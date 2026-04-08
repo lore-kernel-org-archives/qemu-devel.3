@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA4F610F9975
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:24:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B4A510F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYK8-0002As-HE; Wed, 08 Apr 2026 15:12:24 -0400
+	id 1wAYJN-0007zR-4S; Wed, 08 Apr 2026 15:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAYHO-0005qm-Qx
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:09:36 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAYGn-0004RJ-4M
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:08:57 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1wAEoU-0000ok-W4
- for qemu-devel@nongnu.org; Tue, 07 Apr 2026 18:22:28 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2b24fede2acso30678065ad.3
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 15:22:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAPnc-0005kD-Fe
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 06:06:17 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so48359785e9.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 03:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775600546; x=1776205346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775642774; x=1776247574; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BgMYgINs/yOfuuVgzjug5JMD/7kH4ZvROycWlRvKO9k=;
- b=nUdxEtrI8/1koy7mY+rPz4bKYquCi/Yw0nmrxZlTboF7irP+ebjrd+JGw9MPqgnXh1
- xmEt3v+Y9E21jRQA17uRFVAZECXuYxs7iY/LEZ/TLzlL1VU/FMd4Oge+zoIBwqOns52l
- 5PYQi3e4lPxhjdT6aZUybHqkT6QJmn/Z8oDMoTnQjpv2BxVNJBf6f9MnqY3NAw/hTtXZ
- g7Nq14L+zekplhB8CJafpbcDWItc1p0a2RmS0pF9MiS1iGzxcUbAAfKr2ZD7uDVYLlvt
- hmknRnZ7dC3Lfg131ZMPXibmUKzcNdpAnaLNXk/4GnEQoE+hJyUUq3bJAga8fecEbMbc
- W5Bw==
+ bh=dEuPWWzhYNRcUX4pgtCbVMTtFv0Mv67NoRXMJwkflzs=;
+ b=LS2OjBEOCw00wtlRNvgcq7PbntqqzyxaVSKiJnDPVChdXZ63US58j/FLef229Z2y54
+ uqqn0fIXjXzEVi+6va4PknI5hoTSG1v1EzRhGZMpyJlYeQa6d3yp6xJd3EVeSRaKyT1E
+ OrTUYPwKwHkyibTOqFD8oexOgavAScfBa08w+cBEXvH9B+m8yspRHf/yM+EHivD1ZYH2
+ y5ilApZT79GYYMMlrdef4spvQxYWgNgt4oEHEPATiBPtND7zMlFUJh1W54DtUpleog0l
+ +htpIN/UWIMliWPn7aF4okM7vuzAmpUayeWMG2AtY1n8fVg8LzWaUnj3EfOdMIO9kF0T
+ kqCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775600546; x=1776205346;
+ d=1e100.net; s=20251104; t=1775642774; x=1776247574;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BgMYgINs/yOfuuVgzjug5JMD/7kH4ZvROycWlRvKO9k=;
- b=bLzFFoC6ft2DV8dU099XZSBps2E5BJCOpPTmTifsUnoHydiXJJVtY4x6Dx5gVeX75b
- kaAKwPgIN+OE6qAkoepBVnDiIWwzu6IbI12nYyXpXP7zjFoGapynqN0jkekFF6JOiAP4
- MGktUwQxSpS3wUVuKJiY2CQ748RVl+wmHHC1372EwFOkVGZhMvVZ8j8I5Z5V7pWWli5b
- tJuW5J/CExiWekASNcohBPoTd6FIqc1DLzL7myMUgDO0HXskNO8x1gz6Wx1CCCrl0Tya
- KJ46aj7K9u+QtucfFfHFmEiPao9JKgBBggnMYbVPTyu0y0Tjm3Y3e3rql1RruHd6pJ4w
- 1M6g==
-X-Gm-Message-State: AOJu0YyeyF2E8JfKGecxZfELA6tr5Ow91fwPL5oEIdhtvxpUaF48oeAx
- uC69Bx+92EPbv4lE+3I5YqM2vW015jHRZdiv2+0fhTiYd8Kb9xirZEGymXgBy9Cx5Cubz2u9HsM
- bLmCTSIA=
-X-Gm-Gg: AeBDiesD7Dt6VR1XwgbcnamorbxuxXTPJrALzarFZ/5fcH9etUMJ9AaXXRJlsIL5Mc7
- eNNWchoyoFHkt7p6vorOTrW7X0cUgzTxGvqVPlESUngUTCEWxHZhEWkkr9D5Ci5cOwSfP+NQQLe
- bIiv0UYmm0WnnHgxGqDiRNu4BhIXfLYIJ4hrbkhYyEMlm9Kc/dwE6LHOvCfzsG4oKwphiV1gPQZ
- JD+R5oPRY16lO0vkyt1YBPLZLxHLijSS3n2ZlccwFf+mN+O2lUX9wxjkoHP1hx07uUbl39oijLW
- gc9YYOU/cgkGGtaDOROcKfaK0RawkRcGc4N5aXFkTMULC7cZXkpZnCN5NfxgwYoiHWtXXydprNv
- dz2bkc7zK65Pa8ohTONXwDHq6kkAmDID/qei7wrYeSA+PlxxmIm3QevqyH7sLYngE/wD0tb0ked
- GYzM/g1FrGOIsl4v1PI6orhzPw+Esc6DtfVSy2Spyki/VR4UDm6dthOIO8A3yLguxInTkZKXAuN
- poK
-X-Received: by 2002:a17:902:e551:b0:2b0:67cc:adc3 with SMTP id
- d9443c01a7336-2b28180aff8mr206878795ad.14.1775600545548; 
- Tue, 07 Apr 2026 15:22:25 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b274979d5csm180412065ad.38.2026.04.07.15.22.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 15:22:24 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ bh=dEuPWWzhYNRcUX4pgtCbVMTtFv0Mv67NoRXMJwkflzs=;
+ b=AIynODrlicoesN12M3V8kUOBwLC4zwu+ZYBKSv5NoI+LZRRrwgt4w9Zd6mIq/MHYUz
+ YqXkuZxmVr0Wjt22MhxYja5l3b482V0sLBfy7l60jtD1EeyuF9NkjwUWyQRPkwDVkUri
+ wjQJja5cRlFacE5PriICGa+16cFrilnbeQKxhb5foSq9LQwvgBqdZY/hilSQuf/sqhiG
+ a4LJIz2jEkYo/LghYofVo3wIBaRkpqqf476WxHHRU2yxuZmTyTbwxf/os8T0KY/qlkMP
+ vD2lCer1dRg+czy5lDjRiK5UbP66fys7X6GVxNfq6faZW43vfHfKikRBf1/4OXWdmZy9
+ I8Cw==
+X-Gm-Message-State: AOJu0Yy/ecKizGoUHm664GOWroikW5aHOM0oNNA7tITxUEnGMYKFhFlK
+ 4tdJxH50aI4VHEQ5WkkR2Qu0cbmyGreLkwipA14TKmqdq/vVhdmko1/dPZcq83SIU6ytTBt3W8X
+ 8qJKl/Sg=
+X-Gm-Gg: AeBDies7JtDjeyy7FqXKKL30R3dxMUpzkY7p9YfgBe+r69xH4fmvLhP99kBVhrdZHxl
+ 3zbf7oDMorbkMEaO5SaCPtWWaqfYUJ3ahdFBtdianTDGLzwDUN4QP5dx7PnfDazY4PXaMos6Vzn
+ 6Bb/I6v2tzmt6XskSQfqEcuIfRWUlWuvxOerled5//8RqvNI6P1cD26FVZJSIMpSponRl4UGfVu
+ ob1u7eRN2/ky5oSxz2DxWt3DpaOISMvAgE/qNOqKlPDLr8AH+Zp7qa+zg4FxT0CLaHePblSeqVm
+ RO/hvHgQW04eIbyx2B8d80rH5rcORW2OsA96rt6KvGh7BZGcD9XfHVjAFYP+rxUma2s2WHeH7Da
+ hNu0P9nL9m5jRQ3sFd4wPBt/Mnj+s7hVfXOaNPQ5UcQkbpTKoM9qI9SEOzKV8RDG0TXZc8KN0gn
+ BabXNnYjOwYWqhGyM7DU2/7x3tyu6e3d3sPO87t6eIR/CBP4G9SCFPmT85yOa+QPjosjHinoq4
+X-Received: by 2002:a05:600c:3b87:b0:486:fe23:1707 with SMTP id
+ 5b1f17b1804b1-488997ac1bdmr300733115e9.20.1775642773800; 
+ Wed, 08 Apr 2026 03:06:13 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488c5271676sm16822945e9.0.2026.04.08.03.06.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 08 Apr 2026 03:06:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, jim.macarthur@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v11 10/21] target/arm/tcg/gengvec.c: make compilation unit
- common
-Date: Tue,  7 Apr 2026 15:21:57 -0700
-Message-ID: <20260407222208.271838-11-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
-References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Matthew Penney <matt@matthewpenney.net>
+Subject: [PATCH-for-11.0? 1/2] io: Clear dangling GLib event source tag
+Date: Wed,  8 Apr 2026 12:06:04 +0200
+Message-ID: <20260408100605.66795-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260408100605.66795-1-philmd@linaro.org>
+References: <20260408100605.66795-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,42 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/arm/tcg/meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Following commit 34aad589019 ("hw/char/virtio-console: clear
+dangling GLib event source tag"), prevent stale tags from
+being reused by clearing dangling GLib event source tag during
+the cleanup phase (finalize, unrealize).
 
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 1fa26670587..0740de92c1a 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -33,7 +33,6 @@ arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
+Inspiread-by: Matthew Penney <matt@matthewpenney.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/usb/redirect.c                     | 4 +---
+ io/channel-websock.c                  | 8 ++------
+ target/i386/kvm/tdx-quote-generator.c | 5 +----
+ 3 files changed, 4 insertions(+), 13 deletions(-)
+
+diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
+index fda5bbca676..100afbdb06a 100644
+--- a/hw/usb/redirect.c
++++ b/hw/usb/redirect.c
+@@ -1494,9 +1494,7 @@ static void usbredir_unrealize(USBDevice *udev)
+     if (dev->parser) {
+         usbredirparser_destroy(dev->parser);
+     }
+-    if (dev->watch) {
+-        g_source_remove(dev->watch);
+-    }
++    g_clear_handle_id(&dev->watch, g_source_remove);
  
- arm_ss.add(files(
-   'cpu32.c',
--  'gengvec.c',
-   'translate.c',
-   'm_helper.c',
-   'mve_helper.c',
-@@ -72,6 +71,7 @@ arm_common_system_ss.add(
-   'cpregs-at.c',
-   'debug.c',
-   'hflags.c',
-+  'gengvec.c',
-   'neon_helper.c',
-   'op_helper.c',
-   'psci.c',
-@@ -91,6 +91,7 @@ arm_user_ss.add(
-   vfp_d,
-   files(
-   'debug.c',
-+  'gengvec.c',
-   'hflags.c',
-   'neon_helper.c',
-   'op_helper.c',
+     free(dev->filter_rules);
+     qemu_del_vm_change_state_handler(dev->vmstate);
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 9902b014f79..da7e7c9e345 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -950,12 +950,8 @@ static void qio_channel_websock_finalize(Object *obj)
+     buffer_free(&ioc->encinput);
+     buffer_free(&ioc->encoutput);
+     buffer_free(&ioc->rawinput);
+-    if (ioc->hs_io_tag) {
+-        g_source_remove(ioc->hs_io_tag);
+-    }
+-    if (ioc->io_tag) {
+-        g_source_remove(ioc->io_tag);
+-    }
++    g_clear_handle_id(&ioc->hs_io_tag, g_source_remove);
++    g_clear_handle_id(&ioc->io_tag, g_source_remove);
+     error_free(ioc->io_err);
+     object_unref(OBJECT(ioc->master));
+ }
+diff --git a/target/i386/kvm/tdx-quote-generator.c b/target/i386/kvm/tdx-quote-generator.c
+index dee8334b27a..002bc40c8a8 100644
+--- a/target/i386/kvm/tdx-quote-generator.c
++++ b/target/i386/kvm/tdx-quote-generator.c
+@@ -74,10 +74,7 @@ static void encode_header(char *buf, size_t len, uint32_t size) {
+ static void tdx_generate_quote_cleanup(TdxGenerateQuoteTask *task)
+ {
+     timer_del(&task->timer);
+-
+-    if (task->watch) {
+-        g_source_remove(task->watch);
+-    }
++    g_clear_handle_id(&task->watch, g_source_remove);
+     qio_channel_close(QIO_CHANNEL(task->sioc), NULL);
+     object_unref(OBJECT(task->sioc));
+ 
 -- 
-2.47.3
+2.53.0
 
 
