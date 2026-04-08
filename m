@@ -4,112 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4F810F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8C810F9975
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYSy-00061e-I6; Wed, 08 Apr 2026 15:21:32 -0400
+	id 1wAYKL-0003WP-8Q; Wed, 08 Apr 2026 15:12:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wAY41-0006GV-Dk; Wed, 08 Apr 2026 14:55:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAYIv-000773-Ak
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:11:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wAS3F-0007h0-B8; Wed, 08 Apr 2026 08:30:35 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6387EHeQ2590952; Wed, 8 Apr 2026 12:28:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FG7pfh
- 6FfwPjQkkJumHrYmpDSREH9azgO7En8yQs/Bg=; b=gqZAOXfyQs4oddvitVWU5y
- 236XTQdlp0SuEfSWjjyBmdk3A+XXDqCew0KShOw2ZyruD5t/QpzWHiz7Iot6AZB3
- qG00r147VXPbl5zXAnnUdpmRqmd3e4cwY3zReuTKynkiJ2hfwbyukGsS/HGs74mB
- HJVLnuI4WX8n/N7nKxPjEy1NGwHa+6fdP9IU+0FBb1EMFPz8HOqy2VvUcKYF+lZe
- JliU6Z6bvaJEDjp+ZT1p13E2PM5psLRE+lGh/NCSAo7b+W3IUET9rJUoq0GjIb6v
- fEdJ5py9SW3erCzTRH4tf/LMpdqIWKv27TsdAwB8JYZT2iNVbIMekA+FJKxpMxNg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2e7xbn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Apr 2026 12:28:25 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 638B8mlf014352;
- Wed, 8 Apr 2026 12:28:23 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg4qbgh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Apr 2026 12:28:23 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 638CSNTi31326786
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Apr 2026 12:28:23 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA7DA58061;
- Wed,  8 Apr 2026 12:28:22 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3711D58059;
- Wed,  8 Apr 2026 12:28:22 +0000 (GMT)
-Received: from [9.61.9.165] (unknown [9.61.9.165])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Apr 2026 12:28:22 +0000 (GMT)
-Message-ID: <e4e1ea36-29c7-47df-86d1-d108106a006a@linux.ibm.com>
-Date: Wed, 8 Apr 2026 08:28:21 -0400
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAKOq-0005aK-Jp
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:22 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 637J6dRJ071787
+ for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /cvTSbV/zAeAfBfzYUeoj6fbSDj+UEBx4bvW7Z/SrW8=; b=DsdaRayZlG5YRCDX
+ FDFue4d6ljB6z7LuQHtdCqDqCX/hz3GDXgJyBcc9Ol2zHpJO304vPEOVh0rzo+H5
+ AC3z76flVXFU3guzIffbAmM9IG+lqxAZqQRcWji2uEYDOylgljGZKdFwBUjmyVee
+ 3piFx2KkyuWoNVsMWtAPM0YrTHXI4Rr9LXAgdwbI/qzvJKu9935MVwgrFUFk4n58
+ e3PTwknzbYOlbve0ng7arCumO5U602iz5Rx/boRdKwTI3+nnTyrhenlyBE8ErsDp
+ lIQyhKpurs8oQdOJTY2rrOqyXdKrARDtOMG1e+dkZgNLrT+9AOIrwNi4SYhALvaL
+ 9lS/dw==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dd7sx9dq6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:19 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-127133794b6so9493287c88.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1775622018; x=1776226818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/cvTSbV/zAeAfBfzYUeoj6fbSDj+UEBx4bvW7Z/SrW8=;
+ b=DfuGqsMvc96dcbDDrDF9MCO4IiHr8pRXnlYFXv0kfjxwlYzlAYEMPjdJHa7/h6Oe71
+ dArQ+hEGyPXO4W/qfnH8TRrS5u14LrvhN5pjBEh92ubQ9C9K5PStGYoFMKyuQejovc7e
+ nlfAF4dc5DGJUBw/C9vQxMA5dUGFMQ+TjkRey2lJF/vKQUFI4OAEsspJNShECDYpYEMp
+ HohLC4QkoMlDquEuyB65aRxTlnOWUvWkg5kpX0wHCrqmKDRvBNa+9H6qLRuS3UlC+Fyj
+ 8xMfN1jLkwQ4gorgGtxLCt5jxjujXKMxFrVoXdE2fo1LSON/5XntvheWcKXysEn4R1Wm
+ J6Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775622018; x=1776226818;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/cvTSbV/zAeAfBfzYUeoj6fbSDj+UEBx4bvW7Z/SrW8=;
+ b=H9IA8ga5ZBQts0PNc2ISeIBUGQA0m0etBz9Dcd1GtKK96MB7MveP0qrcT4uzklQciy
+ ko788trXDbS1e+MjYuxHmJ/qpBe55WnWT02s/4cVLLx9ACq52ssGtxcGdUNgHQFkJyhn
+ PxAWA9QsS9wo6BZLzsMExoTjQHRNJ9XS3SC9WQ4yrQZ8+kR0maDhHAmFBFu8jK47fyA/
+ hXzc4feTFUa/FRy6b1A5+cN2dJk6+0YU5sPNuRVAsR2n2XJXcjPC6aSsGmahF5jG4a+z
+ uK4kv+m9rvAVALW39HP3qlAKUfp1ECv4duKlQ0Q6OkPt4PUbStupcbL8UQ1nEreXNg8H
+ scEA==
+X-Gm-Message-State: AOJu0YxHg+NNsLmsei0WmdX/kAh9l5hhvELniQxfnM7EnkgmfuhIdU5e
+ 7pzKFT1hRd4fy/SPLDZWCyUUzJXvez1FgiXKWmnXb6bnqy+jhiBmQuqQvRydhMv4jVml1sSDcRi
+ AeMQLJUF6MX6jMi6RKoJNvg6K625I4aS0eXXiMHtGi3y7X5TJgP8tpyLhk7CtT8aaQQ==
+X-Gm-Gg: AeBDieuGLVeJ6HV3AcA9Uljs3mxv4RSMUr4r6UE1zsVusIo/BczvQRPfUJrpV2fNd0X
+ WU4Myektit16bdWVkgbMmERAeu4AA7b0XnatpyGY04qjj6PcKz6UsxlNBcJi3xUEbvmxGpi5Dbn
+ e8wIycPSnjDt/EBPgrvxmFj4YDBJm3CH+JL2M1lPJeCkvwz9ArJZEkmrJYZ0oXnh6fuXnQPgK2j
+ iRbXcAjcK9Ul8+UEHHJD+V01fenlHWxkq58HPPfZsHISc5qkf7g+p/Rc5A4DJ02XMJsM0SrNZIm
+ 5JdSeuwbXMK8muF9lyw0tXLUaaXJDVVv3H69Bdc3bUos5Qzz9oGtvvr+ksnKl+5cpjC1VwO0iDm
+ ROUwC+FXwvz5XW1r1rpUkvse2xaoetcC9PsUI06J33CTgFbxqN9YNXUSNUCXOQRO9Igux4w==
+X-Received: by 2002:a05:7022:ec17:b0:128:d23d:81a2 with SMTP id
+ a92af1059eb24-12bfb777066mr9807566c88.29.1775622018275; 
+ Tue, 07 Apr 2026 21:20:18 -0700 (PDT)
+X-Received: by 2002:a05:7022:ec17:b0:128:d23d:81a2 with SMTP id
+ a92af1059eb24-12bfb777066mr9807548c88.29.1775622017675; 
+ Tue, 07 Apr 2026 21:20:17 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 21:20:17 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng
+Subject: [PATCH v4 09/28] target/hexagon: Implement stack overflow exception
+Date: Tue,  7 Apr 2026 21:19:34 -0700
+Message-Id: <20260408041953.1899532-10-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
+References: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/15] s390x/pci: Implement migration for emulated devices
-To: Thomas Huth <thuth@redhat.com>, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260402022921.298818-1-kshk@linux.ibm.com>
- <20260402022921.298818-15-kshk@linux.ibm.com>
- <021768ba-9871-421d-8b45-80c5ade6a456@redhat.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <021768ba-9871-421d-8b45-80c5ade6a456@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -t7IcIQqs9mcnktNEbxUDfFm3zcQei1I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDExNCBTYWx0ZWRfXyIXMtag7oBIc
- aiW5yb0LbPUJuJH2H+LGis2MfLkzEYpklOHL8E4ruSJgEe/bOUKFod7Yr5QFWX00U+y+K9500jn
- +UmFNob1ekwszhtPbmlgaGChFtPzADwedcm9FJP+oOLIe1idwiBAouZUwp8KLONK+yz//yyjpD+
- tYG20ZbQZLZdRmmvN9XbYoiJWrwOSPJkBKueRnTh7/g13w9gwHG8hUptBi/9hNd6+UzAeuoX1ZI
- zzUYZP9Q1aizDJntvjGyV8vH8sIZlTCjPDk1p2pbxCWq+Hf/efAIhQ2BI1VCtoBZH5bI61k8a69
- AwAyppx7vLA+mZseDUm+iQ+aTCS9VVoxwdFB3ycW+Og/L3sThxjatCyMG2a+vsebdbOgTej+eej
- KM8PGjREKYS3saO05zkhqjCrBnSjXYMAJY+pHCfELkfjkhHtg9YwejmcryZho1P90qcdPTmv+Zg
- U3imU61m4pMH62qeOjA==
-X-Authority-Analysis: v=2.4 cv=Cfw4Irrl c=1 sm=1 tr=0 ts=69d649e9 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=Pc-w_4VLyfRQh03BNDkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: -t7IcIQqs9mcnktNEbxUDfFm3zcQei1I
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Authority-Analysis: v=2.4 cv=etfvCIpX c=1 sm=1 tr=0 ts=69d5d783 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=DTjK4E8Rq4C45BV92HcA:9 a=QEXdDO2ut3YA:10
+ a=Kq8ClHjjuc5pcCNDwlU0:22
+X-Proofpoint-ORIG-GUID: 3FJvzSYMLoLv22JD3An0eDcD-5LrXy6v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNSBTYWx0ZWRfX7I5bATXZGYfs
+ yoEjJYiEBMb678xyLz4NbBOijogvEVAF7jvvbjj4cVRETPWUtf6nG/xDNFdfZLCFxKOXtsmw73j
+ UdQ1neFUAi1MpJUzk6r5+0kjLmNzgd9JO9PQ+H5Vnh3lbwBbI2wijmxZImyNG50nNyPXg/mX06R
+ ymzvU55+zHBs4FtMjhz/OGtgfPpsPGKC1sukcXbFFTl/tUa3GIlKe8DLI5qfZtJNR7GQK+jn2Em
+ pLoUNGCtwvL2VyYJ2CXg45NeBl2yQKnic6xznwBmgIKE5+KQoh2hUUSCRHYWPIYwikMrtjddEIi
+ zoX0kiJNDDk2sQVp9i7iXkqLFP3FPjL9HUs9oU+mgoWSN09h57IjHzJTjdpcSxbAfhUYjAVu6OZ
+ HUB5bFFaAEKlSa5DqSfaB8SqS+jlXT6M1NDCKVg6J8JlBzGYb6t/mbth98kgLX10D6grOAQYagj
+ RXzCbuCHkzxZ1gF++2A==
+X-Proofpoint-GUID: 3FJvzSYMLoLv22JD3An0eDcD-5LrXy6v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_04,2026-04-08_01,2025-10-01_01
+ definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080114
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 spamscore=0 clxscore=1015 malwarescore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604080035
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,105 +150,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/26 6:01 AM, Thomas Huth wrote:
-> On 02/04/2026 04.29, Konstantin Shkolnyy wrote:
->> Implement zPCI device state migration, consequently enabling migration
->> of VMs that have emulated PCI devices, whether virtio or not.
->> Migration is allowed for devices whose function handle has the
->> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
->> state of its zPCI emulator.
->>
->> Passthrough devices will continue to block migration.
->>
->> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
->> ---
->>   hw/s390x/s390-pci-bus.c         | 112 ++++++++++++++++++++++++++++++--
->>   hw/s390x/s390-pci-inst.c        |   2 +-
->>   include/hw/s390x/s390-pci-bus.h |   2 +
->>   3 files changed, 110 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
->> index f339a0fd94..b3037b9a8a 100644
->> --- a/hw/s390x/s390-pci-bus.c
->> +++ b/hw/s390x/s390-pci-bus.c
->> ...
->> +static const VMStateDescription s390_pci_device_vmstate = {
->> +    .name = TYPE_S390_PCI_DEVICE,
->> +    .version_id = 1,
->> +    .minimum_version_id = 1,
->> +    .post_load = s390_pci_device_post_load,
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_UINT32(state, S390PCIBusDevice),
->> +        VMSTATE_UINT16(uid, S390PCIBusDevice),
->> +        VMSTATE_UINT32(idx, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fh, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fid, S390PCIBusDevice),
->> +        VMSTATE_BOOL(fid_defined, S390PCIBusDevice),
->> +        VMSTATE_UINT64(fmb_addr, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fmb.format, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fmb.sample, S390PCIBusDevice),
->> +        VMSTATE_UINT64(fmb.last_update, S390PCIBusDevice),
->> +        VMSTATE_UINT64_ARRAY(fmb.counter, S390PCIBusDevice,
->> +                ARRAY_SIZE(((S390PCIBusDevice *)0)->fmb.counter)),
->> +        VMSTATE_UINT64(fmb.fmt0.dma_rbytes, S390PCIBusDevice),
->> +        VMSTATE_UINT64(fmb.fmt0.dma_wbytes, S390PCIBusDevice),
->> +        VMSTATE_UINT8(isc, S390PCIBusDevice),
->> +        VMSTATE_UINT16(noi, S390PCIBusDevice),
->> +        VMSTATE_UINT8(sum, S390PCIBusDevice),
->> +        VMSTATE_UINT8(pft, S390PCIBusDevice),
->> +        VMSTATE_UINT64(routes.adapter.ind_addr, S390PCIBusDevice),
->> +        VMSTATE_UINT64(routes.adapter.summary_addr, S390PCIBusDevice),
->> +        VMSTATE_UINT64(routes.adapter.ind_offset, S390PCIBusDevice),
->> +        VMSTATE_UINT32(routes.adapter.summary_offset, S390PCIBusDevice),
->> +        VMSTATE_UINT32(routes.adapter.adapter_id, S390PCIBusDevice),
->> +        VMSTATE_BOOL(iommu_enabled, S390PCIBusDevice),
->> +        VMSTATE_UINT64(g_iota, S390PCIBusDevice),
->> +        VMSTATE_UINT64(pba, S390PCIBusDevice),
->> +        VMSTATE_UINT64(pal, S390PCIBusDevice),
->> +        VMSTATE_UINT64(max_dma_limit, S390PCIBusDevice),
->> +        VMSTATE_PTR_TO_IND_ADDR(summary_ind, S390PCIBusDevice),
->> +        VMSTATE_PTR_TO_IND_ADDR(indicator, S390PCIBusDevice),
->> +        VMSTATE_BOOL(pci_unplug_request_processed, S390PCIBusDevice),
->> +        VMSTATE_BOOL(unplug_requested, S390PCIBusDevice),
->> +        VMSTATE_BOOL(interp, S390PCIBusDevice),
->> +        VMSTATE_BOOL(forwarding_assist, S390PCIBusDevice),
->> +        VMSTATE_BOOL(aif, S390PCIBusDevice),
->> +        VMSTATE_BOOL(rtr_avail, S390PCIBusDevice),
->> +        VMSTATE_END_OF_LIST()
->> +    }
->>   };
->  Hi!
-> 
-> I assume this will likely break backward migration with old machine types?
-> 
-> Could you please try whether migrating a s390-ccw-virtio-10.2 machine
-> from an old version of QEMU to a version of QEMU that includes your
-> patches, and back from the new version to the old version works as
-> expected?
-> 
-> If not, you might need to add a ".needed = ..." line to the
-> s390_pci_device_vmstate, with a function that checks a variable from the
-> machine state whether the PCI state is allowed or not. And then enable
-> that variable only on the newest -11.1 machine type once it is available.
-
-+1, I was having the same thought but hadn't gotten around to trying it yet.
-
-We do already have a few examples for zPCI where we did this even though
-migration was not even supported yet to kind of lay the groundwork for
-backward migration ahead of time.
-
-But honestly, looking at just this series in isolation, my concern is
-things like an older machine type would not have the IOMMU replay
-functionality added in patch 1.
-
-So yes, please test to see what happens but make sure to include IOMMU
-activity in that testing.
-
-Tying this to a machine type is probably the safest bet, and given that
-virtio-pci is not the default virtio transport on s390x I don't think it
-would cause much hardship.
-11.1 machine isn't available yet but I imagine will be soon after QEMU
-11.0 release -- you can use Connie's series as a base:
-https://lore.kernel.org/qemu-devel/20260331140347.653404-1-cohuck@redhat.com/
-
+SW1wbGVtZW50IHRoZSBmcmFtZSBsaW1pdCBjaGVjayBmb3Igc3lzdGVtIGVtdWxhdGlvbiBtb2Rl
+LiAgV2hlbgphbGxvY2ZyYW1lIGNvbXB1dGVzIGEgbmV3IHN0YWNrIHBvaW50ZXIgYmVsb3cgRlJB
+TUVMSU1JVCwgcmFpc2UgYQpwcmVjaXNlIGV4Y2VwdGlvbiAoSEVYX0NBVVNFX1NUQUNLX0xJTUlU
+KS4gIFRoZSBjaGVjayBpcyBza2lwcGVkIGluCm1vbml0b3IgbW9kZS4KClJldmlld2VkLWJ5OiBU
+YXlsb3IgU2ltcHNvbiA8bHRheWxvcnNpbXBzb25AZ21haWwuY29tPgpTaWduZWQtb2ZmLWJ5OiBC
+cmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGFyZ2V0L2hleGFn
+b24vaGVscGVyLmggICAgICAgICAgICAgICAgICAgICB8ICAxICsKIHRhcmdldC9oZXhhZ29uL2lk
+ZWYtcGFyc2VyL3BhcnNlci1oZWxwZXJzLmggfCAgMiArKwogdGFyZ2V0L2hleGFnb24vbWFjcm9z
+LmggICAgICAgICAgICAgICAgICAgICB8ICAzIC0tCiB0YXJnZXQvaGV4YWdvbi9zeXNfbWFjcm9z
+LmggICAgICAgICAgICAgICAgIHwgIDQgKysrCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuaCAg
+ICAgICAgICAgICAgICAgIHwgIDIgKysKIHRhcmdldC9oZXhhZ29uL2dlbnB0ci5jICAgICAgICAg
+ICAgICAgICAgICAgfCAxOCArKysrKysrLS0tLQogdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIv
+cGFyc2VyLWhlbHBlcnMuYyB8ICA5ICsrKysrKwogdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMg
+ICAgICAgICAgICAgICAgICB8IDM2ICsrKysrKysrKysrKysrKysrKysrKwogdGFyZ2V0L2hleGFn
+b24vaWRlZi1wYXJzZXIvaWRlZi1wYXJzZXIueSAgICB8ICAzICsrCiA5IGZpbGVzIGNoYW5nZWQs
+IDY4IGluc2VydGlvbnMoKyksIDEwIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9o
+ZXhhZ29uL2hlbHBlci5oIGIvdGFyZ2V0L2hleGFnb24vaGVscGVyLmgKaW5kZXggOWNhODdhY2Zl
+NjMuLmViY2Q0NzFlYzBhIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9oZWxwZXIuaAorKysg
+Yi90YXJnZXQvaGV4YWdvbi9oZWxwZXIuaApAQCAtMTA5LDYgKzEwOSw3IEBAIERFRl9IRUxQRVJf
+Mihwcm9iZV9odnhfc3RvcmVzLCB2b2lkLCBlbnYsIGludCkKIERFRl9IRUxQRVJfMihwcm9iZV9w
+a3Rfc2NhbGFyX2h2eF9zdG9yZXMsIHZvaWQsIGVudiwgaW50KQogCiAjaWYgIWRlZmluZWQoQ09O
+RklHX1VTRVJfT05MWSkKK0RFRl9IRUxQRVJfMyhyYWlzZV9zdGFja19vdmVyZmxvdywgdm9pZCwg
+ZW52LCBpMzIsIGkzMikKIERFRl9IRUxQRVJfMihzd2ksIHZvaWQsIGVudiwgaTMyKQogREVGX0hF
+TFBFUl8yKGNzd2ksIHZvaWQsIGVudiwgaTMyKQogREVGX0hFTFBFUl8yKGNpYWQsIHZvaWQsIGVu
+diwgaTMyKQpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIvcGFyc2VyLWhl
+bHBlcnMuaCBiL3RhcmdldC9oZXhhZ29uL2lkZWYtcGFyc2VyL3BhcnNlci1oZWxwZXJzLmgKaW5k
+ZXggMjA4N2Q1MzRhOTMuLmQzZGZjZWM1NjkwIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9p
+ZGVmLXBhcnNlci9wYXJzZXItaGVscGVycy5oCisrKyBiL3RhcmdldC9oZXhhZ29uL2lkZWYtcGFy
+c2VyL3BhcnNlci1oZWxwZXJzLmgKQEAgLTI5NSw2ICsyOTUsOCBAQCB2b2lkIGdlbl9jYW5jZWwo
+Q29udGV4dCAqYywgWVlMVFlQRSAqbG9jcCk7CiAKIHZvaWQgZ2VuX2xvYWRfY2FuY2VsKENvbnRl
+eHQgKmMsIFlZTFRZUEUgKmxvY3ApOwogCit2b2lkIGdlbl9mcmFtZWNoZWNrKENvbnRleHQgKmMs
+IFlZTFRZUEUgKmxvY3AsIEhleFZhbHVlICphZGRyLCBIZXhWYWx1ZSAqZWEpOworCiB2b2lkIGdl
+bl9sb2FkKENvbnRleHQgKmMsIFlZTFRZUEUgKmxvY3AsIEhleFZhbHVlICpzaXplLAogICAgICAg
+ICAgICAgICBIZXhTaWduZWRuZXNzIHNpZ25lZG5lc3MsIEhleFZhbHVlICplYSwgSGV4VmFsdWUg
+KmRzdCk7CiAKZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL21hY3Jvcy5oIGIvdGFyZ2V0L2hl
+eGFnb24vbWFjcm9zLmgKaW5kZXggMjZkM2Y3ZDhhNGIuLmQzZjIxMDVjOTMyIDEwMDY0NAotLS0g
+YS90YXJnZXQvaGV4YWdvbi9tYWNyb3MuaAorKysgYi90YXJnZXQvaGV4YWdvbi9tYWNyb3MuaApA
+QCAtNTM4LDkgKzUzOCw2IEBAIHN0YXRpYyBpbmxpbmUgVENHdiBnZW5fcmVhZF9pcmVnKFRDR3Yg
+cmVzdWx0LCBUQ0d2IHZhbCwgaW50IHNoaWZ0KQogCiAjaWZkZWYgQ09ORklHX1VTRVJfT05MWQog
+I2RlZmluZSBmRlJBTUVDSEVDSyhBRERSLCBFQSkgZG8geyB9IHdoaWxlICgwKSAvKiBOb3QgbW9k
+ZWxsZWQgaW4gbGludXgtdXNlciAqLwotI2Vsc2UKLS8qIFN5c3RlbSBtb2RlIG5vdCBpbXBsZW1l
+bnRlZCB5ZXQgKi8KLSNkZWZpbmUgZkZSQU1FQ0hFQ0soQUREUiwgRUEpICBnX2Fzc2VydF9ub3Rf
+cmVhY2hlZCgpOwogI2VuZGlmCiAKICNpZmRlZiBRRU1VX0dFTkVSQVRFCmRpZmYgLS1naXQgYS90
+YXJnZXQvaGV4YWdvbi9zeXNfbWFjcm9zLmggYi90YXJnZXQvaGV4YWdvbi9zeXNfbWFjcm9zLmgK
+aW5kZXggMzY0ZmNkZTczODMuLmNiYzg1N2ZhMmY1IDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdv
+bi9zeXNfbWFjcm9zLmgKKysrIGIvdGFyZ2V0L2hleGFnb24vc3lzX21hY3Jvcy5oCkBAIC05NSw2
+ICs5NSwxMCBAQAogI2RlZmluZSBmVFJBUChUUkFQVFlQRSwgSU1NKSBcCiAgICAgcmVnaXN0ZXJf
+dHJhcF9leGNlcHRpb24oZW52LCBUUkFQVFlQRSwgSU1NLCBQQykKIAorI2lmZGVmIFFFTVVfR0VO
+RVJBVEUKKyNkZWZpbmUgZkZSQU1FQ0hFQ0soQUREUiwgRUEpIGdlbl9mcmFtZWNoZWNrKGN0eCwg
+QUREUiwgRUEpCisjZW5kaWYKKwogI2RlZmluZSBmVklSVElOU05fU1BTV0FQKElNTSwgUkVHKQog
+I2RlZmluZSBmVklSVElOU05fR0VUSUUoSU1NLCBSRUcpIHsgUkVHID0gMHhkZWFmYmVlZjsgfQog
+I2RlZmluZSBmVklSVElOU05fU0VUSUUoSU1NLCBSRUcpCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4
+YWdvbi90cmFuc2xhdGUuaCBiL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5oCmluZGV4IGVhZjQ4
+YTg2NWMyLi40ZTA5MDU2NWFhYyAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vdHJhbnNsYXRl
+LmgKKysrIGIvdGFyZ2V0L2hleGFnb24vdHJhbnNsYXRlLmgKQEAgLTM0MCw0ICszNDAsNiBAQCBG
+SUVMRChQUk9CRV9QS1RfU0NBTEFSX0hWWF9TVE9SRVMsIFMwX0lTX1BSRUQsICAgICAzLCAxKQog
+RklFTEQoUFJPQkVfUEtUX1NDQUxBUl9IVlhfU1RPUkVTLCBTMV9JU19QUkVELCAgICAgNCwgMSkK
+IEZJRUxEKFBST0JFX1BLVF9TQ0FMQVJfSFZYX1NUT1JFUywgTU1VX0lEWCwgICAgICAgIDUsIDIp
+CiAKK3ZvaWQgZ2VuX2ZyYW1lY2hlY2soRGlzYXNDb250ZXh0ICpjdHgsIFRDR3ZfaTMyIGFkZHIs
+IFRDR3ZfaTMyIGVhKTsKKwogI2VuZGlmCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9nZW5w
+dHIuYyBiL3RhcmdldC9oZXhhZ29uL2dlbnB0ci5jCmluZGV4IDYzY2JiN2VkYmJjLi4xMjljMTNi
+NjM3ZCAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vZ2VucHRyLmMKKysrIGIvdGFyZ2V0L2hl
+eGFnb24vZ2VucHRyLmMKQEAgLTg4OSwyNiArODg5LDMwIEBAIHN0YXRpYyB2b2lkIGdlbl9sb2Fk
+X2ZyYW1lKERpc2FzQ29udGV4dCAqY3R4LCBUQ0d2X2k2NCBmcmFtZSwgVENHdiBFQSkKICAgICB0
+Y2dfZ2VuX3FlbXVfbGRfaTY0KGZyYW1lLCBFQSwgY3R4LT5tZW1faWR4LCBNT19MRSB8IE1PX1VR
+KTsKIH0KIAotI2lmbmRlZiBDT05GSUdfSEVYQUdPTl9JREVGX1BBUlNFUgogLyogU3RhY2sgb3Zl
+cmZsb3cgY2hlY2sgKi8KLXN0YXRpYyB2b2lkIGdlbl9mcmFtZWNoZWNrKFRDR3YgRUEsIGludCBm
+cmFtZXNpemUpCit2b2lkIGdlbl9mcmFtZWNoZWNrKERpc2FzQ29udGV4dCAqY3R4LCBUQ0d2X2kz
+MiBhZGRyLCBUQ0d2X2kzMiBlYSkKIHsKLSAgICAvKiBOb3QgbW9kZWxsZWQgaW4gbGludXgtdXNl
+ciBtb2RlICovCi0gICAgLyogUGxhY2Vob2xkZXIgZm9yIHN5c3RlbSBtb2RlICovCiAjaWZuZGVm
+IENPTkZJR19VU0VSX09OTFkKLSAgICBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpOworICAgIFRDR0xh
+YmVsICpvayA9IGdlbl9uZXdfbGFiZWwoKTsKKyAgICB0Y2dfZ2VuX2JyY29uZF9pMzIoVENHX0NP
+TkRfR0VVLCBhZGRyLCBoZXhfZ3ByW0hFWF9SRUdfRlJBTUVMSU1JVF0sIG9rKTsKKyAgICBnZW5f
+aGVscGVyX3JhaXNlX3N0YWNrX292ZXJmbG93KHRjZ19lbnYsCisgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIHRjZ19jb25zdGFudF9pMzIoY3R4LT5pbnNuLT5zbG90KSwgZWEpOwor
+ICAgIGdlbl9zZXRfbGFiZWwob2spOwogI2VuZGlmCiB9CiAKKyNpZm5kZWYgQ09ORklHX0hFWEFH
+T05fSURFRl9QQVJTRVIKIHN0YXRpYyB2b2lkIGdlbl9hbGxvY2ZyYW1lKERpc2FzQ29udGV4dCAq
+Y3R4LCBUQ0d2IHIyOSwgaW50IGZyYW1lc2l6ZSkKIHsKICAgICBUQ0d2IHIzMCA9IGdldF9yZXN1
+bHRfZ3ByKGN0eCwgSEVYX1JFR19GUCk7CisgICAgVENHdl9pMzIgbmV3X3IyOSA9IHRjZ190ZW1w
+X25ld19pMzIoKTsKICAgICBUQ0d2X2k2NCBmcmFtZTsKICAgICB0Y2dfZ2VuX2FkZGlfdGwocjMw
+LCByMjksIC04KTsKICAgICBmcmFtZSA9IGdlbl9mcmFtZV9zY3JhbWJsZSgpOwogICAgIGdlbl9z
+dG9yZTgodGNnX2VudiwgcjMwLCBmcmFtZSwgY3R4LT5pbnNuLT5zbG90KTsKLSAgICBnZW5fZnJh
+bWVjaGVjayhyMzAsIGZyYW1lc2l6ZSk7Ci0gICAgdGNnX2dlbl9zdWJpX3RsKHIyOSwgcjMwLCBm
+cmFtZXNpemUpOworICAgIHRjZ19nZW5fc3ViaV90bChuZXdfcjI5LCByMzAsIGZyYW1lc2l6ZSk7
+CisgICAgZ2VuX2ZyYW1lY2hlY2soY3R4LCBuZXdfcjI5LCBoZXhfZ3ByW0hFWF9SRUdfUENdKTsK
+KyAgICB0Y2dfZ2VuX21vdl90bChyMjksIG5ld19yMjkpOwogfQogCiBzdGF0aWMgdm9pZCBnZW5f
+ZGVhbGxvY2ZyYW1lKERpc2FzQ29udGV4dCAqY3R4LCBUQ0d2X2k2NCByMzFfMzAsIFRDR3YgcjMw
+KQpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIvcGFyc2VyLWhlbHBlcnMu
+YyBiL3RhcmdldC9oZXhhZ29uL2lkZWYtcGFyc2VyL3BhcnNlci1oZWxwZXJzLmMKaW5kZXggNzBi
+ZmE2NDQzMmQuLmI5NDJkOWVhMTZiIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9pZGVmLXBh
+cnNlci9wYXJzZXItaGVscGVycy5jCisrKyBiL3RhcmdldC9oZXhhZ29uL2lkZWYtcGFyc2VyL3Bh
+cnNlci1oZWxwZXJzLmMKQEAgLTE3MzEsNiArMTczMSwxNSBAQCB2b2lkIGdlbl9sb2FkX2NhbmNl
+bChDb250ZXh0ICpjLCBZWUxUWVBFICpsb2NwKQogICAgIE9VVChjLCBsb2NwLCAifVxuIik7CiB9
+CiAKK3ZvaWQgZ2VuX2ZyYW1lY2hlY2soQ29udGV4dCAqYywgWVlMVFlQRSAqbG9jcCwgSGV4VmFs
+dWUgKmFkZHIsIEhleFZhbHVlICplYSkKK3sKKyAgICBIZXhWYWx1ZSBhZGRyX20gPSBydmFsdWVf
+bWF0ZXJpYWxpemUoYywgbG9jcCwgYWRkcik7CisgICAgSGV4VmFsdWUgZWFfbSA9IHJ2YWx1ZV9t
+YXRlcmlhbGl6ZShjLCBsb2NwLCBlYSk7CisgICAgYWRkcl9tID0gZ2VuX3J2YWx1ZV90cnVuY2F0
+ZShjLCBsb2NwLCAmYWRkcl9tKTsKKyAgICBlYV9tID0gZ2VuX3J2YWx1ZV90cnVuY2F0ZShjLCBs
+b2NwLCAmZWFfbSk7CisgICAgT1VUKGMsIGxvY3AsICJnZW5fZnJhbWVjaGVjayhjdHgsICIsICZh
+ZGRyX20sICIsICIsICZlYV9tLCAiKTtcbiIpOworfQorCiB2b2lkIGdlbl9sb2FkKENvbnRleHQg
+KmMsIFlZTFRZUEUgKmxvY3AsIEhleFZhbHVlICp3aWR0aCwKICAgICAgICAgICAgICAgSGV4U2ln
+bmVkbmVzcyBzaWduZWRuZXNzLCBIZXhWYWx1ZSAqZWEsIEhleFZhbHVlICpkc3QpCiB7CmRpZmYg
+LS1naXQgYS90YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYyBiL3RhcmdldC9oZXhhZ29uL29wX2hl
+bHBlci5jCmluZGV4IGQ0MDA2MWRlMDZlLi42YmM4Mjg3ZThmZSAxMDA2NDQKLS0tIGEvdGFyZ2V0
+L2hleGFnb24vb3BfaGVscGVyLmMKKysrIGIvdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMKQEAg
+LTEzOTIsNiArMTM5Miw0MiBAQCB2b2lkIEhFTFBFUih2d2hpc3QxMjhxbSkoQ1BVSGV4YWdvblN0
+YXRlICplbnYsIGludDMyX3QgdWlWKQogfQogCiAjaWZuZGVmIENPTkZJR19VU0VSX09OTFkKK3Zv
+aWQgSEVMUEVSKHJhaXNlX3N0YWNrX292ZXJmbG93KShDUFVIZXhhZ29uU3RhdGUgKmVudiwgdWlu
+dDMyX3Qgc2xvdCwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1aW50MzJfdCBi
+YWR2YSkKK3sKKyAgICAvKgorICAgICAqIFBlciBzZWN0aW9uIDcuMy4xIG9mIHRoZSBWNjcgUHJv
+Z3JhbW1lcidzIFJlZmVyZW5jZSwKKyAgICAgKiBzdGFjayBsaW1pdCBleGNlcHRpb24gaXNuJ3Qg
+cmFpc2VkIGluIG1vbml0b3IgbW9kZS4KKyAgICAgKi8KKyAgICB1aW50MzJfdCBzc3IgPSBlbnYt
+PnRfc3JlZ1tIRVhfU1JFR19TU1JdOworICAgIENQVVN0YXRlICpjczsKKworICAgIGlmIChHRVRf
+U1NSX0ZJRUxEKFNTUl9FWCwgc3NyKSB8fAorICAgICAgICAhR0VUX1NTUl9GSUVMRChTU1JfVU0s
+IHNzcikpIHsKKyAgICAgICAgcmV0dXJuOworICAgIH0KKworICAgIGNzID0gZW52X2NwdShlbnYp
+OworICAgIGNzLT5leGNlcHRpb25faW5kZXggPSBIRVhfRVZFTlRfUFJFQ0lTRTsKKyAgICBlbnYt
+PmNhdXNlX2NvZGUgPSBIRVhfQ0FVU0VfU1RBQ0tfTElNSVQ7CisgICAgQVNTRVJUX0RJUkVDVF9U
+T19HVUVTVF9VTlNFVChlbnYsIGNzLT5leGNlcHRpb25faW5kZXgpOworCisgICAgaWYgKHNsb3Qg
+PT0gMCkgeworICAgICAgICBlbnYtPnRfc3JlZ1tIRVhfU1JFR19CQURWQTBdID0gYmFkdmE7Cisg
+ICAgICAgIFNFVF9TU1JfRklFTEQoZW52LCBTU1JfVjAsIDEpOworICAgICAgICBTRVRfU1NSX0ZJ
+RUxEKGVudiwgU1NSX1YxLCAwKTsKKyAgICAgICAgU0VUX1NTUl9GSUVMRChlbnYsIFNTUl9CVlMs
+IDApOworICAgIH0gZWxzZSBpZiAoc2xvdCA9PSAxKSB7CisgICAgICAgIGVudi0+dF9zcmVnW0hF
+WF9TUkVHX0JBRFZBMV0gPSBiYWR2YTsKKyAgICAgICAgU0VUX1NTUl9GSUVMRChlbnYsIFNTUl9W
+MCwgMCk7CisgICAgICAgIFNFVF9TU1JfRklFTEQoZW52LCBTU1JfVjEsIDEpOworICAgICAgICBT
+RVRfU1NSX0ZJRUxEKGVudiwgU1NSX0JWUywgMSk7CisgICAgfSBlbHNlIHsKKyAgICAgICAgZ19h
+c3NlcnRfbm90X3JlYWNoZWQoKTsKKyAgICB9CisgICAgY3B1X2xvb3BfZXhpdF9yZXN0b3JlKGNz
+LCAwKTsKK30KKwogdm9pZCBIRUxQRVIoY2lhZCkoQ1BVSGV4YWdvblN0YXRlICplbnYsIHVpbnQz
+Ml90IG1hc2spCiB7CiAgICAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsKZGlmZiAtLWdpdCBhL3Rh
+cmdldC9oZXhhZ29uL2lkZWYtcGFyc2VyL2lkZWYtcGFyc2VyLnkgYi90YXJnZXQvaGV4YWdvbi9p
+ZGVmLXBhcnNlci9pZGVmLXBhcnNlci55CmluZGV4IGM2ZjE3YzZhZmE3Li4yMjA3MGQ4YzNmZSAx
+MDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIvaWRlZi1wYXJzZXIueQorKysg
+Yi90YXJnZXQvaGV4YWdvbi9pZGVmLXBhcnNlci9pZGVmLXBhcnNlci55CkBAIC00MDQsNiArNDA0
+LDkgQEAgY29udHJvbF9zdGF0ZW1lbnQgOiBmcmFtZV9jaGVjawogICAgICAgICAgICAgICAgICAg
+OwogCiBmcmFtZV9jaGVjayA6IEZDSEsgJygnIHJ2YWx1ZSAnLCcgcnZhbHVlICcpJyAnOycKKyAg
+ICAgICAgICAgICAgeworICAgICAgICAgICAgICAgICAgZ2VuX2ZyYW1lY2hlY2soYywgJkAxLCAm
+JDMsICYkNSk7CisgICAgICAgICAgICAgIH0KICAgICAgICAgICAgIDsKIAogY2FuY2VsX3N0YXRl
+bWVudCA6IExPQURfQ0FOQ0VMCi0tIAoyLjM0LjEKCg==
 
