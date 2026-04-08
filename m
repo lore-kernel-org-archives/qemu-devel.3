@@ -4,132 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF2410F9969
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 655E310F9974
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYTA-00078k-5T; Wed, 08 Apr 2026 15:21:44 -0400
+	id 1wAYQs-0006nW-A7; Wed, 08 Apr 2026 15:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAY4c-0006SR-Nm
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:56:22 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAY0I-00052P-9b
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:51:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAKOl-0005Yf-46
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:17 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6381FKkX1796828
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=U9YtuCo6FuZI/CcKOOjvfv
- 0l3ElZbJzzhbgDdvj+HqQ=; b=RVxWCm0Y34HZg6dDxXo+138VeFHPZeHLagvQ7x
- Gz7WDjvNHk7+718xTLXo8H26jPup5g1y7znUqLhGLTDI1V7HdnYgLfXGClnKb79O
- 5baWX9qtNwtv6qBm7a8o+E2XY9JdrEUUZxkhT5eX4JwayN27jAgo7//RJJuQllLV
- RZAre4z3TiN3FcuKHBYfTA88vkovJ3hqpkSSe28GzONHPMSPw3blWP5QikVE9omb
- rFmSV5vF8QKpvgn2gTQVzN2Ze5P0CSmxGf/tfcGMJcXltLRVirlGaN0/CnBJSoIS
- EJomVSgAGd+lvAkQwEIdHUvw6Ab9bYfo/svSzpbPkKtLYCpA==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dd51da8ur-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:10 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1279caef718so9082655c88.1
- for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAWCK-00028B-05
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:56:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775667371;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=d0qTHjD0q4Ya9dJ7GpDTbLPVx/TGmnxCqtBUTkBdLKA=;
+ b=Ctbqi8KaGxfcU511hIcWRx04URdljM5DEFzjVbIHTgAkFKsRFEsbqoGxDT+FNnZC3P+Mig
+ 0jPewPhZjnhdpjzkKhlWN/wo81CvmYGyXdxvpe7YVQIj5lmMd3QXPxRGlBMB+xl2qP9oBd
+ Gg1/CTafo9oZ31jgFhMPRs/rG7UmQjE=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-64-Yqkji9IZO_iUxmYY7dLeyA-1; Wed, 08 Apr 2026 12:56:10 -0400
+X-MC-Unique: Yqkji9IZO_iUxmYY7dLeyA-1
+X-Mimecast-MFC-AGG-ID: Yqkji9IZO_iUxmYY7dLeyA_1775667370
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-50d8ed08aa4so3214891cf.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775622009; x=1776226809; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=U9YtuCo6FuZI/CcKOOjvfv0l3ElZbJzzhbgDdvj+HqQ=;
- b=V45bwrEsUxnZ7zr4bW1HGXbPoAfRJJQ/lMDp8yv5kfsOhrdnnccGVdUlOBqf9Jybbx
- U493/HdBkkXbc94mfcgSDwh/61+1drdHPeYbCwy8zJjlzYsOUve4Ek6/IknIgNQQV6ed
- zY5GMuGX5y9MDcaYgAvT+ZVl7LKmVNo9DS1157QJE60M7C5jHwsi//cKLaL4mXvFV/39
- tpWljrT4IioVClOKzcj5Yrd2c6NcOryr0fyQc3ydcUtuU1ig7CgW93tR7xosHPgkGF/Q
- yFQCW7aloogta2aVcvyzFW2o3pvo4is7lxiZzdIkPeNmQ9qcExdhqE+VNat/MKhbGL0D
- oF7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775622009; x=1776226809;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1775667370; x=1776272170; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U9YtuCo6FuZI/CcKOOjvfv0l3ElZbJzzhbgDdvj+HqQ=;
- b=gkad6pGM1guxm0vyYeyVzRJC6eErRC4B1V9JRhn2izMI/NF1QWR/AHSboe4AUO8dJG
- 3be3n68TDBooGThTsWTpTBhRmRCxWJt08Fl4v9CCg0xhXaY/toq6tAdrg2+DN2w4cuHr
- Ou4YKal0JNo53DO+3WvjcpUtFb/lV+9GfhtmcIrPYwBTqea3fQlF8X6deYtD8UGU3njH
- wms1LG0C4K1B1uFsBT+A/koAyMZnurORPzoeo++q28Hu0mgymwuG4scNVqhkkUzHHFUy
- N+HkxDlnaN9SGrm0hSD77wrbUP0UjUJ5Ls0SOJywELZuCVITnN96NH1BHC8xTm0WnHB9
- xoIA==
-X-Gm-Message-State: AOJu0YwD6zhYnyO+wrs57yYnyiYhiYUfr+u/N4Vj3Vk8Vl4zD2ztf8ba
- iYLAlC+Bk8RKmO7CvbCFfvMLn9hzqmTeAciAr/lXn36BCgbPHnds28hJn+It2n6rIu48Qtm4oat
- 0+bO4O8oirc26RS8NijWTBV4LiTzDHu5Cz7XTKCip2Q/hZL1lkqZnd2hY7K01M4FeTg==
-X-Gm-Gg: AeBDieulVBa1unMmCwQKamJfdp/d4HjjYaGrFAkciBvdMDSqyGn747hFcdvKtQgpLtT
- 00VEr7+A8nK+UV2v1+cNGYj03L0b8vf9fkTVUvaLykSZZ8DL5DehWPXSZdlmXK9qhNcl8hF89AL
- JlMiAqS3BWVrsn9d1CGGLMR6/IT24MreSNTKnOOI9Sfvrsr+Ix2n20fZDFpvBk7ndYLWaZ0NsgB
- qLo2V2uzLbZS+H6vZxCeVw2XxtoW/7i0BmyskIpu09N8H/Tt5GL9+Smfugzz3Sxajv+pj525ukF
- rHKd085Wkx4JRC1LXIPEQ3MVeacLEpWR5ruylQZDLrvrHsJjDLQPAk7HWJfGYYBF3zeQkK4/hug
- Ndf7S+QTVTT38ZKfyondDqBVZV1iBVVjZ8ObmmVktWgKKlLC1REGiKRpQ6RqIsrGs0IJo3A==
-X-Received: by 2002:a05:7022:929:b0:127:380e:ff5a with SMTP id
- a92af1059eb24-12bfb73e31emr9753765c88.17.1775622009199; 
- Tue, 07 Apr 2026 21:20:09 -0700 (PDT)
-X-Received: by 2002:a05:7022:929:b0:127:380e:ff5a with SMTP id
- a92af1059eb24-12bfb73e31emr9753744c88.17.1775622008539; 
- Tue, 07 Apr 2026 21:20:08 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.07
+ bh=d0qTHjD0q4Ya9dJ7GpDTbLPVx/TGmnxCqtBUTkBdLKA=;
+ b=XAmqfikupgATTl82knCH6Rwqo2ftrq4OSOVDxHgBM7PvHKGd1r4+Gw0IJOE6jE/s/e
+ qclweKKVwyeiSboI9TkmlIUO3vg58MEzB+GkGEts0BiEXhVNzvWhN5WCrQY5bSfk/0mN
+ RPqBJ4dTZsu3RtmkmpxFv83lRB5GOjU3tir2sP28i8HjlTsbWYa9vgCse2ciS3egTbLX
+ 5wuICgma0+4NPNO14tqsYg/+9vjiwU0s9557DBK1PyoLDPQiDexNR3f5dG7EKCVcpi1z
+ KpP/JfMbjApal7YHBUYq3ZMAxdX0wzgZfSmyps+ylxDrtoysY4pXYNuduH0C0QfNCfz6
+ dbmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775667370; x=1776272170;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=d0qTHjD0q4Ya9dJ7GpDTbLPVx/TGmnxCqtBUTkBdLKA=;
+ b=YFe4Ql2Xxy0RpI3F3z0M+2GPT49fZux7fO9mkXhgyDv3f9r7ojbWWjERvX7DEy23GT
+ 2ggeyHyQ1RVHxLxgdRUZ4JM23XdYFnFCziTNkdeLMZe+Oo2Ft+PRQPfyFL11UhJuLbd+
+ 4CQwUMbDQlt1RCHisaWQDKkZx5ZGqKo7fTVXMhD+RVMxqbwBOKzjNqUKyFr3S+fxXwJ5
+ LuRgm0w9kPCcGC+Hk5yCGBxepyGrnGMTUM5/BaABZY8p/b0qWP69pEvWsYnlX92MQKWZ
+ a6InE7TJmGOBuFlGl43hqY/MTK3RBVw1VJ0IjJ57zohECG9Nli3RwdYOpBdwmKXvXl3H
+ 7Yug==
+X-Gm-Message-State: AOJu0Yx2bhVdMUAsJ1MiLM9R5w7i1UbNO+j1jz6RAzu1TAS5vXTYFnpi
+ Q4UUJcpbG71fMVVfGTOspVpLWW9IBZXaOyZpWrHGV0ZFE9hAcgqAI/YrfPFysRZJTW3G44zKkXE
+ HUUFHSKKhm/BbiZS7OPrzEmkamoGoZEsMFVUy3hUPQllE5RBSAWIxTsAuONclJCA9+LYmn+t+hv
+ K/rC7gw31dmGs+0H6xNWl+02lEW6SFvQtlIoueOw==
+X-Gm-Gg: AeBDieuqVeDV64vyGI43TU2VjSkgQYKvwRKQSSn43Ok3wMl+2MVT+e8BuWioBalSVOw
+ ST+J5v0vFb9C0XV0YenAWY+GCiSQ6Fqo9J94j+aCwQsrrBHzB8lso5sMGfsxK8qQdE5/Xn7eqkg
+ MvTu0qvD+CDfAI5jhuUI8SYvAoUWQ+ex6EXbp8/vNbYJTBw1ZXECp18VXlluWfVLcG3OMl6SiqY
+ RuypcryiCFIXJaFK0jBnwfbcE06DeIkyUpzKeWoC5o4Ul0RhG4lmozsezFL9Qy+A1IvqSPlzw6y
+ q3Dw3McHKJmq+q0HiPdGbi7HRTSzmSKiqcHPF+ZCKDHyM1htiSDDZSl+ncmeMTIvPVbMYVkmQe4
+ jxXCPeE1dqemYW1AD2hd1cWWMV2fR3p1ggLGMxJBLP9Ga
+X-Received: by 2002:a05:622a:1aaa:b0:50d:7e1f:9cbd with SMTP id
+ d75a77b69052e-50dc21d7d2cmr1424321cf.25.1775667369466; 
+ Wed, 08 Apr 2026 09:56:09 -0700 (PDT)
+X-Received: by 2002:a05:622a:1aaa:b0:50d:7e1f:9cbd with SMTP id
+ d75a77b69052e-50dc21d7d2cmr1423691cf.25.1775667368648; 
+ Wed, 08 Apr 2026 09:56:08 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50d712c2617sm130491901cf.31.2026.04.08.09.56.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Apr 2026 21:20:08 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+ Wed, 08 Apr 2026 09:56:08 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng
-Subject: [PATCH v4 00/28] Hexagon system emulation - Part 2/3
-Date: Tue,  7 Apr 2026 21:19:25 -0700
-Message-Id: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
+Subject: [PATCH 05/14] migration: Use the new save_query_pending() API directly
+Date: Wed,  8 Apr 2026 12:55:49 -0400
+Message-ID: <20260408165559.157108-6-peterx@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260408165559.157108-1-peterx@redhat.com>
+References: <20260408165559.157108-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: lhzzNcwYFnR4Z7nKoyGgvmT-ZERtuVWk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNSBTYWx0ZWRfX73QV1z985EXH
- 4nG81tTxUGuElC0tCLzCKRJETITt6TIqnez3cAOEAsXu1ejOYDei+voCTe7GgocRfRZ4zVLIkGn
- xg+h23dpr/ss3pEagIVJouwtlTfIg9rs8S/XPGCXMLfUA/RpiKTXNX/92WOiOYHNcIqp2kAP1Jy
- YMOro2W4X0Rc7GHNLqPtzr5f1e8Xrezp01G4IJwFfsJ8kDc8IQXS8Cli50D5meHJB3Yv6W7sOPO
- 8r/VB9tQNsjl4nfbjjJoPj63irn1wb1PvITAhjrrXYaa6jTZa4hlymg9dNsPNsywkzdsu9OQYzg
- ETUnacnzCSyibf9106R4cXP9Xq4EZ+eAEsZuWCmwoiKVialTn1h7fYwBCP2d6//oDWWNVj0/ymi
- Fmt/TAUXcPIhKoPEtN64hfzy/+nHPq267D7auWz1I+re1sFoFvwM27z/CjklUgxThmlj+CWRgB/
- oV7tY1HuMeCcv0GtY+A==
-X-Authority-Analysis: v=2.4 cv=AcaB2XXG c=1 sm=1 tr=0 ts=69d5d77a cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Ft1SjsLI0j10gtFiCOkA:9 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-GUID: lhzzNcwYFnR4Z7nKoyGgvmT-ZERtuVWk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
- phishscore=0 impostorscore=0 spamscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080035
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,94 +124,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGhpcyBpcyBQYXJ0IDIgb2YgdGhlIEhleGFnb24gc3lzdGVtIGVtdWxhdGlvbiBzZXJpZXMuICBJ
-dCBhZGRzIHRoZQpydW50aW1lIGhlbHBlcnMsIENQVSBvcGVyYXRpb25zLCBhbmQgdHJhbnNsYXRp
-b24gc3VwcG9ydCBuZWVkZWQgZm9yCmZ1bGwtc3lzdGVtIGVtdWxhdGlvbiBvZiB0aGUgSGV4YWdv
-biBEU1AuCgpUaGlzIGluY2x1ZGVzOgogLSBTb2Z0d2FyZSBpbnRlcnJ1cHQgKFNXSSkgYW5kIGlu
-dGVycnVwdCBoYW5kbGluZwogLSBUTEIgZmlsbCBhbmQgcGVybWlzc2lvbiBjaGVja2luZwogLSBT
-eXN0ZW0gcmVnaXN0ZXIgcmVhZC93cml0ZSBzdXBwb3J0IGluIFRDRwogLSBJbXBsaWNpdCBzeXNy
-ZWcgd3JpdGVzIGFuZCB0cmFuc2xhdGlvbi1ibG9jayB0ZXJtaW5hdGlvbgogLSBTdGFjayBvdmVy
-ZmxvdyBleGNlcHRpb24gc3VwcG9ydAogLSBUaHJlYWQgc2NoZWR1bGluZyBoZWxwZXJzIChzZXRw
-cmlvLCByZXNjaGVkLCByZXN1bWUpCiAtIGswIGxvY2svdW5sb2NrIGZvciBrZXJuZWwgbW9kZQog
-LSBpZGVmLXBhcnNlciBzdXBwb3J0IGZvciBmRlJBTUVDSEVDSwogLSBUQ0cgb3ZlcnJpZGVzIGZv
-ciBzeXN0ZW0gdHJhbnNmZXIgaW5zdHJ1Y3Rpb25zCgpCYXNlZCBvbiBQYXJ0IDEgdjYuCgpDaGFu
-Z2VzIHNpbmNlIHYzOgogLSBSZWJhc2VkIG9udG8gUGFydCAxIHY2CiAtIEZpeGVkIGlkZWYtcGFy
-c2VyIGZGUkFNRUNIRUNLIGltcGxlbWVudGF0aW9uIChUYXlsb3IpCiAtIFJlbW92ZWQgcGt0X2Vu
-ZHNfdGIgZnJvbSBEaXNhc0NvbnRleHQsIGNhbGwgcGt0X2VuZHNfdGIoKSBkaXJlY3RseSAoVGF5
-bG9yKQogLSBDaGFuZ2VkIHRfc3JlZ19uZXdfdmFsdWUgc2l6aW5nIGZyb20gTlVNX1NSRUdTIHRv
-CiAgIEhFWF9TUkVHX0dMQl9TVEFSVCAoVGF5bG9yKQogLSBSZW1vdmVkIHVubmVjZXNzYXJ5IHRj
-Z19nZW5fbW92X3RsIHNyZWcgcHJlLWNvcHkgaW4KICAgZ2VuX3N0YXJ0X3BhY2tldCgpOyBubyBz
-cmVnIHdyaXRlcyBhcmUgcHJlZGljYXRlZCAoVGF5bG9yKQogLSBBZGRlZCBjb250aW51ZSBhZnRl
-ciBTVElEL0lNQVNLL0lQRU5EQUQgd3JpdGViYWNrIGluCiAgIGdlbl9zcmVnX3dyaXRlcygpIHRv
-IGF2b2lkIHJlZHVuZGFudCB3cml0ZWJhY2sgKFRheWxvcikKIC0gTW92ZWQgaGV4YWdvbl9ncmVn
-X3JlYWQoKSBkZWNsYXJhdGlvbiB0byBjb3JyZWN0IGNvbW1pdCAoVGF5bG9yKQogLSBGaXhlZCBz
-ZXRfZW5hYmxlX21hc2svY2xlYXJfZW5hYmxlX21hc2sgcmV0dXJuIHR5cGUgY29uc2lzdGVuY3kg
-KFRheWxvcikKIC0gQWRkZWQgZWFybHkgcmV0dXJuIGZvciBnbG9iYWxyZWdzPT1mYWxzZSBpbiBz
-ZXRfZW5hYmxlX21hc2sgYW5kCiAgIHNldF93YWl0X21vZGUgKFRheWxvcikKIC0gRml4ZWQgYmFy
-ZSAleC8lZCBmb3JtYXQgc3BlY2lmaWVycyBhY3Jvc3MgbXVsdGlwbGUgZmlsZXMsIHVzaW5nCiAg
-IFBSSXgzMi9QUkl1MzIvVEFSR0VUX0ZNVF9seCBhcyBhcHByb3ByaWF0ZSAoVGF5bG9yKQogLSBG
-aXhlZCBtaWQtYmxvY2sgdmFyaWFibGUgZGVjbGFyYXRpb25zIChDODkgc3R5bGUpCiAtIFJlbW92
-ZWQgaW52YWxpZCBQUk0gc2VjdGlvbiByZWZlcmVuY2VzIGZyb20gc2V0cHJpby9yZXNjaGVkCiAg
-IGNvbW1pdCBtZXNzYWdlIChUYXlsb3IpCiAtIFJlbmFtZWQgIkFkZCBUTEIsIGswIHt1bix9bG9j
-ayIgdG8gIkFkZCBrMCB7dW4sfWxvY2siIChUYXlsb3IpCiAtIE1vdmVkIGN5Y2xlIGNvdW50ZXIv
-cGN5Y2xlL21vZGlmeV9zc3IgY29tbWl0cyB0byBQYXJ0IDEKIC0gQWxsIGN5Y2xlIGNvdW50ZXIg
-Y29kZSBwcm9wZXJseSBndWFyZGVkIGJ5CiAgIGlmbmRlZiBDT05GSUdfVVNFUl9PTkxZIChUYXls
-b3IpCgpQcmV2aW91cyB2ZXJzaW9uczoKIC0gdjM6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3Fl
-bXUtZGV2ZWwvMjAyNjAzMTEwNDA3NTguMTA2ODczMS0xLWJyaWFuLmNhaW5Ab3NzLnF1YWxjb21t
-LmNvbS8KIC0gdjI6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNTA5MDIw
-MzQ4NDcuMTk0ODAxMC0xLWJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbS8KIC0gdjE6IGh0dHBz
-Oi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNTAzMDEwNTI4NDUuMTAxMjA2OS0xLWJy
-aWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbS8KCkJyaWFuIENhaW4gKDI2KToKICB0YXJnZXQvaGV4
-YWdvbjogSW1wbGVtZW50IHtjLH1zd2kgaGVscGVycwogIHRhcmdldC9oZXhhZ29uOiBJbXBsZW1l
-bnQgaWFzc2lnbntyLHd9IGhlbHBlcnMKICB0YXJnZXQvaGV4YWdvbjogSW1wbGVtZW50IHN0YXJ0
-L3N0b3AgaGVscGVycywgc29mdCByZXNldAogIHRhcmdldC9oZXhhZ29uOiBJbXBsZW1lbnQge2cs
-c31ldGltYXNrIGhlbHBlcnMKICB0YXJnZXQvaGV4YWdvbjogSW1wbGVtZW50IHdhaXQgaGVscGVy
-CiAgdGFyZ2V0L2hleGFnb246IEltcGxlbWVudCBnZXRfZXhlX21vZGUoKQogIHRhcmdldC9oZXhh
-Z29uOiBJbXBsZW1lbnQgaGV4X3RsYl9lbnRyeV9nZXRfcGVybSgpCiAgdGFyZ2V0L2hleGFnb246
-IEltcGxlbWVudCBzb2Z0d2FyZSBpbnRlcnJ1cHQKICB0YXJnZXQvaGV4YWdvbjogSW1wbGVtZW50
-IHN0YWNrIG92ZXJmbG93IGV4Y2VwdGlvbgogIHRhcmdldC9oZXhhZ29uOiBJbXBsZW1lbnQgZXhl
-Y19pbnRlcnJ1cHQsIHNldF9pcnEKICB0YXJnZXQvaGV4YWdvbjogSW1wbGVtZW50IGhleGFnb25f
-dGxiX2ZpbGwoKQogIHRhcmdldC9oZXhhZ29uOiBJbXBsZW1lbnQgc2lhZCBpbnN0CiAgdGFyZ2V0
-L2hleGFnb246IEltcGxlbWVudCBoZXhhZ29uX3Jlc3VtZV90aHJlYWRzKCkKICB0YXJnZXQvaGV4
-YWdvbjogSW1wbGVtZW50IHNldHByaW8sIHJlc2NoZWQKICB0YXJnZXQvaGV4YWdvbjogQWRkIHN5
-c2VtdV9vcHMsIGNwdV9nZXRfcGh5c19wYWdlX2RlYnVnKCkKICB0YXJnZXQvaGV4YWdvbjogZXh0
-ZW5kIGhleGFnb25fY3B1X21tdV9pbmRleCgpIGZvciBzeXNlbXUKICB0YXJnZXQvaGV4YWdvbjog
-RGVjb2RlIHRyYXAxLCBydGUgYXMgQ09GCiAgdGFyZ2V0L2hleGFnb246IEltcGxlbWVudCBtb2Rp
-Znlfc3NyLCByZXNjaGVkLCBwZW5kaW5nX2ludGVycnVwdAogIHRhcmdldC9oZXhhZ29uOiBBZGQg
-cGt0X2VuZHNfdGIgdG8gdHJhbnNsYXRpb24KICB0YXJnZXQvaGV4YWdvbjogQWRkIG5leHRfUEMs
-IHtzLGd9cmVnIHdyaXRlcwogIHRhcmdldC9oZXhhZ29uOiBBZGQgaW1wbGljaXQgc3lzcmVnIHdy
-aXRlcwogIHRhcmdldC9oZXhhZ29uOiBEZWZpbmUgc3lzdGVtLCBndWVzdCByZWcgbmFtZXMKICB0
-YXJnZXQvaGV4YWdvbjogQWRkIGswIHt1bix9bG9jawogIHRhcmdldC9oZXhhZ29uOiBBZGQgUEMg
-dG8gcmFpc2VfZXhjZXB0aW9uLCB1c2UgZlRSQVAoKSBoZWxwZXIKICB0YXJnZXQvaGV4YWdvbjog
-QWRkIFRDRyBvdmVycmlkZXMgZm9yIHRyYW5zZmVyIGluc3RzCiAgdGFyZ2V0L2hleGFnb246IEFk
-ZCBzdXBwb3J0IGZvciBsb2Fkd19waHlzCgpNYXRoZXVzIFRhdmFyZXMgQmVybmFyZGlubyAoMik6
-CiAgdGFyZ2V0L2hleGFnb246IGFkZCBzaW1wbGUgY3B1X2V4ZWNfcmVzZXQgYW5kIHBvaW50ZXJf
-d3JhcAogIHRhcmdldC9oZXhhZ29uOiBBZGQgZ3Vlc3QgcmVnIHJlYWRpbmcgZnVuY3Rpb25hbGl0
-eQoKIHRhcmdldC9oZXhhZ29uL2NwdS5oICAgICAgICAgICAgICAgICAgICAgICAgfCAgMTEgKwog
-dGFyZ2V0L2hleGFnb24vY3B1X2hlbHBlci5oICAgICAgICAgICAgICAgICB8ICAgOCArCiB0YXJn
-ZXQvaGV4YWdvbi9nZW5fdGNnLmggICAgICAgICAgICAgICAgICAgIHwgICA3IC0KIHRhcmdldC9o
-ZXhhZ29uL2dlbl90Y2dfc3lzLmggICAgICAgICAgICAgICAgfCAgMjUgKysKIHRhcmdldC9oZXhh
-Z29uL2hlbHBlci5oICAgICAgICAgICAgICAgICAgICAgfCAgIDYgKy0KIHRhcmdldC9oZXhhZ29u
-L2hleHN3aS5oICAgICAgICAgICAgICAgICAgICAgfCAgMTcgKwogdGFyZ2V0L2hleGFnb24vaWRl
-Zi1wYXJzZXIvcGFyc2VyLWhlbHBlcnMuaCB8ICAgMiArCiB0YXJnZXQvaGV4YWdvbi9pbnRlcm5h
-bC5oICAgICAgICAgICAgICAgICAgIHwgICA0ICsKIHRhcmdldC9oZXhhZ29uL21hY3Jvcy5oICAg
-ICAgICAgICAgICAgICAgICAgfCAgIDMgLQogdGFyZ2V0L2hleGFnb24vc3lzX21hY3Jvcy5oICAg
-ICAgICAgICAgICAgICB8ICAgNyArCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuaCAgICAgICAg
-ICAgICAgICAgIHwgICA1ICstCiB0YXJnZXQvaGV4YWdvbi9yZWdfZmllbGRzX2RlZi5oLmluYyAg
-ICAgICAgIHwgIDExICsKIGxpbnV4LXVzZXIvaGV4YWdvbi9jcHVfbG9vcC5jICAgICAgICAgICAg
-ICAgfCAgIDcgKwogdGFyZ2V0L2hleGFnb24vY3B1LmMgICAgICAgICAgICAgICAgICAgICAgICB8
-IDM2MCArKysrKysrKysrKysrKy0KIHRhcmdldC9oZXhhZ29uL2RlY29kZS5jICAgICAgICAgICAg
-ICAgICAgICAgfCAgMTQgKwogdGFyZ2V0L2hleGFnb24vZ2VucHRyLmMgICAgICAgICAgICAgICAg
-ICAgICB8ICAxOCArLQogdGFyZ2V0L2hleGFnb24vaGV4c3dpLmMgICAgICAgICAgICAgICAgICAg
-ICB8IDI2NyArKysrKysrKysrKwogdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIvcGFyc2VyLWhl
-bHBlcnMuYyB8ICAgOSArCiB0YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYyAgICAgICAgICAgICAg
-ICAgIHwgNDYyICsrKysrKysrKysrKysrKysrKystCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUu
-YyAgICAgICAgICAgICAgICAgIHwgMjI1ICsrKysrKysrKy0KIHRhcmdldC9oZXhhZ29uL2hleF9j
-b21tb24ucHkgICAgICAgICAgICAgICAgfCAgIDMgKwogdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJz
-ZXIvaWRlZi1wYXJzZXIueSAgICB8ICAgMyArCiB0YXJnZXQvaGV4YWdvbi9pbXBvcnRlZC9lbmNv
-ZGVfcHAuZGVmICAgICAgIHwgICAxICsKIHRhcmdldC9oZXhhZ29uL2ltcG9ydGVkL2xkc3QuaWRl
-ZiAgICAgICAgICAgfCAgIDMgKwogMjQgZmlsZXMgY2hhbmdlZCwgMTQyNSBpbnNlcnRpb25zKCsp
-LCA1MyBkZWxldGlvbnMoLSkKIGNyZWF0ZSBtb2RlIDEwMDY0NCB0YXJnZXQvaGV4YWdvbi9oZXhz
-d2kuaAogY3JlYXRlIG1vZGUgMTAwNjQ0IHRhcmdldC9oZXhhZ29uL2hleHN3aS5jCgotLSAKMi4z
-NC4xCgo=
+It's easier to use the new API directly in the migration iterations.  This
+also paves way for follow up patches to add new data to report directly to
+the iterator function.
+
+When at it, merge the tracepoints too into one.
+
+No functional change intended.
+
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/savevm.h     |  4 ----
+ migration/migration.c  | 16 +++++++---------
+ migration/savevm.c     | 23 ++---------------------
+ migration/trace-events |  3 +--
+ 4 files changed, 10 insertions(+), 36 deletions(-)
+
+diff --git a/migration/savevm.h b/migration/savevm.h
+index e4efd243f3..96fdf96d4e 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -46,10 +46,6 @@ void qemu_savevm_state_cleanup(void);
+ void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+ int qemu_savevm_state_complete_precopy(MigrationState *s);
+ void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
+-void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+-                                     uint64_t *can_postcopy);
+-void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+-                                        uint64_t *can_postcopy);
+ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
+ bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
+ void qemu_savevm_state_end(QEMUFile *f);
+diff --git a/migration/migration.c b/migration/migration.c
+index dfc60372cf..68cfe2d3bf 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3204,17 +3204,17 @@ typedef enum {
+  */
+ static MigIterateState migration_iteration_run(MigrationState *s)
+ {
+-    uint64_t must_precopy, can_postcopy, pending_size;
+     Error *local_err = NULL;
+     bool in_postcopy = (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
+                         s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+     bool can_switchover = migration_can_switchover(s);
++    MigPendingData pending = { };
++    uint64_t pending_size;
+     bool complete_ready;
+ 
+     /* Fast path - get the estimated amount of pending data */
+-    qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
+-    pending_size = must_precopy + can_postcopy;
+-    trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
++    qemu_savevm_query_pending(&pending, false);
++    pending_size = pending.precopy_bytes + pending.postcopy_bytes;
+ 
+     if (in_postcopy) {
+         /*
+@@ -3243,14 +3243,12 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+          * during postcopy phase.
+          */
+         if (pending_size <= s->threshold_size) {
+-            qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+-            pending_size = must_precopy + can_postcopy;
+-            trace_migrate_pending_exact(pending_size, must_precopy,
+-                                        can_postcopy);
++            qemu_savevm_query_pending(&pending, true);
++            pending_size = pending.precopy_bytes + pending.postcopy_bytes;
+         }
+ 
+         /* Should we switch to postcopy now? */
+-        if (must_precopy <= s->threshold_size &&
++        if (pending.precopy_bytes <= s->threshold_size &&
+             can_switchover && qatomic_read(&s->start_postcopy)) {
+             if (postcopy_start(s, &local_err)) {
+                 migrate_error_propagate(s, error_copy(local_err));
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 392d840955..397f602257 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1778,28 +1778,9 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+         }
+         se->ops->save_query_pending(se->opaque, pending, exact);
+     }
+-}
+-
+-void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+-                                        uint64_t *can_postcopy)
+-{
+-    MigPendingData pending;
+-
+-    qemu_savevm_query_pending(&pending, false);
+-
+-    *must_precopy = pending.precopy_bytes;
+-    *can_postcopy = pending.postcopy_bytes;
+-}
+-
+-void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+-                                     uint64_t *can_postcopy)
+-{
+-    MigPendingData pending;
+-
+-    qemu_savevm_query_pending(&pending, true);
+ 
+-    *must_precopy = pending.precopy_bytes;
+-    *can_postcopy = pending.postcopy_bytes;
++    trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
++                                    pending->postcopy_bytes);
+ }
+ 
+ void qemu_savevm_state_cleanup(void)
+diff --git a/migration/trace-events b/migration/trace-events
+index 60e5087e38..f8995b8d0d 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -7,6 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
+ qemu_loadvm_state_post_main(int ret) "%d"
+ qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
+ qemu_savevm_send_packaged(void) ""
++qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t postcopy) "exact=%d, precopy=%"PRIu64", postcopy=%"PRIu64
+ loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
+ loadvm_state_setup(void) ""
+ loadvm_state_cleanup(void) ""
+@@ -159,8 +160,6 @@ migration_cleanup(void) ""
+ migrate_error(const char *error_desc) "error=%s"
+ migration_cancel(void) ""
+ migrate_handle_rp_req_pages(const char *rbname, size_t start, size_t len) "in %s at 0x%zx len 0x%zx"
+-migrate_pending_exact(uint64_t size, uint64_t pre, uint64_t post) "exact pending size %" PRIu64 " (pre = %" PRIu64 " post=%" PRIu64 ")"
+-migrate_pending_estimate(uint64_t size, uint64_t pre, uint64_t post) "estimate pending size %" PRIu64 " (pre = %" PRIu64 " post=%" PRIu64 ")"
+ migrate_send_rp_message(int msg_type, uint16_t len) "%d: len %d"
+ migrate_send_rp_recv_bitmap(char *name, int64_t size) "block '%s' size 0x%"PRIi64
+ migration_completion_file_err(void) ""
+-- 
+2.53.0
+
 
