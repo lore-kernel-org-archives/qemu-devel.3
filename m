@@ -4,68 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C133A10F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6003A10F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYSj-0003lJ-Ro; Wed, 08 Apr 2026 15:21:17 -0400
+	id 1wAYSy-0005iE-EF; Wed, 08 Apr 2026 15:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wAY3n-00064g-5s
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:55:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wAY3v-0006Bx-Md; Wed, 08 Apr 2026 14:55:39 -0400
+Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wANQQ-0001L4-Ne
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 03:34:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775633648;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ezy+HD52UjJTkuVdmNzj0BC3WnJxDi0i97P4xBBU1cc=;
- b=cQUHQCCCBzszEIsAfxKxszYsMAmjltZ8pkVI4wklxirXmCOtWPt+lio6vQIfllXCCZEuVH
- Y7i0SJiiRuORoBcibI3sEPOnE51S6nJC+hX3lGhiHyTcQm5jyuQUjuGvI/Z0cMsCD9Ra81
- zqPoWxH9+tIrtJruBWCO1VHFb2C/GA0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-219-yya9sPyDOU-g_yDcKveqMA-1; Wed,
- 08 Apr 2026 03:34:07 -0400
-X-MC-Unique: yya9sPyDOU-g_yDcKveqMA-1
-X-Mimecast-MFC-AGG-ID: yya9sPyDOU-g_yDcKveqMA_1775633646
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEAEE18005B9; Wed,  8 Apr 2026 07:34:05 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.49.216])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65D261800673; Wed,  8 Apr 2026 07:34:05 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 1B2BD1800381; Wed, 08 Apr 2026 09:34:03 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wATcO-0001IF-Dt; Wed, 08 Apr 2026 10:10:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1775657328; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=7btD77cTka+EC1KtIs9mPj6vd0anECLAhodJnjQttdc=;
+ b=TTSATh8QpBgLjz7ojaxiYOnEiJI+1kmhoXAsBKGzboZxtVCwwqhg82FowFYc36q9BYAt6NGH0e69QNMqzfESECbMBQGjyrTHPcTcVJjZfJyvVE675JwpaX7WxxUiGKqSlX0su/4JfvY65OGQSLnQkzsnef49vZFzt6o5ceXfNAM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
+ TI=SMTPD_---0X0f.zj4_1775657327; 
+Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0X0f.zj4_1775657327 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 08 Apr 2026 22:08:48 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
-	Yuma Kurogome <yumak@ricsec.co.jp>
-Subject: [PATCH for 11.0] hw/uefi: fix heap overflow (CVE-2026-5744)
-Date: Wed,  8 Apr 2026 09:34:02 +0200
-Message-ID: <20260408073403.3410541-1-kraxel@redhat.com>
+Cc: qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com, palmer@dabbelt.com,
+ alistair23@gmail.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v5 4/6] target/riscv: Implement SMMPT fence instructions
+Date: Wed,  8 Apr 2026 22:06:33 +0800
+Message-Id: <20260408140635.42546-5-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
+References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.119;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-119.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,40 +73,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When copying the request response into the pio transfer buffer the code
-skips the 'struct mm_header' but does not consider that when calculating
-transfer size, so it will copy 24 (== sizeof(struct mm_header)) extra
-bytes, which can overflow uv->pio_xfer_buffer.
+This patch completes the SMMPT implementation by adding support for the
+new fence instructions: `mfence.spa` and `minval.spa`.
 
-Fix that by copying the complete buffer, including the header, which
-also makes the pio code path consistent with the (unaffected) dma code
-path.
+According to the specification, these instructions act as memory ordering
+fences for MPT updates. In QEMU's TCG model, this is conservatively
+implemented by flushing the entire TLB, which ensures that any subsequent
+memory accesses will re-evaluate permissions and see the effects of any prior
+MPT modifications.
 
-Fixes: CVE-2026-5744
-Fixes: 90ca4e03c27d ("hw/uefi: add var-service-core.c")
-Reported-by: Yuma Kurogome <yumak@ricsec.co.jp>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+The instructions are privileged and will cause an illegal instruction
+exception if executed outside of M-mode.
+
+Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- hw/uefi/var-service-core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ target/riscv/insn32.decode                    |  2 ++
+ .../riscv/insn_trans/trans_privileged.c.inc   | 30 +++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
-index ce0628fa5248..68d7594c0dd6 100644
---- a/hw/uefi/var-service-core.c
-+++ b/hw/uefi/var-service-core.c
-@@ -137,9 +137,8 @@ static uint32_t uefi_vars_cmd_mm(uefi_vars_state *uv, bool dma_mode)
-                          uv->buffer, sizeof(*mhdr) + mhdr->length,
-                          MEMTXATTRS_UNSPECIFIED);
-     } else {
--        memcpy(uv->pio_xfer_buffer + sizeof(*mhdr),
--               uv->buffer + sizeof(*mhdr),
--               sizeof(*mhdr) + mhdr->length);
-+        memcpy(uv->pio_xfer_buffer,
-+               uv->buffer, sizeof(*mhdr) + mhdr->length);
-     }
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..84cec57daf 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
+ mret        0011000    00010 00000 000 00000 1110011
+ wfi         0001000    00101 00000 000 00000 1110011
+ sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
++mfence_spa  1000011    ..... ..... 000 00000 1110011 @sfence_vma
++minval_spa  0000011    ..... ..... 000 00000 1110011 @sfence_vma
  
-     return retval;
+ # *** NMI ***
+ mnret       0111000    00010 00000 000 00000 1110011
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 8a62b4cfcd..5ec6bf5991 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+ #endif
+     return false;
+ }
++
++#define REQUIRE_SMSDID(ctx) do {          \
++    if (!ctx->cfg_ptr->ext_smsdid) {      \
++        return false;                     \
++    }                                     \
++} while (0)
++
++static bool do_mfence_spa(DisasContext *ctx)
++{
++#ifndef CONFIG_USER_ONLY
++    REQUIRE_SMSDID(ctx);
++    if (ctx->priv != PRV_M) {
++        return false;
++    }
++    decode_save_opc(ctx, 0);
++    gen_helper_tlb_flush_all(tcg_env);
++    return true;
++#endif
++    return false;
++}
++
++static bool trans_mfence_spa(DisasContext *ctx, arg_mfence_spa *a)
++{
++    return do_mfence_spa(ctx);
++}
++
++static bool trans_minval_spa(DisasContext *ctx, arg_minval_spa *a)
++{
++    return do_mfence_spa(ctx);
++}
 -- 
-2.53.0
+2.43.0
 
 
