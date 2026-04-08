@@ -4,112 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA0F10F9975
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FEBC10F9974
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYSo-0004PM-MK; Wed, 08 Apr 2026 15:21:22 -0400
+	id 1wAYRE-0007nP-9w; Wed, 08 Apr 2026 15:19:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAY3p-00066S-0S
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:55:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAY2M-0005do-Pv
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:54:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wAWCO-00028r-VA
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:56:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775667376;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9pBpMxP6DqkQFj1pPDgFhUWgDgyZXFHvFl5cTHTGA8Q=;
- b=R/iGrigDDM3J1SigIXBea7EeZNP6Ik0+r7VoswR0FJY0uKPKHKEaPYOSLTl7MlWYeSTTrk
- 1Mpynh3faTmVbpX3p17AVyqNjaALdZJNzTklNJOjmvteceFXr1dckOidd+0AJm+CY497At
- BE3uJHNWtFGWejVAk/FQvC1k0VSryyI=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-nH0Zvgx6MlmtCQkut6TcMg-1; Wed, 08 Apr 2026 12:56:15 -0400
-X-MC-Unique: nH0Zvgx6MlmtCQkut6TcMg-1
-X-Mimecast-MFC-AGG-ID: nH0Zvgx6MlmtCQkut6TcMg_1775667375
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8d411d0c1faso32841385a.0
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:56:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAKOo-0005Zd-FF
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:19 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 637J6aYR071730
+ for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 4hsqE0JDPfvXJ30nhCZ/CCXuACFuBC+IpE9moxChOvw=; b=FkpLlVy3IOEnpCdk
+ KJF+zNk4AeAz55at0BYr3NUdmyq9StrdokcyHQA3zlZZ9n2voG378vLxREl3zlQ0
+ 5D5Hh0uXJzszQu2fgLa0D9ic+bHeM7OmnIYU6hrAeOE1wXrarzf+9FJi2lHTc8NI
+ sb94R1dH7coa1fR59wQNak0Egr5mTzOKq8uPfhJAwcAODToV9ibWOKMY3CrhhAQ1
+ VgZL+hFkJqxyPI7lPCADCheScBlQ+CGo8HRvTeY7/M9EZezwWu8dJwqPORwfHvGo
+ em1sjPO3ZSTJMlKWzG6E+wx5yjPWv7/4WYoRRZiiOyxiFk+aNuLWa747WV4WOvJN
+ 18I/IQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dd7sx9dq2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:17 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2ccc035f125so330196eec.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775667375; x=1776272175; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775622016; x=1776226816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9pBpMxP6DqkQFj1pPDgFhUWgDgyZXFHvFl5cTHTGA8Q=;
- b=ltUE37aQsL1XvzZCFtWckJwIhBDufxfbVSRYplcOeiq/MxHQwrBJlwUwYH5PL5CYrI
- MWJslWRnkhl33mii6TdW1a4juuM7E6HWLUPUwDtt8g+2PtO5N3pFK3++xHEUfKeJUfXE
- 3uHeTvcdcmlcZeUa3F2mkOk5Hax9xTq9LoJ9xCNWnB2H2RZZsCq9qoC0g/wBUmDUDuXk
- LAop7sy/x1ND3fIFoigpjGg2wqUEmOJt0mII8wuDFIQB1L/Q0xWBpKxRFfyhvmyze6mc
- V/dSXJ8qi+PpoVuJ0GrllWl0Ef1jf5yr1lVHxFwUAR6di5yyrynGZUD0NVxNwJr8Isx2
- /Y7A==
+ bh=4hsqE0JDPfvXJ30nhCZ/CCXuACFuBC+IpE9moxChOvw=;
+ b=G2bCcBwwwQfxBYoGCnzaHR/98lt75etYfVQ71M87c1wKxVZAJ4pPGBuD4qMHV7b3nP
+ u3UmiGhzlIK3xKQYCNb1qRbRBpRDaxG2194vBAGKx+VmhZ4OA8bdREoRZGvY7do1NsBk
+ hGCepnV5pl9sQ5hkj/876r3eZWp/EFZ2tgA8OeTHS0dvPRfHMA93Fe54zX6zlLNf6O7y
+ zXwROkps6Jz4e3eM2nB4Xypgqd+JY/vbmwnFVlVaidE63AajVCX/JPsyCGIaCiamIvSg
+ fE0ZE162Pa6RkSIkTNHRAyp4MFGZWYrRhRTM+XGsMLJsrW+Ib5SBhi9WOa48jOSfhAhy
+ UQ5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775667375; x=1776272175;
+ d=1e100.net; s=20251104; t=1775622016; x=1776226816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9pBpMxP6DqkQFj1pPDgFhUWgDgyZXFHvFl5cTHTGA8Q=;
- b=Ovzbg631aolq/t8bFqgbRNRa0CuIO4PCOG88JIy46CumI1yQG0mh1OnCvCdNgHhn5t
- OiF2I3fimwHM8LRT134fK00O8jIGo+eUl6YL3tFTJh0yPDTvkiLDi/PP1yN0HpvVLbnJ
- 0aIAB3klf81LJCaaS6xu0lQnElvWsX6WpZEiT1+EuENhdBAiO8kqy11+97zt5zloCQHJ
- LiB2Fs0zbGCr7gN9eQRHnOpNl2R8eafbxRyK64Quj/tCp3z0Jt0MaDsxc+NiuSma0kKR
- LYEaJ3mPcx+BBs6C8uL/PLFUvZb0FsYBpeXdToORRVunwTeybMhwrZs8u0WcgD3HVxge
- 3FkQ==
-X-Gm-Message-State: AOJu0YzryOYzoqCkIrDTlDIaeewVnxa2KFWURFnDYpgxqkwHk/c5gaZl
- 9d7D2U2qXgP+K45yjo0bqcj6fTNjh6Crx5T4qgVPNWZ6ItEyl9kb6pFKoPU/ZBzdkoqIU39xMjQ
- DQwSD1PXoszdXTmOqPj9NdDO4Ea7cIBNFHRYijxEL9gj3l3zBOJSAvc3Htl58Bk+NNYWlVzAVlD
- W9vwh6aNN0+iiymFuC0S8EgfdbPzbgnjJlfwe/AA==
-X-Gm-Gg: AeBDiesOPtoQAoRlY1qPOeqjJAtVgB7L9ljDan0MBARxMRxSdAqANzENnKQxjAMmwme
- 9EZn1XGGRty1U0YbAaAoEXiRwf+JS93EeHU5r+/zPDrmnzo2dixkwyLqluGWBIAANWZzHrwtVzK
- p1WgGzm6TBsGOzRgPUqiAwts0Pz9nbLtFg4xavrt5H9HESudBV9ghSCu7AZ+E4dgwrBmLIG+Zjr
- kXUCbEx6zhrtgSat4SVLRt+Dj4iUtjXzTONW5sX0qBvBhXJix96huOj1rabLCfyqlgDTqtv1Q1W
- NfD/GJZgAoPok1fEEf0aB4MAxSOIONCGiRQkKUZFMEp9uNquFpt5YtX0Xm4CXPR+7w7WIxFoeMK
- 0JrHriXdSCDOGmdhMy7N+CTXxfBJyxJmsxka8y8TiC0Pc
-X-Received: by 2002:a05:622a:288:b0:50d:ab9d:33bc with SMTP id
- d75a77b69052e-50dc20d670fmr1801491cf.8.1775667374285; 
- Wed, 08 Apr 2026 09:56:14 -0700 (PDT)
-X-Received: by 2002:a05:622a:288:b0:50d:ab9d:33bc with SMTP id
- d75a77b69052e-50dc20d670fmr1800691cf.8.1775667373506; 
- Wed, 08 Apr 2026 09:56:13 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50d712c2617sm130491901cf.31.2026.04.08.09.56.12
+ bh=4hsqE0JDPfvXJ30nhCZ/CCXuACFuBC+IpE9moxChOvw=;
+ b=qrqdVmcTiCP3cOrHvZw8Z7EhOid3ABGrViJ1CmVEMeXdRl3vOl1fUnzkAqDGqzsn6u
+ OLrkGPtw4yom4rmiaIeHh2N3zKo22cNfAIoqBOVadSK27OgvZ8eFdGqXiBffI+phRSha
+ 0LxHBqKhzf5C4ju8kkZbmVL8qNN9A0ivrXBeKPUkod58XWNiiYIQ7cPHjva4BZfXHWUd
+ rO/urxqWXc03nLULdrdZqleEVHR3LX4dvEca6klPbqFP5DcyBnVwcqBt50TmueiZrj5c
+ c1pI3EjGQuIqUeZzDTXzB2vTD4XH0UkeviALXgKw1mozD1YsNRZ7mXJhP48R6+M9btch
+ RfMQ==
+X-Gm-Message-State: AOJu0YxCHXcY06D2AWvPu6S9J+84fxEf5HN1OOLippQNuDx8Eqt2SZEf
+ 84H5OhTBu4ByjvJ7zuf/v3PgcwnSpBqy1X9O9BOOerU23AQWANhmUUO4+n5ofZ6V3SkUWHJPkvQ
+ 3fmAAB6GGg7MCzWLyakF63BEOdFK2SaU+Vtg+3+ZEdFlYG7EJ1/G4AoAGQO8oz/LiGQ==
+X-Gm-Gg: AeBDieu7EahXiT31TPk625ZOq5UhhDNaGYIv5KKTzf+vsPoPD+zyMp3SwomkLEyMrMF
+ mVe2+veZo4xRP55UQlJLGAuFCnNXUfM8ZdI05JY7gR6xAduMMk3YRFiLWKoigrT0w6BGHUX/Si5
+ PTqQLxyghjAgotq+fvCbcSSDuPQq0f4YkaYeOM/OHnXiHWLYXQi2efz6/P1HNvNJMjCZM8nzb2m
+ Gx5yicu+t/va8BW8qGTP6LI1D8jMaak8x/CJpxIV8v41D4t1lnNu0kKZPmjP+0IDf55x38dbE1Z
+ wcbb6uhRVIzUEB+ZlZn2Fu4zaT27OMCZJ+dWTI5Ei+UFJzRrweHbNIyyR05ikG0CA7bcy/dhjzZ
+ 9YqILhunMnbK9fyYzr3jB+6WLgWoz+fNHOmWxLRv0dmX6EnUlbRovbBn9d8Dnm+yVnOA4vw==
+X-Received: by 2002:a05:7022:4588:b0:119:e569:f84d with SMTP id
+ a92af1059eb24-12bf0599beamr9448552c88.4.1775622016045; 
+ Tue, 07 Apr 2026 21:20:16 -0700 (PDT)
+X-Received: by 2002:a05:7022:4588:b0:119:e569:f84d with SMTP id
+ a92af1059eb24-12bf0599beamr9448543c88.4.1775622015509; 
+ Tue, 07 Apr 2026 21:20:15 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 09:56:12 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ Tue, 07 Apr 2026 21:20:14 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 08/14] migration: Make qemu_savevm_query_pending() available
- anytime
-Date: Wed,  8 Apr 2026 12:55:52 -0400
-Message-ID: <20260408165559.157108-9-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260408165559.157108-1-peterx@redhat.com>
-References: <20260408165559.157108-1-peterx@redhat.com>
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 07/28] target/hexagon: Implement hex_tlb_entry_get_perm()
+Date: Tue,  7 Apr 2026 21:19:32 -0700
+Message-Id: <20260408041953.1899532-8-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
+References: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Authority-Analysis: v=2.4 cv=etfvCIpX c=1 sm=1 tr=0 ts=69d5d781 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=RKVJoAg1yBLoogzcrgwA:9
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: Cf9Nk-S3kYd6tEVVOxaS98BFBSJzBE1e
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNSBTYWx0ZWRfX9abxyOl+tC88
+ Tibw/6TCta3xQlRiyoGFjelcaVybddeqQaoPB4JJcpPXzbGOzZ+NvcRXPMYNVH4A2ZKym+pO2QP
+ bzzSKg4X3K+UY3Mdn+OGp5pbD8bfAPBOX6K987POYU8v0ryXdY1QbkE3pngFGdiuzzyWAgAxQEF
+ 22zv/q9ApJLDnmJDStz06ZkTIAZY+kUxIl4KlSAiZEVHb6eNKH72n6QT9iPlokJNijnn7jXCLWu
+ a9MwC5/0D00Kb19AsjWyJ/wIybV+1s25CbYxl1k4xVasGRSZOcJv3Ydkh4ti56i7fmTo7PW9Rx4
+ ZDpEiEusZprvGngo7Ta/ty+fkm3iMD+9pjMDPqo8D2SsoMmAg95UKRJl4BCLiL5LIoVMjNDOAOG
+ XEFiJKiyvYTodLkid/S+Yz0vGdDJ7L50IYZwks8h+Lao7YIh/YsGUS5TH9YKU2mTnbW2TqoAPRj
+ LpXcEucLTCBVP/2HWNQ==
+X-Proofpoint-GUID: Cf9Nk-S3kYd6tEVVOxaS98BFBSJzBE1e
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 spamscore=0 clxscore=1015 malwarescore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604080035
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,176 +153,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After qemu_savevm_query_pending() be exposed to more code paths, it can be
-used at very early stage when migration started and this may expose some
-race conditions that we don't use to have.  This patch make it prepared
-for such use cases so this API is fine to be used almost anytime.
-
-What matters here is, querying pending for each module normally depends on
-save_setup() being run first, otherwise modules may not be ready for the
-query request.
-
-Consider an early cancellation of migration after SETUP status but before
-invocations of save_setup() hooks, source QEMU may fall into CANCELLING
-stage directly from SETUP (not ACTIVE, which is the normal use case), in
-which case save_setup() may not have been invoked and modules are not
-ready.  However qemu_savevm_query_pending() may still be used in QMP
-commands like query-migrate and causing crashes.
-
-Guard such use case by introducing a boolean reflecting the availability of
-vmstate save handlers on correct completions of save_setup()s.  So far,
-only protect qemu_savevm_query_pending() with it.  Logically other hooks
-face similar concern, but most of them shouldn't be reachable from random
-code path except migration thread so it should be fine.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration.h |  8 ++++++++
- migration/savevm.h    |  2 +-
- migration/migration.c |  2 +-
- migration/savevm.c    | 37 +++++++++++++++++++++++++++++++++----
- 4 files changed, 43 insertions(+), 6 deletions(-)
-
-diff --git a/migration/migration.h b/migration/migration.h
-index b6888daced..e504df6915 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -522,6 +522,14 @@ struct MigrationState {
-      * anything as input.
-      */
-     bool has_block_bitmap_mapping;
-+
-+    /*
-+     * This boolean reflects if the vmstate handlers have been properly
-+     * setup on source side.  It is set after vmstate save_setup() hooks
-+     * are successfully invoked, and cleared after save_cleanup()s.  It
-+     * reflects a general availability of vmstate hooks on the source side.
-+     */
-+    bool save_setup_ready;
- };
- 
- void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 96fdf96d4e..04ed09cec2 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -42,7 +42,7 @@ int qemu_savevm_state_resume_prepare(MigrationState *s);
- void qemu_savevm_send_header(QEMUFile *f);
- void qemu_savevm_state_header(QEMUFile *f);
- int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
--void qemu_savevm_state_cleanup(void);
-+void qemu_savevm_state_cleanup(MigrationState *s);
- void qemu_savevm_state_complete_postcopy(QEMUFile *f);
- int qemu_savevm_state_complete_precopy(MigrationState *s);
- void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
-diff --git a/migration/migration.c b/migration/migration.c
-index bb17bd0e68..a9ee3360e1 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1283,7 +1283,7 @@ static void migration_cleanup(MigrationState *s)
-     g_free(s->hostname);
-     s->hostname = NULL;
- 
--    qemu_savevm_state_cleanup();
-+    qemu_savevm_state_cleanup(s);
-     cpr_state_close();
-     cpr_transfer_source_destroy(s);
- 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index b75c311a95..1d3fce45b9 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1387,7 +1387,8 @@ int qemu_savevm_state_non_iterable_early(QEMUFile *f,
-     return 0;
- }
- 
--static int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-+static int qemu_savevm_state_setup(MigrationState *s, QEMUFile *f,
-+                                   Error **errp)
- {
-     SaveStateEntry *se;
-     int ret;
-@@ -1409,6 +1410,13 @@ static int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-         }
-     }
- 
-+    /*
-+     * Logically, it should be paired with any hook being used who needs to
-+     * load_acquire() the flag first.  So far, only save_query_pending()
-+     * uses it.
-+     */
-+    qatomic_store_release(&s->save_setup_ready, true);
-+
-     return 0;
- }
- 
-@@ -1429,7 +1437,7 @@ int qemu_savevm_state_do_setup(QEMUFile *f, Error **errp)
-         return ret;
-     }
- 
--    ret = qemu_savevm_state_setup(f, errp);
-+    ret = qemu_savevm_state_setup(ms, f, errp);
-     if (ret) {
-         return ret;
-     }
-@@ -1764,10 +1772,23 @@ int qemu_savevm_state_complete_precopy(MigrationState *s)
- 
- void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
- {
-+    MigrationState *s = migrate_get_current();
-     SaveStateEntry *se;
- 
-     memset(pending, 0, sizeof(*pending));
- 
-+    /*
-+     * This API can be invoked very early before SETUP is properly done, in
-+     * that case don't invoke module queries because they're not ready.
-+     * Just report all zeros.
-+     *
-+     * This is paired with save_setup_ready updates on save_setup() and
-+     * save_cleanup().
-+     */
-+    if (!s || !qatomic_load_acquire(&s->save_setup_ready)) {
-+        return;
-+    }
-+
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (!se->ops || !se->ops->save_query_pending) {
-             continue;
-@@ -1786,7 +1807,7 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
-                                     pending->postcopy_bytes);
- }
- 
--void qemu_savevm_state_cleanup(void)
-+void qemu_savevm_state_cleanup(MigrationState *s)
- {
-     SaveStateEntry *se;
-     Error *local_err = NULL;
-@@ -1795,6 +1816,14 @@ void qemu_savevm_state_cleanup(void)
-         error_report_err(local_err);
-     }
- 
-+    s->save_setup_ready = false;
-+    /*
-+     * Make sure we clear the flag before invoking save_cleanup(), so any
-+     * racy QMP query-migrate won't try to invoke any save hooks.  Just use
-+     * an explicit barrier to be simple.
-+     */
-+    smp_mb();
-+
-     trace_savevm_state_cleanup();
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (se->ops && se->ops->save_cleanup) {
-@@ -1841,7 +1870,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-         error_setg_errno(errp, -ret, "Error while writing VM state");
-     }
- cleanup:
--    qemu_savevm_state_cleanup();
-+    qemu_savevm_state_cleanup(ms);
- 
-     if (ret != 0) {
-         status = MIGRATION_STATUS_FAILED;
--- 
-2.53.0
-
+RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpSZXZpZXdlZC1ieTogVGF5bG9y
+IFNpbXBzb24gPGx0YXlsb3JzaW1wc29uQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1ieTogQnJpYW4g
+Q2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIGxpbnV4LXVzZXIvaGV4YWdv
+bi9jcHVfbG9vcC5jIHwgNyArKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgNyBpbnNlcnRpb25zKCsp
+CgpkaWZmIC0tZ2l0IGEvbGludXgtdXNlci9oZXhhZ29uL2NwdV9sb29wLmMgYi9saW51eC11c2Vy
+L2hleGFnb24vY3B1X2xvb3AuYwppbmRleCA5ZjU0YzdiM2Y5Ni4uMDk1OGM1MWZiYjMgMTAwNjQ0
+Ci0tLSBhL2xpbnV4LXVzZXIvaGV4YWdvbi9jcHVfbG9vcC5jCisrKyBiL2xpbnV4LXVzZXIvaGV4
+YWdvbi9jcHVfbG9vcC5jCkBAIC02Myw2ICs2MywxMyBAQCB2b2lkIGNwdV9sb29wKENQVUhleGFn
+b25TdGF0ZSAqZW52KQogICAgICAgICAgICAgYnJlYWs7CiAgICAgICAgIGNhc2UgSEVYX0VWRU5U
+X1BSRUNJU0U6CiAgICAgICAgICAgICBzd2l0Y2ggKGVudi0+Y2F1c2VfY29kZSkgeworICAgICAg
+ICAgICAgY2FzZSBIRVhfQ0FVU0VfRkVUQ0hfTk9fVVBBR0U6CisgICAgICAgICAgICBjYXNlIEhF
+WF9DQVVTRV9QUklWX05PX1VSRUFEOgorICAgICAgICAgICAgY2FzZSBIRVhfQ0FVU0VfUFJJVl9O
+T19VV1JJVEU6CisgICAgICAgICAgICBmb3JjZV9zaWdfZmF1bHQoVEFSR0VUX1NJR1NFR1YsIFRB
+UkdFVF9TRUdWX01BUEVSUiwKKyAgICAgICAgICAgICAgICAgICAgZW52LT5ncHJbSEVYX1JFR19Q
+Q10pOworCisgICAgICAgICAgICBicmVhazsKICAgICAgICAgICAgIGNhc2UgSEVYX0NBVVNFX1BS
+SVZfVVNFUl9OT19HSU5TTjoKICAgICAgICAgICAgIGNhc2UgSEVYX0NBVVNFX1BSSVZfVVNFUl9O
+T19TSU5TTjoKICAgICAgICAgICAgIGNhc2UgSEVYX0NBVVNFX0lOVkFMSURfUEFDS0VUOgotLSAK
+Mi4zNC4xCgo=
 
