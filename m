@@ -4,110 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA8910F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DF810F9975
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYJH-0007cs-3P; Wed, 08 Apr 2026 15:11:31 -0400
+	id 1wAYRC-0007c2-Pk; Wed, 08 Apr 2026 15:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wAYGh-0004HB-Hz; Wed, 08 Apr 2026 15:08:52 -0400
-Received: from fhigh-a7-smtp.messagingengine.com ([103.168.172.158])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wAY0J-0005Kt-Ic; Wed, 08 Apr 2026 14:51:56 -0400
+Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wAMbc-00042Q-VE; Wed, 08 Apr 2026 02:41:42 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 925531400191;
- Wed,  8 Apr 2026 02:41:39 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Wed, 08 Apr 2026 02:41:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1775630499; x=
- 1775716899; bh=AiE/0ztClLsC4oEIXywhujdJUDqUrolkBz7YUUVmrsw=; b=P
- 9NiWmSMzAnJyDUS9a8VnFOYBB1QEW1pmcWJXiKsVSIdzvHIdszz9A4+sy/VdaEcp
- Pq5eC+8iDU8WrIpxhSxBXtKvWaeHwQSQfkw5T2i8jf5J5nA8H84A2n8nSbGcoXMX
- cBoY2rqo0fYgkWJp+XsVIhP01nE961v1trxkL+jlpg9nLmIbLo07hW6MHd7FLJ1V
- 76DagUkzqUFrUydOKolxDwpx9/FXHCYrstI4CsBSVf513QkJjn+hJhEVXOWeSYDS
- jx1bq2dhUCtcsw3/5z3etIEulUlX2ZN+7lvzyZFFPj0TuG4G7z2qu+JqUu60EdIw
- eHsK3OAb6cvoMCXB+dI/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1775630499; x=1775716899; bh=AiE/0ztClLsC4oEIXywhujdJUDqUrolkBz7
- YUUVmrsw=; b=fN07h0WJDaYEO5Nyiu6S23qxMpjkazw3Rs77SrT7M6kMwS9tu90
- oEMx0q7/Ny98bH4AY/yJS7zxhdw/hsQxrGByzWtEZ/JmSDKLjSL9SdowEZ5dlj4J
- clUA6ggohj+QRqY/6EWNa3xNN/XIg1e89IOSiQcuPxbcvRiU3dtzmwkJsEWimGQ/
- SgID9xwGMTvuutYOcqF7B0DzsVenm4b7jCl2uf3TjjOghpjvMZjiFRi2pSF8nz6J
- Dk9kzZhCL8v2q6/apxMT1i5wTVN7+nRnINzlWz/Zxw3jmLQZtSb6esqo+zzRu1Ko
- pzOraVaSegp0OgY/lU2YnR5+b+UjxEyU/KA==
-X-ME-Sender: <xms:ovjVaRsmlwS7YMsYSIgks4uCpMfevCEQRiFIYGStgnrEUPAXTJ_ucg>
- <xme:ovjVaQDbLv-tpkQVp6r-AgaCpC5JUPtC5S5--tFx4Ut_11G1rmdMxcXmWxkJbq4n0
- DSfN97sMzeCv7TSyKmP6IgIkjeG0taOxU8bkG0Wa5Li0zrSnY6aLNQ>
-X-ME-Received: <xmr:ovjVaeXGBrj-eIe4Zb6K1t_QENR4mlsl_IlrPUb7vj8adC2YzAII75HOtC9R9LdYy48UQGAO_rIOYED3Fw74N216X7qhxEo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvvdekkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
- hrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhsucfl
- vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
- hnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffejveen
- ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
- hirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopedujedpmhhouggvpehsmhht
- phhouhhtpdhrtghpthhtoheprghlvgigrghnuggvrhesmhhihhgrlhhitgihnhdrtghomh
- dprhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthhtohep
- qhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrgi
- esrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrrhhoshgrshesshhushgvrdguvgdp
- rhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehsthhgrh
- grsggvrhesshhtghhrrggsvghrrdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslhhotghk
- sehnohhnghhnuhdrohhrghdprhgtphhtthhopehhrhgvihhtiiesrhgvughhrghtrdgtoh
- hm
-X-ME-Proxy: <xmx:ovjVaZGrNkJA76VJeFjBcv36LFaV5W68YyuZQUZv_-Gh65wz0-aHug>
- <xmx:ovjVaZNuE62cb1FohLYglyH15ffNpiqnInNSCxzhjCuwC1p1YIQiDw>
- <xmx:ovjVaVVyiGEh_O6ThzM018cWeJ3c4UEeAnf8Ea-cLRIgsZ43BBizSg>
- <xmx:ovjVaQxKLAonRuhMeFcaDjaPl-0F_5S7LuXqlZekqCxt1h2rHL5KRA>
- <xmx:o_jVaTwsekEj_eHdmlGW26e00jfx4RNQWKCv8n8ZGq3mMcP-3p3DFzHH>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Apr 2026 02:41:38 -0400 (EDT)
-Date: Wed, 8 Apr 2026 08:41:37 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Jesper Devantier <foss@defmacro.it>,
- =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v5 7/8] hw/nvme: add basic live migration support
-Message-ID: <adX4oSW5u1k0nLOk@AALNPWKJENSEN.aal.scsc.local>
-References: <20260317102708.126725-1-alexander@mihalicyn.com>
- <20260317102708.126725-8-alexander@mihalicyn.com>
- <20260407154803.GB238768@fedora>
- <CAJqdLroJk_EmciJQvYPsywpaOoyFSyNf67DGpOJMGpr+MuhQFg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wATab-0001BT-57; Wed, 08 Apr 2026 10:09:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1775657203; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=vFg92j2gZ9NSCF4Z3rmDUVqAYz3+1RHvZHtl0F7a700=;
+ b=VbrrHQ7O0+tBHYaVFcF0C2v2YA0EJM5PaonSUmjWzF938XUwrrKlhwgsvNjnnXbrbDZ0ruCesHeGZRsBw9R3CsJ4C8OBw34fy6jAOYIg6wB3iUn5NMjI+f/h7tAEE0jhj7rTQdRf1oB0lge42/+6yXCb+syfrLmtceIwKuK7Vkc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0X0f.zGJ_1775657201; 
+Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0X0f.zGJ_1775657201 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 08 Apr 2026 22:06:42 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com, palmer@dabbelt.com,
+ alistair23@gmail.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v5 0/6] target/riscv: Implement Smsdid and Smmpt extension
+Date: Wed,  8 Apr 2026 22:06:29 +0800
+Message-Id: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="RTvK7Yapl5XbfB86"
-Content-Disposition: inline
-In-Reply-To: <CAJqdLroJk_EmciJQvYPsywpaOoyFSyNf67DGpOJMGpr+MuhQFg@mail.gmail.com>
-Received-SPF: pass client-ip=103.168.172.158; envelope-from=its@irrelevant.dk;
- helo=fhigh-a7-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.124;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-124.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,106 +69,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This patch set introduces support for the RISC-V Smmpt (Supervisor
+Memory-tracking and Protection Table) extension. Smmpt provides a
+hardware mechanism for fine-grained memory protection, checked after
+address translation, which is particularly useful for supervisor-level
+sandboxing and security monitoring.
 
---RTvK7Yapl5XbfB86
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The rfc patch set:
+https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
 
-On Apr  7 21:02, Alexander Mikhalitsyn wrote:
-> Am Di., 7. Apr. 2026 um 17:48 Uhr schrieb Stefan Hajnoczi <stefanha@redha=
-t.com>:
-> >
-> > On Tue, Mar 17, 2026 at 11:27:07AM +0100, Alexander Mikhalitsyn wrote:
-> > > +    /* wait when all in-flight IO requests (except NVME_ADM_CMD_ASYN=
-C_EV_REQ) are processed */
-> > > +    for (i =3D 0; i < n->num_queues; i++) {
-> > > +        NvmeRequest *req;
-> > > +        NvmeSQueue *sq =3D n->sq[i];
-> > > +
-> > > +        if (!sq)
-> > > +            continue;
-> > > +
-> > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait(n, i, sq->head=
-, sq->tail, sq->size);
-> > > +
-> > > +wait_out_reqs:
-> > > +        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
-> > > +            if (req->cmd.opcode !=3D NVME_ADM_CMD_ASYNC_EV_REQ) {
-> > > +                cpu_relax();
-> > > +                goto wait_out_reqs;
-> > > +            }
-> > > +        }
-> > > +
-> > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait_end(n, i, sq->=
-head, sq->tail);
-> > > +    }
-> >
->=20
-> Hi Stefan,
->=20
-> > Emulated storage controllers usually do not drain requests themselves.
-> > They rely on core migration code (e.g. migration_completion_precopy())
-> > to stop vCPUs and call bdrv_drain_all_begin/end() to quiesce I/O. Why
-> > does NVMe busy wait for requests here?
->=20
-> I rely on core migration code to stop vCPUs and drain requests, *but*
-> a challenge here is that
-> a concept of "in-flight" request in NVMe is not that simple and we
-> have a few different types of in-flight requests:
-> - request was written in SQ (sq->head !=3D sq->tail) -> this I don't
-> even consider as in-flight, because we just stop SQ processing
->   and these requests don't require any special handling during migration
-> - request was taken from SQ by nvme_process_sq() and it now lives in
-> sq->out_req_list - this means that
->   we have also initialized req->aiocb and submitted IO for processing
-> in QEMU block layer. After request is processed, completion callback
->   will be called (for read/write requests it is
-> nvme_rw_complete_cb()), then nvme_enqueue_req_completion() will be
-> called and remove
->   NvmeRequest from sq->out_req_list and put it into cq->req_list.
->   I expect, that by the time when we enter nvme_ctrl_pre_save(),
-> bdrv_drain_all_begin/end() were called and
->   all AIO is finished and sq->out_req_list is empty (except AERs).
-> *But* to be on a safe side I also added busy loop on
->   sq->out_req_list.
->=20
+v4->v5:
+    1. Rebase to master. 
+v3->v4:
+    1. Add missing review tags.
+v2->v3:
+    1. Fix build error in patch 2.
+    2. Rebase to master.
 
-Correct. When nvme_rw_complete_cb (and friends) returns, we still have
-the completion laying around, not posted on the CQ. That is queued up
-for a BH to handle to coalesce CQE posting.
+rfc->v2:
+    1. When ext_smmpt is false or BARE mode, make other fields in mmpt
+       CSR zero.
+    2. Add patch 5 to fix smrnmi ISA string order.
+    3. Fix patch 6 smmpt and smsdid ISA string order.
+    4. Make smmpt and smsdid experiment extensions.
+    5. Add review tags.
 
-> So, I tend to agree that this busy wait is probably not required, but
-> I believe that we still need to verify that sq->out_req_list
-> is in fact empty. Because if we messed up, then it's better to crash
-> on assert() than to have silent data corruption.
->=20
-> Then after I have a loop cq->req_list, and this time it is absolutely
-> required because we need to write all NvmeRequest
-> results to CQ and free NvmeRequest structure, cause I didn't want to
-> deal with NvmeRequest serialization.
->=20
 
-There is a subtle catch here. There may not be room in the CQ to post
-all CQEs. For example, in the extreme, the host has allocated a CQ with
-room for 1 entry (size 2) and several deep SQs all associated with the
-same CQ. If the controller has nowhere to post CQEs, then we need to
-either abort migration (and try again) or migrate the CQEs.
+LIU Zhiwei (6):
+  target/riscv: Add basic definitions and CSRs for SMMPT
+  target/riscv: Implement core SMMPT lookup logic
+  target/riscv: Integrate SMMPT checks into MMU and TLB fill
+  target/riscv: Implement SMMPT fence instructions
+  target/riscv: Fix smrnmi isa alphabetical order
+  target/riscv: Enable SMMPT extension
 
---RTvK7Yapl5XbfB86
-Content-Type: application/pgp-signature; name="signature.asc"
+ target/riscv/cpu.c                            |   6 +-
+ target/riscv/cpu.h                            |   9 +-
+ target/riscv/cpu_bits.h                       |  27 ++
+ target/riscv/cpu_cfg_fields.h.inc             |   2 +
+ target/riscv/cpu_helper.c                     |  81 +++++-
+ target/riscv/csr.c                            |  95 ++++++
+ target/riscv/insn32.decode                    |   2 +
+ .../riscv/insn_trans/trans_privileged.c.inc   |  30 ++
+ target/riscv/meson.build                      |   1 +
+ target/riscv/pmp.h                            |   3 +
+ target/riscv/riscv_smmpt.c                    | 274 ++++++++++++++++++
+ target/riscv/riscv_smmpt.h                    |  36 +++
+ 12 files changed, 560 insertions(+), 6 deletions(-)
+ create mode 100644 target/riscv/riscv_smmpt.c
+ create mode 100644 target/riscv/riscv_smmpt.h
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.43.0
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnV+KAACgkQTeGvMW1P
-Deluxgf+P62CffzUNPFY9KzFaCGLCUAyj4cl9e94MjUERacflPwpj/39ksA55e5b
-yartZ1YPZXnqe6EDYeG+YvFqCfqiQGJKLXczwYrmLMox80a5tjGjzhqKeSjeBSSf
-KzJTR1ca+bQO2QYw4pjIeq2B5rZi7gSaHZLP9VpwvzA3mTGufFw/HpA2YhqBGOdZ
-WyOrqDxQiSPAKhVXemdZCfYcj23pKit/EpvCqOd2q5/dVvq8Ghv/yTfSF1rREERH
-KWmtf14DVI1ZyWpMJeq1W6QUzhqyURdvawCX33xaZPhYE1GuKozAbDKHg5xVUhb1
-DDGeB0zMKZy1RPnJtrOWVokwPIvjrg==
-=f3Ry
------END PGP SIGNATURE-----
-
---RTvK7Yapl5XbfB86--
 
