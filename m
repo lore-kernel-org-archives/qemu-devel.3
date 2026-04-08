@@ -4,92 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D65810F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8DA10F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:30:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYWh-0008Vg-Kg; Wed, 08 Apr 2026 15:25:23 -0400
+	id 1wAYX1-0001JJ-D1; Wed, 08 Apr 2026 15:25:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1wAY77-0007YN-75
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:58:58 -0400
-Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1wAPHr-000258-L7
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 05:33:29 -0400
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-8a151012558so74979186d6.3
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 02:33:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1775640805; x=1776245605; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lrIuV9zA/JWyl+nsw0d1gC9u2JhKcFJIFMJFYwDVDIs=;
- b=h0FIw5sRYy7v8IPOL5fJmgfxr0vup7klZCSDeQCohh8wUgaNUJ2bUSJjsGBYr9ZlPe
- 5BOTfelHea8bTJYzTu/2fgLe8LBoBQyBdkDlfNoKtwCF+r/Y8JkK1mVeBAFRSl3Ew/zJ
- 185MvVeVZJaWK9oM7mdaUP/gPw1jmdtyrw2cnWzRk9ezTJ8+93OJgiCmY8iqR5yR+83I
- hSEZFsK9TPR8M7VCtnF9Hrx5CgKQ3b3ZSljGpW1OdajxpjZJSHkoGz+8vzU2ZqdLfXff
- 4kdUjm0ABa/UgCNMEh5CGIGwGcclz3DgSqAEu7hNkgv0c8U53r+n3zyVu22uJaCVmXZL
- q7hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775640805; x=1776245605;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lrIuV9zA/JWyl+nsw0d1gC9u2JhKcFJIFMJFYwDVDIs=;
- b=T2ZHLGJGTFiELc8cxJOGM3lpfSHzQnvy1X0DDHE4wi85WvDneupg07h99WQT+Jmt6G
- guyIAOkUjPwvGPkwDUZBdmNVLRKNkFK8CG6W//nLrceQR/nH3yNfqXEsDrVilJdJ/+ad
- TbQ3BjHy5z9jIf43x+v3wCiFg6rdjYplUDa8PDYZuSUCTzcF3nZg0Tfa4kFxcVAsvOau
- m0XjVbO9UonNRRhuNjR9EN+uP6T5omaOLlMubpOQ9TLx6/mYx4kC9jfr4Z7VQtv3U8A+
- IW0JSBKlhowAHVklLeaydfH7nMfi6PKubrV6LSVVxfD2xknuypFN7Iz4hR349UbVYnEh
- CJ/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdEYlTM9czhmXREL1Dr7c1TO0NQsZqD8dV8j9ErlsYxftp3NlXvefOsEWTK7EML/CzEiAgXFoo36Wz@nongnu.org
-X-Gm-Message-State: AOJu0Yx8mUlC5a7EO8AApz5F2jYo4UmrfQDdzoBL54xPOfpU2gYwmlwW
- ITL8bMhOk5gSNhnMWMvQY0vU3dxxY1k5e5ybSLVh7Lv4oIbkD0ux6h66N8mWnSBHF+I=
-X-Gm-Gg: AeBDietbb1j0WBckJAav3l+VNHbzbxN7MdybcXKRnffWDX5ttqJeG3PiRvtIfGDJ7NB
- Qrv1w1NBiX0DBUpCCmOuU6c4Nu/pxRUKvvyxsNjcX9xlkEEPhdhOCCKL6PS6iue5Ioy8du0MC4F
- FJ75h6Sn17k2QcyBNZqJ6hufQ/ICM5Z7SirnYPGLDtQ9oK5BISllds1yCavu3G7SDwiW4BhK4Nj
- pfdP7ZvIEAnrHsrO0N8pXs/N3I1eY1RqgBxZxoTa81p1ZVxArdZlGBeLYWh4e674jbpwRg0E2fY
- ikpKVFzjfYWW1EPEbbmZAfz3V+i8ZyUZDBgp5WfZuqEER72Sw32bqIKmS5LtnXO9+kCCZdsQDPb
- OMDEg9DtCC6YX79S6L729WJynZlYvUOXgyNyigDFEYo/iyk7ooqV/43jr5KrJFcLeZrQGQVuidE
- bJAk06Qj5ItIYqJ9TSXMoAUXYQXEGDqUjW+1NFUxe1yjGTjCON9hq3MCYOB9PK
-X-Received: by 2002:ad4:5d41:0:b0:89c:c3ac:e5c1 with SMTP id
- 6a1803df08f44-8a7020bcf0fmr339834336d6.4.1775640804644; 
- Wed, 08 Apr 2026 02:33:24 -0700 (PDT)
-Received: from [192.168.68.100] ([177.18.66.130])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8a596a0a522sm165827786d6.32.2026.04.08.02.33.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 02:33:23 -0700 (PDT)
-Message-ID: <ccad0832-a4e8-4f7e-9972-297872e53436@ventanamicro.com>
-Date: Wed, 8 Apr 2026 06:33:20 -0300
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAY7X-0007k6-0C; Wed, 08 Apr 2026 14:59:23 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wAQmk-00035r-6R; Wed, 08 Apr 2026 07:09:29 -0400
+DKIM-Signature: a=rsa-sha256; bh=KlR/xKoP61qzgFLUnyAa73Pb9AfwGBhgmoS7vXNN5Ko=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1775646439; v=1;
+ b=aDQA5PmVYnRB727xlZGgImNavpV5CwEGHn3HknW2drPVNs3YQHno6biDANIfF5SHGKtAeD92
+ 90D56OMvWmj29NNWyqEaroepJ3UZuYkPIPTPlYeC88qRQjCXQyXh9TbdZFipfNaMasEYKtgp3gR
+ jWLVmB10LzHRs/ac+7KXi1rzxUzMaideZVsk1Rx3IIpgqUDunAiRH0L/QGpZ5DOWkepiHoZKrf+
+ DtmFnrb92puLy/CX6kt2+F9SuxecfOVaB0glQKVhazxtyhDFo5+P8+TNOFpCYbQDjRfB6DmzP1x
+ defzld9X0Do9NGiEQ1zfIbExxKvfeBj8BtE3KymounYhQ==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 15017207F4;
+ Wed, 08 Apr 2026 11:07:19 +0000 (UTC)
+From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
+Date: Wed, 08 Apr 2026 11:07:18 +0000
+Subject: [PATCH qemu v2 0/7] Update opentitan uart (part of supporting
+ opentitan version 1)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/6] target/riscv: Implement Smsdid and Smmpt extension
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com
-References: <20251112064945.46533-1-zhiwei_liu@linux.alibaba.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20251112064945.46533-1-zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Message-ID: <177564643888.23414.7922925369077631439-0@git.sr.ht>
+X-Mailer: git.sr.ht
+To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
+ Amit Kumar-Hermosillo <amitkh@google.com>, nabihestefan@google.com
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,70 +68,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gentlemen,
+Second revision of the patch set that updates the OpenTitan uart to
+version 1
 
+I have made changes as per the review comments from last time. This is
+now split into smaller commits. The first renames ibex_uart to ot_uart,
+and the rest introduce the various changes step by step.
 
-This is fully reviewed and good to go.  Maybe needs a rebase since it
-was last posted back in November.
+The details of the version 1 of the UART are found here:
+https://opentitan.org/book/hw/ip/uart/index.html
+(This URL is added to the file header in one of these commits)
 
-Zhiwei, if you could please send a rebase keeping all acks that would be
-terrific.
+The changes, as split across these commits, are: switching to new reset
+api, updating the register and field definitions to match the latest
+version of the UART, adding the missing IRQs required for the latest
+version, implementing the features the various hardware features that
+were missing.
 
+Finally, I have also updated the file headers and added the tracing
+changes.
 
-Cheers,
-Daniel
+Lex Bailey (7):
+  Rename ibex_uart to ot_uart
+  ot_uart: move to new reset API
+  ot_uart: update register defs, switch to Fifo8 for tx/rx buffers
+  ot_uart: replace individual IRQ fields with array, add missing IRQs
+  ot_uart: implement missing features
+  ot_uart: update file headers with new authorship and documentation URL
+  ot_uart: add tracing
 
-On 11/12/2025 3:49 AM, LIU Zhiwei wrote:
-> This patch set introduces support for the RISC-V Smmpt (Supervisor
-> Memory-tracking and Protection Table) extension. Smmpt provides a
-> hardware mechanism for fine-grained memory protection, checked after
-> address translation, which is particularly useful for supervisor-level
-> sandboxing and security monitoring.
-> 
-> The rfc patch set:
-> https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
-> 
-> v3->v4:
->      1. Add missing review tags.
-> v2->v3:
->      1. Fix build error in patch 2.
->      2. Rebase to master.
-> 
-> rfc->v2:
->      1. When ext_smmpt is false or BARE mode, make other fields in mmpt
->         CSR zero.
->      2. Add patch 5 to fix smrnmi ISA string order.
->      3. Fix patch 6 smmpt and smsdid ISA string order.
->      4. Make smmpt and smsdid experiment extensions.
->      5. Add review tags.
-> 
-> 
-> LIU Zhiwei (6):
->    target/riscv: Add basic definitions and CSRs for SMMPT
->    target/riscv: Implement core SMMPT lookup logic
->    target/riscv: Integrate SMMPT checks into MMU and TLB fill
->    target/riscv: Implement SMMPT fence instructions
->    target/riscv: Fix smrnmi isa alphabetical order
->    target/riscv: Enable SMMPT extension
-> 
->   target/riscv/cpu.c                            |   6 +-
->   target/riscv/cpu.h                            |   9 +-
->   target/riscv/cpu_bits.h                       |  27 ++
->   target/riscv/cpu_cfg_fields.h.inc             |   2 +
->   target/riscv/cpu_helper.c                     |  81 +++++-
->   target/riscv/csr.c                            |  95 ++++++
->   target/riscv/insn32.decode                    |   2 +
->   .../riscv/insn_trans/trans_privileged.c.inc   |  30 ++
->   target/riscv/meson.build                      |   1 +
->   target/riscv/pmp.h                            |   3 +
->   target/riscv/riscv_smmpt.c                    | 274 ++++++++++++++++++
->   target/riscv/riscv_smmpt.h                    |  36 +++
->   12 files changed, 560 insertions(+), 6 deletions(-)
->   create mode 100644 target/riscv/riscv_smmpt.c
->   create mode 100644 target/riscv/riscv_smmpt.h
-> 
+ MAINTAINERS                  |   1 +
+ hw/char/Kconfig              |   3 +
+ hw/char/ibex_uart.c          | 569 ---------------------------
+ hw/char/meson.build          |   2 +-
+ hw/char/ot_uart.c            | 741 +++++++++++++++++++++++++++++++++++
+ hw/char/trace-events         |   8 +
+ hw/riscv/Kconfig             |   1 +
+ hw/riscv/opentitan.c         |   3 +-
+ include/hw/char/ibex_uart.h  |  73 ----
+ include/hw/char/ot_uart.h    |  61 +++
+ include/hw/riscv/opentitan.h |   4 +-
+ 11 files changed, 820 insertions(+), 646 deletions(-)
+ delete mode 100644 hw/char/ibex_uart.c
+ create mode 100644 hw/char/ot_uart.c
+ delete mode 100644 include/hw/char/ibex_uart.h
+ create mode 100644 include/hw/char/ot_uart.h
 
+-- 
+2.49.1
 
