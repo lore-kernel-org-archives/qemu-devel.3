@@ -4,137 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FD510F9974
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D5D10F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYcN-00062i-Pa; Wed, 08 Apr 2026 15:31:16 -0400
+	id 1wAYc8-0004wh-G5; Wed, 08 Apr 2026 15:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wAYAD-0000zg-CU
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:02:09 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1wAYA1-0000gb-9u
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:01:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wAVu9-0006qB-MF
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:37:26 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 638GH5XV4049231
- for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 16:37:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=P5hMle4dsIJ
- uY/9/X8rZbjNfzfN97R2T6TLhakQh8Ec=; b=F2TziBW5CqikxfFFlyEsXqDnoPz
- GqQaTbtop4BHDU4Jt4OND40X5NqcmrHvZN5gWRswsvrYU7uYjAmfHAueYoCapx5A
- E2xHZKWgpHrPuKGpGCWAlr2iFipdOLkFHR/Ck3UKVXCCvhFN5AmPifixq7JPW6l2
- XPQZqHRB5BQta4LncfoWVMrRXA/sFJ6H/sIUXG9Rzwk8csVui3ua+oBh1RLm0nex
- /vjri0DdsRHVb8Sy8Fw9to75sKqF8ptfNcP4r+meYXyIme55qmNyK/svnMsVRsEU
- e2myGeCPAesH7PWlHMeBzob8niM11udvRHx67gIdvivKsTmc0c04k6c86xA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddtd70217-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:37:24 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c70ea91bfe1so36514a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:37:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775666244; x=1776271044; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P5hMle4dsIJuY/9/X8rZbjNfzfN97R2T6TLhakQh8Ec=;
- b=FD76xUuv+j1GhOEzl1hi+qnjdhlz4DY+y7R+J7GtnV7Gs4WZuTnvCuUzOuOuCNgV74
- 0vsUfwz2nhaYSZleQTuBaKshF0/P0dfdGXP4SrH/+GvB57l4AEbGZLVsBNKCypnd1fyS
- MQ1iJjstKxkAhh5veeNQN+ULpoQXDVyFgZfc2fP3+5SplGcBvecI4You/M+vMh8xGzHG
- 4yXC3bxnaLUJTlfRJQsHMpGc6a7vR4XEpMKC7CfYYbNX2qCYrgYZ1Fr6ZE8yu7CAdV78
- VBBySFvGW6ER6ju82stO3llHN11/NW0E79DP8X5JgHqpXS+Bx+kPvFV9BBx9Rh3uWn3E
- T5Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775666244; x=1776271044;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=P5hMle4dsIJuY/9/X8rZbjNfzfN97R2T6TLhakQh8Ec=;
- b=hWwEV4PgbazcMPRJhl+0Gpfq/l1vKUxWM2maWKS1L8ppa50z5M2f+ExHe2DkIKqSJt
- 9F8GJ7K714E6I0xBHPa/cuL6zJH1k2ewj06LR30DVVajXsLVpjskXbhV92clZuWBlF7e
- ak+uIYqcjPoNsVUzsFxystLuDD5gWwvINXtw2/dkFRaUtJnNQTXBWfeXdO/mD5+XLfaC
- pRZ+gEr/eooQKceQIXAO5si8EEg/QTqKl/yIfwENVFYFjbmGOtMiYjz58uJu3px7YaEi
- cOskQS8QedRQzWcFjL5UGm0w+KPAFjVILMVRdFdH8/RND1HRM6dbC66XLu8S5aOXBvrX
- 1lbQ==
-X-Gm-Message-State: AOJu0YzxImyrx6gezyhLDNJaA0n3jK6hRL3uhrKjXq/D8E38kuPwavgc
- MwwgTocNIEDdKt/L6pueFFnEfD5YVsVLBnuyFcyi69Dne4911eZ331ZeZd6fh8YM9x/1pZhS/MF
- kSa/C3hgc/aZDYb1xdAAopppq9DSbCK3LUZ9z9etqce9MvhstpN6JKUtW5GfEeRZ/0NRO
-X-Gm-Gg: AeBDieu7Qn2C4MaxiWHftsQt90f/plNaAtCEj9olLe9eYjJUFK5qKecDg7bzGjxyCXK
- 9PGBCDWupyGYwTGTIs/x7iO0+CGFaZDN4qgBnRoNdH9zUzLBbjElWw0m3cyDhmE+wpUWXw27Pe9
- Z5l5SCkwVFfBBw0XJZ6XcwLdXnu5GjvMYRnBLBdwKTKc4YQVlqGJ5QOscuJC+YMYPbvNqw1jVcY
- pUxb47t4HUt+UDKgu3RF+uBbHAxFhPsRAX6fIktiKRR0sbiANMCMhMj/mBwFegxbCKoTE0FXFLa
- Ja3O0WRqsN7jlEwpuP6a4XcNUvOKnm7sBmBKakOFRFy//kfCc2LNjrjDQOkmN+I6Mr9SQDQqjXb
- uvrAIb3RdoAjX25wYU79Ib2F95Z/ZdcfKDUFzhF4E7cBNvBdhIYYpvw6LAOD9Eq2FGJ1D2BsDi9
- hlIVGgAPtz
-X-Received: by 2002:a05:7022:239b:b0:128:d494:a1ab with SMTP id
- a92af1059eb24-12bfb71138cmr10288981c88.15.1775666243568; 
- Wed, 08 Apr 2026 09:37:23 -0700 (PDT)
-X-Received: by 2002:a05:7022:239b:b0:128:d494:a1ab with SMTP id
- a92af1059eb24-12bfb71138cmr10288953c88.15.1775666242716; 
- Wed, 08 Apr 2026 09:37:22 -0700 (PDT)
-Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c1ff43d04sm4082006c88.4.2026.04.08.09.37.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Apr 2026 09:37:22 -0700 (PDT)
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1wAITH-0004jo-Kt
+ for qemu-devel@nongnu.org; Tue, 07 Apr 2026 22:16:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775614606;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lLHbJbpbVpCc7ZPDfJzkupfRH4+Vp1i+3Y5xDT7n2Qg=;
+ b=XxwY1oYgffl3coeecc1tYrqiXmoGE7U2ZBgkNI479Hr22QrgkqJG+TbpogMfiQMSE0GFtg
+ db45ZeYlVwZo3eGZDeT8wNtIctdR3RmRt+ovBtDZKeXiu9fQZ1bMEPKot5Lp4f3QMeZzrt
+ 0xn3zIyVlYlfO5Ew1NfjPryojyad24o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-jsNwypOKPeqbz4VomXJdWQ-1; Tue,
+ 07 Apr 2026 22:16:43 -0400
+X-MC-Unique: jsNwypOKPeqbz4VomXJdWQ-1
+X-Mimecast-MFC-AGG-ID: jsNwypOKPeqbz4VomXJdWQ_1775614602
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B694D180044D; Wed,  8 Apr 2026 02:16:41 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.26])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BAFFB1800673; Wed,  8 Apr 2026 02:16:39 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
- brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- marco.liebel@oss.qualcomm.com, philmd@linaro.org,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH v3 13/16] tests/hexagon: add tests for v68 HVX IEEE float
- min/max
-Date: Wed,  8 Apr 2026 09:37:04 -0700
-Message-Id: <5055daa72b6eb563e343a002f988d14e0e52ba72.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-References: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Network Block Dev...)
+Subject: [PATCH] qemu-nbd: Support -s and -l at the same time
+Date: Tue,  7 Apr 2026 21:16:33 -0500
+Message-ID: <20260408021636.794794-2-eblake@redhat.com>
 MIME-Version: 1.0
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=QoRuG1yd c=1 sm=1 tr=0 ts=69d68444 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=gVZ7t9wPRZXE4v3XZ3MA:9 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-ORIG-GUID: FoF6PtfrCDWBetk82QkX3Z6NTabTvVyq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDE1NCBTYWx0ZWRfX2q19AWoXyMwE
- vh0Q9CYejJg0lWmOvOhqm8JkfHP11sAAfiaWK2/nEEZocOnneFvvfcZ2AgYCplGEND1u6+bSVJI
- olUey+Xf8aB4YXZZmWjxcHx6t/iBGVV2JfYzM7ZBjRoHaz0PPuPphMzD5MgQx79IVigRkK8e+le
- 5eoSGU4iLkOpc0NznixUXW/sxFHl4F++xCQCTAI/9kbFoxn6fQTyx18lMUZzuG7X0Fb3mZkIJJu
- VGy49XMGsx02LK0Kb+pVXIcLR/K53OQcLNmpFVjLMPpNQE9/YORFK72q0dMSC7e6jqmbulMA1Eo
- jIKFz3gA/x7pzT0+HZHx1QTpYBDh45CefMEYcBAxJn5Jhm0X4JNcvab5PRY0FDgPl3JiFeAbqyR
- 20CgieLL12cWFaUlPsmANKTNte7ZYce/XIp2pKzE57IUQCwNd51YiIlR4OjNkuqe2oiJ3h4dpyh
- H6qD2dfSKKabNibZFxQ==
-X-Proofpoint-GUID: FoF6PtfrCDWBetk82QkX3Z6NTabTvVyq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_05,2026-04-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080154
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,61 +82,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
----
- tests/tcg/hexagon/fp_hvx.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+qemu-nbd already has the ability to wrap a read-write layer on top of
+the export of a read-only image (-s) and the ability to export an
+internal snapshot rather than the main image in a qcow2 file (-l
+SNAPID).  But it gave a confusing error message when trying to mix the
+two, because the snapshot overlay created first no longer has access
+to the internal snapshots of the image being wrapped.
 
-diff --git a/tests/tcg/hexagon/fp_hvx.c b/tests/tcg/hexagon/fp_hvx.c
-index 0365833753..46f49c0d3c 100644
---- a/tests/tcg/hexagon/fp_hvx.c
-+++ b/tests/tcg/hexagon/fp_hvx.c
-@@ -73,6 +73,30 @@ DEF_TEST_OP_2(vsub, SUB_HF, hf, hf);
- DEF_TEST_OP_2(vmpy, MULT_SF, sf, sf);
- DEF_TEST_OP_2(vmpy, MULT_HF, hf, hf);
- 
-+#define signbit_fp(X) \
-+    (sizeof(X) == bytes_hf ? ((raw_hf(X) & 0x8000) != 0) : \
-+                             ((raw_sf(X) & 0x80000000) != 0))
+WIth a bit of finesse, this useful scenario is now supported.
+
+https://gitlab.com/qemu-project/qemu/-/work_items/159
+
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ docs/tools/qemu-nbd.rst                       |  7 +-
+ qemu-nbd.c                                    | 20 ++++-
+ tests/qemu-iotests/tests/qemu-nbd-snapshots   | 79 +++++++++++++++++++
+ .../qemu-iotests/tests/qemu-nbd-snapshots.out | 34 ++++++++
+ 4 files changed, 134 insertions(+), 6 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/qemu-nbd-snapshots
+ create mode 100644 tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+
+diff --git a/docs/tools/qemu-nbd.rst b/docs/tools/qemu-nbd.rst
+index f82ea5fd77b..336b4aa46e7 100644
+--- a/docs/tools/qemu-nbd.rst
++++ b/docs/tools/qemu-nbd.rst
+@@ -95,9 +95,10 @@ driver options if :option:`--image-opts` is specified.
+
+ .. option:: -l, --load-snapshot=SNAPSHOT_PARAM
+
+-  Load an internal snapshot inside *filename* and export it
+-  as an read-only device, SNAPSHOT_PARAM format is
+-  ``snapshot.id=[ID],snapshot.name=[NAME]`` or ``[ID_OR_NAME]``
++  Load an internal snapshot inside *filename* and export it.
++  SNAPSHOT_PARAM format is ``snapshot.id=[ID],snapshot.name=[NAME]``
++  or ``[ID_OR_NAME]``. The export is read-only unless ``-s`` is also
++  in use.
+
+ .. option:: --cache=CACHE
+
+diff --git a/qemu-nbd.c b/qemu-nbd.c
+index ed5895861bb..128486a0ec2 100644
+--- a/qemu-nbd.c
++++ b/qemu-nbd.c
+@@ -534,6 +534,7 @@ int main(int argc, char **argv)
+ {
+     BlockBackend *blk;
+     BlockDriverState *bs;
++    BlockDriverState *orig_bs;
+     uint64_t dev_offset = 0;
+     bool readonly = false;
+     bool disconnect = false;
+@@ -716,7 +717,7 @@ int main(int argc, char **argv)
+             } else {
+                 sn_id_or_name = optarg;
+             }
+-            /* fall through */
++            break;
+         case 'r':
+             readonly = true;
+             flags &= ~BDRV_O_RDWR;
+@@ -1110,6 +1111,15 @@ int main(int argc, char **argv)
+     bdrv_init();
+     atexit(qemu_nbd_shutdown);
+
++    /*
++     * -s and -l can be used together to create read-write wrapper
++     * around an internal snapshot. Otherwise, -l in isolation implies
++     * read-only.
++     */
++    if ((sn_opts || sn_id_or_name) && (flags & BDRV_O_SNAPSHOT) == 0) {
++        readonly = true;
++        flags &= ~BDRV_O_RDWR;
++    }
+     opts.srcpath = argv[optind];
+     if (imageOpts) {
+         QemuOpts *o;
+@@ -1155,13 +1165,17 @@ int main(int argc, char **argv)
+
+     blk_set_enable_write_cache(blk, !writethrough);
+
++    orig_bs = bs;
++    if (flags & BDRV_O_SNAPSHOT) {
++        orig_bs = bs->backing->bs;
++    }
+     if (sn_opts) {
+-        ret = bdrv_snapshot_load_tmp(bs,
++        ret = bdrv_snapshot_load_tmp(orig_bs,
+                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_ID),
+                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_NAME),
+                                      &local_err);
+     } else if (sn_id_or_name) {
+-        ret = bdrv_snapshot_load_tmp_by_id_or_name(bs, sn_id_or_name,
++        ret = bdrv_snapshot_load_tmp_by_id_or_name(orig_bs, sn_id_or_name,
+                                                    &local_err);
+     }
+     if (ret < 0) {
+diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots b/tests/qemu-iotests/tests/qemu-nbd-snapshots
+new file mode 100755
+index 00000000000..de405e43720
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots
+@@ -0,0 +1,79 @@
++#!/usr/bin/env bash
++# group: rw quick
++#
++# Test qemu-nbd snapshot handling
++#
++# Copyright (C) Red Hat, Inc.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+#define STD_MIN(X, Y) ((X) < (Y) ? (X) : (Y))
-+#define STD_MAX(X, Y) ((X) > (Y) ? (X) : (Y))
++seq="$(basename $0)"
++echo "QA output created by $seq"
 +
-+#define MIN(X, Y, DEF_NAN) \
-+    ((isnan(X) || isnan(Y)) ? DEF_NAN : \
-+     ((X) != (Y)) ? STD_MIN(X, Y) : (signbit_fp(X) ? (X) : (Y))) /* -0 < +0 */
-+#define MAX(X, Y, DEF_NAN) \
-+    ((isnan(X) || isnan(Y)) ? DEF_NAN : \
-+     ((X) != (Y)) ? STD_MAX(X, Y) : (signbit_fp(X) ? (Y) : (X))) /* -0 < +0 */
++status=1 # failure is the default!
 +
-+#define MIN_HF(X, Y) MIN(X, Y, NAN_HF)
-+#define MAX_HF(X, Y) MAX(X, Y, NAN_HF)
-+#define MIN_SF(X, Y) MIN(X, Y, NAN_SF)
-+#define MAX_SF(X, Y) MAX(X, Y, NAN_SF)
++_cleanup()
++{
++    _cleanup_test_img
++    nbd_server_stop
++}
++trap "_cleanup; exit \$status" 0 1 2 3 15
 +
-+DEF_TEST_OP_2(vfmin, MIN_SF, sf, sf);
-+DEF_TEST_OP_2(vfmax, MAX_SF, sf, sf);
-+DEF_TEST_OP_2(vfmin, MIN_HF, hf, hf);
-+DEF_TEST_OP_2(vfmax, MAX_HF, hf, hf);
++# get standard environment, filters and checks
++cd ..
++. ./common.rc
++. ./common.filter
++. ./common.nbd
 +
- /******************************************************************************
-  * Other tests
-  *****************************************************************************/
-@@ -150,6 +174,12 @@ int main(void)
- 
-     test_new();
- 
-+    /* min/max */
-+    test_vfmin_sf_sf();
-+    test_vfmin_hf_hf();
-+    test_vfmax_sf_sf();
-+    test_vfmax_hf_hf();
++_supported_fmt qcow2
++_supported_proto file
++_supported_os Linux
++_require_command QEMU_NBD
 +
-     puts(err ? "FAIL" : "PASS");
-     return err ? 1 : 0;
- }
++echo
++echo "=== Initial image setup ==="
++echo
++
++# Create qcow2 image with one internal snapshot
++_make_test_img 10M
++$QEMU_IO -c 'w -P 1 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++$QEMU_IMG snapshot -c snap -f $IMGFMT "$TEST_IMG" | _filter_qemu_img
++$QEMU_IO -c 'w -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++
++echo
++echo "=== Main image in snapshot mode ==="
++echo
++
++nbd_server_start_unix_socket -s -f qcow2 "$TEST_IMG"
++$QEMU_IO -c 'r -P 2 3M 1M' -c 'w -P 3 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Read-only snapshot access ==="
++echo
++
++nbd_server_start_unix_socket -l snap -f qcow2 "$TEST_IMG"
++$QEMU_IO -r -c 'r -P 1 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Combine -s and -l for read-write internal snapshot access ==="
++echo
++
++nbd_server_start_unix_socket -s -l snap -f qcow2 "$TEST_IMG"
++$QEMU_IO -c 'r -P 1 3M 1M' -c 'w -P 3 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Check that original image is unchanged ==="
++echo
++
++$QEMU_IO -c 'r -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++
++# success, all done
++echo '*** done'
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots.out b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+new file mode 100644
+index 00000000000..6bce9d90253
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+@@ -0,0 +1,34 @@
++QA output created by qemu-nbd-snapshots
++
++=== Initial image setup ===
++
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=10485760
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Main image in snapshot mode ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Read-only snapshot access ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Combine -s and -l for read-write internal snapshot access ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Check that original image is unchanged ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++*** done
 -- 
-2.37.2
+2.53.0
 
 
