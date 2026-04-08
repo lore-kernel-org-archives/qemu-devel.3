@@ -4,56 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9F710F9968
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 20:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 307DF10F9968
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 20:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAZU3-00079x-HN; Wed, 08 Apr 2026 16:26:43 -0400
+	id 1wAZUd-0007fD-Og; Wed, 08 Apr 2026 16:27:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wAZU2-00078c-IG
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 16:26:42 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wAZUX-0007c8-77
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 16:27:13 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wAZU0-0003jh-SZ
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 16:26:42 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 08C5F596A2B;
- Wed, 08 Apr 2026 22:26:39 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id hrfzoSrYV-h9; Wed,  8 Apr 2026 22:26:36 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 589D35969F6; Wed, 08 Apr 2026 22:26:36 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 56FD65968DD;
- Wed, 08 Apr 2026 22:26:36 +0200 (CEST)
-Date: Wed, 8 Apr 2026 22:26:36 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- Chad Jablonski <chad@jablonski.xyz>
-Subject: Re: [PATCH-for-11.0 0/6] Misc patches for 2026-04-07
-In-Reply-To: <80621a59-8948-bbbb-eb83-e12495a06467@eik.bme.hu>
-Message-ID: <4fdc9c3c-f089-4cde-371f-8a5e0e17f4a8@eik.bme.hu>
-References: <20260407215900.63390-1-philmd@linaro.org>
- <14805e95-c831-4eea-ae67-f011cb463cd2@linaro.org>
- <80621a59-8948-bbbb-eb83-e12495a06467@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wAZUV-0003qe-In
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 16:27:12 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 7094143719;
+ Wed,  8 Apr 2026 20:27:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3FEC19421;
+ Wed,  8 Apr 2026 20:27:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775680029;
+ bh=gkoOeBnOMC3lxBY6AwM+cpCNfNX2C//0lZNqmLHcwEE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=IrqZxtZqm5m2K2swgLDt36kw5djfR4BKWfvrkgPRttKT8rwArsBY+JBWJQ5Jnz2Wa
+ +iSknYZ+LMV/jSJWru55ALHkRRnvhe0NlrrkjVg9wfK+m/IrrzGW4N73JbKWVj49jL
+ 5Y9RaiBkVAxnvg+Ej/RuTgT8AUJMs2zHsBFfZFrrFBnuUmzFEaXcwggcTUKz4xaKPp
+ wZcZpf23DI9SiE49iAY807LOuYROcROtlg2sT/R2rTFsB91lC0q9G+ddCQebBhar7n
+ RwYJp0tP5LHCqjgDgkYQysmvEhQLFxlMkX4F0pjXBQkL3piH/TjfMnvWyTNy/6p4vk
+ yI8bURFrvHing==
+Date: Wed, 8 Apr 2026 22:27:04 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 0/5] monitor: add dynamic QMP monitor hotplug support
+Message-ID: <20260408-gemerkt-munter-92aca76e1529@brauner>
+References: <20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org>
+ <adTj1iWPZYTD0CF1@redhat.com>
+ <20260407-notprogramm-wohlfahrt-be7393963311@brauner>
+ <adYlWYHn7AjlHN0t@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="3866299591-787268042-1775679962=:8636"
-Content-ID: <4ecf699f-94ec-14ed-10ed-aed3ac27ee8d@eik.bme.hu>
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <adYlWYHn7AjlHN0t@redhat.com>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=brauner@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,72 +77,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Apr 08, 2026 at 10:52:25AM +0100, Daniel P. BerrangÃ© wrote:
+> On Tue, Apr 07, 2026 at 10:57:26PM +0200, Christian Brauner wrote:
+> > On Tue, Apr 07, 2026 at 12:00:38PM +0100, Daniel P. BerrangÃ© wrote:
+> > > On Tue, Apr 07, 2026 at 09:32:44AM +0200, Christian Brauner wrote:
+> > > > QEMU supports runtime hotplug for chardevs, devices, block backends,
+> > > > and netdevs. Monitors are the only major subsystem that lacks this --
+> > > > all QMP monitors must be configured at launch via -mon or -qmp CLI
+> > > > options.
+> > > > 
+> > > > This series adds monitor-add, monitor-remove, and query-monitors QMP
+> > > > commands so that management tools can create independent QMP sessions
+> > > > on demand at runtime.
+> > > > 
+> > > > I've implemented a QMP-to-Varlink bridge in systemd. This allows
+> > > > systemd-vmspawn to control virtual machines and containers through a
+> > > > unified Varlink interface. Varlink allows protocol upgrades. For
+> > > > example, it is possible to switch from Varlink to say http. I'm
+> > > > allowing Varlink clients to upgrade from the Varlink interface to the
+> > > > native QMP interface. Such clients get a new monitor assigned that
+> > > > allows them to manage the virtual machine directly via QMP. The main
+> > > > monitor remains unaffected and tied to the generic Varlink interface. We
+> > > > can't pre-allocate monitors as we have no control over how many protocol
+> > > > upgrades we actually get but it won't just be one. And having unused
+> > > > monitors around really isn't ideal either.
+> > > > 
+> > > > Having the ability to hotplug monitors would really be helpful. I'm not
+> > > > yet super well-versed in qemu internals so this might be done wrong but
+> > > > testing works so far.
+> > > 
+> > > Can you say if AI agents/LLMs were used in creating these patches ? 
+> > 
+> > In exploring the QEMU codebase and how the QMP protocol is used in other
+> > code-bases. So specifically I used it to research:
+> > 
+> > * Does monitor hotplug already work?
+> > * Has the idea of monitor hotplug been discussed before?
+> > * Is there an obvious fundamental reason this cannot work?
+> > * What does the lifetime of a monitor look like?
+> > * I used it to review the code I wrote and point out bugs that I then
+> >   fixed myself.
+> > * I had various research questions around how io-thread interactions
+> >   work and common synchronization primitives in the codebase.
+> > 
+> > The code hasn't been written by any coding tool in line with what is
+> > requested in the contribution guidelines. I used it to speed up my
+> > understanding of what's going on and to debug things without using the
+> > output.
+> 
+> That's all fine, thanks for confirming. I was too suprised by the
+> thoroughness of the patches, given your caveat that you were not
+> familiar with QEMU internals !
 
---3866299591-787268042-1775679962=:8636
-Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <959a3074-c8b9-3ba3-3d05-aa1eee38e63c@eik.bme.hu>
-
-On Wed, 8 Apr 2026, BALATON Zoltan wrote:
-> On Wed, 8 Apr 2026, Philippe Mathieu-Daudé wrote:
->> Cc'ing Peter directly due to mailing-list issues.
->
-> Thanks a lot for taking care of these. I think you meant to send PULL instead 
-> of PATCH. Here's one more:
-> https://patchew.org/QEMU/20260408104935.1A55A5969F6@zero.eik.bme.hu/
-> the v1 of which had a review by Marc-André that might stand for v2 too as 
-> that makes the check even mode strict.
-
-And this one seems to have been missed:
-https://patchew.org/QEMU/20260404111318.8334E596A22@zero.eik.bme.hu/
-I'd need this in 11.0 too.
-
-Regards,
-BALATON Zoltan
-
->> On 7/4/26 23:58, Philippe Mathieu-Daudé wrote:
->>> The following changes since commit 
->>> b6a7d06213e5d2f7d124d16418bc289c4a8a4b82:
->>>
->>>    Update version for v11.0.0-rc2 release (2026-04-01 20:48:02 +0100)
->>> 
->>> are available in the Git repository at:
->>>
->>>    https://github.com/philmd/qemu.git tags/hw-misc-20260407
->>> 
->>> for you to fetch changes up to 992e01e838733c8063f8a17e92034c5f35e34963:
->>>
->>>    ati-vga: Do not crash on 24 bits per pixel (2026-04-07 22:40:29 +0200)
->>> 
->>> ----------------------------------------------------------------
->>> Misc HW patches
->>> 
->>> Few fixes, mostly for VGA display models.
->>> ----------------------------------------------------------------
->>> 
->>> BALATON Zoltan (4):
->>>    cirrus-vga: Make frame buffer endianness little endian by default
->>>    ati-vga: Fix setting CRTC_OFFSET
->>>    ati-vga: Update mode on CRTC_PITCH change
->>>    ati-vga: Do not crash on 24 bits per pixel
->>> 
->>> GuoHan Zhao (1):
->>>    hw/arm/omap_sx1: map CS3 at the correct base
->>> 
->>> Philippe Mathieu-Daudé (1):
->>>    docs/about/removed-features: Replace 'since' -> 'removed in'
->>>
->>>   docs/about/removed-features.rst | 32 +++++++++++++-------------
->>>   hw/arm/omap_sx1.c               |  2 +-
->>>   hw/display/ati.c                | 40 ++++++++++++++++++---------------
->>>   hw/display/ati_2d.c             |  9 ++++++++
->>>   hw/display/cirrus_vga.c         |  2 ++
->>>   5 files changed, 50 insertions(+), 35 deletions(-)
->>> 
->> 
->> 
->
---3866299591-787268042-1775679962=:8636--
+Well, please don't look at the first version then. :)
 
