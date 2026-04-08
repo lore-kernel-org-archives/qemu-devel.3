@@ -4,77 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA40610F9968
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EB710F9972
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYdQ-0002mH-EU; Wed, 08 Apr 2026 15:32:20 -0400
+	id 1wAYVr-0004uJ-5y; Wed, 08 Apr 2026 15:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1wAYGg-0004Ei-GE
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:08:50 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wAY5q-0006sU-CK
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 14:57:38 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1wAMS5-0002ZA-7m
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 02:31:52 -0400
-X-UUID: 9834d5fa331411f1aa26b74ffac11d73-20260408
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12, REQID:7b6c9b8d-21b6-40f6-b3c5-a3ff8499e1b5, IP:0,
- U
- RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
- :release,TS:-5
-X-CID-META: VersionHash:e7bac3a, CLOUDID:40ac6daea920a4dc817f4b2b1d35040b,
- BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:81|83|102|898,TC:0,Content:0|14|51,EDM:-
- 3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,A
- V:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: 2B06F67595C4F84CB91B9E00163EECF9
-X-UUID: 9834d5fa331411f1aa26b74ffac11d73-20260408
-Received: from node4 [(10.44.17.112)] by mailgw.kylinos.cn
- (envelope-from <yujun@kylinos.cn>) (Generic MTA)
- with ESMTP id 1654394404; Wed, 08 Apr 2026 14:31:37 +0800
-Received: from node4 (localhost [127.0.0.1])
- by node4 (NSMail) with SMTP id 0C7C91200BD8D;
- Wed,  8 Apr 2026 14:31:37 +0800 (CST)
-Received: by node4 (NSMail, from userid 10001)
- id 01AB21200BD8C; Wed,  8 Apr 2026 14:31:35 +0800 (CST)
-From: =?UTF-8?B?5Za75Yab?= <yujun@kylinos.cn>
-Subject: =?UTF-8?B?5Zue5aSNOiBSZTogW1BBVENIXSBhdWRpby9waXBld2lyZTogRml4IHN0YWNrIG92ZXJmbG93IGJ5IG1vdmluZyBidWZmZXIgdG8gaGVhcA==?=
-To: =?UTF-8?B?bWFyY2FuZHJlLmx1cmVhdQ==?= <marcandre.lureau@redhat.com>,
- =?UTF-8?B?b2Rha2k=?= <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?B?VGhvbWFzIEh1dGg=?= <thuth@redhat.com>
-Cc: =?UTF-8?B?bWFyay5jYXZlYXlsYW5k?= <mark.caveayland@nutanix.com>,
- =?UTF-8?B?cGhpbG1k?= <philmd@linaro.org>,
- =?UTF-8?B?cWVtdS1kZXZlbA==?= <qemu-devel@nongnu.org>
-Date: Wed, 08 Apr 2026 14:31:35 +0800
-X-Mailer: NSMAIL 8.2
-Message-ID: <a1npd7r5807-a1so0q5obt4@nsmail8.2--kylin--1>
-References: 7c4c01de-475c-4864-9dc4-743bf8d10247@redhat.com
-X-Israising: 0
-X-Seclevel-1: 0
-X-Seclevel: 0
-X-Delaysendtime: Wed, 08 Apr 2026 14:31:35 +0800
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wAVu8-0006q1-Sa
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 12:37:26 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 638GDARl674176
+ for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 16:37:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=D7rnSVAJp6s
+ d+gvxD4uEflttLT9iHzjnYVqCVfxs/yE=; b=hDO46lWaFOaL9M4PcygI5AH/iF8
+ I2BK2ilz+W84oPyAIrQFmHRozsVKGDkxRYH6ZOiX2QjxCz3+IUyjjM0L5EhREFRl
+ oAVt1CaOAYdIiVsCCI2guKmKCa4LjfUrjJTlo2n5sQLsNs3DZigUhxS8s02L7kKk
+ rjynWdbSuMHJ6mYMOBg6M1AlI5//ANPt0nlebmHYrraf8qEzH+y/H+oejkroJbzc
+ PEqur93DrYBxHPE5hjUDton/DYSxt3Ha7JgFEDPkipK3p4S2qzeBxCEkIje6gbQr
+ EL2fcy5IepMi9SFttYez6n8uo9tBvy2ypWqmuF896bwuRbQXx0ckjRSg82g==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddtbmr2hd-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:37:23 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c76fe944e6fso145443a12.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 09:37:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1775666243; x=1776271043; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=D7rnSVAJp6sd+gvxD4uEflttLT9iHzjnYVqCVfxs/yE=;
+ b=JRWahCDFX2uCLOaHNXlN5cXQZQndNAm4JCIWEKNVs8AnmB5w8iDJQV8+utc3W2OImi
+ FvHUBPM20+ogKuFi0U1UL4S6H9OmEhTyVwoa2JhL9beielOelys2UrJXx3toWaPBg32c
+ WkKaeo7hpx4CTmTYPQt8D/toes8Fz/8LQ42FAT0YUZhqxYF9KDU9zxN98un/eLQ/fgNj
+ JpS0eVGQ1YJFIK1Fljdg0WosemC/TBEmH0LlNzSn2YgLQfY36K0gQog92/01Ezo36nG+
+ FUBq0YZFeY4JsVeotjS8CrldtyhtMNSvHiX5N6XqfGYb5gWsAYQxGcPLf5DvB4Hwy3Q8
+ hjFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775666243; x=1776271043;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=D7rnSVAJp6sd+gvxD4uEflttLT9iHzjnYVqCVfxs/yE=;
+ b=aYvu/admx9GwE3jBHRYi3eZxTr9nGLm6y7v5CXJYn3QCzxCuk1HCdKkCRDJ2NL2EMJ
+ 4qwGBBR0hpcBbrTeLPBSrrDbKxQ5RBFJrPByy8LLoli/gnqPOFz53TD3EkACEzEUAqhp
+ Hk0eqIX/A+CJkQ8jePMjz96FzQZDPmmg/bkXuWbIaVsjjJ8RKPQD7P8Nt/kzEWIahgxH
+ 3pf9Hbe6Gox1GqIG2sYwscKE6VxQ5LIfgx5ZfWE/bS6MjJ9Lnxl8PmjvfOOcF/WYmaAt
+ W4f3hyosl4QifCAYsWHFArsKs/bk2gMu5mvEqnj3SeRopF4ZwSkVkd5dIehUfdnQSVI3
+ XMfg==
+X-Gm-Message-State: AOJu0YyLaFhVJqthYIrJQubYTQhR0a7k81j7vf0en5XCzcubSfVZ54jN
+ ZTlICJmXnOJa1qDlSZghwZ70ASfh/AJGHDZRc/Oya2n1uIi96DMGuTOLWEJAPqAZ2r0OF0PvO6M
+ +GYzdeBReQfQq+sFDSpLCfDj5RXMx7J/dmnRPzw4fUbGkgeiFhd6lt0/7JhXLMty9Xv3G
+X-Gm-Gg: AeBDietK1bj1KObbq+vPx+eDu8c+fMe1nb4iro/K07Qg/pUH0fOXuO79OKy1Ahf2vAZ
+ VhnZa1HI8o3emNgg+gK2GzNe30bDsdX/KH5lIzK8qEWJggDI4HMGiQSABA5OsjMicxPAQLROsoN
+ BO5znjRxO1Qi1iBGF2NHLxeb97r7M0OICmk7+ilOKSgO38C62n5tY0mtjBLTW/w7l/qJFJWlnKd
+ kmeQA8Yy2UFebaMC2t5K6k3TGstbAyEa/Vf+s9MlMxXDzKtfvqJBB+o1HigbGCUC1kwv+T3quHC
+ 4LYoKXvv2UFZzUgWqdkvV6thEaJbpFRQHlXeaSS/BwctX0c/h7I/wVp44iMo/oK6Eaqm8FdIjEz
+ Z73oJyyp8ykSFMXYZFkm1fn83NPYT36NAdZNVkEQ1DoyBkBF3jgXDlR5bQ7LN9pqX+GmLAtUcC7
+ rxrQB1kriR
+X-Received: by 2002:a05:7022:7a4:b0:127:33e0:ea40 with SMTP id
+ a92af1059eb24-12c28bf1e52mr87633c88.15.1775666242576; 
+ Wed, 08 Apr 2026 09:37:22 -0700 (PDT)
+X-Received: by 2002:a05:7022:7a4:b0:127:33e0:ea40 with SMTP id
+ a92af1059eb24-12c28bf1e52mr87612c88.15.1775666241818; 
+ Wed, 08 Apr 2026 09:37:21 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c1ff43d04sm4082006c88.4.2026.04.08.09.37.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Apr 2026 09:37:21 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
+ brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ marco.liebel@oss.qualcomm.com, philmd@linaro.org,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Subject: [PATCH v3 12/16] tests/hexagon: add tests for v68 HVX IEEE float
+ arithmetics
+Date: Wed,  8 Apr 2026 09:37:03 -0700
+Message-Id: <e66f33dc979f03215ab0c0738a14b96e8f8a30cd.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
+References: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary=nsmail-cdbn14l3tu2-cdetvo4qea3
-X-ns-mid: webmail-69d5f647-ap1kl5ig
-X-ope-from: <yujun@kylinos.cn>
-X-receipt: 0
-Received-SPF: pass client-ip=124.126.103.232; envelope-from=yujun@kylinos.cn;
- helo=mailgw.kylinos.cn
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- HTML_MIME_NO_HTML_TAG=0.377, HTML_OBFUSCATE_05_10=0.26, MIME_HTML_ONLY=0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 8wwda7i_YyO7-SIbJogFxYi7_14DYWhI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDE1NCBTYWx0ZWRfX5MHj9YN5Yai3
+ PRgp5d3zhsb5E9yQaG6H5VW8ZNAOjW1AVQE7kq8vTQ4/dZtgVRmQpUT3pIm3M7+Bm/6hqg6ucP3
+ lAS9RS+5VBXu0AhYQkVdHE5swvklHQSwDZ1q4Z7ArQZGKB3wbzTnnSPeUrdSMWddmrU3h9aU1YA
+ d5U59Wb0ee4xRQBPdXcSDiTl9NyvYDCA8kkCsWXTZwikZ2kPktheW5PXnM9HyFMq2TLeylC9dWN
+ C8/nB8hD/1og3nUs0BRw79UAUIoj/UE1wHfuYUyn+CScQV+OM/WYIrzCUudclZrwtLrOzzHciwm
+ 74qamVyacT8vZ80uk72XWkRN/Wi5mryntEzm+6z3J8kqZZNbeRfXnG95uiRXrRjFgd3Nab3qAbw
+ M7jfOnAbTEDqQeG2tsWIcVOO4XwQqXrh0aHilwHdBnNdeqFoL/5YKSj626V3tG0kYK0RCMPML7/
+ UpVmC0hobOb3eR0ogWA==
+X-Authority-Analysis: v=2.4 cv=YM2vDxGx c=1 sm=1 tr=0 ts=69d68443 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=p626gilfWeCCYUnsPZkA:9 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-ORIG-GUID: 8wwda7i_YyO7-SIbJogFxYi7_14DYWhI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-08_05,2026-04-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080154
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 08 Apr 2026 15:32:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,124 +150,378 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This message is in MIME format.
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+---
+ tests/tcg/hexagon/hex_test.h        |   4 +
+ tests/tcg/hexagon/hvx_misc.h        |  41 ++++++++
+ tests/tcg/hexagon/fp_hvx.c          | 155 ++++++++++++++++++++++++++++
+ tests/tcg/hexagon/fp_hvx_disabled.c |  57 ++++++++++
+ tests/tcg/hexagon/Makefile.target   |   8 ++
+ 5 files changed, 265 insertions(+)
+ create mode 100644 tests/tcg/hexagon/fp_hvx.c
+ create mode 100644 tests/tcg/hexagon/fp_hvx_disabled.c
 
---nsmail-cdbn14l3tu2-cdetvo4qea3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+diff --git a/tests/tcg/hexagon/hex_test.h b/tests/tcg/hexagon/hex_test.h
+index cfed06a58b..e7a6644d41 100644
+--- a/tests/tcg/hexagon/hex_test.h
++++ b/tests/tcg/hexagon/hex_test.h
+@@ -19,6 +19,8 @@
+ #ifndef HEX_TEST_H
+ #define HEX_TEST_H
+ 
++#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
++
+ static inline void __check32(int line, uint32_t val, uint32_t expect)
+ {
+     if (val != expect) {
+@@ -110,6 +112,7 @@ static inline void __check64_ne(int line, uint64_t val, uint64_t expect)
+ 
+ /* Some useful floating point values */
+ const uint32_t SF_INF =              0x7f800000;
++const uint32_t SF_INF_neg =          0xff800000;
+ const uint32_t SF_QNaN =             0x7fc00000;
+ const uint32_t SF_QNaN_special =     0x7f800001;
+ const uint32_t SF_SNaN =             0x7fb00000;
+@@ -128,6 +131,7 @@ const uint32_t SF_large_pos =        0x5afa572e;
+ const uint32_t SF_any =              0x3f800000;
+ const uint32_t SF_denorm =           0x00000001;
+ const uint32_t SF_random =           0x346001d6;
++const uint32_t SF_neg_two =          0xc0000000;
+ 
+ const uint64_t DF_QNaN =             0x7ff8000000000000ULL;
+ const uint64_t DF_SNaN =             0x7ff7000000000000ULL;
+diff --git a/tests/tcg/hexagon/hvx_misc.h b/tests/tcg/hexagon/hvx_misc.h
+index 2e868340fd..0330cb289d 100644
+--- a/tests/tcg/hexagon/hvx_misc.h
++++ b/tests/tcg/hexagon/hvx_misc.h
+@@ -18,6 +18,8 @@
+ #ifndef HVX_MISC_H
+ #define HVX_MISC_H
+ 
++#include "hex_test.h"
++
+ static inline void check(int line, int i, int j,
+                          uint64_t result, uint64_t expect)
+ {
+@@ -34,8 +36,10 @@ typedef union {
+     uint64_t ud[MAX_VEC_SIZE_BYTES / 8];
+     int64_t   d[MAX_VEC_SIZE_BYTES / 8];
+     uint32_t uw[MAX_VEC_SIZE_BYTES / 4];
++    uint32_t sf[MAX_VEC_SIZE_BYTES / 4]; /* convenience alias */
+     int32_t   w[MAX_VEC_SIZE_BYTES / 4];
+     uint16_t uh[MAX_VEC_SIZE_BYTES / 2];
++    uint16_t hf[MAX_VEC_SIZE_BYTES / 2]; /* convenience alias */
+     int16_t   h[MAX_VEC_SIZE_BYTES / 2];
+     uint8_t  ub[MAX_VEC_SIZE_BYTES / 1];
+     int8_t    b[MAX_VEC_SIZE_BYTES / 1];
+@@ -63,7 +67,9 @@ static inline void check_output_##FIELD(int line, size_t num_vectors) \
+ 
+ CHECK_OUTPUT_FUNC(d,  8)
+ CHECK_OUTPUT_FUNC(w,  4)
++CHECK_OUTPUT_FUNC(sf, 4)
+ CHECK_OUTPUT_FUNC(h,  2)
++CHECK_OUTPUT_FUNC(hf, 2)
+ CHECK_OUTPUT_FUNC(b,  1)
+ 
+ static inline void init_buffers(void)
+@@ -81,6 +87,33 @@ static inline void init_buffers(void)
+     }
+ }
+ 
++static const uint32_t FP_VALUES[] = {
++    SF_INF, SF_INF_neg, SF_QNaN, SF_QNaN_special, SF_SNaN, SF_QNaN_neg,
++    SF_SNaN_neg, SF_HEX_NaN, SF_zero, SF_zero_neg, SF_one, SF_one_recip,
++    SF_one_invsqrta, SF_two, SF_four, SF_small_neg, SF_large_pos, SF_any,
++    SF_denorm, SF_random, SF_neg_two,
++};
++#define FP_VALUES_MAX ARRAY_SIZE(FP_VALUES)
++
++static inline void init_buffers_fp(void)
++{
++    _Static_assert(BUFSIZE * (MAX_VEC_SIZE_BYTES / 4) >
++                   FP_VALUES_MAX * FP_VALUES_MAX,
++                   "test arrays can't fit all FP_VALUES combinations");
++    int counter1 = 0, counter2 = 0;
++    for (int i = 0; i < BUFSIZE; i++) {
++        for (int j = 0; j < MAX_VEC_SIZE_BYTES / 4; j++) {
++            buffer0[i].sf[j] = FP_VALUES[counter1];
++            buffer1[i].sf[j] = FP_VALUES[counter2];
++            counter2++;
++            if (counter2 == FP_VALUES_MAX) {
++                counter2 = 0;
++                counter1 = (counter1 + 1) % FP_VALUES_MAX;
++            }
++        }
++    }
++}
++
+ #define VEC_OP1(ASM, EL, IN, OUT) \
+     asm("v2 = vmem(%0 + #0)\n\t" \
+         "v2" #EL " = " #ASM "(v2" #EL ")\n\t" \
+@@ -175,4 +208,12 @@ static inline void test_##NAME(bool invert) \
+     check_output_b(__LINE__, BUFSIZE); \
+ }
+ 
++#define float_sf(x) ({ typeof(x) _x = (x); *((float *)&(_x)); })
++#define float_hf(x) ({ typeof(x) _x = (x); *((_Float16 *) &(_x)); })
++#define raw_sf(x) ({ typeof(x) _x = (x); *((uint32_t *)&(_x)); })
++#define raw_hf(x) ({ typeof(x) _x = (x); *((uint16_t *)&(_x)); })
++#define float_hf_to_sf(x) ((float)x)
++#define bytes_hf 2
++#define bytes_sf 4
++
+ #endif
+diff --git a/tests/tcg/hexagon/fp_hvx.c b/tests/tcg/hexagon/fp_hvx.c
+new file mode 100644
+index 0000000000..0365833753
+--- /dev/null
++++ b/tests/tcg/hexagon/fp_hvx.c
+@@ -0,0 +1,155 @@
++/*
++ *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <stdio.h>
++#include <stdint.h>
++#include <stdbool.h>
++#include <string.h>
++#include <hexagon_types.h>
++#include <hvx_hexagon_protos.h>
++
++int err;
++#include "hvx_misc.h"
++
++#if __HEXAGON_ARCH__ > 75
++#error "After v75, compiler will replace some FP HVX instructions."
++#endif
++
++/******************************************************************************
++ * NAN handling
++ *****************************************************************************/
++
++#define isnan(X) \
++     (sizeof(X) == bytes_hf ? ((raw_hf(X) & ~0x8000) > 0x7c00) : \
++                              ((raw_sf(X) & ~(1 << 31)) > 0x7f800000UL))
++
++#define CHECK_NAN(A, DEF_NAN) (isnan(A) ? DEF_NAN : (A))
++#define NAN_SF float_sf(0x7FFFFFFF)
++#define NAN_HF float_hf(0x7FFF)
++
++/******************************************************************************
++ * Binary operations
++ *****************************************************************************/
++
++#define DEF_TEST_OP_2(vop, op, type_res, type_arg) \
++    static void test_##vop##_##type_res##_##type_arg(void) \
++    { \
++        memset(expect, 0xff, sizeof(expect)); \
++        memset(output, 0xff, sizeof(output)); \
++        for (int i = 0; i < BUFSIZE; i++) { \
++            HVX_Vector *hvx_output = (HVX_Vector *)&output[i]; \
++            HVX_Vector hvx_buffer0 = *(HVX_Vector *)&buffer0[i]; \
++            HVX_Vector hvx_buffer1 = *(HVX_Vector *)&buffer1[i]; \
++            *hvx_output = \
++                Q6_V##type_res##_##vop##_V##type_arg##V##type_arg(hvx_buffer0, \
++                                                                  hvx_buffer1); \
++            for (int j = 0; j < MAX_VEC_SIZE_BYTES / bytes_##type_res; j++) { \
++                expect[i].type_res[j] = \
++                    raw_##type_res(op(float_##type_arg(buffer0[i].type_arg[j]), \
++                                      float_##type_arg(buffer1[i].type_arg[j]))); \
++            } \
++        } \
++        check_output_##type_res(__LINE__, BUFSIZE); \
++    }
++
++#define SUM(X, Y, DEF_NAN) CHECK_NAN((X) + (Y), DEF_NAN)
++#define SUB(X, Y, DEF_NAN) CHECK_NAN((X) - (Y), DEF_NAN)
++#define MULT(X, Y, DEF_NAN) CHECK_NAN((X) * (Y), DEF_NAN)
++
++#define SUM_SF(X, Y) SUM(X, Y, NAN_SF)
++#define SUM_HF(X, Y) SUM(X, Y, NAN_HF)
++#define SUB_SF(X, Y) SUB(X, Y, NAN_SF)
++#define SUB_HF(X, Y) SUB(X, Y, NAN_HF)
++#define MULT_SF(X, Y) MULT(X, Y, NAN_SF)
++#define MULT_HF(X, Y) MULT(X, Y, NAN_HF)
++
++DEF_TEST_OP_2(vadd, SUM_SF, sf, sf);
++DEF_TEST_OP_2(vadd, SUM_HF, hf, hf);
++DEF_TEST_OP_2(vsub, SUB_SF, sf, sf);
++DEF_TEST_OP_2(vsub, SUB_HF, hf, hf);
++DEF_TEST_OP_2(vmpy, MULT_SF, sf, sf);
++DEF_TEST_OP_2(vmpy, MULT_HF, hf, hf);
++
++/******************************************************************************
++ * Other tests
++ *****************************************************************************/
++
++static void test_vdmpy_sf_hf(bool acc)
++{
++    memset(expect, 0xff, sizeof(expect));
++
++    for (int i = 0; i < BUFSIZE; i++) {
++        HVX_Vector hvx_buffer0 = *(HVX_Vector *)&buffer0[i];
++        HVX_Vector hvx_buffer1 = *(HVX_Vector *)&buffer1[i];
++        HVX_Vector *hvx_output = (HVX_Vector *)&output[i];
++
++        uint32_t PREFIL_VAL = 0x111222;
++        *hvx_output = Q6_V_vsplat_R(PREFIL_VAL);
++
++        if (!acc) {
++            *hvx_output = Q6_Vsf_vdmpy_VhfVhf(hvx_buffer0, hvx_buffer1);
++        } else {
++            *hvx_output = Q6_Vsf_vdmpyacc_VsfVhfVhf(*hvx_output, hvx_buffer0,
++                                                    hvx_buffer1);
++        }
++
++        for (int j = 0; j < MAX_VEC_SIZE_BYTES / 4; j++) {
++            float a1 = float_hf_to_sf(float_hf(buffer0[i].hf[2 * j + 1]));
++            float a2 = float_hf_to_sf(float_hf(buffer0[i].hf[2 * j]));
++            float a3 = float_hf_to_sf(float_hf(buffer1[i].hf[2 * j + 1]));
++            float a4 = float_hf_to_sf(float_hf(buffer1[i].hf[2 * j]));
++            /*
++             * Note, IEEE FP specifies +0.0 + -0.0 == +0.0. So we use -0.0 in
++             * the default case to preserve the zero sign.
++             */
++            float prev = acc ? float_sf(PREFIL_VAL) : -0.0;
++            expect[i].sf[j] = raw_sf(CHECK_NAN((a1 * a3) + (a2 * a4) + prev, NAN_SF));
++        }
++    }
++    check_output_sf(__LINE__, BUFSIZE);
++}
++
++static void test_new(void)
++{
++    asm volatile("r0 = #0x2\n"
++                 "v0 = vsplat(r0)\n"
++                 "vmem(%1 + #0) = v0\n"
++                 "r1 = #0x1\n"
++                 "v1 = vsplat(r1)\n"
++                 "v2 = vsplat(r1)\n"
++                 "{\n"
++                 "  v0.sf = vadd(v1.sf, v2.sf)\n"
++                 "  vmem(%0 + #0) = v0.new\n"
++                 "}\n"
++                 :
++                 : "r"(output), "r"(expect)
++                 : "r0", "r1", "v0", "v1", "v2", "memory");
++    check_output_w(__LINE__, 1);
++}
++
++int main(void)
++{
++    init_buffers_fp();
++
++    /* add/sub */
++    test_vadd_sf_sf();
++    test_vadd_hf_hf();
++    test_vsub_sf_sf();
++    test_vsub_hf_hf();
++
++    /* multiply */
++    test_vmpy_sf_sf();
++    test_vmpy_hf_hf();
++
++    /* dot product */
++    test_vdmpy_sf_hf(false);
++    test_vdmpy_sf_hf(true);
++
++    test_new();
++
++    puts(err ? "FAIL" : "PASS");
++    return err ? 1 : 0;
++}
+diff --git a/tests/tcg/hexagon/fp_hvx_disabled.c b/tests/tcg/hexagon/fp_hvx_disabled.c
+new file mode 100644
+index 0000000000..388a42e2b7
+--- /dev/null
++++ b/tests/tcg/hexagon/fp_hvx_disabled.c
+@@ -0,0 +1,57 @@
++/*
++ *  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <stdio.h>
++#include <string.h>
++#include <hexagon_types.h>
++#include <hvx_hexagon_protos.h>
++
++int err;
++#include "hvx_misc.h"
++
++static void test_disabled(void)
++{
++    memset(output, 0xAA, sizeof(output));
++    memset(expect, 0, sizeof(expect));
++    asm volatile("r0 = #0xff\n"
++                 "v0 = vsplat(r0)\n"
++                 "r1 = #0x1\n"
++                 "v1 = vsplat(r1)\n"
++                 "v2 = vsplat(r1)\n"
++                 "v0.sf = vadd(v1.sf, v2.sf)\n"
++                 "vmem(%0 + #0) = v0\n"
++                 :
++                 : "r"(output)
++                 : "r0", "r1", "v0", "v1", "v2", "memory");
++    check_output_w(__LINE__, 1);
++}
++
++static void test_disabled_with_new(void)
++{
++    memset(output, 0xAA, sizeof(output));
++    memset(expect, 0, sizeof(expect));
++    asm volatile("r0 = #0xff\n"
++                 "v0 = vsplat(r0)\n"
++                 "r1 = #0x1\n"
++                 "v1 = vsplat(r1)\n"
++                 "v2 = vsplat(r1)\n"
++                 "{\n"
++                 "    v0.sf = vadd(v1.sf, v2.sf)\n"
++                 "    vmem(%0 + #0) = v0.new\n"
++                 "}\n"
++                 :
++                 : "r"(output)
++                 : "r0", "r1", "v0", "v1", "v2", "memory");
++    check_output_w(__LINE__, 1);
++}
++
++int main(void)
++{
++    test_disabled();
++    test_disabled_with_new();
++    puts(err ? "FAIL" : "PASS");
++    return err ? 1 : 0;
++}
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index 549c95082f..789721bdac 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -50,6 +50,8 @@ HEX_TESTS += vector_add_int
+ HEX_TESTS += scatter_gather
+ HEX_TESTS += hvx_misc
+ HEX_TESTS += hvx_histogram
++HEX_TESTS += fp_hvx
++HEX_TESTS += fp_hvx_disabled
+ HEX_TESTS += invalid-slots
+ HEX_TESTS += invalid-encoding
+ HEX_TESTS += multiple-writes
+@@ -126,6 +128,12 @@ v68_hvx: CFLAGS += -mhvx -Wno-unused-function
+ v69_hvx: v69_hvx.c hvx_misc.h
+ v69_hvx: CFLAGS += -mhvx -Wno-unused-function
+ v73_scalar: CFLAGS += -Wno-unused-function
++fp_hvx: fp_hvx.c hvx_misc.h
++fp_hvx: CFLAGS += -mhvx -mhvx-ieee-fp
++fp_hvx_disabled: fp_hvx_disabled.c hvx_misc.h
++fp_hvx_disabled: CFLAGS += -mhvx -mhvx-ieee-fp
++
++run-fp_hvx_disabled: QEMU_OPTS += -cpu v73,ieee-fp=false
+ 
+ hvx_histogram: hvx_histogram.c hvx_histogram_row.S
+ 	$(CC) $(CFLAGS) $(CROSS_CC_GUEST_CFLAGS) $^ -o $@ $(LDFLAGS)
+-- 
+2.37.2
 
-PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6TWljcm9zb2Z0IFlhSGVpO2ZvbnQt
-c2l6ZToxNHB4O2NvbG9yOiMwMDAwMDA7IiBjbGFzcz0ibF9ub2RlX2hhc19j
-b2xvciI+PHA+Jm5ic3A7PC9wPgo8cD5Iae+8jFRob21hc++8mjwvcD4KPHA+
-VGhhbmsgeW91IGZvciByZXZpZXdpbmcgdGhlIHBhdGNoLjwvcD4KPHA+SnVz
-dCB1c2luZyBBSSB0byBkZXNjcmliZSBpdCwgeW91IGtub3csIG15IEVuZ2xp
-c2ggaXMgbm90IHZlcnkgZ29vZC48L3A+CjxwPkkgYW0gY3VycmVudGx5IHBy
-dW5pbmcgYW5kIG9wdGltaXppbmcgcWVtdSB3aXRoIHRoZSBhaW0gb2YgcmVk
-dWNpbmcgaXRzIG1lbW9yeSB1c2FnZS4gSSBoYXBwZW5lZCB0byBkaXNjb3Zl
-ciB0aGUgbGFyZ2UgbWVtb3J5IGFsbG9jYXRpb24gb2YgdGhpcyBzdGFjayBh
-bmQgYW0gdHJ5aW5nIHRvIHByb3Bvc2UgYSBuZXcgc29sdXRpb24uPC9wPgo8
-cD5pdCByZWFsbHkgaXMgdGhhdCBzaW1wbGUuPC9wPgo8cD4mbmJzcDs8L3A+
-CjxwPkp1biBZdTwvcD4KPGRpdiBpZD0ic2lnbmF0dXJlVG9wIj48L2Rpdj4K
-PGRpdiBpZD0iY3MyY19yZSIgc3R5bGU9Im1hcmdpbi1sZWZ0OiAwLjVlbTsg
-cGFkZGluZy1sZWZ0OiAwLjVlbTsgYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAj
-Y2FjYWNhOyAtd2Via2l0LXVzZXItbW9kaWZ5OiByZWFkLW9ubHk7IC1tb3ot
-dXNlci1tb2RpZnk6IHJlYWQtb25seTsgLW1zLXVzZXItbW9kaWZ5OiByZWFk
-LW9ubHk7IC1vLXVzZXItbW9kaWZ5OiByZWFkLW9ubHk7Ij48YnI+PGJyPjxi
-cj4KPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjhmODsgcGFk
-ZGluZzogOHB4IDEwcHg7IGZvbnQtZmFtaWx5OiBNaWNyb3NvZnQgWWFIZWk7
-IGZvbnQtc2l6ZTogMTRweDsgY29sb3I6ICMwMDA7Ij48c3Ryb25nPuS4uyZu
-YnNwOyZuYnNwOyZuYnNwO+mimO+8mjwvc3Ryb25nPjxzcGFuIGlkPSJjczJj
-X3N1YmplY3QiPlJlOiBbUEFUQ0hdIGF1ZGlvL3BpcGV3aXJlOiBGaXggc3Rh
-Y2sgb3ZlcmZsb3cgYnkgbW92aW5nIGJ1ZmZlciB0byBoZWFwPC9zcGFuPiA8
-YnI+PHN0cm9uZz7ml6UmbmJzcDsmbmJzcDsmbmJzcDvmnJ/vvJo8L3N0cm9u
-Zz48c3BhbiBpZD0iY3MyY19kYXRlIj4yMDI25bm0MDTmnIg45pelMTM6MTU8
-L3NwYW4+IDxicj48c3Ryb25nPuWPkeS7tuS6uu+8mjwvc3Ryb25nPjxzcGFu
-IGlkPSJjczJjX2Zyb20iPlRob21hcyBIdXRoPC9zcGFuPiA8YnI+PHN0cm9u
-Zz7mlLbku7bkurrvvJo8L3N0cm9uZz48c3BhbiBpZD0iY3MyY190byIgc3R5
-bGU9IndvcmQtYnJlYWs6IGJyZWFrLWFsbDsiPm1hcmNhbmRyZS5sdXJlYXUs
-b2Rha2ksVGhvbWFzIEh1dGg8L3NwYW4+IDxicj48c3Ryb25nPuaKhOmAgeS6
-uu+8mjwvc3Ryb25nPjxzcGFuIGlkPSJjczJjX3RvIiBzdHlsZT0id29yZC1i
-cmVhazogYnJlYWstYWxsOyI+bWFyay5jYXZlYXlsYW5kLHBoaWxtZCxxZW11
-LWRldmVsPC9zcGFuPjwvZGl2Pgo8YnI+CjxkaXYgaWQ9ImNzMmNfY29udGVu
-dCI+T24gMDgvMDQvMjAyNiAwMy4yMywgSnVuIFl1IHdyb3RlOiAmZ3Q7IFRo
-ZSBQV1ZvaWNlIHN0cnVjdCB3YXMgYWxsb2NhdGluZyBhIGxhcmdlIDRNQiBi
-dWZmZXIgb24gdGhlIHN0YWNrIHVzaW5nICZndDsgdWludDhfdCBidWZmZXJb
-UklOR0JVRkZFUl9TSVpFXSwgd2hpY2ggY291bGQgY2F1c2Ugc3RhY2sgb3Zl
-cmZsb3cuIFdoaWNoIGZ1bmN0aW9uIGlzIHRoaXM/IEkuZS4gd2hlcmUgZG9l
-cyB0aGlzIGdldCBjcmVhdGVkIG9uIHRoZSBzdGFjaz8gJmd0OyBUaGlzIGNv
-bW1pdDogJmd0OyAxLiBDaGFuZ2VzIHRoZSBidWZmZXIgZnJvbSBzdGFjayBh
-bGxvY2F0aW9uIHRvIGhlYXAgYWxsb2NhdGlvbiBieSByZXBsYWNpbmcgJmd0
-OyB1aW50OF90IGJ1ZmZlcltSSU5HQlVGRkVSX1NJWkVdIHdpdGggdWludDhf
-dCAqYnVmZmVyICZndDsgMi4gQWRkcyBnX21hbGxvYygpIGNhbGxzIGluIHFw
-d19pbml0X291dCgpIGFuZCBxcHdfaW5pdF9pbigpIHRvIGFsbG9jYXRlICZn
-dDsgdGhlIGJ1ZmZlciBvbiB0aGUgaGVhcCAmZ3Q7IDMuIEFkZHMgZ19mcmVl
-KCkgaW4gcXB3X3ZvaWNlX2ZpbmkoKSB0byBwcm9wZXJseSBjbGVhbiB1cCB0
-aGUgYnVmZmVyICZndDsgNC4gQWRkcyBlcnJvciBoYW5kbGluZyBmb3IgYWxs
-b2NhdGlvbiBmYWlsdXJlcyAmZ3Q7ICZndDsgVGhpcyBmaXggcHJldmVudHMg
-c3RhY2sgb3ZlcmZsb3cgd2hpbGUgbWFpbnRhaW5pbmcgdGhlIHNhbWUgZnVu
-Y3Rpb25hbGl0eSwgJmd0OyBhcyBlYWNoIGF1ZGlvIHN0cmVhbSAoaW5wdXQv
-b3V0cHV0KSBzdGlsbCBnZXRzIGl0cyBvd24gaW5kZXBlbmRlbnQgYnVmZmVy
-ICZndDsgZm9yIHRoZSByaW5nYnVmZmVyIG9wZXJhdGlvbnMuIEp1c3QgdG8g
-ZG91YmxlLWNoZWNrOiBEaWQgeW91IHVzZSBBSSB0byBjcmVhdGUgdGhpcyBw
-YXRjaD8gT3IganVzdCBmb3IgdGhlIHBhdGNoIGRlc2NyaXB0aW9uPyAmZ3Q7
-IFNpZ25lZC1vZmYtYnk6IEp1biBZdSAmbHQ7eXVqdW5Aa3lsaW5vcy5jbiZn
-dDsgJmd0OyAtLS0gJmd0OyBhdWRpby9wd2F1ZGlvLmMgfCAyMCArKysrKysr
-KysrKysrKysrKysrLSAmZ3Q7IDEgZmlsZSBjaGFuZ2VkLCAxOSBpbnNlcnRp
-b25zKCspLCAxIGRlbGV0aW9uKC0pICZndDsgJmd0OyBkaWZmIC0tZ2l0IGEv
-YXVkaW8vcHdhdWRpby5jIGIvYXVkaW8vcHdhdWRpby5jICZndDsgaW5kZXgg
-YTU5YzIyZTYwYi4uZmY3NWVjMmFmMiAxMDA2NDQgJmd0OyAtLS0gYS9hdWRp
-by9wd2F1ZGlvLmMgJmd0OyArKysgYi9hdWRpby9wd2F1ZGlvLmMgJmd0OyBA
-QCAtNTYsNyArNTYsNyBAQCB0eXBlZGVmIHN0cnVjdCBQV1ZvaWNlIHsgJmd0
-OyB1aW50MzJfdCBoaWdod2F0ZXJfbWFyazsgJmd0OyB1aW50MzJfdCBmcmFt
-ZV9zaXplLCByZXE7ICZndDsgc3RydWN0IHNwYV9yaW5nYnVmZmVyIHJpbmc7
-ICZndDsgLSB1aW50OF90IGJ1ZmZlcltSSU5HQlVGRkVSX1NJWkVdOyAmZ3Q7
-ICsgdWludDhfdCAqYnVmZmVyOyAmZ3Q7ICZndDsgcHd2b2x1bWUgdm9sdW1l
-OyAmZ3Q7IGJvb2wgbXV0ZWQ7ICZndDsgQEAgLTUzMiw2ICs1MzIsMTIgQEAg
-cXB3X2luaXRfb3V0KEhXVm9pY2VPdXQgKmh3LCBzdHJ1Y3QgYXVkc2V0dGlu
-Z3MgKmFzKSAmZ3Q7IEF1ZGlvZGV2UGlwZXdpcmVQZXJEaXJlY3Rpb25PcHRp
-b25zICpwcGRvID0gcG9wdHMtJmd0O291dDsgJmd0OyBpbnQgcjsgJmd0OyAm
-Z3Q7ICsgdi0mZ3Q7YnVmZmVyID0gZ19tYWxsb2MoUklOR0JVRkZFUl9TSVpF
-KTsgJmd0OyArIGlmICghdi0mZ3Q7YnVmZmVyKSB7IGdfbWFsbG9jIG5ldmVy
-IHJldHVybnMgTlVMTC4gJmd0OyArIGVycm9yX3JlcG9ydCgicGlwZXdpcmU6
-IGZhaWxlZCB0byBhbGxvY2F0ZSBidWZmZXIiKTsgJmd0OyArIHJldHVybiAt
-MTsgJmd0OyArIH0gJmd0OyArICZndDsgcHdfdGhyZWFkX2xvb3BfbG9jayhj
-LSZndDt0aHJlYWRfbG9vcCk7ICZndDsgJmd0OyB2LSZndDtpbmZvLmZvcm1h
-dCA9IGF1ZGZtdF90b19wdyhhcy0mZ3Q7Zm10LCBhcy0mZ3Q7YmlnX2VuZGlh
-bik7ICZndDsgQEAgLTU1MSw2ICs1NTcsOCBAQCBxcHdfaW5pdF9vdXQoSFdW
-b2ljZU91dCAqaHcsIHN0cnVjdCBhdWRzZXR0aW5ncyAqYXMpICZndDsgcHBk
-by0mZ3Q7bmFtZSwgU1BBX0RJUkVDVElPTl9PVVRQVVQpOyAmZ3Q7IGlmIChy
-ICZsdDsgMCkgeyAmZ3Q7IHB3X3RocmVhZF9sb29wX3VubG9jayhjLSZndDt0
-aHJlYWRfbG9vcCk7ICZndDsgKyBnX2ZyZWUodi0mZ3Q7YnVmZmVyKTsgJmd0
-OyArIHYtJmd0O2J1ZmZlciA9IE5VTEw7ICZndDsgcmV0dXJuIC0xOyAmZ3Q7
-IH0gJmd0OyAmZ3Q7IEBAIC01NzksNiArNTg3LDEyIEBAIHFwd19pbml0X2lu
-KEhXVm9pY2VJbiAqaHcsIHN0cnVjdCBhdWRzZXR0aW5ncyAqYXMpICZndDsg
-QXVkaW9kZXZQaXBld2lyZVBlckRpcmVjdGlvbk9wdGlvbnMgKnBwZG8gPSBw
-b3B0cy0mZ3Q7aW47ICZndDsgaW50IHI7ICZndDsgJmd0OyArIHYtJmd0O2J1
-ZmZlciA9IGdfbWFsbG9jKFJJTkdCVUZGRVJfU0laRSk7ICZndDsgKyBpZiAo
-IXYtJmd0O2J1ZmZlcikgeyBkaXRvLiAmZ3Q7ICsgZXJyb3JfcmVwb3J0KCJw
-aXBld2lyZTogZmFpbGVkIHRvIGFsbG9jYXRlIGJ1ZmZlciIpOyAmZ3Q7ICsg
-cmV0dXJuIC0xOyAmZ3Q7ICsgfSAmZ3Q7ICsgJmd0OyBwd190aHJlYWRfbG9v
-cF9sb2NrKGMtJmd0O3RocmVhZF9sb29wKTsgJmd0OyAmZ3Q7IHYtJmd0O2lu
-Zm8uZm9ybWF0ID0gYXVkZm10X3RvX3B3KGFzLSZndDtmbXQsIGFzLSZndDti
-aWdfZW5kaWFuKTsgJmd0OyBAQCAtNTk1LDYgKzYwOSw4IEBAIHFwd19pbml0
-X2luKEhXVm9pY2VJbiAqaHcsIHN0cnVjdCBhdWRzZXR0aW5ncyAqYXMpICZn
-dDsgcHBkby0mZ3Q7bmFtZSwgU1BBX0RJUkVDVElPTl9JTlBVVCk7ICZndDsg
-aWYgKHIgJmx0OyAwKSB7ICZndDsgcHdfdGhyZWFkX2xvb3BfdW5sb2NrKGMt
-Jmd0O3RocmVhZF9sb29wKTsgJmd0OyArIGdfZnJlZSh2LSZndDtidWZmZXIp
-OyAmZ3Q7ICsgdi0mZ3Q7YnVmZmVyID0gTlVMTDsgJmd0OyByZXR1cm4gLTE7
-ICZndDsgfSAmZ3Q7ICZndDsgQEAgLTYxOSw2ICs2MzUsOCBAQCBxcHdfdm9p
-Y2VfZmluaShBdWRpb1B3ICpjLCBQV1ZvaWNlICp2KSAmZ3Q7IHB3X3N0cmVh
-bV9kZXN0cm95KHYtJmd0O3N0cmVhbSk7ICZndDsgdi0mZ3Q7c3RyZWFtID0g
-TlVMTDsgJmd0OyBwd190aHJlYWRfbG9vcF91bmxvY2soYy0mZ3Q7dGhyZWFk
-X2xvb3ApOyAmZ3Q7ICsgZ19mcmVlKHYtJmd0O2J1ZmZlcik7ICZndDsgKyB2
-LSZndDtidWZmZXIgPSBOVUxMOyAmZ3Q7IH0gVGhvbWFzICZsdDsveXVqdW5A
-a3lsaW5vcy5jbiZndDs8L2Rpdj4KPC9kaXY+CjxwPiZuYnNwOzwvcD4KPHA+
-Jm5ic3A7PC9wPgo8ZGl2IGlkPSJzaWduYXR1cmVCb20iPgo8ZGl2Pgo8cD4m
-bmJzcDs8L3A+Cjxicj4KPHAgc3R5bGU9ImNvbG9yOiAjMDAwOyBmb250LXNp
-emU6IDE2cHg7Ij4tLS08L3A+CjxkaXYgaWQ9ImNzMmNfbWFpbF9zaWdhdHVy
-ZSIgc3R5bGU9ImNvbG9yOiAjMDAwOyBmb250LXNpemU6IDE2cHg7IGZvbnQt
-ZmFtaWx5OiBNaWNyb3NvZnQgWWFIZWk7Ij48L2Rpdj4KPHA+Jm5ic3A7PC9w
-Pgo8L2Rpdj4KPC9kaXY+PC9kaXY+
-
---nsmail-cdbn14l3tu2-cdetvo4qea3--
 
