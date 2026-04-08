@@ -4,90 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E950D10F9975
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C4A110F9969
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYN3-0007C1-7Q; Wed, 08 Apr 2026 15:15:27 -0400
+	id 1wAYMo-0006kO-Fx; Wed, 08 Apr 2026 15:15:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1wAYJS-0008Qe-Fv
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:11:43 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAYJy-0001Dp-Rd
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:12:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1wATGw-0004gE-96
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 09:48:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1775656086; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=ndIndi6KNOtfYkL1M9otKI3X1lTF6Cn3RaSGrq9v3LZnwC9VHfmo5v2jFJkW4FUkKowyrjU4P/1Jow0Ugy4J/nGmk4E7V6LNgwoIyW9PQrW5H3+Cdv0XutKtK+gi3JktlCEf1xUAPike5RzGyamCLv0A2PlFXdQoTho5uzivkrg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1775656086;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=rgtKBvg/ZLN7Q6dglCEolC9fM9oukOa5QsjfV40lvjU=; 
- b=He2ZL1voZYevAoFu6QPT9qfQ1VsvSrJ+LQlkWOWYuXQtLyXN2rkyiAHQTJnDmG5oCSXd0GfemvjXXs0u15hlTVdrW4MKbVA5NIaBRSVDtiPVdtZSxu9zPpeKMxHIFav3kJGATJ2Z9J/CrN+9xxtG0IEo1FZuqS0R8qDRHJ3tBT0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775656086; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=rgtKBvg/ZLN7Q6dglCEolC9fM9oukOa5QsjfV40lvjU=;
- b=DSoyNrTSJqEHpjSB1I385wXwOIDWFeKuHfRT2ZQVOBo0xqCuhYcgq/s51MTJWYLL
- +lmzPZnjwRFcSvLXGbs5J+eLpKukCmrWrP9UiBIqvlutU6CeRBFaUidX+WL8YLUtKf4
- HkvkR9hiwn23R0rfm0JT5P6y36KaYW+bdqbY1Edg=
-Received: by mx.zohomail.com with SMTPS id 1775656083527283.34652504728285;
- Wed, 8 Apr 2026 06:48:03 -0700 (PDT)
-Message-ID: <a2f0da9e-8227-4f83-bf8d-e598d34c0e46@collabora.com>
-Date: Wed, 8 Apr 2026 16:47:56 +0300
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wAKPJ-0005dA-Ef
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 00:20:53 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 637M4aIU2861188
+ for <qemu-devel@nongnu.org>; Wed, 8 Apr 2026 04:20:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ VyS//kJE8X1YiFhWbpMP89yyJBq8IVDF64zKKUVJKZQ=; b=IN+auyB3ntkHmqf/
+ HKDJ+cmlc2q1YPJ8dEjbkJsXZn7NDdETNNPCw8bb5OfZp0NAxJTWP4BmkBuBQrf+
+ AN1R5ZNquindE3DNbQM5S568N/Fb3X5D0EuBfP9LlxG3S/gyBYuiRS1PRgW3MdOW
+ pxAdW822Ko4+bpDePKXiGyCWt7OLiDeKdhYU7ehH5HyOScsPVu2zLzkdTwgQQ42n
+ a9uDDD2oPp3O4E1C11fBB1re1hRiZqm+IkH/Pu9s61iolQo89rTz1FlHn4OnRSkw
+ yzvRKybZe1U6r/6xifEoyVfWHa0gDEUJKM8GgY2W5lrjeyzMatTxNdNtjqQlebOH
+ RvthDA==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddad8rwvm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 04:20:38 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2b81ff82e3cso352182eec.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Apr 2026 21:20:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1775622037; x=1776226837; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VyS//kJE8X1YiFhWbpMP89yyJBq8IVDF64zKKUVJKZQ=;
+ b=DbYaC4KzSAvRNhcGSAay84LwGfuiC46BrcZBb6BkosXGZiucEpVysjZCmnL+0uoTyj
+ dBsXb1+3V8ntEtM+hj7pA5wSMEoKQloQ/uwzwfiNM2vEJ71bQhgWCJ7LYVd3WZAluoa7
+ 27ivX5MRu+JOByNguDWzH0VE+mW6FBmrNEAYK2Fr0vwvC6ItWmEqE/IjGaZbL8nY4/t4
+ Y7QU9RA9Elusmvtc0cQrKh0mLpAZXoZm1sY+cK8aDtgTM49rnb0ZTP2pkW3A6zN+lXuR
+ So6MK/Dzsvj2LlY2Z5QHSv6nVxUtD8E6GUQnX8JDGN7nfNNwVfMxVRkQAVeJyEIk0l/g
+ 6Ewg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775622037; x=1776226837;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VyS//kJE8X1YiFhWbpMP89yyJBq8IVDF64zKKUVJKZQ=;
+ b=UPjAJ6oCGuNSORRznIHDAi5SQbquERTx7oy4c0OJBiYgoAe2JHIvDVCl2ZpEV+0h3/
+ NxCZlKL1VdcWmfexU279tZHx8FNVCOqv9H//OcQgDkrv960QrnloE/RYQOniBdZ3mWRa
+ KZuFRYbBMUFDXF59ouM0fBwmABBUslMo8BKZB0mTyPuJL8Q/n6dbNjxMFOfwQUFIjiby
+ nB3MnGdupzv4mUC8oU/JqZyvb8BLbCd/SfNjaVadMDU003RLa86e2G9KNezjMeSaPdOP
+ GJdhMZKtOMYWc3bcY2ErNGafbqRV3TPDbzd0rdcv4BgcX0rDHrWl9rKFzJThdEb1jO8O
+ TOcw==
+X-Gm-Message-State: AOJu0YxZ2j0/5ZIOUDdxkg4FcXgVIRmkZtreUFG9n/W6f9JFJ3RKjIGf
+ ZwxKg12iZdG9vemacuYWTiSJDDET2ccZNYubvZRhMaJF6qq7+3CYMa6CNriOOy51hyjcY+Hd+Zx
+ tRs7p+UXaGR6tUMGNJz6154QgnGvQu60rnXm/YTT04rJ5mQb1kacer+4iHyosfsDFuw==
+X-Gm-Gg: AeBDieutZMG8r4Qlk6zOW4D4dX0XlUwpH0M0EiUFuZ3cMFRhqYbtiyUO29b32RKRZkq
+ WYEuiU42u9Hd3jKZ0TiKh4rNOIkCQ8aAXtDG19o6LHi/i2M0RmAWe7Xw08snh3aKv+KOX3y21gE
+ wnRa+EHld7aHBifoy0aqiRCNYkp1/E0uz8tYqUze4l+avDA9778PwbJYoWOWcLOwl2jaP9sRIhN
+ /jF4F7j+wHg0KeLsVjv4hy6N3R4fQgM4keeYDwLOSNzxvlv6pISbDtCzksrsW7FrKT/MdE2i+2C
+ yWw2U5XDdXJUuik02w4Yj/MuTFkdamVKbn4AYz/aXglpuHBNrHFCzwFuo8nee0SOIskENh9Au0J
+ V7Dl+/El+M9awrT66MlvvPEdxmMCRc/4y6TtorkjRbKSsfFsgI++EBqAuclrI3BdyRfuQxg==
+X-Received: by 2002:a05:7022:420:b0:128:d1f6:16da with SMTP id
+ a92af1059eb24-12bfaf58986mr9462708c88.14.1775622037369; 
+ Tue, 07 Apr 2026 21:20:37 -0700 (PDT)
+X-Received: by 2002:a05:7022:420:b0:128:d1f6:16da with SMTP id
+ a92af1059eb24-12bfaf58986mr9462695c88.14.1775622036845; 
+ Tue, 07 Apr 2026 21:20:36 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c14a371b1sm6480362c88.13.2026.04.07.21.20.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Apr 2026 21:20:36 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Subject: [PATCH v4 28/28] target/hexagon: Add guest reg reading functionality
+Date: Tue,  7 Apr 2026 21:19:53 -0700
+Message-Id: <20260408041953.1899532-29-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
+References: <20260408041953.1899532-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v22 02/18] ui/sdl2: Don't disable scanout when display is
- refreshed
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stefan Weil <sw@weilnetz.de>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>,
- Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Anthony Roberts <anthony.roberts@linaro.org>
-References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
- <20260303151422.977399-3-dmitry.osipenko@collabora.com>
- <c9943b84-e997-4ce8-8449-5c0115ca9250@weilnetz.de>
- <87qzoqbs51.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <87qzoqbs51.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-ORIG-GUID: BQ9pnrlvzdFZKAgeMwANDIPnqX5MtvP2
+X-Proofpoint-GUID: BQ9pnrlvzdFZKAgeMwANDIPnqX5MtvP2
+X-Authority-Analysis: v=2.4 cv=EoDiaycA c=1 sm=1 tr=0 ts=69d5d796 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=IJQQmebJWjVxhimlKuwA:9 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDAzNiBTYWx0ZWRfX89OPvUBJRefe
+ f8yxL3p8v1Fyw1D6tlBc3MBmZk++mu+/WabA6AEuh4QL0DHLyZ1VExbCD1CKfF/LxAesdSlpKfd
+ oq258P3EsIxPVpZ4p+5wP3AMkX6nYukiRVvzQKKLPwMVLEdCHgaxmWPmCq6JL4wR4aKUIkWH3tI
+ zjAt7jiMJM0ph9bwps7ryxpZufARnn7MOvB8MyHpkMhI/wxUodfRJPNLD/UUobwajmso5mjASZG
+ 0j4LHaTWqMkdQuKOhjw2mrnMLEV4re9/KHuRdHWY715/pGkKrR0tDHjHEcig69b8GdJ+EvPKDWd
+ ceFcVDAWTeptp2m5cF778NZ2XCtt5YUk8Kzdz5ixwGlNGbjBCGg9FOgnXBxloDMdfhbeHv4RCh2
+ 93j9IzjZ8eOiqEOysurt5H1o1zcQbVM2CxsfwGKLqS6bCJn/zdVMSGhV8eVLEKQE2GeJusV8HlW
+ FiRFLIqEbwgpLsS01LA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-08_02,2026-04-07_05,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 bulkscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080036
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,50 +150,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/26 20:24, Alex Bennée wrote:
-> Stefan Weil <sw@weilnetz.de> writes:
-> 
->> Am 03.03.26 um 16:14 schrieb Dmitry Osipenko:
->>> Display refreshment is invoked by a timer and it erroneously disables
->>> the active scanout if it happens to be invoked after scanout has been
->>> enabled. This offending scanout-disable race condition with a timer
->>> can be easily hit when Qemu runs with a disabled vsync by using SDL or
->>> GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
->>> content shouldn't disable the active display. Fix it by keeping the
->>> scanout's state unchanged when display is redrawn.
->>> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->>> Tested-by: Alex Bennée <alex.bennee@linaro.org>
->>> Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
->>> Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
->>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>> ---
->>>   ui/sdl2-gl.c | 1 -
->>>   1 file changed, 1 deletion(-)
->>> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
->>> index 3be17d1079af..5eca0248233e 100644
->>> --- a/ui/sdl2-gl.c
->>> +++ b/ui/sdl2-gl.c
->>> @@ -51,7 +51,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
->>>       int ww, wh;
->>>         SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
->>> -    sdl2_set_scanout_mode(scon, false);
->>>         SDL_GetWindowSize(scon->real_window, &ww, &wh);
->>>       surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
->>
->> I got a user report that my latest QEMU for Windows no longer supports
->> SDL. According to my own test, SDL still worked with git master
->> (2026-03-07), but was broken with 11.0.0-rc0 (2026-03-18).
-> 
-> This is:
-> 
->   https://gitlab.com/qemu-project/qemu/-/work_items/3347
-> 
-> Anthony should be posting a patch to the list soon.
-
-Thanks a lot for handling the issue!
-
--- 
-Best regards,
-Dmitry
+RnJvbTogTWF0aGV1cyBUYXZhcmVzIEJlcm5hcmRpbm8gPHF1aWNfbWF0aGJlcm5AcXVpY2luYy5j
+b20+CgpTaWduZWQtb2ZmLWJ5OiBNYXRoZXVzIFRhdmFyZXMgQmVybmFyZGlubyA8cXVpY19tYXRo
+YmVybkBxdWljaW5jLmNvbT4KUmV2aWV3ZWQtYnk6IFRheWxvciBTaW1wc29uIDxsdGF5bG9yc2lt
+cHNvbkBnbWFpbC5jb20+Ci0tLQogdGFyZ2V0L2hleGFnb24vY3B1LmggICAgICAgfCAgMSArCiB0
+YXJnZXQvaGV4YWdvbi9jcHUuYyAgICAgICB8IDE5ICsrKysrKysrKysrKysrKysrKysKIHRhcmdl
+dC9oZXhhZ29uL29wX2hlbHBlci5jIHwgMTYgKysrKysrKysrKysrKystLQogMyBmaWxlcyBjaGFu
+Z2VkLCAzNCBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3Rhcmdl
+dC9oZXhhZ29uL2NwdS5oIGIvdGFyZ2V0L2hleGFnb24vY3B1LmgKaW5kZXggMTA0OGU3NjdlNmQu
+LjA5ZDVjYWM0ZmU1IDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9jcHUuaAorKysgYi90YXJn
+ZXQvaGV4YWdvbi9jcHUuaApAQCAtMjE5LDYgKzIxOSw3IEBAIEdfTk9SRVRVUk4gdm9pZCBoZXhh
+Z29uX3JhaXNlX2V4Y2VwdGlvbl9lcnIoQ1BVSGV4YWdvblN0YXRlICplbnYsCiAgKiBub3Qgc3Rv
+cHBlZC4KICAqLwogYm9vbCBoZXhhZ29uX3RocmVhZF9pc19lbmFibGVkKENQVUhleGFnb25TdGF0
+ZSAqdGhyZWFkX2Vudik7Cit1aW50MzJfdCBoZXhhZ29uX2dyZWdfcmVhZChDUFVIZXhhZ29uU3Rh
+dGUgKmVudiwgdWludDMyX3QgcmVnKTsKIHZvaWQgaGV4YWdvbl9jcHVfc29mdF9yZXNldChDUFVI
+ZXhhZ29uU3RhdGUgKmVudik7CiAjZW5kaWYKIApkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24v
+Y3B1LmMgYi90YXJnZXQvaGV4YWdvbi9jcHUuYwppbmRleCBhNDhkNjE3OGUwNi4uYmQzZWVjMGQ1
+MjUgMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL2NwdS5jCisrKyBiL3RhcmdldC9oZXhhZ29u
+L2NwdS5jCkBAIC03NjUsNiArNzY1LDI1IEBAIHN0YXRpYyB2b2lkIGhleGFnb25fY3B1X2NsYXNz
+X2luaXQoT2JqZWN0Q2xhc3MgKmMsIGNvbnN0IHZvaWQgKmRhdGEpCiAjZW5kaWYKIH0KIAorI2lm
+bmRlZiBDT05GSUdfVVNFUl9PTkxZCit1aW50MzJfdCBoZXhhZ29uX2dyZWdfcmVhZChDUFVIZXhh
+Z29uU3RhdGUgKmVudiwgdWludDMyX3QgcmVnKQoreworICAgIGlmIChyZWcgPD0gSEVYX0dSRUdf
+RzMpIHsKKyAgICAgICAgcmV0dXJuIGVudi0+Z3JlZ1tyZWddOworICAgIH0KKyAgICBzd2l0Y2gg
+KHJlZykgeworICAgIGNhc2UgSEVYX0dSRUdfR1BDWUNMRUxPOgorICAgICAgICByZXR1cm4gaGV4
+YWdvbl9nZXRfc3lzX3BjeWNsZV9jb3VudF9sb3coZW52KTsKKyAgICBjYXNlIEhFWF9HUkVHX0dQ
+Q1lDTEVISToKKyAgICAgICAgcmV0dXJuIGhleGFnb25fZ2V0X3N5c19wY3ljbGVfY291bnRfaGln
+aChlbnYpOworICAgIGRlZmF1bHQ6CisgICAgICAgIHFlbXVfbG9nX21hc2soTE9HX1VOSU1QLCAi
+cmVhZGluZyBncmVnICUiIFBSSWQzMgorICAgICAgICAgICAgICAgICIgbm90IHlldCBzdXBwb3J0
+ZWQuXG4iLCByZWcpOworICAgICAgICByZXR1cm4gMDsKKyAgICB9Cit9CisjZW5kaWYKKwogI2Rl
+ZmluZSBERUZJTkVfQ1BVKHR5cGVfbmFtZSwgaW5pdGZuKSAgICAgIFwKICAgICB7ICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcCiAgICAgICAgIC5uYW1lID0gdHlwZV9uYW1l
+LCAgICAgICAgICAgICAgICAgXApkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vb3BfaGVscGVy
+LmMgYi90YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYwppbmRleCBjNGFkNjAxNTY4OS4uYTFjMGM5
+OTEwZjIgMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL29wX2hlbHBlci5jCisrKyBiL3Rhcmdl
+dC9oZXhhZ29uL29wX2hlbHBlci5jCkBAIC0xODc3LDEzICsxODc3LDI1IEBAIHVpbnQ2NF90IEhF
+TFBFUihzcmVnX3JlYWRfcGFpcikoQ1BVSGV4YWdvblN0YXRlICplbnYsIHVpbnQzMl90IHJlZykK
+IH0KIAogdWludDMyX3QgSEVMUEVSKGdyZWdfcmVhZCkoQ1BVSGV4YWdvblN0YXRlICplbnYsIHVp
+bnQzMl90IHJlZykKKwogewotICAgIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCk7CisgICAgcmV0dXJu
+IGhleGFnb25fZ3JlZ19yZWFkKGVudiwgcmVnKTsKIH0KIAogdWludDY0X3QgSEVMUEVSKGdyZWdf
+cmVhZF9wYWlyKShDUFVIZXhhZ29uU3RhdGUgKmVudiwgdWludDMyX3QgcmVnKQorCiB7Ci0gICAg
+Z19hc3NlcnRfbm90X3JlYWNoZWQoKTsKKyAgICBpZiAocmVnID09IEhFWF9HUkVHX0cwIHx8IHJl
+ZyA9PSBIRVhfR1JFR19HMikgeworICAgICAgICByZXR1cm4gKHVpbnQ2NF90KShlbnYtPmdyZWdb
+cmVnXSkgfAorICAgICAgICAgICAgICAgKCgodWludDY0X3QpKGVudi0+Z3JlZ1tyZWcgKyAxXSkp
+IDw8IDMyKTsKKyAgICB9CisgICAgc3dpdGNoIChyZWcpIHsKKyAgICBjYXNlIEhFWF9HUkVHX0dQ
+Q1lDTEVMTzoKKyAgICAgICAgcmV0dXJuIGhleGFnb25fZ2V0X3N5c19wY3ljbGVfY291bnQoZW52
+KTsKKyAgICBkZWZhdWx0OgorICAgICAgICByZXR1cm4gKHVpbnQ2NF90KWhleGFnb25fZ3JlZ19y
+ZWFkKGVudiwgcmVnKSB8CisgICAgICAgICAgICAgICAoKHVpbnQ2NF90KShoZXhhZ29uX2dyZWdf
+cmVhZChlbnYsIHJlZyArIDEpKSA8PCAzMik7CisgICAgfQogfQogCiAvKgotLSAKMi4zNC4xCgo=
 
