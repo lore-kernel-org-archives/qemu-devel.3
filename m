@@ -4,61 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434E610F9976
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA40610F9968
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 19:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAYWq-0000r1-0w; Wed, 08 Apr 2026 15:25:32 -0400
+	id 1wAYdQ-0002mH-EU; Wed, 08 Apr 2026 15:32:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wAY7E-0007b4-TO; Wed, 08 Apr 2026 14:59:05 -0400
-Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
+ (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1wAYGg-0004Ei-GE
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 15:08:50 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wATar-0001D5-NT; Wed, 08 Apr 2026 10:09:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1775657234; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=5lMRHKqs6Bxx8Dg3zBtwYkr7QPmxy73f8UkGge8FRzU=;
- b=xyLaGDKWq5MuJq6SH8hvUVYxawhOYB7LOMRpDeKfBGMBvOGdx04G5ccQlYExXdE2nHKPZWv2TstgemQFsvDR8C9myALiNvK1JCSZ6U/nBgI9tB5Q6rGFaYR8p5dlsUMoJ9lL2kXzQN2Pp31DmvOV4Q+2dt6npJ9lxVRiwroF024=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R471e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0X0f7V58_1775657233; 
-Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X0f7V58_1775657233 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 08 Apr 2026 22:07:14 +0800
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com, palmer@dabbelt.com,
- alistair23@gmail.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v5 1/6] target/riscv: Add basic definitions and CSRs for SMMPT
-Date: Wed,  8 Apr 2026 22:06:30 +0800
-Message-Id: <20260408140635.42546-2-zhiwei_liu@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
-References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <yujun@kylinos.cn>) id 1wAMS5-0002ZA-7m
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 02:31:52 -0400
+X-UUID: 9834d5fa331411f1aa26b74ffac11d73-20260408
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12, REQID:7b6c9b8d-21b6-40f6-b3c5-a3ff8499e1b5, IP:0,
+ U
+ RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+ :release,TS:-5
+X-CID-META: VersionHash:e7bac3a, CLOUDID:40ac6daea920a4dc817f4b2b1d35040b,
+ BulkI
+ D:nil,BulkQuantity:0,Recheck:0,SF:81|83|102|898,TC:0,Content:0|14|51,EDM:-
+ 3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,A
+ V:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: 2B06F67595C4F84CB91B9E00163EECF9
+X-UUID: 9834d5fa331411f1aa26b74ffac11d73-20260408
+Received: from node4 [(10.44.17.112)] by mailgw.kylinos.cn
+ (envelope-from <yujun@kylinos.cn>) (Generic MTA)
+ with ESMTP id 1654394404; Wed, 08 Apr 2026 14:31:37 +0800
+Received: from node4 (localhost [127.0.0.1])
+ by node4 (NSMail) with SMTP id 0C7C91200BD8D;
+ Wed,  8 Apr 2026 14:31:37 +0800 (CST)
+Received: by node4 (NSMail, from userid 10001)
+ id 01AB21200BD8C; Wed,  8 Apr 2026 14:31:35 +0800 (CST)
+From: =?UTF-8?B?5Za75Yab?= <yujun@kylinos.cn>
+Subject: =?UTF-8?B?5Zue5aSNOiBSZTogW1BBVENIXSBhdWRpby9waXBld2lyZTogRml4IHN0YWNrIG92ZXJmbG93IGJ5IG1vdmluZyBidWZmZXIgdG8gaGVhcA==?=
+To: =?UTF-8?B?bWFyY2FuZHJlLmx1cmVhdQ==?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?B?b2Rha2k=?= <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?B?VGhvbWFzIEh1dGg=?= <thuth@redhat.com>
+Cc: =?UTF-8?B?bWFyay5jYXZlYXlsYW5k?= <mark.caveayland@nutanix.com>,
+ =?UTF-8?B?cGhpbG1k?= <philmd@linaro.org>,
+ =?UTF-8?B?cWVtdS1kZXZlbA==?= <qemu-devel@nongnu.org>
+Date: Wed, 08 Apr 2026 14:31:35 +0800
+X-Mailer: NSMAIL 8.2
+Message-ID: <a1npd7r5807-a1so0q5obt4@nsmail8.2--kylin--1>
+References: 7c4c01de-475c-4864-9dc4-743bf8d10247@redhat.com
+X-Israising: 0
+X-Seclevel-1: 0
+X-Seclevel: 0
+X-Delaysendtime: Wed, 08 Apr 2026 14:31:35 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.112;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed; boundary=nsmail-cdbn14l3tu2-cdetvo4qea3
+X-ns-mid: webmail-69d5f647-ap1kl5ig
+X-ope-from: <yujun@kylinos.cn>
+X-receipt: 0
+Received-SPF: pass client-ip=124.126.103.232; envelope-from=yujun@kylinos.cn;
+ helo=mailgw.kylinos.cn
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
+ HTML_MIME_NO_HTML_TAG=0.377, HTML_OBFUSCATE_05_10=0.26, MIME_HTML_ONLY=0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 08 Apr 2026 15:32:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,265 +89,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch lays the groundwork for the SMMPT (Supervisor Domains Access
-Protection) extension by introducing its fundamental components.
+This message is in MIME format.
 
-It adds:
-- New CPU configuration flags, `ext_smmpt` and `ext_smsdid`, to enable
-  the extension.
-- Bit-field definitions for the `mmpt` CSR in `cpu_bits.h`.
-- The `mmpt` and `msdcfg` CSR numbers and their read/write handlers in
-  `csr.c`.
-- New fields in `CPUArchState` to store the state of these new CSRs.
-- A new translation failure reason `TRANSLATE_MPT_FAIL`.
+--nsmail-cdbn14l3tu2-cdetvo4qea3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-This provides the necessary infrastructure for the core MPT logic and
-MMU integration that will follow.
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6TWljcm9zb2Z0IFlhSGVpO2ZvbnQt
+c2l6ZToxNHB4O2NvbG9yOiMwMDAwMDA7IiBjbGFzcz0ibF9ub2RlX2hhc19j
+b2xvciI+PHA+Jm5ic3A7PC9wPgo8cD5Iae+8jFRob21hc++8mjwvcD4KPHA+
+VGhhbmsgeW91IGZvciByZXZpZXdpbmcgdGhlIHBhdGNoLjwvcD4KPHA+SnVz
+dCB1c2luZyBBSSB0byBkZXNjcmliZSBpdCwgeW91IGtub3csIG15IEVuZ2xp
+c2ggaXMgbm90IHZlcnkgZ29vZC48L3A+CjxwPkkgYW0gY3VycmVudGx5IHBy
+dW5pbmcgYW5kIG9wdGltaXppbmcgcWVtdSB3aXRoIHRoZSBhaW0gb2YgcmVk
+dWNpbmcgaXRzIG1lbW9yeSB1c2FnZS4gSSBoYXBwZW5lZCB0byBkaXNjb3Zl
+ciB0aGUgbGFyZ2UgbWVtb3J5IGFsbG9jYXRpb24gb2YgdGhpcyBzdGFjayBh
+bmQgYW0gdHJ5aW5nIHRvIHByb3Bvc2UgYSBuZXcgc29sdXRpb24uPC9wPgo8
+cD5pdCByZWFsbHkgaXMgdGhhdCBzaW1wbGUuPC9wPgo8cD4mbmJzcDs8L3A+
+CjxwPkp1biBZdTwvcD4KPGRpdiBpZD0ic2lnbmF0dXJlVG9wIj48L2Rpdj4K
+PGRpdiBpZD0iY3MyY19yZSIgc3R5bGU9Im1hcmdpbi1sZWZ0OiAwLjVlbTsg
+cGFkZGluZy1sZWZ0OiAwLjVlbTsgYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAj
+Y2FjYWNhOyAtd2Via2l0LXVzZXItbW9kaWZ5OiByZWFkLW9ubHk7IC1tb3ot
+dXNlci1tb2RpZnk6IHJlYWQtb25seTsgLW1zLXVzZXItbW9kaWZ5OiByZWFk
+LW9ubHk7IC1vLXVzZXItbW9kaWZ5OiByZWFkLW9ubHk7Ij48YnI+PGJyPjxi
+cj4KPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y4ZjhmODsgcGFk
+ZGluZzogOHB4IDEwcHg7IGZvbnQtZmFtaWx5OiBNaWNyb3NvZnQgWWFIZWk7
+IGZvbnQtc2l6ZTogMTRweDsgY29sb3I6ICMwMDA7Ij48c3Ryb25nPuS4uyZu
+YnNwOyZuYnNwOyZuYnNwO+mimO+8mjwvc3Ryb25nPjxzcGFuIGlkPSJjczJj
+X3N1YmplY3QiPlJlOiBbUEFUQ0hdIGF1ZGlvL3BpcGV3aXJlOiBGaXggc3Rh
+Y2sgb3ZlcmZsb3cgYnkgbW92aW5nIGJ1ZmZlciB0byBoZWFwPC9zcGFuPiA8
+YnI+PHN0cm9uZz7ml6UmbmJzcDsmbmJzcDsmbmJzcDvmnJ/vvJo8L3N0cm9u
+Zz48c3BhbiBpZD0iY3MyY19kYXRlIj4yMDI25bm0MDTmnIg45pelMTM6MTU8
+L3NwYW4+IDxicj48c3Ryb25nPuWPkeS7tuS6uu+8mjwvc3Ryb25nPjxzcGFu
+IGlkPSJjczJjX2Zyb20iPlRob21hcyBIdXRoPC9zcGFuPiA8YnI+PHN0cm9u
+Zz7mlLbku7bkurrvvJo8L3N0cm9uZz48c3BhbiBpZD0iY3MyY190byIgc3R5
+bGU9IndvcmQtYnJlYWs6IGJyZWFrLWFsbDsiPm1hcmNhbmRyZS5sdXJlYXUs
+b2Rha2ksVGhvbWFzIEh1dGg8L3NwYW4+IDxicj48c3Ryb25nPuaKhOmAgeS6
+uu+8mjwvc3Ryb25nPjxzcGFuIGlkPSJjczJjX3RvIiBzdHlsZT0id29yZC1i
+cmVhazogYnJlYWstYWxsOyI+bWFyay5jYXZlYXlsYW5kLHBoaWxtZCxxZW11
+LWRldmVsPC9zcGFuPjwvZGl2Pgo8YnI+CjxkaXYgaWQ9ImNzMmNfY29udGVu
+dCI+T24gMDgvMDQvMjAyNiAwMy4yMywgSnVuIFl1IHdyb3RlOiAmZ3Q7IFRo
+ZSBQV1ZvaWNlIHN0cnVjdCB3YXMgYWxsb2NhdGluZyBhIGxhcmdlIDRNQiBi
+dWZmZXIgb24gdGhlIHN0YWNrIHVzaW5nICZndDsgdWludDhfdCBidWZmZXJb
+UklOR0JVRkZFUl9TSVpFXSwgd2hpY2ggY291bGQgY2F1c2Ugc3RhY2sgb3Zl
+cmZsb3cuIFdoaWNoIGZ1bmN0aW9uIGlzIHRoaXM/IEkuZS4gd2hlcmUgZG9l
+cyB0aGlzIGdldCBjcmVhdGVkIG9uIHRoZSBzdGFjaz8gJmd0OyBUaGlzIGNv
+bW1pdDogJmd0OyAxLiBDaGFuZ2VzIHRoZSBidWZmZXIgZnJvbSBzdGFjayBh
+bGxvY2F0aW9uIHRvIGhlYXAgYWxsb2NhdGlvbiBieSByZXBsYWNpbmcgJmd0
+OyB1aW50OF90IGJ1ZmZlcltSSU5HQlVGRkVSX1NJWkVdIHdpdGggdWludDhf
+dCAqYnVmZmVyICZndDsgMi4gQWRkcyBnX21hbGxvYygpIGNhbGxzIGluIHFw
+d19pbml0X291dCgpIGFuZCBxcHdfaW5pdF9pbigpIHRvIGFsbG9jYXRlICZn
+dDsgdGhlIGJ1ZmZlciBvbiB0aGUgaGVhcCAmZ3Q7IDMuIEFkZHMgZ19mcmVl
+KCkgaW4gcXB3X3ZvaWNlX2ZpbmkoKSB0byBwcm9wZXJseSBjbGVhbiB1cCB0
+aGUgYnVmZmVyICZndDsgNC4gQWRkcyBlcnJvciBoYW5kbGluZyBmb3IgYWxs
+b2NhdGlvbiBmYWlsdXJlcyAmZ3Q7ICZndDsgVGhpcyBmaXggcHJldmVudHMg
+c3RhY2sgb3ZlcmZsb3cgd2hpbGUgbWFpbnRhaW5pbmcgdGhlIHNhbWUgZnVu
+Y3Rpb25hbGl0eSwgJmd0OyBhcyBlYWNoIGF1ZGlvIHN0cmVhbSAoaW5wdXQv
+b3V0cHV0KSBzdGlsbCBnZXRzIGl0cyBvd24gaW5kZXBlbmRlbnQgYnVmZmVy
+ICZndDsgZm9yIHRoZSByaW5nYnVmZmVyIG9wZXJhdGlvbnMuIEp1c3QgdG8g
+ZG91YmxlLWNoZWNrOiBEaWQgeW91IHVzZSBBSSB0byBjcmVhdGUgdGhpcyBw
+YXRjaD8gT3IganVzdCBmb3IgdGhlIHBhdGNoIGRlc2NyaXB0aW9uPyAmZ3Q7
+IFNpZ25lZC1vZmYtYnk6IEp1biBZdSAmbHQ7eXVqdW5Aa3lsaW5vcy5jbiZn
+dDsgJmd0OyAtLS0gJmd0OyBhdWRpby9wd2F1ZGlvLmMgfCAyMCArKysrKysr
+KysrKysrKysrKysrLSAmZ3Q7IDEgZmlsZSBjaGFuZ2VkLCAxOSBpbnNlcnRp
+b25zKCspLCAxIGRlbGV0aW9uKC0pICZndDsgJmd0OyBkaWZmIC0tZ2l0IGEv
+YXVkaW8vcHdhdWRpby5jIGIvYXVkaW8vcHdhdWRpby5jICZndDsgaW5kZXgg
+YTU5YzIyZTYwYi4uZmY3NWVjMmFmMiAxMDA2NDQgJmd0OyAtLS0gYS9hdWRp
+by9wd2F1ZGlvLmMgJmd0OyArKysgYi9hdWRpby9wd2F1ZGlvLmMgJmd0OyBA
+QCAtNTYsNyArNTYsNyBAQCB0eXBlZGVmIHN0cnVjdCBQV1ZvaWNlIHsgJmd0
+OyB1aW50MzJfdCBoaWdod2F0ZXJfbWFyazsgJmd0OyB1aW50MzJfdCBmcmFt
+ZV9zaXplLCByZXE7ICZndDsgc3RydWN0IHNwYV9yaW5nYnVmZmVyIHJpbmc7
+ICZndDsgLSB1aW50OF90IGJ1ZmZlcltSSU5HQlVGRkVSX1NJWkVdOyAmZ3Q7
+ICsgdWludDhfdCAqYnVmZmVyOyAmZ3Q7ICZndDsgcHd2b2x1bWUgdm9sdW1l
+OyAmZ3Q7IGJvb2wgbXV0ZWQ7ICZndDsgQEAgLTUzMiw2ICs1MzIsMTIgQEAg
+cXB3X2luaXRfb3V0KEhXVm9pY2VPdXQgKmh3LCBzdHJ1Y3QgYXVkc2V0dGlu
+Z3MgKmFzKSAmZ3Q7IEF1ZGlvZGV2UGlwZXdpcmVQZXJEaXJlY3Rpb25PcHRp
+b25zICpwcGRvID0gcG9wdHMtJmd0O291dDsgJmd0OyBpbnQgcjsgJmd0OyAm
+Z3Q7ICsgdi0mZ3Q7YnVmZmVyID0gZ19tYWxsb2MoUklOR0JVRkZFUl9TSVpF
+KTsgJmd0OyArIGlmICghdi0mZ3Q7YnVmZmVyKSB7IGdfbWFsbG9jIG5ldmVy
+IHJldHVybnMgTlVMTC4gJmd0OyArIGVycm9yX3JlcG9ydCgicGlwZXdpcmU6
+IGZhaWxlZCB0byBhbGxvY2F0ZSBidWZmZXIiKTsgJmd0OyArIHJldHVybiAt
+MTsgJmd0OyArIH0gJmd0OyArICZndDsgcHdfdGhyZWFkX2xvb3BfbG9jayhj
+LSZndDt0aHJlYWRfbG9vcCk7ICZndDsgJmd0OyB2LSZndDtpbmZvLmZvcm1h
+dCA9IGF1ZGZtdF90b19wdyhhcy0mZ3Q7Zm10LCBhcy0mZ3Q7YmlnX2VuZGlh
+bik7ICZndDsgQEAgLTU1MSw2ICs1NTcsOCBAQCBxcHdfaW5pdF9vdXQoSFdW
+b2ljZU91dCAqaHcsIHN0cnVjdCBhdWRzZXR0aW5ncyAqYXMpICZndDsgcHBk
+by0mZ3Q7bmFtZSwgU1BBX0RJUkVDVElPTl9PVVRQVVQpOyAmZ3Q7IGlmIChy
+ICZsdDsgMCkgeyAmZ3Q7IHB3X3RocmVhZF9sb29wX3VubG9jayhjLSZndDt0
+aHJlYWRfbG9vcCk7ICZndDsgKyBnX2ZyZWUodi0mZ3Q7YnVmZmVyKTsgJmd0
+OyArIHYtJmd0O2J1ZmZlciA9IE5VTEw7ICZndDsgcmV0dXJuIC0xOyAmZ3Q7
+IH0gJmd0OyAmZ3Q7IEBAIC01NzksNiArNTg3LDEyIEBAIHFwd19pbml0X2lu
+KEhXVm9pY2VJbiAqaHcsIHN0cnVjdCBhdWRzZXR0aW5ncyAqYXMpICZndDsg
+QXVkaW9kZXZQaXBld2lyZVBlckRpcmVjdGlvbk9wdGlvbnMgKnBwZG8gPSBw
+b3B0cy0mZ3Q7aW47ICZndDsgaW50IHI7ICZndDsgJmd0OyArIHYtJmd0O2J1
+ZmZlciA9IGdfbWFsbG9jKFJJTkdCVUZGRVJfU0laRSk7ICZndDsgKyBpZiAo
+IXYtJmd0O2J1ZmZlcikgeyBkaXRvLiAmZ3Q7ICsgZXJyb3JfcmVwb3J0KCJw
+aXBld2lyZTogZmFpbGVkIHRvIGFsbG9jYXRlIGJ1ZmZlciIpOyAmZ3Q7ICsg
+cmV0dXJuIC0xOyAmZ3Q7ICsgfSAmZ3Q7ICsgJmd0OyBwd190aHJlYWRfbG9v
+cF9sb2NrKGMtJmd0O3RocmVhZF9sb29wKTsgJmd0OyAmZ3Q7IHYtJmd0O2lu
+Zm8uZm9ybWF0ID0gYXVkZm10X3RvX3B3KGFzLSZndDtmbXQsIGFzLSZndDti
+aWdfZW5kaWFuKTsgJmd0OyBAQCAtNTk1LDYgKzYwOSw4IEBAIHFwd19pbml0
+X2luKEhXVm9pY2VJbiAqaHcsIHN0cnVjdCBhdWRzZXR0aW5ncyAqYXMpICZn
+dDsgcHBkby0mZ3Q7bmFtZSwgU1BBX0RJUkVDVElPTl9JTlBVVCk7ICZndDsg
+aWYgKHIgJmx0OyAwKSB7ICZndDsgcHdfdGhyZWFkX2xvb3BfdW5sb2NrKGMt
+Jmd0O3RocmVhZF9sb29wKTsgJmd0OyArIGdfZnJlZSh2LSZndDtidWZmZXIp
+OyAmZ3Q7ICsgdi0mZ3Q7YnVmZmVyID0gTlVMTDsgJmd0OyByZXR1cm4gLTE7
+ICZndDsgfSAmZ3Q7ICZndDsgQEAgLTYxOSw2ICs2MzUsOCBAQCBxcHdfdm9p
+Y2VfZmluaShBdWRpb1B3ICpjLCBQV1ZvaWNlICp2KSAmZ3Q7IHB3X3N0cmVh
+bV9kZXN0cm95KHYtJmd0O3N0cmVhbSk7ICZndDsgdi0mZ3Q7c3RyZWFtID0g
+TlVMTDsgJmd0OyBwd190aHJlYWRfbG9vcF91bmxvY2soYy0mZ3Q7dGhyZWFk
+X2xvb3ApOyAmZ3Q7ICsgZ19mcmVlKHYtJmd0O2J1ZmZlcik7ICZndDsgKyB2
+LSZndDtidWZmZXIgPSBOVUxMOyAmZ3Q7IH0gVGhvbWFzICZsdDsveXVqdW5A
+a3lsaW5vcy5jbiZndDs8L2Rpdj4KPC9kaXY+CjxwPiZuYnNwOzwvcD4KPHA+
+Jm5ic3A7PC9wPgo8ZGl2IGlkPSJzaWduYXR1cmVCb20iPgo8ZGl2Pgo8cD4m
+bmJzcDs8L3A+Cjxicj4KPHAgc3R5bGU9ImNvbG9yOiAjMDAwOyBmb250LXNp
+emU6IDE2cHg7Ij4tLS08L3A+CjxkaXYgaWQ9ImNzMmNfbWFpbF9zaWdhdHVy
+ZSIgc3R5bGU9ImNvbG9yOiAjMDAwOyBmb250LXNpemU6IDE2cHg7IGZvbnQt
+ZmFtaWx5OiBNaWNyb3NvZnQgWWFIZWk7Ij48L2Rpdj4KPHA+Jm5ic3A7PC9w
+Pgo8L2Rpdj4KPC9kaXY+PC9kaXY+
 
-Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu.h                |  9 ++-
- target/riscv/cpu_bits.h           | 27 +++++++++
- target/riscv/cpu_cfg_fields.h.inc |  2 +
- target/riscv/csr.c                | 95 +++++++++++++++++++++++++++++++
- target/riscv/riscv_smmpt.h        | 21 +++++++
- 5 files changed, 153 insertions(+), 1 deletion(-)
- create mode 100644 target/riscv/riscv_smmpt.h
-
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 35d1f6362c..f8265c2cc2 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -130,7 +130,8 @@ enum {
-     TRANSLATE_SUCCESS,
-     TRANSLATE_FAIL,
-     TRANSLATE_PMP_FAIL,
--    TRANSLATE_G_STAGE_FAIL
-+    TRANSLATE_G_STAGE_FAIL,
-+    TRANSLATE_MPT_FAIL
- };
- 
- /* Extension context status */
-@@ -181,6 +182,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
- #include "debug.h"
-+#include "riscv_smmpt.h"
- #endif
- 
- #define RV_VLEN_MAX 1024
-@@ -481,6 +483,11 @@ struct CPUArchState {
-     uint64_t hstateen[SMSTATEEN_MAX_COUNT];
-     uint64_t sstateen[SMSTATEEN_MAX_COUNT];
-     uint64_t henvcfg;
-+    /* Smsdid */
-+    uint32_t mptmode;
-+    uint32_t sdid;
-+    uint64_t mptppn;
-+    uint32_t msdcfg;
- #endif
- 
-     /* Fields from here on are preserved across CPU reset. */
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index b62dd82fe7..c6a34863d1 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -1164,4 +1164,31 @@ typedef enum CTRType {
- #define MCONTEXT64                         0x0000000000001FFFULL
- #define MCONTEXT32_HCONTEXT                0x0000007F
- #define MCONTEXT64_HCONTEXT                0x0000000000003FFFULL
-+
-+/* Smsdid */
-+#define CSR_MMPT        0xbc0
-+#define CSR_MSDCFG      0xbd1
-+
-+#define MMPT_MODE_MASK_32   0xC0000000
-+#define MMPT_SDID_MASK_32   0x3F000000
-+#define MMPT_PPN_MASK_32    0x003FFFFF
-+
-+#define MMPT_MODE_SHIFT_32  30
-+#define MMPT_SDID_SHIFT_32  24
-+
-+#define MMPT_MODE_MASK_64   0xF000000000000000ULL
-+#define MMPT_SDID_MASK_64   0x0FC0000000000000ULL
-+#define MMPT_PPN_MASK_64    0x000FFFFFFFFFFFFFULL
-+
-+#define MPTE_L3_VALID       0x0000100000000000ULL
-+#define MPTE_L3_RESERVED    0xFFFFE00000000000ULL
-+
-+#define MPTE_L2_RESERVED_64    0xFFFF800000000000ULL
-+#define MPTE_L2_RESERVED_32    0xFE000000
-+
-+#define MPTE_L1_RESERVED_64    0xFFFFFFFF00000000ULL
-+#define MPTE_L1_RESERVED_32    0xFFFF0000
-+
-+#define MMPT_MODE_SHIFT_64  60
-+#define MMPT_SDID_SHIFT_64  54
- #endif
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index cd1a5ec56b..80644948dd 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -63,6 +63,8 @@ BOOL_FIELD(ext_smpmpmt)
- BOOL_FIELD(ext_svrsw60t59b)
- BOOL_FIELD(ext_svvptc)
- BOOL_FIELD(ext_svukte)
-+BOOL_FIELD(ext_smmpt)
-+BOOL_FIELD(ext_smsdid)
- BOOL_FIELD(ext_zdinx)
- BOOL_FIELD(ext_zaamo)
- BOOL_FIELD(ext_zacas)
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index a75281539b..081d2fc2c3 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -793,6 +793,15 @@ static RISCVException rnmi(CPURISCVState *env, int csrno)
- 
-     return RISCV_EXCP_ILLEGAL_INST;
- }
-+
-+static RISCVException smsdid(CPURISCVState *env, int csrno)
-+{
-+    if (riscv_cpu_cfg(env)->ext_smsdid) {
-+        return RISCV_EXCP_NONE;
-+    }
-+
-+    return RISCV_EXCP_ILLEGAL_INST;
-+}
- #endif
- 
- static RISCVException seed(CPURISCVState *env, int csrno)
-@@ -5446,6 +5455,89 @@ static RISCVException write_mnstatus(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException read_mmpt(CPURISCVState *env, int csrno,
-+                                target_ulong *val)
-+{
-+    if (riscv_cpu_xlen(env) == 32) {
-+        uint32_t value = 0;
-+        value |= env->mptmode << MMPT_MODE_SHIFT_32;
-+        value |= (env->sdid << MMPT_SDID_SHIFT_32) & MMPT_SDID_MASK_32;
-+        value |= env->mptppn & MMPT_PPN_MASK_32;
-+        *val = value;
-+    } else if (riscv_cpu_xlen(env) == 64) {
-+        uint64_t value_64 = 0;
-+        uint32_t mode_value = env->mptmode;
-+        /* mpt_mode_t convert to mmpt.mode value */
-+        if (mode_value) {
-+            mode_value -= SMMPT43 - SMMPT34;
-+        }
-+        value_64 |= (uint64_t)mode_value << MMPT_MODE_SHIFT_64;
-+        value_64 |= ((uint64_t)env->sdid << MMPT_SDID_SHIFT_64)
-+                    & MMPT_SDID_MASK_64;
-+        value_64 |= (uint64_t)env->mptppn & MMPT_PPN_MASK_64;
-+        *val = value_64;
-+    } else {
-+        return RISCV_EXCP_ILLEGAL_INST;
-+    }
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_mmpt(CPURISCVState *env, int csrno,
-+                                 target_ulong val, uintptr_t ra)
-+{
-+    uint32_t mode_value = 0;
-+    if (!riscv_cpu_cfg(env)->ext_smmpt) {
-+        goto set_remaining_fields_zero;
-+    }
-+
-+    if (riscv_cpu_xlen(env) == 32) {
-+        mode_value = (val & MMPT_MODE_MASK_32) >> MMPT_MODE_SHIFT_32;
-+        /* If mode is bare, the remaining fields in mmpt must be zero */
-+        if (mode_value == SMMPTBARE) {
-+            goto set_remaining_fields_zero;
-+        } else if (mode_value <= SMMPT34) {
-+            /* Only write the legal value */
-+            env->mptmode = mode_value;
-+        }
-+        env->sdid = (val & MMPT_SDID_MASK_32) >> MMPT_SDID_SHIFT_32;
-+        env->mptppn = val & MMPT_PPN_MASK_32;
-+    } else if (riscv_cpu_xlen(env) == 64) {
-+        mode_value = (val & MMPT_MODE_MASK_64) >> MMPT_MODE_SHIFT_64;
-+        if (mode_value == SMMPTBARE) {
-+            goto set_remaining_fields_zero;
-+        } else if (mode_value < SMMPTMAX) {
-+            /* convert to mpt_mode_t */
-+            mode_value += SMMPT43 - SMMPT34;
-+            env->mptmode = mode_value;
-+        }
-+        env->sdid = (val & MMPT_SDID_MASK_64) >> MMPT_SDID_SHIFT_64;
-+        env->mptppn = val & MMPT_PPN_MASK_64;
-+    } else {
-+        return RISCV_EXCP_ILLEGAL_INST;
-+    }
-+    return RISCV_EXCP_NONE;
-+
-+set_remaining_fields_zero:
-+    env->sdid = 0;
-+    env->mptmode = SMMPTBARE;
-+    env->mptppn = 0;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_msdcfg(CPURISCVState *env, int csrno,
-+                                   target_ulong *val)
-+{
-+    *val = env->msdcfg;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_msdcfg(CPURISCVState *env, int csrno,
-+                                    target_ulong val, uintptr_t ra)
-+{
-+    env->msdcfg = val;
-+    return RISCV_EXCP_NONE;
-+}
-+
- #endif
- 
- /* Crypto Extension */
-@@ -6660,6 +6752,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-                              write_mhpmcounterh                         },
-     [CSR_SCOUNTOVF]      = { "scountovf", sscofpmf,  read_scountovf,
-                              .min_priv_ver = PRIV_VERSION_1_12_0 },
-+    /* Supervisor Domain Identifier and Protection Registers */
-+    [CSR_MMPT] =    { "mmpt",   smsdid,  read_mmpt,   write_mmpt   },
-+    [CSR_MSDCFG] =  { "msdcfg", smsdid,  read_msdcfg, write_msdcfg },
- 
- #endif /* !CONFIG_USER_ONLY */
- };
-diff --git a/target/riscv/riscv_smmpt.h b/target/riscv/riscv_smmpt.h
-new file mode 100644
-index 0000000000..74dcccf4be
---- /dev/null
-+++ b/target/riscv/riscv_smmpt.h
-@@ -0,0 +1,21 @@
-+/*
-+ * QEMU RISC-V Smmpt (Memory Protection Table)
-+ *
-+ * Copyright (c) 2024 Alibaba Group. All rights reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef RISCV_SMMPT_H
-+#define RISCV_SMMPT_H
-+
-+typedef enum {
-+    SMMPTBARE = 0,
-+    SMMPT34   = 1,
-+    SMMPT43   = 2,
-+    SMMPT52   = 3,
-+    SMMPT64   = 4,
-+    SMMPTMAX
-+} mpt_mode_t;
-+
-+#endif
--- 
-2.43.0
-
+--nsmail-cdbn14l3tu2-cdetvo4qea3--
 
