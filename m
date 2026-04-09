@@ -4,86 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC68EA3C59
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 13:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CAAEA3C5E
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 13:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wApZ3-0000B5-4J; Thu, 09 Apr 2026 09:36:57 -0400
+	id 1wAprG-0004UF-Ok; Thu, 09 Apr 2026 09:55:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wApYq-0000AZ-PX
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:36:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wApYo-0002q4-9r
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:36:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775741800;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qadhq1RgqaOpnkMpQ7Zm5mmTLivcn10ymOSLhVpNaHE=;
- b=XQS/aWyQ74uST4g/0VVmm57oof5vDwfmEzmZzLHJogxyE5qJXp7F6/nytYWjZKXb11XwST
- yq3uGYtwrvCxD56GHZL/MJkhVQ4aIdDzJwnzeKrNdBZ29JYzZYnHdvCgusM5sqHJznuXs5
- s0K4I3KJ+ry/3aJCZPGpzsGQnJszoLU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-YNCQz38dNNeWUtyOS15uug-1; Thu,
- 09 Apr 2026 09:36:36 -0400
-X-MC-Unique: YNCQz38dNNeWUtyOS15uug-1
-X-Mimecast-MFC-AGG-ID: YNCQz38dNNeWUtyOS15uug_1775741792
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D870C19560A7; Thu,  9 Apr 2026 13:36:30 +0000 (UTC)
-Received: from localhost (unknown [10.44.34.179])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A0C29195608E; Thu,  9 Apr 2026 13:36:27 +0000 (UTC)
-Date: Thu, 9 Apr 2026 09:36:25 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <its@irrelevant.dk>,
- =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v5 7/8] hw/nvme: add basic live migration support
-Message-ID: <20260409133625.GC340896@fedora>
-References: <20260317102708.126725-1-alexander@mihalicyn.com>
- <20260317102708.126725-8-alexander@mihalicyn.com>
- <20260407154803.GB238768@fedora>
- <CAJqdLroJk_EmciJQvYPsywpaOoyFSyNf67DGpOJMGpr+MuhQFg@mail.gmail.com>
- <20260408182708.GA319710@fedora>
- <CAJqdLro7E0mhdanbaE-xQUAzk1W7qYKN1QoEe8KH4VhsitiUmw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wAprB-0004Ru-IH
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:55:42 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wApr7-0006IP-J0
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:55:40 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-6507a7d2eccso937649d50.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 06:55:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775742936; cv=none;
+ d=google.com; s=arc-20240605;
+ b=krjj+6AU0fVha0VJMwBUAXZR6xykJM1E5IgIY8yd+dWE6dxLPUzXXfJ9yP18M3qM7g
+ Y4R8/Dcgy2I+7ASK0PAJUhJC1s+c5sgXVh5UrWnyriQX+n+WarYvtCbdh1k1tEn9Vf4+
+ c5whO8NKAyZ7fKpEuGm7nYEZNiSeBBPLo2xD/ji6TUCIBZT8LlApsE/JaphbFVdFRMW3
+ tD3LaBvx5P3Q7ecTpfAaTvL4zf1wm8OqAUJxkeVje1CNXox5XoM8Rko/or/lrSHhkDvr
+ 3rxkRqEydhScDp2/MTf1BS/Pp7oFAmNFpaVBuEWqA80hR24/hxDUSy/GMCJ8W1pJRiSp
+ BwPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=QJ+EQolA+gxK+KucAm6+lcjEO5OE7AOFOMhamr6Y780=;
+ fh=kzk51/YeQmI4YTCijVk5rTapTide1tT1Df99nxdLXdY=;
+ b=PY5tXyRQJVmu/EsnSLLQlYuEHLslxT46H+CLRzvKw1G46Q+40Smxu4pcir4v8xY4+A
+ QFUnDtzEQzSoOkBzyvTaM9akZePPjB4BUgiR6MX4CLklCB5BQH6wYyzSr/44kFWsdSVf
+ 6dwQ2DhHA0YNXJhV+qFBvCcKbNR+HrhQGYFUutBka4PkG/dKrorQoS+Kz6nLdoSOtPQU
+ 7CIIhtT86//PVVkijYGFwg2GXnNvPdVbsu5nF0AKex3plpXFQ01+Lj49IEmFONr7+d7t
+ ycW05jyWubfYh+4T9gPq+sg3XAImrKFlgGaXAyRDfwTZBQjuMhfaASUeEIj14NQah6Mx
+ MYoA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775742936; x=1776347736; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QJ+EQolA+gxK+KucAm6+lcjEO5OE7AOFOMhamr6Y780=;
+ b=XAg2UeqHeyR3p4lQSXEHitNmaTqVz+1MkU1X9e1BSFjMx97XunxRoHqiPe17tnJcBX
+ RNtxVXHvRxH6qqBYuz8MG/iTioQ/hz11qHeF8L+hUQ1NsuxWgto6v/dp47yqWNnCtRMz
+ NP+iHQsmaZ6NvHYCQEd+fcUviFIGGWPv2c/gsf2zCorSn7ynCQqlSbbfY52v5hfvHEgR
+ JFdp+C0+Rz4iq3AAZVNnoVF/rcazfg4d8N8Ngy1eQpEqg1eE/OXFk7qE5hreOdgWoI/N
+ gDgefACMz8LoNkuqja1YhA6y7sD4ZUuZPfeUfdGlruCsJsMIr+BZ1/PXbzZB+lrY0cXb
+ lRig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775742936; x=1776347736;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QJ+EQolA+gxK+KucAm6+lcjEO5OE7AOFOMhamr6Y780=;
+ b=YelflxLpqnYkI/LqF8ubUdFU+j8HzhbFl7bnI5ZbB50anVqto6h+4sZCyOR/m2x9NH
+ txnBlymQeYNs1CsRDhDQ9+kCSPe717j16GXK/V77L9KJeSiYQVVoGsmSOoLZGDQNXwli
+ E2LwNux5bFUeuQsdHqkJlLKIHAnGYOHushJagm0LuOQEfMMJ6Ddrrbw/wTqT0TapTHo/
+ BecyzO5ZHy/81Yhwu/eA1yW9V5ElKyICkLeFW1xccmeW63gmbhAJshouVu1WN/3/rlJp
+ vU6bV5//rMFLPCge41V4DB4IEb+QBh6EmiAhVXODY+Cw/RlGc0MNUpCkvGO+RhCpZC9/
+ iH7A==
+X-Gm-Message-State: AOJu0YylV7vrK9WbF3+2yjbsD9ehVvtFOiRPJd+BkNkqC5MLPbf5blsU
+ ssWpYkhBuOVilNlLfTAW5E4T62uu9XoC79gTVWL41Iji7VQ+1LdtO548wcsQ3SRMKV1cdA7QKzd
+ MbOodfN5uZjzznRMc5M3QbmNuB96Cr+CJDhIOCzc//Q==
+X-Gm-Gg: AeBDiesuF0HPmT7QCqQ+L5MAv91GwVKJM1ACb4cLybMxDbSpeukJS7qTD0JMVhpjbRp
+ 06cjFHFSKj22ndgWSZZfJ5LhXYoHYYT3+wkmRL1OFhe3VTQeHT2tU4WCb6noxZV4SLEht+jy6QU
+ sX8dO9baVPyQ6xcCBSlC4dKpivS3OunBCZQRkwLESNEMipOeUYAFuYjYS9k0dAA3WADrqdY2ufb
+ 6RWiRxSf22uvssgf8hGovZxYc95gnWLgABtT08Cy5wzHZfMMyHFwah6q+cdS/Np/3cTHMP1y8Iz
+ jQdf3+4EwVE2yzUWZ+BaJ8Kvq5PSRAsQU44h2rXhHBbx1FLEVUQSK8JzhMyjpPtx+e4=
+X-Received: by 2002:a05:690e:4802:b0:64e:b33b:c6bb with SMTP id
+ 956f58d0204a3-650486bfbeamr19599444d50.5.1775742935953; Thu, 09 Apr 2026
+ 06:55:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="JqT1BtkDSTA/OB+x"
-Content-Disposition: inline
-In-Reply-To: <CAJqdLro7E0mhdanbaE-xQUAzk1W7qYKN1QoEe8KH4VhsitiUmw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260303143157.80437-1-1486344514@qq.com>
+ <tencent_AEAA700C0455D77E3FEC6487B62AD68A5108@qq.com>
+In-Reply-To: <tencent_AEAA700C0455D77E3FEC6487B62AD68A5108@qq.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 9 Apr 2026 14:55:23 +0100
+X-Gm-Features: AQROBzBk-kks8sJDKqjyx1tZe3d_n_w-CRFGep4dQ99Gg3ZLxl0iLmGw-530S_A
+Message-ID: <CAFEAcA8JdxA0V6i4nkEDhWAG+yt2EXiOe+ourHHSjgWSSTU8hQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] hw/display: Build i.MX6UL LCDIF via its own config
+ symbol
+To: Yucai Liu <1486344514@qq.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, jcd@tribudubois.net, 
+ pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,128 +116,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 3 Mar 2026 at 14:32, Yucai Liu <1486344514@qq.com> wrote:
+>
+> Introduce CONFIG_IMX6UL_LCDIF in hw/display/Kconfig and compile\nthe device from hw/display/meson.build.\n\nStop compiling the LCDIF source from hw/arm/meson.build so the\ndisplay device follows the standard per-device symbol pattern.
+>
+> Signed-off-by: Yucai Liu <1486344514@qq.com>
+> ---
+>  hw/arm/meson.build     | 4 +++-
+>  hw/display/Kconfig     | 4 ++++
+>  hw/display/meson.build | 1 +
+>  3 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 47cdc51d13..59ef60946b 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -87,7 +87,9 @@ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
+>  arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+>  arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+>  arm_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true: files('smmuv3-accel.c'))
+> -arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+> +arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL',
+> +                  if_true: files('fsl-imx6ul.c',
+> +                                 'mcimx6ul-evk.c'))
 
---JqT1BtkDSTA/OB+x
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This change is unrelated to LCDIF and is only changing the
+line-wrap -- I think we can drop it.
 
-On Wed, Apr 08, 2026 at 09:55:10PM +0200, Alexander Mikhalitsyn wrote:
-> Am Mi., 8. Apr. 2026 um 20:27 Uhr schrieb Stefan Hajnoczi <stefanha@redha=
-t.com>:
-> >
-> > On Tue, Apr 07, 2026 at 09:02:26PM +0200, Alexander Mikhalitsyn wrote:
-> > > Am Di., 7. Apr. 2026 um 17:48 Uhr schrieb Stefan Hajnoczi <stefanha@r=
-edhat.com>:
-> > > >
-> > > > On Tue, Mar 17, 2026 at 11:27:07AM +0100, Alexander Mikhalitsyn wro=
-te:
-> > > > > +    /* wait when all in-flight IO requests (except NVME_ADM_CMD_=
-ASYNC_EV_REQ) are processed */
-> > > > > +    for (i =3D 0; i < n->num_queues; i++) {
-> > > > > +        NvmeRequest *req;
-> > > > > +        NvmeSQueue *sq =3D n->sq[i];
-> > > > > +
-> > > > > +        if (!sq)
-> > > > > +            continue;
-> > > > > +
-> > > > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait(n, i, sq->=
-head, sq->tail, sq->size);
-> > > > > +
-> > > > > +wait_out_reqs:
-> > > > > +        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
-> > > > > +            if (req->cmd.opcode !=3D NVME_ADM_CMD_ASYNC_EV_REQ) {
-> > > > > +                cpu_relax();
-> > > > > +                goto wait_out_reqs;
-> > > > > +            }
-> > > > > +        }
-> > > > > +
-> > > > > +        trace_pci_nvme_pre_save_sq_out_req_drain_wait_end(n, i, =
-sq->head, sq->tail);
-> > > > > +    }
-> > > >
-> > >
-> > > Hi Stefan,
-> > >
-> > > > Emulated storage controllers usually do not drain requests themselv=
-es.
-> > > > They rely on core migration code (e.g. migration_completion_precopy=
-())
-> > > > to stop vCPUs and call bdrv_drain_all_begin/end() to quiesce I/O. W=
-hy
-> > > > does NVMe busy wait for requests here?
-> > >
-> > > I rely on core migration code to stop vCPUs and drain requests, *but*
-> > > a challenge here is that
-> > > a concept of "in-flight" request in NVMe is not that simple and we
-> > > have a few different types of in-flight requests:
-> > > - request was written in SQ (sq->head !=3D sq->tail) -> this I don't
-> > > even consider as in-flight, because we just stop SQ processing
-> > >   and these requests don't require any special handling during migrat=
-ion
-> > > - request was taken from SQ by nvme_process_sq() and it now lives in
-> > > sq->out_req_list - this means that
-> > >   we have also initialized req->aiocb and submitted IO for processing
-> > > in QEMU block layer. After request is processed, completion callback
-> > >   will be called (for read/write requests it is
-> > > nvme_rw_complete_cb()), then nvme_enqueue_req_completion() will be
-> > > called and remove
-> > >   NvmeRequest from sq->out_req_list and put it into cq->req_list.
-> > >   I expect, that by the time when we enter nvme_ctrl_pre_save(),
-> > > bdrv_drain_all_begin/end() were called and
-> > >   all AIO is finished and sq->out_req_list is empty (except AERs).
-> > > *But* to be on a safe side I also added busy loop on
-> > >   sq->out_req_list.
-> > >
-> > > So, I tend to agree that this busy wait is probably not required, but
-> > > I believe that we still need to verify that sq->out_req_list
-> > > is in fact empty. Because if we messed up, then it's better to crash
-> > > on assert() than to have silent data corruption.
-> > >
-> > > Then after I have a loop cq->req_list, and this time it is absolutely
-> > > required because we need to write all NvmeRequest
-> > > results to CQ and free NvmeRequest structure, cause I didn't want to
-> > > deal with NvmeRequest serialization.
-> >
-> > I don't see how the busy wait approach can work since
-> > migration_completion_precopy() holds the Big QEMU Lock
-> > (bql_lock()/bql_unlock()) while .pre_save() is called. The main loop
-> > thread's event loop will not be able to make progress while .pre_save()
-> > is busy waiting.
->=20
-> Yes, my bad. Good catch! You are absolutely right.
->=20
-> This is especially stupid mistake from my side, taking into account
-> that I *knew* about that we hold BQL
-> in this context, cause in my first version of this patchset I *was*
-> taking this into account:
-> https://lore.kernel.org/qemu-devel/20260217152517.271422-5-alexander@miha=
-licyn.com/
->=20
-> see comment before qemu_bh_cancel(n->admin_cq.bh).
->=20
-> Thanks, Stefan! ;)
+>  arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+>  arm_common_ss.add(when: 'CONFIG_XEN', if_true: files(
+>    'xen-stubs.c',
+> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+> index 1e95ab28ef..b3593fe981 100644
+> --- a/hw/display/Kconfig
+> +++ b/hw/display/Kconfig
+> @@ -25,6 +25,10 @@ config PL110
+>      bool
+>      select FRAMEBUFFER
+>
+> +config IMX6UL_LCDIF
+> +    bool
+> +    select FRAMEBUFFER
+> +
+>  config SII9022
+>      bool
+>      depends on I2C
+> diff --git a/hw/display/meson.build b/hw/display/meson.build
+> index 90e6c041bd..9b0b1ddf63 100644
+> --- a/hw/display/meson.build
+> +++ b/hw/display/meson.build
+> @@ -11,6 +11,7 @@ system_ss.add(when: ['CONFIG_VGA_CIRRUS', 'CONFIG_VGA_ISA'], if_true: files('cir
+>  system_ss.add(when: 'CONFIG_G364FB', if_true: files('g364fb.c'))
+>  system_ss.add(when: 'CONFIG_JAZZ_LED', if_true: files('jazz_led.c'))
+>  system_ss.add(when: 'CONFIG_PL110', if_true: files('pl110.c'))
+> +system_ss.add(when: 'CONFIG_IMX6UL_LCDIF', if_true: files('imx6ul_lcdif.c'))
+>  system_ss.add(when: 'CONFIG_SII9022', if_true: files('sii9022.c'))
+>  system_ss.add(when: 'CONFIG_SSD0303', if_true: files('ssd0303.c'))
+>  system_ss.add(when: 'CONFIG_SSD0323', if_true: files('ssd0323.c'))
 
-No worries. The good news is that we don't need to worry about race
-conditions due to device state changing while .pre_save() runs :).
+These two parts should go in the preceding patch.
 
-Stefan
-
---JqT1BtkDSTA/OB+x
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnXq1kACgkQnKSrs4Gr
-c8i0OQf/SWqT/byrereK8zjIY5i5ggaZ10XK2quyF72oWdTgUQeZMHcHVjrOxIlP
-CZle0vv+WkYn4xR6WbXAGjvG3O+kaNllzqY9PmBHjZCUzGtDJh/Wo9E6Hcowr4jg
-eCg48fS7LhodeVZtDI3lXC+tzHuzSCvAmTpjTE0I27yQLJjvpCjeb3GahO+OzOHv
-+tk5niDsrpz/Yr/xzgbSC9dFIMfCJUzx1Ah2zJai8uWiRfAeIefff8M8cCCeDsjz
-mn8A54ixidiGe8oBhLfnr7D2lQLCGLjk0gloGzerJ5Fwee1PgWK8qLShaLOzRwTW
-LAQyZpqN/93vcCD6U/H8JDvzs084ug==
-=gxB9
------END PGP SIGNATURE-----
-
---JqT1BtkDSTA/OB+x--
-
+thanks
+-- PMM
 
