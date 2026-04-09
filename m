@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E4D9F364A3
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB77F364A3
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAszw-0005mx-B8; Thu, 09 Apr 2026 13:16:56 -0400
+	id 1wAt0j-0006EX-CU; Thu, 09 Apr 2026 13:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wAszp-0005kz-Ee
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:16:53 -0400
+ id 1wAt0h-0006Ct-1x
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:17:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wAszn-0001N6-TP
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:16:49 -0400
+ id 1wAt0f-0001WH-Lh
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:17:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775755006;
+ s=mimecast20190719; t=1775755061;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=y75PzzbTHJFBVtv3fVLVClI42CasXwdsX/jKsDCZxaI=;
- b=DHPJGg9s4ACeu7C8sQsSyLHwhVQNNnIz7m8UxW8vyQeIQE6l/boPGDv4oEdSZJPwCmP3ae
- M1RHlcUqpQMR1pGu6VO4KdtfZUGonQZ8VdyZn72e/jsQyEL3QUVCPry8pT28mbUWlWV2vF
- W90uccr7b182EMUjAJjdndDzXtEB6Ec=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=247jl1JVuyPjui+k+uF4E77GLIH5nMqjIn39eEpQu7I=;
+ b=IQ/VIsUZCDrL7OYKhOVb65Zx1YN6Z1e+oeTpmuOK4xLI0+I2rDM6cIRCRNqnm/YMggYD9A
+ nqFxAquBZFUxeUzYi5gqKmgjaiq1BvJ+T8XU/ofi8By8L52UZIZG747W/0UtzANJRJ5zGP
+ SsEfXDcD23YnN49PZVKIFONtSs2AmEo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-mkx3kRyQPqecYTiCx-HIcA-1; Thu, 09 Apr 2026 13:16:45 -0400
-X-MC-Unique: mkx3kRyQPqecYTiCx-HIcA-1
-X-Mimecast-MFC-AGG-ID: mkx3kRyQPqecYTiCx-HIcA_1775755004
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-488be33b7a6so9009605e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 10:16:45 -0700 (PDT)
+ us-mta-342-4rNMfa0xNFO5RdF9fdNyrw-1; Thu, 09 Apr 2026 13:17:39 -0400
+X-MC-Unique: 4rNMfa0xNFO5RdF9fdNyrw-1
+X-Mimecast-MFC-AGG-ID: 4rNMfa0xNFO5RdF9fdNyrw_1775755058
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-486fa07f2bbso6212065e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 10:17:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775755004; x=1776359804; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775755058; x=1776359858; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=y75PzzbTHJFBVtv3fVLVClI42CasXwdsX/jKsDCZxaI=;
- b=ThYUACzPT/boM1qy1KzKXhTGzGe6bRv+E/4urYW/2BcxbwdYLzKJDnm4COs0LM2A1t
- RfCQJF34TbxenDoXhMpAxSy+aAdj+O9HlgIbTxzJ9rtSXXXHZxMkq3jNI862+aDKHc6A
- vYuPPy+IdakV71BjXJEC39e3A0lax8gshHMklmmoXl0vRaa0Y+3Pk0FyZGMGHvWHOwf2
- LeT5POqbixTqGCTbSZE9TfoCiWgeNlcoynme7QEWq+P9bK7z79lx1lHcqptBDmqS+rMA
- gSpeHGNNQrWoTea9Wt40Eus07NchXvRH1B7IwT4U/UGg2qgvwO2p8VNqxuFnaRjTl8Lp
- Z32Q==
+ bh=247jl1JVuyPjui+k+uF4E77GLIH5nMqjIn39eEpQu7I=;
+ b=ZpZGMaX86wijTxZPLZ9FIVUclrQ1pOlrN5znFxPP7rgqU/1RvFj5FHw9zFx/O/0fwD
+ 8+hEQoU9HdidiOxue4cLCOFOxF40EpAMPyKOqBlpyEpJVTrOIvqUM/WRRTBXwq8ZccCr
+ IChN9Fce986y4uH74WzKlO6nXtuZENveeeiMckzfHmgT4yZQV/P2P/xuNDzH7gHD0JTa
+ G8UJFR6RrSIrExN5ycmZzqpNoxLIO9ONgWBsGRoFZDxmQtuiKhpvAsXd22CToLr7aB4Z
+ a3cigKkF21DtJ9o5MgaM0Vfsk+bntwq3Tnv0R3/FSfIir1WJTbo2zLHstyy06fDtoYA0
+ Ml4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775755004; x=1776359804;
+ d=1e100.net; s=20251104; t=1775755058; x=1776359858;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y75PzzbTHJFBVtv3fVLVClI42CasXwdsX/jKsDCZxaI=;
- b=cLtVMOe5qdFzy1GtPyZrAQk0Sl48XPQb/oYB2YmYG8fpicDZDHgcjfO5awdCqOuzyn
- RbNCSmErTc9xyZyFJlyA5On/tGW9+mFu3P6p82fu4tH18T2ecAsJt0eE2pyXdnxrEhlN
- /poSGmddJW4wEKPBrAZKJ+dfU61SjVd8YO1tukCWftfNk4TzMiCDITv0F2iaanFvxNIh
- gDHlPL/zDtHwEQk7cSO+MDCcYHvHhhpXGkiWT4k1lWd8B8UwstTPLaifFNRyBboa4/hV
- F6JUHAos2uOeI0NE1rV4DjzE0DiGllYz1Vv7jccw5o3U8a4IP78em0x7BP4ffoFPWiNg
- m1vA==
-X-Gm-Message-State: AOJu0YwR+n0jTU7ivzaqPgy9tgOpA6oZWnz62/NHxsTcBEr+CM/paSzF
- iPJ/ZnAnqiwzTCLxOO9u9ZpKh9qHOXb34wn5yNeRq9GZOYMBUYyDZ/lrwtujLdXhL6YR0VXE24C
- sT3mfQq6YRsCjD+0PP7sMwKmFrSWVqJkiKPkMDKAOguxQPtYvf2Vz4Nxc
-X-Gm-Gg: AeBDiesoU/WdoT3lFKzIisJFI4KquyBP8o97Q9aVcY50EW/zbMgkxn6PasR9VdQBo5G
- mtXxLliJ8vsoEhVTk6rBcBM/JnHpsOdQIuG/0juluEC5ZYHkXwJtIKlnohByypKc1eTdaYfDsJ+
- oDyWrzOkrhqyASYhN0TtgLrf4G0gxxCTAlYYF/mmt/VkdIZeT79BJYzh8/jrOoQEHZaiRpUK9l2
- 9k/jWet6wXXgUavf6+WPplhNNUpzz/tYOfHFBrhrUqye6ji23uxgZbFfhD/rOcfK+AEqOkNferK
- cAQsUnyebhT6sWS8p0PNczqPIJ+K6B/N2rWu3dIqdnEDBvNDum0Vmu995otx2+zeLjw8JENLJ9a
- eGfxBI/X1d9YOtqCU/9mGdvzZMhE6vcGxOJwYFAA=
-X-Received: by 2002:a05:600c:3b1a:b0:486:fc5f:1ab9 with SMTP id
- 5b1f17b1804b1-48899775d8emr333684555e9.14.1775755003890; 
- Thu, 09 Apr 2026 10:16:43 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b1a:b0:486:fc5f:1ab9 with SMTP id
- 5b1f17b1804b1-48899775d8emr333684215e9.14.1775755003376; 
- Thu, 09 Apr 2026 10:16:43 -0700 (PDT)
+ bh=247jl1JVuyPjui+k+uF4E77GLIH5nMqjIn39eEpQu7I=;
+ b=cJGgxFumMz8ySB3Vg7slXtrVgdJ3zXlSjGe10MiY5QxkB8hhOpF8TLIKC1Co05xDJH
+ y6mTWunt/nHGk9XL5hYnU2JiHyloCCH72vQR9LuAhCFS+W5PqgoInvES8tzf18KGLmZ1
+ Pby2uoXjUgvT6b34nIcfXFV3NSiJ2n2vG1Uc678HV10FrhmnTOD3t4Ntx/9m1hbDnP8d
+ IwIQIzyV5HZhQFeAPSOqLS26YpJs3MUNbwJRLdrjIgpIffBdWqDqvT2Es2S6cN45VOhG
+ G9trEExzoLZVmTB7m+p+22q+dj5E8ezW2yYAuBtCVDxKTtXtWbEpXuTcg1F9v2F8fxPD
+ 95OA==
+X-Gm-Message-State: AOJu0Yx80cMnTmQGJZWTNzAq7OA6vurs6IuI6hoBqI4uOkgbWUcwPDjr
+ O5dQUYCAlnlRzvjA8V4BKQbxEYyhBY4hx5GoKxA5iF5fa+jeU+xRpXLiabNj3+6O6JAAATT/xwZ
+ nSXMLYEt+5iXjFnfTOJqSpzift85jEdWorlxpcJCc8k44Yt0emw+7kgnR
+X-Gm-Gg: AeBDiev1d69HaysXbwEPqvLz5Cg2SyVyO8uokDZn4RxwzCCMMwn7dIfSdpliAz2l3VY
+ fEN2+CRKGn5jOKasl7Eh6X2IDmA5gPzx/201wCUaW5I3daB5cPmVHKihr/QNrgGmYRlu8Ntnyxi
+ KpRuujB0IMZP99ZYOdIkDJGzQbOESfd33leq1NC8OXEZg1HN0uha6nIihlmf1ChBWS0y+zO9Z/V
+ rFVTn0gMyg07SDF/6GRX1rQmPaSPnVHVlHX72o7iN1EFXWb4tW8glSsuAsE1cDSwnB+a/WzHXqS
+ 4SOLnyf28YCP08vbwczhfJyYulwbcBl5/cUOC3IRLzOUF1E+gWLfoVcAfOiJYU8g+nvGkaxMiss
+ TfxFVQKQpSKkyCvkvyxWZkGBGfuv8/EIm/aKhhXg=
+X-Received: by 2002:a05:600c:4ed4:b0:488:8b52:f7de with SMTP id
+ 5b1f17b1804b1-488ccf7f7bemr62443875e9.12.1775755058226; 
+ Thu, 09 Apr 2026 10:17:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ed4:b0:488:8b52:f7de with SMTP id
+ 5b1f17b1804b1-488ccf7f7bemr62443365e9.12.1775755057681; 
+ Thu, 09 Apr 2026 10:17:37 -0700 (PDT)
 Received: from fedora (nat-88-212-17-233.antik.sk. [88.212.17.233])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488cd19a69esm30129595e9.32.2026.04.09.10.16.40
+ 5b1f17b1804b1-488d532ef00sm11337405e9.5.2026.04.09.10.17.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Apr 2026 10:16:41 -0700 (PDT)
-Date: Thu, 9 Apr 2026 19:16:38 +0200
+ Thu, 09 Apr 2026 10:17:37 -0700 (PDT)
+Date: Thu, 9 Apr 2026 19:17:34 +0200
 From: Juraj Marcin <jmarcin@redhat.com>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, 
@@ -93,14 +93,15 @@ Cc: qemu-devel@nongnu.org,
  Fabiano Rosas <farosas@suse.de>, 
  Joao Martins <joao.m.martins@oracle.com>, Markus Armbruster <armbru@redhat.com>,
  Alex Williamson <alex@shazbot.org>
-Subject: Re: [PATCH 11/14] migration: Calculate expected downtime on demand
-Message-ID: <adfezzADrj9sAjlQ@fedora>
+Subject: Re: [PATCH 12/14] migration: Fix calculation of expected_downtime to
+ take VFIO info
+Message-ID: <adffHdctAKEsb3IG@fedora>
 References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-12-peterx@redhat.com>
+ <20260408165559.157108-13-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260408165559.157108-12-peterx@redhat.com>
+In-Reply-To: <20260408165559.157108-13-peterx@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -127,18 +128,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-04-08 12:55, Peter Xu wrote:
-> This value does not need to be calculated as frequent.  Only calculate it
-> on demand when query-migrate happened.  With that we can remove the
-> variable in MigrationState.
+> QEMU will provide an expected downtime for the whole system during
+> migration, by remembering the total dirty RAM that we synced the last time,
+> divides the estimated switchover bandwidth.
 > 
-> This paves way for fixing this value to include all modules (not only RAM
-> but others too).
+> That was flawed when VFIO is taking into account: consider there is a VFIO
+> GPU device that contains GBs of data to migrate during stop phase.  Those
+> will not be accounted in this math.
+> 
+> Fix it by updating dirty_bytes_last_sync properly only when we go to the
+> next iteration, rather than hide this update in the RAM code.  Meanwhile,
+> fetch the total (rather than RAM-only) portion of dirty bytes, so as to
+> include GPU device states too.
+> 
+> Update the comment of the field to reflect its new meaning.
+> 
+> Now after this change, the expected-downtime to be read from query-migrate
+> should be very accurate even with VFIO devices involved.
 > 
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  migration/migration.h |  2 +-
->  migration/migration.c | 25 ++++++++++++-------------
->  2 files changed, 13 insertions(+), 14 deletions(-)
+>  migration/migration-stats.h |  8 +++-----
+>  migration/migration.c       | 11 ++++++++---
+>  migration/ram.c             |  1 -
+>  3 files changed, 11 insertions(+), 9 deletions(-)
 > 
 
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
