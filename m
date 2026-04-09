@@ -4,150 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EACAFF364A6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E65DF364A7
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:11:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAsuS-0002eX-MK; Thu, 09 Apr 2026 13:11:16 -0400
+	id 1wAsuK-0002dq-U8; Thu, 09 Apr 2026 13:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAsuR-0002eB-0H
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:11:15 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wAsuJ-0002dh-TL
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:11:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAsuO-0007mF-0I
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:11:14 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 639D1RFP1972539
- for <qemu-devel@nongnu.org>; Thu, 9 Apr 2026 17:11:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- iqCccMDo7Z5kNFp46pm4Xr1h/v2G9JJjT7l5ImekeL0=; b=bzVxUPvgrudS+gI3
- 6KTcysLtRD8uni/ifqeYr4G+YzkHH5y50dRbb4DAx7Bpsw5Ml44XKGSuKipFwZWE
- mbRXgWUU24c34D+l9grvV+KvA8hBrpgMYeXZry8m1fEP0+CbAWosuSWujGYwj42C
- A/ksg3nvN6lOOEo2YTQaChpfdbPdz8jorFGd7KZnJ8hmNALwUh+8G3u0byrEgNK6
- SAOXH2osckhVg2SzwCVd2G8eSL/RKEdpyGfqpfLgzGsEmBY6ak+FbFM5kVFWcmVz
- /4EKz7PgkpD14ynYtfHFxFKDYtWMN8Rtb0BKXDywqdSQRPuS/4sgq22Xoah0zywd
- 0mCDSQ==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4decms0y8n-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 17:11:06 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-1276e71652fso1488025c88.0
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 10:11:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775754666; cv=none;
- d=google.com; s=arc-20240605;
- b=Xbb55IV2nB42IJII9Hir3kI+6knoK0YialjqAXJ2Q/a6gsljE0jT8UZ27TrSWf+wVd
- a07VCDvoiLlhubN+ARSWFYBYSe+cqkeXinc796PwNvycDUc1gmXQBHnyojjNUEX5/jmj
- 0WPptZsh0PUUJPNo59XocDEktJjjkaIIyhbyrJg0SDvK1Ki0br+CVfH7QR/7EF4FNHsk
- 4XWgC7u+Ml3aKJn5JLdbZfKWujd7wleeAUXzrOICLCV5ZJdV6qFAsXqYWX5Zkd/tWwpy
- uMlanfRJUWXyGF5ax4mnPzrRyVmuS+B0PtNbzJ16D+Knjq4pIG9QQS9W0xnk0RADcCOp
- l6mg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=iqCccMDo7Z5kNFp46pm4Xr1h/v2G9JJjT7l5ImekeL0=;
- fh=mrfZO0qQM5eciwqMtrtmvbDllU4euPRvlqU0p6gBO7o=;
- b=EpEgpdqP+JTpnxdhAv0flkZx78It0QT23aygdINzC2PvH4CrccbzgPiMSMrEscsbl1
- O2mzc5+Po4aYkXg2fRNlY+kjRg0tIdV8lLcqFigB8UKl2HXu+yVhehzOx8OhJ8n0CzEn
- pdLJzxDFHSMr83E4pkfqeo/1QBxlTYI9jDeXVan+dBVU6E2zcqEEKwPmDCkX8ktMLEXk
- l2daFTJfeMYyn2Qs8vd2/p6dB/7XxwaQaP+w5yzlY2f1mg60W4r2rd4wfrOlpaU8MyFR
- WC/qeI3IOoRvW+zWxwn8ghuNaZ3YfYaILt07hZEz+2jlYVf7P0zInumv/u3ZJLwEiDko
- YvAg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wAsuH-0007m2-0O
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:11:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775754664;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+h7jpKdhCTn6mHuXqflXQE1DgwiNoIkqxn9rj7Bxf10=;
+ b=C6vQT26l69FwHvfZaq0JNwF76HwwkoXtlTRl/kGy9GR2ghI8c7PF2VnApwPAFh0KVZwa0j
+ nfAFa7OU6noFD87qILhshpKjppSDeebSrisdusHzYOUMug/NQu3AL9srROMGAiEJ/kHKID
+ GFu7phHnH+YH1ff2VlUTyHOMOsD4qwI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-208-NJckk-rWOamcIv9Z1w1cWg-1; Thu, 09 Apr 2026 13:11:02 -0400
+X-MC-Unique: NJckk-rWOamcIv9Z1w1cWg-1
+X-Mimecast-MFC-AGG-ID: NJckk-rWOamcIv9Z1w1cWg_1775754661
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-488c2764f83so9818735e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 10:11:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775754666; x=1776359466; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iqCccMDo7Z5kNFp46pm4Xr1h/v2G9JJjT7l5ImekeL0=;
- b=fBF39sH5I/1ROMjoPiOKfo4NEUznPkkOu9Wa5zzbV0hsPvm7Mh/5L72wERXR2p2nW/
- QxsAyOmKe7yCupUCugb5Ofwu1sua18eMKHUQmKRbPZ91v1aqyvObggizYT/04qNr+CPA
- +8VnAo4Q1sfE3cTZ9vwqMiJKUcwV8Xh8vydbMLvVIg0wh7E3LvtSy0QV9PlpWLveB3AS
- XCQY+hHVBFrZ6B41k9dTjJSjceI5WuhhZlwJM9FhJMZ6MLWvoZX0acGmzRictRK5fKk/
- VApRuaXxY40uYqmWOHVGNhe9NJdticK1ANf+7SlwlxObp0lUcqnZBGrCj8AAwlp1cTyE
- D1MA==
+ d=redhat.com; s=google; t=1775754661; x=1776359461; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=+h7jpKdhCTn6mHuXqflXQE1DgwiNoIkqxn9rj7Bxf10=;
+ b=qlok91z1Ky+YeKFA2jO/KwQ4ChdKSiFvjOZQXZK2o4D+RZouPdXV7U7PvmnvlrVdPr
+ bx8Fm2AZgWiIkjNK8f+WFd45QV8fyyQF+1leT78w9A7cqpGEDB9gUIKN1afmIXHNpEBS
+ A/EkIc9ZX7n23413Fxu/w48fcFT9v21Co9/8Ufj1jGObScYypXe26da2JJ8CWw+7t/Tu
+ 2XH7MaoM/znR189Kmo2lzfvFSvAuN078JzRAmbfR8dpI55NiijD4vZtyJiF9c8KL0yR8
+ EwIzdpzeb5yp7UUqzl/k+FckSrLjy+wgxuXh12lgfMzWY/0Eyfodf/r2v6cYCFTemPjS
+ 79ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775754666; x=1776359466;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iqCccMDo7Z5kNFp46pm4Xr1h/v2G9JJjT7l5ImekeL0=;
- b=VdCUeVaFQVZoIK+tZ0ndsrbfn9mRqpEYW2C0hNBETVVOPcYT/J1KY/pMcQ9/Xl8+Fs
- MXVFSL7jwlkwZYSo0wBhmP1i9Lyu0cIuCKYOpTttmGUnhywlkfi9d9VAdvTB6eJYjrrg
- 6QgZXwPoHcs1jaVzgBmk6P77O1DyecANCFXHItAXBK1D3b88b3cA7rlirOmRbqBXHMQW
- sMhPpZcvtGpreGFIb4Xe1I2nSzmlAyEbFXeHB1npeTdFj4XcsbAiuyClmgnnLrqghDxF
- mCMa1w1qj4C/+1fOCCRTSpk+DZoacsMYqfyjwnFWl5ve+fOPO8xBvvOW3zQXPDugjTJ6
- 151w==
-X-Gm-Message-State: AOJu0YxIOlh19tyWX9ZXWnP2N6O79mBecru4QKsbS6Ih16uFlxxQZUDg
- bNNqXwodyFmwxvBgywIZScf6xl1PQS/I+gNukbE7KKk7U24NpeCvLWfpUt57mnAsFrO6h/XdXnK
- lohjLsEDQm1OVqT6sSKg1nJSWc0bNyaFQNk5M30ifvewVyfE1O3n0sVCexaRy1gUE51MupiltkS
- DUrohKeosg9g7EcKCwhdLZW46g2FNkp+Z6
-X-Gm-Gg: AeBDieuZtf5V3L1EGXFylo2JhZ7wzw8qRcW9r835A/XUBz0NUpAIKR+un0PVQK+L/fa
- WQDU9IUhpeC2eCvtBbu/+VbF0qO+zIyrI41LXrDYZex2ykYQot+zWKihZQLo9KT4H4GEY39aaMp
- w+tBF6Gf5kCD90LM2b9Jw5xQf2zQy4X0WPv9MRd6YIpkA2kZnKfpX/XGDxWzeXg7b93eVdlGY7B
- 2taCx0=
-X-Received: by 2002:a05:7022:6ab:b0:123:3488:899f with SMTP id
- a92af1059eb24-12c28c2d224mr2222111c88.32.1775754665313; 
- Thu, 09 Apr 2026 10:11:05 -0700 (PDT)
-X-Received: by 2002:a05:7022:6ab:b0:123:3488:899f with SMTP id
- a92af1059eb24-12c28c2d224mr2222070c88.32.1775754664375; Thu, 09 Apr 2026
- 10:11:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775754661; x=1776359461;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+h7jpKdhCTn6mHuXqflXQE1DgwiNoIkqxn9rj7Bxf10=;
+ b=NLwHcXNhuCogAF/uaK0+7ESnEOCXafAgNE3S8zZ2IaWah14PQueEDt/JI4zzydTL0p
+ yWJwp/5fkyhUiPEfzCigi8UobXHgQsnlDvwHXkV7J8ECy1Vr7lEKuNaZWrxfcI5suKkO
+ j2jN1TnuApEsRf9uBSTHb694mUFpyixa3DDPCqKb80l3tTMS7Qw1d0T6Ia2OnP22tvg2
+ qg1uRRhAoRub0OJr7Nf9S/H41IU1Mn8u5ZHkAOawyighscrkOou4nYOTxubuRrrsXLGM
+ 8Ggdfms8aFg1pz5MoFGlpr+55E6dogkPyqhnoqCyJmZy98l/NvuLiEDGCCu6yGKsXwAP
+ cj0w==
+X-Gm-Message-State: AOJu0YxGd1tZXb7ZlYuZ/S11yFoQ2dPDF+tA7JJIXxOLmhxXX/NfhCqi
+ CTinDm1L2t/qM5H8psNF2sy2Xog1sAGhSfo/tMGZh512hRgON2kWly3CxydIE76uQoc/5OaxauP
+ p1zHgXbuoLeAizbeXBU/AOVUAAjBxQ+yFy5ggnLRn5Uw93tYGcvKEFKRWaL1wR47OVqs=
+X-Gm-Gg: AeBDieswUQ3FEABYlDqzn2ZfHWlvFGos5o1cC4oweuLF1H7wPb0PKZ60Bo2nblpvVZd
+ 3nFnxvjLOgn12MHUebW9OfqGM43/q4v2/9MCqRG3Te3PCEqp2TK7Bj/ETViWv+Oa7m5JAdZswU+
+ WGpPCucWMn/f5DP+AMy+6mIQxmRlkIwjr0/GBAUru0zlLPM8A1gMCvbwSWraJmsqhuSsa2zYaj+
+ h5xFXWAXsCABYBT+0AbDUmjg5etuwJ4e5syLmhReqAv0SPO1HLg6s9bnnToEzUC4bAUQMX0BAu6
+ vh/nkZgoHU+HU+wStobzGkl3qUOSXhq3T7QQ08YmgwJarpOY/R6+RmmEHbhZSnD73mdYnrYw64K
+ anUT874oY/PaQ0K18kDeUyjs23YQoroBQ2f1h9DA=
+X-Received: by 2002:a05:600c:4688:b0:488:b187:d8ed with SMTP id
+ 5b1f17b1804b1-488b187e4admr221060505e9.2.1775754660505; 
+ Thu, 09 Apr 2026 10:11:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:4688:b0:488:b187:d8ed with SMTP id
+ 5b1f17b1804b1-488b187e4admr221059775e9.2.1775754659919; 
+ Thu, 09 Apr 2026 10:10:59 -0700 (PDT)
+Received: from fedora (nat-88-212-17-233.antik.sk. [88.212.17.233])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d5b56d1asm4104515e9.15.2026.04.09.10.10.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Apr 2026 10:10:59 -0700 (PDT)
+Date: Thu, 9 Apr 2026 19:10:56 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
+ Zhiyi Guo <zhguo@redhat.com>, Prasad Pandit <ppandit@redhat.com>, 
+ Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>, 
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Joao Martins <joao.m.martins@oracle.com>, Markus Armbruster <armbru@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ David Hildenbrand <david@kernel.org>, Cornelia Huck <cohuck@redhat.com>, 
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH 04/14] migration/treewide: Merge
+ @state_pending_{exact|estimate} APIs
+Message-ID: <adfdUBTJweN-V-ZP@fedora>
+References: <20260408165559.157108-1-peterx@redhat.com>
+ <20260408165559.157108-5-peterx@redhat.com>
 MIME-Version: 1.0
-References: <20260122223423.1076448-1-marco.liebel@oss.qualcomm.com>
- <CAEqNhNYa8xybC2tRKscjZhon7vuW4pn3-OuLaLwOj2Y4PHV8QQ@mail.gmail.com>
-In-Reply-To: <CAEqNhNYa8xybC2tRKscjZhon7vuW4pn3-OuLaLwOj2Y4PHV8QQ@mail.gmail.com>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Thu, 9 Apr 2026 12:10:47 -0500
-X-Gm-Features: AQROBzA9FOV9SQaVaEGX615osdQNcSLjVsFoT4hFRGJ-BwZ2qtMQcy-Si4ndpUw
-Message-ID: <CAEqNhNa6gpBRW65GLDgwFmyk4ULsTPhZUgWXKR55e=c0veAdsw@mail.gmail.com>
-Subject: Re: [PATCH] target/hexagon: Change DisasContext packet type
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
- sid.manning@oss.qualcomm.com, ltaylorsimpson@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: tXGDnSxLFC7fgLI5m6XHWCIWhxiZwCmn
-X-Proofpoint-GUID: tXGDnSxLFC7fgLI5m6XHWCIWhxiZwCmn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDE1NyBTYWx0ZWRfXw6qedx2qrFXw
- E6Me4NxsvqwudEBcDZ0W4J2CCFNRxcDcsixeU+AOJnwvkRvOTOf3eH16qE8pNOegmXbaGSmalZg
- HXC8xOaDcycnd3FpZK63xhoqqgY9t328NbSPyBSFGzVaHK5dqSCUHp5UNj7cLLxeKcvjiIrgTFV
- dZDUnDmwr0ZJP+lxrAHLtDZmE3qAK7gx2+xjrJqibWhLQZLda9Ak3ABbgSpYAwO554B0Vam/hUj
- IDq6czrwWrgo8VNzKgzMXtFn+5QTGkrkiVyUOXrFisLQeWmTVzqrpLBaqaiuygJYZOhaWX0BAn4
- I209F23JP1ackaciuXjuq30IoUPwPGMcxDeqrdUlHCbz0ye+izLlSz7iNOFAG5ca0/vWLqC+Ay4
- A6idJTf4bIwknNwM+U2h3mOX9mZxEiy5NE73ZseMddSa1mnIPZUZbfDU6U+iTWI/5hlfk8bdr1w
- lSq/B4wgrJC7wSWU5wA==
-X-Authority-Analysis: v=2.4 cv=N/sZ0W9B c=1 sm=1 tr=0 ts=69d7ddaa cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8 a=ErtwthqZc5DNjmXz0hQA:9
- a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_04,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604090157
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260408165559.157108-5-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,555 +136,491 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 11, 2026 at 7:25=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com> wrote:
->
->
->
-> On Thu, Jan 22, 2026 at 4:34=E2=80=AFPM Marco Liebel <marco.liebel@oss.qu=
-alcomm.com> wrote:
->>
->> The pkt variable inside DisasContext is of type Packet * and gets
->> assigned to a local variable in decode_and_translate_packet. Right now
->> there seems to be no problem with it but future changes to e.g.
->> hexagon_tr_transalte_packet are potentially dangerous if pkt is accessed
->> after the local variable goes out of scope.
->>
->> Since packets are being translated one at a time, the type of pkt can be
->> changed to just Packet to avoid risk of having a dangling pointer.
->>
->> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
->> ---
->
->
-> Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Hi Peter,
 
-Thanks for the patch Marco - this is queued on my hex-next-express
-tree for post-11 inclusion.
+On 2026-04-08 12:55, Peter Xu wrote:
+> These two APIs are a slight duplication.  For example, there're a few users
+> that directly pass in the same function.
+> 
+> It might also be error prone to provide two hooks, so that it's easier to
+> happen one module report different things via the two hooks.
+> 
+> In reality, they should always report the same thing, only about whether we
+> should use a fast-path when the slow path might be too slow, as QEMU may
+> query these information quite frequently during migration process.
+> 
+> Merge it into one API, provide a bool showing if the query is an exact
+> query or not.  No functional change intended.
+> 
+> Export qemu_savevm_query_pending().  We should use the new API here
+> provided when there're new users to do the query.  This will happen very
+> soon.
+> 
+> Cc: Halil Pasic <pasic@linux.ibm.com>
+> Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+> Cc: Jason Herne <jjherne@linux.ibm.com>
+> Cc: Eric Farman <farman@linux.ibm.com>
+> Cc: Matthew Rosato <mjrosato@linux.ibm.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+> Cc: David Hildenbrand <david@kernel.org>
+> Cc: Cornelia Huck <cohuck@redhat.com>
+> Cc: Eric Blake <eblake@redhat.com>
+> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Cc: John Snow <jsnow@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  docs/devel/migration/main.rst  |  9 ++----
+>  docs/devel/migration/vfio.rst  |  9 ++----
+>  include/migration/register.h   | 52 +++++++++++-----------------------
+>  migration/savevm.h             |  3 ++
+>  hw/s390x/s390-stattrib.c       |  9 +++---
+>  hw/vfio/migration.c            | 48 ++++++++++++++-----------------
+>  migration/block-dirty-bitmap.c | 10 +++----
+>  migration/ram.c                | 33 +++++++--------------
+>  migration/savevm.c             | 42 +++++++++++++--------------
+>  hw/vfio/trace-events           |  3 +-
+>  10 files changed, 84 insertions(+), 134 deletions(-)
+> 
+> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+> index 234d280249..e6a6ca3681 100644
+> --- a/docs/devel/migration/main.rst
+> +++ b/docs/devel/migration/main.rst
+> @@ -515,13 +515,8 @@ An iterative device must provide:
+>    - A ``load_setup`` function that initialises the data structures on the
+>      destination.
+>  
+> -  - A ``state_pending_exact`` function that indicates how much more
+> -    data we must save.  The core migration code will use this to
+> -    determine when to pause the CPUs and complete the migration.
+> -
+> -  - A ``state_pending_estimate`` function that indicates how much more
+> -    data we must save.  When the estimated amount is smaller than the
+> -    threshold, we call ``state_pending_exact``.
+> +  - A ``save_query_pending`` function that indicates how much more
+> +    data we must save.
+>  
+>    - A ``save_live_iterate`` function should send a chunk of data until
+>      the point that stream bandwidth limits tell it to stop.  Each call
+> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+> index 0790e5031d..33768c877c 100644
+> --- a/docs/devel/migration/vfio.rst
+> +++ b/docs/devel/migration/vfio.rst
+> @@ -50,13 +50,8 @@ VFIO implements the device hooks for the iterative approach as follows:
+>  * A ``load_setup`` function that sets the VFIO device on the destination in
+>    _RESUMING state.
+>  
+> -* A ``state_pending_estimate`` function that reports an estimate of the
+> -  remaining pre-copy data that the vendor driver has yet to save for the VFIO
+> -  device.
+> -
+> -* A ``state_pending_exact`` function that reads pending_bytes from the vendor
+> -  driver, which indicates the amount of data that the vendor driver has yet to
+> -  save for the VFIO device.
+> +* A ``save_query_pending`` function that reports the remaining pre-copy
+> +  data that the vendor driver has yet to save for the VFIO device.
+>  
+>  * An ``is_active_iterate`` function that indicates ``save_live_iterate`` is
+>    active only when the VFIO device is in pre-copy states.
+> diff --git a/include/migration/register.h b/include/migration/register.h
+> index d0f37f5f43..aba3c9af2f 100644
+> --- a/include/migration/register.h
+> +++ b/include/migration/register.h
+> @@ -16,6 +16,13 @@
+>  
+>  #include "hw/core/vmstate-if.h"
+>  
+> +typedef struct MigPendingData {
+> +    /* Amount of pending bytes can be transferred in precopy or stopcopy */
+> +    uint64_t precopy_bytes;
+> +    /* Amount of pending bytes can be transferred in postcopy */
+> +    uint64_t postcopy_bytes;
+> +} MigPendingData;
+> +
+>  /**
+>   * struct SaveVMHandlers: handler structure to finely control
+>   * migration of complex subsystems and devices, such as RAM, block and
+> @@ -197,46 +204,19 @@ typedef struct SaveVMHandlers {
+>      bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
+>  
+>      /**
+> -     * @state_pending_estimate
+> -     *
+> -     * This estimates the remaining data to transfer
+> -     *
+> -     * Sum of @can_postcopy and @must_postcopy is the whole amount of
+> -     * pending data.
+> -     *
+> -     * @opaque: data pointer passed to register_savevm_live()
+> -     * @must_precopy: amount of data that must be migrated in precopy
+> -     *                or in stopped state, i.e. that must be migrated
+> -     *                before target start.
+> -     * @can_postcopy: amount of data that can be migrated in postcopy
+> -     *                or in stopped state, i.e. after target start.
+> -     *                Some can also be migrated during precopy (RAM).
+> -     *                Some must be migrated after source stops
+> -     *                (block-dirty-bitmap)
+> -     */
+> -    void (*state_pending_estimate)(void *opaque, uint64_t *must_precopy,
+> -                                   uint64_t *can_postcopy);
+> -
+> -    /**
+> -     * @state_pending_exact
+> -     *
+> -     * This calculates the exact remaining data to transfer
+> +     * @save_query_pending
+>       *
+> -     * Sum of @can_postcopy and @must_postcopy is the whole amount of
+> -     * pending data.
+> +     * This estimates the remaining data to transfer on the source side.
+> +     * It's highly suggested that the module should implement both fastpath
+> +     * and slowpath version of it when it can be slow (for more information
+> +     * please check pending->fastpath field).
 
->
->
->>
->>  target/hexagon/gen_tcg.h        |   2 +-
->>  target/hexagon/macros.h         |   6 +-
->>  target/hexagon/translate.h      |   2 +-
->>  target/hexagon/decode.c         |   8 +--
->>  target/hexagon/genptr.c         |  14 ++--
->>  target/hexagon/translate.c      | 111 ++++++++++++++------------------
->>  target/hexagon/gen_tcg_funcs.py |   2 +-
->>  target/hexagon/hex_common.py    |   4 +-
->>  8 files changed, 65 insertions(+), 84 deletions(-)
->>
->> diff --git a/target/hexagon/gen_tcg.h b/target/hexagon/gen_tcg.h
->> index 7b96dab918..54562e3ef3 100644
->> --- a/target/hexagon/gen_tcg.h
->> +++ b/target/hexagon/gen_tcg.h
->> @@ -1363,7 +1363,7 @@
->>  #define fGEN_TCG_J2_trap0(SHORTCODE) \
->>      do { \
->>          uiV =3D uiV; \
->> -        tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], ctx->pkt->pc); \
->> +        tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], ctx->pkt.pc); \
->>          TCGv excp =3D tcg_constant_tl(HEX_EVENT_TRAP0); \
->>          gen_helper_raise_exception(tcg_env, excp); \
->>      } while (0)
->> diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
->> index 6c2862a232..eebfe1e5ed 100644
->> --- a/target/hexagon/macros.h
->> +++ b/target/hexagon/macros.h
->> @@ -83,7 +83,7 @@
->>   */
->>  #define CHECK_NOSHUF(VA, SIZE) \
->>      do { \
->> -        if (insn->slot =3D=3D 0 && ctx->pkt->pkt_has_scalar_store_s1) {=
- \
->> +        if (insn->slot =3D=3D 0 && ctx->pkt.pkt_has_scalar_store_s1) { =
-\
->>              probe_noshuf_load(VA, SIZE, ctx->mem_idx); \
->>              process_store(ctx, 1); \
->>          } \
->> @@ -94,11 +94,11 @@
->>          TCGLabel *noshuf_label =3D gen_new_label(); \
->>          tcg_gen_brcondi_tl(TCG_COND_EQ, PRED, 0, noshuf_label); \
->>          GET_EA; \
->> -        if (insn->slot =3D=3D 0 && ctx->pkt->pkt_has_scalar_store_s1) {=
- \
->> +        if (insn->slot =3D=3D 0 && ctx->pkt.pkt_has_scalar_store_s1) { =
-\
->>              probe_noshuf_load(EA, SIZE, ctx->mem_idx); \
->>          } \
->>          gen_set_label(noshuf_label); \
->> -        if (insn->slot =3D=3D 0 && ctx->pkt->pkt_has_scalar_store_s1) {=
- \
->> +        if (insn->slot =3D=3D 0 && ctx->pkt.pkt_has_scalar_store_s1) { =
-\
->>              process_store(ctx, 1); \
->>          } \
->>      } while (0)
->> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
->> index a0102b6cbd..ffbfc3ac0e 100644
->> --- a/target/hexagon/translate.h
->> +++ b/target/hexagon/translate.h
->> @@ -28,7 +28,7 @@
->>
->>  typedef struct DisasContext {
->>      DisasContextBase base;
->> -    Packet *pkt;
->> +    Packet pkt;
->>      Insn *insn;
->>      uint32_t next_PC;
->>      uint32_t mem_idx;
->> diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
->> index b5ece60450..c2516d927d 100644
->> --- a/target/hexagon/decode.c
->> +++ b/target/hexagon/decode.c
->> @@ -748,14 +748,12 @@ int disassemble_hexagon(uint32_t *words, int nword=
-s, bfd_vma pc,
->>                          GString *buf)
->>  {
->>      DisasContext ctx;
->> -    Packet pkt;
->>
->>      memset(&ctx, 0, sizeof(DisasContext));
->> -    ctx.pkt =3D &pkt;
->>
->> -    if (decode_packet(&ctx, nwords, words, &pkt, true) > 0) {
->> -        snprint_a_pkt_disas(buf, &pkt, words, pc);
->> -        return pkt.encod_pkt_size_in_bytes;
->> +    if (decode_packet(&ctx, nwords, words, &ctx.pkt, true) > 0) {
->> +        snprint_a_pkt_disas(buf, &ctx.pkt, words, pc);
->> +        return ctx.pkt.encod_pkt_size_in_bytes;
->>      } else {
->>          g_string_assign(buf, "<invalid>");
->>          return 0;
->> diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
->> index 36968549d5..160edfe756 100644
->> --- a/target/hexagon/genptr.c
->> +++ b/target/hexagon/genptr.c
->> @@ -382,7 +382,7 @@ static inline void gen_store_conditional8(DisasConte=
-xt *ctx,
->>  static TCGv gen_slotval(DisasContext *ctx)
->>  {
->>      int slotval =3D
->> -        (ctx->pkt->pkt_has_scalar_store_s1 & 1) | (ctx->insn->slot << 1=
-);
->> +        (ctx->pkt.pkt_has_scalar_store_s1 & 1) | (ctx->insn->slot << 1)=
-;
->>      return tcg_constant_tl(slotval);
->>  }
->>  #endif
->> @@ -458,7 +458,7 @@ static void gen_write_new_pc_addr(DisasContext *ctx,=
- TCGv addr,
->>          tcg_gen_brcondi_tl(cond, pred, 0, pred_false);
->>      }
->>
->> -    if (ctx->pkt->pkt_has_multi_cof) {
->> +    if (ctx->pkt.pkt_has_multi_cof) {
->>          /* If there are multiple branches in a packet, ignore the secon=
-d one */
->>          tcg_gen_movcond_tl(TCG_COND_NE, hex_gpr[HEX_REG_PC],
->>                             ctx->branch_taken, tcg_constant_tl(0),
->> @@ -476,8 +476,8 @@ static void gen_write_new_pc_addr(DisasContext *ctx,=
- TCGv addr,
->>  static void gen_write_new_pc_pcrel(DisasContext *ctx, int pc_off,
->>                                     TCGCond cond, TCGv pred)
->>  {
->> -    target_ulong dest =3D ctx->pkt->pc + pc_off;
->> -    if (ctx->pkt->pkt_has_multi_cof) {
->> +    target_ulong dest =3D ctx->pkt.pc + pc_off;
->> +    if (ctx->pkt.pkt_has_multi_cof) {
->>          gen_write_new_pc_addr(ctx, tcg_constant_tl(dest), cond, pred);
->>      } else {
->>          /* Defer this jump to the end of the TB */
->> @@ -528,7 +528,7 @@ static inline void gen_loop0r(DisasContext *ctx, TCG=
-v RsV, int riV)
->>      fIMMEXT(riV);
->>      fPCALIGN(riV);
->>      tcg_gen_mov_tl(get_result_gpr(ctx, HEX_REG_LC0), RsV);
->> -    tcg_gen_movi_tl(get_result_gpr(ctx, HEX_REG_SA0), ctx->pkt->pc + ri=
-V);
->> +    tcg_gen_movi_tl(get_result_gpr(ctx, HEX_REG_SA0), ctx->pkt.pc + riV=
-);
->>      gen_set_usr_fieldi(ctx, USR_LPCFG, 0);
->>  }
->>
->> @@ -542,7 +542,7 @@ static inline void gen_loop1r(DisasContext *ctx, TCG=
-v RsV, int riV)
->>      fIMMEXT(riV);
->>      fPCALIGN(riV);
->>      tcg_gen_mov_tl(get_result_gpr(ctx, HEX_REG_LC1), RsV);
->> -    tcg_gen_movi_tl(get_result_gpr(ctx, HEX_REG_SA1), ctx->pkt->pc + ri=
-V);
->> +    tcg_gen_movi_tl(get_result_gpr(ctx, HEX_REG_SA1), ctx->pkt.pc + riV=
-);
->>  }
->>
->>  static void gen_loop1i(DisasContext *ctx, int count, int riV)
->> @@ -555,7 +555,7 @@ static void gen_ploopNsr(DisasContext *ctx, int N, T=
-CGv RsV, int riV)
->>      fIMMEXT(riV);
->>      fPCALIGN(riV);
->>      tcg_gen_mov_tl(get_result_gpr(ctx, HEX_REG_LC0), RsV);
->> -    tcg_gen_movi_tl(get_result_gpr(ctx, HEX_REG_SA0), ctx->pkt->pc + ri=
-V);
->> +    tcg_gen_movi_tl(get_result_gpr(ctx, HEX_REG_SA0), ctx->pkt.pc + riV=
-);
->>      gen_set_usr_fieldi(ctx, USR_LPCFG, N);
->>      gen_pred_write(ctx, 3, tcg_constant_tl(0));
->>  }
->> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
->> index e88e19cc1a..b06ed154f3 100644
->> --- a/target/hexagon/translate.c
->> +++ b/target/hexagon/translate.c
->> @@ -156,8 +156,6 @@ static void gen_goto_tb(DisasContext *ctx, unsigned =
-tb_slot_idx,
->>
->>  static void gen_end_tb(DisasContext *ctx)
->>  {
->> -    Packet *pkt =3D ctx->pkt;
->> -
->>      gen_exec_counters(ctx);
->>
->>      if (ctx->branch_cond !=3D TCG_COND_NEVER) {
->> @@ -171,7 +169,7 @@ static void gen_end_tb(DisasContext *ctx)
->>              gen_goto_tb(ctx, 0, ctx->branch_dest, true);
->>          }
->>      } else if (ctx->is_tight_loop &&
->> -               pkt->insn[pkt->num_insns - 1].opcode =3D=3D J2_endloop0)=
- {
->> +               ctx->pkt.insn[ctx->pkt.num_insns - 1].opcode =3D=3D J2_e=
-ndloop0) {
->>          /*
->>           * When we're in a tight loop, we defer the endloop0 processing
->>           * to take advantage of direct block chaining
->> @@ -252,11 +250,9 @@ static bool need_slot_cancelled(Packet *pkt)
->>
->>  static bool need_next_PC(DisasContext *ctx)
->>  {
->> -    Packet *pkt =3D ctx->pkt;
->> -
->>      /* Check for conditional control flow or HW loop end */
->> -    for (int i =3D 0; i < pkt->num_insns; i++) {
->> -        uint16_t opcode =3D pkt->insn[i].opcode;
->> +    for (int i =3D 0; i < ctx->pkt.num_insns; i++) {
->> +        uint16_t opcode =3D ctx->pkt.insn[i].opcode;
->>          if (GET_ATTRIB(opcode, A_CONDEXEC) && GET_ATTRIB(opcode, A_COF)=
-) {
->>              return true;
->>          }
->> @@ -339,8 +335,6 @@ static bool pkt_raises_exception(Packet *pkt)
->>
->>  static bool need_commit(DisasContext *ctx)
->>  {
->> -    Packet *pkt =3D ctx->pkt;
->> -
->>      /*
->>       * If the short-circuit property is set to false, we'll always do t=
-he commit
->>       */
->> @@ -348,7 +342,7 @@ static bool need_commit(DisasContext *ctx)
->>          return true;
->>      }
->>
->> -    if (pkt_raises_exception(pkt)) {
->> +    if (pkt_raises_exception(&ctx->pkt)) {
->>          return true;
->>      }
->>
->> @@ -395,11 +389,10 @@ static void mark_implicit_writes(DisasContext *ctx=
-)
->>
->>  static void analyze_packet(DisasContext *ctx)
->>  {
->> -    Packet *pkt =3D ctx->pkt;
->>      ctx->read_after_write =3D false;
->>      ctx->has_hvx_overlap =3D false;
->> -    for (int i =3D 0; i < pkt->num_insns; i++) {
->> -        Insn *insn =3D &pkt->insn[i];
->> +    for (int i =3D 0; i < ctx->pkt.num_insns; i++) {
->> +        Insn *insn =3D &ctx->pkt.insn[i];
->>          ctx->insn =3D insn;
->>          if (opcode_analyze[insn->opcode]) {
->>              opcode_analyze[insn->opcode](ctx);
->> @@ -411,8 +404,7 @@ static void analyze_packet(DisasContext *ctx)
->>
->>  static void gen_start_packet(DisasContext *ctx)
->>  {
->> -    Packet *pkt =3D ctx->pkt;
->> -    target_ulong next_PC =3D ctx->base.pc_next + pkt->encod_pkt_size_in=
-_bytes;
->> +    target_ulong next_PC =3D ctx->base.pc_next + ctx->pkt.encod_pkt_siz=
-e_in_bytes;
->>      int i;
->>
->>      /* Clear out the disassembly context */
->> @@ -454,13 +446,13 @@ static void gen_start_packet(DisasContext *ctx)
->>      bitmap_zero(ctx->pregs_written, NUM_PREGS);
->>
->>      /* Initialize the runtime state for packet semantics */
->> -    if (need_slot_cancelled(pkt)) {
->> +    if (need_slot_cancelled(&ctx->pkt)) {
->>          tcg_gen_movi_tl(hex_slot_cancelled, 0);
->>      }
->>      ctx->branch_taken =3D NULL;
->> -    if (pkt->pkt_has_cof) {
->> +    if (ctx->pkt.pkt_has_cof) {
->>          ctx->branch_taken =3D tcg_temp_new();
->> -        if (pkt->pkt_has_multi_cof) {
->> +        if (ctx->pkt.pkt_has_multi_cof) {
->>              tcg_gen_movi_tl(ctx->branch_taken, 0);
->>          }
->>          if (need_next_PC(ctx)) {
->> @@ -489,7 +481,7 @@ static void gen_start_packet(DisasContext *ctx)
->>       * Preload the predicated pred registers into ctx->new_pred_value[p=
-red_num]
->>       * Only endloop instructions conditionally write to pred registers
->>       */
->> -    if (ctx->need_commit && pkt->pkt_has_endloop) {
->> +    if (ctx->need_commit && ctx->pkt.pkt_has_endloop) {
->>          for (i =3D 0; i < ctx->preg_log_idx; i++) {
->>              int pred_num =3D ctx->preg_log[i];
->>              ctx->new_pred_value[pred_num] =3D tcg_temp_new();
->> @@ -528,13 +520,11 @@ static void gen_start_packet(DisasContext *ctx)
->>
->>  bool is_gather_store_insn(DisasContext *ctx)
->>  {
->> -    Packet *pkt =3D ctx->pkt;
->> -    Insn *insn =3D ctx->insn;
->> -    if (GET_ATTRIB(insn->opcode, A_CVI_NEW) &&
->> -        insn->new_value_producer_slot =3D=3D 1) {
->> +    if (GET_ATTRIB(ctx->insn->opcode, A_CVI_NEW) &&
->> +        ctx->insn->new_value_producer_slot =3D=3D 1) {
->>          /* Look for gather instruction */
->> -        for (int i =3D 0; i < pkt->num_insns; i++) {
->> -            Insn *in =3D &pkt->insn[i];
->> +        for (int i =3D 0; i < ctx->pkt.num_insns; i++) {
->> +            Insn *in =3D &ctx->pkt.insn[i];
->>              if (GET_ATTRIB(in->opcode, A_CVI_GATHER) && in->slot =3D=3D=
- 1) {
->>                  return true;
->>              }
->> @@ -637,7 +627,7 @@ static bool slot_is_predicated(Packet *pkt, int slot=
-_num)
->>
->>  void process_store(DisasContext *ctx, int slot_num)
->>  {
->> -    bool is_predicated =3D slot_is_predicated(ctx->pkt, slot_num);
->> +    bool is_predicated =3D slot_is_predicated(&ctx->pkt, slot_num);
->>      TCGLabel *label_end =3D NULL;
->>
->>      /*
->> @@ -714,13 +704,12 @@ static void process_store_log(DisasContext *ctx)
->>       *  slot 1 and then slot 0.  This will be important when
->>       *  the memory accesses overlap.
->>       */
->> -    Packet *pkt =3D ctx->pkt;
->> -    if (pkt->pkt_has_scalar_store_s1) {
->> -        g_assert(!pkt->pkt_has_dczeroa);
->> +    if (ctx->pkt.pkt_has_scalar_store_s1) {
->> +        g_assert(!ctx->pkt.pkt_has_dczeroa);
->>          process_store(ctx, 1);
->>      }
->> -    if (pkt->pkt_has_scalar_store_s0) {
->> -        g_assert(!pkt->pkt_has_dczeroa);
->> +    if (ctx->pkt.pkt_has_scalar_store_s0) {
->> +        g_assert(!ctx->pkt.pkt_has_dczeroa);
->>          process_store(ctx, 0);
->>      }
->>  }
->> @@ -728,7 +717,7 @@ static void process_store_log(DisasContext *ctx)
->>  /* Zero out a 32-bit cache line */
->>  static void process_dczeroa(DisasContext *ctx)
->>  {
->> -    if (ctx->pkt->pkt_has_dczeroa) {
->> +    if (ctx->pkt.pkt_has_dczeroa) {
->>          /* Store 32 bytes of zero starting at (addr & ~0x1f) */
->>          TCGv addr =3D tcg_temp_new();
->>          TCGv_i64 zero =3D tcg_constant_i64(0);
->> @@ -762,7 +751,7 @@ static void gen_commit_hvx(DisasContext *ctx)
->>
->>      /* Early exit if not needed */
->>      if (!ctx->need_commit) {
->> -        g_assert(!pkt_has_hvx_store(ctx->pkt));
->> +        g_assert(!pkt_has_hvx_store(&ctx->pkt));
->>          return;
->>      }
->>
->> @@ -796,25 +785,23 @@ static void gen_commit_hvx(DisasContext *ctx)
->>          tcg_gen_gvec_mov(MO_64, dstoff, srcoff, size, size);
->>      }
->>
->> -    if (pkt_has_hvx_store(ctx->pkt)) {
->> +    if (pkt_has_hvx_store(&ctx->pkt)) {
->>          gen_helper_commit_hvx_stores(tcg_env);
->>      }
->>  }
->>
->>  static void update_exec_counters(DisasContext *ctx)
->>  {
->> -    Packet *pkt =3D ctx->pkt;
->> -    int num_insns =3D pkt->num_insns;
->>      int num_real_insns =3D 0;
->>      int num_hvx_insns =3D 0;
->>
->> -    for (int i =3D 0; i < num_insns; i++) {
->> -        if (!pkt->insn[i].is_endloop &&
->> -            !pkt->insn[i].part1 &&
->> -            !GET_ATTRIB(pkt->insn[i].opcode, A_IT_NOP)) {
->> +    for (int i =3D 0; i < ctx->pkt.num_insns; i++) {
->> +        if (!ctx->pkt.insn[i].is_endloop &&
->> +            !ctx->pkt.insn[i].part1 &&
->> +            !GET_ATTRIB(ctx->pkt.insn[i].opcode, A_IT_NOP)) {
->>              num_real_insns++;
->>          }
->> -        if (GET_ATTRIB(pkt->insn[i].opcode, A_CVI)) {
->> +        if (GET_ATTRIB(ctx->pkt.insn[i].opcode, A_CVI)) {
->>              num_hvx_insns++;
->>          }
->>      }
->> @@ -843,12 +830,11 @@ static void gen_commit_packet(DisasContext *ctx)
->>       * store.  Therefore, we call process_store_log before anything els=
-e
->>       * involved in committing the packet.
->>       */
->> -    Packet *pkt =3D ctx->pkt;
->> -    bool has_store_s0 =3D pkt->pkt_has_scalar_store_s0;
->> +    bool has_store_s0 =3D ctx->pkt.pkt_has_scalar_store_s0;
->>      bool has_store_s1 =3D
->> -        (pkt->pkt_has_scalar_store_s1 && !ctx->s1_store_processed);
->> -    bool has_hvx_store =3D pkt_has_hvx_store(pkt);
->> -    if (pkt->pkt_has_dczeroa) {
->> +        (ctx->pkt.pkt_has_scalar_store_s1 && !ctx->s1_store_processed);
->> +    bool has_hvx_store =3D pkt_has_hvx_store(&ctx->pkt);
->> +    if (ctx->pkt.pkt_has_dczeroa) {
->>          /*
->>           * The dczeroa will be the store in slot 0, check that we don't=
- have
->>           * a store in slot 1 or an HVX store.
->> @@ -875,12 +861,11 @@ static void gen_commit_packet(DisasContext *ctx)
->>                      FIELD_DP32(mask, PROBE_PKT_SCALAR_HVX_STORES,
->>                                 HAS_HVX_STORES, 1);
->>              }
->> -            if (has_store_s0 && slot_is_predicated(pkt, 0)) {
->> -                mask =3D
->> -                    FIELD_DP32(mask, PROBE_PKT_SCALAR_HVX_STORES,
->> -                               S0_IS_PRED, 1);
->> +            if (has_store_s0 && slot_is_predicated(&ctx->pkt, 0)) {
->> +                mask =3D FIELD_DP32(mask, PROBE_PKT_SCALAR_HVX_STORES, =
-S0_IS_PRED,
->> +                                  1);
->>              }
->> -            if (has_store_s1 && slot_is_predicated(pkt, 1)) {
->> +            if (has_store_s1 && slot_is_predicated(&ctx->pkt, 1)) {
->>                  mask =3D
->>                      FIELD_DP32(mask, PROBE_PKT_SCALAR_HVX_STORES,
->>                                 S1_IS_PRED, 1);
->> @@ -898,7 +883,7 @@ static void gen_commit_packet(DisasContext *ctx)
->>          int args =3D 0;
->>          args =3D
->>              FIELD_DP32(args, PROBE_PKT_SCALAR_STORE_S0, MMU_IDX, ctx->m=
-em_idx);
->> -        if (slot_is_predicated(pkt, 0)) {
->> +        if (slot_is_predicated(&ctx->pkt, 0)) {
->>              args =3D
->>                  FIELD_DP32(args, PROBE_PKT_SCALAR_STORE_S0, IS_PREDICAT=
-ED, 1);
->>          }
->> @@ -910,18 +895,18 @@ static void gen_commit_packet(DisasContext *ctx)
->>
->>      gen_reg_writes(ctx);
->>      gen_pred_writes(ctx);
->> -    if (pkt->pkt_has_hvx) {
->> +    if (ctx->pkt.pkt_has_hvx) {
->>          gen_commit_hvx(ctx);
->>      }
->>      update_exec_counters(ctx);
->>
->> -    if (pkt->vhist_insn !=3D NULL) {
->> +    if (ctx->pkt.vhist_insn !=3D NULL) {
->>          ctx->pre_commit =3D false;
->> -        ctx->insn =3D pkt->vhist_insn;
->> -        pkt->vhist_insn->generate(ctx);
->> +        ctx->insn =3D ctx->pkt.vhist_insn;
->> +        ctx->pkt.vhist_insn->generate(ctx);
->>      }
->>
->> -    if (pkt->pkt_has_cof) {
->> +    if (ctx->pkt.pkt_has_cof) {
->>          gen_end_tb(ctx);
->>      }
->>  }
->> @@ -930,7 +915,6 @@ static void decode_and_translate_packet(CPUHexagonSt=
-ate *env, DisasContext *ctx)
->>  {
->>      uint32_t words[PACKET_WORDS_MAX];
->>      int nwords;
->> -    Packet pkt;
->>      int i;
->>
->>      nwords =3D read_packet_words(env, ctx, words);
->> @@ -939,16 +923,15 @@ static void decode_and_translate_packet(CPUHexagon=
-State *env, DisasContext *ctx)
->>          return;
->>      }
->>
->> -    ctx->pkt =3D &pkt;
->> -    if (decode_packet(ctx, nwords, words, &pkt, false) > 0) {
->> -        pkt.pc =3D ctx->base.pc_next;
->> +    if (decode_packet(ctx, nwords, words, &ctx->pkt, false) > 0) {
->> +        ctx->pkt.pc =3D ctx->base.pc_next;
->>          gen_start_packet(ctx);
->> -        for (i =3D 0; i < pkt.num_insns; i++) {
->> -            ctx->insn =3D &pkt.insn[i];
->> +        for (i =3D 0; i < ctx->pkt.num_insns; i++) {
->> +            ctx->insn =3D &ctx->pkt.insn[i];
->>              gen_insn(ctx);
->>          }
->>          gen_commit_packet(ctx);
->> -        ctx->base.pc_next +=3D pkt.encod_pkt_size_in_bytes;
->> +        ctx->base.pc_next +=3D ctx->pkt.encod_pkt_size_in_bytes;
->>      } else {
->>          gen_exception_end_tb(ctx, HEX_CAUSE_INVALID_PACKET);
->>      }
->> diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_fu=
-ncs.py
->> index 87b7f10d7f..e7f90a0da1 100755
->> --- a/target/hexagon/gen_tcg_funcs.py
->> +++ b/target/hexagon/gen_tcg_funcs.py
->> @@ -72,7 +72,7 @@ def gen_tcg_func(f, tag, regs, imms):
->>          for immlett, bits, immshift in imms:
->>              declared.append(hex_common.imm_name(immlett))
->>
->> -        arguments =3D ", ".join(["ctx", "ctx->insn", "ctx->pkt"] + decl=
-ared)
->> +        arguments =3D ", ".join(["ctx", "ctx->insn", "&ctx->pkt"] + dec=
-lared)
->>          f.write(f"    emit_{tag}({arguments});\n")
->>
->>      elif hex_common.skip_qemu_helper(tag):
->> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
->> index c0e9f26aeb..e37d5a514f 100755
->> --- a/target/hexagon/hex_common.py
->> +++ b/target/hexagon/hex_common.py
->> @@ -1144,7 +1144,7 @@ def helper_args(tag, regs, imms):
->>      if need_pkt_has_multi_cof(tag):
->>          args.append(HelperArg(
->>              "i32",
->> -            "tcg_constant_tl(ctx->pkt->pkt_has_multi_cof)",
->> +            "tcg_constant_tl(ctx->pkt.pkt_has_multi_cof)",
->>              "uint32_t pkt_has_multi_cof"
->>          ))
->>      if need_pkt_need_commit(tag):
->> @@ -1156,7 +1156,7 @@ def helper_args(tag, regs, imms):
->>      if need_PC(tag):
->>          args.append(HelperArg(
->>              "i32",
->> -            "tcg_constant_tl(ctx->pkt->pc)",
->> +            "tcg_constant_tl(ctx->pkt.pc)",
->>              "target_ulong PC"
->>          ))
->>      if need_next_PC(tag):
->> --
->> 2.34.1
->>
+There is no pending->fastpath field anymore.
+
+>       *
+>       * @opaque: data pointer passed to register_savevm_live()
+> -     * @must_precopy: amount of data that must be migrated in precopy
+> -     *                or in stopped state, i.e. that must be migrated
+> -     *                before target start.
+> -     * @can_postcopy: amount of data that can be migrated in postcopy
+> -     *                or in stopped state, i.e. after target start.
+> -     *                Some can also be migrated during precopy (RAM).
+> -     *                Some must be migrated after source stops
+> -     *                (block-dirty-bitmap)
+> +     * @pending: pointer to a MigPendingData struct
+> +     * @exact: set true for an accurate (slow) query
+>       */
+> -    void (*state_pending_exact)(void *opaque, uint64_t *must_precopy,
+> -                                uint64_t *can_postcopy);
+> +    void (*save_query_pending)(void *opaque, MigPendingData *pending,
+> +                               bool exact);
+>  
+>      /**
+>       * @load_state
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index b3d1e8a13c..e4efd243f3 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -14,6 +14,8 @@
+>  #ifndef MIGRATION_SAVEVM_H
+>  #define MIGRATION_SAVEVM_H
+>  
+> +#include "migration/register.h"
+> +
+>  #define QEMU_VM_FILE_MAGIC           0x5145564d
+>  #define QEMU_VM_FILE_VERSION_COMPAT  0x00000002
+>  #define QEMU_VM_FILE_VERSION         0x00000003
+> @@ -43,6 +45,7 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
+>  void qemu_savevm_state_cleanup(void);
+>  void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+>  int qemu_savevm_state_complete_precopy(MigrationState *s);
+> +void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
+>  void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+>                                       uint64_t *can_postcopy);
+>  void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+> index d808ece3b9..a22469a9e9 100644
+> --- a/hw/s390x/s390-stattrib.c
+> +++ b/hw/s390x/s390-stattrib.c
+> @@ -187,15 +187,15 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>      return 0;
+>  }
+>  
+> -static void cmma_state_pending(void *opaque, uint64_t *must_precopy,
+> -                               uint64_t *can_postcopy)
+> +static void cmma_state_pending(void *opaque, MigPendingData *pending,
+> +                               bool exact)
+>  {
+>      S390StAttribState *sas = S390_STATTRIB(opaque);
+>      S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+>      long long res = sac->get_dirtycount(sas);
+>  
+>      if (res >= 0) {
+> -        *must_precopy += res;
+> +        pending->precopy_bytes += res;
+>      }
+>  }
+>  
+> @@ -340,8 +340,7 @@ static SaveVMHandlers savevm_s390_stattrib_handlers = {
+>      .save_setup = cmma_save_setup,
+>      .save_live_iterate = cmma_save_iterate,
+>      .save_complete = cmma_save_complete,
+> -    .state_pending_exact = cmma_state_pending,
+> -    .state_pending_estimate = cmma_state_pending,
+> +    .save_query_pending = cmma_state_pending,
+>      .save_cleanup = cmma_save_cleanup,
+>      .load_state = cmma_load,
+>      .is_active = cmma_active,
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 5d5fca09bd..1e999f0040 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -571,42 +571,39 @@ static void vfio_save_cleanup(void *opaque)
+>      trace_vfio_save_cleanup(vbasedev->name);
+>  }
+>  
+> -static void vfio_state_pending_estimate(void *opaque, uint64_t *must_precopy,
+> -                                        uint64_t *can_postcopy)
+> +static void vfio_state_pending_sync(VFIODevice *vbasedev)
+>  {
+> -    VFIODevice *vbasedev = opaque;
+>      VFIOMigration *migration = vbasedev->migration;
+>  
+> -    if (!vfio_device_state_is_precopy(vbasedev)) {
+> -        return;
+> -    }
+> -
+> -    *must_precopy +=
+> -        migration->precopy_init_size + migration->precopy_dirty_size;
+> +    vfio_query_stop_copy_size(vbasedev);
+>  
+> -    trace_vfio_state_pending_estimate(vbasedev->name, *must_precopy,
+> -                                      *can_postcopy,
+> -                                      migration->precopy_init_size,
+> -                                      migration->precopy_dirty_size);
+> +    if (vfio_device_state_is_precopy(vbasedev)) {
+> +        vfio_query_precopy_size(migration);
+> +    }
+>  }
+>  
+> -static void vfio_state_pending_exact(void *opaque, uint64_t *must_precopy,
+> -                                     uint64_t *can_postcopy)
+> +static void vfio_state_pending(void *opaque, MigPendingData *pending,
+> +                               bool exact)
+>  {
+>      VFIODevice *vbasedev = opaque;
+>      VFIOMigration *migration = vbasedev->migration;
+> +    uint64_t remain;
+>  
+> -    vfio_query_stop_copy_size(vbasedev);
+> -    *must_precopy += migration->stopcopy_size;
+> -
+> -    if (vfio_device_state_is_precopy(vbasedev)) {
+> -        vfio_query_precopy_size(migration);
+> +    if (exact) {
+> +        vfio_state_pending_sync(vbasedev);
+> +        remain = migration->stopcopy_size;
+> +    } else {
+> +        if (!vfio_device_state_is_precopy(vbasedev)) {
+> +            return;
+> +        }
+> +        remain = migration->precopy_init_size + migration->precopy_dirty_size;
+>      }
+>  
+> -    trace_vfio_state_pending_exact(vbasedev->name, *must_precopy, *can_postcopy,
+> -                                   migration->stopcopy_size,
+> -                                   migration->precopy_init_size,
+> -                                   migration->precopy_dirty_size);
+> +    pending->precopy_bytes += remain;
+> +
+> +    trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
+> +                             migration->precopy_init_size,
+> +                             migration->precopy_dirty_size);
+>  }
+>  
+>  static bool vfio_is_active_iterate(void *opaque)
+> @@ -851,8 +848,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
+>      .save_prepare = vfio_save_prepare,
+>      .save_setup = vfio_save_setup,
+>      .save_cleanup = vfio_save_cleanup,
+> -    .state_pending_estimate = vfio_state_pending_estimate,
+> -    .state_pending_exact = vfio_state_pending_exact,
+> +    .save_query_pending = vfio_state_pending,
+>      .is_active_iterate = vfio_is_active_iterate,
+>      .save_live_iterate = vfio_save_iterate,
+>      .save_complete = vfio_save_complete_precopy,
+> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+> index a061aad817..15d417013c 100644
+> --- a/migration/block-dirty-bitmap.c
+> +++ b/migration/block-dirty-bitmap.c
+> @@ -766,9 +766,8 @@ static int dirty_bitmap_save_complete(QEMUFile *f, void *opaque)
+>      return 0;
+>  }
+>  
+> -static void dirty_bitmap_state_pending(void *opaque,
+> -                                       uint64_t *must_precopy,
+> -                                       uint64_t *can_postcopy)
+> +static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
+> +                                       bool exact)
+>  {
+>      DBMSaveState *s = &((DBMState *)opaque)->save;
+>      SaveBitmapState *dbms;
+> @@ -788,7 +787,7 @@ static void dirty_bitmap_state_pending(void *opaque,
+>  
+>      trace_dirty_bitmap_state_pending(pending);
+>  
+> -    *can_postcopy += pending;
+> +    data->postcopy_bytes += pending;
+>  }
+>  
+>  /* First occurrence of this bitmap. It should be created if doesn't exist */
+> @@ -1250,8 +1249,7 @@ static SaveVMHandlers savevm_dirty_bitmap_handlers = {
+>      .save_setup = dirty_bitmap_save_setup,
+>      .save_complete = dirty_bitmap_save_complete,
+>      .has_postcopy = dirty_bitmap_has_postcopy,
+> -    .state_pending_exact = dirty_bitmap_state_pending,
+> -    .state_pending_estimate = dirty_bitmap_state_pending,
+> +    .save_query_pending = dirty_bitmap_state_pending,
+>      .save_live_iterate = dirty_bitmap_save_iterate,
+>      .is_active_iterate = dirty_bitmap_is_active_iterate,
+>      .load_state = dirty_bitmap_load,
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 979751f61b..e5b7217bf5 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3443,30 +3443,18 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>      return qemu_fflush(f);
+>  }
+>  
+> -static void ram_state_pending_estimate(void *opaque, uint64_t *must_precopy,
+> -                                       uint64_t *can_postcopy)
+> -{
+> -    RAMState **temp = opaque;
+> -    RAMState *rs = *temp;
+> -
+> -    uint64_t remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+> -
+> -    if (migrate_postcopy_ram()) {
+> -        /* We can do postcopy, and all the data is postcopiable */
+> -        *can_postcopy += remaining_size;
+> -    } else {
+> -        *must_precopy += remaining_size;
+> -    }
+> -}
+> -
+> -static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
+> -                                    uint64_t *can_postcopy)
+> +static void ram_state_pending(void *opaque, MigPendingData *pending,
+> +                              bool exact)
+>  {
+>      RAMState **temp = opaque;
+>      RAMState *rs = *temp;
+>      uint64_t remaining_size;
+>  
+> -    if (!migration_in_postcopy()) {
+> +    /*
+> +     * Sync is not needed either with: (1) a fast query, or (2) after
+> +     * postcopy has started (no new dirty will generate anymore).
+> +     */
+> +    if (exact && !migration_in_postcopy()) {
+>          bql_lock();
+>          WITH_RCU_READ_LOCK_GUARD() {
+>              migration_bitmap_sync_precopy(false);
+> @@ -3478,9 +3466,9 @@ static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
+>  
+>      if (migrate_postcopy_ram()) {
+>          /* We can do postcopy, and all the data is postcopiable */
+> -        *can_postcopy += remaining_size;
+> +        pending->postcopy_bytes += remaining_size;
+>      } else {
+> -        *must_precopy += remaining_size;
+> +        pending->precopy_bytes += remaining_size;
+>      }
+>  }
+>  
+> @@ -4703,8 +4691,7 @@ static SaveVMHandlers savevm_ram_handlers = {
+>      .save_live_iterate = ram_save_iterate,
+>      .save_complete = ram_save_complete,
+>      .has_postcopy = ram_has_postcopy,
+> -    .state_pending_exact = ram_state_pending_exact,
+> -    .state_pending_estimate = ram_state_pending_estimate,
+> +    .save_query_pending = ram_state_pending,
+>      .load_state = ram_load,
+>      .save_cleanup = ram_save_cleanup,
+>      .load_setup = ram_load_setup,
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index dd58f2a705..392d840955 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1762,46 +1762,44 @@ int qemu_savevm_state_complete_precopy(MigrationState *s)
+>      return qemu_fflush(f);
+>  }
+>  
+> -/* Give an estimate of the amount left to be transferred,
+> - * the result is split into the amount for units that can and
+> - * for units that can't do postcopy.
+> - */
+> -void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> -                                        uint64_t *can_postcopy)
+> +void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+>  {
+>      SaveStateEntry *se;
+>  
+> -    *must_precopy = 0;
+> -    *can_postcopy = 0;
+> +    pending->precopy_bytes = 0;
+> +    pending->postcopy_bytes = 0;
+>  
+>      QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+> -        if (!se->ops || !se->ops->state_pending_estimate) {
+> +        if (!se->ops || !se->ops->save_query_pending) {
+>              continue;
+>          }
+>          if (!qemu_savevm_state_active(se)) {
+>              continue;
+>          }
+> -        se->ops->state_pending_estimate(se->opaque, must_precopy, can_postcopy);
+> +        se->ops->save_query_pending(se->opaque, pending, exact);
+>      }
+>  }
+>  
+> +void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> +                                        uint64_t *can_postcopy)
+> +{
+> +    MigPendingData pending;
+> +
+> +    qemu_savevm_query_pending(&pending, false);
+> +
+> +    *must_precopy = pending.precopy_bytes;
+> +    *can_postcopy = pending.postcopy_bytes;
+> +}
+> +
+>  void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+>                                       uint64_t *can_postcopy)
+>  {
+> -    SaveStateEntry *se;
+> +    MigPendingData pending;
+>  
+> -    *must_precopy = 0;
+> -    *can_postcopy = 0;
+> +    qemu_savevm_query_pending(&pending, true);
+>  
+> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+> -        if (!se->ops || !se->ops->state_pending_exact) {
+> -            continue;
+> -        }
+> -        if (!qemu_savevm_state_active(se)) {
+> -            continue;
+> -        }
+> -        se->ops->state_pending_exact(se->opaque, must_precopy, can_postcopy);
+> -    }
+> +    *must_precopy = pending.precopy_bytes;
+> +    *can_postcopy = pending.postcopy_bytes;
+>  }
+>  
+>  void qemu_savevm_state_cleanup(void)
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 846e3625c5..7cf5a9eb2d 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -173,8 +173,7 @@ vfio_save_device_config_state(const char *name) " (%s)"
+>  vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>  vfio_save_iterate_start(const char *name) " (%s)"
+>  vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+> -vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> -vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> +vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>  vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>  vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>  
+> -- 
+> 2.53.0
+> 
+
+Apart from that one comment above, it looks good to me!
+
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+
 
