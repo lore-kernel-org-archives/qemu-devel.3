@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B2E4F364B7
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 20:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42436F364B7
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 20:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAvoP-0000QC-7F; Thu, 09 Apr 2026 16:17:13 -0400
+	id 1wAvq0-0000wv-Ts; Thu, 09 Apr 2026 16:18:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAvoM-0000Pb-7v
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 16:17:10 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1wAvpz-0000wl-KW
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 16:18:51 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAvoK-0007CV-9I
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 16:17:09 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-65032e9cf01so1249587d50.3
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 13:17:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775765827; cv=none;
+ id 1wAvpx-0007n3-Ut
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 16:18:51 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-6505ef94043so1400139d50.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 13:18:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775765929; cv=none;
  d=google.com; s=arc-20240605;
- b=eyKING0HUta9zOIy+ITSNBl7Td19t/on50McCAwbLjRe9ZUUjBq0FqR7Mc6Avq6Jpo
- BN0hVmJd5tPBh0KiizZNkEK3yvh9ovaO1TPnctniqjgMAld/jLPCpIHPmIBHlWLZkmT4
- zu7WcrDqnYSIkznuAzAlVaorNKXsEn+5p5k8z0nTeSkKRWmVWq/dBP24FMFs+7ga7GjD
- G1FSgiLVaVINEcvOXDolw4XYXw1Ad0hOxp8dUxvCVeNmbF+2mo9sTgPP4z07L1urrnUV
- OU2qeZt0ytaLOph3ZOTx+2j3DvfptPCFIM4aZWBFBfTXa3N4PYwzVQ4lomsGkAry3M3y
- LCsw==
+ b=GsqvqamZkPRUV/3gadQYy+mxIpPQ1f9FlooDNwKiA21EoP6PJ8vcOrw8ZMaG9B4ane
+ 6n3bjvc83ukH+WSHZK9OLJjYtkpxyWBVTHrhExNLRQlYCOPv8I5f/lzG9HMCKpWsU78l
+ c8rKRJU36dcvypcHRK3f4fhYL8J6HnTpdLNIlqG407q71Kz8Bx3exlkG3rnROLtT7X4F
+ jxHElafq503p2Yf+zEowbX0yhtwqC3z4zQPHHhLfc+xNp2ghe34bMAsWf97DN70nF/9m
+ ePRdaGsqduzljwJ5E57hfLl5XQKLMTB1dwj4CfcS/ZcAi77joYfspBlbtiv44diU/lsw
+ WV6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=DZxLqrufXceS85n/R/AvvuBjIY8xZUEjqhJGvgNdNuo=;
- fh=VQTX0KcHLYp0W1xh5qMyMVzUksc/bNzicpit96Uxm2w=;
- b=AyyulJEPemYzuj6unovvrv8t71yIo+h/SkcaM/DAJuCc4RlueHqiyZSwqficzaF2Nx
- iT8kl1Z0KgSgpTmCwRG7BWijxEn5RGcvJv6MYUuku2gaBZVjB6WGC6wqqSV3lShwcf4n
- iRSBsNnEfWudgki+d07MzlakhtokvWUcvP38AzCOTIZIFeacV+DOFxUHNyrcC3QLW6v1
- 1UjxzvlFqHohxQ52qVhPT3E23+5FnE6C/lFgATxHg3PJmObSSIiY65ubGG/Y7nBX3z1Q
- hWJKCjcqEOkm0k8l7kUFgBUObmybdaaO613oe4Cv+s2HheVuPvOvtlza8jTaewj64sTV
- 2Z2Q==; darn=nongnu.org
+ bh=4plR2ELqZYXgy0a8tUDJL86AodK9YMya5DajTn+4JH4=;
+ fh=JqUq8MrIlWC9x6+SgSpz3yeZ6a4MgfoXe4ZGO/gz6y4=;
+ b=eaN2OhcyCYAfLg3sMCO0cAdJmo1BqxMFdI+9y71i/5zoW3/rYdOgiIaCa6vpCIaZy6
+ EJ11slASIkw+QDuBtJymiQ10x+0DVSoMBafzqM/1ezU3NVM0e2knpkQygy1BA16HSbf0
+ nFg0AGOlX+iWRsmf+O0f0czlXfk/EaQ+x9mr/PFVMO6Q54yKMCZ5QHwBvpPNfr0rKORZ
+ agD0y7L/nnCIRrIbi4r1PP62xmeVP5/op0fFEMenwoRqCZD4GYaUxkLrzqY//oajlOU/
+ PNsXskfU2RAhoKzlJnTNH8llufjWKSeeANCAXEA1DVSH9E24cN55utLI44HVpQ8QlFTN
+ atQA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775765827; x=1776370627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775765929; x=1776370729; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DZxLqrufXceS85n/R/AvvuBjIY8xZUEjqhJGvgNdNuo=;
- b=Po4Zh2WxTJqr6Kn7sjFskTz85G1XGOcKQemShLwmA0NLf5t/mZcr9QLZbtTG11a0EX
- TF5lAA97pttGbWSAM+XHVCVmNn5pxivCWmEi0Hh+QI6Fl+sI/ATMPAgME0pimc6yBesW
- mWiYb7Daflnq3RuQ1mnJFnuxU0WUoiCCyHiPSsMvTuYKqoO3I41rGYID+dtBeKyshyjM
- fIvEVjCEn3OtRNDQPD3ct6GwtcpgK94gLHZcKCU1zytvoEvz0hukvcF08Oj2yB7l+HYz
- FYf1z4gL9STUVgYqpyV87ffYRGOccTPfMRUbhrfYpZRIENUqvrPQNnnW+HXLKX/pl0ux
- n7vA==
+ bh=4plR2ELqZYXgy0a8tUDJL86AodK9YMya5DajTn+4JH4=;
+ b=nRk/sVZtf1X1k8yQNjEc7FBsr1On6UviENUDmGUk/BwK8WkL907hMRivD255t+Sw5o
+ BzK56uDHIqKZj1dQxGQEg46WdaUDZbZW2tZse5Kqt8UPUaQ6apttZHDeq1bOaJBbvKrp
+ iQ9HRDrH5Z/Tfhb1zZHtxOPl1ajWdZ8LOFlkndievA3krCULVcXzKAOLUDsDrWitlVQB
+ qK033YQuC09NWNTGNyoQi40jscIZD/988GXSHg8rOpFugEmFSBOesPFMWtfl1Y68xt8f
+ +HZd7MckPjwV3D+bmTIcxIALDCafelZlvm2hMrRkQ2PO+EZYxxxnoZuPeBO2g53tT4yd
+ ibag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775765827; x=1776370627;
+ d=1e100.net; s=20251104; t=1775765929; x=1776370729;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DZxLqrufXceS85n/R/AvvuBjIY8xZUEjqhJGvgNdNuo=;
- b=Malh2zhxvTX0eaoPpb1SEEmlhQaf7vGcqeS/HgkBZ1YsaNvhBNsj8uwfTblYg31N4Z
- C1A4/LbESMI/2GG+JXLxNp5n63ZG42P4pLHDrJFMRe38bQSRLkE3R3tuBwtP1fdthQk2
- cvtGuv50To2t2prXutbi0k3E36f5v6wkLcFOgL87vkiteodP3A4cr+r3vyzjV3DFF/W4
- +UUE0tnQInTIKLRGB0nE1uNjDt6F/6nXnOZWyd5xkGwYdO/O/Zluo29L23F33Gf8jVKI
- fKdo4ID2hz8fQqSMuVzUoVTQMXIzrrQHaq9AKw1zl//7rpacs1AiAI7lAy3yZaWlAI+3
- IO7g==
-X-Gm-Message-State: AOJu0Yxjk7ectLFOgKFQAKazoTYeDnJH0bW+ewTrW/ui8A0rTp5005I/
- TllXDoNrMOz57yi1sQWr1dgYQOiJFT7GGAfaLCrF7wlUp9ZtzZ+w8itowUZCrdlObcXxdmMsbF4
- pi1U2BK/71p3kGHvEEDjGSEziEa9F1fj3y0eJs38Xag==
-X-Gm-Gg: AeBDiesQGSifxK3yu0t6f4uujJhzn7eFr+ZJquedD8iGhvDpCXYvBSUAdzCFKF4OkE1
- YiO27JkSO2Aan2Kly6easKSihMxWbLkO310sjv6Q2iZ+iysxreT/Lb6aq6KzoMwbnwuOv3cSka0
- BqH/Tdpqlo5fixtsXWkRCCQpeVufYERE50sKycxnsqK2LDk7sf9MPDG6bxblEmUEyY3UgH+ExEv
- Tph/36n/7mULIDgRTNWfwPO/230uclE34fPCRFrYNDw5cXm1QO24KWqz8HEipYHJK4LvpNmqAjE
- nPPErGceJI9ZlxJutkbexlVAwiWQgIBzKTo9/2w2untoJcs6zBtbiP9U2TKRuuqIZD9iHH+CtSz
- v3w==
-X-Received: by 2002:a05:690e:400b:b0:64c:9ec3:d710 with SMTP id
- 956f58d0204a3-65198b78e0emr398785d50.41.1775765826673; Thu, 09 Apr 2026
- 13:17:06 -0700 (PDT)
+ bh=4plR2ELqZYXgy0a8tUDJL86AodK9YMya5DajTn+4JH4=;
+ b=HiI9XveaxyRrLQxvTfQ41ynzocjdrWXaQrbeUXhjzLtZ4EfWE7j9eIpIPiJyr245as
+ 34OBhnxdQLEtVHjMtqE9kLnX7Xoxy6Y+wt88daTSZZXXWBTLw0HcwaMMrnm0TMwq9Bsg
+ 22dXUUXadb0jBWd8lCbKD9kzETrxc2LKFwC+XYiPxbSyuwEvmdmDjbpuHCL3uPYZXKXF
+ GdWReJEjd5da2YgTwqSgzFEU6AIipjfRBRrklm1n1/XHxCpWqnf+X4uWVxZkwtmMngea
+ CgPD2hkGiF4OGlT52i1XhtqkNZ6JIk20TjmYdDdtGcBCL0xR2KER+m4pL2kQMjj5kdyb
+ CtNw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUx9abdwUyjhrUD4vFnLaFQPjh1btfoyWnyCUzREuPDMQSXB9ldJblyXkn5EIu1S4dhj3ci84Ruf6hp@nongnu.org
+X-Gm-Message-State: AOJu0YwyICWfkwt1boq1+yNVBlgVdPhFHupUIps/i4N+RelXNZR7hjzN
+ ElKevlalGswP4JfoAxyQy3Bhr+5qGuIDW1cReovyoBbZvgRgwMjiG/2Rz+tzTm/NYh+8UDws6DP
+ ijtc3XLziBl+sF6XHAn1bcIMCf7rEGey4xJIAh9wt1A==
+X-Gm-Gg: AeBDietLIcbp3WPgiHJMvLplGwDwtsyLK7Hb3EPO3NScA87RkHYAaWH76DSVLbw+59E
+ tb7z3tnNlDqlVnQS4M26BlzJ58l2QYy1yCL+omufAd9zsz6/jAIlJw67H2VFUTidykvTnOXpEp0
+ U8Imh8pBRuPGh0snVS+oYfE5eYKk5z8QcID7z2nlovcyILrQXtPIAImrnHBVHneAiGqhlefvNI+
+ ECo0nRJh7wyGWtf3QAI+I9Km53Fu9y+iCqLEqeIwUmqucYxBz0ZJy48irZmIwTwaPoaMR6dNblh
+ JtsaO/RyCmsxLc4jiDSILvThLHH/EXRqxI/Vr0sAN+L8qpIByYDHoczeyg+P9Ssp5LA=
+X-Received: by 2002:a53:b174:0:b0:650:8923:5618 with SMTP id
+ 956f58d0204a3-65198bd4155mr288604d50.57.1775765928729; Thu, 09 Apr 2026
+ 13:18:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260408184228.44242-1-james.hilliard1@gmail.com>
- <CAFEAcA_Jt3SmuTiLWxuVQuktAG=M5C-Ux7OYKcGwPUBSETegew@mail.gmail.com>
- <CADvTj4rMoQi-ic=q=TJ5Dz6_GhHhR=JNhMoRhfKCFAuZzhUpzw@mail.gmail.com>
-In-Reply-To: <CADvTj4rMoQi-ic=q=TJ5Dz6_GhHhR=JNhMoRhfKCFAuZzhUpzw@mail.gmail.com>
+References: <20260409110256.684-1-anthony.roberts@linaro.org>
+ <87qzoo9vzu.fsf@draig.linaro.org>
+In-Reply-To: <87qzoo9vzu.fsf@draig.linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Apr 2026 21:16:54 +0100
-X-Gm-Features: AQROBzAzdBHRTtfHqI6u6UuWaLqQ2yP-vsiuAXeynE3nlMMQAkYfUJew2bTmmx8
-Message-ID: <CAFEAcA_JPnWh22zhb+ajr76oKtFRoCZSZpsVW51m08eWrMZS5w@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/mips: keep k0 in sync with CP0_UserLocal
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date: Thu, 9 Apr 2026 21:18:37 +0100
+X-Gm-Features: AQROBzC3wDWKbiJK8Q3XOXR-HuMw_NfQAZHN8d_A6mx5NrUtx0zgYqHt4KnMGkA
+Message-ID: <CAFEAcA_yjPkAtM0FJLvXGUykxX6Y-HyXTxBrrvWEaLUEpHfgTw@mail.gmail.com>
+Subject: Re: [PATCH] ui/sdl2: Fix assumption of EGL presence at runtime
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Anthony Roberts <anthony.roberts@linaro.org>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,52 +119,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Apr 2026 at 20:47, James Hilliard <james.hilliard1@gmail.com> wro=
-te:
+On Thu, 9 Apr 2026 at 13:09, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
 >
-> On Thu, Apr 9, 2026 at 10:17=E2=80=AFAM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
+> Anthony Roberts <anthony.roberts@linaro.org> writes:
+>
+> > The original commit had a section of code which worked on the assumptio=
+n
+> > that if OpenGL was enabled at build, it was present on the end user mac=
+hine,
+> > and calls could be made to it. This is not always the case (such as Win=
+dows
+> > on Arm devices).
 > >
-> > On Wed, 8 Apr 2026 at 19:43, James Hilliard <james.hilliard1@gmail.com>=
- wrote:
-> > >
-> > > MIPS glibc startup expects the thread pointer to be live in both
-> > > CP0_UserLocal and k0. linux-user already updates CP0_UserLocal for
-> > > cpu_set_tls() and TARGET_NR_set_thread_area, but it leaves gpr[26]
-> > > unchanged.
-> > >
-> > > A guest can therefore successfully execute set_thread_area() and stil=
-l
-> > > reach __pthread_initialize_minimal() with k0 =3D=3D 0, faulting on th=
-e
-> > > first TLS-relative store.
-> > >
-> > > Make cpu_set_tls() synchronize k0 with CP0_UserLocal, and route the
-> > > MIPS set_thread_area syscall through cpu_set_tls() so all guest TLS
-> > > updates follow the same path.
+> > This line should have also included a runtime check.
 > >
-> > Where does the kernel do this? Looking at the mips set_thread_area()
-> > https://elixir.bootlin.com/linux/v6.19.11/source/arch/mips/kernel/sysca=
-ll.c#L87
-> > it looks like it sets CP0_UserLocal plus the tp_value field in the
-> > thread_info struct; and I can't immediately see anywhere where it
-> > would read either CP0_UserLocal or tp_value and put it into k0.
+> > This commit moves the relevant line to inside a runtime check for OpenG=
+L.
+> >
+> > Fixes: 52053b7e0a0e ("ui/sdl2: Implement dpy dmabuf functions")
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3347
+> > Signed-off-by: Anthony Roberts <anthony.roberts@linaro.org>
 >
-> So this seems to be something used by the vendor SDK for Octeon1
-> but not Octeon2 and Octeon3 targets, kinda strange/annoying.
->
-> I also found this:
-> https://lists.gnu.org/archive/html/qemu-devel/2011-08/msg02026.html
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Ah, nice find.
+Applied to git directly, as requested.
 
-> It's in the Octeon vendor kernel here looks like:
-> https://github.com/MarvellEmbeddedProcessors/Octeon-Linux-kernel-4.14/blo=
-b/5c48e5031fbd86361e8185f6c530ffcfa5c9a60d/arch/mips/kernel/syscall.c#L94-L=
-96
-
-Mmm. We emulate the upstream kernel, not vendor forks, so
-we wouldn't want to set k0 here I think.
-
+thanks
 -- PMM
 
