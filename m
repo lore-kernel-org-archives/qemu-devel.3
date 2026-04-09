@@ -4,63 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D64EF364BE
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 21:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E785F364C9
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 22:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAxFL-0003GU-4s; Thu, 09 Apr 2026 17:49:07 -0400
+	id 1wAxWT-0008K3-FL; Thu, 09 Apr 2026 18:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wAxFJ-0003GE-DA
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:49:05 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wAxFG-0001ZF-Ve
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:49:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=I3+zygPDdrYt1oWBgZV98MSYzKehFQGf3kqAyk4J2Kw=; b=IKPOm9jvQ4NvrCkt
- 0aFMPpQbnaDJ/IgKjwY2/w3+y7zBmG/lMokwer3Zh50rD5ZuKxr3lXHljyqTE4ytWevDFjvk1kdBt
- BOGqyK9Hdhldc9OIciU8Khty6iuAjq34bsHX35279EyJ1iTt+DgXhk0nuoNTaW3Zjo4OuZQg80pQr
- 3z/OrGX6QCYKF7DnE/jz1FAd7x4DXfUlxZ4hW/zq001/POY33rloygk6VeBntgugVDMVhfA/l1OOi
- hvGhbGvlldup57SRSjDSA3+e3q5kecV2F+AQmTLXJVr4Lf2Bm8c0BrpYyBu3oOwgOPAAL+IoRKGFp
- gQoy1L0IJzuwefd5HQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wAxFB-00000007HfO-3lz4;
- Thu, 09 Apr 2026 21:48:57 +0000
-Date: Thu, 9 Apr 2026 21:48:57 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: Re: [PATCH 13/14] migration/qapi: Introduce system-wise "remaining"
- reports
-Message-ID: <adgeySiEoXBWRpOl@gallifrey>
-References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-14-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
+ id 1wAxWS-0008IQ-Hb
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 18:06:48 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
+ id 1wAxWQ-0000d7-Ku
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 18:06:48 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-2cc4c693d59so971785eec.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 15:06:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775772405; x=1776377205; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VoJVdciZFaewroq0cySKl+vu/S+aD/kerrA4/hB7jSw=;
+ b=kMhxRzX+KqRMLJI2Y7HOEVZkxbpmG+T80eMgG6aWzMA3Ks6e7pveo8SxzJrfL5WseH
+ QN5zrnUDUr4Xx+jdzGn3/9SnWyXQ4uNc0mPChXcXNPKSlacVo0i00jrTKAbo85YQWuyp
+ VMKjM0JzHxQa7/ljpbjO+FdQ3aDbF72M+I/XjDg/ApAjmUGTj/o3E7hTPTRyHh4hHxjG
+ cNoddiZbfqPKuAPaZlQa/NFvlJfD6vgZxdH4xeTWZcF4p+SFgJF+yaze1HC+ORS2Noxi
+ lnFSQT9zYOKdbu5UcN+1iKY8tpiibvjAGcx+jxdy5thjPcAR4SJYSDpK2egZ0mOdAI32
+ MCcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775772405; x=1776377205;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VoJVdciZFaewroq0cySKl+vu/S+aD/kerrA4/hB7jSw=;
+ b=D2/a6fJwc/wtpxUOf5xgmRqlKTvO2s7YYO0zf50tUZ2ov0IpvFQu0ATghBUNzhy5zR
+ nKt+qrIC160VsBzxbzUIUUglz2+7b2ler0F+/xQaZ7nSljM5vgxzXVIwF+jHS0VPZEzp
+ BiGLMwVPSmZBJuR+3eQF/EeqplUWkmae+MLfVyHrnfoK1R7LmMKTe8FMoAvI32iDMxL4
+ fo2KPPv81ysNBjD8ymQ5Gp+3L/52LvD3Np0Dejzk5FspX2RzptLCA5v6cB4gCFnNDuQu
+ sSHqG9ZHl6yZGZwOlxHC1H749X6hKIOevfo1awI3Af0FB9CkGnZFR3J3d/lgQjh3aWzI
+ DrDA==
+X-Gm-Message-State: AOJu0YxnwjNnZeZjXQ68GY/r0y5E+hAXsCCkC+iEScvPKWdRnBza/dRO
+ 7CUVUbS5Wly17Bvv2uxHtN92bELoN9PFAQg3byyY/FHaVFJGkU/NjT3pODD+SQXv
+X-Gm-Gg: AeBDieudzMmZSUjSUzEd499bEVB38H/R/pIHurvn8Ik/3tz1j68w4deMQOpLyTQ0nUk
+ xQz091rfHW+b5YPC/XdU7J7PE+c/wj+O9++96iCvpniRxiec8A6xsUwE0yDFJrjKWa6DInKKEAx
+ 2n4qkJfSUZ3qIt7YBrYPx1zsIIfNmJpu68YHlFpxUY7mwM0O0rCb+Q6qtakVMvc0HrMkg/vSMxP
+ xXNcL5rcFIRc/zGuN2DTRQbK62dm3J47px9ZwDSgme9stggWwq+B/dniQOa2bEH1QAq7jjyJom6
+ 0m4/iJFztFSnrxFRP07IgevgvkUKNJ+ojgeo3ORmHapubG9C+PJ1iMO+ExpY1n0XTfHXPUJo07+
+ 2Ru5uoqkg6TwmTcR7/sW2qxe5dGSSXt4ROWy3bLhsUq2YRxIzDlWeraBNLMV3GKaEn1S3xyqcAb
+ k+yxl2+SuSmEd8ZqFs/a2X8XmjB9SJSzqNBA+rj/uV+uql+JvtX8OhmAaZpX9zjw==
+X-Received: by 2002:a05:7300:6d03:b0:2c1:778:d897 with SMTP id
+ 5a478bee46e88-2d5888a07c5mr501111eec.21.1775772404920; 
+ Thu, 09 Apr 2026 15:06:44 -0700 (PDT)
+Received: from localhost.localdomain ([2804:7f4:c030:bb40:195d:78fd:ecba:d45])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2d561bde68bsm1534567eec.17.2026.04.09.15.06.41
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 09 Apr 2026 15:06:44 -0700 (PDT)
+From: Lucas Amaral <lucaaamaral@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
+ mohamed@unpredictable.fr, alex.bennee@linaro.org,
+ richard.henderson@linaro.org, Lucas Amaral <lucaaamaral@gmail.com>
+Subject: [PATCH v6 6/6] target/arm/hvf,
+ whpx: wire ISV=0 emulation for data aborts
+Date: Thu,  9 Apr 2026 19:06:14 -0300
+Message-ID: <20260409220614.65558-7-lucaaamaral@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260409220614.65558-1-lucaaamaral@gmail.com>
+References: <20260409220614.65558-1-lucaaamaral@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20260408165559.157108-14-peterx@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
-X-Uptime: 21:48:18 up 27 days, 23:01,  2 users,  load average: 0.02, 0.03, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,138 +102,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> Currently, mgmt can only query for remaining RAM, not system-wise remaining
-> data.  It was not a problem before, because for a very long time RAM was
-> the only part that matters.
-> 
-> After VFIO migrations landed upstream, it may not be true anymore
-> especially considering that there can be GPU devices that contain GBs of
-> device states.
-> 
-> Add a new "remaining" field in query-migrate results, reflecting
-> system-wise remaining data, which will include everything (e.g. VFIO).
+When a data abort with ISV=0 occurs during MMIO emulation, the
+syndrome register does not carry the access size or target register.
+Previously this hit an assert(isv) and killed the VM.
 
-Of course you realise the next thing people will ask for is being able
-to ask *which* vfio device is the one that's busy.
+Replace the assert with instruction fetch + decode + emulate using the
+shared library in target/arm/emulate/.  The faulting instruction is read
+from guest memory via cpu_memory_rw_debug(), decoded by the decodetree-
+generated decoder, and emulated against the vCPU register file.
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Both HVF (macOS) and WHPX (Windows Hyper-V) use the same pattern:
+  1. cpu_synchronize_state() to flush hypervisor registers
+  2. Fetch 4-byte instruction at env->pc
+  3. arm_emul_insn(env, insn)
+  4. On success, advance PC past the emulated instruction
 
-> This information will be useful for mgmt to implement generic way of stall
-> detection that covers all system resources.  Say, when system remaining
-> data does not decrease anymore for a relatively long period of time, then
-> it may mean that there is a challenge of converging, so mgmt can act based
-> on how this value changes over time (especially if sampled after each
-> migration iteration).
-> 
-> Before this patch, "expected_downtime" almost played this role. For
-> example, by monitoring "expected_downtime" at the beginning of each
-> iteration can in most cases also reflect the progress of migration
-> system-wise.  Said that, "expected_downtime" was always calculated based on
-> a bandwidth value that can fluctuate a lot if avail-switchover-bandwidth is
-> not used. This new "remaining" field will remove that part of uncertainty
-> for mgmt.
-> 
-> With the new field, HMP "info migrate" now reports this:
-> 
-> (qemu) info migrate
-> Status:                 active
-> Time (ms):              total=12080, setup=14, exp_down=300
-> Remaining (bytes):      1.36 GiB        <------------------- newline
-> RAM info:
->   Throughput (Mbps):    840.50
->   Sizes:                pagesize=4 KiB, total=4.02 GiB
->   Transfers:            transferred=1.18 GiB, remain=1.36 GiB
->     Channels:           precopy=1.18 GiB, multifd=0 B, postcopy=0 B
->     Page Types:         normal=307923, zero=388148
->   Page Rates (pps):     transfer=25660
->   Others:               dirty_syncs=1
-> 
-> It should be the same value as RAM's remaining report when VFIO is not
-> involved, and it should report more than that when VFIO is involved.
-> 
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  qapi/migration.json            |  4 ++++
->  migration/migration-hmp-cmds.c |  5 +++++
->  migration/migration.c          | 11 +++++++++++
->  3 files changed, 20 insertions(+)
-> 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index e3ad3f0604..a6e24b5685 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -300,6 +300,9 @@
->  #     average memory load of the virtual CPU indirectly.  Note that
->  #     zero means guest doesn't dirty memory.  (Since 8.1)
->  #
-> +# @remaining: amount of bytes remaining to be migrated system-wise,
-> +#     includes both RAM and all devices (like VFIO).  (Since 11.1)
-> +#
->  # Features:
->  #
->  # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
-> @@ -310,6 +313,7 @@
->  ##
->  { 'struct': 'MigrationInfo',
->    'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
-> +           '*remaining': 'uint64',
->             '*vfio': 'VfioStats',
->             '*xbzrle-cache': 'XBZRLECacheStats',
->             '*total-time': 'int',
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 0a193b8f54..721c211086 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -178,6 +178,11 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
->          }
->      }
->  
-> +    if (info->has_remaining) {
-> +        g_autofree char *remaining = size_to_str(info->remaining);
-> +        monitor_printf(mon, "Remaining (bytes): \t%s\n", remaining);
-> +    }
-> +
->      if (info->has_socket_address) {
->          SocketAddressList *addr;
->  
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 4010e5dcf5..c2aa145106 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1076,6 +1076,16 @@ static void populate_time_info(MigrationInfo *info, MigrationState *s)
->      }
->  }
->  
-> +static void populate_global_info(MigrationInfo *info, MigrationState *s)
-> +{
-> +    MigPendingData data = { };
-> +
-> +    qemu_savevm_query_pending(&data, false);
-> +
-> +    info->has_remaining = true;
-> +    info->remaining = data.total_bytes;
-> +}
-> +
->  static void populate_ram_info(MigrationInfo *info, MigrationState *s)
->  {
->      size_t page_size = qemu_target_page_size();
-> @@ -1177,6 +1187,7 @@ static void fill_source_migration_info(MigrationInfo *info)
->          /* TODO add some postcopy stats */
->          populate_time_info(info, s);
->          populate_ram_info(info, s);
-> +        populate_global_info(info, s);
->          migration_populate_vfio_info(info);
->          break;
->      case MIGRATION_STATUS_COLO:
-> -- 
-> 2.53.0
-> 
+If the instruction is unhandled or a memory error occurs, a synchronous
+external abort is injected into the guest via syn_data_abort_no_iss()
+with fnv=1 and fsc=0x10, matching the syndrome that KVM uses in
+kvm_inject_arm_sea().  The guest kernel's fault handler then reports
+the error through its normal data abort path.
+
+WHPX adds a whpx_inject_data_abort() helper and adjusts the
+whpx_handle_mmio() return convention so the caller skips PC advancement
+when an exception has been injected.
+
+Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
+---
+ target/arm/hvf/hvf.c       | 46 ++++++++++++++++++++++++++--
+ target/arm/whpx/whpx-all.c | 61 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 103 insertions(+), 4 deletions(-)
+
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 5fc8f6bb..000e54bd 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -32,6 +32,7 @@
+ #include "arm-powerctl.h"
+ #include "target/arm/cpu.h"
+ #include "target/arm/internals.h"
++#include "emulate/arm_emulate.h"
+ #include "target/arm/multiprocessing.h"
+ #include "target/arm/gtimer.h"
+ #include "target/arm/trace.h"
+@@ -2175,10 +2176,49 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+         assert(!s1ptw);
+ 
+         /*
+-         * TODO: ISV will be 0 for SIMD or SVE accesses.
+-         * Inject the exception into the guest.
++         * ISV=0: syndrome doesn't carry access size/register info.
++         * Fetch and emulate via target/arm/emulate/.
+          */
+-        assert(isv);
++        if (!isv) {
++            ARMCPU *arm_cpu = ARM_CPU(cpu);
++            CPUARMState *env = &arm_cpu->env;
++            uint32_t insn;
++            ArmEmulResult r;
++
++            cpu_synchronize_state(cpu);
++
++            if (cpu_memory_rw_debug(cpu, env->pc,
++                                    (uint8_t *)&insn, 4, false) != 0) {
++                bool same_el = arm_current_el(env) == 1;
++                uint32_t esr = syn_data_abort_no_iss(same_el,
++                    1, 0, 0, 0, iswrite, 0x10);
++
++                error_report("HVF: cannot read insn at pc=0x%" PRIx64,
++                             (uint64_t)env->pc);
++                env->exception.vaddress = excp->virtual_address;
++                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
++                break;
++            }
++
++            r = arm_emul_insn(env, insn);
++            if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
++                bool same_el = arm_current_el(env) == 1;
++                uint32_t esr = syn_data_abort_no_iss(same_el,
++                    1, 0, 0, 0, iswrite, 0x10);
++
++                error_report("HVF: ISV=0 %s insn 0x%08x at "
++                             "pc=0x%" PRIx64 ", injecting data abort",
++                             r == ARM_EMUL_UNHANDLED ? "unhandled"
++                                                     : "memory error",
++                             insn, (uint64_t)env->pc);
++                env->exception.vaddress = excp->virtual_address;
++                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
++                break;
++            }
++
++            advance_pc = true;
++            break;
++        }
+ 
+         /*
+          * Emulate MMIO.
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 513551be..0c04073e 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -29,6 +29,7 @@
+ #include "syndrome.h"
+ #include "target/arm/cpregs.h"
+ #include "internals.h"
++#include "emulate/arm_emulate.h"
+ 
+ #include "system/whpx-internal.h"
+ #include "system/whpx-accel-ops.h"
+@@ -352,6 +353,27 @@ static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
+     whpx_set_reg(cpu, reg, reg_val);
+ }
+ 
++/*
++ * Inject a synchronous external abort (data abort) into the guest.
++ * Used when ISV=0 instruction emulation fails.  Matches the syndrome
++ * that KVM uses in kvm_inject_arm_sea().
++ */
++static void whpx_inject_data_abort(CPUState *cpu, bool iswrite)
++{
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    bool same_el = arm_current_el(env) == 1;
++    uint32_t esr = syn_data_abort_no_iss(same_el, 1, 0, 0, 0, iswrite, 0x10);
++
++    cpu->exception_index = EXCP_DATA_ABORT;
++    env->exception.target_el = 1;
++    env->exception.syndrome = esr;
++
++    bql_lock();
++    arm_cpu_do_interrupt(cpu);
++    bql_unlock();
++}
++
+ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
+ {
+     uint64_t syndrome = ctx->Syndrome;
+@@ -366,7 +388,40 @@ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
+     uint64_t val = 0;
+ 
+     assert(!cm);
+-    assert(isv);
++
++    /*
++     * ISV=0: syndrome doesn't carry access size/register info.
++     * Fetch and decode the faulting instruction via the emulation library.
++     */
++    if (!isv) {
++        ARMCPU *arm_cpu = ARM_CPU(cpu);
++        CPUARMState *env = &arm_cpu->env;
++        uint32_t insn;
++        ArmEmulResult r;
++
++        cpu_synchronize_state(cpu);
++
++        if (cpu_memory_rw_debug(cpu, env->pc,
++                                (uint8_t *)&insn, 4, false) != 0) {
++            error_report("WHPX: cannot read insn at pc=0x%" PRIx64,
++                         (uint64_t)env->pc);
++            whpx_inject_data_abort(cpu, iswrite);
++            return 1;
++        }
++
++        r = arm_emul_insn(env, insn);
++        if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
++            error_report("WHPX: ISV=0 %s insn 0x%08x at "
++                         "pc=0x%" PRIx64 ", injecting data abort",
++                         r == ARM_EMUL_UNHANDLED ? "unhandled"
++                                                 : "memory error",
++                         insn, (uint64_t)env->pc);
++            whpx_inject_data_abort(cpu, iswrite);
++            return 1;
++        }
++
++        return 0;
++    }
+ 
+     if (iswrite) {
+         val = whpx_get_gp_reg(cpu, srt);
+@@ -451,6 +506,10 @@ int whpx_vcpu_run(CPUState *cpu)
+             }
+ 
+             ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx.MemoryAccess);
++            if (ret > 0) {
++                advance_pc = false;
++                ret = 0;
++            }
+             break;
+         case WHvRunVpExitReasonCanceled:
+             cpu->exception_index = EXCP_INTERRUPT;
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.52.0
+
 
