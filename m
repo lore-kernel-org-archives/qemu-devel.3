@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEC2EA3C55
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 11:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68A4EA3C55
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 11:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAnx9-0006Fm-SO; Thu, 09 Apr 2026 07:53:43 -0400
+	id 1wAnxB-0006Gg-7l; Thu, 09 Apr 2026 07:53:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wAnx8-0006FR-Ue
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:53:42 -0400
+ id 1wAnx9-0006Fo-UN
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:53:43 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>) id 1wAnx7-0000DX-E8
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:53:42 -0400
+ (envelope-from <aastharawat@linux.microsoft.com>) id 1wAnx7-0000Fi-Oq
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:53:43 -0400
 Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5106420B710C;
+ by linux.microsoft.com (Postfix) with ESMTPSA id EAAD420B7129;
  Thu,  9 Apr 2026 04:53:39 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5106420B710C
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EAAD420B7129
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1775735619;
- bh=A2gkHzyyrgJ48tKH/NCs6vPTaw/e/Fxg1+vebw64BvU=;
+ s=default; t=1775735620;
+ bh=968+R5QinbpCMEGNp1o9WJBEA7Zubhh3wG4nw0uiz5U=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=d0QaIUOGkgNgLtMF7F4SnXDYriMh3mO/8k0r79DN+v/69py14Pylv09AVzopb6gnS
- Q7AE3YQJzqJfhJy8/cr3HfiOY/8ADXbVSclCGK/5YvziSDgkN1lTl6xq6xx0EXWE1i
- QVSK5GaUtyQco7vIHjTghA3KVIoEvSh4roepkzrE=
+ b=KJ/69FkYLGBQbAY9zNUksU0eKSJW/rU/B7jj/92p7dHfZVWCz0P7L0tC6Au/unfKd
+ 3tt2BVlCsrJfuf8jkHmuVKI8WIzHIbth7WuXv2wZ396MLCbxvDQeVUxSLgr+j7v6Zq
+ M/VXJc3e1mN6In/VOCJbSLWRyyXKjEDG9aIPV7os=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 09 Apr 2026 11:53:06 +0000
-Subject: [PATCH 1/2] accel/mshv: fix ioeventfd deassignment to forward
- correct datamatch value
+Date: Thu, 09 Apr 2026 11:53:07 +0000
+Subject: [PATCH 2/2] accel/mshv: return correct errno value from ioeventfd
+ failure
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260409-fix_ioevent-v1-1-053b810ae6fb@linux.microsoft.com>
+Message-Id: <20260409-fix_ioevent-v1-2-053b810ae6fb@linux.microsoft.com>
 References: <20260409-fix_ioevent-v1-0-053b810ae6fb@linux.microsoft.com>
 In-Reply-To: <20260409-fix_ioevent-v1-0-053b810ae6fb@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -69,62 +69,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-unregister_ioevent() is not forwarding the datamatch (queue index) to
-the mshv driver, causing only the first VirtIO-MMIO queue to be
-deassigned correctly. Subsequent queues fail with `-ENOENT`, triggering
-a fatal abort().
-
-This failure was discovered while booting arm64 EDK2 firmware with mshv
-accel.
+Returning the raw ioctl return value results in misleading error
+message. Ensure that actual failure reason is propagated by returning
+-errno for ioeventfd failure.
 
 Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ accel/mshv/mshv-all.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index d4cc7f5371..e1a8d62f8d 100644
+index e1a8d62f8d..58af674bd9 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -278,13 +278,22 @@ static int ioeventfd(int vm_fd, int event_fd, uint64_t addr, Datamatch dm,
-     return ioctl(vm_fd, MSHV_IOEVENTFD, &args);
- }
+@@ -275,7 +275,12 @@ static int ioeventfd(int vm_fd, int event_fd, uint64_t addr, Datamatch dm,
+         }
+     }
  
--static int unregister_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr)
-+static int unregister_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr,
-+                              uint64_t data, uint32_t len, bool data_match)
- {
-     uint32_t flags = 0;
-     Datamatch dm = {0};
- 
-     flags |= BIT(MSHV_IOEVENTFD_BIT_DEASSIGN);
--    dm.tag = DATAMATCH_NONE;
-+    if (!data_match) {
-+        dm.tag = DATAMATCH_NONE;
-+    } else if (len == sizeof(uint64_t)) {
-+        dm.tag = DATAMATCH_U64;
-+        dm.value.u64 = data;
-+    } else {
-+        dm.tag = DATAMATCH_U32;
-+        dm.value.u32 = data;
+-    return ioctl(vm_fd, MSHV_IOEVENTFD, &args);
++    int ret = ioctl(vm_fd, MSHV_IOEVENTFD, &args);
++    if (ret < 0) {
++        return -errno;
 +    }
- 
-     return ioeventfd(vm_fd, event_fd, mmio_addr, dm, flags);
++
++    return ret;
  }
-@@ -337,11 +346,12 @@ static void mem_ioeventfd_del(MemoryListener *listener,
-     int fd = event_notifier_get_fd(e);
-     int ret;
-     uint64_t addr = section->offset_within_address_space;
-+    uint64_t len = int128_get64(section->size);
  
-     trace_mshv_mem_ioeventfd_del(section->offset_within_address_space,
-                                  int128_get64(section->size), data);
- 
--    ret = unregister_ioevent(mshv_state->vm, fd, addr);
-+    ret = unregister_ioevent(mshv_state->vm, fd, addr, data, len, match_data);
-     if (ret < 0) {
-         error_report("Failed to unregister ioeventfd: %s (%d)", strerror(-ret),
-                      -ret);
+ static int unregister_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr,
 
 -- 
 2.45.4
