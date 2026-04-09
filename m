@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62E0F364A6
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E60CF364A9
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAt9C-0008R9-PQ; Thu, 09 Apr 2026 13:26:30 -0400
+	id 1wAt9F-0008SE-0Z; Thu, 09 Apr 2026 13:26:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bruno.vilaca.sa@gmail.com>)
- id 1wArho-0000Ob-6v
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:54:08 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <benno.fuenfstueck@neodyme.io>)
+ id 1wAqeg-0000X8-Fs
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:46:50 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bruno.vilaca.sa@gmail.com>)
- id 1wArhm-0001Zh-R0
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:54:07 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43cf73bbfbdso660560f8f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 08:54:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <benno.fuenfstueck@neodyme.io>)
+ id 1wAqee-0003Pz-7m
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:46:49 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso10436715e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775750045; x=1776354845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4uNRjVzBrfQNBjxA8Suax0mc4RuGUSF8x1sHTO0A3nY=;
- b=KbvZJwFOURByk9ME58wsPt6iV36LaKvgpsKikptm+v69i1eREDyMHBnIesCW+VDf99
- qgFaSQyp33TIcxaVmWoClHII/LZ4V0ASP+Zh5hK2NDocMixgxEO+XsgivwH/MTyKHL1l
- cDOXZ1CWh8po6Ngl7kk3SZYMhQFq5LIfDalDRVEsI8nE1QdS7NCJsAM3bHAewL/PoMTO
- Ysr1aUmtFFVDdSKvJvx/6zmo3eJ410+kW+4tpsdbALGPCfu4cc4n/kbcAca121QNBNnn
- KlR38xtnGTVx10SFKRTKYIGEYEtre+SIuJ/hxbki38QHvyS6P838Lmcq/9Vhx+QMCMeL
- uMYg==
+ d=neodyme.io; s=google; t=1775746004; x=1776350804; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tzOL7FDl1K7aen5hTdBzUNU7jyLuiNQRylvYSYEPqdw=;
+ b=YjjEklQO0UuGIaisY8fphsQFPq+Ldr/VfwoMKkVRletztrcfYQQVs7cWH3SWVR1hCK
+ ktbTJSgfAPA0i3JCk4FBykRe2RK7LiEwXpEnqfrKYJiLRgb+qHDqAbg69XA+l6ZFfrfW
+ uvtQwL3mLC5iRCR2U9L77IFa8skWipMxp7AmUM7XpS6SOXPnMmqPFIOXH5cYwzLO1IIG
+ KMMHrepclYOHQ2lQFRouam6cn1P/rXS4vBt6GQkb9AMj0Yz6yle52QazI/UdaCL/dCdu
+ UKg8WXBBuFWYjOlXtq/I91QZsHuBUWhgvoPWVpWNTkP6e6FGLxxwfO5bjrdUbOivXfZe
+ eEHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775750045; x=1776354845;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4uNRjVzBrfQNBjxA8Suax0mc4RuGUSF8x1sHTO0A3nY=;
- b=NG+Papdo/YSaHtBPSMIdDAqaEA2Uhnxr9/ujmcQC0NMueZZWnkCLe8pBhVg8uvx7+S
- r3kFDKFHijzvsksAKuT8febU52kEPqA3G2rUne3bRO2iWf4kHBsXpB3vHqKno45Br+8s
- ACB/5SZBo9yP1gfLMctTztau6a42n6gJPeTkJBU8QnLk1uVyIc2erBxHY4m4Xt1o81v2
- yXxkUGfF08NKlYys2rKU0hTh9ATiPPT9UTczOVkCwC2qZmSoBCQ6x7dSFcMn15dqPd8C
- EiAueFb0VButvXDni5c50CvMsJjYgWQ/hOXIo9lqUexPVXTuWbXYzPQigK5aP3AjV1ZB
- xdKQ==
-X-Gm-Message-State: AOJu0YwSDILslu/OOswogJ6QMNQWzKOio7cXjhAP4258BBTdBUH2vDKu
- AbM9LC/Ou6zBoGF4JYeQbBYyrY3HaT2y2OxWI6d4qTdSZY+z2WXmfzy5L986mUGu+yY9YQ==
-X-Gm-Gg: AeBDievPgYqJljTia4Cl31L3pBqOF5j/A8AIK7b7eUP5UgSBjb0n9KHW3NXc76lq266
- wE+SYxmKz4y57PM/OXv5X1/wnaTh0SBVpQXfSORMDiiKyyaH9uOLCZF6Cz8Gce+HQViT0aWz4k0
- pmjbAcuXdnOZj8Cr1a6d3nFzGbGKo35gKCag2Z3IkTL2SOJ9jGxI1EUQ0wTOzmhW4ueneQYQaHi
- ykiOHO2g/BswNFr73ukcnvElpHOjaolj+irMJKvWlfSo43o17QlfKC1KvBTwETi9LKELWBtEQ9K
- bXar+aBllI9yd3R4utxKvSY5v1wuHRghFOqdq0oom9l1Kcf1pG48mDUg52BbXspFTD8RsjZo92x
- eAIn+NlMkr1RNsg8uHEKw2n6bm6sl/VwbsyN6dhMvBnfUVzUef+MCB5+XvnCUPWV96aBiHOpgV/
- M62FRpSytB9r1ufI8ExuAXR8f2s3P5fGrJ2SRoW4L54l4H5e2TKLazQTnm3Aa31y180cOP
-X-Received: by 2002:a05:6000:228a:b0:43d:4e2e:368b with SMTP id
- ffacd0b85a97d-43d5a1a28e0mr5380211f8f.40.1775750044995; 
- Thu, 09 Apr 2026 08:54:04 -0700 (PDT)
-Received: from ninolomata-AERO-15-KC.. (89-181-36-85.net.novis.pt.
- [89.181.36.85]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d1e2c5468sm67259292f8f.13.2026.04.09.08.54.03
+ d=1e100.net; s=20251104; t=1775746004; x=1776350804;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tzOL7FDl1K7aen5hTdBzUNU7jyLuiNQRylvYSYEPqdw=;
+ b=ZEfNUHdOmJRVtaBcXZdvofGvJ+jlTy5f9OmNQZzKKwYGko7HxphYIIFyAEct5zhmKa
+ J78mCrSKVAdxQC0K/MnGq1Z1/IbZ9tTsq1xDVLR9YCofyP7JUxQ6l+kvZ+fw/117pb4R
+ o1243tGBXOjw/tJhbhOkC8RyLjWCHJ2pwOqW3vjlX9WqBA2CgF2yY9E49He8WoCVaTu3
+ kcoKCE7s3teKxTaRYA+D9SOLhhPdOEu8haHozSYxdECR5yCF2At7geSYj/wwZlyXTTUp
+ EBP3qDcO9CNRIBJxuORRxRKtiJfFbW4gWYIPntg8mtsCJ9PrQ0CecKe+dAIWVfI4khaf
+ prbg==
+X-Gm-Message-State: AOJu0YyMfwaaAROq9urtXuNlrZxZsXjZbz4W+KOmY372188u7DXsovcR
+ P6icgWFnJC3YYZHWczx0KObY1CdA5pxIynqQF9FkWunuv41q9pI/av6swGFqjghpdJkbYW+HGee
+ 2RHb7HKUMRbhyoK9EdFO6Yy1nWB94Gr+eUBZbav+Pa8itcZvNoAtDNrfPt+H2rXc9am8=
+X-Gm-Gg: AeBDietoV3bd5gIo2KoHm1pJHGMEGqkAWbKOg/CiTCAalA6373JPdKtgGCvm8pG1Xid
+ F9wJG/v6DKMt6qeHTbkbVzmOBFLvXNvjfIZYSva0MGhjfziPj8mXpnrNmnLHv2Mp9GQ5dT0VoR7
+ w+EoSqOvz/9aEeAyotT/MAkVxKrvgzc85Yq9OJZRKdfSDhOSqvRDdTuopTwVbNJeH6w8kRxJglC
+ DjwJFDCroazZjEt3eFS2mwKHSoK6xNWhF9r97/CdEPi6s8nnIxcYIY3X6LggiqRPihYSUdl2zjY
+ 8Rm3EmLl0JCl2HeIPsVYLwaM4KeyREs3oL13/Zi2WnVvr7FVOonrHX2+HEk16rm9Smx8O1xKVqF
+ ywGyt+cfEiIZ7MM1ePSQTBXjb3he84CBEf9LLi3fBbzvu8PM8g5bF04tFCmBKv74stFpbBGgL+k
+ C0WLhRyq49+CQ/LKoeTyCn3kaBCMTKCJSicZLgVV69vvPxx/kD0jna625+RXnpeUt0F7yt5+ZYZ
+ v+puaJ8tTkwgyNlOmFAQVOHvVFpxfkFojUgw0wKFGXtH/zbxwtIJqS4Z6q+FA==
+X-Received: by 2002:a05:600c:6387:b0:486:faa8:9e4 with SMTP id
+ 5b1f17b1804b1-488d08efdf2mr32906005e9.12.1775746004198; 
+ Thu, 09 Apr 2026 07:46:44 -0700 (PDT)
+Received: from i-cube.fritz.box.net
+ (p200300c27729d60078e64648c83f9ad2.dip0.t-ipconnect.de.
+ [2003:c2:7729:d600:78e6:4648:c83f:9ad2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488cd0eaeecsm26248105e9.8.2026.04.09.07.46.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Apr 2026 08:54:04 -0700 (PDT)
-From: Bruno Sa <bruno.vilaca.sa@gmail.com>
+ Thu, 09 Apr 2026 07:46:43 -0700 (PDT)
+From: =?UTF-8?q?Benno=20F=C3=BCnst=C3=BCck?= <benno.fuenfstueck@neodyme.io>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, Bruno Sa <bruno.vilaca.sa@gmail.com>
-Subject: [PATCH 1/2] target/riscv: preserve RV32 henvcfgh on henvcfg writes
-Date: Thu,  9 Apr 2026 16:53:42 +0100
-Message-ID: <20260409155344.2849233-2-bruno.vilaca.sa@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260409155344.2849233-1-bruno.vilaca.sa@gmail.com>
-References: <20260409155344.2849233-1-bruno.vilaca.sa@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Benno=20F=C3=BCnfst=C3=BCck?= <benno.fuenfstueck@neodyme.io>
+Subject: [PATCH] virtio-gpu: fix inverted mouse cursor
+Date: Thu,  9 Apr 2026 16:46:39 +0200
+Message-ID: <20260409144639.3610-1-benno.fuenfstueck@neodyme.io>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=bruno.vilaca.sa@gmail.com; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=benno.fuenfstueck@neodyme.io; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 09 Apr 2026 13:26:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,42 +106,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On RV32, STCE/ADUE/PBMTE/DTE are implemented in henvcfgh. A write to
-henvcfg should therefore only update the low 32 bits of env->henvcfg.
+From: Benno F=C3=BCnfst=C3=BCck <benno.fuenfstueck@neodyme.io>
 
-The current write_henvcfg() path overwrites env->henvcfg with the
-low-half value and clears any bits previously written via henvcfgh.
+When using virtio-gpu-gl, if the guest uses hardware mouse cursor accelerat=
+ion then the mouse cursor can end up being a resource with the flag Y_0_TOP=
+ set. In this case, we need to make sure to flip the cursor data such that =
+display clients render it correctly.
 
-Preserve the upper 32 bits on RV32 henvcfg writes and keep the existing
-RV64 behaviour unchanged.
+For example, this fixes mouse cursor rendering for wlroots-based window man=
+agers (like Sway) in Linux guests.
 
-Signed-off-by: Bruno Sa <bruno.vilaca.sa@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2315
+Signed-off-by: Benno F=C3=BCnfst=C3=BCck <benno.fuenfstueck@neodyme.io>
 ---
- target/riscv/csr.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ hw/display/virtio-gpu-gl.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 7948188356..d322bdbd47 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3326,7 +3326,15 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-         }
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index 2b7a41c466..4562d3405e 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -33,6 +33,9 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *g=
+,
+     VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+     uint32_t width, height;
+     uint32_t pixels, *data;
++    bool y_0_top =3D true;
++    int ret;
++    struct virgl_renderer_resource_info info;
+=20
+     if (gl->renderer_state !=3D RS_INITED) {
+         return;
+@@ -49,8 +52,23 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *=
+g,
+         return;
      }
- 
--    env->henvcfg = val & mask;
-+    if (riscv_cpu_mxl(env) == MXL_RV32) {
-+        /*
-+         * RV32 stores STCE/ADUE/PBMTE/DTE in henvcfgh, so a low-half henvcfg
-+         * write must not clobber the upper 32 bits.
-+         */
-+        env->henvcfg = (env->henvcfg & ~0xFFFFFFFFULL) | (val & mask);
-+    } else {
-+        env->henvcfg = val & mask;
+=20
++    memset(&info, 0, sizeof(info));
++    ret =3D virgl_renderer_resource_get_info(resource_id, &info);
++    if (ret =3D=3D 0) {
++        y_0_top =3D info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP;
 +    }
-     if ((env->henvcfg & HENVCFG_DTE) == 0) {
-         env->vsstatus &= ~MSTATUS_SDT;
-     }
--- 
-2.43.0
++
+     pixels =3D s->current_cursor->width * s->current_cursor->height;
+-    memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
++    if (y_0_top) {
++        memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
++    } else {
++        uint32_t *dst =3D s->current_cursor->data;
++        for (uint32_t y =3D 0; y < height; y++) {
++            memcpy(dst + y * width,
++                   data + (height - 1 - y) * width,
++                   width * sizeof(uint32_t));
++        }
++    }
+     free(data);
+ }
+=20
+--=20
+2.50.1 (Apple Git-155)
+
+
+--=20
+Neodyme AG
+Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |=C2=A0
+85748 Garching b.M=C3=BCnchen
+Postanschrift:=C2=A0=E2=80=8BRosenthaler Stra=C3=9Fe 72a |=C2=A0=E2=80=8B10=
+119=20
+Berlin
+
+Registergericht / Registry court: M=C3=BCnchen, HRB 269168
+Vorstand /=20
+Management Board: Thomas Lambertz | Tobias Madl
+Aufsichtsratsvorsitzender /=20
+Chairman of the Supervisory Board: Hendrik Hofstadt
+
+
+
 
 
