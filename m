@@ -4,106 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE70E98FA8
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 04:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A35CE98FA6
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 04:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAgaO-0006fC-LF; Thu, 09 Apr 2026 00:01:44 -0400
+	id 1wAgeb-0008DC-Da; Thu, 09 Apr 2026 00:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAga9-0006dZ-6z
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 00:01:29 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1wAgeY-0008CL-Ub
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 00:06:02 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAga7-0005Rh-KJ
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 00:01:28 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-66dd0531d01so607780a12.3
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 21:01:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775707286; cv=none;
+ id 1wAgeX-0006OR-D5
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 00:06:02 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-66f727d6849so534920a12.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 21:06:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775707560; cv=none;
  d=google.com; s=arc-20240605;
- b=BXSdB9KwmNHVb9AfWoQgOi+cpfvVgpS9CN/kUA7PD+uAQI3E2p5c8TdinKj05fXmto
- 5WFm6zTKYecf1QawlPU84Vr9ooGrvW/8atzJfInuKExxjJuualpPbtosRUET8AdE+ui2
- NfP3RopyNkE749PmtS0p9rd8N1NNqroTXJwl4LWp7NHP2dJBNQv31ygxJ29P57PvIZjW
- CMgVE3vdiRwYNUqXbrvqAgL37SM1Fs213Axty4CkrwKhXdBdTYCs0hechH0YWpBhrmiH
- E4SJA7qM1AvHNpRkDAomuDK6KevltrPJUlIst7vezNUaNq9WwdMefL90Fv1dSJCyvCMc
- XNyQ==
+ b=kWaRI31KZIPU19Upy/widdHXohDugYxgY6bIeBRFbS+OwPcitzqk7YLEWFkbcq4bct
+ wXBDODXxzUxvL3p4zQ3NkNKAqAJofSplSkMu93Pvfqt30FLi7ISeoq5kaQm/S2tbadxk
+ yqYuXy/dTXDCyof3angGLE1iqRB94K6DQRT2MS5gPz6SoaVKuYOsbvscEh0Dy3/k4N0s
+ L7bmYgTu5EI4kbJTVB19X24L2WTQgRBfXxXPw/wEesH9RXzItLQubjrEQWDQuX+oGiLt
+ dWLeO3dBkqr/akvAfPFN9cY6XVijOJH0PtytViZstJSIpb+VpthkImuzh7ZMCtNUV1JP
+ EHOA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=C7HKM2wQm2NmdTmZZRuChoXL0dYTtav1FY8h5Lcfgvs=;
- fh=QgsN7xBQtyqE3Cp72FyoYANEJ10sBTgA2oW4l/Z+AT0=;
- b=lbVPdSI6h2Zzp7v6DYip0Ug9cXHfWPKRBOHy0AZ2L7Vnj+5/L7DsGixuQAXBCU8FSn
- E1KucNMw4U8CCKgfg4pG3GomD5hwO/I1kD3Gc+4++nKn+1bXu3Q/nTxQ4B7ZP7JY+Qob
- opO4Nns2PPI46o5RZ0Oh4qSlpMvWyDiHshYvkFrFm3ULeeX28jzLPXsOO0z6gWVhZLHL
- Ke7vX1LMn9ppiSz5eWFYT1nZaADBzr1TnZ28nfHM8LiZuE0UMPou3G4sHrTY5H2pBsqy
- h3ToL9Jt9CXZUd/jjGJe6UzC5jH3ctslSrKJL36O8ON5lc1tYHz+d2s0hhv2PtzObXNd
- tj4Q==; darn=nongnu.org
+ bh=iN4hvQvllatPh2C2Yd/64QWZumbJmuVK3Ja7PZyxzm4=;
+ fh=02yfZO3MCi97EyXeoLg1BYIgpUdGEMk3Yh61+offrCA=;
+ b=K1w/oOzXyU7cuX10VOGe891rG9auhnjeTKsVcUGYyoUHZLP/YIyoh3fj6VVfZp5rPF
+ 9IC/SDRpCMV16NwTjLSzExSowpWTk9AVifw2Z0xxp9dOfnX2hBM/I80a3C2Mgv1cE95R
+ Iy6TPCTMywguRdOv/FYjx8BqmYLj7SHJ/XhE8AK52QcAkFtFwdjwPmA6yPGiFE7qWvEW
+ 213+DY2sMADdyZLL7QanHmoKWJyzq0ADOQF8IDmftAMttW6De6Y12SxuJqmid5Q+FdLs
+ 9zimB8bNPRLdg+C9z1+pb58V13P2/FspbyfO2Q8oWKbldLOq9D8h2JAFl32WeZox5Hmc
+ gR7Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775707286; x=1776312086; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775707560; x=1776312360; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C7HKM2wQm2NmdTmZZRuChoXL0dYTtav1FY8h5Lcfgvs=;
- b=TqYPfSlmrG23IpJgyDg7Nb86YbRG6/b+LRyuyrm6QdBaik5wXr+sF9N+DzamXR6qto
- xywcPMHViO/PV0WQM/EuEsNNhIqdIGqBM/LpsxLDpvF9JTdyPae0PHXTemoMkHm9URSP
- LdWHIuSg0Vpg92GRupqMlD0KUhkL9wmQcq0N5Zrc+Z36Ey30MJ9SE9kCgcco+D/nJ4EB
- Qdg7HNhR42JNPkYbPtrPwth7i6w7TDdLwMc9JmYP8+kz2I+w6DBo0CBPOZk5wOFoqAlr
- ZfH8PtI3crs3yPGsjHyN69t86S4PqZukFU/DgonWXlgfcapEOAo4M6FsXJCv5YliY6n2
- JUqA==
+ bh=iN4hvQvllatPh2C2Yd/64QWZumbJmuVK3Ja7PZyxzm4=;
+ b=B5yS3Fv9JpdpgnKu3xCdF7zQhUnvETqyD/AHeRHGQa76mS4cSnOBSMd3YHzSBHXy0W
+ GmYvNhZytqQX27gtXkjlfjt9L7od+1e9jeBaL/oXoBrGYBzcjaZy879gkfMvBxMYhn5W
+ /Se4MvZZss6Iy0KfnAcpoMa3GPlOZHc9fE2SWa7l6kciDjKq0GH1dU1WNUZBbYV7KAOU
+ 7bs46+RMH4m6HMEWv4TYIH4V6C+KOSeqcpNYRvS+ZmFb974zAonoRT08qdBifqBvKrRI
+ FBDT7vQ51YmW1qZvBrGWWgitmUVFgURROMfDXfJVlh+H4d0Z0gj+kcb8gohbJlGvRMtE
+ /RUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775707286; x=1776312086;
+ d=1e100.net; s=20251104; t=1775707560; x=1776312360;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=C7HKM2wQm2NmdTmZZRuChoXL0dYTtav1FY8h5Lcfgvs=;
- b=I0qFm0cf1KjZ/rsw4OPWfR4NFu9Btae7HUlgNtoj9/5rKEtIra8ba+Z5/wneUCajq5
- 5800dbfehlpXRbbqlRvv9xlibM9ml4pXGXRei983KYLfWblRjpqa2zMe9ruUCu8BWDiZ
- TZndGVRQHMGuXcdKxtzdQLIBba4rXw3UgICKsMcJP64Cr+pXzNc8VaIllS+TevG/2nEo
- wfCXVHI9Nr9l17M77nqwqhqhqQfHNv/7e0KULaxXvHQQ0nKtlmA2emI8sXv6JydtroSc
- LCxBUo6lAJPPqGsqVg+4B1Lkl5hUHQ4RjbSPbQQBNw73zuKcjziwI46EgM2CaVSCynNG
- my3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9vO5CkcnXJOob4wiH21LMpdCJHKm25Zf3bEQB+oWM0SIu+PEErS4tKaWF/jKdMQz5K/OnlRF8AF7t@nongnu.org
-X-Gm-Message-State: AOJu0Yy40Z23IqpSlB2SJ/ctW1K2R/51yfAKXkpvIktzNbm+crStNyWA
- 5PAukc6ZuJxzxIG5SUVu8o7H65EJCJ+7C3ztK+iWU4oHdFhyNAnG9wEVPa6Q4lk76IUTimuK3WY
- PnTkt1Grt4/9HRiannEdfke8vCdh27ZQ=
-X-Gm-Gg: AeBDiesFevvd4dDdsKg6QiO+UkwtfJTFnlT3uWiBMb3w7rhGgT7/Z8LI9rw6xBQFBIO
- O3suViXXExPd7Kl5rWu3aCG2IT6FjrFxTqF85j2K+jFxlemuvqxurpUPaAz5Zhx/C5l+1WA2cVW
- AyEox/1rQohVlYgubZAmJxyQGhpgYKD9SoLhEAJlzxu6JFSVUrw+BM04p9N2Roc0EDt3y8NWuMz
- ejvNsC89Nhf7Wt6SJiNnMe0GA9hmVPVI/pfyO2RBCxPYSJOjjTpPQg+rS6V2KWSx6BMNRHSX9fB
- OCWqNpgXlQ/GCnnmX1stCPsEPIXu8aXlRMRHhg==
-X-Received: by 2002:a17:907:6ea1:b0:b97:c968:d9ba with SMTP id
- a640c23a62f3a-b9c6768a539mr1117825166b.5.1775707285487; Wed, 08 Apr 2026
- 21:01:25 -0700 (PDT)
+ bh=iN4hvQvllatPh2C2Yd/64QWZumbJmuVK3Ja7PZyxzm4=;
+ b=ZhetaEJIPwooenOlJ13HNAefdJjJ5kRPIAF4QJZZocz9VMca0ZWDiQhSt+/qFNB3Pv
+ 9XDd7W7XhQEwCMhqfo8GAW4D523LeTtnhzAcZZAr8R5eFzvaBkOZrFU/BjbKOucZAzhK
+ S9iBJDVfMCfEGs5khBssq01+e3vi2o8O1nMsDatEo4hpCY5odElZ0OlBkogr/qTyiwTD
+ LV+Le6UheOjsOFhjA3O6q5e5hjSvYkfzymru9K6T0hesuO73OkkNs2ICV7T+xFEKh8Ay
+ qpiWCcVDipZ0jZVJ6cxcmlg+TyVUI4JT3kCBfGNP5GUbYGl367op0qMTmoRhYWLfUv68
+ SGJQ==
+X-Gm-Message-State: AOJu0YwyspziitMDB6K1oz773oenHzLB+TEpn7duASgBHz1tC6NzsVyD
+ 50uMvWPTsu6sSjCVWtp6SfamAZ8cE/nfQNZmEEa0kdyO0OW87VqI9wBuWAL9BFzr3dCE9DeMC9f
+ KK6wAkvjsTGc+1Z2TncSy6vL3YgHdoQg=
+X-Gm-Gg: AeBDieuYJi+m0AKbYcn8hjQinqSBKK890s5Agytc9vaCbUjLu3BYGBZ8m09DNJwv0gC
+ dnTyWLnKtfRFsl+nAkJDBmSNJ0dStcYuC5ssfxQ1xL+5oNgXdd0XlF28jfEvRZpyeoweUzLAxyi
+ BWO7v9Z7AfnzLDxrDjFDwiFRIPrqtEhqyvoUI5o5ySCzzKtI1qYQcz4UQYQ9om4sA8sG9xCoVwU
+ r9CjbAaHIcO68Zx7t+sf5n+RapOCvSw/CF+hc8ABjYwDycQYxE7/qfH4hhxx61ujfHWp+4ZENZh
+ Re6qvSLGgIhxygwUkjRNUeZbZbYxBMZGY+N9utY8WtS6aPXb
+X-Received: by 2002:a17:907:3d11:b0:b9a:cb5e:5354 with SMTP id
+ a640c23a62f3a-b9d4749c733mr83676866b.16.1775707559484; Wed, 08 Apr 2026
+ 21:05:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260406154935.144674-1-djordje.todorovic@htecgroup.com>
- <20260406154935.144674-3-djordje.todorovic@htecgroup.com>
- <884193da-0078-44f0-804d-e5ccaf5f3398@linaro.org>
-In-Reply-To: <884193da-0078-44f0-804d-e5ccaf5f3398@linaro.org>
+ <20260406154935.144674-5-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260406154935.144674-5-djordje.todorovic@htecgroup.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 9 Apr 2026 14:00:59 +1000
-X-Gm-Features: AQROBzCecAV2I5_udRQv0RNj77dcZHfplpurvfFfoFaBH5Z_hcQbWLGsR3aDHbE
-Message-ID: <CAKmqyKPZRQ6djtJU2w5y=5i6Bt3Nkr7yOe+K0vnj-m_XKvG=Kg@mail.gmail.com>
-Subject: Re: [PATCH v6 2/7] target/riscv: Add big-endian CPU property
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+Date: Thu, 9 Apr 2026 14:05:33 +1000
+X-Gm-Features: AQROBzB-vP2lLGow6j5VIf5Zc-YReNxtTep_LQrY0l1EVghiHRVv-L6HEadpac4
+Message-ID: <CAKmqyKOXJZuZ1Xh-x_DYkgoQSrv4+BLvzYbCHvdgE-geOz2W=A@mail.gmail.com>
+Subject: Re: [PATCH v6 4/7] target/riscv: Implement runtime data endianness
+ via MSTATUS bits
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
  "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
  "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
  "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "thuth@redhat.com" <thuth@redhat.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
+ "philmd@linaro.org" <philmd@linaro.org>, 
+ "thuth@redhat.com" <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,7 +108,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,52 +124,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 8, 2026 at 12:17=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+On Tue, Apr 7, 2026 at 1:49=E2=80=AFAM Djordje Todorovic
+<Djordje.Todorovic@htecgroup.com> wrote:
 >
-> On 6/4/26 17:49, Djordje Todorovic wrote:
-> > Add a "big-endian" boolean property to the RISC-V CPU configuration,
-> > defaulting to false (little-endian). This property allows machine
-> > models to configure individual HARTs for big-endian data operation.
-> >
-> > The RISC-V ISA supports big-endian data accesses via the mstatus
-> > SBE/MBE/UBE bits, while instructions remain always little-endian.
-> > This property provides the configuration interface; subsequent
-> > patches will connect it to the CPU state and translation logic.
-> >
-> > Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> > Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> > ---
-> >   target/riscv/cpu.c                | 1 +
-> >   target/riscv/cpu_cfg_fields.h.inc | 1 +
-> >   2 files changed, 2 insertions(+)
+> Implement runtime big-endian data support by reading the MSTATUS
+> UBE/SBE/MBE bits to determine data endianness per privilege level.
 >
+> The key changes are:
 >
-> > diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_f=
-ields.h.inc
-> > index 70ec650abf..51436daabf 100644
-> > --- a/target/riscv/cpu_cfg_fields.h.inc
-> > +++ b/target/riscv/cpu_cfg_fields.h.inc
-> > @@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
-> >   BOOL_FIELD(ext_xmipscmov)
-> >   BOOL_FIELD(ext_xmipslsp)
-> >
-> > +BOOL_FIELD(big_endian)
+> - Add riscv_cpu_data_is_big_endian() helper in cpu.h that checks
+>   the appropriate MSTATUS endianness bit based on current privilege
+>   level (MBE for M-mode, SBE for S-mode, UBE for U-mode).
 >
-> Since it is runtime it doesn't belong to RISCVCPUConfig.
+> - Update mo_endian() in translate.c to return MO_BE or MO_LE based
+>   on a new 'big_endian' field in DisasContext, rather than the
+>   previous hardcoded MO_TE.
+>
+> - Update mo_endian_env() in op_helper.c to call the new helper,
+>   giving hypervisor load/store helpers correct runtime endianness.
+>
+> - Pack the endianness flag into cs_base bit 32 (alongside misa_ext
+>   in bits 0-25) in riscv_get_tb_cpu_state(), ensuring translation
+>   blocks are correctly separated by data endianness.
+>
+> Note: instruction fetches continue to use MO_LE unconditionally
+> (from the previous patch), as RISC-V instructions are always
+> little-endian per the ISA specification.
+>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> ---
+>  target/riscv/cpu.h         | 28 ++++++++++++++++++++++++++++
+>  target/riscv/internals.h   |  9 +--------
+>  target/riscv/tcg/tcg-cpu.c |  7 ++++++-
+>  target/riscv/translate.c   | 13 +++++--------
+>  4 files changed, 40 insertions(+), 17 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 35d1f6362c..ef870d05b3 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -703,6 +703,12 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+>  FIELD(TB_FLAGS, PM_PMM, 29, 2)
+>  FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+>
+> +/*
+> + * cs_base carries misa_ext (bits 0-25) plus additional flags.
+> + * Bit 32 is used for data endianness since TB_FLAGS has no free bits.
+> + */
+> +#define TB_CSBASE_BIG_ENDIAN  (1ULL << 32)
 
-I think the idea is that a user can set the `big-endian` property
-(from the command line or machine) and then MBE, SBE and UBE are
-always 1 and big endian is always enabled. Basically to model
-big-endian only hardware
-
-So in that context it isn't runtime, but it's not clear from the
-commit description. Also if we are adding a property the property
-should be exposed last, as in once all of the functionality is
-supported. That way we don't have a property that doesn't do anything.
-We would also need documentation added.
-
-This patch should be merged with patch 3 as well
+We should update the cs_base comment in TranslationBlock
 
 Alistair
 
