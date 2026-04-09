@@ -4,108 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E57E98FB0
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 05:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27A2E98FA8
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 05:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAhl0-0000fR-BN; Thu, 09 Apr 2026 01:16:46 -0400
+	id 1wAi0y-0003jN-8A; Thu, 09 Apr 2026 01:33:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAhkx-0000f0-VJ
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:16:43 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1wAi0w-0003io-NQ
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:33:14 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAhkw-0007yi-De
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:16:43 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b93698bb57aso81449366b.0
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 22:16:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775711801; cv=none;
+ id 1wAi0v-00029F-3l
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:33:14 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b9c603ec2dfso60491466b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 22:33:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775712791; cv=none;
  d=google.com; s=arc-20240605;
- b=k93GuvirIwMlozITXSABo1guIE2NKVltqM6CCfq5X9jmC3Gxz1JcciyC8a11ZcNmOE
- /caqu0QKziZg+uaC2DTMO9BBM3FtvRzaNpyNxJf4JeN4ctBdspnL/JVc5WBO80wtzcS9
- zbDXOwC+ySqq7xtSMxWc6OVVfT5uWJcqPNfw8RY8G5+8QaK88snGma0YzOHqEHH1ED7l
- jTeeggsZ/BzyVcSefaHVJInlF/jwUsSJb9ISwNXxtY0tbbed56dvt720yh3k7RzQCkd2
- rxTk+Pr44YC0/o92mSKp8htXkF9GW6O3Mikq1D0+Ef0ZEtlMwQ/cGMUcHXkNHT12sIdy
- 8VJw==
+ b=Cr9QwmowHAsJCBFrP6tJQgEx1QuL5m1tixDD0uMRdDsT/5z5KFXOnCNMRWY/bw+NOc
+ kX9feug4XK9RAhPzS2QI3q4BSsCGxJ1OYLTkUUS4LS1KollMzveRg9BKzErJyOCuO2Wc
+ OwEmGBdDoU6ksJpDgtAgXwkuzGeC6da/I97I0GIEJ0+gLMwzAn3DJS797I38i3tSO2tS
+ UrErx8X8lJ6NXFaCwgF5bIL7aRcuDrobfRhbkodaOAe96A3eGNS1qlJZEQQDTCpn4675
+ k/GuxN91Ba0d2GCB7vOKo8FLyTMqqCAXuef/JGop08Kw31ed9ELUJBrdXTeuyWNqc+Xi
+ Fedg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=dP5uBhD4kNgDn8CMcJifnA/2h3xLQK0BqtMF9uzugus=;
- fh=EepXk2OmHnRC1HWocdc0alziOF9x5TpT4Q6SNJHadeQ=;
- b=QoLRszvmmkH3KK/8RvInPVrn6P0mscM9nD7v/9+UPMRAWGyW0mGR/sz94gxwiUF9Tc
- COWxl3v9GQR+KVC1tELQ9sO87Xjvl3OGJcyL/dxi3gBhpeRtJp+9aZQqvC4UvDsVXQSP
- 1mEzrpNKZ2dRm9X3mc36PLCITicgMNTWZsZTgygwodaZk27u+bt0f1kPz0+wJTA4D18d
- K9ytKT/wQc0JYqO23MIHPgRbHUPd1bSTS0etFqbhI7394wwub+4hYkuP4iEEMhwV2eqG
- 03mpAVvGswUQbhLqvkkXZTknkKJCO2Z8RDdYaFeqmWQrXcKQoPwT7i3mZRwCzHPfAI6v
- PAGw==; darn=nongnu.org
+ bh=q7W5EgfYBUCh5Ur7tFbXwCFQlDAeWMpzxE/KfTvgmUc=;
+ fh=Kc/dcn40HBQvYOJiosZxh95/A3tD5pu37BAko49UkXA=;
+ b=bfQ0eUL+Gst3ZCOc8XEfehzSUVM3l7bWCK+VjbFqexM/WH0yAhqz3V42N4Caz80q9G
+ av8wqttfJwb5/Ie8bZf2L8cmTE9Jx3l04YnRvwqVBK5ShjDJots6XbGViyIrqckYqGbJ
+ OWfJt7NHdMkpJIEFfJVz1eqSMEe37EUaPsNRvF1BZQ8gVqGV24YlhSeMYBVq8kcHiWJZ
+ p8EApsS97SD6LeOjUyV/jX6LLSWiM8JeKEUm8Gx2xqE4e+qryL0ZqLB/5WpuCgWqqsMQ
+ GkklMxAlUO9U9AcxuKbGghhfaKVyc8fyCb5kkj+KUKbIDdnVkhDSjl+Gxv996NHcNPyn
+ q4tg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775711801; x=1776316601; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775712791; x=1776317591; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dP5uBhD4kNgDn8CMcJifnA/2h3xLQK0BqtMF9uzugus=;
- b=pYLNC0g3D21qGsxoTv0/lCazEpkrxbVRS232Flof/UBuR+AOkU4p7M36qdzDHnaMte
- 9zYUjZGxGWwmDUzapO/ybAkv2ncKguyMXI8SEJZnyCqPzCzoZi9R3LcwNG2TYfrjDx9e
- DMyijfYVg7WU0hQHix0yrX4RHkVAji6U/DONSB1IsIuC05gKjXnWKQF5tBD/IlyOc0VV
- zfpp35C4Q4QJwM/Lyj7SmXKVCcHfLP/4JTEaB0k0DbQZB2iZF/j+GYstZzmCnB1vd8lM
- sB7a++Tx5IdR4FwBKWL6g0Ixnue6jUFBE4DkydQteEiuFy+sFTp6tbs6c1bL29GyGK97
- hV2g==
+ bh=q7W5EgfYBUCh5Ur7tFbXwCFQlDAeWMpzxE/KfTvgmUc=;
+ b=da80+o7NQ3XfZ40/LXo2mmo2tgnIMhVkjRrmA7tL8muClOCdZ8oDAdctbpqai0FZHT
+ KkANT1Sb/1oKLaPhRPJvRZAB6y2XxZSDnzx2nMtpY4jn8nFGObHDiPi0Sp27SAToiKT5
+ 4xUqGfqIo/9jHV8ZKueSxMG0BliJHH/RZ83crdc6FdXGTYegvz1e6TksMn35T81ZbfXG
+ MJ41AiT6orMDdpCFG5yhz4XXv2Mds3xsDd93NiCJ78fDOFsH9H7I/xNCawtok3VOtegr
+ Sret0WCErVmr/+h649C2/8i1uPYBtkCBW0g/d2vOtm0VmLm66hg5XKAOatLSHnT6PzYU
+ F3ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775711801; x=1776316601;
+ d=1e100.net; s=20251104; t=1775712791; x=1776317591;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dP5uBhD4kNgDn8CMcJifnA/2h3xLQK0BqtMF9uzugus=;
- b=c3DAJA3qam2vwQY3aVmB4/gN6zVqM4+bN8NePJjkd/aXNClYcMf+mRYT2FyZ7Y8SS3
- 7AtiPrrVNh/JhxsevnWFg4Jx6KTW1ikScmU0bsisWtxby43lIzpLlGOOh8aKHFb0yuQZ
- 5AxPprE+7tyPaCd0QxGaCDDbx14WrZhtnfa38LXa28XYU07fSFnq+ZGiUjMpJb7GSxr9
- Zv2G3arQO+MCEslB3dsoVL73PYvjhbK7kD5vNvJ8yaNnr8iSxJGU26Y9TBiwDqQe67vr
- jNcVGSgBHEDfq+caII7xED+MsGrog8cGpLjK7C4DTzKL0crMpyTURg/8f71vw3mvkwa6
- Jrvg==
+ bh=q7W5EgfYBUCh5Ur7tFbXwCFQlDAeWMpzxE/KfTvgmUc=;
+ b=AvlmnO3L6qdM8cxyjRrt0OZ4e9/R/57E4yGzrWHqN13mddXOhtNGqWEhoV8RitroBE
+ 14rX5JGvqqzXgJMS6ylqLVH/vss0IUZfGC8/BXdByK3OSGfJ6O4VzYIM8iQzWwy2JoYM
+ X9CoQcyyEF2U29wELgHDt6t0dsjmVwPrKNwXR+aJ0km/sO6siteSEAWHnZ0R7HdiiR0w
+ pFzGVJsAT13dp/1i6G5UTNAlJBQOnp8VNokh1QUPImUaxAVF67+VZYS9Tjln0scL/BY7
+ HeiqVd/CIp427rtM5ccg/a7ZC7Rj0+WgvGZP1dNlAp14jWqsJ1r4kTON1qTLq4R3iqba
+ WBRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9KnUrktcxCSLxaJerSWrmfAC2AqqELNhUPHA9M3eMEz3SuwY5Ur3Z9vBYLZbJPs37DzzDjMEk5xTo@nongnu.org
-X-Gm-Message-State: AOJu0YwRSPH3l/oV6izQZxdHvjZdcIIw9wMbkd1LuM1bpW28JSdhm6vO
- 1072QPmkWapyQ/UA/7P0SnH6bzJqjuIaJtItZo4JrUCfpaIcn/qhH5RVtW4A5EHb/jl7CIVewNd
- hvnmRwJ/jcm70cndSr3Sy6ZC0U9PA1rfa5x2i
-X-Gm-Gg: AeBDieuQHBbZKnslh08bmro/03H79dx+Re/uY3yVGSNDzLv9s4AM5sNgHhYpEhTFzSG
- 9aYEW/xsgoCSE4otihhmXYI8HEH3fbkh+G8ksNjNVkOWEohmrINzq8th0ZTKpmUl2Quy2P+9TMw
- D6ThgW+9/W2ajJ6rgWUE8qQWB/zplQEzmEw2RvcMbvmMyeq0OQ3y2kV/QwS2J34Vu1xNaQwdr4v
- wOxZFCLZrM+7Qh7OLPyNIlE4N21rRILUrlDxxkUr3FakdrLTknTwhJkahRr7F79kspOzIM3mdvt
- QJbq78dclZrDUFGA4Cfmv4s+Q/6YCOlUh5KeV/agZHRHT4E2
-X-Received: by 2002:a17:907:960d:b0:b9b:207c:f7e4 with SMTP id
- a640c23a62f3a-b9d460a0ff0mr106527566b.13.1775711800285; Wed, 08 Apr 2026
- 22:16:40 -0700 (PDT)
+ AJvYcCXScGWF3AIpBBEuxvqLFI1F2LOZkCuTGAELQYzGbuwAWsFcCzn0fOVgklTTFEjtizBE22uAM/Hv04kC@nongnu.org
+X-Gm-Message-State: AOJu0YwLh5WUZwRUan44ZQIC1SuuKGDfN7JdM2vIsneOzWsWIhtrryNs
+ yWKgMxmD+N3x06wWOfbOUEiI4/MCMYYalxQGal8yWRN74vpSEwOAcL3dESyABv5EMefieKMhiws
+ Ts7WpVBebo+6R3XidpDw1KRLYDXNyOMU=
+X-Gm-Gg: AeBDietV7Ym4vb54NN9fd8e9+5iQyQ0SXRAqd05T/IaVhikhfyZ+r9Zb1ED4mrwFgHZ
+ 4/3WHfZGw02krZWBeqGVtXf3FM1rwlrgOLfEJwGBAYVe1fB3Eq05nERc7PKb8UZPy6JYynaBIXO
+ aj6T5sPZdFDgX0QqFCPH7r8/KaMJMTjUGG1EEmr0w8CeIKVyOJyG9CnZ9mjdoJ2MDDjsGUfJP7h
+ lwt4fFOE3A8kiHeflIlK0RT/3PVN7S8XPRO1d+HGAaDrjy5aE3tqim+dX7LjkCruMDIlX9NQ287
+ h5WylTsMRLIzeanAnIRmuc0VTlWI3h6B64S77g==
+X-Received: by 2002:a17:907:6d0e:b0:b9c:a70c:d30b with SMTP id
+ a640c23a62f3a-b9ca70cd589mr945268466b.19.1775712790776; Wed, 08 Apr 2026
+ 22:33:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260406154935.144674-1-djordje.todorovic@htecgroup.com>
- <20260406154935.144674-3-djordje.todorovic@htecgroup.com>
- <884193da-0078-44f0-804d-e5ccaf5f3398@linaro.org>
- <CAKmqyKPZRQ6djtJU2w5y=5i6Bt3Nkr7yOe+K0vnj-m_XKvG=Kg@mail.gmail.com>
- <55bf85d3-3b62-4dab-9b21-ec1ca193dd15@linaro.org>
-In-Reply-To: <55bf85d3-3b62-4dab-9b21-ec1ca193dd15@linaro.org>
+References: <20260407043614.372871-1-alistair.francis@wdc.com>
+ <20260407043614.372871-6-alistair.francis@wdc.com>
+ <ce3cde01-d4cf-4e01-befb-e9631dcf7757@linux.alibaba.com>
+In-Reply-To: <ce3cde01-d4cf-4e01-befb-e9631dcf7757@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 9 Apr 2026 15:16:12 +1000
-X-Gm-Features: AQROBzA56eju3UOAgddFSVZOPHgSw8vorV7eE1wtdYJDEpkMzLMeMdKaFYEg2QY
-Message-ID: <CAKmqyKN=pn997tWzN+-7rFT5ksN6hq7ae3nLW2yDczcCqCWhnw@mail.gmail.com>
-Subject: Re: [PATCH v6 2/7] target/riscv: Add big-endian CPU property
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "thuth@redhat.com" <thuth@redhat.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
+Date: Thu, 9 Apr 2026 15:32:44 +1000
+X-Gm-Features: AQROBzA4ld6oI-3VJgKwhPQdeKKqUMkyO45kO2U3Vfm8inbv8J-vwxdXmuMKgoI
+Message-ID: <CAKmqyKPcK4_o06geCsganH8h8yV80TfxPSzsuDY=nOsU7a2B6g@mail.gmail.com>
+Subject: Re: [PATCH 5/5] target/riscv: Use ELEN for Fractional LMUL check
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
+ chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -129,78 +122,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 9, 2026 at 3:04=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
+On Tue, Apr 7, 2026 at 10:13=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
+a.com> wrote:
 >
-> On 9/4/26 06:00, Alistair Francis wrote:
-> > On Wed, Apr 8, 2026 at 12:17=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-> > <philmd@linaro.org> wrote:
-> >>
-> >> On 6/4/26 17:49, Djordje Todorovic wrote:
-> >>> Add a "big-endian" boolean property to the RISC-V CPU configuration,
-> >>> defaulting to false (little-endian). This property allows machine
-> >>> models to configure individual HARTs for big-endian data operation.
-> >>>
-> >>> The RISC-V ISA supports big-endian data accesses via the mstatus
-> >>> SBE/MBE/UBE bits, while instructions remain always little-endian.
-> >>> This property provides the configuration interface; subsequent
-> >>> patches will connect it to the CPU state and translation logic.
-> >>>
-> >>> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> >>> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> >>> ---
-> >>>    target/riscv/cpu.c                | 1 +
-> >>>    target/riscv/cpu_cfg_fields.h.inc | 1 +
-> >>>    2 files changed, 2 insertions(+)
-> >>
-> >>
-> >>> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg=
-_fields.h.inc
-> >>> index 70ec650abf..51436daabf 100644
-> >>> --- a/target/riscv/cpu_cfg_fields.h.inc
-> >>> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> >>> @@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
-> >>>    BOOL_FIELD(ext_xmipscmov)
-> >>>    BOOL_FIELD(ext_xmipslsp)
-> >>>
-> >>> +BOOL_FIELD(big_endian)
-> >>
-> >> Since it is runtime it doesn't belong to RISCVCPUConfig.
-> >
-> > I think the idea is that a user can set the `big-endian` property
-> > (from the command line or machine) and then MBE, SBE and UBE are
-> > always 1 and big endian is always enabled. Basically to model
-> > big-endian only hardware
-> >
-> > So in that context it isn't runtime, but it's not clear from the
-> > commit description. Also if we are adding a property the property
-> > should be exposed last, as in once all of the functionality is
-> > supported. That way we don't have a property that doesn't do anything.
-> > We would also need documentation added.
+> Hi Alistair,
 >
-> Reading "3.1.6.3 Memory Privilege in mstatus Register" it is not
-> clear to me whether MBE and SBE are hard-wired, I'd have expected
+> On 4/7/26 12:36 PM, alistair23@gmail.com wrote:
+>
+> From: Alistair Francis <alistair.francis@wdc.com>
+>
+> The RISC-V spec states that
+>
+> """
+> For a given supported fractional LMUL setting, implementations
+> must support SEW settings between SEWMIN and LMUL * ELEN, inclusive.
+> """
+>
+> I think the meaning  of "must support"  in specification is "must at leas=
+t support" instead of "must only support".
 
-They don't have to be hard-wired. There is a note in section 3.1.6.5 that s=
-ays:
+Good point, I didn't really think about that.
 
-"""
-An implementation supports only little-endian memory accesses if
-fields MBE, SBE, and UBE
-are all read-only 0. An implementation supports only big-endian memory
-accesses (aside from
-instruction fetches) if MBE is read-only 1 and SBE and UBE are each
-read-only 1 when S-mode
-and U-mode are supported.
-"""
+>
+> Sail or Spike have the same check as this patch to prevent user program c=
+an run on them, but
+> can't run on RTLs, as RTLs implementation may support SEW besides the  SE=
+WMIN and LMUL * ELEN range.
+>
+> We can refer to discussion here: https://github.com/riscv-software-src/ri=
+scv-isa-sim/pull/620
 
-> a HART to be able to reset itself in a different endianness, and
-> in that case the current riscv_cpu_reset_hold() would overwrite that.
+I think this is still the right fix, as it seems like it's unlikely
+there will be implementations that expect outside that minimum support
+to work, see https://github.com/riscv/riscv-isa-manual/issues/2359#issuecom=
+ment-3458627615
+for example.
 
-I suspect a lot of big-endian harts are just always big-endian.
-Swapping at runtime seems tricky, although something we can support.
+>
+> In my opinion, we had better add a option such as "frac_sew_check" to mak=
+e user set right value for their RTL implementation.
 
-This should all be made clear in the commit message and some documentation
+In future if there are implementations that want extra support that we
+can add a property. Right now I suspect there isn't any software that
+expects it to work, so it probably isn't an issue and will help catch
+faulty implementations.
 
 Alistair
+
+>
+> Otherwise,
+> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+>
+> Thanks,
+> Zhiwei
+>
+> We were previously checking VLEN, instead of ELEN, so let's update to
+> check ELEN instead of VLEN for fractional scaling.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3196
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>  target/riscv/vector_helper.c | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
+>
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 83dd26314d..b4fc791eb7 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -47,18 +47,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, targe=
+t_ulong s1,
+>      target_ulong reserved =3D s2 &
+>                              MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+>                                              xlen - 1 - R_VTYPE_RESERVED_=
+SHIFT);
+> -    uint16_t vlen =3D cpu->cfg.vlenb << 3;
+>      int8_t lmul;
+>
+>      if (vlmul & 4) {
+>          /*
+>           * Fractional LMUL, check:
+>           *
+> -         * VLEN * LMUL >=3D SEW
+> -         * VLEN >> (8 - lmul) >=3D sew
+> -         * (vlenb << 3) >> (8 - lmul) >=3D sew
+> +         * ELEN * LMUL >=3D SEW
+> +         * ELEN >> (8 - vlmul) >=3D sew
+>           */
+> -        if (vlmul =3D=3D 4 || (vlen >> (8 - vlmul)) < sew) {
+> +        if (vlmul =3D=3D 4 ||
+> +            (cpu->cfg.elen >> (8 - vlmul)) < sew) {
+>              vill =3D true;
+>          }
+>      }
 
