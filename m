@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88444F31E29
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BA4F31E26
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAqGf-00033e-Al; Thu, 09 Apr 2026 10:22:01 -0400
+	id 1wAqGu-0003Nd-EY; Thu, 09 Apr 2026 10:22:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGa-0002vE-3N
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:21:56 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGn-0003Md-Fz
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:22:10 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGY-00037Q-IX
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:21:55 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43cfce3a195so601559f8f.2
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:21:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGl-0003AS-TV
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:22:09 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488c21c636dso5748615e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775744512; x=1776349312; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775744526; x=1776349326; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v/Jd4YaaBvTfPvDC0v9XltfRQcsbFxXjKJ96oBPPl9w=;
- b=N2OWpNNmiRROwGRB4JCiIDUdaOxbW8sOny3l7/HVaHplyUgKufQO2CuS7M45M3fsX7
- rmqi9NbX1SnRnVRGP+ucWwSgHCuyw/5DNqlMMqNkELfQh7h9dKTvyu0uhYy2IWMgbvJg
- WhfOadY/W2Hxrj5xvFP7duitp5X2IsuK74foWSTvwnACjxmxMHT6zuAcfLsOyfdUb/3Q
- ki1pdPG+7DaOYgcoL5gS+Oib8apiwAU+QhbHlKqsfMC18glpdbJCcYpSgU2BaPdSEuIG
- VHUx/Uu3ykFClqctWn8dtQSSFfLv6yy0d2g6JpOO8oucreG4rG7trDNMEMILIxdPFX+s
- g+mQ==
+ bh=L/+7Bj8ldsjqzb2+6rLdLpbTAiNwT8MkgbfOWGkcJ7k=;
+ b=aV4HDEq9jxUAQyemc9PIftsbkieqGJkmoelmDA4bkcPR0O3FveP84cHnOQNY4DoUxj
+ ARO52QBy3GsHB5ERR1hhG+Al4cOdK5bO48/ezphLOeCu6/Jux0OPcPC0sQFe1RRWCkMr
+ 1+wcBU4joIw3vvri95HZUYkmP1E2fVU05EVQt65EABpxsapsgwYkJU6NMajpLF5eR/3j
+ Fm+IWbYvxVZGliQpkgYUpX8EfCImCX7AD2sN5TBpnHqInaoH9crLZBcTweRhe8H5WWoQ
+ vBArZhzPNdbicNgMh3W4IbWlNrb701GkNgqcVD19rCDnvgDH+dO2BLAI/VCDhlXfMj+d
+ lWoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775744512; x=1776349312;
+ d=1e100.net; s=20251104; t=1775744526; x=1776349326;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=v/Jd4YaaBvTfPvDC0v9XltfRQcsbFxXjKJ96oBPPl9w=;
- b=WpbqSek0VZPiqbfL88kpUPNGp4fJ1b6Kirs/qoRTY+TrSalESGO1UQ0ZAYIUmVhIQd
- zDtpB6rx02xiVfyDTCnQuAWXC6Elgr0npiQ/82l6WbdG7RW6C0Ggqh+Vi1gvdUygTwYz
- JjDxxYBuH6a4TAvVR+BQ3TRffUv6hKSqhN/Lv0bnWzi1VZP8EECWRo4zk7yxV917r08c
- 0qWCa/Y28kJyMKIMK4aacJ+619rMB9+jZri+dRiGKHpvMY633M80I4veak/apWAv3kMc
- 7yfEUu6cRrmBHzrK2X41lGpB7H9ljtOlZ2rR0o8J5pEEY7xlBdzknqTrjI2tdidfQGNU
- jCVw==
-X-Gm-Message-State: AOJu0YzdrS2wm/Tc8Rk2CTd+1wNnD6kso04KXOMHPJ3tb1I57D1mskIA
- FC96Phbx3EHkpGsEwEwiLoKJCg+TB1XRGRDN08AmmUGSL4Rq3htoZFdpyIGuW8t5qezHIfdb7pp
- H30Zlx+M=
-X-Gm-Gg: AeBDieuQvF2Fi3ydHhnmwvRzxuKUQgT2wuP5ki4fHWY7O07iyPBTVcpZtfywlnL63jN
- W7KFBMrW1DV15Vi0DRG3TXU7ZMkl4NbvzFug/b3Fjkog9NpP1TxlYKHONVQRWt6Ezyzq1+eqdzh
- xP8uqliExVvmTpkMDvZBX0/ERxNTO9OJJDo/cRy7wD8iUoFxrCnnLbuRwoX9R+N7z0eIH6GL63R
- WvvvEgq78CJAMxks11psIJRfy0Xvphc0Ah9P3ivAth7BEN4DxvqYViziGaTEit5elNqDLmTcVDw
- wYdYGm4BHdfa9iYMsGowKEBT8K71a9cpZsT1iJnL+fF++vuZPKViU9bILvfsAPY1l+jaE9sx5uI
- C5x9G9ssp83fuBOeHP9J7gdSgRpzDl5qlu5wHZSnpPZ5DzZdWK5RcTxr9WnHK54GelnR1didS/B
- XlmJ8WHFvZU46cCx8VJ0iaDoGDrFAsptR7jR1QkImWDL//fsUNWA6TrdQIhr9qOMtWx0f0Q9eSA
- YS39BoPkog=
-X-Received: by 2002:a05:6000:4305:b0:43b:50d6:4f04 with SMTP id
- ffacd0b85a97d-43d5a1a274bmr5276932f8f.38.1775744512535; 
- Thu, 09 Apr 2026 07:21:52 -0700 (PDT)
+ bh=L/+7Bj8ldsjqzb2+6rLdLpbTAiNwT8MkgbfOWGkcJ7k=;
+ b=HAnKL5hwR5UKEhufH0mOg1sZ9iLAcu0QLiP804r/mASxckKz2tBT7THtIYzM52fbW1
+ WnoaFNxjg8gBTRqkECjYn247V4E3Jb66rgCAKV1llIWpMfR3xYu9yTRPUc9GojtCyZp8
+ EsiuseGC2E1IrODYPoLlJQOtEihAtS3jK1tR+5uTYICXemDYl2GSbuAkOSFg/8rAppV0
+ fkYk6iUEjXz0gpBSl0evnX0W5+8FDKGectzCJd5RPz0pAr+lx1O+sHgw8N9izNbodxe4
+ PNQDUebUa6NWp1lRgGTs83VTVBD1hi/9eoRx+vypr2Q50Z11c2XWW8dpNtXtqExCMbjv
+ YyyQ==
+X-Gm-Message-State: AOJu0Yyp1QCf2UmBOSXslIkxq9xnvyYk86+FnFo9xKcLEUfc6M+MHYq/
+ PFG82rOKJQfZ831aQ3W8BxEHOOFUKMvuD55nrPSCxTISb/RaD7mXGH82ZEjjbvhZFv2YALfQ4+w
+ dOVQ2whM=
+X-Gm-Gg: AeBDieuXzpc6LYatezoJn4uelLBtz09H7yT2/XShdch3Rz+qIi2KH106QQVCkoX114a
+ 4BFwjK69ViMciPD47xCknUR2a5V57Yl1Jw/k0kRtK7soTr+FN4AF9HLi1zTR5OvcdgZ+KrxIzJ6
+ WDOIABj33ipYVWVnt8YUGPQLeM81l1R/y4CNWK7LD6TeLmabNt+HZq/xVzdLXLn27Tx/OawPNYr
+ 27DYaCjsGBSz5g/NDNTW8dwKa+iUJZ5aNfwiFb34XXhcSQS+AJi6WYbT0Ivvbg0nCXvDJUnTvM1
+ Ky2Z65Rj3HIKSu3xGscgrgqGD4QsB3+UVJ8vxhjVc5AOZ++rjuCULwQ/LF+vimA20EU5EJAnMTs
+ 7OZP00cZCAqWYP78WOetJ04S9X77sUu/5U+4efLOkSsR4X9Sy4DW7naRBbqOwCW5QcZ1uL8sv2e
+ 5Ne38402je1/slKpeyMXYc7/2TWspTbbfl6TJHYmxiON97CGchAhCxPRJ9EXFtv1GvuuYmaK4j
+X-Received: by 2002:a05:600c:6305:b0:480:690e:f14a with SMTP id
+ 5b1f17b1804b1-4889978c561mr345190425e9.14.1775744525849; 
+ Thu, 09 Apr 2026 07:22:05 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d1e2c50a7sm67405047f8f.15.2026.04.09.07.21.51
+ 5b1f17b1804b1-488cd2492e8sm77222315e9.15.2026.04.09.07.22.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 09 Apr 2026 07:21:52 -0700 (PDT)
+ Thu, 09 Apr 2026 07:22:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 2/4] hw/timer: ibex_timer: Update IRQs after writing CTRL
-Date: Thu,  9 Apr 2026 16:21:34 +0200
-Message-ID: <20260409142137.58349-3-philmd@linaro.org>
+Subject: [PULL 4/4] qemu-keymap: fix altgr modifier lookup for newer
+ xkeyboard-config
+Date: Thu,  9 Apr 2026 16:21:36 +0200
+Message-ID: <20260409142137.58349-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260409142137.58349-1-philmd@linaro.org>
 References: <20260409142137.58349-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,36 +100,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Dietmar Maurer <dietmar@proxmox.com>
 
-When writing to rv_timer.CTRL after setting the compare values the timer
-doesn't fire as we don't update the interrupts. Ensure we update the
-interrupts after a write to the rv_timer.CTRL register.
+xkeyboard-config 2.37 removed the "AltGr" virtual modifier in favor
+of mapping upper groups directly to Mod5. Since then,
+xkb_keymap_mod_get_index(map, "AltGr") returns XKB_MOD_INVALID, so
+AltGr-based keysyms were never generated.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2796
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+See: https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/commit/473f9bc32f9ba869829cc0d06a75cd1f2560aa60
+
+Try "AltGr" first, and fall back to "Mod5" for compatibility with
+both old and new xkeyboard-config versions.
+
+Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260407043614.372871-5-alistair.francis@wdc.com>
+Message-ID: <20260408091459.4001711-1-dietmar@proxmox.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/timer/ibex_timer.c | 1 +
- 1 file changed, 1 insertion(+)
+ qemu-keymap.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/timer/ibex_timer.c b/hw/timer/ibex_timer.c
-index 0f12531934d..571633803d0 100644
---- a/hw/timer/ibex_timer.c
-+++ b/hw/timer/ibex_timer.c
-@@ -193,6 +193,7 @@ static void ibex_timer_write(void *opaque, hwaddr addr,
-         break;
-     case R_CTRL:
-         s->timer_ctrl = val;
-+        ibex_timer_update_irqs(s);
-         break;
-     case R_CFG0:
-         qemu_log_mask(LOG_UNIMP, "Changing prescale or step not supported");
+diff --git a/qemu-keymap.c b/qemu-keymap.c
+index 1c081db2870..d4dccf456ef 100644
+--- a/qemu-keymap.c
++++ b/qemu-keymap.c
+@@ -230,6 +230,9 @@ int main(int argc, char *argv[])
+     shift = get_mod(map, "Shift");
+     ctrl = get_mod(map, "Control");
+     altgr = get_mod(map, "AltGr");
++    if (!altgr) {
++        altgr = get_mod(map, "Mod5");
++    }
+     numlock = get_mod(map, "NumLock");
+ 
+     state = xkb_state_new(map);
 -- 
 2.53.0
 
