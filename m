@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4909DF364AF
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 19:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B0EF364B5
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 19:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAv5Y-0005F2-K0; Thu, 09 Apr 2026 15:30:52 -0400
+	id 1wAv5Z-0005FI-CJ; Thu, 09 Apr 2026 15:30:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wAv5W-0005EU-QW
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 15:30:50 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1wAv5X-0005Ec-HZ
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 15:30:51 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wAv5U-0001rY-8h
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 15:30:50 -0400
+ id 1wAv5V-0001sK-9Y
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 15:30:51 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 4C5C3452D1
- for <qemu-devel@nongnu.org>; Thu,  9 Apr 2026 19:30:45 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id B5A10496FC
+ for <qemu-devel@nongnu.org>; Thu,  9 Apr 2026 19:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1775763045;
- bh=j8TaCj8BXQQdPb25HliDo6sSud7lmqpTLJBfgoLp62c=;
+ s=20210803; t=1775763047;
+ bh=1lgZ1xVURfPX/Ogb+OgN4NpGiTO+YDf4YPQA60Ez8Mw=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=GYfLEAlsk+7McKnTYy1hOM7zNoQiic4yJI6Lonn7o98rbPlm5SzL2wA7th/2CF+T+
- +L3fdRkPLyCOzE5VZ9clH3BYuLFxGzNbr0EpyCreYsIJOJ2seS1jGi4qJ/wpWNJtt6
- oOg9E3Mt0VUztuyd81gXOaPyqbHpNmiQQf/mm3jQdMX3yiHQP473WJ9Xy5z/yVNIH9
- JdX/hDrCFCg0wEJchWhO4RPEqRml8OF43X7IhnrgNtfGkuKDkYMcZ1Wns+jLUtr4dr
- tyozwDqxIFHX/GiR2X2vZCREhdKnOYDqCStOCzfLmg4RMJqQ10weXoFXphX8/ws38d
- MnHbrm9AaB5zw==
+ b=UmOMNb9APSD4vdd+jE3Hs/YmKvJzNhTWJaxTUKLXA2eYY2vfpEBl9IE83MvDe4D9j
+ K3QMRGwQ47aLuAIErGTf2DTRihOvkQi2j2aUSvl+PiqzA+e5HiSKsHNQ9U4+SOffFX
+ b16BBPwlu/pTWLSjQIhgsoG/HEzJxh0cMKBpVrCtS0MTUKaipfxu6M74T5i3LcMQ+a
+ gNCVZxdGOMWlY9G+n1YOt1XdYSMx1k6ObwOPxgaTFRONLomVSaMsdAAEIkmk7cYWjY
+ L6oGP/nwLPsLwEDGw5x1qRqVmVFSpENOlUyXSb4BY+FyMYyRYr9Ar+DMKgSN8bVqwZ
+ YnBkA4GCtr4FQ==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 270207F048
- for <qemu-devel@nongnu.org>; Thu,  9 Apr 2026 19:30:45 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 9CFC17F048
+ for <qemu-devel@nongnu.org>; Thu,  9 Apr 2026 19:30:47 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Apr 2026 19:21:28 -0000
+Date: Thu, 09 Apr 2026 19:21:36 -0000
 From: Launchpad Bug Tracker <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -82,7 +82,7 @@ X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
 X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <177576249216.3980362.1762359129968824352.malone@scripts.lp.internal>
+Message-Id: <177576250373.3980357.13055082582362862369.malone@scripts.lp.internal>
 Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
  handler
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -91,9 +91,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="63170d9f894f213bed2e467c153d97add655c51e";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: d24c8bdc1c09c3c1419051b4315618f2cc48a3de
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 564e217b4ee9d84d6835abaf8a979eff3258c520
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -116,29 +116,32 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This bug was fixed in the package qemu - 1:10.2.1+ds-1ubuntu3
+This bug was fixed in the package qemu-hwe - 1:10.2.1+ds-1ubuntu4
 
 ---------------
-qemu (1:10.2.1+ds-1ubuntu3) resolute; urgency=3Dmedium
+qemu-hwe (1:10.2.1+ds-1ubuntu4) resolute; urgency=3Dmedium
 
+  * d/t/*: fix test-helper-script.py test failure
+     - d/t/control : allow stderr for test-helper-script.py
+     - d/t/test-helper-script.py : skip checking for removed qemu-efi-arm
+     (LP: #2147320)
+
+qemu-hwe (1:10.2.1+ds-1ubuntu3) resolute; urgency=3Dmedium
+
+  * d/{hwe-helper/*, control}: add virt helper package
+     (LP: #2145809)
+    - d/t/test-helper-script.py : add test for hwe helper script
   * d/control: remove dependency on deprecated edk2 arm
     (LP: #2145209)
-  * d/control-in: add dependency on the virt hwe helper package
-     (LP: #2145809)
 
   [ Heinrich Schuchardt ]
+
   * d/p/u/lp2133188/*: Add riscv64 vector state to signal context
     (LP: #2133188)
   * d/p/u/hw-acpi-correct-field-sequence-in-SPCR-table (LP: #2146419)
 
- -- Hector Cao <hector.cao@canonical.com>  Fri, 27 Mar 2026 10:43:10
-+0100
-
-** Changed in: qemu (Ubuntu Resolute)
-       Status: In Progress =3D> Fix Released
-
-** Changed in: qemu-hwe (Ubuntu Resolute)
-       Status: In Progress =3D> Fix Released
+ -- Hector Cao <hector.cao@canonical.com>  Mon, 06 Apr 2026 09:27:23
++0200
 
 --=20
 You received this bug notification because you are a member of qemu-
