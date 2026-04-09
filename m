@@ -4,98 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C59EA3C59
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 12:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C00EEA3C59
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 13:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAooi-00036g-Ns; Thu, 09 Apr 2026 08:49:04 -0400
+	id 1wAp19-0006WV-Fa; Thu, 09 Apr 2026 09:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAooe-00036N-6M
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 08:49:00 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <anthony.roberts@linaro.org>)
+ id 1wAnAN-0001uC-WE
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:03:20 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAooc-000389-Q5
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 08:48:59 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64937edbc9eso774571d50.2
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 05:48:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775738936; cv=none;
- d=google.com; s=arc-20240605;
- b=ixHvcTkQqI4XXyCr7RFPTTV9vczKsMVFg274osSadFwDLCoWd27PXlhcT0RANphSMA
- OoB99t2FDa0GYl0WUQ4lZv4LLQXHuoSAd+eQcz0puLP32qk2/05JPmeWzBIfMuZquCJx
- Hgm8YKtyFu2pgbVv1JH7B4z2CXTKqMmOkbmI2D+g9EHvZ3w5PuhD7jw7h8YVthgAJ67v
- vhFlPMh8xjZP5KtdR7irQcrJnMfJnKjotJOe+9MLJ3BSHHipXwlWWLyjZOMf3A1AI53M
- WsVrRXjBGD7UFh0+mz5+M9voJqB0BDRj2MQpou3PaSbHlx/znAxyYOJq3zyYgGtIpiG8
- VTNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=yT5xHRSlVuDlCKLT2yF3T0lqtP5ptWJW7Dyr+P8sFaY=;
- fh=ZArSW7+vJJODnJMJnxo5Vd6T3WHasiYNFpAuJV753DA=;
- b=g6EigMjmqZe8GR+GJCOAircPGZggF0ocnfmR81Scizv5SOuMR2qjzRFQ0N4FVclEXf
- NRIK3lMEhLhR9/oUnwsO814DYFpCvdAMXgQJXsj87oms3sKVzr3oyr+uzMVRzWKe5eF+
- /oDB0HtkdChDdwunAvh0WWEwj7GtcALHhIRqw8r6iDiiK4b15m3ObBUI3xcNgu29CfwX
- bzkm79eD2376gCXvCqXC/c+g61CKLeko9StKohQ/CTQLD1atuuQy3eO8v+phrBH+6v9/
- VJb2wy80i7e4aWoowUYetq0wiIuBg83yH6BC7b5SfQERbTLqFNDgbvc2bPRo0CFeREa1
- OmNA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <anthony.roberts@linaro.org>)
+ id 1wAnAM-0002XG-E3
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:03:19 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso8493955e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 04:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775738936; x=1776343736; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yT5xHRSlVuDlCKLT2yF3T0lqtP5ptWJW7Dyr+P8sFaY=;
- b=KpsjFPpnj6RuxxSD6MOAi9yHBEDk8O2nkPulnRIYqRnryZHJhDLoKNDjZSBCCi2igp
- 5Sdkq5iRYMLSe/wQUnjw2YrtTdfXgPxxFoyIwi71LHiSqbzMwjEElClpsUWZxM2AbePM
- CDaksURB0jjmUfbxz2OIfKMF7MsVUR/9DYgnNoJNYOcSzGVEprDRcRPVC9T6Y1+Tlgao
- 3Ew1X2aqAvc7Dw+4jW18aOeBDf0FaYbOBccM4qtR4Q4c9LFef8pRagfbUCJlH31gRspK
- vyg6KF69V4obpcmAXu1GYBmk3iT+qVOZDUUrSm7G9hI28iTKnnazW3cJCA3rcBb6WXgP
- Rx4A==
+ d=linaro.org; s=google; t=1775732596; x=1776337396; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=l1xmRNO4MPFO4sE6cHQgCqUs4K6g7ptewn3o/ZQpDqU=;
+ b=jO69rCjZprtAjlj9SU0WF7pn4nt06G0RsuG3gya0QluwXaVAR6Cp3/AIDr4olbMduQ
+ dREPse32+7CdFz8bDMfa/6CuDVcJVXzlAi6QqNRD8AYtfAK3kC7AmeMRn2ku7ZlP1UoU
+ eOpu/KUP8XqCEz3ILGTAgIaXenqESgj7+h6E4qHBWEThSDHa4m46ULy5ThifZvcclp7d
+ pCe/e0ph5r8nt9q5BY4MdpRcBM36C3wJpDecxCl+AVVHTjEMkDl+qiEi7u08RWg4WKHJ
+ U1cMjtXgoR2bMo/SlbX4laDR5EXbwNsTiy/HTn6yet/PyCDTEdjgJwEc1avbS1qoEmDn
+ HEQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775738936; x=1776343736;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yT5xHRSlVuDlCKLT2yF3T0lqtP5ptWJW7Dyr+P8sFaY=;
- b=gxJ6FmA9aeCOGVCRyGcpBvm35pvwXoZrPSCbA3C6Nvnx2y4gAol4LOjXbcVbqPomn5
- DDVA6YrChCpFJG7bF9eRHMLrj4rnQ1Tv1f6hDdQjDdooJ0/cOKo67nKzaRu374pUcw/x
- o7KcvM+7TnsirNVu63gUmI6B+fUrqUjJp3fJoG/JrPhHUUSsNaFlFmoof1jc9jO5DpZL
- XHXoG1ZtMHGyvzubvR2ZeRXKjw+ms+7vulAiTGjEFaZQedfNXslqkkuACP+UazbFnW7h
- M1MoCWm12EpjI1PuysplNEL7FVbvzvKOVaRs5kbKYdgwErGx6Q+xvulVQru9bO1Xq3ES
- 5B2Q==
-X-Gm-Message-State: AOJu0YxdjZRsIRIq4NiPN98KbMBK//+659RijoHPUBZWro1cuYtPzGyD
- A5m1k9qCUh+thJMjo7lhngDk/Xc1rz8lWFitmABf4zC++gMr5O+9W3MDdk9jQWFVTCRSg5X7Vx1
- t1zmeDa+eFXpv4ff83Qai37Q+n7d2FtDF8NCsptnzvA==
-X-Gm-Gg: AeBDievEnrJe+lBoEgE8HhQWQI30bxFjfeQlK0qOLf1Z6zmh6VFvF97Zz7jQa2DWRKy
- FqpxOCJ0vLeFnbF8I6iZZqiBD6yNO5PwCTE76VjM0gpk4JbOrfv2lwVLXfWnPfOsgjAEdptf/Cr
- Jj4KcV0ez4E1QmLNfNGjayuGSOFmrkY+qeRH6RZsc3Zv7ipGEdV914cswLoc9Rpt2t48DmxEoQm
- 8pzXmLtEhpL+gEK/xRX6C99TVFK5VIxPbGSIw0mfSmkskGCOq68Io/f1VVsKEc5b48B4M41d9Yf
- we4TN16Mha9S3iKozsrpQ+Ld6FLECQQSzS8Oz8eI+2jTh8STPOjAutni0Bt8nqCCy1K3qxfudAM
- GRg==
-X-Received: by 2002:a05:690e:120c:b0:650:1aa5:8568 with SMTP id
- 956f58d0204a3-651877dca15mr2819622d50.55.1775738936493; Thu, 09 Apr 2026
- 05:48:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775732596; x=1776337396;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l1xmRNO4MPFO4sE6cHQgCqUs4K6g7ptewn3o/ZQpDqU=;
+ b=O9fVYmjvkLAUPelcWReu/Q82O3ncYHvk2N+NhY0CmSpcI3UrLzWVqB/eTpdWPLL4UX
+ oTLdewTDE8FHbQBL8e8mC89PvwB4MN0Kmdrw4tjNY+xnx1EB/CODVBXWJewg1kWqzeT7
+ Ew6gMYE7xtdea7wpvdbJo++G5P4f0IzMmIVdd34swnMRBu2NCqZot7bWCvpdECuy2nh6
+ 0BlYWDd8QvFSIZ7Huu8ufvxzyy6MkuhpgI3pkrh02x3ILILaY/0dk9U0dTLaOpgND8Ze
+ Zp1/bGNe2WpnPhpQjqGerATvRZOc4hzHjI/X5TwrFfDLmY1pSko7UKKZDq19uG3gDolI
+ TBhQ==
+X-Gm-Message-State: AOJu0YyT5HBZL2yzaEHdU06hzPnIyIXOds91ECntUZuukaMHanIb1IA5
+ dhN5EAaDO9SCyfRNFdxCuWzhhLBanoa1nXM1BnexlsM3OhhhzmBUpnTOp+Z4hqAju9Gpdqn3Tes
+ XYthnwF4=
+X-Gm-Gg: AeBDiev5Qn3RfBWbmbi9dBgulr/G+S8USqd0BIvlcaUOks+uGkbb/ytHtXTlL5l8j2l
+ Mj+WmD2AquaKLrNjqdhbXE/7szW3jamW01suGuiD6/aSV8NEgtyOwGByNHMZVnWppIDMKhefFME
+ mzT4Go+NWc++2jgFJ9Ez1Eo3Sg7sNsBmGcRVDHrj8yginZRIEdGi8a8oMOiENX1roZ/5RiKIGeS
+ IcH96pV18+USddGg62qVFLEmGGpKzQ0rQp4awSMPFoc0FstLK/Fo1+bshwEJ0uZ5s18aInDRrdB
+ QW4tOfvKx6Whv/t9L4d6r5ElRnOfcp/Fd4By/SrgjGAO8VovViZfA8qQy/s75KXEddwz72Fj1ex
+ hGb0m1RsF/2pXANO+ZMIWYcWl1EHqeg4fgyPr4EZp2rHhRrFtBgh256gXrYoxUrgtYLN1gp5RWr
+ mU7lcLP8rENsdTf0hR0wc4txELVNjzwv6rWwkPxg==
+X-Received: by 2002:a05:600c:444c:b0:488:a977:8de with SMTP id
+ 5b1f17b1804b1-488a9770d4amr247443975e9.16.1775732595537; 
+ Thu, 09 Apr 2026 04:03:15 -0700 (PDT)
+Received: from ANTHONY-T14S ([2a02:6da0:45:960:f48b:8163:76f0:5ff6])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488cd1879b2sm33446475e9.8.2026.04.09.04.03.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Apr 2026 04:03:14 -0700 (PDT)
+From: Anthony Roberts <anthony.roberts@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, Anthony Roberts <anthony.roberts@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] ui/sdl2: Fix assumption of EGL presence at runtime
+Date: Thu,  9 Apr 2026 12:02:55 +0100
+Message-ID: <20260409110256.684-1-anthony.roberts@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260405180826.729652-1-alessandro@0x65c.net>
-In-Reply-To: <20260405180826.729652-1-alessandro@0x65c.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Apr 2026 13:48:45 +0100
-X-Gm-Features: AQROBzB3Ngwa5g5InIVXE-RjkjGj_whSyglhZKO2odPBUg8f7R62L2vFY4NLNlI
-Message-ID: <CAFEAcA9reE9J99SFt2HzQkRJDrxRnObbCrZ3jfrZvNO70uaAWg@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: Move OMAP CP15 register definitions to
- cpregs-omap.c
-To: Alessandro Ratti <alessandro@0x65c.net>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=anthony.roberts@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,6 +84,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 09 Apr 2026 09:01:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,23 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 5 Apr 2026 at 19:09, Alessandro Ratti <alessandro@0x65c.net> wrote:
->
-> The OMAP CP15 registers are only relevant to system-mode emulation
-> of OMAP SoCs. Move them out of the monolithic helper.c into a
-> dedicated file, following the pattern of cpregs-pmu.c and
-> cpregs-gcs.c. This reduces the size of helper.c and compiles
-> the OMAP-specific code out of CONFIG_USER_ONLY builds.
->
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
-> ---
-> v1 -> v2:
-> - addresses Philippe's review adding the correct includes.
+The original commit had a section of code which worked on the assumption
+that if OpenGL was enabled at build, it was present on the end user machine,
+and calls could be made to it. This is not always the case (such as Windows
+on Arm devices).
 
-Thanks, I've applied this to what will be my target-arm
-queue once we re-open git for 11.1 development.
+This line should have also included a runtime check.
 
--- PMM
+This commit moves the relevant line to inside a runtime check for OpenGL.
+
+Fixes: 52053b7e0a0e ("ui/sdl2: Implement dpy dmabuf functions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3347
+Signed-off-by: Anthony Roberts <anthony.roberts@linaro.org>
+---
+ ui/sdl2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index aaaede56e0..987ad334bb 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -120,15 +120,15 @@ void sdl2_window_create(struct sdl2_console *scon)
+ 
+         scon->winctx = SDL_GL_CreateContext(scon->real_window);
+         SDL_GL_SetSwapInterval(0);
++
++#ifdef CONFIG_OPENGL
++        qemu_egl_display = eglGetCurrentDisplay();
++#endif
+     } else {
+         /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
+         scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
+     }
+ 
+-#ifdef CONFIG_OPENGL
+-    qemu_egl_display = eglGetCurrentDisplay();
+-#endif
+-
+     sdl_update_caption(scon);
+ }
+ 
+-- 
+2.53.0
+
 
