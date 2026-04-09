@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB700E98FC2
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 06:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08587E9DE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 07:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAj4V-0007tg-6F; Thu, 09 Apr 2026 02:40:59 -0400
+	id 1wAjf8-0007LC-9d; Thu, 09 Apr 2026 03:18:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangruikang@iscas.ac.cn>)
- id 1wAj4N-0007qy-QO; Thu, 09 Apr 2026 02:40:52 -0400
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangruikang@iscas.ac.cn>)
- id 1wAj4H-0004Pl-FD; Thu, 09 Apr 2026 02:40:50 -0400
-Received: from [127.0.0.2] (unknown [36.110.52.2])
- by APP-03 (Coremail) with SMTP id rQCowABnht3aSddpeI91DQ--.34096S5;
- Thu, 09 Apr 2026 14:40:27 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Thu, 09 Apr 2026 14:40:13 +0800
-Subject: [PATCH 3/5] hw/mips: Use hex unit addresses in FDT CPU nodes
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wAjf3-0007KR-F5
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:18:45 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wAjf1-0000Yq-GH
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:18:45 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 013D943A90;
+ Thu,  9 Apr 2026 07:18:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F9FC4CEF7;
+ Thu,  9 Apr 2026 07:18:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775719114;
+ bh=UUlm8e38M0cU+sF8CtorJzdeLsTyxHdaQbX9fCniErs=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=W95FoXUCMXa1JBrkxNP6NTKMLmsElXzScxBksdQixMLBO2vMLudtmpI3huMkdienc
+ YRrk6m6pv2n/9jAO+qREHxaj/0IeF3NaAA9Dp0svnqFjvmikoxD/jtiG0Os/8jOmYv
+ YmuoK4LZf0VwxgkNwp7y/PD6Um1hCoR7S7cv6NCrtGonM27wlTVBW85G76whvgycjO
+ 7oIw4JGs+oPQJ7Od15rPRvUotPPfoBcUIN66VQX9hHahHpW/dd0vRGmAp4wEpRj8Z8
+ pdvfs8IqVDe7vuRDKCqtvRIVSPDLhq35J7YzAHgsnI36xXMDUZEJr0ES8FoaRRJe7/
+ aVEC65BMsdPdw==
+From: Christian Brauner <brauner@kernel.org>
+Date: Thu, 09 Apr 2026 09:18:18 +0200
+Subject: [PATCH v4 1/5] monitor: store monitor id in Monitor struct
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260409-fix-unit-address-v1-3-946840930af2@iscas.ac.cn>
-References: <20260409-fix-unit-address-v1-0-946840930af2@iscas.ac.cn>
-In-Reply-To: <20260409-fix-unit-address-v1-0-946840930af2@iscas.ac.cn>
+Message-Id: <20260409-work-qmp-monitor-hotplug-v4-1-89c4fdf69df1@kernel.org>
+References: <20260409-work-qmp-monitor-hotplug-v4-0-89c4fdf69df1@kernel.org>
+In-Reply-To: <20260409-work-qmp-monitor-hotplug-v4-0-89c4fdf69df1@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org, 
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paul Burton <paulburton@kernel.org>, 
- Aleksandar Rikalo <arikalo@gmail.com>, 
+Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>, 
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-X-Mailer: b4 0.15.1
-X-CM-TRANSID: rQCowABnht3aSddpeI91DQ--.34096S5
-X-Coremail-Antispam: 1UD129KBjvdXoW7GF4xtFWrWFW8uw4DuF4rXwb_yoWDGwbE9a
- 9FvrnYva1DJry2gF93Zr9FyFyrJ345XF1I9an7Kr43t348ArWrA3ZY9rWDJry5XrW8Cry3
- u3s8Xr15KanxtjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbkAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k26cxKx2IYs7xG
- 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUWwA2048vs2IY02
- 0Ec7CjxVAFwI0_Xr0E3s1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xv
- wVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM2
- 8EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS
- 0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2
- IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0
- Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kIc2
- xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
- JVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67
- kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY
- 6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
- IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
- Ja73UjIFyTuYvjTRuzuWDUUUU
-X-Originating-IP: [36.110.52.2]
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.81;
- envelope-from=wangruikang@iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Christian Brauner <brauner@kernel.org>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7163; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=UUlm8e38M0cU+sF8CtorJzdeLsTyxHdaQbX9fCniErs=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReDzpq7DWn5f3W3yXX3G5ecmOcuMjP8N9CZR/pxVVn+
+ mUnplov6ShlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZjIVl2G/zWLE10+bF56armg
+ e7mVpOLPPVd5FKNOLa52UZ77p1qf3ZPhv5PMRZEk+UsK64SYxM3FNslG8lZvjOKSf9znsW/xs8M
+ eHAA=
+X-Developer-Key: i=brauner@kernel.org; a=openpgp;
+ fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=brauner@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,30 +84,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These unit addresses should have been in hex, not decimal, as per de
-facto convention [1]. Fix them.
+Add an 'id' field to struct Monitor. The id field stores the monitor
+identifier from MonitorOptions which was previously parsed but
+discarded.
 
-Link: https://lore.kernel.org/devicetree-spec/CAL_JsqJFv3+UJ-bjLGk0i7Wc+spsowCrqQZ_s3P4gN8r1W-Q-w@mail.gmail.com/ # [1]
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Auto-generate a unique id ("mon0", "mon1", ...) for QMP monitors
+created via CLI without an explicit id, so that every QMP monitor is
+addressable by monitor-remove and always appears with an id in
+query-monitors output.
+
+Extend monitor_init_qmp() to accept an id parameter so it is set
+before the monitor is added to mon_list.
+
+For iothread monitors, move monitor_list_append() from the setup BH to
+the caller so monitor_find_by_id() can detect duplicates immediately.
+Without this, two concurrent monitor-add calls could both pass the
+duplicate check before either BH runs.  This means the monitor is now
+visible in mon_list before its chardev handlers are set up, which was
+not the case before.  This is safe because the request queue is still
+empty (no chardev handlers means no monitor_qmp_read(), so the
+dispatcher finds nothing to dispatch) and event broadcast is handled
+below.
+
+This requires initializing mon->commands = &qmp_cap_negotiation_commands
+before monitor_list_append().  Without it, commands is NULL (from
+g_new0) and monitor_qapi_event_emit() would not skip the monitor during
+event broadcast -- its check is specifically for the
+qmp_cap_negotiation_commands pointer, so a NULL falls through to
+qmp_send_response() on an uninitialized monitor.  CHR_EVENT_OPENED sets
+commands to the same value again later.
+
+Add monitor_find_by_id() to look up monitors by identifier.  The lookup
+takes monitor_lock to serialize with the I/O thread BH that modifies
+mon_list, but releases it before returning.  The caller must hold the
+BQL to ensure the returned pointer remains valid since only BQL holders
+can destroy monitors.
+
+Free the id string in monitor_data_destroy().
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- hw/mips/boston.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/monitor/monitor.h  |  3 ++-
+ monitor/monitor-internal.h |  4 +++-
+ monitor/monitor.c          | 21 ++++++++++++++++++++-
+ monitor/qmp.c              | 15 ++++++++++++---
+ 4 files changed, 37 insertions(+), 6 deletions(-)
 
-diff --git a/hw/mips/boston.c b/hw/mips/boston.c
-index 4579df23eb..9ef3f6c814 100644
---- a/hw/mips/boston.c
-+++ b/hw/mips/boston.c
-@@ -542,7 +542,7 @@ static const void *create_fdt(BostonState *s,
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#address-cells", 0x1);
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index 296690e1f1..a4e6aaa97f 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -19,7 +19,8 @@ bool monitor_cur_is_qmp(void);
  
-     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
--        name = g_strdup_printf("/cpus/cpu@%d", cpu);
-+        name = g_strdup_printf("/cpus/cpu@%x", (unsigned)cpu);
-         qemu_fdt_add_subnode(fdt, name);
-         qemu_fdt_setprop_string(fdt, name, "compatible", "img,mips");
-         qemu_fdt_setprop_string(fdt, name, "status", "okay");
+ void monitor_init_globals(void);
+ void monitor_init_globals_core(void);
+-void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
++void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
++                      Error **errp);
+ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
+ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
+ int monitor_init_opts(QemuOpts *opts, Error **errp);
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index feca111ae3..24d3b1900e 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -98,7 +98,7 @@ struct Monitor {
+     bool is_qmp;
+     bool skip_flush;
+     bool use_io_thread;
+-
++    char *id;
+     char *mon_cpu_path;
+     QTAILQ_ENTRY(Monitor) entry;
+ 
+@@ -181,6 +181,8 @@ void monitor_data_destroy_qmp(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
+ 
++Monitor *monitor_find_by_id(const char *id);
++
+ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+ void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+ int hmp_compare_cmd(const char *name, const char *list);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 00b93ed612..10a32150e9 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -622,6 +622,7 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+ 
+ void monitor_data_destroy(Monitor *mon)
+ {
++    g_free(mon->id);
+     g_free(mon->mon_cpu_path);
+     qemu_chr_fe_deinit(&mon->chr, false);
+     if (monitor_is_qmp(mon)) {
+@@ -633,6 +634,24 @@ void monitor_data_destroy(Monitor *mon)
+     qemu_mutex_destroy(&mon->mon_lock);
+ }
+ 
++/*
++ * Look up a monitor by its id.  The monitor_lock is released before
++ * returning, so the caller must hold the BQL to ensure the returned
++ * pointer remains valid (only BQL holders can destroy monitors).
++ */
++Monitor *monitor_find_by_id(const char *id)
++{
++    Monitor *mon;
++
++    QEMU_LOCK_GUARD(&monitor_lock);
++    QTAILQ_FOREACH(mon, &mon_list, entry) {
++        if (mon->id && strcmp(mon->id, id) == 0) {
++            return mon;
++        }
++    }
++    return NULL;
++}
++
+ void monitor_cleanup(void)
+ {
+     /*
+@@ -732,7 +751,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
+ 
+     switch (opts->mode) {
+     case MONITOR_MODE_CONTROL:
+-        monitor_init_qmp(chr, opts->pretty, errp);
++        monitor_init_qmp(chr, opts->pretty, opts->id, errp);
+         break;
+     case MONITOR_MODE_READLINE:
+         if (!allow_hmp) {
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 687019811f..bba69a3a40 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -510,10 +510,10 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
+     qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
+                              monitor_qmp_read, monitor_qmp_event,
+                              NULL, &mon->common, context, true);
+-    monitor_list_append(&mon->common);
+ }
+ 
+-void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
++void monitor_init_qmp(Chardev *chr, bool pretty, const char *id,
++                      Error **errp)
+ {
+     MonitorQMP *mon = g_new0(MonitorQMP, 1);
+ 
+@@ -527,12 +527,20 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+     monitor_data_init(&mon->common, true, false,
+                       qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
+ 
++    if (id) {
++        mon->common.id = g_strdup(id);
++    } else {
++        static unsigned int qmp_monitor_id_counter;
++        mon->common.id = g_strdup_printf("mon%u", qmp_monitor_id_counter++);
++    }
+     mon->pretty = pretty;
+ 
+     qemu_mutex_init(&mon->qmp_queue_lock);
+     mon->qmp_requests = g_queue_new();
+ 
+     json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
++    /* Prevent event broadcast to an uninitialized monitor. */
++    mon->commands = &qmp_cap_negotiation_commands;
+     if (mon->common.use_io_thread) {
+         /*
+          * Make sure the old iowatch is gone.  It's possible when
+@@ -551,7 +559,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+          */
+         aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
+                                 monitor_qmp_setup_handlers_bh, mon);
+-        /* The bottom half will add @mon to @mon_list */
++        /* Synchronous insert for immediate duplicate detection. */
++        monitor_list_append(&mon->common);
+     } else {
+         qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
+                                  monitor_qmp_read, monitor_qmp_event,
 
 -- 
-2.53.0
+2.47.3
 
 
