@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF512F364A6
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77144F364AD
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAtZv-0000mq-GC; Thu, 09 Apr 2026 13:54:07 -0400
+	id 1wAtZu-0000iX-U4; Thu, 09 Apr 2026 13:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wAtZk-0000RX-7r
+ id 1wAtZj-0000RT-2S
  for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:53:58 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wAtZg-0006dU-O6
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:53:55 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wAtZg-0006Zv-Ne
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:53:54 -0400
 Received: from laptop.localdomain (unknown [86.121.140.85])
- by linux.microsoft.com (Postfix) with ESMTPSA id A893E20B7128;
- Thu,  9 Apr 2026 10:53:49 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A893E20B7128
+ by linux.microsoft.com (Postfix) with ESMTPSA id E532020B710C;
+ Thu,  9 Apr 2026 10:53:47 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E532020B710C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1775757230;
- bh=GKviAFDCqOn49FheT3Dqs15l4v2G6x26IOu2bK6XmaI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=G+Q6XP1W6jGsKW42jIz9KiEp65n/Hheq0Pk//90ykU/Y7IoB53Yz3yySXmDPrZqZG
- PIBT3RhmPuMYATBBMjx+Pt2+/NLwpti2KC4To0mgR3gGIcmyVIt+A524Ijba5NvkYB
- LDp8jHdtmHC6zcpLYj8b8jOb1J7qs+NNpXRSF/3A=
+ s=default; t=1775757228;
+ bh=w0Qqe82/wbT+bUcoIpJvTT1fltVMgrdDozzPGcEzmr0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=guw+nmDHoCsEqZzVgxpMKb8mXK/3dijquS5dQyZGXlF42zK3EdI+73Wo9a4t0n/9D
+ ekf02r089Wf6AWBacGIhfOljhMX6YPBuEujZewUSyPlanGfy86OIHwSkFw7+Su1qbc
+ 87WNr5ySVQ/RA49DLhvewsIcvAy2D1Y7kpUT5NQo=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH 1/1] target/i386/mshv: fix read/write memory across the page
- boundary
-Date: Thu,  9 Apr 2026 20:53:34 +0300
-Message-ID: <20260409175334.181249-2-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH 0/1] target/i386/mshv: fix read and write memory across the
+ page boundary
+Date: Thu,  9 Apr 2026 20:53:33 +0300
+Message-ID: <20260409175334.181249-1-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260409175334.181249-1-dblanzeanu@linux.microsoft.com>
-References: <20260409175334.181249-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -68,116 +66,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, read_memory and write_memory performed a single GVA-to-GPA
-translation for the entire buffer. If the buffer spanned a page
-boundary, the translated GPA was only valid for the first page, causing
-incorrect reads/writes for the remainder.
+This fixes the guest memory reading and writing spanning multiple pages for mshv Port I/O.
 
-Fix both functions to loop over pages, translating and accessing each
-page-aligned chunk separately.
+Currently, the read_memory and write_memory functions only translate GVA-to-GPA once per buffer.
+In case the buffer is bigger than a page, the translation is only valid for the first page.
 
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
----
+Doru Blânzeanu (1):
+  target/i386/mshv: fix read/write memory across the page boundary
+
  target/i386/mshv/mshv-cpu.c | 71 +++++++++++++++++++++++++++----------
  1 file changed, 52 insertions(+), 19 deletions(-)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 2bc978deb2..afdb6b6e29 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1316,21 +1316,38 @@ static int read_memory(const CPUState *cpu, uint64_t initial_gva,
- {
-     int ret;
-     uint64_t gpa, flags;
--
--    if (gva == initial_gva) {
--        gpa = initial_gpa;
--    } else {
--        flags = HV_TRANSLATE_GVA_VALIDATE_READ;
--        ret = translate_gva(cpu, gva, &gpa, flags);
--        if (ret < 0) {
--            return -1;
-+    uint64_t cur_gva = gva;
-+    size_t page_left, chunk;
-+    uint8_t *cur_data = data;
-+
-+    /*
-+     * If the read spans multiple pages,
-+     * we need to translate and read each page separately
-+     */
-+    while (len > 0) {
-+        page_left = HV_HYP_PAGE_SIZE - (cur_gva & (HV_HYP_PAGE_SIZE - 1));
-+        chunk = MIN(len, page_left);
-+
-+        if (cur_gva == initial_gva) {
-+            gpa = initial_gpa;
-+        } else {
-+            flags = HV_TRANSLATE_GVA_VALIDATE_READ;
-+            ret = translate_gva(cpu, cur_gva, &gpa, flags);
-+            if (ret < 0) {
-+                return -1;
-+            }
-         }
- 
--        ret = mshv_guest_mem_read(gpa, data, len, false, false);
-+        ret = mshv_guest_mem_read(gpa, cur_data, chunk,
-+                                  false, false);
-         if (ret < 0) {
-             error_report("failed to read guest mem");
-             return -1;
-         }
-+
-+        cur_gva += chunk;
-+        cur_data += chunk;
-+        len -= chunk;
-     }
- 
-     return 0;
-@@ -1341,18 +1358,34 @@ static int write_memory(const CPUState *cpu, uint64_t gva, const uint8_t *data,
- {
-     int ret;
-     uint64_t gpa, flags;
-+    uint64_t cur_gva = gva;
-+    size_t page_left, chunk;
-+    const uint8_t *cur_data = data;
-+
-+    /*
-+     * If the write spans multiple pages,
-+     * we need to translate and write each page separately
-+     */
-+    while (len > 0) {
-+        page_left = HV_HYP_PAGE_SIZE - (cur_gva & (HV_HYP_PAGE_SIZE - 1));
-+        chunk = MIN(len, page_left);
-+
-+        flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
-+        ret = translate_gva(cpu, cur_gva, &gpa, flags);
-+        if (ret < 0) {
-+            error_report("failed to translate gva to gpa");
-+            return -1;
-+        }
- 
--    flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
--    ret = translate_gva(cpu, gva, &gpa, flags);
--    if (ret < 0) {
--        error_report("failed to translate gva to gpa");
--        return -1;
--    }
-+        ret = mshv_guest_mem_write(gpa, cur_data, chunk, false);
-+        if (ret != MEMTX_OK) {
-+            error_report("failed to write to mmio");
-+            return -1;
-+        }
- 
--    ret = mshv_guest_mem_write(gpa, data, len, false);
--    if (ret != MEMTX_OK) {
--        error_report("failed to write to mmio");
--        return -1;
-+        cur_gva += chunk;
-+        cur_data += chunk;
-+        len -= chunk;
-     }
- 
-     return 0;
 -- 
 2.53.0
 
