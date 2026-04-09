@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BA4F31E26
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBFDF31E22
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAqGu-0003Nd-EY; Thu, 09 Apr 2026 10:22:18 -0400
+	id 1wAqGl-0003It-Tq; Thu, 09 Apr 2026 10:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGn-0003Md-Fz
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:22:10 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGh-0003F9-A1
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:22:03 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGl-0003AS-TV
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:22:09 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488c21c636dso5748615e9.2
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:22:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGf-00039N-Cu
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:22:02 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43d02a71526so567439f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:22:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775744526; x=1776349326; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775744519; x=1776349319; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L/+7Bj8ldsjqzb2+6rLdLpbTAiNwT8MkgbfOWGkcJ7k=;
- b=aV4HDEq9jxUAQyemc9PIftsbkieqGJkmoelmDA4bkcPR0O3FveP84cHnOQNY4DoUxj
- ARO52QBy3GsHB5ERR1hhG+Al4cOdK5bO48/ezphLOeCu6/Jux0OPcPC0sQFe1RRWCkMr
- 1+wcBU4joIw3vvri95HZUYkmP1E2fVU05EVQt65EABpxsapsgwYkJU6NMajpLF5eR/3j
- Fm+IWbYvxVZGliQpkgYUpX8EfCImCX7AD2sN5TBpnHqInaoH9crLZBcTweRhe8H5WWoQ
- vBArZhzPNdbicNgMh3W4IbWlNrb701GkNgqcVD19rCDnvgDH+dO2BLAI/VCDhlXfMj+d
- lWoA==
+ bh=VjuOAzMxe2056w6Ss/yMMT0oZPZyJj/YY1kbGnOufgk=;
+ b=BhlOCzMI3J7NKM1pDL6dlIcm6S6EQpxuUJNwIB0Ri0UgatrH7+jRb00b4AwG0LvNiI
+ r5mLnKUPqTptntyj+D/nmakDUuRtvePWoE0rpbPe8dBTNFQmpRPeMpWJLb2Xj3+jbIyL
+ ZV7LxNPbWIyUlMUdLxHQ/wwDnhV9iSw6LgaMfvT8W7fMcxbcoCEvCdk7UX1oP5UJwC2a
+ OszcMKzgoC1x2g8fPaRp8b5/rR4HqMkq7ynnMDDCCoJ21jB1Gw0XzI4HWIc9PTN6S22u
+ zetXq+3dSX0grak6QoqBjPpt3nKMXRbrBAZB8NCkKD9cKWI2hy5d7zT6lhZvSprM/aHt
+ lxrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775744526; x=1776349326;
+ d=1e100.net; s=20251104; t=1775744519; x=1776349319;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=L/+7Bj8ldsjqzb2+6rLdLpbTAiNwT8MkgbfOWGkcJ7k=;
- b=HAnKL5hwR5UKEhufH0mOg1sZ9iLAcu0QLiP804r/mASxckKz2tBT7THtIYzM52fbW1
- WnoaFNxjg8gBTRqkECjYn247V4E3Jb66rgCAKV1llIWpMfR3xYu9yTRPUc9GojtCyZp8
- EsiuseGC2E1IrODYPoLlJQOtEihAtS3jK1tR+5uTYICXemDYl2GSbuAkOSFg/8rAppV0
- fkYk6iUEjXz0gpBSl0evnX0W5+8FDKGectzCJd5RPz0pAr+lx1O+sHgw8N9izNbodxe4
- PNQDUebUa6NWp1lRgGTs83VTVBD1hi/9eoRx+vypr2Q50Z11c2XWW8dpNtXtqExCMbjv
- YyyQ==
-X-Gm-Message-State: AOJu0Yyp1QCf2UmBOSXslIkxq9xnvyYk86+FnFo9xKcLEUfc6M+MHYq/
- PFG82rOKJQfZ831aQ3W8BxEHOOFUKMvuD55nrPSCxTISb/RaD7mXGH82ZEjjbvhZFv2YALfQ4+w
- dOVQ2whM=
-X-Gm-Gg: AeBDieuXzpc6LYatezoJn4uelLBtz09H7yT2/XShdch3Rz+qIi2KH106QQVCkoX114a
- 4BFwjK69ViMciPD47xCknUR2a5V57Yl1Jw/k0kRtK7soTr+FN4AF9HLi1zTR5OvcdgZ+KrxIzJ6
- WDOIABj33ipYVWVnt8YUGPQLeM81l1R/y4CNWK7LD6TeLmabNt+HZq/xVzdLXLn27Tx/OawPNYr
- 27DYaCjsGBSz5g/NDNTW8dwKa+iUJZ5aNfwiFb34XXhcSQS+AJi6WYbT0Ivvbg0nCXvDJUnTvM1
- Ky2Z65Rj3HIKSu3xGscgrgqGD4QsB3+UVJ8vxhjVc5AOZ++rjuCULwQ/LF+vimA20EU5EJAnMTs
- 7OZP00cZCAqWYP78WOetJ04S9X77sUu/5U+4efLOkSsR4X9Sy4DW7naRBbqOwCW5QcZ1uL8sv2e
- 5Ne38402je1/slKpeyMXYc7/2TWspTbbfl6TJHYmxiON97CGchAhCxPRJ9EXFtv1GvuuYmaK4j
-X-Received: by 2002:a05:600c:6305:b0:480:690e:f14a with SMTP id
- 5b1f17b1804b1-4889978c561mr345190425e9.14.1775744525849; 
- Thu, 09 Apr 2026 07:22:05 -0700 (PDT)
+ bh=VjuOAzMxe2056w6Ss/yMMT0oZPZyJj/YY1kbGnOufgk=;
+ b=bTn4acBUuKF9850KrSefUKt0Mr2geK8Jv48S+17Y9xP2gJvCL4tPTjeSQfVsne7bZE
+ 9uXNA6pvxWlcX0bDDpJyG/7VCKyqHfWwQs0H8CiSKkoIAmmO39mryI7YT0czlRxcs2RV
+ xipv28f9VTFqdqr1uZXnb6Aeby6uv17ds7BJY3SE1Bhk3/xP6LA9zamkTOxhwCMsPo7f
+ sfX6SRFa4doGv9z8zk438sNBXBbRNjU3ftg2wrSfgN0Lgq7uAzRs3x6zNXncfFxMNgvh
+ EG1zM12ddp9taKlpxv4qrQ4TSZp0JxepXc6TeNBE8Ti2ZwegdDFW2NUFSjeF6yeunycO
+ mx/w==
+X-Gm-Message-State: AOJu0YwLBk25aZAFqaMTOkOBygZ/np5gKd/zETzIgAMB/TYKuabSTaW9
+ X+HFl7q+Z0oSVOcptflCBCtKzVCv4wldMNEicU//wqV4yaQocOYnXv//k/BLLHVxMNm8BzxYVSL
+ QyEnYpw8=
+X-Gm-Gg: AeBDiesKhNisGh7JIqN3u0Eh5gFUBx/k8l9B+/OW/Wiek3cS7wBdPuBh4ytq8b63Hwx
+ x8UbSxTOB14akEPU0SaFg0UmGNSQ2tNDYA6uB/GjbUTdSER6hT4AyVAg11Ccr3WoXQrCXuRPDH7
+ FLFLJ6uaIScamaPuAzr76bfmaAQrhYkZ/R6uxLAKvCpUD/gvtewem27Y/tmO4HKGUKh12tS0Rj2
+ LJt/NSbk3+LXrk13iEe85TsrkDJEejznrykryNFBd1oI/dt55YUvHovhI6B9FthOhytQOOEk0AD
+ CspZknd88UIc1FMwd2Fo0oIQaqs04WPF7mRcHj6kuhVHXJ5dyFATnliQhCvG83b3JI05qbDCVNk
+ heie9JRsu5Gfqa562y0e6/TI0WfW1NRaDlXy8L4w6d6XhWxw/VrE9aO4JinFAkfHaEO01ej+eW2
+ kaAtxX0IGrLErCtAZxjqLKnoBH3VmJv22siPwH7rOJ0s8Uz8tqnH1jE9Ngx4J12LHlRqa1cKSm
+X-Received: by 2002:a05:6000:40ca:b0:43b:80a0:d92 with SMTP id
+ ffacd0b85a97d-43d5a1b107dmr5243479f8f.45.1775744519260; 
+ Thu, 09 Apr 2026 07:21:59 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488cd2492e8sm77222315e9.15.2026.04.09.07.22.05
+ ffacd0b85a97d-43d5e969bbfsm5043612f8f.1.2026.04.09.07.21.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 09 Apr 2026 07:22:05 -0700 (PDT)
+ Thu, 09 Apr 2026 07:21:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 4/4] qemu-keymap: fix altgr modifier lookup for newer
- xkeyboard-config
-Date: Thu,  9 Apr 2026 16:21:36 +0200
-Message-ID: <20260409142137.58349-5-philmd@linaro.org>
+Subject: [PULL 3/4] ati-vga: Fix check for overflowing vram
+Date: Thu,  9 Apr 2026 16:21:35 +0200
+Message-ID: <20260409142137.58349-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260409142137.58349-1-philmd@linaro.org>
 References: <20260409142137.58349-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dietmar Maurer <dietmar@proxmox.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-xkeyboard-config 2.37 removed the "AltGr" virtual modifier in favor
-of mapping upper groups directly to Mod5. Since then,
-xkb_keymap_mod_get_index(map, "AltGr") returns XKB_MOD_INVALID, so
-AltGr-based keysyms were never generated.
+Take into account the bytes per pixels when checking for accessing
+beyond end of vram area.
 
-See: https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/commit/473f9bc32f9ba869829cc0d06a75cd1f2560aa60
-
-Try "AltGr" first, and fall back to "Mod5" for compatibility with
-both old and new xkeyboard-config versions.
-
-Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260408091459.4001711-1-dietmar@proxmox.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260408104935.1A55A5969F6@zero.eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- qemu-keymap.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/display/ati_2d.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/qemu-keymap.c b/qemu-keymap.c
-index 1c081db2870..d4dccf456ef 100644
---- a/qemu-keymap.c
-+++ b/qemu-keymap.c
-@@ -230,6 +230,9 @@ int main(int argc, char *argv[])
-     shift = get_mod(map, "Shift");
-     ctrl = get_mod(map, "Control");
-     altgr = get_mod(map, "AltGr");
-+    if (!altgr) {
-+        altgr = get_mod(map, "Mod5");
-+    }
-     numlock = get_mod(map, "NumLock");
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index f0f77cecc65..504d1c57085 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -146,6 +146,7 @@ static uint32_t make_filler(int bpp, uint32_t color)
+ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+ {
+     QemuRect vis_src, vis_dst;
++    unsigned int x, y, i, j, bypp = ctx->bpp / 8;
  
-     state = xkb_state_new(map);
+     if (!ctx->bpp) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+@@ -156,8 +157,9 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+         return false;
+     }
+     if (ctx->dst.x > 0x3fff || ctx->dst.y > 0x3fff ||
+-        ctx->dst_bits >= ctx->vram_end || ctx->dst_bits + ctx->dst.x +
+-        (ctx->dst.y + ctx->dst.height) * ctx->dst_stride >= ctx->vram_end) {
++        ctx->dst_bits >= ctx->vram_end - bypp ||
++        ctx->dst_bits + ctx->dst.x * bypp + (ctx->dst.y + ctx->dst.height) *
++        ctx->dst_stride >= ctx->vram_end - bypp) {
+         qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+         return false;
+     }
+@@ -194,8 +196,9 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+         }
+         if (!ctx->host_data_active &&
+             (vis_src.x > 0x3fff || vis_src.y > 0x3fff ||
+-            ctx->src_bits >= ctx->vram_end || ctx->src_bits + vis_src.x +
+-            (vis_src.y + vis_dst.height) * ctx->src_stride >= ctx->vram_end)) {
++            ctx->src_bits >= ctx->vram_end - bypp ||
++            ctx->src_bits + vis_src.x * bypp + (vis_src.y + vis_dst.height) *
++            ctx->src_stride >= ctx->vram_end - bypp)) {
+             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+             return false;
+         }
+@@ -240,7 +243,6 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+             fallback = true;
+         }
+         if (fallback) {
+-            unsigned int y, i, j, bypp = ctx->bpp / 8;
+             for (y = 0; y < vis_dst.height; y++) {
+                 i = vis_dst.x * bypp;
+                 j = vis_src.x * bypp;
+@@ -299,7 +301,6 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+ #endif
+         {
+             /* fallback when pixman failed or we don't want to call it */
+-            unsigned int x, y, i, bypp = ctx->bpp / 8;
+             for (y = 0; y < vis_dst.height; y++) {
+                 i = vis_dst.x * bypp + (vis_dst.y + y) * ctx->dst_stride;
+                 for (x = 0; x < vis_dst.width; x++, i += bypp) {
 -- 
 2.53.0
 
