@@ -4,110 +4,170 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD976EA3C21
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 10:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC2DEA3C22
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 10:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAmJw-0004eN-Ds; Thu, 09 Apr 2026 06:09:09 -0400
+	id 1wAmNp-00064k-Lh; Thu, 09 Apr 2026 06:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1wAmJq-0004aB-8A
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:09:03 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1wAmJl-0001dK-L7
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:09:01 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 423C34EE9F;
- Thu,  9 Apr 2026 10:08:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1775729330; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XbEA5OnMLUTPZDi3bwfwfipCn0lwtIzr4jW07Y9h90c=;
- b=CnCKGBTHHrg+kwaLzI03KktCPYvqQZvDIJJwMjVDb0o52LbZczORQpAT3h/PYR5VKBIZN1
- Im8O4wV4acgj7p37MHVl9pagE62BMGEql/k1rV4DTO9VHXelLkxVy1AZSlLW6hjrl86skA
- soosJ9gGCXJDynA3wIF0d/BTnnN+tls=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1775729330;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XbEA5OnMLUTPZDi3bwfwfipCn0lwtIzr4jW07Y9h90c=;
- b=3vY4u5HVF+0sQpong4wwXKJFkAmRxePnHYooeP2Xr0v/UMyZe3bkmDnNekk4mI6+PYm4rs
- nKuG9cEX75gbspAw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1775729330; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XbEA5OnMLUTPZDi3bwfwfipCn0lwtIzr4jW07Y9h90c=;
- b=CnCKGBTHHrg+kwaLzI03KktCPYvqQZvDIJJwMjVDb0o52LbZczORQpAT3h/PYR5VKBIZN1
- Im8O4wV4acgj7p37MHVl9pagE62BMGEql/k1rV4DTO9VHXelLkxVy1AZSlLW6hjrl86skA
- soosJ9gGCXJDynA3wIF0d/BTnnN+tls=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1775729330;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XbEA5OnMLUTPZDi3bwfwfipCn0lwtIzr4jW07Y9h90c=;
- b=3vY4u5HVF+0sQpong4wwXKJFkAmRxePnHYooeP2Xr0v/UMyZe3bkmDnNekk4mI6+PYm4rs
- nKuG9cEX75gbspAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DDE664A0B3;
- Thu,  9 Apr 2026 10:08:49 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id idBNM7F612kBegAAD6G6ig
- (envelope-from <cfontana@suse.de>); Thu, 09 Apr 2026 10:08:49 +0000
-Message-ID: <5f29c2dd-95eb-44c6-b22e-1909f7453cdf@suse.de>
-Date: Thu, 9 Apr 2026 12:08:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] migration: include timing and RAM stats on
- destination when query-migrate
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org,
- Jim Fehlig <jfehlig@suse.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20260405152612.93027-1-viking4@gmail.com>
- <878qb05gq7.fsf@suse.de> <ada038hgmY9hNqPK@x1.local>
-Content-Language: en-US
-From: Claudio Fontana <cfontana@suse.de>
-In-Reply-To: <ada038hgmY9hNqPK@x1.local>
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wAmNn-00064Z-Jt
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:13:07 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wAmNl-0003sr-BM
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:13:07 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6397nhqX3196929; Thu, 9 Apr 2026 03:13:03 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=tA4Rp9vRJXMrhiKMILMRQVIItFDJV+ZzD3fidpi6p
+ mU=; b=AmHlus7FugnGS4rPW9LX+6JxaTVxXfJlNpu99w0kcL/ifB588oFrC87Oe
+ zste37oxYcR4VnpKAnrQhPji85QofKIJdOC7d5NDEbcKvnpL/Vx5ZEiWDgYIkTpW
+ rslU5x1p4QgSvDwlKm6SL7HKPNqThtaV0PvhttcuTlnxHKbYyJfC+fKbTw7PHV5I
+ tYpI7aIyrMSDDKokNNg1huDJPcYXJ4PtgX22ZGiJ0Xg5lNnDvP6UEL9DVIcRlu6E
+ DRHLtRXoOH2VPIjl9nRK3xORiMA9RG/28XQVTd1meg2KVxIW1Flh9VVjv+plWcot
+ 6GNWqOc5GFVyw3jPwxSUK0REF3Qow==
+Received: from mw6pr02cu001.outbound.protection.outlook.com
+ (mail-westus2azon11022079.outbound.protection.outlook.com [52.101.48.79])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4dcms4714k-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 09 Apr 2026 03:13:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZlLj74kYtcCz1s2BAMF/f861XkE+hWKp0ZMqrBcP4BdW+qFQnZyw/sxvUcJpH5w5IVnzkZrZ0WRFB8nLV/6CN7wtb4Uy4+3Fa/5ZYhFjNA9JiiPRkhseMlJNvdVbiwenEQ1XpYfmRobzf+OzQ/lisEyYDItvfV5VYuTGD8n8KO9uMyPrF2sH3RAsprW7KlSPH8XiDYKgq+Nx9CrQpG4Sk4sumCo/oseAh1l8y7sLDGHn81RHVRoVdeGcnYbBVbZ7znwmp8zXtvshGRodl93bQaObY9+u3FPe0rT/zN0Bz5h0Jt8RhvfJYeQoUYBGY0WJWAtLM3tlHwwFKGuxbG95iA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Y2wH8grdoOmwqnhmab37kP/LPW5bL5Ulmoqv6a/loxw=;
+ b=UaoNFhd6T69ZpM3Ahnu9kotT4Z8jlawFLzSn+Y3hg8aQNJAow7yNfhTjJJO6aOa7hNPjwJOp9QIACwlUmJfFmvF2XlUBi1s0o2E+AWAboIW4uBF07KVE/Ej+ZL1WvtVN22nauUDI3MnvbFR/LE0emhPRY3uZ7mP3ZQ6QiqchqLwZTj956F8mSNOWvInR3lPwYUJuVd7FZLcyU2YZQ/kFQ5Qp8hgcDGvzNN+xVmBlJLWD4vZoGc17dfs74M2swsL3SjcAoKRqZoWVUPFN9IILn60e3oyKJCirz1gH0JS5T1BMs0GRFMUFYDbmP9lS2F1pvEATPlWIkcx2cDeH5bFYQA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Y2wH8grdoOmwqnhmab37kP/LPW5bL5Ulmoqv6a/loxw=;
+ b=TeJmQ7P5RGhjnIzu+yO7mu7ChUVtF5rkNc6QxSoxYUie0CN/ex8wEo/ttmcH9iQMkF8iTs6S1M+DLpSNsPTlMD27cq6WvVUUCM0BbnOdZz5RwZbO57rD59LqqG8AqEYKmXmbeJ6Ak1q9QBNS0bQLSOhHkKx0YwA+mQ/NI5qvRL0SHgnRExsO8D1t+/vBpIWg3JEU9dlGRILHQ+og0Hjtc9dLKY8MqU9TiG5WB/vNSURlPYHx+LFPsDnLZ44AXA90XZvVYQFer9HSQaCUWkHcDJeQs1Ay9AWjRV3FbZ8gHHgS5NFdL53Z1yQ/LEIH2DYkZTc19zbvOm8NUIRd4M9etg==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by SJ0PR02MB7389.namprd02.prod.outlook.com (2603:10b6:a03:291::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.20; Thu, 9 Apr
+ 2026 10:13:01 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::dbc1:9766:c58d:4887]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::dbc1:9766:c58d:4887%6]) with mapi id 15.20.9769.035; Thu, 9 Apr 2026
+ 10:13:01 +0000
+Date: Thu, 9 Apr 2026 11:12:57 +0100
+From: John Levon <john.levon@nutanix.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+Subject: Re: [PATCH 2/2] vfio: quieten dma-buf warning
+Message-ID: <add7qUT5WUA26iOW@lent>
+References: <20260317195323.776669-1-john.levon@nutanix.com>
+ <20260317195323.776669-3-john.levon@nutanix.com>
+ <2bbd13e7-5d14-48c8-90a7-231a38537180@redhat.com>
+ <adYYg-OgUUavR31j@lent>
+ <ed00dc34-858e-4d5f-9b43-28c39ef561d7@redhat.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[gmail.com,nongnu.org,suse.com,redhat.com];
- RCPT_COUNT_FIVE(0.00)[6]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=cfontana@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+In-Reply-To: <ed00dc34-858e-4d5f-9b43-28c39ef561d7@redhat.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO4P123CA0478.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1a8::15) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SJ0PR02MB7389:EE_
+X-MS-Office365-Filtering-Correlation-Id: d59b326b-36b5-4612-c09d-08de962094a2
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099003; 
+X-Microsoft-Antispam-Message-Info: 6o6MYu+2/6f1UnXzLIq3C+MffNvTrhdbxSfGsjmmWjF4NZAY9p666yvA6z2IKsHcl0hAoCdKjS0hRhhWA3SYB1Vu4aDKyfq/IUI+6/R6z+U2A8w+mqNo/WIEsYilneRNWX3svnynVyemxlBJfwPaFCpreykOY5KC6vbx9eGFHtKti8RDvxXo/46D3C7om5P0HCOW7eJaEw6JMU3iKxuXBEft8hMbAgy1/HpdALCm2KrjIQobvh3LXP0LcP0b4qSC68NN4YbWOgPp76qtuNQ64QE04v/C7ZCHYZAvXj7NNapsoV4MpP7M+HFpNmOfzUKmWlwpPEzfgfJmZ/2lsTVvJZcayLSKMUuHabWnjMytjaZDNHSsvby4mY51xz2ofoM269jJzSmQL+rdVRvKlhc3rBHrTb02hNZxgEbRUgTEuwYm2n75L+/VyKvAz7J0R3YxZcWmVfrGGEsDZsfmx6ntNTW4mEw4XxGS02M+aIeydLqczXnX+fBAMYJhPf9OaVF9o9QiO2CP4HWhnq4k0X6FXnyJ6RJ9xFAt+cJ9hLCDeJWl3icTdYSKIL3Z8nnXpojJIEKFNLTwQbq66CbrSxDiIPfHlg0Oo4dK2fSZ2qj335KsZp0ZqFl9uBByx3zlVpEyUyzyEEKSnkpNtR1rKYIX3BmSvf2XFFd3kvt4QLJT6zoxX6xK8JwA2h6H2E01277jKu/2Q5oTNncT393uYL+lMieakNZfdzhOSPkoDSoiRFQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?MfvOdI9yxo6XsxTjxE9/Vp0WfjW4RW0w9JGydotdgB8fw36lOyJ8pdu+er?=
+ =?iso-8859-1?Q?KnnzPnuVTSfF2U77KNkZRD36qealXvjAN0AYv5Piv26mU4eM2awyfJH7Xh?=
+ =?iso-8859-1?Q?HhW2e3HITfeMEiOTGS3WFKMgfinmrde0QIN4KO8zdQNqK8fnnAOwoO50gd?=
+ =?iso-8859-1?Q?jYkev2QjnjQvY4B3KVLbvARPwMHNkXwxxjbTBlG/J+llkCsALSkf8f3377?=
+ =?iso-8859-1?Q?nw3OxO3xebSTlVW3wGZtwZdiFHzpgQ+9tgOXiYzwHpmKXwqHyJ/dcatvkM?=
+ =?iso-8859-1?Q?zwZ+NUf5kIQXD3kECtBXdPHMwqDJUzYWpIAIuP0UtRDp/gA7vlJGoy/tjt?=
+ =?iso-8859-1?Q?Dnp+hifKHlrqE0+iYO416rlgPAj1dGCpiDDX7rz0P2noab1zLTMeRYSWr8?=
+ =?iso-8859-1?Q?WPktTJfcj62zAA6VcMDRGrhHSO/zbkjyYJ70HJ0bCqmMrX63sfKcNZ8DXE?=
+ =?iso-8859-1?Q?QugWiLthd8JBNkJtFbvPG5jffaZFAZD5QNPsXopsNQqCESQWMd0Juve29Q?=
+ =?iso-8859-1?Q?g8XgpKnzsVMN5fByiDmKeLytGPJlq72abN0uwCwZzykKkkSARyohcapZH0?=
+ =?iso-8859-1?Q?vQmPKWDfD1EMiP2REwKE6sSAUszwnmusaHjWHF7n7ZLVzum7IxTpc/2diu?=
+ =?iso-8859-1?Q?rWSZgI21EJ+sH/WqLe+LApvq4suRGnnxu5MGAl2ZybFkRLttNiCpzRCzsO?=
+ =?iso-8859-1?Q?ynKB4GMGrYvhOmatX8nR8uWaHGzX5aNExELzVJf+G6rEpeXBVtEyuwm18H?=
+ =?iso-8859-1?Q?/TpDKUDKTKHecUGxWc/sRuLflZZKIPz9EPxNOdW/i4i+jMWBADgorx8AUu?=
+ =?iso-8859-1?Q?7lqxWVk7oSgMJVXeuMdY/b1ES5s3ce6U1h/yFdPjDa25moh+Q1q1vShHsL?=
+ =?iso-8859-1?Q?8zw71UREsScoI60Emvxln92bk147b+gRBatDFIxwRlC1vPNef0mgC1NXEB?=
+ =?iso-8859-1?Q?fk7h5Nfz/dqHh76v+ZilSbVDIN4a379cg3OwfCKnqXh5BWRMaj/sIgWwk+?=
+ =?iso-8859-1?Q?ha1ePQZFrDI6ARUjpwUhic85l/i8bwVWMeErQM8bbKF5Wb4VydmqQL6fSH?=
+ =?iso-8859-1?Q?z58otN7aPR0ofSMW7iPTJmvd5pD9UrvM1fPNlW8JAAiMfPOl96mFay9jL6?=
+ =?iso-8859-1?Q?yQZYG4iJjOf8e9Ma1bpIKdYAT3GtSrqHa2tTKNnbh7sqUQsIHIyR88Ibbh?=
+ =?iso-8859-1?Q?PCaocDJQHrfUOsV7czZzw4cyvw0OGREDdxO1fCK3jNOhiZaOtzBJVs+9Y9?=
+ =?iso-8859-1?Q?auXnPhD2TNnAJ6WWb2RKnqG91qqa8g8wH6+ImpRshwTEowxUz8uV61R4no?=
+ =?iso-8859-1?Q?FgvH1TTU52ldwp/AfWB3hdPPpjeLzTJ0cDDVOEpNKw0Ibgxy4LkR49XeRJ?=
+ =?iso-8859-1?Q?l5/F31MZMVJYdGjYOZ9gFQvRFgJTYjDhpjsipnZgwY6Zu2c6zX9Us2kV0D?=
+ =?iso-8859-1?Q?O0o168wlLF0/DFpHCXVi9NTwIi2mrkZxBoJ/Iay4YkKzP/Y8QjxL2eCWGS?=
+ =?iso-8859-1?Q?BNxvRpYgMQmPEB9n9HqtN5OpuVAxZye/nn59CF3YBqA4cSNPnDHRI/l7iG?=
+ =?iso-8859-1?Q?Arsq5rpS6zoTzHwOG9uosWGpPhk8MP/daAYO63j+32EEA0sSULJP4Wk9fl?=
+ =?iso-8859-1?Q?IT3CAPh+3vqfX6wANn6bCXWsE7g6AbFZeBMcJK98lg5DnVM3tXoaAyBJbk?=
+ =?iso-8859-1?Q?9UIboXfbtOZpTT6MqEcLYrMNj/VYWkXupgLJulHq/aA8p8IHL/mYpNJZdE?=
+ =?iso-8859-1?Q?Z3NDqbgg5HKyHbeePi+7p/sg7P6z2qT8GKMJUHT6m7Ap70X02zAZ+rEEgz?=
+ =?iso-8859-1?Q?WL8w7C/KwA=3D=3D?=
+X-Exchange-RoutingPolicyChecked: vMmcVWUwCeVhfqDUMd7BPRFy98hRQBIdHcCuA8aTCSh8UHPvI8D8KRec1ecgt4+3F9pJvdhFFe73bWdLZDE6HrkswC3TR/Z7N33DgtDio4cmbPpN779kzeHFPpdHUi/R3lPdvbdkUIfjpuK4eYYrTkve5tdiC7l1kVHvKSlaH4bSfgcFnpGUWdXzSzn5ZpmGT8Ao9PmeCzwhjoJNVBayUDHCiIzp4fxY/kIkZ9eiqWdXbvzGDt1iL3TQdL5Bff3xAou9j8I7TftUt/pbKkHeIVrwp6K0xvaJvq5BmaP8NYXpSgp/saVOHcP6tSDb3rdXsS5lP6XX39DXrYAgi6Ytxw==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d59b326b-36b5-4612-c09d-08de962094a2
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2026 10:13:01.1049 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VSwxzOHKf6PnByZ6ip5mdIzNccP/TsTIgP9U9Jk3o9iXGMtlCebXz9/zzXhVyRGuDotKkXyCce8QZ9Gyn7KbLA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7389
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDA5MSBTYWx0ZWRfX6v5u1r8q68UK
+ 5D2QyoWNlf4XnWkkFxAw5mCK3EhUfoDGtlttY6ntrHEzAyE12cLN6h5g8nAQ/rtSWMynyGRI9KM
+ pV02glPLNog3Wnr0amsdRtOkc0k320w1YUSZLu3vAo678+N6WTFkgR9T6j5xNri64ycTYu8ayrm
+ 3mEj7nTK0sNDASKSkYLbAKmvoWkXxWNIuA1XQSWdT3mJQCvJyu9qweTMyL58mmlHqrP4n/ddTrS
+ fidfLB6jeAuPIqJOLRjZ/1tPRBS4hflDZWnbAombry03OuwvS5hAs6WIlKMT5QGOdUJorRvZb2s
+ RUUqE2qjqzNn8T3szvGW4WxI+V+3yr1rQsh37VOp4ETyyONPga1TqZH+urkPjtxOKVYMSCgYDro
+ f5o9deZoRxv+UnpbOgg8z7CNK9o6GrANqJRxLTJ/TVYGu282TbT+bdHHIwYXSjb5G7wBBkIn/e1
+ toxxFFZihSxEwzSRUAQ==
+X-Authority-Analysis: v=2.4 cv=M4197Sws c=1 sm=1 tr=0 ts=69d77baf cx=c_pps
+ a=oCGjzYnsqMZj53MIwVW12w==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=A5OVakUREuEA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
+ a=8qD7CkwyVcilpS8tGWoA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+X-Proofpoint-ORIG-GUID: EWSluM76zH6kmnTEHUTbohQftqdPLMxF
+X-Proofpoint-GUID: EWSluM76zH6kmnTEHUTbohQftqdPLMxF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-09_02,2026-04-09_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,112 +184,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/26 22:04, Peter Xu wrote:
-> On Mon, Apr 06, 2026 at 11:02:56AM -0300, Fabiano Rosas wrote:
->> Trieu Huynh <vikingtc4@gmail.com> writes:
->>
->>> From: Trieu Huynh <vikingtc4@gmail.com>
->>>
->>> When query-migrate is called on the *destination* QEMU after a precopy
->>> migration completes it returns only {"status": "completed"} â€” no timing,
->>> no RAM statistics.  The source correctly returns total-time, downtime,
->>> setup-time, and full ram stats.
->>>
->>> This series fixes the gap in two commits:
->>>
->>> * commit 1: Track start/end timestamps and per-page-type counters in
->>>   MigrationIncomingState, recorded in the receive path.
->>>
->>> * commit 2: Make source-only MigrationStats fields optional in the QAPI
->>>   schema so the destination can populate info->ram with only the fields
->>>   that are meaningful on the receive side.  Fields computed from tracked
->>>   counters (transferred, normal, duplicate, mbps, pages-per-second) are
->>>   shown; source-only fields (dirty-sync-count, precopy-bytes, etc.) are
->>>   absent.
->>>
->>> The QAPI change (commit 2) is ABI-compatible: optional fields that are
->>> not set are simply absent from the output.  Source-side callers are
->>> unaffected because populate_ram_info() sets all optional fields via
->>> has_* setters, so the source output is identical to before.
->>>
->>> On dst, {"execute":"query-migrate"}
->>> * As-is:
->>> {
->>>     "return": {
->>>         "status": "completed"
->>> }
->>> * To-be:
->>> {
->>>     "return": {
->>>         "status": "completed",
->>>         "total-time": 94,
->>>         "ram": {
->>>             "total": 554508288,
->>>             "pages-per-second": 1440234,
->>>             "page-size": 4096,
->>>             "remaining": 0,
->>>             "mbps": 97.955404255319152,
->>>             "transferred": 1150976,
->>>             "duplicate": 135101,
->>>             "normal-bytes": 1150976,
->>>             "normal": 281
->>>         }
->>>     }
->>> }
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3151
->>>
->>> Trieu Huynh (2):
->>>   migration: track timing and received pages in MigrationIncomingState
->>>   migration: expose RAM stats and timing on destination via
->>>     query-migrate
->>>
->>>  migration/migration.c | 37 +++++++++++++++++++++++++++++++++++++
->>>  migration/migration.h | 17 +++++++++++++++++
->>>  migration/ram.c       |  3 +++
->>>  qapi/migration.json   | 14 +++++++-------
->>>  4 files changed, 64 insertions(+), 7 deletions(-)
->>
->> Hi, remember to copy the interested people in your series. Using
->> get_maintainers is correct, but when there's already a discussion about
->> the topic it's good to add some CCs manually.
->>
->> +CC Daniel and Claudio
+On Thu, Apr 09, 2026 at 11:53:58AM +0200, Cédric Le Goater wrote:
+
+> 1. quick one:
 > 
-> The request is a valid one.  Said that, redo accounting on both sides seem
-> to be a duplicated work and overkill to me, if src has everything.
+>   Return -ENOTSUP and test the value in vfio_region_create_dma_buf().
+>   It's cleaner than masking EINVAL IMO.
+
+Scratch that, vfio can return this error too:
+
+220         if (!vdev->pci_ops || !vdev->pci_ops->get_dmabuf_phys)
+221                 return -EOPNOTSUPP;
+
+> 2. cleaner one:
 > 
-> Is there a way we can make Libvirt always query the results before src dies
-> and report it somewhere?  I recall these info were captured somewhere, do
-> we at least dump them into logs?
+>   Add a capability field to VFIODeviceIOOps to advertise supported
+>   features:
+>     #define VFIO_IO_CAP_DMA_BUF        (1 << 0)
+>     #define VFIO_IO_CAP_MIGRATION      (1 << 1)
+>     struct VFIODeviceIOOps {
+>       uint64_t capabilities;  /* Bitmask of VFIO_IO_CAP_* */
+>       ..
+> and test vbasedev->io_ops->capabilities where needed.
 > 
-> Thanks,
-> 
+> How's that ? I can implement option 2.
 
-I am interested in the outcome, but I think the approach shown here is fine, the amount of duplication seems minimal to me.
+I'd appreciate it, thanks, please let me know.
 
-That said if we _have_ to keep libvirt in the picture, I think I see a possible alternative, but then the feature is not available to anyone that does not use libvirt. At the same time, if libvirt is not used, one is free to keep source QEMU alive and query the stats, like I think Proxmox does.
-
-So with libvirt, I think we need a way to tell libvirt to keep the source QEMU alive before the actual switchover and the source QEMU is destroyed,
-so that we can do everything that needs to be done from the platform layer before the source QEMU is lost.
-It might go beyond querying for stats using QEMU and libvirt.
-
-Something similar to (and potentially combined with) virDomainMigrateFlags VIR_MIGRATE_PAUSE, for example:
-
-VIR_MIGRATE_NO_SOURCE_SHUTOFF
-
-So one might say:
-
-flags = VIR_MIGRATE_LIVE | VIR_MIGRATE_PERSIST_DEST | VIR_MIGRATE_UNDEFINE_SOURCE | VIR_MIGRATE_PAUSE | VIR_MIGRATE_NO_SOURCE_SHUTOFF
-new_domain = virDomainMigrate3(old_domain, conn, params, nparams, flags)
-
-and then we could do everything that needs to be done from the platform layer,
-then issue a virDomainResume to start the domain on destination,
-and maybe a virDomainDestroyFlags on the original domain to terminate it on the source.
-
-But I would still favor the simplicity and the overall applicability of this series from Trieu Huynh.
-
-Thanks,
-
-Claudio
+regards
+john
 
