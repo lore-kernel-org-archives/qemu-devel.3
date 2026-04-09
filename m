@@ -4,127 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF324EA3C23
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 10:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F80EA3C59
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 11:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAn1K-00009G-P1; Thu, 09 Apr 2026 06:53:58 -0400
+	id 1wAnnA-0004BW-W0; Thu, 09 Apr 2026 07:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wAn1I-000097-Vg
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:53:57 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wAnn9-0004BO-EX
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:43:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wAn1G-0007eC-1H
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:53:56 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wAnn7-00056X-Ee
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 07:43:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775732032;
+ s=mimecast20190719; t=1775735000;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
- b=GjfrXOAyJTbvK7CPzBuHrQJlmSBuXWy8270Rv9/01VXDFLeM2JllEIj4tfHaLnMpOXbd3q
- XYVAiu+CNqX7j9lGA5Gv+iFtNs2owDN39DCMLs11mJpiRjcpQDwbV+ddx9mnj0qwRtSUDM
- OC9qn6mHYwLlx7vtKcSkdnPn6ad1Llw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-_LNMLL_xOSup3YJdwd4c0w-1; Thu, 09 Apr 2026 06:53:51 -0400
-X-MC-Unique: _LNMLL_xOSup3YJdwd4c0w-1
-X-Mimecast-MFC-AGG-ID: _LNMLL_xOSup3YJdwd4c0w_1775732030
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43d14a4bcd0so982073f8f.3
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 03:53:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775732030; cv=none;
- d=google.com; s=arc-20240605;
- b=iH7U+5bospo5Mb3oJcWTBi0qEqsklGOPThBV54htVroA05+TDhmKBiewOTeX3ms+jW
- elkkJh2kfXphUFQhDtk6WeCC7cpRCpGGFZerYH3G7PI/0DiMog5vrQ7qJGV05VqQoOPY
- OF9mFV3ouU5X3HqRj6gXXIBhYyIrpFJUWEaPe6v2JPuS6fiPofMjFRX59lSRVrwrFa0h
- /NRlQB+NOw7AotUSjWRb3QSN/xsxUR9/zIf/THy3IKMEOofsKoOrpyQXTrlFsNOh6Gq2
- lK1bItJSDlOkSFzNXO4JfcSq5fZsEBGx7QeSActkWbdkGBa2QnmJDdrbY5ifHvYURz9B
- 7BZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
- fh=sWcw3HoY1LaCt8qN2YujPvFLN2rsUTf8ZQNrxkcqM6c=;
- b=K6417zDwqRT+JiEeQQY2V2Hgvhe2DJGFImFob14bBAfmwojiJZZxibUePd4CdkMKMJ
- E+TyvVw886ceQbWQV5uRyJ3Qrh4eJmu7lMYCd/JsGkNOjJpwhDLH2Ef9ja463fx+UaRM
- wMPLFrioLx3V5GJJi6GGhfq0YPjTGwCCUw65kxxwLjT+me4npGvL0Sb+YyYYZrG6OsFR
- Bz0OGUMfx34tzRLFAZKymPAW7oMhzJalS55toXc/ouZUpAx32ZYWCGK7oXH3f6z1aqnl
- 7K/ZTRDAAv2QlcEnLD13LYAVdVtO3IJ+13DOTaI2dHUvjWU981j80nbCcYFT6OTug4Ba
- SoTw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775732030; x=1776336830; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
- b=r1bv6xqSCqJ2CBXnf2+quR+TPaHauZ4FoNt2jmJqS+TRSEGEIkmtdl/B63cE2+12sY
- OYQNCdnQqh+8DViqL0wrHD0s5nfpy+gp2MKARu3k8ZE6QSI+4u2x5qkhc7PNDISnSFla
- +CBccxXPbXwrcB5JugooKcn8Bf6eVnLPdbZm2G4WcM89j9zN6L5HFs0AGrSJKzKZ/6QH
- M6FUXW5s5kP0aDaJehP8T2cApzV3ReVC7zbSAbcredceJ6NHJK5rLbLvv32XfZn0Sa/Y
- kykDH0ucLlupH38StQyvGMAKZdMQjVb1AISoAJSgRSBlf6Td77u2GxhXVVbcEqTFTOIB
- Q3fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775732030; x=1776336830;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
- b=ZmtmABDCYETBCyy4RsQ3DrHD4Ll6RnkvP/wgBcZ17PUXjfCw+Z/NdParTVvWk0Z7UN
- 3IqlkulBnLsnJqy3/oUfET5FsvxBv/bXUIk5ruUDp5fJJGzW6763NyxnaWdRK/+cSWeW
- D+U5G5HS8HUpqtS1PZbmuYVQpE7V2NYKwFLdXSWPYywmDgsmf0RCTsn6CLiU7fmpRU/r
- DTmlelPVgo70qIhAV+Hv0L8+/doP8yiqrEODNwSultFKrlGdaxHXCWmU0HS0Jb/AyTf4
- x/2FFsDQCmi4cF9YKUpqc2k+odtpSmznS0MT+OKsd/uWCLPM7cGSw2p2WRTFMHLIzPnM
- dtlQ==
-X-Gm-Message-State: AOJu0YynlkdXz8d7COZHOTDxamhWBM9UimtI2/CLV9PLFnNkX3jKPRiu
- aU5T8SmzGmnIxMTkNdhIGdFZCIWmpBBIDnzs7znl9h6cc1VqoYwzmC3eCnKRExXkjiCrcy7j72u
- qDSdDj30D4y09N5jmaIIEpNKU/kRF2KiU/XlO437fCWHYd8bWbc2Ec3TKt1WPRA8UM9VPnWMumg
- Ab3/9txQSpkO2N0wuyg7sjhFF0RlYG7HA=
-X-Gm-Gg: AeBDievbyR+VuL7E9DZoYF4Hm4m3aL3Wkt7NDE9VggWwKbz7ZdBemyVO96iXXqwB918
- kWPXhuYjWk0nAGcIiFNKlLbhqM7L9loRA7i7DFyWoGvMq5ZGE1WKWMG+0caK82ZTkV2j0uqnj/Z
- rNqrSnnJACQRCn1kHsm8Zz2TkHU8KD5pbSSGwP1Imi8uPKV8KwXcluXHwU8eNOJjJG0os/lrGA9
- yBYP6HO7vKMbZVN5Ek24OwXz9Pem+ioYnFFceh2VlH7tdQ79z1BoK/PSxOINO1Ij/a7aJ/xl1cf
- i7gK
-X-Received: by 2002:a05:6000:310a:b0:43c:fc5c:a9fc with SMTP id
- ffacd0b85a97d-43d2929dcd9mr36372054f8f.21.1775732030228; 
- Thu, 09 Apr 2026 03:53:50 -0700 (PDT)
-X-Received: by 2002:a05:6000:310a:b0:43c:fc5c:a9fc with SMTP id
- ffacd0b85a97d-43d2929dcd9mr36372022f8f.21.1775732029754; Thu, 09 Apr 2026
- 03:53:49 -0700 (PDT)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=aEZhY1E5eo7lYxSjD0EwAhHg/UAubLjLjd8ZdBwDe8w=;
+ b=b13T5D8FLuN8GZbxbSeq2JcT+e8KEklCrumrCubHjvLir3u6UHbjcKnlwmIV2OmyKFaG1n
+ ZXBzS8c6DYvcEJxSsZ+yl26Z6wZj7BkO/yFGbz2qC6AOZKOw3wtJXFAHYgPwSWlP8GCQ6C
+ FzrgzDgfaaXyB2fwCK27pZ3fwCUJrqg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-dccb79HSMQyTRS7AZAwb4A-1; Thu,
+ 09 Apr 2026 07:43:18 -0400
+X-MC-Unique: dccb79HSMQyTRS7AZAwb4A-1
+X-Mimecast-MFC-AGG-ID: dccb79HSMQyTRS7AZAwb4A_1775734997
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3996119560A3; Thu,  9 Apr 2026 11:43:17 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.21])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4F81E180036E; Thu,  9 Apr 2026 11:43:14 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ John Levon <john.levon@nutanix.com>
+Subject: [PATCH] vfio: Add VFIO I/O backend capability flags for feature
+ support
+Date: Thu,  9 Apr 2026 13:43:12 +0200
+Message-ID: <20260409114312.1704062-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20260409103310.1884968-1-pbonzini@redhat.com>
- <20260409103310.1884968-2-pbonzini@redhat.com>
- <adeEHeacVSfEKp-V@redhat.com>
-In-Reply-To: <adeEHeacVSfEKp-V@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 9 Apr 2026 12:53:37 +0200
-X-Gm-Features: AQROBzB5-JU4C8nX2ddRvXfeOXmiZO1W0OcVrhJmf-UI_2t_tl8y9CiC7P9bxHw
-Message-ID: <CABgObfZ=dGwYMNsxvJb6pd++UQGhZj5D22qs42Z30vce3R9HMw@mail.gmail.com>
-Subject: Re: [PULL 1/1] virtio-scsi: pass the same cdb_size to
- virtio_scsi_pop_req and virtio_scsi_handle_cmd_req_prepare
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Jihe Wang <wangjihe.mail@gmail.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,31 +83,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 9, 2026 at 12:49=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Thu, Apr 09, 2026 at 12:33:09PM +0200, Paolo Bonzini wrote:
-> > Ensure that there is no allocation/usage mismatch when requests
-> > are processed in virtio_scsi_handle_cmd_vq.  To do this,
-> > retrieve the value once and pass it to both functions.
-> >
-> > For other calls to virtio_scsi_pop_req the extra size
-> > can be 0, because control and event requests fit
-> > entirely in VirtIOSCSIReq.
-> >
-> > Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
-> > Tested-by: Jihe Wang <wangjihe.mail@gmail.com>
-> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  hw/scsi/virtio-scsi.c | 26 +++++++++++++++-----------
-> >  1 file changed, 15 insertions(+), 11 deletions(-)
->
-> This issue is tagged CVE-2026-5763   - if possible can we get that
-> in the commit message before merging.
+Different VFIO I/O backends support different features. For example,
+the kernel VFIO backend supports DMA-BUF creation, while vfio-user
+does not. Currently, this is handled by attempting the operation and
+checking for -ENOTTY, which can lead to misleading warnings when a
+feature is simply not supported by a particular backend.
 
-Done, new commit hash is 79971302935472232a68073faddb085177e3ca54.
+Introduce a capability flags mechanism in VFIODeviceIOOps that allows
+backends to explicitly advertise which features they support. Callers
+can check these capabilities before attempting operations, avoiding
+spurious errors and warnings.
 
-Paolo
+Cc: John Levon <john.levon@nutanix.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/vfio/vfio-device.h | 13 +++++++++++++
+ hw/vfio/device.c              |  2 ++
+ hw/vfio/region.c              |  5 +++++
+ 3 files changed, 20 insertions(+)
+
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index a95c5bf50302a7394582dcc493d96aef00b47dc8..380a55d6e5ea280c8f44016c7a8a1dcb8f4c00fe 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -172,12 +172,25 @@ typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
+ extern VFIODeviceList vfio_device_list;
+ 
+ #ifdef CONFIG_LINUX
++/*
++ * VFIO backend I/O operation capabilities
++ */
++#define VFIO_IO_CAP_DMA_BUF        (1ULL << 0)
++
+ /*
+  * How devices communicate with the server.  The default option is through
+  * ioctl() to the kernel VFIO driver, but vfio-user can use a socket to a remote
+  * process.
+  */
+ struct VFIODeviceIOOps {
++    /**
++     * @capabilities
++     *
++     * Bitmask of VFIO_IO_CAP_* flags indicating which features this
++     * backend supports.
++     */
++    uint64_t capabilities;
++
+     /**
+      * @device_feature
+      *
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 8f7ae919a55dd9e08bdd072eee33f5b46a91aa2a..3ffd69a579b8ac135ef729d3d836c8545e36786b 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -648,6 +648,8 @@ static int vfio_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
+ }
+ 
+ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
++    .capabilities = VFIO_IO_CAP_DMA_BUF,
++
+     .device_feature = vfio_device_io_device_feature,
+     .get_region_info = vfio_device_io_get_region_info,
+     .get_irq_info = vfio_device_io_get_irq_info,
+diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+index 47fdc2df349b65c6be6c9605b7a38a4e367f0475..0342ca712acd0ad846685115c29432c15aa966a0 100644
+--- a/hw/vfio/region.c
++++ b/hw/vfio/region.c
+@@ -293,6 +293,11 @@ static bool vfio_region_create_dma_buf(VFIORegion *region, Error **errp)
+     size_t total_size;
+     int i, ret;
+ 
++    /* Check if backend supports DMA-BUF creation */
++    if (!(vbasedev->io_ops->capabilities & VFIO_IO_CAP_DMA_BUF)) {
++        return true;
++    }
++
+     total_size = sizeof(*feature) + sizeof(*dma_buf) +
+                  sizeof(struct vfio_region_dma_range) * region->nr_mmaps;
+     feature = g_malloc0(total_size);
+-- 
+2.53.0
 
 
