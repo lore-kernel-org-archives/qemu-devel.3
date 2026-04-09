@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E085E9DE42
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8AAAE9DE5C
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 07:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAjf6-0007Ks-O8; Thu, 09 Apr 2026 03:18:48 -0400
+	id 1wAjfJ-0007Mq-Qf; Thu, 09 Apr 2026 03:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wAjf3-0007KS-OE
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:18:45 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wAjfA-0007Lk-CP
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:18:52 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
- id 1wAjf1-0000Yj-GL
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:18:45 -0400
+ id 1wAjf6-0000ZG-8M
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:18:51 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 70068600AD;
- Thu,  9 Apr 2026 07:18:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E336CC4CEF7;
- Thu,  9 Apr 2026 07:18:29 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 79B4760125;
+ Thu,  9 Apr 2026 07:18:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F92C4CEF7;
+ Thu,  9 Apr 2026 07:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1775719112;
- bh=8Ti+PWIVHDcunJ1cTVo2D4I6xsYIaP1ZSB4RjxeRgU4=;
- h=From:Subject:Date:To:Cc:From;
- b=PJSWR0zaPpwoWtYsMxJlKJrf6rW/8USqOGU2Wz2qMqvnI4M2DXiD4NilMkje8dPrJ
- FqyUQzkcCByltRJSPuiAKggCF/RY/O8hcZBJDTAY6V4f/FxWuAg6XdBqLeGM+zSeTd
- GA3JurYy/vv3NOnYZb4ctgk9dhjvHkvUXodD0YKvMLS+j7l7x7TJn4abYtXWZ7utXs
- GSk4wYdaw5v+4Q3YUUFzACcF15K7uUtvei95OH9uH+34f7oMZVvdGBs7+rySaDR1lQ
- I24SYCInB6IORtOxmrydDWCeZ40nwrRvyzHDgQpMaskX4zmX91jVYCYIV5XAjDjLH9
- TXBD6vYLav4xw==
+ s=k20201202; t=1775719120;
+ bh=vfa+TrNtrxBo2wYtO9pePlx356JM3/1McvzEe45+0lQ=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=R+I7mmn2eGGTUwosgGWt6r6ZOVNsu2rSXUZfjCAk3GDGsF8UIP7uAJfnJ0QD4S0KR
+ gF3CqwpNEMP49dFiPFNpfdHN5/9Tybg64S2u9SnIYkOSQLScFSOV+MofJZQLm44Tj1
+ C/kTLWVTS/oSrRZysDZ88bELHl4jf3w8iucR5Xcn6OoQhSurPAtuXf9huzXx2gZjdH
+ KZrD3M8+BoMul2zEOiFgG+Cb2tntKygu9TujWZZxzsCymYlzDONIEx7UcGUCeBlAn2
+ mKS070yXoUUAupKvOjojrCaJdnVhiAEwcplvZhahugt35wu+XCts1QKjC+UhAZLS68
+ R+U13ZDEjuFvg==
 From: Christian Brauner <brauner@kernel.org>
-Subject: [PATCH v4 0/5] monitor: add dynamic QMP monitor hotplug support
-Date: Thu, 09 Apr 2026 09:18:17 +0200
-Message-Id: <20260409-work-qmp-monitor-hotplug-v4-0-89c4fdf69df1@kernel.org>
+Date: Thu, 09 Apr 2026 09:18:20 +0200
+Subject: [PATCH v4 3/5] qapi: add monitor-add, monitor-remove,
+ query-monitors commands
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIALlS12kC/43OyW7CMBAG4FdBPneQlziBnvoeqAcv48SF2MEOa
- SuUd8emF6pKqMd/lm/mSjImj5m8bq4k4eKzj6GE5mVDzKBCj+BtyYRT3tKGcviM6QjncYIxBj/
- HBEOcp9OlB6dVZ1q2Q2E1KetTQue/7vTh/Sfni/5AM1evTmiVEXRSwQy1NKo8Y6qNwecif9+fW
- lgF/nF/YUChFUwoaayVXfN2xBTwtI2pJ/WBhT9K8onEi6Ss1Ggt37NO/ZHEo9Q9kUSRjOZyv6P
- UOad/Seu63gAitP/agAEAAA==
-X-Change-ID: 20260402-work-qmp-monitor-hotplug-fba7c618e3db
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260409-work-qmp-monitor-hotplug-v4-3-89c4fdf69df1@kernel.org>
+References: <20260409-work-qmp-monitor-hotplug-v4-0-89c4fdf69df1@kernel.org>
+In-Reply-To: <20260409-work-qmp-monitor-hotplug-v4-0-89c4fdf69df1@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
@@ -56,21 +53,22 @@ Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Christian Brauner <brauner@kernel.org>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8600; i=brauner@kernel.org;
- h=from:subject:message-id; bh=8Ti+PWIVHDcunJ1cTVo2D4I6xsYIaP1ZSB4RjxeRgU4=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReDzr6/fvkP7aSvNfTvep0/816Hilwme/c9OSDubZvl
- WU+ye672FHKwiDGxSArpsji0G4SLrecp2KzUaYGzBxWJpAhDFycAjARm3UMv9kyA9iVFs7dK7eo
- XNzZ8N2OGWKlfUxTXaYWmn5UYL1QdoKRodXTfr22jjKzpIJ/SqmU4vL3e3IDbvSu2ss1XexiMvd
- xFgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7958; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=vfa+TrNtrxBo2wYtO9pePlx356JM3/1McvzEe45+0lQ=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWReDzo6N1ry61WT19qz7A5qaSZy7atdpcUTcKVNak+Sx
+ EOelb4rOkpZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACayT5aR4c1WjbpHno/lp3iz
+ SzvPmJt3olRAu2n+jcn1kxe+UJY/WsHwi+m8RNo3/ufsO9ex/ymzLSqwc4g8Y3Oy6uqE9JyEuX7
+ BjAA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=brauner@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,144 +85,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU supports runtime hotplug for chardevs, devices, block backends,
-and netdevs. Monitors are the only major subsystem that lacks this --
-all QMP monitors must be configured at launch via -mon or -qmp CLI
-options.
+Add QMP commands for monitor lifecycle management:
 
-This series adds monitor-add, monitor-remove, and query-monitors QMP
-commands so that management tools can create independent QMP sessions
-on demand at runtime.
+- monitor-add: Create a QMP monitor on an existing chardev at runtime.
+  The chardev must exist and not already have a frontend attached
+  (enforced by qemu_chr_fe_init()).  The new monitor starts in
+  capability negotiation mode.
 
-I've implemented a QMP-to-Varlink bridge in systemd. This allows
-systemd-vmspawn to control virtual machines and containers through a
-unified Varlink interface. Varlink allows protocol upgrades. For
-example, it is possible to switch from Varlink to say http. I'm
-allowing Varlink clients to upgrade from the Varlink interface to the
-native QMP interface. Such clients get a new monitor assigned that
-allows them to manage the virtual machine directly via QMP. The main
-monitor remains unaffected and tied to the generic Varlink interface. We
-can't pre-allocate monitors as we have no control over how many protocol
-upgrades we actually get but it won't just be one. And having unused
-monitors around really isn't ideal either.
+- monitor-remove: Remove a QMP monitor.  The removal sequence is:
 
-Having the ability to hotplug monitors would really be helpful. I'm not
-yet super well-versed in qemu internals so this might be done wrong but
-testing works so far.
+  1. Mark dead and remove from mon_list under monitor_lock.  This
+     must happen before disconnecting chardev handlers to prevent
+     event broadcast from calling monitor_flush_locked() after the
+     gcontext reset, which would create an out_watch on the wrong
+     GMainContext (see monitor_cancel_out_watch()).
+  2. Cancel any pending out_watch while gcontext still points to the
+     correct context.
+  3. Disconnect chardev handlers.  For self-removal, preserve
+     gcontext by passing the iothread GMainContext and keep the
+     chardev connection open so the command response can be flushed.
+     For normal removal, pass context=NULL and close the connection.
+  4. Drain pending requests from any in-flight monitor_qmp_read().
+  5. For self-removal, defer destruction to the dispatcher (the
+     response must be flushed first).  Otherwise destroy immediately
+     via monitor_qmp_destroy().
 
-My systemd patch that triggered this is at
-https://github.com/systemd/systemd/pull/41449.
+- query-monitors: Introspect all active monitors with their id, mode,
+  and chardev name.
 
-The usage pattern mirrors chardev hotplug:
+The motivating use case is systemd-vmspawn: when an external client
+requests raw QMP access, vmspawn can create an independent QMP session
+on demand rather than pre-allocating spare monitors at launch or
+building an id-rewriting proxy.
 
-  -> chardev-add id=qmp-extra backend=socket,...
-  -> monitor-add id=extra-qmp chardev=qmp-extra
-  [client connects to socket, gets QMP greeting, negotiates, sends commands]
-  -> monitor-remove id=extra-qmp
-  -> chardev-remove id=qmp-extra
-
-Patches 1-2 add the data model (id field in Monitor) and the
-infrastructure for safe per-monitor destruction without shutting down
-the shared dispatcher coroutine.
-
-Patch 3 adds the QAPI schema and command handlers.
-
-Patches 4-5 add qtest unit tests and a functional e2e test that
-performs a full hotplug -> connect -> handshake -> unplug cycle.
-
-> meson test "qtest-x86_64/qmp-test" "func-x86_64-monitor_hotplug" -v
-ninja: Entering directory `/home/brauner/src/git/qemu/build'
-[45/45] Linking target qemu-img
-1/2 qemu:func-quick+func-x86_64 / func-x86_64-monitor_hotplug        RUNNING
->>> QEMU_TEST_QEMU_IMG=/home/brauner/src/git/qemu/build/qemu-img ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_BUILD_ROOT=/home/brauner/src/git/qemu/build LD_LIBRARY_PATH=/home/brauner/src/git/qemu/build/tests/tcg/plugins:/home/brauner/src/git/qemu/build/contrib/plugins:/home/brauner/src/go/deps/raft/.libs/:/home/brauner/src/go/deps/cowsql/.libs/ MALLOC_PERTURB_=165 PYTHONPATH=/home/brauner/src/git/qemu/python:/home/brauner/src/git/qemu/tests/functional QEMU_TEST_GDB=/usr/bin/gdb QEMU_TEST_QEMU_BINARY=/home/brauner/src/git/qemu/build/qemu-system-x86_64 MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 RUST_BACKTRACE=1 /home/brauner/src/git/qemu/build/pyvenv/bin/python3 /home/brauner/src/git/qemu/tests/functional/generic/test_monitor_hotplug.py
-2/2 qemu:qtest+qtest-x86_64 / qtest-x86_64/qmp-test                  RUNNING
->>> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MALLOC_PERTURB_=244 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 PYTHON=/home/brauner/src/git/qemu/build/pyvenv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_IMG=./qemu-img G_TEST_DBUS_DAEMON=/home/brauner/src/git/qemu/tests/dbus-vmstate-daemon.sh QTEST_QEMU_BINARY=./qemu-system-x86_64 MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 RUST_BACKTRACE=1 /home/brauner/src/git/qemu/build/tests/qtest/qmp-test --tap -k
-▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_events_after_negotiation OK
-▶ 2/2 /x86_64/qmp/protocol                                           OK
-▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_hotplug_cycle         OK
-▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_large_response        OK
-▶ 2/2 /x86_64/qmp/oob                                                OK
-▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_self_removal          OK
-1/2 qemu:func-quick+func-x86_64 / func-x86_64-monitor_hotplug        OK              0.30s   4 subtests passed
-
-▶ 2/2 /x86_64/qmp/preconfig                                          OK
-▶ 2/2 /x86_64/qmp/missing-any-arg                                    OK
-▶ 2/2 /x86_64/qmp/monitor-add-remove                                 OK
-▶ 2/2 /x86_64/qmp/monitor-error-paths                                OK
-▶ 2/2 /x86_64/qmp/monitor-chardev-in-use                             OK
-▶ 2/2 /x86_64/qmp/monitor-remove-cli                                 OK
-▶ 2/2 /x86_64/qmp/monitor-remove-hmp                                 OK
-2/2 qemu:qtest+qtest-x86_64 / qtest-x86_64/qmp-test                  OK              1.09s   9 subtests passed
-
-Ok:                 2
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            0
-Timeout:            0
-
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
-Changes in v4:
-- Move 'dead' field from patch 1 to patch 2 where it is first used.
-- Allow removal of any QMP monitor, drop the 'dynamic' gate in
-  qmp_monitor_remove(). Drop the 'dynamic' field from struct Monitor
-  and from MonitorInfo entirely since it no longer serves a purpose.
-- Auto-generate monitor ids ("mon0", "mon1", ...) for QMP monitors
-  created via CLI without an explicit id, so every QMP monitor is
-  addressable by monitor-remove and always appears with an id in
-  query-monitors output.
-- Change Since: 11.0 to Since: 11.1 throughout the QAPI schema.
-- Drop "GenericError" from QAPI error descriptions.
-- Update monitor-remove QAPI doc to reflect that any QMP monitor can
-  be removed, not just dynamically added ones.
-- Update qtest: test_qmp_monitor_remove_cli now expects success
-  instead of error.
-- Link to v3: https://patch.msgid.link/20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org
+ monitor/qmp-cmds-control.c | 105 +++++++++++++++++++++++++++++++++++++++++++++
+ qapi/control.json          |  97 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 202 insertions(+)
 
-Changes in v3:
-- Use SPDX license identifier in functional test.
-- Use framework's socket_dir() helper instead of manual tempfile
-  handling for socket paths in the functional test, drop tearDown().
-- Tighten struct field comments in monitor-internal.h.
-- Wrap long qtest_add_func() registration line.
-- Link to v2: https://patch.msgid.link/20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org
+diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
+index 150ca9f5cb..33d02c8fb6 100644
+--- a/monitor/qmp-cmds-control.c
++++ b/monitor/qmp-cmds-control.c
+@@ -219,3 +219,108 @@ SchemaInfoList *qmp_query_qmp_schema(Error **errp)
+     }
+     return schema;
+ }
++
++void qmp_monitor_add(const char *id, const char *chardev,
++                     bool has_pretty, bool pretty, Error **errp)
++{
++    Chardev *chr;
++
++    /* Reject duplicate monitor id */
++    if (monitor_find_by_id(id)) {
++        error_setg(errp, "monitor '%s' already exists", id);
++        return;
++    }
++
++    chr = qemu_chr_find(chardev);
++    if (!chr) {
++        error_setg(errp, "chardev '%s' not found", chardev);
++        return;
++    }
++
++    monitor_init_qmp(chr, has_pretty && pretty, id, errp);
++}
++
++void qmp_monitor_remove(const char *id, Error **errp)
++{
++    Monitor *mon;
++    MonitorQMP *qmp_mon;
++    bool self_remove;
++
++    mon = monitor_find_by_id(id);
++    if (!mon) {
++        error_setg(errp, "monitor '%s' not found", id);
++        return;
++    }
++
++    if (!mon->is_qmp) {
++        error_setg(errp, "monitor '%s' is not a QMP monitor", id);
++        return;
++    }
++
++    qmp_mon = container_of(mon, MonitorQMP, common);
++
++    if (qatomic_read(&qmp_mon->setup_pending)) {
++        error_setg(errp, "monitor '%s' is still initializing", id);
++        return;
++    }
++
++    self_remove = monitor_qmp_dispatcher_is_servicing(qmp_mon);
++
++    /* Remove from mon_list before chardev disconnect. */
++    WITH_QEMU_LOCK_GUARD(&monitor_lock) {
++        mon->dead = true;
++        QTAILQ_REMOVE(&mon_list, mon, entry);
++    }
++
++    /* Cancel out_watch while gcontext still points to the right ctx. */
++    WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
++        monitor_cancel_out_watch(mon);
++    }
++
++    /*
++     * Clear chardev handlers.  Self-removal preserves gcontext so the
++     * response flush creates out_watch on the correct GMainContext.
++     */
++    if (self_remove) {
++        GMainContext *ctx = mon->use_io_thread
++            ? iothread_get_g_main_context(mon_iothread) : NULL;
++
++        qemu_chr_fe_set_handlers(&mon->chr, NULL, NULL, NULL, NULL,
++                                 NULL, ctx, false);
++    } else {
++        qemu_chr_fe_set_handlers(&mon->chr, NULL, NULL, NULL, NULL,
++                                 NULL, NULL, true);
++    }
++
++    /* Drain requests from any in-flight monitor_qmp_read(). */
++    monitor_qmp_drain_queue(qmp_mon);
++
++    /* Self-removal: defer destruction so the response is flushed first. */
++    if (self_remove) {
++        return;
++    }
++
++    monitor_qmp_destroy(qmp_mon);
++    monitor_fdsets_cleanup();
++}
++
++MonitorInfoList *qmp_query_monitors(Error **errp)
++{
++    MonitorInfoList *list = NULL;
++    Monitor *mon;
++
++    WITH_QEMU_LOCK_GUARD(&monitor_lock) {
++        QTAILQ_FOREACH(mon, &mon_list, entry) {
++            MonitorInfo *info = g_new0(MonitorInfo, 1);
++            Chardev *chr = qemu_chr_fe_get_driver(&mon->chr);
++
++            info->id = g_strdup(mon->id);
++            info->mode = mon->is_qmp ? MONITOR_MODE_CONTROL
++                                     : MONITOR_MODE_READLINE;
++            info->chardev = g_strdup(chr ? chr->label : "unknown");
++            QAPI_LIST_PREPEND(list, info);
++        }
++    }
++
++    return list;
++}
+diff --git a/qapi/control.json b/qapi/control.json
+index 9a5302193d..eb4a30b59e 100644
+--- a/qapi/control.json
++++ b/qapi/control.json
+@@ -211,3 +211,100 @@
+       '*pretty': 'bool',
+       'chardev': 'str'
+   } }
++
++##
++# @monitor-add:
++#
++# Add a QMP monitor on an existing character device backend.
++#
++# The chardev must already exist (created via chardev-add or CLI).
++# The monitor begins in capability negotiation mode -- the first
++# client to connect receives the QMP greeting.
++#
++# @id: Monitor identifier, must be unique among monitors
++#
++# @chardev: Name of the character device backend to attach to
++#
++# @pretty: Enable pretty-printing of QMP responses (default: false)
++#
++# Errors:
++#     - If @id is already in use
++#     - If @chardev does not exist
++#
++# Since: 11.1
++#
++# .. qmp-example::
++#
++#     -> { "execute": "monitor-add",
++#          "arguments": { "id": "extra-qmp",
++#                         "chardev": "qmp-extra" } }
++#     <- { "return": {} }
++##
++{ 'command': 'monitor-add',
++  'data': { 'id': 'str',
++            'chardev': 'str',
++            '*pretty': 'bool' } }
++
++##
++# @monitor-remove:
++#
++# Remove a QMP monitor.
++#
++# The underlying chardev is NOT removed -- use chardev-remove
++# separately if desired.
++#
++# If a client is currently connected, the connection is dropped.
++#
++# @id: Monitor identifier
++#
++# Errors:
++#     - If @id does not exist
++#     - If the monitor is not a QMP monitor
++#
++# Since: 11.1
++#
++# .. qmp-example::
++#
++#     -> { "execute": "monitor-remove",
++#          "arguments": { "id": "extra-qmp" } }
++#     <- { "return": {} }
++##
++{ 'command': 'monitor-remove',
++  'data': { 'id': 'str' } }
++
++##
++# @MonitorInfo:
++#
++# Information about a QMP/HMP monitor.
++#
++# @id: Monitor identifier.  Always present for QMP monitors (auto-
++#     generated if not explicitly set).  Absent for HMP monitors.
++#
++# @mode: Monitor mode (readline or control)
++#
++# @chardev: Name of the attached character device
++#
++# Since: 11.1
++##
++{ 'struct': 'MonitorInfo',
++  'data': { '*id': 'str',
++            'mode': 'MonitorMode',
++            'chardev': 'str' } }
++
++##
++# @query-monitors:
++#
++# Return information about all active monitors.
++#
++# Returns: a list of @MonitorInfo for each active monitor
++#
++# Since: 11.1
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-monitors" }
++#     <- { "return": [ { "id": "mon0", "mode": "control",
++#                        "chardev": "compat_monitor0" } ] }
++##
++{ 'command': 'query-monitors',
++  'returns': ['MonitorInfo'] }
 
-Changes in v2:
-- Fix use-after-free in self-removal path: skip monitor_resume() when
-  the monitor is dead to avoid scheduling a BH against a monitor that
-  is about to be freed by monitor_qmp_destroy().
-- Hold monitor_lock in monitor_find_by_id() to prevent races with
-  the I/O thread BH that appends to mon_list.
-- Deduplicate monitor-remove commit message: trim the gcontext/out_watch
-  explanation that repeated the infrastructure commit, reference
-  monitor_cancel_out_watch() instead.
-- Add missing test descriptions to patch 4 (chardev-in-use, CLI monitor
-  rejection, HMP monitor rejection) and patch 5 (self-removal, large
-  response, events).
-- Fix cover letter wording.
-- Link to v1: https://patch.msgid.link/20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org
-
----
-Christian Brauner (5):
-      monitor: store monitor id in Monitor struct
-      monitor/qmp: add infrastructure for safe dynamic monitor removal
-      qapi: add monitor-add, monitor-remove, query-monitors commands
-      tests/qtest: add tests for dynamic monitor add/remove
-      tests/functional: add e2e test for dynamic QMP monitor hotplug
-
- include/monitor/monitor.h                        |   3 +-
- monitor/monitor-internal.h                       |  10 ++
- monitor/monitor.c                                |  70 ++++++--
- monitor/qmp-cmds-control.c                       | 105 ++++++++++++
- monitor/qmp.c                                    |  81 +++++++++-
- qapi/control.json                                |  97 ++++++++++++
- tests/functional/generic/meson.build             |   1 +
- tests/functional/generic/test_monitor_hotplug.py | 170 ++++++++++++++++++++
- tests/qtest/qmp-test.c                           | 193 +++++++++++++++++++++++
- 9 files changed, 714 insertions(+), 16 deletions(-)
----
-base-commit: 6d3e9dddefdd2e8e6a4942ba9399df0e47df21ed
-change-id: 20260402-work-qmp-monitor-hotplug-fba7c618e3db
+-- 
+2.47.3
 
 
