@@ -4,66 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4007BEA3C23
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 10:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF324EA3C23
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 10:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAmww-0007P6-8w; Thu, 09 Apr 2026 06:49:26 -0400
+	id 1wAn1K-00009G-P1; Thu, 09 Apr 2026 06:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wAmwn-0007FA-9A
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:49:18 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wAn1I-000097-Vg
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:53:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wAmwj-0006Y2-OZ
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:49:15 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wAn1G-0007eC-1H
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 06:53:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775731750;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=3x31sPYFGovHrBN4EFAaaFCFYdPWzfdaBZtVag+fQqg=;
- b=PGWJF1zFRw25SRpe1rR28BBfudAjE+z3Cbxhqh/mmPqy9ClMg9o9UoRXTiK7JVEWArZ2qG
- uFvP08fhnIlEaYemyodJ4jLDQ+rZoOaxOPWvh5lln/Cw3gFHy/sT5adCyrJw2O3b+oNBoU
- wkGHyHogUq1Ep/aTmMu9vsMWqfYv52Q=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-dPFG4SeIMbm88SyB1XkT7w-1; Thu,
- 09 Apr 2026 06:49:06 -0400
-X-MC-Unique: dPFG4SeIMbm88SyB1XkT7w-1
-X-Mimecast-MFC-AGG-ID: dPFG4SeIMbm88SyB1XkT7w_1775731746
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A794E1800345; Thu,  9 Apr 2026 10:49:05 +0000 (UTC)
-Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.101])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 439A71800B7F; Thu,  9 Apr 2026 10:49:04 +0000 (UTC)
-Date: Thu, 9 Apr 2026 11:49:01 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Jihe Wang <wangjihe.mail@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PULL 1/1] virtio-scsi: pass the same cdb_size to
- virtio_scsi_pop_req and virtio_scsi_handle_cmd_req_prepare
-Message-ID: <adeEHeacVSfEKp-V@redhat.com>
+ s=mimecast20190719; t=1775732032;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
+ b=GjfrXOAyJTbvK7CPzBuHrQJlmSBuXWy8270Rv9/01VXDFLeM2JllEIj4tfHaLnMpOXbd3q
+ XYVAiu+CNqX7j9lGA5Gv+iFtNs2owDN39DCMLs11mJpiRjcpQDwbV+ddx9mnj0qwRtSUDM
+ OC9qn6mHYwLlx7vtKcSkdnPn6ad1Llw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-563-_LNMLL_xOSup3YJdwd4c0w-1; Thu, 09 Apr 2026 06:53:51 -0400
+X-MC-Unique: _LNMLL_xOSup3YJdwd4c0w-1
+X-Mimecast-MFC-AGG-ID: _LNMLL_xOSup3YJdwd4c0w_1775732030
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43d14a4bcd0so982073f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 03:53:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775732030; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iH7U+5bospo5Mb3oJcWTBi0qEqsklGOPThBV54htVroA05+TDhmKBiewOTeX3ms+jW
+ elkkJh2kfXphUFQhDtk6WeCC7cpRCpGGFZerYH3G7PI/0DiMog5vrQ7qJGV05VqQoOPY
+ OF9mFV3ouU5X3HqRj6gXXIBhYyIrpFJUWEaPe6v2JPuS6fiPofMjFRX59lSRVrwrFa0h
+ /NRlQB+NOw7AotUSjWRb3QSN/xsxUR9/zIf/THy3IKMEOofsKoOrpyQXTrlFsNOh6Gq2
+ lK1bItJSDlOkSFzNXO4JfcSq5fZsEBGx7QeSActkWbdkGBa2QnmJDdrbY5ifHvYURz9B
+ 7BZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
+ fh=sWcw3HoY1LaCt8qN2YujPvFLN2rsUTf8ZQNrxkcqM6c=;
+ b=K6417zDwqRT+JiEeQQY2V2Hgvhe2DJGFImFob14bBAfmwojiJZZxibUePd4CdkMKMJ
+ E+TyvVw886ceQbWQV5uRyJ3Qrh4eJmu7lMYCd/JsGkNOjJpwhDLH2Ef9ja463fx+UaRM
+ wMPLFrioLx3V5GJJi6GGhfq0YPjTGwCCUw65kxxwLjT+me4npGvL0Sb+YyYYZrG6OsFR
+ Bz0OGUMfx34tzRLFAZKymPAW7oMhzJalS55toXc/ouZUpAx32ZYWCGK7oXH3f6z1aqnl
+ 7K/ZTRDAAv2QlcEnLD13LYAVdVtO3IJ+13DOTaI2dHUvjWU981j80nbCcYFT6OTug4Ba
+ SoTw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775732030; x=1776336830; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
+ b=r1bv6xqSCqJ2CBXnf2+quR+TPaHauZ4FoNt2jmJqS+TRSEGEIkmtdl/B63cE2+12sY
+ OYQNCdnQqh+8DViqL0wrHD0s5nfpy+gp2MKARu3k8ZE6QSI+4u2x5qkhc7PNDISnSFla
+ +CBccxXPbXwrcB5JugooKcn8Bf6eVnLPdbZm2G4WcM89j9zN6L5HFs0AGrSJKzKZ/6QH
+ M6FUXW5s5kP0aDaJehP8T2cApzV3ReVC7zbSAbcredceJ6NHJK5rLbLvv32XfZn0Sa/Y
+ kykDH0ucLlupH38StQyvGMAKZdMQjVb1AISoAJSgRSBlf6Td77u2GxhXVVbcEqTFTOIB
+ Q3fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775732030; x=1776336830;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aH8EYGVmRIg72V1Pgnm38S53Ly8d3QbMpZRRw8MwNaM=;
+ b=ZmtmABDCYETBCyy4RsQ3DrHD4Ll6RnkvP/wgBcZ17PUXjfCw+Z/NdParTVvWk0Z7UN
+ 3IqlkulBnLsnJqy3/oUfET5FsvxBv/bXUIk5ruUDp5fJJGzW6763NyxnaWdRK/+cSWeW
+ D+U5G5HS8HUpqtS1PZbmuYVQpE7V2NYKwFLdXSWPYywmDgsmf0RCTsn6CLiU7fmpRU/r
+ DTmlelPVgo70qIhAV+Hv0L8+/doP8yiqrEODNwSultFKrlGdaxHXCWmU0HS0Jb/AyTf4
+ x/2FFsDQCmi4cF9YKUpqc2k+odtpSmznS0MT+OKsd/uWCLPM7cGSw2p2WRTFMHLIzPnM
+ dtlQ==
+X-Gm-Message-State: AOJu0YynlkdXz8d7COZHOTDxamhWBM9UimtI2/CLV9PLFnNkX3jKPRiu
+ aU5T8SmzGmnIxMTkNdhIGdFZCIWmpBBIDnzs7znl9h6cc1VqoYwzmC3eCnKRExXkjiCrcy7j72u
+ qDSdDj30D4y09N5jmaIIEpNKU/kRF2KiU/XlO437fCWHYd8bWbc2Ec3TKt1WPRA8UM9VPnWMumg
+ Ab3/9txQSpkO2N0wuyg7sjhFF0RlYG7HA=
+X-Gm-Gg: AeBDievbyR+VuL7E9DZoYF4Hm4m3aL3Wkt7NDE9VggWwKbz7ZdBemyVO96iXXqwB918
+ kWPXhuYjWk0nAGcIiFNKlLbhqM7L9loRA7i7DFyWoGvMq5ZGE1WKWMG+0caK82ZTkV2j0uqnj/Z
+ rNqrSnnJACQRCn1kHsm8Zz2TkHU8KD5pbSSGwP1Imi8uPKV8KwXcluXHwU8eNOJjJG0os/lrGA9
+ yBYP6HO7vKMbZVN5Ek24OwXz9Pem+ioYnFFceh2VlH7tdQ79z1BoK/PSxOINO1Ij/a7aJ/xl1cf
+ i7gK
+X-Received: by 2002:a05:6000:310a:b0:43c:fc5c:a9fc with SMTP id
+ ffacd0b85a97d-43d2929dcd9mr36372054f8f.21.1775732030228; 
+ Thu, 09 Apr 2026 03:53:50 -0700 (PDT)
+X-Received: by 2002:a05:6000:310a:b0:43c:fc5c:a9fc with SMTP id
+ ffacd0b85a97d-43d2929dcd9mr36372022f8f.21.1775732029754; Thu, 09 Apr 2026
+ 03:53:49 -0700 (PDT)
+MIME-Version: 1.0
 References: <20260409103310.1884968-1-pbonzini@redhat.com>
  <20260409103310.1884968-2-pbonzini@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260409103310.1884968-2-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ <adeEHeacVSfEKp-V@redhat.com>
+In-Reply-To: <adeEHeacVSfEKp-V@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 9 Apr 2026 12:53:37 +0200
+X-Gm-Features: AQROBzB5-JU4C8nX2ddRvXfeOXmiZO1W0OcVrhJmf-UI_2t_tl8y9CiC7P9bxHw
+Message-ID: <CABgObfZ=dGwYMNsxvJb6pd++UQGhZj5D22qs42Z30vce3R9HMw@mail.gmail.com>
+Subject: Re: [PULL 1/1] virtio-scsi: pass the same cdb_size to
+ virtio_scsi_pop_req and virtio_scsi_handle_cmd_req_prepare
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Jihe Wang <wangjihe.mail@gmail.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -85,136 +137,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 09, 2026 at 12:33:09PM +0200, Paolo Bonzini wrote:
-> Ensure that there is no allocation/usage mismatch when requests
-> are processed in virtio_scsi_handle_cmd_vq.  To do this,
-> retrieve the value once and pass it to both functions.
-> 
-> For other calls to virtio_scsi_pop_req the extra size
-> can be 0, because control and event requests fit
-> entirely in VirtIOSCSIReq.
-> 
-> Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
-> Tested-by: Jihe Wang <wangjihe.mail@gmail.com>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  hw/scsi/virtio-scsi.c | 26 +++++++++++++++-----------
->  1 file changed, 15 insertions(+), 11 deletions(-)
+On Thu, Apr 9, 2026 at 12:49=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Thu, Apr 09, 2026 at 12:33:09PM +0200, Paolo Bonzini wrote:
+> > Ensure that there is no allocation/usage mismatch when requests
+> > are processed in virtio_scsi_handle_cmd_vq.  To do this,
+> > retrieve the value once and pass it to both functions.
+> >
+> > For other calls to virtio_scsi_pop_req the extra size
+> > can be 0, because control and event requests fit
+> > entirely in VirtIOSCSIReq.
+> >
+> > Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
+> > Tested-by: Jihe Wang <wangjihe.mail@gmail.com>
+> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >  hw/scsi/virtio-scsi.c | 26 +++++++++++++++-----------
+> >  1 file changed, 15 insertions(+), 11 deletions(-)
+>
+> This issue is tagged CVE-2026-5763   - if possible can we get that
+> in the commit message before merging.
 
-This issue is tagged CVE-2026-5763   - if possible can we get that
-in the commit message before merging.
+Done, new commit hash is 79971302935472232a68073faddb085177e3ca54.
 
-> 
-> diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-> index 774968d8c70..6c737680119 100644
-> --- a/hw/scsi/virtio-scsi.c
-> +++ b/hw/scsi/virtio-scsi.c
-> @@ -227,16 +227,16 @@ static int virtio_scsi_parse_req(VirtIOSCSIReq *req,
->      return 0;
->  }
->  
-> -static VirtIOSCSIReq *virtio_scsi_pop_req(VirtIOSCSI *s, VirtQueue *vq, QemuMutex *vq_lock)
-> +static VirtIOSCSIReq *virtio_scsi_pop_req(VirtIOSCSI *s, VirtQueue *vq, size_t extra_req_size,
-> +                                          QemuMutex *vq_lock)
->  {
-> -    VirtIOSCSICommon *vs = (VirtIOSCSICommon *)s;
->      VirtIOSCSIReq *req;
->  
->      if (vq_lock) {
->          qemu_mutex_lock(vq_lock);
->      }
->  
-> -    req = virtqueue_pop(vq, sizeof(VirtIOSCSIReq) + vs->cdb_size);
-> +    req = virtqueue_pop(vq, sizeof(VirtIOSCSIReq) + extra_req_size);
->  
->      if (vq_lock) {
->          qemu_mutex_unlock(vq_lock);
-> @@ -682,7 +682,7 @@ static void virtio_scsi_handle_ctrl_vq(VirtIOSCSI *s, VirtQueue *vq)
->  {
->      VirtIOSCSIReq *req;
->  
-> -    while ((req = virtio_scsi_pop_req(s, vq, &s->ctrl_lock))) {
-> +    while ((req = virtio_scsi_pop_req(s, vq, 0, &s->ctrl_lock))) {
->          virtio_scsi_handle_ctrl_req(s, req);
->      }
->  }
-> @@ -850,13 +850,14 @@ static void virtio_scsi_fail_cmd_req(VirtIOSCSIReq *req)
->      virtio_scsi_complete_cmd_req(req);
->  }
->  
-> -static int virtio_scsi_handle_cmd_req_prepare(VirtIOSCSI *s, VirtIOSCSIReq *req)
-> +static int virtio_scsi_handle_cmd_req_prepare(VirtIOSCSI *s, VirtIOSCSIReq *req,
-> +                                              size_t cdb_size)
->  {
->      VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
->      SCSIDevice *d;
->      int rc;
->  
-> -    rc = virtio_scsi_parse_req(req, sizeof(VirtIOSCSICmdReq) + vs->cdb_size,
-> +    rc = virtio_scsi_parse_req(req, sizeof(VirtIOSCSICmdReq) + cdb_size,
->                                 sizeof(VirtIOSCSICmdResp) + vs->sense_size);
->      if (rc < 0) {
->          if (rc == -ENOTSUP) {
-> @@ -878,7 +879,7 @@ static int virtio_scsi_handle_cmd_req_prepare(VirtIOSCSI *s, VirtIOSCSIReq *req)
->      }
->      req->sreq = scsi_req_new(d, req->req.cmd.tag,
->                               virtio_scsi_get_lun(req->req.cmd.lun),
-> -                             req->req.cmd.cdb, vs->cdb_size, req);
-> +                             req->req.cmd.cdb, cdb_size, req);
->  
->      if (req->sreq->cmd.mode != SCSI_XFER_NONE
->          && (req->sreq->cmd.mode != req->mode ||
-> @@ -913,12 +914,15 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
->      QTAILQ_HEAD(, VirtIOSCSIReq) reqs = QTAILQ_HEAD_INITIALIZER(reqs);
->  
->      do {
-> +        VirtIOSCSICommon *vs = (VirtIOSCSICommon *)s;
-> +        size_t cdb_size = qatomic_read(&vs->cdb_size);
-> +
->          if (suppress_notifications) {
->              virtio_queue_set_notification(vq, 0);
->          }
->  
-> -        while ((req = virtio_scsi_pop_req(s, vq, NULL))) {
-> -            ret = virtio_scsi_handle_cmd_req_prepare(s, req);
-> +        while ((req = virtio_scsi_pop_req(s, vq, cdb_size, NULL))) {
-> +            ret = virtio_scsi_handle_cmd_req_prepare(s, req, cdb_size);
->              if (!ret) {
->                  QTAILQ_INSERT_TAIL(&reqs, req, next);
->              } else if (ret == -EINVAL) {
-> @@ -989,7 +993,7 @@ static void virtio_scsi_set_config(VirtIODevice *vdev,
->      }
->  
->      vs->sense_size = virtio_ldl_p(vdev, &scsiconf->sense_size);
-> -    vs->cdb_size = virtio_ldl_p(vdev, &scsiconf->cdb_size);
-> +    qatomic_set(&vs->cdb_size, virtio_ldl_p(vdev, &scsiconf->cdb_size));
->  }
->  
->  static uint64_t virtio_scsi_get_features(VirtIODevice *vdev,
-> @@ -1050,7 +1054,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
->          return;
->      }
->  
-> -    req = virtio_scsi_pop_req(s, vs->event_vq, &s->event_lock);
-> +    req = virtio_scsi_pop_req(s, vs->event_vq, 0, &s->event_lock);
->      WITH_QEMU_LOCK_GUARD(&s->event_lock) {
->          if (!req) {
->              s->events_dropped = true;
-> -- 
-> 2.53.0
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Paolo
 
 
