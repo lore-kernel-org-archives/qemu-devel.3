@@ -4,107 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27A2E98FA8
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 05:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CF8E98FA8
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 05:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAi0y-0003jN-8A; Thu, 09 Apr 2026 01:33:16 -0400
+	id 1wAi5s-00052p-E3; Thu, 09 Apr 2026 01:38:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAi0w-0003io-NQ
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:33:14 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wAi5p-00052F-MZ
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:38:17 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAi0v-00029F-3l
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:33:14 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b9c603ec2dfso60491466b.1
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 22:33:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775712791; cv=none;
- d=google.com; s=arc-20240605;
- b=Cr9QwmowHAsJCBFrP6tJQgEx1QuL5m1tixDD0uMRdDsT/5z5KFXOnCNMRWY/bw+NOc
- kX9feug4XK9RAhPzS2QI3q4BSsCGxJ1OYLTkUUS4LS1KollMzveRg9BKzErJyOCuO2Wc
- OwEmGBdDoU6ksJpDgtAgXwkuzGeC6da/I97I0GIEJ0+gLMwzAn3DJS797I38i3tSO2tS
- UrErx8X8lJ6NXFaCwgF5bIL7aRcuDrobfRhbkodaOAe96A3eGNS1qlJZEQQDTCpn4675
- k/GuxN91Ba0d2GCB7vOKo8FLyTMqqCAXuef/JGop08Kw31ed9ELUJBrdXTeuyWNqc+Xi
- Fedg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=q7W5EgfYBUCh5Ur7tFbXwCFQlDAeWMpzxE/KfTvgmUc=;
- fh=Kc/dcn40HBQvYOJiosZxh95/A3tD5pu37BAko49UkXA=;
- b=bfQ0eUL+Gst3ZCOc8XEfehzSUVM3l7bWCK+VjbFqexM/WH0yAhqz3V42N4Caz80q9G
- av8wqttfJwb5/Ie8bZf2L8cmTE9Jx3l04YnRvwqVBK5ShjDJots6XbGViyIrqckYqGbJ
- OWfJt7NHdMkpJIEFfJVz1eqSMEe37EUaPsNRvF1BZQ8gVqGV24YlhSeMYBVq8kcHiWJZ
- p8EApsS97SD6LeOjUyV/jX6LLSWiM8JeKEUm8Gx2xqE4e+qryL0ZqLB/5WpuCgWqqsMQ
- GkklMxAlUO9U9AcxuKbGghhfaKVyc8fyCb5kkj+KUKbIDdnVkhDSjl+Gxv996NHcNPyn
- q4tg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wAi5n-0002oq-PS
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:38:17 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a8fba3f769so2790865ad.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 22:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775712791; x=1776317591; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q7W5EgfYBUCh5Ur7tFbXwCFQlDAeWMpzxE/KfTvgmUc=;
- b=da80+o7NQ3XfZ40/LXo2mmo2tgnIMhVkjRrmA7tL8muClOCdZ8oDAdctbpqai0FZHT
- KkANT1Sb/1oKLaPhRPJvRZAB6y2XxZSDnzx2nMtpY4jn8nFGObHDiPi0Sp27SAToiKT5
- 4xUqGfqIo/9jHV8ZKueSxMG0BliJHH/RZ83crdc6FdXGTYegvz1e6TksMn35T81ZbfXG
- MJ41AiT6orMDdpCFG5yhz4XXv2Mds3xsDd93NiCJ78fDOFsH9H7I/xNCawtok3VOtegr
- Sret0WCErVmr/+h649C2/8i1uPYBtkCBW0g/d2vOtm0VmLm66hg5XKAOatLSHnT6PzYU
- F3ow==
+ d=gmail.com; s=20251104; t=1775713093; x=1776317893; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=L5oc/VKls3VmWxljsWA0voTl6h+N0SDSJPakOVzGhlQ=;
+ b=qoKn2KUI7bDR/Vs3jHI5qfQu/KDt0dX74eQ/NogSkGQTrv9kt/jA3DFNjho7y7vzOp
+ UvD1rdtDan7nBbPemFbMVvA5u20VxbR1eBjU6R5s/OU/uPChQfGAKb7ZBRdofXy5JGjh
+ PK7+xrBvfw9HL9ybJNa4/AJBK8miCI/Tatcv4UnjwPM8duK09/X39ezxe2B9BzM9Jnkt
+ frUJjFlym5kF9smHzFgvk/+KjI1LAkh+Y5QLsrGtu//WZodADyNW3BXJ7hLlMmgESYKP
+ YQayUQEJZ0skyJj23ka4n03hgZOXu+u1dkREB2f46IFrNYQBe0imFHaAvro+2EPi2Lut
+ Pa9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775712791; x=1776317591;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q7W5EgfYBUCh5Ur7tFbXwCFQlDAeWMpzxE/KfTvgmUc=;
- b=AvlmnO3L6qdM8cxyjRrt0OZ4e9/R/57E4yGzrWHqN13mddXOhtNGqWEhoV8RitroBE
- 14rX5JGvqqzXgJMS6ylqLVH/vss0IUZfGC8/BXdByK3OSGfJ6O4VzYIM8iQzWwy2JoYM
- X9CoQcyyEF2U29wELgHDt6t0dsjmVwPrKNwXR+aJ0km/sO6siteSEAWHnZ0R7HdiiR0w
- pFzGVJsAT13dp/1i6G5UTNAlJBQOnp8VNokh1QUPImUaxAVF67+VZYS9Tjln0scL/BY7
- HeiqVd/CIp427rtM5ccg/a7ZC7Rj0+WgvGZP1dNlAp14jWqsJ1r4kTON1qTLq4R3iqba
- WBRg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXScGWF3AIpBBEuxvqLFI1F2LOZkCuTGAELQYzGbuwAWsFcCzn0fOVgklTTFEjtizBE22uAM/Hv04kC@nongnu.org
-X-Gm-Message-State: AOJu0YwLh5WUZwRUan44ZQIC1SuuKGDfN7JdM2vIsneOzWsWIhtrryNs
- yWKgMxmD+N3x06wWOfbOUEiI4/MCMYYalxQGal8yWRN74vpSEwOAcL3dESyABv5EMefieKMhiws
- Ts7WpVBebo+6R3XidpDw1KRLYDXNyOMU=
-X-Gm-Gg: AeBDietV7Ym4vb54NN9fd8e9+5iQyQ0SXRAqd05T/IaVhikhfyZ+r9Zb1ED4mrwFgHZ
- 4/3WHfZGw02krZWBeqGVtXf3FM1rwlrgOLfEJwGBAYVe1fB3Eq05nERc7PKb8UZPy6JYynaBIXO
- aj6T5sPZdFDgX0QqFCPH7r8/KaMJMTjUGG1EEmr0w8CeIKVyOJyG9CnZ9mjdoJ2MDDjsGUfJP7h
- lwt4fFOE3A8kiHeflIlK0RT/3PVN7S8XPRO1d+HGAaDrjy5aE3tqim+dX7LjkCruMDIlX9NQ287
- h5WylTsMRLIzeanAnIRmuc0VTlWI3h6B64S77g==
-X-Received: by 2002:a17:907:6d0e:b0:b9c:a70c:d30b with SMTP id
- a640c23a62f3a-b9ca70cd589mr945268466b.19.1775712790776; Wed, 08 Apr 2026
- 22:33:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775713093; x=1776317893;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L5oc/VKls3VmWxljsWA0voTl6h+N0SDSJPakOVzGhlQ=;
+ b=Uz2uXGIafJ09TrdVbs2KfAm0sv4ne214Aq3zvECK87qxPN7M/SKpHXHTrFK92WelMh
+ jgwYAkjkPTTAOP0sHwdpz5FU50JgmVnUiMbbcZHU9uwmbzAOST0pQ474yjRztFOqTGNm
+ 6hgkihcHw/abY/YdzDxJHxvG13BGrhSMZX1isbk0fN1Yl3wTegtiQZ9JBh97NigYUY5N
+ TtX+608piS7MDFfjdlPYAyoehWCY7LuG59woF+N1ncUff0TqcWf4QyeP7ZG3FsCZqWtF
+ x68fT5mgOqT4hSKW7CqKPapNNDwWV7U8pjDgOhmtFGEnr91wO9WXMVRhe2+MPRnYQmA2
+ xEaw==
+X-Gm-Message-State: AOJu0Ywd3K9zitLDGtKW+GVZSIHlOGLBYgoR/6fY/Ern3PmpolBfbSfV
+ aOLcsk3c3xKha6NR8JAB2qYeH1BMm82z9Ni03CJizHwyYU0B8NlhrGFYn+P5kHPFHH8=
+X-Gm-Gg: AeBDies6WZEE6BN8UuAf1F/3VZfVTe6MRkWL+h3jGZF5Fv9Jcb97utD7X8mFAh6s0LV
+ yYwVyCdmaAG7mc6kvZw3BQkB1plKouT3Ueh0Uy8lDq6lyP7bIP6T/PMM1vx2tg+hbZfatFpJUH4
+ igTzikbIFfCgEQd5U8JG9qalTJdAHr6zuHkJ4mOCNtlUwxe04EyA5OjIknyMuorPQzUaTlL+2ss
+ CTIzOvKqwrGSXMKT6PRWDujYaSX1afOqL2SFWXFDXiX5GZMxaE6/FQwe5C+MT8Lr1cjWo+ONPQW
+ wzf1YhjsTlQ1pKYYi55MJP9m/pvICPc1xFzHZLAZoPz5q/bGAUz5d3QHWsxjVK74aHMuT3ZICbf
+ J29vMW4QrRRL3J4xq0ixpxvVNLwFhWstXjb9tStqclwp8evqd2IGUvQmOO9+avmnkFg6763ooLv
+ GepJ3zdsLkGwx/JDrLrvJ45NNt81tE7Q==
+X-Received: by 2002:a17:903:1ab0:b0:2b2:5857:583e with SMTP id
+ d9443c01a7336-2b281832ea4mr259908625ad.31.1775713093404; 
+ Wed, 08 Apr 2026 22:38:13 -0700 (PDT)
+Received: from [172.17.0.5] ([168.126.243.22])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b2747a7115sm211108905ad.36.2026.04.08.22.38.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Apr 2026 22:38:12 -0700 (PDT)
+From: Jaemyung Lee <ldc.jml@gmail.com>
+X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
+Subject: [PATCH v3 0/5] hw/ufs: Add Write Booster Support on UFS
+Date: Thu, 09 Apr 2026 14:37:44 +0900
+Message-Id: <20260409-write_booster-v3-0-dd2f1c0119c8@samsung.com>
 MIME-Version: 1.0
-References: <20260407043614.372871-1-alistair.francis@wdc.com>
- <20260407043614.372871-6-alistair.francis@wdc.com>
- <ce3cde01-d4cf-4e01-befb-e9631dcf7757@linux.alibaba.com>
-In-Reply-To: <ce3cde01-d4cf-4e01-befb-e9631dcf7757@linux.alibaba.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 9 Apr 2026 15:32:44 +1000
-X-Gm-Features: AQROBzA4ld6oI-3VJgKwhPQdeKKqUMkyO45kO2U3Vfm8inbv8J-vwxdXmuMKgoI
-Message-ID: <CAKmqyKPcK4_o06geCsganH8h8yV80TfxPSzsuDY=nOsU7a2B6g@mail.gmail.com>
-Subject: Re: [PATCH 5/5] target/riscv: Use ELEN for Fractional LMUL check
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
- chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACg712kC/3XMQQ6CMBCF4auQWVtTC1Jw5T0MMaUdYRZQ0qlVQ
+ 7i7lb3L/yXvW4ExEDJcihUCJmLyc47yUIAdzTygIJcblFS1rKQWr0AR7733HDGIpmmNrK1x9tx
+ C/iwBH/TevVuXeySOPnx2Pqnf+k9KSkjhnNaq70t5aqsrm4mf83C0foJu27Yvn4YutKwAAAA=
+X-Change-ID: 20260407-write_booster-889a06cadc59
+To: qemu-devel@nongnu.org
+Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Jaemyung Lee <jaemyung.lee@samsung.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775713090; l=1796;
+ i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
+ bh=mjY7/lSHigj6dDK6bqBiBvCSpL1fIp9X6JW1sbVSpK0=;
+ b=hP++j+j02YBSjAT4T2RHfxx9Ot33IQPSUR7XiRDWKXjs+DOK7VHRszyD33u2750HYEb/t2Pjl
+ rs0WZXSwgwpBeNR91OsHbE8omnNbTA/EhfcU+uxMettS4CowWZpiog2
+X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
+ pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=ldc.jml@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,96 +111,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 7, 2026 at 10:13=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
->
-> Hi Alistair,
->
-> On 4/7/26 12:36 PM, alistair23@gmail.com wrote:
->
-> From: Alistair Francis <alistair.francis@wdc.com>
->
-> The RISC-V spec states that
->
-> """
-> For a given supported fractional LMUL setting, implementations
-> must support SEW settings between SEWMIN and LMUL * ELEN, inclusive.
-> """
->
-> I think the meaning  of "must support"  in specification is "must at leas=
-t support" instead of "must only support".
+Currently, the QEMU-UFS emulation is implemented based on the JEDEC UFS
+4.0 Specification and does not support the operation related to UFS Extended
+Features which is defined with latest UFS Specifications.
 
-Good point, I didn't really think about that.
+This series modifies the UFS core implementation to align with the JEDEC
+UFS 4.1 Specification[1], and adds a Write Booster UFS Extended Feature
+supportability.
 
->
-> Sail or Spike have the same check as this patch to prevent user program c=
-an run on them, but
-> can't run on RTLs, as RTLs implementation may support SEW besides the  SE=
-WMIN and LMUL * ELEN range.
->
-> We can refer to discussion here: https://github.com/riscv-software-src/ri=
-scv-isa-sim/pull/620
+Tested: x86-64 KVM, upstream QEMU with Debian GNU/Linux 10
 
-I think this is still the right fix, as it seems like it's unlikely
-there will be implementations that expect outside that minimum support
-to work, see https://github.com/riscv/riscv-isa-manual/issues/2359#issuecom=
-ment-3458627615
-for example.
+[1]
+https://jedec.org/standards-documents/focus/flash/universal-flash-storage-ufs
 
->
-> In my opinion, we had better add a option such as "frac_sew_check" to mak=
-e user set right value for their RTL implementation.
+Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
+---
+Changes in v2:
+- Fixed MCQ idle check
+- Added WRITE_6/WRITE_16 handling
+- Fixed WB buffer consume timing
+- Added constraint check
+- Fixed uint64_t casting for unit calculation
+---
+Changes in v3:
+- Fixed constraint check return value
+- Fixed WB buffer consume amount with transfered_len
+- Fixed MCQ idle check:
+ - Added NULL exception check
+ - Added CQ pending request check
+---
+- Link to v2: https://lore.kernel.org/qemu-devel/20260407-write_booster-v2-0-dd772bb30194@samsung.com
 
-In future if there are implementations that want extra support that we
-can add a property. Right now I suspect there isn't any software that
-expects it to work, so it probably isn't an issue and will help catch
-faulty implementations.
+---
+Jaemyung Lee (5):
+      hw/ufs: Apply UFS 4.1 Specification
+      hw/ufs: Modify flag handling operation
+      hw/ufs: Add idle operation
+      hw/ufs: Add UFS Write Booster Support
+      tests/qtest: Add UFS Write Booster QTest
 
-Alistair
+ hw/ufs/lu.c            |  94 ++++++++
+ hw/ufs/ufs.c           | 597 +++++++++++++++++++++++++++++++++++++++++++++----
+ hw/ufs/ufs.h           |  49 ++++
+ include/block/ufs.h    | 110 ++++++++-
+ tests/qtest/ufs-test.c | 176 +++++++++++++++
+ 5 files changed, 982 insertions(+), 44 deletions(-)
+---
+base-commit: b6a7d06213e5d2f7d124d16418bc289c4a8a4b82
+change-id: 20260407-write_booster-889a06cadc59
 
->
-> Otherwise,
-> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
->
-> Thanks,
-> Zhiwei
->
-> We were previously checking VLEN, instead of ELEN, so let's update to
-> check ELEN instead of VLEN for fractional scaling.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3196
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  target/riscv/vector_helper.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
->
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 83dd26314d..b4fc791eb7 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -47,18 +47,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, targe=
-t_ulong s1,
->      target_ulong reserved =3D s2 &
->                              MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->                                              xlen - 1 - R_VTYPE_RESERVED_=
-SHIFT);
-> -    uint16_t vlen =3D cpu->cfg.vlenb << 3;
->      int8_t lmul;
->
->      if (vlmul & 4) {
->          /*
->           * Fractional LMUL, check:
->           *
-> -         * VLEN * LMUL >=3D SEW
-> -         * VLEN >> (8 - lmul) >=3D sew
-> -         * (vlenb << 3) >> (8 - lmul) >=3D sew
-> +         * ELEN * LMUL >=3D SEW
-> +         * ELEN >> (8 - vlmul) >=3D sew
->           */
-> -        if (vlmul =3D=3D 4 || (vlen >> (8 - vlmul)) < sew) {
-> +        if (vlmul =3D=3D 4 ||
-> +            (cpu->cfg.elen >> (8 - vlmul)) < sew) {
->              vill =3D true;
->          }
->      }
+Best regards,
+-- 
+Jaemyung Lee <jaemyung.lee@samsung.com>
+
 
