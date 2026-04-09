@@ -4,82 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C955F36B96
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 23:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF2AF36B97
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 00:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAyxa-0000wI-28; Thu, 09 Apr 2026 19:38:54 -0400
+	id 1wAzqT-0005QF-Ou; Thu, 09 Apr 2026 20:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wAyxY-0000w9-HJ
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 19:38:52 -0400
-Received: from qs-2001i-snip4-7.eps.apple.com ([57.103.87.90]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wAyxU-0000v8-UW
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 19:38:52 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPS id
- B1BC9180012F; Thu, 09 Apr 2026 23:38:45 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775777926; x=1778369926;
- bh=sYzgcaxgnfSQ7nePGqekNNZhBZIcTyPKqzV35Bjs2LQ=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=DsFA4F3T8Xeqy/gLipdZO++XfW/7ov1s+ZwVW508Rc4NNt0em20m3Od6L3jkU0cPmqjy53Ub+zeTyBk1lvVArcb+fNTTsG9eP6gcUcgetZpgH/2MniHrAW+VXqbSDWekBbnkdjVAbkcn0ms1V+Ol7Jgj8T410QAf/Dl120fRyhd2TsnXTP9ZmODj0Q2GtdZbzCU21iu2fYVY90fICkCuLPwS59OqMn2T+wvVGW8/zZQEc7bdZMufySmGYkjptC6Lqa84OU7wp0hkREZd/l1UBlwQoYd5PibYTlRYokluUnH79C3aVR6dq158YU4yx8rG33eh2dBXM3FMLShSuj95eg==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPSA id
- 40E5F18000AB; Thu, 09 Apr 2026 23:38:44 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH 1/1] target/i386/mshv: fix read/write memory across the
- page boundary
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260409175334.181249-2-dblanzeanu@linux.microsoft.com>
-Date: Fri, 10 Apr 2026 01:38:32 +0200
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5076BC48-D356-45E5-8431-B660F2C22059@unpredictable.fr>
-References: <20260409175334.181249-1-dblanzeanu@linux.microsoft.com>
- <20260409175334.181249-2-dblanzeanu@linux.microsoft.com>
-To: =?utf-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDIxOCBTYWx0ZWRfXwRfkLy54/Sy0
- Or0VB8yBnQeeNd80d5AghiFR6sbDj5uC7/P+jpjhosr1erx31DMwe/BAfFzJ2FB4z1rx3h43hqO
- X6MZ5xfaI4sEJB5L6eGOPknqZ+gRwphctPf2vxQ8hmY+IpcU9eei1LYhjdpNtR3gp0Uo9mWdXFb
- mSxFcPKJ9TMuxCNfGMmZ0ff4rzDkqxQYvDcd4MAmKJvjYNj1ssZc0eOQWFomTrpcRWEU+0Yt8yh
- 0g2UZqxgBvHJj19kxMCcaUWbSXWE6zS1eoeP1d3Hb/vz2X0wOx47gI0rnRPrddM0o7t0gaLyiPh
- xO5vV39jQgAzRDlKnXgusCV5ZCGYQB4AUdRk/ml+5L3l+u+eJcifsuLdO861Gk=
-X-Authority-Info-Out: v=2.4 cv=cODtc1eN c=1 sm=1 tr=0 ts=69d83886
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=dCQT-B8v4ZhGZR95z3cA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: mGeSjGiUchr2ZQvupV026MbcTlCLOCtv
-X-Proofpoint-ORIG-GUID: mGeSjGiUchr2ZQvupV026MbcTlCLOCtv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_05,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- adultscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0 phishscore=0
- mlxscore=0 suspectscore=0 malwarescore=0 spamscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604090218
-Received-SPF: pass client-ip=57.103.87.90;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAx1Y-00015p-9a
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:34:52 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAx1W-0000pw-Aa
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:34:51 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so19742495e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 14:34:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=minio.io; s=minio; t=1775770489; x=1776375289; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KvcC0OHWydsrQ65Aj+iaZfcTmw/zkBxH7csPVJaQ8y0=;
+ b=QatAF1RC3P7XbbCf/17g5ry7yzICj0+hfLui0ZGiMp6PNDGQ7XqdVfu6Kqq0IJ40e1
+ sbkd0DzOa1x3GCtbvTHiJeCqClrkgyi+i03yLmrC0bugnp7tco9hsc3v9WeglvPFOzFs
+ 2SsAfv98W9jnlD5J1vudhaipOg1/I+L+sDZ++RtbSZQcEcmU80kQ13cEaAufqAitpvbi
+ wHSJtfkoypxT30MjdH1qgQ6SHUTr5fXNbMq0D6NmDTvJhDqabkJcUGsZYPGv+nmJ2s1M
+ Qjme/mkxG9GaAKAOqOx2mRRp8FaTn9cka5kdqnCf2eadkE4TuGMu7b5dOHNBAqXOdQ0n
+ jNBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775770489; x=1776375289;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KvcC0OHWydsrQ65Aj+iaZfcTmw/zkBxH7csPVJaQ8y0=;
+ b=R0/o0iEgou6Yk8NoV8ehGsXAr09s/i1a1uLXRG2HiSl3omiSL10mtWVhL4E1iJ2wQq
+ NW28wkPAigjPuJHjP7tD9Qfe4aj7ONAovBq+z19TVinLkb6J4XrN8d56KDTKLdFEkYJf
+ mwd4xmLUP0IB4LpzEBXb2JR+0h89wk4NOQNGNGNpWMAhS3rCtMDktSrioYr/psAr+Xxs
+ 6FusbhOKbgwZgy4Kyq2YFfqI9us2LNlDEJJNHasGD5//S7MeVL/gLl5CdhkWObRthf6z
+ 9yrgbhla6Ry+02mk+DP3FTVK0kxDvMF0ZplKkTUkzE5ocQd0xe+KJu2JE2jA/YIzhRS0
+ o0vA==
+X-Gm-Message-State: AOJu0YzvjaIL26ISBkzESiXfn0OBbVAW5Gh4cZ2ouFHsxOau9mX7qr6f
+ tMMjPbthFFNtvI/KXJYTm6cjaWdPJYXEBtahTEjTTDMF3y6RT4Dn37BTxZbmtYYyg8xQICyF64Q
+ wd3q+8yDX5X4j0ZIb5chLOcbgQHRBnZKYSzkD8TADN3Jlj8SQKgf/+CajNGCZ809imnmA9xdIx2
+ CGCfIHoNsU9FpU25ai1rWJq3yzEc8tEIp3gpLElCg=
+X-Gm-Gg: AeBDievjomhkWnR6IGWh1KDBsWGPQqIlkfvHtb2qJQnPihDUe+3a+ncWfsyyeORaHlN
+ cUNXkBPw5D7PAPFVIJz9MJlTHFln8ap3ztPA7kukK6+owtfG1uRHjZzslqCYW6i79D7qWAtWSMY
+ cqMBBK5kPumg+sktUyq8cGesZoP+wcy2zZTRyFJeyvikegQwz7wt052R6QV/quEIjJlWSgpybL3
+ SQafror70rDsN65eV41wkSF5nKI7mjup+Xz+ZifMCJhn3gmNO43CNdKGQsqBNOEQ3iDZYnChRo+
+ Ho2afiDbQU89ZNla81Jhq+/sUzz4JpUrgiWpOaH5e4jEX7J91nA/J4wIwFGMrtPsmTACc7DzXJ1
+ +EZXeqOIwmokznDZRxgHEE9BmLNJ4ohUaA6HovpJDIALWlJYcSnJXBHfcdiudqdII964l4L0TWT
+ 0hSylTxfeduknQFudIb5hmEUCLfaHF8HsCaEI6g4X4Me3BoEvpdZCOkhG8puXpYsZVP1SeSn5wR
+ ncjBnzxEmEviFLrogfsl0tDyzevelko0ITujZogCmpaj9ZxEz1W17j0VgB2aw==
+X-Received: by 2002:a05:600c:8b30:b0:488:b14f:b8ed with SMTP id
+ 5b1f17b1804b1-488d6657928mr5875225e9.0.1775770488168; 
+ Thu, 09 Apr 2026 14:34:48 -0700 (PDT)
+Received: from localhost (2a01cb001411480071f5d8bdb591a8f9.ipv6.abo.wanadoo.fr.
+ [2a01:cb00:1411:4800:71f5:d8bd:b591:a8f9])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-488d5888acbsm25725115e9.1.2026.04.09.14.34.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Apr 2026 14:34:47 -0700 (PDT)
+From: mr-083 <matthieu@minio.io>
+X-Google-Original-From: mr-083 <matthieu@min.io>
+To: qemu-devel@nongnu.org,
+	qemu-block@nongnu.org
+Cc: its@irrelevant.dk, kbusch@kernel.org, stefanha@redhat.com,
+ mr-083 <matthieu@min.io>
+Subject: [PATCH v2] hw/nvme: add namespace hotplug support
+Date: Thu,  9 Apr 2026 23:34:51 +0200
+Message-ID: <20260409213454.5186-1-matthieu@min.io>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260409060155.94704-1-matthieu@min.io>
+References: <20260409060155.94704-1-matthieu@min.io>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=matthieu@minio.io; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HK_NAME_MR_MRS=0.998,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 09 Apr 2026 20:35:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,134 +106,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add hotplug support for nvme-ns devices on the NvmeBus. This enables
+namespace-level hot-swap without removing the NVMe controller, matching
+the behavior of physical NVMe drives hot-swapped in the same PCIe slot.
 
+Mark nvme-ns devices as hotpluggable and register the NvmeBus as a
+hotplug handler with proper plug and unplug callbacks:
 
-> On 9. Apr 2026, at 19:53, Doru Bl=C3=A2nzeanu =
-<dblanzeanu@linux.microsoft.com> wrote:
->=20
-> Previously, read_memory and write_memory performed a single GVA-to-GPA
-> translation for the entire buffer. If the buffer spanned a page
-> boundary, the translated GPA was only valid for the first page, =
-causing
-> incorrect reads/writes for the remainder.
->=20
-> Fix both functions to loop over pages, translating and accessing each
-> page-aligned chunk separately.
->=20
-> Signed-off-by: Doru Bl=C3=A2nzeanu <dblanzeanu@linux.microsoft.com>
+- plug: attach namespace to all started controllers and send an
+  Asynchronous Event Notification (AEN) with NS_ATTR_CHANGED so
+  the guest kernel rescans namespaces and adds the block device
+- unplug: detach from all controllers, send AEN, remove from
+  subsystem, then unrealize the device. The guest kernel rescans
+  and removes the block device.
 
-Hi,
+The plug handler skips controllers that haven't started yet
+(qs_created == false) to avoid interfering with boot-time namespace
+attachment in nvme_start_ctrl().
 
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Both the controller bus and subsystem bus are configured as hotplug
+handlers via qbus_set_bus_hotplug_handler() since nvme-ns devices
+may reparent to the subsystem bus during realize.
 
-> ---
-> target/i386/mshv/mshv-cpu.c | 71 +++++++++++++++++++++++++++----------
-> 1 file changed, 52 insertions(+), 19 deletions(-)
->=20
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 2bc978deb2..afdb6b6e29 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1316,21 +1316,38 @@ static int read_memory(const CPUState *cpu, =
-uint64_t initial_gva,
-> {
->     int ret;
->     uint64_t gpa, flags;
-> -
-> -    if (gva =3D=3D initial_gva) {
-> -        gpa =3D initial_gpa;
-> -    } else {
-> -        flags =3D HV_TRANSLATE_GVA_VALIDATE_READ;
-> -        ret =3D translate_gva(cpu, gva, &gpa, flags);
-> -        if (ret < 0) {
-> -            return -1;
-> +    uint64_t cur_gva =3D gva;
-> +    size_t page_left, chunk;
-> +    uint8_t *cur_data =3D data;
-> +
-> +    /*
-> +     * If the read spans multiple pages,
-> +     * we need to translate and read each page separately
-> +     */
-> +    while (len > 0) {
-> +        page_left =3D HV_HYP_PAGE_SIZE - (cur_gva & (HV_HYP_PAGE_SIZE =
-- 1));
-> +        chunk =3D MIN(len, page_left);
-> +
-> +        if (cur_gva =3D=3D initial_gva) {
-> +            gpa =3D initial_gpa;
-> +        } else {
-> +            flags =3D HV_TRANSLATE_GVA_VALIDATE_READ;
-> +            ret =3D translate_gva(cpu, cur_gva, &gpa, flags);
-> +            if (ret < 0) {
-> +                return -1;
-> +            }
->         }
->=20
-> -        ret =3D mshv_guest_mem_read(gpa, data, len, false, false);
-> +        ret =3D mshv_guest_mem_read(gpa, cur_data, chunk,
-> +                                  false, false);
->         if (ret < 0) {
->             error_report("failed to read guest mem");
->             return -1;
->         }
-> +
-> +        cur_gva +=3D chunk;
-> +        cur_data +=3D chunk;
-> +        len -=3D chunk;
->     }
->=20
->     return 0;
-> @@ -1341,18 +1358,34 @@ static int write_memory(const CPUState *cpu, =
-uint64_t gva, const uint8_t *data,
-> {
->     int ret;
->     uint64_t gpa, flags;
-> +    uint64_t cur_gva =3D gva;
-> +    size_t page_left, chunk;
-> +    const uint8_t *cur_data =3D data;
-> +
-> +    /*
-> +     * If the write spans multiple pages,
-> +     * we need to translate and write each page separately
-> +     */
-> +    while (len > 0) {
-> +        page_left =3D HV_HYP_PAGE_SIZE - (cur_gva & (HV_HYP_PAGE_SIZE =
-- 1));
-> +        chunk =3D MIN(len, page_left);
-> +
-> +        flags =3D HV_TRANSLATE_GVA_VALIDATE_WRITE;
-> +        ret =3D translate_gva(cpu, cur_gva, &gpa, flags);
-> +        if (ret < 0) {
-> +            error_report("failed to translate gva to gpa");
-> +            return -1;
-> +        }
->=20
-> -    flags =3D HV_TRANSLATE_GVA_VALIDATE_WRITE;
-> -    ret =3D translate_gva(cpu, gva, &gpa, flags);
-> -    if (ret < 0) {
-> -        error_report("failed to translate gva to gpa");
-> -        return -1;
-> -    }
-> +        ret =3D mshv_guest_mem_write(gpa, cur_data, chunk, false);
-> +        if (ret !=3D MEMTX_OK) {
-> +            error_report("failed to write to mmio");
-> +            return -1;
-> +        }
->=20
-> -    ret =3D mshv_guest_mem_write(gpa, data, len, false);
-> -    if (ret !=3D MEMTX_OK) {
-> -        error_report("failed to write to mmio");
-> -        return -1;
-> +        cur_gva +=3D chunk;
-> +        cur_data +=3D chunk;
-> +        len -=3D chunk;
->     }
->=20
->     return 0;
-> --=20
-> 2.53.0
->=20
->=20
+Example hot-swap sequence using the NVMe subsystem model:
+
+  # Boot with: -device nvme-subsys,id=subsys0
+  #            -device nvme,id=ctrl0,subsys=subsys0
+  #            -device nvme-ns,id=ns0,drive=drv0,bus=ctrl0,nsid=1
+
+  device_del ns0             # guest receives AEN, removes /dev/nvme0n1
+  drive_del drv0
+  drive_add 0 file=disk.qcow2,format=qcow2,id=drv0,if=none
+  device_add nvme-ns,id=ns0,drive=drv0,bus=ctrl0,nsid=1
+                              # guest receives AEN, adds /dev/nvme0n1
+
+Tested with Linux 6.1 guest (NVMe driver processes AEN and rescans
+namespace list automatically).
+
+Signed-off-by: Matthieu Receveur <matthieu@min.io>
+---
+ hw/nvme/ctrl.c   | 85 ++++++++++++++++++++++++++++++++++++++++++++++++
+ hw/nvme/ns.c     |  1 +
+ hw/nvme/subsys.c |  2 ++
+ 3 files changed, 88 insertions(+)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index be6c7028cb..5502e4ea2b 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -206,6 +206,7 @@
+ #include "system/hostmem.h"
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pcie_sriov.h"
++#include "hw/core/qdev.h"
+ #include "system/spdm-socket.h"
+ #include "migration/vmstate.h"
+ 
+@@ -9293,6 +9294,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
+     }
+ 
+     qbus_init(&n->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
++    qbus_set_bus_hotplug_handler(BUS(&n->bus));
+ 
+     if (nvme_init_subsys(n, errp)) {
+         return;
+@@ -9553,10 +9555,93 @@ static const TypeInfo nvme_info = {
+     },
+ };
+ 
++static void nvme_ns_hot_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                              Error **errp)
++{
++    NvmeNamespace *ns = NVME_NS(dev);
++    NvmeSubsystem *subsys = ns->subsys;
++    uint32_t nsid = ns->params.nsid;
++    int i;
++
++    /*
++     * Attach to all started controllers and notify via AEN.
++     * Skip controllers that haven't started yet (boot-time realize) —
++     * nvme_start_ctrl() will attach namespaces during controller init.
++     */
++    for (i = 0; i < NVME_MAX_CONTROLLERS; i++) {
++        NvmeCtrl *ctrl = nvme_subsys_ctrl(subsys, i);
++        if (!ctrl || !ctrl->qs_created) {
++            continue;
++        }
++
++        if (nvme_csi_supported(ctrl, ns->csi) && !ns->params.detached) {
++            nvme_attach_ns(ctrl, ns);
++            nvme_update_dsm_limits(ctrl, ns);
++
++            if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
++                nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
++                                   NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
++                                   NVME_LOG_CHANGED_NSLIST);
++            }
++        }
++    }
++}
++
++static void nvme_ns_hot_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                               Error **errp)
++{
++    NvmeNamespace *ns = NVME_NS(dev);
++    NvmeSubsystem *subsys = ns->subsys;
++    uint32_t nsid = ns->params.nsid;
++    int i;
++
++    /*
++     * Detach from all controllers and notify the guest via AEN.
++     * Must happen before unrealize to avoid use-after-free when the
++     * guest sends I/O to a freed namespace.
++     */
++    for (i = 0; i < NVME_MAX_CONTROLLERS; i++) {
++        NvmeCtrl *ctrl = nvme_subsys_ctrl(subsys, i);
++        if (!ctrl || !nvme_ns(ctrl, nsid)) {
++            continue;
++        }
++
++        nvme_detach_ns(ctrl, ns);
++        nvme_update_dsm_limits(ctrl, NULL);
++
++        if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
++            nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
++                               NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
++                               NVME_LOG_CHANGED_NSLIST);
++        }
++    }
++
++    /* Remove from subsystem namespace list. */
++    subsys->namespaces[nsid] = NULL;
++
++    /*
++     * Unrealize: drain I/O, flush, cleanup structures, remove from QOM.
++     * nvme_ns_unrealize() handles drain/shutdown/cleanup internally.
++     */
++    qdev_unrealize(dev);
++}
++
++static void nvme_bus_class_init(ObjectClass *klass, const void *data)
++{
++    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
++    hc->plug = nvme_ns_hot_plug;
++    hc->unplug = nvme_ns_hot_unplug;
++}
++
+ static const TypeInfo nvme_bus_info = {
+     .name = TYPE_NVME_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(NvmeBus),
++    .class_init = nvme_bus_class_init,
++    .interfaces = (const InterfaceInfo[]) {
++        { TYPE_HOTPLUG_HANDLER },
++        { }
++    },
+ };
+ 
+ static void nvme_register_types(void)
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index b0106eaa5c..eb628c0734 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -937,6 +937,7 @@ static void nvme_ns_class_init(ObjectClass *oc, const void *data)
+     dc->bus_type = TYPE_NVME_BUS;
+     dc->realize = nvme_ns_realize;
+     dc->unrealize = nvme_ns_unrealize;
++    dc->hotpluggable = true;
+     device_class_set_props(dc, nvme_ns_props);
+     dc->desc = "Virtual NVMe namespace";
+ }
+diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
+index 777e1c620f..fa35055d3c 100644
+--- a/hw/nvme/subsys.c
++++ b/hw/nvme/subsys.c
+@@ -9,6 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
++#include "hw/core/qdev.h"
+ 
+ #include "nvme.h"
+ 
+@@ -205,6 +206,7 @@ static void nvme_subsys_realize(DeviceState *dev, Error **errp)
+     NvmeSubsystem *subsys = NVME_SUBSYS(dev);
+ 
+     qbus_init(&subsys->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
++    qbus_set_bus_hotplug_handler(BUS(&subsys->bus));
+ 
+     nvme_subsys_setup(subsys, errp);
+ }
+-- 
+2.53.0
 
 
