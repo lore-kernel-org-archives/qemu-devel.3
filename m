@@ -4,104 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E8710FC456
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Apr 2026 23:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6972D10FC456
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 00:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAcfk-00081i-Ic; Wed, 08 Apr 2026 19:51:00 -0400
+	id 1wAcrI-00024j-MD; Wed, 08 Apr 2026 20:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1wAcfe-00081A-Ai
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 19:50:54 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1wAcfc-0004U0-In
- for qemu-devel@nongnu.org; Wed, 08 Apr 2026 19:50:54 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c70fb6aa323so132983a12.3
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 16:50:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775692251; cv=none;
- d=google.com; s=arc-20240605;
- b=dG1I4Qt2iEaGeI3Uce7E9NDvosDAjtAcsGODvOHK481GC0WqThLGaOpb7XVcPObX6p
- iPh/E3IsjO52gQ2Ee/Wh1f/+UeVmmVQBB4eQvBLQXeBUPzK31FpOz2hjxvRmVGHSuzwF
- 40SGN1cTgc/2swZcAMU6JTN0QMF/mf73NITxRiHZtP2Yga1xse7dB3iRLyvhYyasV7Zz
- R9yZ5PgY+x8mS3UiF93QJou9UyKQahoiRaABuBlsom/esp6r6mpWeAvtyZfrLsHoavEn
- Pd4OY0GcaUbc59LDuRcLWtUcCYgZRneqBrMhFw9yQqxBZFjR1rybiD7lhkKRBtjdlmbE
- Tv2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=u/WGsQ5rq0OojHisYPCTDH8LA3g49gUaI+vAkkagQhA=;
- fh=seHpsuERei6GoCJPMtZiXpXOw/2EVnvuQ7nSTREwIqg=;
- b=kfhA8v5nKlrGqGwmyqUj+Y/VwGUkPWENhzqGVciyWRW41ZzV/Zw0k9mXrivtbOXOVI
- xSmRhPIG/gZISzOHXYWdo7y8lBwfGVOdqJZm6Sqh3zx4sdwjs5dJQCelwFFMAjMG5UyM
- sb7yOXUsgKZX4eYhIwCHjdEcMsoOrS/CjFVv/WkNe/hnls8/jE8fIIhinhFFZRYeHOJU
- OmfPNteoX9FX0PYD7howriY/gz+AOf8oFy9bxdjv70lMS/40nB5GWuc82WNX3fUkKKRH
- 4oLuEv4VCkjvVKU88FQN7+iXA19k20QWoEYbFslr3MOhOBOuSxqlVGCVtgRZlQcnLuQ5
- 5k4Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775692251; x=1776297051; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=u/WGsQ5rq0OojHisYPCTDH8LA3g49gUaI+vAkkagQhA=;
- b=AgUl/wlUFfndFtObxd8W5K/aEgDc83BspCzhqXxDKSA8r8gT8IdOFYqBLaaaZfPKG2
- BJFxlLCbvC/0XqtMhgYGYhaEgpaPEv2HXWrU1rtB9FAnDlqUOyBOUTBbK+TlACXUwtO4
- MMqCx6rVd93R+pNFhaaM10egkXu1I00PoUYlKKSkRNwqHj3qUcqCLQprt0I1d9HyROFk
- mP/llau9XqFnrtctVIV8Vunt1SMFqo6fdYwM1oihc2ukAS9oar3uR6BLYa+A88r1J4ZM
- Y6RRVoNvGyMnkEwteQGFJlbTlgC4N0KwcEt5zNGiSnxXlnuMEKebSU+eVFd2pVZbynwC
- nERg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775692251; x=1776297051;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u/WGsQ5rq0OojHisYPCTDH8LA3g49gUaI+vAkkagQhA=;
- b=FX83jNipRkps+Xj7vyLd0zWfcvgkbCPBkGFeDn3dTd/TYO4YcyP3/Pmk7dZBXsAhPd
- JnsHFp8mHkbn6p9Lww6lIM23R9nWeXOLSv1THB0I1al11A42o8g2zRKq/ZvZK1QtwOSC
- TcUkKBP0In9kmf6dJjT8MZ0cuoHQpuXfe3Wbdr5qSeULgzRV67PIuCcXov9afZZSspLO
- 48ZTTx/yCbk65KQoTsguznVxedeP7SEOlyzOBANdFTG/Q87rtTwERZRMm3ePZ+YZ5y9x
- c91k4jL5sCipZFCPkwVr6NOsFM5MoAsnhv/wQ8+FGlX6NP6npK+ErqgTeZH3tezIvTEU
- bdcQ==
-X-Gm-Message-State: AOJu0YyxtT+P7a8n5WowbYi4GUxQtobTmI08W+iUYW9rDYp5VkKhwv3y
- PkuTSuEmfmrC1t++hWlKEgBB/x6IgXdM75QGOv8glvrC1QGw+Dyy4vdqtU/9hcutY56pZj4hFZe
- 0GsW4JY58+QQnJ95uw3MVuljBm87QjRE=
-X-Gm-Gg: AeBDietGbPklMWVWGoHFQIaoRiEDBdiV+2EcyW9PMJSLga9IAj7h+gaaxhxgpv3IKjN
- KrpcsoD2PLyWGPr9HO/Xvc89Jz13KX13O9lTXdvAP8jJ0hlPpzxhX6doARh3cMF6ryu/JS94hls
- k8Eh7mBlZMzAtL9hB36DxVfEqxvUVfRI+BMuECjyZWP7IAe9J974Jj63qCOJEFh/P0ke/dKQoTd
- 2+U45HUmAyqFrM7e+0AmayvAT6USNHSE4c1fqdePuxJ8g0l0IlMS0Ua5Bcj4k/kDqOI0spgcNz+
- S6ulJrVboUmGnjJxLZW0cSSRAT1+T+OeflWgfT4=
-X-Received: by 2002:a17:903:17cf:b0:2b2:45b7:307f with SMTP id
- d9443c01a7336-2b2817d8a45mr234348725ad.9.1775692250962; Wed, 08 Apr 2026
- 16:50:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1775665981.git.matheus.bernardino@oss.qualcomm.com>
- <9518dd95bde0a79b7d74bf1f2a15577bfaadb976.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-In-Reply-To: <9518dd95bde0a79b7d74bf1f2a15577bfaadb976.1775665981.git.matheus.bernardino@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Wed, 8 Apr 2026 17:50:39 -0600
-X-Gm-Features: AQROBzCKjI63F_yxAgFgzmODmuyGLrerI53x7U4OTrC4oTOOpP43WAPLIlHO_5w
-Message-ID: <CAATN3NovHf3Lwm_vwxYpDT6TwRitK2s2tD5iOgQeO_6Vv4+rug@mail.gmail.com>
-Subject: Re: [PATCH v3 10/16] target/hexagon: add v68 HVX IEEE float compare
- insns
-To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, ale@rev.ng, 
- anjo@rev.ng, brian.cain@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- philmd@linaro.org, quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Content-Type: multipart/alternative; boundary="000000000000d95ea1064efb91ba"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wAcrC-00022z-1r
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 20:02:50 -0400
+Received: from p-east2-cluster6-host9-snip4-10.eps.apple.com ([57.103.76.201]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wAcr7-0006RE-Q1
+ for qemu-devel@nongnu.org; Wed, 08 Apr 2026 20:02:48 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-11 (Postfix) with ESMTPS id
+ 06D4018003C6; Thu, 09 Apr 2026 00:02:39 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1775692963; x=1778284963;
+ bh=cS+J/WWye3jUhGe3sg2B2pndM8g5c5+4hjjmc4bM4uo=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=FL3E8j4IeZjNlVIzcFY8Ssg1EJMGcL4Bw50VPoJa2UeyxtB6ElBOvWXKrlDzvtAoNSwJJWn0OH2PNf/RCgqs+6Nb0ggvy8DSRSSdyFSFMLPh59mafMO/mxG2DJKNXGvZpLZDYlvGsazC5A5u8RNHmg/3grvktwg0YB8RgTyca35Nhq9IEZrM2VaBY1CsYlCkRSV2ykU4Hbzej4iKieQWqVNEiWLYCx9QIphTiQZy3gS3goMfDGSAGz1xnc8Iq8iUzU0hQre4UjIjHZk+MO6DM2Q2Vv5uhvmkcjYLW0FwY7pGFqf1eoKtH4eGnUFFXcBoxg/VsbH5nigUpykSs5miwg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-11 (Postfix) with ESMTPSA id
+ A804B18003E1; Thu, 09 Apr 2026 00:02:37 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [RFC PATCH 00/10] vfio: PCI device passthrough on Apple Silicon
+ Macs
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <DHO5ZTWY64G0.1AIDXSKEL01UU@gmail.com>
+Date: Thu, 9 Apr 2026 02:02:25 +0200
+Cc: qemu-devel@nongnu.org, alex@shazbot.org, clg@redhat.com,
+ pbonzini@redhat.com, rbolshakov@ddn.com, phil@philjordan.eu,
+ mst@redhat.com, john.levon@nutanix.com, thanos.makatos@nutanix.com,
+ qemu-s390x@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <C35B5E97-73F2-4A60-951B-B064A882BD1E@unpredictable.fr>
+References: <20260405072857.66484-1-scottjgo@gmail.com>
+ <A7F5F3BA-1008-4F21-A103-3079DC511292@unpredictable.fr>
+ <EE710653-F4AF-4C1B-A9B0-C9ADE7EB01F1@unpredictable.fr>
+ <DHLLUP2OY18O.1HYC4V18K7IH1@gmail.com>
+ <67BA415D-4D1A-4F68-9429-284309EE96C0@unpredictable.fr>
+ <DHNKXKNWFI3S.P78ERGSFU3RQ@gmail.com>
+ <97D215C3-5794-4250-BA33-F07C6A753477@unpredictable.fr>
+ <DHO2FDRRIEGO.FEORPWSGCJE9@gmail.com>
+ <7929BC15-D10B-4CF7-875C-0A168811CA72@unpredictable.fr>
+ <DHO5ZTWY64G0.1AIDXSKEL01UU@gmail.com>
+To: "Scott J. Goldman" <scottjgo@gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Authority-Info-Out: v=2.4 cv=BsOQAIX5 c=1 sm=1 tr=0 ts=69d6eca1
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=N_UXvhnrE_qSsDvRhxkA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDIyMiBTYWx0ZWRfX4c0Xgqgm2o0x
+ w24in2z1H8C8XlbuZyi91pl9bMkeDRI4eu1OwLLPARHQCLL34AGHwEaRLxkvbdtPDFHOgkXL7Cx
+ A1MXqes9D+DSiHBBy7OCfGxekLuFB+RXWXAChTCmW3IEh4DT3vCiOgGGhetzkVSge+PQ7k5iuai
+ rKHRq8h5s+jIjHwWwRswhsxN+h0wWG/HyBliscnNga/Zczp+287he/crlNy3gDcaLKJppT3L//6
+ LyN5idIKohbr7lCwLfwlHtSxj4vpa8WiUrC7pGEUZrZoCAtT371LfGbAGhczQNp4rv4CBHwvPb7
+ CsPJTu2H118qM67+66lexhpBRfmuNsQ7xEtiy3mg9Dr69kYl9HY4Kq9Ls2GYPg=
+X-Proofpoint-ORIG-GUID: HgOiitjzn67TDhbI4ZZH_lqkfKzABKA-
+X-Proofpoint-GUID: HgOiitjzn67TDhbI4ZZH_lqkfKzABKA-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-08_07,2026-04-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ suspectscore=0 clxscore=1030 bulkscore=0 spamscore=0 mlxlogscore=694
+ adultscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604080222
+Received-SPF: pass client-ip=57.103.76.201;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,101 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d95ea1064efb91ba
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 8, 2026 at 10:37=E2=80=AFAM Matheus Tavares Bernardino <
-matheus.bernardino@oss.qualcomm.com> wrote:
 
-> Add HVX IEEE floating-point compare instructions:
-> - V6_vgthf, V6_vgtsf: greater-than compare
-> - V6_vgthf_and, V6_vgtsf_and: greater-than with predicate-and
-> - V6_vgthf_or, V6_vgtsf_or: greater-than with predicate-or
-> - V6_vgthf_xor, V6_vgtsf_xor: greater-than with predicate-xor
->
-> Signed-off-by: Matheus Tavares Bernardino <
-> matheus.bernardino@oss.qualcomm.com>
-> ---
->  target/hexagon/mmvec/hvx_ieee_fp.h           |  4 ++
->  target/hexagon/mmvec/macros.h                |  3 +
->  target/hexagon/mmvec/hvx_ieee_fp.c           | 48 +++++++++++++++
->  target/hexagon/imported/mmvec/encode_ext.def | 10 ++++
->  target/hexagon/imported/mmvec/ext.idef       | 61 ++++++++++++++++++++
->  5 files changed, 126 insertions(+)
->
-> diff --git a/target/hexagon/mmvec/hvx_ieee_fp.h
-> b/target/hexagon/mmvec/hvx_ieee_fp.h
-> index d55837b756..ad854b905d 100644
-> --- a/target/hexagon/mmvec/hvx_ieee_fp.h
-> +++ b/target/hexagon/mmvec/hvx_ieee_fp.h
-> @@ -25,4 +25,8 @@ uint16_t qf_min_hf(uint16_t a1, uint16_t a2,
-> float_status *fp_status);
->  int32_t conv_w_sf(float32 a, float_status *fp_status);
->  int16_t conv_h_hf(float16 a, float_status *fp_status);
->
-> +/* IEEE - FP compare instructions */
-> +uint32_t cmpgt_sf(uint32_t a1, uint32_t a2, float_status *fp_status);
-> +uint16_t cmpgt_hf(uint16_t a1, uint16_t a2, float_status *fp_status);
->
+> On 9. Apr 2026, at 01:33, Scott J. Goldman <scottjgo@gmail.com> wrote:
+>=20
+> My possibly incorrect read of the strings and some disassembly of
+> Virtulization.framework is that they look for
+> IOServiceMatching("PCIPassthrough") which is simply not exported by
+> anything I can find on my Mac. For internal builds maybe they ship
+> another kext for this?
+>=20
 
-Use float32/float16 instead of uint32_t/uint16_t for the args.  That's what
-the implementations below use.
-The return type should be bool.
+Hello,
 
-Otherwise
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Looked further and tried to run that code=E2=80=A6
 
---000000000000d95ea1064efb91ba
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The related service names queried at runtime by =
+com.apple.Virtualization.VirtualMachine
+passed to IOServiceMatching in this case are IOPCIDevice=E2=80=A6 and =
+PCIPassthroughController
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Apr 8, =
-2026 at 10:37=E2=80=AFAM Matheus Tavares Bernardino &lt;<a href=3D"mailto:m=
-atheus.bernardino@oss.qualcomm.com">matheus.bernardino@oss.qualcomm.com</a>=
-&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Add =
-HVX IEEE floating-point compare instructions:<br>
-- V6_vgthf, V6_vgtsf: greater-than compare<br>
-- V6_vgthf_and, V6_vgtsf_and: greater-than with predicate-and<br>
-- V6_vgthf_or, V6_vgtsf_or: greater-than with predicate-or<br>
-- V6_vgthf_xor, V6_vgtsf_xor: greater-than with predicate-xor<br>
-<br>
-Signed-off-by: Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheus.ber=
-nardino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm=
-.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/mmvec/hvx_ieee_fp.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0|=C2=A0 4 ++<br>
-=C2=A0target/hexagon/mmvec/macros.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 3 +<br>
-=C2=A0target/hexagon/mmvec/hvx_ieee_fp.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0| 48 +++++++++++++++<br>
-=C2=A0target/hexagon/imported/mmvec/encode_ext.def | 10 ++++<br>
-=C2=A0target/hexagon/imported/mmvec/ext.idef=C2=A0 =C2=A0 =C2=A0 =C2=A0| 61=
- ++++++++++++++++++++<br>
-=C2=A05 files changed, 126 insertions(+)<br>
-<br>
-diff --git a/target/hexagon/mmvec/hvx_ieee_fp.h b/target/hexagon/mmvec/hvx_=
-ieee_fp.h<br>
-index d55837b756..ad854b905d 100644<br>
---- a/target/hexagon/mmvec/hvx_ieee_fp.h<br>
-+++ b/target/hexagon/mmvec/hvx_ieee_fp.h<br>
-@@ -25,4 +25,8 @@ uint16_t qf_min_hf(uint16_t a1, uint16_t a2, float_status=
- *fp_status);<br>
-=C2=A0int32_t conv_w_sf(float32 a, float_status *fp_status);<br>
-=C2=A0int16_t conv_h_hf(float16 a, float_status *fp_status);<br>
-<br>
-+/* IEEE - FP compare instructions */<br>
-+uint32_t cmpgt_sf(uint32_t a1, uint32_t a2, float_status *fp_status);<br>
-+uint16_t cmpgt_hf(uint16_t a1, uint16_t a2, float_status *fp_status);<br><=
-/blockquote><div><br></div><div>Use float32/float16 instead of uint32_t/uin=
-t16_t for the args.=C2=A0 That&#39;s what the implementations below use.</d=
-iv><div>The return type should be bool.</div><div>=C2=A0</div><div>Otherwis=
-e</div><div>Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpso=
-n@gmail.com">ltaylorsimpson@gmail.com</a>&gt;</div><div><br></div></div></d=
-iv>
+As the internet has no mention of PCIPassthroughController and it=E2=80=99=
+s not
+there on my machine running macOS 26.4, and I don=E2=80=99t see any =
+reference of
+the com.apple.private.PCIPassthrough.access entitlement anywhere outside
+of the VirtualMachine service entitlements list, it=E2=80=99s possible =
+to definitely
+conclude that the kernel side of this isn=E2=80=99t shipped by Apple at =
+this point.
 
---000000000000d95ea1064efb91ba--
+And that=E2=80=99s pretty unfortunate but oh well :/ Hopefully was worth =
+looking at though.=
 
