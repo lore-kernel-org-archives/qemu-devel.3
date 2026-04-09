@@ -4,110 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D040CE98FAF
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 05:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A0AE98FA8
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 05:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAi6D-00059c-M8; Thu, 09 Apr 2026 01:38:41 -0400
+	id 1wAi61-00055B-EO; Thu, 09 Apr 2026 01:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAi66-00058I-TD
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:38:35 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wAi5u-00053G-7o
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:38:23 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wAi64-0002qz-Q9
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:38:34 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b8d7f22d405so67739166b.0
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 22:38:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775713111; cv=none;
- d=google.com; s=arc-20240605;
- b=CuuTHfQryYq0TQq/CJeO63AyynH+Yi/rrqgq1XXPqYBSKyzPzYbdk97KevoPLKtpZy
- QG6c4W+lqPpsQOqfrB+As4gPqLVr+z7cddG9pUtHOL0TY8b9SKmEeM6RUo1jy2UgX4dl
- qs0E9xRmXHreJbrWT5MmUxyYRNrK2OVaJQaR1WEmj/pLdWMiLnEcPHD+h8cGhRUUf7l2
- 27ZLd8+A1cmDFIyEnln0JC0yPfVnct9T+N9WQHuIEmSqj8rMI1ytvbdF8+VoHFiSDHd0
- tpqcgMaC+sB+NC4XtTDQPtEBfSmIHaNP+P4nh9FhbbJsayP6wQcaTZ9wMePy39m+KqgV
- I8gQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=q2WDs/N3FmYBogg8pYmgVJoLiFe1LAOOfDhScPeZ85I=;
- fh=Qd/ze66coMyOUagELzJHT65GZa6bS4Rhi3rjNufOSiw=;
- b=bnhRM8AK3zv+0vc24Nis7+BVmChO5Z/8GwkazlRdM/Q40xAjM0vL+WKzceo2Pwmi6y
- VY/lB5XzWsHdzOdb7R4br0SH+kAph+pe2NRmc26Eazo2ReRSzvLIPrL01N066xOio5mN
- y4nyhab5/Bo7yMPLCoC8LfxuykXpFvv5DsoD+WiVwZuNaak70RZdAgFPVXyUqPnvVcfr
- DGAXkAw6942A+C8eG2zWRRML6YdlgDmHqy6S4MaqN52Sd2CMNdyi0R61v0U2KM08f5Zc
- tzOxJ3cecD5A0l0mzYWleHRvrW/Sk4WffxNLr49JjB5CBJg2iSwiA4tUakNCyGgJ4ne5
- Tbsg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wAi5s-0002pM-K6
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 01:38:21 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2a8fba3f769so2791115ad.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 22:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775713111; x=1776317911; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q2WDs/N3FmYBogg8pYmgVJoLiFe1LAOOfDhScPeZ85I=;
- b=WNRCllf/xQjQj49HkQfZCyLo48jonI6ruJdvkiq7Iu5INukUOB6SIex7oN8VyAAIi1
- SMzT4Ml1GX8vg+DaYxzE8yx859QL7k0DP098r9/lttNnxZO1NWI3cOXdDiwwQ1Hkt+IB
- GhpfW/+s6MKJURJIyPBVN1nxpY1sJIzN4/liASqJqx5xVzJ+x5qxR6suov3vA7E2MZ3k
- J+STJNL2nQJaetYmPl2e+ilcK4Yivzbm952afa4NNiadxwlqIKjPnnn9pXcqyYafiyXb
- zquhyuhnKzDp8jWRHBevqvuCVdUHpPK33MchYFtLnehsPGOVvxtLN/3692OnDMyS0FAm
- MUGQ==
+ d=gmail.com; s=20251104; t=1775713099; x=1776317899; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=eaa2fI/lyNIZhY/Fl7cQHJ/gc0K6OWqh0FHi9e2SZvB8cDyc+A++nnLILknojZB2gg
+ JYt203/4g0Qs8DjqLk+p3uwEWLaMN/D6DK5Po8BIn6/bhvYQghmf49nyeZb0yNx7YFjS
+ oQTSJmwGqscni+mYeO1t8UUZ3t2RtW91YzPsC1S1O+d4Egq2cwJjGPJjFpIr/8I9y+Mz
+ 9M7nQuybqEiXJHKFFvkdpqLZTnIAoH388ckNczwIjCzyMtBbGd8/a8SEezXVZebAG2zx
+ 6gfv5rWoHWavXMB+4e0IHV1Bqi1KFfTES8YRTXhVLMt8KyRYLT+xIj6fqYjkqe2w71H9
+ GlZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775713111; x=1776317911;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q2WDs/N3FmYBogg8pYmgVJoLiFe1LAOOfDhScPeZ85I=;
- b=KtJrb9ivHoXT3t6D76Vyo2+2lLkAdWwGhAPKroUhefjmrCOILw3nERHmAJ2UVryoPT
- O2UwJTt/kr3C4+dyXwpONkzw/Np/iQNt8pZU07brFj1OcEfoAlWbszEHXo02eHQbiSQP
- WcnlXX5PR7566J+bnZzvhqlyi7gfW0zeqZt9m99tHEXz8+TuWKsX25EGfSErbe9pFxlY
- xTH9c0emz4TZtWISsJiOE2Du/GD4fufUpxd9A49v37suvhIdD5I0GYyH/1GIT8W/UoXO
- cIz0xsz2CLrMgOUKsoigcEJ8s1tu5Hsq4GnLcoKslQ50I645mLKPVF1SuP3eE7Y9jXDZ
- BhUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWFn+Zr3RSHSlIKZ3swaQKe5vzPPo4O818iWDPSyqBO8xP6vA3EAav2ifdkz6ZevVuL1HHQ1eMLo1d@nongnu.org
-X-Gm-Message-State: AOJu0YxEI9pONceg8jE3/ehAWyAYQ3Z695RY9c44aP6tsvvxHZrN++qE
- 110qxDn7Sze7xDSMa7/aDcEUa8YNqeUA3je3cAiN+8gk4yh9BYI/HtvPBg738H67iQUCQ4cGVzO
- yoNK7jYg86IXNYvlSCNwayOhFFBjjEbI=
-X-Gm-Gg: AeBDiesbxI+L0/0f9yFjeZOwBJAE5zAuiw6GfJllj8rn6B6BXBOF6EAeB177dbWnfMB
- RLJmbgHNb1H8r8DzekBJcpaDODuWhLNBRbBk+6ABBtkNx3Jh6S3BINjY8EMR+3UqwzmY1tVubj9
- yi4xfLBiXcNiAJo3/WXwQSl3m4dsh5wpHUDKKoA37GzWOpeVXw+hu32pZekqC7SqqggKZbsgqdi
- jSWo+1Pv2xzXf6mqutSs1Hp/HnDIFCeN+xM6j+YJ+iEqnsFV8m2D2Yc+Nr8+nXp9dUPVNdetKVx
- bPMX+1Lxt4XilC/PU+t8zDV1i/npxP+rKykonw==
-X-Received: by 2002:a17:907:7fa6:b0:b9c:93f4:d8d9 with SMTP id
- a640c23a62f3a-b9c93f4da3dmr995755266b.33.1775713110786; Wed, 08 Apr 2026
- 22:38:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775713099; x=1776317899;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=Aiv9IjWgPHJ1y0LsQy4QzD/kG7/W30IOexeuRYmdPIF1UhA9ALcngcT8Sj85o35vhQ
+ 0TfO+UOJPlnns+qoDfNpjnLS4P/+iy+arL7snvpPwS2Qg/aXWB4bZJuiRRKMUk7sU/v7
+ lckBKsJw48szX3O9QvvIJnS/yNPFUM3mFJD0Cou3dOkDDMT1jnNeNTUD1oFjP5gSOTKR
+ 5G2sq19rzqbVzTofbpsFntbcIb8tW+qEx8Gb7YNAsvpU5nHV4uVXSeMoKH7+BnvrE8Nv
+ UHrZRYvjqZVcGfVCBtRCWf4YBOjULngG+cdL+DnZxNBnAAMddOvC0B4Ba2qQ0seksVpE
+ PWSg==
+X-Gm-Message-State: AOJu0YwBTiOrrWoouwpWn2p44z+QjG+MJXRIBzcpH7Jy0QPcDX4ZoFaW
+ 8RC5HUlIwF6HJwH91tD9tiuLRNP1rQq+NmuSKQuR3Fw7MGmxKMGIGjturPM5IACqk+g=
+X-Gm-Gg: AeBDiet+RNsWrRgtLbptl5oc9MYNaYNCMrkmVOqIQPVVCiuOb2l97Fps51q7rorN/ld
+ lbP9F75tXiYCPgFOrDCP04uG6qmrC15FU4lPzNNIEwi58VAEyZBz2/h7wNNiTjwAPoB+Xg0rsRy
+ REEHMeGKwv0bKb1+HQ9NUjLzuTsC2b2XTHpKJsnMAmZRn91anuzEueIwN/sLc6YoZ/9ac6HHaP3
+ A2+GNVtQewfaAA2ruqXG/KzLOzp9XJi8mWe0rtrv5q9Kpq4o8BApVrQ2tAJYaNQuGnuJ0lBPxH/
+ FLgg2qToWsrfqbavwOYFOlRbXiynUMRb8ZvSkR/KRFvGibTFxGviyJFyTwaLGuxqYxBadW6mci/
+ DVxVQvXDT1Qi90U7ggDMXV9+PysfaEVv3xSgbX28A6SBQolDOFUZfvjvc6suX3cqYiWZfFt8THz
+ J4j5ToZbG9S2BEwc5GNCvC1D3O9/wmwA==
+X-Received: by 2002:a17:903:11d2:b0:2b2:98d7:bff with SMTP id
+ d9443c01a7336-2b298d73f89mr185137605ad.45.1775713098572; 
+ Wed, 08 Apr 2026 22:38:18 -0700 (PDT)
+Received: from [172.17.0.5] ([168.126.243.22])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b2747a7115sm211108905ad.36.2026.04.08.22.38.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Apr 2026 22:38:18 -0700 (PDT)
+From: Jaemyung Lee <ldc.jml@gmail.com>
+X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
+Date: Thu, 09 Apr 2026 14:37:46 +0900
+Subject: [PATCH v3 2/5] hw/ufs: Modify flag handling operation
 MIME-Version: 1.0
-References: <20260407043614.372871-1-alistair.francis@wdc.com>
- <20260407043614.372871-2-alistair.francis@wdc.com>
- <ad95d6bb-a483-4ef4-a217-a875b5f7a42f@oss.qualcomm.com>
-In-Reply-To: <ad95d6bb-a483-4ef4-a217-a875b5f7a42f@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 9 Apr 2026 15:38:04 +1000
-X-Gm-Features: AQROBzCsgrh6cwXnWWPGB8MOE00sfMkIKiBn1V43DbufBsVt28uHbObK2IFtcp0
-Message-ID: <CAKmqyKOg=mtUisSTA5+e9Hy2drnqesEZQEEv3XRyEty6N7rPNQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] target/riscv: Generate access fault if sc comparison
- fails
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260409-write_booster-v3-2-dd2f1c0119c8@samsung.com>
+References: <20260409-write_booster-v3-0-dd2f1c0119c8@samsung.com>
+In-Reply-To: <20260409-write_booster-v3-0-dd2f1c0119c8@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Jaemyung Lee <jaemyung.lee@samsung.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775713090; l=6656;
+ i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
+ bh=UwQldvutZu9HqLXksjdiAk3IKzXkRCngBaBlZ026a4E=;
+ b=rCLIZMMelhumUe8ZG+UWxP82ZpWkAw4EBe6hVOCEWIuC47fA5uFj0JiXCGGR7tIAgiPaJy9P4
+ hmoQvmNDBJZBe2hpw09rFdGVOUxfJsUQqU3ejKDjy8XelE7jL6QH/9G
+X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
+ pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=ldc.jml@gmail.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,130 +109,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 7, 2026 at 7:38=E2=80=AFPM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
->
->
-> On 4/7/2026 1:36 AM, alistair23@gmail.com wrote:
-> > From: Alistair Francis <alistair.francis@wdc.com>
-> >
-> > The RISC-V spec states:
-> >
-> > "For the purposes of memory protection, a failed SC.W may be treated
-> > like a store."
-> >
-> > So if the comparison in sc.w fails we should still check for alignment
-> > and do a probe access to check permissions.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3323
-> > Resoves: https://gitlab.com/qemu-project/qemu/-/work_items/3136
->
-> Typo: "Resoves"
->
->
-> Also, IIRC the bug URL that automatically closes Gitlab issues when
-> merging the patch is on the format:
->
-> "Resolves: https://gitlab.com/qemu-project/qemu/-/issues/(number)"
+Change internal flag handling operation same as attribute's
 
-Interestingly trying to access
+In UFS device, some flag queries directly trigger specific device
+behaviour like attribute's, not only changes the internal values.
+So restructure flag query processing functions same as attribute
+processing, to facilitate linking detailed implementations based on
+individual flag value changes.
 
-https://gitlab.com/qemu-project/qemu/-/issues/3196
+Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
+---
+ hw/ufs/ufs.c | 152 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 119 insertions(+), 33 deletions(-)
 
-takes me to
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index b2b70c8b38ebecd8d49ecce288614d55efd90f2e..69f82ab462d135fe6cda479891f9d8f26d19be9a 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -1021,6 +1021,122 @@ static inline QueryRespCode ufs_flag_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
++static uint32_t ufs_read_flag_value(UfsHc *u, uint8_t idn)
++{
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        return u->flags.device_init;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        return u->flags.permanent_wp_en;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        return u->flags.power_on_wp_en;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        return u->flags.background_ops_en;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        return u->flags.device_life_span_mode_en;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        return u->flags.purge_enable;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        return u->flags.refresh_enable;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        return u->flags.phy_resource_removal;
++    case UFS_QUERY_FLAG_IDN_BUSY_RTC:
++        return u->flags.busy_rtc;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        return u->flags.permanently_disable_fw_update;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        return u->flags.wb_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        return u->flags.wb_buffer_flush_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        return u->flags.wb_buffer_flush_during_hibernate;
++    case UFS_QUERY_FLAG_IDN_UNPIN_EN:
++        return u->flags.unpin_en;
++    default:
++        g_assert_not_reached();
++        return 0;
++    }
++}
++
++static QueryRespCode ufs_write_flag_value(UfsHc *u, uint8_t idn, uint8_t value)
++{
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        u->flags.device_init = 0;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        u->flags.permanent_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        u->flags.power_on_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        u->flags.background_ops_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        u->flags.device_life_span_mode_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        u->flags.purge_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        u->flags.refresh_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        u->flags.phy_resource_removal = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        u->flags.permanently_disable_fw_update = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        u->flags.wb_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        u->flags.wb_buffer_flush_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        u->flags.wb_buffer_flush_during_hibernate = value;
++        break;
++    default:
++        return UFS_QUERY_RESULT_INVALID_VALUE;
++    }
++
++    return UFS_QUERY_RESULT_SUCCESS;
++}
++
++static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
++{
++    UfsHc *u = req->hc;
++    uint8_t idn = req->req_upiu.qr.idn;
++    uint8_t value;
++    QueryRespCode ret;
++
++    ret = ufs_flag_check_idn_valid(idn, op);
++    if (ret) {
++        return ret;
++    }
++
++    if (op == UFS_QUERY_FLAG_READ) {
++        value = ufs_read_flag_value(u, idn);
++        ret = UFS_QUERY_RESULT_SUCCESS;
++    } else if (op == UFS_QUERY_FLAG_SET) {
++        value = 1;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_CLEAR) {
++        value = 0;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
++        value = !(ufs_read_flag_value(u, idn));
++        ret = ufs_write_flag_value(u, idn, value);
++    } else {
++        trace_ufs_err_query_invalid_opcode(op);
++        return UFS_QUERY_RESULT_INVALID_OPCODE;
++    }
++
++    req->rsp_upiu.qr.value = cpu_to_be32(value);
++    return ret;
++}
++
+ static const int attr_permission[UFS_QUERY_ATTR_IDN_COUNT] = {
+     /* booting is not supported */
+     [UFS_QUERY_ATTR_IDN_BOOT_LU_EN] = UFS_QUERY_ATTR_READ,
+@@ -1103,39 +1219,6 @@ static inline QueryRespCode ufs_attr_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
+-static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
+-{
+-    UfsHc *u = req->hc;
+-    uint8_t idn = req->req_upiu.qr.idn;
+-    uint32_t value;
+-    QueryRespCode ret;
+-
+-    ret = ufs_flag_check_idn_valid(idn, op);
+-    if (ret) {
+-        return ret;
+-    }
+-
+-    if (idn == UFS_QUERY_FLAG_IDN_FDEVICEINIT) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_READ) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-    } else if (op == UFS_QUERY_FLAG_SET) {
+-        value = 1;
+-    } else if (op == UFS_QUERY_FLAG_CLEAR) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-        value = !value;
+-    } else {
+-        trace_ufs_err_query_invalid_opcode(op);
+-        return UFS_QUERY_RESULT_INVALID_OPCODE;
+-    }
+-
+-    *(((uint8_t *)&u->flags) + idn) = value;
+-    req->rsp_upiu.qr.value = cpu_to_be32(value);
+-    return UFS_QUERY_RESULT_SUCCESS;
+-}
+-
+ static inline uint8_t ufs_read_device_temp(UfsHc *u)
+ {
+     uint8_t feat_sup = u->device_desc.ufs_features_support;
+@@ -1300,6 +1383,9 @@ static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
+     case UFS_QUERY_ATTR_IDN_TIMESTAMP:
+         u->attributes.timestamp = cpu_to_be64(value);
+         break;
++    default:
++        g_assert_not_reached();
++        return 0;
+     }
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
 
-https://gitlab.com/qemu-project/qemu/-/work_items/3196
+-- 
+2.48.1
 
-So I think Gitlab is changing from issues to work_items
-
->
->
-> Maybe this URL with "work_items" also works, but even with the regular
-> URL Gitlab fails to autoclose the bug sometimes.  I suggest changing the
-> "work_items" to "issues" in all those URLs to be safe.
-
-Maybe using "issues" is the problem?
-
-I'm thinking of leaving these as-is, as issues seem to be replaced now.
-
-I even see https://docs.gitlab.com/development/work_items/#migration-strate=
-gy
-and https://gitlab.com/groups/gitlab-org/-/work_items/6033 with more
-details on this
-
-Alistair
-
->
->
-> That said,
->
->
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->
-> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> > ---
-> >   target/riscv/helper.h                   |  3 +++
-> >   target/riscv/op_helper.c                | 14 ++++++++++++++
-> >   target/riscv/insn_trans/trans_rva.c.inc |  6 ++++++
-> >   3 files changed, 23 insertions(+)
-> >
-> > diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> > index b785456ee0..af6cfcfc27 100644
-> > --- a/target/riscv/helper.h
-> > +++ b/target/riscv/helper.h
-> > @@ -1289,3 +1289,6 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
-> >   #ifndef CONFIG_USER_ONLY
-> >   DEF_HELPER_1(ssamoswap_disabled, void, env)
-> >   #endif
-> > +
-> > +/* Zalrsc" SC write probe */
-> > +DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
-> > diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> > index 6ccc127c30..b569366369 100644
-> > --- a/target/riscv/op_helper.c
-> > +++ b/target/riscv/op_helper.c
-> > @@ -281,6 +281,20 @@ void helper_cbo_inval(CPURISCVState *env, target_u=
-long address)
-> >       /* We don't emulate the cache-hierarchy, so we're done. */
-> >   }
-> >
-> > +void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
-> > +                           target_ulong size)
-> > +{
-> > +    uintptr_t ra =3D GETPC();
-> > +    int mmu_idx =3D riscv_env_mmu_index(env, false);
-> > +
-> > +    if (addr & (size - 1)) {
-> > +        env->badaddr =3D addr;
-> > +        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ADDR_MIS, ra);
-> > +    }
-> > +
-> > +    probe_write(env, addr, size, mmu_idx, ra);
-> > +}
-> > +
-> >   #ifndef CONFIG_USER_ONLY
-> >
-> >   target_ulong helper_sret(CPURISCVState *env)
-> > diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/ins=
-n_trans/trans_rva.c.inc
-> > index a7a3278d24..62c0fe673d 100644
-> > --- a/target/riscv/insn_trans/trans_rva.c.inc
-> > +++ b/target/riscv/insn_trans/trans_rva.c.inc
-> > @@ -90,6 +90,12 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a,=
- MemOp mop)
-> >        */
-> >       TCGBar bar_strl =3D (ctx->ztso || a->rl) ? TCG_BAR_STRL : 0;
-> >       tcg_gen_mb(TCG_MO_ALL + a->aq * TCG_BAR_LDAQ + bar_strl);
-> > +    /*
-> > +     * "For the purposes of memory protection, a failed SC.W may be tr=
-eated
-> > +     * like a store." so let's check the write access permissions
-> > +     */
-> > +    gen_helper_sc_probe_write(tcg_env, src1,
-> > +                              tcg_constant_tl(memop_size(mop)));
-> >       gen_set_gpr(ctx, a->rd, tcg_constant_tl(1));
-> >
-> >       gen_set_label(l2);
->
 
