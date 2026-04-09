@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C71E9DE60
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 08:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C3FE9DE60
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 08:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAkbi-0006Mj-Om; Thu, 09 Apr 2026 04:19:22 -0400
+	id 1wAkby-0006bI-Ip; Thu, 09 Apr 2026 04:19:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAiSj-0005n5-S4
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 02:01:57 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAjOI-00053q-Lk
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:01:29 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAiSh-0006pp-Us
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 02:01:57 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488971db0fdso4689325e9.0
- for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 23:01:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAjOF-00076a-Vj
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:01:25 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488a29e6110so5246215e9.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 00:01:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minio.io; s=minio; t=1775714514; x=1776319314; darn=nongnu.org;
+ d=minio.io; s=minio; t=1775718077; x=1776322877; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
  bh=JQ+g+Ftg9KxAdBMCWpE/RWEcneIVeaJ38egOZv8j5vc=;
- b=ZWE7DzCCuXVIqjh5sBjNMFS3gAM0vSjgc0e0VeWlpFXavBtkQfvV1N5I3YjVchNnmz
- UgjoF/yz0v19fpxPaoDUadRFP4UOkROF9NVGm7jPBN395rLUjjxeH+ZZE3sD5IcTuH/y
- 2eL2P8PiIlgGoIJbTo2UnqJZVm/JqG2FQKzUehvjAF7tB1RHJdwTXSS3FSJC0RcRS7C7
- mo9gVPm0awDlKndS8uuy+fTLC0fZQyX2xwKgBJO/ijQM/dKu7RrMngy8PxCaCz9LtDkH
- LGYvotYux91HUU5g2meJLj0teV33dcrzehERBpi4e8wzmEoqXe4o2A/Tte4mJmYMRpfj
- mjWQ==
+ b=ri/Wtg3MbS+6LRc8MAL0PASj79xpj8U+l356sN74ruPgBzQc+8dKS39s7RIJiZC+gK
+ g0S33MjisGeuwANM8OApBYnSoj+gy9+LvjzbaX4yEIIfnF/agI0q9gMe2Enm0cCNV+18
+ ThFbYjnPFmp1Z+F5fnFt9ybvq5vYUyULdQMn3BcVPh74huncKwbrXpJ+3AsMIve8DLs8
+ XBZiHzTGOtiyKeInI+H2lmeG1iYHbHdkOKw3DtD+0kKPCIIPDu4EWVhh12kubAvxYLbw
+ KiyCt0MsdDdK2EI+atMZvHa13ITqA3EuJW0q18xUN+55J3DHJbLpIKme+ZxjTJ4W05RV
+ cLEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775714514; x=1776319314;
+ d=1e100.net; s=20251104; t=1775718077; x=1776322877;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
  bh=JQ+g+Ftg9KxAdBMCWpE/RWEcneIVeaJ38egOZv8j5vc=;
- b=XVZ6/cxo3WE4xse5pikzQU3JixZe2RzdR3LI5+WoK/lVYLjvRqYtpdMU9DkIRxIV8g
- IYl0goig8WDrn1+M0hQRaoUxl3J019xUvByhBMiNynleqo+j1nzRX57ZxP9L0RG39ZQR
- 4s2FKMRk5oP3jF9uG+yF6T4OmkfnIxkzADFhknr8Mt7QIbgUjbEu66W6q3Xm82El90YD
- 6VqA23PeZtHC+bd2XjMDzZy5HAe1+NbLBBE94IbgGYMDQqyerexO9h0ztjKJs/R4f7/3
- iUSzAQQoYj43RrmOSPxe0OyFJfunCdx++lG5g19RAmXEkJJVR31nP0BJlL3LswpPvemU
- 1/Ew==
-X-Gm-Message-State: AOJu0YzrkuTY+/p7mgetIuraUThNkzi1pFr3lroFX7I8HhyhbFXMaW5F
- jAwdAGo2fZcZnj6fP3iW5OPmAGTS3whJBI4a8/mj4ONyBUlsyi3vkT0pg3EJYplGwHYXCHNZGUN
- +Av+YxJ5dmZpkqGhNAUhAMNGQujzoud1EhuELVIoi5MqnoVTbce4babVqjB+1PDxeMbUSOvsi3q
- FY+EuKzI8MszbS2Cri02fGwcBmPe7hJemrxlYu6Fc=
-X-Gm-Gg: AeBDies9KOAB2HUz4pjW/EY72hbmJ1PVZGb1BrLy0//aV4Xn1X8hJutZ1lr6gE6zZHw
- fPD8UXuEzygCfNAMqicKNReCEIVGC4oqTiYd3fXiyNGTed9oe5A9ty1Q/BFHQZQzNk9WA7BHzoq
- NvOT/lFX5PeG/Jjo68T0KVvAtCHyhyxqk2wsXydFHqCDqr1tL288Fb4MzHs2w4AsrvLDcfVj7+q
- bS4lHLn5uppfHhHSAbxm9otzqDPJ06ElQQDru1lFPdavhiC8kR1ucleiU5ezT5hAM6kryffpLOf
- XP0POJdWv37Wpg6JkPloBTjpyBd2pceVVORZsHIlallAoUtZaHj33X2LeV3PnVTimEjISDNjaFf
- rVNm6w7v1MHgTKFdmsJzBA6buaLpSk6fxG5b51P0JUxls0D4Blfxut437aSdMJMkI5uAndnhbSv
- N5t9Znpe7O/b6fc9duDVJvx9fzZyPYlNDc4EaTZNK+F865lebUJi1SlBpx6lpsvLdQN5T3WZ0Xt
- PF0caZpqJq0vD8B69BeR94DkKYZ8UC7faqwB9snWX+wAcWVl3NVoq57lYHeUA==
-X-Received: by 2002:a05:600c:a311:b0:488:9bf8:7f17 with SMTP id
- 5b1f17b1804b1-488cd020238mr22822145e9.14.1775714514263; 
- Wed, 08 Apr 2026 23:01:54 -0700 (PDT)
+ b=DnNiQcuo0FXfj8C7bNkZVNvwqRRs0CxvgL+6OA+SxihQgXU8qxURE6VmAVy0bHlGlg
+ gz4P7taRIUPIybjoL36FHrQn6OTCCZ0HaCHBWXQ0qkVwWw7kcQjAhA6K+lT7OYBNbNuf
+ B2n/zMJj/9/aFOdrPR9mBg/K9AvCYbYIkcsPMsqP+JFPBnTiM6u/Wb4CV1+LIcyZTY71
+ gNfAjRe2pbi9rosgfF5Be80c6BEoPy8xw6T3TPieXH5GwlTQrJTbPmA++UJtF6TQL1Qq
+ dbFlENtzCchaZ+Lv99+d9RccKM6levRfr44BpUS/VLsH8bYLTixYkGU2bCXcO9hRvN4l
+ dPeA==
+X-Gm-Message-State: AOJu0YzgHnklhw+SkqPXND1jlWQR55iyFdU2vwXPQLkpCtc34Og4TrXi
+ 86uOoPBR3WDrlHQXCj2t8/f0cBpzJTh54B3laIfrbhoDkVp1FD3WuWr7+TMm2S8e+vDTtVIREVm
+ mU/+2xB6fDIipOAG1N+l97pWmgM7phQ7U5Sp48heBWmym7y2r8T9JUf58Cc9m9lmbUNtoej3hwu
+ HuQ4S5Ga0FLZcwWr1jS4JBn8GtdC8FpXLtETrqBZk=
+X-Gm-Gg: AeBDieuWe9kw7IJxdqVqZvSLazWdkBMcrmGXxBeNLczNacXwQnorNRi0qo65nsqSJTb
+ xwOw2L1PA/A33v9lt21VcYPUcbO3tJQj5tq6mdfQGURclzdh3S6AbkwsXTtzI1lGSzLDu/SkRW/
+ jXvdPoD2CHurC3mp766YJ7+r3i3KD0OTg06l2osiLfnmD+549d0yyA8gVst8S9gi+8Nmaz5QykI
+ gSZHMIWXFBxcZP5ti2kXB/DFhNvRL1tjn+Rm+knuCiqcaErdFn37KT+qHulU6I/QxNpGq4dVSYc
+ V2AfWpylOu4LJ/W9PuSJwISMsajykqPEhVYD+m//aXwlCWOIJHBG3G0MytszCdDymDRWioWQNDA
+ zwLW6ve7nF4BYSx6cgFUjV4ytazsojjdqipZ1pkVwjUZdRiZxWNVSJb5FJRUQeSmNh+qhLzh7C1
+ 4jruNPs2e1xZeZx0zbBijjs/2bBP6GHgS9k0z1XO4qFhCI6Vc63gOQw4ZXCNpjixNEdDnbGNbG3
+ kcmNnxBJ0UjSXvSg5xjT0JEb5vlaK49eY736XOymDbjK0f+nm7/7213OfELbw==
+X-Received: by 2002:a05:600c:8b32:b0:487:1c2:6a56 with SMTP id
+ 5b1f17b1804b1-488996afe1cmr324125805e9.3.1775718076834; 
+ Thu, 09 Apr 2026 00:01:16 -0700 (PDT)
 Received: from localhost (2a01cb00141148004df9ec80d3fa1cac.ipv6.abo.wanadoo.fr.
  [2a01:cb00:1411:4800:4df9:ec80:d3fa:1cac])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-488cd231a72sm47375955e9.14.2026.04.08.23.01.53
+ ffacd0b85a97d-43d1e4d2971sm63964653f8f.22.2026.04.09.00.01.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Apr 2026 23:01:53 -0700 (PDT)
+ Thu, 09 Apr 2026 00:01:16 -0700 (PDT)
 From: mr-083 <matthieu@minio.io>
 X-Google-Original-From: mr-083 <matthieu@min.io>
 To: qemu-devel@nongnu.org,
@@ -73,15 +73,15 @@ To: qemu-devel@nongnu.org,
 Cc: its@irrelevant.dk, kbusch@kernel.org, stefanha@redhat.com,
  mr-083 <matthieu@min.io>
 Subject: [PATCH 2/2] block/monitor: add drive_insert HMP command
-Date: Thu,  9 Apr 2026 08:01:54 +0200
-Message-ID: <20260409060155.94704-3-matthieu@min.io>
+Date: Thu,  9 Apr 2026 09:01:11 +0200
+Message-ID: <20260409070114.11313-3-matthieu@min.io>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260409060155.94704-1-matthieu@min.io>
-References: <20260409060155.94704-1-matthieu@min.io>
+In-Reply-To: <20260409070114.11313-1-matthieu@min.io>
+References: <20260409070114.11313-1-matthieu@min.io>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=matthieu@minio.io; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=matthieu@minio.io; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -90,7 +90,7 @@ X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 09 Apr 2026 04:19:19 -0400
+X-Mailman-Approved-At: Thu, 09 Apr 2026 04:19:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
