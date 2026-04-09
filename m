@@ -4,100 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B58F7F31E22
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 656B9F31E22
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAq7Q-0007o0-LA; Thu, 09 Apr 2026 10:12:28 -0400
+	id 1wAq95-0008PO-Ko; Thu, 09 Apr 2026 10:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAq7N-0007np-1T
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:12:25 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAq7L-0000ad-DO
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:12:24 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-6501547d7edso1049184d50.0
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:12:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775743942; cv=none;
- d=google.com; s=arc-20240605;
- b=Jnjg0IqzNhRPlq33VMF7d4hZEqprR+21rz8+zqPB51/sklUl/SJNvSY2KQTK21no/b
- gUtGrRKe43uT5uww8FNoLX1G3VAY+JYoZJGTTV0idy0I0SL895uLTXzB+zQ6Ue8wz8jy
- ohbMKImr+Ut/NG17xSFSxWIb7wACSG1sg0G4vGO9616ooEJ/2iQ8LGCvkl3AnEU6lSTX
- j2YRexWo30znqmd/medH8hJVZTcRWdxXfBl/JP78uqE60qLnmlsGPcKCuswZeHNA5eKX
- dr9T0UBZOSEVolrL2sJOIlV4nh+1HwsmtoXHm3gPX+pE69C+2+m7chIhmyW+bfuwe6F+
- DBHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=b2z42WOuLOI7rDV2kLC4AvaPFIpQG3uUaTwCXq5nxfs=;
- fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
- b=itQiDA+k9fb+8w8b32cvV3mTOc3Dy0K0vyVgRZaBcSTe2MZqsmTRx7SN303GJgWSuI
- 0JM8DvtfOHLYqoK3o8rZKeAJk8TsTR/qksbcajlzDFDtho/rzrfOhol/cPwBnnqYD9xD
- +Ew2UO8m5acOewvm80SbuCqeoa3eltjYCTqo1HLhQruwwYCI2HghSI6xYkoaQmRr8G9y
- EZNr4sxiwg8ey5YuGtnwoqibHhsKLBhmgiX1IDkCNfDRJDhe8f0AoQ707FrU2t/cqhYT
- lZGH8BjPYzdg2E4GDrJyGhQHI1B0hci3jgVGhPTRVKY0JF3OIixDD8r5ZiCkzKQg2VII
- Pydw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775743942; x=1776348742; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=b2z42WOuLOI7rDV2kLC4AvaPFIpQG3uUaTwCXq5nxfs=;
- b=IDeWyYcKjiimd/NAUlyzoR/QqYhH6n7qwuFdqeEVc4YWIw+PBM5xr+so3YVgqiZY0a
- 4ATidQgKUp5orF2150N7ptiZk5DQUKvh5sdUXVEN/PD7buJ8owkgTBs6O197nsD1XnJh
- dwQ4XSG29ewU+9gw6B6RwK4KZu9KSh5qkxW2fstj6CQbgxLbAxYDe+mdpi01TbM83bAE
- MIYvPa4jDgBtSSAWjNBDlpvYcSnlJo9i7woN4eDpvOVEz7extWvQmpFg9bRA2D6/0ObG
- xfqrRkwJZzO4G2KbQhrI/gdU81S8etzk82zJGjSXXEiO9QS1Flxki//dP/vmUb4aOUzG
- qZGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775743942; x=1776348742;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b2z42WOuLOI7rDV2kLC4AvaPFIpQG3uUaTwCXq5nxfs=;
- b=PEJdEVhupYRq3ED6uZvkpxdTGhlUU4BoBdJdsVFqep2dzEbWpzrprE0GmSwQE2h+i0
- 5rBMp0KfuFNfxy9ReGpib3wrmy7JeYc8duWybUFzsRGGRITAAzMEjFrpdAxgufqQhLlf
- V51uK3hcoX0Snl5svgZhHeiAvc3C/6aEULbujyzT2Ul4EzppK2V49QWE1sb1vytPjMUe
- fcp9SE1Ml24rG91gO5JjHK8QlAyoPFlYrmfE6zgnhH/hOGTMmwlIBIt0ROQwW4UaDGsd
- mDec6fAWsfKUNDsROrC0rnG1cg8KJ02FRaLAwtXLAqgyeBPC+NIAHIY5aFE79hteMkfB
- Iq1w==
-X-Gm-Message-State: AOJu0YwiMsIwpsO8AIdeURDvgW4kT2uLMB0VuLrJ3JD8lZ8q/j71/2fx
- 82IsV69hdt+X3nP7f3LK+08AMFeJU532s8YqYrxl2W7KUNuIpdCIMyyvf4F9boJxr1QNI9Wu/3z
- E2KT/iTgOX0zeo5XpQ5HQbeb6zXg23pXhNsl5i8mV9Q==
-X-Gm-Gg: AeBDiesH9ZhwOQFoNcV8c3rjGi/YMnxnk631mMuXf5oaBpft6RGf5oeGcdJJbWJ9rIT
- 9l8BSmF83Fr8TWMHK8sw2TMEUR6WYTrUa4JPJGhei/GEfcfJNwd7SOXvUmOpdRtZ+RmqqnW1d65
- BR+4htz2/6ymMik8+veAchtdP88l7jzq8ioMxMbm5IAZHRcPsThWoqxPl/CsreE6KpVGipIr1bv
- PoOs2WUTDwzPJCWbtAQy5tBxmW1+aVpmt4ZvnePVbH1wIE4pFuYzOLDbtW2FiE8JvGfw9scZKVr
- K9Ytb2LTC/ypPSKkRh64jxQo1b9X2+W21kwufE24g45mmFiIO4+8efOWzxuc6qvkDrA=
-X-Received: by 2002:a53:b009:0:b0:650:1aa5:8581 with SMTP id
- 956f58d0204a3-65048828bc3mr20315481d50.37.1775743941660; Thu, 09 Apr 2026
- 07:12:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wAq8z-0008MS-6j; Thu, 09 Apr 2026 10:14:05 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wAq8x-0000hZ-32; Thu, 09 Apr 2026 10:14:04 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63971Y0S1656683; Thu, 9 Apr 2026 14:14:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=cUo6lPnMtKarhCbO6
+ lVs/jRRVEJ1XiICyAEL31zc+Wk=; b=QTyMNdxt5wYVH2u67OQpSsZBCNkO35mi9
+ CrLelJQeVOIDwBOT/ETNxT00Rsn7kIDxvvBwFM034U0bz9BP7RP+7JF8b89uw54m
+ gP2z95L0jVtrYa4+/5uB4qPAAd0YM8LaSHQAU7OlxUAuaqnrbtckescvehj2FCwl
+ VZPS0YEvwavzn2gjvj0kfkzdXJXeaJfLRHugxNf39NxR6MBvfOXug5WR54yrlaMP
+ onMlB1K3QrbSgetbDr1rIvRLALPmOsN5CKj3c/MxWDxSVYEfar4vxeNBWpTMHrXS
+ cNy4jDCXeHjjIKVnfe5xAELw/3Hc3T/HUiaZlsLRxhMWWfskBWmeg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2fnbm3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Apr 2026 14:14:01 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 639CkhOP030062;
+ Thu, 9 Apr 2026 14:14:00 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcme7kve3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Apr 2026 14:14:00 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 639EDwDj66322726
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Apr 2026 14:13:58 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4DBAF58056;
+ Thu,  9 Apr 2026 14:13:58 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8959658052;
+ Thu,  9 Apr 2026 14:13:57 +0000 (GMT)
+Received: from li-4c4c4544-004d-4810-8043-b7c04f423534.ibm.com.com (unknown
+ [9.61.93.104]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  9 Apr 2026 14:13:57 +0000 (GMT)
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, clg@redhat.com, farman@linux.ibm.com,
+ borntraeger@linux.ibm.com, alex@shazbot.org, cohuck@redhat.com,
+ Anthony Krowiak <akrowiak@linux.ibm.com>
+Subject: [PATCH v2 1/2] hw/vfio/ap: Extend vfio device state description to
+ facilitate live migration
+Date: Thu,  9 Apr 2026 10:13:44 -0400
+Message-ID: <20260409141352.997844-2-akrowiak@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260409141352.997844-1-akrowiak@linux.ibm.com>
+References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260409103310.1884968-1-pbonzini@redhat.com>
-In-Reply-To: <20260409103310.1884968-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Apr 2026 15:12:09 +0100
-X-Gm-Features: AQROBzC7ajkHGKmjCdVDCczUslK2In9z_3_olhOIQ31QPsbgGGrPJdq7BbeC_bw
-Message-ID: <CAFEAcA9oGac5aF6q68_wRw_pWeNrgQMfesPGCEaKWuvZhOwBzg@mail.gmail.com>
-Subject: Re: [PULL 0/1] virtio-scsi patch for QEMU 1.10-rc3
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDEyNiBTYWx0ZWRfX4p5bDr589Z3w
+ QLDy0a9JYXbpleF956i9tn4EvcSBKpffcDGyJOvJE9F6c5HLk9X4oDgavpTM5x2jQcrKf0m0anu
+ cAaDaQ5fsy7pz9Zt3A/kMVUWhAu8TZPOF6Ax8dc9pJudTLnRgblQd0D3aEu1QJwqP6TlCYub2wa
+ IDaSVGSeHaUtxXyVN4xijO8sqAnH6e34dGblEL3fCcPV3BI4riYBCvhETv1qu4K2GWNIcN6MZSp
+ 8jnqpeiX6obCj6gSnEFMMblbdUyMjCxY5fKd9tO3QxxYJSSn49PeCEhGemyLwW4ZWvM0YZeI/Aa
+ bI9sLtpSvXw16w7VD+D7XhtfePf8NvBqBkFkGXFiwq2VtAKqhudIg6XKfukdkG81lRVZ9wclGAl
+ G0O4GQSbNIG+KR+yf5okwuu3ufyWARMlYCJZeJJN6MxlnZWpDTfLe/JvSTFpGm33a1tzXl3axlw
+ tULRIRgYSOBqS2K56QA==
+X-Authority-Analysis: v=2.4 cv=FsY1OWrq c=1 sm=1 tr=0 ts=69d7b429 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=U2XpRZ1s8oYUY_CUuxAA:9
+X-Proofpoint-ORIG-GUID: wqad3MMXo-0E5-ne4fXC0xjVWNvGba_8
+X-Proofpoint-GUID: wqad3MMXo-0E5-ne4fXC0xjVWNvGba_8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-09_04,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1011 adultscore=0 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604090126
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,33 +120,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Apr 2026 at 11:34, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> The following changes since commit b6a7d06213e5d2f7d124d16418bc289c4a8a4b82:
->
->   Update version for v11.0.0-rc2 release (2026-04-01 20:48:02 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->
-> for you to fetch changes up to 6c0f11de6118a870e6dd5e1928586885e4363ae7:
->
->   virtio-scsi: pass the same cdb_size to virtio_scsi_pop_req and virtio_scsi_handle_cmd_req_prepare (2026-04-09 12:29:49 +0200)
->
-> ----------------------------------------------------------------
-> * virtio-scsi: fix cdb_size issue
->
-> ----------------------------------------------------------------
-> Paolo Bonzini (1):
->       virtio-scsi: pass the same cdb_size to virtio_scsi_pop_req and virtio_scsi_handle_cmd_req_prepare
+Make the changes needed to the VFIOAPDevice state description to facilitate
+live guest migration.
 
+Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+---
+ hw/vfio/ap.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index 5c8f305653..fd68983702 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -41,6 +41,16 @@ struct VFIOAPDevice {
+     EventNotifier req_notifier;
+     EventNotifier cfg_notifier;
+ };
++OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
++
++static const VMStateDescription vmstate_ap_device = {
++    .name = "vfio-ap-device",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    },
++};
+ 
+ typedef struct APConfigChgEvent {
+     QTAILQ_ENTRY(APConfigChgEvent) next;
+@@ -56,8 +66,6 @@ static void __attribute__((constructor)) vfio_ap_global_init(void)
+     qemu_mutex_init(&cfg_chg_events_lock);
+ }
+ 
+-OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+-
+ static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+ {
+     vdev->needs_reset = false;
+@@ -297,11 +305,6 @@ static void vfio_ap_reset(DeviceState *dev)
+     }
+ }
+ 
+-static const VMStateDescription vfio_ap_vmstate = {
+-    .name = "vfio-ap",
+-    .unmigratable = 1,
+-};
+-
+ static void vfio_ap_instance_init(Object *obj)
+ {
+     VFIOAPDevice *vapdev = VFIO_AP_DEVICE(obj);
+@@ -335,7 +338,7 @@ static void vfio_ap_class_init(ObjectClass *klass, const void *data)
+ #ifdef CONFIG_IOMMUFD
+     object_class_property_add_str(klass, "fd", NULL, vfio_ap_set_fd);
+ #endif
+-    dc->vmsd = &vfio_ap_vmstate;
++    dc->vmsd = &vmstate_ap_device;
+     dc->desc = "VFIO-based AP device assignment";
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+     dc->realize = vfio_ap_realize;
+-- 
+2.52.0
 
-Applied, thanks (the 7997130293 version with the CVE tag in the commit message).
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
 
