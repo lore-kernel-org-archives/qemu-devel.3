@@ -4,81 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 290A2F364C3
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 22:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B283F364C3
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 22:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAxes-0005YV-Iq; Thu, 09 Apr 2026 18:15:31 -0400
+	id 1wAxhC-0006SP-NO; Thu, 09 Apr 2026 18:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wAxeq-0005Xl-OX
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 18:15:28 -0400
-Received: from p-east2-cluster5-host7-snip4-3.eps.apple.com ([57.103.79.26]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wAxep-0002fU-8S
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 18:15:28 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPS id
- D1ADD1800312; Thu, 09 Apr 2026 22:15:23 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775772926; x=1778364926;
- bh=/5Vbz+E96X2T1nAdWJTRiWqUg5QK2nKGppZ2ngbxNg0=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=TNcHZdSIkKucD0ge1PfMhvOauN9o3N4FZ8WTeyWSmKa/+daLG8N96ZQVltosz0UVgB5xFQ5uVVOL0Qmic4ALvwkjnESEbbF7n52u5waKWgCXjHSvTY/czQ6WRCtpAtcbWUp+IKD3MNAKSztL5c3zfy5BTy+uwl+2/QgSwYX0OLB99lUk3/wK5c+LOhZtrVILo88X0YpR0nW78v9u0+wu4yvl5f0qvxaBh3smFWMkYroQXYRwRgzmOU/49MEpOkX9DZi1FcXrGNMdEGuuVNRYwoDsUOiCZqmh2PYkKR4D4gpuA/IGnYavFZdbqpjFWvA9oHq29NzC4LDZlEU/CBkQBg==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPSA id
- 3768A18004D4; Thu, 09 Apr 2026 22:15:22 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v6 3/6] target/arm/emulate: add load/store pair
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260409220614.65558-4-lucaaamaral@gmail.com>
-Date: Fri, 10 Apr 2026 00:15:11 +0200
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, agraf@csgraf.de,
- peter.maydell@linaro.org, alex.bennee@linaro.org,
- richard.henderson@linaro.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <B3D25F3F-F62D-476F-9C11-E509E948ECEF@unpredictable.fr>
-References: <20260409220614.65558-1-lucaaamaral@gmail.com>
- <20260409220614.65558-4-lucaaamaral@gmail.com>
-To: Lucas Amaral <lucaaamaral@gmail.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-GUID: wM0UHdw3zNbOxmoNc8ErcgWwoRcbaDzf
-X-Proofpoint-ORIG-GUID: wM0UHdw3zNbOxmoNc8ErcgWwoRcbaDzf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDIwNSBTYWx0ZWRfX79ZiDLsJZIIy
- 2lDCKL6Tg7CD/+BQunbtosrJysTBS1wzxBZxY8aMqNep8OkKTVKEcTp3mk7uIEjnGWkkyjpr5me
- 4cXU0zHrB/Z337QEcoLyj9g33DLtlLiMReLnAuPxwJhvtVaPN7nnDqq4bpvruAJGkzGTHX9rZgx
- 5FOjL/nNQ3EfK2TqibN1xuH9yhYbOxzlqieFoVQQlIxzsmCS0yjuw56lmV3bLRl0EpPuGiPXZOX
- lyYoL2QRhuysXT62x7lFtlw1GO3SxYC+SHEzekBIQr6GceOwi+Li0+/ypFfROiFKNMh72gH7DNE
- 9WBf0lwKPUllqYBYtEBTM58hwkP2KQwrPTO2zhQEsH+B0XdHcWnV5ChuOyvA0g=
-X-Authority-Info-Out: v=2.4 cv=BoyQAIX5 c=1 sm=1 tr=0 ts=69d824fc
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=pOlJZkMN3WBBWC9JYAQA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_04,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- clxscore=1030 adultscore=0 bulkscore=0 spamscore=0 suspectscore=0
- lowpriorityscore=0 mlxlogscore=669 phishscore=0 malwarescore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2604090205
-Received-SPF: pass client-ip=57.103.79.26;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wAxhA-0006SF-N7
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 18:17:52 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wAxh9-0002xQ-0l
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 18:17:52 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 0D63F6A7D7;
+ Thu,  9 Apr 2026 22:17:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1775773067; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=voDaMEDmsGsrJCj/behQqN5i/FszPXKS5XiD9N22kOs=;
+ b=PVoZScHM03WczVx5Pij1nCd3D/hTv9U1I12CCoCKT4F6mssvz9nj8XROYT3GJJ0QBDevXo
+ D6gzoXK4cWJXS5ODv+aEIYvfHZ+U26vFslFKzt986ZCjYNXMipYGkZcni+75Fn5k9SANYp
+ I63OScD+hRZVFuhONgjrxaJYu155I8Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1775773067;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=voDaMEDmsGsrJCj/behQqN5i/FszPXKS5XiD9N22kOs=;
+ b=g6LXZXGnZLqLfPcyoHNTgvMRoONKkDBjk8veMlI8zVI4MUkVMrqXWgqqc6cMY+sjw43tWn
+ kz5uIj7cBr8oSUBA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PVoZScHM;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=g6LXZXGn
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1775773067; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=voDaMEDmsGsrJCj/behQqN5i/FszPXKS5XiD9N22kOs=;
+ b=PVoZScHM03WczVx5Pij1nCd3D/hTv9U1I12CCoCKT4F6mssvz9nj8XROYT3GJJ0QBDevXo
+ D6gzoXK4cWJXS5ODv+aEIYvfHZ+U26vFslFKzt986ZCjYNXMipYGkZcni+75Fn5k9SANYp
+ I63OScD+hRZVFuhONgjrxaJYu155I8Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1775773067;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=voDaMEDmsGsrJCj/behQqN5i/FszPXKS5XiD9N22kOs=;
+ b=g6LXZXGnZLqLfPcyoHNTgvMRoONKkDBjk8veMlI8zVI4MUkVMrqXWgqqc6cMY+sjw43tWn
+ kz5uIj7cBr8oSUBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 920E84A0B3;
+ Thu,  9 Apr 2026 22:17:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2JQIF4ol2GlUPwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 09 Apr 2026 22:17:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, =?utf-8?Q?Daniel?=
+ =?utf-8?Q?_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Zhiyi Guo
+ <zhguo@redhat.com>, Juraj
+ Marcin <jmarcin@redhat.com>, Peter Xu <peterx@redhat.com>, Prasad Pandit
+ <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede
+ <kwankhede@nvidia.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Joao Martins
+ <joao.m.martins@oracle.com>, Markus Armbruster <armbru@redhat.com>, Alex
+ Williamson <alex@shazbot.org>
+Subject: Re: [PATCH 12/14] migration: Fix calculation of expected_downtime
+ to take VFIO info
+In-Reply-To: <20260408165559.157108-13-peterx@redhat.com>
+References: <20260408165559.157108-1-peterx@redhat.com>
+ <20260408165559.157108-13-peterx@redhat.com>
+Date: Thu, 09 Apr 2026 19:17:44 -0300
+Message-ID: <87y0iv4w3b.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[14];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 0D63F6A7D7
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,24 +129,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
-
-> On 10. Apr 2026, at 00:06, Lucas Amaral <lucaaamaral@gmail.com> wrote:
-> 
-> Add emulation for load/store pair instructions (DDI 0487 C3.3.14 --
-> C3.3.16).  All addressing modes are covered: non-temporal (STNP/LDNP),
-> post-indexed, signed offset, and pre-indexed.
-> 
-> Instruction coverage:
->  - STP/LDP (GPR): 32/64-bit pairs, all addressing modes
->  - STP/LDP (SIMD/FP): 32/64/128-bit pairs, all addressing modes
->  - LDPSW: sign-extending 32-bit pair load
->  - STGP: store allocation tag pair (tag operation is NOP for MMIO)
-> 
-> Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
+> QEMU will provide an expected downtime for the whole system during
+> migration, by remembering the total dirty RAM that we synced the last time,
+> divides the estimated switchover bandwidth.
+>
+> That was flawed when VFIO is taking into account: consider there is a VFIO
+> GPU device that contains GBs of data to migrate during stop phase.  Those
+> will not be accounted in this math.
+>
+> Fix it by updating dirty_bytes_last_sync properly only when we go to the
+> next iteration, rather than hide this update in the RAM code.  Meanwhile,
+> fetch the total (rather than RAM-only) portion of dirty bytes, so as to
+> include GPU device states too.
+>
+> Update the comment of the field to reflect its new meaning.
+>
+> Now after this change, the expected-downtime to be read from query-migrate
+> should be very accurate even with VFIO devices involved.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
-> target/arm/emulate/a64-ldst.decode |  68 ++++++++++++++++++
-> target/arm/emulate/arm_emulate.c   | 108 +++++++++++++++++++++++++++++
-> 2 files changed, 176 insertions(+)
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>  migration/migration-stats.h |  8 +++-----
+>  migration/migration.c       | 11 ++++++++---
+>  migration/ram.c             |  1 -
+>  3 files changed, 11 insertions(+), 9 deletions(-)
+>
+> diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+> index 326ddb0088..1447316802 100644
+> --- a/migration/migration-stats.h
+> +++ b/migration/migration-stats.h
+> @@ -31,11 +31,9 @@
+>   */
+>  typedef struct {
+>      /*
+> -     * Number of bytes that were dirty last time that we synced with
+> -     * the guest memory.  We use that to calculate the downtime.  As
+> -     * the remaining dirty amounts to what we know that is still dirty
+> -     * since last iteration, not counting what the guest has dirtied
+> -     * since we synchronized bitmaps.
+> +     * Number of bytes that were reported dirty after the lastest
+
+typo: latest
+
+> +     * system-wise synchronization on dirty information.  It is used to
+
+s/on/of/ ?
+
+I can fix these at merge time.
 
