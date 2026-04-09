@@ -4,130 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B29EA3C5D
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 13:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40D62EA3C5E
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 13:23:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wApGZ-0003AA-Hu; Thu, 09 Apr 2026 09:17:51 -0400
+	id 1wApLb-0004c7-Qb; Thu, 09 Apr 2026 09:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1wApGY-00039o-0y
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:17:50 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wApLZ-0004bb-Ss
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:23:01 -0400
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1wApGV-0006Ks-V0
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:17:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 47A295BD26;
- Thu,  9 Apr 2026 13:17:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1775740666; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GcJ6Ha2tz+LOYbozpN6+iSJS4+XhkXs1K34YJC//NHs=;
- b=u8bC9b4E98pHhKGEP6I54N/2g4nWMKlh4APArpQavvEAzImc8M7ES6yuTx20vyw4GQ5LVP
- vjYDM0vaeTJO1ycGH8w4cmTMeI3dJxacNdTl6eBQe/PKT71BU3BAiC52RDs/xM9z+NDiG/
- 5mbbYDWQFJ1GHbWWQfqMvMrwctJm03c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1775740666;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GcJ6Ha2tz+LOYbozpN6+iSJS4+XhkXs1K34YJC//NHs=;
- b=J7djs8cudFbYUL+FrMcxO781cxkWx2YR6g+jmfkSUZE3cb1GWiP85A7KDVmwj6BBfTjBAo
- ZhzoCRCekiXsNZCw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=u8bC9b4E;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=J7djs8cu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1775740666; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GcJ6Ha2tz+LOYbozpN6+iSJS4+XhkXs1K34YJC//NHs=;
- b=u8bC9b4E98pHhKGEP6I54N/2g4nWMKlh4APArpQavvEAzImc8M7ES6yuTx20vyw4GQ5LVP
- vjYDM0vaeTJO1ycGH8w4cmTMeI3dJxacNdTl6eBQe/PKT71BU3BAiC52RDs/xM9z+NDiG/
- 5mbbYDWQFJ1GHbWWQfqMvMrwctJm03c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1775740666;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GcJ6Ha2tz+LOYbozpN6+iSJS4+XhkXs1K34YJC//NHs=;
- b=J7djs8cudFbYUL+FrMcxO781cxkWx2YR6g+jmfkSUZE3cb1GWiP85A7KDVmwj6BBfTjBAo
- ZhzoCRCekiXsNZCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C51264A0B3;
- Thu,  9 Apr 2026 13:17:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id JldLLfmm12nFNgAAD6G6ig
- (envelope-from <cfontana@suse.de>); Thu, 09 Apr 2026 13:17:45 +0000
-Message-ID: <e51e574b-d743-4010-be16-782fa6233711@suse.de>
-Date: Thu, 9 Apr 2026 15:17:45 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wApLY-00077q-4m
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 09:23:01 -0400
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-43cf8fe9c2aso565626f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 06:22:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775740978; x=1776345778; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=b0KvwrJymUbJzIua33NKYuOwjtkD7R74EjdXbvE3sgE=;
+ b=JLeHrgkB4sCOc504m67xc11y/rAkmTB0d7qfdvKeZFbKkywiKyJSgJ31yH8miEibp0
+ ErrvGt4RlFNzFBgjWns4hFEUdqpzBNFHXINQwWGsnFdKOnK+HScTDsPdIhdnbugJDGoc
+ yaEba+8rlbSZTdnxbyPbodw3R7QGaq4CqDem2rExR7hWFtb3WPCg81T2XHHF7F58DDd4
+ FKAIgoJCPvQOg7XTOA+2v51IZ1kkPkSLqee8Uk5jbzObSSMOd6A211SOom3cVclkYi9/
+ aieVvbPDO4FMbVqJi9zMnm1D9/L5sTPzeYcvJstDgIkk/HDMjnKqA+3qAb58N1Byjmjq
+ zGuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775740978; x=1776345778;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b0KvwrJymUbJzIua33NKYuOwjtkD7R74EjdXbvE3sgE=;
+ b=Ehmvmf+jn8F49ej9+/b5+GXRzVibKNtuEGg6F4TYGou0WxPoOaKaDl32AhPcIEUR4I
+ Y8mINBITcS/gH5wmwosWBm33jRpwxGykaI2hMG9hRttjj6C9uUVSSFBsYvkvJQ6bZm6C
+ VqIBfKHroNP8h9InsxkDqTxKZluYRJhwQHCnDW5l2lcFCg1MbKwPiikM5RYY4mP+XTNZ
+ j9oYJxfihUMseyZGZCsM0QsT+KEKVQj8q/P8gqLXJy0YS31T0rXxODYNiR5YjFo75dJj
+ joLSbDG4B3k5DPg7s1G4vtFp+xqpluXyOVN51H8o89VKXo/48+LlaPkX2f+zo3JdWmcS
+ fAbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnZXKfMbHagsJ19vEJ6ZRaWT4iuDyf0EwrRTFVt52cjkWkP5ESp46Bvw0oHksY7Y1Fs88bwdLKXvBw@nongnu.org
+X-Gm-Message-State: AOJu0YxKWNvWkZIV7T0jy6VLgu+dQiyGsMmcxYnmabtT9hP6ahVxygRo
+ d4wi5XEqdAnbgaJwGA+huQpPuIgMs8qjo0Q2nmzVYRR5Q+1x0Xmaya1UBgfxoGRyvdZjzEXPYNd
+ NYwhRHPOw4Q==
+X-Gm-Gg: AeBDieuwpClwZJ3HYPfwEdUiKS5P2evYMgbXfaaY0PBXDftZwpzM1sEpvBRu5ANlDyq
+ 0HSxKyUBA6dAGMslMYeVviFMf8kFQFyw9dYkgssBlUVNH+rcHLOesyyp1gf3J5H+VlZoaooYafT
+ pze/LpqO11ZHX2dzuDC5rHnWubO4AOs9/fbyTvPWG157Vr6ISp72eUf/TW64rRTMFM81cDWpYlK
+ BqonOSblXCYFYl5CfweOXJcsRWFPKkBaa9hAq6GqldC7JZK7FjafxPMDlLPTakrZM2kWjQxBlMK
+ 0EBeR6Lz03ma13OHgKbdM4dzIoeLxv7KPEdaCNHZpgVo5//Y0kQU+vWxMva0JZKQ5x9gUQ9Hs9o
+ aSf+k/g4EElkgmsrQsfqnkW7mQAmxtyq31ORIK/dgGLJiHEFYXZEZOs1aiTbYrufIzpAMf53dbX
+ 3pX+pvtypzECNxAbs0yQvk1vo=
+X-Received: by 2002:a5d:588c:0:b0:43d:1cec:4766 with SMTP id
+ ffacd0b85a97d-43d292e3a26mr37404760f8f.23.1775740977136; 
+ Thu, 09 Apr 2026 06:22:57 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d1e4f5294sm64127495f8f.35.2026.04.09.06.22.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Apr 2026 06:22:56 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C3B9C5FA6F;
+ Thu, 09 Apr 2026 14:22:55 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: Anthony Roberts <anthony.roberts@linaro.org>, qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, Stefan
+ Weil <sw@weilnetz.de>
+Subject: Re: [PATCH] ui/sdl2: Fix assumption of EGL presence at runtime
+In-Reply-To: <627204A0-8806-4420-97A2-CBDC36C41981@unpredictable.fr> (Mohamed
+ Mediouni's message of "Thu, 9 Apr 2026 14:21:59 +0200")
+References: <20260409110256.684-1-anthony.roberts@linaro.org>
+ <87qzoo9vzu.fsf@draig.linaro.org>
+ <627204A0-8806-4420-97A2-CBDC36C41981@unpredictable.fr>
+User-Agent: mu4e 1.14.1-pre1; emacs 30.1
+Date: Thu, 09 Apr 2026 14:22:55 +0100
+Message-ID: <87mrzcjmj4.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] migration: include timing and RAM stats on
- destination when query-migrate
-To: =?UTF-8?Q?Fabian_Gr=C3=BCnbichler?= <f.gruenbichler@proxmox.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Jim Fehlig <jfehlig@suse.com>, qemu-devel@nongnu.org,
- Trieu Huynh <vikingtc4@gmail.com>, Fiona Ebner <f.ebner@proxmox.com>
-References: <20260405152612.93027-1-viking4@gmail.com>
- <878qb05gq7.fsf@suse.de> <ada038hgmY9hNqPK@x1.local>
- <5f29c2dd-95eb-44c6-b22e-1909f7453cdf@suse.de>
- <1775739757.quazquvuzm.astroid@yuna.none>
-Content-Language: en-US
-From: Claudio Fontana <cfontana@suse.de>
-In-Reply-To: <1775739757.quazquvuzm.astroid@yuna.none>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,proxmox.com:url];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,suse.com,nongnu.org,gmail.com,proxmox.com];
- MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_SEVEN(0.00)[8]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:dkim, suse.de:mid]
-X-Rspamd-Queue-Id: 47A295BD26
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=cfontana@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x444.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -144,80 +110,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/26 15:08, Fabian Grünbichler wrote:
-> On April 9, 2026 12:08 pm, Claudio Fontana wrote:
->> On 4/8/26 22:04, Peter Xu wrote:
->>> On Mon, Apr 06, 2026 at 11:02:56AM -0300, Fabiano Rosas wrote:
->>>> Trieu Huynh <vikingtc4@gmail.com> writes:
->>>>
->>>>> From: Trieu Huynh <vikingtc4@gmail.com>
->>>>>
->>>>> When query-migrate is called on the *destination* QEMU after a precopy
->>>>> migration completes it returns only {"status": "completed"} — no timing,
->>>>> no RAM statistics.  The source correctly returns total-time, downtime,
->>>>> setup-time, and full ram stats.
-> 
->>>>> [..]
->>>>>
->>>>
->>>> Hi, remember to copy the interested people in your series. Using
->>>> get_maintainers is correct, but when there's already a discussion about
->>>> the topic it's good to add some CCs manually.
->>>>
->>>> +CC Daniel and Claudio
->>>
->>> The request is a valid one.  Said that, redo accounting on both sides seem
->>> to be a duplicated work and overkill to me, if src has everything.
->>>
->>> Is there a way we can make Libvirt always query the results before src dies
->>> and report it somewhere?  I recall these info were captured somewhere, do
->>> we at least dump them into logs?
->>>
->>> Thanks,
->>>
->>
->> I am interested in the outcome, but I think the approach shown here is fine, the amount of duplication seems minimal to me.
->>
->> That said if we _have_ to keep libvirt in the picture, I think I see a possible alternative, but then the feature is not available to anyone that does not use libvirt. At the same time, if libvirt is not used, one is free to keep source QEMU alive and query the stats, like I think Proxmox does.
-> 
-> that is correct, we call query-migrate in a loop while migrating both to
-> log progress and to manage migration parameters, and manually switch
-> execution and ownership over to the target node once the migration has
-> converged:
-> 
-> https://git.proxmox.com/?p=qemu-server.git;a=blob;f=src/PVE/QemuMigrate.pm;h=f7ec322770a47dcc8b89109ecfa6f15ea140f30f;hb=HEAD#l1423
+Mohamed Mediouni <mohamed@unpredictable.fr> writes:
 
-Hello Fabian, thanks for the confirmation,
-would it simplify your code if you had the stats already carried over by QEMU to the new QEMU instance?
+(Add Stefan to CC)
 
-I suspect you don't want to touch that code without a very compelling reason, but at least in principle it should make things easier?
+>> On 9. Apr 2026, at 14:08, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>>=20
+>> Anthony Roberts <anthony.roberts@linaro.org> writes:
+>>=20
+>>> The original commit had a section of code which worked on the assumption
+>>> that if OpenGL was enabled at build, it was present on the end user mac=
+hine,
+>>> and calls could be made to it. This is not always the case (such as Win=
+dows
+>>> on Arm devices).
+>>>=20
+>>> This line should have also included a runtime check.
+>>>=20
+>>> This commit moves the relevant line to inside a runtime check for OpenG=
+L.
+>>>=20
+>>> Fixes: 52053b7e0a0e ("ui/sdl2: Implement dpy dmabuf functions")
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3347
+>>> Signed-off-by: Anthony Roberts <anthony.roberts@linaro.org>
+>>=20
+>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>=20
+>> --=20
+>> Alex Benn=C3=A9e
+>> Virtualisation Tech Lead @ Linaro
+>>=20
+>
+> Hello,
+>
+> As a related note, modern QEMU is built assuming EGL which Windows does
+> not ship as a system library - and doesn=E2=80=99t support a WGL-only con=
+figuration...
+>
+> For those distributing QEMU binaries on Windows, they should bring an
+> EGL implementation along such as the one in mingw-w64-angleproject=20
+> or Mesa for Windows if they wish to support OpenGL functionality
+> instead of having crashes.
 
-> 
->> So with libvirt, I think we need a way to tell libvirt to keep the source QEMU alive before the actual switchover and the source QEMU is destroyed,
->> so that we can do everything that needs to be done from the platform layer before the source QEMU is lost.
->> It might go beyond querying for stats using QEMU and libvirt.
->>
->> Something similar to (and potentially combined with) virDomainMigrateFlags VIR_MIGRATE_PAUSE, for example:
->>
->> VIR_MIGRATE_NO_SOURCE_SHUTOFF
->>
->> So one might say:
->>
->> flags = VIR_MIGRATE_LIVE | VIR_MIGRATE_PERSIST_DEST | VIR_MIGRATE_UNDEFINE_SOURCE | VIR_MIGRATE_PAUSE | VIR_MIGRATE_NO_SOURCE_SHUTOFF
->> new_domain = virDomainMigrate3(old_domain, conn, params, nparams, flags)
->>
->> and then we could do everything that needs to be done from the platform layer,
->> then issue a virDomainResume to start the domain on destination,
->> and maybe a virDomainDestroyFlags on the original domain to terminate it on the source.
->>
->> But I would still favor the simplicity and the overall applicability of this series from Trieu Huynh.
->>
->> Thanks,
->>
->> Claudio
->>
->>
->>
-> 
+Stefan handles the semi-official windows binaries.=20
 
+Generally our windows coverage is poor as most developers can only use
+the mingw cross compilers (if they even check) and we have one Windows
+x86_64 runner via Cirrus which doesn't have bare metal access to the
+hypervisor.
+
+It would be nice to have better testing coverage in CI but that would
+require someone to fund some bare metal runners and volunteer to keep
+them updated.
+
+>
+> Wonder what=E2=80=99s the best place to document that requirement=E2=80=A6
+
+docs/system/devices/virtio/virtio-gpu.rst
+
+has a fairly in-depth breakdown of the various moving parts you need.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
