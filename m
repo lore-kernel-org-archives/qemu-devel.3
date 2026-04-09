@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E6F4F31E21
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89EDF31E22
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 15:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAqhw-0001FT-4B; Thu, 09 Apr 2026 10:50:12 -0400
+	id 1wAr8e-00076E-OG; Thu, 09 Apr 2026 11:17:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAqhu-0001El-Do
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:50:10 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ id 1wAr8b-000765-PF
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:17:46 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAqhr-0004NY-K0
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:50:09 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-650221149e2so1080182d50.0
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:50:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775746206; cv=none;
+ id 1wAr8Z-0002cy-2B
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:17:45 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-650775f427eso1050129d50.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 08:17:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775747860; cv=none;
  d=google.com; s=arc-20240605;
- b=ROaASn28b2dnmnOWRJaWYvBzQHR0UkltbhpqoU2qPZUHbNXeYlW+825BWyS7OP8D4U
- /1ARzxR7S//gamTGhqS3csE947gLEcVS2JqVUOK0Js3Nlqsw6GlLUFuFXSDH5Jwhh3Be
- aZ5kmZGx7Lh7aZn8YfiARskT3h4dY4p5DVfiUEDutH7VOVmlvKfZuLAjt8OQ6RL3Dxlc
- 0jdcv++g5sMLI/SHkpLhTJ2mqcSZ5z8KDmDB3EwEPgxfbzZmEwo0djvnnRMuuLPTO5d6
- fLyB4L0wzGEBz+wA/3olTtH4pQbzkKAL2LMcg04tKNkUCDeOZ7uiI0I0tMmGC8Cc1GNf
- WqGw==
+ b=kJ8mQg2X+dNFgCVy25TQCKoVP6Ipi/3utPV2YsWRjJQyrZ1G/QmVbRBWj2Tb0Y4Rd2
+ fxDEkRj+xoILB+zoVshPUcN/WnuiQbLAEN331Zo953K4dPtPJEoYaD+GnhDC/iqL1NUr
+ OhfmbiW6O2jO2QQuMhl84MQWjRTEnXm5hjPP/OPIpG91hX9IeMThIHPbF1omLEGpni8i
+ 2y6lBzkTleohv17IQA1/rSKB1XFQr1jZ059SzjTG1QYMfq77vqJWaQXBX99PBxKM/rYQ
+ kzKBx6Bpq5p/0+PAzAwEk9Tvtj7FCP8dEOd4RnqpnEudrKTFcNebbr6vrB2/Tbrivxqw
+ MsJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3Bh84hvQZDD90RDJE9/3XkBnbkUOOlExoDxsPNBRaKk=;
- fh=kzk51/YeQmI4YTCijVk5rTapTide1tT1Df99nxdLXdY=;
- b=VTJlSsMpaHmL6wgRNtKimsk5c1o6U8jAJUzPX3TnjGyIB1ax2+BWSCsThJR61eAY+b
- tyWp13avX0b02plpmslxbOhU4RtxW22NbAcwHvp2Rnclo8PZ5KcWIztcmk/190sHpCI8
- ESxAJVZ2IcCVnU41hgULJVZaajHyrHFGp99VFp0xNwb/0xnxHmpMqkEAiMwBFOutKBOz
- 6UvBm8/V8AG1F/ht1sVm6/ERMnrkgYhY8R4yS0YIGYP0HGVp7q3FjhqKuH5x6LFXE3zQ
- HwcmooDieV0ezTgRq1SOV8zlIje7V+TnEeFZcAtWwmyZ6pCYVlTsYW0d1OFAiotSyvNN
- YQqQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2hWpS+hbfzl39cSuVN5CbMkIXgOHcp0tZP0S2mlTLjs=;
+ fh=VUZ7eJox894qpEuQTEFSefKlY4l3x+uBmRGBSaSsOHU=;
+ b=JP0mCf83O9XbGtja/XeeIUspYegEarXnvDK5tMbYCqWoBa8yOCexqZzRpio8hM3xkT
+ wbg0o+LJFrZM9E6yFoEuHl0NE5IthAeqDTyfKA5aTMkOREFCd33iUbTvp98ZyGKvl/HM
+ zPjNbVkXdhpHYZ7yCbomDJIog4s6FL/11zTXO+qpYPoI9UW1+DVmnmIxs+94n1sCpBPh
+ lACijQFh6Qlc7pw4u8cHIJg1GlHWBPfbe8UMaX5HlXovseFP30tpOQdNfXDua1zyCPgJ
+ 8w/u3rvSejByTFgz+yXZ+pSEMrPcP8IJEhAVPYOxeW0WqFIj9YkA8kb1ULnqdvalDVag
+ UF+w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775746206; x=1776351006; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3Bh84hvQZDD90RDJE9/3XkBnbkUOOlExoDxsPNBRaKk=;
- b=INeYXairDMrl9izVtJ1BcOF7T6pFjTq9QifxMQEY2ssCRC8nTtYHl12hyJhdfH4hfU
- 4YkGzf1h8CUKgexdIbQaNf9VbCKqDW/5fG6KXQ5JHbTUM3curaTxSzgIDdtNF+8RbeN8
- jJqI2aTc0Gh0EIaxSxUi5wr0Va4+ENe0KGjB7bNAUMPhx2j6QwRNLUhN/FqDGDPjkv57
- pGyYzVTCa29f227BQLVxqi5VgVUClkWWE01n9IajzWraL3tH039qqMBC3UskwFMVACIQ
- SMLiVVm+nP5jhvsClY/gNgTsxmhJ/CW8ik6B/wGqivhaHdkpCEdsKC/uWS79tJghX3xP
- xwgQ==
+ d=linaro.org; s=google; t=1775747860; x=1776352660; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2hWpS+hbfzl39cSuVN5CbMkIXgOHcp0tZP0S2mlTLjs=;
+ b=LhZwSyR585jn+6+ywSZZGy3y2QVacWXpHftEJGKjawTwvPgqVlK3K6vkyL9q8fGnKv
+ HOR6snhup5KmVbsvujoAyBRqkA3ZS2pM0wcKw/0ocv7ONhZmf5CY/tJ+MRLkaNZyh/Ho
+ QvQBblGXJUzdktyQmsbattXXZ8kmDEzviCZyf7KppJqGAl8DBDEkfGQe+WGObVNbWYrZ
+ TJUsMoAYoHL5ssbbfEhZf+1SmXgK4v3KS/4mApc7tWDoO8JH4/dS0/4Ym5Ym9/omxyWe
+ Gc3hchFOVelM+Em1dgv7QTRoPc9J3kt4EBYxZJ+EQTDFbIQ6OMoz7fJN1PdNNl5F+oxD
+ k4TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775746206; x=1776351006;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3Bh84hvQZDD90RDJE9/3XkBnbkUOOlExoDxsPNBRaKk=;
- b=ELwRNJ11gUqB0xnPxnypTz3aOpFcPk+kcqX8YisUJKsjmvRTzkYLyApDqMnSdTgzpZ
- KOzrycKTjjoyl5sZhuWW5Fs7HUeqwi5gCtO5bwep7xygAHszwo57UaFUw4J6SYeASsd5
- dqWvbL+YPLgU8mEjyCp0On5XV8ac5FhdBvtMyGuB2Z+RQAGywqFevzTLDWnavafggrOl
- 1cOFLl3O6Gd7hRwjnlhbWBlmbdNpEoJ7bNVoTb304QQPNH8X6vP8KZbumImvWjAuB2UG
- TwaAHQeqZoTK0CL41kAOCzFT7p/61JlizZmdZ5qaLp3PpV2JOBokoVzIwVrohvhEq+Rl
- 1Ihw==
-X-Gm-Message-State: AOJu0YwwNUzeLzhCLGkG6FHPOR8WsnJb731XWye3XdzbKqN1tqpTqB0k
- u7V1zbsQmkzA3M2De/0zwcn4bbuEhYDksHsYnWmHKVMKeiN1FVmpr53+upEdLrfeEAY+53wMEiB
- +IcHrKKtkE9r8Lk4r57CqdWuI68eAre+TGNUsc5mcqQ==
-X-Gm-Gg: AeBDieteq36beChfa2PQ/36gs1j/gsdHqyaJgj6YLhOsf4hd8oK6QYFurok2cJF+tOK
- 9mctAQml3HiSf8/cK4LdCFiOESLvIOH3ucMb1VCd/Hqe0F8DQRfFQ4rNcLEKj5vD3+22VxSLGN6
- e43EK8E5j6ogRZ0dVYqZ61h1D8PnafYT7xdgYqMDIpSMq39mReM8eh9zOMZ1qH4KS1EjPE5EcDy
- KmrmRsaR/SD4FxR7GxyL+ZrN3Wf9on1ItE2DHcdxyS3yZkp9X84PpkAfwgcLOORG45N/SPsK+kt
- 7RbxD3/OwqGWHC9QMpMOt4u5tP1w0IQ3EC1ubX8RAVw90QVrMJKn6/tH285uRS/NblY=
-X-Received: by 2002:a53:e018:0:b0:650:1c44:cce1 with SMTP id
- 956f58d0204a3-6504873f20cmr17378826d50.25.1775746205653; Thu, 09 Apr 2026
- 07:50:05 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775747860; x=1776352660;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2hWpS+hbfzl39cSuVN5CbMkIXgOHcp0tZP0S2mlTLjs=;
+ b=jH1CXUX1JzukVJa+Rtw5WxsFsVP9GVFbVxGh54gqwJ7Vj9xKnLKwJ5h0/CcZdaAySq
+ UyM5l26u1J1+5QJD5u/XBZ8D/ZrI6Vy2Uz7JZPS0KDcoa5/olUMNHDXIjC3d1zuoGzh2
+ wIiah7XURP8iXQCogRnxZsJc8Dz9otbRPbAbaCOEiCUgBRdY2tTpTII0LLWah2DBOn+c
+ ndqXE7cdARg6qsu7hygDGefks5CgFgsSLLox0ASd9HeJqxoL0anu2Lywj3FEYJmzJukF
+ IVBQEQQhQtHSdjGNUYFusH2+HvmQTfxd+HrFsu6XSH+vWDEKks+wI862bwqt3MGoNo7N
+ C3VQ==
+X-Gm-Message-State: AOJu0Yz3/X06f2eazagTBOnXGnzWXTuW8dzMqswbPiEhpYBwyFZ+prdp
+ eXzsO1pe3EbaDck5e0sHl943pEEqq6Z1ZF2qSylLOpTPFifYG5HrNf9DkvX46OsDzBMs/8J2XjP
+ Ry40VuI5uvEfB0BhwwN4lcP91JqobW720CFNPz1zGcw==
+X-Gm-Gg: AeBDieu0qk5HWtQsTRoHmu8RVv6lOfTxhukhxXxQ73MFgKmhcXv+sCmRBOQlLBPRVCU
+ ZVQ5Mmx+kmyUNGU2EzhGSLKL7HTMxRoewROGmHZVwSt3hjj1k9fNrUwBG1tfOT3htyjvYGngRl1
+ nls7iWwy3r5WFocizvkiiETC4M87kldiiHSiGF+NPBh+mwkTEi00Eqp90IHbboxu7fR5l/qIAIs
+ dAZWopr9HLlFJvwBffqnk//FKLI25PE89yDPgx0lWlKnnAduV+2ESYyMsrlABN2hbQ/NdnJTItD
+ 5u7vqo1/Ad5cMFybcXdhAMbz7uUs42B4PX5gBDs29MkaENp2NkyB0vbhWqAbt6MwBSo=
+X-Received: by 2002:a05:690e:1488:b0:650:497f:7167 with SMTP id
+ 956f58d0204a3-650497f78e8mr24954019d50.48.1775747860107; Thu, 09 Apr 2026
+ 08:17:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260303143157.80437-1-1486344514@qq.com>
- <tencent_541F0EB26A5B5A6BDF2823380282EDEBEC07@qq.com>
-In-Reply-To: <tencent_541F0EB26A5B5A6BDF2823380282EDEBEC07@qq.com>
+References: <20260306121511.1781020-1-kchiu@axiado.com>
+ <20260306121511.1781020-2-kchiu@axiado.com>
+In-Reply-To: <20260306121511.1781020-2-kchiu@axiado.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Apr 2026 15:49:52 +0100
-X-Gm-Features: AQROBzCbi-flSf6hL5SX71pEJwTg5sglqhcVuQJmAD_7b_Mq4uZZMLw6pea5u2Y
-Message-ID: <CAFEAcA_UkrVZFzsN=ROKJLP9w+59+_1+A1vT84xs9N7QVQdPbQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] hw/display: Add i.MX6UL LCDIF device model
-To: Yucai Liu <1486344514@qq.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, jcd@tribudubois.net, 
- pbonzini@redhat.com
+Date: Thu, 9 Apr 2026 16:17:28 +0100
+X-Gm-Features: AQROBzB2a7_DW9Urk4GdXOr54T-XifjSdAP3vtWwYRih-5O3NCh-5hT9AqCanTw
+Message-ID: <CAFEAcA_LCnsubbLH6mQDXHJF4e+ejVzFpy55=7W1jAh_gEXL2g@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] hw/arm: Add Axiado SoC AX3000
+To: Kuan-Jui Chiu <kchiu@axiado.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,588 +114,541 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Mar 2026 at 14:32, Yucai Liu <1486344514@qq.com> wrote:
+On Fri, 6 Mar 2026 at 12:21, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
 >
-> Implement a basic i.MX6UL LCDIF controller model with MMIO\nregisters, fr=
-ame-done interrupt behavior, and framebuffer-backed\ndisplay updates for RG=
-B565 and XRGB8888 inputs.\n\nModel the register fields using registerfields=
-.h helpers, provide\nmigration support via vmstate, and place the device un=
-der hw/display/\nas a standalone display device.
+> This patch adds new model for Axiado SoC AX3000 which supports
+>     4 Cortex-A53 ARM64 CPUs
+>     Arm Generic Interrupt Controller v3
+>     4 Cadence UARTs
+>     1 SDHCI controller with PHY
+>
+> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
 
-Something odd seems to have happened to your commit
-message -- looks like it's ended up with literal "\n"
-instead of newlines ?
+Hi; thanks for this patch; my review comments are below. I have
+some comments about structure but nothing too major I think.
 
-
-> Signed-off-by: Yucai Liu <1486344514@qq.com>
 > ---
->  MAINTAINERS                       |   2 +
->  hw/display/imx6ul_lcdif.c         | 435 ++++++++++++++++++++++++++++++
->  include/hw/display/imx6ul_lcdif.h |  36 +++
->  3 files changed, 473 insertions(+)
->  create mode 100644 hw/display/imx6ul_lcdif.c
->  create mode 100644 include/hw/display/imx6ul_lcdif.h
+>  hw/arm/Kconfig              |   8 +
+>  hw/arm/axiado-soc.c         | 287 ++++++++++++++++++++++++++++++++++++
+>  hw/arm/meson.build          |   2 +
+>  include/hw/arm/axiado-soc.h | 152 +++++++++++++++++++
+>  4 files changed, 449 insertions(+)
+>  create mode 100644 hw/arm/axiado-soc.c
+>  create mode 100644 include/hw/arm/axiado-soc.h
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4918f41ec4..b58022eb28 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -895,8 +895,10 @@ L: qemu-arm@nongnu.org
->  S: Odd Fixes
->  F: hw/arm/mcimx6ul-evk.c
->  F: hw/arm/fsl-imx6ul.c
-> +F: hw/display/imx6ul_lcdif.c
->  F: hw/misc/imx6ul_ccm.c
->  F: include/hw/arm/fsl-imx6ul.h
-> +F: include/hw/display/imx6ul_lcdif.h
->  F: include/hw/misc/imx6ul_ccm.h
->  F: docs/system/arm/mcimx6ul-evk.rst
->
-> diff --git a/hw/display/imx6ul_lcdif.c b/hw/display/imx6ul_lcdif.c
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index c66c452737..a91b81b298 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -699,3 +699,11 @@ config ARMSSE
+>      select UNIMP
+>      select SSE_COUNTER
+>      select SSE_TIMER
+> +
+> +config AXIADO_SOC
+> +    bool
+> +    default y
+> +    depends on ARM
+> +    select ARM_GIC
+> +    select CADENCE # UART
+> +    select SDHCI
+> diff --git a/hw/arm/axiado-soc.c b/hw/arm/axiado-soc.c
 > new file mode 100644
-> index 0000000000..b84084a33e
+> index 0000000000..e23410c147
 > --- /dev/null
-> +++ b/hw/display/imx6ul_lcdif.c
-> @@ -0,0 +1,435 @@
+> +++ b/hw/arm/axiado-soc.c
+> @@ -0,0 +1,287 @@
 > +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * Axiado SoC AX3000
 > + *
-> + * i.MX6UL LCDIF controller
+> + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
 > + *
-> + * Copyright (c) 2026 Yucai Liu <1486344514@qq.com>
+> + * This program is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU General Public License as
+> + * published by the Free Software Foundation; either version 2 or
+> + * (at your option) version 3 of the License.
+> + *
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along
+> + * with this program; if not, see <http://www.gnu.org/licenses/>.
+
+If you run scripts/checkpatch.pl on your patches, it should
+warn you that we prefer to use SPDX identifiers rather than
+the traditional GPL license boilerplate.
+
+
 > + */
+
+Is there a data sheet for this SoC? The top level comment is
+a good place to put the URL for it.
+
+Without a datasheet, it's trickier to review.
+
 > +
 > +#include "qemu/osdep.h"
-> +#include "hw/display/imx6ul_lcdif.h"
-> +#include "hw/core/irq.h"
-> +#include "hw/core/registerfields.h"
-> +#include "hw/display/framebuffer.h"
-> +#include "migration/vmstate.h"
 > +#include "system/address-spaces.h"
-> +#include "qapi/error.h"
-> +#include "qemu/module.h"
-> +#include "ui/pixel_ops.h"
+> +#include "hw/arm/bsa.h"
+> +#include "hw/arm/axiado-soc.h"
+> +#include "system/system.h"
+> +#include "qobject/qlist.h"
+> +#include "qom/object.h"
 > +
-> +#define LCDIF_MMIO_SIZE             0x1000
-
-Where do we get this size from ? The datasheet I have
-suggests the block for the LCDIF in the memory map
-is 16K, and on the other hand the last register is
-at offset 0x290.
-
-> +
-> +REG32(CTRL, 0x00)
-> +    FIELD(CTRL, RUN, 0, 1)
-> +    FIELD(CTRL, WORD_LENGTH, 8, 2)
-> +REG32(CTRL1, 0x10)
-> +    FIELD(CTRL1, CUR_FRAME_DONE_IRQ, 9, 1)
-> +    FIELD(CTRL1, CUR_FRAME_DONE_IRQ_EN, 13, 1)
-> +REG32(V4_TRANSFER_COUNT, 0x30)
-> +    FIELD(V4_TRANSFER_COUNT, H_COUNT, 0, 16)
-> +    FIELD(V4_TRANSFER_COUNT, V_COUNT, 16, 16)
-> +REG32(V4_CUR_BUF, 0x40)
-> +REG32(V4_NEXT_BUF, 0x50)
-> +REG32(AS_NEXT_BUF, 0x230)
-> +
-> +#define REG_SET                     0x4
-> +#define REG_CLR                     0x8
-> +#define REG_TOG                     0xc
-> +
-> +#define CTRL_WORD_LENGTH_16         0
-> +#define CTRL_WORD_LENGTH_24         3
-> +
-> +#define FRAME_PERIOD_NS             (16 * 1000 * 1000ULL)
-> +
-> +static inline uint32_t imx6ul_lcdif_reg_idx(hwaddr offset)
+> +static uint64_t sdhci_phy_read(void *opaque, hwaddr offset, unsigned size)
 > +{
-> +    return (offset & ~0xf) >> 2;
-
-Why >> 2 ? The device seems to have registers at address offsets
-0x00, 0x10, etc, with in some cases also pseudo-regs for set/clear/toggle
-at 0x4, 0x8, 0xc, so I see why & ~0xf. But if we only shift by 2
-then we get indexes 0, 4, 8, etc and we're not using all the
-array elements.
-
+> +    uint32_t val = 0x00;
+> +
+> +    switch (offset) {
+> +    case REG_ID:
+> +        val = 0x3dff6870;
+> +        break;
+> +    case REG_STATUS:
+> +        // Make DLL_RDY | CAL_DONE
+> +        val =  (1u << 0) | (1u << 6);
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    return val;
 > +}
 > +
-> +static inline uint32_t imx6ul_lcdif_reg_read(IMX6ULLCDIFState *s, hwaddr=
- offset)
+> +static void sdhci_phy_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
 > +{
-> +    return s->regs[imx6ul_lcdif_reg_idx(offset)];
+> +    /* TBD */
 > +}
 > +
-> +static inline void imx6ul_lcdif_reg_write(IMX6ULLCDIFState *s, hwaddr of=
-fset,
-> +                                          uint32_t value)
-> +{
-> +    s->regs[imx6ul_lcdif_reg_idx(offset)] =3D value;
-> +}
-> +
-> +static inline bool imx6ul_lcdif_is_running(IMX6ULLCDIFState *s)
-> +{
-> +    uint32_t ctrl =3D imx6ul_lcdif_reg_read(s, A_CTRL);
+> +static const MemoryRegionOps sdhci_phy_ops = {
+> +    .read = sdhci_phy_read,
+> +    .write = sdhci_phy_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +};
 
-Consider following how the imx6ul_ccm device handles its
-registers (it seems to be the other one we have that has some
-of this SET/CLR/TOG stuff). Then you could write
-    return FIELD_EX32(s->regs[LCDIF_RL], CTRL, RUN);
-
-and save some of the extra wrapper function stuff.
+Please put models of sub-devices of the SoC into their own
+source files in the appropriate subdirectory of the hw/ directory.
 
 > +
-> +    return FIELD_EX32(ctrl, CTRL, RUN);
+> +static uint64_t timer_ctrl_read(void *opaque, hwaddr offset, unsigned size)
+> +{
+> +    return 0x0;
 > +}
 > +
-> +static inline bool imx6ul_lcdif_frame_done_pending(IMX6ULLCDIFState *s)
+> +static void timer_ctrl_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
 > +{
-> +    uint32_t ctrl1 =3D imx6ul_lcdif_reg_read(s, A_CTRL1);
-> +
-> +    return FIELD_EX32(ctrl1, CTRL1, CUR_FRAME_DONE_IRQ);
+> +    /* TBD */
 > +}
 > +
-> +static void imx6ul_lcdif_schedule_frame(IMX6ULLCDIFState *s)
-> +{
-> +    int64_t now =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> +static const MemoryRegionOps timer_ctrl_ops = {
+> +    .read = timer_ctrl_read,
+> +    .write = timer_ctrl_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +};
+
+If you can get by with absolutely no implementation of a device,
+consider using TYPE_UNIMPLEMENTED_DEVICE (from hw/misc/unimp.c),
+which will give you a "reads as zero, writes ignored" block which
+also logs when the guest touches it. (You can either create the
+device directly, or use the create_unimplemented_device() helper
+function.)
+
 > +
-> +    timer_mod(s->frame_timer, now + FRAME_PERIOD_NS);
-> +}
-> +
-> +static void imx6ul_lcdif_maybe_schedule_frame(IMX6ULLCDIFState *s)
+> +static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
 > +{
-> +    if (imx6ul_lcdif_is_running(s) && !imx6ul_lcdif_frame_done_pending(s=
-)) {
-> +        imx6ul_lcdif_schedule_frame(s);
-> +    } else {
-> +        timer_del(s->frame_timer);
+> +    switch (offset) {
+> +    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
+> +        return 0x20891b;
+> +    case CLKRST_CPU_PLL_STS_OFFSET:
+> +        return 0x01;
+> +    default:
+> +        return 0x00;
 > +    }
 > +}
 > +
-> +static void imx6ul_lcdif_update_irq(IMX6ULLCDIFState *s)
+> +static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
 > +{
-> +    uint32_t ctrl1 =3D imx6ul_lcdif_reg_read(s, A_CTRL1);
-> +    bool level =3D FIELD_EX32(ctrl1, CTRL1, CUR_FRAME_DONE_IRQ_EN) &&
-> +                 FIELD_EX32(ctrl1, CTRL1, CUR_FRAME_DONE_IRQ);
-> +
-> +    qemu_set_irq(s->irq, level);
+> +    /* TBD */
 > +}
 > +
-> +static void imx6ul_lcdif_frame_done(IMX6ULLCDIFState *s)
-> +{
-> +    uint32_t ctrl1 =3D imx6ul_lcdif_reg_read(s, A_CTRL1);
+> +static const MemoryRegionOps pll_ops = {
+> +    .read = pll_read,
+> +    .write = pll_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +};
 > +
-> +    ctrl1 =3D FIELD_DP32(ctrl1, CTRL1, CUR_FRAME_DONE_IRQ, 1);
-> +    imx6ul_lcdif_reg_write(s, A_CTRL1, ctrl1);
-> +    imx6ul_lcdif_update_irq(s);
-> +}
-> +
-> +static void imx6ul_lcdif_draw_line_rgb565(void *opaque, uint8_t *dst,
-> +                                          const uint8_t *src, int width,
-> +                                          int dststep)
+> +static void ax3000_init(Object *obj)
 > +{
-> +    uint32_t *dst32 =3D (uint32_t *)dst;
+> +    AxiadoSoCState *s = AXIADO_SOC(obj);
+> +    AxiadoSoCClass *sc = AXIADO_SOC_GET_CLASS(s);
 > +    int i;
 > +
-> +    (void)opaque;
-> +    (void)dststep;
-
-You don't need to use this to mark arguments as not used;
-QEMU's build system does not get the compilers to complain
-about unused arguments.
-
-> +
-> +    for (i =3D 0; i < width; i++) {
-> +        uint16_t pixel =3D lduw_le_p(src);
-> +        uint8_t r =3D ((pixel >> 11) & 0x1f) << 3;
-> +        uint8_t g =3D ((pixel >> 5) & 0x3f) << 2;
-> +        uint8_t b =3D (pixel & 0x1f) << 3;
-> +
-> +        *dst32++ =3D rgb_to_pixel32(r, g, b);
-> +        src +=3D 2;
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        g_autofree char *name = g_strdup_printf("cpu%d", i);
+> +        object_initialize_child(obj, name, &s->cpu[i], ARM_CPU_TYPE_NAME("cortex-a53"));
 > +    }
+> +
+> +    object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
+> +
+> +    for (i = 0; i < AX3000_NUM_UARTS; i++) {
+> +        g_autofree char *name = g_strdup_printf("uart%d", i);
+> +        object_initialize_child(obj, name, &s->uart[i], TYPE_CADENCE_UART);
+> +    }
+> +
+> +    object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_SYSBUS_SDHCI);
 > +}
 > +
-> +static void imx6ul_lcdif_draw_line_xrgb8888(void *opaque, uint8_t *dst,
-> +                                            const uint8_t *src, int widt=
-h,
-> +                                            int dststep)
+> +static void ax3000_realize(DeviceState *dev, Error **errp)
 > +{
-> +    uint32_t *dst32 =3D (uint32_t *)dst;
+> +    AxiadoSoCState *s = AXIADO_SOC(dev);
+> +    AxiadoSoCClass *sc = AXIADO_SOC_GET_CLASS(s);
+> +    SysBusDevice *gicsbd = SYS_BUS_DEVICE(&s->gic);
+> +    DeviceState *gicdev = DEVICE(&s->gic);
+> +    QList *redist_region_count;
 > +    int i;
 > +
-> +    (void)opaque;
-> +    (void)dststep;
+> +    /* CPUs */
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
+> +                                &error_abort);
 > +
-> +    for (i =3D 0; i < width; i++) {
-> +        uint32_t pixel =3D ldl_le_p(src);
-> +        uint8_t r =3D (pixel >> 16) & 0xff;
-> +        uint8_t g =3D (pixel >> 8) & 0xff;
-> +        uint8_t b =3D pixel & 0xff;
-> +
-> +        *dst32++ =3D rgb_to_pixel32(r, g, b);
-> +        src +=3D 4;
-> +    }
-> +}
-> +
-> +static void imx6ul_lcdif_update_display(void *opaque)
-> +{
-> +    IMX6ULLCDIFState *s =3D opaque;
-> +    DisplaySurface *surface =3D qemu_console_surface(s->con);
-> +    uint32_t transfer_count =3D imx6ul_lcdif_reg_read(s, A_V4_TRANSFER_C=
-OUNT);
-> +    uint32_t width =3D FIELD_EX32(transfer_count, V4_TRANSFER_COUNT, H_C=
-OUNT);
-> +    uint32_t height =3D FIELD_EX32(transfer_count, V4_TRANSFER_COUNT, V_=
-COUNT);
-> +    uint32_t ctrl =3D imx6ul_lcdif_reg_read(s, A_CTRL);
-> +    uint32_t frame_base =3D imx6ul_lcdif_reg_read(s, A_V4_CUR_BUF);
-> +    drawfn fn;
-> +    int first =3D 0;
-> +    int last =3D 0;
-> +    int src_width;
-> +
-> +    if (!imx6ul_lcdif_is_running(s) || width =3D=3D 0 || height =3D=3D 0=
-) {
-> +        return;
-> +    }
-> +
-> +    if (surface_bits_per_pixel(surface) !=3D 32) {
-> +        return;
-> +    }
-> +
-> +    switch (FIELD_EX32(ctrl, CTRL, WORD_LENGTH)) {
-> +    case CTRL_WORD_LENGTH_16:
-> +        s->src_bpp =3D 2;
-> +        fn =3D imx6ul_lcdif_draw_line_rgb565;
-> +        break;
-> +    case CTRL_WORD_LENGTH_24:
-> +        s->src_bpp =3D 4;
-> +        fn =3D imx6ul_lcdif_draw_line_xrgb8888;
-> +        break;
-> +    default:
-> +        return;
-> +    }
-> +
-> +    if (surface_width(surface) !=3D width || surface_height(surface) !=
-=3D height) {
-> +        qemu_console_resize(s->con, width, height);
-> +        surface =3D qemu_console_surface(s->con);
-> +        s->invalidate =3D true;
-> +    }
-> +
-> +    src_width =3D width * s->src_bpp;
-> +    if (s->invalidate || s->fb_base !=3D frame_base ||
-> +        s->src_width !=3D src_width || s->rows !=3D height) {
-> +        framebuffer_update_memory_section(&s->fbsection, get_system_memo=
-ry(),
-> +                                          frame_base, height, src_width)=
-;
-> +        s->fb_base =3D frame_base;
-> +        s->src_width =3D src_width;
-> +        s->rows =3D height;
-> +    }
-> +
-> +    framebuffer_update_display(surface, &s->fbsection, width, height,
-> +                               src_width, surface_stride(surface), 0,
-> +                               s->invalidate, fn, s, &first, &last);
-> +    if (first >=3D 0) {
-> +        dpy_gfx_update(s->con, 0, first, width, last - first + 1);
-> +    }
-> +
-> +    s->invalidate =3D false;
-> +}
-> +
-> +static void imx6ul_lcdif_invalidate_display(void *opaque)
-> +{
-> +    IMX6ULLCDIFState *s =3D opaque;
-> +
-> +    s->invalidate =3D true;
-> +}
-> +
-> +static const GraphicHwOps imx6ul_lcdif_graphic_ops =3D {
-> +    .invalidate =3D imx6ul_lcdif_invalidate_display,
-> +    .gfx_update =3D imx6ul_lcdif_update_display,
-> +};
-> +
-> +static void imx6ul_lcdif_frame_timer_cb(void *opaque)
-> +{
-> +    IMX6ULLCDIFState *s =3D opaque;
-> +
-> +    if (!imx6ul_lcdif_is_running(s) || imx6ul_lcdif_frame_done_pending(s=
-)) {
-> +        return;
-> +    }
-> +
-> +    imx6ul_lcdif_frame_done(s);
-> +}
-> +
-> +static uint64_t imx6ul_lcdif_read(void *opaque, hwaddr offset, unsigned =
-size)
-> +{
-> +    IMX6ULLCDIFState *s =3D opaque;
-> +
-> +    assert(size =3D=3D 4);
-> +    assert(!(offset & 0x3));
-> +    assert(offset < LCDIF_MMIO_SIZE);
-> +
-> +    return s->regs[imx6ul_lcdif_reg_idx(offset)];
-> +}
-> +
-> +static void imx6ul_lcdif_write(void *opaque, hwaddr offset,
-> +                               uint64_t value, unsigned size)
-> +{
-> +    IMX6ULLCDIFState *s =3D opaque;
-> +    hwaddr reg =3D offset & ~0xf;
-> +    uint32_t idx;
-> +    uint32_t oldv;
-> +
-> +    assert(size =3D=3D 4);
-> +    assert(!(offset & 0x3));
-> +    assert(offset < LCDIF_MMIO_SIZE);
-> +
-> +    idx =3D imx6ul_lcdif_reg_idx(reg);
-> +    oldv =3D s->regs[idx];
-> +
-> +    switch (offset & 0xf) {
-> +    case REG_SET:
-> +        s->regs[idx] |=3D (uint32_t)value;
-> +        break;
-> +    case REG_CLR:
-> +        s->regs[idx] &=3D ~(uint32_t)value;
-> +        break;
-> +    case REG_TOG:
-> +        s->regs[idx] ^=3D (uint32_t)value;
-> +        break;
-> +    default:
-> +        s->regs[idx] =3D (uint32_t)value;
-> +        break;
+> +        if (object_property_find(OBJECT(&s->cpu[i]), "has_el3")) {
+> +            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el3",
+> +                                     false, &error_abort);
 
-Not every register has the SET/CLR/TOG extra registers.
+Does your SoC really not implement EL3 ?
 
-> +    }
-> +
-> +    switch (reg) {
-> +    case A_CTRL:
-> +        if (!FIELD_EX32(oldv, CTRL, RUN) &&
-> +            FIELD_EX32(s->regs[idx], CTRL, RUN)) {
-> +            s->invalidate =3D true;
-> +            graphic_hw_invalidate(s->con);
-> +            imx6ul_lcdif_maybe_schedule_frame(s);
-> +            break;
 > +        }
-> +        if (FIELD_EX32(oldv, CTRL, RUN) &&
-> +            !FIELD_EX32(s->regs[idx], CTRL, RUN)) {
-> +            timer_del(s->frame_timer);
+> +
+> +        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
+> +            return;
 > +        }
-> +        break;
-> +    case A_CTRL1:
-> +        if (FIELD_EX32(oldv, CTRL1, CUR_FRAME_DONE_IRQ) &&
-> +            !FIELD_EX32(s->regs[idx], CTRL1, CUR_FRAME_DONE_IRQ)) {
-> +            imx6ul_lcdif_maybe_schedule_frame(s);
+> +    }
+> +
+> +    /* GIC */
+> +    qdev_prop_set_uint32(gicdev, "num-cpu", sc->num_cpus);
+> +    qdev_prop_set_uint32(gicdev, "num-irq",
+> +                         AX3000_NUM_IRQS + GIC_INTERNAL);
+> +
+> +    redist_region_count = qlist_new();
+> +    qlist_append_int(redist_region_count, sc->num_cpus);
+> +    qdev_prop_set_array(gicdev, "redist-region-count", redist_region_count);
+> +
+> +    if (!sysbus_realize(gicsbd, errp)) {
+> +        return;
+> +    }
+> +
+> +    sysbus_mmio_map(gicsbd, 0, AX3000_GIC_DIST_BASE);
+> +    sysbus_mmio_map(gicsbd, 1, AX3000_GIC_REDIST_BASE);
+> +
+> +    /*
+> +     * Wire the outputs from each CPU's generic timer and the GICv3
+> +     * maintenance interrupt signal to the appropriate GIC PPI inputs, and
+> +     * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
+> +     */
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        DeviceState *cpudev = DEVICE(&s->cpu[i]);
+> +        int intidbase = AX3000_NUM_IRQS + i * GIC_INTERNAL;
+> +        qemu_irq irq;
+> +
+> +        /*
+> +         * Mapping from the output timer irq lines from the CPU to the
+> +         * GIC PPI inputs.
+> +         */
+> +        static const int timer_irqs[] = {
+> +            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
+> +            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
+> +            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
+> +            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ
+> +        };
+> +
+> +        for (int j = 0; j < ARRAY_SIZE(timer_irqs); j++) {
+> +            irq = qdev_get_gpio_in(gicdev, intidbase + timer_irqs[j]);
+> +            qdev_connect_gpio_out(cpudev, j, irq);
 > +        }
-> +        break;
-> +    case A_V4_TRANSFER_COUNT:
-> +        s->invalidate =3D true;
-> +        graphic_hw_invalidate(s->con);
-> +        break;
-> +    case A_V4_CUR_BUF:
-> +        s->invalidate =3D true;
-> +        graphic_hw_invalidate(s->con);
-> +        break;
-> +    case A_V4_NEXT_BUF:
-> +        imx6ul_lcdif_reg_write(s, A_V4_CUR_BUF, s->regs[idx]);
-> +        imx6ul_lcdif_frame_done(s);
-> +        s->invalidate =3D true;
-> +        graphic_hw_invalidate(s->con);
-> +        imx6ul_lcdif_maybe_schedule_frame(s);
+> +
+> +        irq = qdev_get_gpio_in(gicdev, intidbase + ARCH_GIC_MAINT_IRQ);
+> +        qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
+> +                                        0, irq);
+> +
+> +        sysbus_connect_irq(gicsbd, i,
+> +                           qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+> +        sysbus_connect_irq(gicsbd, i + sc->num_cpus,
+> +                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+> +        sysbus_connect_irq(gicsbd, i + 2 * sc->num_cpus,
+> +                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+> +        sysbus_connect_irq(gicsbd, i + 3 * sc->num_cpus,
+> +                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+> +    }
+> +
+> +    /* DRAM */
+> +    for (i = 0; i < AX3000_NUM_BANKS; i++) {
+> +        struct {
+> +            hwaddr addr;
+> +            size_t size;
+> +            const char *name;
+> +        } dram_table[] = {
+> +            { AX3000_DRAM0_BASE, AX3000_DRAM0_SIZE, "dram0" },
+> +            { AX3000_DRAM1_BASE, AX3000_DRAM1_SIZE, "dram1" }
+> +        };
+> +
+> +        memory_region_init_ram(&s->dram[i], OBJECT(s), dram_table[i].name,
+> +                               dram_table[i].size, &error_fatal);
+> +        memory_region_add_subregion(get_system_memory(), dram_table[i].addr,
+> +                                    &s->dram[i]);
+> +    }
+> +
+> +    /* UARTs */
+> +    for (i = 0; i < AX3000_NUM_UARTS; i++) {
+> +        struct {
+> +            hwaddr addr;
+> +            unsigned int irq;
+> +        } serial_table[] = {
+> +            { AX3000_UART0_BASE, AX3000_UART0_IRQ },
+> +            { AX3000_UART1_BASE, AX3000_UART1_IRQ },
+> +            { AX3000_UART2_BASE, AX3000_UART2_IRQ },
+> +            { AX3000_UART3_BASE, AX3000_UART3_IRQ }
+> +        };
+> +
+> +        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i));
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
+> +            return;
+> +        }
+> +
+> +        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].addr);
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
+> +                           qdev_get_gpio_in(gicdev, serial_table[i].irq));
+> +    }
+> +
+> +    /* Timer control*/
+> +    memory_region_init_io(&s->timer_ctrl, OBJECT(s), &timer_ctrl_ops, s,
+> +                          "timer_ctrl", 32);
+> +    memory_region_add_subregion(get_system_memory(), AX3000_TIMER_CTRL,
+> +                                &s->timer_ctrl);
+> +
+> +    /* PLL control */
+> +    memory_region_init_io(&s->pll_ctrl, OBJECT(s), &pll_ops, s, "pll_ctrl",
+> +                          32);
+> +    memory_region_add_subregion(get_system_memory(), AX3000_PLL_BASE,
+> +                                &s->pll_ctrl);
+> +
+> +    /* SDHCI */
+> +    qdev_prop_set_uint64(DEVICE(&s->sdhci0), "capareg", 0x216737eed0b0);
+> +    qdev_prop_set_uint64(DEVICE(&s->sdhci0), "sd-spec-version", 3);
+> +
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdhci0), errp)) {
 > +        return;
-> +    case A_AS_NEXT_BUF:
-> +        imx6ul_lcdif_frame_done(s);
-> +        imx6ul_lcdif_maybe_schedule_frame(s);
-> +        return;
-> +    default:
-> +        break;
 > +    }
 > +
-> +    imx6ul_lcdif_update_irq(s);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sdhci0), 0, AX3000_SDHCI0_BASE);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci0), 0,
+> +                       qdev_get_gpio_in(gicdev, AX3000_SDHCI0_IRQ));
+> +
+> +    memory_region_init_io(&s->sdhci_phy, OBJECT(s), &sdhci_phy_ops, s,
+> +                           "sdhci_phy", AX3000_SDHCI0_PHY_SIZE);
+> +    memory_region_add_subregion(get_system_memory(), AX3000_SDHCI0_PHY_BASE,
+> +                                &s->sdhci_phy);
 > +}
 > +
-> +static const MemoryRegionOps imx6ul_lcdif_ops =3D {
-> +    .read =3D imx6ul_lcdif_read,
-> +    .write =3D imx6ul_lcdif_write,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
-> +    .valid =3D {
-> +        .min_access_size =3D 4,
-> +        .max_access_size =3D 4,
-> +        .unaligned =3D false,
-> +    },
+> +static void ax3000_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    AxiadoSoCClass *sc = AXIADO_SOC_CLASS(oc);
+> +
+> +    dc->desc = "Axiado SoC AX3000";
+> +    dc->realize = ax3000_realize;
+> +    sc->num_cpus = AX3000_NUM_CPUS;
+> +}
+> +
+> +static const TypeInfo axiado_soc_types[] = {
+> +    {
+> +        .name           = TYPE_AXIADO_SOC,
+> +        .parent         = TYPE_SYS_BUS_DEVICE,
+> +        .instance_size  = sizeof(AxiadoSoCState),
+> +        .instance_init  = ax3000_init,
+> +        .class_init     = ax3000_class_init,
+> +    }
 > +};
 > +
-> +static void imx6ul_lcdif_reset(DeviceState *dev)
-> +{
-> +    IMX6ULLCDIFState *s =3D IMX6UL_LCDIF(dev);
-> +
-> +    memset(s->regs, 0, sizeof(s->regs));
-
-The datasheet defines some registers as having non-zero
-reset values, notably CTRL1.
-
-> +    s->fb_base =3D 0;
-> +    s->src_width =3D 0;
-> +    s->rows =3D 0;
-> +    s->src_bpp =3D 0;
-> +    s->invalidate =3D true;
-> +    timer_del(s->frame_timer);
-> +    qemu_set_irq(s->irq, 0);
-> +}
-> +
-> +static int imx6ul_lcdif_post_load(void *opaque, int version_id)
-> +{
-> +    IMX6ULLCDIFState *s =3D opaque;
-> +
-> +    s->fb_base =3D 0;
-> +    s->src_width =3D 0;
-> +    s->rows =3D 0;
-> +    s->src_bpp =3D 0;
-> +    s->invalidate =3D true;
-> +
-> +    imx6ul_lcdif_update_irq(s);
-> +    if (imx6ul_lcdif_is_running(s) &&
-> +        !imx6ul_lcdif_frame_done_pending(s) &&
-> +        !timer_pending(s->frame_timer)) {
-> +        imx6ul_lcdif_schedule_frame(s);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_imx6ul_lcdif =3D {
-> +    .name =3D TYPE_IMX6UL_LCDIF,
-> +    .version_id =3D 1,
-> +    .minimum_version_id =3D 1,
-> +    .post_load =3D imx6ul_lcdif_post_load,
-> +    .fields =3D (const VMStateField[]) {
-> +        VMSTATE_UINT32_ARRAY(regs, IMX6ULLCDIFState,
-> +                             LCDIF_MMIO_SIZE / sizeof(uint32_t)),
-> +        VMSTATE_TIMER_PTR(frame_timer, IMX6ULLCDIFState),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
-> +static void imx6ul_lcdif_realize(DeviceState *dev, Error **errp)
-> +{
-> +    IMX6ULLCDIFState *s =3D IMX6UL_LCDIF(dev);
-> +
-> +    s->frame_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> +                                  imx6ul_lcdif_frame_timer_cb, s);
-> +    s->invalidate =3D true;
-> +    memory_region_init_io(&s->iomem, OBJECT(dev), &imx6ul_lcdif_ops, s,
-> +                          TYPE_IMX6UL_LCDIF, LCDIF_MMIO_SIZE);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-> +    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
-> +    s->con =3D graphic_console_init(dev, 0, &imx6ul_lcdif_graphic_ops, s=
-);
-> +
-> +    if (surface_bits_per_pixel(qemu_console_surface(s->con)) !=3D 32) {
-
-This is always true, you don't need to test it.
-
-> +        error_setg(errp, "%s requires a 32bpp host surface", TYPE_IMX6UL=
-_LCDIF);
-> +    }
-> +}
-> +
-> +static void imx6ul_lcdif_finalize(Object *obj)
-> +{
-> +    IMX6ULLCDIFState *s =3D IMX6UL_LCDIF(obj);
-> +
-> +    if (s->fbsection.mr) {
-> +        memory_region_set_log(s->fbsection.mr, false, DIRTY_MEMORY_VGA);
-
-No other display device seems to be doing this -- why do we need to ?
-
-> +        memory_region_unref(s->fbsection.mr);
-> +        s->fbsection.mr =3D NULL;
-> +    }
-> +    if (s->con) {
-> +        graphic_console_close(s->con);
-> +    }
-> +    timer_free(s->frame_timer);
-
-Cleanup of things done in realize should go in unrealize. (instance_finaliz=
-e
-pairs with instance_init).
-
-> +}
-> +
-> +static void imx6ul_lcdif_class_init(ObjectClass *klass, const void *data=
-)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +
-> +    dc->realize =3D imx6ul_lcdif_realize;
-> +    dc->vmsd =3D &vmstate_imx6ul_lcdif;
-> +    device_class_set_legacy_reset(dc, imx6ul_lcdif_reset);
-> +    dc->desc =3D "i.MX6UL LCDIF";
-> +}
-> +
-> +static const TypeInfo imx6ul_lcdif_info =3D {
-> +    .name =3D TYPE_IMX6UL_LCDIF,
-> +    .parent =3D TYPE_SYS_BUS_DEVICE,
-> +    .instance_size =3D sizeof(IMX6ULLCDIFState),
-> +    .instance_finalize =3D imx6ul_lcdif_finalize,
-> +    .class_init =3D imx6ul_lcdif_class_init,
-> +};
-> +
-> +static void imx6ul_lcdif_register_types(void)
-> +{
-> +    type_register_static(&imx6ul_lcdif_info);
-> +}
-> +
-> +type_init(imx6ul_lcdif_register_types)
-> diff --git a/include/hw/display/imx6ul_lcdif.h b/include/hw/display/imx6u=
-l_lcdif.h
+> +DEFINE_TYPES(axiado_soc_types)
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 47cdc51d13..c3c96c0a70 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -105,6 +105,8 @@ arm_common_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
+>  arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+>  arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+>  arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+> +arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
+> +  'axiado-soc.c'))
+>
+>  arm_common_ss.add(files('boot.c'))
+>
+> diff --git a/include/hw/arm/axiado-soc.h b/include/hw/arm/axiado-soc.h
 > new file mode 100644
-> index 0000000000..0b24b64e68
+> index 0000000000..2483bdd8c2
 > --- /dev/null
-> +++ b/include/hw/display/imx6ul_lcdif.h
-> @@ -0,0 +1,36 @@
+> +++ b/include/hw/arm/axiado-soc.h
+> @@ -0,0 +1,152 @@
 > +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * Axiado SoC AX3000
 > + *
-> + * i.MX6UL LCDIF controller
+> + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
 > + *
-> + * Copyright (c) 2026 Yucai Liu <1486344514@qq.com>
+> + * This program is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU General Public License as
+> + * published by the Free Software Foundation; either version 2 or
+> + * (at your option) version 3 of the License.
+> + *
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along
+> + * with this program; if not, see <http://www.gnu.org/licenses/>.
 > + */
 > +
-> +#ifndef IMX6UL_LCDIF_H
-> +#define IMX6UL_LCDIF_H
+> +#ifndef AXIADO_AX3000_H
+> +#define AXIADO_AX3000_H
 > +
+> +#include "cpu.h"
+> +#include "hw/intc/arm_gicv3_common.h"
+> +#include "hw/char/cadence_uart.h"
+> +#include "hw/sd/sdhci.h"
 > +#include "hw/core/sysbus.h"
-> +#include "qom/object.h"
-> +#include "qemu/timer.h"
-> +#include "ui/console.h"
+> +#include "qemu/units.h"
 > +
-> +#define TYPE_IMX6UL_LCDIF "imx6ul-lcdif"
-> +OBJECT_DECLARE_SIMPLE_TYPE(IMX6ULLCDIFState, IMX6UL_LCDIF)
+> +#define TYPE_AXIADO_SOC "ax3000"
+> +OBJECT_DECLARE_TYPE(AxiadoSoCState, AxiadoSoCClass, AXIADO_SOC)
 > +
-> +struct IMX6ULLCDIFState {
-> +    SysBusDevice parent_obj;
+> +#define AX3000_RAM_START        0x3C000000
+> +#define AX3000_RAM_SIZE_MAX     (16 * GiB)
 > +
-> +    MemoryRegion iomem;
-> +    MemoryRegionSection fbsection;
-> +    qemu_irq irq;
-> +    QemuConsole *con;
-> +    QEMUTimer *frame_timer;
-> +    uint32_t fb_base;
-> +    uint32_t src_width;
-> +    uint32_t rows;
-> +    uint8_t src_bpp;
-> +    bool invalidate;
-> +    uint32_t regs[0x1000 / sizeof(uint32_t)];
+> +#define AX3000_DRAM0_BASE       AX3000_RAM_START
+> +#define AX3000_DRAM0_SIZE       (1088 * MiB)
+> +#define AX3000_DRAM1_BASE       0x400000000
+> +#define AX3000_DRAM1_SIZE       (2 * GiB)
+> +
+> +#define AX3000_GIC_DIST_BASE    0x80300000
+> +#define AX3000_GIC_DIST_SIZE    (64 * KiB)
+> +#define AX3000_GIC_REDIST_BASE  0x80380000
+> +#define AX3000_GIC_REDIST_SIZE  (512 * KiB)
+> +
+> +#define AX3000_UART0_BASE       0x80520000
+> +#define AX3000_UART0_SIZE       (256)
+> +#define AX3000_UART1_BASE       0x805a0000
+> +#define AX3000_UART1_SIZE       (256)
+> +#define AX3000_UART2_BASE       0x80620000
+> +#define AX3000_UART2_SIZE       (256)
+> +#define AX3000_UART3_BASE       0x80520800
+> +#define AX3000_UART3_SIZE       (256)
+> +
+> +#define AX3000_SDHCI0_BASE      0x86000000
+> +#define AX3000_SDHCI0_PHY_BASE  0x80801C00
+> +#define AX3000_SDHCI0_PHY_SIZE  (256)
+> +
+> +#define AX3000_GPIO0_BASE       0x80500000
+> +#define AX3000_GPIO0_SIZE       (1024)
+> +#define AX3000_GPIO1_BASE       0x80580000
+> +#define AX3000_GPIO1_SIZE       (1024)
+> +#define AX3000_GPIO2_BASE       0x80600000
+> +#define AX3000_GPIO2_SIZE       (1024)
+> +#define AX3000_GPIO3_BASE       0x80680000
+> +#define AX3000_GPIO3_SIZE       (1024)
+> +#define AX3000_GPIO4_BASE       0x80700000
+> +#define AX3000_GPIO4_SIZE       (1024)
+> +#define AX3000_GPIO5_BASE       0x80780000
+> +#define AX3000_GPIO5_SIZE       (1024)
+> +#define AX3000_GPIO6_BASE       0x80800000
+> +#define AX3000_GPIO6_SIZE       (1024)
+> +#define AX3000_GPIO7_BASE       0x80880000
+> +#define AX3000_GPIO7_SIZE       (1024)
+> +
+> +#define AX3000_TIMER_CTRL        0x8A020000
+> +#define AX3000_PLL_BASE          0x80000000
+> +#define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
+> +#define CLKRST_CPU_PLL_STS_OFFSET       0x14
+> +
+> +
+> +enum Ax3000Configuration {
+> +    AX3000_NUM_CPUS     = 4,
+> +    AX3000_NUM_IRQS     = 224,
+> +    AX3000_NUM_BANKS    = 2,
+> +    AX3000_NUM_UARTS    = 4,
+> +    AX3000_NUM_GPIOS    = 8,
+> +};
+> +
+> +typedef struct AxiadoSoCState {
+> +    SysBusDevice        parent;
+> +
+> +    ARMCPU              cpu[AX3000_NUM_CPUS];
+> +    GICv3State          gic;
+> +    MemoryRegion        dram[AX3000_NUM_BANKS];
+> +    MemoryRegion        timer_ctrl;
+> +    MemoryRegion        pll_ctrl;
+> +    CadenceUARTState    uart[AX3000_NUM_UARTS];
+> +    SDHCIState          sdhci0;
+> +    MemoryRegion        sdhci_phy;
+> +} AxiadoSoCState;
+> +
+> +typedef struct AxiadoSoCClass {
+> +    SysBusDeviceClass   parent;
+> +
+> +    uint32_t            num_cpus;
+> +} AxiadoSoCClass;
+> +
+> +enum Ax3000MemoryRegions {
+> +    AX3000_GIC_DIST,
+> +    AX3000_GIC_REDIST,
+> +    AX3000_DRAM0,
+> +    AX3000_DRAM1,
+> +    AX3000_UART0,
+> +    AX3000_UART1,
+> +    AX3000_UART2,
+> +    AX3000_UART3,
+> +    AX3000_SDHCI0,
+> +    AX3000_GPIO0,
+> +    AX3000_GPIO1,
+> +    AX3000_GPIO2,
+> +    AX3000_GPIO3,
+> +    AX3000_GPIO4,
+> +    AX3000_GPIO5,
+> +    AX3000_GPIO6,
+> +    AX3000_GPIO7,
+> +};
+> +
+> +enum Ax3000Irqs {
+> +    AX3000_UART0_IRQ    = 112,
+> +    AX3000_UART1_IRQ    = 113,
+> +    AX3000_UART2_IRQ    = 114,
+> +    AX3000_UART3_IRQ    = 170,
+> +
+> +    AX3000_SDHCI0_IRQ    = 123,
+> +
+> +    AX3000_GPIO0_IRQ    = 183,
+> +    AX3000_GPIO1_IRQ    = 184,
+> +    AX3000_GPIO2_IRQ    = 185,
+> +    AX3000_GPIO3_IRQ    = 186,
+> +    AX3000_GPIO4_IRQ    = 187,
+> +    AX3000_GPIO5_IRQ    = 188,
+> +    AX3000_GPIO6_IRQ    = 189,
+> +    AX3000_GPIO7_IRQ    = 190,
+> +};
+> +
+> +enum SDHCI_PHY_REG {
+> +    REG_ID        = 0x00,   // ID
+> +    REG_STATUS    = 0x50,   // READY/LOCK/CAL_DONE bits
 
-This is much more space than you actually need; see earlier remarks.
+Don't use C++ style // comments, please. checkpatch will warn
+about that too, I think.
 
 > +};
+> +
+> +#endif /* AXIADO_AX3000_H */
+> --
+> 2.34.1
 
 thanks
 -- PMM
