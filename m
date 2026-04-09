@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C1D5E9DE60
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 08:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD10E9DE62
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 08:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAkbm-0006N7-JP; Thu, 09 Apr 2026 04:19:26 -0400
+	id 1wAkbf-0006Lx-TB; Thu, 09 Apr 2026 04:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAjOJ-00053v-3a
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:01:29 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAiSi-0005mo-Mh
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 02:01:56 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAjOG-00076F-LS
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 03:01:26 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43b8e8e7432so424460f8f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 00:01:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wAiSg-0006ph-Vt
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 02:01:56 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43d17bb1c65so239259f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Apr 2026 23:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minio.io; s=minio; t=1775718074; x=1776322874; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BQIDX/WNV5Pzl0aC//tD4ssejDFf4jBgsYoG1vBrsEc=;
- b=c6M4BomlwXWzE7NIrvduNvP7bCe4GMtXEuVLE/+ml3JV6pkVKKzDrTezWR5P+cUe5T
- IJWOuiaCJx5pCJQ2o/fPlaSoSonaDw3+Kl0cBy6QD1fGZ4gaYtMgT1A7hS1myDuyztQF
- zOCbZy81aXIiA6LQCg7xJDobGB+RzhtH958tr0tDBWY7OQjHdfnwf8x6zpD/BP60TXBV
- 0uG9teVOy1UC+N1kCGc2TLEH2JrCPn8MxIITM2zX0u+m4EgtlwXrbsbk2CYB4jdyMUIa
- h/wjfQIzmSISU4zocNy0vQw3QV7Xs0PH3Fs0ic92Q00loVn49fEtlgi22HnxPuEC2fOF
- C9lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775718074; x=1776322874;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=minio.io; s=minio; t=1775714513; x=1776319313; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BQIDX/WNV5Pzl0aC//tD4ssejDFf4jBgsYoG1vBrsEc=;
- b=Drllbcgw3uG1R9YpqM5VGRTlw0Qg4YwdS5H/NxCUMpu9FvPvDviG26YupnutY1K7C3
- n0hPWi+tsEq5i784EMJ4Ro59Xn5Uuniv9i1RfRlbaCwbepQuMAlhyQCXGw0pZmoxsebJ
- /y6SHc57YbPhftSeIFGI8cohfWpnUnJfOmf0ApcNCoBVhVbca0jYTc47shw3ucFQntnA
- PNFNOjkOiwtybuB/z/ptvuUemx6xO/NGxcuqLqp0vQmNRj5AiBJkfyZzF11umxy9NmvB
- HVUXslAtdBBGoomIi3pARZImEbSgrgBb6ZvYOwWPS6W6a7sxJe9QVnQ4VUTcsGwLfDeu
- /HnQ==
-X-Gm-Message-State: AOJu0YzxlJxcgjVsML/oTMkbHNpAeuxbBqdXFvC8Pkp9capK40BqfZcJ
- fBBfWmMoAfcLdpWkkLveIonBIsOTrZGFQyIf0zLvBzNs24GcymCvi7NizwdNuL/wCGXOiYBH5M6
- cF2rEdQ/GBObPKDEGKWFNL4FGYOpd9dCMIuJ426xqOzqohbPM+ME49qzpQOACON4r/9gi6XVubg
- JulXbayo8SF+FL3xqeDqZUG2i/TMJZeM3hXX1thFY=
-X-Gm-Gg: AeBDieus+PCEmNJDR1tlR7MpOWhpZR8+S9DYPmRCe3SzQSbn4l8av0TEt2hpYO/mprn
- kCaIuac9hdNBZqFOOIPYptPBejeI5PlSrqy0JTI9/Hnrqw20tDDfgLZqhV8Ti3VylCkRurmjfy9
- J32hCGr8kpVghkVZfjO04avHaqgngZ84C5uhfbGcqhXYq1i3RvvrlZKKzHQ22p1VtD/F9/6zCUr
- xTR8x/9nDQmrV2KROlMlveo+y5WuKyp41fqFRbdWx1feOJ4pJWakdCWbimwsEJl5ibOgNGocNwP
- 9kQ/lx7Hx7JRXbP0Yb5Hyd6H7zgHLX55OSgyuF/C3L8YYCLBSP+55mGUFQBivZ3UIpO9QzEtxzX
- Yc1JnR48gg6F9k2cWCNYliCMsJ81uQreSKgmzjKVa8OL6o5mC+aMUql0iKme3chfApqt5m4BgiN
- hop1DOL0e+EEXCuKv/eHVPpA8bnzeyCRCts410pBEEVDP1FZV47T6W/JnN3aeHgKMSo+C9k1C1/
- KSBdtF4vZxPeiABuE+kh4Sdyn6P4XiumRwfX383TYwy9sWpAQGvex3tVrvLYA==
-X-Received: by 2002:a05:6000:1acf:b0:43d:20e9:b0e1 with SMTP id
- ffacd0b85a97d-43d29280e6dmr33088200f8f.7.1775718074190; 
- Thu, 09 Apr 2026 00:01:14 -0700 (PDT)
+ bh=ef/IDwXK0GaH8OkKz0gZMKyBYmbEr0v7UmTk+WfXTa0=;
+ b=QKEfJjZkxx9zjFv1mwhg0rTFwC4kiecz3v7DdoR7FRlUx2bPnTLNwY9zorxfVb1prg
+ x+5bYjrWFMBxUx4aLvy0js33P3QFfMGzodYMqGwhiMR90c5Q/xtAWxlPWHimGW3RlaZr
+ cDadRtt8bySzPlS1MNGkS58SMVFjnziHi9TQmyxaGZB/uaZqIc6ucx2M+PN1aFbzvbLv
+ TyVSUNmiUk5dV445yr4LUIMdy9a84EumzI1yHm4gRH56kHwfDUlY7uatl7m3qcXZ/gRv
+ A1FnHMaZI625B7hApFywl5YWaRKLmuSM238rX25Ye70agSUaH1/4qhhp0X9JJgIG/DVx
+ eEmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775714513; x=1776319313;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ef/IDwXK0GaH8OkKz0gZMKyBYmbEr0v7UmTk+WfXTa0=;
+ b=T1p/hSMxzNGHSABr7RUQorG/zrnuEXiCF6Wi/pwe9z4a0Vuqh3d5J4i0W+xNzoTQzK
+ QUiHFmvsHi862OcVxtbfbQFK+au1TaioO879mQNvE8IXH9SIxlJg6RQKJT/AwT3gGpk1
+ SyifkHrs06TM+rL5SnHKq5BD0ck9B5FvZ2NwK71/oPzlLh+DExVmfArj6JSqo5bA9wJz
+ CkoWZbIooVptzRnmwBJ+WC/VouqopDERo/iopuZ62K3d76wTokaZNu2HJ+23gkwRCC1+
+ WrsFhtjWNjoNDfMNCS68xYJzRVee7BACMsVUIY1g9ga1QTMI8bW6GI27EB6milTsyjr+
+ 0itQ==
+X-Gm-Message-State: AOJu0YwU5USTYY6/lRi7AYads4nm7PJAo/oV9yKs/t/07URmaHpHcqY3
+ Vi5GhpEhD6zl0sYfgor5+xpLSXyTJAB7dhiOjlCGdswmqWVpUhwHxfFGn438heSAvaOO7IqOLF5
+ DLwdWnwbeOa4lJh/WAq+6D/FztuBrzQ5yUybEByLbkts3dXpIJN+c3ZB1L9HHrjivxphF58c1lT
+ e/HbDDdgwkqUo5QJKmZfhkJsxyVRLH0QO51NQkjkg=
+X-Gm-Gg: AeBDieuZvzLucpQPifSuuhRPhHGAR26GtYpc7KedrZ9AKpEjuyG4OpJK+9SNsQoAEr5
+ 9XR54fPLRe1bohQ0FOUSesd0PfNC3TO617c6RJrcpZi1+759y5XXqy8dTiXVaF2XrNNryezbmGK
+ /VNlbSdbBC3Ek5zQv3PMB7MnvmXrYsdsp6L/leg50qAn9zEgJIv3MweGkEU2qJqNvO/IZkkbLpV
+ Y30i6h8Uud465+I3TLD5f1Eyb1gJYr6tzSifDN3Mp9KsRTv7/8Lieuni95qPFqMHPoLB5ZkeOfT
+ 2JjqWjlGz0Cw6MlvD1BOCVmR/ZowbWxNuem29otHvQeacb1BhstAr3Q+2MQFnYfYDnht7vyL8sS
+ Qk/rYQ3q2bUGbfMeeeFhSckPgpuT7aDAXncm9afZg+4g05WwHpKBD7ZXMPMJ2qhWaygx7ujXOkf
+ SRsGwPeOzQCRXt/u0mxQ4MJJ/878M6Sq//MiJ40lca5sWWluBJd24iqQ4nd9OOHNBeeLE6a+1iS
+ c6X4t2Pz0IOhfQ93Ye1xKudWNgKS507A0nMr1phh7mDMNNYYFhjUThdqNbi7Q==
+X-Received: by 2002:a5d:5847:0:b0:43c:f8b4:e58 with SMTP id
+ ffacd0b85a97d-43d292e2a9emr36065425f8f.41.1775714513163; 
+ Wed, 08 Apr 2026 23:01:53 -0700 (PDT)
 Received: from localhost (2a01cb00141148004df9ec80d3fa1cac.ipv6.abo.wanadoo.fr.
  [2a01:cb00:1411:4800:4df9:ec80:d3fa:1cac])
  by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-43d1e4f1a99sm68622732f8f.32.2026.04.09.00.01.13
+ ffacd0b85a97d-43d1e4e5890sm62750308f8f.31.2026.04.08.23.01.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Apr 2026 00:01:13 -0700 (PDT)
+ Wed, 08 Apr 2026 23:01:52 -0700 (PDT)
 From: mr-083 <matthieu@minio.io>
 X-Google-Original-From: mr-083 <matthieu@min.io>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: its@irrelevant.dk, kbusch@kernel.org, stefanha@redhat.com,
  mr-083 <matthieu@min.io>
-Subject: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
-Date: Thu,  9 Apr 2026 09:01:09 +0200
-Message-ID: <20260409070114.11313-1-matthieu@min.io>
+Subject: [PATCH 1/2] hw/nvme: add namespace hotplug support
+Date: Thu,  9 Apr 2026 08:01:53 +0200
+Message-ID: <20260409060155.94704-2-matthieu@min.io>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260409060155.94704-1-matthieu@min.io>
+References: <20260409060155.94704-1-matthieu@min.io>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=matthieu@minio.io; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=matthieu@minio.io; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -87,7 +91,7 @@ X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 09 Apr 2026 04:19:20 -0400
+X-Mailman-Approved-At: Thu, 09 Apr 2026 04:19:18 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,53 +106,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds two features that together enable transparent NVMe disk
-hot-swap simulation in QEMU, matching the behavior of physical NVMe
-drives being pulled and reinserted in the same PCIe slot.
+Add hotplug support for nvme-ns devices on the NvmeBus. This enables
+namespace-level hot-swap without removing the NVMe controller, which
+is how physical NVMe drives behave when hot-swapped in the same PCIe
+slot.
 
-Problem:
-Currently, hot-swapping an NVMe disk in QEMU requires removing the
-entire NVMe controller via device_del, which causes the Linux guest to
-assign a new controller number on re-add (e.g. nvme2 becomes nvme4).
-This breaks storage software that tracks drives by device name.
+Mark nvme-ns devices as hotpluggable and register the NvmeBus as a
+hotplug handler with proper plug and unplug callbacks:
 
-Solution:
-Patch 1 adds hotplug support for nvme-ns devices on the NvmeBus, with
-proper Asynchronous Event Notification (AEN) so the guest kernel detects
-namespace changes. This allows namespace-level hot-swap without removing
-the NVMe controller.
+- plug: attach namespace to all started controllers and send an
+  Asynchronous Event Notification (AEN) with NS_ATTR_CHANGED so
+  the guest kernel rescans namespaces
+- unplug: detach from all controllers, send AEN, remove from
+  subsystem, then unrealize the device
 
-Patch 2 adds a drive_insert HMP command that reconnects a host block
-device file to an existing guest device after drive_del. This is the
-counterpart to drive_del for non-removable devices where
-blockdev-change-medium cannot be used.
+The plug handler skips controllers that haven't started yet
+(qs_created == false) to avoid interfering with boot-time namespace
+attachment in nvme_start_ctrl().
 
-The recommended hot-swap sequence is:
-  1. drive_del <drive-id>          # disconnect backing store
-  2. drive_insert <device> <file>  # reconnect backing store
-  3. pcie_aer_inject_error <port> SDN  # trigger controller reset
+Both the controller bus and subsystem bus are configured as hotplug
+handlers via qbus_set_bus_hotplug_handler() since nvme-ns devices
+may reparent to the subsystem bus during realize.
 
-After this sequence, the guest sees the same controller and namespace
-names (e.g. /dev/nvme2n1 remains /dev/nvme2n1), and the NVMe driver
-recovers transparently via the standard AER recovery path.
+Signed-off-by: Matthieu Receveur <matthieu@min.io>
+---
+ hw/nvme/ctrl.c   | 85 ++++++++++++++++++++++++++++++++++++++++++++++++
+ hw/nvme/ns.c     |  1 +
+ hw/nvme/subsys.c |  2 ++
+ 3 files changed, 88 insertions(+)
 
-Tested with:
-- Linux 6.1 guest on QEMU aarch64 with HVF (macOS)
-- NVMe subsystem model with multipath disabled
-- DirectPV and MinIO AIStor storage stack
-
-mr-083 (2):
-  hw/nvme: add namespace hotplug support
-  block/monitor: add drive_insert HMP command
-
- block/monitor/block-hmp-cmds.c | 59 +++++++++++++++++++++++
- hmp-commands.hx                | 18 +++++++
- hw/nvme/ctrl.c                 | 85 ++++++++++++++++++++++++++++++++++
- hw/nvme/ns.c                   |  1 +
- hw/nvme/subsys.c               |  2 +
- include/block/block-hmp-cmds.h |  1 +
- 6 files changed, 166 insertions(+)
-
---
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index be6c7028cb..5502e4ea2b 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -206,6 +206,7 @@
+ #include "system/hostmem.h"
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pcie_sriov.h"
++#include "hw/core/qdev.h"
+ #include "system/spdm-socket.h"
+ #include "migration/vmstate.h"
+ 
+@@ -9293,6 +9294,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
+     }
+ 
+     qbus_init(&n->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
++    qbus_set_bus_hotplug_handler(BUS(&n->bus));
+ 
+     if (nvme_init_subsys(n, errp)) {
+         return;
+@@ -9553,10 +9555,93 @@ static const TypeInfo nvme_info = {
+     },
+ };
+ 
++static void nvme_ns_hot_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                              Error **errp)
++{
++    NvmeNamespace *ns = NVME_NS(dev);
++    NvmeSubsystem *subsys = ns->subsys;
++    uint32_t nsid = ns->params.nsid;
++    int i;
++
++    /*
++     * Attach to all started controllers and notify via AEN.
++     * Skip controllers that haven't started yet (boot-time realize) —
++     * nvme_start_ctrl() will attach namespaces during controller init.
++     */
++    for (i = 0; i < NVME_MAX_CONTROLLERS; i++) {
++        NvmeCtrl *ctrl = nvme_subsys_ctrl(subsys, i);
++        if (!ctrl || !ctrl->qs_created) {
++            continue;
++        }
++
++        if (nvme_csi_supported(ctrl, ns->csi) && !ns->params.detached) {
++            nvme_attach_ns(ctrl, ns);
++            nvme_update_dsm_limits(ctrl, ns);
++
++            if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
++                nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
++                                   NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
++                                   NVME_LOG_CHANGED_NSLIST);
++            }
++        }
++    }
++}
++
++static void nvme_ns_hot_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                               Error **errp)
++{
++    NvmeNamespace *ns = NVME_NS(dev);
++    NvmeSubsystem *subsys = ns->subsys;
++    uint32_t nsid = ns->params.nsid;
++    int i;
++
++    /*
++     * Detach from all controllers and notify the guest via AEN.
++     * Must happen before unrealize to avoid use-after-free when the
++     * guest sends I/O to a freed namespace.
++     */
++    for (i = 0; i < NVME_MAX_CONTROLLERS; i++) {
++        NvmeCtrl *ctrl = nvme_subsys_ctrl(subsys, i);
++        if (!ctrl || !nvme_ns(ctrl, nsid)) {
++            continue;
++        }
++
++        nvme_detach_ns(ctrl, ns);
++        nvme_update_dsm_limits(ctrl, NULL);
++
++        if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
++            nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
++                               NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
++                               NVME_LOG_CHANGED_NSLIST);
++        }
++    }
++
++    /* Remove from subsystem namespace list. */
++    subsys->namespaces[nsid] = NULL;
++
++    /*
++     * Unrealize: drain I/O, flush, cleanup structures, remove from QOM.
++     * nvme_ns_unrealize() handles drain/shutdown/cleanup internally.
++     */
++    qdev_unrealize(dev);
++}
++
++static void nvme_bus_class_init(ObjectClass *klass, const void *data)
++{
++    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
++    hc->plug = nvme_ns_hot_plug;
++    hc->unplug = nvme_ns_hot_unplug;
++}
++
+ static const TypeInfo nvme_bus_info = {
+     .name = TYPE_NVME_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(NvmeBus),
++    .class_init = nvme_bus_class_init,
++    .interfaces = (const InterfaceInfo[]) {
++        { TYPE_HOTPLUG_HANDLER },
++        { }
++    },
+ };
+ 
+ static void nvme_register_types(void)
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index b0106eaa5c..eb628c0734 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -937,6 +937,7 @@ static void nvme_ns_class_init(ObjectClass *oc, const void *data)
+     dc->bus_type = TYPE_NVME_BUS;
+     dc->realize = nvme_ns_realize;
+     dc->unrealize = nvme_ns_unrealize;
++    dc->hotpluggable = true;
+     device_class_set_props(dc, nvme_ns_props);
+     dc->desc = "Virtual NVMe namespace";
+ }
+diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
+index 777e1c620f..fa35055d3c 100644
+--- a/hw/nvme/subsys.c
++++ b/hw/nvme/subsys.c
+@@ -9,6 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
++#include "hw/core/qdev.h"
+ 
+ #include "nvme.h"
+ 
+@@ -205,6 +206,7 @@ static void nvme_subsys_realize(DeviceState *dev, Error **errp)
+     NvmeSubsystem *subsys = NVME_SUBSYS(dev);
+ 
+     qbus_init(&subsys->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
++    qbus_set_bus_hotplug_handler(BUS(&subsys->bus));
+ 
+     nvme_subsys_setup(subsys, errp);
+ }
+-- 
 2.50.1 (Apple Git-155)
+
 
