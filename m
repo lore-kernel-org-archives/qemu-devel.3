@@ -4,89 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA4FCEA3C4E
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 12:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E56EA3C4E
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 12:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAoBh-0001C9-Vp; Thu, 09 Apr 2026 08:08:46 -0400
+	id 1wAoHb-0002xq-Og; Thu, 09 Apr 2026 08:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wAoBf-0001BK-G6
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 08:08:43 -0400
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <gyorgy.tamasi@gmail.com>)
+ id 1wAoHY-0002ws-A5
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 08:14:48 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wAoBd-0000em-W8
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 08:08:43 -0400
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-488971db0fdso8193745e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 05:08:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gyorgy.tamasi@gmail.com>)
+ id 1wAoHW-0001P0-KC
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 08:14:48 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-5a0ff30b240so1052688e87.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 05:14:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775736884; cv=none;
+ d=google.com; s=arc-20240605;
+ b=AqTW5QtTH7eslWL5F2jgayIfIMDvqKqCcp6C3qnEX+tbMzRXhHlRn1b/Z+rT9JV0ZN
+ j36DqzdW/s5fgRci1kg3rpffISNYpeXr194nPi25q3G2Y7CIzYT0+jyXubEPxMjKe0ci
+ sPohl9kI7Z1J6tqf4U+0J44e+IfCeVHdkGh0mjP6PmVygPrNtj/pvLNugDKCJeW5D5Yr
+ s7K0C7w6ywsbmq0CMFHf1BnkBYEEbXBWffsw1/TXW5n8bxsPq7mfbKxfwpqKyHgCvDvj
+ +S8DgHCEDrZYwz1zMLpTFi39+A+bYAPBA2F4NNV8ZLaquW5U7jBusAVeUtkYDoOlglU3
+ 6Lrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=GQ2QLRC2q4nCs8Ix6HIfoqeh1t1V7GUWmwnYj6Hr1rM=;
+ fh=Mhn3iCZUwUHrsfmkOmDR9xkZAHbThDVH63k510t4Ymw=;
+ b=j4uZvmyH/YoK8VUAsl5gRPj8T/eOBH3OHVhLFVCgwLQePPIE+t3hYzHTpzDapF/qR4
+ EMcBmUJLa8bT5kJACvmo14qbO3JKCBV2HT/Ezxg2v+iIAOLdLvKQT8BFbLsFbo+EByuM
+ 1/3yMCyl97yqzhST8TVNgWVoJ7Wk1Xe8FJ5RJCoCFG8HtXDOPCXv0Re7vt3efgNwDYOD
+ mKSG+xee3JA1kxbAjM3FZDkEGFo2QX0Y/bpjBxN5Mnvtx8dfzNEcEjB0p6yFV9mM6WJk
+ Q+Iv7hhjLLSHodnEOqTk6hUJCilbDfivdhjxJzsgML/sMD6nIWYE10mLOhylGkwr4dS/
+ 8/dg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775736520; x=1776341320; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1775736884; x=1776341684; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8Gsy7IZRqA2y9U6KfXMKtj/5gwSn0ocPx9d530a3ePc=;
- b=SMGUUnopd/AQ3x4tU9+/cgd/n5DmoJ4qkx6Hz1ab7+BM7MiZ8OzYG3CKQnOKc50FXF
- rIjXNoxfegfRmYIQvFvRy0ktoFNZOKWGqA6oqEY+hm17qHjMoR52mczS94yFS0Owri6N
- c/YUGRLMKq91/KFfuhhr1obTFFy2JaYr2eiXY69jxXLMDl6hUTKlm9VRLQlis8u9uTJp
- qy4T4pttfUgbvduK4apyvL1KM0ZIiRiJt1OJ87ws4ooA3PhaBrhV5Q5gvD/yv2YSUXSD
- 2el4+UYHgbpW+LWnUI9yPJZAPGXYFEnKm4/kvkBZhXfT1Dc/XTvinhTatekDYrFJg3E0
- qOrQ==
+ bh=GQ2QLRC2q4nCs8Ix6HIfoqeh1t1V7GUWmwnYj6Hr1rM=;
+ b=dP4yTZtmHfMyAmHXxLtPkSI7F+ViM4CQdV7/bQn0LhWbZs9pkvcZ7opEiK2FJXPQhc
+ tr8RHuOjI1SGUQbZUwA0U1k9RF3ytBhvh3lwevZAxbtofIZws2NIXzB7wwGKIrxCqoyL
+ Gqg7OiVrt851rc7+sJSxaC/I8BVmtOb7Tzhv5LZGA2DqLaIs3LFQtNwjRBr7Gi90QTpP
+ 1/tE/SN6Del3MSRndKHY4xsDFoURl0ivu/HrmtsnUEbOh8j9+G6hbZWa3PuTs0GkAu/O
+ k7Hwg66trV02kgMx0FQSeZ4bZUCAdGJFlYP2H1yXSKwDWhnA10q0uS8x5Bm53FKKnGAi
+ etaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775736520; x=1776341320;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8Gsy7IZRqA2y9U6KfXMKtj/5gwSn0ocPx9d530a3ePc=;
- b=UyFC3lRRBnpTw8rYOocckkKNXRSoYrtfB+djpuGPKLelmrBwHAo9tlVAAUnfF53hlt
- YT2gqPxii1LaR+l6fXpWlIC6diYgvbnhWP2jEC+YOHqS6nEkHn1XlrGRFio9ODS7NbEX
- erAQ0YKHBLncpoEMkE1Bdi6WzIA8ea1KoRaUtSOiAjRGegbFqxeLaNBp1egZnebsgDUb
- NczQAwVIiZn50Q9wEj5f6uAGUe2BcfZtj882DTmE0HZV/RxCAjXIvEwcC92Lt1JYHsjm
- WTJI2WkUWqUwa7t5nq8MKSYxBYrI3+al9OQX2cdRFwoGaCWIZV72ZjMFvTK24Zg/WUvg
- jB2g==
-X-Gm-Message-State: AOJu0YwxCJPn5NVJXQXStMPm/Le/N5M5RJ6lBd2jTSSUIHyxHZAD9FdN
- lutSwxNFyO3ZAebiku/a218AMf3k2CY7yunmtEUZ06zcW27l/VV7PEQLHUuVPt2tuB4=
-X-Gm-Gg: AeBDiev38mgl64gyqzvR7aVMnq7d1ehytWH8jsrxzEEC1EQabnkYOh0/GfTJvnEaNFK
- qRtSUYO9UGWOKa6qciqCgT9knKGgVopIRoLdxD6GrVxazSCIDjOsVo69nJdfKrbIJOs7n2On2LP
- uvBZBpicmiYFBgdWaA02N82Rj2dhJmmOFDdn4gtw09MJwUbkpfRpd+zQGh8hxgxSPsgJP3f323r
- usbuGoh2PQ6hgmuvc+qm0PCEpOEXb2EwbP39VZMrWN10SKXiD++r7x8SrLb3tHIEHsZU12P5YUS
- PpMsYaO7llPn0aLGNt7W32eawwdgu8W3AwKADpaQcOS2Hg9p3d5JvgTZK+W3DQgTwaUYwPvVqGD
- M/AiDhhTffHH6YEelXjSJVApFQD3t2UsDxatqN5tcQQLmj/cFypLnnikBmuXEd5wB2ObMR8PFUa
- ZxxOaiKECYujkZ4FrnvDWhK8M=
-X-Received: by 2002:a05:6000:2dc1:b0:43d:2be:e4e with SMTP id
- ffacd0b85a97d-43d5a18ef12mr4668326f8f.46.1775736519654; 
- Thu, 09 Apr 2026 05:08:39 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d1e4d29bbsm68908966f8f.21.2026.04.09.05.08.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Apr 2026 05:08:38 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0DFA65FA6F;
- Thu, 09 Apr 2026 13:08:38 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Anthony Roberts <anthony.roberts@linaro.org>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] ui/sdl2: Fix assumption of EGL presence at runtime
-In-Reply-To: <20260409110256.684-1-anthony.roberts@linaro.org> (Anthony
- Roberts's message of "Thu, 9 Apr 2026 12:02:55 +0100")
-References: <20260409110256.684-1-anthony.roberts@linaro.org>
-User-Agent: mu4e 1.14.1-pre1; emacs 30.1
-Date: Thu, 09 Apr 2026 13:08:37 +0100
-Message-ID: <87qzoo9vzu.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1775736884; x=1776341684;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GQ2QLRC2q4nCs8Ix6HIfoqeh1t1V7GUWmwnYj6Hr1rM=;
+ b=TSe5r0XET59vtyqqLeIBOccvtAuJDd5GxU7jZDG15YdGBJjIx1re9FM3qXqE7+sCCk
+ cyceHlEw6964W+/8qfP/QCKb0be2Oo87j0Ft8LMVh6qQCDRS1vLmM9/QSkrTpuAj4PQm
+ WAz26PmYlkQHMqaQ5PaprvnfaFNQZmTUdv0rKIbg4lUEslh+5JLRq2DM8hKWW4nWqikz
+ KEdOI1I97edfIZX/QjeFdP+z8Ye9yZOP7unITbYqv7Rqw6IEv6qYphIKnMjFZy/dDlYf
+ AQdaq2ngw8hQR60LKEvu05r+Sm1A0YEYF/6NJMWAq5FospRcWMs0UtCjR3HSBCdq9IEa
+ RlQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtLCr7CxYHVkVNAt5Txp52m5GQwmwy6uy3+vq2xGlWVT1q9rL+pCteF2uZIzVUItexg42jc42YIR99@nongnu.org
+X-Gm-Message-State: AOJu0Yz/i6pA25i0aEDY/N8s7N8fe43fICvf7xCsc0eSCM5UAowJ+RfD
+ oY4FGDq47VbV2LIk6hVLba+KhLbTaLy86nYzJF5CrKFCsn1UGM/4PxaNuOodWcLNmlyCSg5H+Wb
+ vq9QQ4LnvNWPuP8Ix2WXY3ZH6aAGsWRU=
+X-Gm-Gg: AeBDievuhLRxTPB1tHKqxHxFssz2GHhp+P+wxWV0iOBSXDaaZoSQWnCt9HTZrMdSQP8
+ a0hayUukglSRPPqyUVSXA/J7yxw/bxtzQfuzV24bpL8Z43Srr0vaqSjab3pmb5++sUBP0ojwrF4
+ eudJdcxwsyCm+ooACmBiQcqtXZVqcEOQ7Bbx2Zk+LcJwbBLOTmww8H/cRTojGxok90dW1LbfvTP
+ AYubbUPc7ddMhUkzPhXwMmaAurQ4UQ9PPisVAyGDh/zKonaTz6VJe4+uZryRzQn7WmgERf7VIBV
+ l5cFwwIucHn8wu41CM5GARi5SKHeOTiEZ2FtnsHVlguuljJEUbo=
+X-Received: by 2002:a05:6512:3a92:b0:5a2:8571:459e with SMTP id
+ 2adb3069b0e04-5a337566ef7mr9314082e87.13.1775736883967; Thu, 09 Apr 2026
+ 05:14:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CAFsMJvCLRw2Q=4muDNG1Ojj3oL+UgTrVzpYM6VULRvdFxgR=KA@mail.gmail.com>
+ <df1c484f-bc30-49d5-9928-de6e17dd2816@linaro.org>
+In-Reply-To: <df1c484f-bc30-49d5-9928-de6e17dd2816@linaro.org>
+From: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+Date: Thu, 9 Apr 2026 14:14:35 +0200
+X-Gm-Features: AQROBzCTnHcgliZbIiCuNrAXGgg5mu1IMi78KMQF-GSSQVVvy9Tfkk2VeHBfegg
+Message-ID: <CAFsMJvDWFmMx2t+9JXmBsWP+8r0XZDP+LRm6bN9k8wF5b6CSLQ@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: fix usage of struct target_stat64 for
+ TARGET_LOONGARCH64 in syscall_defs.h
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: laurent@vivier.eu, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x341.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=gyorgy.tamasi@gmail.com; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,26 +119,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Anthony Roberts <anthony.roberts@linaro.org> writes:
+Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
 
-> The original commit had a section of code which worked on the assumption
-> that if OpenGL was enabled at build, it was present on the end user machi=
-ne,
-> and calls could be made to it. This is not always the case (such as Windo=
-ws
-> on Arm devices).
->
-> This line should have also included a runtime check.
->
-> This commit moves the relevant line to inside a runtime check for OpenGL.
->
-> Fixes: 52053b7e0a0e ("ui/sdl2: Implement dpy dmabuf functions")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3347
-> Signed-off-by: Anthony Roberts <anthony.roberts@linaro.org>
+Additional independent testing (bug + fix cases) is documented here -
+see comments by sourav/@kishu279:
+https://gitlab.com/qemu-project/qemu/-/work_items/3371
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+On Wed, Apr 8, 2026 at 8:21=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 4/8/26 11:17 AM, Gyorgy Tamasi wrote:
+> > In a 64bit LoongArch64 env (both TARGET_LOONGARCH and
+> > TARGET_LOONGARCH64 are defined!) we can not use the struct
+> > target_stat64 for data-transfer, since this struct target_stat64 is
+> > defined for 32bit environments with its int-sized (4byte) st_*time
+> > sec/nsec components.
+> > The user side compiler headers of the LoongArch64 env uses long-sized
+> > (8byte) st_*time sec/nsec components.
+> >
+> > (This is similar to the case of 32bit vs. 64bit RISCV: the original
+> > code does not use struct target_stat64 in 64bit RISCV env, when both
+> > TARGET_RISCV and TARGET_RISCV64 are defined.)
+> >
+> > This fix is important for LoongArch64 ABI1.0, where stat() is using an
+> > fstatat syscall with this struct target_stat64, if its usage is
+> > enabled.
+> > (In case of LoongArch64 ABI2.0 stat() uses statx syscall, where this
+> > problematic struct target_stat64 is not used, struct statx is correct
+> > in the LoongArch64 env.)
+> > See also: https://gitlab.com/qemu-project/qemu/-/work_items/3371
+> >
+> > Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+> > ---
+> >   linux-user/syscall_defs.h | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
