@@ -4,105 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E34F31E28
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B30A3F31E25
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 14:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAq91-0008Ms-UK; Thu, 09 Apr 2026 10:14:08 -0400
+	id 1wAqGO-0002rb-LI; Thu, 09 Apr 2026 10:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1wAq8y-0008MC-1P; Thu, 09 Apr 2026 10:14:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1wAq8w-0000hP-9o; Thu, 09 Apr 2026 10:14:03 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 639CB9RU2299314; Thu, 9 Apr 2026 14:13:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=XmwhI/+bp6xBgcb26bOsoNEpsyBXRkoa4vCt/Mxc5
- X4=; b=Dn8s4aUIzlTU67YYhAWWTmGa8Oy3p5AFp+EYfnBP8WZhzizKy0ARvHq9A
- K4vIKHQl3NzPW0k4OmgbGhYRKq6zL6KmL7kPFerb5/9Az1fiaNc/eTkpeKi9rv4N
- bpC0cUasEQt169NIxT5xQpeGuSJfEk9Fdhy1CQoyRkOxcyUgLF6i/H5jiAlKY8hN
- Q1Gb+lfON/NUJlSIl1Nq1xEIb58eAPRrj+VXHGV+lnSL0XxuGRzeUufBO4glJTV6
- 6H6UrnqwFPcuV9K5wTH6wrGwNZQwx02lwhzdYkbsWVcFcgqY+qFg4PauWD3gp6D1
- N+Ukkm3SuQLbOSgo7HqApE3xcx47g==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2g4g6p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Apr 2026 14:13:59 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 639Cx1PU013878;
- Thu, 9 Apr 2026 14:13:58 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcmf4bvyw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Apr 2026 14:13:58 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 639EDv6w29295196
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Apr 2026 14:13:57 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6E0C858056;
- Thu,  9 Apr 2026 14:13:57 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB40B58052;
- Thu,  9 Apr 2026 14:13:56 +0000 (GMT)
-Received: from li-4c4c4544-004d-4810-8043-b7c04f423534.ibm.com.com (unknown
- [9.61.93.104]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Apr 2026 14:13:56 +0000 (GMT)
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGM-0002r7-Mb
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:21:42 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAqGL-00033m-2n
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 10:21:42 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48897fd88ebso10402755e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 07:21:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775744499; x=1776349299; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6LKiLHBuO+qqN94NMoP5HEOooYN0938OEtpgM2ORzGc=;
+ b=XM6qU3QuiA5vUsJrHaCUqb+n9D+ZVoiQIGXc31mSLsbrml/0pWDYoibx/Ij41IPnQU
+ N6eisSmhclR/X9YUkjlUiiGP4Y/fo7h0etIy7Q1KQHCtWLrfRa9skPI+k9jx/XEKEbSQ
+ +QVTdqalsq6iuRSCyd6D0rjw90i7/ZgBNKMdDLhPfKdw9DiaA9Z4kVnSPtrpn1yAIFZq
+ x/swfFbxyK4RpwsRn6MwkyQIB2zdcUSeXz/mF6MTyNG6AcWVrfhIY8wcgoBQa/WD+nR6
+ z3Xgyi8KKwiUOh8a67cvgKfcsgE+P2z+gPwpKKlDXRn7GMdM9EQIVkFdvTI38Fcp6fW1
+ 4Ibg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775744499; x=1776349299;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6LKiLHBuO+qqN94NMoP5HEOooYN0938OEtpgM2ORzGc=;
+ b=aKY0JmOBfizH16SY2b7LQkyTI1nvL10JWGR/1sfeihEARs33ZrsJWbN7WqIFhsJ/ZA
+ b/TJ7VTMoSrGeQAyj0xvaYb0RjeJRDlIzR8EIa9mFhRRha/IHZGTwpzSlt39z4im0uUx
+ eR4zyh5xjwWLpG4pfxsW/86rOaZXZkuYAR7IVgJFJnfbI6wPCCwpvB9FfP2PYz5Nyd33
+ 2uMEJ6kXocLqWJLVxQXDNYb1YXPXU2dN8Hh7bHlM16O3+qyNo/+hJ2QMikprGYuz65Cy
+ mN9gk2Y9EYUTNCXwTRI8E/ym31SEweNYBfWxvMiiOv9m+2DSiFvD5a0W8Fdajwk+eAjW
+ nPSA==
+X-Gm-Message-State: AOJu0Yzmasd2s4XkVe8XjwEdWx7uYy/j8wNsDF55cFx1tQgVlym3e12Y
+ Bf4ljiJD4s0dNy2RVYBpOP1/my1l5HYixioxfvk3i0X0QS+vfM/w34cffzoCkzDB6MySZgVQz7V
+ mo+2miME=
+X-Gm-Gg: AeBDiesL5iaknx3i/EkKQgLejZ4yFxv6IieqB5doKEoKS2r4XxMYiYNExKW5AgkNXCH
+ +tdfpkyFdOaMK8CQmFTuG1FxH+W+QaAH/QLY8yI2+YXMMQcCkMp2LLtsPtC7Da/XYtZSJIINRLL
+ x2wFQ9yxSeFli0Npzr1bTGsGYMZmirRxXt8YoMbkcZpLplxWAA3l1KMbjkiu2xpL1IBLh+qknR7
+ 0PzJLwEM/+RVaNbbFr1gyKREWgL3jkuss1ploH30d+sf111+ZeZEkGk1vKsUh5kIx1pU7tjVkRd
+ OT0Pn6pn3cha3Ntbls7u+Tfmp2i8iSbltK0WaCbOTblCsurSRtP9VEAo7SA90Jos9+AcsSESo2C
+ w5biA4LDzCcu71rPEUdoc+8aoivQ+DWjfCZMQxFgCpDm5wckJ0cl4Q+Pj5TGRito+cgGmHF0Krq
+ E22hyWQh/8dC1YjfFx+hiLhSvpfU+HqBZcc5iwKNe7+8GJO2f4ZpsY+bkQJbXPkhPevrvCqf/0
+X-Received: by 2002:a05:600c:8105:b0:488:a797:f0ac with SMTP id
+ 5b1f17b1804b1-488cd01655bmr55528735e9.28.1775744498800; 
+ Thu, 09 Apr 2026 07:21:38 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d5308811sm444775e9.2.2026.04.09.07.21.37
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 09 Apr 2026 07:21:38 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, clg@redhat.com, farman@linux.ibm.com,
- borntraeger@linux.ibm.com, alex@shazbot.org, cohuck@redhat.com,
- Anthony Krowiak <akrowiak@linux.ibm.com>
-Subject: [PATCH v2 0/2] Enable live migration of vfio-ap devices
-Date: Thu,  9 Apr 2026 10:13:43 -0400
-Message-ID: <20260409141352.997844-1-akrowiak@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 0/4] Misc HW patches for 2026-04-09
+Date: Thu,  9 Apr 2026 16:21:32 +0200
+Message-ID: <20260409142137.58349-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=KeridwYD c=1 sm=1 tr=0 ts=69d7b427 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=D19gQVrFAAAA:8 a=s1Sn9qFGmzIT4Zlq7skA:9
- a=W4TVW4IDbPiebHqcZpNg:22
-X-Proofpoint-ORIG-GUID: qTMOa3XC8jTXLtnEfKi1UZOekzfHxBOF
-X-Proofpoint-GUID: qTMOa3XC8jTXLtnEfKi1UZOekzfHxBOF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDEyNiBTYWx0ZWRfXyFyTFsFS+dvv
- nE7t+pQwsIgOQ22AIqdTbVI32PX9sTzIoM3PpMLgYqDnObF+ruiKtwGdXneLOd7fXqr8880c8r2
- H06eyFJy90gJ3mNDsGGMHDb25MlT4XIdKlH/Q7aOOZ3TYFzVFvhSO5vKI20D19uuHP/vShADXHr
- XwVmLYwa88vMkLUrSvk6IJyapX3ce185FTVV4A9LJcbnEw4r8Fp3XOONxXhTJ0ZhoLF523+O0oi
- dvnPp9NQm1QRqYTcmgPH7aKFqvzXTRHcepl83uGdFVs3/AUPxU05Xhme/ebtmN5D0DWprcxQYR5
- oK4JIFEss8fB3MneqrdPYvJKcf+SqmSh4yG6pFNMzE3f8UwuvINSLYC7yYjd6V8+YcBevwZ6wST
- KZGyfMgCgJ4QnPkEBkCGaG6svWmBUmJjJn50rXphXQln5q9vP2f5Dm1qWF8jyQbIl4mmcgN+20p
- af/7DC0Ve+DpbvP0rmQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_04,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- clxscore=1011 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604090126
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,51 +96,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series enables live guest migration for s390 guests using
-AP (Adjunct Processor) crypto devices passed through via the VFIO
-framework.
+The following changes since commit a87e211600e5e2a86ae51ea53615cd4d866b24a2:
 
-The s390 AP architecture provides cryptographic coprocessor and accelerator
-functions to guests. The vfio_ap device driver allows these AP devices to
-be passed through to KVM guests, giving them access to the cryptographic 
-capabilities of CEXxS crypto cards.
+  Merge tag 'hw-misc-20260407' of https://github.com/philmd/qemu into staging (2026-04-08 19:16:36 +0100)
 
-Previously, guests using vfio-ap devices could not be migrated because the
-device was marked as unmigratable. This series implements the necessary
-QEMU-side support to enable migration by:
+are available in the Git repository at:
 
-* Removing the migration blocker and adding proper VMState infrastructure
-* Implementing the VFIO migration callbacks that coordinate with the kernel
-  vfio_ap driver to save and restore device state
+  https://github.com/philmd/qemu.git tags/hw-misc-20260409
 
-The actual AP device state (queue configurations, crypto adapter
-assignments, etc.) is managed entirely by the kernel vfio_ap driver and
-transferred via the VFIO migration protocol. QEMU's role is to coordinate
-the migration process and ensure proper sequencing of state transfers.
+for you to fetch changes up to 4e6fb62fb0f33c815b089d0b59e1313b768c55d0:
 
-This implementation follows the standard VFIO migration framework used by
-other VFIO device types (GPUs, network adapters, etc.) and integrates
-cleanly with QEMU's existing migration infrastructure.
+  qemu-keymap: fix altgr modifier lookup for newer xkeyboard-config (2026-04-09 15:44:58 +0200)
 
-Dependencies:
-------------
-* Requires corresponding kernel patches that implement the VFIO migration
-  protocol in the vfio_ap driver
-    - see kernel patch series at https://lkml.org/lkml/2026/4/7/1991
-* Kernel must support VFIO_DEVICE_FEATURE_MIGRATION for vfio-ap devices
+----------------------------------------------------------------
+Misc HW patches
 
-Anthony  Krowiak (1):
-  hw/vfio/ap: Callbacks for migration of guests with pass-through access
-    to AP devices
+Few hw/ fixes and a keymap one.
+----------------------------------------------------------------
 
-Anthony Krowiak (1):
-  hw/vfio/ap: Extend vfio device state description to facilitate live
-    migration
+Alistair Francis (1):
+  hw/timer: ibex_timer: Update IRQs after writing CTRL
 
- hw/vfio/ap.c | 60 ++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 49 insertions(+), 11 deletions(-)
+BALATON Zoltan (2):
+  ati-vga: Fix pitch and offset registers mask
+  ati-vga: Fix check for overflowing vram
+
+Dietmar Maurer (1):
+  qemu-keymap: fix altgr modifier lookup for newer xkeyboard-config
+
+ hw/display/ati.c      | 16 ++--------------
+ hw/display/ati_2d.c   | 13 +++++++------
+ hw/timer/ibex_timer.c |  1 +
+ qemu-keymap.c         |  3 +++
+ 4 files changed, 13 insertions(+), 20 deletions(-)
 
 -- 
-2.52.0
+2.53.0
 
 
