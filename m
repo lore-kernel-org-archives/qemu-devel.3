@@ -4,151 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67394F364A6
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A233EF364A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 17:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAsv0-0003JW-Jw; Thu, 09 Apr 2026 13:11:50 -0400
+	id 1wAswd-00041P-A4; Thu, 09 Apr 2026 13:13:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAsuz-0003JL-Se
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:11:49 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wAswb-000419-DU
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:13:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wAsux-0007uz-Ua
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:11:49 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 639Eqrbn115449
- for <qemu-devel@nongnu.org>; Thu, 9 Apr 2026 17:11:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8YSFNoQMEKH0jaXamrOALT5dbH1oM7pZBVxA+gOgufk=; b=nrlZ6F8RShWxlvZL
- Riga0xgy5IRO7Hiv1Gqf0kDPQESPYkbrCsGAnRDYMD42nc7Z3sUrwB+bkWjNlHCS
- 8CddTKW1Kua7j/GI1NRcFvefq66QGHc1ILTirZDDG4fZ2Cnf0z6sCjtItnYCD9+v
- 03oMZEoNMJOLI4YFr4xw5WDctZIh2NzY/Sn6iyFkL4kT0lSvhYFrE8V0YbgqHscv
- 21jhT++7g/D1xw6VxH+JfDh5Ek+bUSnXxzTNmwxxYPNHyz8+QnAVoYD70xcrfjr+
- JzsJrdpVJr0Sdiz8vGk11Ez2kOo4oCcucwtRbpyOvRl64w9/39gFZJmEgXN0Ag5B
- DYc7hw==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dee8x8hk6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 17:11:45 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-12c20a91932so6268112c88.1
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 10:11:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775754705; cv=none;
- d=google.com; s=arc-20240605;
- b=Yv0fmAGBfOum18tkmxmBLbVKwQaqLAzbcLHNUFNYW4jEuQPHFtq/cbY0z/wHsOdavM
- 9YL/C87LGnBPf6zBiDkc+rHG2EoQ1/K2pEkBcKbms/N1eNVWoZxO3Ljw6Lcg6uswniPu
- f/6VRiRLMy4YTO7izTDkiHMRhOL0EGVW+HMai9JjQ82MztO5bDHHi6/LfucT6ukdwMJS
- v6q7GIyM9WmAI3PVDLyxsP5hu/huFFfdeq/PxzppckyWzAVVCgBTth6ElVPUWc55ilDL
- 2sGmcL1vnX98sGrMk/GmJyUqPlKWNpUO8dyvBNuUw/q54N91HwBZ7BY95IJVpXBQFMvq
- 379w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8YSFNoQMEKH0jaXamrOALT5dbH1oM7pZBVxA+gOgufk=;
- fh=yu814cA08wuY4V8jItBqeAdCck7y9xjLffuAyMr9Gfo=;
- b=dRyCJAxd9TubVVttqjN9M56XPfoBxfLxLu/RlDV+2EUINBJBSfi6eqSPLpsmkfv6Aw
- NMmPcvHruenXsM0XGYm7CIYC30T05L0qDvHLlOI6naA/QzEWyOPMNs5UA8Kzhzkxx8aZ
- lzZg4onEapXOk7UsieT6bs1KCaCRWHMOeNwA8BPdl1xbHNcIfMn0w2EIfOQcclwWjjfM
- mRCOeDWAaKViVXq3ICqbN2F1UsVb/OukhSRPrragqpJvgSKc8lnFdNIuSEHmv6TOxmpb
- 3v0inEpGOLzQ+wbqVqu1uRSEtP0vPZHcyMG1KAKf1XMVDBX1cqQvNN2YW92L5fhv7WoH
- ESZg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wAswZ-00006o-Of
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 13:13:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775754806;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v6uJ6P1y8FNDsY+hG+DSCcGyx1T+cYPq5W7WdzsZtzY=;
+ b=Z26yn3RNeUmbR/NOVLerq96IB2IyxR+c6IE7kUvxo01JOrsTpHaqhkDV3yCt+NMnqn7C4L
+ 2gpWmqDyEHJRfTma9BeF2Yz4n8fTyrYQsVulTYKKEGPUImVDqxC0uWkM3E09nIi/q4UozO
+ Wk2oF+t25r5PeRGeKHqjSUYtnjwcG4s=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-l2grSCPXMgqzhx9Dyu-G6w-1; Thu, 09 Apr 2026 13:13:25 -0400
+X-MC-Unique: l2grSCPXMgqzhx9Dyu-G6w-1
+X-Mimecast-MFC-AGG-ID: l2grSCPXMgqzhx9Dyu-G6w_1775754804
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43d121c4271so753534f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 10:13:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775754705; x=1776359505; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8YSFNoQMEKH0jaXamrOALT5dbH1oM7pZBVxA+gOgufk=;
- b=iMZIcek584VjUC6OkwLmxCVzLbhj3bmJTxIWCXrE+jn4sr/ztnQMZJSeWgS3R/3dR4
- ZMKBa8nffDLkvAkY//AO+IKZJba3UB+3m/pBY3pNO2rsyYtSQONvuIoQXwv0NPYiYz51
- /wm+QJhQ8WObx7XFExR/n3qzXeY6Tc08Md3svz/djQR/zzchZw5Uzy4q1VxNfzVxZJQs
- oAJkiTsRD1rZMENwpDOfznObZsA4gN8Ip1T+vchEFJBBTeLghVHoyJpmeouMh8tf4c7e
- rxHaX04s4IrHnQDjBtej2cdJvmpjAk0sJJdaCwORvYwtyCAw9TPT1nsDSEnSIFtaYRJ8
- 4gNA==
+ d=redhat.com; s=google; t=1775754804; x=1776359604; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=v6uJ6P1y8FNDsY+hG+DSCcGyx1T+cYPq5W7WdzsZtzY=;
+ b=sv5O0ViQUa9Iz+sAVSbjE6SzDIB4wmUPwLSniMMwCDQt2lTLreBidGEWE9eFYtd4Ks
+ +LErJzfZwJqTKJtLwQ7o80js2gjeuQLcmCJvdFo6MtMW8WM652MlYqznersvEAAZzU4G
+ q9jwo48CPi+9QQKSHpyWusy4TLNo3Z+HMUMCIDYhcdOOOe7vIFElXLpu2Dz7F9jfLuL7
+ hY0kUapp+PfMdxU5QnxfaJ/ZLRNaJ6CNGj0DIldyzTbEG7yCGSnndv4wGo6lssocJIKZ
+ 1bDentF2dcu7zcwL60vMnwZycEJ3cgS1yvMEv06brMr8mqWc/+mR5Xc/wPS7GhHdEDs9
+ Ucow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775754705; x=1776359505;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8YSFNoQMEKH0jaXamrOALT5dbH1oM7pZBVxA+gOgufk=;
- b=MRnchni7H9opRBdF2dsQFFHH+hxzBCu9tIgZQFz3lZWYJHMiB40XZod/Urgg/D+9Is
- 6bz8qqZqxVRgTq3xW7xCQA4ss8uWomUPU/pwRXT/m8nOcYJLjs0GiM9PKOi8WvI4NHAq
- Q5MsErjL7RgvFV9LVe5d7YTaAi7LqLzMDjELjdJFyglxhCO9uGyE2srq801RLXiBxnwQ
- vMmOoEU4M7+xKFbiYx1hoebQglJoivsFC8XXbTKehfHHMlt8ZCaluuTMkWvmGg5YNkiw
- ns895uCF3X0qmh2bNIwp7Hd9rUuSTNG+rFh6j/j1kQ144wGespBiWSS3YnFrrjWqaMFD
- tmkg==
-X-Gm-Message-State: AOJu0Ywe+aJuPVZ34APUC8SxXmftCJxeDJhbYF+aN/wTYc/eiMvmj6TB
- ek4THkak5s82tRb8rGHtDb4Jvg65UaYXT2ACDQXzkUtZWhW4+aosyu1EH1JkWPDivEspR1LO5mi
- lv6rhipCAKX7NiljvzLlCZR6OJ44EdgwBYe2MP4gMoRGBxnhWeLJ2LRb/0nCc468f9R21loWwQB
- EMf9Pbu+Kld2uJOXuY8+zwBqAyPX9c339r
-X-Gm-Gg: AeBDiesAODbU4l8lDDxtv1TYpS11+jPpgchiRN1l1zr6v/ZUg1xSqroG9zFskmIN7oK
- qB4ZMl+a7tKgf4gSrrzqBaEy6PvPF8UdrKoo94QmtO8CGJ4kYbEfv3aNCStqRmEymhwt99YkwP9
- ivTS+zDwSl2Zz4hmO8xbPvXEJKyYXVAPrHEA8Zv70wOrpWfYizf4DzMyl+f2tjXyPDu2x+HXq5h
- +H1rV4=
-X-Received: by 2002:a05:7022:62aa:b0:11d:fd26:234e with SMTP id
- a92af1059eb24-12bfb70ffeamr15552019c88.16.1775754704908; 
- Thu, 09 Apr 2026 10:11:44 -0700 (PDT)
-X-Received: by 2002:a05:7022:62aa:b0:11d:fd26:234e with SMTP id
- a92af1059eb24-12bfb70ffeamr15551983c88.16.1775754704332; Thu, 09 Apr 2026
- 10:11:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775754804; x=1776359604;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=v6uJ6P1y8FNDsY+hG+DSCcGyx1T+cYPq5W7WdzsZtzY=;
+ b=cv394W8aLuEgt2O1vO7bY6GxSpsDrQjuIBfiwnV+HPFCd3/6+Zk77aVkNvecfpz4Fw
+ l837RnZcaVrG26vDR9ur8d3LrxVIMKdSk5sMZFSojyPGY1MH9z4gPy0KkERu7kjalTkx
+ rs4qjDITE0+BkbG2ujgBjEu5ZSvaA3zTGQcwhUzZzlTYs8WxOBkh7xPUGko61u43e7os
+ eslEfa0p13CldWTBDHdP4bMWHqqwwQpbkQb4wQjI/t2kN6mU/CxX7tNEQ/eNKxG9aXNU
+ XkpjbmRvcABqVp6SLsXohPVu1GgUfWO2MyLKNYF9CydTQu2k8B7a81glc/WaLdJk6mGn
+ EXmg==
+X-Gm-Message-State: AOJu0YyKe97UjPYeXKR2//lP0nc6wsc4+02WdRhLS9omrRA4YCznDFEc
+ wRAvbfGMVf6e5OUYdNImkEk6qlaAfbXTLFg6Vu9rTtBIMWh0Tehv12pTJcnYh7ox3i7cIlrI9El
+ hcTf4GfOBZMplYX1nwh46FKYJ1swI8wZQQK7+y56iwkCfVqKWVQMUcfsC
+X-Gm-Gg: AeBDietQG6q58mSCjMviT7dlq/INxvNa2CtxwQjfnYfAo5478aO1zkljOF9CPxVGgIQ
+ doETGErTo7WX427MHF2dvCfaa1PSi1Yk2aNc+0riAnaEOXcJI9/GQqstdLQrNlyrOCIrXBnQQ/s
+ P0VImP7iuNjQLhlvazCa7FIHc6lG13S6qv7+r0aOjVOXArYYR8KvCsh2CBWRlTGuceMBy782dg+
+ UW8iBwbNzRblGzoP/g5cgLZsBRjSLfJDwVIb6KkqW6bgVO7YEvRTzKWSJ0FsmljzwoF5V9By6GY
+ yOWtQRT8U/zdewk59/SZGKst7DbdpyhYmZAVoTj2YFT5WQsJPn6ZJpIJvSRxyVbc74+NYIHg4OF
+ S33hp46qj+gKinij86Pg5ZCQtCLplQSlcN8n8lCk=
+X-Received: by 2002:a05:6000:2585:b0:439:a95b:3c43 with SMTP id
+ ffacd0b85a97d-43d5a14af20mr5500818f8f.21.1775754804228; 
+ Thu, 09 Apr 2026 10:13:24 -0700 (PDT)
+X-Received: by 2002:a05:6000:2585:b0:439:a95b:3c43 with SMTP id
+ ffacd0b85a97d-43d5a14af20mr5500775f8f.21.1775754803708; 
+ Thu, 09 Apr 2026 10:13:23 -0700 (PDT)
+Received: from fedora (nat-88-212-17-233.antik.sk. [88.212.17.233])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d63de2a69sm278492f8f.4.2026.04.09.10.13.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Apr 2026 10:13:23 -0700 (PDT)
+Date: Thu, 9 Apr 2026 19:13:20 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
+ Zhiyi Guo <zhguo@redhat.com>, Prasad Pandit <ppandit@redhat.com>, 
+ Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>, 
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Joao Martins <joao.m.martins@oracle.com>, Markus Armbruster <armbru@redhat.com>,
+ Alex Williamson <alex@shazbot.org>
+Subject: Re: [PATCH 06/14] migration: Introduce stopcopy_bytes in
+ save_query_pending()
+Message-ID: <adfd21izXQ_6MJmy@fedora>
+References: <20260408165559.157108-1-peterx@redhat.com>
+ <20260408165559.157108-7-peterx@redhat.com>
 MIME-Version: 1.0
-References: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
-In-Reply-To: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Thu, 9 Apr 2026 12:11:27 -0500
-X-Gm-Features: AQROBzBPTDWMfL1rgZO7JHkNlvbgVw4NTuFC5kZ8dRvEq4eWR-kVXoxjUsnQQkk
-Message-ID: <CAEqNhNaZqOG6m2hTOEo4YFZB9epXr_frz+kXYp56wRz_w4A+0w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/8] Hexagon (target/hexagon) Check opcodes versions
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
- sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDE1NyBTYWx0ZWRfX0neli2wwvM5b
- 0ShlnPbrVO60ufEhRpe5759QNfml/3IPmDeM07YUN0VoPI4XqtRYhbITKZbfq2BMq0GxXkJwlUK
- XoZ0LyjzJdrtOIL9KPlZ7Tu9LFKzlo2X1QpVVekG8XlO14JcqOlE4Rymb5ThbH1v+3MlvwE54Mq
- aHrMd7JdTp5w8YaA5BbVkc8eqXv86nvFm1JhOOOvZdCnNkksnQMLCf+TjgG+oaKRo1Z6Pifgo1v
- 6/77KdV7lyZchjcD5tSssblaJKOfhcdMbjZPO6+IEnxplJGnj773HQEwaADM68PaPh7mQ6kA8gC
- JPEHix3WingdfTH7D7V3sjEis2PRCWPROj4iWST2uwUEji0l2xWKfILR6VI4R4IDo4UuGLqkW2J
- 1Dtx8ijzleq6T+inbpz6s8eQcXGXYkzb/EIsZfIxjHr25s7ZRSoZFwSTU/6/5ruheEIDPEj6ZL7
- HV97+A3BFQhQZHt1Yjw==
-X-Proofpoint-GUID: 9m0QIpFJAio3Y46Pf352t6DDDJbtK9EP
-X-Proofpoint-ORIG-GUID: 9m0QIpFJAio3Y46Pf352t6DDDJbtK9EP
-X-Authority-Analysis: v=2.4 cv=O7YJeh9W c=1 sm=1 tr=0 ts=69d7ddd1 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_glEPmIy2e8OvE2BGh3C:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=nOuyLlN8sapJGrm8WlAA:9 a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_04,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 phishscore=0 priorityscore=1501 adultscore=0
- impostorscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604090157
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260408165559.157108-7-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,75 +127,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 17, 2026 at 3:22=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
-l.com> wrote:
->
-> Currently, all versions of Hexagon CPU are treated the same, and all
-> opcodes are able to run on any version.  This series changes the behavior
-> such that only the opcodes available on the currently executing Hexagon
-> CPU version can execute.
->
-> Changes include:
-> Mark which Hexagon CPU version is currently executing
-> Check that each opcode is supported in the Hexagon CPU version
-> If not, generate INVALID_PACKET opcode, which is converted to SIGILL
-> Properly handle disassembly (-d in_asm)
-> Test case added
+On 2026-04-08 12:55, Peter Xu wrote:
+> Allow modules to report data that can only be migrated after VM is stopped.
+> 
+> When this concept is introduced, we will need to account stopcopy size to
+> be part of pending_size as before.
+> 
+> However, when there're data only can be migrated in stopcopy phase, it
+> means the old "pending_size" may not always be able to reach low enough to
+> kickoff an slow version of query sync.
+> 
+> It used to be almost guaranteed to happen as all prior iterative modules
+> doesn't have stopcopy only data.  VFIO may change that fact by having some
+> data that must be copied during stop phase.
+> 
+> So we need to make sure QEMU will kickoff a synchronized version of query
+> pending when all precopy data is migrated.  This might be important to VFIO
+> to keep making progress even if the downtime cannot yet be satisfied.
+> 
+> So far, this patch should introduce no functional change, as no module yet
+> report stopcopy size.
+> 
+> This paves way for VFIO to properly report its pending data sizes, which
+> will start to include stop-only data.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/migration/register.h |  7 +++++
+>  migration/migration.c        | 52 ++++++++++++++++++++++++++++++------
+>  migration/savevm.c           |  7 +++--
+>  migration/trace-events       |  2 +-
+>  4 files changed, 57 insertions(+), 11 deletions(-)
+> 
 
-Thanks for the patches Taylor - this is queued on my hex-next-express
-tree for post-11 inclusion.
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
-> Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualco=
-mm.com>
-> Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
->
-> Changes in v2:
-> - Rebase with Brian Cain's "Handle some invalid encodings" series
-> - Add older opcodes to tag_rev_info.c.inc
-> - Change tag_rev_info to use HexagonVersion
->       Suggested by Richard Henderson <richard.henderson@linaro.org>
-> - Disassembly includes valid opcodes inside packet with invalid opcodes
-> - Remove unused function - snpring_a_pkt_debug
->
-> Changes in v3:
-> - Use a struct to hold Hexagon definition rather than a simple enum
->       Suggested by Anton Johansson <anjo@rev.ng>
->
-> Brian Cain (1):
->   tests/tcg/hexagon: Add test for revision-gated instruction decoding
->
-> Matheus Tavares Bernardino (1):
->   Hexagon (target/hexagon) Introduce tag_rev_info.c.inc
->
-> Taylor Simpson (6):
->   Hexagon (target/hexagon) Properly handle Hexagon CPU version
->   Hexagon (linux-user/hexagon) Identify Hexagon version in ELF file
->   Hexagon (target/hexagon) Add Hexagon definition field to DisasContext
->   Hexagon (target/hexagon) Check each opcode against current CPU
->     definition
->   Hexagon (target/hexagon) Disassembly of invalid packets
->   Hexagon (target/hexagon) Remove snprint_a_pkt_debug
->
->  target/hexagon/cpu-qom.h             |  27 ++
->  target/hexagon/cpu.h                 |   2 +
->  target/hexagon/cpu_bits.h            |   4 +-
->  target/hexagon/decode.h              |   2 +
->  target/hexagon/printinsn.h           |   4 +-
->  target/hexagon/translate.h           |   1 +
->  disas/hexagon.c                      |   3 +-
->  linux-user/hexagon/elfload.c         |  43 +-
->  target/hexagon/cpu.c                 |  48 ++-
->  target/hexagon/decode.c              |  52 ++-
->  target/hexagon/printinsn.c           |  40 +-
->  target/hexagon/translate.c           |   1 +
->  tests/tcg/hexagon/check_rev_gating.c | 141 ++++++
->  target/hexagon/tag_rev_info.c.inc    | 613 +++++++++++++++++++++++++++
->  tests/tcg/hexagon/Makefile.target    |   6 +
->  15 files changed, 911 insertions(+), 76 deletions(-)
->  create mode 100644 tests/tcg/hexagon/check_rev_gating.c
->  create mode 100644 target/hexagon/tag_rev_info.c.inc
->
-> --
-> 2.43.0
->
 
