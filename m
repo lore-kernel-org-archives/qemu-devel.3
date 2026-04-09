@@ -4,93 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAB1F364B6
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 21:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D64EF364BE
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 21:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAwbS-00060h-TS; Thu, 09 Apr 2026 17:07:55 -0400
+	id 1wAxFL-0003GU-4s; Thu, 09 Apr 2026 17:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAwbP-00060J-VI
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:07:51 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wAwbN-00064X-64
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:07:50 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43d02a71526so806749f8f.3
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 14:07:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775768867; x=1776373667; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mEDrAYWL+WIvBTZfhs7OCeci3sI70D3lFJQa5oMQunM=;
- b=q8RKrw+F/uSa1XGS/8Ji1KahusOKoevbgmDEIBq7NnH4GhR0Y2He+WxodSfpYoCRu3
- tQau+DDarabROdtsO1wi0HxmsMRBzHCEVn5yAQ39zQ3fuo3O0b0ccWf9cGhIGkTNda+G
- 3odWKujT+36YoA/zTnGHD7+9czFuz1EkB9EuaTIlVtUmvWkLd9E9ad0rWss7KwHGQKix
- 9XYa9Dh2aM3X9opbp3YKqtsfa3E1pj4MN6Mn2r2Pi6/mjepgfrCjHiF/c2RlUUeSQMdv
- iYIOFo7L4Q2K+3I0R0l0ZdNJz1gWA+Hf3dGLHC3UmHjtCUcyrXAWt+kfwa8uLR/UyQ57
- OAJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775768867; x=1776373667;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mEDrAYWL+WIvBTZfhs7OCeci3sI70D3lFJQa5oMQunM=;
- b=q9GuET56S9xybOsWaMAubwPMJcrNWaJS2cHVHv4I4L4eZsLpNjXfCxfQnCO6Vp+PWt
- 63hDKj8dXfls2KXQ64LWyWQW2+TxN+veseuc5fB6ilXwzL6tI4gLGsCkGY3oHnLAZKVo
- bmUxQhS8hrQpS1j7a4J7fcGrMEVDqmOkXm/LTVNr7ARPUFlNXc7Qlgv1cb+jUSDdddER
- 33tOJ1d62MdX6xMh5vNuX4vdrWXRqASOYdJWm8bfG0Nse6CddJD1seX1BPTpbrkVUAq3
- iuqfCrl27BJColrCArsR29W3cSjLW3c1VdarwJ5Pt6tE59qJzDWESQcXcIub0XeAT6Jl
- FiDg==
-X-Gm-Message-State: AOJu0YyAEOs962s/YwgOkA6vp32YTUb5jMdogMASYGdMeasoA/3QJZM4
- 5wJifVD7ENIXmNdl653Ew2Gct6iMUi1Pg2ZMSu/8HVPie7LIRgw+SI6pBHiCeHk5nv0=
-X-Gm-Gg: AeBDieupv9EavBsCD9H0Prscv/9t7cEQy8RTeNyaC1vWwRVygSl9jy57oDhH9yS8mIy
- 4Sk8ChXXTPL8TAPeqU0z2jF0zt9rY7qqwxxXJxohsj8jYKH7HZbyeIKngxiZxU3Rk6m0DiMqUP4
- w3GQCzDXxoHwhJgjfUMk3WhklAxXFesYxVFpkbHBsCPR9ei7+XQkqIE0+tZ7A4mlq7pTr3P8Ffa
- AuDgoCnEw59RmZ3BBQuJFXS438dvQuuIZXUmMJXBE93aOb98bZV/mU3tCYO/MwE8cIKR2bCTGWx
- ZYcMvWxH202N4jJBL/dZefzl6ELI0Cqu/JAiDuzJeAy1Cr6YGYTuOVAnoyK3vEIi7BkGdJ2IKE4
- +0Weut3IfiMCz9hDDq4k1UApBtdTV+yTOuim3YREbXKLn+mheuU1cB3Vl4O+gPfC/z9UvApJYYb
- XA/ZcxTqhOREIdkBVM4WbZE9BUJ5Wq6Fv2otg8k1M4KGLQo3YHD5X33km3E7COk8184A==
-X-Received: by 2002:a05:6000:4014:b0:43b:4981:1ba3 with SMTP id
- ffacd0b85a97d-43d6423d08emr822214f8f.2.1775768866558; 
- Thu, 09 Apr 2026 14:07:46 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63dec28asm1686886f8f.15.2026.04.09.14.07.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Apr 2026 14:07:46 -0700 (PDT)
-Message-ID: <46b5a434-10de-4ff2-aaca-636fc7a85180@linaro.org>
-Date: Thu, 9 Apr 2026 23:07:44 +0200
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wAxFJ-0003GE-DA
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:49:05 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wAxFG-0001ZF-Ve
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 17:49:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=I3+zygPDdrYt1oWBgZV98MSYzKehFQGf3kqAyk4J2Kw=; b=IKPOm9jvQ4NvrCkt
+ 0aFMPpQbnaDJ/IgKjwY2/w3+y7zBmG/lMokwer3Zh50rD5ZuKxr3lXHljyqTE4ytWevDFjvk1kdBt
+ BOGqyK9Hdhldc9OIciU8Khty6iuAjq34bsHX35279EyJ1iTt+DgXhk0nuoNTaW3Zjo4OuZQg80pQr
+ 3z/OrGX6QCYKF7DnE/jz1FAd7x4DXfUlxZ4hW/zq001/POY33rloygk6VeBntgugVDMVhfA/l1OOi
+ hvGhbGvlldup57SRSjDSA3+e3q5kecV2F+AQmTLXJVr4Lf2Bm8c0BrpYyBu3oOwgOPAAL+IoRKGFp
+ gQoy1L0IJzuwefd5HQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wAxFB-00000007HfO-3lz4;
+ Thu, 09 Apr 2026 21:48:57 +0000
+Date: Thu, 9 Apr 2026 21:48:57 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
+Subject: Re: [PATCH 13/14] migration/qapi: Introduce system-wise "remaining"
+ reports
+Message-ID: <adgeySiEoXBWRpOl@gallifrey>
+References: <20260408165559.157108-1-peterx@redhat.com>
+ <20260408165559.157108-14-peterx@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/mips: keep k0 in sync with CP0_UserLocal
-Content-Language: en-US
-To: James Hilliard <james.hilliard1@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20260408184228.44242-1-james.hilliard1@gmail.com>
- <CAFEAcA_Jt3SmuTiLWxuVQuktAG=M5C-Ux7OYKcGwPUBSETegew@mail.gmail.com>
- <CADvTj4rMoQi-ic=q=TJ5Dz6_GhHhR=JNhMoRhfKCFAuZzhUpzw@mail.gmail.com>
- <CAFEAcA_JPnWh22zhb+ajr76oKtFRoCZSZpsVW51m08eWrMZS5w@mail.gmail.com>
- <CADvTj4qUY6=b56LeHb+fZBEdvFPPR9dMFkYEjNhtN=BipOaEog@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CADvTj4qUY6=b56LeHb+fZBEdvFPPR9dMFkYEjNhtN=BipOaEog@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260408165559.157108-14-peterx@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
+X-Uptime: 21:48:18 up 27 days, 23:01,  2 users,  load average: 0.02, 0.03, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,70 +77,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/26 23:00, James Hilliard wrote:
-> On Thu, Apr 9, 2026 at 2:17 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Thu, 9 Apr 2026 at 20:47, James Hilliard <james.hilliard1@gmail.com> wrote:
->>>
->>> On Thu, Apr 9, 2026 at 10:17 AM Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>
->>>> On Wed, 8 Apr 2026 at 19:43, James Hilliard <james.hilliard1@gmail.com> wrote:
->>>>>
->>>>> MIPS glibc startup expects the thread pointer to be live in both
->>>>> CP0_UserLocal and k0. linux-user already updates CP0_UserLocal for
->>>>> cpu_set_tls() and TARGET_NR_set_thread_area, but it leaves gpr[26]
->>>>> unchanged.
->>>>>
->>>>> A guest can therefore successfully execute set_thread_area() and still
->>>>> reach __pthread_initialize_minimal() with k0 == 0, faulting on the
->>>>> first TLS-relative store.
->>>>>
->>>>> Make cpu_set_tls() synchronize k0 with CP0_UserLocal, and route the
->>>>> MIPS set_thread_area syscall through cpu_set_tls() so all guest TLS
->>>>> updates follow the same path.
->>>>
->>>> Where does the kernel do this? Looking at the mips set_thread_area()
->>>> https://elixir.bootlin.com/linux/v6.19.11/source/arch/mips/kernel/syscall.c#L87
->>>> it looks like it sets CP0_UserLocal plus the tp_value field in the
->>>> thread_info struct; and I can't immediately see anywhere where it
->>>> would read either CP0_UserLocal or tp_value and put it into k0.
->>>
->>> So this seems to be something used by the vendor SDK for Octeon1
->>> but not Octeon2 and Octeon3 targets, kinda strange/annoying.
->>>
->>> I also found this:
->>> https://lists.gnu.org/archive/html/qemu-devel/2011-08/msg02026.html
->>
->> Ah, nice find.
->>
->>> It's in the Octeon vendor kernel here looks like:
->>> https://github.com/MarvellEmbeddedProcessors/Octeon-Linux-kernel-4.14/blob/5c48e5031fbd86361e8185f6c530ffcfa5c9a60d/arch/mips/kernel/syscall.c#L94-L96
->>
->> Mmm. We emulate the upstream kernel, not vendor forks, so
->> we wouldn't want to set k0 here I think.
+* Peter Xu (peterx@redhat.com) wrote:
+> Currently, mgmt can only query for remaining RAM, not system-wise remaining
+> data.  It was not a problem before, because for a very long time RAM was
+> the only part that matters.
 > 
-> Yeah, I was trying to see if there was some sort of way to trivially
-> identify binaries that require this k0 support and autoenable a quirk
-> but I didn't find anything, maybe it would make sense to have a
-> separate runtime target for enabling this k0 quirk since it seems a
-> lot of octeon binaries require it?
+> After VFIO migrations landed upstream, it may not be true anymore
+> especially considering that there can be GPU devices that contain GBs of
+> device states.
+> 
+> Add a new "remaining" field in query-migrate results, reflecting
+> system-wise remaining data, which will include everything (e.g. VFIO).
 
-What about (untested):
+Of course you realise the next thing people will ask for is being able
+to ask *which* vfio device is the one that's busy.
 
--- >8 --
-diff --git a/linux-user/mips/target_cpu.h b/linux-user/mips/target_cpu.h
-index 0a000ac8f35..c4aa08df4a3 100644
---- a/linux-user/mips/target_cpu.h
-+++ b/linux-user/mips/target_cpu.h
-@@ -36,7 +36,9 @@ static inline void cpu_clone_regs_parent(CPUMIPSState 
-*env, unsigned flags)
-  static inline void cpu_set_tls(CPUMIPSState *env, target_ulong newtls)
-  {
-      env->active_tc.CP0_UserLocal = newtls;
--    env->active_tc.gpr[26] = newtls;
-+    if (env->insn_flags & INSN_OCTEON) { /* Octeon1 */
-+        env->active_tc.gpr[26] = newtls;
-+    }
-  }
----
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+> This information will be useful for mgmt to implement generic way of stall
+> detection that covers all system resources.  Say, when system remaining
+> data does not decrease anymore for a relatively long period of time, then
+> it may mean that there is a challenge of converging, so mgmt can act based
+> on how this value changes over time (especially if sampled after each
+> migration iteration).
+> 
+> Before this patch, "expected_downtime" almost played this role. For
+> example, by monitoring "expected_downtime" at the beginning of each
+> iteration can in most cases also reflect the progress of migration
+> system-wise.  Said that, "expected_downtime" was always calculated based on
+> a bandwidth value that can fluctuate a lot if avail-switchover-bandwidth is
+> not used. This new "remaining" field will remove that part of uncertainty
+> for mgmt.
+> 
+> With the new field, HMP "info migrate" now reports this:
+> 
+> (qemu) info migrate
+> Status:                 active
+> Time (ms):              total=12080, setup=14, exp_down=300
+> Remaining (bytes):      1.36 GiB        <------------------- newline
+> RAM info:
+>   Throughput (Mbps):    840.50
+>   Sizes:                pagesize=4 KiB, total=4.02 GiB
+>   Transfers:            transferred=1.18 GiB, remain=1.36 GiB
+>     Channels:           precopy=1.18 GiB, multifd=0 B, postcopy=0 B
+>     Page Types:         normal=307923, zero=388148
+>   Page Rates (pps):     transfer=25660
+>   Others:               dirty_syncs=1
+> 
+> It should be the same value as RAM's remaining report when VFIO is not
+> involved, and it should report more than that when VFIO is involved.
+> 
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  qapi/migration.json            |  4 ++++
+>  migration/migration-hmp-cmds.c |  5 +++++
+>  migration/migration.c          | 11 +++++++++++
+>  3 files changed, 20 insertions(+)
+> 
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index e3ad3f0604..a6e24b5685 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -300,6 +300,9 @@
+>  #     average memory load of the virtual CPU indirectly.  Note that
+>  #     zero means guest doesn't dirty memory.  (Since 8.1)
+>  #
+> +# @remaining: amount of bytes remaining to be migrated system-wise,
+> +#     includes both RAM and all devices (like VFIO).  (Since 11.1)
+> +#
+>  # Features:
+>  #
+>  # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
+> @@ -310,6 +313,7 @@
+>  ##
+>  { 'struct': 'MigrationInfo',
+>    'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
+> +           '*remaining': 'uint64',
+>             '*vfio': 'VfioStats',
+>             '*xbzrle-cache': 'XBZRLECacheStats',
+>             '*total-time': 'int',
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 0a193b8f54..721c211086 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -178,6 +178,11 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+>          }
+>      }
+>  
+> +    if (info->has_remaining) {
+> +        g_autofree char *remaining = size_to_str(info->remaining);
+> +        monitor_printf(mon, "Remaining (bytes): \t%s\n", remaining);
+> +    }
+> +
+>      if (info->has_socket_address) {
+>          SocketAddressList *addr;
+>  
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 4010e5dcf5..c2aa145106 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1076,6 +1076,16 @@ static void populate_time_info(MigrationInfo *info, MigrationState *s)
+>      }
+>  }
+>  
+> +static void populate_global_info(MigrationInfo *info, MigrationState *s)
+> +{
+> +    MigPendingData data = { };
+> +
+> +    qemu_savevm_query_pending(&data, false);
+> +
+> +    info->has_remaining = true;
+> +    info->remaining = data.total_bytes;
+> +}
+> +
+>  static void populate_ram_info(MigrationInfo *info, MigrationState *s)
+>  {
+>      size_t page_size = qemu_target_page_size();
+> @@ -1177,6 +1187,7 @@ static void fill_source_migration_info(MigrationInfo *info)
+>          /* TODO add some postcopy stats */
+>          populate_time_info(info, s);
+>          populate_ram_info(info, s);
+> +        populate_global_info(info, s);
+>          migration_populate_vfio_info(info);
+>          break;
+>      case MIGRATION_STATUS_COLO:
+> -- 
+> 2.53.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
