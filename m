@@ -4,101 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72DB2F31E22
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 15:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DA4F31E44
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 15:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wArDO-0007rV-Jy; Thu, 09 Apr 2026 11:22:42 -0400
+	id 1wArfU-0007Dh-1j; Thu, 09 Apr 2026 11:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wArDM-0007r6-Tr
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:22:40 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1wArfH-00073v-D3
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:51:31 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wArDL-0004H7-89
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:22:40 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-79ab5fd969aso11202077b3.0
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 08:22:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775748158; cv=none;
+ id 1wArfF-0000Op-PL
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 11:51:31 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-79a60975dc5so12077827b3.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 08:51:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775749888; cv=none;
  d=google.com; s=arc-20240605;
- b=IOLAIRI8IUaAXLZE10F5YYkadKQVQ+Sv+u/UUKWr0qRUP+7Rqg/REyeUPshVtyDAQU
- KWIeJqI7zjgf4eFcTMQijmt04GrLAUiSE80hKWO0fRR9OPVRWJGE6EkCqidbKmZqlRc6
- QE4KNK42RrNrDF3Qp4sXgYTs93Kx+Y7EhiwOu/NVVcA222w7SKbytNtsDoA6jhSb83/N
- Jtv8QZQzfxqhR6f/xCz+CpuEQMcwcgvUW+WqGsB6Egr9zykyioEcYU77aS2VH/gfbekp
- c0CAL3QrYCw5X+M8SBDkwkWqAoljIqup4ObsGOqXxRRt6QCniHQyURlASMPO3z6M+Y9k
- 3YQw==
+ b=XmDdCHfGS2O9Rzz/l7/Lsof3QpBgB2hgVAW2URjghUGqz+2tHRkoOJ6sW2ssynlFWd
+ yAT5eshCqScioZQIuIDDUfH/2XWXMjakHx+a10+CipB98NIG8pwyKzPcfs53yHaFVotr
+ M4ha6ZP4ZSOVJkGjUy4mUZw3r0c8OXcxVS1R1R7GISQ/kpoCfGhwy9+33Flr8e5xKTgX
+ iaMcLajiRqUDMmbWlCuwJfZVslB/az9En+SsBPXjem5ySEqh7Q71Ei2qO8tt8y/c0yc+
+ lTzZ+u3Tx2NRJhY0jlQl34tIanR/pvkX0iYeH+OKU4mKfPZgrfILUm1JZwGuCi0qTh9q
+ AFXw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=qJshqtyhL5Fi0CwkZiwe4Cm+ggGRBuchLGOYTsL/uSI=;
- fh=VUZ7eJox894qpEuQTEFSefKlY4l3x+uBmRGBSaSsOHU=;
- b=fWPKpTVCqolx9jBGow8353dFunRcMTGlSHxQiZpb4ogMkK5wauUZ3AvI+6iVqCB6IY
- asJHTzkGmzFUL8EXRtMogdjVNZWm85h6uO0hPZIf40c6CD/IPDy9jUpeUzdRoZ0ojBO3
- QKxPWqBrcbVEZxV4ssGbHjF+tm4EOtYgE6BqC8wwP9hM4pceK9gvn07MQNkb0VPFG/Ed
- 860DKsJJlSa3cUT7JEfs4KpLg+1sA0DwAzQiCLR+x5SJJyjOR/IzZZBcXRbwqSuCINqH
- kX2gSHqRCn8N6UXJeuM3bSPx449WAnVodp+AV2yTCQvCHajoB3C6TRoGiEb/dwlyvvic
- gaqQ==; darn=nongnu.org
+ bh=c8TY27wWNlO+TidtfvNQahmpjcDAa/fwBc1qFWnBTIE=;
+ fh=Y9lXldKquU9Bcr843Q0+0eyUvZTOyRlhLgjIsJQtlEg=;
+ b=gY6257JqV5dt36RnD79Puiy2Ty/MmP+rWPSj/mzanQycc8uxzDywfzVxIMct4K873L
+ rwHULt+p/t+ml5lOQUR2vD8R1PPUZtRxmFIhHd6dJavik25/CGe9X8JgMtz60SwZJdiZ
+ HIz4lNn/N0EBqfYPHOkwhUoNwzwXCiDaUnAXThEc5aHwNCc9IAaoWV6rNHfxsc/CUkWA
+ JBDHCNN+9XYdVH1x1pRecPQVp4TD6Q9Bx6EXaDIpAhXUAqIAHySLV9k++pug0oHnauQl
+ xbTgv102/tSRGLbjarKh88kS3U+kCQN4a/7/TgWQrya8zM4XW9DlRmqj6eVhWK/yCc1+
+ y8NQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775748158; x=1776352958; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775749888; x=1776354688; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qJshqtyhL5Fi0CwkZiwe4Cm+ggGRBuchLGOYTsL/uSI=;
- b=aTJvyEOe0W7jZdrlynU08dg0s4Mkb5fdOiFAisN1xaf5Gopplas1AnuRI4jkpiRJWI
- HavelZxMvzR2h42b3uUeG0rKu4lxYwCBkNR88myF+SKpqsqkSXOdp4lKc4Y0J6dzUhmm
- yRrCWOW8HjTAl0ERjXz6z3nLzzFf51UFZYmr79gDD/ctSbU3wYq5ioNHYLeYVnd4wPIN
- DcIvIfufgCuULnLbeNsIkfAaRQH0MuuSCbKc2qY39g25D2JxkoX26xmOFldeRRNGel3M
- XehWJuKAQwjNQoTSj4X+aNZQxRVC8F5UF1+mcZtSGpUOcvVqMU/FjkaUbd2wuwW5QMAM
- mRsg==
+ bh=c8TY27wWNlO+TidtfvNQahmpjcDAa/fwBc1qFWnBTIE=;
+ b=ntv3J2E360oa89d0rwP9VXWAJaNNSsQnLkTAFNIePQRQmH4AMg7zYavzhd+ZDjcrVQ
+ 7+NgUSiB1QRN9hHgDFR70vhrAbl0jS8aGn1vUaByLjwvcC5HqWWjH9m/3/7Ml35Aua9T
+ atpyTHqFZUeZC5dSj0OgXad8G9gwIp/QDz28KuxZH+a+17qUq1OwP2nQ8t68THy1P6Hy
+ tmcldlTNONkbQ6B+WtIx1q2OVWw5zYNJv9AvMTHNiP7RqS1wLDUfH6b8w4hZ7B9kM02P
+ NDDOZHaIihfNjxMI/sAlVkWtPhniWG1n5wRlsknVfmwXnfBYruUENhqDMtg6I5lcnUbx
+ 1hLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775748158; x=1776352958;
+ d=1e100.net; s=20251104; t=1775749888; x=1776354688;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qJshqtyhL5Fi0CwkZiwe4Cm+ggGRBuchLGOYTsL/uSI=;
- b=k0hdDs4+j0bw/XsY9+/nZOLrqRNLFiT+CN5qEo3dw5/78/9zfoxc7pd8wY1qlGWhxp
- /OkbLPb3Sln9FQu6qDIx1lDtwg8Zh11RJ1kUK/g7YVJ+NcE3Y78HkfydllebVfLysmgI
- dDePAEXVV026xraJlJHhmJJa3y08gTtIhGYL4VmseR0Esiw/UOsN8G5zXq7YVp7aYIW6
- r+CycIkE6pHZIH1Gpljie5ZrEcYYYHZX6bvtvA8VeJwXrRK3lZHU1xDKLioq/dn0b6k8
- 7wqYuTnMSF7aTtHKf3kJR3S/q5jzl5vi9HtBIwvmidIs0Fhtv0Ie5iU3vmMBdp00LUA/
- tAXg==
-X-Gm-Message-State: AOJu0YzOT1MtrUlRth+cTsBsQIFogEE6d/uA9OifDjrvQCPhBOcqpFrR
- lz1TtiCis1BE7E6W/+Lfxv1U+6qLItyLS3Czwv4T8mmrOTqqRm0eobMOjipmcASVpRTxl1766Pf
- 4zGEvul7H5MuhAVbuPGP5ui9RS6XzgCoWLSTtcSvqKA==
-X-Gm-Gg: AeBDieskrurIIeD6GEAcDKvo0rFu3okRwXNxESDSlCV8yqKps4P75jn5381lyXc9oCE
- Rc4s0giQYBqgXIbu6YzzmhlidR+I/KqCZCPNRX07TxidrtwXzBbhIZWi8vZBA3jAwaqFeH6Gyc5
- 2aS8cUMk3Wf7g9OxArmfkeNdJ8KfhKQCMw1Ev96eVwX6eYlmiNJN8JZJzWnSefx0KpkKIMe4KMG
- 30EGBs2ItoMXrrKgqeozB97gEWRN8r6qxXcVjPTaVaer8m3c4+gQctF42xe1a70+efQGoJtNEfi
- xro5+OVJFEYM+cANr36FD7GOEU597N70cjCNGxP8yshkfS6TgOI07HJWuoJsJScQk2w=
-X-Received: by 2002:a05:690c:c510:b0:79e:8299:751f with SMTP id
- 00721157ae682-7adf0ebc8a4mr39196277b3.7.1775748157501; Thu, 09 Apr 2026
- 08:22:37 -0700 (PDT)
+ bh=c8TY27wWNlO+TidtfvNQahmpjcDAa/fwBc1qFWnBTIE=;
+ b=b2JqZdj9KzxyETrjjOPdB5QKLR0EcZfK0yKBD2z5z6AGSdwWk3Ii77eXRbSCx27bjo
+ qstVpepThh1/QKD6Vc5wgXSHocgph1nf58yR4IcxXpf4nWjG2gto8FTEDfy6XhLhlnZ6
+ 6GN+NEqARm8WmxDgcYfxlbn6p+n0LQj6WfOwGYpjCATcLBx9mGq3zW7HUNQfwoaJHMRq
+ IfdkOerMfKsxbwupRmOF5T3LLx873PqqBT8G+wQYym7zDMQZPOkkohBfNQTDCixJvR5b
+ Fuk1NOZEWEFlzeMMSd5F9RUlcuuM4nlvEIA/w7FP3QQ01PqJ3CpRTCoPEOPlxDzwC4cV
+ s8TA==
+X-Gm-Message-State: AOJu0Ywq+PU6hDux2iWJ1B4vH+tOvSgOOoa8ttSpgEQuNGronQ+FsdgW
+ Fqrh/Tq5C3efE77GL8HNWH4bdZ/O5jXaMpeboH8MimOsltjXCEjDPApJGewqRjUz/7PtaQrIxl0
+ FwIZUIxMhTTd+d5988No/SeuebZsSssefRC1fhcaUEQ==
+X-Gm-Gg: AeBDieu5nvR8N8vMumeXNwiSFvMbfiec94AnQswx+gyqRpn+gXE9C8AKSf/9/i9fldq
+ EFvDBz+JHlVwtAslv6GAw/i9dkdY9/pvbRpXQEoOp23tpu8qPdMs8VhRDrad75QCKZYnyHtkGGa
+ t0gCt5kkyf6ZOFs22IiQn4qfuD9r6Ur6yMLFG54f0cFsqJcbpiV7DyDguxkBe/gvWPrA0qyHKgY
+ Ct7M0JZ7R8SrXQ/b2XmEcBWMlPfHwA+odbocbhB4ZlfK7g/2ec+RzzW2prjhEOCMeYOZpqL4ecq
+ MTkrNmxoal3sF5x/8prQCI+hknL+c/WS9s5MVIm06deJjnDFDti/WMd42HfeKls272gF3Zc2+t1
+ Sdw==
+X-Received: by 2002:a05:690e:43cb:b0:650:1485:26c6 with SMTP id
+ 956f58d0204a3-650486ef810mr17821202d50.19.1775749888378; Thu, 09 Apr 2026
+ 08:51:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260306121511.1781020-1-kchiu@axiado.com>
- <20260306121511.1781020-3-kchiu@axiado.com>
-In-Reply-To: <20260306121511.1781020-3-kchiu@axiado.com>
+References: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260407222208.271838-1-pierrick.bouvier@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Apr 2026 16:22:25 +0100
-X-Gm-Features: AQROBzDdHTaHQiWZ0pWpILfYRaDE19q966rUxB7TojkF0iYBpz0acYi92JrrSLs
-Message-ID: <CAFEAcA-yDSiumFrj4R88B0ZrB_jjK1JEJBQok7wUi=yN+vTNGA@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] hw/arm: Add Axiado EVK board
-To: Kuan-Jui Chiu <kchiu@axiado.com>
-Cc: qemu-devel@nongnu.org
+Date: Thu, 9 Apr 2026 16:51:17 +0100
+X-Gm-Features: AQROBzBjfZ-OKubnGZzZsOsd0PaLIW362ws-YqKyzOItkm-WBeLFuU9c-iQaGh0
+Message-ID: <CAFEAcA9rQez-BFVhpDBjFKZjKNXtCuK8ikPWRryN1Xed-MZ6=A@mail.gmail.com>
+Subject: Re: [PATCH v11 00/21] target/arm: single-binary
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jim.macarthur@linaro.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,62 +116,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Mar 2026 at 12:16, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+On Tue, 7 Apr 2026 at 23:22, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
 >
-> This patch adds a new model for Axiado SCM3003 EVK with Axiado SoC AX3000
+> This series tackles (most of) the rest of target/arm, especially tcg folder.
 >
-> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+> We extract tcg memory operation in a new header, with a new type representing
+> virtual addresses.
+>
+> Initially, I went down the way to have a dynamic definition of TCGv, which
+> required much more boilerplate and runtime checks. After discussing with
+> Richard, I realized it was not needed, and that could simply split 32 and 64 bit
+> properly in different files instead. This approach will not work with other
+> architectures, requiring something else, but it's enough for target/arm.
+>
+> Files left are:
+> - target/arm/tcg/mve_helper.c
+> - target/arm/tcg/m_helper.c
+> - target/arm/tcg/cpu32.c
+>
+> v11
 > ---
->  hw/arm/axiado-boards.c         | 78 ++++++++++++++++++++++++++++++++++
->  hw/arm/axiado-evk.c            | 38 +++++++++++++++++
->  hw/arm/meson.build             |  4 +-
->  include/hw/arm/axiado-boards.h | 41 ++++++++++++++++++
->  4 files changed, 160 insertions(+), 1 deletion(-)
->  create mode 100644 hw/arm/axiado-boards.c
->  create mode 100644 hw/arm/axiado-evk.c
->  create mode 100644 include/hw/arm/axiado-boards.h
 >
+> - update comments
 
-> +static const TypeInfo axiado_machine_types[] = {
-> +    {
-> +        .name          = TYPE_AXIADO_MACHINE,
-> +        .parent        = TYPE_MACHINE,
-> +        .instance_size = sizeof(AxiadoMachineState),
-> +        .class_size    = sizeof(AxiadoMachineClass),
-> +        .class_init    = axiado_machine_class_init,
-> +        .interfaces    = aarch64_machine_interfaces,
-> +        .abstract      = true,
-> +    }
-> +};
-
-Are we really going to have lots of Axiado machines such
-that we need all this machinery with an abstract base class?
-The simple thing is to define one machine that directly
-instantiates the SoC, etc.
-
-> +DEFINE_TYPES(axiado_evk_types)
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index c3c96c0a70..993a95d33a 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -106,7 +106,9 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
->  arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
->  arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
->  arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
-> -  'axiado-soc.c'))
-> +  'axiado-soc.c',
-> +  'axiado-boards.c',
-> +  'axiado-evk.c'))
-
-Don't hook everything under a single KConfig symbol like this.
-You should generally speaking have separate Kconfig symbols for:
- - each separate devices that is part of the SoC
- - the SoC itself
- - the board
-
-and the Kconfig stanza for the board says it needs the SoC,
-the SoC says it needs all the devices, and so on. The way
-we do the various imx6 boards is an example of this.
+It looks like this is all fully reviewed, so I've applied it
+to what will become my target-arm queue once 11.1 reopens
+for development.
 
 thanks
 -- PMM
