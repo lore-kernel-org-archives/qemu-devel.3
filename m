@@ -4,127 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA5EF31E5E
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 16:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3285F31E5E
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 16:19:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAs5a-0000pg-27; Thu, 09 Apr 2026 12:18:42 -0400
+	id 1wAs66-00010P-0L; Thu, 09 Apr 2026 12:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wAs5Y-0000ob-4M; Thu, 09 Apr 2026 12:18:40 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wAs5W-00040b-II; Thu, 09 Apr 2026 12:18:39 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6399Avcs2210139; Thu, 9 Apr 2026 16:18:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=RmVOPf
- xVfNgzv+/Rljv07lzY1NMjyMkMPAb2fL7gG0o=; b=dYefThA1B8yKXr3UGdthGi
- vlAUbiGyAnQ98OJsPgDZ1X58FIoyCAilM3XdUe/I4/qOxLaKourYGU8GTB7UbPqu
- e4i2I9HkxineVxUs6WCotHSwTEW1QEIjivGtU3EPtkx4QL2sQXYanak1PDKlxAxG
- GcpasCUo2lkV4mnPid9XvsK+v4cyL4vJm6f7WtKGByfHuFpHmB1Cty1ggU0hjHPN
- 6hGcDfNOoc8t+t72ETMpUGCwdQNXZsa23pYM9UstmakBNf8FVKSaaZu9NyonG91Z
- hmK7+6f6jT7sX121njX3fg72oAe2TN6Z3wDZE8oIwASCQvxp7ZgwfdY5LZWFuwxw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2hn1db-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Apr 2026 16:18:36 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 639CAfEt018952;
- Thu, 9 Apr 2026 16:18:35 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcme9mc3e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Apr 2026 16:18:35 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 639GIYrg8454880
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Apr 2026 16:18:35 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 962A258054;
- Thu,  9 Apr 2026 16:18:34 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 78CD65803F;
- Thu,  9 Apr 2026 16:18:31 +0000 (GMT)
-Received: from [9.39.24.136] (unknown [9.39.24.136])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Apr 2026 16:18:31 +0000 (GMT)
-Message-ID: <d522e029-21ce-45eb-88a7-b9236e94b37d@linux.ibm.com>
-Date: Thu, 9 Apr 2026 21:48:29 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wAs61-0000xj-Q5
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 12:19:09 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wAs5y-0004Lf-AP
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 12:19:09 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-65006c99d38so1283441d50.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 09:19:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775751545; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lNHWRCzjLaBUGCfplXvYq7sl0gwDsvh7dpfohKuIkehUnkadxBW9MTJ6aBALdCGbKk
+ gwfc0PaQU4eZZvf3PAO33HV8TdPt+sbi0KTbyviWqfeUphNfI5/cK3SZKmGoO79WrPih
+ oOM/LIpCRMY/mykYyN8GiaU9XmoKLoCNzLGftcZa2vS3M0xWkk1CAlFa07rOXerXZry7
+ AQ84PaOP41cmx1z/JNZjQ8D67i3xbQNIxMpvLj+WYzPldKLyB8dg3jZ2ZpxewrmeO4Hg
+ b3u4X+pAl0uVDMEsYSwC6YU/pdDNyWa/DZkDEr2e1TpdnNAd2Tf+swa2R2n2HVjqUGZl
+ UeXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=vvGnVZUJgEfitcTTXy67x0cksLZoxifI9oeHAZMv+Ys=;
+ fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
+ b=YYyE5zlrmDgo7dlaNz3wNgVw2IcROMTB0QebsHK5dq3FwebetVFczEUHFr5Iq2MIlU
+ ABkM2j73djMDjzGJ0rmj0GftSi3p0Zo44DcO5vLzLBrMwa0Abe0VJKSo703WLR+Exuin
+ QfLofk7pfecv85arPjTU5+y0bo341iPUnPgTOLKTU5qeJFaxmiMmXhA2rEFrlWGhso0p
+ PrwsAa67LmMTCTxFsUI4hsIY2iPlsfe0dcpfgF+Vrn0JMoRXcQ6Hf0tSSf0w8avLqBfF
+ MNYH7SlqE2by+1DMQD7st62FjlXxf7Oa8bkgWlEBJwDk36oqnNbNpcGofHErpp04U+EB
+ ZGOw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775751545; x=1776356345; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vvGnVZUJgEfitcTTXy67x0cksLZoxifI9oeHAZMv+Ys=;
+ b=RC4keSTXJvfpANGMCLAaHK9IXwZmE7q6iIPupBESCnkJBiANgpsm3uMo9Lw6g15vUS
+ PvWqqmIIctUxZY7V40vlaFX6Uy63tjPKGn4l2CmRFzJx0HMLQqs9/X8Zqfh6aZvxpYYH
+ ZNzw4JN7d/bF61FpD/nYKWQmu9w84BjkzstdBCfJioI/ryEcCbT3aHQb8ybCeaREAW7H
+ JEsW5w4IwIKTFZJR27cc9iGmcBiVCDk8SZZEN/V0Wq2MEWYFtSS0Nxuc4/RwbJa9Fi3g
+ ggNKP/qDoyjme/DSLsnviAz6wo1mBl2wRYMP8JR3Y0Deb/Hfzy2MJhOj9Rn0lTBiSMlb
+ sRwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775751545; x=1776356345;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vvGnVZUJgEfitcTTXy67x0cksLZoxifI9oeHAZMv+Ys=;
+ b=TZz+tOFNlmay0nngZ6JalKHye4NR7G6ZfHpUoKxJ9WFTieFC2fkNvefixF0BCc0dvn
+ AM965yKdN4+cRaVh/n9G6P4Mzk7D26K3k/mdNzcs4lSDZxlr98mts0xpI6JZnqXHvtTu
+ Oe4rJGWS3V14ckD7MemCkLpK+NxamTgDlxI8wozxkEMT7q8lT6DRU5pCkLVh6cr9LFSK
+ Q4jIud48twDgqIcrMcvZB5NUq1ZOZXC89kcIKYHhS89UC6iIe4SIjv4t6W/vh/jXpwIp
+ Bsl6fvG9xWGnukK3jacJQGeKYbQcWszZSjLh9SihAqJjh+oEeUoq9GpjFcfQIg+bhv7C
+ S6+A==
+X-Gm-Message-State: AOJu0Yx9DGEUpAvDDI3BQRRqpw/ilZwqIvKNpniGYUhhIqe2RusxzT0/
+ rx+0hgiGl4jcZJ4ut8OJgETXFEYcDhEgrp6KPRHiTa4AjHp7ExcB1qd3sqAiLUFr94bCbAHnJNO
+ XYlh3Gs2LqqAbpQkzb9YCDkiAXyJHomd/xLPutRo2Kd5xgpwAcwDGj8g=
+X-Gm-Gg: AeBDieuyTceRwkwJJgT+TQdw5WFfZwhRFlCHxP4D0y2K2VEgFlB1KSbpa1iLdsXINGN
+ vS1O5RhkSDsjE1hXHO70duO4DM+RPWrqjhmpn5h7cPLJilFjh4Rjoqo969yHmPUTk8LxtMruyiE
+ zj/0wg2otyTYLFV5pWelp0C9sXvIkqSTZzIrkTBE4CHGjKL+LFyRfcgsEurFl+qJZIPH9WSAXvm
+ clFtsMfyqTm8swJ1VU2bxgRhdpjvv0q+pAHod6M1X1wcT/9S5xDPaGGI2oz/+CEjnH3jv7SShC3
+ lsB5aUySBg+lewkqsdG3Dc0jqPS1uAFJl92nt6jhcY5KnX0hbUTxhpGuZlx23aI/SnE=
+X-Received: by 2002:a05:690e:a4f:b0:64d:6bee:2c5b with SMTP id
+ 956f58d0204a3-651875cad39mr4095862d50.16.1775751544369; Thu, 09 Apr 2026
+ 09:19:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
- commit 98884e0c
-Content-Language: en-GB
-To: Misbah Anjum N <misanjum@linux.ibm.com>, Ani Sinha <anisinha@redhat.com>, 
- Pbonzini <pbonzini@redhat.com>, Qemu Devel <qemu-devel@nongnu.org>,
- Qemu Ppc <qemu-ppc@nongnu.org>
-Cc: npiggin@gmail.com, vaibhav@linux.ibm.com, sbhat@linux.ibm.com,
- Gautam Menghani <gautam@linux.ibm.com>
-References: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
- <2cc23a5ce64847dd8a9278c87f58119b@linux.ibm.com>
- <5bc7997d-329e-47a9-9b4d-750a3104094a@linux.ibm.com>
- <4797B580-7853-490E-8852-B6312619FE95@redhat.com>
- <e966c053-2e69-b185-532e-fcb4173b4daf@redhat.com>
- <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
- <ED4A083D-2B96-468A-BE77-211E9F3FA88D@redhat.com>
- <7bbeb3cb105934e95bf1a5356cfc4613@linux.ibm.com>
- <7ACBCD63-B759-47FD-824F-0327726E47F6@redhat.com>
- <35f6361f69ef4f09f80bd915f3460a28@linux.ibm.com>
- <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
- <526d7172f3933baf913bf4b105a6fa9a@linux.ibm.com>
- <9794AFF9-DFD9-48D0-B4EA-7745ABDED6F7@redhat.com>
- <DCB3A7E9-412C-402D-A4C9-EA558CD1FE29@redhat.com>
- <ab72cb8395bcc2b1f489c5611bb7c00d@linux.ibm.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <ab72cb8395bcc2b1f489c5611bb7c00d@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDE0OSBTYWx0ZWRfX03OAAU/HBDvH
- 3NdGLCwdG07HiZLEpWhR9Ne0JdZvIpTf+LmkXH3rRROShDyFVtDklWNBn45JsA+Tsj+zyccHQAk
- BFsOd8MdVJVgmINMwY68SUSaIJDb5oDzlwtykjyWkU1//LIrIYb+XONf8ZHW58E6kklfz6pwNTK
- appIqCx8+Im82OzUtiAS8REzYQQZLYrtl9LaiEbQTv26UUja267zKuL+upJTlXPwuFfoO0Fib0k
- bRVHtXduzm6xiM9IAbTzJv9j7laVuPZ5I5w0aPOx6iWqZwEGRxREe5gq8kMJNLAyZsRAl//7BzZ
- 6O81sVy21tdL6e7dHW4h9VxiNZtoM4JFt54ssY+cjtkO0FDI2bXc4tFFSHxPtlXub28Ufmt/dti
- 684NXSRvb2whaqbyTqiErPjqqHFM35+32GZ3tFYoTV4JDfNhJXgl41O0kp3w3LpT6PcRipb9bOS
- hKiNSJ0Cwq9X16lIt6A==
-X-Proofpoint-GUID: GXw5xhA0KSxavhYvJn3BnBcOXw68KR1F
-X-Authority-Analysis: v=2.4 cv=a/wAM0SF c=1 sm=1 tr=0 ts=69d7d15d cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=HZCDa-MAzmLoNKJ9Xh4A:9 a=QEXdDO2ut3YA:10
- a=ZXulRonScM0A:10
-X-Proofpoint-ORIG-GUID: Ksdvg09qZfAJdw6GGbDBNRGpbPlSiMvo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_04,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 spamscore=0 impostorscore=0 priorityscore=1501
- phishscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604090149
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260409142137.58349-1-philmd@linaro.org>
+In-Reply-To: <20260409142137.58349-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 9 Apr 2026 17:18:52 +0100
+X-Gm-Features: AQROBzDa-wbt26k1EMxoJmCi8-pgXm5JdJ5iWspdb0pjy9IVg0GmKBsL09lXPlM
+Message-ID: <CAFEAcA_vTp4E6Yc=vH8+fY4=2JjJ=xcDPVSfLEGJ0zF1wVnU0g@mail.gmail.com>
+Subject: Re: [PULL 0/4] Misc HW patches for 2026-04-09
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,29 +115,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Misbah,
+On Thu, 9 Apr 2026 at 15:21, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> The following changes since commit a87e211600e5e2a86ae51ea53615cd4d866b24=
+a2:
+>
+>   Merge tag 'hw-misc-20260407' of https://github.com/philmd/qemu into sta=
+ging (2026-04-08 19:16:36 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/philmd/qemu.git tags/hw-misc-20260409
+>
+> for you to fetch changes up to 4e6fb62fb0f33c815b089d0b59e1313b768c55d0:
+>
+>   qemu-keymap: fix altgr modifier lookup for newer xkeyboard-config (2026=
+-04-09 15:44:58 +0200)
+>
+> ----------------------------------------------------------------
+> Misc HW patches
+>
+> Few hw/ fixes and a keymap one.
+> ----------------------------------------------------------------
+>
 
-On 06/04/26 2:24 pm, Misbah Anjum N wrote:
-> Hi Ani,
-> I've completed the testing you suggested. Unfortunately, the SMP hang 
-> still persists with these changes.
-> 
-> Changes made:
-> As requested, I reverted everything in stubs/kvm.c and the related 
-> changes in stubs/meson.build, include/system/kvm.h, and target/i386/kvm/ 
-> kvm.c. I also commented out the calls to kvm_arch_supports_vmfd_change() 
-> and kvm_arch_on_vmfd_change() in kvm_reset_vmfd().
-> 
-> Test result:
-> The issue persists - guests still hang indefinitely during boot when SMP 
-> is configured.
 
-I have posted a patch here which should fix this smp hang issue:
 
-https://lore.kernel.org/qemu-devel/20260409161042.55281-1-harshpb@linux.ibm.com/
+Applied, thanks.
 
-Could you please help validate for different scenarios and share feedback?
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
-Thanks
-Harsh
+-- PMM
 
