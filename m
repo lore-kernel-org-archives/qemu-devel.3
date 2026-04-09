@@ -4,103 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C825F364B2
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 19:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84625F364AF
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Apr 2026 19:08:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wAuic-0007Lm-O0; Thu, 09 Apr 2026 15:07:10 -0400
+	id 1wAujx-0007qE-E5; Thu, 09 Apr 2026 15:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAuia-0007L3-R9
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 15:07:08 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wAuiZ-00033l-DY
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 15:07:08 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-6500eae6d2fso1659059d50.1
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 12:07:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775761626; cv=none;
- d=google.com; s=arc-20240605;
- b=jT9DYtBJXZHUSMRkHoaYrFEwREgeo4RIARiYC5cS2nJrGJ6Dym+gC0UWE71hsu88Wp
- /jwA5aO88O1V0OLFxqk3vDZQkXFTSWZzzOSh2uiFWjNPZaLzMY20xym9+l+GI48ANprL
- F9UAKXp3VUgsht4JO4L6njTJXIHBfzqBJmqzZYq4ZleXIikY0WbIPoKYPB/JC8hxKSf+
- ERZI6OUnqmoAHBPfvo/W0j1iHstHYgz26Y3/0X+2hXMMWERelbVC/qpUkbouHiQZkVGZ
- 1hbkdY6Fg9119fIgbljWKf+LUlV179JARzwVM/0h/BO3+XIr3eTNJkNlgiEOEioWRdKc
- CHgQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=VCDUOnUjYsgKHbUr94QqzMix7XhtwcU4xW+CD4gMNVg=;
- fh=6f2ksvrcNK0+UxfJWTqhzPgT+A1saGHsnWpNshlAcaw=;
- b=ffVj8o4Guq3aP0eQ2XDN9/Ktks3V0DiG2DhqiRCS4nIl+zOztbyQE2v40OfXx2uMFU
- QQYjDWqeKekowVFtgK5i5Q0ccloWmzw2gBT2HjA9B+a3qU+EJvTVEGsWW4ObxGaPQ0Gc
- PEyTQGRdUV0QHwY6+0G8fRNXiB1sEn1eIZb7hRBd1rEWGM88CVRKJmBV0ew0h7qVHwla
- bW6Qo31at7Bn0yrNM4swGtCif7F2Csg+zskZI20Rr+7JfdlfmXZn1AW7qgpBE6MuzSlj
- 90Dob2sptvaeFE3pN25GqH04F8DkcLz46ooaZyn0D014VVb0JT2k8FB5Cnt0kH4IJmyU
- qP3A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775761626; x=1776366426; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VCDUOnUjYsgKHbUr94QqzMix7XhtwcU4xW+CD4gMNVg=;
- b=Xo0hcWTkS5OAZSMaZcsGOc93LOPCRdm2k3pmw158rmxsiaELhbagpIyrE15Hg6YVaD
- nG75owccc/RfiJ1ldTfFW3p0Oazs3GyZmBRKXR7QyTC/yx3gOcEJgBaC4emzKpN3tpm5
- yeRObIU6ENgO5xM8443aOSjDC9cuD1P2FnS1mjqi93kWrXqI9i2QGgLp42cPFza8l4Y7
- RdTdJvh5LjF/kV/gs0bU4wgKmceiR8XCRr0FwHIUCCTav6bDlgFapShY7s9toUWue3eL
- AmYlOm4GjpT+dI2jAvCu+VKagoS8+Ggmaaf0XUC8VZb6UokVaGZkECOe8zfjgVeJH77I
- x/fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775761626; x=1776366426;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VCDUOnUjYsgKHbUr94QqzMix7XhtwcU4xW+CD4gMNVg=;
- b=qEqxuIQp+P4rtqmWiEin6hdjbDciDN0l9qbHAvpUQ7JJTO6hQsj2T1WRMsUiDf2iKm
- IdNoTQUmOajPhF1F2fAkKbRfek++cfPJvsMzM5ePWwa9JL9udS4Evxi3+jVXC2haj38K
- 9/AfnnR5kwS1xnVwQ1JIId2A8+fFOkgV4RYJMsrPUkVmjJcXcMq414544KP/dEfpzpHG
- IFLSAfCmKkH4T0j7rhpw4yWddNEC5uZbDnBmT8yy9axdx5+dwKFrMs0o4COPg3Rf5GSQ
- 8K+Nh+Y389cTFRp6nygoquriTSG2oFZUkgWUrZ8TyIVFuT/ACrPhMKBj/08KX1o3qV2k
- KRRQ==
-X-Gm-Message-State: AOJu0Yy4v40k2mQrC3FZzB9QLoe5oWR2RSJ9o1HPI3bX6TnRvlVG2bFU
- jyJ3F9YOhkd31Ef2cn/aRrrkM71OBOZ99XkqTheO9Wchcjc1+qQzCPJYdBogkSurdx+hojDVXjH
- qV4XhLnYTXwOXzfXhRz2OZPdu8ed4176jwyEaOpdN3w==
-X-Gm-Gg: AeBDies/2IQGvne5fTI+zxVHFk1P1ZGk3+UHl8fJM27dBhtM9X8IXjP2N0Y9oMK6bsc
- vDjRu1jpUbY/2LrEwXOrJhqdV/o5Ywv1exZaV6r8dqbb+AI359sxwqKdLh06tgXxeTolSwcbtBb
- Jcb3UC9CH2O9pl2Fm0pvY7cQk4XfXCXdH7PshHVgj4J232kAzCgodCJJzrCUO0sykTakg4HixSo
- taqhGe9865/sKrww0LQkKH2rEKzDZ7PaJp8W3CP6q6UEFvgjRmPdnkiIPNVS1j9DVD1EouYu+uS
- u8Rb7x9nam3h7ChrJYXQclnhTTK2dpSV70pUgorcBlHk2qzXV/CvfJiPid5XnYj9yGE=
-X-Received: by 2002:a05:690e:d5b:b0:650:7511:789 with SMTP id
- 956f58d0204a3-65198b56614mr187656d50.32.1775761625740; Thu, 09 Apr 2026
- 12:07:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wAujs-0007pX-Jt; Thu, 09 Apr 2026 15:08:29 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wAujp-0003Gd-RH; Thu, 09 Apr 2026 15:08:28 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6399DfGN2297410; Thu, 9 Apr 2026 19:08:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3fTQAQ
+ E8+roh2sPNbkTH8hUOyrddgrzm4VfvDzCCNaM=; b=QxG8PCD6IFIUtyYCP085Ex
+ 7aKYomnGjet6FQ11dCAmAUwSD8jXCOishKZpPG8vvIKQvbzRu4vlihIEMayOAhuU
+ E/lwyL/oP49Rnjt2cit5S3DVBegTPYNS9FuIkH6cKN89QgkU+xy3TQTazHqx/lxl
+ 39fOo/K12T31O2J7P7We/eShVQQhuKo/+P64NeRkF7W0ki0Tyv02LpGOnROB8kkY
+ kww3ZtcRaQtzEJyUkkPPgT6dgpgWzX0pbmXi1eJfHG+me4YY/Z1qGjWM8/B5VR2Y
+ bK6rPMVOddjXtAVUVidX2hhZ4+HzFosyGoU5hBWnv3aZfl+4F8WbaS6poPdqkCtg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2g5t3y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Apr 2026 19:08:14 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 639Gt5ui007942;
+ Thu, 9 Apr 2026 19:08:13 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcmg2n1q4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Apr 2026 19:08:13 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 639J8BmY17498762
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Apr 2026 19:08:12 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9B36058050;
+ Thu,  9 Apr 2026 19:08:11 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F3E2A58054;
+ Thu,  9 Apr 2026 19:08:09 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu,  9 Apr 2026 19:08:09 +0000 (GMT)
+Message-ID: <55daa9f2-af2b-4076-8d08-752c06efd481@linux.ibm.com>
+Date: Thu, 9 Apr 2026 15:08:09 -0400
 MIME-Version: 1.0
-References: <20260317175744.32469-1-lucaaamaral@gmail.com>
- <20260409175234.40792-1-lucaaamaral@gmail.com>
-In-Reply-To: <20260409175234.40792-1-lucaaamaral@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Apr 2026 20:06:54 +0100
-X-Gm-Features: AQROBzATEW7_n-8rIJ_dlFdmJLtfB8kWhpFaZ2Te9cl9Ji6HKCB-46EM42_U7w0
-Message-ID: <CAFEAcA8rF3nuUTd7ARkcGpr-sA1DYJEJc-2E_URQt6nr8u6cGQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] hvf: map granule abstraction, configurable IPA,
- and MAP_FIXED alignment fix
-To: Lucas Amaral <lucaaamaral@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, agraf@csgraf.de, 
- mohamed@unpredictable.fr, alex.bennee@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 09/30] s390x/diag: Implement DIAG 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
+ david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ jdaley@linux.ibm.com
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
+ <20260402221453.1602899-10-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <20260402221453.1602899-10-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=KeridwYD c=1 sm=1 tr=0 ts=69d7f91e cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=hHZIFWYFNaKudbiwD8MA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: Xb1VHoS6QpDXaLlzEd4TDOLotM9O7xKL
+X-Proofpoint-GUID: Xb1VHoS6QpDXaLlzEd4TDOLotM9O7xKL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDE3MiBTYWx0ZWRfX/4Kc6X9tVQhf
+ wSdguPyAIakbvGP7keUZT+c+TpYdZf8dR4JgjiQKWnX4m1XSVPwTXxzR8/LoTTz6pufe3kFDLD8
+ A1KCGh7KopwOB7MvK3X2LRyrbbKKF9KZhcCe4AU4rb+eYDrFHXw1+FHm82Zfxf6b0p0hQgTJm2t
+ x5RqXl4jNUTCXhmXYILvMNS0btO/+KJE5qfBHos0FyK22icTftHLhRf5LFoR5BnLa25/CYjRPS7
+ nxXH8xhrfZ1IWGAOk+U83G85gwi/1OeHFiOuITeUvn0/8G6GkUZBGTrwyoq9OzVTtg24bwcbHx5
+ OqfSmf9YfFoOQ+u8RqaIdg/K84uxj/t3tsac9IQ6P0I9WV5agIPNsx1RH6ksio19ElXsn+bh90Z
+ +5u+JCXBpwyhfXqbKiFVtAV10Z584SEFIyUqnk1SbsBsj86AzK+1Sgcj1kK8qut+b75Up52Ynnh
+ UwickYgTPj78z7w4QAA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-09_04,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
+ clxscore=1011 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604090172
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,18 +128,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Apr 2026 at 18:52, Lucas Amaral <lucaaamaral@gmail.com> wrote:
->
-> Ping.
->
-> https://patchew.org/QEMU/20260317175744.32469-1-lucaaamaral@gmail.com/
->
-> Mohamed gave Reviewed-by on v2 (nits addressed in v3/v4). Patches still
-> apply cleanly on current master.
+On 4/2/26 18:14, Zhuoying Cai wrote:
+> DIAG 320 subcode 2 provides verification-certificates (VCs) that are in the
+> certificate store. Only X509 certificates in DER format and SHA-256 hash
+> type are recognized.
+> 
+> The subcode value is denoted by setting the second-left-most bit
+> of an 8-byte field.
+> 
+> The Verification Certificate Block (VCB) contains the output data
+> when the operation completes successfully. It includes a common
+> header followed by zero or more Verification Certificate Entries (VCEs),
+> depending on the VCB input length and the VC range (from the first VC
+> index to the last VC index) in the certificate store.
+> 
+> Each VCE contains information about a certificate retrieved from
+> the S390IPLCertificateStore, such as the certificate name, key type,
+> key ID length, hash length, and the raw certificate data.
+> The key ID and hash are extracted from the raw certificate by the crypto API.
+> 
+> Note: SHA2-256 VC hash type is required for retrieving the hash
+> (fingerprint) of the certificate.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>  docs/specs/s390x-secure-ipl.rst |  24 +++
+>  hw/s390x/cert-store.h           |   3 +-
+>  include/hw/s390x/ipl/diag320.h  |  55 ++++++
+>  target/s390x/diag.c             | 338 +++++++++++++++++++++++++++++++-
+>  4 files changed, 417 insertions(+), 3 deletions(-)
+> 
 
-This is on my todo list to look at; I've been prioritizing 11.0
-work while we're in freeze.
+[...]
 
-thanks
--- PMM
+> +
+> +static int get_key_type(const S390IPLCertificate *cert)
+> +{
+> +    int rc;
+> +    Error *err = NULL;
+> +
+> +    rc = qcrypto_x509_check_ecc_curve_p521(cert->raw, cert->size, &err);
+> +    if (rc == -1) {
+> +        error_report_err(err);
+> +        return -1;
+> +    }
+> +
+> +    return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
+> +                        DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
+
+small nit: remove one space to line up the DIAG_'s.
+
+[...]
+
+Other than that, LGTM!
+
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+
+
+-- 
+Regards,
+  Collin
 
