@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71476F45A12
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 22:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488A5F45A0D
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 23:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBKna-000643-ET; Fri, 10 Apr 2026 18:58:02 -0400
+	id 1wBLLS-0005i0-Jl; Fri, 10 Apr 2026 19:33:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wBKnZ-00063j-CC; Fri, 10 Apr 2026 18:58:01 -0400
+ id 1wBLLN-0005hO-33; Fri, 10 Apr 2026 19:32:58 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wBKnX-0001CR-74; Fri, 10 Apr 2026 18:58:01 -0400
+ id 1wBLLK-0002k1-EH; Fri, 10 Apr 2026 19:32:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=THuLOX2PCskfL3cYNUmso7wv62RwWCISNYR590+ueIY=; b=OM9Nu7QES5lWU4kR
- 5pCRBcNmRgRuG/snYQZDONr8zhLHni+GqmYsHtjHL/KDUKpSAmB6EAw15hny5DQWGgj2yxjzqgnr0
- qBL3OIVU1CqAVB2uDeGtKNRmvl4l5HKkxoYt9ouu0n5XswUKCn58kJQR5r53kFpQRU17DkOFLs981
- dIBIM7ht9/4bCzPSRgQJNlZv3t6I9+RPrLMoE3UxmpyuhUpExday6rA982kdYOu1HGbQUgA2pHdto
- SomJYaqc8JvkNLCehUnKMihVyzp0igehiNyTJ+LUAQK4ogKnZpWqpO57tzXVe7RmZ3YQWeRkRnymg
- QdWTEKHdQqUuTSSHkg==;
+ :Subject; bh=YuQ4MgQGPWHlp48NbbbjWxCyQP5Q/VUz3jMzeRmXu5o=; b=FotV5q1i+TbpDdmH
+ qnGCQFWuwWV9rqg6wVKUtR7J0Nu7TbLxuZfucmrVU/8aNHTXV5v/Wtc5ahoWzjeP2IPoAflesGRNr
+ EKTH9ACv4d/5CsqD3sfWY6LNwUDtTcfdC03oPl2W0ysTnZRKcQC+OWsQxhkrzvp93pWAplNpeK/Tc
+ mJzuTgDlNpm8kQqyctwiXPhASLx0Sjg+ugfqVqSy8QTOejU4sIQ524R/bqgpisklV3ZTOAjXlG3Wq
+ V8mSNPD9wCNJoZNqNFlNmqykvOm1It/zAj/f5di1BZOfzwwQOUmiDrP6ocRe3mQIPW5KEYRBAGSEN
+ RU5LC9YSgAuiw6KDTA==;
 Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wBKnS-00000007ZYZ-1nhP;
- Fri, 10 Apr 2026 22:57:54 +0000
-Date: Fri, 10 Apr 2026 22:57:54 +0000
+ (envelope-from <dg@treblig.org>) id 1wBLLH-00000007Zo9-1MvW;
+ Fri, 10 Apr 2026 23:32:51 +0000
+Date: Fri, 10 Apr 2026 23:32:51 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -42,18 +42,18 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Peter Xu <peterx@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 03/17] monitor: rename monitor_init* to monitor_new*
-Message-ID: <admAcuqIMrtQ80l4@gallifrey>
+Subject: Re: [PATCH 04/17] monitor: minimal conversion of monitors to QOM
+Message-ID: <admIo3uTjcH2OOWH@gallifrey>
 References: <20260410160458.3778874-1-berrange@redhat.com>
- <20260410160458.3778874-4-berrange@redhat.com>
+ <20260410160458.3778874-5-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260410160458.3778874-4-berrange@redhat.com>
+In-Reply-To: <20260410160458.3778874-5-berrange@redhat.com>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
-X-Uptime: 22:57:47 up 29 days, 11 min,  2 users,  load average: 0.04, 0.02,
+X-Uptime: 23:32:28 up 29 days, 45 min,  2 users,  load average: 0.00, 0.00,
  0.00
 User-Agent: Mutt/2.2.13 (2024-03-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
@@ -80,184 +80,259 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Daniel P. Berrangé (berrange@redhat.com) wrote:
-> The current "monitor_init" functions will clash with the methods of the
-> same name that are required by QOM. To ease the transition to QOM,
-> rename them out of the way.
+> This introduces a Monitor QOM object, with MonitorHMP and
+> MonitorQMP subclasses. This is the bare minimum conversion
+> of just the type declarations and replacing g_new/g_free
+> with object_new/object_unref.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Looks OK, but I'm not that familiar with QOM, so just:
+
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 
 > ---
->  chardev/char.c                       |  2 +-
->  gdbstub/system.c                     |  2 +-
->  include/monitor/monitor.h            |  8 ++++----
->  monitor/hmp.c                        |  2 +-
->  monitor/monitor.c                    | 10 +++++-----
->  monitor/qmp.c                        |  2 +-
->  storage-daemon/qemu-storage-daemon.c |  2 +-
->  stubs/monitor-internal.c             |  2 +-
->  system/vl.c                          |  2 +-
->  9 files changed, 16 insertions(+), 16 deletions(-)
+>  include/monitor/monitor.h  | 11 ++++++++++-
+>  monitor/hmp.c              | 18 ++++++++++++++++--
+>  monitor/monitor-internal.h | 18 ++++++++++++++++--
+>  monitor/monitor.c          | 18 ++++++++++++++++--
+>  monitor/qmp-cmds.c         | 15 ++++++++-------
+>  monitor/qmp.c              | 18 ++++++++++++++++--
+>  6 files changed, 82 insertions(+), 16 deletions(-)
 > 
-> diff --git a/chardev/char.c b/chardev/char.c
-> index 48b326d57b..b59972f325 100644
-> --- a/chardev/char.c
-> +++ b/chardev/char.c
-> @@ -786,7 +786,7 @@ static Chardev *qemu_chr_new_from_name(const char *label, const char *filename,
->  
->      if (qemu_opt_get_bool(opts, "mux", 0)) {
->          assert(permit_mux_mon);
-> -        monitor_init_hmp(chr, true, &err);
-> +        monitor_new_hmp(chr, true, &err);
->          if (err) {
->              error_report_err(err);
->              object_unparent(OBJECT(chr));
-> diff --git a/gdbstub/system.c b/gdbstub/system.c
-> index e86c5870ab..20dcf7878d 100644
-> --- a/gdbstub/system.c
-> +++ b/gdbstub/system.c
-> @@ -388,7 +388,7 @@ bool gdbserver_start(const char *device, Error **errp)
->          /* Initialize a monitor terminal for gdb */
->          mon_chr = qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
->                                     NULL, NULL, &error_abort);
-> -        monitor_init_hmp(mon_chr, false, &error_abort);
-> +        monitor_new_hmp(mon_chr, false, &error_abort);
->      } else {
->          qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
->          mon_chr = gdbserver_system_state.mon_chr;
 > diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-> index 296690e1f1..bfbb440550 100644
+> index bfbb440550..b349b12c34 100644
 > --- a/include/monitor/monitor.h
 > +++ b/include/monitor/monitor.h
-> @@ -19,10 +19,10 @@ bool monitor_cur_is_qmp(void);
+> @@ -5,8 +5,17 @@
+>  #include "qapi/qapi-types-misc.h"
+>  #include "qemu/readline.h"
+>  #include "exec/hwaddr.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_MONITOR "monitor"
+> +OBJECT_DECLARE_TYPE(Monitor, MonitorClass, MONITOR);
+> +
+> +#define TYPE_MONITOR_HMP "monitor-hmp"
+> +OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
+> +
+> +#define TYPE_MONITOR_QMP "monitor-qmp"
+> +OBJECT_DECLARE_TYPE(MonitorQMP, MonitorQMPClass, MONITOR_QMP);
 >  
->  void monitor_init_globals(void);
->  void monitor_init_globals_core(void);
-> -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
-> -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
-> -int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
-> -int monitor_init_opts(QemuOpts *opts, Error **errp);
-> +void monitor_new_qmp(Chardev *chr, bool pretty, Error **errp);
-> +void monitor_new_hmp(Chardev *chr, bool use_readline, Error **errp);
-> +int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
-> +int monitor_new_opts(QemuOpts *opts, Error **errp);
->  void monitor_cleanup(void);
+> -typedef struct MonitorHMP MonitorHMP;
+>  typedef struct MonitorOptions MonitorOptions;
 >  
->  int monitor_suspend(Monitor *mon);
+>  #define QMP_REQ_QUEUE_LEN_MAX 8
 > diff --git a/monitor/hmp.c b/monitor/hmp.c
-> index af346d190b..6dfeca84b5 100644
+> index 6dfeca84b5..614d9a3707 100644
 > --- a/monitor/hmp.c
 > +++ b/monitor/hmp.c
-> @@ -1516,7 +1516,7 @@ static void monitor_readline_flush(void *opaque)
->      monitor_flush(&mon->parent);
->  }
+> @@ -42,6 +42,20 @@
+>  #include "system/block-backend.h"
+>  #include "trace.h"
 >  
-> -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
-> +void monitor_new_hmp(Chardev *chr, bool use_readline, Error **errp)
+> +OBJECT_DEFINE_TYPE(MonitorHMP, monitor_hmp, MONITOR_HMP, MONITOR);
+> +
+> +static void monitor_hmp_finalize(Object *obj)
+> +{
+> +}
+> +
+> +static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+> +{
+> +}
+> +
+> +static void monitor_hmp_init(Object *obj)
+> +{
+> +}
+> +
+>  static void monitor_command_cb(void *opaque, const char *cmdline,
+>                                 void *readline_opaque)
 >  {
->      MonitorHMP *mon = g_new0(MonitorHMP, 1);
+> @@ -1518,10 +1532,10 @@ static void monitor_readline_flush(void *opaque)
 >  
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 6b183edcf5..393fb7795e 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -715,7 +715,7 @@ void monitor_init_globals(void)
->      aio_co_schedule(iohandler_get_aio_context(), qmp_dispatcher_co);
->  }
->  
-> -int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
-> +int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
+>  void monitor_new_hmp(Chardev *chr, bool use_readline, Error **errp)
 >  {
->      ERRP_GUARD();
->      Chardev *chr;
-> @@ -732,7 +732,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
+> -    MonitorHMP *mon = g_new0(MonitorHMP, 1);
+> +    MonitorHMP *mon = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
 >  
->      switch (opts->mode) {
->      case MONITOR_MODE_CONTROL:
-> -        monitor_init_qmp(chr, opts->pretty, errp);
-> +        monitor_new_qmp(chr, opts->pretty, errp);
->          break;
->      case MONITOR_MODE_READLINE:
->          if (!allow_hmp) {
-> @@ -743,7 +743,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
->              error_setg(errp, "'pretty' is not compatible with HMP monitors");
->              return -1;
->          }
-> -        monitor_init_hmp(chr, true, errp);
-> +        monitor_new_hmp(chr, true, errp);
->          break;
->      default:
->          g_assert_not_reached();
-> @@ -752,7 +752,7 @@ int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp)
->      return *errp ? -1 : 0;
->  }
->  
-> -int monitor_init_opts(QemuOpts *opts, Error **errp)
-> +int monitor_new_opts(QemuOpts *opts, Error **errp)
->  {
->      Visitor *v;
->      MonitorOptions *options;
-> @@ -765,7 +765,7 @@ int monitor_init_opts(QemuOpts *opts, Error **errp)
->          return -1;
+>      if (!qemu_chr_fe_init(&mon->parent.chr, chr, errp)) {
+> -        g_free(mon);
+> +        object_unref(mon);
+>          return;
 >      }
 >  
-> -    ret = monitor_init(options, true, errp);
-> +    ret = monitor_new(options, true, errp);
->      qapi_free_MonitorOptions(options);
->      return ret;
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index 0922588ad9..25320928a7 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -92,7 +92,13 @@ typedef struct HMPCommand {
+>      void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
+>  } HMPCommand;
+>  
+> +
+> +struct MonitorClass {
+> +    ObjectClass parent_class;
+> +};
+> +
+>  struct Monitor {
+> +    Object parent;
+>      CharFrontend chr;
+>      int suspend_cnt;            /* Needs to be accessed atomically */
+>      bool is_qmp;
+> @@ -118,6 +124,10 @@ struct Monitor {
+>      int reset_seen;
+>  };
+>  
+> +struct MonitorHMPClass {
+> +    MonitorClass parent_class;
+> +};
+> +
+>  struct MonitorHMP {
+>      Monitor parent;
+>      bool use_readline;
+> @@ -131,7 +141,11 @@ struct MonitorHMP {
+>      ReadLineState *rs;
+>  };
+>  
+> -typedef struct {
+> +struct MonitorQMPClass {
+> +    MonitorClass parent_class;
+> +};
+> +
+> +struct MonitorQMP {
+>      Monitor parent;
+>      JSONMessageParser parser;
+>      bool pretty;
+> @@ -151,7 +165,7 @@ typedef struct {
+>      QemuMutex qmp_queue_lock;
+>      /* Input queue that holds all the parsed QMP requests */
+>      GQueue *qmp_requests;
+> -} MonitorQMP;
+> +};
+>  
+>  /**
+>   * Is @mon a QMP monitor?
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 393fb7795e..7936e2ab22 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -73,6 +73,20 @@ static GHashTable *coroutine_mon; /* Maps Coroutine* to Monitor* */
+>  MonitorList mon_list;
+>  static bool monitor_destroyed;
+>  
+> +OBJECT_DEFINE_TYPE(Monitor, monitor, MONITOR, OBJECT);
+> +
+> +static void monitor_finalize(Object *obj)
+> +{
+> +}
+> +
+> +static void monitor_class_init(ObjectClass *cls, const void *data)
+> +{
+> +}
+> +
+> +static void monitor_init(Object *obj)
+> +{
+> +}
+> +
+>  Monitor *monitor_cur(void)
+>  {
+>      Monitor *mon;
+> @@ -598,7 +612,7 @@ void monitor_list_append(Monitor *mon)
+>  
+>      if (mon) {
+>          monitor_data_destroy(mon);
+> -        g_free(mon);
+> +        object_unref(mon);
+>      }
 >  }
+>  
+> @@ -680,7 +694,7 @@ void monitor_cleanup(void)
+>          monitor_flush(mon);
+>          monitor_data_destroy(mon);
+>          qemu_mutex_lock(&monitor_lock);
+> -        g_free(mon);
+> +        object_unref(mon);
+>      }
+>      qemu_mutex_unlock(&monitor_lock);
+>  
+> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+> index 191eba1b3a..d0ed241d6a 100644
+> --- a/monitor/qmp-cmds.c
+> +++ b/monitor/qmp-cmds.c
+> @@ -166,12 +166,12 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+>                                  int64_t cpu_index, Error **errp)
+>  {
+>      char *output = NULL;
+> -    MonitorHMP hmp = {};
+> +    MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
+>  
+> -    monitor_data_init(&hmp.parent, false, true, false);
+> +    monitor_data_init(&hmp->parent, false, true, false);
+>  
+>      if (has_cpu_index) {
+> -        int ret = monitor_set_cpu(&hmp.parent, cpu_index);
+> +        int ret = monitor_set_cpu(&hmp->parent, cpu_index);
+>          if (ret < 0) {
+>              error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "cpu-index",
+>                         "a CPU number");
+> @@ -179,14 +179,15 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+>          }
+>      }
+>  
+> -    handle_hmp_command(&hmp, command_line);
+> +    handle_hmp_command(hmp, command_line);
+>  
+> -    WITH_QEMU_LOCK_GUARD(&hmp.parent.mon_lock) {
+> -        output = g_strdup(hmp.parent.outbuf->str);
+> +    WITH_QEMU_LOCK_GUARD(&hmp->parent.mon_lock) {
+> +        output = g_strdup(hmp->parent.outbuf->str);
+>      }
+>  
+>  out:
+> -    monitor_data_destroy(&hmp.parent);
+> +    monitor_data_destroy(&hmp->parent);
+> +    object_unref(hmp);
+>      return output;
+>  }
+>  
 > diff --git a/monitor/qmp.c b/monitor/qmp.c
-> index 69d9e40e32..9caee70624 100644
+> index 9caee70624..36cb078f30 100644
 > --- a/monitor/qmp.c
 > +++ b/monitor/qmp.c
-> @@ -513,7 +513,7 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
->      monitor_list_append(&mon->parent);
->  }
+> @@ -71,6 +71,20 @@ typedef struct QMPRequest QMPRequest;
 >  
-> -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-> +void monitor_new_qmp(Chardev *chr, bool pretty, Error **errp)
+>  QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+>  
+> +OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
+> +
+> +static void monitor_qmp_finalize(Object *obj)
+> +{
+> +}
+> +
+> +static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
+> +{
+> +}
+> +
+> +static void monitor_qmp_init(Object *obj)
+> +{
+> +}
+> +
+>  static bool qmp_oob_enabled(MonitorQMP *mon)
 >  {
->      MonitorQMP *mon = g_new0(MonitorQMP, 1);
+>      return mon->capab[QMP_CAPABILITY_OOB];
+> @@ -515,10 +529,10 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
 >  
-> diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
-> index eb72561358..50dbfbd97a 100644
-> --- a/storage-daemon/qemu-storage-daemon.c
-> +++ b/storage-daemon/qemu-storage-daemon.c
-> @@ -330,7 +330,7 @@ static void process_options(int argc, char *argv[], bool pre_init_pass)
->                  visit_free(v);
->  
->                  /* TODO Catch duplicate monitor IDs */
-> -                monitor_init(monitor, false, &error_fatal);
-> +                monitor_new(monitor, false, &error_fatal);
->                  qapi_free_MonitorOptions(monitor);
->                  break;
->              }
-> diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
-> index 4fece49d53..23d58da184 100644
-> --- a/stubs/monitor-internal.c
-> +++ b/stubs/monitor-internal.c
-> @@ -8,6 +8,6 @@ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
->      return -1;
->  }
->  
-> -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
-> +void monitor_new_hmp(Chardev *chr, bool use_readline, Error **errp)
+>  void monitor_new_qmp(Chardev *chr, bool pretty, Error **errp)
 >  {
->  }
-> diff --git a/system/vl.c b/system/vl.c
-> index 246623b319..2391811a46 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1244,7 +1244,7 @@ static int fsdev_init_func(void *opaque, QemuOpts *opts, Error **errp)
+> -    MonitorQMP *mon = g_new0(MonitorQMP, 1);
+> +    MonitorQMP *mon = MONITOR_QMP(object_new(TYPE_MONITOR_QMP));
 >  
->  static int mon_init_func(void *opaque, QemuOpts *opts, Error **errp)
->  {
-> -    return monitor_init_opts(opts, errp);
-> +    return monitor_new_opts(opts, errp);
->  }
->  
->  static void monitor_parse(const char *str, const char *mode, bool pretty)
+>      if (!qemu_chr_fe_init(&mon->parent.chr, chr, errp)) {
+> -        g_free(mon);
+> +        object_unref(mon);
+>          return;
+>      }
+>      qemu_chr_fe_set_echo(&mon->parent.chr, true);
 > -- 
 > 2.53.0
 > 
