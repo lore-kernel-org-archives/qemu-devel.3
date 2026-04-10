@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0CFF45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00150F45A0C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHRn-0005lE-5m; Fri, 10 Apr 2026 15:23:19 -0400
+	id 1wBHRt-0005oz-CL; Fri, 10 Apr 2026 15:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHRl-0005kl-H9
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:23:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wBHRr-0005oO-S9
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:23:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHRk-00023Z-5M
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:23:17 -0400
+ id 1wBHRq-00023s-Cv
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:23:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775848995;
+ s=mimecast20190719; t=1775849001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=thtgrXJ52vS/oWAHRG9bnZ6YV3gy9fKuuRW+1nnw0yw=;
- b=LtPwRa2iQorafqWnZlHtHCxRohFJfIvTAmYaWCTF/0Icm2yxtz+v8GOHHkCX+madsHN4jL
- wrFbaMcvJyRzJvqEuUOpveC4GBU7ca55ENb6LRcBlVZ8TB8ufu8y4fsYOIQBBNUw83HARv
- jXJ8JNxaFq3slFYI6teJoN3O9ZFcV8o=
+ bh=r5ipliGEfImsYLWRZ8XtsDDq+jSdUO3d2Undg+vDmX0=;
+ b=jHuL2ZVl83ihIJg0CNSKtYEf2Ky4OMYQZ53y7fhOB5YUlYGgPmhjesITiAfGZ3kt6vPY8o
+ UeCq3WFfL+GrRmqdSqMVRaSBuyQ6hNu3NWr9JCxarQGUSFi8qGgu7JVL/C2kqyU6bW7LjD
+ AWnD0DkYiYBo8oZXxVaBbMjftNjqoX4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-Nq7hokqPO8yqsCO9t17kdQ-1; Fri,
- 10 Apr 2026 15:23:14 -0400
-X-MC-Unique: Nq7hokqPO8yqsCO9t17kdQ-1
-X-Mimecast-MFC-AGG-ID: Nq7hokqPO8yqsCO9t17kdQ_1775848993
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-EHsQiA3PM2i4BSxHpFdgtg-1; Fri,
+ 10 Apr 2026 15:23:20 -0400
+X-MC-Unique: EHsQiA3PM2i4BSxHpFdgtg-1
+X-Mimecast-MFC-AGG-ID: EHsQiA3PM2i4BSxHpFdgtg_1775848999
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A104718002E7
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:23:13 +0000 (UTC)
+ id 99EBF180044D
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:23:19 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F02B3000C16; Fri, 10 Apr 2026 19:23:11 +0000 (UTC)
+ id 860E63000C16; Fri, 10 Apr 2026 19:23:17 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:19:05 +0400
-Subject: [PATCH v2 43/67] ui/keymaps: introduce kbd_layout_free()
+Date: Fri, 10 Apr 2026 23:19:06 +0400
+Subject: [PATCH v2 44/67] ui/vnc: fix vnc_display_init() leak on failure
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-43-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-44-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1687;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2626;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=iQh+Fm1P/evY7D8sUcJsQUp91gqqVpdcJuZbaqvuho8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0WM1eIXQjibSxb5CStcoqC4XscLDaHWGLOX
- Vwrb8PwLi6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFgAKCRDa6OEJdZac
- 5a3mD/9J/chsJjbNnz6qHmGS7Clf6oiRmlome4WLpxIFMWTdgrCCa/hxgsdg6PTqqNl7TKYispO
- heSzVzM1OK0883VBSAymnB7sR6LbDMN69y7EDopzVYniXEUvLfG7l6K3+3Ino7eVz2ldKwg3Gmy
- +QL8dVFKKj5xHfz7HIGik98Wav/vKs5FKIof1HfjkJ2HgBjiCbsd8TPikbMeHSWTQ2jIxWbPGbg
- Q2VA3kood64IlhndzUqsvh8nNiV/Z7wOWsod55KNp6fwEmQvaecglLDz/+5TqFk2fDRiAdbMJsO
- t+CnFGrTeR2Ah1Wk2sRZUZPIXXTmJDHn2YcITDqwsH0SdzafnsBMrvfwMqcg0F852OXGoZlsBBt
- SGVbdXdmxGfJQcn3B3hPLQBM1hN9WYWiUmpehadweObSAafiKmKee8Wjus0K4K8O3jEuzGcVtvQ
- +6LYqkWm68N90nsKmxG2Vp9803tA0/KfyLQi/ceTiSKw2tZ+8L5jBXR4RK8R+xaHQoars1lVB7C
- c1t9XnT5MfuhVrmHYD0icCqaT9QLfYgyh5bWQGKpI77Bi6Gl6EhA40Q85aXK2DRb+YSoEuy9FjT
- Qld2GyNNPbfI0lJvMExDriN3wviO1sAsqLg5/vS9nkZIOmpVk7Z147zFUN4+tPgjdDiJXSQ0PQ4
- huxHG7OwUhNw8Sw==
+ bh=xGMPjiKUOaS83BNgVUACNJ3GgkwfP0afhLEHwJZ2v0Y=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0WEsTxXciBVknFi5uX03YbTlWDL5b/ExK7E
+ i0skVNu71OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFgAKCRDa6OEJdZac
+ 5eD6EACYernzMfW9MGdD3eHc8MlFZQIwkwxO8EAv366QUGSiZWxNXOFNrYTqjG1DP4sPX4dF1vs
+ UU1NTCkoGERCY0lVEL7eIgHTBz7jbBHKEMZc7sJusRkSthCDTDKQbSYwRYOMm86EbnTsgXaWBZ2
+ obIpP0MnteIrMTVCFi30Y6zhJIUnUl9DgpcCvG5lWWD8kd7kBEgYgHD7dYahd/j18eQPkhnc8FB
+ kkFAoKgdyE+cHGCjbPt0BRCNBjOa7j3A1yf3Tam4OwdmE8hJqIF6RnoJNKN3RC7q+RdNdHuw9XB
+ PO2Vd81ixfUh8/ETCptJvwjHr3oY4Moo3llzRWlE2gcqkbh7w1/bJ0CJwtJTlpFHkG1gtxkbqKO
+ QIDCvopBxgCPo7A+8e/gnUVC6nNS1PZ5ilAKXKBRcpiVpSowUk0XGjUYoL/k/JkNRCzPpvm5Jy+
+ Li53n9TA0OT8HKYMC8dIgMq1wxrdOZwHy0d0WtXndkVROg6gU7+slx75+5iqLsz2z1evrnTNscb
+ bHQgmMk+C5KCfluZr0pfL1SWSldxPp0h80VrTXwU+DaCf1w4Dt6XU7IO06kvXZQ3J5cb6378ZXM
+ s61XkWHX1p5dGUhuMZpbIxxUTYXkelXlZJGElyedHfp34MhwyyZbBOVUK3yD3JoQMJjtuc4pmwE
+ lIpqfOH9oF3jabw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -85,7 +85,7 @@ X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,58 +103,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable callers to properly tear down keyboard layouts.
+Do not add the display state to the vnc list, if the initialization
+failed. Add vnc_display_free(), to free the display state and associated
+data in such case. The function is meant to be public and reused in the
+following changes.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/keymaps.h |  1 +
- ui/keymaps.c | 13 ++++++++++---
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ ui/vnc.c | 33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/ui/keymaps.h b/ui/keymaps.h
-index 3d52c0882a1..e8917e56404 100644
---- a/ui/keymaps.h
-+++ b/ui/keymaps.h
-@@ -54,6 +54,7 @@ typedef struct kbd_layout_t kbd_layout_t;
- 
- kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
-                                    const char *language, Error **errp);
-+void kbd_layout_free(kbd_layout_t *k);
- int keysym2scancode(kbd_layout_t *k, int keysym,
-                     QKbdState *kbd, bool down);
- int keycode_is_keypad(kbd_layout_t *k, int keycode);
-diff --git a/ui/keymaps.c b/ui/keymaps.c
-index 2359dbfe7e6..d1b3f43dc8a 100644
---- a/ui/keymaps.c
-+++ b/ui/keymaps.c
-@@ -178,6 +178,14 @@ out:
-     return ret;
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 522d4d8fb88..512e11d687e 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3422,6 +3422,8 @@ static void vmstate_change_handler(void *opaque, bool running, RunState state)
+     update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
  }
  
-+void kbd_layout_free(kbd_layout_t *k)
-+{
-+    if (!k) {
-+        return;
-+    }
-+    g_hash_table_unref(k->hash);
-+    g_free(k);
++static void vnc_display_free(VncDisplay *vd);
++
+ void vnc_display_init(const char *id, Error **errp)
+ {
+     VncDisplay *vd;
+@@ -3431,8 +3433,9 @@ void vnc_display_init(const char *id, Error **errp)
+     }
+     vd = g_malloc0(sizeof(*vd));
+ 
++    qemu_mutex_init(&vd->mutex);
+     vd->id = g_strdup(id);
+-    QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
++    vd->dcl.ops = &dcl_ops;
+ 
+     QTAILQ_INIT(&vd->clients);
+     vd->expires = TIME_MAX;
+@@ -3446,22 +3449,22 @@ void vnc_display_init(const char *id, Error **errp)
+     }
+ 
+     if (!vd->kbd_layout) {
++        vnc_display_free(vd);
+         return;
+     }
+ 
+     vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
+     vd->connections_limit = 32;
+ 
+-    qemu_mutex_init(&vd->mutex);
+     vnc_start_worker_thread();
+ 
+-    vd->dcl.ops = &dcl_ops;
+     register_displaychangelistener(&vd->dcl);
+     vd->kbd = qkbd_state_init(vd->dcl.con);
+     vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
+         &vmstate_change_handler, vd);
+-}
+ 
++    QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
 +}
  
- kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
-                                    const char *language, Error **errp)
-@@ -185,10 +193,9 @@ kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
-     kbd_layout_t *k;
+ static void vnc_display_close(VncDisplay *vd)
+ {
+@@ -3505,6 +3508,28 @@ static void vnc_display_close(VncDisplay *vd)
+ #endif
+ }
  
-     k = g_new0(kbd_layout_t, 1);
--    k->hash = g_hash_table_new(NULL, NULL);
-+    k->hash = g_hash_table_new_full(NULL, NULL, NULL, g_free);
-     if (parse_keyboard_layout(k, table, language, errp) < 0) {
--        g_hash_table_unref(k->hash);
--        g_free(k);
-+        kbd_layout_free(k);
-         return NULL;
-     }
-     return k;
++static void vnc_display_free(VncDisplay *vd)
++{
++    if (!vd) {
++        return;
++    }
++
++    assert(QTAILQ_EMPTY(&vd->clients));
++
++    vnc_display_close(vd);
++    unregister_displaychangelistener(&vd->dcl);
++    qkbd_state_free(vd->kbd);
++    qemu_del_vm_change_state_handler(vd->vmstate_handler_entry);
++    kbd_layout_free(vd->kbd_layout);
++    qemu_mutex_destroy(&vd->mutex);
++    if (QTAILQ_IN_USE(vd, next)) {
++        QTAILQ_REMOVE(&vnc_displays, vd, next);
++    }
++    g_free(vd->id);
++    g_free(vd);
++}
++
++
+ int vnc_display_password(const char *id, const char *password, Error **errp)
+ {
+     VncDisplay *vd = vnc_display_find(id);
 
 -- 
 2.53.0
