@@ -4,96 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61683F36BAE
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 05:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFF8F36BAE
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 06:20:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB4sE-0004vt-2y; Fri, 10 Apr 2026 01:57:46 -0400
+	id 1wB5D8-0007MO-Ig; Fri, 10 Apr 2026 02:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wB4sC-0004t2-7d
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 01:57:44 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wB4sA-0007zM-Cz
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 01:57:44 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-c70fb6aa323so671296a12.3
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 22:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775800661; x=1776405461; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UvnDam+RI7xNOArU3spJiI07Kx70RBnYFEvTvltBdIM=;
- b=odOEuxPSULQeUrqIBSKO9zOBgyfXoUy9cnR2a349r0DzstylLTDjM+/tB85SZ1y9/b
- l6e+Drht6NZhYfT9X2o8SpcaAH0F9yXpmLynNNJGa7KNsrUWxn/Ohm2gxofRAAxYLiKC
- OyUrKAOIWz1c/8I3aQxxNu9lY8NtW/mtk6qTf/dCqfwzPvU83dAr+8v9iKrzWVkcO7GN
- rW0l9Q3RMTd6aCZ7YwkdjRbaruRhEFLyAsfHhmGRovk1BY8YcArCf/zQ771netcpIk1A
- S8T5X+0/QjrCStm/e7U+euSFzmN2xX92xyuNpNf4RHJ23FlHWCX05ad68WQOVxvAcfkR
- ZZJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775800661; x=1776405461;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=UvnDam+RI7xNOArU3spJiI07Kx70RBnYFEvTvltBdIM=;
- b=Qzy2TfeBApd86/3XWrv7IEDU8+7eonJMCZngXRQIBi1/q57dbNHJ9AOmbzvotp5D4y
- lmtCJIFQta9SnE1SmSbL0YbnDebqzjLhHbZjacN2A9x8nscXVte4BSAocaur49b0eKw7
- iVpUPwkUomodE6UtwH53wokD8pSmFpY2spsHKF4qMsIgRYj20DsQZ47KXQU6BXUx6wE/
- puVA+Y1VuyeW3qYrOctlTh6aGDJe23BhFa1Ec+wopxVHMd+HaL0KsynQBhg0GtQOY2HR
- Wm0aWullz2IDpeKWp06aa4Xf5acWrg7pkpmU0RGVWWfd+8hbZwTxelhqD2xjJfh5JIrM
- vmMA==
-X-Gm-Message-State: AOJu0YxiTBcQ++2wz4pjcWXGddyCipsbLV/XGjEnoeDHhifUoGZQgBwX
- WV8d9F4xVIML+Ql9JEFvaPRlN62Waza6YLNN1DeBKq5awsCk6Bry6oQC
-X-Gm-Gg: AeBDievaHMMIyuKbqg6rsK80vskrPwPHI6sCLQ3+tPvOxH68YJmuoCKgoGeA51Nqn0T
- tmxvOim2i31jr3NYS8SriAaw/og4mm0kF2eq7Ik7O8TCVkOjrxMqwRnTEBhU8B1WUbSCwtcq/Dy
- vP5SSRzD/w2Z1m0BE5vWVYVzgyxE6IkIZY3hGqFZkFnWJ0jeIbdql8N2ETEqBDUDV/GOux0veoe
- R3n2aTvtBFOiK23Tm+43OsvbOxZWbHfun95b6bxbcIC8aXKwAs1xlDttp9Jg3NRPJUqHHBNpUPp
- ESlL2RB9D9pJo/YXISMq/I6kDPSBDU3bGeYcmTyMlR4vRwtCIU+inqpzgLxrWmhciqN0vYWWnlg
- hrmwY5FkhwefcE9cZGjMa/M0MouS+u5grwBYVh79YjP9ZBF0sFP3abRob/76/Ejnzs1y4ElOxvn
- q3NQvWTXPPD1Yj2gzo1K1gfq+Oh/2T0DSVPvdjTL3g
-X-Received: by 2002:a05:6a20:6a1d:b0:39f:a8fb:3354 with SMTP id
- adf61e73a8af0-39fe3cf233fmr2319155637.17.1775800660823; 
- Thu, 09 Apr 2026 22:57:40 -0700 (PDT)
-Received: from [172.17.0.5] ([168.126.243.22])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c79218fc8d9sm1225965a12.12.2026.04.09.22.57.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Apr 2026 22:57:40 -0700 (PDT)
-From: Jaemyung Lee <ldc.jml@gmail.com>
-X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
-Date: Fri, 10 Apr 2026 14:57:18 +0900
-Subject: [PATCH v5 5/5] tests/qtest: Add UFS Write Booster QTest
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-write_booster-v5-5-d44e1a0e191c@samsung.com>
-References: <20260410-write_booster-v5-0-d44e1a0e191c@samsung.com>
-In-Reply-To: <20260410-write_booster-v5-0-d44e1a0e191c@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Jaemyung Lee <jaemyung.lee@samsung.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775800645; l=8918;
- i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
- bh=rU67KxRcVLL6ZVBVhiBQ/INRn8llY3KXffQmzbO047E=;
- b=9aBa1DA8BEB/wBsYy+k3c3Bh5gJpLqOCExbaDWns0ydiSQAT4zknTw3J0R5LIH1lumD5kFBAg
- vG0L80gPwyVAlDvp+poDJy9rVT3+uylJ8BRUYBTJnEaIMFpflPBuWUH
-X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
- pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=ldc.jml@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wB5D7-0007L8-2g
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 02:19:21 -0400
+Received: from p-east2-cluster4-host9-snip4-2.eps.apple.com ([57.103.78.213]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wB5D4-0002F3-O5
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 02:19:20 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPS id
+ 6A6E218001BB; Fri, 10 Apr 2026 06:19:09 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1775801956; x=1778393956;
+ bh=hiGAvIkWBpXGLB9Dz+wm+Q8whPNmlxLZFKh9k4VOspQ=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=NEuGomWht5rSgGD+JBTR8alnk+i/HNpDoIx7L9oakLWcIrQqXxuFg6xZKlWHiWAwYQw5Z3IAZVKvOO4RIK80tBAryjvWIeDwE++P5XdP6A0Zza6+S0y4oWyY6FfckD8fWTSejW3j0EXhAKc61Yg4OT1k/TvJy+pcqHs1Y4pWhvyjW4Sffef+r6MVco9VOTHmHwuqE0kjsxadiVaiIRTrsTQpsghMGiQuZqRZr+f346DGr3gRpf8Zv438/pHjlZEdOvlY9dSEy5C/rtdTVdHoSi7P9HhfoPHNYp1Jgla0pWCuB8TLvpvnldPZ7PsUkYrSAQvW7QH7L9liHjnFLMdfkw==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPSA id
+ 82DF21802183; Fri, 10 Apr 2026 06:19:07 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v2] target/arm/hvf: Fix WFI halting to stop idle vCPU
+ spinning
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260410055045.63001-1-scottjgo@gmail.com>
+Date: Fri, 10 Apr 2026 08:18:55 +0200
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, rbolshakov@ddn.com,
+ phil@philjordan.eu, agraf@csgraf.de, peter.maydell@linaro.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <86D19C52-2A31-4802-ADF2-703D9AE83E75@unpredictable.fr>
+References: <20260410044726.61853-1-scottjgo@gmail.com>
+ <20260410055045.63001-1-scottjgo@gmail.com>
+To: "Scott J. Goldman" <scottjgo@gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Authority-Info-Out: v=2.4 cv=Ze0Q98VA c=1 sm=1 tr=0 ts=69d8965d
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=wG9qhmRfGSGoVh_Ie2YA:9
+ a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
+X-Proofpoint-GUID: OJhmKsaVbVnmJ8oYEkiXMoQ5nDGyRuzI
+X-Proofpoint-ORIG-GUID: OJhmKsaVbVnmJ8oYEkiXMoQ5nDGyRuzI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA1NyBTYWx0ZWRfX4wran3CTUTwA
+ x9k1EZg7o+eBI5+araeSLY0doc2iQQ4Q93K65YyD+7xfDSNo+j2ejvWcg6/1Re049BMV6opbSX9
+ zSUOzT+gfnIj/3O16TU6iZiGIoeUvZBFzQY06VmXcBUCat1If5gf6pke7Z5DeeELk2kZeNkov0T
+ kCag6j3pZmhOsYlJf07OIrevxWOsdH9OLj3uMlMf/DNVHN5wcOhPvHnLOpYMINjYCiakRRTQLbZ
+ qALMqNCB12DKpxZHA9OkTsWcqV8gX9DMCtFTUisHexWhfvR7dUzSZYHpiU213BnGDw1O3W94ILo
+ E4dHQufSIm3x7HHrEZRzhm0c8P5To9jz8BGuy8paBmtYFmxHxLTUGLJzvyJ/YA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-10_02,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0
+ clxscore=1030 adultscore=0 mlxlogscore=999 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604100057
+Received-SPF: pass client-ip=57.103.78.213;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,219 +96,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It adds 'wb-init' and 'wb-read-write' TCs into tests/qtest/ufs-test.c.
-'wb-init' tests that the WB support is properly initialized with UFS
-device and 'wb-read-write' tests that WB can be enabled and WRITE I/O
-can be handled/buffered as a WB command.
 
-Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
----
- tests/qtest/ufs-test.c | 176 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 176 insertions(+)
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 7f999441552a105987aaaf8e2b976f4a05f953ed..253fea27a5e52619f433d15075500a566eddeccc 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -1182,6 +1182,173 @@ static void ufstest_query_desc_request(void *obj, void *data,
-     ufs_exit(ufs, alloc);
- }
- 
-+static void ufstest_wb_init(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    enum UtpOcsCodes ocs;
-+    UtpUpiuRsp rsp_upiu;
-+    uint8_t *desc;
-+    uint32_t value;
-+
-+    ufs_init(ufs, alloc);
-+
-+    /* Read Device Descriptor */
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_READ_DESC,
-+                         UFS_QUERY_DESC_IDN_DEVICE, 0, 0, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.opcode, ==, UFS_UPIU_QUERY_OPCODE_READ_DESC);
-+    g_assert_cmpuint(rsp_upiu.qr.idn, ==, UFS_QUERY_DESC_IDN_DEVICE);
-+    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(DeviceDescriptor));
-+    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_DEVICE);
-+
-+    /* Check Write Booster Supportability */
-+    desc = rsp_upiu.qr.data;
-+
-+    value = *(uint16_t *)(desc + UFS_DEVICE_DESC_PARAM_EXT_WB_SUP);
-+    value = be16_to_cpu(value);
-+    g_assert_cmpuint(value, ==, WB_RESIZE | WB_FIFO | WB_PINNED);
-+
-+    value = *(uint32_t *)(desc + UFS_DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP);
-+    value = be32_to_cpu(value);
-+    g_assert_cmpuint(value & UFS_DEV_WB_SUPPORT, ==, UFS_DEV_WB_SUPPORT);
-+
-+    /* Read Geometry Descriptor */
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_READ_DESC,
-+                         UFS_QUERY_DESC_IDN_GEOMETRY, 0, 0, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(GeometryDescriptor));
-+    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_GEOMETRY);
-+
-+    /* Check Write Booster Configuration */
-+    desc = rsp_upiu.qr.data;
-+
-+    value = *(uint32_t *)(desc + UFS_GEOMETRY_DESC_PARAM_WB_MAX_ALLOC_UNITS);
-+    value = be32_to_cpu(value);
-+    g_assert_cmpuint(value, ==, 1024);
-+
-+    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_MAX_WB_LUNS];
-+    g_assert_cmpuint(value, ==, 1);
-+
-+    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_BUFF_CAP_ADJ];
-+    g_assert_cmpuint(value, ==, 3);
-+
-+    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_SUP_RED_TYPE];
-+    g_assert_cmpuint(value, ==, 1);
-+
-+    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_SUP_WB_TYPE];
-+    g_assert_cmpuint(value, ==, 1);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_wb_read_write(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t read_buf[4096] = { 0 };
-+    uint8_t write_buf[4096] = { 0 };
-+    const uint8_t read_capacity_cdb[UFS_CDB_SIZE] = {
-+        /* allocation length 4096 */
-+        SERVICE_ACTION_IN_16,
-+        SAI_READ_CAPACITY_16,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x00,
-+        0x10,
-+        0x00,
-+        0x00,
-+        0x00
-+    };
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    const uint8_t write_cdb[UFS_CDB_SIZE] = {
-+        /* WRITE(10) to LBA 0, transfer length 1 */
-+        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00
-+    };
-+    uint32_t block_size;
-+    enum UtpOcsCodes ocs;
-+    UtpUpiuRsp rsp_upiu;
-+    const int test_lun = 1;
-+    uint64_t end_time;
-+
-+    ufs_init(ufs, alloc);
-+
-+    /* Clear Unit Attention */
-+    ocs = ufs_send_scsi_command(ufs, test_lun, request_sense_cdb, NULL, 0,
-+                                read_buf, sizeof(read_buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
-+
-+    /* Read capacity */
-+    ocs = ufs_send_scsi_command(ufs, test_lun, read_capacity_cdb, NULL, 0,
-+                                read_buf, sizeof(read_buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==,
-+                     UFS_COMMAND_RESULT_SUCCESS);
-+    block_size = ldl_be_p(&read_buf[8]);
-+    g_assert_cmpuint(block_size, ==, 4096);
-+
-+    /* Check available buffer size */
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                         UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE, 0, 0, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.opcode, ==, UFS_UPIU_QUERY_OPCODE_READ_ATTR);
-+    g_assert_cmpuint(rsp_upiu.qr.idn, ==, UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0xA));
-+
-+    /* Enable WB */
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_SET_FLAG,
-+                         UFS_QUERY_FLAG_IDN_WB_EN, 0, 0, 0,
-+                         &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, be32_to_cpu(1));
-+
-+    /* Write data */
-+    for (int i = 0; i < 256; i++) {
-+        memset(write_buf, 0xab, block_size);
-+        ocs = ufs_send_scsi_command(ufs, test_lun, write_cdb, write_buf,
-+                                    block_size, NULL, 0, &rsp_upiu);
-+        g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+        g_assert_cmpuint(rsp_upiu.header.scsi_status, ==,
-+                         UFS_COMMAND_RESULT_SUCCESS);
-+    }
-+
-+    end_time = g_get_monotonic_time() + TIMEOUT_SECONDS * G_TIME_SPAN_SECOND;
-+    do {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+
-+        /* Check available buffer size */
-+        ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                             UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                             UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE, 0, 0, 0,
-+                             &rsp_upiu);
-+        g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+        g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+        g_assert_cmpuint(rsp_upiu.qr.opcode, ==, UFS_UPIU_QUERY_OPCODE_READ_ATTR);
-+        g_assert_cmpuint(rsp_upiu.qr.idn, ==, UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE);
-+    } while (rsp_upiu.qr.value == cpu_to_be32(0xA) && g_get_monotonic_time() < end_time);
-+
-+    /* Check available buffer size */
-+    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x9));
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void drive_destroy(void *path)
- {
-     unlink(path);
-@@ -1234,6 +1401,13 @@ static void ufs_register_nodes(void)
-                                           .edge.extra_device_opts =
-                                               "mcq=true,mcq-maxq=1" };
- 
-+    QOSGraphTestOptions wb_test_opts = { .before = ufs_blk_test_setup,
-+                                         .edge.extra_device_opts =
-+                                             "mcq=false,nutrs=32,nutmrs=8,"
-+                                             "wb-max-size=1024,wb-min-size=256,"
-+                                             "wb-max-lus=1,wb-cap-adj-fac=3,"
-+                                             "wb-reduction=1" };
-+
-     add_qpci_address(&edge_opts, &(QPCIAddress){ .devfn = QPCI_DEVFN(4, 0) });
- 
-     qos_node_create_driver("ufs", ufs_create);
-@@ -1262,6 +1436,8 @@ static void ufs_register_nodes(void)
-                  &io_test_opts);
-     qos_add_test("query-desciptor", "ufs", ufstest_query_desc_request,
-                  &io_test_opts);
-+    qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
-+    qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
- }
- 
- libqos_init(ufs_register_nodes);
+> On 10. Apr 2026, at 07:50, Scott J. Goldman <scottjgo@gmail.com> =
+wrote:
+>=20
+> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+> returning EXCP_HLT, intending QEMU's main event loop to handle the
+> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+> always returns false and the vCPU thread spins at 100% CPU per core
+> while the guest is idle.
+>=20
+> Fix this by:
+>=20
+> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps on
+>   halt_cond in qemu_process_cpu_events().
+>=20
+> 2. Arming a host-side QEMU_CLOCK_HOST timer to fire when the guest's
+>   virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>   because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>   hv_vcpu_run(), which is not called while the CPU is halted. The
+>   timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>   vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>   interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+>=20
+> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>   indicates a pending interrupt, and cancelling the WFI timer.
+>=20
+> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
 
--- 
-2.48.1
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+> include/system/hvf_int.h |  1 +
+> target/arm/hvf/hvf.c     | 65 +++++++++++++++++++++++++++++++++++++++-
+> 2 files changed, 65 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+> index 2621164cb2..58fb865eba 100644
+> --- a/include/system/hvf_int.h
+> +++ b/include/system/hvf_int.h
+> @@ -48,6 +48,7 @@ struct AccelCPUState {
+>     hv_vcpu_exit_t *exit;
+>     bool vtimer_masked;
+>     bool guest_debug_enabled;
+> +    struct QEMUTimer *wfi_timer;
+> #endif
+> };
+>=20
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 5fc8f6bbbd..f5d7221845 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -28,6 +28,7 @@
+> #include "hw/core/boards.h"
+> #include "hw/core/irq.h"
+> #include "qemu/main-loop.h"
+> +#include "qemu/timer.h"
+> #include "system/cpus.h"
+> #include "arm-powerctl.h"
+> #include "target/arm/cpu.h"
+> @@ -301,6 +302,8 @@ void hvf_arm_init_debug(void)
+> #define TMR_CTL_IMASK   (1 << 1)
+> #define TMR_CTL_ISTATUS (1 << 2)
+>=20
+> +static void hvf_wfi_timer_cb(void *opaque);
+> +
+> static uint32_t chosen_ipa_bit_size;
+>=20
+> typedef struct HVFVTimer {
+> @@ -1214,6 +1217,9 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
+> {
+>     hv_return_t ret;
+>=20
+> +    timer_free(cpu->accel->wfi_timer);
+> +    cpu->accel->wfi_timer =3D NULL;
+> +
+>     ret =3D hv_vcpu_destroy(cpu->accel->fd);
+>     assert_hvf_ok(ret);
+> }
+> @@ -1352,6 +1358,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+>                               =
+arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
+>     assert_hvf_ok(ret);
+>=20
+> +    cpu->accel->wfi_timer =3D timer_new_ns(QEMU_CLOCK_HOST,
+> +                                          hvf_wfi_timer_cb, cpu);
+> +
+>     aarch64_add_sme_properties(OBJECT(cpu));
+>     return 0;
+> }
+> @@ -2027,8 +2036,30 @@ static uint64_t hvf_vtimer_val_raw(void)
+>     return mach_absolute_time() - hvf_state->vtimer_offset;
+> }
+>=20
+> +static void hvf_wfi_timer_cb(void *opaque)
+> +{
+> +    CPUState *cpu =3D opaque;
+> +    ARMCPU *arm_cpu =3D ARM_CPU(cpu);
+> +
+> +    /*
+> +     * vtimer expired while the CPU was halted for WFI.
+> +     * Mirror HV_EXIT_REASON_VTIMER_ACTIVATED: raise the vtimer
+> +     * interrupt and mark as masked so hvf_sync_vtimer() will
+> +     * check and unmask when the guest handles it.
+> +     *
+> +     * The interrupt delivery chain (GIC -> cpu_interrupt ->
+> +     * qemu_cpu_kick) wakes the vCPU thread from halt_cond.
+> +     */
+> +    qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
+> +    cpu->accel->vtimer_masked =3D true;
+> +}
+> +
+> static int hvf_wfi(CPUState *cpu)
+> {
+> +    ARMCPU *arm_cpu =3D ARM_CPU(cpu);
+> +    uint64_t ctl, cval;
+> +    hv_return_t r;
+> +
+>     if (cpu_has_work(cpu)) {
+>         /*
+>          * Don't bother to go into our "low power state" if
+> @@ -2037,6 +2068,34 @@ static int hvf_wfi(CPUState *cpu)
+>         return 0;
+>     }
+>=20
+> +    /*
+> +     * Set up a host-side timer to wake us when the vtimer expires.
+> +     * HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+> +     * hv_vcpu_run(), which we won't call while halted.
+> +     */
+> +    r =3D hv_vcpu_get_sys_reg(cpu->accel->fd, =
+HV_SYS_REG_CNTV_CTL_EL0, &ctl);
+> +    assert_hvf_ok(r);
+> +
+> +    if ((ctl & TMR_CTL_ENABLE) && !(ctl & TMR_CTL_IMASK)) {
+> +        r =3D hv_vcpu_get_sys_reg(cpu->accel->fd,
+> +                                HV_SYS_REG_CNTV_CVAL_EL0, &cval);
+> +        assert_hvf_ok(r);
+> +
+> +        uint64_t now =3D hvf_vtimer_val_raw();
+> +        if (cval <=3D now) {
+> +            /* Timer already expired, don't halt */
+> +            return 0;
+> +        }
+> +
+> +        uint64_t delta_ticks =3D cval - now;
+> +        int64_t delta_ns =3D delta_ticks * NANOSECONDS_PER_SECOND
+> +                           / arm_cpu->gt_cntfrq_hz;
+> +        int64_t deadline =3D qemu_clock_get_ns(QEMU_CLOCK_HOST) + =
+delta_ns;
+> +
+> +        timer_mod(cpu->accel->wfi_timer, deadline);
+> +    }
+> +
+> +    cpu->halted =3D 1;
+>     return EXCP_HLT;
+> }
+>=20
+> @@ -2332,7 +2391,11 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+>     hv_return_t r;
+>=20
+>     if (cpu->halted) {
+> -        return EXCP_HLT;
+> +        if (!cpu_has_work(cpu)) {
+> +            return EXCP_HLT;
+> +        }
+> +        cpu->halted =3D 0;
+> +        timer_del(cpu->accel->wfi_timer);
+>     }
+>=20
+>     flush_cpu_state(cpu);
+> --=20
+> 2.50.1 (Apple Git-155)
+>=20
+>=20
 
 
