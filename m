@@ -4,124 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6806BF45A08
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 17:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22743F45A08
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 17:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBG65-0006uS-SI; Fri, 10 Apr 2026 13:56:50 -0400
+	id 1wBG5t-0006sk-DB; Fri, 10 Apr 2026 13:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wBG5y-0006u0-66
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:42 -0400
+ id 1wBG5p-0006qs-TV
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:33 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wBG5v-0001ft-UW
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:41 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wBG5l-0001g0-TT
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:32 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63AB13LJ438888
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:20 GMT
+ 63AHCYeG1498589
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=GGG/Zp81i+Z
- 5zJgP834y0mXGrz5J69B+j8Rbi2MoPwg=; b=CQE/Nzt0hwSgJ7FulVAuYlcz7I1
- P3tKthbLd+hYwzWe6gX/X86hgtEW9XD5XIH1Wb8Zv4aNcHeVWmLqwfEI5h2rgFON
- AKcGyJpnjXsyIEsy9wUk66094VthEfgjHseAFzeNb4t/90SXVi/wke4CR2zaJI1D
- aJTAWhKUlBTNuES+PlYMlnbezSUxhK+pPVjjc/Nxyjtt4MFEVnOTDoyobopz6Yv6
- Dp6pK8/I4Hs/8x/hKJBf+aiDmu/Ff9pIQKX9Vhbjbc53nEPBoR0z46JdF9Xc6eVE
- 9ZpNrlzxfed7soj3sljWK2q+92ycNNsEN3+Jj2DWIwuJvCzCtotrzTro0SA==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4deyy9s9uq-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=6rsaGe+qyX7
+ aGhkX5jlvph/v3y8P3SaLT96OgXBeU9M=; b=DqJ0BiVyla3DjSDPAZWWjcfPFqA
+ WZd+oUWFg9raR7D5D/HxocVbrWQhAZ5ZTVfIOp2H2gMOxx5dHLCwWiZHT22TUWSH
+ LE3NvaMne79T11pqVR43NY6bpCOOeTrRQ5mFJ1YT+TobEY80GXpnW7uyTXgPgI5Y
+ 4oGIQlwi/DwqAae9ndUbyOgzzKUw04LDqytD/kSWYE11SuZJJqtNEc+j2x+gxv+W
+ RrFANwqPhmpkeB2xM8zvWtsRjB7nIuFpxJ73t4CbTvvnIfakoxY/1Hndm2QeTnGC
+ f5Fsue7gpgRHu+nNpMuQglSWb+7r5ameKn+evMC9SFWap6cokLKBfp6OtfA==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dey5b1ctg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:20 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-1275c6fc58aso2785951c88.0
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 10:56:20 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:21 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-12c20a91932so4749161c88.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 10:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775843780; x=1776448580; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775843781; x=1776448581; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GGG/Zp81i+Z5zJgP834y0mXGrz5J69B+j8Rbi2MoPwg=;
- b=OqZljLh0cLrWyD3EPtPgZAm8n0/KTltmxy0Qr7zFcph2TPET+doxA9+CRNMfzgcYQ6
- E9Wyz20cpSZh73XFeUO6DBPVmMuuS1hNW1FZvGMVliz/LrPC8U77rOPpNQ2xrfYRyd2s
- A6HarKTgZS02k7NKqKlWbPEpJxevzipEHdU887/xD11GiafAtNWrPQuJQhYbstT/FtPw
- J5yYZzcbuXcRDHQrQWn0ENI8rc13/o8djTbzLMxsxk0tUgQRgxKAQE+NuYxkRgoPdm7R
- T0lQEoyeiaVe1Ye0mtUO0ZoK2+HB3s/SBzDlSeuPMj4eS+guVp8p18RBaxDrgP7MCn/E
- KaOA==
+ bh=6rsaGe+qyX7aGhkX5jlvph/v3y8P3SaLT96OgXBeU9M=;
+ b=L45p8A9lbgMa5mDOg60mApSVFdPChFremC29Yw/ehqKswBahpCSXetaBO8BthowMba
+ aJBLxRkaZFcBB4DxOLoLF1fl6tH3ahKEzR9aQDpfLwukMa6W7Zvp9Ya+41Rv1OveFJn2
+ r6sUTD6Lbb4QJ1KmUBz23s5NoNWNQfL5M0wtec0wRC1dSXT5oPSJTORkFAdub3cd2Xuv
+ 9jVCkPrcwafT9/Gcdeh+C28v8dH9EsKGneoyXZwgmIPBR9m20V/C0eitTshnMNG+wyEK
+ 4k6KycIENxX3pj1xMhlw5yL0Qu+6eYoSR4Bkl08dh6lFkm2RRXmBu/ljZwsi6HzTHlZf
+ SvXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775843780; x=1776448580;
+ d=1e100.net; s=20251104; t=1775843781; x=1776448581;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GGG/Zp81i+Z5zJgP834y0mXGrz5J69B+j8Rbi2MoPwg=;
- b=CuFI1aMeGHditRVq/AL5m3AXRtytbR+vZYg+SGxv74hKlU7wyZLyGXRGwMsHFhg/TU
- KWgDe6fkLlVgIritRjmdRZoxCqLfsxhXDEPuju88jjCcHw3+2yBaS7H/XH7OZsncPfcF
- gnjw4O8aAIhQy8AX4OVlzpJSEYEhY1fwnADSlJpuYhzkP3eqNgw2Uz5/AID2wNWqKV1I
- RjxVr2o57crU5ONJqCMh0H665wUIS9Bf8B563f8EUF4poMgXiOJXAbMt2BxByq2lH8p8
- tgYzsGBv28I0FBHhideFakQT8l2+092fRNe105mVZktVkPed+7COdG8C2WmAsbAD1/ZF
- xjaw==
-X-Gm-Message-State: AOJu0YyHcNfGVYO3yItpx4g0ovQXU8BgIIhvG8hVzrAhhwElL6ap+EKo
- dz2W4grm5BgH7VtZyU4Pd7Wl93wbGIZlur9NWzF4flrdOdO1OVlRTbdpwFScXqCEEqH12NmnB/C
- 6apqT+mWaVx/hlMOgSes2c0VJIlq4tpKNFAgcjRVJFlHCXxVKuzQ8ECtAPJzo3371ZvHb
-X-Gm-Gg: AeBDiesqB4LjvsBdYXsRZ31TXZF2RP3R+vaD8a8c5TLG9VVKSM7Lsi2KYfPy2oergSD
- Gsdk7naS8quU+scxcgDaD9OtDwMKUO1I/OCUNd4YZzHRyGxCDmxTgwBbVzSPkWHqoKgw/rqxFSs
- VXBNx55yb4+yL4kcvdL3PALDJe0Iw009YMy25Lfn/uu0wSPjQxd4BF+597ed22XYNVzks0qIG1D
- +NxiRVoS2yc1xTYTa8aLaALXq/tZKN5e2S64gAfW1kffnBkUSNxiL0hye9pZZdIW5zqK1n6DPth
- CtabD4sIyyPC1LiLMGb4cw2MPZ61HvD72pvyoSsCliLiBjLphmLh7Rl0Se8cjf/6mq+7WX2V+wq
- /LqkGyvmxRSINTqWzzJlnXwsAm/r8mFWp+xWqGB6rJD/eretVp+r0TwC7dDagT+7P87uIkGZM18
- izhzllvs1K
-X-Received: by 2002:a05:7022:439f:b0:128:d715:b717 with SMTP id
- a92af1059eb24-12c34e92e3emr2185479c88.13.1775843779479; 
- Fri, 10 Apr 2026 10:56:19 -0700 (PDT)
-X-Received: by 2002:a05:7022:439f:b0:128:d715:b717 with SMTP id
- a92af1059eb24-12c34e92e3emr2185454c88.13.1775843778626; 
- Fri, 10 Apr 2026 10:56:18 -0700 (PDT)
+ bh=6rsaGe+qyX7aGhkX5jlvph/v3y8P3SaLT96OgXBeU9M=;
+ b=h6+fXdw/oVTeVRn1xWLTUI17HlDvb7YdOcUwS7eYCddt3EbkIx7iG5RvtYIjC/cmqd
+ bBwb2WOoMGMneVKCdfHioxVUQfCjE7qCFqKmXP1a8yip1x0eXoRN1En5lkG7gYrHTeD2
+ eALp+oH5PlHw7PlD5pT559OGSoDwyjF4DhaNtrIZXEMBZlmd4TVKm91Pn2FzkjKynL0W
+ T4JT8Vpwy4QxOgH9ckn9HBNZyGQOE5jfOaWDG/i/onBYtD8lscj7f143ptPbTlIs+qA2
+ DBYd7vDR9HkC+x6lJdO3txZt5AYy/TWwhUk9NMiB1BPeo4Z0hDDSBacKayK7wSgH5stH
+ CjSQ==
+X-Gm-Message-State: AOJu0YxsS0HbaGSjQyjr4/DpcUwvZRInG4BFtinHPeUC8W3LwMM/9H/2
+ 7EJ8FchFzI4lMhEL7IqVzogWkbL0aVxmUX2ALqKHDrV3I2qzqpjcv1iz+70xMra6MTY/NFHOKWh
+ LWo7nYZ8umAFM6kT/REANIq9ARSXlS4Pa/gMwoFsJ/1vBJhxug2Ysf0otJnLSc3/Wi3JF
+X-Gm-Gg: AeBDies4Qa8DuATfjdSCBGAxS5j7Q3ewq5wFspLaFkeoCwcAuTta67LhTqMntMcgEKy
+ reZtUmvQ73SOWSywdX6c1NlijRt7qDuOdv0afciS7DfLl+YqVkC5gG4tDHVT4nvMiedv12K1uFq
+ kKAOv0r69wmW7D/hKgpwxJhvLbVWMzqgIbXHOMdX0vIV0978zrTS2hGtwiAFUb3xg2NkMssw6LG
+ 16UU4SDnPvC8+cMCywhTnFeefIqXtn5ajjpPi4W/p3jjsJZWVtJZm2pw7nl/6KLjLc03fpvGFRZ
+ as8bOAX58FZcA7v8VJhVaf6VwAEm7c8VEb1qOnr9+tMt+l7b2zvERzkF3NdpKTOTWVx6qkQsjvy
+ yHNYJvZFwe1SzOuu8dYC2SWZoXfHljYxubUWsSayrCDGNBP7imDTN8ImdtyI+03RUvOM6ufQNeN
+ rCbVeR/CAZ
+X-Received: by 2002:a05:7022:3d08:b0:11b:ec5f:1c37 with SMTP id
+ a92af1059eb24-12c34ecf745mr2677316c88.18.1775843781152; 
+ Fri, 10 Apr 2026 10:56:21 -0700 (PDT)
+X-Received: by 2002:a05:7022:3d08:b0:11b:ec5f:1c37 with SMTP id
+ a92af1059eb24-12c34ecf745mr2677296c88.18.1775843780564; 
+ Fri, 10 Apr 2026 10:56:20 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c3459f7ffsm4256271c88.3.2026.04.10.10.56.18
+ a92af1059eb24-12c3459f7ffsm4256271c88.3.2026.04.10.10.56.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Apr 2026 10:56:18 -0700 (PDT)
+ Fri, 10 Apr 2026 10:56:20 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
  brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  marco.liebel@oss.qualcomm.com, philmd@linaro.org,
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH v4 11/16] target/hexagon: add v73 HVX IEEE bfloat16 insns
-Date: Fri, 10 Apr 2026 10:55:59 -0700
-Message-Id: <d408ee2b2c7004e7241aa2beaa136c2f28c73985.1775843299.git.matheus.bernardino@oss.qualcomm.com>
+Subject: [PATCH v4 13/16] tests/hexagon: add tests for v68 HVX IEEE float
+ min/max
+Date: Fri, 10 Apr 2026 10:56:01 -0700
+Message-Id: <08abae5ee53c81a1a61b776e4d0a7b0b91d6d824.1775843299.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1775843299.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1775843299.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE2OCBTYWx0ZWRfXxTsHZSRagRO+
- Mhl/gbGyCMovlesPRH6TUF0+WVjvdmqGYWFqp/8Mj1bUXGr4RO+CFIReuguUKWowc6Ox0Yt8msI
- MDtMxpliMqy+tA4+960L8mmrQTPIOfyBvQ9JBSk28QJsAHeFGl+MRUrU6pJP3mnHvEGEL0oMaHe
- XYmw/pHqgrFlWXNq/8CW99F4CJFiqkn6M+BFLbffCAc5uAags4ApAR3BcFpz+YOmWTMYuag6b8V
- JkkMInP3QEU9ft2ydQSgjzP17qAlhalFAR4aHDzHxywBABzFDeMOnwKZ7wwFzQkW0DcY76MHLQd
- LRtiPHCHFu/rjRPww6NaIlCEDwFbsk8RsUs3/bJOHcpHCrAhPZMwP3EjbXuMmczWEZkR7UEOAuZ
- UgwJS71fiZbV/d6IbwXC8Tl5eAf5bqCOfwJueoK5tItDkMPdeOcIsY5Ut5OpBPwhY9Ja4ssJ+tI
- QB4t5G0lYrY9XorSf/g==
-X-Proofpoint-GUID: hE7iTOAI3E5uZBil41gGnUxFC5A0DbeW
-X-Authority-Analysis: v=2.4 cv=d6fFDxjE c=1 sm=1 tr=0 ts=69d939c4 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: Z4c2oWp4Nu3mNgXLPk9sQNbopSv86Rmr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE2OCBTYWx0ZWRfX5E4N1ezN0Ida
+ peeIV+6ewQTqzPEyrN3dKI8yQjPplI0K8vTWrLubAyvJGgeo/wItNDvwmMSgYwUlUoMRM7cRs88
+ Lm1wwxOmW+TWyA7vLTn6pDJKCylpL9GlFpue5wBXKpz/M88huX442ovb3g8yCR4OaY1kP067aCt
+ tDOtxTzMt0eLZSY0mM+/Hhu7pcR3dmfTDeFDv2y+tGcaUn4jmVqk3D77ORlaqAfAfPIuju0I0/1
+ 8sIEg9IDNaUJo30YduxFQu2dleFf8qLqUXhQ13YawOqShoN+29jGtX+zAP8GU+LKQbc2ppJ3vsi
+ JZu5Py/UU4l9UQZZ/QlC4ffPqU6xXdFDm5zrRBwGy0233nNnxx9BWLLnbpNDmfDK35X+AOpT/zp
+ KSlsU3dX3cdEIKkgWfWlyjO2nzVdx8du6TZ8LpQGeWp3ji1gQ9vkCWu8tVKoe/YtGvK6gRJOnPE
+ c5NjEETvXXcCs+iYd7g==
+X-Proofpoint-GUID: Z4c2oWp4Nu3mNgXLPk9sQNbopSv86Rmr
+X-Authority-Analysis: v=2.4 cv=VsgTxe2n c=1 sm=1 tr=0 ts=69d939c5 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=Gs5wSyFCHfQ05zcHo-UA:9 a=vr4QvYf-bLy2KjpDp97w:22
-X-Proofpoint-ORIG-GUID: hE7iTOAI3E5uZBil41gGnUxFC5A0DbeW
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=pGLkceISAAAA:8
+ a=EUspDBNiAAAA:8 a=gVZ7t9wPRZXE4v3XZ3MA:9 a=Kq8ClHjjuc5pcCNDwlU0:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-10_05,2026-04-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- clxscore=1015 impostorscore=0 adultscore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100168
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 spamscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604100168
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=matheus.bernardino@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -148,227 +150,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add HVX IEEE bfloat16 (bf16) instructions:
-
-Arithmetic operations:
-- V6_vadd_sf_bf, V6_vsub_sf_bf: add/sub bf16 widening to sf output
-- V6_vmpy_sf_bf: multiply bf16 widening to sf output
-- V6_vmpy_sf_bf_acc: multiply-accumulate bf16 widening to sf output
-
-Min/Max operations:
-- V6_vmin_bf, V6_vmax_bf: bf16 min/max
-
-Comparison operations:
-- V6_vgtbf: greater-than compare
-- V6_vgtbf_and, V6_vgtbf_or, V6_vgtbf_xor: predicate variants
-
-Conversion operations:
-- V6_vcvt_bf_sf: convert sf to bf16
-
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- target/hexagon/mmvec/hvx_ieee_fp.h           | 37 ++++++++++++
- target/hexagon/mmvec/macros.h                |  4 ++
- target/hexagon/mmvec/mmvec.h                 |  1 +
- target/hexagon/imported/mmvec/encode_ext.def | 15 +++++
- target/hexagon/imported/mmvec/ext.idef       | 62 ++++++++++++++++++++
- 5 files changed, 119 insertions(+)
+ tests/tcg/hexagon/fp_hvx.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/target/hexagon/mmvec/hvx_ieee_fp.h b/target/hexagon/mmvec/hvx_ieee_fp.h
-index 01728121eb..b7e379b089 100644
---- a/target/hexagon/mmvec/hvx_ieee_fp.h
-+++ b/target/hexagon/mmvec/hvx_ieee_fp.h
-@@ -9,8 +9,11 @@
+diff --git a/tests/tcg/hexagon/fp_hvx.c b/tests/tcg/hexagon/fp_hvx.c
+index a309654ed7..dee0781bd7 100644
+--- a/tests/tcg/hexagon/fp_hvx.c
++++ b/tests/tcg/hexagon/fp_hvx.c
+@@ -73,6 +73,30 @@ DEF_TEST_OP_2(vsub, SUB_HF, hf, hf);
+ DEF_TEST_OP_2(vmpy, MULT_SF, sf, sf);
+ DEF_TEST_OP_2(vmpy, MULT_HF, hf, hf);
  
- #include "fpu/softfloat.h"
- 
-+#define FP32_DEF_NAN 0x7FFFFFFF
++#define signbit_fp(X) \
++    (sizeof(X) == bytes_hf ? ((raw_hf(X) & 0x8000) != 0) : \
++                             ((raw_sf(X) & 0x80000000) != 0))
 +
- #define f16_to_f32(A) float16_to_float32((A), true, &env->hvx_fp_status)
- #define f32_to_f16(A) float32_to_float16((A), true, &env->hvx_fp_status)
-+#define bf16_to_f32(A) bfloat16_to_float32(A, &env->hvx_fp_status)
- 
- float32 fp_mult_sf_hf(float16 a1, float16 a2, float_status *fp_status);
- float32 fp_vdmpy(float16 a1, float16 a2, float16 a3, float16 a4,
-@@ -29,4 +32,38 @@ int16_t conv_h_hf(float16 a, float_status *fp_status);
- uint32_t cmpgt_sf(float32 a1, float32 a2, float_status *fp_status);
- uint16_t cmpgt_hf(float16 a1, float16 a2, float_status *fp_status);
- 
-+/* IEEE BFloat instructions */
++#define STD_MIN(X, Y) ((X) < (Y) ? (X) : (Y))
++#define STD_MAX(X, Y) ((X) > (Y) ? (X) : (Y))
 +
-+#define fp_mult_sf_bf(A, B) \
-+    float32_mul(bf16_to_f32(A), bf16_to_f32(B), &env->hvx_fp_status)
++#define MIN(X, Y, DEF_NAN) \
++    ((isnan(X) || isnan(Y)) ? DEF_NAN : \
++     ((X) != (Y)) ? STD_MIN(X, Y) : (signbit_fp(X) ? (X) : (Y))) /* -0 < +0 */
++#define MAX(X, Y, DEF_NAN) \
++    ((isnan(X) || isnan(Y)) ? DEF_NAN : \
++     ((X) != (Y)) ? STD_MAX(X, Y) : (signbit_fp(X) ? (Y) : (X))) /* -0 < +0 */
 +
-+#define fp_add_sf_bf(A, B) \
-+    float32_add(bf16_to_f32(A), bf16_to_f32(B), &env->hvx_fp_status)
++#define MIN_HF(X, Y) MIN(X, Y, NAN_HF)
++#define MAX_HF(X, Y) MAX(X, Y, NAN_HF)
++#define MIN_SF(X, Y) MIN(X, Y, NAN_SF)
++#define MAX_SF(X, Y) MAX(X, Y, NAN_SF)
 +
-+#define fp_sub_sf_bf(A, B) \
-+    float32_sub(bf16_to_f32(A), bf16_to_f32(B), &env->hvx_fp_status)
++DEF_TEST_OP_2(vfmin, MIN_SF, sf, sf);
++DEF_TEST_OP_2(vfmax, MAX_SF, sf, sf);
++DEF_TEST_OP_2(vfmin, MIN_HF, hf, hf);
++DEF_TEST_OP_2(vfmax, MAX_HF, hf, hf);
 +
-+#define fp_mult_sf_bf_acc(f1, f2, f3) \
-+    float32_muladd(bf16_to_f32(f1), bf16_to_f32(f2), f3, 0, &env->hvx_fp_status)
-+
-+static inline bfloat16 f32_to_bf16(float32 A, float_status *fp_status)
-+{
-+    uint32_t rslt = A;
-+    if ((rslt & 0x1FFFF) == 0x08000) {
-+        /* do not round up if exactly .5 and even already */
-+    } else if ((rslt & 0x8000) == 0x8000) {
-+        rslt += 0x8000; /* rounding to nearest number */
-+    }
-+    rslt = float32_is_any_nan(A) ? FP32_DEF_NAN : rslt;
-+    return float32_to_bfloat16(rslt, fp_status);
-+}
-+
-+#define fp_min_bf(A, B) \
-+    f32_to_bf16(float32_min(bf16_to_f32(A), bf16_to_f32(B), &env->hvx_fp_status), \
-+             &env->hvx_fp_status);
-+
-+#define fp_max_bf(A, B) \
-+    f32_to_bf16(float32_max(bf16_to_f32(A), bf16_to_f32(B), &env->hvx_fp_status), \
-+             &env->hvx_fp_status);
-+
- #endif
-diff --git a/target/hexagon/mmvec/macros.h b/target/hexagon/mmvec/macros.h
-index 318d44efb7..4945a61194 100644
---- a/target/hexagon/mmvec/macros.h
-+++ b/target/hexagon/mmvec/macros.h
-@@ -25,6 +25,9 @@
- #include "accel/tcg/probe.h"
- #include "mmvec/hvx_ieee_fp.h"
- 
-+#define fBFLOAT()
-+#define fCVI_VX_NO_TMP_LD()
-+
- #ifndef QEMU_GENERATE
- #define VdV      (*(MMVector *restrict)(VdV_void))
- #define VsV      (*(MMVector *restrict)(VsV_void))
-@@ -358,5 +361,6 @@
- 
- #define fCMPGT_SF(A, B) cmpgt_sf(A, B, &env->hvx_fp_status)
- #define fCMPGT_HF(A, B) cmpgt_hf(A, B, &env->hvx_fp_status)
-+#define fCMPGT_BF(A, B) fCMPGT_SF((uint32_t)(A) << 16, (uint32_t)(B) << 16)
- 
- #endif
-diff --git a/target/hexagon/mmvec/mmvec.h b/target/hexagon/mmvec/mmvec.h
-index 31909303b5..ab991471b1 100644
---- a/target/hexagon/mmvec/mmvec.h
-+++ b/target/hexagon/mmvec/mmvec.h
-@@ -40,6 +40,7 @@ typedef union {
-     int8_t    b[MAX_VEC_SIZE_BYTES / 1];
-     float32  sf[MAX_VEC_SIZE_BYTES / 4];
-     float16  hf[MAX_VEC_SIZE_BYTES / 2];
-+    bfloat16 bf[MAX_VEC_SIZE_BYTES / 2];
- } MMVector;
- 
- typedef union {
-diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
-index 3572e4de4c..16f043b77d 100644
---- a/target/hexagon/imported/mmvec/encode_ext.def
-+++ b/target/hexagon/imported/mmvec/encode_ext.def
-@@ -868,4 +868,19 @@ DEF_ENC(V6_vgthf_or,"00011100100vvvvvPP1uuuuu001101xx")
- DEF_ENC(V6_vgtsf_xor,"00011100100vvvvvPP1uuuuu111010xx")
- DEF_ENC(V6_vgthf_xor,"00011100100vvvvvPP1uuuuu111011xx")
- 
-+/* BFLOAT instructions */
-+DEF_ENC(V6_vmpy_sf_bf,"00011101010vvvvvPP1uuuuu100ddddd")
-+DEF_ENC(V6_vmpy_sf_bf_acc,"00011101000vvvvvPP1uuuuu000xxxxx")
-+DEF_ENC(V6_vadd_sf_bf,"00011101010vvvvvPP1uuuuu110ddddd")
-+DEF_ENC(V6_vsub_sf_bf,"00011101010vvvvvPP1uuuuu101ddddd")
-+DEF_ENC(V6_vmax_bf,"00011101010vvvvvPP1uuuuu111ddddd")
-+DEF_ENC(V6_vmin_bf,"00011101010vvvvvPP1uuuuu000ddddd")
-+DEF_ENC(V6_vcvt_bf_sf,"00011101010vvvvvPP1uuuuu011ddddd")
-+
-+/* BFLOAT compare instructions */
-+DEF_ENC(V6_vgtbf,"00011100100vvvvvPP1uuuuu011110dd")
-+DEF_ENC(V6_vgtbf_and,"00011100100vvvvvPP1uuuuu110100xx")
-+DEF_ENC(V6_vgtbf_or,"00011100100vvvvvPP1uuuuu001110xx")
-+DEF_ENC(V6_vgtbf_xor,"00011100100vvvvvPP1uuuuu111100xx")
-+
- #endif /* NO MMVEC */
-diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef
-index a7043d598c..44135a8eea 100644
---- a/target/hexagon/imported/mmvec/ext.idef
-+++ b/target/hexagon/imported/mmvec/ext.idef
-@@ -3163,6 +3163,15 @@ ITERATOR_INSN_SHIFT_SLOT_FLT(16, vconv_hf_h,"Vd32.hf=Vu32.h",
-     } \
- }
- 
-+#define VCMPGT_BF(DEST, ASRC, ASRCOP, CMP, N, SRC, MASK, WIDTH) \
-+{ \
-+    fBFLOAT(); \
-+    for (fHIDE(int) i = 0; i < fVBYTES(); i += WIDTH) { \
-+        fHIDE(int) VAL = fCMPGT_BF(VuV.SRC[i/WIDTH],VvV.SRC[i/WIDTH]) ? MASK : 0; \
-+        fSETQBITS(DEST,WIDTH,MASK,i,ASRC ASRCOP VAL); \
-+    } \
-+}
-+
- /* Vector SF compare */
- #define MMVEC_CMPGT_SF(TYPE,TYPE2,DESCR,N,MASK,WIDTH,SRC) \
-     EXTINSN(V6_vgt##TYPE##_and, "Qx4&=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
-@@ -3201,8 +3210,61 @@ ITERATOR_INSN_SHIFT_SLOT_FLT(16, vconv_hf_h,"Vd32.hf=Vu32.h",
-         DESCR" greater than", \
-         VCMPGT_HF(QdV, , , ">", N, SRC, MASK, WIDTH))
- 
-+/* Vector BF compare */
-+#define MMVEC_CMPGT_BF(TYPE,TYPE2,DESCR,N,MASK,WIDTH,SRC) \
-+    EXTINSN(V6_vgt##TYPE##_and, "Qx4&=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")",\
-+        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
-+        DESCR" greater than with predicate-and", \
-+        VCMPGT_BF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), &, ">", N, SRC, MASK, WIDTH)) \
-+    EXTINSN(V6_vgt##TYPE##_xor, "Qx4^=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
-+        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
-+        DESCR" greater than with predicate-xor", \
-+        VCMPGT_BF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), ^, ">", N, SRC, MASK, WIDTH)) \
-+    EXTINSN(V6_vgt##TYPE##_or, "Qx4|=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
-+        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
-+        DESCR" greater than with predicate-or", \
-+        VCMPGT_BF(QxV, fGETQBITS(QxV,WIDTH,MASK,i), |, ">", N, SRC, MASK, WIDTH)) \
-+    EXTINSN(V6_vgt##TYPE, "Qd4=vcmp.gt(Vu32." TYPE2 ",Vv32." TYPE2 ")", \
-+        ATTRIBS(A_EXTENSION,A_CVI,A_CVI_VA,A_CVI_VA_2SRC,A_HVX_FLT), \
-+        DESCR" greater than", \
-+        VCMPGT_BF(QdV, , , ">", N, SRC, MASK, WIDTH))
-+
- MMVEC_CMPGT_SF(sf,"sf","Vector sf Compare ", fVELEM(32), 0xF, 4, sf)
- MMVEC_CMPGT_HF(hf,"hf","Vector hf Compare ", fVELEM(16), 0x3, 2, hf)
-+MMVEC_CMPGT_BF(bf,"bf","Vector bf Compare ", fVELEM(16), 0x3, 2, bf)
-+
-+/******************************************************************************
-+ BFloat arithmetic and max/min instructions
-+ ******************************************************************************/
-+
-+ITERATOR_INSN_IEEE_FP_DOUBLE_32(32, vadd_sf_bf,
-+    "Vdd32.sf=vadd(Vu32.bf,Vv32.bf)",  "Vector IEEE add: bf widen to sf",
-+    VddV.v[0].sf[i] = fp_add_sf_bf(VuV.bf[2*i], VvV.bf[2*i]);
-+    VddV.v[1].sf[i] = fp_add_sf_bf(VuV.bf[2*i+1], VvV.bf[2*i+1]); fBFLOAT())
-+ITERATOR_INSN_IEEE_FP_DOUBLE_32(32, vsub_sf_bf,
-+    "Vdd32.sf=vsub(Vu32.bf,Vv32.bf)",  "Vector IEEE sub: bf widen to sf",
-+    VddV.v[0].sf[i] = fp_sub_sf_bf(VuV.bf[2*i], VvV.bf[2*i]);
-+    VddV.v[1].sf[i] = fp_sub_sf_bf(VuV.bf[2*i+1], VvV.bf[2*i+1]); fBFLOAT())
-+ITERATOR_INSN_IEEE_FP_DOUBLE_32(32, vmpy_sf_bf,
-+    "Vdd32.sf=vmpy(Vu32.bf,Vv32.bf)",  "Vector IEEE mul: hf widen to sf",
-+    VddV.v[0].sf[i] = fp_mult_sf_bf(VuV.bf[2*i], VvV.bf[2*i]);
-+    VddV.v[1].sf[i] = fp_mult_sf_bf(VuV.bf[2*i+1], VvV.bf[2*i+1]); fBFLOAT())
-+ITERATOR_INSN_IEEE_FP_DOUBLE_32(32, vmpy_sf_bf_acc,
-+    "Vxx32.sf+=vmpy(Vu32.bf,Vv32.bf)", "Vector IEEE fma: hf widen to sf",
-+    VxxV.v[0].sf[i] = fp_mult_sf_bf_acc(VuV.bf[2*i], VvV.bf[2*i], VxxV.v[0].sf[i]);
-+    VxxV.v[1].sf[i] = fp_mult_sf_bf_acc(VuV.bf[2*i+1], VvV.bf[2*i+1], VxxV.v[1].sf[i]);
-+    fCVI_VX_NO_TMP_LD(); fBFLOAT())
-+ITERATOR_INSN_IEEE_FP_16(32, vcvt_bf_sf,
-+    "Vd32.bf=vcvt(Vu32.sf,Vv32.sf)",   "Vector IEEE cvt: sf to bf",
-+    VdV.bf[2*i]   = f32_to_bf16(VuV.sf[i], &env->hvx_fp_status);
-+    VdV.bf[2*i+1] = f32_to_bf16(VvV.sf[i], &env->hvx_fp_status); fBFLOAT())
-+
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vmax_bf, "Vd32.bf=vmax(Vu32.bf,Vv32.bf)",
-+    "Vector IEEE max: bf", VdV.bf[i] = fp_max_bf(VuV.bf[i], VvV.bf[i]);
-+    fBFLOAT())
-+ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vmin_bf, "Vd32.bf=vmin(Vu32.bf,Vv32.bf)",
-+    "Vector IEEE max: bf", VdV.bf[i] = fp_min_bf(VuV.bf[i], VvV.bf[i]);
-+    fBFLOAT())
- 
  /******************************************************************************
-  DEBUG Vector/Register Printing
+  * Other tests
+  *****************************************************************************/
+@@ -150,6 +174,12 @@ int main(void)
+ 
+     test_new();
+ 
++    /* min/max */
++    test_vfmin_sf_sf();
++    test_vfmin_hf_hf();
++    test_vfmax_sf_sf();
++    test_vfmax_hf_hf();
++
+     puts(err ? "FAIL" : "PASS");
+     return err ? 1 : 0;
+ }
 -- 
 2.37.2
 
