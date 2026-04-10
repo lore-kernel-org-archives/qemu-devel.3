@@ -4,66 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE83F459F3
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 15:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0761F459F5
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 15:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBDiY-0001k2-Q9; Fri, 10 Apr 2026 11:24:23 -0400
+	id 1wBDik-0001me-Ue; Fri, 10 Apr 2026 11:24:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wBDiP-0001iT-LT
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:24:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wBDiR-0001iX-1e
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:24:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wBDiL-00089t-Qn
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:24:13 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wBDiL-00089q-K3
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:24:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1775834644;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=hxHQrFBM4yubzi+V431+CmDy+WUGjh1Nchiot8Some0=;
- b=bNwpt1r0WYGbo268y7SpG/Oc1gb2fwZEXRk4ro1Av/guhO+iQvqXLlGJOeSdHtBn/E7VDc
- 8c9ZpdHhZOjqL60hGpMsgalw5PEBueWBDEf1zbxPtxciBlEFD20Fbmqt0mfqHDI6gsyqSo
- PFPj4NftJjOJyLsf7MAPBjaSAFDBiN4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ufml1BFTV3h7PQpNssX0iYrDnD+YkVaxJC2tzBuM/8k=;
+ b=I8Jqmk7MG87JcOLHe6mdo7o1aT6YuIZyb3EyzTzuTzOx2ns4xV6FQeSu66FM7VqpJesTun
+ OXk2OqZ2g5g7nyTJ3s7OYOmRBoicU1Lsew3kvL3IJP9gPpIlFSxp2ZFgqSdz3bk/Lietlv
+ USIrRRcGp9iS55Tos4IT/5/72v4g8YY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-1eggxT9TNmOd5SNdhEdyyQ-1; Fri,
- 10 Apr 2026 11:23:58 -0400
-X-MC-Unique: 1eggxT9TNmOd5SNdhEdyyQ-1
-X-Mimecast-MFC-AGG-ID: 1eggxT9TNmOd5SNdhEdyyQ_1775834636
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-ahZQ4oONNRKpHtMZq08dCA-1; Fri,
+ 10 Apr 2026 11:24:00 -0400
+X-MC-Unique: ahZQ4oONNRKpHtMZq08dCA-1
+X-Mimecast-MFC-AGG-ID: ahZQ4oONNRKpHtMZq08dCA_1775834639
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52D4C18001E8; Fri, 10 Apr 2026 15:23:56 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 48CFB1955E80; Fri, 10 Apr 2026 15:23:59 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.49.176])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5674D195608E; Fri, 10 Apr 2026 15:23:53 +0000 (UTC)
+ id C09EB19560AB; Fri, 10 Apr 2026 15:23:56 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, ivy@FreeBSD.org, pbonzini@redhat.com,
  fam@euphon.net, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: [PATCH 0/2] scsi: Fix discard_granularity for -drive if=scsi
-Date: Fri, 10 Apr 2026 17:23:12 +0200
-Message-ID: <20260410152314.86412-1-kwolf@redhat.com>
+Subject: [PATCH 1/2] block: Create DEFAULT_BLOCK_CONF macro
+Date: Fri, 10 Apr 2026 17:23:13 +0200
+Message-ID: <20260410152314.86412-2-kwolf@redhat.com>
+In-Reply-To: <20260410152314.86412-1-kwolf@redhat.com>
+References: <20260410152314.86412-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,19 +83,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This fixes the default for discard_granularity with -drive if=scsi,
-which was unintentionally 0 (disable discard) instead of sharing the
-default with the qdev property used for -device scsi-hd (usually 4096).
-This was a regression in QEMU 9.0.
+The property default values from include/hw/block/block.h were
+duplicated in scsi_bus_legacy_handle_cmdline(), allowing them to go out
+of sync easily. There doesn't seem a good way to avoid the duplication,
+but moving them next to each other in the header file should help to
+avoid this problem in the future.
 
-Kevin Wolf (2):
-  block: Create DEFAULT_BLOCK_CONF macro
-  block: Add more defaults to DEFAULT_BLOCK_CONF
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ include/hw/block/block.h | 7 +++++++
+ hw/scsi/scsi-bus.c       | 7 +------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
- include/hw/block/block.h | 12 ++++++++++++
- hw/scsi/scsi-bus.c       |  7 +------
- 2 files changed, 13 insertions(+), 6 deletions(-)
-
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index 7dc19d8a453..e0a427039ee 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -51,6 +51,13 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
+     return exp;
+ }
+ 
++#define DEFAULT_BLOCK_CONF (BlockConf) {                                \
++    .bootindex = -1,                                                    \
++    .share_rw = false,                                                  \
++    .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
++    .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
++}
++
+ #define DEFINE_BLOCK_PROPERTIES_BASE(_state, _conf)                     \
+     DEFINE_PROP_ON_OFF_AUTO("backend_defaults", _state,                 \
+                             _conf.backend_defaults, ON_OFF_AUTO_AUTO),  \
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index 1a6b181b9d6..dccb2f25b2a 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -485,12 +485,7 @@ void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
+     Location loc;
+     DriveInfo *dinfo;
+     int unit;
+-    BlockConf conf = {
+-        .bootindex = -1,
+-        .share_rw = false,
+-        .rerror = BLOCKDEV_ON_ERROR_AUTO,
+-        .werror = BLOCKDEV_ON_ERROR_AUTO,
+-    };
++    BlockConf conf = DEFAULT_BLOCK_CONF;
+ 
+     loc_push_none(&loc);
+     for (unit = 0; unit <= bus->info->max_target; unit++) {
 -- 
 2.53.0
 
