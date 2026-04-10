@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DFEFF459FC
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 18:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCCAF45A0B
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 18:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBGSZ-0000F6-IQ; Fri, 10 Apr 2026 14:20:03 -0400
+	id 1wBGf6-0003E6-Lr; Fri, 10 Apr 2026 14:33:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBGSX-0000Ef-JG
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 14:20:01 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wBGf2-0003D6-Uk
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 14:32:56 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBGSU-0008VR-Fq
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 14:20:01 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso25807785e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 11:19:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wBGf0-00052D-Ry
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 14:32:56 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43d01d6b50cso2356128f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 11:32:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775845196; x=1776449996; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nXl8Ns5iG79tarvyMgM8HOyOkIuENseuXWd0OueXkYc=;
- b=PR6/l9lcVg//CZTS4l37OIEPg/V0ZPPGbCZUbjE/eDNTFlU78ookvL6PG7+dzCLPBh
- zaNRTAeHMs5a6l4K8grxU02uCuLm9C/a5katdKxtYfi2cvq3iUBKGO2nUG92EMkPHdUm
- Bb5wREnOSmby5uc9LwooMNsfIdkSFifpXSf/X6NjHNyD7YhmGDr+4Uz4h5d5gp++SDZC
- IHXWNH4lzeW6yeSCj23AL08emZUKGkAsmEJEr8GmrDm3ED7rnBHKP8n/t6eAQLMbCYuB
- QuqxaPtoNibEQhTfqc5b66JfNb/sUZ62tykxH+MbBqHnn40By2yLhr/7G5+hkqGcRb6s
- vkbg==
+ d=linaro.org; s=google; t=1775845972; x=1776450772; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W9eezskDYP8au4TA0u/saRPDrZUnsxGoUmThaVieUzw=;
+ b=HIqJrVb/eErryRweJT+pEdgZWR7pXjecGJf6hnNYKPd463dquLSalrKON0A5r1BaDI
+ 9wqAGQIuAlQw9MxwISit7oy7Ty1klH/tmdQUZgPz4cJW3ZK0anVn8/1K0WV6r1yHsDcr
+ DqYQua3x5xiAV3zvG6YFM/O+v4BglvrLpAXyLkm1yTpWqCAhUvU1X08r8XbY1b5hg6Xy
+ AYaIZ/vOIQQ2NvuQkfj9TqDT8cN1gIcmVKiYA37DC85Mlloj2X821bts18K5T0kDy/XZ
+ /W6qQTCTWfyPXiM8ScQTW6PK6hEDhMnpEGoaoLV/e258YNOOMD5ngnp+UwZj+chvG1VO
+ dV1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775845196; x=1776449996;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nXl8Ns5iG79tarvyMgM8HOyOkIuENseuXWd0OueXkYc=;
- b=q8NU2ZowUPg6OZMNXmSP7PbCWkHguOiXi4YyCwHR9xa9yD/DdTgIVgDyUZC6cqDwQR
- D2r5tETC8jd7cPPuR8O1bZKLv5E0Ee8p3DERRxhQJNyuXfgz2pQKNB64VPNguQcjNPi+
- AtOmsOa6P+LanDgthZQ1g/uXklFvKYyOPvP0UHhLjCm/E1DOBl7ysL936GBjy5JOHM8Y
- Qi0wPdoDuqYbiwaosxuzWJt53z4pUgdlWp9u98GsfezFLCIQPVqZXuOPXCyLd1Ah6aIl
- kJyDh2jHPTQq71CpfYf8InYCdwmFdD/f5+mWIyJxB2NduZbCQ3WLeDqKKhWRKR1ZMX1h
- lLUA==
-X-Gm-Message-State: AOJu0Yxz86WGZTHytSwSai2PnrkznTtG6H04C+7zR5WuXCkvln/LTAru
- sohqcuhULmHApEz3uWYeS+dpcPwIqbplgZ2/bqqN8xacLNQLQ/eUqetlFkRc+ksRIKw=
-X-Gm-Gg: AeBDiesVEkVAuFVDQULhV7Ix+o2Mg3QWPAgOwrIynTpEtRnLrg1WdSyoJGPOKNoZCVp
- oPZiUn3uzzqlosbBcQYPwps1Ar02h8f6+hn9TGGJM3/2CIShBMCFzQGqQjUZeKoe7zDy+qMZPdA
- JoYNyqvnBBXZdmw5rLKTpe1Xiz961HuzUIQM6oXsifS7OmBCmkhUgkjWL7WgpYrymIOZxStGy8o
- MuWBiEkz+9qnKtePFKgas6phSBgGMNTHeJrkNNLtr7vV7Q5fY+FD+pNzX7GLU108jnTWEb+Dmpy
- wmxzAlFaX7blL2+6OMnDzgJU59D477Yww7+3zaehLQIoIESrkeTzX/U4kE2Vn/vNTZIkacgIgv0
- 4Y1Izuocn4c15Daiar/kJqozk07z/CA/RCnlwSpUW0HoZLYOSVSzFBddipX6IY+HBJLv3VvSLba
- 6deiDCOoEMa6x/ce/9CEc44URu7JXAQM5DMxa1F1HxRpAB3dx8TORZ5UPeK6nzcrFBtA==
-X-Received: by 2002:a05:600c:8717:b0:477:9890:9ab8 with SMTP id
- 5b1f17b1804b1-488d6816f5amr57028525e9.3.1775845195770; 
- Fri, 10 Apr 2026 11:19:55 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d5dcf845sm25552895e9.11.2026.04.10.11.19.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Apr 2026 11:19:55 -0700 (PDT)
-Message-ID: <821e6a48-941f-4094-9475-fff0aea8f0b1@linaro.org>
-Date: Fri, 10 Apr 2026 20:19:54 +0200
+ d=1e100.net; s=20251104; t=1775845972; x=1776450772;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=W9eezskDYP8au4TA0u/saRPDrZUnsxGoUmThaVieUzw=;
+ b=PHIQDB72hbueon3YV1zxMO3p9ZnXvpnWYOdmr+L9PGZHvp4u8wkOAE8PWpBcnVxYfZ
+ RqceoqwA3Hgn+hyxbX1gfwCAw9M5sEeXqJ9EtR8W3XmWDmWSSp6ifBMccFmWOq2rGG4d
+ jdEeSadlLFxc3jLkhF4vm+iKdk9LG0Z2rqlHIquk0Zw9CaeLlMzyxrXP3UXhO6wPrPf1
+ Bd7Y3GAcMg2YKjz0ykEmH0qopQp7/wOdYrS7LrgQmov18IA0QSuwtj82czjqHt3jhx5O
+ hqDBHDMqpQIZT+iWw7R3Smg7t8mJSQMaaUjpWujuLa1AOsi+MMieTzgILwFgEFfdCjE0
+ 4lbA==
+X-Gm-Message-State: AOJu0YzcAJ1vTMOw3ztMRsSy6ejGrwXDYGvWmvl4hn/48qroCzuSl6UB
+ MGKaoiPDQHNg3F+/vmS2aD4JP1MWSlF+xi1heLhxG+MQlgja+lRwUxCXfLVYJTBeJZjIZevNM8o
+ 9WG3j84M=
+X-Gm-Gg: AeBDiesZSkQnVdH47MK172DbDStno7U2EOCxo8rL17ZskbuJ1FPvylizTocVQmu4CqS
+ ppg7gd80M/a5MINxrvySrbtd4hh9PwKLZUJP589W4n2G5xCDdw6v9xyM5cGSQaH7FLYwzw7U9ll
+ X4nOVbS5gTnsMKvf3BmX/46UWsnEjJJcf9TqBlBGjmUlaH9NRGBvU/TuYWi9noVigzZ2CRD1lj9
+ LhSfg0lx0pLdJUWMs/VxFpDJy1TVVwCNwHXcL+zOLflViE7sGFeu1YhXL5NxctS9L7LkwxAoiTQ
+ 9w1XiPFSql6HWGbdBBDh0zDFx9Z5mfCtFZ0HzPmUCjEKJ/EscWqdH5U90vAFx4fGbep9xWu/fPw
+ j9cAQb5VS4+deLDxXVZTofEczxSrhk9u5A3nWt70cNrar7uU40/HSl6ydkCWRcDftoGkNjrr7O9
+ G1mLE/CzkY9QmZYkYNMHzjW3ejFncqCL9dk96cVcIdSu3nQZ4FDKNGUECwgXvCTg4ugorfFjc1E
+ zlYgDJAjPjDC/GcuZ+Yic2S5dXZPsw=
+X-Received: by 2002:a05:6000:2586:b0:43c:f925:8fc0 with SMTP id
+ ffacd0b85a97d-43d642dd84fmr6449431f8f.50.1775845972488; 
+ Fri, 10 Apr 2026 11:32:52 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d63e46a85sm9344714f8f.24.2026.04.10.11.32.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Apr 2026 11:32:51 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH 2/2] hw/display/cirrus_vga: Fix packed-24 color-expansion
+ transparent copies
+Date: Fri, 10 Apr 2026 19:32:49 +0100
+Message-ID: <20260410183249.4046456-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260410183249.4046456-1-peter.maydell@linaro.org>
+References: <20260410183249.4046456-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 v4] target/arm: Use vaddr type in
- handle_psci_call()
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260410142932.33089-1-philmd@linaro.org>
- <CAFEAcA_=DjrPvYXyPJ-mBRtsSaKhdC6NYABcvz9R271V2cvznw@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_=DjrPvYXyPJ-mBRtsSaKhdC6NYABcvz9R271V2cvznw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,58 +102,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/4/26 16:43, Peter Maydell wrote:
-> On Fri, 10 Apr 2026 at 15:29, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Use 'vaddr' type for @entry, which is the start %pc for the
->> on-lining vCPU. This allows to remove an unnecessary target_ulong
->> in hvf_handle_psci_call().
->>
->> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/hvf/hvf.c  | 2 +-
->>   target/arm/tcg/psci.c | 2 +-
->>   2 files changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
->> index 5fc8f6bbbd9..124644918ef 100644
->> --- a/target/arm/hvf/hvf.c
->> +++ b/target/arm/hvf/hvf.c
->> @@ -1418,7 +1418,7 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
->>       bool target_aarch64 = true;
->>       CPUState *target_cpu_state;
->>       ARMCPU *target_cpu;
->> -    target_ulong entry;
->> +    vaddr entry;
->>       int target_el = 1;
->>       int32_t ret = 0;
->>
->> diff --git a/target/arm/tcg/psci.c b/target/arm/tcg/psci.c
->> index 56754bde951..5df17bd059d 100644
->> --- a/target/arm/tcg/psci.c
->> +++ b/target/arm/tcg/psci.c
->> @@ -68,7 +68,7 @@ void arm_handle_psci_call(ARMCPU *cpu)
->>       CPUARMState *env = &cpu->env;
->>       uint64_t param[4];
->>       uint64_t context_id, mpidr;
->> -    uint64_t entry;
->> +    vaddr entry;
->>       int32_t ret = 0;
->>       int i;
-> 
-> So we take our argument which is a uint64_t in param[], and we
-> put it into a vaddr entry, and then the only thing we do with that
-> is pass it to arm_set_cpu_on() which takes a uint64_t... I'm not
-> sure what the vaddr type is getting us here.
-> 
-> Should we just do in hvf.c the same thing we did already for
-> tcg/psci.c in 3580aa03547f92, and make 'entry' a uint64_t ?
+For the "color expansion" subtype of raster operations, the source
+pixel format is a monochrome bitmap, and the destination can be any
+of 8, 16, 24 or 32bpp.
 
-Well this was v3, I just wanted to address Richard comment:
-https://lore.kernel.org/qemu-devel/e02da1c8-9f48-4dab-b4b8-302ab8c69d74@linaro.org/
+For these pattern operations, the GR2F register includes a field
+which specifies how much to skip at the start of each scanline.  In
+the 8, 16 and 32 bit cases, this field is 3 bits and is a count of
+pixels to skip.  We get this case right.  However, for the 24 bit
+case, the field is 5 bits and is a count of destination bytes to
+skip.
 
-I'll repost v3 as v5 so we can choose :)
+In commit ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+in 2005, we updated the code to (attempt to) handle the 5-bit mask
+case.  However, we don't do the right thing when the 5-bit mask
+indicates that we need to skip more than 8 bits of the input bitmap:
+we will right-shift the 0x80 constant completely off the right hand
+side, and will be off-by-one for all the source bitmap loads.
+
+Fix this by calculating the whole number of input bytes we need to
+skip and the residual number of bits.  In the 8/16/32bpp case the
+bytes to skip is always zero.
+
+Cc: qemu-stable@nongnu.org
+Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/display/cirrus_vga_rop2.h | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
+
+diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
+index 8be35ec6e2..33f9b3b613 100644
+--- a/hw/display/cirrus_vga_rop2.h
++++ b/hw/display/cirrus_vga_rop2.h
+@@ -108,12 +108,34 @@ glue(glue(glue(cirrus_colorexpand_transp_, ROP_NAME), _),DEPTH)
+     unsigned int col;
+     unsigned bitmask;
+     unsigned index;
++
++    /*
++     * Raster ops where the source is a monochrome bitmap with
++     * color expansion to 8/16/24/32bpp destination.
++     */
++
+ #if DEPTH == 24
++    /*
++     * For packed-24 modes, GR2F bits [4:0] are a count of destination
++     * bytes to be suppressed for each scanline, which we keep in
++     * dstskipleft. We want to track the number of whole bytes
++     * to skip in the source (always either 0 or 1) and the number
++     * of bits within the byte to skip.
++     */
+     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
+-    int srcskipleft = dstskipleft / 3;
++    int srcskipleftbits = (dstskipleft / 3) & 0x7;
++    int srcskipleftbytes = (dstskipleft / 3) >> 3;
+ #else
+-    int srcskipleft = s->vga.gr[0x2f] & 0x07;
+-    int dstskipleft = srcskipleft * (DEPTH / 8);
++    /*
++     * In all other modes, GR2F bits [2:0] are a count of how many
++     * destination pixels to suppress for each scanline, which is our
++     * srcskipleftbits. We get dstskipleft, the number of bytes to
++     * skip, by multiplying this by the bytes-per-pixel. In these
++     * modes we never need to skip an entire source byte.
++     */
++    int srcskipleftbits = s->vga.gr[0x2f] & 0x07;
++    int srcskipleftbytes = 0;
++    int dstskipleft = srcskipleftbits * (DEPTH / 8);
+ #endif
+ 
+     if (s->cirrus_blt_modeext & CIRRUS_BLTMODEEXT_COLOREXPINV) {
+@@ -125,7 +147,8 @@ glue(glue(glue(cirrus_colorexpand_transp_, ROP_NAME), _),DEPTH)
+     }
+ 
+     for(y = 0; y < bltheight; y++) {
+-        bitmask = 0x80 >> srcskipleft;
++        bitmask = 0x80 >> srcskipleftbits;
++        srcaddr += srcskipleftbytes;
+         bits = cirrus_src(s, srcaddr++) ^ bits_xor;
+         addr = dstaddr + dstskipleft;
+         for (x = dstskipleft; x < bltwidth; x += (DEPTH / 8)) {
+-- 
+2.43.0
+
 
