@@ -4,114 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5541F36BAC
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 05:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73718F36BAC
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 05:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB4Nf-0007UU-Jq; Fri, 10 Apr 2026 01:26:11 -0400
+	id 1wB4QE-0007x5-5s; Fri, 10 Apr 2026 01:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB4Nb-0007UC-Lg; Fri, 10 Apr 2026 01:26:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB4NZ-0006Ww-A2; Fri, 10 Apr 2026 01:26:07 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 639NMjGe2315079; Fri, 10 Apr 2026 05:26:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Dk5iov
- uqyQlNW6p1kUmMfoBh43avLJBdH6SFpfMUKKg=; b=XZvkAQlM7y3cogsDKKm43m
- VQtwY7Yo5UcW4dWGmC3Tilms93pT0SAXNkYypqde11DiVAPHS9+/dBnqK4E0VxVe
- /8NKqHohHzzpT08zYMSmEgKqrqWYYsoKyuXatjgwBPC++z0Is9EQSx+4f69rN7sK
- /3m99KkL4eEyZFh8wdJHz8h6I1ixt3HUBLe53I7S7GlOtOGxsoJfkwZyZDKcMSEZ
- lAMof4CxL05HHdCoy3xj63NcIB2Mpx3W9JYuXyu120BvemLGKEGMEQ1BzmzMfar0
- kh1L6/DrB6/eRrifA/4i9lcNRjg/q/jBGF+kcehhraHSYByjzs6gYrT6iNAgpoHw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2g8ems-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 05:26:01 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63A2VEkX013882;
- Fri, 10 Apr 2026 05:26:00 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcmf4eped-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 05:26:00 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63A5Pw8M24838878
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Apr 2026 05:25:58 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 43DC058056;
- Fri, 10 Apr 2026 05:25:58 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C4215805A;
- Fri, 10 Apr 2026 05:25:55 +0000 (GMT)
-Received: from [9.124.212.60] (unknown [9.124.212.60])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Apr 2026 05:25:55 +0000 (GMT)
-Message-ID: <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
-Date: Fri, 10 Apr 2026 10:55:53 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
- kvm_cpu_exec
-Content-Language: en-GB
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
- misanjum@linux.ibm.com, gautam@linux.ibm.com,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260409161042.55281-1-harshpb@linux.ibm.com>
- <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=FKArAeos c=1 sm=1 tr=0 ts=69d889e9 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22
- a=VnNF1IyMAAAA:8 a=w4t-TaBqUuFs90xPVssA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10
-X-Proofpoint-ORIG-GUID: IBlTKh2k6U6dyEcgjtp32SmolDJfxxnE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA0NiBTYWx0ZWRfX++9UpGhiXo6U
- P58J3JyCoX1Rabk8/E4rv59LNEwFZ+f7LLKFpJNmqYovIoB01f+MDC9GbPPLzRuNwZumBfBvqli
- gabQridAxLfNMXZpkV0VYq6S71E+sUAT44oeECsmJcs2csr6LRPxmRHziXYj/qh5d9fkFA5Eea8
- GXIZ16CjaMMG80m0aunaEMGJaEJj0i9mojhogLe9GdHiuF+C3PWjM+CAwssPVe06e2ok34qGlko
- xp0Ym2SkJATvm5UF2gC5MGVn2G6k7LPFLNnJT8/rL6alOtXjC3c4NJ/MUYJZvBZT7hmr3ogwifS
- HW9cm6NbVzAeNe14O5tnjNYm4IL6OrlsEkJb6lLcK0h4jXX3vJdRPb+FRjZl0H4que+D4idrXxI
- 8YXG6NTVzMpaymT9zX+bJgKVLSJCdKONis1cZlNo78TFZM9w+Edb9DAeWiL9sfFwwhP6wmoD9/R
- ZgtnnFvV4CfzecsaXeA==
-X-Proofpoint-GUID: Vpdr0Co6l27B53CpIggg0OQEJN8M0qFt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-10_01,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100046
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wB4QB-0007ws-Vr
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 01:28:48 -0400
+Received: from mail-dy1-x132b.google.com ([2607:f8b0:4864:20::132b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wB4QA-0007F4-4H
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 01:28:47 -0400
+Received: by mail-dy1-x132b.google.com with SMTP id
+ 5a478bee46e88-2b6b0500e06so2478810eec.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 22:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775798924; x=1776403724; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=//BvhHT67uK2nLwJxFUrnIe05Ect6gqGWpNnBixz1iE=;
+ b=s0gY8Xdd1r1i/xzPkrrs0TwUcnq3BdYAIRLz0R1APG1EiyyS5GD2fFvf54VuCc3rL8
+ humVLojKkaQm5pd9QkW8GhgtH/xSbHyuQPX/pUFqekT1TbBOEetrovoFLzapbACL7XlP
+ eYx8TjSO2jWbVvhkvljr3bCMtbYcbcb257/hUJKe7RmSqpF/Tlfvw0D02h2p80f9BBW4
+ yc5eYGLULcRUjG5IBJuQ+oI8FrpucvBbiu2OnjI1vFhL1NVGHFe5xiuXByld/ktEfBaF
+ IJNn53/k+Yqyq1vQRO0moPmr6T7J6ggdN5EyIfd1YkpJ68P6DYqkHCuYFoJPu+kf5mCR
+ E9Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775798924; x=1776403724;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=//BvhHT67uK2nLwJxFUrnIe05Ect6gqGWpNnBixz1iE=;
+ b=Uf0DsEsJDzUDE/7HQ1LWHiSPjEAT8Z3AwnZRKP/oCL1lv4i+hhCecMpCyFjTkPalnS
+ o5lP1G/mUdoGw9rfYR4vD+2bPbgUI/NreXzC274gNz85VWeJDpy7sVW32/rql+aAsTwX
+ T9GcKPpM60bsGMSNLiv21HEOkD3djXAjspIty4VsBjLAfmiCB8n3Mb2+1QfZFtOQdDUL
+ RPPl6R89zmEQYVB29qurH0LLsb3XPLS7oenpGQl4yrS18jPTAGEMpeq4AVLr8mzehUD/
+ DdKiiNo2bQNdoJI3wPSp4KMRxBSx+S9RQ90v9hlvoRcJsTdOJcd8uZGp4qETRWeoaY0b
+ iVWw==
+X-Gm-Message-State: AOJu0Yx1kOWfBMFr6h6+8kWliJzbxW9NRq8eK9BSYy4dohjsrUaMk8mr
+ szj+AY4MwY285Z8Ow/sApHheuaiFXNY42mZ8my1OYtddn1UkOzLzJd5I
+X-Gm-Gg: AeBDievjLUQ5Rx6iLkkTCrw26q7tFG3tzaTEMidsv4/YUdFQrZlRbAHjHzY0JyYaQbx
+ l25o8w5eX5YdUisvffk7xmp5vCGEnd4R9LquAK1Al3EAxNE8RVixqLMZD6UZsax6XqDarPBsu4A
+ CzfEsMJolKyWxzHhVUcK2u8LqUebm/9ddzGGOOpTBXz7ZjpfL3932c7wiAwPf7o+NmX5jmh7Fct
+ EXlQ2NhDd92E+4i5hSyPF626TCbpGYnEqBfHBuRtgpCzK/ZVGGlwiGhF282+Vb18uQw549NJiOK
+ Ug8w0aCD4GVNwv3NgRONPi8NcNCTDEHQjZth+7sMsJO4RlmGeaQtpqMLu5Vmes8V5LUOx3i80rL
+ Zi8gjN5pdIp2RmENaMTtO2G5/WlsJtIio/o/WdXCPBFdBLk28p9dmCTVMpkerp62DnNXrylIHlO
+ n78cVbhM6+L0iYMQQUIF3iq5csUAW0Plhz+8BOfikH5oU1XuOIyGjUxdfN7kYD8RMwNc5ObDH7A
+ 5M6Dkcsif4=
+X-Received: by 2002:a05:7301:608e:b0:2c1:6cfd:73ee with SMTP id
+ 5a478bee46e88-2d589898d4cmr957712eec.24.1775798924080; 
+ Thu, 09 Apr 2026 22:28:44 -0700 (PDT)
+Received: from localhost ([2601:645:8200:47:ade2:73a1:54c5:e0fe])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2d55f5c69casm3396964eec.2.2026.04.09.22.28.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Apr 2026 22:28:43 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 09 Apr 2026 22:28:42 -0700
+Message-Id: <DHP86IRPEW4G.16N17DFVR56EW@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <rbolshakov@ddn.com>,
+ <phil@philjordan.eu>, <agraf@csgraf.de>, <peter.maydell@linaro.org>
+Subject: Re: [PATCH] target/arm/hvf: Fix WFI halting to stop idle vCPU spinning
+From: "Scott J. Goldman" <scottjgo@gmail.com>
+To: "Mohamed Mediouni" <mohamed@unpredictable.fr>, "Scott J. Goldman"
+ <scottjgo@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260410044726.61853-1-scottjgo@gmail.com>
+ <E41FA391-ABC2-4CA9-850C-BDB3263C1E07@unpredictable.fr>
+In-Reply-To: <E41FA391-ABC2-4CA9-850C-BDB3263C1E07@unpredictable.fr>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132b;
+ envelope-from=scottjgo@gmail.com; helo=mail-dy1-x132b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,143 +104,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani,
-
-On 10/04/26 9:12 am, Ani Sinha wrote:
-> 
-> 
->> On 9 Apr 2026, at 9:40 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>
->> When kvm_cpu_exec() returns EXCP_HLT due to kvm_arch_process_async_events()
->> returning true, it was returning before releasing the BQL (Big QEMU Lock).
->> This caused a lock imbalance where the vCPU thread would loop back to
->> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
-> 
-> I am not sure I understand this. Seems kvm_cpu_exec() does expect that the caller holds bql before calling the function. Where is the lock imbalance?
-
-The issue is not that kvm_cpu_exec() doesn't expect the caller to hold 
-the BQL - it does. The problem is that kvm_cpu_exec() has inconsistent 
-BQL handling across its return paths.
-
-Normal execution path:
-
-int kvm_cpu_exec(CPUState *cpu)
-{
-     // BQL held on entry (from caller)
-
-     if (kvm_arch_process_async_events(cpu)) {
-         return EXCP_HLT;  // ← Returns with BQL STILL HELD
-     }
-
-     bql_unlock();  // ← Normal path unlocks here
-     // ... KVM execution loop ...
-     bql_lock();    // ← Re-acquires before returning
-     return ret;
-}
-
-The lock imbalance:
-
-When kvm_arch_process_async_events() returns true, the function returns 
-EXCP_HLT before the bql_unlock() call.
-This means the early return path keeps the BQL held, while the normal 
-execution path releases and re-acquires it.
-The caller (kvm_vcpu_thread_fn()) loops back and calls kvm_cpu_exec() 
-again, but now the BQL is already held from the previous iteration
-This creates a situation where the BQL is never released between 
-iterations when EXCP_HLT is returned.
-
-Why this matters:
-On PowerPC pseries with halted secondary vCPUs (start-powered-off=true), 
-these vCPUs repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each 
-iteration accumulates BQL holds, preventing other threads (including CPU 
-0) from making progress.
-
-> 
->>
->> The issue manifests as boot hangs on PowerPC pseries machines with multiple
->> vCPUs, where secondary vCPUs with start-powered-off=true remain halted and
->> repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each iteration held
->> the BQL, preventing other operations from proceeding.
->>
->> The fix has two parts:
->>
->> 1. In kvm_cpu_exec() (kvm-all.c):
->>    Release the BQL before returning EXCP_HLT in the early return path,
->>    matching the behavior of the normal execution path where bql_unlock()
->>    is called before entering the main KVM execution loop.
->>
->> 2. In kvm_vcpu_thread_fn() (kvm-accel-ops.c):
->>    Re-acquire the BQL after kvm_cpu_exec() returns EXCP_HLT, since the
->>    loop expects to hold the BQL when calling kvm_cpu_exec() again.
->>
->> This ensures proper BQL lock/unlock pairing:
->> - kvm_vcpu_thread_fn() holds BQL before calling kvm_cpu_exec()
->> - kvm_cpu_exec() releases BQL before returning (for EXCP_HLT)
->> - kvm_vcpu_thread_fn() re-acquires BQL if EXCP_HLT was returned
->> - Next iteration has BQL held as expected
->>
->> This is a regression introduced by commit 98884e0cc1 ("accel/kvm: add
->> changes required to support KVM VM file descriptor change") which
->> refactored kvm_irqchip_create() and changed the initialization timing,
->> exposing this lock imbalance issue.
->>
->> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM file descriptor change")
-> 
-> I do not think this is the right reference. The above commit may have exposed some underlying issue but is certainly not the cause of it. Further, as we have discussed in the other thread, the changes in that commit are not even getting executed.
-> 
-> Personally I think the core issue is somewhere else. I am not convinced this is the proper fix.
-
-Regarding commit 98884e0cc1:
-
-Reverting the kvm_irqchip_create refactoring makes the problem go away. 
-This commit may have changed timing that exposed the issue, but the root 
-cause is the pre-existing BQL lock imbalance in kvm_cpu_exec(). We can 
-either:
-
-Remove the "Fixes:" tag entirely, or
-Add a note that this is a pre-existing issue exposed by timing changes
-The core fix (releasing BQL before returning EXCP_HLT) is correct and 
-addresses the actual deadlock mechanism.
-
-> 
->> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
->> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+On Thu Apr 9, 2026 at 10:06 PM PDT, Mohamed Mediouni wrote:
+>
+>
+>> On 10. Apr 2026, at 06:47, Scott J. Goldman <scottjgo@gmail.com> wrote:
+>>=20
+>> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+>> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+>> returning EXCP_HLT, intending QEMU's main event loop to handle the
+>> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+>> always returns false and the vCPU thread spins at 100% CPU per core
+>> while the guest is idle.
+>>=20
+>> Fix this by:
+>>=20
+>> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps on
+>>   halt_cond in qemu_process_cpu_events().
+>>=20
+>> 2. Arming a host-side QEMU_CLOCK_HOST timer to fire when the guest's
+>>   virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>>   because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>>   hv_vcpu_run(), which is not called while the CPU is halted. The
+>>   timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>>   vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>>   interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+>>=20
+>> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>>   indicates a pending interrupt, and cancelling the WFI timer.
+>>=20
+>> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/959
+>> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+>
+> Hi,
+>
+> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 >> ---
->> accel/kvm/kvm-accel-ops.c | 4 ++++
->> accel/kvm/kvm-all.c       | 1 +
->> 2 files changed, 5 insertions(+)
->>
->> diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
->> index 6d9140e549..d684fd0840 100644
->> --- a/accel/kvm/kvm-accel-ops.c
->> +++ b/accel/kvm/kvm-accel-ops.c
->> @@ -52,6 +52,10 @@ static void *kvm_vcpu_thread_fn(void *arg)
->>
->>          if (cpu_can_run(cpu)) {
->>              r = kvm_cpu_exec(cpu);
->> +            if (r == EXCP_HLT) {
->> +                /* kvm_cpu_exec() released BQL, re-acquire for next iteration */
->> +                bql_lock();
->> +            }
->>              if (r == EXCP_DEBUG) {
->>                  cpu_handle_guest_debug(cpu);
->>              }
->> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->> index 774499d34f..00b8018664 100644
->> --- a/accel/kvm/kvm-all.c
->> +++ b/accel/kvm/kvm-all.c
->> @@ -3439,6 +3439,7 @@ int kvm_cpu_exec(CPUState *cpu)
->>      trace_kvm_cpu_exec();
->>
->>      if (kvm_arch_process_async_events(cpu)) {
->> +        bql_unlock();
->>          return EXCP_HLT;
->>      }
->>
->> -- 
->> 2.52.0
->>
-> 
+>> include/system/hvf_int.h |  1 +
+>> target/arm/hvf/hvf.c     | 65 +++++++++++++++++++++++++++++++++++++++-
+>> 2 files changed, 65 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+>> index 2621164cb2..58fb865eba 100644
+>> --- a/include/system/hvf_int.h
+>> +++ b/include/system/hvf_int.h
+>> @@ -48,6 +48,7 @@ struct AccelCPUState {
+>>     hv_vcpu_exit_t *exit;
+>>     bool vtimer_masked;
+>>     bool guest_debug_enabled;
+>> +    struct QEMUTimer *wfi_timer;
+>> #endif
+>> };
+>>=20
+>> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+>> index 5fc8f6bbbd..0e737d3583 100644
+>> --- a/target/arm/hvf/hvf.c
+>> +++ b/target/arm/hvf/hvf.c
+>> @@ -28,6 +28,7 @@
+>> #include "hw/core/boards.h"
+>> #include "hw/core/irq.h"
+>> #include "qemu/main-loop.h"
+>> +#include "qemu/timer.h"
+>> #include "system/cpus.h"
+>> #include "arm-powerctl.h"
+>> #include "target/arm/cpu.h"
+>> @@ -301,6 +302,8 @@ void hvf_arm_init_debug(void)
+>> #define TMR_CTL_IMASK   (1 << 1)
+>> #define TMR_CTL_ISTATUS (1 << 2)
+>>=20
+>> +static void hvf_wfi_timer_cb(void *opaque);
+>> +
+>> static uint32_t chosen_ipa_bit_size;
+>>=20
+>> typedef struct HVFVTimer {
+>> @@ -1214,6 +1217,9 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
+>> {
+>>     hv_return_t ret;
+>>=20
+>> +    timer_free(cpu->accel->wfi_timer);
+>> +    cpu->accel->wfi_timer =3D NULL;
+>> +
+>>     ret =3D hv_vcpu_destroy(cpu->accel->fd);
+>>     assert_hvf_ok(ret);
+>> }
+>> @@ -1352,6 +1358,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+>>                               arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]=
+);
+>>     assert_hvf_ok(ret);
+>>=20
+>> +    cpu->accel->wfi_timer =3D timer_new_ns(QEMU_CLOCK_HOST,
+>> +                                          hvf_wfi_timer_cb, cpu);
+>> +
+>>     aarch64_add_sme_properties(OBJECT(cpu));
+>>     return 0;
+>> }
+>> @@ -2027,8 +2036,29 @@ static uint64_t hvf_vtimer_val_raw(void)
+>>     return mach_absolute_time() - hvf_state->vtimer_offset;
+>> }
+>>=20
+>> +static void hvf_wfi_timer_cb(void *opaque)
+>> +{
+>> +    CPUState *cpu =3D opaque;
+>> +    ARMCPU *arm_cpu =3D ARM_CPU(cpu);
+>> +
+>> +    /*
+>> +     * vtimer expired while the CPU was halted for WFI.
+>> +     * =09
+>> +     * interrupt and mark as masked so hvf_sync_vtimer() will
+>> +     * check and unmask when the guest handles it.
+>> +     *
+>> +     * The interrupt delivery chain (GIC -> cpu_interrupt ->
+>> +     * qemu_cpu_kick) wakes the vCPU thread from halt_cond.
+>> +     */
+>> +    qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
+>> +    cpu->accel->vtimer_masked =3D true;
+>> +}
+>> +
+>> static int hvf_wfi(CPUState *cpu)
+>> {
+>> +    uint64_t ctl, cval;
+>> +    hv_return_t r;
+>> +
+>>     if (cpu_has_work(cpu)) {
+>>         /*
+>>          * Don't bother to go into our "low power state" if
+>> @@ -2037,6 +2067,35 @@ static int hvf_wfi(CPUState *cpu)
+>>         return 0;
+>>     }
+>>=20
+>> +    /*
+>> +     * Set up a host-side timer to wake us when the vtimer expires.
+>> +     * HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>> +     * hv_vcpu_run(), which we won't call while halted.
+>> +     */
+>> +    r =3D hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, =
+&ctl);
+>> +    assert_hvf_ok(r);
+>> +
+>> +    if ((ctl & TMR_CTL_ENABLE) && !(ctl & TMR_CTL_IMASK)) {
+>> +        r =3D hv_vcpu_get_sys_reg(cpu->accel->fd,
+>> +                                HV_SYS_REG_CNTV_CVAL_EL0, &cval);
+>> +        assert_hvf_ok(r);
+>> +
+>> +        uint64_t now =3D hvf_vtimer_val_raw();
+>> +        if (cval <=3D now) {
+>> +            /* Timer already expired, don't halt */
+>> +            return 0;
+>> +        }
+>> +
+>> +        uint64_t delta_ticks =3D cval - now;
+>
+> We have CNTFRQ_EL0 in cpu->gt_cntfrq_hz but this works too
+> as XNU today tries to take care that host and VM run with
+> the same CNTFRQ_EL0
+>
 
+Ah, I can post a follow-up.
+
+>> +        mach_timebase_info_data_t timebase;
+>> +        mach_timebase_info(&timebase);
+>> +        int64_t delta_ns =3D delta_ticks * timebase.numer / timebase.de=
+nom;
+>> +        int64_t deadline =3D qemu_clock_get_ns(QEMU_CLOCK_HOST) + delta=
+_ns;
+>> +
+>> +        timer_mod(cpu->accel->wfi_timer, deadline);
+>> +    }
+>> +
+>> +    cpu->halted =3D 1;
+>>     return EXCP_HLT;
+>> }
+>>=20
+>> @@ -2332,7 +2391,11 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+>>     hv_return_t r;
+>>=20
+>>     if (cpu->halted) {
+>> -        return EXCP_HLT;
+>> +        if (!cpu_has_work(cpu)) {
+>> +            return EXCP_HLT;
+>> +        }
+>> +        cpu->halted =3D 0;
+>> +        timer_del(cpu->accel->wfi_timer);
+>>     }
+>>=20
+>>     flush_cpu_state(cpu);
+>> --=20
+>> 2.50.1 (Apple Git-155)
+>>=20
+>>=20
+
+Thanks,
+-sjg
 
