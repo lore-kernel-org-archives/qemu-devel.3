@@ -4,114 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B84E99053
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 08:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C41E9904A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 08:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB71S-0000GF-Nt; Fri, 10 Apr 2026 04:15:26 -0400
+	id 1wB73b-0000mH-OE; Fri, 10 Apr 2026 04:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wB71R-0000Fr-FB
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:15:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB73V-0000lj-EC
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:17:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wB71P-0000Yh-7l
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:15:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB73T-0000oJ-Rt
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:17:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775808921;
+ s=mimecast20190719; t=1775809051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tfTs/yau8cHNI4C5o+BGrWbtz6MfsiSDhARV/1OFHwc=;
- b=FWWtKwQCfhzCVzvtLSMkJmf1DWIsYm14Bl7XUWad0sfZylMLJMrWc8h0r2UFRAQPBvF2lx
- YKeOVRY4KafSEaAqopzrDVla2Pqdvl0ybk9aj1Z64FUAoZJ31OYyaOrfv0af+KM+Vz7T0O
- A/91RLCelRP5q9+RLThgVxUN4M8ba5A=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=GMFwOeAl9MieDvJ313hoa+QETKVMjWIGtR8ReZvT38k=;
+ b=GECh1gns9JLkrjljpEZNRKsgHNZPL8ntURdtqMsIZaTFFvzmM2YgLEBw4ZVyJ9MdHsiBGr
+ LUiPvA8uQELGGbHuWiu03NFljpDE8TvCA86ovaHRwG1kU1xMB7WP3904PlOzFeg2wYr/XH
+ 4NLIuHBOXNCG1Phqzznid8Zx9Pe5Y2M=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-hWhN4PoANZ2xyO_nhoe7Pg-1; Fri, 10 Apr 2026 04:15:19 -0400
-X-MC-Unique: hWhN4PoANZ2xyO_nhoe7Pg-1
-X-Mimecast-MFC-AGG-ID: hWhN4PoANZ2xyO_nhoe7Pg_1775808918
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-82cdf02bce5so967974b3a.2
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 01:15:19 -0700 (PDT)
+ us-mta-656-TG1R5VfXPqmLa2e8L8O3oA-1; Fri, 10 Apr 2026 04:17:29 -0400
+X-MC-Unique: TG1R5VfXPqmLa2e8L8O3oA-1
+X-Mimecast-MFC-AGG-ID: TG1R5VfXPqmLa2e8L8O3oA_1775809049
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4837b6f6b93so14357645e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 01:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775808918; x=1776413718; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tfTs/yau8cHNI4C5o+BGrWbtz6MfsiSDhARV/1OFHwc=;
- b=fEWptvVPXo98oqONd+igHyM1oYOA1UHtzl7NTBp8ykLdrPaqLSu2xIK2h1y9g0B/LP
- s/n/idOa9sVOasW0964ORmR9CaZRJIHGOD896UvcT9o1IdiG0UY84A0he+LdhasNvYib
- ARVMtFylmpeeN+0V7jVyYR2srT2FIpsUOVfLcJ/oFLxegrZrI1X01PqqrXfCgnpqygRV
- PQqe8F976LNoZHWev4mthnZa/rd1wn8Tp4+DzQH44bZg7/LTDhvI1pmZF/Q8pMyPp6xB
- sqqlzp34EFW2BQSgsrqkdB3N+TwAWzsbpjTi7SLvah+r79yKFzHM04GvILjEqR7xWqLl
- VClA==
+ d=redhat.com; s=google; t=1775809048; x=1776413848; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=GMFwOeAl9MieDvJ313hoa+QETKVMjWIGtR8ReZvT38k=;
+ b=gLvyRjiEzSse56kIvJYcdI53vl20LEVRQsZnEMwYgix9llkj3W0G77176OR8bb13ZH
+ swSjDfRqVwBfvXQA5XczcpzwdZVJQWA3t3z3LWkdMEylpDDpSY+GBNEfRFSXtSOT5j93
+ U0Tta3quTY9xDwMy58e76K8V+gdiAMICIqruartRbSobV3Pd4jr1NVIQGVjX5T+Tn3nJ
+ d5uqJvVCx2j9lv7sXuAlRQXX+F1qz2ymqsNd5GM0ehggdvskgzHs/y85ArGvADC3pM8P
+ M5BjEji+l52wJxiQO9BGKiQTRRuF3irzWnwCE6WLdUyff1xGuFqGLECRhyGBJZpo0Bpn
+ 3QXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775808918; x=1776413718;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tfTs/yau8cHNI4C5o+BGrWbtz6MfsiSDhARV/1OFHwc=;
- b=asCwDZxds+zORubAtWdNvTS16f5Y9WOE1+M01lXvRyuN63ZkVXDOIYkDIvhuJBcouQ
- 13BUBdzS3yztD8lbrck0lDL/IGpGDXM+75SNlw67kiEe2RUYG3qby++QkaljbePiIhUU
- sZJ8UZsungQ4RwZjAldZsrbijbt6VcbEQQ/ctsnolUSYbw85TGCglqG1Avs5/dGUgvye
- DJNrGkK61WPQlf/x01eRimwTBxS1Uv90AOc5bJ+b/XVbdp3QOY8DybO3kGI5vEGWOqu3
- WXSAS8nBUpIJw042Kwh57pMQYqjBys/AdYoxob9/AMcQq7SgR2rtjhYJlkpsY9eAw1Jr
- XBhA==
-X-Gm-Message-State: AOJu0YxRvUgHI+aEGjh94Dki0LRxscTFa6UzHMSvkZ3X/FSdVxm/tB6N
- 5+1gWJ+z0JwvUjU8HEclHOA4+8e4okZDOaQe+LKSA4FzljsgJXAetAMOvdWWJZpP95ZiyO2l9L/
- zeJbxYWYWeMyIHxT4LyxAdkbPgC7TRZt6b9JwLK2GLv5uj8c6idza+hi7
-X-Gm-Gg: AeBDies/VxHbcYwk0wVWczZbm8iGR4IlTV88BrPIqKEd4aFmhUxLlQugmYmQtZ+ZTzP
- sJMeC8mOHLRohLfNqjjSe3yEQH6Y60sY95iFSHONzLF2MwsuzcerO7WxjCnT3z2b8ZpNQe0Ax6r
- tWosQUWFyRhA0TvCAx4I4NFmGbnPR7St8NnQg5/Ak1LN8NE4Z7gZ9xlp3pS0EusEylGLBDAGL8E
- S5VexjaL+Q5oC5oNJMDY8WQQ38DgfIr59KU8pJucaNCTg56E7r7REEVH2IXCdm6zoVrY1shTg/S
- yiDaZOeswwtTvrSBHtNJKF+0PL7wCvApE88KbgErAJK7ZVd2NzxQgPZF5QEvr5ruvKGu4tr3p3+
- M5+3bNwwlyp+IDaTm9lb0einzaPYfSC6/cpx0uN7aPar+6nnW01WbqlibGpMzoyl7yIRdjaFnLJ
- A=
-X-Received: by 2002:a05:6a00:369b:b0:82d:603f:7ab5 with SMTP id
- d2e1a72fcca58-82f0c221b7dmr2627643b3a.35.1775808918222; 
- Fri, 10 Apr 2026 01:15:18 -0700 (PDT)
-X-Received: by 2002:a05:6a00:369b:b0:82d:603f:7ab5 with SMTP id
- d2e1a72fcca58-82f0c221b7dmr2627609b3a.35.1775808917726; 
- Fri, 10 Apr 2026 01:15:17 -0700 (PDT)
-Received: from smtpclient.apple ([122.163.114.34])
+ d=1e100.net; s=20251104; t=1775809048; x=1776413848;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GMFwOeAl9MieDvJ313hoa+QETKVMjWIGtR8ReZvT38k=;
+ b=jLRQyde/lJ7uUcejrypzr015cUa/+129NhEYOiI1tcW1Vgat6W3IQpHu5aMIJwAiJD
+ DGqFbeW3JV1Ov+ubkShKuK8aIaIfHaSuyA03+iv1AicfW/tHEgkZflowcqAMSIuIAOFg
+ 0tLZMahNLcdo25PnzjCB8aEexLSkYVQeW26dBPVQqFzW5RH8Ys/eQcGHWcdGqk3MbJB9
+ 7eATzZAimD/YCtLYFKMOvMXqyHCGOdu+5jCIPJSDSOuiOseOlhN5Y8CuGet/QDwhILzP
+ R1Rmm08kudTQjhaNHcxHHMo50F1GxEEGyTpFK9oNoNmiDM0eN88IlcXRJEsNViDOVcSr
+ ET3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXj44cW8hKUgr4LNqAQ7ZNAHrxeJpbS+ofO6N5zEfmdgK7a9QxHHTblzzRKlStKTv281TbqajP5qb9v@nongnu.org
+X-Gm-Message-State: AOJu0YxsuJV8w4tsVRR+ZvrjPY/BwpEOXL4bh+jp0k+doKNakLBO8cGJ
+ 1vaKp+L9j8CCPP8pWayd9vSRHBXKmwCX+GugvHqrpdo+OWvbRQ52MRzr//BjbOyTrgNnnDCO+BA
+ 4H1EoAvSxC7Y/6Kl7yNqo3SzBR6QdoZhgLKpWHFDSs6LKuATRn+kNfzlt
+X-Gm-Gg: AeBDiesNnlu0LWXVbTPLd0XCGOtjRS7NI6VRJ+4rfIevjcQP0+EibNtJAk8cfDTPUEH
+ 7hi6JuZ2oK8YkruZeekHOiqqfEjcCLIoBrFPWK0+RswGiib4hXhQz3JayiBWcB7RGYYi7VC5/Qp
+ +uPxYFmofTfNcvC/cBC+fTM33FmrG0GpqOzpD5fszbz7Mgqpg4odeQoydioArUZWkjQ4rhygGX4
+ HLa2P5envfvCIIEky6hbiYUsNaq0l6lErJfbqRar5t0QaBpIiTY8OW5wSoP3hYFxCqHbioruRhQ
+ o9kpMafrqo4OCG1wUcBzUP+yn+ypp3/yFHq8JBiiOdGW2NAg5Kpsc6Pc96S/vQWyguN4LgYW9iS
+ /uskg5dl+RftzHMXKs4s9onhZqUepjUIUlKfclHVTTEDetRHCJUGh/IOt9Q==
+X-Received: by 2002:a05:600c:4709:b0:488:caed:5ccf with SMTP id
+ 5b1f17b1804b1-488d68af17bmr21776495e9.16.1775809048546; 
+ Fri, 10 Apr 2026 01:17:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:4709:b0:488:caed:5ccf with SMTP id
+ 5b1f17b1804b1-488d68af17bmr21776065e9.16.1775809048019; 
+ Fri, 10 Apr 2026 01:17:28 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f0c4e23d9sm2248944b3a.46.2026.04.10.01.15.14
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 10 Apr 2026 01:15:17 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
- kvm_cpu_exec
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <451942FA-0056-466C-AD42-AB0BBE88472E@redhat.com>
-Date: Fri, 10 Apr 2026 13:45:02 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
- misanjum@linux.ibm.com, gautam@linux.ibm.com,
- Peter Maydell <peter.maydell@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8B87F317-5C9C-4CAE-AA50-2B5A12864B76@redhat.com>
-References: <20260409161042.55281-1-harshpb@linux.ibm.com>
- <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
- <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
- <451942FA-0056-466C-AD42-AB0BBE88472E@redhat.com>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ 5b1f17b1804b1-488d531f229sm80790255e9.3.2026.04.10.01.17.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Apr 2026 01:17:27 -0700 (PDT)
+Message-ID: <7bcb67c8-d3c7-4240-a055-a30cb0bb76a2@redhat.com>
+Date: Fri, 10 Apr 2026 10:17:26 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] hw/vfio/ap: Extend vfio device state description
+ to facilitate live migration
+To: Anthony Krowiak <akrowiak@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex@shazbot.org, cohuck@redhat.com
+References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
+ <20260409141352.997844-2-akrowiak@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260409141352.997844-2-akrowiak@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -129,85 +170,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/9/26 16:13, Anthony Krowiak wrote:
+> Make the changes needed to the VFIOAPDevice state description to facilitate
+> live guest migration.
+> 
+> Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+> ---
+>   hw/vfio/ap.c | 19 +++++++++++--------
+>   1 file changed, 11 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 5c8f305653..fd68983702 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -41,6 +41,16 @@ struct VFIOAPDevice {
+>       EventNotifier req_notifier;
+>       EventNotifier cfg_notifier;
+>   };
+> +OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+> +
+> +static const VMStateDescription vmstate_ap_device = {
+> +    .name = "vfio-ap-device",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+>   
+>   typedef struct APConfigChgEvent {
+>       QTAILQ_ENTRY(APConfigChgEvent) next;
+> @@ -56,8 +66,6 @@ static void __attribute__((constructor)) vfio_ap_global_init(void)
+>       qemu_mutex_init(&cfg_chg_events_lock);
+>   }
+>   
+> -OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+> -
+>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+>   {
+>       vdev->needs_reset = false;
+> @@ -297,11 +305,6 @@ static void vfio_ap_reset(DeviceState *dev)
+>       }
+>   }
+>   
+> -static const VMStateDescription vfio_ap_vmstate = {
+> -    .name = "vfio-ap",
+> -    .unmigratable = 1,
+> -};
+> -
+>   static void vfio_ap_instance_init(Object *obj)
+>   {
+>       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(obj);
+> @@ -335,7 +338,7 @@ static void vfio_ap_class_init(ObjectClass *klass, const void *data)
+>   #ifdef CONFIG_IOMMUFD
+>       object_class_property_add_str(klass, "fd", NULL, vfio_ap_set_fd);
+>   #endif
+
+You will need to rebase on 'vfio-next' or 'master' when the changes
+pending in the vfio queue are merged.
 
 
-> On 10 Apr 2026, at 12:05=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
-wrote:
->=20
->=20
->=20
->> On 10 Apr 2026, at 10:55=E2=80=AFAM, Harsh Prateek Bora =
-<harshpb@linux.ibm.com> wrote:
->>=20
->> Hi Ani,
->>=20
->> On 10/04/26 9:12 am, Ani Sinha wrote:
->>>> On 9 Apr 2026, at 9:40=E2=80=AFPM, Harsh Prateek Bora =
-<harshpb@linux.ibm.com> wrote:
->>>>=20
->>>> When kvm_cpu_exec() returns EXCP_HLT due to =
-kvm_arch_process_async_events()
->>>> returning true, it was returning before releasing the BQL (Big QEMU =
-Lock).
->>>> This caused a lock imbalance where the vCPU thread would loop back =
-to
->>>> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
->>> I am not sure I understand this. Seems kvm_cpu_exec() does expect =
-that the caller holds bql before calling the function. Where is the lock =
-imbalance?
->>=20
->> The issue is not that kvm_cpu_exec() doesn't expect the caller to =
-hold the BQL - it does. The problem is that kvm_cpu_exec() has =
-inconsistent BQL handling across its return paths.
->>=20
->> Normal execution path:
->>=20
->> int kvm_cpu_exec(CPUState *cpu)
->> {
->>   // BQL held on entry (from caller)
->>=20
->>   if (kvm_arch_process_async_events(cpu)) {
->>       return EXCP_HLT;  // =E2=86=90 Returns with BQL STILL HELD
->>   }
->>=20
->>   bql_unlock();  // =E2=86=90 Normal path unlocks here
->>   // ... KVM execution loop ...
->>   bql_lock();    // =E2=86=90 Re-acquires before returning
->>   return ret;
->> }
->=20
-> Yes the semantics of the function kvm_cpu_exec() is that it should =
-always return with bql in locked state. This is because the caller =
-kvm_vcpu_thread_fn() calls this function with bql locked and if you see =
-the end of kvm_vcpu_thread_fn(), it releases the lock.
->=20
-> So if kvm_cpu_exec() unlocks bql internally, it has the responsibility =
-to lock it again before returning. This makes the locking and unlocking =
-symmetric.
->=20
->=20
->>=20
->> The lock imbalance:
->>=20
->> When kvm_arch_process_async_events() returns true, the function =
-returns EXCP_HLT before the bql_unlock() call.
->=20
-> Why should it unlock it before returning? In fact it=E2=80=99s =
-opposite. If the function had unlocked bql, it should lock it again =
-before returning.
->=20
->> This means the early return path keeps the BQL held,
->=20
-> This would be the correct thing to do.
->=20
->> while the normal execution path releases and re-acquires it.
->=20
-> Because the functions it calls after unlocking requires bql to be =
-unlocked.
-
-Another likely reason is that we cannot have large atomic regions for =
-performance reasons. So a general principle is to acquire the lock =
-narrowly only for specific regions of the code that requires atomicity.=20=
-
+> -    dc->vmsd = &vfio_ap_vmstate;
+> +    dc->vmsd = &vmstate_ap_device;
+>       dc->desc = "VFIO-based AP device assignment";
+>       set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>       dc->realize = vfio_ap_realize;
 
 
