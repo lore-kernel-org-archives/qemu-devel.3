@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A716F459F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F01F459F7
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBEaE-0006bu-RQ; Fri, 10 Apr 2026 12:19:50 -0400
+	id 1wBEbo-00085V-9c; Fri, 10 Apr 2026 12:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wBEaC-0006bW-SO
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:19:48 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wBEaA-0003Fs-SR
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:19:48 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b9358dd7f79so388209066b.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 09:19:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775837984; x=1776442784; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uTvj91MVW/gP6WB+cyPJwfwtUy3rygvyysw1CRWnss4=;
- b=iGqpY6wCl2sjaCI0HAFtYsCGS7JGnAuB91E4qXmoTB9KfsFvkBN5rZ8WXs2MuMr8tr
- 3V6lYDDOm1NxiTZYxspGv2EJoJbav9CZ6q9Mg+raPOxfflqO9npA12/JGR6ETid2QOkn
- HTJscYow9fyQ4Q9hOtaLr38iIZNlteMWnxBAgH+bCc6FTdrpnITqRgIvsU0RSsrIsF+n
- zf5Y10dpimS7kVvo0GXYOTUrPHVBPTpYDlUDSGdpyHD8D5O+uOEYCxDu9gYTX7Adgh84
- aFmi2e4gEOleDo3qyCfxU+Fh8rvi6mzq2sTdaQ0s/Gl7XkkzNuJCnLPNOdXSahFY79+5
- wm1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775837984; x=1776442784;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uTvj91MVW/gP6WB+cyPJwfwtUy3rygvyysw1CRWnss4=;
- b=qLLEiCdj/jyEkhnsfG6wyEkfcfgcV7hNAYxnhEnfrcoZgg8ha8KgRpw4I21Zjp8ZxB
- WoI9gN7XSg+EP206bGaOtxXXgP0Z4u3DgsqtcFqO7g3RSRiIoi+27x4wqNWdhixtX0PR
- 5Ebzzbydsl60rufU1LO0foIBNho13RK66sMi50M6Uf+qXTkXANgoCLz7cfis4f7cKrCX
- aNWp2vbX/S4LKe64aoa5k7vNfftdNrvXlFxDYYAwc23uALOjxUotn2MZDYgCOtDIKxW4
- N27XJWxsDTcnu+kIJCaYdn4JgMM9Pc2lhDjp37S4bdmwHKUBuBZlrDKLwOPwP6tMbmYW
- lCgw==
-X-Gm-Message-State: AOJu0YwI85VRCFYOKCSY836BjZrchhTCtWjkOb6dryV5bhilieZ+iW+7
- R2wD8h5TNLx9Bwc3R5qOUjkxc32t3WfHfYbFsyygJWTXoBrkZhysJr57+d98aPRrt9s=
-X-Gm-Gg: AeBDiesh/CWD91kG5uUX72n0FwEn9gLCMWWI3INKSs99Y13wLr1UZOf2E/btu2laKT6
- eX0cuHl1VKW/mFVVQBmO13lH5c3v6EMlq0F/iRn2MECecDuAZeFyLVOpWJgu65Djf1bdO69qQjt
- Kraow2j22ai1EvnX0lPQGyhU8e0uqEg0+qRQ8iN/Cxr8Fab/v/L0r7a26zQ9ftwxdwevKxbkPZx
- Qs9DgcH8FXJw28l5CIWIlG5qaHPEzZEdCA7aanYHAU97FXmfsoJpdXVp2+2IMdvozTu6tWl4d6B
- a5/sNe07SKkiclVSL4PUJ+tanK5sS3tW6fn5yQSt4iIZMbeJRYDCPVah0bw5suzKO2U5cr8z2fG
- omtSG0Z6YzNA864bcHNoOzBoLx9cPyC0aaxEbgkLrZZuO7P0eK7cavyisaiWCyIfJCKE/PvxLnH
- aIGzNasvlb6UsXhasrfZ2QCaWh1JxUfUmxVQ==
-X-Received: by 2002:a17:907:7256:b0:b9c:281f:d196 with SMTP id
- a640c23a62f3a-b9d7265d256mr247348666b.27.1775837984398; 
- Fri, 10 Apr 2026 09:19:44 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9d6dfd77c2sm94584766b.24.2026.04.10.09.19.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Apr 2026 09:19:43 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B5BB65F7A1;
- Fri, 10 Apr 2026 17:19:42 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org,  Pedro Barbuda <pbarbuda@microsoft.com>,  Mohamed
- Mediouni <mohamed@unpredictable.fr>
-Subject: Re: [RFC PATCH 24/35] target/arm: remove event_register check from
- arm_cpu_has_work
-In-Reply-To: <87h5pjjgyj.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
- =?utf-8?Q?e=22's?= message of "Fri, 10 Apr 2026 10:35:32 +0100")
-References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-25-alex.bennee@linaro.org>
- <CAFEAcA83X2v6iTQO-r-xp-sRku+KNQb56QhLtvgiCMpOxqFCyw@mail.gmail.com>
- <87h5pjjgyj.fsf@draig.linaro.org>
-User-Agent: mu4e 1.14.1-pre1; emacs 30.1
-Date: Fri, 10 Apr 2026 17:19:42 +0100
-Message-ID: <87y0iuiy8x.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <Stepan.Popov@kaspersky.com>)
+ id 1wBEba-00084I-64; Fri, 10 Apr 2026 12:21:24 -0400
+Received: from mx9.kaspersky-labs.com ([195.122.169.44])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Stepan.Popov@kaspersky.com>)
+ id 1wBEbU-0003hF-Uj; Fri, 10 Apr 2026 12:21:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kaspersky.com;
+ s=mail202505; t=1775838056;
+ bh=vX0FuAyL7+EYBtenR9PVe6o9OLI3BOOo+1olY2h6iqc=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
+ b=JjFFk3d1KZ67T8JPUmCt/U+oA0vV/DCpb9haovJo3+rjQMWppP25PKOQeaSwwlUe4
+ S+3frLiYhbCZrJLSceRzJpXnDkx5B4u9qffHBISfvXGDxVGumr4IFVv7FyWx+TsH55
+ X2yHhk4rvBkA31UP26pvMTmQJg4I1ogf/k4wk+gPeyQazbUHjbQNBuzeDBe7iK4i8B
+ vb2H+mAjgZB7a6qI0t8jP8XT0EWdlp+LSfgpiOUSZrgqrnD0OBl1JMjtqAO8+cEc7g
+ BQM84IUJNXw6ie4cH7HLbd0WN6mDbcYEo7mYjSB9WgaS8uL/ckPPZ1O+42qxmv4k0H
+ FheMHypA+VS1w==
+Received: from relay9.kaspersky-labs.com (localhost [127.0.0.1])
+ by relay9.kaspersky-labs.com (Postfix) with ESMTP id 679728A09CD;
+ Fri, 10 Apr 2026 19:20:56 +0300 (MSK)
+Received: from mail-hq2.kaspersky.com (unknown [91.103.66.203])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Client CN "mail-hq2.kaspersky.com",
+ Issuer "Kaspersky MailRelays CA G3" (verified OK))
+ by mailhub9.kaspersky-labs.com (Postfix) with ESMTPS id 02A348A0926;
+ Fri, 10 Apr 2026 19:20:56 +0300 (MSK)
+Received: from HQMAILSRV1.avp.ru (10.64.57.51) by HQMAILSRV5.avp.ru
+ (10.64.57.55) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 10 Apr
+ 2026 19:20:55 +0300
+Received: from HQMAILSRV1.avp.ru ([fe80::44b0:5a05:5379:9408]) by
+ HQMAILSRV1.avp.ru ([fe80::44b0:5a05:5379:9408%2]) with mapi id
+ 15.02.2562.037; Fri, 10 Apr 2026 19:20:55 +0300
+From: Stepan Popov <Stepan.Popov@kaspersky.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-trivial@nongnu.org"
+ <qemu-trivial@nongnu.org>
+Subject: RE: [PATCH] thread-pool: signal condition variable while holding lock
+Thread-Topic: [PATCH] thread-pool: signal condition variable while holding lock
+Thread-Index: AQHcwEVK1KD1gN9aGUCOqvZG/Ut9mbXHEwYAgBFyemA=
+Date: Fri, 10 Apr 2026 16:20:55 +0000
+Message-ID: <a8d3b3528c1f4cdda076dc6fa0fe8a34@kaspersky.com>
+References: <20260330130104.85200-1-Stepan.Popov@kaspersky.com>
+ <72de7dbb-ba81-4a59-9710-7e88707de31c@redhat.com>
+In-Reply-To: <72de7dbb-ba81-4a59-9710-7e88707de31c@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.16.90.37]
+x-kse-serverinfo: HQMAILSRV5.avp.ru, 9
+x-kse-attachmentfiltering-interceptor-info: no applicable attachment filtering
+ rules found
+x-kse-antivirus-interceptor-info: scan successful
+x-kse-antivirus-info: Clean, bases: 4/10/2026 2:36:00 PM
+x-kse-bulkmessagesfiltering-scan-result: InTheLimit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-KSMG-AntiPhishing: NotDetected, bases: 2026/04/10 16:05:00
+X-KSMG-AntiSpam-Interceptor-Info: not scanned
+X-KSMG-AntiSpam-Status: not scanned, disabled by settings
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
+ bases: 2026/04/10 14:35:00 #28384064
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected, bases: 2026/04/10 16:05:00
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 52
+Received-SPF: pass client-ip=195.122.169.44;
+ envelope-from=Stepan.Popov@kaspersky.com; helo=mx9.kaspersky-labs.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,195 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
-
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
->> On Fri, 20 Mar 2026 at 13:16, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
->>>
->>> The generation of events are not indications of work to be done and
->>> importantly for the case of WFI instructions not a reason to wake up.
->>> Remove the check.
->>
->> But an event *is* a reason for WFE to wake up, which is why this
->> check is here. In particular, the thing that tells accel/tcg
->> that the CPU should come out of halt (via cpu_handle_halt())
->> is whether cpu_exec_halt / cpu_has_work returns true. If we
->> don't check the event register here then another CPU setting
->> the event register won't cause this one to come out of WFE.
->
-> So for the same-CPU case we do because we signal cpu_interrupt(cs,
-> CPU_INTERRUPT_EXITTB) which is enough for has_work to return true but I
-> can see the failure mode for cross-cpu SEV's when we kick all vCPUs in
-> the helper would get stuck.
->
->> If we want to have WFE and WFI wakeup events to be separated
->> such that only WFE wakeup events resume a WFE and only
->> WFI wakeup events resume a WFI then we need to do something
->> more clever here, so that we track whether we're halted for
->> WFI, WFE, PSCI-power-off or whatever and our has_work function
->> can check the right condition.
->
-> I guess we can add a cpu->halt_reason? I've already had to add a
-> cpu->waiting_for_event for arm_wfxt_timer_cb and I guess it would be
-> better to generalise that.
->
->> (Side question: are the only
->> cases where our arm CPUs halt WFE, WFI, power-off, or are
->> there any others I forgot about?)
->
-> The only others I can find are debug events which all have their own
-> logic (and we don't have "external" debug events modelled). YIELD is
-> still a NOP and not really a sleep.
->
->> Incidentally, looking at the code above it will need fixing
->> for A-profile anyway, because a CPU in PSCI-power-off should
->> not be woken up by a WFE event. We get away with doing the
->> WFE event register check first because M-profile doesn't use
->> the PSCI powerdown stuff.
->
-> Ok, that seals it.
-
-I'm thinking something like this:
-
---8<---------------cut here---------------start------------->8---
-modified   =EF=83=BD target/arm/cpu.h
-@@ -257,6 +257,19 @@ typedef enum ARMFPStatusFlavour {
- } ARMFPStatusFlavour;
- #define FPST_COUNT  10
-=20
-+/**
-+ * ARMHaltReason - the reason we have entered halt state
-+ *
-+ * To be able to correctly wake up via arm_cpu_has_work() we need to
-+ * track the reason we went to sleep.
-+ */
-+typedef enum {
-+    NOT_HALTED =3D 0,
-+    HALT_PSCI,
-+    HALT_WFI,
-+    HALT_WFE
-+} ARMHaltReason;
-+
- typedef struct CPUArchState {
-     /* Regs for current mode.  */
-     uint32_t regs[16];
-@@ -760,6 +773,9 @@ typedef struct CPUArchState {
-     /* Optional fault info across tlb lookup. */
-     ARMMMUFaultInfo *tlb_fi;
-=20
-+    /* Reason the CPU is halted */
-+    ARMHaltReason halt_reason;
-+
-     /*
-      * The event register is shared by all ARM profiles (A/R/M),
-      * so it is stored in the top-level CPU state.
-modified   =EE=98=9E target/arm/arm-powerctl.c
-@@ -78,6 +78,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cp=
-u_state,
-=20
-     /* Finally set the power status */
-     assert(bql_locked());
-+    target_cpu->env.halt_reason =3D NOT_HALTED;
-     target_cpu->power_state =3D PSCI_ON;
- }
-=20
-@@ -240,6 +241,7 @@ static void arm_set_cpu_off_async_work(CPUState *target=
-_cpu_state,
-=20
-     assert(bql_locked());
-     target_cpu->power_state =3D PSCI_OFF;
-+    target_cpu->env.halt_reason =3D HALT_PSCI;
-     target_cpu_state->halted =3D 1;
-     target_cpu_state->exception_index =3D EXCP_HLT;
- }
-modified   =EE=98=9E target/arm/cpu.c
-@@ -144,18 +144,36 @@ static bool arm_cpu_has_work(CPUState *cs)
- {
-     ARMCPU *cpu =3D ARM_CPU(cs);
-=20
--    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
--        if (cpu->env.event_register) {
--            return true;
--        }
-+    /*
-+     * Only another PSCI call can wake the CPU up in which case the
-+     * power_state would be set by reset.
-+     */
-+    if (cpu->power_state =3D=3D PSCI_OFF) {
-+        g_assert(cpu->env.halt_reason =3D=3D HALT_PSCI);
-+        return false;
-+    }
-+
-+    /*
-+     * A wake-up event should only wake us if we are halted on a WFE
-+     */
-+    if (cpu->env.halt_reason =3D=3D HALT_WFE && cpu->env.event_register) {
-+        cpu->env.halt_reason =3D NOT_HALTED;
-+        return true;
-+    }
-+
-+    /*
-+     * Otherwise pretty much any IRQ would wake us up
-+     */
-+    if (cpu_test_interrupt(cs,
-+                           CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
-+                           | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU=
-_INTERRUPT_VFNMI
-+                           | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU=
-_INTERRUPT_VSERR
-+                           | CPU_INTERRUPT_EXITTB)) {
-+        cpu->env.halt_reason =3D NOT_HALTED;
-+        return true;
-     }
-=20
--    return (cpu->power_state !=3D PSCI_OFF)
--        && cpu_test_interrupt(cs,
--               CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
--               | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_V=
-FNMI
--               | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_V=
-SERR
--               | CPU_INTERRUPT_EXITTB);
-+    return false;
- }
- #endif /* !CONFIG_USER_ONLY */
-=20
-modified   =EE=98=9E target/arm/tcg/op_helper.c
-@@ -403,6 +403,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
-                         target_el);
-     }
-=20
-+    env->halt_reason =3D HALT_WFI;
-     cs->exception_index =3D EXCP_HLT;
-     cs->halted =3D 1;
-     cpu_loop_exit(cs);
-@@ -464,6 +465,7 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
-     } else {
-         timer_mod(cpu->wfxt_timer, nexttick);
-     }
-+    env->halt_reason =3D HALT_WFI;
-     cs->exception_index =3D EXCP_HLT;
-     cs->halted =3D 1;
-     cpu_loop_exit(cs);
-@@ -508,6 +510,7 @@ void HELPER(wfe)(CPUARMState *env)
-             return;
-         }
-=20
-+        env->halt_reason =3D HALT_WFE;
-         cs->exception_index =3D EXCP_HLT;
-         cs->halted =3D 1;
-         cpu_loop_exit(cs);
---8<---------------cut here---------------end--------------->8---
-
-
->
->>
->> thanks
->> -- PMM
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT4gd3JvdGU6DQo+IE9uIDMvMzAvMjYg
+MTU6MDEsIFN0ZXBhbiBQb3BvdiB3cm90ZToNCj4gPiBNb3ZlIHFlbXVfY29uZF9zaWduYWwoKSBp
+bnNpZGUgdGhlIGNyaXRpY2FsIHNlY3Rpb24gcHJvdGVjdGVkIGJ5IHBvb2wtPmxvY2suDQo+ID4g
+U2lnbmFsaW5nIHdoaWxlIGhvbGRpbmcgdGhlIGxvY2sgaW1wb3NlcyBtb3JlIHByZWRpY3RhYmxl
+IHNjaGVkdWxpbmcgYmVoYXZpb3IuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBTdGVwYW4gUG9w
+b3YgPFN0ZXBhbi5Qb3BvdkBrYXNwZXJza3kuY29tPg0KPiA+IC0tLQ0KPiA+ICAgdXRpbC90aHJl
+YWQtcG9vbC5jIHwgMiArLQ0KPiA+ICAgMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAx
+IGRlbGV0aW9uKC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvdXRpbC90aHJlYWQtcG9vbC5jIGIv
+dXRpbC90aHJlYWQtcG9vbC5jIGluZGV4IA0KPiA+IDhmOGNiMzhkNWMuLjhlNTVhZWZkMDcgMTAw
+NjQ0DQo+ID4gLS0tIGEvdXRpbC90aHJlYWQtcG9vbC5jDQo+ID4gKysrIGIvdXRpbC90aHJlYWQt
+cG9vbC5jDQo+ID4gQEAgLTI2NSw4ICsyNjUsOCBAQCBCbG9ja0FJT0NCICp0aHJlYWRfcG9vbF9z
+dWJtaXRfYWlvKFRocmVhZFBvb2xGdW5jICpmdW5jLCB2b2lkICphcmcsDQo+ID4gICAgICAgICAg
+IHNwYXduX3RocmVhZChwb29sKTsNCj4gPiAgICAgICB9DQo+ID4gICAgICAgUVRBSUxRX0lOU0VS
+VF9UQUlMKCZwb29sLT5yZXF1ZXN0X2xpc3QsIHJlcSwgcmVxcyk7DQo+ID4gLSAgICBxZW11X211
+dGV4X3VubG9jaygmcG9vbC0+bG9jayk7DQo+ID4gICAgICAgcWVtdV9jb25kX3NpZ25hbCgmcG9v
+bC0+cmVxdWVzdF9jb25kKTsNCj4gPiArICAgIHFlbXVfbXV0ZXhfdW5sb2NrKCZwb29sLT5sb2Nr
+KTsNCj4gPiAgICAgICByZXR1cm4gJnJlcS0+Y29tbW9uOw0KPiA+ICAgfQ0KPg0KPiBJbiB0aGlz
+IGNvZGUsIGluIHRoZSBwYXN0IGV2ZW4gdmVyeSBzbWFsbCBjaGFuZ2VzIGhhZCBiaWcgaW1wYWN0
+IG9uIA0KPiBwZXJmb3JtYW5jZS4gIFNvLCB3aXRob3V0IHNvbWUgbWVhc3VyZW1lbnQgSSBhbSB3
+YXJ5IG9mIHRha2luZyB0aGlzIGNoYW5nZS4NCj4NCj4gV2hhdCBpcyAibW9yZSBwcmVkaWN0YWJs
+ZSBzY2hlZHVsaW5nIGJlaGF2aW9yIiBpcyB1bmNsZWFyLCB0b28uICBJZiANCj4gdGhlYWRfcG9v
+bF9zdWJtaXRfYWlvKCkgaXMgcHJlZW1wdGVkIGJldHdlZW4gcWVtdV9jb25kX3NpZ25hbCgpIGFu
+ZCANCj4gcWVtdV9tdXRleF91bmxvY2soKSwgdGhlbiBub3Qgb25seSB0aGUgd2FpdGluZyB0aHJl
+YWQgY2Fubm90IHN0YXJ0IHRoZSANCj4gd29yaywgYnV0IHRoZSBtdXRleCBpcyB0YWtlbiBhbmQg
+bm8gb25lIGVsc2UgY2FuIHN1Ym1pdCBvdGhlciByZXF1ZXN0cy4NCg0KVGhhbmsgeW91IGZvciB5
+b3VyIGZlZWRiYWNrLiBJIHVuZGVyc3RhbmQgeW91ciBjb25jZXJuIGFib3V0IHBlcmZvcm1hbmNl
+Lg0KDQpUbyBleHBsYWluIHRoZSBtb3RpdmF0aW9uOiB3ZSBoYXZlIHNlZW4gcmVwZXRpdGl2ZSBk
+ZWFkbG9ja3MgaW4gcHJvZHVjdGlvbiBhZnRlciBydW5uaW5nIHFlbXUtaW1nIGluZm8gLS1vdXRw
+dXQ9anNvbiBpbWFnZS5xY293LiANClN1Ym1pdHRlciBpcyBzdHVjayBpbiBwdGhyZWFkX2NvbmRf
+c2lnbmFsICh0cnlpbmcgdG8gX19jb25kdmFyX3F1aWVzY2VfYW5kX3N3aXRjaF9nMSkgYW5kIHdh
+aXRlciBpbiBfX3B0aHJlYWRfY29uZF93YWl0X2NvbW1vbiAodHJ5aW5nIHRvIF9fY29uZHZhcl9j
+YW5jZWxfd2FpdGluZykuIA0KT3VyIGdsaWJjIHZlcnNpb24gaGFzIGEga25vd24gYnVnIGxlYWRp
+bmcgdG8gZGVhZGxvY2sgKFVidW50dSBHTElCQyAyLjM1LTB1YnVudHUzLjEzKToNCmh0dHBzOi8v
+c291cmNld2FyZS5vcmcvYnVnemlsbGEvc2hvd19idWcuY2dpP2lkPTI1ODQ3IChwdGhyZWFkX2Nv
+bmRfc2lnbmFsIGZhaWxlZCB0byB3YWtlIHVwIGR1ZSB0byBhIGJ1ZyBpbiB1bmRvaW5nIHN0ZWFs
+aW5nKS4NCg0KV2UgYXJlIG5vdCBzdXJlIGlmIHRoaXMgY2hhbmdlIHdpbGwgZml4IGl0LCANCmJ1
+dCBob2xkaW5nIHRoZSBtdXRleCB3aGlsZSBzaWduYWxpbmcgaXMgcHJlZmVycmVkIGZvciBwcmVk
+aWN0YWJsZSBzY2hlZHVsaW5nIGJlaGF2aW91ciwgDQphcyBzdGF0ZWQgaW4gdGhlIHB0aHJlYWQg
+bWFuIHBhZ2UgKGh0dHBzOi8vbGludXguZGllLm5ldC9tYW4vMy9wdGhyZWFkX2NvbmRfc2lnbmFs
+KS4gDQpUaGVvcmV0aWNhbGx5LCBpdCBjb3VsZCBoZWxwIHdpdGggc2ltaWxhciBwcm9ibGVtcy4N
+Cg0KVG8gbW92ZSBmb3J3YXJkLCBjb3VsZCB5b3Ugc3VnZ2VzdCBhIHNldCBvZiBiZW5jaG1hcmtz
+IHRoYXQgd291bGQgYmUgc2Vuc2l0aXZlIHRvIHRoaXMgY2hhbmdlPyANCk1heWJlIHRoZXJlIGFy
+ZSBleGlzdGluZyBzY3JpcHRzIG9yIHRvb2xzIHRoYXQgeW91IHdvdWxkIHJlY29tbWVuZCBydW5u
+aW5nPyANCldoaWNoIFFFTVUgdXNlIGNhc2VzIChibG9jayBJL08sIHZpcnRpby1zY3NpLCBmaWxl
+LWJhY2tlZCBkaXNrcywgZXRjLikgaGF2ZSBoaXN0b3JpY2FsbHkgc2hvd24gcGVyZm9ybWFuY2Ug
+Y2hhbmdlcyB3aXRoIHNpbWlsYXIgY2hhbmdlcz8NCg0KVGhhbmsgeW91IGFnYWluLg0KDQpCZXN0
+IHJlZ2FyZHMsDQpTdGVwYW4NCg0K
 
