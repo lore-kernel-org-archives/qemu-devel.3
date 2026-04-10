@@ -4,118 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AC5E9905B
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 09:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5278E99056
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 09:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB7ka-000768-Lb; Fri, 10 Apr 2026 05:02:04 -0400
+	id 1wB7z1-0003H0-T4; Fri, 10 Apr 2026 05:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB7kX-00075Q-1t; Fri, 10 Apr 2026 05:02:01 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB7kU-0004cr-Tp; Fri, 10 Apr 2026 05:02:00 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63A1I3P62326341; Fri, 10 Apr 2026 09:01:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=D5zME0
- wZAjsLSMZgAbyrPE1ijWC5L8zIrBhwg2MfKv4=; b=Gvxg1/UlOfys+hFSMHOJ53
- YMRKRnlOIuuY2q6rgwXu0fearNvSLUxR4ZMf4J9yuWyOFHExqsGspACW3G/P6m0G
- KAhstNGccq/8yz/r2LpicDh6IQGZ+BIUphae1fZMzZMfKMUXZLSEzKsgZqhaOaQ4
- jSMdECIGDMop3eXiNrjTztfwNioeQ76noXBp+0DTsncfcKb+QCpeWV+kxRtSebee
- oiYFRjAElrsavNIe5356r7fAWj7bqYJaUNhDQLhhSMZpJp6tyImPTCPszT234iwt
- xGddpTtzM+opoX/USu9ccUDOvsrqxrBXEDoBUVD6r+GItqFfkCMNe2f3vsA6u7mg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2kr1wy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 09:01:56 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63A8oFPH026723;
- Fri, 10 Apr 2026 09:01:55 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg877j7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 09:01:55 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63A91sgd49873246
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Apr 2026 09:01:54 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD3515803F;
- Fri, 10 Apr 2026 09:01:54 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2466058064;
- Fri, 10 Apr 2026 09:01:52 +0000 (GMT)
-Received: from [9.124.212.60] (unknown [9.124.212.60])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Apr 2026 09:01:51 +0000 (GMT)
-Message-ID: <07f76b99-ff79-4480-af02-c43e2779d179@linux.ibm.com>
-Date: Fri, 10 Apr 2026 14:31:50 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wB7z0-0003Gm-Sb
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 05:16:58 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wB7yy-0003SC-UJ
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 05:16:58 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-64937edbc9eso1733277d50.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 02:16:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775812615; cv=none;
+ d=google.com; s=arc-20240605;
+ b=JzwKEzhT/Mzp2CPH7Bnh1cU1SNEbwy5mvaqdy/ukp0V+CrjG63aqjwSYxBzIk940Ha
+ aPt0mGFDXV8MeCRxV31yPKssjPtqHdD0WuNtdMRv6Nh6QmdF5yaQs/Gg0l1jHLOS5YFs
+ NzIHsuB+t62ZbA8o8dKJxQmlzaUm2W6wjvTpTwXR6sFgU6T3otyyzjcv+xJM4TKv2rDj
+ yYwjXzpf5YTxsDhBKaK9/Z2t2ToDJSSp8Kj4TbLR5vYkCYRQ0Y7FQ/P/Hxx0/q2bwIPS
+ 37BXNfE5Dq4rc4ntr8UBIOerMII1Hi3BGPPWIdq4FgcIa98Yk6q7H/ZKs4YUL+dAu8/L
+ d07w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Kf3Xoa/d7lWrYpahFp0rvEzojVSQo2YBSoepHoqnEjc=;
+ fh=LlJHh1fTyVMrUeRXfxxHN6hBLR5uzJfRrrZ9y/XMyWY=;
+ b=Sl3BREGfOMv+N0qwRRinc+EH87JsfVkf7/qclLvY7AikHJmX4t+e4RksexiU25A4BY
+ wVyGuF17piUq/XssqapE7ZLbrxr5mO88pG6mGCA9o3G7zgRB30Y0G3L1NOn3JqtWDyTh
+ /iEw2QyES/6gahhzpia1e9NB0G92tRl7cr7/qC0aAiUBZev8ENR8OA4/SInuE0qKKDMK
+ Do1zpuwahJKGq1zlIrFd2Mr5wMb8CBzHf5gDubls4qF5lLznNPwLqEHZIneJaa70QDmR
+ uise6875+jtao9QYMAXsW40Rx0C3gY94VLTzyhWRCzEW/XGJakf696vKuP+GfQ/JfmaS
+ qPxg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775812615; x=1776417415; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Kf3Xoa/d7lWrYpahFp0rvEzojVSQo2YBSoepHoqnEjc=;
+ b=nD5Xr+BUDruqBs/pMvEILgwmbUWoVj5iuPhWMksWxe/w2keDI8CHuWYbNTgtOprF+h
+ Ub5o7+K3zKf4jj8lG5+Djy0sX+S3dNNiVAxSkNz9moX09EC+0jaaJazGa9KSmmouZsjD
+ b3n53f4zfFLwBUZYW/aYUSPF9l3LXohx33/0ItseEWpP/rHjwlkJSkSdVkgu1eKOsJEd
+ aGmRcAjp7AlMNgukGvGJnBCYLZKcaHtECxyuNzMwj7k/59W3UKjMrIxDWxvnOJjOTnXS
+ b3Z9ahydtT4tqC/kyONMrfgXAhPV4a6znvIWYB7KSKQ6Qk0BdhzBXWoibh7yiRn3f4p8
+ yTYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775812615; x=1776417415;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Kf3Xoa/d7lWrYpahFp0rvEzojVSQo2YBSoepHoqnEjc=;
+ b=SiLViNWnqDPKRufFlBmWnKGTJRj8Hs2oDtsOZLdM5bGcIiKPnf9Ld7k8T6nBWsAU3h
+ TYRKFqThx7jNGRvBX4GJ1WqKkoy3etJ9IYa/pkkHQqxpwlW1wHWYOSkGHBBXEYdEyvnW
+ GrdzthYcDKP7r/UrMQ0vlVzxXd+p21encjHI8KnGkrv/2bYDpWkpaOpqYJyuJeyq2jsb
+ Y2uqorEJ57BRxmRLwXTfSMvCSEfFlW5CjKSyoHATUn1fwPmzjbMKf2Gh2xp3/hYZIF1q
+ X5qbkl9tHFgp2pPflHwUH2SpbKAS62NEn9+rsXBEjb6qH4Gg35cy/d15aJI1mGXn5D+k
+ YWJQ==
+X-Gm-Message-State: AOJu0Yzmo47svEJzLIDrZvF6JPMs0a39LLkc/fNBE1eWtx9FZjz0oGDk
+ THccYlcMnU4RfHe9ZV/exeMgwd1L/4uhRky9dlpuGoJujMa2c95ZOZvInyQloYjhmpkRSwPXQoJ
+ 58iDmmNVTY+rGW4Yxqz6dy1edtDScniJZqRg9ZASSJw==
+X-Gm-Gg: AeBDieuDdB6GN9S/qdLkwNnxZBCTq7sW7uMzYYse2pOJfDN3sn/141xsu9yhP5UBsxo
+ reJE3ZZpVfKsGzer5wFu8QPArEQFjPBFEpXb5hMPR5QMtx1CwYAOK6yAfPsOR2GBFU5V9Ue6eRC
+ vviEo0+s6kGL5ixlJlHgK+mXyboUMQ1JJIZuUAuIQqupPcxSckTg5WsRB01SSYDHD5wi+pjNnW7
+ jKwyLeZYlICn1k0SNDRPw/K4U/ZTtt3WfO4iR2gSGlVBnYIHVRhnuWQJmbQM1wb3jYK0+2DHtuJ
+ 9JJX85XoNYklVVkEN1gqnJtWSp2cztkqkqHtsTGgoQckYY+NC+p3J388MhdRUSo+84pZoEOSm55
+ XUg==
+X-Received: by 2002:a05:690e:43db:b0:650:31d2:234f with SMTP id
+ 956f58d0204a3-65198b90f45mr1379512d50.51.1775812615347; Fri, 10 Apr 2026
+ 02:16:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
- kvm_cpu_exec
-Content-Language: en-GB
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
- misanjum@linux.ibm.com, gautam@linux.ibm.com,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260409161042.55281-1-harshpb@linux.ibm.com>
- <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
- <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
- <451942FA-0056-466C-AD42-AB0BBE88472E@redhat.com>
- <424743ec-a34d-4af0-adfb-c8392ee5e5be@linux.ibm.com>
- <69167029-AE49-4BB3-9A5C-D16E51E5D40F@redhat.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <69167029-AE49-4BB3-9A5C-D16E51E5D40F@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA4MSBTYWx0ZWRfX2D9MKk2Opd4U
- tfVpS8PWnBohwKGQfvMtQ0at7a74Zs9ONrOk2jUrnCuFl8AA4r12ZJLxO12nB+ibgwUx5OaI8MB
- QWmM9dTAOMQU4mbBYEZLZ6mhyuLxs/fJRJZm5ctuSkDBJkE7Yvm3C0q81TknFNyvcaRNqv4zbWM
- ih7qZClsHl4WbGFcaqN+LwFR3+BCD2KtAeiAYQRBgANXlvrQa/QmdAtWvirP1nG3nMwEJV4nq5I
- Z/5UWANZnb3qOVh5cJcyJoQ91vDb/EFIb+MY2lmRfc8e6pG4goevnJ/9XSNOiXXZUOGYqoqDRqK
- Quj0/J6NsCQSOr3lmmyroSLuYJWe9fKXrkyISB2XneK4bCSd2AyKUgfhrbtzD6li6oTt8ssLLsC
- qIWvsZJZ7Kc7r81tmS91WUy2BEkFZl9JsT/KKHsS3NH8MD5+hWnHOw7k2kSkqf6sce2J45cgNtO
- 35pZUxuBfM5/Ms8Rt1Q==
-X-Proofpoint-ORIG-GUID: aNlYwsPhaxL-N2WbxTUYekEUY5uwaCSS
-X-Authority-Analysis: v=2.4 cv=e9k2j6p/ c=1 sm=1 tr=0 ts=69d8bc84 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22
- a=VnNF1IyMAAAA:8 a=dmSnYZTVpx9dE7S3pykA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10
-X-Proofpoint-GUID: 9QXI_HEhhMxl9ASMP--XJl4h7VMkKePC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-10_02,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100081
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260320130607.2071996-1-alex.bennee@linaro.org>
+ <20260320130607.2071996-31-alex.bennee@linaro.org>
+In-Reply-To: <20260320130607.2071996-31-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Apr 2026 10:16:43 +0100
+X-Gm-Features: AQROBzDCiCjcKKyGuZ0ea9al60ecyBGitM2rXdwjxpI4GpkT_ZjQ4kxBlKTuP-4
+Message-ID: <CAFEAcA_eQDLF1ix89h=W6vugFp1+SWyanciMDMdSmpRK8eck8g@mail.gmail.com>
+Subject: Re: [RFC PATCH 30/35] target/arm: implement global monitor events
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,166 +119,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 20 Mar 2026 at 13:06, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> Moving from Exclusive to Open Access should generate event stream
+> events. Technically a non-exclusive store to any address range covered
+> by the global monitor should also trigger such an event but we can
+> only detect that after the event by seeing if memory doesn't match
+> cpu_exclusive_val when processing the eventual store exclusive.
+>
+> The CLREX instruction has the same effect as do other operations
+> clearing the exclusive state (such as eret).
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  target/arm/internals.h         | 1 +
+>  target/arm/tcg/translate-a64.c | 8 ++++++++
+>  2 files changed, 9 insertions(+)
+>
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index 2296ac9cfb6..2e59d58f3d0 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -690,6 +690,7 @@ void arm_handle_psci_call(ARMCPU *cpu);
+>  static inline void arm_clear_exclusive(CPUARMState *env)
+>  {
+>      env->exclusive_addr =3D -1;
+> +    env->event_register.as_bool =3D true;
+>  }
+>
+>  /**
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a6=
+4.c
+> index c25ff9351b4..38a51eb3600 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -2270,6 +2270,7 @@ static bool trans_CHKFEAT(DisasContext *s, arg_CHKF=
+EAT *a)
+>  static bool trans_CLREX(DisasContext *s, arg_CLREX *a)
+>  {
+>      tcg_gen_movi_i64(cpu_exclusive_addr, -1);
+> +    gen_event_reg();
+>      return true;
+>  }
+>
+> @@ -3336,6 +3337,13 @@ static void gen_store_exclusive(DisasContext *s, i=
+nt rd, int rt, int rt2,
+>      TCGv_i64 tmp, clean_addr;
+>      MemOp memop;
+>
+> +    /*
+> +     * All StoreExcl operations will transition the global monitor
+> +     * from Exclusive to Open Access and at that point generate an
+> +     * Event.
+> +     */
+> +    gen_event_reg();
+> +
 
+This needs to set the event register for all CPUs, not just the
+one that does the StoreExcl. See the state machine for the global
+monitor in figure B2-5: a "StoreExcl(Marked_address, !n)" (i.e.
+some other CPU stores to the address we had an exclusive for)
+clears the global monitor for this CPU.
 
-On 10/04/26 1:59 pm, Ani Sinha wrote:
-> 
-> 
->> On 10 Apr 2026, at 1:48 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>
->>
->>
->> On 10/04/26 12:05 pm, Ani Sinha wrote:
->>>> On 10 Apr 2026, at 10:55 AM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>
->>>> Hi Ani,
->>>>
->>>> On 10/04/26 9:12 am, Ani Sinha wrote:
->>>>>> On 9 Apr 2026, at 9:40 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>>>
->>>>>> When kvm_cpu_exec() returns EXCP_HLT due to kvm_arch_process_async_events()
->>>>>> returning true, it was returning before releasing the BQL (Big QEMU Lock).
->>>>>> This caused a lock imbalance where the vCPU thread would loop back to
->>>>>> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
->>>>> I am not sure I understand this. Seems kvm_cpu_exec() does expect that the caller holds bql before calling the function. Where is the lock imbalance?
->>>>
->>>> The issue is not that kvm_cpu_exec() doesn't expect the caller to hold the BQL - it does. The problem is that kvm_cpu_exec() has inconsistent BQL handling across its return paths.
->>>>
->>>> Normal execution path:
->>>>
->>>> int kvm_cpu_exec(CPUState *cpu)
->>>> {
->>>>     // BQL held on entry (from caller)
->>>>
->>>>     if (kvm_arch_process_async_events(cpu)) {
->>>>         return EXCP_HLT;  // ← Returns with BQL STILL HELD
->>>>     }
->>>>
->>>>     bql_unlock();  // ← Normal path unlocks here
->>>>     // ... KVM execution loop ...
->>>>     bql_lock();    // ← Re-acquires before returning
->>>>     return ret;
->>>> }
->>> Yes the semantics of the function kvm_cpu_exec() is that it should always return with bql in locked state. This is because the caller kvm_vcpu_thread_fn() calls this function with bql locked and if you see the end of kvm_vcpu_thread_fn(), it releases the lock.
->>> So if kvm_cpu_exec() unlocks bql internally, it has the responsibility to lock it again before returning. This makes the locking and unlocking symmetric.
->>>>
->>>> The lock imbalance:
->>>>
->>>> When kvm_arch_process_async_events() returns true, the function returns EXCP_HLT before the bql_unlock() call.
->>> Why should it unlock it before returning? In fact it’s opposite. If the function had unlocked bql, it should lock it again before returning.
->>>> This means the early return path keeps the BQL held,
->>> This would be the correct thing to do.
->>>> while the normal execution path releases and re-acquires it.
->>> Because the functions it calls after unlocking requires bql to be unlocked. Since it had to unlock it, it locks it again before returning.
->>
->> It had to unlock it for the same reason - to give others a chance to lock. We need to handle failure/exception cases for the same purpose as well.
-> 
-> But by unlocking and returning you are breaking the semantics of the function and introducing imbalance.
+Also, this happens only if the store-exclusive succeeds, so
+ideally we should to set the event reg much later in
+gen_store_exclusive(). (Because we're allowed to spuriously
+wake up WFE for any IMPDEF reason, it's OK to err on the side
+of setting the event register when we don't need to, but if
+we're taking advantage of that we should say so.)
 
-I think it is better to unlock bql early in failure cases.
-Even Otherwise, it would become a bql_unlock followed by a bql_lock in 
-the caller for EXCP_HLT, which might look a bit odd as well.
+The IMPDEF latitude to wake up more than we need to is also
+why we don't need to try to distinguish "StoreExcl but the
+global monitor for this CPU is in the Open Access state".
 
-Paolo, suggestions?
+The important thing we want to check is that our implementation
+does the right thing for the "litmus test" example usages in
+K11.3.4 which show how WFE and load/store exclusive loops are
+supposed to interact. The rough idea is that the lock-acquire
+goes to sleep with a WFE, and relies on the lock-release
+being a WFE-wakeup event for it. Unfortunately if you look
+at K11.3.4.1, the expected "clear the lock" operation is
+a STLR operation (a store-release). So we will likely
+find that we are causing deadlocks in guest code if we do
+not clear the event register in more cases than just store
+exclusives.
 
-> 
->>
->>>> The caller (kvm_vcpu_thread_fn()) loops back and calls kvm_cpu_exec() again, but now the BQL is already held from the previous iteration
->>>> This creates a situation where the BQL is never released between iterations when EXCP_HLT is returned.
->>>>
->>>> Why this matters:
->>>> On PowerPC pseries with halted secondary vCPUs (start-powered-off=true), these vCPUs repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each iteration accumulates BQL holds, preventing other threads (including CPU 0) from making progress.
->>> This seems like some kind of architectural issue with PowerPC. Shouldn’t qemu_process_cpu_events() -> qemu_cond_wait(cpu->halt_cond, &bql) block other secondary cpus? Then the main cpu does a qemu_cpu_kick() to make them active again at some point?
->>
->> KVM vCPUs need to enter the kernel to handle the halted state and therefore can run. On spapr, it is handled via start-cpu rtas call for which the handler in qemu does a qemu_cpu_kick(). However CPU 0 needs to be able to proceed before that stage is reached, but it hangs while trying to acquire bql_lock in qemu_default_main() whereas secondary vcpu is spinning with BQL held returning EXCP_HLT. This is causing deadlock.
-> 
-> Without looking at the code, it seems there is a race condition in the way the vcpu threads are initialised in spapr. I think that needs fixing.
-
-I did explain the race condition observed above. Other architectures may 
-have different timing that masks the issue.
-
-> 
->>
->>>>
->>>>>>
->>>>>> The issue manifests as boot hangs on PowerPC pseries machines with multiple
->>>>>> vCPUs, where secondary vCPUs with start-powered-off=true remain halted and
->>>>>> repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each iteration held
->>>>>> the BQL, preventing other operations from proceeding.
->>>>>>
->>>>>> The fix has two parts:
->>>>>>
->>>>>> 1. In kvm_cpu_exec() (kvm-all.c):
->>>>>>    Release the BQL before returning EXCP_HLT in the early return path,
->>>>>>    matching the behavior of the normal execution path where bql_unlock()
->>>>>>    is called before entering the main KVM execution loop.
->>>>>>
->>>>>> 2. In kvm_vcpu_thread_fn() (kvm-accel-ops.c):
->>>>>>    Re-acquire the BQL after kvm_cpu_exec() returns EXCP_HLT, since the
->>>>>>    loop expects to hold the BQL when calling kvm_cpu_exec() again.
->>>>>>
->>>>>> This ensures proper BQL lock/unlock pairing:
->>>>>> - kvm_vcpu_thread_fn() holds BQL before calling kvm_cpu_exec()
->>>>>> - kvm_cpu_exec() releases BQL before returning (for EXCP_HLT)
->>>>>> - kvm_vcpu_thread_fn() re-acquires BQL if EXCP_HLT was returned
->>>>>> - Next iteration has BQL held as expected
->>>>>>
->>>>>> This is a regression introduced by commit 98884e0cc1 ("accel/kvm: add
->>>>>> changes required to support KVM VM file descriptor change") which
->>>>>> refactored kvm_irqchip_create() and changed the initialization timing,
->>>>>> exposing this lock imbalance issue.
->>>>>>
->>>>>> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM file descriptor change")
->>>>> I do not think this is the right reference. The above commit may have exposed some underlying issue but is certainly not the cause of it. Further, as we have discussed in the other thread, the changes in that commit are not even getting executed.
->>>>> Personally I think the core issue is somewhere else. I am not convinced this is the proper fix.
->>>>
->>>> Regarding commit 98884e0cc1:
->>>>
->>>> Reverting the kvm_irqchip_create refactoring makes the problem go away. This commit may have changed timing that exposed the issue, but the root cause is the pre-existing BQL lock imbalance in kvm_cpu_exec(). We can either:
->>>>
->>>> Remove the "Fixes:" tag entirely, or
->>> Lets remove fixes tag entirely unless you can pin point the exact commit that introduced the architectural issues.
->>>> Add a note that this is a pre-existing issue exposed by timing changes
->>>> The core fix (releasing BQL before returning EXCP_HLT) is correct and addresses the actual deadlock mechanism.
->>>>
->>>>>> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
->>>>>> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
->>>>>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>>>>> ---
->>>>>> accel/kvm/kvm-accel-ops.c | 4 ++++
->>>>>> accel/kvm/kvm-all.c       | 1 +
->>>>>> 2 files changed, 5 insertions(+)
->>>>>>
->>>>>> diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
->>>>>> index 6d9140e549..d684fd0840 100644
->>>>>> --- a/accel/kvm/kvm-accel-ops.c
->>>>>> +++ b/accel/kvm/kvm-accel-ops.c
->>>>>> @@ -52,6 +52,10 @@ static void *kvm_vcpu_thread_fn(void *arg)
->>>>>>
->>>>>>          if (cpu_can_run(cpu)) {
->>>>>>              r = kvm_cpu_exec(cpu);
->>>>>> +            if (r == EXCP_HLT) {
->>>>>> +                /* kvm_cpu_exec() released BQL, re-acquire for next iteration */
->>>>>> +                bql_lock();
->>>>>> +            }
->>>>>>              if (r == EXCP_DEBUG) {
->>>>>>                  cpu_handle_guest_debug(cpu);
->>>>>>              }
->>>>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>>>>> index 774499d34f..00b8018664 100644
->>>>>> --- a/accel/kvm/kvm-all.c
->>>>>> +++ b/accel/kvm/kvm-all.c
->>>>>> @@ -3439,6 +3439,7 @@ int kvm_cpu_exec(CPUState *cpu)
->>>>>>      trace_kvm_cpu_exec();
->>>>>>
->>>>>>      if (kvm_arch_process_async_events(cpu)) {
->>>>>> +        bql_unlock();
->>>>>>          return EXCP_HLT;
->>>>>>      }
->>>>>>
->>>>>> -- 
->>>>>> 2.52.0
-> 
-> 
-
+-- PMM
 
