@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C3AF459EB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3AE3F459ED
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 15:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBDQO-0006yv-Ty; Fri, 10 Apr 2026 11:05:36 -0400
+	id 1wBDQF-0006dl-OW; Fri, 10 Apr 2026 11:05:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wBDQN-0006yX-6e
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:05:35 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1wBDQB-0006YX-UW
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:05:24 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wBDQL-0002S0-Gy
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:05:34 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-3590042fa8eso1729726a91.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 08:05:33 -0700 (PDT)
+ id 1wBDQA-0002Ce-3y
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:05:23 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-35da2d35eccso1777732a91.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 08:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775833532; x=1776438332; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775833520; x=1776438320; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x69ooA9/Ciku7C9KOIVP3A4OcWl7JOZ863rt2HmRx3I=;
- b=a1FslxY2KL7qIN8v4urhyxoTiSB8Eg6C5Bvd1Gzt/gAgdfwYdCOaguX9bf2kW/Be9k
- 7qQ2kODsxP92AbAhPRVSozVNXwtom6GYhhkJjTEtA6x/FfriIUnSdRTDA5Y1holLjcCP
- nBqao/7qDrh7S2Ms1eutxqpRKkTVrZA+fvtZVxiWL+Qkl+8veYaCDlbf17JT7JfIn3+k
- OwL2WjuvMwWSGbdJ90CY0uwX8UZELBhFHDhEcwNqfISAMLHxxvZZaCeJCgj1UaBmaLmm
- 2aqqFD0lYxXDz/K7lIbzEuHaEac4Fn4mT67yXlMjqwQD83BLKLt2ZzKgBg/FFrC/zD3s
- ckdQ==
+ bh=mPLKHQIKiWNj5QAnc2OyjCMMfWZ4IzzJUVCAIUexiKU=;
+ b=S4RVruJFr2YltKKsJ8tuhTFK1lUaKEYB0biUEaMxZbiZrJV/i/7PZXisQgfICSsBeR
+ XPJgwL6OcuDRgmmL67KXXLfHMB/d59/p2wbXy9by9Z7eTzBx8Rn7BkuyeDKGkCrxg8hW
+ h3NMZNbCZGCp6o914sBH7NBuADyhsfmeK0isbgNZMnI5XQXkcEsgHxvBryjleOVKmNMP
+ mCIHuEjNqmBAnHG4kahzkYOaklWurTKTWc4/x/lvW4CmHaL3cdIrwrM7uIrO0RwweAsw
+ 5ZH+k3BA1GqYmsYIj6QSR9FiyD/zQcfug7mE678bvWcT6GNhjT36QSAWiA0MeOEGxK/U
+ K0rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775833532; x=1776438332;
+ d=1e100.net; s=20251104; t=1775833520; x=1776438320;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=x69ooA9/Ciku7C9KOIVP3A4OcWl7JOZ863rt2HmRx3I=;
- b=dEFIQMOLsaMebT8zUbKuwBaQGr0/BJMJWxNh+LjeaTY2Fp13x3H7K+5ElUBAWfAFm9
- mVaWZRvGIdANmrSU9jxHxiooh7kxOAgMlWuDlmg0hNLfRSRQ4AxIdSxxCuEF+ixBSRSN
- w6LNufpZSQD6Xqw9/c2jPErmwCMFL2X6AO3Av9IY3JCA000xw72qzAnhpDh4XwIGuxzY
- kORngbT7hMHqpe8m0gKawja8BnPMZB4nxqMTNy8i5TUXFD4dxxyG7DRcmUGX6EiAIGl8
- LAzANRiH0QsL7OuqVJB1JUItTWtPfvSN3w9WnGuvSNjlo3YaVs0GyvBbsfnhZbE95k1b
- KKaA==
-X-Gm-Message-State: AOJu0YzqTdWGuQoe0zf4SKrNpxvjJlHp6BEvJ2sqP72ipKP91XhkkrFl
- V5ksaj+/M3d3XpKkA6EJ1W25NFPHlYY668EuhOrKs3bSBTgFw5/UF88OJ206UeCJ
-X-Gm-Gg: AeBDietEMkzYHSfgEUHeiswluUAGR4NIj0zOGZCR//Yr9zIdJupWvtvzQ4guskC8hOp
- VutF0KQ3iH/9K+qOJP+YLU6lLq92ufBki82agvpxd1ih0zaliUGd5L/V5Q8kDwjhOWaloFQel8D
- XTxFPJinm303tsf8ipNU+qYjDQ7zJ3sGdzPp+gdKrpHYtY9Qy9tsPbV6X3EWS2cBaTv1hKI0B7k
- Y5UIgkt102tg7+rPIyp+nWUUCB8s5g2/fyLO0DmS8wS9mXC+BnC3LKMfusn+1L0s2YurcivWTvr
- 4Oypu7fqwZuy9ZxAAxYugyoEX2xFBRMnX1lrFeieQ68gVK36vI0nfgot1DnBWLkxWi7na0+hL8o
- rl8KxFFfKNfex2lZN/+20YCt2Y9jHz6O+0JJx7ym7HuFGQeR6q9W5b7fFl6BehCoqy2Wqqu10JD
- uNPG7u8GDCSSWhpv1eQyOdSyf1vjQx0V3EdiNe1FhuBF7sZx3MWKUm
-X-Received: by 2002:a17:90b:268b:b0:35c:30a8:322 with SMTP id
- 98e67ed59e1d1-35e4245a667mr3694581a91.0.1775833531337; 
- Fri, 10 Apr 2026 08:05:31 -0700 (PDT)
+ bh=mPLKHQIKiWNj5QAnc2OyjCMMfWZ4IzzJUVCAIUexiKU=;
+ b=W1OjpdfDlJ5yrtqQ3OdOgK5fFSZNnSuL1QirjdiMNILZI0lAqlKjbj5QZWlSOt1hgK
+ 1fQVcyFY8x5HtSsQp9uIU/Phyvm/zuMDrKfsLakkDCcYa+WV6z/+EiqSRC7Ng5W1+mXV
+ Zynnl/4eZ1W9ptO3wYd7PjZ5JZ8b30TGTbY/l2ALgPYSaIlu9uu0Ew+l2En1+n0YPxmZ
+ 4el2O57yX0m8X8p8EJ+RUA8jEF8AIrxIgSWyoJfhB5ZIN9aZQTH8uu5oCj+vyeb/oSNh
+ VZDPK/Yx2DTaa0HgvrdAsOFcxEFEzIx6JsUGVHNasIJM6Phoj6xpaYxFVycV1wxTeZ9P
+ nw3Q==
+X-Gm-Message-State: AOJu0YyJrV/1c+5lF0IyteyMtzSAZ8sqhwAoH/fRZSOW0mg/cXGJo+kH
+ Jv73TF5MzZXp5rhL/FBqyKNyhhpuA+wws0N8x9lvu1bxuk50HQvIfFvWDwJkLa3o
+X-Gm-Gg: AeBDietEQO5u6oUkyG570QCU8p8x4fSRllSgVROOHKFp4Nqm32L2sRqAA3Abt3OkEAT
+ APsUcRDGTjLMb4xCMaU4w9xQOYqpBv59JM6Xf0EdTu/d1s2Ez9mgKOu15tjJJKxrKNhIYOhJAfm
+ eGVvsmqz/0BCTwadfnwPpi+Y2tgiEanSo7XEsmZurmkuUfG0F//Ncq+OuoWrN//WAe1b1F5EBBa
+ YOors4s2qz0atZpFACqrs4Y4X/BQi7LwYe1/Th1Brt97NwBDNCKy5HJoWOqigDWY+8JRXKR+B/R
+ 8q7V5x+cS1ea2mjF6PU14is8+KwYOIxW4AmODsZu4dHfHCfgjflIAJUzl+BagcPzlX7EXDVFQjY
+ CkDfCwJRsc6PD2tof6AMv7JZptINJM2s5XojXO+HZkYtCWeS8HDyRZS4+v8S17XijGDFiEneXZN
+ ba0zNo+X0+WHoihhir+mCgtJHlmISkxWaNwK15k+44KLnNlHx9KU0YIiEuDjj2Cv0=
+X-Received: by 2002:a17:90b:350b:b0:35d:a2d3:5c44 with SMTP id
+ 98e67ed59e1d1-35e428581f9mr3562718a91.28.1775833519753; 
+ Fri, 10 Apr 2026 08:05:19 -0700 (PDT)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([104.168.88.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35e4131cfacsm3565785a91.10.2026.04.10.08.05.27
+ 98e67ed59e1d1-35e4131cfacsm3565785a91.10.2026.04.10.08.05.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 08:05:30 -0700 (PDT)
+ Fri, 10 Apr 2026 08:05:19 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
@@ -71,17 +71,16 @@ To: qemu-devel <qemu-devel@nongnu.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V6 06/14] monitor: Update tracking iothread users with holder
- name
-Date: Fri, 10 Apr 2026 23:04:49 +0800
-Message-ID: <20260410150457.85190-7-zhangckid@gmail.com>
+Subject: [PATCH V6 03/14] iothread: tracking iothread users with holder name
+Date: Fri, 10 Apr 2026 23:04:46 +0800
+Message-ID: <20260410150457.85190-4-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260410150457.85190-1-zhangckid@gmail.com>
 References: <20260410150457.85190-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=zhangckid@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=zhangckid@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,105 +103,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the Monitor struct is not a QOM Object, we cannot use
-object_get_canonical_path(). Instead, this patch uses the monitor's
-name (or a default type-based name) as the holder identifier.
+Introduce iothread_get_aio_context() with a 'holder' argument and its
+counterpart iothread_put_aio_context().
 
-Cache the AioContext in the Monitor struct to avoid repeated calls to
-iothread_get_aio_context() and ensure symmetrical ref/unref during
-monitor lifecycle.
+Previously, users of an IOThread's AioContext did not explicitly
+record their identity, making it difficult to debug which devices or
+subsystems were pinning an IOThread.
+
+This patch enhances the reference counting mechanism by:
+1. Automatically incrementing the object reference count when a context
+   is retrieved.
+2. Tracking holders by name using iothread_ref() and iothread_unref().
+
+In iothread_instance_finalize(), we now retrieve the source name from
+the GMainContext to correctly unref the initial internal holder.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- monitor/monitor-internal.h |  3 +++
- monitor/monitor.c          | 24 ++++++++++++++++++++++--
- monitor/qmp.c              |  3 ++-
- 3 files changed, 27 insertions(+), 3 deletions(-)
+ include/system/iothread.h |  3 +++
+ iothread.c                | 33 +++++++++++++++++++++++++++++----
+ 2 files changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index feca111ae3..51cedf90e4 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -116,6 +116,9 @@ struct Monitor {
-     guint out_watch;
-     int mux_out;
-     int reset_seen;
+diff --git a/include/system/iothread.h b/include/system/iothread.h
+index 21a76bd70d..dbada8249c 100644
+--- a/include/system/iothread.h
++++ b/include/system/iothread.h
+@@ -48,6 +48,9 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
+ char *iothread_get_id(IOThread *iothread);
+ IOThread *iothread_by_id(const char *id);
+ AioContext *iothread_get_aio_context(IOThread *iothread);
++AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
++                                             const char *holder);
++void iothread_put_aio_context(IOThread *iothread, const char *holder);
+ GMainContext *iothread_get_g_main_context(IOThread *iothread);
+ 
+ /*
+diff --git a/iothread.c b/iothread.c
+index c43266b191..60a024f770 100644
+--- a/iothread.c
++++ b/iothread.c
+@@ -52,6 +52,12 @@ static void iothread_ref(IOThread *iothread, const char *holder)
+     }
+ 
+     iothread->holders = g_list_prepend(iothread->holders, h);
 +
-+    /* iothread context */
-+    AioContext *ctx;
- };
- 
- struct MonitorHMP {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 00b93ed612..b6efe776d6 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -529,7 +529,7 @@ int monitor_suspend(Monitor *mon)
-          * Kick I/O thread to make sure this takes effect.  It'll be
-          * evaluated again in prepare() of the watch object.
-          */
--        aio_notify(iothread_get_aio_context(mon_iothread));
-+        aio_notify(mon->ctx);
-     }
- 
-     trace_monitor_suspend(mon, 1);
-@@ -564,7 +564,7 @@ void monitor_resume(Monitor *mon)
-         AioContext *ctx;
- 
-         if (mon->use_io_thread) {
--            ctx = iothread_get_aio_context(mon_iothread);
-+            ctx = mon->ctx;
-         } else {
-             ctx = qemu_get_aio_context();
-         }
-@@ -612,6 +612,18 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
- {
-     if (use_io_thread && !mon_iothread) {
-         monitor_iothread_init();
-+        /*
-+         * Because of current Monitor is not a QOM Object,
-+         * so using OBJECT(mon) is undefined behavior and may crash.
-+         * Try using a hard-coded future implementation of the qom path instead.
-+         * (Like the name of the "mon_iothread").
-+         * long-term solution would be making Monitor QOM, after that change
-+         * here to:
-+         * g_autofree path = object_get_canonical_path(OBJECT(mon));
-+         */
-+        g_autofree char *path = g_strdup(is_qmp ? "/monitor/qmp_mon0" :
-+                                                  "/monitor/hmp_mon0");
-+        mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, path);
-     }
-     qemu_mutex_init(&mon->mon_lock);
-     mon->is_qmp = is_qmp;
-@@ -631,6 +643,14 @@ void monitor_data_destroy(Monitor *mon)
-     }
-     g_string_free(mon->outbuf, true);
-     qemu_mutex_destroy(&mon->mon_lock);
-+
-+    if (mon->ctx && mon_iothread) {
-+        g_autofree char *path = g_strdup(monitor_is_qmp(mon) ?
-+                                        "/monitor/qmp_mon0" :
-+                                        "/monitor/hmp_mon0");
-+        iothread_put_aio_context(mon_iothread, path);
-+        mon->ctx = NULL;
-+    }
++    /*
++     * This guarantees that the IOThread and its AioContext remain alive
++     * as long as there is a holder.
++     */
++    object_ref(OBJECT(iothread));
  }
  
- void monitor_cleanup(void)
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 687019811f..8e4a775fac 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -549,7 +549,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-          * since chardev might be running in the monitor I/O
-          * thread.  Schedule a bottom half.
-          */
--        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
-+        Monitor *mon_p = &mon->common;
-+        aio_bh_schedule_oneshot(mon_p->ctx,
-                                 monitor_qmp_setup_handlers_bh, mon);
-         /* The bottom half will add @mon to @mon_list */
-     } else {
+ static int iothread_holder_compare(gconstpointer a, gconstpointer b)
+@@ -83,6 +89,8 @@ static void iothread_unref(IOThread *iothread, const char *holder)
+     IoThreadHolder *h = (IoThreadHolder *)link->data;
+     qapi_free_IoThreadHolder(h);
+     iothread->holders = g_list_delete_link(iothread->holders, link);
++
++    object_unref(OBJECT(iothread));
+ }
+ 
+ static void *iothread_run(void *opaque)
+@@ -196,7 +204,7 @@ static void iothread_init_gcontext(IOThread *iothread, const char *thread_name)
+     g_autofree char *name = g_strdup_printf("%s aio-context", thread_name);
+ 
+     iothread->worker_context = g_main_context_new();
+-    source = aio_get_g_source(iothread_get_aio_context(iothread));
++    source = aio_get_g_source(iothread->ctx);
+     g_source_set_name(source, name);
+     g_source_attach(source, iothread->worker_context);
+     g_source_unref(source);
+@@ -388,13 +396,30 @@ char *iothread_get_id(IOThread *iothread)
+ 
+ AioContext *iothread_get_aio_context(IOThread *iothread)
+ {
+-    /* Remove in next patch for build */
+-    iothread_ref(iothread, "tmp");
+-    iothread_unref(iothread, "tmp");
++    return iothread->ctx;
++}
++
++AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
++                                             const char *holder)
++{
++    /*
++     * In some cases, iothread user need the ctx to clearup other resource.
++     * When holder is empty, back to the legacy way.
++     */
++    if (holder) {
++        /* Add holder device path to the list */
++        iothread_ref(iothread, holder);
++    }
+ 
+     return iothread->ctx;
+ }
+ 
++void iothread_put_aio_context(IOThread *iothread, const char *holder)
++{
++    /* Delete holder device path from the list */
++    iothread_unref(iothread, holder);
++}
++
+ static int query_one_iothread(Object *object, void *opaque)
+ {
+     IOThreadInfoList ***tail = opaque;
 -- 
 2.49.0
 
