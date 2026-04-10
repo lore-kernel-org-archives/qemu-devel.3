@@ -4,74 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B8DF44846
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 12:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B4CF4484C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 12:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBAi9-0002TX-9L; Fri, 10 Apr 2026 08:11:45 -0400
+	id 1wBAsy-0005Si-Hf; Fri, 10 Apr 2026 08:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wBAi6-0002T1-W8
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:11:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wBAi2-0007k3-Nh
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:11:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775823098;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=s64fkcW9RNZ/Nid4PqeO03AMfVCBp32bi6Piw+jLGMc=;
- b=SbANj8+PO1sci8Sa0nNDJ5CQ/7+1fsGYhUuSDDiewBf3jKdfrNPEayt+8Mbn0H3MZ2BgvG
- b58SSbo/zC+ybTPKV+mCnKdJdAS7A+TDIuW9ih23DULnD5qBBbFQKcmtWfH+vY2T/kxlNN
- J/zoOSGdmvKHaqYTIpaqSUz9F7ZTYJs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-qq7-JAkwMW-4ULZraZ6mEg-1; Fri,
- 10 Apr 2026 08:11:34 -0400
-X-MC-Unique: qq7-JAkwMW-4ULZraZ6mEg-1
-X-Mimecast-MFC-AGG-ID: qq7-JAkwMW-4ULZraZ6mEg_1775823093
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A6D918002CA; Fri, 10 Apr 2026 12:11:32 +0000 (UTC)
-Received: from localhost (unknown [10.44.33.180])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 745291800451; Fri, 10 Apr 2026 12:11:29 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, <qemu-stable@nongnu.org>,
- Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Sam Li <faithilikerun@gmail.com>,
- Damien Le Moal <dlemoal@kernel.org>,
- Dmitry Fomichev <dmitry.fomichev@wdc.com>,
- Mingyuan Luo <myluo24@m.fudan.edu.cn>
-Subject: [PATCH for-11.0 v2] virtio-blk: fix zone report buffer out-of-memory
- (CVE-2026-5761)
-Date: Fri, 10 Apr 2026 08:11:28 -0400
-Message-ID: <20260410121128.484298-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wBAst-0005Rx-AL
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:22:51 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wBAsq-0003Yb-Sb
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:22:51 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-650775f427eso2008101d50.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 05:22:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775823767; cv=none;
+ d=google.com; s=arc-20240605;
+ b=N+HQLZTLs6aQC+wnPwqbD7tJPHmHl0FTd3PKWoxbBP2p75EG8NkF1KfE08xxBsFmFB
+ u5oCPwKQRVtn9lvepWueVa1TpyZCWYePnanRpwoYE/1bgFoNI1QayXglsDjEObLdgbKT
+ xyoJ17YY4H5Q1Dq4nqyM1QQYz/k47PUylgoYUp0eKa9AEuASXG13RRV5lbH2oOuveWX+
+ 07X9NcbyOQc48n6J2nDZVgiH1gx/LS6Acaox8ygIMSN9xT35oFpudyIz5lxmEzLD37yC
+ 6WlYwBtlu4gSJndM5uEELl0uFywtDzlS5X6kVtxBVf3ZYvvvsA01Z4gxHf6GM0clyGiy
+ vPdQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=IQOYafq9DurwFSwBvsJy2WTXL7HCMbbN3tocXrg2ZhM=;
+ fh=w0MeEhI6ZaF385icDQf6eSgjxPYrIUt5u2OddUD9FTY=;
+ b=J+TJXwv95K2VJp/VBHHvjr5L5dycgocRTkjM3x+su+FqihgGN1/2ZXi3nnc47lCVCE
+ 7YqdKL1GaCXD+y8GPP7MhNXNE7mfD4pY93uctjLsutLSk/mGghusGoY2gJA3/hPoQmLO
+ kdwH8c5M5Kydklose0nOafuvmyr5LLcqMEz0h6Rx9wERdQPXYfpvV1RsuRN8HM/6dIvq
+ NPmQ6HMkbhQj71dLo6n32Ivy91QxEC1DXEQC+yGD/xKgfBfvbTzM+T8lkwYouWs2e8yg
+ kAfYwg5ymJ+7tFqMgN+EyfttdqTjP3u5JsWGI9UqeDi9f0bfSMJzLzifOJLFIaLKnysO
+ LBBQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775823767; x=1776428567; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IQOYafq9DurwFSwBvsJy2WTXL7HCMbbN3tocXrg2ZhM=;
+ b=OuBkMxCYW+1onYBarzVVpYF4J5k8EHhkixgRhMjJYAXPWtaveSfvvwnKKatUvBZSHe
+ I32AdT3bFdFSHF87HqcrVIDtgP8BcjZ+YyX4pUuxLYaaa5erT2t0oOl/a0bKCMP12Z2C
+ DOAD6E8KeJUxW45VMXUkuj6jei8zlXLM2sc0eIeMlzlJPLBtRARV5aPDAlMRL4xtaObc
+ ysWRVu0b4e9glyiimrUNlnHwHU4I7Hk1ukBQXXMW25XcSgadpN33xP4J/D49iWltaldt
+ WpkGCTIOFfMAoTLJMlGLAfMDlz8mi0bNLvPWuuIBUgJQ6htQaUWarJ4+Vb7r3nxqYso4
+ L4Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775823767; x=1776428567;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IQOYafq9DurwFSwBvsJy2WTXL7HCMbbN3tocXrg2ZhM=;
+ b=RzP3VxF0uxX5zzT3yDq+/oG5G+Ij3i1Nl6Sa/fBBZgBIcMdthMwataNkpM/DeCHzma
+ KgyIZr6zDvLNkaw/KYNDeKTrQxpkOxQOHDzmb5rel4gCnD7wTxQQKsfye+sF/FnrDaWG
+ FThRRng1binCuxuEMGSfxzxwcKJp0ojgdqRlLSro3z61I/8Qy/VZ0cH/zWr/ET9M9jFG
+ 8ipP3/Rv37G878Nu+Q1Q2oQCzmFgBUvCCnyh4bAJi9gs/NfmjLNGE6isCVyKx79mjRw0
+ 9F1G48rM1UHZFXvRZha48dMgWAckFO3E8ZspB4toaxS20vWnSFpeUESD1escJ2wJwzrk
+ r/aQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXR++RWct+IqcvAXd7lqC51aF2uJ+CfXtOwf6ldtTjjSSitRe5J4yLoi0DT1xWi0XXelcgR8ZziZYbH@nongnu.org
+X-Gm-Message-State: AOJu0YwZZvzNuibpUx7CLH/tVtVACk8v+/iEyVaTPG4hr0vvoRgjtZJx
+ xWaDuJJh2XghMjDGVs3CzAaaiblw7AwELTUUCjh/BNQ3qKX1cB6fuhakY4JxCOurNIas/cjVAxs
+ uE+fOEoeVdrlo2VlRZmvryc/VLR1m7gJntsz8+HYwjA==
+X-Gm-Gg: AeBDieuPe9E62j+KI1/dlBe1Fz6jFCHoPKQpP0yDLttjvLHG2bpwr0+Zy42Na22Np3q
+ 21KZvdvmlIT7bRg0VvVNvPcUqwtm2AxN1PnD5HQviOG04IKoMsySrUQKEHKBsbnDK0NNOekPqrY
+ 9e7vNupGe9zPL/rWazDugxC15m+jwaa0M+/GGlC6q86scThoPSy+nwIJKXW0RccPGzmY1RWI+wV
+ LfzdQlf+HtweELSLaH+5WpKyDUrtpIHoNCguOR9RcolmcajaG9Y78OHbZWRfW1snFWVJXRjSbzS
+ Y6RL6GrQW73dlRxDiD70+vZWM4d9qbugf6UElIbj3yNk8h9TumCvNgk7vsgjnJmfxzM=
+X-Received: by 2002:a53:c443:0:b0:64e:e0fc:a314 with SMTP id
+ 956f58d0204a3-65198c34e20mr1912312d50.69.1775823767489; Fri, 10 Apr 2026
+ 05:22:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20260306150302.203112-1-eric.auger@redhat.com>
+ <20260306150302.203112-5-eric.auger@redhat.com>
+In-Reply-To: <20260306150302.203112-5-eric.auger@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Apr 2026 13:22:34 +0100
+X-Gm-Features: AQROBzDDRqKWiw78YOUoqoxvOlCUrjLNmKtABV0dzE6KNtLiqxEQn1TmmChXFyA
+Message-ID: <CAFEAcA_Vd8Uw+Ptdbt+MhYVejcxfcQLGVS_nkJiaACTtftuepg@mail.gmail.com>
+Subject: Re: [PATCH v9 4/6] target/arm/cpu64: Define cpreg migration tolerance
+ for KVM_REG_ARM_VENDOR_HYP_BMAP_2
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ cohuck@redhat.com, sebott@redhat.com, peterx@redhat.com, philmd@linaro.org, 
+ alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,292 +119,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An internal buffer is used when processing VIRTIO_BLK_T_ZONE_REPORT
-requests. The buffer's size is controlled by the guest. A large value
-can result in g_malloc() failure and the QEMU process aborts, resulting
-in a Denial of Service (DoS) (most likely in cases where an untrusted
-guest application or a nested guest with virtio-blk passthrough is able
-to abort QEMU).
+On Fri, 6 Mar 2026 at 15:03, Eric Auger <eric.auger@redhat.com> wrote:
+>
+> KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
+> from v6.15 onwards. Backward migration from a >= v6.15 to an older
+> kernel would fail without cpreg migration tolerance definition
+> for this register.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+> ---
+>  target/arm/cpu64.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index 4cfddc6e8c0..abc6b78ef7d 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -833,6 +833,14 @@ static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
+>                                       0, 0, ToleranceNotOnBothEnds);
+>      arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
+>                                       0, 0, ToleranceNotOnBothEnds);
+> +
+> +    /*
+> +     * KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
+> +     * from v6.15 onwards. Backward migration from a >= v6.15 to an older
+> +     * kernel would fail without cpreg migration tolerance definition
+> +     */
+> +    arm_register_cpreg_mig_tolerance(cpu, KVM_REG_ARM_FW_FEAT_BMAP_REG(3),
+> +                                     0, 0, ToleranceNotOnBothEnds);
+>  }
 
-Modify the zone report implementation to work incrementally with a
-bounded buffer size.
+If I understand the intention of this pseudoregister correctly, it's
+for userspace control of what firmware features KVM exposes to the
+guest. In that regard it's a bit like the KVM_REG_ARM_PSCI_VERSION
+register, and as with that register I don't think the right
+approach is "disregard any differences on migration". If we
+exposed firmware feature X to the guest on the source then we
+need to also expose it to the guest on the destination, because
+it might be relying on it, and we shouldn't permit migration to
+a destination kernel that can't implement X.
 
-This is purely a QEMU implementation issue and no VIRTIO spec changes
-are needed.
+But I'm also not entirely sure what the nature of the mismatch
+here is: https://docs.kernel.org/virt/kvm/arm/fw-pseudo-registers.html
+says both
+"By default, these registers are set with the upper limit of the
+features that are supported"
+but also that for the BMAP_2 bits that
+"This is reset to 0".
 
-Mingyuan Luo found this bug and provided a reproducer which I haven't
-put into tests/qtest/ because it requires a zoned storage device (e.g.
-root and modprobe null_blk):
+So does the register reset to 0 such that all we need to handle
+is "allow a source without the register as if it is zero, and
+allow a source with the register even if the destination doesn't
+have the register as long as the value is zero" ? Or is the
+"reset to 0" bit wrong, and in fact the kernel defaults to
+these bits being set, so we need something like the handling
+of kvm-psci-version where the user can suppress the features
+they need to give a "lowest common denominator" among the
+kernels they want to migrate between ?
 
-1) Prepare a zoned nullblk backend (/dev/nullb0):
-
-sudo modprobe -r null_blk || true
-sudo modprobe null_blk nr_devices=1 zoned=1
-sudo chmod 0666 /dev/nullb0
-cat /sys/block/nullb0/queue/zoned
-
-2) Create qtest input:
-
-cat >/tmp/vblk-zone-report-oom.qtest <<'EOF'
-outl 0xcf8 0x80002004
-outw 0xcfc 0x0007
-outl 0xcf8 0x80002010
-outl 0xcfc 0x0000c001
-outb 0xc012 0x00
-outb 0xc012 0x01
-outb 0xc012 0x03
-outl 0xc004 0x00000000
-outw 0xc00e 0x0000
-outl 0xc008 0x00000100
-outb 0xc012 0x07
-writel 0x00020000 0x00000010
-writel 0x00020004 0x00000000
-writeq 0x00020008 0x0000000000000000
-writeq 0x00100000 0x0000000000020000
-writel 0x00100008 0x00000010
-writew 0x0010000c 0x0001
-writew 0x0010000e 0x0001
-EOF
-
-for i in $(seq 1 1022); do
-d=$((0x00100000 + i * 16))
-n=$((i + 1))
-printf 'writeq 0x%08x 0x0000000000200000\n' "$d" >> /tmp/vblk-zone-report-oom.qtest
-printf 'writel 0x%08x 0x1fe00000\n' $((d + 8)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0003\n' $((d + 12)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x%04x\n' $((d + 14)) "$n" >> /tmp/vblk-zone-report-oom.qtest
-done
-
-d=$((0x00100000 + 1023 * 16))
-printf 'writeq 0x%08x 0x0000000000200000\n' "$d" >> /tmp/vblk-zone-report-oom.qtest
-printf 'writel 0x%08x 0x1fe00000\n' $((d + 8)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0002\n' $((d + 12)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0000\n' $((d + 14)) >> /tmp/vblk-zone-report-oom.qtest
-cat >> /tmp/vblk-zone-report-oom.qtest <<'EOF'
-writew 0x00104000 0x0000
-writew 0x00104002 0x0001
-writew 0x00104004 0x0000
-outw 0xc010 0x0000
-EOF
-
-3) Run the qtest input with ASAN build (compile qemu with --enable-asan):
-
-build/qemu-system-x86_64 -display none \
--accel qtest -qtest stdio \
--machine pc -nodefaults -m 512M -monitor none -serial none \
--blockdev driver=host_device,node-name=disk0,filename=/dev/nullb0 \
--device virtio-blk-pci-transitional,drive=disk0,addr=04.0,queue-size=1024 \
-< /tmp/vblk-zone-report-oom.qtest
-
-Cc: Sam Li <faithilikerun@gmail.com>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Dmitry Fomichev <dmitry.fomichev@wdc.com>
-Fixes: CVE-2026-5761
-Fixes: 4f7366506a9 ("virtio-blk: add zoned storage emulation for zoned devices")
-Reported-by: Mingyuan Luo <myluo24@m.fudan.edu.cn>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
-v2:
-- Fix int64_t nz vs size_t j type mismatch in
-  virtio_blk_zone_report_complete() [Damien]
-
- hw/block/virtio-blk.c | 100 ++++++++++++++++++++++++++++--------------
- 1 file changed, 67 insertions(+), 33 deletions(-)
-
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index ddf0e9ee53..9cb9f1fb2b 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -38,6 +38,9 @@
- #include "hw/virtio/virtio-blk-common.h"
- #include "qemu/coroutine.h"
- 
-+/* Internal buffer size limit for zone report */
-+#define VIRTIO_BLK_MAX_ZONES_PER_BATCH 4096
-+
- static void virtio_blk_ioeventfd_attach(VirtIOBlock *s);
- 
- static void virtio_blk_init_request(VirtIOBlock *s, VirtQueue *vq,
-@@ -447,15 +450,22 @@ err:
-     return err_status;
- }
- 
-+typedef struct {
-+    unsigned int total_nr_zones;    /* max zones to fill in this request */
-+    unsigned int nr_zones_done;     /* how many zones have been filled in */
-+    int64_t iov_offset;             /* current byte position in in_iov[] */
-+    int64_t offset;                 /* current zone report disk offset */
-+    unsigned int nr_zones;          /* for zone report calls */
-+    unsigned int zones_per_batch;   /* size of zone report buffer */
-+    BlockZoneDescriptor *zones;     /* zone report buffer */
-+} ZoneReportData;
-+
- typedef struct ZoneCmdData {
-     VirtIOBlockReq *req;
-     struct iovec *in_iov;
-     unsigned in_num;
-     union {
--        struct {
--            unsigned int nr_zones;
--            BlockZoneDescriptor *zones;
--        } zone_report_data;
-+        ZoneReportData zone_report_data;
-         struct {
-             int64_t offset;
-         } zone_append_data;
-@@ -512,16 +522,15 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
- static void virtio_blk_zone_report_complete(void *opaque, int ret)
- {
-     ZoneCmdData *data = opaque;
-+    ZoneReportData *zrd = &data->zone_report_data;
-     VirtIOBlockReq *req = data->req;
-     VirtIODevice *vdev = VIRTIO_DEVICE(req->dev);
-     struct iovec *in_iov = data->in_iov;
-     unsigned in_num = data->in_num;
--    int64_t zrp_size, n, j = 0;
--    int64_t nz = data->zone_report_data.nr_zones;
-+    int64_t n;
-+    unsigned nz = zrd->nr_zones;
-     int8_t err_status = VIRTIO_BLK_S_OK;
--    struct virtio_blk_zone_report zrp_hdr = (struct virtio_blk_zone_report) {
--        .nr_zones = cpu_to_le64(nz),
--    };
-+    struct virtio_blk_zone_report zrp_hdr = {};
- 
-     trace_virtio_blk_zone_report_complete(vdev, req, nz, ret);
-     if (ret) {
-@@ -529,28 +538,18 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-         goto out;
-     }
- 
--    zrp_size = sizeof(struct virtio_blk_zone_report)
--               + sizeof(struct virtio_blk_zone_descriptor) * nz;
--    n = iov_from_buf(in_iov, in_num, 0, &zrp_hdr, sizeof(zrp_hdr));
--    if (n != sizeof(zrp_hdr)) {
--        virtio_error(vdev, "Driver provided input buffer that is too small!");
--        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
--        goto out;
--    }
--
--    for (size_t i = sizeof(zrp_hdr); i < zrp_size;
--        i += sizeof(struct virtio_blk_zone_descriptor), ++j) {
-+    for (unsigned j = 0; j < nz; j++) {
-         struct virtio_blk_zone_descriptor desc =
-             (struct virtio_blk_zone_descriptor) {
--                .z_start = cpu_to_le64(data->zone_report_data.zones[j].start
-+                .z_start = cpu_to_le64(zrd->zones[j].start
-                     >> BDRV_SECTOR_BITS),
--                .z_cap = cpu_to_le64(data->zone_report_data.zones[j].cap
-+                .z_cap = cpu_to_le64(zrd->zones[j].cap
-                     >> BDRV_SECTOR_BITS),
--                .z_wp = cpu_to_le64(data->zone_report_data.zones[j].wp
-+                .z_wp = cpu_to_le64(zrd->zones[j].wp
-                     >> BDRV_SECTOR_BITS),
-         };
- 
--        switch (data->zone_report_data.zones[j].type) {
-+        switch (zrd->zones[j].type) {
-         case BLK_ZT_CONV:
-             desc.z_type = VIRTIO_BLK_ZT_CONV;
-             break;
-@@ -564,7 +563,7 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-             g_assert_not_reached();
-         }
- 
--        switch (data->zone_report_data.zones[j].state) {
-+        switch (zrd->zones[j].state) {
-         case BLK_ZS_RDONLY:
-             desc.z_state = VIRTIO_BLK_ZS_RDONLY;
-             break;
-@@ -594,18 +593,47 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-         }
- 
-         /* TODO: it takes O(n^2) time complexity. Optimizations required. */
--        n = iov_from_buf(in_iov, in_num, i, &desc, sizeof(desc));
-+        n = iov_from_buf(in_iov, in_num, zrd->iov_offset, &desc, sizeof(desc));
-         if (n != sizeof(desc)) {
-             virtio_error(vdev, "Driver provided input buffer "
-                                "for descriptors that is too small!");
-             err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+            goto out;
-         }
-+
-+        zrd->iov_offset += sizeof(desc);
-+    }
-+
-+    if (nz > 0) {
-+        BlockZoneDescriptor *zone = &zrd->zones[nz - 1];
-+        zrd->offset = zone->start + zone->length;
-+    }
-+
-+    zrd->nr_zones_done += nz;
-+
-+    /* Call zone report again if the end hasn't been reached yet */
-+    if (nz == zrd->zones_per_batch &&
-+        zrd->nr_zones_done < zrd->total_nr_zones) {
-+        zrd->nr_zones = MIN(zrd->zones_per_batch,
-+                            zrd->total_nr_zones - zrd->nr_zones_done);
-+        blk_aio_zone_report(req->dev->blk, zrd->offset, &zrd->nr_zones,
-+                            zrd->zones, virtio_blk_zone_report_complete, data);
-+        return;
-+    }
-+
-+    /* Fill in header now that all zones have been reported */
-+    zrp_hdr.nr_zones = cpu_to_le64(zrd->nr_zones_done);
-+    n = iov_from_buf(in_iov, in_num, 0, &zrp_hdr, sizeof(zrp_hdr));
-+    if (n != sizeof(zrp_hdr)) {
-+        virtio_error(vdev, "Driver provided input buffer that is too small!");
-+        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+        goto out;
-     }
- 
- out:
-     virtio_blk_req_complete(req, err_status);
-     g_free(req);
--    g_free(data->zone_report_data.zones);
-+    g_free(zrd->zones);
-     g_free(data);
- }
- 
-@@ -617,7 +645,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     unsigned int nr_zones;
-     ZoneCmdData *data;
--    int64_t zone_size, offset;
-+    ZoneReportData *zrd;
-+    int64_t offset;
-     uint8_t err_status;
- 
-     if (req->in_len < sizeof(struct virtio_blk_inhdr) +
-@@ -639,16 +668,21 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-     trace_virtio_blk_handle_zone_report(vdev, req,
-                                         offset >> BDRV_SECTOR_BITS, nr_zones);
- 
--    zone_size = sizeof(BlockZoneDescriptor) * nr_zones;
-     data = g_malloc(sizeof(ZoneCmdData));
-     data->req = req;
-     data->in_iov = in_iov;
-     data->in_num = in_num;
--    data->zone_report_data.nr_zones = nr_zones;
--    data->zone_report_data.zones = g_malloc(zone_size),
- 
--    blk_aio_zone_report(s->blk, offset, &data->zone_report_data.nr_zones,
--                        data->zone_report_data.zones,
-+    zrd = &data->zone_report_data;
-+    zrd->total_nr_zones = nr_zones;
-+    zrd->nr_zones_done = 0;
-+    zrd->iov_offset = sizeof(struct virtio_blk_zone_report);
-+    zrd->offset = offset;
-+    zrd->zones_per_batch = MIN(nr_zones, VIRTIO_BLK_MAX_ZONES_PER_BATCH);
-+    zrd->zones = g_malloc(zrd->zones_per_batch * sizeof(BlockZoneDescriptor));
-+
-+    zrd->nr_zones = zrd->zones_per_batch;
-+    blk_aio_zone_report(s->blk, offset, &zrd->nr_zones, zrd->zones,
-                         virtio_blk_zone_report_complete, data);
-     return;
- out:
--- 
-2.53.0
-
+thanks
+-- PMM
 
