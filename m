@@ -4,75 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E2CBF45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 20:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 973D2F45A0A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 20:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBIF4-0008L8-Q4; Fri, 10 Apr 2026 16:14:14 -0400
+	id 1wBIEx-0008Ht-A0; Fri, 10 Apr 2026 16:14:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wBIF3-0008KF-Co
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 16:14:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wBIEv-0008Fu-5b; Fri, 10 Apr 2026 16:14:05 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wBIF1-0002bZ-7p
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 16:14:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775852048;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Bv1kZQYoNQMOACvLFLwx7bKNC/uh0+2uZldXHUG+19U=;
- b=JD70p87fK9WHUcktjyxnYEZf8yZvREKtPVXrZ/mu9u+oordY/pJ5GxkFBXKteqGQhhBMXk
- 9eVxeVNl/bU9SKnzsDhAYrTCUe4TkyX5FQd9wRHw+zbyJQ8maX6Zl3OlsWBkE7qG9YZaXx
- rv5c/8XnizZUA+TgDhnFQgaDc8QAtaY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-pwc8rsMFOpyQFvzlxnITJA-1; Fri,
- 10 Apr 2026 16:14:07 -0400
-X-MC-Unique: pwc8rsMFOpyQFvzlxnITJA-1
-X-Mimecast-MFC-AGG-ID: pwc8rsMFOpyQFvzlxnITJA_1775852045
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21127195606C; Fri, 10 Apr 2026 20:14:05 +0000 (UTC)
-Received: from localhost (unknown [10.44.48.68])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C773919560AB; Fri, 10 Apr 2026 20:14:03 +0000 (UTC)
-Date: Fri, 10 Apr 2026 16:14:01 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Matthieu Rolla <matthieu@minio.io>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, its@irrelevant.dk,
- kbusch@kernel.org, mr-083 <matthieu@min.io>
-Subject: Re: [PATCH v3] hw/nvme: add namespace hotplug support
-Message-ID: <20260410201401.GA501153@fedora>
-References: <20260409060155.94704-1-matthieu@min.io>
- <20260410143000.86708-1-matthieu@min.io>
- <CAPSO8Mx2pXp1UGvrsqTL86b=920os62MYSGn-ryv-YV4kRN4NA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wBIEt-0002aV-Kf; Fri, 10 Apr 2026 16:14:04 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63AF1f4F2316587; Fri, 10 Apr 2026 20:13:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kfvwNI
+ 2gOa3l8AZ2/vsOSUvc1ctLZ1s1lcM2aATiiJI=; b=n+4W/hA16jFeg0e3hgZCgj
+ /NkCEkY1CqMoJsjzV9vipZYkP9NuVAbreljrV7LRKnK2kcDdFzY7obDH7085BLyz
+ fy+RkeYwjYXbOiMJfKRXB5lR2I9edozln9Fdk7aviVyQtfYhwcjULpPwaY988O8/
+ EJGESwSjVjjzHiaOl4j8Ouq42sJOBSjRdURd1icOtV9Adyo75nECVXb51Zhkr4O9
+ cFBwrHnypm6kfMyCw96XWoD6oEKEAt9wukBRe1x6aoUiCORAl7ilT0ssQ+ZjZG0Q
+ V01qbYP4O7GoJxm87L4bz5Pe2Tp+EKxTrCEYU8K1OnN9psYpAPRaTe4V49GYESYA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2gc04p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Apr 2026 20:13:59 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63AK7Iw3013902;
+ Fri, 10 Apr 2026 20:13:58 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcmf4hvm4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Apr 2026 20:13:58 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63AKDvsn19530318
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 10 Apr 2026 20:13:57 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0FABB5805C;
+ Fri, 10 Apr 2026 20:13:57 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D877758051;
+ Fri, 10 Apr 2026 20:13:55 +0000 (GMT)
+Received: from [9.67.17.158] (unknown [9.67.17.158])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 10 Apr 2026 20:13:55 +0000 (GMT)
+Message-ID: <dfb12dba-3e8f-40a1-b198-c8bd5d1457c8@linux.ibm.com>
+Date: Fri, 10 Apr 2026 16:13:55 -0400
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="JRps01L0QAbPgrLX"
-Content-Disposition: inline
-In-Reply-To: <CAPSO8Mx2pXp1UGvrsqTL86b=920os62MYSGn-ryv-YV4kRN4NA@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 24/30] hw/s390x/ipl: Set IPIB flags for secure IPL
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
+ david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ jdaley@linux.ibm.com
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
+ <20260402221453.1602899-25-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <20260402221453.1602899-25-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FKArAeos c=1 sm=1 tr=0 ts=69d95a07 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=YyEUnw4G0FhARttIG-sA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: H7T_RTinfMUWQE4pdnpekGkpJYW6QNu5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE4NSBTYWx0ZWRfX5AIMcJzC84HR
+ WS8VxJKwnDwL8KSPqtjYgPXgnxPKPn9WU9MDBrss7yGpRrU8RRJLe0G3ulsNwdyAqh4WgDHbnRf
+ LXUFmJIVDhSvPKiYPBMOGqCFFuwPIYl3D84kGeWeaoGw5dYHEVOihyVqyQ8kuv8SWtkNvewKHfe
+ xjG36C/WDuubd+XCtNMECNfUsBSbHa4WIV1oZNNnWDbJPERZZCmVrCo03n0K0Sv3b4BlEpfuIzI
+ 5MUIJuKwnV019P3amjG4bfOECr5KQi8gJF+ln4r0eQVbadqw069jKEwUqLzoYEtDHUFTbuYGRCu
+ dwQyofy8mpD60Sc/74pFn93TVIMYhi1Y213m4AqktTffwXPeXW8QSSOjG3wE2rPpsIe9LDJ7gWw
+ gfPz0mALvFzwvOlEWOpPh/3UqhpWHTkcoXeejjIFAEBwz8se/59tWZcLit8znZmBuNkLZXkOXQY
+ S2Y9BO81QwRES2Yxfeg==
+X-Proofpoint-GUID: H7T_RTinfMUWQE4pdnpekGkpJYW6QNu5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-10_05,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100185
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,63 +128,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/2/26 18:14, Zhuoying Cai wrote:
+> If `-M secure-boot=on` is specified on the command line option, indicating
+> true secure IPL enabled, set Secure-IPL bit and IPL-Information-Report
+> bit on in IPIB Flags field, and trigger true secure IPL in the S390 BIOS.
+> 
+> Any error that occurs during true secure IPL will cause the IPL to
+> terminate.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  hw/s390x/ipl.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+> index f4311f6d62..67e8231c76 100644
+> --- a/hw/s390x/ipl.c
+> +++ b/hw/s390x/ipl.c
+> @@ -468,6 +468,11 @@ static bool s390_has_certificate(void)
+>      return ipl->cert_store.count > 0;
+>  }
+>  
+> +static bool s390_secure_boot_enabled(void)
+> +{
+> +    return S390_CCW_MACHINE(qdev_get_machine())->secure_boot;
+> +}
+> +
+>  static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>  {
+>      CcwDevice *ccw_dev = NULL;
+> @@ -524,6 +529,18 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>          s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+>          iplb->flags |= DIAG308_FLAGS_LP_VALID;
+>  
+> +        /*
+> +         * If secure-boot is enabled, then toggle the secure IPL flags to
+> +         * trigger secure boot in the s390 BIOS.
+> +         *
+> +         * Boot process will terminate if any error occurs during secure boot.
+> +         *
+> +         * If SIPL is on, IPLIR must also be on.
+> +         */
+> +        if (s390_secure_boot_enabled()) {
+> +            iplb->hdr_flags |= (DIAG308_IPIB_FLAGS_SIPL | DIAG308_IPIB_FLAGS_IPLIR);
+> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
+> +        }
+>          /*
+>           * Secure boot in audit mode will perform
+>           * if certificate(s) exist in the key store.
+> @@ -533,7 +550,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>           *
+>           * Results of secure boot will be stored in IIRB.
+>           */
+> -        if (s390_has_certificate()) {
+> +        else if (s390_has_certificate()) {
+>              iplb->hdr_flags |= DIAG308_IPIB_FLAGS_IPLIR;
+>              iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
+>          }
 
---JRps01L0QAbPgrLX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
 
-On Fri, Apr 10, 2026 at 04:33:47PM +0200, Matthieu Rolla wrote:
-> Hello @Stefan Hajnoczi <stefanha@redhat.com> ,
->=20
->=20
-> Thanks for the review! v3 sent.
->=20
->=20
-> Wording: Fixed in v3, no more "physical PCIe slot" claim. Now describes it
-> as NVMe namespace-level hotplug.
->=20
->=20
-> I/O drain: Moved nvme_ns_drain() to the start of the unplug handler so
-> in-flight I/O completes before detach. Tested under warp load (16
-> concurrent 1MiB uploads via MinIO/DirectPV)  device_del returns in ~400ms
-> with clean removal, no use-after-free.
->=20
->=20
-> Symmetry:  moved subsys->namespaces[nsid] =3D NULL into nvme_ns_unrealize=
-()
-> so the namespace lifecycle is complete (mirrors what nvme_ns_realize() se=
-ts
-> up).
->=20
->=20
-> I don't have a working Windows test setup, I'd really appreciate if you
-> could test it next week as you offered.
->=20
-> Thanks again for your time
-
-Awesome, thanks!
-
-I will give Windows Server a spin next week. I'm not an expert in
-hw/nvme/ but the patch looks good to me:
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---JRps01L0QAbPgrLX
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnZWgkACgkQnKSrs4Gr
-c8ghzQgAwnln6L2lwz4lopqtfPudrA1U8ucDpjhT4VXJ62bVCWxGf5p/HlpelCqw
-oV5/8jiIVDQgwlqYieCTUB2PKkuxwWdJRbhABoh6tMhuzWGwstrjGFugpq6eYjLP
-KfipmusxxnWAyx4i8k3Bikxa+4+wasQw38AIQ9u4ib18TyHNSOgUFceGgVhzW+bi
-OjfmPk18CAZ4y/MM1dUZ74xm4efgYhenyRTaVuOQRzQKvzis2NufjXp3UUxBt4W3
-rA/ajQI/3iHjZJggrJPH5gJBhSRkHO5UDYrgIWaIsDyQ/wr1KHwfsJPI6+2xbEi9
-WYSM9JSSDJUyDMuRX4OtgsJElmv2AQ==
-=kPx7
------END PGP SIGNATURE-----
-
---JRps01L0QAbPgrLX--
-
+-- 
+Regards,
+  Collin
 
