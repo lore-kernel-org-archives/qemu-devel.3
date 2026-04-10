@@ -4,106 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C059F36BBB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 06:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F415F36B9C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB5TD-0004KA-5i; Fri, 10 Apr 2026 02:35:59 -0400
+	id 1wB5qp-0007AB-Lm; Fri, 10 Apr 2026 03:00:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wB5T9-0004Jb-VN
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 02:35:56 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB5qk-00079t-G8
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:00:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wB5T7-0000Bz-Hm
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 02:35:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB5qh-0002hc-T0
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:00:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775802951;
+ s=mimecast20190719; t=1775804413;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=me1HUP1kyvRB60+ew96olFdIdRAU4EYzbu0s3mn49GU=;
- b=X9aGB1trH1SwNSaLkS6z014ObulQkbMbUatoh+Q6vKKC714RzEjAwrIZmgHxRYp4Vw/KuK
- PXzi/QQX+w0aZ9vUPDr1y5sQH/we/iIG4LcvlSZbxwXpuEsfaeUIuW80SngNSHkOCv8fIX
- grOoPx+6UkOqZAttET4osRLK8ElQM90=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=zRL3Ilz/haqztIcZF0TTIUN59xJoRquekR6jZvaVTgc=;
+ b=fuHO91l2JEg7rvtBWrConr6RmewGrVPQnZUonzcjXo5Y+fw/S6uuCJImdfpttLNcF4o+ph
+ +9R8BePXAIOrEFUukzXQB49gkJIDV+YCVA/IJ6eETz96hn+IVbZNUxzqtB5r+PNuTd8xwL
+ SYBtTgRznRkMggC5Qb23HpjocF937Bw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-Io41gmsOPpiJipbzqPkY9Q-1; Fri, 10 Apr 2026 02:35:49 -0400
-X-MC-Unique: Io41gmsOPpiJipbzqPkY9Q-1
-X-Mimecast-MFC-AGG-ID: Io41gmsOPpiJipbzqPkY9Q_1775802948
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-82cf8dcd079so1099532b3a.1
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 23:35:49 -0700 (PDT)
+ us-mta-438-8xkNiSYnM266GwATEiMHNQ-1; Fri, 10 Apr 2026 03:00:12 -0400
+X-MC-Unique: 8xkNiSYnM266GwATEiMHNQ-1
+X-Mimecast-MFC-AGG-ID: 8xkNiSYnM266GwATEiMHNQ_1775804411
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-488ba9dc026so8409375e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775802948; x=1776407748; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=me1HUP1kyvRB60+ew96olFdIdRAU4EYzbu0s3mn49GU=;
- b=Sbm7p7yn1CbzJCg2Jvh9QQag+NMNtpnnkV3Lt/tI7sZ1AxqlnNhK+viLN5iPg4PvXw
- vaZAfImhs74FgKLdPN/JRcUro176JJCn2BN067ozch4mQ3SKAzfeB4hFJ9oX850fewL/
- SKytDj5iTzj85XNY1iPoN1BgRHETwC3EVFV/ifatqxTAvGIfzAkE9lMOYLp5tRZkEBo3
- HN+Mdb9msO6PXX0g5XhhLrUe/ir1PA4wUX3hKYK9BEAA+pglygmBmiTL0q7JKwRd8LfU
- RuVdZIiOdYLuUr63oIj/uiTrbVnX4N9fL1rmw3dx2PSN6ZeIXmuEvNsyWR2X9uhV+6Fl
- ND2w==
+ d=redhat.com; s=google; t=1775804411; x=1776409211; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=zRL3Ilz/haqztIcZF0TTIUN59xJoRquekR6jZvaVTgc=;
+ b=YsQGNcr2HymX+mv5yJIO0KxPw9+LGcuel9uTheHFYFNZuL6ntAKJNNKcsw4DTiANC0
+ r1IhI3+pNhaYBws+2IrDqFPbBK503W34rhpqStib2GpDvg/sxLnFeiXzTcnyf4UWpPK6
+ nwR90raj3IlwkDBFwQlExLyoki6Mf6h/rmFk4KjncJpKwuUh6gHNVzPV2IA856yR0cbZ
+ t3YYzlu3iJkyM2QFdAHrpSt7Hg2SOWkcxk1xU4kncHmJeXzilmcV2c7JRfJuBSAJxh+g
+ v6AF3B4Cq8hJ4QMVifodl8yj3Yeh3YYo11aFf09FDg7GxCh81vMXdYVIJ7dYnX6nm26S
+ VRiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775802948; x=1776407748;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=me1HUP1kyvRB60+ew96olFdIdRAU4EYzbu0s3mn49GU=;
- b=d3G9JtN/5uAJWIThSeCkz4qiBuVEZ70KeD6wLKc6HiBjzANSswumyzKhwAUN0KW9fp
- /PPf/Ru0bXEmA+CWEbfUed2e37lRGDdtmcSZHIH8qiWQdENOh3w6NTeyOpCkOAbgf5N3
- jttDHNBTv9YJBxjftdEEPEnPYNP6R3PSppnPCewTJwbevxNSKBtGMOTYLd7iR1P/EwGL
- XgZGow0DaA4WYPLfn91his8LB8j05okxOs/4H79NNpi0Z8GNUn82vXCGK2itGetrvchY
- kstQXqKX8h4xpBG+cTe2g2GEQTKKVk2wRn1DmTDOLtbjWBsvIH8+eNOfZrjjhIAamhNL
- a7mw==
-X-Gm-Message-State: AOJu0YxN11IZytaFYZeYZKd2pZ65E71woyJxBTopkJwNRxy3DpQeQ8lM
- 69Hz5dYqxboHOUKtwDGirYcbRMJWOUHewj+yVCPewhQ8+omkmSn5mVqvIIzWWJ1IBa2YYO6EDhH
- +MbvXcr4KMdIEAsZaATSozmFPR4ImgqQU9vX57ew/cxRPa5z4ntJItzHh
-X-Gm-Gg: AeBDievrF9QEwfR5kVUIco5jW2+0aasGRkP2a4P2D+oKlbOVCn8jZHx0+3P5xJGRM5p
- d3f2DlqVGrH0XDyqCKW1zabfP7OZV3AK1WlWM9A4NksSwqTIcXr8wm8pX3JY9RCKzJO9IZEISoa
- nwbb5UyTo319CcvugCjqcbYDBRtkVDNm8wP89izMj+0zTIH/h+Pv0qxAwg9T6TgZySicD1JI4PW
- mM7KaSEWaJFJnROM+OLYrNGKaKzJrcYQsB9R2WEz+BDQJk3++l7R/9avBvGvKwjFcduq5wtF05d
- nLB6BxqWQyiUoz7Ci5IUeR9K8RhDN67e6aCgJ98jnqEKTKyTldcbJoeTWgXQOQaRFNYrzZujY+t
- PU+6sgjf42pMkpIMd+s9TlF3WzqT7oaePFKTdvpog5lzTVjPVI9nCopPF4//1nFh2ALrE7jqD+b
- E=
-X-Received: by 2002:a05:6a00:369b:b0:82c:2468:a163 with SMTP id
- d2e1a72fcca58-82f0c22190cmr2176775b3a.34.1775802948369; 
- Thu, 09 Apr 2026 23:35:48 -0700 (PDT)
-X-Received: by 2002:a05:6a00:369b:b0:82c:2468:a163 with SMTP id
- d2e1a72fcca58-82f0c22190cmr2176744b3a.34.1775802947823; 
- Thu, 09 Apr 2026 23:35:47 -0700 (PDT)
-Received: from smtpclient.apple ([122.163.114.34])
+ d=1e100.net; s=20251104; t=1775804411; x=1776409211;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zRL3Ilz/haqztIcZF0TTIUN59xJoRquekR6jZvaVTgc=;
+ b=OtWG/tsqaRz6slRD8YAX140ttQ5BHWj8p07C9VLQc4FiuSlKYPDoFtXhCZhD6NNGJX
+ tHqtZMYw6xg8R8EKYwR6bZTcDJJ0HgnYdOs2CA8FPzTKom7upwm6HrNGfO8pOydeZezK
+ Y6uacezMhXPS/DcSzR8IOx+apZ/i4wB6yql6YbtksAzoF+z7p1O7rAypC8jHc5Cszmhn
+ ZKUAkTkxvJAR6OUT2+5upRbS8IRc9RJN8qSGVi7my8gsGK3/xio8uzkgLkiRIf8GlTWf
+ k0asJJVHOIm91LlHAgxAOZ5n5+0357D+JzvPppY0LUoqtxd88Cmq7ZW0WxrVFUpXRZva
+ 9TMw==
+X-Gm-Message-State: AOJu0Yw60a5YFSrVOtgIY4EZ3Pw+WqjWQnNcBKGXAd8pv8kVVrPLRlUj
+ Bp5MFE6ugqVL58vl4OL9I29iTMAZ6xq4XZ+zyVd0uJ3Tz97GB134b0U8lRGjwM5y6cEE+oUacjR
+ f90cJk+4xcgJrjXieWA9Ep/8Yz0qhV2RUwogkDsI4j7Di3D7VWOaJPVsGrkbG9vY14QkUC6ESHD
+ l8dSNpUYOZF8WVUiAv8Jj4XFpoTUrLBNZDfA==
+X-Gm-Gg: AeBDieuZz8pQNNTPJSLuk675O8f3cRa/dHJzq+CTsKo391yIEx7F7Er24kI6vBWkhxm
+ DXHWF4aEwh8E417VCzKUm1epB4s3fiKZWklXPMJCa2VcwLF3HbQySKrrD6spBzdOk97ab2CfQWV
+ rihQqOTbpM+DvG4EY1NwcT1hydgzISqRjGSiPwFUXRFIz24hoj4JWPRhvIJPROpyaJccKdeYN9c
+ 931psQNyFJnksjNwG7PzQDhOujFfZGRvBDYdqZ7Wt1AwJmjd6QyXTuoEt9zp4Li+oMkrGRjZEQh
+ e96uzz5t3SlUyYwZPAsylSg5X+ifN/trKQLGEqBS/94YpDFUPhfUk9qo8usiQEXvh5v3lwz+g7f
+ HEzdPwaSy+5/b0Aj44sKDQT/A6AnUfmD7MiYM3pJN6CmGB/1fgMzUKUtjFg==
+X-Received: by 2002:a05:600c:c0da:b0:488:936a:6220 with SMTP id
+ 5b1f17b1804b1-488d685b577mr16997255e9.21.1775804410336; 
+ Fri, 10 Apr 2026 00:00:10 -0700 (PDT)
+X-Received: by 2002:a05:600c:c0da:b0:488:936a:6220 with SMTP id
+ 5b1f17b1804b1-488d685b577mr16994955e9.21.1775804408243; 
+ Fri, 10 Apr 2026 00:00:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c79218fc64csm1394428a12.11.2026.04.09.23.35.44
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 09 Apr 2026 23:35:47 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
- kvm_cpu_exec
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
-Date: Fri, 10 Apr 2026 12:05:32 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
- misanjum@linux.ibm.com, gautam@linux.ibm.com,
- Peter Maydell <peter.maydell@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <451942FA-0056-466C-AD42-AB0BBE88472E@redhat.com>
-References: <20260409161042.55281-1-harshpb@linux.ibm.com>
- <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
- <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ 5b1f17b1804b1-488d532ef00sm59512955e9.5.2026.04.10.00.00.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Apr 2026 00:00:07 -0700 (PDT)
+Message-ID: <f0d95915-f8f6-4c37-a211-5313d48ba120@redhat.com>
+Date: Fri, 10 Apr 2026 09:00:06 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: Add VFIO I/O backend capability flags for feature
+ support
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, John Levon <john.levon@nutanix.com>
+References: <20260409114312.1704062-1-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260409114312.1704062-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -128,194 +166,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/9/26 13:43, Cédric Le Goater wrote:
+> Different VFIO I/O backends support different features. For example,
+> the kernel VFIO backend supports DMA-BUF creation, while vfio-user
+> does not. Currently, this is handled by attempting the operation and
+> checking for -ENOTTY, which can lead to misleading warnings when a
+> feature is simply not supported by a particular backend.
+> 
+> Introduce a capability flags mechanism in VFIODeviceIOOps that allows
+> backends to explicitly advertise which features they support. Callers
+> can check these capabilities before attempting operations, avoiding
+> spurious errors and warnings.
+> 
+> Cc: John Levon <john.levon@nutanix.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   include/hw/vfio/vfio-device.h | 13 +++++++++++++
+>   hw/vfio/device.c              |  2 ++
+>   hw/vfio/region.c              |  5 +++++
+>   3 files changed, 20 insertions(+)
+> 
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index a95c5bf50302a7394582dcc493d96aef00b47dc8..380a55d6e5ea280c8f44016c7a8a1dcb8f4c00fe 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -172,12 +172,25 @@ typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
+>   extern VFIODeviceList vfio_device_list;
+>   
+>   #ifdef CONFIG_LINUX
+> +/*
+> + * VFIO backend I/O operation capabilities
+> + */
+> +#define VFIO_IO_CAP_DMA_BUF        (1ULL << 0)
+> +
+>   /*
+>    * How devices communicate with the server.  The default option is through
+>    * ioctl() to the kernel VFIO driver, but vfio-user can use a socket to a remote
+>    * process.
+>    */
+>   struct VFIODeviceIOOps {
+> +    /**
+> +     * @capabilities
+> +     *
+> +     * Bitmask of VFIO_IO_CAP_* flags indicating which features this
+> +     * backend supports.
+> +     */
+> +    uint64_t capabilities;
+> +
+>       /**
+>        * @device_feature
+>        *
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 8f7ae919a55dd9e08bdd072eee33f5b46a91aa2a..3ffd69a579b8ac135ef729d3d836c8545e36786b 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -648,6 +648,8 @@ static int vfio_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
+>   }
+>   
+>   static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
+> +    .capabilities = VFIO_IO_CAP_DMA_BUF,
+> +
+>       .device_feature = vfio_device_io_device_feature,
+>       .get_region_info = vfio_device_io_get_region_info,
+>       .get_irq_info = vfio_device_io_get_irq_info,
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index 47fdc2df349b65c6be6c9605b7a38a4e367f0475..0342ca712acd0ad846685115c29432c15aa966a0 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -293,6 +293,11 @@ static bool vfio_region_create_dma_buf(VFIORegion *region, Error **errp)
+>       size_t total_size;
+>       int i, ret;
+>   
+> +    /* Check if backend supports DMA-BUF creation */
+> +    if (!(vbasedev->io_ops->capabilities & VFIO_IO_CAP_DMA_BUF)) {
+> +        return true;
+> +    }
+> +
+>       total_size = sizeof(*feature) + sizeof(*dma_buf) +
+>                    sizeof(struct vfio_region_dma_range) * region->nr_mmaps;
+>       feature = g_malloc0(total_size);
 
+Applied to vfio-next.
 
-> On 10 Apr 2026, at 10:55=E2=80=AFAM, Harsh Prateek Bora =
-<harshpb@linux.ibm.com> wrote:
->=20
-> Hi Ani,
->=20
-> On 10/04/26 9:12 am, Ani Sinha wrote:
->>> On 9 Apr 2026, at 9:40=E2=80=AFPM, Harsh Prateek Bora =
-<harshpb@linux.ibm.com> wrote:
->>>=20
->>> When kvm_cpu_exec() returns EXCP_HLT due to =
-kvm_arch_process_async_events()
->>> returning true, it was returning before releasing the BQL (Big QEMU =
-Lock).
->>> This caused a lock imbalance where the vCPU thread would loop back =
-to
->>> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
->> I am not sure I understand this. Seems kvm_cpu_exec() does expect =
-that the caller holds bql before calling the function. Where is the lock =
-imbalance?
->=20
-> The issue is not that kvm_cpu_exec() doesn't expect the caller to hold =
-the BQL - it does. The problem is that kvm_cpu_exec() has inconsistent =
-BQL handling across its return paths.
->=20
-> Normal execution path:
->=20
-> int kvm_cpu_exec(CPUState *cpu)
-> {
->    // BQL held on entry (from caller)
->=20
->    if (kvm_arch_process_async_events(cpu)) {
->        return EXCP_HLT;  // =E2=86=90 Returns with BQL STILL HELD
->    }
->=20
->    bql_unlock();  // =E2=86=90 Normal path unlocks here
->    // ... KVM execution loop ...
->    bql_lock();    // =E2=86=90 Re-acquires before returning
->    return ret;
-> }
+Thanks,
 
-Yes the semantics of the function kvm_cpu_exec() is that it should =
-always return with bql in locked state. This is because the caller =
-kvm_vcpu_thread_fn() calls this function with bql locked and if you see =
-the end of kvm_vcpu_thread_fn(), it releases the lock.
-
-So if kvm_cpu_exec() unlocks bql internally, it has the responsibility =
-to lock it again before returning. This makes the locking and unlocking =
-symmetric.
-
-
->=20
-> The lock imbalance:
->=20
-> When kvm_arch_process_async_events() returns true, the function =
-returns EXCP_HLT before the bql_unlock() call.
-
-Why should it unlock it before returning? In fact it=E2=80=99s opposite. =
-If the function had unlocked bql, it should lock it again before =
-returning.
-
-> This means the early return path keeps the BQL held,
-
-This would be the correct thing to do.
-
-> while the normal execution path releases and re-acquires it.
-
-Because the functions it calls after unlocking requires bql to be =
-unlocked. Since it had to unlock it, it locks it again before returning.
-
-> The caller (kvm_vcpu_thread_fn()) loops back and calls kvm_cpu_exec() =
-again, but now the BQL is already held from the previous iteration
-> This creates a situation where the BQL is never released between =
-iterations when EXCP_HLT is returned.
->=20
-> Why this matters:
-> On PowerPC pseries with halted secondary vCPUs =
-(start-powered-off=3Dtrue), these vCPUs repeatedly call kvm_cpu_exec() =
-which returns EXCP_HLT. Each iteration accumulates BQL holds, preventing =
-other threads (including CPU 0) from making progress.
-
-This seems like some kind of architectural issue with PowerPC. =
-Shouldn=E2=80=99t qemu_process_cpu_events() -> =
-qemu_cond_wait(cpu->halt_cond, &bql) block other secondary cpus? Then =
-the main cpu does a qemu_cpu_kick() to make them active again at some =
-point?
-
->=20
->>>=20
->>> The issue manifests as boot hangs on PowerPC pseries machines with =
-multiple
->>> vCPUs, where secondary vCPUs with start-powered-off=3Dtrue remain =
-halted and
->>> repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each =
-iteration held
->>> the BQL, preventing other operations from proceeding.
->>>=20
->>> The fix has two parts:
->>>=20
->>> 1. In kvm_cpu_exec() (kvm-all.c):
->>>   Release the BQL before returning EXCP_HLT in the early return =
-path,
->>>   matching the behavior of the normal execution path where =
-bql_unlock()
->>>   is called before entering the main KVM execution loop.
->>>=20
->>> 2. In kvm_vcpu_thread_fn() (kvm-accel-ops.c):
->>>   Re-acquire the BQL after kvm_cpu_exec() returns EXCP_HLT, since =
-the
->>>   loop expects to hold the BQL when calling kvm_cpu_exec() again.
->>>=20
->>> This ensures proper BQL lock/unlock pairing:
->>> - kvm_vcpu_thread_fn() holds BQL before calling kvm_cpu_exec()
->>> - kvm_cpu_exec() releases BQL before returning (for EXCP_HLT)
->>> - kvm_vcpu_thread_fn() re-acquires BQL if EXCP_HLT was returned
->>> - Next iteration has BQL held as expected
->>>=20
->>> This is a regression introduced by commit 98884e0cc1 ("accel/kvm: =
-add
->>> changes required to support KVM VM file descriptor change") which
->>> refactored kvm_irqchip_create() and changed the initialization =
-timing,
->>> exposing this lock imbalance issue.
->>>=20
->>> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM =
-VM file descriptor change")
->> I do not think this is the right reference. The above commit may have =
-exposed some underlying issue but is certainly not the cause of it. =
-Further, as we have discussed in the other thread, the changes in that =
-commit are not even getting executed.
->> Personally I think the core issue is somewhere else. I am not =
-convinced this is the proper fix.
->=20
-> Regarding commit 98884e0cc1:
->=20
-> Reverting the kvm_irqchip_create refactoring makes the problem go =
-away. This commit may have changed timing that exposed the issue, but =
-the root cause is the pre-existing BQL lock imbalance in kvm_cpu_exec(). =
-We can either:
->=20
-> Remove the "Fixes:" tag entirely, or
-
-Lets remove fixes tag entirely unless you can pin point the exact commit =
-that introduced the architectural issues.
-
-> Add a note that this is a pre-existing issue exposed by timing changes
-> The core fix (releasing BQL before returning EXCP_HLT) is correct and =
-addresses the actual deadlock mechanism.
->=20
->>> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
->>> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
->>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>> ---
->>> accel/kvm/kvm-accel-ops.c | 4 ++++
->>> accel/kvm/kvm-all.c       | 1 +
->>> 2 files changed, 5 insertions(+)
->>>=20
->>> diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
->>> index 6d9140e549..d684fd0840 100644
->>> --- a/accel/kvm/kvm-accel-ops.c
->>> +++ b/accel/kvm/kvm-accel-ops.c
->>> @@ -52,6 +52,10 @@ static void *kvm_vcpu_thread_fn(void *arg)
->>>=20
->>>         if (cpu_can_run(cpu)) {
->>>             r =3D kvm_cpu_exec(cpu);
->>> +            if (r =3D=3D EXCP_HLT) {
->>> +                /* kvm_cpu_exec() released BQL, re-acquire for next =
-iteration */
->>> +                bql_lock();
->>> +            }
->>>             if (r =3D=3D EXCP_DEBUG) {
->>>                 cpu_handle_guest_debug(cpu);
->>>             }
->>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>> index 774499d34f..00b8018664 100644
->>> --- a/accel/kvm/kvm-all.c
->>> +++ b/accel/kvm/kvm-all.c
->>> @@ -3439,6 +3439,7 @@ int kvm_cpu_exec(CPUState *cpu)
->>>     trace_kvm_cpu_exec();
->>>=20
->>>     if (kvm_arch_process_async_events(cpu)) {
->>> +        bql_unlock();
->>>         return EXCP_HLT;
->>>     }
->>>=20
->>> --=20
->>> 2.52.0
+C.
 
 
 
