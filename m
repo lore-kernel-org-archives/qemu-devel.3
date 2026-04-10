@@ -4,112 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ADA7F36B9A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 02:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4610AF36B9A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 02:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB1Ja-00017d-IX; Thu, 09 Apr 2026 22:09:46 -0400
+	id 1wB1KP-0001cU-CH; Thu, 09 Apr 2026 22:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wB1JY-00017P-Oj
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 22:09:44 -0400
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wB1KN-0001cL-Vm
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 22:10:36 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wB1JX-0006Nt-3f
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 22:09:44 -0400
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-9549a6448e6so339150241.2
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 19:09:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775786982; cv=none;
- d=google.com; s=arc-20240605;
- b=C0k97bBHFLBumM5nRVei3+C/EqO4yzH+b199xHqraF5CcOsasIfUmiqXo+z0KwPC1y
- WOVYXUJoMSPh8Dbi+Z8jmNZpS3MNTV6eghqRExtsne+7VXMT9edxBaWfii0NC82gXehf
- SPA21GBt0qheSGaY0KoOfNXOV/ejd3HZ+8/jhM2GfeQYopp4p8j0RkxCJwUPNs5Nwnpn
- mZE1vNYVCl93fJT9RcSKma/JX84txEtL6bE4xN2KwvayvMxY3hos4TrHlNRknbf468S8
- 3aIqIlRcg7dEqU1ThgKvB83WOEAer33Vxvpva8zHRlw9I8mequf+KvsUj8IIBgr+4XVi
- w7qA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fu9VAJi4oofOw449zoo1nqP2TsOt/Fusn6qpq5HBG4Q=;
- fh=mCZyUOZNBC0wi5TF8haytF29amPSn9tvfwStsFR2vvw=;
- b=FYVNzyr0rtN3x67aui1z5BKpg6UP1SVycW1nlGdXRzzaAadzlwJslZZs5/XBsU+us0
- ceoo6sm7qFyioxMTfKLqzFXwPOmSOcfJmBjVKVcDeMHVVKW3C9vuooa2pxF5CsheKzqT
- sDM5HZBzPWljY5g8UO4KGDGBtLUtKtRJZvia8PTUFj7Czw8Lx/SOHMWB9WZToski9a0l
- XtnYlYRmYdXjEJU3HmEXbK7/Pz/9aZX1tYx5W9ANxNu8Rrat3OVJJb727l9UGPJ4ZpIq
- zHZY8oNvgsbCfVqQKcEBxkBVXm43WieaNK1gCOTZFK/dLZDvTOCRxZMnvQYnoCCNuDFz
- 7FxA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wB1KM-0006nr-9X
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 22:10:35 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-82748257f5fso861933b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 19:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775786982; x=1776391782; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fu9VAJi4oofOw449zoo1nqP2TsOt/Fusn6qpq5HBG4Q=;
- b=JqSCl5CZsS7NxV02Yem2VT6J+um8YJPJviPjbYvKROM7/BNeRLRsuN1N4+rVcaQMIg
- lSh7MlSy36O2DKEAr9N+8vtxUKs62wylbptcvjhArtLkFb0VcoeK1K5awV2jdEKDDviB
- YGwOG7a6LOI/G4/hkVhqD976tsnl7/RsUNE1VeklEedIg6er13HXQf4C+gwyU46YQpwr
- 3lI6tNFe7oYmSD56DV35ATB36zseGD3CoBKEHxs4DH+PTtxDTw6eOxaIXyOKpCqfO2Iq
- QdSE45IktHWcBubPyQxOXfijBzOyYlpYgBky3Bd4pwN/QqTNwuxgqR/eqidWmUtFmH69
- ed8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775786982; x=1776391782;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1775787032; x=1776391832; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fu9VAJi4oofOw449zoo1nqP2TsOt/Fusn6qpq5HBG4Q=;
- b=d0mbHebbc+64Z9TEMmAydcrbDU8Cz83yg25nxiomP/CaKWsUHD+87ce/ORpTGldizM
- NBXwjPDiCDu9GSd0EcJjc/Fz2bR19rG6ZwRmI4qtZESZ6KzPPSjlZpLXmfedP/DY58gZ
- OBz2kP57UeGkREVzHoEuBtOwEohUK6+1mP77/OJ8VyQ1T88lQMOyu2wyOlHtcqwEpIUf
- 5Dli4SSp8VhT+txHJk1gJ29xnhyoxxw0FqlaCH+bD/0K/pgmSTPYdbJGnm7c8y3nomVB
- 8cERPKpGnnpzu2Rf+wkAChogJOzecDYusSJSw2v2MLpc66G+3mc84xueGbasaKPO5wKg
- sv6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSjBX+ibI+sXsFpk9l1BJD5Vj3Kl/X8+zsVzxfZyM7zvKlSk2KRKUKsITuQ7dVIiUD/VXCxaO2MJye@nongnu.org
-X-Gm-Message-State: AOJu0YzRXYit5NRA1dvYcRvuVfoa5d1cPph+cU3ptDVfrYQ2AqRVbvPM
- tvPX2+0gaBAvFM/xaU2rISSeQNcM5gE5tuKZKdrBAATTnbn100zWdWnwB1lz1OVLnW8fjTLHCna
- 4noDDqpTq8CbcylYkBWv4CtEXLw3+jGc=
-X-Gm-Gg: AeBDiev5x+Rg6864cYxf7YCJIa5AxQbDwPOS1Z1+HpUMFvbfgT3gCQ2XBIQhDzIfE37
- 38qrLNHnslLvAMNHwoVaLLan8jn7HsK/LulLhqNsVbbX9ap3gJRnV/ZAszO42uCRxND2+seZTl/
- jDm/Xl0oISKHpq6YfMb9x2eLQrX/hyvnT0EAnNsxM8NhStlmWIxSm/LK0KAQMZsmwkM/x4jpxoI
- e1KqY99o+hVpuQLLxCppKAY3THF1fus2Mdz6R/tExNesyEwTzrDty46R2C2PjQRnsueOZLkLGir
- Hr338lap/ss7m9MvOXzWkBOhoitv2iiWfEzfQ7fruT69k92n8l3HcC5ABr0cC3HU7fCGlHvJ0cW
- HtiwO
-X-Received: by 2002:a05:6102:3e23:b0:609:af4a:371 with SMTP id
- ada2fe7eead31-60a00e44326mr562833137.23.1775786981269; Thu, 09 Apr 2026
- 19:09:41 -0700 (PDT)
+ bh=K0Vrk8P+efqDxb52ticYDuHDNcPgXUDIOcGYeEVKT6U=;
+ b=e0NqSodXg+kFCiyM9CAbrYxu/uDrLnuJ/FCaLIpTxs84iqYxUN3iH18U9go8DysXHd
+ w9Dbuw9YQX7xy4epzyp8wEvQ1YI+IZGp7Iyxr0acgQqxEroZ4fFdw/87CAvHTENmbRh7
+ hqGEnZBv3I9mbfdKtIvI3To1h0ihnTURewmzE89MmZLjSnViHVO56uXC2CcqaYjyBBPI
+ 5kafUs50NS3IlxsgLWnd9xV1SnvTMSEh6ky65uxFmSAdjCgUU7Y3RkYK6f+RQn7cOsZT
+ /zNhdRRK6L16zqZQp6Y/CerSUDEJRamA6XE0I34wr+NNZRTE1FXZAoHGeNlS4KkL2i/N
+ kBpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775787032; x=1776391832;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K0Vrk8P+efqDxb52ticYDuHDNcPgXUDIOcGYeEVKT6U=;
+ b=R+YvsvYIbjR3xRKfIL8kJou7/HuSNgA90FRPOgCa3rNGGYy+Vf9nMBFCuANZflRnLQ
+ qRB4z5w3aiSf+GzFItVKYV/D7QSAhRnVmMP5DqrVWgXHQmVRZ2juy05w/sNgnJj7chIv
+ MvUReAtabJuT7P0PRPrJnIkqGVWfvTCi7stnd/5nc0aWt//n+i61I9y6v8+3PBdW7GUw
+ tErv7NsjnqfvXkRVDlWCrgxAryjraeQkfCQA7R1oIPZ7+0PA6E2GPhQqD1q+EVFd70Oy
+ vJ1b7PpNlWtWzbMHWSq9BqSrKHzTygRPD8uu8mTf7NK7d8PnQddKEhjcslWoL7ytE2jv
+ P96g==
+X-Gm-Message-State: AOJu0Yybv8ALPgGJqCU1NGFObIa3NU0B3IgPulZklhBnzBSeVKJGZKTL
+ apnv2Z3IEVbO/Jc3gTBQQ5OnNkTjAJHttle+iXHgB52EbB9gkz7GWcGlpItGGEhFVhB+/fGOFZH
+ xTgmS
+X-Gm-Gg: AeBDieu5137jUOrATe65eL+46NuCyyuciblkWY4Pv814WM/GSLCbJnJiyqh1FtOIddz
+ l4kruPDhkb0RueC1mlZw+ImsNIgRVAQUGT76gRLbvVaET9xM90He+WZsQaJrABXuOIXEGBei7uC
+ mWvD+3a8bLqTl7kRbehcIoIeu3g9JiVHFYk4nrSr6C6SbVsJidaJ3rLf5fY6FJdhHIWlYU4LrNe
+ OUQUHNRWNeGFa4Kz0a7kAWR8duw67a/O9IOkXDRifxO8PXQuu+x7VxF9E4SCzLT/uczBL9uOCJe
+ R7lRKamkPvZk6ALXqEXzs4YMfxjP6DYaBuP0uyxEvG59IRn8QPYgW9beR5067qgVXj6bY6WZQCU
+ d90MUv3TpzqcadwhJqbL3O9m4zsdOi7z54ASyc6JAXqf6VF4ujacQWrQvG3svt6RBxTimuPZKZ+
+ xQ9ICPCcFAnNJZQ3cLZhZrc762Kt/WHgBZP4CUSsriv3J5Gk8MiQ85OgSpLdnw+sIe+TcC7E1/p
+ IE6OQ==
+X-Received: by 2002:a05:6a21:6d94:b0:39f:7183:b1ee with SMTP id
+ adf61e73a8af0-39fc93791d3mr6120808637.15.1775787032158; 
+ Thu, 09 Apr 2026 19:10:32 -0700 (PDT)
+Received: from [192.168.1.105] (124-150-69-109.tpgi.com.au. [124.150.69.109])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c7921a3e6d2sm664340a12.32.2026.04.09.19.10.30
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Apr 2026 19:10:31 -0700 (PDT)
+Message-ID: <00b95efa-81de-43e1-811a-0ca63fac4449@linaro.org>
+Date: Fri, 10 Apr 2026 12:10:26 +1000
 MIME-Version: 1.0
-References: <20260408184228.44242-1-james.hilliard1@gmail.com>
- <CAFEAcA_Jt3SmuTiLWxuVQuktAG=M5C-Ux7OYKcGwPUBSETegew@mail.gmail.com>
- <CADvTj4rMoQi-ic=q=TJ5Dz6_GhHhR=JNhMoRhfKCFAuZzhUpzw@mail.gmail.com>
- <CAFEAcA_JPnWh22zhb+ajr76oKtFRoCZSZpsVW51m08eWrMZS5w@mail.gmail.com>
- <CADvTj4qUY6=b56LeHb+fZBEdvFPPR9dMFkYEjNhtN=BipOaEog@mail.gmail.com>
- <46b5a434-10de-4ff2-aaca-636fc7a85180@linaro.org>
-In-Reply-To: <46b5a434-10de-4ff2-aaca-636fc7a85180@linaro.org>
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 9 Apr 2026 20:09:30 -0600
-X-Gm-Features: AQROBzCGo3_-1AGKUe4rgZzfUZpYoxaFQfw5QjjwbrElF0cxNC7ChXStET0rDHM
-Message-ID: <CADvTj4pQXVt=mTidKeaJRfP8mzSgnDyOWgNzA0J8Y-Qi8X2d6Q@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/mips: keep k0 in sync with CP0_UserLocal
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ua1-x932.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] linux-user/mips: sync k0 TLS for
+ EF_MIPS_MACH_OCTEON userlands
+To: qemu-devel@nongnu.org
+References: <20260410020012.98778-1-james.hilliard1@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260410020012.98778-1-james.hilliard1@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -127,87 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 9, 2026 at 3:07=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> On 9/4/26 23:00, James Hilliard wrote:
-> > On Thu, Apr 9, 2026 at 2:17=E2=80=AFPM Peter Maydell <peter.maydell@lin=
-aro.org> wrote:
-> >>
-> >> On Thu, 9 Apr 2026 at 20:47, James Hilliard <james.hilliard1@gmail.com=
-> wrote:
-> >>>
-> >>> On Thu, Apr 9, 2026 at 10:17=E2=80=AFAM Peter Maydell <peter.maydell@=
-linaro.org> wrote:
-> >>>>
-> >>>> On Wed, 8 Apr 2026 at 19:43, James Hilliard <james.hilliard1@gmail.c=
-om> wrote:
-> >>>>>
-> >>>>> MIPS glibc startup expects the thread pointer to be live in both
-> >>>>> CP0_UserLocal and k0. linux-user already updates CP0_UserLocal for
-> >>>>> cpu_set_tls() and TARGET_NR_set_thread_area, but it leaves gpr[26]
-> >>>>> unchanged.
-> >>>>>
-> >>>>> A guest can therefore successfully execute set_thread_area() and st=
-ill
-> >>>>> reach __pthread_initialize_minimal() with k0 =3D=3D 0, faulting on =
-the
-> >>>>> first TLS-relative store.
-> >>>>>
-> >>>>> Make cpu_set_tls() synchronize k0 with CP0_UserLocal, and route the
-> >>>>> MIPS set_thread_area syscall through cpu_set_tls() so all guest TLS
-> >>>>> updates follow the same path.
-> >>>>
-> >>>> Where does the kernel do this? Looking at the mips set_thread_area()
-> >>>> https://elixir.bootlin.com/linux/v6.19.11/source/arch/mips/kernel/sy=
-scall.c#L87
-> >>>> it looks like it sets CP0_UserLocal plus the tp_value field in the
-> >>>> thread_info struct; and I can't immediately see anywhere where it
-> >>>> would read either CP0_UserLocal or tp_value and put it into k0.
-> >>>
-> >>> So this seems to be something used by the vendor SDK for Octeon1
-> >>> but not Octeon2 and Octeon3 targets, kinda strange/annoying.
-> >>>
-> >>> I also found this:
-> >>> https://lists.gnu.org/archive/html/qemu-devel/2011-08/msg02026.html
-> >>
-> >> Ah, nice find.
-> >>
-> >>> It's in the Octeon vendor kernel here looks like:
-> >>> https://github.com/MarvellEmbeddedProcessors/Octeon-Linux-kernel-4.14=
-/blob/5c48e5031fbd86361e8185f6c530ffcfa5c9a60d/arch/mips/kernel/syscall.c#L=
-94-L96
-> >>
-> >> Mmm. We emulate the upstream kernel, not vendor forks, so
-> >> we wouldn't want to set k0 here I think.
-> >
-> > Yeah, I was trying to see if there was some sort of way to trivially
-> > identify binaries that require this k0 support and autoenable a quirk
-> > but I didn't find anything, maybe it would make sense to have a
-> > separate runtime target for enabling this k0 quirk since it seems a
-> > lot of octeon binaries require it?
->
-> What about (untested):
->
-> -- >8 --
-> diff --git a/linux-user/mips/target_cpu.h b/linux-user/mips/target_cpu.h
-> index 0a000ac8f35..c4aa08df4a3 100644
-> --- a/linux-user/mips/target_cpu.h
-> +++ b/linux-user/mips/target_cpu.h
-> @@ -36,7 +36,9 @@ static inline void cpu_clone_regs_parent(CPUMIPSState
-> *env, unsigned flags)
->   static inline void cpu_set_tls(CPUMIPSState *env, target_ulong newtls)
->   {
->       env->active_tc.CP0_UserLocal =3D newtls;
-> -    env->active_tc.gpr[26] =3D newtls;
-> +    if (env->insn_flags & INSN_OCTEON) { /* Octeon1 */
-
-INST_OCTEON isn't OCTEON1 specific, but we could do something like this:
-https://lore.kernel.org/qemu-devel/20260410020012.98778-1-james.hilliard1@g=
-mail.com/
-
-> +        env->active_tc.gpr[26] =3D newtls;
-> +    }
->   }
+On 4/10/26 12:00, James Hilliard wrote:
+> Cavium Octeon userspace is not following a generic MIPS Linux TLS
+> ABI rule here. Older Octeon glibc uses the k0 register as the fast
+> thread pointer, while newer Octeon2 and Octeon3 glibc variants use
+> the normal rdhwr $29 path.
+> 
+> linux-user already updates CP0_UserLocal for cpu_set_tls() and
+> TARGET_NR_set_thread_area, but it does not keep gpr[26]
+> synchronized. That leaves EF_MIPS_MACH_OCTEON userlands able to
+> complete set_thread_area() and still reach pthread startup or
+> pthread_self() with a stale k0 value.
+> 
+> Use the existing MIPS ELF machine flags from linux-user/elfload.c and
+> mirror CP0_UserLocal into gpr[26] only for EF_MIPS_MACH_OCTEON.
+> 
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 > ---
+> Changes v1 -> v2:
+>    - only enable on EF_MIPS_MACH_OCTEON
+> ---
+>   linux-user/elfload.c         | 3 +++
+>   linux-user/mips/target_cpu.h | 5 +++++
+>   linux-user/qemu.h            | 1 +
+>   linux-user/syscall.c         | 2 +-
+>   4 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index 59b543f740..0e757787d2 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -1476,6 +1476,9 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+>       /* Usual start for brk is after all sections of the main executable. */
+>       info->brk = TARGET_PAGE_ALIGN(hiaddr + load_bias);
+>       info->elf_flags = ehdr->e_flags;
+> +#ifdef TARGET_MIPS
+> +    info->use_k0_tls = (ehdr->e_flags & EF_MIPS_MACH) == EF_MIPS_MACH_OCTEON;
+> +#endif
+
+Note that we've just stored e_flags in info->elf_flags.
+Better placement for this is in mips/cpu_loop.c, init_main_thread.
+
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
