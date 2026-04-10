@@ -4,72 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F15DAE9906B
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 10:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484D9E99077
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 10:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB8hJ-00065w-Ta; Fri, 10 Apr 2026 06:02:45 -0400
+	id 1wB8k6-0007Iw-Uv; Fri, 10 Apr 2026 06:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB8h2-00063Q-8l; Fri, 10 Apr 2026 06:02:29 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wB8k5-0007IH-00
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 06:05:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB8gt-0000Mz-Tv; Fri, 10 Apr 2026 06:02:25 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63A2PQJq2592704; Fri, 10 Apr 2026 10:02:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wgS69K
- u+w8Lfzd1Ui3J71zR0yx7I5Sie+M7fdcFnTzQ=; b=ecP6yYXgK7OAkaUbJyrdQB
- LrOhBypONmXt26CO9AO1ROR0ppVjn26O+Mc20gPqWU9YYZXKMXDTI9IwoYzrfN/Z
- VwRc8v7MUutE5YC1aRIz1EDoX6wAUtbzAqrbWc7vW40G43Gd29QMIx0lgCzwUe3r
- wW0v8JXnZRYVVsJ7bbCBgow4QasIMpJWJxhhlmVt/BPD4ZQU/RDcCU8hVAZtZauu
- 83CrOToKtJ2l/sYWyGKqEiZQNPIsO9LNdaURKLfW75JYkeYYGe8xnKP/xF02BFkQ
- 1Eavj0LllwTBd4Zm33mvo2ML1ch6hmKbjXtlsJz8f6z3iHIOdjDE7B7b1A2rw9hA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2ehcc3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 10:02:10 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63A8UpWu026661;
- Fri, 10 Apr 2026 10:02:09 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg87djj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 10:02:09 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63AA28cf29229602
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Apr 2026 10:02:08 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2326F58066;
- Fri, 10 Apr 2026 10:02:08 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F38C58055;
- Fri, 10 Apr 2026 10:02:05 +0000 (GMT)
-Received: from [9.124.212.238] (unknown [9.124.212.238])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Apr 2026 10:02:04 +0000 (GMT)
-Message-ID: <852c5863-8f56-473d-ad92-a56a80f3ce71@linux.ibm.com>
-Date: Fri, 10 Apr 2026 15:32:03 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wB8k2-0001On-VD
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 06:05:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775815533;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PLQxTuoOSmu7wueIRZEqqREP+YovMsVy7W3Hn70m5Ls=;
+ b=Ew2f2qur3mDcaGgkijuKuQ4FFYgsTQpXQANc4djNEY10aaFreLTYk6mQy49tUEififw1d8
+ 3rhjpdmOXBTMf9Rig1omsJGTTwlzaiHQXvAcmtxK0dUwYryJjMBa0lK/FbZ6+9GmR2J3oP
+ 1k0v773GXUenQ2xln1kLC6IddSL47vw=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-C52WqwPKMgiYPXprdhNWaA-1; Fri, 10 Apr 2026 06:05:32 -0400
+X-MC-Unique: C52WqwPKMgiYPXprdhNWaA-1
+X-Mimecast-MFC-AGG-ID: C52WqwPKMgiYPXprdhNWaA_1775815531
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-82a88a2704fso906350b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 03:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775815531; x=1776420331; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PLQxTuoOSmu7wueIRZEqqREP+YovMsVy7W3Hn70m5Ls=;
+ b=asHE0TfVH9L9gdZo5PMm/Qf15WsPTZ+tgCPCuiiP+ycESME/YujXK2XyhTSe65xX1D
+ B6PfaEyNLJZB/Ei+DfmGnFzpkfk6JK1jDhcQ2lj7y97sivQ36pqyygL4THjqqRN0w4qj
+ b9OUlI9TRfcwuX99HwhHK8AJ/jgQyJoQVkiCXKW6Bfa5FA/Yob5BE0fXZ2f8cTFU11zf
+ r/ItCp7ZFUYGGupLKE2w+WXDgeME0yo2zdMVtErIpq70ZOA7E8+glZ2/2zpVSfeaHggi
+ 5d2lPjPFlvZCiRHNxpR7ewyrHhnjGQWXJyF504SbqOIah8G0rrejGupg8k79u4Sln4Vl
+ SBYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775815531; x=1776420331;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PLQxTuoOSmu7wueIRZEqqREP+YovMsVy7W3Hn70m5Ls=;
+ b=dgEcGJMgtNytxQajy7HVDj8sCF+GSvfTO6i6A7sC6zh3thvxOQRV0ZgmSknqTH5TZ9
+ EO0e3KA+mMM0El5UA8kvDiLyst08C+Ce6pL5TqXsZ3d4QR28Lo56w1xSvlgUR/KewqIr
+ uK0Q7rF8QaFDLAZjPWgSG//HNgC8akvziXmxI4jWsDVkC1f5w9wG+gTeuW20TD9CnM8o
+ ZnW4yEUkJjhlPEhEU+EJOdj2oG2MYFcBbW1V4ShRfUXaPx1JwdVNIIW1m0rJikeIpXOB
+ Cfm96tUY39wIftlNCZQ0l4vdkiuiSyNnyjzKNKQPqTM7WPBqbwUi05EU7yutO6J0jmXy
+ 1Img==
+X-Gm-Message-State: AOJu0YxlWb69gbTcjCb5snZ3FidNi4Jhnzo4VDu9limj1IzhLeIefbIl
+ HU+lTDE5vyxfN6MxzH3bKG2K4mRF3V7GJSDdRNd8r/arqmT+WxHyuqY6qdP9u8JHu2/oBZb8VJD
+ MeP545NenjHp3yU/T5mFsw13HH2K5rqn9pC73zSecz3rTvJCVi70XFMWzxmGe3uUV
+X-Gm-Gg: AeBDieu2rbS0KuKcY1xFpIobf5w+7fMR8zyldCaJY1aEB0MXtoeiQ4ITL1gYbW/8JY1
+ BFuIBYynmegZgwCWtuQ7KJ4Hmnvctf+btOvwCmSsuqxpSgJ1mW39+Ldza5YlfeGEEenOkhawP1/
+ 1ucL/FcDb6vWr783e/CZdjiN7/qUYrZ6/ygU9Um8xUlIeFiiG8AdBMEwWGWhsfYVXIvuRL4rs/3
+ Y8DG+fpqy3tAjDc1UQ36nFWUbD6t2hcoFAdCpJo9s9zqKYyNNyNx12sAKQxjtfCq12W3oRCijQy
+ ZHQsuQ/FJom98lpkEyzWgGXOHhG60GNfA4RoRBHo4tG2AYeDfg9FWN++8FZJ8At4Kix3rqj0ykb
+ 0p3bTe95OiCSfc/8xz4AYWCeveEdpgUb8n1sZcufuClQiCAyXJZ7kwitczJTRz+oz4Nfv7YnBz7
+ A=
+X-Received: by 2002:a05:6a00:2e08:b0:82c:c390:ad77 with SMTP id
+ d2e1a72fcca58-82dd8a1dbb5mr6256999b3a.7.1775815530790; 
+ Fri, 10 Apr 2026 03:05:30 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2e08:b0:82c:c390:ad77 with SMTP id
+ d2e1a72fcca58-82dd8a1dbb5mr6256960b3a.7.1775815530087; 
+ Fri, 10 Apr 2026 03:05:30 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82f0c4e3d41sm3109682b3a.48.2026.04.10.03.05.26
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 10 Apr 2026 03:05:29 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
 Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
  kvm_cpu_exec
-Content-Language: en-GB
-To: Ani Sinha <anisinha@redhat.com>
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <852c5863-8f56-473d-ad92-a56a80f3ce71@linux.ibm.com>
+Date: Fri, 10 Apr 2026 15:35:13 +0530
 Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
  misanjum@linux.ibm.com, gautam@linux.ibm.com,
  Peter Maydell <peter.maydell@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <89EDA797-28E3-46A1-A464-8AFE9FB534BD@redhat.com>
 References: <20260409161042.55281-1-harshpb@linux.ibm.com>
  <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
  <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
@@ -78,46 +106,19 @@ References: <20260409161042.55281-1-harshpb@linux.ibm.com>
  <69167029-AE49-4BB3-9A5C-D16E51E5D40F@redhat.com>
  <07f76b99-ff79-4480-af02-c43e2779d179@linux.ibm.com>
  <34DB9C06-ED15-42BF-A7BB-AF1BBC170ADA@redhat.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <34DB9C06-ED15-42BF-A7BB-AF1BBC170ADA@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: vagoCx_FyNWv3Hb4jTCK_dlOZJTcoDSw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA5MSBTYWx0ZWRfX69D1KmR9mWna
- JAW1SIU9dPltkBe2E2n4GELzPp/2tfodTh/v7g124YLFnYR+JjTUB4NNqqFIp20mTh4dAL3Xksl
- iH7kLUO6bNn0iSiq+5bBRL/5EdJ5IRkoZ7mjGWwuHJSh/zrzMgI+hAQFtbIQ9oZ1fApA92TLcrL
- GCa4d18bgUd0GdbNUw7L0OkgW3yJUFa9aIdFUlY1hDR3X3gUdtlFC9Tvoye3CLYQhw0ZjchBnKf
- SMH5rkYkwuD3vzEGtGd77lOH7H3CBKEjMPFv1OID88Ko8iSMRRN5+I0FwJKZQ1tvrHxGRuPayr3
- V3wZ+SQx218UD0VjOLu7QYzWEfacUpxDSWtmGENoH8gLiaY1ypZSA05pxlzCxzSazf46qQYkHxZ
- tt/gjqr8gtbBplRJhfj+CJj0E8yVRDNiBkXUzWyeshiyRbz2RFS1ufP/6Ppwvg1Mtfq4erAYaKJ
- BIMkfq40o7GYvt2mvOg==
-X-Authority-Analysis: v=2.4 cv=Cfw4Irrl c=1 sm=1 tr=0 ts=69d8caa2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
- a=VnNF1IyMAAAA:8 a=tSrD7f4uqpc6jKVmcS8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10
-X-Proofpoint-GUID: 43nQ6WNteqXZWkNfP5dF_ThGRFvaTMi5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-10_03,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100091
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ <852c5863-8f56-473d-ad92-a56a80f3ce71@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,178 +136,138 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10/04/26 3:01 pm, Ani Sinha wrote:
-> 
-> 
->> On 10 Apr 2026, at 2:31 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>
->>
->>
->> On 10/04/26 1:59 pm, Ani Sinha wrote:
->>>> On 10 Apr 2026, at 1:48 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>
->>>>
->>>>
->>>> On 10/04/26 12:05 pm, Ani Sinha wrote:
->>>>>> On 10 Apr 2026, at 10:55 AM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>>>
->>>>>> Hi Ani,
->>>>>>
->>>>>> On 10/04/26 9:12 am, Ani Sinha wrote:
->>>>>>>> On 9 Apr 2026, at 9:40 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>>>>>
->>>>>>>> When kvm_cpu_exec() returns EXCP_HLT due to kvm_arch_process_async_events()
->>>>>>>> returning true, it was returning before releasing the BQL (Big QEMU Lock).
->>>>>>>> This caused a lock imbalance where the vCPU thread would loop back to
->>>>>>>> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
->>>>>>> I am not sure I understand this. Seems kvm_cpu_exec() does expect that the caller holds bql before calling the function. Where is the lock imbalance?
->>>>>>
->>>>>> The issue is not that kvm_cpu_exec() doesn't expect the caller to hold the BQL - it does. The problem is that kvm_cpu_exec() has inconsistent BQL handling across its return paths.
->>>>>>
->>>>>> Normal execution path:
->>>>>>
->>>>>> int kvm_cpu_exec(CPUState *cpu)
->>>>>> {
->>>>>>     // BQL held on entry (from caller)
->>>>>>
->>>>>>     if (kvm_arch_process_async_events(cpu)) {
->>>>>>         return EXCP_HLT;  // ← Returns with BQL STILL HELD
->>>>>>     }
->>>>>>
->>>>>>     bql_unlock();  // ← Normal path unlocks here
->>>>>>     // ... KVM execution loop ...
->>>>>>     bql_lock();    // ← Re-acquires before returning
->>>>>>     return ret;
->>>>>> }
->>>>> Yes the semantics of the function kvm_cpu_exec() is that it should always return with bql in locked state. This is because the caller kvm_vcpu_thread_fn() calls this function with bql locked and if you see the end of kvm_vcpu_thread_fn(), it releases the lock.
->>>>> So if kvm_cpu_exec() unlocks bql internally, it has the responsibility to lock it again before returning. This makes the locking and unlocking symmetric.
->>>>>>
->>>>>> The lock imbalance:
->>>>>>
->>>>>> When kvm_arch_process_async_events() returns true, the function returns EXCP_HLT before the bql_unlock() call.
->>>>> Why should it unlock it before returning? In fact it’s opposite. If the function had unlocked bql, it should lock it again before returning.
->>>>>> This means the early return path keeps the BQL held,
->>>>> This would be the correct thing to do.
->>>>>> while the normal execution path releases and re-acquires it.
->>>>> Because the functions it calls after unlocking requires bql to be unlocked. Since it had to unlock it, it locks it again before returning.
->>>>
->>>> It had to unlock it for the same reason - to give others a chance to lock. We need to handle failure/exception cases for the same purpose as well.
->>> But by unlocking and returning you are breaking the semantics of the function and introducing imbalance.
->>
->> I think it is better to unlock bql early in failure cases.
->> Even Otherwise, it would become a bql_unlock followed by a bql_lock in the caller for EXCP_HLT, which might look a bit odd as well.
-> 
-> But you are doing exactly that across a function call.
-
-I am fine with either/or maintainer's choice.
-
-> 
->>
->> Paolo, suggestions?
->>
->>>>
->>>>>> The caller (kvm_vcpu_thread_fn()) loops back and calls kvm_cpu_exec() again, but now the BQL is already held from the previous iteration
->>>>>> This creates a situation where the BQL is never released between iterations when EXCP_HLT is returned.
->>>>>>
->>>>>> Why this matters:
->>>>>> On PowerPC pseries with halted secondary vCPUs (start-powered-off=true), these vCPUs repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each iteration accumulates BQL holds, preventing other threads (including CPU 0) from making progress.
->>>>> This seems like some kind of architectural issue with PowerPC. Shouldn’t qemu_process_cpu_events() -> qemu_cond_wait(cpu->halt_cond, &bql) block other secondary cpus? Then the main cpu does a qemu_cpu_kick() to make them active again at some point?
->>>>
->>>> KVM vCPUs need to enter the kernel to handle the halted state and therefore can run. On spapr, it is handled via start-cpu rtas call for which the handler in qemu does a qemu_cpu_kick(). However CPU 0 needs to be able to proceed before that stage is reached, but it hangs while trying to acquire bql_lock in qemu_default_main() whereas secondary vcpu is spinning with BQL held returning EXCP_HLT. This is causing deadlock.
->>> Without looking at the code, it seems there is a race condition in the way the vcpu threads are initialised in spapr. I think that needs fixing.
->>
->> I did explain the race condition observed above.
-> 
-> So why not fix it properly?
-
-I think the suggested fix is appropriate for this scenario.
-Keeping BQL held forever in a loop for EXCP_HLT case isnt the right 
+> On 10 Apr 2026, at 3:32=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>=20
+>=20
+>=20
+> On 10/04/26 3:01 pm, Ani Sinha wrote:
+>>> On 10 Apr 2026, at 2:31=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>>>=20
+>>>=20
+>>>=20
+>>> On 10/04/26 1:59 pm, Ani Sinha wrote:
+>>>>> On 10 Apr 2026, at 1:48=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>>>>>=20
+>>>>>=20
+>>>>>=20
+>>>>> On 10/04/26 12:05 pm, Ani Sinha wrote:
+>>>>>>> On 10 Apr 2026, at 10:55=E2=80=AFAM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>>>>>>>=20
+>>>>>>> Hi Ani,
+>>>>>>>=20
+>>>>>>> On 10/04/26 9:12 am, Ani Sinha wrote:
+>>>>>>>>> On 9 Apr 2026, at 9:40=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>>>>>>>>>=20
+>>>>>>>>> When kvm_cpu_exec() returns EXCP_HLT due to =
+kvm_arch_process_async_events()
+>>>>>>>>> returning true, it was returning before releasing the BQL (Big =
+QEMU Lock).
+>>>>>>>>> This caused a lock imbalance where the vCPU thread would loop =
+back to
+>>>>>>>>> kvm_cpu_exec() while still holding the BQL, leading to =
+deadlocks.
+>>>>>>>> I am not sure I understand this. Seems kvm_cpu_exec() does =
+expect that the caller holds bql before calling the function. Where is =
+the lock imbalance?
+>>>>>>>=20
+>>>>>>> The issue is not that kvm_cpu_exec() doesn't expect the caller =
+to hold the BQL - it does. The problem is that kvm_cpu_exec() has =
+inconsistent BQL handling across its return paths.
+>>>>>>>=20
+>>>>>>> Normal execution path:
+>>>>>>>=20
+>>>>>>> int kvm_cpu_exec(CPUState *cpu)
+>>>>>>> {
+>>>>>>>    // BQL held on entry (from caller)
+>>>>>>>=20
+>>>>>>>    if (kvm_arch_process_async_events(cpu)) {
+>>>>>>>        return EXCP_HLT;  // =E2=86=90 Returns with BQL STILL =
+HELD
+>>>>>>>    }
+>>>>>>>=20
+>>>>>>>    bql_unlock();  // =E2=86=90 Normal path unlocks here
+>>>>>>>    // ... KVM execution loop ...
+>>>>>>>    bql_lock();    // =E2=86=90 Re-acquires before returning
+>>>>>>>    return ret;
+>>>>>>> }
+>>>>>> Yes the semantics of the function kvm_cpu_exec() is that it =
+should always return with bql in locked state. This is because the =
+caller kvm_vcpu_thread_fn() calls this function with bql locked and if =
+you see the end of kvm_vcpu_thread_fn(), it releases the lock.
+>>>>>> So if kvm_cpu_exec() unlocks bql internally, it has the =
+responsibility to lock it again before returning. This makes the locking =
+and unlocking symmetric.
+>>>>>>>=20
+>>>>>>> The lock imbalance:
+>>>>>>>=20
+>>>>>>> When kvm_arch_process_async_events() returns true, the function =
+returns EXCP_HLT before the bql_unlock() call.
+>>>>>> Why should it unlock it before returning? In fact it=E2=80=99s =
+opposite. If the function had unlocked bql, it should lock it again =
+before returning.
+>>>>>>> This means the early return path keeps the BQL held,
+>>>>>> This would be the correct thing to do.
+>>>>>>> while the normal execution path releases and re-acquires it.
+>>>>>> Because the functions it calls after unlocking requires bql to be =
+unlocked. Since it had to unlock it, it locks it again before returning.
+>>>>>=20
+>>>>> It had to unlock it for the same reason - to give others a chance =
+to lock. We need to handle failure/exception cases for the same purpose =
+as well.
+>>>> But by unlocking and returning you are breaking the semantics of =
+the function and introducing imbalance.
+>>>=20
+>>> I think it is better to unlock bql early in failure cases.
+>>> Even Otherwise, it would become a bql_unlock followed by a bql_lock =
+in the caller for EXCP_HLT, which might look a bit odd as well.
+>> But you are doing exactly that across a function call.
+>=20
+> I am fine with either/or maintainer's choice.
+>=20
+>>>=20
+>>> Paolo, suggestions?
+>>>=20
+>>>>>=20
+>>>>>>> The caller (kvm_vcpu_thread_fn()) loops back and calls =
+kvm_cpu_exec() again, but now the BQL is already held from the previous =
+iteration
+>>>>>>> This creates a situation where the BQL is never released between =
+iterations when EXCP_HLT is returned.
+>>>>>>>=20
+>>>>>>> Why this matters:
+>>>>>>> On PowerPC pseries with halted secondary vCPUs =
+(start-powered-off=3Dtrue), these vCPUs repeatedly call kvm_cpu_exec() =
+which returns EXCP_HLT. Each iteration accumulates BQL holds, preventing =
+other threads (including CPU 0) from making progress.
+>>>>>> This seems like some kind of architectural issue with PowerPC. =
+Shouldn=E2=80=99t qemu_process_cpu_events() -> =
+qemu_cond_wait(cpu->halt_cond, &bql) block other secondary cpus? Then =
+the main cpu does a qemu_cpu_kick() to make them active again at some =
+point?
+>>>>>=20
+>>>>> KVM vCPUs need to enter the kernel to handle the halted state and =
+therefore can run. On spapr, it is handled via start-cpu rtas call for =
+which the handler in qemu does a qemu_cpu_kick(). However CPU 0 needs to =
+be able to proceed before that stage is reached, but it hangs while =
+trying to acquire bql_lock in qemu_default_main() whereas secondary vcpu =
+is spinning with BQL held returning EXCP_HLT. This is causing deadlock.
+>>>> Without looking at the code, it seems there is a race condition in =
+the way the vcpu threads are initialised in spapr. I think that needs =
+fixing.
+>>>=20
+>>> I did explain the race condition observed above.
+>> So why not fix it properly?
+>=20
+> I think the suggested fix is appropriate for this scenario.
+> Keeping BQL held forever in a loop for EXCP_HLT case isnt the right =
 thing to do.
 
-> 
->> Other architectures may have different timing that masks the issue.
->>
->>>>
->>>>>>
->>>>>>>>
->>>>>>>> The issue manifests as boot hangs on PowerPC pseries machines with multiple
->>>>>>>> vCPUs, where secondary vCPUs with start-powered-off=true remain halted and
->>>>>>>> repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each iteration held
->>>>>>>> the BQL, preventing other operations from proceeding.
->>>>>>>>
->>>>>>>> The fix has two parts:
->>>>>>>>
->>>>>>>> 1. In kvm_cpu_exec() (kvm-all.c):
->>>>>>>>    Release the BQL before returning EXCP_HLT in the early return path,
->>>>>>>>    matching the behavior of the normal execution path where bql_unlock()
->>>>>>>>    is called before entering the main KVM execution loop.
->>>>>>>>
->>>>>>>> 2. In kvm_vcpu_thread_fn() (kvm-accel-ops.c):
->>>>>>>>    Re-acquire the BQL after kvm_cpu_exec() returns EXCP_HLT, since the
->>>>>>>>    loop expects to hold the BQL when calling kvm_cpu_exec() again.
->>>>>>>>
->>>>>>>> This ensures proper BQL lock/unlock pairing:
->>>>>>>> - kvm_vcpu_thread_fn() holds BQL before calling kvm_cpu_exec()
->>>>>>>> - kvm_cpu_exec() releases BQL before returning (for EXCP_HLT)
->>>>>>>> - kvm_vcpu_thread_fn() re-acquires BQL if EXCP_HLT was returned
->>>>>>>> - Next iteration has BQL held as expected
->>>>>>>>
->>>>>>>> This is a regression introduced by commit 98884e0cc1 ("accel/kvm: add
->>>>>>>> changes required to support KVM VM file descriptor change") which
->>>>>>>> refactored kvm_irqchip_create() and changed the initialization timing,
->>>>>>>> exposing this lock imbalance issue.
->>>>>>>>
->>>>>>>> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM file descriptor change")
->>>>>>> I do not think this is the right reference. The above commit may have exposed some underlying issue but is certainly not the cause of it. Further, as we have discussed in the other thread, the changes in that commit are not even getting executed.
->>>>>>> Personally I think the core issue is somewhere else. I am not convinced this is the proper fix.
->>>>>>
->>>>>> Regarding commit 98884e0cc1:
->>>>>>
->>>>>> Reverting the kvm_irqchip_create refactoring makes the problem go away. This commit may have changed timing that exposed the issue, but the root cause is the pre-existing BQL lock imbalance in kvm_cpu_exec(). We can either:
->>>>>>
->>>>>> Remove the "Fixes:" tag entirely, or
->>>>> Lets remove fixes tag entirely unless you can pin point the exact commit that introduced the architectural issues.
->>>>>> Add a note that this is a pre-existing issue exposed by timing changes
->>>>>> The core fix (releasing BQL before returning EXCP_HLT) is correct and addresses the actual deadlock mechanism.
->>>>>>
->>>>>>>> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
->>>>>>>> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
->>>>>>>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>>>>>>> ---
->>>>>>>> accel/kvm/kvm-accel-ops.c | 4 ++++
->>>>>>>> accel/kvm/kvm-all.c       | 1 +
->>>>>>>> 2 files changed, 5 insertions(+)
->>>>>>>>
->>>>>>>> diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
->>>>>>>> index 6d9140e549..d684fd0840 100644
->>>>>>>> --- a/accel/kvm/kvm-accel-ops.c
->>>>>>>> +++ b/accel/kvm/kvm-accel-ops.c
->>>>>>>> @@ -52,6 +52,10 @@ static void *kvm_vcpu_thread_fn(void *arg)
->>>>>>>>
->>>>>>>>          if (cpu_can_run(cpu)) {
->>>>>>>>              r = kvm_cpu_exec(cpu);
->>>>>>>> +            if (r == EXCP_HLT) {
->>>>>>>> +                /* kvm_cpu_exec() released BQL, re-acquire for next iteration */
->>>>>>>> +                bql_lock();
->>>>>>>> +            }
->>>>>>>>              if (r == EXCP_DEBUG) {
->>>>>>>>                  cpu_handle_guest_debug(cpu);
->>>>>>>>              }
->>>>>>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>>>>>>> index 774499d34f..00b8018664 100644
->>>>>>>> --- a/accel/kvm/kvm-all.c
->>>>>>>> +++ b/accel/kvm/kvm-all.c
->>>>>>>> @@ -3439,6 +3439,7 @@ int kvm_cpu_exec(CPUState *cpu)
->>>>>>>>      trace_kvm_cpu_exec();
->>>>>>>>
->>>>>>>>      if (kvm_arch_process_async_events(cpu)) {
->>>>>>>> +        bql_unlock();
->>>>>>>>          return EXCP_HLT;
->>>>>>>>      }
->>>>>>>>
->>>>>>>> -- 
->>>>>>>> 2.52.0
-> 
-> 
+IMHO that loop is a symptom of a deeper architectural issue. The fix =
+proposed here feels more like a incorrect hack.
 
 
