@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751EDF45A0C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2094CF45A0C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHwZ-0002HA-0c; Fri, 10 Apr 2026 15:55:07 -0400
+	id 1wBHxt-0000ZI-Go; Fri, 10 Apr 2026 15:56:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwX-0002F6-7C
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:55:05 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHxr-0000Sk-IV
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:56:27 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwU-0001is-47
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:55:04 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488971db0fdso23955315e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:55:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHxm-0004MA-7S
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:56:27 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488b8efed61so22044685e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:56:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775850900; x=1776455700; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775850978; x=1776455778; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WQoGjEROfb1fZGcAyFP7wGDHaXz8m4JpMOdQttRvXaU=;
- b=hDwdKDl7XKAPOkK7kPQc5XoqlmAAHXUIARDvA/fb5kI2SKFNyGZRW7XLz3mYNBmk3x
- NBTkIhYVrqRdIBETJfqAvJhskn4LIUQF5I0rErM0yN67lSoMy4+xOogUrGmIP5wbfJD+
- 5O8W0CYd13ZyZ78rT5vL5PyPBQWWlvPEHNpkLnyCI2oN03hsbB7vK3eokDcL9maURGW6
- GXAq0d5vJXqgroNWz6GhdM/XMM83UM9y6UyHij8h8yUurd9u8u5fhnLCxkCIyJwHLeZ2
- 3UEKcOn3b6H1KGpcrJIjBv+hUDRLLZSFSzYnVFX2SyNAzIoILW6r+bMy92L2IM9mPcg1
- lCag==
+ bh=Ow/eQWa3P4KDoGEVMogN/Isn8lewWO8ymg/RYy5QKo0=;
+ b=fH59SpcGllwzOEpfjLuaPIBCj3Cgsdul6H54+fp22YXR2fk5oWk9ZA/XSLJTX/CETB
+ 9AxmohhADUximrB48xjYHgj3bfNanUXXyIhuexjuDdEWqbrfArg4nZQqcz4yxqOL8O4o
+ paErOSJOx/cg/IM126/pi4qLd0rhbnbx0rlSwk/iSljKg3FxrbJIyGYAkQD8GHBRp3Y1
+ h1xGc1X0/1BGlFODPjJaUp2SuYqqa3pDx3udYxxJZMHvJWSWiz9Bhw8vLayP9XJynSwN
+ OoxqFh7s34jx1bbi/obQu58UE82odyXuKBgvvtH0Q6xcL4SzieKRESDQ+1azqRYy2JcB
+ dNUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775850900; x=1776455700;
+ d=1e100.net; s=20251104; t=1775850978; x=1776455778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WQoGjEROfb1fZGcAyFP7wGDHaXz8m4JpMOdQttRvXaU=;
- b=LbpD3uzXFANOxVRl01R6OctMHL0nSjeW1JirvnI7S0TGATmYV0yQRognO+gIMj+FRz
- rK66jGMW2sADBMaxtofUalp5ZwKgi/Apz3mnP7a65Y6vvcddCwrqiqE4MyIsiLPaXfU/
- RLkkQuadq/PPDKXFDEXX0+mDqxn2Bf9Akx2UXadBE3rSJZug+TXyuNFO2BkNJTaaAOtV
- 6NCAYD0QUAdExJqnWGq9gevKgzBrLnN0Z6mo3+dh9AibjgcfohpUmVL+iYpw5NJpKBPx
- Pm+p1wh6X0Dz4MXsh5OaF9CpCSrTFGYtnPfrH8M3Syo3SlpWIJr6RkPpluqo9FNTTzW0
- w/Gw==
-X-Gm-Message-State: AOJu0Yx46aaHkBz2w8uF6rQuUju/6AdxMv0rzS6c4N4FSc4yDYnA5OuE
- gE9f8kQfdbRMVvYOLRb8kqYCc4dH1Z2goUOIFnFdDXwdregixWBSeSGbJbT50wD1I5obpg8L82C
- M3TCE1Cg=
-X-Gm-Gg: AeBDiev24ThVSPFuBZTTklrz/OOb4cYphMI/zYaGh6uVMFcyJ8npB9dVTojp/QXWJqs
- 9b5PYz6jOUbwgTjya0et2qnIU0/DiZhO+tMmjTFt9j3lMNSsWth7a5+xuuH4l195STaSV/LOjoO
- ZnhqWzq6k35UwiB6NYWnlMoU6ReF1YmmwCqcKKnn89JBbQWTgDuTjNicE60PSLzve/vys89P2jC
- 0C+KtxqpM/GLRldFURSrjNbmw2YCWsgq+OaWWZ4DixKEJbZoEmwc2PkQnyM/60m+3TnFuqEJbV6
- cRsXKfQWZOJPd0qvWefNrGgAjtRXoqxEA6kvY+EWvZZOKpr+ZKzt4zNkFnF0zuEPLJ3nrfW0HeV
- l+u48ZR8Ah8Vsglj/Y+kMZWfsAhyqUU5KJINAce7t2jVhjR+ZBhn1xDgncKnollQJVd/Y5IvSFI
- ZXwbDHDGQF2nMHPqFUZXyj7ixqX0eA6tELf4VDeGGfBaPmlYvv8O8j4yA1ka4DK5w/JCk375dF
-X-Received: by 2002:a05:600c:c0c8:b0:488:8bdd:cfb9 with SMTP id
- 5b1f17b1804b1-488d67bbbf8mr42408135e9.1.1775850899858; 
- Fri, 10 Apr 2026 12:54:59 -0700 (PDT)
+ bh=Ow/eQWa3P4KDoGEVMogN/Isn8lewWO8ymg/RYy5QKo0=;
+ b=G/hvClqLCYlXFFbfP5h3c0Qtn44LX5/iffwaUNfXOELBR/0NXgBTCs3QoE89Hgvy7z
+ oHcXvjVPLtFtgQdzUWSLdVxAsgYm71q1uV5FO0d0+uggiosQKpOOkqFRTQmtpKLKz4B9
+ bP0l+uvoHUNHv1qpSVD/BpZTADpYwqfoScAO9uWzmFlFUoJJdjqzgvN5FfqVGXjun5K+
+ S6wsaTD5TyWp9RzupgHhyqj/OnfD0STt8R0W9kTRxcALkZEof38x38SYyKeazfe+59Ja
+ CydidZ7QzSoIEQArKKKbCaRVZbuPEYkYYWmHFpxVzWaQN5iaVIlCPlvQuDBcaAOZdWma
+ JSKg==
+X-Gm-Message-State: AOJu0YxVqeeB9eCMl7vYb35Xk1t6l091L8zvm5qQIId0N4BAP05ftMq1
+ 7NydWBlXGkWp3496QIGXGf+4I/vGw6e9B6zqT6eHd1PnX5LFCH5uK9OdRbphVQYrzHwjE1UxJjH
+ 1XzUkxjw=
+X-Gm-Gg: AeBDieu/G+Dy0WIRLfePQVrOtl7/W9MVRL7Qt0pbyascgYWT6jW+xTLtMdxQEJXlyx2
+ CuvaUatV4fRrzubZXKtEu1L042QBC6V9PlhH9aRuKWngpbHnzI4EeAR8c7qe5nqnp1nt+jGUe5n
+ +Xp/C6Fk2Wqi8C5jN28d/zkAAAtj9pa9EWvL0XpAHe8cK21pgz97U1XnUfuZX0s7xmXbd+w9Snp
+ FJM1s2Bq22fC/QlNA28HEWzwJUTiklmgOrWd8qHTkB3TLjKhV/3JWYwhyKQTkYJ3ybY4GNhYrCC
+ Bm4NmtNrzt41qzmx2gnJ24G/lWEwumLN7QHIcCeEq2nzxsZcI/7ZKKw3ZsAwi5VCAGYEmt2qzws
+ +3BRrb5kDDWqFy2u00GC88ZyZbJjXDa/53TYAY7ZV6d0pEo+LRzm9r160ndMQ0ca2Fo3brbgczp
+ o3nMwQMQjvHayLn39V64puVQECpsSh+8Vb9tWricxdJECanQmJ6kAPy5grl/+hsbT0EVSWMCI7m
+ q8Qti3qivU=
+X-Received: by 2002:a7b:cd05:0:b0:488:a9c3:44a3 with SMTP id
+ 5b1f17b1804b1-488cd4f463dmr84378015e9.2.1775850977577; 
+ Fri, 10 Apr 2026 12:56:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d592d606sm88600455e9.9.2026.04.10.12.54.58
+ ffacd0b85a97d-43d63e5c981sm10026977f8f.33.2026.04.10.12.56.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 12:54:59 -0700 (PDT)
+ Fri, 10 Apr 2026 12:56:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -71,18 +72,20 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 13/27] monitor: Remove target_get_monitor_def()
-Date: Fri, 10 Apr 2026 21:53:07 +0200
-Message-ID: <20260410195323.17937-14-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2 24/27] monitor: Do not check TARGET_I386 to build 'info
+ sev' command
+Date: Fri, 10 Apr 2026 21:53:18 +0200
+Message-ID: <20260410195323.17937-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260410195323.17937-1-philmd@linaro.org>
 References: <20260410195323.17937-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,96 +108,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_get_monitor_def() is now only a dead stub. Remove as pointless.
+This command is filtered at build-time for i386/x86_64 binaries.
+By using the recently introduced HMPCommand::arch_bitmask flag
+we can filter it at runtime, making it possible to compile
+hmp-commands-info.hx once.
+
+Since the method depends on the CONFIG_SEV definition, define it
+in its own stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/monitor/hmp.h          |  2 --
- monitor/hmp.c                  |  7 +++----
- stubs/target-get-monitor-def.c | 29 -----------------------------
- stubs/meson.build              |  1 -
- 4 files changed, 3 insertions(+), 36 deletions(-)
- delete mode 100644 stubs/target-get-monitor-def.c
+ MAINTAINERS                   |  1 +
+ stubs/hmp-cmd-info_sev.c      | 16 ++++++++++++++++
+ target/i386/sev-system-stub.c |  5 -----
+ hmp-commands-info.hx          |  3 +--
+ stubs/meson.build             |  1 +
+ 5 files changed, 19 insertions(+), 7 deletions(-)
+ create mode 100644 stubs/hmp-cmd-info_sev.c
 
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index cabb2c55f8e..b444095f684 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -23,8 +23,6 @@ struct MonitorDef {
-     int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
- };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 31e973fdeb0..5dcd24a8a89 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -515,6 +515,7 @@ S: Supported
+ F: docs/system/i386/amd-memory-encryption.rst
+ F: docs/system/i386/sgx.rst
+ F: hw/i386/sgx*
++F: stubs/hmp-cmd-info_sev.c
+ F: stubs/qmp-i386-sev.c
+ F: stubs/qmp-i386-sgx.c
+ F: target/i386/kvm/
+diff --git a/stubs/hmp-cmd-info_sev.c b/stubs/hmp-cmd-info_sev.c
+new file mode 100644
+index 00000000000..f3624423a33
+--- /dev/null
++++ b/stubs/hmp-cmd-info_sev.c
+@@ -0,0 +1,16 @@
++/*
++ * Human Monitor 'info sev' stub (CONFIG_SEV)
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "monitor/hmp.h"
++#include "monitor/monitor.h"
++
++void hmp_info_sev(Monitor *mon, const QDict *qdict)
++{
++    monitor_printf(mon, "SEV is not available in this QEMU\n");
++}
+diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
+index f799a338d60..d97536cca1c 100644
+--- a/target/i386/sev-system-stub.c
++++ b/target/i386/sev-system-stub.c
+@@ -31,11 +31,6 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+     g_assert_not_reached();
+ }
  
--int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
--
- CPUArchState *mon_get_cpu_env(Monitor *mon);
- CPUState *mon_get_cpu(Monitor *mon);
- 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 799855f3f68..3b9e180c1ca 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -1632,11 +1632,10 @@ static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
-         }
-     }
- 
--    if (cs->cc->sysemu_ops->monitor_get_register) {
--        ret = cs->cc->sysemu_ops->monitor_get_register(cs, name, &tmp);
--    } else {
--        ret = target_get_monitor_def(cs, name, &tmp);
-+    if (!cs->cc->sysemu_ops->monitor_get_register) {
-+        return -1;
-     }
-+    ret = cs->cc->sysemu_ops->monitor_get_register(cs, name, &tmp);
-     if (!ret) {
-         *pval = target_long_bits() == 32 ? (int32_t)tmp : tmp;
-     }
-diff --git a/stubs/target-get-monitor-def.c b/stubs/target-get-monitor-def.c
-deleted file mode 100644
-index 394e0f9a7d2..00000000000
---- a/stubs/target-get-monitor-def.c
-+++ /dev/null
-@@ -1,29 +0,0 @@
--/*
-- *  Stub for target_get_monitor_def.
-- *
-- *  Copyright IBM Corp., 2015
-- *
-- *  Author: Alexey Kardashevskiy <aik@ozlabs.ru>
-- *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License,
-- *  or (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-- */
--
--#include "qemu/osdep.h"
--
--int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
--
--int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
+-void hmp_info_sev(Monitor *mon, const QDict *qdict)
 -{
--    return -1;
+-    monitor_printf(mon, "SEV is not available in this QEMU\n");
 -}
+-
+ void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size)
+ {
+ }
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index da9fdc0ab7b..336ab870a2c 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -812,15 +812,14 @@ SRST
+     enabled) memory in bytes.
+ ERST
+ 
+-#if defined(TARGET_I386)
+     {
+         .name       = "sev",
+         .args_type  = "",
+         .params     = "",
+         .help       = "show SEV information",
+         .cmd        = hmp_info_sev,
++        .arch_bitmask = QEMU_ARCH_I386,
+     },
+-#endif
+ 
+ SRST
+   ``info sev``
 diff --git a/stubs/meson.build b/stubs/meson.build
-index 10eb68ab55e..85f9e3a4f23 100644
+index dc289e3a482..09e73ef8b73 100644
 --- a/stubs/meson.build
 +++ b/stubs/meson.build
-@@ -74,7 +74,6 @@ if have_system
-     stub_ss.add(files('igvm.c'))
-   endif
-   stub_ss.add(files('kvm.c'))
--  stub_ss.add(files('target-get-monitor-def.c'))
-   stub_ss.add(files('win32-kbd-hook.c'))
-   stub_ss.add(files('xen-hw-stub.c'))
-   stub_ss.add(files('monitor-arm-gic.c'))
+@@ -84,6 +84,7 @@ if have_system
+   stub_ss.add(files('qmp-cpu.c'))
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
++  stub_ss.add(files('hmp-cmd-info_sev.c'))
+   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+   stub_ss.add(files('hmp-cmds-target-i386.c'))
+ endif
 -- 
 2.53.0
 
