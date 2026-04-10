@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439D3F45A0C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A92F45A08
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHvm-0000ai-E4; Fri, 10 Apr 2026 15:54:18 -0400
+	id 1wBHwn-0002xp-T4; Fri, 10 Apr 2026 15:55:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHvj-0000VW-Bh
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:15 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwl-0002kp-Bx
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:55:19 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHvf-0001Ms-Dt
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:14 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43b983bb07eso1554144f8f.0
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:54:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwi-00027T-7R
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:55:19 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso23616715e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:55:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775850850; x=1776455650; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775850914; x=1776455714; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1eA3XKlB2Issg1dkYmP2jSa4cjzBFSxxUi2nhDXWoMo=;
- b=dYfu5rghv18AVZXa0Jkeg1dTcpK2UYN0b4DWmJjfSrVytkKDS6S6uOyCZPebtcdv7f
- NKyquf/+f4+VGywiOG3DZXvSayKuZhY1YIniNqKOfiqTNfB6uX0RfJv/BmHEuYcAjM5b
- 7tCW0ERDu43UGQuQFkpgH1Arqausiy/esmrn0DnK68JSafCvygfQwe5SxSt7XRK6tYUU
- EMvapI7lNLU4wcLxy5rNsiMV1N0LUEJZUobCU+gbaLfcotprXORGB8wf6k5qffcbvK30
- tmpRrLLrL49UE0EJBDfw6+Zobsc9ys+OeALlJrElm+iyW3mTmzcOphQFDD+NPdVJqErS
- EOkQ==
+ bh=6HAEsPfskfREToikV46U/wzGFh7dU/0uRJHIvrZhc2k=;
+ b=r0bVxLJ1D0yokeu8pO4DRnbsVu6Y61xTQbb0rAc1LReFEH1BwRx/HrF+JgB868QIqq
+ TE4lda9jJl3KqVKFtK4vACPA2FNv/vGrgOVm9ZKB2HSOZzV/k+G96NH930aB6K1ylhGs
+ nwfJJZDXhg4/zMgFABfKF1B9TS0g6FEwaEIr9wI5d6w+FwXnK3S2OLB6eEb5i3QA6rpi
+ WpXfvOld3zVrQbrOFH6+illDvIIQ2T7pNiXny5+hzbLARde0lPOCc4tkyzrTq4EN0L/U
+ 98eXUqV22FF1XSt0B1yQxtArSb92nHNS+8ByBiuoIjwyJmOYzHwEA7ltPSFQBMMzP7Jo
+ 3YrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775850850; x=1776455650;
+ d=1e100.net; s=20251104; t=1775850914; x=1776455714;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1eA3XKlB2Issg1dkYmP2jSa4cjzBFSxxUi2nhDXWoMo=;
- b=q1VSdXlE8597uQP9Y1lsg+4pSRDldVsg5dJXEkhWCleiJGM5eRa1f0Pk5sX+dCvsmK
- yXiAWWPTlG/qboXnJSxVi15wPEW9j31K7d8hg6odMVZODbrTMFLXOAQfYxo+FlA686/6
- cCI6+viMTiL0sHH6Aa32DmDw2dOe9dU/gKCRJSPMhLdXAb7ChO8dbu3JRZU9kO8C8nAL
- YYxqDeMapjwzCd4MZKR3fOLB8BCNfWqozmaXAIVYzqdpSy9/NbDrSxC4cajUeP8BRdOV
- 4vtzptou/SFgugepW0OyB8beDXaOBvgbvz/r9H6UoVqNwiRglHExcbK8liZBW78X+n/3
- RJEg==
-X-Gm-Message-State: AOJu0Ywgo04RVQuIK/PJVXLI1t/XFn52Zk/yQKSFbrmrxPdOyQNUw/y2
- 2XR6vKs7wggfQ8CbmCIpFguOU4zrssQ5MTrray6MAASXbAaFL9y29v5ueiBNVDNAIAjT1Txavv6
- 9ed5/XNA=
-X-Gm-Gg: AeBDievIZlE6FiK2f98+j7nVsrcS8N1agNJKWYFyfFDJWSsO5IQBEcEBp/Cy0pSPAq5
- Or32tolePr69tKlSgx+ae/RHdqNhX/hHHokUgdGjm5QE82jDE/Z2RuneipD488R9Tu1ntPMulNv
- aFy2i4HdUEXYuD8E4cr74CcUvW7HzyMrUeZ/nebXwp14tXhd+lA9JTvFLgrdnUTTFI2ycYy52l0
- opSswyu9RlmbWYCoThsxYHnxlzUo3rW+vBNa7HFBfj/CZ0KMZiFZGyzJv7KkfH1j1LoGwNV3GMZ
- +IxpgohBODJBrkfP76ERt77YlzC9/Gaz6dRvKsoeDcJ5zFwUjJr0ZOQ5lK8Z9ugysagrf3ozvLq
- uQMbDCEWsEEFoSSCIvTP/R+8WmJfc3BOzhdok95LiJjU1JT3jF5y8L6oRNK0e6ZL8DxDhvk60fv
- M/roV7PMvc2L1JucDuE8kqnH8nhQJChA5rZmp3cxjVUnQOU4YVMAfoB+4lgPglFBA9heZgSsuf
-X-Received: by 2002:a05:6000:220b:b0:43c:fdd:ea96 with SMTP id
- ffacd0b85a97d-43d642b6e75mr6383617f8f.26.1775850849621; 
- Fri, 10 Apr 2026 12:54:09 -0700 (PDT)
+ bh=6HAEsPfskfREToikV46U/wzGFh7dU/0uRJHIvrZhc2k=;
+ b=mrvXiWOrfXpP12j8bKhKh0+eIWvTCcaU5W4vIE7tMUdf1dVO8iLT+xPeNflWh99qb1
+ sr+Nrf646g0jM7pauY3EuwsaZ9FVkznA8FJRX84k80DM7/ZmVYK3OQXHtExrn5a+vxXN
+ Q+eClDtcRLJmX90xVZhawP9os5ekiNr4yxP0msILR0uXHvlVN+4v9bTMkpTYU6z9UDxk
+ oqqJxVaZIWXLolJKfONLnwSwJEfOhiUPEuK9ShYmTRMuo25izE3s4dPse6WLjceLa/dj
+ 0nw4tCZrXlSxEcdw1UU5D9xLTOSSEvuArTCp14VgIaFqzp+UhGBVNnt6cMtPf8/EpV5U
+ V3tg==
+X-Gm-Message-State: AOJu0YxQmUbIMixe57PgmOson4iQjWkNZH5VcynyFKpHnDQIfVPupIyp
+ Hr3d/LYmNccKu8yLRc0d1okat7lho3/R8wmNft+Wohh71SDD/DZdqRIdVHQ4o3xw5c+ZA01ulNY
+ ay+szJNQ=
+X-Gm-Gg: AeBDiet3k/bZ1YRbR0Gve/tc8pzvC0v3K10yVCK+G6ChSrqbGfGB+cAWumV4HzhQh+1
+ INeGz89m0fhE2T5jeSV7gNW2ZGpXY9T4cjdzr7cmlXc0alRpR3rLYqbC2fndAv8zBGUGBpqWOcL
+ uAriXg7j47M0O594mJ/frv/7f7N4R/YD6pMUGHcMNK+A88pFIMY1p7BXUgzRtJfR9InPx2UGCAM
+ QPkcBE40uF34m+XxzNWSZ7lGcYYf4BoBZsYHiTYl9rj34y0LRjaZczMaZqdDLd7tWZy+34wMmoY
+ qzeIRUMM8XztPWhQrFPe94mXs9wTyVHYSYHplCDFap3RHaCzlYt9voOimzdjOgeWftLBKomKHGd
+ 8jqh7KYnP6vNsfR6HuYoqVVC2u8UeHFkmcsxKxLDHZJ8AdBMmhPdJRQRGYfNaJuay85IRaCapK9
+ vUx1sjhflQG3bL5j3wrw0KLYtLM/KGip+Sk99DtrOVj5XoVjwL/evTHh1PqsxKNw1dvy4EJTko
+X-Received: by 2002:a05:600c:5397:b0:488:b8bc:6a32 with SMTP id
+ 5b1f17b1804b1-488d68a4765mr64730165e9.23.1775850913981; 
+ Fri, 10 Apr 2026 12:55:13 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63dec28asm10125307f8f.15.2026.04.10.12.54.08
+ 5b1f17b1804b1-488d5d80bafsm29702685e9.5.2026.04.10.12.55.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 12:54:09 -0700 (PDT)
+ Fri, 10 Apr 2026 12:55:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,18 +70,19 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
  Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 06/27] cpus: Introduce SysemuCPUOps::monitor_defs hook
-Date: Fri, 10 Apr 2026 21:53:00 +0200
-Message-ID: <20260410195323.17937-7-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 15/27] stubs: Rename monitor* -> qmp* files
+Date: Fri, 10 Apr 2026 21:53:09 +0200
+Message-ID: <20260410195323.17937-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260410195323.17937-1-philmd@linaro.org>
 References: <20260410195323.17937-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,64 +105,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow targets to register their legacy target_monitor_defs()
-in SysemuCPUOps; check it first in get_monitor_def() otherwise
-fall back to previous per-target helper.
+We use 'HMP' for Human monitor and 'QMP' for 'Machine protocol'.
+These files aren't about human monitor but QMP, so rename them
+for clarity using the 'qmp-' prefix instead of 'monitor-'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/sysemu-cpu-ops.h | 5 +++++
- monitor/hmp.c                    | 9 +++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ MAINTAINERS                                      |  6 ++++++
+ stubs/{monitor-arm-gic.c => qmp-arm-gic.c}       |  0
+ ...nitor-cpu-s390x-kvm.c => qmp-cpu-s390x-kvm.c} |  0
+ stubs/{monitor-cpu-s390x.c => qmp-cpu-s390x.c}   |  0
+ stubs/{monitor-cpu.c => qmp-cpu.c}               |  0
+ stubs/{monitor-i386-rtc.c => qmp-i386-rtc.c}     |  0
+ stubs/{monitor-i386-sev.c => qmp-i386-sev.c}     |  0
+ stubs/{monitor-i386-sgx.c => qmp-i386-sgx.c}     |  0
+ stubs/{monitor-i386-xen.c => qmp-i386-xen.c}     |  0
+ stubs/meson.build                                | 16 ++++++++--------
+ 10 files changed, 14 insertions(+), 8 deletions(-)
+ rename stubs/{monitor-arm-gic.c => qmp-arm-gic.c} (100%)
+ rename stubs/{monitor-cpu-s390x-kvm.c => qmp-cpu-s390x-kvm.c} (100%)
+ rename stubs/{monitor-cpu-s390x.c => qmp-cpu-s390x.c} (100%)
+ rename stubs/{monitor-cpu.c => qmp-cpu.c} (100%)
+ rename stubs/{monitor-i386-rtc.c => qmp-i386-rtc.c} (100%)
+ rename stubs/{monitor-i386-sev.c => qmp-i386-sev.c} (100%)
+ rename stubs/{monitor-i386-sgx.c => qmp-i386-sgx.c} (100%)
+ rename stubs/{monitor-i386-xen.c => qmp-i386-xen.c} (100%)
 
-diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-index 7b2d2d2610f..a96f4907d05 100644
---- a/include/hw/core/sysemu-cpu-ops.h
-+++ b/include/hw/core/sysemu-cpu-ops.h
-@@ -85,6 +85,11 @@ typedef struct SysemuCPUOps {
-      */
-     bool (*internal_is_big_endian)(CPUState *cpu);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index edbbd544d62..932d6aee507 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -121,6 +121,7 @@ F: include/hw/s390x/
+ F: include/hw/watchdog/wdt_diag288.h
+ F: pc-bios/s390-ccw/
+ F: pc-bios/s390-ccw.img
++F: stubs/qmp-cpu-s390x.c
+ F: target/s390x/
+ F: docs/system/target-s390x.rst
+ F: docs/system/s390x/
+@@ -496,6 +497,7 @@ M: Christian Borntraeger <borntraeger@linux.ibm.com>
+ R: Eric Farman <farman@linux.ibm.com>
+ R: Matthew Rosato <mjrosato@linux.ibm.com>
+ S: Supported
++F: stubs/qmp-cpu-s390x-kvm.c
+ F: target/s390x/kvm/
+ F: target/s390x/machine.c
+ F: target/s390x/sigp.c
+@@ -510,6 +512,8 @@ L: kvm@vger.kernel.org
+ S: Supported
+ F: docs/system/i386/amd-memory-encryption.rst
+ F: docs/system/i386/sgx.rst
++F: stubs/qmp-i386-sev.c
++F: stubs/qmp-i386-sgx.c
+ F: target/i386/kvm/
+ F: target/i386/sev*
+ F: scripts/kvm/vmxcap
+@@ -522,6 +526,7 @@ S: Supported
+ F: include/system/kvm_xen.h
+ F: target/i386/kvm/xen*
+ F: hw/i386/kvm/xen*
++F: stubs/qmp-i386-xen.c
+ F: tests/functional/x86_64/test_kvm_xen.py
  
-+    /**
-+     * @monitor_defs: Array of MonitorDef entries. This field is legacy,
-+     *                use @gdb_core_xml_file to dump registers instead.
-+     */
-+    const MonitorDef *monitor_defs;
-     /**
-      * @legacy_vmsd: Legacy state for migration.
-      *               Do not use in new targets, use #DeviceClass::vmsd instead.
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 983048db1b9..6cf2f3e65ff 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -25,6 +25,7 @@
- #include "qemu/osdep.h"
- #include <dirent.h>
- #include "hw/core/qdev.h"
-+#include "hw/core/sysemu-cpu-ops.h"
- #include "monitor-internal.h"
- #include "monitor/hmp.h"
- #include "qobject/qdict.h"
-@@ -1603,13 +1604,17 @@ void monitor_register_hmp_info_hrt(const char *name,
-  */
- static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
- {
--    const MonitorDef *md = target_monitor_defs();
-     CPUState *cs = mon_get_cpu(mon);
-+    const MonitorDef *md;
-     void *ptr;
-     uint64_t tmp = 0;
-     int ret;
+ Guest CPU Cores (other accelerators)
+@@ -800,6 +805,7 @@ F: include/hw/timer/a9gtimer.h
+ F: include/hw/timer/arm_mptimer.h
+ F: include/hw/timer/armv7m_systick.h
+ F: include/hw/misc/armv7m_ras.h
++F: stubs/qmp-arm-gic.c
+ F: tests/qtest/test-arm-mptimer.c
  
--    if (cs == NULL || md == NULL) {
-+    if (cs == NULL) {
-+        return -1;
-+    }
-+    md = cs->cc->sysemu_ops->monitor_defs ?: target_monitor_defs();
-+    if (md == NULL) {
-         return -1;
-     }
+ Bananapi M2U
+diff --git a/stubs/monitor-arm-gic.c b/stubs/qmp-arm-gic.c
+similarity index 100%
+rename from stubs/monitor-arm-gic.c
+rename to stubs/qmp-arm-gic.c
+diff --git a/stubs/monitor-cpu-s390x-kvm.c b/stubs/qmp-cpu-s390x-kvm.c
+similarity index 100%
+rename from stubs/monitor-cpu-s390x-kvm.c
+rename to stubs/qmp-cpu-s390x-kvm.c
+diff --git a/stubs/monitor-cpu-s390x.c b/stubs/qmp-cpu-s390x.c
+similarity index 100%
+rename from stubs/monitor-cpu-s390x.c
+rename to stubs/qmp-cpu-s390x.c
+diff --git a/stubs/monitor-cpu.c b/stubs/qmp-cpu.c
+similarity index 100%
+rename from stubs/monitor-cpu.c
+rename to stubs/qmp-cpu.c
+diff --git a/stubs/monitor-i386-rtc.c b/stubs/qmp-i386-rtc.c
+similarity index 100%
+rename from stubs/monitor-i386-rtc.c
+rename to stubs/qmp-i386-rtc.c
+diff --git a/stubs/monitor-i386-sev.c b/stubs/qmp-i386-sev.c
+similarity index 100%
+rename from stubs/monitor-i386-sev.c
+rename to stubs/qmp-i386-sev.c
+diff --git a/stubs/monitor-i386-sgx.c b/stubs/qmp-i386-sgx.c
+similarity index 100%
+rename from stubs/monitor-i386-sgx.c
+rename to stubs/qmp-i386-sgx.c
+diff --git a/stubs/monitor-i386-xen.c b/stubs/qmp-i386-xen.c
+similarity index 100%
+rename from stubs/monitor-i386-xen.c
+rename to stubs/qmp-i386-xen.c
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 85f9e3a4f23..356d7800760 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -76,14 +76,14 @@ if have_system
+   stub_ss.add(files('kvm.c'))
+   stub_ss.add(files('win32-kbd-hook.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
+-  stub_ss.add(files('monitor-arm-gic.c'))
+-  stub_ss.add(files('monitor-i386-rtc.c'))
+-  stub_ss.add(files('monitor-i386-sev.c'))
+-  stub_ss.add(files('monitor-i386-sgx.c'))
+-  stub_ss.add(files('monitor-i386-xen.c'))
+-  stub_ss.add(files('monitor-cpu.c'))
+-  stub_ss.add(files('monitor-cpu-s390x.c'))
+-  stub_ss.add(files('monitor-cpu-s390x-kvm.c'))
++  stub_ss.add(files('qmp-arm-gic.c'))
++  stub_ss.add(files('qmp-i386-rtc.c'))
++  stub_ss.add(files('qmp-i386-sev.c'))
++  stub_ss.add(files('qmp-i386-sgx.c'))
++  stub_ss.add(files('qmp-i386-xen.c'))
++  stub_ss.add(files('qmp-cpu.c'))
++  stub_ss.add(files('qmp-cpu-s390x.c'))
++  stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+ endif
  
+ if have_system or have_user
 -- 
 2.53.0
 
