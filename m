@@ -4,108 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BECF44846
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 12:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EEC0F44855
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 12:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBB0d-0006vq-Pv; Fri, 10 Apr 2026 08:30:51 -0400
+	id 1wBBB1-0002Ib-TC; Fri, 10 Apr 2026 08:41:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wBB0Z-0006uz-1p
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:30:47 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wBB0X-0005Vf-AE
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:30:46 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7982c3b7dfcso19640177b3.0
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 05:30:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775824244; cv=none;
- d=google.com; s=arc-20240605;
- b=KJ8HH6mu6TExDFJkhiEIppoPflE22Sdc2RC8xrOUcHDDCcXwev3a2L71gMbjDMa0Z7
- gqAmN7eP6FZXeje/wFu7gwpfcXQTVLyJ54xUAcRqEkAIGWNfvdIEQZa4gO7Gowt2rlnf
- QJQrE5/IZda080PlftJ3bqIFlSHEhRb8RQFMwihb2BDIMW7ut9RuGAPQwWfi56JaOOds
- PuJkOXUbVwxc2+l3WjsAwy1YC0A5PxNWPbqyUe7lLycGbQpgt9QeCYogMdGnlaYswuur
- pqbPn6WESuPhUyyNDmUTHgni5mJDZ1Z73xvPefpW491v9QbBk0iosHVcLvkgzrDoEbiV
- SnSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Q54P+QY5eLcs+bEYW+DP+kazlntJyFpVKynFXeKamNE=;
- fh=4RYpU1T0IT8L5zyrPSfNK+Q45gmXxoqoUAgIyxGlO9Y=;
- b=dFKI+SK2nvDneqvfKLZcYMAy/FixHaAnxrfwhfT8KwitGy3q6YCj24+ztDxV5zN+Gi
- Yzi+UBb2twOhW6iVWc3UAziwIRML6rIm5ogCDchCcXSdBbl3Voljaq71nCqJcA0y/71O
- L/knVCk1oGqWAYFFJWu071nbx4QTRZR4iiuLqucchowNtzJ7wc6Giake4yvn9/dbDSJh
- TlpfLVwSdD7v1hP1BFRO9wqPRnQkpqwls9zHU4Ariy2XXLBMxW8ZRyiwcKn32VaWlIML
- CisDLYoJflRTEUHXtucxtbxBTWu4kCe9IEOaJsZL2bHf930skWBJ3UOXFoz/DEH5Eblb
- EreQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775824244; x=1776429044; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Q54P+QY5eLcs+bEYW+DP+kazlntJyFpVKynFXeKamNE=;
- b=eANSLNW9IoJAnnQHSUtHrf0FUEuTr9boiTjaNJnh551m3xSKgJTnDgE/EG/INX0OVC
- g5HcwjdrL+JAycJz+NJuTUpf39ECVMcUSjDhdsf8YB94ad9GhDLVn6uV6PxWGahAdkfW
- re5xROGsJctMjcVxlKYz+nqGY4gzpTip9RqkE10WcXQ35u/S/ah6/sPafTJA02lYilar
- NLMPiaZIGdJkh8TGZ7c+tXpKn00iQkbecT5JvpthtB2FxEdpzRZEPAgE31mSwMlZzhSX
- 8D5hUq3dUeFsl3wR0WjSQrrh2pZ/8XiGpqA/RGX/5hsDn/0h4Trlse3x2U6EUNcTfFW3
- sb2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775824244; x=1776429044;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q54P+QY5eLcs+bEYW+DP+kazlntJyFpVKynFXeKamNE=;
- b=nZagD/tdNAz7Ntxzb6VqQdtMLkt217M5MrI2JoFo+rh/KVf5HsCARoD1/2M8tCh20R
- nfWwmFh9RKEnDcsI9Di34UYpajY9m2pUwf5dwpa+KA2z7dQf+mG7qos4/e9cThA2ef06
- Pk5pLb2Pq/j8fDha3ekyAekf8tQ5ZqNcVVU82GzBezJKO8yTsKt6pedJVYy1Et37u5Z2
- 9vLhJJlZDftKY1wirEGStpIigoK1fauN9Wfj1yViKd6ycwygfoliM/M2PbMbXvPJskRm
- mqb7ru7Q6B0oZNaHsMhymcbeKyY2q8ZKbMbSKt+WA/uKAgacH5zKol9RkDvr85tKMSWG
- rECw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzSPRQbANsLm5gJUA6cZQ2Zrk3k8Pp5mHV33AJ1xGfHafQU5EFInOYNRW+TF4aMMYm6EVoZGkbDnce@nongnu.org
-X-Gm-Message-State: AOJu0YzAeFdUBtXWKP+0tVMUblbZiEylQ50EHK8MpLXb1pzavnJYU9uC
- 0Ceyejh7FWCF/jcOvX0b/WWIKTsDFjVhNdIXXdGbU+xX1ivXyj2htdGUBDSZ+ujKDrNHNxh03tB
- FtDeH4yG8UtLawTMXjLBtz7fLj4a4VsWvtf0YXEggvw==
-X-Gm-Gg: AeBDiet5dtKLIhQe7FVx3sV+r0vYJpHc+aV1edi56WDCeVE+aYEIilmn/4pkOzSUGaJ
- s3ZOLuZjldGprw8wjywbtnLBQ9oDXiJJcyJyzr2ctUpOYDu/MsRbTHXrujX0KWbSMD0a0yrPozQ
- +uLi6q34CPcGNQOfxh9F3SjnL2HRSKCau5Ag6qOzmz0wcOGtzBOUkVzvr0ak9l99Pwko1YEMSKx
- XUiCdU5538PqthDeY2dFgqafMWBuYRltObxMcxsFyoyju/UeTZK171+cw317dkdsE3xAbugSHx+
- 9Odl7pr6rJmksAD+40kfMVr7m1MsFxOlENGHD8LlvlecJeWjFYfBfa3DIpZy8JpSnEs=
-X-Received: by 2002:a05:690c:1d:b0:798:1636:c330 with SMTP id
- 00721157ae682-7af70f92613mr31071027b3.34.1775824243407; Fri, 10 Apr 2026
- 05:30:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wBBB0-0002Hq-5j
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:41:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wBBAy-0007Rs-03
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 08:41:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775824890;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OkFro9RzyLlMJ1jNDT8zK4zo475sncVAQoU2I6wG3yk=;
+ b=KU6YhQB6erdEJwlVSQ+P58OUeBUzFKpXBDE4EsPrLtPjf+iXuRhAIWrVTE86Nqd5/Am0ze
+ lC40iAnIGJ18OyfFVAV30C3593Rmwl/7DzfGS+qVyA3kz3yKgW0WpyLaMpSjbYhArmoYGG
+ GD/p28Ui6zzYPVlqE9NACsaSxa3bixE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-5VEcGlopPG26FGig9nsY0g-1; Fri,
+ 10 Apr 2026 08:41:27 -0400
+X-MC-Unique: 5VEcGlopPG26FGig9nsY0g-1
+X-Mimecast-MFC-AGG-ID: 5VEcGlopPG26FGig9nsY0g_1775824885
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E52919560AA; Fri, 10 Apr 2026 12:41:25 +0000 (UTC)
+Received: from localhost (unknown [10.44.33.180])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8F5C93000C16; Fri, 10 Apr 2026 12:41:23 +0000 (UTC)
+Date: Fri, 10 Apr 2026 08:41:21 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: mr-083 <matthieu@minio.io>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, its@irrelevant.dk,
+ kbusch@kernel.org, mr-083 <matthieu@min.io>
+Subject: Re: [PATCH v2] hw/nvme: add namespace hotplug support
+Message-ID: <20260410124121.GA485553@fedora>
+References: <20260409060155.94704-1-matthieu@min.io>
+ <20260409213454.5186-1-matthieu@min.io>
 MIME-Version: 1.0
-References: <20260311-edk2_arm_serial-v1-1-c25e237116f3@redhat.com>
- <0b4976f9-cf83-47b4-8f00-cc68c9cf47fd@linaro.org>
- <abkPy4Xzf6YT6g5Y@sirius.home.kraxel.org>
-In-Reply-To: <abkPy4Xzf6YT6g5Y@sirius.home.kraxel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Apr 2026 13:30:32 +0100
-X-Gm-Features: AQROBzCubG18WzVTiDLxr79n2IPv6VzrMuAtq1k1JzwsujFiRd8nXOboDTBEEZE
-Message-ID: <CAFEAcA-dTkoKs0tgF+VV0PayFbDcmH_t64P6AOT18ShwEKTW_g@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/virt: add serial-debug-level property for EDK2
- firmware
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Luigi Leonardi <leonardi@redhat.com>, 
- qemu-devel@nongnu.org, Oliver Steffen <osteffen@redhat.com>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="MjL36GCxI9d0/xOb"
+Content-Disposition: inline
+In-Reply-To: <20260409213454.5186-1-matthieu@min.io>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,78 +86,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Mar 2026 at 08:45, Gerd Hoffmann <kraxel@redhat.com> wrote:
->
-> On Wed, Mar 11, 2026 at 03:24:04PM -0700, Pierrick Bouvier wrote:
-> > Hi Luigi,
-> >
-> > On 3/11/26 6:43 AM, Luigi Leonardi wrote:
-> > > Add a machine property to pass a debug level to EDK2 firmware via the
-> > > device tree. The value is set as an "edk2,debug-level" property on all
-> > > pl011 UART nodes.
-> > >
-> > > This is to create a runtime parameter to set the verbosity of the debug
-> > > log on the serial ports in edk2. Currently, the only way to set the
-> > > verbosity is a compile-time option.
-> > >
-> > > DT is used because the fw_cfg interface is not yet initialized in early
-> > > boot phases.
-> > >
-> > > Corresponding edk2 PR: https://github.com/tianocore/edk2/pull/12277
-> > >
-> > > Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
-> > > Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
-> > > ---
-> > >   docs/system/arm/virt.rst |  6 ++++++
-> > >   hw/arm/virt.c            | 38 ++++++++++++++++++++++++++++++++++++++
-> > >   include/hw/arm/virt.h    |  2 ++
-> > >   3 files changed, 46 insertions(+)
-> > >
-> >
-> > I am not sure if maintainer want to have bootloader specific options in
-> > machine code.
->
-> Does that mean "yes" or "no" or "maybe" ?
->
-> Some background:  Traditionally firmware logging in edk2/ArmVirtPkg is a
-> compile time option, so typically distributions ship two builds, one
-> with logging turned on and one with logging turned off.
->
-> Last year edk2 got support for logging to a memory buffer which can be
-> accessed from the booted OS or via qemu monitor.  Ideally we have this
-> always enabled, but without also spamming the serial console with the
-> firmware log (by default).  While working on that it would be nice to
-> also get rid of the two builds by moving from a compile time to a
-> runtime switch for the serial debug log.
->
-> > Alternatively, it's possible to dump virt dtb, modify it, and pass it.
-> > $ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
-> > $ ... modify dt ...
-> > $ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
->
-> I'd like to have something more convenient than that to turn on firmware
-> debug logging.
->
-> On x86 we have a dedicated device for firmware logging (isa-debugcon),
-> so logging can be easily enabled on the qemu command line by adding that
-> device.
->
-> So the idea here is to have a dt property added to serial port to
-> setup firmware logging, so we have something roughly comparable to the
-> x86 functionality ...
 
-My rough rule of thumb for DT properties is "if it is a binding
-officially documented in the binding specs in the kernel with
-the relevant semantics, then OK"; but not ad-hoc bootloader
-specific stuff (we have turned down requests from u-boot for that
-in the past).
+--MjL36GCxI9d0/xOb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Would using the fw_cfg mechanism work here? That's intended for
-passing configuration info (and "how verbose should debug be"
-seems like configuration info), and we already have a command
-line interface for it:
- -fw_cfg name=edk2/debug-level,string=1
-(or whatever). You could also then use the same mechanism for x86.
+On Thu, Apr 09, 2026 at 11:34:51PM +0200, mr-083 wrote:
+> Add hotplug support for nvme-ns devices on the NvmeBus. This enables
+> namespace-level hot-swap without removing the NVMe controller, matching
+> the behavior of physical NVMe drives hot-swapped in the same PCIe slot.
 
--- PMM
+If we rely purely on NVMe's AEN then this is not equivalent to swapping
+physical drives in the same PCIe slot. Maybe adjust the wording to
+reflect that this is NVMe-level Namespace hotplug?
+
+> Mark nvme-ns devices as hotpluggable and register the NvmeBus as a
+> hotplug handler with proper plug and unplug callbacks:
+>=20
+> - plug: attach namespace to all started controllers and send an
+>   Asynchronous Event Notification (AEN) with NS_ATTR_CHANGED so
+>   the guest kernel rescans namespaces and adds the block device
+> - unplug: detach from all controllers, send AEN, remove from
+>   subsystem, then unrealize the device. The guest kernel rescans
+>   and removes the block device.
+>=20
+> The plug handler skips controllers that haven't started yet
+> (qs_created =3D=3D false) to avoid interfering with boot-time namespace
+> attachment in nvme_start_ctrl().
+>=20
+> Both the controller bus and subsystem bus are configured as hotplug
+> handlers via qbus_set_bus_hotplug_handler() since nvme-ns devices
+> may reparent to the subsystem bus during realize.
+>=20
+> Example hot-swap sequence using the NVMe subsystem model:
+>=20
+>   # Boot with: -device nvme-subsys,id=3Dsubsys0
+>   #            -device nvme,id=3Dctrl0,subsys=3Dsubsys0
+>   #            -device nvme-ns,id=3Dns0,drive=3Ddrv0,bus=3Dctrl0,nsid=3D1
+>=20
+>   device_del ns0             # guest receives AEN, removes /dev/nvme0n1
+>   drive_del drv0
+>   drive_add 0 file=3Ddisk.qcow2,format=3Dqcow2,id=3Ddrv0,if=3Dnone
+>   device_add nvme-ns,id=3Dns0,drive=3Ddrv0,bus=3Dctrl0,nsid=3D1
+>                               # guest receives AEN, adds /dev/nvme0n1
+>=20
+> Tested with Linux 6.1 guest (NVMe driver processes AEN and rescans
+> namespace list automatically).
+
+Did you test a Windows Server guest? If not, I can try that next week in
+case there are any surprises.
+
+>=20
+> Signed-off-by: Matthieu Receveur <matthieu@min.io>
+> ---
+>  hw/nvme/ctrl.c   | 85 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  hw/nvme/ns.c     |  1 +
+>  hw/nvme/subsys.c |  2 ++
+>  3 files changed, 88 insertions(+)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index be6c7028cb..5502e4ea2b 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -206,6 +206,7 @@
+>  #include "system/hostmem.h"
+>  #include "hw/pci/msix.h"
+>  #include "hw/pci/pcie_sriov.h"
+> +#include "hw/core/qdev.h"
+>  #include "system/spdm-socket.h"
+>  #include "migration/vmstate.h"
+> =20
+> @@ -9293,6 +9294,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error =
+**errp)
+>      }
+> =20
+>      qbus_init(&n->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
+> +    qbus_set_bus_hotplug_handler(BUS(&n->bus));
+> =20
+>      if (nvme_init_subsys(n, errp)) {
+>          return;
+> @@ -9553,10 +9555,93 @@ static const TypeInfo nvme_info =3D {
+>      },
+>  };
+> =20
+> +static void nvme_ns_hot_plug(HotplugHandler *hotplug_dev, DeviceState *d=
+ev,
+> +                              Error **errp)
+> +{
+> +    NvmeNamespace *ns =3D NVME_NS(dev);
+> +    NvmeSubsystem *subsys =3D ns->subsys;
+> +    uint32_t nsid =3D ns->params.nsid;
+> +    int i;
+> +
+> +    /*
+> +     * Attach to all started controllers and notify via AEN.
+> +     * Skip controllers that haven't started yet (boot-time realize) =E2=
+=80=94
+> +     * nvme_start_ctrl() will attach namespaces during controller init.
+> +     */
+> +    for (i =3D 0; i < NVME_MAX_CONTROLLERS; i++) {
+> +        NvmeCtrl *ctrl =3D nvme_subsys_ctrl(subsys, i);
+> +        if (!ctrl || !ctrl->qs_created) {
+> +            continue;
+> +        }
+> +
+> +        if (nvme_csi_supported(ctrl, ns->csi) && !ns->params.detached) {
+> +            nvme_attach_ns(ctrl, ns);
+> +            nvme_update_dsm_limits(ctrl, ns);
+> +
+> +            if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
+> +                nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
+> +                                   NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
+> +                                   NVME_LOG_CHANGED_NSLIST);
+> +            }
+> +        }
+> +    }
+> +}
+> +
+> +static void nvme_ns_hot_unplug(HotplugHandler *hotplug_dev, DeviceState =
+*dev,
+> +                               Error **errp)
+> +{
+> +    NvmeNamespace *ns =3D NVME_NS(dev);
+> +    NvmeSubsystem *subsys =3D ns->subsys;
+> +    uint32_t nsid =3D ns->params.nsid;
+> +    int i;
+
+While there is qdev_unrealize -> nvme_ns_unrealize -> nvme_ns_drain ->
+blk_drain to quiesce I/O requests at the end of this function, I wonder
+whether it's safe to start removing the namespace before I/O has been
+drained.
+
+Did you test hot unplug while the Namespace is under heavy I/O (e.g. fio
+job running inside the guest with lots of queued I/O requests)?
+
+It might be necessary to stop I/O first before tearing down the
+namespace.
+
+> +
+> +    /*
+> +     * Detach from all controllers and notify the guest via AEN.
+> +     * Must happen before unrealize to avoid use-after-free when the
+> +     * guest sends I/O to a freed namespace.
+> +     */
+> +    for (i =3D 0; i < NVME_MAX_CONTROLLERS; i++) {
+> +        NvmeCtrl *ctrl =3D nvme_subsys_ctrl(subsys, i);
+> +        if (!ctrl || !nvme_ns(ctrl, nsid)) {
+> +            continue;
+> +        }
+> +
+> +        nvme_detach_ns(ctrl, ns);
+> +        nvme_update_dsm_limits(ctrl, NULL);
+> +
+> +        if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
+> +            nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
+> +                               NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
+> +                               NVME_LOG_CHANGED_NSLIST);
+> +        }
+> +    }
+> +
+> +    /* Remove from subsystem namespace list. */
+> +    subsys->namespaces[nsid] =3D NULL;
+
+The dual of this operation is done in nvme_ns_realize():
+
+  subsys->namespaces[nsid] =3D ns;
+
+Maybe nvme_ns_unrealize() should remove the namespace from the
+subsystem for consistency? I guess the lack of removal was never an
+issue before hot unplug, but now it would be nice to implement the
+lifecycle.
+
+> +
+> +    /*
+> +     * Unrealize: drain I/O, flush, cleanup structures, remove from QOM.
+> +     * nvme_ns_unrealize() handles drain/shutdown/cleanup internally.
+> +     */
+> +    qdev_unrealize(dev);
+> +}
+> +
+> +static void nvme_bus_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    HotplugHandlerClass *hc =3D HOTPLUG_HANDLER_CLASS(klass);
+> +    hc->plug =3D nvme_ns_hot_plug;
+> +    hc->unplug =3D nvme_ns_hot_unplug;
+> +}
+> +
+>  static const TypeInfo nvme_bus_info =3D {
+>      .name =3D TYPE_NVME_BUS,
+>      .parent =3D TYPE_BUS,
+>      .instance_size =3D sizeof(NvmeBus),
+> +    .class_init =3D nvme_bus_class_init,
+> +    .interfaces =3D (const InterfaceInfo[]) {
+> +        { TYPE_HOTPLUG_HANDLER },
+> +        { }
+> +    },
+>  };
+> =20
+>  static void nvme_register_types(void)
+> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+> index b0106eaa5c..eb628c0734 100644
+> --- a/hw/nvme/ns.c
+> +++ b/hw/nvme/ns.c
+> @@ -937,6 +937,7 @@ static void nvme_ns_class_init(ObjectClass *oc, const=
+ void *data)
+>      dc->bus_type =3D TYPE_NVME_BUS;
+>      dc->realize =3D nvme_ns_realize;
+>      dc->unrealize =3D nvme_ns_unrealize;
+> +    dc->hotpluggable =3D true;
+>      device_class_set_props(dc, nvme_ns_props);
+>      dc->desc =3D "Virtual NVMe namespace";
+>  }
+> diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
+> index 777e1c620f..fa35055d3c 100644
+> --- a/hw/nvme/subsys.c
+> +++ b/hw/nvme/subsys.c
+> @@ -9,6 +9,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/units.h"
+>  #include "qapi/error.h"
+> +#include "hw/core/qdev.h"
+> =20
+>  #include "nvme.h"
+> =20
+> @@ -205,6 +206,7 @@ static void nvme_subsys_realize(DeviceState *dev, Err=
+or **errp)
+>      NvmeSubsystem *subsys =3D NVME_SUBSYS(dev);
+> =20
+>      qbus_init(&subsys->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id=
+);
+> +    qbus_set_bus_hotplug_handler(BUS(&subsys->bus));
+> =20
+>      nvme_subsys_setup(subsys, errp);
+>  }
+> --=20
+> 2.53.0
+>=20
+
+--MjL36GCxI9d0/xOb
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnY7/AACgkQnKSrs4Gr
+c8hlnQgAoGM24bM8QP8yecuDLkruRcLp+NHWgy0zQWP/nJZkxPzZS9NZ5DTKIXQX
+BPXgASo20o/+jKbCmbhZqD2Gq7T9sTm0IDpWJXnACuF/pGO+b/Ia8ooKRP+Yqtj5
+SO1F7x64Qmdf/huIJl6b7A5PtbT64oHv/3zNIxfyl8+xcX7sytG7hgsq0lrt8lPX
+hiFWX48NFFDGLL1YUXUg8T2lN9r47JFjG4ecjxxgwSW5BdS2WQ9gjDsSMnqBeaq9
+rS2MduBq1u8mh9tGWGwp9sYVlfiNOLLt7lPEyFergih7PAa39zU2JBx57vh6+wm3
+tHo93KPAkh18dSBHcH8s6DLQBkM9VQ==
+=J7TG
+-----END PGP SIGNATURE-----
+
+--MjL36GCxI9d0/xOb--
+
 
