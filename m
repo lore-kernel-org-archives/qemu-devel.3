@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46AA8F45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC88DF45A08
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHQH-0000MQ-LH; Fri, 10 Apr 2026 15:21:45 -0400
+	id 1wBHQL-000148-K8; Fri, 10 Apr 2026 15:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHQ3-0007s8-U8
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wBHQK-0000wj-GU
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHQ0-0001cS-JO
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:31 -0400
+ id 1wBHQI-0001f3-RH
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775848887;
+ s=mimecast20190719; t=1775848906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eev7ZgDt7TuG9zqc7JFbqu+7TfwNceZf9Sx5cioSKfc=;
- b=jSGZMHO3WsMgtct5/YSdXpvnupM8zZBMRHTttw+9TCt7uZf9tGdaKOI4pWsKbNLnjbYzpI
- +Fa2NMOS6PAwkBjzfRJepxjBj/Zfv6QGDjxvNGMoHTHbJmnlok6Psaw95POW3sk0L/U3ug
- ucx8SSFML/QTy2YqB9vQLGo9C02povY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=PlKFwmWjmC8Lncf18Tdazfm1QoSVzgcnfKazbHyaKp4=;
+ b=YHVxxAhF1y0atuY/OByx+3OCcbEWUoULNxKthr2xDAKDSsK6efjOIfmV+azh5yWpM3cA/e
+ gKTQyhVhfR0nG5rUniHqC1KNgtHseRX9iq3HqGptuHbapRYQXrqU82d2q8EceC+EH8VnmJ
+ xkNM4waIPDyZLTPsxHwPzNmJMKXQJZU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-DmQzhfBQNziv3cF7vOBDoQ-1; Fri,
- 10 Apr 2026 15:21:26 -0400
-X-MC-Unique: DmQzhfBQNziv3cF7vOBDoQ-1
-X-Mimecast-MFC-AGG-ID: DmQzhfBQNziv3cF7vOBDoQ_1775848885
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-tDXGYv-7ORGlXlUSR0ftFQ-1; Fri,
+ 10 Apr 2026 15:21:43 -0400
+X-MC-Unique: tDXGYv-7ORGlXlUSR0ftFQ-1
+X-Mimecast-MFC-AGG-ID: tDXGYv-7ORGlXlUSR0ftFQ_1775848902
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6AF2119560B7
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:21:25 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79FB8180034F; Fri, 10 Apr 2026 19:21:42 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D747180057F; Fri, 10 Apr 2026 19:21:22 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5AC5A3000C16; Fri, 10 Apr 2026 19:21:40 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:18:47 +0400
-Subject: [PATCH v2 25/67] ui/console-vc: move VT100 state machine and
- output FIFO into QemuVT100
+Date: Fri, 10 Apr 2026 23:18:50 +0400
+Subject: [PATCH v2 28/67] ui/console-vc: extract vt100_init() and vt100_fini()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-25-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-28-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=32396;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3601;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=PUHVzwpUuSJhv3fv9Q/KSd6OQTNQ0Wo8/FtWCxla3rc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0Uu5D6XB2ok14O8BvhaKHqEXFAu2YyAL0cT
- croY93vPcSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFAAKCRDa6OEJdZac
- 5eG+EACzXd7JZWoWXB5zpPyFdEg0MOD3ZubOdc4UQ7HQKHzLGlnzUKyqcQJQN08ORbXKn9SuiWL
- 42phqXNu2HLgwdl6X/CVmzMOi1D2XI4WWOpd4Gxs2A7BQKSN86HzewdcTVc3oYzocgTlaoAA0nQ
- vOk510uNaTfg4bv9N6QUZzSmRpzjCp9CtsTaPJzkqTq7RF83kWkG5uwC1JtTNZ3Z5FRLz0k9XAf
- 8Q6JLwVFAooz5OMZQA4ZVr2jjOLDg46FjAtfyRdmv0wy5g4ycIw2JPcu77MEauO+nAzrfl+esdH
- 23BKMTh0rJ/yMVyqZFjVSlh98MfU0axDH8Shv0GJgll/ENA41SchqNmyaqgPjzXg1UZT9xhhtZp
- P37IVNOWyyOydir5BRIrtK3ZHp/2++2vvUQrsF3pI298oIImN5xB5hlWRjMFYpGdxoC0Ovbf1pP
- mk7io1PKdxvRzP2pg263EvZBhIzwg0fqqWy0xLg38lsAy9Mxmf1OM4A0h8px1vmMEZWhUXy7k/f
- xiDLa8SC6hTiQuRKcEiL5Fmr07O4n9eiWpnLpjnf5YVVYjWfigw5SlELLMU830//34GdmOCehzq
- RUiO/mRJmzUYdhBz6dsM0emqWSpfynI2ckciuoL3Li9NTPu5U0WGefN+m7OGbsMtxsl2YSsnPNX
- lOiYWbhSeMFEJWA==
+ bh=Zhp6CmSbOUhHIMaEnP1CemI0/3Yw4E1NhjHME/nu10Y=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0VpE3etBJUMcNi+ptl4BrW55cT9JMcpDHCr
+ BOQnQqsii+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFQAKCRDa6OEJdZac
+ 5Y9QEAC11lsjNwwM37vnUAH+upQxOaUp62dJNnAiIh0z2IozourdPhmj5j7sSkDpIdTpS14yzUl
+ IWncyp75mfwUDLn+mx+8/smy5WkYbIC241ZVt7FmsnaeKEGo/MuIFtaehbMLZe6K011tzcPCjcC
+ tJEm/VUu19finhGWPbTnhiyMgExa2RoDMVlB4ZNMvBEhvPF4pet3CLAKcIn2ktDwtNyeevCDnAP
+ /KtTrUIH8BAl4xcq04ri5Qf6vU9kf7GLFjH8kmrWYh8PapGRIGAuiqnxNwkdU4NdLpK0bSHvO0e
+ +tdLo4Nu2uDZRgontHBV2CUtR6w/6XgKREgLT2/l96ZWUfh5q9SdY5q7gQ8WsRU/UdLHmFfnfVi
+ 1MPf3Py6c2PS8L6rOi3ThIeaU0t3fbR0eqRz1PmTtktgLe2/KoN7OE4F3bJmkfvKzKqM2NeCJb6
+ 18c1P0mKC4o3BuPVlM4p+HiGF/R8fd/rmrcASDbXZ+7tmIQfTqqJuZ5DOb1m1wDCuALtnm7Piiz
+ 9KHIaOBeqOuyTXAtHx/3uyVlmwB2QrlYVXPidErPPoAobH+tNt17erK2/fPVzF4nS9d+nsX/Lxf
+ WPMqAjL5M5kVejnoufpBgFa1b5IipjNLa1EHJKejseoFj0DioKoL/7TOdkC2FrZRNQPrlVFlDFz
+ sCshkIRZKWSg/wQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,860 +103,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the terminal escape sequence parser state (TTYState, esc_params,
-text attributes, saved cursor position) and the output FIFO from
-VCChardev/QemuTextConsole into QemuVT100. Rename the corresponding
-functions from vc_* to vt100_* to reflect they now operate on the VT100
-layer directly, removing the indirection through vc->console->vt.
+Consolidate VT100 initialization and finalization into dedicated
+functions, continuing the extraction of the VT100 layer from the
+console/chardev code.
 
-Add an out_flush callback to QemuVT100 so vt100_write() can flush
-output without knowing about QemuTextConsole, and move FIFO/VT100
-initialization from qemu_text_console_init() to vc_chr_open() where
-the callback can be wired up.
+vt100_init() gathers the scattered setup (cursor timer, list insertion,
+FIFO creation, default attributes, and image) that was previously spread
+across vc_chr_open() and qemu_text_console_class_init().
 
-This continues the decoupling of VT100 terminal emulation from the
-chardev layer, making QemuVT100 a self-contained terminal emulator.
+vt100_fini() pairs with it by handling list removal, FIFO destruction,
+and cells cleanup, replacing the open-coded QTAILQ_REMOVE in
+qemu_text_console_finalize().
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 375 +++++++++++++++++++++++++++-----------------------------
- 1 file changed, 180 insertions(+), 195 deletions(-)
+ ui/console-vc.c | 44 ++++++++++++++++++++++++++++++--------------
+ 1 file changed, 30 insertions(+), 14 deletions(-)
 
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index bba1fe614ef..5cfb3dfcf72 100644
+index 194233f41df..84944f845e1 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -72,6 +72,18 @@ struct QemuVT100 {
-     int update_x1;
-     int update_y1;
- 
-+    enum TTYState state;
-+    int esc_params[MAX_ESC_PARAMS];
-+    int nb_esc_params;
-+    uint32_t utf8_state;     /* UTF-8 DFA decoder state */
-+    uint32_t utf8_codepoint; /* accumulated UTF-8 code point */
-+    TextAttributes t_attrib; /* currently active text attributes */
-+    TextAttributes t_attrib_saved;
-+    int x_saved, y_saved;
-+    /* fifo for key pressed */
-+    Fifo8 out_fifo;
-+    void (*out_flush)(QemuVT100 *vt);
-+
-     QTAILQ_ENTRY(QemuVT100) list;
- };
- 
-@@ -83,8 +95,6 @@ typedef struct QemuTextConsole {
- 
-     QemuVT100 vt;
-     Chardev *chr;
--    /* fifo for key pressed */
--    Fifo8 out_fifo;
- } QemuTextConsole;
- 
- typedef QemuConsoleClass QemuTextConsoleClass;
-@@ -102,15 +112,6 @@ OBJECT_DEFINE_TYPE(QemuFixedTextConsole, qemu_fixed_text_console, QEMU_FIXED_TEX
- struct VCChardev {
-     Chardev parent;
-     QemuTextConsole *console;
--
--    enum TTYState state;
--    int esc_params[MAX_ESC_PARAMS];
--    int nb_esc_params;
--    uint32_t utf8_state;     /* UTF-8 DFA decoder state */
--    uint32_t utf8_codepoint; /* accumulated UTF-8 code point */
--    TextAttributes t_attrib; /* currently active text attributes */
--    TextAttributes t_attrib_saved;
--    int x_saved, y_saved;
- };
- typedef struct VCChardev VCChardev;
- 
-@@ -299,36 +300,35 @@ static void vt100_scroll(QemuVT100 *vt, int ydelta)
-     vt100_refresh(vt);
+@@ -1127,12 +1127,19 @@ static void text_console_invalidate(void *opaque)
+     vt100_refresh(&s->vt);
  }
  
--static void qemu_text_console_flush(QemuTextConsole *s)
-+static void qemu_text_console_out_flush(QemuTextConsole *s)
- {
-     uint32_t len, avail;
- 
-     len = qemu_chr_be_can_write(s->chr);
--    avail = fifo8_num_used(&s->out_fifo);
-+    avail = fifo8_num_used(&s->vt.out_fifo);
-     while (len > 0 && avail > 0) {
-         const uint8_t *buf;
-         uint32_t size;
- 
--        buf = fifo8_pop_bufptr(&s->out_fifo, MIN(len, avail), &size);
-+        buf = fifo8_pop_bufptr(&s->vt.out_fifo, MIN(len, avail), &size);
-         qemu_chr_be_write(s->chr, buf, size);
-         len = qemu_chr_be_can_write(s->chr);
-         avail -= size;
-     }
- }
- 
--static void qemu_text_console_write(QemuTextConsole *s, const void *buf, size_t len)
-+static void vt100_write(QemuVT100 *vt, const void *buf, size_t len)
- {
-     uint32_t num_free;
- 
--    num_free = fifo8_num_free(&s->out_fifo);
--    fifo8_push_all(&s->out_fifo, buf, MIN(num_free, len));
--    qemu_text_console_flush(s);
-+    num_free = fifo8_num_free(&vt->out_fifo);
-+    fifo8_push_all(&vt->out_fifo, buf, MIN(num_free, len));
-+    vt->out_flush(vt);
- }
- 
- /* called when an ascii key is pressed */
- void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
- {
--    QemuVT100 *vt = &s->vt;
-     uint8_t buf[16], *q;
-     int c;
- 
-@@ -360,16 +360,16 @@ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
-             *q++ = '\033';
-             *q++ = '[';
-             *q++ = keysym & 0xff;
--        } else if (vt->echo && (keysym == '\r' || keysym == '\n')) {
-+        } else if (s->vt.echo && (keysym == '\r' || keysym == '\n')) {
-             qemu_chr_write(s->chr, (uint8_t *)"\r", 1, true);
-             *q++ = '\n';
-         } else {
-             *q++ = keysym;
-         }
--        if (vt->echo) {
-+        if (s->vt.echo) {
-             qemu_chr_write(s->chr, buf, q - buf, true);
-         }
--        qemu_text_console_write(s, buf, q - buf);
-+        vt100_write(&s->vt, buf, q - buf);
-         break;
-     }
- }
-@@ -377,30 +377,29 @@ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
- static void text_console_update(void *opaque, console_ch_t *chardata)
- {
-     QemuTextConsole *s = QEMU_TEXT_CONSOLE(opaque);
--    QemuVT100 *vt = &s->vt;
-     int i, j, src;
- 
--    if (vt->text_x[0] <= vt->text_x[1]) {
--        src = (vt->y_base + vt->text_y[0]) * vt->width;
--        chardata += vt->text_y[0] * vt->width;
--        for (i = vt->text_y[0]; i <= vt->text_y[1]; i ++)
--            for (j = 0; j < vt->width; j++, src++) {
-+    if (s->vt.text_x[0] <= s->vt.text_x[1]) {
-+        src = (s->vt.y_base + s->vt.text_y[0]) * s->vt.width;
-+        chardata += s->vt.text_y[0] * s->vt.width;
-+        for (i = s->vt.text_y[0]; i <= s->vt.text_y[1]; i ++)
-+            for (j = 0; j < s->vt.width; j++, src++) {
-                 console_write_ch(chardata ++,
--                                 ATTR2CHTYPE(vt->cells[src].ch,
--                                             vt->cells[src].t_attrib.fgcol,
--                                             vt->cells[src].t_attrib.bgcol,
--                                             vt->cells[src].t_attrib.bold));
-+                                 ATTR2CHTYPE(s->vt.cells[src].ch,
-+                                             s->vt.cells[src].t_attrib.fgcol,
-+                                             s->vt.cells[src].t_attrib.bgcol,
-+                                             s->vt.cells[src].t_attrib.bold));
-             }
--        dpy_text_update(QEMU_CONSOLE(s), vt->text_x[0], vt->text_y[0],
--                        vt->text_x[1] - vt->text_x[0], i - vt->text_y[0]);
--        vt->text_x[0] = vt->width;
--        vt->text_y[0] = vt->height;
--        vt->text_x[1] = 0;
--        vt->text_y[1] = 0;
-+        dpy_text_update(QEMU_CONSOLE(s), s->vt.text_x[0], s->vt.text_y[0],
-+                        s->vt.text_x[1] - s->vt.text_x[0], i - s->vt.text_y[0]);
-+        s->vt.text_x[0] = s->vt.width;
-+        s->vt.text_y[0] = s->vt.height;
-+        s->vt.text_x[1] = 0;
-+        s->vt.text_y[1] = 0;
-     }
--    if (vt->cursor_invalidate) {
--        dpy_text_cursor(QEMU_CONSOLE(s), vt->x, vt->y);
--        vt->cursor_invalidate = 0;
-+    if (s->vt.cursor_invalidate) {
-+        dpy_text_cursor(QEMU_CONSOLE(s), s->vt.x, s->vt.y);
-+        s->vt.cursor_invalidate = 0;
-     }
- }
- 
-@@ -489,103 +488,101 @@ static void vt100_put_lf(QemuVT100 *vt)
-  * NOTE: I know this code is not very efficient (checking every color for it
-  * self) but it is more readable and better maintainable.
-  */
--static void vc_handle_escape(VCChardev *vc)
-+static void vt100_handle_escape(QemuVT100 *vt)
- {
-     int i;
- 
--    for (i = 0; i < vc->nb_esc_params; i++) {
--        switch (vc->esc_params[i]) {
-+    for (i = 0; i < vt->nb_esc_params; i++) {
-+        switch (vt->esc_params[i]) {
-             case 0: /* reset all console attributes to default */
--                vc->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
-+                vt->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
-                 break;
-             case 1:
--                vc->t_attrib.bold = 1;
-+                vt->t_attrib.bold = 1;
-                 break;
-             case 4:
--                vc->t_attrib.uline = 1;
-+                vt->t_attrib.uline = 1;
-                 break;
-             case 5:
--                vc->t_attrib.blink = 1;
-+                vt->t_attrib.blink = 1;
-                 break;
-             case 7:
--                vc->t_attrib.invers = 1;
-+                vt->t_attrib.invers = 1;
-                 break;
-             case 8:
--                vc->t_attrib.unvisible = 1;
-+                vt->t_attrib.unvisible = 1;
-                 break;
-             case 22:
--                vc->t_attrib.bold = 0;
-+                vt->t_attrib.bold = 0;
-                 break;
-             case 24:
--                vc->t_attrib.uline = 0;
-+                vt->t_attrib.uline = 0;
-                 break;
-             case 25:
--                vc->t_attrib.blink = 0;
-+                vt->t_attrib.blink = 0;
-                 break;
-             case 27:
--                vc->t_attrib.invers = 0;
-+                vt->t_attrib.invers = 0;
-                 break;
-             case 28:
--                vc->t_attrib.unvisible = 0;
-+                vt->t_attrib.unvisible = 0;
-                 break;
-             /* set foreground color */
-             case 30:
--                vc->t_attrib.fgcol = QEMU_COLOR_BLACK;
-+                vt->t_attrib.fgcol = QEMU_COLOR_BLACK;
-                 break;
-             case 31:
--                vc->t_attrib.fgcol = QEMU_COLOR_RED;
-+                vt->t_attrib.fgcol = QEMU_COLOR_RED;
-                 break;
-             case 32:
--                vc->t_attrib.fgcol = QEMU_COLOR_GREEN;
-+                vt->t_attrib.fgcol = QEMU_COLOR_GREEN;
-                 break;
-             case 33:
--                vc->t_attrib.fgcol = QEMU_COLOR_YELLOW;
-+                vt->t_attrib.fgcol = QEMU_COLOR_YELLOW;
-                 break;
-             case 34:
--                vc->t_attrib.fgcol = QEMU_COLOR_BLUE;
-+                vt->t_attrib.fgcol = QEMU_COLOR_BLUE;
-                 break;
-             case 35:
--                vc->t_attrib.fgcol = QEMU_COLOR_MAGENTA;
-+                vt->t_attrib.fgcol = QEMU_COLOR_MAGENTA;
-                 break;
-             case 36:
--                vc->t_attrib.fgcol = QEMU_COLOR_CYAN;
-+                vt->t_attrib.fgcol = QEMU_COLOR_CYAN;
-                 break;
-             case 37:
--                vc->t_attrib.fgcol = QEMU_COLOR_WHITE;
-+                vt->t_attrib.fgcol = QEMU_COLOR_WHITE;
-                 break;
-             /* set background color */
-             case 40:
--                vc->t_attrib.bgcol = QEMU_COLOR_BLACK;
-+                vt->t_attrib.bgcol = QEMU_COLOR_BLACK;
-                 break;
-             case 41:
--                vc->t_attrib.bgcol = QEMU_COLOR_RED;
-+                vt->t_attrib.bgcol = QEMU_COLOR_RED;
-                 break;
-             case 42:
--                vc->t_attrib.bgcol = QEMU_COLOR_GREEN;
-+                vt->t_attrib.bgcol = QEMU_COLOR_GREEN;
-                 break;
-             case 43:
--                vc->t_attrib.bgcol = QEMU_COLOR_YELLOW;
-+                vt->t_attrib.bgcol = QEMU_COLOR_YELLOW;
-                 break;
-             case 44:
--                vc->t_attrib.bgcol = QEMU_COLOR_BLUE;
-+                vt->t_attrib.bgcol = QEMU_COLOR_BLUE;
-                 break;
-             case 45:
--                vc->t_attrib.bgcol = QEMU_COLOR_MAGENTA;
-+                vt->t_attrib.bgcol = QEMU_COLOR_MAGENTA;
-                 break;
-             case 46:
--                vc->t_attrib.bgcol = QEMU_COLOR_CYAN;
-+                vt->t_attrib.bgcol = QEMU_COLOR_CYAN;
-                 break;
-             case 47:
--                vc->t_attrib.bgcol = QEMU_COLOR_WHITE;
-+                vt->t_attrib.bgcol = QEMU_COLOR_WHITE;
-                 break;
-         }
-     }
- }
- 
--static void vc_update_xy(VCChardev *vc, int x, int y)
-+static void vt100_update_xy(QemuVT100 *vt, int x, int y)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
-     TextCell *c;
-     int y1, y2;
- 
-@@ -606,14 +603,12 @@ static void vc_update_xy(VCChardev *vc, int x, int y)
-         c = &vt->cells[y1 * vt->width + x];
-         vt100_putcharxy(vt, x, y2, c->ch,
-                       &(c->t_attrib));
--        vt100_invalidate_xy(&s->vt, x, y2);
-+        vt100_invalidate_xy(vt, x, y2);
-     }
- }
- 
--static void vc_clear_xy(VCChardev *vc, int x, int y)
-+static void vt100_clear_xy(QemuVT100 *vt, int x, int y)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
-     int y1 = (vt->y_base + y) % vt->total_height;
-     if (x >= vt->width) {
-         x = vt->width - 1;
-@@ -621,7 +616,7 @@ static void vc_clear_xy(VCChardev *vc, int x, int y)
-     TextCell *c = &vt->cells[y1 * vt->width + x];
-     c->ch = ' ';
-     c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
--    vc_update_xy(vc, x, y);
-+    vt100_update_xy(vt, x, y);
- }
- 
- /*
-@@ -664,10 +659,8 @@ static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
-     return *state;
- }
- 
--static void vc_put_one(VCChardev *vc, int ch)
-+static void vt100_put_one(QemuVT100 *vt, int ch)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
-     TextCell *c;
-     int y1;
-     if (vt->x >= vt->width) {
-@@ -678,17 +671,14 @@ static void vc_put_one(VCChardev *vc, int ch)
-     y1 = (vt->y_base + vt->y) % vt->total_height;
-     c = &vt->cells[y1 * vt->width + vt->x];
-     c->ch = ch;
--    c->t_attrib = vc->t_attrib;
--    vc_update_xy(vc, vt->x, vt->y);
-+    c->t_attrib = vt->t_attrib;
-+    vt100_update_xy(vt, vt->x, vt->y);
-     vt->x++;
- }
- 
- /* set cursor, checking bounds */
--static void vc_set_cursor(VCChardev *vc, int x, int y)
-+static void vt100_set_cursor(QemuVT100 *vt, int x, int y)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
--
-     if (x < 0) {
-         x = 0;
-     }
-@@ -712,10 +702,8 @@ static void vc_set_cursor(VCChardev *vc, int x, int y)
-  * characters between the cursor and right margin move to the
-  * left. Character attributes move with the characters.
-  */
--static void vc_csi_P(struct VCChardev *vc, unsigned int nr)
-+static void vt100_csi_P(QemuVT100 *vt, unsigned int nr)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
-     TextCell *c1, *c2;
-     unsigned int x1, x2, y;
-     unsigned int end, len;
-@@ -739,12 +727,12 @@ static void vc_csi_P(struct VCChardev *vc, unsigned int nr)
-         c2 = &vt->cells[y * vt->width + x2];
-         memmove(c1, c2, len * sizeof(*c1));
-         for (end = x1 + len; x1 < end; x1++) {
--            vc_update_xy(vc, x1, vt->y);
-+            vt100_update_xy(vt, x1, vt->y);
-         }
-     }
-     /* Clear the rest */
-     for (; x1 < vt->width; x1++) {
--        vc_clear_xy(vc, x1, vt->y);
-+        vt100_clear_xy(vt, x1, vt->y);
-     }
- }
- 
-@@ -754,10 +742,8 @@ static void vc_csi_P(struct VCChardev *vc, unsigned int nr)
-  * blank characters. Text between the cursor and right margin moves to
-  * the right. Characters scrolled past the right margin are lost.
-  */
--static void vc_csi_at(struct VCChardev *vc, unsigned int nr)
-+static void vt100_csi_at(QemuVT100 *vt, unsigned int nr)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
-     TextCell *c1, *c2;
-     unsigned int x1, x2, y;
-     unsigned int end, len;
-@@ -781,61 +767,53 @@ static void vc_csi_at(struct VCChardev *vc, unsigned int nr)
-         c2 = &vt->cells[y * vt->width + x2];
-         memmove(c1, c2, len * sizeof(*c1));
-         for (end = x1 + len; x1 < end; x1++) {
--            vc_update_xy(vc, x1, vt->y);
-+            vt100_update_xy(vt, x1, vt->y);
-         }
-     }
-     /* Insert blanks */
-     for (x1 = vt->x; x1 < vt->x + nr; x1++) {
--        vc_clear_xy(vc, x1, vt->y);
-+        vt100_clear_xy(vt, x1, vt->y);
-     }
- }
- 
- /**
-- * vc_save_cursor() - saves cursor position and character attributes.
-+ * vt100_save_cursor() - saves cursor position and character attributes.
-  */
--static void vc_save_cursor(VCChardev *vc)
-+static void vt100_save_cursor(QemuVT100 *vt)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
--
--    vc->x_saved = vt->x;
--    vc->y_saved = vt->y;
--    vc->t_attrib_saved = vc->t_attrib;
-+    vt->x_saved = vt->x;
-+    vt->y_saved = vt->y;
-+    vt->t_attrib_saved = vt->t_attrib;
- }
- 
- /**
-- * vc_restore_cursor() - restores cursor position and character
-+ * vt100_restore_cursor() - restores cursor position and character
-  * attributes from saved state.
-  */
--static void vc_restore_cursor(VCChardev *vc)
-+static void vt100_restore_cursor(QemuVT100 *vt)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
--
--    vt->x = vc->x_saved;
--    vt->y = vc->y_saved;
--    vc->t_attrib = vc->t_attrib_saved;
-+    vt->x = vt->x_saved;
-+    vt->y = vt->y_saved;
-+    vt->t_attrib = vt->t_attrib_saved;
- }
- 
--static void vc_putchar(VCChardev *vc, int ch)
-+static void vt100_putchar(QemuVT100 *vt, int ch)
- {
--    QemuTextConsole *s = vc->console;
--    QemuVT100 *vt = &s->vt;
-     int i;
-     int x, y;
-     g_autofree char *response = NULL;
- 
--    switch(vc->state) {
-+    switch (vt->state) {
-     case TTY_STATE_NORM:
-         /* Feed byte through the UTF-8 DFA decoder */
-         if (ch >= 0x80) {
--            switch (bh_utf8_decode(&vc->utf8_state, &vc->utf8_codepoint, ch)) {
-+            switch (bh_utf8_decode(&vt->utf8_state, &vt->utf8_codepoint, ch)) {
-             case BH_UTF8_ACCEPT:
--                vc_put_one(vc, unicode_to_cp437(vc->utf8_codepoint));
-+                vt100_put_one(vt, unicode_to_cp437(vt->utf8_codepoint));
-                 break;
-             case BH_UTF8_REJECT:
-                 /* Reset state so the decoder can resync */
--                vc->utf8_state = BH_UTF8_ACCEPT;
-+                vt->utf8_state = BH_UTF8_ACCEPT;
-                 break;
-             default:
-                 /* Need more bytes */
-@@ -844,13 +822,13 @@ static void vc_putchar(VCChardev *vc, int ch)
-             break;
-         }
-         /* ASCII byte: abort any pending UTF-8 sequence */
--        vc->utf8_state = BH_UTF8_ACCEPT;
-+        vt->utf8_state = BH_UTF8_ACCEPT;
-         switch(ch) {
-         case '\r':  /* carriage return */
-             vt->x = 0;
-             break;
-         case '\n':  /* newline */
--            vt100_put_lf(&s->vt);
-+            vt100_put_lf(vt);
-             break;
-         case '\b':  /* backspace */
-             if (vt->x > 0)
-@@ -874,95 +852,95 @@ static void vc_putchar(VCChardev *vc, int ch)
-             /* SI (shift in), character set 0 (ignored) */
-             break;
-         case 27:    /* esc (introducing an escape sequence) */
--            vc->state = TTY_STATE_ESC;
-+            vt->state = TTY_STATE_ESC;
-             break;
-         default:
--            vc_put_one(vc, ch);
-+            vt100_put_one(vt, ch);
-             break;
-         }
-         break;
-     case TTY_STATE_ESC: /* check if it is a terminal escape sequence */
-         if (ch == '[') {
-             for(i=0;i<MAX_ESC_PARAMS;i++)
--                vc->esc_params[i] = 0;
--            vc->nb_esc_params = 0;
--            vc->state = TTY_STATE_CSI;
-+                vt->esc_params[i] = 0;
-+            vt->nb_esc_params = 0;
-+            vt->state = TTY_STATE_CSI;
-         } else if (ch == '(') {
--            vc->state = TTY_STATE_G0;
-+            vt->state = TTY_STATE_G0;
-         } else if (ch == ')') {
--            vc->state = TTY_STATE_G1;
-+            vt->state = TTY_STATE_G1;
-         } else if (ch == ']' || ch == 'P' || ch == 'X'
-                    || ch == '^' || ch == '_') {
-             /* String sequences: OSC, DCS, SOS, PM, APC */
--            vc->state = TTY_STATE_OSC;
-+            vt->state = TTY_STATE_OSC;
-         } else if (ch == '7') {
--            vc_save_cursor(vc);
--            vc->state = TTY_STATE_NORM;
-+            vt100_save_cursor(vt);
-+            vt->state = TTY_STATE_NORM;
-         } else if (ch == '8') {
--            vc_restore_cursor(vc);
--            vc->state = TTY_STATE_NORM;
-+            vt100_restore_cursor(vt);
-+            vt->state = TTY_STATE_NORM;
-         } else {
--            vc->state = TTY_STATE_NORM;
-+            vt->state = TTY_STATE_NORM;
-         }
-         break;
-     case TTY_STATE_CSI: /* handle escape sequence parameters */
-         if (ch >= '0' && ch <= '9') {
--            if (vc->nb_esc_params < MAX_ESC_PARAMS) {
--                int *param = &vc->esc_params[vc->nb_esc_params];
-+            if (vt->nb_esc_params < MAX_ESC_PARAMS) {
-+                int *param = &vt->esc_params[vt->nb_esc_params];
-                 int digit = (ch - '0');
- 
-                 *param = (*param <= (INT_MAX - digit) / 10) ?
-                          *param * 10 + digit : INT_MAX;
-             }
-         } else {
--            if (vc->nb_esc_params < MAX_ESC_PARAMS)
--                vc->nb_esc_params++;
-+            if (vt->nb_esc_params < MAX_ESC_PARAMS)
-+                vt->nb_esc_params++;
-             if (ch == ';' || ch == '?') {
-                 break;
-             }
--            trace_console_putchar_csi(vc->esc_params[0], vc->esc_params[1],
--                                      ch, vc->nb_esc_params);
--            vc->state = TTY_STATE_NORM;
-+            trace_console_putchar_csi(vt->esc_params[0], vt->esc_params[1],
-+                                      ch, vt->nb_esc_params);
-+            vt->state = TTY_STATE_NORM;
-             switch(ch) {
-             case 'A':
-                 /* move cursor up */
--                if (vc->esc_params[0] == 0) {
--                    vc->esc_params[0] = 1;
-+                if (vt->esc_params[0] == 0) {
-+                    vt->esc_params[0] = 1;
-                 }
--                vc_set_cursor(vc, vt->x, vt->y - vc->esc_params[0]);
-+                vt100_set_cursor(vt, vt->x, vt->y - vt->esc_params[0]);
-                 break;
-             case 'B':
-                 /* move cursor down */
--                if (vc->esc_params[0] == 0) {
--                    vc->esc_params[0] = 1;
-+                if (vt->esc_params[0] == 0) {
-+                    vt->esc_params[0] = 1;
-                 }
--                vc_set_cursor(vc, vt->x, vt->y + vc->esc_params[0]);
-+                vt100_set_cursor(vt, vt->x, vt->y + vt->esc_params[0]);
-                 break;
-             case 'C':
-                 /* move cursor right */
--                if (vc->esc_params[0] == 0) {
--                    vc->esc_params[0] = 1;
-+                if (vt->esc_params[0] == 0) {
-+                    vt->esc_params[0] = 1;
-                 }
--                vc_set_cursor(vc, vt->x + vc->esc_params[0], vt->y);
-+                vt100_set_cursor(vt, vt->x + vt->esc_params[0], vt->y);
-                 break;
-             case 'D':
-                 /* move cursor left */
--                if (vc->esc_params[0] == 0) {
--                    vc->esc_params[0] = 1;
-+                if (vt->esc_params[0] == 0) {
-+                    vt->esc_params[0] = 1;
-                 }
--                vc_set_cursor(vc, vt->x - vc->esc_params[0], vt->y);
-+                vt100_set_cursor(vt, vt->x - vt->esc_params[0], vt->y);
-                 break;
-             case 'G':
-                 /* move cursor to column */
--                vc_set_cursor(vc, vc->esc_params[0] - 1, vt->y);
-+                vt100_set_cursor(vt, vt->esc_params[0] - 1, vt->y);
-                 break;
-             case 'f':
-             case 'H':
-                 /* move cursor to row, column */
--                vc_set_cursor(vc, vc->esc_params[1] - 1, vc->esc_params[0] - 1);
-+                vt100_set_cursor(vt, vt->esc_params[1] - 1, vt->esc_params[0] - 1);
-                 break;
-             case 'J':
--                switch (vc->esc_params[0]) {
-+                switch (vt->esc_params[0]) {
-                 case 0:
-                     /* clear to end of screen */
-                     for (y = vt->y; y < vt->height; y++) {
-@@ -970,7 +948,7 @@ static void vc_putchar(VCChardev *vc, int ch)
-                             if (y == vt->y && x < vt->x) {
-                                 continue;
-                             }
--                            vc_clear_xy(vc, x, y);
-+                            vt100_clear_xy(vt, x, y);
-                         }
-                     }
-                     break;
-@@ -981,7 +959,7 @@ static void vc_putchar(VCChardev *vc, int ch)
-                             if (y == vt->y && x > vt->x) {
-                                 break;
-                             }
--                            vc_clear_xy(vc, x, y);
-+                            vt100_clear_xy(vt, x, y);
-                         }
-                     }
-                     break;
-@@ -989,62 +967,62 @@ static void vc_putchar(VCChardev *vc, int ch)
-                     /* clear entire screen */
-                     for (y = 0; y < vt->height; y++) {
-                         for (x = 0; x < vt->width; x++) {
--                            vc_clear_xy(vc, x, y);
-+                            vt100_clear_xy(vt, x, y);
-                         }
-                     }
-                     break;
-                 }
-                 break;
-             case 'K':
--                switch (vc->esc_params[0]) {
-+                switch (vt->esc_params[0]) {
-                 case 0:
-                     /* clear to eol */
-                     for(x = vt->x; x < vt->width; x++) {
--                        vc_clear_xy(vc, x, vt->y);
-+                        vt100_clear_xy(vt, x, vt->y);
-                     }
-                     break;
-                 case 1:
-                     /* clear from beginning of line */
-                     for (x = 0; x <= vt->x && x < vt->width; x++) {
--                        vc_clear_xy(vc, x, vt->y);
-+                        vt100_clear_xy(vt, x, vt->y);
-                     }
-                     break;
-                 case 2:
-                     /* clear entire line */
-                     for(x = 0; x < vt->width; x++) {
--                        vc_clear_xy(vc, x, vt->y);
-+                        vt100_clear_xy(vt, x, vt->y);
-                     }
-                     break;
-                 }
-                 break;
-             case 'P':
--                vc_csi_P(vc, vc->esc_params[0]);
-+                vt100_csi_P(vt, vt->esc_params[0]);
-                 break;
-             case 'm':
--                vc_handle_escape(vc);
-+                vt100_handle_escape(vt);
-                 break;
-             case 'n':
--                switch (vc->esc_params[0]) {
-+                switch (vt->esc_params[0]) {
-                 case 5:
-                     /* report console status (always succeed)*/
--                    qemu_text_console_write(s, "\033[0n", 4);
-+                    vt100_write(vt, "\033[0n", 4);
-                     break;
-                 case 6:
-                     /* report cursor position */
-                     response = g_strdup_printf("\033[%d;%dR",
-                                                vt->y + 1, vt->x + 1);
--                    qemu_text_console_write(s, response, strlen(response));
-+                    vt100_write(vt, response, strlen(response));
-                     break;
-                 }
-                 break;
-             case 's':
--                vc_save_cursor(vc);
-+                vt100_save_cursor(vt);
-                 break;
-             case 'u':
--                vc_restore_cursor(vc);
-+                vt100_restore_cursor(vt);
-                 break;
-             case '@':
--                vc_csi_at(vc, vc->esc_params[0]);
-+                vt100_csi_at(vt, vt->esc_params[0]);
-                 break;
-             default:
-                 trace_console_putchar_unhandled(ch);
-@@ -1056,10 +1034,10 @@ static void vc_putchar(VCChardev *vc, int ch)
-     case TTY_STATE_OSC: /* Operating System Command: ESC ] ... BEL/ST */
-         if (ch == '\a') {
-             /* BEL terminates OSC */
--            vc->state = TTY_STATE_NORM;
-+            vt->state = TTY_STATE_NORM;
-         } else if (ch == 27) {
-             /* ESC might start ST (ESC \) */
--            vc->state = TTY_STATE_ESC;
-+            vt->state = TTY_STATE_ESC;
-         }
-         /* All other bytes are silently consumed */
-         break;
-@@ -1070,7 +1048,7 @@ static void vc_putchar(VCChardev *vc, int ch)
-             /* Latin-1 map */
-             break;
-         }
--        vc->state = TTY_STATE_NORM;
-+        vt->state = TTY_STATE_NORM;
-         break;
-     }
- }
-@@ -1083,22 +1061,21 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
- {
-     VCChardev *drv = VC_CHARDEV(chr);
-     QemuTextConsole *s = drv->console;
--    QemuVT100 *vt = &s->vt;
-     int i;
- 
--    vt->update_x0 = vt->width * FONT_WIDTH;
--    vt->update_y0 = vt->height * FONT_HEIGHT;
--    vt->update_x1 = 0;
--    vt->update_y1 = 0;
--    vt100_show_cursor(vt, 0);
-+    s->vt.update_x0 = s->vt.width * FONT_WIDTH;
-+    s->vt.update_y0 = s->vt.height * FONT_HEIGHT;
-+    s->vt.update_x1 = 0;
-+    s->vt.update_y1 = 0;
-+    vt100_show_cursor(&s->vt, 0);
-     for(i = 0; i < len; i++) {
--        vc_putchar(drv, buf[i]);
-+        vt100_putchar(&s->vt, buf[i]);
-     }
--    vt100_show_cursor(vt, 1);
--    if (vt->update_x0 < vt->update_x1) {
--        vt100_image_update(vt, vt->update_x0, vt->update_y0,
--                           vt->update_x1 - vt->update_x0,
--                           vt->update_y1 - vt->update_y0);
-+    vt100_show_cursor(&s->vt, 1);
-+    if (s->vt.update_x0 < s->vt.update_x1) {
-+        vt100_image_update(&s->vt, s->vt.update_x0, s->vt.update_y0,
-+                           s->vt.update_x1 - s->vt.update_x0,
-+                           s->vt.update_y1 - s->vt.update_y0);
-     }
-     return len;
- }
-@@ -1167,9 +1144,6 @@ qemu_text_console_init(Object *obj)
- {
-     QemuTextConsole *c = QEMU_TEXT_CONSOLE(obj);
- 
--    QTAILQ_INSERT_HEAD(&vt100s, &c->vt, list);
--    fifo8_create(&c->out_fifo, 16);
--    c->vt.total_height = DEFAULT_BACKSCROLL;
-     QEMU_CONSOLE(c)->hw_ops = &text_console_ops;
-     QEMU_CONSOLE(c)->hw = c;
- }
-@@ -1193,7 +1167,7 @@ static void vc_chr_accept_input(Chardev *chr)
- {
-     VCChardev *drv = VC_CHARDEV(chr);
- 
--    qemu_text_console_flush(drv->console);
-+    qemu_text_console_out_flush(drv->console);
- }
- 
- static void vc_chr_set_echo(Chardev *chr, bool echo)
-@@ -1215,6 +1189,13 @@ static void text_console_image_update(QemuVT100 *vt, int x, int y, int width, in
-     dpy_gfx_update(QEMU_CONSOLE(console), x, y, width, height);
- }
- 
-+static void text_console_out_flush(QemuVT100 *vt)
++static void vt100_fini(QemuVT100 *vt)
 +{
-+    QemuTextConsole *console = container_of(vt, QemuTextConsole, vt);
++    QTAILQ_REMOVE(&vt100s, vt, list);
++    fifo8_destroy(&vt->out_fifo);
++    g_free(vt->cells);
++}
 +
-+    qemu_text_console_out_flush(console);
+ static void
+ qemu_text_console_finalize(Object *obj)
+ {
+     QemuTextConsole *s = QEMU_TEXT_CONSOLE(obj);
+ 
+-    QTAILQ_REMOVE(&vt100s, &s->vt, list);
++    vt100_fini(&s->vt);
+ }
+ 
+ static void
+@@ -1140,10 +1147,6 @@ qemu_text_console_class_init(ObjectClass *oc, const void *data)
+ {
+     QemuConsoleClass *cc = QEMU_CONSOLE_CLASS(oc);
+ 
+-    if (!cursor_timer) {
+-        cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
+-    }
+-
+     cc->get_label = qemu_text_console_get_label;
+ }
+ 
+@@ -1209,6 +1212,25 @@ static void text_console_out_flush(QemuVT100 *vt)
+     qemu_text_console_out_flush(console);
+ }
+ 
++static void vt100_init(QemuVT100 *vt,
++                       pixman_image_t *image,
++                       void (*image_update)(QemuVT100 *vt, int x, int y, int w, int h),
++                       void (*out_flush)(QemuVT100 *vt))
++{
++    if (!cursor_timer) {
++        cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
++    }
++
++    QTAILQ_INSERT_HEAD(&vt100s, vt, list);
++    fifo8_create(&vt->out_fifo, 16);
++    vt->total_height = DEFAULT_BACKSCROLL;
++    vt->image_update = image_update;
++    vt->out_flush = out_flush;
++    /* set current text attributes to default */
++    vt->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
++    vt100_set_image(vt, image);
 +}
 +
  static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
  {
      ChardevVC *vc = backend->u.vc.data;
-@@ -1244,24 +1225,28 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+@@ -1238,20 +1260,14 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
          s = QEMU_TEXT_CONSOLE(object_new(TYPE_QEMU_FIXED_TEXT_CONSOLE));
      }
  
-+    QTAILQ_INSERT_HEAD(&vt100s, &s->vt, list);
-+    fifo8_create(&s->vt.out_fifo, 16);
-+    s->vt.total_height = DEFAULT_BACKSCROLL;
+-    QTAILQ_INSERT_HEAD(&vt100s, &s->vt, list);
+-    fifo8_create(&s->vt.out_fifo, 16);
+-    s->vt.total_height = DEFAULT_BACKSCROLL;
      dpy_gfx_replace_surface(QEMU_CONSOLE(s), qemu_create_displaysurface(width, height));
-     s->vt.image_update = text_console_image_update;
-+    s->vt.out_flush = text_console_out_flush;
+-    s->vt.image_update = text_console_image_update;
+-    s->vt.out_flush = text_console_out_flush;
++    vt100_init(&s->vt, QEMU_CONSOLE(s)->surface->image,
++               text_console_image_update,
++               text_console_out_flush);
  
      s->chr = chr;
      drv->console = s;
  
-     /* set current text attributes to default */
--    drv->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
-+    s->vt.t_attrib = TEXT_ATTRIBUTES_DEFAULT;
-     vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
- 
+-    /* set current text attributes to default */
+-    s->vt.t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-    vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
+-
      if (chr->label) {
          char *msg;
  
--        drv->t_attrib.bgcol = QEMU_COLOR_BLUE;
-+        s->vt.t_attrib.bgcol = QEMU_COLOR_BLUE;
-         msg = g_strdup_printf("%s console\r\n", chr->label);
-         qemu_chr_write(chr, (uint8_t *)msg, strlen(msg), true);
-         g_free(msg);
--        drv->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
-+        s->vt.t_attrib = TEXT_ATTRIBUTES_DEFAULT;
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
 
 -- 
 2.53.0
