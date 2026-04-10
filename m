@@ -4,109 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87FFE99049
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B69EE99049
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:29:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB6GM-0004Bi-EK; Fri, 10 Apr 2026 03:26:46 -0400
+	id 1wB6IC-0004fS-MP; Fri, 10 Apr 2026 03:28:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wB6GK-0004Au-N0
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:26:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB6IA-0004fG-Ex
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:28:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wB6GI-0006iM-Ne
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:26:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB6I8-0006wS-AJ
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:28:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775806000;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1775806115;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SzWLDKBnyzNA1T5YceMswjeh4MEVICXjSAPV2kBjGzE=;
- b=ZqJ2AvY6gpYZ1C9Y+U5oc59yhP0Wa2TIGiFEOj9/1cuInq8DiX+v2jW/g/NuLzT/zHQ9yl
- RwqRrS5kwRQHLPujFkaJpfvUSE5LqlfZyAvh0q+AVx2wq9sxBqVYuKNKdokkSWvB0yep85
- v3Lu7Aw00OothJHlDAdpV0TKuQQ1NF4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=hJnrr/zC+83AI7h+d0sONzJwwmF2Jk/g5jqjj/CWTTg=;
+ b=d7Y3Z74yx1wNzBqybZsgCRW0clpfcBTQEJ5v64sS3NhEtd38DZww1D9QUmqqMPACT0xytU
+ T7nKReav9rAoae+KYqnGWjiUJu8ivlwcRNk6if7+rXZsnJtvJnif6XCS6oaCo/lsXZLaGa
+ KyinGpQxX7o/kSYnNog78JsnU/SuNAo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-bGIyEV3EMHexmb2J6OoaJQ-1; Fri, 10 Apr 2026 03:26:39 -0400
-X-MC-Unique: bGIyEV3EMHexmb2J6OoaJQ-1
-X-Mimecast-MFC-AGG-ID: bGIyEV3EMHexmb2J6OoaJQ_1775805998
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-488bd1ee9e7so10844765e9.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:26:38 -0700 (PDT)
+ us-mta-546-cqh-FpkKO2yWxN_atiRfxw-1; Fri, 10 Apr 2026 03:28:33 -0400
+X-MC-Unique: cqh-FpkKO2yWxN_atiRfxw-1
+X-Mimecast-MFC-AGG-ID: cqh-FpkKO2yWxN_atiRfxw_1775806112
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-488bf01961cso11444155e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:28:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1775806112; x=1776410912; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=hJnrr/zC+83AI7h+d0sONzJwwmF2Jk/g5jqjj/CWTTg=;
+ b=kVCNsG7Eh80TmNQXKPV1QnCl6yw/R3RQ6YMoyCjhwBYxH02U0ZVH2DxYOCtpHa03Mi
+ Mm/EVeoRfl/4046pj2+BvP5heZBp1JXb1cYxTF37yarDPsZ/ZFxbi6yGSrdO6kRWJKyw
+ r8z6ywI48CyUzA7pDNoKhNRj6dgEyBRM8010Vnm9Q87wwTkJERrij8cgV9lhtp82MznD
+ 4bhigVTYB4ssIk+I+mReKdVZq+rPs6SGKxITQkmfvNfnKg7oamolm6LAJF0Z9u10XAYd
+ hXpjQbDXcYg7J76WBsEEfhqXPCvSAIMBzsz4n1nW22UHXHDKWnRLxt5xV4oJBYsO7ODM
+ OEdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775805998; x=1776410798;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1775806112; x=1776410912;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SzWLDKBnyzNA1T5YceMswjeh4MEVICXjSAPV2kBjGzE=;
- b=BdoDpHc6GWxPOr+NXLThG652YLujdpbf/NCHZxVXqSOpAccYCn7ILTncyf8DM7bpmH
- rPVOzk5B1OJO+AyboTF1phnO/TqSxLDzYEEzSEzDyaX2CkPIEhVFtSj/3hT8WrQz6B93
- B/Q+2Df8KN/d0jkJENW3LPavPRHoSGTrLzQJ5LTWGJ7EUb4xDWBLrP3VKgn64NY62/5v
- SMFsXsLfY0X4vXluSoieJDPSzmva/nQuyIY84IEtcnaU8NwtsXUBYOy6oaYficR53ioz
- +2rcPHCLpvrL+VUoEC7RGMiMg5vHA/eigqaMDKJzLpN/MxW1nWQMzofinUgMlalNSslv
- MNqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnRn+fP6H3qLUtvOMwh2mkdOT35elbdfAO/yrIhLg/PyWR14vUUd7iZk5GI7z3N7dTigHlOuvDExBe@nongnu.org
-X-Gm-Message-State: AOJu0YybVH2I4S+Ahyuei5x1heHvDnxhSFPXmof6TXXc1ck4QpSe7Xij
- JFp8LQySHb2lU6aYRnH3h1nAaaIUB+KonLyQYrHUkXZADrk2m+l2oTJmJkOALND7PlwhgRS8ylM
- 3jrinBwSYhyKTCvXEIVRCqrALZnnJGdgVSsDNjiyAl0kpYWrX/1mHzyvi
-X-Gm-Gg: AeBDies/OJfrFCnHCCQTa0rkJInBJTMsT5KiSgoyawm0EcuvkC862HdgV3UHcQ3RXb9
- rzGaekGf0gnJl9c6zpcCoCnanvun0IokflrhgkbDvSUh92zI1Ju9p7pj4C2NFbVUaGt79+7NLML
- PI/NEWmDjCXKfCAz298qyCjpRAJr6x64vAR0tdwaxit8QG9H7aNq/y3/S4Ltlw/LbZV9N/cmTo+
- ebQJUvlQ4Vt0yFkvSnE6JKOj/SMA6wu5rVUsQScOmPwDAWrtiIz0sHecCyqyJf1i/DpVYgGGPS+
- 6Qo/4RRMyE1Wt4UlySn8UBLlJzNxzGs3a4BbdkvYRF7KXEjR/bUYOW5CllumO5MR5XL0tWUE6Yn
- 38lKM2cJQmN7btYyeghgBnZZSGzgJUoBGxYfb43APCbBvyVCpmpKnqTb+KYNLHhdbN69ArA==
-X-Received: by 2002:a05:600c:1391:b0:486:fe23:1707 with SMTP id
- 5b1f17b1804b1-488d687116amr24238625e9.20.1775805997684; 
- Fri, 10 Apr 2026 00:26:37 -0700 (PDT)
-X-Received: by 2002:a05:600c:1391:b0:486:fe23:1707 with SMTP id
- 5b1f17b1804b1-488d687116amr24238045e9.20.1775805997126; 
- Fri, 10 Apr 2026 00:26:37 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ bh=hJnrr/zC+83AI7h+d0sONzJwwmF2Jk/g5jqjj/CWTTg=;
+ b=gtK/sg9KjyhtIq4I2H8BkddJ57nvNUaWthjbku8pzi5gLFn997vJ1CwvrIEv79U84c
+ XLexW1o3rqofl/lzeWyxKx+Bj8mPRNorJHA/0flqvjnDHjCtf3TEDpvX137xcQDQQJtA
+ fvYKf4/fN3yPu1n93aDh8wBm4CDheaD9n7Iu29jHTR+X8lci0OPsosbJPj3QPzDVJkUK
+ 6fazDjX2UWD78f5rZMCmP1UIGaCGe0kLPecH751s/VDBUx+ONzJuOVf1EGzruVcEiA2U
+ 3RRqXyXltaUKRcrvwB6kxmF6WlD28ZBi/OvR7LtFGBK70oTtRB1WMPNYwn0s6eRzMzFq
+ tk0A==
+X-Gm-Message-State: AOJu0Yxqdwqbczk+YlqHRRMieJ5vmu3snVIKLrqIWtAGEMCe0xlqJm/N
+ /AcUvTbe94vJIv1OczJos5MMWjVhmsNdQRNFDyY4PmIlbD9dgpiroJTQwuHBBMIb3Y6Bv1ksvI0
+ 3W2Bi9v5pztqDGK3JPvwWQSeB1fBB5EXlCxIzVMkuMCDW5zrQbXGiRdOG
+X-Gm-Gg: AeBDieutiOoF7bj+jvtWZzBzOclQVjc1Zn+BKQlPKEj7jlU14DZUG2wIryZzZWHM22D
+ j7snEEn/hSE/4nh1Rtd+KJ6HWaOJDY0abZ90pkrTuo2+wfDaCSs9jEfB6Zi55ysIZcYPU/BR19V
+ 9ZIeJyQYbz+J/uTl7H6xu3marlD42y+UCKl1OgON53GwWSIuBaIlsFPc8pRVC9Ph1Sdne0vtVhj
+ O1l0HO2diyPH8jJE3b7F2rJfInCHNRVMsHm+3Y29O4EfOCQalwlFFFgHEkxi6LbZ7CaXrKAMVk/
+ VfCEsDQS0A6kD4SQjv2I89DSRDE1y2LYS7LZt860K2cvL/dTPpMBnwznsdC7WUZKxm7YQ372dfh
+ Xb1cvNfq4nnS34tbx37QVrwj1j/o7o+OqIC9vQz+deFr5EOuQCF1Hr14l5Q==
+X-Received: by 2002:a05:600c:474c:b0:485:35d3:ce59 with SMTP id
+ 5b1f17b1804b1-488d68101edmr22044135e9.10.1775806112429; 
+ Fri, 10 Apr 2026 00:28:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:474c:b0:485:35d3:ce59 with SMTP id
+ 5b1f17b1804b1-488d68101edmr22043765e9.10.1775806111992; 
+ Fri, 10 Apr 2026 00:28:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d53807d7sm92539365e9.10.2026.04.10.00.26.35
+ ffacd0b85a97d-43d63de2a53sm5432776f8f.5.2026.04.10.00.28.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Apr 2026 00:26:36 -0700 (PDT)
-Message-ID: <10540f3f-28b6-4cbb-9736-d6e8a01bdd76@redhat.com>
-Date: Fri, 10 Apr 2026 09:26:34 +0200
+ Fri, 10 Apr 2026 00:28:31 -0700 (PDT)
+Message-ID: <75d9ff43-6c96-4b17-a8e3-449a33237ad2@redhat.com>
+Date: Fri, 10 Apr 2026 09:28:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] hw/arm/smmuv3-accel: Add helper for resolving auto
- parameters
-Content-Language: en-US
-To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,
- Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-References: <20260401010231.4166776-1-nathanc@nvidia.com>
- <20260401010231.4166776-2-nathanc@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260401010231.4166776-2-nathanc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH 1/3] vfio-user: support VFIO_USER_DEVICE_FEATURE
+To: John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260409104756.465294-1-john.levon@nutanix.com>
+ <20260409104756.465294-2-john.levon@nutanix.com>
+ <6c5a98ca-2ac4-4239-b3aa-30e5572f2c72@redhat.com> <adecGoLC4Txe18Fm@lent>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <adecGoLC4Txe18Fm@lent>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,156 +164,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nathan,
 
-On 4/1/26 3:02 AM, Nathan Chen wrote:
-> From: Nathan Chen <nathanc@nvidia.com>
->
-> Introduce smmuv3_accel_auto_finalise() to resolve properties that are
-> set to 'auto' for accelerated SMMUv3. This helper function allows
-> properties such as ats, ril, ssidsize, and oas support to be resolved
-> from host IOMMU capabilities via IOMMU_GET_HW_INFO.
->
-> Auto mode requires at least one cold-plugged device to retrieve and
-> finalise these properties. Register a machine_init_done notifier to
-> verify this requirement and fail boot if it is not met.
->
-> Hot-plugged devices into an accel SMMUv3-associated bus will re-use
-> the resolved host values from the initial cold-plug.
->
-> Subsequent patches will make use of this helper to resolve 'auto' to
-> what is reported by host IOMMU capabilities.
->
-> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c   | 14 ++++++++++++++
->  hw/arm/smmuv3-accel.h   |  2 ++
->  hw/arm/smmuv3.c         | 20 ++++++++++++++++++++
->  include/hw/arm/smmuv3.h |  2 ++
->  4 files changed, 38 insertions(+)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 65c2f44880..a0146c8d31 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -35,11 +35,25 @@ static int smmuv3_oas_bits(uint32_t oas)
->      return map[oas];
->  }
->  
-> +static void smmuv3_accel_auto_finalise(SMMUv3State *s,
-> +                                       struct iommu_hw_info_arm_smmuv3 *info) {
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +
-> +    /* Return if no auto for any or finalised already */
-> +    if (!accel->auto_mode || accel->auto_finalised) {
-I think you need to explain the commit message when auto_mode is going
-to be set (I guess at least once an accel  prop is set to auto mode).
 
-Also can you detail this case where smmuv3_accel_auto_finalise() would
-be called several times. Here we return directly without looking again
-at the prop values. Would it be meaningful to continue and check the
-collected info matches the ones already collected? Can it happen?
+>>> +# device.c
+>>> +vfio_user_device_io_device_feature(uint32_t argsz, uint32_t flags);
+>>
+>> missing format here ^
+> 
+> Oops, surprised I didn't get errors with this
 
-An alternative would have been to fall back to default values in case no
-cold plugged host dev could be found. Can you motivate that choice in
-the commit msg?
-> +        return;
-> +    }
-> +
-> +    accel->auto_finalised = true;
-> +}
-> +
->  static bool
->  smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->                                   struct iommu_hw_info_arm_smmuv3 *info,
->                                   Error **errp)
->  {
-> +    smmuv3_accel_auto_finalise(s, info);
-> +
->      /* QEMU SMMUv3 supports both linear and 2-level stream tables */
->      if (FIELD_EX32(info->idr[0], IDR0, STLEVEL) !=
->                  FIELD_EX32(s->idr[0], IDR0, STLEVEL)) {
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index dba6c71de5..3c1cd55714 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -26,6 +26,8 @@ typedef struct SMMUv3AccelState {
->      uint32_t bypass_hwpt_id;
->      uint32_t abort_hwpt_id;
->      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-> +    bool auto_mode;
-> +    bool auto_finalised;
->  } SMMUv3AccelState;
->  
->  typedef struct SMMUS1Hwpt {
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 7fead1c3cf..09ea08eb18 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -37,6 +37,7 @@
->  #include "smmuv3-accel.h"
->  #include "smmuv3-internal.h"
->  #include "smmu-internal.h"
-> +#include "system/system.h"
->  
->  #define PTW_RECORD_FAULT(ptw_info, cfg) (((ptw_info).stage == SMMU_STAGE_1 && \
->                                          (cfg)->record_faults) || \
-> @@ -2020,6 +2021,22 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->      return true;
->  }
->  
-> +static void smmuv3_machine_done(Notifier *notifier, void *data)
-> +{
-> +    SMMUv3State *s = container_of(notifier, SMMUv3State, machine_done);
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +
-> +    if (!s->accel) {
-> +        return;
-> +    }
-> +
-> +    if (accel->auto_mode && !accel->auto_finalised) {
-> +        error_report("arm-smmuv3 accel=on with 'auto' properties requires "
-> +                     "at least one cold-plugged VFIO device");
-> +        exit(1);
-> +    }
-> +}
-> +
->  static void smmu_realize(DeviceState *d, Error **errp)
->  {
->      SMMUState *sys = ARM_SMMU(d);
-> @@ -2058,6 +2075,9 @@ static void smmu_realize(DeviceState *d, Error **errp)
->  
->      smmu_init_irq(s, dev);
->      smmuv3_init_id_regs(s);
-> +
-> +    s->machine_done.notify = smmuv3_machine_done;
-> +    qemu_add_machine_init_done_notifier(&s->machine_done);
-can't you move smmuv3_machine_done in smmuv3-accel.c and also call 
+Can you please resend ? I am preparing the vfio queue for the
+next cycle.
 
-qemu_add_machine_init_done_notifier from smmuv3_accel_init()?
+Thanks,
 
-Eric
-
->  }
->  
->  static const VMStateDescription vmstate_smmuv3_queue = {
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index 82f18eb090..fe0493c1aa 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -74,6 +74,8 @@ struct SMMUv3State {
->      OnOffAuto ats;
->      OasMode oas;
->      SsidSizeMode ssidsize;
-> +
-> +    Notifier machine_done;
->  };
->  
->  typedef enum {
+C.
 
 
