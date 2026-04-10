@@ -4,54 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3096FF459E9
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 15:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFE8F459F5
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 15:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBDaL-0007LP-Gp; Fri, 10 Apr 2026 11:15:54 -0400
+	id 1wBDii-0001kR-Cp; Fri, 10 Apr 2026 11:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wBDaE-0007KU-Lh
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:15:48 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wBDaD-0005gc-5N
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:15:46 -0400
-Received: from example.com (unknown [167.220.208.74])
- by linux.microsoft.com (Postfix) with ESMTPSA id EC62720B710C;
- Fri, 10 Apr 2026 08:15:42 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EC62720B710C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1775834143;
- bh=TjmSR5ot8qnJB+7P8gdzM3ES2sXgm7IPqX+SRJryobY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=lILJrZXUflKUl6MZd4wPHHprqxNQXLAB4qH3iKZzNQkgsHpwIScEnXE7xz7BnnpNt
- /LpA45Z6WhjbmzdzhOVT2+rSU4sARoacVgjtPBWp7Om27USIc0x/vVMC4kP/rZegnS
- Y7E+pBZMlF/4b1Aj+Y9UaCfGdDzz1AmDE1eFFhUQ=
-Date: Fri, 10 Apr 2026 17:15:39 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Aastha Rawat <aastharawat@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH 1/2] accel/mshv: fix ioeventfd deassignment to forward
- correct datamatch value
-Message-ID: <adkUGzhat6PuqphX@example.com>
-References: <20260409-fix_ioevent-v1-0-053b810ae6fb@linux.microsoft.com>
- <20260409-fix_ioevent-v1-1-053b810ae6fb@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wBDiR-0001iW-1B
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:24:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wBDiM-0008AL-Fw
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 11:24:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775834646;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FfjKtk+ZXOkZvUOghWl0pCv85bkiuG0/v4M2PtMHc3M=;
+ b=eNV6TnVuztLIdQqgNNnYU5DoEPh9G1nb5DfsadwxFFcyM7BZiAekIsxo1tzJx05cQqVqnl
+ qpfyJujtHJgNry6r57iGDc/r0tSr9hfb6VV9Cdq5Dcwlnfv+poSS+Ii3YCQGdYWKd47gMW
+ ars87/0f6nbHJMTGwQKTTYh8GyZgX4s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-Bc91LWxQNnSrER55qBTrdQ-1; Fri,
+ 10 Apr 2026 11:24:03 -0400
+X-MC-Unique: Bc91LWxQNnSrER55qBTrdQ-1
+X-Mimecast-MFC-AGG-ID: Bc91LWxQNnSrER55qBTrdQ_1775834642
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 58F481800361; Fri, 10 Apr 2026 15:24:02 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.44.49.176])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B426A195608E; Fri, 10 Apr 2026 15:23:59 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, ivy@FreeBSD.org, pbonzini@redhat.com,
+ fam@euphon.net, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: [PATCH 2/2] block: Add more defaults to DEFAULT_BLOCK_CONF
+Date: Fri, 10 Apr 2026 17:23:14 +0200
+Message-ID: <20260410152314.86412-3-kwolf@redhat.com>
+In-Reply-To: <20260410152314.86412-1-kwolf@redhat.com>
+References: <20260410152314.86412-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260409-fix_ioevent-v1-1-053b810ae6fb@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,17 +82,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 09, 2026 at 11:53:06AM +0000, Aastha Rawat wrote:
-> unregister_ioevent() is not forwarding the datamatch (queue index) to
-> the mshv driver, causing only the first VirtIO-MMIO queue to be
-> deassigned correctly. Subsequent queues fail with `-ENOENT`, triggering
-> a fatal abort().
-> 
-> This failure was discovered while booting arm64 EDK2 firmware with mshv
-> accel.
-> 
+discard_granularity was missing from this, which means that SCSI disks
+created with -drive if=scsi would default to 0 (i.e. disabling discards)
+instead of -1, which makes scsi-hd automatically pick a granularity and
+is the default of the corresponding qdev property for -device scsi-hd.
 
-Looks good, I tested the patch on x86 w/ virtio queues.
+This was broken in QEMU 9.0 with commit 3089637.
 
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Also set other fields whose default isn't an obvious 0. These are not
+actual bug fixes because ON_OFF_AUTO_AUTO in fact happens to be 0, but
+it's better not to rely on the order of enums.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 308963746169 ('scsi: Don't ignore most usb-storage properties')
+Reported-by: Lexi Winter <ivy@FreeBSD.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ include/hw/block/block.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index e0a427039ee..df941df19f2 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -53,7 +53,12 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
+ 
+ #define DEFAULT_BLOCK_CONF (BlockConf) {                                \
+     .bootindex = -1,                                                    \
++    .backend_defaults = ON_OFF_AUTO_AUTO,                               \
++    .discard_granularity = -1,                                          \
++    .wce = ON_OFF_AUTO_AUTO,                                            \
+     .share_rw = false,                                                  \
++    .account_invalid = ON_OFF_AUTO_AUTO,                                \
++    .account_failed = ON_OFF_AUTO_AUTO,                                 \
+     .rerror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+     .werror = BLOCKDEV_ON_ERROR_AUTO,                                   \
+ }
+-- 
+2.53.0
+
 
