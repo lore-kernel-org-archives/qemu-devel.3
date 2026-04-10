@@ -4,105 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A09EF36BA4
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 03:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBDD0F36BA4
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 03:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB2CQ-0006Ke-43; Thu, 09 Apr 2026 23:06:26 -0400
+	id 1wB2FO-0007EM-6S; Thu, 09 Apr 2026 23:09:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB2CO-0006Jy-Mm
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:06:24 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1wB2FM-0007E1-Ov
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:09:28 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB2CN-0000wJ-5P
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:06:24 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b9c3e2cf3c0so244880366b.1
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 20:06:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775790382; cv=none;
+ id 1wB2FL-0002ID-3Q
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:09:28 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-66ec3b7b1deso2378205a12.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 20:09:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775790565; cv=none;
  d=google.com; s=arc-20240605;
- b=BYwr811BRtsJeakIn6WbZUHl/dV/y749FSYCKg2nXDFbdn10xdmM2XZHjYshdD9PPh
- aUJDknOYIdY+EGfutXV6UC/1eB7HSUfZQl5BMUF3ImrOtpxk1CX9cKR6foWur1uvFvnp
- yDMJ6aqR8lQLus8BQ1nETSr9LrXezdCTeXeeSEuwxhQU2pGCY8RMm97oYrAOrGjpyqJ1
- 81ecsMKgdGBdK/kmohiT1ToSLlRFEcjT8M90tu+2zuoKxHuDlQnr2NuxD5omHDKcPu36
- BWwphtgZIU3bOJZ2K8s1AqWtYaUNT5x7WEdrjHpGbTJnnepFjpkhDLm5RJsLMVyVUE8b
- EMzA==
+ b=CWWwJae2MShmGhpbDZtIdS7asIRkDXd49Y9e+uaJRvAqS1YF06URXGpmmDuWLOdzbp
+ GBbziqHBFjM9Ls5ybhgp/i/T3Ar4r6dOwWgYz6NZ/JDdVulurbG31+7M9aleepIKvUPB
+ a8SkYejfG6vOchm3vrRKFoh7Cx91Bn9GuLtq/JHxw4ytskOtSQKcuxMfLoQNPhV+vCWe
+ EU2MhHu1z3Y339P8FfLjc7sTKHkhct/qcL92aPDC/1VlDpWpmASM9yYC2xAYdQEtQdB7
+ KxgDfa5T15vgVVm9/RHosLN43f4iGo0o+al0D+Zfr5O/1XxjzC/73hj65Hy2Krv0rsu1
+ iZcw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=O/v9BNw6moGVWKKKvr6uhW7rv9fKfG2kNcmDfAY1m2U=;
- fh=XKSN9paJ64y8+2A8hyFkzRThM2aineFmGefUDO9sU8g=;
- b=WWj77w8GXnb1y4aDuLqdQXYAKU34XPwjmk+nWIcCqH3zPd/gyRA++ExVxr0XE08JhI
- FxmDA05CtgWm+YJobX4ig88ilguxGHdjujGEWwWX8UFI+69SN/E05zxZIbS8VEQWDGQw
- XjjrWJG7sXwWSbpvUp3jX/D3KUGOfsbiEwbKSXTUg2DKrQsBRImi0DbJ4EDccvCHADnK
- Sc+Py2Wr81BssLCLLaXKWwNtx73gh4RsdKg7xX8Luf59oa+S2qVlgat13wN/XeiM7SS8
- fr8Mqnawlh33AvEsl+RE11v0kj4/ccPSxEfRE0xDAAumrm+0k5k4hn6t8KL4OriSOMk/
- oL6g==; darn=nongnu.org
+ bh=BcNwny8wyNt8LtwGmNYf4OQ39okzkFiw+z+OlIqhKJo=;
+ fh=XErS4XjkAQDBkClscxjQUC7TY1MVaIkgq5whaEGujtU=;
+ b=RK4vfHNWj9isO3pyGfM7/kgh9mZKYAzpl+1M9w0/ffPcUgofRSFYbm+jU+mezY4CxQ
+ 5hYevUfzL+W54BoRGALcHcJeN5kwEATZ7ylcdPFatLZFMhr8jLqaBkb9mqAN24syG3sX
+ GtmdU0/pR8srVNkIodBufNLR+aSDwQjcxnfznR5iAfHlhQU4D7u15aSzYUJ25gvE4gd3
+ oPglpvEcna3OMUg1f/y93gdHZaPoFOB2fIDM2OBFdKYHH2xOuqc3ViEKmYIfRMZ62HnW
+ 4KYERTe3dnCMMLiefLZCX0rzJ3vrneLUQcNbJvh7blx9CoScNLum5eb2t4SpgrFGsoM7
+ Bmvg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775790382; x=1776395182; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775790565; x=1776395365; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O/v9BNw6moGVWKKKvr6uhW7rv9fKfG2kNcmDfAY1m2U=;
- b=aEGI4oz5wQ0qdJ4fezkPdCezIR5HMkG2tL5UhJiaZu50MvWVwYrmikNtNF/JiboDX4
- 101+XhmsJB2YDzE7jORtwmtnTzUf0AU6fU7P1n1Uif7noawbWa3x/rY+Y/bjgr/+0zQJ
- F+pu6uyALH32+xyG0j5dn3zLbi/9i0dgMnmGG2iTrdCsXG+/gIEW7qV/d77GAPIK2f2x
- 4gndQgph/9awsXMho+9R5V9o8lOLxju9kyaAxyvJ1azakkARNzqvpOaKDupOlXIq9hv/
- iJoJnGhGVRTA+EnQNPRAsoowCqIc0DtoSIjTYr/WJJkp81SuoCl25cAoFXJWe0wDp9T8
- S1MA==
+ bh=BcNwny8wyNt8LtwGmNYf4OQ39okzkFiw+z+OlIqhKJo=;
+ b=fnmJEu+8+4EXVK2eun5/U2K9fDdxyGsHKGS5gUWtc3Co2Z3rf/XaYh5uMJo1MKMHId
+ 8eQDSO1gBmvNOqpeSBhAkE2slKAisceCRadKma3RicQTRBzrCIlrCRMJ96sIcFlqXCfW
+ vPsEp4gy03qu/5JQCo9hGE133x5fye10G3aYv/jLgh/w7CqYfx4K2nypnBOh4TzTknU+
+ 3VEwaEcBXQWLAEBcsrs/dWIJ73b+0UBYAJrIhOkQRcyKxJK1HcmVA4+A0+ICfP4caGLa
+ x3yIiIkfBLAsijGdUgFjDq19QyFLKSXiymRlBG7KUT/OMN0Wsk3+TsRCuvI1xHpgIC2K
+ 3C/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775790382; x=1776395182;
+ d=1e100.net; s=20251104; t=1775790565; x=1776395365;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=O/v9BNw6moGVWKKKvr6uhW7rv9fKfG2kNcmDfAY1m2U=;
- b=fWrQG63cNbtjH54KhkT2fK61nC5xtf04v28e9a/rPh7IwjKqCrFFsBjahADyUg0tCf
- 4uPxC5YYt9IG7Qh/01DDLVMZ1wotfW/ulVk7EEDTRSs6MrLEfiD1Y7tchkytCDXwMQ2k
- wP4MskAO8kn9LpEE4oq9AwulQNbYnBkV2g+4E+GbyRaALtQ3zNQH/qDOkfCOyxKfypdh
- IOsHBBc7bQnYMTkV7tsVn9GNy7ZLz2sHO0a9DCDBsz0m8Sdn5GaBR+CDjJI4HvJzMkx9
- uxB6J6BK6URgd7rdQvSphOuYAHdtmGzn6TDswOuL1q2wDib4hLFm4w5xappStCIGeX8l
- JwEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVmxRHSIpTMPeL+qYJ6CQdjdBmR6RDKPHmVY7RTuukHM8f/UUyZxZ7LtrYO3bf7GZ4Mlu/TUMOyAhKQ@nongnu.org
-X-Gm-Message-State: AOJu0YzCh5hsD1veoHACUawmqF9MmLdICewrO1Ip8hhn5AXAlkzsRN+d
- KUJ5kwALK0bxInGIEbhhnTRvV8+o9KQ5cuK3hXX4wrF5AhaX7dUTjJ2Wm1By8YZNEBb1MtZIYSQ
- qO2+hw00/kmdOFwthH6Iv6KmRj+20I/I=
-X-Gm-Gg: AeBDieuN5DRtXmkZIfZBP6TyA9yx/YvxgDn07d5/YXWWPidfcSv4i9IwatsaiVgiGMH
- Tq8Ha5IrpkHpWhEQU2swwRthSoyNtmB3Oi+DfYMqez9ZSNb7Xx/lGR6Uyht8eP1iw1aEmsMdyv4
- CKjRBmdg4dfxWMMgZVkl9njdkT2+Gt6YkOq7Z+j3ZX4Mfld/KmBbvVMWgm/FS7eH3WbAYzYblkU
- K7pDbqNPU2wJQx3KiuzxdzzDhjqwLp+eNmToBTWlOvvEw9XM6eVFhouS+YJHgSjYMQhUHcObl5n
- ekGajAV4cbgKuNG5uB3uNRN157I+zjeoGvfXlA==
-X-Received: by 2002:a17:907:3c92:b0:b98:6177:2ef8 with SMTP id
- a640c23a62f3a-b9d72612784mr82268066b.20.1775790381443; Thu, 09 Apr 2026
- 20:06:21 -0700 (PDT)
+ bh=BcNwny8wyNt8LtwGmNYf4OQ39okzkFiw+z+OlIqhKJo=;
+ b=KjOuyG6/mH8MsILzkJ0B6Qt+Z5ziRDPSak7lOy4R5JQ543zssLhxLQoPAfrhg4DH5E
+ xRlkUquAr6Wz947NqRMNabndEtDj6a0rRYrKupXP4vDP1/T5CNCXOq2PYUUIXTHOk/vF
+ i5gJXqm8kG+qkjKFI5v6EVFLejJpBwgiLsajA16GSdwuGpeIJxiSh6xYVFXZwvQTlJ+G
+ 372pN70bn1tmqVlZPDWAuZ+Fa0xTgRa9yDWVrwtftjSYeYtwWabFhM/eRBhzUuUzrHiq
+ RP+l2ypYCnz1F5I0EekaHSbBE+Xd4upRs9auH+ZTlAYX8A3m8JON8wmtRAvvItY+0Zmh
+ +vUA==
+X-Gm-Message-State: AOJu0YxZ7t+WL82oaad1o6reLrykFhoP9v1kvf3lim5o39wmz91ao5z9
+ ztntDhrls3J/l3loIrM88/LxuJ1PC/YvtrLHJMx0S81Am2Ub0Xs6Xqm1C8+yAJMk8WU0B2/JD/9
+ MbUL+FkYfcu8K8taw5AUXyJaHFoC4zUQ=
+X-Gm-Gg: AeBDieuzv6PdS8sHXiOJ4hEUlspW6E9xZ5LU6yKYhkvgvBuslDKtfWogo7JhD01wU0S
+ EiovopS1qgPbVxDqJvkAL6bvK3G06E2uZtkGRgMaLXUOnR0lmcgPM6lsr09IPH3Huj/dMHWJQ2p
+ MJI4m4Q9HsTetTNmunfALVA5y46jVo+tkYCusU2q1KRupXBs8m7pUBv/3ewjcKmHuhJqwb5jTlF
+ It2E5khX2sfkBZl23dxCYXUpaeKMBYPuDWuMqO92lDnw2Ira1VtX0i1XjzxDSi8vQlUnQL9Ulqb
+ 8Hfaljmd8NJdlZD4MlJM4U3bbCSdN7GOvB0zEjUcnP7hH7QV
+X-Received: by 2002:a17:907:6c0f:b0:b97:e32f:7ee8 with SMTP id
+ a640c23a62f3a-b9d7298ffe1mr76763266b.37.1775790564913; Thu, 09 Apr 2026
+ 20:09:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <177564643888.23414.7922925369077631439-0@git.sr.ht>
-In-Reply-To: <177564643888.23414.7922925369077631439-0@git.sr.ht>
+References: <20260402125234.1371897-1-max.chou@sifive.com>
+ <20260402125234.1371897-6-max.chou@sifive.com>
+In-Reply-To: <20260402125234.1371897-6-max.chou@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 10 Apr 2026 13:05:55 +1000
-X-Gm-Features: AQROBzAva2_Qh1Tx8hnXXDaGLJoqhCGmhvqVq6R6AXgDcblNHBydD6B9lMG6cHo
-Message-ID: <CAKmqyKOnVOx_xe0ZVm6y84mNk_wMhty7+Mh8XsR6sE1fmXEkUw@mail.gmail.com>
-Subject: Re: [PATCH qemu v2 0/7] Update opentitan uart (part of supporting
- opentitan version 1)
-To: "~lexbaileylowrisc" <lex.bailey@lowrisc.org>
-Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+Date: Fri, 10 Apr 2026 13:08:58 +1000
+X-Gm-Features: AQROBzBTr3Kdo78Y0rCZKcEb6R6UH4FkP1U6PLofrrsxpLHhRi7I-8YUmoH5nqA
+Message-ID: <CAKmqyKNDyZZjr_TWeKe1b2tfGN5+-b4P9d60PP06A5f-4gvF=Q@mail.gmail.com>
+Subject: Re: [PATCH v6 5/9] target/riscv: Use the tb->cs_base as the extend tb
+ flags
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, 
- Amit Kumar-Hermosillo <amitkh@google.com>, nabihestefan@google.com
+ Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -126,22 +124,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 9, 2026 at 5:31=E2=80=AFAM ~lexbaileylowrisc
-<lexbaileylowrisc@git.sr.ht> wrote:
+On Thu, Apr 2, 2026 at 11:53=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
 >
-> Second revision of the patch set that updates the OpenTitan uart to
-> version 1
+> We have more than 32-bits worth of state per TB, so use the
+> tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
 >
-> I have made changes as per the review comments from last time. This is
-> now split into smaller commits. The first renames ibex_uart to ot_uart,
-> and the rest introduce the various changes step by step.
->
-> The details of the version 1 of the UART are found here:
-> https://opentitan.org/book/hw/ip/uart/index.html
-> (This URL is added to the file header in one of these commits)
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 
-Can you include a version as well. So we can say we specifically
-support version ... (git commit or release is fine)
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  include/exec/translation-block.h | 1 +
+>  target/riscv/cpu.h               | 3 +++
+>  target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
+>  3 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/exec/translation-block.h b/include/exec/translation-=
+block.h
+> index 4f83d5bec9..40cc699031 100644
+> --- a/include/exec/translation-block.h
+> +++ b/include/exec/translation-block.h
+> @@ -65,6 +65,7 @@ struct TranslationBlock {
+>       * arm: an extension of tb->flags,
+>       * s390x: instruction data for EXECUTE,
+>       * sparc: the next pc of the instruction queue (for delay slots).
+> +     * riscv: an extension of tb->flags,
+>       */
+>      uint64_t cs_base;
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 962cc45073..4c0676ed53 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -703,6 +703,9 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+>  FIELD(TB_FLAGS, PM_PMM, 29, 2)
+>  FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+>
+> +FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
+> +FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
+> +
+>  #ifdef TARGET_RISCV32
+>  #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+>  #else
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index c4f7da7193..f3f7808895 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -104,6 +104,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
+*cs)
+>      RISCVCPU *cpu =3D env_archcpu(env);
+>      RISCVExtStatus fs, vs;
+>      uint32_t flags =3D 0;
+> +    uint64_t ext_flags =3D 0;
+>      bool pm_signext =3D riscv_cpu_virt_mem_enabled(env);
+>
+>      if (cpu->cfg.ext_zve32x) {
+> @@ -118,6 +119,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
+*cs)
+>
+>          /* lmul encoded as in DisasContext::lmul */
+>          int8_t lmul =3D sextract32(FIELD_EX64(env->vtype, VTYPE, VLMUL),=
+ 0, 3);
+> +        uint8_t altfmt =3D FIELD_EX64(env->vtype, VTYPE, ALTFMT);
+>          uint32_t vsew =3D FIELD_EX64(env->vtype, VTYPE, VSEW);
+>          uint32_t vlmax =3D vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+>          uint32_t maxsz =3D vlmax << vsew;
+> @@ -133,6 +135,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
+*cs)
+>          flags =3D FIELD_DP32(flags, TB_FLAGS, VMA,
+>                             FIELD_EX64(env->vtype, VTYPE, VMA));
+>          flags =3D FIELD_DP32(flags, TB_FLAGS, VSTART_EQ_ZERO, env->vstar=
+t =3D=3D 0);
+> +        ext_flags =3D FIELD_DP64(ext_flags, EXT_TB_FLAGS, ALTFMT, altfmt=
+);
+>      } else {
+>          flags =3D FIELD_DP32(flags, TB_FLAGS, VILL, 1);
+>      }
+> @@ -189,10 +192,12 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUStat=
+e *cs)
+>      flags =3D FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env))=
+;
+>      flags =3D FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
+>
+> +    ext_flags =3D FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->mis=
+a_ext);
+> +
+>      return (TCGTBCPUState){
+>          .pc =3D env->xl =3D=3D MXL_RV32 ? env->pc & UINT32_MAX : env->pc=
+,
+>          .flags =3D flags,
+> -        .cs_base =3D env->misa_ext,
+> +        .cs_base =3D ext_flags,
+>      };
+>  }
+>
+> --
+> 2.52.0
+>
+>
 
