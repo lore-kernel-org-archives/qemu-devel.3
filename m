@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DE2F45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0CCF45A08
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHNz-0002JT-Mb; Fri, 10 Apr 2026 15:19:23 -0400
+	id 1wBHNp-0002GR-8D; Fri, 10 Apr 2026 15:19:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHNy-0002H5-GW
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:19:22 -0400
+ id 1wBHNm-0002Fq-QN
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:19:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHNx-0000Py-5n
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:19:22 -0400
+ id 1wBHNk-0000Nf-A0
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:19:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775848760;
+ s=mimecast20190719; t=1775848747;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I09NHvw8atmJax+ZAvCxf3dEVbEAKA6LxIu95J9jOIY=;
- b=aOtGMdqCE3GgNrbgykTRD31oDqd5g2nA/gmAubYY35p7chaAB7gZT+0/AmgggYfMqOfyWl
- 0Onzm8yRHezUzpIhRX+HRf5DWPAMn1z7S+E6CRv0MQm2lGQLwM0mSJ+CCMjOhTTmVhSA8N
- nyS83zuF0q3GQfbtY1j94Kdqko2pHsU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=582Mq7JHgKD89nFbt457ZffKJ0pztKW4k1JqMJhynNw=;
+ b=iQWewPhaxqv7b/fxx/wuitKhMbXJEmSFHeyk3rd81UNlKdAFgh9h8bQWu2kwaiDbgNylZp
+ t9ZECk7dCcouLuARRs9UiLijFrW2DssdDIYQWKVcprQMySn+RpiMtb3c6BZw7rp/ARuc1Q
+ xmX/wnEVsNCzJb8x/yMWmJk0368vOYE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-vx_P347-OGmlxAVJd63VUA-1; Fri,
- 10 Apr 2026 15:19:18 -0400
-X-MC-Unique: vx_P347-OGmlxAVJd63VUA-1
-X-Mimecast-MFC-AGG-ID: vx_P347-OGmlxAVJd63VUA_1775848757
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-u6iGaDMcO7uhPJyMHa9K7w-1; Fri,
+ 10 Apr 2026 15:19:06 -0400
+X-MC-Unique: u6iGaDMcO7uhPJyMHa9K7w-1
+X-Mimecast-MFC-AGG-ID: u6iGaDMcO7uhPJyMHa9K7w_1775848745
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91A431801326
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:19:17 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98A5918002C0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:19:05 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 56C8D1955E77; Fri, 10 Apr 2026 19:19:15 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 555CE3000C1F; Fri, 10 Apr 2026 19:19:03 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:18:26 +0400
-Subject: [PATCH v2 04/67] ui/vnc-jobs: remove dead VncJobQueue.exit
+Date: Fri, 10 Apr 2026 23:18:24 +0400
+Subject: [PATCH v2 02/67] ui/vnc: clarify intent using buffer_empty() function
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-4-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-2-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1591;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1156;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=dgRNTw9wFjvzywdXh2HBEiFRI7zZwhAv49Mp+nZt5gc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0TpkcMpz7YbgnFAe1hXAkHJHnR/wCYU0Mrb
- ubWcspCNNKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNEwAKCRDa6OEJdZac
- 5UD9D/9I9EaL70HdZHS43JiYeFsD1WDReURSerHfakS1qq6EsrcgYPkP5I0cqiXlAAM2VNYscFa
- 1+9TVAaA4DaXLvytfgzPDC0aFw7oGliGknm8yLdOZoyyj+TfKvy/9R6xV+ZAYqp6TWwkn69t1SI
- 068X2k5HBMUK736cR9ORpjDEKGXavjat4iAoRpGEpQB3NNisYG7BXKO6a2qGtEEDpB/3ny4TV+E
- LrCct8rIZwX8Pof6Ho5Lex/keQSHFd2tjubNEuVVKLd+PYPyXbUZFhI3bekvrKIzVySZl79Lddr
- 1M5N4SNjsEgE9pf0/UiaaoS8aHzJTWsrDwCd34vRFeFW7rLQNmRHodL8BiPjtSf0qBh1kp7LQs4
- hhctQGqAwAPEhyLN+dFJRjyoHdgpM8TUCAmiVKC9KHPt32ez9Q0B0GSXvaJgyueZgRjLjKuFdUt
- 3D1/cVAFfsCsiH3zc+PVmxrxfJHI3pBtELkoTkQgwS7s0JscVwC72Af93MFbxUyEW2I16bQ56/8
- 9tWGuSbqKfUcwKKkiPYjBgNr8+vN+ySkNMkQHIfx37f0i6G7lmrD+r/iFxRZT6gfKhJxs/oPEpK
- 2+fBMFxibm7ClBFTgfQ93EvqdeZ5Erg7vsJR9eQf/kZSVWuadeW1IldCcYpSuO1bu2f30NF23AW
- 2UyU9WACLYYvuNA==
+ bh=Oaz4HwykOBOf9JYgkJzVi5dqUDlvyrzedLzIIlA+YUQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0TMZDQJ9nSmNocpX15cdsYo4DX93RlAFrK+
+ 4RLcdCWLO6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNEwAKCRDa6OEJdZac
+ 5YbqEAC6ky+Rv0lNUojnxjQiDx6KbczbsZjpOvvo4kNs2jZM40OKsEaqQlR4IgQ6BPKo6+UhTTU
+ lTtd54nyIWymFmBcSl0ohuJ2rV8yT1Vbo/MAEi0PDwrdK/UcCWEJBRhhvFz8fs0K4Np04jpcNSG
+ inr46cQIx1SeKa1XtLK623eZXRTEaAXhvAEivPyAAq+wbbgub/xPK84sLnxcbayAL8oet4gf3Ex
+ +cm1JbV516v4+hYr4n811hvvvqs0hTpq9ikq64eAtLHDIk+nr8dncAplO3GCFk6qrPYeTyX4jSk
+ mWqMajRaOyvBtGRokdu7lSFl1r/GEfCPaJi1AQDm2bSxZYk/NQJqaepDuDHiG5sPblW+wQkgx62
+ evArJ31zEThCplTBHwQqV33Gz4vg7VdyC4Jg/TYpdfv442yKHp3RKYLydok2XOLfxVexqJQlrun
+ WyIdvx/elwyPa2DK5ENy8Ul8SMZcGkLwNuRyUJUhYGtg22v+achcWDCXpSWXt4DliEH62XCwpXc
+ BFpWs0vWQI2t85Da1MlyPpafjf5Is46vwaMOvbfwKhY9nH3TlC3FfM06HSiM9tjVQHCyd540oBi
+ HVPXeNMEmVXgQvjkqMMPEoHqf9fmlxTREbAxeT04/6XNGUipvCaWpButo7P7VFMel1X5xgw2kj/
+ pZHMw3kXrI4Sa+g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,56 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 09526058d0a5 ("ui/vnc: Remove vnc_stop_worker_thread()"),
-it's not used anymore. It seems stopping worker thread hasn't been
-supported ever.
-
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc-jobs.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ ui/vnc-jobs.c | 2 +-
+ ui/vnc.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index 8cb30e72276..9e536b07b90 100644
+index a6ab733faa1..4dd7ccad969 100644
 --- a/ui/vnc-jobs.c
 +++ b/ui/vnc-jobs.c
-@@ -56,7 +56,6 @@ struct VncJobQueue {
-     QemuCond cond;
-     QemuMutex mutex;
-     QemuThread thread;
--    bool exit;
-     QTAILQ_HEAD(, VncJob) jobs;
- };
+@@ -160,7 +160,7 @@ void vnc_jobs_consume_buffer(VncState *vs)
+     bool flush;
  
-@@ -124,7 +123,7 @@ static void vnc_job_free(VncJob *job)
- void vnc_job_push(VncJob *job)
+     vnc_lock_output(vs);
+-    if (vs->jobs_buffer.offset) {
++    if (!buffer_empty(&vs->jobs_buffer)) {
+         if (vs->ioc != NULL && buffer_empty(&vs->output)) {
+             g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+             if (vs->disconnecting == FALSE) {
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ccc73bd7aa4..4aa446a48d7 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -1718,7 +1718,7 @@ void vnc_write_u8(VncState *vs, uint8_t value)
+ void vnc_flush(VncState *vs)
  {
-     vnc_lock_queue(queue);
--    if (queue->exit || QLIST_EMPTY(&job->rectangles)) {
-+    if (QLIST_EMPTY(&job->rectangles)) {
-         vnc_job_free(job);
-     } else {
-         QTAILQ_INSERT_TAIL(&queue->jobs, job, next);
-@@ -248,17 +247,12 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
-     int saved_offset;
- 
-     vnc_lock_queue(queue);
--    while (QTAILQ_EMPTY(&queue->jobs) && !queue->exit) {
-+    while (QTAILQ_EMPTY(&queue->jobs)) {
-         qemu_cond_wait(&queue->cond, &queue->mutex);
+     vnc_lock_output(vs);
+-    if (vs->ioc != NULL && vs->output.offset) {
++    if (vs->ioc != NULL && !buffer_empty(&vs->output)) {
+         vnc_client_write_locked(vs);
      }
--    /* Here job can only be NULL if queue->exit is true */
-     job = QTAILQ_FIRST(&queue->jobs);
-     vnc_unlock_queue(queue);
- 
--    if (queue->exit) {
--        return -1;
--    }
--
-     assert(job->vs->magic == VNC_MAGIC);
-     vc = container_of(job->vs, VncConnection, vs);
- 
+     if (vs->disconnecting) {
 
 -- 
 2.53.0
