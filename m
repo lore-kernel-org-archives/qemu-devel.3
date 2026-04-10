@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC16F45A08
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8481EF45A0C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHyd-0002Dk-5V; Fri, 10 Apr 2026 15:57:15 -0400
+	id 1wBHy2-0000oX-KR; Fri, 10 Apr 2026 15:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHya-00029g-HT
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:57:12 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHy0-0000mH-PM
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:56:36 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHy4-0004vK-8v
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:57:12 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so26372345e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:56:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHxq-0004ag-Ht
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:56:36 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43b95e5b3afso1560801f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775850998; x=1776455798; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775850984; x=1776455784; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TnjRe5b33HAs4SIsako+kOOSPGazNPDfUbCOKtysLcw=;
- b=Q2maWj+/L7brHeiwqlqdYeP+o/fCrvIPwee7m+0MISUo6xN6RPlAp48OnKwbqrfMj2
- 5EJltMnnMZaRQe818qvxoSwORUH5vNkvwbRH8WuLJ/+J24N7uClGgj5M11nH+VFnxq4m
- Op0ISVKbobLa00R5xHdhZ4KCAlFGWl5N/VmvF3eqKhAxSStzpyO93zqYD2fVviRGTqEV
- ppqOpRFNqu19chbZpr5+vXmezYRf6aohqqOYsHHctsaWs+e3BNUiz51O0zHYa4KVLraI
- BXMk5LI2CW+RrAos0q4bDSGnlfBseyL3at8ANJXqa1B7GqbcvcWPJPIvQX+VsXhK/e/Y
- ku4Q==
+ bh=3N9tVXkZOmp74LI4AeaDzzl55NbG18DiRwK9K16fx5c=;
+ b=Q6EwOKwtEdlJe78qgdf+K9reHh119V9ZNBDERPt7rGRFcT2GQrITYljBOIQD3zQEgs
+ NUI88LoGbzVyLhEIxs3eoGzAZZtEadgYuld8mjSyWVPiKotie/W3UEAEw4iC7qZrs8+q
+ o5U+3Kz8UXXxC+J2/I8bpRb9DVQ8z+2al/+yvHN3XWWKYRHa1pMolTo7raDNAIlNjKIk
+ flEdBpEzivY1nFCgswyRvsmx39pzUKPBuEjCELKzyRS2HFAr5HBrM/q9WhLLOy6hD9a+
+ a3yPoaGO40K1PDY/8JVqbfHegTJ4J5rc+sUEcPeq3zncjIWp+c/1M877wXuxI6gn3+Dx
+ whsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775850998; x=1776455798;
+ d=1e100.net; s=20251104; t=1775850984; x=1776455784;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TnjRe5b33HAs4SIsako+kOOSPGazNPDfUbCOKtysLcw=;
- b=UYUcnRODYVFDUFhAVUwmuUDObfjOpSY72ByG0SPFx0zc2RJbtzuIfRk6M7e9kTxlHq
- a9KEQKcxa7IKGTaLS64vPf2CKuZLZrcj7aT0EYqnqfzeurozobOlFXXrZN/qqfg6V2w2
- 5JC5KJlgYC8THAutgaTc9xPIiCnAYwfmvWK8z2lfVo1s9+y7v0H0DSYAPm7GC4SkU54V
- ZKpEBj8eDOjm3Yo/t6oTRC7GyMXd9gil9F0bfQZPsdBa3NXccUtx2qOpxe4gbTXyO7kG
- Kq6Xr++zaZ84TnXDMgpNi2c6dir92PCv4q4skO0PgVDXioULHy2exWIezdmNJE7PHcxa
- zR9g==
-X-Gm-Message-State: AOJu0YwpMYAurXZ2WMzNHNPaHiyjdXRptVoLizrldJyQaXLqizJEKXO4
- dKKmHhQeW4rJkIgSFB4KSC4lvsh4M3zHtp6DEbFe4Yem+583YxE9x7iWfA4L89TKm1G02KAphQ+
- E0NdkVgM=
-X-Gm-Gg: AeBDieuBumsU50DOwV7P715IKoh26fZV24S5da9705CzRc7pt4kZI7drg8fXD1tN0al
- eUVX9hlruElpXyQGO3hH4GwrXdTXuRZhoCessx/vDgdhA3I0fiJ0/GxohZuGJ1gZZCQq6i/FxWk
- EtcAojYSf5SK6IQx3CvgvZ7J8bbr4lY4ZG2D9w7Dmhfib33K3UJ74SIvludLEGTpq4jc6uplfZZ
- 2gHMutZvG0N3UO5re/P12BOwufNs2KWJxKl4U8clMQ/BWeL0Ep8QZ1V77a/g2wV6VDSWUWbGMjb
- QMt3PhLNCzPFZNSguSCWuTsFbSTNFm62MgGNolVS5zTcQprHYZqMyhf95ekMtM9baHVsPByzEh9
- VSZUrqui7lOiaibj7yiPBGWD/9W+xDKMG+Na8FNNqrQfrxDj2XmI9rfBSG1fiOt1z/PAXdkCpTP
- Cs/uB+zLigOdFh0EKk4v7gEEIbI82+0V/QZkYpdPhX9zKnAKZqFiBut8EVkWy1NGaBXcBuKlsA
-X-Received: by 2002:a05:600c:c0da:b0:488:936a:6220 with SMTP id
- 5b1f17b1804b1-488d685b577mr50873375e9.21.1775850998436; 
- Fri, 10 Apr 2026 12:56:38 -0700 (PDT)
+ bh=3N9tVXkZOmp74LI4AeaDzzl55NbG18DiRwK9K16fx5c=;
+ b=YRQkWwcgsz3dx5b+hU4L2b5k+m62kT7BWZH0iGsG5GwmBw3cMjnq2kKCmZ6tKdHNB1
+ 0/gLffh4rts8kEmLhcl/7xPGpA+a33VuxrGWyKXa1ghxhGDmd4hLysKKf5j8OBZl4erE
+ rQFrClU2HXyS7Hw+aEeY2vmEg2fTYBMQeJs45flCR4XWGbB/REjtI/FSr96NHKhfp/ei
+ 7NgITtWNzG7DYbVFBDW6ozuB88gZEiCIXT5dp11BJOmUVFQqeOhgzMn6ZaI14Lqz5Vkv
+ fxal0MAftsxuXCKENwkGaN+RB3TT8q/EBBQS3GYknmS4GhjXsXx8QuDLjpbGEU4H07Gm
+ gt9Q==
+X-Gm-Message-State: AOJu0YwZjO1IJDqDpLch/vfCB6axJMdTsza9EwsfEwWkl4gvbHuSLYWL
+ 4mK+mCkcDjyuCHSeACGdjujppOsqEuBbLD5rO69ciwoJ/+Ax0jJHk68Udj0a+LSgwdFaeaRf1o2
+ Vf1ZEy5c=
+X-Gm-Gg: AeBDietKp3QerXU3VoJeumcN43KseRns6Z5hjq6P5SRtNL6sv+oG9Vapy49Q/olRdpx
+ OR0hA+xEdCYwmaVvwGAji3V0E3lhEdN1nUpH7ZRzFSwLjpbkxO3RO0aiDw3i8SGwclTu6p0JcKi
+ eRjwczxXZZXH4K1YvGiMl4FBlXroLF07B9SS2jHiHNtKv4ksWxKBRCSjQklQHOP0/lKMBtd6x7P
+ G3JtG/UFLUlCns7fojzZh0U6pnp5wjxRGz2AX2h2lsHNm2Z+E5Ez0akTHCygFHhMa2OpFA2RVeC
+ bQrKfq1hnFuthjIih95JrPGawg3gHbE0YvuXUFXPiufGCDYm1AOYqotYjIK15vLEfTdUeLDHgaZ
+ r5Y6usVnsCX9wUcCziezGlV/p/Gy4swuGEf65P6zaAMhJtcl4NzPcYmW8b6xvgU4eEBvT4Sytut
+ cOVOUZamIXQzS2WdagXtoqjjII2Ciet/vPASRmr0y9XGh5JOvKitPZFRaBjlGO0GP6zwlZRZXW
+X-Received: by 2002:a05:600c:35c7:b0:483:64b4:79da with SMTP id
+ 5b1f17b1804b1-488d68b27d6mr64123085e9.26.1775850984497; 
+ Fri, 10 Apr 2026 12:56:24 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d531f1f9sm124274295e9.1.2026.04.10.12.56.37
+ 5b1f17b1804b1-488d5b56d1asm96903885e9.15.2026.04.10.12.56.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 12:56:37 -0700 (PDT)
+ Fri, 10 Apr 2026 12:56:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,18 +70,20 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
  Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 27/27] monitor: Merge hmp-target.c code within hmp-cmds.c
-Date: Fri, 10 Apr 2026 21:53:21 +0200
-Message-ID: <20260410195323.17937-28-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 25/27] monitor: Do not check TARGET_I386/RISCV to build
+ 'info mem' command
+Date: Fri, 10 Apr 2026 21:53:19 +0200
+Message-ID: <20260410195323.17937-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260410195323.17937-1-philmd@linaro.org>
 References: <20260410195323.17937-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,191 +106,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hmp-target.c doesn't contain any target-specific code anymore.
-Merge it within hmp-cmds.c (which is already built once).
+This command is filtered at build-time for i386/x86_64 and
+riscv32/riscv64 binaries. By using the recently introduced
+HMPCommand::arch_bitmask flag we can filter it at runtime,
+making it possible to compile hmp-commands-info.hx once.
+
+Since the method depends on a pair of distinct targets,
+define it in its own stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS          |  1 -
- monitor/hmp-cmds.c   | 40 ++++++++++++++++++++++++
- monitor/hmp-target.c | 73 --------------------------------------------
- monitor/meson.build  |  3 --
- 4 files changed, 40 insertions(+), 77 deletions(-)
- delete mode 100644 monitor/hmp-target.c
+ stubs/hmp-cmd-info_mem.c | 12 ++++++++++++
+ hmp-commands-info.hx     |  3 +--
+ stubs/meson.build        |  1 +
+ 3 files changed, 14 insertions(+), 2 deletions(-)
+ create mode 100644 stubs/hmp-cmd-info_mem.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5dcd24a8a89..d184e25ddd4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3414,7 +3414,6 @@ Human Monitor (HMP)
- M: Dr. David Alan Gilbert <dave@treblig.org>
- S: Maintained
- F: monitor/monitor-internal.h
--F: monitor/hmp-target.c
- F: monitor/monitor.c
- F: monitor/hmp*
- F: hmp.h
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index e81632f5551..409a1a9c701 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -14,6 +14,7 @@
-  */
+diff --git a/stubs/hmp-cmd-info_mem.c b/stubs/hmp-cmd-info_mem.c
+new file mode 100644
+index 00000000000..8a53e367a9f
+--- /dev/null
++++ b/stubs/hmp-cmd-info_mem.c
+@@ -0,0 +1,12 @@
++/*
++ * Human Monitor 'info mem' stub
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "monitor/hmp.h"
++
++HMP_STUB(info_mem)
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 336ab870a2c..2d0a8f7d48f 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -209,15 +209,14 @@ SRST
+     Show virtual to physical memory mappings.
+ ERST
  
- #include "qemu/osdep.h"
-+#include "qemu/base-arch-defs.h"
- #include "system/address-spaces.h"
- #include "system/ioport.h"
- #include "exec/gdbstub.h"
-@@ -22,19 +23,58 @@
- #include "monitor/hmp.h"
- #include "qemu/help_option.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor-internal.h"
-+#include "monitor/qdev.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-control.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qapi/qapi-commands-misc.h"
-+#include "block/block-hmp-cmds.h"
- #include "qobject/qdict.h"
- #include "qemu/cutils.h"
- #include "qemu/log.h"
-+#include "net/slirp.h"
-+#include "system/device_tree.h"
- #include "system/hw_accel.h"
- #include "system/memory.h"
- #include "system/system.h"
- #include "disas/disas.h"
+-#if defined(TARGET_I386) || defined(TARGET_RISCV)
+     {
+         .name       = "mem",
+         .args_type  = "",
+         .params     = "",
+         .help       = "show the active virtual memory mappings",
+         .cmd        = hmp_info_mem,
++        .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_RISCV,
+     },
+-#endif
  
-+/* Please update hmp-commands.hx when adding or changing commands */
-+static HMPCommand hmp_info_cmds[] = {
-+#include "hmp-commands-info.h"
-+    { NULL, NULL, },
-+};
-+
-+/* hmp_cmds and hmp_info_cmds would be sorted at runtime */
-+static HMPCommand hmp_cmds[] = {
-+#include "hmp-commands.h"
-+    { NULL, NULL, },
-+};
-+
-+HMPCommand *hmp_cmds_for_target(bool info_command)
-+{
-+    return info_command ? hmp_info_cmds : hmp_cmds;
-+}
-+
-+static int
-+compare_mon_cmd(const void *a, const void *b)
-+{
-+    return strcmp(((const HMPCommand *)a)->name,
-+            ((const HMPCommand *)b)->name);
-+}
-+
-+static void __attribute__((__constructor__)) sortcmdlist(void)
-+{
-+    qsort(hmp_cmds, ARRAY_SIZE(hmp_cmds) - 1,
-+          sizeof(*hmp_cmds),
-+          compare_mon_cmd);
-+    qsort(hmp_info_cmds, ARRAY_SIZE(hmp_info_cmds) - 1,
-+          sizeof(*hmp_info_cmds),
-+          compare_mon_cmd);
-+}
-+
- bool hmp_handle_error(Monitor *mon, Error *err)
- {
-     if (err) {
-diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-deleted file mode 100644
-index 4968d511101..00000000000
---- a/monitor/hmp-target.c
-+++ /dev/null
-@@ -1,73 +0,0 @@
--/*
-- * QEMU monitor, target-dependent part
-- *
-- * Copyright (c) 2003-2004 Fabrice Bellard
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
--#include "qemu/osdep.h"
--#include "qemu/base-arch-defs.h"
--#include "monitor-internal.h"
--#include "monitor/qdev.h"
--#include "net/slirp.h"
--#include "system/device_tree.h"
--#include "monitor/hmp.h"
--#include "monitor/hmp-completion.h"
--#include "block/block-hmp-cmds.h"
--#include "qapi/qapi-commands-control.h"
--#include "qapi/qapi-commands-misc.h"
--#include "qapi/qapi-commands-machine.h"
--
--/* Make devices configuration available for use in hmp-commands*.hx templates */
--#include CONFIG_DEVICES
--
--/* Please update hmp-commands.hx when adding or changing commands */
--static HMPCommand hmp_info_cmds[] = {
--#include "hmp-commands-info.h"
--    { NULL, NULL, },
--};
--
--/* hmp_cmds and hmp_info_cmds would be sorted at runtime */
--static HMPCommand hmp_cmds[] = {
--#include "hmp-commands.h"
--    { NULL, NULL, },
--};
--
--HMPCommand *hmp_cmds_for_target(bool info_command)
--{
--    return info_command ? hmp_info_cmds : hmp_cmds;
--}
--
--static int
--compare_mon_cmd(const void *a, const void *b)
--{
--    return strcmp(((const HMPCommand *)a)->name,
--            ((const HMPCommand *)b)->name);
--}
--
--static void __attribute__((__constructor__)) sortcmdlist(void)
--{
--    qsort(hmp_cmds, ARRAY_SIZE(hmp_cmds) - 1,
--          sizeof(*hmp_cmds),
--          compare_mon_cmd);
--    qsort(hmp_info_cmds, ARRAY_SIZE(hmp_info_cmds) - 1,
--          sizeof(*hmp_info_cmds),
--          compare_mon_cmd);
--}
-diff --git a/monitor/meson.build b/monitor/meson.build
-index 585251804e4..4c58dd148c0 100644
---- a/monitor/meson.build
-+++ b/monitor/meson.build
-@@ -7,6 +7,3 @@ system_ss.add(files(
-   'qemu-config-qmp.c',
-   'qmp-cmds.c',
- ))
--
--specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
--                if_true: [files('hmp-target.c')])
+ SRST
+   ``info mem``
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 09e73ef8b73..ed7ca54ae06 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -84,6 +84,7 @@ if have_system
+   stub_ss.add(files('qmp-cpu.c'))
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
++  stub_ss.add(files('hmp-cmd-info_mem.c'))
+   stub_ss.add(files('hmp-cmd-info_sev.c'))
+   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+   stub_ss.add(files('hmp-cmds-target-i386.c'))
 -- 
 2.53.0
 
