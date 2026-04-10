@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1283CF45A0D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8431EF45A0C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHw0-0000ry-Hk; Fri, 10 Apr 2026 15:54:32 -0400
+	id 1wBHyP-0001oJ-16; Fri, 10 Apr 2026 15:57:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHvy-0000pv-Se
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:30 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHyO-0001nl-1D
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:57:00 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHvv-0001US-I6
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:30 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488a9033b2cso28740705e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:54:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHxx-0004nz-Cd
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:56:59 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43cfd96354aso1510268f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775850864; x=1776455664; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775850991; x=1776455791; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EuoKZZrJIA/hKCIvNS2NFNqHU7220n1eLUSWyy7IvJI=;
- b=ojN2lMcenJRrbVuHebxt77o/Zn5ZVKZBHEVBGJKGFrAsQ7YLks9c02YOEQuzU1hjFL
- G6CP6F11HbakOLwDwlCzDvzamzNVMEtXIDUFuVMpn/MUERdZ30x4OS2sZld7rry3JJRJ
- +84Nu2FFrgsDxc/tIRJ8l6uWL4z5WUzGIvMzs4yCzQbOf+v4k9telaJaI4EIC9C6fIxD
- sw9pTAA5Xcy81MAjChhSCfc90WLGrrc/yB38o0YN+EyokhGGh0VsUmS3r4cbkmsXFkpK
- k9OlrtrPTlRdZ+zcj4WyfBBQ99YtOlTZc2awY46YP3x1hkOISZ3xMVElyTuVq8foo3mA
- 396w==
+ bh=iHk1fkmZMPSQJTPZJGYUyFHdUWj/VJJojjesXRowi+8=;
+ b=XWNwM+XVhZkK5hUhnXf5tbau2IwCa7L7eoyhDgP38BJEt833XQHT/P+1CAPs7+XOne
+ BBqiu7QeSvsm+OpcyMgGBMo2BJ5qrImI0WWSd3F8fiucg9wMkPUV9FCEDZ9Qo4OB+h+s
+ IDMpI0P7NFjUS71OT7jJF8iegGqFmR2q2SbiX8okhv8LEZ4InCY1QUsFzTLzTka7AVln
+ WrERH23rxsUBZW9I71oleGESoN6VE5x+MGztpWsqMFjg8llVP6PA34tXQhZokHgXt4kP
+ VYrveoRjpaHGb/BAv4fY9o2gYSJbj+TZ3LWNGhKR3Sfm25mxJ+jrL2q9Rs6BW5xnYWvB
+ tkuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775850864; x=1776455664;
+ d=1e100.net; s=20251104; t=1775850991; x=1776455791;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EuoKZZrJIA/hKCIvNS2NFNqHU7220n1eLUSWyy7IvJI=;
- b=smFeGNIbMEcOJPE6PqTSG40GGJHyVoZJPPCjgr2TrDX4rZcWe8J12rjB4uC8FCMz73
- EZk/8Oc+O5KuLVij35NQp66ipAfMfJPzjqS44/g6asCB6LlGfkcXH7P+lq7FDha59u95
- bAoM0L6xgaN7HXtUQ/p0Vvpnjg7AKevwtUV+IFHJpGG2ocGS9ETM8AQrHYiTmdYRQBfD
- Ckm/YM0kv6/P9ztNhbYnXc49hVrPDu0e258TOC/ylbIPEw7p6FV+IEijNYhVxi9n7CHD
- CGE8NWNGFy0L9J5xo019pNV92WObTua76URY6CLJC/THgIfIdcwqzUak7ojO2SuhVAT3
- QHvw==
-X-Gm-Message-State: AOJu0YxYhUSWpxWXt29OCuRsKu25cFU6xJtITVkrDV7zuG4WPeUZ6sKt
- RKILGTDWmShV3DMz4PJ2TrA0zPulseUqzzsfULtwRC5qXUf+DLrtEuIhKFTY4opd5pTVDWqKarT
- SE41tLQI=
-X-Gm-Gg: AeBDieujGLiF0rCmJzxvearRwbO9/FK6b40r0LtcDjVMl1EuVQKnIoKh2T0jAGGWaWs
- a0ZGJIWgMx+OCxoRoHQ0y4Ib18YTsuHuBlyEovccmBDVSbAUrbu24WSuhmwqF8Fi9yiDU0xQ7TS
- 9K9uSvDdcLgK0V5N8JkPR4PnLk4Caf4I266iY0xqEfMZxPVEV5HN1eAr7GHdlJ9eKWfnDLoB+9v
- t0AGIl9omMMONQ63CEPZCpomNQJ4E8JXSVIP3aY8RofGqGkzmZBV9oa31Z2uF18KenZnkMqKuVV
- aHo0TJzTVulpFmjr35xm9/nUZsJkButxMmqOYHV0cWaPEXzAqTByO2B0ttD4Pmb0dhNTaBsegeQ
- +nQVMAVqXd13ouzCgthFh0mJKOXOeiKTmLsFhNmkPo8dMg4XvXVJnG5DCwmuxnT9smYmomqEpLw
- 2n3K/NczIgMwOotM6XyH7ikS/rcFVeEsWotD+NcgtfftqiSRlDzjtLI1ruHDjrA9BxJSrCGjQX
-X-Received: by 2002:a05:600c:a109:b0:488:a977:8de with SMTP id
- 5b1f17b1804b1-488d6839866mr43608325e9.16.1775850863956; 
- Fri, 10 Apr 2026 12:54:23 -0700 (PDT)
+ bh=iHk1fkmZMPSQJTPZJGYUyFHdUWj/VJJojjesXRowi+8=;
+ b=GSUiWFxeLs14AD5dKFigyoAo2M+0O4i9J30Skn65mQZIVH+uLGs1EItRvLoAhFIzvc
+ XirGnHY2ECOLPdHKRSLubGVjAoRXIP7QcLKxv0J4rMdNB/Ci5a4p5kZwneFDBd0wDbt8
+ Xve/+I0APpXISL8gxpqaMQwzJC8MOdeXzhY5FoOtHkaDxlPHFD8EBx8LHbNnM00kUjXe
+ ab746qDAT1lWXcmQyL4zPdwJl2IyS+IpMk/MNkUe/ip4khcrYO2zHb533x65n4xva3yf
+ on2exN1VlGtH7pb5pPqUIm/EQMceIc9PN+f8w00v2K4F8GaEpnA0Cs7j6fZ2OKe3HClb
+ 07cQ==
+X-Gm-Message-State: AOJu0Ywo82yNeNyRjuJ739tR1gI8NRDh/AmF6COObOik+99PdzZ13L1+
+ ELOUZ4hVHO990bwpYNtyqzQtSgPLEi4H4ohi/Mre1vKV7Nd3Y2xpmmQ4xyw0FvG6je3pURvtJfA
+ Z24+jHOU=
+X-Gm-Gg: AeBDiesaayomIRwiBWF44Ys1sUbYFLMxZrReDtAtohDXRw1T7kPqSthLiXUk1tkJkNF
+ W2xwvhKuNhEbw6ACi5BwC1Xij4EdDw+dkvKe7rq4QSCuBKcIdTZprHaB9xt6XoYvUb2jQkkd1vD
+ BXo67RTVijot4MiGIZQhw8sKino/UUUYk3mcwsB1MgVYsspcHo9K6qCU9eRxHovZJN1iyAsoRh2
+ 5NdxNim3zF1WYjJTcjT4FgxbpsmkFdN8VTS5guxkx2WRgyF9bLz4YwupDqyxhVB4tW8W/B57AmL
+ /LScW2xRtTcsahDlbSjVzRKTEkUBMXp9Dvkk7Wm0HUqEMk/W/mX2Qd9l1w7stwRj0GXOgUb2F9e
+ VMd5V86sMzht4IK9uWs1RFPdtZk+4jDnV88cujcylJsWap6v7fg5qXkHaWxI7CPeCOiwoJ6euzR
+ yUjTdE7t7sNyN90XpXwU+Zd+mbWYNpxL+pAbH5pKS4jQnMgB7O3cDMwYepdi3mbTkZvWjfLR92
+X-Received: by 2002:a05:6000:40df:b0:43d:4b00:9ee9 with SMTP id
+ ffacd0b85a97d-43d642ca07cmr7372748f8f.43.1775850991514; 
+ Fri, 10 Apr 2026 12:56:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d683e54fsm26145515e9.23.2026.04.10.12.54.22
+ ffacd0b85a97d-43d63e469ddsm9751293f8f.17.2026.04.10.12.56.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 12:54:23 -0700 (PDT)
+ Fri, 10 Apr 2026 12:56:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -71,19 +71,19 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 08/27] target/m68k: Replace target_monitor_defs ->
- SysemuCPUOps::monitor_defs
-Date: Fri, 10 Apr 2026 21:53:02 +0200
-Message-ID: <20260410195323.17937-9-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 26/27] monitor: Do not check multiple TARGET_* to build
+ 'info tlb' command
+Date: Fri, 10 Apr 2026 21:53:20 +0200
+Message-ID: <20260410195323.17937-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260410195323.17937-1-philmd@linaro.org>
 References: <20260410195323.17937-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,86 +106,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict m68k_monitor_defs[] to cpu.c, register it as
-SysemuCPUOps::monitor_defs hook, allowing to remove
-the target_monitor_defs() method.
+This command is filtered at build-time for a selection of binaries.
+By using the recently introduced HMPCommand::arch_bitmask flag we
+can filter them at runtime, making it possible to compile
+hmp-commands-info.hx once.
+
+Since the method depends on a pair of distinct targets,
+define it in its own stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/cpu.c     | 18 ++++++++++++++++++
- target/m68k/monitor.c | 21 ---------------------
- 2 files changed, 18 insertions(+), 21 deletions(-)
+ stubs/hmp-cmd-info_tlb.c | 12 ++++++++++++
+ hmp-commands-info.hx     |  5 ++---
+ stubs/meson.build        |  1 +
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+ create mode 100644 stubs/hmp-cmd-info_tlb.c
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index d849a4a90fc..f704a6af613 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -25,6 +25,7 @@
- 
- #ifndef CONFIG_USER_ONLY
- #include "migration/vmstate.h"
-+#include "monitor/hmp.h"
- #endif
- 
- #include "cpu.h"
-@@ -602,11 +603,28 @@ static const VMStateDescription vmstate_m68k_cpu = {
-     },
- };
- 
-+static const MonitorDef m68k_monitor_defs[] = {
-+    { "ssp", offsetof(CPUM68KState, sp[0]) },
-+    { "usp", offsetof(CPUM68KState, sp[1]) },
-+    { "isp", offsetof(CPUM68KState, sp[2]) },
-+    { "sfc", offsetof(CPUM68KState, sfc) },
-+    { "dfc", offsetof(CPUM68KState, dfc) },
-+    { "urp", offsetof(CPUM68KState, mmu.urp) },
-+    { "srp", offsetof(CPUM68KState, mmu.srp) },
-+    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]) },
-+    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]) },
-+    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]) },
-+    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]) },
-+    { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
-+    { NULL },
-+};
+diff --git a/stubs/hmp-cmd-info_tlb.c b/stubs/hmp-cmd-info_tlb.c
+new file mode 100644
+index 00000000000..a144e68c1c7
+--- /dev/null
++++ b/stubs/hmp-cmd-info_tlb.c
+@@ -0,0 +1,12 @@
++/*
++ * Human Monitor 'info tlb' stub
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- #include "hw/core/sysemu-cpu-ops.h"
++#include "qemu/osdep.h"
++#include "monitor/hmp.h"
++
++HMP_STUB(info_tlb)
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 2d0a8f7d48f..0898221a486 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -193,16 +193,15 @@ SRST
+     Show PCI information.
+ ERST
  
- static const struct SysemuCPUOps m68k_sysemu_ops = {
-     .has_work = m68k_cpu_has_work,
-     .get_phys_page_debug = m68k_cpu_get_phys_page_debug,
-+    .monitor_defs = m68k_monitor_defs,
- };
- #endif /* !CONFIG_USER_ONLY */
+-#if defined(TARGET_I386) || defined(TARGET_SH4) || defined(TARGET_SPARC) || \
+-    defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K)
+     {
+         .name       = "tlb",
+         .args_type  = "",
+         .params     = "",
+         .help       = "show virtual to physical memory mappings",
+         .cmd        = hmp_info_tlb,
++        .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_SH4 | QEMU_ARCH_SPARC \
++                        | QEMU_ARCH_PPC | QEMU_ARCH_XTENSA | QEMU_ARCH_M68K,
+     },
+-#endif
  
-diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-index be7411edca6..3e0df40a6b8 100644
---- a/target/m68k/monitor.c
-+++ b/target/m68k/monitor.c
-@@ -21,24 +21,3 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
- 
-     dump_mmu(env1);
- }
--
--static const MonitorDef monitor_defs[] = {
--    { "ssp", offsetof(CPUM68KState, sp[0]) },
--    { "usp", offsetof(CPUM68KState, sp[1]) },
--    { "isp", offsetof(CPUM68KState, sp[2]) },
--    { "sfc", offsetof(CPUM68KState, sfc) },
--    { "dfc", offsetof(CPUM68KState, dfc) },
--    { "urp", offsetof(CPUM68KState, mmu.urp) },
--    { "srp", offsetof(CPUM68KState, mmu.srp) },
--    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]) },
--    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]) },
--    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]) },
--    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]) },
--    { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
--    { NULL },
--};
--
--const MonitorDef *target_monitor_defs(void)
--{
--    return monitor_defs;
--}
+ SRST
+   ``info tlb``
+diff --git a/stubs/meson.build b/stubs/meson.build
+index ed7ca54ae06..3c6d0032e93 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -86,6 +86,7 @@ if have_system
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+   stub_ss.add(files('hmp-cmd-info_mem.c'))
+   stub_ss.add(files('hmp-cmd-info_sev.c'))
++  stub_ss.add(files('hmp-cmd-info_tlb.c'))
+   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+   stub_ss.add(files('hmp-cmds-target-i386.c'))
+ endif
 -- 
 2.53.0
 
