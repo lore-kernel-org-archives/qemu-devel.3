@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D14F45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C9CF45A08
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHkR-0004Da-D2; Fri, 10 Apr 2026 15:42:35 -0400
+	id 1wBHvG-0008WF-Bv; Fri, 10 Apr 2026 15:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHkQ-0004DO-52
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:42:34 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHvE-0008VE-O1
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:53:44 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHkN-0002OG-Qk
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:42:33 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43cff5dafc3so1797345f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:42:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHvC-0000VV-84
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:53:44 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488aa77a06eso38602325e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775850150; x=1776454950; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CKAvcWXpbfUXyfm02WmTUpHmGf7JvGvxgw1GkwpEpH8=;
- b=Rh+2X2imowB0H90dNzVNVeVdtqnFHMfNttV3n23HPbR8XLAB/ctfWGLddeV/WJhxS4
- THGMZQti4a4Gmddbt2SHkAHzDGqCspe4JeuJrvWY6tRe15BiBgsEDwmvVKUcVlPYCJM+
- WXdb49TVBTEBli9+hQrpfXDHPd/alSVE3I5eWMenh4H0mJYWF4dbdAb7wDvskB5QFOpL
- VrnaIbN8UY7mEI1l47VGPdtakg+QS1sUiVd67p//95mvEuqOPtYy3cFa/RGoQaFKZbnH
- X9sphXFOnXlOWzTXGgFSqtj0LmRb5RDU9cV/Ta0pV1aAU7axGkl9Rz3M5L8haFR+dvP1
- QNRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775850150; x=1776454950;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1775850820; x=1776455620; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CKAvcWXpbfUXyfm02WmTUpHmGf7JvGvxgw1GkwpEpH8=;
- b=ZegRy6BQ0ySpA+XASHRZGJkUha/BnCwQG0kSN1l0V5bIzh+baELHLDwl3BeMtzOGzV
- HNlrHjO/Lt3ynPSOZ43soVGqQ8m60wMyVxjijWRckW7M1iTEHj3rIUjY9SSaF+VxRAY6
- f1OhWncPtZx179RkYUgkzIlNkyujF6Byjkm85OJQ9Fx7AoV/fP5BeNXJ7PNmzuGtgs7Y
- nkfjT1E03DtZm9VmfecClcpTvzTidPDqsLBAMhbWangV9xjmb0xIzwJOuXZpHBAbDoyv
- fMSH9/uQDQGBo1SWc32wOxoa/GOU/Wqe7pE5mc06vUHREb1J2tK6u8LrdwnmadGp/rT0
- gWaQ==
-X-Gm-Message-State: AOJu0Yz5gQdqXr1Mh+i+rTrCj4oH3+2M0zlYXWjVWHQyRaMETA1xF9/u
- SjcJ9JWReS7OH0mNSdoS6pF9HJjR/qoHmC/sE0A8Ee5NmxC7grkXc/OM9ZHdNWONvrOrYxQLQNT
- oabKifiM=
-X-Gm-Gg: AeBDieulSZY81cv3rRmGmkzi67q2pSKoPHngc7NtsEkpaNrL59UQb/e4CcpLYQLVZ4l
- 9xzmwpDCB7lUqKiM/bYGwPJGliR+akTwV9VqDNk+dIS1uXMS3htifw4p9EwCNZ8o5ncUWPC2Ds0
- sloIFytWYkYqDHID0owJfKcBf/uMlKTzqKlngTnakqzqCwSqpC5ALnKyCCxChvV69IUs21jvkVO
- MaIO5iQPKtm1cPrCUYVUBklLoA9ydmMwmFps8B9AiPLymOTpyBTt54RPJaEH+zd7fR0f5uxcnoa
- /SsfaYicP1SPF+adKB+NSzZz1ATB58S3VBIlgvsVzvKeGhiCd9GLBiEVs/FDK1qLk6kviSCGAGo
- SlqFYcqz8o1UwUcAutBHyBMb0AY9YiKUv3jscrIliSclPh1cFcfqzWHCEBuPbFpo1rmUokCmluO
- Hjw00FMcwrULfp+gAAWy+7OADcXt6BxnHpw2sDGMDr/vRx+7FnrBPHEexhOatYi0TqHDQfYGe8
-X-Received: by 2002:a05:6000:40c8:b0:439:b4dc:1e1e with SMTP id
- ffacd0b85a97d-43d642da6f8mr6513067f8f.29.1775850149648; 
- Fri, 10 Apr 2026 12:42:29 -0700 (PDT)
+ bh=K2WKZF4iKqMlnmispjyJNMuthrudidPMtbX4QHH6Sz4=;
+ b=gGYa66MFTvuuuK+1jFpvswZoWsV91IpKk0TVhL4SwiHMpcbnbT4oB3mPFjuTBhYsjG
+ zwhR3MflKRvizymOE6tCK1FCm36PUvEnpbLWZAucsfKKB6VtSRPxpS378PzMSDoNkTQG
+ hLuKP+L2345g5od/2d3Tab345D5e3c2V3+sejpqkLdJ8HVu1Zf4hk607qDQtIbQMqMdU
+ kEkyl3fOeDRtF5qb5jSPnvi0BYUzh+je15Eghgm0DX/8otZGnkbNECPo8rBv1x1KYx1U
+ i6Z9w3t/OXaqDWoKuaypzM8J7k8OVAiI7tDMCzj/g1fM5+A07rz6PXe5EfS4HLHDr1hN
+ CQQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775850820; x=1776455620;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=K2WKZF4iKqMlnmispjyJNMuthrudidPMtbX4QHH6Sz4=;
+ b=ftN+VKo3c6Mi5YwoeYDofLqKa3CYdheR3bON3g/nmpCzid8+Pt5niK2DZEa7wjcQVO
+ KqvAIHZKdSbYVgqk2OYL03AiPFnG8RiiAZUAZt6KsEJKq2g3Cb33a08Nw/hXPbUYAW1s
+ NtycZILHfE6PI8VuEkqneZ9dDxO217hy7J+X9GQDT1zwKTkeQbKn+RnWDELmzi10g+Ee
+ aBWc1PCP28LfBEf6k4Q6D/xDnjzObojJj+v+7VNi+QGVUW2QHQJKaGqsYRLKPCgYU9c8
+ WskIk6sexua3o+RpqUiflrcl5DLfCIUv3cloIQQfnfVvQj0JWjgAkCnXWceEG/rDCCnq
+ unHg==
+X-Gm-Message-State: AOJu0Yx7oqncy+PY/Iu5J1BKBfK7r97GzuNTN3jf/v5NUdDJADslAp2B
+ bBuH6HKzQ7aFwr1rgtD69Pj0eMzWVmT6Mkq73mE74aGvWYgZZwaPWQt4SjE8XlEAVcYBm1LK5cp
+ FPeTHVXU=
+X-Gm-Gg: AeBDietrSrIPKvzpxW8TJLfSU7zrl4Jd9WPjDrOdeoypntSwUGmOi5jPRwVfYfzCF4n
+ KhmJrQNjUjghd2eU1q6vT1RZc0bEJpw9BpnfoJt/elmn9seia4z2e5p/6XVPqD89xanELTsujHN
+ mT0zfvX4q0sHxIwxkCvhzukbaZvyhCUYxp1Hpy17uOx9cNgmvqJg4FgXwK5RuC0gqNKFybHddqR
+ pi3JEM9cOVld6NXwb2VxgAFe02blDsrQL0sj7aL8J2aRD0ElUNYSkxDTTIKYC0DfuOmU7LnLiti
+ h7DCto4t4s6IuM/3BODBRmqfijRCSSbiRFqX1GSoAg4ggCRbFALab3sKIHADwzxRrsaTujC9u9b
+ H8Lx1y3gSOG3c/xSQXDANJWozbhajh6iYEsADzWyczXhBMfn1XouL64kP3t7yeSu+IvuJQt/N9h
+ fZCFy5GlfELYttXYGf9F31K5koJZkZZNzkpljLetEP7gIG9LTGU7OU4EWv9YOc3zatDPDNBYJR
+X-Received: by 2002:a05:600c:a408:b0:488:8b99:54a1 with SMTP id
+ 5b1f17b1804b1-488d68865f6mr46720645e9.28.1775850819896; 
+ Fri, 10 Apr 2026 12:53:39 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63e5062fsm9144142f8f.31.2026.04.10.12.42.28
+ 5b1f17b1804b1-488d531f229sm129524635e9.3.2026.04.10.12.53.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 12:42:29 -0700 (PDT)
+ Fri, 10 Apr 2026 12:53:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH-for-11.1 v5] target/arm: Remove target_ulong use in
- hvf_handle_psci_call()
-Date: Fri, 10 Apr 2026 21:42:27 +0200
-Message-ID: <20260410194227.16357-1-philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
+ kvm@vger.kernel.org, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 02/27] monitor: Remove target_long use in get_monitor_def()
+Date: Fri, 10 Apr 2026 21:52:56 +0200
+Message-ID: <20260410195323.17937-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260410195323.17937-1-philmd@linaro.org>
+References: <20260410195323.17937-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,34 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similarly to commit 3580aa03547 ("target/arm/tcg/psci.c: make
-compilation unit common") which replaced the target_ulong use in
-arm_handle_psci_call(), replace the one in hvf_handle_psci_call.
-
-This could be vaddr, because entry is the start pc for the on-lining
-cpu, but we prefer uint64_t because this is what we get in param[]
-and pass to arm_set_cpu_on().
+Truncate manually, removing the need of target-specific
+code in get_monitor_def().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/hvf/hvf.c | 2 +-
+ monitor/hmp-target.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 5fc8f6bbbd9..678afe5c8e1 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1418,7 +1418,7 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
-     bool target_aarch64 = true;
-     CPUState *target_cpu_state;
-     ARMCPU *target_cpu;
--    target_ulong entry;
-+    uint64_t entry;
-     int target_el = 1;
-     int32_t ret = 0;
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index 812714ada01..b9b79e8e927 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -93,7 +93,7 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
  
+     ret = target_get_monitor_def(cs, name, &tmp);
+     if (!ret) {
+-        *pval = (target_long) tmp;
++        *pval = target_long_bits() == 32 ? (int32_t)tmp : tmp;
+     }
+ 
+     return ret;
 -- 
 2.53.0
 
