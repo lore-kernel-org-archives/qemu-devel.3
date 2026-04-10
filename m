@@ -4,108 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9A3F36B97
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 01:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C58CF36B97
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 01:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB0xn-0002ht-5M; Thu, 09 Apr 2026 21:47:15 -0400
+	id 1wB11I-0004O1-Ox; Thu, 09 Apr 2026 21:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB0xl-0002hU-Q2
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:47:13 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wB11H-0004NY-U2
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:50:51 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB0xk-0004Qc-8X
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:47:13 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-66bd4e0560fso2006950a12.0
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 18:47:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775785630; cv=none;
- d=google.com; s=arc-20240605;
- b=gEvDLk5VANvJVOTuK9RZOY/975L6lizosirM0AhmxjzDjx63TRGiK8H1cWY+Va/ZPG
- nXKLtLHl8huyhrcWiShASki2FfXxYo/pf/k0Yt84x7FQne28oqEDRZVUz0dypw6/f5TN
- 9IJEU4lOF5k0W9mctMEO03iCVVN+fI0HZS7b8hhKHhzqYIipjiB/y2nsT4Mfc95PdFSY
- RLXlpr55G6VBELXgqTr0TFqskaYujJDC944dgtIzsM8mi4E0Ny6zRk/dR+KunrnUvots
- XjGBXi20M4AtxlyjK/Nf+qlHDwABWN5VN2PdvBn4rk1F0H7IZaKdTGhd0OYIkzIvBe03
- 4oOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=S+bUn4Z5nOt0Mxyff/J/d30eTpNQWwXXzdsf4LaqeZY=;
- fh=cWfiSq/oFyTN/DKvcJSgQUgJ4u5YSKmpf6by/WUOfgI=;
- b=UCfj0JrvdFTcXt6SRu8p8oI4FZ7zSOKxK+Btg21HYPfSlw85QP0YsT8/tdaeTxXpha
- 9TELm2sqSCeV1EsHkyynoVY1X1ZMUQb+ORhSYXjhuoIM57wV3JzcWRwzS5sPNAYDjaOn
- +9aN9CQ/DcBOKywbPCNjhKTSfM6F0WHqJF4n49vxuB/AosBKCTN5wgnE/JInJL3ceUOU
- 7YCAzDGzP3uwGqqHj9+dMj4KUYlIy6KkO1fdj9njudgM0dCZpCIYRZ3Oo+iNZQiM9UjZ
- WVQOKy/tBioCteRbcOvyeyTrWcKtwyl4/8qEoy7mDu4A/ojuz5k++4MJMyvFqRiNg4Ox
- KxqA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wB11G-0006Qw-4d
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:50:51 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2b258576d8cso9248105ad.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 18:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775785630; x=1776390430; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S+bUn4Z5nOt0Mxyff/J/d30eTpNQWwXXzdsf4LaqeZY=;
- b=W1FQC8nA+81bUtkC+AZR+5MluE14haQaGJfqB2EMvSKp9XT7ILanpsEQicFpmJbnzP
- KqOG2oU0Kxi+gg2VY2Grt6jh2R77UaxFpq1zrA1lDW49myC9hPAfMh+eF78zrOe6zre0
- /mrM8c6eCpmSPcbd2ZMziqb+d37yPjwNgVP1eyRj7Mi9m6sqiperAZ5dbNCHC8B/jOlk
- 320vL/5tihLdN2xkQoMBXVWpJjaw3zhOaWWHPoRl0hop1GkxdRpQJfesydqm2dKSi/5X
- Oig6f12Zr1sB2+hXzC8MnQ0vwcDasPkc2jl6NbGuEPCaAuMnR//8rDVLvC70oEwMDyRy
- g8ng==
+ d=gmail.com; s=20251104; t=1775785849; x=1776390649; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=BU5CcSDXNGzSY2Iw3YI5l/gTpxyF81iQ+DC6/gUPmRwzqTHfTGovjjrBv0UR8PHLpB
+ 248uath07RQiKiOVhCOv7tbJknwxbwTOG6Mw6HED1SaUkvlRYZjfVszzqjNM0P5x9ysp
+ SO4NpwwPZEqHlXy0d7/6SihLU5sNCSwga0p/yMhwyPcPVdOo/QvEeUXvx4hFcuu51T5N
+ XDxFFp6A7j4ZfoRtVbot4EqwJyFEv6BHzbcaLd0hsY7n+EtuSnG0r/a8lyISQ6xzMsL3
+ FpW3CmxS/jhkO4Magrz1/ulruFIJLKO6gTdDHwKHxdm2TmoDHyAWpMwEMi2rbr+6kKvB
+ EHgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775785630; x=1776390430;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=S+bUn4Z5nOt0Mxyff/J/d30eTpNQWwXXzdsf4LaqeZY=;
- b=PD57LFuTAO2RP7HpldCU7AGrW8gDcsGAuPWuHjKonw+DfMMWCL9WsmmbH6fDBL7JyU
- /mj7kXpVkqXlYg9beltD3vKf1cZ1Li7TBf+MN9FLSnBr6097O/JQDzKu6MY3Rt0Uk1rp
- 7NQ6GwlXbicXYLRHDAUY6aiWjhce9CLpAuku2VicQ1MoN8d/KlCx7eAb+/f0Taazvvo2
- XpU7p9D4uxqkK2+eia6giHFdpM/N37A5wWLrUJkc1g74+WDbDA3VL5S/0oCsSb4GU5/c
- Mb/f44ZIWfA2iqTe39S22MljARGXoN1wHRB8nMTExEkIvmxaTOkYUl6h5SsKiM/T8k4l
- f4hg==
-X-Gm-Message-State: AOJu0YwgrejDIWaCsMjGJ9FDXfiB+Dwr6x04bfX9aFGp11bkSj80gqWC
- qEj3I3CRvLqd69+p/LHVlgHIkbTVraZlhCAQK5pz5Xa22fAcIwUHLx2vB2XErmCdLNq0cErvgMt
- ftJWKAF58X9Iu7Eke7Z6IHqFOfYrp/yQ=
-X-Gm-Gg: AeBDiesn0fHXMWAFHxVaZjjVBA9I/S8ICBEDzXfyH75nTxkjB4TqRO3SxRc5fys2Nbj
- Omsvs4nMH+X1ZmQAiZwoSYCLNZ2oMIA82k6wJrYlDutaKBHGDVbxn/OYqVpjQocjLiMXg8C/xTY
- 3/Ua8oP8xAqiXMsfPPxKf6bEKNWtjOM9ll+PULEDMOjXzezMo4O+toA+x+u3b6ijHlgASyrnVLz
- 7XyAbrHTPaEpBt6HMwKDA6586M8qJMvnk2BZtbOyu5rZPOift+9rq/IR8faz9UkF3AD941URF3J
- +BBnYY5JuxyINbG7/eNxSJzZ8oAjykU1qC4dTA==
-X-Received: by 2002:a17:907:940a:b0:b9c:bf69:8b54 with SMTP id
- a640c23a62f3a-b9d76d6d812mr50481066b.18.1775785630189; Thu, 09 Apr 2026
- 18:47:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1775785849; x=1776390649;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=UOXNCK0zuz/1He2zV0PrkzNnaFV1tpogFS3PsvedZVUdRsF8c59t5U77jeUAe/sSah
+ /Cl+ogXeroy7uoXry/oZvBOomaa67s00iG2+F2Rqu0UcqGqzTb8RigDizYCMRUlLgvAB
+ GQC0zWsFawabgPd+7w6OiUeLm4bTnRWD2uTO3AhjKkOYTq5wY+VfJTyoOMo+hlvkWCjh
+ ds0rLXxrOmUy9dlA19M/ZDDGMhO0w8aEcmZpsSaiBNRzY7K8+IewrH5jW3sEa3iw3O38
+ /LRcbhXczbXsJLN4edzXSSKCCyIGqk9qytDn/Oz++5RBd0bFVC8cij6D+qE/1p/sMT0e
+ 5qvw==
+X-Gm-Message-State: AOJu0YwmRKpKX44+lpav/KWii34jKEIjrgsg4QjbGuAeS7A7AeCElNL7
+ fPjkelN85VOcj3bzAPDsdLqldgbaGkBrHT6ZnTyaLtKnWZjrR0f0Qdpv
+X-Gm-Gg: AeBDiet5z9Mfv7hEYzkfMUt0G25UR9wfmNK92HEuUaCuMEGiqffto0oC7GrqiuwGSkd
+ QOcIkOcktC5LL/kaU//wuj5MbGHNZuFfe+9YcQ/QvsFfsTL/eov4cujPLjVjmDOtlAF2sBUQKZb
+ tUdz9193vFNRKqfDhgL94n50CPl2b4c1fNhH31XXOGAjdq3Taek3Wx7LpvbqwribpUwoIDsP0xC
+ ODebgcRcgvHiWzNRRdjCyCDoe7dKbYG3mnqZeKDZ0O7jJo0jP5ljOjQPOgQgU8J9NBdYmy4Keg6
+ zn8vllBIrl7UclpF0jXyePGjKJ/htoNFKiOIF7nyi/CCRTeKdPiRBfT1ixiHyEnxtKY6Cc653AP
+ av0R7nGXkUTyy9jlUYueMPwdqs797/mWI9xG8+95XJs9hbfdcdPJ9OFB6hlDVK4gcMrPxZb/hsb
+ e0usNAJNuPtnR5nuBAXS0Ue69qpKqZ5A==
+X-Received: by 2002:a17:902:a515:b0:2b2:50bd:83ac with SMTP id
+ d9443c01a7336-2b2d5a6d9b1mr7848185ad.40.1775785848646; 
+ Thu, 09 Apr 2026 18:50:48 -0700 (PDT)
+Received: from [172.17.0.5] ([168.126.243.22])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b2d4f0b284sm8832245ad.52.2026.04.09.18.50.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Apr 2026 18:50:48 -0700 (PDT)
+From: Jaemyung Lee <ldc.jml@gmail.com>
+X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
+Date: Fri, 10 Apr 2026 10:50:04 +0900
+Subject: [PATCH v4 2/5] hw/ufs: Modify flag handling operation
 MIME-Version: 1.0
-References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
- <20260408140635.42546-7-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20260408140635.42546-7-zhiwei_liu@linux.alibaba.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 10 Apr 2026 11:46:43 +1000
-X-Gm-Features: AQROBzCjD1UV49a7YY0YtxJpDD85oPkjv9EpMcbE6xfqG6lrPjdfhrr1uZBVCGk
-Message-ID: <CAKmqyKMryrNgfo8bp-FOj1F0B63WLv1Shsjwj=euptjVr7auVQ@mail.gmail.com>
-Subject: Re: [PATCH v5 6/6] target/riscv: Enable SMMPT extension
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com, 
- palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com, 
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260410-write_booster-v4-2-d58a680587df@samsung.com>
+References: <20260410-write_booster-v4-0-d58a680587df@samsung.com>
+In-Reply-To: <20260410-write_booster-v4-0-d58a680587df@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Jaemyung Lee <jaemyung.lee@samsung.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775785840; l=6656;
+ i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
+ bh=UwQldvutZu9HqLXksjdiAk3IKzXkRCngBaBlZ026a4E=;
+ b=xD8BvC+Wsuy1G9SlYE3/Gk+7hcOuVzQ+akAvEnag+F0xr1rUcoEppI/mCdULRabIm/XUiJs15
+ 1cYNXNPvEpoBULj+VToB67Oau4RBcWoSy1ZUzpzUMcC9IZFfVUnaSM0
+X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
+ pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=ldc.jml@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,48 +109,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 9, 2026 at 12:09=E2=80=AFAM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
+Change internal flag handling operation same as attribute's
 
-Can we add a link in this commit to the spec version please?
+In UFS device, some flag queries directly trigger specific device
+behaviour like attribute's, not only changes the internal values.
+So restructure flag query processing functions same as attribute
+processing, to facilitate linking detailed implementations based on
+individual flag value changes.
 
-Alistair
+Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
+---
+ hw/ufs/ufs.c | 152 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 119 insertions(+), 33 deletions(-)
 
->
-> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index cb4ccd001d..1e49465eeb 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -225,8 +225,10 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->      ISA_EXT_DATA_ENTRY(smpmpmt, PRIV_VERSION_1_12_0, ext_smpmpmt),
->      ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
-> +    ISA_EXT_DATA_ENTRY(smmpt, PRIV_VERSION_1_13_0, ext_smmpt),
->      ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
->      ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
-> +    ISA_EXT_DATA_ENTRY(smsdid, PRIV_VERSION_1_13_0, ext_smsdid),
->      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
->      ISA_EXT_DATA_ENTRY(ssccfg, PRIV_VERSION_1_13_0, ext_ssccfg),
-> @@ -1379,6 +1381,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[=
-] =3D {
->
->  /* These are experimental so mark with 'x-' */
->  const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] =3D {
-> +    MULTI_EXT_CFG_BOOL("x-smmpt", ext_smmpt, false),
-> +    MULTI_EXT_CFG_BOOL("x-smsdid", ext_smsdid, false),
->      MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
->
->      { },
-> --
-> 2.43.0
->
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index b2b70c8b38ebecd8d49ecce288614d55efd90f2e..69f82ab462d135fe6cda479891f9d8f26d19be9a 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -1021,6 +1021,122 @@ static inline QueryRespCode ufs_flag_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
++static uint32_t ufs_read_flag_value(UfsHc *u, uint8_t idn)
++{
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        return u->flags.device_init;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        return u->flags.permanent_wp_en;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        return u->flags.power_on_wp_en;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        return u->flags.background_ops_en;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        return u->flags.device_life_span_mode_en;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        return u->flags.purge_enable;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        return u->flags.refresh_enable;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        return u->flags.phy_resource_removal;
++    case UFS_QUERY_FLAG_IDN_BUSY_RTC:
++        return u->flags.busy_rtc;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        return u->flags.permanently_disable_fw_update;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        return u->flags.wb_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        return u->flags.wb_buffer_flush_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        return u->flags.wb_buffer_flush_during_hibernate;
++    case UFS_QUERY_FLAG_IDN_UNPIN_EN:
++        return u->flags.unpin_en;
++    default:
++        g_assert_not_reached();
++        return 0;
++    }
++}
++
++static QueryRespCode ufs_write_flag_value(UfsHc *u, uint8_t idn, uint8_t value)
++{
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        u->flags.device_init = 0;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        u->flags.permanent_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        u->flags.power_on_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        u->flags.background_ops_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        u->flags.device_life_span_mode_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        u->flags.purge_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        u->flags.refresh_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        u->flags.phy_resource_removal = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        u->flags.permanently_disable_fw_update = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        u->flags.wb_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        u->flags.wb_buffer_flush_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        u->flags.wb_buffer_flush_during_hibernate = value;
++        break;
++    default:
++        return UFS_QUERY_RESULT_INVALID_VALUE;
++    }
++
++    return UFS_QUERY_RESULT_SUCCESS;
++}
++
++static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
++{
++    UfsHc *u = req->hc;
++    uint8_t idn = req->req_upiu.qr.idn;
++    uint8_t value;
++    QueryRespCode ret;
++
++    ret = ufs_flag_check_idn_valid(idn, op);
++    if (ret) {
++        return ret;
++    }
++
++    if (op == UFS_QUERY_FLAG_READ) {
++        value = ufs_read_flag_value(u, idn);
++        ret = UFS_QUERY_RESULT_SUCCESS;
++    } else if (op == UFS_QUERY_FLAG_SET) {
++        value = 1;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_CLEAR) {
++        value = 0;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
++        value = !(ufs_read_flag_value(u, idn));
++        ret = ufs_write_flag_value(u, idn, value);
++    } else {
++        trace_ufs_err_query_invalid_opcode(op);
++        return UFS_QUERY_RESULT_INVALID_OPCODE;
++    }
++
++    req->rsp_upiu.qr.value = cpu_to_be32(value);
++    return ret;
++}
++
+ static const int attr_permission[UFS_QUERY_ATTR_IDN_COUNT] = {
+     /* booting is not supported */
+     [UFS_QUERY_ATTR_IDN_BOOT_LU_EN] = UFS_QUERY_ATTR_READ,
+@@ -1103,39 +1219,6 @@ static inline QueryRespCode ufs_attr_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
+-static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
+-{
+-    UfsHc *u = req->hc;
+-    uint8_t idn = req->req_upiu.qr.idn;
+-    uint32_t value;
+-    QueryRespCode ret;
+-
+-    ret = ufs_flag_check_idn_valid(idn, op);
+-    if (ret) {
+-        return ret;
+-    }
+-
+-    if (idn == UFS_QUERY_FLAG_IDN_FDEVICEINIT) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_READ) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-    } else if (op == UFS_QUERY_FLAG_SET) {
+-        value = 1;
+-    } else if (op == UFS_QUERY_FLAG_CLEAR) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-        value = !value;
+-    } else {
+-        trace_ufs_err_query_invalid_opcode(op);
+-        return UFS_QUERY_RESULT_INVALID_OPCODE;
+-    }
+-
+-    *(((uint8_t *)&u->flags) + idn) = value;
+-    req->rsp_upiu.qr.value = cpu_to_be32(value);
+-    return UFS_QUERY_RESULT_SUCCESS;
+-}
+-
+ static inline uint8_t ufs_read_device_temp(UfsHc *u)
+ {
+     uint8_t feat_sup = u->device_desc.ufs_features_support;
+@@ -1300,6 +1383,9 @@ static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
+     case UFS_QUERY_ATTR_IDN_TIMESTAMP:
+         u->attributes.timestamp = cpu_to_be64(value);
+         break;
++    default:
++        g_assert_not_reached();
++        return 0;
+     }
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+
+-- 
+2.48.1
+
 
