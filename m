@@ -4,115 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBDD0F36BA4
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 03:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCED0F36BA4
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 03:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB2FO-0007EM-6S; Thu, 09 Apr 2026 23:09:30 -0400
+	id 1wB2H5-00088Y-BR; Thu, 09 Apr 2026 23:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB2FM-0007E1-Ov
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:09:28 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB2FL-0002ID-3Q
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:09:28 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-66ec3b7b1deso2378205a12.2
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 20:09:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775790565; cv=none;
- d=google.com; s=arc-20240605;
- b=CWWwJae2MShmGhpbDZtIdS7asIRkDXd49Y9e+uaJRvAqS1YF06URXGpmmDuWLOdzbp
- GBbziqHBFjM9Ls5ybhgp/i/T3Ar4r6dOwWgYz6NZ/JDdVulurbG31+7M9aleepIKvUPB
- a8SkYejfG6vOchm3vrRKFoh7Cx91Bn9GuLtq/JHxw4ytskOtSQKcuxMfLoQNPhV+vCWe
- EU2MhHu1z3Y339P8FfLjc7sTKHkhct/qcL92aPDC/1VlDpWpmASM9yYC2xAYdQEtQdB7
- KxgDfa5T15vgVVm9/RHosLN43f4iGo0o+al0D+Zfr5O/1XxjzC/73hj65Hy2Krv0rsu1
- iZcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=BcNwny8wyNt8LtwGmNYf4OQ39okzkFiw+z+OlIqhKJo=;
- fh=XErS4XjkAQDBkClscxjQUC7TY1MVaIkgq5whaEGujtU=;
- b=RK4vfHNWj9isO3pyGfM7/kgh9mZKYAzpl+1M9w0/ffPcUgofRSFYbm+jU+mezY4CxQ
- 5hYevUfzL+W54BoRGALcHcJeN5kwEATZ7ylcdPFatLZFMhr8jLqaBkb9mqAN24syG3sX
- GtmdU0/pR8srVNkIodBufNLR+aSDwQjcxnfznR5iAfHlhQU4D7u15aSzYUJ25gvE4gd3
- oPglpvEcna3OMUg1f/y93gdHZaPoFOB2fIDM2OBFdKYHH2xOuqc3ViEKmYIfRMZ62HnW
- 4KYERTe3dnCMMLiefLZCX0rzJ3vrneLUQcNbJvh7blx9CoScNLum5eb2t4SpgrFGsoM7
- Bmvg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775790565; x=1776395365; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BcNwny8wyNt8LtwGmNYf4OQ39okzkFiw+z+OlIqhKJo=;
- b=fnmJEu+8+4EXVK2eun5/U2K9fDdxyGsHKGS5gUWtc3Co2Z3rf/XaYh5uMJo1MKMHId
- 8eQDSO1gBmvNOqpeSBhAkE2slKAisceCRadKma3RicQTRBzrCIlrCRMJ96sIcFlqXCfW
- vPsEp4gy03qu/5JQCo9hGE133x5fye10G3aYv/jLgh/w7CqYfx4K2nypnBOh4TzTknU+
- 3VEwaEcBXQWLAEBcsrs/dWIJ73b+0UBYAJrIhOkQRcyKxJK1HcmVA4+A0+ICfP4caGLa
- x3yIiIkfBLAsijGdUgFjDq19QyFLKSXiymRlBG7KUT/OMN0Wsk3+TsRCuvI1xHpgIC2K
- 3C/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775790565; x=1776395365;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BcNwny8wyNt8LtwGmNYf4OQ39okzkFiw+z+OlIqhKJo=;
- b=KjOuyG6/mH8MsILzkJ0B6Qt+Z5ziRDPSak7lOy4R5JQ543zssLhxLQoPAfrhg4DH5E
- xRlkUquAr6Wz947NqRMNabndEtDj6a0rRYrKupXP4vDP1/T5CNCXOq2PYUUIXTHOk/vF
- i5gJXqm8kG+qkjKFI5v6EVFLejJpBwgiLsajA16GSdwuGpeIJxiSh6xYVFXZwvQTlJ+G
- 372pN70bn1tmqVlZPDWAuZ+Fa0xTgRa9yDWVrwtftjSYeYtwWabFhM/eRBhzUuUzrHiq
- RP+l2ypYCnz1F5I0EekaHSbBE+Xd4upRs9auH+ZTlAYX8A3m8JON8wmtRAvvItY+0Zmh
- +vUA==
-X-Gm-Message-State: AOJu0YxZ7t+WL82oaad1o6reLrykFhoP9v1kvf3lim5o39wmz91ao5z9
- ztntDhrls3J/l3loIrM88/LxuJ1PC/YvtrLHJMx0S81Am2Ub0Xs6Xqm1C8+yAJMk8WU0B2/JD/9
- MbUL+FkYfcu8K8taw5AUXyJaHFoC4zUQ=
-X-Gm-Gg: AeBDieuzv6PdS8sHXiOJ4hEUlspW6E9xZ5LU6yKYhkvgvBuslDKtfWogo7JhD01wU0S
- EiovopS1qgPbVxDqJvkAL6bvK3G06E2uZtkGRgMaLXUOnR0lmcgPM6lsr09IPH3Huj/dMHWJQ2p
- MJI4m4Q9HsTetTNmunfALVA5y46jVo+tkYCusU2q1KRupXBs8m7pUBv/3ewjcKmHuhJqwb5jTlF
- It2E5khX2sfkBZl23dxCYXUpaeKMBYPuDWuMqO92lDnw2Ira1VtX0i1XjzxDSi8vQlUnQL9Ulqb
- 8Hfaljmd8NJdlZD4MlJM4U3bbCSdN7GOvB0zEjUcnP7hH7QV
-X-Received: by 2002:a17:907:6c0f:b0:b97:e32f:7ee8 with SMTP id
- a640c23a62f3a-b9d7298ffe1mr76763266b.37.1775790564913; Thu, 09 Apr 2026
- 20:09:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wB2H3-00088O-8t
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:11:13 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wB2H0-0003wz-OQ
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 23:11:13 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id BE4A94A400
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 03:11:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1775790668;
+ bh=yQUtgtDqZRblDe8EZaHghML4A1yPsk18t7BkUJGI+Rg=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=aU+tHmP6s7+ZTNxY8ubPK08gWI0ESX2nOXBEglkKpVtam2AlJBUC2SebFf327mhTd
+ oLRqcP9p73+2TBFoWwxxaocyfKSRy52WOExw8JsipOTa9MpOW/wX0F6R37gKiEgJ+h
+ VK8jF7eXjeC/tJHr3EyViQ/mPj6CSqKLZeCHMoIjEHcU4wRkVHlfd5qMXjvu8tWHjE
+ HOQ0TK9asoPWr9WX/PCwo35iDRVLwTLnE/4yl01xM6takE92iBDJQHhULD9ilQv3XB
+ wYCnhnqQ9BOQe9Qyb3qsxV2/l+Gik+8stWTyR9/R2FcbZ3pMGv4f+pOc6jaGiyhzP3
+ AhztuKYQW5qzA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id B26787E15F
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 03:11:08 +0000 (UTC)
 MIME-Version: 1.0
-References: <20260402125234.1371897-1-max.chou@sifive.com>
- <20260402125234.1371897-6-max.chou@sifive.com>
-In-Reply-To: <20260402125234.1371897-6-max.chou@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 10 Apr 2026 13:08:58 +1000
-X-Gm-Features: AQROBzBTr3Kdo78Y0rCZKcEb6R6UH4FkP1U6PLofrrsxpLHhRi7I-8YUmoH5nqA
-Message-ID: <CAKmqyKNDyZZjr_TWeKe1b2tfGN5+-b4P9d60PP06A5f-4gvF=Q@mail.gmail.com>
-Subject: Re: [PATCH v6 5/9] target/riscv: Use the tb->cs_base as the extend tb
- flags
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Fri, 10 Apr 2026 03:02:59 -0000
+From: =?utf-8?q?=F0=9F=A4=96_prod-kernel-team-janitor?=
+ <1037606@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=linux; status=Confirmed; importance=Medium;
+ assignee=None; 
+X-Launchpad-Bug: product=qemu; status=Won't Fix; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=linux; component=main;
+ status=Expired; importance=Medium; assignee=None; 
+X-Launchpad-Bug-Tags: apport-collected kernel-autoclosed
+ kernel-autoclosed-expired kernel-bug-exists-upstream kernel-daily-bug precise
+ quantal running-unity
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: brad-figg hramrach jsalisbury leaf-node
+ prod-kernel-team-janitor th-huth
+X-Launchpad-Bug-Reporter: Michal Suchanek (hramrach)
+X-Launchpad-Bug-Modifier: =?utf-8?q?=F0=9F=A4=96_prod-kernel-team-janitor_=28prod-kernel-team-janitor=29?=
+References: <20120816144502.14385.65707.malonedeb@soybean.canonical.com>
+Message-Id: <177579017936.1863843.15618821939280275426.malone@juju-98d295-prod-launchpad-3>
+Subject: [Bug 1037606] Re: vmwgfx does not work with kvm vmware vga
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="63170d9f894f213bed2e467c153d97add655c51e";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: daaffbc8b48c57370a8fe86fc5cc7c1cd40b6db7
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -121,110 +94,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 1037606 <1037606@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 2, 2026 at 11:53=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
-e:
->
-> We have more than 32-bits worth of state per TB, so use the
-> tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
->
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Signed-off-by: Max Chou <max.chou@sifive.com>
+The task "linux (Ubuntu)" has expired because it has had no new comments
+or updates for more than three years.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+If this issue is still present in an Ubuntu LTS kernel still under
+active support, please reopen the bug and provide updated details. If
+this issue was reported against an Ubuntu kernel no longer under active
+support but the issue still exists in a currently supported Ubuntu
+kernel, please open a new bug against that kernel version and provide
+the updated details, with a reference link to the original bug.
 
-Alistair
+This action was performed by an automated process maintained by the
+Ubuntu Kernel Team.
 
-> ---
->  include/exec/translation-block.h | 1 +
->  target/riscv/cpu.h               | 3 +++
->  target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
->  3 files changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/include/exec/translation-block.h b/include/exec/translation-=
-block.h
-> index 4f83d5bec9..40cc699031 100644
-> --- a/include/exec/translation-block.h
-> +++ b/include/exec/translation-block.h
-> @@ -65,6 +65,7 @@ struct TranslationBlock {
->       * arm: an extension of tb->flags,
->       * s390x: instruction data for EXECUTE,
->       * sparc: the next pc of the instruction queue (for delay slots).
-> +     * riscv: an extension of tb->flags,
->       */
->      uint64_t cs_base;
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 962cc45073..4c0676ed53 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -703,6 +703,9 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
->  FIELD(TB_FLAGS, PM_PMM, 29, 2)
->  FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
->
-> +FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
-> +FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
-> +
->  #ifdef TARGET_RISCV32
->  #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
->  #else
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index c4f7da7193..f3f7808895 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -104,6 +104,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
-*cs)
->      RISCVCPU *cpu =3D env_archcpu(env);
->      RISCVExtStatus fs, vs;
->      uint32_t flags =3D 0;
-> +    uint64_t ext_flags =3D 0;
->      bool pm_signext =3D riscv_cpu_virt_mem_enabled(env);
->
->      if (cpu->cfg.ext_zve32x) {
-> @@ -118,6 +119,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
-*cs)
->
->          /* lmul encoded as in DisasContext::lmul */
->          int8_t lmul =3D sextract32(FIELD_EX64(env->vtype, VTYPE, VLMUL),=
- 0, 3);
-> +        uint8_t altfmt =3D FIELD_EX64(env->vtype, VTYPE, ALTFMT);
->          uint32_t vsew =3D FIELD_EX64(env->vtype, VTYPE, VSEW);
->          uint32_t vlmax =3D vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
->          uint32_t maxsz =3D vlmax << vsew;
-> @@ -133,6 +135,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
-*cs)
->          flags =3D FIELD_DP32(flags, TB_FLAGS, VMA,
->                             FIELD_EX64(env->vtype, VTYPE, VMA));
->          flags =3D FIELD_DP32(flags, TB_FLAGS, VSTART_EQ_ZERO, env->vstar=
-t =3D=3D 0);
-> +        ext_flags =3D FIELD_DP64(ext_flags, EXT_TB_FLAGS, ALTFMT, altfmt=
-);
->      } else {
->          flags =3D FIELD_DP32(flags, TB_FLAGS, VILL, 1);
->      }
-> @@ -189,10 +192,12 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUStat=
-e *cs)
->      flags =3D FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env))=
-;
->      flags =3D FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
->
-> +    ext_flags =3D FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->mis=
-a_ext);
-> +
->      return (TCGTBCPUState){
->          .pc =3D env->xl =3D=3D MXL_RV32 ? env->pc & UINT32_MAX : env->pc=
-,
->          .flags =3D flags,
-> -        .cs_base =3D env->misa_ext,
-> +        .cs_base =3D ext_flags,
->      };
->  }
->
-> --
-> 2.52.0
->
->
+** Tags added: kernel-autoclosed kernel-autoclosed-expired
+
+** Changed in: linux (Ubuntu)
+       Status: Triaged =3D> Expired
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/1037606
+
+Title:
+  vmwgfx does not work with kvm vmware vga
+
+Status in Linux:
+  Confirmed
+Status in QEMU:
+  Won't Fix
+Status in linux package in Ubuntu:
+  Expired
+
+Bug description:
+  vmwgfx driver fails to initialize inside kvm.
+
+  tried: kvm -m 2048 -vga vmware -cdrom RebeccaBlackLinux.iso (Ubuntu
+  based, any Ubuntu live CD would do)
+
+  Apport data collected with qantal alpha live CD (somewhat older
+  kernel).
+
+  The error is shjown in CurrentDmesg.txt
+  https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1037606/+attachment/=
+3265235/+files/CurrentDmesg.txt
+
+  ---
+  ApportVersion: 2.4-0ubuntu8
+  Architecture: amd64
+  AudioDevicesInUse: Error: command ['fuser', '-v', '/dev/snd/seq', '/dev/s=
+nd/timer'] failed with exit code 1:
+  CRDA: Error: command ['iw', 'reg', 'get'] failed with exit code 1: nl8021=
+1 not found.
+  CasperVersion: 1.320
+  DistroRelease: Ubuntu 12.10
+  IwConfig:
+  =C2=A0eth0      no wireless extensions.
+
+  =C2=A0lo        no wireless extensions.
+  LiveMediaBuild: Ubuntu 12.10 "Quantal Quetzal" - Alpha amd64 (20120724.2)
+  Lsusb: Error: command ['lsusb'] failed with exit code 1: unable to initia=
+lize libusb: -99
+  MachineType: Bochs Bochs
+  Package: linux (not installed)
+  ProcEnviron:
+  =C2=A0TERM=3Dlinux
+  =C2=A0PATH=3D(custom, no user)
+  =C2=A0LANG=3Den_US.UTF-8
+  =C2=A0SHELL=3D/bin/bash
+  ProcFB:
+
+  ProcKernelCmdLine: file=3D/cdrom/preseed/hostname.seed boot=3Dcasper init=
+rd=3D/casper/initrd.lz quiet splash -- maybe-ubiquity
+  ProcVersionSignature: Ubuntu 3.5.0-6.6-generic 3.5.0
+  PulseList: Error: command ['pacmd', 'list'] failed with exit code 1: No P=
+ulseAudio daemon running, or not running as session daemon.
+  RelatedPackageVersions:
+  =C2=A0linux-restricted-modules-3.5.0-6-generic N/A
+  =C2=A0linux-backports-modules-3.5.0-6-generic  N/A
+  =C2=A0linux-firmware                           1.85
+  RfKill:
+
+  Tags:  quantal
+  Uname: Linux 3.5.0-6-generic x86_64
+  UpgradeStatus: No upgrade log present (probably fresh install)
+  UserGroups:
+
+  dmi.bios.date: 01/01/2007
+  dmi.bios.vendor: Bochs
+  dmi.bios.version: Bochs
+  dmi.chassis.type: 1
+  dmi.chassis.vendor: Bochs
+  dmi.modalias: dmi:bvnBochs:bvrBochs:bd01/01/2007:svnBochs:pnBochs:pvr:cvn=
+Bochs:ct1:cvr:
+  dmi.product.name: Bochs
+  dmi.sys.vendor: Bochs
+  ---=20
+  ApportVersion: 2.0.1-0ubuntu12
+  Architecture: i386
+  DistroRelease: Ubuntu 12.04
+  InstallationMedia: Ubuntu 10.10 "Maverick Meerkat" - Release i386 (201010=
+07)
+  Package: linux (not installed)
+  ProcEnviron:
+   TERM=3Dxterm
+   PATH=3D(custom, no user)
+   LANG=3Den_US.UTF-8
+   SHELL=3D/bin/bash
+  Tags:  precise running-unity
+  Uname: Linux 3.6.0-030600rc3-generic i686
+  UnreportableReason: The running kernel is not an Ubuntu kernel
+  UpgradeStatus: Upgraded to precise on 2012-08-30 (0 days ago)
+  UserGroups: adm admin cdrom dialout lpadmin plugdev sambashare
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/linux/+bug/1037606/+subscriptions
+
 
