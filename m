@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31FD4F45A08
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1908F45A0C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:23:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHQI-0000Xt-D3; Fri, 10 Apr 2026 15:21:46 -0400
+	id 1wBHR5-0004qT-BY; Fri, 10 Apr 2026 15:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHQ9-0008Lq-IJ
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:39 -0400
+ id 1wBHR4-0004qF-HZ
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:22:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHQ7-0001dN-Tw
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:37 -0400
+ id 1wBHR2-0001w8-EM
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:22:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775848895;
+ s=mimecast20190719; t=1775848951;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nlf2o8mRqacvDJSwzpHGOMMjfkTarzsBxasECZnZ52w=;
- b=SI2xdqCST6qvYRJ06ADo3p61qOaJFnVsGFAuAL9OKj4Tmo3oETNupjlIkm1vkIv9NoYT+K
- at1tc0q4mmKeeahZI0Rdlmwu7MqZ/DQ5WWxlT2QWmMKjV8HEpL/0OA2eA7/YLhHh1Nbt2e
- PIAJDQbYca7vzPtvYYwaba9C0ZVwJ2k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3LNuPoQo1Zb1a/2wcDI/iPeJu3JZHwmOC/OpCwhaFTQ=;
+ b=L8Mn3QbVrMBopm7lAwWYT/Ypg1hU/ErKTCDV5LSyAg/3FingizjGTG3zRwgKDe/8DFfV2E
+ 7qnSsnGaP/1tjxU2493Okd4Zt1FCnxfa4nQM4E3Jzj+Zvogu5MMeYVaXCvRgxW7kvmgkXL
+ Ll2sV8h8TWS6zQSS9YPcUsjaVzMhDAg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-iGkVYhm7Mp27tI82cdbnXw-1; Fri,
- 10 Apr 2026 15:21:31 -0400
-X-MC-Unique: iGkVYhm7Mp27tI82cdbnXw-1
-X-Mimecast-MFC-AGG-ID: iGkVYhm7Mp27tI82cdbnXw_1775848891
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-R2EfsumIOjOSDrNkEd6olQ-1; Fri,
+ 10 Apr 2026 15:22:28 -0400
+X-MC-Unique: R2EfsumIOjOSDrNkEd6olQ-1
+X-Mimecast-MFC-AGG-ID: R2EfsumIOjOSDrNkEd6olQ_1775848947
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0573B195609D; Fri, 10 Apr 2026 19:21:31 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CD981195608F; Fri, 10 Apr 2026 19:22:27 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB5E11800357; Fri, 10 Apr 2026 19:21:29 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A9E753000C16; Fri, 10 Apr 2026 19:22:26 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:18:48 +0400
-Subject: [PATCH v2 26/67] ui/console-vc: extract vt100_input() from
- vc_chr_write()
+Date: Fri, 10 Apr 2026 23:18:57 +0400
+Subject: [PATCH v2 35/67] ui: move DisplaySurface functions to
+ display-surface.c
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-26-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-35-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2581;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8074;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=TYkIOGSAidOPC1GAUAmf1ai1B20Ef3cKVdaaYTLqsSc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0UC+ZcTORFPunFNKAFArqyjf73drBZpEU6O
- PZgTCUA3QqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFAAKCRDa6OEJdZac
- 5d76EACknccvmeujT9lmEtJYNq5TH/2P28Av+Tfxl13hAFDh5fKsr1Zc8VthN9h4y/E7CqM92Hh
- PJYFcbtZrRYIhltxj/dKCstiB+kll0R40PG2jyNsTNDE886PXgX0LbC2dJZykKrYX++FVqW6RBX
- 6jPYMT5DLohLmRYSF+5SoyS6uVo+Uz98HvKFWNoYtiOtKpcS+5zFAGzCyKeFKbUXZIRN0sxCrMc
- MHqRy8MqaLSBtluQ+M1xwajPoimVHbEsRMqHTRImGDUTinEY0LA2VQg8dcaCcTDrrUqqowT3V/j
- +pKxCXCRmm311+O4jNIu5UwMAl7BTBmSctGO6MrvcvhiZnccsVDOGypIsfddB4NUOqRKQahM7F8
- WZ0Ze/xCV2ozfpur9cZ+2iXYAr1STvBaXDQ3F/kvBFqRpHzaxPVyAeqdMK0YetZqa9QtJbcBW0G
- 2Tpe8FOS7v9z423UCOnBDHNLkG66BdmlX7FZVlx06ilqiyLB9fYo1nV51e6hZiYQN7Ce9cItaoV
- I9naMIlfdsftN1gBt6z/JBhtRng270pBeMQZ4GgSwibU8l7Xms5nx+hkG4qaCnmhIsUSbLE6dRj
- a18bwhiD0PvkAGsVc2OaX0F15EK9XGD9fz81CorQX8FWWCWCPy/CVF6sZdTmRKIq6ZuSG/kdt1z
- uT10k5nel20LK6Q==
+ bh=ip6J6xhBFa1TM9CJ2RiUKz+3a5NwlbQbCiticjMAo+4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0VulXShd3rujT5uudBvVvm2e0/8h788nd6D
+ iZ/oBTI4xuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFQAKCRDa6OEJdZac
+ 5bgNEAC0C0YF6YMTJvLQqXbIEdYKE0ucWlk76Z1TualYN+GLQ+aHEOBeyWiwdDlRqCM+bYQQB0m
+ 47c1EdaZnTFzekLdYp7NHyG2gxDb+wQtsycZht+4DtNISwYzcp/hA09bz9o4vwOm7qxAoq1wLdS
+ a1RuJ1Rgi25i67t3ld/Cnwuc+BWmcF/xwRrTr3YvccQyrfgu4kYvO2V589biTFVrYdt1zFQEnlo
+ 3w4vDeLeUi7bpqwhHpYKd8CGryMzEPBBmSO9lrHsRepgL5xHg33xW+QVShSrWR4hNvh+lyUqt9G
+ iAqfc8DNU1EB0kWUYjV6n6W+NUM6IAPGTkny6ANCCFFEYgnZ9xdM+MrMncx2FJRZ0AC45isaRpR
+ G/ttn+liX6JTyqNkiGIyyX8jPeDxUBU8uG042w3C1mGbmCAJEXPNYK2iJldxTi0KHkHqkSutXVB
+ nup+ySJ4+c2XxzlfIkYpFOedjtXgz3b2IGJfBbuGiNzfkqebH+uZ/bX4hLEFSXjWN4ANmyKcuVH
+ mcKUjCsKRReOmX8REM48RyekGnjXc1xdvC6UWvZ1U0QK3jOJ+9MgOQLZQQA7HugPepU6N8PGJ7C
+ ABaxoCUZleW9jAB3kwRzdz7fmZEy1r4ZSZfIGmwHaf7ijOwz4It/ORbHEKe94e7XI4Ei07m6uvl
+ x7BhcudVKurSxwA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,75 +104,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the VT100 input processing logic out of vc_chr_write() into a new
-vt100_input() function that operates on QemuVT100 directly, rather than
-going through the Chardev/VCChardev layers. This continues the effort
-to decouple the VT100 emulation from the chardev backend, making the
-VT100 layer self-contained and reusable.
-
-vc_chr_write() becomes a thin wrapper that extracts the QemuVT100 from
-the chardev and delegates to vt100_input().
+Extract DisplaySurface creation and destruction functions from console.c
+into their own file to reduce the size of console.c and improve code
+organization.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ ui/console.c         |  96 ---------------------------------------------
+ ui/display-surface.c | 107 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ ui/meson.build       |   1 +
+ 3 files changed, 108 insertions(+), 96 deletions(-)
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 5cfb3dfcf72..15600128380 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -1057,29 +1057,35 @@ static void vt100_putchar(QemuVT100 *vt, int ch)
- DECLARE_INSTANCE_CHECKER(VCChardev, VC_CHARDEV,
-                          TYPE_CHARDEV_VC)
- 
--static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
-+static size_t vt100_input(QemuVT100 *vt, const uint8_t *buf, size_t len)
+diff --git a/ui/console.c b/ui/console.c
+index 7ffea2776ef..24794e5a9dc 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -507,102 +507,6 @@ qemu_graphic_console_init(Object *obj)
  {
--    VCChardev *drv = VC_CHARDEV(chr);
--    QemuTextConsole *s = drv->console;
-     int i;
- 
--    s->vt.update_x0 = s->vt.width * FONT_WIDTH;
--    s->vt.update_y0 = s->vt.height * FONT_HEIGHT;
--    s->vt.update_x1 = 0;
--    s->vt.update_y1 = 0;
--    vt100_show_cursor(&s->vt, 0);
-+    vt->update_x0 = vt->width * FONT_WIDTH;
-+    vt->update_y0 = vt->height * FONT_HEIGHT;
-+    vt->update_x1 = 0;
-+    vt->update_y1 = 0;
-+    vt100_show_cursor(vt, 0);
-     for(i = 0; i < len; i++) {
--        vt100_putchar(&s->vt, buf[i]);
-+        vt100_putchar(vt, buf[i]);
-     }
--    vt100_show_cursor(&s->vt, 1);
--    if (s->vt.update_x0 < s->vt.update_x1) {
--        vt100_image_update(&s->vt, s->vt.update_x0, s->vt.update_y0,
--                           s->vt.update_x1 - s->vt.update_x0,
--                           s->vt.update_y1 - s->vt.update_y0);
-+    vt100_show_cursor(vt, 1);
-+    if (vt->update_x0 < vt->update_x1) {
-+        vt100_image_update(vt, vt->update_x0, vt->update_y0,
-+                           vt->update_x1 - vt->update_x0,
-+                           vt->update_y1 - vt->update_y0);
-     }
-     return len;
  }
  
-+static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
-+{
-+    VCChardev *drv = VC_CHARDEV(chr);
-+    QemuTextConsole *s = drv->console;
+-void qemu_displaysurface_set_share_handle(DisplaySurface *surface,
+-                                          qemu_pixman_shareable handle,
+-                                          uint32_t offset)
+-{
+-    assert(surface->share_handle == SHAREABLE_NONE);
+-
+-    surface->share_handle = handle;
+-    surface->share_handle_offset = offset;
+-
+-}
+-
+-DisplaySurface *qemu_create_displaysurface(int width, int height)
+-{
+-    trace_displaysurface_create(width, height);
+-
+-    return qemu_create_displaysurface_from(
+-        width, height,
+-        PIXMAN_x8r8g8b8,
+-        width * 4, NULL
+-    );
+-}
+-
+-DisplaySurface *qemu_create_displaysurface_from(int width, int height,
+-                                                pixman_format_code_t format,
+-                                                int linesize, uint8_t *data)
+-{
+-    DisplaySurface *surface = g_new0(DisplaySurface, 1);
+-
+-    trace_displaysurface_create_from(surface, width, height, format);
+-    surface->share_handle = SHAREABLE_NONE;
+-
+-    if (data) {
+-        surface->image = pixman_image_create_bits(format,
+-                                                  width, height,
+-                                                  (void *)data, linesize);
+-    } else {
+-        qemu_pixman_image_new_shareable(&surface->image,
+-                                        &surface->share_handle,
+-                                        "displaysurface",
+-                                        format,
+-                                        width,
+-                                        height,
+-                                        linesize,
+-                                        &error_abort);
+-        surface->flags = QEMU_ALLOCATED_FLAG;
+-    }
+-
+-    assert(surface->image != NULL);
+-    return surface;
+-}
+-
+-DisplaySurface *qemu_create_displaysurface_pixman(pixman_image_t *image)
+-{
+-    DisplaySurface *surface = g_new0(DisplaySurface, 1);
+-
+-    trace_displaysurface_create_pixman(surface);
+-    surface->share_handle = SHAREABLE_NONE;
+-    surface->image = pixman_image_ref(image);
+-
+-    return surface;
+-}
+-
+-DisplaySurface *qemu_create_placeholder_surface(int w, int h,
+-                                                const char *msg)
+-{
+-    DisplaySurface *surface = qemu_create_displaysurface(w, h);
+-#ifdef CONFIG_PIXMAN
+-    pixman_color_t bg = QEMU_PIXMAN_COLOR_BLACK;
+-    pixman_color_t fg = QEMU_PIXMAN_COLOR_GRAY;
+-    pixman_image_t *glyph;
+-    int len, x, y, i;
+-
+-    len = strlen(msg);
+-    x = (w / FONT_WIDTH  - len) / 2;
+-    y = (h / FONT_HEIGHT - 1)   / 2;
+-    for (i = 0; i < len; i++) {
+-        glyph = qemu_pixman_glyph_from_vgafont(FONT_HEIGHT, vgafont16, msg[i]);
+-        qemu_pixman_glyph_render(glyph, surface->image, &fg, &bg,
+-                                 x+i, y, FONT_WIDTH, FONT_HEIGHT);
+-        qemu_pixman_image_unref(glyph);
+-    }
+-#endif
+-    surface->flags |= QEMU_PLACEHOLDER_FLAG;
+-    return surface;
+-}
+-
+-void qemu_free_displaysurface(DisplaySurface *surface)
+-{
+-    if (surface == NULL) {
+-        return;
+-    }
+-    trace_displaysurface_free(surface);
+-    qemu_pixman_image_unref(surface->image);
+-    g_free(surface);
+-}
+-
+ bool console_has_gl(QemuConsole *con)
+ {
+     return con->gl != NULL;
+diff --git a/ui/display-surface.c b/ui/display-surface.c
+new file mode 100644
+index 00000000000..38e408513cc
+--- /dev/null
++++ b/ui/display-surface.c
+@@ -0,0 +1,107 @@
++/*
++ * QEMU graphical console surface helper
++ *
++ * Copyright (c) 2004 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: MIT
++ */
++#include "qemu/osdep.h"
++#include "ui/console.h"
++#include "ui/vgafont.h"
++#include "trace.h"
 +
-+    return vt100_input(&s->vt, buf, len);
++void qemu_displaysurface_set_share_handle(DisplaySurface *surface,
++                                          qemu_pixman_shareable handle,
++                                          uint32_t offset)
++{
++    assert(surface->share_handle == SHAREABLE_NONE);
++
++    surface->share_handle = handle;
++    surface->share_handle_offset = offset;
++
 +}
 +
- void vt100_update_cursor(void)
- {
-     QemuVT100 *vt;
++DisplaySurface *qemu_create_displaysurface(int width, int height)
++{
++    trace_displaysurface_create(width, height);
++
++    return qemu_create_displaysurface_from(
++        width, height,
++        PIXMAN_x8r8g8b8,
++        width * 4, NULL
++    );
++}
++
++DisplaySurface *qemu_create_displaysurface_from(int width, int height,
++                                                pixman_format_code_t format,
++                                                int linesize, uint8_t *data)
++{
++    DisplaySurface *surface = g_new0(DisplaySurface, 1);
++
++    trace_displaysurface_create_from(surface, width, height, format);
++    surface->share_handle = SHAREABLE_NONE;
++
++    if (data) {
++        surface->image = pixman_image_create_bits(format,
++                                                  width, height,
++                                                  (void *)data, linesize);
++    } else {
++        qemu_pixman_image_new_shareable(&surface->image,
++                                        &surface->share_handle,
++                                        "displaysurface",
++                                        format,
++                                        width,
++                                        height,
++                                        linesize,
++                                        &error_abort);
++        surface->flags = QEMU_ALLOCATED_FLAG;
++    }
++
++    assert(surface->image != NULL);
++    return surface;
++}
++
++DisplaySurface *qemu_create_displaysurface_pixman(pixman_image_t *image)
++{
++    DisplaySurface *surface = g_new0(DisplaySurface, 1);
++
++    trace_displaysurface_create_pixman(surface);
++    surface->share_handle = SHAREABLE_NONE;
++    surface->image = pixman_image_ref(image);
++
++    return surface;
++}
++
++DisplaySurface *qemu_create_placeholder_surface(int w, int h,
++                                                const char *msg)
++{
++    DisplaySurface *surface = qemu_create_displaysurface(w, h);
++#ifdef CONFIG_PIXMAN
++    pixman_color_t bg = QEMU_PIXMAN_COLOR_BLACK;
++    pixman_color_t fg = QEMU_PIXMAN_COLOR_GRAY;
++    pixman_image_t *glyph;
++    int len, x, y, i;
++
++    len = strlen(msg);
++    x = (w / FONT_WIDTH  - len) / 2;
++    y = (h / FONT_HEIGHT - 1)   / 2;
++    for (i = 0; i < len; i++) {
++        glyph = qemu_pixman_glyph_from_vgafont(FONT_HEIGHT, vgafont16, msg[i]);
++        qemu_pixman_glyph_render(glyph, surface->image, &fg, &bg,
++                                 x + i, y, FONT_WIDTH, FONT_HEIGHT);
++        qemu_pixman_image_unref(glyph);
++    }
++#endif
++    surface->flags |= QEMU_PLACEHOLDER_FLAG;
++    return surface;
++}
++
++void qemu_free_displaysurface(DisplaySurface *surface)
++{
++    if (surface == NULL) {
++        return;
++    }
++    trace_displaysurface_free(surface);
++    qemu_pixman_image_unref(surface->image);
++    g_free(surface);
++}
+diff --git a/ui/meson.build b/ui/meson.build
+index 9ece6f262b6..bae6ea0d2dc 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -5,6 +5,7 @@ system_ss.add(files(
+   'console.c',
+   'cp437.c',
+   'cursor.c',
++  'display-surface.c',
+   'dmabuf.c',
+   'input-keymap.c',
+   'input-legacy.c',
 
 -- 
 2.53.0
