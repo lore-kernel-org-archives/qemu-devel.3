@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9AD5F45A08
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2DD7F45A0A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHOV-0003KO-E5; Fri, 10 Apr 2026 15:19:55 -0400
+	id 1wBHPE-0004zk-5Z; Fri, 10 Apr 2026 15:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHOT-0003I4-Uj
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:19:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wBHOy-0004jP-Qe
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHOQ-0000os-P5
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:19:53 -0400
+ id 1wBHOx-000189-2N
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775848790;
+ s=mimecast20190719; t=1775848822;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6JBJBMHZC9WLxuLQpDicTt3kZxJ/ySW/z8ibHRBORuU=;
- b=ND7uF6ERxR4UsjxhkTXj8JL4XDniNUHgVCOPDwT1Ch6085c0RWFEJYUrIyAP3xrVIFTU18
- K+2/YCZaKqmqph1pCAC6pY2V+Rkg9bsRoU7F6N0E14Vw2eX9GM6ZyeORXzSxKUoFEBWhrg
- i8jzvSOo/EmFaYGWk1np29GiB0JJb9c=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=f95ATmdiY5d94eUC7k7kUvpTiBIL3Lv55v1kPJaIGF4=;
+ b=YNrsQqX62UbvljsJx/WgIXnP3vcllvgU9TiyHRsiYFVQNcoYYVgFbKyvUmF6xB2GEVd1HA
+ 9Ueq+L/v+EmcPX8FT/levG2oL/cw6xgA19Gg3csd1BnXqkJq/marJsAmrM5Pi1lLKuLj0r
+ ag7NFbeca8pg+MarTRa1RND8BttI3/g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-VIKqXZvINTGcGzdkjfRi-Q-1; Fri,
- 10 Apr 2026 15:19:49 -0400
-X-MC-Unique: VIKqXZvINTGcGzdkjfRi-Q-1
-X-Mimecast-MFC-AGG-ID: VIKqXZvINTGcGzdkjfRi-Q_1775848788
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-WOBWvqk7NlqgHBfxx0W9aQ-1; Fri,
+ 10 Apr 2026 15:20:21 -0400
+X-MC-Unique: WOBWvqk7NlqgHBfxx0W9aQ-1
+X-Mimecast-MFC-AGG-ID: WOBWvqk7NlqgHBfxx0W9aQ_1775848820
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D0C81800454
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:19:48 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 497361800345; Fri, 10 Apr 2026 19:20:20 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5EB11801ACC; Fri, 10 Apr 2026 19:19:46 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1427D180049F; Fri, 10 Apr 2026 19:20:18 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:18:31 +0400
-Subject: [PATCH v2 09/67] ui/console-vc: add UTF-8 input decoding with
- CP437 rendering
+Date: Fri, 10 Apr 2026 23:18:36 +0400
+Subject: [PATCH v2 14/67] ui/console-vc: set vt100 associated pixman image
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-9-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-14-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=16632;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6225;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=KHIfXWQ7lGuS0EQV66aajAXrSG5dXvt2AmBHpq2kLlc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0UbNta3kieg0BaRmBxq0YIkIfm6sPC/+l0n
- t3T++lN10OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFAAKCRDa6OEJdZac
- 5a0RD/9MbkzkgsHfStRL+C2ubMORitwROzerdgkekGXOMB73iRftjLjxqxwpQ/dW6IpAj5z/LS1
- oIjE780gOYfm9MuV/127rhUQhSyi4IUJ7s1V/HbrDTCFMCxjlCkgd6S1oveqr3QOu9HnpuUdBlc
- 2CD06f8ztjtC9ZdscahGVCKzw44juRr+pEwJOHXFGOic/S9XvtwpMDQ5JMOgWop0+VcwV0fYNLh
- iuMLW1YRtzYO2ZR4652UMJ8wdLAJRKpoSZWetE4SDzIFB3Of4fNMQ3kTpZrakXgoV8zvOrjycaY
- 1npUAp3AG9ahVKQK0avxNms+Mp+c5/R1sa53vsaakDwoveWabjT0HdRI6Pa4ZRkS1Rm/tA96FCB
- jlGppczwQqotEPX0EL/FzCQkOwoW+noYVvXe0eDEBaUHF3LoflWQ9mIZMUIIHbxlLX/2oUbWe3p
- /nNWgyNcmmwAng/KivVAsfg8R22NPyQ+kvZr++Ro821Q9FECUey8EbrdXFQYYXEDV5sxTFpsqCf
- d46vSDFMqOMsAXGd446ZuF+uLkcEyuDPFF3ci6ZExrb0b6ekPwwkQFhu49hkXq6OdCHx+5CJdWh
- 4bSn63AdkHJOccF39wTWIxd1+zSajOR55zVh4otpchPPu+QzccDS5BV5qPN/nOAqecTsHEwtX5A
- HhSOd6WR/+sgAFw==
+ bh=Baw5rMs8bwBjzgkFxZfs9rC3Qi9crFdvgPbcJYPkFdA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0UiLQ1zmqXqirOk/DEQHM5sO+/yxLCRvOAn
+ TrGhwD62NyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFAAKCRDa6OEJdZac
+ 5SLDD/4y+k5xRbncqE5dUmjnNcGuf4ikWb1TZEM6+fmKPBOfgQYPLS/0Bm3lbKwYOC3mGLkt0K9
+ vp6kIOvdDzozBUzINWrrMnjaro5pMcmkCaTUYbNq79x0gJ58Uzcyxd65xH0SIDfUbDxVyalAeFj
+ tJUTB/4L6Oeq8c969Aa6bOchCtcsKPxdQ58R7MDjQ1jBTnZB/ig5EHi2eQTjKAhXE7o6fLG3N5Q
+ ztJwqfusyd1pejBsPzPIoPRvNOErPhFWvIwIgvZTKmBX5wGkfCh9xWd0q1N/qbHrtMhqeUsroCQ
+ xIKlRyYkUJ0g5jrZYUQBHquE15rkcx3g+77++tERVwJGTzPBkOlPlippATI8oTASv5bUhds9vGv
+ kswdu6zKwtzdkyOMbsn71JdpXVL0nmEIAD64JAOR7V6GyGTzErXuS9vDc6bqBIA106oOO+nGKva
+ z+lvGk35LV49TeAMwbLsKkONwMkO93nsNo6o3E3ur7hcRBnOGQPhdoB+SvZ82cMkBsh2qPBAixi
+ aVIYUq4mghHE1PX+jLQsT7cKjAil+mzw//+kh0uqgMhaHDABZFkkujHBFIXZUUFsXrQlr1A1eAl
+ d1aPYEkI+6IRzww0FjqMR5HNkoohmPZIP+wH5Zw99UfxpX3NaZGVPf7nua4ceuvTNwmv/dEDEJC
+ abYWqFPC0vGOYHQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -86,7 +85,7 @@ X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,363 +103,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The text console receives bytes that may be UTF-8 encoded (e.g. from
-a guest running a modern distro), but currently treats each byte as a
-raw character index into the VGA/CP437 font, producing garbled output
-for any multi-byte sequence.
+Start removing dependency on DisplaySurface for vt100 handling.
 
-Add a UTF-8 decoder using Bjoern Hoehrmann's DFA. The DFA inherently
-rejects overlong encodings, surrogates, and codepoints above U+10FFFF.
-Completed codepoints are then mapped to CP437, unmappable characters are
-displayed as '?'.
+Note that before, the rendering is done on the current DisplaySurface.
+It's not obvious the QemuTextConsole associated surface isn't changed
+over time, in particular if it was doing resize. But
+qemu_console_resize() is only implemented for QemuGraphicConsole.
 
-Note that QEMU has a "buffered" utf8 decoder in util/unicode.c, but
-it is not a good fit for byte-per-byte decoding.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/cp437.h      |  13 ++++
- ui/console-vc.c |  61 +++++++++++++++++
- ui/cp437.c      | 205 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- ui/meson.build  |   2 +-
- 4 files changed, 280 insertions(+), 1 deletion(-)
+ ui/console-vc.c | 54 +++++++++++++++++++++++++-----------------------------
+ 1 file changed, 25 insertions(+), 29 deletions(-)
 
-diff --git a/ui/cp437.h b/ui/cp437.h
-new file mode 100644
-index 00000000000..81ace8317c7
---- /dev/null
-+++ b/ui/cp437.h
-@@ -0,0 +1,13 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Copyright (c) QEMU contributors
-+ */
-+#ifndef QEMU_CP437_H
-+#define QEMU_CP437_H
-+
-+#include <stdint.h>
-+
-+int unicode_to_cp437(uint32_t codepoint);
-+
-+#endif /* QEMU_CP437_H */
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 8dee1f9bd01..d9d6966410a 100644
+index cc061dff769..267620689e4 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -9,6 +9,7 @@
- #include "qemu/fifo8.h"
- #include "qemu/option.h"
- #include "ui/console.h"
-+#include "ui/cp437.h"
+@@ -49,6 +49,8 @@ enum TTYState {
+ };
  
- #include "trace.h"
- #include "console-priv.h"
-@@ -89,6 +90,8 @@ struct VCChardev {
-     enum TTYState state;
-     int esc_params[MAX_ESC_PARAMS];
-     int nb_esc_params;
-+    uint32_t utf8_state;     /* UTF-8 DFA decoder state */
-+    uint32_t utf8_codepoint; /* accumulated UTF-8 code point */
-     TextAttributes t_attrib; /* currently active text attributes */
-     TextAttributes t_attrib_saved;
-     int x_saved, y_saved;
-@@ -598,6 +601,46 @@ static void vc_clear_xy(VCChardev *vc, int x, int y)
-     vc_update_xy(vc, x, y);
+ typedef struct QemuVT100 {
++    pixman_image_t *image;
++
+     int width;
+     int height;
+     int total_height;
+@@ -136,28 +138,22 @@ qemu_text_console_get_label(QemuConsole *c)
+     return tc->chr ? g_strdup(tc->chr->label) : NULL;
  }
  
-+/*
-+ * UTF-8 DFA decoder by Bjoern Hoehrmann.
-+ * Copyright (c) 2008-2010 Bjoern Hoehrmann <bjoern@hoehrmann.de>
-+ * See https://github.com/polijan/utf8_decode for details.
-+ *
-+ * SPDX-License-Identifier: MIT
-+ */
-+#define BH_UTF8_ACCEPT 0
-+#define BH_UTF8_REJECT 12
-+
-+static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
-+{
-+    static const uint8_t utf8d[] = {
-+        /* character class lookup */
-+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,  9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
-+        7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,  7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-+        8,8,2,2,2,2,2,2,2,2,2,2,2,2,2,2,  2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-+        10,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3, 11,6,6,6,5,8,8,8,8,8,8,8,8,8,8,8,
-+
-+        /* state transition lookup */
-+        0,12,24,36,60,96,84,12,12,12,48,72, 12,12,12,12,12,12,12,12,12,12,12,12,
-+        12, 0,12,12,12,12,12, 0,12, 0,12,12, 12,24,12,12,12,12,12,24,12,24,12,12,
-+        12,12,12,12,12,12,12,24,12,12,12,12, 12,24,12,12,12,12,12,12,12,24,12,12,
-+        12,12,12,12,12,12,12,36,12,36,12,12, 12,36,12,12,12,12,12,36,12,36,12,12,
-+        12,36,12,12,12,12,12,12,12,12,12,12,
-+    };
-+    uint32_t type = utf8d[byte];
-+
-+    *codep = (*state != BH_UTF8_ACCEPT) ?
-+        (byte & 0x3fu) | (*codep << 6) :
-+        (0xffu >> type) & (byte);
-+
-+    *state = utf8d[256 + *state + type];
-+    return *state;
-+}
-+
- static void vc_put_one(VCChardev *vc, int ch)
+-static void qemu_console_fill_rect(QemuConsole *con, int posx, int posy,
+-                                   int width, int height, pixman_color_t color)
++static void image_fill_rect(pixman_image_t *image, int posx, int posy,
++                            int width, int height, pixman_color_t color)
  {
-     QemuTextConsole *s = vc->console;
-@@ -761,6 +804,24 @@ static void vc_putchar(VCChardev *vc, int ch)
+-    DisplaySurface *surface = qemu_console_surface(con);
+     pixman_rectangle16_t rect = {
+         .x = posx, .y = posy, .width = width, .height = height
+     };
  
-     switch(vc->state) {
-     case TTY_STATE_NORM:
-+        /* Feed byte through the UTF-8 DFA decoder */
-+        if (ch >= 0x80) {
-+            switch (bh_utf8_decode(&vc->utf8_state, &vc->utf8_codepoint, ch)) {
-+            case BH_UTF8_ACCEPT:
-+                vc_put_one(vc, unicode_to_cp437(vc->utf8_codepoint));
-+                break;
-+            case BH_UTF8_REJECT:
-+                /* Reset state so the decoder can resync */
-+                vc->utf8_state = BH_UTF8_ACCEPT;
-+                break;
-+            default:
-+                /* Need more bytes */
-+                break;
-+            }
-+            break;
-+        }
-+        /* ASCII byte: abort any pending UTF-8 sequence */
-+        vc->utf8_state = BH_UTF8_ACCEPT;
-         switch(ch) {
-         case '\r':  /* carriage return */
-             s->x = 0;
-diff --git a/ui/cp437.c b/ui/cp437.c
-new file mode 100644
-index 00000000000..8ec38b73419
---- /dev/null
-+++ b/ui/cp437.c
-@@ -0,0 +1,205 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Copyright (c) QEMU contributors
-+ */
-+#include "qemu/osdep.h"
-+#include "cp437.h"
-+
-+/*
-+ * Unicode to CP437 page tables.
-+ *
-+ * Borrowed from the Linux kernel (fs/nls/nls_cp437.c, "Dual BSD/GPL"),
-+ * generated from the Unicode Organization tables (www.unicode.org).
-+ */
-+static const unsigned char uni2cp437_page00[256] = {
-+    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, /* 0x00-0x07 */
-+    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, /* 0x08-0x0f */
-+    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, /* 0x10-0x17 */
-+    0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, /* 0x18-0x1f */
-+    0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, /* 0x20-0x27 */
-+    0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, /* 0x28-0x2f */
-+    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, /* 0x30-0x37 */
-+    0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, /* 0x38-0x3f */
-+    0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, /* 0x40-0x47 */
-+    0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, /* 0x48-0x4f */
-+    0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, /* 0x50-0x57 */
-+    0x58, 0x59, 0x5a, 0x5b, 0x5c, 0x5d, 0x5e, 0x5f, /* 0x58-0x5f */
-+    0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, /* 0x60-0x67 */
-+    0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, /* 0x68-0x6f */
-+    0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, /* 0x70-0x77 */
-+    0x78, 0x79, 0x7a, 0x7b, 0x7c, 0x7d, 0x7e, 0x7f, /* 0x78-0x7f */
-+
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-+    0xff, 0xad, 0x9b, 0x9c, 0x00, 0x9d, 0x00, 0x00, /* 0xa0-0xa7 */
-+    0x00, 0x00, 0xa6, 0xae, 0xaa, 0x00, 0x00, 0x00, /* 0xa8-0xaf */
-+    0xf8, 0xf1, 0xfd, 0x00, 0x00, 0xe6, 0x00, 0xfa, /* 0xb0-0xb7 */
-+    0x00, 0x00, 0xa7, 0xaf, 0xac, 0xab, 0x00, 0xa8, /* 0xb8-0xbf */
-+    0x00, 0x00, 0x00, 0x00, 0x8e, 0x8f, 0x92, 0x80, /* 0xc0-0xc7 */
-+    0x00, 0x90, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xc8-0xcf */
-+    0x00, 0xa5, 0x00, 0x00, 0x00, 0x00, 0x99, 0x00, /* 0xd0-0xd7 */
-+    0x00, 0x00, 0x00, 0x00, 0x9a, 0x00, 0x00, 0xe1, /* 0xd8-0xdf */
-+    0x85, 0xa0, 0x83, 0x00, 0x84, 0x86, 0x91, 0x87, /* 0xe0-0xe7 */
-+    0x8a, 0x82, 0x88, 0x89, 0x8d, 0xa1, 0x8c, 0x8b, /* 0xe8-0xef */
-+    0x00, 0xa4, 0x95, 0xa2, 0x93, 0x00, 0x94, 0xf6, /* 0xf0-0xf7 */
-+    0x00, 0x97, 0xa3, 0x96, 0x81, 0x00, 0x00, 0x98, /* 0xf8-0xff */
-+};
-+
-+static const unsigned char uni2cp437_page01[256] = {
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x60-0x67 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x78-0x7f */
-+
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-+    0x00, 0x00, 0x9f, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-+};
-+
-+static const unsigned char uni2cp437_page03[256] = {
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x60-0x67 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x78-0x7f */
-+
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-+    0x00, 0x00, 0x00, 0xe2, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-+    0xe9, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-+    0x00, 0x00, 0x00, 0xe4, 0x00, 0x00, 0xe8, 0x00, /* 0xa0-0xa7 */
-+    0x00, 0xea, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xa8-0xaf */
-+    0x00, 0xe0, 0x00, 0x00, 0xeb, 0xee, 0x00, 0x00, /* 0xb0-0xb7 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xb8-0xbf */
-+    0xe3, 0x00, 0x00, 0xe5, 0xe7, 0x00, 0xed, 0x00, /* 0xc0-0xc7 */
-+};
-+
-+static const unsigned char uni2cp437_page20[256] = {
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x60-0x67 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, /* 0x78-0x7f */
-+
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x9e, /* 0xa0-0xa7 */
-+};
-+
-+static const unsigned char uni2cp437_page22[256] = {
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-+    0x00, 0xf9, 0xfb, 0x00, 0x00, 0x00, 0xec, 0x00, /* 0x18-0x1f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-+    0x00, 0xef, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-+    0xf7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-+    0x00, 0xf0, 0x00, 0x00, 0xf3, 0xf2, 0x00, 0x00, /* 0x60-0x67 */
-+};
-+
-+static const unsigned char uni2cp437_page23[256] = {
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-+    0xa9, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-+    0xf4, 0xf5, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-+};
-+
-+static const unsigned char uni2cp437_page25[256] = {
-+    0xc4, 0x00, 0xb3, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-+    0x00, 0x00, 0x00, 0x00, 0xda, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-+    0xbf, 0x00, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-+    0xd9, 0x00, 0x00, 0x00, 0xc3, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-+    0x00, 0x00, 0x00, 0x00, 0xb4, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-+    0x00, 0x00, 0x00, 0x00, 0xc2, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-+    0x00, 0x00, 0x00, 0x00, 0xc1, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-+    0x00, 0x00, 0x00, 0x00, 0xc5, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-+    0xcd, 0xba, 0xd5, 0xd6, 0xc9, 0xb8, 0xb7, 0xbb, /* 0x50-0x57 */
-+    0xd4, 0xd3, 0xc8, 0xbe, 0xbd, 0xbc, 0xc6, 0xc7, /* 0x58-0x5f */
-+    0xcc, 0xb5, 0xb6, 0xb9, 0xd1, 0xd2, 0xcb, 0xcf, /* 0x60-0x67 */
-+    0xd0, 0xca, 0xd8, 0xd7, 0xce, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x78-0x7f */
-+
-+    0xdf, 0x00, 0x00, 0x00, 0xdc, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-+    0xdb, 0x00, 0x00, 0x00, 0xdd, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-+    0xde, 0xb0, 0xb1, 0xb2, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-+    0xfe, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xa0-0xa7 */
-+};
-+
-+static const unsigned char *const uni2cp437_page[256] = {
-+    [0x00] = uni2cp437_page00, [0x01] = uni2cp437_page01,
-+    [0x03] = uni2cp437_page03, [0x20] = uni2cp437_page20,
-+    [0x22] = uni2cp437_page22, [0x23] = uni2cp437_page23,
-+    [0x25] = uni2cp437_page25,
-+};
-+
-+/*
-+ * Convert a Unicode code point to its CP437 equivalent for
-+ * rendering with the VGA font.
-+ * Returns '?' for characters that cannot be mapped.
-+ */
-+int unicode_to_cp437(uint32_t codepoint)
-+{
-+    const unsigned char *page;
-+    unsigned char hi = (codepoint >> 8) & 0xff;
-+    unsigned char lo = codepoint & 0xff;
-+
-+    if (codepoint > 0xffff) {
-+        return '?';
-+    }
-+
-+    page = uni2cp437_page[hi];
-+    if (page && page[lo]) {
-+        return page[lo];
-+    }
-+
-+    return '?';
-+}
-diff --git a/ui/meson.build b/ui/meson.build
-index 69404bca71a..d4d9312b98c 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -16,7 +16,7 @@ system_ss.add(files(
-   'ui-qmp-cmds.c',
-   'util.c',
- ))
--system_ss.add(when: pixman, if_true: files('console-vc.c'), if_false: files('console-vc-stubs.c'))
-+system_ss.add(when: pixman, if_true: files('console-vc.c', 'cp437.c'), if_false: files('console-vc-stubs.c'))
- if dbus_display
-   system_ss.add(files('dbus-module.c'))
- endif
+-    assert(surface);
+-    pixman_image_fill_rectangles(PIXMAN_OP_SRC, surface->image,
+-                                 &color, 1, &rect);
++    pixman_image_fill_rectangles(PIXMAN_OP_SRC, image, &color, 1, &rect);
+ }
+ 
+ /* copy from (xs, ys) to (xd, yd) a rectangle of size (w, h) */
+-static void qemu_console_bitblt(QemuConsole *con,
+-                                int xs, int ys, int xd, int yd, int w, int h)
++static void image_bitblt(pixman_image_t *image,
++                         int xs, int ys, int xd, int yd, int w, int h)
+ {
+-    DisplaySurface *surface = qemu_console_surface(con);
+-
+-    assert(surface);
+     pixman_image_composite(PIXMAN_OP_SRC,
+-                           surface->image, NULL, surface->image,
++                           image, NULL, image,
+                            xs, ys, 0, 0, xd, yd, w, h);
+ }
+ 
+@@ -165,10 +161,10 @@ static void vga_putcharxy(QemuConsole *s, int x, int y, int ch,
+                           TextAttributes *t_attrib)
+ {
+     static pixman_image_t *glyphs[256];
+-    DisplaySurface *surface = qemu_console_surface(s);
++    pixman_image_t *image = QEMU_TEXT_CONSOLE(s)->vt.image;
+     pixman_color_t fgcol, bgcol;
+ 
+-    assert(surface);
++    assert(image);
+     if (t_attrib->invers) {
+         bgcol = color_table_rgb[t_attrib->bold][t_attrib->fgcol];
+         fgcol = color_table_rgb[t_attrib->bold][t_attrib->bgcol];
+@@ -180,7 +176,7 @@ static void vga_putcharxy(QemuConsole *s, int x, int y, int ch,
+     if (!glyphs[ch]) {
+         glyphs[ch] = qemu_pixman_glyph_from_vgafont(FONT_HEIGHT, vgafont16, ch);
+     }
+-    qemu_pixman_glyph_render(glyphs[ch], surface->image,
++    qemu_pixman_glyph_render(glyphs[ch], image,
+                              &fgcol, &bgcol, x, y, FONT_WIDTH, FONT_HEIGHT);
+ }
+ 
+@@ -233,20 +229,20 @@ static void console_show_cursor(QemuTextConsole *s, int show)
+ 
+ static void console_refresh(QemuTextConsole *s)
+ {
+-    DisplaySurface *surface = qemu_console_surface(QEMU_CONSOLE(s));
+     QemuVT100 *vt = &s->vt;
+     TextCell *c;
+     int x, y, y1;
++    int w = pixman_image_get_width(vt->image);
++    int h = pixman_image_get_height(vt->image);
+ 
+-    assert(surface);
+     vt->text_x[0] = 0;
+     vt->text_y[0] = 0;
+     vt->text_x[1] = vt->width - 1;
+     vt->text_y[1] = vt->height - 1;
+     vt->cursor_invalidate = 1;
+ 
+-    qemu_console_fill_rect(QEMU_CONSOLE(s), 0, 0, surface_width(surface), surface_height(surface),
+-                           color_table_rgb[0][QEMU_COLOR_BLACK]);
++    image_fill_rect(vt->image, 0, 0, w, h,
++                    color_table_rgb[0][QEMU_COLOR_BLACK]);
+     y1 = vt->y_displayed;
+     for (y = 0; y < vt->height; y++) {
+         c = vt->cells + y1 * vt->width;
+@@ -260,8 +256,7 @@ static void console_refresh(QemuTextConsole *s)
+         }
+     }
+     console_show_cursor(s, 1);
+-    dpy_gfx_update(QEMU_CONSOLE(s), 0, 0,
+-                   surface_width(surface), surface_height(surface));
++    dpy_gfx_update(QEMU_CONSOLE(s), 0, 0, w, h);
+ }
+ 
+ static void console_scroll(QemuTextConsole *s, int ydelta)
+@@ -401,8 +396,9 @@ static void text_console_resize(QemuTextConsole *t)
+ 
+     assert(s->scanout.kind == SCANOUT_SURFACE);
+ 
+-    w = surface_width(s->surface) / FONT_WIDTH;
+-    h = surface_height(s->surface) / FONT_HEIGHT;
++    t->vt.image = s->surface->image;
++    w = pixman_image_get_width(t->vt.image) / FONT_WIDTH;
++    h = pixman_image_get_height(t->vt.image) / FONT_HEIGHT;
+     if (w == t->vt.width && h == t->vt.height) {
+         return;
+     }
+@@ -464,12 +460,12 @@ static void vc_put_lf(VCChardev *vc)
+             vt->text_x[1] = vt->width - 1;
+             vt->text_y[1] = vt->height - 1;
+ 
+-            qemu_console_bitblt(QEMU_CONSOLE(s), 0, FONT_HEIGHT, 0, 0,
+-                                vt->width * FONT_WIDTH,
+-                                (vt->height - 1) * FONT_HEIGHT);
+-            qemu_console_fill_rect(QEMU_CONSOLE(s), 0, (vt->height - 1) * FONT_HEIGHT,
+-                                   vt->width * FONT_WIDTH, FONT_HEIGHT,
+-                                   color_table_rgb[0][TEXT_ATTRIBUTES_DEFAULT.bgcol]);
++            image_bitblt(vt->image, 0, FONT_HEIGHT, 0, 0,
++                         vt->width * FONT_WIDTH,
++                         (vt->height - 1) * FONT_HEIGHT);
++            image_fill_rect(vt->image, 0, (vt->height - 1) * FONT_HEIGHT,
++                            vt->width * FONT_WIDTH, FONT_HEIGHT,
++                            color_table_rgb[0][TEXT_ATTRIBUTES_DEFAULT.bgcol]);
+             vt->update_x0 = 0;
+             vt->update_y0 = 0;
+             vt->update_x1 = vt->width * FONT_WIDTH;
 
 -- 
 2.53.0
