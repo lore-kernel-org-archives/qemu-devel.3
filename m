@@ -4,111 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52385E99052
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42692E99052
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 08:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB6ja-0005yX-CB; Fri, 10 Apr 2026 03:56:58 -0400
+	id 1wB705-00088c-4j; Fri, 10 Apr 2026 04:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wB6jZ-0005yH-Bn
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:56:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wB6jW-0004Tr-J4
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:56:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775807813;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F1g0itLpK4atu/TRh/SFG6m5vAPx388SgzqIeaV3NV0=;
- b=gXDuEWi6B9NXhfJIz4tgM3bU85qivjfXfyB/kkcXy+K8LH5gP+C4ea2UG8Q3SDmVmHnXm6
- Dk0d7Xgof+oUaE9JJCH3u547lNqIMzMwQ0luNXmkf7wJRmag+1Ktdce+Otre9va2LnYfey
- e82sDPp3oIDZJetlr5bZNYhxWXyiP/g=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-Sz_TybYhNPG0uf1wwcB00Q-1; Fri, 10 Apr 2026 03:56:51 -0400
-X-MC-Unique: Sz_TybYhNPG0uf1wwcB00Q-1
-X-Mimecast-MFC-AGG-ID: Sz_TybYhNPG0uf1wwcB00Q_1775807810
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43cff5bc312so1320939f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:56:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775807810; x=1776412610;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wB703-00088N-MX
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:13:59 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wB701-00005w-Vs
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:13:59 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-6505ef94043so1795203d50.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 01:13:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775808836; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ZCaj4yvCQM6FDuTwsIek1yRB4x0QsogbdV+diINavON49G3WDhl4Ndk23yeQmfQCaF
+ Ii9JQZr7QVFO0KQaSK/pTmA7OEWY74gGNEf/LLqcx8bp1DDFT2eenFgiombIFkT6h1aL
+ /x29BCO/J3f4GOZDlyMW72FqLEFnTExZFsal9qe3UqX9+57/mSmcMoGUJAymG2elj30o
+ R6W1t3cZjIub8hgmf2lXmY0uGvNAJeykcyWedpyL+jhVx346SVNuL8xOF3cX0pbku9AH
+ EIUUzI2V/tte34mwJfLp/pYW/VPDQcSNtR+z+ri2TOuZXtQeQXnB84v55P30EAxm7mpQ
+ LfEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=RvFO6UByEpB5iQ8gep8vaTkLyi+ZU0xgSFREu2ZZbP8=;
+ fh=VQTX0KcHLYp0W1xh5qMyMVzUksc/bNzicpit96Uxm2w=;
+ b=dx3fiOPXkFsofOrUv+1mqYAhOelxP0QXuzZoE5kMQTNVKhRjHqh98VU1a4v11bA4UZ
+ 4QwikexhtNCCgZIunONu2ad9nmPM9Tdnq15WZGJ4GxvwBAuW1pfTCwDVJcjY+mIyIy+o
+ OoroUzQFs5E/u3fzgCXNvL5vHPjwvfdTylSH+4KbbpolnqAFP/+A4YX0Yj3wrMI6rN1i
+ E3aoA23V62FE/QQ9tukZ9Zj9Irm6TBzrLNtkc6eG+jaGjaPBX4eqlS9mY5EASr+vIJiw
+ MPnZyZxOBNpvwrQiN9YNfySnNoxadhD+NczLFE77zze8qumnolLoEh/O/JCsQFV6gmqZ
+ I30g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1775808836; x=1776413636; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F1g0itLpK4atu/TRh/SFG6m5vAPx388SgzqIeaV3NV0=;
- b=PklC9f+Wr7vnw/fU19Uc5ngB7tU/d00jEUjNR4y3JycvA2dmQnrFoNPgsV8tC5n9+E
- Z7An9+KDRuuUj7Y6xaILeacLYYgp9/HUFDIiCbfuP0cq3ukh/zP4mNqeCmT3pkIMLbFK
- KwYoDJ/Iw5P9J/Xf/JBNbiYbI4L6UkFILr7bZ63kqIH4aYjPAOg4daHDrHV/3n2w4t5x
- eyCeBt2Gp2vXuc8o6kgZU060IA4pHfqZ4mE4M6V0jWOPl4q4ii14u6q0gcRCe0QKag/r
- 5RxZ6PxVGThshh1bKJ7l71ucqsw1QE9Tn+Hgylkl2rEFapwdxjF32lLDoyP+K6HxjOcp
- g1fQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJ9ObW3HMJGC25HvP6UEsjMZmFbmhFAILY1PoBZafEGpZoYSjSf0VZowCcZrQcPjbylC84/v16JTIr@nongnu.org
-X-Gm-Message-State: AOJu0YzbIIzxKFOgbFwa1lpu2NahP7bAgldvD+ounz1+fIYE4jeR51FO
- DGn8da557XnqzQF4mxr+F1btU29+KNqIM6z+GAeqaE+jYzI8u8GkD5SO7FNXPkBbYei4h7M7mEV
- z+OQ03PzsvTSrB7Mp6YwZ6lsJUHqxe/DWyJIAyoS5BxfiCNVcB31VO14d
-X-Gm-Gg: AeBDievYKanAYUhN8zXbVtwn+bIAPQFubtq1dAiFZuuxumERZLqvrs9wzzgZ8jG9DCx
- V5w0iRR9CGHeSmqmmH41D/8uTfkL+3Zx072D1nqEMZvsfo9epqoMMgQGwwL+OjYsnYwc/Vzpj1Y
- pkISZAD4rbmZjD2BiT7/eIyy+ONNGTEcaH/UcsmyJJ4X+V2PltwJrtn2V5xL1Y0u/I3I4D7Z6s+
- CUF0YnmCZ6aYhurCQlk/HI/eX6qAGU8Qfgf3o7YbMvivgvT6s3r73IePf7CrZPtUTJaosWIxzpT
- /lq4pxZZykYiY4LfTFizIkmM+zm+qbGDnHyhmD+zg3yRG5e5KdGgro/U/5dlD+UU7Z5iY5d1yaR
- Eu/aUytl9GQQp2yKghMRYxUvugOcDCw2AoCVS0+CP2aykZ7bXNojpWGA3stMlQsr0RIbmdA==
-X-Received: by 2002:a05:600c:8907:b0:485:445a:87d1 with SMTP id
- 5b1f17b1804b1-488d67d2cc5mr16435985e9.8.1775807810237; 
- Fri, 10 Apr 2026 00:56:50 -0700 (PDT)
-X-Received: by 2002:a05:600c:8907:b0:485:445a:87d1 with SMTP id
- 5b1f17b1804b1-488d67d2cc5mr16435775e9.8.1775807809783; 
- Fri, 10 Apr 2026 00:56:49 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d681ed50sm14465405e9.15.2026.04.10.00.56.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Apr 2026 00:56:49 -0700 (PDT)
-Message-ID: <24339c4e-0654-445e-8ed4-bbe192c83523@redhat.com>
-Date: Fri, 10 Apr 2026 09:56:47 +0200
+ bh=RvFO6UByEpB5iQ8gep8vaTkLyi+ZU0xgSFREu2ZZbP8=;
+ b=lMf39ox0ba33dlLSzpFlhV8t+7T1oIjHkQZY5RrggR1i68uO9QbHAIS6mptGJCIfXw
+ dy4y2+Ie+5TmnyYKcLUGiDNRBJV0lgvhcsMuOZn541KTs8vvQc+QeG26dRbYrmHzCa4W
+ lWKpetZNUcrmNZ5hTPZhIQsqm3u4FL+IHsrsrheX3z6k7qIFDw9uSODcXG22I4oOJNDF
+ xjcNxyW3NHuoo229eI0RM7dQ3YFhruqTWhgICL9KCFUhV1q5UhHqK/49KbJDk389BIgG
+ BtqFOtcq9MK92fkgDzVtrgrDXp318tkVtLGhJBtqdkF6g6ywGuE2+NztnfEryTMaB0VO
+ mzYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775808836; x=1776413636;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RvFO6UByEpB5iQ8gep8vaTkLyi+ZU0xgSFREu2ZZbP8=;
+ b=kM2tT9nHfiLU/t+qXjVGIZtV5wDj384NdKp/HHbkrh00Fj5iFYHIZgJMgYf3st0Eds
+ Ofl4WKVUhrASdUae2d5WIERP/uxhvcREIIqYcNliyb5C9yghsDoEbCnf5SdIBYKwnSYV
+ vXQJ2Zcn6VgrlMj0Ob4tUlBFJxK5M73UjfWWx+FJ7joTEayMMZtwpFcbmnbDWxCwZFSo
+ gdQZA6ITPWIqM24ANfRPIR4H7rpQBJOH5hrR1EKzQe1bpBkcptIlfXMQ8ZVUwTu3R0yy
+ aM8W1aLk/CoJDnFenWF50ONTIP8J7xC0EvgtCpBsH65GmNMvRPtsLbGBUaTkcxPG7DCP
+ /Ljg==
+X-Gm-Message-State: AOJu0Yzn4c6pdKHhmfqNWAJNbhzWqS4P/uYSg1qR8+aAFG+J0DWNy9+5
+ cQqX9j/V4AeAV5T3PCyDAVAZA45yio9aPufqMH1eI0Ich/vRuVbq24mAi5qpD4YyUSEeVBxKEcE
+ jpRwxpQtpKJAJmQuNT70le1k/JNJ0jUEMcxK4wI4JLw==
+X-Gm-Gg: AeBDieu4uYQiAq69C3oF88WZSR/3fmLMVmp/TNeJe0W4VJzujMojwBwRflENtT7u4uq
+ vy0TLUK4d5zS6uX+tN0cAQ3KwJYnmqaawtvB0dDZXefgWs1sU5P1ChGNKw30NdRBHorrc1BnByF
+ MA/2P+epEMorYF+AmVKBcNFBIyj+K85XafSurYRTCzGYNKZ+ehiCEXU3ZVgWA4ZNmfjYMkHNKoC
+ aQX9jtXaECnCIMdkpo/1PEkA+wx/1OZ8bl3R/Kqx9ikQ5ItUB1askGerT4fjHOp+xTyIVIzOIL/
+ uit4SylVVCiaaxENyWBCID6VPf5U0BAG4EUnvOh4111+txXduUOu5s6aQNHcfvH0C/A=
+X-Received: by 2002:a05:690e:484e:b0:651:8ba3:8787 with SMTP id
+ 956f58d0204a3-65198bdd966mr1306929d50.61.1775808836506; Fri, 10 Apr 2026
+ 01:13:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/11] hw/arm/smmuv3-accel: Implement "auto" value for
- "ssidsize"
-Content-Language: en-US
-To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,
- Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-References: <20260401010231.4166776-1-nathanc@nvidia.com>
- <20260401010231.4166776-8-nathanc@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260401010231.4166776-8-nathanc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20260408184228.44242-1-james.hilliard1@gmail.com>
+ <CAFEAcA_Jt3SmuTiLWxuVQuktAG=M5C-Ux7OYKcGwPUBSETegew@mail.gmail.com>
+ <CADvTj4rMoQi-ic=q=TJ5Dz6_GhHhR=JNhMoRhfKCFAuZzhUpzw@mail.gmail.com>
+ <CAFEAcA_JPnWh22zhb+ajr76oKtFRoCZSZpsVW51m08eWrMZS5w@mail.gmail.com>
+ <CADvTj4qUY6=b56LeHb+fZBEdvFPPR9dMFkYEjNhtN=BipOaEog@mail.gmail.com>
+In-Reply-To: <CADvTj4qUY6=b56LeHb+fZBEdvFPPR9dMFkYEjNhtN=BipOaEog@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Apr 2026 09:13:44 +0100
+X-Gm-Features: AQROBzBJ4JUIqcoLxp4Lg9Hta65TMVJrK5xyLcFa0sD8gDrLAisSgXDqLhkHStU
+Message-ID: <CAFEAcA9CT9KeO1qmNg6YaCnjmvDG3-jeSwTjP4EnUqg4Hh8fSg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/mips: keep k0 in sync with CP0_UserLocal
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,105 +119,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/1/26 3:02 AM, Nathan Chen wrote:
-> From: Nathan Chen <nathanc@nvidia.com>
+On Thu, 9 Apr 2026 at 22:00, James Hilliard <james.hilliard1@gmail.com> wro=
+te:
 >
-> Allow accelerated SMMUv3 SSID size property to be derived from host
-> IOMMU capabilities. Derive host values using IOMMU_GET_HW_INFO,
-> retrieving SSID size from IDR1. When the auto SSID size is resolved
-> to a non-zero value, PASID capability is advertised to the vIOMMU
-> and accelerated use cases such as Shared Virtual Addressing (SVA)
-> are supported.
+> On Thu, Apr 9, 2026 at 2:17=E2=80=AFPM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+> >
+> > On Thu, 9 Apr 2026 at 20:47, James Hilliard <james.hilliard1@gmail.com>=
+ wrote:
+> > > So this seems to be something used by the vendor SDK for Octeon1
+> > > but not Octeon2 and Octeon3 targets, kinda strange/annoying.
+> > >
+> > > I also found this:
+> > > https://lists.gnu.org/archive/html/qemu-devel/2011-08/msg02026.html
+> >
+> > Ah, nice find.
+> >
+> > > It's in the Octeon vendor kernel here looks like:
+> > > https://github.com/MarvellEmbeddedProcessors/Octeon-Linux-kernel-4.14=
+/blob/5c48e5031fbd86361e8185f6c530ffcfa5c9a60d/arch/mips/kernel/syscall.c#L=
+94-L96
+> >
+> > Mmm. We emulate the upstream kernel, not vendor forks, so
+> > we wouldn't want to set k0 here I think.
 >
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 14 ++++++++++++--
->  hw/arm/smmuv3.c       | 11 +++++------
->  2 files changed, 17 insertions(+), 8 deletions(-)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 9e7ec6a930..03393fd7ba 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -56,6 +56,13 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s,
->                                 FIELD_EX32(info->idr[3], IDR3, RIL));
->      }
->  
-> +    /* Update SSIDSIZE if auto from info */
-> +    if (s->ssidsize == SSID_SIZE_MODE_AUTO) {
-> +        /* Store for get_viommu_flags() to determine PASID support */
-> +        s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE,
-> +                               FIELD_EX32(info->idr[1], IDR1, SSIDSIZE));
-> +    }
-> +
->      accel->auto_finalised = true;
->  }
->  
-> @@ -828,7 +835,9 @@ static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
->      SMMUState *bs = opaque;
->      SMMUv3State *s = ARM_SMMUV3(bs);
->  
-> -    if (s->ssidsize > SSID_SIZE_MODE_0) {
-> +    if (s->ssidsize > SSID_SIZE_MODE_0 ||
-> +        (s->ssidsize == SSID_SIZE_MODE_AUTO &&
-maybe worth adding a short static inline helper pasid_is_supported(s)?
+> Yeah, I was trying to see if there was some sort of way to trivially
+> identify binaries that require this k0 support and autoenable a quirk
+> but I didn't find anything, maybe it would make sense to have a
+> separate runtime target for enabling this k0 quirk since it seems a
+> lot of octeon binaries require it?
 
-Eric
-> +         FIELD_EX32(s->idr[1], IDR1, SSIDSIZE))) {
->          flags |= VIOMMU_FLAG_PASID_SUPPORTED;
->      }
->      return flags;
-> @@ -952,7 +961,8 @@ void smmuv3_accel_init(SMMUv3State *s)
->      smmuv3_accel_as_init(s);
->  
->      if (s->ats == ON_OFF_AUTO_AUTO ||
-> -        s->ril == ON_OFF_AUTO_AUTO) {
-> +        s->ril == ON_OFF_AUTO_AUTO ||
-> +        s->ssidsize == SSID_SIZE_MODE_AUTO) {
->          s->s_accel->auto_mode = true;
->      }
->  }
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 74cc81ae32..67c499d22b 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -627,7 +627,10 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
->      }
->  
->      /* Multiple context descriptors require SubstreamID support */
-> -    if (s->ssidsize == SSID_SIZE_MODE_0 && STE_S1CDMAX(ste) != 0) {
-> +    if ((s->ssidsize == SSID_SIZE_MODE_0 ||
-> +         (s->ssidsize == SSID_SIZE_MODE_AUTO &&
-> +          !FIELD_EX32(s->idr[1], IDR1, SSIDSIZE))) &&
-> +        STE_S1CDMAX(ste) != 0) {
->          qemu_log_mask(LOG_UNIMP,
->                  "SMMUv3: multiple S1 context descriptors require SubstreamID support. "
->                  "Configure ssidsize > 0 (requires accel=on)\n");
-> @@ -1973,10 +1976,6 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->      }
->  #endif
->  
-> -    if (s->ssidsize == SSID_SIZE_MODE_AUTO) {
-> -        error_setg(errp, "ssidsize auto mode is not supported");
-> -        return false;
-> -    }
->      if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48) {
->          error_setg(errp, "QEMU SMMUv3 model only implements 44 and 48 bit"
->                     "OAS; other OasMode values are not supported");
-> @@ -2197,7 +2196,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
->          "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
->          "Valid range is 0-20, where 0 disables SubstreamID support. "
->          "Defaults to 0. A value greater than 0 is required to enable "
-> -        "PASID support. ssidsize=auto is not supported.");
-> +        "PASID support.");
->  }
->  
->  static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+We didn't add this 15 years ago, and my feeling is we still don't
+want to, because we track the mainline kernel. If an actual host
+kernel doesn't have a quirk to let these binaries run, we don't
+need one either.
 
+-- PMM
 
