@@ -4,95 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3819CE99064
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 09:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D00E9905D
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 09:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB8H5-0008Eh-Ph; Fri, 10 Apr 2026 05:35:39 -0400
+	id 1wB8Iq-0000mv-AX; Fri, 10 Apr 2026 05:37:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wB8H4-0008Cv-7x
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 05:35:38 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wB8H2-0001n6-Ob
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 05:35:38 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d02a71526so1090969f8f.3
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 02:35:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775813734; x=1776418534; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7C9hC6oP3HzpI0ngIK4XeOqugtTl46bkPiAd+X+8QzE=;
- b=nB6G94NDdNRuKgTn/tpMz447RkIRrfYFSAhRkwywhOJk5hmD+4x+/1spo0M05rBMcD
- D2luNtDQXc8wMR95U3n6zy/D4LdKWD0wdJpVq6qjR59fGclCTTFmgoXa8vQA7fTxKg+A
- JPXr1EwjGkRQaeC306a2zE6zjebl0pQjUjVED2Th4GRNOHGs9SQKbhPFsD2X0kPKAvtU
- MkP06ldVYC4DJpCLFAKFdNoemR96A2LJqbydrD+eeo/JBcXZbKd7/Q9zmJ2yb7J2ljPz
- yoM2SuwbQExFz95zNjr0WdenmOd4at7coBmy/NW1erI4E7+Jj1iKttILpY++4do3vd2b
- qQRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775813734; x=1776418534;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7C9hC6oP3HzpI0ngIK4XeOqugtTl46bkPiAd+X+8QzE=;
- b=WqzVB2v+t57cW1S223a7ToayRPySogNtKXTzaYAPr3B2VtUsSL9lrE2qkeo9B4u7vn
- zkK+QVVE7ViWCT/NRqrGTSgncot826w3PiFteFNGaj1nUrkdnIuffM6bViykV3vX15A5
- IfBcS7/JWgyGNPfJVN7gd+AYzMzXnf5idzKHUe3ZhM38nN5fIqbIO/qE8J993M4ngL7a
- ZXg087g6IM277+pzsqpnfcLzl70kQCVxEGnAZj7W6hWWAtHU7eeMpY53ZZY0TC0eddQa
- 38dGItWbXe+1iK3LdWL81kekXhJwubQWmAq9DEZfy6DjIUe9lzP2SHASLE7RzTt1rXRU
- g2AA==
-X-Gm-Message-State: AOJu0YxA76ckvf11LQCfLWl4+8j70hugwFhuW+iz4J6k3xJs+b5Y1mqt
- d2iOis5MepnrxRzOXhWCfsAeaMMOfgkDG4FxX9LWPUNx4JBwLpnLe+d15lSFvRc1zn8=
-X-Gm-Gg: AeBDiev2FLzbsMdfq6dcmoaNW/iJjbkDAuPu52jMmTF7aS5M6VeL5GJsTOU1L3XAid8
- m+89RVHool3Uf0rAr+0/prya69PnIUOAiGRn39BbMY30lUOpk65ZH3EZ15akXCWaJcDyECSAidN
- 1cHY19trzVSp2bASIXYQbRDQ5zRR3M6YPTKg5NkP3vfnIu34bbEENrLYXp2qB+R2/FavSTnaIV0
- LfXvy6XUWBofxNsi389eoWlg/9OKzQ4ylw446fr7Hb+DumUJIXoW8p7/inOtbfYFpXEbXnQMY4P
- WxMJT8oiNTcoiLykJ+pX+1TG8xO7fBsQ/qE8GN3akB5+eaYt+cSWwqVNb0J/DAXKtMi3ihwsGVP
- BN7j9wHuWL6Bu4QejOIhd5As4fwKoPJ6hsHsIannv3mwL2EeCyHU1ewsu1S6rin9M8roiawNylU
- q6lee/r0GSNsLw3CqcX9jgC+U=
-X-Received: by 2002:a05:6000:2408:b0:43d:1c75:db70 with SMTP id
- ffacd0b85a97d-43d642537a8mr3499576f8f.15.1775813734403; 
- Fri, 10 Apr 2026 02:35:34 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63ab84cdsm6186656f8f.0.2026.04.10.02.35.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Apr 2026 02:35:33 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 020CC5F830;
- Fri, 10 Apr 2026 10:35:33 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org,  Pedro Barbuda <pbarbuda@microsoft.com>,  Mohamed
- Mediouni <mohamed@unpredictable.fr>
-Subject: Re: [RFC PATCH 24/35] target/arm: remove event_register check from
- arm_cpu_has_work
-In-Reply-To: <CAFEAcA83X2v6iTQO-r-xp-sRku+KNQb56QhLtvgiCMpOxqFCyw@mail.gmail.com>
- (Peter Maydell's message of "Fri, 10 Apr 2026 09:47:36 +0100")
-References: <20260320130607.2071996-1-alex.bennee@linaro.org>
- <20260320130607.2071996-25-alex.bennee@linaro.org>
- <CAFEAcA83X2v6iTQO-r-xp-sRku+KNQb56QhLtvgiCMpOxqFCyw@mail.gmail.com>
-User-Agent: mu4e 1.14.1-pre1; emacs 30.1
-Date: Fri, 10 Apr 2026 10:35:32 +0100
-Message-ID: <87h5pjjgyj.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wB8In-0000mh-Ur
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 05:37:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wB8Ik-00021S-VG
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 05:37:25 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxFMG+xNhpg_IjAA--.52717S3;
+ Fri, 10 Apr 2026 17:37:02 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJAxHMKsxNhpP0RqAA--.4348S3;
+ Fri, 10 Apr 2026 17:36:52 +0800 (CST)
+Subject: Re: [PATCH] linux-user: fix usage of struct target_stat64 for
+ TARGET_LOONGARCH64 in syscall_defs.h
+To: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: laurent@vivier.eu, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Huacai Chen <chenhuacai@kernel.org>, bibo mao <maobibo@loongson.cn>,
+ xianglai li <lixianglai@loongson.cn>
+References: <CAFsMJvCLRw2Q=4muDNG1Ojj3oL+UgTrVzpYM6VULRvdFxgR=KA@mail.gmail.com>
+ <df1c484f-bc30-49d5-9928-de6e17dd2816@linaro.org>
+ <CAFsMJvDWFmMx2t+9JXmBsWP+8r0XZDP+LRm6bN9k8wF5b6CSLQ@mail.gmail.com>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <d56c0dd2-720a-2973-865d-c9d16b90b69f@loongson.cn>
+Date: Fri, 10 Apr 2026 17:38:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAFsMJvDWFmMx2t+9JXmBsWP+8r0XZDP+LRm6bN9k8wF5b6CSLQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJAxHMKsxNhpP0RqAA--.4348S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZF48GrWkZF43Cw4DJry7urX_yoW8ury3pF
+ WxCay2krW5JrW3Ca1DKFy7uFWYgrn3J345WrWjgr4Y9as0vry5tr40g3y5uFyDZayxCF4Y
+ 9r47C3sxWFWqyagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8xu
+ ctUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.135,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,59 +89,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Fri, 20 Mar 2026 at 13:16, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> The generation of events are not indications of work to be done and
->> importantly for the case of WFI instructions not a reason to wake up.
->> Remove the check.
+在 2026/4/9 下午8:14, Gyorgy Tamasi 写道:
+> Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
 >
-> But an event *is* a reason for WFE to wake up, which is why this
-> check is here. In particular, the thing that tells accel/tcg
-> that the CPU should come out of halt (via cpu_handle_halt())
-> is whether cpu_exec_halt / cpu_has_work returns true. If we
-> don't check the event register here then another CPU setting
-> the event register won't cause this one to come out of WFE.
+> Additional independent testing (bug + fix cases) is documented here -
+> see comments by sourav/@kishu279:
+> https://gitlab.com/qemu-project/qemu/-/work_items/3371
 
-So for the same-CPU case we do because we signal cpu_interrupt(cs,
-CPU_INTERRUPT_EXITTB) which is enough for has_work to return true but I
-can see the failure mode for cross-cpu SEV's when we kick all vCPUs in
-the helper would get stuck.
+Hi.
+Please note that QEMU is not compatible with ABI 1.0.
 
-> If we want to have WFE and WFI wakeup events to be separated
-> such that only WFE wakeup events resume a WFE and only
-> WFI wakeup events resume a WFI then we need to do something
-> more clever here, so that we track whether we're halted for
-> WFI, WFE, PSCI-power-off or whatever and our has_work function
-> can check the right condition.
+If you absolutely must use ABI 1.0, the branch below is the version we use.
+https://github.com/loongson/qemu/commits/9.2-tcg-old/
+  
+However, this branch is quite far from the mainline.
+The QEMU mainline follows the kernel mainline, and
+I believe this is the case for other architectures as well.
 
-I guess we can add a cpu->halt_reason? I've already had to add a
-cpu->waiting_for_event for arm_wfxt_timer_cb and I guess it would be
-better to generalise that.
+Thanks.
+Song Gao
+> On Wed, Apr 8, 2026 at 8:21 PM Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>> On 4/8/26 11:17 AM, Gyorgy Tamasi wrote:
+>>> In a 64bit LoongArch64 env (both TARGET_LOONGARCH and
+>>> TARGET_LOONGARCH64 are defined!) we can not use the struct
+>>> target_stat64 for data-transfer, since this struct target_stat64 is
+>>> defined for 32bit environments with its int-sized (4byte) st_*time
+>>> sec/nsec components.
+>>> The user side compiler headers of the LoongArch64 env uses long-sized
+>>> (8byte) st_*time sec/nsec components.
+>>>
+>>> (This is similar to the case of 32bit vs. 64bit RISCV: the original
+>>> code does not use struct target_stat64 in 64bit RISCV env, when both
+>>> TARGET_RISCV and TARGET_RISCV64 are defined.)
+>>>
+>>> This fix is important for LoongArch64 ABI1.0, where stat() is using an
+>>> fstatat syscall with this struct target_stat64, if its usage is
+>>> enabled.
+>>> (In case of LoongArch64 ABI2.0 stat() uses statx syscall, where this
+>>> problematic struct target_stat64 is not used, struct statx is correct
+>>> in the LoongArch64 env.)
+>>> See also: https://gitlab.com/qemu-project/qemu/-/work_items/3371
+>>>
+>>> Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+>>> ---
+>>>    linux-user/syscall_defs.h | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-> (Side question: are the only
-> cases where our arm CPUs halt WFE, WFI, power-off, or are
-> there any others I forgot about?)
-
-The only others I can find are debug events which all have their own
-logic (and we don't have "external" debug events modelled). YIELD is
-still a NOP and not really a sleep.
-
-> Incidentally, looking at the code above it will need fixing
-> for A-profile anyway, because a CPU in PSCI-power-off should
-> not be woken up by a WFE event. We get away with doing the
-> WFE event register check first because M-profile doesn't use
-> the PSCI powerdown stuff.
-
-Ok, that seals it.
-
->
-> thanks
-> -- PMM
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
