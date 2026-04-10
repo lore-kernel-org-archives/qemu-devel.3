@@ -4,81 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 043B8F459F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A7EBF459EF
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:40:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBEgI-0001KC-16; Fri, 10 Apr 2026 12:26:06 -0400
+	id 1wBEtv-0003W4-0R; Fri, 10 Apr 2026 12:40:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wBEgD-0001Jt-Ty
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:26:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wBEgB-0004hY-C4
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:26:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775838357;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=B80+ptspUNmcChHxTEZ62OeTsDOdbGlVshBRS3l5X+0=;
- b=TtzCl5XK8EgCudT65L5N3igo/WgNx/e3/2XRWCwarFD/9uw/fJOjXG7uIUh4n/E6wDDwZH
- CD+MR7KhM3nq7lq0xG18GvZFkBVkb5fIEgT16ombyFk6OR9KmNkmEYWC/3S9YLW39ZpEi6
- i91y3TmKE5N6XEin5y0KBEHCfw0fgSg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-DtlTV85MPVmdjgRLFh2HEA-1; Fri,
- 10 Apr 2026 12:25:53 -0400
-X-MC-Unique: DtlTV85MPVmdjgRLFh2HEA-1
-X-Mimecast-MFC-AGG-ID: DtlTV85MPVmdjgRLFh2HEA_1775838352
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 388261954235; Fri, 10 Apr 2026 16:25:52 +0000 (UTC)
-Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.101])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D13619560AB; Fri, 10 Apr 2026 16:25:45 +0000 (UTC)
-Date: Fri, 10 Apr 2026 17:25:42 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Christian Brauner <brauner@kernel.org>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 0/5] monitor: add dynamic QMP monitor hotplug support
-Message-ID: <adkkhkMdJxHY8rh-@redhat.com>
-References: <20260409-work-qmp-monitor-hotplug-v4-0-89c4fdf69df1@kernel.org>
- <adgBbHDDcEhh9LpQ@redhat.com>
- <20260410-kupfer-rosten-9d08af140e1a@brauner>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wBEtt-0003V2-C4
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:40:09 -0400
+Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wBEtr-0001UG-Uu
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:40:09 -0400
+Received: by mail-dl1-x1229.google.com with SMTP id
+ a92af1059eb24-128e4d0cc48so9754901c88.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 09:40:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775839206; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EytdkpRgKzCh4Nvd7uBNRbP3tvqofb3Un6jjUeMWGCUXrL6Rgr+lbuN+zu9TcVFiRL
+ ZW9AQVcPIQ26Necq0EmD9g2TVatSWJJKgUG2ds+B31Whf5rUU7ibq6P8h4nKczeCVEv5
+ 54Z/RVyaRzzr6cKcdPXCJErpNOHzi7kFCSeout4kp9YjQowi5g1LCE/qovtQI8VxE3ld
+ +uVjLS3hg9ItCapURhqdt6K7TAdOaKcsXV2UsIvzP4DYKMEWjn2tIXojgisT5kKJuhQF
+ 2xsuJCCNx+AGE+5kPwp1stJMeQ1vK5rN68qFRl0k8BpqOOVcp67Bz2mSD894Wk9X+Tnp
+ 0jlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=RGq+f38wc8zNWMr6JH5/h+rGv5DrH1N3XDMiUobDA8o=;
+ fh=5hm2zad6FptwkTwuMlIAmgfHff93FWjTkPTDKWpG3ZQ=;
+ b=PQC2md2N3jtkn2RZnSRd2H2NAtFvMbKIOz2sh87vJlRRoFKpNDwUHyon17JVntdSST
+ qOsUwijigCcaJSdzLKu7x8418ZE9WYEBDWFnr+rTDoUYGGMfsP+FTTRvUsK6otbk0sCM
+ 2ifAB1nVbvLNkDmmXlI5d+E8MKuh3pfRMPOjwPeDRjvFN7E7Jx13M4sP/csFUiw/zXUJ
+ d52WLXsYsRlYxm2lEODQetI+KEcsKX5o1+jXprCQ4u7ZNKOdCW92nsX4WAxp5wbGlsgg
+ HONSDyYZRLX5U+FglsrgvbeRx4INcCRUKEYbvaIqMq+Pw8qC4Qlg+Gf01Z3VIsIHUMR/
+ oSzQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775839206; x=1776444006; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RGq+f38wc8zNWMr6JH5/h+rGv5DrH1N3XDMiUobDA8o=;
+ b=QO0vnyN9H5ZM/arQamHrjOD0J2n7C9CMtqoNJLzuyOjMwA80kXTWm+vO6FON+wF9dL
+ ot/wj2M71bC8bZIRK2IshWeP1Xzi0KezI9nQpMdFQrszd49WatjXCzbT4d2pkO/6z7Fy
+ /OuwE8za/KXrw57/1xWvO7ChaYX7SAWzhBW7UCvievKnkqsVnStEhJEpPDl1YYyzKQH6
+ UvNW4UaEZM6x3a6NnFcJdI+cWkXSqrGcSUShNjDEZetuV2a65D552T9lWHUNJsVzTnv/
+ ouW3rHRgeQHLcmRiBzHPnrsUPaKkvK5OdHncjKT6rhonwOFpMMEBp7E495dn4kOePlUM
+ xvaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775839206; x=1776444006;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RGq+f38wc8zNWMr6JH5/h+rGv5DrH1N3XDMiUobDA8o=;
+ b=SzLpZyL7jPZe1S5Yj6chyUwl+Ym+HJu/BV4/vBKU22htC+UVR23G0XducjjomxuknB
+ +0vJ3mLiIImy4r0Yl8rfQl9R2chFR0cDXq+0jGZB/lIviexHq3lOO62OsPKA3yyo6LfT
+ 63KiyvV/bEKCgpePEEO6D/0XFA5+/3aeBF1KcG0z2GNAc/+VpycGx1jYwSv3Za7IKwfr
+ Sy6EtmavBZ5+sqJGS63ug1GXMSllMfEsLkzZshoqFJ9qjrmhogoadK4IU83Cm31k2A6N
+ RAxMsAfGCy2BTgmRL0ULnXYrzIG4pPROf3Wpu8Lm8f+W3b0tOOQxc5o9LbhTyFp668QR
+ XLuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjjAR8IZFaZ7h9QSD6vCr3AFWFK/VJlBR18qmBNW0xIEPdCZbS0ocwGues+//pErhSQ6h4kTpRwlkt@nongnu.org
+X-Gm-Message-State: AOJu0YzhFzSj7F6KX6bQnB3GD7IDPoqnv4hJZhhREJDsILTmompIJnhK
+ BmJLept8/DZJhiEuTuvIQx6edhb5jdAjxVhNTdTns1XtuNhFS9XFNjtxuduDd3HW4frpZSn3xcF
+ cKOAxN8U75SJ5WbT/zj+jSW0eu0MkkSs=
+X-Gm-Gg: AeBDiesuG4WjGe4KyIWwMCl2O30RfIM3APZF+2NEo7jtIrXbXE1M4/nccMFwHFsZtEZ
+ 0RAAnpjFnv9PN8mIVPML1i6r+XoP4EB8Vyw1WRBG7MOUU3xDEWU68w2X2hcgurqSJyYakqZszFx
+ z/3hDoVvLz49W29Vh36wpqD1mv0fEqfewdBrhhZNVuPAvU2Ie8I8sUlJ0X2/FvJm2bmlDTZHEUP
+ OC2HPrsOLR9w0TRzUFHbV2DMmZ5KL5HdiJnKaNOfL3OFAdBWNOkIuvFpd9OjOJd0WO/vBwUl4U7
+ AEj0jrImC7qxHQcVLJfuor/tpEK0s2c7B08OOo4Y
+X-Received: by 2002:a05:7300:d183:b0:2d6:526c:55cc with SMTP id
+ 5a478bee46e88-2d6526c5736mr831953eec.6.1775839205757; Fri, 10 Apr 2026
+ 09:40:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260410-kupfer-rosten-9d08af140e1a@brauner>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260406141735.25844-1-armenon@redhat.com>
+ <20260406141735.25844-7-armenon@redhat.com>
+ <CAMxuvaw1Zaui2mSw2o6M6OzC7vnwN8CW1hgnZEtz1BiZmsT1kg@mail.gmail.com>
+ <adkLu8uBy_Lkfrop@fedora>
+In-Reply-To: <adkLu8uBy_Lkfrop@fedora>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Fri, 10 Apr 2026 20:39:52 +0400
+X-Gm-Features: AQROBzAS8AP9d0wjZZK5pETBfJHdET4xg3dAA3jQMRaxQ9bI0yAuMlDJIep-9jM
+Message-ID: <CAJ+F1C+fHg8b9-=uWe22ptQNAvyW01ehCpSofoCcMxrJsZ9Dyw@mail.gmail.com>
+Subject: Re: [PATCH v3 06/10] hw/tpm: Add support for VM migration with TPM
+ CRB chunking
+To: Arun Menon <armenon@redhat.com>
+Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>, qemu-devel@nongnu.org, 
+ Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,124 +125,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 10, 2026 at 09:36:02AM +0200, Christian Brauner wrote:
-> On Thu, Apr 09, 2026 at 08:43:40PM +0100, Daniel P. Berrangé wrote:
-> > On Thu, Apr 09, 2026 at 09:18:17AM +0200, Christian Brauner wrote:
-> > > QEMU supports runtime hotplug for chardevs, devices, block backends,
-> > > and netdevs. Monitors are the only major subsystem that lacks this --
-> > > all QMP monitors must be configured at launch via -mon or -qmp CLI
-> > > options.
-> > > 
-> > > This series adds monitor-add, monitor-remove, and query-monitors QMP
-> > > commands so that management tools can create independent QMP sessions
-> > > on demand at runtime.
-> > 
-> > There's nothing inherently wrong with your proposal. It is following
-> > the standard historical design practice we've taken for enabling
-> > hotplug/unplug of all the other backend types. Conceptually though
-> > our historical practice is more of an accident of evolution rather
-> > than an ideal state.
-> > 
-> > By this I mean we have a general purpose object framework
-> > internally and commands '-object', and 'object_add' / 'object_del'
-> > for hotplug/unplug in QMP and HMP. Conceptually these could handle
-> > all of our objects, devices, netdev chardevs, monitors, etc, etc,
-> > removing the need for the specialized add/remove QMP commands for
-> > each backend type, and the specialized CLI argsf. 
-> 
-> If you actually plan on converting old types you're now left with two
-> ways of adding objects. And if you plan on ultimately deprecating the
-> old format it's going to be very annoying to fade those out.
+Hi
 
-We have two ways to dealing with this.
+On Fri, Apr 10, 2026 at 6:41=E2=80=AFPM Arun Menon <armenon@redhat.com> wro=
+te:
+>
+> However, I am a bit confused on the order of precedence of this variable.
+> From what I understand, the device initialization happens first ->
+> followed by the compat properties
+>
+> So,
+> "DEFINE_PROP_BOOL("migrate-buffers", CRBState, migrate_buffers, true)"
+> gets executed first setting it to true by default and then, the compat
+> property is applied,
+> "GlobalProperty hw_compat_11_0[] =3D {
+>     { "tpm-crb", "migrate-buffers", "off"},
+> }"
+> setting it to false.
+>
+> When is the user provided command line argument parsed?
+> For example launching qemu using:
+>     -machine pc-11.0
+>     -device tpm-crb,tpmdev=3Dtpm0,cap-chunk=3Don
+>
+> Is it set in the end? In the above example, the user explicitly set
+> cap-chunk to true whereas the migrate-buffers default value is false.
 
-A formal deprecation & removal process which lets us fully
-kill off the old way of doing things across 3 releases (1
-year).
+Iirc, user specified property takes precedence over compat properties.
 
-  https://www.qemu.org/docs/master/about/deprecated.html
+> Therefore we end up with the following scenario.
+> Since chunking is supported, the guest writes a large command in the
+> buffer. The user then decides to migrate the VM. QEMU sees that
+> migrate-buffer is off, so it does not migrate the buffers. When the VM
+> resumes on the destination host, it will find the buffers empty.
 
-We use that alot, but for something as fundamental as the
-monitor I don't think we would take that route as the
-impact on users is too great. Instead we would follow the
-approach of preserving the existing CLI arg and internally
-rewriting it to the new syntax. So we only have one (new)
-code path internally, except for a thin shim as the CLI
-layer for conversion which has minimal long term burden on
-maintainers.
+>
+> Therefore, we need to stop migration if cap-chunk is enabled but
+> migrate-buffers is disabled. Please guide.
 
-Eventually we're likely to have a clean compat back with
-new binaries, where we can drop all the legacy cruft from
-the CLI.
+Yes, if cap-chunk is enabled but migrate-buffer is off (compat 11.0),
+there should be a migration blocker.
 
-> > The blocker has been lack of time to convert everything/anything,
-> > since while the conversions are not especially difficult they are
-> > certainly time consuming due to the sheer number of types that
-> > exist in many cases.
-> > 
-> > 
-> > I'm thinking the monitor, however, is a decent opportunity to
-> > "do the right thing" from a design POV. We only have three classes
-> > needed in QOM, the monitor generic base class, a HMP subclass and
-> > a QMP subclass.
-> > 
-> > If we convert QMP/HMP into QOM objects, we could then use the
-> > pre-existing object_add/object_del commands in both HMP and QMP.
-> > 
-> > I'm not asking you to do that conversion work though. I've
-> > been doing some experimentation myself today to test the
-> > viability of this idea and it looks promising.
-> 
-> How difficult is this to do? I've had bad experiences with projects
-> promising to do it all very differently and taking the patch away from
-> me and then not following through or like 2 years later or the feature
-> just vanished into nothing. I'm not saying this is the case here but I'm
-> a bit weary of not having any way to move this forward myself other than
-> "any news on this?" mails. It's frustrating for both sides.
-> 
-> So if this is doable just give me what you got and let me see whether I
-> can take it over the finish line.
 
-I've just posted a series which gets it as far as being able to
-use -object and object_add.  I don't want your use case to be
-delayed indefinitely - whichever design & impl, I'd want something
-to be mergeable for the next schedule release. 
-
-> Also, I really dislike spending a lot of time understanding something
-> and it all working and then being told "actually, let me do this". I
-> avoid this like the plague doing this to developers in the kernel.
-
-I'm sorry I didn't notice your series when it was the v1 posting,
-as I would have liked to raise this idea earlier. It is delicate
-balancing act between being accessible to new contributions, vs
-trying to align with longer term design preferences.
-
-> > Given we've got an entire 4 month dev cycle before these
-> > proposed monitor-add/remove commands could get into a QEMU
-> > release, I think it is worth trialling the QOM conversion
-> > for a short while.
-> 
-> I'm not sure what your governance model is so I'm just going to ask: Is
-> this just a review or is this a project level decision?
-
-This is just my design opinion as one of many QEMU maintainers,
-albeit informed by many historical discussions on this topic.
-
-Ultimately nothing is final until a patch series is accepted
-and queued by a maintainer.
-
-Hopefully others will give some input - I'm especialy looking
-at Markus (CCd) for this as our QAPI & QMP design expert/maintainer.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
