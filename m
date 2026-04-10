@@ -4,108 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A7EBF459EF
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE00F459F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBEtv-0003W4-0R; Fri, 10 Apr 2026 12:40:11 -0400
+	id 1wBEvr-00040q-Rb; Fri, 10 Apr 2026 12:42:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wBEtt-0003V2-C4
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:40:09 -0400
-Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
+ id 1wBEvh-00040I-MK
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:42:06 -0400
+Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wBEtr-0001UG-Uu
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:40:09 -0400
-Received: by mail-dl1-x1229.google.com with SMTP id
- a92af1059eb24-128e4d0cc48so9754901c88.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 09:40:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775839206; cv=none;
+ id 1wBEvg-00039n-4n
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:42:01 -0400
+Received: by mail-dl1-x1234.google.com with SMTP id
+ a92af1059eb24-128b9b7e3edso468226c88.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 09:41:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775839318; cv=none;
  d=google.com; s=arc-20240605;
- b=EytdkpRgKzCh4Nvd7uBNRbP3tvqofb3Un6jjUeMWGCUXrL6Rgr+lbuN+zu9TcVFiRL
- ZW9AQVcPIQ26Necq0EmD9g2TVatSWJJKgUG2ds+B31Whf5rUU7ibq6P8h4nKczeCVEv5
- 54Z/RVyaRzzr6cKcdPXCJErpNOHzi7kFCSeout4kp9YjQowi5g1LCE/qovtQI8VxE3ld
- +uVjLS3hg9ItCapURhqdt6K7TAdOaKcsXV2UsIvzP4DYKMEWjn2tIXojgisT5kKJuhQF
- 2xsuJCCNx+AGE+5kPwp1stJMeQ1vK5rN68qFRl0k8BpqOOVcp67Bz2mSD894Wk9X+Tnp
- 0jlg==
+ b=AdaZm1RCn8IdyyCOO3pKYj1DxavX/jBqOmoBwFvb9bs9sp9sdctJCQb+IDnnY++qph
+ swYk1CALT2afJS8FfY3qCp0PJiJx+vzAECogJLUUpqkY5DLiniOkhOBhsc5LNYQs9mYj
+ JFNiRxZ8lqALxmASMjgYb0mS9sUPT7RZv47RmrJ1c2Aa6gK4rArHXsOP3Z4niG2HQ46C
+ YMbsnwOI5lN/OHL+gcAIaXxGvAGSlbXu8ryh/s03VvDU37B8gUghhugF1fJt1lVRA2S4
+ q+djgF461s6NbC5Ri3ZtTGoWQb7MZCJubVzJjyuEpBP/g3SU+avCOAzYPGEP3vLpfudQ
+ eRsQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=RGq+f38wc8zNWMr6JH5/h+rGv5DrH1N3XDMiUobDA8o=;
- fh=5hm2zad6FptwkTwuMlIAmgfHff93FWjTkPTDKWpG3ZQ=;
- b=PQC2md2N3jtkn2RZnSRd2H2NAtFvMbKIOz2sh87vJlRRoFKpNDwUHyon17JVntdSST
- qOsUwijigCcaJSdzLKu7x8418ZE9WYEBDWFnr+rTDoUYGGMfsP+FTTRvUsK6otbk0sCM
- 2ifAB1nVbvLNkDmmXlI5d+E8MKuh3pfRMPOjwPeDRjvFN7E7Jx13M4sP/csFUiw/zXUJ
- d52WLXsYsRlYxm2lEODQetI+KEcsKX5o1+jXprCQ4u7ZNKOdCW92nsX4WAxp5wbGlsgg
- HONSDyYZRLX5U+FglsrgvbeRx4INcCRUKEYbvaIqMq+Pw8qC4Qlg+Gf01Z3VIsIHUMR/
- oSzQ==; darn=nongnu.org
+ bh=bvesXMpz50kHTUEcp/X0NnnqvOyncblvdLWc0DfGMwU=;
+ fh=1U4GF0oLWQ/Y6af78tK/MyKxzL//5ocgILtxHMzYyAA=;
+ b=LnTcMYdmTPrnqmheCGJXtD9BmXsx2P96uuWIBCilGcVCwdkspLXWCvTaNubBlapCwe
+ KGicipo/prifECJLLWvaMfRRbKgf+pExAQVgYJ/O5wYFe69QhEWMQEWbascDEAFLHd/+
+ hNe96BMNb7bJLL/+o8FHr1WG6g2C3xvK0wBMFxvyAbLwDi+h+AgWSf6q/Axcv1ArVFSt
+ aZJ9y+GGzCBCW3StkWKRLL+K7yvCsAFHXv9MoAo7ZcdNwRvGdUahpVCXwu92eY5edZ1A
+ RU6QzRCOpNxg+LroKh7lSFfeuVuvMQFSrC44jxwGt7kb6J44Y4CoooxQN6l4zuI09RDX
+ FeIA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775839206; x=1776444006; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775839318; x=1776444118; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RGq+f38wc8zNWMr6JH5/h+rGv5DrH1N3XDMiUobDA8o=;
- b=QO0vnyN9H5ZM/arQamHrjOD0J2n7C9CMtqoNJLzuyOjMwA80kXTWm+vO6FON+wF9dL
- ot/wj2M71bC8bZIRK2IshWeP1Xzi0KezI9nQpMdFQrszd49WatjXCzbT4d2pkO/6z7Fy
- /OuwE8za/KXrw57/1xWvO7ChaYX7SAWzhBW7UCvievKnkqsVnStEhJEpPDl1YYyzKQH6
- UvNW4UaEZM6x3a6NnFcJdI+cWkXSqrGcSUShNjDEZetuV2a65D552T9lWHUNJsVzTnv/
- ouW3rHRgeQHLcmRiBzHPnrsUPaKkvK5OdHncjKT6rhonwOFpMMEBp7E495dn4kOePlUM
- xvaw==
+ bh=bvesXMpz50kHTUEcp/X0NnnqvOyncblvdLWc0DfGMwU=;
+ b=mDlrLiX8xqNrWSE86+tRXVg1IiZSqTOagg/c9STeM1i8DLWl681Gipwpqz98MNHFw2
+ Tv5T05TvTFp8rWu8VS87sZ04UVajThi1hU3M2EBbMtxW80SZxq92yh4H42ZzFUeGgHfK
+ YWJwUxgnFbesN75CitNOFzYT7RNk9ep5Ccqv4dF9vUgt2v9tHfM92T0aDLtxVXe7z3EZ
+ j90KZ9vA+wZy7eSjaLwYNeIJgh9XeAkxaX1gJiCeUOtKEkhk8yXJRllv7rRgo+eEcyz7
+ 6qBGBSns/T7vJL+YAyfDX+BY2D1nBc7kfM2kH6A6o9YSDLxxsBSyFTS47EHyCK7E4yiu
+ /TmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775839206; x=1776444006;
+ d=1e100.net; s=20251104; t=1775839318; x=1776444118;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RGq+f38wc8zNWMr6JH5/h+rGv5DrH1N3XDMiUobDA8o=;
- b=SzLpZyL7jPZe1S5Yj6chyUwl+Ym+HJu/BV4/vBKU22htC+UVR23G0XducjjomxuknB
- +0vJ3mLiIImy4r0Yl8rfQl9R2chFR0cDXq+0jGZB/lIviexHq3lOO62OsPKA3yyo6LfT
- 63KiyvV/bEKCgpePEEO6D/0XFA5+/3aeBF1KcG0z2GNAc/+VpycGx1jYwSv3Za7IKwfr
- Sy6EtmavBZ5+sqJGS63ug1GXMSllMfEsLkzZshoqFJ9qjrmhogoadK4IU83Cm31k2A6N
- RAxMsAfGCy2BTgmRL0ULnXYrzIG4pPROf3Wpu8Lm8f+W3b0tOOQxc5o9LbhTyFp668QR
- XLuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjjAR8IZFaZ7h9QSD6vCr3AFWFK/VJlBR18qmBNW0xIEPdCZbS0ocwGues+//pErhSQ6h4kTpRwlkt@nongnu.org
-X-Gm-Message-State: AOJu0YzhFzSj7F6KX6bQnB3GD7IDPoqnv4hJZhhREJDsILTmompIJnhK
- BmJLept8/DZJhiEuTuvIQx6edhb5jdAjxVhNTdTns1XtuNhFS9XFNjtxuduDd3HW4frpZSn3xcF
- cKOAxN8U75SJ5WbT/zj+jSW0eu0MkkSs=
-X-Gm-Gg: AeBDiesuG4WjGe4KyIWwMCl2O30RfIM3APZF+2NEo7jtIrXbXE1M4/nccMFwHFsZtEZ
- 0RAAnpjFnv9PN8mIVPML1i6r+XoP4EB8Vyw1WRBG7MOUU3xDEWU68w2X2hcgurqSJyYakqZszFx
- z/3hDoVvLz49W29Vh36wpqD1mv0fEqfewdBrhhZNVuPAvU2Ie8I8sUlJ0X2/FvJm2bmlDTZHEUP
- OC2HPrsOLR9w0TRzUFHbV2DMmZ5KL5HdiJnKaNOfL3OFAdBWNOkIuvFpd9OjOJd0WO/vBwUl4U7
- AEj0jrImC7qxHQcVLJfuor/tpEK0s2c7B08OOo4Y
-X-Received: by 2002:a05:7300:d183:b0:2d6:526c:55cc with SMTP id
- 5a478bee46e88-2d6526c5736mr831953eec.6.1775839205757; Fri, 10 Apr 2026
- 09:40:05 -0700 (PDT)
+ bh=bvesXMpz50kHTUEcp/X0NnnqvOyncblvdLWc0DfGMwU=;
+ b=Hc42ym23CFMyJyHMQVtz83nQzIHfUQdGDrpDx6l2HDQu5AiXEmg5hStxm9xXmDPeeI
+ Ou123f7UJE2MKEKMQKDbNbEyeBl70jB4OCH8KL1DInjw8uIXv4jcYHIF6HEe1Mtl2Rwq
+ 9NJIU4B+DCHC9EwX9+wZXYLjkKB5X34eIeHR9EH+MIlfBK+Qi4zrnA2U0lLFMhMCTIvw
+ kED93U9WteXdtzsDe4EK5sU3DTviz8vVJQdUVzY7USRCFxp44CMga6Vm9N7eEEiMIVG9
+ BpvtH2PFDaqL6hdJh5QdETlZZaJ8gbYR3BLP92du2EVK2k3eubyCWS7wkF+1kwxHpwLx
+ M0/A==
+X-Gm-Message-State: AOJu0YzJ5AfQwKLJHJIcwizjnDtGWdy0m+/djlgFwKafbkJZw7sDEXr3
+ C+gntIh584DZs0/WR3MYNEpvC3Uo+UUi+IS/r4FlZYe4VjMSigffjxNnGufeSxZfhPWBTToBElo
+ 2we3Y7VRKps9h86dW1rJQY8Kjsq7Y8PU=
+X-Gm-Gg: AeBDievIRxTqkqF3nCZvSZwLHP1b4uOLQlETVB6Kk+msNTDM7M9dJI8Lrk9PsNm29pO
+ jAYcHgqzfUf/SnalSOwtaZAhZX3s5/86cSZb5Ee7rVTKFRygSOSejVlEkdL9okeYPOfOkK26RKY
+ TiS/u9zAo0IuzX4A+N9iFHQPk0guIfSCQr/av+9KMNq7lQ6YgKEGSK0mm9UuCb4Quon5Otbd0+D
+ 9cHq97sDWn6rNy8Ar2r/yR6FZ+JBln5vz46osPb1nXmePYRore9uKZvXZ9jaotLRCJMVTsbT47I
+ ruCA8XmvTxH8HZKIfbBCjfy5+Bxoevi6JbGZKrJ3
+X-Received: by 2002:a05:7022:670a:b0:128:d714:3ca1 with SMTP id
+ a92af1059eb24-12c34e39792mr2512772c88.5.1775839317658; Fri, 10 Apr 2026
+ 09:41:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260406141735.25844-1-armenon@redhat.com>
- <20260406141735.25844-7-armenon@redhat.com>
- <CAMxuvaw1Zaui2mSw2o6M6OzC7vnwN8CW1hgnZEtz1BiZmsT1kg@mail.gmail.com>
- <adkLu8uBy_Lkfrop@fedora>
-In-Reply-To: <adkLu8uBy_Lkfrop@fedora>
+References: <20260410151818.817298-1-development@knutsson.it>
+In-Reply-To: <20260410151818.817298-1-development@knutsson.it>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 10 Apr 2026 20:39:52 +0400
-X-Gm-Features: AQROBzAS8AP9d0wjZZK5pETBfJHdET4xg3dAA3jQMRaxQ9bI0yAuMlDJIep-9jM
-Message-ID: <CAJ+F1C+fHg8b9-=uWe22ptQNAvyW01ehCpSofoCcMxrJsZ9Dyw@mail.gmail.com>
-Subject: Re: [PATCH v3 06/10] hw/tpm: Add support for VM migration with TPM
- CRB chunking
-To: Arun Menon <armenon@redhat.com>
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>, qemu-devel@nongnu.org, 
- Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Fri, 10 Apr 2026 20:41:44 +0400
+X-Gm-Features: AQROBzBkj661Jq2vxSVu87bi6ZXY6BIVNSDYmE7csTJhBL2RgVjGr9aBeScvi78
+Message-ID: <CAJ+F1CKyO_bLi7R01EE1qYG0fkKPcdT1a9pU329xutBT5bC3Vw@mail.gmail.com>
+Subject: Re: [PATCH] monitor: fix missing spaces in screendump help text
+To: Brian Knutsson <development@knutsson.it>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1229.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,46 +115,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Fri, Apr 10, 2026 at 6:41=E2=80=AFPM Arun Menon <armenon@redhat.com> wro=
-te:
+On Fri, Apr 10, 2026 at 8:24=E2=80=AFPM Brian Knutsson <development@knutsso=
+n.it> wrote:
 >
-> However, I am a bit confused on the order of precedence of this variable.
-> From what I understand, the device initialization happens first ->
-> followed by the compat properties
+> From: Knutsson Development <development@knutsson.it>
 >
-> So,
-> "DEFINE_PROP_BOOL("migrate-buffers", CRBState, migrate_buffers, true)"
-> gets executed first setting it to true by default and then, the compat
-> property is applied,
-> "GlobalProperty hw_compat_11_0[] =3D {
->     { "tpm-crb", "migrate-buffers", "off"},
-> }"
-> setting it to false.
+> Signed-off-by: Knutsson Development <development@knutsson.it>
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> ---
+>  hmp-commands.hx | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> When is the user provided command line argument parsed?
-> For example launching qemu using:
->     -machine pc-11.0
->     -device tpm-crb,tpmdev=3Dtpm0,cap-chunk=3Don
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 5cc4788f12..b6f3b8a796 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -257,8 +257,8 @@ ERST
+>          .name       =3D "screendump",
+>          .args_type  =3D "filename:F,format:-fs,device:s?,head:i?",
+>          .params     =3D "filename [-f format] [device [head]]",
+> -        .help       =3D "save screen from head 'head' of display device =
+'device'"
+> -                      "in specified format 'format' as image 'filename'.=
+"
+> +        .help       =3D "save screen from head 'head' of display device =
+'device' "
+> +                      "in specified format 'format' as image 'filename'.=
+ "
+>                        "Currently only 'png' and 'ppm' formats are suppor=
+ted.",
+>           .cmd        =3D hmp_screendump,
+>          .coroutine  =3D true,
+> --
+> 2.48.1
 >
-> Is it set in the end? In the above example, the user explicitly set
-> cap-chunk to true whereas the migrate-buffers default value is false.
-
-Iirc, user specified property takes precedence over compat properties.
-
-> Therefore we end up with the following scenario.
-> Since chunking is supported, the guest writes a large command in the
-> buffer. The user then decides to migrate the VM. QEMU sees that
-> migrate-buffer is off, so it does not migrate the buffers. When the VM
-> resumes on the destination host, it will find the buffers empty.
-
 >
-> Therefore, we need to stop migration if cap-chunk is enabled but
-> migrate-buffers is disabled. Please guide.
-
-Yes, if cap-chunk is enabled but migrate-buffer is off (compat 11.0),
-there should be a migration blocker.
 
 
 --=20
