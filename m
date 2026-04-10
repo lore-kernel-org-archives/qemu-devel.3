@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B71F45A0D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E02F45A08
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHwe-0002Ro-BT; Fri, 10 Apr 2026 15:55:12 -0400
+	id 1wBHw8-0000yM-AK; Fri, 10 Apr 2026 15:54:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwd-0002Q6-22
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:55:11 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHw3-0000up-9f
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:35 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwa-0001xw-Nm
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:55:10 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43cf7683a28so1617494f8f.2
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:55:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHw1-0001Wj-3t
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:35 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43d17bb1c65so1645347f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775850907; x=1776455707; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775850871; x=1776455671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1hmYqwWSqPmJMgJvimCb5gTwLjtaQvrO8BVqR+We6PI=;
- b=XR44ntTZGA8OiXTeDSwE4T+q3zMF+j8TDb+Ng4cU1eSMmgI8rNg3HzWndJNenAQLo/
- DbtDwaMpwKj8YQ8eFdu2KtTCf2s1iBIi728WMB9u6y2Lo4JwpMu2LACkS21B2o/azr58
- TZhBDa9Z6F8+pyV6GnE4TFHefUj9Vt7gEYIGa3KdR9pDBUB7i87X6ciAMEVGdR91gnll
- sO1a9/eXGX26qr0eYepo4/nenTxt8WykjlQjxH5NajTPCR0OTq+ERR3K+xRgef1obxgh
- BFaxALTvK/rYzAfLyED8M39As3Xls8pVWSU1chl1+j9yTHFnwaj4FpPj8NckN4O5tKch
- 9yuw==
+ bh=dQcummkxUOYYVBuFGYQ78NMsb9ycB7/JcbKGuZBFsZk=;
+ b=kDnSkJhUbdGGH0YeXAdmyMRvkxlfwU5iDk+NAEZfHBiZ7TqiIVa5ptkvVMe9gunV7h
+ ggQQ1G/McIXUZDiK7cMsysga0OeY3LTiofa654dRZpkL0/ruzDfQiGRH/guoeXOdZDo4
+ SHwycANaiWd8vHyMhVQc2FeJgLwmjC/RgMWwL5o8qUcOjBt3oJWcn1qJ7X8/YWPueBeS
+ HoPgBbg8BXYFApTOaqi11KrrdcKIck3OvxpT7jmkBoPX1mgJ2Z2UcU3PQ5kTxVmYXNKN
+ NUrGFMBfUPzLbn3uCc1R1aeUPmXPNuNJYpMy5/PBUBZWwkcT/IhmY+BdP4+xmcmaqHtp
+ oexQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775850907; x=1776455707;
+ d=1e100.net; s=20251104; t=1775850871; x=1776455671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1hmYqwWSqPmJMgJvimCb5gTwLjtaQvrO8BVqR+We6PI=;
- b=tKffO2OroTHmUDdtfYS4VaOjQ/XYsfYXO9yrE8K/RPbJMaM7XeF+XjqrfaPiF3gmdb
- /8GSrpQg3hJwH2awsw8oG21ggIvbxewIxpGaY85O42QXx0mIlbWVQjV0KOHgtSaXk6/c
- uSTYHREAcbnE6RfxpGNl3skzHLIIbrkT2G202Pjwoo6DN7Bnf+QZIoUR7d80WKBr5plH
- QEWeyjqWuaUrziPnRamfvfdUCWzNBs9bB/l1/P1QlJZjqHVq0dOBjXQGw3f5B+vTWXwM
- VKr4y7dymmKShgNEF+LXEJxXADM/eom31i2rWHvHNn2ev3gRBeFWKvmiGz4F+1d+0yEX
- +VMg==
-X-Gm-Message-State: AOJu0YzUyxjkSk1AOQO34K4MJZYMcIfrePJwUtPCtH+TRjVXyA3mRm8k
- DqOlHYW6Y7Wu3Aj1HJFfhrrjZ71wYO7PO0sUt9K2gUzoqMHG95uvnbRO2wnx9J3SBJvoWsZ8XxM
- SUepTgdE=
-X-Gm-Gg: AeBDiesI6YESAamBSYfXnyVpxtBrMbL2q1CnFRncLf/h4ME8Qt6OoasxpeotD17+yo4
- D5NLGxsIE66lF9sqki0ImTWEB8uTKF1NXVJw81z5NtKbRM4gRM1Rtu3cf0PCneb4phFMEFh8nt2
- snnfnw67yRr52EZWLa34pp3QjMdT/lEBk5oXPG6j8O3NubXV0qswR1omVIJgY5duGmLt3I2DC5v
- Y4ptYCpQB+k1S5EskyHBqb23o+f1LSSxYHqMtMoYxBc8tyubfABrN8PkPVJUdcWoFEH6yPiGBdY
- QNj4hctlCdKHyHSVx9ccAUrCU5lcWu+xdDc4AxYxvBkywKJbVnT99Ja0SnSTtNeQ4kW5W/aQuxv
- Wt6oL4zRt41d/2GBKT/51VFIHaFMMGrkGOkXxbB5kEQDktKfjQB4VYPeCNZM2YyqrpMZhsMdEAf
- NwGe6jZfGs2jIPGf5h6LzxbSS3yuV28hpwbqBQvJTdFQyGO3rkwUOHEZ+536eKB3Kzyzr5vn3D
-X-Received: by 2002:a05:6000:184b:b0:43c:ea2d:9c7a with SMTP id
- ffacd0b85a97d-43d642cc2dfmr7403832f8f.49.1775850906890; 
- Fri, 10 Apr 2026 12:55:06 -0700 (PDT)
+ bh=dQcummkxUOYYVBuFGYQ78NMsb9ycB7/JcbKGuZBFsZk=;
+ b=D3P+DREtlttL9JXwFW7ZtvFhbkY7g3JpnH4bkvrW0x0csHKqetiHjetfbBgrq8oakE
+ tGv6FzK/sCrFX1NLpwjbyXZ7lsY2NfqyOxrf6R5D7lmS3mnpejvBmH4OdHHq+o6PoLqw
+ 3X9XThGvby3Jq/HF/zsXvtPWwHppSUhJqUiRvtd2upItkbAt+f9BMmpTfEo6c9lmBeq9
+ U7tLzMlwxsWGZMS+GjTIVevxpsEDy4TSWc6VYmc0YtS+93yHYqVLgNMhnk27RVS3ci0p
+ MDChqKwzvp1kFb/0dwc9vYM5QG/4qnZZZNzlp0t1pT4BlYuGG74f5ArD10TDiUY5EzCb
+ oMQQ==
+X-Gm-Message-State: AOJu0YyZjplReKYbqM4oeA/WOEavAKji5WMgXVP3dJNRwOTltFq0W06H
+ O4aguf3SzWjXb5/0Ja4wgSVqJzNv1KRDQhOJV/82WAg+nwfZyEPQUl2mCRZXimptRj4Krxn1Owh
+ kVHehMgM=
+X-Gm-Gg: AeBDiesMbQFI/HE2boGCNMQ8FwWvWTB95px4C0mWBm9fkIE08FON2waEgnMHUxvBZXL
+ dld8n0pbWkpb6mpVwddW8/iOB5esZ12rMyt/NqIlsYbmcbs5iX/XE5e632RfhfRAnUvhLwACKmi
+ 56TDJqrfCQ4AoI54kqiu+WI7mSBxsE2rRM1zPdjL2ysxdWTWJW64tzVyAN2mrEJKkyeO9Li5fj7
+ fCh9UX/A5CpmIXhhjrG01qm1f55bAne1MZEFUs/hKMclVs6KCqM8/Sm4Sr2iVpMDz796cI6B6eF
+ 4OgBdN25iGZkjbJwCWUN+eIdyGoHBW2NVKsgSeDzLtH1VrwitcDARqi8W7YKQymS3v0KjDY2bQW
+ fMhRsui1B7+xbKHJ5o7aK4nxzqA27UCxSDq+H012P3B4B0i6cNlK7/5Zzea0gLKOqulkzaZzK5M
+ CLEH2AdXuUVdfCXokSfPKID5nZASI14HU0E0aZjzyJjlKoaSGGyH8vHHKkcckIPooLo1Y7RpJA
+X-Received: by 2002:a05:6000:1a8f:b0:43b:a21e:9c19 with SMTP id
+ ffacd0b85a97d-43d642c080amr6854206f8f.38.1775850871272; 
+ Fri, 10 Apr 2026 12:54:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63e468d0sm9671181f8f.18.2026.04.10.12.55.05
+ ffacd0b85a97d-43d63e5d85fsm8603605f8f.36.2026.04.10.12.54.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 12:55:06 -0700 (PDT)
+ Fri, 10 Apr 2026 12:54:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -71,18 +71,20 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 14/27] monitor/meson: Use SPICE with migration HMP commands
-Date: Fri, 10 Apr 2026 21:53:08 +0200
-Message-ID: <20260410195323.17937-15-philmd@linaro.org>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH v2 09/27] target/sparc: Replace target_monitor_defs ->
+ SysemuCPUOps::monitor_defs
+Date: Fri, 10 Apr 2026 21:53:03 +0200
+Message-ID: <20260410195323.17937-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260410195323.17937-1-philmd@linaro.org>
 References: <20260410195323.17937-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,51 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When moving code around in commit 27be86351ec ("migration: Move
-the QMP command from monitor/ to migration/") we forgot to update
-the meson rule about SPICE pkg-config flags.
+Restrict sparc64_monitor_defs[] to cpu.c, register it
+as SysemuCPUOps::monitor_defs hook (taking care to not
+register it on 32-bit SPARC target), allowing to remove
+the target_monitor_defs() method.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- migration/meson.build | 2 +-
- monitor/meson.build   | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ target/sparc/cpu.c     | 19 +++++++++++++++++++
+ target/sparc/monitor.c | 18 ------------------
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/migration/meson.build b/migration/meson.build
-index c9f0f5f9f21..e583822dec6 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -23,7 +23,6 @@ system_ss.add(files(
-   'fd.c',
-   'file.c',
-   'global_state.c',
--  'migration-hmp-cmds.c',
-   'migration.c',
-   'multifd.c',
-   'multifd-device-state.c',
-@@ -37,6 +36,7 @@ system_ss.add(files(
-   'socket.c',
-   'tls.c',
- ), gnutls, zlib)
-+system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 1493336e7a2..9c5175aca34 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -993,12 +993,31 @@ static const Property sparc_cpu_properties[] = {
+ };
  
- if get_option('replication').allowed()
-   system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
-diff --git a/monitor/meson.build b/monitor/meson.build
-index 2647100e04c..585251804e4 100644
---- a/monitor/meson.build
-+++ b/monitor/meson.build
-@@ -5,8 +5,8 @@ system_ss.add(files(
-   'hmp-cmds.c',
-   'hmp.c',
-   'qemu-config-qmp.c',
-+  'qmp-cmds.c',
- ))
--system_ss.add([spice_headers, files('qmp-cmds.c')])
+ #ifndef CONFIG_USER_ONLY
++
++#ifdef TARGET_SPARC64
++#include "monitor/hmp.h"
++
++static const MonitorDef sparc64_monitor_defs[] = {
++    { "asi", offsetof(CPUSPARCState, asi) },
++    { "pstate", offsetof(CPUSPARCState, pstate) },
++    { "cansave", offsetof(CPUSPARCState, cansave) },
++    { "canrestore", offsetof(CPUSPARCState, canrestore) },
++    { "otherwin", offsetof(CPUSPARCState, otherwin) },
++    { "wstate", offsetof(CPUSPARCState, wstate) },
++    { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
++    { NULL },
++};
++#endif
++
+ #include "hw/core/sysemu-cpu-ops.h"
  
- specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
--                if_true: [files('hmp-target.c'), spice])
-+                if_true: [files('hmp-target.c')])
+ static const struct SysemuCPUOps sparc_sysemu_ops = {
+     .has_work = sparc_cpu_has_work,
+     .get_phys_page_debug = sparc_cpu_get_phys_page_debug,
+     .legacy_vmsd = &vmstate_sparc_cpu,
++#if defined(TARGET_SPARC64)
++    .monitor_defs = sparc64_monitor_defs,
++#endif
+ };
+ #endif
+ 
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index 99abddbf1e0..36f3d8d58e9 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -37,21 +37,3 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+     }
+     dump_mmu(env1);
+ }
+-
+-const MonitorDef monitor_defs[] = {
+-#ifdef TARGET_SPARC64
+-    { "asi", offsetof(CPUSPARCState, asi) },
+-    { "pstate", offsetof(CPUSPARCState, pstate) },
+-    { "cansave", offsetof(CPUSPARCState, cansave) },
+-    { "canrestore", offsetof(CPUSPARCState, canrestore) },
+-    { "otherwin", offsetof(CPUSPARCState, otherwin) },
+-    { "wstate", offsetof(CPUSPARCState, wstate) },
+-    { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
+-#endif
+-    { NULL },
+-};
+-
+-const MonitorDef *target_monitor_defs(void)
+-{
+-    return monitor_defs;
+-}
 -- 
 2.53.0
 
