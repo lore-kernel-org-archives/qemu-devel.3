@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573A8F459FA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D6EF459F9
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBEMf-00043t-8p; Fri, 10 Apr 2026 12:05:50 -0400
+	id 1wBEMB-0003ua-1q; Fri, 10 Apr 2026 12:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wBEME-0003wx-SV
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:05:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wBEM4-0003pJ-Tz
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:05:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wBEMB-0006Nl-MF
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:05:21 -0400
+ id 1wBEM2-0006Lb-BR
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:05:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775837118;
+ s=mimecast20190719; t=1775837109;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wOJHS8sN6JhZ4wgsDWCE9wWo4qgdFz7hBOvo57Z6mro=;
- b=KjbTodagl+hM7Ehc2yxMkLPFP1+fpmE1rN8H+3uTJzH8POsrJBJlagWzsxgfZMksSC2+4u
- J2a6UX++mbdRC0X/MHC0yy/h0aZeAiyd1mlYwtzzoTDB1JqBnaO12uqEQ8rsfpQHHFwQPi
- o67e/DlUl3d8hYW267fLA5S8iLnKG3A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JtP4WTryhH9guBAN2A7tyUb+cg0JFkESkEjp9nk3qS4=;
+ b=Xp7Sqf6pqswSGn4Tt0zmuet7Hh/+PHu9lTeXeHe6w3j4GeP+thO84BhsHrn2z7styHNwk1
+ oQwt9nfaVZ7KmhK0jNUspOCRoDJWMjANx7GR5WVs3F5dDiHtScQO83tvEiL5wCkoUX6P5M
+ fzH4c2rfEWv1iSROS9rLzcR/L5I83s8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-FpMymekmMfiNwckxJoR7AQ-1; Fri,
- 10 Apr 2026 12:05:13 -0400
-X-MC-Unique: FpMymekmMfiNwckxJoR7AQ-1
-X-Mimecast-MFC-AGG-ID: FpMymekmMfiNwckxJoR7AQ_1775837111
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-ke4vb9EDMc2uaEa0zHTE4w-1; Fri,
+ 10 Apr 2026 12:05:06 -0400
+X-MC-Unique: ke4vb9EDMc2uaEa0zHTE4w-1
+X-Mimecast-MFC-AGG-ID: ke4vb9EDMc2uaEa0zHTE4w_1775837104
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C52D19560BB; Fri, 10 Apr 2026 16:05:11 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16B411955DB9; Fri, 10 Apr 2026 16:05:04 +0000 (UTC)
 Received: from toolbx.redhat.corp (headnet01.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.101])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 580E7195608E; Fri, 10 Apr 2026 16:05:08 +0000 (UTC)
+ id 5A38F195608E; Fri, 10 Apr 2026 16:05:00 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -60,26 +59,23 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-block@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
  Eric Blake <eblake@redhat.com>
-Subject: [PATCH 02/17] monitor: replace 'common' with 'parent' in MonitorQMP
-Date: Fri, 10 Apr 2026 17:04:43 +0100
-Message-ID: <20260410160458.3778874-3-berrange@redhat.com>
-In-Reply-To: <20260410160458.3778874-1-berrange@redhat.com>
-References: <20260410160458.3778874-1-berrange@redhat.com>
+Subject: [PATCH RFC 00/17] monitor: turn QMP and HMP into QOM objects
+Date: Fri, 10 Apr 2026 17:04:41 +0100
+Message-ID: <20260410160458.3778874-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 7
 X-Spam_score: 0.7
 X-Spam_bar: /
 X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,216 +91,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The field name 'parent' is standard practice for QOM structs
-so align the QMP monitor.
+Conceptually -object and object_add/object_del should be sufficient
+for essentially all QEMU configuration....if only we ported all our
+internal custom backends/devices/etc to QOM. That is of course a big
+job which is why it hasn't happened.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- monitor/monitor-internal.h |  2 +-
- monitor/monitor.c          |  4 ++--
- monitor/qmp-cmds-control.c |  4 ++--
- monitor/qmp.c              | 40 +++++++++++++++++++-------------------
- 4 files changed, 25 insertions(+), 25 deletions(-)
+This series started with the premise that the monitor is one of the
+easier areas to convert since we have no more than three classes,
+a common base, and QMP and HMP subclasses. So why not give it a go
+and thus unlock the ability to dynamically create/delete monitors
+in QMP/HMP.
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index ae0cf8c1da..0922588ad9 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -132,7 +132,7 @@ struct MonitorHMP {
- };
- 
- typedef struct {
--    Monitor common;
-+    Monitor parent;
-     JSONMessageParser parser;
-     bool pretty;
-     /*
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 6532796edb..6b183edcf5 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -308,7 +308,7 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
-             continue;
-         }
- 
--        qmp_mon = container_of(mon, MonitorQMP, common);
-+        qmp_mon = container_of(mon, MonitorQMP, parent);
-         {
-             QEMU_LOCK_GUARD(&mon->mon_lock);
-             if (qmp_mon->commands == &qmp_cap_negotiation_commands) {
-@@ -625,7 +625,7 @@ void monitor_data_destroy(Monitor *mon)
-     g_free(mon->mon_cpu_path);
-     qemu_chr_fe_deinit(&mon->chr, false);
-     if (monitor_is_qmp(mon)) {
--        monitor_data_destroy_qmp(container_of(mon, MonitorQMP, common));
-+        monitor_data_destroy_qmp(container_of(mon, MonitorQMP, parent));
-     } else {
-         readline_free(container_of(mon, MonitorHMP, parent)->rs);
-     }
-diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
-index 150ca9f5cb..ca471bc1c7 100644
---- a/monitor/qmp-cmds-control.c
-+++ b/monitor/qmp-cmds-control.c
-@@ -76,7 +76,7 @@ void qmp_qmp_capabilities(bool has_enable, QMPCapabilityList *enable,
-     MonitorQMP *mon;
- 
-     assert(monitor_is_qmp(cur_mon));
--    mon = container_of(cur_mon, MonitorQMP, common);
-+    mon = container_of(cur_mon, MonitorQMP, parent);
- 
-     if (mon->commands == &qmp_commands) {
-         error_set(errp, ERROR_CLASS_COMMAND_NOT_FOUND,
-@@ -126,7 +126,7 @@ CommandInfoList *qmp_query_commands(Error **errp)
-     MonitorQMP *mon;
- 
-     assert(monitor_is_qmp(cur_mon));
--    mon = container_of(cur_mon, MonitorQMP, common);
-+    mon = container_of(cur_mon, MonitorQMP, parent);
- 
-     qmp_for_each_command(mon->commands, query_commands_cb, &list);
- 
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 687019811f..69d9e40e32 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -80,7 +80,7 @@ static void monitor_qmp_caps_reset(MonitorQMP *mon)
- {
-     memset(mon->capab_offered, 0, sizeof(mon->capab_offered));
-     memset(mon->capab, 0, sizeof(mon->capab));
--    mon->capab_offered[QMP_CAPABILITY_OOB] = mon->common.use_io_thread;
-+    mon->capab_offered[QMP_CAPABILITY_OOB] = mon->parent.use_io_thread;
- }
- 
- static void qmp_request_free(QMPRequest *req)
-@@ -124,7 +124,7 @@ static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
-          * when we get here while the monitor is suspended.  An
-          * unfortunately timed CHR_EVENT_CLOSED can do the trick.
-          */
--        monitor_resume(&mon->common);
-+        monitor_resume(&mon->parent);
-     }
- 
- }
-@@ -139,7 +139,7 @@ void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
-     trace_monitor_qmp_respond(mon, json->str);
- 
-     g_string_append_c(json, '\n');
--    monitor_puts(&mon->common, json->str);
-+    monitor_puts(&mon->parent, json->str);
- 
-     g_string_free(json, true);
- }
-@@ -166,7 +166,7 @@ static void monitor_qmp_dispatch(MonitorQMP *mon, QObject *req)
-     QDict *error;
- 
-     rsp = qmp_dispatch(mon->commands, req, qmp_oob_enabled(mon),
--                       &mon->common);
-+                       &mon->parent);
- 
-     if (mon->commands == &qmp_cap_negotiation_commands) {
-         error = qdict_get_qdict(rsp, "error");
-@@ -207,7 +207,7 @@ static QMPRequest *monitor_qmp_requests_pop_any_with_lock(void)
-             continue;
-         }
- 
--        qmp_mon = container_of(mon, MonitorQMP, common);
-+        qmp_mon = container_of(mon, MonitorQMP, parent);
-         qemu_mutex_lock(&qmp_mon->qmp_queue_lock);
-         req_obj = g_queue_pop_head(qmp_mon->qmp_requests);
-         if (req_obj) {
-@@ -302,7 +302,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
-         oob_enabled = qmp_oob_enabled(mon);
-         if (oob_enabled
-             && mon->qmp_requests->length == QMP_REQ_QUEUE_LEN_MAX - 1) {
--            monitor_resume(&mon->common);
-+            monitor_resume(&mon->parent);
-         }
- 
-         /*
-@@ -343,7 +343,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
-         }
- 
-         if (!oob_enabled) {
--            monitor_resume(&mon->common);
-+            monitor_resume(&mon->parent);
-         }
- 
-         qmp_request_free(req_obj);
-@@ -408,7 +408,7 @@ static void handle_qmp_command(void *opaque, QObject *req, Error *err)
-          */
-         if (!qmp_oob_enabled(mon) ||
-             mon->qmp_requests->length == QMP_REQ_QUEUE_LEN_MAX - 1) {
--            monitor_suspend(&mon->common);
-+            monitor_suspend(&mon->parent);
-         }
- 
-         /*
-@@ -462,7 +462,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
- 
-     switch (event) {
-     case CHR_EVENT_OPENED:
--        WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
-+        WITH_QEMU_LOCK_GUARD(&mon->parent.mon_lock) {
-             mon->commands = &qmp_cap_negotiation_commands;
-             monitor_qmp_caps_reset(mon);
-         }
-@@ -504,27 +504,27 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
-     MonitorQMP *mon = opaque;
-     GMainContext *context;
- 
--    assert(mon->common.use_io_thread);
-+    assert(mon->parent.use_io_thread);
-     context = iothread_get_g_main_context(mon_iothread);
-     assert(context);
--    qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
-+    qemu_chr_fe_set_handlers(&mon->parent.chr, monitor_can_read,
-                              monitor_qmp_read, monitor_qmp_event,
--                             NULL, &mon->common, context, true);
--    monitor_list_append(&mon->common);
-+                             NULL, &mon->parent, context, true);
-+    monitor_list_append(&mon->parent);
- }
- 
- void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
- {
-     MonitorQMP *mon = g_new0(MonitorQMP, 1);
- 
--    if (!qemu_chr_fe_init(&mon->common.chr, chr, errp)) {
-+    if (!qemu_chr_fe_init(&mon->parent.chr, chr, errp)) {
-         g_free(mon);
-         return;
-     }
--    qemu_chr_fe_set_echo(&mon->common.chr, true);
-+    qemu_chr_fe_set_echo(&mon->parent.chr, true);
- 
-     /* Note: we run QMP monitor in I/O thread when @chr supports that */
--    monitor_data_init(&mon->common, true, false,
-+    monitor_data_init(&mon->parent, true, false,
-                       qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
- 
-     mon->pretty = pretty;
-@@ -533,7 +533,7 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-     mon->qmp_requests = g_queue_new();
- 
-     json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
--    if (mon->common.use_io_thread) {
-+    if (mon->parent.use_io_thread) {
-         /*
-          * Make sure the old iowatch is gone.  It's possible when
-          * e.g. the chardev is in client mode, with wait=on.
-@@ -553,9 +553,9 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-                                 monitor_qmp_setup_handlers_bh, mon);
-         /* The bottom half will add @mon to @mon_list */
-     } else {
--        qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
-+        qemu_chr_fe_set_handlers(&mon->parent.chr, monitor_can_read,
-                                  monitor_qmp_read, monitor_qmp_event,
--                                 NULL, &mon->common, NULL, true);
--        monitor_list_append(&mon->common);
-+                                 NULL, &mon->parent, NULL, true);
-+        monitor_list_append(&mon->parent);
-     }
- }
+This series does the conversion in as many small steps as I could
+achieve. At the end it is possible to create HMP and QMP monitors
+with -object and object_add.
+
+In theory object_del is possible but is unsafe since there's no
+synchronization wrt "in use" monitors. Christian Brauner sent
+a proposal for monitor_add/monitor_del commands that address the
+safety/synchronization issues, but I've not yet integrated the
+relevent bits of that series with this proposal:
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2026-04/msg01349.html
+
+My overall feeling is that we're better off turning monitors
+into QOM classes, rather than inventing more type specific
+QMP commands.
+
+What's missing:
+
+ - Integration of code for safe deletion of monitors
+ - The existing -mon/-qmp/-monitor args should be turned
+   into syntax sugar around -object & -chardev
+ - The new approach must be documented
+ - Functional tests are needed for the hot add/remove of
+   monitors and new -object syntax. (The pre-existing
+   test suites cover the static config with the traditional
+   args).
+
+Daniel P. Berrangé (17):
+  monitor: replace 'common' with 'parent' in MonitorHMP
+  monitor: replace 'common' with 'parent' in MonitorQMP
+  monitor: rename monitor_init* to monitor_new*
+  monitor: minimal conversion of monitors to QOM
+  monitor: remove 'skip_flush' field
+  monitor: move monitor_data_(init|destroy) into QOM init/finalize
+  monitor: use class methods for monitor_vprintf
+  monitor: use class methods for monitor_qapi_event_emit
+  monitor: use class methods for monitor_accept_input
+  monitor: use dynamic cast in monitor_qmp_requests_pop_any_with_lock
+  util: use dynamic cast in error vreport
+  monitor: drop unused monitor_cur_is_qmp
+  monitor: use dynamic cast in QMP commands
+  monitor: use dynamic cast in monitor_is_hmp_non_interactive
+  monitor: drop unused monitor_is_qmp method
+  monitor: eliminate monitor_is_hmp_non_interactive method
+  FIXME: monitor: implement "user creatable" interface
+
+ chardev/char.c                       |  10 +-
+ gdbstub/system.c                     |  10 +-
+ include/monitor/monitor.h            |  21 ++-
+ migration/migration-hmp-cmds.c       |   5 +-
+ monitor/hmp-cmds.c                   |   7 +-
+ monitor/hmp.c                        | 159 ++++++++++++++-----
+ monitor/monitor-internal.h           |  44 +++---
+ monitor/monitor.c                    | 222 +++++++++++++--------------
+ monitor/qmp-cmds-control.c           |  12 +-
+ monitor/qmp-cmds.c                   |  14 +-
+ monitor/qmp.c                        | 138 ++++++++++++-----
+ qapi/qom.json                        |  43 ++++++
+ storage-daemon/qemu-storage-daemon.c |   2 +-
+ stubs/monitor-core.c                 |   5 -
+ stubs/monitor-internal.c             |   4 -
+ system/vl.c                          |  10 +-
+ tests/unit/test-util-sockets.c       |   1 -
+ ui/ui-hmp-cmds.c                     |   2 +-
+ util/error-report.c                  |  13 +-
+ 19 files changed, 465 insertions(+), 257 deletions(-)
+
 -- 
 2.53.0
 
