@@ -4,111 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3166AF459F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE12F459F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 16:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBEYW-000669-CL; Fri, 10 Apr 2026 12:18:04 -0400
+	id 1wBEak-0006xf-9T; Fri, 10 Apr 2026 12:20:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wBEYV-00061s-7A
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:18:03 -0400
-Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wBEYT-0002jN-IK
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:18:02 -0400
-Received: by mail-vs1-xe29.google.com with SMTP id
- ada2fe7eead31-607f1fac33cso757736137.3
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 09:18:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775837880; cv=none;
- d=google.com; s=arc-20240605;
- b=cbILQ8VTr17EQQOycRQEavkqqpRDKPAPfrth/qQY2oITVrrX+t/kDc9h6opTO8+FTy
- MNJTxpy0ENAVOGjags+5w36aNGuc9j9KPMG3xT0883utTpmCMYrCSuClUntVj0v7z2e1
- b0e2aCc7jH4imcYWNQGSqcuSa35TLGHfmCF750z+QunPPCaIVXQrtjttXxl2qGJDTRzm
- rkxUTIGq0fePHkn1X3BvofJKZEw2gXtTvPjx4PmPUxgBmKSKPCkIR9v8afpjsJtNBUtL
- Vf/oQ+oXWZuotUuUIRz/9ZKSefXpDBr8BnFQ0xbR+w7duez8NzSwNDhzpTqWlM6v9HCV
- aMbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Zb7LYTqGtSCK+gsuBQZ2Dvcd6c15n5rlD6NcR35ZKlE=;
- fh=6WPaczp89kVEvyqQhTtoSourPaOeS62pIBkgOKSIhVk=;
- b=doiJw9zj0B7pjkBRgHF/51KzKMmIAxQKFpsCe12PdhTx7i+26Ry5w1a76RDH+rR/Rg
- b4vMePngxrH5jFMksFh/+02A7S8reU0QwbEExmxLR2QuM4Fm6jmIWeUnthQNo2cNGPHt
- sqP3vFfgKIp/aZRm4rCW7KD6PhvU8+f3i4oBKGly5szlWhSFh5mh6xVp9wG5jVTDoVpg
- y4GkgLF185HIK+Yj+GJFHtGdH5K9NDHrfHZtmFJDK5XBeht62DXivEV282UE3FJw1ki/
- hDJ+S5dYHOFUD7D3fqIjLrWZ+nTQ1RZJ9Bv7juXhpPhq5IoqU7uXpJMJfXWaUJ2Fhz2S
- k4nw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775837880; x=1776442680; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Zb7LYTqGtSCK+gsuBQZ2Dvcd6c15n5rlD6NcR35ZKlE=;
- b=d4xnjBtx7rutJ07mW2BGovqc76Mq/ZQO1JNTG9tmyIKIGaIJelsYYMdgb2aeGcQAXp
- RqhvW8zmadYrpE1+5cIk2Py45xG6ze2IMsfu2ClLWYq9vx2U7u3GMqt9AT9OxX2uXwVP
- Gl3Dft9CVNeNR8/mKklQAA3tIyZwIXxdHNLTBKxAFG2rrrqRArvge4URNpzZTHq+zJ12
- e6gnQtA22Ci5ckJsvIhxF3o6HUYJnY9NhCoOZQEOaKANqwZRqpzOFb79hSoyUYZt1EMX
- KPtX7hLwZCnqxNd7bPsrpswTvxnQHYVPqq05cWYLaOBNm6iki9B3lw5I0vvvljDY8rtH
- fH3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775837880; x=1776442680;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Zb7LYTqGtSCK+gsuBQZ2Dvcd6c15n5rlD6NcR35ZKlE=;
- b=QSlwKHehOxwsbVuV4sTQWhMgcj6/EW9CUFJc743nweVRnvRGPOzywilXNebhVUNyd/
- OCBan+qchmyQUkMDodtK+Wo2MKUZzVJGjaOnq9tEsGKNLt0424Me0NkbPkTAYEMhKSaQ
- /VP8Xox12xDAXSqGykkI9IKbiqhjzUVwi6EaN5QHY2a8GGvo8BbGOCg1VYI/z+vZ0+2r
- /7u3RxMkjxsrI/fF4sR3plNCoCERkuuy1TF4KXUyZ74D34gNNUGtj/bZaqARx+prybiy
- vTM1wq9S+VGPwqXtPBEycCwx5KraVrzQEvI8QWML4+yd9UeRDmqQyBqFo3kF7ZBx1kle
- 3OYQ==
-X-Gm-Message-State: AOJu0YxD8mNjOgxUAbxXPIJPi5Qqy5qm2s3txZu8KKtPsc9SK15aS15k
- ulp5jpdIfMeZNxGmlY/SUI+5HpqrMIK9dSivnY0/iAHfer527l2WpBjy1t54i+kzBTmZXAlAbFU
- taM9HvC3BQ0dTLi2zInestg0Zd9dP8/Y=
-X-Gm-Gg: AeBDieuh1Fvv0zgQnQ2GJOINhuIhfH0tr7oIBOmbrBoS0MJG0D6GcV/tsfJx5lkH8Uj
- og1gfy3MNDCDWDMIJoj8J2vlEhzsNNU3ETjBMAei7vqBPvDqzDb9SLNGtOmlvTKAYC9SJ9+Opgo
- L9gkrnUIGZGN/cIhXKNMp07pVcLJHJIZOGtLtfik50w7kfejhlgmuyFNm5i5j/mqkmE/rkqMNae
- IWVi7yC5OgtfkFA6knsxbxwhffG9Vml+c7TyPOke6Hkx2UM02Z/5ov4esWiqz1avCIV9YWNVrBF
- zw562Duzg+M4+WF5httuXjxE34NDOil6ebSAi1TPYwxRLQf0YgZzpyXeTCONyL7FmWo=
-X-Received: by 2002:a05:6102:304b:b0:5ff:fbe4:8a4 with SMTP id
- ada2fe7eead31-60a00629e26mr1639943137.21.1775837880256; Fri, 10 Apr 2026
- 09:18:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260408184228.44242-1-james.hilliard1@gmail.com>
- <CAFEAcA_Jt3SmuTiLWxuVQuktAG=M5C-Ux7OYKcGwPUBSETegew@mail.gmail.com>
- <CADvTj4rMoQi-ic=q=TJ5Dz6_GhHhR=JNhMoRhfKCFAuZzhUpzw@mail.gmail.com>
- <CAFEAcA_JPnWh22zhb+ajr76oKtFRoCZSZpsVW51m08eWrMZS5w@mail.gmail.com>
- <CADvTj4qUY6=b56LeHb+fZBEdvFPPR9dMFkYEjNhtN=BipOaEog@mail.gmail.com>
- <CAFEAcA9CT9KeO1qmNg6YaCnjmvDG3-jeSwTjP4EnUqg4Hh8fSg@mail.gmail.com>
-In-Reply-To: <CAFEAcA9CT9KeO1qmNg6YaCnjmvDG3-jeSwTjP4EnUqg4Hh8fSg@mail.gmail.com>
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 10 Apr 2026 10:17:48 -0600
-X-Gm-Features: AQROBzCs8DBFvf3_uEY4GH3sVICM0ANwOMt20BhpJ9HRiLgR_8Rf0TVFmxX1a4w
-Message-ID: <CADvTj4rZUm1opV8viEHB-BEuCoyj_+_Fr2UN6SEj=Dpkcg_xBw@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/mips: keep k0 in sync with CP0_UserLocal
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wBEaf-0006pb-E4
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:20:20 -0400
+Received: from p-west2-cluster2-host9-snip4-5.eps.apple.com ([57.103.68.168]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wBEac-0003UW-UR
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 12:20:17 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-20-percent-0 (Postfix) with ESMTPS id
+ 0529618000AC; Fri, 10 Apr 2026 16:20:09 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1775838013; x=1778430013;
+ bh=9C9EfZBCmJzTDp9vPQ8rjVTNZBfPyjCtGagVGhQwjV8=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=V0H3toQrGd5lN65Up6OaQfEadZXKqXVLI4se8p/U1AGSnJGUKZ35QPHURHIikzMYvbLSWak/nwqaTPbA+c+BLTe3u8odccEbL3SEDhBlGRruXBAW0wAxMTLYWJC6wfoA/ID/OxDp74JlHcUNgGWN4kjpPKBiYHgN+/RIWrfRwMjF5D9DTutBPt87rtC4vEhLKEkbFf3RHSZDwUfeom86CRbvdAIOOWiFF+Dti0eCx7wbDDCzZxUAF1n5fKBvJvDiuAuHlNxjX+mw/ddoje6yo80jImLbXZz4TRJ2d2jLUz0gVr9AT1PWPus/sSURE9gtdo6oUhOJmu6nou29iGSvWA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-20-percent-0 (Postfix) with ESMTPSA id
+ 726A21800119; Fri, 10 Apr 2026 16:20:07 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] target/i386/mshv: Fix segment regression in MMIO emu
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260410142652.367541-1-magnuskulke@linux.microsoft.com>
+Date: Fri, 10 Apr 2026 18:19:53 +0200
+Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@microsoft.com>,
+ =?utf-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Wei Liu <liuwe@microsoft.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
- envelope-from=james.hilliard1@gmail.com; helo=mail-vs1-xe29.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Message-Id: <8678AD43-795C-4803-925C-38AE29473D4C@unpredictable.fr>
+References: <20260410142652.367541-1-magnuskulke@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE1MyBTYWx0ZWRfX5uhVmZWg77Od
+ r99PzA31p5zXcuIJJ7DpHxQbM8r2FiFOFD1ANbbmSBRlinyJWahwrWJVPwqp4T63DjfyAh0sIXu
+ dbEhfdp+S418qt9zn/kBHwRoFfcKZvWZ4RJMaOF8/iloj1KWeeHsSu356sG/aah5DiykMjZSr2J
+ vbDDUHoJ9+w5iRwROyGUpafmCyeKkzrpJBC/rm+/iB8u8d5O2Bk678Ew2lpgaFatQAUU/C3Q+T9
+ DPNRsWJ/KIL/KkZifGJN2Ia55fEVqA2DSR6LYT6l5JBMCVRrNZLp83ayoiK9FbAP6AOSOreN9lp
+ woky5U0LS71e9eDom/Mn/7adwOqOik2347HfwYH39NGrwUKV2n9Jb3IZEB7gEA=
+X-Proofpoint-ORIG-GUID: 6thnDMEqVsSmhQSG2nL7O8zRQhg5n6X8
+X-Authority-Info-Out: v=2.4 cv=LJxrgZW9 c=1 sm=1 tr=0 ts=69d9233b
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=-qgjkGIHYDdkKxKmpZ4A:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: 6thnDMEqVsSmhQSG2nL7O8zRQhg5n6X8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-10_04,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 clxscore=1030 phishscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604100153
+Received-SPF: pass client-ip=57.103.68.168;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,48 +93,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 10, 2026 at 2:13=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Thu, 9 Apr 2026 at 22:00, James Hilliard <james.hilliard1@gmail.com> w=
-rote:
-> >
-> > On Thu, Apr 9, 2026 at 2:17=E2=80=AFPM Peter Maydell <peter.maydell@lin=
-aro.org> wrote:
-> > >
-> > > On Thu, 9 Apr 2026 at 20:47, James Hilliard <james.hilliard1@gmail.co=
-m> wrote:
-> > > > So this seems to be something used by the vendor SDK for Octeon1
-> > > > but not Octeon2 and Octeon3 targets, kinda strange/annoying.
-> > > >
-> > > > I also found this:
-> > > > https://lists.gnu.org/archive/html/qemu-devel/2011-08/msg02026.html
-> > >
-> > > Ah, nice find.
-> > >
-> > > > It's in the Octeon vendor kernel here looks like:
-> > > > https://github.com/MarvellEmbeddedProcessors/Octeon-Linux-kernel-4.=
-14/blob/5c48e5031fbd86361e8185f6c530ffcfa5c9a60d/arch/mips/kernel/syscall.c=
-#L94-L96
-> > >
-> > > Mmm. We emulate the upstream kernel, not vendor forks, so
-> > > we wouldn't want to set k0 here I think.
-> >
-> > Yeah, I was trying to see if there was some sort of way to trivially
-> > identify binaries that require this k0 support and autoenable a quirk
-> > but I didn't find anything, maybe it would make sense to have a
-> > separate runtime target for enabling this k0 quirk since it seems a
-> > lot of octeon binaries require it?
->
-> We didn't add this 15 years ago, and my feeling is we still don't
-> want to, because we track the mainline kernel. If an actual host
-> kernel doesn't have a quirk to let these binaries run, we don't
-> need one either.
 
-I'm wondering, is there any actual downside to enabling this quirk for
-Octeon 1 binaries? It wouldn't actually interfere with binaries that
-don't require the quirk right?
 
->
-> -- PMM
+> On 10. Apr 2026, at 16:26, Magnus Kulke =
+<magnuskulke@linux.microsoft.com> wrote:
+>=20
+> When the segmentation code has been reworked, there is now an
+> unconditional call to emul_ops->read_segment_descriptor(). The MSHV =
+impl
+> was delegating this to x86_read_segement_descriptor(), which read from
+> the GDT in guest memory. This fails for selector.idx =3D=3D 0 and when =
+no
+> GDT is set up (which is the case in real mode).
+>=20
+> In the fix we change the MSHV impl to fill segment descriptor from
+> SegmentCache, that was populated from the hypervisor by =
+mshv_load_regs()
+> before instruction emulation.
+>=20
+> Fixes: 09442d98ab (target/i386: emulate: segmentation rework)
+>=20
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+
+> ---
+> target/i386/mshv/mshv-cpu.c | 39 ++++++++++++++++++++++++++++++-------
+> 1 file changed, 32 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 2bc978deb2..4ed6e7548f 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -1552,17 +1552,42 @@ static void read_segment_descriptor(CPUState =
+*cpu,
+>                                     struct x86_segment_descriptor =
+*desc,
+>                                     enum X86Seg seg_idx)
+> {
+> -    bool ret;
+>     X86CPU *x86_cpu =3D X86_CPU(cpu);
+>     CPUX86State *env =3D &x86_cpu->env;
+>     SegmentCache *seg =3D &env->segs[seg_idx];
+> -    x86_segment_selector sel =3D { .sel =3D seg->selector & 0xFFFF };
+> -
+> -    ret =3D x86_read_segment_descriptor(cpu, desc, sel);
+> -    if (ret =3D=3D false) {
+> -        error_report("failed to read segment descriptor");
+> -        abort();
+> +    uint32_t limit;
+> +
+> +    memset(desc, 0, sizeof(struct x86_segment_descriptor));
+> +
+> +    desc->type =3D (seg->flags & DESC_TYPE_MASK) >> DESC_TYPE_SHIFT;
+> +    desc->s    =3D (seg->flags & DESC_S_MASK)    >> DESC_S_SHIFT;
+> +    desc->dpl  =3D (seg->flags & DESC_DPL_MASK)  >> DESC_DPL_SHIFT;
+> +    desc->p    =3D (seg->flags & DESC_P_MASK)    >> DESC_P_SHIFT;
+> +    desc->avl  =3D (seg->flags & DESC_AVL_MASK)  >> DESC_AVL_SHIFT;
+> +    desc->l    =3D (seg->flags & DESC_L_MASK)    >> DESC_L_SHIFT;
+> +    desc->db   =3D (seg->flags & DESC_B_MASK)    >> DESC_B_SHIFT;
+> +    desc->g    =3D (seg->flags & DESC_G_MASK)    >> DESC_G_SHIFT;
+> +
+> +    /*
+> +     * SegmentCache stores the hypervisor-provided value verbatim =
+(populated by
+> +     * mshv_load_regs). We need to convert it to format expected by =
+the
+> +     * instruction emulator. We can have a limit value > 0xfffff with
+> +     * granularity of 0 (byte granularity), which is not =
+representable
+> +     * in real x86_segment_descriptor. In this case we set =
+granularity to 1
+> +     * (4k granularity) and shift the limit accordingly.
+> +     *
+> +     * This quirk has been adopted from =
+"whpx_segment_to_x86_description()"
+> +     */
+> +
+> +    if (!desc->g && seg->limit <=3D 0xfffff) {
+> +        limit =3D seg->limit;
+> +    } else {
+> +        limit =3D seg->limit >> 12;
+> +        desc->g =3D 1;
+>     }
+> +
+> +    x86_set_segment_limit(desc, limit);
+> +    x86_set_segment_base(desc, seg->base);
+> }
+>=20
+> static const struct x86_emul_ops mshv_x86_emul_ops =3D {
+> --=20
+> 2.34.1
+>=20
+>=20
+
 
