@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F22F45A08
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E99F45A0D
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHSX-0006a6-CJ; Fri, 10 Apr 2026 15:24:05 -0400
+	id 1wBHR9-0004tk-Bm; Fri, 10 Apr 2026 15:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHSV-0006ZT-QA
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:24:03 -0400
+ id 1wBHR7-0004rK-MK
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:22:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHSU-0002Eu-Dc
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:24:03 -0400
+ id 1wBHR6-0001xT-92
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:22:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775849041;
+ s=mimecast20190719; t=1775848955;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LbD5bApnct5r2F5XxoCnsfV4wmuuaWmgTLO38u520H0=;
- b=SdkzQGBkayKSl/+IbkdRgVk8G/ZLpgWKiT+U4CW8d5SOF88/arwn/znH55WyeA83HbDoz6
- CtN3L0UIMS0CwOJDuON7C/6LYRtgG95TZE/dYlIfBTcPrX8G9yYzV/2kVTvCGbmeeT5gtd
- vLsgJ2cWGyevhZCgUrVkCK7OdkiMfFk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jg06xNsDHiAjS1cpxEPhGzH0lDWKplTKePp+SKWf2pw=;
+ b=L3gIto1y+V+6zxX6WVpIMDWUr7VjeGSENIOWErgUzfNG+M4EUq9qNHXT7zuWJVBVdcjRzH
+ V14Q0n0igULqHmDuFmIeSwG/qy5v+RVyU54PvbOp9LxEwtudpy+VoQptLm8V0uYFhDMfll
+ dL/1ZaMKP5OGS06Bxv9woquYWJy02q4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-Fv05_hy9OEqxnFVwybAWCg-1; Fri,
- 10 Apr 2026 15:24:00 -0400
-X-MC-Unique: Fv05_hy9OEqxnFVwybAWCg-1
-X-Mimecast-MFC-AGG-ID: Fv05_hy9OEqxnFVwybAWCg_1775849039
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-Qtbiv3tpN82m0euDqHH_Pg-1; Fri,
+ 10 Apr 2026 15:22:34 -0400
+X-MC-Unique: Qtbiv3tpN82m0euDqHH_Pg-1
+X-Mimecast-MFC-AGG-ID: Qtbiv3tpN82m0euDqHH_Pg_1775848953
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 974AC19560A6
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:23:59 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F3831955DAE
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:22:33 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5A06B180049F; Fri, 10 Apr 2026 19:23:57 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6CA2F1955E84; Fri, 10 Apr 2026 19:22:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:19:13 +0400
-Subject: [PATCH v2 51/67] ui/vnc: defer listener registration until the
- console is known
+Date: Fri, 10 Apr 2026 23:18:58 +0400
+Subject: [PATCH v2 36/67] ui: make qemu_default_pixelformat() static inline
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-51-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-36-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1763;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2417;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=D0sNYAf7b7syfLNSN9v3FM+l0V9XmMPf8r84aEh9Pq0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0Whx5b0xAqA9vG6lhmn/9pHsODDfRH5jyEU
- 0tauD5hpfKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFgAKCRDa6OEJdZac
- 5T5dEAC0+nSDBe/NpO+wVW/F2rXuXEruYD0CDfCmrkNc2cZf9VMdZT//3zCr9YxTFX/kyhJ6Am+
- aE7MJB5lJzLbVtMTx2Ns9++34xiWCg4P4bd34cNKFuvo88bomyj2b/lFBRkxoNEJSG3vdmhyLRe
- WzJ1LktgFNt+hlNxrz42U0vmAroBNlTJPy24ecvOFmYE3RkFiR2Oj28WmS/aycWPc7LK+7a6jN4
- LAmI4C6VPFnc4PkPokSyTsj/xffMJa9PpUSouVAIuPREPVXECcWp3QxSsQpTERgmYDo9xlFIETB
- 5+ZQimyhN4BnqFzjrA4MbADNnTEEjhi1NZmshCo0C1+bBt80yg20+W0XlAr+QX+fq5XLtHL8gJH
- tZHTXUV8uh0GekTbcoRYy+mFTZh89ZIq7aEkfMX5nppFZrq9hFSS7vA3OP3/VxVB1SSMUSGCy6k
- wllLvw0AfNkNr3t1vKCRQU7n33x3dQPbb1iBUiS3EOmqfW0kV4fkR55pJto1arW4TWimHNoiIrD
- JzyFeYhndn3jPgNEjzaKcah3sg20jzZOy0URV6KfrLOBGycAlkEENSC7dz3XKclL+Wt0T2gYaJJ
- Xraw7LMqhjzlohUNEzHD+ix/N4zUOsAWFb+xqIGCND57ZcDwY48MZyDzKUTbtS/NYbV94A0F2lD
- /MriBDqmKhsn48Q==
+ bh=J76FKl9tH/d0oVk3sn0TrxBVo9ODvG49qjWGz2g7+78=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0VfTC5N7taSyNlI89/Sk+QwR7eAG/Tf1qkA
+ vIYYWiWUTWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFQAKCRDa6OEJdZac
+ 5cjBD/wMYMeeHtOhi3CyRSANX9bi8iS8ZvSuUWK/eCHsIzud3RMzfJDaJUwF/5EnqvMFgs358pS
+ MDJGSok9bpi53p2/ePptl0qUGzdFDLRe2ygEp+5rBjmA2XJSpOn5AWa683DF9qvSIo4x7FJaJvf
+ 74qM955QfPHQdTzQPqGz2J3H3VZiCZkoBTCZFnGLSIcMQZVD+eC71SSYG6aMwFaOIo6LX/LLjHv
+ OdO/MZAi1nZrz0xDc3faSpwlukeeoPHzm9V526SkOvkKxWnJFrERRsMGkliKwfOJYkFhVBEf+Jf
+ eAh+mLqnktkb/cQr3IL6oeCL7PSjOd7Q8MB2Vz/0oa2oiE8Mxc2zCBK0SNpm6qFf82JYhspG7w7
+ Ybdeio8k5/uylVKyKrUyy/zREmG4CjuoCK37HH4NR7x0Gomy+zicRYze9h9TRYRkl9Iw30ts+nC
+ tBqJx3+TqiaLHgPJmQA3QiagTe8LqCfozzmST0R0UwkGgK/m0vp5veSLRIqhbFxg5I0K0LTKFbb
+ r6vqz0BzNrIBvSXouD8n/ogx7Qt60IvKAipaXfnXVyXO0Hdf7WGtpXnnApOCYuYe1AWiuAzRACQ
+ NryS5xNThCuNtaRLuW2N1Qw3fYx8sKl+4PKkzPX0BVrP4r8Z9PW/e1qeBCROu1BDnwff9Aas/63
+ eDZmKIMRS/Ohaxw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,50 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, the display change listener was registered early in
-vnc_display_new() without a console, requiring vnc_display_open() to
-conditionally unregister and re-register it when the actual console was
-resolved. Since vnc_display_new() and vnc_display_open() were merged in
-the previous commit, simply delay the registration and keyboard state
-initialization to vnc_display_open(), after the console has been looked
-up. This removes the conditional re-registration and simplifies the code.
+The function is a trivial wrapper around qemu_default_pixman_format()
+and qemu_pixelformat_from_pixman(), so make it static inline in
+qemu-pixman.h instead of a standalone function in console.c, allowing to
+be easily reused.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ include/ui/qemu-pixman.h | 8 ++++++++
+ include/ui/surface.h     | 2 --
+ ui/console.c             | 7 -------
+ 3 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 6f9cc3f25a3..747b1c44e36 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3460,8 +3460,6 @@ VncDisplay *vnc_display_new(const char *id, Error **errp)
+diff --git a/include/ui/qemu-pixman.h b/include/ui/qemu-pixman.h
+index 2ca0ed7029c..4bc7a59698e 100644
+--- a/include/ui/qemu-pixman.h
++++ b/include/ui/qemu-pixman.h
+@@ -73,6 +73,14 @@ typedef struct PixelFormat {
  
-     vnc_start_worker_thread(vd);
+ PixelFormat qemu_pixelformat_from_pixman(pixman_format_code_t format);
+ pixman_format_code_t qemu_default_pixman_format(int bpp, bool native_endian);
++
++static inline PixelFormat qemu_default_pixelformat(int bpp)
++{
++    pixman_format_code_t fmt = qemu_default_pixman_format(bpp, true);
++    PixelFormat pf = qemu_pixelformat_from_pixman(fmt);
++    return pf;
++}
++
+ pixman_format_code_t qemu_drm_format_to_pixman(uint32_t drm_format);
+ uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman);
+ int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian);
+diff --git a/include/ui/surface.h b/include/ui/surface.h
+index d2542d3ace5..8e5f3e35e8c 100644
+--- a/include/ui/surface.h
++++ b/include/ui/surface.h
+@@ -24,8 +24,6 @@ typedef struct DisplaySurface {
+     uint32_t share_handle_offset;
+ } DisplaySurface;
  
--    register_displaychangelistener(&vd->dcl);
--    vd->kbd = qkbd_state_init(vd->dcl.con);
-     vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
-         &vmstate_change_handler, vd);
- 
-@@ -4269,13 +4267,9 @@ static bool vnc_display_open(VncDisplay *vd, Error **errp)
-         con = qemu_console_lookup_default();
+-PixelFormat qemu_default_pixelformat(int bpp);
+-
+ DisplaySurface *qemu_create_displaysurface_from(int width, int height,
+                                                 pixman_format_code_t format,
+                                                 int linesize, uint8_t *data);
+diff --git a/ui/console.c b/ui/console.c
+index 24794e5a9dc..78b0ac27827 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -1392,13 +1392,6 @@ DisplaySurface *qemu_console_surface(QemuConsole *console)
      }
+ }
  
--    if (con != vd->dcl.con) {
--        qkbd_state_free(vd->kbd);
--        unregister_displaychangelistener(&vd->dcl);
--        vd->dcl.con = con;
--        register_displaychangelistener(&vd->dcl);
--        vd->kbd = qkbd_state_init(vd->dcl.con);
--    }
-+    vd->dcl.con = con;
-+    register_displaychangelistener(&vd->dcl);
-+    vd->kbd = qkbd_state_init(vd->dcl.con);
-     qkbd_state_set_delay(vd->kbd, key_delay_ms);
+-PixelFormat qemu_default_pixelformat(int bpp)
+-{
+-    pixman_format_code_t fmt = qemu_default_pixman_format(bpp, true);
+-    PixelFormat pf = qemu_pixelformat_from_pixman(fmt);
+-    return pf;
+-}
+-
+ static QemuDisplay *dpys[DISPLAY_TYPE__MAX];
  
-     if (saddr_list == NULL) {
+ void qemu_display_register(QemuDisplay *ui)
 
 -- 
 2.53.0
