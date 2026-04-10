@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14BCCF45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:21:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5641BF45A0D
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHPk-000613-F5; Fri, 10 Apr 2026 15:21:12 -0400
+	id 1wBHPk-00062S-Qe; Fri, 10 Apr 2026 15:21:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHPE-00051f-37
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:41 -0400
+ id 1wBHPU-0005N9-Ss
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHPB-0001Aq-Jt
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:39 -0400
+ id 1wBHPQ-0001Q5-SB
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775848836;
+ s=mimecast20190719; t=1775848851;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8Zn7scE4lRCbc2GAfCsAVHlUaaYW/OSWPb6ggmWUO1c=;
- b=ay3qL9Ko4/HQkmFF6coWUtig9OO7aGnGhW+MoS/tFHUlHe3WqSZXKKzA9abhRFoimKgxn+
- gUM2ZztM+uJGRa6Ujx3C5a2Jq8Ec8wtKZIq76v+pXkAnG+D1ntFU7VU/vUhsKmCvyujq9j
- 72z4KDzg6nifSy+efXLlyPg+RAkG0/A=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=35NB0NPv2qOWBVLdjvh0a4RCEHDwikxV3x+wq6dGcfw=;
+ b=NjWfm8TvlfVVLRDLeTO+ttXLaOixwvHJJmVP2XKFXF6MmcwICK1cvPjtxqNUdF2yn/7WNp
+ u+5XuVKd6O9pfd2TPOOMLVT8oDs5Cp+hGlljzQbrAi120q3B+K0Ka66WUeHmH8Blg3kXvb
+ vsDDr5xOc3usiC5uf+Oh5uiYylRLjNU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-0Y_XP9TWOxqWfo6igi5P8Q-1; Fri,
- 10 Apr 2026 15:20:33 -0400
-X-MC-Unique: 0Y_XP9TWOxqWfo6igi5P8Q-1
-X-Mimecast-MFC-AGG-ID: 0Y_XP9TWOxqWfo6igi5P8Q_1775848832
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-nEzCD_YROImaoDvcWAUpFw-1; Fri,
+ 10 Apr 2026 15:20:50 -0400
+X-MC-Unique: nEzCD_YROImaoDvcWAUpFw-1
+X-Mimecast-MFC-AGG-ID: nEzCD_YROImaoDvcWAUpFw_1775848849
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 252BE180057A; Fri, 10 Apr 2026 19:20:32 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79AB8180044D; Fri, 10 Apr 2026 19:20:49 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0053A180049F; Fri, 10 Apr 2026 19:20:30 +0000 (UTC)
+ id 46748180057F; Fri, 10 Apr 2026 19:20:47 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:18:38 +0400
-Subject: [PATCH v2 16/67] ui/console-vc: make invalidate_xy() take vt100
+Date: Fri, 10 Apr 2026 23:18:41 +0400
+Subject: [PATCH v2 19/67] ui/console-vc: console_refresh() -> vt100_refresh()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-16-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-19-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2178;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1727;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=jvcgWFNlKqlrN3nVcfOXq9ZC2/xDMncef+UtF1pVUuQ=;
- b=owEBbAKT/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0U4AM+QDPfGOpu9rVejfoMBydoLI85vdCIg
- fuurh5dRjGJAjIEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFAAKCRDa6OEJdZac
- 5eReD/jh99E1jBIhmZFu6EH1u+gN9rCYVbQAt93K5FTBe7UKKtuE2lJOx7Zx3yBTCn6uBLDy3hu
- qLNmKbr2mzrS2vRRhH4INv0EV3fKYfwn7ilJwbo1DJQkBZH1ouJi66Jiyd39xQc8c+XPvaJA9S4
- EZmoKoRzGULXNcPxuZ6ORdbSdgqraPZ0f1Bk9vp2VvZo6JvIgl2QyCInPrlZ3JxUplY6UB3CbPS
- XE2L4+p7SFkLDelLMSi1NUBdhF8I+yoYghSvbw7Dz0bo2OpqK4tOBPEFHj1pK1ZnDEpFaE55H1m
- xxeACkHmh54H2zPVB4VmNT+P/LIiQctndp8uCwEo9FJxWzb3FFcRizddWWb/CXiQFGPDs+yrPMZ
- fU1wet6DRPEErB6lsBxepWHOIhE+c//oIkfyOIuIV47GG3KVpCov0GQCN/s0OoAJ/fYVOcbG9tP
- IRAVdQwTnOSoPB/EAkTIqTtiMtGEb5UmR2p1cIk7RjmETaccdAHJeRGwp5pLTLqfaDsQ5ypoumw
- hjui2QJUBPNFfmcksDAAZRE1N7KT4w3MBK3I2iP+rIg8ZhbUWKNl+7DrE3m+t4BvjfjaTOfEjwL
- mMnwWkWQzj6f1j1YZxj6E1tYIJTFPMIlb/kRx0bPdtF77VPgA9PHY1xH/cb/Jj0foZa0IjdYEby
- 5dRdKfZWbP3x4
+ bh=Alv36LrSEk9pffbsC7R8BXcgJH+s8HLIVfm8/6cC23I=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0UTC5YnAx3mhJRtjWlIqasqVJDGZhAcwAaI
+ +MFO5Xw9CCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFAAKCRDa6OEJdZac
+ 5aFEEACLRFsKMZr8qCaCwzt+QoEcPge1PEDuVs9OqT+ZcBrOsXsJfHQ/69gbwYBF7aI2x3MkQLf
+ s4PWaUpME6JhZuDP5SDGAe+5saE/E11UR0YTk3cwzi7Nl6orGiRwlMfnwPpJc7IRuCmpO6v5YHj
+ z8YGHYoWFwbqY/DgW62pVwXfxOoPl8qn7LAjLal/v+r0ir81BKLDAaZKBJecY9A6bE4d5goSCZF
+ 5xmlXxXd6stNxu3xxpuGzf5dY+3lZQnIR3z87GFY7+aOMHKpoNRw3LyZ+jEXbv7WS1oZNsfGinC
+ UZDFkLQbgOL/pQ7As7sSLM4SWFZZ9OeNzCuov74IwSrWvRcrtlU4a0x7eswfJf7J1eb5VryrE4/
+ lFgFqmlpB1JGw+m4BjxwOkGXU3uLIn1RVRxHRwMT9KZ6IAqKuGYh0Qzw1VM11lv+JuOS+TyZRPY
+ u+ctXTFpSygNVevk8rLw2MHKdy/Vcz7myDcViwRRPUM9zbCMxprmQt5B8QrZlHo+SB9nR3jRNTs
+ OcYM3xwcII7O7LJJTXlkNHWqRGvYz2fIhB2zIblYK8ErVkULURIohF+dwm9nIvKa+52fX9rg70K
+ 20Bg9SsWRWMmuGf8b2j4JJvBNauw7ekAt/OUGrpv2U1oMQKT0Sh42AEgE7IaXz1F1ulsVq5LCx/
+ 0jyXfbQXrvaaouQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
@@ -106,67 +106,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 This decouples glyph rendering from the console object, continuing the
 QemuVT100 abstraction introduced in the previous commits.
 
-Style fixes.
-
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ ui/console-vc.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index cf087c64fb2..9566ce592f2 100644
+index f8682d2d1dc..d46dcb6a678 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -179,21 +179,20 @@ static void vt100_putcharxy(QemuVT100 *vt, int x, int y, int ch,
-                              &fgcol, &bgcol, x, y, FONT_WIDTH, FONT_HEIGHT);
+@@ -232,9 +232,8 @@ static void vt100_image_update(QemuVT100 *vt, int x, int y, int width, int heigh
+     vt->image_update(vt, x, y, width, height);
  }
  
--static void invalidate_xy(QemuTextConsole *s, int x, int y)
-+static void vt100_invalidate_xy(QemuVT100 *vt, int x, int y)
+-static void console_refresh(QemuTextConsole *s)
++static void vt100_refresh(QemuVT100 *vt)
  {
 -    QemuVT100 *vt = &s->vt;
--
--    if (!qemu_console_is_visible(QEMU_CONSOLE(s))) {
--        return;
--    }
--    if (vt->update_x0 > x * FONT_WIDTH)
-+    if (vt->update_x0 > x * FONT_WIDTH) {
-         vt->update_x0 = x * FONT_WIDTH;
--    if (vt->update_y0 > y * FONT_HEIGHT)
-+    }
-+    if (vt->update_y0 > y * FONT_HEIGHT) {
-         vt->update_y0 = y * FONT_HEIGHT;
--    if (vt->update_x1 < (x + 1) * FONT_WIDTH)
-+    }
-+    if (vt->update_x1 < (x + 1) * FONT_WIDTH) {
-         vt->update_x1 = (x + 1) * FONT_WIDTH;
--    if (vt->update_y1 < (y + 1) * FONT_HEIGHT)
-+    }
-+    if (vt->update_y1 < (y + 1) * FONT_HEIGHT) {
-         vt->update_y1 = (y + 1) * FONT_HEIGHT;
-+    }
- }
- 
- static void console_show_cursor(QemuTextConsole *s, int show)
-@@ -222,7 +221,7 @@ static void console_show_cursor(QemuTextConsole *s, int show)
-         } else {
-             vt100_putcharxy(&s->vt, x, y, c->ch, &(c->t_attrib));
+     TextCell *c;
+     int x, y, y1;
+     int w = pixman_image_get_width(vt->image);
+@@ -260,8 +259,8 @@ static void console_refresh(QemuTextConsole *s)
+             y1 = 0;
          }
--        invalidate_xy(s, x, y);
-+        vt100_invalidate_xy(&s->vt, x, y);
      }
+-    vt100_show_cursor(&s->vt, 1);
+-    vt100_image_update(&s->vt, 0, 0, w, h);
++    vt100_show_cursor(vt, 1);
++    vt100_image_update(vt, 0, 0, w, h);
  }
  
-@@ -594,7 +593,7 @@ static void vc_update_xy(VCChardev *vc, int x, int y)
-         c = &vt->cells[y1 * vt->width + x];
-         vt100_putcharxy(vt, x, y2, c->ch,
-                       &(c->t_attrib));
--        invalidate_xy(s, x, y2);
-+        vt100_invalidate_xy(&s->vt, x, y2);
+ static void console_scroll(QemuTextConsole *s, int ydelta)
+@@ -291,7 +290,7 @@ static void console_scroll(QemuTextConsole *s, int ydelta)
+                 vt->y_displayed = vt->total_height - 1;
+         }
      }
+-    console_refresh(s);
++    vt100_refresh(&s->vt);
  }
  
+ static void kbd_send_chars(QemuTextConsole *s)
+@@ -1127,7 +1126,7 @@ static void text_console_invalidate(void *opaque)
+     if (!QEMU_IS_FIXED_TEXT_CONSOLE(s)) {
+         text_console_resize(QEMU_TEXT_CONSOLE(s));
+     }
+-    console_refresh(s);
++    vt100_refresh(&s->vt);
+ }
+ 
+ static void
 
 -- 
 2.53.0
