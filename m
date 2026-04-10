@@ -4,91 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86D7F45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 20:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24859F45A0A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 20:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBI23-0007P5-3t; Fri, 10 Apr 2026 16:00:47 -0400
+	id 1wBI4s-0000VI-Dx; Fri, 10 Apr 2026 16:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBI20-0007Ok-3e
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 16:00:44 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBI1y-0006bn-I7
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 16:00:43 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso21893715e9.3
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 13:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775851241; x=1776456041; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Qsggwi5zbpivKYu9vxgPsRTzFrjprzvcyLLml3Oa1F4=;
- b=NGTGoFjN6Peqk52B2QhZDDzyYEDg8UuIo2fXVmlll/9aOk99btm3mTQWDga219toLo
- Zo03pJ3RQGfT5TQw3hT/8zHK93wWTJbevO97TxLfY3o87OXQIlHaTJ/bCU/14OA15qw+
- CKyk2fbe+eKAMIxpm/L+llJB+hbxLh10p6ioLo/nCL8DTtMq57pR5LUWVfo9425BSWHr
- imWFlWSYtM8BxvYu6hRTCEC6Q2PPSAqPC87vYsEfAyYIstj2u9kN+iHEo+LCaTkpedhU
- dTpzm5MXjteBc+AaZkTwE6M5FF2AaEvQKO2BVVSM4Keib+falxNUPzoec3ToYunfGZQs
- AwoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775851241; x=1776456041;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Qsggwi5zbpivKYu9vxgPsRTzFrjprzvcyLLml3Oa1F4=;
- b=j9iPziE0oPxtIaCOsSroDv3pTrqbhjS93DcMDaCi7HKzQd6GaUBBoHqwAeocw03kNG
- mum5gUE6vQzryWMF/Wwud9WyqiEK4Xv1z8KqOty9mD7HyARDCFJdJhw4KyYxadysNBy/
- rTbZx2NO0ttCbkfmW/v1CeTRKtx0TqtrjBYzBVaraEhaaeKvY+I6PE35i813TpqsWI9Z
- P3c3rn4wCj5OrUODNutCzdg93e2XI+ftYpktxBNbuBQVbZLSlqH0UBaqB8usaiyaIvco
- sRjyD+k/oaVV9Lz4vocBiS3Nu6jfFeCn6O93AFJCiw6D2i5/0M+BBXiz90w1BULY7jFC
- m8Og==
-X-Gm-Message-State: AOJu0YzMRVcWwTiK5+g8BHhtNWKH/uM4mJZvxl4exveG1+ZnOWqwydo6
- BZIw1QzFxR6BNUTxxmavrR37NTUG6MKKJV8DQwx5aA/zsPi9dSuKxR69BOuJDUSCn3OdZ/wcGOd
- cnmFy45c=
-X-Gm-Gg: AeBDieuh/Z4/SXrTGUpEKT60Ekq5BX64Awyu6TsXrIYhUFxoGdXzbwNNhYUjiLSZT7n
- UxB1uOn2ah5cEKZenvCxh1tOzj2KUHa0yX+Yty7GketjA+kytAxuCCOGRR/CjnlBO942sxAqhb0
- FtQQo57enIISMMVQ/gDe+xth7wbQD0PhGHAqIK9mJo/Hgo6i+MRT3TV+bgFwc0i7YINiXgLbeCE
- x/vTNZaeJUv1pIyoRIEGAkHIGVcaIYHvnWWOTUcnWIkY8sIw+wM/04iZZ23kHOGcYzSKNPXqRPD
- /wTjtxss17nKN0mgTsvPmThcfdRMzrdVxS/dJgbVWGi/39WYgbuoCNiVf2R/awvbJgMAx0LkGb5
- 7drPvpF0Jb6+GqGDGNHq2xzxCg60qR7pAvR3m5bKYyCXIPVFVfVf73PBueQ5ZN3o5367baSVrg6
- qwsga/F6JJuThlygLExNLhs/kBw217ljB2DUoUhaeUtwosPouVDuJgZ6/IJ+ZWt/Cfjp+1zM86
-X-Received: by 2002:a05:600c:1f83:b0:488:b99b:4177 with SMTP id
- 5b1f17b1804b1-488d687bf61mr56226695e9.25.1775851240522; 
- Fri, 10 Apr 2026 13:00:40 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d5b3c597sm92483685e9.12.2026.04.10.13.00.39
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 13:00:39 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] hw/arm/smmuv3: Have smmuv3_accel_init() take an Error*
- parameter
-Date: Fri, 10 Apr 2026 22:00:30 +0200
-Message-ID: <20260410200031.18572-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260410200031.18572-1-philmd@linaro.org>
-References: <20260410200031.18572-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from
+ <BATV+40a191e5bd4967edb234+8265+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1wBI4q-0000Ud-AP; Fri, 10 Apr 2026 16:03:40 -0400
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+40a191e5bd4967edb234+8265+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1wBI4m-0007QP-Jh; Fri, 10 Apr 2026 16:03:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=BfeL/q27vFubqbVDSUFubDSRXIjwf0FMBPuEJmujvkQ=; b=SLNRpWpjeVr4Z3J/ySNS5/bxeb
+ wUvJ9ZIrkONkoDNbjYmbt/XDzOoLuycMJ9YcnJdJ5XBGdniETxq+EmEVVLxm5p4BnXFV3W651hhz6
+ 2vefS8+zNLh47D7rkgBKHfgR5a69aNQCBg7KvRG+4ogrJ+tbdPhzY1LzqqVN3Sz3OHqx07AgOljuJ
+ G5BskdfHYWjVdCWlO+hl9tYQnzVVu4cTdraUQcDLBsEzGphu1i8fLwhlZzHpJMQBsaAFGu3kt4lby
+ /KI7HM+saiwbNub5W1VzHr7eXNPw8aGyHb2Lx1uT7xo7XdaXFeQlv4spXJXPs4w/NOW2JoMKSO2js
+ LXXoW1KA==;
+Received: from [172.31.31.148] (helo=u09cd745991455d.lumleys.internal)
+ by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+ id 1wBI4a-0000000EBfm-0Qv1; Fri, 10 Apr 2026 20:03:24 +0000
+Message-ID: <02d3f91e3f199ae2863223205d2498751b733e9a.camel@infradead.org>
+Subject: Re: [PATCH v2 17/27] monitor: Make Xen emulation commands generic ones
+From: David Woodhouse <dwmw2@infradead.org>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, "Dr. David Alan
+ Gilbert" <dave@treblig.org>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,  Markus Armbruster
+ <armbru@redhat.com>, qemu-s390x@nongnu.org, kvm@vger.kernel.org, 
+ qemu-ppc@nongnu.org, Paul Durrant <paul@xen.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>
+Date: Fri, 10 Apr 2026 21:03:23 +0100
+In-Reply-To: <20260410195323.17937-18-philmd@linaro.org>
+References: <20260410195323.17937-1-philmd@linaro.org>
+ <20260410195323.17937-18-philmd@linaro.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-uGPYLPTuULVdQjXKA3Go"
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+40a191e5bd4967edb234+8265+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,93 +81,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By giving smmuv3_accel_init() the ability to populate an error,
-we can fail early in smmu_realize() when CONFIG_ARM_SMMUV3_ACCEL
-is not available, simplifying smmu_validate_property().
 
-Suggested-by: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Co-developed-by: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/smmuv3-accel.h |  7 +++++--
- hw/arm/smmuv3-accel.c |  3 ++-
- hw/arm/smmuv3.c       | 11 +++--------
- 3 files changed, 10 insertions(+), 11 deletions(-)
+--=-uGPYLPTuULVdQjXKA3Go
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-index dba6c71de52..1ca2c80a933 100644
---- a/hw/arm/smmuv3-accel.h
-+++ b/hw/arm/smmuv3-accel.h
-@@ -42,7 +42,7 @@ typedef struct SMMUv3AccelDevice {
- } SMMUv3AccelDevice;
- 
- #ifdef CONFIG_ARM_SMMUV3_ACCEL
--void smmuv3_accel_init(SMMUv3State *s);
-+bool smmuv3_accel_init(SMMUv3State *s, Error **errp);
- bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-                               Error **errp);
- bool smmuv3_accel_install_ste_range(SMMUv3State *s, SMMUSIDRange *range,
-@@ -54,8 +54,11 @@ void smmuv3_accel_idr_override(SMMUv3State *s);
- bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp);
- void smmuv3_accel_reset(SMMUv3State *s);
- #else
--static inline void smmuv3_accel_init(SMMUv3State *s)
-+#include "qapi/error.h"
-+static inline bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
- {
-+    error_setg(errp, "accel=on support not compiled in");
-+    return false;
- }
- static inline bool
- smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 65c2f44880a..ae031f1eccf 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -917,11 +917,12 @@ static void smmuv3_accel_as_init(SMMUv3State *s)
-     address_space_init(shared_as_sysmem, &root, "smmuv3-accel-as-sysmem");
- }
- 
--void smmuv3_accel_init(SMMUv3State *s)
-+bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
- {
-     SMMUState *bs = ARM_SMMU(s);
- 
-     s->s_accel = g_new0(SMMUv3AccelState, 1);
-     bs->iommu_ops = &smmuv3_accel_ops;
-     smmuv3_accel_as_init(s);
-+    return true;
- }
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 5570a13c8a6..5c2855c3770 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1965,13 +1965,6 @@ static void smmu_reset_exit(Object *obj, ResetType type)
- 
- static bool smmu_validate_property(SMMUv3State *s, Error **errp)
- {
--#ifndef CONFIG_ARM_SMMUV3_ACCEL
--    if (s->accel) {
--        error_setg(errp, "accel=on support not compiled in");
--        return false;
--    }
--#endif
--
-     if (s->ats == ON_OFF_AUTO_AUTO) {
-         error_setg(errp, "ats auto mode is not supported");
-         return false;
-@@ -2033,7 +2026,9 @@ static void smmu_realize(DeviceState *d, Error **errp)
-     }
- 
-     if (s->accel) {
--        smmuv3_accel_init(s);
-+        if (!smmuv3_accel_init(s, errp)) {
-+            return;
-+        }
-         error_setg(&s->migration_blocker, "Migration not supported with SMMUv3 "
-                    "accelerator mode enabled");
-         if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
--- 
-2.53.0
+On Fri, 2026-04-10 at 21:53 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
+> In order to build hmp-commands.hx once we need to stop using
+> device target-specific check. Use the generic pattern to make
+> the command available on all targets, providing a stub with
+> kind error message when the feature is not available.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
+Acked-by: David Woodhouse <dwmw@amazon.co.uk>
+
+
+
+--=-uGPYLPTuULVdQjXKA3Go
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
+ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
+MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
+a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
+jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
+GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
+aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
+nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
+8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
+IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
+KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
+BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
+QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
+ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
+/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
+uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
+xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
+W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
+c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
+VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
+NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
+sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
+w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
+i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
+kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
+0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
+ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
+blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
+hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
+VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
+HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
+ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
+AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
+cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
+AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
+aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
+iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
+8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
+JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
+xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
+EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
+B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
+MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
+Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
+nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
+WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
+W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
+nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
+g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
+9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
+9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
+sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
+a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
+ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
+AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
+dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
+MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
+YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
+4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
+6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
+QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
+nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
+MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
+VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDQxMDIwMDMy
+M1owLwYJKoZIhvcNAQkEMSIEIEiSDk3WPDAW+ChnymmcKPfkU2M0XHZ7d70Xb56KQzcDMGQGCSsG
+AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
+cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
+VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
+cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIA2EbMUUuey69Z
+Ydhe1nZKGm6OH0aiAqWau1JwBcwq59jVIy8/rFYf0zHHcOq+XTcEhtH8xCxVbZEHfa2UuvmlSCUY
+P3r9An9ud1BLwHBExARS+txiFq76idwXAGL9z9v06P8pPIoenWacPShYu0CVVLXmcaIRfx/0xePz
+Lre8Omn1AlAP4qMWKMBKu5lipIc2LNuxuKmIvHNT0HhBo2/00p7sDSGuspA1VIwA/GTiO18CX9qa
+aoDkPhCBT2kc07Vp/4BmwaiQA4a346FMMg5Atk69ZCr3tZff67WqNSWTyXcGB8/OJLijaC8JcJLR
+243JRbDPcUA0haZVxZBvFUArn8stj0VG6wFJFnLsK7uxyQX9dyh6gMazmyIvwzOJGIPmlKeQ9FbS
+4escW+Oila9XAQcQgAOa0xfWpKRCShjacgvZqJSX0CJK9R/gymsJHUA0zYa50rQLhPwl9Zaxpn87
+gQanA0MUuCkcJipNOmM0g3N5hvbkZhuJOimhzWZ7tdhzX1Git2uFWs5b2aB4LL1Jv0bY7xoxkq+F
+JEHwDDQ6a0eukEkrSKJ94JDxCoyatZrFcdrAU/hO5OhKUbUjKAA/loPNfJXdW4c1XQlpLeikCyLH
+Yag0+a5I91726kNv4JD7ONZzhFXD3oa1vvaLl6S2Qnad4SiNHMSk/u5TypRLUIAAAAAAAAA=
+
+
+--=-uGPYLPTuULVdQjXKA3Go--
 
