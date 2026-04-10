@@ -4,112 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87FDFE99049
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87FFE99049
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB668-0002Ke-7E; Fri, 10 Apr 2026 03:16:12 -0400
+	id 1wB6GM-0004Bi-EK; Fri, 10 Apr 2026 03:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1wB666-0002K1-2c; Fri, 10 Apr 2026 03:16:10 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wB6GK-0004Au-N0
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:26:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1wB664-0004hx-Aj; Fri, 10 Apr 2026 03:16:09 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 639LDaWH2326338; Fri, 10 Apr 2026 07:16:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NnRxgs
- 8uCVhsjkfC8QTCVCXzpNWTDgDGCkUn4+e7VUI=; b=Sgrm+jrRxMrcbnc2AsW0KR
- u/lI2M2vRvmzv/6jyaCLijxOmZI2+QAd2z08nhWOhbH97rwjG1YuEscOE4qoIWwR
- C+gCCjrRQ1Ui+cxg4unxCBxeBI+XbDRUHUsIhckTYkOTiDYjfqqbEiPUmhZ4nF5P
- DERLB74Pa7GPBk8YdUAuaXvftFzDs+jxOr/or+oCJOIPpW74ZoqG6La6Qh/x0vyb
- FF5Su3efLZvVdZqNw6eBzUKZa4A0LHrKY4vggr03H87emiAe+vowiGJxOBmjv+gv
- aA1YK96uT8fai0fnwraZI7IVcB92VXqMd/S3OCLTBwuf7O3UAQqSP1vLIyOcmfgA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2kqqj2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 07:16:04 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63A3ch4X014378;
- Fri, 10 Apr 2026 07:16:03 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg4y0dw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 07:16:03 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63A7G2YF65798452
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Apr 2026 07:16:02 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EFC2C58043;
- Fri, 10 Apr 2026 07:16:01 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3D8A35805F;
- Fri, 10 Apr 2026 07:16:01 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Apr 2026 07:16:01 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wB6GI-0006iM-Ne
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:26:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775806000;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SzWLDKBnyzNA1T5YceMswjeh4MEVICXjSAPV2kBjGzE=;
+ b=ZqJ2AvY6gpYZ1C9Y+U5oc59yhP0Wa2TIGiFEOj9/1cuInq8DiX+v2jW/g/NuLzT/zHQ9yl
+ RwqRrS5kwRQHLPujFkaJpfvUSE5LqlfZyAvh0q+AVx2wq9sxBqVYuKNKdokkSWvB0yep85
+ v3Lu7Aw00OothJHlDAdpV0TKuQQ1NF4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-315-bGIyEV3EMHexmb2J6OoaJQ-1; Fri, 10 Apr 2026 03:26:39 -0400
+X-MC-Unique: bGIyEV3EMHexmb2J6OoaJQ-1
+X-Mimecast-MFC-AGG-ID: bGIyEV3EMHexmb2J6OoaJQ_1775805998
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-488bd1ee9e7so10844765e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:26:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775805998; x=1776410798;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SzWLDKBnyzNA1T5YceMswjeh4MEVICXjSAPV2kBjGzE=;
+ b=BdoDpHc6GWxPOr+NXLThG652YLujdpbf/NCHZxVXqSOpAccYCn7ILTncyf8DM7bpmH
+ rPVOzk5B1OJO+AyboTF1phnO/TqSxLDzYEEzSEzDyaX2CkPIEhVFtSj/3hT8WrQz6B93
+ B/Q+2Df8KN/d0jkJENW3LPavPRHoSGTrLzQJ5LTWGJ7EUb4xDWBLrP3VKgn64NY62/5v
+ SMFsXsLfY0X4vXluSoieJDPSzmva/nQuyIY84IEtcnaU8NwtsXUBYOy6oaYficR53ioz
+ +2rcPHCLpvrL+VUoEC7RGMiMg5vHA/eigqaMDKJzLpN/MxW1nWQMzofinUgMlalNSslv
+ MNqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnRn+fP6H3qLUtvOMwh2mkdOT35elbdfAO/yrIhLg/PyWR14vUUd7iZk5GI7z3N7dTigHlOuvDExBe@nongnu.org
+X-Gm-Message-State: AOJu0YybVH2I4S+Ahyuei5x1heHvDnxhSFPXmof6TXXc1ck4QpSe7Xij
+ JFp8LQySHb2lU6aYRnH3h1nAaaIUB+KonLyQYrHUkXZADrk2m+l2oTJmJkOALND7PlwhgRS8ylM
+ 3jrinBwSYhyKTCvXEIVRCqrALZnnJGdgVSsDNjiyAl0kpYWrX/1mHzyvi
+X-Gm-Gg: AeBDies/OJfrFCnHCCQTa0rkJInBJTMsT5KiSgoyawm0EcuvkC862HdgV3UHcQ3RXb9
+ rzGaekGf0gnJl9c6zpcCoCnanvun0IokflrhgkbDvSUh92zI1Ju9p7pj4C2NFbVUaGt79+7NLML
+ PI/NEWmDjCXKfCAz298qyCjpRAJr6x64vAR0tdwaxit8QG9H7aNq/y3/S4Ltlw/LbZV9N/cmTo+
+ ebQJUvlQ4Vt0yFkvSnE6JKOj/SMA6wu5rVUsQScOmPwDAWrtiIz0sHecCyqyJf1i/DpVYgGGPS+
+ 6Qo/4RRMyE1Wt4UlySn8UBLlJzNxzGs3a4BbdkvYRF7KXEjR/bUYOW5CllumO5MR5XL0tWUE6Yn
+ 38lKM2cJQmN7btYyeghgBnZZSGzgJUoBGxYfb43APCbBvyVCpmpKnqTb+KYNLHhdbN69ArA==
+X-Received: by 2002:a05:600c:1391:b0:486:fe23:1707 with SMTP id
+ 5b1f17b1804b1-488d687116amr24238625e9.20.1775805997684; 
+ Fri, 10 Apr 2026 00:26:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:1391:b0:486:fe23:1707 with SMTP id
+ 5b1f17b1804b1-488d687116amr24238045e9.20.1775805997126; 
+ Fri, 10 Apr 2026 00:26:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d53807d7sm92539365e9.10.2026.04.10.00.26.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Apr 2026 00:26:36 -0700 (PDT)
+Message-ID: <10540f3f-28b6-4cbb-9736-d6e8a01bdd76@redhat.com>
+Date: Fri, 10 Apr 2026 09:26:34 +0200
 MIME-Version: 1.0
-Date: Fri, 10 Apr 2026 12:46:00 +0530
-From: Misbah Anjum N <misanjum@linux.ibm.com>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, Anisinha
- <anisinha@redhat.com>, Pbonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- gautam@linux.ibm.com, peter.maydell@linaro.org
-Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
- kvm_cpu_exec
-In-Reply-To: <20260409161042.55281-1-harshpb@linux.ibm.com>
-References: <20260409161042.55281-1-harshpb@linux.ibm.com>
-Message-ID: <4fee7176e93e91a75e39ef141db2675f@linux.ibm.com>
-X-Sender: misanjum@linux.ibm.com
-Organization: IBM
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA2MSBTYWx0ZWRfX6jKPEGteKutG
- I53l9toAbqBbiI3Lg/zZM7B/q6GS+L0RAr44va7H0ry/fWw/iqytPuBiZhOnB/YvZIZowuI/iuK
- iZHAzFvu/cGWjQ5yLscJ1M97qJ5OLxeOtbqu1rL2qX5VWZC1FKMTCvr4wGuXDUci147UZOp4JFe
- 5mlOhFlgzdfpFLip1ROJ3BkmTfhjXp8e2p6JJVBXnnYWiETiz61MidNJ2xtF0LnVwvlJ+By2f9N
- Rh6zyL70M315y+uLO0L9vqNvll6LH4u8OhV1Wcmm1TrTRtoYVN1vwMfFK7lHXRjARvQAqlTZndz
- MTetl0Bnd9rjfEhX2+WLmQkZbeZJ30KqQqJ0qqchePGvQ3+laAsIpz2WdqumlRzwYMOrcIS+KEQ
- jUZXq9oqI+i3I/lZ0pyNTI/4QlLU68H4GKlWLnTOML6EjTsM96N2MJUHKn7dFAXcuW045JL2c4R
- /eA6Ps5FGNApxHymy5g==
-X-Proofpoint-ORIG-GUID: XbzVHOuZhd_9uTrAtaKohDaaRlicFaB5
-X-Authority-Analysis: v=2.4 cv=e9k2j6p/ c=1 sm=1 tr=0 ts=69d8a3b4 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=9oSHA60ZoXLfwu9LI_gA:9 a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
-X-Proofpoint-GUID: GETwo9QV28Wz_Sxq8bUNjdJgXVbjrhjM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-10_02,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100061
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=misanjum@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/11] hw/arm/smmuv3-accel: Add helper for resolving auto
+ parameters
+Content-Language: en-US
+To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,
+ Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
+References: <20260401010231.4166776-1-nathanc@nvidia.com>
+ <20260401010231.4166776-2-nathanc@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260401010231.4166776-2-nathanc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,121 +121,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-I've tested the patch on PowerPC pseries machine and it resolves the 
-boot hang issue seen on ppc when booting KVM guest with >1 smp value.
+Hi Nathan,
 
-Test Environment:
-- Host Arch: ppc64le
-- Host and Guest OS: Fedora 42
-- Machine Type: pseries with KVM acceleration
-- QEMU: Latest master with this patch applied
-
-Test Results:
-All the following SMP topologies now boot successfully:
-
-Single and simple multi-CPU:
-- -smp 1
-- -smp 2
-- -smp 4
-- -smp 32
-
-Various socket/core/thread combinations (8 vCPUs):
-- -smp 8,sockets=8,cores=1,threads=1
-- -smp 8,sockets=1,cores=8,threads=1
-- -smp 8,sockets=1,cores=1,threads=8
-- -smp 8,sockets=2,cores=4,threads=1
-- -smp 8,sockets=1,cores=4,threads=2
-- -smp 8,sockets=2,cores=1,threads=4
-- -smp 8,sockets=2,cores=2,threads=2
-
-Higher vCPU count:
-- -smp 16,sockets=2,cores=4,threads=2
-- -smp 32,sockets=1,cores=8,threads=4
-
-Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
-
-Thanks,
-Misbah Anjum N <misanjum@linux.ibm.com>
-
-
-On 2026-04-09 21:40, Harsh Prateek Bora wrote:
-> When kvm_cpu_exec() returns EXCP_HLT due to 
-> kvm_arch_process_async_events()
-> returning true, it was returning before releasing the BQL (Big QEMU 
-> Lock).
-> This caused a lock imbalance where the vCPU thread would loop back to
-> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
-> 
-> The issue manifests as boot hangs on PowerPC pseries machines with 
-> multiple
-> vCPUs, where secondary vCPUs with start-powered-off=true remain halted 
-> and
-> repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each iteration 
-> held
-> the BQL, preventing other operations from proceeding.
-> 
-> The fix has two parts:
-> 
-> 1. In kvm_cpu_exec() (kvm-all.c):
->    Release the BQL before returning EXCP_HLT in the early return path,
->    matching the behavior of the normal execution path where 
-> bql_unlock()
->    is called before entering the main KVM execution loop.
-> 
-> 2. In kvm_vcpu_thread_fn() (kvm-accel-ops.c):
->    Re-acquire the BQL after kvm_cpu_exec() returns EXCP_HLT, since the
->    loop expects to hold the BQL when calling kvm_cpu_exec() again.
-> 
-> This ensures proper BQL lock/unlock pairing:
-> - kvm_vcpu_thread_fn() holds BQL before calling kvm_cpu_exec()
-> - kvm_cpu_exec() releases BQL before returning (for EXCP_HLT)
-> - kvm_vcpu_thread_fn() re-acquires BQL if EXCP_HLT was returned
-> - Next iteration has BQL held as expected
-> 
-> This is a regression introduced by commit 98884e0cc1 ("accel/kvm: add
-> changes required to support KVM VM file descriptor change") which
-> refactored kvm_irqchip_create() and changed the initialization timing,
-> exposing this lock imbalance issue.
-> 
-> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM
-> file descriptor change")
-> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
-> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+On 4/1/26 3:02 AM, Nathan Chen wrote:
+> From: Nathan Chen <nathanc@nvidia.com>
+>
+> Introduce smmuv3_accel_auto_finalise() to resolve properties that are
+> set to 'auto' for accelerated SMMUv3. This helper function allows
+> properties such as ats, ril, ssidsize, and oas support to be resolved
+> from host IOMMU capabilities via IOMMU_GET_HW_INFO.
+>
+> Auto mode requires at least one cold-plugged device to retrieve and
+> finalise these properties. Register a machine_init_done notifier to
+> verify this requirement and fail boot if it is not met.
+>
+> Hot-plugged devices into an accel SMMUv3-associated bus will re-use
+> the resolved host values from the initial cold-plug.
+>
+> Subsequent patches will make use of this helper to resolve 'auto' to
+> what is reported by host IOMMU capabilities.
+>
+> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 > ---
->  accel/kvm/kvm-accel-ops.c | 4 ++++
->  accel/kvm/kvm-all.c       | 1 +
->  2 files changed, 5 insertions(+)
-> 
-> diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
-> index 6d9140e549..d684fd0840 100644
-> --- a/accel/kvm/kvm-accel-ops.c
-> +++ b/accel/kvm/kvm-accel-ops.c
-> @@ -52,6 +52,10 @@ static void *kvm_vcpu_thread_fn(void *arg)
-> 
->          if (cpu_can_run(cpu)) {
->              r = kvm_cpu_exec(cpu);
-> +            if (r == EXCP_HLT) {
-> +                /* kvm_cpu_exec() released BQL, re-acquire for next
-> iteration */
-> +                bql_lock();
-> +            }
->              if (r == EXCP_DEBUG) {
->                  cpu_handle_guest_debug(cpu);
->              }
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 774499d34f..00b8018664 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -3439,6 +3439,7 @@ int kvm_cpu_exec(CPUState *cpu)
->      trace_kvm_cpu_exec();
-> 
->      if (kvm_arch_process_async_events(cpu)) {
-> +        bql_unlock();
->          return EXCP_HLT;
->      }
+>  hw/arm/smmuv3-accel.c   | 14 ++++++++++++++
+>  hw/arm/smmuv3-accel.h   |  2 ++
+>  hw/arm/smmuv3.c         | 20 ++++++++++++++++++++
+>  include/hw/arm/smmuv3.h |  2 ++
+>  4 files changed, 38 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 65c2f44880..a0146c8d31 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -35,11 +35,25 @@ static int smmuv3_oas_bits(uint32_t oas)
+>      return map[oas];
+>  }
+>  
+> +static void smmuv3_accel_auto_finalise(SMMUv3State *s,
+> +                                       struct iommu_hw_info_arm_smmuv3 *info) {
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +
+> +    /* Return if no auto for any or finalised already */
+> +    if (!accel->auto_mode || accel->auto_finalised) {
+I think you need to explain the commit message when auto_mode is going
+to be set (I guess at least once an accel  prop is set to auto mode).
+
+Also can you detail this case where smmuv3_accel_auto_finalise() would
+be called several times. Here we return directly without looking again
+at the prop values. Would it be meaningful to continue and check the
+collected info matches the ones already collected? Can it happen?
+
+An alternative would have been to fall back to default values in case no
+cold plugged host dev could be found. Can you motivate that choice in
+the commit msg?
+> +        return;
+> +    }
+> +
+> +    accel->auto_finalised = true;
+> +}
+> +
+>  static bool
+>  smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+>                                   struct iommu_hw_info_arm_smmuv3 *info,
+>                                   Error **errp)
+>  {
+> +    smmuv3_accel_auto_finalise(s, info);
+> +
+>      /* QEMU SMMUv3 supports both linear and 2-level stream tables */
+>      if (FIELD_EX32(info->idr[0], IDR0, STLEVEL) !=
+>                  FIELD_EX32(s->idr[0], IDR0, STLEVEL)) {
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index dba6c71de5..3c1cd55714 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -26,6 +26,8 @@ typedef struct SMMUv3AccelState {
+>      uint32_t bypass_hwpt_id;
+>      uint32_t abort_hwpt_id;
+>      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
+> +    bool auto_mode;
+> +    bool auto_finalised;
+>  } SMMUv3AccelState;
+>  
+>  typedef struct SMMUS1Hwpt {
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 7fead1c3cf..09ea08eb18 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -37,6 +37,7 @@
+>  #include "smmuv3-accel.h"
+>  #include "smmuv3-internal.h"
+>  #include "smmu-internal.h"
+> +#include "system/system.h"
+>  
+>  #define PTW_RECORD_FAULT(ptw_info, cfg) (((ptw_info).stage == SMMU_STAGE_1 && \
+>                                          (cfg)->record_faults) || \
+> @@ -2020,6 +2021,22 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+>      return true;
+>  }
+>  
+> +static void smmuv3_machine_done(Notifier *notifier, void *data)
+> +{
+> +    SMMUv3State *s = container_of(notifier, SMMUv3State, machine_done);
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +
+> +    if (!s->accel) {
+> +        return;
+> +    }
+> +
+> +    if (accel->auto_mode && !accel->auto_finalised) {
+> +        error_report("arm-smmuv3 accel=on with 'auto' properties requires "
+> +                     "at least one cold-plugged VFIO device");
+> +        exit(1);
+> +    }
+> +}
+> +
+>  static void smmu_realize(DeviceState *d, Error **errp)
+>  {
+>      SMMUState *sys = ARM_SMMU(d);
+> @@ -2058,6 +2075,9 @@ static void smmu_realize(DeviceState *d, Error **errp)
+>  
+>      smmu_init_irq(s, dev);
+>      smmuv3_init_id_regs(s);
+> +
+> +    s->machine_done.notify = smmuv3_machine_done;
+> +    qemu_add_machine_init_done_notifier(&s->machine_done);
+can't you move smmuv3_machine_done in smmuv3-accel.c and also call 
+
+qemu_add_machine_init_done_notifier from smmuv3_accel_init()?
+
+Eric
+
+>  }
+>  
+>  static const VMStateDescription vmstate_smmuv3_queue = {
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 82f18eb090..fe0493c1aa 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -74,6 +74,8 @@ struct SMMUv3State {
+>      OnOffAuto ats;
+>      OasMode oas;
+>      SsidSizeMode ssidsize;
+> +
+> +    Notifier machine_done;
+>  };
+>  
+>  typedef enum {
+
 
