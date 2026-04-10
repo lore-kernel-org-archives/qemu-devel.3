@@ -4,128 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417C0F45A08
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 17:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3AB0F459FC
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 17:57:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBG5a-0006nW-Qy; Fri, 10 Apr 2026 13:56:18 -0400
+	id 1wBG5a-0006nT-Er; Fri, 10 Apr 2026 13:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wBG5Y-0006mW-Hg
+ id 1wBG5Y-0006mf-PK
  for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:16 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wBG5V-0001Xb-DO
+ id 1wBG5W-0001Xj-2I
  for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:16 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63AAKDwV2698454
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:10 GMT
+ 63AApPnH709117
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=nOvzeWfo1gz
- MP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=; b=RFVXNgcJHHkNaeIM8Sw4bUZjY17
- Qj88nXrDq35lQDyfQKjrUlgJvTGT1SYRH1sA10lbhuGtoUdVrom39u1gwqWOVSKx
- mbng/5wfPzSX4dDxRhPe2VLQyl9A88+piPPIf6ENgPMStJJyqO95izo5EOHVb79y
- o4xggLo7ecPYkdLnUjOzEl+R5gp16P4onDa6t2HmFJH1yBi7gQEzXqQpjrT2eUoM
- 0xRbbU1x04Lhiez8D1OMeYwzjq+jolqwOcOv8sV5XiWCzG+vIlioxqUKpNNYzice
- dC4trALNXV/But3Z4gv7+20KfZvnRHcHT9NBVmLtCNHiWCycq6fForotWEA==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4degt9v4hj-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=sangyG8tfzJ
+ 3xLqN6HjSzyDmUUok+xf6sPcbdCH9vRw=; b=UJQDbGAMJu4SfaSY2CwMv6DwORw
+ WN3ghlqfTcIJIIiFUXC5uR1GTy8WozcgEV87LlxAADBQB4di354GDy8JbO0wJOm2
+ 8KG8dkHyy2PcbnmTWXL0vVgnjbLKgZSHSKt1X4Yc8dBGhkjeV3jaB3d0ikEeOG2+
+ EwuHwhy910U0Rwzumos0dua9iSVZjYXNFD/rZGKPAWbWNeKiBxZTb7v0pkDdLKjO
+ BJVBCKxrvMXz9nTDOVym74Qa5I0wVOSXI0TOSSAN9JoAiMe01NKD2clqcDn/z9jt
+ GwLOwrYTq+04fmTdZJLjC+UFnv5qjC8WMJu6FzOeFIiFxD2ecBxuW3adc8A==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4deudj2dgw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:10 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-127133794b6so13615424c88.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 10:56:10 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:11 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2b81ff82e3cso1183653eec.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 10:56:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1775843769; x=1776448569; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1775843770; x=1776448570; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nOvzeWfo1gzMP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=;
- b=CVxDgyrCItlOqhjOOAwFcXNyoKaxIIj0HvI8s53szAY2NMzeC83ybY9XOoTqEMk6oB
- PNiXYlK7SDw3rASVv9kqAl5CffGyTJYQ1TyOaDkX4uz/lW43aWR18/XGTOWJmmnPhIll
- Zdn/DrSinG1JIw+CZYUSzjUuvNpvN+k9ZF7MZ0U/1lDuRkmkwLpWl2dsUfdrP6xboIJV
- t0KP42S/xqmrhxfm5A278Sxv/aSuQgrNjK8EGJcokKHe74D4Eedy5YukGPMcD0NRDBKJ
- obNRtA0DLpe3oL37c/L98K1vzMdKudrUPOWtiWl4haql8bZ3+a6i/6zBJMFvD/ib7916
- hYBQ==
+ bh=sangyG8tfzJ3xLqN6HjSzyDmUUok+xf6sPcbdCH9vRw=;
+ b=MSKN2o2s+2W0icQ9xu/BmPh1Nz6Haw4NerJf56zLKH5uZQD55vPiry0j147UgLzXr1
+ 14xU38+29j87g/ggQ7dCrzIyEpSRGLGPiyS8Ahn+tQpoDvUAkErjo2UUtGHboyt3c3XZ
+ Se1rw34oYgQepZIdL9al6/oLQ9ASPfslxS7G3DSCD32u3lz3bUDEBFGhJ4VJxZrV7nvM
+ 1HniflGF5seIrZvCSR29yRPOCOmopVdiVQSyfwSo1jPNFwlSgoYLkR/S0EdCsxSms327
+ HG2GU/mR2jsGqDk7FpR+S+Nda5ozsBA5yQZYlK3YoFUeypU8edoIuXYhoq4CQxsu7V4T
+ IJfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1775843770; x=1776448570;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nOvzeWfo1gzMP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=;
- b=b/70/NlscFAJeLvkqRwpxJ5J0oria4Tnk+9N5M57vK5Pe6/K75DF2+3Nl4gpnyk9DD
- NhtH1xRxc253voJd7TsTOevc3DXgbBHZ5A09yIGL0oSm7S/oRzLezDsi0WE8MjtFHB2F
- ZZbXGybV0aveasFADbFtHHEe9ztzaRJ/aJZuidr/jpzbWLd6KdQqEWeGKfIbvQy2erX8
- MNTtLpwkS8g1w83YuGGap5hxKBHXQrxO2mqo3KfC3DbDqNoN/QbZw9LloNv06I8ZfJbx
- wG2MKMxhJ0xxXBxAKxhCCFWRXV/e42O/t9aoFB2Y/NrZQl2SrFVeBwbvGgzjY0XWt3Pp
- Rmjg==
-X-Gm-Message-State: AOJu0YyzzdeMBja+QiNMCXz49JiWL5n0Mty8ijwG3ker/kOadVbSH7Z2
- LMDxNVa0bQBfNwaIm4EhyIZxzEdPgI+zgLJXOW/No1/DeV/oIt97MB9o05skOdDtx54F59kFanJ
- GizWSjq5E8gm+1pkso6CpjKRPkZzW+Ohea1kI5FjOE2AaGAGCBa4DTSN+fNnCyB5CBrG8
-X-Gm-Gg: AeBDietTLiH63OGQNdFoeaqB1JNrAhk4/LhNonGhWPnKjgmtwx8mYyNinCg5UtbKsUC
- BIFmPrg9wwO+ts6jarwm1ZDnVcnivcMY5I5gAt71mQS6C/wNpRhFlrLIF2057b7UTZGgma2+7gO
- xwEANS370ByYZaQq3sSAimOGpckaxKUdBlri80R1T7LnwWLTG5LHtNqwIRjxCLySf68v9IdPG/P
- sbRR17JRwCGrqKPCM2GnXm8Gn1KUg6eQTl81gImv2eC0bYGcjRGfRB0w55j3L86kGOFdi/9RO9u
- ky4iqPsm3R3lofXHIU5a2+CKO8kwkPi2q8S3Kk3e0KK5U8M6fyZH+KYwt+V4JgHh8zpViUavel9
- alj9pXwCcGh6XzPz4baxW/SNqUvx2v7fOaLfFs6fUhph0Db+6OjBTzXnjQEhTRewjIOmkaAukLZ
- xAFh3pI4md
-X-Received: by 2002:a05:7022:ec07:b0:128:d3de:c9e4 with SMTP id
- a92af1059eb24-12c34ef7f15mr2346151c88.30.1775843769357; 
+ bh=sangyG8tfzJ3xLqN6HjSzyDmUUok+xf6sPcbdCH9vRw=;
+ b=rgBsdcQ1tn0dZbKScgk01cBkXcJZkk4sGTqe41arhnb32b5lpMLtp6FtitzX94jXyI
+ rmhQwSb1WZGcFV+ovInBjBD9ZTNI2Kp8Zm3B9ihtgJR6OLyITXJmhO/o7Zdk+NsRLn33
+ eJOq0XrkvfhXjYKOXW5masxBp0Jf1vq3kyZvNZaTTYvS2GGkdsxsRYWTznztgxjkwsvY
+ 9TGjGkwmMsOCtU94DEhLJVVwmKtFbwhUqG8pyONItFtDEKQGLomoDLBYVRxPhBAhXkLr
+ XBZvphfUvCeX1eem/ZNIAHmb6vyjNEAZ6xyMN2X0I4fdD0Yqi3LttVVquevHPO9PQOmR
+ fkwA==
+X-Gm-Message-State: AOJu0YxTSe4YgvDynaGaBra2Rl/ijNgvGE5UjvQGAYLAMmhElDFeF3Ww
+ +eclYSKryG8+GQlxGRUFUvHVhaiggv7mEsdFBDtGMXMn+U5mfyDexcKpa71rx3nX6jgvfs/TCWW
+ h+mniybiqbEUawhqqZ1nk4VQ9QjiwZAAmY5A/hjJO6+jsKfRUDuarMzOnDBhy1TMx1/+u
+X-Gm-Gg: AeBDies/TxIryyFGWqgmmsFTRfESIG6es21+ksEx0V4vUfaUyxtZpKNSEIrqCYjr86S
+ kwbklFpaJwdwQU8Cn1GLIwMwKZRnsm6KzMWPJLIrd+0S++HN7rta5TMDUiGJ6FuGZb7YkueAEft
+ CpojLUgLNZUMfaz+N7LcaJJAKdBPatcA0ZIOrihL42dHVggodYWM8r7DtSqxDgslU6cp5UhcmYK
+ /kgrcSMyKX11ky72GOWKuDRzfMoitGaUAJGtlIXkzekE6ovYNAICkkRhay11qCZsXOWt9o6RSfO
+ WdhDC8A9THLeePzF3wSumJ4C8zhxiYx7H56sQDuDm+bn52RS4tkA0r63a4zk0gvMZw6EF51FFjc
+ KEtihMwV1bEFOTZfA18FyZacorl/iwd/ikx5LMLj9OAdD/NgWkpGacBPNYm9VOBn/ZhqasfO0L2
+ OlsqMgULtP
+X-Received: by 2002:a05:7022:6186:b0:12c:f77:f087 with SMTP id
+ a92af1059eb24-12c28c2946emr4003215c88.12.1775843770226; 
+ Fri, 10 Apr 2026 10:56:10 -0700 (PDT)
+X-Received: by 2002:a05:7022:6186:b0:12c:f77:f087 with SMTP id
+ a92af1059eb24-12c28c2946emr4003210c88.12.1775843769681; 
  Fri, 10 Apr 2026 10:56:09 -0700 (PDT)
-X-Received: by 2002:a05:7022:ec07:b0:128:d3de:c9e4 with SMTP id
- a92af1059eb24-12c34ef7f15mr2346121c88.30.1775843768686; 
- Fri, 10 Apr 2026 10:56:08 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c3459f7ffsm4256271c88.3.2026.04.10.10.56.08
+ a92af1059eb24-12c3459f7ffsm4256271c88.3.2026.04.10.10.56.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Apr 2026 10:56:08 -0700 (PDT)
+ Fri, 10 Apr 2026 10:56:09 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
  brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  marco.liebel@oss.qualcomm.com, philmd@linaro.org,
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
-Subject: [PATCH v4 02/16] target/hexagon: fix incorrect/too-permissive HVX
- encodings
-Date: Fri, 10 Apr 2026 10:55:50 -0700
-Message-Id: <b9a5a46b82e804d3c1cbeff678a9871a2b25a900.1775843299.git.matheus.bernardino@oss.qualcomm.com>
+Subject: [PATCH v4 03/16] target/hexagon/cpu: add HVX IEEE FP extension
+Date: Fri, 10 Apr 2026 10:55:51 -0700
+Message-Id: <7889db953a4d91781d4c669ab89a43ad8ed3fe6e.1775843299.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1775843299.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1775843299.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE2OCBTYWx0ZWRfX9yLIMnW5xLEy
- ClOfN2k+0QrwY+uxDD21to5Whr4yjVHyyiZtxhAJs9rpwjJT3GRzZqq+EkHAz0TFnfPNRg1HM+j
- O4WVQHgfpTXPlq/oUfkuAIy/x2YrqhOkbH1WIGF7+XZ1Z72NZucZWrjUJRRh2zEJc1TTcA/oSAd
- fLdONr8FY+ZmzPVV/82F3Qhpsn4dBIovb3L4IOOl/ZX5OV7Ieigxuu9PTWduc3eVIkhIR9GzBkh
- UvFVtJ4nBeiL3izWfndP6W2JP8SnPKwufqECH1jXt7Qi0c9JlF1GECpcjm1EMuDv4MWUn3O06vv
- A8qiLB6RWIHGcQ+d7QxjciF6vWjZBP9pHLFYKM0vsg1B1V/IePu6fFZGES7orIiPpGvOpO5A2bT
- obzWK1uRwBZ5UOKBEszbKR6YG5uQU0Vu3Ke43iqDdSwSEvj7fVU8eUDjHkZ6izbsI3aWwJv074+
- kZBJmpxEo+WvgN8Balg==
-X-Proofpoint-ORIG-GUID: A1LO4U7Ba-7U5SvETsorGkksL-W0UOA0
-X-Proofpoint-GUID: A1LO4U7Ba-7U5SvETsorGkksL-W0UOA0
-X-Authority-Analysis: v=2.4 cv=BJyDalQG c=1 sm=1 tr=0 ts=69d939ba cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: x6PxLnRSRTR-FdkOCih8oSu_mCJ0nkt4
+X-Proofpoint-GUID: x6PxLnRSRTR-FdkOCih8oSu_mCJ0nkt4
+X-Authority-Analysis: v=2.4 cv=cKfQdFeN c=1 sm=1 tr=0 ts=69d939bb cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=LtKSMYrkcOpncNoavBoA:9 a=vBUdepa8ALXHeOFLBtFW:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
+ a=3E6RppW8_B6KdyBj4qEA:9 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE2OCBTYWx0ZWRfX5hK0sa8Mz+03
+ zHLSECuu7xdPzD6y4Y42f8cHkTvIvFJJGyzC6V1AiLZOpGe4MYXINjYSmxBoc0okNP8LfrG9Egp
+ eEEmdpqprAlKeFEZgihgIXWOCEICv1F9Z1x+sGSpOl4uvoNYSRqy3WVAQHCx8Px/l3epLLic1CD
+ q7xKUuvCaYWbRpeWLEA7G0/FSHGqbBB4I2olC6ZmxZwaL46QgQA0lhtzWyubpIU68zf/ewBSYtF
+ 0kaLJcP5pLrUCANWvgj5f4yEpi9SbBETJJJUXyTd4mo1q24pnrQmm8083zRFwydQHUikded1pml
+ b+r/tKI2BawCNIqQ92rk+EqlK69PyjrB6WtBNfF9Y7FDwfNv807tBxVC7+x4ahSAlw4GP5OoGDS
+ MNdkyeAzlUWX/H9RwIzrmHwxqpCU7MUQZRfF7tKVvjd0mDNStxvWEGtCw53B9B/M9YCQMI8FeKK
+ IeIuJLWnmflBiuvTDdg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-10_05,2026-04-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 spamscore=0
+ impostorscore=0 clxscore=1015 suspectscore=0 phishscore=0 lowpriorityscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100168
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -149,90 +149,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following encodings have become stricter since v68:
+This flag will be used to control the HVX IEEE float instructions, which
+are only available at some Hexagon cores. When unavailable, the
+instruction effectively only set the destination registers to 0.
 
-    - V6_vunpackob, V6_vunpackoh: ---00 -> --000
-    - V6_vaddbq/hq/wq, V6_vaddbnq/hnq/wnq: ---01 -> --001
-    - V6_vsubbq/hq, V6_vsubwq/bnq/hnq/wnq: ---01/---10 -> --001/--010
-    - V6_vhist, V6_vwhist128/256, V6_vwhist128/256_sat: ---00 -> --000
-    - V6_vhistq, V6_vwhist128/256q, V6_vwhist128/256q_sat: ---10 -> --010
-
-Pre v68 compilers, by default, already use "0" for the non-specified bit
-that changed in v68, so unless someone is manually writing the binary
-encoding, this should not cause any backwards incompatibility with
-pre-v68 binaries.
-
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- target/hexagon/imported/mmvec/encode_ext.def | 48 ++++++++++----------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ target/hexagon/cpu.h             |  1 +
+ target/hexagon/translate.h       |  1 +
+ target/hexagon/attribs_def.h.inc |  3 +++
+ target/hexagon/cpu.c             |  1 +
+ target/hexagon/translate.c       |  1 +
+ target/hexagon/gen_tcg_funcs.py  | 11 +++++++++++
+ target/hexagon/hex_common.py     | 25 +++++++++++++++++++++++++
+ 7 files changed, 43 insertions(+)
 
-diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
-index 402438f566..6d70086b5f 100644
---- a/target/hexagon/imported/mmvec/encode_ext.def
-+++ b/target/hexagon/imported/mmvec/encode_ext.def
-@@ -647,36 +647,36 @@ DEF_ENC(V6_vsubububb_sat,    ICLASS_CJ" 1 110 101 vvvvv PP 0 uuuuu 101 ddddd")
- DEF_ENC(V6_vmpyewuh_64,        ICLASS_CJ" 1 110 101 vvvvv PP 0 uuuuu 110 ddddd")
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index 85afd59277..77822a48b6 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -127,6 +127,7 @@ struct ArchCPU {
+     bool lldb_compat;
+     target_ulong lldb_stack_adjust;
+     bool short_circuit;
++    bool ieee_fp_extension;
+ };
  
- DEF_FIELDROW_DESC32(        ICLASS_CJ" 1 110 --0 ----- PP 1 ----- ----- ---","Vx32=Vu32")
--DEF_ENC(V6_vunpackob,         ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 000 xxxxx") //
--DEF_ENC(V6_vunpackoh,         ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 001 xxxxx") //
-+DEF_ENC(V6_vunpackob,         ICLASS_CJ" 1 110 --0 --000 PP 1 uuuuu 000 xxxxx") //
-+DEF_ENC(V6_vunpackoh,         ICLASS_CJ" 1 110 --0 --000 PP 1 uuuuu 001 xxxxx") //
- //DEF_ENC(V6_vunpackow,     ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 010 xxxxx") //
+ #include "cpu_bits.h"
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+index b37cb49238..516aab7038 100644
+--- a/target/hexagon/translate.h
++++ b/target/hexagon/translate.h
+@@ -70,6 +70,7 @@ typedef struct DisasContext {
+     target_ulong branch_dest;
+     bool is_tight_loop;
+     bool short_circuit;
++    bool ieee_fp_extension;
+     bool read_after_write;
+     bool has_hvx_overlap;
+     TCGv new_value[TOTAL_PER_THREAD_REGS];
+diff --git a/target/hexagon/attribs_def.h.inc b/target/hexagon/attribs_def.h.inc
+index 9e3a05f882..c85cd5d17c 100644
+--- a/target/hexagon/attribs_def.h.inc
++++ b/target/hexagon/attribs_def.h.inc
+@@ -173,5 +173,8 @@ DEF_ATTRIB(NOTE_SHIFT_RESOURCE, "Uses the HVX shift resource.", "", "")
+ DEF_ATTRIB(RESTRICT_NOSLOT1_STORE, "Packet must not have slot 1 store", "", "")
+ DEF_ATTRIB(RESTRICT_LATEPRED, "Predicate can not be used as a .new.", "", "")
  
--DEF_ENC(V6_vhist,            ICLASS_CJ" 1 110 --0 ---00 PP 1 -000- 100 -----")
--DEF_ENC(V6_vwhist256,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -0010 100 -----")
--DEF_ENC(V6_vwhist256_sat,    ICLASS_CJ" 1 110 --0 ---00 PP 1 -0011 100 -----")
--DEF_ENC(V6_vwhist128,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -010- 100 -----")
--DEF_ENC(V6_vwhist128m,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -011i 100 -----")
-+DEF_ENC(V6_vhist,            ICLASS_CJ" 1 110 --0 --000 PP 1 -000- 100 -----")
-+DEF_ENC(V6_vwhist256,        ICLASS_CJ" 1 110 --0 --000 PP 1 -0010 100 -----")
-+DEF_ENC(V6_vwhist256_sat,    ICLASS_CJ" 1 110 --0 --000 PP 1 -0011 100 -----")
-+DEF_ENC(V6_vwhist128,        ICLASS_CJ" 1 110 --0 --000 PP 1 -010- 100 -----")
-+DEF_ENC(V6_vwhist128m,        ICLASS_CJ" 1 110 --0 --000 PP 1 -011i 100 -----")
++/* HVX IEEE FP extension attributes */
++DEF_ATTRIB(HVX_IEEE_FP, "HVX IEEE FP extension instruction", "", "")
++
+ /* Keep this as the last attribute: */
+ DEF_ATTRIB(ZZ_LASTATTRIB, "Last attribute in the file", "", "")
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index ffd14bb467..8b72a5d3c8 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -54,6 +54,7 @@ static const Property hexagon_cpu_properties[] = {
+     DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, lldb_stack_adjust, 0,
+                          qdev_prop_uint32, target_ulong),
+     DEFINE_PROP_BOOL("short-circuit", HexagonCPU, short_circuit, true),
++    DEFINE_PROP_BOOL("ieee-fp", HexagonCPU, ieee_fp_extension, true),
+ };
  
- DEF_FIELDROW_DESC32(        ICLASS_CJ" 1 110 --0 ----- PP 1 ----- ----- ---","if (Qv4) Vx32=Vu32")
--DEF_ENC(V6_vaddbq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 000 xxxxx") //
--DEF_ENC(V6_vaddhq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 001 xxxxx") //
--DEF_ENC(V6_vaddwq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 010 xxxxx") //
--DEF_ENC(V6_vaddbnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 011 xxxxx") //
--DEF_ENC(V6_vaddhnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 100 xxxxx") //
--DEF_ENC(V6_vaddwnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 101 xxxxx") //
--DEF_ENC(V6_vsubbq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 110 xxxxx") //
--DEF_ENC(V6_vsubhq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 111 xxxxx") //
-+DEF_ENC(V6_vaddbq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 000 xxxxx") //
-+DEF_ENC(V6_vaddhq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 001 xxxxx") //
-+DEF_ENC(V6_vaddwq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 010 xxxxx") //
-+DEF_ENC(V6_vaddbnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 011 xxxxx") //
-+DEF_ENC(V6_vaddhnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 100 xxxxx") //
-+DEF_ENC(V6_vaddwnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 101 xxxxx") //
-+DEF_ENC(V6_vsubbq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 110 xxxxx") //
-+DEF_ENC(V6_vsubhq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 111 xxxxx") //
+ const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS] = {
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 633401451d..fa8f615a9e 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -988,6 +988,7 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+     ctx->branch_cond = TCG_COND_NEVER;
+     ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
+     ctx->short_circuit = hex_cpu->short_circuit;
++    ctx->ieee_fp_extension = hex_cpu->ieee_fp_extension;
+ }
  
--DEF_ENC(V6_vsubwq,             ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 000 xxxxx") //
--DEF_ENC(V6_vsubbnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 001 xxxxx") //
--DEF_ENC(V6_vsubhnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 010 xxxxx") //
--DEF_ENC(V6_vsubwnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 011 xxxxx") //
-+DEF_ENC(V6_vsubwq,             ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 000 xxxxx") //
-+DEF_ENC(V6_vsubbnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 001 xxxxx") //
-+DEF_ENC(V6_vsubhnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 010 xxxxx") //
-+DEF_ENC(V6_vsubwnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 011 xxxxx") //
+ static void hexagon_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
+index 87b7f10d7f..b752ec883c 100755
+--- a/target/hexagon/gen_tcg_funcs.py
++++ b/target/hexagon/gen_tcg_funcs.py
+@@ -22,6 +22,14 @@
+ import string
+ import hex_common
  
--DEF_ENC(V6_vhistq,            ICLASS_CJ" 1 110 vv0 ---10 PP 1 --00- 100 -----")
--DEF_ENC(V6_vwhist256q,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --010 100 -----")
--DEF_ENC(V6_vwhist256q_sat,    ICLASS_CJ" 1 110 vv0 ---10 PP 1 --011 100 -----")
--DEF_ENC(V6_vwhist128q,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --10- 100 -----")
--DEF_ENC(V6_vwhist128qm,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --11i 100 -----")
-+DEF_ENC(V6_vhistq,            ICLASS_CJ" 1 110 vv0 --010 PP 1 --00- 100 -----")
-+DEF_ENC(V6_vwhist256q,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --010 100 -----")
-+DEF_ENC(V6_vwhist256q_sat,    ICLASS_CJ" 1 110 vv0 --010 PP 1 --011 100 -----")
-+DEF_ENC(V6_vwhist128q,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --10- 100 -----")
-+DEF_ENC(V6_vwhist128qm,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --11i 100 -----")
++def gen_disabled_ieee_insn(f, tag, regs):
++    f.write("    if (!ctx->ieee_fp_extension) {\n")
++    for regtype, regid in regs:
++        reg = hex_common.get_register(tag, regtype, regid)
++        if reg.is_hvx_reg() and reg.is_written():
++            reg.gen_zero(f)
++    f.write("        return;\n")
++    f.write("    }\n")
  
+ ##
+ ## Generate the TCG code to call the helper
+@@ -62,6 +70,9 @@ def gen_tcg_func(f, tag, regs, imms):
+         i = 1 if immlett.isupper() else 0
+         f.write(f"    int {hex_common.imm_name(immlett)} = insn->immed[{i}];\n")
  
- DEF_ENC(V6_vandvqv,            ICLASS_CJ" 1 110 vv0 ---11 PP 1 uuuuu 000 ddddd")
++    if "A_HVX_IEEE_FP" in hex_common.attribdict[tag]:
++        gen_disabled_ieee_insn(f, tag, regs)
++
+     if hex_common.is_idef_parser_enabled(tag):
+         declared = []
+         ## Handle registers
+diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+index c0e9f26aeb..e82a3da1e4 100755
+--- a/target/hexagon/hex_common.py
++++ b/target/hexagon/hex_common.py
+@@ -723,6 +723,11 @@ def decl_tcg(self, f, tag, regno):
+                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
+                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
+             """))
++    def gen_zero(self, f):
++        f.write(code_fmt(f"""\
++                tcg_gen_gvec_dup_imm(MO_64, {self.hvx_off()},
++                    sizeof(MMVector), sizeof(MMVector), 0);
++            """))
+     def gen_write(self, f, tag):
+         pass
+     def helper_hvx_desc(self, f):
+@@ -789,6 +794,11 @@ def decl_tcg(self, f, tag, regno):
+                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
+                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
+             """))
++    def gen_zero(self, f):
++        f.write(code_fmt(f"""\
++                tcg_gen_gvec_dup_imm(MO_64, {self.hvx_off()},
++                    sizeof(MMVector), sizeof(MMVector), 0);
++            """))
+     def gen_write(self, f, tag):
+         pass
+     def helper_hvx_desc(self, f):
+@@ -821,6 +831,11 @@ def decl_tcg(self, f, tag, regno):
+                                  vreg_src_off(ctx, {self.reg_num}),
+                                  sizeof(MMVector), sizeof(MMVector));
+             """))
++    def gen_zero(self, f):
++        f.write(code_fmt(f"""\
++                tcg_gen_gvec_dup_imm(MO_64, {self.hvx_off()},
++                    sizeof(MMVector), sizeof(MMVector), 0);
++            """))
+     def gen_write(self, f, tag):
+         f.write(code_fmt(f"""\
+             gen_vreg_write(ctx, {self.hvx_off()}, {self.reg_num},
+@@ -854,6 +869,11 @@ def decl_tcg(self, f, tag, regno):
+                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
+                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
+             """))
++    def gen_zero(self, f):
++        f.write(code_fmt(f"""\
++            tcg_gen_gvec_dup_imm(MO_64, {self.hvx_off()},
++                sizeof(MMVectorPair), sizeof(MMVectorPair), 0);
++        """))
+     def gen_write(self, f, tag):
+         pass
+     def helper_hvx_desc(self, f):
+@@ -913,6 +933,11 @@ def decl_tcg(self, f, tag, regno):
+                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
+                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
+             """))
++    def gen_zero(self, f):
++        f.write(code_fmt(f"""\
++            tcg_gen_gvec_dup_imm(MO_64, {self.hvx_off()},
++                sizeof(MMVectorPair), sizeof(MMVectorPair), 0);
++        """))
+     def gen_write(self, f, tag):
+         f.write(code_fmt(f"""\
+             gen_vreg_write_pair(ctx, {self.hvx_off()}, {self.reg_num},
 -- 
 2.37.2
 
