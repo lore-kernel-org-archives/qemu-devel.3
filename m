@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC34E9904F
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:42:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429A9E9904A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB6Uw-0000Zw-Uq; Fri, 10 Apr 2026 03:41:50 -0400
+	id 1wB6W9-0001In-K6; Fri, 10 Apr 2026 03:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wB6Uu-0000ZH-AA
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:41:48 -0400
+ id 1wB6W7-0001IN-VF
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:43:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wB6Ur-0000eN-1x
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:41:46 -0400
+ id 1wB6W6-0000qx-7X
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:43:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775806904;
+ s=mimecast20190719; t=1775806981;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TCf7g8F9KxcApSEA2qC2s65YlgaHMhK3MANE2ANARdQ=;
- b=GUFqcsxNxeFaB7moeDfnVsTunhOCZPhse2y02pphlEQrFQW7q0LmENJEfakADL/8DW/qk8
- 3iBrsI7RiEtJIBXJHJn7CJVw1kF+/yyWrHyPXQfCYf7b5egAD7JotjRMXjSV8BlpDlCDNw
- zaY5jwGzrRLcL8Aidi5QX+Cbw/MknCE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CRfM/2uzYK3VTBfMBLk8dXqfUTctabwqWxHpKci4tIM=;
+ b=KdS5NY0q+RZfJWDxZaiUGyXZeG6YvvgqCD5Av7sAFlipunupfS1mldl08fdj3dZJ/o2iey
+ 4QoG+gNZY64tNVWChdBY5VBXM6uO8rG+OT0ApOyUclIMhp8vnJMXvs8d8Hz3NVB5FzlR+w
+ 5m95AltzBKGMPH1RM8BUGdqvawz2GIw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-_1bkbvxeNOGrmlu_zlo_0Q-1; Fri, 10 Apr 2026 03:41:43 -0400
-X-MC-Unique: _1bkbvxeNOGrmlu_zlo_0Q-1
-X-Mimecast-MFC-AGG-ID: _1bkbvxeNOGrmlu_zlo_0Q_1775806902
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43d1dea12aaso1221993f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:41:42 -0700 (PDT)
+ us-mta-570-NPP4I7rQOe20QBWcicig7g-1; Fri, 10 Apr 2026 03:43:00 -0400
+X-MC-Unique: NPP4I7rQOe20QBWcicig7g-1
+X-Mimecast-MFC-AGG-ID: NPP4I7rQOe20QBWcicig7g_1775806979
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-488bf01961cso11538205e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:42:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775806902; x=1776411702;
+ d=1e100.net; s=20251104; t=1775806979; x=1776411779;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TCf7g8F9KxcApSEA2qC2s65YlgaHMhK3MANE2ANARdQ=;
- b=JzIp/E1ZxWUXKJKnDMFHSBCutKWFidTdWUbqM33w5BOoWiyCZZpvALdUuqbJ6JtPDJ
- tA/d/Wpy/8aDgiIOkLvo8v2OUYR7iZ8xnRC4wrOkFPIgF+nYsUIwP/PygrVyws5jOpeM
- rYQTEntTnh2FN2lYAbP5rbJXXt4TEjQ0ZEg2A7Y6PSBdsZkflM5TNlPy5vLQPCzb7/Ge
- XC4nJ7KOQcymGb46To7e8Ze27lRi9yTxA3/fbjB3L+Ihc9M281znnwMOrmI9Qgohh3z2
- pr3ZvsL5HdO9vWuO+Sz0JbO5WhzmaKYyqrXpBStF80aRWHHylNJyVm1542RfnjpymW/m
- 3eig==
+ bh=CRfM/2uzYK3VTBfMBLk8dXqfUTctabwqWxHpKci4tIM=;
+ b=gGYRQ5c/0oSlGxXdgHtDQ6X5UWoFiEUkycFdRnXNN5rP0ctr75OhN7qx635csafLko
+ ZSG3WW6utUWaC0XWvUzKP9GlVlP/Uoaq13ymhu9sMtLft3kLybyfWLwTx8HBQvNyfCMf
+ 0vyXAtBeOeC3R5St+jEHe1oVHGw4VdgWB3T9V8BWOqD8GYEIMO/xAsyvfL3CLybHEwRl
+ by8ikufvo57g/pepWbE76edNvE3x1sUpLRuhtIKmA7Bk8yxQ2qc/OXHO3lQfDNOoM0sz
+ eWfzLW2UbBPBrIbJ0RnWdF6C8jOOdKLp3GVve8j8fqOK3opYOihZmeJ/ncljSP1NSJpD
+ U6gA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTjL1h8oQJmvN+MrQ3yKDyuT8guREikZ4cgnTVyur2CaSr69hiKHvDDcOqkcknP1BPYohtRqQkAKrD@nongnu.org
-X-Gm-Message-State: AOJu0YyxrdW/nmgpYDkwODjE2QY6zy4L8xvloUJmpFtBZQtNW1EOts8E
- +J75meD0YyTddGvwLcpUD7i1IcTPNhe6eBXh9QSSzEcQaRwkTOhX03jhJY14OrMu77cSbbotsnL
- azbCHuQPR/VjSrReu/cxrB4/XvAFxUq+MVleJ1R/9R5+5PYAe5X7rA2Il
-X-Gm-Gg: AeBDieue+Rosl5KSt8wb4krr5HFY4Dm/QvxqZiTQ/rkmH2pdzes80+TlvpmUSj4JlUo
- MnMZESAmesQjkK9m0kW5zxNWizgdmKRKOOe0dFH65PIJLKsz5JooCorBxrS3efroffbrHG6LJQH
- Nehog98jmPXezIl5geIoo/hPLkg9q8GhWw0IAuLuyRy1i+vVjfa+HQEpxNtbnd0hUCY8Bq8MV+S
- o6aDUuqije8QQHiEnr5NNHLCD6atwKLeh1SwTIcNWge7CWwLN2w1Js8xbnqk35F4tnuyz/TZpLY
- 9Vb3fDtCwHwF1lr1AkbmnlZ0LzTlx31vbS3JEtrYuAHpG+To4KOHiDQICI4PEEdmoBZaRomqr4B
- GVInVYtepYSHh00Qa+Aa/SMh+FPQorgE6+eDMnsGQA3Hz3IE/2NK8jLZHLHfRfXyXJAcWgA==
-X-Received: by 2002:a05:6000:26c2:b0:439:ddf9:a205 with SMTP id
- ffacd0b85a97d-43d6427b793mr2884384f8f.10.1775806901745; 
- Fri, 10 Apr 2026 00:41:41 -0700 (PDT)
-X-Received: by 2002:a05:6000:26c2:b0:439:ddf9:a205 with SMTP id
- ffacd0b85a97d-43d6427b793mr2884330f8f.10.1775806901260; 
- Fri, 10 Apr 2026 00:41:41 -0700 (PDT)
+ AJvYcCWMiItMt1IGyxgt5Mbx61t/P9lGeHws/HZgCYEZoFg0PvNq5vmbIlt93f936r9Jpsn8l3IN8PopSYBY@nongnu.org
+X-Gm-Message-State: AOJu0Yxkc6rXWQlTwKxrXm5jf0pCopMhY2uQfuEjogaBLQFHj/JGybet
+ ZEhPPhKpPCYtUHGzZSsz0scm1W5zTnJq5SIORjJjAQ0D3ZlR/9CqHmZm1PsoyS80VsowYzclyKc
+ CkQ8x9nDcu/U+/sedgnfk9Q1qn1eN9B02xFvKR9k3Ns16QyDAkEZ/Kt4q
+X-Gm-Gg: AeBDiet6J9oDYdd8KyFV+E0g4pmhczJaMJSPbJnFc91f/91lxzigaP2vLJl/PGN6oQy
+ LMfIrhXfKTys2M8k+iEG5NmICvIOq6CtlXrHcXNLGUs4QBkLcwTosMyXI4U4ZlFIFHnrSOgZk3V
+ s5w9gmubwR+gKO8kU80T/xIEpahT4aJkJn10cpAVPfauZcV+FZnzuUX6dcYCLtYGJ7dWmqXoy7S
+ tehk5yuueQW2+jaqa1ZuERXV17z8GhdJvdFvB+Wcsy3dxhe26cmDZgmXC4M4CishyGuPkWUciVw
+ ajTKrHzVLmtSFFaVmgeaa2SllssH8J7iKp14mEqm1NLxE/1K3iH+Wc0tu67A8hl6tjOcorotDrH
+ p0MVsOlXxoNX+1bP4wiFqU4uSVXZWLhzgE+OYtJN48YW1e785tRUmeHJQIISA8UlWE6nIzw==
+X-Received: by 2002:a05:600c:5292:b0:486:fe39:28b7 with SMTP id
+ 5b1f17b1804b1-488d67fa48emr25267045e9.9.1775806978601; 
+ Fri, 10 Apr 2026 00:42:58 -0700 (PDT)
+X-Received: by 2002:a05:600c:5292:b0:486:fe39:28b7 with SMTP id
+ 5b1f17b1804b1-488d67fa48emr25266695e9.9.1775806978115; 
+ Fri, 10 Apr 2026 00:42:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63de2a53sm5506192f8f.5.2026.04.10.00.41.40
+ 5b1f17b1804b1-488d5b3d4dbsm50551495e9.14.2026.04.10.00.42.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Apr 2026 00:41:40 -0700 (PDT)
-Message-ID: <a8cece25-47ff-4210-8962-cbc39ba7646e@redhat.com>
-Date: Fri, 10 Apr 2026 09:41:38 +0200
+ Fri, 10 Apr 2026 00:42:57 -0700 (PDT)
+Message-ID: <1bdba168-e5fb-491e-a9ee-6311bc95b38d@redhat.com>
+Date: Fri, 10 Apr 2026 09:42:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/11] hw/arm/smmuv3: Change the default ril support to
+Subject: Re: [PATCH 03/11] hw/arm/smmuv3: Change the default ats support to
  match the host
 Content-Language: en-US
 To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
@@ -94,9 +94,9 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
  <clg@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,
  Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
 References: <20260401010231.4166776-1-nathanc@nvidia.com>
- <20260401010231.4166776-7-nathanc@nvidia.com>
+ <20260401010231.4166776-4-nathanc@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260401010231.4166776-7-nathanc@nvidia.com>
+In-Reply-To: <20260401010231.4166776-4-nathanc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124;
@@ -125,52 +125,54 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nathan,
+
 
 On 4/1/26 3:02 AM, Nathan Chen wrote:
 > From: Nathan Chen <nathanc@nvidia.com>
 >
-> Set the default value of RIL to auto. The default for RIL support used
-> to be set to on, but we change it to match what the host IOMMU
-> properties report so that users do not have to introspect host IDR3 for
-> Range Invalidation support. Include the previous default for ril in the
-> 11.0 compat.
+> Set the default value of ATS to auto. The default for ATS support used
+> to be set to off, but we change it to match what the host IOMMU
+> properties report. Introduce a new compat for the changed default.
 >
 > Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 > ---
 >  hw/arm/smmuv3.c   | 2 +-
->  hw/core/machine.c | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
+>  hw/core/machine.c | 5 +++++
+>  2 files changed, 6 insertions(+), 1 deletion(-)
 >
 > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index a2d2f0e3bc..74cc81ae32 100644
+> index f3603554e3..f353865187 100644
 > --- a/hw/arm/smmuv3.c
 > +++ b/hw/arm/smmuv3.c
-> @@ -2153,7 +2153,7 @@ static const Property smmuv3_properties[] = {
->      /* GPA of MSI doorbell, for SMMUv3 accel use. */
+> @@ -2158,7 +2158,7 @@ static const Property smmuv3_properties[] = {
 >      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
 >      /* RIL can be turned off for accel cases */
-> -    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
-> +    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_AUTO),
->      DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
->      DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
->      DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 6796ab63cc..8f8c26bbe8 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -41,6 +41,7 @@
->  
->  GlobalProperty hw_compat_11_0[] = {
->      { TYPE_ARM_SMMUV3, "ats", "off" },
-> +    { TYPE_ARM_SMMUV3, "ril", "on" },
-I wonder if you shouldn't squash all the patches that change the default
-values of accel props to auto mode into a single patch, at the end of
-the series.
+>      DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
+> -    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
+> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
+see my previous comment about squashing all those patches. Besides you
+need to update qemu-options.hx where the default value is documented as
+non auto.
 
 Eric
->  };
+>      DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
+>      DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
+>                                SSID_SIZE_MODE_0),
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 0aa77a57e9..6796ab63cc 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -37,6 +37,11 @@
+>  #include "hw/virtio/virtio-iommu.h"
+>  #include "hw/acpi/generic_event_device.h"
+>  #include "qemu/audio.h"
+> +#include "hw/arm/smmuv3.h"
+> +
+> +GlobalProperty hw_compat_11_0[] = {
+> +    { TYPE_ARM_SMMUV3, "ats", "off" },
+> +};
 >  
 >  GlobalProperty hw_compat_10_2[] = {
+>      { "scsi-block", "migrate-pr", "off" },
 
 
