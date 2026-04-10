@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A7EF45A0A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26C9DF45A0C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHOn-0004Gu-4F; Fri, 10 Apr 2026 15:20:13 -0400
+	id 1wBHPn-0006TS-Cy; Fri, 10 Apr 2026 15:21:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHOl-0004Aa-9x
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:11 -0400
+ id 1wBHPY-0005Qx-1W
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:21:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHOj-00015C-1m
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:10 -0400
+ id 1wBHPV-0001YU-Ui
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:20:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775848808;
+ s=mimecast20190719; t=1775848857;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0I2+yZ98E836Z2P9dlsrUG3JAUWuXDSLpAuU+eC392E=;
- b=ACcwmoiRaAZPt7oMemWY7eEpEw/WFRr1zpo7XVDsRr5J548c2KSZxN7jUQp/Q8JMOldkj0
- RaLgxbH9oeJW/wMfwGo3Frok8UgQa572sqHe1dPRYRXZft1toKCw+Wqo0mjHd2CphZQdLO
- cBnU/7SVY6OcnVqf5+RdTUbPD2Hkr0M=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GJtPVEml1iOK2+K7tckw0IWuMjNfHvInu91vVbDRD40=;
+ b=IJMjoJxMZZMM9xI/77POhJkmO1MiHAsBxL/riCiQEgsVP4LnJP8ekDkOolD3hiOhJd8lci
+ u+zC2oIjU7Q4lZMsULAxWU4TIqhi0r34UxQHoAOfwaQ5hSIAiOcdWMFdBgqNewcIlXnr9T
+ Q8N+DpPy7NkHw/mTfV6Fok8sGeqrAiM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-Y0gyWIl_PmKPSk47N0Bkpw-1; Fri,
- 10 Apr 2026 15:20:07 -0400
-X-MC-Unique: Y0gyWIl_PmKPSk47N0Bkpw-1
-X-Mimecast-MFC-AGG-ID: Y0gyWIl_PmKPSk47N0Bkpw_1775848806
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-EIFxwp4OP1GJH1JKv9NcDg-1; Fri,
+ 10 Apr 2026 15:20:56 -0400
+X-MC-Unique: EIFxwp4OP1GJH1JKv9NcDg-1
+X-Mimecast-MFC-AGG-ID: EIFxwp4OP1GJH1JKv9NcDg_1775848855
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87265195605E
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:20:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D8DA195608D
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:20:55 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E6BF3000C16; Fri, 10 Apr 2026 19:20:04 +0000 (UTC)
+ id 1BA913000C16; Fri, 10 Apr 2026 19:20:53 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:18:34 +0400
-Subject: [PATCH v2 12/67] ui/console: dispatch get_label() through QOM
- virtual method
+Date: Fri, 10 Apr 2026 23:18:42 +0400
+Subject: [PATCH v2 20/67] ui/console-vc: move cursor blinking logic into
+ VT100 layer
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-12-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-20-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6932;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5150;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=VZpzpANVaAkXTsjt5tv6uI07yEgnJRkVBs8sY4GwLtQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0UCt4OpQ/403qw7n7WYHgEhNC/f6K6g/ErF
- LEGrqgB1NuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFAAKCRDa6OEJdZac
- 5ShKD/9rw3Bl3TP6Gk/yM+YumAzUovg5wDf4+x8X+9fwCbpMtti9dihwUC2XGk/dHm2jn+JOCAH
- RnwPmYSfgMQNFLCm+7SbSmw9NuX3r4MplJaVOsi2gUJs2Z8cvjMv3AxW3orFMHzkCs33cxzEkHS
- SZaqEje33lSSKDWTVDdFR95/TsKJ3ZK5TP79IjgG7kbo+laenNX0JmA4wcT29/cd3MmsO6E4Pu6
- 9bWDR769IjG2RsmlUVzKy/96gQ1bInmu7KnsrWemW529GH5bujdzjOIw0ejPpcXeqklK7hfC4zB
- Kk68L0jQzZbjVk1/0MwD77t52q+r59ucyGkIaNokSJMu+JqIj+S6ELm1W2N7vBEnX9ShaOSXsxL
- 3n+F5kdJ0FpUQuRZnRKw7junMuYcLz1bsfF3vzSAX0oEZp1Jk5duL0hYyGchlJ/0LI4reC/8ouJ
- NYgbQGzEHzyinCIs0WoB5AaSKZ5Dd38vIIvgqwss8S7KP1muuiCN6TQOTPPRkwfxTS/Bjp4Ur7J
- 1CycWb7CCLn5ksmNmVGAIA6yU3h3wTGsL1gqmZOvtpHkO88HoXvyrN5KGGECL9NnTHPzR+gy2Ka
- /H54wZ6ofUZhF0Z8a9jwY9nXGKo6d/ntQH530vuyMEM6IouodAlwZYzG4vlgMMLfZi3Ajcvrlp8
- Tng7/mtdQf59vDQ==
+ bh=THg3kb3eky9MQNSqzzOIG7g/WozpZqAHz7OdHuv3imo=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGnZTRSix9Nz3xQgMaMgO+PKBvxcrO7zsLK3O1s5aVYSstfyB
+ 4kCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJp2U0UAAoJENro4Ql1lpzl7joP/jCu
+ aJXbvew5GD+IMbRIrXTLZnImIhQgFaEMzci/Erq7eopbI0VqPZAyfJmO41ZR0n1MSe58pQC/ujj
+ VEWepK6foHCrpPQ8g/AXAeFB5BZT8b9z1ll8SBvLYwMw1h1T/Y6QgPPon2z/uhdvrBqfIFySzf2
+ OQutk/tqETjJ8KdC9PJ8L5rHEDXQvRaCTVkTvGPP/bgfe56sMp/u7AiIoo/qJZf0LtnYkMla9o2
+ ZK/rcUdIgaHrGWWHEoHQ3Kcc6g/8OfpyN183Rr8xT2Zbq/89ZDKIntLpMskiFCZwsrUiOCU/r8x
+ S420v0yNm3TqjGe/EepNJ3WjYLemgP90k/4QSlRw+mlmDC7i/Ps5v8oPIp9g+Q6wyq0ysDz5H//
+ iwraXfz9cS9QragNShIhYZv1lpus8zKoUhCXDAofwdMwpQ70kDBya4FncWdH8Se2FDWSuI139Y8
+ rII3BxKxQIsWzU0xw8Ecso2MwSpbDxYgougncF0WiSUM40gJsUEBm+9zhse+QBGWqEq59DbOMK4
+ 9QmoVgUjhqwjkzMRgotD5wSSl/qHOmNH4euQF4gampQFsPuAlN0H33mr5MqN7yNjOUOGvPDVoLs
+ ooo+JPK8PwsT+pZXY6k9cWddOwo1yTXjZSucnqcGowXbNyAfJu7d5gj1r5+rjIX0JlZivf+FnOX
+ XTij5
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
@@ -105,229 +104,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the type-checking chain in qemu_console_get_label() (using
-QEMU_IS_GRAPHIC_CONSOLE/QEMU_IS_TEXT_CONSOLE) with a QemuConsoleClass
-virtual method, allowing each console subclass to provide its own
-get_label implementation.
+Maintain a list of QemuVT100 instances so the cursor timer can directly
+iterate over them and call vt100_refresh(), instead of going through
+qemu_invalidate_text_consoles() which iterated over all consoles
+(including graphic ones) and called back into the generic display layer.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+This removes the qemu_invalidate_text_consoles() function from
+console.c, further decoupling VT100 text rendering from the console
+core.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h  |   2 +
- ui/console-priv.h     |   1 -
- ui/console-vc-stubs.c |   6 ---
- ui/console-vc.c       |  12 ++++--
- ui/console.c          | 101 +++++++++++++++++++++++++++-----------------------
- 5 files changed, 65 insertions(+), 57 deletions(-)
+ include/ui/console.h  |  1 -
+ ui/console-priv.h     |  2 +-
+ ui/console-vc-stubs.c |  2 +-
+ ui/console-vc.c       | 28 +++++++++++++++++++++++-----
+ ui/console.c          | 19 +------------------
+ 5 files changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/include/ui/console.h b/include/ui/console.h
-index 08082389f71..395a723e318 100644
+index 395a723e318..5b5bba46ec2 100644
 --- a/include/ui/console.h
 +++ b/include/ui/console.h
-@@ -129,6 +129,8 @@ void console_handle_touch_event(QemuConsole *con,
+@@ -416,7 +416,6 @@ void qemu_console_set_window_id(QemuConsole *con, int window_id);
+ void qemu_console_resize(QemuConsole *con, int width, int height);
+ DisplaySurface *qemu_console_surface(QemuConsole *con);
+ void coroutine_fn qemu_console_co_wait_update(QemuConsole *con);
+-int qemu_invalidate_text_consoles(void);
  
- struct QemuConsoleClass {
-     ObjectClass parent_class;
-+
-+    char * (*get_label)(QemuConsole *con);
- };
- 
- typedef struct ScanoutTexture {
+ /* console-gl.c */
+ #ifdef CONFIG_OPENGL
 diff --git a/ui/console-priv.h b/ui/console-priv.h
-index 43ceb8122f1..2c2cfd99570 100644
+index 2c2cfd99570..8bcdb79d914 100644
 --- a/ui/console-priv.h
 +++ b/ui/console-priv.h
-@@ -36,7 +36,6 @@ struct QemuConsole {
+@@ -36,7 +36,7 @@ struct QemuConsole {
  };
  
  void qemu_text_console_update_size(QemuTextConsole *c);
--const char * qemu_text_console_get_label(QemuTextConsole *c);
- void qemu_text_console_update_cursor(void);
+-void qemu_text_console_update_cursor(void);
++void vt100_update_cursor(void);
  void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym);
  
+ #endif
 diff --git a/ui/console-vc-stubs.c b/ui/console-vc-stubs.c
-index b63e2fb2345..8a7f19c1f44 100644
+index 8a7f19c1f44..d911a82f263 100644
 --- a/ui/console-vc-stubs.c
 +++ b/ui/console-vc-stubs.c
-@@ -14,12 +14,6 @@ void qemu_text_console_update_size(QemuTextConsole *c)
+@@ -14,7 +14,7 @@ void qemu_text_console_update_size(QemuTextConsole *c)
  {
  }
  
--const char *
--qemu_text_console_get_label(QemuTextConsole *c)
--{
--    return NULL;
--}
--
- void qemu_text_console_update_cursor(void)
+-void qemu_text_console_update_cursor(void)
++void vt100_update_cursor(void)
  {
  }
+ 
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index bd816d45759..7b9acf1adb1 100644
+index d46dcb6a678..6694c5082f8 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -125,10 +125,12 @@ static const pixman_color_t color_table_rgb[2][8] = {
- static bool cursor_visible_phase;
- static QEMUTimer *cursor_timer;
+@@ -8,6 +8,7 @@
+ #include "qapi/error.h"
+ #include "qemu/fifo8.h"
+ #include "qemu/option.h"
++#include "qemu/queue.h"
+ #include "ui/console.h"
+ #include "ui/cp437.h"
  
--const char *
--qemu_text_console_get_label(QemuTextConsole *c)
-+static char *
-+qemu_text_console_get_label(QemuConsole *c)
- {
--    return c->chr ? c->chr->label : NULL;
-+    QemuTextConsole *tc = QEMU_TEXT_CONSOLE(c);
+@@ -69,8 +70,13 @@ struct QemuVT100 {
+     int update_y0;
+     int update_x1;
+     int update_y1;
 +
-+    return tc->chr ? g_strdup(tc->chr->label) : NULL;
++    QTAILQ_ENTRY(QemuVT100) list;
+ };
+ 
++static QTAILQ_HEAD(QemuVT100Head, QemuVT100) vt100s =
++    QTAILQ_HEAD_INITIALIZER(vt100s);
++
+ typedef struct QemuTextConsole {
+     QemuConsole parent;
+ 
+@@ -1103,20 +1109,28 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
+     return len;
  }
  
- static void qemu_console_fill_rect(QemuConsole *con, int posx, int posy,
-@@ -1114,9 +1116,13 @@ qemu_text_console_finalize(Object *obj)
- static void
- qemu_text_console_class_init(ObjectClass *oc, const void *data)
+-void qemu_text_console_update_cursor(void)
++void vt100_update_cursor(void)
  {
-+    QemuConsoleClass *cc = QEMU_CONSOLE_CLASS(oc);
++    QemuVT100 *vt;
 +
-     if (!cursor_timer) {
-         cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
+     cursor_visible_phase = !cursor_visible_phase;
+ 
+-    if (qemu_invalidate_text_consoles()) {
+-        timer_mod(cursor_timer,
+-                  qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
++    if (QTAILQ_EMPTY(&vt100s)) {
++        return;
++    }
++
++    QTAILQ_FOREACH(vt, &vt100s, list) {
++        vt100_refresh(vt);
      }
 +
-+    cc->get_label = qemu_text_console_get_label;
++    timer_mod(cursor_timer,
++        qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
  }
  
- static const GraphicHwOps text_console_ops = {
+ static void
+ cursor_timer_cb(void *opaque)
+ {
+-    qemu_text_console_update_cursor();
++    vt100_update_cursor();
+ }
+ 
+ static void text_console_invalidate(void *opaque)
+@@ -1132,6 +1146,9 @@ static void text_console_invalidate(void *opaque)
+ static void
+ qemu_text_console_finalize(Object *obj)
+ {
++    QemuTextConsole *s = QEMU_TEXT_CONSOLE(obj);
++
++    QTAILQ_REMOVE(&vt100s, &s->vt, list);
+ }
+ 
+ static void
+@@ -1156,6 +1173,7 @@ qemu_text_console_init(Object *obj)
+ {
+     QemuTextConsole *c = QEMU_TEXT_CONSOLE(obj);
+ 
++    QTAILQ_INSERT_HEAD(&vt100s, &c->vt, list);
+     fifo8_create(&c->out_fifo, 16);
+     c->vt.total_height = DEFAULT_BACKSCROLL;
+     QEMU_CONSOLE(c)->hw_ops = &text_console_ops;
 diff --git a/ui/console.c b/ui/console.c
-index f445db11389..24e4761e1f9 100644
+index 24e4761e1f9..8af1dee0e22 100644
 --- a/ui/console.c
 +++ b/ui/console.c
-@@ -436,9 +436,58 @@ qemu_graphic_console_prop_get_head(Object *obj, Visitor *v, const char *name,
-     visit_type_uint32(v, name, &c->head, errp);
+@@ -752,7 +752,7 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
+     } else if (QEMU_IS_TEXT_CONSOLE(dcl->con)) {
+         qemu_text_console_update_size(QEMU_TEXT_CONSOLE(dcl->con));
+     }
+-    qemu_text_console_update_cursor();
++    vt100_update_cursor();
  }
  
-+static bool
-+qemu_graphic_console_is_multihead(QemuGraphicConsole *c)
-+{
-+    QemuConsole *con;
-+
-+    QTAILQ_FOREACH(con, &consoles, next) {
-+        QemuGraphicConsole *candidate;
-+
-+        if (!QEMU_IS_GRAPHIC_CONSOLE(con)) {
-+            continue;
-+        }
-+
-+        candidate = QEMU_GRAPHIC_CONSOLE(con);
-+        if (candidate->device != c->device) {
-+            continue;
-+        }
-+
-+        if (candidate->head != c->head) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+static char *
-+qemu_graphic_console_get_label(QemuConsole *con)
-+{
-+    QemuGraphicConsole *c = QEMU_GRAPHIC_CONSOLE(con);
-+
-+    if (c->device) {
-+        DeviceState *dev;
-+        bool multihead;
-+
-+        dev = DEVICE(c->device);
-+        multihead = qemu_graphic_console_is_multihead(c);
-+        if (multihead) {
-+            return g_strdup_printf("%s.%d", dev->id ?
-+                                   dev->id :
-+                                   object_get_typename(c->device),
-+                                   c->head);
-+        } else {
-+            return g_strdup(dev->id ? : object_get_typename(c->device));
-+        }
-+    }
-+    return g_strdup("VGA");
-+}
-+
- static void
- qemu_graphic_console_class_init(ObjectClass *oc, const void *data)
- {
-+    QemuConsoleClass *cc = QEMU_CONSOLE_CLASS(oc);
-+
-     object_class_property_add_link(oc, "device", TYPE_DEVICE,
-                                    offsetof(QemuGraphicConsole, device),
-                                    object_property_allow_set_link,
-@@ -446,6 +495,8 @@ qemu_graphic_console_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add(oc, "head", "uint32",
-                               qemu_graphic_console_prop_get_head,
-                               NULL, NULL, NULL);
-+
-+    cc->get_label = qemu_graphic_console_get_label;
+ void update_displaychangelistener(DisplayChangeListener *dcl,
+@@ -1457,23 +1457,6 @@ int qemu_console_get_height(QemuConsole *con, int fallback)
+     }
  }
  
- static void
-@@ -1347,56 +1398,12 @@ bool qemu_console_is_gl_blocked(QemuConsole *con)
-     return con->gl_block;
- }
- 
--static bool qemu_graphic_console_is_multihead(QemuGraphicConsole *c)
+-int qemu_invalidate_text_consoles(void)
 -{
--    QemuConsole *con;
+-    QemuConsole *s;
+-    int count = 0;
 -
--    QTAILQ_FOREACH(con, &consoles, next) {
--        QemuGraphicConsole *candidate;
--
--        if (!QEMU_IS_GRAPHIC_CONSOLE(con)) {
+-    QTAILQ_FOREACH(s, &consoles, next) {
+-        if (qemu_console_is_graphic(s) ||
+-            !qemu_console_is_visible(s)) {
 -            continue;
 -        }
--
--        candidate = QEMU_GRAPHIC_CONSOLE(con);
--        if (candidate->device != c->device) {
--            continue;
--        }
--
--        if (candidate->head != c->head) {
--            return true;
--        }
+-        count++;
+-        graphic_hw_invalidate(s);
 -    }
--    return false;
+-
+-    return count;
 -}
 -
- char *qemu_console_get_label(QemuConsole *con)
+ void qemu_console_resize(QemuConsole *s, int width, int height)
  {
--    if (QEMU_IS_GRAPHIC_CONSOLE(con)) {
--        QemuGraphicConsole *c = QEMU_GRAPHIC_CONSOLE(con);
--        if (c->device) {
--            DeviceState *dev;
--            bool multihead;
--
--            dev = DEVICE(c->device);
--            multihead = qemu_graphic_console_is_multihead(c);
--            if (multihead) {
--                return g_strdup_printf("%s.%d", dev->id ?
--                                       dev->id :
--                                       object_get_typename(c->device),
--                                       c->head);
--            } else {
--                return g_strdup(dev->id ? : object_get_typename(c->device));
--            }
--        }
--        return g_strdup("VGA");
--    } else if (QEMU_IS_TEXT_CONSOLE(con)) {
--        const char *label = qemu_text_console_get_label(QEMU_TEXT_CONSOLE(con));
--        if (label) {
--            return g_strdup(label);
--        }
-+    char *label = QEMU_CONSOLE_GET_CLASS(con)->get_label(con);
-+    if (label) {
-+        return label;
-     }
--
-     return g_strdup_printf("vc%d", con->index);
- }
- 
+     DisplaySurface *surface = qemu_console_surface(s);
 
 -- 
 2.53.0
