@@ -4,112 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80FEEEA3C5C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 10:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60028F364DB
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 11:10:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB9Re-0003cM-M1; Fri, 10 Apr 2026 06:50:38 -0400
+	id 1wB9k3-00079W-8Y; Fri, 10 Apr 2026 07:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1wB9Rd-0003bl-7o; Fri, 10 Apr 2026 06:50:37 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1wB9Rb-0000Ut-Hg; Fri, 10 Apr 2026 06:50:36 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63A3IsYn2590946; Fri, 10 Apr 2026 10:50:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=A9lQeN
- XVzJxzmvNIp0NQd0XtMPE0FKftMclkxEk4upA=; b=Y64/dsoowQbhJjyumnuKHG
- qztpzQVvqIBnEEe87mv3yMB+C+JhAeMz+hz6CW4Bn9pqZfZWJBYDqxe5kfv9rYB2
- 8ssRVWclpu8osUneTO1IQP4u2MSKhHJK3EvnfvCeNPO15Mno3JPy2Q0RuSIliRdn
- Egv2cKGamO44L/oiY2npgjgfrMf/eE4lVfVn63VZlvElYEN8wxHYkQ27EkcaVhQA
- MXChroHpAJb42Hd0Xc2bzJZ9dFVZyAkpvL+u60rzRG/CO1bme3fM0ESA6afTst4v
- qL8vt9vmdinI3HLKZoW/fx6GjirfvnJclMm6VRXeQqlKChUDg3Ye8O6nzcpLbWxw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2ehj71-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 10:50:33 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63A8NUjw007917;
- Fri, 10 Apr 2026 10:50:32 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcmg2qmmp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 10:50:32 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63AAoV9326346184
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Apr 2026 10:50:31 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1CFCD58057;
- Fri, 10 Apr 2026 10:50:31 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 611D858063;
- Fri, 10 Apr 2026 10:50:30 +0000 (GMT)
-Received: from [9.61.133.90] (unknown [9.61.133.90])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Apr 2026 10:50:30 +0000 (GMT)
-Message-ID: <d57069a5-ac2a-471f-a955-bf9b2169be8a@linux.ibm.com>
-Date: Fri, 10 Apr 2026 06:50:30 -0400
+ (Exim 4.90_1) (envelope-from <bruno.vilaca.sa@gmail.com>)
+ id 1wB9k2-000797-0d
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 07:09:38 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bruno.vilaca.sa@gmail.com>)
+ id 1wB9k0-0003Tt-18
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 07:09:37 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488a4bc360bso10696925e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 04:09:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775819374; x=1776424174; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wL2RjIiakxvUiKqLallUtvD80SyqMUagJMAW4JWo6rY=;
+ b=oG8uh/8O41McF7zJS5zlKIGuxIvm8Hr5gM41BQWyLqgE2cfPXDHTCBv4iFv/mmWSZ1
+ Fr1o/adNHC6U+++fEaK0reZmsefDLR+edZ59ZEcCVbxQOBuB4C7iRfoEjKf9guGXGj3e
+ m1pC4b1dexAMlOPGfls1O/y9UL3qRY8Hp1lE5KKbNV/EoN44ZsSv3/MFWZsaN50y9cKL
+ l15dZ/Mb8drtWWsrikwLeclzlCnvVyAsmzdHH1lwzsQq+YUksMlhfVa5KXj1lYdLeLWD
+ c9t5rXragZM7M8stZECCUjyRkD4fRLHUOYcVyC2EW+HQDeKT1ttzNcOPHHXw27H+XoL9
+ J5JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775819374; x=1776424174;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wL2RjIiakxvUiKqLallUtvD80SyqMUagJMAW4JWo6rY=;
+ b=BdHDzQkUFyTk8ZXbkig2Y9tSjPECWHEQhFGGxD6BMhMLT9ziAEZTX0pkZSB6ndj9OV
+ hOGj0395IqnZsoAIa6tVSiifrCEdYI9pOehwhGdDq9oEruzOMsUtTrwQDWuwx7x+13Gu
+ PBCHB02xbRg/hULN/kp9HUoAaOsQKgY6QYCy0DMT5SAzknwXid2qmtQoritmoZf8VaYH
+ 3PV1o3jsy/9pRdZIx6qjXZKin+w+HGuHtwk+xMCmPuv6jMCzba9cQDHkuOCmxPkiI6UI
+ ePZgejcxVi+pRaCgIiklG/lsoXHBSNoSi23SyusyQ0XxeJMHzAecLc0eTYNTLTPdFv3x
+ 7aAA==
+X-Gm-Message-State: AOJu0YxhjVawLmtFic7hfX23rFunaQWqHVHnJZrqfJxU9R1ABqxhL4cs
+ JfYHQm/t32pmj47xju19zSMlrfBWWduPPWok0IUdr3YWyxOU6xseNt9zfV66Gl/h
+X-Gm-Gg: AeBDievC7RZmsyvPXF08qAVe/XToBJZb16HO4xQ02K7w4aZirfadBl9JhXySwWIGfWG
+ 7A7uEl4THBlaCPP66qieL7dRSL/3h64oT+a+I1Ea6BFteB3Ye2xF+yduRaBTQzn7VvzJ1EFAzPc
+ mDp3T6EJIck6z0qMdFGSf9aQSpRww6wPsgIQMQXgo+joLgPsatDZcIJle5/cxK5s6G6Yh0OcNLr
+ NpWMAglKRBs7xzKvds1fMrbbmGSEhOM4pxmn2rnDdLX3V37eVfCG+busCWU78HNgtM10NFUW/FV
+ W8xFzwFTqDN0nIPMaD4oyCTD2gGlN0iUCwaHiuPVi6ckE1pbqVKZJLtItXVloxCLoR/hYf33x++
+ avbyV1kzBQ8H+umwasshBjPm0pMv5P67SeOvwiaRR5Xprjs4MVOt0FSoqxBPo4ALAkn1P01xmX5
+ v7GijperKH+yRn1FsBWv4HEBeOBh5w2KfPl7kQZulgH/VQsfXWPh57y26iyEk98s3AnarQ
+X-Received: by 2002:a05:600c:a105:b0:485:3af5:7e53 with SMTP id
+ 5b1f17b1804b1-488d6839821mr23465265e9.19.1775819373838; 
+ Fri, 10 Apr 2026 04:09:33 -0700 (PDT)
+Received: from ninolomata-AERO-15-KC.. (89-181-36-85.net.novis.pt.
+ [89.181.36.85]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d5dc7070sm19311605e9.10.2026.04.10.04.09.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Apr 2026 04:09:33 -0700 (PDT)
+From: Bruno Sa <bruno.vilaca.sa@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, Bruno Sa <bruno.vilaca.sa@gmail.com>
+Subject: [PATCH v2] target/riscv: fix RV32 stateen CSR handling
+Date: Fri, 10 Apr 2026 12:08:42 +0100
+Message-ID: <20260410110928.1014170-1-bruno.vilaca.sa@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260409155344.2849233-1-bruno.vilaca.sa@gmail.com>
+References: <20260409155344.2849233-1-bruno.vilaca.sa@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] hw/vfio/ap: Callbacks for migration of guests with
- pass-through access to AP devices
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com,
- alex@shazbot.org, cohuck@redhat.com
-References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
- <20260409141352.997844-3-akrowiak@linux.ibm.com>
- <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 7cXIs08zVy-Lulyhncw0sMPCuhPVitgn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDEwMCBTYWx0ZWRfXzNvG2kZ6TkyH
- dbrabHLIJfw9m/dD6zdESJS9npadLvoHnfMak9MUU30EELF/tg08bL3S1llwQwIV+Tme7c1c9+N
- WuRwrJc0KCPMS3u+cTQvyWHJRBughLHaI6mzuFghtGf0ApTGlPoiXdJf+0wbzHV1u9nCMpTs8jU
- iymLhrC8i0hrHeAen8A4WWE0K/uDuB25ZYuWwA3+F/p+2YwYCmukN3J5qsDGoZ2U3QCI5CUTTnU
- O2wIVD0Flh9YElOosobbm6lXz6L1X6me8zMpcQNwgViOp8yRL5NshANx8WW6NoNNm47id9cYbxT
- ZY5VsmJJ888NZLgfxypdQeU2R72uKxHrhHvqxlpaG8B8GZKeAj52p+6DuVIyiiQ5V7hN8IUtWdk
- X+q/oabxC2bQoiFDBC4TGWNvIRjlYWaw1i7OXWetXDtOApvKS4dgKAQkBeGzRt+xDiqhCMiNLEu
- 4QrBE/eoqGmCSb3Vpww==
-X-Authority-Analysis: v=2.4 cv=Cfw4Irrl c=1 sm=1 tr=0 ts=69d8d5f9 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=EJE7A_Tmek1c15OkdScA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 7cXIs08zVy-Lulyhncw0sMPCuhPVitgn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-10_03,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100100
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=bruno.vilaca.sa@gmail.com; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,125 +101,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The RV32 stateen CSRs are split between the low-half CSR and the
+corresponding xH CSR, but the current implementation still handles some
+upper-half bits through the low-half write paths and also accepts the
+xH CSRs on RV64.
 
+Fix this by:
+- rejecting mstateen*h and hstateen*h accesses on RV64
+- keeping the RV64-only writable bits in the low-half write paths
+- handling the RV32 upper-half writable bits in write_mstateen0h() and
+  write_hstateen0h()
+- dropping unsupported writable bits from write_sstateen0()
 
-On 4/10/26 4:19 AM, Cédric Le Goater wrote:
-> On 4/9/26 16:13, Anthony Krowiak wrote:
->> From: Anthony  Krowiak <akrowiak@linux.ibm.com>
->>
->> Implements the callbacks used by the VFIO migration framework to migrate
->> guests with pass-through access to s390 crypto devices.
->>
->> Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
->> ---
->>   hw/vfio/ap.c | 43 +++++++++++++++++++++++++++++++++++++++----
->>   1 file changed, 39 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
->> index fd68983702..49947b18c3 100644
->> --- a/hw/vfio/ap.c
->> +++ b/hw/vfio/ap.c
->> @@ -32,6 +32,7 @@
->>   #include "hw/s390x/ap-bridge.h"
->>   #include "system/address-spaces.h"
->>   #include "qom/object.h"
->> +#include "vfio-migration-internal.h"
->>     #define TYPE_VFIO_AP_DEVICE      "vfio-ap"
->>   @@ -47,6 +48,7 @@ static const VMStateDescription vmstate_ap_device 
->> = {
->>       .name = "vfio-ap-device",
->>       .version_id = 1,
->>       .minimum_version_id = 1,
->> +    .unmigratable = 0,
->
-> unneeded.
->
->>       .fields = (const VMStateField[]) {
->>           VMSTATE_END_OF_LIST()
->>       },
->> @@ -66,17 +68,44 @@ static void __attribute__((constructor)) 
->> vfio_ap_global_init(void)
->>       qemu_mutex_init(&cfg_chg_events_lock);
->>   }
->>   +static int vfio_ap_save_config(VFIODevice *vdev, QEMUFile *f, 
->> Error **errp)
->> +{
->> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
->> +
->> +    return vmstate_save_state(f, &vmstate_ap_device, vapdev, NULL, 
->> errp);
->> +}
->> +
->> +static int vfio_ap_load_config(VFIODevice *vdev, QEMUFile *f)
->> +{
->> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
->> +    Error *err = NULL;
->> +    int ret;
->> +
->> +    ret = vmstate_load_state(f, &vmstate_ap_device, vapdev, 1, &err);
->> +    if (ret) {
->> +        error_report_err(err);
->> +    }
->> +
->> +    return ret;
->> +}
->> +
->> +static Object *vfio_ap_get_object(VFIODevice *vbasedev)
->> +{
->> +    VFIOAPDevice *vdev = container_of(vbasedev, VFIOAPDevice, vdev);
->> +
->> +    return OBJECT(vdev);
->> +}
->> +
->>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
->>   {
->>       vdev->needs_reset = false;
->>   }
->>   -/*
->> - * We don't need vfio_hot_reset_multi and vfio_eoi operations for
->> - * vfio-ap device now.
->> - */
->>   struct VFIODeviceOps vfio_ap_ops = {
->>       .vfio_compute_needs_reset = vfio_ap_compute_needs_reset,
->> +    .vfio_save_config = vfio_ap_save_config,
->> +    .vfio_load_config = vfio_ap_load_config,
->> +    .vfio_get_object = vfio_ap_get_object,
->>   };
->>     static void vfio_ap_req_notifier_handler(void *opaque)
->> @@ -251,6 +280,10 @@ static void vfio_ap_realize(DeviceState *dev, 
->> Error **errp)
->>           goto error;
->>       }
->>   +    if (!vfio_migration_realize(vbasedev, errp)) {
->> +        goto error;
->> +    }
->> +
->>       if (!vfio_ap_register_irq_notifier(vapdev, 
->> VFIO_AP_REQ_IRQ_INDEX, &err)) {
->>           /*
->>            * Report this error, but do not make it a failing condition.
->> @@ -287,6 +320,8 @@ static void vfio_ap_unrealize(DeviceState *dev)
->>     static const Property vfio_ap_properties[] = {
->>       DEFINE_PROP_STRING("sysfsdev", VFIOAPDevice, vdev.sysfsdev),
->> +    DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOAPDevice,
->> +                            vdev.enable_migration, ON_OFF_AUTO_ON),
->
-> Why not ON_OFF_AUTO_AUTO ? This would enable migration only if kernel
-> has migration support. If not, the VM would still start but migration
-> would be blocked.
+Signed-off-by: Bruno Sa <bruno.vilaca.sa@gmail.com>
+---
+v2:
+- rebase on riscv-to-apply.next
+- resend only patch 2 after patch 1 was applied
+- wrap the AIA comment text to keep checkpatch clean
 
-Will this allow the vfio-ap device migration patches to get merged before
-the kernel/KVM patches?
+ target/riscv/csr.c | 117 ++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 83 insertions(+), 34 deletions(-)
 
->
-> thanks,
->
-> C.
->
->
->>   #ifdef CONFIG_IOMMUFD
->>       DEFINE_PROP_LINK("iommufd", VFIOAPDevice, vdev.iommufd,
->>                        TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
->
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index cfd076b368..80727aa81e 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -502,6 +502,15 @@ static RISCVException mstateen(CPURISCVState *env, int csrno)
+     return any(env, csrno);
+ }
+ 
++static RISCVException mstateen_32(CPURISCVState *env, int csrno)
++{
++    if (riscv_cpu_mxl(env) != MXL_RV32) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    return mstateen(env, csrno);
++}
++
+ static RISCVException hstateen_pred(CPURISCVState *env, int csrno, int base)
+ {
+     if (!riscv_cpu_cfg(env)->ext_smstateen) {
+@@ -533,6 +542,10 @@ static RISCVException hstateen(CPURISCVState *env, int csrno)
+ 
+ static RISCVException hstateenh(CPURISCVState *env, int csrno)
+ {
++    if (riscv_cpu_mxl(env) != MXL_RV32) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
+     return hstateen_pred(env, csrno, CSR_HSTATEEN0H);
+ }
+ 
+@@ -3447,25 +3460,29 @@ static RISCVException write_mstateen0(CPURISCVState *env, int csrno,
+         wr_mask |= SMSTATEEN0_FCSR;
+     }
+ 
+-    if (env->priv_ver >= PRIV_VERSION_1_13_0) {
+-        wr_mask |= SMSTATEEN0_P1P13;
+-    }
++    if (riscv_cpu_mxl(env) == MXL_RV64) {
++        if (env->priv_ver >= PRIV_VERSION_1_13_0) {
++            wr_mask |= SMSTATEEN0_P1P13;
++        }
+ 
+-    if (riscv_cpu_cfg(env)->ext_smaia || riscv_cpu_cfg(env)->ext_smcsrind) {
+-        wr_mask |= SMSTATEEN0_SVSLCT;
+-    }
++        if (riscv_cpu_cfg(env)->ext_smaia ||
++            riscv_cpu_cfg(env)->ext_smcsrind) {
++            wr_mask |= SMSTATEEN0_SVSLCT;
++        }
+ 
+-    /*
+-     * As per the AIA specification, SMSTATEEN0_IMSIC is valid only if IMSIC is
+-     * implemented. However, that information is with MachineState and we can't
+-     * figure that out in csr.c. Just enable if Smaia is available.
+-     */
+-    if (riscv_cpu_cfg(env)->ext_smaia) {
+-        wr_mask |= (SMSTATEEN0_AIA | SMSTATEEN0_IMSIC);
+-    }
++        /*
++         * As per the AIA specification, SMSTATEEN0_IMSIC is valid
++         * only if IMSIC is implemented. However, that information is
++         * with MachineState and we can't figure that out in csr.c.
++         * Just enable if Smaia is available.
++         */
++        if (riscv_cpu_cfg(env)->ext_smaia) {
++            wr_mask |= (SMSTATEEN0_AIA | SMSTATEEN0_IMSIC);
++        }
+ 
+-    if (riscv_cpu_cfg(env)->ext_ssctr) {
+-        wr_mask |= SMSTATEEN0_CTR;
++        if (riscv_cpu_cfg(env)->ext_ssctr) {
++            wr_mask |= SMSTATEEN0_CTR;
++        }
+     }
+ 
+     return write_mstateen(env, csrno, wr_mask, new_val);
+@@ -3507,6 +3524,20 @@ static RISCVException write_mstateen0h(CPURISCVState *env, int csrno,
+         wr_mask |= SMSTATEEN0_P1P13;
+     }
+ 
++    if (riscv_cpu_cfg(env)->ext_smaia || riscv_cpu_cfg(env)->ext_smcsrind) {
++        wr_mask |= SMSTATEEN0_SVSLCT;
++    }
++
++    /*
++     * As per the AIA specification, SMSTATEEN0_IMSIC is valid only if
++     * IMSIC is implemented. However, that information is with
++     * MachineState and we can't figure that out in csr.c. Just enable
++     * if Smaia is available.
++     */
++    if (riscv_cpu_cfg(env)->ext_smaia) {
++        wr_mask |= (SMSTATEEN0_AIA | SMSTATEEN0_IMSIC);
++    }
++
+     if (riscv_cpu_cfg(env)->ext_ssctr) {
+         wr_mask |= SMSTATEEN0_CTR;
+     }
+@@ -3552,21 +3583,25 @@ static RISCVException write_hstateen0(CPURISCVState *env, int csrno,
+         wr_mask |= SMSTATEEN0_FCSR;
+     }
+ 
+-    if (riscv_cpu_cfg(env)->ext_ssaia || riscv_cpu_cfg(env)->ext_sscsrind) {
+-        wr_mask |= SMSTATEEN0_SVSLCT;
+-    }
++    if (riscv_cpu_mxl(env) == MXL_RV64) {
++        if (riscv_cpu_cfg(env)->ext_ssaia ||
++            riscv_cpu_cfg(env)->ext_sscsrind) {
++            wr_mask |= SMSTATEEN0_SVSLCT;
++        }
+ 
+-    /*
+-     * As per the AIA specification, SMSTATEEN0_IMSIC is valid only if IMSIC is
+-     * implemented. However, that information is with MachineState and we can't
+-     * figure that out in csr.c. Just enable if Ssaia is available.
+-     */
+-    if (riscv_cpu_cfg(env)->ext_ssaia) {
+-        wr_mask |= (SMSTATEEN0_AIA | SMSTATEEN0_IMSIC);
+-    }
++        /*
++         * As per the AIA specification, SMSTATEEN0_IMSIC is valid
++         * only if IMSIC is implemented. However, that information is
++         * with MachineState and we can't figure that out in csr.c.
++         * Just enable if Ssaia is available.
++         */
++        if (riscv_cpu_cfg(env)->ext_ssaia) {
++            wr_mask |= (SMSTATEEN0_AIA | SMSTATEEN0_IMSIC);
++        }
+ 
+-    if (riscv_cpu_cfg(env)->ext_ssctr) {
+-        wr_mask |= SMSTATEEN0_CTR;
++        if (riscv_cpu_cfg(env)->ext_ssctr) {
++            wr_mask |= SMSTATEEN0_CTR;
++        }
+     }
+ 
+     return write_hstateen(env, csrno, wr_mask, new_val);
+@@ -3608,6 +3643,20 @@ static RISCVException write_hstateen0h(CPURISCVState *env, int csrno,
+ {
+     uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
+ 
++    if (riscv_cpu_cfg(env)->ext_ssaia || riscv_cpu_cfg(env)->ext_sscsrind) {
++        wr_mask |= SMSTATEEN0_SVSLCT;
++    }
++
++    /*
++     * As per the AIA specification, SMSTATEEN0_IMSIC is valid only if
++     * IMSIC is implemented. However, that information is with
++     * MachineState and we can't figure that out in csr.c. Just enable
++     * if Ssaia is available.
++     */
++    if (riscv_cpu_cfg(env)->ext_ssaia) {
++        wr_mask |= (SMSTATEEN0_AIA | SMSTATEEN0_IMSIC);
++    }
++
+     if (riscv_cpu_cfg(env)->ext_ssctr) {
+         wr_mask |= SMSTATEEN0_CTR;
+     }
+@@ -3657,7 +3706,7 @@ static RISCVException write_sstateen(CPURISCVState *env, int csrno,
+ static RISCVException write_sstateen0(CPURISCVState *env, int csrno,
+                                       target_ulong new_val, uintptr_t ra)
+ {
+-    uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
++    uint64_t wr_mask = 0;
+ 
+     if (!riscv_has_ext(env, RVF)) {
+         wr_mask |= SMSTATEEN0_FCSR;
+@@ -5937,25 +5986,25 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     /* Smstateen extension CSRs */
+     [CSR_MSTATEEN0] = { "mstateen0", mstateen, read_mstateen, write_mstateen0,
+                         .min_priv_ver = PRIV_VERSION_1_12_0 },
+-    [CSR_MSTATEEN0H] = { "mstateen0h", mstateen, read_mstateenh,
++    [CSR_MSTATEEN0H] = { "mstateen0h", mstateen_32, read_mstateenh,
+                           write_mstateen0h,
+                          .min_priv_ver = PRIV_VERSION_1_12_0 },
+     [CSR_MSTATEEN1] = { "mstateen1", mstateen, read_mstateen,
+                         write_mstateen_1_3,
+                         .min_priv_ver = PRIV_VERSION_1_12_0 },
+-    [CSR_MSTATEEN1H] = { "mstateen1h", mstateen, read_mstateenh,
++    [CSR_MSTATEEN1H] = { "mstateen1h", mstateen_32, read_mstateenh,
+                          write_mstateenh_1_3,
+                          .min_priv_ver = PRIV_VERSION_1_12_0 },
+     [CSR_MSTATEEN2] = { "mstateen2", mstateen, read_mstateen,
+                         write_mstateen_1_3,
+                         .min_priv_ver = PRIV_VERSION_1_12_0 },
+-    [CSR_MSTATEEN2H] = { "mstateen2h", mstateen, read_mstateenh,
++    [CSR_MSTATEEN2H] = { "mstateen2h", mstateen_32, read_mstateenh,
+                          write_mstateenh_1_3,
+                          .min_priv_ver = PRIV_VERSION_1_12_0 },
+     [CSR_MSTATEEN3] = { "mstateen3", mstateen, read_mstateen,
+                         write_mstateen_1_3,
+                         .min_priv_ver = PRIV_VERSION_1_12_0 },
+-    [CSR_MSTATEEN3H] = { "mstateen3h", mstateen, read_mstateenh,
++    [CSR_MSTATEEN3H] = { "mstateen3h", mstateen_32, read_mstateenh,
+                          write_mstateenh_1_3,
+                          .min_priv_ver = PRIV_VERSION_1_12_0 },
+     [CSR_HSTATEEN0] = { "hstateen0", hstateen, read_hstateen, write_hstateen0,
+-- 
+2.43.0
+Rebased on riscv-to-apply.next as requested.
 
+Patch 1 was already applied, so this v2 resends only patch 2.
+
+Thanks,
+Bruno
 
