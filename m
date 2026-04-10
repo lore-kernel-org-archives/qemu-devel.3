@@ -4,109 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F88FF36BAB
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 04:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E3FF36BAA
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 05:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB3nu-0008EH-W0; Fri, 10 Apr 2026 00:49:15 -0400
+	id 1wB44n-0002je-O5; Fri, 10 Apr 2026 01:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wB3nt-0008Dv-NC
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 00:49:13 -0400
-Received: from mail-northcentralusazon11012026.outbound.protection.outlook.com
- ([40.107.200.26] helo=CH5PR02CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wB44l-0002jA-PE
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 01:06:39 -0400
+Received: from p-west2-cluster6-host3-snip4-10.eps.apple.com ([57.103.70.13]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wB3nr-0001rk-BV
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 00:49:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tA3kyKg2+7y4EKyqbuZzwrKZVM2Q2MatJ2bDEKYNoqjJhdDds7c1dqKBw7h3ONE7Mc11BAvjv8Q8tPO+sVoWzw9rB3l2ND4gCfEADCKT+cN39X2w8b9QfApIIUDirwicvztnLYIwKnturTA5ajKEoHn+FpZn3kbcnrQw1YShzF+aTGrOm8ZCDs54kxWbr/sVZDPBLxJrD7IHOWGhLJoMqUUq1dzdoF3nlofdxLTAxuoClZeDWuzjIXwKvTeGJwlMsjfw8h13/YADhQRTLZWA0py75zit/chN6BuIEbqhvk+ruwUQ+kyab+H0hu3jYOb/m+BPhroL5eTbByckaEp7xA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LVXrEkKFBlEPdH3NnBMpvP/UgYAtSogqLHLUWPRoLvQ=;
- b=deXR0lMkEVo5uVdBIAkiJyJMRLNWvLTLJJ+F47Cve/x60o9ZEbtdL2+9bnhx6ggdw0eTsSlwEbIxLRjTqsfhYdsvCHyR9nADxc+eC42Y8LtPrgNXyH/dPH7vD5S0D6nB/1u7LuMJn0NaPdYHzT545hKQos0GZmdseGvr1QSVAo5cLmHHUYSCACB6i6ZAWAyk+Ah9egLRWSyoS5q7XznGnmogcZbIRl98YxKCz+OXHCmTmKFVAp+juxYRjvS2hOzh9MJCHnqKS0UPxlTFT0UQcKPky/WQWzwbwxCffwbyl98Zd6ijM6TK6Nbd/dZGX381yQtVyx8VlVlcEOslIaU3mA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LVXrEkKFBlEPdH3NnBMpvP/UgYAtSogqLHLUWPRoLvQ=;
- b=e8xYl0do/lLwdLH54g96YCpHc5VSTk5PQ4H4At2B6kHPLpNLIlp3IQ6JJxTNaNu2CQB+JtQmiL23skeeeCg9qqcZQDR/U+qqPzZ9y0QilwRbxkbGdnBbnmIUDd6XDNKvCnolz+DhhbHel1WPAoceeEJSarjtAozQ5BCvIevgwJg=
-Received: from SJ0PR03CA0267.namprd03.prod.outlook.com (2603:10b6:a03:3a0::32)
- by CH2PR12MB9493.namprd12.prod.outlook.com (2603:10b6:610:27c::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9791.32; Fri, 10 Apr
- 2026 04:44:03 +0000
-Received: from SJ5PEPF00000205.namprd05.prod.outlook.com
- (2603:10b6:a03:3a0:cafe::f0) by SJ0PR03CA0267.outlook.office365.com
- (2603:10b6:a03:3a0::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9769.43 via Frontend Transport; Fri,
- 10 Apr 2026 04:44:03 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ5PEPF00000205.mail.protection.outlook.com (10.167.244.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9769.17 via Frontend Transport; Fri, 10 Apr 2026 04:44:02 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 9 Apr
- 2026 23:44:01 -0500
-Date: Thu, 9 Apr 2026 23:43:42 -0500
-To: <qemu-devel@nongnu.org>
-CC: <peter.maydell@linaro.org>
-Subject: [ANNOUNCE] QEMU 11.0.0-rc3 is now available
-Message-ID: <o3rq6wvjn4hantt3eniwctu7xshqhifiwbibtjjepmdskpv5z7@26stv36tybrd>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF00000205:EE_|CH2PR12MB9493:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3bf8f620-f87d-4fd6-36f9-08de96bbca14
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700016|376014|82310400026|13003099007|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: JLGKKeakDBWDkzoDf4rbmS8rh4VK0BeGxdMK9kvRf5K5GM18UnUdvHKcWnQI+ViGeMsJp11vfE7bflo3OKh5VVhMEvfHx9JC7c2nCSzfdCRXjC1oGfgN3OTUr9M5cV6vm8tEGJKO2wnLPCym/+IFw0Z9rqH7q7jZA8vQlx4FDMK1lfsrOBGaVsE6AcYTJEpsIF3lRxkjWwGYEkXKdszRb3W9BqyoCvKlgt1lin0sa7pQTv+SknpInnNndqNjNWbhNY89pmQwPHVRmmbLxqeSiICqLrZlkBpiAEFXOjHfC8wznzSjEENkmhcyEKuQ6Qr+i0s9bXcR4c7IV2uiLNj4/GV311ejQLTE9IQAq+qgk1Eq8yPwh9AQGI94lA2oR6eoRW5l00twnLOvXSZFxQOxaEkonegr1zB0lKpCYN9+p7lYU/L5NhyANjP4FhIOWGRDldzd8NpynQBP6RTNEUUdl8thTxu0+awIcfQCYebsRt94VdsvbZ4X8H7tmNVToKrjnwEQJT4zs/5IzMSihkbB0rUk2VfvG8vHZ09tffvv2aRMGYZr9TMtPIbSoJvEC9DLUT29lLSV/PKNpjzaIFW4TAVb2n9XlqjaN1U533tsbkOmmYeqr7YYlaJ2J3xzPQa3M5Y9HLrla2xHEz4xsWCTuL8fxepbk5coVkBFpdjocLDX7j/FYm11KHG2bz9hsN0Dbvt6Z/IY+gdLl1QsfwmJ177YDZmoN8xxAp08/NdIB2A=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700016)(376014)(82310400026)(13003099007)(56012099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: uq6lR7RXNJZ3UV778+GQWEWtO/aGyVJliYthqsmsnJMRSS6EbV9Y46+XIRENvbJSK9wJGICJ7QHNq7MdXhHF1ycghX0CMXgpt4jyKpUlNbmYLpRxKS4ANS5405XXD+THZKevkYn9LjCtYGHhnq4qoYumnAI8JgJx/dr5h/ODtAv+kxBdoSRqBfGOG8i7pcTIk2gSsySU3b1x//CUdu7fZx6q1lZ6i9is9h+ok/JEBjytp5IZcS8NWVVZ98yWBNN1guHjlv7dCrhO0bC8GdsM8YkFsq5R0SAOd/+ldIO9HfLWnomj5SXAODJJlQg/S/2+veS8G6Lr/bjxAqbfxMw93UpNHdwAYWr5baUIr8rtOxp/aEtG2kpTE1wp7fxVrExw4wnIpC75rlITwma+XG9FwNWtHxRkkIJ5QhjTVjxt0CGA116Pawy1Z8zyRHN3kQub
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2026 04:44:02.5226 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3bf8f620-f87d-4fd6-36f9-08de96bbca14
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000205.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB9493
-Received-SPF: permerror client-ip=40.107.200.26;
- envelope-from=Michael.Roth@amd.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wB44j-000853-CS
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 01:06:39 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPS id
+ E1A08180019A; Fri, 10 Apr 2026 05:06:33 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1775797594; x=1778389594;
+ bh=fFlzdLPddqiJVPIuJDZJCC+IL3keDdWnwv2Sa7Yn6v0=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=QsXvj74slMkKp13EKOo+omkKPSDdqrSSnqV+FyQ1ZHmNRPY4FGRaE07FCn8dzpRhRfosO8jHgS6e6XB+s9T6puD7MtSf1X97zHBHf+cny05lWV3CLqHPHZz+4eS+MwfU04HYsgaCc+DjhkCcLRaT4kIjXBzdUWU66Xv0Qg2ALJsPVJ8G5tD/e/3H9e47Q+z6rkV+tN78N7Jd/CZiuLAdbbE7Bmuxwu6Yz1OIne7szE8PNUovohz8v53sDkpBiP+YQ/2zela29gnVTNmAnc8g2bjtCoyomP0mvDkm0WKQlI6GDotLqOZIC7y0vffxi3xg9EjKcizRyuRPGIHV0/l5uQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPSA id
+ D5C2B1800136; Fri, 10 Apr 2026 05:06:31 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] target/arm/hvf: Fix WFI halting to stop idle vCPU spinning
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260410044726.61853-1-scottjgo@gmail.com>
+Date: Fri, 10 Apr 2026 07:06:18 +0200
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, rbolshakov@ddn.com,
+ phil@philjordan.eu, agraf@csgraf.de, peter.maydell@linaro.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E41FA391-ABC2-4CA9-850C-BDB3263C1E07@unpredictable.fr>
+References: <20260410044726.61853-1-scottjgo@gmail.com>
+To: "Scott J. Goldman" <scottjgo@gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Authority-Info-Out: v=2.4 cv=Ze0Q98VA c=1 sm=1 tr=0 ts=69d8855a
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8
+ a=wG9qhmRfGSGoVh_Ie2YA:9 a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
+X-Proofpoint-GUID: bNDyCNcHHrbGMgKGnHAz24R8jL1U25C9
+X-Proofpoint-ORIG-GUID: bNDyCNcHHrbGMgKGnHAz24R8jL1U25C9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA0NCBTYWx0ZWRfX+rqT4V4g3iYu
+ +SSX/E5ni58RvtiFXkGf4T6cpEMNLBGLAeS0M2VdDBgL01Hc03RLpPByowr9R4zU/MW/uQiK9q2
+ ki5IhMczd1lDTkZIg71K/wQnrChqiYbNh5uBsDXfouFUqXnseWx/eG66YxNAlpk67Cvvyp1N17c
+ +M9nIXeImU7EChUOP/K0rY5tp5C9Uq7X7EMPn+1Tdy2XAYvRfjC5RTNot1IGzGcNyhhVf9chjjv
+ ukVScojm0bnU/ctCO7AE3wMfnVqD6cQ4dXVcWLEkqQvKK/D3QfQT2saLIFZEwOcPTJ2QOa+J5Pa
+ KW1IMBC34F6w07bFdwXnqBcHlMb3H0B6NUEjoEgTMxk5Cwysn+ioB/0u6jquL8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-10_01,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0
+ clxscore=1030 adultscore=0 mlxlogscore=999 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604100044
+Received-SPF: pass client-ip=57.103.70.13;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,63 +91,193 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Michael Roth <michael.roth@amd.com>
-From:  Michael Roth via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
 
-On behalf of the QEMU Team, I'd like to announce the availability of the
-fourth release candidate for the QEMU 11.0 release. This release is meant
-for testing purposes and should not be used in a production environment.
 
-  http://download.qemu.org/qemu-11.0.0-rc3.tar.xz
-  http://download.qemu.org/qemu-11.0.0-rc3.tar.xz.sig
+> On 10. Apr 2026, at 06:47, Scott J. Goldman <scottjgo@gmail.com> =
+wrote:
+>=20
+> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+> returning EXCP_HLT, intending QEMU's main event loop to handle the
+> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+> always returns false and the vCPU thread spins at 100% CPU per core
+> while the guest is idle.
+>=20
+> Fix this by:
+>=20
+> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps on
+>   halt_cond in qemu_process_cpu_events().
+>=20
+> 2. Arming a host-side QEMU_CLOCK_HOST timer to fire when the guest's
+>   virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>   because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>   hv_vcpu_run(), which is not called while the CPU is halted. The
+>   timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>   vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>   interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+>=20
+> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>   indicates a pending interrupt, and cancelling the WFI timer.
+>=20
+> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/959
+> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
 
-A note from the maintainer:
+Hi,
 
-  There are a few patches which didn't quite make it into this rc,
-  so the plan is to tag an rc4 next week, with final release hopefully
-  the week after that.
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+> include/system/hvf_int.h |  1 +
+> target/arm/hvf/hvf.c     | 65 +++++++++++++++++++++++++++++++++++++++-
+> 2 files changed, 65 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+> index 2621164cb2..58fb865eba 100644
+> --- a/include/system/hvf_int.h
+> +++ b/include/system/hvf_int.h
+> @@ -48,6 +48,7 @@ struct AccelCPUState {
+>     hv_vcpu_exit_t *exit;
+>     bool vtimer_masked;
+>     bool guest_debug_enabled;
+> +    struct QEMUTimer *wfi_timer;
+> #endif
+> };
+>=20
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 5fc8f6bbbd..0e737d3583 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -28,6 +28,7 @@
+> #include "hw/core/boards.h"
+> #include "hw/core/irq.h"
+> #include "qemu/main-loop.h"
+> +#include "qemu/timer.h"
+> #include "system/cpus.h"
+> #include "arm-powerctl.h"
+> #include "target/arm/cpu.h"
+> @@ -301,6 +302,8 @@ void hvf_arm_init_debug(void)
+> #define TMR_CTL_IMASK   (1 << 1)
+> #define TMR_CTL_ISTATUS (1 << 2)
+>=20
+> +static void hvf_wfi_timer_cb(void *opaque);
+> +
+> static uint32_t chosen_ipa_bit_size;
+>=20
+> typedef struct HVFVTimer {
+> @@ -1214,6 +1217,9 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
+> {
+>     hv_return_t ret;
+>=20
+> +    timer_free(cpu->accel->wfi_timer);
+> +    cpu->accel->wfi_timer =3D NULL;
+> +
+>     ret =3D hv_vcpu_destroy(cpu->accel->fd);
+>     assert_hvf_ok(ret);
+> }
+> @@ -1352,6 +1358,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+>                               =
+arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
+>     assert_hvf_ok(ret);
+>=20
+> +    cpu->accel->wfi_timer =3D timer_new_ns(QEMU_CLOCK_HOST,
+> +                                          hvf_wfi_timer_cb, cpu);
+> +
+>     aarch64_add_sme_properties(OBJECT(cpu));
+>     return 0;
+> }
+> @@ -2027,8 +2036,29 @@ static uint64_t hvf_vtimer_val_raw(void)
+>     return mach_absolute_time() - hvf_state->vtimer_offset;
+> }
+>=20
+> +static void hvf_wfi_timer_cb(void *opaque)
+> +{
+> +    CPUState *cpu =3D opaque;
+> +    ARMCPU *arm_cpu =3D ARM_CPU(cpu);
+> +
+> +    /*
+> +     * vtimer expired while the CPU was halted for WFI.
+> +     * =09
+> +     * interrupt and mark as masked so hvf_sync_vtimer() will
+> +     * check and unmask when the guest handles it.
+> +     *
+> +     * The interrupt delivery chain (GIC -> cpu_interrupt ->
+> +     * qemu_cpu_kick) wakes the vCPU thread from halt_cond.
+> +     */
+> +    qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
+> +    cpu->accel->vtimer_masked =3D true;
+> +}
+> +
+> static int hvf_wfi(CPUState *cpu)
+> {
+> +    uint64_t ctl, cval;
+> +    hv_return_t r;
+> +
+>     if (cpu_has_work(cpu)) {
+>         /*
+>          * Don't bother to go into our "low power state" if
+> @@ -2037,6 +2067,35 @@ static int hvf_wfi(CPUState *cpu)
+>         return 0;
+>     }
+>=20
+> +    /*
+> +     * Set up a host-side timer to wake us when the vtimer expires.
+> +     * HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+> +     * hv_vcpu_run(), which we won't call while halted.
+> +     */
+> +    r =3D hv_vcpu_get_sys_reg(cpu->accel->fd, =
+HV_SYS_REG_CNTV_CTL_EL0, &ctl);
+> +    assert_hvf_ok(r);
+> +
+> +    if ((ctl & TMR_CTL_ENABLE) && !(ctl & TMR_CTL_IMASK)) {
+> +        r =3D hv_vcpu_get_sys_reg(cpu->accel->fd,
+> +                                HV_SYS_REG_CNTV_CVAL_EL0, &cval);
+> +        assert_hvf_ok(r);
+> +
+> +        uint64_t now =3D hvf_vtimer_val_raw();
+> +        if (cval <=3D now) {
+> +            /* Timer already expired, don't halt */
+> +            return 0;
+> +        }
+> +
+> +        uint64_t delta_ticks =3D cval - now;
 
-You can help improve the quality of the QEMU 11.0 release by testing this
-release and reporting bugs using our GitLab issue tracker:
+We have CNTFRQ_EL0 in cpu->gt_cntfrq_hz but this works too
+as XNU today tries to take care that host and VM run with
+the same CNTFRQ_EL0
 
-  https://gitlab.com/qemu-project/qemu/-/milestones/18
-
-The release plan, as well a documented known issues for release
-candidates, are available at:
-
-  http://wiki.qemu.org/Planning/11.0
-
-Please add entries to the ChangeLog for the 11.0 release below:
-
-  http://wiki.qemu.org/ChangeLog/11.0
-
-Thank you to everyone involved!
-
-Changes since rc2:
-
-becd22fdc2: Update version for v11.0.0-rc3 release (Peter Maydell)
-4e6fb62fb0: qemu-keymap: fix altgr modifier lookup for newer xkeyboard-config (Dietmar Maurer)
-a34f546c5f: ati-vga: Fix check for overflowing vram (BALATON Zoltan)
-c75b41f21f: hw/timer: ibex_timer: Update IRQs after writing CTRL (Alistair Francis)
-1c3bc5ea56: ati-vga: Fix pitch and offset registers mask (BALATON Zoltan)
-af74c9e46b: hw/uefi: fix heap overflow (CVE-2026-5744) (Gerd Hoffmann)
-7997130293: virtio-scsi: pass the same cdb_size to virtio_scsi_pop_req and virtio_scsi_handle_cmd_req_prepare (Paolo Bonzini)
-4e4832dd72: util/readline: Fix out-of-bounds access in readline_insert_char(). (Nguyen Dinh Phi)
-17fbf3e18c: util: fix missing aio_wait sym in qemu guest agent only build (Daniel P. Berrangé)
-cf634dfcd8: Allow building qemu tools on 32-bit hosts (Helge Deller)
-992e01e838: ati-vga: Do not crash on 24 bits per pixel (BALATON Zoltan)
-f4813f444a: ati-vga: Update mode on CRTC_PITCH change (BALATON Zoltan)
-4bbe831f1e: ati-vga: Fix setting CRTC_OFFSET (BALATON Zoltan)
-9b3faf0d49: hw/arm/omap_sx1: map CS3 at the correct base (GuoHan Zhao)
-26f21f6e17: cirrus-vga: Make frame buffer endianness little endian by default (BALATON Zoltan)
-8108793f67: docs/about/removed-features: Replace 'since' -> 'removed in' (Philippe Mathieu-Daudé)
-8a9fa9ec99: docs/system: remove extraneous sentence (Alex Bennée)
-566594f108: target/arm: fix fault_s1ns for stage 2 faults (Alex Bennée)
-276b060a74: util/meson.build: do not add cpuinfo-$arch to util_ss for 32bit CPUs (Michael Tokarev)
-84771c64a5: target/arm: do_ats_write(): avoid assertion when ptw failed (Peter Maydell)
+> +        mach_timebase_info_data_t timebase;
+> +        mach_timebase_info(&timebase);
+> +        int64_t delta_ns =3D delta_ticks * timebase.numer / =
+timebase.denom;
+> +        int64_t deadline =3D qemu_clock_get_ns(QEMU_CLOCK_HOST) + =
+delta_ns;
+> +
+> +        timer_mod(cpu->accel->wfi_timer, deadline);
+> +    }
+> +
+> +    cpu->halted =3D 1;
+>     return EXCP_HLT;
+> }
+>=20
+> @@ -2332,7 +2391,11 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+>     hv_return_t r;
+>=20
+>     if (cpu->halted) {
+> -        return EXCP_HLT;
+> +        if (!cpu_has_work(cpu)) {
+> +            return EXCP_HLT;
+> +        }
+> +        cpu->halted =3D 0;
+> +        timer_del(cpu->accel->wfi_timer);
+>     }
+>=20
+>     flush_cpu_state(cpu);
+> --=20
+> 2.50.1 (Apple Git-155)
+>=20
+>=20
 
 
