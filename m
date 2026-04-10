@@ -4,114 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B66ACE99068
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 10:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14FC4F364B0
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 10:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB8vC-0002w2-Df; Fri, 10 Apr 2026 06:17:06 -0400
+	id 1wB9Oh-00026l-Td; Fri, 10 Apr 2026 06:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB8v9-0002vF-8z; Fri, 10 Apr 2026 06:17:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wB9Of-00024w-8t; Fri, 10 Apr 2026 06:47:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wB8v7-0003mM-9R; Fri, 10 Apr 2026 06:17:02 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wB9Od-00007v-AL; Fri, 10 Apr 2026 06:47:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63A1iO3m2298432; Fri, 10 Apr 2026 10:16:59 GMT
+ 63A3ZmID4127453; Fri, 10 Apr 2026 10:47:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/UHNg6
- cyNaixJPFd2I27xfAXRNvI652l2wGrfTl3TxY=; b=L7lfqWuq9MFePKZlIFT0EH
- FWgC3KoO2yOa+Koo3jlwdUbQTSTg2NPeL9vzROu6BWQg15Ts1eKqNneG+6yE5wEM
- 50s0KOGkh/849yoACIixFwCBFWf6g4yx9stKMc/Ew0pT6cLI7OXa+P5dRmOMJFnP
- hpO1aoNqjTan+9ONptM0Z28JRalIhp0YxjYWou9MzblPvO/2e9nixpSHKSGEPwXW
- FuTVhJUyoWUEkJBhTcFWHJTGsoicEhA8I3iwuuQPVvAUoG3syjKkDKr8wufQVAPx
- oVSKtkWd8uktozLmW1OJOKNlYm946TDl1eCV9miUxCK0XiSxWjz+l3td8/mhfq9w
+ :message-id:mime-version:references:subject:to; s=pp1; bh=v7cHye
+ DksBOGwBdzd5aylcFyQe3xZZKadR3NFO4lREs=; b=JKuiXvp7FTgyh+99KZyuHT
+ 92+Ef1v6vXxtXXuWWa8BBtxodP+NLGoowXZd1Korlz7p5mtLVcTxM/naL8TGkvG1
+ Ne7ObKt9cfKlRV+vlWbp7atMJueBjp8EUBE0ZRbIof3sRCIPas3yYku6Q/lW0S1M
+ 5FovKSN/qcZAfwm2TIY7j/f+OsIaDadUryEDFOFF9CU2cAOkXtIkrXhmovt21/Eb
+ UeKijd8oeDPGxCfvu6NW9P/9LwBtrkZ8dt8jL1UzkaKDenTzveU4qzRPwh+XJRmX
+ o4pMe1FTI3kI/rG3mS3RFx59lsEP/i5gBo+XXAKtuyujVd4k0bqvkqK7K1QPecnA
  ==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2g8bad-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2ehhua-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 10:16:58 +0000 (GMT)
+ Fri, 10 Apr 2026 10:47:28 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63A8ZA4h026646;
- Fri, 10 Apr 2026 10:16:57 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg87f7w-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63A8oFm2026723;
+ Fri, 10 Apr 2026 10:47:27 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg87jj6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 10:16:57 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63AAGu6c983980
+ Fri, 10 Apr 2026 10:47:27 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63AAlQIO24642138
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Apr 2026 10:16:56 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1A78358066;
- Fri, 10 Apr 2026 10:16:56 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5723F58055;
- Fri, 10 Apr 2026 10:16:53 +0000 (GMT)
-Received: from [9.124.212.238] (unknown [9.124.212.238])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Apr 2026 10:16:53 +0000 (GMT)
-Message-ID: <c56cf0e3-6d95-40a3-b00f-0b95c8137b14@linux.ibm.com>
-Date: Fri, 10 Apr 2026 15:46:51 +0530
+ Fri, 10 Apr 2026 10:47:26 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C737658065;
+ Fri, 10 Apr 2026 10:47:26 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0973358058;
+ Fri, 10 Apr 2026 10:47:26 +0000 (GMT)
+Received: from [9.61.133.90] (unknown [9.61.133.90])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 10 Apr 2026 10:47:25 +0000 (GMT)
+Message-ID: <74bec63f-a251-4493-a2bb-f40675bad3c5@linux.ibm.com>
+Date: Fri, 10 Apr 2026 06:47:25 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
- kvm_cpu_exec
-Content-Language: en-GB
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
- misanjum@linux.ibm.com, gautam@linux.ibm.com,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260409161042.55281-1-harshpb@linux.ibm.com>
- <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
- <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
- <451942FA-0056-466C-AD42-AB0BBE88472E@redhat.com>
- <424743ec-a34d-4af0-adfb-c8392ee5e5be@linux.ibm.com>
- <69167029-AE49-4BB3-9A5C-D16E51E5D40F@redhat.com>
- <07f76b99-ff79-4480-af02-c43e2779d179@linux.ibm.com>
- <34DB9C06-ED15-42BF-A7BB-AF1BBC170ADA@redhat.com>
- <852c5863-8f56-473d-ad92-a56a80f3ce71@linux.ibm.com>
- <89EDA797-28E3-46A1-A464-8AFE9FB534BD@redhat.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <89EDA797-28E3-46A1-A464-8AFE9FB534BD@redhat.com>
+Subject: Re: [PATCH v2 2/2] hw/vfio/ap: Callbacks for migration of guests with
+ pass-through access to AP devices
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex@shazbot.org, cohuck@redhat.com
+References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
+ <20260409141352.997844-3-akrowiak@linux.ibm.com>
+ <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=KeridwYD c=1 sm=1 tr=0 ts=69d8ce1a cx=c_pps
+X-Proofpoint-ORIG-GUID: Tq_juyFEwwPJzgHhKD62n61cBnD0DKSC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDEwMCBTYWx0ZWRfX7jmYn7GS8Th6
+ u1Gwy7Q/OllQ03ZMMJNS7HENLGUDO9Oc7H6IkKW91xSGYHPiOgl4BpqtrquKp4I1VZOEiD62ObK
+ ssNiaw3TvuL+qio78YsBxp7MouqqTh8cOg2gqZm/JSBk1+exYdB/Gu/M+koKfytWEm4TVYUpc3E
+ yUx2duMFyhgtXEUcJT3t5FWiUUG/EXs+4oIzq44wniw6ubkDkxXxKV+QyfStwu+SmA7GUuoPMg0
+ TMk/uLkFRPq2yhDSzK/kPkfd0Z0yQHl4jhrC9ximb5KWgdi6Y3U8U9gx6hTekjMmTYDqQxOjtjf
+ Y5odH2egJKaMHJnQjCHxEzZ14Iu6xUgLyyx9Fv9CEsE+/+IPxND4WeOeT2W5uJYeb7+IGjC4e9w
+ oqesH8P5j2l/6CrRtRb8aaw8TPYb53UChRKk9sWtrRA36XMnEcAZam1aWq4wuWGFJJCvwM062Ik
+ 63FyEZK6wajWNvEH7CA==
+X-Authority-Analysis: v=2.4 cv=Cfw4Irrl c=1 sm=1 tr=0 ts=69d8d540 cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22
- a=VnNF1IyMAAAA:8 a=tNryw6az7MBK7zL6OWoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10
-X-Proofpoint-ORIG-GUID: QmVloEOwyCRIS9kpvTr2hO6csjjL_ZOm
-X-Proofpoint-GUID: G3kji3VUuDmS5CQuV4wAyHOAzGG1eLfu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA5MSBTYWx0ZWRfX68YkYsVVNi7x
- EhC2jLsxQudt80LEUtA/ZLVa+zHZWbCVqg2tvPtgLau0rLFBxNvXGzRGsxoum08+celQowcZC11
- CWYfzQfYVI+6agKWiPo4jCeBE+VvOnBg/5LikysrV1EuOnrADkxV2QNHOAEYCsFH/Ie0Cl1ulzP
- q5XRAPBxYqHDq9impchXjWYJYQKyrB6DZUWVPxHVzQ81FKiNvHMX3RjlNnB+lYlyYE2v1qzHeN4
- jIuPEWD7ARq/7ZaroFixjVTZaQps5DbTmWPSNtyri1HnKl3bKj+4u36Io9v++PUCqOppcaMkJLb
- GloEXXLLbLdtxjUi3hnoXeuvbevyNyJsUrOkB4t6BpFyBkkibveRB0c2373NM+e/aC1JybosCPy
- olzuKD/ADJGydfCRZvOxM6Lhq83a+1ik2wQtfRF7VKpQWFnSe5mibnvph1fywkt4ClQKNJF+kGW
- oblv2GOVT7dPEcOQfAA==
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=EJE7A_Tmek1c15OkdScA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Tq_juyFEwwPJzgHhKD62n61cBnD0DKSC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-10_03,2026-04-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- clxscore=1015 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100091
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100100
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -137,101 +127,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10/04/26 3:35 pm, Ani Sinha wrote:
-> 
-> 
->> On 10 Apr 2026, at 3:32 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
+On 4/10/26 4:19 AM, Cédric Le Goater wrote:
+> On 4/9/26 16:13, Anthony Krowiak wrote:
+>> From: Anthony  Krowiak <akrowiak@linux.ibm.com>
 >>
+>> Implements the callbacks used by the VFIO migration framework to migrate
+>> guests with pass-through access to s390 crypto devices.
 >>
+>> Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+>> ---
+>>   hw/vfio/ap.c | 43 +++++++++++++++++++++++++++++++++++++++----
+>>   1 file changed, 39 insertions(+), 4 deletions(-)
 >>
->> On 10/04/26 3:01 pm, Ani Sinha wrote:
->>>> On 10 Apr 2026, at 2:31 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>
->>>>
->>>>
->>>> On 10/04/26 1:59 pm, Ani Sinha wrote:
->>>>>> On 10 Apr 2026, at 1:48 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 10/04/26 12:05 pm, Ani Sinha wrote:
->>>>>>>> On 10 Apr 2026, at 10:55 AM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>>>>>
->>>>>>>> Hi Ani,
->>>>>>>>
->>>>>>>> On 10/04/26 9:12 am, Ani Sinha wrote:
->>>>>>>>>> On 9 Apr 2026, at 9:40 PM, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>>>>>>>>>
->>>>>>>>>> When kvm_cpu_exec() returns EXCP_HLT due to kvm_arch_process_async_events()
->>>>>>>>>> returning true, it was returning before releasing the BQL (Big QEMU Lock).
->>>>>>>>>> This caused a lock imbalance where the vCPU thread would loop back to
->>>>>>>>>> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
->>>>>>>>> I am not sure I understand this. Seems kvm_cpu_exec() does expect that the caller holds bql before calling the function. Where is the lock imbalance?
->>>>>>>>
->>>>>>>> The issue is not that kvm_cpu_exec() doesn't expect the caller to hold the BQL - it does. The problem is that kvm_cpu_exec() has inconsistent BQL handling across its return paths.
->>>>>>>>
->>>>>>>> Normal execution path:
->>>>>>>>
->>>>>>>> int kvm_cpu_exec(CPUState *cpu)
->>>>>>>> {
->>>>>>>>     // BQL held on entry (from caller)
->>>>>>>>
->>>>>>>>     if (kvm_arch_process_async_events(cpu)) {
->>>>>>>>         return EXCP_HLT;  // ← Returns with BQL STILL HELD
->>>>>>>>     }
->>>>>>>>
->>>>>>>>     bql_unlock();  // ← Normal path unlocks here
->>>>>>>>     // ... KVM execution loop ...
->>>>>>>>     bql_lock();    // ← Re-acquires before returning
->>>>>>>>     return ret;
->>>>>>>> }
->>>>>>> Yes the semantics of the function kvm_cpu_exec() is that it should always return with bql in locked state. This is because the caller kvm_vcpu_thread_fn() calls this function with bql locked and if you see the end of kvm_vcpu_thread_fn(), it releases the lock.
->>>>>>> So if kvm_cpu_exec() unlocks bql internally, it has the responsibility to lock it again before returning. This makes the locking and unlocking symmetric.
->>>>>>>>
->>>>>>>> The lock imbalance:
->>>>>>>>
->>>>>>>> When kvm_arch_process_async_events() returns true, the function returns EXCP_HLT before the bql_unlock() call.
->>>>>>> Why should it unlock it before returning? In fact it’s opposite. If the function had unlocked bql, it should lock it again before returning.
->>>>>>>> This means the early return path keeps the BQL held,
->>>>>>> This would be the correct thing to do.
->>>>>>>> while the normal execution path releases and re-acquires it.
->>>>>>> Because the functions it calls after unlocking requires bql to be unlocked. Since it had to unlock it, it locks it again before returning.
->>>>>>
->>>>>> It had to unlock it for the same reason - to give others a chance to lock. We need to handle failure/exception cases for the same purpose as well.
->>>>> But by unlocking and returning you are breaking the semantics of the function and introducing imbalance.
->>>>
->>>> I think it is better to unlock bql early in failure cases.
->>>> Even Otherwise, it would become a bql_unlock followed by a bql_lock in the caller for EXCP_HLT, which might look a bit odd as well.
->>> But you are doing exactly that across a function call.
->>
->> I am fine with either/or maintainer's choice.
->>
->>>>
->>>> Paolo, suggestions?
->>>>
->>>>>>
->>>>>>>> The caller (kvm_vcpu_thread_fn()) loops back and calls kvm_cpu_exec() again, but now the BQL is already held from the previous iteration
->>>>>>>> This creates a situation where the BQL is never released between iterations when EXCP_HLT is returned.
->>>>>>>>
->>>>>>>> Why this matters:
->>>>>>>> On PowerPC pseries with halted secondary vCPUs (start-powered-off=true), these vCPUs repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each iteration accumulates BQL holds, preventing other threads (including CPU 0) from making progress.
->>>>>>> This seems like some kind of architectural issue with PowerPC. Shouldn’t qemu_process_cpu_events() -> qemu_cond_wait(cpu->halt_cond, &bql) block other secondary cpus? Then the main cpu does a qemu_cpu_kick() to make them active again at some point?
->>>>>>
->>>>>> KVM vCPUs need to enter the kernel to handle the halted state and therefore can run. On spapr, it is handled via start-cpu rtas call for which the handler in qemu does a qemu_cpu_kick(). However CPU 0 needs to be able to proceed before that stage is reached, but it hangs while trying to acquire bql_lock in qemu_default_main() whereas secondary vcpu is spinning with BQL held returning EXCP_HLT. This is causing deadlock.
->>>>> Without looking at the code, it seems there is a race condition in the way the vcpu threads are initialised in spapr. I think that needs fixing.
->>>>
->>>> I did explain the race condition observed above.
->>> So why not fix it properly?
->>
->> I think the suggested fix is appropriate for this scenario.
->> Keeping BQL held forever in a loop for EXCP_HLT case isnt the right thing to do.
-> 
-> IMHO that loop is a symptom of a deeper architectural issue. The fix proposed here feels more like a incorrect hack.
+>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+>> index fd68983702..49947b18c3 100644
+>> --- a/hw/vfio/ap.c
+>> +++ b/hw/vfio/ap.c
+>> @@ -32,6 +32,7 @@
+>>   #include "hw/s390x/ap-bridge.h"
+>>   #include "system/address-spaces.h"
+>>   #include "qom/object.h"
+>> +#include "vfio-migration-internal.h"
+>>     #define TYPE_VFIO_AP_DEVICE      "vfio-ap"
+>>   @@ -47,6 +48,7 @@ static const VMStateDescription vmstate_ap_device 
+>> = {
+>>       .name = "vfio-ap-device",
+>>       .version_id = 1,
+>>       .minimum_version_id = 1,
+>> +    .unmigratable = 0,
+>
+> unneeded.
 
-I do not think so. Irrespective of the issue, there's no reason to keep 
-holding BQL forever in a loop like that for EXCP_HLT case.
+I'll remove it
 
+>
+>>       .fields = (const VMStateField[]) {
+>>           VMSTATE_END_OF_LIST()
+>>       },
+>> @@ -66,17 +68,44 @@ static void __attribute__((constructor)) 
+>> vfio_ap_global_init(void)
+>>       qemu_mutex_init(&cfg_chg_events_lock);
+>>   }
+>>   +static int vfio_ap_save_config(VFIODevice *vdev, QEMUFile *f, 
+>> Error **errp)
+>> +{
+>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
+>> +
+>> +    return vmstate_save_state(f, &vmstate_ap_device, vapdev, NULL, 
+>> errp);
+>> +}
+>> +
+>> +static int vfio_ap_load_config(VFIODevice *vdev, QEMUFile *f)
+>> +{
+>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
+>> +    Error *err = NULL;
+>> +    int ret;
+>> +
+>> +    ret = vmstate_load_state(f, &vmstate_ap_device, vapdev, 1, &err);
+>> +    if (ret) {
+>> +        error_report_err(err);
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static Object *vfio_ap_get_object(VFIODevice *vbasedev)
+>> +{
+>> +    VFIOAPDevice *vdev = container_of(vbasedev, VFIOAPDevice, vdev);
+>> +
+>> +    return OBJECT(vdev);
+>> +}
+>> +
+>>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+>>   {
+>>       vdev->needs_reset = false;
+>>   }
+>>   -/*
+>> - * We don't need vfio_hot_reset_multi and vfio_eoi operations for
+>> - * vfio-ap device now.
+>> - */
+>>   struct VFIODeviceOps vfio_ap_ops = {
+>>       .vfio_compute_needs_reset = vfio_ap_compute_needs_reset,
+>> +    .vfio_save_config = vfio_ap_save_config,
+>> +    .vfio_load_config = vfio_ap_load_config,
+>> +    .vfio_get_object = vfio_ap_get_object,
+>>   };
+>>     static void vfio_ap_req_notifier_handler(void *opaque)
+>> @@ -251,6 +280,10 @@ static void vfio_ap_realize(DeviceState *dev, 
+>> Error **errp)
+>>           goto error;
+>>       }
+>>   +    if (!vfio_migration_realize(vbasedev, errp)) {
+>> +        goto error;
+>> +    }
+>> +
+>>       if (!vfio_ap_register_irq_notifier(vapdev, 
+>> VFIO_AP_REQ_IRQ_INDEX, &err)) {
+>>           /*
+>>            * Report this error, but do not make it a failing condition.
+>> @@ -287,6 +320,8 @@ static void vfio_ap_unrealize(DeviceState *dev)
+>>     static const Property vfio_ap_properties[] = {
+>>       DEFINE_PROP_STRING("sysfsdev", VFIOAPDevice, vdev.sysfsdev),
+>> +    DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOAPDevice,
+>> +                            vdev.enable_migration, ON_OFF_AUTO_ON),
+>
+> Why not ON_OFF_AUTO_AUTO ? This would enable migration only if kernel
+> has migration support. If not, the VM would still start but migration
+> would be blocked.
 
-> 
+I will make that change but I'm wondering; how does QEMU know whether the
+kernel has support for migration of vfio-ap devices or not?
+
+>
+>
+> thanks,
+>
+> C.
+>
+>
+>>   #ifdef CONFIG_IOMMUFD
+>>       DEFINE_PROP_LINK("iommufd", VFIOAPDevice, vdev.iommufd,
+>>                        TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+>
 
 
