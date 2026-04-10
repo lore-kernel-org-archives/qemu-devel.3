@@ -4,154 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B69EE99049
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09670E99049
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 07:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB6IC-0004fS-MP; Fri, 10 Apr 2026 03:28:40 -0400
+	id 1wB6Pb-0005vQ-R1; Fri, 10 Apr 2026 03:36:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB6IA-0004fG-Ex
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:28:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wB6Pa-0005vH-IJ
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:36:18 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB6I8-0006wS-AJ
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:28:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775806115;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hJnrr/zC+83AI7h+d0sONzJwwmF2Jk/g5jqjj/CWTTg=;
- b=d7Y3Z74yx1wNzBqybZsgCRW0clpfcBTQEJ5v64sS3NhEtd38DZww1D9QUmqqMPACT0xytU
- T7nKReav9rAoae+KYqnGWjiUJu8ivlwcRNk6if7+rXZsnJtvJnif6XCS6oaCo/lsXZLaGa
- KyinGpQxX7o/kSYnNog78JsnU/SuNAo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-546-cqh-FpkKO2yWxN_atiRfxw-1; Fri, 10 Apr 2026 03:28:33 -0400
-X-MC-Unique: cqh-FpkKO2yWxN_atiRfxw-1
-X-Mimecast-MFC-AGG-ID: cqh-FpkKO2yWxN_atiRfxw_1775806112
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-488bf01961cso11444155e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 00:28:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775806112; x=1776410912; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=hJnrr/zC+83AI7h+d0sONzJwwmF2Jk/g5jqjj/CWTTg=;
- b=kVCNsG7Eh80TmNQXKPV1QnCl6yw/R3RQ6YMoyCjhwBYxH02U0ZVH2DxYOCtpHa03Mi
- Mm/EVeoRfl/4046pj2+BvP5heZBp1JXb1cYxTF37yarDPsZ/ZFxbi6yGSrdO6kRWJKyw
- r8z6ywI48CyUzA7pDNoKhNRj6dgEyBRM8010Vnm9Q87wwTkJERrij8cgV9lhtp82MznD
- 4bhigVTYB4ssIk+I+mReKdVZq+rPs6SGKxITQkmfvNfnKg7oamolm6LAJF0Z9u10XAYd
- hXpjQbDXcYg7J76WBsEEfhqXPCvSAIMBzsz4n1nW22UHXHDKWnRLxt5xV4oJBYsO7ODM
- OEdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775806112; x=1776410912;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hJnrr/zC+83AI7h+d0sONzJwwmF2Jk/g5jqjj/CWTTg=;
- b=gtK/sg9KjyhtIq4I2H8BkddJ57nvNUaWthjbku8pzi5gLFn997vJ1CwvrIEv79U84c
- XLexW1o3rqofl/lzeWyxKx+Bj8mPRNorJHA/0flqvjnDHjCtf3TEDpvX137xcQDQQJtA
- fvYKf4/fN3yPu1n93aDh8wBm4CDheaD9n7Iu29jHTR+X8lci0OPsosbJPj3QPzDVJkUK
- 6fazDjX2UWD78f5rZMCmP1UIGaCGe0kLPecH751s/VDBUx+ONzJuOVf1EGzruVcEiA2U
- 3RRqXyXltaUKRcrvwB6kxmF6WlD28ZBi/OvR7LtFGBK70oTtRB1WMPNYwn0s6eRzMzFq
- tk0A==
-X-Gm-Message-State: AOJu0Yxqdwqbczk+YlqHRRMieJ5vmu3snVIKLrqIWtAGEMCe0xlqJm/N
- /AcUvTbe94vJIv1OczJos5MMWjVhmsNdQRNFDyY4PmIlbD9dgpiroJTQwuHBBMIb3Y6Bv1ksvI0
- 3W2Bi9v5pztqDGK3JPvwWQSeB1fBB5EXlCxIzVMkuMCDW5zrQbXGiRdOG
-X-Gm-Gg: AeBDieutiOoF7bj+jvtWZzBzOclQVjc1Zn+BKQlPKEj7jlU14DZUG2wIryZzZWHM22D
- j7snEEn/hSE/4nh1Rtd+KJ6HWaOJDY0abZ90pkrTuo2+wfDaCSs9jEfB6Zi55ysIZcYPU/BR19V
- 9ZIeJyQYbz+J/uTl7H6xu3marlD42y+UCKl1OgON53GwWSIuBaIlsFPc8pRVC9Ph1Sdne0vtVhj
- O1l0HO2diyPH8jJE3b7F2rJfInCHNRVMsHm+3Y29O4EfOCQalwlFFFgHEkxi6LbZ7CaXrKAMVk/
- VfCEsDQS0A6kD4SQjv2I89DSRDE1y2LYS7LZt860K2cvL/dTPpMBnwznsdC7WUZKxm7YQ372dfh
- Xb1cvNfq4nnS34tbx37QVrwj1j/o7o+OqIC9vQz+deFr5EOuQCF1Hr14l5Q==
-X-Received: by 2002:a05:600c:474c:b0:485:35d3:ce59 with SMTP id
- 5b1f17b1804b1-488d68101edmr22044135e9.10.1775806112429; 
- Fri, 10 Apr 2026 00:28:32 -0700 (PDT)
-X-Received: by 2002:a05:600c:474c:b0:485:35d3:ce59 with SMTP id
- 5b1f17b1804b1-488d68101edmr22043765e9.10.1775806111992; 
- Fri, 10 Apr 2026 00:28:31 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
- ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63de2a53sm5432776f8f.5.2026.04.10.00.28.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Apr 2026 00:28:31 -0700 (PDT)
-Message-ID: <75d9ff43-6c96-4b17-a8e3-449a33237ad2@redhat.com>
-Date: Fri, 10 Apr 2026 09:28:30 +0200
+ (Exim 4.90_1) (envelope-from <brauner@kernel.org>)
+ id 1wB6PY-0008D9-02
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 03:36:18 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 9000760125;
+ Fri, 10 Apr 2026 07:36:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B53C19421;
+ Fri, 10 Apr 2026 07:36:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775806567;
+ bh=sMideR0bB8PUkl/2I9TpfAIKACkXq5AAs7uYqqkYmPs=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=my1gnUEoHE4T0p3baj3gCczn7jbIrQQgu5MSSz5kufs15ea5MDbrB/j1K26LcehF8
+ 3h+IBjnHuMhEmvnTU1z6o+xXDx/z3DKGG2lLEnbdF2fUy9EvjlkKoqGvfaAj36KVue
+ VjJkL6dXVfIwNkAizmPFZcp7DWNK5seW3JQbNeMQPoB5tXqA8c1Gx0x7g9hhRhLNSP
+ wStNgtiXM14/Rj/doTNcfc0dhhKJ0ehTNOezC+Y5G3ZQo/6YIFJ1JI1hSZnsKt6/1X
+ j9F6qw79PxLo9Rogpa0oCakF6eqqZsAMZDmBX/kT/pWjthOtsEXbDDvFb9NLyiiGXw
+ LrKn9yD4F8cVQ==
+Date: Fri, 10 Apr 2026 09:36:02 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 0/5] monitor: add dynamic QMP monitor hotplug support
+Message-ID: <20260410-kupfer-rosten-9d08af140e1a@brauner>
+References: <20260409-work-qmp-monitor-hotplug-v4-0-89c4fdf69df1@kernel.org>
+ <adgBbHDDcEhh9LpQ@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] vfio-user: support VFIO_USER_DEVICE_FEATURE
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260409104756.465294-1-john.levon@nutanix.com>
- <20260409104756.465294-2-john.levon@nutanix.com>
- <6c5a98ca-2ac4-4239-b3aa-30e5572f2c72@redhat.com> <adecGoLC4Txe18Fm@lent>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <adecGoLC4Txe18Fm@lent>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <adgBbHDDcEhh9LpQ@redhat.com>
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=brauner@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,20 +76,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
->>> +# device.c
->>> +vfio_user_device_io_device_feature(uint32_t argsz, uint32_t flags);
->>
->> missing format here ^
+On Thu, Apr 09, 2026 at 08:43:40PM +0100, Daniel P. Berrangé wrote:
+> On Thu, Apr 09, 2026 at 09:18:17AM +0200, Christian Brauner wrote:
+> > QEMU supports runtime hotplug for chardevs, devices, block backends,
+> > and netdevs. Monitors are the only major subsystem that lacks this --
+> > all QMP monitors must be configured at launch via -mon or -qmp CLI
+> > options.
+> > 
+> > This series adds monitor-add, monitor-remove, and query-monitors QMP
+> > commands so that management tools can create independent QMP sessions
+> > on demand at runtime.
 > 
-> Oops, surprised I didn't get errors with this
+> There's nothing inherently wrong with your proposal. It is following
+> the standard historical design practice we've taken for enabling
+> hotplug/unplug of all the other backend types. Conceptually though
+> our historical practice is more of an accident of evolution rather
+> than an ideal state.
+> 
+> By this I mean we have a general purpose object framework
+> internally and commands '-object', and 'object_add' / 'object_del'
+> for hotplug/unplug in QMP and HMP. Conceptually these could handle
+> all of our objects, devices, netdev chardevs, monitors, etc, etc,
+> removing the need for the specialized add/remove QMP commands for
+> each backend type, and the specialized CLI argsf. 
 
-Can you please resend ? I am preparing the vfio queue for the
-next cycle.
+If you actually plan on converting old types you're now left with two
+ways of adding objects. And if you plan on ultimately deprecating the
+old format it's going to be very annoying to fade those out.
 
-Thanks,
+Or you're not going to convert and then you have blockdev-add and then
+the new object pattern.
 
-C.
+I'm not sure that I see the value in that. Imho, that's just pain for
+new users. Just providing my opinion here.
 
+> The blocker has been lack of time to convert everything/anything,
+> since while the conversions are not especially difficult they are
+> certainly time consuming due to the sheer number of types that
+> exist in many cases.
+> 
+> 
+> I'm thinking the monitor, however, is a decent opportunity to
+> "do the right thing" from a design POV. We only have three classes
+> needed in QOM, the monitor generic base class, a HMP subclass and
+> a QMP subclass.
+> 
+> If we convert QMP/HMP into QOM objects, we could then use the
+> pre-existing object_add/object_del commands in both HMP and QMP.
+> 
+> I'm not asking you to do that conversion work though. I've
+> been doing some experimentation myself today to test the
+> viability of this idea and it looks promising.
+
+How difficult is this to do? I've had bad experiences with projects
+promising to do it all very differently and taking the patch away from
+me and then not following through or like 2 years later or the feature
+just vanished into nothing. I'm not saying this is the case here but I'm
+a bit weary of not having any way to move this forward myself other than
+"any news on this?" mails. It's frustrating for both sides.
+
+So if this is doable just give me what you got and let me see whether I
+can take it over the finish line.
+
+Also, I really dislike spending a lot of time understanding something
+and it all working and then being told "actually, let me do this". I
+avoid this like the plague doing this to developers in the kernel.
+
+> Given we've got an entire 4 month dev cycle before these
+> proposed monitor-add/remove commands could get into a QEMU
+> release, I think it is worth trialling the QOM conversion
+> for a short while.
+
+I'm not sure what your governance model is so I'm just going to ask: Is
+this just a review or is this a project level decision?
+
+> > I've implemented a QMP-to-Varlink bridge in systemd. This allows
+> > systemd-vmspawn to control virtual machines and containers through a
+> > unified Varlink interface. Varlink allows protocol upgrades. For
+> > example, it is possible to switch from Varlink to say http. I'm
+> > allowing Varlink clients to upgrade from the Varlink interface to the
+> > native QMP interface. Such clients get a new monitor assigned that
+> > allows them to manage the virtual machine directly via QMP. The main
+> > monitor remains unaffected and tied to the generic Varlink interface. We
+> > can't pre-allocate monitors as we have no control over how many protocol
+> > upgrades we actually get but it won't just be one. And having unused
+> > monitors around really isn't ideal either.
+> > 
+> > Having the ability to hotplug monitors would really be helpful. I'm not
+> > yet super well-versed in qemu internals so this might be done wrong but
+> > testing works so far.
+> > 
+> > My systemd patch that triggered this is at
+> > https://github.com/systemd/systemd/pull/41449.
+> > 
+> > The usage pattern mirrors chardev hotplug:
+> > 
+> >   -> chardev-add id=qmp-extra backend=socket,...
+> >   -> monitor-add id=extra-qmp chardev=qmp-extra
+> >   [client connects to socket, gets QMP greeting, negotiates, sends commands]
+> >   -> monitor-remove id=extra-qmp
+> >   -> chardev-remove id=qmp-extra
+> 
+> With my idea the usage pattern would be basically the same
+> flow:
+> 
+>   -> chardev-add id=qmp-extra backend=socket,...
+>   -> object-add qom-type=monitor-qmp id=extra-qmp chardev=qmp-extra
+>   [client connects to socket, gets QMP greeting, negotiates, sends commands]
+>   -> object-del id=extra-qmp
+>   -> chardev-remove id=qmp-extra
+> 
+> > Patches 1-2 add the data model (id field in Monitor) and the
+> > infrastructure for safe per-monitor destruction without shutting down
+> > the shared dispatcher coroutine.
+> > 
+> > Patch 3 adds the QAPI schema and command handlers.
+> > 
+> > Patches 4-5 add qtest unit tests and a functional e2e test that
+> > performs a full hotplug -> connect -> handshake -> unplug cycle.
+> 
+> Patches 2, 4 and 5 would still be desirable even with the QOM
+> conversion I'm thinking about.
+> 
+> Patch 1 would be redundant since QOM would give us an ID facility
+> as standard.
+> 
+> Patch 3 would be redundant since we'd use object_add/object_del
+> instead.
+> 
+> > 
+> > > meson test "qtest-x86_64/qmp-test" "func-x86_64-monitor_hotplug" -v
+> > ninja: Entering directory `/home/brauner/src/git/qemu/build'
+> > [45/45] Linking target qemu-img
+> > 1/2 qemu:func-quick+func-x86_64 / func-x86_64-monitor_hotplug        RUNNING
+> > >>> QEMU_TEST_QEMU_IMG=/home/brauner/src/git/qemu/build/qemu-img ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_BUILD_ROOT=/home/brauner/src/git/qemu/build LD_LIBRARY_PATH=/home/brauner/src/git/qemu/build/tests/tcg/plugins:/home/brauner/src/git/qemu/build/contrib/plugins:/home/brauner/src/go/deps/raft/.libs/:/home/brauner/src/go/deps/cowsql/.libs/ MALLOC_PERTURB_=165 PYTHONPATH=/home/brauner/src/git/qemu/python:/home/brauner/src/git/qemu/tests/functional QEMU_TEST_GDB=/usr/bin/gdb QEMU_TEST_QEMU_BINARY=/home/brauner/src/git/qemu/build/qemu-system-x86_64 MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 RUST_BACKTRACE=1 /home/brauner/src/git/qemu/build/pyvenv/bin/python3 /home/brauner/src/git/qemu/tests/functional/generic/test_monitor_hotplug.py
+> > 2/2 qemu:qtest+qtest-x86_64 / qtest-x86_64/qmp-test                  RUNNING
+> > >>> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MALLOC_PERTURB_=244 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 PYTHON=/home/brauner/src/git/qemu/build/pyvenv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_IMG=./qemu-img G_TEST_DBUS_DAEMON=/home/brauner/src/git/qemu/tests/dbus-vmstate-daemon.sh QTEST_QEMU_BINARY=./qemu-system-x86_64 MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 RUST_BACKTRACE=1 /home/brauner/src/git/qemu/build/tests/qtest/qmp-test --tap -k
+> > ▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_events_after_negotiation OK
+> > ▶ 2/2 /x86_64/qmp/protocol                                           OK
+> > ▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_hotplug_cycle         OK
+> > ▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_large_response        OK
+> > ▶ 2/2 /x86_64/qmp/oob                                                OK
+> > ▶ 1/2 test_monitor_hotplug.MonitorHotplug.test_self_removal          OK
+> > 1/2 qemu:func-quick+func-x86_64 / func-x86_64-monitor_hotplug        OK              0.30s   4 subtests passed
+> > 
+> > ▶ 2/2 /x86_64/qmp/preconfig                                          OK
+> > ▶ 2/2 /x86_64/qmp/missing-any-arg                                    OK
+> > ▶ 2/2 /x86_64/qmp/monitor-add-remove                                 OK
+> > ▶ 2/2 /x86_64/qmp/monitor-error-paths                                OK
+> > ▶ 2/2 /x86_64/qmp/monitor-chardev-in-use                             OK
+> > ▶ 2/2 /x86_64/qmp/monitor-remove-cli                                 OK
+> > ▶ 2/2 /x86_64/qmp/monitor-remove-hmp                                 OK
+> > 2/2 qemu:qtest+qtest-x86_64 / qtest-x86_64/qmp-test                  OK              1.09s   9 subtests passed
+> > 
+> > Ok:                 2
+> > Expected Fail:      0
+> > Fail:               0
+> > Unexpected Pass:    0
+> > Skipped:            0
+> > Timeout:            0
+> > 
+> > Signed-off-by: Christian Brauner <brauner@kernel.org>
+> > ---
+> > Changes in v4:
+> > - Move 'dead' field from patch 1 to patch 2 where it is first used.
+> > - Allow removal of any QMP monitor, drop the 'dynamic' gate in
+> >   qmp_monitor_remove(). Drop the 'dynamic' field from struct Monitor
+> >   and from MonitorInfo entirely since it no longer serves a purpose.
+> > - Auto-generate monitor ids ("mon0", "mon1", ...) for QMP monitors
+> >   created via CLI without an explicit id, so every QMP monitor is
+> >   addressable by monitor-remove and always appears with an id in
+> >   query-monitors output.
+> > - Change Since: 11.0 to Since: 11.1 throughout the QAPI schema.
+> > - Drop "GenericError" from QAPI error descriptions.
+> > - Update monitor-remove QAPI doc to reflect that any QMP monitor can
+> >   be removed, not just dynamically added ones.
+> > - Update qtest: test_qmp_monitor_remove_cli now expects success
+> >   instead of error.
+> > - Link to v3: https://patch.msgid.link/20260407-work-qmp-monitor-hotplug-v3-0-cb259800fffb@kernel.org
+> > 
+> > Changes in v3:
+> > - Use SPDX license identifier in functional test.
+> > - Use framework's socket_dir() helper instead of manual tempfile
+> >   handling for socket paths in the functional test, drop tearDown().
+> > - Tighten struct field comments in monitor-internal.h.
+> > - Wrap long qtest_add_func() registration line.
+> > - Link to v2: https://patch.msgid.link/20260405-work-qmp-monitor-hotplug-v2-0-ad5bedd2917a@kernel.org
+> > 
+> > Changes in v2:
+> > - Fix use-after-free in self-removal path: skip monitor_resume() when
+> >   the monitor is dead to avoid scheduling a BH against a monitor that
+> >   is about to be freed by monitor_qmp_destroy().
+> > - Hold monitor_lock in monitor_find_by_id() to prevent races with
+> >   the I/O thread BH that appends to mon_list.
+> > - Deduplicate monitor-remove commit message: trim the gcontext/out_watch
+> >   explanation that repeated the infrastructure commit, reference
+> >   monitor_cancel_out_watch() instead.
+> > - Add missing test descriptions to patch 4 (chardev-in-use, CLI monitor
+> >   rejection, HMP monitor rejection) and patch 5 (self-removal, large
+> >   response, events).
+> > - Fix cover letter wording.
+> > - Link to v1: https://patch.msgid.link/20260402-work-qmp-monitor-hotplug-v1-0-6313a5cdd574@kernel.org
+> > 
+> > ---
+> > Christian Brauner (5):
+> >       monitor: store monitor id in Monitor struct
+> >       monitor/qmp: add infrastructure for safe dynamic monitor removal
+> >       qapi: add monitor-add, monitor-remove, query-monitors commands
+> >       tests/qtest: add tests for dynamic monitor add/remove
+> >       tests/functional: add e2e test for dynamic QMP monitor hotplug
+> > 
+> >  include/monitor/monitor.h                        |   3 +-
+> >  monitor/monitor-internal.h                       |  10 ++
+> >  monitor/monitor.c                                |  70 ++++++--
+> >  monitor/qmp-cmds-control.c                       | 105 ++++++++++++
+> >  monitor/qmp.c                                    |  81 +++++++++-
+> >  qapi/control.json                                |  97 ++++++++++++
+> >  tests/functional/generic/meson.build             |   1 +
+> >  tests/functional/generic/test_monitor_hotplug.py | 170 ++++++++++++++++++++
+> >  tests/qtest/qmp-test.c                           | 193 +++++++++++++++++++++++
+> >  9 files changed, 714 insertions(+), 16 deletions(-)
+> > ---
+> > base-commit: 6d3e9dddefdd2e8e6a4942ba9399df0e47df21ed
+> > change-id: 20260402-work-qmp-monitor-hotplug-fba7c618e3db
+> > 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> 
+> 
 
