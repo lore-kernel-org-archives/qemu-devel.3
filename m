@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75BBF36B97
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 01:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A028F36B9B
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 01:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB0ZZ-0006BF-60; Thu, 09 Apr 2026 21:22:13 -0400
+	id 1wB0nY-00088G-Pc; Thu, 09 Apr 2026 21:36:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB0ZY-0006AP-60
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:22:12 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1wB0nW-00087o-A5
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:36:38 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wB0ZW-0003hQ-L9
- for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:22:11 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b9825ba7e8dso207903966b.3
- for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 18:22:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775784129; cv=none;
+ id 1wB0nU-0001F6-4p
+ for qemu-devel@nongnu.org; Thu, 09 Apr 2026 21:36:38 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b982b0889d8so205423966b.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Apr 2026 18:36:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775784994; cv=none;
  d=google.com; s=arc-20240605;
- b=Y2Bhk9gnC77TIpk7mLYBPvXzwbSg5sfTo+HGlQXlXxOwsuYSqQQR7Ml3tM+4MhW1Hd
- vwDvuX/21e/5DyvvrcPEwQO9SZo26f33YKVG2qN4CdbcTWwxZi/6v8N8ZUCKAhU7+jt+
- b8goK+PkEONcoID+Yvgi/JitvgUX7MK86zsRg0B6UqA8wC2f3osj4kx8kzH20e0q9yOh
- CcFK+PJ1Cz+bsGVrqLMapL4qAfjlW4nBcPT0gkIeudwjkMj2ULYDL9XMVRCSiHbdcHyx
- 1vd60mKUu0B0T9MJvquP29nT0zxbmOyXkjLjeQM/ehJwgdb8s+olZredxfgzapMmrnmG
- mvZw==
+ b=jO7iqX9eqjR6/l20hpeqjwV5v1DKWrQNLnWU6jHG5bQNAkjd2g/SPeMoFfKKyMY44A
+ MzaNH1WUMxNndZ6J6zL6dgwlVWZqvl8cPBGInECNHANLoKEuwgSYJ9Gdj8Khd12wJjlg
+ HLjG1JwjuKsi/FhTj+k1t4wGmfSUntdw2xFMg60OVlbOwMCplX+W3kiZiJEgBIw882L/
+ AVzCh1415bg4fhHCl0y//k8YjLwfLu7ugwPv2gBWhJTem4mO8fXhh4LaAj3UW40xeCAw
+ XMC51IskGfXDb2M9kiS5PZ36rITQlAnS8C+jzIPv7zPK2yAomPRozLegeYvxngtMI0x6
+ B29g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=n7ybCpehmxz+hcqcVWTBu6jeVYUVszK4KXc+fbXvH5s=;
- fh=yA45nsw3/GlmR4yv0X4Y623/LexEZcgSQA1vCu7Dy/k=;
- b=THj7BGnWM/L7zP40sYhclCR8wtBOzgLq7YHmcGTpNgmp6VdEC7XDQboUH05MMg3jPb
- 5VDy4ZkhTWoOFQ1AYXhrVSF8IhRdT2mAC/4rNfNCYI36sG35KDWW5ZBAl0ss1+BMkXib
- KGoULjlGhQoOiV+qdWM6Dn9RkuMvQ3seO/5dUMH2O/JEp6igUOygR+/iwCJnAJIL/62H
- NCXOFP2+2OR2L/h2tBSbWfJIzngBfXqHHAe0dGbLeWv2sLsv8ZdmECZ3t0kff0H0+2Fb
- pzCSJHMsyFKMCVqyzr9xR01MgU7r1xnvUPP3ZQLVBVuP42CGbDyJaUxxMkR3OsGJj91y
- CHdw==; darn=nongnu.org
+ bh=tGDHPv2KtHevCmzz0FTTj4qFv8sYfv+ejK+QThaIROE=;
+ fh=cWfiSq/oFyTN/DKvcJSgQUgJ4u5YSKmpf6by/WUOfgI=;
+ b=FRo+bWrhmcbZZAl11vE9ReQwO4zoZjO2NtSkvQE617p4JhyCOqgb6f+jjIrmAEm+ot
+ lxYZV6TnY5maTPX95YZWngykHawUIi6NiTTXpzMlx9cIjynmvus2sYIJXTUW0CL8UDtT
+ kUCx9ffTmXUDqME0VhnbgA5ep8t3u/uQ49411HIf6iet0K53+xO+zUgygPMsmvUZGiqQ
+ Ty1QqVaMeDTISUvFW9XnuUr6RvRVqWyVA9/vOAiwYNE4lii18Eu6/1D/IwMSh7JnlmOa
+ sEB5pEvymTG2T2XOx0WVe6GO1bGrKDtXUJrVJnlbIs9t4vys/3fzuappMnYaRPO5juRP
+ nl/A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775784129; x=1776388929; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775784994; x=1776389794; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n7ybCpehmxz+hcqcVWTBu6jeVYUVszK4KXc+fbXvH5s=;
- b=qcncp71mQYJDZaFQfPZh0im0M4Yvm6b/mghR6dWJOkbLUaaSqecWcnmlffMLuQqUFH
- 26SGghZw905WBEmIOCEm5hf1dza4npzT1HSill2EkNZLaFVcMjZbx9VRgX1vXTbkTUUm
- kYATqhNDWRD2cBCsB5rTc1ZAFGZB6xI5CBJU+OC9MDAQrJdx2kWrZPv8C0CtjG8NCLXe
- ntzbyCQwfUSr96kPljvsSAqKQwcQmBlrXF0T/rHt+pQ1PvYMu+f39s5js8c22BRlCAJf
- uzoA55EwNzoeYRau2PSyZFXqHXaz86h9wEiKm+ypDkzFWtGjP3qp46ZPK4LpIm1+SbxB
- V8IA==
+ bh=tGDHPv2KtHevCmzz0FTTj4qFv8sYfv+ejK+QThaIROE=;
+ b=IRuFLwJSEk1enKLHrV/w6LOTLwAIVchkKpahSBfgM2E3iF9HeZLECn2tuhJzzlSI6/
+ c7JFeqhIvst/yWGANEtBnQM9AzH2lJTGJ09UxYvwpDGwKhDKF25usrDc0bjlzigmS3ty
+ NnG0i/CbIN+8y9JX9B/j8XRADrtOOV5nspbdOO+/ala6t4fD193MZm8/roCwGGtRcNsx
+ CFpwaozYObw50ce67+pp3zhLuBjyITYdoNE6/LlW/eRnRc91cy2WF6uLNTx7bDFFu3Ox
+ IFdvk7zT5ZQQUVbswzQuAPnIAS1dgaoqHfoV1j3T94waI3xNqc2TfHDHUSbK+HvZIEeo
+ iRcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775784129; x=1776388929;
+ d=1e100.net; s=20251104; t=1775784994; x=1776389794;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=n7ybCpehmxz+hcqcVWTBu6jeVYUVszK4KXc+fbXvH5s=;
- b=dL7RVo8SPUzKq5CBRlABGOOwbsoPjKhVb+/4V1q2jpQbqJ+Z2QpLSDOg/BocQ8SkW3
- FR4zovQt+0wMJhFA/ouR6Q2GLNqdF7mZ7XpbMAQiwd1Dl3F9bBJTXN4RfD+0g1jx5Oup
- thL44VlZs0Vj6Q8kk3Js8JJTYZfpOhI3d2LPzgAMH78yyiTarIoMsy+uTxfU0o6Us3iu
- hCYWdWsWQ5xta1jH22JUkiRw+po8+Mb56SodbubQCVaLmIHXM0fh4dz5OxIr2BszPT9f
- pxhUs0yEv2W8gbl/bTgpRvK362gD+K/IHGuKBluy6zGYOKQvld4ctTmzBu807TW4vxNC
- abew==
-X-Gm-Message-State: AOJu0Yyv01+GsSTvt34C/rfohfKjSEHO0evuE/h2SE8EY1ugkpYDSOAi
- k9O/sd0hz9t/FBI05rPmDrjpLdV5wmccUoObCS5bWprI3Z1Zb+qcza+c4WNlf5p5sL3l07ie8jF
- fbL2URmAFLm6x7dk7ZijbjX168pSjH8w=
-X-Gm-Gg: AeBDietKRODETu7YFZv5df7cPUUCakf3KqmzaMqjKlvDMGuHoP4KBQbXupZDxVV4aLK
- UlmYattbQ1ZeLZBxa8V61N/xUsAuoor6N2ySE2/Mv8ZStPaWfJE5bN5l500ZyjYjiu8ET8MnkV3
- /+5c/ZbPGWng2yrsJte5SJogGescB7hS3sCTwzxoDM3g5Y23VdRWESQ0F0VBofTgjpuTUkZX+Lp
- Izzphse447++wlgmR6hBznVJzdN8OxorAjno7Yw2E0GImN1GdLgkYHbFxnc59Pa4Jayk80MSAdZ
- jHJBTy7mMgm56hP1yihbBTo+LY71dgxL5xZ14A==
-X-Received: by 2002:a17:907:1c03:b0:b97:3bbe:e42b with SMTP id
- a640c23a62f3a-b9d729645f3mr70967766b.28.1775784128794; Thu, 09 Apr 2026
- 18:22:08 -0700 (PDT)
+ bh=tGDHPv2KtHevCmzz0FTTj4qFv8sYfv+ejK+QThaIROE=;
+ b=RRp9GifSQ+T6CpEwUYwJDJHOUiMDxjZCA0ZTEIV1EPzapfbZBo0sR4dPhcZ/BSYWTW
+ SiWFjNdyJBHnUYzw87+PHNCXaAHuCMe8i7aVpI61Aksl8EOtpxDt+ICyMRCktceS4BsD
+ re08zerKoDcEuKiNv0NoE/mPduX0pPscmmw/C1rVALh0aPQR+5iq1DNhCC2QWPkqF0aP
+ KY3RoJ/oMAz/lFMOwcX4sDrUbAOrv3NkAmjZwk2m/OiBQH61M/FwG6zcgLRbp55AJrqf
+ +Eo8FvjR3ISU/wVndHjFcfzTAwPMAZKz9gn13g7kwWxDLsvSco3whN1hRoaXi/KXUS2b
+ 5sfw==
+X-Gm-Message-State: AOJu0YwcTgkcUwG6JUAoN05BBXx+48N2Ukpr5FDtlzSXtyD/7KxVjqog
+ J/yA/IjF7TMJvcxMbEDPevhCI9e5U2N5x91TEanuq5j+K/UX4NS8+sVKumgP3FZcHxlFkRVO2iR
+ ha3cBQkCavy4eVjJ9h2DUx0JyYI9u6Jo=
+X-Gm-Gg: AeBDiev4ql6VyDGV3ErqBdBSuEcmaM6y2CUdAJq/UEa+DUrg3FNNIHx1a5h6mov+24s
+ 1aPAd6SB5wBO8JjTEf7Q7XF/7yTLEnnfv99ZlrehzMHuasNhhLs5DDrHr7EvxTzbcfnMnAfM9FF
+ HuYtTxD4LGl1mRtuGPQACOW1RVqQYKpg+hhDxTRnjevaeCKZuc6aNMgR14FN0uU65ZCBB0MwRSy
+ jwaDap2ruRnXxFMhJCJpME3xn8/RZydVU7NhNfPPT8pKj4feskj/+BJOa5HEig8+p46vNL43hID
+ UanLzqMNgo3ydfDVfBaf7MUpzo/40Z9FH7qS7zcNaTkF3vws
+X-Received: by 2002:a17:907:1609:b0:b98:5b2:77f7 with SMTP id
+ a640c23a62f3a-b9d7248ababmr79969366b.12.1775784993878; Thu, 09 Apr 2026
+ 18:36:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260409155344.2849233-1-bruno.vilaca.sa@gmail.com>
-In-Reply-To: <20260409155344.2849233-1-bruno.vilaca.sa@gmail.com>
+References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
+ <20260408140635.42546-3-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20260408140635.42546-3-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 10 Apr 2026 11:21:41 +1000
-X-Gm-Features: AQROBzDzqFjZGtJJwdZ4FGzCWVLXwkpJ-w_QwzPBibD6Jqk54I0dhrUsAwPQYWw
-Message-ID: <CAKmqyKO2y5g_ZtW0sjg6vmZ2bdr+9C6oWGRcZDbJk=ngKukbUg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] target/riscv: fix RV32 henvcfg/stateen CSR handling
-To: Bruno Sa <bruno.vilaca.sa@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com
+Date: Fri, 10 Apr 2026 11:36:06 +1000
+X-Gm-Features: AQROBzDHHsIxb35Ho5tn-yp6GatJ7zLt6v2_lqT-pSh99twIheCyhnTXjGhZLGs
+Message-ID: <CAKmqyKOCRdD5cUvux6W9Z_9fMXiZ0g5s1n6iWp7RkTmZBGvHXw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/6] target/riscv: Implement core SMMPT lookup logic
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com, 
+ palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com, 
+ Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -118,37 +121,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 10, 2026 at 3:27=E2=80=AFAM Bruno Sa <bruno.vilaca.sa@gmail.com=
-> wrote:
+On Thu, Apr 9, 2026 at 12:07=E2=80=AFAM LIU Zhiwei <zhiwei_liu@linux.alibab=
+a.com> wrote:
 >
-> This series fixes two RV32-specific CSR handling issues in target/riscv.
+> This patch introduces the core implementation for the Memory Protection T=
+able
+> (MPT) walk, which is the central mechanism of the SMMPT extension.
 >
-> The first patch fixes write_henvcfg() so that an RV32 write to henvcfg
-> does not clear the upper-half bits implemented in henvcfgh.
+> A new file, `riscv_smmpt.c`, is added to encapsulate the MPT logic. It
+> implements the `smmpt_lookup()` function, which performs a multi-level
+> page table-like walk starting from the physical address specified in the
+> `mptppn` CSR field. This walk determines the access permissions (read,
+> write, execute) for a given physical address.
 >
-> The second patch fixes the RV32 split handling of the stateen CSRs by
-> rejecting the xH CSRs on RV64, placing the upper-half mask bits in the
-> *stateen0h write paths on RV32, and dropping the unsupported writable
-> bits from sstateen0.
+> The implementation supports various SMMPT modes (SMMPT34, SMMPT43, etc.) =
+and
+> correctly handles leaf and non-leaf entries, including reserved bit
+> checks. Helper functions for parsing MPT entries and converting access
+> permissions are also included in the new `riscv_smmpt.h` header.
 >
-> Bruno Sa (2):
->   target/riscv: preserve RV32 henvcfgh on henvcfg writes
->   target/riscv: fix RV32 stateen CSR handling
+> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu_helper.c  |   5 +-
+>  target/riscv/meson.build   |   1 +
+>  target/riscv/pmp.h         |   3 +
+>  target/riscv/riscv_smmpt.c | 274 +++++++++++++++++++++++++++++++++++++
+>  target/riscv/riscv_smmpt.h |  15 ++
+>  5 files changed, 295 insertions(+), 3 deletions(-)
+>  create mode 100644 target/riscv/riscv_smmpt.c
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index dd6c861a90..e3361fadae 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1089,9 +1089,8 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_=
+ulong newpriv, bool virt_en)
+>   * @access_type: The type of MMU access
+>   * @mode: Indicates current privilege level.
+>   */
+> -static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwadd=
+r addr,
+> -                                    int size, MMUAccessType access_type,
+> -                                    int mode)
+> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+> +                             int size, MMUAccessType access_type, int mo=
+de)
+>  {
+>      pmp_priv_t pmp_priv;
+>      bool pmp_has_privs;
+> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+> index 3842c7c1a8..bd1c2e8fad 100644
+> --- a/target/riscv/meson.build
+> +++ b/target/riscv/meson.build
+> @@ -34,6 +34,7 @@ riscv_system_ss =3D ss.source_set()
+>  riscv_system_ss.add(files(
+>    'arch_dump.c',
+>    'pmp.c',
+> +  'riscv_smmpt.c',
+>    'debug.c',
+>    'monitor.c',
+>    'machine.c',
+> diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+> index 467fb6b4b1..1ed574227c 100644
+> --- a/target/riscv/pmp.h
+> +++ b/target/riscv/pmp.h
+> @@ -86,6 +86,9 @@ void pmp_update_rule_nums(CPURISCVState *env);
+>  uint32_t pmp_get_num_rules(CPURISCVState *env);
+>  int pmp_priv_to_page_prot(pmp_priv_t pmp_priv);
+>  void pmp_unlock_entries(CPURISCVState *env);
+> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+> +                             int size, MMUAccessType access_type,
+> +                             int mode);
+>
+>  #define MSECCFG_MML_ISSET(env) get_field(env->mseccfg, MSECCFG_MML)
+>  #define MSECCFG_MMWP_ISSET(env) get_field(env->mseccfg, MSECCFG_MMWP)
+> diff --git a/target/riscv/riscv_smmpt.c b/target/riscv/riscv_smmpt.c
+> new file mode 100644
+> index 0000000000..b7b47c5ae1
+> --- /dev/null
+> +++ b/target/riscv/riscv_smmpt.c
+> @@ -0,0 +1,274 @@
+> +/*
+> + * QEMU RISC-V Smmpt (Memory Protection Table)
+> + *
+> + * Copyright (c) 2024 Alibaba Group. All rights reserved.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "riscv_smmpt.h"
+> +#include "pmp.h"
+> +#include "system/memory.h"
+> +
+> +typedef uint64_t load_entry_fn(AddressSpace *, hwaddr,
+> +                               MemTxAttrs, MemTxResult *);
+> +
+> +static uint64_t load_entry_32(AddressSpace *as, hwaddr addr,
+> +                              MemTxAttrs attrs, MemTxResult *result)
+> +{
+> +    return address_space_ldl(as, addr, attrs, result);
+> +}
+> +
+> +static uint64_t load_entry_64(AddressSpace *as, hwaddr addr,
+> +                              MemTxAttrs attrs, MemTxResult *result)
+> +{
+> +    return address_space_ldq(as, addr, attrs, result);
+> +}
+> +
+> +typedef union {
+> +    uint64_t raw;
+> +    struct {
+> +        uint32_t v:1;
+> +        uint32_t l:1;
+> +        uint32_t rsv1:5;
+> +        uint32_t perms:24;
+> +        uint32_t n:1;
+> +    } leaf32;
+> +    struct {
+> +        uint32_t v:1;
+> +        uint32_t l:1;
+> +        uint32_t rsv1:8;
+> +        uint32_t ppn:22;
+> +    } nonleaf32;
+> +    struct {
+> +        uint64_t v:1;
+> +        uint64_t l:1;
+> +        uint64_t rsv1:8;
+> +        uint64_t perms:48;
+> +        uint64_t rsv2:5;
+> +        uint64_t n:1;
+> +    } leaf64;
+> +    struct {
+> +        uint64_t v:1;
+> +        uint64_t l:1;
+> +        uint64_t rsv1:8;
+> +        uint64_t ppn:52;
+> +        uint64_t rsv2:1;
+> +        uint64_t n:1;
+> +    } nonleaf64;
+> +} mpte_union_t;
 
-Thanks for the patches.
+There is no guarantee in C that these bit fields are packed and laid
+out like you are expecting
 
-I have applied patch 1 to my tree, but patch 2 doesn't seem to apply.
-Do you mind rebasing it on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next and
-resending a v2
+> +
+> +static inline bool mpte_is_leaf(uint64_t mpte)
+> +{
+> +   return mpte & 0x2;
+> +}
+> +
+> +static inline bool mpte_is_valid(uint64_t mpte)
+> +{
+> +    return mpte & 0x1;
+> +}
+> +
+> +static uint64_t mpte_get_rsv(CPURISCVState *env, uint64_t mpte)
+> +{
+> +    RISCVMXL mxl =3D riscv_cpu_mxl(env);
+> +    bool leaf =3D mpte_is_leaf(mpte);
+> +    mpte_union_t *u =3D (mpte_union_t *)&mpte;
+
+So this cast
+
+> +
+> +    if (mxl =3D=3D MXL_RV32) {
+> +        return leaf ? u->leaf32.rsv1 : u->nonleaf32.rsv1;
+
+and these accesses are not valid.
+
+On some platforms this will work, but on others it won't
+
+See the notes here
+https://en.cppreference.com/w/cpp/language/bit_field.html for more
+details
 
 Alistair
-
->
->  target/riscv/csr.c | 122 ++++++++++++++++++++++++++++++++-------------
->  1 file changed, 86 insertions(+), 36 deletions(-)
->
-> --
-> 2.43.0
->
 
