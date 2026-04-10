@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949ACF45A08
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8427F45A0C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHv8-0008T1-97; Fri, 10 Apr 2026 15:53:38 -0400
+	id 1wBHwM-0001XH-CW; Fri, 10 Apr 2026 15:54:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHv6-0008Rt-DX
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:53:36 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwI-0001BW-2X
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:50 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHv4-0000Sv-Oe
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:53:36 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43cfce3a195so1524423f8f.2
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:53:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBHwF-0001dL-Kx
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:54:49 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso28951115e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 12:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775850813; x=1776455613; darn=nongnu.org;
+ d=linaro.org; s=google; t=1775850886; x=1776455686; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vgSDBpX5CLw08pNI+SPMIuoznTVCeN74IG0qPtzmxwM=;
- b=UWTA0ZCwd6DkBI7Zcydv37n/mKXNdg2B1rN/GlFMe7RfqsegtD3T1BeoVP+Jp0/Btj
- oCKybYrkdpcXq/zvXJIDRMm6Ydz7zZbwHU5vz0WuPPDlFgB8fi63uRgosx1kTcFqTclO
- Lua5hoSiF9WsmN3Nr+sfm7o/TFGiTUtzE+t9r0UUhvy860OrwPfB2HfPlH7brYznlH+m
- zflt0RQ+vlm7gbb3V7jBoMtaHN/3VwVeK9kht/4y2o94HwCH7jnNUc8DD6vY6kuVai5e
- WG4Yhwdc0iTDkZW3ItMv117AA5zTF5iJje8oeyXCGshVR9KKq9HaOVb5USQOvapzifTz
- NLIw==
+ bh=m5TS34D7gzjspZxEtF9wQrQfCaZf1oD4hCg5mbcwpKM=;
+ b=D4cVZwWg5G6vikaYtnqJ0velvbp665UIoB5AuV8a+MVz2g7VFRsf1hUgVkbc94Mcl2
+ 1wpevKHk9VpZ/FJrZV8HPskaNRk1ZEuR/MP5NTtAxaAkM0ey74oCyJorQ97pjlyXNLwJ
+ f7xOKnMuBn/mdLg53gO2ipdu309UupGlO9cYGs3Deck6Hx99JcIOuuBkkBRziqP1Bhnb
+ 04jSYZYAVRm/oKsR6iO0QYf0I+Zmp08gf0YflPNKC9Mk1PSebWBJvsXBN0Iuf5vPv1+G
+ HPdExj5nuhG7x3adFADM/OYvPG7edQi3KJsEtH+1wk65qqs1XOkqOsD5a/LA/pV8xsSj
+ 8wrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775850813; x=1776455613;
+ d=1e100.net; s=20251104; t=1775850886; x=1776455686;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vgSDBpX5CLw08pNI+SPMIuoznTVCeN74IG0qPtzmxwM=;
- b=BNRth/7aBprNuEY+cUSbxJMe2JpjgtdughfZaknn1/wFUD1C959uNu/muFiZnxWl1y
- G+zwgSMGVtF1HpDzX4AdVa61CV6T78s9sz+ERrbL+wna105ayduo2//wlWXxb176p5Hb
- KnjKXzg2es1EAmaOnVohWEor1EpPRnLJeZbFCTY5fc3Ti/LB8nywj8SfOgNaZE5lxjFz
- XnW4bwFpNjGDpc+PsZM5bB2LGLhXbpO8Bgw2tH035aNqCACmlqlD1klfRZ6uybDQZvkS
- alfqZZAizVyW04AwruQn1l7mlGgh1HmkmGPiQLxgz8ti3XXzro9PCW5nAOaix3n/Zp7+
- nYnQ==
-X-Gm-Message-State: AOJu0Yx7PB/F5gog+1gthmXHAc2R+997fBeoz8dgWmRlPMlYjpZp0H2i
- 68x5V507m3CP4MsyYR9Etb1/glKFe8vHOzxn6tjpcsgpR2PAe/FazjLgG5DeDiPJ542wDVwcHNT
- GOFGGz4E=
-X-Gm-Gg: AeBDieuI49eo0CGczHh0Xe/h/pdx8PPrNwmedm4b1wR1XLFYozfL4pNJR0JQhiTWVqZ
- k+b/uzZytmsQL5sS6EUoelw1141K2wFFvXWh0oaMRwHBR/NlgZUuGJuX1DQsfmKx9yvilB/VW7t
- 7xemt88nBhsAVzDnqCsKfZe8VGVG4WHhk0GjqTDpX0XoXnqFaLOzNfEiyNW8wVlphG06ugwW5o/
- hiOIyk+Lmggapk/rY5NXCRkSQqrZnQscvshb58spWePLACSfiaObC1AiGTrGTlSIZGID9qgFGiJ
- ov1MbeSbE4EKPfylE89fff1jmR2BEVyzDdzlYfdrkaL0rtEgngKeaV4evnvyvLIb/E8506TPEH5
- DCJ+2MTUSqnKcB/hqFG6TJw8Jahx6ZjTPsxV+HYSsLEYDc8BMo6R7zdaRrbm2MtdRiZJKE8ar63
- FhXQcOVXEJoqpgWwGXs2f+bvtJsu13rXCpcQ78+TcXdjPGDHldn5jvWUAXJ1p8UlvKW9mT6WxV
-X-Received: by 2002:a05:6000:420b:b0:43c:fd18:a30e with SMTP id
- ffacd0b85a97d-43d642b4653mr6664483f8f.35.1775850812787; 
- Fri, 10 Apr 2026 12:53:32 -0700 (PDT)
+ bh=m5TS34D7gzjspZxEtF9wQrQfCaZf1oD4hCg5mbcwpKM=;
+ b=QPxPzIs+srql0aLSRh7ukE8lOwAtm7eWozdV8q5c1cB0pr5aCfreGiqtTxIPCAEPlJ
+ KbjqG97WhO+Fu/G4e/mTeBvr58d1/g9uUqSMrzgTQEA0r8S9z8ucP7qZ6gFmwLEVyVuU
+ e+kgxjgUl2P6GNDFkfs174iselaevxKuEQyOLDPNsYs8ODWM7T8Wq2GKfGkPdI6J5s+T
+ l6NGBxZD0NtTtIge0lgQgdxP1oDmSVljr4H6cbJDrxS/GdbFQbqxwGUNQpocQ8uweyaX
+ uk9YJ4kMqazm1GBRSBONELbVEttCGk4fkScdTkRnNFDnXE70y0hiXP2UviEca/9LeUUQ
+ oy4A==
+X-Gm-Message-State: AOJu0YxdQCjatj1A20qMnQsIIi89mHVpbwPTGbp+ore4lbNcjK8KzIo2
+ EPfwsWZhWIHtTafKVWL/RpRKNGfYO2Z/2S+mNC7+Tnjca2PhAo3SFYpePl9IQDd31MeHSzGhcGY
+ sj6wOSgw=
+X-Gm-Gg: AeBDies8T1phBUAZJpAB6D9YixU9WlS1uKQ4yPnBApQHGOKldu5M0AVDm4lKUQqb4Kk
+ eRrmftfKNRBMg4Dc9YWMGJDdM063+41wX9217wDzB0jwmzVRx9DIZ/wJsoWdmOEZ53dIiSy7pqD
+ MuZ8R7QAXG9BohwcFwXkGC3SL5V5ZIn/3Iz35o0GJYUorBoriCB3TyC+0t/t+fhRdBknxb04Bbe
+ +JFoSFWfia8ZvbUMblEhQAcBmZR82G8WIXN5sVNGcvL01hxbOa3lPSfUPyxyiKPfJjADvYCqnpm
+ /ZNmB4ZFYlfRquUGmvUabr2t2zxvkaXi+lOYM0uxyunH72CQQM1OOoucDAvdVB4ky+eKdYqHgWj
+ CeBE5fx0bhNrBQ002ugMvmvUkDtV5ifjhXPJPtynfvvJuAxftaV43T5lrD+Qgis5O3MeNsFN+53
+ 28rplaScmBH2c9QREr0DV4H+Pw0Bj+i3GRNAJnEFcmO+f8yNqiFe8SPH1Nd23+j9mW5y1KIGxu
+X-Received: by 2002:a05:600c:3ba4:b0:488:c6e9:1e0c with SMTP id
+ 5b1f17b1804b1-488d6847de9mr53887245e9.5.1775850885735; 
+ Fri, 10 Apr 2026 12:54:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63deba9esm10266885f8f.10.2026.04.10.12.53.31
+ 5b1f17b1804b1-488d533e596sm100071985e9.6.2026.04.10.12.54.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Apr 2026 12:53:32 -0700 (PDT)
+ Fri, 10 Apr 2026 12:54:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,20 +70,19 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
  Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 01/27] monitor: Have MonitorDef::get_value() always return
- int64_t type
-Date: Fri, 10 Apr 2026 21:52:55 +0200
-Message-ID: <20260410195323.17937-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 11/27] cpus: Introduce SysemuCPUOps::monitor_get_register()
+ hook
+Date: Fri, 10 Apr 2026 21:53:05 +0200
+Message-ID: <20260410195323.17937-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260410195323.17937-1-philmd@linaro.org>
 References: <20260410195323.17937-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,76 +105,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify MonitorDef::get_value() handler by having it always
-return a int64_t type. Truncate to 32-bit in the single caller.
-
-Note, this handler is only implemented once for the x86 targets.
+Allow targets to register their legacy target_get_monitor_def()
+in SysemuCPUOps; check it first in get_monitor_def() otherwise
+fall back to previous per-target helper.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/monitor/hmp-target.h | 6 +-----
- monitor/hmp-target.c         | 4 +++-
- target/i386/monitor.c        | 4 ++--
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ include/hw/core/sysemu-cpu-ops.h | 8 ++++++++
+ monitor/hmp.c                    | 6 +++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-index ce0bb1983cc..6364c94edf8 100644
---- a/include/monitor/hmp-target.h
-+++ b/include/monitor/hmp-target.h
-@@ -27,15 +27,11 @@
+diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+index a96f4907d05..a9200ec5737 100644
+--- a/include/hw/core/sysemu-cpu-ops.h
++++ b/include/hw/core/sysemu-cpu-ops.h
+@@ -85,11 +85,19 @@ typedef struct SysemuCPUOps {
+      */
+     bool (*internal_is_big_endian)(CPUState *cpu);
  
- typedef struct MonitorDef MonitorDef;
- 
--#ifdef COMPILING_PER_TARGET
--#include "exec/target_long.h"
- struct MonitorDef {
-     const char *name;
-     int offset;
--    target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
--                             int val);
-+    int64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int offset);
- };
--#endif
- 
- const MonitorDef *target_monitor_defs(void);
- int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
-diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index da7dd7f31f2..812714ada01 100644
---- a/monitor/hmp-target.c
-+++ b/monitor/hmp-target.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "monitor-internal.h"
- #include "monitor/qdev.h"
- #include "net/slirp.h"
-@@ -79,7 +80,8 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
-     for(; md->name != NULL; md++) {
-         if (hmp_compare_cmd(name, md->name)) {
-             if (md->get_value) {
--                *pval = md->get_value(mon, md, md->offset);
-+                int64_t val = md->get_value(mon, md, md->offset);
-+                *pval = target_long_bits() == 32 ? (int32_t)val : val;
-             } else {
-                 CPUArchState *env = mon_get_cpu_env(mon);
-                 ptr = (uint8_t *)env + md->offset;
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 977f65fe16c..b128334e571 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -593,8 +593,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
++    /**
++     * @monitor_get_register: Callback to fill @pval with register @name.
++     *                        This field is legacy, use @gdb_core_xml_file
++     *                        to dump registers instead.
++     */
++    int (*monitor_get_register)(CPUState *cs, const char *name, uint64_t *pval);
++
+     /**
+      * @monitor_defs: Array of MonitorDef entries. This field is legacy,
+      *                use @gdb_core_xml_file to dump registers instead.
+      */
+     const MonitorDef *monitor_defs;
++
+     /**
+      * @legacy_vmsd: Legacy state for migration.
+      *               Do not use in new targets, use #DeviceClass::vmsd instead.
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 3d812ea3068..799855f3f68 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1632,7 +1632,11 @@ static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+         }
      }
- }
  
--static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
--                                  int val)
-+static int64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
-+                              int offset)
- {
-     CPUArchState *env = mon_get_cpu_env(mon);
-     return env->eip + env->segs[R_CS].base;
+-    ret = target_get_monitor_def(cs, name, &tmp);
++    if (cs->cc->sysemu_ops->monitor_get_register) {
++        ret = cs->cc->sysemu_ops->monitor_get_register(cs, name, &tmp);
++    } else {
++        ret = target_get_monitor_def(cs, name, &tmp);
++    }
+     if (!ret) {
+         *pval = target_long_bits() == 32 ? (int32_t)tmp : tmp;
+     }
 -- 
 2.53.0
 
