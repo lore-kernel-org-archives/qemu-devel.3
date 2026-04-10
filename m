@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F92F45A0C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97202F45A08
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 19:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBHTx-0007vw-6E; Fri, 10 Apr 2026 15:25:33 -0400
+	id 1wBHQm-0003q4-KD; Fri, 10 Apr 2026 15:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHTv-0007pT-75
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:25:31 -0400
+ id 1wBHQl-0003je-8O
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:22:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wBHTr-00038I-Kc
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:25:30 -0400
+ id 1wBHQj-0001tK-PN
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 15:22:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775849126;
+ s=mimecast20190719; t=1775848933;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sgwc+N0yjaNA5essMR4duloCYDqsIlwU6/zTCk4Cxuk=;
- b=OCJYgabYGIXQAXWU4uOOTtSU9Lxfs1U8VG4oRRv5yeWGvmcyggnq8PHi9y1RwKdaaierip
- y35xYUJGuRiIkfvNr0Nugff8P21RjBXtByE5UmBJknIuoIQ3Gklil3hrtHL4bLvDPQdBaX
- BrapeSR/VDYqtfq1d8umBkTlTDnFN5Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=j3St06greiPm0gRjhv05vve6ioGFoJrPO6xToZlL5pk=;
+ b=fwtbLeYkhXs9Vt7TeB2ZVIyHuBF8p7copaIh7PN5eFtwfEaXwDYuKwRBczbEIjXtz08wo1
+ 10+1lrAhP2Hvtcvs2Eb6RWLBjKY09M+UydzIRtFgfIF38NTUmADl3CLga6zfj+wpsvWHlV
+ wJIErqUBJPad0oEXyIorRLPg/FTMkbI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-CB5_MAHfPsWKajYmJxYsEg-1; Fri,
- 10 Apr 2026 15:25:24 -0400
-X-MC-Unique: CB5_MAHfPsWKajYmJxYsEg-1
-X-Mimecast-MFC-AGG-ID: CB5_MAHfPsWKajYmJxYsEg_1775849124
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-ypADfWsgOuiGXlPFHrS0tQ-1; Fri,
+ 10 Apr 2026 15:22:10 -0400
+X-MC-Unique: ypADfWsgOuiGXlPFHrS0tQ-1
+X-Mimecast-MFC-AGG-ID: ypADfWsgOuiGXlPFHrS0tQ_1775848929
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17D8F180057A
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:25:24 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2219F19560B2; Fri, 10 Apr 2026 19:22:09 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AD0471801ACB; Fri, 10 Apr 2026 19:25:22 +0000 (UTC)
+ id DDDA21801ACA; Fri, 10 Apr 2026 19:22:07 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 10 Apr 2026 23:19:27 +0400
-Subject: [PATCH v2 65/67] tests/qtest: fix dbus-vmstate-test compilation
+Date: Fri, 10 Apr 2026 23:18:54 +0400
+Subject: [PATCH v2 32/67] ui: move FONT_WIDTH/HEIGHT to vgafont.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260410-qemu-vnc-v2-65-231416f76dc3@redhat.com>
+Message-Id: <20260410-qemu-vnc-v2-32-231416f76dc3@redhat.com>
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 In-Reply-To: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2534;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1762;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=AOLvl3KfosfDJbEbxdB9wrP2jcATXQDS62ur3cuRiFY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0XOSWttPnZQT2G7JRBB9lZ0dMbBcwCka+fo
- AqEINRhr+eJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFwAKCRDa6OEJdZac
- 5TUtD/0R4M3EpT/7pPTt7mfMtQEn9SEVFjJOpU3PV012RyX2F/lZ2dwnH/vtVuoXCJAWqw5Qj1g
- /eXoH9qMcfoThWtN+opV/1wrfV9jSiq16U06rRa3lWHannLXOeWdNQ4Ut/QkFSEH9tBsGyMmkTp
- r2dp66OFO6X+RIpfMiQQOnzNk/lDe+L/m5WhDT8Ix1z9bESTGU3MAn1/gWk+y8a+7pzc+UelQHi
- 49QoW+NyWQhYYJxwvgooSlsulx9xOjaaefBlcZvm+9iEdOlejrPotoQ/YVBYHQ5WImXnFvLCd9G
- j8VZhRDngkUvdwNpDA20FBSSDdlKd7fONedr5EuHtFFe9NjAZIDsgO8klPQr6tO2UKCHccVHAL3
- IDH3POuarpwiYcvP/svRfaIpbDcaqt4fE2zCRDWt2Il5QTt/GRiqTjbPJ2zWFSTfFa2hC01E/cJ
- rZT4UghZbgIO4pRbFx9dkJH4XaAJhpCkR1xVcQyOkRkaTdwuUVFvKs57/PpBg/X5tPDzlIen/s7
- 3WRprfQ/JH8RuyYQ7s7O6rE6Dxsr2rcuJJ+9Y+/Sn/BSoUeRkEyNBPTNV5YoipvvhX1jxfk7HSd
- dJ3sihPbPN4Mv1M48y55CKnOAftq4Qc4u/1gc38pQM9RAgXWkhlusQOiyObU+2Uc6j9K7zdKRVi
- NWZNkF3l4DbTeLg==
+ bh=bzagRfynX+IeSymorU/TnEpMIirjW/YFelY6j4BXYvo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp2U0VHnt50kmy5xeEfHAKZmT6j4riJFT2+BYFQ
+ fGa7WGh5xyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCadlNFQAKCRDa6OEJdZac
+ 5U7CD/0f389iLnU6SZBvcz/VDFZzO9wIkSzyQwcUXFw/WF139c0XFZ3YukWrCj4ss0DZX0Y1o75
+ z9MFZrUFjNtAWIP3vtiOsB53jv/j5oVTc1x/87iEnTGImjG569tt68iTZQxYc2ahe7H+5cC3xbn
+ oOuv5TG9qFy+gZc9lCZzjcbNByYGXCDt7A3u56LBbU2uNfly5Nf8zuIWbBSuLmFeUbqKKX3bck1
+ +URu+2OWep8VD+GkK2Vc42e/9aqOBS6J6IFqy6u+xlHF/t+2BT4eUpLENrDSB4npt8En3IKlms7
+ gVHVIAWYWKYK3Axd7vHk8c5rn0PZxtoCXC+p/6zqswn2eHK9WZzom8x3rAz1m5oPDGZaWxF0Pt/
+ AP3PPjvNDzuQGb5SD5VRu5YJSdSnnksTJZjExb9pyGGFy39qQdxeFYiGr6d0xdBfdS98LRMBZPi
+ EwILWHW6XQXuk8i1vP1NaIJBaOwoN/BNCl1uS4Lt3NBLoNr+Z5lXMLhlzAQ8o8ASbRYQ8XKOO3n
+ RRLj04qDTsGO+vZI5/DpiCrUaIwp/+3emOAqcskxm6v8450z+qfhbPoR1tpseZiQFJNEmvhliv7
+ 6zyfElvhOc+jWbwGgf1/a1qNVrlJ8Gx9V9YRamv1JBGYyceZnetKhd4SLWWoiFqT3m44P3CLYRX
+ GCjqopHtFBZP9KQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,69 +104,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test is still disabled, and trying to compile it will fail now.
+Since those values are related to the VGA font, it make sense to move
+them here.
 
-Fix it, and remove the G_TEST_DBUS_DAEMON setting, since it is passed by
-meson test. Fwiw, the test passes here.
-
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/dbus-vmstate-test.c | 11 ++---------
- tests/qtest/meson.build         |  3 ++-
- 2 files changed, 4 insertions(+), 10 deletions(-)
+ ui/console-priv.h | 5 -----
+ ui/vgafont.h      | 6 +++++-
+ ui/console-vc.c   | 1 +
+ ui/console.c      | 1 +
+ 4 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
-index 0a82cc9f935..5c80bb303b6 100644
---- a/tests/qtest/dbus-vmstate-test.c
-+++ b/tests/qtest/dbus-vmstate-test.c
-@@ -3,7 +3,7 @@
- #include <gio/gio.h>
- #include "libqtest.h"
- #include "dbus-vmstate1.h"
--#include "migration-helpers.h"
-+#include "migration/migration-qmp.h"
+diff --git a/ui/console-priv.h b/ui/console-priv.h
+index 8bcdb79d914..39798c3e9d7 100644
+--- a/ui/console-priv.h
++++ b/ui/console-priv.h
+@@ -9,11 +9,6 @@
+ #include "qemu/coroutine.h"
+ #include "qemu/timer.h"
  
- static char *workdir;
- 
-@@ -230,7 +230,7 @@ test_dbus_vmstate(Test *test)
-     thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
- 
-     migrate_incoming_qmp(dst_qemu, uri, NULL, "{}");
--    migrate_qmp(src_qemu, uri, "{}");
-+    migrate_qmp(src_qemu, dst_qemu, uri, NULL, "{}");
-     test->src_qemu = src_qemu;
-     if (test->migrate_fail) {
-         wait_for_migration_fail(src_qemu, true);
-@@ -343,15 +343,8 @@ int
- main(int argc, char **argv)
- {
-     GError *err = NULL;
--    g_autofree char *dbus_daemon = NULL;
-     int ret;
- 
--    dbus_daemon = g_build_filename(G_STRINGIFY(SRCDIR),
--                                   "tests",
--                                   "dbus-vmstate-daemon.sh",
--                                   NULL);
--    g_setenv("G_TEST_DBUS_DAEMON", dbus_daemon, true);
+-#include "vgafont.h"
 -
-     g_test_init(&argc, &argv, NULL);
+-#define FONT_HEIGHT 16
+-#define FONT_WIDTH 8
+-
+ struct QemuConsole {
+     Object parent;
  
-     workdir = g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index b735f55fc40..5f8cff172c8 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -130,7 +130,8 @@ if dbus_daemon.found() and gdbus_codegen.found()
-                                 input: meson.project_source_root() / 'backends/dbus-vmstate1.xml',
-                                 command: [gdbus_codegen, '@INPUT@',
-                                           '--interface-prefix', 'org.qemu',
--                                          '--generate-c-code', '@BASENAME@']).to_list()
-+                                          '--generate-c-code', '@BASENAME@',
-+                                          '--output-directory', meson.current_build_dir()]).to_list()
- else
-   dbus_vmstate1 = []
- endif
+diff --git a/ui/vgafont.h b/ui/vgafont.h
+index 54aeeb7d192..d24b5d47a95 100644
+--- a/ui/vgafont.h
++++ b/ui/vgafont.h
+@@ -6,6 +6,10 @@
+ 
+ #include <stdint.h>
+ 
+-extern const uint8_t vgafont16[256 * 16];
++/* supports only vga 8x16 */
++#define FONT_WIDTH 8
++#define FONT_HEIGHT 16
++
++extern const uint8_t vgafont16[256 * FONT_HEIGHT];
+ 
+ #endif
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index d58917c1850..0d7b943fdc7 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -11,6 +11,7 @@
+ #include "qemu/queue.h"
+ #include "ui/console.h"
+ #include "ui/cp437.h"
++#include "ui/vgafont.h"
+ 
+ #include "pixman.h"
+ #include "trace.h"
+diff --git a/ui/console.c b/ui/console.c
+index b2b879e8533..c997e8df572 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -24,6 +24,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "ui/console.h"
++#include "ui/vgafont.h"
+ #include "hw/core/qdev.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-ui.h"
 
 -- 
 2.53.0
