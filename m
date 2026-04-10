@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C18E99056
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 08:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9852E99056
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 08:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB7gB-0004cp-0T; Fri, 10 Apr 2026 04:57:31 -0400
+	id 1wB7gC-0004dc-BR; Fri, 10 Apr 2026 04:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1wB7g9-0004c9-Lt
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:57:29 -0400
+ id 1wB7gB-0004d1-4M
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:57:31 -0400
 Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1wB7g8-0003Hq-1B
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:57:29 -0400
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ id 1wB7g9-0003I8-9F
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:57:30 -0400
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
  by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63A6IR3Q2662057; Fri, 10 Apr 2026 01:57:24 -0700
+ 639LxbrV3391897; Fri, 10 Apr 2026 01:57:26 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=gQOXKIzzMxP1bXybqF8ZZWY5+IuNxA80ImuiDGXUU
- /Q=; b=wzz67U2FnQPo9uxP6IVYxyzZxcS6ah3vz2ZoRuSxqvU1bWDFeu6FxPH7C
- 6fh+yzFgPdMdWxZrd7weeXnCH6DvFlAgF5mAgvhKLoLn8AdK7o1V8uNBYQc1htJS
- eiSLb12Szoj+MNzIIP4GMgrtLxYCvPlUb5V9vl/ji2ggGr2kMoaBoekx54uBdIXP
- EvJLf+jMuZ498yJ/Gg2twW2Mr3z8VX/0TMENCfLw92TvdYYy2vYTYk+qc3TN/lx+
- zGaJ+40p0AH71191VR0zKlYHO+1VkPkBg/S+hmbOKUfRw+ML0WHcSrnSXu16sJH0
- 4p4aIufmyYlyt/FmUwC390kHXWkYg==
-Received: from dm5pr21cu001.outbound.protection.outlook.com
- (mail-centralusazon11021106.outbound.protection.outlook.com [52.101.62.106])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4def2k1re2-1
+ proofpoint20171006; bh=DJgBrU89x0Xj39oqDstylv5nGc845iu1BsAVm6rOE
+ 9s=; b=nDzybLqNHcqY1DPcEpXwzZ0AFD0ADQr7NJaiZDsOE83Exu1/zKtq3mGQD
+ hSaYbK/sfYEFlBe/f6wp90ZShT5GoGlRo+chvC3NhNaeWySdK4fGjvIbMox+3yu+
+ TSvy1CwO7iOWHV66WSibuZJPk2GMljWJZW89E6/P4cH6oYEQTbffDCNxGqt8BWOG
+ kVlqCUYR0CXosK15i4qAH8kg3NWCwlrK9K3FL93f4U2cYtVwislG0ONd5Qhjq82e
+ OJUG711sLaUyfd+XF97OoUqEGFse5i9Q8LKUe8KtQDgpyodWHMbxzSDzN83gFs+o
+ A4AW4EU2iZkeWrQH9jexZBpg1mmuQ==
+Received: from ph0pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11021140.outbound.protection.outlook.com [40.107.208.140])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4deav1abrt-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 10 Apr 2026 01:57:24 -0700 (PDT)
+ Fri, 10 Apr 2026 01:57:25 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=h8CHcxbJiwqBh4juidt5bv6hb5ocw/LGi/aIViCd/9uuZ5RPy+SpSxwgC+ooRsaBX8hI/U6KgpOQZ3qDcbglF/PpTjEMzvkYhhrctfeFsVAfupkGliHXNttBpJhgk4uwLUSmX6IEkf62qOyEwDxxwpzQ86aH0a/j2Mnan+mEQmCY+LvJP2f0AnXS06BV1hRhFhny96qFcT6/dsNbvBHqsUaquiPFw56RWpQU5F40W/JcIPi4VTXKeqpSk+0Yv37PQsLuTfJuMALXCQbZH/GHLWtarJtESOw8OiOEOLktVjjKvHpbVJQFWxCi8fXbUTiReliJi1UXKmY3s875FyjmcQ==
+ b=VYBbFlwbZZuyLWPpmoi5V3leCANtVUVvY35ChOLzVH2SHvBmfcJM5ebmD4ZGfcfUbyD1yf+i957DAByDnK3fnLHhzl8UVmaS43ZigY0900E+hbL7GqRgpaSdkcova1lK0KE3jMihAYVvOuSS6BX8n+BsnpiBFt0p8/yUsRUWzIfpJOtyTCZBUja7yNgTM05w425I0Gt6bGZo5wBlvIeMMe0y7F7TfRbhdXjm/j4iQLDebMwQfS1EXVfIZN/nQM5DXjNNMd7FpBvua6Ls4Gy7CN2FzkTr/LtzXdJ66yCAzsLM3Wy0D/Wpon22qdtn30Q0cNBPJ/K+D6cwbkA4OAgvvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gQOXKIzzMxP1bXybqF8ZZWY5+IuNxA80ImuiDGXUU/Q=;
- b=cgzSbFX314+VngTHirEkqn6wLSHB/WpGcKKhqC9rG0SoC2WxMPybzvYyOxjdYpFT0+RFDMg83Pe7NyUIGw3T1qI1ybit3mOCBEW60QO5ygPNVYOo7NFt2cLnhwbInKT3MszP4LAM2zcx6Naoq30wxvdEgqnchVvounRWSx/gS8w9Bh8P1TTe+lkiFnSSvvIZF9LW+VqGHfKl2hZw/+oprvC4aOxSbd3c7j3Q/GCNRLjkOCwKXGvb7n4zdM7Ywb4FCZoYetGmEbilXaz7qx5E5YYrmpk1wvY/gP5FyfbUzXQZScA6kSlJPLbwsx68XJmesoSEfDYCdtDprQtYIU/P6g==
+ bh=DJgBrU89x0Xj39oqDstylv5nGc845iu1BsAVm6rOE9s=;
+ b=GnRH49zBxM9noyydVpShh1vrIRmy4PApuKeELsK3AQZ6I6BEZKFJjnmcp9MEu9uHHf1+NGa2gGIoGsd5UYDnT17vKkyR7jMl78620jcch9fb8ZHkDc7mY2mceBQmNGIrVC3WXp2g/l4HKwAjqxtYspdNuFKIIb3ZMC1N9rvx8dg7/gztlNKWRObUJVy8wH2tF2HSvVZgd0RvMk+q6GOWAJ3jHQJUoomNFnaEvsdq58GckFzfiTs/B14PhjijQf18TCbvXg6To80pQwGMfba60lCTGekewgJeA/Ay/x6B0GZoOqDpwsTSf3qG4ZxOTgWvt0brqZGci1R63mUU4J1XJg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gQOXKIzzMxP1bXybqF8ZZWY5+IuNxA80ImuiDGXUU/Q=;
- b=ThsbgtvA6y9TXI8MXDNxhfduAGGLKmIWg5Lj9E1r0aOdbyT1ojp5PNOAkTuqbHak6DM4GYinKlRgsAwcJeimy0g9z1uExCfytWimndROF6eX4/JKpX0Z3+T0BXQskHRdSU1AFw4B/eV2ONisMDuejsj8sd+X2cUo4HrEL5WodULng41mgr7ZcOxgSy7zCWrlUQpnuXjDawgjzKNqj3POnoiJg3oOAtytBcgxoQc5QryPSVCF1QQVgE0oF9cnopwZpQzVg3IsJAahVYLIfKQkMFoNXd5EUceEudoV7MQMv0cfLSbU7xJ81INevkQBUFW/8jC5vDQkzlcLxYg+ubcK2w==
+ bh=DJgBrU89x0Xj39oqDstylv5nGc845iu1BsAVm6rOE9s=;
+ b=RCWvZOJXfi+LBktX7nZdEP0QfkMjS0LpfrKDA8D/4iL5qJrQ3KbrNPCdEO5BCn5FApOzmclD+H0woiWMidkQOcNZ5OXDlykyMRZ+HHFwlYubuDy2RoxdCBUAt68BA5+Vv7YV0pXm3sMjlQQ1W/Gy6VHyPTK2bj8mg3FLEjHcjkzRQff4ed+mcMZgVOpx5zvItIOsr3bfA4p98vqJhXK5okuFQggV4fa6BdpBM06+UwVwiHjl0EORHOkTzeNfNu0Az3t7bQ9ZxZmAvlkNwhGBrWdGQlvlTbRjRpBNEaDJTHi2k6dI9jMhjD4N6HfkI6bP04sGmcyudvI5uDZVrn47VQ==
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
  by IA1PR02MB9256.namprd02.prod.outlook.com (2603:10b6:208:424::16) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Fri, 10 Apr
- 2026 08:57:23 +0000
+ 2026 08:57:24 +0000
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::dbc1:9766:c58d:4887]) by CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::dbc1:9766:c58d:4887%6]) with mapi id 15.20.9769.035; Fri, 10 Apr 2026
- 08:57:23 +0000
+ 08:57:24 +0000
 From: John Levon <john.levon@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  John Levon <john.levon@nutanix.com>, Patrick Mooney <patrick@matx.com>
-Subject: [PATCH v2 2/3] vfio-user: correct protocol for DMA reads/writes
-Date: Fri, 10 Apr 2026 09:57:15 +0100
-Message-ID: <20260410085716.877185-3-john.levon@nutanix.com>
+Subject: [PATCH v2 3/3] vfio-user: fix DMA write reply
+Date: Fri, 10 Apr 2026 09:57:16 +0100
+Message-ID: <20260410085716.877185-4-john.levon@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260410085716.877185-1-john.levon@nutanix.com>
 References: <20260410085716.877185-1-john.levon@nutanix.com>
@@ -82,76 +82,76 @@ X-ClientProxiedBy: LO2P265CA0404.GBRP265.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|IA1PR02MB9256:EE_
-X-MS-Office365-Filtering-Correlation-Id: 31233401-b5d0-4969-77a7-08de96df2dfa
+X-MS-Office365-Filtering-Correlation-Id: bfe85a07-11e3-4bfe-c48f-08de96df2ee4
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|366016|1800799024|376014|18002099003|22082099003|56012099003; 
-X-Microsoft-Antispam-Message-Info: Zxna37pV6rD0f2LZOIKvDXA7m6GehGM+TzwN17dEAuTlo1zK6mKprNzVaFVL4LcSVFuH2PR6F7PGSeqUF4bt/YKvKimZb53yv7vWZsB326Ls1qGYOvIcckAyyFM4kgb3M1XF+L4q5mD77PtxhtmQNCLNCGU02qrbjXBDfKx57P+7Afg9XuSi2dwA3VGWdW4C3fYH8yNqMAnijtu+DL19YE7xL0z8YnpnQOtJFxUyNGIM4gQcPsT/fQKii38zhpGsNj5ayIc+aNm4iIKkKYD1/oihlW8/PreqhTgsq/G5UFRDdfu8Wv4L/LTxBXEyqTnQYoLdMbwSKvo8874YJdpIa0Ee0ndWb8Nv+YH90rJ8lAaH5xBytLtQmfR7JLUpHnwbc52/KJHLALVIY/+wyYcLdjldVW8+I+Oi1Cmi2Hj5doqd187Z4h1rzl+FYdxhSrVF3f3juVGpY1A1SjRn5fWPKhtMF/4609T26m/2GI1bBNRHi9Xqix7JYdXBiDQvnt+IvAt1pBpdJlTgPslWlTe7tJfvxBX0Qc5HS98I4yLyze2TWeZSI4Cl0AZ29617WqhYpZoVxOm2r938pAGHs3l4XETuQMA/0WITsTtb2J+KuA+656N6gt+YZjK7u54tDktYofISNToVbjQjf9Ia985tSpyqR4Bp1Z3a/qPfGyBhJ3v8PAFHBpOpIDeAQpnpKUG1bKkLJT/3DsG6iiyS58vjUvuP8Yki3jmECd7L5oOWB0M=
+X-Microsoft-Antispam-Message-Info: umhr7RL1JHnzJ97f8eHv5Uslxki7YXYNL6LfgPQxETNBnyaCl0VkedGJvPXtNwwssgaCjVnEUqXaRDZURUDEp1wKqRZ31pr19Bi2TQva2jLVsRAfSxC51AjyxrBETUJPjHGqOo785jRrHdlCW9Sst9K4RNTpUTjQ9US8821V6r4e8Ex6L2+pP0E+fPPr/vp0rmgQvAp/UvWhrbasQ8aT4kSN2vlkYxMjXgfOnFwip0GIpwYQyMuQpcv5uVxU4kqANQgNeMOzq7sT9atzT04+m2ZL88HBU8mIPFJkianrU5NBT0ez2o4AuNl2JFZRh6DpeN/d9JTZWOZvYkcZia2NThgOvj8GSTITG0skJhP6fmEbBdYhH4xvZHjfyrtYQe9VlXYHBiMfwrMTVq+HBk7VCFdl0P8RtfPEJR0wuNp9kp8J7hNzzOZkkHPno0EBSHC9cmlDkokVQZbnZXgJH88jeA8BN/d8Czfp5hXDCrFxPpZdG+Dn4I2SrWf95CQl+vfeH1hbiZSUVIKHEDlsmwHwmnA7xVYmOyz/pvflyqNTquutXUgFSLfAPxoZEuRGu2tLGeb/2f5C6k1nodvEOU/jb0Dazz+pHMGIg1EBRWj0S1TRmdPdbwzSlOPe0KCrULIPUczUlrof37j+hiWrx138TCl0CzEkKU3nDXK2kZA0Dgbp5IoDds6B1qK2U3INOo9bOOtGrchHW2yDxz1VL9T0ubp9VHDUHDrQ1WLmhHZZlMY=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(22082099003)(56012099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9Gr5pT1/qwQvazxUr0xGVYq5lQME6DXTApnxRK1zzOoF62WyPQcOSV4jQPWz?=
- =?us-ascii?Q?0JeskU8LmXohHMd2jPjArzYAbKIiYr/iVTbZY0tRs/3oSfCN6euKmKeSRkSx?=
- =?us-ascii?Q?lA961qPEb64/bkyCTiSozHZFlAPzOOu2cYxsKazOU5ahfIJANxWRQaXtjS9W?=
- =?us-ascii?Q?0bYXeU7TYW4vukp6JcxE1HNZtu5LZOxXK0n0isTyZlkVbjM3R6ECJjpQOe3B?=
- =?us-ascii?Q?S4da28cBstGt5pMhznuejrtw+jAmcjZN3XVT0Huhi8V7/AT3Sfu4dRibhBdK?=
- =?us-ascii?Q?GJGk52A4AmoP9iq59S1Oet9mUzsKM17SZrK3t4XcRGPZVYuGUMAzxPLmq7Mk?=
- =?us-ascii?Q?F9+eQw46EEiaI4HY/fJfPaAtRoKn+riHcm8eetmRMUB7w1PCQIQCMgFQsjux?=
- =?us-ascii?Q?Fb1F+i8qevEXVY4kGpp5sfGStQEd6J0MRkVk3ihHH50ddzmREClgPh9VxXnW?=
- =?us-ascii?Q?mBZdMevwEVDIyThHp4q5t2gX9pKnFhdWfi4BkaWKOoOsbkprYzUGOsFDduI1?=
- =?us-ascii?Q?zlk/LazcZ/oJ5vS4GO7odsjbpKRVTtiQ3Cx9h9h+0miuX7TJxVX/kfqO+Yf5?=
- =?us-ascii?Q?RagF2wh315cxf8A8WX4iHbh/XnoOdNvwEoJUuLbb0W0h7GHfcbYNmBODjlOB?=
- =?us-ascii?Q?t9GNe3cnGHMc4nGg5HaPCxBzJfHFqw8npd7CLDJx7NRZO8qJIbpzj5Q27rHj?=
- =?us-ascii?Q?I+Q7R56UW5crPqfpgWgN9CYkz6NdGWzzEg1Ysart5YdjTM41B1wMNDtwUrLZ?=
- =?us-ascii?Q?Uwf5cT+m9VopTsSOlou1D0VShU1MRSzmDcbwj5wZdApzN0zzhSjbfAcYUHDr?=
- =?us-ascii?Q?xvoOhKLQqoAKoqj+80U1mp04fH4RalRbMqkYqD9sLVfjBAqU86zYLwsdpHPJ?=
- =?us-ascii?Q?+h5R8DRhN56jUQj1yoDz0bScF2qNJ4LMXvRwaAgCvhS7mjOvSWnXUpvZEL6A?=
- =?us-ascii?Q?+dnTVcFd/JEjfa7DuEK46rMPeS3sRCyYPpiNGjz7EC32dUFWsjs1rkPe0PjR?=
- =?us-ascii?Q?xqgboQqmim/F3Gss1mztoExw6nNDZJ7AeJzhmLGDpTryCpchFs12I7XNIz43?=
- =?us-ascii?Q?Xudbq/7cWLSEXdAclVkQpuu1n9tO6gU3s3920V+sOZsbfhL1jCjBXsNALl8j?=
- =?us-ascii?Q?qBDTj26b3Tm93O6PCIjKB29bR4MpxVz0q6OrVh2rBlbnG02pfafH6CPBPhmB?=
- =?us-ascii?Q?tkvdq6qT9WEA2Ul/hIm8dGIW38ab7TQVq9VrFKK7TA9TQAgKknF4nd8liKpe?=
- =?us-ascii?Q?Nf2lAbwBXhnbu9gN0J9eyP/gNY6zhdUuvFHQNvntvsbez8gmY6a7lkRw6lr2?=
- =?us-ascii?Q?kPesLcx0KXIGDhLwnGyetmIR0Tuuy++c9ZwUanjafB1UMXzcWI+g7pp8Gcu/?=
- =?us-ascii?Q?Z10hyKeW4kOrWLpPKFtUtEvPse2kHFF0F16ALfhb/8yheL55Y9Kfju81GyD2?=
- =?us-ascii?Q?yswkkv7hk7SHpwHPnDdZbEZAn3hBrBTAcgPGfGpZAMi/m4MXkvXq4zsjQBnU?=
- =?us-ascii?Q?zfPKA0LSRBWGMeoyOgHruCasyLocaTdaqag/uoMWCOav+1iHyzdV5qpvJZWd?=
- =?us-ascii?Q?a0zJi5Y5qQLzVHzdzbJYhFrmBcJfSHyAOZ6xvvQmWB9/Zkdb/qofcPlC+fLp?=
- =?us-ascii?Q?oDklRa73hJJWYjMk3M9noLelLaHMrtePRLBJUCdaxjdjGjLA19bFPMidYkJA?=
- =?us-ascii?Q?f11mhmYGkxbbDNvZgtAPiZyDzTfLwJtWnuBRRXhTQZLIzn74a+zzWekcacEk?=
- =?us-ascii?Q?MsuDr5Q9hg=3D=3D?=
-X-Exchange-RoutingPolicyChecked: XvoghYn08zq8c9BrLKUR1hD9r+akI624/8k7rH114Z7RVca36yXZpeLZnUHBFHcTGUztT7bu1S35WdY1cV3zYzo6QOvwjiY8zWtH+3P8IiSDSCovdhY2aX0i/4ZDvY+yEmqY2ISi2exfD9aobIDWyxRrzc/aK/1iOwf1HTjs3Y1Fu8jVNJJdlAbgnDklGkWrK91pXmyfzvsmTluq7bOHlbx8Pih2qnFbXMlj6qpUfgRu1BDlajx9X8N9z+ZuTwkuruGBatf5ByEFs3hI3BwQkHaE6rI0LDtAX2q0gCGEGj6L1QBKK900ad65doe78zIVhMhO3CqCksB7eL2tGpmhzg==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?48IPUjI7sK1zdp3RgoKboa9t8Mt7h7mBDhwCrrMOE7gdgudROF5wMrF7DbhA?=
+ =?us-ascii?Q?tOkFv4g/jbkt3QAwnWopa9w8VLW+NgLA49rinHweKeEcm4OVfrxvQUpaNarY?=
+ =?us-ascii?Q?yUvBKrxaBCyuKlnXq8JuqKKhk9Miv1fhJlcYO+vRXiCavXonvpzTM00nhVzw?=
+ =?us-ascii?Q?qO3z5oBN8F8bzxLM4P/myDt5DQG2V/PUq6IB6CWtuVweTSmqaktEisnxZkL1?=
+ =?us-ascii?Q?pf2T97DgZtNHT1ypdI4VeSRNKVBVO0pjgzO/7p+tb282ACd/LcK6bB3661qu?=
+ =?us-ascii?Q?sMYftBxR5FYsQaveDZvyWA4Ti0P6ULvwjitxp2N1HkmzUPp02bzW7Al6Kg+n?=
+ =?us-ascii?Q?o5ws2RQ13WmG2zjXusKCNOZYuP6ovso01HUH47TU7E6qV34J+UEp8wqJHBPS?=
+ =?us-ascii?Q?2Yyp0OmLJWjoMtZv9AozE48kjyOYPrEYrRyYTmu00bVeBh0KcD1SCceakkcD?=
+ =?us-ascii?Q?H+0xSJRoJ/R9Jn/lEw09iT+n2wdCdrbyaQolUoWUWWrReIdXIwLPsge4CWW+?=
+ =?us-ascii?Q?oqrvNgR+LP1p7zQwpM9/5MB+Bojyko+UNXiVAkHwdVTMGwzzCJkLn5UsetlC?=
+ =?us-ascii?Q?Gvfkh1RGoFqubFHyrrSd4PTDWHjzjap5jIjDtinhBGiCptP69vp2xFubCikF?=
+ =?us-ascii?Q?trQTA02OZp2pUA6Hwy35LOyrkS3WZwxp0OksFtratOTKgGTQSsZEsJj+J+Ta?=
+ =?us-ascii?Q?L6LUAGI89UaxsJxxuGmH/AuumT+UXy8uoieIoeD7la+UStIO0SOGwGB1L6dP?=
+ =?us-ascii?Q?0+OMbu53/U1/qkHNe9S4EQItc/79W55dfq2NTVeAFZUnZS0009sJSbo3etFn?=
+ =?us-ascii?Q?2mfP0d81T5vXgwK9yM/NizjLbXVTlmwSPhY786a9XeU0sEraYXR0Rm5QVDik?=
+ =?us-ascii?Q?+iF2u75OH6UfTk3Za+jRsm0uyikf7MNz+cWyDT3t8l9P80/Sw5xGUCfQcj+2?=
+ =?us-ascii?Q?hinB3knXpbAc2H2qDo4YzULVKuybQUW4rV5qYT9HNrsDxVFQ+7ROcd1fseeC?=
+ =?us-ascii?Q?Wl6SsJWvqKRE4xJfTkuCmW+/3MwJj3kcAWyKZMKD6zhXWJDfQjyB8Bw7Oqq4?=
+ =?us-ascii?Q?1TA4IvOA5zaYveGm53nQr6MJzhezDRzYz4QpkbiJpEH0NMvg89y0tQQkPOkP?=
+ =?us-ascii?Q?MwsMCyNp3Ih7h19rkXaVJmyrglGE0i5NvwSz3XvY8CIRb7Lxiky5/cfZXdbT?=
+ =?us-ascii?Q?Qt1hNzxI6SxyM425kothfOEcGTHPTHnaoUE+34asuZevUPXGlvaoDlfG3bAS?=
+ =?us-ascii?Q?jWu9qMV42lR2Q3DPQL+ItY9CUQieHs7WvTrmkRu3+RSzsII+7N3eW4H107JM?=
+ =?us-ascii?Q?UwHq1SwnVOaNfggcmpTq48pb0E6jmJAeMG6+pEY03bHtvdaq2Y46r7mKI5rx?=
+ =?us-ascii?Q?UjEvewBioPx3C7/GpA6104xK0Rp4GpjbsSujzijoomg1cWzqOeZH9Wkun9F5?=
+ =?us-ascii?Q?KBXXyq1ZcRWf/Tee6Q2YalEjz0pdiO20zABGXjDB4yDOG/HEiJFZKou4v1QK?=
+ =?us-ascii?Q?UXhx4CpyjN15uF6htP56PfVLMtH2Oppu03Inb93EV0SI6Qvce3HrbK2Q9PKM?=
+ =?us-ascii?Q?w9Yo4BhDn1m7y4CGOpk+Ei+NsVhfWyziLqPaBCiPuKkwCn4Jlh7gOu9SRXUF?=
+ =?us-ascii?Q?TTG3sIn6ihOJ0DD8DSMPfoeY4KtJxTkzvifSI9+oWMoRgOwHWUA9C9LnDd6v?=
+ =?us-ascii?Q?vRmat83BR7hVjO3lBZ687gp6ckVyVzWsfRJoucNsfDxKz53BZbik8yS71Obj?=
+ =?us-ascii?Q?o2DeekjY3g=3D=3D?=
+X-Exchange-RoutingPolicyChecked: OK8BHfTm2tv8UPFm13W88BYG0IHSBXTEWh8Yw+snIbw3dufRTP0drmAOUsg6BR8xqS0yYNUw3BONSfeRupM4JecHLuC1YVqAYDkMdWRudwqbMgklKYUGeUppbPR0957PzhEWusZybH2AiBOc4WjnC/8TFOWkh3WRypTCrOeVhvTMCpgKcm4RAE+bDDVCLjA9ZGrQGtzY3uApDZIuBo6s41xvMRLrnbo4ZcmqzLI1R8oPNJNHvj32WmwgXfRcTAxeHPDfBzXBdWsebyx/8xEzxxzrIAWhGxCHNdfMudF4zi2nOIBE9xMGEoqoc0ZOBFr7Wf9UmU+D9nNzSmOng1/E4g==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 31233401-b5d0-4969-77a7-08de96df2dfa
+X-MS-Exchange-CrossTenant-Network-Message-Id: bfe85a07-11e3-4bfe-c48f-08de96df2ee4
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2026 08:57:22.9191 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2026 08:57:24.3469 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JcLVxVh5e/nbQrOHQK584TK7akg2CnbeSWqRF9B5kDlwh/9hZToIotaTOT+T9l03uq/fZgsmusFmAao/sbMN2w==
+X-MS-Exchange-CrossTenant-UserPrincipalName: cwdqPLBU3AKAjix1u9pNbvZwM39Jn4iC6r2AIyy4R8+xzMUdpfuY4rqSgBqhVnJXc7UMclTVvCxou+Z4TNISzQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR02MB9256
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA4MiBTYWx0ZWRfX9X3AGclXX2P8
- cHuI5UM1V1ctMlPi9gY8tZYjvQ+DEKnhrCa3VbKo+3du0/ud/CWeEey5e9F54OU6OBgf/gvImMY
- rv6r6OhRRcE/VAXoKfTdGajK/FEQBvXUcEsu/RnmX0eHmo802w3jKTP0Al4m/g5DItYaKK84WlT
- V+iPQGZBq2VoQDZh5lQbSPTUttOLSxTdPxY9lTM0GWY25HFLfm5GdFYD10Wh2kAUHNUjEATWsQn
- O1RuogztFqSExKx1KFfzDmKolCcj2rxrc/J/r516/3uGoKZWrPe3VDuHnWq4iE/2EQVwOkJQmL+
- SLOnASUwT/neyqLBYcq1Vy+WDHcE6vYrRwfl3CR6RJV93EXRa/lnqCOnzOrx7vJqcFih39qb2md
- 5SS3h//CCxZT929nO+n/T3PaED8ifYQEnPg8ZjG3WW0999sCc/LULISUZVFQSwG0ZqEhsJP+xMw
- axMIyJMIPu+y/7W/Nxw==
-X-Proofpoint-ORIG-GUID: Ae0l7Nd5dmtxGhTwDPjR0dNKxmZujE17
-X-Authority-Analysis: v=2.4 cv=fKgJG5ae c=1 sm=1 tr=0 ts=69d8bb74 cx=c_pps
- a=YkHaaIsEX1QH8E31U4hA2w==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Authority-Analysis: v=2.4 cv=MalcfZ/f c=1 sm=1 tr=0 ts=69d8bb75 cx=c_pps
+ a=oqYjYovRwutaw0NExYmD7Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=A5OVakUREuEA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
- a=puMWUmrUAAAA:8 a=64Cc0HZtAAAA:8 a=grO-18Nwhb_pULRB4IoA:9
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
+ a=puMWUmrUAAAA:8 a=64Cc0HZtAAAA:8 a=w6TJzBNOSodSHIE7IQgA:9
  a=oJ1xzHRvupUJs7EIRaQM:22
-X-Proofpoint-GUID: Ae0l7Nd5dmtxGhTwDPjR0dNKxmZujE17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDA4MiBTYWx0ZWRfXwqfqmvXiJg+t
+ so+O0hvdEhmlKs+z/VMWiNu7rSjxlPheXctDXwiB3sI3ttndjx0ZqaIIXW2v34ktwGCTTyaA3H5
+ osxklM0D+JIswq4lalUnPqz0I1lYf16A/jPpZaNEbS9IF8GMsvOIbb8CN2QbPtv/a0Pu67dWFHU
+ RkDZ8X6UTHQePPhEfc4AOinPs8LIJKc5kkRDDaDEECGyidDE+jlqm9VFx2PnSbHNEiUJ/2gagLI
+ ykOk0dlwiw698qa2TPzhx1YS7Kd8W4fgMEbhxeUGdlt9YSEaBQWKu22mc5hPU/I3yIzjXbBLKv7
+ elqw+d5t7qkoM/FhHPESCLRCeNxWI3LwkAeR/o3+Lg4GElk0l2dc3FEJjzvNOAQuDbrWS24/t5x
+ 7Hst4hLogdnEbA/FKG8yo1OGATsc5skkpawWBsLJoYxlJV7unERR+7tqeYHJz1RqhFMRFCAKjSY
+ nnrqV3986lRglLETZAg==
+X-Proofpoint-ORIG-GUID: Vn5qky0CPNZ5jW-4ghAv9CyeHSZAbq3o
+X-Proofpoint-GUID: Vn5qky0CPNZ5jW-4ghAv9CyeHSZAbq3o
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-10_02,2026-04-09_02,2025-10-01_01
@@ -181,40 +181,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "count" parameter in the DMA write reply should be 8 bytes in size.
+The protocol specifies that DMA write replies should include
+address+count, but the client code was only doing so for read. Fix that
+up.
+
+In addition, add a protocol clarification over how short writes may be
+reported in that reply. QEMU never reports a short write via the
+count field.
 
 Reported-by: Patrick Mooney <patrick@matx.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- docs/interop/vfio-user.rst | 2 +-
- hw/vfio-user/protocol.h    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ docs/interop/vfio-user.rst |  6 ++++++
+ hw/vfio-user/pci.c         | 30 ++++++++++++++++++++++--------
+ 2 files changed, 28 insertions(+), 8 deletions(-)
 
 diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
-index 303fc13d6e..d4766487ea 100644
+index d4766487ea..12deb25102 100644
 --- a/docs/interop/vfio-user.rst
 +++ b/docs/interop/vfio-user.rst
-@@ -1463,7 +1463,7 @@ Reply
- +=========+========+==========+
- | address | 0      | 8        |
- +---------+--------+----------+
--| count   | 8      | 4        |
-+| count   | 8      | 8        |
- +---------+--------+----------+
+@@ -1429,6 +1429,9 @@ Reply
+ * *count* is the size of the data transferred.
+ * *data* is the data read.
  
++Note that whether short reads return an error or just set count appropriately is
++a client-side choice; servers should be prepared to handle both cases.
++
+ ``VFIO_USER_DMA_WRITE``
+ -----------------------
+ 
+@@ -1469,6 +1472,9 @@ Reply
  * *address* is the client DMA memory address being accessed.
-diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
-index 2a0c31e7c5..c478d1353f 100644
---- a/hw/vfio-user/protocol.h
-+++ b/hw/vfio-user/protocol.h
-@@ -210,7 +210,7 @@ typedef struct {
- typedef struct {
-     VFIOUserHdr hdr;
-     uint64_t offset;
--    uint32_t count;
-+    uint64_t count;
-     char data[];
- } VFIOUserDMARW;
+ * *count* is the size of the data transferred.
+ 
++Note that whether short writes return an error or just set count appropriately
++is a client-side choice; servers should be prepared to handle both cases.
++
+ ``VFIO_USER_DEVICE_RESET``
+ --------------------------
+ 
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index 64b8b3cb8c..facc79727a 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -109,6 +109,10 @@ static void vfio_user_dma_read(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
+ 
+     r = pci_dma_read(pdev, res->offset, &res->data, res->count);
+ 
++    /*
++     * pci_dma_read() doesn't support reporting short reads via the reply's
++     * count parameter; in this case, we'll reply with an error instead.
++     */
+     switch (r) {
+     case MEMTX_OK:
+         if (res->hdr.flags & VFIO_USER_NO_REPLY) {
+@@ -136,6 +140,7 @@ static void vfio_user_dma_write(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
+ {
+     PCIDevice *pdev = PCI_DEVICE(vdev);
+     VFIOUserProxy *proxy = vdev->vbasedev.proxy;
++    VFIOUserDMARW *res;
+     MemTxResult r;
+ 
+     if (msg->hdr.size < sizeof(*msg)) {
+@@ -150,26 +155,35 @@ static void vfio_user_dma_write(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
+ 
+     r = pci_dma_write(pdev, msg->offset, &msg->data, msg->count);
+ 
++    res = g_malloc0(sizeof(*res));
++    memcpy(res, msg, sizeof(*res));
++    g_free(msg);
++
++    /*
++     * pci_dma_write() doesn't support reporting short writes via the reply's
++     * count parameter; in this case, we'll reply with an error instead.
++     */
+     switch (r) {
+     case MEMTX_OK:
+-        if ((msg->hdr.flags & VFIO_USER_NO_REPLY) == 0) {
+-            vfio_user_send_reply(proxy, &msg->hdr, sizeof(msg->hdr));
+-        } else {
+-            g_free(msg);
++        if (res->hdr.flags & VFIO_USER_NO_REPLY) {
++            g_free(res);
++            return;
+         }
++
++        vfio_user_send_reply(proxy, &res->hdr, sizeof(*res));
+         break;
+     case MEMTX_ERROR:
+-        vfio_user_send_error(proxy, &msg->hdr, EFAULT);
++        vfio_user_send_error(proxy, &res->hdr, EFAULT);
+         break;
+     case MEMTX_DECODE_ERROR:
+-        vfio_user_send_error(proxy, &msg->hdr, ENODEV);
++        vfio_user_send_error(proxy, &res->hdr, ENODEV);
+         break;
+     case MEMTX_ACCESS_ERROR:
+-        vfio_user_send_error(proxy, &msg->hdr, EPERM);
++        vfio_user_send_error(proxy, &res->hdr, EPERM);
+         break;
+     default:
+         error_printf("vfio_user_dma_write unknown error %d\n", r);
+-        vfio_user_send_error(vdev->vbasedev.proxy, &msg->hdr, EINVAL);
++        vfio_user_send_error(vdev->vbasedev.proxy, &res->hdr, EINVAL);
+     }
+ }
  
 -- 
 2.43.0
