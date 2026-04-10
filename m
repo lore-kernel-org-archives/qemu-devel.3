@@ -4,154 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B7E8F459F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 17:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417C0F45A08
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 17:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBFEs-0008Hf-G1; Fri, 10 Apr 2026 13:01:50 -0400
+	id 1wBG5a-0006nW-Qy; Fri, 10 Apr 2026 13:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBFEp-0008GX-Ts
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:01:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wBG5Y-0006mW-Hg
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBFEo-0000Sc-5I
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:01:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775840503;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=J+8pJ2FK0JDD8W2tK6IXSjlx2tJLyHV1yG7afDmdGDc=;
- b=auQa8D63BGVjZklawyV8SQqgncg5kit1IbT+U0QhBRrc+jStP57X2AiklzB0I5YhBiTQ//
- e5dDh24JhXGiB56n/NUXfB+Si19io0G0nJbGxGOD5wvMeIUZkdh2Kmms6PCYDgkvrAK2oS
- h7hl9by4n74GZ4/U5pS30msn+0aeakc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-NrgXzk7eMlSgLqIDBj9n5Q-1; Fri, 10 Apr 2026 13:01:42 -0400
-X-MC-Unique: NrgXzk7eMlSgLqIDBj9n5Q-1
-X-Mimecast-MFC-AGG-ID: NrgXzk7eMlSgLqIDBj9n5Q_1775840501
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43d675e59f7so704892f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 10:01:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wBG5V-0001Xb-DO
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 13:56:16 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63AAKDwV2698454
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=nOvzeWfo1gz
+ MP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=; b=RFVXNgcJHHkNaeIM8Sw4bUZjY17
+ Qj88nXrDq35lQDyfQKjrUlgJvTGT1SYRH1sA10lbhuGtoUdVrom39u1gwqWOVSKx
+ mbng/5wfPzSX4dDxRhPe2VLQyl9A88+piPPIf6ENgPMStJJyqO95izo5EOHVb79y
+ o4xggLo7ecPYkdLnUjOzEl+R5gp16P4onDa6t2HmFJH1yBi7gQEzXqQpjrT2eUoM
+ 0xRbbU1x04Lhiez8D1OMeYwzjq+jolqwOcOv8sV5XiWCzG+vIlioxqUKpNNYzice
+ dC4trALNXV/But3Z4gv7+20KfZvnRHcHT9NBVmLtCNHiWCycq6fForotWEA==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4degt9v4hj-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 17:56:10 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-127133794b6so13615424c88.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 10:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775840501; x=1776445301; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=J+8pJ2FK0JDD8W2tK6IXSjlx2tJLyHV1yG7afDmdGDc=;
- b=lig4aDzxbELat/KZVjCVaLGpr62mbn21sajugm2W9qTPp0LsrqZ6IQ44LeMe0jXVMS
- xB6bvNKPJmoikMcUyjtLN8X/ijBcMi2e1FvHbFLaETXkt+lsG2RssF6hmNZGh+/UfJYh
- mpMX+JnswQ1xGv/oTOpECMlcFhtllJz3PIvvQHEFhRvrbh8Oew0dBhQNBnTFl4Qh316u
- rGcKRNtOBFhMdd71jdK6Pz4c5Av6RFTlQeohAbZ96ehBhWxNRHx0CdJGloh3MoHQkHDZ
- L653ZHoNwfuJyKNpg+t8TXPnN8RzAkHxN1Hmza4FiJcV5CAJO2ha9YZX0Mxc/CrXtVVe
- 1cSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775840501; x=1776445301;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1775843769; x=1776448569; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J+8pJ2FK0JDD8W2tK6IXSjlx2tJLyHV1yG7afDmdGDc=;
- b=iUMHZLvitBGSMpHUC0dk2xLGnc8D0k+XbM8ojFrfC0MS07TU2mt1P+23m960NpPkbS
- GIRlgN+Vbva7ZtwWeh/AZPC/WUus00VDs//Nzk+Fa8iXQQQ7nWNaB2UsKFBIHU91qFya
- TZoiO7sCQWEQUtiPaMwzOrImi/EjqxjbYwSILw0XVOQgM6S7CzDZSNj3ey32Vjz4LbgZ
- wVEVcutJqUAKJE6AuhXQvaFtomnxc31BuuEHfS0RdoKEDtPG655QO9QFcnjGe93HbMEp
- QhQZUy+j2Z2tnNrxC64WvULtXpGRh8x7HitZ8RfVdtlouE8VlffiuPWtKxKA/iZdhPcT
- a21A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVyEVFohcfj9+U/nQKjW1lKyOEL3qFi+uBxO6Chc+IK/3L0gJXS4j1dB33ocr+z8/JAYBba4yPvhuAD@nongnu.org
-X-Gm-Message-State: AOJu0Ywd95geQ2gWCT5AA7J84YrkHA8raO0jSVHsY0tPe6I2g6iaftMN
- BWbV2OB6wqjmA/E4pODz1CZzXc6orMWZdVCPZ0IkdudluIKoa+saLfUP6ieB1LhtEKmqfalpFgS
- r/EwYY2v16aku0FK+xCRi5/n1UEB6Djv5GhsBKUSHEpUDlPKfxhVDaojY
-X-Gm-Gg: AeBDievic4YuqpbMZKqu3+3PO0/eucggQs5Q+46ELQ/CHYI9sGu9Y9+jpWDnii2+dk2
- 8l03MI6AcQiPTOdEF9oI2yLFKo+6oMgpKLeRzLkff6GRDlmboxU6fDFJEjpabDrR/EV5ZpkzFV3
- Si+D211SLT93LVnR4Tqk/hjxhJzYlYmvbIB+hXS+BPYe9FTdIPchdOGaYYhrEdd3S6OsLO1IT6t
- 1YolIGcBI8jhXnXxKipbAMrrrKJyuinoToqhSas18+UyzhB4hglN6ULLSDLxpgJsunqq0L3FB5q
- WEOzj+5u+P4X6QD7vl7zIlURltJAu95F5Dq4rkMiWATBtC7L52Qpzf6PvVOoiXkacSxc1H7I6zW
- h5/mUN3U9D4BUiLho+T0TPy0XPdY7drVamodabRoyMtA+DeV9UTOBdQSwhtjC
-X-Received: by 2002:a05:600c:8b38:b0:488:be58:bb77 with SMTP id
- 5b1f17b1804b1-488d6890ee3mr48171875e9.30.1775840500630; 
- Fri, 10 Apr 2026 10:01:40 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b38:b0:488:be58:bb77 with SMTP id
- 5b1f17b1804b1-488d6890ee3mr48171345e9.30.1775840500171; 
- Fri, 10 Apr 2026 10:01:40 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d67b128dsm41607995e9.2.2026.04.10.10.01.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Apr 2026 10:01:38 -0700 (PDT)
-Message-ID: <e9846ef2-802b-40b9-8a65-5a273b199a0f@redhat.com>
-Date: Fri, 10 Apr 2026 19:01:37 +0200
+ bh=nOvzeWfo1gzMP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=;
+ b=CVxDgyrCItlOqhjOOAwFcXNyoKaxIIj0HvI8s53szAY2NMzeC83ybY9XOoTqEMk6oB
+ PNiXYlK7SDw3rASVv9kqAl5CffGyTJYQ1TyOaDkX4uz/lW43aWR18/XGTOWJmmnPhIll
+ Zdn/DrSinG1JIw+CZYUSzjUuvNpvN+k9ZF7MZ0U/1lDuRkmkwLpWl2dsUfdrP6xboIJV
+ t0KP42S/xqmrhxfm5A278Sxv/aSuQgrNjK8EGJcokKHe74D4Eedy5YukGPMcD0NRDBKJ
+ obNRtA0DLpe3oL37c/L98K1vzMdKudrUPOWtiWl4haql8bZ3+a6i/6zBJMFvD/ib7916
+ hYBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775843770; x=1776448570;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nOvzeWfo1gzMP3it2e0DgF8ZBLHR2ZVPC9oC1yks6l8=;
+ b=b/70/NlscFAJeLvkqRwpxJ5J0oria4Tnk+9N5M57vK5Pe6/K75DF2+3Nl4gpnyk9DD
+ NhtH1xRxc253voJd7TsTOevc3DXgbBHZ5A09yIGL0oSm7S/oRzLezDsi0WE8MjtFHB2F
+ ZZbXGybV0aveasFADbFtHHEe9ztzaRJ/aJZuidr/jpzbWLd6KdQqEWeGKfIbvQy2erX8
+ MNTtLpwkS8g1w83YuGGap5hxKBHXQrxO2mqo3KfC3DbDqNoN/QbZw9LloNv06I8ZfJbx
+ wG2MKMxhJ0xxXBxAKxhCCFWRXV/e42O/t9aoFB2Y/NrZQl2SrFVeBwbvGgzjY0XWt3Pp
+ Rmjg==
+X-Gm-Message-State: AOJu0YyzzdeMBja+QiNMCXz49JiWL5n0Mty8ijwG3ker/kOadVbSH7Z2
+ LMDxNVa0bQBfNwaIm4EhyIZxzEdPgI+zgLJXOW/No1/DeV/oIt97MB9o05skOdDtx54F59kFanJ
+ GizWSjq5E8gm+1pkso6CpjKRPkZzW+Ohea1kI5FjOE2AaGAGCBa4DTSN+fNnCyB5CBrG8
+X-Gm-Gg: AeBDietTLiH63OGQNdFoeaqB1JNrAhk4/LhNonGhWPnKjgmtwx8mYyNinCg5UtbKsUC
+ BIFmPrg9wwO+ts6jarwm1ZDnVcnivcMY5I5gAt71mQS6C/wNpRhFlrLIF2057b7UTZGgma2+7gO
+ xwEANS370ByYZaQq3sSAimOGpckaxKUdBlri80R1T7LnwWLTG5LHtNqwIRjxCLySf68v9IdPG/P
+ sbRR17JRwCGrqKPCM2GnXm8Gn1KUg6eQTl81gImv2eC0bYGcjRGfRB0w55j3L86kGOFdi/9RO9u
+ ky4iqPsm3R3lofXHIU5a2+CKO8kwkPi2q8S3Kk3e0KK5U8M6fyZH+KYwt+V4JgHh8zpViUavel9
+ alj9pXwCcGh6XzPz4baxW/SNqUvx2v7fOaLfFs6fUhph0Db+6OjBTzXnjQEhTRewjIOmkaAukLZ
+ xAFh3pI4md
+X-Received: by 2002:a05:7022:ec07:b0:128:d3de:c9e4 with SMTP id
+ a92af1059eb24-12c34ef7f15mr2346151c88.30.1775843769357; 
+ Fri, 10 Apr 2026 10:56:09 -0700 (PDT)
+X-Received: by 2002:a05:7022:ec07:b0:128:d3de:c9e4 with SMTP id
+ a92af1059eb24-12c34ef7f15mr2346121c88.30.1775843768686; 
+ Fri, 10 Apr 2026 10:56:08 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c3459f7ffsm4256271c88.3.2026.04.10.10.56.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Apr 2026 10:56:08 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
+ brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ marco.liebel@oss.qualcomm.com, philmd@linaro.org,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Subject: [PATCH v4 02/16] target/hexagon: fix incorrect/too-permissive HVX
+ encodings
+Date: Fri, 10 Apr 2026 10:55:50 -0700
+Message-Id: <b9a5a46b82e804d3c1cbeff678a9871a2b25a900.1775843299.git.matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <cover.1775843299.git.matheus.bernardino@oss.qualcomm.com>
+References: <cover.1775843299.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] vfio-user fixes
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-References: <20260410085716.877185-1-john.levon@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260410085716.877185-1-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE2OCBTYWx0ZWRfX9yLIMnW5xLEy
+ ClOfN2k+0QrwY+uxDD21to5Whr4yjVHyyiZtxhAJs9rpwjJT3GRzZqq+EkHAz0TFnfPNRg1HM+j
+ O4WVQHgfpTXPlq/oUfkuAIy/x2YrqhOkbH1WIGF7+XZ1Z72NZucZWrjUJRRh2zEJc1TTcA/oSAd
+ fLdONr8FY+ZmzPVV/82F3Qhpsn4dBIovb3L4IOOl/ZX5OV7Ieigxuu9PTWduc3eVIkhIR9GzBkh
+ UvFVtJ4nBeiL3izWfndP6W2JP8SnPKwufqECH1jXt7Qi0c9JlF1GECpcjm1EMuDv4MWUn3O06vv
+ A8qiLB6RWIHGcQ+d7QxjciF6vWjZBP9pHLFYKM0vsg1B1V/IePu6fFZGES7orIiPpGvOpO5A2bT
+ obzWK1uRwBZ5UOKBEszbKR6YG5uQU0Vu3Ke43iqDdSwSEvj7fVU8eUDjHkZ6izbsI3aWwJv074+
+ kZBJmpxEo+WvgN8Balg==
+X-Proofpoint-ORIG-GUID: A1LO4U7Ba-7U5SvETsorGkksL-W0UOA0
+X-Proofpoint-GUID: A1LO4U7Ba-7U5SvETsorGkksL-W0UOA0
+X-Authority-Analysis: v=2.4 cv=BJyDalQG c=1 sm=1 tr=0 ts=69d939ba cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=pGLkceISAAAA:8
+ a=EUspDBNiAAAA:8 a=LtKSMYrkcOpncNoavBoA:9 a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-10_05,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100168
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,27 +149,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/10/26 10:57, John Levon wrote:
-> 
-> 
-> John Levon (3):
->    vfio-user: support VFIO_USER_DEVICE_FEATURE
->    vfio-user: correct protocol for DMA reads/writes
->    vfio-user: fix DMA write reply
-> 
->   docs/interop/vfio-user.rst |  8 +++++++-
->   hw/vfio-user/protocol.h    | 14 ++++++++++++-
->   hw/vfio-user/device.c      | 42 ++++++++++++++++++++++++++++++++++++++
->   hw/vfio-user/pci.c         | 30 +++++++++++++++++++--------
->   hw/vfio-user/trace-events  | 23 ++++++++++++---------
->   5 files changed, 97 insertions(+), 20 deletions(-)
-> 
+The following encodings have become stricter since v68:
 
+    - V6_vunpackob, V6_vunpackoh: ---00 -> --000
+    - V6_vaddbq/hq/wq, V6_vaddbnq/hnq/wnq: ---01 -> --001
+    - V6_vsubbq/hq, V6_vsubwq/bnq/hnq/wnq: ---01/---10 -> --001/--010
+    - V6_vhist, V6_vwhist128/256, V6_vwhist128/256_sat: ---00 -> --000
+    - V6_vhistq, V6_vwhist128/256q, V6_vwhist128/256q_sat: ---10 -> --010
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Pre v68 compilers, by default, already use "0" for the non-specified bit
+that changed in v68, so unless someone is manually writing the binary
+encoding, this should not cause any backwards incompatibility with
+pre-v68 binaries.
 
-Thanks,
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+---
+ target/hexagon/imported/mmvec/encode_ext.def | 48 ++++++++++----------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-C.
+diff --git a/target/hexagon/imported/mmvec/encode_ext.def b/target/hexagon/imported/mmvec/encode_ext.def
+index 402438f566..6d70086b5f 100644
+--- a/target/hexagon/imported/mmvec/encode_ext.def
++++ b/target/hexagon/imported/mmvec/encode_ext.def
+@@ -647,36 +647,36 @@ DEF_ENC(V6_vsubububb_sat,    ICLASS_CJ" 1 110 101 vvvvv PP 0 uuuuu 101 ddddd")
+ DEF_ENC(V6_vmpyewuh_64,        ICLASS_CJ" 1 110 101 vvvvv PP 0 uuuuu 110 ddddd")
+ 
+ DEF_FIELDROW_DESC32(        ICLASS_CJ" 1 110 --0 ----- PP 1 ----- ----- ---","Vx32=Vu32")
+-DEF_ENC(V6_vunpackob,         ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 000 xxxxx") //
+-DEF_ENC(V6_vunpackoh,         ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 001 xxxxx") //
++DEF_ENC(V6_vunpackob,         ICLASS_CJ" 1 110 --0 --000 PP 1 uuuuu 000 xxxxx") //
++DEF_ENC(V6_vunpackoh,         ICLASS_CJ" 1 110 --0 --000 PP 1 uuuuu 001 xxxxx") //
+ //DEF_ENC(V6_vunpackow,     ICLASS_CJ" 1 110 --0 ---00 PP 1 uuuuu 010 xxxxx") //
+ 
+-DEF_ENC(V6_vhist,            ICLASS_CJ" 1 110 --0 ---00 PP 1 -000- 100 -----")
+-DEF_ENC(V6_vwhist256,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -0010 100 -----")
+-DEF_ENC(V6_vwhist256_sat,    ICLASS_CJ" 1 110 --0 ---00 PP 1 -0011 100 -----")
+-DEF_ENC(V6_vwhist128,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -010- 100 -----")
+-DEF_ENC(V6_vwhist128m,        ICLASS_CJ" 1 110 --0 ---00 PP 1 -011i 100 -----")
++DEF_ENC(V6_vhist,            ICLASS_CJ" 1 110 --0 --000 PP 1 -000- 100 -----")
++DEF_ENC(V6_vwhist256,        ICLASS_CJ" 1 110 --0 --000 PP 1 -0010 100 -----")
++DEF_ENC(V6_vwhist256_sat,    ICLASS_CJ" 1 110 --0 --000 PP 1 -0011 100 -----")
++DEF_ENC(V6_vwhist128,        ICLASS_CJ" 1 110 --0 --000 PP 1 -010- 100 -----")
++DEF_ENC(V6_vwhist128m,        ICLASS_CJ" 1 110 --0 --000 PP 1 -011i 100 -----")
+ 
+ DEF_FIELDROW_DESC32(        ICLASS_CJ" 1 110 --0 ----- PP 1 ----- ----- ---","if (Qv4) Vx32=Vu32")
+-DEF_ENC(V6_vaddbq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 000 xxxxx") //
+-DEF_ENC(V6_vaddhq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 001 xxxxx") //
+-DEF_ENC(V6_vaddwq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 010 xxxxx") //
+-DEF_ENC(V6_vaddbnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 011 xxxxx") //
+-DEF_ENC(V6_vaddhnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 100 xxxxx") //
+-DEF_ENC(V6_vaddwnq,         ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 101 xxxxx") //
+-DEF_ENC(V6_vsubbq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 110 xxxxx") //
+-DEF_ENC(V6_vsubhq,             ICLASS_CJ" 1 110 vv0 ---01 PP 1 uuuuu 111 xxxxx") //
++DEF_ENC(V6_vaddbq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 000 xxxxx") //
++DEF_ENC(V6_vaddhq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 001 xxxxx") //
++DEF_ENC(V6_vaddwq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 010 xxxxx") //
++DEF_ENC(V6_vaddbnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 011 xxxxx") //
++DEF_ENC(V6_vaddhnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 100 xxxxx") //
++DEF_ENC(V6_vaddwnq,         ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 101 xxxxx") //
++DEF_ENC(V6_vsubbq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 110 xxxxx") //
++DEF_ENC(V6_vsubhq,             ICLASS_CJ" 1 110 vv0 --001 PP 1 uuuuu 111 xxxxx") //
+ 
+-DEF_ENC(V6_vsubwq,             ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 000 xxxxx") //
+-DEF_ENC(V6_vsubbnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 001 xxxxx") //
+-DEF_ENC(V6_vsubhnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 010 xxxxx") //
+-DEF_ENC(V6_vsubwnq,         ICLASS_CJ" 1 110 vv0 ---10 PP 1 uuuuu 011 xxxxx") //
++DEF_ENC(V6_vsubwq,             ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 000 xxxxx") //
++DEF_ENC(V6_vsubbnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 001 xxxxx") //
++DEF_ENC(V6_vsubhnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 010 xxxxx") //
++DEF_ENC(V6_vsubwnq,         ICLASS_CJ" 1 110 vv0 --010 PP 1 uuuuu 011 xxxxx") //
+ 
+-DEF_ENC(V6_vhistq,            ICLASS_CJ" 1 110 vv0 ---10 PP 1 --00- 100 -----")
+-DEF_ENC(V6_vwhist256q,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --010 100 -----")
+-DEF_ENC(V6_vwhist256q_sat,    ICLASS_CJ" 1 110 vv0 ---10 PP 1 --011 100 -----")
+-DEF_ENC(V6_vwhist128q,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --10- 100 -----")
+-DEF_ENC(V6_vwhist128qm,        ICLASS_CJ" 1 110 vv0 ---10 PP 1 --11i 100 -----")
++DEF_ENC(V6_vhistq,            ICLASS_CJ" 1 110 vv0 --010 PP 1 --00- 100 -----")
++DEF_ENC(V6_vwhist256q,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --010 100 -----")
++DEF_ENC(V6_vwhist256q_sat,    ICLASS_CJ" 1 110 vv0 --010 PP 1 --011 100 -----")
++DEF_ENC(V6_vwhist128q,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --10- 100 -----")
++DEF_ENC(V6_vwhist128qm,        ICLASS_CJ" 1 110 vv0 --010 PP 1 --11i 100 -----")
+ 
+ 
+ DEF_ENC(V6_vandvqv,            ICLASS_CJ" 1 110 vv0 ---11 PP 1 uuuuu 000 ddddd")
+-- 
+2.37.2
 
 
