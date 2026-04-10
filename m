@@ -4,155 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DDCDE9904A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 08:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44082E99055
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Apr 2026 08:30:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wB75r-0001kd-DY; Fri, 10 Apr 2026 04:19:59 -0400
+	id 1wB7Fb-0007dk-OA; Fri, 10 Apr 2026 04:30:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB75p-0001ju-Lu
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:19:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wB7Fa-0007UD-3h
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:30:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wB75o-0001Jk-0l
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:19:57 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wB7FX-0005Mh-Gq
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 04:30:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775809195;
+ s=mimecast20190719; t=1775809798;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1somlgRxhwBDjFzZka83KVIYD/+WD314nW9PJccUXwc=;
- b=O2R43dzXIEOTdf1njvQTA5kx6tKLTiC2IfVvYiEvWH90iidEvGg/mNQt724bYPPpq7LCWE
- v6j9600ARvmZHOkQKz2QZBlhP7lklU5DBtpfYnZdqIJ4394s8gmhK5Pu1VKcjp/FIaZKUq
- sGa4Bq22NfLKa9xhLTOD8rbVPD2nNbE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=PAl6Drf07LiwM8kPAV4FwH12BT3JzkTnu9KAQX5IAqo=;
+ b=Wan72vaTp+BRlwgIV+SvSwp2LQn4GNJAg0lmR4IXlWNMjrPjBhHhsB+d+ip9HrizxiYyTa
+ u3MUlBlrc/DY8Cb9iQwwTh4VKHZWDoEdxEPwWY9hANADAn1Pjn83QMvzjGr5SqT2Xg7rVK
+ DLLAVZF/KyynzWOufJRtgst+rWbEzlc=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-5h1klwLWPem3lU9l0TRSjw-1; Fri, 10 Apr 2026 04:19:53 -0400
-X-MC-Unique: 5h1klwLWPem3lU9l0TRSjw-1
-X-Mimecast-MFC-AGG-ID: 5h1klwLWPem3lU9l0TRSjw_1775809193
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-488a75d674fso12162675e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 01:19:53 -0700 (PDT)
+ us-mta-604-vV56HS73Nh2gK87QBsdbZA-1; Fri, 10 Apr 2026 04:29:56 -0400
+X-MC-Unique: vV56HS73Nh2gK87QBsdbZA-1
+X-Mimecast-MFC-AGG-ID: vV56HS73Nh2gK87QBsdbZA_1775809796
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-82c1e1a6cfbso1456000b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 01:29:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775809192; x=1776413992; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=1somlgRxhwBDjFzZka83KVIYD/+WD314nW9PJccUXwc=;
- b=XqOmmolE0uVAThkePI54r71M1cN6TfY07e1OGpxW3C3PxquE6Ez7KCqc5uh+Vyq6uK
- 4pjX1c15SExT4j9zCtoNbVhEcr5tsR81DgTtJl7JgS02xX2XIta36QFzF66Ozs8euaJu
- EnA34rhFpEcxSlLuTDXkgOYTHyTUIi+gTZ3hrur3rkkH3ox7kNeIRjs/BFL3hwVAaIcn
- ehd8dhW5wag5Mpqls7YR0R8GDGNavlPrSxd6arpGRoMjbqSywPg8m1s+uGjRhqqNkwMV
- MPJkscPgayNBhjt3G8SAiVM/59vvdL+FCcQnltrMcbBW1JNQS3PeK7ArOFMqvdyh7PVR
- xJtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775809192; x=1776413992;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1775809796; x=1776414596; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1somlgRxhwBDjFzZka83KVIYD/+WD314nW9PJccUXwc=;
- b=dNxOwLzJWYCaiOIB7YBIiKeLV2T/kgpQZk+Ez7HxJUBbCPwDdSdXq8S9lE0zag3DP8
- CTBHLkrY7n01FeMBoIst3L5byjY5n4ohcXRIlUxrr5z2C+7WmYxVtd/viGjknPek41v+
- O0TyxLXnfCSyI3JriU8YHx8OuZ6yOcE2frJx0IkI+f6zat5xbIArAIBz3oN6ZaD8newr
- 18Co+G5lVQgpmmTDLd3VV8RukwZQJeys/1UGdU6OBoMIjZjJwXS6iMz3QONkcZYBZbSX
- SEKdB2jnj4d7fyREUfXOdskWNQZx3OAcdj5aSpvVpQlA7wjQinxZq5C9skutFYxhJ0xM
- ZHtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUB+59kYe3vOO64Cq69O4OgfHlc7byPNy9ZX7AlRS1hpqYmLEIsaj2ywnxbyiLAGviX7J8LhS2e2QGJ@nongnu.org
-X-Gm-Message-State: AOJu0YzLS7/xT7yJvOZnHqQyMyzMecJ5XZ5iSQVQRsj4uihnCvrnZKbV
- cVHuRbzevW3Y7ywk48SSH7YtBoCJWTrE9LQ0rjIlW6HdvxMFA/54aibqrYvLfTZTxxuU51/g63/
- 28CPV4r38NqS8YXybli88IZheen6IFA/OHd8XBa2h8zOIHAzTjDpEHzb3
-X-Gm-Gg: AeBDieuAQ9IciEeX6IgLfgMr7fR5SJfLkdxuekG4dvLgHxjG5ArqEJuBLEJ2Wz3DtwD
- +Dp/qnlo9t1h5Y5ZUp4UOVI+cuy2sSDw/no2Q2N3C7qM9/+ElQP/c1LiBxvDj777jd9quxVijAx
- oLd+hPm97eNbs5Qxe+Vd6FNjlHbHuhiT/bzX/Jz36ndqO93tErqZUOEmK7bhdeycMWO0FaTCFTm
- WWDAUu13kXuFw4jqef8ktbnDY4u2WhmbxvNRm/LEmQvScB4MxKnXaLX9VjzZ8DsnglNnUCmolUd
- 4W+m3bPhiseKauV6qGu+jeswoHgfl6Pi+056WqtpEhDLqN1Rp81TOKCyYiMJsaDGYNhWRblmlDj
- Sys+g+LTJLUW6Z3L1cGvngr1Y9UaR41dV+zaMFhMTUoxzHdaJnxv7xi5PrA==
-X-Received: by 2002:a05:600c:45c9:b0:488:9696:488a with SMTP id
- 5b1f17b1804b1-488d68a0d6fmr24008765e9.30.1775809192400; 
- Fri, 10 Apr 2026 01:19:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:45c9:b0:488:9696:488a with SMTP id
- 5b1f17b1804b1-488d68a0d6fmr24008345e9.30.1775809191854; 
- Fri, 10 Apr 2026 01:19:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
- ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
+ bh=PAl6Drf07LiwM8kPAV4FwH12BT3JzkTnu9KAQX5IAqo=;
+ b=b3O9B7zChXbnweJLBoq5hc8hVXzByjrqAJjHFg0qwsbMfz1QlApt8dlAtBqPoS6UVj
+ Zn552CgZBqniMvDBnQIkc2VZxERdufjtnMuM9v27lTqyHH/FDKo9ELk/S2tB0NoicmhH
+ zEEc+dIAyz5ADLqPn4n5ZdqW8sgEXS1V8/9VMdJjBPSj9sA9ia+AsLQNzfsLrnBDkQUX
+ RuBy/BR43ema2Rlmgmq8Nn5050AJ0G6egZYSB3ZOCOWo5gy+JWleDYzV75u58a+L2pAv
+ /n9lE51+rBRgkEvzg1mUxMMFAccBnotC1HwfS+afb1K7kY4riUV0bf7ElxOiCEvrzMPj
+ 23PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775809796; x=1776414596;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PAl6Drf07LiwM8kPAV4FwH12BT3JzkTnu9KAQX5IAqo=;
+ b=e93qkfVdDzKZs4IFOvH+LwHWtgTUThrMwNAs9WsuWU3TYxULPB0tiSIStlMv4GUaBx
+ ZP/Wva67QvFP8tNNsNuHrjSJYncZji9uSPTdYAhHIvtUZKP1NLKqhf2uOg+/1wXD9Y00
+ mLiLRq0as72pIUHfDtHAEg7x10CT6nmYpMFnxWvH16DtOCDJobXoMamFzYElKDWW7vM6
+ 6Hj1ZccJDaKQV4Vvhuj3Y7ALbyZXs7tEdL1V7CYqIuFXdMj03BG7s7ZRmKZ9qn2bf3uR
+ qPjmwMj2puGHRVe063vv0Lx46FkQy7LkNJLcdUJGL6s6SVfsl8NQg0BJEEDPdfZ1NEA9
+ Ab2w==
+X-Gm-Message-State: AOJu0Yz1NaKOE/KThIAw0MXFnjUdbAdD658uFbuMFNjhfjiB3AxMpeqq
+ XiSJtFnqyjm4VOuvwMwi8hL5MQTcBW3544e/GjdrdQusvXqMJ79+Q48kTJKi/+NaknpaXMMwJM6
+ sVteLUMj6fGprxVOAMMkmEiiSN3ATufpimwPNrBD2wS04UYlZcOpY7hxi
+X-Gm-Gg: AeBDievHOOvbC9S1/nsb0770EmDp8zpEpWvjkV/0NGrtsp5+xM8VO7z2224XtKmMuUj
+ 7HB8xK3fpBdsfPbFyjJLDpoRRa0lksX0DznC56OMKTsOJR7+loyKIFumND/+vggqE8YHyMdNpqy
+ ksdBelw+6LtBzhl0JIJq2djaSl8fFjFhZGpuBJvfnqzYKsmcAme4PrH8s7IdeKkLXCTN2s00dfV
+ 6Yk/fWLzmwoL8kErB7AUPf6zrSCJu9YfTm0SnDNHRn6tEES5Q/j7KajCq4h1oGSebb9OTdDLiir
+ FYCQ24uN0/Ts0Whbi+su35FwzhpzSQ7itSuK2jLzHYPaj0W0OHNgpe0kdB65KV/gst2sWa3z9UF
+ KOVMa8bJRIdYDb8abV02wO32WE4RsdolmtmzH5EAPCFIoJvEiVDjv0yb3Kycjxv5S7y6QV/JM6n
+ w=
+X-Received: by 2002:a05:6a00:929e:b0:82c:2468:a164 with SMTP id
+ d2e1a72fcca58-82f0c3a37f1mr2940785b3a.41.1775809795561; 
+ Fri, 10 Apr 2026 01:29:55 -0700 (PDT)
+X-Received: by 2002:a05:6a00:929e:b0:82c:2468:a164 with SMTP id
+ d2e1a72fcca58-82f0c3a37f1mr2940765b3a.41.1775809795007; 
+ Fri, 10 Apr 2026 01:29:55 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d5888a97sm65093165e9.2.2026.04.10.01.19.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Apr 2026 01:19:51 -0700 (PDT)
-Message-ID: <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
-Date: Fri, 10 Apr 2026 10:19:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] hw/vfio/ap: Callbacks for migration of guests with
- pass-through access to AP devices
-To: Anthony Krowiak <akrowiak@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com,
- alex@shazbot.org, cohuck@redhat.com
-References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
- <20260409141352.997844-3-akrowiak@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260409141352.997844-3-akrowiak@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ d2e1a72fcca58-82f0c343b16sm1974340b3a.23.2026.04.10.01.29.51
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 10 Apr 2026 01:29:54 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
+ kvm_cpu_exec
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <424743ec-a34d-4af0-adfb-c8392ee5e5be@linux.ibm.com>
+Date: Fri, 10 Apr 2026 13:59:39 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
+ misanjum@linux.ibm.com, gautam@linux.ibm.com,
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <69167029-AE49-4BB3-9A5C-D16E51E5D40F@redhat.com>
+References: <20260409161042.55281-1-harshpb@linux.ibm.com>
+ <C0822D91-E199-4FEB-B1AA-28652D0F3453@redhat.com>
+ <4b3044b1-4ea0-4f3a-8a0a-04e09d071a15@linux.ibm.com>
+ <451942FA-0056-466C-AD42-AB0BBE88472E@redhat.com>
+ <424743ec-a34d-4af0-adfb-c8392ee5e5be@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -170,118 +130,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/26 16:13, Anthony Krowiak wrote:
-> From: Anthony  Krowiak <akrowiak@linux.ibm.com>
-> 
-> Implements the callbacks used by the VFIO migration framework to migrate
-> guests with pass-through access to s390 crypto devices.
-> 
-> Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-> ---
->   hw/vfio/ap.c | 43 +++++++++++++++++++++++++++++++++++++++----
->   1 file changed, 39 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index fd68983702..49947b18c3 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -32,6 +32,7 @@
->   #include "hw/s390x/ap-bridge.h"
->   #include "system/address-spaces.h"
->   #include "qom/object.h"
-> +#include "vfio-migration-internal.h"
->   
->   #define TYPE_VFIO_AP_DEVICE      "vfio-ap"
->   
-> @@ -47,6 +48,7 @@ static const VMStateDescription vmstate_ap_device = {
->       .name = "vfio-ap-device",
->       .version_id = 1,
->       .minimum_version_id = 1,
-> +    .unmigratable = 0,
-
-unneeded.
-
->       .fields = (const VMStateField[]) {
->           VMSTATE_END_OF_LIST()
->       },
-> @@ -66,17 +68,44 @@ static void __attribute__((constructor)) vfio_ap_global_init(void)
->       qemu_mutex_init(&cfg_chg_events_lock);
->   }
->   
-> +static int vfio_ap_save_config(VFIODevice *vdev, QEMUFile *f, Error **errp)
-> +{
-> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
-> +
-> +    return vmstate_save_state(f, &vmstate_ap_device, vapdev, NULL, errp);
-> +}
-> +
-> +static int vfio_ap_load_config(VFIODevice *vdev, QEMUFile *f)
-> +{
-> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
-> +    Error *err = NULL;
-> +    int ret;
-> +
-> +    ret = vmstate_load_state(f, &vmstate_ap_device, vapdev, 1, &err);
-> +    if (ret) {
-> +        error_report_err(err);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static Object *vfio_ap_get_object(VFIODevice *vbasedev)
-> +{
-> +    VFIOAPDevice *vdev = container_of(vbasedev, VFIOAPDevice, vdev);
-> +
-> +    return OBJECT(vdev);
-> +}
-> +
->   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
->   {
->       vdev->needs_reset = false;
->   }
->   
-> -/*
-> - * We don't need vfio_hot_reset_multi and vfio_eoi operations for
-> - * vfio-ap device now.
-> - */
->   struct VFIODeviceOps vfio_ap_ops = {
->       .vfio_compute_needs_reset = vfio_ap_compute_needs_reset,
-> +    .vfio_save_config = vfio_ap_save_config,
-> +    .vfio_load_config = vfio_ap_load_config,
-> +    .vfio_get_object = vfio_ap_get_object,
->   };
->   
->   static void vfio_ap_req_notifier_handler(void *opaque)
-> @@ -251,6 +280,10 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
->           goto error;
->       }
->   
-> +    if (!vfio_migration_realize(vbasedev, errp)) {
-> +        goto error;
-> +    }
-> +
->       if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_REQ_IRQ_INDEX, &err)) {
->           /*
->            * Report this error, but do not make it a failing condition.
-> @@ -287,6 +320,8 @@ static void vfio_ap_unrealize(DeviceState *dev)
->   
->   static const Property vfio_ap_properties[] = {
->       DEFINE_PROP_STRING("sysfsdev", VFIOAPDevice, vdev.sysfsdev),
-> +    DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOAPDevice,
-> +                            vdev.enable_migration, ON_OFF_AUTO_ON),
-
-Why not ON_OFF_AUTO_AUTO ? This would enable migration only if kernel
-has migration support. If not, the VM would still start but migration
-would be blocked.
-
-thanks,
-
-C.
 
 
->   #ifdef CONFIG_IOMMUFD
->       DEFINE_PROP_LINK("iommufd", VFIOAPDevice, vdev.iommufd,
->                        TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+> On 10 Apr 2026, at 1:48=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>=20
+>=20
+>=20
+> On 10/04/26 12:05 pm, Ani Sinha wrote:
+>>> On 10 Apr 2026, at 10:55=E2=80=AFAM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>>>=20
+>>> Hi Ani,
+>>>=20
+>>> On 10/04/26 9:12 am, Ani Sinha wrote:
+>>>>> On 9 Apr 2026, at 9:40=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>>>>>=20
+>>>>> When kvm_cpu_exec() returns EXCP_HLT due to =
+kvm_arch_process_async_events()
+>>>>> returning true, it was returning before releasing the BQL (Big =
+QEMU Lock).
+>>>>> This caused a lock imbalance where the vCPU thread would loop back =
+to
+>>>>> kvm_cpu_exec() while still holding the BQL, leading to deadlocks.
+>>>> I am not sure I understand this. Seems kvm_cpu_exec() does expect =
+that the caller holds bql before calling the function. Where is the lock =
+imbalance?
+>>>=20
+>>> The issue is not that kvm_cpu_exec() doesn't expect the caller to =
+hold the BQL - it does. The problem is that kvm_cpu_exec() has =
+inconsistent BQL handling across its return paths.
+>>>=20
+>>> Normal execution path:
+>>>=20
+>>> int kvm_cpu_exec(CPUState *cpu)
+>>> {
+>>>    // BQL held on entry (from caller)
+>>>=20
+>>>    if (kvm_arch_process_async_events(cpu)) {
+>>>        return EXCP_HLT;  // =E2=86=90 Returns with BQL STILL HELD
+>>>    }
+>>>=20
+>>>    bql_unlock();  // =E2=86=90 Normal path unlocks here
+>>>    // ... KVM execution loop ...
+>>>    bql_lock();    // =E2=86=90 Re-acquires before returning
+>>>    return ret;
+>>> }
+>> Yes the semantics of the function kvm_cpu_exec() is that it should =
+always return with bql in locked state. This is because the caller =
+kvm_vcpu_thread_fn() calls this function with bql locked and if you see =
+the end of kvm_vcpu_thread_fn(), it releases the lock.
+>> So if kvm_cpu_exec() unlocks bql internally, it has the =
+responsibility to lock it again before returning. This makes the locking =
+and unlocking symmetric.
+>>>=20
+>>> The lock imbalance:
+>>>=20
+>>> When kvm_arch_process_async_events() returns true, the function =
+returns EXCP_HLT before the bql_unlock() call.
+>> Why should it unlock it before returning? In fact it=E2=80=99s =
+opposite. If the function had unlocked bql, it should lock it again =
+before returning.
+>>> This means the early return path keeps the BQL held,
+>> This would be the correct thing to do.
+>>> while the normal execution path releases and re-acquires it.
+>> Because the functions it calls after unlocking requires bql to be =
+unlocked. Since it had to unlock it, it locks it again before returning.
+>=20
+> It had to unlock it for the same reason - to give others a chance to =
+lock. We need to handle failure/exception cases for the same purpose as =
+well.
+
+But by unlocking and returning you are breaking the semantics of the =
+function and introducing imbalance.
+
+>=20
+>>> The caller (kvm_vcpu_thread_fn()) loops back and calls =
+kvm_cpu_exec() again, but now the BQL is already held from the previous =
+iteration
+>>> This creates a situation where the BQL is never released between =
+iterations when EXCP_HLT is returned.
+>>>=20
+>>> Why this matters:
+>>> On PowerPC pseries with halted secondary vCPUs =
+(start-powered-off=3Dtrue), these vCPUs repeatedly call kvm_cpu_exec() =
+which returns EXCP_HLT. Each iteration accumulates BQL holds, preventing =
+other threads (including CPU 0) from making progress.
+>> This seems like some kind of architectural issue with PowerPC. =
+Shouldn=E2=80=99t qemu_process_cpu_events() -> =
+qemu_cond_wait(cpu->halt_cond, &bql) block other secondary cpus? Then =
+the main cpu does a qemu_cpu_kick() to make them active again at some =
+point?
+>=20
+> KVM vCPUs need to enter the kernel to handle the halted state and =
+therefore can run. On spapr, it is handled via start-cpu rtas call for =
+which the handler in qemu does a qemu_cpu_kick(). However CPU 0 needs to =
+be able to proceed before that stage is reached, but it hangs while =
+trying to acquire bql_lock in qemu_default_main() whereas secondary vcpu =
+is spinning with BQL held returning EXCP_HLT. This is causing deadlock.
+
+Without looking at the code, it seems there is a race condition in the =
+way the vcpu threads are initialised in spapr. I think that needs =
+fixing.=20
+
+>=20
+>>>=20
+>>>>>=20
+>>>>> The issue manifests as boot hangs on PowerPC pseries machines with =
+multiple
+>>>>> vCPUs, where secondary vCPUs with start-powered-off=3Dtrue remain =
+halted and
+>>>>> repeatedly call kvm_cpu_exec() which returns EXCP_HLT. Each =
+iteration held
+>>>>> the BQL, preventing other operations from proceeding.
+>>>>>=20
+>>>>> The fix has two parts:
+>>>>>=20
+>>>>> 1. In kvm_cpu_exec() (kvm-all.c):
+>>>>>   Release the BQL before returning EXCP_HLT in the early return =
+path,
+>>>>>   matching the behavior of the normal execution path where =
+bql_unlock()
+>>>>>   is called before entering the main KVM execution loop.
+>>>>>=20
+>>>>> 2. In kvm_vcpu_thread_fn() (kvm-accel-ops.c):
+>>>>>   Re-acquire the BQL after kvm_cpu_exec() returns EXCP_HLT, since =
+the
+>>>>>   loop expects to hold the BQL when calling kvm_cpu_exec() again.
+>>>>>=20
+>>>>> This ensures proper BQL lock/unlock pairing:
+>>>>> - kvm_vcpu_thread_fn() holds BQL before calling kvm_cpu_exec()
+>>>>> - kvm_cpu_exec() releases BQL before returning (for EXCP_HLT)
+>>>>> - kvm_vcpu_thread_fn() re-acquires BQL if EXCP_HLT was returned
+>>>>> - Next iteration has BQL held as expected
+>>>>>=20
+>>>>> This is a regression introduced by commit 98884e0cc1 ("accel/kvm: =
+add
+>>>>> changes required to support KVM VM file descriptor change") which
+>>>>> refactored kvm_irqchip_create() and changed the initialization =
+timing,
+>>>>> exposing this lock imbalance issue.
+>>>>>=20
+>>>>> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM =
+VM file descriptor change")
+>>>> I do not think this is the right reference. The above commit may =
+have exposed some underlying issue but is certainly not the cause of it. =
+Further, as we have discussed in the other thread, the changes in that =
+commit are not even getting executed.
+>>>> Personally I think the core issue is somewhere else. I am not =
+convinced this is the proper fix.
+>>>=20
+>>> Regarding commit 98884e0cc1:
+>>>=20
+>>> Reverting the kvm_irqchip_create refactoring makes the problem go =
+away. This commit may have changed timing that exposed the issue, but =
+the root cause is the pre-existing BQL lock imbalance in kvm_cpu_exec(). =
+We can either:
+>>>=20
+>>> Remove the "Fixes:" tag entirely, or
+>> Lets remove fixes tag entirely unless you can pin point the exact =
+commit that introduced the architectural issues.
+>>> Add a note that this is a pre-existing issue exposed by timing =
+changes
+>>> The core fix (releasing BQL before returning EXCP_HLT) is correct =
+and addresses the actual deadlock mechanism.
+>>>=20
+>>>>> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+>>>>> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
+>>>>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>>>> ---
+>>>>> accel/kvm/kvm-accel-ops.c | 4 ++++
+>>>>> accel/kvm/kvm-all.c       | 1 +
+>>>>> 2 files changed, 5 insertions(+)
+>>>>>=20
+>>>>> diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
+>>>>> index 6d9140e549..d684fd0840 100644
+>>>>> --- a/accel/kvm/kvm-accel-ops.c
+>>>>> +++ b/accel/kvm/kvm-accel-ops.c
+>>>>> @@ -52,6 +52,10 @@ static void *kvm_vcpu_thread_fn(void *arg)
+>>>>>=20
+>>>>>         if (cpu_can_run(cpu)) {
+>>>>>             r =3D kvm_cpu_exec(cpu);
+>>>>> +            if (r =3D=3D EXCP_HLT) {
+>>>>> +                /* kvm_cpu_exec() released BQL, re-acquire for =
+next iteration */
+>>>>> +                bql_lock();
+>>>>> +            }
+>>>>>             if (r =3D=3D EXCP_DEBUG) {
+>>>>>                 cpu_handle_guest_debug(cpu);
+>>>>>             }
+>>>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>>>>> index 774499d34f..00b8018664 100644
+>>>>> --- a/accel/kvm/kvm-all.c
+>>>>> +++ b/accel/kvm/kvm-all.c
+>>>>> @@ -3439,6 +3439,7 @@ int kvm_cpu_exec(CPUState *cpu)
+>>>>>     trace_kvm_cpu_exec();
+>>>>>=20
+>>>>>     if (kvm_arch_process_async_events(cpu)) {
+>>>>> +        bql_unlock();
+>>>>>         return EXCP_HLT;
+>>>>>     }
+>>>>>=20
+>>>>> --=20
+>>>>> 2.52.0
+
 
 
