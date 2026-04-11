@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A683F45A18
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 02:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B70E7F45A12
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 02:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBO3s-00023g-Tz; Fri, 10 Apr 2026 22:27:04 -0400
+	id 1wBO3v-000279-GR; Fri, 10 Apr 2026 22:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wBO3r-00022O-Hb; Fri, 10 Apr 2026 22:27:03 -0400
+ id 1wBO3t-00024M-4o; Fri, 10 Apr 2026 22:27:05 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wBO3o-0000LY-EG; Fri, 10 Apr 2026 22:27:03 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wBO3r-0000Mm-FH; Fri, 10 Apr 2026 22:27:04 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63AFeoUS2302533; Sat, 11 Apr 2026 02:26:54 GMT
+ 63AFWgak2594681; Sat, 11 Apr 2026 02:26:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=5dGHeUZdYw4AwVziYjzw5fzJrURxo/6YCMzIafKFG
- GQ=; b=Y0r4btxhuFSgx9FVowecRY2z3ZZEE6yHjlL8pP/0u2njJCcb07VxEWC6y
- 6tdedrlxSi0Dnp4d0C7q72zR3sdyIHH2mwZHWQDoAv9/uWIGs8FHGXvHLDF8zXa4
- 4AnrkVHrxkHYbREWiTLiRG0OUjrBbDMCPphDUxBnImiQsMqgxm7Mlq8g8SGl9Kua
- H96mFNYCWkge54cygRkP5xdrIDjsu8WI9iacYOw62EY9Z3uqhJ25J2UbrL7rtRCy
- 1XFGxIQSN35N9J9HlLkguH4r6YR5tKM2ly2ykvJwLlNFGFUq4vp1b8cuLpNbSaR2
- qazULCp7jXRiyfz3ItUwK8SiDO4gw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2fw3vr-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Gt8DeEfDIwQ0aIYf9
+ Nv06cYAJNcblIALhEev2YCEqVo=; b=iAkqS6RAyfObAPRYcX4XM8p1S+fpxzaKq
+ B6Txgc7PIeLUfdFX3XM7dCyi6LcLV1SQO39w+FplwxOahn2A1zmjkTY2qwL2l8xJ
+ 7IbZ2ZwvX15VKwM/Gbi/vU6fI+n/QhyX4XNNPr/KethfHUTvZFbQzhuhf5OQo9/i
+ cXJjGlH2Hul0ejurlgf/IkJyrVZOrBy0xGWeUnhYe4do9nVqpaVlbDc9FK+9i288
+ ybOlcb4COJ8ZfHbhxwd2Ovqn6gddK+C96ik3R3NYoQ5k5DnB+T7Q/cAVYarv2l54
+ pgppQKPKSy4xxaAFRJ0TEGUTq7WN0kCL3rVgBfrB6j7Z+bhdUf1bA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2en5d0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 11 Apr 2026 02:26:53 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63B0U1ZP019113;
- Sat, 11 Apr 2026 02:26:53 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcme9u230-1
+ Sat, 11 Apr 2026 02:26:59 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63B0PKPT013878;
+ Sat, 11 Apr 2026 02:26:58 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcmf4k1r5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 11 Apr 2026 02:26:53 +0000
+ Sat, 11 Apr 2026 02:26:58 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63B2Qpln34734758
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63B2Quuk29491766
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 11 Apr 2026 02:26:51 GMT
+ Sat, 11 Apr 2026 02:26:57 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 687945805A;
- Sat, 11 Apr 2026 02:26:51 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B36225805A;
+ Sat, 11 Apr 2026 02:26:56 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCDFC58054;
- Sat, 11 Apr 2026 02:26:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2779E58054;
+ Sat, 11 Apr 2026 02:26:56 +0000 (GMT)
 Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.252.248])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 11 Apr 2026 02:26:50 +0000 (GMT)
+ Sat, 11 Apr 2026 02:26:56 +0000 (GMT)
 From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 To: mjrosato@linux.ibm.com
 Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
  david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Subject: [PATCH v2 00/15] s390x/pci: Implement migration for emulated devices
-Date: Fri, 10 Apr 2026 21:26:03 -0500
-Message-Id: <20260411022618.2136588-1-kshk@linux.ibm.com>
+Subject: [PATCH v2 08/15] s390x/pci: Move dma_limit from S390PCIIOMMU to
+ S390PCIBusDevice
+Date: Fri, 10 Apr 2026 21:26:11 -0500
+Message-Id: <20260411022618.2136588-9-kshk@linux.ibm.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260411022618.2136588-1-kshk@linux.ibm.com>
+References: <20260411022618.2136588-1-kshk@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDAxNiBTYWx0ZWRfX7RjsZli60dBE
- JQd45UnQriZ/Hq45wAzKIeydnyh9JlYDbnm3R7fB+pYPQyI1kazQVR9czCUEIylifzJ+9Pf30fC
- +ZazqxG/jwxpJG7JF8qnZO4q+s6eaEqzkoe6Uy7S51jMd+AWHCn6xJcBdSO/2y93oJzN/SGaI1F
- XQR8eO3uaFc6ALDwRCBX17lTexo81r06yq5hJiLFzkKMvYKA8i7k7yIUt8+0ZLkAfQkAWYU9JIh
- aCTVXlz4AKdy/a50tPHnO9TMbrak4NwVXMkhL7aZ9eavn1XP72/o59yVAFJ3on5fDVazUv5M9Wv
- pGsecceqCwfxCz20/nUlMtT4PHKvU7G0nDp1eyzZDXyCJJ3V5kPKIeB8T9PN4nICVC+9h/4u15C
- /4ZvWOiecHhTb422+V6AykpHkWuB4id9J5JVuHUe9rcz1dS90zlVdFL9aRtBEKBny8nETF8AW2z
- UkT0UMA0amYKxqB5o4A==
-X-Authority-Analysis: v=2.4 cv=FsY1OWrq c=1 sm=1 tr=0 ts=69d9b16d cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-ORIG-GUID: d7EfHRl2AW2TNHvRvX17bakNsSqo_KAk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDAxNiBTYWx0ZWRfXw/p60DVum2Tk
+ XExcGoVG+kATzX+XJdN4XvkPv6KTWNhlbIXWNvkmfI1g5sPSFZ5ZXNbX4iQPey7umVF85doXTIV
+ 485bhmTt5dRvS+QW6ujynKthfoYKzkKNVCrySGiu7/qyQBrBgka8Nvv1K65BUguYb1/iJoebBUB
+ GOQ+eoqMCWm9jt5bM42d/KA3RuRS7X/av/oYa7o19aGl/kCFvFF2fYZqE8XOgVGF0RC5I18CAyA
+ Aao41FtHGdOCOYRozNN0uG692igK8hd3W8vHvB/R0vGB0pXI5l3+CTg+1+ijbeiKVqpuGW2ko4/
+ WQgRLlN8RJJ1H3a1z+dnMoaMJBK2DZvtpri4O6oHyRoBz5VMnrrqTJgbx4jMCfGW427vvYFSsX7
+ I4zALOVaViAWi31kwFpyy03g5IHCoxSUHh77i+qDSVOE644kSXtybBI91EMedTZVw2hu7qSgJBX
+ PXxWj5+ECQ4r/fY/yxw==
+X-Authority-Analysis: v=2.4 cv=Cfw4Irrl c=1 sm=1 tr=0 ts=69d9b173 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8
- a=8Hgc_-vnOkY6PsbUFoQA:9
-X-Proofpoint-ORIG-GUID: lV4LbyvLhp-Kc_tY8qx8ZjQd3k07K3kP
-X-Proofpoint-GUID: lV4LbyvLhp-Kc_tY8qx8ZjQd3k07K3kP
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=NXusJeJlOfVlo0NZOjUA:9
+X-Proofpoint-GUID: d7EfHRl2AW2TNHvRvX17bakNsSqo_KAk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-10_07,2026-04-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 malwarescore=0 suspectscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110016
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
@@ -118,54 +120,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Up until now QEMU marked any zPCI device as "unmigratable."
+This field is only used when S390PCIBusDevice exists, so it can be moved
+there to simplify S390PCIIOMMU which purpose is just to store the "root"
+AddressSpace.
 
-This patch series adds support for migrating emulated devices, which are
-simpler to migrate. It leaves VFIO devices still unmigratable.
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+---
+ hw/s390x/s390-pci-bus.c         | 10 +++++-----
+ hw/s390x/s390-pci-inst.c        | 23 +++++++++++------------
+ include/hw/s390x/s390-pci-bus.h |  2 +-
+ 3 files changed, 17 insertions(+), 18 deletions(-)
 
-To enable migration, the device state needs to be saved/restored to/from
-the migration stream.
-
-There are 2 kinds of emulated devices - those that use the zPCI IOMMU page
-table emulation in QEMU (e.g., Intel IGB NIC), and those that don't (virtio).
-This is important to note for testing purposes.
-
-This change was tested on IGB, virtio-net and virtio-blk devices by running
-I/O on them while performing "virsh managedsave, virsh start" and also live migration to another host and back.
-
-Changes in v2:
- - Block migration for machine versions 11.0 and earlier.
-   Because the current version is still 11.0, migration will start working when
-   QEMU gets moved to 11.1 by the following patch:
-   https://lore.kernel.org/qemu-devel/20260331140347.653404-1-cohuck@redhat.com/
-
-Konstantin Shkolnyy (14):
-  s390x/pci: Create function to contain translation status check
-  s390x/pci: Move iommu_mr from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Move dm_mr from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Move iotlb from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Remove a ptr to S390PCIBusDevice from S390PCIIOMMU
-  s390x/pci: Move/rename enabled from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Move dma_limit from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Move g_iota from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Move pba from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Move pal from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Move max_dma_limit from S390PCIIOMMU to S390PCIBusDevice
-  s390x/pci: Add a comment explaining S390PCIIOMMU purpose
-  s390x/pci: Implement migration for emulated devices
-  s390x/pci: Create function to contain fmb_timer start
-
-Matthew Rosato (1):
-  s390x/pci: implement IOMMU replay
-
- hw/s390x/s390-pci-bus.c          | 278 +++++++++++++++++++++++++------
- hw/s390x/s390-pci-inst.c         | 116 +++++++------
- hw/s390x/s390-pci-vfio.c         |   4 +-
- hw/s390x/s390-virtio-ccw.c       |   5 +
- include/hw/s390x/s390-pci-bus.h  |  39 +++--
- include/hw/s390x/s390-pci-inst.h |   3 +-
- 6 files changed, 320 insertions(+), 125 deletions(-)
-
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index 27ba3c801c..4a0b31b98b 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -609,8 +609,8 @@ static void s390_pci_ioat_replay(S390PCIBusDevice *pbdev)
+         return;
+     }
+ 
+-    if (iommu->dma_limit) {
+-        dma_avail = iommu->dma_limit->avail;
++    if (pbdev->dma_limit) {
++        dma_avail = pbdev->dma_limit->avail;
+     } else {
+         dma_avail = 1;
+     }
+@@ -1210,7 +1210,7 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+                     pbdev->forwarding_assist = false;
+                 }
+             }
+-            pbdev->iommu->dma_limit = s390_pci_start_dma_count(s, pbdev);
++            pbdev->dma_limit = s390_pci_start_dma_count(s, pbdev);
+             /* Fill in CLP information passed via the vfio region */
+             s390_pci_get_clp_info(pbdev);
+             if (!pbdev->interp) {
+@@ -1288,8 +1288,8 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         pbdev->fid = 0;
+         QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
+         g_hash_table_remove(s->zpci_table, &pbdev->idx);
+-        if (pbdev->iommu && pbdev->iommu->dma_limit) {
+-            s390_pci_end_dma_count(s, pbdev->iommu->dma_limit);
++        if (pbdev->dma_limit) {
++            s390_pci_end_dma_count(s, pbdev->dma_limit);
+         }
+         g_hash_table_destroy(pbdev->iotlb);
+         qdev_unrealize(dev);
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index 4458eae681..ac4e7f412d 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -28,17 +28,17 @@
+ 
+ #include "trace.h"
+ 
+-static inline void inc_dma_avail(S390PCIIOMMU *iommu)
++static inline void inc_dma_avail(S390PCIBusDevice *pbdev)
+ {
+-    if (iommu->dma_limit) {
+-        iommu->dma_limit->avail++;
++    if (pbdev->dma_limit) {
++        pbdev->dma_limit->avail++;
+     }
+ }
+ 
+-static inline void dec_dma_avail(S390PCIIOMMU *iommu)
++static inline void dec_dma_avail(S390PCIBusDevice *pbdev)
+ {
+-    if (iommu->dma_limit) {
+-        iommu->dma_limit->avail--;
++    if (pbdev->dma_limit) {
++        pbdev->dma_limit->avail--;
+     }
+ }
+ 
+@@ -616,7 +616,6 @@ int pcistg_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+ uint32_t s390_pci_update_iotlb(S390PCIBusDevice *pbdev,
+                                S390IOTLBEntry *entry)
+ {
+-    S390PCIIOMMU *iommu = pbdev->iommu;
+     S390IOTLBEntry *cache = g_hash_table_lookup(pbdev->iotlb, &entry->iova);
+     IOMMUTLBEvent event = {
+         .type = entry->perm ? IOMMU_NOTIFIER_MAP : IOMMU_NOTIFIER_UNMAP,
+@@ -634,7 +633,7 @@ uint32_t s390_pci_update_iotlb(S390PCIBusDevice *pbdev,
+             goto out;
+         }
+         g_hash_table_remove(pbdev->iotlb, &entry->iova);
+-        inc_dma_avail(iommu);
++        inc_dma_avail(pbdev);
+         /* Don't notify the iommu yet, maybe we can bundle contiguous unmaps */
+         goto out;
+     } else {
+@@ -657,7 +656,7 @@ uint32_t s390_pci_update_iotlb(S390PCIBusDevice *pbdev,
+         cache->len = TARGET_PAGE_SIZE;
+         cache->perm = entry->perm;
+         g_hash_table_replace(pbdev->iotlb, &cache->iova, cache);
+-        dec_dma_avail(iommu);
++        dec_dma_avail(pbdev);
+     }
+ 
+     /*
+@@ -667,7 +666,7 @@ uint32_t s390_pci_update_iotlb(S390PCIBusDevice *pbdev,
+     memory_region_notify_iommu(&pbdev->iommu_mr, 0, event);
+ 
+ out:
+-    return iommu->dma_limit ? iommu->dma_limit->avail : 1;
++    return pbdev->dma_limit ? pbdev->dma_limit->avail : 1;
+ }
+ 
+ static void s390_pci_batch_unmap(S390PCIBusDevice *pbdev, uint64_t iova,
+@@ -744,8 +743,8 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+     }
+ 
+     iommu = pbdev->iommu;
+-    if (iommu->dma_limit) {
+-        dma_avail = iommu->dma_limit->avail;
++    if (pbdev->dma_limit) {
++        dma_avail = pbdev->dma_limit->avail;
+     } else {
+         dma_avail = 1;
+     }
+diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
+index 24f6e60786..126a50c98b 100644
+--- a/include/hw/s390x/s390-pci-bus.h
++++ b/include/hw/s390x/s390-pci-bus.h
+@@ -279,7 +279,6 @@ struct S390PCIIOMMU {
+     uint64_t pba;
+     uint64_t pal;
+     uint64_t max_dma_limit;
+-    S390PCIDMACount *dma_limit;
+ };
+ 
+ typedef struct S390PCIIOMMUTable {
+@@ -353,6 +352,7 @@ struct S390PCIBusDevice {
+     IOMMUMemoryRegion iommu_mr;
+     MemoryRegion *dm_mr;
+     GHashTable *iotlb;
++    S390PCIDMACount *dma_limit;
+     MemoryRegion msix_notify_mr;
+     IndAddr *summary_ind;
+     IndAddr *indicator;
 -- 
 2.34.1
 
