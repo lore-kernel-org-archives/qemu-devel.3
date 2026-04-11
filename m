@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45729F3ED40
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 13:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45EADF3ED54
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 14:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBYEG-0007V1-N0; Sat, 11 Apr 2026 09:18:28 -0400
+	id 1wBZKB-0007BK-BC; Sat, 11 Apr 2026 10:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wBYE9-0007Sh-29
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 09:18:22 -0400
-Received: from p-west3-cluster3-host9-snip4-8.eps.apple.com ([57.103.72.239]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wBYE6-0005qU-2G
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 09:18:20 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-8 (Postfix) with ESMTPS id
- A93DE18002A3; Sat, 11 Apr 2026 13:18:11 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1775913493; x=1778505493;
- bh=lF0jdyfsX2D7PN9TMkL5HOWX7JJ7u8+26yUNFPoFu10=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=bvf2a8I4RiHONEStDVJCoqvu+3ACapA8894YJW/R74tMZHFpA/UZ9Xj77lFPgpGZfqxSlQOvCRSNPsomN5/+aJZymtfAv+Hx6iv2QrnOJ3UXDKzqcJwRmqJ5+B3WQVygpfRRlzPuQJQx2flusRSTwZDSzVsDNxNCaEj13vGIwfGkv5rQ8bkbtAy4pT5SovKBa5Uz+RBGwr0DqbSENvefYFhZ7QWGpWumULIBvJ4rwDKwzRr5uOTO518Np/RItkeNdrcB0DRSZepwG+Ah1fL5gPXOigYJ3oetAOYM2pM0ekwfLNqjON4uJZ6OfJPe8/ijBLVNse5mixydfZeRNEoRgg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-8 (Postfix) with ESMTPSA id
- C991F18000D0; Sat, 11 Apr 2026 13:18:09 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH] hw/intc: apic: stop register accesses for invalid situations
-Date: Sat, 11 Apr 2026 15:18:06 +0200
-Message-ID: <20260411131806.94653-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDExMyBTYWx0ZWRfX6KuJnfN+jstx
- 6j+i1jvrST3m/ebDjNlLd3H5cNhqGcT4WVN8/SPkO4uwquQi6zi4ALnQZckV2g6p7WDvWn3/GBj
- 3y4aGuxYsMsQ5k/6BmhNocJkianZiGqqZa1m0zhMkq/fXi/f5YW4LmMJ1MTCP00rjNL4T4IZkOu
- OuScpcYR17UvWoQsGPvzE/oV4ejyfrmwz6UnMj6wDoJqBMU+OM28uPxtdv9eIvwViWeTdn+ukN0
- BVXj9/cE8E9jDrTiotau+zGrpMr54csY2DL/2OiCJLOZo+aV3lkmUFFivYfuYRzIPRpyLBHrL4Y
- qCfKX4KheKLgym4XAIsip9bgUSFmHTomMjECbWMbFwkl9Dvhuu8oO16EXqrw4o=
-X-Proofpoint-GUID: gokvfFS0J8BPtV1u1cNTx0UxKfmIr46a
-X-Proofpoint-ORIG-GUID: gokvfFS0J8BPtV1u1cNTx0UxKfmIr46a
-X-Authority-Info-Out: v=2.4 cv=F9lat6hN c=1 sm=1 tr=0 ts=69da4a14
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=zBtDF0ibdIbUSHW8crcA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-11_03,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- phishscore=0 mlxscore=0 clxscore=1030 suspectscore=0 lowpriorityscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=821 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604110113
-Received-SPF: pass client-ip=57.103.72.239;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3-K3ZaQkKChE0v358vz8rx55x2v.t537v3B-uvCv2454x4B.58x@flex--jemoreira.bounces.google.com>)
+ id 1wBNpU-0006mR-OD
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 22:12:12 -0400
+Received: from mail-dl1-x124a.google.com ([2607:f8b0:4864:20::124a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3-K3ZaQkKChE0v358vz8rx55x2v.t537v3B-uvCv2454x4B.58x@flex--jemoreira.bounces.google.com>)
+ id 1wBNpT-0003vv-1w
+ for qemu-devel@nongnu.org; Fri, 10 Apr 2026 22:12:12 -0400
+Received: by mail-dl1-x124a.google.com with SMTP id
+ a92af1059eb24-12711ec96fbso5928591c88.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1775873529; x=1776478329; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=RUi25tL6VRbh424glOaREy1evXPETqqAzqCwfi2sKiE=;
+ b=QAgES7L/8uOsA6P4cxfZUEj6OuEEomqPni2FjrNbqX5WCbJNx+tYSnmm4LeD4GVfHK
+ iskkmik6mvpIFSZ0KJGYexVP6+ykksZBh29wGrAGdPOmUZGsXJDCvsAamaaJmDyrdojR
+ GGzgiUcyxgUQDL/iYmT6KIf8tbl4pVvTUyML7D0txGQREYH1yH64hfEbiWtrhW73J/dW
+ 6Mk8hBTiHv69hgcTIwshA/ru6Ovd8yyoL3AG6Xql7Cd+duagFSJ5isvouKYAcgZZkQdD
+ 3Uh1gJ6EXuVMqak2dkOfBG3/jw8ASm9fX34knkWT3IAX80PsxlqDSHw7ishAzxDn3xh2
+ QzWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775873529; x=1776478329;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RUi25tL6VRbh424glOaREy1evXPETqqAzqCwfi2sKiE=;
+ b=gCXQzuNmgiEfiQJvUbKvs1QR5e+iuxzZLKDC8g8x3JIpOae/9pstkmcQd4mOmsiQ62
+ 3LUdtE5CFQ9gqs9KzDdV1xrXEtMz5SMPhB7lv1QU1TdCg6YMHY40lbRnwpqRNBZARvea
+ 9gglnstN+Ls4JCHSEjF6n5D8oR7vreJaj1RmaJd0R9L3T8SQ3NdKIlm399KrtsBcxUeI
+ 7kxSVA67AiiXx9jVwcR4U+8oefXseeI0jAodHrNx2Tk2zkH/nOOmQ3Cnta6bgJKn7OOq
+ VrZ0z26B0G9XuxNFkByRZmXc00ZQ+M4bCJLJtBcosqEh7euVMYQ5sOJbdjCux83LZJE2
+ ppGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXGXX6bLezs8tnQkCAoD/1Te9Audp+qZM+1iAUucfSLfQyiXUxVN8zdYxaKda3vvmZnqnnXKnJHHQJf@nongnu.org
+X-Gm-Message-State: AOJu0Ywrn6+3Kr2FTWvtrjvmnys2lYXH+NLTR2iPm2Q/UUybXIjqQGIz
+ Ci+Pol4hVRm73AgOsvYqKlIqcgsovhYq/+Kisx8Xlh2wu47tQrVzQ+H2bHmruQ7u/HWYt4DFZG4
+ 5oyekBMl/lhbA+EmXYA==
+X-Received: from dlea18-n2.prod.google.com
+ ([2002:a05:701b:4212:20b0:128:ed1b:481d])
+ (user=jemoreira job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7022:6299:b0:127:1492:e370 with SMTP id
+ a92af1059eb24-12c34e92fc6mr3404027c88.5.1775873528758; 
+ Fri, 10 Apr 2026 19:12:08 -0700 (PDT)
+Date: Fri, 10 Apr 2026 19:12:05 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.53.0.1213.gd9a14994de-goog
+Message-ID: <20260411021205.3592118-1-jemoreira@google.com>
+Subject: [PATCH] vhost-user.rst: Explicitly allow front-end to write to kick
+ FDs
+From: "Jorge E. Moreira" <jemoreira@google.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Hanna Czenczek <xanclic@gmail.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
+ "Jorge E. Moreira" <jemoreira@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::124a;
+ envelope-from=3-K3ZaQkKChE0v358vz8rx55x2v.t537v3B-uvCv2454x4B.58x@flex--jemoreira.bounces.google.com;
+ helo=mail-dl1-x124a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 11 Apr 2026 10:28:37 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,42 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm-unit-tests's apic.c tests for:
+Migration of back-end state happens while the device is suspended (i.e
+all vrings are stopped). To resume normal operation on the destination,
+the vrings need to be started again with a kick (either a write on the
+FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
+these notifications are typically sent by the driver, it has no reason
+to send them in the destination if it already sent them in the source as
+the driver is unaware that a migration took place. Therefore it should
+be the responsibility of the vhost-user front-end to ensure these vrings
+are started. This is particularly necessary for queues where data only
+flows from device to driver, such as those used by the vsock and input
+devices.
 
-!APICBASE_ENABLE + attempting to read xAPIC registers is not an allowed
- combination.
+This behavior is already used by some qemu vhost-user front-ends (e.g
+vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm).
+Adding it to the vhost-user documentation makes it explicit that this
+strategy is permitted and suggest it to vhost-user front-end authors.
+Explicitly documenting it is necessary because vring kicks appear
+designed to originate in the driver, so having some originate in the
+front-end can be counterintuitive and cause developers to waste time
+looking for other alternatives or face pushback during code review.
 
-And neither is x2APIC enabled + attempting to read xAPIC registers
-
-This was tested on WHPX with kernel-irqchip=off with x2APIC emulation
-enabled (in a posted series) and TCG.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Jorge E. Moreira <jemoreira@google.com>
 ---
- hw/intc/apic.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ docs/interop/vhost-user.rst | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index 8766ed00b9..c09dddef39 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -875,6 +875,15 @@ static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
-         return -1;
-     }
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index 137c9f3669..ad5aba3430 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -656,7 +656,10 @@ destination, following the usual protocol for establishing a connection
+ to a vhost-user back-end: This includes, for example, setting up memory
+ mappings and kick and call FDs as necessary, negotiating protocol
+ features, or setting the initial vring base indices (to the same value
+-as on the source side, so that operation can resume).
++as on the source side, so that operation can resume). The vhost-user front-end
++may also write to the kick FDs of vrings containing unused buffers or send
++``VHOST_USER_VRING_KICK`` if negotiated to start those vrings in the destination
++since the driver likely already kicked them in the source and won't do it again.
  
-+    /* if the xAPIC is disabled, return early. */
-+    if (!(s->apicbase & MSR_IA32_APICBASE_ENABLE)) {
-+        return 0xffffffff;
-+    }
-+
-+    if (s->apicbase & MSR_IA32_APICBASE_EXTD) {
-+        return 0xffffffff;
-+    }
-+
-     index = (addr >> 4) & 0xff;
-     apic_register_read(s, index, &val);
- 
+ Both on the source and on the destination side, after the respective
+ front-end has seen all data transferred (when the transfer FD has been
 -- 
-2.50.1 (Apple Git-155)
+2.53.0.1213.gd9a14994de-goog
 
 
