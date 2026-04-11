@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98962F36BA6
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 07:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0B9F36BA7
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 07:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBSde-0007nL-SK; Sat, 11 Apr 2026 03:20:18 -0400
+	id 1wBTCy-0001zv-9R; Sat, 11 Apr 2026 03:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBSde-0007n5-0h
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:20:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBTCx-0001zb-Fh
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:56:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBSdb-00042o-It
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:20:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBTCu-0000YH-VK
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:56:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775892014;
+ s=mimecast20190719; t=1775894203;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mdioEZK1ne1OQdrnhqV3pcA9l1MGi+4tJIw4FV9vRj0=;
- b=CzwJ6LNDPigKflfGgF1wlPSVctve57avTKw1pZs5wKIHhNj+gJEpA51TMmtaXbYsGC78Ms
- Ed0NZqNdqtEdieHucNfuA1pKZvY57IPrr1wWNmUzI7kCZldQp6vLQSf1CrA9KCLkhfa1d2
- u3UfJ9oabTTkIevtr94djHDa4M5mx8M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u3GA70hj4p4LL5c8Uv+bm+kbx2+3axZjdM+dDePyOxo=;
+ b=IpEvX944Awxhdgg3oHaASrndkRZtiUEr/GScV+6JKjZddaWLM5pAaqWNDWFiJadERIm0f8
+ ys2ItyZ6DfzR1asGk6HroMf0VT0V7tTbHk1ci9biVTYGYsI6kPYUSkVOZqXqgQ+4S7/6FU
+ nKC9hC41jEtUQYzEKuVcHFeiB7a0gUY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-2JtEs4-BMIiod5j70PT-xQ-1; Sat, 11 Apr 2026 03:20:11 -0400
-X-MC-Unique: 2JtEs4-BMIiod5j70PT-xQ-1
-X-Mimecast-MFC-AGG-ID: 2JtEs4-BMIiod5j70PT-xQ_1775892010
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-488ba2919b9so18482555e9.1
- for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 00:20:11 -0700 (PDT)
+ us-mta-611-OJmjro01NUKBY3TP6roK7A-1; Sat, 11 Apr 2026 03:56:41 -0400
+X-MC-Unique: OJmjro01NUKBY3TP6roK7A-1
+X-Mimecast-MFC-AGG-ID: OJmjro01NUKBY3TP6roK7A_1775894200
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43d03065782so1621932f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 00:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775892010; x=1776496810; darn=nongnu.org;
+ d=redhat.com; s=google; t=1775894200; x=1776499000; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mdioEZK1ne1OQdrnhqV3pcA9l1MGi+4tJIw4FV9vRj0=;
- b=cm1tyOteLkblA/04xgcr9AexYAO3mymm8Ic8zqhRxkfbmKxlU3KzLf6Y+NGY+5EUYH
- ScP8YgbP6uJ6FcofvPtXZA1CpACSgOvnyPC3HelbQtGoI4d5AZb1989QZSQ7OAmc1UaV
- wWibSLfTg3LUV/vUqxlmFl50TF8Dbft5CGGrfC9frEBaeEzRW8EIYHQJ7TILFCpf3vq8
- AaqoVPDzCFetmVnVus1h68OO1YtmMJH2SYg/1tJdkH4giTB6X1Lwrq0kt+e63KVWdIjW
- ryzxVXQqcbnJFXlgUWelHv8F8Kj1W7p1zQYUqbrvhDFHg4XahN1HhCYqMxUPXCAHnLql
- t+pw==
+ bh=u3GA70hj4p4LL5c8Uv+bm+kbx2+3axZjdM+dDePyOxo=;
+ b=Pr+ak126JubZDOGRpj4/KXC3FFYByEhrWoEtO7l4jzXDdM5NyNMrcA+zkl0i1bEEUG
+ 7AwHYtUfy153o+9FSBx1OaeSm42vT5tl1SEWw+J8A5KVB7mC4zyvkrobpU2R7VJFSBMd
+ ZY0DTd0QxvPd1KkbdtsNvvXynpFy2MTwxK27YbaH+ksBpQk35Av8O/B/UptMPucSpSi2
+ ya3kxm1tLSz/KbRAfzHCI/6clJH6LOAx21NWvBfqKkMk1MQGONYb33bnio8a1VF10lzx
+ 9x9d8WZFP4Nj+q1CJDjOepuKRDov8dfFLW1rFMcyaUEWy2z7S2V0wkOUKpbKeeLvtP6a
+ IHyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775892010; x=1776496810;
+ d=1e100.net; s=20251104; t=1775894200; x=1776499000;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mdioEZK1ne1OQdrnhqV3pcA9l1MGi+4tJIw4FV9vRj0=;
- b=P9tljAXnq0Mpl26v68BmiTDxwOaesxBKN/DGY6aAXPIEUNXzcVTcOdxNjptstOQ2CX
- grkUor5pAPUCrlVa+vRUuPJ1yT7rGIld9Sxm8qTsRQuLTAbBgZoLkBjk6yf9rwWNhVf0
- wGtOH0GYbCZqG7bflfBQjjJpE3lAJ2PiqNeO0eypQulDIv4chys85MWkXvC9NMfEzePX
- m0u/0Sj/KSqlATvBqNa3/Biz1to2o3tUtUyLzHC5u3+DUFVcjCpB3Y5nFXFHM1YqAe/f
- wkjW2TSKEiEFlpN4k1NsgjopRZ68Qm4jH+ElAARgpJh/Cer5qhE0wzUSqHyzRYpcRAAG
- ZvOQ==
+ bh=u3GA70hj4p4LL5c8Uv+bm+kbx2+3axZjdM+dDePyOxo=;
+ b=JD0B3/C29bq/gi4SsMi+ZV19yiohNAs+qUrIZuplv0h26mbVpro6wyq9iyuTABjrHo
+ +aLURspHHal1+q0Nngbf+i7aFK8W2U/7R156Wgqr+tfIBZnpCsFu3vKHKcRlKeZ4JVqz
+ 6GOln108XGFpV5SwPrK3jwNUK0tGC+1OCsGt+zKVtkvEImEyhVI+LHcCOIrkizMHXUAW
+ PWdBs+DhG8gTCfAV1L0apv5eVu2VdtZoRdvU2WIzLlzr1Xpf52DiudmkuDH8fvW1grRY
+ vCOebtSpoq0dyvdG5IE5cV1ILiEWbRgHJi1vs2aguJ30mquwVc3cQilKQnu/B2yNX3d8
+ x+5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVaPGOFY18krnPkFjJ6DpgiheZJQ2uz/xcHOiV8DNp+Q01ses54bQmaX1C3FpRcWIXpnkKROS2dy3q@nongnu.org
-X-Gm-Message-State: AOJu0YzxgbjExWe3XjzYQoQ6XswWXkZQD4EZvr7zFl4LlFDQsFx7QyrJ
- vDhhuqt4/hvIItGAjDOE214p7kjLP7SaT+JXkd9B1fNTdF0s75e+REoAIG+JJ9tovtMMbCszlp7
- 0ndRaUQ/pejGg31cpSV5jHqnKjjQqOcY7Caw8esADif27c43BkIkpM5Wf
-X-Gm-Gg: AeBDieutqUr28HQzNEYRV+Ag6JIzCXXSC5S+1DJjGQ3zrP7C6aMW4oC01a9uitIkY04
- wxXoHhubI1xHqdeFCVHDj5e2ua4WpPPGb8wEIg+SjXqud5bE7OHEzCXiliz3RMkzLd4hzRGFCV7
- rtVNaCiINoTl8Pah9a+U03d8KiBmY9I4pWkasJK8gJczlzeHljvLkDisEsAuRFvuvof2WY+aEty
- as3AZUB2BlgAOnh3jnRKIIIIq2IwiQ3KoeM2yNjolAl0o/zQobawqhAyWd0kUB+gV299inVl4ps
- hhlgmmxnNeiYpmMYAwcPw51vo1zNVj5KTEXKXfPuAun3NA7f2o47qaQiSRGU3TJYVf4W5H7NamA
- R9+KypDk+2OIN4vumu/SOua6VqRmbWvem+zOA3EQ/4F1HTBb64DVXRbVIFo1o
-X-Received: by 2002:a05:600c:45c9:b0:488:bc6a:5285 with SMTP id
- 5b1f17b1804b1-488d689d277mr75817285e9.30.1775892010044; 
- Sat, 11 Apr 2026 00:20:10 -0700 (PDT)
-X-Received: by 2002:a05:600c:45c9:b0:488:bc6a:5285 with SMTP id
- 5b1f17b1804b1-488d689d277mr75816845e9.30.1775892009507; 
- Sat, 11 Apr 2026 00:20:09 -0700 (PDT)
+ AJvYcCVbi77BygbkXsKhtXk2CeO4EsecGwRtEe1ku9bBBJ4XK8kc26ja5kOWUp2UN0FvLe+dvXYqERSbQXJA@nongnu.org
+X-Gm-Message-State: AOJu0YyYkcI57PKAN1HcFqRhzgMub0Jdfe0hMURbaF5hLg07m50ijFom
+ 1HrCAHSgB/T3gHI/VenC9X+S2STKdNUrjyU3x4sSDkJN2o5gbN8MbEZxMRcuDN9SeDDc00mEZyY
+ wfnnkN1Ob5fmxLSBhmUQauhrgeDo4SBuwoo2XeqHclPe1XDvxy22a1AJx
+X-Gm-Gg: AeBDievmTGzfz4ayu1XLa7zStmXXQu8UD3Co8ZMxFu/uAPlO9epEKSOtcbUNnAz2Fjf
+ zlmSQimdzP359/PuvFIgaBwtjMe5/Yhb+EPSzgOqAexMyL/TLduUSGzXN9Sd3hfK7xINkVKyhYa
+ /EDJpIWmD7MTrPYrG06F1LVd8wSzgAqg8D658ujKDQ4ktc7dY9h+K0X4edB35zfA8/rV6mP0GEK
+ lpo25L27Xqe+r8dgvLcXuYR5P1WV+TuurY5UVho+VEvI/mD0gdrW4x5woM9F60tc/URSb3XPyNb
+ lGSjsDwnX3g82bOIQmmBktW3D+3G7Uhz+tzC5ocITCaD4EPu3yi7vc/EQyTfW927gKz5glAgcsv
+ 7wO137+cMUEDM0PfOitV10By3bKS6OlkgnjVkYrdG9W9hDLT4XScnDnJ833uT
+X-Received: by 2002:a05:6000:2383:b0:43c:fd4d:2409 with SMTP id
+ ffacd0b85a97d-43d642c9421mr8666420f8f.46.1775894200330; 
+ Sat, 11 Apr 2026 00:56:40 -0700 (PDT)
+X-Received: by 2002:a05:6000:2383:b0:43c:fd4d:2409 with SMTP id
+ ffacd0b85a97d-43d642c9421mr8666396f8f.46.1775894199850; 
+ Sat, 11 Apr 2026 00:56:39 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63deb904sm14642197f8f.9.2026.04.11.00.20.08
+ ffacd0b85a97d-43d63e46713sm14873801f8f.21.2026.04.11.00.56.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Apr 2026 00:20:08 -0700 (PDT)
-Message-ID: <6e9e2f9e-529d-4754-ae4a-c291a46489be@redhat.com>
-Date: Sat, 11 Apr 2026 09:20:07 +0200
+ Sat, 11 Apr 2026 00:56:39 -0700 (PDT)
+Message-ID: <1ba6e7b2-5b5d-4ebc-b9bb-c5a3d68bcb56@redhat.com>
+Date: Sat, 11 Apr 2026 09:56:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 2/2] hw/vfio/ap: Callbacks for migration of guests with
@@ -98,7 +98,7 @@ Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
 References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
  <20260409141352.997844-3-akrowiak@linux.ibm.com>
  <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
- <74bec63f-a251-4493-a2bb-f40675bad3c5@linux.ibm.com>
+ <d57069a5-ac2a-471f-a955-bf9b2169be8a@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -144,19 +144,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <74bec63f-a251-4493-a2bb-f40675bad3c5@linux.ibm.com>
+In-Reply-To: <d57069a5-ac2a-471f-a955-bf9b2169be8a@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,7 +172,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/10/26 12:47, Anthony Krowiak wrote:
+On 4/10/26 12:50, Anthony Krowiak wrote:
 > 
 > 
 > On 4/10/26 4:19 AM, Cédric Le Goater wrote:
@@ -204,9 +204,6 @@ On 4/10/26 12:47, Anthony Krowiak wrote:
 >>> +    .unmigratable = 0,
 >>
 >> unneeded.
-> 
-> I'll remove it
-> 
 >>
 >>>       .fields = (const VMStateField[]) {
 >>>           VMSTATE_END_OF_LIST()
@@ -277,19 +274,24 @@ On 4/10/26 12:47, Anthony Krowiak wrote:
 >> has migration support. If not, the VM would still start but migration
 >> would be blocked.
 > 
-> I will make that change but I'm wondering; how does QEMU know whether the
-> kernel has support for migration of vfio-ap devices or not?
+> Will this allow the vfio-ap device migration patches to get merged before
+> the kernel/KVM patches?
 
-vfio_migration_init() will probe the kernel for migration support
-and install a migration blocker in case of failure.
+It's possible. Several reasons could explain the lack of migration
+support. The most obvious is a lack of kernel support, but it could
+also be a firmware support issue, an incompatible hardware state of
+the adapter, adapter model, etc.
 
-You should see a message like :
+Do all CEXxS crypto cards support migration ?
 
-   VFIO migration init failed: migration is not supported in kernel
+Do you expect kernel support [*] to be merged in v7.1 ?
 
+Also, I think the QEMU support lacks vfio_migration_exit().
 
 Thanks,
 
 C.
+
+[*]  https://lore.kernel.org/r/20260407205100.331150-1-akrowiak@linux.ibm.com
 
 
