@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADAAAF3ED66
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 22:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B345DF3ED5C
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 22:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBgl0-00034M-05; Sat, 11 Apr 2026 18:24:50 -0400
+	id 1wBgn5-0003lU-Ao; Sat, 11 Apr 2026 18:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBgky-000347-VU
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 18:24:48 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBgn4-0003lJ-Is
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 18:26:58 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBgkx-0003xb-ET
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 18:24:48 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso30885785e9.3
- for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 15:24:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBgn3-0004KN-40
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 18:26:58 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43d7213b6ebso99942f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 15:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775946285; x=1776551085; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CxLyaVB2t2xEPXpvFSlqEcsMBMuKLwPIjxP5Xi/fxQM=;
- b=UsYjKCrXFNUBMm6WZV9NeltEXwLEXLFXZ6uQSV2ewsKFA8Sfnq/Mez5u/KiDRzipPM
- GzLsTmmUKwwChhzcZQh0sMGUCPxOP9XRR0Cm4e/GibHjGgD+WHvX6RMieyu04EF+r7nt
- 8l8w4iupbkYP5RCharymFqzMRIaV1xm3QztTm5N5jUAfIjXscNUaL2o770adkAZnbeee
- E0Jp3mqssCce+heksT8Nb9smV96Ft3PGf+9iQSxH0RclkQGnCEFPAdU3DtgtcqflI6Pz
- JhCmwWIPhc1NhTz7+3ibsCeTxVgM/nFyEjhC8J9WcRg9rTLRof4FWPK0v3kzUGugCYVm
- ejBA==
+ d=linaro.org; s=google; t=1775946415; x=1776551215; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rI3e81KRJR+NbKrOU+fL1YrFiQ9FlYizv25LmKP7ON8=;
+ b=js+2KCsb/Ac+9MQH81IZKicQOEFBmTiXXEVg0lvf//aMYTdxHmA1jJdGwlk60n8mae
+ /mDiEALrVJ9YgyYmvn2vCpTf94GJnUtaZZKJTYq+hrXTryKMvNElEyTGGL06h8vKsdja
+ niEKqAjDsSATbRVo/TSwlLAFzRP0hTG+4fvrXpnnhmeRYbifbhUvDm9K6LAJEgaJBneJ
+ nfXeKFCtki73NAO95Pk6jVIoeEBvll5nLnoCvRjbSlqarPgbGNvCdae+MmfMcYjJLYfq
+ kAKB7eFhwBNsFiK/Dkc3vgZizqB5xrIKEgpIU33jYxeUxWp7jaPHim1wpO8ND+p7YMha
+ KoVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775946285; x=1776551085;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1775946415; x=1776551215;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CxLyaVB2t2xEPXpvFSlqEcsMBMuKLwPIjxP5Xi/fxQM=;
- b=bBFbpfC1ekI1rhoXPnyScxOcSccudH5ZqBYpIjaNbC20a0LR3C9DSG0ykxwQpTN8DY
- AmgeTfBlKwiQsS4hAUJyCnLKZ0AG65k7kmv77ofr5JSzCiXNELgEwOZmjXXw+pI1cvRx
- f6A2TIsaFjT7QgIsYwODgOLj8HKyY7S8oq8/B1AsJkYpfOgedSzeHKj/49Dh7KDSE6me
- OxuijSt+qsK1J10lTCjLapoNbNYhYoQ4JrsZxpknbj2pJJzcauevzhLGiXadlsbR9PlR
- mW1kPL6B/dLzwRPmwGd6LWkRu+HJX+N2tsokXPaYzmeGeQRzUXEppFKvvjqPsONlTTie
- A5EQ==
+ bh=rI3e81KRJR+NbKrOU+fL1YrFiQ9FlYizv25LmKP7ON8=;
+ b=d2WKFw2XnQNtQPfAnuxnNTfJP2PQFNzjeO1qT/gW1EFUqP3fxp39M45Ccw7792q5HC
+ SrrwoyDH1IemqPijAeM02lwMwR2ZqOq8RgCU7fpNM4VsL7L40jbI8kVPy+psUcKuj5Zs
+ 4qjs+mkJpElfqRO5P6I1cUrlMxak4rEK90OEb0vzQ2Fgl6yM4NcW8XNf5OsU3NSrzx40
+ h5PSRCXfdkxlukRORoxDIKHNFxKBS8Zv9TDba/50Za9591nwIZD6GEbiQ24zVp4pwNEo
+ UntQ1hcJ0byBIvs6vL4kNfmBMYOUy9Tv2zazLPBjJkkxAQJHCS1XcsuolIs/dcXtKvK0
+ ukjg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRDiEW4qD+2xMIDTgdgddeeOdgVM9UKfQQM65jEIuMigOt0xfTsGR30Mda554CtHTTLqtg1myFCXyy@nongnu.org
-X-Gm-Message-State: AOJu0YzDAtEe0HLP1oU6xCi7XTmf0Dg+T875lM1xPMLINlFMr6RscoOk
- Qh/mF/hDsWaa9AxxcF/iaNb1wG9WzzF/yq3EqkOQDnl/P1pL0yhmADaa0aEfyQfeDRo=
-X-Gm-Gg: AeBDiespiyTw2ghKEv4tv2oiSoAn7dNshoHwdlgIe7gLID2v2ftaPNjfgDM9F997F1d
- E7agj0laZXZ6mz+LKb0TqM7hwc10h9TF8pCQ4eGbJuKQF93Wz8r10R7C6GX/RR85Ls83VofnInr
- ASy5UtBnKIW/PgrUMyGdEf/RW+NKjYLC0LDta4AxGkV4bRIOfwmriHRf8zOHM+h8vGvN6eXUX1o
- c770cdhWZjpTcQ006zzonW0AOSv0AM4Q5s+bZumWWg+71HuZ941dVFHvOcwRPHjeS8z9ZPExIRb
- AzCnEmdMjAl2epM09SjabjwCVoQm3PxHfWVfreSFxk7N+ZjidQNSLOyX7WJ5H9RtARFAmLXatfy
- Jhmrcmj9/TcQHvPyLvBroU0JxVmNFbSenhxpu0h6/qXczJH2DJVTJzrrxaOmwoFJHL4xGEc2eRm
- jNc0qUi8YqMAqhpl1P7ZgMXn8bHijF9gPvpQOysMBqcbCrgjlD9JhzyRZmWnG262O0wA==
-X-Received: by 2002:a05:600c:45c6:b0:488:a723:ea53 with SMTP id
- 5b1f17b1804b1-488d67ce902mr91316675e9.7.1775946285046; 
- Sat, 11 Apr 2026 15:24:45 -0700 (PDT)
+ AFNElJ9rnObMbD6z2uLTr+syYPakmWo4eLVNsErBy/lmkZIK5/ayFJlg6eLdi9YZswYTJ4Ns0limfzRilIxL@nongnu.org
+X-Gm-Message-State: AOJu0Yxxl5DJs+oG2HFmXlGBdXCL29e7L4d8MbnxsB76AJN8D6GhAzLw
+ PiEOIMRtS42IfU2lke7VMwTLC0e6OrNF7owkrGpB4kGOHh+O2i/U9Z1GzTaxIdsOszc=
+X-Gm-Gg: AeBDieuoiTnIM/5x2eDQzIqhiOxdfCFigg32o29l+bcKnkOYExU53b23gHc74EVCJkQ
+ koT2vJeUAoKzVo7RcgZhPMB8PYGwGLoMt6S39cGXi7T7Z+9OBgiInO9xcuoUgi6NfCb+ixdZoWQ
+ oEy1Ag8aDM5A4ZBrfQ98ZPU6q2X1FgGZg6vLS5orffMdgi30zDBFhyuc54ZaDqiJdLb4fyMzF/s
+ XZBNAa2FDAWy88wpd8iBaALqJ+eEo7aiQEESn9T6YSK+GRaZVNf3bY4i5lxnvq9wZ6w/GQUOv6g
+ WduXG73lI/2vjCBmI3XN6qnLak8i5RFHeuNA7p4ZKdfzb3l6srz5vW6JrAXsOem+wd86zkMkgI8
+ MUXCnLmb6aI9WNVLx1efSnPww/lCqVFyWUcZNCjwjW1YnHkVlZI8a645qFzHRE+rzOxyiAeDAhP
+ qe0HQc9yEvQt1lS0K3Kcu+LHOCimKqLpSrFSMD28+UnnCIf+lvYawq1KtDmAZ5ELFbww==
+X-Received: by 2002:a05:6000:1847:b0:43b:4f0c:aefd with SMTP id
+ ffacd0b85a97d-43d642b9e05mr11090047f8f.23.1775946414918; 
+ Sat, 11 Apr 2026 15:26:54 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63e51600sm16993222f8f.32.2026.04.11.15.24.43
+ ffacd0b85a97d-43d63e50200sm19098287f8f.29.2026.04.11.15.26.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Apr 2026 15:24:44 -0700 (PDT)
-Message-ID: <3f917c02-e358-4da1-897c-90d9b39925e1@linaro.org>
-Date: Sun, 12 Apr 2026 00:24:43 +0200
+ Sat, 11 Apr 2026 15:26:54 -0700 (PDT)
+Message-ID: <8fded74a-b72e-47f8-a298-07f78218ed27@linaro.org>
+Date: Sun, 12 Apr 2026 00:26:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 29/67] ui/console: remove console_ch_t typedef and
- console_write_ch()
+Subject: Re: [PATCH v2 43/67] ui/keymaps: introduce kbd_layout_free()
+Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
- <20260410-qemu-vnc-v2-29-231416f76dc3@redhat.com>
+ <20260410-qemu-vnc-v2-43-231416f76dc3@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260410-qemu-vnc-v2-29-231416f76dc3@redhat.com>
+In-Reply-To: <20260410-qemu-vnc-v2-43-231416f76dc3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,31 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/4/26 21:18, Marc-André Lureau wrote:
-> Since commit e2f82e924d05 ("console: purge curses bits from
-> console.h"), console_ch_t is a plain uint32_t typedef and
-> console_write_ch() is a trivial assignment (*dest = ch). These
-> abstractions were originally needed because console_ch_t was the
-> curses chtype when CONFIG_CURSES was enabled, and console_write_ch()
-> handled VGA-to-curses character translation. That commit moved the
-> curses logic into curses_update(), making the typedef and helper
-> dead abstractions.
+On 10/4/26 21:19, Marc-André Lureau wrote:
+> Enable callers to properly tear down keyboard layouts.
 > 
-> Replace console_ch_t with uint32_t and console_write_ch() calls
-> with direct assignments.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/ui/console.h         | 11 ++---------
->   hw/display/jazz_led.c        | 10 +++++-----
->   hw/display/vga.c             | 16 ++++++++--------
->   hw/display/virtio-gpu-base.c |  2 +-
->   hw/display/virtio-vga.c      |  2 +-
->   hw/display/vmware_vga.c      |  2 +-
->   ui/console-vc.c              | 11 +++++------
->   ui/console.c                 |  2 +-
->   ui/curses.c                  |  6 +++---
->   9 files changed, 27 insertions(+), 35 deletions(-)
+>   ui/keymaps.h |  1 +
+>   ui/keymaps.c | 13 ++++++++++---
+>   2 files changed, 11 insertions(+), 3 deletions(-)
+
+
+> diff --git a/ui/keymaps.c b/ui/keymaps.c
+> index 2359dbfe7e6..d1b3f43dc8a 100644
+> --- a/ui/keymaps.c
+> +++ b/ui/keymaps.c
+> @@ -178,6 +178,14 @@ out:
+>       return ret;
+>   }
+>   
+> +void kbd_layout_free(kbd_layout_t *k)
+> +{
+> +    if (!k) {
+> +        return;
+> +    }
+> +    g_hash_table_unref(k->hash);
+> +    g_free(k);
+> +}
+>   
+>   kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
+>                                      const char *language, Error **errp)
+
+Worth renaming kbd_layout_new/init?
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
