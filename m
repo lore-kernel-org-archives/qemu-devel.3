@@ -4,107 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DE7EF45A18
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 02:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D426F36B98
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 07:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBO3u-00026O-HV; Fri, 10 Apr 2026 22:27:06 -0400
+	id 1wBSQw-0001bT-1C; Sat, 11 Apr 2026 03:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wBO3t-00024E-2v; Fri, 10 Apr 2026 22:27:05 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wBO3r-0000Mo-3R; Fri, 10 Apr 2026 22:27:04 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63B1PvYf2331673; Sat, 11 Apr 2026 02:26:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=G+mRZ7G+wFrg4KfVX
- 4SGQUu69NmYqkiVfXmLRl4uDEw=; b=XiMe2CZAtck/1cp0Y/GHGDChwajGBC7+Q
- 0RHU4c1ot6k2rDI7IQh4SVteaUqhH6nTdU2MzEKUykEvMuSlqn2H1zMfTWHaZFzu
- eGZmHCjXwO2XMtdAcZ/LfMUfxOAusZinO/lT4zdtHgmn0QdbI8mEML0TZJHtISdF
- aVfCgCbXuVb4oD/5J3ABxabowJRClnm2HNDpS5z5//1pPuurDOckvFyDqAp5cGrQ
- 2iuqILbWBQKWTy2z6c6vi8d98DJ6fJODyme0ohEMgnB1TAreHFpGn6C7Ost01XPh
- iRtCCQn/xaBLEzyZJ0uB7iphrsrh17UpgVJiJkwDGwJJ6bGI3LAmg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2gbwex-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 11 Apr 2026 02:26:58 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63B0Z4Qv026655;
- Sat, 11 Apr 2026 02:26:57 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg8ayxh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 11 Apr 2026 02:26:57 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63B2QueZ22872686
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 11 Apr 2026 02:26:56 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 12C3E5805A;
- Sat, 11 Apr 2026 02:26:56 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BE6458054;
- Sat, 11 Apr 2026 02:26:55 +0000 (GMT)
-Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.252.248])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 11 Apr 2026 02:26:55 +0000 (GMT)
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-To: mjrosato@linux.ibm.com
-Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Subject: [PATCH v2 07/15] s390x/pci: Move/rename enabled from S390PCIIOMMU to
- S390PCIBusDevice
-Date: Fri, 10 Apr 2026 21:26:10 -0500
-Message-Id: <20260411022618.2136588-8-kshk@linux.ibm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260411022618.2136588-1-kshk@linux.ibm.com>
-References: <20260411022618.2136588-1-kshk@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wBSQv-0001bL-CC
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:07:09 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wBSQt-00010m-4M
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:07:09 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-470145d7df5so1838941b6e.0
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 00:07:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1775891226; x=1776496026; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C5Hb/Kbp3EbT7B/m+Bd9c1VL9NV7LguO7HwGtzLx5RI=;
+ b=n0JL1iZ+B9pMqd88l2ZHusAqPekaQyUhxgKDdWbS2aEZBeZtOudUef/it3ygfmSYbK
+ d4GAk76ENMAoMQTD5CBdYxiY69TRrKwW2hDc0p+Ua4V9oNgSxfz69T20cbLwR6KHwzdI
+ Evedyv36mX6iWLRfe7WWc+rqt/Qibpf229F17kNQbVeTyemNPUY7eUedw2+tPhBmJDTU
+ K1nFEEfiQJALh8ipq4I8b8z1Is3D0bXUXN03L9mpJkL97mXNZyMrxoGg/JwBNFjtmCxM
+ ML6+TqA/we+kMQswM460Xt9c5aEz/H8ovQIM0T6q3h5NvD4cKTjU13XhAheUdAHFV+QS
+ YGAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1775891226; x=1776496026;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=C5Hb/Kbp3EbT7B/m+Bd9c1VL9NV7LguO7HwGtzLx5RI=;
+ b=FR+hXXqMgBit66kr44pDzmsFMMTgkfBviLyTOcL//gsvt53Gdk8KlRbTset/JABceM
+ 8Y8D58u+uasx7hFmV9NeAj+uAr1ATQihVQ2xK8njERbiu1rd12X/ZLAvCPzMyIj8dj06
+ iGHByBgr26LdwODwsD0BMsHGdckc7Ya6OLmmjg1CRL+Q7iBJr7/dvhb/ggFJrz89WpYk
+ /NL7UvbK+ks9BtSbrUWjUpwJxsJJ/xCmpDnHZN+VCP6INVS61Q8d1iUVYT4gZ/lCbgB1
+ ydPOeJpLmFJB40dWuTG10zcjdJrLcb6Jgu9MTNBWQThp1vP8Foj0FFNox91uXd6CkI4B
+ nWLQ==
+X-Gm-Message-State: AOJu0YwBvmOD5UvCqdlZ8+lqwFAWVFOkmmuM65ofg8e+ZVdEBmJyKJq2
+ uw+oqcQti+gj7IDoqpibWpEh0U1Rc4Im6h6PRrrocfBjbpJrVb8KRyPkmz29oHPW0cA=
+X-Gm-Gg: AeBDiet4SyO9kjDrobcBueYKyHtAgfXnOf6qKtoZn3L9JVJPoQ8eOAyca4G26WeHu7Z
+ Wgs9N9e0d2y6QN3cqFnRzSyNILE9RZbujOZnvoA6vVQZWoOsN09qUbgZInu9gUj+sOIMXwlOI3L
+ XLuRMCB1R2D8iB0sUwDyOWfEVmEgJ6zShoLCNtbR5w0e1jKRBwk44u7K0c3/SRK4KBcKmnHtRXS
+ pNWPjsOrumrJ79JPRDFsOwSNGVwRhTX5X/5EPyjkMQM+D3x/pIKdbO/J+lJ4SxFYHt2vy7Lrk6f
+ QcSwlTSHQy58GauXCr8Q0UOQ0xPL36uqLUn29rlNPHVfgqx9BhMqQUsZvpPSTEV1TNjKrOkBgE7
+ +SM7y8sN1rMyj9iw9j/TDcHKtBgaa7JY6nxDGrmiw2pIinRg9qVlOsTDKe8c0qei2kAijAw4VZk
+ VMdNnXvJCjYlTprlVWqy8Ud2rLwHX+ACOffQAghosUbk5bk+4igIKbGw+WOJZTFtJ13+8qmc/rA
+ cDlVs8/MafRdIc68QfrA3vh1/zvSJInelqg/8Az6rqUwQS8M5iTFt+xGvvjfV3rgNSvZE8=
+X-Received: by 2002:a05:6808:c1b5:b0:467:2f84:b0c6 with SMTP id
+ 5614622812f47-4789ca3aaa0mr3443597b6e.8.1775891225754; 
+ Sat, 11 Apr 2026 00:07:05 -0700 (PDT)
+Received: from Mac.localdomain (71-218-253-186.hlrn.qwest.net.
+ [71.218.253.186]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-478a0f1e841sm2651091b6e.5.2026.04.11.00.07.03
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 11 Apr 2026 00:07:04 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: James Hilliard <james.hilliard1@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>
+Subject: [PATCH 7/9] target/mips: add Octeon ZUC crypto support
+Date: Sat, 11 Apr 2026 01:06:33 -0600
+Message-ID: <20260411070637.72421-7-james.hilliard1@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260411070637.72421-1-james.hilliard1@gmail.com>
+References: <20260411070637.72421-1-james.hilliard1@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=KeridwYD c=1 sm=1 tr=0 ts=69d9b172 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=i0DCopz73FH-yKe2uwYA:9
-X-Proofpoint-ORIG-GUID: 7EOce1iQ9pq5O8SzyIES5C1wCxwybEu9
-X-Proofpoint-GUID: 7EOce1iQ9pq5O8SzyIES5C1wCxwybEu9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDAxNiBTYWx0ZWRfX+4Ir+1BkUSmq
- nddOL38xC1ZL35SJCwPS1WfAx6ZnjWXL46fIlSsVpUXttWwIldJcHglSvIJU/aGjHRac5IDrcWo
- XnIJHptFOwtCOkqjQwuBehthfttVK+Q058/vkSUnu7gBs0RFCytAejkhzIL0Yhw5a8gYhdZ7X4g
- bNxW/K/MG+UwxhL18NhVOOLQpij7CKBSsaiPa1THsY2FGN8AI07ftP+rq0mJZ+XYo2ThQGGGNoq
- kzWL0PytymZ6BYs5XtiLZrxyQ/4o8PpkyxRQYlkSTtX0g7aX5zpv/UWbGlhdu775+Ei0x1Daulq
- iomPz2v6P7PjgkVGbZVrxLgs91XMoG3o0/eL1lTjx9CO/g/WukVDXYAj1rlK11I/u/kfyzAY1b+
- mL34lnFomDpRgeuzWkaUafJPApH1NAXlJEFJnmlgItzc/96Ui0KZ0tAwrpgfkwpjHtDGgMDM/O+
- eNexYXfdfykLJnavjow==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-10_07,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- clxscore=1015 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110016
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x235.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,147 +107,420 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This field is only used when S390PCIBusDevice exists, so it can be moved
-there to simplify S390PCIIOMMU which purpose is just to store the "root"
-AddressSpace.
+Add the Octeon ZUC START and MORE selectors and model the shared state
+window used by the hardware interface.
 
-This also allows to save/restore this field during migration.
+This covers the keystream and MAC engine state, including the
+save-and-restore view that overlaps the HSH/SHA3 bank.
 
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
- hw/s390x/s390-pci-bus.c         | 14 +++++++-------
- hw/s390x/s390-pci-inst.c        |  8 ++++----
- include/hw/s390x/s390-pci-bus.h |  2 +-
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ target/mips/cpu.h               |   7 +
+ target/mips/tcg/octeon_crypto.c | 323 ++++++++++++++++++++++++++++++++
+ target/mips/tcg/translate.c     |   2 +
+ 3 files changed, 332 insertions(+)
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 83e9ca99f3..27ba3c801c 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -205,7 +205,7 @@ void s390_pci_sclp_deconfigure(SCCB *sccb)
-         } else if (pbdev->summary_ind) {
-             pci_dereg_irqs(pbdev);
-         }
--        if (pbdev->iommu->enabled) {
-+        if (pbdev->iommu_enabled) {
-             pci_dereg_ioat(pbdev);
-         }
-         pbdev->state = ZPCI_FS_STANDBY;
-@@ -554,7 +554,7 @@ static IOMMUTLBEntry s390_translate_iommu(IOMMUMemoryRegion *mr, hwaddr addr,
-     switch (pbdev->state) {
-     case ZPCI_FS_ENABLED:
-     case ZPCI_FS_BLOCKED:
--        if (!iommu->enabled) {
-+        if (!pbdev->iommu_enabled) {
-             return ret;
-         }
-         break;
-@@ -771,7 +771,7 @@ void s390_pci_iommu_enable(S390PCIBusDevice *pbdev)
-     memory_region_init_iommu(&pbdev->iommu_mr, sizeof(pbdev->iommu_mr),
-                              TYPE_S390_IOMMU_MEMORY_REGION, OBJECT(&iommu->mr),
-                              name, iommu->pal + 1);
--    iommu->enabled = true;
-+    pbdev->iommu_enabled = true;
-     memory_region_add_subregion(&iommu->mr, 0, MEMORY_REGION(&pbdev->iommu_mr));
-     g_free(name);
- }
-@@ -794,7 +794,7 @@ void s390_pci_iommu_direct_map_enable(S390PCIBusDevice *pbdev)
-     memory_region_init_alias(pbdev->dm_mr, OBJECT(&iommu->mr), name,
-                              get_system_memory(), 0,
-                              s390_get_memory_limit(s390ms));
--    iommu->enabled = true;
-+    pbdev->iommu_enabled = true;
-     memory_region_add_subregion(&iommu->mr, pbdev->zpci_fn.sdma,
-                                 pbdev->dm_mr);
- }
-@@ -802,7 +802,7 @@ void s390_pci_iommu_direct_map_enable(S390PCIBusDevice *pbdev)
- void s390_pci_iommu_disable(S390PCIBusDevice *pbdev)
- {
-     S390PCIIOMMU *iommu = pbdev->iommu;
--    iommu->enabled = false;
-+    pbdev->iommu_enabled = false;
-     g_hash_table_remove_all(pbdev->iotlb);
-     if (pbdev->dm_mr) {
-         memory_region_del_subregion(&iommu->mr, pbdev->dm_mr);
-@@ -1411,7 +1411,7 @@ static void s390_pcihost_reset(DeviceState *dev)
-             } else if (pbdev->summary_ind) {
-                 pci_dereg_irqs(pbdev);
-             }
--            if (pbdev->iommu->enabled) {
-+            if (pbdev->iommu_enabled) {
-                 pci_dereg_ioat(pbdev);
-             }
-             pbdev->state = ZPCI_FS_STANDBY;
-@@ -1552,7 +1552,7 @@ static void s390_pci_device_reset(DeviceState *dev)
-     } else if (pbdev->summary_ind) {
-         pci_dereg_irqs(pbdev);
-     }
--    if (pbdev->iommu->enabled) {
-+    if (pbdev->iommu_enabled) {
-         pci_dereg_ioat(pbdev);
-     }
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index dc5223e165..8249b17e8a 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -541,6 +541,7 @@ typedef enum MIPSOcteonSharedMode {
+     OCTEON_SHARED_MODE_NONE = 0,
+     OCTEON_SHARED_MODE_SHA512,
+     OCTEON_SHARED_MODE_SNOW3G,
++    OCTEON_SHARED_MODE_ZUC,
+     OCTEON_SHARED_MODE_SHA3,
+ } MIPSOcteonSharedMode;
  
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 8349b44dd4..4458eae681 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -1251,7 +1251,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         if (dmaas != 0) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_DMAAS_INVAL);
--        } else if (pbdev->iommu->enabled) {
-+        } else if (pbdev->iommu_enabled) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_SEQUENCE);
-         } else if (reg_ioat(env, pbdev, fib, ra)) {
-@@ -1263,7 +1263,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         if (dmaas != 0) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_DMAAS_INVAL);
--        } else if (!pbdev->iommu->enabled) {
-+        } else if (!pbdev->iommu_enabled) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_SEQUENCE);
-         } else {
-@@ -1274,7 +1274,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         if (dmaas != 0) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_DMAAS_INVAL);
--        } else if (!pbdev->iommu->enabled) {
-+        } else if (!pbdev->iommu_enabled) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_SEQUENCE);
-         } else {
-@@ -1404,7 +1404,7 @@ int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         /* fallthrough */
-     case ZPCI_FS_ENABLED:
-         fib.fc |= 0x80;
--        if (pbdev->iommu->enabled) {
-+        if (pbdev->iommu_enabled) {
-             fib.fc |= 0x10;
-         }
-         if (!(fh & FH_MASK_ENABLE)) {
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index fcaaf19512..24f6e60786 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -275,7 +275,6 @@ struct S390PCIIOMMU {
-     Object parent_obj;
-     AddressSpace as;
-     MemoryRegion mr;
--    bool enabled;
-     uint64_t g_iota;
-     uint64_t pba;
-     uint64_t pal;
-@@ -350,6 +349,7 @@ struct S390PCIBusDevice {
-     S390MsixInfo msix;
-     AdapterRoutes routes;
-     S390PCIIOMMU *iommu;
-+    bool iommu_enabled;
-     IOMMUMemoryRegion iommu_mr;
-     MemoryRegion *dm_mr;
-     GHashTable *iotlb;
+@@ -704,6 +705,8 @@ typedef enum MIPSOcteonCop2Sel {
+     OCTEON_COP2_SEL_SNOW3G_MORE = 0x404e,
+     OCTEON_COP2_SEL_HSH_STARTSHA256 = 0x404f,
+     OCTEON_COP2_SEL_SHA3_STARTOP = 0x4052,
++    OCTEON_COP2_SEL_ZUC_START = 0x4055,
++    OCTEON_COP2_SEL_ZUC_MORE = 0x4056,
+     OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT = 0x405d,
+     OCTEON_COP2_SEL_HSH_STARTSHA1 = 0x4057,
+     OCTEON_COP2_SEL_HSH_STARTSHA512 = 0x424f,
+@@ -738,6 +741,10 @@ typedef struct MIPSOcteonCryptoState {
+     uint32_t snow3g_fsm[3];
+     uint32_t snow3g_lfsr[16];
+     uint64_t snow3g_result;
++    uint32_t zuc_fsm[2];
++    uint32_t zuc_lfsr[16];
++    uint32_t zuc_window[3];
++    uint32_t zuc_tresult;
+ } MIPSOcteonCryptoState;
+ 
+ typedef struct CPUArchState {
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+index 7dde536560..317dd89cd2 100644
+--- a/target/mips/tcg/octeon_crypto.c
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -591,6 +591,251 @@ static int octeon_sha3_xordat_pos_from_sel(uint32_t sel)
+     return -1;
+ }
+ 
++static const uint8_t octeon_zuc_s0[256] = {
++    0x3e, 0x72, 0x5b, 0x47, 0xca, 0xe0, 0x00, 0x33,
++    0x04, 0xd1, 0x54, 0x98, 0x09, 0xb9, 0x6d, 0xcb,
++    0x7b, 0x1b, 0xf9, 0x32, 0xaf, 0x9d, 0x6a, 0xa5,
++    0xb8, 0x2d, 0xfc, 0x1d, 0x08, 0x53, 0x03, 0x90,
++    0x4d, 0x4e, 0x84, 0x99, 0xe4, 0xce, 0xd9, 0x91,
++    0xdd, 0xb6, 0x85, 0x48, 0x8b, 0x29, 0x6e, 0xac,
++    0xcd, 0xc1, 0xf8, 0x1e, 0x73, 0x43, 0x69, 0xc6,
++    0xb5, 0xbd, 0xfd, 0x39, 0x63, 0x20, 0xd4, 0x38,
++    0x76, 0x7d, 0xb2, 0xa7, 0xcf, 0xed, 0x57, 0xc5,
++    0xf3, 0x2c, 0xbb, 0x14, 0x21, 0x06, 0x55, 0x9b,
++    0xe3, 0xef, 0x5e, 0x31, 0x4f, 0x7f, 0x5a, 0xa4,
++    0x0d, 0x82, 0x51, 0x49, 0x5f, 0xba, 0x58, 0x1c,
++    0x4a, 0x16, 0xd5, 0x17, 0xa8, 0x92, 0x24, 0x1f,
++    0x8c, 0xff, 0xd8, 0xae, 0x2e, 0x01, 0xd3, 0xad,
++    0x3b, 0x4b, 0xda, 0x46, 0xeb, 0xc9, 0xde, 0x9a,
++    0x8f, 0x87, 0xd7, 0x3a, 0x80, 0x6f, 0x2f, 0xc8,
++    0xb1, 0xb4, 0x37, 0xf7, 0x0a, 0x22, 0x13, 0x28,
++    0x7c, 0xcc, 0x3c, 0x89, 0xc7, 0xc3, 0x96, 0x56,
++    0x07, 0xbf, 0x7e, 0xf0, 0x0b, 0x2b, 0x97, 0x52,
++    0x35, 0x41, 0x79, 0x61, 0xa6, 0x4c, 0x10, 0xfe,
++    0xbc, 0x26, 0x95, 0x88, 0x8a, 0xb0, 0xa3, 0xfb,
++    0xc0, 0x18, 0x94, 0xf2, 0xe1, 0xe5, 0xe9, 0x5d,
++    0xd0, 0xdc, 0x11, 0x66, 0x64, 0x5c, 0xec, 0x59,
++    0x42, 0x75, 0x12, 0xf5, 0x74, 0x9c, 0xaa, 0x23,
++    0x0e, 0x86, 0xab, 0xbe, 0x2a, 0x02, 0xe7, 0x67,
++    0xe6, 0x44, 0xa2, 0x6c, 0xc2, 0x93, 0x9f, 0xf1,
++    0xf6, 0xfa, 0x36, 0xd2, 0x50, 0x68, 0x9e, 0x62,
++    0x71, 0x15, 0x3d, 0xd6, 0x40, 0xc4, 0xe2, 0x0f,
++    0x8e, 0x83, 0x77, 0x6b, 0x25, 0x05, 0x3f, 0x0c,
++    0x30, 0xea, 0x70, 0xb7, 0xa1, 0xe8, 0xa9, 0x65,
++    0x8d, 0x27, 0x1a, 0xdb, 0x81, 0xb3, 0xa0, 0xf4,
++    0x45, 0x7a, 0x19, 0xdf, 0xee, 0x78, 0x34, 0x60,
++};
++
++static const uint8_t octeon_zuc_s1[256] = {
++    0x55, 0xc2, 0x63, 0x71, 0x3b, 0xc8, 0x47, 0x86,
++    0x9f, 0x3c, 0xda, 0x5b, 0x29, 0xaa, 0xfd, 0x77,
++    0x8c, 0xc5, 0x94, 0x0c, 0xa6, 0x1a, 0x13, 0x00,
++    0xe3, 0xa8, 0x16, 0x72, 0x40, 0xf9, 0xf8, 0x42,
++    0x44, 0x26, 0x68, 0x96, 0x81, 0xd9, 0x45, 0x3e,
++    0x10, 0x76, 0xc6, 0xa7, 0x8b, 0x39, 0x43, 0xe1,
++    0x3a, 0xb5, 0x56, 0x2a, 0xc0, 0x6d, 0xb3, 0x05,
++    0x22, 0x66, 0xbf, 0xdc, 0x0b, 0xfa, 0x62, 0x48,
++    0xdd, 0x20, 0x11, 0x06, 0x36, 0xc9, 0xc1, 0xcf,
++    0xf6, 0x27, 0x52, 0xbb, 0x69, 0xf5, 0xd4, 0x87,
++    0x7f, 0x84, 0x4c, 0xd2, 0x9c, 0x57, 0xa4, 0xbc,
++    0x4f, 0x9a, 0xdf, 0xfe, 0xd6, 0x8d, 0x7a, 0xeb,
++    0x2b, 0x53, 0xd8, 0x5c, 0xa1, 0x14, 0x17, 0xfb,
++    0x23, 0xd5, 0x7d, 0x30, 0x67, 0x73, 0x08, 0x09,
++    0xee, 0xb7, 0x70, 0x3f, 0x61, 0xb2, 0x19, 0x8e,
++    0x4e, 0xe5, 0x4b, 0x93, 0x8f, 0x5d, 0xdb, 0xa9,
++    0xad, 0xf1, 0xae, 0x2e, 0xcb, 0x0d, 0xfc, 0xf4,
++    0x2d, 0x46, 0x6e, 0x1d, 0x97, 0xe8, 0xd1, 0xe9,
++    0x4d, 0x37, 0xa5, 0x75, 0x5e, 0x83, 0x9e, 0xab,
++    0x82, 0x9d, 0xb9, 0x1c, 0xe0, 0xcd, 0x49, 0x89,
++    0x01, 0xb6, 0xbd, 0x58, 0x24, 0xa2, 0x5f, 0x38,
++    0x78, 0x99, 0x15, 0x90, 0x50, 0xb8, 0x95, 0xe4,
++    0xd0, 0x91, 0xc7, 0xce, 0xed, 0x0f, 0xb4, 0x6f,
++    0xa0, 0xcc, 0xf0, 0x02, 0x4a, 0x79, 0xc3, 0xde,
++    0xa3, 0xef, 0xea, 0x51, 0xe6, 0x6b, 0x18, 0xec,
++    0x1b, 0x2c, 0x80, 0xf7, 0x74, 0xe7, 0xff, 0x21,
++    0x5a, 0x6a, 0x54, 0x1e, 0x41, 0x31, 0x92, 0x35,
++    0xc4, 0x33, 0x07, 0x0a, 0xba, 0x7e, 0x0e, 0x34,
++    0x88, 0xb1, 0x98, 0x7c, 0xf3, 0x3d, 0x60, 0x6c,
++    0x7b, 0xca, 0xd3, 0x1f, 0x32, 0x65, 0x04, 0x28,
++    0x64, 0xbe, 0x85, 0x9b, 0x2f, 0x59, 0x8a, 0xd7,
++    0xb0, 0x25, 0xac, 0xaf, 0x12, 0x03, 0xe2, 0xf2,
++};
++
++static inline uint32_t octeon_zuc_addm(uint32_t a, uint32_t b)
++{
++    uint32_t c = a + b;
++
++    c = (c & 0x7fffffffU) + (c >> 31);
++    return c ? c : 0x7fffffffU;
++}
++
++static inline uint32_t octeon_zuc_mul_by_pow2(uint32_t v, unsigned int shift)
++{
++    return ((v << shift) | (v >> (31 - shift))) & 0x7fffffffU;
++}
++
++static inline uint32_t octeon_zuc_make_u32(uint8_t a, uint8_t b,
++                                           uint8_t c, uint8_t d)
++{
++    return ((uint32_t)a << 24) | ((uint32_t)b << 16) |
++           ((uint32_t)c << 8) | d;
++}
++
++static inline uint64_t octeon_zuc_pack_pair(uint32_t hi, uint32_t lo)
++{
++    return ((uint64_t)hi << 32) | lo;
++}
++
++static void octeon_zuc_bit_reorganization(const MIPSOcteonCryptoState *crypto,
++                                          uint32_t x[4])
++{
++    x[0] = ((crypto->zuc_lfsr[15] & 0x7fff8000U) << 1) |
++           (crypto->zuc_lfsr[14] & 0xffffU);
++    x[1] = ((crypto->zuc_lfsr[11] & 0xffffU) << 16) |
++           (crypto->zuc_lfsr[9] >> 15);
++    x[2] = ((crypto->zuc_lfsr[7] & 0xffffU) << 16) |
++           (crypto->zuc_lfsr[5] >> 15);
++    x[3] = ((crypto->zuc_lfsr[2] & 0xffffU) << 16) |
++           (crypto->zuc_lfsr[0] >> 15);
++}
++
++static inline uint32_t octeon_zuc_l1(uint32_t x)
++{
++    return x ^ rol32(x, 2) ^ rol32(x, 10) ^
++           rol32(x, 18) ^ rol32(x, 24);
++}
++
++static inline uint32_t octeon_zuc_l2(uint32_t x)
++{
++    return x ^ rol32(x, 8) ^ rol32(x, 14) ^
++           rol32(x, 22) ^ rol32(x, 30);
++}
++
++static uint32_t octeon_zuc_f(MIPSOcteonCryptoState *crypto, const uint32_t x[4])
++{
++    uint32_t w = (x[0] ^ crypto->zuc_fsm[0]) + crypto->zuc_fsm[1];
++    uint32_t w1 = crypto->zuc_fsm[0] + x[1];
++    uint32_t w2 = crypto->zuc_fsm[1] ^ x[2];
++    uint32_t u = octeon_zuc_l1((w1 << 16) | (w2 >> 16));
++    uint32_t v = octeon_zuc_l2((w2 << 16) | (w1 >> 16));
++
++    crypto->zuc_fsm[0] = octeon_zuc_make_u32(octeon_zuc_s0[u >> 24],
++                                             octeon_zuc_s1[(uint8_t)(u >> 16)],
++                                             octeon_zuc_s0[(uint8_t)(u >> 8)],
++                                             octeon_zuc_s1[(uint8_t)u]);
++    crypto->zuc_fsm[1] = octeon_zuc_make_u32(octeon_zuc_s0[v >> 24],
++                                             octeon_zuc_s1[(uint8_t)(v >> 16)],
++                                             octeon_zuc_s0[(uint8_t)(v >> 8)],
++                                             octeon_zuc_s1[(uint8_t)v]);
++    return w;
++}
++
++static void octeon_zuc_lfsr_step(MIPSOcteonCryptoState *crypto,
++                                 bool init_mode, uint32_t u)
++{
++    uint32_t f = crypto->zuc_lfsr[0];
++
++    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(crypto->zuc_lfsr[0], 8));
++    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(crypto->zuc_lfsr[4], 20));
++    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(crypto->zuc_lfsr[10], 21));
++    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(crypto->zuc_lfsr[13], 17));
++    f = octeon_zuc_addm(f, octeon_zuc_mul_by_pow2(crypto->zuc_lfsr[15], 15));
++    if (init_mode) {
++        f = octeon_zuc_addm(f, u);
++    }
++
++    memmove(&crypto->zuc_lfsr[0], &crypto->zuc_lfsr[1],
++            15 * sizeof(crypto->zuc_lfsr[0]));
++    crypto->zuc_lfsr[15] = f;
++}
++
++static uint32_t octeon_zuc_generate_word(MIPSOcteonCryptoState *crypto)
++{
++    uint32_t x[4];
++    uint32_t z;
++
++    octeon_zuc_bit_reorganization(crypto, x);
++    z = octeon_zuc_f(crypto, x) ^ x[3];
++    octeon_zuc_lfsr_step(crypto, false, 0);
++    return z;
++}
++
++static void octeon_zuc_fill_window(MIPSOcteonCryptoState *crypto)
++{
++    crypto->zuc_window[0] = octeon_zuc_generate_word(crypto);
++    crypto->zuc_window[1] = octeon_zuc_generate_word(crypto);
++    crypto->zuc_window[2] = octeon_zuc_generate_word(crypto);
++}
++
++static inline uint32_t
++octeon_zuc_window_word(const MIPSOcteonCryptoState *crypto, unsigned int bit)
++{
++    if (bit == 0) {
++        return crypto->zuc_window[0];
++    }
++    if (bit < 32) {
++        return (crypto->zuc_window[0] << bit) |
++               (crypto->zuc_window[1] >> (32 - bit));
++    }
++    if (bit == 32) {
++        return crypto->zuc_window[1];
++    }
++    return (crypto->zuc_window[1] << (bit - 32)) |
++           (crypto->zuc_window[2] >> (64 - bit));
++}
++
++static void octeon_zuc_advance_window(MIPSOcteonCryptoState *crypto)
++{
++    crypto->zuc_window[0] = crypto->zuc_window[2];
++    crypto->zuc_window[1] = octeon_zuc_generate_word(crypto);
++    crypto->zuc_window[2] = octeon_zuc_generate_word(crypto);
++}
++
++static void octeon_zuc_start(MIPSOcteonCryptoState *crypto, uint64_t q)
++{
++    uint32_t x[4];
++    bool restore_active = crypto->shared_mode == OCTEON_SHARED_MODE_ZUC;
++
++    octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_ZUC);
++    if (!restore_active) {
++        for (int i = 0; i < 7; i++) {
++            uint64_t pair = crypto->sha512_block[i];
++
++            crypto->zuc_lfsr[i * 2] = (pair >> 32) & 0x7fffffffU;
++            crypto->zuc_lfsr[i * 2 + 1] = pair & 0x7fffffffU;
++        }
++    }
++    crypto->zuc_lfsr[14] = (q >> 32) & 0x7fffffffU;
++    crypto->zuc_lfsr[15] = q & 0x7fffffffU;
++    crypto->zuc_fsm[0] = 0;
++    crypto->zuc_fsm[1] = 0;
++    crypto->zuc_tresult = 0;
++
++    for (int i = 0; i < 32; i++) {
++        octeon_zuc_bit_reorganization(crypto, x);
++        octeon_zuc_lfsr_step(crypto, true, octeon_zuc_f(crypto, x) >> 1);
++    }
++
++    octeon_zuc_bit_reorganization(crypto, x);
++    (void)octeon_zuc_f(crypto, x);
++    octeon_zuc_lfsr_step(crypto, false, 0);
++    octeon_zuc_fill_window(crypto);
++}
++
++static void octeon_zuc_more(MIPSOcteonCryptoState *crypto, uint64_t q)
++{
++    uint32_t t = crypto->zuc_tresult;
++
++    octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_ZUC);
++    for (unsigned int bit = 0; bit < 64; bit++) {
++        if ((q >> (63 - bit)) & 1) {
++            t ^= octeon_zuc_window_word(crypto, bit);
++        }
++    }
++    crypto->zuc_tresult = t;
++    octeon_zuc_advance_window(crypto);
++}
++
+ static const uint8_t octeon_snow3g_sr[256] = {
+     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
+     0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+@@ -1487,6 +1732,38 @@ target_ulong helper_octeon_cop2_dmfc2(CPUMIPSState *env, uint32_t sel)
+     MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
+     int sha3_pos;
+ 
++    if (crypto->shared_mode == OCTEON_SHARED_MODE_ZUC) {
++        if (sel >= OCTEON_COP2_SEL_HSH_DATW0 &&
++            sel <= OCTEON_COP2_SEL_HSH_DATW7) {
++            unsigned int idx = sel - OCTEON_COP2_SEL_HSH_DATW0;
++
++            return octeon_zuc_pack_pair(crypto->zuc_lfsr[idx * 2],
++                                        crypto->zuc_lfsr[idx * 2 + 1]);
++        }
++        switch (sel) {
++        case OCTEON_COP2_SEL_HSH_DATW8:
++            return octeon_zuc_pack_pair(crypto->zuc_fsm[0], crypto->zuc_fsm[1]);
++        case OCTEON_COP2_SEL_HSH_DATW9:
++        case OCTEON_COP2_SEL_HSH_IVW0:
++            return octeon_zuc_pack_pair(crypto->zuc_window[0],
++                                        crypto->zuc_window[1]);
++        case OCTEON_COP2_SEL_HSH_DATW10:
++            return crypto->zuc_window[2];
++        case OCTEON_COP2_SEL_HSH_DATW11:
++        case OCTEON_COP2_SEL_HSH_IVW3:
++            return crypto->zuc_tresult;
++        case OCTEON_COP2_SEL_SHA3_DAT15_READ:
++        case OCTEON_COP2_SEL_SHA3_DAT24:
++            return 0;
++        case OCTEON_COP2_SEL_HSH_IVW1:
++            return crypto->zuc_fsm[0];
++        case OCTEON_COP2_SEL_HSH_IVW2:
++            return crypto->zuc_fsm[1];
++        default:
++            break;
++        }
++    }
++
+     if (crypto->shared_mode == OCTEON_SHARED_MODE_SNOW3G) {
+         if (sel >= OCTEON_COP2_SEL_SNOW3G_LFSR0 &&
+             sel <= OCTEON_COP2_SEL_SNOW3G_LFSR7) {
+@@ -1606,6 +1883,46 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, target_ulong value,
+     uint64_t q = (uint64_t)value;
+     int sha3_pos;
+ 
++    if (crypto->shared_mode == OCTEON_SHARED_MODE_ZUC) {
++        if (sel >= OCTEON_COP2_SEL_HSH_DATW0 &&
++            sel <= OCTEON_COP2_SEL_HSH_DATW7) {
++            unsigned int idx = sel - OCTEON_COP2_SEL_HSH_DATW0;
++
++            crypto->zuc_lfsr[idx * 2] = (q >> 32) & 0x7fffffffU;
++            crypto->zuc_lfsr[idx * 2 + 1] = q & 0x7fffffffU;
++            return;
++        }
++        switch (sel) {
++        case OCTEON_COP2_SEL_HSH_DATW8:
++            crypto->zuc_fsm[0] = q >> 32;
++            crypto->zuc_fsm[1] = q;
++            return;
++        case OCTEON_COP2_SEL_HSH_DATW9:
++        case OCTEON_COP2_SEL_HSH_IVW0:
++            crypto->zuc_window[0] = q >> 32;
++            crypto->zuc_window[1] = q;
++            return;
++        case OCTEON_COP2_SEL_HSH_DATW10:
++            crypto->zuc_window[2] = q;
++            return;
++        case OCTEON_COP2_SEL_HSH_DATW11:
++        case OCTEON_COP2_SEL_HSH_IVW3:
++            crypto->zuc_tresult = q;
++            return;
++        case OCTEON_COP2_SEL_SHA3_DAT15_WRITE:
++        case OCTEON_COP2_SEL_SHA3_DAT24:
++            return;
++        case OCTEON_COP2_SEL_HSH_IVW1:
++            crypto->zuc_fsm[0] = q;
++            return;
++        case OCTEON_COP2_SEL_HSH_IVW2:
++            crypto->zuc_fsm[1] = q;
++            return;
++        default:
++            break;
++        }
++    }
++
+     switch (sel) {
+     case OCTEON_COP2_SEL_3DES_KEY0:
+     case OCTEON_COP2_SEL_3DES_KEY1:
+@@ -1822,6 +2139,12 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, target_ulong value,
+         octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
+         octeon_sha3_permute(crypto);
+         break;
++    case OCTEON_COP2_SEL_ZUC_START:
++        octeon_zuc_start(crypto, q);
++        break;
++    case OCTEON_COP2_SEL_ZUC_MORE:
++        octeon_zuc_more(crypto, q);
++        break;
+     case OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT:
+         octeon_gfm_mul_reflect(crypto, q);
+         break;
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index be380cab11..39fad07adc 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -9303,6 +9303,8 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
+     case OCTEON_COP2_SEL_SNOW3G_MORE:
+     case OCTEON_COP2_SEL_HSH_STARTSHA256:
+     case OCTEON_COP2_SEL_SHA3_STARTOP:
++    case OCTEON_COP2_SEL_ZUC_START:
++    case OCTEON_COP2_SEL_ZUC_MORE:
+     case OCTEON_COP2_SEL_HSH_STARTSHA1:
+     case OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT:
+     case OCTEON_COP2_SEL_HSH_STARTSHA512:
 -- 
-2.34.1
+2.53.0
 
 
