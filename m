@@ -4,159 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0B9F36BA7
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 07:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E36DF45A19
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 08:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBTCy-0001zv-9R; Sat, 11 Apr 2026 03:56:48 -0400
+	id 1wBTds-0008Uf-JM; Sat, 11 Apr 2026 04:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBTCx-0001zb-Fh
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:56:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
+ id 1wBTdr-0008UX-Fq
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 04:24:35 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wBTCu-0000YH-VK
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:56:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1775894203;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=u3GA70hj4p4LL5c8Uv+bm+kbx2+3axZjdM+dDePyOxo=;
- b=IpEvX944Awxhdgg3oHaASrndkRZtiUEr/GScV+6JKjZddaWLM5pAaqWNDWFiJadERIm0f8
- ys2ItyZ6DfzR1asGk6HroMf0VT0V7tTbHk1ci9biVTYGYsI6kPYUSkVOZqXqgQ+4S7/6FU
- nKC9hC41jEtUQYzEKuVcHFeiB7a0gUY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-OJmjro01NUKBY3TP6roK7A-1; Sat, 11 Apr 2026 03:56:41 -0400
-X-MC-Unique: OJmjro01NUKBY3TP6roK7A-1
-X-Mimecast-MFC-AGG-ID: OJmjro01NUKBY3TP6roK7A_1775894200
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43d03065782so1621932f8f.0
- for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 00:56:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1775894200; x=1776499000; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=u3GA70hj4p4LL5c8Uv+bm+kbx2+3axZjdM+dDePyOxo=;
- b=Pr+ak126JubZDOGRpj4/KXC3FFYByEhrWoEtO7l4jzXDdM5NyNMrcA+zkl0i1bEEUG
- 7AwHYtUfy153o+9FSBx1OaeSm42vT5tl1SEWw+J8A5KVB7mC4zyvkrobpU2R7VJFSBMd
- ZY0DTd0QxvPd1KkbdtsNvvXynpFy2MTwxK27YbaH+ksBpQk35Av8O/B/UptMPucSpSi2
- ya3kxm1tLSz/KbRAfzHCI/6clJH6LOAx21NWvBfqKkMk1MQGONYb33bnio8a1VF10lzx
- 9x9d8WZFP4Nj+q1CJDjOepuKRDov8dfFLW1rFMcyaUEWy2z7S2V0wkOUKpbKeeLvtP6a
- IHyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775894200; x=1776499000;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u3GA70hj4p4LL5c8Uv+bm+kbx2+3axZjdM+dDePyOxo=;
- b=JD0B3/C29bq/gi4SsMi+ZV19yiohNAs+qUrIZuplv0h26mbVpro6wyq9iyuTABjrHo
- +aLURspHHal1+q0Nngbf+i7aFK8W2U/7R156Wgqr+tfIBZnpCsFu3vKHKcRlKeZ4JVqz
- 6GOln108XGFpV5SwPrK3jwNUK0tGC+1OCsGt+zKVtkvEImEyhVI+LHcCOIrkizMHXUAW
- PWdBs+DhG8gTCfAV1L0apv5eVu2VdtZoRdvU2WIzLlzr1Xpf52DiudmkuDH8fvW1grRY
- vCOebtSpoq0dyvdG5IE5cV1ILiEWbRgHJi1vs2aguJ30mquwVc3cQilKQnu/B2yNX3d8
- x+5A==
+ (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
+ id 1wBTdp-0005UV-FT
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 04:24:35 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id CAA4260145
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 08:24:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F09C2BCB1
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 08:24:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1775895863;
+ bh=bqoQbqPELWRk5acf+ZyoEUs3D/b4C2lVsVH6ctZMC9Q=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=II3SqzEvF+aEL6T1Ktmj0vBQS9DSc2uPxqNvuP8+603V6vWSyr6/diOddLJiJrIs1
+ oo12F27qxFcQjira7eoMCf4GI1T26cnuxkW2YmwWeBe8IqYwrQB4WDtaGrurozPIkt
+ fssKMZcYE2OigchYXFD5BDvJjL/hSm8JSSv8WWaeBrJMqMffQV+rQP6ePE0CEq7nvz
+ 1aeP7YDa6GGsStwwkYgoPMsbEi976m7PcwUUEujZ2seM8JZrYgNXEq1RC9lCfraz3q
+ XslLeKfMHcHZUPCDNZ56R51RQK2+YlQai2tUjoS5XHOIi788IpCbTsTLRjr2ZxQ3T8
+ 2l9VdXJRZtzHg==
+Received: by mail-ej1-f43.google.com with SMTP id
+ a640c23a62f3a-b8f9568e074so468427966b.0
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 01:24:23 -0700 (PDT)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbi77BygbkXsKhtXk2CeO4EsecGwRtEe1ku9bBBJ4XK8kc26ja5kOWUp2UN0FvLe+dvXYqERSbQXJA@nongnu.org
-X-Gm-Message-State: AOJu0YyYkcI57PKAN1HcFqRhzgMub0Jdfe0hMURbaF5hLg07m50ijFom
- 1HrCAHSgB/T3gHI/VenC9X+S2STKdNUrjyU3x4sSDkJN2o5gbN8MbEZxMRcuDN9SeDDc00mEZyY
- wfnnkN1Ob5fmxLSBhmUQauhrgeDo4SBuwoo2XeqHclPe1XDvxy22a1AJx
-X-Gm-Gg: AeBDievmTGzfz4ayu1XLa7zStmXXQu8UD3Co8ZMxFu/uAPlO9epEKSOtcbUNnAz2Fjf
- zlmSQimdzP359/PuvFIgaBwtjMe5/Yhb+EPSzgOqAexMyL/TLduUSGzXN9Sd3hfK7xINkVKyhYa
- /EDJpIWmD7MTrPYrG06F1LVd8wSzgAqg8D658ujKDQ4ktc7dY9h+K0X4edB35zfA8/rV6mP0GEK
- lpo25L27Xqe+r8dgvLcXuYR5P1WV+TuurY5UVho+VEvI/mD0gdrW4x5woM9F60tc/URSb3XPyNb
- lGSjsDwnX3g82bOIQmmBktW3D+3G7Uhz+tzC5ocITCaD4EPu3yi7vc/EQyTfW927gKz5glAgcsv
- 7wO137+cMUEDM0PfOitV10By3bKS6OlkgnjVkYrdG9W9hDLT4XScnDnJ833uT
-X-Received: by 2002:a05:6000:2383:b0:43c:fd4d:2409 with SMTP id
- ffacd0b85a97d-43d642c9421mr8666420f8f.46.1775894200330; 
- Sat, 11 Apr 2026 00:56:40 -0700 (PDT)
-X-Received: by 2002:a05:6000:2383:b0:43c:fd4d:2409 with SMTP id
- ffacd0b85a97d-43d642c9421mr8666396f8f.46.1775894199850; 
- Sat, 11 Apr 2026 00:56:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63e46713sm14873801f8f.21.2026.04.11.00.56.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Apr 2026 00:56:39 -0700 (PDT)
-Message-ID: <1ba6e7b2-5b5d-4ebc-b9bb-c5a3d68bcb56@redhat.com>
-Date: Sat, 11 Apr 2026 09:56:37 +0200
+ AJvYcCUaJdgwdn4UCuKh03tn+BAMJ7MO6D7k3SFrGZtrSMIQUDS+9BpscDKD6dMq1z2wQZQeTqg1clmgxrff@nongnu.org
+X-Gm-Message-State: AOJu0Yz3N7OE+mPwYKCbI7d+Plb23rcM7Zsie4jsIwbJ/0GI7fTXwZ1u
+ 9tnaVdOG9+adfY9Bt2pih3jjeNxYLhrICWPiKfyLltgx0XPCoabKMmEFtlo3ijB3+9Jqo2Jkc15
+ KVpZYSKlusS9MnLyQTcQiDYlqJtOAkg4=
+X-Received: by 2002:a17:906:2092:b0:b9d:705e:1dae with SMTP id
+ a640c23a62f3a-b9d72777e58mr214554466b.45.1775895861761; Sat, 11 Apr 2026
+ 01:24:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] hw/vfio/ap: Callbacks for migration of guests with
- pass-through access to AP devices
-To: Anthony Krowiak <akrowiak@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com,
- alex@shazbot.org, cohuck@redhat.com
-References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
- <20260409141352.997844-3-akrowiak@linux.ibm.com>
- <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
- <d57069a5-ac2a-471f-a955-bf9b2169be8a@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <d57069a5-ac2a-471f-a955-bf9b2169be8a@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <CAFsMJvCLRw2Q=4muDNG1Ojj3oL+UgTrVzpYM6VULRvdFxgR=KA@mail.gmail.com>
+ <df1c484f-bc30-49d5-9928-de6e17dd2816@linaro.org>
+ <CAFsMJvDWFmMx2t+9JXmBsWP+8r0XZDP+LRm6bN9k8wF5b6CSLQ@mail.gmail.com>
+ <d56c0dd2-720a-2973-865d-c9d16b90b69f@loongson.cn>
+ <CAFsMJvBKkLf=F=g=6H5_-FX4wJAzC6MhweoapqVTPx+7V9e9bw@mail.gmail.com>
+In-Reply-To: <CAFsMJvBKkLf=F=g=6H5_-FX4wJAzC6MhweoapqVTPx+7V9e9bw@mail.gmail.com>
+From: Huacai Chen <chenhuacai@kernel.org>
+Date: Sat, 11 Apr 2026 16:24:28 +0800
+X-Gmail-Original-Message-ID: <CAAhV-H6tAdv9BwrkgPTLWKpy35jJx+aG0xHGK2=CWdx5cUeiPg@mail.gmail.com>
+X-Gm-Features: AQROBzDBFkqm0mDiVV5S0T1ys9AKylY71_Id4V7oF-ydWReoS3obfjTdvX-r68k
+Message-ID: <CAAhV-H6tAdv9BwrkgPTLWKpy35jJx+aG0xHGK2=CWdx5cUeiPg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: fix usage of struct target_stat64 for
+ TARGET_LOONGARCH64 in syscall_defs.h
+To: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+Cc: gaosong <gaosong@loongson.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, laurent@vivier.eu, 
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ bibo mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=chenhuacai@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,126 +92,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/10/26 12:50, Anthony Krowiak wrote:
-> 
-> 
-> On 4/10/26 4:19 AM, Cédric Le Goater wrote:
->> On 4/9/26 16:13, Anthony Krowiak wrote:
->>> From: Anthony  Krowiak <akrowiak@linux.ibm.com>
->>>
->>> Implements the callbacks used by the VFIO migration framework to migrate
->>> guests with pass-through access to s390 crypto devices.
->>>
->>> Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
->>> ---
->>>   hw/vfio/ap.c | 43 +++++++++++++++++++++++++++++++++++++++----
->>>   1 file changed, 39 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
->>> index fd68983702..49947b18c3 100644
->>> --- a/hw/vfio/ap.c
->>> +++ b/hw/vfio/ap.c
->>> @@ -32,6 +32,7 @@
->>>   #include "hw/s390x/ap-bridge.h"
->>>   #include "system/address-spaces.h"
->>>   #include "qom/object.h"
->>> +#include "vfio-migration-internal.h"
->>>     #define TYPE_VFIO_AP_DEVICE      "vfio-ap"
->>>   @@ -47,6 +48,7 @@ static const VMStateDescription vmstate_ap_device = {
->>>       .name = "vfio-ap-device",
->>>       .version_id = 1,
->>>       .minimum_version_id = 1,
->>> +    .unmigratable = 0,
->>
->> unneeded.
->>
->>>       .fields = (const VMStateField[]) {
->>>           VMSTATE_END_OF_LIST()
->>>       },
->>> @@ -66,17 +68,44 @@ static void __attribute__((constructor)) vfio_ap_global_init(void)
->>>       qemu_mutex_init(&cfg_chg_events_lock);
->>>   }
->>>   +static int vfio_ap_save_config(VFIODevice *vdev, QEMUFile *f, Error **errp)
->>> +{
->>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
->>> +
->>> +    return vmstate_save_state(f, &vmstate_ap_device, vapdev, NULL, errp);
->>> +}
->>> +
->>> +static int vfio_ap_load_config(VFIODevice *vdev, QEMUFile *f)
->>> +{
->>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
->>> +    Error *err = NULL;
->>> +    int ret;
->>> +
->>> +    ret = vmstate_load_state(f, &vmstate_ap_device, vapdev, 1, &err);
->>> +    if (ret) {
->>> +        error_report_err(err);
->>> +    }
->>> +
->>> +    return ret;
->>> +}
->>> +
->>> +static Object *vfio_ap_get_object(VFIODevice *vbasedev)
->>> +{
->>> +    VFIOAPDevice *vdev = container_of(vbasedev, VFIOAPDevice, vdev);
->>> +
->>> +    return OBJECT(vdev);
->>> +}
->>> +
->>>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
->>>   {
->>>       vdev->needs_reset = false;
->>>   }
->>>   -/*
->>> - * We don't need vfio_hot_reset_multi and vfio_eoi operations for
->>> - * vfio-ap device now.
->>> - */
->>>   struct VFIODeviceOps vfio_ap_ops = {
->>>       .vfio_compute_needs_reset = vfio_ap_compute_needs_reset,
->>> +    .vfio_save_config = vfio_ap_save_config,
->>> +    .vfio_load_config = vfio_ap_load_config,
->>> +    .vfio_get_object = vfio_ap_get_object,
->>>   };
->>>     static void vfio_ap_req_notifier_handler(void *opaque)
->>> @@ -251,6 +280,10 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
->>>           goto error;
->>>       }
->>>   +    if (!vfio_migration_realize(vbasedev, errp)) {
->>> +        goto error;
->>> +    }
->>> +
->>>       if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_REQ_IRQ_INDEX, &err)) {
->>>           /*
->>>            * Report this error, but do not make it a failing condition.
->>> @@ -287,6 +320,8 @@ static void vfio_ap_unrealize(DeviceState *dev)
->>>     static const Property vfio_ap_properties[] = {
->>>       DEFINE_PROP_STRING("sysfsdev", VFIOAPDevice, vdev.sysfsdev),
->>> +    DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOAPDevice,
->>> +                            vdev.enable_migration, ON_OFF_AUTO_ON),
->>
->> Why not ON_OFF_AUTO_AUTO ? This would enable migration only if kernel
->> has migration support. If not, the VM would still start but migration
->> would be blocked.
-> 
-> Will this allow the vfio-ap device migration patches to get merged before
-> the kernel/KVM patches?
+On Sat, Apr 11, 2026 at 10:09=E2=80=AFAM Gyorgy Tamasi <gyorgy.tamasi@gmail=
+.com> wrote:
+>
+> Hi,
+>
+> Thanks for the link of this separate Loongson-maintained 9.2-tcg-old
+> branch - intended for use specifically with ABI 1.0 code.
+>
+> This separate branch still contains the same bug (in the context of
+> the glibc-2.28-7cdc44d5a1 env of Loongson's gcc 8.3.0 rc1.6 - where
+> fstatat syscall can be used by glibc, and it can trigger the usage of
+> the related erroneous data-conversion workflow based on  struct
+> target_stat64 with 4byte sec/nsec fields):
+>
+> This changeset was the last mod of syscall_defs.h - but it still
+> incorrectly modifies the condition of struct target_stat64 usage:
+> (~ "Add Loongarch64 old ABI support")
+> https://github.com/loongson/qemu/commit/409f7717d6e3217cb8f497547bbe45c2e=
+864be99
+> (line 2006)
+> -----
+> -#if !defined(TARGET_RISCV64)
+> +#if !defined(TARGET_RISCV64) || defined(TARGET_LOONGARCH64)
+I think this patch has nothing to do with ABI 1.0/2.0, it really fixed
+a bug, similar to RISCV. While RISCV has no ABI 1.0/2.0.
 
-It's possible. Several reasons could explain the lack of migration
-support. The most obvious is a lack of kernel support, but it could
-also be a firmware support issue, an incompatible hardware state of
-the adapter, adapter model, etc.
+Huacai
 
-Do all CEXxS crypto cards support migration ?
-
-Do you expect kernel support [*] to be merged in v7.1 ?
-
-Also, I think the QEMU support lacks vfio_migration_exit().
-
-Thanks,
-
-C.
-
-[*]  https://lore.kernel.org/r/20260407205100.331150-1-akrowiak@linux.ibm.com
-
+> -----
+>
+> This is the broader context in this 9.2-tcg-old original version:
+> Here the 2nd embedded "|| defined(TARGET_LOONGARCH64)" normally a
+> no-op: always true/false if the 1st "|| defined(TARGET_LOONGARCH64)"
+> is true/false.
+> -----
+> #elif defined(TARGET_OPENRISC) || defined(TARGET_NIOS2) \
+>         || defined(TARGET_RISCV) || defined(TARGET_HEXAGON) || \
+>         defined(TARGET_LOONGARCH64)
+> /* These are the asm-generic versions of the stat and stat64 structures *=
+/
+>
+> #define TARGET_STAT_HAVE_NSEC
+> struct target_stat {
+> ...
+> };
+>
+> #if !defined(TARGET_RISCV64) || defined(TARGET_LOONGARCH64)
+> #define TARGET_HAS_STRUCT_STAT64
+> struct target_stat64 {
+> ...
+> };
+> #endif
+>
+> #elif defined(TARGET_HPPA)
+> -----
+>
+> The correct fix is the same here (~ disable the use of this struct
+> target_stat64 - instead of explicitly enabling it for
+> TARGET_LOONGARCH64 with the "|| defined(...)" part):
+> -----
+> ~/qemu/qemu-9.2-tcg-old/linux-user$ diff -u syscall_defs.h.ori syscall_de=
+fs.h
+> --- syscall_defs.h.ori  2026-04-10 20:53:34.639034304 +0200
+> +++ syscall_defs.h      2026-04-10 20:55:12.219347804 +0200
+> @@ -2003,7 +2003,7 @@
+>      abi_uint __unused5;
+>  };
+>
+> -#if !defined(TARGET_RISCV64) || defined(TARGET_LOONGARCH64)
+> +#if !defined(TARGET_RISCV64) && !defined(TARGET_LOONGARCH64)
+>  #define TARGET_HAS_STRUCT_STAT64
+>  struct target_stat64 {
+>      abi_ullong st_dev;
+> -----
+>
+> The same test-scenario of
+> https://gitlab.com/qemu-project/qemu/-/work_items/3371 can be used
+> [with the relevant gcc 8.3 rc1.6 & this qemu linux-user 9.2-tcg-old
+> toolset] to show exactly the same bad & good test results - without &
+> with this mod.
+>
+> Just a personal experience based side-note on ABI1.0 compatibility
+> with mainline qemu (~10.2.2):
+> I'm working on porting a quite large code-base (a commercial OCR &
+> document conversion SDK) to LoongArch64 (for ABI1.0 and ABI2.0)...and
+> I'm trying to check correctness of my actual builds using the
+> regression-test package of this codebase. It runs quite complex
+> workflows of general CLI code. I accept that this is not a
+> comprehensive test with all of the edge cases or touching every
+> special areas (like signal handling) of compatibility of ABI1.0 and
+> mainline qemu, but...the ABI1.0 version of this test-code seems to be
+> able to run with mainline qemu-user 10.2.2.
+>
+> Best regards,
+> -tgy
+>
+> On Fri, Apr 10, 2026 at 11:37=E2=80=AFAM gaosong <gaosong@loongson.cn> wr=
+ote:
+> >
+> > =E5=9C=A8 2026/4/9 =E4=B8=8B=E5=8D=888:14, Gyorgy Tamasi =E5=86=99=E9=
+=81=93:
+> > > Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+> > >
+> > > Additional independent testing (bug + fix cases) is documented here -
+> > > see comments by sourav/@kishu279:
+> > > https://gitlab.com/qemu-project/qemu/-/work_items/3371
+> >
+> > Hi.
+> > Please note that QEMU is not compatible with ABI 1.0.
+> >
+> > If you absolutely must use ABI 1.0, the branch below is the version we =
+use.
+> > https://github.com/loongson/qemu/commits/9.2-tcg-old/
+> >
+> > However, this branch is quite far from the mainline.
+> > The QEMU mainline follows the kernel mainline, and
+> > I believe this is the case for other architectures as well.
+> >
+> > Thanks.
+> > Song Gao
+> > > On Wed, Apr 8, 2026 at 8:21=E2=80=AFPM Pierrick Bouvier
+> > > <pierrick.bouvier@linaro.org> wrote:
+> > >> On 4/8/26 11:17 AM, Gyorgy Tamasi wrote:
+> > >>> In a 64bit LoongArch64 env (both TARGET_LOONGARCH and
+> > >>> TARGET_LOONGARCH64 are defined!) we can not use the struct
+> > >>> target_stat64 for data-transfer, since this struct target_stat64 is
+> > >>> defined for 32bit environments with its int-sized (4byte) st_*time
+> > >>> sec/nsec components.
+> > >>> The user side compiler headers of the LoongArch64 env uses long-siz=
+ed
+> > >>> (8byte) st_*time sec/nsec components.
+> > >>>
+> > >>> (This is similar to the case of 32bit vs. 64bit RISCV: the original
+> > >>> code does not use struct target_stat64 in 64bit RISCV env, when bot=
+h
+> > >>> TARGET_RISCV and TARGET_RISCV64 are defined.)
+> > >>>
+> > >>> This fix is important for LoongArch64 ABI1.0, where stat() is using=
+ an
+> > >>> fstatat syscall with this struct target_stat64, if its usage is
+> > >>> enabled.
+> > >>> (In case of LoongArch64 ABI2.0 stat() uses statx syscall, where thi=
+s
+> > >>> problematic struct target_stat64 is not used, struct statx is corre=
+ct
+> > >>> in the LoongArch64 env.)
+> > >>> See also: https://gitlab.com/qemu-project/qemu/-/work_items/3371
+> > >>>
+> > >>> Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+> > >>> ---
+> > >>>    linux-user/syscall_defs.h | 2 +-
+> > >>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> > >>>
+> > >> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> >
 
