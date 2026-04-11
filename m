@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901C5F364CD
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 07:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD0DE99058
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 07:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBSQz-0001cN-4P; Sat, 11 Apr 2026 03:07:13 -0400
+	id 1wBSQs-0001aG-Kw; Sat, 11 Apr 2026 03:07:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wBSQw-0001bi-W4
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:07:11 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ id 1wBSQq-0001Zo-L9
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:07:04 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wBSQv-000112-0x
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:07:10 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-470145d7e6fso1122045b6e.2
- for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 00:07:08 -0700 (PDT)
+ id 1wBSQo-00010E-RF
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 03:07:04 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-4094b31a037so1949169fac.1
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 00:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775891228; x=1776496028; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775891221; x=1776496021; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i3mqzqFktVAsD33oYdiATk+me8iVIppTrgqW8wbij8Y=;
- b=dr+Iz4PK1Rulm1d6US+ToC1TeBLNQH/CpdIW0qiYuBiJkaLor1BM46tkWS3EjWJq4Z
- tU866r3/4oV9MTNLQ3wOsHmOOSSdnudplvd4vRc99aeZ+ah3FCcfgaRtyHM4Q2oA/mTM
- eMxHN9ieowXYiVYCNF/6zwB7QO1geDaEJmuGroyeN+H8izKiGb4aVTjLc4xxi5RKsCFA
- WVs/S2ASL87NYJ0pP+0NoD1isIKDTQav3Hbx3d2ouFvyc+bi4kVIvhWAPCbMd+YDpLns
- EQJE9j5KoTS9tsCji7+mWH6ZnjI/X8bQcPVKQKeGZuYKI+o/Ud4oFR7i/ii+haKgFtiq
- k+8g==
+ bh=ILzL3Jim9OA/Ssv/nVzqqnWJdD1VSRHtuqTQWWGsyRs=;
+ b=JgSjoXFgePsMtm9+W9NZD1JcspVmgaktCZfUjgQeb7z+D0YCDOWVQEsPbp/HWods0s
+ +l3WTY7uF9YY8FV9MYqV0JuqB6NVd9MWTER6VFub2vTOuXS9XX67y9L1CDnnMpEr9MmL
+ C5BVyKSmH6W5EQlcrnER5l6/hw2ADr6gdNG9+D9dQ/B2cIOFJdxXdT2J6Fc9IVDMPGdm
+ T44rNz6jAOTd/nFrqMzTNxxhG9x16wH5k1jP7AeHARYobBL2CLgVHGXJHyNBaHGIumJ4
+ OQfrL2/7aE0/gpiyWsqzm35gbc79Pxg0gS0SHnf/v5UC5svIXjUaxgv38mooJH9v8yo5
+ TTUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775891228; x=1776496028;
+ d=1e100.net; s=20251104; t=1775891221; x=1776496021;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=i3mqzqFktVAsD33oYdiATk+me8iVIppTrgqW8wbij8Y=;
- b=LEmcGbPwdlJoEtZjF3z3X6RIeXqqw7BotiuQCEADohl12OPqbl3jdaHZF88LC3vtPA
- PZP/vxfEchbO4m4YqC57PYSoqrayghVmn4eq5trNbff8Tm8Wq4u395vVMr3+IOJ4T6bU
- t1Ewm4nXQ38ANSHiLmJhnPeM6dpkXq8fQSXTOQi1VE50walGUh8zcGXp1IhJjKa/33H+
- Gag4S+PUOWQ0Z2SjBri9DsMKZRu470/J3Krzt9Ayef5qZ3pqKu6tBgJu2K9gE7OSOt5f
- 9nZTlOT62e2IlvhbuHt3sXVHFuLm9mq+UFjwdwS+3chzmnjweSbVG+GxWWXyqcUEz6Gr
- JW8w==
-X-Gm-Message-State: AOJu0Yzcwa9471dVEUgdZ3MXffqzhQ/NdT1ZeVooomI7dEJO3371+dw2
- Zl1fTRmmyQvaiFsp3sRMcq3n6pWB8pbJGrTVTazWoANi4j2ptqzSHeKCO7kiuZER6YQ=
-X-Gm-Gg: AeBDieuzIp8lLk70+G1/P2X2PcunXA5iUEP1khArzIjXp0WZBQ9O8zaZJuMfuylm1bT
- lmix9/Yku6NwC2Yw33HCEApj9mdfJXo+QOx9y/zmzcGRZcAiHN3RLUKPSoI1zjljfou0p0SMrXn
- PDvYaIEG5hLa0+xOH4yuFXvo653oeiizu50pX4raiq17Eu1lvvlHuEvWqP6pxihGp9WXY6QQTZK
- s0p5lvNZS/CF7oS8dchhR+Ewj4a83kdhoFgQ+6imRpInYUYOYI0ztJ8HcUCpu++qvrag7hcb/MM
- eB5+p7d5AQf0BTzSZGYLIeQy/E3NXdI+7eG+1qY/vL/bjCJZgQa22ZOw9LV8EPv6UJchEMghN3Y
- ZNg3QAEF8d06/RTt5xiz/sMxVcJAxPWfaaIRZ/X/Y8mtJB/QCR48DrbJUDasDz8IJLe4xE4ppkR
- zJP31T76nmeBXrn1AF6p/qTyJqWQZYXLXzV0bayOWt2ZnGi+zBTGptYk+FMwooea+8MyYMZjfMa
- lc5D3Xbg+Csox+V1krLbhoq+NUqR32cLRUM7rvN0gxOtxzAyZZMOqv5mqrSngUg07uqBzc=
-X-Received: by 2002:a05:6808:1b10:b0:468:776:1ead with SMTP id
- 5614622812f47-4789e81b7cdmr3132863b6e.21.1775891227685; 
- Sat, 11 Apr 2026 00:07:07 -0700 (PDT)
+ bh=ILzL3Jim9OA/Ssv/nVzqqnWJdD1VSRHtuqTQWWGsyRs=;
+ b=Q7do9lOZ5paOIOeQ7/J+p8+r27fDfVg1G15iZKfaO472LNkAVbvG6zFa7AnSoZOboe
+ 4yrf/iQd7fcg0asxnnNy9Aus4Pya7eVOIA6qjAV5iPmtvaJXz9h/4JGW/quj3DtdNN4v
+ +fFodV7jnaYr3UmMwgJm4+JzE2mCx9i49u8oCK4udnZJzWj1tVZ7dKVMDQDIgD3ot4PO
+ wAFHyQ6FGdVUN/9MTWitN+wuXJ8wTG2+vXX04ZVFeGyQbsXsM8rdWAfN9hPF5PO75kWS
+ U1AdFiJa7DcCZlLzx1JrJP7x8RLpn67IEgHoH+NxMrkVmd2ZW8gp57Q5WEyj3SXnaKk8
+ aPgQ==
+X-Gm-Message-State: AOJu0YzfFh9/0WB4Y/57xZG8cqHpiIL9HWpS+M1SHLUBKqLNlr5VpDLU
+ bVzKmMArqI3zPqjdMni1OeI3PLp1ryElySC4b1o4FEb1oRnmZHsvC+mrp/kwnQuK9Yo=
+X-Gm-Gg: AeBDieuNmNG8zPBB/1WXd4wiGsViaNFMYcHMFTRiEDViZeDKgo1iWM1zaQ/qONCJLpH
+ pveERJbs3ZainK1fqkyWyeULV6s4jBL13BNU0j8yab84dfjuN7yiR541/T89phzMDGnvQiZPrFA
+ wif6SH7OadG4FvCEh0TgS0SY7YPbQTaHR3cQN8LLPKtv1TRxuTg63WpWWpMudsAWGipN41E24Xo
+ U4dtXUK78Ds795z4UpMZL+HIx+9063K72e3TiZMpOKkCB9TU/7MMgeMddHnhxDa9CvR/B1waO+Z
+ mLGK7cxxvB1O8aArvdcKtkldHgP8iihmG8f/8TlsNc5EGY2OVLG7RJ9yWXCcaD879OVA2Ot2x8/
+ AUCXPN6+hrz1B5kvUEr5RORr960K9hSThTkJJZnp6cC/YsJSs50VhGPm6doZZF5hD6fM5/5a4Ps
+ xVBbHt+GnVpegYPnqlrJwgu/LPEi08mE+QkpIYu/RH3wFADSJWJ6a5a3dVv4aFXOseDTOu/pdr4
+ j6sHiGEQmO/vAK73LqrerZbcKIdFydS7MTxg6RnYsavR2DwA4Ec407YROnzh7wNmn5IalY0iDtw
+ dDkkrg==
+X-Received: by 2002:a05:6808:c2d9:b0:466:f3a2:dc34 with SMTP id
+ 5614622812f47-4789f209e29mr2873351b6e.36.1775891221402; 
+ Sat, 11 Apr 2026 00:07:01 -0700 (PDT)
 Received: from Mac.localdomain (71-218-253-186.hlrn.qwest.net.
  [71.218.253.186]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-478a0f1e841sm2651091b6e.5.2026.04.11.00.07.06
+ 5614622812f47-478a0f1e841sm2651091b6e.5.2026.04.11.00.07.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 11 Apr 2026 00:07:06 -0700 (PDT)
+ Sat, 11 Apr 2026 00:07:01 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: James Hilliard <james.hilliard1@gmail.com>,
@@ -74,16 +75,16 @@ Cc: James Hilliard <james.hilliard1@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>
-Subject: [PATCH 8/9] target/mips: add Octeon Camellia crypto support
-Date: Sat, 11 Apr 2026 01:06:34 -0600
-Message-ID: <20260411070637.72421-8-james.hilliard1@gmail.com>
+Subject: [PATCH 5/9] target/mips: add Octeon SMS4 crypto support
+Date: Sat, 11 Apr 2026 01:06:31 -0600
+Message-ID: <20260411070637.72421-5-james.hilliard1@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260411070637.72421-1-james.hilliard1@gmail.com>
 References: <20260411070637.72421-1-james.hilliard1@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x231.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,213 +108,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Octeon Camellia ROUND, FL, and FLINV selectors and model the
-round engine that reuses the AES RESULT/RESINP bank.
+On Octeon, the SMS4 engine is exposed through selectors that alias the
+AES register bank. Add the missing selectors and model the shared
+RESULT, IV, and key state so the hardware interface matches the
+processor behaviour.
 
-Implement the Camellia F-function and FL layers directly from RFC 3713
-so guest-managed key schedules can drive the engine through the hardware
-interface.
+Use the in-tree SM4 tables to implement the block operation without
+adding a host crypto dependency.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
- target/mips/cpu.h               |   9 +++
- target/mips/tcg/octeon_crypto.c | 120 ++++++++++++++++++++++++++++++++
- target/mips/tcg/translate.c     |   3 +
- 3 files changed, 132 insertions(+)
+ target/mips/cpu.h               |  18 +++++
+ target/mips/tcg/octeon_crypto.c | 114 ++++++++++++++++++++++++++++++++
+ target/mips/tcg/translate.c     |   8 +++
+ 3 files changed, 140 insertions(+)
 
 diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 8249b17e8a..69f96172d8 100644
+index b4b7575ecb..28b3e71793 100644
 --- a/target/mips/cpu.h
 +++ b/target/mips/cpu.h
-@@ -595,6 +595,14 @@ typedef enum MIPSOcteonCop2Sel {
+@@ -593,6 +593,20 @@ typedef enum MIPSOcteonCop2Sel {
      OCTEON_COP2_SEL_AES_DEC0 = 0x010e,
      OCTEON_COP2_SEL_AES_KEYLENGTH = 0x0110,
      OCTEON_COP2_SEL_AES_DAT0 = 0x0111,
 +    /*
-+     * Camellia reuses the AES RESULT/RESINP bank and adds per-round and
-+     * diffusion-layer selectors for the guest-managed key schedule.
++     * SMS4 reuses the AES result/input, IV, and key banks and only adds
++     * operation selectors for ECB/CBC encrypt/decrypt.
 +     */
-+    OCTEON_COP2_SEL_CAMELLIA_RESINP0 = OCTEON_COP2_SEL_AES_RESULT0,
-+    OCTEON_COP2_SEL_CAMELLIA_RESINP1 = OCTEON_COP2_SEL_AES_RESULT1,
-+    OCTEON_COP2_SEL_CAMELLIA_FL = 0x0115,
-+    OCTEON_COP2_SEL_CAMELLIA_FLINV = 0x0116,
-     /*
-      * SMS4 reuses the AES result/input, IV, and key banks and only adds
-      * operation selectors for ECB/CBC encrypt/decrypt.
-@@ -696,6 +704,7 @@ typedef enum MIPSOcteonCop2Sel {
++    OCTEON_COP2_SEL_SMS4_RESINP0 = OCTEON_COP2_SEL_AES_RESULT0,
++    OCTEON_COP2_SEL_SMS4_RESINP1 = OCTEON_COP2_SEL_AES_RESULT1,
++    OCTEON_COP2_SEL_SMS4_IV0 = OCTEON_COP2_SEL_AES_IV0,
++    OCTEON_COP2_SEL_SMS4_IV1 = OCTEON_COP2_SEL_AES_IV1,
++    OCTEON_COP2_SEL_SMS4_KEY0 = OCTEON_COP2_SEL_AES_KEY0,
++    OCTEON_COP2_SEL_SMS4_KEY1 = OCTEON_COP2_SEL_AES_KEY1,
++    OCTEON_COP2_SEL_SMS4_ENC_CBC0 = OCTEON_COP2_SEL_AES_ENC_CBC0,
++    OCTEON_COP2_SEL_SMS4_ENC0 = OCTEON_COP2_SEL_AES_ENC0,
++    OCTEON_COP2_SEL_SMS4_DEC_CBC0 = OCTEON_COP2_SEL_AES_DEC_CBC0,
++    OCTEON_COP2_SEL_SMS4_DEC0 = OCTEON_COP2_SEL_AES_DEC0,
+     OCTEON_COP2_SEL_CRC_POLYNOMIAL = 0x0200,
+     OCTEON_COP2_SEL_CRC_IV = 0x0201,
+     OCTEON_COP2_SEL_CRC_LEN = 0x0202,
+@@ -661,6 +675,10 @@ typedef enum MIPSOcteonCop2Sel {
      OCTEON_COP2_SEL_AES_ENC1 = 0x310b,
      OCTEON_COP2_SEL_AES_DEC_CBC1 = 0x310d,
      OCTEON_COP2_SEL_AES_DEC1 = 0x310f,
-+    OCTEON_COP2_SEL_CAMELLIA_ROUND = 0x3114,
-     OCTEON_COP2_SEL_SMS4_ENC_CBC1 = 0x3119,
-     OCTEON_COP2_SEL_SMS4_ENC1 = 0x311b,
-     OCTEON_COP2_SEL_SMS4_DEC_CBC1 = 0x311d,
++    OCTEON_COP2_SEL_SMS4_ENC_CBC1 = 0x3119,
++    OCTEON_COP2_SEL_SMS4_ENC1 = 0x311b,
++    OCTEON_COP2_SEL_SMS4_DEC_CBC1 = 0x311d,
++    OCTEON_COP2_SEL_SMS4_DEC1 = 0x311f,
+     OCTEON_COP2_SEL_HSH_STARTMD5 = 0x4047,
+     OCTEON_COP2_SEL_SNOW3G_START = 0x404d,
+     OCTEON_COP2_SEL_SNOW3G_MORE = 0x404e,
 diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index 317dd89cd2..70cd1ddcac 100644
+index a308c3957e..976f6c7ddb 100644
 --- a/target/mips/tcg/octeon_crypto.c
 +++ b/target/mips/tcg/octeon_crypto.c
-@@ -1584,6 +1584,117 @@ static void octeon_aes_store_block(uint64_t regs[2], const uint8_t *block)
+@@ -12,6 +12,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/memop.h"
+ #include "crypto/aes.h"
++#include "crypto/sm4.h"
+ #include "qemu/bitops.h"
+ #include "qemu/host-utils.h"
+ 
+@@ -733,6 +734,57 @@ static int octeon_aes_key_bits(const MIPSOcteonCryptoState *crypto)
+     }
+ }
+ 
++static inline uint32_t octeon_sms4_t(uint32_t x)
++{
++    x = sm4_subword(x);
++    return x ^ rol32(x, 2) ^ rol32(x, 10) ^
++           rol32(x, 18) ^ rol32(x, 24);
++}
++
++static inline uint32_t octeon_sms4_t_key(uint32_t x)
++{
++    x = sm4_subword(x);
++    return x ^ rol32(x, 13) ^ rol32(x, 23);
++}
++
++static void octeon_sms4_expand_key(const uint8_t *key, uint32_t round_keys[32])
++{
++    static const uint32_t fk[4] = {
++        0xa3b1bac6U, 0x56aa3350U, 0x677d9197U, 0xb27022dcU,
++    };
++    uint32_t k[36];
++
++    for (int i = 0; i < 4; i++) {
++        k[i] = ldl_be_p(key + i * 4) ^ fk[i];
++    }
++    for (int i = 0; i < 32; i++) {
++        k[i + 4] = k[i] ^ octeon_sms4_t_key(k[i + 1] ^ k[i + 2] ^
++                                            k[i + 3] ^ sm4_ck[i]);
++        round_keys[i] = k[i + 4];
++    }
++}
++
++static void octeon_sms4_crypt_block(const uint8_t *in, uint8_t *out,
++                                    const uint32_t round_keys[32],
++                                    bool encrypt)
++{
++    uint32_t x[36];
++
++    for (int i = 0; i < 4; i++) {
++        x[i] = ldl_be_p(in + i * 4);
++    }
++    for (int i = 0; i < 32; i++) {
++        uint32_t rk = round_keys[encrypt ? i : 31 - i];
++
++        x[i + 4] = x[i] ^ octeon_sms4_t(x[i + 1] ^ x[i + 2] ^
++                                        x[i + 3] ^ rk);
++    }
++    stl_be_p(out, x[35]);
++    stl_be_p(out + 4, x[34]);
++    stl_be_p(out + 8, x[33]);
++    stl_be_p(out + 12, x[32]);
++}
++
+ static const uint8_t octeon_des_ip[64] = {
+     58, 50, 42, 34, 26, 18, 10,  2,
+     60, 52, 44, 36, 28, 20, 12,  4,
+@@ -1186,6 +1238,47 @@ static void octeon_aes_store_block(uint64_t regs[2], const uint8_t *block)
      regs[1] = ldq_be_p(block + 8);
  }
  
-+static const uint8_t octeon_camellia_sbox1[256] = {
-+    112, 130,  44, 236, 179,  39, 192, 229, 228, 133,  87,  53, 234,  12,
-+    174,  65,  35, 239, 107, 147,  69,  25, 165,  33, 237,  14,  79,  78,
-+     29, 101, 146, 189, 134, 184, 175, 143, 124, 235,  31, 206,  62,  48,
-+    220,  95,  94, 197,  11,  26, 166, 225,  57, 202, 213,  71,  93,  61,
-+    217,   1,  90, 214,  81,  86, 108,  77, 139,  13, 154, 102, 251, 204,
-+    176,  45, 116,  18,  43,  32, 240, 177, 132, 153, 223,  76, 203, 194,
-+     52, 126, 118,   5, 109, 183, 169,  49, 209,  23,   4, 215,  20,  88,
-+     58,  97, 222,  27,  17,  28,  50,  15, 156,  22,  83,  24, 242,  34,
-+    254,  68, 207, 178, 195, 181, 122, 145,  36,   8, 232, 168,  96, 252,
-+    105,  80, 170, 208, 160, 125, 161, 137,  98, 151,  84,  91,  30, 149,
-+    224, 255, 100, 210,  16, 196,   0,  72, 163, 247, 117, 219, 138,   3,
-+    230, 218,   9,  63, 221, 148, 135,  92, 131,   2, 205,  74, 144,  51,
-+    115, 103, 246, 243, 157, 127, 191, 226,  82, 155, 216,  38, 200,  55,
-+    198,  59, 129, 150, 111,  75,  19, 190,  99,  46, 233, 121, 167, 140,
-+    159, 110, 188, 142,  41, 245, 249, 182,  47, 253, 180,  89, 120, 152,
-+      6, 106, 231,  70, 113, 186, 212,  37, 171,  66, 136, 162, 141, 250,
-+    114,   7, 185,  85, 248, 238, 172,  10,  54,  73,  42, 104,  60,  56,
-+    241, 164,  64,  40, 211, 123, 187, 201,  67, 193,  21, 227, 173, 244,
-+    119, 199, 128, 158,
-+};
-+
-+static inline uint8_t octeon_camellia_rotl8(uint8_t v, unsigned int shift)
++static void octeon_sms4_crypt_common(MIPSOcteonCryptoState *crypto,
++                                     bool encrypt, bool cbc)
 +{
-+    return (v << shift) | (v >> (8 - shift));
++    uint8_t key[16];
++    uint8_t in[16];
++    uint8_t out[16];
++    uint8_t iv[16];
++    uint8_t next_iv[16];
++    uint32_t round_keys[32];
++
++    /*
++     * SMS4 aliases the AES state onto the RESULT/RESINP, IV, and KEY banks,
++     * with only the operation selectors remaining distinct.
++     */
++    octeon_aes_load_key(crypto, key, sizeof(key));
++    octeon_aes_load_block(crypto->aes_input, in);
++    if (cbc) {
++        octeon_aes_load_block(crypto->aes_iv, iv);
++        if (encrypt) {
++            for (int i = 0; i < sizeof(in); i++) {
++                in[i] ^= iv[i];
++            }
++        } else {
++            memcpy(next_iv, in, sizeof(next_iv));
++        }
++    }
++
++    octeon_sms4_expand_key(key, round_keys);
++    octeon_sms4_crypt_block(in, out, round_keys, encrypt);
++    if (cbc && !encrypt) {
++        for (int i = 0; i < sizeof(out); i++) {
++            out[i] ^= iv[i];
++        }
++    }
++
++    octeon_aes_store_block(crypto->aes_result, out);
++    if (cbc) {
++        octeon_aes_store_block(crypto->aes_iv, encrypt ? out : next_iv);
++    }
 +}
 +
-+static inline uint8_t octeon_camellia_sbox2(uint8_t x)
-+{
-+    return octeon_camellia_rotl8(octeon_camellia_sbox1[x], 1);
-+}
-+
-+static inline uint8_t octeon_camellia_sbox3(uint8_t x)
-+{
-+    return octeon_camellia_rotl8(octeon_camellia_sbox1[x], 7);
-+}
-+
-+static inline uint8_t octeon_camellia_sbox4(uint8_t x)
-+{
-+    return octeon_camellia_sbox1[octeon_camellia_rotl8(x, 1)];
-+}
-+
-+static uint64_t octeon_camellia_f(uint64_t input, uint64_t key)
-+{
-+    uint64_t x = input ^ key;
-+    uint8_t t1 = octeon_camellia_sbox1[x >> 56];
-+    uint8_t t2 = octeon_camellia_sbox2((x >> 48) & 0xff);
-+    uint8_t t3 = octeon_camellia_sbox3((x >> 40) & 0xff);
-+    uint8_t t4 = octeon_camellia_sbox4((x >> 32) & 0xff);
-+    uint8_t t5 = octeon_camellia_sbox2((x >> 24) & 0xff);
-+    uint8_t t6 = octeon_camellia_sbox3((x >> 16) & 0xff);
-+    uint8_t t7 = octeon_camellia_sbox4((x >> 8) & 0xff);
-+    uint8_t t8 = octeon_camellia_sbox1[x & 0xff];
-+    uint8_t y1 = t1 ^ t3 ^ t4 ^ t6 ^ t7 ^ t8;
-+    uint8_t y2 = t1 ^ t2 ^ t4 ^ t5 ^ t7 ^ t8;
-+    uint8_t y3 = t1 ^ t2 ^ t3 ^ t5 ^ t6 ^ t8;
-+    uint8_t y4 = t2 ^ t3 ^ t4 ^ t5 ^ t6 ^ t7;
-+    uint8_t y5 = t1 ^ t2 ^ t6 ^ t7 ^ t8;
-+    uint8_t y6 = t2 ^ t3 ^ t5 ^ t7 ^ t8;
-+    uint8_t y7 = t3 ^ t4 ^ t5 ^ t6 ^ t8;
-+    uint8_t y8 = t1 ^ t4 ^ t5 ^ t6 ^ t7;
-+
-+    return ((uint64_t)y1 << 56) | ((uint64_t)y2 << 48) |
-+           ((uint64_t)y3 << 40) | ((uint64_t)y4 << 32) |
-+           ((uint64_t)y5 << 24) | ((uint64_t)y6 << 16) |
-+           ((uint64_t)y7 << 8) | y8;
-+}
-+
-+static uint64_t octeon_camellia_fl(uint64_t input, uint64_t key)
-+{
-+    uint32_t x1 = input >> 32;
-+    uint32_t x2 = input;
-+    uint32_t k1 = key >> 32;
-+    uint32_t k2 = key;
-+
-+    x2 ^= rol32(x1 & k1, 1);
-+    x1 ^= x2 | k2;
-+    return ((uint64_t)x1 << 32) | x2;
-+}
-+
-+static uint64_t octeon_camellia_flinv(uint64_t input, uint64_t key)
-+{
-+    uint32_t y1 = input >> 32;
-+    uint32_t y2 = input;
-+    uint32_t k1 = key >> 32;
-+    uint32_t k2 = key;
-+
-+    y1 ^= y2 | k2;
-+    y2 ^= rol32(y1 & k1, 1);
-+    return ((uint64_t)y1 << 32) | y2;
-+}
-+
-+static void octeon_camellia_round(MIPSOcteonCryptoState *crypto, uint64_t key)
-+{
-+    uint64_t left = crypto->aes_result[0];
-+    uint64_t right = crypto->aes_result[1];
-+
-+    crypto->aes_result[0] = right ^ octeon_camellia_f(left, key);
-+    crypto->aes_result[1] = left;
-+}
-+
-+static void octeon_camellia_fl_layer(MIPSOcteonCryptoState *crypto,
-+                                     uint64_t key, bool inverse)
-+{
-+    uint64_t state = crypto->aes_result[inverse ? 1 : 0];
-+
-+    crypto->aes_result[inverse ? 1 : 0] = inverse ?
-+        octeon_camellia_flinv(state, key) :
-+        octeon_camellia_fl(state, key);
-+}
-+
- static void octeon_sms4_crypt_common(MIPSOcteonCryptoState *crypto,
-                                      bool encrypt, bool cbc)
+ static void octeon_aes_encrypt_common(MIPSOcteonCryptoState *crypto, bool cbc)
  {
-@@ -1977,6 +2088,12 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, target_ulong value,
-     case OCTEON_COP2_SEL_AES_KEYLENGTH:
-         crypto->aes_keylen = q;
+     AES_KEY key;
+@@ -1424,6 +1517,11 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, target_ulong value,
+     case OCTEON_COP2_SEL_3DES_DEC:
+         octeon_3des_crypt_common(crypto, q, false, false);
          break;
-+    case OCTEON_COP2_SEL_CAMELLIA_FL:
-+        octeon_camellia_fl_layer(crypto, q, false);
++    case OCTEON_COP2_SEL_AES_RESULT0:
++    case OCTEON_COP2_SEL_AES_RESULT1:
++        crypto->aes_input[sel - OCTEON_COP2_SEL_AES_RESULT0] = q;
++        crypto->aes_result[sel - OCTEON_COP2_SEL_AES_RESULT0] = q;
 +        break;
-+    case OCTEON_COP2_SEL_CAMELLIA_FLINV:
-+        octeon_camellia_fl_layer(crypto, q, true);
-+        break;
-     case OCTEON_COP2_SEL_CRC_WRITE_POLYNOMIAL:
-     case OCTEON_COP2_SEL_CRC_WRITE_POLYNOMIAL_REFLECT:
-         crypto->crc_poly = q;
-@@ -2164,6 +2281,9 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, target_ulong value,
+     case OCTEON_COP2_SEL_AES_IV0:
+     case OCTEON_COP2_SEL_AES_IV1:
+         crypto->aes_iv[sel - OCTEON_COP2_SEL_AES_IV0] = q;
+@@ -1588,6 +1686,22 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, target_ulong value,
          crypto->aes_input[1] = q;
          octeon_aes_decrypt_common(crypto, false);
          break;
-+    case OCTEON_COP2_SEL_CAMELLIA_ROUND:
-+        octeon_camellia_round(crypto, q);
++    case OCTEON_COP2_SEL_SMS4_ENC_CBC1:
++        crypto->aes_input[1] = q;
++        octeon_sms4_crypt_common(crypto, true, true);
 +        break;
-     case OCTEON_COP2_SEL_SMS4_ENC_CBC1:
-         crypto->aes_input[1] = q;
-         octeon_sms4_crypt_common(crypto, true, true);
++    case OCTEON_COP2_SEL_SMS4_ENC1:
++        crypto->aes_input[1] = q;
++        octeon_sms4_crypt_common(crypto, true, false);
++        break;
++    case OCTEON_COP2_SEL_SMS4_DEC_CBC1:
++        crypto->aes_input[1] = q;
++        octeon_sms4_crypt_common(crypto, false, true);
++        break;
++    case OCTEON_COP2_SEL_SMS4_DEC1:
++        crypto->aes_input[1] = q;
++        octeon_sms4_crypt_common(crypto, false, false);
++        break;
+     case OCTEON_COP2_SEL_GFM_XORMUL1: {
+         uint64_t in[2] = {
+             crypto->gfm_result[0] ^ crypto->gfm_xor0,
 diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 39fad07adc..625faae9d1 100644
+index 42445e5526..c66cb63cfc 100644
 --- a/target/mips/tcg/translate.c
 +++ b/target/mips/tcg/translate.c
-@@ -9218,6 +9218,8 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
-     case OCTEON_COP2_SEL_AES_DEC_CBC0:
-     case OCTEON_COP2_SEL_AES_DEC0:
-     case OCTEON_COP2_SEL_AES_KEYLENGTH:
-+    case OCTEON_COP2_SEL_CAMELLIA_FL:
-+    case OCTEON_COP2_SEL_CAMELLIA_FLINV:
-     case OCTEON_COP2_SEL_CRC_WRITE_POLYNOMIAL:
-     case OCTEON_COP2_SEL_CRC_IV:
-     case OCTEON_COP2_SEL_CRC_WRITE_LEN:
-@@ -9313,6 +9315,7 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
+@@ -9138,6 +9138,8 @@ static bool octeon_cop2_is_supported_dmfc2(uint16_t sel)
+     case OCTEON_COP2_SEL_3DES_RESULT_IN:
+     case OCTEON_COP2_SEL_AES_RESULT0:
+     case OCTEON_COP2_SEL_AES_RESULT1:
++    case OCTEON_COP2_SEL_AES_KEY0:
++    case OCTEON_COP2_SEL_AES_KEY1:
+     case OCTEON_COP2_SEL_CRC_POLYNOMIAL:
+     case OCTEON_COP2_SEL_AES_IV0:
+     case OCTEON_COP2_SEL_AES_IV1:
+@@ -9194,6 +9196,8 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
+     case OCTEON_COP2_SEL_KAS_ENC:
+     case OCTEON_COP2_SEL_3DES_DEC_CBC:
+     case OCTEON_COP2_SEL_3DES_DEC:
++    case OCTEON_COP2_SEL_AES_RESULT0:
++    case OCTEON_COP2_SEL_AES_RESULT1:
+     case OCTEON_COP2_SEL_AES_IV0:
+     case OCTEON_COP2_SEL_AES_IV1:
+     case OCTEON_COP2_SEL_AES_KEY0:
+@@ -9277,6 +9281,10 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
      case OCTEON_COP2_SEL_AES_ENC1:
      case OCTEON_COP2_SEL_AES_DEC_CBC1:
      case OCTEON_COP2_SEL_AES_DEC1:
-+    case OCTEON_COP2_SEL_CAMELLIA_ROUND:
-     case OCTEON_COP2_SEL_SMS4_ENC_CBC1:
-     case OCTEON_COP2_SEL_SMS4_ENC1:
-     case OCTEON_COP2_SEL_SMS4_DEC_CBC1:
++    case OCTEON_COP2_SEL_SMS4_ENC_CBC1:
++    case OCTEON_COP2_SEL_SMS4_ENC1:
++    case OCTEON_COP2_SEL_SMS4_DEC_CBC1:
++    case OCTEON_COP2_SEL_SMS4_DEC1:
+         return true;
+     default:
+         return false;
 -- 
 2.53.0
 
