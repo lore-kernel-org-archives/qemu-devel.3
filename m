@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 653D3F45A18
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 02:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DBEF45A12
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 02:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBO3s-000239-Kj; Fri, 10 Apr 2026 22:27:04 -0400
+	id 1wBO3x-00029c-T5; Fri, 10 Apr 2026 22:27:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wBO3r-00021X-1w; Fri, 10 Apr 2026 22:27:03 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wBO3w-00028J-EO; Fri, 10 Apr 2026 22:27:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wBO3o-0000LV-EG; Fri, 10 Apr 2026 22:27:01 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wBO3u-0000OX-I1; Fri, 10 Apr 2026 22:27:08 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63B2PANr2382161; Sat, 11 Apr 2026 02:26:54 GMT
+ 63AEeCal2590966; Sat, 11 Apr 2026 02:27:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=zP+6BKHqwiPV9Z25t
- enrM6T/B/avjR59LPW9kUw8TqM=; b=juDkDG6SK830bT03HP6walWr6twAu9V7y
- HTQoLiBE1WsTcR0a+/8NSr8ghJDHx1WUw5NUn34Pi28rl3q+3lQc12s5bGRuLllp
- HpXqaHcZkPFo0d/29YJIrwajZtz9IwMimAFYGGHGLH8oQedFYGfAvMgq3qOT17Ey
- Cpc36gojamj3JvJC8fl1lJ+C3ZVZx/uV/F5Dl86LcCxUDy2pfk8rJzbZ0qLW4ePE
- sWqoAor3MW+zA8LWv/iKAZhb2/jPeTyUuizNLF+nYVlqGp5GcIiQpY/+Hx8Gws0W
- Z8l5zFGp0v8FZlcc6ouhfJbWdW1Uk42aUKbRcNtbibYn7gbuPV9Ag==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dfcqer35y-1
+ :mime-version:references:subject:to; s=pp1; bh=NrGCf/8bYetSxN9UU
+ Picau0uFbfmC6ccfpRPRtmpOxo=; b=KD8i1jlK9gIH+GjMs02sxR3xCbHDWKGc8
+ 9TQ+mK+NvIPQACrYTa2ZE9y8VXoXoKJuk5HYKvF6iS45rJxHML5Pm30m7Pp6ekL7
+ aW8dG4zrsCB8Q6IpxIjdUPNAo+IQVfSZYf0Rrw8X0ujXgTuZPD9k1kFXqCnczqHz
+ 4pdNUwQZFLtCNETeWm3hvAhQZjDKIXS03g4axtdtUQ58QKxAwktbqv/OFiNi5Kp/
+ nmrMEoPSb+ifkqsdOXoUVWx+ULMbLQamhlXS+GkZOWbkrPO1Mk11c2jz4iqanFiD
+ g+6Mx2PXBVmpHFg3RbItLBOAevXB/WfrDT4M8A8gNiapq61iEA7pw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dcn2en5d3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 11 Apr 2026 02:26:54 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63B18fQL026665;
- Sat, 11 Apr 2026 02:26:53 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dcmg8ayxd-1
+ Sat, 11 Apr 2026 02:27:01 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63B16nlZ030068;
+ Sat, 11 Apr 2026 02:27:00 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dcme7u2a4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 11 Apr 2026 02:26:53 +0000
+ Sat, 11 Apr 2026 02:27:00 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63B2QqFx31392440
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63B2Qwvk27460308
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 11 Apr 2026 02:26:52 GMT
+ Sat, 11 Apr 2026 02:26:59 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1798F5805A;
- Sat, 11 Apr 2026 02:26:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ABC185805A;
+ Sat, 11 Apr 2026 02:26:58 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7CF7058054;
- Sat, 11 Apr 2026 02:26:51 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 209865805D;
+ Sat, 11 Apr 2026 02:26:58 +0000 (GMT)
 Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.252.248])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 11 Apr 2026 02:26:51 +0000 (GMT)
+ Sat, 11 Apr 2026 02:26:58 +0000 (GMT)
 From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 To: mjrosato@linux.ibm.com
 Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
  david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Subject: [PATCH v2 01/15] s390x/pci: implement IOMMU replay
-Date: Fri, 10 Apr 2026 21:26:04 -0500
-Message-Id: <20260411022618.2136588-2-kshk@linux.ibm.com>
+Subject: [PATCH v2 11/15] s390x/pci: Move pal from S390PCIIOMMU to
+ S390PCIBusDevice
+Date: Fri, 10 Apr 2026 21:26:14 -0500
+Message-Id: <20260411022618.2136588-12-kshk@linux.ibm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260411022618.2136588-1-kshk@linux.ibm.com>
 References: <20260411022618.2136588-1-kshk@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDAxNiBTYWx0ZWRfXzzqcIjPWqk/i
- uO751AcYA3J3hJH02Xz6ErvKtdi+KDMvveSMe6InnG9YyvXQefQvrl93rIMQx2iB8ZcIeEt5a/L
- zHwICuUM5ca5UpRMjjCUhkQWkipEtPt+Cwy0rM0T1hUgL32FsyOwV8S9NIMrnsbMorHdZ7zHEUO
- OJFIKePM3OqdqCSEtIfZ//H5bzf2DTG9dWYStpX5vwjzxdumM+5uYJkzFC6PfwLNZg3+1NLlMVG
- HtUj3kdA9jj9X6CI//fs2qLIGG67zDxV/z/buCdfhr812iz2Cqs4cT8Kja3cpPm1novXTtrgfqH
- 67zYJiKvd5iWHwU6IXCu22csnnsHgL+LWI2hyCP+BrZ2AESt9kZrJu/HCZ8Qtvuqhw/mmbAcUpv
- Z+lHI9k49wlv/5TD0Nncnl/Cl+LhIdrwmJD5fyGm2ZJZV/Q2YDBme+rKH7C6N/6EWr2kyAnj8mK
- sAbfsvBFABGPKVeJBUw==
-X-Proofpoint-GUID: DmF5m4pZlyrW0gGhW2KXExB3aUbWZppj
-X-Proofpoint-ORIG-GUID: DmF5m4pZlyrW0gGhW2KXExB3aUbWZppj
-X-Authority-Analysis: v=2.4 cv=YemNIQRf c=1 sm=1 tr=0 ts=69d9b16e cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: 8jIQ17iDpjyJtRssB4Xt4N1RkHU6_T7o
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDAxNiBTYWx0ZWRfX4SnXEqUV/7oN
+ +tf8e885RQJ4vlkh2kKJARVHS12Ocm3dg6IdRpxgkEW7sY6uYYCx5q9O3bVAI7ABKNNGh3Pezd6
+ Mu5n/Q93Fp0GegbOjF8Vffl6cpsJH2FzEFgY8df3yLjBIuaioQghRB6kH9nNtB9irqTg+AQtGS3
+ yEyu6qmpBWu4GUPCBagEWrvduNKfcEe48G2OAXR7ClVdkKF12ktRhP19Dvz2MMhxoJxvCnIsXZY
+ cCRmw/FZ5Mg6ORqiQDKf+izxPK63cZ6KRICg/3ruJyrkORPG1kV3BygEtypKDG+TElJUPd9QjAY
+ ++MfG0UKVxg726yLnXkF18ggPR9oRolAPqimHrMMzpBGSOGyPSZkRinMKZVs6CafGX4iWhQrUKY
+ yeOHS5fNxu3jdMaKMcKsKS7XCYvrAko9gSd/bevMfvBiRC1QggX9P9z4b6qhFr2sKR/agaiwyXE
+ GTar1Bq0gDWNidS8BHA==
+X-Authority-Analysis: v=2.4 cv=Cfw4Irrl c=1 sm=1 tr=0 ts=69d9b175 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=CCwrLMjO1E3osjVnD3IA:9
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=WfwOUNX5pORHP_P-vIkA:9
+X-Proofpoint-GUID: 8jIQ17iDpjyJtRssB4Xt4N1RkHU6_T7o
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-10_07,2026-04-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110016
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -119,116 +120,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+This field is only used when S390PCIBusDevice exists, so it can be moved
+there to simplify S390PCIIOMMU which purpose is just to store the "root"
+AddressSpace.
 
-There are a few scenarios where IOMMU replay can potentially be needed
-for zPCI device, namely VFIO device reset scenarios where the guest
-continues running and expects the contents of its IOMMU to be replayed
-upon IOAT re-registration and migration scenarios where the destination
-must reconstruct the IOMMU on the destination.
+This also allows to save/restore this field during migration.
 
-zPCI migration is not supported yet, but the IOMMU replay function is
-implemented so that it can be called both from IOMMUMemoryRegionClass
-now and migration post_load later.
-
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
 ---
- hw/s390x/s390-pci-bus.c          | 50 ++++++++++++++++++++++++++++----
- hw/s390x/s390-pci-inst.c         |  4 +--
- include/hw/s390x/s390-pci-inst.h |  1 +
- 3 files changed, 47 insertions(+), 8 deletions(-)
+ hw/s390x/s390-pci-bus.c         |  8 +++-----
+ hw/s390x/s390-pci-inst.c        | 12 ++++--------
+ include/hw/s390x/s390-pci-bus.h |  2 +-
+ 3 files changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 4de7b587e8..3665aba106 100644
+index 734af3a307..f339a0fd94 100644
 --- a/hw/s390x/s390-pci-bus.c
 +++ b/hw/s390x/s390-pci-bus.c
-@@ -592,14 +592,52 @@ err:
-     return ret;
- }
- 
--static void s390_pci_iommu_replay(IOMMUMemoryRegion *iommu,
-+static void s390_pci_ioat_replay(S390PCIIOMMU *iommu)
-+{
-+    S390IOTLBEntry entry;
-+    uint16_t error = 0;
-+    uint32_t dma_avail;
-+    hwaddr curr, end;
-+
-+    curr = iommu->pba;
-+    end = iommu->pal;
-+
-+    if (iommu->dm_mr) {
-+        /* If direct mapping is used, there are no guest tables to replay */
-+        return;
-+    }
-+
-+    if (iommu->dma_limit) {
-+        dma_avail = iommu->dma_limit->avail;
-+    } else {
-+        dma_avail = 1;
-+    }
-+
-+    while (curr < end) {
-+        error = s390_guest_io_table_walk(iommu->g_iota, curr, &entry);
-+        if (error) {
-+            error_report("Failure to walk table during iommu remap");
-+            return;
-+        }
-+
-+        if (entry.perm != IOMMU_NONE) {
-+            if (dma_avail > 0) {
-+                dma_avail = s390_pci_update_iotlb(iommu, &entry);
-+            } else {
-+                error_report("DMA mappings exhausted: iommu remap failed");
-+                return;
-+            }
-+        }
-+        curr += entry.len;
-+    }
-+}
-+
-+static void s390_pci_iommu_replay(IOMMUMemoryRegion *mr,
-                                   IOMMUNotifier *notifier)
+@@ -539,7 +539,6 @@ static IOMMUTLBEntry s390_translate_iommu(IOMMUMemoryRegion *mr, hwaddr addr,
+                                           IOMMUAccessFlags flag, int iommu_idx)
  {
--    /* It's impossible to plug a pci device on s390x that already has iommu
--     * mappings which need to be replayed, that is due to the "one iommu per
--     * zpci device" construct. But when we support migration of vfio-pci
--     * devices in future, we need to revisit this.
--     */
-+    S390PCIIOMMU *iommu = container_of(mr, S390PCIIOMMU, iommu_mr);
-+
-+    s390_pci_ioat_replay(iommu);
- }
+     S390PCIBusDevice *pbdev = container_of(mr, S390PCIBusDevice, iommu_mr);
+-    S390PCIIOMMU *iommu = pbdev->iommu;
+     S390IOTLBEntry *entry;
+     uint64_t iova = addr & TARGET_PAGE_MASK;
+     uint16_t error = 0;
+@@ -564,7 +563,7 @@ static IOMMUTLBEntry s390_translate_iommu(IOMMUMemoryRegion *mr, hwaddr addr,
  
- static S390PCIIOMMU *s390_pci_get_iommu(S390pciState *s, PCIBus *bus,
+     trace_s390_pci_iommu_xlate(addr);
+ 
+-    if (addr < pbdev->pba || addr > iommu->pal) {
++    if (addr < pbdev->pba || addr > pbdev->pal) {
+         error = ERR_EVENT_OORANGE;
+         goto err;
+     }
+@@ -599,10 +598,9 @@ static void s390_pci_ioat_replay(S390PCIBusDevice *pbdev)
+     uint16_t error = 0;
+     uint32_t dma_avail;
+     hwaddr curr, end;
+-    S390PCIIOMMU *iommu = pbdev->iommu;
+ 
+     curr = pbdev->pba;
+-    end = iommu->pal;
++    end = pbdev->pal;
+ 
+     if (pbdev->dm_mr) {
+         /* If direct mapping is used, there are no guest tables to replay */
+@@ -770,7 +768,7 @@ void s390_pci_iommu_enable(S390PCIBusDevice *pbdev)
+     char *name = g_strdup_printf("iommu-s390-%04x", pbdev->uid);
+     memory_region_init_iommu(&pbdev->iommu_mr, sizeof(pbdev->iommu_mr),
+                              TYPE_S390_IOMMU_MEMORY_REGION, OBJECT(&iommu->mr),
+-                             name, iommu->pal + 1);
++                             name, pbdev->pal + 1);
+     pbdev->iommu_enabled = true;
+     memory_region_add_subregion(&iommu->mr, 0, MEMORY_REGION(&pbdev->iommu_mr));
+     g_free(name);
 diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 10066ca618..1834596076 100644
+index 7680d87080..191f549ba7 100644
 --- a/hw/s390x/s390-pci-inst.c
 +++ b/hw/s390x/s390-pci-inst.c
-@@ -613,8 +613,8 @@ int pcistg_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
-     return 0;
+@@ -700,7 +700,6 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+     uint32_t fh;
+     uint16_t error = 0;
+     S390PCIBusDevice *pbdev;
+-    S390PCIIOMMU *iommu;
+     S390IOTLBEntry entry;
+     hwaddr start, end, sstart;
+     uint32_t dma_avail;
+@@ -742,7 +741,6 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+         break;
+     }
+ 
+-    iommu = pbdev->iommu;
+     if (pbdev->dma_limit) {
+         dma_avail = pbdev->dma_limit->avail;
+     } else {
+@@ -753,7 +751,7 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+         goto err;
+     }
+ 
+-    if (end < pbdev->pba || start > iommu->pal) {
++    if (end < pbdev->pba || start > pbdev->pal) {
+         error = ERR_EVENT_OORANGE;
+         goto err;
+     }
+@@ -1001,7 +999,6 @@ bool s390_pci_is_translation_enabled(uint64_t g_iota)
+ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+                     uintptr_t ra)
+ {
+-    S390PCIIOMMU *iommu = pbdev->iommu;
+     uint64_t pba = ldq_be_p(&fib.pba);
+     uint64_t pal = ldq_be_p(&fib.pal);
+     uint64_t g_iota = ldq_be_p(&fib.iota);
+@@ -1027,7 +1024,7 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+     }
+ 
+     pbdev->pba = pba;
+-    iommu->pal = pal;
++    pbdev->pal = pal;
+     pbdev->g_iota = g_iota;
+ 
+     if (t) {
+@@ -1041,10 +1038,9 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+ 
+ void pci_dereg_ioat(S390PCIBusDevice *pbdev)
+ {
+-    S390PCIIOMMU *iommu = pbdev->iommu;
+     s390_pci_iommu_disable(pbdev);
+     pbdev->pba = 0;
+-    iommu->pal = 0;
++    pbdev->pal = 0;
+     pbdev->g_iota = 0;
  }
  
--static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
--                                      S390IOTLBEntry *entry)
-+uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-+                               S390IOTLBEntry *entry)
- {
-     S390IOTLBEntry *cache = g_hash_table_lookup(iommu->iotlb, &entry->iova);
-     IOMMUTLBEvent event = {
-diff --git a/include/hw/s390x/s390-pci-inst.h b/include/hw/s390x/s390-pci-inst.h
-index 5cb8da540b..c782990e3b 100644
---- a/include/hw/s390x/s390-pci-inst.h
-+++ b/include/hw/s390x/s390-pci-inst.h
-@@ -111,6 +111,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
- int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-                          uintptr_t ra);
- void fmb_timer_free(S390PCIBusDevice *pbdev);
-+uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu, S390IOTLBEntry *entry);
+@@ -1417,7 +1413,7 @@ int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
+     }
  
- #define ZPCI_IO_BAR_MIN 0
- #define ZPCI_IO_BAR_MAX 5
+     stq_be_p(&fib.pba, pbdev->pba);
+-    stq_be_p(&fib.pal, pbdev->iommu->pal);
++    stq_be_p(&fib.pal, pbdev->pal);
+     stq_be_p(&fib.iota, pbdev->g_iota);
+     stq_be_p(&fib.aibv, pbdev->routes.adapter.ind_addr);
+     stq_be_p(&fib.aisb, pbdev->routes.adapter.summary_addr);
+diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
+index 42f39a5cf0..1f5d8d4bd4 100644
+--- a/include/hw/s390x/s390-pci-bus.h
++++ b/include/hw/s390x/s390-pci-bus.h
+@@ -275,7 +275,6 @@ struct S390PCIIOMMU {
+     Object parent_obj;
+     AddressSpace as;
+     MemoryRegion mr;
+-    uint64_t pal;
+     uint64_t max_dma_limit;
+ };
+ 
+@@ -352,6 +351,7 @@ struct S390PCIBusDevice {
+     GHashTable *iotlb;
+     uint64_t g_iota;
+     uint64_t pba;
++    uint64_t pal;
+     S390PCIDMACount *dma_limit;
+     MemoryRegion msix_notify_mr;
+     IndAddr *summary_ind;
 -- 
 2.34.1
 
