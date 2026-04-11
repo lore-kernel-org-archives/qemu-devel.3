@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45EADF3ED54
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 14:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A5BF3ED50
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 15:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBZKB-0007BK-BC; Sat, 11 Apr 2026 10:28:39 -0400
+	id 1wBadc-0007IJ-4D; Sat, 11 Apr 2026 11:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3-K3ZaQkKChE0v358vz8rx55x2v.t537v3B-uvCv2454x4B.58x@flex--jemoreira.bounces.google.com>)
- id 1wBNpU-0006mR-OD
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 22:12:12 -0400
-Received: from mail-dl1-x124a.google.com ([2607:f8b0:4864:20::124a])
+ (Exim 4.90_1) (envelope-from <vivien.leger@gmail.com>)
+ id 1wBaWq-0005HZ-UI
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 11:45:59 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3-K3ZaQkKChE0v358vz8rx55x2v.t537v3B-uvCv2454x4B.58x@flex--jemoreira.bounces.google.com>)
- id 1wBNpT-0003vv-1w
- for qemu-devel@nongnu.org; Fri, 10 Apr 2026 22:12:12 -0400
-Received: by mail-dl1-x124a.google.com with SMTP id
- a92af1059eb24-12711ec96fbso5928591c88.0
- for <qemu-devel@nongnu.org>; Fri, 10 Apr 2026 19:12:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vivien.leger@gmail.com>)
+ id 1wBaWk-0001CS-Ik
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 11:45:48 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b8bc6bc9so21335425e9.3
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 08:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1775873529; x=1776478329; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=RUi25tL6VRbh424glOaREy1evXPETqqAzqCwfi2sKiE=;
- b=QAgES7L/8uOsA6P4cxfZUEj6OuEEomqPni2FjrNbqX5WCbJNx+tYSnmm4LeD4GVfHK
- iskkmik6mvpIFSZ0KJGYexVP6+ykksZBh29wGrAGdPOmUZGsXJDCvsAamaaJmDyrdojR
- GGzgiUcyxgUQDL/iYmT6KIf8tbl4pVvTUyML7D0txGQREYH1yH64hfEbiWtrhW73J/dW
- 6Mk8hBTiHv69hgcTIwshA/ru6Ovd8yyoL3AG6Xql7Cd+duagFSJ5isvouKYAcgZZkQdD
- 3Uh1gJ6EXuVMqak2dkOfBG3/jw8ASm9fX34knkWT3IAX80PsxlqDSHw7ishAzxDn3xh2
- QzWQ==
+ d=gmail.com; s=20251104; t=1775922339; x=1776527139; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=U/uR6qw258G23PmDbEC6+qEwH1s4sVRz5k7AU31IC0I=;
+ b=OT6Mt8H3Ww9v07pGnq748gdGW6A/2vPLFXylVAqChU5B2kVKFnueZ3IIEHsrm7QfAM
+ E9UzHVB/04BJauE7xLZU6nKBpMF7mytponJOzxwodRE7rq1uykzUXjo5iDIwFIv31tZk
+ JK84+/85BF9F1YMPDGDwoVSz7EhXYbHpycZmMgTaEwQ9fK4aKZbgQ5CMRKhbY+l6zQAh
+ tvI+/SY7yA1NcqoYENjF4jomKIQFJGAlHRrOs83YeUObrq/n/n3Fy0l+v7H/VYoBBQBa
+ wMg+mJl2Qa6GiLIB0jaS6Si5IfDHX28+uG8XzGbXxww28lvKz2iUlWuYeR+1oCuefD9i
+ fJPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775873529; x=1776478329;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RUi25tL6VRbh424glOaREy1evXPETqqAzqCwfi2sKiE=;
- b=gCXQzuNmgiEfiQJvUbKvs1QR5e+iuxzZLKDC8g8x3JIpOae/9pstkmcQd4mOmsiQ62
- 3LUdtE5CFQ9gqs9KzDdV1xrXEtMz5SMPhB7lv1QU1TdCg6YMHY40lbRnwpqRNBZARvea
- 9gglnstN+Ls4JCHSEjF6n5D8oR7vreJaj1RmaJd0R9L3T8SQ3NdKIlm399KrtsBcxUeI
- 7kxSVA67AiiXx9jVwcR4U+8oefXseeI0jAodHrNx2Tk2zkH/nOOmQ3Cnta6bgJKn7OOq
- VrZ0z26B0G9XuxNFkByRZmXc00ZQ+M4bCJLJtBcosqEh7euVMYQ5sOJbdjCux83LZJE2
- ppGA==
+ d=1e100.net; s=20251104; t=1775922339; x=1776527139;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U/uR6qw258G23PmDbEC6+qEwH1s4sVRz5k7AU31IC0I=;
+ b=R4YAvQx4pSIVQfPiXdoTEkZWfZ5PFKGV5iqgcw5fiGCch3lnj5VxKCoKC/TcU/eIZC
+ G5uJwn4AEGF54PRz9cqhKTKWQ2GSwsjYHygrHVXQ9AWfdxWQbdJbuHFg0940YBGrQegd
+ yQofLQsvmzJlNNuv/HvOxFsM7sUH7BmBjnhA9Wn4z/+83hKTz20TYxWqxZSTJRPRNCqj
+ P4Ap5+rbYZwLMeYYoIUt65QdcVmm124ve3c5yxdr512N00njfNGLKoX32qjFBd8TIpI7
+ /Gg2OYDDiKH/SaMY1/JmQWrRCXhkRDT4U8WZDoN90QgN9aupp1KxK7qIU1n62AcUJ2bM
+ Iusg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGXX6bLezs8tnQkCAoD/1Te9Audp+qZM+1iAUucfSLfQyiXUxVN8zdYxaKda3vvmZnqnnXKnJHHQJf@nongnu.org
-X-Gm-Message-State: AOJu0Ywrn6+3Kr2FTWvtrjvmnys2lYXH+NLTR2iPm2Q/UUybXIjqQGIz
- Ci+Pol4hVRm73AgOsvYqKlIqcgsovhYq/+Kisx8Xlh2wu47tQrVzQ+H2bHmruQ7u/HWYt4DFZG4
- 5oyekBMl/lhbA+EmXYA==
-X-Received: from dlea18-n2.prod.google.com
- ([2002:a05:701b:4212:20b0:128:ed1b:481d])
- (user=jemoreira job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:7022:6299:b0:127:1492:e370 with SMTP id
- a92af1059eb24-12c34e92fc6mr3404027c88.5.1775873528758; 
- Fri, 10 Apr 2026 19:12:08 -0700 (PDT)
-Date: Fri, 10 Apr 2026 19:12:05 -0700
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.53.0.1213.gd9a14994de-goog
-Message-ID: <20260411021205.3592118-1-jemoreira@google.com>
-Subject: [PATCH] vhost-user.rst: Explicitly allow front-end to write to kick
- FDs
-From: "Jorge E. Moreira" <jemoreira@google.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- Hanna Czenczek <xanclic@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
- "Jorge E. Moreira" <jemoreira@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::124a;
- envelope-from=3-K3ZaQkKChE0v358vz8rx55x2v.t537v3B-uvCv2454x4B.58x@flex--jemoreira.bounces.google.com;
- helo=mail-dl1-x124a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ AJvYcCUobfk1AhTkbpxJWXjVUELyrXUuXmRUPH/8sY8Jz1SrADTQU09PeVAnRd1d6bdP5MkGT5ddkxdosZN6@nongnu.org
+X-Gm-Message-State: AOJu0YyknMLKjyY3kcT8/jTaggyP+YeMsLHZdqpyo2CeybIwBeZUq5x7
+ 5sDOmtwibuc7UgYFSRraAr0rttUADknftd+BteCY1DDf2RUNLVBAjVDX
+X-Gm-Gg: AeBDiet72OlnOFRGpePdGPeIfWL9o3n0VQHGAx249Kyp/UPwhcxk35bVUXejrHDKAmR
+ KVPYxWLyhIT0NLpjQ4UZCKWpk7zUjGHjVr1z3je8B9qIqFEOiRTKu7jYKo5lkQ1pgtPFtT/h/DR
+ aYPJ2avIBuISOV2+LElLJnMRttjqGqZxSKQBqVbUBYnhU8ccbowpJM8BXl0V4e6wTQQQ7w+DWSd
+ +pCeHYzlKA3KGFZGHVcOWtbOmVlqNabQ7py9kiTn7lodY5bltkCxkXJCqpIcZE+KQMC3yprR+B6
+ qoMiiJos//tjBRh2bsqqyHhz7qr1pPDFCWSLOExxIprcnD6naAZmOhaJZQk5PzIS62DeVEwHrpF
+ xMJY3l38wvWc0V5LDnIfDq/RoHC/rMYm4hRGjU9vZwcNMr2pj+h4fqkkVrWokkBBecp67aMd9Zw
+ duD3q+RMUp8pxWhOGp1pOcp01k+1p6Rur46FxFxbUjdkEiNKTTssTSh5WGOG190jB+JqAVAHa7Z
+ ypsyzw89TUkwg1qOrkCMA1de5PBk5hlBpyF5+g=
+X-Received: by 2002:a05:600c:8591:b0:488:a824:fe04 with SMTP id
+ 5b1f17b1804b1-488d6abe9e4mr68536955e9.26.1775922338396; 
+ Sat, 11 Apr 2026 08:45:38 -0700 (PDT)
+Received: from vle-arch (88-184-113-142.subs.proxad.net. [88.184.113.142])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d6839981sm48974135e9.21.2026.04.11.08.45.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 11 Apr 2026 08:45:37 -0700 (PDT)
+From: Vivien LEGER <vivien.leger@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: shentey@gmail.com, qemu-devel@nongnu.org,
+ Vivien LEGER <vivien.leger@gmail.com>
+Subject: [PATCH] hw/ppc/e500: fix bus-frequency property hardcoded to zero in
+ CPU FDT node
+Date: Sat, 11 Apr 2026 17:45:35 +0200
+Message-ID: <20260411154535.1451361-1-vivien.leger@gmail.com>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=vivien.leger@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 11 Apr 2026 10:28:37 -0400
+X-Mailman-Approved-At: Sat, 11 Apr 2026 11:52:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,49 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration of back-end state happens while the device is suspended (i.e
-all vrings are stopped). To resume normal operation on the destination,
-the vrings need to be started again with a kick (either a write on the
-FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
-these notifications are typically sent by the driver, it has no reason
-to send them in the destination if it already sent them in the source as
-the driver is unaware that a migration took place. Therefore it should
-be the responsibility of the vhost-user front-end to ensure these vrings
-are started. This is particularly necessary for queues where data only
-flows from device to driver, such as those used by the vsock and input
-devices.
+The bus-frequency property in the CPU FDT node was hardcoded to 0.
+This is incorrect - it should reflect the actual platform bus clock
+frequency, as firmware and RTOSes use it to derive peripheral clock
+rates.
 
-This behavior is already used by some qemu vhost-user front-ends (e.g
-vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm).
-Adding it to the vhost-user documentation makes it explicit that this
-strategy is permitted and suggest it to vhost-user front-end authors.
-Explicitly documenting it is necessary because vring kicks appear
-designed to originate in the driver, so having some originate in the
-front-end can be counterintuitive and cause developers to waste time
-looking for other alternatives or face pushback during code review.
+Notably, the RTEMS QorIQ BSP uses bus-frequency to program the MPIC
+global timer interval. With bus-frequency=0, the timer interval
+overflows to ~85 seconds, preventing any clock interrupts from firing.
 
-Signed-off-by: Jorge E. Moreira <jemoreira@google.com>
+Fix by adding a bus_freq field to PPCE500MachineClass and using it in
+the FDT generator. Set bus_freq = PLATFORM_CLK_FREQ_HZ (400MHz) for
+existing machines, matching the existing clock_freq value.
+
+Signed-off-by: Vivien LEGER <vivien.leger@gmail.com>
 ---
- docs/interop/vhost-user.rst | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/ppc/e500.c      | 2 +-
+ hw/ppc/e500.h      | 1 +
+ hw/ppc/e500plat.c  | 1 +
+ hw/ppc/mpc8544ds.c | 1 +
+ 4 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 137c9f3669..ad5aba3430 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -656,7 +656,10 @@ destination, following the usual protocol for establishing a connection
- to a vhost-user back-end: This includes, for example, setting up memory
- mappings and kick and call FDs as necessary, negotiating protocol
- features, or setting the initial vring base indices (to the same value
--as on the source side, so that operation can resume).
-+as on the source side, so that operation can resume). The vhost-user front-end
-+may also write to the kick FDs of vrings containing unused buffers or send
-+``VHOST_USER_VRING_KICK`` if negotiated to start those vrings in the destination
-+since the driver likely already kicked them in the source and won't do it again.
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index d6ca2e8..5be2f20 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -518,7 +518,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+                               env->icache_line_size);
+         qemu_fdt_setprop_cell(fdt, cpu_name, "d-cache-size", 0x8000);
+         qemu_fdt_setprop_cell(fdt, cpu_name, "i-cache-size", 0x8000);
+-        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", 0);
++        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", pmc->bus_freq);
+         if (cpu->cpu_index) {
+             qemu_fdt_setprop_string(fdt, cpu_name, "status", "disabled");
+             qemu_fdt_setprop_string(fdt, cpu_name, "enable-method",
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index 11f8ae5..6d56c7b 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -40,6 +40,7 @@ struct PPCE500MachineClass {
+     hwaddr pci_mmio_bus_base;
+     hwaddr spin_base;
+     uint32_t clock_freq;
++    uint32_t bus_freq;
+     uint32_t tb_freq;
+ };
  
- Both on the source and on the destination side, after the respective
- front-end has seen all data transferred (when the transfer FD has been
+diff --git a/hw/ppc/e500plat.c b/hw/ppc/e500plat.c
+index ca56472..85cec81 100644
+--- a/hw/ppc/e500plat.c
++++ b/hw/ppc/e500plat.c
+@@ -94,6 +94,7 @@ static void e500plat_machine_class_init(ObjectClass *oc, const void *data)
+     pmc->pci_mmio_bus_base = 0xE0000000ULL;
+     pmc->spin_base = 0xFEF000000ULL;
+     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
+     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "generic paravirt e500 platform";
+diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
+index 5826985..d022761 100644
+--- a/hw/ppc/mpc8544ds.c
++++ b/hw/ppc/mpc8544ds.c
+@@ -56,6 +56,7 @@ static void mpc8544ds_machine_class_init(ObjectClass *oc, const void *data)
+     pmc->pci_pio_base = 0xE1000000ULL;
+     pmc->spin_base = 0xEF000000ULL;
+     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
+     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "mpc8544ds";
 -- 
-2.53.0.1213.gd9a14994de-goog
+2.53.0
 
 
