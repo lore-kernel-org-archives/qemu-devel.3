@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E0AE937EF
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D8F0E937EE
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBxzL-0003ux-09; Sun, 12 Apr 2026 12:48:47 -0400
+	id 1wBy0U-0004K8-P6; Sun, 12 Apr 2026 12:49:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBxzI-0003ug-N0
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:48:44 -0400
-Received: from smtpout2.mo534.mail-out.ovh.net ([51.210.94.141])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wBy0T-0004Jp-2W; Sun, 12 Apr 2026 12:49:57 -0400
+Received: from 7.mo533.mail-out.ovh.net ([54.36.140.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBxzE-00066p-Kt
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:48:44 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [152.228.215.222])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4ftxLp6Lt5z6KpP;
- Sun, 12 Apr 2026 16:48:34 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 16:48:34 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.183])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4ftxLp0zWyz5vgM;
- Sun, 12 Apr 2026 16:48:34 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wBy0Q-0006Ie-6s; Sun, 12 Apr 2026 12:49:55 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4ftxNG1v7Gz5xQg;
+ Sun, 12 Apr 2026 16:49:50 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 16:49:50 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.229])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4ftxNF6Vfpz5w9R; Sun, 12 Apr 2026 16:49:49 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 807EF203999; 
- Sun, 12 Apr 2026 16:48:32 +0000 (UTC)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 22C76941618; 
+ Sun, 12 Apr 2026 16:49:48 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-110S0048e1ad7b8-2270-425b-96ac-e1d92cd69912,
+ (GARM-107S001f4252a1f-bb91-4083-8f86-45bd22d3158c,
  24D929EF98A9C54707A36CFD348010E9E2578269) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f93ba836-9250-4a32-a93a-5ac5587b3807@kaod.org>
-Date: Sun, 12 Apr 2026 18:48:31 +0200
+Message-ID: <b2cc5d66-ee2b-4f65-840d-839891ca2b90@kaod.org>
+Date: Sun, 12 Apr 2026 18:49:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 03/13] hw/usb/hcd-ehci: Change descriptor addresses to
- 64-bit
+Subject: Re: [PATCH v1 04/13] hw/usb/trace-events: Print EHCI queue and
+ transfer addresses as 64-bit
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -53,7 +53,7 @@ Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
- <20260311072614.1095587-4-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,31 +98,31 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260311072614.1095587-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 14763362528694610955
+x-ovh-tracer-id: 14784754629384317963
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFf4SqluAtYZu0IVtGI0EIE1usmOSzhRvSvbub7UxnNktnfdTVT6L+Mkq9mpRhWdqpZl+haZ6NKoGuikh6vcQxpxMSP8wkorNJSm2x1DqtGth0IodjVlU7z18d2FCMffKbU+oKtETfPMzcxiWSPQJcp9EYPo6tCc1vdaUEJpjYXnZ+LknHx0lZ725EBpxaNBmhYiXscujJvKxPx1yoU9e7fnmPl//ugSWTER8397cdHluNlNEB9vXOgoVdaNDTvucd1pRmPCQfkM0OXmh9WcKznOy3C5rnexbGq9GgkjT7d8czC08/rh7BwAVt7zw1uA3etj8O/tyDdYmScqOttFwdiSWWxYu6b4Dq3NXESTrlljs4ixPgVa3auGQUdOdKTsLlGUlU/aasNTseljZZpExX1v/gyUkfcQiC3pjjeM6jA4vyjbfnf/x5HWwTXhc5trx+cUPZf72QR6RLJC/bGst06AfiKX5htLeXv/Y0iR1+dqbqULC9KKJNRqdUBiqgHHxN9F6ZJxYYVN1oDsLH9ZNZqlnLmg3c5m3wIXsM26Vqy/R2Cz4jEqnlNext6oGcbYINTIhocknLc4c+ljewC9ci5dSi3bMjDTGebED0ZJtdQ/6yl4mblP6Ru5uJp6lE7Hb/8K/qwx7mzfhXRQlSwLA7i8X+725ACEJD5epAXhAAuNQ
-DKIM-Signature: a=rsa-sha256; bh=9NugQO8C22PemF/eOVgFwco7k/6oni8fXwziaqHUz7M=; 
+X-VR-SPAMCAUSE: dmFkZTGHLIOsrZGsc7nG3gt31OtL6MFL+tigeUBTZ+kGuNF+QpQhTOeK6JbYoUK/KUhjxX4Z+ghTVYa3VAqprkW4X8DnYnSqKtF2VloLZkwfcOIP3pSUSmAdJP6UgFDgH8P3XDfLpDi0Wi4qqlVZve+1EQHLKt4BiiAfcBx/W51rFl2BM7MOK6FQdV6p6Wxl0F/MDOZMZVFa+AavNDVrtU7Sbab8oHj/D4vykDr66TBgeFSStPdZS0HBcoB3/jT7qjJ9RiSUHcBwYoLKY4X48zY8kzNzMwwIoVHjpsQal44Kji9caorK0ufiNjoreCjZ5ILGjk8sDyr7Etzok7o3joOXZQiRBUGqGZaHqOHNzDfYENyvgM8f69fEv0LN6ccgVxpo6dcopNjcXqMUf/TzTOLBJCPLrej2QstPn8U8Er0iCCNBXPooNiU/6GQX4ecWYx621KKJmtY3ICgLEG9/sNCIkml+mZgFIrEbHlf58RP/wxG9G+4zjvOBbXV5WhrOR29wn43DCjSnEGTH0If4kqwdF6bt7Tq7hcJdPw79nFzZI5ylhXZpbSHy6FjE/qEkmljFKdJxQNvjoy1pLAqtgR5pB19afz4IbWwtGpbDDqIrADcYe3rsXw9s/Qvd/Jz5KAeb0NUU0ZxDaDaiOAVm68NbYhNKHbG7SDYZFRum74OpKCmGBQ
+DKIM-Signature: a=rsa-sha256; bh=67sQ/cRWXE2zVshkL9QTufuL4WiX4mLACn2B+Bst82k=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1776012516; v=1;
- b=cBU+HX6eZhQ7lbJB+ldsTA4gkr+MRyMZ7WsHdHhMisCFL6CpiYnfZsBKn+yI1ni7l9r1bDjI
- ORi7cX0kcCSsXOXKggTY5Ee65tmsux4AgHIi1yGnslLEAD8BwCDtzBpDeMJp/v1HhNPoNtz0Pe/
- LgSPEVDGM7YMHmsz1NrWV+ODACgEFrNHM2R9WrneokNEcTlDt9NfCVz2S21lKzyaLoexbHEYGhl
- OVPuDu2ZyXTQI5LkW+5RifSd9A5HP0RHBvTq+sdepVqci207TZmCN/FRpW3rw1aftbx9C9YnqGg
- jTjjxSEIv3rCdEynPUVnTDzCI2mhFPntI8gFL0HzkDVPg==
-Received-SPF: pass client-ip=51.210.94.141; envelope-from=clg@kaod.org;
- helo=smtpout2.mo534.mail-out.ovh.net
+ t=1776012590; v=1;
+ b=XaA7ldYZAOHywASpPkzJd4gxkps0DXuzmmOcj0OBgPGRsI56ANAHvA3aufBQtVffMQyodZy2
+ fTP+5g3r1yQp22V5tWdAE3oy+NACHFmm328IRC2Q4NWallIE299dr7hcmfRKmdx1mp4IZfGpT/t
+ /6iXOc47I0CuXE+r42Wugu9J+czO/V7UO79e9xWUJbYfExnY19UGPLCgg8W6p17AUnmEFLMPLvN
+ Zq1ROYSsyyFxwHdBMkx7No+5PeoW1vsuad/SgzhhBjMMdYYjTkPKRclTQzPSDNl33sYDC7vfQBc
+ 8A3zT0IoqGx5jxkaa3PnstL+Jzd4gpJFpb6EWATSs0iNg==
+Received-SPF: pass client-ip=54.36.140.182; envelope-from=clg@kaod.org;
+ helo=7.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,332 +139,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/11/26 08:26, Jamin Lin wrote:
-> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
+> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
+> use uint64_t for the address argument and print it with PRIx64. This
+> ensures full 64-bit addresses are shown in trace output and improves
+> debugging of queue heads and transfer descriptors.
 > 
-> The following fields are updated:
-> - EHCIPacket::qtdaddr
-> - EHCIQueue::{qhaddr, qtdaddr}
-> - EHCIState::{a_fetch_addr, p_fetch_addr}
-> 
-> Update get_dwords() and put_dwords() to take 64-bit addresses and
-> propagate the type change through the descriptor traversal paths.
-> 
-> Adjust NLPTR_GET() to operate on 64-bit values:
-> 
->      #define NLPTR_GET(x) ((x) & ~(uint64_t)0x1f)
-
-how about :
-
-   #define NLPTR_GET(x)             ((x) & ~0x1fULL)
-
-
-> 
-> so that link pointer masking works correctly when descriptor
-> addresses exceed 32-bit space. The previous mask (0xffffffe0)
-> implicitly truncated addresses to 32 bits.
-> 
-> This patch does not change the on-wire descriptor layout yet.
-> It only removes the internal 32-bit address limit and prepares
-> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
-> 
-> Since the type of fetch_addr changes from 32-bit to 64-bit,
-> bump the VMState version.
-> 
-> No functional change.
+> This change only affects trace formatting and does not modify the EHCI
+> data structure layout or behavior.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/usb/hcd-ehci.h | 10 +++----
->   hw/usb/hcd-ehci.c | 67 +++++++++++++++++++++++++----------------------
->   2 files changed, 41 insertions(+), 36 deletions(-)
-> 
-> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
-> index ed44935302..df87f8145f 100644
-> --- a/hw/usb/hcd-ehci.h
-> +++ b/hw/usb/hcd-ehci.h
-> @@ -226,7 +226,7 @@ struct EHCIPacket {
->       QTAILQ_ENTRY(EHCIPacket) next;
->   
->       EHCIqtd qtd;           /* copy of current QTD (being worked on) */
-> -    uint32_t qtdaddr;      /* address QTD read from                 */
-> +    uint64_t qtdaddr;      /* address QTD read from                 */
->   
->       USBPacket packet;
->       QEMUSGList sgl;
-> @@ -247,8 +247,8 @@ struct EHCIQueue {
->        * when guest removes an entry (doorbell, handshake sequence)
->        */
->       EHCIqh qh;             /* copy of current QH (being worked on) */
-> -    uint32_t qhaddr;       /* address QH read from                 */
-> -    uint32_t qtdaddr;      /* address QTD read from                */
-> +    uint64_t qhaddr;       /* address QH read from                 */
-> +    uint64_t qtdaddr;      /* address QTD read from                */
->       int last_pid;          /* pid of last packet executed          */
->       USBDevice *dev;
->       QTAILQ_HEAD(, EHCIPacket) packets;
-> @@ -312,8 +312,8 @@ struct EHCIState {
->       EHCIQueueHead pqueues;
->   
->       /* which address to look at next */
-> -    uint32_t a_fetch_addr;
-> -    uint32_t p_fetch_addr;
-> +    uint64_t a_fetch_addr;
-> +    uint64_t p_fetch_addr;
->   
->       USBPacket ipacket;
->       QEMUSGList isgl;
-> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-> index e2ff0f5874..87c3991313 100644
-> --- a/hw/usb/hcd-ehci.c
-> +++ b/hw/usb/hcd-ehci.c
-> @@ -71,7 +71,7 @@ typedef enum {
->   } EHCI_STATES;
->   
->   /* macros for accessing fields within next link pointer entry */
-> -#define NLPTR_GET(x)             ((x) & 0xffffffe0)
-> +#define NLPTR_GET(x)             ((x) & ~(uint64_t)0x1f)
->   #define NLPTR_TYPE_GET(x)        (((x) >> 1) & 3)
->   #define NLPTR_TBIT(x)            ((x) & 1)  /* 1=invalid, 0=valid */
->   
-> @@ -286,7 +286,7 @@ static int ehci_get_state(EHCIState *s, int async)
->       return async ? s->astate : s->pstate;
->   }
->   
-> -static void ehci_set_fetch_addr(EHCIState *s, int async, uint32_t addr)
-> +static void ehci_set_fetch_addr(EHCIState *s, int async, uint64_t addr)
->   {
->       if (async) {
->           s->a_fetch_addr = addr;
-> @@ -295,7 +295,7 @@ static void ehci_set_fetch_addr(EHCIState *s, int async, uint32_t addr)
->       }
->   }
->   
-> -static int ehci_get_fetch_addr(EHCIState *s, int async)
-> +static uint64_t ehci_get_fetch_addr(EHCIState *s, int async)
->   {
->       return async ? s->a_fetch_addr : s->p_fetch_addr;
->   }
-> @@ -372,7 +372,7 @@ static inline bool ehci_periodic_enabled(EHCIState *s)
->   }
->   
->   /* Get an array of dwords from main memory */
-> -static inline int get_dwords(EHCIState *ehci, uint32_t addr,
-> +static inline int get_dwords(EHCIState *ehci, uint64_t addr,
->                                uint32_t *buf, int num)
->   {
->       int i;
-> @@ -394,7 +394,7 @@ static inline int get_dwords(EHCIState *ehci, uint32_t addr,
->   }
->   
->   /* Put an array of dwords in to main memory */
-> -static inline int put_dwords(EHCIState *ehci, uint32_t addr,
-> +static inline int put_dwords(EHCIState *ehci, uint64_t addr,
->                                uint32_t *buf, int num)
->   {
->       int i;
-> @@ -548,7 +548,7 @@ static void ehci_free_packet(EHCIPacket *p)
->   
->   /* queue management */
->   
-> -static EHCIQueue *ehci_alloc_queue(EHCIState *ehci, uint32_t addr, int async)
-> +static EHCIQueue *ehci_alloc_queue(EHCIState *ehci, uint64_t addr, int async)
->   {
->       EHCIQueueHead *head = async ? &ehci->aqueues : &ehci->pqueues;
->       EHCIQueue *q;
-> @@ -621,7 +621,7 @@ static void ehci_free_queue(EHCIQueue *q, const char *warn)
->       g_free(q);
->   }
->   
-> -static EHCIQueue *ehci_find_queue_by_qh(EHCIState *ehci, uint32_t addr,
-> +static EHCIQueue *ehci_find_queue_by_qh(EHCIState *ehci, uint64_t addr,
->                                           int async)
->   {
->       EHCIQueueHead *head = async ? &ehci->aqueues : &ehci->pqueues;
-> @@ -1133,7 +1133,7 @@ static void ehci_flush_qh(EHCIQueue *q)
->   {
->       uint32_t *qh = (uint32_t *) &q->qh;
->       uint32_t dwords = sizeof(EHCIqh) >> 2;
-> -    uint32_t addr = NLPTR_GET(q->qhaddr);
-> +    uint64_t addr = NLPTR_GET(q->qhaddr);
->   
->       put_dwords(q->ehci, addr + 3 * sizeof(uint32_t), qh + 3, dwords - 3);
->   }
-> @@ -1279,8 +1279,8 @@ static void ehci_execute_complete(EHCIQueue *q)
->       assert(p->async == EHCI_ASYNC_INITIALIZED ||
->              p->async == EHCI_ASYNC_FINISHED);
->   
-> -    DPRINTF("execute_complete: qhaddr 0x%x, next 0x%x, qtdaddr 0x%x, "
-> -            "status %d, actual_length %d\n",
-> +    DPRINTF("execute_complete: qhaddr 0x%" PRIx64 ", next 0x%x, "
-> +            "qtdaddr 0x%" PRIx64 ", status %d, actual_length %d\n",
->               q->qhaddr, q->qh.next, q->qtdaddr,
->               p->packet.status, p->packet.actual_length);
 
-Please use trace events.
-
->   
-> @@ -1389,9 +1389,10 @@ static int ehci_execute(EHCIPacket *p, const char *action)
->   
->       trace_usb_ehci_packet_action(p->queue, p, action);
->       usb_handle_packet(p->queue->dev, &p->packet);
-> -    DPRINTF("submit: qh 0x%x next 0x%x qtd 0x%x pid 0x%x len %zd endp 0x%x "
-> -            "status %d actual_length %d\n", p->queue->qhaddr, p->qtd.next,
-> -            p->qtdaddr, p->pid, p->packet.iov.size, endp, p->packet.status,
-> +    DPRINTF("submit: qh 0x%" PRIx64 " next 0x%x qtd 0x%" PRIx64
-> +            " pid 0x%x len %zd endp 0x%x status %d actual_length %d\n",
-> +            p->queue->qhaddr, p->qtd.next, p->qtdaddr, p->pid,
-> +            p->packet.iov.size, endp, p->packet.status,
->               p->packet.actual_length);
->   
->       if (p->packet.actual_length > BUFF_SIZE) {
-> @@ -1405,12 +1406,13 @@ static int ehci_execute(EHCIPacket *p, const char *action)
->   /* 4.7.2 */
->   static int ehci_process_itd(EHCIState *ehci,
->                               EHCIitd *itd,
-> -                            uint32_t addr)
-> +                            uint64_t addr)
->   {
->       USBDevice *dev;
->       USBEndpoint *ep;
->       uint32_t i, len, pid, dir, devaddr, endp;
-> -    uint32_t pg, off, ptr1, ptr2, max, mult;
-> +    uint32_t pg, off, max, mult;
-> +    uint64_t ptr1, ptr2;
->   
->       ehci->periodic_sched_active = PERIODIC_ACTIVE;
->   
-> @@ -1525,7 +1527,7 @@ static int ehci_state_waitlisthead(EHCIState *ehci,  int async)
->       EHCIqh qh;
->       int i = 0;
->       int again = 0;
-> -    uint32_t entry = ehci->asynclistaddr;
-> +    uint64_t entry = ehci->asynclistaddr;
->   
->       /* set reclamation flag at start event (4.8.6) */
->       if (async) {
-> @@ -1575,7 +1577,7 @@ out:
->   static int ehci_state_fetchentry(EHCIState *ehci, int async)
->   {
->       int again = 0;
-> -    uint32_t entry = ehci_get_fetch_addr(ehci, async);
-> +    uint64_t entry = ehci_get_fetch_addr(ehci, async);
->   
->       if (NLPTR_TBIT(entry)) {
->           ehci_set_state(ehci, async, EST_ACTIVE);
-> @@ -1606,7 +1608,7 @@ static int ehci_state_fetchentry(EHCIState *ehci, int async)
->   
->       default:
->           /* TODO: handle FSTN type */
-> -        fprintf(stderr, "FETCHENTRY: entry at %X is of type %u "
-> +        fprintf(stderr, "FETCHENTRY: entry at %" PRIx64 "is of type %" PRIu64
->                   "which is not supported yet\n", entry, NLPTR_TYPE_GET(entry));
-
-This looks like a qemu_log_mask(LOG_GUEST_ERROR) to me.
-
-
->           return -1;
->       }
-> @@ -1617,7 +1619,7 @@ out:
->   
->   static EHCIQueue *ehci_state_fetchqh(EHCIState *ehci, int async)
->   {
-> -    uint32_t entry;
-> +    uint64_t entry;
->       EHCIQueue *q;
->       EHCIqh qh;
->   
-> @@ -1669,8 +1671,9 @@ static EHCIQueue *ehci_state_fetchqh(EHCIState *ehci, int async)
->           if (ehci->usbsts & USBSTS_REC) {
->               ehci_clear_usbsts(ehci, USBSTS_REC);
->           } else {
-> -            DPRINTF("FETCHQH:  QH 0x%08x. H-bit set, reclamation status reset"
-> -                       " - done processing\n", q->qhaddr);
-> +            DPRINTF("FETCHQH:  QH 0x%" PRIx64
-> +                    ". H-bit set, reclamation status reset - "
-> +                    "done processing\n", q->qhaddr);
->               ehci_set_state(ehci, async, EST_ACTIVE);
->               q = NULL;
->               goto out;
-> @@ -1679,7 +1682,8 @@ static EHCIQueue *ehci_state_fetchqh(EHCIState *ehci, int async)
->   
->   #if EHCI_DEBUG
->       if (q->qhaddr != q->qh.next) {
-> -        DPRINTF("FETCHQH:  QH 0x%08x (h %x halt %x active %x) next 0x%08x\n",
-> +        DPRINTF("FETCHQH:  QH 0x%" PRIx64
-> +                " (h %x halt %x active %x) next 0x%08x\n",
->                  q->qhaddr,
->                  q->qh.epchar & QH_EPCHAR_H,
->                  q->qh.token & QTD_TOKEN_HALT,
-> @@ -1708,7 +1712,7 @@ out:
->   
->   static int ehci_state_fetchitd(EHCIState *ehci, int async)
->   {
-> -    uint32_t entry;
-> +    uint64_t entry;
->       EHCIitd itd;
->   
->       assert(!async);
-> @@ -1734,7 +1738,7 @@ static int ehci_state_fetchitd(EHCIState *ehci, int async)
->   
->   static int ehci_state_fetchsitd(EHCIState *ehci, int async)
->   {
-> -    uint32_t entry;
-> +    uint64_t entry;
->       EHCIsitd sitd;
->   
->       assert(!async);
-> @@ -1804,7 +1808,7 @@ static int ehci_state_fetchqtd(EHCIQueue *q)
->       EHCIqtd qtd;
->       EHCIPacket *p;
->       int again = 1;
-> -    uint32_t addr;
-> +    uint64_t addr;
->   
->       addr = NLPTR_GET(q->qtdaddr);
->       if (get_dwords(q->ehci, addr +  8, &qtd.token,   1) < 0) {
-> @@ -1887,7 +1891,7 @@ static int ehci_fill_queue(EHCIPacket *p)
->       USBEndpoint *ep = p->packet.ep;
->       EHCIQueue *q = p->queue;
->       EHCIqtd qtd = p->qtd;
-> -    uint32_t qtdaddr;
-> +    uint64_t qtdaddr;
->   
->       for (;;) {
->           if (NLPTR_TBIT(qtd.next) != 0) {
-> @@ -2010,7 +2014,8 @@ static int ehci_state_executing(EHCIQueue *q)
->   static int ehci_state_writeback(EHCIQueue *q)
->   {
->       EHCIPacket *p = QTAILQ_FIRST(&q->packets);
-> -    uint32_t *qtd, addr;
-> +    uint32_t *qtd;
-> +    uint64_t addr;
->       int again = 0;
->   
->       /*  Write back the QTD from the QH area */
-> @@ -2484,8 +2489,8 @@ static void usb_ehci_vm_state_change(void *opaque, bool running, RunState state)
->   
->   const VMStateDescription vmstate_ehci = {
->       .name        = "ehci-core",
-> -    .version_id  = 2,
-> -    .minimum_version_id  = 1,
-> +    .version_id  = 3,
-> +    .minimum_version_id  = 2,
->       .pre_save    = usb_ehci_pre_save,
->       .post_load   = usb_ehci_post_load,
->       .fields = (const VMStateField[]) {
-> @@ -2513,8 +2518,8 @@ const VMStateDescription vmstate_ehci = {
->           /* schedule state */
->           VMSTATE_UINT32(astate, EHCIState),
->           VMSTATE_UINT32(pstate, EHCIState),
-> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
-> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
-> +        VMSTATE_UINT64(a_fetch_addr, EHCIState),
-> +        VMSTATE_UINT64(p_fetch_addr, EHCIState),
->           VMSTATE_END_OF_LIST()
->       }
->   };
+I think this change should be merged in the previous patch.
 
 Thanks,
 
 C.
+
+> ---
+>   hw/usb/trace-events | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/usb/trace-events b/hw/usb/trace-events
+> index dd04f14add..ecd84e54c0 100644
+> --- a/hw/usb/trace-events
+> +++ b/hw/usb/trace-events
+> @@ -86,14 +86,14 @@ usb_ehci_portsc_write(uint32_t addr, uint32_t port, uint32_t val) "wr mmio 0x%04
+>   usb_ehci_portsc_change(uint32_t addr, uint32_t port, uint32_t new, uint32_t old) "ch mmio 0x%04x [port %d] = 0x%x (old: 0x%x)"
+>   usb_ehci_usbsts(const char *sts, int state) "usbsts %s %d"
+>   usb_ehci_state(const char *schedule, const char *state) "%s schedule %s"
+> -usb_ehci_qh_ptrs(void *q, uint32_t addr, uint32_t nxt, uint32_t c_qtd, uint32_t n_qtd, uint32_t a_qtd) "q %p - QH @ 0x%08x: next 0x%08x qtds 0x%08x,0x%08x,0x%08x"
+> -usb_ehci_qh_fields(uint32_t addr, int rl, int mplen, int eps, int ep, int devaddr) "QH @ 0x%08x - rl %d, mplen %d, eps %d, ep %d, dev %d"
+> -usb_ehci_qh_bits(uint32_t addr, int c, int h, int dtc, int i) "QH @ 0x%08x - c %d, h %d, dtc %d, i %d"
+> -usb_ehci_qtd_ptrs(void *q, uint32_t addr, uint32_t nxt, uint32_t altnext) "q %p - QTD @ 0x%08x: next 0x%08x altnext 0x%08x"
+> -usb_ehci_qtd_fields(uint32_t addr, int tbytes, int cpage, int cerr, int pid) "QTD @ 0x%08x - tbytes %d, cpage %d, cerr %d, pid %d"
+> -usb_ehci_qtd_bits(uint32_t addr, int ioc, int active, int halt, int babble, int xacterr) "QTD @ 0x%08x - ioc %d, active %d, halt %d, babble %d, xacterr %d"
+> -usb_ehci_itd(uint32_t addr, uint32_t nxt, uint32_t mplen, uint32_t mult, uint32_t ep, uint32_t devaddr) "ITD @ 0x%08x: next 0x%08x - mplen %d, mult %d, ep %d, dev %d"
+> -usb_ehci_sitd(uint32_t addr, uint32_t nxt, uint32_t active) "ITD @ 0x%08x: next 0x%08x - active %d"
+> +usb_ehci_qh_ptrs(void *q, uint64_t addr, uint32_t nxt, uint32_t c_qtd, uint32_t n_qtd, uint32_t a_qtd) "q %p - QH @ 0x%" PRIx64 ": next 0x%08x qtds 0x%08x,0x%08x,0x%08x"
+> +usb_ehci_qh_fields(uint64_t addr, int rl, int mplen, int eps, int ep, int devaddr) "QH @ 0x%" PRIx64 " - rl %d, mplen %d, eps %d, ep %d, dev %d"
+> +usb_ehci_qh_bits(uint64_t addr, int c, int h, int dtc, int i) "QH @ 0x%" PRIx64 " - c %d, h %d, dtc %d, i %d"
+> +usb_ehci_qtd_ptrs(void *q, uint64_t addr, uint32_t nxt, uint32_t altnext) "q %p - QTD @ 0x%" PRIx64 ": next 0x%08x altnext 0x%08x"
+> +usb_ehci_qtd_fields(uint64_t addr, int tbytes, int cpage, int cerr, int pid) "QTD @ 0x%" PRIx64 " - tbytes %d, cpage %d, cerr %d, pid %d"
+> +usb_ehci_qtd_bits(uint64_t addr, int ioc, int active, int halt, int babble, int xacterr) "QTD @ 0x%" PRIx64 " - ioc %d, active %d, halt %d, babble %d, xacterr %d"
+> +usb_ehci_itd(uint64_t addr, uint32_t nxt, uint32_t mplen, uint32_t mult, uint32_t ep, uint32_t devaddr) "ITD @ 0x%" PRIx64 ": next 0x%08x - mplen %d, mult %d, ep %d, dev %d"
+> +usb_ehci_sitd(uint64_t addr, uint32_t nxt, uint32_t active) "SITD @ 0x%" PRIx64 ": next 0x%08x - active %d"
+>   usb_ehci_port_attach(uint32_t port, const char *owner, const char *device) "attach port #%d, owner %s, device %s"
+>   usb_ehci_port_detach(uint32_t port, const char *owner) "detach port #%d, owner %s"
+>   usb_ehci_port_reset(uint32_t port, int enable) "reset port #%d - %d"
+
 
