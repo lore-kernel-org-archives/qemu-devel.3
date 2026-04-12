@@ -4,90 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF2A0E93804
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60117E937E6
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 21:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC1sZ-0003L2-4O; Sun, 12 Apr 2026 16:58:03 -0400
+	id 1wC1xc-00047U-00; Sun, 12 Apr 2026 17:03:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1sT-0003Ko-JB
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:57:58 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1sR-0007nA-Nd
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:57:57 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so392996f8f.0
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776027472; x=1776632272; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=09PqwNmU1FaK0txdsT0YCjxAuFR71lGoXBL2cRJstVY=;
- b=hPw2MiE8bOyl+Ls5//ZqiAY8zG3SEUoYsn+UdNJerctbltX77TSR2JmE9c6t/cRjuY
- 1WyMpPGK/kBJ4sqO3Ka+kJb+Z8q3X6C4iiMnG160GODN19LkBOskws8DbjYt5sN++23k
- pIyQVm7d1qODamGgQTcSQtv+5P1p6yMHtkRcNLEI3RaX/QD8CTfqsAMpnYtpeRlekEDO
- J7KerP0rNon2tF4Bc+J5ZQhzDM4EdLjrc3WkWVhXfj+8DV5nxDoBuhpRQzZ+gOVwCIUB
- R9y5Po0FieYgGuUyBvjzhjMoL7fWFF35L4zHvARsjrzJt1puyRMQa4vyrk2ECNyWon7+
- fQCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776027472; x=1776632272;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=09PqwNmU1FaK0txdsT0YCjxAuFR71lGoXBL2cRJstVY=;
- b=YRVE8sFnPXcl62G2Bv5o7PVnuMW37XlK9aMFe323rmLAutCv7sfRss/ArOyZrdZ5kL
- gqZfwW/kgez1fDGJWw3HJQulgV8IezezYNXZ2JOYPtmBby3vbAsJS9++21hL0Z/1Yj9u
- JqD5yrNkhD2OCoYmtsG8qgfHeBxnNsmIV0NbKVqZZqdZnm39KZinMFmijAhG/9L2FCYm
- bF0XjHFs75jeA+EzTwSXxgek6dx+dGgNTWbhJTuuym54/G4Yb4QNdgYKJfpdoyF9gqOi
- GVc11qGS2Loaf8Ui0R6UgWiWILqjw326F2m9q+kwk717cQeLK5TKaNYJRvPnP0Z70qr4
- RpgQ==
-X-Gm-Message-State: AOJu0Yyki2UoFhFsFjN2aOdcmO9THLaWY+FvwR0evrEtMLKABAiqyQgQ
- aVXGDWFS3ng7dsTd9ACK07XJyrT6wDzWVHn+O1tIA5UD/ldtThZA6OSaaVVuhkG8IGE=
-X-Gm-Gg: AeBDievsNsl2r/I+R74BO/e4xlXuFtPqpPL/eQ3WhkCORCYVi7bWN2uJmxe3q103zFB
- L9w/4HfLHAxIP1Hn5CqJxPU53jyfNRW3ER/psUGDLKn8UPaMzapV1MKf+jmTyjHP/EA8tceTCov
- CMu1cDOq/60svNSGEs6jzszVdLFe4bOchf/dA/oqx9IJ3wRjRGrc6GnJndigI1vJyl31f5nXHJj
- ha9tp8XFLVTEV8QC+G8z/n7uE6b9ta9xfMO7ngALTgvCLQyXn4f8TcRqdmTkgZkh9Ta+yhct/nK
- ft7ysvFQUFiSMgTCwaDEGlMiHl+aBwJk0rR8PFrZ8Pes4gY77cfmBUDJZvzrMJeXhAuO8DxZTsU
- pD5PSKnvQI9qTbqSMyRj4OsZ7A681aGUwvYvxx5lfyLyDN+XZ4iui5wFzRXScCTN2/owU/jXOxq
- HWtlzlHhtv86ydxhj1YYa6d8SNQEMblp9BlU227UEcONxhLbsunhVj1Y8pmPg+nvh8HA==
-X-Received: by 2002:a05:6000:3104:b0:43d:258d:8fa7 with SMTP id
- ffacd0b85a97d-43d6492e85emr16797281f8f.7.1776027472310; 
- Sun, 12 Apr 2026 13:57:52 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63dec27fsm26525499f8f.11.2026.04.12.13.57.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 13:57:51 -0700 (PDT)
-Message-ID: <fae0a954-fd89-49f7-848d-74f352036176@linaro.org>
-Date: Sun, 12 Apr 2026 22:57:51 +0200
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wC1xY-00046z-Au
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 17:03:13 -0400
+Received: from 12.mo533.mail-out.ovh.net ([178.33.248.79])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wC1xU-0000ve-7I
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 17:03:11 -0400
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net [51.255.22.22])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4fv30Q2H1Kz61cw;
+ Sun, 12 Apr 2026 21:03:02 +0000 (UTC)
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net. [127.0.0.1])
+ by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 21:03:02 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.229])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4fv30Q1CwJz7tn9; Sun, 12 Apr 2026 21:03:02 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
+ (Authenticated sender: clg@kaod.org)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id A4BA3941619; 
+ Sun, 12 Apr 2026 21:03:00 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-103G005233f8795-9f84-4bee-9885-d8c45fec36df,
+ 24D929EF98A9C54707A36CFD348010E9E2578269) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <6ae68fe4-6b54-433e-a9df-ae703a9c5f38@kaod.org>
+Date: Sun, 12 Apr 2026 23:03:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 48/67] ui/vnc: merge vnc_display_init() and
- vnc_display_open()
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
- <20260410-qemu-vnc-v2-48-231416f76dc3@redhat.com>
- <4dabec5f-1700-41a4-a36c-526b9f096460@linaro.org>
- <CAMxuvaw9YOsJihsQDpLjhM3ohk+h_JoeHT-6S7KvPuwNCReHSg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAMxuvaw9YOsJihsQDpLjhM3ohk+h_JoeHT-6S7KvPuwNCReHSg@mail.gmail.com>
+Subject: Re: [PATCH v1 03/13] hw/usb/hcd-ehci: Change descriptor addresses to
+ 64-bit
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-4-jamin_lin@aspeedtech.com>
+ <4253d673-02a9-45cd-9781-0f03866b9703@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <4253d673-02a9-45cd-9781-0f03866b9703@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+x-ovh-tracer-id: 614178401363864587
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGoIYK04eauWfeYO18H0rV6JXWEbYr8csS1aqfXtsWE+p7Zilf7uiGwYr9FhxrOyInqCafVJ4f+4SS4/Gd6W6wkg/CJxm1S1/OCuFeOTGUhxuqMHkhxXz6ZJkcrhqS3NzkooSLO+wD+IaMyjIHuwAijvnvLldz1YVuuewdIrvuJYMKXkdQHhqSxPQS1+Wxatuq7TJGKd9t9sA26pYjrUwxLj1b/IUWgg9W0mbKLp0ZE+78lI/0QGVUZCLhiuYRGQ1oxsSvQ0u/Uka2EZARWWx6VHM03JuYrf6W8y0MQDjzkOrOZemHpZfJ3/X4OA2MuKDwGF4MV5whUogeM9Fe7zbpRUSwzcZF6QYO0VFnUo6ArthM9cujePtPzaXrSlYOIwQ0lTDfU4TSe9jR3RU0NaFIGo7f9rax9TMPWTaWbTdJMb5DIK+ZpheuuGS/ZsxaBt+3gCmAqLCGpA1akHH0C+dMuHu1bT8bT/3ujzU3W1zsvKZsHWc2re3lXRKDC34kZHtUVdijmYQvjkQwDogQqONGqjZtqhkoQ9l8jhEHSSR0SoIgJrRRKb9Ytt8n8fkFIVqgQV++tH74Okp8QoExZgqO2cvujDznEFiMSLp1gBPU0CkZ4emQiILoeyG0L8Tnz0Sa93X8yWYKuX7V6SLZca5kPwp00reKogu5AjdgsoQf5pg
+DKIM-Signature: a=rsa-sha256; bh=Z2eJU4zUsBKBMyD96Hw8R7DEQcgxr/npxtk2QDNS1IU=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1776027784; v=1;
+ b=gEs/2fI87P/UkH3oCCTbWm+lb6koi2SMrPfwz3e5mCqLaSYxEv5G0fvK75ah6xSB2iqjZ6G7
+ MqRIqGhl7U0zPsNuvjlrHC+voBC6d6fWwwF1GKcn7baKD80H+oIp5VifLmnNhi//kT5XRQ44cop
+ DWu//OyJ2bKZmYGUuXzDQ4cT+OF0RLVL62f0kxMh40xTjbZPkJe5NQQWQ8HtkYNmqH7syyv0wEN
+ 7d4ZVL7ycQiYhhrTU3aOnU5jQbCPCI2zYvfASVszetC6jooUoS6Muw6d1uxHdfEjtYZ5FMiBqOI
+ 4G+u1LHrh/45x8DIBbmzMezSyDOJRmfHkzTso6e2BH8yw==
+Received-SPF: pass client-ip=178.33.248.79; envelope-from=clg@kaod.org;
+ helo=12.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,77 +140,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/26 16:17, Marc-André Lureau wrote:
-> Hi
+On 4/12/26 22:34, Philippe Mathieu-Daudé wrote:
+> Hi Jamin,
 > 
-> On Sun, Apr 12, 2026 at 2:31 AM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
+> On 11/3/26 08:26, Jamin Lin wrote:
+>> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
 >>
->> On 10/4/26 21:19, Marc-André Lureau wrote:
->>> Combine the two-step vnc_display_init()/vnc_display_open() sequence
->>> into a single vnc_display_new() function that returns VncDisplay*.
->>> This simplifies the API by making vnc_display_open() an
->>> internal detail and will allow further code simplification.
->>>
->>> vnc_display_new() is moved to vnc.h, since it returns VncDisplay* now.
->>> Add vnc_display_free() for consistency, and it will be later used.
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>>    include/ui/console.h |  2 --
->>>    ui/vnc.h             |  3 +++
->>>    ui/vnc.c             | 75 ++++++++++++++++++++++------------------------------
->>>    3 files changed, 35 insertions(+), 45 deletions(-)
+>> The following fields are updated:
+>> - EHCIPacket::qtdaddr
+>> - EHCIQueue::{qhaddr, qtdaddr}
+>> - EHCIState::{a_fetch_addr, p_fetch_addr}
 >>
+>> Update get_dwords() and put_dwords() to take 64-bit addresses and
+>> propagate the type change through the descriptor traversal paths.
 >>
->>> -bool vnc_display_init(const char *id, Error **errp)
->>> +VncDisplay *vnc_display_new(const char *id, Error **errp)
->>>    {
->>>        VncDisplay *vd;
->>>
->>>        if (vnc_display_find(id) != NULL) {
->>> -        return true;
->>> +        return NULL;
+>> Adjust NLPTR_GET() to operate on 64-bit values:
 >>
->> Can you explain why we don't return the VncDisplay found here?
+>>      #define NLPTR_GET(x) ((x) & ~(uint64_t)0x1f)
+>>
+>> so that link pointer masking works correctly when descriptor
+>> addresses exceed 32-bit space. The previous mask (0xffffffe0)
+>> implicitly truncated addresses to 32 bits.
+>>
+>> This patch does not change the on-wire descriptor layout yet.
+>> It only removes the internal 32-bit address limit and prepares
+>> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
+>>
+>> Since the type of fetch_addr changes from 32-bit to 64-bit,
+>> bump the VMState version.
+>>
+>> No functional change.
+>>
+>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>> ---
+>>   hw/usb/hcd-ehci.h | 10 +++----
+>>   hw/usb/hcd-ehci.c | 67 +++++++++++++++++++++++++----------------------
+>>   2 files changed, 41 insertions(+), 36 deletions(-)
 > 
-> `vnc_display_new()` is called from `vnc_init_func()`. If we have
-> duplicate IDs, the function returns NULL, which is treated as an
-> error.
 > 
-> Duplicate IDs are handled earlier by qemu_opts_create() though. So we
-> could assert() instead ?
+>> @@ -2484,8 +2489,8 @@ static void usb_ehci_vm_state_change(void *opaque, bool running, RunState state)
+>>   const VMStateDescription vmstate_ehci = {
+>>       .name        = "ehci-core",
+>> -    .version_id  = 2,
+>> -    .minimum_version_id  = 1,
+>> +    .version_id  = 3,
+>> +    .minimum_version_id  = 2,
+> 
+> Since this device is used in cloud virtualized instances, we can not
+> ignore previous migration streams and really need to implement the v2
+> to v3 hook.
 
-That would make this code path clearer for sure.
+We will need :
+
++    uint32_t a_fetch_addr_hi;
++    uint32_t p_fetch_addr_hi;
+
+to be set by pre_save, and used by post_load to reconstruct
+64-bit addresses. This is going to be tedious ...
+
+
+C.
+
+
 
 > 
->>
->>>        }
->>>        vd = g_malloc0(sizeof(*vd));
->>>
->>> @@ -3451,7 +3451,7 @@ bool vnc_display_init(const char *id, Error **errp)
->>>
->>>        if (!vd->kbd_layout) {
->>>            vnc_display_free(vd);
->>> -        return false;
->>> +        return NULL;
->>>        }
->>>
->>>        vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
->>> @@ -3464,8 +3464,13 @@ bool vnc_display_init(const char *id, Error **errp)
->>>        vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
->>>            &vmstate_change_handler, vd);
->>>
->>> +    if (!vnc_display_open(vd, errp)) {
->>> +        vnc_display_free(vd);
->>> +        return NULL;
->>> +    }
->>> +
->>>        QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
->>> -    return true;
->>> +    return vd;
->>>    }
->>
+>>       .pre_save    = usb_ehci_pre_save,
+>>       .post_load   = usb_ehci_post_load,
+>>       .fields = (const VMStateField[]) {
+>> @@ -2513,8 +2518,8 @@ const VMStateDescription vmstate_ehci = {
+>>           /* schedule state */
+>>           VMSTATE_UINT32(astate, EHCIState),
+>>           VMSTATE_UINT32(pstate, EHCIState),
+>> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
+>> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
+>> +        VMSTATE_UINT64(a_fetch_addr, EHCIState),
+>> +        VMSTATE_UINT64(p_fetch_addr, EHCIState),
+>>           VMSTATE_END_OF_LIST()
+>>       }
+>>   };
 > 
 
 
