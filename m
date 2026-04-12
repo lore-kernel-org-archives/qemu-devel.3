@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA76E937EA
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B231DE937EB
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBxIC-0006Ue-QO; Sun, 12 Apr 2026 12:04:12 -0400
+	id 1wBxIG-0006XT-Kz; Sun, 12 Apr 2026 12:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxI0-0006Rv-Gr
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:04:04 -0400
-Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHp-0006Ps-Fj
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:03:52 -0400
+Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHx-0004Xb-LB
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:04:00 -0400
-Received: by mail-oa1-x36.google.com with SMTP id
- 586e51a60fabf-40f1a1f77a6so2422949fac.2
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 09:03:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHh-0004UB-MB
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:03:47 -0400
+Received: by mail-oa1-x34.google.com with SMTP id
+ 586e51a60fabf-404254ffe8aso2409445fac.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 09:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776009833; x=1776614633;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776009814; x=1776614614;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=umfzvOji71umc53PSuHoNWCYUoaF8ndU8jIV+mTrGw0=;
- b=lub+rRRrHz0wc04WMtXrPNVRcbi72Dh+P5vZ7mHx+vt4K2JAE8CyhS49UnYIkhtO8m
- b7AdRGs3TxWxjN9InhGWzIGIWl56EDdOHWKC/wo8QJQdj18kzIRsM5y3UHRt7WwFM7kY
- mFNMRYnDaqP7ZnPy3OoJr9JIi+FmfVKY6B6z9zBmcTqNvczQVPLPb/BCGchtlbEzqKN2
- t9VNcMBEaI/+qHXAzgHPtiOzSFqJooQjZxWjM7IJV8S40GlhGGLrPq9y2a9FzmKoluZR
- NRoAWrmF4QJmLRNjIrp3zBzevCEP5kDC0zZsuQfk1nRwHJKj3W5iyLnKh1NdltupwCmg
- m5gQ==
+ :reply-to; bh=AMr7jz7FRFjQWOZT8lC9LVSiGIZkZ996tBpI4CHStjU=;
+ b=eM7YZztDmRcF1DjbYy2y4eT1yFBm6o+UthcW62p1xUGES6Fc2dKZskiYQEOUz9LloF
+ SFh/WZTKPjSZecKKkA+MoAEVGD9ffgE54mMQhIFIn2z32EIYOBfxClUz+ijOx4iMw06D
+ ukMNmHg6psmnlv/3U0PZ2ypl5/WVov6+fQ95SuBDKuF8Wq2LNZ1HY/4+MgQc7DMMlbGA
+ cEhblx9RsVIcq6VsmOFkCEgTE/Y31kr8OF6BdZj1vG2SHAeWWyOrA9yL8r+gBOJy9Rdk
+ 1tym9nphZveRLo1kIWoiQoyfxY6iSCt/TPQD3KFdmg+Mo1pTnVWl+vb8P8fk3INmiF8P
+ J3lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776009833; x=1776614633;
+ d=1e100.net; s=20251104; t=1776009814; x=1776614614;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=umfzvOji71umc53PSuHoNWCYUoaF8ndU8jIV+mTrGw0=;
- b=r2c/k2EWLzLzhmTD4a9V6RfMslRelWxR6z8JgRVQ5kFOQosqCJQP1eA2kqnfO372Qz
- /DJ8uq/BJyJ6UdhTD1jZoJHMEo2+bnKicSJXTqEs2ApMTkrJwqsSe/xXyabdwWaF37ha
- NVoVkX/3uFPhbSb8/sSdBrKKRYehbK52YnzrK7SSK2XeOyTjH9oaPmIUyURxcEl/FqLK
- PtyF5/Od+XPrZEeLUuaGjgUTtZSVwOTRD5udjd9MMISwZY2HfpriAf/CfuI7NJ51J3Xy
- h2LFWzauzDVE5Ed0s0P1nMmGgZygcBkQZvXUA3SxGOcwgXYjX9AaAjdWJg5px5ld4kUJ
- dmqw==
-X-Gm-Message-State: AOJu0YzyGI729FvMsdWqIdgJ1kNToUgN0GfGzrvVY6VEoKqNvvBuyse1
- 4w6Xy9i2HDv+IGTT0ngHc5n98YMtvwAhb0aIeWz3utxngtkBUq9Z1RQH689fWGcuyzJghAjyHPp
- mCssIXmA=
-X-Gm-Gg: AeBDievlWAiQhvPkex1P+rhN7T0YU/nUoxImq/vXLPxhancx/AdttrLuuUWPVE7y3Dp
- LtpswJ+/4xUyyM33PmcqQJHXaQB0yMxIdovwSIWTbwyekQYZgLakewfmr2bj4J7ZsGi4rknViEe
- N1Ksnb+LWzyeIgrcaAY04j19BcyM5aZuoEr4bLfXNqBWx0WjGZODII1KIksWuc97eoMzCAZC+mI
- WNJbS1tkBwsFR4ZqF5RWhyT+P8uL8u7jNw2A76ZtYbsPT2syKicNxD6EY/hlah7rP56YH20icig
- jg3I+IdObCprYa6IJvn985cZkr5hyUqeVzy6Y4Y8YlHVhVnuNmNnWEJV29gm4nboGOrwi1zJSxB
- ZPa1e7dUiCmV1wnYUkq6ZJrNWu/Vz/0f+79ZqCfwu6g/IDviCZDUWu8dGlcxd9NfGBMzcTMazHF
- L1BmF8rRGXLvC8ikpB1ig2
-X-Received: by 2002:a05:6870:e131:b0:417:6402:395f with SMTP id
- 586e51a60fabf-423e0e18313mr5817252fac.13.1776009832751; 
- Sun, 12 Apr 2026 09:03:52 -0700 (PDT)
+ bh=AMr7jz7FRFjQWOZT8lC9LVSiGIZkZ996tBpI4CHStjU=;
+ b=QLDqe8eCPY6mSz+2j7lLO7HRgYpzLkr47+6/Z/Edyu7uknL0BegtH7Y5A4BnyetibG
+ 4caY6+zpHF+6jJNQZmfdZJ7nSANwGfmJsFzexmYA9FhsEG3jFMkbRSWbsgOreXO974uW
+ HSdlKOIw4NvUMV0NGJAsbC9PuzhQhYpPUbUIwVX7T520L1gsKSkXTNbKo9aC/cW7/fZ9
+ KjLnJxT2fALuCbWj3fxt7FxrkyxHm+NuCqSOvsZXeLH0PFCSLm9F8LjLY3ZAbbIcqemt
+ XFxrECYErkcqpnolVmuVyNoaQTBCq3FJIrjRxys/TX/1kCrOpMQJKHZniAEMdv8Yvo2q
+ PaNg==
+X-Gm-Message-State: AOJu0YzGhSYhKs7xGqJRPjPJ/48SPMNFdzoCufNRWwNF6tA38j9ExDsT
+ wn8U4nD9os4PvLbMNb/oeDPiiozaL/0LMy1GZk5mygaqJU60r3mVecscpNKuxW9yHFCJ+1MavUV
+ pDnOLoqY=
+X-Gm-Gg: AeBDievvoJ2RPaROySnsalMJfG3M7n1/9kOMea0Y1PBORWH6H7glXTxr7MWXXK9BR0K
+ aMuU9sv1bW2Wt35KID0PzB4woQ9/xM/zjmi3YvonDVtAi1G/GvLEi3sJHE8SMD+FkqIkI3L8NGz
+ M5hcHBga66ejSBaUgsEs0X8nuArJ9FFWTDCsgBH+3jo5LeVhQwROGUF8CRjmD2ZjnZJUUMnj9kV
+ J+3dpwq0yo3QDu78g7AX6ff8XMiGjildb7BivNE24FuiLdYsOajOa/aj+QQrnvSqGSFSp0+XAHR
+ NH0MB0LyU79I4/vDfinxqFJKf0K/HaWvCD8HpwxCw/2GfoU3rPC5HWacHs7kDfOXkPxjMoL5Cp1
+ KxuMaMy0kFjs8axHz70o1DrzKG8At+r62BBSYU97z8pMGshhgDay/kHUxFtA6ymzJOYznrQUAyw
+ zO4JSqY/7ieB3huimrMNGQ
+X-Received: by 2002:a05:6870:2188:b0:423:69cd:14d1 with SMTP id
+ 586e51a60fabf-423e1f241d9mr4904496fac.21.1776009814110; 
+ Sun, 12 Apr 2026 09:03:34 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-423ddbee0fesm6457006fac.17.2026.04.12.09.03.51
+ 586e51a60fabf-423ddbee0fesm6457006fac.17.2026.04.12.09.03.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 Apr 2026 09:03:51 -0700 (PDT)
+ Sun, 12 Apr 2026 09:03:33 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 12 Apr 2026 10:02:38 -0600
-Subject: [PATCH 15/17] bsd-user: Add do_ioctl_in6_ifreq_sockaddr_int function
+Date: Sun, 12 Apr 2026 10:02:25 -0600
+Subject: [PATCH 02/17] bsd-user: Add FreeBSD file I/O ioctl definitions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260412-ioctl-v1-15-1d998a460560@bsdimp.com>
+Message-Id: <20260412-ioctl-v1-2-1d998a460560@bsdimp.com>
 References: <20260412-ioctl-v1-0-1d998a460560@bsdimp.com>
 In-Reply-To: <20260412-ioctl-v1-0-1d998a460560@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>, 
  "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1912; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=8zLJUOP9iTXAdsPkZjgut3g1hr2+Sb8fdxbKAXICtBw=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp28Ihxa0JsbGwDGTQvzuaxXu9vvL48pgmfXB7D
- VDUsAZpTwiJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCadvCIQAKCRBsHNEofbAR
- AE0wD/9eCWRLn9h+D+WuazBggeU1wHs3n8YwK+DjbvsByfOUg685siLJDvsMvTZ9psgO30VKQ9I
- 1fDhbBuqdFgfeGZ/JAX0kFcLHCAy6u1ygjqU8o62hQCBA/Xtf1KxX6k2QXYFXWg7v7K1HVPFQuR
- NZCZzfCfyot4rj/h23uFjiuEzTiu4tmdoCCxZVs0c2Xw5++yLGt2dGtZHq/RJ/AJLYsZ8gHMBTH
- PM1HgADI6ShbvtpzHUE+yqVTBFarjx2h6jlwpQRB7y2iiA2Vbg6B+hUAL+iM5roEGgsX5N2kj25
- snPhcNHsxxv4bB9qpLP0GQzcny9raA2yKo5v3nD84T/Q38QHQ0Xq+DPOSqw6qKBJFnJ4YppZAEc
- IYrystuEGWo5TiVwMoLx3ZwN0Jw6R6a+kFR5ECqVxi8maq+bbN+Mws9wD/KJuvDQ1umaDiIkFo6
- iwCLGTZ7XRv+GkVTu61RfCt/qPgf8EU1b2TBNr93ilIFnrnQeDp6+v13cReJygZKmBMIPUKwdr0
- iuEAbj9CdkynJV2zv6pUtaXAyr9SuKKTEkD0xiqFwTXBy0wd5AbYX7x28+3+MyvCkOIX8U+UYSp
- /EEGIyzJrSA8cGwMiACCXzTAVAIORlIIFGm5ULhh7KTqZ19p6xYhvi4sqn84LvF8r1x75Dt0awb
- zJ+U9EqMB2y6amA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1819; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=EbvF/Y9N6ysKAY6EEB2dujgG2t2X2bzpyoB14Ggqvkg=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp28IflOjsC9jKrFLgCbRqdtjNtPYYmGeFwH6n5
+ E5clq1qmzSJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCadvCHwAKCRBsHNEofbAR
+ AKusD/9/Z2Sr/KkYKuDePlkbi8Sej224qEtpmKX4x+FTCWAYF8aDpBW93ZD111A2k1945qwcWNb
+ DIzk7uBL9Udn6GkpG2RU1Jkb0652HYQS+nwJZIhx6kx5Qf1WTs+dj7k2BJAptENGHoyOwTjLr1K
+ wcke2VT8iXh+b6omrnIpY3dJha/Ep+SToC0PTIN7nNj3LKxTO4EgO+1z7Me6wevMwRbn1/ia1HG
+ J5ho0quzemc0quTyg9u4eT94wwwRJc0Va3PYMaPBv9hCfGAayYOTL91YGnQkdiGVq8FuAbRk2wD
+ +1jbKqoH977QUN9N+WN1ds9ZIioDNkQog4srFv8+j5VHH5WOGk/PuWYno9ljSqCQHD12uY7Eusw
+ DqnW2FECRn4nShVxfeE9CMrC2pPefa1Z5hawCpIZyC/qNAKs6mHp1ZTkPIaOBJkleOKocXpsuT1
+ aVCdE/liJys6CwuXe/Nvv4M2tbHVLoIPjdvwYkTI0GemND1irVE+qp7/rADapC5F7PByIEeG/m1
+ E+dLFzP5CWUqpifKmL5yqSouLL0H3lGXba5smPmT+jD7EsseGyNGZzPWCDjiUnrp2wHrxhg1jIE
+ RJjA2Sf72fyRfAZoUl8B94hQcCT7F6uCE1aVyCsgoo1psGgyo2yXcGvQPh6VxVWeJxtXY5/WCmO
+ jyu0gM0lpJslN9Q==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2001:4860:4864:20::36;
- envelope-from=imp@bsdimp.com; helo=mail-oa1-x36.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::34;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -115,56 +115,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add special handler for IPv6 interface request ioctls that take
-a sockaddr_in6 structure as input and return an integer flag value,
-such as SIOCGIFAFLAG_IN6 and SIOCGIFALIFETIME_IN6.
+From: "Stacey D. Son" <sson@freebsd.org>
+
+Add os-ioctl-filio.h with file I/O control ioctl definitions including
+FIONREAD, FIONBIO, FIOASYNC, and FIOSETOWN for file descriptor control.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-ioctl.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ bsd-user/freebsd/os-ioctl-filio.h | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
-index 2ff37a0817..aa0153bbaa 100644
---- a/bsd-user/bsd-ioctl.c
-+++ b/bsd-user/bsd-ioctl.c
-@@ -262,3 +262,35 @@ static void target_to_host_sockaddr_in6(struct sockaddr_in6 *hsa_in6,
-     memcpy(&hsa_in6->sin6_addr, &tsa_in6->sin6_addr, 16);
-     __get_user(hsa_in6->sin6_scope_id, &tsa_in6->sin6_scope_id);
- }
-+
+diff --git a/bsd-user/freebsd/os-ioctl-filio.h b/bsd-user/freebsd/os-ioctl-filio.h
+new file mode 100644
+index 0000000000..79e8f0b83d
+--- /dev/null
++++ b/bsd-user/freebsd/os-ioctl-filio.h
+@@ -0,0 +1,34 @@
 +/*
-+ * For ioctl()'s such as SIOCGIFAFLAG_IN6 and SIOCGIFALIFETIME_IN6 that
-+ * passes a struct sockaddr_in6 in and gets an int out using
-+ * struct in6_ifreq.
++ * FreeBSD filio definitions for ioctl(2) emulation
++ *
++ * Copyright (c) 2013 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
-+        uint8_t *buf_temp, int fd, abi_long cmd, abi_long arg)
-+{
-+    abi_long ret;
-+    struct target_in6_ifreq *tin6ifreq;
-+    struct target_sockaddr_in6 *tsa_in6;
-+    struct in6_ifreq hin6ifreq;
-+    struct sockaddr_in6 *hsa_in6 = &hin6ifreq.ifr_ifru.ifru_addr;
++#ifndef BSD_USER_FREEBSD_OS_IOCTL_FILIO_H
++#define BSD_USER_FREEBSD_OS_IOCTL_FILIO_H
 +
-+    tin6ifreq = lock_user(VERIFY_WRITE, arg, sizeof(*tin6ifreq), 0);
-+    if (tin6ifreq == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    memcpy(hin6ifreq.ifr_name, tin6ifreq->ifr_name, IFNAMSIZ);
-+    tsa_in6 = &tin6ifreq->ifr_ifru.ifru_addr;
-+    target_to_host_sockaddr_in6(hsa_in6, tsa_in6);
++/* see sys/filio.h */
++#define TARGET_FIOCLEX      TARGET_IO('f', 1)
++#define TARGET_FIONCLEX     TARGET_IO('f', 2)
++#define TARGET_FIONREAD     TARGET_IOR('f', 127, int)
++#define TARGET_FIONBIO      TARGET_IOW('f', 126, int)
++#define TARGET_FIOASYNC     TARGET_IOW('f', 125, int)
++#define TARGET_FIOSETOWN    TARGET_IOW('f', 124, int)
++#define TARGET_FIOGETOWN    TARGET_IOR('f', 123, int)
++#define TARGET_FIODTYPE     TARGET_IOR('f', 122, int)
++#define TARGET_FIOGETLBA    TARGET_IOR('f', 121, int)
 +
-+    ret = get_errno(safe_ioctl(fd, ie->host_cmd, &hin6ifreq));
-+    if (!is_error(ret)) {
-+        put_user_s32(hin6ifreq.ifr_ifru.ifru_flags6,
-+                arg + offsetof(struct target_in6_ifreq, ifr_ifru.ifru_flags6));
-+    }
-+    unlock_user(tin6ifreq, arg, 1);
++struct target_fiodgname_arg {
++    int32_t     len;
++    abi_ulong   buf;
++};
 +
-+    return ret;
-+}
++#define TARGET_FIODGNAME    TARGET_IOW('f', 120,    \
++                struct target_fiodgname_arg)
++#define TARGET_FIONWRITE    TARGET_IOR('f', 119, int)
++#define TARGET_FIONSPACE    TARGET_IOR('f', 118, int)
++#define TARGET_FIOSEEKDATA  TARGET_IOWR('f', 97, off_t)
++#define TARGET_FIOSEEKHOLE  TARGET_IOWR('f', 98, off_t)
++
++#endif /* BSD_USER_FREEBSD_OS_IOCTL_FILIO_H */
 
 -- 
 2.52.0
