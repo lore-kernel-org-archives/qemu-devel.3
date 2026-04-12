@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6294BE937EB
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74269E937EB
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBxIH-0006Y2-Ib; Sun, 12 Apr 2026 12:04:17 -0400
+	id 1wBxIH-0006Xc-As; Sun, 12 Apr 2026 12:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHx-0006Rb-Oq
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:04:02 -0400
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxI1-0006Rx-6K
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:04:04 -0400
+Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHp-0004Ve-7B
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:03:52 -0400
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-40f387a688dso2462253fac.0
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 09:03:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHz-0004Xn-1Z
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:04:00 -0400
+Received: by mail-oo1-xc33.google.com with SMTP id
+ 006d021491bc7-67c250805ccso1183309eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 09:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776009824; x=1776614624;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776009834; x=1776614634;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3CPXyrU6scI+xTi1TnD3MNp9VsbfveDSzhlCE0CEV+o=;
- b=FUYlqw78fjA/h2z8UbzC5bySSYuRrg5fDYEpeWX8LMqdvdQBsGzXGOPM6l+5zSOifG
- E2L9p376dQuqcOY/HnnmCxj41hcEevB7yiz9zhoOEhRtwZRLoLgvPlbUoW1QUbmasszD
- vqdGDs6PKDihRCdHBPx/P6FL4YHifneXEXgYktU3TxlRRgEGgot1TO7xErvhsC5/V4CI
- zuIh2K/qomYWkjBlirWRYMMdJ+masDJTjIOBtEvQS63vo4SyL7p2iXqUlm2QyF+pP94S
- 9v+yZJO6OdQTYOrxmC7NbUDdMTK5lQTuN493v7pgnBf8fTq0acXwQvfmWAksVSWV3TAD
- Dh9w==
+ :reply-to; bh=BIEcMXAa7oyuBcQ1J23D6kVpY/4XNgxRO50EvsP93+M=;
+ b=RK8lJwj73nQsd2tuVFCLxAIEGBG8Eogg/wD/pjIbgbuxl6TfN46GNXdbtmXvx5y8m5
+ lxg5bSej+mituFeDIL5KtKRizdC4VQL79hkrOIBi37fCZ8bV4PVB33PV3ZV7Ve5OFDRc
+ pKcwpxgReAJDv5U8+tM5t/j3Pk+ITaxeVz4/Z1b6YyOABXLr94CEBVI3iAUG8cYo3cSX
+ tuXY1GLArp01jep436Bnx9GT3pwYeLiU7yBEcon/dl6FNgqWUMhjzsWxIlDvwltQQXkY
+ coVZo+Vv5v2FZ5YP0rkyck4ylb2iUxxjXQz6vf0sEe7IbZpp+xi9xNLvFO6GEjvWbe+r
+ pvWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776009824; x=1776614624;
+ d=1e100.net; s=20251104; t=1776009834; x=1776614634;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3CPXyrU6scI+xTi1TnD3MNp9VsbfveDSzhlCE0CEV+o=;
- b=jtoIaOfiVL6DARcA2GH9RxzrPbSAcDYDKRamrAxih2ErUbm1z856CthMhDSLK88Qts
- 0fUeDdLJD/CKq16s8Is1CseI51KkewQxJILucozY5QgsTg3z1UnUwWLcjxhiJ3tiodhw
- iBsZ03Hk3uuKhHrZJ763MagsEPkf0FoicsvVEg6ESL6JgJ03ZIs/S4P6vwd6VY04r72D
- SDAI55dlZdhOr3vY2maZV7PBNA0dgYPwW0d3WbvP+1kVCqeLCnyIi9tu7nwxlPAI9oh5
- aIo0NKAQuqs8Hqgx/kEsj4VE6K9In8b99mVuS2KqtsweId7tUwYg/dk76Je5/tiUJZU/
- vpuQ==
-X-Gm-Message-State: AOJu0YzlyoVJ5kBQBzsef8pMtsKbP7yVnCDltfQH5cVq7R4aZZ73Uzs8
- 4eMmZI3kkXsARynhKH1jSz9oUsJNYd0i/ZvTE6/UZ/ECKyr0jFeaiEmUe3FdujDzuRqxXLn8JHW
- hyRi4pvE=
-X-Gm-Gg: AeBDiessngNgirhlZ6AlHg++7JnqNYOwW87zyDkHM/QbubiArAUtDRd3UBz26phvvrG
- G/OCw9X1jg9ujfXZd0lFVka1kA6OV6cZJPb7ah3wSUByphMarO+WqlDntiI8Z4xV6vKjJwex8KY
- d9Yw6sB87+rohtUdyRiMDq44sRUQ9eAQ8zUEQTi+0AS6TPG2vyUPuIWC15xm7kU3s0WaWV/XLfK
- i2HJOrGnetZBC5BtLkaLWGfoGe8TIwNzXfOGWaQYlFF3Axrjneznt5IWZvM2aXem1W52QQcMYkY
- oZ/nf8rFuiGg1QiFY4+pM9afpi7OXTNMFLizQvNhLQHjy9Lj2cFwjc8iepCE+FirDWFywH8d9PW
- b8i0lQ56nIIWu3Nynuj25oMxeOv5hCpRyKMEb/5chbSQWzt+gAeJAG5nzIX0Fapw6HTmFO8Ir2a
- U2Hp0x+E925g==
-X-Received: by 2002:a05:6870:1b1a:b0:41b:f2ee:bfea with SMTP id
- 586e51a60fabf-423e1162254mr5650894fac.41.1776009824292; 
- Sun, 12 Apr 2026 09:03:44 -0700 (PDT)
+ bh=BIEcMXAa7oyuBcQ1J23D6kVpY/4XNgxRO50EvsP93+M=;
+ b=lWfXTpDj/q6Kz1OZxgBniQwP/Ox59oedScTfPCcwQ77/YOwa1L3DTZtc17ZL0/y0vq
+ Pyf196iCHIire7+XyoegoBDv4gd7SxUx5YGPrfm1R4fqfQejnhFbTV1zQgFW8N5y9pdG
+ QN843b7utt81KGZJMF2f55UBkn7RE7idsgi0/0/KLF0pu0F+JOx1UhI2lyPGQGSAXxMP
+ UZUnxI9zCnbCFOvzv3UlLuE+zLdbE4BJ2Kt/mecbnTYvN6QjwxKYMXru2/Pt03LJWNfJ
+ QaoJZEvx7ZM8bSe7xVa/XMqeiKSmb0w/vjdA7pHSEBvKlELPuu3FxRF678U8Trl+DFP/
+ i70w==
+X-Gm-Message-State: AOJu0YxzEaISqcmR08bKIQUVFWkaOHlGymRAmDGX5CvF1Stiidh2ye46
+ ahHIgrLzqA/LTp6yeJF1H0fwmaguCCZRbglcxxfYethPIYk4D1aTN027uGUFZw/c0lO06qpzNke
+ M41SrkyY=
+X-Gm-Gg: AeBDiesAhuxz8tpHV+2kyH8plgfkPkUJcHZJrGfw3ovzjx6nZcdploYcN99xk9/t4dF
+ wuhYg350gWRaDChaOsIPlo43hzTbmQ0wYqxfiHSUS5/9JNIeCVFVnX33phomCcnQkQucEtaWK4O
+ sv58wB7a8oWiPNiUo1sRMfqvG66/O1Htcu05hv/Y6NKFMZLrZ5Kuw98v+SAYxNRc3fV6TRMqCtl
+ xnpJhUsSMQSvo/hvV/5rWxvscwXVJ2404HaSvBisOvl0oUiHWqZLBFbuAaIkuucC8Xe6vEH0xZE
+ 7R5i6FEpKaZRIUACm8FvvaIjk8/1R7f3YPNUXsTeZwMBszvcmgf4zybShZbp0JVVMr2uYjauadG
+ WpqSGa0960KjtoQ5UVopbGITQwmA6T8khfOb9uQzQjTv8sP23nkDv3fWlKNsPoSFvNltC+LMPU6
+ GUSgdxm9my5Q==
+X-Received: by 2002:a05:6820:2e83:b0:67f:c06c:a5f0 with SMTP id
+ 006d021491bc7-68be7de42cdmr3645688eaf.35.1776009834336; 
+ Sun, 12 Apr 2026 09:03:54 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-423ddbee0fesm6457006fac.17.2026.04.12.09.03.43
+ 586e51a60fabf-423ddbee0fesm6457006fac.17.2026.04.12.09.03.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 Apr 2026 09:03:43 -0700 (PDT)
+ Sun, 12 Apr 2026 09:03:53 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 12 Apr 2026 10:02:32 -0600
-Subject: [PATCH 09/17] bsd-user: Add bsd-ioctl.h header
+Date: Sun, 12 Apr 2026 10:02:39 -0600
+Subject: [PATCH 16/17] bsd-user: Add do_bsd_ioctl main function
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260412-ioctl-v1-9-1d998a460560@bsdimp.com>
+Message-Id: <20260412-ioctl-v1-16-1d998a460560@bsdimp.com>
 References: <20260412-ioctl-v1-0-1d998a460560@bsdimp.com>
 In-Reply-To: <20260412-ioctl-v1-0-1d998a460560@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>, 
  "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=833; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=yeGavK2BMRJ20mAsfFVakCqJnM3dMDajDrM0UbXfJQI=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp28IgZb4V++s7iQnDx5XKujCjFEjbbSFirgDFJ
- v7Zi4xCRSSJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCadvCIAAKCRBsHNEofbAR
- ACz2D/0fGBH304BWkbKEX+Cdg+x2Or+a8S3QtCrv/9T4tPR5UtrihXplOLQvHDttlEUhrGg8H/i
- ycjyjXQrXwLEDRZvadT7HZ2V37C5PGmi0Y9ZBcHXChtTh3d8TaJ+ZYsexLqh39zgRNsFjEAmcPi
- u39yZ1Mf05JuTc3mBMZ4UTmX/li2lkz4pYEnP8CB9/aGG1CtcwkhQEGMOPfsdJzL5KyExUGsrQe
- 36yg1oJ2kwTJtCJdisX83pSwFPInME1ZPQAFUJOq6SmjYCS5+L0y4fKiQxCoTmlSS0J+6rhNexI
- RqFrnWlb0Y16f7cLGYL2aCJYBY74PE85wRg/G9cT9Ww/71FXxYe/7Z5AOUf9zg6BvlQso2G2Htp
- efVHGwYoomNTPpxbaKK1fKH+v5BEx7i4cKzFmwaThRXDnlcQf6X3g8VeUGkG10ShAjj15ILML/m
- gNdrcAmM209yqmWe1N3tfksyOEZL81xYc22qkvy5yiffI2wIuDK4g0CbuB/W/4ui5ICdF7ETrOp
- +UZfMbmSrunc/YniNkzP4JhbdJsRqNxb609uQ6OgtrKZoeptYHrEqd4K18dng+MGk0TpJT1Qyao
- kVtpYejnfd+BWSfNIk0yL0yzrP9GdGO4oFORmxMXMBj2jNnZd2RWbu4x2XkEONLOMU+m6a6xeeU
- CMiPxZuhE5Wwjmw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3864; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=ocknaMBKcFWF+U0DHJKsIdFpogAJcD7isOX+33qY5G8=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp28IhHUkBoyDFzbO2lOco3V8FQv16713r/rc7J
+ H9WPM0sOwqJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCadvCIQAKCRBsHNEofbAR
+ ABygD/9wMlcksw+1NQMBkZiGmx49UoshOnoxqLoVi8U1UHrg6hX7sZyqVsdR0KusixoVCyJ1U/Z
+ 7YSb8Pben0xF8spqMQLpa6FqlWeWEyc6++zJffO7Tji0P4qGbPHmdsrVil6BfltdCQvAa2J2jyF
+ x2O7uX2iHcxqEvFQJ75sn3pu+9PlBYiJ/StGbRem7P9AOkNGaES460T/qNzHQCynb9xgREDwH8b
+ EShVk2HgQ4H4kor4P2KN5oVWGz+ZkRHeP77hX98S/oyXliIXYrT0B4FZv9ZC6XEv3cU68YrNX1u
+ qHgRSux86Dn6/ThV3OwoCqQKzZhFcPl9y8B+WcvEqUVMaIAG+FUy3mYMFSo4OQhatQq7caxzYiq
+ 3UpXPHiPUVWfFgw1m42Qk9FbD1BcEP5Q40lN0nqAfopxD/JWKN4dEkBSdrzVT6JT8w0SQrsf2uv
+ kSM6aswJGPYQs4u2mUkYwdTIbIVamf0Q+dMUPgEbDgVTzqV2AbuShpbPXf4io7vFuP1L3jgvxRI
+ on/UPqUAAst16HL1NKy8E0vBAW5wPjuleUVuZxCxNC31mapUgRYvMz/Znn7ajyHeeI5zHl/8//p
+ BRubmXGp0h6sPXCfmS76bfXTAiiNhzBhn8WEbb8knVIYKMTJbPU8mMACb3AgpqeRIzaWyGoLAfK
+ HZzqJWiXSKOjbeg==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2001:4860:4864:20::2d;
- envelope-from=imp@bsdimp.com; helo=mail-oa1-x2d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c33;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc33.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -115,38 +115,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
-
-Add bsd-ioctl.h header declaring the public ioctl emulation API:
-do_bsd_ioctl() for processing ioctl system calls and init_bsd_ioctl()
-for initialization.
+Add main ioctl emulation dispatcher that handles table-driven
+ioctl translation with thunk-based structure conversion. Supports
+TYPE_NULL, TYPE_INT, and TYPE_PTR argument types with read, write,
+and read-write access modes.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-ioctl.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ bsd-user/bsd-ioctl.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-diff --git a/bsd-user/bsd-ioctl.h b/bsd-user/bsd-ioctl.h
-new file mode 100644
-index 0000000000..bf9bb72bc9
---- /dev/null
-+++ b/bsd-user/bsd-ioctl.h
-@@ -0,0 +1,14 @@
-+/*
-+ * ioctl system call definitions
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef BSD_IOCTL_H
-+#define BSD_IOCTL_H
+diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
+index aa0153bbaa..ae3ac7ae24 100644
+--- a/bsd-user/bsd-ioctl.c
++++ b/bsd-user/bsd-ioctl.c
+@@ -294,3 +294,103 @@ static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
+ 
+     return ret;
+ }
 +
-+abi_long do_bsd_ioctl(int fd, abi_long cmd, abi_long arg);
-+void init_bsd_ioctl(void);
++abi_long do_bsd_ioctl(int fd, abi_long cmd, abi_long arg)
++{
++    const IOCTLEntry *ie;
++    const argtype *arg_type;
++    abi_long ret;
++    uint8_t buf_temp[MAX_STRUCT_SIZE];
++    int target_size;
++    void *argptr;
 +
-+#endif /* BSD_IOCTL_H */
++    ie = ioctl_entries;
++    for (;;) {
++        if (ie->target_cmd == 0) {
++            gemu_log("QEMU unsupported ioctl: ");
++            log_unsupported_ioctl(cmd);
++            return -TARGET_ENOSYS;
++        }
++        if (ie->target_cmd == cmd) {
++            break;
++        }
++        ie++;
++    }
++    arg_type = ie->arg_type;
++#if defined(DEBUG)
++    gemu_log("ioctl: cmd=0x%04lx (%s)\n", (long)cmd, ie->name);
++#endif
++    if (ie->do_ioctl) {
++        return ie->do_ioctl(ie, buf_temp, fd, cmd, arg);
++    }
++
++    switch (arg_type[0]) {
++    case TYPE_NULL:
++        /* no argument */
++        ret = get_errno(safe_ioctl(fd, ie->host_cmd));
++        break;
++
++    case TYPE_PTRVOID:
++    case TYPE_INT:
++        /* int argument */
++        ret = get_errno(safe_ioctl(fd, ie->host_cmd, arg));
++        break;
++
++    case TYPE_PTR:
++        arg_type++;
++        target_size = thunk_type_size(arg_type, 0);
++        switch (ie->access) {
++        case IOC_R:
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            if (!is_error(ret)) {
++                argptr = lock_user(VERIFY_WRITE, arg,
++                    target_size, 0);
++                if (!argptr) {
++                    return -TARGET_EFAULT;
++                }
++                thunk_convert(argptr, buf_temp, arg_type,
++                    THUNK_TARGET);
++                unlock_user(argptr, arg, target_size);
++            }
++            break;
++
++        case IOC_W:
++            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
++            if (!argptr) {
++                return -TARGET_EFAULT;
++            }
++            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
++            unlock_user(argptr, arg, 0);
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            break;
++
++        case IOC_RW:
++            /* fallthrough */
++        default:
++            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
++            if (!argptr) {
++                return -TARGET_EFAULT;
++            }
++            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
++            unlock_user(argptr, arg, 0);
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            if (!is_error(ret)) {
++                argptr = lock_user(VERIFY_WRITE, arg, target_size, 0);
++                if (!argptr) {
++                    return -TARGET_EFAULT;
++                }
++                thunk_convert(argptr, buf_temp, arg_type, THUNK_TARGET);
++                unlock_user(argptr, arg, target_size);
++            }
++            break;
++        }
++        break;
++
++    default:
++        gemu_log("QEMU unknown ioctl: type=%d ", arg_type[0]);
++        log_unsupported_ioctl(cmd);
++        ret = -TARGET_ENOSYS;
++        break;
++    }
++    return ret;
++}
 
 -- 
 2.52.0
