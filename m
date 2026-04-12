@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D8F0E937EE
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFE3E937EE
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBy0U-0004K8-P6; Sun, 12 Apr 2026 12:49:58 -0400
+	id 1wBy3b-0005ck-DB; Sun, 12 Apr 2026 12:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wBy0T-0004Jp-2W; Sun, 12 Apr 2026 12:49:57 -0400
-Received: from 7.mo533.mail-out.ovh.net ([54.36.140.182])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBy3Z-0005c6-DZ
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:53:09 -0400
+Received: from smtpout1.mo533.mail-out.ovh.net ([51.210.94.138])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wBy0Q-0006Ie-6s; Sun, 12 Apr 2026 12:49:55 -0400
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net [51.68.80.175])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4ftxNG1v7Gz5xQg;
- Sun, 12 Apr 2026 16:49:50 +0000 (UTC)
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net. [127.0.0.1])
- by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 16:49:50 +0000 (UTC)
-Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.229])
- by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4ftxNF6Vfpz5w9R; Sun, 12 Apr 2026 16:49:49 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBy3X-00075g-5j
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:53:09 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4ftxRz4mrXz5wvM;
+ Sun, 12 Apr 2026 16:53:03 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 16:53:03 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.242])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4ftxRz3lzrz1xp5; Sun, 12 Apr 2026 16:53:03 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
  (Authenticated sender: clg@kaod.org)
- by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 22C76941618; 
- Sun, 12 Apr 2026 16:49:48 +0000 (UTC)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 0A1E52403A3F; Sun, 12 Apr 2026 16:53:01 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-107S001f4252a1f-bb91-4083-8f86-45bd22d3158c,
+ (GARM-109S0035231a40e-642e-43f5-bae3-854c91ce17b7,
  24D929EF98A9C54707A36CFD348010E9E2578269) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <b2cc5d66-ee2b-4f65-840d-839891ca2b90@kaod.org>
-Date: Sun, 12 Apr 2026 18:49:47 +0200
+Message-ID: <b26ce316-dcd0-44f3-a5be-86c0767da640@kaod.org>
+Date: Sun, 12 Apr 2026 18:53:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/13] hw/usb/trace-events: Print EHCI queue and
- transfer addresses as 64-bit
+Subject: Re: [PATCH v1 05/13] hw/usb/hcd-ehci: Add property to advertise
+ 64-bit addressing capability
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -53,7 +53,7 @@ Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
- <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-6-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,31 +98,31 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260311072614.1095587-6-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 14784754629384317963
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 14839079298058857483
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGHLIOsrZGsc7nG3gt31OtL6MFL+tigeUBTZ+kGuNF+QpQhTOeK6JbYoUK/KUhjxX4Z+ghTVYa3VAqprkW4X8DnYnSqKtF2VloLZkwfcOIP3pSUSmAdJP6UgFDgH8P3XDfLpDi0Wi4qqlVZve+1EQHLKt4BiiAfcBx/W51rFl2BM7MOK6FQdV6p6Wxl0F/MDOZMZVFa+AavNDVrtU7Sbab8oHj/D4vykDr66TBgeFSStPdZS0HBcoB3/jT7qjJ9RiSUHcBwYoLKY4X48zY8kzNzMwwIoVHjpsQal44Kji9caorK0ufiNjoreCjZ5ILGjk8sDyr7Etzok7o3joOXZQiRBUGqGZaHqOHNzDfYENyvgM8f69fEv0LN6ccgVxpo6dcopNjcXqMUf/TzTOLBJCPLrej2QstPn8U8Er0iCCNBXPooNiU/6GQX4ecWYx621KKJmtY3ICgLEG9/sNCIkml+mZgFIrEbHlf58RP/wxG9G+4zjvOBbXV5WhrOR29wn43DCjSnEGTH0If4kqwdF6bt7Tq7hcJdPw79nFzZI5ylhXZpbSHy6FjE/qEkmljFKdJxQNvjoy1pLAqtgR5pB19afz4IbWwtGpbDDqIrADcYe3rsXw9s/Qvd/Jz5KAeb0NUU0ZxDaDaiOAVm68NbYhNKHbG7SDYZFRum74OpKCmGBQ
-DKIM-Signature: a=rsa-sha256; bh=67sQ/cRWXE2zVshkL9QTufuL4WiX4mLACn2B+Bst82k=; 
+X-VR-SPAMCAUSE: dmFkZTFnnWxY2A1ZcYYKxv+HLvH3XGK9dbVY5gE5ZTKt8D4sAqHz8IvTg29T8h0pxuHMaX42LYH/10Zv81g2plTFzax1Ji6Pf7CJV0o1GM/2BLpMwZMUuzP1kZwwVVaHqIGhQBpQmA5xALKTffIsLFH6PtFtUa1jKMPb+5TMu9cAte24IeqJjTRGhqlronUM3HmLdyv9kW2zL/+qLmnHBnx5J0ywcczCl3Rvt38dZNWXQXQY05KCA1AXKN/4HJrkcqtKJxYKGD7kL1mxjZiSK/6swG6S2mmueRSbPqBfESOEZOvVY/iZ2DEwYaMwaCK9q+1X3uIJolhHPdXbOzIqbzLU0Ba5KarEnVKJZ7sEh4OX7bH0w1RazwqaE2Rkl8c9NzUTTQdMY2zy6t79ATPYTbUEkiW5uK2QCBCxBSGG0P0f6dzwJjRJFwk4jxM6wpK4xcv3wSC8YnsV4xPYFsmwJCHs75vfJXJmATafj8gNn9OTyFeSMHDmuCqPAtd9K2aHgIzd+iFTddS8BtETmL8Y6itUZnMlZF6EasH+Bvcfta2E/Zkzt4tuj2xiJwQo6UVFHmRjZyipaM9Yqg9Cziq63PrpRNgDbuIojusnDXNV59Y2YSC+69QSsYY9CgtTIQ9Px/b8Caz0Pi6/E0nuKg4H53S6RFB5N8uhHKvXvOBJfIUCdU3wdQ
+DKIM-Signature: a=rsa-sha256; bh=gLfVo4yOMyf1U6xBbDZwKJsVi1bSh1SphtrJq5OJfRU=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1776012590; v=1;
- b=XaA7ldYZAOHywASpPkzJd4gxkps0DXuzmmOcj0OBgPGRsI56ANAHvA3aufBQtVffMQyodZy2
- fTP+5g3r1yQp22V5tWdAE3oy+NACHFmm328IRC2Q4NWallIE299dr7hcmfRKmdx1mp4IZfGpT/t
- /6iXOc47I0CuXE+r42Wugu9J+czO/V7UO79e9xWUJbYfExnY19UGPLCgg8W6p17AUnmEFLMPLvN
- Zq1ROYSsyyFxwHdBMkx7No+5PeoW1vsuad/SgzhhBjMMdYYjTkPKRclTQzPSDNl33sYDC7vfQBc
- 8A3zT0IoqGx5jxkaa3PnstL+Jzd4gpJFpb6EWATSs0iNg==
-Received-SPF: pass client-ip=54.36.140.182; envelope-from=clg@kaod.org;
- helo=7.mo533.mail-out.ovh.net
+ t=1776012783; v=1;
+ b=eY6/G0HlmMvRhYIs3neAhl8JZhIof7u390zHuMq2eTEZlmYAomlEfFHEVYwqV/BLm6EpQQc3
+ DI+fCMjxje2FoAHS+Gv9J9GtZI6kCJhUCTFfa3sPtUX5/sALtrc6EJRZYraBP0Ny+SUChz4zmZ6
+ MJkZcWV4Wdr4iAbxkQ6AsGgKyDK03x9UN/TSRxxoYC4IZArRf+jexc0QlI4m8Wch8gzy9UioVtR
+ p/JrKE0mzQBsAZITrhVwvnmjdAc0ynuJ+HesZ/wLpGG5AccI5ieqdf+12BNKnRCVOwoVNHpsqdF
+ hQwMFNfdvtKEE1Bdp3UNQD6Qua4xRd99KpTsNFD/upYyw==
+Received-SPF: pass client-ip=51.210.94.138; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,52 +139,91 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/11/26 08:26, Jamin Lin wrote:
-> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
-> use uint64_t for the address argument and print it with PRIx64. This
-> ensures full 64-bit addresses are shown in trace output and improves
-> debugging of queue heads and transfer descriptors.
+> Introduce a new boolean property, "caps-64bit-addr", to control
+> HCCPARAMS[0] (64-bit Addressing Capability).
 > 
-> This change only affects trace formatting and does not modify the EHCI
-> data structure layout or behavior.
+> When enabled, the EHCI controller advertises support for 64-bit
+> address memory pointers as defined in the EHCI specification
+> (Table 2-7, HCCPARAMS). This allows software to use the 64-bit
+> data structure formats described in Appendix B.
+> 
+> When disabled (default), the controller reports 32-bit addressing
+> capability and uses the standard 32-bit data structures.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/usb/hcd-ehci.h        | 1 +
+>   hw/usb/hcd-ehci-pci.c    | 2 ++
+>   hw/usb/hcd-ehci-sysbus.c | 2 ++
+>   hw/usb/hcd-ehci.c        | 5 ++++-
+>   4 files changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
+> index df87f8145f..7dc6d151cc 100644
+> --- a/hw/usb/hcd-ehci.h
+> +++ b/hw/usb/hcd-ehci.h
+> @@ -274,6 +274,7 @@ struct EHCIState {
+>   
+>       /* properties */
+>       uint32_t maxframes;
+> +    bool caps_64bit_addr;
+>   
+>       /*
+>        *  EHCI spec version 1.0 Section 2.3
+> diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+> index 9febcc1031..2ea8549db9 100644
+> --- a/hw/usb/hcd-ehci-pci.c
+> +++ b/hw/usb/hcd-ehci-pci.c
+> @@ -137,6 +137,8 @@ static void usb_ehci_pci_write_config(PCIDevice *dev, uint32_t addr,
+>   
+>   static const Property ehci_pci_properties[] = {
+>       DEFINE_PROP_UINT32("maxframes", EHCIPCIState, ehci.maxframes, 128),
+> +    DEFINE_PROP_BOOL("caps-64bit-addr", EHCIPCIState, ehci.caps_64bit_addr,
+> +                     false),
+>   };
+>   
+>   static const VMStateDescription vmstate_ehci_pci = {
+> diff --git a/hw/usb/hcd-ehci-sysbus.c b/hw/usb/hcd-ehci-sysbus.c
+> index b31032bbf3..61215e9f3d 100644
+> --- a/hw/usb/hcd-ehci-sysbus.c
+> +++ b/hw/usb/hcd-ehci-sysbus.c
+> @@ -34,6 +34,8 @@ static const Property ehci_sysbus_properties[] = {
+>       DEFINE_PROP_UINT32("maxframes", EHCISysBusState, ehci.maxframes, 128),
+>       DEFINE_PROP_BOOL("companion-enable", EHCISysBusState, ehci.companion_enable,
+>                        false),
+> +    DEFINE_PROP_BOOL("caps-64bit-addr", EHCISysBusState, ehci.caps_64bit_addr,
+> +                     false),
+>   };
+>   
+>   static void usb_ehci_sysbus_realize(DeviceState *dev, Error **errp)
+> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+> index 87c3991313..9e82328116 100644
+> --- a/hw/usb/hcd-ehci.c
+> +++ b/hw/usb/hcd-ehci.c
+> @@ -2538,6 +2538,9 @@ void usb_ehci_realize(EHCIState *s, DeviceState *dev, Error **errp)
+>                      s->maxframes);
+>           return;
+>       }
+> +    if (s->caps_64bit_addr) {
+> +        s->caps[0x08] |= BIT(0);
+> +    }
+>   
+>       memory_region_add_subregion(&s->mem, s->capsbase, &s->mem_caps);
+>       memory_region_add_subregion(&s->mem, s->opregbase, &s->mem_opreg);
+> @@ -2597,7 +2600,7 @@ void usb_ehci_init(EHCIState *s, DeviceState *dev)
+>       s->caps[0x05] = 0x00;        /* No companion ports at present */
+>       s->caps[0x06] = 0x00;
+>       s->caps[0x07] = 0x00;
+> -    s->caps[0x08] = 0x80;        /* We can cache whole frame, no 64-bit */
+> +    s->caps[0x08] = 0x80;        /* We can cache whole frame */
+>       s->caps[0x0a] = 0x00;
+>       s->caps[0x0b] = 0x00;
+>   
 
-I think this change should be merged in the previous patch.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
-> ---
->   hw/usb/trace-events | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/usb/trace-events b/hw/usb/trace-events
-> index dd04f14add..ecd84e54c0 100644
-> --- a/hw/usb/trace-events
-> +++ b/hw/usb/trace-events
-> @@ -86,14 +86,14 @@ usb_ehci_portsc_write(uint32_t addr, uint32_t port, uint32_t val) "wr mmio 0x%04
->   usb_ehci_portsc_change(uint32_t addr, uint32_t port, uint32_t new, uint32_t old) "ch mmio 0x%04x [port %d] = 0x%x (old: 0x%x)"
->   usb_ehci_usbsts(const char *sts, int state) "usbsts %s %d"
->   usb_ehci_state(const char *schedule, const char *state) "%s schedule %s"
-> -usb_ehci_qh_ptrs(void *q, uint32_t addr, uint32_t nxt, uint32_t c_qtd, uint32_t n_qtd, uint32_t a_qtd) "q %p - QH @ 0x%08x: next 0x%08x qtds 0x%08x,0x%08x,0x%08x"
-> -usb_ehci_qh_fields(uint32_t addr, int rl, int mplen, int eps, int ep, int devaddr) "QH @ 0x%08x - rl %d, mplen %d, eps %d, ep %d, dev %d"
-> -usb_ehci_qh_bits(uint32_t addr, int c, int h, int dtc, int i) "QH @ 0x%08x - c %d, h %d, dtc %d, i %d"
-> -usb_ehci_qtd_ptrs(void *q, uint32_t addr, uint32_t nxt, uint32_t altnext) "q %p - QTD @ 0x%08x: next 0x%08x altnext 0x%08x"
-> -usb_ehci_qtd_fields(uint32_t addr, int tbytes, int cpage, int cerr, int pid) "QTD @ 0x%08x - tbytes %d, cpage %d, cerr %d, pid %d"
-> -usb_ehci_qtd_bits(uint32_t addr, int ioc, int active, int halt, int babble, int xacterr) "QTD @ 0x%08x - ioc %d, active %d, halt %d, babble %d, xacterr %d"
-> -usb_ehci_itd(uint32_t addr, uint32_t nxt, uint32_t mplen, uint32_t mult, uint32_t ep, uint32_t devaddr) "ITD @ 0x%08x: next 0x%08x - mplen %d, mult %d, ep %d, dev %d"
-> -usb_ehci_sitd(uint32_t addr, uint32_t nxt, uint32_t active) "ITD @ 0x%08x: next 0x%08x - active %d"
-> +usb_ehci_qh_ptrs(void *q, uint64_t addr, uint32_t nxt, uint32_t c_qtd, uint32_t n_qtd, uint32_t a_qtd) "q %p - QH @ 0x%" PRIx64 ": next 0x%08x qtds 0x%08x,0x%08x,0x%08x"
-> +usb_ehci_qh_fields(uint64_t addr, int rl, int mplen, int eps, int ep, int devaddr) "QH @ 0x%" PRIx64 " - rl %d, mplen %d, eps %d, ep %d, dev %d"
-> +usb_ehci_qh_bits(uint64_t addr, int c, int h, int dtc, int i) "QH @ 0x%" PRIx64 " - c %d, h %d, dtc %d, i %d"
-> +usb_ehci_qtd_ptrs(void *q, uint64_t addr, uint32_t nxt, uint32_t altnext) "q %p - QTD @ 0x%" PRIx64 ": next 0x%08x altnext 0x%08x"
-> +usb_ehci_qtd_fields(uint64_t addr, int tbytes, int cpage, int cerr, int pid) "QTD @ 0x%" PRIx64 " - tbytes %d, cpage %d, cerr %d, pid %d"
-> +usb_ehci_qtd_bits(uint64_t addr, int ioc, int active, int halt, int babble, int xacterr) "QTD @ 0x%" PRIx64 " - ioc %d, active %d, halt %d, babble %d, xacterr %d"
-> +usb_ehci_itd(uint64_t addr, uint32_t nxt, uint32_t mplen, uint32_t mult, uint32_t ep, uint32_t devaddr) "ITD @ 0x%" PRIx64 ": next 0x%08x - mplen %d, mult %d, ep %d, dev %d"
-> +usb_ehci_sitd(uint64_t addr, uint32_t nxt, uint32_t active) "SITD @ 0x%" PRIx64 ": next 0x%08x - active %d"
->   usb_ehci_port_attach(uint32_t port, const char *owner, const char *device) "attach port #%d, owner %s, device %s"
->   usb_ehci_port_detach(uint32_t port, const char *owner) "detach port #%d, owner %s"
->   usb_ehci_port_reset(uint32_t port, int enable) "reset port #%d - %d"
 
 
