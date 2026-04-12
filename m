@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AFDE93805
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDAB8E93805
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC1WC-0006ma-Ry; Sun, 12 Apr 2026 16:34:56 -0400
+	id 1wC1aR-0007mP-Cg; Sun, 12 Apr 2026 16:39:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1WB-0006lx-J3
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:34:55 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1aP-0007lw-D6
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:39:17 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1W9-0000iy-Fz
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:34:54 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4888375f735so35263685e9.3
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:34:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1aN-0001xM-Tr
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:39:17 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso43706385e9.3
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776026090; x=1776630890; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776026354; x=1776631154; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D2X2yQawK2yED/vm9MPrBI+GUdhWyI8d2KdgH0FLPf4=;
- b=CInZytZSOVD6OkuRiEyO/YkLc2XClFrG0OOrDgNyXqRQOcQNDRxbFFFRFUGj+ZKb39
- ZfHq0mhoUB88frBSTfPT+S2mIxr9sdpGuvhFC+7zq+jujyGuYyULbKfzX+17A9OoYn0o
- Ixij91+EZYgHaHgb2x1yBXLPBsz/YZUWZXKeSIIl6Fn/SL/8BGNAlWcMl/Mf0HdHCUnC
- 34sgP/1m0YlvQzRk+64AiQZf5LqAlowbpALKRvCVAW9M9ulv5gXqI1o7b9jK4Z30HM8+
- TfIQGF4cithV2S3Qrf9Lt6Yg4+hwhkV6DmLEgpsJyqF19KUgP+BaQCUoXtSKA8EMWxqJ
- D1QA==
+ bh=oA0DLeSnfQ1X+bYFCL2d+Pb52L0Uky4PduQpBdNLBkM=;
+ b=qC25amMP4MMGf9zvwnEWHBXu54dPT5LnD0U+EP9v5HgJKocI4APdUB815ivq36y76P
+ Pw9RNYoi1OKrCJzzP6FtPRoKIUj/n9L7vX1MgKJ629Xr2LMaDGziK7WTX+QOR+mySiyM
+ vOgfH3FKTBsauLqS3sBCovkMCrNa4gZNFnDTrfX9OKP52LtD3E+/RsXPgu9dRzzTvm+A
+ qenXXeQHO1XFObnfTRHKgw1ahxKJWQpDipime0VrddmPISaMI8yWM8cjhOIQge92R8Uj
+ HcbCoan6yqz59DKQDM+ZjUcJ8LssoJ/rKg02KNC9/FSoRuPU900IY7qCaj0V9fgmeNo3
+ 2HDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776026090; x=1776630890;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776026354; x=1776631154;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D2X2yQawK2yED/vm9MPrBI+GUdhWyI8d2KdgH0FLPf4=;
- b=cC53uM21QoF9F6W3zI7PxZI/0V2Km7se+4tTGFEFN7XZvJseAGH4GsCG4JZEhw43JM
- TzWxtdhOCDdZKWi1elGwn3kJkHYudTQz5a4H99MrC3uFlctWQLppJfliv5EnNTYbDVbi
- LmmxtydyFBbfDXWsIxtFDaY5o6ImCA/nTzCsez803/TggpLrOtopJ3Rv55opEXLxd8B6
- 2n+Af0kK9xHmW8vKEUzDK5mucHxWys2fXhR8LJ7c5GQr2MeINEkrSBY15FihtlT+ZwH8
- A8qwd4yHJYxFAPXv+PrDd4hwe5W7f/ZXJiRV5NW4CcAdAcNeUa3AP2NctsPlY4IAn6t6
- T0Sg==
+ bh=oA0DLeSnfQ1X+bYFCL2d+Pb52L0Uky4PduQpBdNLBkM=;
+ b=cXju00XCnOnXgDZ3zlSPQ0z50cADBfwI44D2pBcPd0oJbRzUEtl3W3jTCMA8EvtKQU
+ VcBGdvagaHpJNE5D36LriWRZuXRMXXiUdauRipOwq0rOw6Hh98WQi9aBG262iqxGmmX1
+ GdktpGzweW7qQXYjCcJaUeMxsIdz2o8zn6LFxyGobDncll4hOlpA/5sPzWocrkYVSjLR
+ o3sNV5s5EWDLcdDEVom37TQ2s5asYVuuHNCzaZvOequU/MPneJZhNLmp6soxcr84OWWP
+ 95ZX0Oif0qXcB6vxqHi5vuYXcaPB77ZSymBco5oOvZkgfAStO89MoZJWXojSVQak4Ql4
+ vBLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyZms1uueehFF2JQygN+hB5nEdoOAMcd8CgO66m8j6DfuQRNNOeGVyhk/3wj8+XBZRNr/ovKaZ2yOX@nongnu.org
-X-Gm-Message-State: AOJu0YxFLt3ZNQ1gBOpSnfmwDE+nIvw2xGaEwaPHvESOS3MMy0GgjhTI
- wfniG111VoGmlrh2mLZm1eWQNo5uq3uMrn2675U7T2LKYO8iaaQjPc+x8QxTcOXqHnE=
-X-Gm-Gg: AeBDiesgF6c9tzR2ooxavCumMcTtKFoZ92KV/gclWWLmLHFKAJKZv9KlOdeLOGhRctk
- 9jZPxe0i7UeaReQ1cQfbgjYfuKMnoaM0sDn/Qshx4v5MQOweAXbrszzOC8+RBbb40JCaAkJJeuP
- aa++3Nro1ouwASjN6eHqz7dOqr7cxsK6I+5oEJeNpb/jk/iDlaLDO36ykgUCDY8sjT7nPFRu3ep
- OIhirN/UUWDToQK+y6bHMz1H1OxJRgnlVlIDT9WzOwADZNNF/sJP0q5mjvtpydQ5bYmKBp/y0hG
- n5bG3benWTX+Q9qRBIviJUlF6eywQuzz9mnwl3b6dNNIXJoYA7CfM3iLy5xZksN99D0Pps3BL4p
- t50RRDvEQt3Z/Udp9Uep3IBMVyrHN+sygDKJ/Ko8PvxtJUmxy2YQS92PvaSztjBqMp1Rzq3FdlR
- K/A48thB/oexSbOgrgvrbAECIaHKXdqXO3m+Qsj55A7xXcH6w0C9htGBcyVydGyjl/9Q==
-X-Received: by 2002:a05:600c:3047:b0:488:d6eb:e635 with SMTP id
- 5b1f17b1804b1-488d6ebe7ebmr87538865e9.12.1776026090514; 
- Sun, 12 Apr 2026 13:34:50 -0700 (PDT)
+ AJvYcCVR6wFErtc+q1hrDYN3yfmEb/D87JhIEXWdTMvYWM7hxhpbfG89SsQji2yUqnZIwx9QiII6mdcyo6n8@nongnu.org
+X-Gm-Message-State: AOJu0YyEYWNDzyVpgSE/QLutMiUaorkFkv+1PNo8yOiiLUFlZerBor32
+ 8FbUg1OTHEb3/1JGS09XDd3EyTtk9wV2MCv3WyI8scSiHibQk0Fa8vnT4I+5LjDXqvejbn+DA15
+ dv2k4nKc=
+X-Gm-Gg: AeBDiesQqa/Thu8MR9agIJQO7kK/ygWsln0QsR8VlMzgOrCAaq6rpnhLrfbm+NnKXfs
+ e7QluZsHVniYuOrzlEg/kGfkQ86ZEULUrHdFXesGyy0n7gjC6Y3eJmJWbcBvruPNRDxS7k1/Sb4
+ bPLrGMr5fKXgSbqpUN0BZFRAJgsBHF5FkqCEDJkF1lgw7+7NDr3jDm0bPdc4+2AKzBMjj3D2hnH
+ ceor5edBmYr9kMFaSD/tp6TOdqx3nbNiUMNs1rpedr1Jtd0CbGCWp+/XrveG9xcEXybKs58fPno
+ w/2eGjjlW65BCfDa9UXs8bN23Y4zO2aGBsL9uvLeAml+Azo+Vv6yUhr9fguaAn6gd08pq5WOEgk
+ dAY3R7xY4QQCCW2eninfNnlz0mLbaAVyzk1NiTu4YzYGs0xX94SnhecLx/5nDo/pMEhBLYc412r
+ lu606VnO0Gn2+/rhCQTRq5GmulfOQs2h9xZTZVsS2xCTnTkjVXATLKtQ34r5VPgVn9hg==
+X-Received: by 2002:a05:600c:34cc:b0:488:869c:edaf with SMTP id
+ 5b1f17b1804b1-488d67d882cmr156080645e9.8.1776026353943; 
+ Sun, 12 Apr 2026 13:39:13 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d58bf10fsm251660545e9.8.2026.04.12.13.34.49
+ 5b1f17b1804b1-488d592d606sm239789575e9.9.2026.04.12.13.39.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 13:34:49 -0700 (PDT)
-Message-ID: <4253d673-02a9-45cd-9781-0f03866b9703@linaro.org>
-Date: Sun, 12 Apr 2026 22:34:48 +0200
+ Sun, 12 Apr 2026 13:39:13 -0700 (PDT)
+Message-ID: <ed479279-fbf0-46af-96a9-93aec25c0ecf@linaro.org>
+Date: Sun, 12 Apr 2026 22:39:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 03/13] hw/usb/hcd-ehci: Change descriptor addresses to
- 64-bit
-Content-Language: en-US
+Subject: Re: [PATCH v1 04/13] hw/usb/trace-events: Print EHCI queue and
+ transfer addresses as 64-bit
 To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -82,13 +82,14 @@ Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
- <20260311072614.1095587-4-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260311072614.1095587-4-jamin_lin@aspeedtech.com>
+Content-Language: en-US
+In-Reply-To: <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,69 +112,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jamin,
-
 On 11/3/26 08:26, Jamin Lin wrote:
-> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
+> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
+> use uint64_t for the address argument and print it with PRIx64. This
+> ensures full 64-bit addresses are shown in trace output and improves
+> debugging of queue heads and transfer descriptors.
 > 
-> The following fields are updated:
-> - EHCIPacket::qtdaddr
-> - EHCIQueue::{qhaddr, qtdaddr}
-> - EHCIState::{a_fetch_addr, p_fetch_addr}
-> 
-> Update get_dwords() and put_dwords() to take 64-bit addresses and
-> propagate the type change through the descriptor traversal paths.
-> 
-> Adjust NLPTR_GET() to operate on 64-bit values:
-> 
->      #define NLPTR_GET(x) ((x) & ~(uint64_t)0x1f)
-> 
-> so that link pointer masking works correctly when descriptor
-> addresses exceed 32-bit space. The previous mask (0xffffffe0)
-> implicitly truncated addresses to 32 bits.
-> 
-> This patch does not change the on-wire descriptor layout yet.
-> It only removes the internal 32-bit address limit and prepares
-> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
-> 
-> Since the type of fetch_addr changes from 32-bit to 64-bit,
-> bump the VMState version.
-> 
-> No functional change.
+> This change only affects trace formatting and does not modify the EHCI
+> data structure layout or behavior.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/usb/hcd-ehci.h | 10 +++----
->   hw/usb/hcd-ehci.c | 67 +++++++++++++++++++++++++----------------------
->   2 files changed, 41 insertions(+), 36 deletions(-)
+>   hw/usb/trace-events | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 
-
-> @@ -2484,8 +2489,8 @@ static void usb_ehci_vm_state_change(void *opaque, bool running, RunState state)
->   
->   const VMStateDescription vmstate_ehci = {
->       .name        = "ehci-core",
-> -    .version_id  = 2,
-> -    .minimum_version_id  = 1,
-> +    .version_id  = 3,
-> +    .minimum_version_id  = 2,
-
-Since this device is used in cloud virtualized instances, we can not
-ignore previous migration streams and really need to implement the v2
-to v3 hook.
-
->       .pre_save    = usb_ehci_pre_save,
->       .post_load   = usb_ehci_post_load,
->       .fields = (const VMStateField[]) {
-> @@ -2513,8 +2518,8 @@ const VMStateDescription vmstate_ehci = {
->           /* schedule state */
->           VMSTATE_UINT32(astate, EHCIState),
->           VMSTATE_UINT32(pstate, EHCIState),
-> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
-> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
-> +        VMSTATE_UINT64(a_fetch_addr, EHCIState),
-> +        VMSTATE_UINT64(p_fetch_addr, EHCIState),
->           VMSTATE_END_OF_LIST()
->       }
->   };
-
+This patch should come before the previous one. Bonus if you convert
+the legacy DPRINTF() calls.
 
