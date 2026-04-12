@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E33FAF3ED4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 02:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A5AF3ED4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 02:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBkS0-0004Dk-Fc; Sat, 11 Apr 2026 22:21:28 -0400
+	id 1wBkS3-0004EQ-Ds; Sat, 11 Apr 2026 22:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wBkRw-0004DL-VE
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:26 -0400
-Received: from mail-qv1-xf41.google.com ([2607:f8b0:4864:20::f41])
+ id 1wBkS0-0004Do-4k
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:28 -0400
+Received: from mail-qv1-xf43.google.com ([2607:f8b0:4864:20::f43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wBkRt-0008GT-L3
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:24 -0400
-Received: by mail-qv1-xf41.google.com with SMTP id
- 6a1803df08f44-8a08fa355a1so49657916d6.0
- for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 19:21:21 -0700 (PDT)
+ id 1wBkRy-0008Nb-C1
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:27 -0400
+Received: by mail-qv1-xf43.google.com with SMTP id
+ 6a1803df08f44-8a00566c11bso42519136d6.2
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 19:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775960481; x=1776565281; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775960485; x=1776565285; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7vVCl9oFeB3SQLBVtH9GYT4ioHX7OL/vziaYxhp85Ro=;
- b=dRfa+4jyZqQLHv/o1zI2rEiPh3WseNaM8vouc/eAN3tbPOKfOYTDmm6npw9ENNTIgd
- /RYsQ5pNz3ohs+DKqX1uf7fVnCkSDQORHdnB9H8HEuzsEIpgQS6IaggK24TvCt3ScGsn
- Bb8g3m8Dh6gnxpj70wAhsXm8sP/aIOLfyS8J5NjfAh7PuPPT+9//Mbq+cez52Hnv+xDf
- iRX8LP1krrrx84pJWpQn6lAc/CMgVv4ydiYvMxIuoYRJHeCucYlWOSvAlDBxS/YVqDXf
- t63dCWy3WpgYhfv5tyIHox1x3zUebtahRgB1ccv+C85UG0Uw/mBJ04ArfEdRPGZZ0xLe
- VW3g==
+ bh=CKkxfjFo9HpAG1vOAa+x6hJo3pEzWJI2rZ+qLPR4jgw=;
+ b=Z9QXLuY06EAYf24uvR+y3zAJO1ndYbmgWFR/4Cu7CfyQBTzidowpwXQFJCNjo77gLw
+ uPYgH83tMcd54e09oIyQBOYjnuyvsOBZDJNcRIdtsS2l22xTP6wmU3W6LO4yOGxAeZI0
+ pyGpODtgU/syoMtDXQ4SeQymHs+wxJWHdUjX6kJF8Xhya5h6aAq3tRgocnjv/VYzLMB9
+ ec3mahrzjac6VgEknmdYsihWMirJot93nCK0Kd6K+V6aXsEv1HZcEAUEjJ3OqCTIGQqv
+ wM4l91kUZ+MWtSFLaikrVwZJRw2ZNpG74Ce8ebuRjWELegu7MiHFHzflJnwx6OtXN7Ed
+ JZcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775960481; x=1776565281;
+ d=1e100.net; s=20251104; t=1775960485; x=1776565285;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7vVCl9oFeB3SQLBVtH9GYT4ioHX7OL/vziaYxhp85Ro=;
- b=ZBfV13zfNhjxWSoot1KbWynQYArktwjxG5cZGPPBDjxnDo5Yh+rbZVf8gMCrQTELos
- D2ZDbE3RzawHpHoN7xRQUSJtQ2yHpoooQrLMr2p4veeBWy3Fjr03nHK+1/Y8WtdOL+mg
- 0g75YUMzTwqMKZAMsxKx301Q/ZKPNbTOvJ0v8iZZys+4gZnUQhL0Y9lPuQLbwknI+P40
- IRPNt7cd8D2ZW1KpiNIyD4xrWy3dVNJE0xZ+KCZu41q7ixK1WFjnBKvH05WZ8BdbDgu3
- wvlPZmmVb3miDuLNsxuKTCuDSqzFcrko5o5D7pCqa5xQd4DLun+YqMAdAsjXTEnpxlwf
- 0KfQ==
-X-Gm-Message-State: AOJu0YwoYdSAFeEVmBFYJPz31hJ8RjalmdEVaqhjg94fQfxYUTKA4bHa
- 2QIiQCj6dfGTDLFkKwfprQpr6diQ3R83KOJqe+vMUc+jc+04GxqmZC0j
-X-Gm-Gg: AeBDieu8LKjtJ4+ZYWtRz0NFv7/Ie1yTeqqkzGpORMweRkQV+TtFpoK87qIIdRmmoO3
- Lm7ngMd2L9KxiBPbubmJYCgPQdBUAwNcevKN5dUzF9UoIL0tpgI/haFTnG0x5PKJsmES1x3yFbP
- vkvpSOGsehuKVoGWOruemaoE3f2gCtNZ6STcvGIrNj77eXj3SskRg7P31V2gmS/kI6Xcxbzce4B
- g4nGRvM5FaVZud8Zw5ncYlWA/ZcVX7rxVJEF0QTlzmyj1iIas/m8Ej0+FzuG55nzOnpy55V9LfH
- q4pV92l7IN0nZFEcIFsVo0FqgtxmXHMsgoe8TuTQ8haPTyMDuzLDDCBBMCJ1tPBQxvN14JscUBC
- 150t965q44/iJr61Vqb+XC82KxY1Crxtm1ksK9HHR82IUykU5B3DxrYIRzE8vSjUKyYFE5bArNz
- D8t6XygpmbjEclyvvB+kA5xbd1UC7Tx1oPDQuY9p0tIyEgA/Fn4CYz0A1/fVRPQfUmYceI
-X-Received: by 2002:a05:6214:19e2:b0:89c:6ba4:e306 with SMTP id
- 6a1803df08f44-8ac862c8eaamr150741326d6.43.1775960480548; 
- Sat, 11 Apr 2026 19:21:20 -0700 (PDT)
+ bh=CKkxfjFo9HpAG1vOAa+x6hJo3pEzWJI2rZ+qLPR4jgw=;
+ b=F+HloFWeCALnsMaZXAi3nnC7rv7Q8MgRxV/oOTTfel0ye58ond8orRl7nyAhUbaiMC
+ RfYfAi5R1bqaDLQDFtG5fUTkEBwv6fDBgYjMO7XrSWRoVmH/ICn7wJe7LHPrJ82tZRvH
+ mVR01PgmG1syuTkRpV81ULzdvXv2uQyRsAA9PYI0qPTiCGCqX9ZaUsfkD1857YQd8GL0
+ a/NmKJGEd3Xsr6ZNiPJVJxj1dskPijXrelHz3wgsxwxWRCDsyosREcPopkAW3inVH7Za
+ SkOmcZ3gob3hnkwCCwFpITJUcr3LE8Z082iNjXy4eytdgpNfmikgaMtb1MO6lDLUbQqR
+ e81A==
+X-Gm-Message-State: AOJu0Yxyt+E9ObO3EFnBWpgrLgbsjxf7+9Zk3u0h5I2vvgbIvavjoYG+
+ qJSz9WdEz0osB39LWO+TDrLdfdzkJAlEUot9mgq9P5gnH3MmHSVwaNTJSqk+hh7iUVaQn9ac
+X-Gm-Gg: AeBDiesJQg+gFPLl3UFxnTaJ6rVP8ODxZT2AenqzRF5Y6Z7nvBpyJsOonrk30V9+SOR
+ fmHP7moIDiwt0q8lKmHezuZ2fkt+HjFTiEG7ESQmwogcW14NPYlFF9gTzM13x+V6Cq+RAok9BRa
+ NUixVa+N3Gi+jbcY7tckuDr3BNVQnHZ1XSAUDCQHdyhsDUQPFwc6cTyqbJosm40m9hlA205cloQ
+ kFroAnYzaoXW+215RCZHFyHcTCaz+uSSmAOC8vD+4i7/nU7lLNzRmYFyxXoQwMiKcWFw4Kw1b48
+ L90sft1gDs8nylOVbTh5nlSnEeHQ781W23oO5yPQ/7vpDEO56LLih23PZ7tsCOd7+YSvfgEiP2s
+ +TmrVy+zoOjVAc48VHkWg1hQrpu58l3gqBbFwLx8RBJFFLNj08LnQNA+RVwyQe5dgdgARaHsf0u
+ IcDHaAYCo+6m5JhqUp30n/1kFikIHrgvkETB05srUvppHKL8AdAgQoBc++CUcI/HRZGjg4
+X-Received: by 2002:ad4:5949:0:b0:89c:c75a:e83b with SMTP id
+ 6a1803df08f44-8ac86319c15mr138327616d6.54.1775960485459; 
+ Sat, 11 Apr 2026 19:21:25 -0700 (PDT)
 Received: from ZEVORN-PC.bbrouter ([162.244.208.119])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8aca05592ecsm15455576d6.29.2026.04.11.19.21.16
+ 6a1803df08f44-8aca05592ecsm15455576d6.29.2026.04.11.19.21.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 Apr 2026 19:21:20 -0700 (PDT)
+ Sat, 11 Apr 2026 19:21:25 -0700 (PDT)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -74,23 +74,23 @@ To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chao Liu <chao.liu.zevorn@gmail.com>
 Cc: qemu-devel@nongnu.org, tangtao1634@phytium.com.cn, devel@lists.libvirt.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH v6 3/7] target/riscv: add sdext Debug Mode helpers
-Date: Sun, 12 Apr 2026 10:20:20 +0800
-Message-ID: <99be0e0e0d43c77389dd076d079b195844817076.1775959096.git.chao.liu.zevorn@gmail.com>
+Subject: [PATCH v6 4/7] target/riscv: add dret instruction
+Date: Sun, 12 Apr 2026 10:20:21 +0800
+Message-ID: <279d8e6c4bb55ae831f929c105a20c3372de636b.1775959096.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1775959096.git.chao.liu.zevorn@gmail.com>
 References: <cover.1775959096.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f41;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qv1-xf41.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f43;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qv1-xf43.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,177 +109,99 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 RISC-V Debug Specification:
 https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 
-Add helpers to enter/leave Debug Mode and to update dpc/dcsr.
-Model resume without a Debug Module by leaving Debug Mode at
-cpu_exec_enter and continuing from dpc.
+Add DRET decode/translate and a helper to leave Debug Mode and return
+to dpc. Executing DRET outside Debug Mode raises illegal instruction.
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- target/riscv/cpu.h         |  3 ++
- target/riscv/cpu_helper.c  | 84 ++++++++++++++++++++++++++++++++++++++
- target/riscv/debug.c       |  5 +++
- target/riscv/tcg/tcg-cpu.c | 14 +++++++
- 4 files changed, 106 insertions(+)
+ target/riscv/helper.h                          |  1 +
+ target/riscv/insn32.decode                     |  1 +
+ target/riscv/insn_trans/trans_privileged.c.inc | 18 ++++++++++++++++++
+ target/riscv/op_helper.c                       | 16 ++++++++++++++++
+ 4 files changed, 36 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2a265faae5..62732957a4 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -624,6 +624,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- char *riscv_isa_string(RISCVCPU *cpu);
- int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
- bool riscv_cpu_option_set(const char *optname);
-+void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-+                                uint32_t cause);
-+void riscv_cpu_leave_debug_mode(CPURISCVState *env);
- 
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 54d2331966..c8e76eb116 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -133,6 +133,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
  #ifndef CONFIG_USER_ONLY
- void riscv_cpu_do_interrupt(CPUState *cpu);
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 659150c646..0ff11a45de 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -136,6 +136,90 @@ bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
+ DEF_HELPER_1(sret, tl, env)
+ DEF_HELPER_1(mret, tl, env)
++DEF_HELPER_1(dret, tl, env)
+ DEF_HELPER_1(mnret, tl, env)
+ DEF_HELPER_1(ctr_clear, void, env)
+ DEF_HELPER_1(wfi, void, env)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..4db842d5d9 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -118,6 +118,7 @@ sctrclr     000100000100     00000 000 00000 1110011
+ uret        0000000    00010 00000 000 00000 1110011
+ sret        0001000    00010 00000 000 00000 1110011
+ mret        0011000    00010 00000 000 00000 1110011
++dret        0111101    10010 00000 000 00000 1110011
+ wfi         0001000    00101 00000 000 00000 1110011
+ sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
+ 
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 8a62b4cfcd..f8641b1977 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -125,6 +125,24 @@ static bool trans_mret(DisasContext *ctx, arg_mret *a)
  #endif
  }
  
-+#ifndef CONFIG_USER_ONLY
-+static bool riscv_sdext_enabled(CPURISCVState *env)
-+{
-+    return riscv_cpu_cfg(env)->ext_sdext;
-+}
-+#endif
-+
-+void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-+                                uint32_t cause)
++static bool trans_dret(DisasContext *ctx, arg_dret *a)
 +{
 +#ifndef CONFIG_USER_ONLY
-+    if (!riscv_sdext_enabled(env)) {
-+        return;
++    if (!ctx->cfg_ptr->ext_sdext) {
++        return false;
 +    }
-+
-+    env->debug_mode = true;
-+    env->dpc = pc & get_xepc_mask(env);
-+    env->dcsr &= ~(DCSR_CAUSE_MASK | DCSR_PRV_MASK | DCSR_V);
-+    env->dcsr |= ((target_ulong)(cause & 0x7)) << DCSR_CAUSE_SHIFT;
-+    env->dcsr |= env->priv & DCSR_PRV_MASK;
-+    if (env->virt_enabled && riscv_has_ext(env, RVH)) {
-+        env->dcsr |= DCSR_V;
-+    }
-+
-+    if (env_archcpu(env)->cfg.ext_zicfilp) {
-+        if (env->elp) {
-+            env->dcsr |= DCSR_PELP;
-+        } else {
-+            env->dcsr &= ~DCSR_PELP;
-+        }
-+        env->elp = false;
-+    }
++    decode_save_opc(ctx, 0);
++    translator_io_start(&ctx->base);
++    gen_update_pc(ctx, 0);
++    gen_helper_dret(cpu_pc, tcg_env);
++    exit_tb(ctx); /* no chaining */
++    ctx->base.is_jmp = DISAS_NORETURN;
++    return true;
++#else
++    return false;
 +#endif
 +}
 +
-+void riscv_cpu_leave_debug_mode(CPURISCVState *env)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (!riscv_sdext_enabled(env)) {
-+        return;
-+    }
-+
-+    target_ulong new_priv = env->dcsr & DCSR_PRV_MASK;
-+    bool new_virt = riscv_has_ext(env, RVH) && (env->dcsr & DCSR_V);
-+
-+    if (new_priv > PRV_M) {
-+        new_priv = PRV_M;
-+    }
-+    if (new_priv == PRV_M) {
-+        new_virt = false;
-+    }
-+
-+    if (new_priv == PRV_S && !riscv_has_ext(env, RVS)) {
-+        new_priv = PRV_M;
-+        new_virt = false;
-+    } else if (new_priv == PRV_U && !riscv_has_ext(env, RVU)) {
-+        new_priv = riscv_has_ext(env, RVS) ? PRV_S : PRV_M;
-+        new_virt = false;
-+    }
-+
-+    env->debug_mode = false;
-+    riscv_cpu_set_mode(env, new_priv, new_virt);
-+
-+    if (env_archcpu(env)->cfg.ext_zicfilp) {
-+        env->elp = cpu_get_fcfien(env) && (env->dcsr & DCSR_PELP);
-+        env->dcsr &= ~DCSR_PELP;
-+    }
-+
-+    if (new_priv != PRV_M) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, 0);
-+    }
-+
-+    if (env_archcpu(env)->cfg.ext_smdbltrp && new_priv != PRV_M) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 0);
-+    }
-+    if (env_archcpu(env)->cfg.ext_ssdbltrp && (new_priv == PRV_U || new_virt)) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_SDT, 0);
-+        if (new_virt && new_priv == PRV_U) {
-+            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
-+        }
-+    }
-+#endif
-+}
-+
- RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
+ static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
  {
  #ifndef CONFIG_USER_ONLY
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466749..5877a60c50 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -927,6 +927,11 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
- 
-+    /* Triggers must not match or fire while in Debug Mode. */
-+    if (env->debug_mode) {
-+        return;
-+    }
-+
-     if (cs->watchpoint_hit) {
-         if (cs->watchpoint_hit->flags & BP_CPU) {
-             do_trigger_action(env, DBG_ACTION_BP);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 0613450691..4b17fbb611 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -266,6 +266,19 @@ static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
-     }
-     return extract64(result, 0, 64 - pm_len);
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index dde40a5549..ce68ee5959 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -440,6 +440,22 @@ target_ulong helper_mret(CPURISCVState *env)
+     return retpc;
  }
-+
-+static void riscv_cpu_exec_enter(CPUState *cs)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+    CPURISCVState *env = &cpu->env;
-+
-+    if (!cpu->cfg.ext_sdext || !env->debug_mode) {
-+        return;
-+    }
-+    target_ulong pc = env->dpc;
-+    riscv_cpu_leave_debug_mode(env);
-+    env->pc = pc;
-+}
- #endif
  
- const TCGCPUOps riscv_tcg_ops = {
-@@ -282,6 +295,7 @@ const TCGCPUOps riscv_tcg_ops = {
- #ifndef CONFIG_USER_ONLY
-     .tlb_fill = riscv_cpu_tlb_fill,
-     .pointer_wrap = riscv_pointer_wrap,
-+    .cpu_exec_enter = riscv_cpu_exec_enter,
-     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
-     .cpu_exec_halt = riscv_cpu_has_work,
-     .cpu_exec_reset = cpu_reset,
++target_ulong helper_dret(CPURISCVState *env)
++{
++    uintptr_t ra = GETPC();
++#ifdef CONFIG_USER_ONLY
++    riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
++    return 0;
++#else
++    if (!riscv_cpu_cfg(env)->ext_sdext || !env->debug_mode) {
++        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
++    }
++    target_ulong retpc = env->dpc & get_xepc_mask(env);
++    riscv_cpu_leave_debug_mode(env);
++    return retpc;
++#endif
++}
++
+ target_ulong helper_mnret(CPURISCVState *env)
+ {
+     target_ulong retpc = env->mnepc;
 -- 
 2.53.0
 
