@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E87E5E937EE
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 17:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4045E937EF
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 17:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBygR-0007X0-Qs; Sun, 12 Apr 2026 13:33:19 -0400
+	id 1wByiz-0008Sk-Ib; Sun, 12 Apr 2026 13:35:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBygK-0007VZ-L3
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 13:33:14 -0400
-Received: from 6.mo533.mail-out.ovh.net ([54.36.140.181])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wByiq-0008RS-Qn; Sun, 12 Apr 2026 13:35:50 -0400
+Received: from smtpout1.mo533.mail-out.ovh.net ([51.210.94.138])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBygF-0001cK-F0
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 13:33:12 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4ftyL763yqz5wm9;
- Sun, 12 Apr 2026 17:33:03 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 17:33:03 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.192])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4ftyL73LMdz7tnt; Sun, 12 Apr 2026 17:33:03 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wByin-0002Ju-Sp; Sun, 12 Apr 2026 13:35:47 -0400
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net [51.255.22.22])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4ftyP81gz8z61XK;
+ Sun, 12 Apr 2026 17:35:40 +0000 (UTC)
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net. [127.0.0.1])
+ by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 17:35:40 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.133])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4ftyP80c2Mz7tn8; Sun, 12 Apr 2026 17:35:40 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id CD25212E3A38;
- Sun, 12 Apr 2026 17:33:01 +0000 (UTC)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 7D393941618; 
+ Sun, 12 Apr 2026 17:35:38 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-97G002995574aa-565f-46a6-9f3a-9b736cc0e228,
+ (GARM-111S005326bc5a1-63d8-40e3-ae42-17650902ebc3,
  24D929EF98A9C54707A36CFD348010E9E2578269) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <ec62abcb-7602-470a-b7a8-1ce9bf8c5edd@kaod.org>
-Date: Sun, 12 Apr 2026 19:33:01 +0200
+Message-ID: <cc63ecb7-c9d3-4d79-b13c-156efaf76dfd@kaod.org>
+Date: Sun, 12 Apr 2026 19:35:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 11/13] hw/usb/hcd-ehci: Add descriptor address offset
- property
+Subject: Re: [PATCH v1 00/13] hw/usb/ehci: Add 64-bit descriptor addressing
+ support
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -53,7 +53,6 @@ Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
- <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,31 +97,31 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 15514619242805111819
+x-ovh-tracer-id: 15558810813333744651
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEPMX1bRCzlt49bZiVnBr4A1XTg1uYapD+4fT26wGhzK4wa0XjaEgwvH5msL5rxptT8zBShlchhdSYrcUTdoix+NH04mOfyJoDde6DJshjG1oCR+Hd550n1p0gjc9p2YagPuXb2Nm5HbS1QyocJi9Eaf6BzgS1cyzw87oH3eETWLGiI7caJVYe61ldp7nCJq445zFhGXH5tJ6dn9uktXVbnBc2hz2qa+h8KCeBj5xgWSOH+QHjKzKuj+GZX+xhF6AzU8/WlWEG4BNxzkk6L+cVVyfJ5gYVy/cPxx70rVMRyw6kgG2c5Qs4JjfJT7z4D5ExIp4tfu7XbwRKs1DpA9qGQm6VoNlMlFnU9ukwzo3jwqnPfFAFFB3WTHi8SDs7MzPDsKUMBY1f/1JZZqz1sOn/+QSpacU4UXzehdCaVUk21gM5UQnt3r3itON0WG/rxPCljI2tP5nGrgxuQ0lo96Ay/Zd6f9U+2ialg7F0jL+loUhaF2uAfOA27vCEsLNdaCdd2zjeK/ZT5OEHlvIMxKyKRAbNlRNt7HfJKl65yChn8R+ZE0JZErJd9HWwuRrJDm6qCH7nfU6BRgeh9o3KLDMnQuY2WBbtxgB9v4oeBms5iPiezH33Oqq2+LrTWegaUjdPdTobPnbOQnv+KtpjQvuizT1LreY4L2C3dPkbIeSg7qA
-DKIM-Signature: a=rsa-sha256; bh=vs6Cx3UpmLgjsIibMBBcjTlsS0O0JHeYE7FdUWKsKoY=; 
+X-VR-SPAMCAUSE: dmFkZTGnfn9ZWhuCnXCPhDZh2mE6W8MpVONShPwSW1FHFx/N7dAwqcuP33DpfkyEm+LXa1wcVe5M1QHMUDRF9c8WBmc5LGxz4SzkX+inOHTCuA2mWkSkL0zfDjneDNtWNh7tpK+9gIyRjCTiipqklmAnnMA1GxenHgsqAVfPk/+/KVO3XwkNmvHFVEDwX/+fvuIREWCiRkkZwBF2C6ovA0HD105cl82RkYP2TqO9iZd8ycazC+d0BG7/JTnX+rLDhKAUvrVxK9x6efE4nU683IgmGTSI7fo4DJhSTjtEs4PguG/wgPbE0EWXDWrVmUJk4MzqoZzLMw7azq0gme/dqEJpbE+RfSkz6x+8EBGgF9woM0htiy12jTejP2k/COADvsHTGNL15wwhM0+DriFx2vn2XSk5FaLzn+QbTH1lYqE31sf3FN57X+ewgN9WrV0hCmOOsli0OvNcEdgMA8BMcHgqdkPGu8Zay3YUCSjbGbRHlRHBVEmUWE29pSXgu/xKbzzeqFEVjL59mPpIN0tCvdhVK7WzN5LF5GXXcQxL/ICE4ZivgFMwEpE6xjrKgt76vaOAT/D/9z5LMW8vK0T6sUYc5dAGiAqX5qrJjp6PAz+jbROcLwskXM2rSE3k1L+mwhq5GCr4R5j5OlFOKEEV8x3TV7uIVfW+jx1mEycIGkM93Ay/ew
+DKIM-Signature: a=rsa-sha256; bh=W+7JSMVWz/6T3ganRUgISG+f/OudQCe30ogGUEqWX8s=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1776015184; v=1;
- b=Mq+KXhm8A0kTuaXJBT+zl0yqQ8+3WfgGpLDyp0Uxke2TqkRYwVqfsA/yp6ErFVtAj7thxo9Q
- IhF/wDn7L9/3+HVBo/UhS5AUY78xEX4cfCvamzVpGVjytWQw675QFye4qzCni+ZAuJlQoq1hR8q
- nFUdww9RicsJYeNSXSn/QbSXsjVKBATQCZwOmwuhkvIwuZb4l2uW82OOM042x86KcWdVIAlSxZB
- CDsyjwleJCq4YzNGqmA2McJuJtB1DaVJBKoftIJhhmGxjjiVDrbzLWrXkqzyb6m8c7LUCIdp1WE
- KhMGP4h/tJpWFWngSZcAkzOFtgdXgZZfBdq+Foq1ExQ4A==
-Received-SPF: pass client-ip=54.36.140.181; envelope-from=clg@kaod.org;
- helo=6.mo533.mail-out.ovh.net
+ t=1776015340; v=1;
+ b=UoYaELP4z6d5tExrr0XU8wWyQsCzlHFtlETjZoQhbbLObGxDgYH8JDnll7laeLpZk136kd2N
+ UKneKke81gI6j44X9dnPKrmDS4SXe1aFF/uquktH5jPA82yy+aCGBwSMcsEW5ZQm4pSTPq4wHP8
+ shPwOw1df3krMQh1GE+SLvGn93NgVLFwA+E6zr/QaV9DSnNwLCFEUgKKIfez3ijpy+CWwmpic8P
+ VBPuHc2Puiwlp2vRdx9xEGJW4/3AoYg1UrVNrr//sLUngGdga2cmG9rqThbHYTkaWwLZpSkwA2v
+ j+VVps/oIlV0rNZ9rqMzg3CrdM2QXDm2lqOY5aGW378VA==
+Received-SPF: pass client-ip=51.210.94.138; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,103 +137,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Jamin,
+
+
 On 3/11/26 08:26, Jamin Lin wrote:
-> When 64-bit addressing is supported, the Linux EHCI driver programs the
-> segment register to zero. See ehci_run function:
-> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-hcd.c
+> EHCI supports 64-bit addressing through the CTRLDSSEGMENT register,
+> which provides the upper 32 bits of descriptor addresses when the
+> controller advertises 64-bit capability.
 > 
-> The driver comment also notes that descriptor structures allocated from
-> the DMA pool use segment zero semantics.
+> Currently QEMU EHCI model only partially supports this functionality and
+> descriptor addresses are effectively treated as 32-bit. This becomes
+> problematic on systems where system memory is located above the 4GB
+> boundary.
 > 
-> Descriptor memory is allocated using the DMA API. The platform driver
-> configures a 64-bit DMA mask so memory can be allocated above 4GB.
-> See ehci_platform_probe function:
-> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-platform.c
+> The Linux EHCI driver enables 64-bit addressing if the controller
+> advertises the capability. During initialization it programs the
+> segment register to zero:
 > 
-> On AST2700 platforms, system DRAM is mapped above 4GB at 0x400000000.
-> As a result, descriptor addresses constructed directly from the guest
-> EHCI registers do not match the actual system address used by the
-> controller when fetching queue heads (QH) and queue element transfer
+>    https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-hcd.c#L600
+> 
+> The driver also notes that descriptor structures allocated from the
+> DMA pool use segment zero semantics. Descriptor memory is allocated
+> using the DMA API and platforms may configure a 64-bit DMA mask,
+> allowing descriptor memory to be placed above 4GB.
+> 
+> On AST2700 platforms, system DRAM is mapped at 0x400000000. As a
+> result, descriptor addresses constructed directly from the EHCI
+> registers do not match the actual system addresses used by the
+> controller when accessing queue heads (QH) and queue element transfer
 > descriptors (qTD).
 > 
-> Introduce a descriptor-addr-offset property so platforms can provide an
-> address offset applied when constructing descriptor addresses. This
-> allows systems where DRAM resides above 4GB to correctly access EHCI
-> descriptors while keeping the default behavior unchanged for existing
-> machines.
+> This patch series implements full 64-bit descriptor addressing support
+> in the EHCI emulation. Descriptor address handling is updated to use
+> 64-bit values and the descriptor structures (QH, qTD, iTD and siTD)
+> are extended to support the upper address bits provided by the segment
+> register.
+> 
+> In addition, a descriptor-addr-offset property is introduced so
+> platforms can apply an address translation when descriptor memory
+> resides above the 4GB boundary.
+> 
+> The AST2700 machine uses this property to account for its DRAM mapping
+> at 0x400000000 and enables 64-bit EHCI DMA addressing.
+> 
+> Test Result:
+> 1. EHCI 32bits with ast2600-evb machine
+> Command line:
+> ./build/qemu-system-arm \
+>    -machine ast2600-evb \
+>    -m 1G \
+>    -drive file=image-bmc,if=mtd,format=raw \
+>    -nographic \
+>    -device usb-kbd,bus=usb-bus.1,id=mykbd \
+>    -drive id=usbdisk,if=none,file=image0.ext4,format=raw \
+>    -device usb-storage,bus=usb-bus.1,id=mystorage,drive=usbdisk
+>    -snapshot \
+>    -nographic
+> Result:
+> unable to initialize usb specBus 001 Device 001: ID 1d6b:0002 Linux 6.18.3-v00.08.01-g172b7e27a30d ehci_hcd EHCI Host Controller
+> Bus 001 Device 002: ID 0627:0001 QEMU QEMU USB Keyboard
+> Bus 001 Device 003: ID 46f4:0001 QEMU QEMU USB HARDDRIVE
+> Bus 002 Device 001: ID 1d6b:0001 Linux 6.18.3-v00.08.01-g172b7e27a30d uhci_hcd Generic UHCI Host Controller
+> 
+> 2. EHCI 64bits with ast2700a2-evb machine
+> Command line:
+> ./build/qemu-system-aarch64 -M ast2700a2-evb -nographic\
+>   -bios ast27x0_bootrom.bin \
+>   -drive file=image-bmc,format=raw,if=mtd \
+>   -snapshot \
+>   -device usb-kbd,bus=usb-bus.3,id=mykbd \
+>   -drive id=usbdisk,if=none,file=image0.ext4,format=raw \
+>   -device usb-storage,bus=usb-bus.3,id=mystorage,drive=usbdisk
+> Result:
+> root@ast2700-default:~# lsusb
+> unable to initialize usb specBus 001 Device 001: ID 1d6b:0001 Linux 6.18.3-v00.08.01-g172b7e27a30d uhci_hcd Generic UHCI Host Controller
+> Bus 002 Device 001: ID 1d6b:0002 Linux 6.18.3-v00.08.01-g172b7e27a30d ehci_hcd EHCI Host Controller
+> Bus 002 Device 002: ID 0627:0001 QEMU QEMU USB Keyboard
+> Bus 002 Device 003: ID 46f4:0001 QEMU QEMU USB HARDDRIVE
+>
 
-I am a bit confused. QEMU should not adapt to what Linux actually does.
 
-It seems Linux has a workaround for buggy 64bit HW and relies on the
-HW to present bus addresses (remapped by HW ?) to devices.
+Would you have time to propose a functional test ?
 
-So the "descriptor-addr-offset" property sort-of simulates the DMA
-address translation that would exist in real hardware.
-
-How does the AST2700 SoC works ?
-
-Thanks,
+Thanks
 
 C.
 
+
+> v1
+>   1. Fix checkpatch coding style issues
+>   2. Implement 64-bit addressing for QH/qTD/iTD/siTD descriptors
+>   3. Add descriptor address offset property
+>   4. Enable 64-bit EHCI DMA addressing on AST2700
+>   5. Configure descriptor address offset for AST2700
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/usb/hcd-ehci.h        | 1 +
->   hw/usb/hcd-ehci-pci.c    | 2 ++
->   hw/usb/hcd-ehci-sysbus.c | 2 ++
->   hw/usb/hcd-ehci.c        | 1 +
->   4 files changed, 6 insertions(+)
+> Jamin Lin (13):
+>    hw/usb/hcd-ehci.h: Fix coding style issues reported by checkpatch
+>    hw/usb/hcd-ehci.c: Fix coding style issues reported by checkpatch
+>    hw/usb/hcd-ehci: Change descriptor addresses to 64-bit
+>    hw/usb/trace-events: Print EHCI queue and transfer addresses as 64-bit
+>    hw/usb/hcd-ehci: Add property to advertise 64-bit addressing
+>      capability
+>    hw/usb/hcd-ehci: Reject CTRLDSSEGMENT writes without 64-bit capability
+>    hw/usb/hcd-ehci: Implement 64-bit QH descriptor addressing
+>    hw/usb/hcd-ehci: Implement 64-bit qTD descriptor addressing
+>    hw/usb/hcd-ehci: Implement 64-bit iTD descriptor addressing
+>    hw/usb/hcd-ehci: Implement 64-bit siTD descriptor addressing
+>    hw/usb/hcd-ehci: Add descriptor address offset property
+>    hw/arm/aspeed_ast27x0: Enable 64-bit EHCI DMA addressing
+>    hw/arm/aspeed_ast27x0: Set EHCI descriptor address offset
 > 
-> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
-> index a11d4179cd..6593480028 100644
-> --- a/hw/usb/hcd-ehci.h
-> +++ b/hw/usb/hcd-ehci.h
-> @@ -279,6 +279,7 @@ struct EHCIState {
->       /* properties */
->       uint32_t maxframes;
->       bool caps_64bit_addr;
-> +    uint64_t descriptor_addr_offset;
->   
->       /*
->        *  EHCI spec version 1.0 Section 2.3
-> diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
-> index 2ea8549db9..115d05ede0 100644
-> --- a/hw/usb/hcd-ehci-pci.c
-> +++ b/hw/usb/hcd-ehci-pci.c
-> @@ -139,6 +139,8 @@ static const Property ehci_pci_properties[] = {
->       DEFINE_PROP_UINT32("maxframes", EHCIPCIState, ehci.maxframes, 128),
->       DEFINE_PROP_BOOL("caps-64bit-addr", EHCIPCIState, ehci.caps_64bit_addr,
->                        false),
-> +    DEFINE_PROP_UINT64("descriptor-addr-offset", EHCIPCIState,
-> +                       ehci.descriptor_addr_offset, 0),
->   };
->   
->   static const VMStateDescription vmstate_ehci_pci = {
-> diff --git a/hw/usb/hcd-ehci-sysbus.c b/hw/usb/hcd-ehci-sysbus.c
-> index 61215e9f3d..df138fb339 100644
-> --- a/hw/usb/hcd-ehci-sysbus.c
-> +++ b/hw/usb/hcd-ehci-sysbus.c
-> @@ -36,6 +36,8 @@ static const Property ehci_sysbus_properties[] = {
->                        false),
->       DEFINE_PROP_BOOL("caps-64bit-addr", EHCISysBusState, ehci.caps_64bit_addr,
->                        false),
-> +    DEFINE_PROP_UINT64("descriptor-addr-offset", EHCISysBusState,
-> +                       ehci.descriptor_addr_offset, 0),
->   };
->   
->   static void usb_ehci_sysbus_realize(DeviceState *dev, Error **errp)
-> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-> index d9d1ac2d28..cdb53be4ae 100644
-> --- a/hw/usb/hcd-ehci.c
-> +++ b/hw/usb/hcd-ehci.c
-> @@ -155,6 +155,7 @@ static uint64_t ehci_get_desc_addr(EHCIState *s, uint32_t low)
->           addr |= (uint64_t)s->ctrldssegment << 32;
->       }
->   
-> +    addr += s->descriptor_addr_offset;
->       return addr;
->   }
->   
+>   hw/usb/hcd-ehci.h        |  36 +++--
+>   hw/arm/aspeed_ast27x0.c  |   5 +
+>   hw/usb/hcd-ehci-pci.c    |   4 +
+>   hw/usb/hcd-ehci-sysbus.c |   4 +
+>   hw/usb/hcd-ehci.c        | 293 ++++++++++++++++++++++++---------------
+>   hw/usb/trace-events      |  16 +--
+>   6 files changed, 226 insertions(+), 132 deletions(-)
+> 
 
 
