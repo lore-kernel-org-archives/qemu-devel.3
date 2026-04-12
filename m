@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD37F3ED6A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Apr 2026 22:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1F9F3ED6B
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 01:24:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBh2H-0007Ri-Tg; Sat, 11 Apr 2026 18:42:41 -0400
+	id 1wBjYX-0004JG-GO; Sat, 11 Apr 2026 21:24:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBh2F-0007RP-Oc
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 18:42:39 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wBjYW-0004J0-SV
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 21:24:08 -0400
+Received: from mail-qk1-x742.google.com ([2607:f8b0:4864:20::742])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wBh2D-0006aT-Sc
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 18:42:39 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so42807845e9.0
- for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 15:42:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wBjYV-00079s-8t
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 21:24:08 -0400
+Received: by mail-qk1-x742.google.com with SMTP id
+ af79cd13be357-8c9f6b78ca4so387748285a.0
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 18:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1775947356; x=1776552156; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dvCq3Cy7wX+HL0FMrT+YMOuJcoj033MC/MGno2ssRlk=;
- b=z7BMqzmZR0vr1rpVxtZZEXX7z+n02Faeq9V5n7F4nWgj1fGRF0HB3YGbe/Smbsh15r
- 2sMYneS3Vv3xwOjIVtqtonqBYSBICVDwNYrsDlMYdJ9AIyMtkq1BgjP4ZK1iUq/8jLQW
- 6btLzVaLKf4c+tOF4gnW+wwMlHSxRKvfLiz8y3utOqWLffVRl8lQ/p9qX6OBtb9bf7Sg
- BorZu8xBTEbBHbrjCWvta8jjOA7OC/GAaMU1VMFLnpzQXNRFPXsvLV0F8bVdFJDljsPx
- ZNKPlGunZTpFIo4pPDPL3SGzCSiho/21mzWjBs3rSnmURBi3pZQ8xxHmpZe/AjYNfFWF
- 2h5g==
+ d=gmail.com; s=20251104; t=1775957045; x=1776561845; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gzxvyg9DAiaJCfwiPoi4wC/1aA5w3LQq6pswVaNHAgg=;
+ b=T/FTd0cD5SMgewfzor4BjBDRQ7pjuDJ9/7/wgNRT/laJ/Z4/QqbTjxQ1dP1PzgsZ7p
+ LNDRvq2WjzDjdlgUrf2RhRTQEOCTRn+DAEwu5aUv9lhkxnlphU85PiP5NA6Z1dBu626E
+ AGwcAkpDmQxWvVXiNdKpICvMGG/LedbubDX3toHu9lluJP0R2uiHGbgbBiGrg3WHPSok
+ ZYjvR2NgN72//rnreUTY4CnD6EOC3SBSe3xZZ8b4daHZRb+RnD343PKP3RJ2DPClRCDw
+ bi1phOE+6QkJIMz2KPVC1VSCScMVjrNLxIQMNeMI4hXRqY5sQ377uOsTdGEDF8lfDoF0
+ vbMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775947356; x=1776552156;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dvCq3Cy7wX+HL0FMrT+YMOuJcoj033MC/MGno2ssRlk=;
- b=dQB/0IkYM9fsqnq5WmsQXbHh+rKzL2exMIxGhxz9z+hPqpjBMgmzPKTrg+lPXzbpDU
- 3cYHiYOSSUoq6LF3UYkLT6MhS1Do0fHtuQJgwbAROcS+JZ2O9CBQwVgvWRfipHRQDl1q
- 4j820shep9uGt4JDcP/kal9OltqzPGWxfbaKL5WJ8nFJ/RE52nNe07UU4DfyTdmN9r+b
- 4mS56b0y5v3EmJkJ9vC1peCOmzeUHPeacyCciBUJicf8XBE7qiwyQiolEiJCYTJQnqN4
- jkDgfyoCo8GmHmGue+oqlTj8kOBThUZs2OejEMfBnPVNqUyIcT7zgs81VyfuJrQOQQBC
- g4Rg==
+ d=1e100.net; s=20251104; t=1775957045; x=1776561845;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gzxvyg9DAiaJCfwiPoi4wC/1aA5w3LQq6pswVaNHAgg=;
+ b=Vc60ROQov18v8LkNRI9CWGbPt7jc6AhvcbJs2TVDCAn2apPSKwSzNQ0Llr4r6nnxHC
+ EDi+5+Oj4YRde2xmD/T9vTKxNIyBQCfjdU5HPhxaHFlweVSpcfnjHIrksr4n8W8cwF0j
+ IkkWljq2Y0pYM2gqPCOvU0YP4X9zOyJ3DX1E2T7jKQ3/v1S10qfD1RAahGeRun+BsNNg
+ 8sP8wXyppIwHoFe7GNpdSQEX3yE+iYPmkPIXz6pk1Ox+2OEeDX757pfLOB6JLba1K/H1
+ X81pFgz9c5VhJGNHbatRHuRkO/NdlPjFBNVp0vwt0ayoAKFCCPdCVm8ZKQcRd1VP6LjP
+ hifA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVrxjErnzk15BkZq2/AM23BBc5jNDCF6t6Q7+6JgZb1k+QTHAFeeMYSkCwOqAX9bqMpJ3J8aEy+Ocpr@nongnu.org
-X-Gm-Message-State: AOJu0Yxu2sNNCwagce3EDw8xJCOsCg1GQgKT8KEEJh9Q99GgsEgi5+It
- TCeBmzTzI/cU3hYXj64ErnOy4nPLeIFnrQ/fARC20WwoGrC5tP0IpmFR6i2wEsH91Wk=
-X-Gm-Gg: AeBDievAS8O1Mmmjd3sqQZ9upWS7o4q/uZkUxWis4lspHK7v5uxHwF1WSWpjldcZ2gs
- I5LCDAhLDv/sX/FWENeSUnqgJgpe7Z8nGfUMzQGYeDBvvysZ/9TFPvPGKbBudMBr09lC1WZEq47
- H5cEAgxt1K0WBc/YLonbhjtFb7VCibJ9rIQo+8LwO/Mz9HU2baO4qroG2ErZbFc9kYAlSD1UshP
- 9O5ERshPvhB5xFD0LIY/2uXdRuXAbM5EIAs/Ax1oSYXxoMpGMLKy4G1zsPMLWc1PLTDbL5epte/
- wURLndAB9c95OJN1+vs26MOBYeIHk9iDr3GJ+VhtYVGQ0rjh/vn653D+RiwruiwMzPuUHQARWUq
- n8vnQ2GHxkFm/JgiVzydd8E0pJuP5BaVEgVlxEy7H3iQfTXvPHpwkaeTgXM/7qkIj+IYaSPwUPN
- RR+dpWxubb8VPier3c9eBK3iA8HbRWwqPn0va7/A7LVxXhbToCn/Y/n+hTCDcWyu4FOg==
-X-Received: by 2002:a05:600c:3acf:b0:485:35a4:939f with SMTP id
- 5b1f17b1804b1-488d68a8275mr93503425e9.28.1775947355989; 
- Sat, 11 Apr 2026 15:42:35 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63e50015sm20507085f8f.27.2026.04.11.15.42.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Apr 2026 15:42:35 -0700 (PDT)
-Message-ID: <3a2f3e97-816c-4a41-b632-bbf8b3b16adf@linaro.org>
-Date: Sun, 12 Apr 2026 00:42:34 +0200
+ AJvYcCVW+SCMUT0JT5+Btrypy6L9zz6nf7rzyGSMd3CzEKwku64rOnesx+CRYYRbo3Napyjq9jayo927zigs@nongnu.org
+X-Gm-Message-State: AOJu0YxggBN3ouglLCXeNwBrDLFGw32vzjU7iUf9jWHBtQPNXSd9jT8k
+ vCwLH5DYHcOh385AJFYns4Px86YyzLKBZQsvsKX5evxYsANjpbKokniL
+X-Gm-Gg: AeBDievGAO3x46NgHudUytIJ0T/sULenBf3BflDSpnSlt+MZYYzAcuySROQu54cFTeT
+ nQ4Lh6jCXriP06h3rpGaH+hWnhymPAiwz1eujqErHKrtll/DSi0U0q6+v1hVlBtWl7HKH4mbnhd
+ PAs31BfvKDmxjaArg4uxpWXKsZN7VYKlwFkZDz3m++3nEm8TephAVYzdthgepqMXGt0wNMwYM5S
+ y3YEt3rWEVppuZKGa9MSKuY61JLdCUVkyU/bWnjHfDc4gkpHPHVXD0Q+0uEWwCRsAQDlMfLCu7O
+ E56HiaLmMH5CVlfeph/SlVKMqKz8vvFpE9Rc30E3JBgnvvrj/79J/kpV91giSIHB/3mcc6D0K7o
+ uYoI+leTGssp9ypNkyiu0GqciEYVxBJcDN2EvuGRJ4R5dGygEYu2ygJYt+UITkLDIk2m2jNZTZ3
+ 67VNwRz1CWUJir/1JtDDTou0DrwS02KUkNoMZw6KSszgAX0WP95LDIF1MtGttqHjBjVce0
+X-Received: by 2002:a05:620a:c43:b0:8cf:d6f8:5983 with SMTP id
+ af79cd13be357-8ddcf6b69b6mr1253159485a.55.1775957045374; 
+ Sat, 11 Apr 2026 18:24:05 -0700 (PDT)
+Received: from ZEVORN-PC.bbrouter ([162.244.208.119])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8ddb9833c6asm562381385a.42.2026.04.11.18.23.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 11 Apr 2026 18:24:03 -0700 (PDT)
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: tangtao1634@phytium.com.cn, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v1] hw/char/riscv_htif: Fix format specifier for uint64_t
+Date: Sun, 12 Apr 2026 09:23:23 +0800
+Message-ID: <20260412012323.1807856-1-chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/67] ui/console-vc: fix off-by-one in CSI J 2 (clear
- entire screen)
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
- <20260410-qemu-vnc-v2-8-231416f76dc3@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260410-qemu-vnc-v2-8-231416f76dc3@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::742;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x742.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,16 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/4/26 21:18, Marc-André Lureau wrote:
-> The loop condition used `y <= s->height` instead of `y < s->height`,
-> causing vc_clear_xy() to be called with y == s->height. This clears
-> a row in the scrollback buffer beyond the visible screen.
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   ui/console-vc.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Use PRIx64 instead of %llx for uint64_t arguments to avoid
+-Werror=format warnings on platforms where uint64_t is not
+long long.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This fixes the cross-riscv64-system CI failure:
+  https://gitlab.com/TaoTang/qemu/-/jobs/13878406521
+
+Fixes: d98f7a541c2c ("riscv_htif: reject invalid signature ranges (end <= begin)")
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+---
+ hw/char/riscv_htif.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+index 65ddea3fc8..a53d2ace02 100644
+--- a/hw/char/riscv_htif.c
++++ b/hw/char/riscv_htif.c
+@@ -172,8 +172,9 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+                  */
+                 if (sig_file && begin_sig_addr && end_sig_addr) {
+                     if (end_sig_addr <= begin_sig_addr) {
+-                        error_report("Invalid HTIF signature range: begin=0x%llx end=0x%llx",
+-                                    begin_sig_addr, end_sig_addr);
++                        error_report("Invalid HTIF signature range:"
++                                     " begin=0x%" PRIx64 " end=0x%" PRIx64,
++                                     begin_sig_addr, end_sig_addr);
+                         return;
+                     }
+                     uint64_t sig_len = end_sig_addr - begin_sig_addr;
+-- 
+2.53.0
+
 
