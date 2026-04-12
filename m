@@ -4,95 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07838E937F2
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 17:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E87E5E937EE
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 17:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wByaO-0005Xk-GV; Sun, 12 Apr 2026 13:27:04 -0400
+	id 1wBygR-0007X0-Qs; Sun, 12 Apr 2026 13:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wByaK-0005XJ-Sw
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 13:27:01 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wByaJ-00006O-9j
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 13:27:00 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-488ba6366a7so45856895e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 10:26:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776014817; x=1776619617; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3Rj6KEsSXtoqhhBgycSpSIQxzzQXvWkUvgTIpKYngEs=;
- b=Tzr73V7H5GV4LnwLriGr2Sg40KIdkRumfhp6V5QcfSaw/SFtw2CpTVYvwSYsafvQhg
- rnB92ZqiWQaGeYCQI0xPRSrnau0plnP44GAtjUH0oOUuUfh0+rwpG7GdNOS3yEkMqTFT
- EWfJv9uJds8BToXq7/0WeeX0FkE9fpMXMol9CdT2p8rnIieJxsVatFyPM5ifO24CXeBZ
- qeGG5oufIwqM7gwlIsO+gjCThgV7SgB3MqPFEId7XxBZnwsbKpNqxVfUzHIJZzHYP+pU
- VVNDqN6Joa9X/E38vW4v5YfFkp+NIJHXnbcZYEajRd65kVeeAZtMOGSD0iTElqoWULXS
- /t8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776014817; x=1776619617;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3Rj6KEsSXtoqhhBgycSpSIQxzzQXvWkUvgTIpKYngEs=;
- b=mx5Dfk84vhuPa29cxrJsX9ooHRgX4Hx5bUckyg0RrQJjt8GnBIP42s7BVlrZxQ5JrO
- /UB0UyKOWOeGP7FTUOLWD/8TnlmOJkjz9MIuJmE6HFFJhwDvLjTkAhB3prW3XpsdVut0
- 1jC3VwLksF7lcDLe1EaqYA/CJC4UdjMmlxV5rpdfxu3uMQkzgLGqToUViOCnBNOHVE2u
- nBy8PQohibJApY4I1sJ+ma8P5b6dvFUxH9smdaxdo1xWQV8EPBkDg0KMonBrKtalV/KS
- 8mR7U9ZzkUViorNxgA3xYX+NiptrhDSu6QP3eGGQ/NIU3cIuMBIWd5quk59ZHiJX+BzP
- oGwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW+nbawW8jFIIbBBocCw+XhrFMHjnzNjsXUGRkUd5JfuI9eTJAxDqXHuM/iWZpp6YGCT8Nd96vsNvDt@nongnu.org
-X-Gm-Message-State: AOJu0Yy4Dwc3bjBdau+qfIAdmXS2WX3PTy1JQ7K7UEEDeUotqV3qGot9
- X8Cy+hkOQPsqqbohkArNxDNp/abTFm3sWThYuRSnkSgAXeOwAfaulVEFeQjnDbozAkY=
-X-Gm-Gg: AeBDietWFuk4sRnzBFmJk1FNi25H3Kc2ilOYrJDnqr40CQLT+/4+/Lm+5L/hkOBxXLW
- 23xezG9JgjEZxOgjvdJX6VPVxfO9fPC/DYska/tZj+TjW3A74t6jXCaojIrS65e3x4eLqodzIii
- JbFn1dPil/lKwsPkXo4nS3cPwjP0HYqJxq4DOce9cXOJcYUWsTNV66GfaZXjpzI10+BYc42h2fv
- kfPMZlGH3o/37qhq4mFE712u7hKqymEs25ldQpavqfq5U2S06uDZ6ECnH7lI/ZgH/bs+tLtZJbm
- 78PYWnkN8qkGwz5fK9Y68Uv887n7Oujmj/AWr8P9z3oaRic11N5ajFxIpVWMzZ935wbs2iAz0uw
- yhYeA6dJJS2aFJwkh8yBVwboVmm2FSYjDsIJ6B/MVaOnu5Y0muQWHgWDPM39Skcvd5ETBQY3Uxg
- 9dsFXuSp6INK0vkMdYDzkSjLDQOWcBHN+ohX75/LqmiVdAzH3n20YrfIx/mXNzuK9eLw==
-X-Received: by 2002:a05:600c:a109:b0:488:b187:3c with SMTP id
- 5b1f17b1804b1-488d68431ebmr104073925e9.14.1776014817196; 
- Sun, 12 Apr 2026 10:26:57 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d5d768afsm111104705e9.2.2026.04.12.10.26.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 10:26:56 -0700 (PDT)
-Message-ID: <cd86b0bc-976b-40dc-8eb2-4f6547be465d@linaro.org>
-Date: Sun, 12 Apr 2026 19:26:55 +0200
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBygK-0007VZ-L3
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 13:33:14 -0400
+Received: from 6.mo533.mail-out.ovh.net ([54.36.140.181])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wBygF-0001cK-F0
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 13:33:12 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [51.68.94.138])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4ftyL763yqz5wm9;
+ Sun, 12 Apr 2026 17:33:03 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun, 12 Apr 2026 17:33:03 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.192])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4ftyL73LMdz7tnt; Sun, 12 Apr 2026 17:33:03 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.2])
+ (Authenticated sender: clg@kaod.org)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id CD25212E3A38;
+ Sun, 12 Apr 2026 17:33:01 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-97G002995574aa-565f-46a6-9f3a-9b736cc0e228,
+ 24D929EF98A9C54707A36CFD348010E9E2578269) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <ec62abcb-7602-470a-b7a8-1ce9bf8c5edd@kaod.org>
+Date: Sun, 12 Apr 2026 19:33:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/char/riscv_htif: Fix format specifier for uint64_t
-Content-Language: en-US
-To: Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: tangtao1634@phytium.com.cn, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20260412012323.1807856-1-chao.liu.zevorn@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260412012323.1807856-1-chao.liu.zevorn@gmail.com>
+Subject: Re: [PATCH v1 11/13] hw/usb/hcd-ehci: Add descriptor address offset
+ property
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 15514619242805111819
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEPMX1bRCzlt49bZiVnBr4A1XTg1uYapD+4fT26wGhzK4wa0XjaEgwvH5msL5rxptT8zBShlchhdSYrcUTdoix+NH04mOfyJoDde6DJshjG1oCR+Hd550n1p0gjc9p2YagPuXb2Nm5HbS1QyocJi9Eaf6BzgS1cyzw87oH3eETWLGiI7caJVYe61ldp7nCJq445zFhGXH5tJ6dn9uktXVbnBc2hz2qa+h8KCeBj5xgWSOH+QHjKzKuj+GZX+xhF6AzU8/WlWEG4BNxzkk6L+cVVyfJ5gYVy/cPxx70rVMRyw6kgG2c5Qs4JjfJT7z4D5ExIp4tfu7XbwRKs1DpA9qGQm6VoNlMlFnU9ukwzo3jwqnPfFAFFB3WTHi8SDs7MzPDsKUMBY1f/1JZZqz1sOn/+QSpacU4UXzehdCaVUk21gM5UQnt3r3itON0WG/rxPCljI2tP5nGrgxuQ0lo96Ay/Zd6f9U+2ialg7F0jL+loUhaF2uAfOA27vCEsLNdaCdd2zjeK/ZT5OEHlvIMxKyKRAbNlRNt7HfJKl65yChn8R+ZE0JZErJd9HWwuRrJDm6qCH7nfU6BRgeh9o3KLDMnQuY2WBbtxgB9v4oeBms5iPiezH33Oqq2+LrTWegaUjdPdTobPnbOQnv+KtpjQvuizT1LreY4L2C3dPkbIeSg7qA
+DKIM-Signature: a=rsa-sha256; bh=vs6Cx3UpmLgjsIibMBBcjTlsS0O0JHeYE7FdUWKsKoY=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1776015184; v=1;
+ b=Mq+KXhm8A0kTuaXJBT+zl0yqQ8+3WfgGpLDyp0Uxke2TqkRYwVqfsA/yp6ErFVtAj7thxo9Q
+ IhF/wDn7L9/3+HVBo/UhS5AUY78xEX4cfCvamzVpGVjytWQw675QFye4qzCni+ZAuJlQoq1hR8q
+ nFUdww9RicsJYeNSXSn/QbSXsjVKBATQCZwOmwuhkvIwuZb4l2uW82OOM042x86KcWdVIAlSxZB
+ CDsyjwleJCq4YzNGqmA2McJuJtB1DaVJBKoftIJhhmGxjjiVDrbzLWrXkqzyb6m8c7LUCIdp1WE
+ KhMGP4h/tJpWFWngSZcAkzOFtgdXgZZfBdq+Foq1ExQ4A==
+Received-SPF: pass client-ip=54.36.140.181; envelope-from=clg@kaod.org;
+ helo=6.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,37 +138,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/26 03:23, Chao Liu wrote:
-> Use PRIx64 instead of %llx for uint64_t arguments to avoid
-> -Werror=format warnings on platforms where uint64_t is not
-> long long.
+On 3/11/26 08:26, Jamin Lin wrote:
+> When 64-bit addressing is supported, the Linux EHCI driver programs the
+> segment register to zero. See ehci_run function:
+> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-hcd.c
 > 
-> This fixes the cross-riscv64-system CI failure:
->    https://gitlab.com/TaoTang/qemu/-/jobs/13878406521
+> The driver comment also notes that descriptor structures allocated from
+> the DMA pool use segment zero semantics.
+> 
+> Descriptor memory is allocated using the DMA API. The platform driver
+> configures a 64-bit DMA mask so memory can be allocated above 4GB.
+> See ehci_platform_probe function:
+> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-platform.c
+> 
+> On AST2700 platforms, system DRAM is mapped above 4GB at 0x400000000.
+> As a result, descriptor addresses constructed directly from the guest
+> EHCI registers do not match the actual system address used by the
+> controller when fetching queue heads (QH) and queue element transfer
+> descriptors (qTD).
+> 
+> Introduce a descriptor-addr-offset property so platforms can provide an
+> address offset applied when constructing descriptor addresses. This
+> allows systems where DRAM resides above 4GB to correctly access EHCI
+> descriptors while keeping the default behavior unchanged for existing
+> machines.
 
-This link might last less than this commit, better to document here:
+I am a bit confused. QEMU should not adapt to what Linux actually does.
 
-../hw/char/riscv_htif.c: In function ‘htif_handle_tohost_write’:
-../hw/char/riscv_htif.c:175:38: error: format ‘%llx’ expects argument of 
-type ‘long long unsigned int’, but argument 2 has type ‘uint64_t’ {aka 
-‘long unsigned int’} [-Werror=format=]
-   175 |                         error_report("Invalid HTIF signature 
-range: begin=0x%llx end=0x%llx",
-       | 
-^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   176 |                                     begin_sig_addr, end_sig_addr);
-       |                                     ~~~~~~~~~~~~~~
-       |                                     |
-       |                                     uint64_t {aka long unsigned 
-int}
+It seems Linux has a workaround for buggy 64bit HW and relies on the
+HW to present bus addresses (remapped by HW ?) to devices.
+
+So the "descriptor-addr-offset" property sort-of simulates the DMA
+address translation that would exist in real hardware.
+
+How does the AST2700 SoC works ?
+
+Thanks,
+
+C.
 
 > 
-> Fixes: d98f7a541c2c ("riscv_htif: reject invalid signature ranges (end <= begin)")
-> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/char/riscv_htif.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+>   hw/usb/hcd-ehci.h        | 1 +
+>   hw/usb/hcd-ehci-pci.c    | 2 ++
+>   hw/usb/hcd-ehci-sysbus.c | 2 ++
+>   hw/usb/hcd-ehci.c        | 1 +
+>   4 files changed, 6 insertions(+)
+> 
+> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
+> index a11d4179cd..6593480028 100644
+> --- a/hw/usb/hcd-ehci.h
+> +++ b/hw/usb/hcd-ehci.h
+> @@ -279,6 +279,7 @@ struct EHCIState {
+>       /* properties */
+>       uint32_t maxframes;
+>       bool caps_64bit_addr;
+> +    uint64_t descriptor_addr_offset;
+>   
+>       /*
+>        *  EHCI spec version 1.0 Section 2.3
+> diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+> index 2ea8549db9..115d05ede0 100644
+> --- a/hw/usb/hcd-ehci-pci.c
+> +++ b/hw/usb/hcd-ehci-pci.c
+> @@ -139,6 +139,8 @@ static const Property ehci_pci_properties[] = {
+>       DEFINE_PROP_UINT32("maxframes", EHCIPCIState, ehci.maxframes, 128),
+>       DEFINE_PROP_BOOL("caps-64bit-addr", EHCIPCIState, ehci.caps_64bit_addr,
+>                        false),
+> +    DEFINE_PROP_UINT64("descriptor-addr-offset", EHCIPCIState,
+> +                       ehci.descriptor_addr_offset, 0),
+>   };
+>   
+>   static const VMStateDescription vmstate_ehci_pci = {
+> diff --git a/hw/usb/hcd-ehci-sysbus.c b/hw/usb/hcd-ehci-sysbus.c
+> index 61215e9f3d..df138fb339 100644
+> --- a/hw/usb/hcd-ehci-sysbus.c
+> +++ b/hw/usb/hcd-ehci-sysbus.c
+> @@ -36,6 +36,8 @@ static const Property ehci_sysbus_properties[] = {
+>                        false),
+>       DEFINE_PROP_BOOL("caps-64bit-addr", EHCISysBusState, ehci.caps_64bit_addr,
+>                        false),
+> +    DEFINE_PROP_UINT64("descriptor-addr-offset", EHCISysBusState,
+> +                       ehci.descriptor_addr_offset, 0),
+>   };
+>   
+>   static void usb_ehci_sysbus_realize(DeviceState *dev, Error **errp)
+> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+> index d9d1ac2d28..cdb53be4ae 100644
+> --- a/hw/usb/hcd-ehci.c
+> +++ b/hw/usb/hcd-ehci.c
+> @@ -155,6 +155,7 @@ static uint64_t ehci_get_desc_addr(EHCIState *s, uint32_t low)
+>           addr |= (uint64_t)s->ctrldssegment << 32;
+>       }
+>   
+> +    addr += s->descriptor_addr_offset;
+>       return addr;
+>   }
+>   
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
