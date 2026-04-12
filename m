@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 004D9E93802
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A541CE93804
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC1kq-0006gC-Gf; Sun, 12 Apr 2026 16:50:04 -0400
+	id 1wC1oO-00013N-Fo; Sun, 12 Apr 2026 16:53:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1ko-0006en-HI
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:50:02 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1oM-00011l-Fy
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:53:42 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1km-0005AA-JK
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:50:02 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d74086e5bso487201f8f.0
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:49:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1oI-00065L-EW
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:53:40 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488af9fdaa7so25364905e9.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776026998; x=1776631798; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776027216; x=1776632016; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=99//8Qdl8Nl4XZNELcSg9us9cOBG7f/uZJi+Fte2f/E=;
- b=dXWK96KNlsVLt6cueiJoxGkbiEov9IPjxzPyDqCxTdsIuDw21fGxic6NVOQ+xmbx18
- VwgZv5D6TIjBaVDpaYXfLcdq12Z+tAWFi1FkFnQNgT6JLUFH2yrp4RidpKLuXZyTj9jv
- ON+0etsavwH9XhSc25cVUJSNx2n3eGOXMSnpTZXFNmBQ6GvxlwvMbInXdkYQ+L/8GVrJ
- utCY2Oc+1CkceWuAinAUOeQGKBpCQD0t8QdBVTeyMtgXHIk9OcPfiv3cgPI2OAA9+GP4
- dm786LMuo50WLvBclJyodYoP8Kcx8CVEKw0wnYnLq4/iUmxM7yzg39QFn8NXuNfQ+nLN
- jBjA==
+ bh=dlGKgcDRVNZh/ceoFaMTbHZb+tkfz+iHzXD+62lWtK4=;
+ b=Je/4GR/PSs3BRhw/lKXZQIltyjWuNkprIDmfBHGR00MBbmslolwf00jaEm0Vlwxfb6
+ iHY6LN520+tiW/UXoWj+EErBEkXFdSbIiSPJBIaSKiKuCcrMff5ps9tkWPtBgIzgO4pb
+ /wywht5CbYYP8QffJ5fHwvy9n1pGE2rmphdvSSeWZeJbsPcngPSUQbcHT4g0In7ef6vl
+ 7tcpP/zbiGHyRKzq+BKC2bvCI/NAVND3SypdDlzYTNyh13dOnCChYpfqHloUodbRfpR4
+ jxSKlqBr/uoMZcC/xgFn50Z0K8BrsXd5PJpiIzW5wj6cNqY6VSnrFG/oCTlC2dpDUhpY
+ GZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776026998; x=1776631798;
+ d=1e100.net; s=20251104; t=1776027216; x=1776632016;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=99//8Qdl8Nl4XZNELcSg9us9cOBG7f/uZJi+Fte2f/E=;
- b=nKcErWESpPKxB/102prin2sZ5T/HxV32XDXiwoojhaHnXWeAAJuHP5o4ki423LBuSb
- aEWnh3WEOxKRTy+t0zEGbqxruc9wM8SZ/NLlT7X626mhblmbD1sF5rF9JTVStXoYL+RX
- QtTbbNK1KD4KCxg7JAYHF6GqeGoc3dLjCYQQPeuq75zyJh5ZVunjimbJRVhShTjcJ9lN
- 1F3i7Bu56/GotSxDUUWDj178nuVWQRiL6FKZtg1MBx7LxPWsDUO5NjmnmCj1esUY8DPl
- 0PUzK9PIc/iCJJgUk5XrtGnfv/EXpw79thFkmjfcSSz+X2AGUh+BbpuII2RAaYUALhDA
- 9caw==
+ bh=dlGKgcDRVNZh/ceoFaMTbHZb+tkfz+iHzXD+62lWtK4=;
+ b=n/roP+Bw/js/m2neQEKPWRLbXIR0BphSg/CvqkiiCoHR9AyJz8ROvEIWKQ6QDVGdeb
+ pTxGhwMHmvoj1iVwp4jTNpkEaBDrh6s7XCpjQrqncFqbTPcgHJLwS92ia2bZkfwF95jz
+ EosH4bugUaFwY6GtTxgP/LBsHF2FpjCXdCa4F0LDe+wPHKgJMyT7Ak/VJIfgEb7hczui
+ W2l9P/fbCbZNvJBbFvRA/ck4XbQFvtGy7Q4rGS6yY3MpF1FIDERvRWsHHyTJneF2o68I
+ oJ2LnO3r99F2IGr+gXFfL0UtSigyxPV5tXkn98j4fFctN+jZ4pedmN6eojt+qDRJHWBr
+ 3SHA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+DHXX5Rp9vYVI3wibnMVAuioH53WNRSw9LxB7Xnnku+PQMEXwOIWC50MRLjkW3zJDAvAz3DAfPA2cX@nongnu.org
-X-Gm-Message-State: AOJu0Yzl4aiZagrh3n4oukl2cUYkowAHiPjDocpNoGj9/wlbpYm4x5ST
- 8AfF4MWZd8FYAqHI+PsUNOOknkpgYNVScxtDYbmhfP8Xc+JcvvrdGiL4l/Iw9wlZET8=
-X-Gm-Gg: AeBDieugJSM/shwnLem2vEj7ebIjsqXzZ1YSTTh8tnnId/YGFRfIqJHLeumPzsB9HT+
- 1ODzarKGQwY/+skq5fK++FMVlTY2UZWJrsZcWOh+hSu42fh6cvQ/6fEGumlc8w72tByyMJ5qyC/
- eJXa0ll2Qln/et+TLYtwaKmTVZTTNfhfVhsXEA8DOZ7o0dCsO8afLCzJ6molQcrB3u+AszRtV6v
- Jih954B8qU7MliCrzEGLadPZfvCS5+RCkrK8nHLbA4etkfUwAPvk5xugYM9MadHpz+f2o0wLCcQ
- 3Ac0UCVZiK5sHctElD2mSkMlpkAdLJFvAFfAhuuPsMyKlH9/cxsVte41+19Z/4o2tsUv8nUhDyU
- 5MspUo8/FDuokjuLwX9XvsJJBMUfW/HMlMYMz6BND2/rnLNvNPPJcQiIraHpD6sbSwF1/Qt/O6Q
- itphJIl5+XpQ+lJwo8WezY26Qdpktj3sAYQ7xiKsQhljKrkGmvdLZr9z7Ps0Wn3WZY6Q==
-X-Received: by 2002:a5d:5d0b:0:b0:43d:70e5:bfa9 with SMTP id
- ffacd0b85a97d-43d70e5c016mr5248279f8f.48.1776026998351; 
- Sun, 12 Apr 2026 13:49:58 -0700 (PDT)
+ AJvYcCXm0i4h9onDUsqPfHvv3MfXtSNDRUgIGNNnjSajkZGGUNAoBmY+0PfloyHoZ9iz2kE5qSAn1J1/SxAe@nongnu.org
+X-Gm-Message-State: AOJu0YwrJxWVG4uXsBYFK8aYGgmiUuu1r61+eJJqclFjKhk49w97xGvi
+ iN91GLy7wZeD/L6blhnpP7JJL0G6CqGQyV/0y0pzo7EBwfajNabN3pADM3i1X4Uq65s=
+X-Gm-Gg: AeBDiesI+SKlSj2KCrRzHTYF/KoaecqfEQSSfYQKmCxz6y2dx2ADN5pRQH+E2socSkW
+ JRfBrlg+PWiViZxQcuiXCfT4moo1CUrfC6csqyGbJMG/VVuG4KcCtrNPyyzstog61dXfX5ZAvbX
+ 2J034i+Sesb8cpDFLJo8ALRVe9WmiWvtdlOb1F13W36FezSm0HV17tG4ZkV0VnbFi8LZHXo7ITn
+ 0Ukip7TeJzs1aqXwzn7UGtsRJl9vbkDiT+K+bjKzHRQOPew/aZn00qEUEJusttGQZU4rivrOi4L
+ t4GHoP4AAmiaiC2Z6cj5aq8vKJZ3diEmRnMmK8/zbORu68yxfyPCj1rUemcKCmYbdxCoUC7XC2z
+ +w4csBljsI3G5gF/YVFDc2SvSZUuMpxLmtEjAmsmiuZ7Ek0RIee6UgPSQ1n90eIP9ImYhhgBKh0
+ 6LNhqMsuv+wp6WaWTDTYVhi33vToftZwxZD8cyTqTBDKgzySOD8ealfX1vEQFmMKPX2Q==
+X-Received: by 2002:a05:600c:64c4:b0:486:fbd1:9dc0 with SMTP id
+ 5b1f17b1804b1-488d68c2c56mr132751815e9.22.1776027215811; 
+ Sun, 12 Apr 2026 13:53:35 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63e4f16bsm26430024f8f.26.2026.04.12.13.49.57
+ 5b1f17b1804b1-488d67ced32sm107711855e9.7.2026.04.12.13.53.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 13:49:57 -0700 (PDT)
-Message-ID: <b143a786-751e-4d19-b27f-40449aba52a7@linaro.org>
-Date: Sun, 12 Apr 2026 22:49:56 +0200
+ Sun, 12 Apr 2026 13:53:35 -0700 (PDT)
+Message-ID: <f1f030b4-acc6-414d-a0ef-4afff50278fc@linaro.org>
+Date: Sun, 12 Apr 2026 22:53:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 07/13] hw/usb/hcd-ehci: Implement 64-bit QH descriptor
- addressing
+Subject: Re: [PATCH v1 11/13] hw/usb/hcd-ehci: Add descriptor address offset
+ property
 Content-Language: en-US
 To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
@@ -82,20 +82,20 @@ Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
- <20260311072614.1095587-8-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260311072614.1095587-8-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,115 +112,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/3/26 08:26, Jamin Lin wrote:
-> EHCI supports 64-bit control data structure addressing when the
-> 64-bit Addressing Capability bit in HCCPARAMS is set. In that mode,
-> the CTRLDSSEGMENT register supplies the upper 32 bits which are
-> concatenated with 32-bit link pointer fields to form full 64-bit
-> descriptor addresses (EHCI 1.0, section 2.3.5 and Appendix B).
+> When 64-bit addressing is supported, the Linux EHCI driver programs the
+> segment register to zero. See ehci_run function:
+> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-hcd.c
 > 
-> The current implementation assumes 32-bit QH descriptor addresses
-> and directly uses link pointer values without applying the
-> CTRLDSSEGMENT upper dword.
+> The driver comment also notes that descriptor structures allocated from
+> the DMA pool use segment zero semantics.
 > 
-> Introduce a helper, ehci_get_desc_addr(), to construct full 64-bit
-> descriptor addresses when 64-bit capability is enabled. Update QH
-> traversal paths (async list walk, horizontal QH link, and periodic
-> schedule entry handling) to use the translated 64-bit addresses.
+> Descriptor memory is allocated using the DMA API. The platform driver
+> configures a 64-bit DMA mask so memory can be allocated above 4GB.
+> See ehci_platform_probe function:
+> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-platform.c
 > 
-> Also add bufptr_hi[5] to EHCIqh to support 64-bit buffer pointer
-> fields as defined in Appendix B.
-
-bufptr_hi[] is not used in this patch (but the following), however
-I wonder why not convert to 64-bit:
-
--    uint32_t bufptr[5];               /* Standard buffer pointer */
-+    uint64_t bufptr[5];               /* Standard buffer pointer */
-
-adapting the current 32-bit path and extending 64-bit in the next
-patch.
-
+> On AST2700 platforms, system DRAM is mapped above 4GB at 0x400000000.
+> As a result, descriptor addresses constructed directly from the guest
+> EHCI registers do not match the actual system address used by the
+> controller when fetching queue heads (QH) and queue element transfer
+> descriptors (qTD).
 > 
-> When 64-bit capability is disabled, descriptor addresses remain
-> 32-bit and existing behaviour is unchanged.
+> Introduce a descriptor-addr-offset property so platforms can provide an
+> address offset applied when constructing descriptor addresses. This
+> allows systems where DRAM resides above 4GB to correctly access EHCI
+> descriptors while keeping the default behavior unchanged for existing
+> machines.
+
+This is dubious. Maybe the AST2700 isn't modelled appropriately (like
+some memory region not mapped in the correct container, or some code
+path not using the correct address space).
+
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/usb/hcd-ehci.h |  1 +
->   hw/usb/hcd-ehci.c | 45 ++++++++++++++++++++++++++++++++-------------
->   2 files changed, 33 insertions(+), 13 deletions(-)
-> 
-> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
-> index 7dc6d151cc..f18150c352 100644
-> --- a/hw/usb/hcd-ehci.h
-> +++ b/hw/usb/hcd-ehci.h
-> @@ -204,6 +204,7 @@ typedef struct EHCIqh {
->   #define BUFPTR_FRAMETAG_MASK          0x0000001f
->   #define BUFPTR_SBYTES_MASK            0x00000fe0
->   #define BUFPTR_SBYTES_SH              5
-> +    uint32_t bufptr_hi[5];
->   } EHCIqh;
->   
->   /*
-> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-> index d7a0917caf..8fd3fd60c4 100644
-> --- a/hw/usb/hcd-ehci.c
-> +++ b/hw/usb/hcd-ehci.c
-> @@ -146,6 +146,18 @@ static const char *addr2str(hwaddr addr)
->       return nr2str(ehci_mmio_names, ARRAY_SIZE(ehci_mmio_names), addr);
->   }
->   
-> +static uint64_t ehci_get_desc_addr(EHCIState *s, uint32_t low)
-> +{
-> +    uint64_t addr;
-> +
-> +    addr = (uint64_t)low;
+>   hw/usb/hcd-ehci.h        | 1 +
+>   hw/usb/hcd-ehci-pci.c    | 2 ++
+>   hw/usb/hcd-ehci-sysbus.c | 2 ++
+>   hw/usb/hcd-ehci.c        | 1 +
+>   4 files changed, 6 insertions(+)
 
-Not need for 32-bit @low, take a uint64_t addr argument.
-
-> +    if (s->caps_64bit_addr) {
-> +        addr |= (uint64_t)s->ctrldssegment << 32;
-> +    }
-> +
-> +    return addr;
-> +}
-> +
->   static void ehci_trace_usbsts(uint32_t mask, int state)
->   {
->       /* interrupts */
-> @@ -438,8 +450,9 @@ static bool ehci_verify_qh(EHCIQueue *q, EHCIqh *qh)
->           (endp    != get_field(q->qh.epchar, QH_EPCHAR_EP)) ||
->           (qh->current_qtd != q->qh.current_qtd) ||
->           (q->async && qh->next_qtd != q->qh.next_qtd) ||
-> +        /* 1 altnext_qtd + 1 token + 5 bufptr + 5 bufptr_hi */
->           (memcmp(&qh->altnext_qtd, &q->qh.altnext_qtd,
-> -                                 7 * sizeof(uint32_t)) != 0) ||
-> +                12 * sizeof(uint32_t)) != 0) ||
->           (q->dev != NULL && q->dev->addr != devaddr)) {
->           return false;
->       } else {
-> @@ -1534,7 +1547,9 @@ static int ehci_state_waitlisthead(EHCIState *ehci,  int async)
->       EHCIqh qh;
->       int i = 0;
->       int again = 0;
-> -    uint64_t entry = ehci->asynclistaddr;
-> +    uint64_t entry = 0;
-> +
-> +    entry = ehci_get_desc_addr(ehci, ehci->asynclistaddr);
-
-(for example, @asynclistaddr is 64-bit).
-
->   
->       /* set reclamation flag at start event (4.8.6) */
->       if (async) {
-> @@ -1562,8 +1577,8 @@ static int ehci_state_waitlisthead(EHCIState *ehci,  int async)
->               goto out;
->           }
->   
-> -        entry = qh.next;
-> -        if (entry == ehci->asynclistaddr) {
-> +        entry = ehci_get_desc_addr(ehci, qh.next);
-> +        if (entry == ehci_get_desc_addr(ehci, ehci->asynclistaddr)) {
->               break;
->           }
->       }
 
