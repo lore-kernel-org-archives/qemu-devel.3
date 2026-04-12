@@ -4,90 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CF5F3ED6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 07:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C014F3ED7B
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 07:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBoyF-0006W4-Si; Sun, 12 Apr 2026 03:11:04 -0400
+	id 1wBp5C-0007ZQ-1x; Sun, 12 Apr 2026 03:18:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wBoyD-0006VK-EN; Sun, 12 Apr 2026 03:11:01 -0400
+ id 1wBp59-0007Z7-2l; Sun, 12 Apr 2026 03:18:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wBoyB-0003WM-1B; Sun, 12 Apr 2026 03:11:01 -0400
+ id 1wBp56-00057T-9q; Sun, 12 Apr 2026 03:18:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1775977784; bh=b3I8f/WbGNwl7pTNhWOEryD9k7VgMyI9KvXlIh82FFo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=sZPw+UAettb/aHIQoarhuANERdHc9mNU94OhhRqwaE497KXJ76aMIWhsrdZzDrh8H
- xFxbTdO5YDjL0OVqTau+J5NNoe8zQZ/ZsaULNPZ2kFhBAzTSuKUHUrLdksr7yF+jlP
- c2xaDiccg/PWyVwe7p9pqUp3Cl9fhUQvkS4LJmnGDjutb/akiFt1B4IBrDpvuoeY3t
- +9Lz8Pkah8XgWlIH+R1PZKKS02S60bN+JOm6XPFnBec/j+ERTT72eQGvp+QwfBnxb1
- wqnm1FjSAnLHKJjy5lYEAyLFWXWMfC29Mjd7tT8FEAq0bSwgGJr9xeFXRClLFV6hWm
- moKVQSMetRBJA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 1E00E19D60D;
- Sun, 12 Apr 2026 10:09:44 +0300 (MSK)
-Message-ID: <d0e6f8b4-200b-4ba8-adb2-5c29cc668d15@tls.msk.ru>
-Date: Sun, 12 Apr 2026 10:10:38 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-keymap: fix altgr modifier lookup for newer
- xkeyboard-config
-To: Dietmar Maurer <dietmar@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20260408091459.4001711-1-dietmar@proxmox.com>
-Content-Language: en-US, ru-RU
+ t=1775978229; bh=Ii6uLQ7SVYIqmQDuAU/zlm75kkuTaU3xz0u4cZXiKP4=;
+ h=From:To:Cc:Subject:Date;
+ b=ncI27t+UjP2SvbTvtN9hZQpigYdeg31Kj9UWSMltbEWEJjOZfwkiqDrKLKTQtf+6Z
+ BAy0p6bkcByG8NUcUP3xJU8ou9XtixvImGpG3Rpw8XFHCy8vvIO2dWTkz74n3+Vc5W
+ KMmkJ+X/w/wT7ABSuw9TU5Jqa6480y5Lx1CIxEIW92Ax4CQ0x6G2qpaMVfJ4de1Z8J
+ YiYjZpAq8pfXYK80WELosiluEi25k8R2kjYbgniLG3rMW5W7YbmPaIOghk9CPchV8J
+ 6rlZrBPVE6vNN0GXVJqTYjQihEcdwW9WXJ8n7AxrsjAl0y6QhLhtvMwCqXm3MPkrVo
+ PU0IVTN6TzVkg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3039A19D611;
+ Sun, 12 Apr 2026 10:17:09 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E3306394611;
+ Sun, 12 Apr 2026 10:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260408091459.4001711-1-dietmar@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org,
+ Christopher Palmer-Richez <crichez@pm.me>
+Subject: [PATCH trivial v3] net/slirp: allow hostfwd socket paths with dashes
+Date: Sun, 12 Apr 2026 10:17:49 +0300
+Message-ID: <20260412071754.569575-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -112,26 +67,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.04.2026 12:14, Dietmar Maurer wrote:
-> xkeyboard-config 2.37 removed the "AltGr" virtual modifier in favor
-> of mapping upper groups directly to Mod5. Since then,
-> xkb_keymap_mod_get_index(map, "AltGr") returns XKB_MOD_INVALID, so
-> AltGr-based keysyms were never generated.
-> 
-> See: https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/commit/473f9bc32f9ba869829cc0d06a75cd1f2560aa60
-> 
-> Try "AltGr" first, and fall back to "Mod5" for compatibility with
-> both old and new xkeyboard-config versions.
+The format of hostfwd parameter is:
+  hostfwd=hostpart-guestaddr:guestport
+so a minus sign can not be part of the hostpart.
+If hostpart specifies a unix socket path, this becomes problematic.
 
-Maybe we can go the other way 'round, namely, first try Mod5,
-and if that's not available, try AltGr?  This way, "current"
-way will be tried first, and "compat" way will be a last resort?
+To solve this, look for the LAST minus/dash char in the string,
+not first.
 
-But anyway,
+Unfortunately, [-guestaddr] is optional (defaults to 10.0.0.15),
+so we still can't parse the thing in an uniform way.
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Extend get_str_sep() to accept negative separator to indicate searching
+from the end of buffer, to find the last occurence.  Update slirp_hostfwd
+to search for the last separator when parsing unix domain socket path.
 
-Thanks,
+Inspired-by: Christopher Palmer-Richez <crichez@pm.me>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/347
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+v3: instead of adding an additional argument to
+    get_str_sep() and changing all callers,
+    (ab)use signedness of the separator.
 
-/mjt
+ net/slirp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/net/slirp.c b/net/slirp.c
+index 04925f3318..847e7dab63 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -54,7 +54,8 @@ static int get_str_sep(char *buf, int buf_size, const char **pp, int sep)
+     const char *p, *p1;
+     int len;
+     p = *pp;
+-    p1 = strchr(p, sep);
++    /* negative sep means to search -sep from the end of buf */
++    p1 = sep >= 0 ? strchr(p, sep) : strrchr(p, -sep);
+     if (!p1)
+         return -1;
+     len = p1 - p;
+@@ -848,7 +849,7 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
+ 
+ #if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
+     if (is_unix) {
+-        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
++        if (get_str_sep(buf, sizeof(buf), &p, 0 - '-') < 0) {
+             fail_reason = "Missing - separator";
+             goto fail_syntax;
+         }
+-- 
+2.47.3
+
 
