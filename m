@@ -4,87 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E10E937E7
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 21:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8874E93807
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 21:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC2Jd-0007qY-Bj; Sun, 12 Apr 2026 17:26:01 -0400
+	id 1wC2hL-0002Bc-3x; Sun, 12 Apr 2026 17:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC2JX-0007qF-Qc
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 17:25:57 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC2JV-00076R-PS
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 17:25:55 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso40157345e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 14:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776029150; x=1776633950; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Z8VZn4FxpRf32y6yQiXLMXIl12GmZ01c/kHgJ1+ertw=;
- b=wwzQEL5It95IHu11Sufj603V6bpjQHqEwm7FmK36PT+QjWsFUDEtDsp7vMqn2K3KMt
- t4vl41Lm6N2lUER3wG9EZfaS0JT4PYNMAMl9RoXnLyKeRFXkm2SCT9UEexZMh/izBNoC
- DWOvtEKHZgj3FAltG/lg6IxqI9ZLBscGsZX9WpjH4P5jo7aEwpqqHo3ba+J5td9/obXf
- MgY6UBXdZ7Ca83p4bmUSCllo3YWNXQMKltJXiIEmp4U0bwyjMeUYhTsj/GsUF3qAbsC2
- zyj2SO7h5YI5m8J1D5sw1gyefAqutoWeaUqtn5iL0KxV+s3UTUq5um85W74yLux7r9v6
- mN7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776029150; x=1776633950;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z8VZn4FxpRf32y6yQiXLMXIl12GmZ01c/kHgJ1+ertw=;
- b=IiWPKgOq7MJ7Q6lHY7AgH85Z62DCeGosd5/vqmTlk5xx4euUevZGnTbK5GOYvENx+M
- Lby8IfVd0HxjKISno3JL2SO9gjnhuDmzMbojmZCnhlOp+58Z1Nzog6/z93b+xg3RYbjX
- lvRm+ZMxPPF+xUMs61jTWUdGR9dS7he4oMfU9bfwAwCR1nfqb5wMytgA4OUloLYY9zzI
- pcSSR38ZHlAhV237Qof8Hr8g366Rv2unWh2a4WgdZRkjL2WCYTbhKIh7rd/ATxZgWily
- CkVZTC6+GhCX3BPV1lkHnd/FgRsd6fsuJBjuFIMykGEMYndNh6b4O+G8LNeysGc9iCqX
- h/Xg==
-X-Gm-Message-State: AOJu0YwsaAfCm0XJUGRq5adThn+juzOhh44S+Za0BNhfgpeNuCreGAOZ
- cEG9nhvt8VS0zfFO4aYp9uOKQ4qPUSnF176Eu8ZrbjQNzn9jxxA5is19bxweexbsmdlKdwFj4jW
- Jp7KqMVg=
-X-Gm-Gg: AeBDiesPace+1G8bS6EXM6Lyd71qqwydTiAt47f83B9hLuCnpBbYJRcHzdSiPy3VvRP
- 5leBFFZZaXDZvVY39jbtaw82qHrf8BM8B4FXTIqRR7GheMh2LX3anOcrDDLAfpfevju7K/en5au
- 7TmYgpC9LtlV3SGHeYznBdP/QNdA+Y5WKkFksed7Bk01JMe5QyuZ5hqa1MeRU2TjMBkMAQjtAtT
- yL0+KnE2eLQ0U3bWBt+gQsxbNp5YodwbOR4LrTo0Ju5XcU8UXamjucCyZBMablhPumMKC6asWOq
- g+6fCpMHUb98XrWh2UhmGRzge8ECXIONz4sUte6QDVbHSvw1XEwLzJ454a05My87TzszEdA4pMJ
- MZ9+8OwOk9a8fJCAgZ2pbuS2f1CVFdW2CwgNBhKdEQ9oloEnS2+gVbY+alEnpKnBmF4IodQYLRH
- aA1TFyghRGIc3Oj7PVW6WME/3u1SVth8WnSPD5SYdIXtk35coBFGHTHy9YHx4126Y7VaCqXSpk
-X-Received: by 2002:a05:600c:c10c:b0:486:faa8:9e4 with SMTP id
- 5b1f17b1804b1-488d68cb8demr85362455e9.12.1776029150445; 
- Sun, 12 Apr 2026 14:25:50 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d6864121sm78508835e9.28.2026.04.12.14.25.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Apr 2026 14:25:49 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Yanan Wang <wangyanan55@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH] cpus: Remove CPUClass::init_accel_cpu() left-over hook
-Date: Sun, 12 Apr 2026 23:25:47 +0200
-Message-ID: <20260412212547.29645-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1wC2hI-0002Am-9J; Sun, 12 Apr 2026 17:50:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1wC2hF-00057U-0a; Sun, 12 Apr 2026 17:50:27 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63C9k5FE1822902; Sun, 12 Apr 2026 21:50:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=GOJ5PtGfRw9JuVE9Z
+ GBFN43Vs8zqFtSfYXt6iC8HpHU=; b=X5oDLS9srTBoDWTv2dNd9rvqKVqWBlMOz
+ Fkrbo/C8THxGqYtAo9MQU7o5fHkIrvgIkr81xDyXAWO2PZEs2qnDUneJBYZ2Vt4t
+ ik3vrrdn8rZSruOgdpda7R0vn2tT7PvjwxJHz7m05ss7euu6TI16GW7kQinnkDVb
+ Pkr65Y4y2yMybxrmPaW5kuRKh8wBLqZJVbiZrN34l32SEpNTq/V9bgqEKlrnmqDH
+ o5JklFkyOURAiDkAx1ulyfTBbxMYiu4pkLxznz/saxPYdmGKgtVJhbx1EbZqlcQa
+ aXWlUwnato9Ao2+YTVZJZ7FB63+BglPbs6rwZgqjECNBwsYNqTFgQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dfdyqn2yf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 12 Apr 2026 21:50:19 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63CG5msA025621;
+ Sun, 12 Apr 2026 21:50:18 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dg2ujajep-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 12 Apr 2026 21:50:18 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63CLoHIJ15336168
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 12 Apr 2026 21:50:17 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 624AE58052;
+ Sun, 12 Apr 2026 21:50:17 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A483D58045;
+ Sun, 12 Apr 2026 21:50:16 +0000 (GMT)
+Received: from IBM-GLTZVH3.ibm.com (unknown [9.61.240.32])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Sun, 12 Apr 2026 21:50:16 +0000 (GMT)
+From: Jaehoon Kim <jhkim@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: pbonzini@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de,
+ mjrosato@linux.ibm.com, farman@linux.ibm.com,
+ Jaehoon Kim <jhkim@linux.ibm.com>
+Subject: [PATCH v4 1/3] aio-poll: avoid unnecessary polling time computation
+Date: Sun, 12 Apr 2026 16:50:09 -0500
+Message-ID: <20260412215011.326196-2-jhkim@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260412215011.326196-1-jhkim@linux.ibm.com>
+References: <20260412215011.326196-1-jhkim@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ErTiaycA c=1 sm=1 tr=0 ts=69dc139b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=6MqEkq6nHlEWUoCmaegA:9
+X-Proofpoint-ORIG-GUID: ckaDrHO43XM1IhWOjedwLfu8PZCcxZVu
+X-Proofpoint-GUID: ckaDrHO43XM1IhWOjedwLfu8PZCcxZVu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEyMDIxNCBTYWx0ZWRfXxvJCevnPS8mC
+ +jo02k9qahrwOsQkXs7bTJSnjuGjAXUxjEA6yDuAIMAu3/rtYVmQtxixrOdh/thytbOWVC6aS9A
+ BJJiaERfpvUDAG41wyzr3/4F51TDTLQCY0K6Pfud/m9jSDJwUfqne3lp6MqbjLiFFcH+349q9zd
+ vVwMvOACXUrp/3QwDhkXnhCJsrHwWG2hNVjMTqr56T639SVCjrK4PpGGpYRHSQ9ep32NK9/HFlD
+ yQER977EyV9fsv6zpF7w9NE+Wx+ZdTVqTm4Ze3W7xlcbWq9/tFZv2Tum7wew7DdR2juwP5YLVeM
+ BtiTyd6wQc+LlV1t/cMoPtCIFiGmz4jtr6CHgF7B0ABh+4B7+Co3i/kGuuiMR6h3FUGD9i15/rY
+ LacwoGkM+1RBGqXfzmAULSCsVxiOuvBY+616+OID3JMxDn95RyQvPfG5tlbGyswVM7+QaZFgk9d
+ /zWXg3uyxXeyPD1TsTA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-12_05,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 spamscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604120214
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,62 +122,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commits f50d0f335a6 and a522b04bb9c ("target/riscv,i386: Remove
-AccelCPUClass::cpu_class_init need") removed the last uses of
-the CPUClass::init_accel_cpu hook. Remove it as unused.
+Nodes are no longer added to poll_aio_handlers when adaptive polling is
+disabled, preventing unnecessary try_poll_mode() calls. This avoids
+iterating over all nodes to compute max_ns unnecessarily when polling
+is disabled.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/hw/core/cpu.h |  6 ------
- accel/accel-common.c  | 13 -------------
- 2 files changed, 19 deletions(-)
+ util/aio-posix.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 04e1f970caf..cd03187e116 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -186,12 +186,6 @@ struct CPUClass {
-     /* when TCG is not available, this pointer is NULL */
-     const TCGCPUOps *tcg_ops;
- 
--    /*
--     * if not NULL, this is called in order for the CPUClass to initialize
--     * class data that depends on the accelerator, see accel/accel-common.c.
--     */
--    void (*init_accel_cpu)(struct AccelCPUClass *accel_cpu, CPUClass *cc);
--
-     /*
-      * Keep non-pointer data at the end to minimize holes.
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index 488d964611..351847c6fb 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -307,9 +307,8 @@ static bool aio_dispatch_handler(AioContext *ctx, AioHandler *node)
+      * fdmon_supports_polling(), but only until the fd fires for the first
+      * time.
       */
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index eecb2a292af..9c5b4111c8d 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -37,23 +37,10 @@ static void accel_init_cpu_int_aux(ObjectClass *klass, void *opaque)
-     CPUClass *cc = CPU_CLASS(klass);
-     AccelCPUClass *accel_cpu = opaque;
- 
--    /*
--     * The first callback allows accel-cpu to run initializations
--     * for the CPU, customizing CPU behavior according to the accelerator.
--     *
--     * The second one allows the CPU to customize the accel-cpu
--     * behavior according to the CPU.
--     *
--     * The second is currently only used by TCG, to specialize the
--     * TCGCPUOps depending on the CPU type.
--     */
-     cc->accel_cpu = accel_cpu;
-     if (accel_cpu->cpu_class_init) {
-         accel_cpu->cpu_class_init(cc);
+-    if (!QLIST_IS_INSERTED(node, node_deleted) &&
+-        !QLIST_IS_INSERTED(node, node_poll) &&
+-        node->io_poll) {
++    if (ctx->poll_max_ns && !QLIST_IS_INSERTED(node, node_deleted) &&
++        !QLIST_IS_INSERTED(node, node_poll) && node->io_poll) {
+         trace_poll_add(ctx, node, node->pfd.fd, revents);
+         if (ctx->poll_started && node->io_poll_begin) {
+             node->io_poll_begin(node->opaque);
+@@ -631,7 +630,7 @@ static void adjust_polling_time(AioContext *ctx, AioPolledEvent *poll,
+ bool aio_poll(AioContext *ctx, bool blocking)
+ {
+     AioHandlerList ready_list = QLIST_HEAD_INITIALIZER(ready_list);
+-    bool progress;
++    bool progress = false;
+     bool use_notify_me;
+     int64_t timeout;
+     int64_t start = 0;
+@@ -656,7 +655,9 @@ bool aio_poll(AioContext *ctx, bool blocking)
      }
--    if (cc->init_accel_cpu) {
--        cc->init_accel_cpu(accel_cpu, cc);
--    }
- }
  
- /* initialize the arch-specific accel CpuClass interfaces */
+     timeout = blocking ? aio_compute_timeout(ctx) : 0;
+-    progress = try_poll_mode(ctx, &ready_list, &timeout);
++    if (ctx->poll_max_ns != 0) {
++        progress = try_poll_mode(ctx, &ready_list, &timeout);
++    }
+     assert(!(timeout && progress));
+ 
+     /*
 -- 
-2.53.0
+2.50.1
 
 
