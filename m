@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDAB8E93805
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B25E93802
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC1aR-0007mP-Cg; Sun, 12 Apr 2026 16:39:19 -0400
+	id 1wC1bo-0000Ab-PQ; Sun, 12 Apr 2026 16:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1aP-0007lw-D6
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:39:17 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1bl-0000AO-3P
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:40:41 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1aN-0001xM-Tr
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:39:17 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso43706385e9.3
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:39:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1bh-0002bf-Dv
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:40:40 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso34795425e9.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776026354; x=1776631154; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776026435; x=1776631235; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oA0DLeSnfQ1X+bYFCL2d+Pb52L0Uky4PduQpBdNLBkM=;
- b=qC25amMP4MMGf9zvwnEWHBXu54dPT5LnD0U+EP9v5HgJKocI4APdUB815ivq36y76P
- Pw9RNYoi1OKrCJzzP6FtPRoKIUj/n9L7vX1MgKJ629Xr2LMaDGziK7WTX+QOR+mySiyM
- vOgfH3FKTBsauLqS3sBCovkMCrNa4gZNFnDTrfX9OKP52LtD3E+/RsXPgu9dRzzTvm+A
- qenXXeQHO1XFObnfTRHKgw1ahxKJWQpDipime0VrddmPISaMI8yWM8cjhOIQge92R8Uj
- HcbCoan6yqz59DKQDM+ZjUcJ8LssoJ/rKg02KNC9/FSoRuPU900IY7qCaj0V9fgmeNo3
- 2HDg==
+ bh=ACJxaywudMwrTLfxzQ6gGKprUXdb7b0YKQf3koP+Buk=;
+ b=iFY3sGBiGvcAEtpTWtg/FSdhZ84V3qai5l+FmcvasV9GXHuf+wunj5tG6t4fwJC/KA
+ 6CATk2Fc/9YPrj7o3zQasBVqREJ2oj3o2QDzEqOy15cvSgEWZrIaADdhn0GW7BsRQvXK
+ RDSPlUfhIcZV7t5SEQ7ImC5UBoUORSZUuEebvHH2JmXm8E5tVG6g8WR2m3o+kyr+0Zq4
+ aXqoxTD3//r0BAb0lnTXHhUGC0SZiDa8BcLqsltuHhTCqJSk63wmcBabzugKj4pznC23
+ gG7OfNLzSgfEevzwIDxLpI6l2zhDQl04jGJ9cvzc70eLQxj8ag/RFLJhQ+FHgGCiHJKL
+ cC7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776026354; x=1776631154;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776026435; x=1776631235;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=oA0DLeSnfQ1X+bYFCL2d+Pb52L0Uky4PduQpBdNLBkM=;
- b=cXju00XCnOnXgDZ3zlSPQ0z50cADBfwI44D2pBcPd0oJbRzUEtl3W3jTCMA8EvtKQU
- VcBGdvagaHpJNE5D36LriWRZuXRMXXiUdauRipOwq0rOw6Hh98WQi9aBG262iqxGmmX1
- GdktpGzweW7qQXYjCcJaUeMxsIdz2o8zn6LFxyGobDncll4hOlpA/5sPzWocrkYVSjLR
- o3sNV5s5EWDLcdDEVom37TQ2s5asYVuuHNCzaZvOequU/MPneJZhNLmp6soxcr84OWWP
- 95ZX0Oif0qXcB6vxqHi5vuYXcaPB77ZSymBco5oOvZkgfAStO89MoZJWXojSVQak4Ql4
- vBLQ==
+ bh=ACJxaywudMwrTLfxzQ6gGKprUXdb7b0YKQf3koP+Buk=;
+ b=HQm4eGNVOxb+mr8HveGeLGfkk8LbZi2P+opvuLpKKlcu4owWW2w8ZFtR7FUlrGn/Kb
+ 0eI2luyKrEeAYUi2GHuVrQPb1tFYn0zvHdC2T5Cvs+cxQ/9a63hm0hCjSIHFoXRY7/dV
+ oxpdD4dG01QHLkr4YkNBf7fmjHIm19VYd4xZi11v/u5Jwc8TGKltvsdwFbzuj9Eu06Or
+ vZjUbVOoVIF50tEpOavak3CnCSK/tV5FDNdmdudRf5pngHDsR/4oanfyGe6Q6cQw5sOv
+ oZbgqKdLogNVeu4SLh5r06/zIE+ZGSxxx8NwrhwPgutvwbPwSVn2cdYoaTmpdNUaO2Or
+ N0sw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVR6wFErtc+q1hrDYN3yfmEb/D87JhIEXWdTMvYWM7hxhpbfG89SsQji2yUqnZIwx9QiII6mdcyo6n8@nongnu.org
-X-Gm-Message-State: AOJu0YyEYWNDzyVpgSE/QLutMiUaorkFkv+1PNo8yOiiLUFlZerBor32
- 8FbUg1OTHEb3/1JGS09XDd3EyTtk9wV2MCv3WyI8scSiHibQk0Fa8vnT4I+5LjDXqvejbn+DA15
- dv2k4nKc=
-X-Gm-Gg: AeBDiesQqa/Thu8MR9agIJQO7kK/ygWsln0QsR8VlMzgOrCAaq6rpnhLrfbm+NnKXfs
- e7QluZsHVniYuOrzlEg/kGfkQ86ZEULUrHdFXesGyy0n7gjC6Y3eJmJWbcBvruPNRDxS7k1/Sb4
- bPLrGMr5fKXgSbqpUN0BZFRAJgsBHF5FkqCEDJkF1lgw7+7NDr3jDm0bPdc4+2AKzBMjj3D2hnH
- ceor5edBmYr9kMFaSD/tp6TOdqx3nbNiUMNs1rpedr1Jtd0CbGCWp+/XrveG9xcEXybKs58fPno
- w/2eGjjlW65BCfDa9UXs8bN23Y4zO2aGBsL9uvLeAml+Azo+Vv6yUhr9fguaAn6gd08pq5WOEgk
- dAY3R7xY4QQCCW2eninfNnlz0mLbaAVyzk1NiTu4YzYGs0xX94SnhecLx/5nDo/pMEhBLYc412r
- lu606VnO0Gn2+/rhCQTRq5GmulfOQs2h9xZTZVsS2xCTnTkjVXATLKtQ34r5VPgVn9hg==
-X-Received: by 2002:a05:600c:34cc:b0:488:869c:edaf with SMTP id
- 5b1f17b1804b1-488d67d882cmr156080645e9.8.1776026353943; 
- Sun, 12 Apr 2026 13:39:13 -0700 (PDT)
+ AJvYcCXWO3n3l5i79nsLxWCx4WNCCP1LnWLEQPLz8U/15s3lkASlfkW4ilNNlvjGg0CxX2khJp4FoL+buMJ5@nongnu.org
+X-Gm-Message-State: AOJu0YyD9t7xV1x1GcpYkkXyom2wpa6RAD9opN2KNjM+dMTz9YUNpeMd
+ YGu7WJAJUjiOBGIgjYTu4pj/fQvoT3jQr5+dk5Hd1gfO3OIjGdsJ0AZz4kupZv6jHHI=
+X-Gm-Gg: AeBDietp/bSB0vKZaPq5KjK62Mg9nWOg69LOBOw3NuSGW7R1+bjOz87MzR9duVQVNQZ
+ sl9D8HtlrJKrl5xeawJTSRYAKRZ1e9Fp4Odc3cmZmzKybSoToQozXqsST5vc639eCNOodrtJYzY
+ 64A7ICs+u6zCyhHLI0T/WYUYTlAeOfRP5WWN2D1F+g6R4vUApTi/7dg3nHwQXbvrVTQoOhwuqtE
+ CLd+RR7+q9GW/qhJ9jRFK332zNP1ySUtXOf4AZ93SK5BwAluT772dA0jW6Yt1GnHkikmWV+Od38
+ RBXkpP2FGTVGvFjYkdr95jTe7ztfwyUjDdIKzF3Nctj0mSpzbyEIl9vo7ANGzZLrK3ZUQfsZcz1
+ nVd9TVcosQtjQHzfeUPOFFZuSnNNcfj+uYRsIkQJLr19305dtIBKwFXnNQVa5zYbVsdzwBu2BzD
+ 8bKt5KJ9dqrjaK+ucAPazL6AT6ex2UstKYm37OPrnDgMMe1aoA9MPY71Zt7XKrLDHwiw==
+X-Received: by 2002:a05:600c:8b27:b0:488:af7f:775f with SMTP id
+ 5b1f17b1804b1-488d68766c7mr136914125e9.18.1776026435442; 
+ Sun, 12 Apr 2026 13:40:35 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d592d606sm239789575e9.9.2026.04.12.13.39.12
+ 5b1f17b1804b1-488d58a414bsm244320185e9.4.2026.04.12.13.40.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 13:39:13 -0700 (PDT)
-Message-ID: <ed479279-fbf0-46af-96a9-93aec25c0ecf@linaro.org>
-Date: Sun, 12 Apr 2026 22:39:11 +0200
+ Sun, 12 Apr 2026 13:40:34 -0700 (PDT)
+Message-ID: <1ec64a4c-b648-4b79-a3a1-ca938ef4b7ae@linaro.org>
+Date: Sun, 12 Apr 2026 22:40:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/13] hw/usb/trace-events: Print EHCI queue and
- transfer addresses as 64-bit
+Subject: Re: [PATCH v1 06/13] hw/usb/hcd-ehci: Reject CTRLDSSEGMENT writes
+ without 64-bit capability
+Content-Language: en-US
 To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -82,14 +82,13 @@ Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
- <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-7-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260311072614.1095587-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260311072614.1095587-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,19 +112,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/3/26 08:26, Jamin Lin wrote:
-> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
-> use uint64_t for the address argument and print it with PRIx64. This
-> ensures full 64-bit addresses are shown in trace output and improves
-> debugging of queue heads and transfer descriptors.
+> The EHCI CTRLDSSEGMENT register provides the upper 32 bits [63:32] used to
+> form 64-bit addresses for EHCI control data structures. Per EHCI 1.0
+> spec section 2.3.5, when the HCCPARAMS 64-bit Addressing Capability bit
+> is zero, CTRLDSSEGMENT is not used: software cannot write it and reads
+> must return zero.
 > 
-> This change only affects trace formatting and does not modify the EHCI
-> data structure layout or behavior.
+> Add a capability check in the operational register write handler and
+> reject guest writes to CTRLDSSEGMENT when 64-bit addressing is
+> not enabled.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/usb/trace-events | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+>   hw/usb/hcd-ehci.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+> index 9e82328116..d7a0917caf 100644
+> --- a/hw/usb/hcd-ehci.c
+> +++ b/hw/usb/hcd-ehci.c
+> @@ -1106,7 +1106,14 @@ static void ehci_opreg_write(void *ptr, hwaddr addr,
+>                 "      is enabled and HC is enabled\n");
+>           }
+>           break;
+> -
+> +    case CTRLDSSEGMENT:
+> +        if (!s->caps_64bit_addr) {
+> +            fprintf(stderr,
+> +                    "ehci: write to CTRLDSSEGMENT while "
+> +                    "64-bit addressing capability is disabled\n");
 
-This patch should come before the previous one. Bonus if you convert
-the legacy DPRINTF() calls.
+qemu_log_mask(LOG_GUEST_ERROR, ...).
+
+> +            return;
+> +        }
+> +        break;
+>       case ASYNCLISTADDR:
+>           if (ehci_async_enabled(s)) {
+>               fprintf(stderr,
+
 
