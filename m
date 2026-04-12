@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A541CE93804
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF2A0E93804
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 20:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC1oO-00013N-Fo; Sun, 12 Apr 2026 16:53:44 -0400
+	id 1wC1sZ-0003L2-4O; Sun, 12 Apr 2026 16:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1oM-00011l-Fy
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:53:42 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1sT-0003Ko-JB
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:57:58 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1oI-00065L-EW
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:53:40 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488af9fdaa7so25364905e9.1
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:53:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC1sR-0007nA-Nd
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 16:57:57 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43d734223e4so392996f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 13:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776027216; x=1776632016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776027472; x=1776632272; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dlGKgcDRVNZh/ceoFaMTbHZb+tkfz+iHzXD+62lWtK4=;
- b=Je/4GR/PSs3BRhw/lKXZQIltyjWuNkprIDmfBHGR00MBbmslolwf00jaEm0Vlwxfb6
- iHY6LN520+tiW/UXoWj+EErBEkXFdSbIiSPJBIaSKiKuCcrMff5ps9tkWPtBgIzgO4pb
- /wywht5CbYYP8QffJ5fHwvy9n1pGE2rmphdvSSeWZeJbsPcngPSUQbcHT4g0In7ef6vl
- 7tcpP/zbiGHyRKzq+BKC2bvCI/NAVND3SypdDlzYTNyh13dOnCChYpfqHloUodbRfpR4
- jxSKlqBr/uoMZcC/xgFn50Z0K8BrsXd5PJpiIzW5wj6cNqY6VSnrFG/oCTlC2dpDUhpY
- GZRw==
+ bh=09PqwNmU1FaK0txdsT0YCjxAuFR71lGoXBL2cRJstVY=;
+ b=hPw2MiE8bOyl+Ls5//ZqiAY8zG3SEUoYsn+UdNJerctbltX77TSR2JmE9c6t/cRjuY
+ 1WyMpPGK/kBJ4sqO3Ka+kJb+Z8q3X6C4iiMnG160GODN19LkBOskws8DbjYt5sN++23k
+ pIyQVm7d1qODamGgQTcSQtv+5P1p6yMHtkRcNLEI3RaX/QD8CTfqsAMpnYtpeRlekEDO
+ J7KerP0rNon2tF4Bc+J5ZQhzDM4EdLjrc3WkWVhXfj+8DV5nxDoBuhpRQzZ+gOVwCIUB
+ R9y5Po0FieYgGuUyBvjzhjMoL7fWFF35L4zHvARsjrzJt1puyRMQa4vyrk2ECNyWon7+
+ fQCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776027216; x=1776632016;
+ d=1e100.net; s=20251104; t=1776027472; x=1776632272;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dlGKgcDRVNZh/ceoFaMTbHZb+tkfz+iHzXD+62lWtK4=;
- b=n/roP+Bw/js/m2neQEKPWRLbXIR0BphSg/CvqkiiCoHR9AyJz8ROvEIWKQ6QDVGdeb
- pTxGhwMHmvoj1iVwp4jTNpkEaBDrh6s7XCpjQrqncFqbTPcgHJLwS92ia2bZkfwF95jz
- EosH4bugUaFwY6GtTxgP/LBsHF2FpjCXdCa4F0LDe+wPHKgJMyT7Ak/VJIfgEb7hczui
- W2l9P/fbCbZNvJBbFvRA/ck4XbQFvtGy7Q4rGS6yY3MpF1FIDERvRWsHHyTJneF2o68I
- oJ2LnO3r99F2IGr+gXFfL0UtSigyxPV5tXkn98j4fFctN+jZ4pedmN6eojt+qDRJHWBr
- 3SHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXm0i4h9onDUsqPfHvv3MfXtSNDRUgIGNNnjSajkZGGUNAoBmY+0PfloyHoZ9iz2kE5qSAn1J1/SxAe@nongnu.org
-X-Gm-Message-State: AOJu0YwrJxWVG4uXsBYFK8aYGgmiUuu1r61+eJJqclFjKhk49w97xGvi
- iN91GLy7wZeD/L6blhnpP7JJL0G6CqGQyV/0y0pzo7EBwfajNabN3pADM3i1X4Uq65s=
-X-Gm-Gg: AeBDiesI+SKlSj2KCrRzHTYF/KoaecqfEQSSfYQKmCxz6y2dx2ADN5pRQH+E2socSkW
- JRfBrlg+PWiViZxQcuiXCfT4moo1CUrfC6csqyGbJMG/VVuG4KcCtrNPyyzstog61dXfX5ZAvbX
- 2J034i+Sesb8cpDFLJo8ALRVe9WmiWvtdlOb1F13W36FezSm0HV17tG4ZkV0VnbFi8LZHXo7ITn
- 0Ukip7TeJzs1aqXwzn7UGtsRJl9vbkDiT+K+bjKzHRQOPew/aZn00qEUEJusttGQZU4rivrOi4L
- t4GHoP4AAmiaiC2Z6cj5aq8vKJZ3diEmRnMmK8/zbORu68yxfyPCj1rUemcKCmYbdxCoUC7XC2z
- +w4csBljsI3G5gF/YVFDc2SvSZUuMpxLmtEjAmsmiuZ7Ek0RIee6UgPSQ1n90eIP9ImYhhgBKh0
- 6LNhqMsuv+wp6WaWTDTYVhi33vToftZwxZD8cyTqTBDKgzySOD8ealfX1vEQFmMKPX2Q==
-X-Received: by 2002:a05:600c:64c4:b0:486:fbd1:9dc0 with SMTP id
- 5b1f17b1804b1-488d68c2c56mr132751815e9.22.1776027215811; 
- Sun, 12 Apr 2026 13:53:35 -0700 (PDT)
+ bh=09PqwNmU1FaK0txdsT0YCjxAuFR71lGoXBL2cRJstVY=;
+ b=YRVE8sFnPXcl62G2Bv5o7PVnuMW37XlK9aMFe323rmLAutCv7sfRss/ArOyZrdZ5kL
+ gqZfwW/kgez1fDGJWw3HJQulgV8IezezYNXZ2JOYPtmBby3vbAsJS9++21hL0Z/1Yj9u
+ JqD5yrNkhD2OCoYmtsG8qgfHeBxnNsmIV0NbKVqZZqdZnm39KZinMFmijAhG/9L2FCYm
+ bF0XjHFs75jeA+EzTwSXxgek6dx+dGgNTWbhJTuuym54/G4Yb4QNdgYKJfpdoyF9gqOi
+ GVc11qGS2Loaf8Ui0R6UgWiWILqjw326F2m9q+kwk717cQeLK5TKaNYJRvPnP0Z70qr4
+ RpgQ==
+X-Gm-Message-State: AOJu0Yyki2UoFhFsFjN2aOdcmO9THLaWY+FvwR0evrEtMLKABAiqyQgQ
+ aVXGDWFS3ng7dsTd9ACK07XJyrT6wDzWVHn+O1tIA5UD/ldtThZA6OSaaVVuhkG8IGE=
+X-Gm-Gg: AeBDievsNsl2r/I+R74BO/e4xlXuFtPqpPL/eQ3WhkCORCYVi7bWN2uJmxe3q103zFB
+ L9w/4HfLHAxIP1Hn5CqJxPU53jyfNRW3ER/psUGDLKn8UPaMzapV1MKf+jmTyjHP/EA8tceTCov
+ CMu1cDOq/60svNSGEs6jzszVdLFe4bOchf/dA/oqx9IJ3wRjRGrc6GnJndigI1vJyl31f5nXHJj
+ ha9tp8XFLVTEV8QC+G8z/n7uE6b9ta9xfMO7ngALTgvCLQyXn4f8TcRqdmTkgZkh9Ta+yhct/nK
+ ft7ysvFQUFiSMgTCwaDEGlMiHl+aBwJk0rR8PFrZ8Pes4gY77cfmBUDJZvzrMJeXhAuO8DxZTsU
+ pD5PSKnvQI9qTbqSMyRj4OsZ7A681aGUwvYvxx5lfyLyDN+XZ4iui5wFzRXScCTN2/owU/jXOxq
+ HWtlzlHhtv86ydxhj1YYa6d8SNQEMblp9BlU227UEcONxhLbsunhVj1Y8pmPg+nvh8HA==
+X-Received: by 2002:a05:6000:3104:b0:43d:258d:8fa7 with SMTP id
+ ffacd0b85a97d-43d6492e85emr16797281f8f.7.1776027472310; 
+ Sun, 12 Apr 2026 13:57:52 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d67ced32sm107711855e9.7.2026.04.12.13.53.34
+ ffacd0b85a97d-43d63dec27fsm26525499f8f.11.2026.04.12.13.57.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 13:53:35 -0700 (PDT)
-Message-ID: <f1f030b4-acc6-414d-a0ef-4afff50278fc@linaro.org>
-Date: Sun, 12 Apr 2026 22:53:33 +0200
+ Sun, 12 Apr 2026 13:57:51 -0700 (PDT)
+Message-ID: <fae0a954-fd89-49f7-848d-74f352036176@linaro.org>
+Date: Sun, 12 Apr 2026 22:57:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 11/13] hw/usb/hcd-ehci: Add descriptor address offset
- property
+Subject: Re: [PATCH v2 48/67] ui/vnc: merge vnc_display_init() and
+ vnc_display_open()
 Content-Language: en-US
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
- <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
+ <20260410-qemu-vnc-v2-48-231416f76dc3@redhat.com>
+ <4dabec5f-1700-41a4-a36c-526b9f096460@linaro.org>
+ <CAMxuvaw9YOsJihsQDpLjhM3ohk+h_JoeHT-6S7KvPuwNCReHSg@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260311072614.1095587-12-jamin_lin@aspeedtech.com>
+In-Reply-To: <CAMxuvaw9YOsJihsQDpLjhM3ohk+h_JoeHT-6S7KvPuwNCReHSg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,42 +104,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/26 08:26, Jamin Lin wrote:
-> When 64-bit addressing is supported, the Linux EHCI driver programs the
-> segment register to zero. See ehci_run function:
-> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-hcd.c
+On 12/4/26 16:17, Marc-André Lureau wrote:
+> Hi
 > 
-> The driver comment also notes that descriptor structures allocated from
-> the DMA pool use segment zero semantics.
+> On Sun, Apr 12, 2026 at 2:31 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> On 10/4/26 21:19, Marc-André Lureau wrote:
+>>> Combine the two-step vnc_display_init()/vnc_display_open() sequence
+>>> into a single vnc_display_new() function that returns VncDisplay*.
+>>> This simplifies the API by making vnc_display_open() an
+>>> internal detail and will allow further code simplification.
+>>>
+>>> vnc_display_new() is moved to vnc.h, since it returns VncDisplay* now.
+>>> Add vnc_display_free() for consistency, and it will be later used.
+>>>
+>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> ---
+>>>    include/ui/console.h |  2 --
+>>>    ui/vnc.h             |  3 +++
+>>>    ui/vnc.c             | 75 ++++++++++++++++++++++------------------------------
+>>>    3 files changed, 35 insertions(+), 45 deletions(-)
+>>
+>>
+>>> -bool vnc_display_init(const char *id, Error **errp)
+>>> +VncDisplay *vnc_display_new(const char *id, Error **errp)
+>>>    {
+>>>        VncDisplay *vd;
+>>>
+>>>        if (vnc_display_find(id) != NULL) {
+>>> -        return true;
+>>> +        return NULL;
+>>
+>> Can you explain why we don't return the VncDisplay found here?
 > 
-> Descriptor memory is allocated using the DMA API. The platform driver
-> configures a 64-bit DMA mask so memory can be allocated above 4GB.
-> See ehci_platform_probe function:
-> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-platform.c
+> `vnc_display_new()` is called from `vnc_init_func()`. If we have
+> duplicate IDs, the function returns NULL, which is treated as an
+> error.
 > 
-> On AST2700 platforms, system DRAM is mapped above 4GB at 0x400000000.
-> As a result, descriptor addresses constructed directly from the guest
-> EHCI registers do not match the actual system address used by the
-> controller when fetching queue heads (QH) and queue element transfer
-> descriptors (qTD).
-> 
-> Introduce a descriptor-addr-offset property so platforms can provide an
-> address offset applied when constructing descriptor addresses. This
-> allows systems where DRAM resides above 4GB to correctly access EHCI
-> descriptors while keeping the default behavior unchanged for existing
-> machines.
+> Duplicate IDs are handled earlier by qemu_opts_create() though. So we
+> could assert() instead ?
 
-This is dubious. Maybe the AST2700 isn't modelled appropriately (like
-some memory region not mapped in the correct container, or some code
-path not using the correct address space).
+That would make this code path clearer for sure.
 
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/usb/hcd-ehci.h        | 1 +
->   hw/usb/hcd-ehci-pci.c    | 2 ++
->   hw/usb/hcd-ehci-sysbus.c | 2 ++
->   hw/usb/hcd-ehci.c        | 1 +
->   4 files changed, 6 insertions(+)
+>>
+>>>        }
+>>>        vd = g_malloc0(sizeof(*vd));
+>>>
+>>> @@ -3451,7 +3451,7 @@ bool vnc_display_init(const char *id, Error **errp)
+>>>
+>>>        if (!vd->kbd_layout) {
+>>>            vnc_display_free(vd);
+>>> -        return false;
+>>> +        return NULL;
+>>>        }
+>>>
+>>>        vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
+>>> @@ -3464,8 +3464,13 @@ bool vnc_display_init(const char *id, Error **errp)
+>>>        vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
+>>>            &vmstate_change_handler, vd);
+>>>
+>>> +    if (!vnc_display_open(vd, errp)) {
+>>> +        vnc_display_free(vd);
+>>> +        return NULL;
+>>> +    }
+>>> +
+>>>        QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
+>>> -    return true;
+>>> +    return vd;
+>>>    }
+>>
+> 
 
 
