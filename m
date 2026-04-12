@@ -4,96 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E0A4E93807
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 22:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 242C0E93807
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 23:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC32v-0007Ra-Pe; Sun, 12 Apr 2026 18:12:50 -0400
+	id 1wC4d7-0002Cs-4Y; Sun, 12 Apr 2026 19:54:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC32r-0007Qk-1b
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 18:12:46 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wC4d5-0002C8-FI
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 19:54:15 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wC32l-0001wK-8a
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 18:12:43 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43d72875729so429346f8f.3
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 15:12:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wC4d3-0003ha-Jf
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 19:54:15 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-66b2d49ffb0so4876698a12.3
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 16:54:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776038051; cv=none;
+ d=google.com; s=arc-20240605;
+ b=llGo4ex6pLlmiaIBm8vefJjIy7f65tA3cjGpwHe9nYUH50McdtgBPlRoR5DbEPjYrj
+ 6Eom4Mi9LJEwhNhAdQ6ce7P5Udy0jYz7l0l2BWcWdS60aKy3Hrw9JqcjWd5aaJRC2Q33
+ ZmOWEt+Jr3wR7mviwYO5DC7IstUB51BN1OtEBK4HG1g+4ocmQutcTo91/G3Y4R+AHfAt
+ afZhfkwhYfaMni8IaVp3mxY1CagO6YrLhHXZiS9JSINn9gL9NDTe7jofv4w0gzfPEWvM
+ 9VJ9NHPZPeWkjYrnu0IaLev3AHIGBDQQgPwiptWC4skSixyPhZpjZs5DNNpRKtzHH3bG
+ 5J8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=KTd2H0CTGgEh5OeFbtce3WgwBUn0KoR6CcXrGlSPvTk=;
+ fh=zqccCkjyU3Nf3yeS9c5ebWV8rczJMg4v5Ntm0euKmwU=;
+ b=W5tXyoibjU/0gBSqr+UbeDzDGatzKzUkXAs3oVjeLhDiVkU7dp2Q5wRFY5W9p4LcHw
+ aoonv342posM5EclLtXezOmsXiwh3xDkgaM0GKiVRowbLU+YLCxY29VSjeTp8kQcwFdf
+ Rh6uYORqWR+FMZ+hJVudERf6l5ikJN+gS+Paw3DVjQDVFpPNb/VkLp4eNvTZnurUYQkE
+ clT7zF0IeB3EAan+NKA07WSd1kRnr8cmxH+5enR0aBnaq9Bi5MFCBE7mCCCliGYBRP/d
+ ow+LnAjimX0/V09NAIQ1bKkeyYGJqEUjoJiUucd8Lw+5LDhjC6KDRQQ21fNTT2GjGpkz
+ /uwQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776031949; x=1776636749; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kQQubkV7yuAFWu7YUoDUcpW3i4GFqsIpGt7q6Okg334=;
- b=Ma/Y6EklbNgIZkoZhOwhS2+9AGrU+nE6NmcNX91di0gq3/It5wzRD2Kk/hbndn6LKY
- OV7o+jeZpd121PdSFswE+X2OWHDz0CiFuiYGL3a1z0TWFRPBBClPzsM3jW5Kp0IifAW5
- ZnEprL196jlaNGe2G5zooUZEdm34TwpyLlP61ce6KyVzj1YUkpxSAIDopYfpk/47EOT1
- Rd3UlTr0bRzF8Mv7vuL07OfXqJSYWF3auurL6n613H4jIt5ju381wiv8px/WJCOzm1k4
- 0Dy4U6fnGd4y4qx0d55K6Gr4afaJQIuZPwkfXU9BCDm6NtBob/BaY0l8IsPG4LIEwefF
- k+7w==
+ d=gmail.com; s=20251104; t=1776038051; x=1776642851; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KTd2H0CTGgEh5OeFbtce3WgwBUn0KoR6CcXrGlSPvTk=;
+ b=IsgjD+qb3JlPyuw1/GSa5wPAwpiV4zcIdGdRFC7pn/lNP5Bf4KGgB++6vB4bbxWlo/
+ ORL8sxUKTf3UF8yE0b6OBDMcJ6tu2SGtX/fVOuplemKRuo8vjuL+3rU3vMg2VvANPL4c
+ L6gnMbsnKu2W0j5DzkiauakKo/w58wQuc8snTrZ88iOiltEmHlvvSsS50LxDevVbBDmJ
+ n0rxSx5jRUdN5FenW4dG50dLDAb4G1wPEOntw3DiqvN0brFlKfxYhVdW8x59jHd8gryD
+ gtFYS0N4Ok7u0sNpf39nSQCBwJxG4/Pwr83N0+AdfVcyDh6L707rOKv5SVcI9nUZ1Kel
+ a6eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776031949; x=1776636749;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kQQubkV7yuAFWu7YUoDUcpW3i4GFqsIpGt7q6Okg334=;
- b=I6XFckio86yMn0oYBlDZaOVXKFaDOGcC1gTQ+mYrMT9TAuf6xOedouuUT7A6AAdjFp
- TW61jzZeSuRyIg2MDE8DtiYZZ6yUdkK8SXTomUB0youF/Z7pu0CYjyLuw7/NWsYiR2AH
- tmsdGTAcd2/vj/+WBtQ4BDfAwjhm8lymfZPDiWfSyaa9b5c5HXaffg95SvIInTX9AoPF
- KoQLyUEmkCFdSFWmeSkQhHxtJdX2wjOIsaTEwm5VKmO2aIHYrAoqFV4jkx0f8gxaH1OG
- QLia0QPCe6Ew+anzxMHW03lZHet7RKL+B7XgU/lyt1G/m2V/L+Hby/V9O61Zat5CSylO
- apSg==
-X-Gm-Message-State: AOJu0Yz2/IhDx8iSN+KPH/FbFK88FVdrnCwLuWw5b/BgL1Jvs70gH4fP
- KYRw85glbZlkGIH/5rJsZ1cTuPCuG7v2Xi04UcM8apM3IyfUWXPe6Y9COCZRVnQc6XpWaTLMl68
- Iduj7Jtc=
-X-Gm-Gg: AeBDieuO5HTRJ1aWDj8LfPVF4mUfx3EMNJMuqS0VEGQG4InlQ58/noteFaDRtzASbJ4
- bfbHL+Poghj3IRYiCrYI+g7p/SPpUWJ7QXlopkuOV7g77E3Dc+cSwc+PM9E8YqmkNrLHAZSsdlc
- +vqaSKgkEDnG6jDiU07XL65g4Tn+ERwbTzGdBReC45U2Wa9KrvFkXyJQq5tc3tMY84jreZQpm0r
- EWxCpPbQVDUUJiGyhC+h5e7b2aJHCunajdIplnCyIuqQhIYlb56dDy0M/cJberMKdlEzUZGLIrA
- 6bRNa4uPEIylQc2CeQX6YIUlqJKnfEV89W9iehjQXGS52Xv3bcWMeIKEf1R5W3zC2FcSre3zYZs
- Ny43WZ4wZLbpDjuLyL8m8Q8D9f5boFyRnG46un5kLy8ufUDJUmHQsRkpp3B53unsy6Tq9bCt5dA
- uqb6a/TxWi7qz6IF3XVe+o5sSCh2IHx09QJgv5e/DqxxRif8yVfqMI6F6YHw2TTQI+cg==
-X-Received: by 2002:a05:6000:220b:b0:43b:80a0:d92 with SMTP id
- ffacd0b85a97d-43d642bd578mr14539510f8f.45.1776031948669; 
- Sun, 12 Apr 2026 15:12:28 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d7400708dsm8968950f8f.25.2026.04.12.15.12.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 15:12:27 -0700 (PDT)
-Message-ID: <7def8c1c-ea21-44d8-beb4-545425868170@linaro.org>
-Date: Mon, 13 Apr 2026 00:12:26 +0200
+ d=1e100.net; s=20251104; t=1776038051; x=1776642851;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KTd2H0CTGgEh5OeFbtce3WgwBUn0KoR6CcXrGlSPvTk=;
+ b=kBhaPnlkOnX3VOsM3EdmwyDiZlPjvSqOIkeGBd3ap828uhaVVya3TnjKDrvdgMIEV8
+ V8fuobr3IBsIG3GkzFGoACNOzlUuK033mdrSmX54xCZm9HLk2lWRBGpHr7w2RLMXxqeH
+ Bj9bHErcxeQqHNUYs0e/n4DQqWghfZjot2M/6KOzwb71eraOSl91K2WF0MNYY4x+lyAF
+ QRDlDLpM7EjGS9NQAR5ITFltWeJ21BF9dDPrhvmq9df5o0/sZgMnau3bEHcKaVxy3JqX
+ CGHGYHYpYrOQ6sBz2YnwyZQtJRsAMUSrY6k0O1nr4lled+gKus/1bpPKV3ju/Y0yju3W
+ f3GA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8C6Ghy0V1Ti5crCtUtZkQF1xg93ALNTOyaO/GWRsRwrWCU55TjGB96VKKB7tSOlyKXZxkQX9XcFXR1@nongnu.org
+X-Gm-Message-State: AOJu0YxH5L3OR+xNI10CA++KlvoTHNLFZSOMwDNbpn5LiAYu48g4hB6q
+ RURqZThbxwjVCLe7aFVbhPeJMRsS8wTjBOvBgVgDMT3Z26g0hLJXjDOjkHyBeB5KBl6PTZX1mLl
+ TLarwd97Vikxtxybwp21EUKocQe7P+uI=
+X-Gm-Gg: AeBDiesfyBeQSHKUOHeLMnwUI2nP27KQRfmsckrUKoYfrQ9xifHFWE8KEGQkYf4qFw1
+ V+UbWRUQOhbabhTtxdQ6rAdyHMvi59L9CKLG5Ue1+t79oVIUQv5iZTvRZ45jaA1ITnUCetb+5Ea
+ zIP22wxG1vOv0iwCmBW8UBzj05FxTlOv3+AEs85iX+r+xC9z69DZZ1Uhn5dlWj2gbFwh8jxivbp
+ muN+4ko6972Zrc689cqLLNGGzuoC4UWAv/VkjaJ4xENbKKvMGQnc4ADKvAGtvm+VjYPj8BdNPsH
+ 5XaCcbyn
+X-Received: by 2002:a17:907:c48e:b0:b9c:5672:852 with SMTP id
+ a640c23a62f3a-b9d727fe83bmr634389966b.40.1776038050618; Sun, 12 Apr 2026
+ 16:54:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1 00/10] migration: Reduce uses of target-specific
- macros
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+References: <20260412012323.1807856-1-chao.liu.zevorn@gmail.com>
+In-Reply-To: <20260412012323.1807856-1-chao.liu.zevorn@gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 13 Apr 2026 09:53:43 +1000
+X-Gm-Features: AQROBzDqc0G6sK8SLB4I1_AMGBwHoT-bVI8XigbIQ35BCodLaU8mNAkez0Z3EYA
+Message-ID: <CAKmqyKPC2=rTTbxxw1jRSwxbQFNTtp+Ry=wNrNnPSiD_rp=tkg@mail.gmail.com>
+Subject: Re: [PATCH v1] hw/char/riscv_htif: Fix format specifier for uint64_t
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, Alistair Francis
- <alistair.francis@wdc.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-riscv@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Xu <peterx@redhat.com>
-References: <20260325211728.89204-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260325211728.89204-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, tangtao1634@phytium.com.cn,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -111,17 +125,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/26 22:17, Philippe Mathieu-Daudé wrote:
+On Sun, Apr 12, 2026 at 11:25=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail.co=
+m> wrote:
+>
+> Use PRIx64 instead of %llx for uint64_t arguments to avoid
+> -Werror=3Dformat warnings on platforms where uint64_t is not
+> long long.
+>
+> This fixes the cross-riscv64-system CI failure:
+>   https://gitlab.com/TaoTang/qemu/-/jobs/13878406521
+>
+> Fixes: d98f7a541c2c ("riscv_htif: reject invalid signature ranges (end <=
+=3D begin)")
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
 
-> Philippe Mathieu-Daudé (10):
->    target/avr: Avoid target-specific migration headers in machine.c
->    target/loongarch: Avoid target-specific migration headers in machine.c
->    migration: Revert "Add VMSTATE_UINTTL_2DARRAY()"
->    migration: Remove unused target-specific macros
->    target/sparc: Inline qemu_get/put_betl()
->    target/mips: Inline qemu_get/put_betls()
->    target/i386: Expand VMSTATE_UINTTL_SUB_ARRAY for APX registers
->    target/sparc: Replace VMSTATE_VARRAY_MULTIPLY -> VMSTATE_UINTTL_ARRAY
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Patches 1-7 & 9 queued, thanks.
+Alistair
+
+> ---
+>  hw/char/riscv_htif.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+> index 65ddea3fc8..a53d2ace02 100644
+> --- a/hw/char/riscv_htif.c
+> +++ b/hw/char/riscv_htif.c
+> @@ -172,8 +172,9 @@ static void htif_handle_tohost_write(HTIFState *s, ui=
+nt64_t val_written)
+>                   */
+>                  if (sig_file && begin_sig_addr && end_sig_addr) {
+>                      if (end_sig_addr <=3D begin_sig_addr) {
+> -                        error_report("Invalid HTIF signature range: begi=
+n=3D0x%llx end=3D0x%llx",
+> -                                    begin_sig_addr, end_sig_addr);
+> +                        error_report("Invalid HTIF signature range:"
+> +                                     " begin=3D0x%" PRIx64 " end=3D0x%" =
+PRIx64,
+> +                                     begin_sig_addr, end_sig_addr);
+>                          return;
+>                      }
+>                      uint64_t sig_len =3D end_sig_addr - begin_sig_addr;
+> --
+> 2.53.0
+>
+>
 
