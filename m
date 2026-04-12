@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B20E937EA
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 15:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857BAE937EC
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 16:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBwmw-0008Qx-3h; Sun, 12 Apr 2026 11:31:54 -0400
+	id 1wBxHv-0006Pv-7n; Sun, 12 Apr 2026 12:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paulian@marinca.net>)
- id 1wBwZ7-0005wC-Jj
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 11:17:37 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHh-0006P7-SE
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:03:43 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paulian@marinca.net>)
- id 1wBwZ4-0001sd-Uy
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 11:17:37 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-38dfb789d7fso28839431fa.2
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 08:17:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776007051; cv=none;
- d=google.com; s=arc-20240605;
- b=UuMeHfk8TdjykAKiE32sawV/PtTuSzaV4ZzApY8IJpvH5wCJUy1e5tjNyl/7dKs70v
- 6w/iysYDgUlr1UlXAYmHaideOZPWdhRw2iZBpeYK1V7veEHEdiJg4wepIzEHXuuHMDSt
- 1INwsh9xtRLrCY7WQqMTO2Xx8V09vFqNhcoeEDLjlUM2XxY0nn1qxzh7ani9qWGy46Nr
- 0jJSQ0WDjZweNFY1W14jYWWVjrI3AhZrh17pR/c7hR/LO/Oq5lSKCdr6CyuEmFjObLAF
- R01inLfW7xtgAmxX4ptXlpncNiFqt9PzKZoMLyTNW0cCDUBQXupNmBEqjJOEo1Uyi6XI
- N2OA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=Rd27kwtRTRUH+8A4yfGOIwrcYZq65QZACpHIU62afQ0=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=FYz5FN4TPTH96NqtIxDqQfw6s2GOnjxk8TTUzRzyvnHiZ/Grbvhim2sfNx4CTAX5tc
- kV/3tPSv8XvIDbgcBpN/rnfG9hb/HFDuY9T/wRCeEmdJGm+DsbOFz5TOv+IuGKxjesi/
- L6aTOPfqBisqeNNf6ewn/gud0XL58yWbrAUTMbqmEL1qQV1uS3CyeVQLeO0wCkTTdzO3
- a10i+7coHxSjSdMFJ6D6JnbU3hx8MAbSpg0YP3VzDuN1CRxoqoOsEM5UyGnBUvxQge8V
- wxb538uUDFDz8WMYcuMmS6BnC6B7r9Y+06rtmraqiyw2iBCmSANPTa+ezIHmFlb1d6Qo
- /QXA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wBxHZ-0004T8-VZ
+ for qemu-devel@nongnu.org; Sun, 12 Apr 2026 12:03:35 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-40efc77933fso2350595fac.3
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 09:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=marinca-net.20251104.gappssmtp.com; s=20251104; t=1776007051; x=1776611851;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776009811; x=1776614611;
  darn=nongnu.org; 
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Rd27kwtRTRUH+8A4yfGOIwrcYZq65QZACpHIU62afQ0=;
- b=lHMpku0jd/3l0+kSkNsFtkJo/E82844xgDpE/2uHSV/pRNg9bPdgwe5b85eeU0qwRG
- exW+HTc5v5pWkohMvGc0yloBAxNn9DJq1RKcym/JUUVeQYYjGE+THWQUGJKFD5tbQ733
- KFY3sgismhUI5Go1SkYaVHNzYk3QBwEI3JGpI5KPVhZ5/tq/42PfxTVVUkjqCe1d+HAd
- Nixj8tc2BWpZbqL6CRcrgC0Tv9aNwVQJxMimLa8/to25Yt7zTG4s82BoQFw+wGjVvV6r
- hHkt80IRD2DcO/i83rwgaMZLm+NUm4qRY9lBasnJbT29xc6zDmTz3l26CTC84qeDhhfM
- mKPQ==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sDPHxCUUZMuudC3r/Is5VFOWdpeuXtwqE61HpPsUYjI=;
+ b=AMzTCNY7QwWWsEWBtcI/UckAa/f13leDcbsr2s7p2aghDbxgDEx/9L6V4F2n24qJi7
+ va8WqQua6nOgALikG/0cBiPsdRSRpCg+NuhxGk1jjWJs15A3MJ+R4KiqX/bAWgY+5aRj
+ vewAYSjJANAUv9FYIwckJXMtgcelJ1177CmtgEc5gVc/6rFcihMoroZPWfP6cqOcBluo
+ gat4mPAKXfLKpP3MdKTFZMEu4Pg+UsgzaytfbE4p+F+G/8L1G/6Q2K0TPelEdYoUVq4m
+ YomFKVCrejWif/yq+Nj/8aLyqfJ41gyz4lUStdDghRXwi/wXDzXu74Uho7JL7kMOK60D
+ wrPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776007051; x=1776611851;
- h=to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rd27kwtRTRUH+8A4yfGOIwrcYZq65QZACpHIU62afQ0=;
- b=Xcwucrl4DS/BtOJesg5g4ZnCTOZOHw1w5EphF0vA/wzjMQu9Y5uCOk3/E5e80EKTU8
- e/OprJ7N9omqkjZbWpTw23a9Qjsu43kE2w/MpCcSJ2DD0RDwSzVeuPZTLvdcLsQqkQ9/
- iL8hwBeaP2dN85h8n9ZdOQuE80ZGCWqEC6kKrQJke9DVQGr066EI1CWBqIzfY0bvWb2+
- 00kXcqvOCYeSnhmoD2FfiKmrpkfEWWk1EaVCIlJTFd+5BbemOLuBN6F8FqcMCQpvFJ74
- y2RDVtuhQRtf+UthzWEU/6aryoQUslrdLzoijrPHK1V2YOZYrLzN+7Pl3tDeyRPsqIdW
- oFAQ==
-X-Gm-Message-State: AOJu0YxbcB9ndbCVyneth4Yn8MI0UDDkdfiwfYYKryztijusHP2T+xuL
- dM4I4Rz6ykChhwp5ZHYli/kqtGbke2mfdl8S43CkqBbCjHhyLkAoYpZb8jwy7pZorzs+uHeCmTM
- QBKsi1seTdgyCSqpdEhSEsbbgdKCRYvnC/1Jtj/oovgfEUzgXLWJL+zED
-X-Gm-Gg: AeBDiesSQwS2CKQmS3ZLjxIzVxmk57nZR5fmhqr6aXBCzqknRVA+p+EWg5Sx74wSnXI
- F+Bs1EVGwQFSG84ruwx4EJNo+xWyH1q3nuR3vruFeih+V+8/+D8GepdUeS5rX0AXoNQGJR0ezPG
- wUgMkLUFYtKdqZuq10aBeM5ppz4SBt7ozRBoPMGAsq5s7ReT1Q8MbDyONZcJ5BxbiQXVLJMrjje
- yFziNphFs1hUi9UyXUhE4n5nksQ1XAXayxeha6whzUjYmClcP0YsKO/oHYf7FqDSo49iL49CYH8
- rfYUew==
-X-Received: by 2002:a05:651c:f1c:b0:38b:50c7:8239 with SMTP id
- 38308e7fff4ca-38e4befac2dmr33682361fa.21.1776007050680; Sun, 12 Apr 2026
- 08:17:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776009811; x=1776614611;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sDPHxCUUZMuudC3r/Is5VFOWdpeuXtwqE61HpPsUYjI=;
+ b=i700WlNEEkQOD202sPBrFVDZIExySFyqD6Mu5npwBF5qxMNJ8L5+r0CSok8EfIIUbX
+ xTHF19O+TqSm9BiaYDsGcXv2SLwRTofRsrbuNwEC3U28MixroAYMk1eVnxrhgMgCDjas
+ MxOJKUF4izGtAyiJumgCbr2fLQac12HW/FfITi/8wO603gAj1D2j/jd3PzF/h8Hm86MB
+ dJsSyKZv0M+gTjxU7yWIBl0jbVRWb77OYyNwht8++BaVNn4M4MD9bLYB1F6WsZGuZwlK
+ uDIRkjd1rcv8Z5bFvsOwyAaMciMMi1QYKxCxdQp1aaLXQxIUnRw0xhyZC5rMOeFuyJNc
+ D0Cw==
+X-Gm-Message-State: AOJu0Ywo+EVwPXDKL/qFq/Kxe5uUhNYaaiRGbebyOj5ds9MnoZCv+ttZ
+ RxoaXXYQYDA6X6YohTvjc9u3S07qCDmD2lui8c1Tl3T7jLAmdtrtireUQIxRMHdvOUugn1NSvr0
+ 2c0bqkyQ=
+X-Gm-Gg: AeBDiesU6x4Uep/zNWCYaAISpg23bHQ7VR+l0T+Pl3Qyb3A67IQ15e7Cn9Cx+x5qOyZ
+ gPu7VB957gKdO3liP+8ivsj3gxgQ2Q173hOar2x6vdE6ardoizoVlkp8/flL3XUfyiz1R3D6OBB
+ X5554b9UEgSrTpqn+hzkKaVpDolEU6Kgit9Y4GZWJJF8djAMqljGcgwrjUeknjOY+YX+qMqPKaw
+ L3G/rqjNsLp07jtD03N6AFwb1JyqACN9uZV9gnqjmCaAaSs8LWZPxeV8T+pISIGsKBkPK6OYg3f
+ pedq0TruqWu+lPz0jQoB1yndv8x1+glgL4OVyAkzKOsr5shUQkaxSpXPYr+pLEwoa+ajaEDszH8
+ iKEHzF7C2FnRAomApgZp5+TVpcBLydgavHQe9jSUN0Jl2tlFDz86C4q7YPLKyjd0GQKStr9SUBv
+ 42PX1fWw59yg==
+X-Received: by 2002:a05:6870:b28b:b0:417:2156:ffea with SMTP id
+ 586e51a60fabf-423e0eb1375mr5781463fac.13.1776009810892; 
+ Sun, 12 Apr 2026 09:03:30 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-423ddbee0fesm6457006fac.17.2026.04.12.09.03.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 12 Apr 2026 09:03:30 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+Subject: [PATCH 00/17] bsd-user: upstream ioctl
+Date: Sun, 12 Apr 2026 10:02:23 -0600
+Message-Id: <20260412-ioctl-v1-0-1d998a460560@bsdimp.com>
 MIME-Version: 1.0
-From: Paulian Bogdan Marinca <paulian@marinca.net>
-Date: Sun, 12 Apr 2026 18:17:19 +0300
-X-Gm-Features: AQROBzAtQHK-VTX8ZbGeVtHt7kxPfbs0qQUnCXVoy1ILI6u83lt_ZPvtMt2s17g
-Message-ID: <CAFFE2avrHDKZd5m7j3E3x5=F=pzn-3c9vzGWP3+9-AVPwQng7w@mail.gmail.com>
-Subject: [PATCH] hw/i386/intel_iommu: advertise PT in ECAP, not CAP
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIABDC22kC/0XMSwqDMBSF4a1Ixg0kNzEPt1Ic5HGtoVXbRKUg7
+ r2igw7/w+HbSMGcsJCm2kjGNZU0jUfwW0VC78YH0hSPJsBAMck5TVOYX1SZYJjT2kUB5Pi+M3b
+ pezr39uqMn+Xg5mv8a011WoIDLb3LSOd+GZ/UeV6bWmptrW3WE/WuIA3TMKS5qTyGCNDFAI5pr
+ o2IFpmUwGtQSgitwQtvTSDtvv8AFzJPwNYAAAA=
+X-Change-ID: 20260411-ioctl-68c80a77ad32
 To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: none client-ip=2a00:1450:4864:20::235;
- envelope-from=paulian@marinca.net; helo=mail-lj1-x235.google.com
+Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>, 
+ "Stacey D. Son" <sson@freebsd.org>, Alexander Kabaev <kan@FreeBSD.org>, 
+ Sean Bruno <sbruno@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2977; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=dqWlpRoLXMYeX6+AokJWrSRtLXbR4AbGf+9KfgwWhAg=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp28IYD5eJ5lN4IfRC9plhM5Z1CUog/EfTLdMOl
+ RPhLlyB0FyJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCadvCGAAKCRBsHNEofbAR
+ AG9BEACE6ShC/ZOyyCmXw3Py7ZvvTRU07GnhyWPSs9EoHX0FydqkLZf00KNYhavmO/8wsncEaxv
+ jqgnYld7ZEWKGMd07ZGqX0cyFiw6RkUpmpigjTWzkyT0N7kvhDMSdNz74IzOFqy5J4zmdLu3H7/
+ mt0zwK1Q2a36iZt0OGWIXFzUJMqkV8a67YOAMFHFZU2SQWoMk7bYcZpRNWDraNbsaVhvGtnbzDu
+ 7JD4xa2h/sULNFeqDRPjNjsW7vsywSFWQP1MKREvyZ00EftkYfgQKTUTpmN4KZ66YulNNIhV0yF
+ 9cig00zVaIi5hmC/sC9IXWC2dUzNT/6/JxkG9BLWSauyb1xI/jbCA6Wbwure4cGOHSGz33nuCp+
+ 0O+Ll3igM2vpsp/Ug38zWa0lXqkRspkhpxCtBFBSEVhXMUnADXjqJGGDYSzXW0qKYA1MJQm5dPm
+ BMdmA64Un6HxjIzlf0AsYIP2tmBW11JwM+OTxved5mk6k+h0lcDaeL07QxwOIrA3A+V44OBx4qQ
+ fvF22stps5wHlnST1EetHOvxH3hw16BaFJzIClAK3m8Mrr2ZYd5OcZVvbphbQGoz5N+79kmVd2k
+ gJAnAUJQgFuGJ+VTz3agZWtcarxaVU1TARE1RKrJp3YSnYbe/IeGdYtMrUrQVQBgi4QKo21xV67
+ oSe+RSOTVM5hqxA==
+X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
+ fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
+Received-SPF: none client-ip=2001:4860:4864:20::32;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,7 +105,6 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 12 Apr 2026 11:31:50 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,44 +119,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-commit acf7e2c93cb3efda0add6fd5f3b5b447e63d6367 (HEAD -> master)
-Author: paulian <paulian@marinca.net>
-Date:   Sun Apr 12 18:08:45 2026 +0300
+Again with the help of claude, harvest the ioctl changes from
+bsd-user blitz branch. These are a bit messy, since ioctls tend
+to be a bit messy. Ideally, all this would be generated, but
+that code isn't ready yet, so we go with what we have.
 
-    hw/i386/intel_iommu: advertise PT in ECAP, not CAP
+Please note: All style complaints are false positives. The > 80
+character ones are fine: these files are semi-generated from upstream
+and fixing them makes syncing harder. Harder syncing in code that's
+basically boilerplate is worse than lines that are too long for
+definitions people are never going to read.
 
-    Commit c7b2e22bd957 ("hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported
-    field") made pass-through translation type always supported, but moved
-    VTD_ECAP_PT into s->cap in vtd_cap_init().
+The two errors:
+● b64902a56387: bsd-user: Add bsd-ioctl.c infrastructure and termios conversion
+  ● checkpatch.pl: 197: ERROR: Macros with complex values should be enclosed in parenthesis
+  ● checkpatch.pl: 198: ERROR: Macros with complex values should be enclosed in parenthesis
+are impossible to fix: they are what they need to be for the macro
+tricks that are being used. One cannot add parenthesis and have correct
+code.
 
-    VTD_ECAP_PT is an ECAP bit, not a CAP bit, and the rest of the VT-d code
-    checks it via s->ecap. Advertise PT in s->ecap and stop setting the bit in
-    s->cap.
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+Stacey D. Son (10):
+      bsd-user: Add FreeBSD tty ioctl definitions
+      bsd-user: Add FreeBSD file I/O ioctl definitions
+      bsd-user: Add FreeBSD socket ioctl definitions
+      bsd-user: Add FreeBSD cryptodev ioctl definitions
+      bsd-user: Add FreeBSD disk ioctl definitions
+      bsd-user: Add FreeBSD IPv6 ioctl definitions
+      bsd-user: Add FreeBSD ioctl type definitions
+      bsd-user: Add FreeBSD ioctl command table
+      bsd-user: Add bsd-ioctl.h header
+      bsd-user: Add target_sockaddr and safe_ioctl to syscall_defs.h
 
-    Fixes: c7b2e22bd957 ("hw/i386/x86-iommu: Remove
-X86IOMMUState::pt_supported field")
-    Signed-off-by: Paulian Marinca <paulian@marinca.net>
+Warner Losh (7):
+      bsd-user: Add bsd-ioctl.c infrastructure and termios conversion
+      bsd-user: Add log_unsupported_ioctl function
+      bsd-user: Add do_ioctl_unsupported function
+      bsd-user: Add target_to_host_sockaddr_in6 function
+      bsd-user: Add do_ioctl_in6_ifreq_sockaddr_int function
+      bsd-user: Add do_bsd_ioctl main function
+      bsd-user: Add init_bsd_ioctl function
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index f395fa248c..7b2cead8f8 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4998,7 +4998,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
- {
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+ bsd-user/bsd-ioctl.c                  | 438 ++++++++++++++++++++++++++++++++++
+ bsd-user/bsd-ioctl.h                  |  14 ++
+ bsd-user/freebsd/os-ioctl-cmds.h      | 151 ++++++++++++
+ bsd-user/freebsd/os-ioctl-cryptodev.h |  74 ++++++
+ bsd-user/freebsd/os-ioctl-disk.h      |  41 ++++
+ bsd-user/freebsd/os-ioctl-filio.h     |  34 +++
+ bsd-user/freebsd/os-ioctl-in6_var.h   | 217 +++++++++++++++++
+ bsd-user/freebsd/os-ioctl-sockio.h    | 240 +++++++++++++++++++
+ bsd-user/freebsd/os-ioctl-ttycom.h    | 237 ++++++++++++++++++
+ bsd-user/freebsd/os-ioctl-types.h     | 104 ++++++++
+ bsd-user/syscall_defs.h               |  10 +
+ 11 files changed, 1560 insertions(+)
+---
+base-commit: becd22fdc2a071783d9e04421526633772b3b98c
+change-id: 20260411-ioctl-68c80a77ad32
+prerequisite-change-id: 20260312-share-thunk-ab1585477999:v2
+prerequisite-patch-id: a048e442d9dda7ee4ed1070ef5eb524e078b9a3b
 
--    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |
-+    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
-              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS | VTD_CAP_DRAIN |
-              VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
-     if (x86_iommu->dma_translation) {
-@@ -5009,7 +5009,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
-                     s->cap |= VTD_CAP_SAGAW_48bit;
-             }
-     }
--    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO;
-+    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO | VTD_ECAP_PT;
+Best regards,
+-- 
+Warner Losh <imp@bsdimp.com>
 
-     if (x86_iommu_ir_supported(x86_iommu)) {
-         s->ecap |= VTD_ECAP_IR | VTD_ECAP_MHMV;
 
