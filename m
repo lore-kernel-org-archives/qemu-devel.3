@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97894F3ED6B
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 02:22:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390F1F3ED4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Apr 2026 02:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wBkSC-0004IR-6f; Sat, 11 Apr 2026 22:21:40 -0400
+	id 1wBkRn-0004B8-UW; Sat, 11 Apr 2026 22:21:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wBkSA-0004Fy-Eu
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:38 -0400
-Received: from mail-qt1-x842.google.com ([2607:f8b0:4864:20::842])
+ id 1wBkRl-0004Ae-KU
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:13 -0400
+Received: from mail-qv1-xf43.google.com ([2607:f8b0:4864:20::f43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wBkS8-0000Qg-Ab
- for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:38 -0400
-Received: by mail-qt1-x842.google.com with SMTP id
- d75a77b69052e-50d876329bbso36328551cf.2
- for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 19:21:35 -0700 (PDT)
+ id 1wBkRj-0008FP-M6
+ for qemu-devel@nongnu.org; Sat, 11 Apr 2026 22:21:13 -0400
+Received: by mail-qv1-xf43.google.com with SMTP id
+ 6a1803df08f44-8a1e1817db6so28502546d6.2
+ for <qemu-devel@nongnu.org>; Sat, 11 Apr 2026 19:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1775960495; x=1776565295; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1775960471; x=1776565271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X6AvJKjpsy8kWzemg/IhyQYebO4GZU+JLooE65CkwM8=;
- b=ra14ZT42Avw/kw9BEusIxunRjZPfj3CvwLMvpF2bweEUYxukLs43AmLbYNXq8jWG9L
- bWJqxnaLhVjsklK+y5bXklZZ3VYCcQCHgVZQStt725br0nn98f92sZyiIT/Mu+W90wNx
- PK8jjsobZVDgqZcg6RfiegTp9UxYrqQxvBIDlDY5i0KdFg3jq8IlsRS11ShzRGJWi2G7
- 8FdzsNOKPUz5GH8hdIq4pXlYRhPJe5t1vKMqQvDnSPXfeVkXQWeqjHgZetU7XX2lR28y
- uzlrNs6+D5QERFnOWsIHgDtVPo6V3WCuu+9xqht80zWifi9kTrx5lLyVho1txooPvW6j
- pFjg==
+ bh=r4TyZefY9NFwD1+f8ide9sGoKm39GlSzIyT0VGj0ISI=;
+ b=tGR+cNuiqwInExOc6KWoKPguozWozJB3pO6TsIkkq6ztHyoQUpH+13E9pQmxrFzCd1
+ usPBr2Ou5fvvwFL+wENqbiq0SrPCPcUdqvC2za+N7SMFpaIQlETbClh/oRXfe42JpIun
+ n0nuCmUJllypww8NcdM9RB7s88uoV/TFoxLiHLXGCV+1ZyNW1gEVJikmxo6mQvWsiL3C
+ EAx8ofw6CjUDDjF/uoYBUKZmwcACNZMQZDg7wGPjI6wHmW5NbV2kFFiMEtTsdGryu+le
+ 4ekB/WGP9g7WTpCQSvkbC3xm14tXwQItwAI59sSbDQD/8mEvauDm7o7CFSKbVSVmYdUg
+ dOJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1775960495; x=1776565295;
+ d=1e100.net; s=20251104; t=1775960471; x=1776565271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=X6AvJKjpsy8kWzemg/IhyQYebO4GZU+JLooE65CkwM8=;
- b=Bijhhqd620h7Z2wsZT2RzFkKfA1v8V9eJLvIBID1bkiasNgefqGxtNiQf2krWILFII
- lmjY/z7ngd++fx/edv1hAiPFA7AaJlGNMJ4aIRXnhD7AWfhUybbhFPDdxZg1rIibz8dk
- Bsjsme3urDiSM+ATKynm3SkEzSxuBypmmoMzCX2osD7y/poAMkD5X+Eg9UrxWqf+4Ak4
- vskMYde5ujY9gik2gzKrwv7ylcsL4ag4r170Ghq3rpkhwmUXjGv3E7WCtkBO989Hv0bp
- J+5DlPJ49vfPtyv0CswWsvbSR0ZuxgXxJHVjIZXjry6hZjQ87HxHDnnu/uzWUN3RegOQ
- TK6Q==
-X-Gm-Message-State: AOJu0YwrHQjF10alTRP3sa6O5/lJuM0DDHoNsRC0it13nZUtNvJy7gsX
- /bofpyqK2TP8NGybniTOdDU1rhy0uf8k5lkjRuSslRsItdcavaPmdXwU
-X-Gm-Gg: AeBDietHOPN4UfFMSm3DqX4a3gyOvS85MiOEDBzZXmnOQZrGj/nexDlHF6lR5LbuhdR
- MXoldCxN3GI5xsxxCm2sHD7a+rvwFVojz96NR7v1sBWpHlRDlnnhg3aPKA2pHopLBpy1bZ2xv3o
- de9kRQbSY2Q0Rrx5RYR66b9+JwClyhiMqzgJ9QHztssVu3R5HR4I0en5mrb7Sv+n4DfWjLEiLMF
- l8PRMqSaAdtaG9XaRAYl2mRC21ClHiuSt0/1wie55GyZvS/kFMeC+sO8HHFgkmLeVffqj1NPrI3
- 2/m4T7O5q/l76CvTpC21b/E/bHcsHQ/SJWdV84G/41+jA3No3OgfoNHYC3FMdcrA20J4oGpWGG6
- UrAEr8bzbhP7BV5sfi9nghgEYxgMuhRr1Xd6CaRD7hWX/Y3fYFqJUCmJ1RSwu/sXpFA3/qVZruj
- 0FZhwHFrrRra6UTFrEIko80pig6vYNxZGxjtuFUq8Xckfx1v4vmh6nrJFw6kFy8VbCPlrC2sxpc
- Odzfa4=
-X-Received: by 2002:a05:622a:1920:b0:50d:6ee0:3822 with SMTP id
- d75a77b69052e-50dd5a976b6mr132703411cf.4.1775960495198; 
- Sat, 11 Apr 2026 19:21:35 -0700 (PDT)
+ bh=r4TyZefY9NFwD1+f8ide9sGoKm39GlSzIyT0VGj0ISI=;
+ b=HreLh32IWRt7MS6EekHZWWaMp+7qAK6BkDzqE8rxT+Oq0v+9+xE9Dv59KPkJqfWg9H
+ iLSEPcana7ds7cCGqkQHTTHZ1x/aRCeibyAtN42C0lJyXaCwFNjOvxrOEs+KbQ2AbfRx
+ XlzSjTT7fFI7E8M/DiiyRV3MKEIxsPJW8I/Ip+ld+hMbjxcFiWlKeuf1C0PI8R0Hqimq
+ Kl0B4q+pGsEd7NEMBHugOHX+FDUSfRYcpz6bonPlzr7sP3yUefkOv+zUpCSszJSzZ98n
+ 8WW2T/hs9eZf8fga9EXPJ5myzov5fUzKLbDodeR5nC8nFsXYfGwN3SpibMn7bAv8ljCj
+ B80g==
+X-Gm-Message-State: AOJu0YzAnANg6cwz7arB7od6KSkUaHo48iZ205RcbI+R55zwV9LqDVPL
+ lmeYkfLKgjPe/6UcaUgr54CtGpZbQmnMnMpWY72YNmhyxGjY4l7X0ITciSjWFDOHKQKdJioy
+X-Gm-Gg: AeBDieucV965Skbc5SwSRWGEdD8u7iaTIZxHOQTvDhuTFGNxJ5ZL3CINdvCfmpqC9+O
+ 8lLUjFCOOREcR/pJA7RTCUmqaEO6MIym9Ps9szGG11L3shR+kFIJIOiOTQhhplhEXzIv0an3eoI
+ 2BXqx0BlwsnuijeZb46QMiPsdzgd/HpVc+6NwaiTjwkZ2iyjp8+5CqEydxWDvJPeE+9mvqf+Uyc
+ LffFLApjCRzHJTm8oa+ZNSWkzWn/+TJPDw11a2pwVywLJM9v5+djxk5uzKa75+8UdiW1uTJsGje
+ dj/beM6N3TkdIL51/d72LnHuYM0dx0gMG0QkYf7yqgB6rH/dKQjgk7YdfqZslUvk4S98BMF7/XI
+ mjc1JW0sv2pHZ4GruczjcdfATZtsHvBSIsPkIAuswiSNxnN8glsu17HWCsJagqaf4dF9vKlRRYl
+ H5AMnuI3+Z/3D0Jy0CqSbvh3xb5SdGpWDlRbcTZ+FxWJLP5RFEdm0FOAE0ccAuaavm5fJNW6dvn
+ w7K3lc=
+X-Received: by 2002:ad4:4ea7:0:b0:89c:9fa2:5de9 with SMTP id
+ 6a1803df08f44-8ac862a63dbmr150577846d6.36.1775960470682; 
+ Sat, 11 Apr 2026 19:21:10 -0700 (PDT)
 Received: from ZEVORN-PC.bbrouter ([162.244.208.119])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8aca05592ecsm15455576d6.29.2026.04.11.19.21.30
+ 6a1803df08f44-8aca05592ecsm15455576d6.29.2026.04.11.19.21.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 Apr 2026 19:21:34 -0700 (PDT)
+ Sat, 11 Apr 2026 19:21:10 -0700 (PDT)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -75,23 +75,23 @@ To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chao Liu <chao.liu.zevorn@gmail.com>
 Cc: qemu-devel@nongnu.org, tangtao1634@phytium.com.cn, devel@lists.libvirt.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH v6 6/7] target/riscv: add sdext single-step support
-Date: Sun, 12 Apr 2026 10:20:23 +0800
-Message-ID: <cca288cd6fbd75ee1b84b6af8c3dad87a96c7357.1775959096.git.chao.liu.zevorn@gmail.com>
+Subject: [PATCH v6 1/7] target/riscv: deprecate 'debug' CPU property
+Date: Sun, 12 Apr 2026 10:20:18 +0800
+Message-ID: <99f0437cbb0169ffa318af4864ee48af22abeb17.1775959096.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1775959096.git.chao.liu.zevorn@gmail.com>
 References: <cover.1775959096.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::842;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qt1-x842.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f43;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qv1-xf43.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,205 +107,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V Debug Specification:
-https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Use a TB flag when dcsr.step is set (and we are not in Debug Mode).
-When the flag is on, build 1-insn TBs and do not chain to the next TB.
-Add a TB-exit helper that enters Debug Mode with cause=step and sets
-dpc to the next pc, then stops with EXCP_DEBUG.
+Starting on commit f31ba686a9 ("target/riscv/cpu.c: add 'sdtrig' in
+riscv,isa') the 'debug' flag has been used as an alias for 'sdtrig'.
 
-If dcsr.stepie is 0, do not take interrupts while stepping. Treat WFI
-as a nop so the hart does not sleep during a step.
+We're going to add more debug trigger extensions, e.g. 'sdext' [1].  And
+all of a sudden the existence of this flag is now weird. Do we keep it
+as a 'sdtrig' only or do we add 'sdext'?
 
-PS: This patch references Max Chou's handling of ext_tb_flags.
-https://lore.kernel.org/qemu-devel/20260108132631.9429-6-max.chou@sifive.com/
+The solution proposed here is to deprecate it. The flag was introduced a
+long time ago as a way to encapsulate support for all debug related
+CSRs.  Today we have specific debug trigger extensions and there's no
+more use for a generic 'debug' flag. Users should be encouraged to
+enable/disable extensions directly instead of using "made-up" flags that
+exists only in a QEMU context.
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+The following changes are made:
+
+- 'ext_sdtrig' flag was added in cpu->cfg. 'debug' flag was removed from
+  cpu->cfg;
+- All occurrences of cpu->cfg.debug were replaced to 'ext_sdtrig';
+- Two explicit getters and setters for the 'debug' property were added.
+  The property will simply get/set ext_sdtrig;
+- vmstate_debug was renamed to vmstate_sdtrig. We're aware that this
+  will impact migration between QEMU 10.2 to newer versions, but we're
+  still in a point where the migration break cost isn't big enough to
+  justify adding migration compatibility scaffolding.
+
+Finally, deprecated.rst was updated to deprecate 'debug' and encourage
+users to use 'ext_sdtrig' instead.
+
+[1] https://lore.kernel.org/qemu-devel/cover.1768622881.git.chao.liu.zevorn@gmail.com/
+
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- include/exec/translation-block.h |  4 ++--
- target/riscv/cpu.h               |  2 ++
- target/riscv/cpu_helper.c        |  6 ++++++
- target/riscv/helper.h            |  1 +
- target/riscv/op_helper.c         | 20 ++++++++++++++++++++
- target/riscv/tcg/tcg-cpu.c       |  5 +++++
- target/riscv/translate.c         | 15 +++++++++++++--
- 7 files changed, 49 insertions(+), 4 deletions(-)
+ docs/about/deprecated.rst         |  7 +++++
+ target/riscv/cpu.c                | 51 ++++++++++++++++++++++++++++---
+ target/riscv/cpu_cfg_fields.h.inc |  2 +-
+ target/riscv/csr.c                |  2 +-
+ target/riscv/machine.c            | 24 +++++++--------
+ target/riscv/tcg/tcg-cpu.c        |  2 +-
+ 6 files changed, 69 insertions(+), 19 deletions(-)
 
-diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-index 40cc699031..ee15608c89 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -64,8 +64,8 @@ struct TranslationBlock {
-      * x86: the original user, the Code Segment virtual base,
-      * arm: an extension of tb->flags,
-      * s390x: instruction data for EXECUTE,
--     * sparc: the next pc of the instruction queue (for delay slots).
--     * riscv: an extension of tb->flags,
-+     * sparc: the next pc of the instruction queue (for delay slots),
-+     * riscv: an extension of tb->flags.
-      */
-     uint64_t cs_base;
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index a6d6a71326..cba050334b 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -452,6 +452,13 @@ It was implemented as a no-op instruction in TCG up to QEMU 9.0, but
+ only with ``-cpu max`` (which does not guarantee migration compatibility
+ across versions).
  
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 62732957a4..0d6b70c9f0 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -712,6 +712,8 @@ FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
- 
- FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
- FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
-+/* sdext single-step needs a TB flag to build 1-insn TBs */
-+FIELD(EXT_TB_FLAGS, SDEXT_STEP, 33, 1)
- 
- #ifdef TARGET_RISCV32
- #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 0ff11a45de..cefab2b131 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -635,6 +635,12 @@ bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-     if (interrupt_request & mask) {
-         RISCVCPU *cpu = RISCV_CPU(cs);
-         CPURISCVState *env = &cpu->env;
++``debug=true|false`` on RISC-V CPUs (since 11.0)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
-+        if (cpu->cfg.ext_sdext && !env->debug_mode &&
-+            (env->dcsr & DCSR_STEP) && !(env->dcsr & DCSR_STEPIE)) {
-+            return false;
-+        }
++This option, since QEMU 10.1, has been a simple alias to the ``sdtrig``
++extension. Users are advised to enable/disable ``sdtrig`` directly instead
++of using ``debug``.
 +
-         int interruptno = riscv_cpu_local_irq_pending(env);
-         if (interruptno >= 0) {
-             cs->exception_index = RISCV_EXCP_INT_FLAG | interruptno;
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 9538e816f0..68e9796289 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -143,6 +143,7 @@ DEF_HELPER_1(tlb_flush_all, void, env)
- DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
- /* Native Debug */
- DEF_HELPER_1(itrigger_match, void, env)
-+DEF_HELPER_1(sdext_step, void, env)
- DEF_HELPER_2(sdext_ebreak, void, env, tl)
- #endif
+ Backwards compatibility
+ -----------------------
  
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 58d47b88c1..0165e98d16 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -456,6 +456,22 @@ target_ulong helper_dret(CPURISCVState *env)
- #endif
- }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 38286b6b40..6208201538 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -210,7 +210,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+-    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
++    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, ext_sdtrig),
+     ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
+     ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+@@ -783,7 +783,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     env->vill = true;
  
-+void helper_sdext_step(CPURISCVState *env)
+ #ifndef CONFIG_USER_ONLY
+-    if (cpu->cfg.debug) {
++    if (cpu->cfg.ext_sdtrig) {
+         riscv_trigger_reset_hold(env);
+     }
+ 
+@@ -947,7 +947,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+     riscv_cpu_register_gdb_regs_for_features(cs);
+ 
+ #ifndef CONFIG_USER_ONLY
+-    if (cpu->cfg.debug) {
++    if (cpu->cfg.ext_sdtrig) {
+         riscv_trigger_realize(&cpu->env);
+     }
+ #endif
+@@ -1126,6 +1126,14 @@ static void riscv_cpu_init(Object *obj)
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+     cpu->cfg.max_satp_mode = -1;
+ 
++    /*
++     * 'debug' started being deprecated in 11.0, been just a proxy
++     * to set ext_sdtrig ever since. It has been enabled by default
++     * for a long time though, so we're stuck with setting set 'strig'
++     * by default too. At least for now ...
++     */
++    cpu->cfg.ext_sdtrig = true;
++
+     if (mcc->def->profile) {
+         mcc->def->profile->enabled = true;
+     }
+@@ -1240,6 +1248,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
+     MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
+     MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
++    MULTI_EXT_CFG_BOOL("sdtrig", ext_sdtrig, true),
+     MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
+     MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
+     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+@@ -2654,8 +2663,42 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+     NULL
+ };
+ 
++/*
++ * DEPRECATED_11.0: just a proxy for ext_sdtrig.
++ */
++static void prop_debug_get(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
 +{
-+#ifndef CONFIG_USER_ONLY
-+    CPUState *cs = env_cpu(env);
++    bool value = RISCV_CPU(obj)->cfg.ext_sdtrig;
 +
-+    if (!riscv_cpu_cfg(env)->ext_sdext || env->debug_mode ||
-+        !(env->dcsr & DCSR_STEP)) {
-+        return;
-+    }
-+
-+    riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_STEP);
-+    cs->exception_index = EXCP_DEBUG;
-+    cpu_loop_exit_restore(cs, GETPC());
-+#endif
++    visit_type_bool(v, name, &value, errp);
 +}
 +
- void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
++/*
++ * DEPRECATED_11.0: just a proxy for ext_sdtrig.
++ */
++static void prop_debug_set(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    bool value;
++
++    visit_type_bool(v, name, &value, errp);
++    cpu->cfg.ext_sdtrig = value;
++}
++
++/*
++ * DEPRECATED_11.0: just a proxy for ext_sdtrig.
++ */
++static const PropertyInfo prop_debug = {
++    .type = "bool",
++    .description = "DEPRECATED: use 'sdtrig' instead.",
++    .get = prop_debug_get,
++    .set = prop_debug_set,
++};
++
+ static const Property riscv_cpu_properties[] = {
+-    DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
++    {.name = "debug", .info = &prop_debug},
+ 
+     {.name = "pmu-mask", .info = &prop_pmu_mask},
+     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 734fa079f2..44235bfaa1 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -46,6 +46,7 @@ BOOL_FIELD(ext_zilsd)
+ BOOL_FIELD(ext_zimop)
+ BOOL_FIELD(ext_zcmop)
+ BOOL_FIELD(ext_ztso)
++BOOL_FIELD(ext_sdtrig)
+ BOOL_FIELD(ext_smstateen)
+ BOOL_FIELD(ext_sstc)
+ BOOL_FIELD(ext_smcdeleg)
+@@ -159,7 +160,6 @@ BOOL_FIELD(ext_xlrbr)
+ 
+ BOOL_FIELD(mmu)
+ BOOL_FIELD(pmp)
+-BOOL_FIELD(debug)
+ BOOL_FIELD(misa_w)
+ 
+ BOOL_FIELD(short_isa_string)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index cfd076b368..93b4864933 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -776,7 +776,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
+ 
+ static RISCVException debug(CPURISCVState *env, int csrno)
  {
-     CPUState *cs = env_cpu(env);
-@@ -588,6 +604,10 @@ void helper_wfi(CPURISCVState *env)
-                (prv_u || (prv_s && get_field(env->hstatus, HSTATUS_VTW)))) {
-         riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
-     } else {
-+        if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode &&
-+            (env->dcsr & DCSR_STEP)) {
-+            return;
-+        }
-         cs->halted = 1;
-         cs->exception_index = EXCP_HLT;
-         cpu_loop_exit(cs);
+-    if (riscv_cpu_cfg(env)->debug) {
++    if (riscv_cpu_cfg(env)->ext_sdtrig) {
+         return RISCV_EXCP_NONE;
+     }
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 09c032a879..62c51c8033 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -218,14 +218,14 @@ static const VMStateDescription vmstate_kvmtimer = {
+ };
+ #endif
+ 
+-static bool debug_needed(void *opaque)
++static bool sdtrig_needed(void *opaque)
+ {
+     RISCVCPU *cpu = opaque;
+ 
+-    return cpu->cfg.debug;
++    return cpu->cfg.ext_sdtrig;
+ }
+ 
+-static int debug_post_load(void *opaque, int version_id)
++static int sdtrig_post_load(void *opaque, int version_id)
+ {
+     RISCVCPU *cpu = opaque;
+     CPURISCVState *env = &cpu->env;
+@@ -237,12 +237,12 @@ static int debug_post_load(void *opaque, int version_id)
+     return 0;
+ }
+ 
+-static const VMStateDescription vmstate_debug = {
+-    .name = "cpu/debug",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
+-    .needed = debug_needed,
+-    .post_load = debug_post_load,
++static const VMStateDescription vmstate_sdtrig = {
++    .name = "cpu/sdtrig",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sdtrig_needed,
++    .post_load = sdtrig_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
+         VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+@@ -425,8 +425,8 @@ static const VMStateDescription vmstate_sstc = {
+ 
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+-    .version_id = 11,
+-    .minimum_version_id = 11,
++    .version_id = 12,
++    .minimum_version_id = 12,
+     .post_load = riscv_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+@@ -492,13 +492,13 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_kvmtimer,
+ #endif
+         &vmstate_envcfg,
+-        &vmstate_debug,
+         &vmstate_smstateen,
+         &vmstate_jvt,
+         &vmstate_elp,
+         &vmstate_ssp,
+         &vmstate_ctr,
+         &vmstate_sstc,
++        &vmstate_sdtrig,
+         NULL
+     }
+ };
 diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 4b17fbb611..cb464c13cd 100644
+index f3f7808895..0613450691 100644
 --- a/target/riscv/tcg/tcg-cpu.c
 +++ b/target/riscv/tcg/tcg-cpu.c
-@@ -193,6 +193,11 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
-     flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
- 
-     ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->misa_ext);
-+#ifndef CONFIG_USER_ONLY
-+    if (cpu->cfg.ext_sdext && !env->debug_mode && (env->dcsr & DCSR_STEP)) {
-+        ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, SDEXT_STEP, 1);
-+    }
-+#endif
- 
-     return (TCGTBCPUState){
-         .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 81087e0a5d..d850aaee89 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -111,6 +111,8 @@ typedef struct DisasContext {
-     bool ztso;
-     /* Use icount trigger for native debug */
-     bool itrigger;
-+    /* Enter Debug Mode after next instruction (sdext single-step). */
-+    bool sdext_step;
-     /* FRM is known to contain a valid value. */
-     bool frm_valid;
-     bool insn_start_updated;
-@@ -293,6 +295,9 @@ static void lookup_and_goto_ptr(DisasContext *ctx)
-     if (ctx->itrigger) {
-         gen_helper_itrigger_match(tcg_env);
+@@ -180,7 +180,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+              ? EXT_STATUS_DIRTY : EXT_STATUS_DISABLED;
      }
-+    if (ctx->sdext_step) {
-+        gen_helper_sdext_step(tcg_env);
-+    }
- #endif
-     tcg_gen_lookup_and_goto_ptr();
- }
-@@ -303,6 +308,9 @@ static void exit_tb(DisasContext *ctx)
-     if (ctx->itrigger) {
-         gen_helper_itrigger_match(tcg_env);
-     }
-+    if (ctx->sdext_step) {
-+        gen_helper_sdext_step(tcg_env);
-+    }
- #endif
-     tcg_gen_exit_tb(NULL, 0);
- }
-@@ -316,7 +324,8 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx,
-       * Under itrigger, instruction executes one by one like singlestep,
-       * direct block chain benefits will be small.
-       */
--    if (translator_use_goto_tb(&ctx->base, dest) && !ctx->itrigger) {
-+    if (translator_use_goto_tb(&ctx->base, dest) &&
-+        !ctx->itrigger && !ctx->sdext_step) {
-         /*
-          * For pcrel, the pc must always be up-to-date on entry to
-          * the linked TB, so that it can use simple additions for all
-@@ -1357,6 +1366,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->bcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, BCFI_ENABLED);
-     ctx->fcfi_lp_expected = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_LP_EXPECTED);
-     ctx->fcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_ENABLED);
-+    ctx->sdext_step = FIELD_EX64(ext_tb_flags, EXT_TB_FLAGS, SDEXT_STEP);
-     ctx->zero = tcg_constant_tl(0);
-     ctx->virt_inst_excp = false;
-     ctx->decoders = cpu->decoders;
-@@ -1407,7 +1417,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
  
-     /* Only the first insn within a TB is allowed to cross a page boundary. */
-     if (ctx->base.is_jmp == DISAS_NEXT) {
--        if (ctx->itrigger || !translator_is_same_page(&ctx->base, ctx->base.pc_next)) {
-+        if (ctx->itrigger || ctx->sdext_step ||
-+            !translator_is_same_page(&ctx->base, ctx->base.pc_next)) {
-             ctx->base.is_jmp = DISAS_TOO_MANY;
-         } else {
-             unsigned page_ofs = ctx->base.pc_next & ~TARGET_PAGE_MASK;
+-    if (cpu->cfg.debug && !icount_enabled()) {
++    if (cpu->cfg.ext_sdtrig && !icount_enabled()) {
+         flags = FIELD_DP32(flags, TB_FLAGS, ITRIGGER, env->itrigger_enabled);
+     }
+ #endif
 -- 
 2.53.0
 
