@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDB4F34C63
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB31EF34C62
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCJIF-0006K9-Jf; Mon, 13 Apr 2026 11:33:43 -0400
+	id 1wCJIT-0006Yf-Ms; Mon, 13 Apr 2026 11:33:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wCJHQ-0006Fu-Bj
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:32:55 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wCJHV-0006GU-Sm
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:33:06 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wCJHL-0002x0-6O
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:32:50 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7d86eb7c854so2224989a34.3
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 08:32:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wCJHT-0002yI-1e
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:32:57 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-7d9b21d1461so4494970a34.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 08:32:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776094365; x=1776699165;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776094372; x=1776699172;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6HIYnL74G9vWKIG7UY01i+b0GPOrTKuUyV9x38ekQzQ=;
- b=02E6RK03p++3S84XwJSqv+xYuNpkRlFt2mB6Tb1GiN9TdwyqjaWawWEImLok+iahvE
- G6J0SFs2i0WFPBIEGXjxddBs4f62VidyaY5I9RHABJdRdCxKXIj1A61oWCWD9lizYjeA
- RGIug59yX8nIXaSztNskyLNRCbP2lMGEDyMAUwFK2/LdboIRxY/uFX6KEmsDM24CUY8W
- Xs9QyoTw3kWYniNBwDQchHaKhRxnYpnMUPjmij4RuMmbTlkhPh4ZTilGpai/XPl/awnx
- 25RFcVezs90PYZl1x64MeLgfgWmyugC3h0AimX+XIugjPyAxaZTPu9QhXqlBkt6jEKmE
- FjVQ==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=0uQmWEvli3jR1BBImI39hfECjelvyoZ3y4nVls2Vhpg=;
+ b=RJtXjmdMHnRJYXuLkbqiLpB/OVaq/RjUNbXZqUb4ufpjvnouvn8BwWEz5oJGowqXfG
+ mFWlIdnB63qzO2m+boOXQ3Q/5qyi4CnNoY1W7HFuLpeNBJLr5eg9Z1hOPNfWU8iNNjbJ
+ ztUpF7G2P6xqNP+6SLXvhKELLpQT1/S17I2Jmd2bG2YS3jYnxIXjkhnfDWjYWtR+bj9N
+ 8Ot0LhUdxmIgBx1v7cUX7P9cOxIcd9ZDdnVguaZv6Rb0bkhdaUXkowNo2VZql8czRoBT
+ dNLAbxFP/bpz5IVA9aSFSmzKN0/pBZG8PY/kSXaPYNapwOi6Y+s5hAO2qhDWKhOYCNAs
+ RExw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776094365; x=1776699165;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6HIYnL74G9vWKIG7UY01i+b0GPOrTKuUyV9x38ekQzQ=;
- b=Zd4wToiTX/L5udQLDPP6tUziLYvQhHmKkJjyok7Q3v/0gMAN0jt3g/iF7+hKUABjCn
- X7GoYRw9r9svn0yZmMcbOBUuMJZ4DJ/IwY24tLu8wqVoy6MbQWU4H9jP8xW9eaCeM3Am
- chdjquWZT59zx+e6oRIIx+51waiX0oorfxhNFdVxtPVOe09eZgrlQwksMff6gXNumNBA
- 3ybDHGd/sB2nyHJ3y1fVfZAiR8v8w1xeHw3IVhvWes6Qikg3B+2dCEkNDvXdmIs5ynkx
- CzuInhbV67KOjWRmMhtYONB8JSODV4FrkfYRBUId/0R/ybUfhAQxtGIVtPAQHbgNUlri
- SvrA==
-X-Gm-Message-State: AOJu0Yx+ZFRJuIZNEpIBwhZGxGUlpBf27njK4hm+T8EvkoJ/6bKNIJ4A
- ar5lE8EA7E+W1tUNvWSBmeze9LNQjz1PSmfSKtQl7iVdShrmpQirjHjd2EglTqan4jE=
-X-Gm-Gg: AeBDietjMPmB4m8RExF5pw+E0vb2JFUD+Zv7YhQgz9sLDnM2/fX4zRaNIC1/fMMPVRD
- E2+6YXNcJ3cxOiSUMTEIrHUaLK4ehe6FziKoIUYfeSV3aRLAtUV/ASu3rnIK3hIAjuL9Rm0uO53
- 1yxF2TcKtG1vJXHXISoOUv2/LO3li6rKTm+496kiVwV783l7lHOrDVbomkMcnJF+74Ex8HZKMrH
- eRHVbcOIY8FHKaz+z70GltYEaAIWlh9kQdZuaU2i2/RkPX5M5ofGm+s7tdVa5eNvUCGqkzVSZMd
- Tpf0Gh057few2NWwAdQVrmW/TmN7uqgVkyMPz5b5CNfX07rKo/xuIcWwlo5U6NRn2Fp45OPVQwy
- 6+yMqZWjT1WlQVgjvfiodAq/mxVXzzKTA38QqaYI9dQsGeIhOZqWugaLNtDEo+9dh8i3raJWtVP
- EuCcGrY1nI3DbddJe2Llsi
-X-Received: by 2002:a05:6830:6d54:b0:7d7:ea9f:c0f9 with SMTP id
- 46e09a7af769-7dc27a236f3mr7911178a34.0.1776094365383; 
- Mon, 13 Apr 2026 08:32:45 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776094372; x=1776699172;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=0uQmWEvli3jR1BBImI39hfECjelvyoZ3y4nVls2Vhpg=;
+ b=jbbm6Y8Yv5DpDzis/wfwBas7jlNmKXX7cWcRaLJFj5PmCqiOQOQ0dyPjS+ARwODnXB
+ jiXXq6J9kp2oNZHnHfdCzE8ukrAJXraRQYPa/IpAvM1PcqQfxVl1TJGtb7Lx7VxNzZUK
+ Ke9wpPGP1A6E+OSt2VA2IHMUzD1UgS0COCao0J+TotKrftK8BWq5QroQ7TfN8s8hwm5m
+ RTcbWdrvr3u1GCFatWfbGnzv2qhb/7Kt3BMO1j7mBDtK76CZOQx5w41nYvixiLKaIMu8
+ qm7bhHDCoZzyEzvhE9paUZTbKF+BPQps3Kme4atXhyyMxnBNkT4GZJ9EDPh18IIlAbvR
+ 3CrQ==
+X-Gm-Message-State: AOJu0YwY8gb8UbzlqW+ZJh8lx4DoTlbri0tLrZm8bFQiEycy1lNaAQ5j
+ hqdBWS+YrpNCjf/cwoPcvESHWV15/PuHqpPQALTqx6dDxkqCr2wM7DokuaSdD3xQYUw=
+X-Gm-Gg: AeBDieudnr9sOYs7KLiIjoANpWHK2Oaeed5KNuCRP21pyIB2AQCHixQo69kX9+fOrjB
+ m2saBlX3zJ1zs52sj5Ega9lDee5qXKurk89TYHYJv36gEWDOdsdR1954hfghWyJPEteptWyu6cO
+ DBa85SrPJMBe/9SmDB776wG4i+/BGISxutsSmLgfXaYRiZ/ehKioDxiORPrLM5Q+PT95FMahkGO
+ Oy/nqmxTMoQBHkHXTn+DvS/oO8Bg315QmAPs52fIwzH92hoOzVZcfPLGVUC7+MIgYcvoLTr0gFK
+ 4u24LnGXMlb0zXcQ1DRZCF1nE37ZKT4fHD7AwLLDQKp6q8DCe6p+1TYpekfHGDWTvI+L0h2JN7s
+ LOYiyxtqJXujd3jAig5TJr0J5JFRTBQb6HseySpw4tJJDrorMGOvRk7XqwGj3nQtcLKm4JXIBbW
+ 21wgDu3MqOU5CVLm2hEMKE
+X-Received: by 2002:a05:6830:6da6:b0:7d7:f3d1:d701 with SMTP id
+ 46e09a7af769-7dc1762da55mr7595181a34.6.1776094372184; 
+ Mon, 13 Apr 2026 08:32:52 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7dc2696c463sm8659192a34.23.2026.04.13.08.32.44
+ 46e09a7af769-7dc2696c463sm8659192a34.23.2026.04.13.08.32.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Apr 2026 08:32:44 -0700 (PDT)
+ Mon, 13 Apr 2026 08:32:51 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Subject: [PATCH 0/5] bsd-user: Generate system call numbers
-Date: Mon, 13 Apr 2026 09:31:42 -0600
-Message-Id: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
+Date: Mon, 13 Apr 2026 09:31:47 -0600
+Subject: [PATCH 5/5] bsd-user: Switch to generated syscall_nr.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAF4M3WkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDE0Mj3eLK4uTEnBzdvCLdRINEC2PDtORUy0QDJaCGgqLUtMwKsGHRsbW
- 1AIRL4atcAAAA
-X-Change-ID: 20260412-syscall-nr-a0a831fce9a0
+Message-Id: <20260413-syscall-nr-v1-5-f70408d042ea@bsdimp.com>
+References: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
+In-Reply-To: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
@@ -80,24 +78,24 @@ Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1698; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=vtDT9NtU71NG/2MazN8rwck6GlVgWWz7UFUcQjK2czQ=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp3Qxib9AajzRyGuia1/rZp77i/OWIwVi8iY+4f
- 59oIj5Vx7qJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCad0MYgAKCRBsHNEofbAR
- ABvFEADMmneTEHKHz03rFfN+/GfVvqOHxMvka6DVI26aalZHddvfqf7JpIJSRf0rEsiq8d0vCxO
- jea2YbuZC21WcNA1Yxu7RmjSFwqJjWl/YpqEuIOgv+tkt0rjjDsrXly/7zYzzrAwJneczyWLFo0
- /zo8AAmR5HYgZLaXB3dHJQYuHninE7M/Jto3uxsSmmNgLHlvVjws91oA+MZGkHosg5FHcg7s+7O
- RDCIXkYLYPsxIDLmzz6k+eSfcFrR7TfOo9Axf+ytCCM4AM8z/m7omYwgqLOg+jP5CFT7mzYty0t
- i6pMFHuIRrFn714NOCRJ/oQCN6AjKznrVS5Ou2Cg41LrKSyA77opo0ly9GvLMND5U+/6uhim3OC
- 9PpnXJ5fHHKZgeNqZ1JWmp3KjSq2o9K7NkoVR11HdksaEbCtqHTjvL75nDa4kbYFygiQPZYAjnB
- c/yv67eey+1/IJJU6DFD/u0JWq3T4euSgsOM7/SEmWoOdMaXRcBL145w9mlhtk9vHN1sca8a7e8
- gePeqA5wGOhkWu0Ua/Kq5nT0fPjETEm8WLMZnDuIJ8bZgZzlul53JFjO3xYazO9eU/PPmXcxJJV
- A/pciVHGXEAeYlh08PzfDEdPx6cq6TJD+duSwP4oc502eIwbut7J3b8/v/vUYblBmVh9A2vyne+
- tIT1rKtSgV4ikIA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=27190; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=tnNJZRJcZ2aCmaykLh+cQ7PzQ8MlLfYbvFoybCubHQ8=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp3QxpwMfh8KfEG3hJrf+cqrrxoLDlAFRYHzROb
+ /3YjoptULuJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCad0MaQAKCRBsHNEofbAR
+ AHruEAC8i3T8HETd53cuTHuYLKaPmyotsbR9SstsIQEQ9eH2l9rCEiK3jo2a+uDqIjTLQUGJLVl
+ A00YTOycaOLauN8MaoHaKauf5JDGZsgRsuMRi6P/PXLWdBLcKjkIajb468EaI4sm032cj4Ggdjn
+ RYXkNAxu+xYJCqffKbLJ/8ADreOCIMCe4B6Rh1RPC//6CQRHkcU4Cjm2I41ajUaqdkHfMBIzXXt
+ cvd7xIIPY5aFMXjZHrBV5SucRDVHE5wbEVqgPWGAR8bVpbyzdnigPiE4J35mbKLGbeEPfG3D3IA
+ 5YMSsg6AF85zPZ6d8qAuNH0jLnNeKyw6+tYf3sKu89WWd84GqNoS0R2vURS2cji56ymu89QuTHe
+ 84irjZkcLrsqyWO716peW4kmWhvqIyrAd+utPiHvXRZL1MPJCCoqDgg7bzwQvEM+IYrvTc47BHD
+ qwM9Siyv7xCqJiEc3YFc2RAlCszk1w/j3YhFkwP92ELcCBPLRmkx5FvVjGKSlRfumuHF8ZBs6OW
+ PiW9C+okLIvubhTuRHqYWQiWVd8E6mWMY+l1zwuVPlhchecYRgJYDmN6vKvRt/I9c6E+4Sa/Vju
+ 4bBAzudLt9Ky/ZwE8DttG1rggSHvht8W7yMK82e/1CMxY4sZaCYUyzwVWL+2dOSRqkmmaYgzDpE
+ s1ERR+e/5MNLt5A==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -119,47 +117,579 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FreeBSD has a system call number header, sys/syscall.h, that's installed
-on every system that can compile qemu. Generate the system call numbers
-from that table rather than re-regenerating it yet again.
+Now that this will build and work, remove the old syscall_nr.h and
+switch the include over to the generated file in syscall_defs.h.
 
-To do this, I have to clean up a few stragglers for system calls we've
-removed. But these returned not supported anyway, so there's no net
-change.
-
-I also tried to do this in a way that the other bsds can coexist with
-should they show up again in the future. To that end, I moved the
-definition of time_t into os-syscall.h, where I noticed it was wrong for
-amd64 targets (which is little used and missing features, so it went
-unnoticed for a long time).
-
-More will be generated in the future, but this is the first steps.
+To do this, I had to delete the old, wrong definition of time_t for
+FreeBSD on amd64 since it stumbled over the fact that TARGET_i386 is
+defined for both 32-bit and 64-bit builds (the new os-syscall.h had the
+rigth definition). Rather than modify this file twice to fix it, rolled
+the fix into using os-syscall.h since it's still easy enough to review.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
-Warner Losh (5):
-      bsd-user: Add syscall header generator for FreeBSD
-      bsd-user: Generate the system call numbers in meson build.
-      bsd-user: Conditionally use old system calls
-      bsd-user: Create os-syscall.h
-      bsd-user: Switch to generated syscall_nr.h
+ bsd-user/freebsd/syscall_nr.h | 515 ------------------------------------------
+ bsd-user/syscall_defs.h       |  18 +-
+ 2 files changed, 1 insertion(+), 532 deletions(-)
 
- bsd-user/bsd-mem.h             |   2 +
- bsd-user/freebsd/meson.build   |   4 +
- bsd-user/freebsd/os-syscall.c  |   4 +
- bsd-user/freebsd/os-syscall.h  |  21 ++
- bsd-user/freebsd/strace.list   |   4 +
- bsd-user/freebsd/syscall_nr.h  | 515 -----------------------------------------
- bsd-user/freebsd/syscallhdr.sh |   9 +
- bsd-user/syscall_defs.h        |  18 +-
- meson.build                    |   2 +
- 9 files changed, 47 insertions(+), 532 deletions(-)
----
-base-commit: becd22fdc2a071783d9e04421526633772b3b98c
-change-id: 20260412-syscall-nr-a0a831fce9a0
+diff --git a/bsd-user/freebsd/syscall_nr.h b/bsd-user/freebsd/syscall_nr.h
+deleted file mode 100644
+index 7f73a6d0f1..0000000000
+--- a/bsd-user/freebsd/syscall_nr.h
++++ /dev/null
+@@ -1,515 +0,0 @@
+-/*
+- * System call numbers.
+- *
+- * DO NOT EDIT-- this file is automatically @generated.
+- * $FreeBSD$
+- */
+-
+-#define TARGET_FREEBSD_NR_syscall       0
+-#define TARGET_FREEBSD_NR_exit  1
+-#define TARGET_FREEBSD_NR_fork  2
+-#define TARGET_FREEBSD_NR_read  3
+-#define TARGET_FREEBSD_NR_write 4
+-#define TARGET_FREEBSD_NR_open  5
+-#define TARGET_FREEBSD_NR_close 6
+-#define TARGET_FREEBSD_NR_wait4 7
+-                                /* 8 is old creat */
+-#define TARGET_FREEBSD_NR_link  9
+-#define TARGET_FREEBSD_NR_unlink        10
+-                                /* 11 is obsolete execv */
+-#define TARGET_FREEBSD_NR_chdir 12
+-#define TARGET_FREEBSD_NR_fchdir        13
+-#define TARGET_FREEBSD_NR_freebsd11_mknod       14
+-#define TARGET_FREEBSD_NR_chmod 15
+-#define TARGET_FREEBSD_NR_chown 16
+-#define TARGET_FREEBSD_NR_break 17
+-                                /* 18 is freebsd4 getfsstat */
+-                                /* 19 is old lseek */
+-#define TARGET_FREEBSD_NR_getpid        20
+-#define TARGET_FREEBSD_NR_mount 21
+-#define TARGET_FREEBSD_NR_unmount       22
+-#define TARGET_FREEBSD_NR_setuid        23
+-#define TARGET_FREEBSD_NR_getuid        24
+-#define TARGET_FREEBSD_NR_geteuid       25
+-#define TARGET_FREEBSD_NR_ptrace        26
+-#define TARGET_FREEBSD_NR_recvmsg       27
+-#define TARGET_FREEBSD_NR_sendmsg       28
+-#define TARGET_FREEBSD_NR_recvfrom      29
+-#define TARGET_FREEBSD_NR_accept        30
+-#define TARGET_FREEBSD_NR_getpeername   31
+-#define TARGET_FREEBSD_NR_getsockname   32
+-#define TARGET_FREEBSD_NR_access        33
+-#define TARGET_FREEBSD_NR_chflags       34
+-#define TARGET_FREEBSD_NR_fchflags      35
+-#define TARGET_FREEBSD_NR_sync  36
+-#define TARGET_FREEBSD_NR_kill  37
+-                                /* 38 is old stat */
+-#define TARGET_FREEBSD_NR_getppid       39
+-                                /* 40 is old lstat */
+-#define TARGET_FREEBSD_NR_dup   41
+-#define TARGET_FREEBSD_NR_freebsd10_pipe        42
+-#define TARGET_FREEBSD_NR_getegid       43
+-#define TARGET_FREEBSD_NR_profil        44
+-#define TARGET_FREEBSD_NR_ktrace        45
+-                                /* 46 is old sigaction */
+-#define TARGET_FREEBSD_NR_getgid        47
+-                                /* 48 is old sigprocmask */
+-#define TARGET_FREEBSD_NR_getlogin      49
+-#define TARGET_FREEBSD_NR_setlogin      50
+-#define TARGET_FREEBSD_NR_acct  51
+-                                /* 52 is old sigpending */
+-#define TARGET_FREEBSD_NR_sigaltstack   53
+-#define TARGET_FREEBSD_NR_ioctl 54
+-#define TARGET_FREEBSD_NR_reboot        55
+-#define TARGET_FREEBSD_NR_revoke        56
+-#define TARGET_FREEBSD_NR_symlink       57
+-#define TARGET_FREEBSD_NR_readlink      58
+-#define TARGET_FREEBSD_NR_execve        59
+-#define TARGET_FREEBSD_NR_umask 60
+-#define TARGET_FREEBSD_NR_chroot        61
+-                                /* 62 is old fstat */
+-                                /* 63 is old getkerninfo */
+-                                /* 64 is old getpagesize */
+-#define TARGET_FREEBSD_NR_msync 65
+-#define TARGET_FREEBSD_NR_vfork 66
+-                                /* 67 is obsolete vread */
+-                                /* 68 is obsolete vwrite */
+-#define TARGET_FREEBSD_NR_sbrk  69
+-#define TARGET_FREEBSD_NR_sstk  70
+-                                /* 71 is old mmap */
+-#define TARGET_FREEBSD_NR_freebsd11_vadvise     72
+-#define TARGET_FREEBSD_NR_munmap        73
+-#define TARGET_FREEBSD_NR_mprotect      74
+-#define TARGET_FREEBSD_NR_madvise       75
+-                                /* 76 is obsolete vhangup */
+-                                /* 77 is obsolete vlimit */
+-#define TARGET_FREEBSD_NR_mincore       78
+-#define TARGET_FREEBSD_NR_getgroups     79
+-#define TARGET_FREEBSD_NR_setgroups     80
+-#define TARGET_FREEBSD_NR_getpgrp       81
+-#define TARGET_FREEBSD_NR_setpgid       82
+-#define TARGET_FREEBSD_NR_setitimer     83
+-                                /* 84 is old wait */
+-#define TARGET_FREEBSD_NR_swapon        85
+-#define TARGET_FREEBSD_NR_getitimer     86
+-                                /* 87 is old gethostname */
+-                                /* 88 is old sethostname */
+-#define TARGET_FREEBSD_NR_getdtablesize 89
+-#define TARGET_FREEBSD_NR_dup2  90
+-#define TARGET_FREEBSD_NR_fcntl 92
+-#define TARGET_FREEBSD_NR_select        93
+-#define TARGET_FREEBSD_NR_fsync 95
+-#define TARGET_FREEBSD_NR_setpriority   96
+-#define TARGET_FREEBSD_NR_socket        97
+-#define TARGET_FREEBSD_NR_connect       98
+-                                /* 99 is old accept */
+-#define TARGET_FREEBSD_NR_getpriority   100
+-                                /* 101 is old send */
+-                                /* 102 is old recv */
+-                                /* 103 is old sigreturn */
+-#define TARGET_FREEBSD_NR_bind  104
+-#define TARGET_FREEBSD_NR_setsockopt    105
+-#define TARGET_FREEBSD_NR_listen        106
+-                                /* 107 is obsolete vtimes */
+-                                /* 108 is old sigvec */
+-                                /* 109 is old sigblock */
+-                                /* 110 is old sigsetmask */
+-                                /* 111 is old sigsuspend */
+-                                /* 112 is old sigstack */
+-                                /* 113 is old recvmsg */
+-                                /* 114 is old sendmsg */
+-                                /* 115 is obsolete vtrace */
+-#define TARGET_FREEBSD_NR_gettimeofday  116
+-#define TARGET_FREEBSD_NR_getrusage     117
+-#define TARGET_FREEBSD_NR_getsockopt    118
+-#define TARGET_FREEBSD_NR_readv 120
+-#define TARGET_FREEBSD_NR_writev        121
+-#define TARGET_FREEBSD_NR_settimeofday  122
+-#define TARGET_FREEBSD_NR_fchown        123
+-#define TARGET_FREEBSD_NR_fchmod        124
+-                                /* 125 is old recvfrom */
+-#define TARGET_FREEBSD_NR_setreuid      126
+-#define TARGET_FREEBSD_NR_setregid      127
+-#define TARGET_FREEBSD_NR_rename        128
+-                                /* 129 is old truncate */
+-                                /* 130 is old ftruncate */
+-#define TARGET_FREEBSD_NR_flock 131
+-#define TARGET_FREEBSD_NR_mkfifo        132
+-#define TARGET_FREEBSD_NR_sendto        133
+-#define TARGET_FREEBSD_NR_shutdown      134
+-#define TARGET_FREEBSD_NR_socketpair    135
+-#define TARGET_FREEBSD_NR_mkdir 136
+-#define TARGET_FREEBSD_NR_rmdir 137
+-#define TARGET_FREEBSD_NR_utimes        138
+-                                /* 139 is obsolete 4.2 sigreturn */
+-#define TARGET_FREEBSD_NR_adjtime       140
+-                                /* 141 is old getpeername */
+-                                /* 142 is old gethostid */
+-                                /* 143 is old sethostid */
+-                                /* 144 is old getrlimit */
+-                                /* 145 is old setrlimit */
+-                                /* 146 is old killpg */
+-#define TARGET_FREEBSD_NR_setsid        147
+-#define TARGET_FREEBSD_NR_quotactl      148
+-                                /* 149 is old quota */
+-                                /* 150 is old getsockname */
+-#define TARGET_FREEBSD_NR_nlm_syscall   154
+-#define TARGET_FREEBSD_NR_nfssvc        155
+-                                /* 156 is old getdirentries */
+-                                /* 157 is freebsd4 statfs */
+-                                /* 158 is freebsd4 fstatfs */
+-#define TARGET_FREEBSD_NR_lgetfh        160
+-#define TARGET_FREEBSD_NR_getfh 161
+-                                /* 162 is freebsd4 getdomainname */
+-                                /* 163 is freebsd4 setdomainname */
+-                                /* 164 is freebsd4 uname */
+-#define TARGET_FREEBSD_NR_sysarch       165
+-#define TARGET_FREEBSD_NR_rtprio        166
+-#define TARGET_FREEBSD_NR_semsys        169
+-#define TARGET_FREEBSD_NR_msgsys        170
+-#define TARGET_FREEBSD_NR_shmsys        171
+-                                /* 173 is freebsd6 pread */
+-                                /* 174 is freebsd6 pwrite */
+-#define TARGET_FREEBSD_NR_setfib        175
+-#define TARGET_FREEBSD_NR_ntp_adjtime   176
+-#define TARGET_FREEBSD_NR_setgid        181
+-#define TARGET_FREEBSD_NR_setegid       182
+-#define TARGET_FREEBSD_NR_seteuid       183
+-                                /* 184 is obsolete lfs_bmapv */
+-                                /* 185 is obsolete lfs_markv */
+-                                /* 186 is obsolete lfs_segclean */
+-                                /* 187 is obsolete lfs_segwait */
+-#define TARGET_FREEBSD_NR_freebsd11_stat        188
+-#define TARGET_FREEBSD_NR_freebsd11_fstat       189
+-#define TARGET_FREEBSD_NR_freebsd11_lstat       190
+-#define TARGET_FREEBSD_NR_pathconf      191
+-#define TARGET_FREEBSD_NR_fpathconf     192
+-#define TARGET_FREEBSD_NR_getrlimit     194
+-#define TARGET_FREEBSD_NR_setrlimit     195
+-#define TARGET_FREEBSD_NR_freebsd11_getdirentries       196
+-                                /* 197 is freebsd6 mmap */
+-#define TARGET_FREEBSD_NR___syscall     198
+-                                /* 199 is freebsd6 lseek */
+-                                /* 200 is freebsd6 truncate */
+-                                /* 201 is freebsd6 ftruncate */
+-#define TARGET_FREEBSD_NR___sysctl      202
+-#define TARGET_FREEBSD_NR_mlock 203
+-#define TARGET_FREEBSD_NR_munlock       204
+-#define TARGET_FREEBSD_NR_undelete      205
+-#define TARGET_FREEBSD_NR_futimes       206
+-#define TARGET_FREEBSD_NR_getpgid       207
+-#define TARGET_FREEBSD_NR_poll  209
+-#define TARGET_FREEBSD_NR_freebsd7___semctl     220
+-#define TARGET_FREEBSD_NR_semget        221
+-#define TARGET_FREEBSD_NR_semop 222
+-                                /* 223 is obsolete semconfig */
+-#define TARGET_FREEBSD_NR_freebsd7_msgctl       224
+-#define TARGET_FREEBSD_NR_msgget        225
+-#define TARGET_FREEBSD_NR_msgsnd        226
+-#define TARGET_FREEBSD_NR_msgrcv        227
+-#define TARGET_FREEBSD_NR_shmat 228
+-#define TARGET_FREEBSD_NR_freebsd7_shmctl       229
+-#define TARGET_FREEBSD_NR_shmdt 230
+-#define TARGET_FREEBSD_NR_shmget        231
+-#define TARGET_FREEBSD_NR_clock_gettime 232
+-#define TARGET_FREEBSD_NR_clock_settime 233
+-#define TARGET_FREEBSD_NR_clock_getres  234
+-#define TARGET_FREEBSD_NR_ktimer_create 235
+-#define TARGET_FREEBSD_NR_ktimer_delete 236
+-#define TARGET_FREEBSD_NR_ktimer_settime        237
+-#define TARGET_FREEBSD_NR_ktimer_gettime        238
+-#define TARGET_FREEBSD_NR_ktimer_getoverrun     239
+-#define TARGET_FREEBSD_NR_nanosleep     240
+-#define TARGET_FREEBSD_NR_ffclock_getcounter    241
+-#define TARGET_FREEBSD_NR_ffclock_setestimate   242
+-#define TARGET_FREEBSD_NR_ffclock_getestimate   243
+-#define TARGET_FREEBSD_NR_clock_nanosleep       244
+-#define TARGET_FREEBSD_NR_clock_getcpuclockid2  247
+-#define TARGET_FREEBSD_NR_ntp_gettime   248
+-#define TARGET_FREEBSD_NR_minherit      250
+-#define TARGET_FREEBSD_NR_rfork 251
+-                                /* 252 is obsolete openbsd_poll */
+-#define TARGET_FREEBSD_NR_issetugid     253
+-#define TARGET_FREEBSD_NR_lchown        254
+-#define TARGET_FREEBSD_NR_aio_read      255
+-#define TARGET_FREEBSD_NR_aio_write     256
+-#define TARGET_FREEBSD_NR_lio_listio    257
+-#define TARGET_FREEBSD_NR_freebsd11_getdents    272
+-#define TARGET_FREEBSD_NR_lchmod        274
+-                                /* 275 is obsolete netbsd_lchown */
+-#define TARGET_FREEBSD_NR_lutimes       276
+-                                /* 277 is obsolete netbsd_msync */
+-#define TARGET_FREEBSD_NR_freebsd11_nstat       278
+-#define TARGET_FREEBSD_NR_freebsd11_nfstat      279
+-#define TARGET_FREEBSD_NR_freebsd11_nlstat      280
+-#define TARGET_FREEBSD_NR_preadv        289
+-#define TARGET_FREEBSD_NR_pwritev       290
+-                                /* 297 is freebsd4 fhstatfs */
+-#define TARGET_FREEBSD_NR_fhopen        298
+-#define TARGET_FREEBSD_NR_freebsd11_fhstat      299
+-#define TARGET_FREEBSD_NR_modnext       300
+-#define TARGET_FREEBSD_NR_modstat       301
+-#define TARGET_FREEBSD_NR_modfnext      302
+-#define TARGET_FREEBSD_NR_modfind       303
+-#define TARGET_FREEBSD_NR_kldload       304
+-#define TARGET_FREEBSD_NR_kldunload     305
+-#define TARGET_FREEBSD_NR_kldfind       306
+-#define TARGET_FREEBSD_NR_kldnext       307
+-#define TARGET_FREEBSD_NR_kldstat       308
+-#define TARGET_FREEBSD_NR_kldfirstmod   309
+-#define TARGET_FREEBSD_NR_getsid        310
+-#define TARGET_FREEBSD_NR_setresuid     311
+-#define TARGET_FREEBSD_NR_setresgid     312
+-                                /* 313 is obsolete signanosleep */
+-#define TARGET_FREEBSD_NR_aio_return    314
+-#define TARGET_FREEBSD_NR_aio_suspend   315
+-#define TARGET_FREEBSD_NR_aio_cancel    316
+-#define TARGET_FREEBSD_NR_aio_error     317
+-                                /* 318 is freebsd6 aio_read */
+-                                /* 319 is freebsd6 aio_write */
+-                                /* 320 is freebsd6 lio_listio */
+-#define TARGET_FREEBSD_NR_yield 321
+-                                /* 322 is obsolete thr_sleep */
+-                                /* 323 is obsolete thr_wakeup */
+-#define TARGET_FREEBSD_NR_mlockall      324
+-#define TARGET_FREEBSD_NR_munlockall    325
+-#define TARGET_FREEBSD_NR___getcwd      326
+-#define TARGET_FREEBSD_NR_sched_setparam        327
+-#define TARGET_FREEBSD_NR_sched_getparam        328
+-#define TARGET_FREEBSD_NR_sched_setscheduler    329
+-#define TARGET_FREEBSD_NR_sched_getscheduler    330
+-#define TARGET_FREEBSD_NR_sched_yield   331
+-#define TARGET_FREEBSD_NR_sched_get_priority_max        332
+-#define TARGET_FREEBSD_NR_sched_get_priority_min        333
+-#define TARGET_FREEBSD_NR_sched_rr_get_interval 334
+-#define TARGET_FREEBSD_NR_utrace        335
+-                                /* 336 is freebsd4 sendfile */
+-#define TARGET_FREEBSD_NR_kldsym        337
+-#define TARGET_FREEBSD_NR_jail  338
+-#define TARGET_FREEBSD_NR_nnpfs_syscall 339
+-#define TARGET_FREEBSD_NR_sigprocmask   340
+-#define TARGET_FREEBSD_NR_sigsuspend    341
+-                                /* 342 is freebsd4 sigaction */
+-#define TARGET_FREEBSD_NR_sigpending    343
+-                                /* 344 is freebsd4 sigreturn */
+-#define TARGET_FREEBSD_NR_sigtimedwait  345
+-#define TARGET_FREEBSD_NR_sigwaitinfo   346
+-#define TARGET_FREEBSD_NR___acl_get_file        347
+-#define TARGET_FREEBSD_NR___acl_set_file        348
+-#define TARGET_FREEBSD_NR___acl_get_fd  349
+-#define TARGET_FREEBSD_NR___acl_set_fd  350
+-#define TARGET_FREEBSD_NR___acl_delete_file     351
+-#define TARGET_FREEBSD_NR___acl_delete_fd       352
+-#define TARGET_FREEBSD_NR___acl_aclcheck_file   353
+-#define TARGET_FREEBSD_NR___acl_aclcheck_fd     354
+-#define TARGET_FREEBSD_NR_extattrctl    355
+-#define TARGET_FREEBSD_NR_extattr_set_file      356
+-#define TARGET_FREEBSD_NR_extattr_get_file      357
+-#define TARGET_FREEBSD_NR_extattr_delete_file   358
+-#define TARGET_FREEBSD_NR_aio_waitcomplete      359
+-#define TARGET_FREEBSD_NR_getresuid     360
+-#define TARGET_FREEBSD_NR_getresgid     361
+-#define TARGET_FREEBSD_NR_kqueue        362
+-#define TARGET_FREEBSD_NR_freebsd11_kevent      363
+-                                /* 364 is obsolete __cap_get_proc */
+-                                /* 365 is obsolete __cap_set_proc */
+-                                /* 366 is obsolete __cap_get_fd */
+-                                /* 367 is obsolete __cap_get_file */
+-                                /* 368 is obsolete __cap_set_fd */
+-                                /* 369 is obsolete __cap_set_file */
+-#define TARGET_FREEBSD_NR_extattr_set_fd        371
+-#define TARGET_FREEBSD_NR_extattr_get_fd        372
+-#define TARGET_FREEBSD_NR_extattr_delete_fd     373
+-#define TARGET_FREEBSD_NR___setugid     374
+-                                /* 375 is obsolete nfsclnt */
+-#define TARGET_FREEBSD_NR_eaccess       376
+-#define TARGET_FREEBSD_NR_afs3_syscall  377
+-#define TARGET_FREEBSD_NR_nmount        378
+-                                /* 379 is obsolete kse_exit */
+-                                /* 380 is obsolete kse_wakeup */
+-                                /* 381 is obsolete kse_create */
+-                                /* 382 is obsolete kse_thr_interrupt */
+-                                /* 383 is obsolete kse_release */
+-#define TARGET_FREEBSD_NR___mac_get_proc        384
+-#define TARGET_FREEBSD_NR___mac_set_proc        385
+-#define TARGET_FREEBSD_NR___mac_get_fd  386
+-#define TARGET_FREEBSD_NR___mac_get_file        387
+-#define TARGET_FREEBSD_NR___mac_set_fd  388
+-#define TARGET_FREEBSD_NR___mac_set_file        389
+-#define TARGET_FREEBSD_NR_kenv  390
+-#define TARGET_FREEBSD_NR_lchflags      391
+-#define TARGET_FREEBSD_NR_uuidgen       392
+-#define TARGET_FREEBSD_NR_sendfile      393
+-#define TARGET_FREEBSD_NR_mac_syscall   394
+-#define TARGET_FREEBSD_NR_freebsd11_getfsstat   395
+-#define TARGET_FREEBSD_NR_freebsd11_statfs      396
+-#define TARGET_FREEBSD_NR_freebsd11_fstatfs     397
+-#define TARGET_FREEBSD_NR_freebsd11_fhstatfs    398
+-#define TARGET_FREEBSD_NR_ksem_close    400
+-#define TARGET_FREEBSD_NR_ksem_post     401
+-#define TARGET_FREEBSD_NR_ksem_wait     402
+-#define TARGET_FREEBSD_NR_ksem_trywait  403
+-#define TARGET_FREEBSD_NR_ksem_init     404
+-#define TARGET_FREEBSD_NR_ksem_open     405
+-#define TARGET_FREEBSD_NR_ksem_unlink   406
+-#define TARGET_FREEBSD_NR_ksem_getvalue 407
+-#define TARGET_FREEBSD_NR_ksem_destroy  408
+-#define TARGET_FREEBSD_NR___mac_get_pid 409
+-#define TARGET_FREEBSD_NR___mac_get_link        410
+-#define TARGET_FREEBSD_NR___mac_set_link        411
+-#define TARGET_FREEBSD_NR_extattr_set_link      412
+-#define TARGET_FREEBSD_NR_extattr_get_link      413
+-#define TARGET_FREEBSD_NR_extattr_delete_link   414
+-#define TARGET_FREEBSD_NR___mac_execve  415
+-#define TARGET_FREEBSD_NR_sigaction     416
+-#define TARGET_FREEBSD_NR_sigreturn     417
+-#define TARGET_FREEBSD_NR_getcontext    421
+-#define TARGET_FREEBSD_NR_setcontext    422
+-#define TARGET_FREEBSD_NR_swapcontext   423
+-#define TARGET_FREEBSD_NR_swapoff       424
+-#define TARGET_FREEBSD_NR___acl_get_link        425
+-#define TARGET_FREEBSD_NR___acl_set_link        426
+-#define TARGET_FREEBSD_NR___acl_delete_link     427
+-#define TARGET_FREEBSD_NR___acl_aclcheck_link   428
+-#define TARGET_FREEBSD_NR_sigwait       429
+-#define TARGET_FREEBSD_NR_thr_create    430
+-#define TARGET_FREEBSD_NR_thr_exit      431
+-#define TARGET_FREEBSD_NR_thr_self      432
+-#define TARGET_FREEBSD_NR_thr_kill      433
+-#define TARGET_FREEBSD_NR_jail_attach   436
+-#define TARGET_FREEBSD_NR_extattr_list_fd       437
+-#define TARGET_FREEBSD_NR_extattr_list_file     438
+-#define TARGET_FREEBSD_NR_extattr_list_link     439
+-                                /* 440 is obsolete kse_switchin */
+-#define TARGET_FREEBSD_NR_ksem_timedwait        441
+-#define TARGET_FREEBSD_NR_thr_suspend   442
+-#define TARGET_FREEBSD_NR_thr_wake      443
+-#define TARGET_FREEBSD_NR_kldunloadf    444
+-#define TARGET_FREEBSD_NR_audit 445
+-#define TARGET_FREEBSD_NR_auditon       446
+-#define TARGET_FREEBSD_NR_getauid       447
+-#define TARGET_FREEBSD_NR_setauid       448
+-#define TARGET_FREEBSD_NR_getaudit      449
+-#define TARGET_FREEBSD_NR_setaudit      450
+-#define TARGET_FREEBSD_NR_getaudit_addr 451
+-#define TARGET_FREEBSD_NR_setaudit_addr 452
+-#define TARGET_FREEBSD_NR_auditctl      453
+-#define TARGET_FREEBSD_NR__umtx_op      454
+-#define TARGET_FREEBSD_NR_thr_new       455
+-#define TARGET_FREEBSD_NR_sigqueue      456
+-#define TARGET_FREEBSD_NR_kmq_open      457
+-#define TARGET_FREEBSD_NR_kmq_setattr   458
+-#define TARGET_FREEBSD_NR_kmq_timedreceive      459
+-#define TARGET_FREEBSD_NR_kmq_timedsend 460
+-#define TARGET_FREEBSD_NR_kmq_notify    461
+-#define TARGET_FREEBSD_NR_kmq_unlink    462
+-#define TARGET_FREEBSD_NR_abort2        463
+-#define TARGET_FREEBSD_NR_thr_set_name  464
+-#define TARGET_FREEBSD_NR_aio_fsync     465
+-#define TARGET_FREEBSD_NR_rtprio_thread 466
+-#define TARGET_FREEBSD_NR_sctp_peeloff  471
+-#define TARGET_FREEBSD_NR_sctp_generic_sendmsg  472
+-#define TARGET_FREEBSD_NR_sctp_generic_sendmsg_iov      473
+-#define TARGET_FREEBSD_NR_sctp_generic_recvmsg  474
+-#define TARGET_FREEBSD_NR_pread 475
+-#define TARGET_FREEBSD_NR_pwrite        476
+-#define TARGET_FREEBSD_NR_mmap  477
+-#define TARGET_FREEBSD_NR_lseek 478
+-#define TARGET_FREEBSD_NR_truncate      479
+-#define TARGET_FREEBSD_NR_ftruncate     480
+-#define TARGET_FREEBSD_NR_thr_kill2     481
+-#define TARGET_FREEBSD_NR_freebsd12_shm_open    482
+-#define TARGET_FREEBSD_NR_shm_unlink    483
+-#define TARGET_FREEBSD_NR_cpuset        484
+-#define TARGET_FREEBSD_NR_cpuset_setid  485
+-#define TARGET_FREEBSD_NR_cpuset_getid  486
+-#define TARGET_FREEBSD_NR_cpuset_getaffinity    487
+-#define TARGET_FREEBSD_NR_cpuset_setaffinity    488
+-#define TARGET_FREEBSD_NR_faccessat     489
+-#define TARGET_FREEBSD_NR_fchmodat      490
+-#define TARGET_FREEBSD_NR_fchownat      491
+-#define TARGET_FREEBSD_NR_fexecve       492
+-#define TARGET_FREEBSD_NR_freebsd11_fstatat     493
+-#define TARGET_FREEBSD_NR_futimesat     494
+-#define TARGET_FREEBSD_NR_linkat        495
+-#define TARGET_FREEBSD_NR_mkdirat       496
+-#define TARGET_FREEBSD_NR_mkfifoat      497
+-#define TARGET_FREEBSD_NR_freebsd11_mknodat     498
+-#define TARGET_FREEBSD_NR_openat        499
+-#define TARGET_FREEBSD_NR_readlinkat    500
+-#define TARGET_FREEBSD_NR_renameat      501
+-#define TARGET_FREEBSD_NR_symlinkat     502
+-#define TARGET_FREEBSD_NR_unlinkat      503
+-#define TARGET_FREEBSD_NR_posix_openpt  504
+-#define TARGET_FREEBSD_NR_gssd_syscall  505
+-#define TARGET_FREEBSD_NR_jail_get      506
+-#define TARGET_FREEBSD_NR_jail_set      507
+-#define TARGET_FREEBSD_NR_jail_remove   508
+-#define TARGET_FREEBSD_NR_freebsd12_closefrom   509
+-#define TARGET_FREEBSD_NR___semctl      510
+-#define TARGET_FREEBSD_NR_msgctl        511
+-#define TARGET_FREEBSD_NR_shmctl        512
+-#define TARGET_FREEBSD_NR_lpathconf     513
+-                                /* 514 is obsolete cap_new */
+-#define TARGET_FREEBSD_NR___cap_rights_get      515
+-#define TARGET_FREEBSD_NR_cap_enter     516
+-#define TARGET_FREEBSD_NR_cap_getmode   517
+-#define TARGET_FREEBSD_NR_pdfork        518
+-#define TARGET_FREEBSD_NR_pdkill        519
+-#define TARGET_FREEBSD_NR_pdgetpid      520
+-#define TARGET_FREEBSD_NR_pselect       522
+-#define TARGET_FREEBSD_NR_getloginclass 523
+-#define TARGET_FREEBSD_NR_setloginclass 524
+-#define TARGET_FREEBSD_NR_rctl_get_racct        525
+-#define TARGET_FREEBSD_NR_rctl_get_rules        526
+-#define TARGET_FREEBSD_NR_rctl_get_limits       527
+-#define TARGET_FREEBSD_NR_rctl_add_rule 528
+-#define TARGET_FREEBSD_NR_rctl_remove_rule      529
+-#define TARGET_FREEBSD_NR_posix_fallocate       530
+-#define TARGET_FREEBSD_NR_posix_fadvise 531
+-#define TARGET_FREEBSD_NR_wait6 532
+-#define TARGET_FREEBSD_NR_cap_rights_limit      533
+-#define TARGET_FREEBSD_NR_cap_ioctls_limit      534
+-#define TARGET_FREEBSD_NR_cap_ioctls_get        535
+-#define TARGET_FREEBSD_NR_cap_fcntls_limit      536
+-#define TARGET_FREEBSD_NR_cap_fcntls_get        537
+-#define TARGET_FREEBSD_NR_bindat        538
+-#define TARGET_FREEBSD_NR_connectat     539
+-#define TARGET_FREEBSD_NR_chflagsat     540
+-#define TARGET_FREEBSD_NR_accept4       541
+-#define TARGET_FREEBSD_NR_pipe2 542
+-#define TARGET_FREEBSD_NR_aio_mlock     543
+-#define TARGET_FREEBSD_NR_procctl       544
+-#define TARGET_FREEBSD_NR_ppoll 545
+-#define TARGET_FREEBSD_NR_futimens      546
+-#define TARGET_FREEBSD_NR_utimensat     547
+-                                /* 548 is obsolete numa_getaffinity */
+-                                /* 549 is obsolete numa_setaffinity */
+-#define TARGET_FREEBSD_NR_fdatasync     550
+-#define TARGET_FREEBSD_NR_fstat 551
+-#define TARGET_FREEBSD_NR_fstatat       552
+-#define TARGET_FREEBSD_NR_fhstat        553
+-#define TARGET_FREEBSD_NR_getdirentries 554
+-#define TARGET_FREEBSD_NR_statfs        555
+-#define TARGET_FREEBSD_NR_fstatfs       556
+-#define TARGET_FREEBSD_NR_getfsstat     557
+-#define TARGET_FREEBSD_NR_fhstatfs      558
+-#define TARGET_FREEBSD_NR_mknodat       559
+-#define TARGET_FREEBSD_NR_kevent        560
+-#define TARGET_FREEBSD_NR_cpuset_getdomain      561
+-#define TARGET_FREEBSD_NR_cpuset_setdomain      562
+-#define TARGET_FREEBSD_NR_getrandom     563
+-#define TARGET_FREEBSD_NR_getfhat       564
+-#define TARGET_FREEBSD_NR_fhlink        565
+-#define TARGET_FREEBSD_NR_fhlinkat      566
+-#define TARGET_FREEBSD_NR_fhreadlink    567
+-#define TARGET_FREEBSD_NR_funlinkat     568
+-#define TARGET_FREEBSD_NR_copy_file_range       569
+-#define TARGET_FREEBSD_NR___sysctlbyname        570
+-#define TARGET_FREEBSD_NR_shm_open2     571
+-#define TARGET_FREEBSD_NR_shm_rename    572
+-#define TARGET_FREEBSD_NR_sigfastblock  573
+-#define TARGET_FREEBSD_NR___realpathat  574
+-#define TARGET_FREEBSD_NR_close_range   575
+-#define TARGET_FREEBSD_NR_rpctls_syscall        576
+-#define TARGET_FREEBSD_NR_MAXSYSCALL    577
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 4dbd90c2f1..30b0270faa 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -25,29 +25,13 @@
+ 
+ #include "errno_defs.h"
+ 
+-#include "freebsd/syscall_nr.h"
++#include "os-syscalls.h"
+ 
+ /*
+  * machine/_types.h
+  * or x86/_types.h
+  */
+ 
+-/*
+- * time_t seems to be very inconsistly defined for the different *BSD's...
+- *
+- * FreeBSD uses a 64bits time_t except on i386
+- * so we have to add a special case here.
+- *
+- * On NetBSD time_t is always defined as an int64_t.  On OpenBSD time_t
+- * is always defined as an int.
+- *
+- */
+-#if (!defined(TARGET_I386))
+-typedef int64_t target_time_t;
+-#else
+-typedef int32_t target_time_t;
+-#endif
+-
+ struct target_iovec {
+     abi_long iov_base;   /* Starting address */
+     abi_long iov_len;   /* Number of bytes */
 
-Best regards,
 -- 
-Warner Losh <imp@bsdimp.com>
+2.52.0
 
 
