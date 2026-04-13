@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0786F34C5C
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B1AF34C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCJ8f-0005VT-7s; Mon, 13 Apr 2026 11:23:51 -0400
+	id 1wCJ8m-0005ai-H4; Mon, 13 Apr 2026 11:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCJ8U-0005To-5T
+ id 1wCJ8U-0005Tn-4n
  for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:23:39 -0400
-Received: from qs-2001j-snip4-6.eps.apple.com ([57.103.87.99]
+Received: from qs-2001a-snip4-7.eps.apple.com ([57.103.87.10]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCJ8Q-0000Rq-U6
+ id 1wCJ8Q-0000RV-9B
  for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:23:37 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPS id
- 7683718000AF; Mon, 13 Apr 2026 15:23:32 +0000 (UTC)
+ E61A3180010E; Mon, 13 Apr 2026 15:23:30 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776093814; x=1778685814;
- bh=zl2db1VwfCW29E4LtwT7zz4buZdQP1VZYTXVu1kcs+o=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Y9M+UwoIVHhGtG/Ew9BzW+1nrR4Z+2TA9obqMBl2QlZyMciShGva9hiLcjkBh1qlKtZWBXO8bpOKALXaWb3LHrbR2Pqdw0TofjeBhttDoTzNW0YTALb50Q6PxbzD52F9mB9/KPBxuBGerLRGaOWGkaJ5ITcKzclt0nEse8Inge/ohf+LgN4VbBas+qE8qgGKWaJzRanNgt6cq4aZPwc2FCTcqbEJsZpNd3YgoqNiLQ/FQdf3p9foRRs5cYQ/3PrQHaXrVxwOb2c2e+ugwerTmG/jkSFw6Qsq4E3+/bVxhDWJkCN9XfE0mt255nd4nkv+hKXapY/iSW9E/Y8zpECPPA==
+ s=sig1; t=1776093812; x=1778685812;
+ bh=VcQbQQfZCPKyOeMxphf10bRBZbvYKbSjds7zUGaLjiI=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=MkKXiUunaLBUFOEf1WBS9ip3tgmkuvDr3Wl+l9U0cUxyAW8IkL6tfnVUiyw1MswJdYaGw7zc71VCOFALjbtIe6J77zS81bSfEHWP9oqC00zHevIOfTo04n85fBaB8cuzJKwf3plA88ZQk5BhpyrVbUGuQBVKm5tx7cl8tIai1jh9tRjRpB5GlWeJ2MHL51GSxjr/4MLVXybz8VYSkNnXPYU+eIpJj10mXSmE8ja2LlCe1AkXiRGxfgxIldmrKYBorwFXs9zqYWw/qMTtxgqrlpJou6Yp/zO5NnvLPWzyJOfHFG9Lb+qYCzmUlIwo6X9cS9wBwOVTDE1rHc/ETiAnTA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPSA id
- A5EB11800114; Mon, 13 Apr 2026 15:23:30 +0000 (UTC)
+ 39D57180016D; Mon, 13 Apr 2026 15:23:29 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -41,36 +41,35 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v10 01/14] whpx: i386: x2apic emulation
-Date: Mon, 13 Apr 2026 17:23:13 +0200
-Message-ID: <20260413152326.63738-2-mohamed@unpredictable.fr>
+Subject: [PATCH v10 00/14] whpx: i386: bug fixes, feature probing and CPUID
+Date: Mon, 13 Apr 2026 17:23:12 +0200
+Message-ID: <20260413152326.63738-1-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260413152326.63738-1-mohamed@unpredictable.fr>
-References: <20260413152326.63738-1-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: EmPtBbl6b0ZZeKGLmsIdW80Bk-FSGsa6
-X-Proofpoint-GUID: EmPtBbl6b0ZZeKGLmsIdW80Bk-FSGsa6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE1MSBTYWx0ZWRfXxe5MfbCcXDE+
- lZ8Q8YVUItVPGktqdyRqDaF62A+Vg9zF5QQr2zakyX0bdZ1BQ0mg6ppRs1BFgmKPZVOW33f50dy
- 472s9yz5fz48GoI2g1rC9tKIbuvXDMKJBAtnrbz1uy+7m5y0hK7zaIxdJnZmZ0AVVM8XGOszjv1
- kiE9uN9GvyH31ihh83cRToUHNa5IKoFKvkGeYpylWk+d9AsSHRPwCFvT8pnKW7O029btkPVrNv3
- nqpPju4zORYqcJSEJ2RVwp1wKpMJleQxj18o9DgP0FUY1eiM4Xvh5p51c2Uh8t8ALGOaPXA2bNO
- cdZCOWSjKsII8jejdEW7Jhhm8ETkkPSf2bBXXo5xQ8sHIb9x4SBAEENkEIaIJI=
-X-Authority-Info-Out: v=2.4 cv=Rbidyltv c=1 sm=1 tr=0 ts=69dd0a75
+X-Authority-Info-Out: v=2.4 cv=PZPyRyhd c=1 sm=1 tr=0 ts=69dd0a73
  cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=nj4AhdDZwDx412jv8JQA:9
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=1DGgg3L7_nY_qRTbWDsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 6CvUZnD_MAqNWsi6crcVnyp7GjjNq0MG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE1MSBTYWx0ZWRfX+KqTULXZe2xG
+ DjcO+pgDvKWXcQ15fgjLN6QhsHWMp4gZTFOsqzaas0aRt9nhk/Z0g9aCMlQ6rgjBtLNLyoq96pf
+ 4f0arfSmjgF4HNR3txcCd+WNH61lT/PoZyzJeZp2lJZS0EgA3lbangNbzFOwlTVW8pVW5AlaZgy
+ ZGt34JFrFGSta4vcepICB/LM3WwiukNGW5VPI7z77RTN7MyQ3epr759UukB5W/pAuRTRvB/j5W/
+ WB4mNtzMa21LtOd9V57WlOmBGTf6mImrNsKGO40qgZ8ZpKeocNd6MzW91wKCCa6u0vTCMWzz6bs
+ S046hWVd2v1DscMZH/8gmYh+BB3Jqqzdc3Wza/QvT5Lo6eW2UnBFpOmHJ4aQEw=
+X-Proofpoint-GUID: 6CvUZnD_MAqNWsi6crcVnyp7GjjNq0MG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- spamscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 mlxscore=0
- clxscore=1030 mlxlogscore=734 phishscore=0 bulkscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=976
+ adultscore=0 phishscore=0 malwarescore=0 mlxscore=0
+ clxscore=1030
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 spamscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2604130151
-Received-SPF: pass client-ip=57.103.87.99;
+Received-SPF: pass client-ip=57.103.87.10;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,214 +93,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add x2apic emulation to WHPX for the kernel-irqchip=off case.
+This is a supplemental update that includes
+"whpx: i386: x2apic emulation for kernel-irqchip=off, feature probing"
+v4 unmodified.
 
-Unfortunately, it looks like there isn't a workaround available
-for proper behavior of PIC interrupts when kernel-irqchip=on
-for Windows 10. The OS is out of support outside of extended
-security updates so this will not be addressed.
+This might be too big for QEMU 11.0 at this point though...
 
-The performance boost is quite visible for multicore guests.
+"whpx: i386: disable TbFlushHypercalls for emulated LAPIC" is a
+bugfix, and "target/i386: emulate: include name of unhandled instruction"
+is a debugging aid.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 134 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 133 insertions(+), 1 deletion(-)
+"whpx: i386: x2apic emulation" makes things slightly better for Windows
+10 users. But I strongly recommend *not* relying on it when possible and
+using kernel-irqchip=on instead. On Windows 10 however that's more murky
+because PIC interrupt injection is broken (interrupts don't wake the vCPU
+from HLT) in that case.
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index e56ae2b343..4127440c0c 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -1082,6 +1082,8 @@ HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
-     /* Register for MSR and CPUID exits */
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ExtendedVmExits.X64MsrExit = 1;
-+    prop.ExtendedVmExits.X64CpuidExit = 1;
-+
-     if (exceptions != 0) {
-         prop.ExtendedVmExits.ExceptionExit = 1;
-     }
-@@ -1898,6 +1900,18 @@ int whpx_vcpu_run(CPUState *cpu)
-             WHV_REGISTER_NAME reg_names[3];
-             UINT32 reg_count;
-             bool is_known_msr = 0; 
-+            uint64_t val;
-+
-+            if (vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                val = ((uint32_t)vcpu->exit_ctx.MsrAccess.Rax) |
-+                    ((uint64_t)(vcpu->exit_ctx.MsrAccess.Rdx) << 32);
-+            } else {
-+                /*
-+                 * Workaround for [-Werror=maybe-uninitialized]
-+                 * with GCC. Not needed with Clang.
-+                 */
-+                val = 0;
-+            }
- 
-             reg_names[0] = WHvX64RegisterRip;
-             reg_names[1] = WHvX64RegisterRax;
-@@ -1911,7 +1925,47 @@ int whpx_vcpu_run(CPUState *cpu)
-                 && !vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite
-                 && !whpx_irqchip_in_kernel()) {
-                 is_known_msr = 1;
--                reg_values[1].Reg32 = (uint32_t)X86_CPU(cpu)->env.apic_bus_freq;
-+                val = X86_CPU(cpu)->env.apic_bus_freq;
-+            }
-+
-+            if (!whpx_irqchip_in_kernel() &&
-+                vcpu->exit_ctx.MsrAccess.MsrNumber == MSR_IA32_APICBASE) {
-+                is_known_msr = 1;
-+                if (!vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                    /* Read path unreachable on Hyper-V */
-+                    abort();
-+                } else {
-+                    WHV_REGISTER_VALUE reg = {.Reg64 = val};
-+                    int msr_ret = cpu_set_apic_base(X86_CPU(cpu)->apic_state, val);
-+                    if (msr_ret < 0) {
-+                        x86_emul_raise_exception(&X86_CPU(cpu)->env, EXCP0D_GPF, 0);
-+                    }
-+                    whpx_set_reg(cpu, WHvX64RegisterApicBase, reg);
-+                }
-+            }
-+
-+            if (!whpx_irqchip_in_kernel() &&
-+                vcpu->exit_ctx.MsrAccess.MsrNumber >= MSR_APIC_START &&
-+                vcpu->exit_ctx.MsrAccess.MsrNumber <= MSR_APIC_END) {
-+                int index = vcpu->exit_ctx.MsrAccess.MsrNumber - MSR_APIC_START;
-+                int msr_ret;
-+                is_known_msr = 1;
-+                if (!vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                    bql_lock();
-+                    msr_ret = apic_msr_read(X86_CPU(cpu)->apic_state, index, &val);
-+                    bql_unlock();
-+                    reg_values[1].Reg64 = val;
-+                    if (msr_ret < 0) {
-+                        x86_emul_raise_exception(&X86_CPU(cpu)->env, EXCP0D_GPF, 0);
-+                    }
-+                } else {
-+                    bql_lock();
-+                    msr_ret = apic_msr_write(X86_CPU(cpu)->apic_state, index, val);
-+                    bql_unlock();
-+                    if (msr_ret < 0) {
-+                        x86_emul_raise_exception(&X86_CPU(cpu)->env, EXCP0D_GPF, 0);
-+                    }
-+                }
-             }
-             /*
-              * For all unsupported MSR access we:
-@@ -1921,6 +1975,11 @@ int whpx_vcpu_run(CPUState *cpu)
-             reg_count = vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite ?
-                         1 : 3;
- 
-+            if (!vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                reg_values[1].Reg32 = (uint32_t)val;
-+                reg_values[2].Reg32 = (uint32_t)(val >> 32);
-+            }
-+
-             if (!is_known_msr) {
-                 trace_whpx_unsupported_msr_access(vcpu->exit_ctx.MsrAccess.MsrNumber,
-                     vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-@@ -1939,6 +1998,47 @@ int whpx_vcpu_run(CPUState *cpu)
-             ret = 0;
-             break;
-         }
-+        case WHvRunVpExitReasonX64Cpuid: {
-+            WHV_REGISTER_VALUE reg_values[5] = {0};
-+            WHV_REGISTER_NAME reg_names[5];
-+            UINT32 reg_count = 5;
-+            X86CPU *x86_cpu = X86_CPU(cpu);
-+            CPUX86State *env = &x86_cpu->env;
-+
-+            reg_names[0] = WHvX64RegisterRip;
-+            reg_names[1] = WHvX64RegisterRax;
-+            reg_names[2] = WHvX64RegisterRcx;
-+            reg_names[3] = WHvX64RegisterRdx;
-+            reg_names[4] = WHvX64RegisterRbx;
-+
-+            reg_values[0].Reg64 =
-+                vcpu->exit_ctx.VpContext.Rip +
-+                vcpu->exit_ctx.VpContext.InstructionLength;
-+
-+            reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-+            reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-+            reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-+            reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-+
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 1) {
-+                if (cpu_has_x2apic_feature(env)) {
-+                    reg_values[2].Reg64 |= CPUID_EXT_X2APIC;
-+                }
-+            }
-+
-+            hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
-+                whpx->partition,
-+                cpu->cpu_index,
-+                reg_names, reg_count,
-+                reg_values);
-+
-+            if (FAILED(hr)) {
-+                error_report("WHPX: Failed to set CpuidAccess state "
-+                             " registers, hr=%08lx", hr);
-+            }
-+            ret = 0;
-+            break;
-+        }
-         case WHvRunVpExitReasonException:
-             whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
- 
-@@ -2136,6 +2236,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_PROCESSOR_FEATURES_BANKS processor_features;
-     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
-     bool is_legacy_os = false;
-+    UINT32 cpuidExitList[] = {1};
- 
-     whpx = &whpx_global;
- 
-@@ -2354,6 +2455,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     /* Register for MSR and CPUID exits */
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ExtendedVmExits.X64MsrExit = 1;
-+    prop.ExtendedVmExits.X64CpuidExit = 1;
- 
-     hr = whp_dispatch.WHvSetPartitionProperty(
-             whpx->partition,
-@@ -2366,6 +2468,36 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
- 
-+    memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-+    prop.X64MsrExitBitmap.UnhandledMsrs = 1;
-+    if (!whpx_irqchip_in_kernel()) {
-+        prop.X64MsrExitBitmap.ApicBaseMsrWrite = 1;
-+    }
-+
-+    hr = whp_dispatch.WHvSetPartitionProperty(
-+            whpx->partition,
-+            WHvPartitionPropertyCodeX64MsrExitBitmap,
-+            &prop,
-+            sizeof(WHV_PARTITION_PROPERTY));
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set MSR exit bitmap, hr=%08lx", hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    hr = whp_dispatch.WHvSetPartitionProperty(
-+        whpx->partition,
-+        WHvPartitionPropertyCodeCpuidExitList,
-+        cpuidExitList,
-+        RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set partition CpuidExitList hr=%08lx",
-+                     hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-     /*
-      * We do not want to intercept any exceptions from the guest,
-      * until we actually start debugging with gdb.
+"whpx: i386: wire up feature probing" is yet another commit adding a code path
+not used on Windows 10. It'll tell the user today which CPU features they set
+are incompatible with the hardware but it does not sync that to the CPUID view
+that the guest has.
+
+And then another commit to enable x2apic emulation by default even for
+kernel-irqchip=off + re-introducing provided by QEMU enlightenments in a more
+functional form to signal that the x2apic can be used. I'm not aware of the
+actual vmware freq leaf being used though.
+
+"whpx: x2apic emulation for kernel-irqchip=off follow-up" is rolled into this series.
+
+"whpx: i386: reintroduce enlightenments for Windows 10" is a bugfix to make
+x2APIC work as intended on Windows 10 without emulating an IOMMU.
+*And* a massive improvement for Windows 10 hosts in performance for Linux guests
+due to using the right clocksource instead of HPET.
+
+And dependent on this series so included, CPUID intercepts finally...
+However that's only supported starting from Windows 11/Server 2022.
+
+Also ended up switching over Windows 10 to kernel-irqchip=off
+by default due to PIC interrupt injection being broken.
+
+Old performance (or lack thereof...) numbers:
+
+On a Ryzen 7 8700GE with a Windows 10 VM running with KVM in nested virt, with
+kernel-irqchip=off for the virt Alpine Linux x86_64 ISO (3.23.3) with -smp cores=2,
+boot times as reported through dmesg:
+
+- QEMU 10.2: 83 seconds
+- QEMU 10.2 with a single core: 18.1 seconds
+- as of v6 of this series, x2apic forced off: 29 seconds
+- as of v6 this series, out of the box: 18 seconds
+- v6 with kernel-irqchip=on and EDK2: 16.5 seconds
+- v6 with kernel-irqchip=off and EDK2: 9.5 seconds
+- v6, and with 1 core instead of two: 12.6 seconds
+
+In v7, the Windows 10 numbers are pretty much at parity with Windows 11 now.
+
+And with this series on a Windows 11 VM on the same hardware:
+- kernel-irqchip=on: 6.5 seconds
+- kernel-irqchip=on, x2apic forced off: 7.6 seconds
+- kernel-irqchip=off: 8.3 seconds
+- hyperv=off,kernel-irqchip=off: 7.6 seconds... which is faster,
+so the absence of enlightenment support on Windows 10 doesn't explain things...
+
+With kernel-irqchip=on on Windows 10, when booting with SeaBIOS, it gets stuck in
+syslinux due to PIC interrupt injection being broken there. That can be counted
+as an infinite boot time (?).
+
+checkpatch false positives:
+
+ERROR: spaces required around that '*' (ctx:WxV)
++         UINT32 Ecx, WHV_CPUID_OUTPUT *CpuidOutput))
+
+Not a multiplication but a pointer reference.
+
+ERROR: space prohibited after that '&' (ctx:ExW)
++                    & CPUID_7_0_EDX_CET_IBT) {
+                     ^
+
+ERROR: space prohibited after that '&' (ctx:ExW)
++                    & CPUID_7_0_ECX_CET_SHSTK) {
+                     ^
+
+Because it's multiline.
+
+Changes in v10:
+- disallow APIC reads when the APIC is disabled
+- fix CPUID[1:EDX].APIC reporting
+
+Changes in v9:
+
+- Oops,  "if (irr == -1)" change (and cleanup)
+to avoid an abort(). And think that I understand this a bit better now.
+
+Changes in v8:
+
+- Interrupt priority changes are back.
+- Some CPUID fixes
+- disable enlightenments and LAPIC for isapc
+
+Changes in v7:
+
+- Exposing VMware hypervisor identification when not
+using Hyper-V enlightenments and when the VMware frequency
+CPUID leaf isn't explictly disabled.
+
+- Remove the interrupt priority logic as it has issues with
+PIC interrupts. Can be reintroduced later.
+
+- -cpu max passing through CPUID info from Hyper-V
+- fill xsave info
+
+- OSXSAVE CPUID leaf reporting fix.
+
+Changes in v6:
+
+- kernel-irqchip=off fix: re-registering the interrupt window
+when the existing one has too low of a TPR value.
+
+Folded into "whpx: i386: kernel-irqchip=off fixes".
+
+- I/O port access fast path cleanup commit added at the end
+
+The path relied on a side effect of whpx_get_reg instead of
+something cleaner.
+
+- Use the CR8 register provided by the hypervisor only when
+kernel-irqchip=off. Rely on the APIC state synchronisation
+otherwise.
+
+This fixes some register sync errors that surfaced when setting
+the TPR values properly.
+
+Changes in v5/v1 with rename:
+
+- kernel-irqchip=off fixes, notably making 64-bit Windows bootable
+- switching over Windows 10 to kernel-irqchip=off by default
+
+Changes in v4:
+
+- Ugh for a revision sent quickly, unbreaking the arm64 build...
+- and making checkpatch happier to some extent
+
+Changes in v3:
+
+- Fixing CPUID intercepts so that QEMU CPU models work fine now, instead
+of the partial intercept that was present in QEMU 10.2
+- cleanups
+
+Changes in v2:
+
+- GCC warned when a variable name was re-used within a different (but overlapping)
+scope in the same function. It also warned with a -Werror=maybe-uninitialized for
+the MSR write case. Address those
+- make the in-KVM enlightenments path available on Windows 11 too when -M hyperv=off.
+
+Mohamed Mediouni (14):
+  whpx: i386: x2apic emulation
+  whpx: i386: wire up feature probing
+  whpx: i386: disable TbFlushHypercalls for emulated LAPIC
+  whpx: i386: enable x2apic by default for user-mode LAPIC
+  whpx: i386: reintroduce enlightenments for Windows 10
+  whpx: i386: introduce proper cpuid support
+  whpx: i386: kernel-irqchip=off fixes
+  whpx: i386: use WHvX64RegisterCr8 only when kernel-irqchip=off
+  whpx: i386: disable kernel-irqchip on Windows 10 when PIC enabled
+  whpx: i386: IO port fast path cleanup
+  whpx: i386: disable enlightenments and LAPIC for isapc
+  whpx: i386: interrupt priority support
+  hw/intc: apic: disallow APIC reads when disabled
+  whpx: i386: fix CPUID[1:EDX].APIC reporting
+
+ accel/whpx/whpx-common.c       |   2 +
+ hw/intc/apic.c                 |   9 +
+ include/system/whpx-common.h   |   2 +-
+ include/system/whpx-internal.h |  10 +
+ target/arm/whpx/whpx-all.c     |   1 +
+ target/i386/cpu.c              |  25 ++
+ target/i386/whpx/whpx-all.c    | 601 +++++++++++++++++++++++++++------
+ target/i386/whpx/whpx-apic.c   |  71 +++-
+ target/i386/whpx/whpx-i386.h   |   4 +
+ 9 files changed, 613 insertions(+), 112 deletions(-)
+ create mode 100644 target/i386/whpx/whpx-i386.h
+
 -- 
 2.50.1 (Apple Git-155)
 
