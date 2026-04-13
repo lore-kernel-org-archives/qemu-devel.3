@@ -4,112 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA32EBFD37
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 11:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8C4F34C40
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 11:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCFbK-0004Bs-23; Mon, 13 Apr 2026 07:37:10 -0400
+	id 1wCFuu-0007Mv-VZ; Mon, 13 Apr 2026 07:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wCFbH-0004Bh-M1
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 07:37:07 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wCFbE-0002Uf-Ct
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 07:37:06 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63CLtcHV3213180; Mon, 13 Apr 2026 11:37:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jHepOC
- uTklpTDiLS/v6IL9l8lsKTi9amvT8oND3QWcU=; b=ICxS+TxaQFa3D4Koypv2c2
- IIevRjPQNyI2YsmAJptoyzLV85Hi5LpUyn0ED2vlYkuoA8OcFxrk9zrTJzvsBYsy
- X/YvSeYzWu9xUNqYDQlBDnyUxufqfP5TMRNiCv/adD+Q7cq9S7UzDRgLVBoagXkt
- 6nTRGQjCJGv6/ppov4dXtez8ohbgzWWoSNiyvvV5Oe+bRAEM0+D7TSSrREso6M1N
- t6xGNGImQwszfxyyPk63W5JhayIqttmM4Ut3vbOuOGvLsBUdDtaHEN4KHGukrCX3
- OUYIUtgrgQyjqZ2N8+2AnpQS/0McadiOWhX9mDzY/nII9BUefSK6QzXK6Eu2upjg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dfbqkf950-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Apr 2026 11:37:02 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63D8vPb6003581;
- Mon, 13 Apr 2026 11:37:01 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dg1mn4xf4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Apr 2026 11:37:01 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63DBb0jf29360806
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 Apr 2026 11:37:00 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3FCFA58043;
- Mon, 13 Apr 2026 11:37:00 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 586EF58053;
- Mon, 13 Apr 2026 11:36:57 +0000 (GMT)
-Received: from [9.123.0.169] (unknown [9.123.0.169])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 13 Apr 2026 11:36:57 +0000 (GMT)
-Message-ID: <0954ef7e-b04e-4542-89fb-796acc452068@linux.ibm.com>
-Date: Mon, 13 Apr 2026 17:06:55 +0530
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1wCFut-0007Mh-LR
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 07:57:23 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wCFus-0005BG-5Z
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 07:57:23 -0400
+Received: from example.com (unknown [167.220.208.32])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 977DD20B6F01;
+ Mon, 13 Apr 2026 04:57:18 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 977DD20B6F01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1776081439;
+ bh=QAt3V/69bjuLDa6D+9wZ9aHyMQTnHhrnwOHgoSS1x7I=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=VUlvy+ouwW9XupQuz04GsIS/0lwbcpY1IISflQt78cFP4+WxtS4v/XlqviTv6XYEl
+ bkM60ci2aA/fsJuGEt6u8Yo/MgauPCTOk2g+K13hx1Ru43xV0ziv5ibdjTkjdTj8HL
+ hvd3T9q4YTRyKeC3y0biiAHwPszzc3Mu5eL01VZs=
+Date: Mon, 13 Apr 2026 13:57:17 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH 1/1] target/i386/mshv: fix read/write memory across the
+ page boundary
+Message-ID: <adzaHT8YdPcQ2GTw@example.com>
+References: <20260409175334.181249-1-dblanzeanu@linux.microsoft.com>
+ <20260409175334.181249-2-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 for-11.0] accel/kvm: return early from
- kvm_irqchip_create if kvm does not support irqchip
-Content-Language: en-GB
-To: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: peter.maydell@linaro.org, Misbah Anjum N <misanjum@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20260413112151.61261-1-anisinha@redhat.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260413112151.61261-1-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=I+9Vgtgg c=1 sm=1 tr=0 ts=69dcd55e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=Y_7XUuprIgRBB3N_oLcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: HoeGeDP2Q7PnjKqx4jI4OcKS71H9Iwb6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDExMSBTYWx0ZWRfX96E9rF2Rp7dT
- P/j9riur638eRzmE1J0m68oG0HcIVlSAU9Tu5wudCBwrgim9IvpnRokqdUmJGKJtptQU8yBQJOp
- A6nwrV5NDojqy9DIwkyo0soes1vkF0IClysmOoh07woSBgCPrggjxlByeqMGdkY03fuNiGbDlx/
- 3D2jrniiD2e0G8c+BOWQuMcN23xia8oBk3/S7awzc8/1v+XEik4TIFkn/rxlMyUTgCf1n//1Vfi
- Ya7dFz+PNQF9fihkWYmwXChb//H7B78EYRFlwtiQIxiAnb5COrwRscZ3J224hwRMB2SmZnwIbbz
- Ozon63WiEfYrdA+QMywbv7oKO1KW0OxKjTv3bfeDyni70eL0ZRG9xhIezUEl0yMRcC1Lf+Wypxm
- k+f2bgObK8Q897WT3H6zFLSJF+L9oNaqEhemOcPumZhS3Ym5srgU+gDd7LWUACIWNE1NPdlQJFq
- 47JHZlnXY1X25MYzARQ==
-X-Proofpoint-ORIG-GUID: HoeGeDP2Q7PnjKqx4jI4OcKS71H9Iwb6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-13_03,2026-04-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 clxscore=1011 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604130111
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260409175334.181249-2-dblanzeanu@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,110 +68,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 13/04/26 4:51 pm, Ani Sinha wrote:
-> During refactoring of kvm_irqchip_create(), the refactored code was returning
-> early from do_kvm_irqchip_create() function if the required capabilities were
-> not present in KVM. This was not translating to an early return from
-> kvm_irqchip_create() as was the case before refactoring. This is because,
-> do_kvm_irqchip_create() did not have a means to notify the caller of the lack
-> of kvm capabilities. Fix this by making do_notify_irqchip_create() return
-> EOPNOTSUPP error when required capabilities are absent and then the caller
-> can check the return code and return early.
+On Thu, Apr 09, 2026 at 08:53:34PM +0300, Doru Blânzeanu wrote:
+> Previously, read_memory and write_memory performed a single GVA-to-GPA
+> translation for the entire buffer. If the buffer spanned a page
+> boundary, the translated GPA was only valid for the first page, causing
+> incorrect reads/writes for the remainder.
 > 
-> Converted some calls to exit() to assertion checks in order to make it cleaner.
+> Fix both functions to loop over pages, translating and accessing each
+> page-aligned chunk separately.
 > 
-> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM file descriptor change")
-> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
-> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
-> Suggested-by: Fabiano Rosas <farosas@suse.de>
-> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 > ---
->   accel/kvm/kvm-all.c | 29 ++++++++++++++++-------------
->   1 file changed, 16 insertions(+), 13 deletions(-)
+>  target/i386/mshv/mshv-cpu.c | 71 +++++++++++++++++++++++++++----------
+>  1 file changed, 52 insertions(+), 19 deletions(-)
 > 
-> changelog:
-> v2: converted some exit() calls to assertions.
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 774499d34f..c78bf6a56f 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2575,7 +2575,7 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, qemu_irq irq, int gsi)
->       g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
->   }
->   
-> -static void do_kvm_irqchip_create(KVMState *s)
-> +static int do_kvm_irqchip_create(KVMState *s)
->   {
->       int ret;
->       if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
-> @@ -2587,36 +2587,38 @@ static void do_kvm_irqchip_create(KVMState *s)
->               exit(1);
->           }
->       } else {
-> -        return;
-> +        /*
-> +         * neither KVM_CAP_IRQCHIP nor KVM_CAP_S390_IRQCHIP capabilities are
-> +         * present. Bail.
-> +         */
-> +        return -EOPNOTSUPP;
->       }
->   
-> -    if (kvm_check_extension(s, KVM_CAP_IRQFD) <= 0) {
-> -        fprintf(stderr, "kvm: irqfd not implemented\n");
-> -        exit(1);
-> -    }
-> +    assert(kvm_check_extension(s, KVM_CAP_IRQFD));
-
-again changing behaviour ?
-previously it was doing exit(1) on returning non-zero.
-Now, it will assert on returning zero ?
-May be split the patch to keep the exit -> assert changes separate ?
-
->   
->       /* First probe and see if there's a arch-specific hook to create the
->        * in-kernel irqchip for us */
->       ret = kvm_arch_irqchip_create(s);
->       if (ret == 0) {
-> -        if (s->kernel_irqchip_split == ON_OFF_AUTO_ON) {
-> -            error_report("Split IRQ chip mode not supported.");
-> -            exit(1);
-> -        } else {
-> -            ret = kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
-> -        }
-> +        /* assert that split IRQ chip mode is supported. */
-> +        assert(s->kernel_irqchip_split != ON_OFF_AUTO_ON);
-> +        ret = kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
->       }
->       if (ret < 0) {
->           fprintf(stderr, "Create kernel irqchip failed: %s\n", strerror(-ret));
->           exit(1);
->       }
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 2bc978deb2..afdb6b6e29 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -1316,21 +1316,38 @@ static int read_memory(const CPUState *cpu, uint64_t initial_gva,
+>  {
+>      int ret;
+>      uint64_t gpa, flags;
+> -
+> -    if (gva == initial_gva) {
+> -        gpa = initial_gpa;
+> -    } else {
+> -        flags = HV_TRANSLATE_GVA_VALIDATE_READ;
+> -        ret = translate_gva(cpu, gva, &gpa, flags);
+> -        if (ret < 0) {
+> -            return -1;
+> +    uint64_t cur_gva = gva;
+> +    size_t page_left, chunk;
+> +    uint8_t *cur_data = data;
 > +
-> +    return 0;
->   }
->   
->   static void kvm_irqchip_create(KVMState *s)
->   {
->       assert(s->kernel_irqchip_split != ON_OFF_AUTO_AUTO);
->   
-> -    do_kvm_irqchip_create(s);
-> +    if (do_kvm_irqchip_create(s) < 0) {
-> +        return;
-> +    }
->       kvm_kernel_irqchip = true;
->       /* If we have an in-kernel IRQ chip then we must have asynchronous
->        * interrupt delivery (though the reverse is not necessarily true)
-> @@ -2835,6 +2837,7 @@ static int kvm_reset_vmfd(MachineState *ms)
->       }
->   
->       if (s->kernel_irqchip_allowed) {
-> +        /* ignore return from this function */
->           do_kvm_irqchip_create(s);
->       }
->   
+> +    /*
+> +     * If the read spans multiple pages,
+> +     * we need to translate and read each page separately
+> +     */
+> +    while (len > 0) {
+> +        page_left = HV_HYP_PAGE_SIZE - (cur_gva & (HV_HYP_PAGE_SIZE - 1));
+> +        chunk = MIN(len, page_left);
+> +
+> +        if (cur_gva == initial_gva) {
+> +            gpa = initial_gpa;
+> +        } else {
+> +            flags = HV_TRANSLATE_GVA_VALIDATE_READ;
+> +            ret = translate_gva(cpu, cur_gva, &gpa, flags);
+> +            if (ret < 0) {
+> +                return -1;
+> +            }
+>          }
+>  
+> -        ret = mshv_guest_mem_read(gpa, data, len, false, false);
+> +        ret = mshv_guest_mem_read(gpa, cur_data, chunk,
+> +                                  false, false);
+>          if (ret < 0) {
+>              error_report("failed to read guest mem");
+>              return -1;
+>          }
+> +
+> +        cur_gva += chunk;
+> +        cur_data += chunk;
+> +        len -= chunk;
+>      }
+>  
+>      return 0;
+> @@ -1341,18 +1358,34 @@ static int write_memory(const CPUState *cpu, uint64_t gva, const uint8_t *data,
+>  {
+>      int ret;
+>      uint64_t gpa, flags;
+> +    uint64_t cur_gva = gva;
+> +    size_t page_left, chunk;
+> +    const uint8_t *cur_data = data;
+> +
+> +    /*
+> +     * If the write spans multiple pages,
+> +     * we need to translate and write each page separately
+> +     */
+> +    while (len > 0) {
+> +        page_left = HV_HYP_PAGE_SIZE - (cur_gva & (HV_HYP_PAGE_SIZE - 1));
+> +        chunk = MIN(len, page_left);
+> +
+> +        flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
+> +        ret = translate_gva(cpu, cur_gva, &gpa, flags);
+> +        if (ret < 0) {
+> +            error_report("failed to translate gva to gpa");
+> +            return -1;
+> +        }
+>  
+> -    flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
+> -    ret = translate_gva(cpu, gva, &gpa, flags);
+> -    if (ret < 0) {
+> -        error_report("failed to translate gva to gpa");
+> -        return -1;
+> -    }
+> +        ret = mshv_guest_mem_write(gpa, cur_data, chunk, false);
+> +        if (ret != MEMTX_OK) {
+> +            error_report("failed to write to mmio");
+> +            return -1;
+> +        }
+>  
+> -    ret = mshv_guest_mem_write(gpa, data, len, false);
+> -    if (ret != MEMTX_OK) {
+> -        error_report("failed to write to mmio");
+> -        return -1;
+> +        cur_gva += chunk;
+> +        cur_data += chunk;
+> +        len -= chunk;
+>      }
+>  
+>      return 0;
+> -- 
+> 2.53.0
 
+Fixes: 6dec60528c (target/i386/mshv: Implement mshv_vcpu_run())
 
