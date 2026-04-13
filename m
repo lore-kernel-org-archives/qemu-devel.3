@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB64DF531CA
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 20:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF32AF531CA
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 20:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCOGc-0007M7-Dg; Mon, 13 Apr 2026 16:52:22 -0400
+	id 1wCOGe-0007Mi-Js; Mon, 13 Apr 2026 16:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCOGY-0007LE-Pk
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:18 -0400
-Received: from ci-2007g-snip4-2.eps.apple.com ([57.103.88.65]
+ id 1wCOGZ-0007LW-RU
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:19 -0400
+Received: from ci-2007e-snip4-11.eps.apple.com ([57.103.88.53]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCOGW-0007th-9X
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:18 -0400
+ id 1wCOGY-0007tp-5W
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:19 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPS id
- C92A11800208; Mon, 13 Apr 2026 20:52:12 +0000 (UTC)
+ 7C3EC180016F; Mon, 13 Apr 2026 20:52:14 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776113534; x=1778705534;
- bh=p9EZKcG/7kfn11wdqZrItGJf0DlIfHgfjadGdY8/YEg=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=N6Ep8veyUfPUCczLyp53e0pKN62h2H2P7+l8OH432lUaqNsz6LcB5NP9sGhb2n+7fElOOlEvSnCN7WPA8l9aOF7+LUKgpRyNxOH+Wa1xY/MGiKeRgA4qrg1MxqB4q6psrq8noiXdSbQPCijTjmrkGf/cokI5D1hwdnGpd1UgIzUqTThCMz8RXU2ycF0NLpuOPp1jECEf9YcWmrbm8WXL2kaW7QEnX89USXyxiM99zJjZhoFJKf4rBFwLjmld3VZ5TaEULaPqWq52aMx7+XiFg2BfLLchhpIKIEq6xyt8kqzMyuKk6Z3v9GWjkFrlylqB5uH/PfxB4NlX14cqekREYQ==
+ s=sig1; t=1776113537; x=1778705537;
+ bh=jSFEY3OW57r5Gmf0SB6G349rIgUNCT10rXc1M/CBSww=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=UYw3IAS8ndwoCx3n0WEgDoCzqTCJ8txe9uVnnCUIgzMbC5dpjHhXaN/diBIcIbFTtQ/UqCqoF6C0FKZy4Bt+kCbK88YPBQeCqhPERqkwKPBfe8L+TD3Ydbt1E0JP6aRIj2LMfONVuJvYWRfGxt0NmcDLmBy/OIrCLIgmk7YwRakWz9OziZgwHLOyvU0nZf33wlk/liKKNLKEFveMlD0p1raCgNl4891C3DI6dgpyxw3bgSIARXQYtwwZxuVeT613kDVZE3I1lUbB4WtSx/CIlWzRqqZLXWseshyWo2GMgYThsKPKImCscRj9JxenSgqVqTPJDpOGnzvH0OEOV9KuGQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPSA id
- DFA98180016B; Mon, 13 Apr 2026 20:52:10 +0000 (UTC)
+ 7A2821800206; Mon, 13 Apr 2026 20:52:12 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -40,43 +40,45 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v12 00/15] whpx: i386: bug fixes, feature probing and CPUID
-Date: Mon, 13 Apr 2026 22:51:52 +0200
-Message-ID: <20260413205208.50643-1-mohamed@unpredictable.fr>
+Subject: [PATCH v12 01/15] target/i386: emulate: include name of unhandled
+ instruction
+Date: Mon, 13 Apr 2026 22:51:53 +0200
+Message-ID: <20260413205208.50643-2-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260413205208.50643-1-mohamed@unpredictable.fr>
+References: <20260413205208.50643-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: nkQ-3JYN8Z_rOOpiCSW6vrxlAjrlvdwL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDIwNSBTYWx0ZWRfX8wRjYl47aK8B
- b7NDs9+ZsFyPYeaLP0TjDER8KAX7xiqUDKRjOCsRpr+FQGGZkGsRqz1SS7t3xpgW1IYM0kx22ZN
- fYAylXW5OrgdmY/SvmOqN7CI9Uxkk7asxQL3FP5/8pE7ZuOi949vKZvLgUix/pRzz/BiDYIjLHZ
- YZhKd0WE0vrJ43sD8Z/l0UUU3T53mEA8zATW24JJrtS8qvHXN7wbyPcO2iNcxpFZyrZrDtfFht1
- 3Hc9HyDUaaWy5MCPvDO+lppjEvIbbzs7IRMYUgZYyACcDReQqbdvqb2MvXcJ5mY8WxCYhdnIfcQ
- PzyaWFvJ2pNIhKX9Echy9CWS4HEOVQPIGBBPxEyWiyUc7KGjIwbwz+9AVfR1VI=
-X-Authority-Info-Out: v=2.4 cv=L4cQguT8 c=1 sm=1 tr=0 ts=69dd577d
+X-Proofpoint-ORIG-GUID: CYG-t-37XGIgiOmn8q8rFbJkxRSmFyj5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDIwNSBTYWx0ZWRfX6zaM1b+F8x5E
+ AAF4SIc6iQBX3kJpl3H+wHMhY/FOneXGHqzXME/d55ea+ejC273l5ySHhBfoGO2S5UCajN64uiE
+ XRCIEv4CU81QM/CNFTwLKQ9BdXOEqRTR9kdazRee1rNrZOXL65U8IrQnExChJk/+FF4VhcVrtc7
+ 0sIdfntHFU6GNCr4fAccCr6B6X1ABD5GkC4gcvkqq/x2K5VIlZKI2dyIVedLhljsWH/datPzP3G
+ 8l5CuX1UK2k46AR7vK/MwhLnUShuaDrrVQwYYmazjBKerE9KU3X8MujcMgRC2ltbkjOhiCI79I0
+ SAKI+kyZSMgyyyQbNLuGrNaVPT1BI7juuwi9OZTgwWO3Fr2GQ2rZ8tvIVeI6JE=
+X-Proofpoint-GUID: CYG-t-37XGIgiOmn8q8rFbJkxRSmFyj5
+X-Authority-Info-Out: v=2.4 cv=DohbOW/+ c=1 sm=1 tr=0 ts=69dd577f
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=1DGgg3L7_nY_qRTbWDsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: nkQ-3JYN8Z_rOOpiCSW6vrxlAjrlvdwL
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=x0iqa3ucmZZh0HPruXgA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1030 adultscore=0
- phishscore=0 mlxscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1030 mlxlogscore=900 adultscore=0 mlxscore=0
+ spamscore=0 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
  classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
  engine=8.22.0-2601150000 definitions=main-2604130205
-Received-SPF: pass client-ip=57.103.88.65;
+Received-SPF: pass client-ip=57.103.88.53;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,198 +94,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a supplemental update that includes
-"whpx: i386: x2apic emulation for kernel-irqchip=off, feature probing"
-v4 unmodified.
+Instead of just the command number, include the instruction name to make debugging easier.
 
-This might be too big for QEMU 11.0 at this point though...
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ target/i386/emulate/x86_emu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-"whpx: i386: disable TbFlushHypercalls for emulated LAPIC" is a
-bugfix, and "target/i386: emulate: include name of unhandled instruction"
-is a debugging aid.
-
-"whpx: i386: x2apic emulation" makes things slightly better for Windows
-10 users. But I strongly recommend *not* relying on it when possible and
-using kernel-irqchip=on instead. On Windows 10 however that's more murky
-because PIC interrupt injection is broken (interrupts don't wake the vCPU
-from HLT) in that case.
-
-"whpx: i386: wire up feature probing" is yet another commit adding a code path
-not used on Windows 10. It'll tell the user today which CPU features they set
-are incompatible with the hardware but it does not sync that to the CPUID view
-that the guest has.
-
-And then another commit to enable x2apic emulation by default even for
-kernel-irqchip=off + re-introducing provided by QEMU enlightenments in a more
-functional form to signal that the x2apic can be used. I'm not aware of the
-actual vmware freq leaf being used though.
-
-"whpx: x2apic emulation for kernel-irqchip=off follow-up" is rolled into this series.
-
-"whpx: i386: reintroduce enlightenments for Windows 10" is a bugfix to make
-x2APIC work as intended on Windows 10 without emulating an IOMMU.
-*And* a massive improvement for Windows 10 hosts in performance for Linux guests
-due to using the right clocksource instead of HPET.
-
-And dependent on this series so included, CPUID intercepts finally...
-However that's only supported starting from Windows 11/Server 2022.
-
-Also ended up switching over Windows 10 to kernel-irqchip=off
-by default due to PIC interrupt injection being broken.
-
-Old performance (or lack thereof...) numbers:
-
-On a Ryzen 7 8700GE with a Windows 10 VM running with KVM in nested virt, with
-kernel-irqchip=off for the virt Alpine Linux x86_64 ISO (3.23.3) with -smp cores=2,
-boot times as reported through dmesg:
-
-- QEMU 10.2: 83 seconds
-- QEMU 10.2 with a single core: 18.1 seconds
-- as of v6 of this series, x2apic forced off: 29 seconds
-- as of v6 this series, out of the box: 18 seconds
-- v6 with kernel-irqchip=on and EDK2: 16.5 seconds
-- v6 with kernel-irqchip=off and EDK2: 9.5 seconds
-- v6, and with 1 core instead of two: 12.6 seconds
-
-In v7, the Windows 10 numbers are pretty much at parity with Windows 11 now.
-
-And with this series on a Windows 11 VM on the same hardware:
-- kernel-irqchip=on: 6.5 seconds
-- kernel-irqchip=on, x2apic forced off: 7.6 seconds
-- kernel-irqchip=off: 8.3 seconds
-- hyperv=off,kernel-irqchip=off: 7.6 seconds... which is faster,
-so the absence of enlightenment support on Windows 10 doesn't explain things...
-
-With kernel-irqchip=on on Windows 10, when booting with SeaBIOS, it gets stuck in
-syslinux due to PIC interrupt injection being broken there. That can be counted
-as an infinite boot time (?).
-
-checkpatch false positives:
-
-ERROR: spaces required around that '*' (ctx:WxV)
-+         UINT32 Ecx, WHV_CPUID_OUTPUT *CpuidOutput))
-
-Not a multiplication but a pointer reference.
-
-ERROR: space prohibited after that '&' (ctx:ExW)
-+                    & CPUID_7_0_EDX_CET_IBT) {
-                     ^
-
-ERROR: space prohibited after that '&' (ctx:ExW)
-+                    & CPUID_7_0_ECX_CET_SHSTK) {
-                     ^
-
-Because it's multiline.
-
-Changes in v12:
-
-- Fix for the interrupt priority path for the pic=off
-case.
-
-Changes in v11:
-- None, forgot a commit while posting
-
-Changes in v10:
-- disallow APIC reads when the APIC is disabled
-- fix CPUID[1:EDX].APIC reporting
-
-Changes in v9:
-
-- Oops,  "if (irr == -1)" change (and cleanup)
-to avoid an abort(). And think that I understand this a bit better now.
-
-Changes in v8:
-
-- Interrupt priority changes are back.
-- Some CPUID fixes
-- disable enlightenments and LAPIC for isapc
-
-Changes in v7:
-
-- Exposing VMware hypervisor identification when not
-using Hyper-V enlightenments and when the VMware frequency
-CPUID leaf isn't explictly disabled.
-
-- Remove the interrupt priority logic as it has issues with
-PIC interrupts. Can be reintroduced later.
-
-- -cpu max passing through CPUID info from Hyper-V
-- fill xsave info
-
-- OSXSAVE CPUID leaf reporting fix.
-
-Changes in v6:
-
-- kernel-irqchip=off fix: re-registering the interrupt window
-when the existing one has too low of a TPR value.
-
-Folded into "whpx: i386: kernel-irqchip=off fixes".
-
-- I/O port access fast path cleanup commit added at the end
-
-The path relied on a side effect of whpx_get_reg instead of
-something cleaner.
-
-- Use the CR8 register provided by the hypervisor only when
-kernel-irqchip=off. Rely on the APIC state synchronisation
-otherwise.
-
-This fixes some register sync errors that surfaced when setting
-the TPR values properly.
-
-Changes in v5/v1 with rename:
-
-- kernel-irqchip=off fixes, notably making 64-bit Windows bootable
-- switching over Windows 10 to kernel-irqchip=off by default
-
-Changes in v4:
-
-- Ugh for a revision sent quickly, unbreaking the arm64 build...
-- and making checkpatch happier to some extent
-
-Changes in v3:
-
-- Fixing CPUID intercepts so that QEMU CPU models work fine now, instead
-of the partial intercept that was present in QEMU 10.2
-- cleanups
-
-Changes in v2:
-
-- GCC warned when a variable name was re-used within a different (but overlapping)
-scope in the same function. It also warned with a -Werror=maybe-uninitialized for
-the MSR write case. Address those
-- make the in-KVM enlightenments path available on Windows 11 too when -M hyperv=off.
-
-Mohamed Mediouni (15):
-  target/i386: emulate: include name of unhandled instruction
-  whpx: i386: x2apic emulation
-  whpx: i386: wire up feature probing
-  whpx: i386: disable TbFlushHypercalls for emulated LAPIC
-  whpx: i386: enable x2apic by default for user-mode LAPIC
-  whpx: i386: reintroduce enlightenments for Windows 10
-  whpx: i386: introduce proper cpuid support
-  whpx: i386: kernel-irqchip=off fixes
-  whpx: i386: use WHvX64RegisterCr8 only when kernel-irqchip=off
-  whpx: i386: disable kernel-irqchip on Windows 10 when PIC enabled
-  whpx: i386: IO port fast path cleanup
-  whpx: i386: disable enlightenments and LAPIC for isapc
-  whpx: i386: interrupt priority support
-  hw/intc: apic: disallow APIC reads when disabled
-  whpx: i386: fix CPUID[1:EDX].APIC reporting
-
- accel/whpx/whpx-common.c       |   2 +
- hw/intc/apic.c                 |   9 +
- include/system/whpx-common.h   |   2 +-
- include/system/whpx-internal.h |  10 +
- target/arm/whpx/whpx-all.c     |   1 +
- target/i386/cpu.c              |  25 ++
- target/i386/emulate/x86_emu.c  |   4 +-
- target/i386/whpx/whpx-all.c    | 601 +++++++++++++++++++++++++++------
- target/i386/whpx/whpx-apic.c   |  71 +++-
- target/i386/whpx/whpx-i386.h   |   4 +
- 10 files changed, 615 insertions(+), 114 deletions(-)
- create mode 100644 target/i386/whpx/whpx-i386.h
-
+diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
+index 55b1a68eb6..c2da1a133f 100644
+--- a/target/i386/emulate/x86_emu.c
++++ b/target/i386/emulate/x86_emu.c
+@@ -1399,8 +1399,8 @@ static void init_cmd_handler(void)
+ bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
+ {
+     if (!_cmd_handler[ins->cmd].handler) {
+-        printf("Unimplemented handler (" TARGET_FMT_lx ") for %d (%x %x)\n",
+-                env->eip,
++        printf("Unimplemented handler (" TARGET_FMT_lx ") for %s - %d (%x %x)\n",
++                env->eip, decode_cmd_to_string(ins->cmd),
+                 ins->cmd, ins->opcode[0],
+                 ins->opcode_len > 1 ? ins->opcode[1] : 0);
+         env->eip += ins->len;
 -- 
 2.50.1 (Apple Git-155)
 
