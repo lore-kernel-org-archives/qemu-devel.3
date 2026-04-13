@@ -4,104 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D60FEBFD3A
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 10:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164CDEBFD38
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 10:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCEqz-0002ub-Df; Mon, 13 Apr 2026 06:49:19 -0400
+	id 1wCEwE-0004Zn-3m; Mon, 13 Apr 2026 06:54:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCEqk-0002oO-94
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 06:49:03 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCEqh-0004D5-RI
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 06:49:01 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-651cfaa21e6so517804d50.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 03:48:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776077338; cv=none;
- d=google.com; s=arc-20240605;
- b=i2nbBi1mVQZ/hj47QfCMXlb+2w8RQEgoLvvRSC2f2cdnqI8F3Rq/jxO76/UVyQGa+E
- aDpQYEpaZxKzag1lBwt8hja+gXEx9W8g7/lDZya4PlBe61muLKTR1GToVeaFdd20mfVV
- HIOUtU+9dgcgPtofDfEg2fUeL27eOYjUq2LoDtxIaC3Egwi+oj94l3YZs6QQog8J4uw0
- n+frDO5jbSUri7lg7y47aZoKY0rKCC/8GeR+rBlIhcoIC789U6fo3vgPLAb+ynCWd8ip
- bvRoJEXsy1HiVVscHIt4qPifPgyRgf3NR5M/yRLBK4Du49UuyU9bGlXasW0eLKxjloSQ
- UJ+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=T/1dmromYxTFvEtNo6SmDGXtOxL0QiWh3YyyT28njEA=;
- fh=nzB82wXMZp8IHFtzo5rr1BNPunJBjX04EUwTm2pcAS4=;
- b=TJpTPS3s/OnYXxXHTYKridsKAQHjmDLMdDpseeDSW6P53BOIlPSaunj1RwpQKygSYG
- qg3kTPLWflz/Bokr/nPpJkQxLx5EB8m9nFzjL0yo2mgU6G+kVHLo+DmYY76X653HBHE9
- TMJI2NVSrNjyTN/IcyPNBHPUrYG6C8QKxeozPIGPkR12eZHiTZTmFWcRlq1GyzJgGSeO
- o03iBNn6LS/w6ql15Ea2l10aSIr0Ok2g+gArGSkop+Is4nhH8j6o4T1LCHTP6hVHKMVS
- YSaelzOjzfZ+2mvI3uaOGSTHBzAWroaHjotIcdHbGlT1Vu7Cw1lSme3sStt7cFFFRE1b
- Ryhw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776077338; x=1776682138; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=T/1dmromYxTFvEtNo6SmDGXtOxL0QiWh3YyyT28njEA=;
- b=wFqzrQ8PtMiyHRaxYHvbi/5ZQfgrCDl3rRi3Veilopx8aa1M/Wg5s598tYVOld8/9q
- i/1zGUAiSEHWtDScoo7Snd7sHIyIM3jlexjYXiIRudkcXm66l3ujSYuuUVNu3VkvOLc/
- wiiXdrUvmjJt3xEWm9rgIxrN6l+erZN0YXEPvNS8+rDN5l4517S//mItgiyy+OVPeRR/
- KvTPqNqOUa0XXCq+Pj2bCoEluKdSiMTpf4u/VKQkuzTJMok5KzsjUKwD5T4gwWoT9amh
- MxFwocVuWFNPMQIekbH/Lg9DQicx+HZY6d7eNqCgLw+92IhKjLOipo94eg39BDNH57Mj
- cxKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776077338; x=1776682138;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T/1dmromYxTFvEtNo6SmDGXtOxL0QiWh3YyyT28njEA=;
- b=qID5FDXjCeCTEOqwVOoPy1QzO8Z5AdZGbypWj/bqsTVKStCaCgT10fQ8vp6bye/WGS
- eye+9zNfMifSyHmSOWgfDXNh/cY1BHrYDM/7JUaJ3K55wrh1judJ1IrjhoMMpjrDza47
- tND6oSRIuoMoDppYx1O6jsGTBmLMB0CAudoKU7acOo1GaVfIN0O8wsH6gprlmwAmcME7
- 7nrygSb//RDn83bsxkBugebN8/dPi3xHKjildB/rVnxgIiuzwCuU98GwHow54uOchf2d
- hQj29x/zAAFFINNuuUtFFDQgNoqQURhi6uhlYNpF+JMlEBmg5jGs7sxu0hEeQfj5M1C7
- YLrQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8bJBFSC5NQv1E7LQXAcHC4rvIJUFEv+UycLMdhnMb2osHIxHLD4Y9ur3HbPREDvk/w1+4m5ohQcmpP@nongnu.org
-X-Gm-Message-State: AOJu0YzSrAwbOfROoAPaUy9Gi/E2c241dzm+EmcD9/QH4KT9gjANy6Xb
- riekxaEdQM9W9Iz0yfQa7XguqtamuJmesOh/+Cymk1A6agATgn8vGLH4bem+myMimZ6ohYVKQ1z
- SAkWQXM7WBT1smc455CpVkrlLsa6hsZTR8QJMVRcNsg==
-X-Gm-Gg: AeBDieuvsmKYxBgiAhOAofYPmV9WhH8DDbQKEZUaXRhTXQ8+0ekGBDzTaD3kMN+cN91
- sCYxSKz58ZmcGrur158x9QpMENhwlazLKPADaTKbu/EcWr61t/k4AUf6hNnwhBOpHCICUApQ5mt
- jpxGFb5C6YTEvmTAX8NuWooQkcNrUyzO1Xxp9T/zoOX/LixjRxb7poUGkx9EHK1r7WJ1y9XgCto
- 2suMwe+g+5LFyrNmEnfkSMToIESt3HIS3gTHuL3djJ/0CEIhP0AbSxacxEDEyblNN1WPh91/wOG
- iVXrybPbIhtcuTId5m35n7EKWclL6WRloGsvBQUAmBQ95lD75Y0gtVHzdW0nx0LBzEM=
-X-Received: by 2002:a05:690e:1308:b0:64e:e898:10ff with SMTP id
- 956f58d0204a3-6518726a297mr13533121d50.40.1776077338101; Mon, 13 Apr 2026
- 03:48:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260413103754.45745-1-peter.maydell@linaro.org>
- <F20654A8-2ECB-477B-8B64-9688B5FA9EB6@unpredictable.fr>
-In-Reply-To: <F20654A8-2ECB-477B-8B64-9688B5FA9EB6@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Apr 2026 11:48:46 +0100
-X-Gm-Features: AQROBzA3EHEWErFX0uNKwE_BDfcwG573kit_NzKi7mycu2Ipws6rncgdJlfDD_M
-Message-ID: <CAFEAcA887dXAQ153Z2ZqjpDtUtnpGAmoBwet63CTyn=wLtn1jw@mail.gmail.com>
-Subject: Re: [PATCH for-11.0 ?] docs: Deprecate Arm OABI and NWFPE support
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCEw9-0004ZZ-CB
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 06:54:37 -0400
+Received: from p-west3-cluster3-host2-snip4-3.eps.apple.com ([57.103.72.164]
+ helo=outbound.ms.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCEw5-0005b4-QM
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 06:54:37 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-11 (Postfix) with ESMTPS id
+ 00445180010C; Mon, 13 Apr 2026 10:54:28 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776077669; x=1778669669;
+ bh=Vy/FaAGWV2WQVt3b0s5zjxx/Dt+f2YrqzXJiz7/npJA=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=GUpSZoxh0783byJdQBnvffUPxqd/jSxi1x+7Zr/BFgSE6ZqbRe2YUuVgEssxVbFmisxlvVu3BnwpXs382ZmECL9WHLgfgqnphb9G2oTNCLXtiaNf8gAGSO3X3fRTEaHQMJlyCrrY/x9WEbPffRT3TNYYOUa7PSl4Fm7jxjHyo7neYlsBtawgitd+IRvKGZtdud+0UoZQ2Hq27F1RsKYQHv2DFWR+YKCCmppogWEUfHbUdRgq4xAQzKx0Qh61geYam8QFsTQEBpQ8fFcTK10UnCFW2kZt45gE7sYVEdrHOfjKzXEvuBMZNb45gsCvsYrCztVcYtlGwFl13ADbPHfqCA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-11 (Postfix) with ESMTPSA id
+ E556D180012A; Mon, 13 Apr 2026 10:54:26 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: Cirrus CI about to shut down
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <87ldert9vi.fsf@draig.linaro.org>
+Date: Mon, 13 Apr 2026 12:54:12 +0200
+Cc: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <635C476A-FCA8-44C5-ADA7-A2E18EF15665@unpredictable.fr>
+References: <b8a73eb5-aa21-481b-9120-aa6277492b26@redhat.com>
+ <CAJSP0QXJs33g1=yG9c5KSWzdsVpxmF-zSs=xQpPV-hn7rR5giQ@mail.gmail.com>
+ <7d223288-dab5-48d3-940a-f4a3ac252d0c@redhat.com>
+ <87qzojtbuv.fsf@draig.linaro.org> <adzAhSbs21GGVCUv@redhat.com>
+ <87ldert9vi.fsf@draig.linaro.org>
+To: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-GUID: YA_q3KE7bKIsj3jNN1Fpy8i4D2zDq2O5
+X-Proofpoint-ORIG-GUID: YA_q3KE7bKIsj3jNN1Fpy8i4D2zDq2O5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDEwNyBTYWx0ZWRfX23E2fsfo/cPj
+ nli+1iM2gLwtWJrhtDVjPoyuHNOGZJfyz3zssyt4WXnsOSnw/1V/RbVfjIOK6aYUDmeBHB7OFjj
+ clZW2yXq6ZBEcI707YfIuOgrdp3leZW3OOG0XHdKtWCGjs9lqY7Pgqs2mrsksOjgG2W295uc/qo
+ lAAb24ulBT56nmgIO/SCWoBvjNHuqUKsyl7HpEOvoixrThWSilqDl0ap98s6kq7bNyUSnEVmASF
+ mU8UzxvceAJXrXEyxbOj4G0VNbxX6wE5Zg339bU6eR97asVIK2C9WXhXZa7Ym69IjF9I2npfvds
+ j4QhkKl+9Yziq6L243MF9u60ppaSI2fueRo17EVlnGgazWpEvJaU8uV/ZcD20M=
+X-Authority-Info-Out: v=2.4 cv=AdW83nXG c=1 sm=1 tr=0 ts=69dccb65
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8
+ a=xTzdydv0GPGeQcyqNc8A:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-13_03,2026-04-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=792 spamscore=0 clxscore=1030 mlxscore=0 lowpriorityscore=0
+ adultscore=0 malwarescore=0 phishscore=0 suspectscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604130107
+Received-SPF: pass client-ip=57.103.72.164;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,21 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Apr 2026 at 11:45, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
-> > On 13. Apr 2026, at 12:37, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > NWFPE floating-point emulation handles the ancient FPA11 coprocessor,
-> > which is only needed/supported with OABI.  Our implementation is old,
-> > untested and not thread-safe.
 
-> Especially that this has ISA emulation code inside of linux-user (!)
->
-> If this is (unlikely) to continue to exist, it ought to be moved to
-> common code for system emulation...
 
-No, because no CPU we emulate has an FPA11. What we're emulating
-here is the Linux kernel's emulation support. You can look at it
-as a set of syscalls with a very funny ABI and very specific
-behaviour :-)
+> On 13. Apr 2026, at 12:47, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
+wrote:
+>=20
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>=20
+>> On Mon, Apr 13, 2026 at 11:04:40AM +0100, Alex Benn=C3=A9e wrote:
+>>> Thomas Huth <thuth@redhat.com> writes:
+>>>=20
+>>> Not sure what to do about FreeBSD though. Ideally we want hosted =
+runners
+>>> so we can exercise the hypervisor (ditto Windows x86 and Arm).
+>>=20
+>> For the various BSDs we have  VMs for QEMU builds, which (in
+>> theory) we could run from regular gitlab Linux jobs. Running them
+>> with TCG is rather unpleasant though. Do our private upstream
+>> runners have nested-virt available to let us use KVM ?
+>=20
+> We don't have any custom x86 runners, I have no idea about the cloud
+> ones that serve the bulk of the CI jobs. I assume the AWS EKS machine
+> wouldn't by default.
+Hi,
 
--- PMM
+EKS doesn=E2=80=99t expose nested virtualisation today, only direct EC2 =
+as an opt-in
+for *8i instances.
+
+Windows is a bit of an oddball but is supported with the nested virt =
+support
+on AWS, but as I=E2=80=99ve been out of sync with that for quite a while =
+can=E2=80=99t tell if
+what shipped supports MBEC.
+
 
