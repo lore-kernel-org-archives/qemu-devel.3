@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2E5F531DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 23:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D227EF531DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 23:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCQQR-0001ED-HS; Mon, 13 Apr 2026 19:10:40 -0400
+	id 1wCQQi-0001aA-GA; Mon, 13 Apr 2026 19:10:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCQQM-0001Cu-2O
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:10:35 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCQQX-0001Sb-JI
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:10:46 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCQQI-0007cq-RP
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:10:33 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-35da1af3e10so5014414a91.3
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:10:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCQQT-0007pE-BQ
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:10:45 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so47641045e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:10:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776121829; x=1776726629; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+uMLBHkbqIoy3/o8oR/uJ1QAa6rhaTedm9bKoVhZfLQ=;
- b=nttXkYZwzhZVJB/LTF/FJoXVH2v2aAvo3OzzLaL7UTwatUW6c0ZKTDlPV0fTr/h4vx
- 7uink/bR4e+QQSXt4UZU8SDkOlG2MVx1FhaRT4K0nI3VW/L9c3J2WJknsCH1Ky9tnT9F
- LJgfahuLkHGeIGTNnEtdUuW8/aCPeOaODYp/DLzsUk2EOnxAsf9Or9CKloN+aR7w1hws
- uUCL2pYzYS+vggQuRak2tS7iJRJYf8A/mAo0lmW2wAMefhJLe6Vm8GXXNBPbXaQjzn8g
- IUt0ZakmmAcf842CzAWPYL+3vSP5jkqQdFYmADwMFZqUBOfvIhlseouwYvdTcPPYkTHW
- ouYQ==
+ d=linaro.org; s=google; t=1776121838; x=1776726638; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MHyI/6O0K+5so/EsQYExOJN2KDvFgpDlCHLvEUdwEUI=;
+ b=tQMlbEU45t4pKPEruIoM4ZC+367avMQPg48o4pI6knnwwr9wjQ8vU9u0qgZELYNFot
+ DUE5tLwBuNMeW0IjVM0shb9wXWq6xjkD4GOnd2lgBVvIizzriHUWKjGGvRayNrezAO19
+ jorUtZxkNoNxy86NAFaCMR5LzujHIOlRw8xt1QR754UdyBr4Ze5UXIYA7XyN65Lsp/O3
+ iIvD/WLEU67GOmWO8grqCfHrPIfsR+8oopQGpbsnG/oWU2qnCH9TormvWpYVzvCGT0oy
+ 8SVeD1ru+NmjGzCdEvlkTB+8hvaOZo+muyGCROk0DbMaymsafy2xbwCM5X6vAhm6sdKE
+ 4HmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776121829; x=1776726629;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776121838; x=1776726638;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+uMLBHkbqIoy3/o8oR/uJ1QAa6rhaTedm9bKoVhZfLQ=;
- b=J3C7iHNTCagOhTX7oEPVPDSRiXyuxVTDfxcgOGNCFScYvgC/3j+DVvE/AImkYrKiTx
- dkOHnFpA7IonENA8NgnO2BJQlH3JvivRgMFHgSzqgIHoR0bF82SehX5UzMNV+FOBdBFL
- s7hGVIwQ5IPFewza1S1vU8tqzpMmTM4TZtpGbEcZ1/LubD0cz6B/ThBTEmMRNz0+tR2Q
- ptkzFt2kAGNnkBtWhMo3lrVCcs+Yc/8n4HvNBJ158OG1ME1EGMrHr5agiKLfXuQbUp0i
- b3H8QWyhezLXgWYCX2fKn/JziwvsWPzLPH2KrKiUIqJK70SYRWIPf0ADPvis4YnYRV7z
- Bs7g==
+ bh=MHyI/6O0K+5so/EsQYExOJN2KDvFgpDlCHLvEUdwEUI=;
+ b=YHzR5hCHZX5HHGbQor4lPKCpuvAdpVy9cbBtEGDRvtkBAkHX7dmT7jDGYtsIuueLpy
+ Xcl/1JviSyE9vJ7GBio7kJpqod8Ef3choA4dnAzsGm7asCXxj3emvxIPk/B1UcN512JX
+ DZDsCcIqIpB2Kz+I1kbtZWuL6kpITp4NQ0F86vTbXcRV0Yqd2q7ed9T2fQUg7PMB0Zj9
+ QvcvTblOWhTxzDrvPD5GUg2/tt7LsmnjO7k4ZJOffHcEQ4gY4p2yrSfogAqKQxnaD6Fg
+ Hjj/Zx4B6ivotEC1T14D5+M5+qUtigbwqnQJCBdgfYlGdlUx4u//RAxtXLsDVcZQGLhN
+ Pzhg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/BRBy1oVHAZjVPHArQrEkTFOPEqQiOmtNbFC5XkX9FrQGIjL+cQAAdB+Mz5YDkmNdUQr4zBGxpga+Z@nongnu.org
-X-Gm-Message-State: AOJu0YzZvf6QeuYLt50GYhy93GIhc1Lv4og7xEQwHhCBk1Sj73ABw0l5
- KjwhyMRx3LNp3oAB9Ob/7rFfwBSwrabd0+uCe8i4V+t5hqGcUZVMdlW5K4UxMDqLfDU=
-X-Gm-Gg: AeBDiesdDI4/aaEx1Js6fXeNkiWMrLiZ8zJ7E/Wer3uyaSDjViVXRp/rpZPlW/O62rN
- SZkxRX7dwCr73LLoLcuMh6yU922Ze0nz3Iz2g2pG9S3sCkCebQ1wNZZFVZnqqCmqPQIOo7jGIAj
- 8yG1lswXeEQZ8hzOBZ1EiB72nL6kE4/N27Y0yasfKY+T1l4XpTeQN+/V7AM71K6pXS0Q0BinhKr
- Ot9YcSKHpEJe1hbeme9YLSv5nOZYVqkcxrcyb/jrkjKkJSiXxdoiJAv0bZt9AKk5VvTWUKXcw8C
- liB0AKSyciY10xMbztMEbo3f0VPJ+rDqDmn1J+9Hq5x8gcdqiAXdn5noVaRHyxvvhjjJr+qv4dG
- 5uFS8P3Bn/We4zf8VNRCnuvvq6jX/aLGJGwcCL1uF35Brpk7FbV8s2XaTsmdEibbKfWO0FQ8kYl
- AIgzSA6lP5jo7aJpVYa0+273zo88j6hCrQJwSrGSLs8Myuf8PHzrP2ZQC+zcnv+2Dsn1ncWwhk8
- UdivQLb6NMc+A==
-X-Received: by 2002:a17:903:2ac5:b0:2b4:62bd:ee3 with SMTP id
- d9443c01a7336-2b462bd139emr43128415ad.33.1776121829123; 
- Mon, 13 Apr 2026 16:10:29 -0700 (PDT)
-Received: from ?IPV6:2401:d002:dc0f:2100:377f:61ec:6edd:e205?
- ([2401:d002:dc0f:2100:377f:61ec:6edd:e205])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2d4f3b65asm130466665ad.76.2026.04.13.16.10.26
+ AFNElJ+2h/KN3zqzS6aJBi61RdlC2EkqPBbOSLst/eFtoBfLv0UUp9vbqfbfeIwYmFis8KQ+xvXCwuEpZP06@nongnu.org
+X-Gm-Message-State: AOJu0YwWCVkFjmBDak1NqCoLyLJOuaiwHifyMR+RYYL3a3ChHwWROlSY
+ skLNIysMqQd1I5rgHKV+zSICLERgvPblPG4ebXSPQdkLSKRy731eVQ/0ph1rDgrrFHI=
+X-Gm-Gg: AeBDieve8H6fbmb6PId1VJ7KbD0hOhpFrnCgBUa247gBC5Wo77d1J8G4l2pyTmmhf7l
+ rV/Ne8B3in9MoJ6JszKQeAlr2uf7xvErYZ2sBIZMczQ7Q4gJlrPbWwwTa5ayWHTBGTiOOMTR23o
+ QB9GmDExuSrpPjFClqrsih3Dz5CYQEZvjsEn3EUssxj5+xFH+KnWSoJWpIkduaWg2EoxctptPDd
+ dNb5XZeb7VZNElXP/aR+ojjC1v6JxPARuevUCzMxmSUe8+Bu3nNqPlNw8LO2mCoPNMk/Gg3iunK
+ RwFqexH66TFiMFLKEtxLyEPjfFY/wedyoqft5CRAhlWcG4bTELl49B+qHuwrtYCB9GQOhD7M/sy
+ TqzWI5676mckxgqlzrzjIPHpnvxW0q6KP4CYUO68fRQtcsXkbN0QNneSgM3i3UFN2VZPcfdYt4s
+ jBnFAVJAQa64d75ZrfG6I/Oi/ItV5IiycTbetHnF59rtV53DOJqIEXNnplmlIeNIgqQQ==
+X-Received: by 2002:a05:600c:3f16:b0:485:3f30:6250 with SMTP id
+ 5b1f17b1804b1-488d6894bf6mr222055925e9.20.1776121838578; 
+ Mon, 13 Apr 2026 16:10:38 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488ede15694sm3087225e9.3.2026.04.13.16.10.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 16:10:28 -0700 (PDT)
-Message-ID: <79d2c8e2-8ee7-41d5-8fbf-ec859032783c@linaro.org>
-Date: Tue, 14 Apr 2026 09:10:23 +1000
+ Mon, 13 Apr 2026 16:10:37 -0700 (PDT)
+Message-ID: <43a16b17-1770-4699-9f09-c38556076cc6@linaro.org>
+Date: Tue, 14 Apr 2026 01:10:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0 ?] docs: Deprecate Arm OABI and NWFPE support
+Subject: Re: [PATCH v2 11/65] hw/intc/arm_gicv5: Add link property for
+ MemoryRegion for DMA
+Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-References: <20260413103754.45745-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260413103754.45745-1-peter.maydell@linaro.org>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+References: <20260327111700.795099-1-peter.maydell@linaro.org>
+ <20260327111700.795099-12-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260327111700.795099-12-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,36 +105,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/13/26 20:37, Peter Maydell wrote:
-> Linux for 32-bit Arm has had two major ABIs: the original OABI and
-> the more modern EABI.  OABI support was marked as obsolete in GCC 4.7
-> and dropped in GCC 4.8.  In the Linux kernel, compatibility handling
-> for OABI (OABI_COMPAT) is not generally enabled by default and is not
-> compatible with building a Thumb2 kernel.  Distros dropped OABI
-> support fifteen years or more ago.
+On 27/3/26 12:16, Peter Maydell wrote:
+> The GICv5 IRS keeps data structures in system memory.  (Notably, it
+> stores per-interrupt configuration information like the interrupt
+> priority and its active and pending state in an in-memory data
+> structure.) Add a link property so that the board or SoC can wire up
+> a MemoryRegion that we will do DMA to.  We name this property
+> "sysmem" to match the GICv3's equivalent property.
 > 
-> NWFPE floating-point emulation handles the ancient FPA11 coprocessor,
-> which is only needed/supported with OABI.  Our implementation is old,
-> untested and not thread-safe.
-> 
-> Mark OABI and NWFPE support as deprecated so we can remove it in a
-> future release.  Our main motivation here is to be able to drop the
-> 2500+ lines of NWFPE emulation code.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 > ---
-> This just came up today; it's tempting to squeeze the deprecation
-> notice into 11.0 so we don't have an extra three months before
-> we can delete it, but we could just deprecate in 11.1 instead.
-> 
->   docs/about/deprecated.rst | 25 +++++++++++++++++++++++++
->   1 file changed, 25 insertions(+)
+>   hw/intc/arm_gicv5_common.c         | 8 ++++++++
+>   include/hw/intc/arm_gicv5_common.h | 4 ++++
+>   2 files changed, 12 insertions(+)
 
-Thank you.  This is better worded and more complete than what I just posted.  I look 
-forward to removing env->eabi as well.  :-)
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
