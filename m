@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F74F34C65
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 16:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A7DF34C67
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 17:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCKZt-0004Iy-ER; Mon, 13 Apr 2026 12:56:01 -0400
+	id 1wCKhv-0006wQ-DQ; Mon, 13 Apr 2026 13:04:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCKZs-0004IT-FA
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:56:00 -0400
-Received: from qs-2004a-snip4-11.eps.apple.com ([57.103.84.13]
- helo=outbound.qs.icloud.com)
+ id 1wCKhu-0006wH-II
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 13:04:18 -0400
+Received: from p-west3-cluster1-host10-snip4-10.eps.apple.com ([57.103.73.231]
+ helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCKZr-0006MQ-5Z
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:56:00 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPS id
- DDC0E18001EC; Mon, 13 Apr 2026 16:55:55 +0000 (UTC)
+ id 1wCKhr-0000No-Qf
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 13:04:18 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-3 (Postfix) with ESMTPS id
+ B78AC18001DA; Mon, 13 Apr 2026 17:04:11 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776099358; x=1778691358;
- bh=YOOT28fiEdtJgXJo4+sHr2gCe5d+0619yUvpG8SAUyg=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=X7z/DuNNGv6G7btjPdMK1+8eq9mX9sEBgDlew+3qNODVCzw2+V9F8dFxYRdh0s/zTe8xgW+bD1epaWSJPiv/pIHL/rwyCaTcMhuBePqX1Mi92sojlaIEdf44LYu0GsNyfYDn6f243b8J0oVrclPlM4TYjWxLWjzzE/dVUJnP/JxLcf6Rswk2vK9mEXVNJbYnXLCZfNO57+rAsRSOgrHmyJG//+AJyDRex2SDmw2qj57VE8ftG6qpgKLIrePDbtD74HjFGvCWDHMyk//rbzOJ9huC2u/mG1vSwlhDx+RCmgFee6tR4DUGkHbCYim3ryXuGVXBohGGnWvuF2rurcZi9Q==
+ s=sig1; t=1776099853; x=1778691853;
+ bh=0/fpAPP5PLzFLXvq8GPcE+h9tIAhBl3FyIhWttyKd5A=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=FZ/7OKDs57Bae3EkzJYql/Y89gYWv5HL32/vAmKPeqeSV9q7XW0O2sX/dRg39gv+cFU/sEQ8vYoHKZlwWTX7iVaATT2aWM81NR3rBrQsMcQPNpskkB0KLmIQ7TD89EQszx0GX5MEaqJOPhkuH2Emj6Pps424YzEwpqcSqVfsC55rkBhg/uIHjcWKGVBaz1/MDSRmsHdoreLMls/ejEkF8WgTOdhaAII6gcj2x8PlGuHS+KI/MAHFANFY0LqlRwIqU2WH/NtEW3e6Qd1Xofg5xyNwdry5njynl/mA+HDaFjhpb85QyzRVYDIPjhPaikJDFBn4o/0AIqod4iA3wz06Fg==
 mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPSA id
- EAC43180052E; Mon, 13 Apr 2026 16:43:41 +0000 (UTC)
+Received: from localhost.localdomain (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-3 (Postfix) with ESMTPSA id
+ 498C31800201; Mon, 13 Apr 2026 17:04:10 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH 0/3] win32: Windows-specific fixes from the mailing list
-Date: Mon, 13 Apr 2026 18:43:35 +0200
-Message-ID: <20260413164338.42894-1-mohamed@unpredictable.fr>
+Subject: [PATCH] hw: q35: fix VGA text console with SMM disabled
+Date: Mon, 13 Apr 2026 19:04:07 +0200
+Message-ID: <20260413170407.57574-1-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=Q6zfIo2a c=1 sm=1 tr=0 ts=69dd201c
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=0aPdGTaxRqo4RFwBobMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: PjCHBwuydqaXSVrB-wVjg-GFH7SiP7Sq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE2NiBTYWx0ZWRfX3WJi2gzwaerX
- V+EsvLfYk6fNcTA4V3nMuwLUkVl8pLAlHSAXw9nT+sygbBkAbCPz927TueU5x184RkCdmt51Jje
- x1q6sl73X1brjHzXc8ycy9u87lJXPhmVh/1zhl0YzDQfM+LsAoftse8X0QXf2QqWJyMQkrPLRHe
- AIee5//vK4Bz27o5kduHbBNBe5598SZoUuOcaiA0zhpx3uMTswHv4CbMHADM7d/fzigVFRvzisT
- r+442RhIbgzGRX70ojKRgKivCd6jaMy9Katr29AKtYMVs9iw4HK33YrVvlU1V8a4EWtnzcgvyFh
- 95TTr9BC/p4gyo89sMOvHNV1sHADcHNCpe1MfZlK+PuGxnnhS5wa16GCfzaTBw=
-X-Proofpoint-GUID: PjCHBwuydqaXSVrB-wVjg-GFH7SiP7Sq
+X-Proofpoint-ORIG-GUID: soYKR_QXwpT_QwrzzNeaAMNN-TB-2PmN
+X-Authority-Info-Out: v=2.4 cv=NIfYOk6g c=1 sm=1 tr=0 ts=69dd220b
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=_ctWjzdLAAAA:8 a=p0WdMEafAAAA:8
+ a=WqM1to31ecf1YN0a6F4A:9 a=WoGCsytTnHKj16XvecxK:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE2OCBTYWx0ZWRfX18FV+ZJk3EI4
+ Q2HphuByYe7TXjzG0GJqMcb9z+vVoBO078FlK3F+0eqHeqE+I0sXkvVrAYW1GnfJO7OgmkzBtoe
+ hOguGI+K6Ga1Pt0OzM9+TGN0snZiHj46Qzrpagrvc8abv1+W4rCnSLFQ9YHPwTURmxIV+97/T52
+ VYVqo6z5HGsSQR6ftlrnC6HveRtNElKaZUjJftLEjWj/YKbrNkDfFsHKmB6UgT1w/eoOF3M6beh
+ B0gsTPie4n7A2NK2RKHg5E7J55xGrZ0+NmetnGJENF5j4GVDO1B9aUXS9v8y3tIU2xqXjg591iv
+ /9FIDC+/wiDeHXT5KEaxsDwIVya+eUZ/YVlFwiYDSge/4nXCh1j3046HdSv3nY=
+X-Proofpoint-GUID: soYKR_QXwpT_QwrzzNeaAMNN-TB-2PmN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- mlxlogscore=795 adultscore=0 phishscore=0 bulkscore=0 mlxscore=0
- suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 mlxscore=0 adultscore=0
+ phishscore=0 clxscore=1030 mlxlogscore=999 lowpriorityscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604130166
-Received-SPF: pass client-ip=57.103.84.13;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+ definitions=main-2604130168
+Received-SPF: pass client-ip=57.103.73.231;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,20 +89,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It looks like these ought to be merged but were not, so
-posting them again.
+Work around black screen in VGA mode with SMM disabled.
 
-Gal Horowitz (2):
-  tap-win32: cleanup leaked handles on tap close
-  tap-win32: allocate separate tap state for each instance
+Required by NVMM, HVF and WHPX backends.
 
-Werner de Carne (1):
-  serial COM: windows serial COM PollingFunc don't sleep
+https://gnats.NetBSD.org/59721
+https://gitlab.com/qemu-project/qemu/-/issues/2608
+https://gitlab.com/qemu-project/qemu/-/work_items/3085
 
- chardev/char-win.c | 16 +++++++++------
- net/tap-win32.c    | 51 ++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 50 insertions(+), 17 deletions(-)
+Patch written by Taylor R Campbell <riastradh@NetBSD.org>
 
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ hw/pci-host/q35.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
+
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index e85e4227b3..05ef5222f7 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -372,6 +372,10 @@ static void mch_update_smram(MCHPCIState *mch)
+         memory_region_set_enabled(&mch->high_smram, false);
+     }
+ 
++    if (!mch->has_smm_ranges) {
++        goto out;
++    }
++
+     if ((pd->config[MCH_HOST_BRIDGE_ESMRAMC] & MCH_HOST_BRIDGE_ESMRAMC_T_EN) &&
+         (pd->config[MCH_HOST_BRIDGE_SMRAM] & SMRAM_G_SMRAME)) {
+         switch (pd->config[MCH_HOST_BRIDGE_ESMRAMC] &
+@@ -405,7 +409,7 @@ static void mch_update_smram(MCHPCIState *mch)
+                               mch->below_4g_mem_size - tseg_size);
+     memory_region_set_alias_offset(&mch->tseg_window,
+                                    mch->below_4g_mem_size - tseg_size);
+-
++out:
+     memory_region_transaction_commit();
+ }
+ 
+@@ -474,15 +478,15 @@ static void mch_write_config(PCIDevice *d,
+         mch_update_pciexbar(mch);
+     }
+ 
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
+     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
+                        MCH_HOST_BRIDGE_SMRAM_SIZE)) {
+         mch_update_smram(mch);
+     }
+ 
++    if (!mch->has_smm_ranges) {
++        return;
++    }
++
+     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
+                        MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
+         mch_update_ext_tseg_mbytes(mch);
+@@ -585,10 +589,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+     }
+ 
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
+     /* if *disabled* show SMRAM to all CPUs */
+     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+@@ -604,6 +604,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                                         &mch->open_high_smram, 1);
+     memory_region_set_enabled(&mch->open_high_smram, false);
+ 
++    if (!mch->has_smm_ranges) {
++        return;
++    }
++
+     /* smram, as seen by SMM CPUs */
+     memory_region_init(&mch->smram, OBJECT(mch), "smram", 4 * GiB);
+     memory_region_set_enabled(&mch->smram, true);
 -- 
 2.50.1 (Apple Git-155)
 
