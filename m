@@ -4,92 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0752CEBFD0A
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F978EBFD0A
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCBe6-00043h-Sq; Mon, 13 Apr 2026 03:23:46 -0400
+	id 1wCBfd-0004Ub-4d; Mon, 13 Apr 2026 03:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wCBe5-00043N-Fw
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:23:45 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wCBe4-0001oP-22
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:23:45 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c742b9b7727so1282950a12.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 00:23:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776065022; x=1776669822; darn=nongnu.org;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:mime-version:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CM/BJEM0oQPnOgDJn2yySGpUjQTzbucI18FpRefJ+2c=;
- b=QhCB8wVoq2u1Zcqzq2Q01iDQHXiWMdwCjlt68+1uIJu8z6f4PiiQ90LTk2/h60lx1r
- mcH1hKqYpFvR/EUoGTHrH62opY3B7FvWoETWwyJfRG6cVpcj4Xr3sZf3rN1N0Uv1FGkX
- xveaLKtHy/zg/KuaN+wi/4pmj+unn7WBieRN2DyASsdWuyZzSHgeJIzRAse9C+5Bg9f/
- 8w3I2y56pgLgaCb6Iu+1vop830Bt8IgoHijMVrtmAwEb3W5erGWUM2cHiR6bFe65fV48
- +zBtQDA9iGLX83hAzdAOqZekpbuJhPKMKKP6qLQAlyVkqwP+x2cIeLV6gEiHLG5Qxvkm
- urRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776065022; x=1776669822;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:mime-version:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CM/BJEM0oQPnOgDJn2yySGpUjQTzbucI18FpRefJ+2c=;
- b=q2XrCI4VYKaq+kkY6fBIG/fJHiap326Y5d+YyETGYcZmRdFRfWfM33uKwJBGxPewP6
- 5Ku2GxSysmwiM9dxEBwXnrLfbDw+FDfmRsbJmKkjk+2WMgP+Y8WRj8L3+0cmBEDeNObW
- 4aoONYVP4Buvz/YlFX/e7UtmJ1r2kWwL5/SxfWeGOsC3bLXyzuaJWmx6vcj9gv5UW8m8
- YCCh8YeK3fYMFPiRgoFWStiUDd7MT8m99FXZwh5by4rvxwtsbpRv14SvRfJcxYJawyeI
- DK3msnQ3/KZrd6fYTUIEYbWfQQHmmi5uNKl1/FvEcNV/MsB1XQYf0LMLcm6ra1C8lx82
- jKsA==
-X-Gm-Message-State: AOJu0YxmYnISpHTyZa4+46Nr1bAZxWTujZ+F3MxZXgEOb/rtFhkaA8V4
- kNrtB4IIpaLrrQaoAmv4zaflHaz0+rY2zq9tQ4tEPqbrH0kijeA6+Avt
-X-Gm-Gg: AeBDieviGT2wrO9ngfBVgM3/E7hWhe98eGxLxL+FV7Ue/6ZqhJvyqnMo3knY9mWtSiU
- sHTGV5FRTLdc2T83Lr7nTqNQzOVpGHbXogDumX/zU3AcdjEhC+zv6pCCIAGS0Tjqt+guIM4Kixs
- LqBjZbi7gsmJm9tq0Gbswipvp2HyJBGEBCJNPHjyPX+VO02sMcCma7m55wstx9gEmQG1m6HaDcq
- k0xTxFByusVVg+mK87NAfn/jWimIi7hZ3K7lFvwOMQsg4QStbTwOQf+HEb2Jo4Lde3U9SqKAZBj
- IzPHRTroPqIhE7QfHTLlC3OufcGDhvSMXJyeHdGrRFKVPWi2mxLb0Bd2CJ8FXp0b7hgx6jyEVMH
- fRjKJz64IPdLPje9rzpoqdJm3SrmqNn9ojLA57AyIxjQV0xbRwOPDBVk4uTuncyMxOdHyEHX+bD
- QpieNQU9v2Uk4prWqyKboXuDwCUVw=
-X-Received: by 2002:a05:6a20:9188:b0:39c:4e62:b843 with SMTP id
- adf61e73a8af0-39fe44a0722mr10972178637.10.1776065021903; 
- Mon, 13 Apr 2026 00:23:41 -0700 (PDT)
-Received: from [127.0.1.1] ([211.226.54.223]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c79219c6306sm8983043a12.15.2026.04.13.00.23.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Apr 2026 00:23:41 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wCBfN-0004Lg-3W
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:25:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wCBfL-000230-3e
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:25:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776065100;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+utsl4mJD2ZW/eILKQS+iemd0eSSuzZ0R8Gs50lRirE=;
+ b=N1SPWPPf4y7GcdHR4Co80Z4LXu9ANfj8BxTgkua/Ct1EE32q0CHyQYanUiGdCaiHPfuQuw
+ N1rzZ7ZqtzPGVVDnF31QPstLd0GsrdVVlsdcr+l5bbSyXEn6YPI6IUdHP9wSX1mGJ9jjgX
+ bowVtSqcjmbw1MhjowNquQDYe3yZM7E=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-510-EzY4kTi6PIWySAoYgJbCqQ-1; Mon,
+ 13 Apr 2026 03:24:56 -0400
+X-MC-Unique: EzY4kTi6PIWySAoYgJbCqQ-1
+X-Mimecast-MFC-AGG-ID: EzY4kTi6PIWySAoYgJbCqQ_1776065095
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6EFA1955DDB; Mon, 13 Apr 2026 07:24:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B1001800451; Mon, 13 Apr 2026 07:24:54 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C7B2621E6A28; Mon, 13 Apr 2026 09:24:51 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  artem_mygaiev@epam.com,
+ takahiro.nakata.wr@renesas.com
+Subject: Re: Question on preferred location for QEMU sample projects
+In-Reply-To: <CAN-aV1EiKRh-Zpb9=77rXYPD2uT7HZmeNfvVW-wAToT+gaVC=A@mail.gmail.com>
+ (Ruslan Ruslichenko's message of "Fri, 3 Apr 2026 16:39:32 +0200")
+References: <CAN-aV1EiKRh-Zpb9=77rXYPD2uT7HZmeNfvVW-wAToT+gaVC=A@mail.gmail.com>
+Date: Mon, 13 Apr 2026 09:24:51 +0200
+Message-ID: <87v7dvgw58.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v5 4/5] hw/ufs: Add UFS Write Booster Support
-To: Jaemyung Lee <ldc.jml@gmail.com>
-Cc: qemu-devel@nongnu.org, Jeuk Kim <jeuk20.kim@samsung.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Jaemyung Lee <jaemyung.lee@samsung.com>
-In-Reply-To: <20260410-write_booster-v5-4-d44e1a0e191c@samsung.com>
-References: <20260410-write_booster-v5-0-d44e1a0e191c@samsung.com>
- <20260410-write_booster-v5-4-d44e1a0e191c@samsung.com>
-Date: Mon, 13 Apr 2026 16:23:21 +0900
-Message-Id: <177606500173.194535.11048393004211826936.b4-review@b4>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,66 +85,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Apr 2026 14:57:17 +0900, Jaemyung Lee <ldc.jml@gmail.com> wrote:
-> diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-> index 3f3c9589ce..b4ec91d6b8 100644
-> --- a/hw/ufs/lu.c
-> +++ b/hw/ufs/lu.c
-> @@ -58,13 +58,108 @@ static void ufs_build_scsi_response_upiu(UfsRequest *req, uint8_t *sense,
-> [ ... skip 20 lines ... ]
-> +    }
-> +
-> +    return (group_number == UFS_WB_GROUP_NUMBER_PINNED);
-> +}
-> +
-> +#define UFS_WB_TOTAL_WRITTEN_DIV (1000 * 1000) /* 10MB */
+Ruslan Ruslichenko <ruslichenko.r@gmail.com> writes:
 
-It is still not 10MiB.
-
+> Hi everyone,
 >
-> diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-> index c504a0d7e3..78bd3e4a05 100644
-> --- a/hw/ufs/ufs.c
-> +++ b/hw/ufs/ufs.c
-> @@ -1238,6 +1249,31 @@ static inline uint8_t ufs_read_device_temp(UfsHc *u)
-> [ ... skip 13 lines ... ]
-> +    return value;
-> +}
-> +
-> +static inline uint32_t ufs_wb_read_resize_status(UfsHc *u)
-> +{
-> +    uint32_t value = u->attributes.wb_buffer_flush_status;
+> We are currently preparing the v2 patch series for the Remote-Port
+> Co-simulation protocol for interfacing with SystemC modules. The first
+> revision was here:
+> https://lists.nongnu.org/archive/html/qemu-devel/2026-02/msg01760.html.
+>
+> As part of this submission, we would like to publish a sample project
+> serving as a demonstration of how to connect a QEMU Remote-Port
+> frontend to a SystemC backend.
+>
+> The sample project implements a standard SystemC IP core and uses
+> several external components such as:
+> - libsystemctlm-soc: https://github.com/Xilinx/libsystemctlm-soc
+> - VCML Library: https://github.com/machineware-gmbh/vcml
+> - SystemC Library: https://github.com/accellera-official/systemc
+>
+> We have a question regarding the location for this kind of project.
+> Could you please suggest if there is a preferred location or some
+> standard practice for hosting such a sample project?
 
-It should be attributes.wb_buffer_resize_status, not
-attributes.wb_buffer_flush_status.
+Location within the QEMU source tree?
 
-> @@ -1383,6 +1443,27 @@ static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
-> [ ... skip 18 lines ... ]
-> +    case UFS_QUERY_ATTR_IDN_PINNED_WB_NUM_ALLOC_UNITS:
-> +        ufs_wb_pinned_max_size(u, value);
-> +        break;
-> +    case UFS_QUERY_ATTR_IDN_NON_PINNED_WB_MIN_NUM_ALLOC_UNITS:
-> +        ufs_wb_pinned_min_size(u, value);
-> +        break;
-
-I think these WB alloc-unit attributes are missing the UFS 4.1 range check.
-For `dMaxFIFOSizeForWriteBoosterPartialFlushMode`, UFS 4.1 explicitly says 
-the value shall not be greater than `dNumSharedWriteBoosterBufferAllocUnits`
-or `dLUNumWriteBoosterBufferAllocUnits`;
-otherwise the attribute must remain unchanged and the Query Response must be
-`Invalid VALUE` (13.4.18.7.2, p.424).
-
-> @@ -1801,9 +1882,177 @@ static void ufs_sendback_req(void *opaque)
-> [ ... skip 68 lines ... ]
-> +        }
-> +
-> +        break;
-> +    case UFS_WB_FLUSH_IN_PROGRESS:
-> +        if (!u->flags.wb_buffer_flush_en) {
-> +            u->attributes.wb_buffer_flush_status = UFS_WB_FLUSH_FAILED;
-
-Shouldn't it be UFS_WB_FLUSH_SUSPENDED?
-
--- 
-Jeuk Kim <jeuk20.kim@samsung.com>
 
