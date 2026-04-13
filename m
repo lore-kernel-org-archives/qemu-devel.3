@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D701F9D0EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44793F9D0EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wChSK-0005va-7I; Tue, 14 Apr 2026 13:21:44 -0400
+	id 1wChSK-0005wA-LV; Tue, 14 Apr 2026 13:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wChSE-0005sV-8t; Tue, 14 Apr 2026 13:21:40 -0400
+ id 1wChSE-0005sX-9B; Tue, 14 Apr 2026 13:21:40 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wChSB-0007Kc-HL; Tue, 14 Apr 2026 13:21:37 -0400
-DKIM-Signature: a=rsa-sha256; bh=bpoRrUp4pyhuvp+Q79o5fEv94I7SFuni9yO5BtCXukE=; 
+ id 1wChSB-0007Kd-HC; Tue, 14 Apr 2026 13:21:37 -0400
+DKIM-Signature: a=rsa-sha256; bh=4eJ+HnMcX8p6InMQPVwB32zKkriVDrfCwoCMifz9Wxk=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
  t=1776187286; v=1;
- b=V8hSqag8a/UdhnMNak+X3IsUuqiWjVwl2E2Slf4oxj3SRa+FBY1JzRLIiOShtMdCev9Ia3Ku
- knlEHvL73PKlXlGLcmNsepUkjtpXRUreXp7AbyEr7/1W+bh/Rs31RoHP/t1jNf1eM4BB0gtaVAT
- QwWN/dwgp40LLQlqPHky4TqshQUmdYYsP6f50kHHOX2LDT+4qxdpxav9LQ52Vep/iq+yv8ki65Z
- EfPVbZu4gOD2N2Z4FS9Gx01EK/Eoz1uaGaPJbsR7OqARXCcoxlHOz5Y1xnSrYpF4CvOLfGzCB7Z
- 1nyxYfS4e2NS5QkovMJxX7KI2U4NCMpxud8/4e/UQZReQ==
+ b=G7p6Ue+L+EiCXLw/Z2u42bGGayDw8T0AwqeYzg8a6Aj9FOJVxEWJVHcc5J+V0Ph3GP25TgzQ
+ C+2uGzA4c2I8UcRWz+eu52QNhqoCnnWQih6NnDhT133hK7bMmdRLkA1dqPeJFvltPyCG/S87ORo
+ rnvyEZQVaUEduhPbrL3gr9kkryYdn6ub94yWzM/pjKRHiOPRpCxuIUFDk5Dgw7ktt+cz6jzOWe6
+ 2SZQKX4L97LDZs9E62t1tHJCuS3J/+lA+PPUUepUYGR8lls1W8+iiJU/OcE3lt8P15N+YjFX8l0
+ GKpULKxRiXPRFdPxVhPNIUn+q1gF1/82yW8iWow1T6K+Q==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 46FD920A39;
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 5BF7D20A3A;
  Tue, 14 Apr 2026 17:21:26 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Mon, 13 Apr 2026 17:27:19 +0100
-Subject: [PATCH qemu v3 05/10] ot_uart: gather similar behaviours togeter in
- register read and write
-Message-ID: <177618728515.4917.14466194789826252277-5@git.sr.ht>
+Date: Mon, 13 Apr 2026 19:01:26 +0100
+Subject: [PATCH qemu v3 06/10] ot_uart: implement RX fifo and loopback
+Message-ID: <177618728515.4917.14466194789826252277-6@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177618728515.4917.14466194789826252277-0@git.sr.ht>
 To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
@@ -51,10 +50,10 @@ Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
  helo=mail-a.sr.ht
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
  DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
@@ -76,224 +75,267 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Lex Bailey <lex.bailey@lowrisc.org>
 
-the register read and write functions are each a large switch statement with
-many similar behaviours in, this is mostly for enabling the use of specific
-register names inside of log messages. this commit adds a lookup table for
-register names and uses that instead, allowing much of the code in the regist=
-er
-read and write functions to be deduplicated.
-
-the write function was also missing a switch case for R_ALERT_TEST, so I added
-that in this commit since it has a very simple implementation for now
+The STATUS register value is now generated on every read instead of being
+tracked in memory since it has such a dynamic value. the receive fifo is now
+implemented, and the system loopback mode. (line loopback is not supported)
 
 Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 ---
- hw/char/ot_uart.c | 106 +++++++++++++++++++++++-----------------------
- 1 file changed, 53 insertions(+), 53 deletions(-)
+ hw/char/ot_uart.c | 160 ++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 112 insertions(+), 48 deletions(-)
 
 diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-index f621fd3eae..2247db7110 100644
+index 2247db7110..3511a42fbe 100644
 --- a/hw/char/ot_uart.c
 +++ b/hw/char/ot_uart.c
-@@ -99,9 +99,6 @@ REG32(TIMEOUT_CTRL, 0x30)
-      R_CTRL_LLPBK_MASK | R_CTRL_PARITY_EN_MASK | R_CTRL_PARITY_ODD_MASK | \
-      R_CTRL_RXBLVL_MASK | R_CTRL_NCO_MASK)
+@@ -140,6 +140,21 @@ static void ot_uart_update_irqs(OtUARTState *s)
+     }
+ }
 =20
--#define CTRL_SUP_MASK \
--    (R_CTRL_RX_MASK | R_CTRL_TX_MASK | R_CTRL_SLPBK_MASK | R_CTRL_NCO_MASK)
--
- #define OT_UART_NCO_BITS     16
- #define OT_UART_TX_FIFO_SIZE 128
- #define OT_UART_RX_FIFO_SIZE 128
-@@ -112,6 +109,26 @@ REG32(TIMEOUT_CTRL, 0x30)
- #define R_LAST_REG (R_TIMEOUT_CTRL)
- #define REGS_COUNT (R_LAST_REG + 1u)
- #define REGS_SIZE  (REGS_COUNT * sizeof(uint32_t))
-+#define REG_NAME(_reg_) \
-+    ((((_reg_) < REGS_COUNT) && REG_NAMES[_reg_]) ? REG_NAMES[_reg_] : "?")
++static bool ot_uart_is_sys_loopack_enabled(const OtUARTState *s)
++{
++    return FIELD_EX32(s->regs[R_CTRL], CTRL, SLPBK);
++}
 +
-+#define REG_NAME_ENTRY(_reg_) [R_##_reg_] =3D stringify(_reg_)
-+static const char *REG_NAMES[REGS_COUNT] =3D {
-+    REG_NAME_ENTRY(INTR_STATE),
-+    REG_NAME_ENTRY(INTR_ENABLE),
-+    REG_NAME_ENTRY(INTR_TEST),
-+    REG_NAME_ENTRY(ALERT_TEST),
-+    REG_NAME_ENTRY(CTRL),
-+    REG_NAME_ENTRY(STATUS),
-+    REG_NAME_ENTRY(RDATA),
-+    REG_NAME_ENTRY(WDATA),
-+    REG_NAME_ENTRY(FIFO_CTRL),
-+    REG_NAME_ENTRY(FIFO_STATUS),
-+    REG_NAME_ENTRY(OVRD),
-+    REG_NAME_ENTRY(VAL),
-+    REG_NAME_ENTRY(TIMEOUT_CTRL),
-+};
-+#undef REG_NAME_ENTRY
-=20
- static void ot_uart_update_irqs(OtUARTState *s)
++static bool ot_uart_is_tx_enabled(const OtUARTState *s)
++{
++    return FIELD_EX32(s->regs[R_CTRL], CTRL, TX);
++}
++
++static bool ot_uart_is_rx_enabled(const OtUARTState *s)
++{
++    return FIELD_EX32(s->regs[R_CTRL], CTRL, RX);
++}
++
+ static int ot_uart_can_receive(void *opaque)
  {
-@@ -304,23 +321,14 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
- unsigned int size)
      OtUARTState *s =3D opaque;
-     uint64_t retvalue =3D 0;
+@@ -196,7 +211,7 @@ static void ot_uart_reset_rx_fifo(OtUARTState *s)
+     fifo8_reset(&s->rx_fifo);
+     s->regs[R_INTR_STATE] &=3D ~INTR_RX_WATERMARK_MASK;
+     s->regs[R_INTR_STATE] &=3D ~INTR_RX_OVERFLOW_MASK;
+-    if (FIELD_EX32(s->regs[R_CTRL], CTRL, RX)) {
++    if (ot_uart_is_rx_enabled(s)) {
+         qemu_chr_fe_accept_input(&s->chr);
+     }
+ }
+@@ -218,21 +233,37 @@ static void ot_uart_xmit(OtUARTState *s)
+         return;
+     }
 =20
--    switch (addr >> 2) {
-+    hwaddr reg =3D R32_OFF(addr);
-+    switch (reg) {
-     case R_INTR_STATE:
--        retvalue =3D s->regs[R_INTR_STATE];
--        break;
-     case R_INTR_ENABLE:
--        retvalue =3D s->regs[R_INTR_ENABLE];
--        break;
--    case R_INTR_TEST:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: wdata is write only\n", __func__);
--        break;
+-    /* instant drain the fifo when there's no back-end */
+-    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+-        ot_uart_reset_tx_fifo(s);
+-        ot_uart_update_irqs(s);
+-        return;
+-    }
++    if (ot_uart_is_sys_loopack_enabled(s)) {
++        /* system loopback mode, just forward to RX FIFO */
++        uint32_t count =3D fifo8_num_used(&s->tx_fifo);
++        buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
++        ot_uart_receive(s, buf, (int)size);
++        count -=3D size;
++        /*
++         * there may be more data to send if data wraps around the end of TX
++         * FIFO
++         */
++        if (count) {
++            buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
++            ot_uart_receive(s, buf, (int)size);
++        }
++    } else {
++        /* instant drain the fifo when there's no back-end */
++        if (!qemu_chr_fe_backend_connected(&s->chr)) {
++            ot_uart_reset_tx_fifo(s);
++            ot_uart_update_irqs(s);
++            return;
++        }
+=20
+-    /* get a continuous buffer from the FIFO */
+-    buf =3D
+-        fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &size);
+-    /* send as much as possible */
+-    ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
+-    /* if some characters where sent, remove them from the FIFO */
+-    if (ret >=3D 0) {
+-        fifo8_drop(&s->tx_fifo, ret);
++        /* get a continuous buffer from the FIFO */
++        buf =3D
++            fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &siz=
+e);
++        /* send as much as possible */
++        ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
++        /* if some characters where sent, remove them from the FIFO */
++        if (ret >=3D 0) {
++            fifo8_drop(&s->tx_fifo, ret);
++        }
+     }
+=20
+     /* update INTR_STATE */
+@@ -269,7 +300,7 @@ static void uart_write_tx_fifo(OtUARTState *s, uint8_t va=
+l)
+         s->tx_watermark_level =3D 0;
+     }
+=20
+-    if (FIELD_EX32(s->regs[R_CTRL], CTRL, TX)) {
++    if (ot_uart_is_tx_enabled(s)) {
+         ot_uart_xmit(s);
+     }
+=20
+@@ -288,8 +319,6 @@ static void ot_uart_reset_enter(Object *obj, ResetType ty=
+pe)
+=20
+     memset(&s->regs[0], 0, sizeof(s->regs));
+=20
+-    s->regs[R_STATUS] =3D 0x0000003c;
 -
+     s->tx_watermark_level =3D 0;
+     for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
+         qemu_set_irq(s->irqs[index], 0);
+@@ -305,6 +334,27 @@ static void ot_uart_reset_enter(Object *obj, ResetType t=
+ype)
+     ot_uart_update_irqs(s);
+ }
+=20
++static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
++{
++    uint8_t val;
++
++    if (!(s->regs[R_CTRL] & R_CTRL_RX_MASK)) {
++        return 0;
++    }
++
++    if (fifo8_is_empty(&s->rx_fifo)) {
++        return 0;
++    }
++
++    val =3D fifo8_pop(&s->rx_fifo);
++
++    if (ot_uart_is_rx_enabled(s) && !ot_uart_is_sys_loopack_enabled(s)) {
++        qemu_chr_fe_accept_input(&s->chr);
++    }
++
++    return val;
++}
++
+ static uint64_t ot_uart_get_baud(OtUARTState *s)
+ {
+     uint64_t baud;
+@@ -327,32 +377,50 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
+ unsigned int size)
+     case R_INTR_ENABLE:
      case R_CTRL:
--        retvalue =3D s->regs[R_CTRL];
--        break;
-+    case R_FIFO_CTRL:
-     case R_STATUS:
--        retvalue =3D s->regs[R_STATUS];
-+        retvalue =3D s->regs[reg];
+     case R_FIFO_CTRL:
+-    case R_STATUS:
+         retvalue =3D s->regs[reg];
          break;
++    case R_STATUS:
++        /* assume that UART always report RXIDLE */
++        retvalue =3D R_STATUS_RXIDLE_MASK;
++        /* report RXEMPTY or RXFULL */
++        switch (fifo8_num_used(&s->rx_fifo)) {
++        case 0:
++            retvalue |=3D R_STATUS_RXEMPTY_MASK;
++            break;
++        case OT_UART_RX_FIFO_SIZE:
++            retvalue |=3D R_STATUS_RXFULL_MASK;
++            break;
++        default:
++            break;
++        }
++        /* report TXEMPTY+TXIDLE or TXFULL */
++        switch (fifo8_num_used(&s->tx_fifo)) {
++        case 0:
++            retvalue |=3D R_STATUS_TXEMPTY_MASK | R_STATUS_TXIDLE_MASK;
++            break;
++        case OT_UART_TX_FIFO_SIZE:
++            retvalue |=3D R_STATUS_TXFULL_MASK;
++            break;
++        default:
++            break;
++        }
++        if (!ot_uart_is_tx_enabled(s)) {
++            retvalue |=3D R_STATUS_TXIDLE_MASK;
++        }
++        if (!ot_uart_is_rx_enabled(s)) {
++            retvalue |=3D R_STATUS_RXIDLE_MASK;
++        }
++        break;
 =20
      case R_RDATA:
-@@ -336,14 +344,7 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr, =
-unsigned int size)
-             }
-         }
+-        retvalue =3D s->regs[R_RDATA];
+-        if ((s->regs[R_CTRL] & R_CTRL_RX_MASK) && (s->rx_level > 0)) {
+-            qemu_chr_fe_accept_input(&s->chr);
+-
+-            s->rx_level -=3D 1;
+-            s->regs[R_STATUS] &=3D ~R_STATUS_RXFULL_MASK;
+-            if (s->rx_level =3D=3D 0) {
+-                s->regs[R_STATUS] |=3D R_STATUS_RXIDLE_MASK;
+-                s->regs[R_STATUS] |=3D R_STATUS_RXEMPTY_MASK;
+-            }
+-        }
++        retvalue =3D (uint32_t)ot_uart_read_rx_fifo(s);
          break;
--    case R_WDATA:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: wdata is write only\n", __func__);
--        break;
 =20
--    case R_FIFO_CTRL:
--        retvalue =3D s->regs[R_FIFO_CTRL];
--        break;
      case R_FIFO_STATUS:
-         retvalue =3D s->regs[R_FIFO_STATUS];
-=20
-@@ -354,21 +355,21 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
- unsigned int size)
-                       "%s: RX fifos are not supported\n", __func__);
+-        retvalue =3D s->regs[R_FIFO_STATUS];
+-
+-        retvalue |=3D (s->rx_level & 0x1F) << R_FIFO_STATUS_RXLVL_SHIFT;
+-        retvalue |=3D (s->tx_level & 0x1F) << R_FIFO_STATUS_TXLVL_SHIFT;
+-
+-        qemu_log_mask(LOG_UNIMP,
+-                      "%s: RX fifos are not supported\n", __func__);
++        retvalue =3D
++            (fifo8_num_used(&s->rx_fifo) & 0xffu) << R_FIFO_STATUS_RXLVL_SHI=
+FT;
++        retvalue |=3D
++            (fifo8_num_used(&s->tx_fifo) & 0xffu) << R_FIFO_STATUS_TXLVL_SHI=
+FT;
          break;
 =20
--    case R_OVRD:
--        retvalue =3D s->regs[R_OVRD];
--        qemu_log_mask(LOG_UNIMP,
--                      "%s: ovrd is not supported\n", __func__);
--        break;
      case R_VAL:
--        retvalue =3D s->regs[R_VAL];
--        qemu_log_mask(LOG_UNIMP,
--                      "%s: val is not supported\n", __func__);
--        break;
-+    case R_OVRD:
-     case R_TIMEOUT_CTRL:
--        retvalue =3D s->regs[R_TIMEOUT_CTRL];
-+        retvalue =3D s->regs[reg];
-         qemu_log_mask(LOG_UNIMP,
--                      "%s: timeout_ctrl is not supported\n", __func__);
-+                      "%s: %s is not supported\n", __func__, REG_NAME(reg));
-+        break;
-+
-+    case R_ALERT_TEST:
-+    case R_INTR_TEST:
-+    case R_WDATA:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: %s is write only\n", __func__, REG_NAME(reg));
-         break;
-+
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
-@@ -384,7 +385,9 @@ static void ot_uart_write(void *opaque, hwaddr addr, uint=
-64_t val64,
-     OtUARTState *s =3D opaque;
-     uint32_t value =3D val64;
-=20
--    switch (addr >> 2) {
-+    hwaddr reg =3D R32_OFF(addr);
-+
-+    switch (reg) {
-     case R_INTR_STATE:
-         /* Write 1 clear */
-         value &=3D INTR_MASK;
-@@ -401,7 +404,11 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
+@@ -416,10 +484,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
 t64_t val64,
-         s->regs[R_INTR_STATE] |=3D value;
-         ot_uart_update_irqs(s);
-         break;
--
-+    case R_ALERT_TEST:
-+        value &=3D R_ALERT_TEST_FATAL_FAULT_MASK;
-+        s->regs[reg] =3D value;
-+        /* This will also set an IRQ once the alert handler is added */
-+        break;
-     case R_CTRL:
-         s->regs[R_CTRL] =3D value;
-=20
-@@ -437,15 +444,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
-t64_t val64,
-             s->char_tx_time =3D (NANOSECONDS_PER_SECOND / baud) * 10;
+             qemu_log_mask(LOG_UNIMP,
+                           "%s: UART_CTRL_NF is not supported\n", __func__);
          }
-         break;
--    case R_STATUS:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: status is read only\n", __func__);
--        break;
--
--    case R_RDATA:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: rdata is read only\n", __func__);
--        break;
-     case R_WDATA:
-         uart_write_tx_fifo(s, value);
-         break;
-@@ -462,10 +460,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
-t64_t val64,
-             s->tx_level =3D 0;
-         }
-         break;
--    case R_FIFO_STATUS:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: fifo_status is read only\n", __func__);
--        break;
-     case R_OVRD:
-         if (value & R_OVRD_TXEN_MASK) {
-             qemu_log_mask(LOG_UNIMP, "%s: OVRD.TXEN is not supported\n",
-@@ -473,16 +467,22 @@ static void ot_uart_write(void *opaque, hwaddr addr, ui=
+-        if (value & R_CTRL_SLPBK_MASK) {
+-            qemu_log_mask(LOG_UNIMP,
+-                          "%s: UART_CTRL_SLPBK is not supported\n", __func__=
+);
+-        }
+         if (value & R_CTRL_LLPBK_MASK) {
+             qemu_log_mask(LOG_UNIMP,
+                           "%s: UART_CTRL_LLPBK is not supported\n", __func__=
+);
+@@ -445,19 +509,19 @@ static void ot_uart_write(void *opaque, hwaddr addr, ui=
 nt64_t val64,
          }
-         s->regs[R_OVRD] =3D value & R_OVRD_TXVAL_MASK;
          break;
--    case R_VAL:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: val is read only\n", __func__);
--        break;
-+
-     case R_TIMEOUT_CTRL:
-         s->regs[R_TIMEOUT_CTRL] =3D
-             value & (R_TIMEOUT_CTRL_EN_MASK | R_TIMEOUT_CTRL_VAL_MASK);
-         qemu_log_mask(LOG_UNIMP,
-                       "%s: timeout_ctrl is not supported\n", __func__);
+     case R_WDATA:
+-        uart_write_tx_fifo(s, value);
++        uart_write_tx_fifo(s, (uint8_t)(value & R_WDATA_WDATA_MASK));
          break;
-+
-+    case R_STATUS:
-+    case R_RDATA:
-+    case R_FIFO_STATUS:
-+    case R_VAL:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: %s is read only\n", __func__, REG_NAME(reg));
-+        break;
-+
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
+=20
+     case R_FIFO_CTRL:
+-        s->regs[R_FIFO_CTRL] =3D value;
+-
++        s->regs[R_FIFO_CTRL] =3D
++            value & (R_FIFO_CTRL_RXILVL_MASK | R_FIFO_CTRL_TXILVL_MASK);
+         if (value & R_FIFO_CTRL_RXRST_MASK) {
+-            s->rx_level =3D 0;
+-            qemu_log_mask(LOG_UNIMP,
+-                          "%s: RX fifos are not supported\n", __func__);
++            ot_uart_reset_rx_fifo(s);
++            ot_uart_update_irqs(s);
+         }
+         if (value & R_FIFO_CTRL_TXRST_MASK) {
+-            s->tx_level =3D 0;
++            ot_uart_reset_tx_fifo(s);
++            ot_uart_update_irqs(s);
+         }
+         break;
+     case R_OVRD:
 --=20
 2.49.1
 
