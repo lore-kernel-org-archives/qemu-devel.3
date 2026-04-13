@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E385E93813
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 04:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CACDE93815
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 05:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC97H-00025j-EP; Mon, 13 Apr 2026 00:41:43 -0400
+	id 1wC9VG-0004tm-Sj; Mon, 13 Apr 2026 01:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wC97G-00025J-0w
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 00:41:42 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1wC9VF-0004rs-Bz
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 01:06:29 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wC97D-0002MC-EO
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 00:41:41 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2b24fcc2b5dso26315815ad.1
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 21:41:38 -0700 (PDT)
+ id 1wC9VD-0007ZT-TS
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 01:06:29 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-82cebbdab08so3074651b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 22:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776055297; x=1776660097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776056786; x=1776661586; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QszutIL7wDTHLCDNTzcTvkrv//j2mQDdIveZtbTBtCI=;
- b=wu98b1CKnTBpisuaSaj1lGYAIE1prcX6oWbTQoXeOt+cl6vYFdl9bK6j2uSyPTpWPr
- 6otwinheWoTz65W2Q3z/Wn03gZ29Iwzx4egP9rI3jZUA3kg9zbf/jItpTJfrg/I3uEoD
- gVXkvV4Lgh4zDn5o7ukSqhwEmPeRvDY22lwuzBfgg7IovO2DJoiSbXBAYzLhjsXR9saX
- vyqgE+KvBVKCr2DQV4Qjr2c2O+W6XXUcydAAp7OZUK/T8lOlO3Cx7YoVEAxqwab1u/vN
- Se77AESoYwz1aX8TgFQ5pD2ceDC+oPWtTgosdhRkV9bd1jgoG54/AhZ78C2OY/RQk/CS
- NL7Q==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fSoNfsSvDYmTGidkH+WfEiZmjKBr48rGJ/dRvhy+ejA=;
+ b=GTB+1uYfVm6yyxIJHlpSInjrE08//l3CdlzJdO+XxDYEzvaC2szriE1roAV0nCnsbO
+ Coy0DclAxLUU+cc8+Ly9GcuJ7CrYDXpEoVJb2ymb99rd70yDat3KNSMT2BhPYqYd6Gdl
+ qsMd6S7qFroQGNF5wWmtJxB2uubR1qsisINxiW7ITbU6E7KlRzWzRc4FbxEhtiuZvxir
+ i0iHI9q5xQiniKOS/ISQohk6ePw3D5q+FeiB2xUPr5lmkKAhoetW/cKStKIuC9vroPzW
+ uPVKunZMe4DtT6njvUPCMWtoUQM7ki+rzqyVHbZMfuguQ2RzZIDS2YqHQE6bxEcW9/jw
+ C5TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776055297; x=1776660097;
+ d=1e100.net; s=20251104; t=1776056786; x=1776661586;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QszutIL7wDTHLCDNTzcTvkrv//j2mQDdIveZtbTBtCI=;
- b=OW8A2i6W4aKQdoQFEw2zezvIDK1KUpKit1jV1CidB8uNSTIw4oYsvXHnFiQFLlk90K
- ypQOPhCNW6xcIr/caPP5KWA6yVBy6+iiw8CYGuwDYAk+RejfkdLxMWJr4+7FqB5EFqEe
- sIRTvYk/OHJJLdkXbYfJ4veZT3NyfKLKBYtfVnucmE+37yizRDBw7UJD5RFzx9XDWCQU
- BqIeIcSZlAIeTzTfGGXurfGm5RVhfszP6EOzHzpLvjUwgD0sA1IvWhUua0EZt+o5gJxk
- Y3DbXtS5pRFJgPmVglRV/j9FBjdbROXXCFIS9A1meA7Xt1GI9JSJ5eTEqqsN+gIgReI+
- tKpQ==
+ bh=fSoNfsSvDYmTGidkH+WfEiZmjKBr48rGJ/dRvhy+ejA=;
+ b=GdSLE167OgogJ3iqZspZpM+IoFsgwuaLgv65GGRnyDK6FogfUzFRVQvxFsaxTdT+c+
+ sBAQIbLPVz6wNABrsmTFhamMci0GOpQ8Rroqpzh7iadddSgco6+bEZ/07J2s/zI1Tlvi
+ 8NR6o5PzvmiSKEhgZ7W865Z2Po2m3709QSpb0q5e2hqpZPswWZokL8j4H3ktw2hv6YJE
+ mE+DYvU0rmTdEzSmOyaQwc8F69s8HwCNhHx5Fg/7z+yJ3ZGJWkDsIfS+FoDzzs21GX0b
+ ij7cBpmEKtXyuWOSPt0j41W95Vvy6BvE1BT3PW1NT+sIHXno888NOs0ESS3K9+Wcp8n3
+ y99A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9wq4s1TQqHzUiuFpYBfkBjYvgd8Fk0olDuClX6yi0D7uVaD4Y3UeQsQ8f/8iqAOHhZ2UzL+CNxq4/i@nongnu.org
-X-Gm-Message-State: AOJu0YxLU2Sg8tTn9SSBugo+ZQSO+fxDaS1xml1HwMdFK1kZSoVwKcq4
- 4XBT0hhJ/d+emSoair8MEKEtH8ntXhv/eZKpK2D0bippZ1qEbUYQl9q9t9oOWDZgkYA=
-X-Gm-Gg: AeBDievbinJZnz51d6UGraNFfIOSuV8Ho/spUka+dYkcjaodVPD2W7A9qFInvibncoP
- YfhUplPpf8IY4MIw1vkw0YY4c0uLrvExwT+bvJoyXGyWLwEjHjt3wt9bHu95uiHaJJNq1VdwFy2
- MzzU89JF5ldX9rl8P5/CCUR52vcCypZqkGyggaukZ1i7gIv92NQOkSZy8JRY0Seg4IK33X+hcHH
- JM5tMkgzH5RsBZnY+9Hoy88/oASsO+Ld2yswNytAbw7n6uXlrNslnOEuBmG5+A0ZOILydC8iw5N
- nQkARz8nznhXP0ys3iwTfC98c7osl0kyTPeQVjKQaZDfq1r9T/aEOPlxEDgGlXrV/MMeUFj9XN8
- VDJ5EfbC+k4KK9HECEvlJCQs3C3y+8lsfVLyzM+Hk1JaAyy2VjL1/ZZkzgi4pjfekTiF4/tFEQk
- HFoET+bEXanXvOPN8msF5LAfnAJk1twbrex7cLgMw1GhpCDcFKxLv3qH9RCTwn2KyRNc5bAVwek
- lpKVmOVXCaEAeodi8XIrMr1vvmTSnHC4dLO15NSRz41s4MOFE+N1q8=
-X-Received: by 2002:a17:903:2c50:b0:2b4:5cb8:99eb with SMTP id
- d9443c01a7336-2b45cb89e2emr30003155ad.27.1776055297031; 
- Sun, 12 Apr 2026 21:41:37 -0700 (PDT)
+ AFNElJ9surqe54gz8QwCmmfPvINNIj4CMLgyDNa+qoysjSrvGR8/IhXfxHCf/gq9S+feQtJwmffwheJU05r7@nongnu.org
+X-Gm-Message-State: AOJu0Yx810SVdS7gSNkIM/9s+4NwhOXamLdpMc7aOttDl/HVqgxZaFVz
+ Kcurr+JhEeGpSTP0iNfZ3m0KZeAJDP024PhRmLmJ32DykcJcYDsn3SEsPaJ7uC3YrZE=
+X-Gm-Gg: AeBDievGL2NWDZapM82KAfXiQ9Tx8eTBxilwmobIRE9fbLy9pOKmWA426DIiiU6Kfps
+ I0pPSnFf4WgEKvojx4klaEJbT0v2uuU8WcSjkoBDoretnmFcnpHq/T8MUlx1f7krPMjhpKNi6dx
+ tm8vw7jmYQVIDnq7bWJxLmDGJF4rxESfCW33Tvv/aBp9YbWyc8GHDMQfZhtygw/JXp25e4QoeJV
+ yBjuOOzXwjM5GEiYVaCBFJXBMABK83z3knzGj2pfEJL1VNnc5RBx2Y7WDsU9YNMuyCSzOTQ6S9Y
+ f0J3UC5QD6uZiRWyDukTb7BTtVNu7fyTZsKujofTawS4UPflTUBZT6+hNpF1r+iQhCtKx+3/38d
+ uI57zy+CUCrPCtNZFH6DQXz8J+FswcRTGsIzGCA1+wuQGwJwRaGOA0i/tDoZypvIRhNmN0eHCDt
+ GvG/9CMzIaX4b0i0IdwFV900WlxtLCvKhvvC4kj9Yu3ZnLRxvBQnuuyiD3safcnhd6m8V/PsZrh
+ iCzZdKSa52CCXC+Ohpx8FJl2uX0u/94z3+od0ZdY9VKaF2TlUtL5q0=
+X-Received: by 2002:a05:6a00:2c94:b0:82f:4628:4198 with SMTP id
+ d2e1a72fcca58-82f46284fc1mr874450b3a.31.1776056785798; 
+ Sun, 12 Apr 2026 22:06:25 -0700 (PDT)
 Received: from ?IPV6:2401:d002:dc0f:2100:a7b4:d4f1:5b23:321f?
  (bg30dj032xp6rdh0yngy.ip6.superloop.au.
  [2401:d002:dc0f:2100:a7b4:d4f1:5b23:321f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2d4f3a8f7sm101698425ad.71.2026.04.12.21.41.33
+ d2e1a72fcca58-82f0c36130csm9828910b3a.24.2026.04.12.22.06.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 21:41:36 -0700 (PDT)
-Message-ID: <cc224b46-c705-46c7-94b7-b5638bbe3a0f@linaro.org>
-Date: Mon, 13 Apr 2026 14:41:30 +1000
+ Sun, 12 Apr 2026 22:06:25 -0700 (PDT)
+Message-ID: <59998758-bdb0-405d-a0ff-83bd54ad5a5d@linaro.org>
+Date: Mon, 13 Apr 2026 15:06:19 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/27] monitor: Introduce HMPCommand::arch_bitmask field
+Subject: Re: [PATCH v2 20/27] hw/s390x: Reduce 'monitor/monitor.h' inclusions
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org
 References: <20260410195323.17937-1-philmd@linaro.org>
- <20260410195323.17937-20-philmd@linaro.org>
+ <20260410195323.17937-21-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260410195323.17937-20-philmd@linaro.org>
+In-Reply-To: <20260410195323.17937-21-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,40 +109,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/11/26 05:53, Philippe Mathieu-Daudé wrote:
-> Add the @arch_bitmask field to the HMPCommand structure,
-> allowing to restrict a command to a set of target
-> architectures (represented by the QEMU_ARCH_* enum constants).
+> We want to make the HMP commands available for all targets,
+> move the declarations to "monitor/hmp.h" where all other
+> are, and only include the monitor headers in the source files.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   monitor/monitor-internal.h | 6 ++++++
->   monitor/hmp-target.c       | 1 +
->   monitor/hmp.c              | 4 ++++
->   3 files changed, 11 insertions(+)
-> 
-> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> index 3ecd394ecf6..78281928e7a 100644
-> --- a/monitor/monitor-internal.h
-> +++ b/monitor/monitor-internal.h
-> @@ -74,6 +74,12 @@ typedef struct HMPCommand {
->       const char *params;
->       const char *help;
->       const char *flags; /* p=preconfig */
-> +    /**
-> +     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
-> +     *     Allow to restrict the command for a particular set of
-> +     *     target architectures.
-> +     */
-> +    uint32_t arch_bitmask;
->       void (*cmd)(Monitor *mon, const QDict *qdict);
->       /*
->        * If implementing a command that takes no arguments and simply
+>   include/hw/s390x/storage-attributes.h | 4 ----
+>   include/hw/s390x/storage-keys.h       | 3 ---
+>   include/monitor/hmp.h                 | 5 +++++
+>   hw/s390x/s390-skeys.c                 | 2 ++
+>   hw/s390x/s390-stattrib.c              | 2 ++
+>   5 files changed, 9 insertions(+), 7 deletions(-)
 
-This and coroutine could be placed better to avoid two holes.
-
-Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
