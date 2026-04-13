@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC764E937E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 01:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF12E93808
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 01:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC66D-0003fC-Ar; Sun, 12 Apr 2026 21:28:25 -0400
+	id 1wC69w-0004Nb-0V; Sun, 12 Apr 2026 21:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wC669-0003er-Nf; Sun, 12 Apr 2026 21:28:21 -0400
+ id 1wC69t-0004N2-Kc; Sun, 12 Apr 2026 21:32:13 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wC667-0005jG-3O; Sun, 12 Apr 2026 21:28:21 -0400
+ id 1wC69s-0006sw-3V; Sun, 12 Apr 2026 21:32:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=mf2gmiwYTaAAfCw01jy17/m2CBty+lUI4Fl6BoD39Gw=; b=DHGrwZyz++kxcfqq
- Mmwf1DI8LVajZh0QJtFX/aXUpD1NpOfuJd/0GujVifnSrnQEOZ0xmYfPopVPBNu2vFNOoJ/ZWB6AL
- zDNXTWeM1tJEQYzfq6lS4juW3ATBkbW3G5JFLLVQQ/19hG4VFhb4u8G3CAh7KGeeycQ0ByjEea334
- cH6qRa7SHb5njmwFYOhweeH/X46QBab6cS+Xv58PUFKLtqaV1MVi2Q3okFwlNQkALW5qnKRBfYE2A
- EOgOSUIuEtn9MlbevrEk6Div1y6iElXyXz8zt1XLDbdoEu6BYuCrrrwD9/PXyVY9sAduooYgOUWr9
- Xae2q9YU+X/rpICEnw==;
+ :Subject; bh=PtKBHD8ST23EDcZlBrffJ9XaQVErETUQDeqR/FP5qjo=; b=b//IppyA1xOPLvXw
+ jh744kydSgbY6VYm9rEw9X1R/f5iJ40lAug/5AeZPkiU0OVC7ivE/DPfFhYCmT3cKHLWlipwKLPCg
+ XYGYbmgoZjux2JrAQNNrlHk+7k2emOUhpajfc1APHPT5bNMTqn24Fch9Ablm20u/xRYPc6oX1zf+Y
+ p0pM2wJivNb28YtgAyGCBWes6nANKZ71X0zC5Aek8K+Eisti5vZkKJq0UYzDLM7zETsJoSzmJLqi+
+ Vc29kfZ/A0RZNtR0lb/zPcEdwS8ZeJfREgw/JbTSb0TjydVM5fUMAFy6uzOsnaVhpTxUxmFdizTV3
+ HWNX3Jcr2FnlBkGJmQ==;
 Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wC661-00000007rno-2xil;
- Mon, 13 Apr 2026 01:28:13 +0000
-Date: Mon, 13 Apr 2026 01:28:13 +0000
+ (envelope-from <dg@treblig.org>) id 1wC69q-00000007rtV-30Pr;
+ Mon, 13 Apr 2026 01:32:10 +0000
+Date: Mon, 13 Apr 2026 01:32:10 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -42,18 +42,18 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Peter Xu <peterx@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 05/17] monitor: remove 'skip_flush' field
-Message-ID: <adxGrbCi4LfS0lsT@gallifrey>
+Subject: Re: [PATCH 07/17] monitor: use class methods for monitor_vprintf
+Message-ID: <adxHmgyw1FJYkvQw@gallifrey>
 References: <20260410160458.3778874-1-berrange@redhat.com>
- <20260410160458.3778874-6-berrange@redhat.com>
+ <20260410160458.3778874-8-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260410160458.3778874-6-berrange@redhat.com>
+In-Reply-To: <20260410160458.3778874-8-berrange@redhat.com>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
-X-Uptime: 01:27:03 up 31 days,  2:40,  2 users,  load average: 0.08, 0.11, 0.05
+X-Uptime: 01:32:06 up 31 days,  2:45,  2 users,  load average: 0.01, 0.07, 0.05
 User-Agent: Mutt/2.2.13 (2024-03-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
  helo=mx.treblig.org
@@ -79,127 +79,94 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Daniel P. Berrangé (berrange@redhat.com) wrote:
-> The 'skip_flush' field is set on the dummy throwaway HMP monitor
-> object created by QMP's  'human-monitor-command', as an indication
-> not to try to write data to the chardev. Instead the QMP command
-> impl will grab the data straight out of the in-memory buffer.
+> This removes the need for using monitor_is_qmp() to check the
+> subclass type, which is an anti-pattern.
 > 
-> The flag is redundant, however, as the monitor code could instead
-> simply check the 'fe_is_open' field on the CharFrontend, which
-> will be false in the same scenarios that 'skip_flush' is true.
-
-For monitors on sockets where the other end isn't connected, does that
-change the behaviour?   Does that also have !fe_is_open and can that hit this
-case?
-
-Dave
-
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+
 > ---
->  monitor/hmp.c              |  2 +-
->  monitor/monitor-internal.h |  4 +---
->  monitor/monitor.c          | 11 +++++++----
->  monitor/qmp-cmds.c         |  2 +-
->  monitor/qmp.c              |  2 +-
->  5 files changed, 11 insertions(+), 10 deletions(-)
+>  monitor/hmp.c              | 12 ++++++++++++
+>  monitor/monitor-internal.h |  3 +++
+>  monitor/monitor.c          | 11 ++++-------
+>  3 files changed, 19 insertions(+), 7 deletions(-)
 > 
 > diff --git a/monitor/hmp.c b/monitor/hmp.c
-> index 614d9a3707..72f8303662 100644
+> index 833de0eee8..3fe6f5715a 100644
 > --- a/monitor/hmp.c
 > +++ b/monitor/hmp.c
-> @@ -1539,7 +1539,7 @@ void monitor_new_hmp(Chardev *chr, bool use_readline, Error **errp)
->          return;
->      }
+> @@ -50,14 +50,26 @@ static void monitor_hmp_finalize(Object *obj)
+>      readline_free(mon->rs);
+>  }
 >  
-> -    monitor_data_init(&mon->parent, false, false, false);
-> +    monitor_data_init(&mon->parent, false, false);
+> +int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
+> +    G_GNUC_PRINTF(2, 0);
+> +
+>  static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+>  {
+> +    MonitorClass *moncls = MONITOR_CLASS(cls);
+> +
+> +    moncls->vprintf = monitor_hmp_vprintf;
+>  }
 >  
->      mon->use_readline = use_readline;
->      if (mon->use_readline) {
+>  static void monitor_hmp_init(Object *obj)
+>  {
+>  }
+>  
+> +int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
+> +{
+> +    g_autofree char *buf = g_strdup_vprintf(fmt, ap);
+> +    return monitor_puts(mon, buf);
+> +}
+> +
+>  static void monitor_command_cb(void *opaque, const char *cmdline,
+>                                 void *readline_opaque)
+>  {
 > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> index 25320928a7..84117805b7 100644
+> index 5bfe3b7325..3f05c46e88 100644
 > --- a/monitor/monitor-internal.h
 > +++ b/monitor/monitor-internal.h
-> @@ -102,7 +102,6 @@ struct Monitor {
->      CharFrontend chr;
->      int suspend_cnt;            /* Needs to be accessed atomically */
->      bool is_qmp;
-> -    bool skip_flush;
->      bool use_io_thread;
+> @@ -95,6 +95,9 @@ typedef struct HMPCommand {
 >  
->      char *mon_cpu_path;
-> @@ -183,8 +182,7 @@ extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
->  extern QemuMutex monitor_lock;
->  extern MonitorList mon_list;
+>  struct MonitorClass {
+>      ObjectClass parent_class;
+> +
+> +    int (*vprintf)(Monitor *mon, const char *fmt, va_list ap)
+> +        G_GNUC_PRINTF(2, 0);
+>  };
 >  
-> -void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
-> -                       bool use_io_thread);
-> +void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread);
->  void monitor_data_destroy(Monitor *mon);
->  int monitor_can_read(void *opaque);
->  void monitor_list_append(Monitor *mon);
+>  struct Monitor {
 > diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 7936e2ab22..f7e3708d2f 100644
+> index f6c90145f6..b51046c0c9 100644
 > --- a/monitor/monitor.c
 > +++ b/monitor/monitor.c
-> @@ -167,7 +167,12 @@ void monitor_flush_locked(Monitor *mon)
->      size_t len;
->      const char *buf;
+> @@ -243,21 +243,18 @@ int monitor_puts(Monitor *mon, const char *str)
 >  
-> -    if (mon->skip_flush) {
-> +    /*
-> +     * When used by QMP human-monitor-command, no chardev
-> +     * will be connected, as we want to just collect the
-> +     * output in the buffer
-> +     */
-> +    if (!mon->chr.fe_is_open) {
->          return;
+>  int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+>  {
+> -    char *buf;
+> -    int n;
+> +    MonitorClass *moncls;
+>  
+>      if (!mon) {
+>          return -1;
 >      }
 >  
-> @@ -621,8 +626,7 @@ static void monitor_iothread_init(void)
->      mon_iothread = iothread_create("mon_iothread", &error_abort);
+> -    if (monitor_is_qmp(mon)) {
+> +    moncls = MONITOR_GET_CLASS(mon);
+> +    if (!moncls->vprintf) {
+>          return -1;
+>      }
+>  
+> -    buf = g_strdup_vprintf(fmt, ap);
+> -    n = monitor_puts(mon, buf);
+> -    g_free(buf);
+> -    return n;
+> +    return moncls->vprintf(mon, fmt, ap);
 >  }
 >  
-> -void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
-> -                       bool use_io_thread)
-> +void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread)
->  {
->      if (use_io_thread && !mon_iothread) {
->          monitor_iothread_init();
-> @@ -630,7 +634,6 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
->      qemu_mutex_init(&mon->mon_lock);
->      mon->is_qmp = is_qmp;
->      mon->outbuf = g_string_new(NULL);
-> -    mon->skip_flush = skip_flush;
->      mon->use_io_thread = use_io_thread;
->  }
->  
-> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-> index d0ed241d6a..be2bd985b7 100644
-> --- a/monitor/qmp-cmds.c
-> +++ b/monitor/qmp-cmds.c
-> @@ -168,7 +168,7 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
->      char *output = NULL;
->      MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
->  
-> -    monitor_data_init(&hmp->parent, false, true, false);
-> +    monitor_data_init(&hmp->parent, false, false);
->  
->      if (has_cpu_index) {
->          int ret = monitor_set_cpu(&hmp->parent, cpu_index);
-> diff --git a/monitor/qmp.c b/monitor/qmp.c
-> index 36cb078f30..fe2aec9ce9 100644
-> --- a/monitor/qmp.c
-> +++ b/monitor/qmp.c
-> @@ -538,7 +538,7 @@ void monitor_new_qmp(Chardev *chr, bool pretty, Error **errp)
->      qemu_chr_fe_set_echo(&mon->parent.chr, true);
->  
->      /* Note: we run QMP monitor in I/O thread when @chr supports that */
-> -    monitor_data_init(&mon->parent, true, false,
-> +    monitor_data_init(&mon->parent, true,
->                        qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
->  
->      mon->pretty = pretty;
+>  int monitor_printf(Monitor *mon, const char *fmt, ...)
 > -- 
 > 2.53.0
 > 
