@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91597F34C49
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF07DF34C52
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCHLa-00020M-B9; Mon, 13 Apr 2026 09:29:02 -0400
+	id 1wCHNo-0002zR-2n; Mon, 13 Apr 2026 09:31:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wCHLX-0001zt-K9
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:29:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wCHLV-0007wQ-9l
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:28:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776086936;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aI705tjxRJL/4XBNX9wESOaq5t4HygsnFVO8tqlUGWY=;
- b=GnRufWKlVSoOfUtBmCizfG2uX+0vfUR20mN/3RPUZpUbpRWbnUywFWu31Z/zjwlPQIGwS2
- 58I1lALToTP9yw3CIyqzbGWB+JvvBrcuP0TO2YC06WK4W41jrNfslH7u+48/qy+Ne9bX3C
- kccYd3loYixLhCwzVd5coBi9xbS2OHw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-oyYZ2AOyO6uwQolqEh2nig-1; Mon,
- 13 Apr 2026 09:28:53 -0400
-X-MC-Unique: oyYZ2AOyO6uwQolqEh2nig-1
-X-Mimecast-MFC-AGG-ID: oyYZ2AOyO6uwQolqEh2nig_1776086930
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C91D51955F05; Mon, 13 Apr 2026 13:28:49 +0000 (UTC)
-Received: from localhost (unknown [10.44.35.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E7B3119560AB; Mon, 13 Apr 2026 13:28:47 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
- Dmitry Fomichev <dmitry.fomichev@wdc.com>,
- Mingyuan Luo <myluo24@m.fudan.edu.cn>
-Subject: [PULL for-11.0 1/1] virtio-blk: fix zone report buffer out-of-memory
- (CVE-2026-5761)
-Date: Mon, 13 Apr 2026 09:28:40 -0400
-Message-ID: <20260413132840.20439-2-stefanha@redhat.com>
-In-Reply-To: <20260413132840.20439-1-stefanha@redhat.com>
-References: <20260413132840.20439-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCHNj-0002z8-Q7
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:31:15 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCHNh-0008Rh-Hy
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:31:15 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so42270845e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 06:31:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776087070; x=1776691870; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t5vcOHHKDRYP3xxw2rBt6Qey87y53kpywFzjN+QVxGM=;
+ b=KYqzGyNjmRWZB+TvL5Kzi0j9QYwaOCc9zmjBglbdZqUBwlk2oSAqr/PlKoXxglqgHf
+ JL8hPu4/qB86Bl5wE8o/EFy6jouM7rbtYyz6M6pTtH3REfgn41ZhmEaFtHVDgu3Ue97b
+ FaSvEBUBRl2ZmPC2L6g/uAOzhy8i2neUumRcv0uLffiD55zU20X2t1EUbMzQDCb9bO/J
+ dVCDVY0Y5smhRI5OzceMFRC8B2RGEq9zAyBpoZpo+3wTnLrJWL53mXjvu0zRTysPLxTW
+ I2FgvSapg4Sl6Tp+8v5uOVKJ/UXFQY0xDoJZqjPCBwtrmVEgv5kptr5Uy0c1KVsFglZe
+ FJcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776087070; x=1776691870;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=t5vcOHHKDRYP3xxw2rBt6Qey87y53kpywFzjN+QVxGM=;
+ b=Jy34+pDiOkVUMvLq41itaWRoT9JSTISm/+DUL8GyQbnqusTBU0Q+Ds1cFv/ma/Qbd4
+ UP5IIMWmmTGpeb/rfjjBCsx5jAgg8vHIam5u2noysGdr9Ixrnf20lZMjd1MZgyb+5sav
+ jk7FlIsEsw6ITJ3DSHKK4sq8/aCnV9J5AWIDKc0qjIGUPKr4UMhca8wi0hrJ+7ZYSsC1
+ LKbGaXWDUlcQzLBFblDBLx1dFO/zH41f9If/lLVs5WBnn5naGFqKPbzumBovHmd9KBSH
+ unQ4mMrDbHiLss0cdPRKjnfQ5eogsx8qluRhn1+pQ8RLumhBVJPet0F2cKK6/zO/t3K3
+ B4BA==
+X-Gm-Message-State: AOJu0YwEQvAjanm5rwKUthco0c+NTWYjFKKykFbOWWOEi5Ta7jS+djRi
+ tcly09mZWWN5spkpQLQc32KEhxM6F2FxGOYcXuFcshUUR+cFUhZIb0hUliyAeg==
+X-Gm-Gg: AeBDietfdd+ERtqg+hKoR+1mzfBzxrhPy/R2OacMfoow2JK5v9Qal2ZRuxykn2p+Dhq
+ vRMjqr0hzWwpvLK8TfehqttwZMM5ZtjzLRKer4dmrWHB5EZmh14k8iFfM6T3uY8+Gf2v+sStt9X
+ kqu/FUC4SKFy5ZE3DATOMwI33hWHkPpFQWj13Ij3vrBLpSw/ukHnFbebAT0fbrStls9LVGTEjsS
+ IDIewaUjLHOagLk7+Q+2Pte79O4fvDxip7E6NW2ksDfncjP2QWHzoMhVjAg/G/7Q9sfIfMpphYd
+ Pzhv707JmJJr84Hgq3k796zppIsqUIWAF4FDBKZ7zyzpotW03M7+u2JyzL/1+F3LwVbLe2NLIvR
+ /9n2E/0tmIvQeP9157djPukwKWBRKRO+AfBlrDz2p/64utAl7t5TknONkKtEjKSbpKeZTZQrb9T
+ fNF0+GdthABTb69RI+BEnCqmf2TWuCJaWKuZlRIoVbUn52HksN03KDAVq7P36M0bR6MTgjS4FWQ
+ EwB8Ypu/T5fPNUITxdk
+X-Received: by 2002:a05:600c:8b27:b0:488:af7f:775f with SMTP id
+ 5b1f17b1804b1-488d68766c7mr169263335e9.18.1776087069877; 
+ Mon, 13 Apr 2026 06:31:09 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (p200300faaf1c6100004fcff454cbdf8f.dip0.t-ipconnect.de.
+ [2003:fa:af1c:6100:4f:cff4:54cb:df8f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d6839981sm96475135e9.21.2026.04.13.06.31.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Apr 2026 06:31:09 -0700 (PDT)
+Date: Mon, 13 Apr 2026 13:31:06 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>
+CC: pbonzini@redhat.com, peter.maydell@linaro.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv5_00/15=5D_Adding_comprehe?=
+ =?US-ASCII?Q?nsive_support_for_i=2EMX8MM_EVK_board?=
+In-Reply-To: <20260413073737.986219-1-gaurav.sharma_7@nxp.com>
+References: <20260413073737.986219-1-gaurav.sharma_7@nxp.com>
+Message-ID: <9BF9D1F9-DA94-41AE-8C81-2226B17E096A@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,288 +102,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An internal buffer is used when processing VIRTIO_BLK_T_ZONE_REPORT
-requests. The buffer's size is controlled by the guest. A large value
-can result in g_malloc() failure and the QEMU process aborts, resulting
-in a Denial of Service (DoS) (most likely in cases where an untrusted
-guest application or a nested guest with virtio-blk passthrough is able
-to abort QEMU).
 
-Modify the zone report implementation to work incrementally with a
-bounded buffer size.
 
-This is purely a QEMU implementation issue and no VIRTIO spec changes
-are needed.
+Am 13=2E April 2026 07:37:22 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@=
+nxp=2Ecom>:
 
-Mingyuan Luo found this bug and provided a reproducer which I haven't
-put into tests/qtest/ because it requires a zoned storage device (e.g.
-root and modprobe null_blk):
+Hi Gurav,
 
-1) Prepare a zoned nullblk backend (/dev/nullb0):
+>Changes in v5:
+>- Fixed SoC object reference counting by using object_new_with_props()
+>  instead of object_new() + object_property_add_child()
+>- Merged imx8mm-evk=2Erst documentation into imx8mp-evk=2Erst to avoid
+>  duplication and updated the title accordingly
+>- Added on-chip RAM (OCRAM) support to match iMX8MP dev
 
-sudo modprobe -r null_blk || true
-sudo modprobe null_blk nr_devices=1 zoned=1
-sudo chmod 0666 /dev/nullb0
-cat /sys/block/nullb0/queue/zoned
+I tried to apply v5 but I'm hitting the same issues as Patchew: <https://p=
+atchew=2Eorg/QEMU/20260413073737=2E986219-1-gaurav=2Esharma=2E_5F7@nxp=2Eco=
+m/> Mind resending a version rebased onto master?
 
-2) Create qtest input:
+Moreover, you may keep my R-b tags which I've given during v4=2E
 
-cat >/tmp/vblk-zone-report-oom.qtest <<'EOF'
-outl 0xcf8 0x80002004
-outw 0xcfc 0x0007
-outl 0xcf8 0x80002010
-outl 0xcfc 0x0000c001
-outb 0xc012 0x00
-outb 0xc012 0x01
-outb 0xc012 0x03
-outl 0xc004 0x00000000
-outw 0xc00e 0x0000
-outl 0xc008 0x00000100
-outb 0xc012 0x07
-writel 0x00020000 0x00000010
-writel 0x00020004 0x00000000
-writeq 0x00020008 0x0000000000000000
-writeq 0x00100000 0x0000000000020000
-writel 0x00100008 0x00000010
-writew 0x0010000c 0x0001
-writew 0x0010000e 0x0001
-EOF
+Best regards,
+Bernhard
 
-for i in $(seq 1 1022); do
-d=$((0x00100000 + i * 16))
-n=$((i + 1))
-printf 'writeq 0x%08x 0x0000000000200000\n' "$d" >> /tmp/vblk-zone-report-oom.qtest
-printf 'writel 0x%08x 0x1fe00000\n' $((d + 8)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0003\n' $((d + 12)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x%04x\n' $((d + 14)) "$n" >> /tmp/vblk-zone-report-oom.qtest
-done
-
-d=$((0x00100000 + 1023 * 16))
-printf 'writeq 0x%08x 0x0000000000200000\n' "$d" >> /tmp/vblk-zone-report-oom.qtest
-printf 'writel 0x%08x 0x1fe00000\n' $((d + 8)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0002\n' $((d + 12)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0000\n' $((d + 14)) >> /tmp/vblk-zone-report-oom.qtest
-cat >> /tmp/vblk-zone-report-oom.qtest <<'EOF'
-writew 0x00104000 0x0000
-writew 0x00104002 0x0001
-writew 0x00104004 0x0000
-outw 0xc010 0x0000
-EOF
-
-3) Run the qtest input with ASAN build (compile qemu with --enable-asan):
-
-build/qemu-system-x86_64 -display none \
--accel qtest -qtest stdio \
--machine pc -nodefaults -m 512M -monitor none -serial none \
--blockdev driver=host_device,node-name=disk0,filename=/dev/nullb0 \
--device virtio-blk-pci-transitional,drive=disk0,addr=04.0,queue-size=1024 \
-< /tmp/vblk-zone-report-oom.qtest
-
-Cc: Sam Li <faithilikerun@gmail.com>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Dmitry Fomichev <dmitry.fomichev@wdc.com>
-Fixes: CVE-2026-5761
-Fixes: 4f7366506a9 ("virtio-blk: add zoned storage emulation for zoned devices")
-Reported-by: Mingyuan Luo <myluo24@m.fudan.edu.cn>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/block/virtio-blk.c | 100 ++++++++++++++++++++++++++++--------------
- 1 file changed, 67 insertions(+), 33 deletions(-)
-
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index ddf0e9ee53..9cb9f1fb2b 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -38,6 +38,9 @@
- #include "hw/virtio/virtio-blk-common.h"
- #include "qemu/coroutine.h"
- 
-+/* Internal buffer size limit for zone report */
-+#define VIRTIO_BLK_MAX_ZONES_PER_BATCH 4096
-+
- static void virtio_blk_ioeventfd_attach(VirtIOBlock *s);
- 
- static void virtio_blk_init_request(VirtIOBlock *s, VirtQueue *vq,
-@@ -447,15 +450,22 @@ err:
-     return err_status;
- }
- 
-+typedef struct {
-+    unsigned int total_nr_zones;    /* max zones to fill in this request */
-+    unsigned int nr_zones_done;     /* how many zones have been filled in */
-+    int64_t iov_offset;             /* current byte position in in_iov[] */
-+    int64_t offset;                 /* current zone report disk offset */
-+    unsigned int nr_zones;          /* for zone report calls */
-+    unsigned int zones_per_batch;   /* size of zone report buffer */
-+    BlockZoneDescriptor *zones;     /* zone report buffer */
-+} ZoneReportData;
-+
- typedef struct ZoneCmdData {
-     VirtIOBlockReq *req;
-     struct iovec *in_iov;
-     unsigned in_num;
-     union {
--        struct {
--            unsigned int nr_zones;
--            BlockZoneDescriptor *zones;
--        } zone_report_data;
-+        ZoneReportData zone_report_data;
-         struct {
-             int64_t offset;
-         } zone_append_data;
-@@ -512,16 +522,15 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
- static void virtio_blk_zone_report_complete(void *opaque, int ret)
- {
-     ZoneCmdData *data = opaque;
-+    ZoneReportData *zrd = &data->zone_report_data;
-     VirtIOBlockReq *req = data->req;
-     VirtIODevice *vdev = VIRTIO_DEVICE(req->dev);
-     struct iovec *in_iov = data->in_iov;
-     unsigned in_num = data->in_num;
--    int64_t zrp_size, n, j = 0;
--    int64_t nz = data->zone_report_data.nr_zones;
-+    int64_t n;
-+    unsigned nz = zrd->nr_zones;
-     int8_t err_status = VIRTIO_BLK_S_OK;
--    struct virtio_blk_zone_report zrp_hdr = (struct virtio_blk_zone_report) {
--        .nr_zones = cpu_to_le64(nz),
--    };
-+    struct virtio_blk_zone_report zrp_hdr = {};
- 
-     trace_virtio_blk_zone_report_complete(vdev, req, nz, ret);
-     if (ret) {
-@@ -529,28 +538,18 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-         goto out;
-     }
- 
--    zrp_size = sizeof(struct virtio_blk_zone_report)
--               + sizeof(struct virtio_blk_zone_descriptor) * nz;
--    n = iov_from_buf(in_iov, in_num, 0, &zrp_hdr, sizeof(zrp_hdr));
--    if (n != sizeof(zrp_hdr)) {
--        virtio_error(vdev, "Driver provided input buffer that is too small!");
--        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
--        goto out;
--    }
--
--    for (size_t i = sizeof(zrp_hdr); i < zrp_size;
--        i += sizeof(struct virtio_blk_zone_descriptor), ++j) {
-+    for (unsigned j = 0; j < nz; j++) {
-         struct virtio_blk_zone_descriptor desc =
-             (struct virtio_blk_zone_descriptor) {
--                .z_start = cpu_to_le64(data->zone_report_data.zones[j].start
-+                .z_start = cpu_to_le64(zrd->zones[j].start
-                     >> BDRV_SECTOR_BITS),
--                .z_cap = cpu_to_le64(data->zone_report_data.zones[j].cap
-+                .z_cap = cpu_to_le64(zrd->zones[j].cap
-                     >> BDRV_SECTOR_BITS),
--                .z_wp = cpu_to_le64(data->zone_report_data.zones[j].wp
-+                .z_wp = cpu_to_le64(zrd->zones[j].wp
-                     >> BDRV_SECTOR_BITS),
-         };
- 
--        switch (data->zone_report_data.zones[j].type) {
-+        switch (zrd->zones[j].type) {
-         case BLK_ZT_CONV:
-             desc.z_type = VIRTIO_BLK_ZT_CONV;
-             break;
-@@ -564,7 +563,7 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-             g_assert_not_reached();
-         }
- 
--        switch (data->zone_report_data.zones[j].state) {
-+        switch (zrd->zones[j].state) {
-         case BLK_ZS_RDONLY:
-             desc.z_state = VIRTIO_BLK_ZS_RDONLY;
-             break;
-@@ -594,18 +593,47 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-         }
- 
-         /* TODO: it takes O(n^2) time complexity. Optimizations required. */
--        n = iov_from_buf(in_iov, in_num, i, &desc, sizeof(desc));
-+        n = iov_from_buf(in_iov, in_num, zrd->iov_offset, &desc, sizeof(desc));
-         if (n != sizeof(desc)) {
-             virtio_error(vdev, "Driver provided input buffer "
-                                "for descriptors that is too small!");
-             err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+            goto out;
-         }
-+
-+        zrd->iov_offset += sizeof(desc);
-+    }
-+
-+    if (nz > 0) {
-+        BlockZoneDescriptor *zone = &zrd->zones[nz - 1];
-+        zrd->offset = zone->start + zone->length;
-+    }
-+
-+    zrd->nr_zones_done += nz;
-+
-+    /* Call zone report again if the end hasn't been reached yet */
-+    if (nz == zrd->zones_per_batch &&
-+        zrd->nr_zones_done < zrd->total_nr_zones) {
-+        zrd->nr_zones = MIN(zrd->zones_per_batch,
-+                            zrd->total_nr_zones - zrd->nr_zones_done);
-+        blk_aio_zone_report(req->dev->blk, zrd->offset, &zrd->nr_zones,
-+                            zrd->zones, virtio_blk_zone_report_complete, data);
-+        return;
-+    }
-+
-+    /* Fill in header now that all zones have been reported */
-+    zrp_hdr.nr_zones = cpu_to_le64(zrd->nr_zones_done);
-+    n = iov_from_buf(in_iov, in_num, 0, &zrp_hdr, sizeof(zrp_hdr));
-+    if (n != sizeof(zrp_hdr)) {
-+        virtio_error(vdev, "Driver provided input buffer that is too small!");
-+        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+        goto out;
-     }
- 
- out:
-     virtio_blk_req_complete(req, err_status);
-     g_free(req);
--    g_free(data->zone_report_data.zones);
-+    g_free(zrd->zones);
-     g_free(data);
- }
- 
-@@ -617,7 +645,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     unsigned int nr_zones;
-     ZoneCmdData *data;
--    int64_t zone_size, offset;
-+    ZoneReportData *zrd;
-+    int64_t offset;
-     uint8_t err_status;
- 
-     if (req->in_len < sizeof(struct virtio_blk_inhdr) +
-@@ -639,16 +668,21 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-     trace_virtio_blk_handle_zone_report(vdev, req,
-                                         offset >> BDRV_SECTOR_BITS, nr_zones);
- 
--    zone_size = sizeof(BlockZoneDescriptor) * nr_zones;
-     data = g_malloc(sizeof(ZoneCmdData));
-     data->req = req;
-     data->in_iov = in_iov;
-     data->in_num = in_num;
--    data->zone_report_data.nr_zones = nr_zones;
--    data->zone_report_data.zones = g_malloc(zone_size),
- 
--    blk_aio_zone_report(s->blk, offset, &data->zone_report_data.nr_zones,
--                        data->zone_report_data.zones,
-+    zrd = &data->zone_report_data;
-+    zrd->total_nr_zones = nr_zones;
-+    zrd->nr_zones_done = 0;
-+    zrd->iov_offset = sizeof(struct virtio_blk_zone_report);
-+    zrd->offset = offset;
-+    zrd->zones_per_batch = MIN(nr_zones, VIRTIO_BLK_MAX_ZONES_PER_BATCH);
-+    zrd->zones = g_malloc(zrd->zones_per_batch * sizeof(BlockZoneDescriptor));
-+
-+    zrd->nr_zones = zrd->zones_per_batch;
-+    blk_aio_zone_report(s->blk, offset, &zrd->nr_zones, zrd->zones,
-                         virtio_blk_zone_report_complete, data);
-     return;
- out:
--- 
-2.53.0
-
+>
+>Changes in v4:
+>- Update Maintainers file
+>- Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
+>  specific property
+>- Split up the patch that enabled CCM and Analog in the previous
+>  revision=2E Now we have 3 patches to enable CCM and Analog in iMX8MM
+>- Updated copyrights
+>- Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
+>
+>Changes in v3:
+>- Minor documentation change - Added KVM Acceleration section in docs/sys=
+tem/arm/imx8mm-evk=2Erst
+>
+>Changes in v2:
+>- Fixed the DTB offset in functional testing script test_imx8mm_evk=2Epy
+>  and preserved alphabetical order of machine names in tests/functional/a=
+arch64/meson=2Ebuild
+>- Fixed a typo and updated the documentation
+>- Modified structures type to static const in fsl-imx8mm=2Ec wherever
+>  applicable=2E
+>- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk=2Ec=
+=2E This
+>  is needed because the default DTB in the iMX LF BSP images have CSI
+>  and DSI enabled=2E Developers/Hobbyists using these BSP images will
+>  observe CSI and DSI crash logs on the console since these are unimpleme=
+nted=2E
+>  With this change, both debian and iMX LF images will boot up without an=
+y issues=2E
+>
+>Changes in v1:
+>
+>This patch series adds support for the NXP i=2EMX8MM EVK (Evaluation Kit)
+>board to QEMU, enabling emulation of this ARM Cortex-A53 based developmen=
+t
+>platform=2E
+>
+>The series includes:
+>
+>1=2E Core peripheral support (CCM clock controller, Analog module)
+>2=2E GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
+>3=2E GPIO,I2C,SPI,USDHC and USB Emulation support
+>4=2E PCIe and ENET Controller Emulation support
+>5=2E Documentation and functional test included
+>
+>Key features ported:
+>- Basic boot support with Linux
+>- UART console for serial communication
+>- Interrupt handling
+>- Clock and power management infrastructure
+>
+>Testing:
+>- Linux kernel boots to console
+>
+>Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>
+>Gaurav Sharma (15):
+>  hw/arm: Add the i=2EMX 8MM EVK(Evaluation Kit) board
+>  hw/misc/imx8mp_analog: Add property to analog device
+>  hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
+>  hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
+>  hw/arm/fsl-imx8mm: Implemented support for SNVS
+>  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
+>  hw/arm/fsl-imx8mm: Add PCIe support
+>  hw/arm/fsl-imx8mm: Add GPIO controllers
+>  hw/arm/fsl-imx8mm: Adding support for I2C emulation
+>  hw/arm/fsl-imx8mm: Adding support for SPI controller
+>  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
+>  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
+>  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
+>  hw/arm/fsl-imx8mm: Adding support for USB controller
+>  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
+>
+> MAINTAINERS                                 |  10 +
+> docs/system/arm/imx8mp-evk=2Erst              |  33 +-
+> docs/system/target-arm=2Erst                  |   1 +
+> hw/arm/Kconfig                              |  24 +
+> hw/arm/fsl-imx8mm=2Ec                         | 704 ++++++++++++++++++++
+> hw/arm/imx8mm-evk=2Ec                         | 130 ++++
+> hw/arm/meson=2Ebuild                          |   2 +
+> hw/misc/imx8mp_analog=2Ec                     |  12 +-
+> hw/timer/imx_gpt=2Ec                          |  26 +
+> include/hw/arm/fsl-imx8mm=2Eh                 | 242 +++++++
+> include/hw/misc/imx8mp_analog=2Eh             |   3 +
+> include/hw/timer/imx_gpt=2Eh                  |   2 +
+> tests/functional/aarch64/meson=2Ebuild        |   2 +
+> tests/functional/aarch64/test_imx8mm_evk=2Epy |  67 ++
+> 14 files changed, 1251 insertions(+), 7 deletions(-)
+> create mode 100644 hw/arm/fsl-imx8mm=2Ec
+> create mode 100644 hw/arm/imx8mm-evk=2Ec
+> create mode 100644 include/hw/arm/fsl-imx8mm=2Eh
+> create mode 100755 tests/functional/aarch64/test_imx8mm_evk=2Epy
+>
 
