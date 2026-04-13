@@ -4,117 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DDDEBFD2C
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3768BEBFD22
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCDtG-00010t-Jp; Mon, 13 Apr 2026 05:47:34 -0400
+	id 1wCDwv-0001b1-PU; Mon, 13 Apr 2026 05:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wCDtE-00010Q-Ez
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:47:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wCDtC-0000E5-EL
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:47:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776073648;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vFPS6fRPR8ifQZYJmpMES4Pv/Kh+VEGwYZnf74bIzfc=;
- b=IL78LQOoPDTDc9xN3ksDeBweh9FsNQPfxzmk33jTcuD71eH4Z6wdkI0NZlnotMNNnqMJqe
- LJIZcybDF4HjnOH50RlDaOyVDyTxD9UZKdv3RS0/DxaE5BaZAs7NYL3L5oq1+8+o/iHBSc
- He8emBm5CySdbnc7+I9vMaGQ6O4tp3s=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-lo6Y6kLuOmSnI8w6tEd08A-1; Mon, 13 Apr 2026 05:47:27 -0400
-X-MC-Unique: lo6Y6kLuOmSnI8w6tEd08A-1
-X-Mimecast-MFC-AGG-ID: lo6Y6kLuOmSnI8w6tEd08A_1776073646
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-c76cb2dce57so2530352a12.1
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 02:47:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wCDwu-0001ai-5F
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:51:20 -0400
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wCDws-0001US-JY
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:51:19 -0400
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-488a4bc360bso22657725e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 02:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776073646; x=1776678446; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vFPS6fRPR8ifQZYJmpMES4Pv/Kh+VEGwYZnf74bIzfc=;
- b=rS3QYm1vLnGt/bYd34QwFT96iWUz//5mWxB6ZFzuFmLmeq8jIw9r2e2W2HLA1bDDpk
- OcOm9nbEW0yX/Jyb3tWKkm61EbCXsB3pgs7AR/+QyxnAXFUp/WtZ13x8NzQRi9fx43Ga
- xRaw+4JoF7VQHa3OKlb0lg4lOHEHjzasOx7zpBXjmgaqPOSnPAik2r34VJ698vyu4w7b
- V94niWGkxm0XY9lwm/6o6UWi0pqS+aCJH3MS4CvHPI4ta4i0rAkE/c8YnFJ/q+4dGnOv
- b/PsYmWljMNkDsrmzCPxMWVvTB3F9hTIeQzNJxs+40fmzEziuTsw+K/KNYK5HgUpbuiY
- p8ow==
+ d=linaro.org; s=google; t=1776073876; x=1776678676; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7dQXpi742+XLPZ9WRdmXCOGdWzb1IxAvWsv3N3EWwPw=;
+ b=aOlMyeqSy26d1FzIqqd5F+1X77y/koWib79WDifADF6XB1vALttzEOuP/cZQrXxD6t
+ 0Zvdn9J0VFR4KZyvW/3SE94PI924SvsrhZ2clOy8dRGxomLDbLvbpga554XXUSXM308v
+ 5P6eHKM28OpcOsfxhrPBT5OvYEXFlDaYIMKdXb4A+mhvjOA6sZvYkGR5E1Y7AUcPkF1R
+ +9zHDPg9SsN4+Pbll2MV3Gqvx+Q5I3Bf3uhsG1nKNQuXn6ZfY5PyNstm0CAk4kPzLER5
+ orRVxpc5R6OnFAUGk+Ca7Zqbq3r2LPJHMujpeFjejAQLEWxKe2qxasZSjO+018CFxKIB
+ KmJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776073646; x=1776678446;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vFPS6fRPR8ifQZYJmpMES4Pv/Kh+VEGwYZnf74bIzfc=;
- b=S94vZmCepnmwtWpM2rp78eseLZ5dUeipL/fPSl4XqQvZgHuXhQcv1suHCl4ghdq5if
- 93rSqARyC5fdrr36rI+FiiXXOOPxd6DwJtUL56ZtLxuWTCcuGJZ5KQrwPShryvJ2MllU
- XhKb73FQ1xLFBEvVVZWvf1+KSkx5X+wGVwVsHOaMR63Ast905AcvqZPzxG5DEN+R+nZk
- SKQ8O2tg/vlj3j0AxYmZLU4gQEBk9IAa9hISvQfEz8exAqlvBk0lNPMM9n4AoWt/+QHj
- O7LpqxlMyO5pqCt5bkZpffPfGoO6f1G6tpbglF9yh7vHih6fL/agsB6y2YDCUB25DrH7
- gTag==
+ d=1e100.net; s=20251104; t=1776073876; x=1776678676;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7dQXpi742+XLPZ9WRdmXCOGdWzb1IxAvWsv3N3EWwPw=;
+ b=seHvw0RS3PtJ02Gp2fuKo/4I2RyRO/4pXj7I7wiI01xximZ/MEbYVo0upOOKkRQziE
+ wWiWsSy5WaW0zo8quPPQq8SSbrEX/8l2G1q2lPNrrvuMKpeWbGSi0kJh6yM45Eombd6R
+ kRYe0X2+IF3Ep97PFPugFwiiYINfrH9d3ZO5uZ5p/xZBLwlJ4UrC/8o5hS4zW5thyHg/
+ lhxx9CKDhdx/RxjTG+S4GhrAzgajQFOtGQ+HYYr/1pUe+SkTa7CRXmUSxHSrrxj2jrHu
+ qpQAbz2IiVRP1e56G8tYGlbDQEos5Vb11+1e58stJf1gWyeBKs8aznPflhyCalcJmb1W
+ I2CA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9bh4iuibRPYcVh7vt7D/KSE0zmkIsKbSMwT9u8sQabcUjDMzxP48WEf8x1nR1Wr4K3WxC8qawFGy0e@nongnu.org
-X-Gm-Message-State: AOJu0YwJ5b09lZA7Fb1j+mybFq52vwFRvpOP342ZQS/mTa7eoN98re51
- L6wxQZcyngr/AyYWzx9yv/0J8qdpdNiyFMsdUtJpAyGEF9uz3IITTYYfOIami35dF9mSqWa/wNH
- h+Wwkdn/72X/alYXmUB4e8u9C5FHDHk/Wqve5fMUpSDMDevPrE3Xw5nsn
-X-Gm-Gg: AeBDieuqtDwhJZ8IhBHVccIF8Lt1oP1sR1qsjngmPy3BGIg5QEdgIZibSxibbkMnVdO
- eN1kEJ882mdrHrMa7IEMcWQVhG+02I3gaEdIT+GT91ofPC2ebjVNLo1CC8GISwc35Ne6T7aBcyt
- gZGpaCZ4d9plBVTrWMhLvVYTLMrSzTX+xpu8SVLdvNM76IbqBQs04kYYtGiU5aQwfUvDxZWuJlI
- xXmYT1fND7qiSS0Yd2jWw2wfa2we2yA9rtCkBsS7HxrkdTajGmU/LDxISmb23obpILc0BGvb5qS
- p6WRykyKL037X9n09GlNX0YUwe8p3dmVzqaLuWx1TPQg4yCbjN12w1cKQNJX4AQmCejOK5mDdUr
- G9TmKVtrrUDwu0o5i2yaiXm55tC2JAdlyH/nOVQwuTExpr0Ymzt2vrtlmx5gXakjQdPLwkAr7Ay
- o=
-X-Received: by 2002:a05:6a21:9991:b0:39b:ce4a:f397 with SMTP id
- adf61e73a8af0-39fe3d0eca5mr14334536637.18.1776073646003; 
- Mon, 13 Apr 2026 02:47:26 -0700 (PDT)
-X-Received: by 2002:a05:6a21:9991:b0:39b:ce4a:f397 with SMTP id
- adf61e73a8af0-39fe3d0eca5mr14334511637.18.1776073645547; 
- Mon, 13 Apr 2026 02:47:25 -0700 (PDT)
-Received: from smtpclient.apple ([122.163.114.34])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c7921a12adasm9453700a12.26.2026.04.13.02.47.22
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 13 Apr 2026 02:47:25 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH for-11.0] accel/kvm: return early from kvm_irqchip_create
- if kvm does not support irqchip
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <CAFEAcA__kgxb-9FEsBu_3cmv3UZMMy3kuqk9Bf1NqoQpnEmmSw@mail.gmail.com>
-Date: Mon, 13 Apr 2026 15:17:09 +0530
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, kvm@vger.kernel.org,
- qemu-devel <qemu-devel@nongnu.org>
+ AFNElJ97Z1w5s2HE1YgEoBfl9ohZyVBy8oy3mphovATU9irPOp1H7g6zwq7ZpRhG/UoRuiMV6Z5fYVAHzqMT@nongnu.org
+X-Gm-Message-State: AOJu0YwA2wkG9+hJXG49iG+W75Df1kLUcPlHL6FL+4TRNxuMMYbvOIBs
+ LoJNXwcJc1YuNcJF7EdeDPsnMSCo7KjFPc91wdOKjNq3hFgJXBo37ZyFwyB/oL2DncU=
+X-Gm-Gg: AeBDieteXK2W6UaCVC82U3LLCy0n+saMlMKC7acrV652CHttM3r/ZhICTt9kD1gdSKZ
+ EvkUYk2eDgMAC2t1V4sy5PNg/r4jH8dy/bTBNcNmbdl2LmNSlYH/3uiVrRjQgcJUBtqXz0TFkUX
+ HwyxMnu7ugN6HRblPGTH6Rid05Wywy5U3B9zH4ZKH6VKVBbu6rWtqIyExrMpa2rcMHeELU6U7hA
+ 9e3sGnhSU5KEFMiXlk0S8xI/o4uM6MyVnS7QDWMkaBmObJkVKVjARZrgpab70Spijxr/NEy62N9
+ 5BKo9uN6OTLSBTYdoWjjixB/wyS9IOnnbU+q1bvk+3rufvQlPblu0MpT2anmgu/sj8R6bN3oDJX
+ F8+4wAWQo+fJvbwDzzG68dHGiQ3NeGCg0Jmw7pRdQgi32nAjCSo7d+KprbMRc/5BhT6pL7BqkhV
+ TQujtTg6osHfF1JY1EMNPLyFE=
+X-Received: by 2002:a05:600c:8b30:b0:485:2f4a:6ae6 with SMTP id
+ 5b1f17b1804b1-488d67bf79emr181800525e9.6.1776073875804; 
+ Mon, 13 Apr 2026 02:51:15 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d6864121sm91480095e9.28.2026.04.13.02.51.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Apr 2026 02:51:15 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5EF745F864;
+ Mon, 13 Apr 2026 10:51:13 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org, Demi Marie
+ Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com, Eric Blake
+ <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
+ <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, jacob.oursland@gmail.com,
+ Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>, matthieu@minio.io, Max Chou
+ <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ mdean@redhat.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Roberto
+ Campesato <rbc@meta.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
+ Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU Community call 14/04/2026 (14:00 UTC, CEST/15:00 BST)
+ agenda items
+User-Agent: mu4e 1.14.1-pre2; emacs 30.1
+Date: Mon, 13 Apr 2026 10:51:13 +0100
+Message-ID: <87wlybtcha.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <B3B285BF-87E9-48DA-8F9E-28B2C3E9426E@redhat.com>
-References: <20260413090010.60339-1-anisinha@redhat.com>
- <CAFEAcA__kgxb-9FEsBu_3cmv3UZMMy3kuqk9Bf1NqoQpnEmmSw@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x342.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,80 +131,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+Hi,
 
-> On 13 Apr 2026, at 3:03=E2=80=AFPM, Peter Maydell =
-<peter.maydell@linaro.org> wrote:
->=20
-> On Mon, 13 Apr 2026 at 10:01, Ani Sinha <anisinha@redhat.com> wrote:
->>=20
->> During refactoring of kvm_irqchip_create(), the refactored code was =
-returning
->> early from do_kvm_irqchip_create() function if the required =
-capabilities were
->> not present in KVM. This was not translating to an early return from
->> kvm_irqchip_create() as was the case before refactoring. This is =
-because,
->> do_kvm_irqchip_create() did not have a means to notify the caller of =
-the lack
->> of kvm capabilities. Fix this by making do_notify_irqchip_create() =
-return
->> EOPNOTSUPP error when required capabilities are absent and then the =
-caller
->> can check the return code and return early.
->>=20
->> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM =
-file descriptor change")
->> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
->> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
->> Suggested-by: Fabiano Rosas <farosas@suse.de>
->> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> ---
->> accel/kvm/kvm-all.c | 11 ++++++++---
->> 1 file changed, 8 insertions(+), 3 deletions(-)
->>=20
->> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->> index 774499d34f..92af42503b 100644
->> --- a/accel/kvm/kvm-all.c
->> +++ b/accel/kvm/kvm-all.c
->> @@ -2575,7 +2575,7 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, =
-qemu_irq irq, int gsi)
->>     g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
->> }
->>=20
->> -static void do_kvm_irqchip_create(KVMState *s)
->> +static int do_kvm_irqchip_create(KVMState *s)
->> {
->>     int ret;
->>     if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
->> @@ -2587,7 +2587,7 @@ static void do_kvm_irqchip_create(KVMState *s)
->>             exit(1);
->>         }
->>     } else {
->> -        return;
->> +        return -EOPNOTSUPP;
->>     }
->>=20
->>     if (kvm_check_extension(s, KVM_CAP_IRQFD) <=3D 0) {
->=20
-> This function confuses me. With this patch it can do three things:
-> * report an error and exit(1)
-> * return success
-> * return a failure code
->=20
-> What is the difference between the cases where we exit and
-> where we return the error code? The commit message says we
-> return an error "when required capabilities are absent", but
-> we do the error-exit for e.g. "KVM_CAP_IRQFD not present", which
-> sounds like "required capabilities are absent" to me...
+The KVM/QEMU community call is at:
 
-I think it should be an assertion there. That is instead of exit(1) we =
-should have had
+https://meet.jit.si/kvmcallmeeting
+@
+14/04/2026 14:00 UTC
 
-assert(kvm_check_extension(s, KVM_CAP_IRQFD));
+Are there any agenda items for the sync-up?
 
-That is you can=E2=80=99t have KVM_CAP_IRQCHIP cap and not have =
-KVM_CAP_IRQFD . That is how I understand it.
-
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
