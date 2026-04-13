@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B006F531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 20:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B957FF531CA
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 20:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCOGk-0007PJ-9j; Mon, 13 Apr 2026 16:52:30 -0400
+	id 1wCOGp-0007Se-NP; Mon, 13 Apr 2026 16:52:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCOGj-0007Oe-Cq
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:29 -0400
-Received: from ci-2007l-snip4-2.eps.apple.com ([57.103.88.115]
+ id 1wCOGn-0007Qh-Lv
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:33 -0400
+Received: from ci-2007j-snip4-3.eps.apple.com ([57.103.88.96]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCOGh-0007vK-BO
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:29 -0400
+ id 1wCOGm-0007wF-7C
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:33 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPS id
- A506E180020A; Mon, 13 Apr 2026 20:52:23 +0000 (UTC)
+ B626E1800154; Mon, 13 Apr 2026 20:52:29 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776113546; x=1778705546;
- bh=6tmGSEaUrE0Q7MlYX6psbx8TA0g5EcgDAZR7bSJpGEE=;
+ s=sig1; t=1776113551; x=1778705551;
+ bh=G89W4sMC3YwwxzvqsgVypuGjICEkNIb9nBQsRfciAZw=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=XPdXk5QxhRBdaRL+Cfl0tr1WtaZt1fgM1880yu61MXk8pPduwQhjHn3dmC+RDsp7YeKU3FnR651+ISMZRSE6EG1aB6OC505c3DAIQ4bxyke9W/hQdmaTGUg3lZ+fVl2/7toSDjw80zosnjrP+TggDWOLubDi6y7Pe3G3OtT5fuZiUGHz5wt6DvSLmRgA1J458bUW/KKGKknqg5ueYtfjAevri2u3/UmY2tetjsd0NIpUiDE5BcJt+2bbnspiuJ+IXNQILdj0o0RfDrWfx0Vh9zYbRbQpRLtkHZ1IcaQ52zeJuGz29ZrAt0+vZA87mQz29Z/njGDmJI3eilJmi5qNew==
+ b=BN5RoA2qSzPfCSLSAX58XQKjEqvoRNj/ubVtwl76c4EiM/DHBWdE+mrVNG/Rps88sPRaSsEByWTP/plqBLX0AOlQmV1smZi0bmQ7g/yLaD8FxNiN7xt9dFEXjct/3NSvfo0SeMy/eDxpWIX8yoCbJZIUxTDRafKJPpP1n9yF1l9RUK5LSBJ+usjzBSxWnvMLbH7OMy2aRTMURjqF4UrjXUaADoYqvqfsyzvjRnk1xaZvNpv0/j40OUdozjo7+5G0hhnBBrkTUaV87zRxtP5JtnXoLXOiF9BgfD82lAehWO6lRnwV5iwZbZ5bQoYMh1N5pNHLDrGJsPbkl966fhVvrg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPSA id
- A6A94180020C; Mon, 13 Apr 2026 20:52:21 +0000 (UTC)
+ BBDD518000BE; Mon, 13 Apr 2026 20:52:27 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -40,35 +40,36 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v12 07/15] whpx: i386: introduce proper cpuid support
-Date: Mon, 13 Apr 2026 22:51:59 +0200
-Message-ID: <20260413205208.50643-8-mohamed@unpredictable.fr>
+Subject: [PATCH v12 11/15] whpx: i386: IO port fast path cleanup
+Date: Mon, 13 Apr 2026 22:52:03 +0200
+Message-ID: <20260413205208.50643-12-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260413205208.50643-1-mohamed@unpredictable.fr>
 References: <20260413205208.50643-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDIwNSBTYWx0ZWRfX4r1ysznE3swW
- Z1HL25+KL3+zNNzipa4/ClDvW89ok5iEVACVsjHOMtalxF8z/1sXgzhlAIa8FI4s7GAzg8fhWBX
- LfV/URXLEhOc3DyqjZTJYDtzPxOd+8ZZbv+81KNy0EosHbeLOlElhBmPQaz06kVyf4DcdAKUl3c
- oqWYDFoZ9eWu0UMQDiVCHRUBi/9AwmQQFdblDqA4GDoaKi21N8/JGLHXoAY/p44RGppnWMnoCtJ
- 3UqOgT+wByqxIP9gc+gR3udGU2IcW7FGAoKWN5G8RlH+KxVaNp2vTdXtIdNRNdS9shxUe5axt0Q
- 1b6qsld/RJa02fLHA+TAxEWMdbNqN50N9+oObraAK28GxjciesWIVqGuxyIIO0=
-X-Authority-Info-Out: v=2.4 cv=YLySCBGx c=1 sm=1 tr=0 ts=69dd5788
+X-Proofpoint-GUID: 5M1NNjFva0r69B9_lemNMw1FGEO4D0JQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDIwNSBTYWx0ZWRfXxT6mNi3ozEMl
+ rWYZIT3eDy3/XEMx/b65zIAFqmMooSVkgY/DlBif+tbXk7U8UBUC8chFLZ/kc0wozotYQb2W/Sj
+ uI3VPxf8Aj43MrSfDHr3eNzdFT/AIHSmzxDe8cMnXKt9G6YHZU+2L32DDBst8MrXl8vjrlhuTsw
+ 6E2h6cSku/xm4c3z3xF9u7U2sKKJVseslLwQJOl0tOG1a3zSdtMcd0K1tG8WPlQJLQtsqmcLg+Q
+ HzwLaBVm26S36BZguR4NUYqP0UBsCT7jo1d1qpdSaP6p0PW+4Q9/p35GeguIwuQzmwu7CoVstax
+ 86kcTXoOyna2qtcOzBwHITIPqfQomZ2TvNFcRIcrtJz36B8IpYSisCjRQZ6GUU=
+X-Proofpoint-ORIG-GUID: 5M1NNjFva0r69B9_lemNMw1FGEO4D0JQ
+X-Authority-Info-Out: v=2.4 cv=HdsZjyE8 c=1 sm=1 tr=0 ts=69dd578e
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=n8cRCUxqL_yedgTzvKUA:9
-X-Proofpoint-GUID: nu8tEGSjeS4bV4oz1WyStvAurSENOWVn
-X-Proofpoint-ORIG-GUID: nu8tEGSjeS4bV4oz1WyStvAurSENOWVn
+ a=Vrzv6M8N8vcM0KmfSJEA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- malwarescore=0 bulkscore=0 clxscore=1030 mlxlogscore=999 spamscore=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ spamscore=0 mlxscore=0 adultscore=0 phishscore=0
+ suspectscore=0 clxscore=1030
+ mlxlogscore=805 bulkscore=0 lowpriorityscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2604130205
-Received-SPF: pass client-ip=57.103.88.115;
+Received-SPF: pass client-ip=57.103.88.96;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -92,194 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike the implementation in QEMU 10.2, this one works.
+vmport calls synchronise_state within an I/O port read.
+Support that properly.
 
-It's not optimal though as it doesn't use the Hyper-V support for this.
+What was there before worked because of a side effect of
+whpx_get_reg synchronising context if cpu->vcpu_dirty.
+
+Remove that whpx_get_reg call in whpx_bump_rip too as it's no longer
+needed now.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 123 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 119 insertions(+), 4 deletions(-)
+ target/i386/whpx/whpx-all.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index c2a78312f8..9827c93df1 100644
+index 7c80d653d1..61aec98e66 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2071,6 +2071,7 @@ int whpx_vcpu_run(CPUState *cpu)
-             WHV_REGISTER_NAME reg_names[5];
-             UINT32 reg_count = 5;
-             X86CPU *x86_cpu = X86_CPU(cpu);
-+            X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
-             CPUX86State *env = &x86_cpu->env;
- 
-             reg_names[0] = WHvX64RegisterRip;
-@@ -2083,7 +2084,15 @@ int whpx_vcpu_run(CPUState *cpu)
-                 vcpu->exit_ctx.VpContext.Rip +
-                 vcpu->exit_ctx.VpContext.InstructionLength;
- 
--            if (whpx_is_legacy_os()) {
-+            /*
-+             * On Windows 10 we can't query features from
-+             * the Hyper-V interface.
-+             *
-+             * On Windows 11, if using xcc->max_features
-+             * just pass through what the hypervisor
-+             * provides without any QEMU filtering.
-+             */
-+            if (whpx_is_legacy_os() || xcc->max_features) {
-                 reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-                 reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-                 reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-@@ -2135,6 +2144,60 @@ int whpx_vcpu_run(CPUState *cpu)
-                     }
-                     break;
-                 }
-+            } else {
-+                switch (vcpu->exit_ctx.CpuidAccess.Rax) {
-+                case 0x40000000:
-+                case 0x40000001:
-+                case 0x40000010:
-+                    reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-+                    reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-+                    reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-+                    reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-+                    break;
-+                }
-+            }
-+
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 0x1) {
-+                if (cpu_has_x2apic_feature(env)) {
-+                    reg_values[2].Reg64 |= CPUID_EXT_X2APIC;
-+                } else {
-+                    reg_values[2].Reg32 &= CPUID_EXT_X2APIC;
-+                }
-+            }
-+
-+            /* Dynamic depending on XCR0 and XSS, so query DefaultResult */
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 0x07
-+                && vcpu->exit_ctx.CpuidAccess.Rcx == 0) {
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRdx
-+                    & CPUID_7_0_EDX_CET_IBT) {
-+                    reg_values[3].Reg32 |= CPUID_7_0_EDX_CET_IBT;
-+                } else {
-+                    reg_values[3].Reg32 &= ~CPUID_7_0_EDX_CET_IBT;
-+                }
-+
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_7_0_ECX_CET_SHSTK) {
-+                    reg_values[2].Reg32 |= CPUID_7_0_ECX_CET_SHSTK;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_7_0_ECX_CET_SHSTK;
-+                }
-+
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_7_0_ECX_OSPKE) {
-+                    reg_values[2].Reg32 |= CPUID_7_0_ECX_OSPKE;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_7_0_ECX_OSPKE;
-+                }
-+            }
-+
-+            /* OSXSAVE is dynamic. Do this instead of syncing CR4 */
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 1) {
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_EXT_OSXSAVE) {
-+                    reg_values[2].Reg32 |= CPUID_EXT_OSXSAVE;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_EXT_OSXSAVE;
-+                }
-             }
- 
-             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
-@@ -2324,6 +2387,45 @@ error:
-     return ret;
- }
- 
-+static void whpx_cpu_xsave_init(void)
-+{
-+    static bool first = true;
-+    int i;
-+
-+    if (!first) {
-+        return;
-+    }
-+    first = false;
-+
-+    /* x87 and SSE states are in the legacy region of the XSAVE area. */
-+    x86_ext_save_areas[XSTATE_FP_BIT].offset = 0;
-+    x86_ext_save_areas[XSTATE_SSE_BIT].offset = 0;
-+
-+    for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
-+        ExtSaveArea *esa = &x86_ext_save_areas[i];
-+
-+        if (esa->size) {
-+            int sz = whpx_get_supported_cpuid(0xd, i, R_EAX);
-+            if (sz != 0) {
-+                assert(esa->size == sz);
-+                esa->offset = whpx_get_supported_cpuid(0xd, i, R_EBX);
-+            }
-+        }
-+    }
-+}
-+
-+static void whpx_cpu_max_instance_init(X86CPU *cpu)
-+{
-+    CPUX86State *env = &cpu->env;
-+
-+    env->cpuid_min_level =
-+        whpx_get_supported_cpuid(0x0, 0, R_EAX);
-+    env->cpuid_min_xlevel =
-+        whpx_get_supported_cpuid(0x80000000, 0, R_EAX);
-+    env->cpuid_min_xlevel2 =
-+        whpx_get_supported_cpuid(0xC0000000, 0, R_EAX);
-+}
-+
- static PropValue whpx_default_props[] = {
-     { "x2apic", "on" },
-     { NULL, NULL },
-@@ -2333,9 +2435,18 @@ static PropValue whpx_default_props[] = {
- void whpx_cpu_instance_init(CPUState *cs)
+@@ -862,7 +862,6 @@ static void handle_io(CPUState *env, uint16_t port, void *buffer,
+ static void whpx_bump_rip(CPUState *cpu, WHV_RUN_VP_EXIT_CONTEXT *exit_ctx)
  {
-     X86CPU *cpu = X86_CPU(cs);
-+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
- 
-     host_cpu_instance_init(cpu);
-     x86_cpu_apply_props(cpu, whpx_default_props);
-+
-+    if (!whpx_is_legacy_os() && xcc->max_features) {
-+        whpx_cpu_max_instance_init(cpu);
-+    }
-+
-+    if (!whpx_is_legacy_os()) {
-+        whpx_cpu_xsave_init();
-+    }
+     WHV_REGISTER_VALUE reg;
+-    whpx_get_reg(cpu, WHvX64RegisterRip, &reg);
+     reg.Reg64 = exit_ctx->VpContext.Rip + exit_ctx->VpContext.InstructionLength;
+     whpx_set_reg(cpu, WHvX64RegisterRip, reg);
  }
+@@ -890,13 +889,23 @@ static int whpx_handle_portio(CPUState *cpu,
+         } else {
+             reg.Reg64 = (uint64_t)val;
+         }
+-        whpx_bump_rip(cpu, exit_ctx);
+-        whpx_set_reg(cpu, WHvX64RegisterRax, reg);
++        /* vmport calls cpu_synchronize_state on an I/O port read */
++        if (!cpu->vcpu_dirty) {
++            whpx_bump_rip(cpu, exit_ctx);
++            whpx_set_reg(cpu, WHvX64RegisterRax, reg);
++        } else {
++            env->eip = exit_ctx->VpContext.Rip + exit_ctx->VpContext.InstructionLength;
++            env->regs[R_EAX] = reg.Reg64;
++        }
+         return 0;
+     } else if (!ctx->AccessInfo.StringOp && ctx->AccessInfo.IsWrite) {
+         RAX(env) = ctx->Rax;
+         handle_io(cpu, ctx->PortNumber, &RAX(env), 1, ctx->AccessInfo.AccessSize, 1);
+-        whpx_bump_rip(cpu, exit_ctx);
++        if (!cpu->vcpu_dirty) {
++            whpx_bump_rip(cpu, exit_ctx);
++        } else {
++            env->eip = exit_ctx->VpContext.Rip + exit_ctx->VpContext.InstructionLength;
++        }
+         return 0;
+     }
  
- /*
-@@ -2353,8 +2464,12 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_CAPABILITY_FEATURES features = {0};
-     WHV_PROCESSOR_FEATURES_BANKS processor_features;
-     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
--    UINT32 cpuidExitList[] = {1};
--    UINT32 cpuidExitList_nohyperv[] = {1, 0x40000000, 0x40000001, 0x40000010};
-+
-+    UINT32 cpuidExitList[] = {0x0, 0x1, 0x6, 0x7, 0x14, 0x24, 0x29, 0x1E,
-+        0x40000000, 0x40000001, 0x40000010, 0x80000000, 0x80000001,
-+        0x80000002, 0x80000003, 0x80000004, 0x80000007, 0x80000008,
-+        0x8000000A, 0x80000021, 0x80000022, 0xC0000000, 0xC0000001};
-+    UINT32 cpuidExitList_legacy_os[] = {1, 0x40000000, 0x40000001, 0x40000010};
- 
-     whpx = &whpx_global;
- 
-@@ -2610,7 +2725,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     hr = whp_dispatch.WHvSetPartitionProperty(
-         whpx->partition,
-         WHvPartitionPropertyCodeCpuidExitList,
--        whpx->hyperv_enlightenments_enabled ? cpuidExitList : cpuidExitList_nohyperv,
-+        !whpx_is_legacy_os() ? cpuidExitList : cpuidExitList_legacy_os,
-         RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
- 
-     if (FAILED(hr)) {
 -- 
 2.50.1 (Apple Git-155)
 
