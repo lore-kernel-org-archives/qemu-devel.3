@@ -4,103 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF3DF34C5C
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEDEF34C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCJ9X-0006pN-I3; Mon, 13 Apr 2026 11:24:43 -0400
+	id 1wCJ8t-0005fu-6Q; Mon, 13 Apr 2026 11:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wCJ9S-0006k6-9x
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:24:38 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wCJ9Q-0000aG-0F
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:24:37 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-793fdbb8d3aso49554517b3.3
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 08:24:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776093874; cv=none;
- d=google.com; s=arc-20240605;
- b=PLBfL8LhtvLCp8zoSbA/xJNx5Z0xvp9J2QI/LnjOqIUYwcx/H+SCxsjHdESa7h1UAD
- tnNytArtZALp13Oj5FQTDEXMgKy1Th/ZfdXce5tfJO5YD/LsMpzxD21PaXjVy8esAyaR
- bPjzkw4YBVRNugak/j0Qn0cHXE/8jrl/BKGsILQp84VO8u2alGkYHtkfrleaTJhDygUk
- hwwjP6Q16G0Q8YqFparf583XDRQ6BOUZ6paYKq+/ImXLaDPhSlq1KFwrTgKA0/v16Xy0
- ZsMOB5AgsKcgbxOBBpjmtzcLHWaSCDVT/sjBsC9f5DwwinheoQu+T6RZFJJqtCjS1Ys4
- Sbrw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=leKoe1zxD0sTN0Fe2mL7153kT+YlstzCjcsiyCaDX84=;
- fh=9APC4TOqqeyK4f+hBMC/WhXBwI4zhfL25tS7yb/7n7s=;
- b=anQovTOwTue94nVockLrTKXf1Xb9l5Zx85bwYksvmZPx2waQWPLzEz88uwCjwhDthM
- WMLThdeRWu7tfUgkISM2qcp1or78LWK3N1kFk8OkGoOCbeiYMSbQt67hu8NbvyIcA8tQ
- RUPS/9brvlQLmQXXHN6s2adVuzGKiJrJAgWDwULtYe9V+0R2blubXTm297Oae2iM/5tR
- cV4Sq8x8xVUZ2nj/n/lXWuUgur+Nez2ZgSJrMoYND7N+948a1auKSHthE/OYBS0LHDej
- 7RdquEQzOms4HgVPLOP8DC7qq76IIzB3LbSjx6Ke8r4lz4la10AJO4/DuaCSXPnX3asX
- +J1g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minio.io; s=minio; t=1776093874; x=1776698674; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=leKoe1zxD0sTN0Fe2mL7153kT+YlstzCjcsiyCaDX84=;
- b=NcWFV2aSz6aBbi4xEqbwqmMqynYYWTE5F5VJcAB1Pl5Q9jS01l7/+taTCI10plIz5F
- lt/3NDODYVnXEMxB0tTiDW4CglXDrXxnL9dNSeKPn++BjB4/n32CRV/nqwVvF4UDWjsb
- 7fOuzN4Rqz3DugBAIos49xq4xrbJtN1tn2QMvxc3ye1ThOHdUatpMviWf8h7ZcV5rtol
- E2BeDBtjd884qQWeqKyotfEvi58XgZThmDT3OWEeLdHDII9E3mT3QMBckGfnCpGHD9mx
- bsujQSp5hlpwKV/hRgMazN9rorJz9bSLcIer3EhV/6ihdNcdHzCz4pHFMidr3E30R7Po
- TSJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776093874; x=1776698674;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=leKoe1zxD0sTN0Fe2mL7153kT+YlstzCjcsiyCaDX84=;
- b=BHroH4NrSvPea5+kXhHygn9WSOUc/DdDYS2l5+JHFITSLDRrTEOBiSb1j0I+iUhtGb
- Ao9YKLi5Rzf2OVY/BCCI1ai+kQn6DccVK46Khir/DWGuXzVwXDiafooJUnuNvWsbclml
- IWG/hkxljzWjdmiD6tKTYSTGL8YAgDJQKcFjKbuXSyhHlZaLdHm07n3vE2w1dmOETBre
- OJ/avs/aYanKmiZ+9OYSAo0VhJMJmz4Fc7oRqePNKgTRh1KTTbWRvqjX4b5oz5AJdBnY
- 193fqzWGw8/3z0VYz6yec7RiC4yR6XX79u4K4wIyUOXyEx1Gh09llOeWz33mJ472fgwn
- PchA==
-X-Gm-Message-State: AOJu0YzLdY6gZWsHEG2iRCNNXiPms+FWkEYL1qP9L1l91n7FB71frDfL
- zvpObAfn49tovngcsrMUhGCkNGG4ELekaE3TmDkcECvm+HTnrur0s7DLLQe3eBFjAFpQYz8znyx
- +NLTvPnWbKONVqCtJ7oidVY3lcIMShL3EBwJ3R/WIYg==
-X-Gm-Gg: AeBDiesNpNZ7boH7T1duFcyvnY08BXnAA7IsNgI4DGniM5waOgeiA4Y/8W+n6Wl2eXC
- 63FbGEv+gViAZ9zcN29HQVtniD/iC3HN89GKYlnltRT5OY65mA+KAMetlatPCotGX9UIuG7zgjK
- 0jrDCvGGkhTqXWEAZc48kDkvAGBn0/fs33uEr4Xm6/nf2oWlWWo3H8HQ1EDXWHlD0UyaPFRMzhD
- wpPM+e0z+pY5k6/u6XG16TRZ4kJfOvIxVknosZ+iJzr4kcEPHpbUIpONMWKOXSM/Ku/05k2/4YL
- Jp25D/7sXJHsDMAGEzpaS9qoiszHuEvw73TefVOBcLVdPOa5rPvw9BWTrFxkpo/TKHXU6eueBQ=
- =
-X-Received: by 2002:a05:690c:6b01:b0:7b2:1bf1:7ff2 with SMTP id
- 00721157ae682-7b21bf18391mr62871777b3.7.1776093874192; Mon, 13 Apr 2026
- 08:24:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wCJ8U-0005Tp-6E; Mon, 13 Apr 2026 11:23:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wCJ8Q-0000RS-Gr; Mon, 13 Apr 2026 11:23:37 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63DElSQ93250375; Mon, 13 Apr 2026 15:23:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sbQkLv
+ Q8n8AOekiigmrceRIJmk74sUCteDBJw8HUasM=; b=UfmGr6UYgeZoGLTYa5p5X/
+ 5JbQZty6Mpf6j4VL7oVkPlsNs5JjDLA+ipEimIvNO/5kvuq6AsQ3jBndY14LjrwG
+ wRB2WxgGAYlSpONUndg/jqG6G2JA7kkMLFB68CzsZxzlnqRl8DrqnpWBeY+xAiPy
+ zFQNvVUvzDyCFjOK5gqkSv3hef0ptcj/pTNeu+4mk1NCx0mShjplNYW3L04aTX/6
+ SNnE/z9GESjNAwxbeucl16q1qCB29H4mA87wOKjX5UvU/2d6ZFSj4fknnGrhoPrp
+ vddH5nf0p6J6roxJ8PYgeduY0duU9EKmKfsV0oIgqyDpYjZSrIr7PF7+Iv350xmw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dfdxwyxbh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Apr 2026 15:23:31 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63DEQZmL025643;
+ Mon, 13 Apr 2026 15:23:30 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dg2ujdhex-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Apr 2026 15:23:30 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63DFNSrd32113320
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 13 Apr 2026 15:23:28 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7FCF858061;
+ Mon, 13 Apr 2026 15:23:28 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC13E5803F;
+ Mon, 13 Apr 2026 15:23:27 +0000 (GMT)
+Received: from [9.61.12.51] (unknown [9.61.12.51])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 13 Apr 2026 15:23:27 +0000 (GMT)
+Message-ID: <aadd1d51-231a-4406-9543-ce258653ce28@linux.ibm.com>
+Date: Mon, 13 Apr 2026 11:23:27 -0400
 MIME-Version: 1.0
-References: <20260409060155.94704-1-matthieu@min.io>
- <20260410143000.86708-1-matthieu@min.io>
- <CAPSO8Mx2pXp1UGvrsqTL86b=920os62MYSGn-ryv-YV4kRN4NA@mail.gmail.com>
- <20260410201401.GA501153@fedora>
-In-Reply-To: <20260410201401.GA501153@fedora>
-From: Matthieu Rolla <matthieu@minio.io>
-Date: Mon, 13 Apr 2026 17:24:34 +0200
-X-Gm-Features: AQROBzDd0FdWvsP_NpSC7SZQS7XNeh_o5B4KnBJarZdCuvymbhybyDKS5Y8xKKE
-Message-ID: <CAPSO8MwiXZJ0z7N-uS5Vm3znRXUddWqNCe98Fg--4AumpLCDXA@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/nvme: add namespace hotplug support
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, its@irrelevant.dk, 
- kbusch@kernel.org, mr-083 <matthieu@min.io>
-Content-Type: multipart/alternative; boundary="0000000000007592f3064f5914ae"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=matthieu@minio.io; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] hw/vfio/ap: Callbacks for migration of guests with
+ pass-through access to AP devices
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex@shazbot.org, cohuck@redhat.com
+References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
+ <20260409141352.997844-3-akrowiak@linux.ibm.com>
+ <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE1MCBTYWx0ZWRfX859zhbUSApMA
+ bGWz5q1AY6jsrCndDYeoDGevqw4jle4RrLajdzdhjzvFMDZhhumTmZl6TjP5L69Lx/C4LJDxSKn
+ psEzbakiu472c8/VL8ugIw8CURBEiuvNBNKxWXCH7ZGreToHiUI3p8qVpiby621lfhsROjBvx4s
+ MSvbPiXN8wSsIK7po+T9f9H+qv1VecSdkr+VjKQ8XPg7+aviQSPYkzLcM7LjeAW7EFKg9AgldKr
+ mtuRPUznHjgbkmcCS6iY2i2d0Drq7GLPLsn/anSBBgCISuVVZJNxvzqkFh5y3bFmJmsKkrl4USz
+ VTboJJNJZmrImx4Xf8woJK3LGIcI/EFM47t4tyX2aXEBCONpUMBxkDbW16QHYwy0J7cBpVgOWwC
+ BoEyvksWTDL78zCptv8GbMMir45sNdnQpmCG3S5KWIJrByKQCHvG1Fh7/izbkJ9Mrowl6vucFCH
+ YRdVdmvDv3nbqfvineA==
+X-Proofpoint-ORIG-GUID: -wpZ3ZjxJy6mROSnbX6Jw9oGo1rj-QiW
+X-Authority-Analysis: v=2.4 cv=TId1jVla c=1 sm=1 tr=0 ts=69dd0a73 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=EJE7A_Tmek1c15OkdScA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: -wpZ3ZjxJy6mROSnbX6Jw9oGo1rj-QiW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 spamscore=0 adultscore=0 phishscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604130150
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,148 +126,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007592f3064f5914ae
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
 
-I tested further more the device_del + device_add and the AEN works
-correctly, causing the guest to rescan namespaces.
-
-However, when XFS filesystems are mounted on the namespace (via
-DirectPV/CSI in our case), the kernel doesn't reuse the block device number
-after re-add.
-
-For example, nvme2n1 becomes nvme2n2 because the stale XFS mount holds a
-reference to the old nvme_ns_head, preventing ida_free() in
-nvme_free_ns_head() from releasing the instance number before the new
-namespace is allocated.
-
-This causes XFS "duplicate UUID" errors since the same filesystem appears
-under a different device name while the old stale mount still exists.
-
-This is a Linux kernel behavior (ida_alloc in nvme_alloc_ns_head), not a
-QEMU issue. The namespace hotplug patch itself is correct. But for
-practical use with mounted filesystems, I found that the drive_del +
-drive_insert approach (keeping the namespace device alive) avoids the
-rename entirely since no ida allocation/free cycle occurs.
-
-Would it make sense to include drive_insert as a companion patch, or is
-that better handled separately ?
-
-Thanks
-
-On Fri, Apr 10, 2026 at 10:14=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
-om>
-wrote:
-
-> On Fri, Apr 10, 2026 at 04:33:47PM +0200, Matthieu Rolla wrote:
-> > Hello @Stefan Hajnoczi <stefanha@redhat.com> ,
-> >
-> >
-> > Thanks for the review! v3 sent.
-> >
-> >
-> > Wording: Fixed in v3, no more "physical PCIe slot" claim. Now describes
-> it
-> > as NVMe namespace-level hotplug.
-> >
-> >
-> > I/O drain: Moved nvme_ns_drain() to the start of the unplug handler so
-> > in-flight I/O completes before detach. Tested under warp load (16
-> > concurrent 1MiB uploads via MinIO/DirectPV)  device_del returns in ~400=
-ms
-> > with clean removal, no use-after-free.
-> >
-> >
-> > Symmetry:  moved subsys->namespaces[nsid] =3D NULL into nvme_ns_unreali=
-ze()
-> > so the namespace lifecycle is complete (mirrors what nvme_ns_realize()
-> sets
-> > up).
-> >
-> >
-> > I don't have a working Windows test setup, I'd really appreciate if you
-> > could test it next week as you offered.
-> >
-> > Thanks again for your time
+On 4/10/26 4:19 AM, Cédric Le Goater wrote:
+> On 4/9/26 16:13, Anthony Krowiak wrote:
+>> From: Anthony  Krowiak <akrowiak@linux.ibm.com>
+>>
+>> Implements the callbacks used by the VFIO migration framework to migrate
+>> guests with pass-through access to s390 crypto devices.
+>>
+>> Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+>> ---
+>>   hw/vfio/ap.c | 43 +++++++++++++++++++++++++++++++++++++++----
+>>   1 file changed, 39 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+>> index fd68983702..49947b18c3 100644
+>> --- a/hw/vfio/ap.c
+>> +++ b/hw/vfio/ap.c
+>> @@ -32,6 +32,7 @@
+>>   #include "hw/s390x/ap-bridge.h"
+>>   #include "system/address-spaces.h"
+>>   #include "qom/object.h"
+>> +#include "vfio-migration-internal.h"
+>>     #define TYPE_VFIO_AP_DEVICE      "vfio-ap"
+>>   @@ -47,6 +48,7 @@ static const VMStateDescription vmstate_ap_device 
+>> = {
+>>       .name = "vfio-ap-device",
+>>       .version_id = 1,
+>>       .minimum_version_id = 1,
+>> +    .unmigratable = 0,
 >
-> Awesome, thanks!
+> unneeded.
 >
-> I will give Windows Server a spin next week. I'm not an expert in
-> hw/nvme/ but the patch looks good to me:
+>>       .fields = (const VMStateField[]) {
+>>           VMSTATE_END_OF_LIST()
+>>       },
+>> @@ -66,17 +68,44 @@ static void __attribute__((constructor)) 
+>> vfio_ap_global_init(void)
+>>       qemu_mutex_init(&cfg_chg_events_lock);
+>>   }
+>>   +static int vfio_ap_save_config(VFIODevice *vdev, QEMUFile *f, 
+>> Error **errp)
+>> +{
+>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
+>> +
+>> +    return vmstate_save_state(f, &vmstate_ap_device, vapdev, NULL, 
+>> errp);
+>> +}
+>> +
+>> +static int vfio_ap_load_config(VFIODevice *vdev, QEMUFile *f)
+>> +{
+>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
+>> +    Error *err = NULL;
+>> +    int ret;
+>> +
+>> +    ret = vmstate_load_state(f, &vmstate_ap_device, vapdev, 1, &err);
+>> +    if (ret) {
+>> +        error_report_err(err);
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static Object *vfio_ap_get_object(VFIODevice *vbasedev)
+>> +{
+>> +    VFIOAPDevice *vdev = container_of(vbasedev, VFIOAPDevice, vdev);
+>> +
+>> +    return OBJECT(vdev);
+>> +}
+>> +
+>>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+>>   {
+>>       vdev->needs_reset = false;
+>>   }
+>>   -/*
+>> - * We don't need vfio_hot_reset_multi and vfio_eoi operations for
+>> - * vfio-ap device now.
+>> - */
+>>   struct VFIODeviceOps vfio_ap_ops = {
+>>       .vfio_compute_needs_reset = vfio_ap_compute_needs_reset,
+>> +    .vfio_save_config = vfio_ap_save_config,
+>> +    .vfio_load_config = vfio_ap_load_config,
+>> +    .vfio_get_object = vfio_ap_get_object,
+>>   };
+>>     static void vfio_ap_req_notifier_handler(void *opaque)
+>> @@ -251,6 +280,10 @@ static void vfio_ap_realize(DeviceState *dev, 
+>> Error **errp)
+>>           goto error;
+>>       }
+>>   +    if (!vfio_migration_realize(vbasedev, errp)) {
+>> +        goto error;
+>> +    }
+>> +
+>>       if (!vfio_ap_register_irq_notifier(vapdev, 
+>> VFIO_AP_REQ_IRQ_INDEX, &err)) {
+>>           /*
+>>            * Report this error, but do not make it a failing condition.
+>> @@ -287,6 +320,8 @@ static void vfio_ap_unrealize(DeviceState *dev)
+>>     static const Property vfio_ap_properties[] = {
+>>       DEFINE_PROP_STRING("sysfsdev", VFIOAPDevice, vdev.sysfsdev),
+>> +    DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOAPDevice,
+>> +                            vdev.enable_migration, ON_OFF_AUTO_ON),
 >
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Why not ON_OFF_AUTO_AUTO ? This would enable migration only if kernel
+> has migration support. If not, the VM would still start but migration
+> would be blocked.
+
+I made this change and migration failed on the destination host with the
+following error message:
+
+error: Requested operation is not valid: cannot migrate domain: 
+62177883-f1bb-47f0-914d-32a22e3a8804: VFIO device doesn't support device 
+and IOMMU dirty tracking
+
+This despite having the following property defined:
+
+DEFINE_PROP_ON_OFF_AUTO("x-device-dirty-page-tracking", VFIOAPDevice, 
+vdev.device_dirty_page_tracking, ON_OFF_AUTO_ON)
+
+
+>
+> thanks,
+>
+> C.
+>
+>
+>>   #ifdef CONFIG_IOMMUFD
+>>       DEFINE_PROP_LINK("iommufd", VFIOAPDevice, vdev.iommufd,
+>>                        TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
 >
 
---0000000000007592f3064f5914ae
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello,<br><br>I tested further more the device_del + devic=
-e_add and the AEN works correctly, causing the guest to rescan namespaces.<=
-br><br>However, when XFS filesystems are mounted on the namespace (via Dire=
-ctPV/CSI in our case), the kernel doesn&#39;t reuse the block device number=
- after re-add. <br><br>For example, nvme2n1 becomes nvme2n2 because the sta=
-le XFS mount holds a reference to the old nvme_ns_head, preventing ida_free=
-() in nvme_free_ns_head() from releasing the instance number before the new=
- namespace is allocated.<br><br>This causes XFS &quot;duplicate UUID&quot; =
-errors since the same filesystem appears under a different device name whil=
-e the old stale mount still exists.<br><br>This is a Linux kernel behavior =
-(ida_alloc in nvme_alloc_ns_head), not a QEMU issue. The namespace hotplug =
-patch itself is correct. But for practical use with mounted filesystems, I =
-found that the drive_del + drive_insert approach (keeping the namespace dev=
-ice alive) avoids the rename entirely since no ida allocation/free cycle oc=
-curs.<br><br>Would it make sense to include drive_insert as a companion pat=
-ch, or is that better handled separately ?<br><br>Thanks</div><br><div clas=
-s=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_att=
-r">On Fri, Apr 10, 2026 at 10:14=E2=80=AFPM Stefan Hajnoczi &lt;<a href=3D"=
-mailto:stefanha@redhat.com">stefanha@redhat.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">On Fri, Apr 10, 2026 at 04:3=
-3:47PM +0200, Matthieu Rolla wrote:<br>
-&gt; Hello @Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com" targ=
-et=3D"_blank">stefanha@redhat.com</a>&gt; ,<br>
-&gt; <br>
-&gt; <br>
-&gt; Thanks for the review! v3 sent.<br>
-&gt; <br>
-&gt; <br>
-&gt; Wording: Fixed in v3, no more &quot;physical PCIe slot&quot; claim. No=
-w describes it<br>
-&gt; as NVMe namespace-level hotplug.<br>
-&gt; <br>
-&gt; <br>
-&gt; I/O drain: Moved nvme_ns_drain() to the start of the unplug handler so=
-<br>
-&gt; in-flight I/O completes before detach. Tested under warp load (16<br>
-&gt; concurrent 1MiB uploads via MinIO/DirectPV)=C2=A0 device_del returns i=
-n ~400ms<br>
-&gt; with clean removal, no use-after-free.<br>
-&gt; <br>
-&gt; <br>
-&gt; Symmetry:=C2=A0 moved subsys-&gt;namespaces[nsid] =3D NULL into nvme_n=
-s_unrealize()<br>
-&gt; so the namespace lifecycle is complete (mirrors what nvme_ns_realize()=
- sets<br>
-&gt; up).<br>
-&gt; <br>
-&gt; <br>
-&gt; I don&#39;t have a working Windows test setup, I&#39;d really apprecia=
-te if you<br>
-&gt; could test it next week as you offered.<br>
-&gt; <br>
-&gt; Thanks again for your time<br>
-<br>
-Awesome, thanks!<br>
-<br>
-I will give Windows Server a spin next week. I&#39;m not an expert in<br>
-hw/nvme/ but the patch looks good to me:<br>
-<br>
-Reviewed-by: Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com" tar=
-get=3D"_blank">stefanha@redhat.com</a>&gt;<br>
-</blockquote></div>
-
---0000000000007592f3064f5914ae--
 
