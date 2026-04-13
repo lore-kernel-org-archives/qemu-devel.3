@@ -4,103 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF6EF34C64
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:46:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 963D8F34C63
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 16:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCJTZ-0003Vx-3G; Mon, 13 Apr 2026 11:45:25 -0400
+	id 1wCJjK-0006nZ-EI; Mon, 13 Apr 2026 12:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCJTX-0003VG-En
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:45:23 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCJTV-0006d9-Re
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:45:23 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-650789b22e3so5000629d50.1
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 08:45:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776095120; cv=none;
- d=google.com; s=arc-20240605;
- b=dvO53nnls/zz4KfAc67t8Mltv2voE2kdN/dXDPqiRhRHYcNR22/kpiyvux9tzmcK6p
- zPqc68lsZPaZX3e3pUkvoDcNFPiqgA7ct3VzVrthwE8z+0hYSqWXnIAicbnDTvzRCs9R
- Ootsu3n1LA0UtGiq/OJPwLRXlsfPjzEkRbidHv+ayL7b8f7Z68Ax8J5H10s6x+VdN6HF
- wb30Jmf2IgnB0zz/ZwMrTtYikECJOP4otD0BroJzFPMsjmvML2xxaPFjnbOq+S2DXwLC
- /gIFKpUIenaPvvTRrB7m2e0lcB2dZbgWg1M7G0V4fNUMkcn3CeUDVm48N7q53Q+uHyv1
- ESVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=riW71PclCiQU2fsUTHuBNzwXD1UZBB8o9+nl1jBl8jU=;
- fh=ALeMb0ICJgHgamdD3MB22cM7s6+GyDlr+DSZvDZGG74=;
- b=YPrss5knDaJluw5H3UgymZj4VC4JLsoZbeSyoRgWid6IURqy/euplw8enxGhNpLyKG
- jNa1YSQe6CR6ewL+gOAw/3rE+4C4HYZiK7f5KnnaZ77zmgAv2aotKKmU14qKj4O09AZT
- RJaHNV7UKWJouf7Nwa0icRPfAtFD47brZXhZ7PV/IdXLYZO3mJcv25bx5nWUBjIr/B0Z
- xTpSboR1cgL3RaMbJkOg3HJ1EbPDP8fjRcbu6DhX1Ja/Aw2vsdLQrYZONDF99S/hn/lg
- JaNnHBp4oh83/TNUl+hGhTII+oKd4TU7kg/0WF3vig7Kf+h8UFv0atA7GzcOE6v9n3JF
- PBPA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wCJjD-0006gl-4M
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:01:38 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wCJjA-00023U-DN
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:01:34 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63DEmakX1764445
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:01:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=EGFuY5l2bXI+/DkX4i7xgpWC8yw7k6Dv3SC
+ fyowaT/A=; b=TyB5u+ttwKw5iZoSgRdH9crr3EQfmTjNGfO+rvU9nx7PAfHXMVo
+ gtnor8qmjNMD4ZpTb616cXWn+fHZYAwR4sOuBvEzwzIRkXRvhuWSQT3HbMzMz6pB
+ BDrjJfaoprD+dxIPrfJ6FA/P7ITrygS/CIitB2C55J6i1wcwm1KD+WtuaAOSV76f
+ HBFeTLj/m2zRuXNHOuMlP0IpElOqVfU/CXvv8V7PS8iDrdfW9YA39RGo7iVERDb5
+ DfdTligoxeCtxXLSt/yv+uR+9MmxfGI2GUFrBFgQ4NYcJW/0s1zXXOTCEfbN0JP3
+ g8MhDXvEczlbbz+Ggsw2WrWujliJPqfpMkw==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dh2k087jk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:01:27 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2c0f6593ef5so6418610eec.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 09:01:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776095120; x=1776699920; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=riW71PclCiQU2fsUTHuBNzwXD1UZBB8o9+nl1jBl8jU=;
- b=S/lkp9FwrDL2o7r6gA7vYFnHjyWtpd2TawkQ8IbtBB52WW0cH/cxU7/UzD2yaMQDTo
- jWZ2XVlr/mo5B6GPRBWsFBBdLp4bV/LYanRhzWvjnLsZfxJODCZ2fW1y438+g4+anaAp
- 1HWyEN2yj2swC5/80IOiPrSVsIBsuMKcJJWBiNCsBfS+9Ba3w2JtKIhtAurJ9Fc346Cr
- 92gdILKhh6lPadKlooJ7m6sZ81QXNd7YvhjaYiPayr/XGwwf2dk9q+B9pmS54UixOmuk
- HYx8cgxgC2Z/RF4pHJbRE6tSsi4rozI00pCIwDmE+kkv/y9Ue7okxt1fPwE2KOnn3rUy
- ltRQ==
+ d=oss.qualcomm.com; s=google; t=1776096087; x=1776700887; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EGFuY5l2bXI+/DkX4i7xgpWC8yw7k6Dv3SCfyowaT/A=;
+ b=Zm1yvGNqQdkRHbmGJib/Ijrtg4lTfGHoSil46jP33KUKsbQGMjsrm3ri9GFszYkA7u
+ YAdg59pOinwN0L3wlnAz6XlB1OfQhCdQ5lv+HbUW5KZ3LOWzClSEza8lsZ9FI3yo4zlQ
+ i4Ep5I85JuECl7/Oh5PgP+ruyulTPkSmBM1J77PSE18P1nnTsXqLlltVqSXGntubx2u6
+ fmHMmB/BouUtis7AU8F42XqRD1n1Z+TAhSgCuqrJoi0orAK4rATkGPNNcfWk/OcMB2Gm
+ 84qSFXWmhtc/12tEnAnHEiW2LsG3a46Y4QdioocMAdfprdEDFquqmoKPF2+u6zV3eeB/
+ 48qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776095120; x=1776699920;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1776096087; x=1776700887;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=riW71PclCiQU2fsUTHuBNzwXD1UZBB8o9+nl1jBl8jU=;
- b=BhqRXJyLQ0/RUfTFPzyoaDiXIvaXbTr2hbE58laeLCG8WbdgdY+1uK7f/vAjkErgWF
- +nAQNBKwjwOYH34bHJjF1+RwNEbqwWqhlUtzHoEX/4D5sCUWLci40+wOXjUN6AlNwulH
- GlKqdtuLnUBO04FmWI5vLjXykmih9AHEoiNs10yy9rOxWHxxrwT/JumvSj/U0J8d2ERc
- RybiCTfAzx4s6pqrYM47wrZSVEEzP1+uZ/oNsjJ9RQCdlphKJybTVku9hjRbkj0tIlcj
- QYEcgc3m/WgnwkugmBn/V0WXtBEVFZQ4DihMkPEBTBoLgNoZid7a3rtDIz/6MNcxdX0P
- klCQ==
-X-Gm-Message-State: AOJu0Yw2oeOF3CE1ZDxlGPvMhGcFsldWdda+oVOdci0nPYJ3RoC/H0W2
- Q23WFcUJR17gV2DUSHMT2MMLjX7FUpHO+XKDd46BR8MLzvb1mcyqxM1VMuSUVo+cE5epMtsgiJ+
- T/2hLvFVsG3PNUNpjkqMgQzkux5fvL+n23Tthqc6XYA==
-X-Gm-Gg: AeBDieuWg9PHyf01b6M13mp8I2EdHe8LtqZT+hYjxvcWYRokBFdHdDMOIMHkqz9NNTL
- j8ibJ2BnGjEkx9ix0FMIMzDmPN60P0htwgqJf3ndvZ29X+XhPvlduSO0czwZahZnKThoNk/hnyf
- b7uq3bvKUvwUXlLCwgAz25s4y0gNlp7mdGKUwp1+BRy6IQbNBHJfCXXdjXLjd8FCcb01sHWfagS
- JsUp0XSBlHiFyZtCrqpOhiSrwZ3cAxAVGDzynde/KLWNFZgBA6I8kyAfoV7RabMmXTIYzGmicQC
- fulSH0pETsLiBp22JWNXz2XVWSFxiRzAjlNn5bNbA6LMMNKKSsI3bdvCB7wLuex2cxA=
-X-Received: by 2002:a53:ead2:0:b0:651:8abe:ce65 with SMTP id
- 956f58d0204a3-65198a6cb0bmr10055130d50.18.1776095120016; Mon, 13 Apr 2026
- 08:45:20 -0700 (PDT)
+ bh=EGFuY5l2bXI+/DkX4i7xgpWC8yw7k6Dv3SCfyowaT/A=;
+ b=VUrQ/A4qZHWicg3MaBvNlbD40j2Fl4vG5N9Bxyq1YnORc5bBvKrjm2QcUdHeD1fRgj
+ e0gCi7ocmMrFHbOXNycVayveDDHUFk/vOlrXg/iT3hG8yrQlYKGbHkGf8VYFfxI5qo+x
+ zlx+cRPrvWyaJsb+uj3bdzXLkB+DJPC+zOySiyUdeNQhao0QGycoAymNGmATmR6M87mC
+ OZ7Uh4ZRvj82Cg6nLGev5V2c/sBSOrnHq6yoMDgo60hyaVlvIBciT/139Nii/MgJP/lp
+ 2dGK4zS8Swi984csHS+kpnN4eOTtzu6saNVvFp+MAM6MklymmeEB25yet4V6CgWMX8+A
+ F02g==
+X-Gm-Message-State: AOJu0YxVRNdMCaDZodCeygYtZ2jjc2OVxNDV/w9apzkg0smPlkWCsF1d
+ qZE+adlNJoTKRzDfiStAFHhd+yD95FIQPR14lg7ru/WFKK+aVTSGHTZol8N54/TY6S9tPWY39CQ
+ BpIVmjVrDIgCVBuRNO2XaC35OUkSeQeA9OqwZERESxMP5rkVlVgtqMEzMaQuCKtIUL5VE
+X-Gm-Gg: AeBDievEjr2i2gsIvcH/3CAPWxabgeFLDy8A4sZdU7aTX97vn6N/eBi4gYxfI1BzDjP
+ j6iT1NXDLRJKHznQWuaObLBhfXEX9pwdp1tQAKbfl62rpB90Mi3Y3O8y0W7tIh4hY6Y+mJrutK4
+ SkQ5xpePFVOpGCkuq1oer0+BtjkVtsZMaU38hzs9ZVXHIXaIZ5T0M8Mu6Qs/fhJTKD8I8aIZkQA
+ sby3yB7DmH8pcZvS7mlipZZFk1Imh19Er9z1MlcuXmU7giFh8AGX9MlObf8gUEVGLOxMcHMcOyN
+ B9hq94lyqXlSKIxpAQHOEs7vQ50IppX16U91jzMeYjHoxqtcMseuN6sQNCui8T4zsQuDefsmfQ7
+ xoCZWhvnlI32XPlPhn4rUqsCXiEv5ytPdQoT9d7EPDIqtFg7qzzQolt0jdowkzYRQypkTuaM623
+ /hXvdCzpV7gPMCxHIeTQU=
+X-Received: by 2002:a05:7300:e207:b0:2c5:d833:a4fe with SMTP id
+ 5a478bee46e88-2d5876a10f7mr7948266eec.10.1776096086367; 
+ Mon, 13 Apr 2026 09:01:26 -0700 (PDT)
+X-Received: by 2002:a05:7300:e207:b0:2c5:d833:a4fe with SMTP id
+ 5a478bee46e88-2d5876a10f7mr7948163eec.10.1776096085246; 
+ Mon, 13 Apr 2026 09:01:25 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2d55faa586bsm19837210eec.11.2026.04.13.09.01.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Apr 2026 09:01:24 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, slp@redhat.com, peter.maydell@linaro.org,
+ philmd@linaro.org, richard.henderson@linaro.org, mads@ynddal.dk,
+ brian.cain@oss.qualcomm.com, mark.burton@oss.qualcomm.com,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH] accel/hvf: fix double hv_vcpu_destroy() causing teardown error
+Date: Mon, 13 Apr 2026 09:01:22 -0700
+Message-Id: <70cca2a5cdde3e6531e5c8f1e399e0b584d51ad6.1776096073.git.matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-References: <20260413132840.20439-1-stefanha@redhat.com>
-In-Reply-To: <20260413132840.20439-1-stefanha@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Apr 2026 16:45:08 +0100
-X-Gm-Features: AQROBzDQMpsAruWzP6KeODEOECHODWFOk-lT8VNu2UEopEs2xbgr2DkTkj7ZMnY
-Message-ID: <CAFEAcA-rcqNYrPJ3zN7p41SOHXQHzLHEYwSmr3J1qyMkGXbQ_Q@mail.gmail.com>
-Subject: Re: [PULL for-11.0 0/1] Block patches
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 9i5stJn1e3izGJYLhaVde7u5scZmL_jE
+X-Authority-Analysis: v=2.4 cv=CsGPtH4D c=1 sm=1 tr=0 ts=69dd1358 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=NluNWX7204cXcFQq7gAA:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-ORIG-GUID: 9i5stJn1e3izGJYLhaVde7u5scZmL_jE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE1NyBTYWx0ZWRfX9pWbvNDlGWHr
+ W8DEF627ADm0DWd1YKrMbY/lYF0m8E5Qtc/5QyePFpAWCaC/7wFvQ4uFFeq1qCwcYzO2jkql7ii
+ kheO9w2+8w2vgRXZ2wFjxBorm3yAtqFAovp/2AKqxPqAJ1hJ5e/T39QOrwDkxd4WGZ2JVsI/MSD
+ thotQnN8Ixa6nFWdTNPJwmL/LKKLlraZiWBi56UjavbX7Te3srmlmIiXMIwNxf/Zm+81fYhw0UX
+ YXryqIQO94KIKDBWT3aT8QrQrUCWa3PtkMjpBqZCqGUkKgo2wbHgLujRPnBRa/QWeyFvoMYa6/9
+ 1ln9C9NrS8uuwlTggDKfFrCF73M1Ifl16uDsv7q+2qobMD3d8bMi/gPYznwpind5jLjOACW9Sdu
+ pub2Lua8UiY0GSxLiydmEZe2di/p1fNI0vVSi94fgQJm67tyz2l8cUOWXEntzUfToMcZjuueHOJ
+ qtFrcPuQDEIJMbZ0qGA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604130157
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,32 +148,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Apr 2026 at 14:28, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->
-> The following changes since commit becd22fdc2a071783d9e04421526633772b3b98c:
->
->   Update version for v11.0.0-rc3 release (2026-04-09 21:18:56 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/stefanha/qemu.git tags/block-pull-request
->
-> for you to fetch changes up to 4913ae36f9796c55d434dcbfa6bdb9ebb3e5e4b1:
->
->   virtio-blk: fix zone report buffer out-of-memory (CVE-2026-5761) (2026-04-13 09:21:38 -0400)
->
-> ----------------------------------------------------------------
-> Pull request
->
-> virtio-blk zone report CVE DoS fix
->
+The following callstack causes hv_vcpu_destroy() to be called twice,
+producing HV_BAD_ARGUMENT on the already-destroyed handler:
 
+hvf_vcpu_destroy
+ |
+ |_ hv_vcpu_destroy
+ |
+ |_ hvf_arch_vcpu_destroy
+     |
+     |_ hv_vcpu_destroy
 
+Let's remove the redundant call at first function.
 
-Applied, thanks.
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+---
+ accel/hvf/hvf-accel-ops.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index b74a5779c3..d1c532f7e0 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -113,9 +113,6 @@ static void do_hvf_get_vcpu_exec_time(CPUState *cpu, run_on_cpu_data arg)
+ 
+ static void hvf_vcpu_destroy(CPUState *cpu)
+ {
+-    hv_return_t ret = hv_vcpu_destroy(cpu->accel->fd);
+-    assert_hvf_ok(ret);
+-
+     hvf_arch_vcpu_destroy(cpu);
+     g_free(cpu->accel);
+     cpu->accel = NULL;
+-- 
+2.37.2
 
--- PMM
 
