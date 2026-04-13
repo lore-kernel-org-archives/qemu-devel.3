@@ -4,126 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B516EBFD27
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F16EBFD20
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCDfo-0007CC-4H; Mon, 13 Apr 2026 05:33:40 -0400
+	id 1wCDfo-0007CB-2f; Mon, 13 Apr 2026 05:33:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wCDfk-0007BX-Al
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wCDfk-0007Ba-Mc
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:33:37 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wCDff-0005Xq-H1
  for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:33:36 -0400
-Received: from 10.mo533.mail-out.ovh.net ([46.105.72.194])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wCDfc-0005U9-Kz
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:33:31 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4fvMfC2wc9z5wm4;
- Mon, 13 Apr 2026 09:33:23 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Mon, 13 Apr 2026 09:33:23 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.254.103])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4fvMfC04lkz7v45;
- Mon, 13 Apr 2026 09:33:23 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 36EEA2403A4B; Mon, 13 Apr 2026 09:33:21 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-97G00239af5ffc-7425-4ff7-a01f-aec15dcb7842,
- F7713FC095E1F08B8E0558270325563210D84F3E) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d171fb32-5a43-4855-83ca-6858ccfdec2c@kaod.org>
-Date: Mon, 13 Apr 2026 11:33:20 +0200
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-651cfaa21e6so450573d50.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 02:33:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776072810; cv=none;
+ d=google.com; s=arc-20240605;
+ b=cJy0Me9qIYcm6bqfr/QOkfjLPAwGudZF32JDqVyzktlhsNwwIx/mfwA2Ktgx/WyN9N
+ oNjr5msR4d9yQkgwTAiKokgxJFeNUailss/EVJgAmA06s9ySbSuoo3UExtPZiUZp0NO8
+ ODyvvOn/oiTDZjIihTAn9rB1Tpro1O0sZdX6qrdTupK/Uf99nVPU40kMC6LOAfRqzqab
+ 51YDgG0XahxwN6QZmjGdRXOzxtkyqUlm/mbucx8Jg0APfFzwJK2dwnqa5cNnb3EbD4ln
+ n4mRVYr3hnCd3Rc/0miST3DOPlNTyFKR8SsDT52YXnoqH945vYZ7XD55nmxnx7GCjqiZ
+ 5Fqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=0XI9DbHYUkGehlX0OcWQ888vFtJXew82enKuyuQHRk0=;
+ fh=q+92S+8ZWXLl9eg/tdbobV+jDbNbyjbR8mwSpqPZ/ZE=;
+ b=TOOGvRs2N0EwU+RQLCGl+Eyh4D8/L832tw73vb/9yt+c66AIOB0d7etCuv6pfzpfBo
+ J/pIb62i2TRy3IxS9QCnS4Bs0THpT13uDABKv8t0qaTJ5nb1nCFnNTKuKhAkG14d4Chi
+ JBOq3gEsk56yOfZjlnBeiBl/urqJjdNVFFbtrhoq2r1yDLUO3ZI1lgaXeFHN7InYBSQB
+ stDMDVNsAt0q7EX7z6U8ioCmOu0xXP62NVEpbuoXdi7D8VOZey7OXJrCRaGxq3sf+1fc
+ cPc8sJgjV+sBxdPZ/WbmNuN9r2XAGR9uV2puLMJemT2UzwhMljkx7xLwlYR5j2f3V/63
+ Y1DQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776072810; x=1776677610; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=0XI9DbHYUkGehlX0OcWQ888vFtJXew82enKuyuQHRk0=;
+ b=fuS8rQ6xH4QSaZb0dK2pZoGjVLM1ZJnvnwWsNtA0pQqMn5kLOyRQwc2OTa4zlcuqen
+ N6VF+KZDQUVg8lXrOHVTIO5tMJVETGzilhLRiCdBLBfibI8kLEpKeUz3HZgq27mbKRGE
+ /Ts0cf6K6CVaqTmWC+QEXG/jwGDIhprfSYKfikEyYnGVVeL+n4NAhSo1WqN4FkY6vDpw
+ i1XuFE7aukieoQC+GbL++Q/KZK1X8A9EfQTgCi3qovj+1ONfPAJVWAgTYqIsnPkSqa0V
+ n0YqLnlkK0LSvyf+O7phubaCqm0pn4bj2ExYsFGR0SRypFv/AXe+IUDH4F0w8+ztrh+0
+ QZcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776072810; x=1776677610;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0XI9DbHYUkGehlX0OcWQ888vFtJXew82enKuyuQHRk0=;
+ b=dPGw4p+SOEQJB6xgJWjFgokph1mjKVhIsmV8c+eoegYp9UwvH24okoyWONwC462tmJ
+ MRswEVpXTlzD/VdPGkD8rKJganJit/RyQD74iVX+Wcs6QWjN6zKFIKiy+UsEFisyzenK
+ V2Uf65plC+jq5mc5LkuSiu29QgjMnVn6k5q2/ze6mbfGcSY+6ZoHynugkwNJhpKLAtl5
+ U/ck34aMpglp2dC4k3VhRYPnt6UpuPdvWVBMcQshOcDm+2RM7xBgbZR3LEVOiYBVCfrs
+ G4VIyUBfOn7Cavla42W4CxdvQdGiyEKSWX+PM6JrzU8q5ADEKh476Spu0F4yVvmc3YL3
+ x8fw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9lFQIZwzZZYbuskegYoEGYGyiqY/Q2mfY3Hz4l8abWil7X8bM6Cb/pDItwt35MExeNR8jRZ70sKCuY@nongnu.org
+X-Gm-Message-State: AOJu0YyZpiFELI3xYBzonMXPuiUX29pWGeKM6grQv/8kPJ5tyAWUhzW3
+ 7BRaTLnnaBIAIAadujsmziOP4dJCQSXZfDPq2P0mtKihHwGT7E8qqsgstnW7Rb1HfoO/yVSd8qe
+ jTvIy+kcAwOx8SUuGoSCpDZEb/RD6fXPGTbnXz/i4Yw==
+X-Gm-Gg: AeBDievVYA0naDAq71s3Ctj0SK1AOg8dz872FZPKlnUugSIcJASchrbBAi/6l0Rq0lC
+ SBJkYwxM4ZLjpwhf/uPrU1Dj/fIrzkMXtdwOE7Hp50KnNA1bftYgUUWykn9ENXVGoiVWLtpT9v8
+ BQtcA8Scb0QKMp5CuuDuqx7zgbVWSFsX7O4qb2+n3uMEu3Hrxe5rOYBgB0Aixv2+IIU3s3IIkyI
+ XVrP0Z2I9mZOgm65lpz/kiYWkNaYbBy9/RoB/v33pZao7NETK09F41x5fy02LZf8TjMTT0U96hd
+ PdvX4T7Adp2G6+7wuBSfMe1UIlBEGRkSa40zpt8L0qDd2bg2/d6hHTo19IqbHUMEbCSALUmYJFe
+ lYw==
+X-Received: by 2002:a05:690e:1341:b0:650:ece:89fd with SMTP id
+ 956f58d0204a3-6518721b5b9mr12869286d50.27.1776072809671; Mon, 13 Apr 2026
+ 02:33:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/15] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM
- remap
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <20260224065556.3847942-1-jamin_lin@aspeedtech.com>
- <20260224065556.3847942-4-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260224065556.3847942-4-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 13286463329606151307
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF/gh+F6g+bX3gy/LsQXvLELX3I/IFlLipXbRDXdOMMZ5Saq7h8hwVchmpAyXPXDBlVfEGhOvpifKE3+E5LA69O0/TMjOjfowM1uETeUdTJFqvVamDvpU0MNG3ty3W2IzjXz7E/apYAhYsbkwSl16LdyhuSqS0n9YJSGfA6af3pTaVfFq26t2SWFqOGp4WALQEyQRvmDop10D0yiwVhQ0KdTfuGfR4IlYJdRUnXADv5g+LwnS5YStS0bZXQT9RDS5fhV3CppOk8iLziWSvJIiDVkHJeNp1mcCNwlZ0VY3oQ+ACrgpFZq78ZV3CRyqwRLmb/y+WvTv/bUhKAjOzyNd9aD292bleJ1xjapZ/9wTYsg5YDRYOGNqb4bYdvCOXxR7DtC0V4Y2LVYiIgH4RVsg8CGU0El3cyoyStvfR2XRfzx1tRbJwY4NOO4LaIGf6kUIIQjxJHyU7FY+em6DX8Z1woqN64qnPkKHKNMN2pEmafVPyiaZme8FjlnWDjlQ+a4sCJCS1gYEaYK11VIxkKmPM4TPm5jQBndfuwZX9KHBjEpj+Un5Negid2HUQTAf/n89z9xzr2mJhnIRMI8EV220eYEk8VwvZTnDse8+8kkzUxRb2Ww1tenbZgTg0zkk/4VUAYzIFq6q/H5zB2LsXF/9+Xvq2qbE1CKZ2rZVIO6DPaLA
-DKIM-Signature: a=rsa-sha256; bh=XRVoK4RkaeUf/znT0NF3v86chqU2JVNDnGRFyxVNDx0=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1776072805; v=1;
- b=QTA+8POMELZc87xgY+10Uw3CMVHpsoHzDTQaTuCanvvvosiOJgcTjEog8JYDPp/lvQyJsWoh
- MxfH00YrlSwH3XGb6jzOX/zO2KDUF/ATZnso+EqOlmVAZWisfSg293lvEFmv8ybLj8UJddN+jEZ
- udPj8Dmf7moAdbwenv3BzCV/efHgwDQNnBwrYwkPK0JIjUTkm2IdbZ/zVgt+TDQGDcQnPSV7s1u
- Ob7cr35+VcSUKygc1ubllV76fV3wBaoMl5MK6c+8Uzv6tSFeiefsLByoDazNHbkkX+xV/BrBODO
- uftcSv7atOh90i2QveHMXFd4uRkTr/u+uFTEm3o2bhtPQ==
-Received-SPF: pass client-ip=46.105.72.194; envelope-from=clg@kaod.org;
- helo=10.mo533.mail-out.ovh.net
+References: <20260413090010.60339-1-anisinha@redhat.com>
+In-Reply-To: <20260413090010.60339-1-anisinha@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 13 Apr 2026 10:33:17 +0100
+X-Gm-Features: AQROBzCPNQstYoD5bOM-E3AUU_4dEQnR2dcVMuHGo-eva1X-zovzQPwiUKgqIfo
+Message-ID: <CAFEAcA__kgxb-9FEsBu_3cmv3UZMMy3kuqk9Bf1NqoQpnEmmSw@mail.gmail.com>
+Subject: Re: [PATCH for-11.0] accel/kvm: return early from kvm_irqchip_create
+ if kvm does not support irqchip
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>, 
+ Gautam Menghani <gautam@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,193 +121,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 07:56, Jamin Lin wrote:
-> This commit adds two MemoryRegion aliases to support PSP access to
-> SSP SDRAM through shared memory remapping, as defined by the default SCU
-> configuration.
-> 
-> The SSP exposes two DRAM aliases:
->    - remap1 maps PSP DRAM at 0x400000000 (32MB) to SSP SDRAM offset 0x2000000
->    - remap2 maps PSP DRAM at 0x42c000000 (32MB) to SSP SDRAM offset 0x0
-> 
-> These regions correspond to the default SCU register values, which control
-> the mapping between PSP and coprocessor memory windows.
-> 
-> Set SSP CPUID 4 and bumps the SCU VMState version to 3.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+On Mon, 13 Apr 2026 at 10:01, Ani Sinha <anisinha@redhat.com> wrote:
+>
+> During refactoring of kvm_irqchip_create(), the refactored code was returning
+> early from do_kvm_irqchip_create() function if the required capabilities were
+> not present in KVM. This was not translating to an early return from
+> kvm_irqchip_create() as was the case before refactoring. This is because,
+> do_kvm_irqchip_create() did not have a means to notify the caller of the lack
+> of kvm capabilities. Fix this by making do_notify_irqchip_create() return
+> EOPNOTSUPP error when required capabilities are absent and then the caller
+> can check the return code and return early.
+>
+> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM file descriptor change")
+> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 > ---
->   include/hw/misc/aspeed_scu.h |  5 +++++
->   hw/arm/aspeed_ast27x0-fc.c   |  2 ++
->   hw/arm/aspeed_ast27x0-ssp.c  |  6 ++++++
->   hw/arm/aspeed_ast27x0.c      |  4 ++++
->   hw/misc/aspeed_scu.c         | 42 ++++++++++++++++++++++++++++++++++--
->   5 files changed, 57 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-> index d003955428..9c29ca217d 100644
-> --- a/include/hw/misc/aspeed_scu.h
-> +++ b/include/hw/misc/aspeed_scu.h
-> @@ -39,6 +39,10 @@ struct AspeedSCUState {
->       uint32_t hw_strap1;
->       uint32_t hw_strap2;
->       uint32_t hw_prot_key;
-> +
-> +    MemoryRegion dram_remap_alias[3];
-> +    MemoryRegion *dram;
-> +    int ssp_cpuid;
->   };
->   
->   #define AST2400_A1_SILICON_REV   0x02010303U
-> @@ -64,6 +68,7 @@ struct AspeedSCUClass {
->       uint32_t nr_regs;
->       bool clkin_25Mhz;
->       const MemoryRegionOps *ops;
-> +    void (*dram_remap)(AspeedSCUState *s, Error **errp);
->   };
->   
->   #define ASPEED_SCU_PROT_KEY      0x1688A8A8
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 5eb6680da9..77ce312591 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -100,6 +100,8 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
->                               sc->uarts_num, serial_hd(1));
->       aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART7, sc->uarts_base,
->                               sc->uarts_num, serial_hd(2));
-> +    object_property_set_int(OBJECT(&s->ca35), "ssp-cpuid", 4,
-> +                            &error_abort);
->       if (!qdev_realize(DEVICE(&s->ca35), NULL, errp)) {
->           return false;
->       }
-> diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-> index 437fff3311..4a9c8c1406 100644
-> --- a/hw/arm/aspeed_ast27x0-ssp.c
-> +++ b/hw/arm/aspeed_ast27x0-ssp.c
-> @@ -198,6 +198,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
->       memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCU],
->                                   &s->scu_alias);
->   
-> +    /* SDRAM remap alias used by PSP to access SSP SDRAM */
-> +    memory_region_add_subregion(&s->sdram, 0, &s->scu->dram_remap_alias[1]);
-> +    memory_region_add_subregion(&s->sdram,
-> +            memory_region_size(&s->scu->dram_remap_alias[1]),
-> +            &s->scu->dram_remap_alias[0]);
-> +
->       /* INTC */
->       if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
->           return;
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 87dcb82e1b..b914c01825 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -432,6 +432,8 @@ static void aspeed_soc_ast2700_init(Object *obj)
->                                 "hw-strap1");
->       object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),
->                                 "hw-prot-key");
-> +    object_property_add_alias(obj, "ssp-cpuid", OBJECT(&s->scu),
-> +                              "ssp-cpuid");
->   
->       object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUIO);
->       qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",
-> @@ -794,6 +796,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->                                   sc->memmap[ASPEED_DEV_VBOOTROM], &s->vbootrom);
->   
->       /* SCU */
-> +    object_property_set_link(OBJECT(&s->scu), "dram", OBJECT(s->dram_mr),
-> +                             &error_abort);
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
->           return;
->       }
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index e4160356e4..84fe88e58b 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -20,6 +20,7 @@
->   #include "qemu/guest-random.h"
->   #include "qemu/module.h"
->   #include "trace.h"
-> +#include "qemu/units.h"
->   
->   #define TO_REG(offset) ((offset) >> 2)
->   
-> @@ -593,12 +594,16 @@ static void aspeed_scu_realize(DeviceState *dev, Error **errp)
->                             TYPE_ASPEED_SCU, SCU_IO_REGION_SIZE);
->   
->       sysbus_init_mmio(sbd, &s->iomem);
-> +
-> +    if (asc->dram_remap) {
-> +        asc->dram_remap(s, errp);
-> +    }
->   }
->   
->   static const VMStateDescription vmstate_aspeed_scu = {
->       .name = "aspeed.scu",
-> -    .version_id = 2,
-> -    .minimum_version_id = 2,
-> +    .version_id = 3,
-> +    .minimum_version_id = 3,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT32_ARRAY(regs, AspeedSCUState, ASPEED_AST2600_SCU_NR_REGS),
->           VMSTATE_END_OF_LIST()
-> @@ -610,6 +615,9 @@ static const Property aspeed_scu_properties[] = {
->       DEFINE_PROP_UINT32("hw-strap1", AspeedSCUState, hw_strap1, 0),
->       DEFINE_PROP_UINT32("hw-strap2", AspeedSCUState, hw_strap2, 0),
->       DEFINE_PROP_UINT32("hw-prot-key", AspeedSCUState, hw_prot_key, 0),
-> +    DEFINE_PROP_INT32("ssp-cpuid", AspeedSCUState, ssp_cpuid, -1),
-> +    DEFINE_PROP_LINK("dram", AspeedSCUState, dram, TYPE_MEMORY_REGION,
-> +                     MemoryRegion *),
->   };
->   
->   static void aspeed_scu_class_init(ObjectClass *klass, const void *data)
-> @@ -863,6 +871,35 @@ static const TypeInfo aspeed_2600_scu_info = {
->       .class_init = aspeed_2600_scu_class_init,
->   };
->   
-> +static void aspeed_2700_scu_dram_remap_alias_init(AspeedSCUState *s,
-> +                                                  Error **errp)
-> +{
-> +    if (s->ssp_cpuid > 0) {
+>  accel/kvm/kvm-all.c | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
+>
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 774499d34f..92af42503b 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -2575,7 +2575,7 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, qemu_irq irq, int gsi)
+>      g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
+>  }
+>
+> -static void do_kvm_irqchip_create(KVMState *s)
+> +static int do_kvm_irqchip_create(KVMState *s)
+>  {
+>      int ret;
+>      if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
+> @@ -2587,7 +2587,7 @@ static void do_kvm_irqchip_create(KVMState *s)
+>              exit(1);
+>          }
+>      } else {
+> -        return;
+> +        return -EOPNOTSUPP;
+>      }
+>
+>      if (kvm_check_extension(s, KVM_CAP_IRQFD) <= 0) {
 
+This function confuses me. With this patch it can do three things:
+ * report an error and exit(1)
+ * return success
+ * return a failure code
 
-why not introduce new Aspeed SCU subclasses with custom realize and reset
-handlers instead ?
+What is the difference between the cases where we exit and
+where we return the error code? The commit message says we
+return an error "when required capabilities are absent", but
+we do the error-exit for e.g. "KVM_CAP_IRQFD not present", which
+sounds like "required capabilities are absent" to me...
 
-> +        if (!s->dram) {
-> +            error_setg(errp, TYPE_ASPEED_2700_SCU ": 'dram' link not set");
-> +            return;
-> +        }
-> +    }
-> +
-> +    if (s->ssp_cpuid > 0) {
-> +        /*
-> +         * The SSP coprocessor uses two memory aliases (remap1 and remap2)
-> +         * to access shared memory regions in the PSP DRAM:
-> +         *
-> +         * - remap1 maps PSP DRAM at 0x400000000 (size: 32MB) to SSP SDRAM
-> +         *   offset 0x2000000
-> +         * - remap2 maps PSP DRAM at 0x42c000000 (size: 32MB) to SSP SDRAM
-> +         *   offset 0x0
-> +         */
-> +        memory_region_init_alias(&s->dram_remap_alias[0], OBJECT(s),
-> +                                 "ssp.dram.remap1", s->dram,
-> +                                 0, 32 * MiB);
-> +        memory_region_init_alias(&s->dram_remap_alias[1], OBJECT(s),
-> +                                 "ssp.dram.remap2", s->dram,
-> +                                 0x2c000000, 32 * MiB);
-> +    }
-> +}
-> +
->   static uint64_t aspeed_ast2700_scu_read(void *opaque, hwaddr offset,
->                                           unsigned size)
->   {
-> @@ -973,6 +1010,7 @@ static void aspeed_2700_scu_class_init(ObjectClass *klass, const void *data)
->       asc->nr_regs = ASPEED_AST2700_SCU_NR_REGS;
->       asc->clkin_25Mhz = true;
->       asc->ops = &aspeed_ast2700_scu_ops;
-> +    asc->dram_remap = aspeed_2700_scu_dram_remap_alias_init;
->   }
->   
->   static uint64_t aspeed_ast2700_scuio_read(void *opaque, hwaddr offset,
-
+thanks
+-- PMM
 
