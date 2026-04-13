@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8C8F34C49
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80962F34C49
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCFz7-0000AP-9Q; Mon, 13 Apr 2026 08:01:45 -0400
+	id 1wCG7R-0001Ft-Uq; Mon, 13 Apr 2026 08:10:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCFyw-000078-0x
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:01:34 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1wCG7O-0001FU-2r
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:10:18 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCFys-0005lc-Fr
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:01:32 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-651bc8f864fso712795d50.1
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 05:01:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776081689; cv=none;
+ id 1wCG7M-0006zo-Hp
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:10:17 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-6501418152cso3830095d50.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 05:10:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776082215; cv=none;
  d=google.com; s=arc-20240605;
- b=EuOw0jhLJEHHL1zyWi6atHgKtNfv3KoG69HYRx2fYNKIJb82jfub1aKEldQMFo2z8a
- GxslLYFBY8VVxp+Ucgd9Oi+KjZl6jDmvJn0js5AihVnx2i3EZpqb95T/hxpL+1jgGQ9i
- qB36t8KDbjtrJPddpaSIHLcXNKb067s9FtDn+nN7bC3MAV7hXgwnInzyp/O/qIaO+Hpw
- HEhULeSrIMU/Pr/WowR/mrURcEdmgxDk8Qzd2s9rDhNrzC+vPThDZ+bxlKPTiMtIounV
- LWdE39deRJRQv47tNUGTPTMzB2G8pQBMgHKTI7jmhaKMBJaMS25rbHCYwduC5dN1L+IP
- /GKg==
+ b=goLQOt/ocWYyhzj67w+MPqRRpFV9xMZ0VWaNFHdqn4fI9VeBH9gY3C2epqcH2gYjbh
+ ZWSR4MwwZT7MU6phrC+r7EaBujc92GuuEGMwuGWF3RS1+r+KxHgJ2PX5mBrXisgM8NUA
+ 8T2iG0B34JevT1a1wmwUc0nZvD1vPEFnWBCenqc0/X3bwVwOAIp9070YIPxhQg6/g2ya
+ yzIlkAVJKZ+G/wPMVWYw/up1loQ6bguNWz1HRZ9wwaX8vN4hBbw/S6hL85RwLvsZc9O4
+ Q5wNQ32fXA68tySOKPc6BztUWSW4G6bxGztVsbhCXsDHPXhQqAIcE0MhwH17FmvO1ZEZ
+ y47A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=kg4fpig85e9+P7TZRqwVS3sXGmsWpc/MTnaSigaxjmI=;
- fh=4CeLI+GdcZXeyr0Pf2AGol/gPKPkqBOXdXINghNu4gQ=;
- b=Az+q1YsF4Vza0d9nyMxzkKE1o8EJ92yaIOLd1vMEsyJzsnlFhbeE88ZtEqfOaJP3Oa
- KFrQ7ucMAgnNGh9QqG1kBpZYm4ujS1+Z63lckBZ3ABvx5gIxT2xRbd10OGS5v4z/QyCt
- IYCYuIRuTxbRMAOa3/EZlt6UAvcLaHk25n6bVC395tyLWYJlzeIWX9FbeEqHht2pxcPz
- X4I+Gf232O/1E3b1ewebR2BD5zo+ek7NPPgMhxzkZ40shP+BiyhUqvLsvw0PAzH+n48B
- v25HVPC8wmLNR+apPAAuFmGur12R874HNu7h2aGj+C4ghSAt79zYfYxSnRBawHm+ApLj
- O3Pg==; darn=nongnu.org
+ bh=d0l7uKyUGAFvL6R4w6MO2qwL5tFfxbP6Pv5jSvZFfDc=;
+ fh=nuDyw2AaQVMu/z3gTSY9tFXBGNPo8PzzGimxbuSOXjs=;
+ b=ii8M3a/HBAbIuathslgOjOZoxna+1BOOG0JYHOde49s3SMdkOj/SnIhdUKRjJHLkE4
+ Gw+MTZnauvreYT04MAzd1KYYxsLXqL4oAfi+/+P14uMfqmPWy0DRHv5nd3MKh90HTB98
+ V27OSjxySPRSP37SV2XPcwVFmwAEDma26AmO4QI1h/eP70t1lyiUpX0V1kdBx3ho2XfV
+ /HzoXeF/Nm1QrdJF+++HBUoRMndZbBBN6LA9WvOodgYpoK6ixCqv1nbpgkbQg9mhMD8t
+ sBRTqabv8KcJdRswntrxRW7RAZ7BvmAcqN1SH5hEpWjGT0S7eZSojwUQM3ceU62pheRh
+ tKug==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776081689; x=1776686489; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776082215; x=1776687015; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kg4fpig85e9+P7TZRqwVS3sXGmsWpc/MTnaSigaxjmI=;
- b=V019sk8m/+Y1B5u/LFoHozA1MwQXOIN8rgKjOFPjoMiFPBHaTY9ndtLMQh5zKTavoC
- iTtTRe+Cjm0jRPiadeEWWWY4rg11HtjuWAedjiyrqJ4TNMhSeE4YfvcHqcFsCnPBwfLI
- H59c8h9t3IByyE4C4GGGkEqy6buOTLr0MZ1JkN4TsdW0by9H7+J24wtXRi6wWp19sIK2
- yqgunnu1nOx5iRSY5sBbLKYUujNEF5zccIdgIr/geq7OxH0bk8HdXQiNlJKCF75QpOXQ
- ILVWAPthvJh9w+/ljwn7ZftKvyjp5OFP8zauRf3lImXCbGV2pWlvTNLA8NY/7uXZ9bo3
- O4qA==
+ bh=d0l7uKyUGAFvL6R4w6MO2qwL5tFfxbP6Pv5jSvZFfDc=;
+ b=n3kwoOSLWhsngl6TEgT5hSdUK+BeW2EDPVDoT6vPlSKrPabolu+hUUQEoXEtER+X7y
+ VRh0EP/HR3NtID0GyRKDfveTZjjoq2TMIgC77J9XBgJQjiby22qQvxl0yI+XOl37PhVj
+ ghTx9U1tODFZa/iN3aunAlfAr4vnRFg+ylILMJNAmIWxVWv80Imax8KnmhFSk/e9z7CM
+ voqM7OIa5OMbS8SX4ujPGMmD5XK30wilV/TM4STyMTnkLIY2BCz1G9tPqKu6ZHsRqe0N
+ Rr5x/H6lJAnP9f61TXUMhf/gKeDVrAtvIhLiwWBki5R24GmD50VTA1RkqMS0BS5qB7Xu
+ /avw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776081689; x=1776686489;
+ d=1e100.net; s=20251104; t=1776082215; x=1776687015;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kg4fpig85e9+P7TZRqwVS3sXGmsWpc/MTnaSigaxjmI=;
- b=hku9o7kTh70iyzFhnBSjk3F7N6mp/EqULgCWf09oSeAscBLEKrPyzKk4lUDNf5gtyy
- /IfamTr3OKAz6sIBYMNm/RMJz20x373nXOvjgznL5GQXgIvhjK7zU4Tv0yDTrTnUv/Lw
- X5yLWZW/yDQL5vSIK+YnRA552hi4UZ+2Rjl5eXqebJbQT+gCfU78fFT3LiPOE2qlJKvH
- pwUt0vNIgxVdQpxoM/i21UBnAzBVoOFcQHt309XSujkCl3YJhOSsehwSa8Qhp9b+icyc
- xqShHO8oFomqOFHJN8FViO9oMk2cIzmIVSKsMigdd8B2/nsx3gv/WhfLVeqWF6GZMiW4
- RDAw==
+ bh=d0l7uKyUGAFvL6R4w6MO2qwL5tFfxbP6Pv5jSvZFfDc=;
+ b=LC4genpPt6XjiqoWhZgPQrN7D3R6/YspvuQmBxSCVP3ojtMsJjoo5FQuNaqu/mdZNe
+ kReRBtH1DvZUFXtGbJo1lISpkpRk4Y6gyWuSl8sgv87ulFKZuYOYUb40PcNAqXrUL9+p
+ ylGc2sl6M/0Z4RGImZwETNVULAnZasGnRfzvDBkcs5V7FT+ZLDtY2Blp5xxqyv+rvx7l
+ I7m0FwiTOkT9UhT1VXIEhP8d5rsz56Cv4qdmo7VRrw7qc3a7208dvJFO2sCkqRTxkw4W
+ G9PDojx8Id/TGwhY6nSUq3iA+vn2ZKoC9JlQEquKhf7PCmZqsZAs/OWgHgQLvaaHWGF4
+ CIEg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8EOws9Dx4+ybKP+VTKDFzZqFbJ6Xtc872hRM7VBGKk5uSHkqMrrJB+GsQL1BZxj/r8uyE/iR0kS3vi@nongnu.org
-X-Gm-Message-State: AOJu0YwrZqcHhlUPoMW585Qz2UB3i3CorPtUUxY6g+Zw7RkOCUGlf/FT
- Eg5Z1tJzwXjYD+0SI8kU9mED2okTaDsdCd+ioU8LOOmHhmVxqheg0ecjNpiRVtMh+AGgz4BKgoZ
- wxbTKLxOYbgQ4A2CHgN/IK+qZNzkNWkiIRirFLsJ7zQ==
-X-Gm-Gg: AeBDietvS4fEuU2O+LZekePIKkgNY7H0c9unkt5S/LuxvBjKAzDFQu13dR1x/QaMIWB
- kZx9QA0mnjZZo6uQAvocdDqTbnAbXspRwqKx/JEtunTv/onOn3jaDWIFYheSBFdncF8p3RDLwsz
- 1o5WjNgElNjFY+2gdu9tChRdvRJUSsGbl+nDiirA/iJ5xY7acsAXv0sX3DrL3DiPk7+K4lKB3P1
- 9cWaYZ0gfVm8nx8B1VMKZnq4DiM0hu7aoof+7OAHtog3YfkZsSH7y997ygR6UtCdJPoOymYINeH
- lXJtFQOUI1Mx6DGOB/Ko6sqUHUjdp4U/BGVOum+aL3woroBwvO8tSWVSaQHjhMVsx7CYS4/AeWW
- Trw==
-X-Received: by 2002:a53:c946:0:b0:64e:d95a:c89e with SMTP id
- 956f58d0204a3-65198b72cb0mr10328423d50.41.1776081688070; Mon, 13 Apr 2026
- 05:01:28 -0700 (PDT)
+ AFNElJ+NCwbcwZKa7FHa56Cf5d5bpJ0vJjVF5aiqG3QvEIWND4WwBu0YzbwoKojLNbC1SKmokIM6FaEd3Y7i@nongnu.org
+X-Gm-Message-State: AOJu0YxcrZ1QuPE6vZja99PqVoRW+ivpaOwfVUBrT02vEkgQK3GLDisQ
+ DkqKEVhFRezGNxpuu0G7xpe4mvSSiG+cJbE7hoIGPrGAtenq1qlzV963RPeXm3fYyMEgqAbmamk
+ QE266s49XGyoE8v3f6n5EF7FxWfkXj1+nJLZepS6+cw==
+X-Gm-Gg: AeBDietPq5WNnSX51YULrtuNNtX22Qg41w5PrFEGvO6Cq820A3ETVFMszyjqwUWg3fV
+ vPteUkrNhfZYkmkbIM240RevFfKSlSSPyuUfZY30wmUmQ6gOfGuuTr1TbYqgT1cEZe3UeM3tmxR
+ UZo+F6NkwZ/jsYh0fW8fVBd/nZFaWa2mDkG79WJFrzfNtGC+GwcsVXgELebvyPDYOKn0aSInHci
+ U4tSyOqX8AJYvBXZYnJeLORUFNJ/rzH+bFw2R4oZ9HoBYdNWfSZ2fsD3OmdM9PI1AhszBftDONB
+ kcfk2Yg/Uz16VCiYAit9/4sv/qlLVlQwJiXYDqzIJfruelCRA+7m2s2kEfJ8gSIPP68=
+X-Received: by 2002:a05:690e:4841:b0:650:211f:1d4 with SMTP id
+ 956f58d0204a3-65198b82095mr8882405d50.47.1776082214947; Mon, 13 Apr 2026
+ 05:10:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260413112151.61261-1-anisinha@redhat.com>
- <0954ef7e-b04e-4542-89fb-796acc452068@linux.ibm.com>
-In-Reply-To: <0954ef7e-b04e-4542-89fb-796acc452068@linux.ibm.com>
+References: <20260413090010.60339-1-anisinha@redhat.com>
+In-Reply-To: <20260413090010.60339-1-anisinha@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Apr 2026 13:01:14 +0100
-X-Gm-Features: AQROBzB6Oyv06TxOpxsHTGPZS_Pb6Ys_6ks3UaFd50xNIqUWB6VUhjVDXJYsvBQ
-Message-ID: <CAFEAcA8wJY6o3x1HNZrPu-=JG0Jyu_gJ+SKpcLHwHXvz+ZDGDQ@mail.gmail.com>
-Subject: Re: [PATCH V2 for-11.0] accel/kvm: return early from
- kvm_irqchip_create if kvm does not support irqchip
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Misbah Anjum N <misanjum@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, kvm@vger.kernel.org, qemu-devel@nongnu.org
+Date: Mon, 13 Apr 2026 13:10:03 +0100
+X-Gm-Features: AQROBzBUIwljeF7bsJTwC19zV3JnLe8AM7zwfh_wplD60WBQv9RPuRuBSo4bXGw
+Message-ID: <CAFEAcA8CcD+8Hn2++X5FnyYcsDLV4J=tFg5BAd_sRJmCw+nVkg@mail.gmail.com>
+Subject: Re: [PATCH for-11.0] accel/kvm: return early from kvm_irqchip_create
+ if kvm does not support irqchip
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>, 
+ Gautam Menghani <gautam@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,77 +120,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Apr 2026 at 12:37, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
+On Mon, 13 Apr 2026 at 10:01, Ani Sinha <anisinha@redhat.com> wrote:
 >
->
->
-> On 13/04/26 4:51 pm, Ani Sinha wrote:
-> > During refactoring of kvm_irqchip_create(), the refactored code was returning
-> > early from do_kvm_irqchip_create() function if the required capabilities were
-> > not present in KVM. This was not translating to an early return from
-> > kvm_irqchip_create() as was the case before refactoring. This is because,
-> > do_kvm_irqchip_create() did not have a means to notify the caller of the lack
-> > of kvm capabilities. Fix this by making do_notify_irqchip_create() return
-> > EOPNOTSUPP error when required capabilities are absent and then the caller
-> > can check the return code and return early.
-> >
-> > Converted some calls to exit() to assertion checks in order to make it cleaner.
-> >
-> > Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM file descriptor change")
-> > Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
-> > Reported-by: Gautam Menghani <gautam@linux.ibm.com>
-> > Suggested-by: Fabiano Rosas <farosas@suse.de>
-> > Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> > ---
-> >   accel/kvm/kvm-all.c | 29 ++++++++++++++++-------------
-> >   1 file changed, 16 insertions(+), 13 deletions(-)
-> >
-> > changelog:
-> > v2: converted some exit() calls to assertions.
-> >
-> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> > index 774499d34f..c78bf6a56f 100644
-> > --- a/accel/kvm/kvm-all.c
-> > +++ b/accel/kvm/kvm-all.c
-> > @@ -2575,7 +2575,7 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, qemu_irq irq, int gsi)
-> >       g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
-> >   }
-> >
-> > -static void do_kvm_irqchip_create(KVMState *s)
-> > +static int do_kvm_irqchip_create(KVMState *s)
-> >   {
-> >       int ret;
-> >       if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
-> > @@ -2587,36 +2587,38 @@ static void do_kvm_irqchip_create(KVMState *s)
-> >               exit(1);
-> >           }
-> >       } else {
-> > -        return;
-> > +        /*
-> > +         * neither KVM_CAP_IRQCHIP nor KVM_CAP_S390_IRQCHIP capabilities are
-> > +         * present. Bail.
-> > +         */
-> > +        return -EOPNOTSUPP;
-> >       }
-> >
-> > -    if (kvm_check_extension(s, KVM_CAP_IRQFD) <= 0) {
-> > -        fprintf(stderr, "kvm: irqfd not implemented\n");
-> > -        exit(1);
-> > -    }
-> > +    assert(kvm_check_extension(s, KVM_CAP_IRQFD));
->
-> again changing behaviour ?
-> previously it was doing exit(1) on returning non-zero.
-> Now, it will assert on returning zero ?
-> May be split the patch to keep the exit -> assert changes separate ?
+> During refactoring of kvm_irqchip_create(), the refactored code was returning
+> early from do_kvm_irqchip_create() function if the required capabilities were
+> not present in KVM. This was not translating to an early return from
+> kvm_irqchip_create() as was the case before refactoring. This is because,
+> do_kvm_irqchip_create() did not have a means to notify the caller of the lack
+> of kvm capabilities. Fix this by making do_notify_irqchip_create() return
+> EOPNOTSUPP error when required capabilities are absent and then the caller
+> can check the return code and return early.
 
-I think for 11.0 it's probably best to do the minimum necessary
-change to fix the logic error introduced by 98884e0cc1. For
-that I think the v1 of this patch is OK.
+As a fix intended for 11.0 at this point in the release cycle,
+it would be helpful if the commit message stated what the
+user-visible consqeuences of this bug are. That helps in
+identifying whether this really does need to go into 11.0
+(i.e. whether it is release-critical).
 
-There do seem to be some cleanup opportunities that we
-have here, but we can do those in 11.1.
+> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM file descriptor change")
+> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+as the minimal fix for the logic-bug introduced by 98884e0cc1.
+
+thanks
 -- PMM
 
