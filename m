@@ -4,117 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3768BEBFD22
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA9CEBFD30
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCDwv-0001b1-PU; Mon, 13 Apr 2026 05:51:21 -0400
+	id 1wCE3c-00033O-Ti; Mon, 13 Apr 2026 05:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wCDwu-0001ai-5F
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:51:20 -0400
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wCDws-0001US-JY
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:51:19 -0400
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-488a4bc360bso22657725e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 02:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776073876; x=1776678676; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7dQXpi742+XLPZ9WRdmXCOGdWzb1IxAvWsv3N3EWwPw=;
- b=aOlMyeqSy26d1FzIqqd5F+1X77y/koWib79WDifADF6XB1vALttzEOuP/cZQrXxD6t
- 0Zvdn9J0VFR4KZyvW/3SE94PI924SvsrhZ2clOy8dRGxomLDbLvbpga554XXUSXM308v
- 5P6eHKM28OpcOsfxhrPBT5OvYEXFlDaYIMKdXb4A+mhvjOA6sZvYkGR5E1Y7AUcPkF1R
- +9zHDPg9SsN4+Pbll2MV3Gqvx+Q5I3Bf3uhsG1nKNQuXn6ZfY5PyNstm0CAk4kPzLER5
- orRVxpc5R6OnFAUGk+Ca7Zqbq3r2LPJHMujpeFjejAQLEWxKe2qxasZSjO+018CFxKIB
- KmJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776073876; x=1776678676;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7dQXpi742+XLPZ9WRdmXCOGdWzb1IxAvWsv3N3EWwPw=;
- b=seHvw0RS3PtJ02Gp2fuKo/4I2RyRO/4pXj7I7wiI01xximZ/MEbYVo0upOOKkRQziE
- wWiWsSy5WaW0zo8quPPQq8SSbrEX/8l2G1q2lPNrrvuMKpeWbGSi0kJh6yM45Eombd6R
- kRYe0X2+IF3Ep97PFPugFwiiYINfrH9d3ZO5uZ5p/xZBLwlJ4UrC/8o5hS4zW5thyHg/
- lhxx9CKDhdx/RxjTG+S4GhrAzgajQFOtGQ+HYYr/1pUe+SkTa7CRXmUSxHSrrxj2jrHu
- qpQAbz2IiVRP1e56G8tYGlbDQEos5Vb11+1e58stJf1gWyeBKs8aznPflhyCalcJmb1W
- I2CA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ97Z1w5s2HE1YgEoBfl9ohZyVBy8oy3mphovATU9irPOp1H7g6zwq7ZpRhG/UoRuiMV6Z5fYVAHzqMT@nongnu.org
-X-Gm-Message-State: AOJu0YwA2wkG9+hJXG49iG+W75Df1kLUcPlHL6FL+4TRNxuMMYbvOIBs
- LoJNXwcJc1YuNcJF7EdeDPsnMSCo7KjFPc91wdOKjNq3hFgJXBo37ZyFwyB/oL2DncU=
-X-Gm-Gg: AeBDieteXK2W6UaCVC82U3LLCy0n+saMlMKC7acrV652CHttM3r/ZhICTt9kD1gdSKZ
- EvkUYk2eDgMAC2t1V4sy5PNg/r4jH8dy/bTBNcNmbdl2LmNSlYH/3uiVrRjQgcJUBtqXz0TFkUX
- HwyxMnu7ugN6HRblPGTH6Rid05Wywy5U3B9zH4ZKH6VKVBbu6rWtqIyExrMpa2rcMHeELU6U7hA
- 9e3sGnhSU5KEFMiXlk0S8xI/o4uM6MyVnS7QDWMkaBmObJkVKVjARZrgpab70Spijxr/NEy62N9
- 5BKo9uN6OTLSBTYdoWjjixB/wyS9IOnnbU+q1bvk+3rufvQlPblu0MpT2anmgu/sj8R6bN3oDJX
- F8+4wAWQo+fJvbwDzzG68dHGiQ3NeGCg0Jmw7pRdQgi32nAjCSo7d+KprbMRc/5BhT6pL7BqkhV
- TQujtTg6osHfF1JY1EMNPLyFE=
-X-Received: by 2002:a05:600c:8b30:b0:485:2f4a:6ae6 with SMTP id
- 5b1f17b1804b1-488d67bf79emr181800525e9.6.1776073875804; 
- Mon, 13 Apr 2026 02:51:15 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d6864121sm91480095e9.28.2026.04.13.02.51.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Apr 2026 02:51:15 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5EF745F864;
- Mon, 13 Apr 2026 10:51:13 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org, Demi Marie
- Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com, Eric Blake
- <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
- Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
- <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
- iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, jacob.oursland@gmail.com,
- Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
- <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>, matthieu@minio.io, Max Chou
- <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
- mdean@redhat.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul Walmsley
- <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Roberto
- Campesato <rbc@meta.com>, Richard Henderson
- <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU Community call 14/04/2026 (14:00 UTC, CEST/15:00 BST)
- agenda items
-User-Agent: mu4e 1.14.1-pre2; emacs 30.1
-Date: Mon, 13 Apr 2026 10:51:13 +0100
-Message-ID: <87wlybtcha.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wCE3T-00032R-Pp
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:58:08 -0400
+Received: from mail-southcentralusazon11013016.outbound.protection.outlook.com
+ ([40.93.196.16] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wCE3S-0002ut-Dc
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:58:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PpiE2pKa/VKqGwzD/SrheuO7HGNV86qBFCxkjiO+7FJmaVygD5awl/BKvYRKg81pXjTmD0Q2JUiXdWtUQiD2SvBt1ZVPxjSVGbDe3nT1e4J0C4yAQf6iI/mW1fpRwfhxiFVUZgChOZDSGLeXrFiJe7mwPs1XevQZAI/HV8kU6rAC14omCwFKfXWYNbuw2A7tkq3SUC+Nov+xxqKd7ANACTwqnAQ5eMDjArRg7p3ZjKdH8Rx1s4up/cmMCDx9QppSAv6cjZaxv9IknDqRyLxSh4J43s1TWdTjOB8M43MCSAYMlTNKgSBIW4tj4qtAkJrCrzYe6ReoPLqClgKWBVzpDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=chJhiUdAn1gfqdYPHJcavYcd3xdJDzeu2JdHAFUPtSE=;
+ b=E08PBAGblOaXzsuOxNoetRBOeX2m1fm0NUBWW+CjT8+rC5a9YOxOUATc6SiBuSSU0OsAepbnCeJNl52uru/IdIxjMkfKfihjMLe+tcItxWajIO6uHXf57vQpYuFmV871mqxtHmTAXwJiPd458bwHKubJHm2TTDDQEU1uqjz3Ej6RweX3DLXn93kzLjw5G0v/5/LGmWV/GeL63aRvIEuTu/3RBc9mKpAGsBK5PVfY4l117Bgo+Yv/I3ev56C3Dh4kIDAAx+ralJORLJQzJ/2m4f+Q1N7fXM7rwRsyBR77MrKfmYd1vayOnqXuI+55d+0HeZgNV9EgLxMSDsuH+7J4Dg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=chJhiUdAn1gfqdYPHJcavYcd3xdJDzeu2JdHAFUPtSE=;
+ b=OuCdv9af5KwF+C0W941J3DIyp9nYsddBIymkXMYdWPtxHpxHUq8DBNZvcpQMWg+luimjqqdv49jHMd+6DVhnmTOB7uc/8z/YS8OHtNaO/n+/iOxEGj7GGriq88HTpob91DtxgTXmARyFOsz7LMaOY2kajxc1kd1q3DegMRhO90JCVWU8Uk/gueQYo7TIedPC9FAgX67dJFNW3MlB4IO46M52nwkdHAvc/iZwirmnXIrr/gconaN6CUoIO1N6Udja6sT8Laa/7ah/52OUdqL+CUvwN1ZPVtYf2yqin6pdgSVCFk57Zf3KgAMAfYSNgyn41IZ12j1bwCZQCi4PGo0MMQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by SA1PR12MB5670.namprd12.prod.outlook.com (2603:10b6:806:239::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.20; Mon, 13 Apr
+ 2026 09:53:00 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.20.9818.014; Mon, 13 Apr 2026
+ 09:52:57 +0000
+Message-ID: <a6c3aaf4-bbd4-4cb7-888c-ac498b032b87@nvidia.com>
+Date: Mon, 13 Apr 2026 12:52:52 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/14] vfio/migration: Cache stop size in VFIOMigration
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, Kirti Wankhede <kwankhede@nvidia.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
+References: <20260408165559.157108-1-peterx@redhat.com>
+ <20260408165559.157108-4-peterx@redhat.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20260408165559.157108-4-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TL2P290CA0021.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:3::15) To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x342.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|SA1PR12MB5670:EE_
+X-MS-Office365-Filtering-Correlation-Id: de68f0a0-6676-4d5d-1cea-08de994270c9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|366016|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: jV0FL8N663c6YnSv2QdObGtF0qp2/aDyv5Hi9guQ57LWcsUmzfODeC/u1Xz8zqpX1nOJ8MH2Uq7E9tZlUTXoPxp8xrFCZnxa04qbF1jX3c6/3RJpTJFWXvGTFihF9KmqP0/yOxN+JfUKAXLW9hqei6l8ohVgjYlvy9Qum3sNZeyD4C4eNMNkO8Jy4d1UCeWzM1lRU9gsbPTnYKYJ+dQTZQ1FkCQPlhSJVNEp53mvv12x+37lyJhN2ZzbE+0VXTf93yL16NdW64qxOgrExDT+xvSJG0hMPpBweoNtSQS876vAhZokcNqoiRLhS8KTLsTdq6WhRQqY2UGmPazwVhphrc4nYgtSEwXTNKi0JpIlpyFE/AdjnT3jAw9fxaUTsqHzuTN3cKOgGooRbePUUwHGw0ytt6THjVgkK+UIrdY+bRippl3oQl/VToB6FRxfJyDGnKuxkuPk2eIq4LmpdYmk4Ga6jKDEKA6zJ9mnzuE+ooWr2iRwmCaQ2tXbsQu1xQ2s1mucge+QR/bfTXgllm7BOqnTMBMeUYgKzEBJskDvNRE58LyPUFsgiEbww5ljhhNKpG1la/sifor2y7rIjnxkazUf7T/uOuZBLUR0rDryOtvID5uOM9rhb+kq64ydvumBa92YE2GeqdF/WAU6erdE+8ud9AeaL0bqCssGK9t7XhjTIXq8aZu5hzVGAjW+4+UAy3HXBQI+kNmm3FOwlIEzZisqV79rorakXeCXf746ZSA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SVd4Smh6ZHo4S1pJZWJvU3dNTDFMZWM5TTQzeWVOd3krSlA5QVBzbGM0dnNS?=
+ =?utf-8?B?TkdReTA3SVBsejMwbWczNTVvMXRKL0dCUzNjZDl1Q3BPcXlBNVloeks1Y2NF?=
+ =?utf-8?B?Mkg1bWpyYTVPb0JpaUYyVCtpYk5XL0NoZFE2QnEyWTJ2bldTQ2YwTFlyZnJI?=
+ =?utf-8?B?ZG9pOThIRkFSZmh0dUprOElDVE1pR1ZnZVcwSGx5d3NZUzZxNkx6YU1hQTQz?=
+ =?utf-8?B?QXd2SHZYYnVXMzNKeXVZbkNCZnMyRVhSZnQzYUpVU0RsODVJZWFpVjkzZ1Zi?=
+ =?utf-8?B?dy9jVkhwK2hFMzRCbjlJdmt1cTYyeGszWmU2cUNqQzF1TDF1Uk4zZjVLY2lP?=
+ =?utf-8?B?WlBaeHhuSndzbm12TVdPY3d0KzhLOGV6Z05keXg3ay9mYmNQc1ZaeldxVUZN?=
+ =?utf-8?B?NUx3bHVUNWJKRld2TXFuOE5LWU1YSmJSYU80RkkvWDhDN2prQkhUMFlmcmNs?=
+ =?utf-8?B?b1c1MGVPT3FSdTVpeXRzOW1JQXpvcHVJbjhPdldzNk1jWDV6QUFnTU1DYmpw?=
+ =?utf-8?B?aVJaVDV3ZXdJcmp3WWxlbWNqNUZTbUV6RmZidkNSUGQwNXZLeCs5aWpvUXVZ?=
+ =?utf-8?B?UkVnQXpNV3hXZ08xc0E5Rjl6K3ZieTlCa09NbUVteWN5bTZqSzB1ZUh4eitJ?=
+ =?utf-8?B?WHE1bmhsRkhraHRGQy93Mi83SDF1bkRVaVZsSjdRRkNDMnhzNzhZY3Z5Y3pi?=
+ =?utf-8?B?aGVtd2NCS21RYlBqMHVFQTRsanF3TlRuYW94TnRUM3FVcUtTYWl6dTd1bWhq?=
+ =?utf-8?B?ZDJINW1GN2lYWFA2OWpyK1JORjNyZXp1Vk92cUQ5a0Q2WUdEU1FTcWVDSTZu?=
+ =?utf-8?B?WjNibkdVRCtRWkEwR05qdzBKck51Z2h1T1V0WFBCSFZHaytrbjF6MFBZUTY0?=
+ =?utf-8?B?ak9ZQWdBZTByVXN6dzlnY1JuODNZNHpwZjEydnlUWVZScGJPd2dUdlphOFZP?=
+ =?utf-8?B?NHFveHhYTTgrcTVNTE1NckNEbmxTRU5oL2VYSUVnTUZZMklRMGdSTlBSUVVn?=
+ =?utf-8?B?VHBvNnJENkVDdEFSdUx4TGU3bENuOHF1UHY0aG4xZHpZbnZVR0xRNHY0azRH?=
+ =?utf-8?B?MWxsUzlZdVE0QWszQS9XZmV4UitXWTlPMnh0bjFXY1hCUmdTRjZhZVovQmY1?=
+ =?utf-8?B?bTRRaWlWTWp1dHAxbVhhN28vNUwvY0dVanVOOFU2aWozM2xPNm9oYVRybUt5?=
+ =?utf-8?B?T2wvUnNLK3BFSm9EYlI5YlQvMEYyR1AyQXVscytWdHA1QWkrbU9icTNLT0Ey?=
+ =?utf-8?B?N2hCWWVUbDczanlaR0hYeVdJcWhKR3pScU8rb2pWRGdaVE95YmJuTlhxK1hR?=
+ =?utf-8?B?ZVdyelhaTDhPOThGMmlPWUhHNkphbEkzUHpQbmkzRnFibjNGMytpTVR2eEdn?=
+ =?utf-8?B?eVN3MXN0M0FpWVhZaUE4OGhRVVVRMnFNWi8yd3lIbVpuRUkyS3hGUUl0R3dJ?=
+ =?utf-8?B?N1EyUmsySUFMTVIrcEdqcTE5c1h0c0tHQ05MSW1ENlpSRXZ0RWFhelR1U3U5?=
+ =?utf-8?B?cFdiZk1hbFc2b3VBeERnYlkrY3N0YWJZa215NG04dVl0QzRVaE5kNjQ3dUJa?=
+ =?utf-8?B?RXV1K3ZYOW4vbDljazZnRDFpRkNTZkhVeW5seThkMzNwNUxSZVBMM3kralQw?=
+ =?utf-8?B?VFdnUnNBYlgzMXlRYmtGeUhNdzc5cVVJbUNHL0x0S0Nma2VxZTJKUncvRzRa?=
+ =?utf-8?B?NmJxaWIxNDNweklydGViYjBKN0lEM2FUdEljUWFVK1FIWFlzUld4bVRRN0c3?=
+ =?utf-8?B?M0JCazdTcGprTmtZenNlYVgzTEYvYjNTTnRhNkhoYnFNY1Ywa3ROeTNscUsw?=
+ =?utf-8?B?ZXptZGtrSUJVOG10eC9KUmI2cURuWTgwOGkzeGRjdHI1ZGxISjRlSDJTNVRI?=
+ =?utf-8?B?bGp3OWtnaXNnSmhRKzdEU3kxWkhZUlFCQXF0R1BxeWFKQWtUMGJiOU5HYTl2?=
+ =?utf-8?B?VitPMGtLUGxId2ZSbWJzS3JsZmpjV3FmWCs1U29YZkxQWHIrVGI4Y09PcDhZ?=
+ =?utf-8?B?Y1lTQXR5VnZsVk11UXk4OWhaSy94Zmw3TGdhNWpWYjl4TzMrMlpiYjcxb0Z2?=
+ =?utf-8?B?TUFUbHFuTFRMakZlSjkvaGIyVWFCNW9pc0FPUEZwL0Z2VE9Rd1Fld1JiT0VD?=
+ =?utf-8?B?S0lsYitvQVRVMlBpWlQrMThHaFJjSFJuY09IdnNKc1dCdnR5MUM4L1BYTXps?=
+ =?utf-8?B?WnRBbC9aRXRvcGxvT0RRcGtWbkZ0dG9mdzYvVTJZQXlPY3NRY0xoQy9tdmV0?=
+ =?utf-8?B?RTIvZTBBV2tSMzNFckJzUmlqMWhUeWM4T214Q1RvdE1QWUhaalhXM2paWTBv?=
+ =?utf-8?B?b1ZYdGY4aXAwY2Y5RnZpRWQ0YVFQZFUvL3ZjdXNsNHVjZ2RIL0dCdz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de68f0a0-6676-4d5d-1cea-08de994270c9
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Apr 2026 09:52:57.3853 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: S2yjiRx56JDkjaMCj8PQ6Fg3wI/tP/lzFx1KDk74PbeVA2e02lcPgoxkemLPwQvn5dmx0QjX6QpVDrmaUREccw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5670
+Received-SPF: permerror client-ip=40.93.196.16;
+ envelope-from=avihaih@nvidia.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,17 +159,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-Hi,
+On 4/8/2026 7:55 PM, Peter Xu wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> Add a field to cache stop size.  Note that there's an initial value change
+> in vfio_save_setup for the stop size default, but it shouldn't matter if it
+> is followed with a math of MIN() against VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE.
+>
+> Document that all the three sizes we read from VFIO's uAPI on dirty or stop
+> sizes are estimates, so QEMU needs to always remember they can be anything.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   hw/vfio/vfio-migration-internal.h |  8 +++++
+>   hw/vfio/migration.c               | 50 ++++++++++++++++++-------------
+>   2 files changed, 38 insertions(+), 20 deletions(-)
 
-The KVM/QEMU community call is at:
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 
-https://meet.jit.si/kvmcallmeeting
-@
-14/04/2026 14:00 UTC
-
-Are there any agenda items for the sync-up?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
