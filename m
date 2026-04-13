@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AAE4F34C4E
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5030F34C49
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:46:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCHcB-0004zD-90; Mon, 13 Apr 2026 09:46:11 -0400
+	id 1wCHcY-00057K-B6; Mon, 13 Apr 2026 09:46:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wCHc8-0004z3-Sy
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:46:09 -0400
+ id 1wCHcX-00056l-1g
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:46:33 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wCHc5-0002B8-SN
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:46:08 -0400
+ id 1wCHcV-0002H1-GE
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:46:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1776087966; x=1807623966;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=mpOpWUR/JKUYvWYU/9UWkn+4s8966MonAVVkxOp9oYY=;
- b=b4F/+Tdz0l1D3mth3RcM0YohuuNYO89C6ku0O8IZTSh7hMGr5KIF0jtH
- cvXuAG+mWCLesA05PrQmNqjIo1MAh2QjmiTBmP3o6EkC7sGVl9s2nACbX
- /sGNGUEGH2zyiRM7vZIq5SVq5O5vxOm30s4swW6nU7xHaBMWMWqclbkDF
- 8SrtgPfmF7ZbVsXHJWKy4Set/0j2XIfn+Pvn9cWSaL8qOgrmRq+8EHJ7q
- AU6rY4x993TeQ8fRT28SXzJNF3U66edoMMmZjgvZsrFSlXq9iid2mtX3b
- BNNOVrfU+BHAHAfCi4q0g+xvr9goTwbt2YRYZlYeDmQsGG3Tke/XwTmAO A==;
-X-CSE-ConnectionGUID: YRBEiu0uS92BBGnv6yDvgQ==
-X-CSE-MsgGUID: oqN0KBkxRiG5I/+FMnAByg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11758"; a="80885616"
-X-IronPort-AV: E=Sophos;i="6.23,177,1770624000"; d="scan'208";a="80885616"
+ t=1776087992; x=1807623992;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=jRIYr/DJPikQoTUtLLf24NEzeIOFia6aU6GKa/BmoKA=;
+ b=JuPavCBXydKLribUPiYNn7ONXxn6tvNffsOv1MzoYyZdX+uIPCFWBHq6
+ a7QcWHekemdFdKBsBUtnkQbYtMvVAtw4yXW/UuLU+DlzBv7ahdBi3AMev
+ cVgxd2Gm3+uLfAUHIjREqucHL2keofRuiS0V/DMBliHrZeMIBqjGC/gaI
+ UvED3JHS5YWSjrOwmXRiqM7TgElYr6s0XhIcKVIA+IWps4SiVPN/XcF8o
+ FsGEjAgw3eDyqgx/ZMHNzG0KhnPR/ZBaZVnI1KKXv7O+Dcl77g52TNsFD
+ fWjV2vhHjwMrNWfNJKEV0RLZq9Zvtyneeq198rc8uMh8LDIMCqjiZ9sIu Q==;
+X-CSE-ConnectionGUID: HFgKHtr+TIC+F5/5Z6eEiA==
+X-CSE-MsgGUID: 8M0HvRKgSwqlJyA52+tIxw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11758"; a="80885675"
+X-IronPort-AV: E=Sophos;i="6.23,177,1770624000"; d="scan'208";a="80885675"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Apr 2026 06:46:02 -0700
-X-CSE-ConnectionGUID: 8HtHr6SPSzC1oMXkFltT3Q==
-X-CSE-MsgGUID: +mD5IXYsT1CddvlEahYlHA==
+ 13 Apr 2026 06:46:30 -0700
+X-CSE-ConnectionGUID: mRaTV8cTR++7NbeU2U3tEA==
+X-CSE-MsgGUID: ffP93G3MQ9SAB2yOrdMGKw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,177,1770624000"; d="scan'208";a="234770323"
+X-IronPort-AV: E=Sophos;i="6.23,177,1770624000"; d="scan'208";a="234770429"
 Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
  by orviesa005-auth.jf.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2026 06:46:01 -0700
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2026 06:46:29 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, peterx@redhat.com, farosas@suse.de,
  junjie.cao@intel.com
-Subject: [PATCH v3 0/4] io/channel: complete pread/pwrite_all API and fix
+Subject: [PATCH v3 3/4] migration/file: fix type mismatch and NULL deref in
  multifd_file_recv_data
-Date: Tue, 14 Apr 2026 05:45:45 +0800
-Message-ID: <20260413214549.926435-1-junjie.cao@intel.com>
+Date: Tue, 14 Apr 2026 05:45:48 +0800
+Message-ID: <20260413214549.926435-4-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260413214549.926435-1-junjie.cao@intel.com>
+References: <20260413214549.926435-1-junjie.cao@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,39 +85,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes two bugs in multifd_file_recv_data() and completes
-the positioned read/write "all" API set for QIO channels.
+multifd_file_recv_data() stores the return value of qio_channel_pread()
+(ssize_t) in a size_t variable.  On I/O error the -1 return value wraps
+to SIZE_MAX, producing a nonsensical read size in the error message.
 
-Bug summary:
-  - size_t variable storing ssize_t return: -1 wraps to SIZE_MAX
-  - error_prepend() called without ERRP_GUARD(): NULL deref on short read
+More critically, a short read (0 <= ret < data->size) is possible when
+the migration file is truncated.  In that case qio_channel_pread()
+returns a non-negative value without setting *errp.  The function then
+calls error_prepend(errp, ...) which dereferences *errp -- a NULL
+pointer -- crashing QEMU.
 
-Changes since v2:
-  - Added qio_channel_pread_all_eof() to complete the API set (Daniel)
-  - Added pwrite_all / pwritev_all variants (Daniel)
-  - Reworked doc comments to match existing API style (Daniel)
-  - Added Fixes tag, expanded _eof test coverage, added CONFIG_PREADV guard
+Fix both issues by switching to qio_channel_pread_all() introduced in
+a previous patch, which retries on short reads and treats end-of-file
+as an error, so the caller no longer needs to check the byte count
+manually.  Add ERRP_GUARD() so that error_prepend() works correctly
+even when errp is &error_fatal or NULL.
 
-Changes since v1:
-  - Used approach (b): add pread_all API instead of local retry loop
-    (Daniel, Peter)
+Fixes: a49d15a38d3d ("migration/multifd: Support incoming mapped-ram stream format")
+Suggested-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ migration/file.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-v2: https://lore.kernel.org/qemu-devel/20260318140113.434-1-junjie.cao@intel.com/
-v1: https://lore.kernel.org/qemu-devel/20260316084618.52-1-junjie.cao@intel.com/
-
-Junjie Cao (4):
-  io/channel: introduce qio_channel_pread{v,}_all{,_eof}()
-  io/channel: introduce qio_channel_pwrite{v,}_all()
-  migration/file: fix type mismatch and NULL deref in
-    multifd_file_recv_data
-  tests/unit: add pread/pwrite _all tests for io channel file
-
- include/io/channel.h              | 133 +++++++++++++++++++
- io/channel.c                      | 139 ++++++++++++++++++++
- migration/file.c                  |  13 +-
- tests/unit/test-io-channel-file.c | 207 ++++++++++++++++++++++++++++++
- 4 files changed, 486 insertions(+), 6 deletions(-)
-
+diff --git a/migration/file.c b/migration/file.c
+index 5618aced49..0853188601 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -254,15 +254,16 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+ 
+ int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp)
+ {
++    ERRP_GUARD();
+     MultiFDRecvData *data = p->data;
+-    size_t ret;
++    int ret;
+ 
+-    ret = qio_channel_pread(p->c, (char *) data->opaque,
+-                            data->size, data->file_offset, errp);
+-    if (ret != data->size) {
++    ret = qio_channel_pread_all(p->c, (char *) data->opaque,
++                                data->size, data->file_offset, errp);
++    if (ret != 0) {
+         error_prepend(errp,
+-                      "multifd recv (%u): read 0x%zx, expected 0x%zx",
+-                      p->id, ret, data->size);
++                      "multifd recv (%u): ",
++                      p->id);
+         return -1;
+     }
+ 
 -- 
 2.43.0
 
