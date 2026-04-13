@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA98EBFD0F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7240BEBFD10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCBrp-0006w0-Ld; Mon, 13 Apr 2026 03:37:59 -0400
+	id 1wCBsV-0007Oh-JZ; Mon, 13 Apr 2026 03:38:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCBrk-0006uR-P5
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:37:53 -0400
-Received: from inva021.nxp.com ([92.121.34.21])
+ id 1wCBrz-0006xc-Lv
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:38:08 -0400
+Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCBrg-0005VW-6w
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:37:52 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 3F4902014AE;
- Mon, 13 Apr 2026 09:37:43 +0200 (CEST)
+ id 1wCBrx-0005eL-4h
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:38:06 -0400
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 934821A3F14;
+ Mon, 13 Apr 2026 09:37:46 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 0A8CB2015A8;
- Mon, 13 Apr 2026 09:37:43 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 5AA711A158E;
+ Mon, 13 Apr 2026 09:37:46 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 33F4E1802229;
- Mon, 13 Apr 2026 15:37:42 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id C7E7A1802229;
+ Mon, 13 Apr 2026 15:37:45 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv5 04/15] hw/arm/fsl-imx8mm: Add Clock Control Module IP to
- iMX8MM
-Date: Mon, 13 Apr 2026 13:07:26 +0530
-Message-Id: <20260413073737.986219-5-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>
+Subject: [PATCHv5 14/15] hw/arm/fsl-imx8mm: Adding support for USB controller
+Date: Mon, 13 Apr 2026 13:07:36 +0530
+Message-Id: <20260413073737.986219-15-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260413073737.986219-1-gaurav.sharma_7@nxp.com>
 References: <20260413073737.986219-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.21;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
+Received-SPF: pass client-ip=92.121.34.13;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -68,85 +68,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Clock Control Module (CCM) device to i.MX8MM SoC.
-The CCM implementation is shared with i.MX8MP as the register
-layout is identical between the two variants.Hence iMX8MM will
-be using the source of iMX8MP CCM.
+It enables emulation of USB on iMX8MM
+Enables testing and debugging of USB drivers
 
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
  hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx8mm.c         | 10 ++++++++++
- include/hw/arm/fsl-imx8mm.h |  2 ++
- 3 files changed, 13 insertions(+)
+ hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h |  6 ++++++
+ 3 files changed, 34 insertions(+)
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 3737335841..758addea22 100644
+index 4095351490..2ed236171a 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -630,6 +630,7 @@ config FSL_IMX8MM
-     bool
-     select ARM_GIC
-     select FSL_IMX8MP_ANALOG
-+    select FSL_IMX8MP_CCM
-     select IMX
+@@ -640,6 +640,7 @@ config FSL_IMX8MM
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
++    select USB_DWC3
+     select WDT_IMX2
  
  config FSL_IMX8MM_EVK
 diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 5d992906fc..e05e9c9d20 100644
+index a41837a4e8..7f2cc46599 100644
 --- a/hw/arm/fsl-imx8mm.c
 +++ b/hw/arm/fsl-imx8mm.c
-@@ -169,6 +169,8 @@ static void fsl_imx8mm_init(Object *obj)
- 
-     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
- 
-+    object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX8MP_CCM);
-+
-     object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MP_ANALOG);
- 
-     for (i = 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
-@@ -305,6 +307,13 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         }
+@@ -202,6 +202,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
      }
  
-+    /* CCM */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ccm), errp)) {
-+        return;
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
++        g_autofree char *name = g_strdup_printf("usb%d", i);
++        object_initialize_child(obj, name, &s->usb[i], TYPE_USB_DWC3);
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ccm), 0,
-+                    fsl_imx8mm_memmap[FSL_IMX8MM_CCM].addr);
 +
-     /* Analog */
-     object_property_set_uint(OBJECT(&s->analog), "arm-pll-fdiv-ctl0-reset",
-                             0x000fa030, &error_abort);
-@@ -350,6 +359,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
-         switch (i) {
-         case FSL_IMX8MM_ANA_PLL:
-+        case FSL_IMX8MM_CCM:
-         case FSL_IMX8MM_GIC_DIST:
-         case FSL_IMX8MM_GIC_REDIST:
-         case FSL_IMX8MM_RAM:
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         g_autofree char *name = g_strdup_printf("spi%d", i + 1);
+         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
+@@ -529,6 +534,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
+     }
+ 
++    /* USBs */
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } usb_table[FSL_IMX8MM_NUM_USBS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB1].addr, FSL_IMX8MM_USB1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB2].addr, FSL_IMX8MM_USB2_IRQ },
++        };
++
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p2", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p3", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usb[i]), errp)) {
++            return;
++        }
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
++                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
++    }
++
+     /* ECSPIs */
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         static const struct {
+@@ -635,6 +661,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_OCRAM:
+         case FSL_IMX8MM_SNVS_HP:
+         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
++        case FSL_IMX8MM_USB1 ... FSL_IMX8MM_USB2:
+         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
+         case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
+             /* device implemented and treated above */
 diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 0a020c32a1..df35f0f5ac 100644
+index c212b6a7a7..cc585bab39 100644
 --- a/include/hw/arm/fsl-imx8mm.h
 +++ b/include/hw/arm/fsl-imx8mm.h
-@@ -14,6 +14,7 @@
- #include "hw/char/imx_serial.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/misc/imx8mp_analog.h"
-+#include "hw/misc/imx8mp_ccm.h"
+@@ -25,6 +25,7 @@
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
+ #include "hw/timer/imx_gpt.h"
++#include "hw/usb/hcd-dwc3.h"
+ #include "hw/watchdog/wdt_imx2.h"
  #include "qom/object.h"
  #include "qemu/units.h"
+@@ -43,6 +44,7 @@ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_I2CS         = 4,
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
++    FSL_IMX8MM_NUM_USBS         = 2,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
+     FSL_IMX8MM_NUM_WDTS         = 3,
+ };
+@@ -64,6 +66,7 @@ struct FslImx8mmState {
+     IMXFECState        enet;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
++    USBDWC3            usb[FSL_IMX8MM_NUM_USBS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+     OrIRQState         gpt5_gpt6_irq;
+@@ -202,6 +205,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_I2C3_IRQ     = 37,
+     FSL_IMX8MM_I2C4_IRQ     = 38,
  
-@@ -34,6 +35,7 @@ struct FslImx8mmState {
- 
-     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
-     GICv3State         gic;
-+    IMX8MPCCMState     ccm;
-     IMX8MPAnalogState  analog;
-     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     MemoryRegion ocram;
++    FSL_IMX8MM_USB1_IRQ     = 40,
++    FSL_IMX8MM_USB2_IRQ     = 41,
++
+     FSL_IMX8MM_GPT1_IRQ      = 55,
+     FSL_IMX8MM_GPT2_IRQ      = 54,
+     FSL_IMX8MM_GPT3_IRQ      = 53,
 -- 
 2.34.1
 
