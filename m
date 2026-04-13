@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A31E93817
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7767E9381A
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 04:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC8mf-0007nz-0K; Mon, 13 Apr 2026 00:20:25 -0400
+	id 1wC8mq-0007oc-Eq; Mon, 13 Apr 2026 00:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wC8ma-0007km-6q
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 00:20:22 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1wC8mp-0007oR-9D
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 00:20:35 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wC8mY-0006Jg-II
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 00:20:19 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2b2429f98d0so24709065ad.2
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 21:20:17 -0700 (PDT)
+ id 1wC8mn-0006Lr-LO
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 00:20:35 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-82f2385724aso960844b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 21:20:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776054016; x=1776658816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776054032; x=1776658832; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LNw0hoKQ41WblOWVXhwtYC1W/5fGL0BV9AzWD94r4e0=;
- b=EiHp0Xqj043T7DahHHkcBxxKCpA0SKbaW+bt25sXZFP14c4O5ABcOz2fhegEFYlAWC
- O3Lz9cLnytXYhJil49IuAzkAxzdXJGMt0GtRoAxQeJmwE3Ni+SNcMrQKkvfeq+1nvBHu
- Yxos6EfgF2aOhDFacJnwooE0JJpBlzxcamI9YodAegPysJXUiaaoGHxl0RdMLlCe+ncx
- 3VLOc3aZ0PisYfziVc7qhUMjGSAufnF/TbcIV8avdovGmG5vTlJqkSrudDNkLYHLtR2Q
- 3yJKViO1hA1Pg+y/L9n1AHtu8Gpqyik/jzwBZiwIXrBu1+r07Mt0UREpbDG5EHxfHYol
- W1FQ==
+ bh=jot5pHSNVJ8fOgl3QWe0Lp4bvZr4fMZF9j1OHgOFWtE=;
+ b=cIjrwiuHKWTCa25hPxmaF9Ub4MIYz/aGEddFDXEU1lHjkQPvujq3scntSPjYCmeEfF
+ VCbinoTgkd29jKSIJRaascHFKgx7/8Z2TiRX7VsghI/gDRzuy1oepxY7N37GvGDlKWWs
+ /PEabyXn+ZCNDIkeZKDdd6asIShNMMbeUBoYKzSkq7h4QwTPKZxbr17IGqpz+0LgNBzz
+ 17A5Iftfb01kiTTAr4nRIucH1fZVfL3mHMHEDu0HUKhowdhe+jNiozv05Js/MWPz0MBT
+ OqaNXu8LHKDHid7MyvaQ39sMexCKOc2CWVAFKZYDPe4IGntohc2P2abv+WfBNXUvLxgG
+ qcdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776054016; x=1776658816;
+ d=1e100.net; s=20251104; t=1776054032; x=1776658832;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LNw0hoKQ41WblOWVXhwtYC1W/5fGL0BV9AzWD94r4e0=;
- b=ls+cAoX+xnTri4bs6nlmNjBB8w3TFVWMqgXaOO+yNWey+VEjo8pOEL5wW3IHw1+WLD
- ybn38ZT3JMLfyPAADqMUIHfFkgjbEqYuyOE08V93If/TVyMICGwNpZ8H3tz8C6DJomH/
- tX/RGvtUxGmYFDa+Qfc4eIDMicoGZZ6NgtRp/Q5CdPPOwXF0DsxymfhL4snufR0u/hoS
- 4eDzqULXwxHSm5BhOYXnZ63eKCcJ+/BgW4AtYidBObGguLGWEww0PeFg5t8CgKgIjQSV
- RI4+yhZtXpd0YozmX2KBvOovuBORZzEk200HIKcfcf3kyf4ZLp/+i7roczLTX+qZa5d9
- p+Bg==
+ bh=jot5pHSNVJ8fOgl3QWe0Lp4bvZr4fMZF9j1OHgOFWtE=;
+ b=dwcBVKszjO3N8fWZk4zDU0dfkLJCu+8h2igevTjcqmB1iP5UpLqSacwOFYg4cLhtg/
+ 1L1fdArU2kGnOwb5tKA7bP9DTe5JQYMyw3WoFex1b+qCB5ceTIA2RJpozFRd+z3NtBVZ
+ SLT3kCOq7MgojqVetFCtyJzg1feEhbrr6e/ty3NFo2wp+wu40dXYiPbdRa+f/yLnTvck
+ Rd30oKzC2CmoYu/nby3/PCUjMeRYiH9AMSS2WaUqgoxCs13XgY8zKiiEjaKPfiAoYFBy
+ A2hXX5VS8tuWNXzeWc7W5GnXMJ/6LZpwuyUCLoUAnY/biBj9q6ggs/2Mwxgjr6tsq3sT
+ K9bA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9k8skTpE/8pFmOQsMhcdsVeHdV/6Ubm3Pd01M5nJBSPuDebh5zUxA053YRir8UKv0LGL8bppjGc/HD@nongnu.org
-X-Gm-Message-State: AOJu0YzRwHOPBmpFNqbYllEnTDFnNVqPycHUhnyZq2LIQQ91hU3C5KxL
- LoVduZ95uwzswJ6DyD7xzatNDRdIGfulhe80ATQ0mAWkQsd/L99YDbrSz4/I2bF0bQA=
-X-Gm-Gg: AeBDievPhfa0O1Zs+TxIexoEiUNXaxw3SXi+XOKqTiZgwPT0UX1ZNHIZl8yQiH0vcSI
- wZLLSVvWm9/uLt3XFA7V1b0Tel6UJLNtC4Lg/HYo7RiXx3KZvw/N7yBg3MV8JMs/iHZZ5nISPAG
- xT+XVqhYDFfpnV5LQ0JGnqj3rJ4bnXFAX6qKQzXlFGerLt9OiytTIlgoXjdHiNkJM3O40W8Ey+R
- 38Xi/2YGZaKOrQXMhGXjOcNTvjayXw3NVoBP7grO9I3BgDwHg8UCT8Mr4Qk4R+U9ZDU9ooJ7ukA
- 9sG6XERlcDbs8epAaMvXN5MPJHLujyRoA9B//HsQv8a703k5CvPGOOzI/TFMUf0xLVlb/GeDSCN
- g/UUhfjTMm+areOM+qBcWaUdxYfBVkudxG/gyPZOXJORIsBcL2Q9ogSLKv2fsMw6sP2ccIrV56e
- w54uDEcGJ0uGD4V9FIg+H7DZxd7Y9XihZIdwwavVFMhwxikrGg0AJJWXpy9uaS8hfyr8gw5UlCG
- kOf+aMel56x61LZeddG9cygadlG6/VwN/CE6dZ7FtizQC80R0+R9i8=
-X-Received: by 2002:a17:902:6acb:b0:2b0:5520:f497 with SMTP id
- d9443c01a7336-2b2d591ddc8mr89663365ad.9.1776054015513; 
- Sun, 12 Apr 2026 21:20:15 -0700 (PDT)
+ AFNElJ9sVnrvjVDNZoaVWJYyzhIMpEp/KFIXwmB1Q+Y5cZVXjGe/p0J4JTip+jXwIjIMC38PmINZLCNHeguX@nongnu.org
+X-Gm-Message-State: AOJu0YypcwBhmVqAm9jHK6pk1gnRP14/dTO0FLMmeTsf0APtqE/byTp+
+ 8WWRyV78OUaaqgzKIUpuRU2uafRbZmZcuo/e72Nb5Uyf53jZoI8nFJKOHXumsLG/bhqIHykZMz2
+ xRpPtUYg=
+X-Gm-Gg: AeBDiesJOoM+qXrAa4CVvSZxiISqKQjIVwjggsrVQ/H3T3RKVpP34oW4Qb/6JreWIHB
+ HYbLaEo4l9c+qWdT4JUcDLzcAzjOb1SlW5EEXu+OgOo0+x2DSdqOCxIxHKoU2i4fxxyR0NpIMDq
+ 6NU+tN+7PF+cpaAqYo3KOrm2y+ZOxSZfhYO9d5Otv7ssHLMSqV1MC4K4qd/cp3XHIt3ibknL6t5
+ 4vFzY98ezu/bC6Twd8M3JLzJxrZBLlna3X5yFCBmkfz4mVbAEStoSW4hSsGSNF5HQnRl5DZBBdw
+ F6MiWxST+mLpUNxHZqHV50vI58tA0qYyNdZBCSbnhfy3/4gLma9802Ni0MIJWWMifHWGELoK4vl
+ +KkaLI0wSpYhC29i5s918cnqcb2EDBx3g85xkdXneSUv2EQC86Cv0j8tjQPL8x/B77QakFuEl7g
+ CQekKaZfoWIeHpIuTozw+rX1U6Eskgfa2B0Sq0Jb9QTp/63//X53WI5KLvWecr9Lb7FquYi4a6B
+ AUeWCiZ8Bhl8JezgDewX2ZmrXsgso3n8GjUqvVdHwDcuedSQRFcjNc=
+X-Received: by 2002:a05:6a00:3e10:b0:7f1:4:66b with SMTP id
+ d2e1a72fcca58-82f0c2cca1amr11924141b3a.44.1776054032088; 
+ Sun, 12 Apr 2026 21:20:32 -0700 (PDT)
 Received: from ?IPV6:2401:d002:dc0f:2100:a7b4:d4f1:5b23:321f?
  (bg30dj032xp6rdh0yngy.ip6.superloop.au.
  [2401:d002:dc0f:2100:a7b4:d4f1:5b23:321f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2d4f25d83sm101957875ad.58.2026.04.12.21.20.13
+ d2e1a72fcca58-82f0c3145acsm10850343b3a.6.2026.04.12.21.20.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 21:20:15 -0700 (PDT)
-Message-ID: <1909e5aa-ed18-49a2-b196-7def6772062e@linaro.org>
-Date: Mon, 13 Apr 2026 14:20:10 +1000
+ Sun, 12 Apr 2026 21:20:31 -0700 (PDT)
+Message-ID: <42f94999-1d77-48c1-bf17-40e81b8d24e6@linaro.org>
+Date: Mon, 13 Apr 2026 14:20:27 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/27] monitor: Make Xen emulation commands generic ones
+Subject: Re: [PATCH v2 16/27] monitor: Make 'info via' a generic command
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20260410195323.17937-1-philmd@linaro.org>
- <20260410195323.17937-18-philmd@linaro.org>
+ <20260410195323.17937-17-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260410195323.17937-18-philmd@linaro.org>
+In-Reply-To: <20260410195323.17937-17-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,21 +110,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/11/26 05:53, Philippe Mathieu-Daudé wrote:
-> In order to build hmp-commands.hx once we need to stop using
-> device target-specific check. Use the generic pattern to make
-> the command available on all targets, providing a stub with
-> kind error message when the feature is not available.
+> In order to build hmp-commands-info.hx once we need to stop
+> using device target-specific check. Use the generic pattern
+> to make the command available on all targets, providing a
+> stub with kind error message when the device is not available.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/i386/kvm/xen-stubs.c | 12 ++++++++++++
->   hmp-commands.hx         |  2 --
->   2 files changed, 12 insertions(+), 2 deletions(-)
-
-
+>   MAINTAINERS            |  2 +-
+>   hw/misc/mos6522-stub.c | 16 ++++++++++++++++
+>   hmp-commands-info.hx   |  2 --
+>   hw/misc/meson.build    |  1 +
+>   4 files changed, 18 insertions(+), 3 deletions(-)
+>   create mode 100644 hw/misc/mos6522-stub.c
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
