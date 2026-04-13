@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38237CD13D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4797ECD13DE
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITs6-0001Ak-E2; Thu, 30 Apr 2026 12:04:18 -0400
+	id 1wITrw-0000VT-VQ; Thu, 30 Apr 2026 12:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wITrC-0007UH-6g; Thu, 30 Apr 2026 12:03:24 -0400
+ id 1wITrK-0007c9-SY; Thu, 30 Apr 2026 12:03:30 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wITr9-00078Z-DY; Thu, 30 Apr 2026 12:03:16 -0400
-DKIM-Signature: a=rsa-sha256; bh=t4iQhUpFRyAgERtmsoOXchPum38b2rhvJCOxHACr+zY=; 
+ id 1wITrC-00078y-9J; Thu, 30 Apr 2026 12:03:24 -0400
+DKIM-Signature: a=rsa-sha256; bh=4eJ+HnMcX8p6InMQPVwB32zKkriVDrfCwoCMifz9Wxk=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1777564992; v=1;
- b=hiGxLjjwYcuxq1HdNKItXQa8Wiq3k5QCvtyVhON95xkRarli+yHTsIESQt+lhMsj8mTXXDW+
- LCnTzQGdJ5e9A42OGXJOPNwUftHuCl4n2R8jkJy2DNwroeRuvy/5JGvRLfawrORV6671QTJeyf1
- FXMhmC754kd1B3mBkfgShPXi7JMSNH+lPXAP1ZbIYWj8vwwtF2ZX35S+pPVceX2Iei6eJwcNsU3
- lg0xtDynnpFNoozENDdJdE7O/PM/tZwRclztzcPGiY1j7R3Atmx3HlR0DZyZSdKeESufgo6BkGP
- 6gDpBWUdQKHjNdMdiE0EmLfPSrbqvQI33MZEK8cYhM94g==
+ t=1777564993; v=1;
+ b=nYqM86HtlOBZzXGHMW9tDfq7lBL57+bN7udMVIx2jyngpa7jHAIG/VgVc52ABW2HLjr78nRE
+ Oam/zhAOX6XXERoh/ROy362SJOiHMuSsV7uf3r0p6b89QuQiSntyDpt0+mPkl63MmNGDVV6zhev
+ PxgReGM5TPlBSJ2O77lTZO91nQOyaPU8RV9GTImebp/MecNVqvuQDKPT0GYK37KkPQvI1df845u
+ IAWvjsO5zIfqOMykUfS8BwCYARRLqL6tDSmjzWJlGUvTxTJsP8M4du7yt8JBJA1gnwIY2Q5Of8F
+ lX8ofz4/NnSc9J83PJCU+rNoWv+b/V52LWNXaaZdka7nw==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 39C1A20C76;
- Thu, 30 Apr 2026 16:03:12 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 6D13920C7D;
+ Thu, 30 Apr 2026 16:03:13 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Tue, 07 Apr 2026 14:38:47 +0100
-Subject: [PATCH qemu v4 4/9] ot_uart: replace individual IRQ fields with
- array, add missing IRQs
-Message-ID: <177756498815.8917.12449488721849651971-4@git.sr.ht>
+Date: Mon, 13 Apr 2026 19:01:26 +0100
+Subject: [PATCH qemu v4 6/9] ot_uart: implement RX fifo and loopback
+Message-ID: <177756498815.8917.12449488721849651971-6@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177756498815.8917.12449488721849651971-0@git.sr.ht>
 To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
@@ -75,134 +74,267 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Lex Bailey <lex.bailey@lowrisc.org>
 
-There are 9 interrupts in the OpenTitan UART device.
-These are documented here:
-https://opentitan.org/book/hw/ip/uart/doc/theory_of_operation.html#interrupts
-
-This commit removes the individually named interrupts (of which there was onl=
-y four)
-and replaces them with an array of 9 interrupts.
+The STATUS register value is now generated on every read instead of being
+tracked in memory since it has such a dynamic value. the receive fifo is now
+implemented, and the system loopback mode. (line loopback is not supported)
 
 Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/char/ot_uart.c         | 44 +++++++++++++--------------------------
- include/hw/char/ot_uart.h |  5 +----
- 2 files changed, 15 insertions(+), 34 deletions(-)
+ hw/char/ot_uart.c | 160 ++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 112 insertions(+), 48 deletions(-)
 
 diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-index 3fe7c5efe5..62c182cbed 100644
+index 2247db7110..3511a42fbe 100644
 --- a/hw/char/ot_uart.c
 +++ b/hw/char/ot_uart.c
-@@ -102,6 +102,7 @@ REG32(TIMEOUT_CTRL, 0x30)
- #define OT_UART_NCO_BITS     16
- #define OT_UART_TX_FIFO_SIZE 128
- #define OT_UART_RX_FIFO_SIZE 128
-+#define OT_UART_IRQ_NUM      9
-=20
- #define R32_OFF(_r_) ((_r_) / sizeof(uint32_t))
-=20
-@@ -111,31 +112,11 @@ REG32(TIMEOUT_CTRL, 0x30)
-=20
- static void ot_uart_update_irqs(OtUARTState *s)
- {
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
--        & INTR_TX_WATERMARK_MASK) {
--        qemu_set_irq(s->tx_watermark, 1);
--    } else {
--        qemu_set_irq(s->tx_watermark, 0);
--    }
--
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
--        & INTR_RX_WATERMARK_MASK) {
--        qemu_set_irq(s->rx_watermark, 1);
--    } else {
--        qemu_set_irq(s->rx_watermark, 0);
--    }
-+    uint32_t state_masked =3D s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE];
-=20
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE] & INTR_TX_EMPTY_MASK)=
- {
--        qemu_set_irq(s->tx_empty, 1);
--    } else {
--        qemu_set_irq(s->tx_empty, 0);
--    }
--
--    if (s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE]
--        & INTR_RX_OVERFLOW_MASK) {
--        qemu_set_irq(s->rx_overflow, 1);
--    } else {
--        qemu_set_irq(s->rx_overflow, 0);
-+    for (int index =3D 0; index < OT_UART_IRQ_NUM; index++) {
-+        bool level =3D (state_masked & (1U << index)) !=3D 0;
-+        qemu_set_irq(s->irqs[index], level);
+@@ -140,6 +140,21 @@ static void ot_uart_update_irqs(OtUARTState *s)
      }
  }
 =20
-@@ -290,6 +271,9 @@ static void ot_uart_reset_enter(Object *obj, ResetType ty=
++static bool ot_uart_is_sys_loopack_enabled(const OtUARTState *s)
++{
++    return FIELD_EX32(s->regs[R_CTRL], CTRL, SLPBK);
++}
++
++static bool ot_uart_is_tx_enabled(const OtUARTState *s)
++{
++    return FIELD_EX32(s->regs[R_CTRL], CTRL, TX);
++}
++
++static bool ot_uart_is_rx_enabled(const OtUARTState *s)
++{
++    return FIELD_EX32(s->regs[R_CTRL], CTRL, RX);
++}
++
+ static int ot_uart_can_receive(void *opaque)
+ {
+     OtUARTState *s =3D opaque;
+@@ -196,7 +211,7 @@ static void ot_uart_reset_rx_fifo(OtUARTState *s)
+     fifo8_reset(&s->rx_fifo);
+     s->regs[R_INTR_STATE] &=3D ~INTR_RX_WATERMARK_MASK;
+     s->regs[R_INTR_STATE] &=3D ~INTR_RX_OVERFLOW_MASK;
+-    if (FIELD_EX32(s->regs[R_CTRL], CTRL, RX)) {
++    if (ot_uart_is_rx_enabled(s)) {
+         qemu_chr_fe_accept_input(&s->chr);
+     }
+ }
+@@ -218,21 +233,37 @@ static void ot_uart_xmit(OtUARTState *s)
+         return;
+     }
+=20
+-    /* instant drain the fifo when there's no back-end */
+-    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+-        ot_uart_reset_tx_fifo(s);
+-        ot_uart_update_irqs(s);
+-        return;
+-    }
++    if (ot_uart_is_sys_loopack_enabled(s)) {
++        /* system loopback mode, just forward to RX FIFO */
++        uint32_t count =3D fifo8_num_used(&s->tx_fifo);
++        buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
++        ot_uart_receive(s, buf, (int)size);
++        count -=3D size;
++        /*
++         * there may be more data to send if data wraps around the end of TX
++         * FIFO
++         */
++        if (count) {
++            buf =3D fifo8_pop_bufptr(&s->tx_fifo, count, &size);
++            ot_uart_receive(s, buf, (int)size);
++        }
++    } else {
++        /* instant drain the fifo when there's no back-end */
++        if (!qemu_chr_fe_backend_connected(&s->chr)) {
++            ot_uart_reset_tx_fifo(s);
++            ot_uart_update_irqs(s);
++            return;
++        }
+=20
+-    /* get a continuous buffer from the FIFO */
+-    buf =3D
+-        fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &size);
+-    /* send as much as possible */
+-    ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
+-    /* if some characters where sent, remove them from the FIFO */
+-    if (ret >=3D 0) {
+-        fifo8_drop(&s->tx_fifo, ret);
++        /* get a continuous buffer from the FIFO */
++        buf =3D
++            fifo8_peek_bufptr(&s->tx_fifo, fifo8_num_used(&s->tx_fifo), &siz=
+e);
++        /* send as much as possible */
++        ret =3D qemu_chr_fe_write(&s->chr, buf, (int)size);
++        /* if some characters where sent, remove them from the FIFO */
++        if (ret >=3D 0) {
++            fifo8_drop(&s->tx_fifo, ret);
++        }
+     }
+=20
+     /* update INTR_STATE */
+@@ -269,7 +300,7 @@ static void uart_write_tx_fifo(OtUARTState *s, uint8_t va=
+l)
+         s->tx_watermark_level =3D 0;
+     }
+=20
+-    if (FIELD_EX32(s->regs[R_CTRL], CTRL, TX)) {
++    if (ot_uart_is_tx_enabled(s)) {
+         ot_uart_xmit(s);
+     }
+=20
+@@ -288,8 +319,6 @@ static void ot_uart_reset_enter(Object *obj, ResetType ty=
 pe)
-     s->regs[R_STATUS] =3D 0x0000003c;
 =20
+     memset(&s->regs[0], 0, sizeof(s->regs));
+=20
+-    s->regs[R_STATUS] =3D 0x0000003c;
+-
      s->tx_watermark_level =3D 0;
-+    for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
-+        qemu_set_irq(s->irqs[index], 0);
-+    }
-     ot_uart_reset_tx_fifo(s);
-     ot_uart_reset_rx_fifo(s);
-=20
-@@ -566,21 +550,21 @@ static void ot_uart_init(Object *obj)
-                                   ot_uart_clk_update, s, ClockUpdate);
-     clock_set_hz(s->f_clk, OT_UART_CLOCK);
-=20
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_watermark);
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_watermark);
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->tx_empty);
--    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->rx_overflow);
-+    for (unsigned index =3D 0; index < OT_UART_IRQ_NUM; index++) {
-+        sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irqs[index]);
-+    }
-=20
-     memory_region_init_io(&s->mmio, obj, &ot_uart_ops, s, TYPE_OT_UART,
-                           REGS_SIZE);
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-=20
-     /*
--     * This array has a fixed size in the header. This assertion is used to
--     * check that it is consistent with the definition in this file. This is
-+     * These arrays have fixed sizes in the header. These assertions are use=
-d to
-+     * check that they are consistent with the definitions in this file. Thi=
-s is
-      * ostensibly a runtime check, but may be optimised away by the compiler.
-      */
-     assert(REGS_SIZE =3D=3D sizeof(s->regs));
-+    assert(OT_UART_IRQ_NUM * sizeof(qemu_irq) =3D=3D sizeof(s->irqs));
+     for (unsigned index =3D 0; index < ARRAY_SIZE(s->irqs); index++) {
+         qemu_set_irq(s->irqs[index], 0);
+@@ -305,6 +334,27 @@ static void ot_uart_reset_enter(Object *obj, ResetType t=
+ype)
+     ot_uart_update_irqs(s);
  }
 =20
- static void ot_uart_realize(DeviceState *dev, Error **errp)
-diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
-index f489612700..a2c5ff8b33 100644
---- a/include/hw/char/ot_uart.h
-+++ b/include/hw/char/ot_uart.h
-@@ -42,6 +42,7 @@ struct OtUARTState {
++static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
++{
++    uint8_t val;
++
++    if (!(s->regs[R_CTRL] & R_CTRL_RX_MASK)) {
++        return 0;
++    }
++
++    if (fifo8_is_empty(&s->rx_fifo)) {
++        return 0;
++    }
++
++    val =3D fifo8_pop(&s->rx_fifo);
++
++    if (ot_uart_is_rx_enabled(s) && !ot_uart_is_sys_loopack_enabled(s)) {
++        qemu_chr_fe_accept_input(&s->chr);
++    }
++
++    return val;
++}
++
+ static uint64_t ot_uart_get_baud(OtUARTState *s)
+ {
+     uint64_t baud;
+@@ -327,32 +377,50 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
+ unsigned int size)
+     case R_INTR_ENABLE:
+     case R_CTRL:
+     case R_FIFO_CTRL:
+-    case R_STATUS:
+         retvalue =3D s->regs[reg];
+         break;
++    case R_STATUS:
++        /* assume that UART always report RXIDLE */
++        retvalue =3D R_STATUS_RXIDLE_MASK;
++        /* report RXEMPTY or RXFULL */
++        switch (fifo8_num_used(&s->rx_fifo)) {
++        case 0:
++            retvalue |=3D R_STATUS_RXEMPTY_MASK;
++            break;
++        case OT_UART_RX_FIFO_SIZE:
++            retvalue |=3D R_STATUS_RXFULL_MASK;
++            break;
++        default:
++            break;
++        }
++        /* report TXEMPTY+TXIDLE or TXFULL */
++        switch (fifo8_num_used(&s->tx_fifo)) {
++        case 0:
++            retvalue |=3D R_STATUS_TXEMPTY_MASK | R_STATUS_TXIDLE_MASK;
++            break;
++        case OT_UART_TX_FIFO_SIZE:
++            retvalue |=3D R_STATUS_TXFULL_MASK;
++            break;
++        default:
++            break;
++        }
++        if (!ot_uart_is_tx_enabled(s)) {
++            retvalue |=3D R_STATUS_TXIDLE_MASK;
++        }
++        if (!ot_uart_is_rx_enabled(s)) {
++            retvalue |=3D R_STATUS_RXIDLE_MASK;
++        }
++        break;
 =20
-     /* <public> */
-     MemoryRegion mmio;
-+    qemu_irq irqs[9];
+     case R_RDATA:
+-        retvalue =3D s->regs[R_RDATA];
+-        if ((s->regs[R_CTRL] & R_CTRL_RX_MASK) && (s->rx_level > 0)) {
+-            qemu_chr_fe_accept_input(&s->chr);
+-
+-            s->rx_level -=3D 1;
+-            s->regs[R_STATUS] &=3D ~R_STATUS_RXFULL_MASK;
+-            if (s->rx_level =3D=3D 0) {
+-                s->regs[R_STATUS] |=3D R_STATUS_RXIDLE_MASK;
+-                s->regs[R_STATUS] |=3D R_STATUS_RXEMPTY_MASK;
+-            }
+-        }
++        retvalue =3D (uint32_t)ot_uart_read_rx_fifo(s);
+         break;
 =20
-     uint32_t tx_level;
+     case R_FIFO_STATUS:
+-        retvalue =3D s->regs[R_FIFO_STATUS];
+-
+-        retvalue |=3D (s->rx_level & 0x1F) << R_FIFO_STATUS_RXLVL_SHIFT;
+-        retvalue |=3D (s->tx_level & 0x1F) << R_FIFO_STATUS_TXLVL_SHIFT;
+-
+-        qemu_log_mask(LOG_UNIMP,
+-                      "%s: RX fifos are not supported\n", __func__);
++        retvalue =3D
++            (fifo8_num_used(&s->rx_fifo) & 0xffu) << R_FIFO_STATUS_RXLVL_SHI=
+FT;
++        retvalue |=3D
++            (fifo8_num_used(&s->tx_fifo) & 0xffu) << R_FIFO_STATUS_TXLVL_SHI=
+FT;
+         break;
 =20
-@@ -59,10 +60,6 @@ struct OtUARTState {
-     Clock *f_clk;
+     case R_VAL:
+@@ -416,10 +484,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
+t64_t val64,
+             qemu_log_mask(LOG_UNIMP,
+                           "%s: UART_CTRL_NF is not supported\n", __func__);
+         }
+-        if (value & R_CTRL_SLPBK_MASK) {
+-            qemu_log_mask(LOG_UNIMP,
+-                          "%s: UART_CTRL_SLPBK is not supported\n", __func__=
+);
+-        }
+         if (value & R_CTRL_LLPBK_MASK) {
+             qemu_log_mask(LOG_UNIMP,
+                           "%s: UART_CTRL_LLPBK is not supported\n", __func__=
+);
+@@ -445,19 +509,19 @@ static void ot_uart_write(void *opaque, hwaddr addr, ui=
+nt64_t val64,
+         }
+         break;
+     case R_WDATA:
+-        uart_write_tx_fifo(s, value);
++        uart_write_tx_fifo(s, (uint8_t)(value & R_WDATA_WDATA_MASK));
+         break;
 =20
-     CharFrontend chr;
--    qemu_irq tx_watermark;
--    qemu_irq rx_watermark;
--    qemu_irq tx_empty;
--    qemu_irq rx_overflow;
- };
-=20
- struct OtUARTClass {
+     case R_FIFO_CTRL:
+-        s->regs[R_FIFO_CTRL] =3D value;
+-
++        s->regs[R_FIFO_CTRL] =3D
++            value & (R_FIFO_CTRL_RXILVL_MASK | R_FIFO_CTRL_TXILVL_MASK);
+         if (value & R_FIFO_CTRL_RXRST_MASK) {
+-            s->rx_level =3D 0;
+-            qemu_log_mask(LOG_UNIMP,
+-                          "%s: RX fifos are not supported\n", __func__);
++            ot_uart_reset_rx_fifo(s);
++            ot_uart_update_irqs(s);
+         }
+         if (value & R_FIFO_CTRL_TXRST_MASK) {
+-            s->tx_level =3D 0;
++            ot_uart_reset_tx_fifo(s);
++            ot_uart_update_irqs(s);
+         }
+         break;
+     case R_OVRD:
 --=20
 2.49.1
 
