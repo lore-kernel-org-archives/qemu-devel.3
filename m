@@ -4,96 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F32F34C76
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 17:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED77DF34C78
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 17:19:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCKv1-00011h-8C; Mon, 13 Apr 2026 13:17:52 -0400
+	id 1wCKwE-0001aC-7U; Mon, 13 Apr 2026 13:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wCKuw-00010R-Ow; Mon, 13 Apr 2026 13:17:46 -0400
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wCKwD-0001Zt-65
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 13:19:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wCKuu-0004na-Hq; Mon, 13 Apr 2026 13:17:46 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfout.phl.internal (Postfix) with ESMTP id BFA56EC046A;
- Mon, 13 Apr 2026 13:17:40 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Mon, 13 Apr 2026 13:17:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1776100660; x=
- 1776187060; bh=+v6r/Y+AI78jDBnyf+yWhBKEBztHpvqNMpgMzFSCets=; b=e
- pugcTyjWNqhRV9ZiN5XkfeAt/Bl46Cc+KgPh0m3IBVhKZFHlZ+28avhKqw2j8uat
- ZoKbUly7U8tIUQhL4r2jqlLMYbHbZgf+eEskKPi9nIINxlAzfkwpBqFSOahWlF04
- e2H4dD7cvu1mw+ndX1/YGZ904tlwMp9m8iH8mkFRrbcu6zYLU+tSBxVD7ClubhXS
- MRH1ghb+g3vWE6b+EosQDVraye7tADDhiYoFnHj0MQa/+lULDfWxFt8TeFdND5qG
- +zzJRj2JbWSlsm8IGbFxoXf3ARaq5M7aLr5WwDXtWC1VjWJbFBBVZZlmHp51rUeD
- DB2QN1KhS40u1dJGOicqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1776100660; x=1776187060; bh=+v6r/Y+AI78jDBnyf+yWhBKEBztHpvqNMpg
- MzFSCets=; b=pkWHKU0P/q6rPGaamP8jglvZwQ9bTZHeWR0Gx/HQ2OmxeZyC+Wo
- 8ZfKjNHQE2Zj0GlE1/2k7p+T5HYb5RLZaa1hqltp4dH79I4gLpYuTcnyH7Qcnc3f
- 89W2eT/zWWTbmvjRWV1uczmdxUORH4gTvvMnmYyVLMN5LlepakHibm/gUMmc5+Yx
- zYznealq+9txvHfc0+91LNx+h5/XDChIboGEiqnotMbWNDugglmJhugH8nGng2An
- mybtMMVNPQo/7Eqi5F/HU3Edo1PirV4EImEs9PTNfK9EWnHcW2+z4u66yELcrLiF
- jBpbe8heh9gnFuGsk18g2HM5XAsdRZnT5GA==
-X-ME-Sender: <xms:MyXdaZySJSzWj-m6uWWmTvtw0QiUhwj0UTQ9wCE86e_fbHLJG4rMXw>
- <xme:MyXdaUOzt4xORLtTaV9V5r-tcXPRGSHgsfFDgabtgkp8PdE5r0hfebyZK75Dbrrgs
- Re6P3U9erCyljbyNQOJ0hgeQWpTHdpoh1dk1jwI65GvRZQvpqrvzvY>
-X-ME-Received: <xmr:MyXdaSX8EV8uqBW2Z-_fctMyNSWH6w78KMKLdIj2DD8aAFWqVBgnRWqghBncbAi36stTbaUNvH45Fv1zHAkCEBIUoLEmxdU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefkeekudcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtreertd
- dtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgr
- nhhtrdgukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehud
- ekveejvedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
- rghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtg
- hpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrthhthhhivghu
- sehmihhnihhordhiohdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurd
- horhhgpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgt
- phhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtvghfrg
- hnhhgrsehrvgguhhgrthdrtghomhdprhgtphhtthhopehmrghtthhhihgvuhesmhhinhdr
- ihhopdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:MyXdaQ2eGyqbDExjunOd2IZjws7esSCL_ZAPe8VWYnzyVkWzCTHeJg>
- <xmx:MyXdaYrVAaOsv8XpqC15mcDvOAF6-18ej-EaISO3zaWBhyF2v6Yzig>
- <xmx:MyXdafVViSOcqWQ1s_kthZnZXXKmL3mzN-5Rvux6ai4XtbANIss-pQ>
- <xmx:MyXdabaLRIDApzjLu_h4BCzroWuo-XLC0MPDVgLz7GO9rxjLC6isMg>
- <xmx:NCXdaW8JyoMBy8OzNh6-XN6gMrniTAJjZoe-QWEFyA-fxY9GVh_fj6y8>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Apr 2026 13:17:39 -0400 (EDT)
-Date: Mon, 13 Apr 2026 19:17:37 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: mr-083 <matthieu@minio.io>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kbusch@kernel.org,
- stefanha@redhat.com, mr-083 <matthieu@min.io>
-Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
-Message-ID: <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
-References: <20260409060155.94704-1-matthieu@min.io>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wCKwB-0005Wu-5p
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 13:19:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776100741;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6LzxU4YHZUM8BM6AOLCu0wCognEC2MYJVQf5Jl0xX4s=;
+ b=goGTmBhsPtnOZhb/Fa5HZNevhAXgg+KHVJhz7dANMt4G4FDM1mwfZaOfb5QIx5lYd+zt5t
+ 5+YshonVsrGcTGBEIpKbQ4BDltT2RcjEl+mLaxbVau+FkwYrACB9ucxTqZszORUmIqoGJO
+ rPOy+c+/Eutdh6wR68tuB3DgVh2r4wQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-M1Zt-HuCNamrc2jBvjSsJA-1; Mon,
+ 13 Apr 2026 13:18:56 -0400
+X-MC-Unique: M1Zt-HuCNamrc2jBvjSsJA-1
+X-Mimecast-MFC-AGG-ID: M1Zt-HuCNamrc2jBvjSsJA_1776100734
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5934219560BC; Mon, 13 Apr 2026 17:18:54 +0000 (UTC)
+Received: from localhost (unknown [10.44.35.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5728D18002A6; Mon, 13 Apr 2026 17:18:52 +0000 (UTC)
+Date: Mon, 13 Apr 2026 13:18:51 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Matthieu Rolla <matthieu@minio.io>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] hw/nvme: add namespace hotplug support
+Message-ID: <20260413171851.GA42769@fedora>
+References: <CAPSO8MwceccK3gHgbeZi0A9=p8B9VV85whYmN1D343gV=9PucA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="d+LtPI+/KR3dtQlq"
+ protocol="application/pgp-signature"; boundary="uVynRK3CCs5Kc/T5"
 Content-Disposition: inline
-In-Reply-To: <20260409060155.94704-1-matthieu@min.io>
-Received-SPF: pass client-ip=103.168.172.144; envelope-from=its@irrelevant.dk;
- helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAPSO8MwceccK3gHgbeZi0A9=p8B9VV85whYmN1D343gV=9PucA@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,34 +86,49 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---d+LtPI+/KR3dtQlq
-Content-Type: text/plain; charset=utf-8
+--uVynRK3CCs5Kc/T5
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Apr  9 08:01, mr-083 wrote:
-> This series adds two features that together enable transparent NVMe disk
-> hot-swap simulation in QEMU, matching the behavior of physical NVMe
-> drives being pulled and reinserted in the same PCIe slot.
+On Mon, Apr 13, 2026 at 04:13:38PM +0200, Matthieu Rolla wrote:
+> Hello Stefan,
 >=20
+> Thanks let me know how it goes.
 
-I don't understand this. From an NVMe perspective you can't hotplug a
-namespace. You can hotplug a PCIe-based NVM Subsystem.
+[Resending to qemu-devel so others are aware too.]
 
---d+LtPI+/KR3dtQlq
-Content-Type: application/pgp-signature; name="signature.asc"
+Hi Matthieu,
+Windows Server 2022 Build 20348 successfully handles NVMe Namespace List
+changes with your QEMU patch.
+
+When adding the disk a new drive appears as expected.
+
+When removing the disk the drive disappears and there is a Windows Event
+Log event about a surprise removal. Windows probably has a procedure for
+safely removing drives, but this basic test seems like enough
+confirmation that it is working.
+
+Drive letters are preserved across hotplug, so I think everything is
+working as expected.
+
+Stefan
+
+--uVynRK3CCs5Kc/T5
+Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmndJS4ACgkQTeGvMW1P
-Dek9mQgAn8gS00VBPUBtna+HrfvjrI5+Z9UA04tLqFKFiPW2qm/VABMVL7pOxgb7
-tz6iPhqEy0xF6puJzaGreSHZlGeNnb5chVApdwsadbb1k3eP4auYK6MpLwZpOkKv
-I16x07d0p6IUjozeZ04UAw2h3fxGkpNVUsLx/67xPD3SDI+T/kTELz+P9MvmoPPz
-bMPKIuBo25ljnSTsYiR35CHyGnYVTp2TtCu//WqAN9blQw1J6ZpHQkUfMlTFiHxM
-uSa4N7yaDLApREcMGHNgvcNN5p6VshBF4FbItl7BkJ8m72V0h4PBblrFUSQzW1dy
-Nr4kbiabBk26gIf4F7xEX8urPyQAXg==
-=fLW2
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmndJXsACgkQnKSrs4Gr
+c8jodAf+N4I3WvebVSFwlHI3lsXHLgLeaF9M0goznZy21v3UGQDGWtC6RGxQST8z
+srUQ0it9zIN1jpWkZ/R8j26UG5g0JfD8AHyqKw3E2puTWNSLaRsUEDxGCtTGCdRe
+3sqnkMkOz4YLfjAYjOJdQRoIp5hBqkoYJMI9krWbCpJeAelhmmSrpok3ZVPqR9ET
+ciiFNgh/5RPUnmRTtEzNDMbM/WhY/knA7hEEXK/OYE6ZN9Qkb3vTGyFywpDFs5iL
+mdg9K3+vL4iOAgECAnKo5KR3BBgOoTXk7kYR9LRFDaPn7kdpVS1k7sbKUgUWRlYv
+l9g9SPtpogNF7IKtGUcYT79gejzyAA==
+=mL7b
 -----END PGP SIGNATURE-----
 
---d+LtPI+/KR3dtQlq--
+--uVynRK3CCs5Kc/T5--
+
 
