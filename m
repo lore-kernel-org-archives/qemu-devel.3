@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F978EBFD0A
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B46EBFD0B
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCBfd-0004Ub-4d; Mon, 13 Apr 2026 03:25:21 -0400
+	id 1wCBjl-0005E6-0E; Mon, 13 Apr 2026 03:29:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wCBfN-0004Lg-3W
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:25:06 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wCBjh-0005C0-Lv
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:29:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wCBfL-000230-3e
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:25:04 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wCBjg-0002t7-6T
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:29:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776065100;
+ s=mimecast20190719; t=1776065371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+utsl4mJD2ZW/eILKQS+iemd0eSSuzZ0R8Gs50lRirE=;
- b=N1SPWPPf4y7GcdHR4Co80Z4LXu9ANfj8BxTgkua/Ct1EE32q0CHyQYanUiGdCaiHPfuQuw
- N1rzZ7ZqtzPGVVDnF31QPstLd0GsrdVVlsdcr+l5bbSyXEn6YPI6IUdHP9wSX1mGJ9jjgX
- bowVtSqcjmbw1MhjowNquQDYe3yZM7E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qmQOShNP/QeFQ+an/+WZQS6PcHMVutQEjoheAnkTkRE=;
+ b=TnCfDxPi03kRQc9qXzeZEFcSDXHIhnRfSWR6ZIrN8KxFrXP7ZgflLwMXHdGhh7jxIQ2VOI
+ ADgF0mYni/WfxRCj7lrNWJQSyLRTedbuh8UYvDZUREgcb8pq4CLCje/Uk504GNYzxcRluk
+ 50NNSU9wCFknh4aB9CofL77+75AH/+o=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-510-EzY4kTi6PIWySAoYgJbCqQ-1; Mon,
- 13 Apr 2026 03:24:56 -0400
-X-MC-Unique: EzY4kTi6PIWySAoYgJbCqQ-1
-X-Mimecast-MFC-AGG-ID: EzY4kTi6PIWySAoYgJbCqQ_1776065095
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-vbmSYp64Pk-h9tw86bLomA-1; Mon,
+ 13 Apr 2026 03:29:29 -0400
+X-MC-Unique: vbmSYp64Pk-h9tw86bLomA-1
+X-Mimecast-MFC-AGG-ID: vbmSYp64Pk-h9tw86bLomA_1776065368
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D6EFA1955DDB; Mon, 13 Apr 2026 07:24:54 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69B431956095; Mon, 13 Apr 2026 07:29:28 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B1001800451; Mon, 13 Apr 2026 07:24:54 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E164519560AB; Mon, 13 Apr 2026 07:29:26 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C7B2621E6A28; Mon, 13 Apr 2026 09:24:51 +0200 (CEST)
+ id 6B0FA21E6A28; Mon, 13 Apr 2026 09:29:24 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  artem_mygaiev@epam.com,
- takahiro.nakata.wr@renesas.com
-Subject: Re: Question on preferred location for QEMU sample projects
-In-Reply-To: <CAN-aV1EiKRh-Zpb9=77rXYPD2uT7HZmeNfvVW-wAToT+gaVC=A@mail.gmail.com>
- (Ruslan Ruslichenko's message of "Fri, 3 Apr 2026 16:39:32 +0200")
-References: <CAN-aV1EiKRh-Zpb9=77rXYPD2uT7HZmeNfvVW-wAToT+gaVC=A@mail.gmail.com>
-Date: Mon, 13 Apr 2026 09:24:51 +0200
-Message-ID: <87v7dvgw58.fsf@pond.sub.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Helge Deller <deller@kernel.org>,  qemu-devel@nongnu.org,  Richard
+ Henderson <richard.henderson@linaro.org>,  Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH v3] Allow building qemu tools on 32-bit hosts
+In-Reply-To: <adTVobzrgl8f6chd@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 7 Apr 2026 11:00:01 +0100")
+References: <adGTUNUSckx1KrAk@p100> <adTVobzrgl8f6chd@redhat.com>
+Date: Mon, 13 Apr 2026 09:29:24 +0200
+Message-ID: <87qzojgvxn.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 7
@@ -85,29 +88,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ruslan Ruslichenko <ruslichenko.r@gmail.com> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> Hi everyone,
+> On Sun, Apr 05, 2026 at 12:40:16AM +0200, Helge Deller wrote:
+>> Qemu's tools like qemu-img are often needed on 32-bit platforms,
+>> although the actual qemu emulators have been discontinued on 32-bit.
 >
-> We are currently preparing the v2 patch series for the Remote-Port
-> Co-simulation protocol for interfacing with SystemC modules. The first
-> revision was here:
-> https://lists.nongnu.org/archive/html/qemu-devel/2026-02/msg01760.html.
+> IMHO, the thought behind disabling 32-bit builds was not making
+> a statement about whether the code was useful on 32-bit platforms.
+> Users of 32-bit platforms will naturally always want to have as
+> much as possible available on their platform.
 >
-> As part of this submission, we would like to publish a sample project
-> serving as a demonstration of how to connect a QEMU Remote-Port
-> frontend to a SystemC backend.
+> Rather it was that 32-bit platforms were no longer considered
+> important as targets by QEMU maintainers. The goal is thus to
+> reduce the set of targets that maintainers have to think about.
 >
-> The sample project implements a standard SystemC IP core and uses
-> several external components such as:
-> - libsystemctlm-soc: https://github.com/Xilinx/libsystemctlm-soc
-> - VCML Library: https://github.com/machineware-gmbh/vcml
-> - SystemC Library: https://github.com/accellera-official/systemc
+> Thus the commit message needs to be justifying why 32-bit platforms
+> should still be treated as a target.
 >
-> We have a question regarding the location for this kind of project.
-> Could you please suggest if there is a preferred location or some
-> standard practice for hosting such a sample project?
+> In terms of the impact on QEMU maintainers / subsystems we see
+>
+>  * QEMU guest agent
+>
+>     =3D> util/, qapi/, qobject/, qom/, qga/
+>
+>    Total about 300  C files
+>
+>  * Adding in tools on top we also get
+>
+>     =3D> block/, chardev/, crypto/, io/, authz/, storage-daemon/
+>
+>    Total about 700 C files
+>
+>
+> I'll support the build of QEMU guest agent on 32-bit, as we were
+> clear that we wanted to continue supporting 32-bit guests in
+> general.
+>
+> I'm not in favour of re-introducing 32-bit support  for anything
+> else.
 
-Location within the QEMU source tree?
+Neither am I.
 
 
