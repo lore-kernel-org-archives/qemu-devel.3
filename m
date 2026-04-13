@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 747B0F531DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 23:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BB44F531DF
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 23:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCQJ9-0005Il-Az; Mon, 13 Apr 2026 19:03:07 -0400
+	id 1wCQJB-0005JZ-7U; Mon, 13 Apr 2026 19:03:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCQJ5-0005I4-4T
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:03:03 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1wCQJ6-0005IN-NT
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:03:05 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCQJ1-0005AC-R5
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:03:02 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2ad21f437eeso29016845ad.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:02:58 -0700 (PDT)
+ id 1wCQJ4-0005AP-TE
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:03:04 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2b24fede2acso28260175ad.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776121378; x=1776726178; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sIfbA9Xm428AoYAJwzWkfIAHFnAZAB7Jc1Vpoczc/W0=;
- b=RUbR/sxfSu7e86gjoH9KRhxr2bHBqsZtHRl4neIjH5h/l+mARHGjVXo0y238qc7eo9
- OqmgPTjALbj1KZBBfRxLfE6/HgN+BRkCHAQBevywpHDSA7vU3HbWfeOhjpkqxH69/MIC
- FgkmPdPR3aoz5nVlrFBJRRffQ41TvAvXMP/l2xLYr/8f7dOr/XxlDvm92N/z6ISCisYV
- 5Td/91HdnyUYCtqwZ+IOW5ztphwxXOrMV72d7eNDFE3zF1reWTE9HqDUoSTnay6abXCz
- +NpmE4TGRQPOW32AQXvduaxyqSpnNTdWO/6/1qlleAmkwnAXDWyCjFD1fjWPejsczMli
- DTlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776121378; x=1776726178;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1776121380; x=1776726180; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sIfbA9Xm428AoYAJwzWkfIAHFnAZAB7Jc1Vpoczc/W0=;
- b=hk4JUKfBqO3ckUM1he8xY+X0ZF/YT3BoCo+OOTVkpKjC/BLC6UI6Bd+Lnd+PW+iWuM
- t7uHhYRwqdDXegcXlY/gFvoN+rcmU8i0X/C8+FSCL66n9sZP3iqMjv3hf5LOnYh7eSLn
- PVxv8QwWL54zOg5vRAPygWGYBWnoKAsX/aOdP9zoLddTMNQoVH/Ead2EHc//gZ2xuyDw
- JhKQYbuyDBxR0Gbz4pJa9bN7lz5ZOTORREpYrLQScQbBkTQsyB9o3SZxQrotOd0TWL51
- geLD35IQnxHtbzDqCdglglI6Loagn3pcKYNLc1RVj2fSpxcClnytHCIxm5XBuUjW4ax6
- Dgvg==
-X-Gm-Message-State: AOJu0Yz1kaAFMyDr3ft9f1DoLqcqfo382JGuFh8A5lh6PM2hDMcrI5iP
- beUrURtFDVmQzcmZ+dDs1YDXUk3cCkM4RScoZoFldhDebW4EZPIKg0RJUVxC5LR9hGW6VcQYUKH
- StSjffAA=
-X-Gm-Gg: AeBDieto3t84JM2LOUnp/nwwQHDcXfYIQv5ul6xnWSV4nwtTn8fJVPvnlhnubzc7DIr
- 4ITraG/ye2dlAFwPGgy057XQFtsucNaGQXs6FyDgGTNOQR8ZdV9FYyD/Wg/9uWpFRwP2yFc4syw
- 9LxxJ1kICksCYUU4UnkxFSYZiqgXziRQS1kgSNOAJuu0FYtSwiUygG34KChoSix8L+rx9cxaEUl
- 9Hok7gcHsa1yB2WfPOKc0Z1tOGuXoNtcByr970hO9uE2Jvz3QWqnmIDrgI7D0WsgkvVgB8dMhd4
- mOWlwgF79LY9v3oqWzAZSkaL0+Os4Hmdv2x4ckmHnYTv/8TbzXHpulQdh1/8p/RVbVkK3+Y2909
- i2SIbsMbS+Pa+kyphHybTS9mO0XUPt39+qTm0YeRzrLJUxWa+u27GZYBR99xvHgfc+i14Wa/G8C
- UYYRuChESosfXoev7Lf4YAaxMr1MVPI9e3fg==
-X-Received: by 2002:a17:902:ffd0:b0:2b0:4f16:22f7 with SMTP id
- d9443c01a7336-2b2c73474b0mr163755095ad.16.1776121377694; 
- Mon, 13 Apr 2026 16:02:57 -0700 (PDT)
+ bh=OKaS1DCDiqzxSEU5l7F4GxOxyESqwl7tvcmMl50HH6A=;
+ b=ft3bMS7P73qPL0E5Sn68IWhlhELeTNzi+FHjB/9zOkbXOvc8R5kmZIdCMYt5eEpdN7
+ 5B9yBdHIWIjjXnu9DpvOYUEKOwdWrz99ruaVnRad5Jn4jxNllFZoVWsb7FP3vKQmVGN5
+ tMo7krLayNdrNxYiGnMJ/vi8ts0QyZvdojlUm5GO30wERXWu0fU9WB16PKeoYF4iydWR
+ pwNxFDLWgIzuRY1RanyN/0ymykQrM/gcBYcVkJ13indzPLMTn2AwvVv4kV59XN076OIj
+ NB9rCWtrhu2BTYSU9DBxi6GwRT9bfs9wbt82jFwM/LMnPttH/dqjlW73j9Wq5tO/SDi+
+ ERew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776121380; x=1776726180;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OKaS1DCDiqzxSEU5l7F4GxOxyESqwl7tvcmMl50HH6A=;
+ b=lVvlxaZoPjpytI9HYYVoxQxdjhSTVbOxmIUJagiAv5alEQsB03hzH0iyc6SsJzxXFr
+ VBkBfZF95i1QRkSiVCqn3JNWw0p7Zc27t4QRxs/12ms6orw0GJnUGZVFk5EiS9TRfWCR
+ nOAYQW6PVDIIVthJqVxfpHS6BwKN4H/VQUMdpGev2f4Q/iGQkOjerIBZIhU2mlahmEwI
+ KUPglv+kj6obIaFyQyvWFGVljxhmDBvZyOnL5kROj/ImeCM+HbYXCtNl50AnQUZkLiKG
+ VlqgbqgrN6AfWP6WQKsb7ZHH0YaffHZCB9kcCyNcbYu82pHMm0k8ceKqbjdbGILGdLdL
+ xi+g==
+X-Gm-Message-State: AOJu0YwYbAPdxSz8izGbbnP+ZOX+l4oFjccvigmoHi+UWdF0ArCV1Pxk
+ G8/8iS+At+FXdvqvhwuOtxWtJyRcaH7qM4lwS7Jf2Mzlk3CVu8CC6fNItimzesCKZ/v/yy17xR6
+ mkXdzv40=
+X-Gm-Gg: AeBDievaJsuydS3o+a18xWYiL7G+V+3hk4RHh4ZRBRRhMqFRvl0syzj+G/0ZUG+ZAe6
+ zRYqMLCMVJUb7XNGIqlB7/94SByLe86OgxhV6kn/wVmRy1Eh0COkj+XffQgLdBHKNFzTB0P8vOJ
+ j/AAOtcr9ZRt6wzhQlkEx1uMKs1gPpehyukFimpnEMVISC4sNXepJTQWscRJJSpul9/GVpMZBM2
+ pJVUQVBu493O8skomv1iBz0yTP9Q6ZDc9V9O8kax8q6jJsk5/Y7Ba5QD97lc7yPI1losK+HFMk6
+ pU7Mem/XW6oaK2WaMXGJ4xJD17KwSbtgqM0gXBQsrSbInylRj81wHNf1yVl//R6a1OdRRfLbrJn
+ P9NRAw0KBBet569YuemRSXzkNqCmdlS8vEWYj4d3STYd2+blodv4IIEAMokuTJt3sx18/Gagixm
+ VehZPI0xYed8I+sZhXtmiBxvfgYTb7JdMJ4A==
+X-Received: by 2002:a17:903:124e:b0:2b2:ec6d:16c9 with SMTP id
+ d9443c01a7336-2b2ec6d19bemr75223925ad.44.1776121380356; 
+ Mon, 13 Apr 2026 16:03:00 -0700 (PDT)
 Received: from stoup.. ([2401:d002:dc0f:2100:377f:61ec:6edd:e205])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2d4db008esm120507675ad.16.2026.04.13.16.02.55
+ d9443c01a7336-2b2d4db008esm120507675ad.16.2026.04.13.16.02.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Apr 2026 16:02:57 -0700 (PDT)
+ Mon, 13 Apr 2026 16:03:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH for-11.0? 0/3] linux-user/arm: Deprecate nwfpe
-Date: Tue, 14 Apr 2026 09:02:48 +1000
-Message-ID: <20260413230251.22537-1-richard.henderson@linaro.org>
+Subject: [PATCH 1/3] docs: Deprecate linux-user/arm/nwfpe
+Date: Tue, 14 Apr 2026 09:02:49 +1000
+Message-ID: <20260413230251.22537-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260413230251.22537-1-richard.henderson@linaro.org>
+References: <20260413230251.22537-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,22 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Deprecate nwfpe emulation.
-But while it still exists, fix thread safety.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ docs/about/deprecated.rst | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-r~
-
-Richard Henderson (3):
-  docs: Deprecate linux-user/arm/nwfpe
-  linux-user/arm/nwfpe: Replace user_registers with current_cpu
-  linux-user/arm/nwfpe: Use thread-local storage for qemufpa
-
- linux-user/arm/nwfpe/fpa11.h | 25 ++++++++-----------------
- linux-user/arm/cpu_loop.c    |  2 +-
- linux-user/arm/nwfpe/fpa11.c | 12 ++----------
- docs/about/deprecated.rst    | 12 ++++++++++++
- 4 files changed, 23 insertions(+), 28 deletions(-)
-
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index a6d6a71326..e7023b96c4 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -494,3 +494,15 @@ If the user requests a modern x86 CPU model (i.e. not one of ``486``,
+ ``athlon``, ``kvm32``, ``pentium``, ``pentium2``, ``pentium3``or ``qemu32``)
+ a warning will be displayed until a future QEMU version when such CPUs will
+ be rejected.
++
++User emulator features
++----------------------
++
++NetWinder Floating Point Emulator (since 11.0)
++'''''''''''''''''''''''''''''''''''''''''''''''
++
++The NetWinder Floating Point Emulator (NWFPE) is a software emulation
++of the FPA11 coprocessor to the ARM3.  This emulation is no longer
++enabled in the Linux kernel by default for any kernel supporting the EABI,
++which is now standard for all distributions.  Compiler support for FPA
++was removed for GCC 4.8.0.
 -- 
 2.43.0
 
