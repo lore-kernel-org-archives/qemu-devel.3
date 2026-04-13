@@ -4,69 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95BDCEBFD25
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DDDEBFD2C
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCDhI-00087Y-6G; Mon, 13 Apr 2026 05:35:12 -0400
+	id 1wCDtG-00010t-Jp; Mon, 13 Apr 2026 05:47:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wCDhF-00084i-Lu
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:35:09 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wCDhC-0005nG-Ci
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:35:09 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Dx7em9uNxp7RsAAA--.245S3;
- Mon, 13 Apr 2026 17:34:54 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxPMK8uNxpmwlsAA--.7100S3;
- Mon, 13 Apr 2026 17:34:52 +0800 (CST)
-Subject: Re: [PATCH v2] target/loongarch: Add support for dbar hint variants
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org,
- lixianglai@loongson.cn, yijun@loongson.cn, chenhuacai@loongson.cn
-References: <20260410033723.1225983-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <331159fe-8596-e406-32d5-c9c8c2ad6f8b@loongson.cn>
-Date: Mon, 13 Apr 2026 17:32:03 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <20260410033723.1225983-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxPMK8uNxpmwlsAA--.7100S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuw1xWw15Ar1DAw45ur48AFc_yoW7Kw45pF
- 4xCF1akFWjqF97Zan7XayYvrn8Zr4xKw42vay3trWfursxWr1kZF1kK3y5KF4xGw4qqF10
- vFWvyw43Wa9IqabCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07Ui
- iSdUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.135,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wCDtE-00010Q-Ez
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:47:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wCDtC-0000E5-EL
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:47:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776073648;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vFPS6fRPR8ifQZYJmpMES4Pv/Kh+VEGwYZnf74bIzfc=;
+ b=IL78LQOoPDTDc9xN3ksDeBweh9FsNQPfxzmk33jTcuD71eH4Z6wdkI0NZlnotMNNnqMJqe
+ LJIZcybDF4HjnOH50RlDaOyVDyTxD9UZKdv3RS0/DxaE5BaZAs7NYL3L5oq1+8+o/iHBSc
+ He8emBm5CySdbnc7+I9vMaGQ6O4tp3s=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-684-lo6Y6kLuOmSnI8w6tEd08A-1; Mon, 13 Apr 2026 05:47:27 -0400
+X-MC-Unique: lo6Y6kLuOmSnI8w6tEd08A-1
+X-Mimecast-MFC-AGG-ID: lo6Y6kLuOmSnI8w6tEd08A_1776073646
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c76cb2dce57so2530352a12.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 02:47:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776073646; x=1776678446; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vFPS6fRPR8ifQZYJmpMES4Pv/Kh+VEGwYZnf74bIzfc=;
+ b=rS3QYm1vLnGt/bYd34QwFT96iWUz//5mWxB6ZFzuFmLmeq8jIw9r2e2W2HLA1bDDpk
+ OcOm9nbEW0yX/Jyb3tWKkm61EbCXsB3pgs7AR/+QyxnAXFUp/WtZ13x8NzQRi9fx43Ga
+ xRaw+4JoF7VQHa3OKlb0lg4lOHEHjzasOx7zpBXjmgaqPOSnPAik2r34VJ698vyu4w7b
+ V94niWGkxm0XY9lwm/6o6UWi0pqS+aCJH3MS4CvHPI4ta4i0rAkE/c8YnFJ/q+4dGnOv
+ b/PsYmWljMNkDsrmzCPxMWVvTB3F9hTIeQzNJxs+40fmzEziuTsw+K/KNYK5HgUpbuiY
+ p8ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776073646; x=1776678446;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vFPS6fRPR8ifQZYJmpMES4Pv/Kh+VEGwYZnf74bIzfc=;
+ b=S94vZmCepnmwtWpM2rp78eseLZ5dUeipL/fPSl4XqQvZgHuXhQcv1suHCl4ghdq5if
+ 93rSqARyC5fdrr36rI+FiiXXOOPxd6DwJtUL56ZtLxuWTCcuGJZ5KQrwPShryvJ2MllU
+ XhKb73FQ1xLFBEvVVZWvf1+KSkx5X+wGVwVsHOaMR63Ast905AcvqZPzxG5DEN+R+nZk
+ SKQ8O2tg/vlj3j0AxYmZLU4gQEBk9IAa9hISvQfEz8exAqlvBk0lNPMM9n4AoWt/+QHj
+ O7LpqxlMyO5pqCt5bkZpffPfGoO6f1G6tpbglF9yh7vHih6fL/agsB6y2YDCUB25DrH7
+ gTag==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9bh4iuibRPYcVh7vt7D/KSE0zmkIsKbSMwT9u8sQabcUjDMzxP48WEf8x1nR1Wr4K3WxC8qawFGy0e@nongnu.org
+X-Gm-Message-State: AOJu0YwJ5b09lZA7Fb1j+mybFq52vwFRvpOP342ZQS/mTa7eoN98re51
+ L6wxQZcyngr/AyYWzx9yv/0J8qdpdNiyFMsdUtJpAyGEF9uz3IITTYYfOIami35dF9mSqWa/wNH
+ h+Wwkdn/72X/alYXmUB4e8u9C5FHDHk/Wqve5fMUpSDMDevPrE3Xw5nsn
+X-Gm-Gg: AeBDieuqtDwhJZ8IhBHVccIF8Lt1oP1sR1qsjngmPy3BGIg5QEdgIZibSxibbkMnVdO
+ eN1kEJ882mdrHrMa7IEMcWQVhG+02I3gaEdIT+GT91ofPC2ebjVNLo1CC8GISwc35Ne6T7aBcyt
+ gZGpaCZ4d9plBVTrWMhLvVYTLMrSzTX+xpu8SVLdvNM76IbqBQs04kYYtGiU5aQwfUvDxZWuJlI
+ xXmYT1fND7qiSS0Yd2jWw2wfa2we2yA9rtCkBsS7HxrkdTajGmU/LDxISmb23obpILc0BGvb5qS
+ p6WRykyKL037X9n09GlNX0YUwe8p3dmVzqaLuWx1TPQg4yCbjN12w1cKQNJX4AQmCejOK5mDdUr
+ G9TmKVtrrUDwu0o5i2yaiXm55tC2JAdlyH/nOVQwuTExpr0Ymzt2vrtlmx5gXakjQdPLwkAr7Ay
+ o=
+X-Received: by 2002:a05:6a21:9991:b0:39b:ce4a:f397 with SMTP id
+ adf61e73a8af0-39fe3d0eca5mr14334536637.18.1776073646003; 
+ Mon, 13 Apr 2026 02:47:26 -0700 (PDT)
+X-Received: by 2002:a05:6a21:9991:b0:39b:ce4a:f397 with SMTP id
+ adf61e73a8af0-39fe3d0eca5mr14334511637.18.1776073645547; 
+ Mon, 13 Apr 2026 02:47:25 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c7921a12adasm9453700a12.26.2026.04.13.02.47.22
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 13 Apr 2026 02:47:25 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH for-11.0] accel/kvm: return early from kvm_irqchip_create
+ if kvm does not support irqchip
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <CAFEAcA__kgxb-9FEsBu_3cmv3UZMMy3kuqk9Bf1NqoQpnEmmSw@mail.gmail.com>
+Date: Mon, 13 Apr 2026 15:17:09 +0530
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, kvm@vger.kernel.org,
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B3B285BF-87E9-48DA-8F9E-28B2C3E9426E@redhat.com>
+References: <20260413090010.60339-1-anisinha@redhat.com>
+ <CAFEAcA__kgxb-9FEsBu_3cmv3UZMMy3kuqk9Bf1NqoQpnEmmSw@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,177 +132,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2026/4/10 上午11:37, Song Gao wrote:
-> LoongArch architecture (since LA664) introduces fine-grained dbar
-> hints that allow controlling which memory accesses are ordered by
-> the barrier. Previously, all dbar instructions were treated as a
-> full barrier (TCG_MO_ALL | TCG_BAR_SC).
-> 
-> This patch adds support for decoding dbar hints and emitting the
-> appropriate TCG memory barrier flags. For CPUs that do not advertise
-> the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
-> fall back to a full barrier, preserving compatibility.
-> 
-> The hint encoding follows the LoongArch v1.10 specification:
->   * Bit3: barrier for previous read (0: true, 1: false)
->   * Bit2: barrier for previous write (0: true, 1: false)
->   * Bit1: barrier for succeeding read (0: true, 1: false)
->   * Bit0: barrier for succeeding write (0: true, 1: false)
-> 
-> The mapping to TCG memory order flags is as follows:
->    TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_LD_ST;
->    TCG_BAR_SC |TCG_MO_ST_LD | TCG_MO_ST_ST;
->    TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_ST_LD;
->    TCG_BAR_SC |TCG_MO_ST_ST | TCG_MO_LD_ST;
-> 
-> Special hint handling:
-> - hint 0x700: LL/SC loop barrier, treated as a full barrier as recommended.
-> - hint 0xf and 0x1f: reserved/no-op, treated as no operation
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/cpu.c                        |  4 ++
->   .../tcg/insn_trans/trans_memory.c.inc         | 62 ++++++++++++++++++-
->   target/loongarch/tcg/translate.c              |  1 +
->   target/loongarch/translate.h                  |  3 +
->   4 files changed, 68 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index e22568c84a..d8d106b07e 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
->           data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
->           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
->           cpu->env.cpucfg[2] = data;
-> +
-> +        data = cpu->env.cpucfg[3];
-> +        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
-> +        cpu->env.cpucfg[3] = data;
->       }
->   }
->   
-> diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> index e287d46363..e1146fe9ec 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> @@ -137,11 +137,69 @@ static bool trans_preldx(DisasContext *ctx, arg_preldx * a)
->       return true;
->   }
->   
-> +/*
-> + * Decode dbar hint and emit appropriate TCG memory barrier.
-> + *
-> + * The hint is a 5-bit field (0-31) encoded in the instruction.
-> + * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
-> + *
-> + * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
-> + */
->   static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
->   {
-> -    tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
-> +    int hint = a->imm;
-> +    TCGBar bar_flags = 0;
-> +
-> +    /* Reserved/no-op hints: 0xf and 0x1f */
-> +    if (hint == 0xf || hint == 0x1f) {
-> +        return true;
-> +    }
-> +
-> +    /* If the CPU does not support fine-grained hints,or for the special LL/SC
-> +     * loop barrier (0x700), emit a full barrier.
-> +     */
-> +    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
-> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * Fine-grained hint decoding:
-> +     * Bits 3-0 control which accesses must be ordered.
-> +     * Bit3: barrier for previous read (0: true, 1: false)
-> +     * Bit2: barrier for previous write (0: true, 1: false)
-> +     * Bit1: barrier for succeeding read (0: true, 1: false)
-> +     * Bit0: barrier for succeeding write (0: true, 1: false)
-Hi Song,
+> On 13 Apr 2026, at 3:03=E2=80=AFPM, Peter Maydell =
+<peter.maydell@linaro.org> wrote:
+>=20
+> On Mon, 13 Apr 2026 at 10:01, Ani Sinha <anisinha@redhat.com> wrote:
+>>=20
+>> During refactoring of kvm_irqchip_create(), the refactored code was =
+returning
+>> early from do_kvm_irqchip_create() function if the required =
+capabilities were
+>> not present in KVM. This was not translating to an early return from
+>> kvm_irqchip_create() as was the case before refactoring. This is =
+because,
+>> do_kvm_irqchip_create() did not have a means to notify the caller of =
+the lack
+>> of kvm capabilities. Fix this by making do_notify_irqchip_create() =
+return
+>> EOPNOTSUPP error when required capabilities are absent and then the =
+caller
+>> can check the return code and return early.
+>>=20
+>> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM =
+file descriptor change")
+>> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+>> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
+>> Suggested-by: Fabiano Rosas <farosas@suse.de>
+>> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>> ---
+>> accel/kvm/kvm-all.c | 11 ++++++++---
+>> 1 file changed, 8 insertions(+), 3 deletions(-)
+>>=20
+>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>> index 774499d34f..92af42503b 100644
+>> --- a/accel/kvm/kvm-all.c
+>> +++ b/accel/kvm/kvm-all.c
+>> @@ -2575,7 +2575,7 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, =
+qemu_irq irq, int gsi)
+>>     g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
+>> }
+>>=20
+>> -static void do_kvm_irqchip_create(KVMState *s)
+>> +static int do_kvm_irqchip_create(KVMState *s)
+>> {
+>>     int ret;
+>>     if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
+>> @@ -2587,7 +2587,7 @@ static void do_kvm_irqchip_create(KVMState *s)
+>>             exit(1);
+>>         }
+>>     } else {
+>> -        return;
+>> +        return -EOPNOTSUPP;
+>>     }
+>>=20
+>>     if (kvm_check_extension(s, KVM_CAP_IRQFD) <=3D 0) {
+>=20
+> This function confuses me. With this patch it can do three things:
+> * report an error and exit(1)
+> * return success
+> * return a failure code
+>=20
+> What is the difference between the cases where we exit and
+> where we return the error code? The commit message says we
+> return an error "when required capabilities are absent", but
+> we do the error-exit for e.g. "KVM_CAP_IRQFD not present", which
+> sounds like "required capabilities are absent" to me...
 
-This is much better than before, I think it will be better if some 
-comments for BIT4 is added here showing it is discarded here.
-> +     *
-> +     * For each combination, we set the corresponding TCG_MO_* flag if both
-> +     * sides of the barrier require ordering.
-> +     */
-> +
-> +    bool prev_rd = !(hint & 0x08); /* bit3 */
-> +    bool prev_wr = !(hint & 0x04); /* bit2 */
-> +    bool succ_rd = !(hint & 0x02); /* bit1 */
-> +    bool succ_wr = !(hint & 0x01); /* bit0 */
-> +
-> +    if (prev_rd) {
-> +        bar_flags |= TCG_MO_LD_LD | TCG_MO_LD_ST;
-> +    }
-> +    if (prev_wr) {
-> +        bar_flags |= TCG_MO_ST_LD | TCG_MO_ST_ST;
-> +    }
-> +    if (succ_rd) {
-> +        bar_flags |= TCG_MO_LD_LD | TCG_MO_ST_LD;
-> +    }
-> +    if (succ_wr) {
-> +        bar_flags |= TCG_MO_ST_ST | TCG_MO_LD_ST;
-> +    }
-Previously I hear that TCG_MO_LD_ST should be default enabled on 
-LoongArch, but I am not sure. Is that correct?
+I think it should be an assertion there. That is instead of exit(1) we =
+should have had
 
-The others looks good to me.
+assert(kvm_check_extension(s, KVM_CAP_IRQFD));
 
-Regards
-Bibo Mao
+That is you can=E2=80=99t have KVM_CAP_IRQCHIP cap and not have =
+KVM_CAP_IRQFD . That is how I understand it.
 
-> +
-> +    if (bar_flags == 0) {
-> +        bar_flags = TCG_MO_ALL;
-> +    }
-> +
-> +    tcg_gen_mb(bar_flags | TCG_BAR_SC);
->       return true;
-> -}
-> + }
->   
->   static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
->   {
-> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-> index b9ed13d19c..49280b1dd3 100644
-> --- a/target/loongarch/tcg/translate.c
-> +++ b/target/loongarch/tcg/translate.c
-> @@ -149,6 +149,7 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->   
->       ctx->cpucfg1 = env->cpucfg[1];
->       ctx->cpucfg2 = env->cpucfg[2];
-> +    ctx->cpucfg3 = env->cpucfg[3];
->   }
->   
->   static void loongarch_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
-> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-> index ba1c89e57b..8aa8325dc6 100644
-> --- a/target/loongarch/translate.h
-> +++ b/target/loongarch/translate.h
-> @@ -43,6 +43,8 @@
->   #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LLACQ_SCREL))
->   #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
->   
-> +#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, DBAR_HINTS))
-> +
->   /*
->    * If an operation is being performed on less than TARGET_LONG_BITS,
->    * it may require the inputs to be sign- or zero-extended; which will
-> @@ -66,6 +68,7 @@ typedef struct DisasContext {
->       bool va32; /* 32-bit virtual address */
->       uint32_t cpucfg1;
->       uint32_t cpucfg2;
-> +    uint32_t cpucfg3;
->   } DisasContext;
->   
->   void generate_exception(DisasContext *ctx, int excp);
-> 
 
 
