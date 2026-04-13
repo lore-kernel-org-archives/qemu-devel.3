@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25EC0F34C4C
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6544AF34C4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCGHI-0004Ui-4w; Mon, 13 Apr 2026 08:20:32 -0400
+	id 1wCGOT-0005W9-7A; Mon, 13 Apr 2026 08:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wCGHF-0004UR-BV
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:20:29 -0400
+ id 1wCGOR-0005Vi-JK
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:27:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wCGHB-0000VM-Hh
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:20:27 -0400
+ id 1wCGON-0002Fb-NZ
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:27:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776082824;
+ s=mimecast20190719; t=1776083269;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sg+50Q8sxRR1Aj/0H7R8h6PT06l8kVwGZNKTmLDU/uw=;
- b=cb5jht3GepqEY6CUkzUDO2z2AZxi9FDT4RIFrceHfetK02vfb2mkrvqp9mhdeh0d4AOkKE
- Pg1e1qWAgb1I0NIztodk+mfGEsy1P7ctwDGlwUF83GJZ7aBGY79WUdTmKxuXOqmj3pGxFP
- 4M4W2SJByWNKobNyhca68w48WGRpTzI=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bRKspQPq8OXUc15a9NtnUtQGzjqGHbd9RQrfqxefTaQ=;
+ b=XMa3l78bUIqUS7UKtD3BSSaO0DE7QG2A0BoXpfAzaUfJef6anzmvxfo+QLiDXhbuFwWXC8
+ nwr5uvTRB8I5+RaSl1sjwDZ3JdodCwtbG6Gx6cygDQpfw26FMKS7pCZE4vMiCXTzhmZdqN
+ 4mm2OS1AnQCkLASyj8Y6sbCrtSyYjQ4=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-E1uUgcQYNQ-vwI3LbmprZA-1; Mon, 13 Apr 2026 08:20:21 -0400
-X-MC-Unique: E1uUgcQYNQ-vwI3LbmprZA-1
-X-Mimecast-MFC-AGG-ID: E1uUgcQYNQ-vwI3LbmprZA_1776082820
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2b2ed279eedso8308775ad.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 05:20:21 -0700 (PDT)
+ us-mta-542-zsgMbkZoOQmi5nKgxtIfYQ-1; Mon, 13 Apr 2026 08:27:46 -0400
+X-MC-Unique: zsgMbkZoOQmi5nKgxtIfYQ-1
+X-Mimecast-MFC-AGG-ID: zsgMbkZoOQmi5nKgxtIfYQ_1776083265
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-3568090851aso9639696a91.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 05:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776082820; x=1776687620; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776083265; x=1776688065; darn=nongnu.org;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sg+50Q8sxRR1Aj/0H7R8h6PT06l8kVwGZNKTmLDU/uw=;
- b=NkxntGOVzeb+KRqKbr/PZxqpzbof8Kx63ebL2cyKe1JnM4a02gS3ssxalfmJ0+ZVaP
- laz5mTXJMDDZX6KSP6E8Vo+F5PFGe6A1ChRCaQYBUuhsQ5h2AoI7jhrBGROf7UwnLGtZ
- pEaMSMWdAdUqMIfMgCt6fD0cT5aoVSZ/0iEb9/H3w1eOpy2Es4l6M5WOwYVDEcrrbXhr
- RCyWLHplzbZMzHbQL0+keaF1Oh+bcTZDyfMtJvtdPPaui0rVVbTafv2SUTARZOTuhToU
- 2X9LwEO6bT9ijytB7RoaNt7bTNQ5PKhig4dCekOPmdNKXpMtd8ZUeVnSrTvteB6rDI7L
- G7Gw==
+ bh=bRKspQPq8OXUc15a9NtnUtQGzjqGHbd9RQrfqxefTaQ=;
+ b=fOc1OBaja/zLsW4/HWumzRG8Wjd/9OdhVdU2AqBiFOD9fdodpUJGEa1TzyF6niHXlM
+ pyWppJrki7QmYRIAvCFTf/s/0YYfHCH6ovMw7jSZANVJaLxZfDkc2+ASUa4r9RU0DhEC
+ F+6qv6DBmG0IqxfoSWVo+wDhqFR/pe6IjB5/t7LwxzBgB7gDwBvcdkO3xDe38h/zjKWS
+ 171aSl/xeQ7IaWdOvdmPXwE8uANTSiRV0kD9uGHFgCe56jG3F+82zNAckAgN2xV27fNh
+ cNeqF2AS16WNxwy2Wyszs+B5kXfVAdQlsyfabMLnJTVTBlL1oO8Gw1WzdQKK4zwfSchZ
+ DClQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776082820; x=1776687620;
+ d=1e100.net; s=20251104; t=1776083265; x=1776688065;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sg+50Q8sxRR1Aj/0H7R8h6PT06l8kVwGZNKTmLDU/uw=;
- b=oTjr/FCQD/H1id3frRfczpV3Yt+7Uo18z5bHg+7sfhSOV2wrafaUfSZ7OFLFEBwyVW
- VxRQTmtviptQrrdjAZedGOvSI6MtAnDl+CAwb6dAuxfsp0dOVWc1N1N89rf/xW/Td1Do
- B4qCRH6gCvqpoyeeMbBMDlngHd4RwoaC+LhJdFFsC8GrAB3M7497XjMKv8NM7atoLebt
- fCOSjDktF82MAdC1yKG4qRX/ggO/GJoKoneLS8CJ9HkxzNGlWglC/Xf/7UETnt455Ieo
- n5E+AC7XJdc4V+T5y7/mE2EtVrcySFFjplPnCiibNYi1EYnaH/MbIKUtaXnmCr/5tAhq
- Uwvg==
+ bh=bRKspQPq8OXUc15a9NtnUtQGzjqGHbd9RQrfqxefTaQ=;
+ b=QPjzOgie0Fn3rq+/zajvw8nVurXu/nSY5xgRkx1tFq9FNVstriA/+eXih5Dgt1pE2i
+ qtWAbTXJZH2WAGCvVl1xy6W0zFF0gkdERPF0QKoc8UQKlON3ake/wU4nwTiEVAYnKWXp
+ 7YHnqTpXsTjR3x98I2dZot+bXpzCRkMXoXQaLTBwuRfY5p6Z9WHTV5EY/PerdOTJKXBN
+ 68f2eCaK5U9RoGiwTLNdzvHJ7da1qPWkx4pQ1QDm7h/6bohm3z6ZdLwxYe9G+P4LrgMU
+ 2O89k+93tDPnWHOskdXLqBcPhEspcqxuMTGbwbjwTY89PDuB9z/tPPZSNUvJuX1lxL0S
+ Z3AA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/sz3Xq4F3f1SelJ7PAgcN/IcLQVeFpMElF+pS3RJgf7sln9a89uscLkl1IXgzobeeHYIlOxRsVMrqG@nongnu.org
-X-Gm-Message-State: AOJu0YxPFddOmT6rLS7fTbXerIiylik2q4UuzoyGYvdE7apgvHYk5YS3
- 4VzqQQwsSJ2eqEng4MIFjROxnbr/k6Ekjx8jjfoNxvi1A8airIJEh3BHFFKSmDbSV3Li3WwJ5A1
- PuMgxUtAzHUL90JnD0T3Gar5N4/raqiwZJAQuipJytHx1ciO2et+8/oybCMK5nIF3
-X-Gm-Gg: AeBDietp3QpmPj2gse/txgSGvR9OyuwIzSm7d6GLa/U3u+LXR9bi45jMZV7ED9+xJ+D
- dSPDzkz6iN4y/NfIiWfGOj4EgSX54QejV/MDBTIF41K4WrNwYsMenJvpROOb19BnpWpXlTm+YIA
- dfKywlxxsBNG0bKpYu8fozYGBtlMDh/vYxbShXbkvdTuahkt/yojLP9657oBD7zEGJx0gyKgLQd
- aCOyTw+JsPm0ZQaWEAm9mqEWNukyXeVHPOvaCHr/e4jT48lKWRf+ll7Gonhnrz3oIyi/5BXHpae
- Fk1YB6/bpUH1ZLLccEMrOXOBne1i09vnjBT9MExk0WYoTPqzaEINgkYmRuStUXqzsGtdOL3YLZ7
- Tg+GuAY0L7evuMFXtmwMjz3lx3ApoBZBL82CqIhQIUdD1iryCLPnc3ToGj1Qk5Dog2qYbF8wIO/
- 4=
-X-Received: by 2002:a05:6a20:748b:b0:38e:9220:ebbe with SMTP id
- adf61e73a8af0-39fe3d616a7mr14231524637.23.1776082820017; 
- Mon, 13 Apr 2026 05:20:20 -0700 (PDT)
-X-Received: by 2002:a05:6a20:748b:b0:38e:9220:ebbe with SMTP id
- adf61e73a8af0-39fe3d616a7mr14231494637.23.1776082819551; 
- Mon, 13 Apr 2026 05:20:19 -0700 (PDT)
+ AFNElJ87sgFfzF5XJ8XJcexMy3ZMevmT9KYk/snv7v50rT7bx94gsifOrW8sGoGLthrMsjtTC/DV1FF6ghgx@nongnu.org
+X-Gm-Message-State: AOJu0YwTu9jY3yC3E275S0ujfyGGZJ3eFXqwox9SalRXB4vt1c4m7rs+
+ D5/CVigqKNhAvL9RnekEwlnnyDnRqlVIFXjOeqh96ZY4f2JgsVEH2AkydRBPuCG9YLWkXy0kkWs
+ 2+B2HjRzJJhZgvAsyWAVwWMHMoDqJ3nM7Ff+iaLGiLZ8qxi0C/DvWxosr
+X-Gm-Gg: AeBDievCwbWjdwB7ocnm9Z9aziKSGAzlAUv9C9A2r9TayX5WjF5hb0LO6QkEfu2n2vx
+ se8Nfnw6mIeW14qZV35YcsbMpCDiXCPMWC+4H5O++zERJRVnX+mLOiw9lT1uwsLDBBWMAbyMp/v
+ BFN49Tm2Hq61Q+WGsEG0u8ibqyWHWZUMrjL1yEENKSrcjZl36DWAZPLH6Z++OTOocNTOtVfpd97
+ uUHmz7rQfuAE9+bn29iGIB6jQrHFDuu6u/XRXjh2U+P/2KaaCPiSD77H8lKPf94yF1q2VbBQlpt
+ xr4ouyLVQiAt+Y9j2xpkeKmBdfzyUNlAe7V9X2gszrkEzlOBrujSv0U9zzgfwd/gizevX+WagVl
+ lDNTcmvBrhHSaLBcT+oZiJ33cBZB4km32MClbfFB5lFkPkzZfR8VRSSn6ArL4ugu7IfZMm0m0QY
+ o=
+X-Received: by 2002:a05:6a20:2455:b0:394:56ae:8a7f with SMTP id
+ adf61e73a8af0-39fe40027cemr14040396637.42.1776083264990; 
+ Mon, 13 Apr 2026 05:27:44 -0700 (PDT)
+X-Received: by 2002:a05:6a20:2455:b0:394:56ae:8a7f with SMTP id
+ adf61e73a8af0-39fe40027cemr14040359637.42.1776083264478; 
+ Mon, 13 Apr 2026 05:27:44 -0700 (PDT)
 Received: from smtpclient.apple ([122.163.114.34])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c7922de0626sm10683181a12.13.2026.04.13.05.20.16
+ 41be03b00d2f7-c79219c618asm10117963a12.18.2026.04.13.05.27.41
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 13 Apr 2026 05:20:19 -0700 (PDT)
+ Mon, 13 Apr 2026 05:27:44 -0700 (PDT)
 Content-Type: text/plain;
 	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH for-11.0] accel/kvm: return early from kvm_irqchip_create
- if kvm does not support irqchip
+Subject: Re: [PATCH V2 for-11.0] accel/kvm: return early from
+ kvm_irqchip_create if kvm does not support irqchip
 From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <CAFEAcA8CcD+8Hn2++X5FnyYcsDLV4J=tFg5BAd_sRJmCw+nVkg@mail.gmail.com>
-Date: Mon, 13 Apr 2026 17:50:04 +0530
+In-Reply-To: <980AC83F-DD93-4924-8935-11CBFD624ACE@redhat.com>
+Date: Mon, 13 Apr 2026 17:57:29 +0530
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  Misbah Anjum N <misanjum@linux.ibm.com>,
  Gautam Menghani <gautam@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, kvm@vger.kernel.org,
- qemu-devel <qemu-devel@nongnu.org>
+ kvm@vger.kernel.org, qemu-devel <qemu-devel@nongnu.org>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <1974E499-C3D2-4A3C-A5B9-89961751F23E@redhat.com>
-References: <20260413090010.60339-1-anisinha@redhat.com>
- <CAFEAcA8CcD+8Hn2++X5FnyYcsDLV4J=tFg5BAd_sRJmCw+nVkg@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <F0A82F77-6F25-4193-88D0-01B24B1459AE@redhat.com>
+References: <20260413112151.61261-1-anisinha@redhat.com>
+ <0954ef7e-b04e-4542-89fb-796acc452068@linux.ibm.com>
+ <980AC83F-DD93-4924-8935-11CBFD624ACE@redhat.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
 X-Mailer: Apple Mail (2.3864.500.181)
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -132,57 +133,159 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 13 Apr 2026, at 5:40=E2=80=AFPM, Peter Maydell =
-<peter.maydell@linaro.org> wrote:
+> On 13 Apr 2026, at 5:45=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
+wrote:
 >=20
-> On Mon, 13 Apr 2026 at 10:01, Ani Sinha <anisinha@redhat.com> wrote:
+>=20
+>=20
+>> On 13 Apr 2026, at 5:06=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
 >>=20
->> During refactoring of kvm_irqchip_create(), the refactored code was =
+>>=20
+>>=20
+>> On 13/04/26 4:51 pm, Ani Sinha wrote:
+>>> During refactoring of kvm_irqchip_create(), the refactored code was =
 returning
->> early from do_kvm_irqchip_create() function if the required =
+>>> early from do_kvm_irqchip_create() function if the required =
 capabilities were
->> not present in KVM. This was not translating to an early return from
->> kvm_irqchip_create() as was the case before refactoring. This is =
+>>> not present in KVM. This was not translating to an early return from
+>>> kvm_irqchip_create() as was the case before refactoring. This is =
 because,
->> do_kvm_irqchip_create() did not have a means to notify the caller of =
+>>> do_kvm_irqchip_create() did not have a means to notify the caller of =
 the lack
->> of kvm capabilities. Fix this by making do_notify_irqchip_create() =
+>>> of kvm capabilities. Fix this by making do_notify_irqchip_create() =
 return
->> EOPNOTSUPP error when required capabilities are absent and then the =
+>>> EOPNOTSUPP error when required capabilities are absent and then the =
 caller
->> can check the return code and return early.
+>>> can check the return code and return early.
+>>> Converted some calls to exit() to assertion checks in order to make =
+it cleaner.
+>>> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM =
+VM file descriptor change")
+>>> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+>>> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
+>>> Suggested-by: Fabiano Rosas <farosas@suse.de>
+>>> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>>> ---
+>>> accel/kvm/kvm-all.c | 29 ++++++++++++++++-------------
+>>> 1 file changed, 16 insertions(+), 13 deletions(-)
+>>> changelog:
+>>> v2: converted some exit() calls to assertions.
+>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>>> index 774499d34f..c78bf6a56f 100644
+>>> --- a/accel/kvm/kvm-all.c
+>>> +++ b/accel/kvm/kvm-all.c
+>>> @@ -2575,7 +2575,7 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, =
+qemu_irq irq, int gsi)
+>>>     g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
+>>> }
+>>> -static void do_kvm_irqchip_create(KVMState *s)
+>>> +static int do_kvm_irqchip_create(KVMState *s)
+>>> {
+>>>     int ret;
+>>>     if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
+>>> @@ -2587,36 +2587,38 @@ static void do_kvm_irqchip_create(KVMState =
+*s)
+>>>             exit(1);
+>>>         }
+>>>     } else {
+>>> -        return;
+>>> +        /*
+>>> +         * neither KVM_CAP_IRQCHIP nor KVM_CAP_S390_IRQCHIP =
+capabilities are
+>>> +         * present. Bail.
+>>> +         */
+>>> +        return -EOPNOTSUPP;
+>>>     }
+>>> -    if (kvm_check_extension(s, KVM_CAP_IRQFD) <=3D 0) {
+>>> -        fprintf(stderr, "kvm: irqfd not implemented\n");
+>>> -        exit(1);
+>>> -    }
+>>> +    assert(kvm_check_extension(s, KVM_CAP_IRQFD));
+>>=20
+>> again changing behaviour ?
+>> previously it was doing exit(1) on returning non-zero.
 >=20
-> As a fix intended for 11.0 at this point in the release cycle,
-> it would be helpful if the commit message stated what the
-> user-visible consqeuences of this bug are.
+> Non-zero is the success case. It was doing exit() for returning <=3D0  =
+case
+>=20
+>> if (kvm_check_extension(s, KVM_CAP_IRQFD) <=3D 0)
 
-Ok I would appreciate if you can add this line in the commit log before =
-putting it in CI:
+Actually maybe I should make this clearer
 
-=E2=80=9CDue to this regression, all KVM guests on PPC 64 hang =
-immediately during startup"
+int kvm_check_extension(KVMState *s, unsaigned int extension)            =
+                                                            =20
+{                                                                        =
+                                                           =20
+    int ret;                                                             =
+                                                           =20
+                                                                         =
+                                                           =20
+    ret =3D kvm_ioctl(s, KVM_CHECK_EXTENSION, extension);                =
+                                                             =20
+    if (ret < 0) {                                                       =
+                                                           =20
+        ret =3D 0;                                                       =
+                                                             =20
+    }                                                                    =
+                                                           =20
+                                                                         =
+                                                           =20
+    return ret;                                                          =
+                                                           =20
+}                      =20
 
-Or if you prefer, I can spin up a new version with the updated commit =
-message.
+So non-zero positive value is success. 0 is unsupported. Also see =
+https://docs.kernel.org/virt/kvm/api.html#kvm-check-extension
+So asserting on non-zero is fine.
 
-> That helps in
-> identifying whether this really does need to go into 11.0
-> (i.e. whether it is release-critical).
 >=20
->> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM =
-file descriptor change")
->> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
->> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
->> Suggested-by: Fabiano Rosas <farosas@suse.de>
->> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 >=20
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->=20
-> as the minimal fix for the logic-bug introduced by 98884e0cc1.
->=20
-> thanks
-> -- PMM
->=20
+>> Now, it will assert on returning zero ?
+>> May be split the patch to keep the exit -> assert changes separate ?
+>>=20
+>>>       /* First probe and see if there's a arch-specific hook to =
+create the
+>>>      * in-kernel irqchip for us */
+>>>     ret =3D kvm_arch_irqchip_create(s);
+>>>     if (ret =3D=3D 0) {
+>>> -        if (s->kernel_irqchip_split =3D=3D ON_OFF_AUTO_ON) {
+>>> -            error_report("Split IRQ chip mode not supported.");
+>>> -            exit(1);
+>>> -        } else {
+>>> -            ret =3D kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
+>>> -        }
+>>> +        /* assert that split IRQ chip mode is supported. */
+>>> +        assert(s->kernel_irqchip_split !=3D ON_OFF_AUTO_ON);
+>>> +        ret =3D kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
+>>>     }
+>>>     if (ret < 0) {
+>>>         fprintf(stderr, "Create kernel irqchip failed: %s\n", =
+strerror(-ret));
+>>>         exit(1);
+>>>     }
+>>> +
+>>> +    return 0;
+>>> }
+>>>   static void kvm_irqchip_create(KVMState *s)
+>>> {
+>>>     assert(s->kernel_irqchip_split !=3D ON_OFF_AUTO_AUTO);
+>>> -    do_kvm_irqchip_create(s);
+>>> +    if (do_kvm_irqchip_create(s) < 0) {
+>>> +        return;
+>>> +    }
+>>>     kvm_kernel_irqchip =3D true;
+>>>     /* If we have an in-kernel IRQ chip then we must have =
+asynchronous
+>>>      * interrupt delivery (though the reverse is not necessarily =
+true)
+>>> @@ -2835,6 +2837,7 @@ static int kvm_reset_vmfd(MachineState *ms)
+>>>     }
+>>>       if (s->kernel_irqchip_allowed) {
+>>> +        /* ignore return from this function */
+>>>         do_kvm_irqchip_create(s);
+>>>     }
+
 
 
