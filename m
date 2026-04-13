@@ -4,53 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D91AEBFD10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC37EBFD10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 07:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCBrx-0006x5-Rs; Mon, 13 Apr 2026 03:38:05 -0400
+	id 1wCBtu-0002VE-4n; Mon, 13 Apr 2026 03:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCBrm-0006uq-8A
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:37:55 -0400
-Received: from inva020.nxp.com ([92.121.34.13])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wCBtq-0002Fe-I8; Mon, 13 Apr 2026 03:40:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCBrk-0005bj-7N
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 03:37:53 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 07DCE1A1592;
- Mon, 13 Apr 2026 09:37:44 +0200 (CEST)
-Received: from aprdc01srsp001v.ap-rdc01.nxp.com
- (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id C64B31A158E;
- Mon, 13 Apr 2026 09:37:43 +0200 (CEST)
-Received: from lsv031015.swis.in-blr01.nxp.com
- (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 3F27918000A4;
- Mon, 13 Apr 2026 15:37:43 +0800 (+08)
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv5 07/15] hw/arm/fsl-imx8mm: Add PCIe support
-Date: Mon, 13 Apr 2026 13:07:29 +0530
-Message-Id: <20260413073737.986219-8-gaurav.sharma_7@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260413073737.986219-1-gaurav.sharma_7@nxp.com>
-References: <20260413073737.986219-1-gaurav.sharma_7@nxp.com>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wCBto-0006oz-Mt; Mon, 13 Apr 2026 03:40:02 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63CJF39V2897733; Mon, 13 Apr 2026 07:39:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+Gckv2
+ M9p1mNTsqe3ii1JrV33Rbla4jfy+2WAtjSvQo=; b=UCY2Xm5wPQwqsS6kNWfLat
+ HMvFveluT+sKZ/2eFBYwln2OIf5JnmA7VsWAWtUqZL6/Q/EtY4K+L4TmXkVWx2Lp
+ NsMlAXM/hz/rGsbDF9eBsQNVOVyQ54RLG+RIMfaJwQG9X/mBcwX4joUGt1pH17LA
+ wwpwz4aq8/m8DF0gSk+5ZBxhQBzP7/P4q/Lv8/t26yeJ6wCEb+dxd6uFkJEsM+a7
+ pb46BgwZVh0pX+40x1jQN71qrcKOEbF9GWMqXPkNf9p1esQIsZCmZJUGu4GpqlMy
+ M4MQ8MpSMoz9niKseZU41XUZe+iFC7zrCxt8PkwD/1Dye1T/9Q/+M9GUOO6kbIBg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dfdyqpgt6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Apr 2026 07:39:55 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63D55vdu025761;
+ Mon, 13 Apr 2026 07:39:54 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dg3b1bwsk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Apr 2026 07:39:54 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63D7drH48848076
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 13 Apr 2026 07:39:53 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 260985803F;
+ Mon, 13 Apr 2026 07:39:53 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CEEBB58054;
+ Mon, 13 Apr 2026 07:39:49 +0000 (GMT)
+Received: from [9.123.0.169] (unknown [9.123.0.169])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 13 Apr 2026 07:39:49 +0000 (GMT)
+Message-ID: <33b54326-f6f6-4589-9fa8-bc315a9be2eb@linux.ibm.com>
+Date: Mon, 13 Apr 2026 13:09:48 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.13;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for 11.0-rc3] accel/kvm: Fix BQL lock imbalance in
+ kvm_cpu_exec
+Content-Language: en-GB
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, balaton@eik.bme.hu,
+ qemu-devel <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, npiggin@gmail.com,
+ misanjum@linux.ibm.com, gautam@linux.ibm.com,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260409161042.55281-1-harshpb@linux.ibm.com>
+ <87qzomznto.fsf@suse.de> <d4ca5f6a-c810-407b-b089-839e0a7d6d06@linux.ibm.com>
+ <A44F57CD-3292-4715-BE26-98DD15D40613@redhat.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <A44F57CD-3292-4715-BE26-98DD15D40613@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=ErTiaycA c=1 sm=1 tr=0 ts=69dc9dcb cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22
+ a=aHC7gpCOpxZIYopdUIsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: gOE9PviYbO3wlO3xAiUDLF6Cr7DV9rav
+X-Proofpoint-GUID: 9GeYidcRu52NQr-TjExo6576xoH_kxdt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDA2OSBTYWx0ZWRfX+o2c/QdqN+gT
+ J2GJF0uTvBgbWX1Lz9kqPq2gkct/aCHCFj5k+j06Eg85vyVf4ks5WUw5EcxoIsl5F0BLGCg2sKb
+ o6MGsPUIA/akdU8fjUGkR6a68YudC897tOGcsJUyMNRZ064P5Yts5BMEw3S9aHwu7P7RTtJ8NfR
+ +0dmtDB/p4lvMo5vWOggnqOnRbcpK7O7Odml3oVFdGxBNLW6phMXTKPbb+OMGXdysiERBZYONLz
+ mRGYdbSuxNRuIbl2cVxITmm/wNkuDe1rPy4Z4qYqRKx0SR2dOv6rvZ8N0JtCSaOzNF4huJc+GVB
+ ctT1RBKoxADispGIHb754abFrdQvIuxivJTYrkyOdpmMKv/pXwS9vIJbfhCw1BuT49BtAH1kfvp
+ okVHaPyk0ol6w+fbTVO0C3Y5nksL7q/rRuYiQ3a6zMGAEfxtlwq56STxQ3efkCi0zCZDHBMzOp+
+ Ei2SNHa/Pf493unxNVA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-13_02,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 spamscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604130069
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -68,128 +129,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enables support for Designware PCI Express Controller emulation
-It provides a controlled environment to debug the linux pci subsystem
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
----
- hw/arm/Kconfig              |  3 +++
- hw/arm/fsl-imx8mm.c         | 30 ++++++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h | 10 ++++++++++
- 3 files changed, 43 insertions(+)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index e7fe4af968..045649516f 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -628,11 +628,14 @@ config FSL_IMX8MP_EVK
- 
- config FSL_IMX8MM
-     bool
-+    imply PCI_DEVICES
-     select ARM_GIC
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select IMX
-     select SDHCI
-+    select PCI_EXPRESS_DESIGNWARE
-+    select PCI_EXPRESS_FSL_IMX8M_PHY
- 
- config FSL_IMX8MM_EVK
-     bool
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 17d54a59c9..d516e476de 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -184,6 +184,10 @@ static void fsl_imx8mm_init(Object *obj)
-         g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
-         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-     }
-+
-+    object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
-+    object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
-+                            TYPE_FSL_IMX8M_PCIE_PHY);
- }
- 
- static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-@@ -388,6 +392,30 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
-                     fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
- 
-+    /* PCIe */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie), 0,
-+                    fsl_imx8mm_memmap[FSL_IMX8MM_PCIE1].addr);
-+
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 0,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTA_IRQ));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 1,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTB_IRQ));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 2,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTC_IRQ));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 3,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTD_IRQ));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 4,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_MSI_IRQ));
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie_phy), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie_phy), 0,
-+                    fsl_imx8mm_memmap[FSL_IMX8MM_PCIE_PHY1].addr);
-+
-     /* Unimplemented devices */
-     for (i = 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
-         switch (i) {
-@@ -395,6 +423,8 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_CCM:
-         case FSL_IMX8MM_GIC_DIST:
-         case FSL_IMX8MM_GIC_REDIST:
-+        case FSL_IMX8MM_PCIE1:
-+        case FSL_IMX8MM_PCIE_PHY1:
-         case FSL_IMX8MM_RAM:
-         case FSL_IMX8MM_OCRAM:
-         case FSL_IMX8MM_SNVS_HP:
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 93a30a2f55..3181c02574 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -16,6 +16,8 @@
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/pci-host/designware.h"
-+#include "hw/pci-host/fsl_imx8m_phy.h"
- #include "hw/sd/sdhci.h"
- #include "qom/object.h"
- #include "qemu/units.h"
-@@ -44,6 +46,8 @@ struct FslImx8mmState {
-     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     MemoryRegion ocram;
-     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-+    DesignwarePCIEHost pcie;
-+    FslImx8mPciePhyState   pcie_phy;
- };
- 
- enum FslImx8mmMemoryRegions {
-@@ -166,6 +170,12 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_UART2_IRQ    = 27,
-     FSL_IMX8MM_UART3_IRQ    = 28,
-     FSL_IMX8MM_UART4_IRQ    = 29,
-+
-+    FSL_IMX8MM_PCI_INTA_IRQ = 122,
-+    FSL_IMX8MM_PCI_INTB_IRQ = 123,
-+    FSL_IMX8MM_PCI_INTC_IRQ = 124,
-+    FSL_IMX8MM_PCI_INTD_IRQ = 125,
-+    FSL_IMX8MM_PCI_MSI_IRQ  = 127,
- };
- 
- #endif /* FSL_IMX8MM_H */
--- 
-2.34.1
+On 13/04/26 12:43 pm, Ani Sinha wrote:
+>> Ani, would you like to post the patch fixing the behaviour change
+>> introduced with commit 98884e0cc1 or I can send below patch if looks fine?
+> I will post something soon.
 
+Thanks, Ani. Let's get it fixed in -rc4!
 
