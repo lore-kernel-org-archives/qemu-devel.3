@@ -4,95 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DDDAE93804
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 00:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC764E937E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 01:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wC5H2-0006w5-2B; Sun, 12 Apr 2026 20:35:32 -0400
+	id 1wC66D-0003fC-Ar; Sun, 12 Apr 2026 21:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wC5H0-0006v2-RW
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 20:35:30 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wC5Gx-0007G1-Ey
- for qemu-devel@nongnu.org; Sun, 12 Apr 2026 20:35:30 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-82f138a6d5aso904578b3a.0
- for <qemu-devel@nongnu.org>; Sun, 12 Apr 2026 17:35:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776040521; x=1776645321; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=J9KxxnuJB3942Z3pfrfnnNG+j3dmF8CcUQlJBKYaZeA=;
- b=BSGPXTQoJqMbYuwWi9EEDPI8jphmt96qPMsv0qtqwqJtbhIpkqHGxRgIArWcZbjPjC
- TJdE5kzvHORKz7hsi2RbXdJ4kvEV42wyu37paQ1PEY9Edj7zm8zu8aS6oG7uHuaiCYUe
- mtEeHnDztNmJ3gZ0IraqHaMGwqIjcrG7uBIl5DjtGaOVDbJOY7A/GBaKrTnhzb6re2pQ
- xqMQdGps9zfbcHsHl7F4Wo25v4q9fa2qEUUq68Cykwz2oFSWD7YD5w/5sYXiw72RGvfK
- FhP9HRn6RnX0pWmLOEAZVPiUivYtpZQ5/BgPMjbqCMWpEOQCA20R65+RJPvIjyeuoFvD
- 7eLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776040521; x=1776645321;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J9KxxnuJB3942Z3pfrfnnNG+j3dmF8CcUQlJBKYaZeA=;
- b=Dda+5JFdLMN/QVNx766nL5DUOlx1VQcSE6jJaYM+Bcp/7S+sszKBtg9QtLH8c5OCuj
- RJOI1oNFQVaoQZDFcpF+Tj9OIUk/fDwGCBRK/CvXURBjFlFimJeRjqWYIjEsq4nE8QUK
- Wx1Kmzn0n+FVSa3w2fQOrLbAAMfDws/G92wBJQHFz5IsZqJsh0SY3gqvMTHrHPuaPN3C
- B9UkRie7O77ZBMTe7wkJ84KPnAYTnNuExFFr0hEtVQSmQzlYiSQTjfaqPFpI05m3TiZD
- c+W0LCDulfpOhHH7DavY3veeZH7cNCeQNptM8EykEkwPVth0sWa6CWtuHBX+LTzR5apf
- Mirg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8vMQGgSSAFDgLRJxABVXGOTllayrJzHI38yBam0bUM8VamwWWi/JQLARfRCh5BlR44RPn+bT9+t49k@nongnu.org
-X-Gm-Message-State: AOJu0YxaPKSxxRepkoRooq6iRv8tdvQi/5/X/efSzz2tYUeKLouHwICq
- sde6QRednd/HsTwsS0dwZW5U2LJhAIxY6hnUC5RmSWeY8l9Zseo7z6thoFJIc4RnBVQ=
-X-Gm-Gg: AeBDietyh5c2j0FghiH/TGai/0bkWpg4A11kVwzx9oR7QUXiTXNlmAMREgazmJ/Pixc
- C2HD9NYAb7uBHtBfjjSRxmcm3ywOIWCceXfNH7mXtUa7731T59zf0ntnnO7zqdNjFvvXe7LWL1O
- BRNarWbCGXjYQnB65Cox35RksKj43SVnL3YTNrej/ca/hVNlaShXU1IGGO+4n5IKPA7zkuYig+d
- 0JGS3+7QnauTH/RCNgpDFmttLuwCYBVN/e1ftOPzLnIRQ4fYa/FUWeyXyC3yCxw9BYsl26p4rPL
- Hm5hqel+VCmh8x58rcmJdouNk2+AXSToJ1BHYPMZKGot9x93A1jkZTpxkRYen41AIOtF2DVrDsC
- seS17bjvozyTCVTphmsM/Ny4TRBzoQ0gRv/iUwWD//GPZ5tzw0oJzk6oW568VYv5zQG2+cgddE5
- MKxvhrMQ6MJA2guNY2aR0ocYlJt4NSRbx/w6OGO8CAhZ9Ks9WKLTC+uivXg3lSFUOi6Xetq7WVO
- E/567gWfwl2Ew==
-X-Received: by 2002:a05:6a00:e1b:b0:82c:e60c:f36d with SMTP id
- d2e1a72fcca58-82f0c3e7d30mr11668177b3a.48.1776040521088; 
- Sun, 12 Apr 2026 17:35:21 -0700 (PDT)
-Received: from ?IPV6:2401:d002:dc0f:2100:a7b4:d4f1:5b23:321f?
- ([2401:d002:dc0f:2100:a7b4:d4f1:5b23:321f])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f0c500415sm9194752b3a.51.2026.04.12.17.35.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Apr 2026 17:35:20 -0700 (PDT)
-Message-ID: <b64e7832-871a-4410-b4ac-6822fdb03a91@linaro.org>
-Date: Mon, 13 Apr 2026 10:35:12 +1000
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wC669-0003er-Nf; Sun, 12 Apr 2026 21:28:21 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wC667-0005jG-3O; Sun, 12 Apr 2026 21:28:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=mf2gmiwYTaAAfCw01jy17/m2CBty+lUI4Fl6BoD39Gw=; b=DHGrwZyz++kxcfqq
+ Mmwf1DI8LVajZh0QJtFX/aXUpD1NpOfuJd/0GujVifnSrnQEOZ0xmYfPopVPBNu2vFNOoJ/ZWB6AL
+ zDNXTWeM1tJEQYzfq6lS4juW3ATBkbW3G5JFLLVQQ/19hG4VFhb4u8G3CAh7KGeeycQ0ByjEea334
+ cH6qRa7SHb5njmwFYOhweeH/X46QBab6cS+Xv58PUFKLtqaV1MVi2Q3okFwlNQkALW5qnKRBfYE2A
+ EOgOSUIuEtn9MlbevrEk6Div1y6iElXyXz8zt1XLDbdoEu6BYuCrrrwD9/PXyVY9sAduooYgOUWr9
+ Xae2q9YU+X/rpICEnw==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wC661-00000007rno-2xil;
+ Mon, 13 Apr 2026 01:28:13 +0000
+Date: Mon, 13 Apr 2026 01:28:13 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Christian Brauner <brauner@kernel.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 05/17] monitor: remove 'skip_flush' field
+Message-ID: <adxGrbCi4LfS0lsT@gallifrey>
+References: <20260410160458.3778874-1-berrange@redhat.com>
+ <20260410160458.3778874-6-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpus: Remove CPUClass::init_accel_cpu() left-over hook
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20260412212547.29645-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260412212547.29645-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+In-Reply-To: <20260410160458.3778874-6-berrange@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
+X-Uptime: 01:27:03 up 31 days,  2:40,  2 users,  load average: 0.08, 0.11, 0.05
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,20 +78,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/13/26 07:25, Philippe Mathieu-DaudÃ© wrote:
-> Commits f50d0f335a6 and a522b04bb9c ("target/riscv,i386: Remove
-> AccelCPUClass::cpu_class_init need") removed the last uses of
-> the CPUClass::init_accel_cpu hook. Remove it as unused.
+* Daniel P. Berrangé (berrange@redhat.com) wrote:
+> The 'skip_flush' field is set on the dummy throwaway HMP monitor
+> object created by QMP's  'human-monitor-command', as an indication
+> not to try to write data to the chardev. Instead the QMP command
+> impl will grab the data straight out of the in-memory buffer.
 > 
-> Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
+> The flag is redundant, however, as the monitor code could instead
+> simply check the 'fe_is_open' field on the CharFrontend, which
+> will be false in the same scenarios that 'skip_flush' is true.
+
+For monitors on sockets where the other end isn't connected, does that
+change the behaviour?   Does that also have !fe_is_open and can that hit this
+case?
+
+Dave
+
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   include/hw/core/cpu.h |  6 ------
->   accel/accel-common.c  | 13 -------------
->   2 files changed, 19 deletions(-)
-
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+>  monitor/hmp.c              |  2 +-
+>  monitor/monitor-internal.h |  4 +---
+>  monitor/monitor.c          | 11 +++++++----
+>  monitor/qmp-cmds.c         |  2 +-
+>  monitor/qmp.c              |  2 +-
+>  5 files changed, 11 insertions(+), 10 deletions(-)
+> 
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index 614d9a3707..72f8303662 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -1539,7 +1539,7 @@ void monitor_new_hmp(Chardev *chr, bool use_readline, Error **errp)
+>          return;
+>      }
+>  
+> -    monitor_data_init(&mon->parent, false, false, false);
+> +    monitor_data_init(&mon->parent, false, false);
+>  
+>      mon->use_readline = use_readline;
+>      if (mon->use_readline) {
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index 25320928a7..84117805b7 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -102,7 +102,6 @@ struct Monitor {
+>      CharFrontend chr;
+>      int suspend_cnt;            /* Needs to be accessed atomically */
+>      bool is_qmp;
+> -    bool skip_flush;
+>      bool use_io_thread;
+>  
+>      char *mon_cpu_path;
+> @@ -183,8 +182,7 @@ extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+>  extern QemuMutex monitor_lock;
+>  extern MonitorList mon_list;
+>  
+> -void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+> -                       bool use_io_thread);
+> +void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread);
+>  void monitor_data_destroy(Monitor *mon);
+>  int monitor_can_read(void *opaque);
+>  void monitor_list_append(Monitor *mon);
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 7936e2ab22..f7e3708d2f 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -167,7 +167,12 @@ void monitor_flush_locked(Monitor *mon)
+>      size_t len;
+>      const char *buf;
+>  
+> -    if (mon->skip_flush) {
+> +    /*
+> +     * When used by QMP human-monitor-command, no chardev
+> +     * will be connected, as we want to just collect the
+> +     * output in the buffer
+> +     */
+> +    if (!mon->chr.fe_is_open) {
+>          return;
+>      }
+>  
+> @@ -621,8 +626,7 @@ static void monitor_iothread_init(void)
+>      mon_iothread = iothread_create("mon_iothread", &error_abort);
+>  }
+>  
+> -void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+> -                       bool use_io_thread)
+> +void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread)
+>  {
+>      if (use_io_thread && !mon_iothread) {
+>          monitor_iothread_init();
+> @@ -630,7 +634,6 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+>      qemu_mutex_init(&mon->mon_lock);
+>      mon->is_qmp = is_qmp;
+>      mon->outbuf = g_string_new(NULL);
+> -    mon->skip_flush = skip_flush;
+>      mon->use_io_thread = use_io_thread;
+>  }
+>  
+> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+> index d0ed241d6a..be2bd985b7 100644
+> --- a/monitor/qmp-cmds.c
+> +++ b/monitor/qmp-cmds.c
+> @@ -168,7 +168,7 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+>      char *output = NULL;
+>      MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
+>  
+> -    monitor_data_init(&hmp->parent, false, true, false);
+> +    monitor_data_init(&hmp->parent, false, false);
+>  
+>      if (has_cpu_index) {
+>          int ret = monitor_set_cpu(&hmp->parent, cpu_index);
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index 36cb078f30..fe2aec9ce9 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -538,7 +538,7 @@ void monitor_new_qmp(Chardev *chr, bool pretty, Error **errp)
+>      qemu_chr_fe_set_echo(&mon->parent.chr, true);
+>  
+>      /* Note: we run QMP monitor in I/O thread when @chr supports that */
+> -    monitor_data_init(&mon->parent, true, false,
+> +    monitor_data_init(&mon->parent, true,
+>                        qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
+>  
+>      mon->pretty = pretty;
+> -- 
+> 2.53.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
