@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 351A2F34C65
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 16:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE4DF34C65
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 16:56:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCKZv-0004JQ-9w; Mon, 13 Apr 2026 12:56:03 -0400
+	id 1wCKa1-0004Kc-Ru; Mon, 13 Apr 2026 12:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCKZu-0004JG-3J
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:56:02 -0400
-Received: from qs-2004f-snip4-1.eps.apple.com ([57.103.84.54]
+ id 1wCKa0-0004KP-27
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:56:08 -0400
+Received: from qs-2004g-snip4-7.eps.apple.com ([57.103.84.70]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCKZs-0006Mn-Kg
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:56:01 -0400
+ id 1wCKZy-0006Ns-I8
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 12:56:07 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPS id
- A4F9F1800B1C; Mon, 13 Apr 2026 16:55:56 +0000 (UTC)
+ 0110B1800279; Mon, 13 Apr 2026 16:56:02 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776099360; x=1778691360;
- bh=UzCpYCxioU37a8LihFnYJRJpzhI5QkED2mBVZIjSzck=;
+ s=sig1; t=1776099365; x=1778691365;
+ bh=ToEMsnEimqSsQl70dsHQJi59glSBxpGleQUdKNrc4Sg=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=DU7QJL1Nv8KQtdMjuIJrUY5vBbyZdUZy0HHSywLwLbITXs/Ha3F5To6TcYSibeOvoGl+9UUftrWQarTXEL4jJP/1TVSnzGgbWAVgMtroxGoUsfRTuDuiNJ3qX8LiOywpUt6tjjzI7ynwiGWIC+wZ0LU3BPRlaZMlMkz6yrHHC7Jx2P8JIk/9Lbx9FsMB/3tZ5RI5iGtaSxPxYq+0bSYyiHSKXEiN/6FNIc0Gb5lCaKvBF7bTn+db+YSy4SpO+GcPfP0WgByP2ur80v3yV3NpeLwV5qv/FgO5jvPbd4CLa4z9V8gyDapRym9anqw2Og3j+Z/UoJ0BkOizpWM/foFTaQ==
+ b=A1WZd7/jNpV6XPtSPQXNrZ/1LPOL7qzxFE/drbXPvN0H9TUKkQgu3T9FWsuItq2quM0cIiIfQB4ZexJfDiovnTsT8AX9OjG1z2PbakqwtjdcoYJEssaxreNGJXFjvrgNTDU56IhSJNpE2kPT1ka4iy0+z0KYUpvnyvPoKvQgl6YlqWnVV3/6nAwRaxGRObZJvRdYYeaIydZ4MzmO7693Pqjk5JNE5qsu7JbViqso0guC84ZjwJ3qKNvNBWM6hnlCdVJC2m35yeYOIEEJAr2Jx/zsNkDgMgrCZNY/hdu3dZDK8UaAA3Y3g27OhqYb1LKgyMVy6VY+C5regAEysb4IFA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPSA id
- 1D0A41800543; Mon, 13 Apr 2026 16:43:43 +0000 (UTC)
+ 3E94E180057D; Mon, 13 Apr 2026 16:43:45 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Werner de Carne <werner@carne.de>
-Subject: [PATCH 1/3] serial COM: windows serial COM PollingFunc don't sleep
-Date: Mon, 13 Apr 2026 18:43:36 +0200
-Message-ID: <20260413164338.42894-2-mohamed@unpredictable.fr>
+ Jason Wang <jasowang@redhat.com>, Gal Horowitz <galush.horowitz@gmail.com>
+Subject: [PATCH 3/3] tap-win32: allocate separate tap state for each instance
+Date: Mon, 13 Apr 2026 18:43:38 +0200
+Message-ID: <20260413164338.42894-4-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260413164338.42894-1-mohamed@unpredictable.fr>
 References: <20260413164338.42894-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE2NiBTYWx0ZWRfX+9BrMHpOftiv
- vGsR3UKdQZBbBFwcBn3+VS3Kl6wi9Fj3Rg6mT6xy+p1GiQjtm23gYehe0+a1tv/LYTJZu52E3S5
- /r/2u+R0rJFedqIPFwl6m0JTp1Q1tALu9vCoOED6m55r0qMMEPII9AACdDB0QmQmpKTGi/MMea+
- 93Kz5556jusU4ei/jR4aoKE53rWRVjUdD00liJ7IPCU2Uo0lgJjgFRLwqyOU9o+nf/0tioPyJKc
- DZ5fe8GUzW5/7aDKypfpQt1UjqhmSEp+sQx+GuG93gHg9Cc38vvvE8Ptlh1QbAYpbgzY1RyF+cR
- VBh599MsCxrtKuIuZuTlJDFTEwN/bYcWv99Z5xgCueCfEkEJK2vliS6SQxA2w0=
-X-Authority-Info-Out: v=2.4 cv=I4hohdgg c=1 sm=1 tr=0 ts=69dd201d
+X-Authority-Info-Out: v=2.4 cv=eKYeTXp1 c=1 sm=1 tr=0 ts=69dd2023
  cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=p0WdMEafAAAA:8 a=Unios6BkgxOyw5t3swQA:9
-X-Proofpoint-GUID: M1xfhkaEUfnbwya6K2NO8vctu68hy48b
-X-Proofpoint-ORIG-GUID: M1xfhkaEUfnbwya6K2NO8vctu68hy48b
+ a=pGLkceISAAAA:8 a=UVr0gZAdEIgvgD1kzycA:9
+X-Proofpoint-ORIG-GUID: t4_NenBNUQtl75rsT2b_LVfeaU-PQDb_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE2NiBTYWx0ZWRfX5ISTb7o41Yzd
+ 9DxXFLQWZFJtSnGaJZ7yuxgqgCN5ndD1BjAjJDzHtBOXdHXnA6Zei0+rCS2B7lNSN+e6heVTfgz
+ ZFlzfYC3fq2iR/onmegYq2fhpquldLAmgZ+C9Y0jhYDb4EJD/oRIbla+1fKYCqac6vBCSlKLuVL
+ nmVS9+dnudFvceKBIO/QlOrcaR57CYqUydr9QODulUAsKtcvejuXxAZF3gm9OjVcoZMy52EyiaA
+ YGi2PyF84wTs9yf1irbvn3cHpaCQ0pp8MmaWxw5Aa87Xik8i9t1ybMFeL12IslM+tAxnJP6iLIB
+ AWiO2SlIQqJT++Rr2fNqBXZJfiO2ouqCaORq2eW+seUhWcQWyw8H3UMYZj8vN8=
+X-Proofpoint-GUID: t4_NenBNUQtl75rsT2b_LVfeaU-PQDb_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- spamscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=679
- mlxscore=0 phishscore=0 clxscore=1030 malwarescore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
+ adultscore=0 suspectscore=0 phishscore=0 clxscore=1030 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2604130166
-Received-SPF: pass client-ip=57.103.84.54;
+Received-SPF: pass client-ip=57.103.84.70;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,69 +90,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Werner de Carne <werner@carne.de>
+From: Gal Horowitz <galush.horowitz@gmail.com>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1802
-Signed-off-by: Werner de Carne <werner@carne.de>
+A static global is incorrectly used as the tap state for all win32 taps
+created. Instead, we now allocate per win32 tap.
+
+Signed-off-by: Gal Horowitz <galush.horowitz@gmail.com>
 ---
- chardev/char-win.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/tap-win32.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/chardev/char-win.c b/chardev/char-win.c
-index fef45e83aa..f13d526e2f 100644
---- a/chardev/char-win.c
-+++ b/chardev/char-win.c
-@@ -28,7 +28,7 @@
- #include "qapi/error.h"
- #include "chardev/char-win.h"
+diff --git a/net/tap-win32.c b/net/tap-win32.c
+index ae25e5a883..3d7227fcf4 100644
+--- a/net/tap-win32.c
++++ b/net/tap-win32.c
+@@ -115,8 +115,6 @@ typedef struct tap_win32_overlapped {
+     tun_buffer_t* output_queue_back;
+ } tap_win32_overlapped_t;
  
--static void win_chr_read(Chardev *chr, DWORD len)
-+static int win_chr_read(Chardev *chr, DWORD len)
+-static tap_win32_overlapped_t tap_overlapped;
+-
+ static tun_buffer_t* get_buffer_from_free_list(tap_win32_overlapped_t* const overlapped)
  {
-     WinChardev *s = WIN_CHARDEV(chr);
-     int max_size = qemu_chr_be_can_write(chr);
-@@ -40,7 +40,7 @@ static void win_chr_read(Chardev *chr, DWORD len)
-         len = max_size;
-     }
-     if (len == 0) {
--        return;
-+        return 0;
-     }
- 
-     ZeroMemory(&s->orecv, sizeof(s->orecv));
-@@ -56,6 +56,8 @@ static void win_chr_read(Chardev *chr, DWORD len)
-     if (size > 0) {
-         qemu_chr_be_write(chr, buf, size);
-     }
-+    
-+    return size > 0 ? 1 : 0;
+     tun_buffer_t* buffer = NULL;
+@@ -403,8 +401,10 @@ static int tap_win32_set_status(HANDLE handle, int status)
+                 &status, sizeof (status), &len, NULL);
  }
  
- static int win_chr_serial_poll(void *opaque)
-@@ -67,8 +69,9 @@ static int win_chr_serial_poll(void *opaque)
+-static void tap_win32_overlapped_init(tap_win32_overlapped_t* const overlapped, const HANDLE handle)
++static tap_win32_overlapped_t *tap_win32_overlapped_new(const HANDLE handle)
+ {
++    tap_win32_overlapped_t *overlapped = g_new0(tap_win32_overlapped_t, 1);
++
+     overlapped->handle = handle;
  
-     ClearCommError(s->file, &comerr, &status);
-     if (status.cbInQue > 0) {
--        win_chr_read(chr, status.cbInQue);
--        return 1;
-+        if (win_chr_read(chr, status.cbInQue)) {
-+			return 1;
-+		}
-     }
-     return 0;
+     overlapped->read_event = CreateEvent(NULL, FALSE, FALSE, NULL);
+@@ -455,6 +455,8 @@ static void tap_win32_overlapped_init(tap_win32_overlapped_t* const overlapped,
+     overlapped->tap_semaphore = CreateSemaphore(NULL, 0, TUN_MAX_BUFFER_COUNT, NULL);
+     if(!overlapped->tap_semaphore)
+         fprintf(stderr, "error creating tap_semaphore.\n");
++
++    return overlapped;
  }
-@@ -147,8 +150,9 @@ int win_chr_pipe_poll(void *opaque)
  
-     PeekNamedPipe(s->file, NULL, 0, NULL, &size, NULL);
-     if (size > 0) {
--        win_chr_read(chr, size);
--        return 1;
-+    	if (win_chr_read(chr, size)) {
-+			return 1;
-+		}
+ static int tap_win32_write(tap_win32_overlapped_t *overlapped,
+@@ -625,6 +627,7 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+         unsigned long debug;
+     } version;
+     DWORD version_len;
++    tap_win32_overlapped_t *tap_overlapped = NULL;
+ 
+     if (preferred_name != NULL) {
+         snprintf(name_buffer, sizeof(name_buffer), "%s", preferred_name);
+@@ -666,10 +669,10 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+         return -1;
      }
-     return 0;
- }
+ 
+-    tap_win32_overlapped_init(&tap_overlapped, handle);
++    tap_overlapped = tap_win32_overlapped_new(handle);
+ 
+-    tap_overlapped.thread_handle = CreateThread(NULL, 0,
+-        tap_win32_thread_entry, (LPVOID)&tap_overlapped, 0, NULL);
++    tap_overlapped->thread_handle = CreateThread(NULL, 0,
++        tap_win32_thread_entry, (LPVOID)tap_overlapped, 0, NULL);
+ 
+     if (tap_overlapped->thread_handle == NULL) {
+         tap_win32_close(tap_overlapped);
 -- 
 2.50.1 (Apple Git-155)
 
