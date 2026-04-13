@@ -4,117 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B59F531D9
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 22:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FD4F531DB
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 22:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCPPG-0000WY-Sa; Mon, 13 Apr 2026 18:05:22 -0400
+	id 1wCPQL-0000i9-8H; Mon, 13 Apr 2026 18:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1wCPPE-0000W3-M1; Mon, 13 Apr 2026 18:05:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1wCPPC-00083r-Rm; Mon, 13 Apr 2026 18:05:20 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63DLIjJq1843301; Mon, 13 Apr 2026 22:05:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=p0MpYA
- tEHwnmYmWSGNNTh5w887w5kxQw5lM0a0k95KQ=; b=j1tjXT5pUWEMCGNm0mvXRa
- Y+LtoxSNAw1MZuCX0Lb4k+q4NpxHQ3OTEokxbtvVOLoxXr+imQYlzB6TsIXMVJUo
- 91UQJbY60VmzuXnJy3WRDFDUQ3NNdRyrb7s7lkiheuyltE8rAMM9+No6N1SICeuH
- mjdUBoTmdByBRW98lOBQ/jWueaCjHh+4UclOw/dF+cuNWWOhgo2x7uH5FLdjPnnW
- p3RO1+VJ/MkU29gQyJg2qv7CvW7iIC4f+B9LM9pS44x1RzmScozGRPUpiSCPuSwT
- 4bjMzYSYYn1g8vq98y4jqvdxP0oESRoOTKEWSv4cpBT/lbhaM8kxZDXAaI0UBu9w
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89mg3wv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Apr 2026 22:05:10 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63DLhkVo015149;
- Mon, 13 Apr 2026 22:05:10 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dg0msf51u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Apr 2026 22:05:10 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63DM4gTm16450116
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 Apr 2026 22:04:43 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2EEE358059;
- Mon, 13 Apr 2026 22:05:08 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BB6AC58043;
- Mon, 13 Apr 2026 22:05:06 +0000 (GMT)
-Received: from [9.61.251.241] (unknown [9.61.251.241])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 13 Apr 2026 22:05:06 +0000 (GMT)
-Message-ID: <0c315300-bfdd-4fab-b083-13997e7d36ab@linux.ibm.com>
-Date: Mon, 13 Apr 2026 18:05:05 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPQJ-0000hy-7e
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:06:27 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPQH-0008Bz-HG
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:06:26 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43d7badbd7dso660856f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 15:06:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776117982; x=1776722782; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=i4RsorHF0acEAVG7guZevG7EEg75GuFR2NltetW7cXw=;
+ b=moUYgEDZIWO77hRHiWnF67/qHhVhUrOdAZKk01kwu9lmdlJjGq8gTZiRx5GV1L9q2g
+ sffRv/D+UrR3KSwMdNAzjHzzoRgfGqbAbxQyPV3W1n4F1g/DE6E9lwLNMdvTScpvVo/O
+ HWfpIXdyN5cLI60quLoibB4q4ykFeIfF04/vaN5MnAUI8oKRPA/UX2aKkL+TcIyoNdVo
+ 3c4eoMRkNTSYGyJm6WzVtmJ1heCWMGAJm2NUXx9ehJhZ7KeO2VYIhuvWsyDU7biOacdW
+ qm0xnyAto7jl1eVtoLxt8d33LXNIR8iLEt21cgdy+D7+UeM+dONZub4NQ9jvPoSDoQxc
+ +gyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776117982; x=1776722782;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=i4RsorHF0acEAVG7guZevG7EEg75GuFR2NltetW7cXw=;
+ b=R7yIiO3dmNpd48dG+lvOqcnS43ADwusRsjKza5f59WyD+ox6Or331kNxm61qXsDuiO
+ nq5rXPzKTvwpk4HUcWPRpWiKhiH7Dq3L7iEDQhNBntA2V/UfILhpYNmnXGSSUBILeiyJ
+ l2irzJowO2T32sYquyBiNpGroVqVccqNOSpR27NkeFDk6CQHAwDO+exH9P5QIVN6w6T3
+ hTZB/yc77cIokI//o7byfnGhZdp0JoyxzkbEiwwC2ugRcFkWlKHVivuyzTH33MvfHhU2
+ 0sF+v874azth71+ZXueUy3N2yltJ5pBqW4R3kYLkwaDBioEqsPH/3lKfowwJ6H4U12Ok
+ ueFg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8DfYlJowvKFp28EVSRkIO4qgVrKH28lTinDRDHpwzkIJbO8CqqkY9xS+uiAyX+MhTAB4h3LIHACmeY@nongnu.org
+X-Gm-Message-State: AOJu0YxK+DpBLDYQXsInqOExDNVlJDgiaXhryYTj5EoBnjUxEezWkQTu
+ OugiR0qOPokA/iylXkupUxlCsg2vFHXMu5Z3vJmnWmBPySostqzzfMmfN3GHEER+WeU=
+X-Gm-Gg: AeBDietfTZ5BrPnad/Iz8PLgMzSQbMySinuDD3C/o8s4QxEuUr+Yx6mdiplreCk3elO
+ 5Qt4P27jhDHFtOYh2ZOLF1A1A6OkdcbQuqEFG3HWu8FzvS48iNEP7oNCNUnAhfFwxl8BsRJE8Vx
+ wHb5/mI3Bu6h8c1Bt3XKeeyDBXhnf4JJ4XfIGDyjYvf/ayAYoZjyov2yqhsPPDAx0/WRGh/7umJ
+ xwAMWe6+cZs4O09yG1O2pLcqfas2K4VqaeNqosP35TGGWvtf4Xla1pAWLNb/VY2gO/x++fc+u63
+ +aw2rB1DIgQZWnoUgeDR7WYivziYZAdmYAYI1qRdgZzTkde1lj5CWVOumW1w/wm/Rapjj3g9K5M
+ POmSxBBFsFub8ikEc+BvKcOwfIszac9I/WuBWN8PjJ//R6BtiQXWbzENyg2S7bxNmcxSAtmQRqt
+ 5zCznFTUXzimtKQxOC4Hp3dQAgf3/+UEu7DxsbY9nZStojHLMc7XrabBZYJ34Q2JhNYw==
+X-Received: by 2002:a05:6000:144e:b0:43d:c95b:c46f with SMTP id
+ ffacd0b85a97d-43dc95bc595mr1647876f8f.38.1776117982447; 
+ Mon, 13 Apr 2026 15:06:22 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d63dec28asm39519258f8f.15.2026.04.13.15.06.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Apr 2026 15:06:21 -0700 (PDT)
+Message-ID: <79b575cb-5d7d-4e3a-80f1-5b67ac7cad9f@linaro.org>
+Date: Tue, 14 Apr 2026 00:06:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 19/30] pc-bios/s390-ccw: Add signature verification
- for secure IPL in audit mode
-To: Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- pierrick.bouvier@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com,
- brueckner@linux.ibm.com
-References: <20260402221453.1602899-1-zycai@linux.ibm.com>
- <20260402221453.1602899-20-zycai@linux.ibm.com>
- <c941097f-4c48-45ec-af8b-2068c446e33b@linux.ibm.com>
+Subject: Re: [PATCH] accel/hvf: fix double hv_vcpu_destroy() causing teardown
+ error
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, slp@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, mads@ynddal.dk, brian.cain@oss.qualcomm.com,
+ mark.burton@oss.qualcomm.com, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+References: <70cca2a5cdde3e6531e5c8f1e399e0b584d51ad6.1776096073.git.matheus.bernardino@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Content-Language: en-US
-From: Joshua Daley <jdaley@linux.ibm.com>
-In-Reply-To: <c941097f-4c48-45ec-af8b-2068c446e33b@linux.ibm.com>
+In-Reply-To: <70cca2a5cdde3e6531e5c8f1e399e0b584d51ad6.1776096073.git.matheus.bernardino@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDIxNCBTYWx0ZWRfX2XF1APwpQvqn
- HhsPyYOuhMFHXXhI/TPFRTPY2vq/DwN9n18/eAK9+xT2jf6p1kPbCTJVfPN2xTnLTH8h9umai0O
- dXlW+bP27KfYaOkcu5lchI0AjMAu0VMlEt7XuszOU1ydNljVwKUGgea2tHyVCCgO1cZCEvWkkI1
- kEHpBPCe9IfJtXZipjjk6B4fVYF3I4KQvPae4Z3hsVF01N3bn1T+2SP/cETqSv1EHp064xp1D9b
- mb+GgvhnojRdglAPMmrM4h9Up7FX2qm+wtBXZjJQ9E/6rV5hqIi71gA05Eh/qH0zVq9wDRzmkBa
- m1qZCwcEOnDyvREDgfWGf4nbCoo4u9KhfmdrWHZg2hh108ra23UYcw6eyNpTXCViXiqDUI4Pfcy
- HznV4tOmRvZxGdiwppSfiWl2ObrWxutYAiuGiEREW5mcRS665KRWQD9QLCcIrAP9sZx0Z3NhpeS
- l/7RGxz4jWAeqBk/q4g==
-X-Authority-Analysis: v=2.4 cv=eJ4jSnp1 c=1 sm=1 tr=0 ts=69dd6897 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=1gfuZGPUVoj4r_BVOqoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: m99N0rB8zN1BQHeiLPKm_rzWBxWOZkeH
-X-Proofpoint-ORIG-GUID: m99N0rB8zN1BQHeiLPKm_rzWBxWOZkeH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
- clxscore=1011 bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604130214
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jdaley@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,90 +107,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/13/2026 3:59 PM, Jared Rossi wrote:
-> 
-> 
-> On 4/2/26 6:14 PM, Zhuoying Cai wrote:
->> Enable secure IPL in audit mode, which performs signature verification,
->> but any error does not terminate the boot process. Only warnings will be
->> logged to the console instead.
->>
->> Add a comp_len variable to store the length of a segment in
->> zipl_load_segment. comp_len variable is necessary to store the
->> calculated segment length and is used during signature verification.
->> Return the length on success, or a negative return code on failure.
->>
->> Secure IPL in audit mode requires at least one certificate provided in
->> the key store along with necessary facilities (Secure IPL Facility,
->> Certificate Store Facility and secure IPL extension support).
->>
->> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
->> virtio-blk/virtio-scsi devices.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>   docs/system/s390x/secure-ipl.rst |  35 +++
->>   pc-bios/s390-ccw/Makefile        |   2 +-
->>   pc-bios/s390-ccw/bootmap.c       |  36 +++-
->>   pc-bios/s390-ccw/bootmap.h       |  11 +
->>   pc-bios/s390-ccw/main.c          |   6 +
->>   pc-bios/s390-ccw/s390-ccw.h      |  27 +++
->>   pc-bios/s390-ccw/sclp.c          |  37 ++++
->>   pc-bios/s390-ccw/sclp.h          |   6 +
->>   pc-bios/s390-ccw/secure-ipl.c    | 359 +++++++++++++++++++++++++++++++
->>   pc-bios/s390-ccw/secure-ipl.h    | 110 ++++++++++
->>   10 files changed, 626 insertions(+), 3 deletions(-)
->>   create mode 100644 pc-bios/s390-ccw/secure-ipl.c
->>   create mode 100644 pc-bios/s390-ccw/secure-ipl.h
->>
+Hi Matheus,
 
-...
-
->> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
->> new file mode 100644
->> index 0000000000..6d65cd5596
->> --- /dev/null
->> +++ b/pc-bios/s390-ccw/secure-ipl.h
->> @@ -0,0 +1,110 @@
->> +/*
->> + * S/390 Secure IPL
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef _PC_BIOS_S390_CCW_SECURE_IPL_H
->> +#define _PC_BIOS_S390_CCW_SECURE_IPL_H
->> +
->> +#include <diag320.h>
->> +#include <diag508.h>
->> +
->> +VCStorageSizeBlock *zipl_secure_get_vcssb(void);
->> +int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec);
->> +
->> +/* Custom struct for secure IPL component entry information */
->> +typedef struct SecureIplCompEntryInfo {
->> +    uint64_t addr;
->> +    uint64_t len;
->> +    uint16_t cert_index;
->> +    uint8_t  flags;
->> +} SecureIplCompEntryInfo;
->> +
->> +static inline void zipl_secure_handle(const char *message)
->> +{
->> +    switch (boot_mode) {
->> +    case ZIPL_BOOT_MODE_SECURE_AUDIT:
->> +        IPL_check(false, message);
->> +        break;
->> +    default:
->> +        break;
->> +    }
->> +}
-> I think calling this something like 'secure_ipl_print' would make more sense.
-> Maybe skip IPL_check and use printf directly since it's always false.
+On 13/4/26 18:01, Matheus Tavares Bernardino wrote:
+> The following callstack causes hv_vcpu_destroy() to be called twice,
+> producing HV_BAD_ARGUMENT on the already-destroyed handler:
 > 
-When true secure IPL mode is introduced (patch 25), this function is updated
-such that it will panic in that mode. How about 'secure_ipl_error'?
+> hvf_vcpu_destroy
+>   |
+>   |_ hv_vcpu_destroy
+>   |
+>   |_ hvf_arch_vcpu_destroy
+>       |
+>       |_ hv_vcpu_destroy
+> 
+> Let's remove the redundant call at first function.
+> 
+> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> ---
+>   accel/hvf/hvf-accel-ops.c | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
+> diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+> index b74a5779c3..d1c532f7e0 100644
+> --- a/accel/hvf/hvf-accel-ops.c
+> +++ b/accel/hvf/hvf-accel-ops.c
+> @@ -113,9 +113,6 @@ static void do_hvf_get_vcpu_exec_time(CPUState *cpu, run_on_cpu_data arg)
+>   
+>   static void hvf_vcpu_destroy(CPUState *cpu)
+>   {
+> -    hv_return_t ret = hv_vcpu_destroy(cpu->accel->fd);
+> -    assert_hvf_ok(ret);
+
+That would break x86. I suppose I screwed something in commit
+feee55d36a1 ("accel/hvf: Implement hvf_arch_vcpu_destroy"). This
+was part of my split-accel work which as of today I flushed out
+of my head so don't recall well.
+
+At any rate, better to remove the duplicate call in ARM's
+hvf_arch_vcpu_destroy(), WDYT?
+
+>       hvf_arch_vcpu_destroy(cpu);
+>       g_free(cpu->accel);
+>       cpu->accel = NULL;
+
 
