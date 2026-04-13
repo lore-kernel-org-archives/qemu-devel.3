@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFCAF531CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 23:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD4EF531DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 23:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCQPE-0008OM-B9; Mon, 13 Apr 2026 19:09:24 -0400
+	id 1wCQPy-0000wR-4O; Mon, 13 Apr 2026 19:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCQPB-0008L5-Vv
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:09:22 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCQPw-0000vU-MP
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:10:08 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCQPA-0006xz-JO
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:09:21 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso76997315e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:09:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCQPv-0007RK-4l
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:10:08 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-48896199cbaso53074155e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:10:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776121759; x=1776726559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776121805; x=1776726605; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mwFZ1UB1Z24/RVCrJPQo8FdEDCjxtQvwKJkKFTsE7bg=;
- b=HdT26UVZLsUVs0iRufgcCbY8YQHIjcmz/JVs+j0EQYNTUzymwEZHFcgcy3XB3I+IP1
- t98MbmClL+SerZnUuQbD85p5j8CMMnWWEEGDApETrPGYeYloyC/Rh34NbIfXQxLSWahv
- 1x/2AweZ8ZpOiqakW7Dhba9prO1mHXk57sBaRKF48XO+Xv9zjoPefZFKzz1ZADAfYRAj
- seggs6q0sxlhAJL3uryU5QH9xyk4EZYX/ofZuXBVztamSpGwda+uEDz1oIVvv3TPYGfh
- BN0Lp9Wcc4haXKp9xTP6toMi94Fv6mN2R9XBzjWD8R3L2DPl/8jjfLJ6vg8Lr6fPJasr
- Llkg==
+ bh=nT6MBic3zRD9hJ6QMNU4WWheucpSrr5PGWxkNRXjzPc=;
+ b=qWWFM0SEWJXjCzw0nrAzh0e0voFbrs642O2kf57uE2kP9HgkxDDmhOyc3jEIqgaj+e
+ T6cUEULIQPLpNKuPJ7JCC8yR5r7GlOTS/huGRUK+XLiWgZ2UtykCbF1QUbg+lVCcGODt
+ SoJmpbRKTV8ZHI+X6Bu4NdSu9104WjgNQHLtMQD2hP+b9fn85deGzDHpHzCkAIP77WSR
+ FM4Loi0qKUlFgLbKeSjQtj4hOcAQv7PArKShQflbjTi5doWWxRUwOtwEl0/BRbHXtEZz
+ AVpX5kATjRPijg1u+vEJHPiUJWd7a3p7egKOnLv4UIQ00vTzBi4JO8Oxxs9nT5JImk5N
+ KWMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776121759; x=1776726559;
+ d=1e100.net; s=20251104; t=1776121805; x=1776726605;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mwFZ1UB1Z24/RVCrJPQo8FdEDCjxtQvwKJkKFTsE7bg=;
- b=lZJTkySNVtpo/LlNqb8jjHsg35c1+RjO7QgQnfjlpvGdEIsU9ZnWUWkBh/HLCC7Noo
- ib/O8QZSHu2OwgPH3VQcymwAbGIVfJVHKMVRsi/MsGLi6NSfqXqOXfhEq2hxqjHaymL6
- GcHiYcgELTgfHzZQ0Tp4vJGHVYgGOJc9Tf10mrNH2uYb9tXTCw33a+vlIb5y+Qi+udET
- NH7h9qu8/VounNc1IAWv4RMVqlApDzBbJq3+pSRWLXzUE11l6e+BoJS+ik/PIuk4ZRmK
- 86H6Prg3CPdMwpZ6bIYnUdnMuPK29wbOz7yEfRvJW1Imx9ZF/nQdj5Z7tHvlwLYyQz22
- 5bjQ==
+ bh=nT6MBic3zRD9hJ6QMNU4WWheucpSrr5PGWxkNRXjzPc=;
+ b=mm/ppXAaTjDGHjqVwMe0lOYnbf8NajlA4VzZoIw+U4OuApyTmSXszV6Q1s02ujAkWz
+ 81lWxOTykPx/LDE89YzlSgYBfvexEaA1ykLQja6Dqyn72kwVz71wgNvi9zRupe2Y3fyQ
+ 2eyT3C4GWISQzJF5R2N3PZ3ge0fqPP0u2NnmXXh2JNFRPheFYN066ISNHJRmcNIcm5ha
+ +zARgSeJEm5t60XaqimDPcaXdZBJe20locfNEe2rbcoCM4ctN3bLM7g6sOgyi+S0tA1p
+ DEW63HLk+uHCMzciLoVxkWg4ztCSiocS80Do9Aoc12hCaMu332Soymq3o9ThPtZjJO7D
+ R63w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8k7tNUtLfq6/tDtFMZQTzaKueHWO90aMfg2uc+Me/Y24Q2gop8CZNUUE+Rr0cbLobNRIxHybN9jZzF@nongnu.org
-X-Gm-Message-State: AOJu0YyM3VWKo02g1AEE0chxCfrZkrbIYbENCasA6C/eCJAB2TrboC7d
- TfWSDq0GYISgyLSk8lPMkSYW99QT/Wo0wBm32qR3RApL5KPQzI76xgY1ypY+fPHVhtMj6Wejdt7
- fn5JcjNM=
-X-Gm-Gg: AeBDietM2KhP/9QICNFy3TchFGw3YER6lRNy3wURyv2Zi7ej5G6ZOqYfDhkjkjmWEOn
- imZ5iqJtJN5zy0pwT4Eljpikx5OMncWn15P/Jo/2UeYL+6P1vFEgxZaGhdc8dDaz1wz+COLU9R7
- nOfEyQW0LhAydBThunhGZyPsczoi3dmkSbCm7pEU4Hcm+wL3yTQCYp58KxJCfSheT6lyKeacn09
- jFP8ec+k+Is4cy4jT9q2OjuVpSm5izBcKzMIymczQaVCwrxA5+hDSh0FTcY81YT5gf+kogevzzQ
- hj6d9RMbvYpmRYMnA81G7jY3oCbG8cj8Bfk5PuPArqoJpvh5JT8s60Z60QVj0QyZi6Xdkn35o/P
- AMo2bnjDV41cWbwUrpn02Im7kqcG/4ggviCd8dM5QybO97np7EeoV9eXkUzBrXnRB8BLnsm5s7Z
- BFbtjoMZWT6Ye+p6O+jjr+vnUxVlo26FmQ0w4doDUvKPSMVagMZkvmuw0cvtzm9NM3UA==
-X-Received: by 2002:a05:600c:1f83:b0:488:a82f:bba9 with SMTP id
- 5b1f17b1804b1-488d6864dd2mr205247975e9.22.1776121759078; 
- Mon, 13 Apr 2026 16:09:19 -0700 (PDT)
+ AFNElJ8U3fZSvMBqrVt9d1w753chfOR9O6xKCMAGQtWGys2zX/m3/81DFv2Fm53TcORzQlp/wCni40kFzS1H@nongnu.org
+X-Gm-Message-State: AOJu0YzJPjJaP5YiKCIy5G/b9/4WPYPL5TK+N/YYr6aUWdgypUlE/LNc
+ HwiAmjB69dZNdPb7GhkhfWA38IFillVW2h87dGwJD49a94qT46f2ELNy/36luaL3b/o=
+X-Gm-Gg: AeBDietZ8k6glEMpnJftJe826VyLePJioz7wcOhrKklBjgoUCpPb2fvwh0OzOoSgovM
+ ZnNWMUY0K8KAAtAJjfhzavuwFSiwXppjbEuIMZHyF+4rWrcqooHO6Nb+a++dWaRsNLPR0EAaIgP
+ dayYD/cNYwjFEJNEPak30w0xqoqGZnJcgENc5adXE21ANi6ZdbP+DRAQNkhMNLFIXlvlHWLptaP
+ 9GP1dOrUW3DrlVL6ICbuCYs3loSRXg6tI4Zcq4hw4cLQ32ecXPFbpj9xsgBWCH9EXDBfoG8Dx8y
+ o4suw8lS8Xyu2z1W6DX/mY61VJG8g+zG9p3SG5EIdEgPXW49Us+YfBU/gp9s3ymBjeYQBpFLyS0
+ y+zzEDreDTJ2ex4H2/iuDSMAVlVn7W4/NT1lj6plGzqN17e6SHXxTu6F+8yqJpSDwM+DwZo5PjH
+ 1YcR//NeW9qkDsuztTBueZSfH2wgt42q8s4/kvYL6m2QlZpE54o95H4UImpoNFgkKYSg==
+X-Received: by 2002:a05:600c:c0c8:b0:488:b749:8482 with SMTP id
+ 5b1f17b1804b1-488d67bbc13mr151085355e9.4.1776121805586; 
+ Mon, 13 Apr 2026 16:10:05 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ee019e44sm2888285e9.15.2026.04.13.16.09.16
+ 5b1f17b1804b1-488ede1e217sm2977515e9.5.2026.04.13.16.10.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 16:09:17 -0700 (PDT)
-Message-ID: <2fd0f178-e4a1-4e8d-b159-d1f278bb570d@linaro.org>
-Date: Tue, 14 Apr 2026 01:09:16 +0200
+ Mon, 13 Apr 2026 16:10:04 -0700 (PDT)
+Message-ID: <dd333659-7bb5-4010-8bb1-515347b1e313@linaro.org>
+Date: Tue, 14 Apr 2026 01:10:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/65] hw/intc/arm_gicv5: Add defines for GICv5
- architected PPIs
+Subject: Re: [PATCH v2 12/65] hw/intc/arm_gicv5: Implement gicv5_class_name()
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
 References: <20260327111700.795099-1-peter.maydell@linaro.org>
- <20260327111700.795099-14-peter.maydell@linaro.org>
+ <20260327111700.795099-13-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260327111700.795099-14-peter.maydell@linaro.org>
+In-Reply-To: <20260327111700.795099-13-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,15 +105,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/3/26 12:16, Peter Maydell wrote:
-> The GICv5 defines architected numbers for the PPI sources like the
-> generic timer and the PMU; these are different from the ones
-> traditionally used by GICv2 and GICv3.  Add defines for them.
+> Implement a gicv5_class_name() function that does the same job as
+> gicv3_class_name(): allows board code to get the correct QOM type for
+> the GIC at runtime depending on whether KVM is enabled or not.
+> 
+> For the GICv5, we don't yet implement KVM support, so the KVM-enabled
+> codepath is always an error.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 > ---
->   include/hw/intc/arm_gicv5_types.h | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
+>   hw/intc/arm_gicv5_common.c         | 12 ++++++++++++
+>   include/hw/intc/arm_gicv5_common.h | 10 ++++++++++
+>   2 files changed, 22 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
