@@ -4,92 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3652F531CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 22:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF579F531CE
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 22:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCPfp-0004Vg-Iu; Mon, 13 Apr 2026 18:22:29 -0400
+	id 1wCPo6-0006Ab-Gg; Mon, 13 Apr 2026 18:31:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPfm-0004VJ-Tq
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:22:26 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPfj-0002Tc-Ta
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:22:25 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43d74086e5bso1358166f8f.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 15:22:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776118942; x=1776723742; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MkEo2tqWfrRY38XhmcG25pXIT80ZoAFjEOHm2ctnvVw=;
- b=EaGtZL79jH0oCR4t5fJKdIre4BdzbIJwWclvJIvjufL8DKq8VMkEpuf3GG0YRo9N7J
- HHr0kl6zFymZ9Cj7//Wg5CwuDD90v8XHaUd8dNXBpMzLqaXVjzn5FAUmAGr+ViR+5J43
- 7RI4vPxhl9M8dq9rgOkMSc/9PM35XVPtxe8lNHTeG7OUHZzyCFACsIoH5LHDsWbWR4rL
- AfVdFcyP4JMKB4FxposhgUY1ar3xh850o1+bF+tga9xGyhH6N4u8JJynlnZ9ylorpKpT
- NE1sO5D6oAyZrInbKDdiLiFTnw52He51/Aq53xytkYpyVbAFRek9I+EWOljCQzuEDnm3
- EPrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776118942; x=1776723742;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MkEo2tqWfrRY38XhmcG25pXIT80ZoAFjEOHm2ctnvVw=;
- b=N8Z5JiPSEgFwZI5i2HR7lTbET3flHigG8eL15EaQo3G13uqHZEMkWoYgLF0T4e2cQt
- qmwxqtF2DibeDBQi1Gj1FwI4rCPV9Hb/p5EzMAWMRbYRnqin7imVbSwl9R2uMb18ShsE
- JFF7L+eaovimYoR9ZRTlIU9SBSoFgFhEkYrKIxiEbJSZ4lbVctBeKiopV/9D09GW8F41
- FrYSHa5ZLye1Z7hJhAVCE64FNDl41J2KyAKZOduFCTlPpnHgfGQuZ8EOEh3F1yWzoMfX
- g877a4Ix/W2WUtkwt9YLObxVopHjKv9+CTyh3f6GihnObte/XlnfBoQX9uqK4jICH1o4
- dROQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9VOpLLt8f5hT6zMXkZOg98GHlfUBaN3MlJsN0SJZnRbuIZchm0SkuB76w5zhmoeYTCYVnKedjy6kPJ@nongnu.org
-X-Gm-Message-State: AOJu0Yw8xxlN2kSEnXc++vG6nb970oN9BPkaCcMRDWPzFAfh/xJkzeDa
- aB2G6xG/sCNiWVYUAvx6nTA/xE2v3VdJ0xTbBfEiwrsKs2jF8lshmGVYLtpRQhsiYhE=
-X-Gm-Gg: AeBDieulifP4KClxqeXKEsqh4NDIxVOy3/4jVzGNjJT7GTCXouLjIujyUWt7FKbgZXu
- iPdn3W+2bUXobvJ0bKVEl3WAjQ3cNHUIe8qVneQKmuOd8UjHhs7vz3pUZ1xNP7GZin8c5JQOakN
- B4aGBn6mzAtYDbMYYuF0d83Rara9xXF+B7OuT7YmHmqEAyTzh+yy0A7mu1ydor+gJwtQBq23hQV
- UgjJTEilUkYvdMt+lu8+8lN4OFjhgAnH/36BT/1bkVISN358C9gmZUTf8AZdBf3xHFmXvdrXmcH
- rUi4M6aJ42ArGtrieTb69cPCxLKh0w7IJXg4eCLzO5RgnlAUncW3uHIZv5ghGKxqFcG5MR9DC0+
- nhWmATmEKQWynk5DX9OqFWCwwG9NrWmEbBKDMwdTkB+USDTe/OH7CNMsUnOTzffnTH4xEdVYy+c
- iX+iDXcDShC+2cdQuVJAf1HpHKKNQlZdWHUB9B9GE7BC94me7xBHx7m53iqi8H34T8qA==
-X-Received: by 2002:a05:6000:40db:b0:43b:86ce:27a1 with SMTP id
- ffacd0b85a97d-43d642a5095mr22561168f8f.17.1776118941676; 
- Mon, 13 Apr 2026 15:22:21 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d7a6054dfsm10416745f8f.17.2026.04.13.15.22.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 15:22:21 -0700 (PDT)
-Message-ID: <deeb42cf-2ef8-46b9-8cf7-3b6b32b88cd6@linaro.org>
-Date: Tue, 14 Apr 2026 00:22:20 +0200
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
+ id 1wCPnr-00068n-Jx; Mon, 13 Apr 2026 18:30:57 -0400
+Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>)
+ id 1wCPnn-00049I-Sk; Mon, 13 Apr 2026 18:30:47 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id 315A51D761;
+ Tue, 14 Apr 2026 00:30:38 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Authentication-Results: cerokez-250.feld.cvut.cz (amavis);
+ dkim=pass (2048-bit key) header.d=fel.cvut.cz
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id 6pGXoF2YCln6; Tue, 14 Apr 2026 00:30:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1776119436;
+ bh=ytsv3OaWJupADmi9crU4Hx02RH1WhyA+ZtWFnpTotgo=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=sfP2okAo1FJRtAvxmj83iLJcFDCWv+RZuqJX/qVDbOYSsVn305XYBDoVujoGSMyO+
+ t9sjtz3z+if+7woFxo7w/Lkfx/Ydj8qBNefZ7DRxX3n6KDN64hq9HQqCcAT0B5Yvu9
+ 6yHkBmIXhIErjUqM/NbJuepYRS87YMAKqHUymt0d7xCozuLRQyBXqfn8TmYgli9n6o
+ XY/4qIwOMQF5N2gLoFIM2Y4Q0AziQQMczVmCIi4XxCgm03OxzSLmaFNT42IZguwuQf
+ rgNat2pMZLma/U2LVvokAkGSrhqtI2mb3yNK5K9u3iQXQP5EwEna/L7I+YvwN/kw8a
+ FAu18vkskhYkw==
+Received: from baree.pikron.com (static-84-242-78-234.bb.vodafone.cz
+ [84.242.78.234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 670B11D86B;
+ Tue, 14 Apr 2026 00:30:36 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Bernhard Beschow <shentey@gmail.com>
+Subject: Re: [PATCH v2 4/7] hw/net/can/flexcan: NXP FlexCAN core emulation
+Date: Tue, 14 Apr 2026 00:30:35 +0200
+User-Agent: KMail/1.9.10
+Cc: =?utf-8?q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
+ qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ qemu-arm@nongnu.org, "Marc Kleine-Budde" <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <cover.1773866323.git.matyas.bobek@gmail.com>
+ <e790990bfaaebf2c1dd884c2c2f4eab5de6d4076.1773866323.git.matyas.bobek@gmail.com>
+ <9c21bd91-3732-4438-9b83-dc36e09f9ec3@gmail.com>
+In-Reply-To: <9c21bd91-3732-4438-9b83-dc36e09f9ec3@gmail.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] bsd-user: Generate the system call numbers in meson
- build.
-Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
- <20260413-syscall-nr-v1-2-f70408d042ea@bsdimp.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260413-syscall-nr-v1-2-f70408d042ea@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Message-Id: <202604140030.35350.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-3.135,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,16 +91,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/4/26 17:31, Warner Losh wrote:
-> Build glue to generate system call numbers with the meson build.
-> 
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
->   bsd-user/freebsd/meson.build | 4 ++++
->   meson.build                  | 2 ++
->   2 files changed, 6 insertions(+)
+Dear Bernhard,
 
-Squash with previous patch? Anyhow,
+thanks for time for review. I agree with all suggested
+changes except one where I express soft opinion
+to keep code as it is, see below.=20
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Monday 13 of April 2026 12:56:40 Bernhard Beschow wrote:
+> Am 19. M=C3=A4rz 2026 19:13:11 UTC schrieb "Maty=C3=A1=C5=A1 Bobek"
+>
+> <matyas.bobek@gmail.com>:
+> >Added the FlexCAN2 emulator implementation core, with
+> >CAN_FLEXCAN Kconfig flag and MAINTAINERS entry.
+> >
+> >FlexCAN2 version can be found in i.MX6 SoCs and others.
+> >
+> >More information about the implementation can be found in [1].
+> >
+> >[1]
+> > http://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-Ma=
+ty
+> >as-BP_Bobek_FlexCAN_final_4.pdf
+> >
+> >Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas.bobek@gmail.com>
+> >---
+=2E..
+> >+    flexcan_irq_update(s);
+> >+}
+> >+
+> >+static void flexcan_mem_write(void *opaque, hwaddr addr, uint64_t val,
+> >+                              unsigned size)
+> >+{
+> >+    FlexcanState *s =3D opaque;
+> >+
+> >+    flexcan_trace_mem_op(s, addr, val, size, true);
+> >+    flexcan_reg_write(s, addr, (uint32_t)val);
+>
+> The contribution of this method is now only to add a trace statement. It
+> can now be merged with flexcan_reg_write(), keeping the
+> flexcan_mem_write() identifier.
+>
+> Note: I suggest to call the trace function just before the switch
+> statement, i.e. after the variable declarations.
+
+I would suggest to keep names
+
+  flexcan_mem_write()
+  flexcan_mem_read()
+
+not to change one to flexcan_reg_write. The flexcan_reg_write()
+can be absorbed into flexcan_mem_write() for now but for longer term
+I would like that message boxes (user memory) writes are separated
+from  register access though overlay structure describing registers
+and in addition even reads from registers are separated from memory
+area. That would better fit newer version of FlexCAN controllers.
+=46or example on the imxRT there is FD capable FlexCAN and ranges
+
+ 0x0000 to 0x007f (used up to 0x53) is range for registers
+ 0x0080 to 0x047F is for up to 64 frames, data 8 byte (16 bytes each)
+ 0x0880 to 0x097C is range for Rx Individual Mask Registers (RXIMR0 - RXIMR=
+63)
+ 0x0BF0 to 0x0D2f is again registers area, i.e. enhanced CAN bit-timing=20
+ 0x2000 to 0x204f is allocates the Enhanced Rx FIFO output
+ 0x3000 to 0x31FC is enhanced Rx FIFO filter element
+
+So this is mix and may it there are even more variations between
+different versions. So in these cases I would prefer to keep registers
+block as separate structures, which needs RO/RW masks side effects
+handling and memory areas in between as more regular RAM with no
+masking and simpler side effects rules.
+
+But I consider as the priority to have basic support which passes
+review, is mainlined and can be used for imx6 developmet and CI testing
+now. When we or somebody else find somebody with interrest at university
+(i.e. final thesis, GSoC project) or some company willing to provide
+some their developers time or funding, it can be base to move forward.
+But there is no plan on my side at this moment. All my organization
+and conceive of the QEMU CAN subsystem is personal activity without any
+income and I have lot of other much higher priority projects for teaching
+and even use in the the wild including space, so I cannot promise anything
+nor predict any dates when something is ready...
+
+By the way, I have noticed that you invest time into ESP32 mainlining
+support. If you are willing to discuss that, I would open another
+therad. I have tested original Espressinf QEMU version and tried
+yours but end by segmentation-fault. May it be incorrect arguments
+to QEMU.
+
+The ESP32C3 QEMU support could be interesting for RTEMS community which
+included basic ESP32C3 support in mainline
+
+  https://users.rtems.org/t/rtems-support-for-esp32-xtensa-existing-bsp-wor=
+k/660
+
+and I have tested Michal Lenc's contributed RTEMS SJA1000 CAN driver
+with real ESP32C3 chip up to detect and configuration phase and QEMU would
+be great for CI and Espressinf and Yours QEMU already maps SJA1000/TWAI.
+The RTEMS ESP32C6 support has proposal for this year RTEMS GSoC.
+The ESP32C5 and ESP32S31 are even more interesting because they provide
+motion control, CAN FD and the last one even wired Ethernet.=20
+
+Best wishes
+
+                Pavel
+
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
