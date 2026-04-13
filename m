@@ -4,105 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 720E7F34C4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCC1F34C50
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCGVg-0007Ab-Ss; Mon, 13 Apr 2026 08:35:24 -0400
+	id 1wCGhJ-00005s-3Z; Mon, 13 Apr 2026 08:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCGVe-0007AC-V1
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:35:22 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCGVc-0004iV-Ug
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:35:22 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-6501c4857b2so3473782d50.3
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 05:35:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776083720; cv=none;
- d=google.com; s=arc-20240605;
- b=idHvirusUU926J8CvLUvDVDJHGJvWVvJiDpyj1WxC4hEoLySnSPvSZ2qCLT26PCV+/
- uYkPoPiRJskNTU+qQz87XinJjEN3KgEGca34IbCxzf0ltVXR10IGoWgND9wSvG3XZ7lP
- cw0L+iCR2vS2amCI2nQYuMrHzCE0n8emTDYPMYxsrkXwIjNa1s5obHQetYidCX//tQPl
- fliZcnJWh+M0uK96GKZ5vZGp6EsBsm0M6qDVs4iYhrs4HXgIYKph8cxm5LuobVW/DA2D
- e7lKQAmgIocL2JFKkndo1llUJmf7NtTThPXlY8Me99i0N1gS1ESkifalrtRb54790yBx
- zYsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Yl4RxljFlL2zQhrWwJUvTBU3Rj1lgogsz3ZXCm5OQqY=;
- fh=iqRDn0HWqOWFRTM6TPT7Rp+m3JdAe6EjJsWwnoP/5Os=;
- b=i90bHWPCaMPyNTSwHdcIJkmtYp76vSOWq3cr2k16DwVw/RWe2Jls+AWxg748Tnmw/2
- nW61kxjl7L4hmCICnuqNo0f7b6VTjxgC37+YGXMIjc58C4Iz3sPtg0OLcKQQcj8Bliu/
- riLHv2nfi5lQiYcnxzY4z7pXHwPrq1QTyyg3YZ4rxD4fWeDOA23w1Gd5l8CHxXoqp/mW
- 4FV0hzt3pVK57bmhQAg5IRi8VVWbwWoejZYBDyuIfIocOMSl8hKRi9+IPl9cHt+e1ZOP
- JCZH/MedJQF4XGgx6fojB2YWmjyeSWzm3hZ6lYEv3KWJU112D6XJG3iass3CiH++vl+U
- p+KA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776083720; x=1776688520; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Yl4RxljFlL2zQhrWwJUvTBU3Rj1lgogsz3ZXCm5OQqY=;
- b=JGheMcJSGQ02sulSGleVe+kaqEy7e+rh9F3fgruSYmYuRVFxVamk0qX76yXgK4RX4s
- nJxh/OaR1f/IiOF3UXocMOr8dZR0fsRDw7qb+caPIDLmzqb60V0WQ3GUGXVN3LcgxgHE
- 2sKRxk4wDhiUldSIy8Kr0PBtTKl+TDTdsaQdHN2TppZYk5OAYyykiucNM7+9zsCY0DOI
- KZeCCyaPGxfY9BHX+w44q1g2xFBSPcRrw/TvN1AAxJHCB9pgnveRJAkUa9czHqnq3K6p
- EXc5mDu1VAl52pWnDYP13fxTTrggzdhLRxDEaaWbyY3xeyb/PwSvQigT8mLfHiFN0iRz
- IPuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776083720; x=1776688520;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Yl4RxljFlL2zQhrWwJUvTBU3Rj1lgogsz3ZXCm5OQqY=;
- b=Xrhr3rx4q4R4lk5/3wHOz0EMzxTgdXxICVubLAjcMBp1fdOGGadB5trpaDYyoViw+U
- AOuInx8IttxPVJ6lWFDIH5bjVkWJrFmT3698elRNWexfdOR9ww71yE7DtfkKchlO7Gsj
- GT8TJKLgWI9x+jFECzfZ3tF1/4M12QaNe5bn4W6SJqYtX9LY1z3ojwJgcUwigaXJayvn
- IJmQbdWv6pYyEBR1dwdrM0+TS5p20IWM7MFzstuax3/XuBg71Se+ZEDC1ayDURBU1F3w
- QPWf2dCkEhCzPaLezw+aZ+BP3PiSGAPGOOsA40jYQQeZt3eVudQGZBO1o+Kyt9df5ovm
- 3tOQ==
-X-Gm-Message-State: AOJu0YwdqmGczGGuJOLbdEkJwd9KZVawBNiO38pPJy1yoFYi17tSphij
- SmNlGp0odDvHBn0qi9xnDVfp2gMX4q6vog+32H0it9YbthFFUW6pmoPalrIfKphFrxcos3xmU7s
- N/HD49by+owOetdji1tw0VwM1w/0oK780wZvsQaRGlA==
-X-Gm-Gg: AeBDievauXpHUNo58ipdfD4og1j1UUEbJBWEy7M6VIzG8lu+L/0owN2tDhJUtzcvfdi
- B+TCtDwUhhUcV0xbb2jprp8VmqNzE9Idjugw3YxMnwo2pcACkhb5zGJp6BG5W1l11nZ7+XyfPnn
- owdsokji1AgHqgp28w7o351qmrj+7s6CdqMvj8PdlILfjzW9dC5O+CI6iOoAbJlZ+aYERBsa6Uf
- tLeYOJ7xBiHpyEwqnPcflAeiGlA/HkAld34n0lX62/ER8ybqZeYvQQl04uq7uwBjdbUF3O98Msi
- V7rTM+uofXphkINDVY5QiwbcLwSybxwXtsrPQtxA02V+rraghfxBTfrGEBZklqro0ehyyKG3NJ9
- e2A==
-X-Received: by 2002:a05:690e:438e:b0:64a:edf2:e769 with SMTP id
- 956f58d0204a3-65198a38613mr9586279d50.10.1776083719390; Mon, 13 Apr 2026
- 05:35:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wCGhH-00005c-CY
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:47:23 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wCGhE-0007lz-P6
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:47:23 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id BB714506D3
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 12:47:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1776084436;
+ bh=+neQrHekGJBQCpTmpVCenrmOOApowNSJE9sTSTHHAUE=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=H8AOfU7BUQis5R6MpmRAYMP2UmNZKI04VZQdHNw5tGYP1ykaGv6zr34W3yJKEntz5
+ 5lolaNZ8B4fllmLINsl96ArDRnon/A1dds5RKxHlS+5i5wePcVUsRvjxoeUFSucaWk
+ dVkr1nyXCtrVJ7sloLs1wBGip5BxUfV/T2YKT3uSmxBm68bU2tGlvq2ti+bI/dgARh
+ irpGez3FHECxJbpxpRPACistg9pRymft3GyMEMDdTeVrcSsBmaS6/Mcq2b9NRU6OlX
+ y/x4d/xd5teQ5IejpOpKycwU3ICE1xK/WEkkH/I7+KOEBmzD9JWEZedEAOQZKi7etU
+ v2AiVmUxiLggA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 9C3F87E156
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 12:47:16 +0000 (UTC)
 MIME-Version: 1.0
-References: <20260413115622.160212-1-scherer.simon89@gmail.com>
-In-Reply-To: <20260413115622.160212-1-scherer.simon89@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Apr 2026 13:35:07 +0100
-X-Gm-Features: AQROBzAiQI3t81bsQPB-qql_jhW7sTq9mPAk2AcZpfl2s6GHtIVk-dTS8xLgJuk
-Message-ID: <CAFEAcA-PGSc2bae3CxSHMqMwrvTJDOoE80_O9xAovOObOzuR=g@mail.gmail.com>
-Subject: Re: [PATCH] target/i386: fix missing PF_INSTR in SIGSEGV context
-To: Simon Scherer <scherer.simon89@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 13 Apr 2026 12:37:48 -0000
+From: =?utf-8?q?=F0=9F=A4=96_prod-kernel-team-janitor?=
+ <1915063@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=linux; component=main;
+ status=Expired; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=linux-oem-5.10;
+ component=main; status=Fix Released; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=linux-oem-5.6;
+ component=main; status=Expired; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Invalid; importance=Undecided; assignee=None; 
+X-Launchpad-Bug-Tags: apport-collected focal kernel-autoclosed
+ kernel-autoclosed-expired kernel-daily-bug
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: apw babumoger dober60 imammedo markrhpearson
+ paelzer prod-kernel-team-janitor sergiodj th-huth ubuntu-kernel-bot
+X-Launchpad-Bug-Reporter: David Ober (dober60)
+X-Launchpad-Bug-Modifier: =?utf-8?q?=F0=9F=A4=96_prod-kernel-team-janitor_=28prod-kernel-team-janitor=29?=
+References: <161281335451.16853.7070328699645987751.malonedeb@wampee.canonical.com>
+Message-Id: <177608386819.3205796.325711089808660643.malone@juju-98d295-prod-launchpad-2>
+Subject: [Bug 1915063] Re: Windows 10 wil not install using qemu-system-x86_64
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="866d07beecca8ac2e3326342adf6c1740cd3e7b3";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 8311d6884a559621870c8918cb7a46f7afb39ad1
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -111,64 +98,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 1915063 <1915063@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Apr 2026 at 13:17, Simon Scherer <scherer.simon89@gmail.com> wrote:
->
-> When running linux-user emulation, the SIGSEGV handler does not
-> correctly set the 4th bit (PF_INSTR) in the error_code variable of
-> the context argument (context->uc_mcontext.gregs[REG_ERR]).
->
-> Because this bit is never set, guest applications cannot distinguish
-> if a fault was due to missing executable permissions. This patch
-> ensures that when a page fault occurs during an instruction fetch,
-> the PF_INSTR flag is properly populated in the signal context.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3384
-> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-> ---
->  VERSION                            | 2 +-
->  target/i386/tcg/user/excp_helper.c | 7 ++++---
->  2 files changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/VERSION b/VERSION
-> index de760e732f..340ebebb29 100644
-> --- a/VERSION
-> +++ b/VERSION
-> @@ -1 +1 @@
-> -10.2.92
-> +10.2.93
+The task "linux-oem-5.6 (Ubuntu)" has expired because it has had no new
+comments or updates for more than three years.
 
-Your patch seems to have a stray other change in it.
+If this issue is still present in an Ubuntu LTS kernel still under
+active support, please reopen the bug and provide updated details. If
+this issue was reported against an Ubuntu kernel no longer under active
+support but the issue still exists in a currently supported Ubuntu
+kernel, please open a new bug against that kernel version and provide
+the updated details, with a reference link to the original bug.
 
-You don't need to respin it just to fix this, and if it gets
-reviewed without needing any other changes then the maintainer
-will probably fix that up, but if you need to do a v2 of the
-patch then you can sort it out for that.
+This action was performed by an automated process maintained by the
+Ubuntu Kernel Team.
 
-> diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/excp_helper.c
-> index 98fab4cbc3..6c5df5e0e8 100644
-> --- a/target/i386/tcg/user/excp_helper.c
-> +++ b/target/i386/tcg/user/excp_helper.c
-> @@ -36,9 +36,10 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
->       * signal and set exception_index to EXCP_INTERRUPT.
->       */
->      env->cr[2] = addr;
-> -    env->error_code = ((access_type == MMU_DATA_STORE) << PG_ERROR_W_BIT)
-> -                    | (maperr ? 0 : PG_ERROR_P_MASK)
-> -                    | PG_ERROR_U_MASK;
-> +    env->error_code = (maperr ? 0 : PG_ERROR_P_MASK)
-> +                    | ((access_type == MMU_DATA_STORE) << PG_ERROR_W_BIT)
+** Changed in: linux-oem-5.6 (Ubuntu)
+       Status: Confirmed =3D> Expired
 
-Why did you reorder these two lines ? Is there a code change here I'm missing?
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/1915063
 
-> +                    | PG_ERROR_U_MASK
-> +                    | ((access_type == MMU_INST_FETCH) ? PG_ERROR_I_D_MASK : 0);
->      cs->exception_index = EXCP0E_PAGE;
->
->      /* Disable do_interrupt_user. */
+Title:
+  Windows 10 wil not install using qemu-system-x86_64
 
-thanks
--- PMM
+Status in QEMU:
+  Fix Released
+Status in linux package in Ubuntu:
+  Expired
+Status in linux-oem-5.10 package in Ubuntu:
+  Fix Released
+Status in linux-oem-5.6 package in Ubuntu:
+  Expired
+Status in qemu package in Ubuntu:
+  Invalid
+
+Bug description:
+  Steps to reproduce
+  install virt-manager and ovmf if nopt already there
+  copy windows and virtio iso files to /var/lib/libvirt/images
+
+  Use virt-manager from local machine to create your VMs with the disk, CPU=
+s and memory required
+      Select customize configuration then select OVMF(UEFI) instead of seab=
+ios
+      set first CDROM to the windows installation iso (enable in boot optio=
+ns)
+      add a second CDROM and load with the virtio iso
+  	change spice display to VNC
+
+    Always get a security error from windows and it fails to launch the ins=
+taller (works on RHEL and Fedora)
+  I tried updating the qemu version from Focals 4.2 to Groovy 5.0 which was=
+ of no help
+  ---=20
+  ProblemType: Bug
+  ApportVersion: 2.20.11-0ubuntu27.14
+  Architecture: amd64
+  CasperMD5CheckResult: skip
+  CurrentDesktop: ubuntu:GNOME
+  DistributionChannelDescriptor:
+   # This is the distribution channel descriptor for the OEM CDs
+   # For more information see http://wiki.ubuntu.com/DistributionChannelDes=
+criptor
+   canonical-oem-sutton-focal-amd64-20201030-422+pc-sutton-bachman-focal-am=
+d64+X00
+  DistroRelease: Ubuntu 20.04
+  InstallationDate: Installed on 2021-01-20 (19 days ago)
+  InstallationMedia: Ubuntu 20.04 "Focal" - Build amd64 LIVE Binary 2020103=
+0-14:39
+  MachineType: LENOVO 30E102Z
+  NonfreeKernelModules: nvidia_modeset nvidia
+  Package: linux (not installed)
+  ProcEnviron:
+   TERM=3Dxterm-256color
+   PATH=3D(custom, no user)
+   XDG_RUNTIME_DIR=3D<set>
+   LANG=3Den_US.UTF-8
+   SHELL=3D/bin/bash
+  ProcFB: 0 EFI VGA
+  ProcKernelCmdLine: BOOT_IMAGE=3D/boot/vmlinuz-5.6.0-1042-oem root=3DUUID=
+=3D389cd165-fc52-4814-b837-a1090b9c2387 ro locale=3Den_US quiet splash vt.h=
+andoff=3D7
+  ProcVersionSignature: Ubuntu 5.6.0-1042.46-oem 5.6.19
+  RelatedPackageVersions:
+   linux-restricted-modules-5.6.0-1042-oem N/A
+   linux-backports-modules-5.6.0-1042-oem  N/A
+   linux-firmware                          1.187.8
+  RfKill:
+  =20
+  Tags:  focal
+  Uname: Linux 5.6.0-1042-oem x86_64
+  UpgradeStatus: No upgrade log present (probably fresh install)
+  UserGroups: adm cdrom dip docker kvm libvirt lpadmin plugdev sambashare s=
+udo
+  _MarkForUpload: True
+  dmi.bios.date: 07/29/2020
+  dmi.bios.vendor: LENOVO
+  dmi.bios.version: S07KT08A
+  dmi.board.name: 1046
+  dmi.board.vendor: LENOVO
+  dmi.board.version: Not Defined
+  dmi.chassis.type: 3
+  dmi.chassis.vendor: LENOVO
+  dmi.chassis.version: None
+  dmi.modalias: dmi:bvnLENOVO:bvrS07KT08A:bd07/29/2020:svnLENOVO:pn30E102Z:=
+pvrThinkStationP620:rvnLENOVO:rn1046:rvrNotDefined:cvnLENOVO:ct3:cvrNone:
+  dmi.product.family: INVALID
+  dmi.product.name: 30E102Z
+  dmi.product.sku: LENOVO_MT_30E1_BU_Think_FM_ThinkStation P620
+  dmi.product.version: ThinkStation P620
+  dmi.sys.vendor: LENOVO
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/1915063/+subscriptions
+
 
