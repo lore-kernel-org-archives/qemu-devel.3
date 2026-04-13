@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7BFF531DB
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 22:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFA9F531DB
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 22:12:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCPTF-0001Zi-Ju; Mon, 13 Apr 2026 18:09:29 -0400
+	id 1wCPWI-0002HB-1r; Mon, 13 Apr 2026 18:12:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPTD-0001ZZ-V7
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:09:27 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPWE-0002Gs-Er
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:12:34 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPTB-00005J-Gs
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:09:27 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so47331825e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 15:09:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCPWC-0000aQ-Mj
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 18:12:34 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43d04fc3bf2so2976421f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 15:12:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776118164; x=1776722964; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776118351; x=1776723151; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yJItwY8PngS/iJBr61aUH13ixYWYfGT0DejHpEoDqno=;
- b=HfaxREI1BBe6mqUozdD8RR2mj8jusHcgbbnRWxkqLMKbbR3qwcziDB+L5WUUtW/ftB
- VUDF6QdDN836609Zzo40WhbN8+RgotBxBmhSGVKT/BVUS9TBnClKtBNgNtQwP7QuTzAG
- xVsF9NPXsAJHmXAqjxuSRSKfUAVz4fPIycNGpwmu/XuJ8rDwS3zaP5MNWvWdcHHoYlhW
- db8goMAW2wSjKlRXVg+T6MCY4S5141FadE2ZOSlSHEZ9cWm3qjomS3DxVa3O3M80367d
- 9LkdF7YrpssDtLRZum/g8cqavxGNqACEEfc3DbkZTahIbyAe7FoIs5Lpl8kkMzVC6tEp
- XkLA==
+ bh=2zcHNNSKvC8rWAGslRgprodHcm0VUiUbvnzD4QAf5lM=;
+ b=M47JjwnMoKWwIRQ2QUmcwsat3B1n/LfflBhQFjzDXDHgk+jNyaumFAOfKy4hua81cN
+ RxjVlnn6G++J3R6Lu82S9nBm3auD/gv5AjkNSODb2sLBlMCexfiIeH4cTheiDd1ROG/x
+ zCWKVHun1yAqR+B56p2FP6D5ZNK1/HY/3r38akKqd5uF1YbexLU+CG6QtuyaQJuIJ6dd
+ N+//iLAQjn+oRMjUcoasZUMNn9bkcbNK6pGOeXbjNLm1YVPgM/D+UWTOKxTJAaPx6/KI
+ vRUrsmju5HUCOAuBGZ1/XlxFM+VfdO64Hz+eNb3fBLaGShOxxXN5Teu7ET6SfPPPoDuO
+ DrGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776118164; x=1776722964;
+ d=1e100.net; s=20251104; t=1776118351; x=1776723151;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yJItwY8PngS/iJBr61aUH13ixYWYfGT0DejHpEoDqno=;
- b=rHG7ZFeDs2MCTI8Z0NqBu5IwRVvzJ3gk7+Av+gniZjIz/SQGGGI9eQijvM2NFGWQ0f
- wtIs5hL5sC6S0ZDAKPp0SlDOtccQPqqCTdeNqmNHMT9y/W9QIjAowGoOU7iVmM+/mDkx
- 2UW4az6LQwvtYH+1MYOC1ThaVgeRPh6RSN6L9NJyna+2vlV4GUTozKYIqySjY1unIcJM
- DBM/DHRLHxH7cFVkg2ETnoGM7orDJFckeotDdEVgLSly3zuZHBLtYF8TNc4tcfCjkksG
- bf/m/KAT3A8fRTZtz5MND4b7SgLZ3DtoDw7+tKYt8H53qSsJnYXFRisVA6aVmGg5wc1C
- VXxQ==
-X-Gm-Message-State: AOJu0Yy8PJgMJzGz/Uf7N3KeNXPIpSYHNTdkDJlYDCyzInJx2YsJXd8a
- IDlQl283VCSMbz2UMNkAGeh7uuKaI85rnbq1QyRV0GfHLGc1W8Ijm+Bpx6Mz4Wk2G18erMDKhjA
- olxakPb4=
-X-Gm-Gg: AeBDietEExYZhYORvJU3OEEDGX0OHv1iDlE5O3ODW/KNe73GhHEqDeH1YeZFOSbK3Lh
- cY/ir7qdHyGH/4hLn/tEWqZPY3nUnwjpa9tNwt93JsdEI8Ln56FWfDfJ4v1vZxWXUZoZLl4V0Rb
- ejbP/CRkiIxEEOZcoytibIXG9CVsIiofgefqnKcpq+sArYx9RcbOwJHUDnJWUnOi4jKXSCES3bx
- iIp/OiWc1PSecv9tTFGZHMKCh+rNTvIAnKd/xw3Und6/dihVfKGMD/bM4kYM1tZZWFMTRCsavNo
- 6UZmQQkTLCt5MsTaf6kYnNBevK/xRlYIPRfGw8Kqd1I6wZ5kptActDVclcXXhCowamqUPdqi62o
- em46gFnieSbLrhG6olzgVlV/cy4qCgmExRNqoBKRvZnYPjC5t12C+ohjljoI4FLezmxgu/1xnxf
- jImO051j5RUTi6q71bzSvMB4JxfSGjLPYvaiHnQLZTc7TrULXtBIcmk3fINjg7MUVK1Zja9nEJO
- Kp0
-X-Received: by 2002:a05:600c:674f:b0:488:a82f:bb9b with SMTP id
- 5b1f17b1804b1-488d68cb47amr218256835e9.30.1776118162868; 
- Mon, 13 Apr 2026 15:09:22 -0700 (PDT)
+ bh=2zcHNNSKvC8rWAGslRgprodHcm0VUiUbvnzD4QAf5lM=;
+ b=V62y6ElkbXrj1n0Ev9GWmoW0f+6wtwxeS6f+byuCTTyiezTWUgYHwRkxN6aE7CuZ2M
+ SG4//m4VQBTStg1af9DXXtmUo2T0VIp2JE8g9iMSx/afbSj/Q/638BvywT8NZR4+gQwR
+ 63w3eNF/iFfK1eP3LRxKEfXdFtE5pjg8mGiPUwWdTeL6XDPtTj3dBovIjJcS/2cahlJ0
+ kT3q0HLpAMt57yf7lhAdpv+RiJAwaswPwLYVWZaoaQAgTc0cIyIbL7cMdsPGjbxADCYq
+ udLucGSsBoL/z0/fGlv1nauC9P6mvyVWrN8DNQ+m2Isf6Byno2yusA2O/O82tCMOZSSS
+ Yonw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/MzjCZHJq7kQxQbb7JRke9AloC2t7/Mvwn0KwUvZ+QQj5iaiDzQSDDvdLjxe6CryA/Ki7WJa/jwen9@nongnu.org
+X-Gm-Message-State: AOJu0Yx5N52tzHWiEyo0ajpOOjWW3+DG7tnBkvln+ileOV/7oR1PSLEE
+ DHSKGHba6Vrp0Lv7Xfy6eCtgDF7jzA5dApT/pH0Kkj+4M13Heq6SYWciCUCZxAAylp4=
+X-Gm-Gg: AeBDies+s9n58CFmSRvqk0RqOztK+D8DaQaH3rPAC3ih9qnvsMjaAfeVwvxVoS8Hgvo
+ 2fhgEYxASJyPZJrrpLYxe9ySQD/yyY/kEQBt4edjYuJjaN83o0e3NAqBnDmlFWWdd2JYBAMIVjY
+ MiAAkAbFaaGc88lSlXuASVoKgAQcb5shGOxPQQ+nzIsE8nmSg75xetwqbKjM7wfkNPFYbCK9o+2
+ cANRB+MByTH/pXZkGA8md0i2m+1oaMtY+mS9AP7DmP8HPpylZ5rFKQbVvjKVXD9QjNNnLZqFsa0
+ ePUNPKkhCGWCM0lOPYiNjHIbFQXoC450Lr03MaaXAIG+LMJn+ySJkjMr2+WK/91BEZwY/gxUmH7
+ J6MKPSF2DSwERKWh2ycpPWn0hXL+45P2aGyYt+Q95GB2QWm/lPeSDR0/CzeLTU09XE7xHYrDyBC
+ FxJeGlDf0V5lBXgbxTMYkPeB6IRiCgyqjx1O8TYXxd5jHIPx82/hrptl1j24GgEEsvxsRmkD2VS
+ Sk+
+X-Received: by 2002:a05:6000:144e:b0:43d:c95b:c46f with SMTP id
+ ffacd0b85a97d-43dc95bc595mr1669561f8f.38.1776118350912; 
+ Mon, 13 Apr 2026 15:12:30 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d5d9fa22sm103224095e9.7.2026.04.13.15.09.21
+ ffacd0b85a97d-43d63e5062fsm34937030f8f.31.2026.04.13.15.12.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 15:09:22 -0700 (PDT)
-Message-ID: <af54b324-a03f-4251-bcf0-58d457229e0d@linaro.org>
-Date: Tue, 14 Apr 2026 00:09:20 +0200
+ Mon, 13 Apr 2026 15:12:30 -0700 (PDT)
+Message-ID: <86d2bfb2-6943-4030-822a-07637adfae9c@linaro.org>
+Date: Tue, 14 Apr 2026 00:12:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0?] target/i386: Mandate monitor 'info lapic' take
- a vCPU ID argument
+Subject: Re: [PATCH 3/5] bsd-user: Conditionally use old system calls
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260413130748.6631-1-philmd@linaro.org>
- <adztRa80X42EGP4Y@redhat.com>
+To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
+ <20260413-syscall-nr-v1-3-f70408d042ea@bsdimp.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <adztRa80X42EGP4Y@redhat.com>
+In-Reply-To: <20260413-syscall-nr-v1-3-f70408d042ea@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,40 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/4/26 15:19, Daniel P. Berrangé wrote:
-> On Mon, Apr 13, 2026 at 03:07:48PM +0200, Philippe Mathieu-Daudé wrote:
->> With SMP configurations, using the 'current vCPU' under the
->> monitor isn't recommended, as it changes during runtime. Better
->> to specify which vCPU we want to monitor by its index. Deprecate
->> the default of 'info lapic', mentioning an argument is expected,
->> so we can remove this unpredictable behavior one day.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> The other command with this unpredictable behavior is 'info tlb'
->> which we'll deal with differently, after the v11.0 release.
+On 13/4/26 17:31, Warner Losh wrote:
+> sbrk and sstk have been deprecated in FreeBSD for a while now, only
+> support them if the version of FreeBSD we're compiling on does. They've
+> returned not supported for a while anyway, so no net change.
 > 
-> Aren't there quite a few more commands that rely on the HMP
-> "current" vCPU concept besides these two ?
-> 
-> info registers  comes to mind,
-> 
-> There are others whic call mon_get_cpu(), which are not
-> directly caring about a specific CPU, eg 'info mem',
-> 'memory_dump'
-> 
-> Why the rush to get lapic deprecated in 11.0 but not the
-> otherrs ?
+> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> ---
+>   bsd-user/bsd-mem.h            | 2 ++
+>   bsd-user/freebsd/os-syscall.c | 4 ++++
+>   bsd-user/freebsd/strace.list  | 4 ++++
+>   3 files changed, 10 insertions(+)
 
-Reading the "Arm OABI and NWFPE" deprecation patch triggered
-"oh it is still possible to get deprecation message merged"
-and I took that first patch of a bigger branch. Not a smart
-move because no rush indeed.
-
->> ---
->>   docs/about/deprecated.rst | 6 ++++++
->>   target/i386/cpu-apic.c    | 2 ++
->>   hmp-commands-info.hx      | 3 +--
->>   3 files changed, 9 insertions(+), 2 deletions(-)
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
