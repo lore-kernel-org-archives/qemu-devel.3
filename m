@@ -4,81 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08942F34C49
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E78F34C49
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:11:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCH19-0004bF-CX; Mon, 13 Apr 2026 09:07:55 -0400
+	id 1wCH44-0005EE-UM; Mon, 13 Apr 2026 09:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCH18-0004b7-Eu
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:07:54 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCH42-0005Dk-TF
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:10:54 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCH16-00042F-TE
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:07:54 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-43d70c30767so903294f8f.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 06:07:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCH41-0004pA-37
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:10:54 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-48897fd88ebso47671465e9.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 06:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776085670; x=1776690470; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=T+polFJXIRW8YuYLuBeq5TCrPMFMgIHh/5hqcgt2EOQ=;
- b=S+ZS6OvWrgV5EClTXdBRIu+N3lSNJDqGR4mXus5QvfDXP5fZMGSmn/MaE0L6DiSi7e
- /Ie4O3yten/3Vpuy447kRYvUfPTJHqFWcHta+TRTHyGYQBB/dCkDsi640BP9pqzJBp2j
- YhYOsuBittuVOQ8IO/ukudFCAz/PHfAitSCKUQZYvEhkzH0SFLXTlJAs4NWMS9daBVsv
- XeG9EgK9Ik6+bqR6dbuWKW2z+bHR3czFfzWuP+/c1i6APBOANJn+nhvGUQEcXJSrefHl
- P5l/uiRy4I3sOJW7EWN0zU9aDuUpjsREm4lYP8If+u8RPwhVBZ5ZhAceW9/7muFWb7x1
- 2zWg==
+ d=linaro.org; s=google; t=1776085851; x=1776690651; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x0jSFPhNSNtyBI/o0IEkt+dfELMsEWf+OoJ+558Ayxg=;
+ b=IUxsg5pTnXLVBxF86/vvDnBvCcdE9qIDVIgWv17gL5STCIsdFg+P7+xdotBP3FQLTd
+ pLOvCJdNNmp38tHnSFqK27IA4lyyItTyrs1WSCzg6uvDc2tOZsct8rujsk9aOFTJ3SA1
+ d6oPmjrHUw7Q7RqeHhLVKrLt99eNSXmJlj/KlsPZD63H6XQ2iyFSq+4URiXBMzgp7nyc
+ di0OO0Lp/9yVelz3jBjInpUrR1kJrtdPa3y7KuLPxaTQIPV7+D1LC0VBNwDvdkkWgir5
+ LN5F+8lWOfD3VdaG9FWAZlbfxU7wPeZKjOUR5iB26QbJDDqVnpI72Swn3PARTPwwomDo
+ l0zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776085670; x=1776690470;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T+polFJXIRW8YuYLuBeq5TCrPMFMgIHh/5hqcgt2EOQ=;
- b=en5ulMTg77AdJxGBtcznh1GWG2X1vRwJDfzE42tXCxc9MQKe7hyJi/4PQHcEzdx3yC
- NClDnBTqVDL1m3yYJ0E6Rd8naxrXCvDprDGaUbAO+8FOkwOtzCAWLYxuKCOiHP4Zqbl2
- mSk7AApaLXtb+/br+ZbBS790u91CeOhIe0sYeIttgtdWuFMt96v9P0HPWeztnp/7WXpx
- HfXlnwInmyrBFld/JInIwUQkSSr7QOks3QRdVLQHfTDbS/Zw+C8s79OJKhi+LE1qOxWL
- DLgWVCmfJwgsDynkJMvF8tMF35bWEdA7bVCGl+2y6/5lZQOo8zx2CBsICyls0eViAnxb
- CoSA==
-X-Gm-Message-State: AOJu0YzPj7jTyJSGw8qyCyFPEDY59YqxjIYOn+vygGtR8kznWZ+2R6aI
- 9fkygG7TKQCeDiw21YY3QaPEYC0Kpi/Et3qQoKzp6lh3G+x1/IvPsNIoudo+etpFWrwaCruZRMn
- U+o0UwRA=
-X-Gm-Gg: AeBDiet0a7Z10Yo6896ltCJgalubNAkWbD7Gt5gRPNiqKKSILtRx/Ddyy7EeFzAE41k
- nwsmwabdccpmMX6QdFkvNPFNXqA2KLkDr1ZbabW9zbD8Pc048gQuWSccHq/9v0C6gcG9Ux/PVJN
- 9rxhc/BOca8vSWOMrbhnpwvDEgnVNFGv0IyQPWGhMUVavVmRmqHquTS5iJESaBrzbJe5Gn+OuQl
- hQSA5hOtEBRT97uqXLGH5OJ3Vt6JT4hv0/WUuYxEvHIT73D9AFTrLK9RvkItYOj699/hxe6itd0
- DGpTO6K8YOzSpHLEA964nCcoZ8feOc9dN3FQ5wOnIbVYeLnzS9UwElhrXyTwGYMlK5hEfSgdQ8N
- TB91YrDBaYQMuqEl6Cw/2zLwX2UM+HgY6thYKX6CILAV1QbybxFift2JzNs7UPyBk0yzH4+qQjx
- /dIn0Irx2KzSsjStEbKwiN0kKYBByKN7t+p7ZyUEanPhdRFT5K8S28ZixDpF/O3Y1RDiGEAvKx
-X-Received: by 2002:a5d:5d03:0:b0:437:7719:ca82 with SMTP id
- ffacd0b85a97d-43d6491fef7mr18361158f8f.3.1776085670379; 
- Mon, 13 Apr 2026 06:07:50 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1776085851; x=1776690651;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x0jSFPhNSNtyBI/o0IEkt+dfELMsEWf+OoJ+558Ayxg=;
+ b=SBAjLvhACTLye0PyJqKp0tsrQmL5/Zr/+qGJbASHWOXKlibdetvmDJ8/+sZlNyexWA
+ 8A0N9KBNXDbYpsYuGR6DDP9eHe3WT/Cz+lZd9Kmf5jqqD8wgDPF1rBJaG0pC5Pn7V4KO
+ NW92VPvihWQt81leJKs6SYjdAbBisoT33xVmRZLWHLTIUbvnyqotg0mL0GW/6vGuY/O0
+ JQdI2GbCWaBePVkR+7vm8T7wZXDhK1hSBGSSJli0P6L87fdgD2h1lxvBFD/IKMYu0OV+
+ dkG0AFYZOuGlT9xg/ZbotolajZHu0wS/QIfTVXR7zQGcPcElkK3sosnd8tElwEM8FYIp
+ XTPw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8J3Q/pcT+RQIMiIQr+Vma5oABhNQbFQpkKVgumR5KLEPqSOcwL3/at/wtXPCowzjyRuypLVZ9EqBiU@nongnu.org
+X-Gm-Message-State: AOJu0Yw7NE3N7s9SN0ae75kGd/PHtWiNg+dDgjDzEVgK8DDp6/DuwiFM
+ AOREtJV7UaySPaIuSi/yqCFLSnRUB9DuoVqErTlHFBcK6ivruhM3DZQxDFxtumNEd/I=
+X-Gm-Gg: AeBDiev4hwkd/SL7CJ6LT5OftgyqYKVvfAY+8DRBzHBLBZMgJxjQudxQfG3Qrq8jvoV
+ jBA5Q5+6jSQ706yQ7akLhZD9imwdxzIq4BnHUIfBV5inXovtsixjP6VD3Hh9Ov/MW6mXT7PTgBq
+ Ryu3vcaJB6u/0ARdUoRpUfAcvgfjVz8wYv83ouIZJny9s2MoNYmzkcYhIihTL3e3fK30mbsTH/a
+ ckRsKeb85AJCCUDMBW5+eA4A8/G9W34oS9an9IsmGbUxJTK4FS7GSShfROTyorDn9zOYrK1mnnx
+ 5Kt64B3xd3hFJnMrENjF5Tw4EmJq71yiR0nkzIHKUTEALUzlyxWzxM0wo0z2sWfFCFia5uWZo/i
+ FeJBweqG8PQ2nq96R5+Hp58if2rLuuaQo+819mr85kpkU97fDnFe/DGXUSF0a6YrthiNISVYwrh
+ XHkJWkO4fHCu03l14sfMM4thzpEc+Dp2c0vcIASRd4aNIPcUvsiMTHiVb3TnUfv3PEJQ==
+X-Received: by 2002:a05:600c:3150:b0:488:c80c:c236 with SMTP id
+ 5b1f17b1804b1-488d68057f3mr196997615e9.5.1776085851265; 
+ Mon, 13 Apr 2026 06:10:51 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63de2e4csm34608412f8f.2.2026.04.13.06.07.49
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 13 Apr 2026 06:07:49 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0?] target/i386: Mandate monitor 'info lapic' take a
- vCPU ID argument
-Date: Mon, 13 Apr 2026 15:07:48 +0200
-Message-ID: <20260413130748.6631-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ 5b1f17b1804b1-488d5cf2e70sm161679665e9.0.2026.04.13.06.10.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Apr 2026 06:10:50 -0700 (PDT)
+Message-ID: <8b4c7707-3a17-449e-9039-4c20809bcd72@linaro.org>
+Date: Mon, 13 Apr 2026 15:10:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 03/13] hw/usb/hcd-ehci: Change descriptor addresses to
+ 64-bit
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20260311072614.1095587-1-jamin_lin@aspeedtech.com>
+ <20260311072614.1095587-4-jamin_lin@aspeedtech.com>
+ <4253d673-02a9-45cd-9781-0f03866b9703@linaro.org>
+ <6ae68fe4-6b54-433e-a9df-ae703a9c5f38@kaod.org>
+ <9a15c454-c904-4c16-8ba1-14352bd9b86d@linaro.org>
+In-Reply-To: <9a15c454-c904-4c16-8ba1-14352bd9b86d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,67 +116,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With SMP configurations, using the 'current vCPU' under the
-monitor isn't recommended, as it changes during runtime. Better
-to specify which vCPU we want to monitor by its index. Deprecate
-the default of 'info lapic', mentioning an argument is expected,
-so we can remove this unpredictable behavior one day.
+(Cc'ing migration maintainers)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-The other command with this unpredictable behavior is 'info tlb'
-which we'll deal with differently, after the v11.0 release.
----
- docs/about/deprecated.rst | 6 ++++++
- target/i386/cpu-apic.c    | 2 ++
- hmp-commands-info.hx      | 3 +--
- 3 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index a6d6a713265..a62da93259a 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -169,6 +169,12 @@ The ``stopcapture`` command is deprecated and will be removed in a future releas
- 
- The ``info capture`` command is deprecated and will be removed in a future release.
- 
-+``info lapic`` without ``apic-id`` argument (since 11.0)
-+''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+When no APIC ID is provided, ``info lapic`` defaults to the current vCPU.
-+This behavior is now deprecated, the ID will be mandatory in a future release.
-+
- Host Architectures
- ------------------
- 
-diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
-index eaa10ad2a3d..9ca569f62b8 100644
---- a/target/i386/cpu-apic.c
-+++ b/target/i386/cpu-apic.c
-@@ -97,6 +97,8 @@ void hmp_info_local_apic(Monitor *mon, const QDict *qdict)
-             cpu_synchronize_state(cs);
-         }
-     } else {
-+        monitor_printf(mon, "Not specifying the local apic id is deprecated"
-+                       " (using the current CPU one)\n");
-         cs = mon_get_cpu(mon);
-     }
- 
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 74c741f80e2..e4206d329fc 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -118,8 +118,7 @@ ERST
-         .name       = "lapic",
-         .args_type  = "apic-id:i?",
-         .params     = "[apic-id]",
--        .help       = "show local apic state (apic-id: local apic to read, default is which of current CPU)",
--
-+        .help       = "show local apic state (apic-id: local apic to read)",
-         .cmd        = hmp_info_local_apic,
-     },
- #endif
--- 
-2.53.0
+On 12/4/26 23:16, Philippe Mathieu-Daudé wrote:
+> On 12/4/26 23:03, Cédric Le Goater wrote:
+>> On 4/12/26 22:34, Philippe Mathieu-Daudé wrote:
+>>> Hi Jamin,
+>>>
+>>> On 11/3/26 08:26, Jamin Lin wrote:
+>>>> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
+>>>>
+>>>> The following fields are updated:
+>>>> - EHCIPacket::qtdaddr
+>>>> - EHCIQueue::{qhaddr, qtdaddr}
+>>>> - EHCIState::{a_fetch_addr, p_fetch_addr}
+>>>>
+>>>> Update get_dwords() and put_dwords() to take 64-bit addresses and
+>>>> propagate the type change through the descriptor traversal paths.
+>>>>
+>>>> Adjust NLPTR_GET() to operate on 64-bit values:
+>>>>
+>>>>      #define NLPTR_GET(x) ((x) & ~(uint64_t)0x1f)
+>>>>
+>>>> so that link pointer masking works correctly when descriptor
+>>>> addresses exceed 32-bit space. The previous mask (0xffffffe0)
+>>>> implicitly truncated addresses to 32 bits.
+>>>>
+>>>> This patch does not change the on-wire descriptor layout yet.
+>>>> It only removes the internal 32-bit address limit and prepares
+>>>> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
+>>>>
+>>>> Since the type of fetch_addr changes from 32-bit to 64-bit,
+>>>> bump the VMState version.
+>>>>
+>>>> No functional change.
+>>>>
+>>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>>> ---
+>>>>   hw/usb/hcd-ehci.h | 10 +++----
+>>>>   hw/usb/hcd-ehci.c | 67 ++++++++++++++++++++++++ 
+>>>> +----------------------
+>>>>   2 files changed, 41 insertions(+), 36 deletions(-)
+>>>
+>>>
+>>>> @@ -2484,8 +2489,8 @@ static void usb_ehci_vm_state_change(void 
+>>>> *opaque, bool running, RunState state)
+>>>>   const VMStateDescription vmstate_ehci = {
+>>>>       .name        = "ehci-core",
+>>>> -    .version_id  = 2,
+>>>> -    .minimum_version_id  = 1,
+>>>> +    .version_id  = 3,
+>>>> +    .minimum_version_id  = 2,
+>>>
+>>> Since this device is used in cloud virtualized instances, we can not
+>>> ignore previous migration streams and really need to implement the v2
+>>> to v3 hook.
+>>
+>> We will need :
+>>
+>> +    uint32_t a_fetch_addr_hi;
+>> +    uint32_t p_fetch_addr_hi;
+>>
+>> to be set by pre_save, and used by post_load to reconstruct
+>> 64-bit addresses. This is going to be tedious ...
+> 
+> Would something in those lines work?
+> 
+> -- >8 --
+> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+> index 57f930b0998..c228d4a8c6d 100644
+> --- a/hw/usb/hcd-ehci.c
+> +++ b/hw/usb/hcd-ehci.c
+> @@ -2439,6 +2439,10 @@ static int usb_ehci_post_load(void *opaque, int 
+> version_id)
+>               companion->dev = NULL;
+>           }
+>       }
+> +    if (version_id < 3) {
+> +        s->a_fetch_addr = s->a_fetch_addr_pre_v3;
+> +        s->p_fetch_addr = s->p_fetch_addr_pre_v3;
+> +    }
+> 
+>       return 0;
+>   }
+> @@ -2471,7 +2475,7 @@ static void usb_ehci_vm_state_change(void *opaque, 
+> bool running, RunState state)
+> 
+>   const VMStateDescription vmstate_ehci = {
+>       .name        = "ehci-core",
+> -    .version_id  = 2,
+> +    .version_id  = 3,
+>       .minimum_version_id  = 1,
+>       .pre_save    = usb_ehci_pre_save,
+>       .post_load   = usb_ehci_post_load,
+> @@ -2500,8 +2504,10 @@ const VMStateDescription vmstate_ehci = {
+>           /* schedule state */
+>           VMSTATE_UINT32(astate, EHCIState),
+>           VMSTATE_UINT32(pstate, EHCIState),
+> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
+> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
+> +        VMSTATE_UINT32_TEST(a_fetch_addr_pre_v3, EHCIState, 2),
+> +        VMSTATE_UINT32_TEST(p_fetch_addr_pre_v3, EHCIState, 2),
+> +        VMSTATE_UINT64(a_fetch_addr, EHCIState),
+> +        VMSTATE_UINT64(p_fetch_addr, EHCIState),
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
+> ---
 
 
