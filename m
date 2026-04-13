@@ -4,82 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13074F34C5C
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660B6F34C64
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 15:34:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCJ8u-0005jU-Or; Mon, 13 Apr 2026 11:24:04 -0400
+	id 1wCJI5-0006JB-3N; Mon, 13 Apr 2026 11:33:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCJ8r-0005cs-4C
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:24:01 -0400
-Received: from qs-2005i-snip4-4.eps.apple.com ([57.103.86.215]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCJ8n-0000XI-33
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:24:00 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPS id
- A43AF18000A4; Mon, 13 Apr 2026 15:23:51 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776093835; x=1778685835;
- bh=M6AkUUrPcxLOfhXzaNmZevrpR2eORr3l/18/Pdjn4vI=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=g75zPbFX9Uvgk1RCyqoRQGzzd7WpkrEsb6FBVcpcD2lM3E8MjLQs1ba5EngMQC50k+j4rL+hRsOUyHZcrQckuGtCIrG6cRwODaBrjyod27Ugi7GlITtDYp/xO6+trRv3KK9JhLNUJ05hhbay4HLjwRQB1u6Gf/DNozBz60FNMx/X27RSrSJAffIxtWUuriNbGS2f+We7NMsjWsBHIuhCzfjMFOK9UzPjtpbMjDmGfu1PegL/us550QsYOmyCjK6LheMB669VkW2nTyJuymXO2ZwHLInBemNMYxR2ZJB2/NAwmyolDiWJpi4B64+TvBXnl6tOmrqPYgMWdpVMzyum4w==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPSA id
- 61BB618001CB; Mon, 13 Apr 2026 15:23:49 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v10 14/14] whpx: i386: fix CPUID[1:EDX].APIC reporting
-Date: Mon, 13 Apr 2026 17:23:26 +0200
-Message-ID: <20260413152326.63738-15-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260413152326.63738-1-mohamed@unpredictable.fr>
-References: <20260413152326.63738-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wCJHQ-0006Fs-Bd
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:32:55 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wCJHO-0002xT-9h
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 11:32:51 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7d556c1a79eso6249112a34.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 08:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776094368; x=1776699168;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=nsZzqiCeHObMh6Bh4gb9lxnGMx8xUKeqe78737tmJYs=;
+ b=mE5AamgnBvlkuE6E/JZ6Fzb9SveScsI+5KzL4HrmpVOn8WWLofBrRP2G+ENSEIiJZP
+ uaPbfTaJV/P4p8An7e1GtTXiZJQgEUSoK/eA2YwJr4GytksibCeXOefWi0X4LYEQpTkg
+ +VX9c1/nbZo7m9hNF+2ux6WRO/m8ow5sqKea4Y6IrvnGdgd5mvf1PsxMhz+AaIo9Oa5G
+ +5/rsIInox/0xlnn6ZwRYps1TL8fvencUyZUKnmuEm+3hnWTXJT+HHk2ZDpUQuC9M6kC
+ IcmlFGw3FhSEcHTyaNKNx/jR5XOQfKQzdJNtXAzZN3qWhAoAJBBR7SLGOvckAKbDXm8o
+ BO/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776094368; x=1776699168;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nsZzqiCeHObMh6Bh4gb9lxnGMx8xUKeqe78737tmJYs=;
+ b=nfH2Hi4IEl0nJ9QTyXSljPZ4OmgcmVtWGywv4EAKXhg6196L9QRPrE6iVw9R234emi
+ GDzAB8g8pS0dXNauEoOgqVq6zexN4jaYMhdwPRj4Z2p+W7tvSfg/dLvxuaChqKN4RPfw
+ jWbxB0+GlpAOQcMFQGMhLefWM1pyvOz291XiLOkn0jS3/ZbMuubW2w2WWE05o0JF/w7t
+ NbLAMvjDfGLpWWZUdB/1Uku9qSqjm7o10uoUa7pVhcbK6cQPTyUbYC5U/Bi7tpNjRDKA
+ xMTJDfLcQo4b5e11RM33XtPBSr+ouz6dU7odup0oLEjmUU+KUUMVJePUT3wOlxLvNhxb
+ zetA==
+X-Gm-Message-State: AOJu0YxMQ2gfFPDM2KPtRR8Y0s6o2LZbEKdIdjX0uKbr24mzNUekDj7P
+ a3fjTT8HoT2tWILspi15XFy/8bcciGzERMGLteVElNKaybFZmNIabgQ0nC1bgPxtm30=
+X-Gm-Gg: AeBDieskE5Yz0oms0ekxdDVj7cw/qi3M3msoyIuAP01tBTXQNPQZdCZK84BBqmGc+iv
+ tOuhTaDmArxbZ6ALfj3qnwN5tvrJ5H40n2BT6BLu7Fx2BG5Qmq4OSUdYsKjxgNLK0W5MjNZKPgV
+ nPRYhy9irePlzQknr7iCSvMc/zVYfAOv3GURUHmOXZwaFNaQkE1u/vxLwBnqgx54CEIZRAnlf/8
+ 0haylbur/vJgLbpNvtG4NhtiQyHK+nyvpj/mmzWPNKChorcEVOqi5YViwkF5HRKugVrPxg3aMMw
+ XOCy6WSZ0O6sQ9yHnEIwGtFbjLcmVgGUJWlcTCX9eaMOLwFn6fLf/W4wOI0zYTGQb10LY4fER8W
+ 7zcKUjVJB6G+zcvsCtJk3/az+yeCumuEeIlJfK+EBmyCooAsisZQwum3U2k9qf12Vww98qurzdq
+ vwSdQUdK7yrQ==
+X-Received: by 2002:a05:6830:34a1:b0:7d7:ddc2:540e with SMTP id
+ 46e09a7af769-7dc27c6731dmr9772860a34.6.1776094368095; 
+ Mon, 13 Apr 2026 08:32:48 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7dc2696c463sm8659192a34.23.2026.04.13.08.32.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Apr 2026 08:32:47 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+Date: Mon, 13 Apr 2026 09:31:44 -0600
+Subject: [PATCH 2/5] bsd-user: Generate the system call numbers in meson build.
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: OiZfWjie1kUd0v-0ycLxZjDwKG-_b6iz
-X-Proofpoint-GUID: OiZfWjie1kUd0v-0ycLxZjDwKG-_b6iz
-X-Authority-Info-Out: v=2.4 cv=QKdlhwLL c=1 sm=1 tr=0 ts=69dd0a89
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=ljJ9V6m273jqBh-Cp98A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDE1MSBTYWx0ZWRfX91lA5Jj8GUiS
- Lhslujwaa4G3uuzmrF17qtjeT8sVFzEQdo9Hqpgm15W2/oy3vGlUuetkVqT4XGrP/5MME1ydRJ+
- KTjtR4itBHAv6PnPUOez3ELNAB3ixmIailNhJO+2dL2GM7xB0B2A8k+NiIZveI+fAhrIsUHMfT5
- +Dts1DqdyBj9eq7l0n6zFtubJujTnBj8toW+sLWX2QgJFHmO1OuqEPGfrZLIBRipm3GqRsQ4hz5
- kdDOSaNvogNBF0Ld6cedmE2O0nYt/aiAI+/vdCTH0JDqVajhSUPZiw1BgRuMqAMNi/79U4cko+K
- Oq8aFQqHc7F7CVtv9yRr9yj6qn0+3Fq9/Hoxjdoui3kKiT81XZOAxQdzvZ0xVE=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=856
- malwarescore=0 adultscore=0 spamscore=0 mlxscore=0
- lowpriorityscore=0
- bulkscore=0 clxscore=1030 phishscore=0 suspectscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604130151
-Received-SPF: pass client-ip=57.103.86.215;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260413-syscall-nr-v1-2-f70408d042ea@bsdimp.com>
+References: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
+In-Reply-To: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Warner Losh <imp@bsdimp.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1217; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=X36aYeaQXGyEFGdQRLNGg1zEFe/4/vZEyNQKObpVU/0=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp3QxoFOiegTWxFcJLWUbeqWWJOK+zsb5C4jrIN
+ z4ryM12pMCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCad0MaAAKCRBsHNEofbAR
+ ANHwEADBgR3eBIGzWJLbSwL788y42A7hClJVWYnhRgDSPvMSbNH4jODSOlbK6B5e7W8lvTHLNmn
+ svI2fghDhUp7CPF3C+bDM7WzZ6fppMQgqfpjAQl9uKpG/O68wlEqdq427yAKZyPACRjd6oe0y1P
+ 7tUnnrvINpiKrdaxiEieOZVou9u9sL/2hRh1oxAPTVXkeOXVDfMjASDFYaINwFLQpAnyVV6QwhQ
+ wsgYWB2RXB0UPMuVG020RBG2xlW5ghAVPtgb5lGVyXuT4E4WjMpvfKK+hxG5LbR3opDW4CUYTiB
+ fpEF3XLKcPM6+jIqNbxT2r77AyrS2y1GSRYSiNng+/hHTO6uES892EbIO15XzzVukb0YXvDbJxR
+ WPBUmu7uB5MSlyPkHZ1sCVo9aIfPcXskdLVRNoi3cSjtWlCYPvRHKuWtAfc60JndmBRMQZ4KEHC
+ B7HKKF1rnsGrCC5xuPNoSnzfF7U9YHyqDYZzPBWVwF4EW2JKd/USX4PZqtVY/nDFL0Zq6KYKchQ
+ tsXvUAYFRNw4sJhCRGdczGzTODSupsvelMBvLRtg+Tu/6CbpVACn7P++8w+tQupbkjdZBiDogQP
+ 8FPB8C3jMJOy8mBAt5wK36cz8ABHYLK1nGjp4z8lqvd6sSjYutc6hd0tguFF8LNLu8W3qMQhMQt
+ 3T7qqEZi3gmb4oQ==
+X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
+ fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
+Received-SPF: none client-ip=2607:f8b0:4864:20::334;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,228 +117,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hyper-V always has CPUID[1:EDX].APIC set, even when the APIC isn't enabled yet.
+Build glue to generate system call numbers with the meson build.
 
-Work around this by also using the APICBASE trap for kernel-irqchip=on.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- include/system/whpx-common.h |  1 -
- target/i386/whpx/whpx-all.c  | 34 ++++++++---------
- target/i386/whpx/whpx-apic.c | 71 ++++++++++++++++++++++++++++++++++--
- 3 files changed, 84 insertions(+), 22 deletions(-)
+ bsd-user/freebsd/meson.build | 4 ++++
+ meson.build                  | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
-index 3406c20fec..79710e2fb3 100644
---- a/include/system/whpx-common.h
-+++ b/include/system/whpx-common.h
-@@ -8,7 +8,6 @@ struct AccelCPUState {
-     bool interruptable;
-     bool ready_for_pic_interrupt;
-     uint64_t tpr;
--    uint64_t apic_base;
-     bool interruption_pending;
-     /* Must be the last field as it may have a tail */
-     WHV_RUN_VP_EXIT_CONTEXT exit_ctx;
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 8cd81fffee..9ce73261c2 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -139,7 +139,6 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
- #ifdef TARGET_X86_64
-     WHvX64RegisterKernelGsBase,
- #endif
--    WHvX64RegisterApicBase,
-     /* WHvX64RegisterPat, */
-     WHvX64RegisterSysenterCs,
-     WHvX64RegisterSysenterEip,
-@@ -401,7 +400,6 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-     r86 = !(env->cr[0] & CR0_PE_MASK);
- 
-     vcpu->tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
--    vcpu->apic_base = cpu_get_apic_base(x86_cpu->apic_state);
- 
-     idx = 0;
- 
-@@ -519,9 +517,6 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-         vcxt.values[idx++].Reg64 = env->kernelgsbase;
- #endif
- 
--        assert(whpx_register_names[idx] == WHvX64RegisterApicBase);
--        vcxt.values[idx++].Reg64 = vcpu->apic_base;
--
-         /* WHvX64RegisterPat - Skipped */
- 
-         assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-@@ -556,6 +551,12 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-         error_report("WHPX: Failed to set virtual processor context, hr=%08lx",
-                      hr);
-     }
+diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
+index 8fd6c7cfb8..21d4bedb56 100644
+--- a/bsd-user/freebsd/meson.build
++++ b/bsd-user/freebsd/meson.build
+@@ -4,3 +4,7 @@ bsd_user_ss.add(files(
+   'os-sys.c',
+   'os-syscall.c',
+ ))
 +
-+    if (level >= WHPX_LEVEL_FULL_STATE) {
-+        WHV_REGISTER_VALUE apic_base = {};
-+        apic_base.Reg64 = cpu_get_apic_base(X86_CPU(cpu)->apic_state);
-+        whpx_set_reg(cpu, WHvX64RegisterApicBase, apic_base);
-+    }
- }
- 
- static int whpx_get_tsc(CPUState *cpu)
-@@ -647,7 +648,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     struct whpx_register_set vcxt;
--    uint64_t tpr, apic_base;
-+    uint64_t tpr;
-     HRESULT hr;
-     int idx;
-     int idx_next;
-@@ -779,13 +780,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     env->kernelgsbase = vcxt.values[idx++].Reg64;
- #endif
- 
--    assert(whpx_register_names[idx] == WHvX64RegisterApicBase);
--    apic_base = vcxt.values[idx++].Reg64;
--    if (apic_base != vcpu->apic_base) {
--        vcpu->apic_base = apic_base;
--        cpu_set_apic_base(x86_cpu->apic_state, vcpu->apic_base);
--    }
--
-     /* WHvX64RegisterPat - Skipped */
- 
-     assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-@@ -1997,8 +1991,7 @@ int whpx_vcpu_run(CPUState *cpu)
-                 val = X86_CPU(cpu)->env.apic_bus_freq;
-             }
- 
--            if (!whpx_irqchip_in_kernel() &&
--                vcpu->exit_ctx.MsrAccess.MsrNumber == MSR_IA32_APICBASE) {
-+            if (vcpu->exit_ctx.MsrAccess.MsrNumber == MSR_IA32_APICBASE) {
-                 is_known_msr = 1;
-                 if (!vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-                     /* Read path unreachable on Hyper-V */
-@@ -2164,6 +2157,13 @@ int whpx_vcpu_run(CPUState *cpu)
-                 } else {
-                     reg_values[2].Reg32 &= CPUID_EXT_X2APIC;
-                 }
-+
-+                /* CPUID[1:EDX].APIC is dynamic */
-+                if (env->features[FEAT_1_EDX] & CPUID_APIC) {
-+                    reg_values[3].Reg32 |= CPUID_APIC;
-+                } else {
-+                    reg_values[3].Reg32 &= ~CPUID_APIC;
-+                }
-             }
- 
-             /* Dynamic depending on XCR0 and XSS, so query DefaultResult */
-@@ -2725,9 +2725,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
- 
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.X64MsrExitBitmap.UnhandledMsrs = 1;
--    if (!whpx_irqchip_in_kernel()) {
--        prop.X64MsrExitBitmap.ApicBaseMsrWrite = 1;
--    }
-+    prop.X64MsrExitBitmap.ApicBaseMsrWrite = 1;
- 
-     hr = whp_dispatch.WHvSetPartitionProperty(
-             whpx->partition,
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-index f26ecaf6e8..65629ca45f 100644
---- a/target/i386/whpx/whpx-apic.c
-+++ b/target/i386/whpx/whpx-apic.c
-@@ -90,9 +90,70 @@ static void whpx_get_apic_state(APICCommonState *s,
-     apic_next_timer(s, s->initial_count_load_time);
- }
- 
--static int whpx_apic_set_base(APICCommonState *s, uint64_t val)
-+static int apic_set_base_check(APICCommonState *s, uint64_t val)
- {
--    s->apicbase = val;
-+    /* Enable x2apic when x2apic is not supported by CPU */
-+    if (!cpu_has_x2apic_feature(&s->cpu->env) &&
-+        val & MSR_IA32_APICBASE_EXTD) {
-+        return -1;
-+    }
-+
-+    /*
-+     * Transition into invalid state
-+     * (s->apicbase & MSR_IA32_APICBASE_ENABLE == 0) &&
-+     * (s->apicbase & MSR_IA32_APICBASE_EXTD) == 1
-+     */
-+    if (!(val & MSR_IA32_APICBASE_ENABLE) &&
-+        (val & MSR_IA32_APICBASE_EXTD)) {
-+        return -1;
-+    }
-+
-+    /* Invalid transition from disabled mode to x2APIC */
-+    if (!(s->apicbase & MSR_IA32_APICBASE_ENABLE) &&
-+        !(s->apicbase & MSR_IA32_APICBASE_EXTD) &&
-+        (val & MSR_IA32_APICBASE_ENABLE) &&
-+        (val & MSR_IA32_APICBASE_EXTD)) {
-+        return -1;
-+    }
-+
-+    /* Invalid transition from x2APIC to xAPIC */
-+    if ((s->apicbase & MSR_IA32_APICBASE_ENABLE) &&
-+        (s->apicbase & MSR_IA32_APICBASE_EXTD) &&
-+        (val & MSR_IA32_APICBASE_ENABLE) &&
-+        !(val & MSR_IA32_APICBASE_EXTD)) {
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int apic_set_base(APICCommonState *s, uint64_t val)
-+{
-+    if (apic_set_base_check(s, val) < 0) {
-+        return -1;
-+    }
-+
-+    s->apicbase = (val & MSR_IA32_APICBASE_BASE) |
-+        (s->apicbase & (MSR_IA32_APICBASE_BSP | MSR_IA32_APICBASE_ENABLE));
-+    if (!(val & MSR_IA32_APICBASE_ENABLE)) {
-+        s->apicbase &= ~MSR_IA32_APICBASE_ENABLE;
-+        cpu_clear_apic_feature(&s->cpu->env);
-+    }
-+
-+    /* Transition from disabled mode to xAPIC */
-+    if (!(s->apicbase & MSR_IA32_APICBASE_ENABLE) &&
-+        (val & MSR_IA32_APICBASE_ENABLE)) {
-+        s->apicbase |= MSR_IA32_APICBASE_ENABLE;
-+        cpu_set_apic_feature(&s->cpu->env);
-+    }
-+
-+    /* Transition from xAPIC to x2APIC */
-+    if (cpu_has_x2apic_feature(&s->cpu->env) &&
-+        !(s->apicbase & MSR_IA32_APICBASE_EXTD) &&
-+        (val & MSR_IA32_APICBASE_EXTD)) {
-+        s->apicbase |= MSR_IA32_APICBASE_EXTD;
-+    }
-+
-     return 0;
- }
- 
-@@ -235,6 +296,10 @@ static void whpx_apic_mem_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps whpx_apic_io_ops = {
-     .read = whpx_apic_mem_read,
-     .write = whpx_apic_mem_write,
-+    .impl.min_access_size = 1,
-+    .impl.max_access_size = 4,
-+    .valid.min_access_size = 1,
-+    .valid.max_access_size = 4,
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
-@@ -262,7 +327,7 @@ static void whpx_apic_class_init(ObjectClass *klass, const void *data)
- 
-     k->realize = whpx_apic_realize;
-     k->reset = whpx_apic_reset;
--    k->set_base = whpx_apic_set_base;
-+    k->set_base = apic_set_base;
-     k->set_tpr = whpx_apic_set_tpr;
-     k->get_tpr = whpx_apic_get_tpr;
-     k->post_load = whpx_apic_post_load;
++bsd_syscall_nr = generator(sh,
++			   arguments: [ meson.current_source_dir() / 'syscallhdr.sh', '@INPUT@', '@OUTPUT@', '@EXTRA_ARGS@'],
++			   output: '@BASENAME@_nr.h')
+diff --git a/meson.build b/meson.build
+index ab3e97eb9f..d42d5d47a7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4307,6 +4307,8 @@ foreach target : target_dirs
+       target_inc += include_directories('bsd-user/host/' / host_arch)
+       dir = base_dir / abi
+       arch_srcs += files(dir / 'signal.c', dir / 'target_arch_cpu.c')
++      arch_srcs += bsd_syscall_nr.process('/usr/include/sys/syscall.h',
++					  extra_args : host_os.to_upper())
+     endif
+     target_inc += include_directories(
+       base_dir,
+
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
