@@ -4,96 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 403D5F34C49
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E46F34C49
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 13:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCHFH-0007p1-Jc; Mon, 13 Apr 2026 09:22:33 -0400
+	id 1wCHGS-0008KM-Ry; Mon, 13 Apr 2026 09:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCHFE-0007om-1m
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:22:28 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCHFA-0006i9-21
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:22:27 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so41909405e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 06:22:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776086542; x=1776691342; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lLvLo2XKC0NvOjwJT9iISh66X4JaJ6aNIWQADjHDq68=;
- b=ZLjQ7GmmWGuLMsejY3dxgcQGBULkMGw3+HN7xL2m8sPPyp1jmNJFllikiLhctHnBhN
- lMnIS1n/9gZDI9Vyrz7tP1I+8kPWh6jNjOPnJy9tbk4nWIZdhJ5IxJY1EBkyqpMy5eIe
- mCNytJjD0X199ewaNVlG6AlP1t/gdl7eT06shVeaUytFNuo5wGURVLRCLTj/TEtI5KVb
- ali+Lgtjp9ojwfAOaEtufKnpHpD7eEYfSXMQZFlYoigQTcdae55LzvbBZ4Am501OD/jw
- eJYkB2HjAuy04JgYgiomu6Ju2uqU9OHWTP11B6KSf5dPFKHj2U9HcQeEFr29BCW55l5i
- nJAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776086542; x=1776691342;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lLvLo2XKC0NvOjwJT9iISh66X4JaJ6aNIWQADjHDq68=;
- b=Xs36pel0/QzRt2lAFsgVtc+MJCWaGVs3hBO+9k7sqBI4EebvPRfEd/yiFzCTWKloFa
- glznyRkqnMG9sYsEmtvdZxYxNQ4xEMoJKs1Wc0lInCHiFo5Acmn0VY39j4AZ+zbsr4Gi
- O8IATau0PCIe0vJNxg/1NfvMlBxkPHrYPa6SyXM+qOHePCN0htsAYAXiLcEaIZ1E00vn
- mf3MywQUpG9rwKIs4H1lYMITZ9JCqv2/eTLo4P30eAAR1yQF4LNC5kwGR3FJ5YIFXX5t
- 3qHz0eTAV4SoDUUfyXndZp7awp40svn1GczIBW+5lonRPdzFkFutvcNBZ2pBfPHojnRD
- 7z5A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/552fh4wp1vpwxMZWaIRkv7rI5DuwQas6Hrv8ERXeO4aHAeGgM2D82EvKaT0wBnhK3VgXesqD//Ege@nongnu.org
-X-Gm-Message-State: AOJu0YwDsSLooNGf4/o60UzAr6ijTOE4v642xxd1p5QtvXfa/CAsBbj7
- V1mYEUCqd4uvrNpsmMMSpEHrQct3wzerFhK4X5wWe1wQ1r6MSJ3YYxKx
-X-Gm-Gg: AeBDievU6SrzRA5iYERd1cDn2VDV5/JkvteylkazDY+Y1rzNQS+K93u4hPfmiXThWzU
- qSHA7aqTYGM06dhSWyTYIb7/OMHvvYY6BKHIUM5N5NNJ/Kg9JwUvh95+Gb74EIbLLyEkXQCBDgI
- lIUTe/3NnNxuu76vjE+AQFOCUyS4w8ls9YMYs+OR8l0lcRCAnTx1OROrpRT3ggvKYSNNHY4WZCQ
- v7jW8J577AdM2nM65l8m+AGcZLlwMrdfUMyJJU/6yqPdmVSqbM0HK5lZoZobgp3GIBx9mfcOpfv
- yVaBw852z73+icVVTTVPwvF/cfwjKLJEDqW+2kb3YiLcDLoqzBXYZHR6HeQsGGNJ0+NuuAN0dxE
- A8UBGSGc/8k0D80kOW4T4mnI1AN97ksqYwFF1kMcgu3Goq5aSysehMOoHDU/y2O5fg/owYkhsDt
- O12Y3iiN2WGi8yGW4pd0ivr85PwF+HdvBBuEVudQaouHuFpGQw7/etqAJ6ho+sbK21hUzuUBHdq
- 6CX36ZNpUqlgLxBIQwX
-X-Received: by 2002:a05:600c:4504:b0:486:fbdb:b718 with SMTP id
- 5b1f17b1804b1-488d6868606mr174185805e9.25.1776086541718; 
- Mon, 13 Apr 2026 06:22:21 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf1c6100004fcff454cbdf8f.dip0.t-ipconnect.de.
- [2003:fa:af1c:6100:4f:cff4:54cb:df8f])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d538c03esm298060405e9.13.2026.04.13.06.22.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 06:22:20 -0700 (PDT)
-Date: Mon, 13 Apr 2026 13:22:19 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wCHGN-0008Ip-Un
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:23:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wCHGI-0006w6-Va
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 09:23:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776086612;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HZ1aqZabgLQpvCuwPaKybB2MjBBeetK6fS7mGxyWmE8=;
+ b=Cu0QUuW1uxBYInIbEvkko4jT9o1jwS325OMw+QgO/G2euoOyc9U2oCBDkzBK+UlQMGMR06
+ y/Hkn/uubkreXIPyFk97CRpGKyR7LDLVFzPgJVggBowMwWzHjAV/RWjqNK0B0ffWI2CUa8
+ n0E45Je3/Rys23NVhSPUVNNFKuVNQOc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-RwRQx_LeNM6cuP59IAMnZA-1; Mon,
+ 13 Apr 2026 09:23:26 -0400
+X-MC-Unique: RwRQx_LeNM6cuP59IAMnZA-1
+X-Mimecast-MFC-AGG-ID: RwRQx_LeNM6cuP59IAMnZA_1776086604
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2913B1800361; Mon, 13 Apr 2026 13:23:23 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F169E180049F; Mon, 13 Apr 2026 13:23:19 +0000 (UTC)
+Date: Mon, 13 Apr 2026 14:23:16 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: =?utf-8?B?TWF0ecOhxaE=?= Bobek <matyas.bobek@gmail.com>,
  qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Pavel Pisa <pisa@fel.cvut.cz>
-CC: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Pavel Pisa <pisa@fel.cvut.cz>, qemu-arm@nongnu.org,
+ Marc Kleine-Budde <mkl@pengutronix.de>,
  Oliver Hartkopp <socketcan@hartkopp.net>,
  Nikita Ostrenkov <n.ostrenkov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 0/7] hw/arm/sabrelite: Add FlexCAN support
-In-Reply-To: <D2D2A915-D9EB-40A9-921C-0DB50D4CA810@gmail.com>
+Subject: Re: [PATCH v2 6/7] tests: Add qtests for FlexCAN
+Message-ID: <adzuRHcb4BVIRAS8@redhat.com>
 References: <cover.1773866323.git.matyas.bobek@gmail.com>
- <D2D2A915-D9EB-40A9-921C-0DB50D4CA810@gmail.com>
-Message-ID: <3AC8F245-DFEF-4F59-AA27-B4160F5EE02D@gmail.com>
+ <33d03d96698eb7511321690d9b5a054f03aa8bc7.1773866323.git.matyas.bobek@gmail.com>
+ <4244E4A0-CCE2-4E23-B32E-B6B9242FAA60@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4244E4A0-CCE2-4E23-B32E-B6B9242FAA60@gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,116 +93,502 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Apr 13, 2026 at 01:16:20PM +0000, Bernhard Beschow wrote:
+> 
+> 
+> Am 19. März 2026 19:13:13 UTC schrieb "Matyáš Bobek" <matyas.bobek@gmail.com>:
+> >The tests do not test all of the FlexCAN emulator functionality.
+> >
+> >Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
+> >---
+> > MAINTAINERS                |   1 +
+> > tests/qtest/flexcan-test.c | 424 +++++++++++++++++++++++++++++++++++++
+> > tests/qtest/meson.build    |   1 +
+> > 3 files changed, 426 insertions(+)
+> > create mode 100644 tests/qtest/flexcan-test.c
+> >
+> >diff --git a/MAINTAINERS b/MAINTAINERS
+> >index e723863a6f..dbb159f031 100644
+> >--- a/MAINTAINERS
+> >+++ b/MAINTAINERS
+> >@@ -2090,6 +2090,7 @@ S: Maintained
+> > F: hw/net/can/flexcan.c
+> > F: hw/net/can/flexcan_regs.h
+> > F: include/hw/net/flexcan.h
+> >+F: tests/qtest/flexcan-test.c
+> > 
+> > EDU
+> > M: Jiri Slaby <jslaby@suse.cz>
+> >diff --git a/tests/qtest/flexcan-test.c b/tests/qtest/flexcan-test.c
+> >new file mode 100644
+> >index 0000000000..b5880d4119
+> >--- /dev/null
+> >+++ b/tests/qtest/flexcan-test.c
+> >@@ -0,0 +1,424 @@
+> >+/*
+> >+ * QTests for FlexCAN CAN controller device model
+> >+ *
+> >+ * Copyright (c) 2025 Matyas Bobek <matyas.bobek@gmail.com>
+> >+ *
+> >+ * This code is licensed under the GPL version 2 or later.  See
+> >+ * the COPYING file in the top-level directory.
+> 
+> IIUC this license text is redundant to the specifier below, but again, IANAL. Daniel?
+
+checkpatch.pl  should complain about this.
+
+For *newly* written files, only the SPDX-License-Identifier should be
+present.   Traditional license boilerplate is only permitted if we're
+dealing with historical files where we're required to preserve existing
+license text.
 
 
-Am 2=2E April 2026 10:02:56 UTC schrieb Bernhard Beschow <shentey@gmail=2E=
-com>:
->
->
->Am 19=2E M=C3=A4rz 2026 19:13:07 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <ma=
-tyas=2Ebobek@gmail=2Ecom>:
->
->Hi Maty=C3=A1=C5=A1,
->
->>This series adds emulation of the FlexCAN CAN controller, version 2,
->>found in NXP i=2EMX6 series SoCs=2E The controller is integrated into
->>fsl-imx6 and the Sabrelite ARM board=2E
->>
->>The chip has two FlexCAN controllers, but the Linux Sabrelite
->>device tree enables only one by default=2E Linux kernel with both
->>controllers enabled has been tested to work properly (using a custom
->>device tree)=2E
->>See docs/system/devices/can=2Erst for an example of QEMU command line
->>invocation=2E
->>
->>More information about the implementation can be found in my bachelor
->>thesis [1]=2E
->>
->>The headers (struct FlexcanRegs and flexcan_regs=2Eh macros) were copied
->>from the Linux kernel=2E Marc Kleine-Budde is the copyright holder=2E He
->>has been kindly asked to provide consent, to confirm his approval for
->>the inclusion of said header fragments into QEMU=2E
->>
->>Changes from v1:
->>- removed DPRINTF (turned into traces or guest errors)
->>- removed gotos and unnecessary continues
->>- register memory region shortened to actual length w/o padding
->>- make flexcan_* fns private
->>- used DEVICE(s)->canonical_path instead of allocating new strings
->>- changed DEVICE_NATIVE_ENDIAN to DEVICE_LITTLE_ENDIAN
->>- removed ugly USE macro
->>- used enums instead of define sequences in flexcan=2Ec
->>- fixed FlexCAN KConfig conf (fixes build on non-arm-softmmu)
->>- fixed style and other issues from Bernhard's review
->>- better wording in docs
->>- rebased onto latest master
->>- Link to v1: https://lore=2Ekernel=2Eorg/qemu-devel/cover=2E1765826753=
-=2Egit=2Ematyas=2Ebobek@gmail=2Ecom
->
->Nice!
->
->>
->>Thanks Bernhard Beschow for the review and his patience=2E
->>I borrowed some fixes from his flexcan branch at [2]=2E
->
->You're welcome to do that!
->
->I'm on reviewing v2=2E Since I'm currently rather busy this will take me =
-more time=2E And I want to mention that I'm very much looking forward to ha=
-ving CAN support in i=2EMX devices!
+> 
+> >+ *
+> >+ * SPDX-License-Identifier: GPL-2.0-or-later
+> >+ */
+> >+
+> >+#include "qemu/osdep.h"
+> >+#include "libqtest-single.h"
+> >+
+> >+#include "hw/net/flexcan.h"
+> >+#include "hw/net/can/flexcan_regs.h"
+> >+
+> >+#define FSL_IMX6_CAN2_ADDR 0x02094000
+> >+#define FSL_IMX6_CAN2_SIZE 0x4000
+> >+#define FSL_IMX6_CAN1_ADDR 0x02090000
+> >+#define FSL_IMX6_CAN1_SIZE 0x4000
+> >+
+> >+#define FC_QEMU_ARGS "-nographic -M sabrelite " \
+> >+                     "-object can-bus,id=qcan0  " \
+> >+                     "-machine canbus0=qcan0 -machine canbus1=qcan0"
+> >+
+> >+/* used for masking out unused/reserved bits */
+> >+#define FC_MB_CNT_USED_MASK (~0xF080FFFFu)
+> >+
+> >+#define FCREG(BASE_ADDR, REG) ((BASE_ADDR) + offsetof(FlexcanRegs, REG))
+> >+#define FCMB(BASE_ADDR, MB_IDX, WORD_IDX) (FCREG(BASE_ADDR, mbs) + \
+> >+    0x10 * (MB_IDX) + 4 * (WORD_IDX))
+> >+
+> >+typedef struct FcTestFrame {
+> >+    uint32_t id;
+> >+    uint32_t data[2];
+> >+    uint8_t len;
+> >+    bool ide;
+> >+    bool rtr;
+> >+
+> >+    /* rx only */
+> >+    bool expect_overrun;
+> >+} FcTestFrame;
+> >+
+> >+static const FcTestFrame fc_test_frame_1 = {
+> >+    .id = 0x5AF,
+> >+    .len = 8,
+> >+    .data = {
+> >+        0x01020304,
+> >+        0x0A0B0C0D
+> >+    },
+> >+    .ide = false
+> >+};
+> >+
+> >+static const FcTestFrame fc_test_frame_1_ide = {
+> >+    .id = 0x105AF5AF,
+> >+    .len = 8,
+> >+    .data = {
+> >+        0x01020304,
+> >+        0x0A0B0C0D
+> >+    },
+> >+    .ide = true
+> >+};
+> >+
+> >+static void fc_reset(hwaddr ba, uint32_t mcr_flags)
+> >+{
+> >+    /* disable */
+> >+    writel(FCREG(ba, mcr), 0xD890000F);
+> >+
+> >+    /* enable in freeze mode */
+> >+    writel(FCREG(ba, mcr), 0x5980000F);
+> >+
+> >+    /* soft reset */
+> >+    writel(FCREG(ba, mcr), 0x5980000F | FLEXCAN_MCR_SOFTRST);
+> >+
+> >+    g_assert_cmpuint(readl(FCREG(ba, mcr)), ==, 0x5980000F);
+> >+    g_assert_cmpuint(readl(FCREG(ba, ctrl)), ==, 0);
+> >+    g_assert_cmpuint(readl(FCREG(ba, ctrl2)), ==, 0);
+> >+
+> >+    writel(FCREG(ba, mcr), (0x5980000F & ~FLEXCAN_MCR_HALT) | mcr_flags);
+> >+    writel(FCREG(ba, ctrl2), FLEXCAN_CTRL2_RRS);
+> >+
+> >+    /* initialize all mailboxes as rx inactive */
+> >+    for (int i = 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+> >+        writel(FCMB(ba, i, 0), FLEXCAN_MB_CODE_RX_INACTIVE);
+> >+        writel(FCMB(ba, i, 1), 0);
+> >+        writel(FCMB(ba, i, 2), 0);
+> >+        writel(FCMB(ba, i, 3), 0);
+> >+    }
+> >+}
+> >+
+> >+static uint64_t fc_get_irqs(hwaddr ba)
+> >+{
+> >+    return (uint64_t)readl(FCREG(ba, iflag1)) |
+> >+        ((uint64_t)readl(FCREG(ba, iflag2)) << 32);
+> >+}
+> >+
+> >+static void fc_clear_irq(hwaddr ba, int idx)
+> >+{
+> >+    if (idx >= 32) {
+> >+        writel(FCREG(ba, iflag2), (uint32_t)1 << (idx - 32));
+> >+    } else {
+> >+        writel(FCREG(ba, iflag1), (uint32_t)1 << idx);
+> >+    }
+> >+
+> >+    g_assert_cmpuint(fc_get_irqs(ba) & ((uint64_t)1 << idx), ==, 0);
+> >+}
+> >+
+> >+static void fc_setup_rx_mb(hwaddr ba, int mbidx)
+> >+{
+> >+    writel(FCMB(ba, mbidx, 0), FLEXCAN_MB_CODE_RX_EMPTY);
+> >+    writel(FCMB(ba, mbidx, 1), 0);
+> >+    /* the data value should be ignored for RX mb */
+> >+    writel(FCMB(ba, mbidx, 2), 0);
+> >+    writel(FCMB(ba, mbidx, 3), 0);
+> >+
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 0)), ==, FLEXCAN_MB_CODE_RX_EMPTY);
+> >+}
+> >+
+> >+static void fc_tx(hwaddr ba, int mbidx, const FcTestFrame *frame)
+> >+{
+> >+    g_assert_cmpuint(frame->len, <=, 8);
+> >+
+> >+    writel(FCMB(ba, mbidx, 0), FLEXCAN_MB_CODE_TX_INACTIVE);
+> >+    uint32_t id = frame->ide ? frame->id : frame->id << 18;
+> >+    writel(FCMB(ba, mbidx, 1), id);
+> >+    writel(FCMB(ba, mbidx, 2), frame->data[0]);
+> >+    writel(FCMB(ba, mbidx, 3), frame->data[1]);
+> >+
+> >+    uint32_t ctrl = FLEXCAN_MB_CODE_TX_DATA | FLEXCAN_MB_CNT_LENGTH(frame->len);
+> >+    if (frame->ide) {
+> >+        ctrl |= FLEXCAN_MB_CNT_IDE | FLEXCAN_MB_CNT_SRR;
+> >+    }
+> >+    if (frame->rtr) {
+> >+        ctrl |= FLEXCAN_MB_CNT_RTR;
+> >+    }
+> >+    writel(FCMB(ba, mbidx, 0), ctrl);
+> >+
+> >+    /* check frame was transmitted */
+> >+    g_assert_cmpuint(fc_get_irqs(ba) & ((uint64_t)1 << mbidx),
+> >+                     !=, 0);
+> >+
+> >+    uint32_t xpectd_ctrl = (ctrl & ~FLEXCAN_MB_CODE_MASK) |
+> >+        FLEXCAN_MB_CODE_TX_INACTIVE;
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 0)) & FC_MB_CNT_USED_MASK, ==,
+> >+                     xpectd_ctrl);
+> >+    /* other fields should stay unchanged */
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 1)), ==, id);
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 2)), ==, frame->data[0]);
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 3)), ==, frame->data[1]);
+> >+}
+> >+
+> >+static void fc_rx_check(hwaddr ba, int mbidx, const FcTestFrame *frame)
+> >+{
+> >+    uint32_t xpectd_ctrl = frame->expect_overrun ? FLEXCAN_MB_CODE_RX_OVERRUN
+> >+                             : FLEXCAN_MB_CODE_RX_FULL;
+> >+    xpectd_ctrl |= FLEXCAN_MB_CNT_LENGTH(frame->len) | FLEXCAN_MB_CNT_SRR;
+> >+    if (frame->ide) {
+> >+        xpectd_ctrl |= FLEXCAN_MB_CNT_IDE;
+> >+    }
+> >+    if (frame->rtr) {
+> >+        xpectd_ctrl |= FLEXCAN_MB_CNT_RTR;
+> >+    }
+> >+
+> >+    uint32_t xpectd_id = frame->ide ? frame->id : frame->id << 18;
+> >+
+> >+    uint32_t ctrl = readl(FCMB(ba, mbidx, 0)) & FC_MB_CNT_USED_MASK;
+> >+    if ((ctrl & FLEXCAN_MB_CODE_MASK) == FLEXCAN_MB_CODE_RX_EMPTY) {
+> >+        fprintf(stderr, "expected frame (id=0x%X) not received\n", frame->id);
+> >+    }
+> >+
+> >+    g_assert_cmpuint(ctrl, ==, xpectd_ctrl);
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 1)), ==, xpectd_id);
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 2)), ==, frame->data[0]);
+> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 3)), ==, frame->data[1]);
+> >+}
+> >+
+> >+static void fc_check_empty_multi(hwaddr ba, int idx_count, int mbidxs[])
+> >+{
+> >+    for (int i = 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+> >+        bool check_empty = true;
+> >+        int ctrl = readl(FCMB(ba, i, 0));
+> >+
+> >+        for (int j = 0; j < idx_count; j++) {
+> >+            if (i == mbidxs[j]) {
+> >+                check_empty = false;
+> >+            }
+> >+        }
+> >+
+> >+        if (check_empty) {
+> >+            if (!(ctrl == FLEXCAN_MB_CODE_RX_EMPTY ||
+> >+                  ctrl == FLEXCAN_MB_CODE_RX_INACTIVE)) {
+> >+                g_assert_cmpuint(ctrl, ==, FLEXCAN_MB_CODE_RX_INACTIVE);
+> >+            }
+> >+            g_assert_cmpuint(readl(FCMB(ba, i, 1)), ==, 0);
+> >+            g_assert_cmpuint(readl(FCMB(ba, i, 2)), ==, 0);
+> >+            g_assert_cmpuint(readl(FCMB(ba, i, 3)), ==, 0);
+> >+        } else {
+> >+            g_assert_cmpuint(
+> >+                ctrl & FLEXCAN_MB_CODE_MASK, !=,
+> >+                FLEXCAN_MB_CODE_RX_INACTIVE
+> >+            );
+> >+        }
+> >+    }
+> >+}
+> >+
+> >+static void fc_check_empty(hwaddr ba, int mbidx)
+> >+{
+> >+    fc_check_empty_multi(ba, 1, &mbidx);
+> >+}
+> >+
+> >+static void flexcan_test_linux_probe_impl(hwaddr fba)
+> >+{
+> >+    /* -- test a Linux driver-like probe sequence -- */
+> >+    /* disable */
+> >+    writel(FCREG(fba, mcr), 0xD890000F);
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xD890000F);
+> >+    g_assert_cmpuint(readl(FCREG(fba, ctrl)), ==, 0);
+> >+
+> >+    /* set bit in reserved field we do not implement (CTRL_CLK_SRC) */
+> >+    writel(FCREG(fba, ctrl), 0x00002000);
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xD890000F);
+> >+
+> >+    /* enable in freeze mode */
+> >+    writel(FCREG(fba, mcr), 0x5980000F);
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0x5980000F);
+> >+
+> >+    /* enable Rx-FIFO */
+> >+    writel(FCREG(fba, mcr), 0x7980000F);
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0x7980000F);
+> >+    g_assert_cmpuint(readl(FCREG(fba, ecr)), ==, 0);
+> >+
+> >+    /* disable */
+> >+    writel(FCREG(fba, mcr), 0xF890000F);
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xF890000F);
+> >+}
+> >+
+> >+static void flexcan_test_freeze_disable_interaction_impl(hwaddr fba)
+> >+{
+> >+    /* -- test normal <=> freeze <=> disable transitions -- */
+> >+
+> >+    /* leave freeze in disabled, FRZ_ACK should stay cleared */
+> >+    writel(FCREG(fba, mcr), 0xF890000F); /* disable */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xF890000F);
+> >+    writel(FCREG(fba, mcr), 0xB890000F);  /* by clearing FRZ */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xB890000F);
+> >+
+> >+    writel(FCREG(fba, mcr), 0xF890000F); /* disable */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xF890000F);
+> >+    writel(FCREG(fba, mcr), 0xE890000F);  /* by clearing HALT */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xE890000F);
+> >+
+> >+    writel(FCREG(fba, mcr), 0xF890000F); /* disable */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xF890000F);
+> >+    writel(FCREG(fba, mcr), 0xA890000F);  /* by clearing both */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0xA890000F);
+> >+
+> >+    /* enter and leave freeze */
+> >+    writel(FCREG(fba, mcr), 0x7980000F); /* enable in freeze mode */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0x7980000F);
+> >+    writel(FCREG(fba, mcr), 0x3980000F); /* leave by clearing FRZ */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0x3080000F);
+> >+
+> >+    writel(FCREG(fba, mcr), 0x7980000F); /* enable in freeze mode */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0x7980000F);
+> >+    writel(FCREG(fba, mcr), 0x6980000F); /* leave by clearing HALT */
+> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), ==, 0x6080000F);
+> >+}
+> >+
+> >+static void flexcan_test_mailbox_io_impl(hwaddr ba_tx, hwaddr ba_rx)
+> >+{
+> >+    /* -- test correct handling of mailbox IO -- */
+> >+    const int test_1_mbidx = 0;
+> >+    fc_reset(ba_tx,
+> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_COUNT));
+> >+    fc_reset(ba_rx,
+> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_COUNT));
+> >+
+> >+    fc_setup_rx_mb(ba_rx, test_1_mbidx);
+> >+    fc_tx(ba_tx, test_1_mbidx, &fc_test_frame_1_ide);
+> >+    g_assert_cmpuint(fc_get_irqs(ba_rx), ==, 1 << test_1_mbidx);
+> >+    fc_rx_check(ba_rx, test_1_mbidx, &fc_test_frame_1_ide);
+> >+    readl(FCREG(ba_rx, timer)); /* reset lock */
+> >+
+> >+    writel(FCMB(ba_rx, test_1_mbidx, 0), 0);
+> >+    g_assert_cmpuint(readl(FCMB(ba_rx, test_1_mbidx, 0)), ==, 0);
+> >+    writel(FCMB(ba_rx, test_1_mbidx, 1), 0x99AABBCC);
+> >+    g_assert_cmpuint(readl(FCMB(ba_rx, test_1_mbidx, 1)), ==, 0x99AABBCC);
+> >+}
+> >+
+> >+static void flexcan_test_dual_transmit_receive_impl(hwaddr ba_tx, hwaddr ba_rx)
+> >+{
+> >+    /* -- test TX and RX between the two FlexCAN instances -- */
+> >+    const int test_1_mbidx = 50;
+> >+    const int test_rounds = 50;
+> >+
+> >+    /* self-receive enabled on tx FC */
+> >+    fc_reset(ba_tx,
+> >+             FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_COUNT));
+> >+    fc_reset(ba_rx,
+> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_COUNT));
+> >+
+> >+    /* tests self-receive on tx and reception on rx */
+> >+    fc_setup_rx_mb(ba_rx, test_1_mbidx);
+> >+    fc_check_empty(ba_rx, test_1_mbidx);
+> >+    fc_setup_rx_mb(ba_tx, test_1_mbidx + 1);
+> >+    fc_check_empty(ba_tx, test_1_mbidx + 1);
+> >+    g_assert_cmpuint(fc_get_irqs(ba_rx), ==, 0);
+> >+    g_assert_cmpuint(fc_get_irqs(ba_tx), ==, 0);
+> >+
+> >+    fc_tx(ba_tx, test_1_mbidx, &fc_test_frame_1);
+> >+    fc_clear_irq(ba_tx, test_1_mbidx);
+> >+
+> >+    fc_rx_check(ba_rx, test_1_mbidx, &fc_test_frame_1);
+> >+    fc_check_empty(ba_rx, test_1_mbidx);
+> >+    fc_rx_check(ba_tx, test_1_mbidx + 1, &fc_test_frame_1);
+> >+    int tx_non_empty_mbidxs[] = {test_1_mbidx, test_1_mbidx + 1};
+> >+
+> >+    fc_check_empty_multi(ba_tx, 2, tx_non_empty_mbidxs);
+> >+    fc_clear_irq(ba_rx, test_1_mbidx);
+> >+    fc_clear_irq(ba_tx, test_1_mbidx + 1);
+> >+    readl(FCREG(ba_rx, timer)); /* reset lock */
+> >+
+> >+    for (int ridx = 0; ridx < test_rounds; ridx++) {
+> >+        /* test extended IDs sent to all mailboxes */
+> >+        for (int i = 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+> >+            fc_setup_rx_mb(ba_rx, i);
+> >+        }
+> >+        fc_check_empty_multi(ba_rx, 0, NULL);
+> >+        g_assert_cmpuint(fc_get_irqs(ba_rx), ==, 0);
+> >+        g_assert_cmpuint(fc_get_irqs(ba_tx), ==, 0);
+> >+
+> >+        for (int i = 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+> >+            fc_tx(ba_tx, i, &fc_test_frame_1_ide);
+> >+        }
+> >+        g_assert_cmpuint(fc_get_irqs(ba_rx), ==, UINT64_MAX);
+> >+        g_assert_cmpuint(fc_get_irqs(ba_tx), ==, UINT64_MAX);
+> >+        for (int i = 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+> >+            fc_rx_check(ba_rx, i, &fc_test_frame_1_ide);
+> >+        }
+> >+
+> >+        /* reset interrupts */
+> >+        writel(FCREG(ba_rx, iflag1), UINT32_MAX);
+> >+        writel(FCREG(ba_rx, iflag2), UINT32_MAX);
+> >+        writel(FCREG(ba_tx, iflag1), UINT32_MAX);
+> >+        writel(FCREG(ba_tx, iflag2), UINT32_MAX);
+> >+        g_assert_cmpuint(fc_get_irqs(ba_rx), ==, 0);
+> >+        g_assert_cmpuint(fc_get_irqs(ba_tx), ==, 0);
+> >+    }
+> >+}
+> >+
+> >+static void flexcan_test_tx_abort_impl(hwaddr ba)
+> >+{
+> >+    /* -- test the TX abort feature -- */
+> >+    fc_reset(ba,
+> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_COUNT));
+> >+
+> >+
+> >+    for (int mbidx = 0; mbidx < FLEXCAN_MAILBOX_COUNT; mbidx++) {
+> >+        fc_tx(ba, mbidx, &fc_test_frame_1);
+> >+
+> >+        writel(FCMB(ba, mbidx, 0), FLEXCAN_MB_CODE_TX_ABORT);
+> >+        g_assert_cmpuint(readl(FCMB(ba, mbidx, 0)), ==,
+> >+                         FLEXCAN_MB_CODE_TX_INACTIVE);
+> >+    }
+> >+}
+> >+
+> >+static void flexcan_test_freeze_disable_interaction(void)
+> >+{
+> >+    qtest_start(FC_QEMU_ARGS);
+> >+    flexcan_test_freeze_disable_interaction_impl(FSL_IMX6_CAN1_ADDR);
+> >+    flexcan_test_freeze_disable_interaction_impl(FSL_IMX6_CAN2_ADDR);
+> >+    qtest_end();
+> >+}
+> >+
+> >+static void flexcan_test_linux_probe(void)
+> >+{
+> >+    qtest_start(FC_QEMU_ARGS);
+> >+    flexcan_test_linux_probe_impl(FSL_IMX6_CAN1_ADDR);
+> >+    flexcan_test_linux_probe_impl(FSL_IMX6_CAN2_ADDR);
+> >+    qtest_end();
+> >+}
+> >+
+> >+static void flexcan_test_dual_transmit_receive(void)
+> >+{
+> >+    qtest_start(FC_QEMU_ARGS);
+> >+    flexcan_test_dual_transmit_receive_impl(FSL_IMX6_CAN1_ADDR,
+> >+                                            FSL_IMX6_CAN2_ADDR);
+> >+    flexcan_test_dual_transmit_receive_impl(FSL_IMX6_CAN2_ADDR,
+> >+                                            FSL_IMX6_CAN1_ADDR);
+> >+    qtest_end();
+> >+}
+> >+
+> >+static void flexcan_test_tx_abort(void)
+> >+{
+> >+    qtest_start(FC_QEMU_ARGS);
+> >+    flexcan_test_tx_abort_impl(FSL_IMX6_CAN1_ADDR);
+> >+    flexcan_test_tx_abort_impl(FSL_IMX6_CAN2_ADDR);
+> >+    qtest_end();
+> >+}
+> >+
+> >+static void flexcan_test_mailbox_io(void)
+> >+{
+> >+    qtest_start(FC_QEMU_ARGS);
+> >+    flexcan_test_mailbox_io_impl(FSL_IMX6_CAN1_ADDR, FSL_IMX6_CAN2_ADDR);
+> >+    flexcan_test_mailbox_io_impl(FSL_IMX6_CAN2_ADDR, FSL_IMX6_CAN1_ADDR);
+> >+    qtest_end();
+> >+}
+> >+
+> >+int main(int argc, char **argv)
+> >+{
+> >+    g_test_init(&argc, &argv, NULL);
+> >+
+> >+    qtest_add_func("/net/flexcan/linux_probe", flexcan_test_linux_probe);
+> >+    qtest_add_func("/net/flexcan/freeze_disable_interaction",
+> >+                   flexcan_test_freeze_disable_interaction);
+> >+    qtest_add_func("/net/flexcan/dual_transmit_receive",
+> >+                   flexcan_test_dual_transmit_receive);
+> >+    qtest_add_func("/net/flexcan/tx_abort",
+> >+                   flexcan_test_tx_abort);
+> >+    qtest_add_func("/net/flexcan/mailbox_io", flexcan_test_mailbox_io);
+> >+
+> >+    return g_test_run();
+> >+}
+> >diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> >index be4fa627b5..33239f1880 100644
+> >--- a/tests/qtest/meson.build
+> >+++ b/tests/qtest/meson.build
+> >@@ -246,6 +246,7 @@ qtests_arm = \
+> >   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
+> >   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
+> >   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
+> >+  (config_all_devices.has_key('CONFIG_CAN_FLEXCAN') ? ['flexcan-test'] : []) + \
+> >   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+> >    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+> >   ['arm-cpu-features',
+> 
+> I like that the test attempts to mimic real device driver behavior, which makes its intent recognizable.
+> 
+> With the license text comment addressed:
+> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+> 
 
-I believe I've now given each patch a (conditional) R-b tag -- please let =
-me know if I missed something=2E So there is a realistic chance that this s=
-eries could be merged in the next iteration!
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-Best regards,
-Bernhard
-
->
->Best regards,
->Bernhard
->
->>
->>[1] http://dspace=2Ecvut=2Ecz/bitstream/handle/10467/122654/F3-BP-2025-B=
-obek-Matyas-BP_Bobek_FlexCAN_final_4=2Epdf
->>[2] https://github=2Ecom/shentok/qemu/tree/flexcan
->>
->>Maty=C3=A1=C5=A1 Bobek (7):
->>  hw/arm/sabrelite: Open code DEFINE_MACHINE_ARM
->>  hw/arm/sabrelite: Introduce class SabreliteMachineState
->>  hw/misc/imx6_ccm: Add PLL3 and CAN clock
->>  hw/net/can/flexcan: NXP FlexCAN core emulation
->>  hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
->>  tests: Add qtests for FlexCAN
->>  docs/arm/sabrelite: Mention FlexCAN support
->>
->> MAINTAINERS                   |    9 +
->> docs/system/arm/sabrelite=2Erst |    1 +
->> docs/system/devices/can=2Erst   |   24 +
->> hw/arm/Kconfig                |    1 +
->> hw/arm/fsl-imx6=2Ec             |   29 +
->> hw/arm/sabrelite=2Ec            |   68 +-
->> hw/misc/imx6_ccm=2Ec            |   24 +
->> hw/misc/trace-events          |    2 +
->> hw/net/Kconfig                |    5 +
->> hw/net/can/flexcan=2Ec          | 1407 ++++++++++++++++++++++++++++++++=
-+
->> hw/net/can/flexcan_regs=2Eh     |  193 +++++
->> hw/net/can/meson=2Ebuild        |    1 +
->> hw/net/can/trace-events       |   18 +
->> include/hw/arm/fsl-imx6=2Eh     |    6 +
->> include/hw/misc/imx6_ccm=2Eh    |    4 +
->> include/hw/misc/imx_ccm=2Eh     |    1 +
->> include/hw/net/flexcan=2Eh      |  142 ++++
->> tests/qtest/flexcan-test=2Ec    |  424 ++++++++++
->> tests/qtest/meson=2Ebuild       |    1 +
->> 19 files changed, 2350 insertions(+), 10 deletions(-)
->> create mode 100644 hw/net/can/flexcan=2Ec
->> create mode 100644 hw/net/can/flexcan_regs=2Eh
->> create mode 100644 include/hw/net/flexcan=2Eh
->> create mode 100644 tests/qtest/flexcan-test=2Ec
->>
 
