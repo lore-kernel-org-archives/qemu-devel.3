@@ -4,69 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B470F34C49
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701F4F34C4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 12:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCGBK-00022H-Td; Mon, 13 Apr 2026 08:14:24 -0400
+	id 1wCGCV-0002Uz-5z; Mon, 13 Apr 2026 08:15:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wCGB7-00021d-TA
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:14:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wCGCN-0002T9-LS
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:15:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wCGB3-0007Ln-9R
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:14:08 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wCGCL-0007eT-PR
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 08:15:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776082437;
+ s=mimecast20190719; t=1776082524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=rl5Q4QpnKZKNCpZC7o6fcH5SQnll8iGBzXAabzyX6q0=;
- b=RMmpAPKyDG3Wy+KOOOfFzYusm5+Hu6zulmMLR3HvUEMZ/5Ty3XTfOXDWic+KxQTOzcdIRw
- rqcndiC0oABBIoojrSDMYxv58Bl7lz2MT6sgtV6GAi7l4BM/mmBO6uBELA105j7hbghnbn
- sXEYfM/N1UdBbVdkUPjUILTjA4BH9wI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-h7EgaVz5MeSsp_sUJYn_6Q-1; Mon,
- 13 Apr 2026 08:13:55 -0400
-X-MC-Unique: h7EgaVz5MeSsp_sUJYn_6Q-1
-X-Mimecast-MFC-AGG-ID: h7EgaVz5MeSsp_sUJYn_6Q_1776082435
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF4F51956095
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 12:13:54 +0000 (UTC)
-Received: from kdutta-thinkpadp1gen7.bengluru.csb (unknown [10.74.64.14])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1AD6C195608E; Mon, 13 Apr 2026 12:13:51 +0000 (UTC)
-From: Koushik Dutta <kdutta@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
-Subject: [PATCH v5] hw/net/virtio-net: add support for notification coalescing
-Date: Mon, 13 Apr 2026 17:43:48 +0530
-Message-ID: <20260413121348.655887-1-kdutta@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kdutta@redhat.com;
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=98IpbZc1i4m/jkYav02DEme4PH34rmZew/TvIsBqAN0=;
+ b=i9I37FxoOeBBtHwqQfzLhSQgFpuAFkG9eLoisO4p/9ILVZA9QDdJcAsU2S8P851+qtXqjB
+ acMXuoRhugpZAMla8q0iF6Cyj8CEqoLTqbqt1UnjySMQKMJsHLqNeazsg8kXN2yfWJkKYS
+ gGUnh4c+l0i778mgmpfYo1+evsqsJuQ=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-164-QanoLqqxMC6IjVtP-YmR5g-1; Mon, 13 Apr 2026 08:15:22 -0400
+X-MC-Unique: QanoLqqxMC6IjVtP-YmR5g-1
+X-Mimecast-MFC-AGG-ID: QanoLqqxMC6IjVtP-YmR5g_1776082522
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2b458add85aso12411555ad.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 05:15:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776082522; x=1776687322; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=98IpbZc1i4m/jkYav02DEme4PH34rmZew/TvIsBqAN0=;
+ b=MVxQV6nPkguTSAAuMtyTNa3ScnB09NTmjr4NnGCt7KsydcOafiz5IMF/AztP2kyMtS
+ OkKG8G4btOSrWntQ60ulM04XOP2ofKPb8gKl7kTG+V4FCsLi4MSCEuf+wWwP/q7Ty0bI
+ pCSYcuuA/b/cFQ+6otrKsanFywBfvtYjTcvBkB8j8hJXTOH3FnqHuJrYkz1proPXYUM3
+ V0ZLdHkiNviBSLtkjGooxpCkBmPkWQcqvg5jZZ8oYPzRp08FDjifVfdrbf5OjesSH8Zj
+ CuQHVeuvxFHFr1kxXCsS//huUByi25zqJ3kXtiNjyFhaF0Ar0U6tsw1AAZfPFQCrDUv2
+ LBCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776082522; x=1776687322;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=98IpbZc1i4m/jkYav02DEme4PH34rmZew/TvIsBqAN0=;
+ b=DECXhYefWNNRslyZV6cDrHNTlvrx0u9GP4Hs6q7JGpFyFA0prgATS6V8PJUD04YXoD
+ BJekhoWJ3uRg7DJvUH2SKBgnvb/vbrFoNowDqYW5xO0Wn4wIHaR4R3l9QAHxseWBlzmt
+ spb0jX9qXbpdTXvL/778LbkYM6IQh751y/3hBu/3+7swC9mZs0rH0fxdjgBMRwErhgoO
+ m+yOgbd30NvKI6l5ApotJNTgb1fAz41Rmfa+7s6xI9VZdHmMwXX4ChYv5xZRG48Feyds
+ T/EBRIIoVFc+LfjqNhFSt+F8wOrR0DwrRK8+cox39+f7jvDAq0Iy76c99DU3mJUCJp1E
+ GIeg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+CAvUkTADuFfnI7WQMtIYfTiI9bovIBSPscss3x+MlG/T3gXg9AXBd39aG7Leo8vhchJauX7C0dmrL@nongnu.org
+X-Gm-Message-State: AOJu0Yz+1YgQ7qnDZvtFMz9qOMJ75yk4PDYSuUaWc2dUmt+IdgQdeQtO
+ 6wSziWCzuAUAikyndMtEa6TEprv7iHxq+SyCWMqQ8tT/ArAst0BGdC8U6aBNB6gQyUiFy0WGjPX
+ m8qn/fU5gvnJI7bYGQjQS+cshpw0CpSANkZeHlD3w524bga+d4TGPFamG
+X-Gm-Gg: AeBDiesf7jWNAVCdY9LNty0T6bYWZNx43gKip4Qb55Iquy5lBqo/uKEku1MQ+UZ7P53
+ YU58DrNothgle80+oH3BweT3YRCHdXla1IGh3z5+78M4QiHX07jwPYBD/M+4LsMSP33/0lah1RF
+ Xihf5ffPONp8IjGDPfigSFndLPKlOzmbZOe9wj7X09pH8EL0tDwW6Z40SFx/3fobvDv10gbxW+U
+ lln98naqNqS61azLnuZ+qJZY6deJis7uj/KE5DjDjUxEM53zy0GU88a5wypvDRLscUVkSO3XGYX
+ 1qolSs0Q0fO0nR8rMIhXTNOh1YNl0fYN1JxtHagmz9weAwF/uK/8xx1KNbv4vt/KwV+ppz/LAac
+ uORFZR98Tmu6SY8Dlda2BB59ArGOjIoe/Y+aJHLhjCguR2RLQj6lVkDa+HZU5SSfNqBLrG3iROl
+ 0=
+X-Received: by 2002:a17:903:37c6:b0:2b2:49a7:a5bc with SMTP id
+ d9443c01a7336-2b2d5a60603mr132540235ad.39.1776082521415; 
+ Mon, 13 Apr 2026 05:15:21 -0700 (PDT)
+X-Received: by 2002:a17:903:37c6:b0:2b2:49a7:a5bc with SMTP id
+ d9443c01a7336-2b2d5a60603mr132539505ad.39.1776082520751; 
+ Mon, 13 Apr 2026 05:15:20 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b2d4db198asm115235855ad.3.2026.04.13.05.15.17
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 13 Apr 2026 05:15:20 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH V2 for-11.0] accel/kvm: return early from
+ kvm_irqchip_create if kvm does not support irqchip
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <0954ef7e-b04e-4542-89fb-796acc452068@linux.ibm.com>
+Date: Mon, 13 Apr 2026 17:45:05 +0530
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ kvm@vger.kernel.org, qemu-devel <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <980AC83F-DD93-4924-8935-11CBFD624ACE@redhat.com>
+References: <20260413112151.61261-1-anisinha@redhat.com>
+ <0954ef7e-b04e-4542-89fb-796acc452068@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,399 +130,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement VirtIO Network Notification Coalescing (Bit 53).
-This allows the guest to manage interrupt frequency using ethtool
--C for both RX and TX paths.
 
-- Added VIRTIO_NET_F_NOTF_COAL to host features.
-- Implemented VIRTIO_NET_CTRL_NOTF_COAL class handling in
-  virtio_net_handle_ctrl_iov.
-- Added logic to store and apply rx/tx usecs and max_packets.
-- Added packet counters and threshold logic for both RX and TX data paths.
-- Dynamic Dispatcher: Implemented a dispatcher mechanism that
-  dynamically switches/activates the notification callback logic
-  only after the guest enables TX coalescing via ethtool.
-- After VM LM coalescing parameters persist in the destination VM.
 
-This reduces interrupt overhead by batching notifications based on
-either a packet count or a time-based threshold.
+> On 13 Apr 2026, at 5:06=E2=80=AFPM, Harsh Prateek Bora =
+<harshpb@linux.ibm.com> wrote:
+>=20
+>=20
+>=20
+> On 13/04/26 4:51 pm, Ani Sinha wrote:
+>> During refactoring of kvm_irqchip_create(), the refactored code was =
+returning
+>> early from do_kvm_irqchip_create() function if the required =
+capabilities were
+>> not present in KVM. This was not translating to an early return from
+>> kvm_irqchip_create() as was the case before refactoring. This is =
+because,
+>> do_kvm_irqchip_create() did not have a means to notify the caller of =
+the lack
+>> of kvm capabilities. Fix this by making do_notify_irqchip_create() =
+return
+>> EOPNOTSUPP error when required capabilities are absent and then the =
+caller
+>> can check the return code and return early.
+>> Converted some calls to exit() to assertion checks in order to make =
+it cleaner.
+>> Fixes: 98884e0cc1 ("accel/kvm: add changes required to support KVM VM =
+file descriptor change")
+>> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+>> Reported-by: Gautam Menghani <gautam@linux.ibm.com>
+>> Suggested-by: Fabiano Rosas <farosas@suse.de>
+>> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>> ---
+>>  accel/kvm/kvm-all.c | 29 ++++++++++++++++-------------
+>>  1 file changed, 16 insertions(+), 13 deletions(-)
+>> changelog:
+>> v2: converted some exit() calls to assertions.
+>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>> index 774499d34f..c78bf6a56f 100644
+>> --- a/accel/kvm/kvm-all.c
+>> +++ b/accel/kvm/kvm-all.c
+>> @@ -2575,7 +2575,7 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, =
+qemu_irq irq, int gsi)
+>>      g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
+>>  }
+>>  -static void do_kvm_irqchip_create(KVMState *s)
+>> +static int do_kvm_irqchip_create(KVMState *s)
+>>  {
+>>      int ret;
+>>      if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
+>> @@ -2587,36 +2587,38 @@ static void do_kvm_irqchip_create(KVMState =
+*s)
+>>              exit(1);
+>>          }
+>>      } else {
+>> -        return;
+>> +        /*
+>> +         * neither KVM_CAP_IRQCHIP nor KVM_CAP_S390_IRQCHIP =
+capabilities are
+>> +         * present. Bail.
+>> +         */
+>> +        return -EOPNOTSUPP;
+>>      }
+>>  -    if (kvm_check_extension(s, KVM_CAP_IRQFD) <=3D 0) {
+>> -        fprintf(stderr, "kvm: irqfd not implemented\n");
+>> -        exit(1);
+>> -    }
+>> +    assert(kvm_check_extension(s, KVM_CAP_IRQFD));
+>=20
+> again changing behaviour ?
+> previously it was doing exit(1) on returning non-zero.
 
-Signed-off-by: Koushik Dutta <kdutta@redhat.com>
----
- hw/net/virtio-net.c            | 180 ++++++++++++++++++++++++++++++---
- include/hw/virtio/virtio-net.h |   9 ++
- net/passt.c                    |   1 +
- net/tap.c                      |   1 +
- net/vhost-user.c               |   1 +
- net/vhost-vdpa.c               |   2 +
- 6 files changed, 178 insertions(+), 16 deletions(-)
+Non-zero is the success case. It was doing exit() for returning <=3D0  =
+case
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2a5d642a64..a15e9d17bd 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -157,6 +157,16 @@ static void flush_or_purge_queued_packets(NetClientState *nc)
-  * - we could suppress RX interrupt if we were so inclined.
-  */
- 
-+static void virtio_net_rx_notify(void *opaque)
-+{
-+    VirtIONetQueue *q = opaque;
-+    VirtIONet *n = q->n;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+
-+    n->rx_pkt_cnt = 0;
-+    virtio_notify(vdev, q->rx_vq);
-+}
-+
- static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
- {
-     VirtIONet *n = VIRTIO_NET(vdev);
-@@ -1080,6 +1090,53 @@ static int virtio_net_handle_offloads(VirtIONet *n, uint8_t cmd,
-     }
- }
- 
-+static void virtio_net_tx_timer(void *opaque);
-+
-+static int virtio_net_handle_coal(VirtIONet *n, uint8_t cmd,
-+                                  struct iovec *iov, unsigned int iov_cnt)
-+{
-+    struct virtio_net_ctrl_coal coal;
-+    VirtIONetQueue *q;
-+    size_t s;
-+    int i;
-+
-+    s = iov_to_buf(iov, iov_cnt, 0, &coal, sizeof(coal));
-+    if (s != sizeof(coal)) {
-+        return VIRTIO_NET_ERR;
-+    }
-+
-+    if (cmd == VIRTIO_NET_CTRL_NOTF_COAL_RX_SET) {
-+        n->rx_coal_usecs = le32_to_cpu(coal.max_usecs);
-+        n->rx_coal_packets = le32_to_cpu(coal.max_packets);
-+        if (n->rx_coal_usecs > 0) {
-+            for (i = 0; i < n->max_queue_pairs; i++) {
-+                q = &n->vqs[i];
-+                if (!q->rx_timer) {
-+                    q->rx_timer = timer_new_us(QEMU_CLOCK_VIRTUAL,
-+                                               virtio_net_rx_notify,
-+                                               q);
-+                }
-+            }
-+        }
-+    } else if (cmd == VIRTIO_NET_CTRL_NOTF_COAL_TX_SET) {
-+        n->tx_coal_usecs = le32_to_cpu(coal.max_usecs);
-+        n->tx_coal_packets = le32_to_cpu(coal.max_packets);
-+        n->tx_timeout = n->tx_coal_usecs * 1000;
-+        if (n->tx_coal_usecs > 0) {
-+            for (i = 0; i < n->max_queue_pairs; i++) {
-+                q = &n->vqs[i];
-+                if (!q->tx_timer && n->tx_coal_usecs > 0) {
-+                    q->tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                               virtio_net_tx_timer,
-+                                               q);
-+                }
-+            }
-+        }
-+    }
-+
-+    return VIRTIO_NET_OK;
-+}
-+
- static int virtio_net_handle_mac(VirtIONet *n, uint8_t cmd,
-                                  struct iovec *iov, unsigned int iov_cnt)
- {
-@@ -1581,6 +1638,8 @@ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-         status = virtio_net_handle_mq(n, ctrl.cmd, iov, out_num);
-     } else if (ctrl.class == VIRTIO_NET_CTRL_GUEST_OFFLOADS) {
-         status = virtio_net_handle_offloads(n, ctrl.cmd, iov, out_num);
-+    } else if (ctrl.class == VIRTIO_NET_CTRL_NOTF_COAL) {
-+        status = virtio_net_handle_coal(n, ctrl.cmd, iov, out_num);
-     }
- 
-     s = iov_from_buf(in_sg, in_num, 0, &status, sizeof(status));
-@@ -2040,7 +2099,22 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-     }
- 
-     virtqueue_flush(q->rx_vq, i);
--    virtio_notify(vdev, q->rx_vq);
-+
-+    /* rx coalescing */
-+    n->rx_pkt_cnt += i;
-+    if (n->rx_coal_usecs == 0 || n->rx_pkt_cnt >= n->rx_coal_packets) {
-+        if (q->rx_timer) {
-+            timer_del(q->rx_timer);
-+        }
-+        virtio_net_rx_notify(q);
-+    } else {
-+        if (q->rx_timer) {
-+            if (!timer_pending(q->rx_timer)) {
-+                timer_mod(q->rx_timer,
-+                          qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + n->rx_coal_usecs);
-+            }
-+        }
-+    }
- 
-     return size;
- 
-@@ -2817,7 +2891,6 @@ detach:
-     return -EINVAL;
- }
- 
--static void virtio_net_tx_timer(void *opaque);
- 
- static void virtio_net_handle_tx_timer(VirtIODevice *vdev, VirtQueue *vq)
- {
-@@ -2899,6 +2972,12 @@ static void virtio_net_tx_timer(void *opaque)
-     if (ret == -EBUSY || ret == -EINVAL) {
-         return;
-     }
-+    if (n->tx_pkt_cnt < ret) {
-+        n->tx_pkt_cnt = 0;
-+    } else {
-+        n->tx_pkt_cnt -= ret;
-+    }
-+
-     /*
-      * If we flush a full burst of packets, assume there are
-      * more coming and immediately rearm
-@@ -2918,6 +2997,7 @@ static void virtio_net_tx_timer(void *opaque)
-     ret = virtio_net_flush_tx(q);
-     if (ret > 0) {
-         virtio_queue_set_notification(q->tx_vq, 0);
-+        n->tx_pkt_cnt -= ret;
-         q->tx_waiting = 1;
-         timer_mod(q->tx_timer,
-                   qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
-@@ -2973,6 +3053,32 @@ static void virtio_net_tx_bh(void *opaque)
-     }
- }
- 
-+static void virtio_net_handle_tx_dispatch(VirtIODevice *vdev, VirtQueue *vq)
-+{
-+    VirtIONet *n = VIRTIO_NET(vdev);
-+    VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
-+    bool use_timer = n->tx_timer_activate || n->tx_coal_usecs > 0 ||
-+                     n->tx_coal_packets > 0;
-+    bool pkt_limit = (n->tx_coal_packets > 0);
-+
-+    if (use_timer) {
-+        n->tx_pkt_cnt++;
-+        if (!pkt_limit || n->tx_pkt_cnt < n->tx_coal_packets) {
-+            if (q->tx_timer) {
-+                virtio_net_handle_tx_timer(vdev, vq);
-+                return;
-+            }
-+        }
-+        n->tx_pkt_cnt = 0;
-+        if (q->tx_timer) {
-+            timer_del(q->tx_timer);
-+        }
-+        virtio_net_handle_tx_bh(vdev, vq);
-+    } else {
-+        virtio_net_handle_tx_bh(vdev, vq);
-+    }
-+}
-+
- static void virtio_net_add_queue(VirtIONet *n, int index)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-@@ -2980,20 +3086,15 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
-     n->vqs[index].rx_vq = virtio_add_queue(vdev, n->net_conf.rx_queue_size,
-                                            virtio_net_handle_rx);
- 
--    if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
--        n->vqs[index].tx_vq =
--            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
--                             virtio_net_handle_tx_timer);
--        n->vqs[index].tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                              virtio_net_tx_timer,
--                                              &n->vqs[index]);
--    } else {
--        n->vqs[index].tx_vq =
--            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
--                             virtio_net_handle_tx_bh);
--        n->vqs[index].tx_bh = qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
--                                                  &DEVICE(vdev)->mem_reentrancy_guard);
--    }
-+    n->vqs[index].tx_vq =
-+        virtio_add_queue(vdev,
-+                         n->net_conf.tx_queue_size,
-+                         virtio_net_handle_tx_dispatch);
-+
-+    n->vqs[index].tx_bh =
-+        qemu_bh_new_guarded(virtio_net_tx_bh,
-+                            &n->vqs[index],
-+                            &DEVICE(vdev)->mem_reentrancy_guard);
- 
-     n->vqs[index].tx_waiting = 0;
-     n->vqs[index].n = n;
-@@ -3242,6 +3343,36 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-     }
- 
-     virtio_net_commit_rss_config(n);
-+    if (n->tx_coal_usecs > 0 || n->rx_coal_usecs > 0) {
-+        n->tx_timeout = n->tx_coal_usecs * 1000;
-+
-+        for (i = 0; i < n->max_queue_pairs; i++) {
-+            VirtIONetQueue *q = &n->vqs[i];
-+            if (!q->rx_timer && n->rx_coal_usecs > 0) {
-+                q->rx_timer = timer_new_us(QEMU_CLOCK_VIRTUAL,
-+                                           virtio_net_rx_notify,
-+                                           q);
-+            }
-+
-+            if (!q->tx_timer && n->tx_coal_usecs > 0) {
-+                q->tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                           virtio_net_tx_timer,
-+                                           q);
-+            }
-+
-+            if (n->tx_coal_usecs > 0 && q->tx_timer) {
-+                n->tx_pkt_cnt = 0;
-+                timer_mod(q->tx_timer,
-+                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
-+            }
-+
-+            if (n->rx_coal_usecs > 0 && q->rx_timer) {
-+                timer_mod(q->rx_timer,
-+                          qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + n->rx_coal_usecs);
-+            }
-+        }
-+    }
-+
-     return 0;
- }
- 
-@@ -3617,6 +3748,10 @@ static const VMStateDescription vmstate_virtio_net_device = {
-                          vmstate_virtio_net_tx_waiting),
-         VMSTATE_UINT64_TEST(curr_guest_offloads, VirtIONet,
-                             has_ctrl_guest_offloads),
-+        VMSTATE_UINT32(rx_coal_usecs, VirtIONet),
-+        VMSTATE_UINT32(tx_coal_usecs, VirtIONet),
-+        VMSTATE_UINT32(rx_coal_packets, VirtIONet),
-+        VMSTATE_UINT32(tx_coal_packets, VirtIONet),
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription * const []) {
-@@ -3970,6 +4105,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         error_printf("Defaulting to \"bh\"");
-     }
- 
-+    if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer")) {
-+        n->tx_timer_activate = true;
-+    }
-+
-     n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
-                                     n->net_conf.tx_queue_size);
- 
-@@ -4046,6 +4185,13 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-             n->rss_data.specified_hash_types.on_bits |
-             n->rss_data.specified_hash_types.auto_bits;
-     }
-+    n->rx_pkt_cnt = 0;
-+    n->tx_pkt_cnt = 0;
-+    n->rx_coal_usecs = 0;
-+    n->tx_coal_usecs = 0;
-+    n->rx_coal_packets = 0;
-+    n->tx_coal_packets = 0;
-+    n->rx_index_timer = NULL;
- }
- 
- static void virtio_net_device_unrealize(DeviceState *dev)
-@@ -4258,6 +4404,8 @@ static const Property virtio_net_properties[] = {
-                       VIRTIO_NET_F_GUEST_USO6, true),
-     DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
-                       VIRTIO_NET_F_HOST_USO, true),
-+    DEFINE_PROP_BIT64("vq_notf_coal", VirtIONet, host_features,
-+                      VIRTIO_NET_F_NOTF_COAL, true),
-     DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv4", VirtIONet,
-                                   rss_data.specified_hash_types,
-                                   VIRTIO_NET_HASH_REPORT_IPv4 - 1,
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 371e376428..d88f8aef87 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -158,6 +158,7 @@ typedef struct VirtioNetRssData {
- typedef struct VirtIONetQueue {
-     VirtQueue *rx_vq;
-     VirtQueue *tx_vq;
-+    QEMUTimer *rx_timer;
-     QEMUTimer *tx_timer;
-     QEMUBH *tx_bh;
-     uint32_t tx_waiting;
-@@ -230,6 +231,14 @@ struct VirtIONet {
-     struct EBPFRSSContext ebpf_rss;
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-+    QEMUTimer *rx_index_timer;
-+    uint32_t rx_coal_usecs;
-+    uint32_t rx_coal_packets;
-+    uint32_t rx_pkt_cnt;
-+    uint32_t tx_coal_usecs;
-+    uint32_t tx_coal_packets;
-+    uint32_t tx_pkt_cnt;
-+    bool tx_timer_activate;
- };
- 
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-diff --git a/net/passt.c b/net/passt.c
-index 4ff94ee509..0b0d9e222a 100644
---- a/net/passt.c
-+++ b/net/passt.c
-@@ -52,6 +52,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_NET_F_GUEST_USO4,
-     VIRTIO_NET_F_GUEST_USO6,
-     VIRTIO_NET_F_HOST_USO,
-+    VIRTIO_NET_F_NOTF_COAL,
- 
-     /* This bit implies RARP isn't sent by QEMU out of band */
-     VIRTIO_NET_F_GUEST_ANNOUNCE,
-diff --git a/net/tap.c b/net/tap.c
-index 8d7ab6ba6f..ea5987a3dc 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -62,6 +62,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_NOTIFICATION_DATA,
-     VIRTIO_NET_F_RSC_EXT,
-     VIRTIO_NET_F_HASH_REPORT,
-+    VIRTIO_NET_F_NOTF_COAL,
-     VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
-     VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
-     VHOST_INVALID_FEATURE_BIT
-diff --git a/net/vhost-user.c b/net/vhost-user.c
-index a4bb49bbcf..f0b3752d7c 100644
---- a/net/vhost-user.c
-+++ b/net/vhost-user.c
-@@ -54,6 +54,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_NET_F_GUEST_USO4,
-     VIRTIO_NET_F_GUEST_USO6,
-     VIRTIO_NET_F_HOST_USO,
-+    VIRTIO_NET_F_NOTF_COAL,
- 
-     /* This bit implies RARP isn't sent by QEMU out of band */
-     VIRTIO_NET_F_GUEST_ANNOUNCE,
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 3df6091274..a20db78b81 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -70,6 +70,7 @@ static const int vdpa_feature_bits[] = {
-     VIRTIO_NET_F_CTRL_RX,
-     VIRTIO_NET_F_CTRL_RX_EXTRA,
-     VIRTIO_NET_F_CTRL_VLAN,
-+    VIRTIO_NET_F_NOTF_COAL,
-     VIRTIO_NET_F_CTRL_VQ,
-     VIRTIO_NET_F_GSO,
-     VIRTIO_NET_F_GUEST_CSUM,
-@@ -115,6 +116,7 @@ static const uint64_t vdpa_svq_device_features =
-     BIT_ULL(VIRTIO_NET_F_HOST_UFO) |
-     BIT_ULL(VIRTIO_NET_F_MRG_RXBUF) |
-     BIT_ULL(VIRTIO_NET_F_STATUS) |
-+    BIT_ULL(VIRTIO_NET_F_NOTF_COAL) |
-     BIT_ULL(VIRTIO_NET_F_CTRL_VQ) |
-     BIT_ULL(VIRTIO_NET_F_GSO) |
-     BIT_ULL(VIRTIO_NET_F_CTRL_RX) |
--- 
-2.53.0
+> if (kvm_check_extension(s, KVM_CAP_IRQFD) <=3D 0)
+
+
+> Now, it will assert on returning zero ?
+> May be split the patch to keep the exit -> assert changes separate ?
+>=20
+>>        /* First probe and see if there's a arch-specific hook to =
+create the
+>>       * in-kernel irqchip for us */
+>>      ret =3D kvm_arch_irqchip_create(s);
+>>      if (ret =3D=3D 0) {
+>> -        if (s->kernel_irqchip_split =3D=3D ON_OFF_AUTO_ON) {
+>> -            error_report("Split IRQ chip mode not supported.");
+>> -            exit(1);
+>> -        } else {
+>> -            ret =3D kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
+>> -        }
+>> +        /* assert that split IRQ chip mode is supported. */
+>> +        assert(s->kernel_irqchip_split !=3D ON_OFF_AUTO_ON);
+>> +        ret =3D kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
+>>      }
+>>      if (ret < 0) {
+>>          fprintf(stderr, "Create kernel irqchip failed: %s\n", =
+strerror(-ret));
+>>          exit(1);
+>>      }
+>> +
+>> +    return 0;
+>>  }
+>>    static void kvm_irqchip_create(KVMState *s)
+>>  {
+>>      assert(s->kernel_irqchip_split !=3D ON_OFF_AUTO_AUTO);
+>>  -    do_kvm_irqchip_create(s);
+>> +    if (do_kvm_irqchip_create(s) < 0) {
+>> +        return;
+>> +    }
+>>      kvm_kernel_irqchip =3D true;
+>>      /* If we have an in-kernel IRQ chip then we must have =
+asynchronous
+>>       * interrupt delivery (though the reverse is not necessarily =
+true)
+>> @@ -2835,6 +2837,7 @@ static int kvm_reset_vmfd(MachineState *ms)
+>>      }
+>>        if (s->kernel_irqchip_allowed) {
+>> +        /* ignore return from this function */
+>>          do_kvm_irqchip_create(s);
+>>      }
+>> =20
+>=20
 
 
