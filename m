@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA9CEBFD30
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC936EBFD2D
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 09:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCE3c-00033O-Ti; Mon, 13 Apr 2026 05:58:17 -0400
+	id 1wCE3Y-00032m-UF; Mon, 13 Apr 2026 05:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wCE3T-00032R-Pp
+ id 1wCE3T-00032S-Pg
  for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:58:08 -0400
-Received: from mail-southcentralusazon11013016.outbound.protection.outlook.com
- ([40.93.196.16] helo=SA9PR02CU001.outbound.protection.outlook.com)
+Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wCE3S-0002ut-Dc
+ id 1wCE3R-0002uT-0n
  for qemu-devel@nongnu.org; Mon, 13 Apr 2026 05:58:07 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PpiE2pKa/VKqGwzD/SrheuO7HGNV86qBFCxkjiO+7FJmaVygD5awl/BKvYRKg81pXjTmD0Q2JUiXdWtUQiD2SvBt1ZVPxjSVGbDe3nT1e4J0C4yAQf6iI/mW1fpRwfhxiFVUZgChOZDSGLeXrFiJe7mwPs1XevQZAI/HV8kU6rAC14omCwFKfXWYNbuw2A7tkq3SUC+Nov+xxqKd7ANACTwqnAQ5eMDjArRg7p3ZjKdH8Rx1s4up/cmMCDx9QppSAv6cjZaxv9IknDqRyLxSh4J43s1TWdTjOB8M43MCSAYMlTNKgSBIW4tj4qtAkJrCrzYe6ReoPLqClgKWBVzpDw==
+ b=anVJlQ4S4YrhdrvBgkrVW9Cl4udGSTePddxnj1X0yXSlN4biz2+/5Nytm8GHRbpmKkjaVIqED6W7BatPfK6wyo6Ivb/OCsY/I3YAnQEIL+X8BauOrIpPRusbuTvqWsadcUHS5aD39H2ETGx4s1Yb2gI4F7cyLM//Ca+SgLnH8uSdbHG1LEhPFiQA5PUgItdyfE7CAviuwq+s08NaV1xRpmDpjXmkIrWOCOO6T9apEpwWVb4dxsrhUqUhEJziOxEsp5rQpNBmGeLbg/31Z3Njf/wgjZd4glZaDuyFqPu9MJpSclmwummMXXghMPCx1SV7hAtpqhPr45oiYrhmz4ECvg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=chJhiUdAn1gfqdYPHJcavYcd3xdJDzeu2JdHAFUPtSE=;
- b=E08PBAGblOaXzsuOxNoetRBOeX2m1fm0NUBWW+CjT8+rC5a9YOxOUATc6SiBuSSU0OsAepbnCeJNl52uru/IdIxjMkfKfihjMLe+tcItxWajIO6uHXf57vQpYuFmV871mqxtHmTAXwJiPd458bwHKubJHm2TTDDQEU1uqjz3Ej6RweX3DLXn93kzLjw5G0v/5/LGmWV/GeL63aRvIEuTu/3RBc9mKpAGsBK5PVfY4l117Bgo+Yv/I3ev56C3Dh4kIDAAx+ralJORLJQzJ/2m4f+Q1N7fXM7rwRsyBR77MrKfmYd1vayOnqXuI+55d+0HeZgNV9EgLxMSDsuH+7J4Dg==
+ bh=NLXfQnO1TOsGxruuvPmc5b1Mm6MDkR5XLaNsyYLzNOM=;
+ b=NhJGIewCcEl5Qu+IUthoWqnzd2HPi9vENd0XnGyu6onpCmwPhjQEAa1tWxiQpQ5xTUQCp0gmS1izctBVOUfkcO/3zSUksP5EoOQjAtEcIhqmoCfNJ+NhOmYY9es48djNB8YiGi94s+tazVZgTXcsiimx2UXtMODijGMoRLE3gEXQc6klWBz5ILOwAQVtphanpNBaLO+bHQOIlFy3NhU6QDoIDZuqUyp3gQNDh28J2n6Lewl04pGBTGv2FJxwRsCNSfRhw6ED3Og+m85+5AgceYGlWEgXAWiC3T+qv+LTj1WgnZ0+nmpZXUSz5KEn6ElVqLxF1kF8jGYuvUMyJLUDKQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=chJhiUdAn1gfqdYPHJcavYcd3xdJDzeu2JdHAFUPtSE=;
- b=OuCdv9af5KwF+C0W941J3DIyp9nYsddBIymkXMYdWPtxHpxHUq8DBNZvcpQMWg+luimjqqdv49jHMd+6DVhnmTOB7uc/8z/YS8OHtNaO/n+/iOxEGj7GGriq88HTpob91DtxgTXmARyFOsz7LMaOY2kajxc1kd1q3DegMRhO90JCVWU8Uk/gueQYo7TIedPC9FAgX67dJFNW3MlB4IO46M52nwkdHAvc/iZwirmnXIrr/gconaN6CUoIO1N6Udja6sT8Laa/7ah/52OUdqL+CUvwN1ZPVtYf2yqin6pdgSVCFk57Zf3KgAMAfYSNgyn41IZ12j1bwCZQCi4PGo0MMQ==
+ bh=NLXfQnO1TOsGxruuvPmc5b1Mm6MDkR5XLaNsyYLzNOM=;
+ b=C0PUkdYKKv2Jk25oTTM4+1fyCS64LO7xS9rJD7bhfM8BuzIk846/+4/YUQcihaaVbkm0tLQqrsB4zRa8r6Pu3UCBFkVrtHy/6acSxb4tLVN362AW5IMXJ0Aonlp6XQfOjp2LjoadXedXpBVxSIy2Os+9wyI92IDoRAAUfmWFfl1SdBrrHWhAMFyRLWlQ3SJwp1+iiTztu/qS4g2jtC51I/v0UPI3wU3adnjB5W8ZkcHuh3Q7YW8wE2lM7JNB+MCgzcyHbm/uv8AcCTuEDn7XC5CJEyi3raFkexQ8mPi5Npf/gw4RQEQvTXOwAa8AW+2FSBus+VpzQ/TD/xgEoI2mNg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
  by SA1PR12MB5670.namprd12.prod.outlook.com (2603:10b6:806:239::9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.20; Mon, 13 Apr
- 2026 09:53:00 +0000
+ 2026 09:57:24 +0000
 Received: from BL1PR12MB5063.namprd12.prod.outlook.com
  ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
  ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.20.9818.014; Mon, 13 Apr 2026
- 09:52:57 +0000
-Message-ID: <a6c3aaf4-bbd4-4cb7-888c-ac498b032b87@nvidia.com>
-Date: Mon, 13 Apr 2026 12:52:52 +0300
+ 09:57:24 +0000
+Message-ID: <3d818473-3c5b-42fc-9cdc-e074394e0103@nvidia.com>
+Date: Mon, 13 Apr 2026 12:57:17 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/14] vfio/migration: Cache stop size in VFIOMigration
+Subject: Re: [PATCH 04/14] migration/treewide: Merge
+ @state_pending_{exact|estimate} APIs
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -58,91 +59,99 @@ Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  Prasad Pandit <ppandit@redhat.com>, Kirti Wankhede <kwankhede@nvidia.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
+ Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>
 References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-4-peterx@redhat.com>
+ <20260408165559.157108-5-peterx@redhat.com>
 Content-Language: en-US
 From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <20260408165559.157108-4-peterx@redhat.com>
+In-Reply-To: <20260408165559.157108-5-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TL2P290CA0021.ISRP290.PROD.OUTLOOK.COM
- (2603:1096:950:3::15) To BL1PR12MB5063.namprd12.prod.outlook.com
+X-ClientProxiedBy: TL2P290CA0028.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:3::10) To BL1PR12MB5063.namprd12.prod.outlook.com
  (2603:10b6:208:31a::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|SA1PR12MB5670:EE_
-X-MS-Office365-Filtering-Correlation-Id: de68f0a0-6676-4d5d-1cea-08de994270c9
+X-MS-Office365-Filtering-Correlation-Id: 8ab2e247-0766-4d2b-287e-08de99430fad
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|7416014|1800799024|366016|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: jV0FL8N663c6YnSv2QdObGtF0qp2/aDyv5Hi9guQ57LWcsUmzfODeC/u1Xz8zqpX1nOJ8MH2Uq7E9tZlUTXoPxp8xrFCZnxa04qbF1jX3c6/3RJpTJFWXvGTFihF9KmqP0/yOxN+JfUKAXLW9hqei6l8ohVgjYlvy9Qum3sNZeyD4C4eNMNkO8Jy4d1UCeWzM1lRU9gsbPTnYKYJ+dQTZQ1FkCQPlhSJVNEp53mvv12x+37lyJhN2ZzbE+0VXTf93yL16NdW64qxOgrExDT+xvSJG0hMPpBweoNtSQS876vAhZokcNqoiRLhS8KTLsTdq6WhRQqY2UGmPazwVhphrc4nYgtSEwXTNKi0JpIlpyFE/AdjnT3jAw9fxaUTsqHzuTN3cKOgGooRbePUUwHGw0ytt6THjVgkK+UIrdY+bRippl3oQl/VToB6FRxfJyDGnKuxkuPk2eIq4LmpdYmk4Ga6jKDEKA6zJ9mnzuE+ooWr2iRwmCaQ2tXbsQu1xQ2s1mucge+QR/bfTXgllm7BOqnTMBMeUYgKzEBJskDvNRE58LyPUFsgiEbww5ljhhNKpG1la/sifor2y7rIjnxkazUf7T/uOuZBLUR0rDryOtvID5uOM9rhb+kq64ydvumBa92YE2GeqdF/WAU6erdE+8ud9AeaL0bqCssGK9t7XhjTIXq8aZu5hzVGAjW+4+UAy3HXBQI+kNmm3FOwlIEzZisqV79rorakXeCXf746ZSA=
+X-Microsoft-Antispam-Message-Info: iekLOHZvLYmP2nrSyOUkD79FDP5GXE1cYOmNxjAlvbYHWS7mOziIfEg1BNF4lBQieYKpcMjfphUVJSORalxRbmoP/pZ0ps3eihoWl18VxubgwW0CI6NE/3DbV3U94n0EF9PSCgVOlqXmoBc0TnX1uNpztE75Y+wYsFzC468Bf6G/PAXkXDig4xKLtxxklL0z0VrcnvVMVhmXJtDXe38qe8p+Y7B0UEkrHlHXJWw2oaFcVVA9JLG7pvgzT8FQrxwr7uewbbdAKyo0/kfx13N/l+rSBDL2JScC8xo25eUravChNlu8T5dG7ZN0+/39D5PWTeTSc3+u1pPK7UBizuvL9i2ji4MExztTr7dZ43QbOHTePK00WGDDtOozEfrmBAkapNnuf/RttyLAdkZ1GpJb43w7KChHQncQYOxv8vV1c9JpsLQUXRu1kLlHAw1XHdNg2Vud/rBA/hBGTmhaZBSVDaI4yDr1uOU0cJZi+4F0a35gjp+fdUCw1uYmiVnsnbDTiE1NEUoax3wvGQl/5Gbg7DxuOdheTnDUnkD+w3u+gYN5B8NLP2mdkVSgDeWjDNRxx7Q2wpl0KfTT3SQ3vAmt31HMAFPJETF7lwcJ7fU7whmAou9O3U94n6l61Hf1n6Icvl46+uVfa3tMzpfdkFSVerzjr0c/s0jJy/MDr1pikCy4VeukJZtb+oRR9K/cLVdwexGzEBHYJRLecZ3tBnPqmcYZIq2mju6xweTdF6OX4Ek=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(7416014)(1800799024)(366016)(56012099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SVd4Smh6ZHo4S1pJZWJvU3dNTDFMZWM5TTQzeWVOd3krSlA5QVBzbGM0dnNS?=
- =?utf-8?B?TkdReTA3SVBsejMwbWczNTVvMXRKL0dCUzNjZDl1Q3BPcXlBNVloeks1Y2NF?=
- =?utf-8?B?Mkg1bWpyYTVPb0JpaUYyVCtpYk5XL0NoZFE2QnEyWTJ2bldTQ2YwTFlyZnJI?=
- =?utf-8?B?ZG9pOThIRkFSZmh0dUprOElDVE1pR1ZnZVcwSGx5d3NZUzZxNkx6YU1hQTQz?=
- =?utf-8?B?QXd2SHZYYnVXMzNKeXVZbkNCZnMyRVhSZnQzYUpVU0RsODVJZWFpVjkzZ1Zi?=
- =?utf-8?B?dy9jVkhwK2hFMzRCbjlJdmt1cTYyeGszWmU2cUNqQzF1TDF1Uk4zZjVLY2lP?=
- =?utf-8?B?WlBaeHhuSndzbm12TVdPY3d0KzhLOGV6Z05keXg3ay9mYmNQc1ZaeldxVUZN?=
- =?utf-8?B?NUx3bHVUNWJKRld2TXFuOE5LWU1YSmJSYU80RkkvWDhDN2prQkhUMFlmcmNs?=
- =?utf-8?B?b1c1MGVPT3FSdTVpeXRzOW1JQXpvcHVJbjhPdldzNk1jWDV6QUFnTU1DYmpw?=
- =?utf-8?B?aVJaVDV3ZXdJcmp3WWxlbWNqNUZTbUV6RmZidkNSUGQwNXZLeCs5aWpvUXVZ?=
- =?utf-8?B?UkVnQXpNV3hXZ08xc0E5Rjl6K3ZieTlCa09NbUVteWN5bTZqSzB1ZUh4eitJ?=
- =?utf-8?B?WHE1bmhsRkhraHRGQy93Mi83SDF1bkRVaVZsSjdRRkNDMnhzNzhZY3Z5Y3pi?=
- =?utf-8?B?aGVtd2NCS21RYlBqMHVFQTRsanF3TlRuYW94TnRUM3FVcUtTYWl6dTd1bWhq?=
- =?utf-8?B?ZDJINW1GN2lYWFA2OWpyK1JORjNyZXp1Vk92cUQ5a0Q2WUdEU1FTcWVDSTZu?=
- =?utf-8?B?WjNibkdVRCtRWkEwR05qdzBKck51Z2h1T1V0WFBCSFZHaytrbjF6MFBZUTY0?=
- =?utf-8?B?ak9ZQWdBZTByVXN6dzlnY1JuODNZNHpwZjEydnlUWVZScGJPd2dUdlphOFZP?=
- =?utf-8?B?NHFveHhYTTgrcTVNTE1NckNEbmxTRU5oL2VYSUVnTUZZMklRMGdSTlBSUVVn?=
- =?utf-8?B?VHBvNnJENkVDdEFSdUx4TGU3bENuOHF1UHY0aG4xZHpZbnZVR0xRNHY0azRH?=
- =?utf-8?B?MWxsUzlZdVE0QWszQS9XZmV4UitXWTlPMnh0bjFXY1hCUmdTRjZhZVovQmY1?=
- =?utf-8?B?bTRRaWlWTWp1dHAxbVhhN28vNUwvY0dVanVOOFU2aWozM2xPNm9oYVRybUt5?=
- =?utf-8?B?T2wvUnNLK3BFSm9EYlI5YlQvMEYyR1AyQXVscytWdHA1QWkrbU9icTNLT0Ey?=
- =?utf-8?B?N2hCWWVUbDczanlaR0hYeVdJcWhKR3pScU8rb2pWRGdaVE95YmJuTlhxK1hR?=
- =?utf-8?B?ZVdyelhaTDhPOThGMmlPWUhHNkphbEkzUHpQbmkzRnFibjNGMytpTVR2eEdn?=
- =?utf-8?B?eVN3MXN0M0FpWVhZaUE4OGhRVVVRMnFNWi8yd3lIbVpuRUkyS3hGUUl0R3dJ?=
- =?utf-8?B?N1EyUmsySUFMTVIrcEdqcTE5c1h0c0tHQ05MSW1ENlpSRXZ0RWFhelR1U3U5?=
- =?utf-8?B?cFdiZk1hbFc2b3VBeERnYlkrY3N0YWJZa215NG04dVl0QzRVaE5kNjQ3dUJa?=
- =?utf-8?B?RXV1K3ZYOW4vbDljazZnRDFpRkNTZkhVeW5seThkMzNwNUxSZVBMM3kralQw?=
- =?utf-8?B?VFdnUnNBYlgzMXlRYmtGeUhNdzc5cVVJbUNHL0x0S0Nma2VxZTJKUncvRzRa?=
- =?utf-8?B?NmJxaWIxNDNweklydGViYjBKN0lEM2FUdEljUWFVK1FIWFlzUld4bVRRN0c3?=
- =?utf-8?B?M0JCazdTcGprTmtZenNlYVgzTEYvYjNTTnRhNkhoYnFNY1Ywa3ROeTNscUsw?=
- =?utf-8?B?ZXptZGtrSUJVOG10eC9KUmI2cURuWTgwOGkzeGRjdHI1ZGxISjRlSDJTNVRI?=
- =?utf-8?B?bGp3OWtnaXNnSmhRKzdEU3kxWkhZUlFCQXF0R1BxeWFKQWtUMGJiOU5HYTl2?=
- =?utf-8?B?VitPMGtLUGxId2ZSbWJzS3JsZmpjV3FmWCs1U29YZkxQWHIrVGI4Y09PcDhZ?=
- =?utf-8?B?Y1lTQXR5VnZsVk11UXk4OWhaSy94Zmw3TGdhNWpWYjl4TzMrMlpiYjcxb0Z2?=
- =?utf-8?B?TUFUbHFuTFRMakZlSjkvaGIyVWFCNW9pc0FPUEZwL0Z2VE9Rd1Fld1JiT0VD?=
- =?utf-8?B?S0lsYitvQVRVMlBpWlQrMThHaFJjSFJuY09IdnNKc1dCdnR5MUM4L1BYTXps?=
- =?utf-8?B?WnRBbC9aRXRvcGxvT0RRcGtWbkZ0dG9mdzYvVTJZQXlPY3NRY0xoQy9tdmV0?=
- =?utf-8?B?RTIvZTBBV2tSMzNFckJzUmlqMWhUeWM4T214Q1RvdE1QWUhaalhXM2paWTBv?=
- =?utf-8?B?b1ZYdGY4aXAwY2Y5RnZpRWQ0YVFQZFUvL3ZjdXNsNHVjZ2RIL0dCdz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Qmh3cGtDWlhxc1pTcXNxWTZzSG5YTzBWYjVPUk80YlJQR3ovOEwyTm9SazdI?=
+ =?utf-8?B?VXh4OU5FMit1RGdyVG5xL0x6QXVvSHIxcXJxbGtEb2J2QmRyaHh6S2MvMm1Y?=
+ =?utf-8?B?c2Q3R2t2TTFlZE5tbDJQcU1uZWF5R3ZueVhhVmJDOTJtc3lyWkFnOFcwbE5i?=
+ =?utf-8?B?TWF4TWVyU3M2WDJSZ0NpUVgzdjNOdWUrejdtNkUwWjVubjlwcysrNjgzT212?=
+ =?utf-8?B?ay9HZ0tlby90cEltSnF0NW01ZGo4dzdwNmQwdW1RYlBGejd1dlVma1p4RTY5?=
+ =?utf-8?B?MTdJalp5azRpTjUyUG5jUzUvQ243VSt0OENqRWgwNnBuaERiRC8waDlMN3FX?=
+ =?utf-8?B?MmdjKzVXVGl6MTBFQzVURUpzbTlCc05pWFpyR0hWUHNQbVlxeEpxZ0cwTmZZ?=
+ =?utf-8?B?NEJaRFRWK0dyVnREYlpYWkJOTzFRSVZ1RUxsNFZscGtndGRpdHlQcXBJc1hX?=
+ =?utf-8?B?czNMRzNjck9lUXFuUmdoRTNkeFZDNVF1YmJmSE1xU0pFRXRpcDIwM0lzVTE3?=
+ =?utf-8?B?R2swelM3SEY4WnlFMmZVSmZjTlplSmlpUUtMNS9iUnhDdG14ZlZQQTRhMVFS?=
+ =?utf-8?B?U1J4QU91KzVkNUVaVzdTeTlKaXh1eHB1ck85ZXZ5MXkrdExMS0s4amZ1WWFm?=
+ =?utf-8?B?SXo1T3Jxa3NEZG9YcU1GUFFPT3QvUXYvR3lZbU1ld01HNkgzTVF0d0pINWda?=
+ =?utf-8?B?WUdzWUxOQVg4bGdIKzN1b0FHazZqWkZoUDhBNUsyVGFHRnFzMml2SWhNNzFT?=
+ =?utf-8?B?aW1yMGpCdDNINjdRTE9sR1JOak9tZVJkVWpZanlXUVBqYlIyMnVyT3gxTzdi?=
+ =?utf-8?B?bFhrejdIZXRNblh3YUFvNjlWOUQ1SmlBWmFCUmQwbGxWNHpJbzZGcDE4clZY?=
+ =?utf-8?B?RkVaRnpBS0I3UEc2K0FRbXpidzhBRmcrcHFLWnVId1hXRkdmZlB0cWkwK3BS?=
+ =?utf-8?B?Z0hjOXJ1ZTZlQUY5UXlHZ0JIcUtqMDJxRDRSV29xME9RN0VwbHcvelZEZThB?=
+ =?utf-8?B?by85MUNVNWhITmRKeDFLc1NDOEZ2b2pnWitwTGIxNlFzcGEyRU0wVDVDazJn?=
+ =?utf-8?B?d0wwblp0Zm9wU1BwVUNYdGxTRzcwQ2xWQk9mODFBVmNhTStDV1Y3SVFWanQ2?=
+ =?utf-8?B?OVE3Y292Uk02d1JTUGhmT0MyWU1tdmF6bWdlTlVTYXVncStuWDNiOUtCVHZM?=
+ =?utf-8?B?aGhqcHVpdmwyQ05iRTZLZnY2SDFZdGxqaWoyTzZzcDhaRmhDOEVmV0pmbDBH?=
+ =?utf-8?B?ejJTVjlpRVdlM3ZkTkNWVkg3Q3lJRU0vWEt5RGdiL2NKZm15dU9ET1hWYUNk?=
+ =?utf-8?B?OURRbm1TS014amx5L2lLTzBUV2txM09kemo2Y3F4cG03YjBrMERURXlYcEN0?=
+ =?utf-8?B?QmxYU2hkb2VzelduMEt4QytmSGxUUDZ6OXNIdkNqNVlZMjcvcWVOSmZhK25V?=
+ =?utf-8?B?ejhsWit1eVZ6Z1pmanAvUzlab0Jqb0N6UDFBcVU1TWY3M29NeHRYamozQ0t2?=
+ =?utf-8?B?cDhWWm8rdDVYaXFHaUxtaFFnTjBVY3JZRTFGUHVvMVZPRk1jcG9Bckl5SDZU?=
+ =?utf-8?B?N0FuQ2Y2bkdGOWRMc2ZXczdDY2h5emh1QlpJeVh2MldlNHFXNWFIM0hoeWdG?=
+ =?utf-8?B?Y0U0L2hTOVRmMzc3VU5YR0RXT28zK2JsMjRFWFp0eEJKMndSRjB4NzlBaHBu?=
+ =?utf-8?B?MktpSllEc2lkR2tlbDRXNUwvTy9ORXp2S3M5cEl5b291bkJqUnpoL3FwTUhR?=
+ =?utf-8?B?VWd3aVdLQmlsemxaMFZhcEV2eEVSWmlYS3NZMnJ5emJMQWtjcmhUZVROeC95?=
+ =?utf-8?B?Tm9oZGtjK2g0LzdDT0wxQW5vVXlBWU5Zd0Rva0h3SHh5N0ZBR2huSnBKcWZX?=
+ =?utf-8?B?L3NBdUQzSXYrNk14OENVQUtmS2dTb2kwaDE1RUJ5LzRNUWNNYTI2VjB3ajIw?=
+ =?utf-8?B?cktzOEw5K2FQNU5rSUNVQzBjRG10TEpsQTJHdWR1QVZxY1czM3RLRFNGSk0r?=
+ =?utf-8?B?aSt6M0FPNEZKWjVRLzdmR1BkVXkvVnNOaUlHSFhnck5pcVJRMWpITGdpR1kz?=
+ =?utf-8?B?b08zeWlRcWZ5RXJVWnM2dThWQk1vRE43R2EyQlphYTdYK3l3QVJ4Z1NrNFpt?=
+ =?utf-8?B?TmpUU3R4NDVyWEp0UjU5ay9nNmFEWHU2TGxHOWRWZW1HV0V1SHEwTWxTM2J0?=
+ =?utf-8?B?eG04NGhSK1FESXNtYXpuUjZPQ0lXaVZwVW9tTjFpR3BDQ0NNb1k3QkRUaWVV?=
+ =?utf-8?B?a3lmV3V5VzlNeGlLRENFRzV1aStsTFJ2T0RLYWRlbXhzUWVEWGFSMENFYkoz?=
+ =?utf-8?B?WDFNMmlPWUl3Y25aak1wZkJXcUNSREZYeVVnN2F1NVZoeTJ2dWVHQT09?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: de68f0a0-6676-4d5d-1cea-08de994270c9
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8ab2e247-0766-4d2b-287e-08de99430fad
 X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Apr 2026 09:52:57.3853 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Apr 2026 09:57:24.2589 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S2yjiRx56JDkjaMCj8PQ6Fg3wI/tP/lzFx1KDk74PbeVA2e02lcPgoxkemLPwQvn5dmx0QjX6QpVDrmaUREccw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: gRotXjhxVbC6//Z/+Ryj21XXjjYHQsgzE6QrW4RtnUvDceqTzxRcQF01lznEuW2+jev8YQJzFr96FJEPcohfXw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5670
-Received-SPF: permerror client-ip=40.93.196.16;
+Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
  envelope-from=avihaih@nvidia.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
+ helo=CH5PR02CU005.outbound.protection.outlook.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
 X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,19 +172,489 @@ On 4/8/2026 7:55 PM, Peter Xu wrote:
 > External email: Use caution opening links or attachments
 >
 >
-> Add a field to cache stop size.  Note that there's an initial value change
-> in vfio_save_setup for the stop size default, but it shouldn't matter if it
-> is followed with a math of MIN() against VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE.
+> These two APIs are a slight duplication.  For example, there're a few users
+> that directly pass in the same function.
 >
-> Document that all the three sizes we read from VFIO's uAPI on dirty or stop
-> sizes are estimates, so QEMU needs to always remember they can be anything.
+> It might also be error prone to provide two hooks, so that it's easier to
+> happen one module report different things via the two hooks.
 >
+> In reality, they should always report the same thing, only about whether we
+> should use a fast-path when the slow path might be too slow, as QEMU may
+> query these information quite frequently during migration process.
+>
+> Merge it into one API, provide a bool showing if the query is an exact
+> query or not.  No functional change intended.
+>
+> Export qemu_savevm_query_pending().  We should use the new API here
+> provided when there're new users to do the query.  This will happen very
+> soon.
+>
+> Cc: Halil Pasic <pasic@linux.ibm.com>
+> Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+> Cc: Jason Herne <jjherne@linux.ibm.com>
+> Cc: Eric Farman <farman@linux.ibm.com>
+> Cc: Matthew Rosato <mjrosato@linux.ibm.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+> Cc: David Hildenbrand <david@kernel.org>
+> Cc: Cornelia Huck <cohuck@redhat.com>
+> Cc: Eric Blake <eblake@redhat.com>
+> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Cc: John Snow <jsnow@redhat.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   hw/vfio/vfio-migration-internal.h |  8 +++++
->   hw/vfio/migration.c               | 50 ++++++++++++++++++-------------
->   2 files changed, 38 insertions(+), 20 deletions(-)
+>   docs/devel/migration/main.rst  |  9 ++----
+>   docs/devel/migration/vfio.rst  |  9 ++----
+>   include/migration/register.h   | 52 +++++++++++-----------------------
+>   migration/savevm.h             |  3 ++
+>   hw/s390x/s390-stattrib.c       |  9 +++---
+>   hw/vfio/migration.c            | 48 ++++++++++++++-----------------
+>   migration/block-dirty-bitmap.c | 10 +++----
+>   migration/ram.c                | 33 +++++++--------------
+>   migration/savevm.c             | 42 +++++++++++++--------------
+>   hw/vfio/trace-events           |  3 +-
+>   10 files changed, 84 insertions(+), 134 deletions(-)
+>
+> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+> index 234d280249..e6a6ca3681 100644
+> --- a/docs/devel/migration/main.rst
+> +++ b/docs/devel/migration/main.rst
+> @@ -515,13 +515,8 @@ An iterative device must provide:
+>     - A ``load_setup`` function that initialises the data structures on the
+>       destination.
+>
+> -  - A ``state_pending_exact`` function that indicates how much more
+> -    data we must save.  The core migration code will use this to
+> -    determine when to pause the CPUs and complete the migration.
+> -
+> -  - A ``state_pending_estimate`` function that indicates how much more
+> -    data we must save.  When the estimated amount is smaller than the
+> -    threshold, we call ``state_pending_exact``.
+> +  - A ``save_query_pending`` function that indicates how much more
+> +    data we must save.
+>
+>     - A ``save_live_iterate`` function should send a chunk of data until
+>       the point that stream bandwidth limits tell it to stop.  Each call
+> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+> index 0790e5031d..33768c877c 100644
+> --- a/docs/devel/migration/vfio.rst
+> +++ b/docs/devel/migration/vfio.rst
+> @@ -50,13 +50,8 @@ VFIO implements the device hooks for the iterative approach as follows:
+>   * A ``load_setup`` function that sets the VFIO device on the destination in
+>     _RESUMING state.
+>
+> -* A ``state_pending_estimate`` function that reports an estimate of the
+> -  remaining pre-copy data that the vendor driver has yet to save for the VFIO
+> -  device.
+> -
+> -* A ``state_pending_exact`` function that reads pending_bytes from the vendor
+> -  driver, which indicates the amount of data that the vendor driver has yet to
+> -  save for the VFIO device.
+> +* A ``save_query_pending`` function that reports the remaining pre-copy
+> +  data that the vendor driver has yet to save for the VFIO device.
 
+Maybe drop "pre-copy" since we also report stopcopy bytes?
+
+>
+>   * An ``is_active_iterate`` function that indicates ``save_live_iterate`` is
+>     active only when the VFIO device is in pre-copy states.
+> diff --git a/include/migration/register.h b/include/migration/register.h
+> index d0f37f5f43..aba3c9af2f 100644
+> --- a/include/migration/register.h
+> +++ b/include/migration/register.h
+> @@ -16,6 +16,13 @@
+>
+>   #include "hw/core/vmstate-if.h"
+>
+> +typedef struct MigPendingData {
+> +    /* Amount of pending bytes can be transferred in precopy or stopcopy */
+> +    uint64_t precopy_bytes;
+> +    /* Amount of pending bytes can be transferred in postcopy */
+> +    uint64_t postcopy_bytes;
+> +} MigPendingData;
+> +
+>   /**
+>    * struct SaveVMHandlers: handler structure to finely control
+>    * migration of complex subsystems and devices, such as RAM, block and
+> @@ -197,46 +204,19 @@ typedef struct SaveVMHandlers {
+>       bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
+>
+>       /**
+> -     * @state_pending_estimate
+> -     *
+> -     * This estimates the remaining data to transfer
+> -     *
+> -     * Sum of @can_postcopy and @must_postcopy is the whole amount of
+> -     * pending data.
+> -     *
+> -     * @opaque: data pointer passed to register_savevm_live()
+> -     * @must_precopy: amount of data that must be migrated in precopy
+> -     *                or in stopped state, i.e. that must be migrated
+> -     *                before target start.
+> -     * @can_postcopy: amount of data that can be migrated in postcopy
+> -     *                or in stopped state, i.e. after target start.
+> -     *                Some can also be migrated during precopy (RAM).
+> -     *                Some must be migrated after source stops
+> -     *                (block-dirty-bitmap)
+> -     */
+> -    void (*state_pending_estimate)(void *opaque, uint64_t *must_precopy,
+> -                                   uint64_t *can_postcopy);
+> -
+> -    /**
+> -     * @state_pending_exact
+> -     *
+> -     * This calculates the exact remaining data to transfer
+> +     * @save_query_pending
+>        *
+> -     * Sum of @can_postcopy and @must_postcopy is the whole amount of
+> -     * pending data.
+> +     * This estimates the remaining data to transfer on the source side.
+> +     * It's highly suggested that the module should implement both fastpath
+> +     * and slowpath version of it when it can be slow (for more information
+> +     * please check pending->fastpath field).
+>        *
+>        * @opaque: data pointer passed to register_savevm_live()
+> -     * @must_precopy: amount of data that must be migrated in precopy
+> -     *                or in stopped state, i.e. that must be migrated
+> -     *                before target start.
+> -     * @can_postcopy: amount of data that can be migrated in postcopy
+> -     *                or in stopped state, i.e. after target start.
+> -     *                Some can also be migrated during precopy (RAM).
+> -     *                Some must be migrated after source stops
+> -     *                (block-dirty-bitmap)
+> +     * @pending: pointer to a MigPendingData struct
+> +     * @exact: set true for an accurate (slow) query
+>        */
+> -    void (*state_pending_exact)(void *opaque, uint64_t *must_precopy,
+> -                                uint64_t *can_postcopy);
+> +    void (*save_query_pending)(void *opaque, MigPendingData *pending,
+> +                               bool exact);
+>
+>       /**
+>        * @load_state
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index b3d1e8a13c..e4efd243f3 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -14,6 +14,8 @@
+>   #ifndef MIGRATION_SAVEVM_H
+>   #define MIGRATION_SAVEVM_H
+>
+> +#include "migration/register.h"
+> +
+>   #define QEMU_VM_FILE_MAGIC           0x5145564d
+>   #define QEMU_VM_FILE_VERSION_COMPAT  0x00000002
+>   #define QEMU_VM_FILE_VERSION         0x00000003
+> @@ -43,6 +45,7 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
+>   void qemu_savevm_state_cleanup(void);
+>   void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+>   int qemu_savevm_state_complete_precopy(MigrationState *s);
+> +void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
+>   void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+>                                        uint64_t *can_postcopy);
+>   void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+> index d808ece3b9..a22469a9e9 100644
+> --- a/hw/s390x/s390-stattrib.c
+> +++ b/hw/s390x/s390-stattrib.c
+> @@ -187,15 +187,15 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>       return 0;
+>   }
+>
+> -static void cmma_state_pending(void *opaque, uint64_t *must_precopy,
+> -                               uint64_t *can_postcopy)
+> +static void cmma_state_pending(void *opaque, MigPendingData *pending,
+> +                               bool exact)
+>   {
+>       S390StAttribState *sas = S390_STATTRIB(opaque);
+>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+>       long long res = sac->get_dirtycount(sas);
+>
+>       if (res >= 0) {
+> -        *must_precopy += res;
+> +        pending->precopy_bytes += res;
+>       }
+>   }
+>
+> @@ -340,8 +340,7 @@ static SaveVMHandlers savevm_s390_stattrib_handlers = {
+>       .save_setup = cmma_save_setup,
+>       .save_live_iterate = cmma_save_iterate,
+>       .save_complete = cmma_save_complete,
+> -    .state_pending_exact = cmma_state_pending,
+> -    .state_pending_estimate = cmma_state_pending,
+> +    .save_query_pending = cmma_state_pending,
+>       .save_cleanup = cmma_save_cleanup,
+>       .load_state = cmma_load,
+>       .is_active = cmma_active,
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 5d5fca09bd..1e999f0040 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -571,42 +571,39 @@ static void vfio_save_cleanup(void *opaque)
+>       trace_vfio_save_cleanup(vbasedev->name);
+>   }
+>
+> -static void vfio_state_pending_estimate(void *opaque, uint64_t *must_precopy,
+> -                                        uint64_t *can_postcopy)
+> +static void vfio_state_pending_sync(VFIODevice *vbasedev)
+>   {
+> -    VFIODevice *vbasedev = opaque;
+>       VFIOMigration *migration = vbasedev->migration;
+>
+> -    if (!vfio_device_state_is_precopy(vbasedev)) {
+> -        return;
+> -    }
+> -
+> -    *must_precopy +=
+> -        migration->precopy_init_size + migration->precopy_dirty_size;
+> +    vfio_query_stop_copy_size(vbasedev);
+>
+> -    trace_vfio_state_pending_estimate(vbasedev->name, *must_precopy,
+> -                                      *can_postcopy,
+> -                                      migration->precopy_init_size,
+> -                                      migration->precopy_dirty_size);
+> +    if (vfio_device_state_is_precopy(vbasedev)) {
+> +        vfio_query_precopy_size(migration);
+> +    }
+>   }
+>
+> -static void vfio_state_pending_exact(void *opaque, uint64_t *must_precopy,
+> -                                     uint64_t *can_postcopy)
+> +static void vfio_state_pending(void *opaque, MigPendingData *pending,
+> +                               bool exact)
+>   {
+>       VFIODevice *vbasedev = opaque;
+>       VFIOMigration *migration = vbasedev->migration;
+> +    uint64_t remain;
+>
+> -    vfio_query_stop_copy_size(vbasedev);
+> -    *must_precopy += migration->stopcopy_size;
+> -
+> -    if (vfio_device_state_is_precopy(vbasedev)) {
+> -        vfio_query_precopy_size(migration);
+> +    if (exact) {
+> +        vfio_state_pending_sync(vbasedev);
+> +        remain = migration->stopcopy_size;
+> +    } else {
+> +        if (!vfio_device_state_is_precopy(vbasedev)) {
+> +            return;
+> +        }
+> +        remain = migration->precopy_init_size + migration->precopy_dirty_size;
+>       }
+>
+> -    trace_vfio_state_pending_exact(vbasedev->name, *must_precopy, *can_postcopy,
+> -                                   migration->stopcopy_size,
+> -                                   migration->precopy_init_size,
+> -                                   migration->precopy_dirty_size);
+> +    pending->precopy_bytes += remain;
+> +
+> +    trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
+> +                             migration->precopy_init_size,
+> +                             migration->precopy_dirty_size);
+
+Let's also log "exact", I think it can be useful.
+
+With this and Juraj's comment fixed:
 Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 
+>   }
+>
+>   static bool vfio_is_active_iterate(void *opaque)
+> @@ -851,8 +848,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
+>       .save_prepare = vfio_save_prepare,
+>       .save_setup = vfio_save_setup,
+>       .save_cleanup = vfio_save_cleanup,
+> -    .state_pending_estimate = vfio_state_pending_estimate,
+> -    .state_pending_exact = vfio_state_pending_exact,
+> +    .save_query_pending = vfio_state_pending,
+>       .is_active_iterate = vfio_is_active_iterate,
+>       .save_live_iterate = vfio_save_iterate,
+>       .save_complete = vfio_save_complete_precopy,
+> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+> index a061aad817..15d417013c 100644
+> --- a/migration/block-dirty-bitmap.c
+> +++ b/migration/block-dirty-bitmap.c
+> @@ -766,9 +766,8 @@ static int dirty_bitmap_save_complete(QEMUFile *f, void *opaque)
+>       return 0;
+>   }
+>
+> -static void dirty_bitmap_state_pending(void *opaque,
+> -                                       uint64_t *must_precopy,
+> -                                       uint64_t *can_postcopy)
+> +static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
+> +                                       bool exact)
+>   {
+>       DBMSaveState *s = &((DBMState *)opaque)->save;
+>       SaveBitmapState *dbms;
+> @@ -788,7 +787,7 @@ static void dirty_bitmap_state_pending(void *opaque,
+>
+>       trace_dirty_bitmap_state_pending(pending);
+>
+> -    *can_postcopy += pending;
+> +    data->postcopy_bytes += pending;
+>   }
+>
+>   /* First occurrence of this bitmap. It should be created if doesn't exist */
+> @@ -1250,8 +1249,7 @@ static SaveVMHandlers savevm_dirty_bitmap_handlers = {
+>       .save_setup = dirty_bitmap_save_setup,
+>       .save_complete = dirty_bitmap_save_complete,
+>       .has_postcopy = dirty_bitmap_has_postcopy,
+> -    .state_pending_exact = dirty_bitmap_state_pending,
+> -    .state_pending_estimate = dirty_bitmap_state_pending,
+> +    .save_query_pending = dirty_bitmap_state_pending,
+>       .save_live_iterate = dirty_bitmap_save_iterate,
+>       .is_active_iterate = dirty_bitmap_is_active_iterate,
+>       .load_state = dirty_bitmap_load,
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 979751f61b..e5b7217bf5 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3443,30 +3443,18 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>       return qemu_fflush(f);
+>   }
+>
+> -static void ram_state_pending_estimate(void *opaque, uint64_t *must_precopy,
+> -                                       uint64_t *can_postcopy)
+> -{
+> -    RAMState **temp = opaque;
+> -    RAMState *rs = *temp;
+> -
+> -    uint64_t remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+> -
+> -    if (migrate_postcopy_ram()) {
+> -        /* We can do postcopy, and all the data is postcopiable */
+> -        *can_postcopy += remaining_size;
+> -    } else {
+> -        *must_precopy += remaining_size;
+> -    }
+> -}
+> -
+> -static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
+> -                                    uint64_t *can_postcopy)
+> +static void ram_state_pending(void *opaque, MigPendingData *pending,
+> +                              bool exact)
+>   {
+>       RAMState **temp = opaque;
+>       RAMState *rs = *temp;
+>       uint64_t remaining_size;
+>
+> -    if (!migration_in_postcopy()) {
+> +    /*
+> +     * Sync is not needed either with: (1) a fast query, or (2) after
+> +     * postcopy has started (no new dirty will generate anymore).
+> +     */
+> +    if (exact && !migration_in_postcopy()) {
+>           bql_lock();
+>           WITH_RCU_READ_LOCK_GUARD() {
+>               migration_bitmap_sync_precopy(false);
+> @@ -3478,9 +3466,9 @@ static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
+>
+>       if (migrate_postcopy_ram()) {
+>           /* We can do postcopy, and all the data is postcopiable */
+> -        *can_postcopy += remaining_size;
+> +        pending->postcopy_bytes += remaining_size;
+>       } else {
+> -        *must_precopy += remaining_size;
+> +        pending->precopy_bytes += remaining_size;
+>       }
+>   }
+>
+> @@ -4703,8 +4691,7 @@ static SaveVMHandlers savevm_ram_handlers = {
+>       .save_live_iterate = ram_save_iterate,
+>       .save_complete = ram_save_complete,
+>       .has_postcopy = ram_has_postcopy,
+> -    .state_pending_exact = ram_state_pending_exact,
+> -    .state_pending_estimate = ram_state_pending_estimate,
+> +    .save_query_pending = ram_state_pending,
+>       .load_state = ram_load,
+>       .save_cleanup = ram_save_cleanup,
+>       .load_setup = ram_load_setup,
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index dd58f2a705..392d840955 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1762,46 +1762,44 @@ int qemu_savevm_state_complete_precopy(MigrationState *s)
+>       return qemu_fflush(f);
+>   }
+>
+> -/* Give an estimate of the amount left to be transferred,
+> - * the result is split into the amount for units that can and
+> - * for units that can't do postcopy.
+> - */
+> -void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> -                                        uint64_t *can_postcopy)
+> +void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+>   {
+>       SaveStateEntry *se;
+>
+> -    *must_precopy = 0;
+> -    *can_postcopy = 0;
+> +    pending->precopy_bytes = 0;
+> +    pending->postcopy_bytes = 0;
+>
+>       QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+> -        if (!se->ops || !se->ops->state_pending_estimate) {
+> +        if (!se->ops || !se->ops->save_query_pending) {
+>               continue;
+>           }
+>           if (!qemu_savevm_state_active(se)) {
+>               continue;
+>           }
+> -        se->ops->state_pending_estimate(se->opaque, must_precopy, can_postcopy);
+> +        se->ops->save_query_pending(se->opaque, pending, exact);
+>       }
+>   }
+>
+> +void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+> +                                        uint64_t *can_postcopy)
+> +{
+> +    MigPendingData pending;
+> +
+> +    qemu_savevm_query_pending(&pending, false);
+> +
+> +    *must_precopy = pending.precopy_bytes;
+> +    *can_postcopy = pending.postcopy_bytes;
+> +}
+> +
+>   void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+>                                        uint64_t *can_postcopy)
+>   {
+> -    SaveStateEntry *se;
+> +    MigPendingData pending;
+>
+> -    *must_precopy = 0;
+> -    *can_postcopy = 0;
+> +    qemu_savevm_query_pending(&pending, true);
+>
+> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+> -        if (!se->ops || !se->ops->state_pending_exact) {
+> -            continue;
+> -        }
+> -        if (!qemu_savevm_state_active(se)) {
+> -            continue;
+> -        }
+> -        se->ops->state_pending_exact(se->opaque, must_precopy, can_postcopy);
+> -    }
+> +    *must_precopy = pending.precopy_bytes;
+> +    *can_postcopy = pending.postcopy_bytes;
+>   }
+>
+>   void qemu_savevm_state_cleanup(void)
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 846e3625c5..7cf5a9eb2d 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -173,8 +173,7 @@ vfio_save_device_config_state(const char *name) " (%s)"
+>   vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>   vfio_save_iterate_start(const char *name) " (%s)"
+>   vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+> -vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> -vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> +vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>   vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>   vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>
+> --
+> 2.53.0
+>
 
