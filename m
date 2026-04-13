@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB309F531CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 20:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB64DF531CA
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 20:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCOE9-0005uc-SO; Mon, 13 Apr 2026 16:49:49 -0400
+	id 1wCOGc-0007M7-Dg; Mon, 13 Apr 2026 16:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCOE7-0005t7-RV
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:49:47 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCOE5-0007JH-O5
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:49:47 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43d76dd4ee8so1488802f8f.2
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 13:49:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776113384; x=1776718184; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U0lpLGWEf3jcupvQE27VyWyLYYCpebeHdQNrRxPS3Pc=;
- b=f6NJJ4QiOlfh7Eapsk0fNTuOWUDc/EugDwcnlrQFSRv19XMu63Xr6v93w3oorjRMty
- cl+abp2wpuUxLBwlpn029cibIxXdurXFsgxrxhZixUarZF8Zl3SKGDtlYFWADvm1Gpdp
- XT+oVEkZTeuAEDrzLP/09xXg0bq6VyfypbcdotICA1n7WNzBs/QNcpCyulBfbyRbaSS3
- 3k39LXpdAgVzbv/uDOs1T6eXJYzHYPZQGldsHHuVWz+DvB/qNKMtiz22mj0qmqJP9eGu
- 2t5/0/4eL5hlTwbohZjXXxNNBfWUP20z0lFK64Fi6WFGUC0QVui8AegRIsAdMA8BV3qx
- 2WSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776113384; x=1776718184;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=U0lpLGWEf3jcupvQE27VyWyLYYCpebeHdQNrRxPS3Pc=;
- b=iuGFp62qIJjbeNlDKGc3c381PMfOMzPopn4tz+qDSl1h7Ke0a/KW1/4u0vSDTrwgRN
- h1FOaP6BoK1BJTO/2ChIq+/b7nVLdqCVmcOQTHOjmj+M8UweDmX09UCGTsxdOiknYq+Z
- PhRIONSeACv1k52dZLdodqcrPvTBWp+DDd+ncqFf1MSEgiSDQwzEeX4xY2vbKmxkn5X/
- 0kV0BFnZnJm9aX31MyOs0jpuuH2Wsj0v2fjyfsPEWY9uwxY6ItWdNKyST0N7qdzPsH8u
- e/vuanlSlkNkGKUGYFnhDEs4M/Ll6KKqzC5rg2DKpz7cqyzV9ZBuqVBNwq3Tz9M/HeMs
- QNXA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ83io8+GcuFQPVtNKoW6Gfyz80+ATjuUeNeTQB138Togyal3HxeJYLjexkxuULw9mgGkAhAxD1COv9c@nongnu.org
-X-Gm-Message-State: AOJu0YwkaJk72AIE34IZx4TEKcqQwtUlpGA/ZZvuu6SUWhLoKwRs9UNH
- vBmHi6GYZfk8qJYkrZ2/bF4YpKtTPNtjN0AGLU8rVEVK1eqSZPjTptCMSexZXA==
-X-Gm-Gg: AeBDieuM8kSulmr1z8T8J17zCepLVx1jwEnL582RvUSkk7NS3Ng4pWXb7a5gSqCt1jp
- Hp+v/Y4ytaDRKn+Ncq4/8KoaQ5zoZ8ifv1g2vehuVPOPcxSeCl8ZiVIbwhsHQr31r1Kpjfx/5wk
- Cikxa678klHioOF8rUn0mSKXZ+LHBZ+jnPAZAcfQITDp0lOGWmYFYKMTxUXdgw9BAGNgtWuqnof
- HT66OBD41YVzdC9121uN8UKIP68wayPwFSTH+pL9SBhVia4Go7XtOTAGVl/knk6CWUGPlQo4tXr
- zFpTiZccv2d8u3e4gYsDghrepCSP3IoHJKbgj8I3Zh1Vw9FQKiMBKkJPtZZzZiUNSPI6sMqo4dW
- 4+9ENeo0KSfqv7OAEtTJKj90pMI7nW1f2qNqVIBENBmZTe3U5VXmuNbaNMOi7t4o10Br5MpK4Td
- XWopum4+lNR88q7Z0Kc1LQogeq52w2PAWGfm945cXoS/mqlnlDv3xFrZFKOezdwMYw4hoPAX/hU
- PquucupaJJxcokkbkS8
-X-Received: by 2002:a05:6000:1a8d:b0:43b:3d4f:e17a with SMTP id
- ffacd0b85a97d-43d642cd287mr21999512f8f.37.1776113384014; 
- Mon, 13 Apr 2026 13:49:44 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf1c6100004fcff454cbdf8f.dip0.t-ipconnect.de.
- [2003:fa:af1c:6100:4f:cff4:54cb:df8f])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d762decf6sm22203242f8f.8.2026.04.13.13.49.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 13:49:43 -0700 (PDT)
-Date: Mon, 13 Apr 2026 20:49:41 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-Subject: =?US-ASCII?Q?RE=3A_=5BEXT=5D_Re=3A_=5BPATCHv5_00/15=5D_Adding_com?=
- =?US-ASCII?Q?prehensive_support_for_i=2EMX8MM_EVK_board?=
-In-Reply-To: <AM0PR04MB4370028D6C330307CADBF81D87242@AM0PR04MB4370.eurprd04.prod.outlook.com>
-References: <20260413073737.986219-1-gaurav.sharma_7@nxp.com>
- <9BF9D1F9-DA94-41AE-8C81-2226B17E096A@gmail.com>
- <AM0PR04MB43700A10A6F9E20DE479701887242@AM0PR04MB4370.eurprd04.prod.outlook.com>
- <AM0PR04MB4370028D6C330307CADBF81D87242@AM0PR04MB4370.eurprd04.prod.outlook.com>
-Message-ID: <AE626996-1262-42ED-8400-9684DA86F871@gmail.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCOGY-0007LE-Pk
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:18 -0400
+Received: from ci-2007g-snip4-2.eps.apple.com ([57.103.88.65]
+ helo=outbound.ci.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCOGW-0007th-9X
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 16:52:18 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPS id
+ C92A11800208; Mon, 13 Apr 2026 20:52:12 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776113534; x=1778705534;
+ bh=p9EZKcG/7kfn11wdqZrItGJf0DlIfHgfjadGdY8/YEg=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=N6Ep8veyUfPUCczLyp53e0pKN62h2H2P7+l8OH432lUaqNsz6LcB5NP9sGhb2n+7fElOOlEvSnCN7WPA8l9aOF7+LUKgpRyNxOH+Wa1xY/MGiKeRgA4qrg1MxqB4q6psrq8noiXdSbQPCijTjmrkGf/cokI5D1hwdnGpd1UgIzUqTThCMz8RXU2ycF0NLpuOPp1jECEf9YcWmrbm8WXL2kaW7QEnX89USXyxiM99zJjZhoFJKf4rBFwLjmld3VZ5TaEULaPqWq52aMx7+XiFg2BfLLchhpIKIEq6xyt8kqzMyuKk6Z3v9GWjkFrlylqB5uH/PfxB4NlX14cqekREYQ==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPSA id
+ DFA98180016B; Mon, 13 Apr 2026 20:52:10 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v12 00/15] whpx: i386: bug fixes, feature probing and CPUID
+Date: Mon, 13 Apr 2026 22:51:52 +0200
+Message-ID: <20260413205208.50643-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: nkQ-3JYN8Z_rOOpiCSW6vrxlAjrlvdwL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDIwNSBTYWx0ZWRfX8wRjYl47aK8B
+ b7NDs9+ZsFyPYeaLP0TjDER8KAX7xiqUDKRjOCsRpr+FQGGZkGsRqz1SS7t3xpgW1IYM0kx22ZN
+ fYAylXW5OrgdmY/SvmOqN7CI9Uxkk7asxQL3FP5/8pE7ZuOi949vKZvLgUix/pRzz/BiDYIjLHZ
+ YZhKd0WE0vrJ43sD8Z/l0UUU3T53mEA8zATW24JJrtS8qvHXN7wbyPcO2iNcxpFZyrZrDtfFht1
+ 3Hc9HyDUaaWy5MCPvDO+lppjEvIbbzs7IRMYUgZYyACcDReQqbdvqb2MvXcJ5mY8WxCYhdnIfcQ
+ PzyaWFvJ2pNIhKX9Echy9CWS4HEOVQPIGBBPxEyWiyUc7KGjIwbwz+9AVfR1VI=
+X-Authority-Info-Out: v=2.4 cv=L4cQguT8 c=1 sm=1 tr=0 ts=69dd577d
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=1DGgg3L7_nY_qRTbWDsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: nkQ-3JYN8Z_rOOpiCSW6vrxlAjrlvdwL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-13_03,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1030 adultscore=0
+ phishscore=0 mlxscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999
+ classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2601150000 definitions=main-2604130205
+Received-SPF: pass client-ip=57.103.88.65;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,220 +92,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a supplemental update that includes
+"whpx: i386: x2apic emulation for kernel-irqchip=off, feature probing"
+v4 unmodified.
 
+This might be too big for QEMU 11.0 at this point though...
 
-Am 13=2E April 2026 19:54:29 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@=
-nxp=2Ecom>:
->@'Bernhard Beschow', after I rebased to master and build the changes, so =
-far I have observed build errors like:-
->
->1=2E 2 of those attributed to qdev-properties=2Eh header file moved from =
-hw/ to hw/core/
->2=2E 2 errors attributed to boards=2Eh header file moved from hw/ to hw/c=
-ore/
->3=2E One attributed to smmu :-
->
->In file included from =2E=2E/hw/arm/smmuv3=2Ec:37:
->=2E=2E/hw/arm/smmuv3-accel=2Eh:17:10: error: #include expects "FILENAME" =
-or <FILENAME>
->   17 | #include CONFIG_DEVICES
->      |          ^~~~~~~~~~~~~~
->=2E=2E/hw/arm/smmuv3-accel=2Eh:44:8: error: attempt to use poisoned "CONF=
-IG_ARM_SMMUV3_ACCEL"
->   44 | #ifdef CONFIG_ARM_SMMUV3_ACCEL
->      |        ^
->=2E=2E/hw/arm/smmuv3=2Ec: In function 'smmu_validate_property':
->=2E=2E/hw/arm/smmuv3=2Ec:1968:9: error: attempt to use poisoned "CONFIG_A=
-RM_SMMUV3_ACCEL"
-> 1968 | #ifndef CONFIG_ARM_SMMUV3_ACCEL
->      |         ^
->
->Build command used:-
->
->=2E=2E/configure --target-list=3Daarch64-softmmu
->make -j$(nproc)
->
->are these expected ?=20
+"whpx: i386: disable TbFlushHypercalls for emulated LAPIC" is a
+bugfix, and "target/i386: emulate: include name of unhandled instruction"
+is a debugging aid.
 
-Certainly not, since we're close to a release=2E The only advice I can giv=
-e for now is to double check against imx8mp=2E=2E=2E
+"whpx: i386: x2apic emulation" makes things slightly better for Windows
+10 users. But I strongly recommend *not* relying on it when possible and
+using kernel-irqchip=on instead. On Windows 10 however that's more murky
+because PIC interrupt injection is broken (interrupts don't wake the vCPU
+from HLT) in that case.
 
->
->
->
->> -----Original Message-----
->> From: Gaurav Sharma
->> Sent: 14 April 2026 00:30
->> To: 'Bernhard Beschow' <shentey@gmail=2Ecom>; qemu-devel@nongnu=2Eorg
->> Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg
->> Subject: RE: [EXT] Re: [PATCHv5 00/15] Adding comprehensive support for
->> i=2EMX8MM EVK board
->>=20
->>=20
->>=20
->> > -----Original Message-----
->> > From: Bernhard Beschow <shentey@gmail=2Ecom>
->> > Sent: 13 April 2026 19:01
->> > To: qemu-devel@nongnu=2Eorg; Gaurav Sharma
->> <gaurav=2Esharma_7@nxp=2Ecom>
->> > Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg
->> > Subject: [EXT] Re: [PATCHv5 00/15] Adding comprehensive support for
->> > i=2EMX8MM EVK board
->> >
->> > Caution: This is an external email=2E Please take care when clicking
->> > links or opening attachments=2E When in doubt, report the message usi=
-ng
->> > the 'Report this email' button
->> >
->> >
->> > Am 13=2E April 2026 07:37:22 UTC schrieb Gaurav Sharma
->> > <gaurav=2Esharma_7@nxp=2Ecom>:
->> >
->> > Hi Gurav,
->> >
->> > >Changes in v5:
->> > >- Fixed SoC object reference counting by using
->> > >object_new_with_props()
->> > >  instead of object_new() + object_property_add_child()
->> > >- Merged imx8mm-evk=2Erst documentation into imx8mp-evk=2Erst to avo=
-id
->> > >  duplication and updated the title accordingly
->> > >- Added on-chip RAM (OCRAM) support to match iMX8MP dev
->> >
->> > I tried to apply v5 but I'm hitting the same issues as Patchew:
->> > <https://eur01=2Esafelinks=2Eprotection=2Eoutlook=2Ecom/?url=3Dhttps%=
-3A%2F%2Fpat
->> > ch
->> > ew=2Eorg%2FQEMU%2F20260413073737=2E986219-1-
->> >
->> gaurav=2Esharma=2E_5F7%40nxp=2Ecom%2F&data=3D05%7C02%7Cgaurav=2Esharma_=
-7%4
->> >
->> 0nxp=2Ecom%7Cfbdcd381f0014ebd086a08de9960ed16%7C686ea1d3bc2b4c6fa
->> >
->> 92cd99c5c301635%7C0%7C0%7C639116838724991885%7CUnknown%7CTWF
->> >
->> pbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4
->> >
->> zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DnyynvYO
->> > v87nTkxEFkU8k3eSt4r%2Fa17rQkr9STABgaaA%3D&reserved=3D0> Mind
->> resending a
->> > version rebased onto master?
->> >
->> > Moreover, you may keep my R-b tags which I've given during v4=2E
->> >
->> > Best regards,
->> > Bernhard
->> >
->>=20
->> Hey Bernhard,
->> yes, looks like I need to rebase and create patches again=2E Lemme do t=
-hat and
->> send over as v6=2E
->>=20
->> > >
->> > >Changes in v4:
->> > >- Update Maintainers file
->> > >- Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a
->> > >variant
->> > >  specific property
->> > >- Split up the patch that enabled CCM and Analog in the previous
->> > >  revision=2E Now we have 3 patches to enable CCM and Analog in iMX8=
-MM
->> > >- Updated copyrights
->> > >- Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check'
->> > >failures
->> > >
->> > >Changes in v3:
->> > >- Minor documentation change - Added KVM Acceleration section in
->> > >docs/system/arm/imx8mm-evk=2Erst
->> > >
->> > >Changes in v2:
->> > >- Fixed the DTB offset in functional testing script
->> > >test_imx8mm_evk=2Epy
->> > >  and preserved alphabetical order of machine names in
->> > >tests/functional/aarch64/meson=2Ebuild
->> > >- Fixed a typo and updated the documentation
->> > >- Modified structures type to static const in fsl-imx8mm=2Ec whereve=
-r
->> > >  applicable=2E
->> > >- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk=
-=2Ec=2E
->> > >This
->> > >  is needed because the default DTB in the iMX LF BSP images have CS=
-I
->> > >  and DSI enabled=2E Developers/Hobbyists using these BSP images wil=
-l
->> > >  observe CSI and DSI crash logs on the console since these are
->> > unimplemented=2E
->> > >  With this change, both debian and iMX LF images will boot up
->> > > without any
->> > issues=2E
->> > >
->> > >Changes in v1:
->> > >
->> > >This patch series adds support for the NXP i=2EMX8MM EVK (Evaluation
->> > >Kit) board to QEMU, enabling emulation of this ARM Cortex-A53 based
->> > >development platform=2E
->> > >
->> > >The series includes:
->> > >
->> > >1=2E Core peripheral support (CCM clock controller, Analog module) 2=
-=2E
->> > >GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation
->> support
->> > 3=2E
->> > >GPIO,I2C,SPI,USDHC and USB Emulation support 4=2E PCIe and ENET
->> > >Controller Emulation support 5=2E Documentation and functional test
->> > >included
->> > >
->> > >Key features ported:
->> > >- Basic boot support with Linux
->> > >- UART console for serial communication
->> > >- Interrupt handling
->> > >- Clock and power management infrastructure
->> > >
->> > >Testing:
->> > >- Linux kernel boots to console
->> > >
->> > >Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->> > >
->> > >Gaurav Sharma (15):
->> > >  hw/arm: Add the i=2EMX 8MM EVK(Evaluation Kit) board
->> > >  hw/misc/imx8mp_analog: Add property to analog device
->> > >  hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
->> > >  hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
->> > >  hw/arm/fsl-imx8mm: Implemented support for SNVS
->> > >  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
->> > >  hw/arm/fsl-imx8mm: Add PCIe support
->> > >  hw/arm/fsl-imx8mm: Add GPIO controllers
->> > >  hw/arm/fsl-imx8mm: Adding support for I2C emulation
->> > >  hw/arm/fsl-imx8mm: Adding support for SPI controller
->> > >  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
->> > >  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
->> > >  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
->> > >  hw/arm/fsl-imx8mm: Adding support for USB controller
->> > >  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
->> > >
->> > > MAINTAINERS                                 |  10 +
->> > > docs/system/arm/imx8mp-evk=2Erst              |  33 +-
->> > > docs/system/target-arm=2Erst                  |   1 +
->> > > hw/arm/Kconfig                              |  24 +
->> > > hw/arm/fsl-imx8mm=2Ec                         | 704 +++++++++++++++=
-+++++
->> > > hw/arm/imx8mm-evk=2Ec                         | 130 ++++
->> > > hw/arm/meson=2Ebuild                          |   2 +
->> > > hw/misc/imx8mp_analog=2Ec                     |  12 +-
->> > > hw/timer/imx_gpt=2Ec                          |  26 +
->> > > include/hw/arm/fsl-imx8mm=2Eh                 | 242 +++++++
->> > > include/hw/misc/imx8mp_analog=2Eh             |   3 +
->> > > include/hw/timer/imx_gpt=2Eh                  |   2 +
->> > > tests/functional/aarch64/meson=2Ebuild        |   2 +
->> > > tests/functional/aarch64/test_imx8mm_evk=2Epy |  67 ++
->> > > 14 files changed, 1251 insertions(+), 7 deletions(-) create mode
->> > > 100644 hw/arm/fsl-imx8mm=2Ec create mode 100644 hw/arm/imx8mm-
->> evk=2Ec
->> > > create mode 100644 include/hw/arm/fsl-imx8mm=2Eh create mode 100755
->> > > tests/functional/aarch64/test_imx8mm_evk=2Epy
->> > >
+"whpx: i386: wire up feature probing" is yet another commit adding a code path
+not used on Windows 10. It'll tell the user today which CPU features they set
+are incompatible with the hardware but it does not sync that to the CPUID view
+that the guest has.
+
+And then another commit to enable x2apic emulation by default even for
+kernel-irqchip=off + re-introducing provided by QEMU enlightenments in a more
+functional form to signal that the x2apic can be used. I'm not aware of the
+actual vmware freq leaf being used though.
+
+"whpx: x2apic emulation for kernel-irqchip=off follow-up" is rolled into this series.
+
+"whpx: i386: reintroduce enlightenments for Windows 10" is a bugfix to make
+x2APIC work as intended on Windows 10 without emulating an IOMMU.
+*And* a massive improvement for Windows 10 hosts in performance for Linux guests
+due to using the right clocksource instead of HPET.
+
+And dependent on this series so included, CPUID intercepts finally...
+However that's only supported starting from Windows 11/Server 2022.
+
+Also ended up switching over Windows 10 to kernel-irqchip=off
+by default due to PIC interrupt injection being broken.
+
+Old performance (or lack thereof...) numbers:
+
+On a Ryzen 7 8700GE with a Windows 10 VM running with KVM in nested virt, with
+kernel-irqchip=off for the virt Alpine Linux x86_64 ISO (3.23.3) with -smp cores=2,
+boot times as reported through dmesg:
+
+- QEMU 10.2: 83 seconds
+- QEMU 10.2 with a single core: 18.1 seconds
+- as of v6 of this series, x2apic forced off: 29 seconds
+- as of v6 this series, out of the box: 18 seconds
+- v6 with kernel-irqchip=on and EDK2: 16.5 seconds
+- v6 with kernel-irqchip=off and EDK2: 9.5 seconds
+- v6, and with 1 core instead of two: 12.6 seconds
+
+In v7, the Windows 10 numbers are pretty much at parity with Windows 11 now.
+
+And with this series on a Windows 11 VM on the same hardware:
+- kernel-irqchip=on: 6.5 seconds
+- kernel-irqchip=on, x2apic forced off: 7.6 seconds
+- kernel-irqchip=off: 8.3 seconds
+- hyperv=off,kernel-irqchip=off: 7.6 seconds... which is faster,
+so the absence of enlightenment support on Windows 10 doesn't explain things...
+
+With kernel-irqchip=on on Windows 10, when booting with SeaBIOS, it gets stuck in
+syslinux due to PIC interrupt injection being broken there. That can be counted
+as an infinite boot time (?).
+
+checkpatch false positives:
+
+ERROR: spaces required around that '*' (ctx:WxV)
++         UINT32 Ecx, WHV_CPUID_OUTPUT *CpuidOutput))
+
+Not a multiplication but a pointer reference.
+
+ERROR: space prohibited after that '&' (ctx:ExW)
++                    & CPUID_7_0_EDX_CET_IBT) {
+                     ^
+
+ERROR: space prohibited after that '&' (ctx:ExW)
++                    & CPUID_7_0_ECX_CET_SHSTK) {
+                     ^
+
+Because it's multiline.
+
+Changes in v12:
+
+- Fix for the interrupt priority path for the pic=off
+case.
+
+Changes in v11:
+- None, forgot a commit while posting
+
+Changes in v10:
+- disallow APIC reads when the APIC is disabled
+- fix CPUID[1:EDX].APIC reporting
+
+Changes in v9:
+
+- Oops,  "if (irr == -1)" change (and cleanup)
+to avoid an abort(). And think that I understand this a bit better now.
+
+Changes in v8:
+
+- Interrupt priority changes are back.
+- Some CPUID fixes
+- disable enlightenments and LAPIC for isapc
+
+Changes in v7:
+
+- Exposing VMware hypervisor identification when not
+using Hyper-V enlightenments and when the VMware frequency
+CPUID leaf isn't explictly disabled.
+
+- Remove the interrupt priority logic as it has issues with
+PIC interrupts. Can be reintroduced later.
+
+- -cpu max passing through CPUID info from Hyper-V
+- fill xsave info
+
+- OSXSAVE CPUID leaf reporting fix.
+
+Changes in v6:
+
+- kernel-irqchip=off fix: re-registering the interrupt window
+when the existing one has too low of a TPR value.
+
+Folded into "whpx: i386: kernel-irqchip=off fixes".
+
+- I/O port access fast path cleanup commit added at the end
+
+The path relied on a side effect of whpx_get_reg instead of
+something cleaner.
+
+- Use the CR8 register provided by the hypervisor only when
+kernel-irqchip=off. Rely on the APIC state synchronisation
+otherwise.
+
+This fixes some register sync errors that surfaced when setting
+the TPR values properly.
+
+Changes in v5/v1 with rename:
+
+- kernel-irqchip=off fixes, notably making 64-bit Windows bootable
+- switching over Windows 10 to kernel-irqchip=off by default
+
+Changes in v4:
+
+- Ugh for a revision sent quickly, unbreaking the arm64 build...
+- and making checkpatch happier to some extent
+
+Changes in v3:
+
+- Fixing CPUID intercepts so that QEMU CPU models work fine now, instead
+of the partial intercept that was present in QEMU 10.2
+- cleanups
+
+Changes in v2:
+
+- GCC warned when a variable name was re-used within a different (but overlapping)
+scope in the same function. It also warned with a -Werror=maybe-uninitialized for
+the MSR write case. Address those
+- make the in-KVM enlightenments path available on Windows 11 too when -M hyperv=off.
+
+Mohamed Mediouni (15):
+  target/i386: emulate: include name of unhandled instruction
+  whpx: i386: x2apic emulation
+  whpx: i386: wire up feature probing
+  whpx: i386: disable TbFlushHypercalls for emulated LAPIC
+  whpx: i386: enable x2apic by default for user-mode LAPIC
+  whpx: i386: reintroduce enlightenments for Windows 10
+  whpx: i386: introduce proper cpuid support
+  whpx: i386: kernel-irqchip=off fixes
+  whpx: i386: use WHvX64RegisterCr8 only when kernel-irqchip=off
+  whpx: i386: disable kernel-irqchip on Windows 10 when PIC enabled
+  whpx: i386: IO port fast path cleanup
+  whpx: i386: disable enlightenments and LAPIC for isapc
+  whpx: i386: interrupt priority support
+  hw/intc: apic: disallow APIC reads when disabled
+  whpx: i386: fix CPUID[1:EDX].APIC reporting
+
+ accel/whpx/whpx-common.c       |   2 +
+ hw/intc/apic.c                 |   9 +
+ include/system/whpx-common.h   |   2 +-
+ include/system/whpx-internal.h |  10 +
+ target/arm/whpx/whpx-all.c     |   1 +
+ target/i386/cpu.c              |  25 ++
+ target/i386/emulate/x86_emu.c  |   4 +-
+ target/i386/whpx/whpx-all.c    | 601 +++++++++++++++++++++++++++------
+ target/i386/whpx/whpx-apic.c   |  71 +++-
+ target/i386/whpx/whpx-i386.h   |   4 +
+ 10 files changed, 615 insertions(+), 114 deletions(-)
+ create mode 100644 target/i386/whpx/whpx-i386.h
+
+-- 
+2.50.1 (Apple Git-155)
+
 
