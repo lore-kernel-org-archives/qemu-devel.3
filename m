@@ -4,72 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED77DF34C78
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 17:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6510CF34C6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 17:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCKwE-0001aC-7U; Mon, 13 Apr 2026 13:19:06 -0400
+	id 1wCLBg-0004gC-IS; Mon, 13 Apr 2026 13:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wCKwD-0001Zt-65
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 13:19:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wCLBe-0004fy-SN; Mon, 13 Apr 2026 13:35:03 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wCKwB-0005Wu-5p
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 13:19:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776100741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6LzxU4YHZUM8BM6AOLCu0wCognEC2MYJVQf5Jl0xX4s=;
- b=goGTmBhsPtnOZhb/Fa5HZNevhAXgg+KHVJhz7dANMt4G4FDM1mwfZaOfb5QIx5lYd+zt5t
- 5+YshonVsrGcTGBEIpKbQ4BDltT2RcjEl+mLaxbVau+FkwYrACB9ucxTqZszORUmIqoGJO
- rPOy+c+/Eutdh6wR68tuB3DgVh2r4wQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-M1Zt-HuCNamrc2jBvjSsJA-1; Mon,
- 13 Apr 2026 13:18:56 -0400
-X-MC-Unique: M1Zt-HuCNamrc2jBvjSsJA-1
-X-Mimecast-MFC-AGG-ID: M1Zt-HuCNamrc2jBvjSsJA_1776100734
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5934219560BC; Mon, 13 Apr 2026 17:18:54 +0000 (UTC)
-Received: from localhost (unknown [10.44.35.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5728D18002A6; Mon, 13 Apr 2026 17:18:52 +0000 (UTC)
-Date: Mon, 13 Apr 2026 13:18:51 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Matthieu Rolla <matthieu@minio.io>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3] hw/nvme: add namespace hotplug support
-Message-ID: <20260413171851.GA42769@fedora>
-References: <CAPSO8MwceccK3gHgbeZi0A9=p8B9VV85whYmN1D343gV=9PucA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wCLBc-0002OD-IF; Mon, 13 Apr 2026 13:35:02 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id 15F93EC04FC;
+ Mon, 13 Apr 2026 13:34:59 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-06.internal (MEProxy); Mon, 13 Apr 2026 13:34:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1776101699; x=
+ 1776188099; bh=0TZHTFy/wTEE72HoRTcOvtkq7TFGEMaP4+WuZ6Yb+rg=; b=F
+ hCiyHb97W/EF2XhbXNwC/rsRNAXi5vB6lKNKG4hgKPkG+UbX/4UQlStYmdmuagGW
+ e9mpD2Wa+m3NdysHm4Za9IwvO9EE2eJk+Fgm3kpUswelSVTY200BJwx5i8p/p+je
+ kDAtKiOYD5fcY3W6Pe+qrL4hzCPjooZqo2UL+Yt/GR/GcjPaGRqk2zeJBqCTj4BT
+ rKWVQ93zEY3RIoL4XCXMghrjClqWZbhWWmK2CS2g28TYO5kc5mpHdKRurq0eQCVM
+ lOsmlLyLMhRystRdkj/NHLP+yFB8F5Vl/q9hS7nC13Rpp6WlsgqZawqxYgeDE/jX
+ Ej3i3bFkAVJUppV9vVMtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1776101699; x=1776188099; bh=0TZHTFy/wTEE72HoRTcOvtkq7TFGEMaP4+W
+ uZ6Yb+rg=; b=ZiGhgmNoKAzWPVDyXzVCi0DX8Y6ZRCmFR+GoIJjkxDsEZqoMdsP
+ Niuwq2QSQN85n2zWmnzIZo/iANHCR9131/o8i/ndNzdY60PupD3caHq/3g05YmPT
+ 6PVkphubJBZl1cGpAoQJiK9AEbJord1A4OEGzo5q/+cpWJ+aRT3rJLr9HP5yZtDo
+ lCuKYni0uSoPzmFuPYKZpK1MVnGe8dgWoq0erRGoe5mSfOqo6qhK+X4oSfw4JMtg
+ zq2oXh1+0xULUhGGf7qqyjtBXf4L0WPVNGliWx9fS+YggIca+1F6qNDfpPtdTPyS
+ YsRJ/UZqsby02hiA4F5IBQzjO5zjBM1EwuQ==
+X-ME-Sender: <xms:QSndacjXTT4v2XDc5AjvJndQAPPv_Ha3jYC1QVcfw__r-7fTtfmIHQ>
+ <xme:QSndadJhYf5JXmlA53jyxRO8nfBhRASRR-J200_V7A8Z7pqyjPb6Vkzc0egFgWH4p
+ hlY3OVyVeDlCEJOjVbmbojqxU0aOLDlAvjewjovJ5_jx9K6D1_GhxU>
+X-ME-Received: <xmr:QSndaTlgiuAAhRHwnencMArfv7Jz8uIU2SQMnMGlZAMf6c4EjnEXEz44q3LxP67GKHXrxXGXR4QG-Xc1kD4QhQqWjtRGS04>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefkeekgecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhsucfl
+ vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
+ hnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffejveen
+ ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
+ hirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopedufedpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtohepsggvrhhrrghnghgvsehrvgguhhgrthdrtghomhdprhgtph
+ htthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphhi
+ vghrrhhitghkrdgsohhuvhhivghrsehlihhnrghrohdrohhrghdprhgtphhtthhopehphh
+ hilhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgv
+ lhdrohhrghdprhgtphhtthhopehkfiholhhfsehrvgguhhgrthdrtghomhdprhgtphhtth
+ hopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthhtoheprghvihesshgt
+ hihllhgruggsrdgtohhmpdhrtghpthhtohepfhgrmhesvghuphhhohhnrdhnvght
+X-ME-Proxy: <xmx:QSndadOsVGJSzubrT5wgkGPQvYAxl5iCojvl-VGANahOcFPtkAVX_g>
+ <xmx:QSndaV5Jx7r1JTAXpDCwtx6x2PufD8c_j9dlYuEtAYQHAkTuXM8Opg>
+ <xmx:QSndaZZQ2h7uFgHSmzMXYNK8X3u7b3ZQyWh8sO1L3pl5x7H8ZZAN7w>
+ <xmx:QSndaacejT5CL00XGAIULCS9MzOIYM5el5weirSBwzF8Vs1WqjlCZQ>
+ <xmx:QyndaYnp76HGxSbe0tq6h3VoEohmayPd3DDk0rJKvUnIYssl-TCz6Bbe>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Apr 2026 13:34:57 -0400 (EDT)
+Date: Mon, 13 Apr 2026 19:34:56 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Keith Busch <kbusch@kernel.org>, Kevin Wolf <kwolf@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Avi Kivity <avi@scylladb.com>, Fam Zheng <fam@euphon.net>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: Re: [PATCH 0/4] hw/nvme: make model & firmware version cnofigurable
+Message-ID: <ad0pQDzYIki56wUe@AALNPWKJENSEN.aal.scsc.local>
+References: <20260306165717.3360110-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="uVynRK3CCs5Kc/T5"
+ protocol="application/pgp-signature"; boundary="OgHqLDwYem1ofw4s"
 Content-Disposition: inline
-In-Reply-To: <CAPSO8MwceccK3gHgbeZi0A9=p8B9VV85whYmN1D343gV=9PucA@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20260306165717.3360110-1-berrange@redhat.com>
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=its@irrelevant.dk;
+ helo=fout-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,49 +117,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---uVynRK3CCs5Kc/T5
-Content-Type: text/plain; charset=us-ascii
+--OgHqLDwYem1ofw4s
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 13, 2026 at 04:13:38PM +0200, Matthieu Rolla wrote:
-> Hello Stefan,
+On Mar  6 16:57, Daniel P. Berrang=C3=A9 wrote:
+> These are both currently set to QEMU specific hardcoded defaults,
+> and in common with other block devices, should allow user overrides.
 >=20
-> Thanks let me know how it goes.
+> The pre-existing serial field should also be length checked to
+> detect & report invalid user input instead of silently truncating.
+>=20
+> Daniel P. Berrang=C3=A9 (4):
+>   include/block: define constants for NVME string fields
+>   hw/nvme: report error for oversized 'serial' parameter
+>   hw/nvme: add user controlled 'model' property
+>   hw/nvme: add user controlled 'firmware-version' property
+>=20
+>  docs/system/devices/nvme.rst | 10 ++++++++++
+>  hw/nvme/ctrl.c               | 31 ++++++++++++++++++++++++++++---
+>  hw/nvme/nvme.h               |  2 ++
+>  include/block/nvme.h         | 10 +++++++---
+>  4 files changed, 47 insertions(+), 6 deletions(-)
+>=20
+> --=20
+> 2.53.0
+>=20
+>=20
 
-[Resending to qemu-devel so others are aware too.]
+Given the reference to prior art on introducing error checking in these
+cases, this LGTM.
 
-Hi Matthieu,
-Windows Server 2022 Build 20348 successfully handles NVMe Namespace List
-changes with your QEMU patch.
+Applied to nvme.for-11.1. Thanks!
 
-When adding the disk a new drive appears as expected.
-
-When removing the disk the drive disappears and there is a Windows Event
-Log event about a surprise removal. Windows probably has a procedure for
-safely removing drives, but this basic test seems like enough
-confirmation that it is working.
-
-Drive letters are preserved across hotplug, so I think everything is
-working as expected.
-
-Stefan
-
---uVynRK3CCs5Kc/T5
-Content-Type: application/pgp-signature; name=signature.asc
+--OgHqLDwYem1ofw4s
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmndJXsACgkQnKSrs4Gr
-c8jodAf+N4I3WvebVSFwlHI3lsXHLgLeaF9M0goznZy21v3UGQDGWtC6RGxQST8z
-srUQ0it9zIN1jpWkZ/R8j26UG5g0JfD8AHyqKw3E2puTWNSLaRsUEDxGCtTGCdRe
-3sqnkMkOz4YLfjAYjOJdQRoIp5hBqkoYJMI9krWbCpJeAelhmmSrpok3ZVPqR9ET
-ciiFNgh/5RPUnmRTtEzNDMbM/WhY/knA7hEEXK/OYE6ZN9Qkb3vTGyFywpDFs5iL
-mdg9K3+vL4iOAgECAnKo5KR3BBgOoTXk7kYR9LRFDaPn7kdpVS1k7sbKUgUWRlYv
-l9g9SPtpogNF7IKtGUcYT79gejzyAA==
-=mL7b
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmndKT0ACgkQTeGvMW1P
+Dem9Dwf+P7v3292YCfbRQDS5z615fDBjfLaSlinoptvL7K5QXulJPTvyKWJyuM6u
+sfbWXDIZ7J21ZnTWeX3PL4iuaCA30cG9LlkSrR+5pJ8ELLjHhBLFz9vNuip0R8T9
+bi6POydXHixA5/m1E6lS4M82Hg4YnrC6+jhELK12BuTzH9TeRd9b8eEPVfxx+Arn
+RIBgIvJ3g68daIhNGB4TrGw1PvmjwnQiblFqUzB5yzwvSKDESwtJ41WZukRSQIfy
+vEZpHyIYmOWrzaYWDWXeHtnSA3gyjdmB7GOwYERPy+jaWL7AAcn5aZi1fwPfoLsF
+2CRCPeRw1TfDyH13uQavUigBV+twCA==
+=xgCE
 -----END PGP SIGNATURE-----
 
---uVynRK3CCs5Kc/T5--
-
+--OgHqLDwYem1ofw4s--
 
