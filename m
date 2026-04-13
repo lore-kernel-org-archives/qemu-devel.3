@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A849F9D0E8
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D701F9D0EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wChSL-0005x7-JH; Tue, 14 Apr 2026 13:21:45 -0400
+	id 1wChSK-0005va-7I; Tue, 14 Apr 2026 13:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wChSE-0005sY-He; Tue, 14 Apr 2026 13:21:40 -0400
+ id 1wChSE-0005sV-8t; Tue, 14 Apr 2026 13:21:40 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1wChSC-0007LG-Ie; Tue, 14 Apr 2026 13:21:38 -0400
-DKIM-Signature: a=rsa-sha256; bh=KLpuStIUCtdEwm7bU4ULI48OBxTw38QY1td1/B8iSN4=; 
+ id 1wChSB-0007Kc-HL; Tue, 14 Apr 2026 13:21:37 -0400
+DKIM-Signature: a=rsa-sha256; bh=bpoRrUp4pyhuvp+Q79o5fEv94I7SFuni9yO5BtCXukE=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
  t=1776187286; v=1;
- b=b9MLvEGndhNeWJrtb/X660IC5s7kKSBsc2VnKodQ/wVhadUZe72jwJsPuYr6AWA5pnkcHpq1
- LXgEcNv2MTtLdA9jE7zs2RYyY7KBvP3hs4jQ+c01wojqWJ+qzL1s6sH916/cRn8fp2CdTFuWrTw
- VY14E2+SxDb38VB07pRoz0HU8zZDt7iWZ1d1boclAuB+6w5lbG+wnVwTyVOTNea8CtQFiBBnRxG
- /kTAc4LTlqYrsOP6eGYTm+JeYPAvhZycYQmnZUPXal09Ye/mpFHrqcNP2vbnn+SGAEGxCQ+o66c
- ecAqnDZK/rHbRErVDsoW7GmntUbn95PK3CAoKVc0gxuTg==
+ b=V8hSqag8a/UdhnMNak+X3IsUuqiWjVwl2E2Slf4oxj3SRa+FBY1JzRLIiOShtMdCev9Ia3Ku
+ knlEHvL73PKlXlGLcmNsepUkjtpXRUreXp7AbyEr7/1W+bh/Rs31RoHP/t1jNf1eM4BB0gtaVAT
+ QwWN/dwgp40LLQlqPHky4TqshQUmdYYsP6f50kHHOX2LDT+4qxdpxav9LQ52Vep/iq+yv8ki65Z
+ EfPVbZu4gOD2N2Z4FS9Gx01EK/Eoz1uaGaPJbsR7OqARXCcoxlHOz5Y1xnSrYpF4CvOLfGzCB7Z
+ 1nyxYfS4e2NS5QkovMJxX7KI2U4NCMpxud8/4e/UQZReQ==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id B43F220A3D;
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 46FD920A39;
  Tue, 14 Apr 2026 17:21:26 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Tue, 07 Apr 2026 15:03:54 +0100
-Subject: [PATCH qemu v3 09/10] ot_uart: add tracing
-Message-ID: <177618728515.4917.14466194789826252277-9@git.sr.ht>
+Date: Mon, 13 Apr 2026 17:27:19 +0100
+Subject: [PATCH qemu v3 05/10] ot_uart: gather similar behaviours togeter in
+ register read and write
+Message-ID: <177618728515.4917.14466194789826252277-5@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177618728515.4917.14466194789826252277-0@git.sr.ht>
 To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
@@ -50,10 +51,10 @@ Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
  helo=mail-a.sr.ht
-X-Spam_score_int: 17
-X-Spam_score: 1.7
-X-Spam_bar: +
-X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
  DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
@@ -75,148 +76,224 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Lex Bailey <lex.bailey@lowrisc.org>
 
-Added some tracing to the OpenTitan UART for transparency when debugging
+the register read and write functions are each a large switch statement with
+many similar behaviours in, this is mostly for enabling the use of specific
+register names inside of log messages. this commit adds a lookup table for
+register names and uses that instead, allowing much of the code in the regist=
+er
+read and write functions to be deduplicated.
+
+the write function was also missing a switch case for R_ALERT_TEST, so I added
+that in this commit since it has a very simple implementation for now
 
 Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
 ---
- hw/char/ot_uart.c         | 19 +++++++++++++++++++
- hw/char/trace-events      |  8 ++++++++
- hw/riscv/opentitan.c      |  1 +
- include/hw/char/ot_uart.h |  1 +
- 4 files changed, 29 insertions(+)
+ hw/char/ot_uart.c | 106 +++++++++++++++++++++++-----------------------
+ 1 file changed, 53 insertions(+), 53 deletions(-)
 
 diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-index d00f7bee66..910bef00f2 100644
+index f621fd3eae..2247db7110 100644
 --- a/hw/char/ot_uart.c
 +++ b/hw/char/ot_uart.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "hw/char/ot_uart.h"
- #include "qemu/fifo8.h"
-+#include "hw/core/cpu.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
-@@ -28,6 +29,7 @@
- #include "migration/vmstate.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-+#include "trace.h"
+@@ -99,9 +99,6 @@ REG32(TIMEOUT_CTRL, 0x30)
+      R_CTRL_LLPBK_MASK | R_CTRL_PARITY_EN_MASK | R_CTRL_PARITY_ODD_MASK | \
+      R_CTRL_RXBLVL_MASK | R_CTRL_NCO_MASK)
 =20
- REG32(INTR_STATE, 0x00)
-     SHARED_FIELD(INTR_TX_WATERMARK, 0, 1)
-@@ -126,6 +128,9 @@ static void ot_uart_update_irqs(OtUARTState *s)
+-#define CTRL_SUP_MASK \
+-    (R_CTRL_RX_MASK | R_CTRL_TX_MASK | R_CTRL_SLPBK_MASK | R_CTRL_NCO_MASK)
+-
+ #define OT_UART_NCO_BITS     16
+ #define OT_UART_TX_FIFO_SIZE 128
+ #define OT_UART_RX_FIFO_SIZE 128
+@@ -112,6 +109,26 @@ REG32(TIMEOUT_CTRL, 0x30)
+ #define R_LAST_REG (R_TIMEOUT_CTRL)
+ #define REGS_COUNT (R_LAST_REG + 1u)
+ #define REGS_SIZE  (REGS_COUNT * sizeof(uint32_t))
++#define REG_NAME(_reg_) \
++    ((((_reg_) < REGS_COUNT) && REG_NAMES[_reg_]) ? REG_NAMES[_reg_] : "?")
++
++#define REG_NAME_ENTRY(_reg_) [R_##_reg_] =3D stringify(_reg_)
++static const char *REG_NAMES[REGS_COUNT] =3D {
++    REG_NAME_ENTRY(INTR_STATE),
++    REG_NAME_ENTRY(INTR_ENABLE),
++    REG_NAME_ENTRY(INTR_TEST),
++    REG_NAME_ENTRY(ALERT_TEST),
++    REG_NAME_ENTRY(CTRL),
++    REG_NAME_ENTRY(STATUS),
++    REG_NAME_ENTRY(RDATA),
++    REG_NAME_ENTRY(WDATA),
++    REG_NAME_ENTRY(FIFO_CTRL),
++    REG_NAME_ENTRY(FIFO_STATUS),
++    REG_NAME_ENTRY(OVRD),
++    REG_NAME_ENTRY(VAL),
++    REG_NAME_ENTRY(TIMEOUT_CTRL),
++};
++#undef REG_NAME_ENTRY
+=20
+ static void ot_uart_update_irqs(OtUARTState *s)
  {
-     uint32_t state_masked =3D s->regs[R_INTR_STATE] & s->regs[R_INTR_ENABLE];
+@@ -304,23 +321,14 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
+ unsigned int size)
+     OtUARTState *s =3D opaque;
+     uint64_t retvalue =3D 0;
 =20
-+    trace_ot_uart_irqs(s->ot_id, s->regs[R_INTR_STATE], s->regs[R_INTR_ENABL=
-E],
-+                       state_masked);
-+
-     for (int index =3D 0; index < OT_UART_IRQ_NUM; index++) {
-         bool level =3D (state_masked & (1U << index)) !=3D 0;
-         qemu_set_irq(s->irqs[index], level);
-@@ -402,6 +407,10 @@ static uint64_t ot_uart_get_baud(OtUARTState *s)
-     baud *=3D clock_get_hz(s->f_clk);
-     baud >>=3D 20;
+-    switch (addr >> 2) {
++    hwaddr reg =3D R32_OFF(addr);
++    switch (reg) {
+     case R_INTR_STATE:
+-        retvalue =3D s->regs[R_INTR_STATE];
+-        break;
+     case R_INTR_ENABLE:
+-        retvalue =3D s->regs[R_INTR_ENABLE];
+-        break;
+-    case R_INTR_TEST:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: wdata is write only\n", __func__);
+-        break;
+-
+     case R_CTRL:
+-        retvalue =3D s->regs[R_CTRL];
+-        break;
++    case R_FIFO_CTRL:
+     case R_STATUS:
+-        retvalue =3D s->regs[R_STATUS];
++        retvalue =3D s->regs[reg];
+         break;
 =20
-+    if (baud) {
-+        trace_ot_uart_check_baudrate(s->ot_id, baud);
-+    }
-+
-     return baud;
- }
-=20
-@@ -503,6 +512,10 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr, =
+     case R_RDATA:
+@@ -336,14 +344,7 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr, =
 unsigned int size)
-         return 0;
-     }
+             }
+         }
+         break;
+-    case R_WDATA:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: wdata is write only\n", __func__);
+-        break;
 =20
-+    uint32_t pc =3D current_cpu->cc->get_pc(current_cpu);
-+    trace_ot_uart_io_read_out(s->ot_id, (uint32_t)addr, REG_NAME(reg),
-+                              retvalue, pc);
+-    case R_FIFO_CTRL:
+-        retvalue =3D s->regs[R_FIFO_CTRL];
+-        break;
+     case R_FIFO_STATUS:
+         retvalue =3D s->regs[R_FIFO_STATUS];
+=20
+@@ -354,21 +355,21 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr,=
+ unsigned int size)
+                       "%s: RX fifos are not supported\n", __func__);
+         break;
+=20
+-    case R_OVRD:
+-        retvalue =3D s->regs[R_OVRD];
+-        qemu_log_mask(LOG_UNIMP,
+-                      "%s: ovrd is not supported\n", __func__);
+-        break;
+     case R_VAL:
+-        retvalue =3D s->regs[R_VAL];
+-        qemu_log_mask(LOG_UNIMP,
+-                      "%s: val is not supported\n", __func__);
+-        break;
++    case R_OVRD:
+     case R_TIMEOUT_CTRL:
+-        retvalue =3D s->regs[R_TIMEOUT_CTRL];
++        retvalue =3D s->regs[reg];
+         qemu_log_mask(LOG_UNIMP,
+-                      "%s: timeout_ctrl is not supported\n", __func__);
++                      "%s: %s is not supported\n", __func__, REG_NAME(reg));
++        break;
 +
-     return retvalue;
- }
-=20
-@@ -514,6 +527,9 @@ static void ot_uart_write(void *opaque, hwaddr addr, uint=
++    case R_ALERT_TEST:
++    case R_INTR_TEST:
++    case R_WDATA:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: %s is write only\n", __func__, REG_NAME(reg));
+         break;
++
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
+@@ -384,7 +385,9 @@ static void ot_uart_write(void *opaque, hwaddr addr, uint=
 64_t val64,
+     OtUARTState *s =3D opaque;
+     uint32_t value =3D val64;
 =20
-     hwaddr reg =3D R32_OFF(addr);
-=20
-+    uint32_t pc =3D current_cpu->cc->get_pc(current_cpu);
-+    trace_ot_uart_io_write(s->ot_id, (uint32_t)addr, REG_NAME(reg), value, p=
-c);
+-    switch (addr >> 2) {
++    hwaddr reg =3D R32_OFF(addr);
 +
-     switch (reg) {
++    switch (reg) {
      case R_INTR_STATE:
          /* Write 1 clear */
-@@ -665,6 +681,7 @@ static const VMStateDescription vmstate_ot_uart =3D {
- };
+         value &=3D INTR_MASK;
+@@ -401,7 +404,11 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
+t64_t val64,
+         s->regs[R_INTR_STATE] |=3D value;
+         ot_uart_update_irqs(s);
+         break;
+-
++    case R_ALERT_TEST:
++        value &=3D R_ALERT_TEST_FATAL_FAULT_MASK;
++        s->regs[reg] =3D value;
++        /* This will also set an IRQ once the alert handler is added */
++        break;
+     case R_CTRL:
+         s->regs[R_CTRL] =3D value;
 =20
- static const Property ot_uart_properties[] =3D {
-+    DEFINE_PROP_STRING("ot-id", OtUARTState, ot_id),
-     DEFINE_PROP_CHR("chardev", OtUARTState, chr),
-     DEFINE_PROP_BOOL("oversample-break", OtUARTState, oversample_break, fals=
-e),
-     DEFINE_PROP_BOOL("toggle-break", OtUARTState, toggle_break, false),
-@@ -716,6 +733,8 @@ static void ot_uart_realize(DeviceState *dev, Error **err=
-p)
- {
-     OtUARTState *s =3D OT_UART(dev);
-=20
-+    g_assert(s->ot_id);
+@@ -437,15 +444,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
+t64_t val64,
+             s->char_tx_time =3D (NANOSECONDS_PER_SECOND / baud) * 10;
+         }
+         break;
+-    case R_STATUS:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: status is read only\n", __func__);
+-        break;
+-
+-    case R_RDATA:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: rdata is read only\n", __func__);
+-        break;
+     case R_WDATA:
+         uart_write_tx_fifo(s, value);
+         break;
+@@ -462,10 +460,6 @@ static void ot_uart_write(void *opaque, hwaddr addr, uin=
+t64_t val64,
+             s->tx_level =3D 0;
+         }
+         break;
+-    case R_FIFO_STATUS:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: fifo_status is read only\n", __func__);
+-        break;
+     case R_OVRD:
+         if (value & R_OVRD_TXEN_MASK) {
+             qemu_log_mask(LOG_UNIMP, "%s: OVRD.TXEN is not supported\n",
+@@ -473,16 +467,22 @@ static void ot_uart_write(void *opaque, hwaddr addr, ui=
+nt64_t val64,
+         }
+         s->regs[R_OVRD] =3D value & R_OVRD_TXVAL_MASK;
+         break;
+-    case R_VAL:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: val is read only\n", __func__);
+-        break;
 +
-     s->fifo_trigger_handle =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                           fifo_trigger_update, s);
-=20
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index a3fcc77287..17cc9ad2d5 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -141,3 +141,11 @@ stm32f2xx_usart_receive(char *id, uint8_t chr) " %s rece=
-iving '%c'"
- # riscv_htif.c
- htif_uart_write_to_host(uint8_t device, uint8_t cmd, uint64_t payload) "devi=
-ce: %u cmd: %02u payload: %016" PRIx64
- htif_uart_unknown_device_command(uint8_t device, uint8_t cmd, uint64_t paylo=
-ad) "device: %u cmd: %02u payload: %016" PRIx64
+     case R_TIMEOUT_CTRL:
+         s->regs[R_TIMEOUT_CTRL] =3D
+             value & (R_TIMEOUT_CTRL_EN_MASK | R_TIMEOUT_CTRL_VAL_MASK);
+         qemu_log_mask(LOG_UNIMP,
+                       "%s: timeout_ctrl is not supported\n", __func__);
+         break;
 +
-+# ot_uart.c
-+ot_uart_check_baudrate(const char *id, unsigned baud) "%s: %u bps"
-+ot_uart_connect_input_clock(const char *id, const char * srcname) "%s: %s"
-+ot_uart_debug(const char *id, const char *msg) "%s: %s"
-+ot_uart_io_read_out(const char *id, uint32_t addr, const char *regname, uint=
-32_t val, uint32_t pc) "%s: addr=3D0x%02x (%s), val=3D0x%x, pc=3D0x%x"
-+ot_uart_io_write(const char *id, uint32_t addr, const char *regname, uint32_=
-t val, uint32_t pc) "%s: addr=3D0x%02x (%s), val=3D0x%x, pc=3D0x%x"
-+ot_uart_irqs(const char *id, uint32_t active, uint32_t mask, uint32_t eff) "=
-%s: act:0x%08x msk:0x%08x eff:0x%08x"
-diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
-index 97c33d1b53..163d3ac3d3 100644
---- a/hw/riscv/opentitan.c
-+++ b/hw/riscv/opentitan.c
-@@ -133,6 +133,7 @@ static void lowrisc_ibex_soc_init(Object *obj)
-     object_initialize_child(obj, "plic", &s->plic, TYPE_SIFIVE_PLIC);
-=20
-     object_initialize_child(obj, "uart", &s->uart, TYPE_OT_UART);
-+    object_property_set_str(OBJECT(&s->uart), "ot-id", "uart0", &error_fatal=
-);
-=20
-     object_initialize_child(obj, "timer", &s->timer, TYPE_IBEX_TIMER);
-=20
-diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
-index 4dc51142f7..2f538e1f6f 100644
---- a/include/hw/char/ot_uart.h
-+++ b/include/hw/char/ot_uart.h
-@@ -54,6 +54,7 @@ struct OtUARTState {
-     bool in_break;
-     guint watch_tag;
-=20
-+    char *ot_id;
-     Clock *f_clk;
-=20
-     CharFrontend chr;
++    case R_STATUS:
++    case R_RDATA:
++    case R_FIFO_STATUS:
++    case R_VAL:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: %s is read only\n", __func__, REG_NAME(reg));
++        break;
++
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
 --=20
 2.49.1
 
