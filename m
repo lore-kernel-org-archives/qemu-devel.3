@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A4EF531EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 05:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 272E0F531EF
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 05:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCWSo-0003pK-Rj; Tue, 14 Apr 2026 01:37:30 -0400
+	id 1wCWSn-0003ot-6g; Tue, 14 Apr 2026 01:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCWSi-0003nT-BR
+ id 1wCWSi-0003nU-CV
  for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:24 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCWSg-00043h-1k
+ id 1wCWSg-00043Y-77
  for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:24 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id A3E511A240D;
- Tue, 14 Apr 2026 07:37:20 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id E3DB11A242A;
+ Tue, 14 Apr 2026 07:37:19 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6DB2E1A242D;
- Tue, 14 Apr 2026 07:37:20 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id AD3611A242D;
+ Tue, 14 Apr 2026 07:37:19 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 868571802228;
- Tue, 14 Apr 2026 13:37:19 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id BDC291800098;
+ Tue, 14 Apr 2026 13:37:18 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCHv5 02/15] hw/misc/imx8mp_analog: Add property to analog device
-Date: Tue, 14 Apr 2026 11:07:02 +0530
-Message-Id: <20260414053715.1378021-3-gaurav.sharma_7@nxp.com>
+Subject: [PATCHv5 00/15] Adding comprehensive support for i.MX8MM EVK board
+Date: Tue, 14 Apr 2026 11:07:00 +0530
+Message-Id: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
-References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
@@ -68,80 +66,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add configurable properties for register reset values that differ
-between i.MX 8M variants (Plus, Mini, etc.). This allows the same
-device implementation to be shared across multiple SoCs.
+Changes in v5:
+- Fixed SoC object reference counting by using object_new_with_props()
+  instead of object_new() + object_property_add_child()
+- Merged imx8mm-evk.rst documentation into imx8mp-evk.rst to avoid
+  duplication and updated the title accordingly
+- Added on-chip RAM (OCRAM) support to match iMX8MP dev
 
-Properties added:
-- arm-pll-fdiv-ctl0-reset: ARM PLL divider control reset value
+Changes in v4:
+- Update Maintainers file
+- Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
+  specific property
+- Split up the patch that enabled CCM and Analog in the previous
+  revision. Now we have 3 patches to enable CCM and Analog in iMX8MM
+- Updated copyrights
+- Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
 
-Default value is set to match i.MX 8MP reset value (0x000FA031).
-This can be overridden in the variant like iMX8MM with its own
-reset value.
+Changes in v3:
+- Minor documentation change - Added KVM Acceleration section in docs/system/arm/imx8mm-evk.rst
+
+Changes in v2:
+- Fixed the DTB offset in functional testing script test_imx8mm_evk.py
+  and preserved alphabetical order of machine names in tests/functional/aarch64/meson.build
+- Fixed a typo and updated the documentation
+- Modified structures type to static const in fsl-imx8mm.c wherever
+  applicable.
+- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk.c. This
+  is needed because the default DTB in the iMX LF BSP images have CSI
+  and DSI enabled. Developers/Hobbyists using these BSP images will
+  observe CSI and DSI crash logs on the console since these are unimplemented.
+  With this change, both debian and iMX LF images will boot up without any issues.
+
+Changes in v1:
+
+This patch series adds support for the NXP i.MX8MM EVK (Evaluation Kit)
+board to QEMU, enabling emulation of this ARM Cortex-A53 based development
+platform.
+
+The series includes:
+
+1. Core peripheral support (CCM clock controller, Analog module)
+2. GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
+3. GPIO,I2C,SPI,USDHC and USB Emulation support
+4. PCIe and ENET Controller Emulation support
+5. Documentation and functional test included
+
+Key features ported:
+- Basic boot support with Linux
+- UART console for serial communication
+- Interrupt handling
+- Clock and power management infrastructure
+
+Testing:
+- Linux kernel boots to console
 
 Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
----
- hw/misc/imx8mp_analog.c         | 12 +++++++++++-
- include/hw/misc/imx8mp_analog.h |  3 +++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com> 
 
-diff --git a/hw/misc/imx8mp_analog.c b/hw/misc/imx8mp_analog.c
-index 23ffae84f8..592512071c 100644
---- a/hw/misc/imx8mp_analog.c
-+++ b/hw/misc/imx8mp_analog.c
-@@ -12,6 +12,7 @@
- #include "qemu/log.h"
- 
- #include "hw/misc/imx8mp_analog.h"
-+#include "hw/core/qdev-properties.h"
- #include "migration/vmstate.h"
- 
- #define ANALOG_PLL_LOCK BIT(31)
-@@ -51,7 +52,10 @@ static void imx8mp_analog_reset(DeviceState *dev)
-     s->analog[ANALOG_VPU_PLL_LOCKD_CTRL] = 0x0010003f;
-     s->analog[ANALOG_VPU_PLL_MNIT_CTRL] = 0x00280081;
-     s->analog[ANALOG_ARM_PLL_GEN_CTRL] = 0x00000810;
--    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = 0x000fa031;
-+
-+    /* Use property value instead of hardcoded */
-+    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = s->arm_pll_fdiv_ctl0_reset;
-+
-     s->analog[ANALOG_ARM_PLL_LOCKD_CTRL] = 0x0010003f;
-     s->analog[ANALOG_ARM_PLL_MNIT_CTRL] = 0x00280081;
-     s->analog[ANALOG_SYS_PLL1_GEN_CTRL] = 0x0aaaa810;
-@@ -138,11 +142,17 @@ static const VMStateDescription imx8mp_analog_vmstate = {
-     },
- };
- 
-+static const Property imx8mp_analog_properties[] = {
-+    DEFINE_PROP_UINT32("arm-pll-fdiv-ctl0-reset", IMX8MPAnalogState,
-+                       arm_pll_fdiv_ctl0_reset, 0x000fa031), /* imx8mp default */
-+};
-+
- static void imx8mp_analog_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     device_class_set_legacy_reset(dc, imx8mp_analog_reset);
-+    device_class_set_props(dc, imx8mp_analog_properties);
-     dc->vmsd  = &imx8mp_analog_vmstate;
-     dc->desc  = "i.MX 8M Plus Analog Module";
- }
-diff --git a/include/hw/misc/imx8mp_analog.h b/include/hw/misc/imx8mp_analog.h
-index 6996e53771..0765e607b9 100644
---- a/include/hw/misc/imx8mp_analog.h
-+++ b/include/hw/misc/imx8mp_analog.h
-@@ -76,6 +76,9 @@ struct IMX8MPAnalogState {
-     } mmio;
- 
-     uint32_t analog[ANALOG_MAX];
-+
-+    /* Property for variant-specific reset values */
-+    uint32_t arm_pll_fdiv_ctl0_reset;
- };
- 
- #endif /* IMX8MP_ANALOG_H */
+
+Gaurav Sharma (15):
+  hw/arm: Add the i.MX 8MM EVK(Evaluation Kit) board
+  hw/misc/imx8mp_analog: Add property to analog device
+  hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
+  hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
+  hw/arm/fsl-imx8mm: Implemented support for SNVS
+  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
+  hw/arm/fsl-imx8mm: Add PCIe support
+  hw/arm/fsl-imx8mm: Add GPIO controllers
+  hw/arm/fsl-imx8mm: Adding support for I2C emulation
+  hw/arm/fsl-imx8mm: Adding support for SPI controller
+  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
+  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
+  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
+  hw/arm/fsl-imx8mm: Adding support for USB controller
+  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
+
+ MAINTAINERS                                 |  10 +
+ docs/system/arm/imx8mp-evk.rst              |  33 +-
+ docs/system/target-arm.rst                  |   1 +
+ hw/arm/Kconfig                              |  24 +
+ hw/arm/fsl-imx8mm.c                         | 704 ++++++++++++++++++++
+ hw/arm/imx8mm-evk.c                         | 130 ++++
+ hw/arm/meson.build                          |   2 +
+ hw/misc/imx8mp_analog.c                     |  12 +-
+ hw/timer/imx_gpt.c                          |  26 +
+ include/hw/arm/fsl-imx8mm.h                 | 242 +++++++
+ include/hw/misc/imx8mp_analog.h             |   3 +
+ include/hw/timer/imx_gpt.h                  |   2 +
+ tests/functional/aarch64/meson.build        |   2 +
+ tests/functional/aarch64/test_imx8mm_evk.py |  67 ++
+ 14 files changed, 1251 insertions(+), 7 deletions(-)
+ create mode 100644 hw/arm/fsl-imx8mm.c
+ create mode 100644 hw/arm/imx8mm-evk.c
+ create mode 100644 include/hw/arm/fsl-imx8mm.h
+ create mode 100755 tests/functional/aarch64/test_imx8mm_evk.py
+
 -- 
 2.34.1
 
