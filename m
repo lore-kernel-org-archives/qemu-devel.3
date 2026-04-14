@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9050F9D0D5
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 15:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DCB1F9D0D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 15:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCfHr-0001kL-K9; Tue, 14 Apr 2026 11:02:47 -0400
+	id 1wCfQy-0003E4-2H; Tue, 14 Apr 2026 11:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCfHq-0001k5-Aa
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:02:46 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCfQr-0003Dd-LU
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:12:06 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCfHn-0007kt-Jq
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:02:45 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso53663435e9.3
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 08:02:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCfQp-0001nI-Fm
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:12:05 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso53780355e9.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 08:12:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776178957; x=1776783757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776179518; x=1776784318; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Tz/4vUIMP10DDMNiOy4QZPaEX12h2s2ROTRljbT+BTY=;
- b=CuyNUF8PMRSYPIGOTFGbyT+386HmIQu+dom6/hbbzOg14kaajmlsUrBUCUx2st9ygA
- IjSkdrvw+fRRPyXiHPHHbMXH3OfnbwWMCIbkPD05r0TxVb0p0q1mZs4XFUv3xGdd4EIg
- 6/pDvrFLE3gaDjO9kl0VtdPK7ePVEIvN9DIOEcnma83oiV/323dCMbylWBIZj2zJJYSQ
- VAV/8gZfDwHSbmrLXX7hmy3GdSaMskVKL0l/EndBrcezQvmD7kouy2k8gPy6OD2UV6W8
- LDIxLOASZqttI7avMWrq+pGzz5JcSn5qvb2aM6tFhAPWUZNAPPw5NnIxd3Rd6y+FNydV
- bLnA==
+ bh=WYSQ0wBjMnhHj6/hkTkot0uG8kzpLRFXNRlLGEFsJjg=;
+ b=ttRRgjpPKjViWKJzX2tCVygP2n1Lz8mZZladYUnHNufACTVOao3ILbA6qUdbw2wKfq
+ NUhGNfoDAtt9bDqKDHga7GAIrztJUPi7iWlLkUpB+jlUjg/xm1B4O4Gpzp79dGG3FJYX
+ 0hKP4CJJUCOqn+a7AY7bZgEkiuSgRdvBuFf9951U73SJ6vZJkXP0ssSZxCX7CrzDQ54R
+ E9Sjg1XWl0Zqdrez0SHnmtJg5UQe19Mg1Tr71Ayl3mJHG7d4DRR1j9mQnFlK2apz63ix
+ dq3/QNFb+llVtAWLe4asdE2FgkawjBwZFQ5atnaOATA845OZbTAh5fYqBCOpleK+7jrq
+ yp6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776178957; x=1776783757;
+ d=1e100.net; s=20251104; t=1776179518; x=1776784318;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Tz/4vUIMP10DDMNiOy4QZPaEX12h2s2ROTRljbT+BTY=;
- b=srkSv8je8nj6pinKKQTMxkBtpT3+FxAIWFrR9j8eIkEgNo5lz8DkRKAurXGRFeTYto
- LKdDdRPT5vhiDxNusrMZ6itQ1VqENWuhcq/Eu+uaSw8dmzSPigpXV0F1aq/X03iyvSB9
- rVVmqOT9Sbz2HTi3TwuT6TFVv7n/ZsHkgSIMnfrdn7XYRVBjdBz/fclL1wGvy06+4FOg
- +IFEu/GYpIOFE0nxNCRflAPFrZ4oPMeQEqPV/9MQR7KhArm7zA2dKUbd7V5Kkd3ffiwf
- usqC4IvOERh2cqSbZg2h1OxB++E3j6FjLMbZ/G7Uw6uwAqazpjh1jQAeC0wYKpsXmIQo
- 8HNg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8ulmAM4OLc7Tvhdq6uT3IhzLodgut3rZRc0+heiyRq0WOIk/Hmct3RRgsRgxLH+SNfjXJINaOLJOVB@nongnu.org
-X-Gm-Message-State: AOJu0YywodZD4r3sOMFhM3+DSuFY95th91GkvhT+vVZb7Z6Qkm63QEo5
- RdtX7BDSjSH178rMCQJBCpadaYnoJbdTrGu8ll1mPYI0y8/jbRTKe/cwA15Qg8daoi8=
-X-Gm-Gg: AeBDieta6mmVBShylT0ORrDb69cYp6pfqxd6I/RZOUXey2gMm8mTmiIIS6wvDxsqsIu
- K4BRtQRaiVJ5Gw2GoeOq5IeVDuj7IBjcgbZanhfKLbS1IAu1pkjP2VcFdqQQIrvQD3NiLrLLbYd
- NBUC1g+nM7BFlC3aUkdfV1JqmS6LHsbDHPza8CmOAzDUrw6YTwWlWjm6SGtT4nlMq4a4GXPpUNz
- 6Wq84+LxjX7aPwPkNuwG3hn3RoUiF7h4AgsLnAFyS/k/YYH3oXtgoruLTRI+z91PoaZ+f8lQAfo
- JeHIB5GSztgye24yAxEUUwAilk8tmJ25YMNY/ytABGMCEMSiYp7oVcePAnMGqmMy24IwAtDRKQ/
- UgGu+9GWls+nazhN7a5Gd385XHnKUyqU9604tzOb1GHraHLhX70AsWkphKIbjznoxllTVCBTvQh
- VnDGGXaO3sDiL95KswW46HLGcOyJbdzo8YpAuQHGfud1NnDzGkM9Tu4iBXBdFlmSkbFqVpvwRuM
- gUB
-X-Received: by 2002:a05:600c:46cb:b0:488:c51f:e04e with SMTP id
- 5b1f17b1804b1-488d67f3a0fmr249223415e9.13.1776178956826; 
- Tue, 14 Apr 2026 08:02:36 -0700 (PDT)
+ bh=WYSQ0wBjMnhHj6/hkTkot0uG8kzpLRFXNRlLGEFsJjg=;
+ b=nd4Wov87CvwRUZbXNDLPkhfaVL5hm+Eo2KRYeiinltIAzygzOpoXawiLq/uzd83Xag
+ uY7/61nf194Ahml+bMMT71Nrx+iQcBYMoUub23FRpUWEtec/L0PWd4f78y25brqOsXTr
+ oWl/IQBLORG0maKisdzKu5rLmaJTElEaOLKKKFE3jOz/13Y3EyW0xytiAlEEzXzD/eq4
+ sMGXPOx9QzG7Uf23nzIA87jzF/+2f9E62Ac+JncPp3akNE7NS0XH6byk2qXU4eXiavTW
+ iml1mftTRMMSZ9fHIC4elIdgOog35N+/PIw7zUbv24wrzO7mSZNF0pZBy0gSLVYG0ASB
+ UCOQ==
+X-Gm-Message-State: AOJu0Yz5PYbkfwROHLRpjHRmyMYn2rfxi/mfYyjkUf8N7u2UYPDhnX/x
+ xrI9U2NovYmUbCwE8cU5smYgiHRi6CUcj+awS9IaZCIF96/aOl2LEqGz0/h7Os6DgvXL/hUHljE
+ eIePmpVI=
+X-Gm-Gg: AeBDiesxOH889Y4Lqfgjrx2Xg8mLpAultz1UIiNrY6fpAxHp31qiqMxL86w4ozZQjKt
+ LHflKtTKDF0qvw5Z8aLxp2kU8p8tb1Cer+ls4vY+jaGBkSvnaEFqkZcAEEC9EYj67BzpOw4VRXi
+ 2gxqCLSdTfr+zqExms+lgVKveJoujJpiZYnPCJ2bpw6euF7DfE3ySJGrrkCGzrckwAohppMZOKf
+ 0xWuzzFQuKJM/kuPQC2Gg7QASrNJJ2z1mHyAN1TLNL/PZ9wgKF75EeeUp/mxyspYZexzozfiM5G
+ 3ggfVjiC845tadBFh+ttLOHhlaQwd94cycguC0M7FgbsGQE0TWfgKRJlNf6WTGZGxUquolq1SEh
+ SI0ZPWxUgbh7BhCpZKhPAwZvFQSMBZUljvD+FXmljKXrLuhT7L74mH3SecyjE1HIrDVXrqwlLex
+ 5JD/dlnOT7nCRrkIB4iFBTt5LhGs7zeQSJQ6e0xM4C4e+I23639WMSNIN2ZptK+op2xfI6Nzc13
+ w1d
+X-Received: by 2002:a05:600c:45c9:b0:480:4a8f:2d5c with SMTP id
+ 5b1f17b1804b1-488d689cf9emr235255415e9.29.1776179518314; 
+ Tue, 14 Apr 2026 08:11:58 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ee042ff9sm65430185e9.14.2026.04.14.08.02.35
+ 5b1f17b1804b1-488ede25a12sm50896635e9.9.2026.04.14.08.11.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 08:02:35 -0700 (PDT)
-Message-ID: <8d358e4b-d6a0-417f-b357-99a0ae06164e@linaro.org>
-Date: Tue, 14 Apr 2026 17:02:34 +0200
+ Tue, 14 Apr 2026 08:11:57 -0700 (PDT)
+Message-ID: <ec43f756-60f0-4f09-a8c6-1a83b6d41e9a@linaro.org>
+Date: Tue, 14 Apr 2026 17:11:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/6] hw/sd/sdcard: Add erase-blocks-as-zero option.
+Subject: Re: [PULL 0/3] Misc HW patches for 2026-04-14
 Content-Language: en-US
-To: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-References: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
- <20260204-sdcard-performance-b4-v3-5-dc1cf172ee57@avm.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260414132100.53861-1-philmd@linaro.org>
+ <CAFEAcA9-oUv7sycLCCtL-Css-2mi+5T-UBs4aKQB-KF6P-zUpg@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260204-sdcard-performance-b4-v3-5-dc1cf172ee57@avm.de>
+In-Reply-To: <CAFEAcA9-oUv7sycLCCtL-Css-2mi+5T-UBs4aKQB-KF6P-zUpg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,87 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/26 14:22, Christian Speich wrote:
-> Currently, erased blocks are filled with 0xFF. However SCR Bit 55
-> (DATA_STAT_AFTER_ERASE) indicates that an erase produces zeros. One of
-> them is wrong.
+On 14/4/26 15:47, Peter Maydell wrote:
+> On Tue, 14 Apr 2026 at 14:21, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> The following changes since commit becd22fdc2a071783d9e04421526633772b3b98c:
+>>
+>>    Update version for v11.0.0-rc3 release (2026-04-09 21:18:56 +0100)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://github.com/philmd/qemu.git tags/hw-misc-20260414
+>>
+>> for you to fetch changes up to 31ebdb207f99bf7d72abbbb82fced15d161a548f:
+>>
+>>    ati-vga: fix unsigned integer overflow in cursor bounds checks (2026-04-14 11:35:13 +0200)
+>>
+>> ----------------------------------------------------------------
+>> Misc HW patches
+>>
+>> Few more VGA & PPC fixes.
+>> ----------------------------------------------------------------
+>>
+>> Junjie Cao (1):
+>>    ati-vga: fix unsigned integer overflow in cursor bounds checks
+>>
+>> Mohamed Mediouni (1):
+>>    hw: q35: fix VGA text console with SMM disabled
+>>
+>> Vivien LEGER (1):
+>>    hw/ppc/e500: fix bus-frequency property hardcoded to zero in CPU FDT
+>>      node
 > 
-> This patch does two things.
-> 
-> First it fixes the reporting of DATA_STAT_AFTER_ERASE in SCR to
-> correctly reflect the content of erased blocks. We also increase the
-> Product Revision (REV in CID) to indicate to the guest that
-> DATA_STAT_AFTER_ERASE is now reliable.
-> 
-> Secondly, we introduce a erase-blocks-as-zero option, which allows the
-> user to choose if erased blocks should contain 0xFF or 0x00. The default
-> is still 0xFF to remain compatible with current users.
-> 
-> Signed-off-by: Christian Speich <c.speich@avm.de>
-> ---
->   hw/sd/sd.c | 15 +++++++++++++--
->   1 file changed, 13 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index c9cfd3620b563fbe7520cfe361e14b57cd8f7472..5ddaa08d77b6b7606005fb59f42f107d254d6e5c 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -162,6 +162,7 @@ struct SDState {
->       /* Static properties */
->   
->       uint8_t spec_version;
-> +    bool erase_blocks_as_zero;
->       uint64_t boot_part_size;
->       uint64_t rpmb_part_size;
->       BlockBackend *blk;
-> @@ -439,6 +440,9 @@ static void sd_set_scr(SDState *sd)
->       sd->scr[0] |= 2;            /* Spec Version 2.00 or Version 3.0X */
->       sd->scr[1] = (2 << 4)       /* SDSC Card (Security Version 1.01) */
->                    | 0b0101;      /* 1-bit or 4-bit width bus modes */
-> +    if (!sd->erase_blocks_as_zero) {
-> +        sd->scr[1] |= (1 << 7); /* DATA_STAT_AFTER_ERASE: Erase produces 0xFF */
-> +    }
->       sd->scr[2] = 0x00;          /* Extended Security is not supported. */
->       if (sd->spec_version >= SD_PHY_SPECv3_01_VERS) {
->           sd->scr[2] |= 1 << 7;   /* Spec Version 3.0X */
-> @@ -456,7 +460,7 @@ static void sd_set_scr(SDState *sd)
->   #define MID     0xaa
->   #define OID     "XY"
->   #define PNM     "QEMU!"
-> -#define PRV     0x01
-> +#define PRV     0x02
->   #define MDT_YR  2006
->   #define MDT_MON 2
->   
-> @@ -1363,7 +1367,12 @@ static void sd_erase(SDState *sd)
->       sd->erase_end = INVALID_ADDRESS;
->       sd->csd[14] |= 0x40;
->   
-> -    memset(sd->data, 0xff, erase_len);
-> +    if (sd->erase_blocks_as_zero) {
-> +        memset(sd->data, 0x0, erase_len);
-> +    } else {
-> +        memset(sd->data, 0xFF, erase_len);
-> +    }
-> +
->       for (erase_addr = erase_start; erase_addr <= erase_end;
->            erase_addr += erase_len) {
->           if (sdsc) {
-> @@ -3287,6 +3296,8 @@ static void emmc_realize(DeviceState *dev, Error **errp)
->   
->   static const Property sdmmc_common_properties[] = {
->       DEFINE_PROP_DRIVE("drive", SDState, blk),
-> +    DEFINE_PROP_BOOL("erase-blocks-as-zero", SDState, erase_blocks_as_zero,
-> +                     false),
->   };
+> Are these all regressions from 10.2 ?
 
-Keep it enabled for previous versions adding in hw/core/machine.c:
+No.
 
-GlobalProperty hw_compat_11_0[] = {
-     { "sdmmc-common", "erase-blocks-as-zero", "true" },
-};
+> For rc4 I would prefer to
+> limit it to only important regressions and maybe very obviously
+> safe fixes.
 
-(Although I wonder about the PRV bit).
+OK, I'll repost them included with the rest of queued patches for 11.0,
+you can drop them from your radar.
 
-Otherwise LGTM.
+Thanks,
+
+Phil.
 
