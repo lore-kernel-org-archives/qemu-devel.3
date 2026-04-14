@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3EEED7B82
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 08:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9358FED7B87
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 08:31:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCZAl-0008Od-Ad; Tue, 14 Apr 2026 04:31:03 -0400
+	id 1wCZAo-0000L9-Si; Tue, 14 Apr 2026 04:31:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wCZAe-00085x-8d
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 04:31:00 -0400
+ id 1wCZAn-00009x-A6
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 04:31:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wCZAc-00043v-JA
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 04:30:55 -0400
+ id 1wCZAl-00044d-6w
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 04:31:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776155452;
+ s=mimecast20190719; t=1776155462;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ClfWz/hTXQx5IWEI8DJH2vTF1tKQTfAQCoPQ/9w7nI8=;
- b=HuJGsoTT7Z5IyqEev4BzkDzSAzlfUxfcABi1imQa4bJnNL4NQXGGet7voWMgpXwIysYSvR
- jc+u+xkwYS9bPf+gkCYxxQP8xOeQzuxx2lmXpbVyBx1kD87egRyNigxgNZW8JYjYCJINbJ
- Hfe4fgGKIZUfK5P7bCkqb9WydjFfTjE=
+ bh=oB2qQatP86NDHo/fOW4g+asa3pzyhpj3nK6Gfp6npWc=;
+ b=S0GVeBRfKHx7IqVq1hOMLlCCtNfPcj9AkDmhuMRSV3Jzh7obz1kg+y/osNdmXkz9LizxXX
+ eTruRlhFx6wNn0bEyhXf0yjp4GMOvxK9tb41C4B5aS1qLnozg8s+Wjinln5RQGVPAlEeD0
+ RdVdFXGT4wXvt+dGdn6A8+13MAuNGWw=
 Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
  [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-fDlGMK7qOEmZP4TJG5R3eA-1; Tue, 14 Apr 2026 04:30:51 -0400
-X-MC-Unique: fDlGMK7qOEmZP4TJG5R3eA-1
-X-Mimecast-MFC-AGG-ID: fDlGMK7qOEmZP4TJG5R3eA_1776155450
+ us-mta-364-5Hh7u_oIP-GHt96bglKHOA-1; Tue, 14 Apr 2026 04:31:01 -0400
+X-MC-Unique: 5Hh7u_oIP-GHt96bglKHOA-1
+X-Mimecast-MFC-AGG-ID: 5Hh7u_oIP-GHt96bglKHOA_1776155460
 Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2b2ed279eedso15400865ad.0
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 01:30:51 -0700 (PDT)
+ d9443c01a7336-2b24308165dso99849315ad.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 01:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776155450; x=1776760250; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776155460; x=1776760260; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ClfWz/hTXQx5IWEI8DJH2vTF1tKQTfAQCoPQ/9w7nI8=;
- b=Io3FcvwnSoJ3/mjO45PO+qzBI4HNz0ZmyRq/b5CeohfbbUXjQj619HakRMy7F6z7xD
- QAFYnEAWG4ZIC0zswBmVPQqxT+9pRSth05w73PP9nDLrX0OUX+vmrFmsMMb/xoUXkSFr
- y7I98RRpyEMqG2cPIwyMVWAOm1VbCMAJIvP+sGvew5z0d7TpPjWtdh3IIVPaPSSzHWAM
- pQ37uqsm9GTx25jetsLAYVwtiBNcAEFggYEqAlG8UFeqfiFEIsO/rXhtAvmn4d+h6ie3
- lpHjkyUYDDjHc3QfGhDodBKFXgaikn/Iw9sQDIgSl7OhmbKM0xs5OuYqCrk2uIHEbKIy
- 5zQQ==
+ bh=oB2qQatP86NDHo/fOW4g+asa3pzyhpj3nK6Gfp6npWc=;
+ b=arLMS+y/363snBFIknmoLXSPYI8pSJeZTRWx66Id+RVg20CPjPjxo9Wq0Haosp7zAC
+ DUKyoH+3zQEPJa0T8ONk7ApU8zDDsXa6x7a4AN2xWLpAfPKC4WVwc2JbVcroGdJDpFV2
+ mB6JXI20STkkqgCnTi9rdmBwgiHX6NqL4EoF0egZ7utIXiogS33UEAo9QrnUoSreDV7W
+ HEph4vEvjFHxGZAc24+fwzj1ODI0GM1UhPe6IP5bJd/f3Vv8328rFFF2pkYRfPamLQvM
+ /ZTPbMdm7N7CGGVaBGBNoGgNtkjd2BHQ6xvyHkWXIKpRwiFSXUIYbWINOzfG6c2zijKW
+ Yn5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776155450; x=1776760250;
+ d=1e100.net; s=20251104; t=1776155460; x=1776760260;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ClfWz/hTXQx5IWEI8DJH2vTF1tKQTfAQCoPQ/9w7nI8=;
- b=Je9oMwmVjphBs4KqYOFlpNqHHwwtiAoWOu/OhIMNTNJJAihAyreCLalNUFj0O1TFTk
- cu3DnsqNb7LcszTmsd8fzvpjI/7QrjFVokqCaqECw1VEQhsEL7qbb78tB3J435Bg/4yk
- +OQ1Zo3qQds1ePepdbFBGY6t+z2iv5FzGl2+5J+tC5YtWFnLV4XIahz9nb7gGXfnHyth
- vpvN+i5nIu4Kb7RZeem02cD/+IPnF+3dJJdrpezpkryuRvxcnFzEoTbXtkbupw6ZLqts
- w5hJAeg7uFf9HmoJzJA8TRn0Nr+Cs9SOmfxCkbUo38QNZZWR1JIgWl3b4nsAHGFTltM4
- vMYQ==
-X-Gm-Message-State: AOJu0YxvMtosrloooUpVJ/hrnSbvqe8nvzoWwkmQ7byxZxoCJNQQbyqX
- W3fiFyOCaQKk/qg6CWuU6XPbjLZT3rq3ccdZNoaAsTv2BV9kF5fjeAqx3K1OQ0SXDGSBxksW1dX
- WI4QzpwnaywGZI/IUVr9xXqBcEBMM/xZf7blrAbH2ZZBs4AC95n7iwbfaAVgz7xMRdwxlNh9kN+
- s1jBlJ+7eHRU/WYuAlNM/5H9aY0OLeB1r2yrS3Unc=
-X-Gm-Gg: AeBDieu9N2jGiX6uVdtGoEEvmizlajNqUGyHX4i7+mIZpmhz/Tlx+xRr0uRpfkJyKJ/
- 5MDhJ9vrOHzREXu82QWOI0pt+bav4ueBocybNQa+rtGub2pubEaPqC3eNj1hUAZKT+WhvrM90NT
- iUoSkC8MbC2LWY50H+BzRpZCZiLmtf2MKzs+F2e1yjFMmgbUqmYVT+X8oTizLNNTUb8oLdZwCFd
- JFsoo9YoRP22bFtsMPNcTdfg2HPSeqKVlM5xQTFhCmUpF0QAYRVtPzg4W8BkNbTcR4MH6yne2AK
- C7oedmnUuslODCcxjhafgJ065Nl5CmTvKBZzBQ0E46JcQUi2b9kpMR+iB4XdwZ4Mf1sGzDEqYoS
- PJDF7jLDPWxjz9nA5V/QfyaY+VVrGKRpB6G/LX8YHlj4s3boCSuDbGvdXXb04tas=
-X-Received: by 2002:a17:902:724b:b0:2b0:5795:9ead with SMTP id
- d9443c01a7336-2b2d57d9aa2mr109672655ad.0.1776155449948; 
- Tue, 14 Apr 2026 01:30:49 -0700 (PDT)
-X-Received: by 2002:a17:902:724b:b0:2b0:5795:9ead with SMTP id
- d9443c01a7336-2b2d57d9aa2mr109672215ad.0.1776155449320; 
- Tue, 14 Apr 2026 01:30:49 -0700 (PDT)
+ bh=oB2qQatP86NDHo/fOW4g+asa3pzyhpj3nK6Gfp6npWc=;
+ b=RVc/03D8qwpw5uR5ruFC9u7EoqVdC0q5WFs6eYOjMDSxrqWr6pwdbl1bL2rGv8CRBh
+ tA/vlreEgz9IpLNSPt/zJNF38omzq8T9zmUyq0oGeWqXGMgqC1PI6Rd0I4X6LP8737UJ
+ VirCjogcb/UZatrf6VqRvVIQlELL/RboH3bTtqd3+ZsDTiLmcj9ZnusZW8kh+wopFLBI
+ oImwacfZ7epJRheWUBiuMlVJsX/6TCJux/q26UPWkghwBVwkMn+VqkurHzWWnV7swrI0
+ oyFlgpFO5v7EBECEG/x3pM4UnVbHIECe2vIJN5nTD87lx71PFRIJTlJJUdAxbdVy7V9W
+ YlkA==
+X-Gm-Message-State: AOJu0Yxpf+BP0aBQhVeLYvggJkDlr+H4UZbjgdffa3K2bDmnMOcIg029
+ ff/JYsu/PIwrF+HQIjJDwPaKpe6kXK2Q6owuhGz9Sx8zM5QKCG/91Vr+sLpPjC4TIjdhu+SvG7U
+ +bF+hZZCMGDKwdPJYWDwH27mq3cfJukz2v4H3FtOmlKqtyG8qgfhNO7md0I2yX5HHRgrmk8VGyQ
+ 6E8l1eAagswzaoAAqhwJy1mwPwk2AOGXJBjip+KzU=
+X-Gm-Gg: AeBDietSyqUCbbHTxxlUMS76+MyY9iyoU1Ms/06tRNrHXx7tR3HazKqaKwVgOLHJfW7
+ +F4xjopSy8TL0l5jF66810mxklPYGsEPIsBFptHmE+7NLNz8SK+mC6aM8D9Qm7126826mKyx84k
+ PxSiHH1o/HMKS5RiXkBquPLN9PY2WVcQUJpqEjKhl0ew9s+QgHU2CsYWSMlbXNCVgosUiLUCKaO
+ Dkbj1q9OhaLoSDi7CNYUsBWW4fEy/pfYrV9oFKpXNJFj8mjdgyc/+wsO1C2ZJefW7YN1NXyWfUi
+ 7uUhu+X7h6Nfvjx0i7j3i7fYGvzMuLgyrUdPpfYnD+rGaG4r8wjXhWDnq9sXUnWeGLDW9lRi06w
+ 9936F7HZoImfU35ZgrPuwAgBe5Nh8demptYz0T7yks+18gAZsnMfPJPEFuSFjqnE=
+X-Received: by 2002:a17:902:d507:b0:2b4:5cd0:b6c3 with SMTP id
+ d9443c01a7336-2b45cd0bb63mr93404655ad.29.1776155459587; 
+ Tue, 14 Apr 2026 01:30:59 -0700 (PDT)
+X-Received: by 2002:a17:902:d507:b0:2b4:5cd0:b6c3 with SMTP id
+ d9443c01a7336-2b45cd0bb63mr93404135ad.29.1776155459002; 
+ Tue, 14 Apr 2026 01:30:59 -0700 (PDT)
 Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.110.202])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2d4e0f909sm181493785ad.35.2026.04.14.01.30.39
+ d9443c01a7336-2b2d4e0f909sm181493785ad.35.2026.04.14.01.30.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Apr 2026 01:30:48 -0700 (PDT)
+ Tue, 14 Apr 2026 01:30:58 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
@@ -96,9 +96,10 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Arun Menon <armenon@redhat.com>,
  Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v4 07/10] qtests: Enable starting swtpm with a given profile
-Date: Tue, 14 Apr 2026 13:59:12 +0530
-Message-ID: <20260414082915.112122-8-armenon@redhat.com>
+Subject: [PATCH v4 08/10] tests: Use ML-DSA-87 operations to caused large TPM
+ transfers with CRB
+Date: Tue, 14 Apr 2026 13:59:13 +0530
+Message-ID: <20260414082915.112122-9-armenon@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260414082915.112122-1-armenon@redhat.com>
 References: <20260414082915.112122-1-armenon@redhat.com>
@@ -131,95 +132,222 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Berger <stefanb@linux.ibm.com>
 
-Enable swtpm to start with a given profile by passing it to swtpm on the
-command line using
-
-   --profile name=<profile name>
-
-Remove any existing TPM 2 state file since applying a new profile to
-existing state would be refused by swtpm.
+To test large data transfers (receiving and sending) that make use of a CRB
+chunked transfer, create an ML-DSA-87 key and sign some data with it and
+receive the 4627 bytes signature. After this send the signature back to the
+TPM to have the TPM verify the signature.
 
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- tests/qtest/tpm-tests.c | 6 +++---
- tests/qtest/tpm-util.c  | 9 ++++++++-
- tests/qtest/tpm-util.h  | 3 ++-
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ tests/qtest/tpm-crb-swtpm-test.c |  5 +-
+ tests/qtest/tpm-tests.c          | 96 ++++++++++++++++++++++++++++++++
+ tests/qtest/tpm-tests.h          |  4 ++
+ tests/qtest/tpm-util.c           | 37 ++++++++++++
+ tests/qtest/tpm-util.h           |  2 +
+ 5 files changed, 142 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
-index 197714f8d9..f71d882990 100644
---- a/tests/qtest/tpm-tests.c
-+++ b/tests/qtest/tpm-tests.c
-@@ -43,7 +43,7 @@ void tpm_test_swtpm_test(const char *src_tpm_path, tx_func *tx,
-         return;
-     }
+diff --git a/tests/qtest/tpm-crb-swtpm-test.c b/tests/qtest/tpm-crb-swtpm-test.c
+index 050c7b0c1f..541fd58133 100644
+--- a/tests/qtest/tpm-crb-swtpm-test.c
++++ b/tests/qtest/tpm-crb-swtpm-test.c
+@@ -37,8 +37,9 @@ static void tpm_crb_chunk_swtpm_test(const void *data)
+ {
+     const TestState *ts = data;
  
--    succ = tpm_util_swtpm_start(src_tpm_path, &swtpm_pid, &addr, &error);
-+    succ = tpm_util_swtpm_start(src_tpm_path, &swtpm_pid, &addr, NULL, &error);
-     g_assert_true(succ);
- 
-     args = g_strdup_printf(
-@@ -91,11 +91,11 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
-     }
- 
-     succ = tpm_util_swtpm_start(src_tpm_path, &src_tpm_pid,
--                                &src_tpm_addr, &error);
-+                                &src_tpm_addr, NULL, &error);
-     g_assert_true(succ);
- 
-     succ = tpm_util_swtpm_start(dst_tpm_path, &dst_tpm_pid,
--                                &dst_tpm_addr, &error);
-+                                &dst_tpm_addr, NULL, &error);
-     g_assert_true(succ);
- 
-     tpm_util_migration_start_qemu(&src_qemu, &dst_qemu,
-diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-index 744592763f..cbba5b1c1f 100644
---- a/tests/qtest/tpm-util.c
-+++ b/tests/qtest/tpm-util.c
-@@ -212,7 +212,8 @@ bool tpm_util_swtpm_has_tpm2(void)
+-    tpm_test_swtpm_test(ts->src_tpm_path, tpm_util_crb_chunk_transfer,
+-                        "tpm-crb", NULL);
++    tpm_test_swtpm_large_tx_test(ts->src_tpm_path,
++                                 tpm_util_crb_chunk_transfer,
++                                 "tpm-crb", NULL);
  }
  
- gboolean tpm_util_swtpm_start(const char *path, GPid *pid,
--                              SocketAddress **addr, GError **error)
-+                              SocketAddress **addr, const char *profilename,
-+                              GError **error)
- {
-     char *swtpm_argv_tpmstate = g_strdup_printf("dir=%s", path);
-     char *swtpm_argv_ctrl = g_strdup_printf("type=unixio,path=%s/sock",
-@@ -222,11 +223,17 @@ gboolean tpm_util_swtpm_start(const char *path, GPid *pid,
-         g_strdup("--tpmstate"), swtpm_argv_tpmstate,
-         g_strdup("--ctrl"), swtpm_argv_ctrl,
-         g_strdup("--tpm2"),
-+        profilename ? g_strdup("--profile") : NULL,
-+        profilename ? g_strdup_printf("name=%s", profilename) : NULL,
-         NULL
-     };
-+    g_autofree char *swtpm_state_file;
-     gboolean succ;
-     unsigned i;
+ static void tpm_crb_swtpm_migration_test(const void *data)
+diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
+index f71d882990..21811f3a2e 100644
+--- a/tests/qtest/tpm-tests.c
++++ b/tests/qtest/tpm-tests.c
+@@ -13,6 +13,7 @@
+  */
  
-+    swtpm_state_file = g_strdup_printf("%s/tpm2-00.permall", path);
-+    g_unlink(swtpm_state_file);
+ #include "qemu/osdep.h"
++#include "system/tpm_util.h"
+ #include <glib/gstdio.h>
+ 
+ #include "libqtest-single.h"
+@@ -130,3 +131,98 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
+     g_unlink(src_tpm_addr->u.q_unix.path);
+     qapi_free_SocketAddress(src_tpm_addr);
+ }
 +
-     *addr = g_new0(SocketAddress, 1);
-     (*addr)->type = SOCKET_ADDRESS_TYPE_UNIX;
-     (*addr)->u.q_unix.path = g_build_filename(path, "sock", NULL);
++void tpm_test_swtpm_large_tx_test(const char *src_tpm_path, tx_func *tx,
++                                  const char *ifmodel,
++                                  const char *machine_options)
++{
++    unsigned char signature[2 + 2 + 4627]; /* TPMT_SIGNATURE */
++    unsigned char response[8192];
++    unsigned char request[8192];
++    SocketAddress *addr = NULL;
++    GError *error = NULL;
++    char *args = NULL;
++    GPid swtpm_pid;
++    QTestState *s;
++    gboolean succ;
++
++    if (tpm_test_swtpm_skip()) {
++        return;
++    }
++
++    /* Large transfers based on ML-DSA operations required default-v2 profile */
++    if (!tpm_util_swtpm_has_profile("default-v2", "ml-dsa")) {
++        return;
++    }
++
++    succ = tpm_util_swtpm_start(src_tpm_path, &swtpm_pid, &addr, "default-v2",
++                                &error);
++    g_assert_true(succ);
++
++    args = g_strdup_printf(
++        "%s "
++        "-chardev socket,id=chr,path=%s "
++        "-tpmdev emulator,id=dev,chardev=chr "
++        "-device %s,tpmdev=dev",
++        machine_options ? : "", addr->u.q_unix.path, ifmodel);
++
++    s = qtest_start(args);
++    g_free(args);
++
++    tpm_util_startup(s, tx);
++
++    static const unsigned char tpm_createprimary_mldsa[] =
++        "\x80\x02\x00\x00\x00\x38\x00\x00\x01\x31\x40\x00\x00\x07\x00\x00"
++        "\x00\x09\x40\x00\x00\x09\x00\x00\x00\x00\x00\x00\x04\x00\x00\x00"
++        "\x00\x00\x0f\x00\xa1\x00\x0b\x00\x04\x04\x72\x00\x00\x00\x03\x00"
++        "\x00\x00\x00\x00\x00\x00\x00\x00";
++    tx(s, tpm_createprimary_mldsa, sizeof(tpm_createprimary_mldsa),
++       response, sizeof(response));
++    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
++    g_assert_cmpint(tpm_cmd_get_size(response), ==, 2831);
++
++    static const unsigned char tpm_signsequencestart[] =
++        "\x80\x01\x00\x00\x00\x12\x00\x00\x01\xaa\x80\x00\x00\x00\x00\x00"
++        "\x00\x00";
++    tx(s, tpm_signsequencestart, sizeof(tpm_signsequencestart),
++       response, sizeof(response));
++    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
++    g_assert_cmpint(tpm_cmd_get_size(response), ==, 14);
++
++    /* Complete sequence and get signature */
++    static const unsigned char tpm_signsequencecomplete[] =
++        "\x80\x02\x00\x00\x00\x2a\x00\x00\x01\xa4\x80\x00\x00\x01\x80\x00"
++        "\x00\x00\x00\x00\x00\x12\x40\x00\x00\x09\x00\x00\x00\x00\x00\x40"
++        "\x00\x00\x09\x00\x00\x00\x00\x00\x00\x00";
++    tx(s, tpm_signsequencecomplete, sizeof(tpm_signsequencecomplete),
++       response, sizeof(response));
++    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
++    g_assert_cmpint(tpm_cmd_get_size(response), ==, 4655);
++
++    /* TPMT_SIGNATURE found at offset 14 */
++    memcpy(signature, &response[14], sizeof(signature));
++
++    static const unsigned char tpm_verifysequencestart[] =
++        "\x80\x01\x00\x00\x00\x14\x00\x00\x01\xa9\x80\x00\x00\x00\x00\x00"
++        "\x00\x00\x00\x00";
++    tx(s, tpm_verifysequencestart, sizeof(tpm_verifysequencestart),
++       response, sizeof(response));
++    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
++    g_assert_cmpint(tpm_cmd_get_size(response), ==, 14);
++
++    /* TPM2_VerifySequenceComplete */
++    memcpy(request,
++           "\x80\x02\x00\x00\x12\x36\x00\x00\x01\xa3\x80\x00\x00\x01\x80\x00"
++           "\x00\x00\x00\x00\x00\x09\x40\x00\x00\x09\x00\x00\x00\x00\x00",
++           31);
++    memcpy(&request[31], signature, sizeof(signature));
++    tx(s, request, 31 + sizeof(signature), response, sizeof(response));
++    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
++    g_assert_cmpint(tpm_cmd_get_size(response), ==, 27);
++
++    qtest_end();
++    tpm_util_swtpm_kill(swtpm_pid);
++
++    g_unlink(addr->u.q_unix.path);
++    qapi_free_SocketAddress(addr);
++}
+diff --git a/tests/qtest/tpm-tests.h b/tests/qtest/tpm-tests.h
+index 07ba60d26e..6993ce40dc 100644
+--- a/tests/qtest/tpm-tests.h
++++ b/tests/qtest/tpm-tests.h
+@@ -24,4 +24,8 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
+                                    const char *ifmodel,
+                                    const char *machine_options);
+ 
++void tpm_test_swtpm_large_tx_test(const char *src_tpm_path, tx_func *tx,
++                                  const char *ifmodel,
++                                  const char *machine_options);
++
+ #endif /* TESTS_TPM_TESTS_H */
+diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
+index cbba5b1c1f..ad4325aade 100644
+--- a/tests/qtest/tpm-util.c
++++ b/tests/qtest/tpm-util.c
+@@ -211,6 +211,43 @@ bool tpm_util_swtpm_has_tpm2(void)
+     return has_tpm2;
+ }
+ 
++bool tpm_util_swtpm_has_profile(const char *profilename,
++                                const char *content)
++{
++    bool has_profile = false;
++    char *out = NULL;
++    static const char *argv[] = {
++        "swtpm", "socket", "--tpm2", "--print-profiles", NULL
++    };
++
++    if (!tpm_util_swtpm_has_tpm2()) {
++        return false;
++    }
++
++    if (!g_spawn_sync(NULL /* working_dir */,
++                      (char **)argv,
++                      NULL /* envp */,
++                      G_SPAWN_SEARCH_PATH,
++                      NULL /* child_setup */,
++                      NULL /* user_data */,
++                      &out,
++                      NULL /* err */,
++                      NULL /* exit_status */,
++                      NULL)) {
++        return false;
++    }
++
++    if (strstr(out, profilename)) {
++        has_profile = true;
++    }
++    if (has_profile && content && strstr(out, content) == NULL) {
++        has_profile = false;
++    }
++
++    g_free(out);
++    return has_profile;
++}
++
+ gboolean tpm_util_swtpm_start(const char *path, GPid *pid,
+                               SocketAddress **addr, const char *profilename,
+                               GError **error)
 diff --git a/tests/qtest/tpm-util.h b/tests/qtest/tpm-util.h
-index 681544e7d8..ca2d7d173f 100644
+index ca2d7d173f..90790f30db 100644
 --- a/tests/qtest/tpm-util.h
 +++ b/tests/qtest/tpm-util.h
-@@ -41,7 +41,8 @@ void tpm_util_pcrread(QTestState *s, tx_func *tx,
+@@ -39,6 +39,8 @@ void tpm_util_pcrread(QTestState *s, tx_func *tx,
+                       const unsigned char *exp_resp, size_t exp_resp_size);
+ 
  bool tpm_util_swtpm_has_tpm2(void);
++bool tpm_util_swtpm_has_profile(const char *profilename,
++                                const char *content);
  
  gboolean tpm_util_swtpm_start(const char *path, GPid *pid,
--                              SocketAddress **addr, GError **error);
-+                              SocketAddress **addr, const char *profilename,
-+                              GError **error);
- void tpm_util_swtpm_kill(GPid pid);
- 
- void tpm_util_migrate(QTestState *who, const char *uri);
+                               SocketAddress **addr, const char *profilename,
 -- 
 2.53.0
 
