@@ -4,94 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70C6F9D0DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA40F9D0EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wChKN-0004CV-83; Tue, 14 Apr 2026 13:13:31 -0400
+	id 1wChSH-0005tR-KS; Tue, 14 Apr 2026 13:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1wChKA-0004C2-QO
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 13:13:21 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1wChK8-00044n-UJ
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 13:13:18 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CD7066A7C3;
- Tue, 14 Apr 2026 17:13:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1776186794; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QwrA3UAj9f+hTnysPAZpKWkAifpREUXcbA1pqdPgd30=;
- b=kGi0HNYWoiwPJrpIIrgTWuxiZ9y2t+tcxyT0+dywsa3k4SZ6ToLoTGJFUWHc9s+yyXtIvD
- dfuZA2JkApnack1tpVCHz2f8h1YmV2qvx5/t9/S6KbN1oQT2sLEafij4OAFLKC4cYSWoXh
- 4TVN3wH3RbtFtlhdo7XPvy2O34dSPCM=
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1776186794; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QwrA3UAj9f+hTnysPAZpKWkAifpREUXcbA1pqdPgd30=;
- b=kGi0HNYWoiwPJrpIIrgTWuxiZ9y2t+tcxyT0+dywsa3k4SZ6ToLoTGJFUWHc9s+yyXtIvD
- dfuZA2JkApnack1tpVCHz2f8h1YmV2qvx5/t9/S6KbN1oQT2sLEafij4OAFLKC4cYSWoXh
- 4TVN3wH3RbtFtlhdo7XPvy2O34dSPCM=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A8F374B55F;
- Tue, 14 Apr 2026 17:13:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IhomKKp13mksIQAAD6G6ig
- (envelope-from <mwilck@suse.com>); Tue, 14 Apr 2026 17:13:14 +0000
-Message-ID: <db21d9d4fd3a1489d5a25d7b7f0c49e3787ee9af.camel@suse.com>
-Subject: Re: [PATCH RFC] qga: Add selinux-helper for guest-exec subcommand
- (bsc#1237450)
-From: Martin Wilck <mwilck@suse.com>
-To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
-Cc: Cathy Hu <cathy.hu@suse.com>, qemu-devel@nongnu.org, Cathy Hu
- <cahu@suse.de>,  Fabiano Rosas <fabiano.rosas@suse.com>
-Date: Tue, 14 Apr 2026 19:13:14 +0200
-In-Reply-To: <ad5ypLQMlHQm6ATh@redhat.com>
-References: <20260327102515.502822-5-cathy.hu@suse.com>
- <acaVRtE-NPUa5Ujy@redhat.com>
- <3d54a532eb5b3111d8f8849458a009493d3d8845.camel@suse.com>
- <ad5ypLQMlHQm6ATh@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.0 
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wChS9-0005rs-G1; Tue, 14 Apr 2026 13:21:33 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wChS7-0007Hq-Pr; Tue, 14 Apr 2026 13:21:33 -0400
+DKIM-Signature: a=rsa-sha256; bh=P8dgVOGwTlEde/3soL3XZGyks4q2sUF3UObCz6fViOM=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1776187285; v=1;
+ b=TvEjlW9LgT25aHBuuayjD/sa/m4JRYmrCBecaoN/NRejvH1beJdliiZXg5TIaOmjlCHE+Xe5
+ dF0pbzyQCZr1nuXcacAgb60m0zwWc0Zih8+O7BhQFeO/Y9j159Nfp5kt+N6yDYqisj/sJbzAQKy
+ qo4iZAZGcPMQknMreIt+zCZlhLN9ZWMmaGZnwU6FGXbCAYwCf1neYwVaxpVRpRi2fU50fz4I9BV
+ ipVXSUKk/RyKsRKi+qVFiKyuhQYE3e92e3BEgra0jLyI7DE9etjXJ+7495va2e7woVY+ZFhHkw6
+ MeWt+xLkAGxnG8+OicmacsqiZ/SLf9QrDuN4rfh2ulMtg==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 8020120A30;
+ Tue, 14 Apr 2026 17:21:25 +0000 (UTC)
+From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
+Date: Tue, 14 Apr 2026 17:21:25 +0000
+Subject: [PATCH qemu v3 00/10] Update opentitan uart (part of supporting
+ opentitan version 1)
 MIME-Version: 1.0
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_SIGNED(0.00)[suse.com:s=susede1];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[libvirt.org:url, suse.com:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=mwilck@suse.com;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Message-ID: <177618728515.4917.14466194789826252277-0@git.sr.ht>
+X-Mailer: git.sr.ht
+To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Amit Kumar-Hermosillo <amitkh@google.com>,
+ nabihestefan <nabihestefan@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +69,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-04-14 at 18:00 +0100, Daniel P. Berrang=C3=A9 wrote:
-> On Tue, Apr 14, 2026 at 06:51:12PM +0200, Martin Wilck wrote:
->=20
->=20
-> > > If users want to support an ability to have arbitrary command
-> > > execution, then that should be done with SSH over VSock, where
-> > > the guest owner can choose whether to require authentication
-> > > first or not, and use SSH authorized_keys if desired to limit
-> > > what commands can be run for a given recorded key.
-> > >=20
-> > > These days systemd installs magic to allow SSH'ing directly
-> > > to a guest using VSOCK addresses, and libvirt further
-> > > enhances that to allow SSH'ing to a named VM.
-> >=20
-> > Thanks, I wasn't aware of this feature so far. I suppose you're
-> > referring to https://libvirt.org/ssh-proxy.html. I'll need to
-> > experiment with it. IIUC this works for local libvirt connections
-> > only?
->=20
-> Yes, vsock is exposed to the local host.
+Thanks for the review comments again!
 
-And it can't / won't be implemented for remote hosts?
+this is the third revision of the patch set that [starts to] update
+the OpenTitan uart to align with earlgrey version 1.0.0. I can't really
+give a specific commit hash, but the there is a branch on the opentitan
+repo which represents this version:
+https://github.com/lowRISC/opentitan/tree/earlgrey_1.0.0
 
-Martin
+I can't give a specifc hash because these changes do miss out two
+important parts of the UART device. The clock manager is not yet present
+in upstream qemu, only in the lowRISC fork, so for now it is not
+connected here. The other issue is that the alert handler block is
+missing, and thus the alert test feature of the UART will not work. This
+can only be fixed after the alert handler is also upstreamed. that will
+come later.
+
+as before, the details of the version 1 of the UART are found here:
+https://opentitan.org/book/hw/ip/uart/index.html
+(and this URL is still added to the file header in one of these commits,
+as before)
+
+I have now split up that large commit into logical steps, which included
+splitting out that change that removes the timer. You commented on this
+in the last revision. I have put this commit last because it's not
+strictly required yet. It is a change that is included on our own fork,
+and will be needed when we add the rest of the clock handling from our
+fork. For now though, you can take or leave it as you see fit. I'm happy
+for this patch set to merge with or without it.
+
+I think I fixed all the other comments too, sorry if I missed anything.
+Thanks,
+Lex.
+
+
+-----
+Lex Bailey (they/them)
+lowRISC C.I.C. 7 Hills Road, Cambridge, CB2 1GE, UK. Registered in
+England & Wales 09272283 lex.bailey@lowrisc.org
+
+Lex Bailey (10):
+  Rename ibex_uart to ot_uart
+  ot_uart: move to new reset API
+  ot_uart: update register defs, switch to Fifo8 for tx/rx buffers
+  ot_uart: replace individual IRQ fields with array, add missing IRQs
+  ot_uart: gather similar behaviours togeter in register read and write
+  ot_uart: implement RX fifo and loopback
+  ot_uart: handle break condition
+  ot_uart: update file headers with new authorship and documentation URL
+  ot_uart: add tracing
+  ot_uart: switch from clock driven transmission to reg R/W driven
+    transmission
+
+ MAINTAINERS                  |   1 +
+ hw/char/Kconfig              |   3 +
+ hw/char/ibex_uart.c          | 569 --------------------------
+ hw/char/meson.build          |   2 +-
+ hw/char/ot_uart.c            | 759 +++++++++++++++++++++++++++++++++++
+ hw/char/trace-events         |   8 +
+ hw/riscv/Kconfig             |   1 +
+ hw/riscv/opentitan.c         |   3 +-
+ include/hw/char/ibex_uart.h  |  73 ----
+ include/hw/char/ot_uart.h    |  61 +++
+ include/hw/riscv/opentitan.h |   4 +-
+ 11 files changed, 838 insertions(+), 646 deletions(-)
+ delete mode 100644 hw/char/ibex_uart.c
+ create mode 100644 hw/char/ot_uart.c
+ delete mode 100644 include/hw/char/ibex_uart.h
+ create mode 100644 include/hw/char/ot_uart.h
+
+-- 
+2.49.1
 
