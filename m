@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 569AAF531EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 05:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E992BF531EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 05:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCWSp-0003q7-Bl; Tue, 14 Apr 2026 01:37:31 -0400
+	id 1wCWTH-0003tQ-3l; Tue, 14 Apr 2026 01:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCWSm-0003oi-QF
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:28 -0400
+ id 1wCWT2-0003so-2A
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:44 -0400
 Received: from inva021.nxp.com ([92.121.34.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCWSk-00045u-TN
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:28 -0400
+ id 1wCWSv-00046L-EM
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:39 -0400
 Received: from inva021.nxp.com (localhost [127.0.0.1])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id D7FC2202243;
- Tue, 14 Apr 2026 07:37:22 +0200 (CEST)
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 48EB3202239;
+ Tue, 14 Apr 2026 07:37:24 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id A386520223E;
- Tue, 14 Apr 2026 07:37:22 +0200 (CEST)
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 14AF520223E;
+ Tue, 14 Apr 2026 07:37:24 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 1F7EF1802227;
- Tue, 14 Apr 2026 13:37:22 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 8F50318000A4;
+ Tue, 14 Apr 2026 13:37:23 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv5 09/15] hw/arm/fsl-imx8mm: Adding support for I2C emulation
-Date: Tue, 14 Apr 2026 11:07:09 +0530
-Message-Id: <20260414053715.1378021-10-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: [PATCHv5 13/15] hw/arm/fsl-imx8mm: Adding support for ENET ethernet
+ controller
+Date: Tue, 14 Apr 2026 11:07:13 +0530
+Message-Id: <20260414053715.1378021-14-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
 References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
@@ -68,127 +68,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This can be used to test and debug I2C device drivers.
-Added I2C interrupts
+It enables emulation of ENET ethernet controller in iMX8MM
+Enables testing and debugging of network dependent drivers
+Added ENET MAC IRQ lines
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- hw/arm/Kconfig              |  2 ++
- hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h |  8 ++++++++
- 3 files changed, 37 insertions(+)
+ hw/arm/Kconfig              |  1 +
+ hw/arm/fsl-imx8mm.c         | 24 ++++++++++++++++++++++++
+ hw/arm/imx8mm-evk.c         |  1 +
+ include/hw/arm/fsl-imx8mm.h | 10 +++++++++-
+ 4 files changed, 35 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 4636551d66..97ff6d9716 100644
+index 07a3f3273b..45d10e34dc 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -621,10 +621,12 @@ config FSL_IMX8MP_EVK
- config FSL_IMX8MM
-     bool
-     imply PCI_DEVICES
-+    imply I2C_DEVICES
-     select ARM_GIC
+@@ -626,6 +626,7 @@ config FSL_IMX8MM
      select FSL_IMX8MP_ANALOG
      select FSL_IMX8MP_CCM
      select IMX
-+    select IMX_I2C
++    select IMX_FEC
+     select IMX_I2C
+     select OR_IRQ
      select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
 diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 85bce5a788..3632d85197 100644
+index c08c0ca8ca..9d42e328bf 100644
 --- a/hw/arm/fsl-imx8mm.c
 +++ b/hw/arm/fsl-imx8mm.c
-@@ -180,6 +180,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+@@ -212,6 +212,8 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
      }
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
-+        g_autofree char *name = g_strdup_printf("i2c%d", i + 1);
-+        object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
-+    }
++    object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
 +
-     for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-         g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
-         object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
-@@ -370,6 +375,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].addr,
-                                 &s->ocram);
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -547,6 +549,21 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, spi_table[i].irq));
+     }
  
-+    /* I2Cs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } i2c_table[FSL_IMX8MM_NUM_I2CS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C1].addr, FSL_IMX8MM_I2C1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C2].addr, FSL_IMX8MM_I2C2_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C3].addr, FSL_IMX8MM_I2C3_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C4].addr, FSL_IMX8MM_I2C4_IRQ },
-+        };
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0, i2c_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
-+                           qdev_get_gpio_in(gicdev, i2c_table[i].irq));
++    /* ENET1 */
++    object_property_set_uint(OBJECT(&s->enet), "phy-num", s->phy_num,
++                             &error_abort);
++    object_property_set_uint(OBJECT(&s->enet), "tx-ring-num", 3, &error_abort);
++    qemu_configure_nic_device(DEVICE(&s->enet), true, NULL);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->enet), errp)) {
++        return;
 +    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->enet), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_ENET1].addr);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
++                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
 +
-     /* GPIOs */
-     for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-         static const struct {
-@@ -477,6 +503,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_GIC_DIST:
-         case FSL_IMX8MM_GIC_REDIST:
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+         return;
+@@ -610,6 +627,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
          case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
-+        case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
+         case FSL_IMX8MM_GPT1 ... FSL_IMX8MM_GPT6:
+ 	case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
++        case FSL_IMX8MM_ENET1:
+         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
          case FSL_IMX8MM_PCIE1:
          case FSL_IMX8MM_PCIE_PHY1:
-         case FSL_IMX8MM_RAM:
+@@ -631,10 +649,16 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static const Property fsl_imx8mm_properties[] = {
++    DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mmState, phy_num, 0),
++    DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mmState, phy_connected, true),
++};
++
+ static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
++    device_class_set_props(dc, fsl_imx8mm_properties);
+     dc->realize = fsl_imx8mm_realize;
+ 
+     dc->desc = "i.MX 8MM SoC";
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index dfdf3cd4f8..6b7774d3e2 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -79,6 +79,7 @@ static void imx8mm_evk_init(MachineState *machine)
+ 
+     s = FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machine),
+                                          "soc", &error_fatal, NULL));
++    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
+     memory_region_add_subregion(get_system_memory(), FSL_IMX8MM_RAM_START,
 diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 4fe27b9575..d6df16e9d4 100644
+index 607ac86666..bc5a0922ad 100644
 --- a/include/hw/arm/fsl-imx8mm.h
 +++ b/include/hw/arm/fsl-imx8mm.h
-@@ -13,6 +13,7 @@
- #include "cpu.h"
- #include "hw/char/imx_serial.h"
- #include "hw/gpio/imx_gpio.h"
-+#include "hw/i2c/imx_i2c.h"
- #include "hw/intc/arm_gicv3_common.h"
+@@ -18,7 +18,8 @@
  #include "hw/misc/imx7_snvs.h"
  #include "hw/misc/imx8mp_analog.h"
-@@ -32,6 +33,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
- enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_CPUS         = 4,
-     FSL_IMX8MM_NUM_GPIOS        = 5,
-+    FSL_IMX8MM_NUM_I2CS         = 4,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-@@ -46,6 +48,7 @@ struct FslImx8mmState {
-     IMX8MPCCMState     ccm;
-     IMX8MPAnalogState  analog;
-     IMX7SNVSState      snvs;
-+    IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
+ #include "hw/misc/imx8mp_ccm.h"
+-#include "hw/or-irq.h"
++#include "hw/net/imx_fec.h"
++#include "hw/core/or-irq.h"
+ #include "hw/pci-host/designware.h"
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+@@ -60,11 +61,15 @@ struct FslImx8mmState {
+     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
      IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
      MemoryRegion ocram;
++    IMXFECState        enet;
      SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-@@ -174,6 +177,11 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_UART3_IRQ    = 28,
-     FSL_IMX8MM_UART4_IRQ    = 29,
- 
-+    FSL_IMX8MM_I2C1_IRQ     = 35,
-+    FSL_IMX8MM_I2C2_IRQ     = 36,
-+    FSL_IMX8MM_I2C3_IRQ     = 37,
-+    FSL_IMX8MM_I2C4_IRQ     = 38,
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+     OrIRQState         gpt5_gpt6_irq;
 +
-     FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
-     FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
-     FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
++    uint32_t           phy_num;
++    bool               phy_connected;
+ };
+ 
+ enum FslImx8mmMemoryRegions {
+@@ -218,6 +223,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_WDOG2_IRQ    = 79,
+     FSL_IMX8MM_WDOG3_IRQ    = 10,
+ 
++    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
++    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
++
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+     FSL_IMX8MM_PCI_INTC_IRQ = 124,
 -- 
 2.34.1
 
