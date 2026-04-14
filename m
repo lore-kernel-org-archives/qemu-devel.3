@@ -4,109 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F7DF9D0DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E1AF9D0DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCgIw-0003wV-OF; Tue, 14 Apr 2026 12:07:58 -0400
+	id 1wCgLS-0004Zw-GH; Tue, 14 Apr 2026 12:10:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCgIs-0003wG-2X
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:07:54 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCgIq-0003dG-Jv
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:07:53 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-651cfaa21e6so2181437d50.0
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 09:07:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776182870; cv=none;
- d=google.com; s=arc-20240605;
- b=E/Hxk3A0v9r7XYAgtnyKCW35YpX6FE+MhI3MVPzMRkS4eBG1zVxC9VLG2FylVs1DLq
- 5WM7sRmg9cyT+OBgn/qvq5aaTP+1VPrwUIlMixlD2t+yuTs+LVYgqGAfQEFCjgSTeG9H
- MMZNeUNRdaIpSc1Uvh8vZXutlA/bIdIXy5Q3yvCBRl/yj/URRC+hv667l2qjVXT3b/+m
- X5aRJbBr+ZzXn1GxqnyKWHu4sn7QvUNV1EfOSCVwaLJ6YPzIQgkQ4HQabALfB84rh8Ew
- a/nPAE/a/frG3E7N9u3EuDi8olHWojHtnaTIDlE5hAj6xpvLxMuW0DAKH22pMyH5AASn
- QMbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=h1Gz+UDapnPG9yRjjyw4+Dk+QgOPJvqVPusAuaEqC3g=;
- fh=MFiJx8Ql5Uc0dXwP0Ww6JZ7Gtxy4tq4TxFQizRRbUEw=;
- b=fFLpuUTeMIN1cXoblD6YnrhZBso+HVL1Ly+wyhsho7CFqJjN+X4NRdJj/4kdRYjexa
- EcJjSfQQvVc8qX+Bkgub+dBfL0IRjeiFCChrGLRTxmhWCT4f9kNZlJi5xYazIdpu5Zhj
- OpVWGuuPnIvHN2J7zsQZEa52u94ArDO6Ph2SCDilh3jpr1XDhDDIvFRjUMgZ3rMwJ3X0
- jdoUlAm8OGzdLyUZAU+xWp7t/qQ29tXG+NzeWv0cGTnA3uKBwDi/T/Tk0t2cX+MpZB1R
- WFj7Qi9Ic8i5/3hmibah0Ea4X6FuYSfQIOFoWqRu4XBP4pWPJZ7wfZs4JX+BhgHQx+vn
- n1Pw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776182870; x=1776787670; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=h1Gz+UDapnPG9yRjjyw4+Dk+QgOPJvqVPusAuaEqC3g=;
- b=DWWQtS3Eh8NiNOx5vFD5T3lJ7vRRPWcTZjkE0C7b2BiUY9s7BiYVvFgF3eBxmp+r8L
- hiWndAQjyd+IdM84cufw6Y3g1NLVeJ529u2oUrQwggRhgzIPAaIaiHfxRxVC1GOINMH9
- GovA8vrG7lpNJbD85ylgfq+mMQTiRy4h+JTPzaETmwi6iNxxHcij6fqUR3QEgHi1dPQ3
- A+FqVCI8RNsQIiZkoe1JW8EqRkN+41mTWr1sAyCo3WAwT2B6rSpPgyURM8rRTy19XXDa
- Mp+6MpX6RX3HbgSjMFLwbbkpuQIN+OhFyxRddzhHrdgHFCWfdUv6SK/vonjm4/jHlVsu
- qYJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776182870; x=1776787670;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h1Gz+UDapnPG9yRjjyw4+Dk+QgOPJvqVPusAuaEqC3g=;
- b=qGNq5i8By8uPsdSPC7QlTzkthRxXfcSzVjqIF6JxqF8rluYmX/78mRvS/hgWMSUVj/
- LuS6g2Aip0XmkwANQpPLYpDrJxW2p87uljhBSGEGWvyHJ45vIMnHAvGK35bt/n/Av+Fv
- FLBkdp340R5xggVaqlaeJcsbFbtArAhGxWimyQriW9HeAm/KgQEIAgbpUlLddhKC8slt
- LIJkCqvBfOBB/BxRNQVl4QOn3vpDef9CCtKmW/lhXT8uanQH0euvhAAME79MmXWsUPxQ
- +fKKaMFoOErhKRr2BMb7D1fCpqR5fOsF60XeJxw6YyJWluoJhdGuL1XQHT4vlYstmx1d
- wzIQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+ssYR5cJtjCRcfQHWTXnnNtEawN3z30CUy9DEnF52/bC0ET98g7qSCgXoumUBsN73XyEedaqBttI47@nongnu.org
-X-Gm-Message-State: AOJu0Yx/cfhyfCN765u0rEW8ZTPo7XcHW5Y5GPyv6A7cuikTOlgdyiEM
- XNyySepqMYONvZKjMAHmbjvI024CF58vTbORSrE/nq7WNfren4bq7sWc1WBmZykbesVkiNlROV9
- jNGlDyPw/ic+c7j/2bIC1SugSYtcSGk/MpdOv3oi0Cw==
-X-Gm-Gg: AeBDiesZ34gkIjTcc3KmqvoC+vh53gNOwcKg4pCDZQT0JeWOJshtyS6eQT/jFlXo9oc
- rjz0uRGrSeZHmb8b2psdlrNH4HF33ExI1xQORJ1vue9GzAOU3doM2VXoSkXgSWn95PesMMd7ULK
- MT02fg7vC8IA0wq6Pg1MkK4gKjPa7gZqrfAV5s+pDqP9A5T++MMQ/6Lk67s84scMCtiNtXQasUh
- m/fscpOnZq96JpNM3iDc4u1EGH4V+39N6ufQzGawgnh6QbGuH6DIfP4qHELjD8YD5w6Dg4yIOTx
- Quh457M7K0lr8R4tppDN1JU8P+D4/JsXMY75SRKWGVCVDfRT9care0T6J1naZYkzQTL132DGbhZ
- wdg==
-X-Received: by 2002:a05:690e:43c1:b0:63f:b6c0:23f8 with SMTP id
- 956f58d0204a3-6518724a43bmr11503053d50.33.1776182870023; Tue, 14 Apr 2026
- 09:07:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wCgLQ-0004ZW-5r
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:10:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wCgLO-0004BT-Bo
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:10:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776183027;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4uFFsUNY8N2veYMyscW+0Z3REbXKD4Kf4XJMyJXcpmk=;
+ b=dJk9RyUHnycCXc5lHWtIPOuWQJYNWhdycTSWPV62LPoaPs1GRdIWOI1X6T6GF9w9DzpyCZ
+ rhtX/zRrjMmtqyw+KcD4CtyC8DfXzo72cycKLw0OxXqLYy5HevMxD/gnVxYM0VIHvHsXpl
+ /dh0KZcLtPpF0mrlsDWBXRU1tU+5TH4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-4NmAWbPTM9GVW8NUHbDV9g-1; Tue,
+ 14 Apr 2026 12:10:24 -0400
+X-MC-Unique: 4NmAWbPTM9GVW8NUHbDV9g-1
+X-Mimecast-MFC-AGG-ID: 4NmAWbPTM9GVW8NUHbDV9g_1776183023
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4E8C19560A7; Tue, 14 Apr 2026 16:10:22 +0000 (UTC)
+Received: from [10.32.181.49] (unknown [10.32.181.49])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 28E9F1800357; Tue, 14 Apr 2026 16:10:20 +0000 (UTC)
+Message-ID: <32594f82-0268-4844-830a-4147bd1598f6@redhat.com>
+Date: Tue, 14 Apr 2026 18:10:19 +0200
 MIME-Version: 1.0
-References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
- <20260414053715.1378021-2-gaurav.sharma_7@nxp.com>
- <D981B877-F5F8-4873-B241-AE20CA354410@gmail.com>
- <AM0PR04MB4370D4D69523579FA7971C8A87252@AM0PR04MB4370.eurprd04.prod.outlook.com>
-In-Reply-To: <AM0PR04MB4370D4D69523579FA7971C8A87252@AM0PR04MB4370.eurprd04.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Apr 2026 17:07:38 +0100
-X-Gm-Features: AQROBzBgVyFAoUsfH2EmYPUvwYZd0pvl93NTTBIYbvJrTu-COkLWb4N5lOnPONY
-Message-ID: <CAFEAcA9sgRbWtPeJ=B58nMBKNn4wciyXOgc0cX6xmPByAimuXQ@mail.gmail.com>
-Subject: Re: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM EVK(Evaluation
- Kit) board
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: Bernhard Beschow <shentey@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "pbonzini@redhat.com" <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 8/9] target/i386/mshv: filter out CET bits in cpuid
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
+Cc: Wei Liu <wei.liu@kernel.org>, Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20260414155433.483186-1-magnuskulke@linux.microsoft.com>
+ <20260414155433.483186-9-magnuskulke@linux.microsoft.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <20260414155433.483186-9-magnuskulke@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,42 +123,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Apr 2026 at 16:57, Gaurav Sharma <gaurav.sharma_7@nxp.com> wrote:
-> > -----Original Message-----
-> > From: Bernhard Beschow <shentey@gmail.com>
-> > I get two warnings during compilation:
-> >
-> > 1)
-> > ./src/docs/system/arm/imx8mp-evk.rst:2: WARNING: Title underline too
-> > short.
-> >
-> > NXP i.MX 8M Plus and i.MX 8M Mini Evaluation Kits (``imx8mp-evk``,
-> > ``imx8mm-evk``) ================================================
-> > [docutils]
-> >
-> >
-> > 2)
-> > ./src/docs/system/target-arm.rst:71: WARNING: toctree contains reference to
-> > nonexisting document 'system/arm/imx8mm-evk' [toc.not_readable]
-> >
->
-> I have been configuring and compiling like this:-
->
-> ../configure --target-list="aarch64-softmmu" --enable-werror
-> make -j32
->
-> The build turns out to be fine. Not sure why it doesn't show these warnings in my build.
+On 4/14/26 17:54, Magnus Kulke wrote:
+> e46dcef1d0 introduced CET_U/CET_S xstate bits in the ExtSaveArea. The
+> response in EBX of a 0x4,1 cpuid query will contain a size contingent on
+> what the guest enabled in the IA32_XSS MSR (compacted xsave size).
+> 
+> Since the MSHV accelerator currently responds with static answers to
+> 0x4d cpuid queries, we'll have to disable those bits, even if the host
+> supports them.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+> ---
+>   target/i386/mshv/mshv-cpu.c | 19 +++++++++++++++++++
+>   1 file changed, 19 insertions(+)
+> 
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index ee25eb5f6f..2c66a52709 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -1663,6 +1663,25 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
+>       if (func == 0x01       && reg == R_ECX) {
+>           ret &= ~CPUID_EXT_VMX;
+>       }
+> +
+> +    /*
+> +     * MSHV currently uses static CPUID intercept results for leaf 0xD.
+> +     * However there are feature-responses that are dynamic based on what a
+> +     * guest enables in XCR0 and XSS, such as CET shadow stack.
+> +     *
+> +     * A guest which doesn't know about those features yet would encounter an
+> +     * unexpcted CPUID[0xD,1].EBX (compactes XSAVE size) and either fail
+> +     * or gracefully degrade by not using XSAVE at all.
+> +     *
+> +     * To avoid this, we filter out supervisor xstate features.
+> +     */
 
-Your system is probably missing the necessary dependencies to
-build the documentation, and so configure disables it.
-If you pass configure '--enable-docs' it will insist that
-it builds the docs and configure will fail, telling you
-what you need to install, if it's missing something.
+I don't understand this, but it seems to be a Linux bug.  Don't *all* 
+xsave features cause changes to CPUID[0xD,1].EBX?
 
-If you're adding something to the docs it's a good idea to also
-check the built HTML (it appears in the docs/manual subdir of
-your build tree) in a web browser to make sure it looks the
-way you expect it to.
+Paolo
 
--- PMM
+> +    if (func == 0x07 && idx == 0 && reg == R_ECX) {
+> +        ret &= ~CPUID_7_0_ECX_CET_SHSTK;
+> +    }
+> +    if (func == 0x07 && idx == 0 && reg == R_EDX) {
+> +        ret &= ~CPUID_7_0_EDX_CET_IBT;
+> +    }
+> +
+>       return ret;
+>   }
+>   
+
 
