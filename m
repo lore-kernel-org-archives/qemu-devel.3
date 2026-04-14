@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9994F531DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E7A7F531CE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCRfd-0001LK-OJ; Mon, 13 Apr 2026 20:30:25 -0400
+	id 1wCRgY-0002L3-TI; Mon, 13 Apr 2026 20:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRfY-0001Kf-OX
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:30:21 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRgX-0002Ev-Bu
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:31:21 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRfX-0002oe-4V
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:30:20 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488afb0427eso61863715e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:30:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRgV-0003Cd-IR
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:31:21 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488afb0427eso61868225e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776126617; x=1776731417; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776126678; x=1776731478; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1hmYqwWSqPmJMgJvimCb5gTwLjtaQvrO8BVqR+We6PI=;
- b=tOCRO8X896QZGcamXX/PQvFBRb8W0vsXU9UunOpHZzt86rhz+QrlFokqnsdxEcRKJl
- 7zP0wt/iIh0oPHLXBsHI+Qvzio34eIq3n+BkXa9yd+71Hjvuc+C424cqLsngRzQfpKd/
- 3uBKJQUQH4CTF9xRMV7LJR2skcx4o/9FXF7oeVdqHZnv9X3XbJRYTK+Sv6QtdbKtW2vY
- C39dE5Sgc4i9ppiK5ZEBWFaTBTQopkhoDLlXP1rsnRMoUkITukAGeZ0ZYg2B4JEVzWr2
- tsKy16Q8EeW8wbYuSEsCsGTeI12hLho8UMzYDF2SdoHHk1WSckckz2Auo0sd9Ah6CLzA
- eP9Q==
+ bh=4HhO+vrX/AM//JPlmWhzirx7E6tYyJP7oHGnG3g4hvE=;
+ b=cEKIUQTOu4UTY373u49k8K1qJkBYaSD77VDfzR2Axvl3JpF26fn5qqGoxTCKN3Msw6
+ k//4JHxZav8yJdQXejpTwUNVLCySIE/s51t+rY7+jSPTkZRrJB3AsQN906SnOBukQG+d
+ G8kYz3Uclt6MdNREJlxCcUskMXF6B5aclBFabEVsrjiRE9LLHsmKDWQFUmihOKEar1gx
+ oyTnV4faX4Cu90TH7/aidXVVVFLxHiJRwxEgC/bj3rvUl/ITBREaubJ/tP//wcvgezQP
+ CB/UQxciM5zslnQ5118xvlwK5JTFt09GRU/jkfqJXGRIjZKw1g9xS3DtBNORFXuE8NO4
+ zq+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776126617; x=1776731417;
+ d=1e100.net; s=20251104; t=1776126678; x=1776731478;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1hmYqwWSqPmJMgJvimCb5gTwLjtaQvrO8BVqR+We6PI=;
- b=FcKbSaLdYwWWofXiU2JYUurWht8wWT6Qj1cp1Lf2pc5raDp6nWfBcGp6DQ5FbAe0+U
- 1oLX7zagyH40FoSgxLheF0+9wjhF8s8oszMniiD1FTVfTvtaO7zGnbbIRzRddMgSP1F9
- aR1HRWiAbNF25ic/ev0Tcuj70mu+n8OZ4oAgafU+uCdd9jhXTOlqP6AyQfzgLUSNLxnp
- 1IxtOV1YPZaMfU8/Ttf09Z8YNisBe9DBuQ3bNORBPNiiYahSSlcockBEx73gkMk/Kbel
- nqX+3Rornl6MdVnDFM/qjSkO0fCuIz/qjQlkUc/nD0weJsS2MvAIwAonXexRTptGbGWA
- S/PQ==
-X-Gm-Message-State: AOJu0YyxI5pi6TBU8OCfeP2N/uLPGkBBQgEdTaxH77TyoB8ANO+FVdmu
- 3bnhah7N+VmL2FGuSpZ8EMNnb/zwWJhMXjAslNOgOQR4LZwaZW/hPiz4OmGjpTU79VakQldkHUw
- DBXGM/K4=
-X-Gm-Gg: AeBDies8eSK/LTcOlTBJkH05Ij6dzZeu4lL3y3o8CwDbBRraf3h4qhHbAMTTmjdMRbL
- YQxv6+Eu9feMHheMeR7N3e/KTE6T36ZEAF+7mZn2AUDLKA0pwfMesbsMz5vkv1jOSc5S9iBZW/2
- jjbB49J0WeEhPi3re1I8C6xf4SmVhTcoKTMGwqA0FDMMdIj1kdjcfcUYv7Tqim6QSImyz1BxNw5
- iNZbWSW24YZn6LU8E5G4pJWWgGB8ptWt4aj9KmxcYv2+83Nxyn9F3XaFQwuJalT5t+Ici2ufwYD
- +PtNmI0srv/jDNaSNncfII454Ul/HZG6LH/zM4pEcmESg4m4r0MqaFhOdS/hY9ztl4He3D1Gc5q
- LalK9ZLh/QAaq5/Qt90viUjSNo4DskySxEHx9F78l2wnJ9RjZH34tJbHgIa9VNS7zkZkv8TLvyu
- MR0K3gjBBXB85ZzIA1x7ni7NjaPS6Qyl3mIp5dOkfSp21NA8/4VFA9ev4A+LaXce1S1nIzgTBi
-X-Received: by 2002:a05:600c:5298:b0:485:3ee1:eba5 with SMTP id
- 5b1f17b1804b1-488d68820abmr222091915e9.27.1776126617313; 
- Mon, 13 Apr 2026 17:30:17 -0700 (PDT)
+ bh=4HhO+vrX/AM//JPlmWhzirx7E6tYyJP7oHGnG3g4hvE=;
+ b=B1SC1pKieaoiL8lL/4qbO5aqFYCGxBZMlCpuOOFiaYmtC3YcU7g7/xTXJbY4wyzb+V
+ dgQQx7xmh1fbiAy4ZmS65omIkDFlBu3n9gIhHjJoYGHg9RNBUGiCkbJdsTyczERPVIUG
+ kDvoZWmtI5b858bdfikf/ikl24vnRfVS+WaiWmS9kRQPUp+Ff6hIXN0PQhkYL5U3JsqA
+ OQB4K2sxX+1v4W2QQKrj8k7/qMKBWJYamIteTjWKyc2KpcuF39uQshZ11F4gQwvjIbG8
+ Vuid+oUFv1M+kDFzSVTX3OnSdMS5LDnk3b1lUnObMn/oAeV7hBvtrlc8j9sWah3ftyXN
+ i65A==
+X-Gm-Message-State: AOJu0YzrSKuXl5jPEzK+lumsTugOv7MdRCY+fdkP20SQCVIM/ixZkZjn
+ uyui/ALSAkdO6aPS7JXrKbzydDV+aMPyIqDwaOqDe7mytoJ1eGW8nM23LWHsy6YMOp0Tmz8ea9T
+ /pFrGPB4=
+X-Gm-Gg: AeBDiete2YzyRsNjdQEiKEgdZY45SZ+VnVyYB8eCcP0d7PC/jLArOZJPS2ShlUK2hop
+ 3LKj+q+/TGNOKTqNaGUuGuq0LoDEnAxAmQ6sG67Ll7wmkfr+juQM/uqGFaGyRxC3FaCkbi+MR8g
+ 6DYds34V6ipamV1Kas45IdyYiiGZy7b50g7dgQ3JSj949m5IRDrm1ghOSglM7MY5rKGL8poL0kZ
+ q1fk/4xIiy00/fz9pBWFllgMkUArEeBQN+3xq0/RjpL8vTketqwBCSFfGTZ0nwHBcMNYH3UD+Dj
+ +A6s/hER/fAnWBKJO5OvGC0JTxPmlnPcDd2B9uaRODOFUXxoL1DuivN8Bjwc3KXSL5KHndni3Ix
+ 09fWCmUxxsdFwwn0Rw2aL1+KWYsFXdKH3cV4+Y2TRQbAyNBT+22nBU7DHHghiJD0IuO6nM1G4zN
+ 4f/9ytbgDAjYjkfKIbJhN1uuhi2wwca5W3WymE8HK8Csob30DnX6CveK2/p0lDoOHjSsEFHOB6
+X-Received: by 2002:a05:600c:3150:b0:486:fcc7:d6a with SMTP id
+ 5b1f17b1804b1-488d67f4c4dmr233519535e9.13.1776126677556; 
+ Mon, 13 Apr 2026 17:31:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ede1e217sm10743045e9.5.2026.04.13.17.30.16
+ 5b1f17b1804b1-488ede1e217sm10822615e9.5.2026.04.13.17.31.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 13 Apr 2026 17:30:16 -0700 (PDT)
+ Mon, 13 Apr 2026 17:31:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -71,18 +71,19 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v3 02/27] monitor/meson: Use SPICE with migration HMP commands
-Date: Tue, 14 Apr 2026 02:29:34 +0200
-Message-ID: <20260414003001.97571-3-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v3 10/27] monitor: Do not check TARGET_I386 to build
+ target/i386/ commands
+Date: Tue, 14 Apr 2026 02:29:42 +0200
+Message-ID: <20260414003001.97571-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260414003001.97571-1-philmd@linaro.org>
 References: <20260414003001.97571-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,51 +106,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When moving code around in commit 27be86351ec ("migration: Move
-the QMP command from monitor/ to migration/") we forgot to update
-the meson rule about SPICE pkg-config flags.
+These commands are filtered at build-time for i386/x86_64 binaries.
+By using the recently introduced HMPCommand::arch_bitmask flag
+we can filter them at runtime, making it possible to compile
+hmp-commands[-info].hx files once.
+
+Since these methods are used inconditionally within target/i386/,
+define them in the same stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- migration/meson.build | 2 +-
- monitor/meson.build   | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ MAINTAINERS                  |  1 +
+ stubs/hmp-cmds-target-i386.c | 13 +++++++++++++
+ hmp-commands-info.hx         |  4 +---
+ hmp-commands.hx              |  5 +----
+ stubs/meson.build            |  1 +
+ 5 files changed, 17 insertions(+), 7 deletions(-)
+ create mode 100644 stubs/hmp-cmds-target-i386.c
 
-diff --git a/migration/meson.build b/migration/meson.build
-index c9f0f5f9f21..e583822dec6 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -23,7 +23,6 @@ system_ss.add(files(
-   'fd.c',
-   'file.c',
-   'global_state.c',
--  'migration-hmp-cmds.c',
-   'migration.c',
-   'multifd.c',
-   'multifd-device-state.c',
-@@ -37,6 +36,7 @@ system_ss.add(files(
-   'socket.c',
-   'tls.c',
- ), gnutls, zlib)
-+system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 306835ff678..a0c8f484163 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -148,6 +148,7 @@ F: configs/targets/i386-softmmu.mak
+ F: configs/targets/x86_64-softmmu.mak
+ F: docs/system/i386/
+ F: docs/system/target-i386*
++F: stubs/hmp-cmds-target-i386.c
+ F: target/i386/*.[ch]
+ F: target/i386/Kconfig
+ F: target/i386/meson.build
+diff --git a/stubs/hmp-cmds-target-i386.c b/stubs/hmp-cmds-target-i386.c
+new file mode 100644
+index 00000000000..43a167056d5
+--- /dev/null
++++ b/stubs/hmp-cmds-target-i386.c
+@@ -0,0 +1,13 @@
++/*
++ * Human Monitor x86 stubs
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "monitor/hmp.h"
++
++HMP_STUB(info_local_apic)
++HMP_STUB(mce)
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 28dec25642d..b575e4ac993 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -113,16 +113,14 @@ SRST
+     Show the cpu registers.
+ ERST
  
- if get_option('replication').allowed()
-   system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
-diff --git a/monitor/meson.build b/monitor/meson.build
-index 2647100e04c..585251804e4 100644
---- a/monitor/meson.build
-+++ b/monitor/meson.build
-@@ -5,8 +5,8 @@ system_ss.add(files(
-   'hmp-cmds.c',
-   'hmp.c',
-   'qemu-config-qmp.c',
-+  'qmp-cmds.c',
- ))
--system_ss.add([spice_headers, files('qmp-cmds.c')])
+-#if defined(TARGET_I386)
+     {
+         .name       = "lapic",
+         .args_type  = "apic-id:i?",
+         .params     = "[apic-id]",
+         .help       = "show local apic state (apic-id: local apic to read, default is which of current CPU)",
+-
+         .cmd        = hmp_info_local_apic,
++        .arch_bitmask = QEMU_ARCH_I386,
+     },
+-#endif
  
- specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
--                if_true: [files('hmp-target.c'), spice])
-+                if_true: [files('hmp-target.c')])
+ SRST
+   ``info lapic``
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index ff65b39b454..cfd53bdc744 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -1488,18 +1488,15 @@ SRST
+   Stop the QEMU embedded NBD server.
+ ERST
+ 
+-
+-#if defined(TARGET_I386)
+-
+     {
+         .name       = "mce",
+         .args_type  = "broadcast:-b,cpu_index:i,bank:i,status:l,mcg_status:l,addr:l,misc:l",
+         .params     = "[-b] cpu bank status mcgstatus addr misc",
+         .help       = "inject a MCE on the given CPU [and broadcast to other CPUs with -b option]",
+         .cmd        = hmp_mce,
++        .arch_bitmask = QEMU_ARCH_I386,
+     },
+ 
+-#endif
+ SRST
+ ``mce`` *cpu* *bank* *status* *mcgstatus* *addr* *misc*
+   Inject an MCE on the given CPU (x86 only).
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 32c16209543..4d1a803c17c 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -87,6 +87,7 @@ if have_system
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
++  stub_ss.add(files('hmp-cmds-target-i386.c'))
+ endif
+ 
+ if have_system or have_user
 -- 
 2.53.0
 
