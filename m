@@ -4,104 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC6CF9D0E7
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F31F9D0E7
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCgpx-0003u8-U2; Tue, 14 Apr 2026 12:42:05 -0400
+	id 1wCgyv-0007GR-Gv; Tue, 14 Apr 2026 12:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCgpv-0003u0-OY
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:42:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCgpt-0003gI-PM
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:42:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776184920;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1wCgyt-0007DF-Rb
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:51:19 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1wCgyr-000648-JA
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:51:19 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 4FDB95BE1D;
+ Tue, 14 Apr 2026 16:51:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1776185473; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f/rNg2G8LVLSGObtFJQYT5FoGLMARNFUzEUSGrzAYQA=;
- b=SFKmp709eO/1f29bdZ22LvNiLgWZ2QB44Yt24Eapq1NZKbBmGhuvLq3uddbR1YuX/moxux
- Wpl3o8ZTZbr1hXknashdfhxlZhBzKpDg7Z8HQiAQNjp9HH8XvOuKSxoetSOkkuwqDAYrRN
- KEXR+U7iBe0p7Td9FyvLZbhXCDSgKhE=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-wCp-__XxOb-IZaa0NgPyOA-1; Tue, 14 Apr 2026 12:41:59 -0400
-X-MC-Unique: wCp-__XxOb-IZaa0NgPyOA-1
-X-Mimecast-MFC-AGG-ID: wCp-__XxOb-IZaa0NgPyOA_1776184918
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8a1accb970fso153583076d6.3
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 09:41:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776184918; x=1776789718; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=f/rNg2G8LVLSGObtFJQYT5FoGLMARNFUzEUSGrzAYQA=;
- b=fm5m/3bts1s2QI3g79UklbRFV5/rTwxn8afj9/1LBjP4KNCu4ruz8/ah/UebS5I6hf
- Ns7I4Hm2MzsOrdSjiciCOqGGoCo1R3esZaWwf/ysGxtHzyEri2KCubB8HEW+trqPp0fv
- kuhwBXrVlgtgmKEjLUeR+JFWDkWOf2Z/OZaaSy8sk7yPicNkHsTGomlXOsdf03ErJn6H
- QwTE6Ysz4rv7HX2f1ECnuD5RqkPUqADCsWmIilClmHV3FzyNryJnbIK9s2KIs5hqJ7YT
- Szwl7X0J0209T32IzK/BeazuVWwSkqUtMyxF2y3jOwTqu8lV+SKrZAAWuaV6fRwmlyi8
- oyuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776184918; x=1776789718;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f/rNg2G8LVLSGObtFJQYT5FoGLMARNFUzEUSGrzAYQA=;
- b=itRTr40IopxnUVo8m2WeX2Ck1YVhSvCK102eIwAiWSh9NfQ72WPr09xAr6uOnyFG/D
- LHhkUMbWN/0RKjEfEkx1hmomtzzOt3ZfUX3VKzpRKPuGFQMkOp8FpZik0qs7NMIm7Uvm
- x20PeUlyxwmKyBZMj9UC5+oZqJ2w2RDRA8APHBAFlknrYTfFJ28xsDKgzQ8r5V3z9duy
- 5WRQ+O4Qmra42RPdaTMKGK7wYTp86GQJBiRDyerQy99GwtLYTzSDSd+Fz0GnlnSn1ATB
- SHikjCEuFPhWNXY9Jevr8vXfQmZvcvWne1I1WnP8R7G2i/oWXS6wUZOJWVS99+W3hu6g
- /tXw==
-X-Gm-Message-State: AOJu0Yw06GPD1PFVPtpHvMutG7rin/K/kaUotQ4LE4e0Pqh50mtPJH1Q
- PpPhE2xtCJmjRxV1b1W1pMb7Ill1aYuq+Bpjs1OOk1Umo0rOrHizgsw20ZHgkDBam1TEu+P+1NE
- flS8CxP+r1CGfKNhUASXF7nMKXaw+SS+/G3ZCiD7GVvt7WXlhn/JmG9Y1
-X-Gm-Gg: AeBDietqz7WtyCO4/r+NRfn94Ibx1PWaV6z3ntKxeYuszi0cPJ50A4A71sMbv6ZM7GO
- tvGdWy9O250mxGSkhJFwIuyF7p+j5x1iZvVC2yS4GUlCBk05cPqqPUNnWeuvvzpObeX8ICH4dQF
- YBrLV6sVzxK8SBi3XZfDnu3g0C58yjCPmRcYXE97dnOcFrKsVx5ycZjLqQYpFoxsz0vLjfYIafw
- JoB02GmBxCD6EoPnq6DKijkxfkH8mvqpwQB6Ngrc2GbM5hN5olyMQ9oWxvP6cQ/NHZ1Mw9hN+HT
- Ps/MAJ2Bs603xbPeaQ3Phx9G1ZDVAIbqEvFwUL0xYVRumkg1gaqND1TgngFHypaDU4qK8FViqSV
- BaqKuPKmfKM3taRdkBRxtJ4vQHXc1XNvP4g/tHG8q70CeRfRPeMECx/aBEg==
-X-Received: by 2002:a05:6214:1bca:b0:8ac:b2e8:8681 with SMTP id
- 6a1803df08f44-8acb2e8905fmr119564156d6.5.1776184917880; 
- Tue, 14 Apr 2026 09:41:57 -0700 (PDT)
-X-Received: by 2002:a05:6214:1bca:b0:8ac:b2e8:8681 with SMTP id
- 6a1803df08f44-8acb2e8905fmr119563526d6.5.1776184917321; 
- Tue, 14 Apr 2026 09:41:57 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ac84a47a0dsm125927756d6.22.2026.04.14.09.41.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Apr 2026 09:41:56 -0700 (PDT)
-Date: Tue, 14 Apr 2026 12:41:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Li Zhijian <lizhijian@fujitsu.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH] migration/ram: avoid page population in ram_handle_zero
- via madvise
-Message-ID: <ad5uUqgY1IDvq37g@x1.local>
-References: <20260328130110.166469-1-vikingtc4@gmail.com>
+ bh=lX/0w9YP/DqUSMVQKYBI6gVtw0w+IriCgUYJkQMZhC4=;
+ b=OlBnJzyZvmp3UPVSUQsyusZ9pEPL2ajzr9byn8pu9Vl4kB2whopRvw+nwNCRukl8c1nUkm
+ EvjtOeC0oP6ILGHU/Dp+x5TEnHqPhtLt+y8CX/5rf/BjOzdo3op5gB8Ak9nxYJl8/TcASf
+ mZHekjdFcGTOpfN9TFF4WX4oC3yngiU=
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.com header.s=susede1 header.b=OlBnJzyZ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1776185473; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lX/0w9YP/DqUSMVQKYBI6gVtw0w+IriCgUYJkQMZhC4=;
+ b=OlBnJzyZvmp3UPVSUQsyusZ9pEPL2ajzr9byn8pu9Vl4kB2whopRvw+nwNCRukl8c1nUkm
+ EvjtOeC0oP6ILGHU/Dp+x5TEnHqPhtLt+y8CX/5rf/BjOzdo3op5gB8Ak9nxYJl8/TcASf
+ mZHekjdFcGTOpfN9TFF4WX4oC3yngiU=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2716C4B549;
+ Tue, 14 Apr 2026 16:51:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id XVNrCIFw3mm5CwAAD6G6ig
+ (envelope-from <mwilck@suse.com>); Tue, 14 Apr 2026 16:51:13 +0000
+Message-ID: <3d54a532eb5b3111d8f8849458a009493d3d8845.camel@suse.com>
+Subject: Re: [PATCH RFC] qga: Add selinux-helper for guest-exec subcommand
+ (bsc#1237450)
+From: Martin Wilck <mwilck@suse.com>
+To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Cathy Hu
+ <cathy.hu@suse.com>
+Cc: qemu-devel@nongnu.org, Cathy Hu <cahu@suse.de>, Fabiano Rosas
+ <fabiano.rosas@suse.com>, KVM Bugs <kvm-bugs@suse.de>
+Date: Tue, 14 Apr 2026 18:51:12 +0200
+In-Reply-To: <acaVRtE-NPUa5Ujy@redhat.com>
+References: <20260327102515.502822-5-cathy.hu@suse.com>
+ <acaVRtE-NPUa5Ujy@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.0 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260328130110.166469-1-vikingtc4@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[libvirt.org:url,suse.de:email,suse.com:dkim,suse.com:mid,suse.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ DKIM_TRACE(0.00)[suse.com:+]
+X-Rspamd-Queue-Id: 4FDB95BE1D
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=mwilck@suse.com; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,177 +111,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 28, 2026 at 10:01:10PM +0900, Trieu Huynh wrote:
-> When the destination receives a zero page during precopy migration,
-> ram_handle_zero() calls buffer_is_zero() which reads the page. For
-> anonymous mmap this is benign (reads map to the shared zero page), but
-> for memory-backend-memfd (mmap(MAP_SHARED) of a memfd) even a read
-> commits a physical page in the tmpfs page cache.
-> 
-> As a result, after migration all zero pages of the guest are committed
-> on the destination, turning a sparse RSS into a fully-populated one
-> (see GitLab issue #2839: a 256 GB VM went from ~4 GB RSS before
-> migration to ~256 GB after).
-> 
-> Add a bool can_discard parameter and call madvise(MADV_DONTNEED) when
-> it is true. This releases tmpfs/anonymous pages back to the kernel's
-> zero-page pool without reading the mapping at all. The madvise is
-> issued before any read or write, preventing the initial page fault
-> entirely.
+On Fri, 2026-03-27 at 14:33 +0000, Daniel P. Berrang=C3=A9 wrote:
+> On Fri, Mar 27, 2026 at 11:25:19AM +0100, Cathy Hu wrote:
+> > From: Cathy Hu <cahu@suse.de>
+> >=20
+> > Problem:
+> >=20
+> > ATM the QEMU Guest Agent and SELinux are not working together
+> > properly.
+> > The fedora (and therefor also the openSUSE) policy confine the
+> > qemu-guest-agent
+> > service in the domain `qemu_ga_t`. That means, qemu-guest-agent
+> > is only allowed to do what the policy says.
+> >=20
+> > However, the `guest-exec` command allows arbitrary execution
+> > of code from a privileged service, which conflicts with the
+> > notion of SELinux confinement.
+> >=20
+> > ATM, the policy allows only some accesses that are used
+> > by other qemu-guest-agent commands.
+> > That means, the qemu-guest-agent fails sporadically, depending
+> > on what is allowed for other commands.
+> > However, `guest-exec` would need to allow everything.
+> >=20
+> > see https://bugzilla.suse.com/show_bug.cgi?id=3D1237450
+> >=20
+> > Solution:
+> >=20
+> > This is not an great solution, but it works like this:
+> > We add a "wrapper" which is executed instead of the program
+> > that is called via `guest-exec`. The "wrapper" just
+> > re-executes the command given by `guest-exec`.
+> > This way, on the SELinux policy side we can give that
+> > wrapper executable a label on the file system.
+> > With that label, we can transition into a more broader
+> > unconfined domain _and_ toggle that transition with a
+> > SELinux boolean. That would make `guest-exec`
+> > consistently allowed to execute or not by policy.
+> >=20
+> > This needs a change on the SELinux policy side to
+> > accompany this with:
+> > https://github.com/fedora-selinux/selinux-policy/pull/3122
+> >=20
+> > What other options have been tried unsuccessfully:
+> >=20
+> > - Fixing via SELinux policy: It is not possible for
+> > =C2=A0 one domain to have different permissions depending on
+> > =C2=A0 code path. It is also not possible to toggle the permissive
+> > =C2=A0 state via a SELinux boolean, so users would need
+> > =C2=A0 to add it via semanage.
+> > - Setting the domain of the executed commands directly
+> > =C2=A0 to a broader domain with setcon/setexeccon.
+> > =C2=A0 The SELinux kernel does not allow to spawn a process
+> > =C2=A0 directly with those that has broader privileges than the parent.
+> >=20
+> > What other options are there to solve this issue:
+> >=20
+> > - Making the qemu-guest-agent unconfined by default
+> > - Document the workaround to use semanage to make the domain
+> > permissive
+> > =C2=A0 if `exec-guest` is needed as works as intended and ignore the
+> > problem
+>=20
+> IMHO, the 'exec' command should never have been added to the
+> QEMU guest agent, for precisely this reason that it makes it
+> impractical to put any meaningful security controls around it.
+> Likewise the commands which allow arbitrary file read/write.
+>=20
+> QEMU guest agent should focus on specific targetted tasks
+> with dedicated commands.
+>=20
+> NB: in RHEL we disable all those unconfinable commands.
+>=20
 
-Trieu,
+Downstream bug reporter here. My use case, for which Cathy has come up
+with the solution proposed, was to be able to run the ansible libvirt
+connection plugin to connect to a freshly installed VM before sshd was
+actually configured on the VM, or on a VM that didn't allow ssh access
+at all.
 
-Thanks again for the patch.
+My thinking was that the access control was done by libvirt in this
+case. The user running ansible would either need to have access to
+qemu:///system, or to some remote libvirt server via libvirt's access
+controls (in my case, ssh). Users with this permission level would be
+able to pause, hard-reset, or destroy the VM in question, so I was
+thinking that being able to execute arbitrary commands inside the VM
+was not that problematic. But I may be overlooking something, of
+course.
 
-> 
-> Callers pass can_discard = !(block->flags & RAM_PREALLOC) so that
+> If users want to support an ability to have arbitrary command
+> execution, then that should be done with SSH over VSock, where
+> the guest owner can choose whether to require authentication
+> first or not, and use SSH authorized_keys if desired to limit
+> what commands can be run for a given recorded key.
+>=20
+> These days systemd installs magic to allow SSH'ing directly
+> to a guest using VSOCK addresses, and libvirt further
+> enhances that to allow SSH'ing to a named VM.
 
-I wonder if this will be enough.  E.g. see ram_block_discard_range() where
-it special cased RAM_READONLY_FD.
+Thanks, I wasn't aware of this feature so far. I suppose you're
+referring to https://libvirt.org/ssh-proxy.html. I'll need to
+experiment with it. IIUC this works for local libvirt connections only?
+If that's the case, it wouldn't be a full replacement for qemu-agent
+based access, which I've found to be particularly handy for remote
+libvirt instances.
 
-> backends with prealloc=on are unaffected: deliberately pre-faulted pages
-> must not be discarded. On the destination side vCPUs are paused
-> (RUN_STATE_INMIGRATE) while precopy pages are loaded, so madvise is
-> race-free.
-> 
-> After migration for VM with 4GB RAM, the RSS on destination was reduced
-> to 247 MB (vs 4148 MB before change), measured via VmRSS in
-> /proc/$PID/status.
-> 
-> Relates-to: https://wiki.qemu.org/ToDo/LiveMigration#Avoid_page_population_when_page_is_not_populated
-> See-also: https://gitlab.com/qemu-project/qemu/-/issues/2839
-
-Please always loop in people that were involved in the discussions.  I'm
-adding Dan here.
-
-> 
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> ---
->  migration/ram.c  | 16 +++++++++++++---
->  migration/ram.h  |  2 +-
->  migration/rdma.c |  9 ++++++++-
->  3 files changed, 22 insertions(+), 5 deletions(-)
-> 
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 2a7e958e87..e57613e29d 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -3638,9 +3638,13 @@ static inline void *colo_cache_from_block_offset(RAMBlock *block,
->   *
->   * @host: host address for the zero page
->   * @size: size of the zero page
-> + * @can_discard: check whether RAMBlock was created with prealloc=on
-
-This is fine, but let's avoid mentioning "prealloc=on" details.  It may not
-always be the case. As a helper function, we should normally describe what
-it implies when can_discard is set, not when it will be set.
-
->   */
-> -void ram_handle_zero(void *host, uint64_t size)
-> +void ram_handle_zero(void *host, uint64_t size, bool can_discard)
->  {
-> +    if (can_discard && qemu_madvise(host, size, QEMU_MADV_DONTNEED) == 0) {
-
-I also don't know if DONTNEED will always work as expected.  E.g. when
-there're shared mappings and if the same page/folio is mapped elsewhere,
-DONTNEED may not be enough.  Again, see ram_block_discard_range() on the
-cases where ramblock is shared, or fd>0.
-
-I wonder if we should just pass in ramblock itself as parameter with offset
-to zero..  then we can do all the checks here and directly invoke
-ram_block_discard_range() when it's applicable.
-
-> +        return;
-> +    }
->      if (!buffer_is_zero(host, size)) {
->          memset(host, 0, size);
->      }
-> @@ -4086,7 +4090,7 @@ static bool handle_zero_mapped_ram(RAMBlock *block, unsigned long from_bit_idx,
->                     block->idstr);
->          return false;
->      }
-> -    ram_handle_zero(host, size);
-> +    ram_handle_zero(host, size, !(block->flags & RAM_PREALLOC));
->  
->      return true;
->  }
-> @@ -4421,7 +4425,13 @@ static int ram_load_precopy(QEMUFile *f)
->                  ret = -EINVAL;
->                  break;
->              }
-> -            ram_handle_zero(host, TARGET_PAGE_SIZE);
-> +            {
-> +                ram_addr_t ram_offset;
-> +                RAMBlock *rb = qemu_ram_block_from_host(host, false,
-> +                                                        &ram_offset);
-> +                bool can_discard = rb && !(rb->flags & RAM_PREALLOC);
-
-IMHO there's no need to redo the lookup, we can extend the lifespan of the
-"block" variable right above when calculating the host address.
-
-> +                ram_handle_zero(host, TARGET_PAGE_SIZE, can_discard);
-> +            }
->              break;
->  
->          case RAM_SAVE_FLAG_PAGE:
-> diff --git a/migration/ram.h b/migration/ram.h
-> index 41697a7599..faa80f27d1 100644
-> --- a/migration/ram.h
-> +++ b/migration/ram.h
-> @@ -90,7 +90,7 @@ int ram_discard_range(const char *block_name, uint64_t start, size_t length);
->  int ram_postcopy_incoming_init(MigrationIncomingState *mis, Error **errp);
->  int ram_load_postcopy(QEMUFile *f, int channel);
->  
-> -void ram_handle_zero(void *host, uint64_t size);
-> +void ram_handle_zero(void *host, uint64_t size, bool can_discard);
->  
->  void ram_transferred_add(uint64_t bytes);
->  void ram_release_page(const char *rbname, uint64_t offset);
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 55ab85650a..d4c36af5b9 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -28,6 +28,7 @@
->  #include "qemu/error-report.h"
->  #include "qemu/main-loop.h"
->  #include "qemu/module.h"
-> +#include "system/ramblock.h"
->  #include "qemu/rcu.h"
->  #include "qemu/sockets.h"
->  #include "qemu/bitmap.h"
-> @@ -3413,7 +3414,13 @@ int rdma_registration_handle(QEMUFile *f)
->                               comp->value);
->                  goto err;
->              }
-> -            ram_handle_zero(host_addr, comp->length);
-> +            {
-> +                ram_addr_t ram_offset;
-> +                RAMBlock *rb = qemu_ram_block_from_host(host_addr, false,
-> +                                                        &ram_offset);
-
-Similar here, a slight difference is RDMA manages ramblocks with its own
-internal data structure, so I wonder if we want to simply cache the block
-pointer somewhere in qemu_rdma_init_one_block() if we want to make
-ram_handle_zero() take the ramblock ptr directly.
-
-The other thing is I'm not yet sure if you have tested this code.  Please
-keep that in mind whatever patches one posted need to be properly tested.
-It's definitely not good to send whatever not tested for merging.  Here,
-this changes RDMA code path.  You can have a look at our RDMA unit tests,
-but you'll also need to setup it.  There's a helper you can use, see
-scripts/rdma-migration-helper.sh.
-
-> +                bool can_discard = rb && !(rb->flags & RAM_PREALLOC);
-> +                ram_handle_zero(host_addr, comp->length, can_discard);
-> +            }
->              break;
->  
->          case RDMA_CONTROL_REGISTER_FINISHED:
-> -- 
-> 2.43.0
-> 
-
--- 
-Peter Xu
-
+Regards,
+Martin
 
