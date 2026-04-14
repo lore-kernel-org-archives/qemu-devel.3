@@ -4,58 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BEAF9D0D5
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 14:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9050F9D0D5
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 15:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCeyt-00069C-K5; Tue, 14 Apr 2026 10:43:11 -0400
+	id 1wCfHr-0001kL-K9; Tue, 14 Apr 2026 11:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1wCeyr-00068i-RZ; Tue, 14 Apr 2026 10:43:09 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1wCeyq-0002vg-FG; Tue, 14 Apr 2026 10:43:09 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 7F7F760018;
- Tue, 14 Apr 2026 14:42:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D949AC19425;
- Tue, 14 Apr 2026 14:42:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1776177779;
- bh=2WpOj6taseqBidjihcW9XRHVqfeQr6sfPKeZa635VE4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=VGzvYagnI4cjcGsO3eruVWvUXRCtNo9DUq2Up7sSJEK+M1orK+MQRoEqMbBA0MdUF
- yzEbBA7AZIHg7aDjGNKMCa4YojWVH7Oaj05vOL+3vktPtVeXDfXhGB0lm4TyteYW90
- 8WlSNCiJkKoigJC5fvTwD0aG3NZRbNbbCsMgfbVO6dY1TW+t1cglSMLHPKZ2qYmjYj
- h4hTf4xLEZ1Gxg+h7G6ZCS8C10WgO6Xq7KI9tBzfrM5PhVis8/MkENemj+Tw46+8Li
- 9SKcJ2GUumZy5isFEPE/nAT7fBoXvOjdFZXUBq1ziuQn84uBZLs4zywvP+W6SNoD7v
- zqZ7rykalJNWg==
-Date: Tue, 14 Apr 2026 08:42:57 -0600
-From: Keith Busch <kbusch@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Klaus Jensen <its@irrelevant.dk>, mr-083 <matthieu@minio.io>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- mr-083 <matthieu@min.io>, John Meneghini <jmeneghi@redhat.com>
-Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
-Message-ID: <ad5ScUYqe8RWC2y8@kbusch-mbp>
-References: <20260409060155.94704-1-matthieu@min.io>
- <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
- <20260414124221.GB111076@fedora>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCfHq-0001k5-Aa
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:02:46 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCfHn-0007kt-Jq
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:02:45 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso53663435e9.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 08:02:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776178957; x=1776783757; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Tz/4vUIMP10DDMNiOy4QZPaEX12h2s2ROTRljbT+BTY=;
+ b=CuyNUF8PMRSYPIGOTFGbyT+386HmIQu+dom6/hbbzOg14kaajmlsUrBUCUx2st9ygA
+ IjSkdrvw+fRRPyXiHPHHbMXH3OfnbwWMCIbkPD05r0TxVb0p0q1mZs4XFUv3xGdd4EIg
+ 6/pDvrFLE3gaDjO9kl0VtdPK7ePVEIvN9DIOEcnma83oiV/323dCMbylWBIZj2zJJYSQ
+ VAV/8gZfDwHSbmrLXX7hmy3GdSaMskVKL0l/EndBrcezQvmD7kouy2k8gPy6OD2UV6W8
+ LDIxLOASZqttI7avMWrq+pGzz5JcSn5qvb2aM6tFhAPWUZNAPPw5NnIxd3Rd6y+FNydV
+ bLnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776178957; x=1776783757;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Tz/4vUIMP10DDMNiOy4QZPaEX12h2s2ROTRljbT+BTY=;
+ b=srkSv8je8nj6pinKKQTMxkBtpT3+FxAIWFrR9j8eIkEgNo5lz8DkRKAurXGRFeTYto
+ LKdDdRPT5vhiDxNusrMZ6itQ1VqENWuhcq/Eu+uaSw8dmzSPigpXV0F1aq/X03iyvSB9
+ rVVmqOT9Sbz2HTi3TwuT6TFVv7n/ZsHkgSIMnfrdn7XYRVBjdBz/fclL1wGvy06+4FOg
+ +IFEu/GYpIOFE0nxNCRflAPFrZ4oPMeQEqPV/9MQR7KhArm7zA2dKUbd7V5Kkd3ffiwf
+ usqC4IvOERh2cqSbZg2h1OxB++E3j6FjLMbZ/G7Uw6uwAqazpjh1jQAeC0wYKpsXmIQo
+ 8HNg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8ulmAM4OLc7Tvhdq6uT3IhzLodgut3rZRc0+heiyRq0WOIk/Hmct3RRgsRgxLH+SNfjXJINaOLJOVB@nongnu.org
+X-Gm-Message-State: AOJu0YywodZD4r3sOMFhM3+DSuFY95th91GkvhT+vVZb7Z6Qkm63QEo5
+ RdtX7BDSjSH178rMCQJBCpadaYnoJbdTrGu8ll1mPYI0y8/jbRTKe/cwA15Qg8daoi8=
+X-Gm-Gg: AeBDieta6mmVBShylT0ORrDb69cYp6pfqxd6I/RZOUXey2gMm8mTmiIIS6wvDxsqsIu
+ K4BRtQRaiVJ5Gw2GoeOq5IeVDuj7IBjcgbZanhfKLbS1IAu1pkjP2VcFdqQQIrvQD3NiLrLLbYd
+ NBUC1g+nM7BFlC3aUkdfV1JqmS6LHsbDHPza8CmOAzDUrw6YTwWlWjm6SGtT4nlMq4a4GXPpUNz
+ 6Wq84+LxjX7aPwPkNuwG3hn3RoUiF7h4AgsLnAFyS/k/YYH3oXtgoruLTRI+z91PoaZ+f8lQAfo
+ JeHIB5GSztgye24yAxEUUwAilk8tmJ25YMNY/ytABGMCEMSiYp7oVcePAnMGqmMy24IwAtDRKQ/
+ UgGu+9GWls+nazhN7a5Gd385XHnKUyqU9604tzOb1GHraHLhX70AsWkphKIbjznoxllTVCBTvQh
+ VnDGGXaO3sDiL95KswW46HLGcOyJbdzo8YpAuQHGfud1NnDzGkM9Tu4iBXBdFlmSkbFqVpvwRuM
+ gUB
+X-Received: by 2002:a05:600c:46cb:b0:488:c51f:e04e with SMTP id
+ 5b1f17b1804b1-488d67f3a0fmr249223415e9.13.1776178956826; 
+ Tue, 14 Apr 2026 08:02:36 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488ee042ff9sm65430185e9.14.2026.04.14.08.02.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Apr 2026 08:02:35 -0700 (PDT)
+Message-ID: <8d358e4b-d6a0-417f-b357-99a0ae06164e@linaro.org>
+Date: Tue, 14 Apr 2026 17:02:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260414124221.GB111076@fedora>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=kbusch@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/6] hw/sd/sdcard: Add erase-blocks-as-zero option.
+Content-Language: en-US
+To: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
+References: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
+ <20260204-sdcard-performance-b4-v3-5-dc1cf172ee57@avm.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260204-sdcard-performance-b4-v3-5-dc1cf172ee57@avm.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,30 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 14, 2026 at 08:42:21AM -0400, Stefan Hajnoczi wrote:
-> On Mon, Apr 13, 2026 at 07:17:37PM +0200, Klaus Jensen wrote:
-> > On Apr  9 08:01, mr-083 wrote:
-> > > This series adds two features that together enable transparent NVMe disk
-> > > hot-swap simulation in QEMU, matching the behavior of physical NVMe
-> > > drives being pulled and reinserted in the same PCIe slot.
-> > > 
-> > 
-> > I don't understand this. From an NVMe perspective you can't hotplug a
-> > namespace. You can hotplug a PCIe-based NVM Subsystem.
+On 4/2/26 14:22, Christian Speich wrote:
+> Currently, erased blocks are filled with 0xFF. However SCR Bit 55
+> (DATA_STAT_AFTER_ERASE) indicates that an erase produces zeros. One of
+> them is wrong.
 > 
-> Hi Klaus,
-> It would be great if someone with more NVMe experience than myself can
-> find a definite answer, but I think the Namespace List can change
-> asynchronously even on a NVMe PCIe controller as long as it supports
-> Namespace Management commands.
+> This patch does two things.
+> 
+> First it fixes the reporting of DATA_STAT_AFTER_ERASE in SCR to
+> correctly reflect the content of erased blocks. We also increase the
+> Product Revision (REV in CID) to indicate to the guest that
+> DATA_STAT_AFTER_ERASE is now reliable.
+> 
+> Secondly, we introduce a erase-blocks-as-zero option, which allows the
+> user to choose if erased blocks should contain 0xFF or 0x00. The default
+> is still 0xFF to remain compatible with current users.
+> 
+> Signed-off-by: Christian Speich <c.speich@avm.de>
+> ---
+>   hw/sd/sd.c | 15 +++++++++++++--
+>   1 file changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index c9cfd3620b563fbe7520cfe361e14b57cd8f7472..5ddaa08d77b6b7606005fb59f42f107d254d6e5c 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -162,6 +162,7 @@ struct SDState {
+>       /* Static properties */
+>   
+>       uint8_t spec_version;
+> +    bool erase_blocks_as_zero;
+>       uint64_t boot_part_size;
+>       uint64_t rpmb_part_size;
+>       BlockBackend *blk;
+> @@ -439,6 +440,9 @@ static void sd_set_scr(SDState *sd)
+>       sd->scr[0] |= 2;            /* Spec Version 2.00 or Version 3.0X */
+>       sd->scr[1] = (2 << 4)       /* SDSC Card (Security Version 1.01) */
+>                    | 0b0101;      /* 1-bit or 4-bit width bus modes */
+> +    if (!sd->erase_blocks_as_zero) {
+> +        sd->scr[1] |= (1 << 7); /* DATA_STAT_AFTER_ERASE: Erase produces 0xFF */
+> +    }
+>       sd->scr[2] = 0x00;          /* Extended Security is not supported. */
+>       if (sd->spec_version >= SD_PHY_SPECv3_01_VERS) {
+>           sd->scr[2] |= 1 << 7;   /* Spec Version 3.0X */
+> @@ -456,7 +460,7 @@ static void sd_set_scr(SDState *sd)
+>   #define MID     0xaa
+>   #define OID     "XY"
+>   #define PNM     "QEMU!"
+> -#define PRV     0x01
+> +#define PRV     0x02
+>   #define MDT_YR  2006
+>   #define MDT_MON 2
+>   
+> @@ -1363,7 +1367,12 @@ static void sd_erase(SDState *sd)
+>       sd->erase_end = INVALID_ADDRESS;
+>       sd->csd[14] |= 0x40;
+>   
+> -    memset(sd->data, 0xff, erase_len);
+> +    if (sd->erase_blocks_as_zero) {
+> +        memset(sd->data, 0x0, erase_len);
+> +    } else {
+> +        memset(sd->data, 0xFF, erase_len);
+> +    }
+> +
+>       for (erase_addr = erase_start; erase_addr <= erase_end;
+>            erase_addr += erase_len) {
+>           if (sdsc) {
+> @@ -3287,6 +3296,8 @@ static void emmc_realize(DeviceState *dev, Error **errp)
+>   
+>   static const Property sdmmc_common_properties[] = {
+>       DEFINE_PROP_DRIVE("drive", SDState, blk),
+> +    DEFINE_PROP_BOOL("erase-blocks-as-zero", SDState, erase_blocks_as_zero,
+> +                     false),
+>   };
 
-I think there's some clash in terminology. From nvme protocol side,
-hotplug refers to bus events detected by the host, so something like
-PCIe slot capabilities defines how that works. This series is doing
-something behind the scenes from the host-controller interface
-visibility, so it's just coincidence that framework is also called
-"hotplug". From nvme protocol perspective, this patch looks like a qemu
-specific out-of-band method for namespace "attach/detach" via the QMP
-interface. Sounds fine to me: the nvme namespace events are not strictly
-tied to the spec defined in-band attachment status.
+Keep it enabled for previous versions adding in hw/core/machine.c:
+
+GlobalProperty hw_compat_11_0[] = {
+     { "sdmmc-common", "erase-blocks-as-zero", "true" },
+};
+
+(Although I wonder about the PRV bit).
+
+Otherwise LGTM.
 
