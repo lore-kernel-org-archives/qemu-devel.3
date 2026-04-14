@@ -4,95 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67AB6F9D0FB
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 22:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6988F9D0DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 23:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCmO7-0003qR-39; Tue, 14 Apr 2026 18:37:43 -0400
+	id 1wCml7-0006yy-RN; Tue, 14 Apr 2026 19:01:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCmO4-0003pZ-V1
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:37:40 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCmO3-0008HE-3B
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:37:40 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 759576A8E9;
- Tue, 14 Apr 2026 22:37:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776206257; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
- b=dyk73w7vS7oxSQHHhS9nns1lp1zIaOfvd/e1Z7eUIxTcImgh+z5uMd9KEoIK0M0+LI0wQa
- VHt4CJ030KTjK7QlV5Sd2rVcYsMn8f7zSomOZBibtvNl+v4yYqozVzEj9+yNbPK352aXLq
- f3keQsfEv5j3BTjlPGpPUMaXuaW9bFY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776206257;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
- b=6hsgq//Z+lTR8uQrKhVHQAhEUonH+q3bkArpiTvAaPzZaZrv6wzFBEtj5W2ish3jYES/Cv
- kQXckk90co5GUuBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776206256; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
- b=iYT9gdC1dbt/qCVEo2J6DLw+Vu8+d4ZUmT7ILKD8QXrL9Wfw+tGjPyt7uYfmntNF4mLry6
- JO8GDYe6ePlwW7phXQsDFQ73S4JYBZiVVCAm8u5MuDCQsIC7jlcKzvYgz5SV+zcHOdXNlI
- BDu+XvFqCXcDYgpfv72pewsXlOSdZas=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776206256;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
- b=s5VhVk8iZMtM03UDpYzI+3izWoX2Zo8B0smdkpp36+UJER+/DkzEXNZOK8yewbyS2tcePO
- ssmUIUpScnjJWSAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5560D4B6A3;
- Tue, 14 Apr 2026 22:37:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QAXPCa/B3mlmVwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 14 Apr 2026 22:37:35 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Subject: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
- migrate_params_test_apply
-Date: Tue, 14 Apr 2026 19:37:18 -0300
-Message-ID: <20260414223718.23965-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wCml6-0006xd-FU
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 19:01:28 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wCml4-0006TW-Bs
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 19:01:28 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63EGBoAt1779139
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 23:01:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ y4RfMEEa0CpZFWy1j/ciFSr3YrCHOMZsVnSFnCFDDDc=; b=iWMROM2PSJ5vCxcv
+ JMmwHkxdoBAf983sjO9h9bXEP2xyi7lFVEz7CXYXhfYVZkFEUvnx9FdYYlpGChlC
+ keqnd+Vo5SLgMydwnD+Esew+8T/zK7dvGWEvqUic6hBQHYalnXePe0I4FvYszW3L
+ Dje+sgYsrfdQf2j32ZazSO40220hT7Ia3q5+QMR+hmcyJ7DL8K53+LJQiMT2Lonm
+ IX7iQyYK47hCeJ2RBXfUdBCx8xksSVAB9JEQvRKSoFxpQ1+jPQlCBidh5JvfP1WA
+ vpFPoKef7oqQE3uYtm1nSImaUxA/IQOrzanZ4uCd1KPNqqqcLScNCOJztxWeL2Hj
+ meF/Hg==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dhrw017s8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 23:01:21 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-12c56ad1a90so9365440c88.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 16:01:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776207681; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EAAKU6f7F9M4c0L2cBUuF39bYxUGwICBR79iiz4MA4HQm6mmKdWnP5Qam4P8Cc02Pj
+ 2pNwcnKarP+fTuAnzaVgYua/JZ+q9pHa6v3tcYgsMzHyw86P2lt4la94ahRsA+Qk5Uif
+ NNHUVIXXHMYvLC7Emgx4Py8vmgAo4DD/EbDtUVyJJKF+a5AYeHZPFociVmwVrhBW5PlB
+ qu6Qb5O4h+PyMWeVzQTDIC8dUj4gC6fwh6JPcenAGxLSqmo2R+LM8q40uHjEShPco5Gx
+ 8aGx0a+oPZFm3vFAPFIcVQIjGLCSGp3QsMx6ldS7jYIntKr8RP4MRago9Q9Jugpkzu/I
+ s2JA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=y4RfMEEa0CpZFWy1j/ciFSr3YrCHOMZsVnSFnCFDDDc=;
+ fh=hoMXCrJnauR1QzJmhe2dmsXmHFwojppyyJeZbn8p/n0=;
+ b=WasgiZz2YOrMwkI7Bxa/qUJlQwb7oFjLymm7v5W6ofXcc849DDZA8GYXThUWIDOnz3
+ QyB0Jmv8w+4cGU8Hm1gtmZ3R356zMF7NiN1sxSsRPkch01qUSrqVuWv+LzOu6Rml4rD1
+ 6suORPKRJt+Ty9jBLbcuph73dU938G6VepfuxIsFed3/hc93Q7jv83UwlNZokGj0uHnx
+ FF8k6C6RyixRIEr16xe8zOG+W2Uh2foQrxSo9+ti42K814wOv/bSis/8WCODc8o8cgtM
+ awBk/x9aISYGZq+rD1OmVbJ5j0zAAU0j2k35DpszH8Oxcw+45y8K/nL2w5u8TRbeqFWv
+ x6+Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1776207681; x=1776812481; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y4RfMEEa0CpZFWy1j/ciFSr3YrCHOMZsVnSFnCFDDDc=;
+ b=iz3D/5rwRT2VYY3PxByDV7xM7r0TMZ1EC1MSB1ZZnxuQdMtJgo5g5d7A8IfgNuTEZu
+ Hw/NFw0SuKcZtNqlYjs/7Itdhg3UJ0IwfJfkV+h8sGjPT6ud3Rps82HFDIEYfFTeXk1v
+ qFVi17Rdk4q3u7oIuM/dFeK4n/lb3Fgh0fQcXUhtMHMU2tpI37O5AHbiY9Ytc8LkFp3R
+ MI18Z7NPumgPV4hSRWdpn7BV6ba/Y7iavU+10JWe6wpFIlGUs1oIL40juNX8fEPw8tx8
+ 7retElPyj4/PqWF9auM0HLntCj61AZl3XQTQBXBEOjJA7BNGE7cln39nrLWa2kGPUFm3
+ ocNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776207681; x=1776812481;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=y4RfMEEa0CpZFWy1j/ciFSr3YrCHOMZsVnSFnCFDDDc=;
+ b=tQ2zadzZnEBdBUwY+iEh99sxdP3SPsJvQUke36p2/uX+JuTc9/FTBAxzfclG7kaihC
+ hr0RcfXwXvRA0dBDtb9dlrsugqJBAFLuZTkhwJQ+dBy9EjkTmsbV2yjnSut+Rq7bnBBG
+ clkFctJJvQIOx/9Bq+d50C4sSSgTmRMDYvhG9PcNSzli46nKzSOb7kg9XOEC3SKQzLKt
+ BBELZij/X12E5BxdnBcuXCf1ow+4xQXNGTUAzlHwJ9tajcwH015QMscJRdZn01vQKOB/
+ Ln3Bgp5rhiEN4TA9ntRPn9epbC/vnGK7c4V9Kd3uLPORpjlXA637TkZ3acxSgbN9MYXS
+ duFA==
+X-Gm-Message-State: AOJu0Ywq5N2LtDLnjNIPdt/9XZw4ZsC8ovqP2DyAgsJS/IUtzVlkSyKf
+ yp7RMoGtTaKIKL4IKEmYLdu1UF9gDuNXrYwZBszDpCBAZb4gyOiODWFpovFcwrcX/uU/F8kkvG/
+ TJIX5/DWiaGU9OTdYgY6ZbNVSwzxmNHnbe5U4PY/nFnFDtUS3huPn6kCLeGD8k0wdZHJMNOvH2/
+ ECQtsWPtHpHoQLty/NC4VkQbwQ5sYQs4zp
+X-Gm-Gg: AeBDietLeiJyDYRlWOaMzSAsEGdjncmqX3Tz7n90viTpMs+i40lJsNf/e3bOp2jFyDT
+ T1OoQG1fkvzSbgKY/L8VZEvMvV53QdUTVfzSNHfkRLYlcSKSyEbQZ0XYaXG6OjOS/Pbq4V9b7pt
+ EHLXwInErTRRInDLXUAfmr9QoqYcYlMY4KqD0/eS2FiY7y+xRMXIEwvc98D87NXtIeEbWjKR8pG
+ Aqu3Z4=
+X-Received: by 2002:a05:701b:2205:b0:12a:7181:2f1c with SMTP id
+ a92af1059eb24-12c34ecf751mr7400361c88.17.1776207681123; 
+ Tue, 14 Apr 2026 16:01:21 -0700 (PDT)
+X-Received: by 2002:a05:701b:2205:b0:12a:7181:2f1c with SMTP id
+ a92af1059eb24-12c34ecf751mr7400339c88.17.1776207680363; Tue, 14 Apr 2026
+ 16:01:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260414223604.104290-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260414223604.104290-3-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260414223604.104290-3-pierrick.bouvier@oss.qualcomm.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Tue, 14 Apr 2026 18:01:04 -0500
+X-Gm-Features: AQROBzC5rLE0-gzs7V9PqusOeb2zYFGRUg-luGThj47yTui7MrhPy1jp8wnkaGU
+Message-ID: <CAEqNhNb=niMdcr-Af71yasv356Gmrr7QeEmADd7Mnvwfowokxg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] MAINTAINERS: add new reviewer for Hexagon target
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Burton <mburton@qti.qualcomm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: -wv1NEXuNXApwwyjwid5-GNeb6sbb9r5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDIxNSBTYWx0ZWRfXwtWW5jn5Krzu
+ b8UQ/zmE7e4NxG5Q4OCR491el9flHgV8qy8mMEp9GkTI5GV11nc34MZhR4ggTu2/52ueeisiqVe
+ QI1zmPqTE5WqN8kKJeOt/FsfsF6ndGUJ9UPve0hyMAOrodcHkDj6Y9H2FWcOBEMu1qGI8nUtbKX
+ 5pw7+RpgZtyNvGARyeXddlQa8Oh1z/IWKEOV8FRhFizpRezbMCDSnXG3ceN3sEOmzS4DfpITapd
+ vanJonw1jG5UOXUTeQa80iaWBvUJf12V7FkIa7XqBIETba+FYszraddR0y4bjSoTvtTMMY8FHts
+ Y1Uv8vUz5jAapf/Sd2VXqj2xxvMO7IVvlKY78fROkGpGQi7lOmy3ES7W9NrJ8MBm4Vwc57DJNzp
+ NUjeyMW8XzF4skhdicO8lE3NJhCa1CjJeeRET6j2jkNLN1+m1sgn13mfA/4kA9DK73vlYxhO9YG
+ GH+VfDOYHmFb95o0exA==
+X-Proofpoint-ORIG-GUID: -wv1NEXuNXApwwyjwid5-GNeb6sbb9r5
+X-Authority-Analysis: v=2.4 cv=YMGvDxGx c=1 sm=1 tr=0 ts=69dec741 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8 a=yk-8APeZfJODsI6Ux2QA:9
+ a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-14_04,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604140215
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,124 +168,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
-method makes the handling of the TLS strings more intuitive because it
-clones them as well.
+On Tue, Apr 14, 2026 at 5:36=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-This also fixes a segfault when a NULL TLS option is accessed as part
-of a validation check for another option (e.g. in the zero-copy +
-multifd compression case). Details follow:
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
-Currently, after copying s->parameters to the temporary
-MigrationParameters object before migrate_params_check(), the
-references in temporary object to the TLS options are dropped, either
-because:
-
-a) the user set a new option, in which case that's fine as
-   s->parameters still holds the reference to the old memory or,
-
-b) the user did not set a new option, in which case keeping the
-   references in the temporary object would later cause them to be
-   freed along with it, leading to double-free when s->parameters is
-   also freed later on.
-
-In this second case, it was overlooked that the TLS options can be
-accessed already during migrate_params_check() as part of validation
-of another option. Those pointers should not have been cleared.
-
-Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
-is not stealing a reference from s->parameters anymore.
-
-Fixes: aed97f0563 ("migration: Normalize tls arguments")
-Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-NOTE#1: For the release we could have a simpler fix just checking for
-NULL, but that would allow two unsupported configurations to be
-accepted: zero-copy with either multifd compression or TLS.
-
-NOTE#2: CI is red due to pre-existing failure in functional tests with
-"exec:socat" migration.
----
- migration/options.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
-
-diff --git a/migration/options.c b/migration/options.c
-index 7556fbc06b..68441f0276 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1279,9 +1279,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
- static void migrate_params_test_apply(MigrationParameters *params,
-                                       MigrationParameters *dest)
- {
--    *dest = migrate_get_current()->parameters;
-+    MigrationState *s = migrate_get_current();
- 
--    /* TODO use QAPI_CLONE() instead of duplicating it inline */
-+    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
- 
-     if (params->has_throttle_trigger_threshold) {
-         dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
-@@ -1300,24 +1300,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     }
- 
-     if (params->tls_creds) {
-+        qapi_free_StrOrNull(dest->tls_creds);
-         dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
--    } else {
--        /* clear the reference, it's owned by s->parameters */
--        dest->tls_creds = NULL;
-     }
- 
-     if (params->tls_hostname) {
-+        qapi_free_StrOrNull(dest->tls_hostname);
-         dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
--    } else {
--        /* clear the reference, it's owned by s->parameters */
--        dest->tls_hostname = NULL;
-     }
- 
-     if (params->tls_authz) {
-+        qapi_free_StrOrNull(dest->tls_authz);
-         dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
--    } else {
--        /* clear the reference, it's owned by s->parameters */
--        dest->tls_authz = NULL;
-     }
- 
-     if (params->has_max_bandwidth) {
-@@ -1374,8 +1368,9 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     }
- 
-     if (params->has_block_bitmap_mapping) {
--        dest->has_block_bitmap_mapping = true;
--        dest->block_bitmap_mapping = params->block_bitmap_mapping;
-+        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
-+        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
-+                                                params->block_bitmap_mapping);
-     }
- 
-     if (params->has_x_vcpu_dirty_limit_period) {
-@@ -1399,7 +1394,8 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     }
- 
-     if (params->has_cpr_exec_command) {
--        dest->cpr_exec_command = params->cpr_exec_command;
-+        qapi_free_strList(dest->cpr_exec_command);
-+        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
-     }
- }
- 
-@@ -1555,4 +1551,6 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-     }
- 
-     migrate_tls_opts_free(&tmp);
-+    qapi_free_BitmapMigrationNodeAliasList(tmp.block_bitmap_mapping);
-+    qapi_free_strList(tmp.cpr_exec_command);
- }
--- 
-2.51.0
-
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 14bd822ddbe..0a90204ae93 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -244,6 +244,7 @@ F: tests/functional/avr/
+>
+>  Hexagon TCG CPUs
+>  M: Brian Cain <brian.cain@oss.qualcomm.com>
+> +R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>  S: Supported
+>  F: target/hexagon/
+>  X: target/hexagon/idef-parser/
+> --
+> 2.47.3
+>
 
