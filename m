@@ -4,90 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B726CF9D0ED
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C093F9D0EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCi5W-0001bu-AD; Tue, 14 Apr 2026 14:02:14 -0400
+	id 1wCi7A-0002Eb-Bd; Tue, 14 Apr 2026 14:03:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wCi5R-0001ZT-Gl
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:02:11 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wCi5N-0000j1-Qv
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:02:08 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488b3f8fa2bso60924035e9.1
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 11:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minio.io; s=minio; t=1776189721; x=1776794521; darn=nongnu.org;
- h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZJSw28qT4lIaIJCKrCAWX4T+WrGgCglbDv0E1IFC+QM=;
- b=Z5zpwXNf4OkwWLGB815Bb4wKN57SjwJXSzBqJmlCoLiRYtvjswp3/I5N8ZdKCdZNuv
- ss9YELbGyt9gSHJfFQoKyfbzI21Tn5bbqQdUMlDqLKUWZGo24Kr4XjQFMui6xUQugQz2
- XaA4Y9uXqoYhEppQpB6uhS5pEODIhHYk5apr6mCOf/+HibqrF7ObfIbWOiZ6K4nhNB42
- QHDko9vkm+eju4fWXzVr70s0pv1lfVGAFdy7WeR7JRhOQYUu+S0yW/CPng06A7AtYac2
- a1t0t/v/nsckkbX5mSIVIIblbSKhJsurPEpdB202HR8Tu+nPB09SSv1e4ZZ9BHUKoc5N
- kalw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776189721; x=1776794521;
- h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZJSw28qT4lIaIJCKrCAWX4T+WrGgCglbDv0E1IFC+QM=;
- b=LELsmv4ZfxYsHQEBjJy1/VwqotyJHr1y/eh/Yc1ZC5tS00BSmQrmXUW4Ro3otzVoWW
- Do6aWD27S0EpdH+kBA2ActtkESYVjHJWijsK16CR7cmwawv3rq0Ebt5Bnh7BBUygWLqK
- JA4Iym0j2m76uCZe3bYVCYxulCKcZsUzIeNBoYwaUHMMXgNgWNngSXBN52gln5gPtp6K
- Q/CY382Lq7gLDrYAv++ZPUJn77G+mYufWwFHLCuP4z2/LCbDfCn8j4V7bAGiU6p7tHzB
- RB8WaotTTXiP891cHb/kvrr4v2IIyZCvO2IgO+wT0u0qgC87268Ewr9J7UCj5RAO/tDA
- 0mMQ==
-X-Gm-Message-State: AOJu0Yxfr6POb6VlgxxChpR1bPeRNmEpGwChWdxNOnwhQzf56cPz47To
- EU7frdSl5bN+e0MyoNmvuzHKjDZNT6LFC7N5Ha7mtwSLT97r4/oSD5uX4CJmJ/f4krc=
-X-Gm-Gg: AeBDietc7kZLoaCnZFwwMNT7xDzGqRvtzTz0jpCvvmwFys7w1wDIbl4jLQLr3GZfwVM
- nEzWGLvrufTvk+Jk5mDcjosAtKAfv5dPqp+ULPcduKlHSgZldqqTYO7BIjH2FQ6Tp+8TAbnCyLB
- 85FsNwHlkg1z1VhQ8tTB/cL9Otw7m83VhqjqER1dS1sXTlgZ6LEBg7POf6PozM0j2czSMY4dR9C
- 66C0L9sRAcE6MyEs2uRMu6Wh2A6vZa8ijdxzwceBx6MMe2GrJMDCeDrhPHUZm6GHHOmLlgmieJO
- 9wkV/C7gfuOsv6oAmOv6BqQSp7JXq/BPqmQcmHZTqWbEOwZ540DKE5BUA+bjmrc26eCa+sN+Kfz
- 7cFvBhtk9sWmIvK40SJtIBNTzLehPXG/qKXJizbLpYQ+i2c/fVzX6wenoD5sTpZh0qXYz2ZO70Q
- SwZ7xFQfGxkrMD1cHoOVB34b71lNT69rg/xju9kWlPNb2INjzaOCdQGW/BeliL1StwjfUuDb2M3
- gg3nCQloTmHJqgGFj+mpO2/2K4ZCLe5evj1glv3qkCG/4gG/SuELyy4H/IHg0hjEs7cbxHY1Ou9
- WluQwIw=
-X-Received: by 2002:a05:600d:8496:10b0:486:f893:56c6 with SMTP id
- 5b1f17b1804b1-488db8d16aamr133354225e9.10.1776189720985; 
- Tue, 14 Apr 2026 11:02:00 -0700 (PDT)
-Received: from smtpclient.apple
- (2a01cb0014114800d473b7d8f9900c70.ipv6.abo.wanadoo.fr.
- [2a01:cb00:1411:4800:d473:b7d8:f990:c70])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ee038752sm67139645e9.9.2026.04.14.11.01.59
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 14 Apr 2026 11:01:59 -0700 (PDT)
-From: Matthieu Rolla <matthieu@minio.io>
-Message-Id: <5AEBB39E-A111-4678-9F28-9816D996C514@minio.io>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_446220A6-E2D4-43DE-A789-AB2A929A7E5E"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH 2/2] block/monitor: add drive_insert HMP command
-Date: Tue, 14 Apr 2026 20:02:00 +0200
-In-Reply-To: <20260414175710.GA136064@fedora>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, its@irrelevant.dk,
- kbusch@kernel.org, mr-083 <matthieu@min.io>, kwolf@redhat.com
-To: Stefan Hajnoczi <stefanha@redhat.com>
-References: <20260409060155.94704-1-matthieu@min.io>
- <20260409060155.94704-3-matthieu@min.io> <20260414175710.GA136064@fedora>
-X-Mailer: Apple Mail (2.3864.400.21)
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=matthieu@minio.io; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCi78-0002EQ-Gd
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:03:54 -0400
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCi73-0001DW-Op
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:03:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PNzY/3AgHhH0Np8bVmjpRM0OWgTmiX41g6PbCTT8bLX8IDojdtVBiuYUzpy8LwgxcNhk663N3xrazjl3ROkNkwYKfxFWlA6kRsEkmD+FDDVxwsKiBCSBh6UDpz3iKxArTI70GqKn1BrPiD/uhEF0AJMhO53cmPBSDr5BYjiffOP3lbEAtlSCNimcTJLhgRTTLAae82fVxj2ErVKJwt3jpp7dsGstOwifuR9BLRbbsBWLEXrTtDI9s4+oB8/Xx5esypwZ16cw4f1fCuALuV0PVUNAkBPNojcztcxcBLfBaoIR3w6mLXghOuKq78+Gfr7At34eSP9JHTTeby2BdhiUiA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0dcSMTLWjCn0rrGI0HRWCrUBQNmBz+ZhUuWbP6dJA7k=;
+ b=Ewnc/Mtc5BpA3KagMWn+MGbeuuVx/r+cUGfK1KbIQHBaphb3gp5dK5owAtpcNt3ynHFJbno6L/DonDjI4U56eN8wSHJAq2QjmlW4+mhzevrggIPHzU9k0MoxOTfxlMrpj9e/h/F7L5pN1U+Ppykvkv9HSUdFx86zGpf16NMQOePtQ4oliu95c493tHeWX0yphrrVhSdFu3hbfOtKWo31RcxGGlqdhzndr1AovlpATAuHdFnDd0BJ+rRV0MAlGrmz6DWw2gyGSYvYW9knOE0xwLMyvyZXewKFAmAfLg/8hcZkSjTyG1A/R9KeBvNZohHnjRX/cdGw9iXjuZ4wZ6ZKng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0dcSMTLWjCn0rrGI0HRWCrUBQNmBz+ZhUuWbP6dJA7k=;
+ b=UfL9+mBEUOQ1s3gUTrnUYhto65Eeyu0c5O0piGdpsezFtg3LnBwP4XmRQrabladogrBu/ZK2Vmv8CT0JPidykHRixixyEJirLBaDg+KPWKqe2zlrVlv1fDKOhBMd646Ug0casiWsrMyOrsfEPdmA77RkbSlcpn8S/Qo10qqzz3uiNLNGwv8V2lGdxaeLzTwdPalL/s/WnfY75jxosYDXwXcI04TxmphTtP1Gw7UYIZp4rUYafJ9Drx3Bg58HfKdfe4uT1muU3iQna4pkZyjIQnEfMfeQTnt2nrekJLluBWFtiZipQiqxOACcSIyuHXoiPp/VUq2/q/pyGaJ+floEuA==
+Received: from AM0PR04MB4370.eurprd04.prod.outlook.com (2603:10a6:208:6e::32)
+ by GV1PR04MB10944.eurprd04.prod.outlook.com (2603:10a6:150:210::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.48; Tue, 14 Apr
+ 2026 18:03:43 +0000
+Received: from AM0PR04MB4370.eurprd04.prod.outlook.com
+ ([fe80::fe3b:fb2c:9dfc:9b]) by AM0PR04MB4370.eurprd04.prod.outlook.com
+ ([fe80::fe3b:fb2c:9dfc:9b%6]) with mapi id 15.20.9745.035; Tue, 14 Apr 2026
+ 18:03:42 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>
+Subject: RE: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM EVK(Evaluation
+ Kit) board
+Thread-Topic: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM
+ EVK(Evaluation Kit) board
+Thread-Index: AQHcy9DG4Tq2c1qndki/HWXadYKLu7XejlMAgABLbpA=
+Date: Tue, 14 Apr 2026 18:03:42 +0000
+Message-ID: <AM0PR04MB43706A7D40CFC751820B259387252@AM0PR04MB4370.eurprd04.prod.outlook.com>
+References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
+ <20260414053715.1378021-2-gaurav.sharma_7@nxp.com>
+ <340AC51E-6165-45B5-A467-842EA0244B3D@gmail.com>
+In-Reply-To: <340AC51E-6165-45B5-A467-842EA0244B3D@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM0PR04MB4370:EE_|GV1PR04MB10944:EE_
+x-ms-office365-filtering-correlation-id: 6c2700e6-0ad9-4eeb-d269-08de9a502a22
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|19092799006|376014|366016|18096099003|38070700021|18002099003|56012099003|22082099003;
+x-microsoft-antispam-message-info: HMkUzGjRNJXCNvyjVljkPmdJE7az+q4dQIpXHSFEms1cENiHn3uUrz3XSQ3BbiIKpgH5Z+NNgBgxBOSwr4nn5uNlZ9WZ+5hXEsZ7yf1PFCLAtYUiHqZ/Fr3YcqGSVD34LzColXXcR8FgBNXSDfBl2UTnb/o/7biqNJhisPor6U4ZmEXFUiOHa2Q3QjrizdDaa7g8w3KX1WLSe9Fypyzk+mExQQsdvaeiQfFiDte1BBRTh4rbLsM1mHxpqVk6P8ifoMYXKT3QjYguYWrodpGWuzPoeUO/H1M23pCAJ92wGPq5TK3t2YsmkTQ5XQCKW/GOEhyGGbARQr6b8OwuCx0ymKCzzgu8chP51aFaESFpK9QX49sbEcV6ld9WDOLxt42gFFPZWZfJ77Wz3tG8nc7osVmMxo7fzPkchucKTZsUkj4YR4Q8C2YVVHnD7zRYJnvsRqsHbh8HXAYpw5ArlUrGoklPu5VIgIjyCLkBFZ35SsH3CYn7fHmU/Wxgh+wNJPBYALgIimRSAqDnNDcZDK8YlWRLFA4v+CpJrHcooegP3cytOenFM6yxLCLTZzallK04NrlyfzSOy9ew4oT11iZ/6WLw6OBWZofHD/Cj2Dt4SWKSZAcB+K4U5osYCmARFXzJa1R8FMkAiW/2aHINZeSjmiE7S+BMnzCcBHl+quADeQ+Bl8LbnyvUw2CB7dI86chLctfxa9SrbYlVY9GMj/cchzikSWY2AxYm08mcep33+2mTyHjjpTU5bPugRBr3yIxwCJGkiNJGdZn1Uf2d8T0/z0d9PyVI3QOxWh9fuuwtzgQ=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM0PR04MB4370.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(19092799006)(376014)(366016)(18096099003)(38070700021)(18002099003)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?+3tD8DN0/E77jzRdu7VKkjck8MUa/gxEGpI0SAsibUdkC51pPVv8wKgPRGf5?=
+ =?us-ascii?Q?rWDiSYu9ea6CIZleDaqFFoxHD+iD76jj3TXXFEsFCQsov/dT0rRIXPR95DKA?=
+ =?us-ascii?Q?AWPuWBoAjxPgoN74ROntjJxxQ7hsccaiDWx/930aVTYB8SYEBUl7V4lesi+q?=
+ =?us-ascii?Q?T4wZYBnZmOFm+kREQDvfwdnWokW+UpaDdThmmEaLUmira3PSM+b24sHEIibB?=
+ =?us-ascii?Q?NGhneYNAkuIgyyIHDQso/qkfyzz/A2BrLnx3D/p/IkVClt6Dn8aKbbAR3cWA?=
+ =?us-ascii?Q?9RpnLJLenaaQqwXl9/Mh9nQ6kBL2HRXOvD315w1ArV7Nt/NLFowIbK5thI0w?=
+ =?us-ascii?Q?+bDq8oWngpKBR3Wxhynq4Bjo1nAiqHSV27SKL0ZnTBYef2dDXBlwVN7g3smf?=
+ =?us-ascii?Q?IstvPe1i+4unezHuio38vqCwC52rYahF+du68PCzD//aiuZiYPwXwV5Pr9Y9?=
+ =?us-ascii?Q?X9lbGCXZys00gEoN0hA/rhaGuled8IlujM1xEPTaVKQhC/jMzjOJh/XlL+u0?=
+ =?us-ascii?Q?r0gHIFQNwdGZb+wPJB1dz3l+EsipsdKiW5dreaG9aUO7672MrL6MqCXfr5Xs?=
+ =?us-ascii?Q?B7+ONvQC+ln3mnOBn7vl/7lQNAw//LHuXLUTt3GUrDksa1YDXc43XVWML+D1?=
+ =?us-ascii?Q?JoUl/mU/BmgtGPU9rB/jHWn+5gWcLCmnxnQzJMEYTXjkPAZWndxRNp4GnA+4?=
+ =?us-ascii?Q?Yw/6D+SA4iA6ScoW0hA3ii+IXprnYljPTmcvFpnNbdKp9/3HVJ8EQCd/HlV8?=
+ =?us-ascii?Q?1PI/K3m+TH8EdnaImS/h8ARrXLROnC6tUx1wM5Oh5af+mJoMIPQot/K+gUac?=
+ =?us-ascii?Q?0+LmncwsCoj4DCNwu5Lfw3u5vTVTDhrriVVMOwU/H5e9J4poZSKgS75EcI+t?=
+ =?us-ascii?Q?nDSRGKCt8Zi6rjdx0izS8nGsXPm+qSGA1MsVd1IUyrK/Z/vKV2vyG2hrl9Uy?=
+ =?us-ascii?Q?4OCPUy/mm5cSlmqSk2MfjN56F9RHcQ4GHA7F+SIhorAOOPb2ACq7Uh++SLov?=
+ =?us-ascii?Q?pgUGyPUWnxwRBn31sIyTfViTeUYQz1W4oPWHy3FDNcfRK1hW0gRNRt5J1H68?=
+ =?us-ascii?Q?gZZx6P8THvBHHhga9CSfrWRqCQJjJxn6izM5cOgdkXxDQ91m6xU69LIii9WB?=
+ =?us-ascii?Q?Ng+XFulC3sVGzJfYJYMlMguJ8J7Tacsnz+wT6tCFa1qpMPURrm2QZAhLUlIJ?=
+ =?us-ascii?Q?BVLHctLCrHhlAy3Qrj2yERnk3CSwpDxVP6cKAg5KA4wAObLGXmAaxla34dMU?=
+ =?us-ascii?Q?QOmduLw/aMiWqsRzaYteBHeElPWoArcsAJARSovcfwnnDZ8E+jc4wANSvYqB?=
+ =?us-ascii?Q?6XsL687W/Jhumc7Xgz3l0Mc+6hx5znGoYZe+YaNBNMeZWIr17J7GgAoF5yNs?=
+ =?us-ascii?Q?dlnsNQ5TnhJ8de5GuunGTO68rhw2yoc4/+/kpfQarNPzA5GJaRV6i69OxSCY?=
+ =?us-ascii?Q?Z2/ASBXx+YKdAC1zbv/etTtXJjlBVzmMByhHYPioaZ3ax6O6sOoYPVdaMprp?=
+ =?us-ascii?Q?ct1wWJOjOTw9rQp3HwmMLADGlQPcd+WGqw2ShiGaMQ3nDHGqBwsMdrZTDY+g?=
+ =?us-ascii?Q?AsGFrNr4gMKD62l43IYModnbB3TTB80OxAviGQ0n5ne3VQcXMSZPTNzlTtJy?=
+ =?us-ascii?Q?zKq9J7ELhdOQB6wxnPMQiyVyxOFs6uwq/mceYL//S12MqPvmlUIOBX7JnyPi?=
+ =?us-ascii?Q?L1ihfQvCcoS/bFGcJOnZfTYJAeotGCZREGstgCjV8gwTv2Y27JXa/hfw1dsM?=
+ =?us-ascii?Q?rL21IOYByg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB4370.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6c2700e6-0ad9-4eeb-d269-08de9a502a22
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Apr 2026 18:03:42.8129 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: X1g2tFvwHvIp6wec09HHkfsckleiSl1ldTCwbFnaju4EwE0nlkAMEVG0OlbLpopzAR4vAGzCIrNLBt6b+0rgzA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10944
+Received-SPF: permerror client-ip=2a01:111:f403:c20a::7;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,205 +148,966 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---Apple-Mail=_446220A6-E2D4-43DE-A789-AB2A929A7E5E
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
-Hello Stefan,
-
-1. Correct, no AEN involved.The namespace stays attached to the =
-controller throughout. Only the BlockBackend's root node changes, so =
-from the NVMe protocol perspective nothing happened to the namespace =
-topology.
-
-2. Yes, the new storage is accessible immediately after drive_insert at =
-the QEMU block layer level. The SDN is needed to reset the NVMe =
-controller which may have cached an error state from I/O failures during =
-the period when no backing was present. Without the reset, the guest =
-driver continues to see the controller as faulted. The SDN triggers the =
-standard PCIe AER recovery path (freeze =E2=86=92 slot reset =E2=86=92 =
-restart) which clears the error state and resumes normal I/O.
-
-One thing to note: since the namespace device stays alive, the guest =
-kernel's block device number is preserved (e.g. /dev/nvme0n1 stays =
-nvme0n1). This avoids the ida_alloc renaming issue that occurs with =
-device_del + device_add when filesystems hold references to the old =
-namespace head.
-
-Thanks
-
-
-	.=09
-Matthieu
-www.min.io <>
-matthieu@min.io <>=20
-
-> On Apr 14, 2026, at 7:57=E2=80=AFPM, Stefan Hajnoczi =
-<stefanha@redhat.com> wrote:
+> -----Original Message-----
+> From: Bernhard Beschow <shentey@gmail.com>
+> Sent: 14 April 2026 19:01
+> To: qemu-devel@nongnu.org; Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> Cc: pbonzini@redhat.com; peter.maydell@linaro.org
+> Subject: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM
+> EVK(Evaluation Kit) board
 >=20
-> On Thu, Apr 09, 2026 at 08:01:54AM +0200, mr-083 wrote:
->> Add a drive_insert HMP command that reconnects a host block device =
-file
->> to an existing guest device whose backing store was previously =
-removed
->> with drive_del.
->>=20
->> After drive_del, the BlockBackend remains attached to the guest =
-device
->> but has no BlockDriverState (shown as "[not inserted]" in info =
-block).
->> drive_insert opens the specified file, finds the device's =
-BlockBackend
->> by iterating all backends and matching the attached device ID, then
->> calls blk_insert_bs() to reconnect the backing store.
->>=20
->> This complements drive_del for non-removable devices (such as NVMe
->> namespaces) where blockdev-change-medium cannot be used. Combined =
-with
->> PCIe AER Surprise Down error injection to trigger a controller reset,
->> this enables complete NVMe disk hot-swap simulation where the guest
->> sees the same device names throughout.
->>=20
->> Example usage:
->>  drive_del drv0             # remove backing store
->>  drive_insert ns0 disk.qcow2  # reconnect backing
->>  pcie_aer_inject_error rp0 SDN  # trigger controller reset
+> Caution: This is an external email. Please take care when clicking links =
+or
+> opening attachments. When in doubt, report the message using the 'Report
+> this email' button
 >=20
-> This approach does not delete the `--device nvme-ns` but instead
-> replaces the BlockBackend's root node so that the existing NVMe
-> Namespace changes the underlying storage.
 >=20
-> Questions about this approach:
-> 1. NVMe AEN is not involved at all?
-> 2. Does the guest have access to the new storage as soon as =
-drive_insert
->   completes and the PCIe AER is just to kick the guest driver (e.g.
->   getting it to update the size of the guest Linux block device)?
+> Am 14. April 2026 05:37:01 UTC schrieb Gaurav Sharma
+> <gaurav.sharma_7@nxp.com>:
+> >Implemented CPUs, RAM, UARTs and Interrupt Controller Other peripherals
+> >are represented as TYPE_UNIMPLEMENTED_DEVICE Complete memory map
+> of the
+> >SoC is provided.
+> >
+> >Set default RAM size to 2GB and default CPU count to 4 to match the
+> >real i.MX8MM EVK hardware configuration.
+> >
+> >Documentation is shared with imx8mp-evk to avoid duplication.
+> >
+> >Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> >---
+> > MAINTAINERS                    |  10 +
+> > docs/system/arm/imx8mp-evk.rst |  33 ++-
+> > docs/system/target-arm.rst     |   1 +
+> > hw/arm/Kconfig                 |  12 ++
+> > hw/arm/fsl-imx8mm.c            | 377
+> +++++++++++++++++++++++++++++++++
+> > hw/arm/imx8mm-evk.c            | 112 ++++++++++
+> > hw/arm/meson.build             |   2 +
+> > include/hw/arm/fsl-imx8mm.h    | 158 ++++++++++++++
+> > 8 files changed, 699 insertions(+), 6 deletions(-)  create mode 100644
+> >hw/arm/fsl-imx8mm.c  create mode 100644 hw/arm/imx8mm-evk.c  create
+> >mode 100644 include/hw/arm/fsl-imx8mm.h
+> >
+> >diff --git a/MAINTAINERS b/MAINTAINERS
+> >index ad215eced8..cc64d57342 100644
+> >--- a/MAINTAINERS
+> >+++ b/MAINTAINERS
+> >@@ -916,6 +916,16 @@ F: hw/pci-host/designware.c
+> > F: include/hw/pci-host/designware.h
+> > F: docs/system/arm/mcimx7d-sabre.rst
+> >
+> >+MCIMX8MM-EVK / iMX8MM
+> >+M: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> >+L: qemu-arm@nongnu.org
+> >+S: Maintained
+> >+F: hw/arm/fsl-imx8mm.c
+> >+F: hw/arm/imx8mm-evk.c
+> >+F: include/hw/arm/fsl-imx8mm.h
+> >+F: docs/system/arm/imx8mm-evk.rst
 >=20
-> Stefan
+> Stale entry
+>=20
+> >+F: tests/functional/aarch64/test_imx8mm_evk.py
+>=20
+> I'd add this line in the last patch where you introduce the test for cons=
+istency.
+>=20
 
+okay. Making these changes as part of upcoming series v6
 
---Apple-Mail=_446220A6-E2D4-43DE-A789-AB2A929A7E5E
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><span style=3D"color: rgb(34, 34, 34); =
-font-family: Arial, Helvetica, sans-serif; font-size: small; =
-font-variant-ligatures: normal; background-color: rgb(255, 255, =
-255);">Hello Stefan,</span><br style=3D"color: rgb(34, 34, 34); =
-font-family: Arial, Helvetica, sans-serif; font-size: small; =
-font-variant-ligatures: normal; background-color: rgb(255, 255, =
-255);"><br style=3D"color: rgb(34, 34, 34); font-family: Arial, =
-Helvetica, sans-serif; font-size: small; font-variant-ligatures: normal; =
-background-color: rgb(255, 255, 255);"><span style=3D"color: rgb(34, 34, =
-34); font-family: Arial, Helvetica, sans-serif; font-size: small; =
-font-variant-ligatures: normal; background-color: rgb(255, 255, =
-255);">1. Correct, no AEN involved.The namespace stays attached to the =
-controller throughout. Only the BlockBackend's root node changes, so =
-from the NVMe protocol perspective nothing happened to the namespace =
-topology.</span><br style=3D"color: rgb(34, 34, 34); font-family: Arial, =
-Helvetica, sans-serif; font-size: small; font-variant-ligatures: normal; =
-background-color: rgb(255, 255, 255);"><br style=3D"color: rgb(34, 34, =
-34); font-family: Arial, Helvetica, sans-serif; font-size: small; =
-font-variant-ligatures: normal; background-color: rgb(255, 255, =
-255);"><span style=3D"color: rgb(34, 34, 34); font-family: Arial, =
-Helvetica, sans-serif; font-size: small; font-variant-ligatures: normal; =
-background-color: rgb(255, 255, 255);">2. Yes, the new storage is =
-accessible immediately after drive_insert at the QEMU block layer level. =
-The SDN is needed to reset the NVMe controller which may have cached an =
-error state from I/O failures during the period when no backing was =
-present. Without the reset, the guest driver continues to see the =
-controller as faulted. The SDN triggers the standard PCIe AER recovery =
-path (freeze =E2=86=92 slot reset =E2=86=92 restart) which clears the =
-error state and resumes normal I/O.</span><br style=3D"color: rgb(34, =
-34, 34); font-family: Arial, Helvetica, sans-serif; font-size: small; =
-font-variant-ligatures: normal; background-color: rgb(255, 255, =
-255);"><br style=3D"color: rgb(34, 34, 34); font-family: Arial, =
-Helvetica, sans-serif; font-size: small; font-variant-ligatures: normal; =
-background-color: rgb(255, 255, 255);"><span style=3D"color: rgb(34, 34, =
-34); font-family: Arial, Helvetica, sans-serif; font-size: small; =
-font-variant-ligatures: normal; background-color: rgb(255, 255, =
-255);">One thing to note: since the namespace device stays alive, the =
-guest kernel's block device number is preserved (e.g. /dev/nvme0n1 stays =
-nvme0n1). This avoids the ida_alloc renaming issue that occurs with =
-device_del + device_add when filesystems hold references to the old =
-namespace head.</span><br style=3D"color: rgb(34, 34, 34); font-family: =
-Arial, Helvetica, sans-serif; font-size: small; font-variant-ligatures: =
-normal; background-color: rgb(255, 255, 255);"><br style=3D"color: =
-rgb(34, 34, 34); font-family: Arial, Helvetica, sans-serif; font-size: =
-small; font-variant-ligatures: normal; background-color: rgb(255, 255, =
-255);"><span style=3D"color: rgb(34, 34, 34); font-family: Arial, =
-Helvetica, sans-serif; font-size: small; font-variant-ligatures: normal; =
-background-color: rgb(255, 255, 255);">Thanks</span><br =
-id=3D"lineBreakAtBeginningOfMessage"><div>
-<br>
-<br>
-<table>
-   <tbody>
-       <tr>
-           <td style=3D"padding: 0 50px 0 0;"><img =
-src=3D"https://cdn.bfldr.com/Q955TODV/at/f5h9pjj8f8t3ng5t6vxs2n/emailsigna=
-ture-logo-standalone.png?auto=3Dwebp&amp;format=3Dpng" height=3D"34"></td>=
-
-           <td style=3D"width: 1px; padding: 0; background-color: =
-#D6DAE1; color: #D6DAE1; font-size: 1px;">.</td>
-           <td style=3D"padding:0 20px 0 50px;">
-               <div style=3D"margin-top: -6px; margin-bottom: -4px;">
-                   <strong><span =
-style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: =
-1.1em; color: #353638;" color=3D"#353638">Matthieu</span></strong><br>
-                   <div style=3D"height: 6px;"></div>
-                   <a =
-style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: 1em; =
-color: #353638; text-decoration: none; line-height: 118%;" =
-color=3D"#353638">www.min.io</a><br>
-                   <a =
-style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: 1em; =
-color: #353638; text-decoration: none; line-height: 118%;" =
-color=3D"#353638">matthieu@min.io</a>
-               </div>
-           </td>
-       </tr>
-   </tbody>
-</table>
-
-</div>
-<div><br><blockquote type=3D"cite"><div>On Apr 14, 2026, at 7:57=E2=80=AFP=
-M, Stefan Hajnoczi &lt;stefanha@redhat.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><div>On Thu, Apr 09, 2026 at =
-08:01:54AM +0200, mr-083 wrote:<br><blockquote type=3D"cite">Add a =
-drive_insert HMP command that reconnects a host block device file<br>to =
-an existing guest device whose backing store was previously =
-removed<br>with drive_del.<br><br>After drive_del, the BlockBackend =
-remains attached to the guest device<br>but has no BlockDriverState =
-(shown as "[not inserted]" in info block).<br>drive_insert opens the =
-specified file, finds the device's BlockBackend<br>by iterating all =
-backends and matching the attached device ID, then<br>calls =
-blk_insert_bs() to reconnect the backing store.<br><br>This complements =
-drive_del for non-removable devices (such as NVMe<br>namespaces) where =
-blockdev-change-medium cannot be used. Combined with<br>PCIe AER =
-Surprise Down error injection to trigger a controller reset,<br>this =
-enables complete NVMe disk hot-swap simulation where the guest<br>sees =
-the same device names throughout.<br><br>Example usage:<br> =
-&nbsp;drive_del drv0 =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# =
-remove backing store<br> &nbsp;drive_insert ns0 disk.qcow2 &nbsp;# =
-reconnect backing<br> &nbsp;pcie_aer_inject_error rp0 SDN &nbsp;# =
-trigger controller reset<br></blockquote><br>This approach does not =
-delete the `--device nvme-ns` but instead<br>replaces the BlockBackend's =
-root node so that the existing NVMe<br>Namespace changes the underlying =
-storage.<br><br>Questions about this approach:<br>1. NVMe AEN is not =
-involved at all?<br>2. Does the guest have access to the new storage as =
-soon as drive_insert<br> &nbsp;&nbsp;completes and the PCIe AER is just =
-to kick the guest driver (e.g.<br> &nbsp;&nbsp;getting it to update the =
-size of the guest Linux block =
-device)?<br><br>Stefan<br></div></div></blockquote></div><br></body></html=
->=
-
---Apple-Mail=_446220A6-E2D4-43DE-A789-AB2A929A7E5E--
+> >+
+> > MCIMX8MP-EVK / i.MX8MP
+> > M: Bernhard Beschow <shentey@gmail.com>
+> > L: qemu-arm@nongnu.org
+> >diff --git a/docs/system/arm/imx8mp-evk.rst
+> >b/docs/system/arm/imx8mp-evk.rst index e60a422824..f7db33de32
+> 100644
+> >--- a/docs/system/arm/imx8mp-evk.rst
+> >+++ b/docs/system/arm/imx8mp-evk.rst
+> >@@ -1,13 +1,13 @@
+> >-NXP i.MX 8M Plus Evaluation Kit (``imx8mp-evk``)
+> >+NXP i.MX 8M Plus and i.MX 8M Mini Evaluation Kits (``imx8mp-evk``,
+> >+``imx8mm-evk``)
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> >-The ``imx8mp-evk`` machine models the i.MX 8M Plus Evaluation Kit,
+> >based on an -i.MX 8M Plus SoC.
+> >+The ``imx8mp-evk`` and ``imx8mm-evk`` machine models the i.MX 8M Plus
+> >+and i.MX 8M Mini Evaluation Kits, based on i.MX 8M Plus and i.MX8M Mini
+> SoCs.
+> >
+> > Supported devices
+> > -----------------
+> >
+> >-The ``imx8mp-evk`` machine implements the following devices:
+> >+The ``imx8mp-evk`` and ``imx8mm-evk`` machines implement the following
+> devices:
+> >
+> >  * Up to 4 Cortex-A53 cores
+> >  * Generic Interrupt Controller (GICv3) @@ -27,7 +27,7 @@ The
+> >``imx8mp-evk`` machine implements the following devices:
+> > Boot options
+> > ------------
+> >
+> >-The ``imx8mp-evk`` machine can start a Linux kernel directly using the
+> >standard
+> >+The ``imx8mp-evk`` and ``imx8mm-evk`` machines can start a Linux
+> >+kernel directly using the standard
+> > ``-kernel`` functionality.
+> >
+> > Direct Linux Kernel Boot
+> >@@ -38,11 +38,20 @@ is to generate an image with Buildroot. Version
+> >2024.11.1 is tested at the time  of writing and involves two steps.
+> >First run the following commands in the  toplevel directory of the Build=
+root
+> source tree:
+> >
+> >+For i.MX 8M Plus EVK:
+> >+
+> > .. code-block:: bash
+> >
+> >   $ make freescale_imx8mpevk_defconfig
+> >   $ make
+> >
+> >+For i.MX 8M Mini EVK:
+> >+
+> >+.. code-block:: bash
+> >+
+> >+  $ make freescale_imx8mmevk_defconfig  $ make
+> >+
+> > Once finished successfully there is an ``output/image`` subfolder.
+> > Navigate into it and resize the SD card image to a power of two:
+> >
+> >@@ -52,6 +61,8 @@ it and resize the SD card image to a power of two:
+> >
+> > Now that everything is prepared the machine can be started as follows:
+> >
+> >+For i.MX 8M Plus EVK:
+> >+
+> > .. code-block:: bash
+> >
+> >   $ qemu-system-aarch64 -M imx8mp-evk \ @@ -61,6 +72,16 @@ Now
+> that
+> >everything is prepared the machine can be started as follows:
+> >       -append "root=3D/dev/mmcblk2p2" \
+> >       -drive file=3Dsdcard.img,if=3Dsd,bus=3D2,format=3Draw,id=3Dmmcblk=
+2
+> >
+> >+For i.MX 8M Mini EVK:
+> >+
+> >+.. code-block:: bash
+> >+
+> >+  $ qemu-system-aarch64 -M imx8mm-evk -smp 4 -m 2G \
+> >+      -display none -serial null -serial stdio \
+> >+      -kernel Image \
+> >+      -dtb imx8mm-evk.dtb \
+> >+      -append "root=3D/dev/mmcblk2p2" \
+> >+      -drive file=3Dsdcard.img,if=3Dsd,bus=3D2,format=3Draw,id=3Dmmcblk=
+2
+> >
+> > KVM Acceleration
+> > ----------------
+> >@@ -69,7 +90,7 @@ To enable hardware-assisted acceleration via KVM,
+> >append  ``-accel kvm`` to the command line. While this speeds up
+> >performance  significantly, be aware of the following limitations:
+> >
+> >-* The ``imx8mp-evk`` machine is not included under the "virtualization =
+use
+> case"
+> >+* The ``imx8mp-evk`` and ``imx8mm-evk`` machines are not included under
+> the "virtualization use case"
+> >   of :doc:`QEMU's security policy </system/security>`. This means that =
+you
+> >   should not trust that it can contain malicious guests, whether it is =
+run
+> >   using TCG or KVM. If you don't trust your guests and you're relying
+> >on QEMU to diff --git a/docs/system/target-arm.rst
+> >b/docs/system/target-arm.rst index 89f7b77313..11c750b3f2 100644
+> >--- a/docs/system/target-arm.rst
+> >+++ b/docs/system/target-arm.rst
+> >@@ -96,6 +96,7 @@ Board-specific documentation
+> >    arm/mcimx6ul-evk
+> >    arm/mcimx7d-sabre
+> >    arm/imx8mp-evk
+> >+   arm/imx8mm-evk
+> >    arm/orangepi
+> >    arm/raspi
+> >    arm/collie
+> >diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig index
+> >4e50fb1111..1399a2e04c 100644
+> >--- a/hw/arm/Kconfig
+> >+++ b/hw/arm/Kconfig
+> >@@ -618,6 +618,18 @@ config FSL_IMX8MP_EVK
+> >     depends on TCG
+> >     select FSL_IMX8MP
+> >
+> >+config FSL_IMX8MM
+> >+    bool
+> >+    select ARM_GIC
+> >+    select IMX
+> >+
+> >+config FSL_IMX8MM_EVK
+> >+    bool
+> >+    default y
+> >+    depends on AARCH64
+> >+    depends on TCG
+> >+    select FSL_IMX8MM
+> >+
+> > config ARM_SMMUV3_ACCEL
+> >     bool
+> >     depends on ARM_SMMUV3
+> >diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c new file mode
+> >100644 index 0000000000..ff3603645f
+> >--- /dev/null
+> >+++ b/hw/arm/fsl-imx8mm.c
+> >@@ -0,0 +1,377 @@
+> >+/*
+> >+ * i.MX 8MM SoC Implementation
+> >+ *
+> >+ * Based on hw/arm/fsl-imx6.c
+> >+ *
+> >+ * Copyright (c) 2025, NXP Semiconductors
+> >+ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> >+ *
+> >+ * SPDX-License-Identifier: GPL-2.0-or-later
+> >+ *
+> >+ * iMX8MM Reference Manual -
+> >+https://eur01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fw
+> ww.
+> >+nxp.com%2Fproducts%2Fi.MX8MMINI&data=3D05%7C02%7Cgaurav.sharm
+> a_7%40nxp.c
+> >+om%7C39fd32bdf5234a5d8ebf08de9a2a1fa5%7C686ea1d3bc2b4c6fa92
+> cd99c5c3016
+> >+35%7C0%7C0%7C639117702903994424%7CUnknown%7CTWFpbGZsb3
+> d8eyJFbXB0eU1hcG
+> >+kiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIld
+> UIjoy
+> >+fQ%3D%3D%7C0%7C%7C%7C&sdata=3Dqi1tAhqYA5errQ8xaAEXWnLX0Ew1
+> NXW8ucnQxVRJUu
+> >+4%3D&reserved=3D0 -> Documentation  */
+> >+
+> >+#include "qemu/osdep.h"
+> >+#include "system/address-spaces.h"
+> >+#include "hw/arm/bsa.h"
+> >+#include "hw/arm/fsl-imx8mm.h"
+> >+#include "hw/misc/unimp.h"
+> >+#include "hw/core/boards.h"
+> >+#include "system/kvm.h"
+> >+#include "system/system.h"
+> >+#include "target/arm/cpu.h"
+> >+#include "target/arm/cpu-qom.h"
+> >+#include "target/arm/kvm_arm.h"
+> >+#include "qapi/error.h"
+> >+#include "qobject/qlist.h"
+> >+
+> >+static const struct {
+> >+    hwaddr addr;
+> >+    size_t size;
+> >+    const char *name;
+> >+} fsl_imx8mm_memmap[] =3D {
+> >+    [FSL_IMX8MM_RAM] =3D { FSL_IMX8MM_RAM_START,
+> FSL_IMX8MM_RAM_SIZE_MAX, "ram" },
+> >+    [FSL_IMX8MM_DDR_PHY_BROADCAST] =3D { 0x3dc00000, 4 * MiB,
+> "ddr_phy_broadcast" },
+> >+    [FSL_IMX8MM_DDR_PERF_MON] =3D { 0x3d800000, 4 * MiB,
+> "ddr_perf_mon" },
+> >+    [FSL_IMX8MM_DDR_CTL] =3D { 0x3d400000, 4 * MiB, "ddr_ctl" },
+> >+    [FSL_IMX8MM_DDR_PHY] =3D { 0x3c000000, 16 * MiB, "ddr_phy" },
+> >+    [FSL_IMX8MM_GIC_DIST] =3D { 0x38800000, 512 * KiB, "gic_dist" },
+> >+    [FSL_IMX8MM_GIC_REDIST] =3D { 0x38880000, 512 * KiB, "gic_redist" }=
+,
+> >+    [FSL_IMX8MM_VPU] =3D { 0x38340000, 2 * MiB, "vpu" },
+> >+    [FSL_IMX8MM_VPU_BLK_CTRL] =3D { 0x38330000, 2 * MiB,
+> "vpu_blk_ctrl" },
+> >+    [FSL_IMX8MM_VPU_G2_DECODER] =3D { 0x38310000, 1 * MiB,
+> "vpu_g2_decoder" },
+> >+    [FSL_IMX8MM_VPU_G1_DECODER] =3D { 0x38300000, 1 * MiB,
+> "vpu_g1_decoder" },
+> >+    [FSL_IMX8MM_USB2_OTG] =3D { 0x32e50200, 0x200, "usb2_otg" },
+> >+    [FSL_IMX8MM_USB2] =3D { 0x32e50000, 0x200, "usb2" },
+> >+    [FSL_IMX8MM_USB1_OTG] =3D { 0x32e40200, 0x200, "usb1_otg" },
+> >+    [FSL_IMX8MM_USB1] =3D { 0x32e40000, 0x200, "usb1" },
+> >+    [FSL_IMX8MM_GPU2D] =3D { 0x38000000, 64 * KiB, "gpu2d" },
+> >+    [FSL_IMX8MM_QSPI1_RX_BUFFER] =3D { 0x34000000, 32 * MiB,
+> "qspi1_rx_buffer" },
+> >+    [FSL_IMX8MM_PCIE1] =3D { 0x33800000, 4 * MiB, "pcie1" },
+> >+    [FSL_IMX8MM_QSPI1_TX_BUFFER] =3D { 0x33008000, 32 * KiB,
+> "qspi1_tx_buffer" },
+> >+    [FSL_IMX8MM_APBH_DMA] =3D { 0x33000000, 32 * KiB, "apbh_dma" },
+> >+
+> >+    /* AIPS-4 Begin */
+> >+    [FSL_IMX8MM_TZASC] =3D { 0x32f80000, 64 * KiB, "tzasc" },
+> >+    [FSL_IMX8MM_PCIE_PHY1] =3D { 0x32f00000, 64 * KiB, "pcie_phy1" },
+> >+    [FSL_IMX8MM_MEDIA_BLK_CTL] =3D { 0x32e28000, 256,
+> "media_blk_ctl" },
+> >+    [FSL_IMX8MM_LCDIF] =3D { 0x32e00000, 64 * KiB, "lcdif" },
+> >+    [FSL_IMX8MM_MIPI_DSI] =3D { 0x32e10000, 64 * KiB, "mipi_dsi" },
+> >+    [FSL_IMX8MM_MIPI_CSI] =3D { 0x32e30000, 64 * KiB, "mipi_csi" },
+> >+    [FSL_IMX8MM_AIPS4_CONFIGURATION] =3D { 0x32df0000, 64 * KiB,
+> "aips4_configuration" },
+> >+    /* AIPS-4 End */
+> >+
+> >+    [FSL_IMX8MM_INTERCONNECT] =3D { 0x32700000, 1 * MiB,
+> "interconnect"
+> >+ },
+> >+
+> >+    /* AIPS-3 Begin */
+> >+    [FSL_IMX8MM_ENET1] =3D { 0x30be0000, 64 * KiB, "enet1" },
+> >+    [FSL_IMX8MM_SDMA1] =3D { 0x30bd0000, 64 * KiB, "sdma1" },
+> >+    [FSL_IMX8MM_QSPI] =3D { 0x30bb0000, 64 * KiB, "qspi" },
+> >+    [FSL_IMX8MM_USDHC3] =3D { 0x30b60000, 64 * KiB, "usdhc3" },
+> >+    [FSL_IMX8MM_USDHC2] =3D { 0x30b50000, 64 * KiB, "usdhc2" },
+> >+    [FSL_IMX8MM_USDHC1] =3D { 0x30b40000, 64 * KiB, "usdhc1" },
+> >+    [FSL_IMX8MM_SEMAPHORE_HS] =3D { 0x30ac0000, 64 * KiB,
+> "semaphore_hs" },
+> >+    [FSL_IMX8MM_MU_B] =3D { 0x30ab0000, 64 * KiB, "mu_b" },
+> >+    [FSL_IMX8MM_MU_A] =3D { 0x30aa0000, 64 * KiB, "mu_a" },
+> >+    [FSL_IMX8MM_UART4] =3D { 0x30a60000, 64 * KiB, "uart4" },
+> >+    [FSL_IMX8MM_I2C4] =3D { 0x30a50000, 64 * KiB, "i2c4" },
+> >+    [FSL_IMX8MM_I2C3] =3D { 0x30a40000, 64 * KiB, "i2c3" },
+> >+    [FSL_IMX8MM_I2C2] =3D { 0x30a30000, 64 * KiB, "i2c2" },
+> >+    [FSL_IMX8MM_I2C1] =3D { 0x30a20000, 64 * KiB, "i2c1" },
+> >+    [FSL_IMX8MM_AIPS3_CONFIGURATION] =3D { 0x309f0000, 64 * KiB,
+> "aips3_configuration" },
+> >+    [FSL_IMX8MM_CAAM] =3D { 0x30900000, 256 * KiB, "caam" },
+> >+    [FSL_IMX8MM_SPBA1] =3D { 0x308f0000, 64 * KiB, "spba1" },
+> >+    [FSL_IMX8MM_UART2] =3D { 0x30890000, 64 * KiB, "uart2" },
+> >+    [FSL_IMX8MM_UART3] =3D { 0x30880000, 64 * KiB, "uart3" },
+> >+    [FSL_IMX8MM_UART1] =3D { 0x30860000, 64 * KiB, "uart1" },
+> >+    [FSL_IMX8MM_ECSPI3] =3D { 0x30840000, 64 * KiB, "ecspi3" },
+> >+    [FSL_IMX8MM_ECSPI2] =3D { 0x30830000, 64 * KiB, "ecspi2" },
+> >+    [FSL_IMX8MM_ECSPI1] =3D { 0x30820000, 64 * KiB, "ecspi1" },
+> >+    /* AIPS-3 End */
+> >+
+> >+    /* AIPS-2 Begin */
+> >+    [FSL_IMX8MM_QOSC] =3D { 0x307f0000, 64 * KiB, "qosc" },
+> >+    [FSL_IMX8MM_PERFMON2] =3D { 0x307d0000, 64 * KiB, "perfmon2" },
+> >+    [FSL_IMX8MM_PERFMON1] =3D { 0x307c0000, 64 * KiB, "perfmon1" },
+> >+    [FSL_IMX8MM_GPT4] =3D { 0x30700000, 64 * KiB, "gpt4" },
+> >+    [FSL_IMX8MM_GPT5] =3D { 0x306f0000, 64 * KiB, "gpt5" },
+> >+    [FSL_IMX8MM_GPT6] =3D { 0x306e0000, 64 * KiB, "gpt6" },
+> >+    [FSL_IMX8MM_SYSCNT_CTRL] =3D { 0x306c0000, 64 * KiB, "syscnt_ctrl" =
+},
+> >+    [FSL_IMX8MM_SYSCNT_CMP] =3D { 0x306b0000, 64 * KiB, "syscnt_cmp" },
+> >+    [FSL_IMX8MM_SYSCNT_RD] =3D { 0x306a0000, 64 * KiB, "syscnt_rd" },
+> >+    [FSL_IMX8MM_PWM4] =3D { 0x30690000, 64 * KiB, "pwm4" },
+> >+    [FSL_IMX8MM_PWM3] =3D { 0x30680000, 64 * KiB, "pwm3" },
+> >+    [FSL_IMX8MM_PWM2] =3D { 0x30670000, 64 * KiB, "pwm2" },
+> >+    [FSL_IMX8MM_PWM1] =3D { 0x30660000, 64 * KiB, "pwm1" },
+> >+    [FSL_IMX8MM_AIPS2_CONFIGURATION] =3D { 0x305f0000, 64 * KiB,
+> "aips2_configuration" },
+> >+    /* AIPS-2 End */
+> >+
+> >+    /* AIPS-1 Begin */
+> >+    [FSL_IMX8MM_CSU] =3D { 0x303e0000, 64 * KiB, "csu" },
+> >+    [FSL_IMX8MM_RDC] =3D { 0x303d0000, 64 * KiB, "rdc" },
+> >+    [FSL_IMX8MM_SEMAPHORE2] =3D { 0x303c0000, 64 * KiB,
+> "semaphore2" },
+> >+    [FSL_IMX8MM_SEMAPHORE1] =3D { 0x303b0000, 64 * KiB,
+> "semaphore1" },
+> >+    [FSL_IMX8MM_GPC] =3D { 0x303a0000, 64 * KiB, "gpc" },
+> >+    [FSL_IMX8MM_SRC] =3D { 0x30390000, 64 * KiB, "src" },
+> >+    [FSL_IMX8MM_CCM] =3D { 0x30380000, 64 * KiB, "ccm" },
+> >+    [FSL_IMX8MM_SNVS_HP] =3D { 0x30370000, 64 * KiB, "snvs_hp" },
+> >+    [FSL_IMX8MM_ANA_PLL] =3D { 0x30360000, 64 * KiB, "ana_pll" },
+> >+    [FSL_IMX8MM_OCOTP_CTRL] =3D { 0x30350000, 64 * KiB, "ocotp_ctrl" },
+> >+    [FSL_IMX8MM_IOMUXC_GPR] =3D { 0x30340000, 64 * KiB, "iomuxc_gpr" },
+> >+    [FSL_IMX8MM_IOMUXC] =3D { 0x30330000, 64 * KiB, "iomuxc" },
+> >+    [FSL_IMX8MM_GPT3] =3D { 0x302f0000, 64 * KiB, "gpt3" },
+> >+    [FSL_IMX8MM_GPT2] =3D { 0x302e0000, 64 * KiB, "gpt2" },
+> >+    [FSL_IMX8MM_GPT1] =3D { 0x302d0000, 64 * KiB, "gpt1" },
+> >+    [FSL_IMX8MM_SDMA2] =3D { 0x302c0000, 64 * KiB, "sdma2" },
+> >+    [FSL_IMX8MM_SDMA3] =3D { 0x302b0000, 64 * KiB, "sdma3" },
+> >+    [FSL_IMX8MM_WDOG3] =3D { 0x302a0000, 64 * KiB, "wdog3" },
+> >+    [FSL_IMX8MM_WDOG2] =3D { 0x30290000, 64 * KiB, "wdog2" },
+> >+    [FSL_IMX8MM_WDOG1] =3D { 0x30280000, 64 * KiB, "wdog1" },
+> >+    [FSL_IMX8MM_ANA_OSC] =3D { 0x30270000, 64 * KiB, "ana_osc" },
+> >+    [FSL_IMX8MM_ANA_TSENSOR] =3D { 0x30260000, 64 * KiB,
+> "ana_tsensor" },
+> >+    [FSL_IMX8MM_GPIO5] =3D { 0x30240000, 64 * KiB, "gpio5" },
+> >+    [FSL_IMX8MM_GPIO4] =3D { 0x30230000, 64 * KiB, "gpio4" },
+> >+    [FSL_IMX8MM_GPIO3] =3D { 0x30220000, 64 * KiB, "gpio3" },
+> >+    [FSL_IMX8MM_GPIO2] =3D { 0x30210000, 64 * KiB, "gpio2" },
+> >+    [FSL_IMX8MM_GPIO1] =3D { 0x30200000, 64 * KiB, "gpio1" },
+> >+    [FSL_IMX8MM_AIPS1_CONFIGURATION] =3D { 0x301f0000, 64 * KiB,
+> "aips1_configuration" },
+> >+    [FSL_IMX8MM_SAI6] =3D { 0x30060000, 64 * KiB, "sai6" },
+> >+    [FSL_IMX8MM_SAI5] =3D { 0x30050000, 64 * KiB, "sai5" },
+> >+    [FSL_IMX8MM_SAI3] =3D { 0x30030000, 64 * KiB, "sai3" },
+> >+    [FSL_IMX8MM_SAI2] =3D { 0x30020000, 64 * KiB, "sai2" },
+> >+    [FSL_IMX8MM_SAI1] =3D { 0x30010000, 64 * KiB, "sai1" },
+> >+
+> >+    /* AIPS-1 End */
+> >+
+> >+    [FSL_IMX8MM_A53_DAP] =3D { 0x28000000, 16 * MiB, "a53_dap" },
+> >+    [FSL_IMX8MM_PCIE1_MEM] =3D { 0x18000000, 128 * MiB,
+> "pcie1_mem" },
+> >+    [FSL_IMX8MM_QSPI_MEM] =3D { 0x08000000, 256 * MiB, "qspi_mem" },
+> >+    [FSL_IMX8MM_OCRAM] =3D { 0x00900000, 256 * KiB, "ocram" },
+> >+    [FSL_IMX8MM_TCM_DTCM] =3D { 0x00800000, 128 * KiB, "tcm_dtcm" },
+> >+    [FSL_IMX8MM_TCM_ITCM] =3D { 0x007e0000, 128 * KiB, "tcm_itcm" },
+> >+    [FSL_IMX8MM_OCRAM_S] =3D { 0x00180000, 32 * KiB, "ocram_s" },
+> >+    [FSL_IMX8MM_CAAM_MEM] =3D { 0x00100000, 32 * KiB, "caam_mem" },
+> >+    [FSL_IMX8MM_BOOT_ROM_PROTECTED] =3D { 0x0003f000, 4 * KiB,
+> "boot_rom_protected" },
+> >+    [FSL_IMX8MM_BOOT_ROM] =3D { 0x00000000, 252 * KiB, "boot_rom" }, };
+> >+
+> >+static void fsl_imx8mm_init(Object *obj) {
+> >+    MachineState *ms =3D MACHINE(qdev_get_machine());
+> >+    FslImx8mmState *s =3D FSL_IMX8MM(obj);
+> >+    const char *cpu_type =3D ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-
+> a53");
+> >+    int i;
+> >+
+> >+    for (i =3D 0; i < MIN(ms->smp.cpus, FSL_IMX8MM_NUM_CPUS); i++) {
+> >+        g_autofree char *name =3D g_strdup_printf("cpu%d", i);
+> >+        object_initialize_child(obj, name, &s->cpu[i], cpu_type);
+> >+    }
+> >+
+> >+    object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
+> >+
+> >+    for (i =3D 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+> >+        g_autofree char *name =3D g_strdup_printf("uart%d", i + 1);
+> >+        object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL=
+);
+> >+    }
+> >+
+> >+}
+> >+
+> >+static void fsl_imx8mm_realize(DeviceState *dev, Error **errp) {
+> >+    MachineState *ms =3D MACHINE(qdev_get_machine());
+> >+    FslImx8mmState *s =3D FSL_IMX8MM(dev);
+> >+    DeviceState *gicdev =3D DEVICE(&s->gic);
+> >+    int i;
+> >+
+> >+    if (ms->smp.cpus > FSL_IMX8MM_NUM_CPUS) {
+> >+        error_setg(errp, "%s: Only %d CPUs are supported (%d requested)=
+",
+> >+                   TYPE_FSL_IMX8MM, FSL_IMX8MM_NUM_CPUS, ms->smp.cpus);
+> >+        return;
+> >+    }
+> >+
+> >+    /* CPUs */
+> >+    for (i =3D 0; i < ms->smp.cpus; i++) {
+> >+        /* On uniprocessor, the CBAR is set to 0 */
+> >+        if (ms->smp.cpus > 1 &&
+> >+                object_property_find(OBJECT(&s->cpu[i]), "reset-cbar"))=
+ {
+> >+            object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+> >+                                    fsl_imx8mm_memmap[FSL_IMX8MM_GIC_DI=
+ST].addr,
+> >+                                    &error_abort);
+> >+        }
+> >+
+> >+        /*
+> >+         * CNTFID0 base frequency in Hz of system counter
+> >+         */
+> >+        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
+> >+                                &error_abort);
+> >+
+> >+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el2")) {
+> >+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el2",
+> >+                                     !kvm_enabled(), &error_abort);
+> >+        }
+> >+
+> >+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el3")) {
+> >+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el3",
+> >+                                     !kvm_enabled(), &error_abort);
+> >+        }
+> >+
+> >+        if (i) {
+> >+            /*
+> >+             * Secondary CPUs start in powered-down state (and can be
+> >+             * powered up via the SRC system reset controller)
+> >+             */
+> >+            object_property_set_bool(OBJECT(&s->cpu[i]), "start-powered=
+-off",
+> >+                                     true, &error_abort);
+> >+        }
+> >+
+> >+        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
+> >+            return;
+> >+        }
+> >+    }
+> >+
+> >+    /* GIC */
+> >+    {
+> >+        SysBusDevice *gicsbd =3D SYS_BUS_DEVICE(&s->gic);
+> >+        QList *redist_region_count;
+> >+        bool pmu =3D object_property_get_bool(OBJECT(first_cpu), "pmu",
+> >+ NULL);
+> >+
+> >+        qdev_prop_set_uint32(gicdev, "num-cpu", ms->smp.cpus);
+> >+        qdev_prop_set_uint32(gicdev, "num-irq",
+> >+                             FSL_IMX8MM_NUM_IRQS + GIC_INTERNAL);
+> >+        redist_region_count =3D qlist_new();
+> >+        qlist_append_int(redist_region_count, ms->smp.cpus);
+> >+        qdev_prop_set_array(gicdev, "redist-region-count",
+> redist_region_count);
+> >+        object_property_set_link(OBJECT(&s->gic), "sysmem",
+> >+                                 OBJECT(get_system_memory()), &error_fa=
+tal);
+> >+        if (!sysbus_realize(gicsbd, errp)) {
+> >+            return;
+> >+        }
+> >+        sysbus_mmio_map(gicsbd, 0,
+> fsl_imx8mm_memmap[FSL_IMX8MM_GIC_DIST].addr);
+> >+        sysbus_mmio_map(gicsbd, 1,
+> >+ fsl_imx8mm_memmap[FSL_IMX8MM_GIC_REDIST].addr);
+> >+
+> >+        /*
+> >+         * Wire the outputs from each CPU's generic timer and the GICv3
+> >+         * maintenance interrupt signal to the appropriate GIC PPI inpu=
+ts, and
+> >+         * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
+> >+         */
+> >+        for (i =3D 0; i < ms->smp.cpus; i++) {
+> >+            DeviceState *cpudev =3D DEVICE(&s->cpu[i]);
+> >+            int intidbase =3D FSL_IMX8MM_NUM_IRQS + i * GIC_INTERNAL;
+> >+            qemu_irq irq;
+> >+
+> >+            /*
+> >+             * Mapping from the output timer irq lines from the CPU to =
+the
+> >+             * GIC PPI inputs.
+> >+             */
+> >+            static const int timer_irqs[] =3D {
+> >+                [GTIMER_PHYS] =3D ARCH_TIMER_NS_EL1_IRQ,
+> >+                [GTIMER_VIRT] =3D ARCH_TIMER_VIRT_IRQ,
+> >+                [GTIMER_HYP]  =3D ARCH_TIMER_NS_EL2_IRQ,
+> >+                [GTIMER_SEC]  =3D ARCH_TIMER_S_EL1_IRQ,
+> >+            };
+> >+
+> >+            for (int j =3D 0; j < ARRAY_SIZE(timer_irqs); j++) {
+> >+                irq =3D qdev_get_gpio_in(gicdev, intidbase + timer_irqs=
+[j]);
+> >+                qdev_connect_gpio_out(cpudev, j, irq);
+> >+            }
+> >+
+> >+            irq =3D qdev_get_gpio_in(gicdev, intidbase + ARCH_GIC_MAINT=
+_IRQ);
+> >+            qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-
+> interrupt",
+> >+                                        0, irq);
+> >+
+> >+            irq =3D qdev_get_gpio_in(gicdev, intidbase + VIRTUAL_PMU_IR=
+Q);
+> >+            qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+> >+ irq);
+> >+
+> >+            sysbus_connect_irq(gicsbd, i,
+> >+                               qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+> >+            sysbus_connect_irq(gicsbd, i + ms->smp.cpus,
+> >+                               qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+> >+            sysbus_connect_irq(gicsbd, i + 2 * ms->smp.cpus,
+> >+                               qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+> >+            sysbus_connect_irq(gicsbd, i + 3 * ms->smp.cpus,
+> >+                               qdev_get_gpio_in(cpudev,
+> >+ ARM_CPU_VFIQ));
+> >+
+> >+            if (kvm_enabled()) {
+> >+                if (pmu) {
+> >+                    assert(arm_feature(&s->cpu[i].env, ARM_FEATURE_PMU)=
+);
+> >+                    if (kvm_irqchip_in_kernel()) {
+> >+                        kvm_arm_pmu_set_irq(&s->cpu[i], VIRTUAL_PMU_IRQ=
+);
+> >+                    }
+> >+                    kvm_arm_pmu_init(&s->cpu[i]);
+> >+                }
+> >+            }
+> >+        }
+> >+    }
+> >+
+> >+    /* UARTs */
+> >+    for (i =3D 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+> >+        static const struct {
+> >+            hwaddr addr;
+> >+            unsigned int irq;
+> >+        } serial_table[FSL_IMX8MM_NUM_UARTS] =3D {
+> >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART1].addr,
+> FSL_IMX8MM_UART1_IRQ },
+> >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART2].addr,
+> FSL_IMX8MM_UART2_IRQ },
+> >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART3].addr,
+> FSL_IMX8MM_UART3_IRQ },
+> >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART4].addr,
+> FSL_IMX8MM_UART4_IRQ },
+> >+        };
+> >+
+> >+        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i))=
+;
+> >+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
+> >+            return;
+> >+        }
+> >+
+> >+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0,
+> serial_table[i].addr);
+> >+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
+> >+                           qdev_get_gpio_in(gicdev, serial_table[i].irq=
+));
+> >+    }
+> >+
+> >+    /* On-Chip RAM */
+> >+    if (!memory_region_init_ram(&s->ocram, OBJECT(dev),
+> "imx8mm.ocram",
+> >+                                fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].siz=
+e,
+> >+                                errp)) {
+> >+        return;
+> >+    }
+> >+    memory_region_add_subregion(get_system_memory(),
+> >+                                fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].add=
+r,
+> >+                                &s->ocram);
+> >+
+> >+    /* Unimplemented devices */
+> >+    for (i =3D 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
+> >+        switch (i) {
+> >+        case FSL_IMX8MM_GIC_DIST:
+> >+        case FSL_IMX8MM_GIC_REDIST:
+> >+        case FSL_IMX8MM_RAM:
+> >+        case FSL_IMX8MM_OCRAM:
+> >+        case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
+> >+            /* device implemented and treated above */
+> >+            break;
+> >+
+> >+        default:
+> >+            create_unimplemented_device(fsl_imx8mm_memmap[i].name,
+> >+                                        fsl_imx8mm_memmap[i].addr,
+> >+                                        fsl_imx8mm_memmap[i].size);
+> >+            break;
+> >+        }
+> >+    }
+> >+}
+> >+
+> >+static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data) {
+> >+    DeviceClass *dc =3D DEVICE_CLASS(oc);
+> >+
+> >+    dc->realize =3D fsl_imx8mm_realize;
+> >+
+> >+    dc->desc =3D "i.MX 8MM SoC";
+> >+}
+> >+
+> >+static const TypeInfo fsl_imx8mm_types[] =3D {
+> >+    {
+> >+        .name =3D TYPE_FSL_IMX8MM,
+> >+        .parent =3D TYPE_SYS_BUS_DEVICE,
+> >+        .instance_size =3D sizeof(FslImx8mmState),
+> >+        .instance_init =3D fsl_imx8mm_init,
+> >+        .class_init =3D fsl_imx8mm_class_init,
+> >+    },
+> >+};
+> >+
+> >+DEFINE_TYPES(fsl_imx8mm_types)
+> >diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c new file mode
+> >100644 index 0000000000..0a8cce8866
+> >--- /dev/null
+> >+++ b/hw/arm/imx8mm-evk.c
+> >@@ -0,0 +1,112 @@
+> >+/*
+> >+ * NXP i.MX 8MM Evaluation Kit System Emulation
+> >+ *
+> >+ * Copyright (c) 2025, NXP Semiconductors
+> >+ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> >+ *
+> >+ * SPDX-License-Identifier: GPL-2.0-or-later  */
+> >+
+> >+#include "qemu/osdep.h"
+> >+#include "system/address-spaces.h"
+> >+#include "hw/arm/boot.h"
+> >+#include "hw/arm/fsl-imx8mm.h"
+> >+#include "hw/arm/machines-qom.h"
+> >+#include "hw/core/boards.h"
+> >+#include "hw/core/qdev-properties.h"
+> >+#include "system/kvm.h"
+> >+#include "system/qtest.h"
+> >+#include "qemu/error-report.h"
+> >+#include "qapi/error.h"
+> >+#include <libfdt.h>
+> >+
+> >+static void imx8mm_evk_modify_dtb(const struct arm_boot_info *info,
+> >+void *fdt) {
+> >+    int i, offset;
+> >+
+> >+    /* Temporarily disable following nodes until they are implemented *=
+/
+> >+    const char *nodes_to_remove[] =3D {
+> >+        "nxp,imx8mm-fspi",
+> >+        "fsl,imx8mm-mipi-csi",
+> >+        "fsl,imx8mm-mipi-dsim"
+> >+    };
+> >+
+> >+    for (i =3D 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
+> >+        const char *dev_str =3D nodes_to_remove[i];
+> >+
+> >+        offset =3D fdt_node_offset_by_compatible(fdt, -1, dev_str);
+> >+        while (offset >=3D 0) {
+> >+            fdt_nop_node(fdt, offset);
+> >+            offset =3D fdt_node_offset_by_compatible(fdt, offset, dev_s=
+tr);
+> >+        }
+> >+    }
+> >+
+> >+    /* Remove cpu-idle-states property from CPU nodes */
+> >+    offset =3D fdt_node_offset_by_compatible(fdt, -1, "arm,cortex-a53")=
+;
+> >+    while (offset >=3D 0) {
+> >+        fdt_nop_property(fdt, offset, "cpu-idle-states");
+> >+        offset =3D fdt_node_offset_by_compatible(fdt, offset, "arm,cort=
+ex-a53");
+> >+    }
+> >+
+> >+    if (kvm_enabled()) {
+> >+        /* Use system counter frequency from host CPU to fix time in gu=
+est */
+> >+        offset =3D fdt_node_offset_by_compatible(fdt, -1, "arm,armv8-ti=
+mer");
+> >+        while (offset >=3D 0) {
+> >+            fdt_nop_property(fdt, offset, "clock-frequency");
+> >+            offset =3D fdt_node_offset_by_compatible(fdt, offset, "arm,=
+armv8-
+> timer");
+> >+        }
+> >+    }
+> >+}
+> >+
+> >+static void imx8mm_evk_init(MachineState *machine) {
+> >+    static struct arm_boot_info boot_info;
+> >+    FslImx8mmState *s;
+> >+
+> >+    if (machine->ram_size > FSL_IMX8MM_RAM_SIZE_MAX) {
+> >+        error_report("RAM size " RAM_ADDR_FMT " above max supported
+> (%08" PRIx64 ")",
+> >+                     machine->ram_size, FSL_IMX8MM_RAM_SIZE_MAX);
+> >+        exit(1);
+> >+    }
+> >+
+> >+    boot_info =3D (struct arm_boot_info) {
+> >+        .loader_start =3D FSL_IMX8MM_RAM_START,
+> >+        .board_id =3D -1,
+> >+        .ram_size =3D machine->ram_size,
+> >+        .psci_conduit =3D QEMU_PSCI_CONDUIT_SMC,
+> >+        .modify_dtb =3D imx8mm_evk_modify_dtb,
+> >+    };
+> >+
+> >+    s =3D FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM,
+> OBJECT(machine),
+> >+                                         "soc", &error_fatal, NULL));
+> >+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+> >+
+> >+    memory_region_add_subregion(get_system_memory(),
+> FSL_IMX8MM_RAM_START,
+> >+                                machine->ram);
+> >+
+> >+    if (!qtest_enabled()) {
+> >+        arm_load_kernel(&s->cpu[0], machine, &boot_info);
+> >+    }
+> >+}
+> >+
+> >+static const char *imx8mm_evk_get_default_cpu_type(const MachineState
+> >+*ms) {
+> >+    if (kvm_enabled()) {
+> >+        return ARM_CPU_TYPE_NAME("host");
+> >+    }
+> >+
+> >+    return ARM_CPU_TYPE_NAME("cortex-a53"); }
+> >+
+> >+static void imx8mm_evk_machine_init(MachineClass *mc) {
+> >+    mc->desc =3D "NXP i.MX 8MM EVK Board";
+> >+    mc->init =3D imx8mm_evk_init;
+> >+    mc->max_cpus =3D FSL_IMX8MM_NUM_CPUS;
+> >+    mc->default_cpus =3D FSL_IMX8MM_NUM_CPUS;
+> >+    mc->default_ram_size =3D 2 * GiB;
+> >+    mc->default_ram_id =3D "imx8mm-evk.ram";
+> >+    mc->get_default_cpu_type =3D imx8mm_evk_get_default_cpu_type; }
+> >+
+> >+DEFINE_MACHINE_AARCH64("imx8mm-evk", imx8mm_evk_machine_init)
+> >diff --git a/hw/arm/meson.build b/hw/arm/meson.build index
+> >b187b946f0..8b7a6ad07a 100644
+> >--- a/hw/arm/meson.build
+> >+++ b/hw/arm/meson.build
+> >@@ -84,6 +84,8 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE',
+> if_true:
+> >files('armsse.c'))
+> > arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true:
+> >files('fsl-imx7.c', 'mcimx7d-sabre.c'))
+> > arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true:
+> >files('fsl-imx8mp.c'))
+> > arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true:
+> >files('imx8mp-evk.c'))
+> >+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MM', if_true:
+> >+files('fsl-imx8mm.c'))
+> >+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MM_EVK', if_true:
+> >+files('imx8mm-evk.c'))
+> > arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+> > arm_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true:
+> >files('smmuv3-accel.c'))
+> > arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true:
+> >files('fsl-imx6ul.c', 'mcimx6ul-evk.c')) diff --git
+> >a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h new file
+> >mode 100644 index 0000000000..2811e809b9
+> >--- /dev/null
+> >+++ b/include/hw/arm/fsl-imx8mm.h
+> >@@ -0,0 +1,158 @@
+> >+/*
+> >+ * i.MX 8MM SoC Definitions
+> >+ *
+> >+ * Copyright (c) 2025, NXP Semiconductors
+> >+ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> >+ *
+> >+ * SPDX-License-Identifier: GPL-2.0-or-later  */
+> >+
+> >+#ifndef FSL_IMX8MM_H
+> >+#define FSL_IMX8MM_H
+> >+
+> >+#include "cpu.h"
+> >+#include "hw/char/imx_serial.h"
+> >+#include "hw/intc/arm_gicv3_common.h"
+> >+#include "qom/object.h"
+> >+#include "qemu/units.h"
+> >+
+> >+#define TYPE_FSL_IMX8MM "fsl-imx8mm"
+> >+OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
+> >+
+> >+#define FSL_IMX8MM_RAM_START        0x40000000
+> >+#define FSL_IMX8MM_RAM_SIZE_MAX     (4 * GiB)
+> >+
+> >+enum FslImx8mmConfiguration {
+> >+    FSL_IMX8MM_NUM_CPUS         =3D 4,
+> >+    FSL_IMX8MM_NUM_IRQS         =3D 128,
+> >+    FSL_IMX8MM_NUM_UARTS        =3D 4,
+> >+};
+> >+
+> >+struct FslImx8mmState {
+> >+    SysBusDevice   parent_obj;
+> >+
+> >+    ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
+> >+    GICv3State         gic;
+> >+    IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+> >+    MemoryRegion ocram;
+> >+};
+> >+
+> >+enum FslImx8mmMemoryRegions {
+> >+    FSL_IMX8MM_A53_DAP,
+> >+    FSL_IMX8MM_AIPS1_CONFIGURATION,
+> >+    FSL_IMX8MM_AIPS2_CONFIGURATION,
+> >+    FSL_IMX8MM_AIPS3_CONFIGURATION,
+> >+    FSL_IMX8MM_AIPS4_CONFIGURATION,
+> >+    FSL_IMX8MM_ANA_OSC,
+> >+    FSL_IMX8MM_ANA_PLL,
+> >+    FSL_IMX8MM_ANA_TSENSOR,
+> >+    FSL_IMX8MM_APBH_DMA,
+> >+    FSL_IMX8MM_BOOT_ROM,
+> >+    FSL_IMX8MM_BOOT_ROM_PROTECTED,
+> >+    FSL_IMX8MM_CAAM,
+> >+    FSL_IMX8MM_CAAM_MEM,
+> >+    FSL_IMX8MM_CCM,
+> >+    FSL_IMX8MM_CSU,
+> >+    FSL_IMX8MM_DDR_CTL,
+> >+    FSL_IMX8MM_DDR_PERF_MON,
+> >+    FSL_IMX8MM_DDR_PHY,
+> >+    FSL_IMX8MM_DDR_PHY_BROADCAST,
+> >+    FSL_IMX8MM_ECSPI1,
+> >+    FSL_IMX8MM_ECSPI2,
+> >+    FSL_IMX8MM_ECSPI3,
+> >+    FSL_IMX8MM_ENET1,
+> >+    FSL_IMX8MM_GIC_DIST,
+> >+    FSL_IMX8MM_GIC_REDIST,
+> >+    FSL_IMX8MM_GPC,
+> >+    FSL_IMX8MM_GPIO1,
+> >+    FSL_IMX8MM_GPIO2,
+> >+    FSL_IMX8MM_GPIO3,
+> >+    FSL_IMX8MM_GPIO4,
+> >+    FSL_IMX8MM_GPIO5,
+> >+    FSL_IMX8MM_GPT1,
+> >+    FSL_IMX8MM_GPT2,
+> >+    FSL_IMX8MM_GPT3,
+> >+    FSL_IMX8MM_GPT4,
+> >+    FSL_IMX8MM_GPT5,
+> >+    FSL_IMX8MM_GPT6,
+> >+    FSL_IMX8MM_GPU2D,
+> >+    FSL_IMX8MM_I2C1,
+> >+    FSL_IMX8MM_I2C2,
+> >+    FSL_IMX8MM_I2C3,
+> >+    FSL_IMX8MM_I2C4,
+> >+    FSL_IMX8MM_INTERCONNECT,
+> >+    FSL_IMX8MM_IOMUXC,
+> >+    FSL_IMX8MM_IOMUXC_GPR,
+> >+    FSL_IMX8MM_MEDIA_BLK_CTL,
+> >+    FSL_IMX8MM_LCDIF,
+> >+    FSL_IMX8MM_MIPI_CSI,
+> >+    FSL_IMX8MM_MIPI_DSI,
+> >+    FSL_IMX8MM_MU_A,
+> >+    FSL_IMX8MM_MU_B,
+> >+    FSL_IMX8MM_OCOTP_CTRL,
+> >+    FSL_IMX8MM_OCRAM,
+> >+    FSL_IMX8MM_OCRAM_S,
+> >+    FSL_IMX8MM_PCIE1,
+> >+    FSL_IMX8MM_PCIE1_MEM,
+> >+    FSL_IMX8MM_PCIE_PHY1,
+> >+    FSL_IMX8MM_PERFMON1,
+> >+    FSL_IMX8MM_PERFMON2,
+> >+    FSL_IMX8MM_PWM1,
+> >+    FSL_IMX8MM_PWM2,
+> >+    FSL_IMX8MM_PWM3,
+> >+    FSL_IMX8MM_PWM4,
+> >+    FSL_IMX8MM_QOSC,
+> >+    FSL_IMX8MM_QSPI,
+> >+    FSL_IMX8MM_QSPI1_RX_BUFFER,
+> >+    FSL_IMX8MM_QSPI1_TX_BUFFER,
+> >+    FSL_IMX8MM_QSPI_MEM,
+> >+    FSL_IMX8MM_RAM,
+> >+    FSL_IMX8MM_RDC,
+> >+    FSL_IMX8MM_SAI1,
+> >+    FSL_IMX8MM_SAI2,
+> >+    FSL_IMX8MM_SAI3,
+> >+    FSL_IMX8MM_SAI5,
+> >+    FSL_IMX8MM_SAI6,
+> >+    FSL_IMX8MM_SDMA1,
+> >+    FSL_IMX8MM_SDMA2,
+> >+    FSL_IMX8MM_SDMA3,
+> >+    FSL_IMX8MM_SEMAPHORE1,
+> >+    FSL_IMX8MM_SEMAPHORE2,
+> >+    FSL_IMX8MM_SEMAPHORE_HS,
+> >+    FSL_IMX8MM_SNVS_HP,
+> >+    FSL_IMX8MM_SPBA1,
+> >+    FSL_IMX8MM_SRC,
+> >+    FSL_IMX8MM_SYSCNT_CMP,
+> >+    FSL_IMX8MM_SYSCNT_CTRL,
+> >+    FSL_IMX8MM_SYSCNT_RD,
+> >+    FSL_IMX8MM_TCM_DTCM,
+> >+    FSL_IMX8MM_TCM_ITCM,
+> >+    FSL_IMX8MM_TZASC,
+> >+    FSL_IMX8MM_UART1,
+> >+    FSL_IMX8MM_UART2,
+> >+    FSL_IMX8MM_UART3,
+> >+    FSL_IMX8MM_UART4,
+> >+    FSL_IMX8MM_USB1,
+> >+    FSL_IMX8MM_USB2,
+> >+    FSL_IMX8MM_USB1_OTG,
+> >+    FSL_IMX8MM_USB2_OTG,
+> >+    FSL_IMX8MM_USDHC1,
+> >+    FSL_IMX8MM_USDHC2,
+> >+    FSL_IMX8MM_USDHC3,
+> >+    FSL_IMX8MM_VPU,
+> >+    FSL_IMX8MM_VPU_BLK_CTRL,
+> >+    FSL_IMX8MM_VPU_G1_DECODER,
+> >+    FSL_IMX8MM_VPU_G2_DECODER,
+> >+    FSL_IMX8MM_WDOG1,
+> >+    FSL_IMX8MM_WDOG2,
+> >+    FSL_IMX8MM_WDOG3,
+> >+};
+> >+
+> >+enum FslImx8mmIrqs {
+> >+    FSL_IMX8MM_UART1_IRQ    =3D 26,
+> >+    FSL_IMX8MM_UART2_IRQ    =3D 27,
+> >+    FSL_IMX8MM_UART3_IRQ    =3D 28,
+> >+    FSL_IMX8MM_UART4_IRQ    =3D 29,
+> >+};
+> >+
+> >+#endif /* FSL_IMX8MM_H */
 
