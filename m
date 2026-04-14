@@ -4,102 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E262BF9D0D0
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31245F9D0D1
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCe6x-0001XX-Tq; Tue, 14 Apr 2026 09:47:27 -0400
+	id 1wCeA3-0002EW-JM; Tue, 14 Apr 2026 09:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCe6w-0001X6-7Y
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:47:26 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCeA2-0002Dt-Nj
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:50:38 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wCe6u-0008U7-Jd
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:47:25 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-64eb84d1e37so4247381d50.2
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:47:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776174443; cv=none;
- d=google.com; s=arc-20240605;
- b=VyDcXKWpOhfGbJMC3JRn5JcuyEj6rhSiV6JfaAUrKlyAnAkJ5r+UZe7qSfgBuh3t0a
- sYkneeighQIukqJTRhsKuvZc88YwHI7dLClNToURizZWrBRA6LoFu1MjVG9XQV1EiJjv
- 95y+cq7aAcVCN6Wen7/FxkKIGabfxnUHxaUx8GMo9p5NwVrVUqmi9NjOzQjiB4JonI4m
- tJWg9EaEowDiZxPuetvULiZBNdOyqAB8ctA1K6x7/tsLafZFt6ZX+RRrn/kwNRaZPXE7
- kUM6BwlmolebMZVLXGNk/lbaDFkcOeUgWpygcjUrCLzmkTz0ZOdtXnMs0pFWeQnySTfr
- jsTw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=kx6hXMCK7i29sxgp9fDiDv1RFf91cX4uP4hQP6MR2Cw=;
- fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
- b=X4K576ngjTa/pYRW5/2iclHZfLS23pEph0FOY6dDgXUJJMXnvb1YePQdOONTPSgobv
- jaqPB+qoUwdTFl5qcVpEJcZWmo1Fx+1JoaFt7cQyIp9OM0ErMtuKVpM+X6LswulSCd6K
- YFEILpXGw4c2/NRMdj7oQQy6LSqeTiKb08Bj4l8ngK5rSHZClFV3tcyBJzB/jJyFp+fM
- QuE2N0uVmFquQzjdSHW8z/E2gb5KntsX4v+e8DgwIrxERxR4cjWKnBHm+Qf3jM0SpkhW
- WpUqAN1hvkD/riUkUKyTeIDLCsuMx0G3qyjU2onM5D/ZgMOelbthOg7NI1dOoVBqMtw+
- ULAg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCeA1-0000iO-3H
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:50:38 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-43d43e09de5so3351521f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776174443; x=1776779243; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kx6hXMCK7i29sxgp9fDiDv1RFf91cX4uP4hQP6MR2Cw=;
- b=Es+25lrv34kJF1D05AKy73ql1Pa8qbEJV0nTSdJ9CiY7PEh9cfCnLzISda6epxlWow
- kkWYknmdQnLOGZywoIe4hqYqt05f4mGtV6D4cSLD2TIXqzGQWZOVam94HgDY4acKaNak
- 2xcVL7omowjfESy9xzqo96ZNYf2YwC82T6fc6nl8/2ctHBfjHoxyN15CWJcPgnyknT+g
- KHmkbP41BKn5zX9Yz4RRh2R5MZUgiFbNMScvaV4U/GXtjyQm6TNy8y9J5+Osq9lI1xKf
- HzgNUWuQ6o8lAEfy4aHfJmG0m5VpCGtr/hRYgCt3cKEOYfGbeHzNb4+aGCZUyAgnzuS3
- 0nSg==
+ d=gmail.com; s=20251104; t=1776174634; x=1776779434; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qGQ0vQZjSWVGg2TxoOsKEknF4O3F9luiW3rRVb2C2/o=;
+ b=IJZ5Jv1XkHFSJBiGYNuWv6xPPYTKOPIMZyiNCI37BT3lTDsODqQcCMSkTablMKo/W/
+ JjTqCh09dJ7VGkxm7z08mSNKPlmjygYLMQsyGuqOhmXOoUqVM4YeskH+LUK7GDIBrhg+
+ K5jrRx4mfHF6hoe7zPZxD4JZzScIJdxg8LvbZVPb+mqshtrr6Qzkn84f2IdWJ5ULoMUn
+ yoW6KPUXeqe6WSJbFyOZ78otKVNlTWZPDaUspwxt1j72FRTgoyE/Neej4PDJhoxx0wig
+ 8N/LAQtiqGFVQpkP2JNYd8XRXSIO5CsZe3pq3xVypaV7+xQdNKTrOHDFQ1f340O0NroE
+ YNFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776174443; x=1776779243;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kx6hXMCK7i29sxgp9fDiDv1RFf91cX4uP4hQP6MR2Cw=;
- b=JCkogLh7L4uuwybQyIqYJMaq9EXAL+SHGMeKHJagNWg59DrqKIHp+0vBGjnBbjq0Me
- nAMCPSu8z81dDyVlLMkfEEmJisfAawdGzBvf6/Ot3Y7oyX6yMOMEUBGPLh3bcZ+pBpJj
- zGaxo5FVp5JWiQ6vl/9n0VZFbdXLtt5HJYv/seIXPDylM9kr6EWVVczqTQ7Jw04d2Bvq
- Vn7MymXJmWO759PVO6xwulNYQSNZQfAB3ZcoFpB0yxXd+V3yK6u2Q+o5y/AeNMzNvkHU
- cCM1qHIh9TqhUHhWmG6XJa2UcrcwxZjBSE9LhGDvQ+0ULAWxdcTXwcN0pmn9CuMW8Pz5
- q6Aw==
-X-Gm-Message-State: AOJu0YyIKrWN9yajiG7iQeHEF2gvQdYifPTo62NYyQweP9Q1CYYQg4fL
- iIckJpxq4nhigqDngIlPgdBeSH4PiC2Y0Q0EfBiryWYI6d9euoKEG6xmNguwNTHBzxTcautCfg8
- +QSnhG//DQD5hOcz1Mq1QF8XwfheIFOM/adY6tSij/g==
-X-Gm-Gg: AeBDievXO0L2cF4JJoQ3kKGhjyEF1K9r+2OeDyqvXp3PZ4hiAeqnT10t+G0Bs1v1rHu
- 0+xbi8yvQBH9cezos8QOTO+EEXRS2+mtLgfDEzVQYV0NFhzNqwFNV+raLjxZjZjwu53z4q9f83v
- RWlrsJEYL/8u1yQUGnPO8FVMHW8CqNqwaHsbLYZJsVBvSMBbNlTkRAMQ9UdhNlS3uglot7YKM79
- Ul4xMBxDzICE5Pia5P3UUxJ4rlidq6SrvaUgHkjKWnUJhrmgbtLoIlq/cQ4lajJwN/EWTCtJC8w
- vc1fDvTVbVubgOfFuC3ICFrFbFo+ANd7sOQf/Nf5Ik6QgtEZzQ8+jN0mlsN90t7J5ow=
-X-Received: by 2002:a05:690e:4011:b0:651:c782:6a8 with SMTP id
- 956f58d0204a3-651c7820a22mr8329145d50.15.1776174442638; Tue, 14 Apr 2026
- 06:47:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776174634; x=1776779434;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qGQ0vQZjSWVGg2TxoOsKEknF4O3F9luiW3rRVb2C2/o=;
+ b=Yl4IqMmCpHTdvAWISAiLvsS689EPLLdBSoytOv4Olr0Zdo4vbI8/kjFfcuyEeBa6wO
+ plsIAc+0PKOdUw5/X8JAFYeBUZupGdevtg+GrBPuN6hkUTXpUomzhoOxvDcnhnAR537n
+ vBtOzEdm0rYE5iwpcuA9/sNrFXkbgcikzFCh2AmQidE5e8i18/21TbZ/E/kAgbIcsvHN
+ IIFu1m517I4HoVs4E0uqOaT3hj7UFvKKyMWe4uIflm9ZmGcIb+dxJCbcbHWh+FqtJk82
+ XQPZxWvkjdJbhDEPut7FyzwL1++jLs49ptb3CGnxQqZ8g4D4x0z12dc4tI2E4vbh8BNz
+ AgeA==
+X-Gm-Message-State: AOJu0YztljY+wHuibFP8VhhwUvK19lv8MEN1iu1zKh1xANUjD0gK7qAk
+ Or5ZPtyGAAMXwJKBIerzGD35NLy5G9/uteS5965pcQeMwwvjH8SJYqZLZXJTpg==
+X-Gm-Gg: AeBDievUSCQlSHM8j76s87Fh3/PhRKg2Vlbha9isdGyQTmVWvaj5YlBK/wMCBSzK8Uz
+ pFzfuH3UbqMHvzxpQ+fIqlsai9kKfKtVfj4+vcVdX9hhKthFxPbSLpVfdP5ZQEhFpplWTZXBT95
+ ak4WzIQd/WoN/h9Smqn4NhHhkyLkWz249SDudfFteZMUi6FoNVyggeELe5ANkGvQ8dnbRV8OWI1
+ XkX54Wg7XDg810r4H4PbmSukZB4OUJwlweNYxUQeq9nSw7bcta06X+In+Im6o7Xbf1X0MGCnIUx
+ vD6GU+qynIKChTchibY6QYBWxTqmlORT9WQFDLQxChSkykdlVpmxaD9DMkSx0zNiCKi91NrfHqP
+ 0WyzAik7a3Ywl2YTRB1XX10aO/IhtkZeqUr5wMu9zBbzjhPQ0WghcOgvfWOTV9PEgT+DScBcsU8
+ E8ctVoytpMzcmWnYeRTOOdeWK2GSInRJr89b6vKhBashsm4qIkrcAMSFLYyUMFRpw=
+X-Received: by 2002:a5d:5d83:0:b0:43d:30af:a173 with SMTP id
+ ffacd0b85a97d-43d64259b7emr25902355f8f.5.1776174634040; 
+ Tue, 14 Apr 2026 06:50:34 -0700 (PDT)
+Received: from archlinux (pd9ed75d7.dip0.t-ipconnect.de. [217.237.117.215])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d7ba57e72sm14397646f8f.0.2026.04.14.06.50.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 06:50:33 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] scripts/checkpatch: Reject another license boilerplate pattern
+Date: Tue, 14 Apr 2026 15:50:18 +0200
+Message-ID: <20260414135018.13585-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260414132100.53861-1-philmd@linaro.org>
-In-Reply-To: <20260414132100.53861-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Apr 2026 14:47:11 +0100
-X-Gm-Features: AQROBzCKDUIwTh8NXk3cE2_VBir0NjJDsIGNgzwuQmi5t_OLZIDDNRJmdBTCPL0
-Message-ID: <CAFEAcA9-oUv7sycLCCtL-Css-2mi+5T-UBs4aKQB-KF6P-zUpg@mail.gmail.com>
-Subject: Re: [PULL 0/3] Misc HW patches for 2026-04-14
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,43 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Apr 2026 at 14:21, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> The following changes since commit becd22fdc2a071783d9e04421526633772b3b9=
-8c:
->
->   Update version for v11.0.0-rc3 release (2026-04-09 21:18:56 +0100)
->
-> are available in the Git repository at:
->
->   https://github.com/philmd/qemu.git tags/hw-misc-20260414
->
-> for you to fetch changes up to 31ebdb207f99bf7d72abbbb82fced15d161a548f:
->
->   ati-vga: fix unsigned integer overflow in cursor bounds checks (2026-04=
--14 11:35:13 +0200)
->
-> ----------------------------------------------------------------
-> Misc HW patches
->
-> Few more VGA & PPC fixes.
-> ----------------------------------------------------------------
->
-> Junjie Cao (1):
->   ati-vga: fix unsigned integer overflow in cursor bounds checks
->
-> Mohamed Mediouni (1):
->   hw: q35: fix VGA text console with SMM disabled
->
-> Vivien LEGER (1):
->   hw/ppc/e500: fix bus-frequency property hardcoded to zero in CPU FDT
->     node
+The pattern us used 56 times in QEMU.
 
-Are these all regressions from 10.2 ? For rc4 I would prefer to
-limit it to only important regressions and maybe very obviously
-safe fixes.
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ scripts/checkpatch.pl | 1 +
+ 1 file changed, 1 insertion(+)
 
-thanks
--- PMM
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index b77bd69328..b2ef0a8528 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -368,6 +368,7 @@ our @typeList = (
+ # Match text found in common license boilerplate comments:
+ # for new files the SPDX-License-Identifier line is sufficient.
+ our @LICENSE_BOILERPLATE = (
++	"licensed under the GPL version 2",
+ 	"licensed under the terms of the GNU GPL",
+ 	"under the terms of the GNU General Public License",
+ 	"under the terms of the GNU Lesser General Public",
+-- 
+2.53.0
+
 
