@@ -4,55 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C119AF9D0EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A49D3F9D0EF
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCiQ4-0006VM-Dg; Tue, 14 Apr 2026 14:23:28 -0400
+	id 1wCiPh-00069H-3s; Tue, 14 Apr 2026 14:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCiQ3-0006Uj-70
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:27 -0400
-Received: from inva020.nxp.com ([92.121.34.13])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCiPR-00066X-CG
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:50 -0400
+Received: from pv-2005c-snip4-8.eps.apple.com ([57.103.66.159]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCiQ0-0006he-0S
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:26 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id B1C8B1A2865;
- Tue, 14 Apr 2026 20:23:22 +0200 (CEST)
-Received: from aprdc01srsp001v.ap-rdc01.nxp.com
- (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 7C26C1A2864;
- Tue, 14 Apr 2026 20:23:22 +0200 (CEST)
-Received: from lsv031015.swis.in-blr01.nxp.com
- (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id EA0D71802227;
- Wed, 15 Apr 2026 02:23:21 +0800 (+08)
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCiPP-0006UV-SF
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:49 -0400
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPS id
+ 7A36618017A2; Tue, 14 Apr 2026 18:22:44 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776190966; x=1778782966;
+ bh=aHWbpBbWHa1pDSLj1H1tPnDt0duRVaN6KSal90efVe4=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=Qb6rj1lBiQ/fdp5uLcQDat9lsIv+cNCd87KS0lhUkjC+XKe1dnpYA5WjxmxhwhQBGCH5lwonCc0GcXx5z5Dhgm1mfBWExY8HeGo+BVSE6Fpf2eHoCuevcXQPChWeCtUDIpM7sHbdHh+mqUVKBaO0VIyOAUZq56zvsu01PGmJcZBmZ4PzFhupx923bkptehA8DngYBS71BV6jBITQZ7otrerF+GFhnruSkOIfaX+1uHYYFkOSbhb4fajCK2bBupxf8QGaSvOfDPxkMJMldI3tnjY+I07jt0LhLAucamWdFphtQarWgBkOXxabNF4QjT8D14xDPn1+PF4OxW0ovlqLsg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPSA id
+ 8A90018001DB; Tue, 14 Apr 2026 18:22:42 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv6 14/15] hw/arm/fsl-imx8mm: Adding support for USB controller
-Date: Tue, 14 Apr 2026 23:53:12 +0530
-Message-Id: <20260414182313.1691519-15-gaurav.sharma_7@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
-References: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5/7] whpx: i386: ignore vpassist when kernel-irqchip=off
+Date: Tue, 14 Apr 2026 20:22:29 +0200
+Message-ID: <20260414182231.18776-6-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260414182231.18776-1-mohamed@unpredictable.fr>
+References: <20260414182231.18776-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.13;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-Authority-Info-Out: v=2.4 cv=c4GmgB9l c=1 sm=1 tr=0 ts=69de85f5
+ cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=HmN67jXOOwgiugJlUbgA:9
+X-Proofpoint-GUID: QPG1F_s5cYYfRUAsDQuBJrokPb-16-MJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDE3MiBTYWx0ZWRfX6kukinN5p/0H
+ x3+9bBgOCuEvOQnUVQgu1MZ7OiS5dCwJUH7SjZ1hcjLctr8ihGMWa645Eok+zNDSAIga8uUKM6X
+ U4MXogQDE2vm0qdJRtHndeAUGqQQ3ROyDmzJCqEvGm7o/8KvmP+QMuBJyOOvYb2YwNKnGALgSxA
+ aoWN/wW+SRiAi22OgO54VBq6nQIznWXmdYCG3/zS894ARqPPi695uSNuxqsXydGRszo/vxI/Rpn
+ Nv4pBdhLIXDPPyDOszszaj8unY91AylFxu0sHl/nv39pzcBJ+2tvKIO2McJBhc4MWOsOrsErTX+
+ FvO4O6i7ABUPi7xtnALasZwh+0FNE9GDjImu8olFi9MGx97Oauf6l0mPYpC2VQ=
+X-Proofpoint-ORIG-GUID: QPG1F_s5cYYfRUAsDQuBJrokPb-16-MJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-14_03,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ bulkscore=0 spamscore=0 phishscore=0 suspectscore=0 clxscore=1030
+ malwarescore=0 lowpriorityscore=0 mlxlogscore=999 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604140172
+Received-SPF: pass client-ip=57.103.66.159;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,121 +90,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It enables emulation of USB on iMX8MM
-Enables testing and debugging of USB drivers
+Linux tries to set vpassist even when none of the enlightenments
+using it are available.
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+So ignore the page it sets.
+
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h |  6 ++++++
- 3 files changed, 34 insertions(+)
+ target/i386/whpx/whpx-all.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 45d10e34dc..1b26bd3431 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -632,6 +632,7 @@ config FSL_IMX8MM
-     select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
-+    select USB_DWC3
-     select WDT_IMX2
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 6c39168b06..2e6679f40b 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -51,6 +51,7 @@
+ #define HYPERV_APIC_BUS_FREQUENCY      (200000000ULL)
+ /* for kernel-irqchip=off */
+ #define HV_X64_MSR_APIC_FREQUENCY       0x40000023
++#define HV_X64_MSR_VP_ASSIST_PAGE       0x40000073
  
- config FSL_IMX8MM_EVK
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index f1c173dbec..97c3f8542c 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -202,6 +202,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-     }
+ static bool is_modern_os = true;
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
-+        g_autofree char *name = g_strdup_printf("usb%d", i);
-+        object_initialize_child(obj, name, &s->usb[i], TYPE_USB_DWC3);
-+    }
+@@ -2033,6 +2034,18 @@ int whpx_vcpu_run(CPUState *cpu)
+                     }
+                 }
+             }
 +
-     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
-         g_autofree char *name = g_strdup_printf("spi%d", i + 1);
-         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
-@@ -529,6 +534,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
-     }
- 
-+    /* USBs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } usb_table[FSL_IMX8MM_NUM_USBS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_USB1].addr, FSL_IMX8MM_USB1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_USB2].addr, FSL_IMX8MM_USB2_IRQ },
-+        };
++            /*
++             * Linux tries to use it anyway even when not exposed. 
++             * Ignore the write as the VP assist page is not used.
++             */
++            if (vcpu->exit_ctx.MsrAccess.MsrNumber == HV_X64_MSR_VP_ASSIST_PAGE
++                && vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite
++                && !whpx_irqchip_in_kernel()
++                && whpx->hyperv_enlightenments_enabled) {
++                is_known_msr = 1;
++            }
 +
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p2", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p3", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usb[i]), errp)) {
-+            return;
-+        }
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
-+                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
-+    }
-+
-     /* ECSPIs */
-     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
-         static const struct {
-@@ -635,6 +661,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_OCRAM:
-         case FSL_IMX8MM_SNVS_HP:
-         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
-+        case FSL_IMX8MM_USB1 ... FSL_IMX8MM_USB2:
-         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
-         case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
-             /* device implemented and treated above */
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index bc5a0922ad..60d79a6e3c 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -25,6 +25,7 @@
- #include "hw/sd/sdhci.h"
- #include "hw/ssi/imx_spi.h"
- #include "hw/timer/imx_gpt.h"
-+#include "hw/usb/hcd-dwc3.h"
- #include "hw/watchdog/wdt_imx2.h"
- #include "qom/object.h"
- #include "qemu/units.h"
-@@ -43,6 +44,7 @@ enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_I2CS         = 4,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-+    FSL_IMX8MM_NUM_USBS         = 2,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-     FSL_IMX8MM_NUM_WDTS         = 3,
- };
-@@ -64,6 +66,7 @@ struct FslImx8mmState {
-     IMXFECState        enet;
-     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
-+    USBDWC3            usb[FSL_IMX8MM_NUM_USBS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
-     OrIRQState         gpt5_gpt6_irq;
-@@ -202,6 +205,9 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_I2C3_IRQ     = 37,
-     FSL_IMX8MM_I2C4_IRQ     = 38,
- 
-+    FSL_IMX8MM_USB1_IRQ     = 40,
-+    FSL_IMX8MM_USB2_IRQ     = 41,
-+
-     FSL_IMX8MM_GPT1_IRQ      = 55,
-     FSL_IMX8MM_GPT2_IRQ      = 54,
-     FSL_IMX8MM_GPT3_IRQ      = 53,
+             /*
+              * For all unsupported MSR access we:
+              *     ignore writes
 -- 
-2.34.1
+2.50.1 (Apple Git-155)
 
 
