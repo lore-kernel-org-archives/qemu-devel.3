@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDACFF9D0CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBDCFF9D0CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCdho-0000s6-Fg; Tue, 14 Apr 2026 09:21:28 -0400
+	id 1wCdhh-0000qE-BV; Tue, 14 Apr 2026 09:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdhm-0000rS-UX
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:21:26 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdhf-0000q0-VK
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:21:19 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdhl-00080k-C6
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:21:26 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43d43e09de5so3327998f8f.1
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:21:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdhe-000809-57
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:21:19 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43d74086e5bso1858061f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776172883; x=1776777683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776172876; x=1776777676; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RTP8G/3syFvWMTvC3Oy537xBcJoeDL0PeXldlkypUIc=;
- b=J85Qq5X29zkEt1ZE1zj9GJQlt7eexi+4l0GXiEk8yc1aMMBcx9Qnw62+LLXlp2QfKw
- LhO6HVe3u/8mW2SoGw91mshmCBatY90XnwJ55kregXaNwMEk9/WpD26BPZVpqtJ0ziUX
- iP/Z9dfFZgJueIkXcO9ia9nPqKcqyRwJ4qHEnUS4UcvQittIjSFmGjfXo7zcIA/mwb7t
- H5guz3DN3n2am/TJE7maT0+03C6aVbcmikp1Yx4jCyPatO/EV/bYyaZyhFxMsBXROdIF
- PsYRtR8a/CHaiSXSv+2d4VAlo5w3/oUxTk1t0tIrG/ychSOMwxe+asm96yZUQqlM9bLs
- weTg==
+ :reply-to; bh=iR6Z60525WsUcAHnGzZLKIJqtugk1SSKoNFtM74g22c=;
+ b=mWTBhqiLyjx88Grp7ur6Fe8IoF185uhRPfE5/ZFPoA4joBRJJRLxFsWSJ5udUnH2gU
+ Ux2V3qCG7to1Q1X3T7l0LLYA0aHs/uAi34Kn09ZhEhq+O3WWHLoT5LIESsYZZKYhM6AK
+ +hocTTwNFp9Btv/0b/sdfbkHjUhealBwzhZUOAs2NBLiQZponjtPk6B+M0N0g9JQ3OPC
+ CsGoFIiWh3SCR8BDXBWsqZxXYWQij86zSK6mjv486+7wIJxgFwKP17OVeXlJy1YG/GOU
+ Dp/19oaeoJnq1pKsFNhRB8H3uIHnUJ8vxlD+ohga1GNAX0vO9GgsKQoyiXm0CqPbAjBl
+ DzDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776172883; x=1776777683;
+ d=1e100.net; s=20251104; t=1776172876; x=1776777676;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=RTP8G/3syFvWMTvC3Oy537xBcJoeDL0PeXldlkypUIc=;
- b=ZccWG1VM+kDw+bKd5oCM8Ec8DRnWHstu2FkUT2EcfqLCzJNLfg0eCuEcPwAichdxLR
- yXjyW7Bfh4niN3kAR6uO9QgFZ/afCwgqI6v2WbmD9HYjTbqk81Yj9NN8jFs+eXqpUuqG
- 9uroiDlKupoDZMlS2Oy8sRqZcaBDP6IRCAmYIRBEnEQ/SOrE+OB9etmJMD/RQ6DH+Wz2
- e3g6T4i94UKNCMtBGRVg+9tmZ6M3ivzfUpITnn8Pf/Y2MC4lvssAE2PkdeSyRFBv9sPu
- vz9OSXx6LwUGEYe6rP5zdbGH5OJcwyIAhC+LDvwGMU4k429y4G4ySt+F9Fdy53S5jEAd
- ZBPQ==
-X-Gm-Message-State: AOJu0YwCgOFMPkAYKxdua1V/JwBenWHkfp+kLdXmcoaGRBML10jaYzop
- zBO5f9TOlxY1HTnTvikUmjbNp7Qnb201Tu9OjrPEeplnUdZAkPVpe8XmoEisZvzX7IYos5Iszkh
- +01NUAA8=
-X-Gm-Gg: AeBDietnEfjRvyAcaH7hdMLNE10kUEdYAlyesyHWLzhxUAZCGs4ccsqSKIjHMgBkRlx
- HF9LyfSn8Pp8JdmMb14+4BKzszPEQd38LwX5rRXKCT3aQUFu3/o5ZH2Fn2R3eDs76d2BY7aQfRh
- kFkRxCZQLaCGZiAhTe/qZrEG9sD3lZlyLqCqD05REklDbqq7HfF7XjbyjruovlLHgv9lSiUpz3q
- 0bgeHqP4scAbTmxeC1X/qUKfLF/6YXq/zO98wfOfa5c0naHvqU44ZgaPNKSzHipVlb8anobkEI3
- JQyiA1DbH2oOJXp4RmmUcGRgdvMotqLjQQ2FXu12vXfqzrGkwloTSYus3lAltnklmYwjZJpANma
- 0CsOQ/wNiCSY05ZEXu/zjn9+KCPRzDxYHJ/Km++6Mj3YQH+aU8N6du0mv0AcJlYxodfITM9Hczv
- XR4vdoLX1x40lFd6t1iWKWH9gq3ceTzdq+1Lr04F/owqSwFSruyR/g8p6mibUjYmYHmthKF62f
-X-Received: by 2002:a05:6000:612:b0:43e:a81d:c475 with SMTP id
- ffacd0b85a97d-43ea81dc4d7mr2249966f8f.6.1776172883117; 
- Tue, 14 Apr 2026 06:21:23 -0700 (PDT)
+ bh=iR6Z60525WsUcAHnGzZLKIJqtugk1SSKoNFtM74g22c=;
+ b=XkNbz9+OPH9mCxPU4u3X0XzZUIJkMxH17tMqS5hcKhJvO1IyZwYgtYYdfwJC/QilZn
+ U6+HYtD+RF/QoDsAPqBzD7iZ4yFWs5w9sVl1ARk3UP6ovbjyqTO+DXPXyiYkVfQ3mnib
+ J2j+Jbcnh0oram5Xm5gxKaqi1yud6pinKQ9t/5YGva+bImlCubl9Jod0UuCbhRD7SmuM
+ vgQP6KyhXhOpbE22AYZo9wrZjiRUv+36Pcf9dKYxBpthE1RnaRS7Q5rFb557toJJYSDD
+ +nqIFEcOZb5YetTYF9GrSZfGoF3lP4YWOv8F0WcvYcrMertmxtA6wfCGLF0S22i3lWRo
+ qBzQ==
+X-Gm-Message-State: AOJu0YwhnVockztkkAL1J2XOrsmzALWQdBj++EEWrTxTp1qu3boSS6LJ
+ OfufAdfNC4ixe566zdYRN6XRO6sI5pDQb846M7xk/eMunZ4S3OLzfdIGL27LoZoXyYcKv38Xf+T
+ W1eRfKDI=
+X-Gm-Gg: AeBDietRPnMgF1kLv+oXSjnynXGLiwnClq30i3WWlWAlWZpcyHTGy1Fxe8z0XC8O0QX
+ wveD1pVn0MyZ92YIqTKFcmjkitjCUwDCc32IdDEOHq+eH+1yfKixpWRBsy4FtiacexzA9LdLo1k
+ u7okl/dCIgluCidpRZ18hf7kjaFYXM6hb7BYKkQJ+NINmTr+gzsXJolyCe7MD/W1BK2i39ElTTd
+ zCyPdVCTkqB3wLQuBJz1Smpep5xdzeD29AHBZofov4j7HJAD0EBrcdF/kD+REMnXtovNabojsVY
+ mlCn/qrnaNRv23v8QXGWHNdqnmdqg18bYhoKyxAj5CHOqlJDZ62Q1yhr0fO8VVRPg4mlFQz9eUd
+ OIh9AIYcXeK/spVO6FEiPOKeUdUy5N/14Od9D5Rg+WHUapcJkligIvVEcBVZpYNsXNHouwXDsHS
+ ceOchq2BGS9OX3JXXzYNq0W8QrBR7/foE306+ujAj+agLmAQY2X2aZcaFSjMss59pQyiDJ4IOm
+X-Received: by 2002:a5d:6a90:0:b0:43d:6fb7:fedb with SMTP id
+ ffacd0b85a97d-43d6fb801bamr10964943f8f.36.1776172876195; 
+ Tue, 14 Apr 2026 06:21:16 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d7b543057sm14033448f8f.6.2026.04.14.06.21.22
+ ffacd0b85a97d-43d6a1203b8sm37370938f8f.16.2026.04.14.06.21.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Apr 2026 06:21:22 -0700 (PDT)
+ Tue, 14 Apr 2026 06:21:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 3/3] ati-vga: fix unsigned integer overflow in cursor bounds
- checks
-Date: Tue, 14 Apr 2026 15:20:59 +0200
-Message-ID: <20260414132100.53861-4-philmd@linaro.org>
+Subject: [PULL 2/3] hw: q35: fix VGA text console with SMM disabled
+Date: Tue, 14 Apr 2026 15:20:58 +0200
+Message-ID: <20260414132100.53861-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260414132100.53861-1-philmd@linaro.org>
 References: <20260414132100.53861-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +98,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-The cursor bounds checks compare (srcoff + N) against vram_size, but
-both sides are uint32_t so the addition can wrap past UINT32_MAX when
-srcoff underflows from the cur_hv_offs subtraction, causing the check
-to be bypassed.
+Work around black screen in VGA mode with SMM disabled.
 
-Rewrite the checks as (srcoff > vram_size - N) to avoid the
-overflow-prone addition, matching the style already used in
-ati_mm_read() and ati_mm_write().
+Required by NVMM, HVF and WHPX backends.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 2f1fbe6ee9b5 ("ati-vga: Make sure hardware cursor data is within vram")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Message-ID: <20260414141458.1076014-1-junjie.cao@intel.com>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+https://gnats.NetBSD.org/59721
+https://gitlab.com/qemu-project/qemu/-/issues/2608
+https://gitlab.com/qemu-project/qemu/-/work_items/3085
+
+Patch written by Taylor R Campbell <riastradh@NetBSD.org>
+
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260413170407.57574-1-mohamed@unpredictable.fr>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/ati.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/pci-host/q35.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 88a5bbbf07a..0489995d00b 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -149,7 +149,7 @@ static void ati_cursor_define(ATIVGAState *s)
-     /* FIXME handle cur_hv_offs correctly */
-     srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
-              (s->regs.cur_hv_offs & 0xffff) * 16;
--    if (srcoff + 64 * 16 > s->vga.vram_size) {
-+    if (srcoff > s->vga.vram_size - 64 * 16) {
-         return;
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index e85e4227b37..05ef5222f7a 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -372,6 +372,10 @@ static void mch_update_smram(MCHPCIState *mch)
+         memory_region_set_enabled(&mch->high_smram, false);
      }
-     for (int i = 0; i < 64; i++, srcoff += 16) {
-@@ -206,7 +206,7 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+ 
++    if (!mch->has_smm_ranges) {
++        goto out;
++    }
++
+     if ((pd->config[MCH_HOST_BRIDGE_ESMRAMC] & MCH_HOST_BRIDGE_ESMRAMC_T_EN) &&
+         (pd->config[MCH_HOST_BRIDGE_SMRAM] & SMRAM_G_SMRAME)) {
+         switch (pd->config[MCH_HOST_BRIDGE_ESMRAMC] &
+@@ -405,7 +409,7 @@ static void mch_update_smram(MCHPCIState *mch)
+                               mch->below_4g_mem_size - tseg_size);
+     memory_region_set_alias_offset(&mch->tseg_window,
+                                    mch->below_4g_mem_size - tseg_size);
+-
++out:
+     memory_region_transaction_commit();
+ }
+ 
+@@ -474,15 +478,15 @@ static void mch_write_config(PCIDevice *d,
+         mch_update_pciexbar(mch);
      }
-     /* FIXME handle cur_hv_offs correctly */
-     srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
--    if (srcoff + 16 > s->vga.vram_size) {
-+    if (srcoff > s->vga.vram_size - 16) {
-         return;
+ 
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
+     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
+                        MCH_HOST_BRIDGE_SMRAM_SIZE)) {
+         mch_update_smram(mch);
      }
-     dp = &dp[vga->hw_cursor_x];
+ 
++    if (!mch->has_smm_ranges) {
++        return;
++    }
++
+     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
+                        MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
+         mch_update_ext_tseg_mbytes(mch);
+@@ -585,10 +589,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+     }
+ 
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
+     /* if *disabled* show SMRAM to all CPUs */
+     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+@@ -604,6 +604,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                                         &mch->open_high_smram, 1);
+     memory_region_set_enabled(&mch->open_high_smram, false);
+ 
++    if (!mch->has_smm_ranges) {
++        return;
++    }
++
+     /* smram, as seen by SMM CPUs */
+     memory_region_init(&mch->smram, OBJECT(mch), "smram", 4 * GiB);
+     memory_region_set_enabled(&mch->smram, true);
 -- 
 2.53.0
 
