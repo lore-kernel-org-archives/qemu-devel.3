@@ -4,74 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E68F9D0CD
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 12:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A90BF9D0CA
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 12:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCd6A-0008Am-Ef; Tue, 14 Apr 2026 08:42:34 -0400
+	id 1wCdJR-0002NW-PY; Tue, 14 Apr 2026 08:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wCd69-0008AW-Nd
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:42:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wCd68-00030e-Bg
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:42:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776170551;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=64C2YsslG2c/XZX4KWE47mEgBaDHV+zeHySbSFO5g8c=;
- b=XPJIT1NPcCXTnEcWWEO1gWvvJilcoKrhcpd9dWQi9LYXjNLU6PzkXFdv+a1rLUik/rInkW
- 0r/KLDN0r0+AAo8Dait11ikEDdFSftR5QiTQ7FLOkEvKkuKNDAdRKKca2Ir04gRWcapFD+
- HUzdOUqeLxDVOqfImN4sL9Hex8BI6q0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-KqmYqaqZPyS1xAMPi1Rt1A-1; Tue,
- 14 Apr 2026 08:42:26 -0400
-X-MC-Unique: KqmYqaqZPyS1xAMPi1Rt1A-1
-X-Mimecast-MFC-AGG-ID: KqmYqaqZPyS1xAMPi1Rt1A_1776170545
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CFD1519560B8; Tue, 14 Apr 2026 12:42:24 +0000 (UTC)
-Received: from localhost (unknown [10.44.50.237])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0C4B3000C1F; Tue, 14 Apr 2026 12:42:23 +0000 (UTC)
-Date: Tue, 14 Apr 2026 08:42:21 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: mr-083 <matthieu@minio.io>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, kbusch@kernel.org, mr-083 <matthieu@min.io>,
- John Meneghini <jmeneghi@redhat.com>
-Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
-Message-ID: <20260414124221.GB111076@fedora>
-References: <20260409060155.94704-1-matthieu@min.io>
- <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCdJM-0002MY-4U
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:56:13 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCdJK-0001pN-4e
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:56:11 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-43d7645adbdso1359887f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 05:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776171368; x=1776776168; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cipN3wxzUuC12n9kYMrK1ldVmk7FWHJ23evv2/U0hx8=;
+ b=gZ67hWltjZXk7uAClWniBmIVhTgdMgXGQw3YUeT+lIEH61dTaVHLnbxNdQ0DbnF4ct
+ znwCY/JsTe//FFDuJ0ixyisXFsOenmUHdRf893LGmaj/SNL+AojOhNgd+GfHQaGgsCCl
+ jmsUwpykwu8yuI/KCSAEQF9O/+h0Zz0OA1X6b8XbKskqc4CSrlZUhY+Vr3gB0rJVFApm
+ yfBNuuf3b+1W1xWL/NPzpy2EU5oMKyU/xIUyU8zOZn82fUgkn5ONQxYiP791K/OtXBLv
+ miJup0w/+15yI79N+U0FUjGwlbdnm02NYogH7lBK+bJCyHW3MRE3k3/OnrUHduJQRJHT
+ 1/TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776171368; x=1776776168;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cipN3wxzUuC12n9kYMrK1ldVmk7FWHJ23evv2/U0hx8=;
+ b=TWTC2m/n5Ln1rWl53A2tvq07GINWuqSTv1paxIp2DEswFKs3olAMr1vDSch5Wfz9TV
+ PjF/sSSPrU7bGd+GS8C+UqeiAsc6xi1bL5z0uztpqzNDYjb7eFrKJ41x2LqtIyN/r2yy
+ IMAsSvqxoYDAE05WtA2bOoZlgrpVxl3wpXEfvu6ddXPj2sYdKlfeO29w5LqkI/TwWXhZ
+ vIoi7gI0Ua+vDp0lMvE/6dI15wKVykz6T3UWw6AdYenAavWEffjYyeApfVs8WnoLseW+
+ RU2KQvSQ0mTbIMX/v7ehVsjkECIuB8O7EteEpGzD8dDgkPD7Gek0TLFCnnERoZw+YTzb
+ GBeQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9VHEUtfKZ/y9TEptH/YLwB4+KmXMVEMzemD55gcyNhe4s5TpWb//gNfFk7U3+g5njeSnEcE746NrFD@nongnu.org
+X-Gm-Message-State: AOJu0YwmTjdnkY+rL5WHraye9FV20QwiJE6u0mXjureXn6kjo/PT1vHN
+ FhIRB1LDLGrJW3f6DdJi/k8GOSkqgc5fbgmdrAdPm3j0kbQkjPjgsAPT
+X-Gm-Gg: AeBDiesnlk3NMPcgEl0BqPfDnnIJaEpi+MQBsEEEc4DZDf6jxocDhnVtNzK+sAB8yfL
+ zt6BnVo4luiEjEWLoxTO2OmmmVOzszo21ufERDijurHphf/xqckCSn0XkgNsLwqkUyMYH674rHS
+ I4KvZd0nmZ79sW3b7Mt2ypx9gdmXcy9hmJ715R2JYDthCotl9WLTiW+pr4mEUTQs8V9vb3bKyQt
+ tgfpBW1p/yE0TaaGqC3y8E21bi6adQPWrz97j03qXkOWInOzqndEWRPMVcG2DWrJhNchY4RWD6m
+ wy+jnX2qqvLvK79yh8FQCRR0nvUvhx3fghiLgaChSY4T0ytuIDOYH1T/IxX/pd+oaJ8t+IuFtWd
+ 1cO2Vbhqy8+b6UsOVzTZjGbL6VPV02sAC+2ZLOIAZLiqeLo53Yc1iuqVlvr0dddxufUNRngeMjk
+ pRV8pmirKsZ55Bi1yV6Qpfdoui2qlmqwJ/4p+UgWUuxVjGOfUTHAANfud1Dsx+AznjAHB7t7ZqC
+ lzHUK+/NmGAJocfW7Cg
+X-Received: by 2002:a5d:5889:0:b0:43d:77f4:7149 with SMTP id
+ ffacd0b85a97d-43d77f475d9mr12925946f8f.48.1776171368225; 
+ Tue, 14 Apr 2026 05:56:08 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (p200300faaf1c6100004fcff454cbdf8f.dip0.t-ipconnect.de.
+ [2003:fa:af1c:6100:4f:cff4:54cb:df8f])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43d6a1203b8sm37192387f8f.16.2026.04.14.05.56.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Apr 2026 05:56:07 -0700 (PDT)
+Date: Tue, 14 Apr 2026 12:56:05 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-devel@nongnu.org
+CC: pbonzini@redhat.com, peter.maydell@linaro.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv5_00/15=5D_Adding_comprehe?=
+ =?US-ASCII?Q?nsive_support_for_i=2EMX8MM_EVK_board?=
+In-Reply-To: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
+References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
+Message-ID: <D3770294-A42E-4D24-8BF6-1E2B554DCF04@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="xAu5N7wFZwOlRHtN"
-Content-Disposition: inline
-In-Reply-To: <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,64 +105,117 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---xAu5N7wFZwOlRHtN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 13, 2026 at 07:17:37PM +0200, Klaus Jensen wrote:
-> On Apr  9 08:01, mr-083 wrote:
-> > This series adds two features that together enable transparent NVMe disk
-> > hot-swap simulation in QEMU, matching the behavior of physical NVMe
-> > drives being pulled and reinserted in the same PCIe slot.
-> >=20
->=20
-> I don't understand this. From an NVMe perspective you can't hotplug a
-> namespace. You can hotplug a PCIe-based NVM Subsystem.
+Am 14=2E April 2026 05:37:00 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@=
+nxp=2Ecom>:
+>Changes in v5:
+>- Fixed SoC object reference counting by using object_new_with_props()
+>  instead of object_new() + object_property_add_child()
+>- Merged imx8mm-evk=2Erst documentation into imx8mp-evk=2Erst to avoid
+>  duplication and updated the title accordingly
+>- Added on-chip RAM (OCRAM) support to match iMX8MP dev
 
-Hi Klaus,
-It would be great if someone with more NVMe experience than myself can
-find a definite answer, but I think the Namespace List can change
-asynchronously even on a NVMe PCIe controller as long as it supports
-Namespace Management commands.
+Checkpatch raises several errors (you may ignore its warnings)=2E Reproduc=
+e in the QEMU root src dir with the following command:
 
-There are instances in the NVMe Express Base Specification 2.0b like:
-- 8.3.1 Capacity Management Overview
-  "a Namespace Attribute Changed event is generated for hosts other than
-  the host which issued the Capacity Management command"
-- 8.11 Namespace Management
-  "If Namespace Attribute Notices are enabled, any controller(s) not
-  processing the Namespace Management command that was attached to the
-  namespace reports a Namespace Attribute Changed asynchronous event to
-  the host."
+  =2E/scripts/checkpatch=2Epl --branch origin/master=2E=2E
 
-I imagine this functionality would be useful in storage offload cards
-(IPUs/DPUs) that present as NVMe PCIe controllers instead of as
-NVMe-over-Fabrics. This makes sense when the host is not supposed to
-manage the storage itself. When the card's control plane configures a
-new volume, the NVMe Namespace List changes and the host is notified.
+Best regards,
+Bernhard
 
-Linux and Windows NVMe PCI drivers support this according to the testing
-that Matthieu and I have done.
-
-Thanks,
-Stefan
-
---xAu5N7wFZwOlRHtN
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmneNiwACgkQnKSrs4Gr
-c8igTQgApBp5b1M7ekqyYRSyxicOF16k7484FS7e7aKbMhGKgW4kY81y8f9FKQdV
-cSKAH3OR5E+uQSSN5mr0I0OZi7fahQh6TEq+v5kq/RuomEJwAcMQERX+qoFeZ81w
-uZ7h2zqICUML2vieHugfb8Trk6GEwlQPL3U1Lu07ML7xOMduYV/Qj1jC/Zy1NDiA
-KUfYepPe3tPMFLPmztmOZeDfSOg3VI2joFavdyZ655CAUR32PCfI47gcM1b0e9lk
-PQXcn07vW6fQ68q5r11F+G+37gDAbY4X3Kw7k+mMZhBF+ynRNyfla4ygpPnCpAXu
-LvawpetldV5wyrHOdIKf7kvXG+cj7g==
-=gTsi
------END PGP SIGNATURE-----
-
---xAu5N7wFZwOlRHtN--
-
+>
+>Changes in v4:
+>- Update Maintainers file
+>- Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
+>  specific property
+>- Split up the patch that enabled CCM and Analog in the previous
+>  revision=2E Now we have 3 patches to enable CCM and Analog in iMX8MM
+>- Updated copyrights
+>- Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
+>
+>Changes in v3:
+>- Minor documentation change - Added KVM Acceleration section in docs/sys=
+tem/arm/imx8mm-evk=2Erst
+>
+>Changes in v2:
+>- Fixed the DTB offset in functional testing script test_imx8mm_evk=2Epy
+>  and preserved alphabetical order of machine names in tests/functional/a=
+arch64/meson=2Ebuild
+>- Fixed a typo and updated the documentation
+>- Modified structures type to static const in fsl-imx8mm=2Ec wherever
+>  applicable=2E
+>- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk=2Ec=
+=2E This
+>  is needed because the default DTB in the iMX LF BSP images have CSI
+>  and DSI enabled=2E Developers/Hobbyists using these BSP images will
+>  observe CSI and DSI crash logs on the console since these are unimpleme=
+nted=2E
+>  With this change, both debian and iMX LF images will boot up without an=
+y issues=2E
+>
+>Changes in v1:
+>
+>This patch series adds support for the NXP i=2EMX8MM EVK (Evaluation Kit)
+>board to QEMU, enabling emulation of this ARM Cortex-A53 based developmen=
+t
+>platform=2E
+>
+>The series includes:
+>
+>1=2E Core peripheral support (CCM clock controller, Analog module)
+>2=2E GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
+>3=2E GPIO,I2C,SPI,USDHC and USB Emulation support
+>4=2E PCIe and ENET Controller Emulation support
+>5=2E Documentation and functional test included
+>
+>Key features ported:
+>- Basic boot support with Linux
+>- UART console for serial communication
+>- Interrupt handling
+>- Clock and power management infrastructure
+>
+>Testing:
+>- Linux kernel boots to console
+>
+>Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>=20
+>
+>
+>Gaurav Sharma (15):
+>  hw/arm: Add the i=2EMX 8MM EVK(Evaluation Kit) board
+>  hw/misc/imx8mp_analog: Add property to analog device
+>  hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
+>  hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
+>  hw/arm/fsl-imx8mm: Implemented support for SNVS
+>  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
+>  hw/arm/fsl-imx8mm: Add PCIe support
+>  hw/arm/fsl-imx8mm: Add GPIO controllers
+>  hw/arm/fsl-imx8mm: Adding support for I2C emulation
+>  hw/arm/fsl-imx8mm: Adding support for SPI controller
+>  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
+>  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
+>  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
+>  hw/arm/fsl-imx8mm: Adding support for USB controller
+>  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
+>
+> MAINTAINERS                                 |  10 +
+> docs/system/arm/imx8mp-evk=2Erst              |  33 +-
+> docs/system/target-arm=2Erst                  |   1 +
+> hw/arm/Kconfig                              |  24 +
+> hw/arm/fsl-imx8mm=2Ec                         | 704 ++++++++++++++++++++
+> hw/arm/imx8mm-evk=2Ec                         | 130 ++++
+> hw/arm/meson=2Ebuild                          |   2 +
+> hw/misc/imx8mp_analog=2Ec                     |  12 +-
+> hw/timer/imx_gpt=2Ec                          |  26 +
+> include/hw/arm/fsl-imx8mm=2Eh                 | 242 +++++++
+> include/hw/misc/imx8mp_analog=2Eh             |   3 +
+> include/hw/timer/imx_gpt=2Eh                  |   2 +
+> tests/functional/aarch64/meson=2Ebuild        |   2 +
+> tests/functional/aarch64/test_imx8mm_evk=2Epy |  67 ++
+> 14 files changed, 1251 insertions(+), 7 deletions(-)
+> create mode 100644 hw/arm/fsl-imx8mm=2Ec
+> create mode 100644 hw/arm/imx8mm-evk=2Ec
+> create mode 100644 include/hw/arm/fsl-imx8mm=2Eh
+> create mode 100755 tests/functional/aarch64/test_imx8mm_evk=2Epy
+>
 
