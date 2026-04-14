@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E166F9D0EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0438BF9D0EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wChmL-0006OZ-L5; Tue, 14 Apr 2026 13:42:27 -0400
+	id 1wChqN-0007BI-KT; Tue, 14 Apr 2026 13:46:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wChmG-0006Nn-6c
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 13:42:21 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wChmE-0004ho-Jm
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 13:42:19 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so56138625e9.0
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 10:42:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776188536; x=1776793336; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8mLryzvirqb7/wKMhWXyGJHFsmWtP8zgAM5xmzE8UJI=;
- b=QhXgJJjZLdd6CHjNRjIk3k6gciLhEQx4NZ3oGVRpdqFhvQZTGbxleWujCyj1bBJ82I
- Y0hpCjv3MXv+DttrZXDSqtVVeQCs9trDIM8pjhiZ8H6YXoc4qYknBg597ynjrcZnYJvK
- LLARn25Lz1tV6Y7qvW//8qaXcuCUZYXJP4wXn+VXeg1bLIsG6xfFmDgEK+xAEKpHytVb
- WRZ+L5gO1oEebVGM+BGj7Id5c1eeoi2HPnNXhBoHC7fgUbUif8xLdkv3tjFXJlw4EyJf
- slUBdiWLA2tcufrQjNSH6hFrV+OwNiA5btnAL8WtdulzfrfIDZqiBn8DrK6puYRd2Lm3
- jajw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776188536; x=1776793336;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8mLryzvirqb7/wKMhWXyGJHFsmWtP8zgAM5xmzE8UJI=;
- b=BexIGfr2sLx/GVyysSXRCUFt1F00ZV9/k/AJkNkAknpdgXyCKHg1INdVo3UQx4lVBI
- 4P1NGx9J1KQBcp0PJBdaA8MjiOYR2Q6w3H1RkIxCQxH1WjPig0tPOIAmMV2Jf1nRN7JI
- a3G3M0ig54ACRYQCDoj3Ux7O/9GQnn1hdODLBtHBs80X9tVis2L+++iE91VKq6LHMhYx
- CL9Mx9glyxB0DWBCu94kfXgzDTdTAoBTqQd4ODBrKzFI/XFhmRK3TQyJg4SitZF8gb7t
- najjbI6H80e4xvne8CzE1DLPPChBCgWn6fvQVtSD/j1gAXFALp97GaT9ZAfeULPW1z4V
- ZIVQ==
-X-Gm-Message-State: AOJu0YwNAmcvRpzjaW0k5sdE+og8iTVqG1N4C/3A0Z0D1X3RTxy8SZta
- 9vz7rLhBiq6SFbTwk6G59quyIQj36LWFXO/C8rgqAbkYKSw5/W9PJGTLCZRQ97AhKM2bCKJGRGa
- Vzvdyabc=
-X-Gm-Gg: AeBDiesEmNYQ453IO0GaSKi3fNj36awyzMoFLpg5p0Z7ldxRs77BZ/4nrwAy1Iv79Ec
- Wf2vuPMoF7HLInemTwbgz+5FoSJUQ+bswcAxcZiDwWQOAE2cp3qlAU7YbuU0hV+VewbBnfnjxkC
- IA5WW4qeNjj86dLJ3IXIrzkqq6RO/dfBIgLmevwDB4v2limgHqXpO4xM7v9J8JZh+Ujigy8ALrh
- rU2S0Fx/1IWY9kKyrfQqmdkQEMboy6kxLIWAz4I9gDW0KzZ10e9asgmkrJU8XLCVkvaTqgbwLSe
- HQPGSm6P5ZsRy+ZYql5sjL/XPjb2+EXro8UOkPi8yOKUdSnoukFaOqvhhNr28InLkqHyiSi+Yg7
- iLvywafBbOwP25AzMLZoDi5NB26gnclITk/zZOshse5ExPnWxAHYKc+rZ3/wjKwZIyiu6VcLVOB
- bCDKIplfgAubCfzUl8upaIgABUlFrf0ON27vnI/hA6hOtJ2Ol/I2HB5gzJhoFalFzdFQ==
-X-Received: by 2002:a05:600c:628b:b0:488:904b:f31 with SMTP id
- 5b1f17b1804b1-488d68603ffmr232436635e9.22.1776188535972; 
- Tue, 14 Apr 2026 10:42:15 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d687684dsm120723255e9.31.2026.04.14.10.42.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 10:42:14 -0700 (PDT)
-Message-ID: <77350176-76c6-4e9d-87bc-691bef228e6b@linaro.org>
-Date: Tue, 14 Apr 2026 19:42:11 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wChqL-0007Ak-Vv
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 13:46:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wChqJ-0005qV-8A
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 13:46:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776188788;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=N8i//lCPbqSQI2wwFqteQhbNktHcAh6x7fp8bX53YhQ=;
+ b=MzJL4IZRtPkIcngmM5reWoJlHKhLf3R3nZ7+hOcH53O35jyu4QmgfSpwU2fPDMzpR1K/OQ
+ 8WvAnJlFQsSvb1PHIsBub1FZfE/W3Yqs8jV0Fw4ibyxsKpt3WQwlO6g042b8Gv5SIWeWTA
+ PGoOTD+QvxzbCODPN+CBOdpLJHlMJeg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-zhJmOYoePtu-P-oR58bRgA-1; Tue,
+ 14 Apr 2026 13:46:22 -0400
+X-MC-Unique: zhJmOYoePtu-P-oR58bRgA-1
+X-Mimecast-MFC-AGG-ID: zhJmOYoePtu-P-oR58bRgA_1776188781
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 786D118002F7; Tue, 14 Apr 2026 17:46:21 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E777A1955D88; Tue, 14 Apr 2026 17:46:19 +0000 (UTC)
+Date: Tue, 14 Apr 2026 18:46:16 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Martin Wilck <mwilck@suse.com>
+Cc: Cathy Hu <cathy.hu@suse.com>, qemu-devel@nongnu.org,
+ Cathy Hu <cahu@suse.de>, Fabiano Rosas <fabiano.rosas@suse.com>
+Subject: Re: [PATCH RFC] qga: Add selinux-helper for guest-exec subcommand
+ (bsc#1237450)
+Message-ID: <ad59aPHDUueFq2z7@redhat.com>
+References: <20260327102515.502822-5-cathy.hu@suse.com>
+ <acaVRtE-NPUa5Ujy@redhat.com>
+ <3d54a532eb5b3111d8f8849458a009493d3d8845.camel@suse.com>
+ <ad5ypLQMlHQm6ATh@redhat.com>
+ <db21d9d4fd3a1489d5a25d7b7f0c49e3787ee9af.camel@suse.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] accel/tcg: Remove non-explicit endian cpu_ld*_code()
- wrappers
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260320074555.33974-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260320074555.33974-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <db21d9d4fd3a1489d5a25d7b7f0c49e3787ee9af.camel@suse.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,15 +91,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/3/26 08:45, Philippe Mathieu-Daudé wrote:
+On Tue, Apr 14, 2026 at 07:13:14PM +0200, Martin Wilck wrote:
+> On Tue, 2026-04-14 at 18:00 +0100, Daniel P. Berrangé wrote:
+> > On Tue, Apr 14, 2026 at 06:51:12PM +0200, Martin Wilck wrote:
+> > 
+> > 
+> > > > If users want to support an ability to have arbitrary command
+> > > > execution, then that should be done with SSH over VSock, where
+> > > > the guest owner can choose whether to require authentication
+> > > > first or not, and use SSH authorized_keys if desired to limit
+> > > > what commands can be run for a given recorded key.
+> > > > 
+> > > > These days systemd installs magic to allow SSH'ing directly
+> > > > to a guest using VSOCK addresses, and libvirt further
+> > > > enhances that to allow SSH'ing to a named VM.
+> > > 
+> > > Thanks, I wasn't aware of this feature so far. I suppose you're
+> > > referring to https://libvirt.org/ssh-proxy.html. I'll need to
+> > > experiment with it. IIUC this works for local libvirt connections
+> > > only?
+> > 
+> > Yes, vsock is exposed to the local host.
+> 
+> And it can't / won't be implemented for remote hosts?
 
-> Philippe Mathieu-Daudé (2):
->    target/mips: Inline cpu_ld{uw,l}_code() calls in
->      set_badinstr_registers
->    accel/tcg: Remove non-explicit endian cpu_ld*_code() wrappers
+That doesn't make sense conceptually. Think of VSOCK as the equivalent
+of a UNIX domain socket, but between host & guest.  If you want off
+node access, then IP sockets are what you want, either directly from
+the guest, or tunnelled to VSOCK via the host.
 
-Series queued, thanks.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
