@@ -4,91 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A90BF9D0CA
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 12:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02920F9D0CD
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCdJR-0002NW-PY; Tue, 14 Apr 2026 08:56:18 -0400
+	id 1wCdPG-0003YS-Il; Tue, 14 Apr 2026 09:02:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCdJM-0002MY-4U
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:56:13 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCdJK-0001pN-4e
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:56:11 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43d7645adbdso1359887f8f.1
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 05:56:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wCdPD-0003Xy-6K
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:02:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wCdPA-0003K8-3S
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:02:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776171728;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7v7RAsPiBBjIsh3V4W8l0+fXdNpFpnv7O4lfHKteAWY=;
+ b=CclGarKb0IwbgYdQUXBVoLPlILXJ+8AhrN+TdyMwZ/vIE9kWLgSV0k3R53deAJXafi63zx
+ Mejuh9z4iWFmin3qzibct1dYCvpxBiXHP9ABM/iFOa9VoFCZ0E6rizSc+OO9a8f/Slu/aP
+ fuzrIUlA2lOSR1zC3aBicxgeeignIUE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-512-0ccghJb5MnelWtn-_Tw9Ug-1; Tue, 14 Apr 2026 09:02:07 -0400
+X-MC-Unique: 0ccghJb5MnelWtn-_Tw9Ug-1
+X-Mimecast-MFC-AGG-ID: 0ccghJb5MnelWtn-_Tw9Ug_1776171726
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43d1bfbd219so4069313f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:02:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776171368; x=1776776168; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cipN3wxzUuC12n9kYMrK1ldVmk7FWHJ23evv2/U0hx8=;
- b=gZ67hWltjZXk7uAClWniBmIVhTgdMgXGQw3YUeT+lIEH61dTaVHLnbxNdQ0DbnF4ct
- znwCY/JsTe//FFDuJ0ixyisXFsOenmUHdRf893LGmaj/SNL+AojOhNgd+GfHQaGgsCCl
- jmsUwpykwu8yuI/KCSAEQF9O/+h0Zz0OA1X6b8XbKskqc4CSrlZUhY+Vr3gB0rJVFApm
- yfBNuuf3b+1W1xWL/NPzpy2EU5oMKyU/xIUyU8zOZn82fUgkn5ONQxYiP791K/OtXBLv
- miJup0w/+15yI79N+U0FUjGwlbdnm02NYogH7lBK+bJCyHW3MRE3k3/OnrUHduJQRJHT
- 1/TA==
+ d=redhat.com; s=google; t=1776171726; x=1776776526; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=7v7RAsPiBBjIsh3V4W8l0+fXdNpFpnv7O4lfHKteAWY=;
+ b=aUQEVISVl/Ir1L1AqZe8+knAtrbdEp/vJCJIRPKVMSEmXT7y+iRhOcWuxUcTWxLpVk
+ g4/ZtRMLjkn4Vh46b2eJxK8yTVkgARuBnpwbWMyt7sfdeBvFtM1Nwi0/G0ibZ20VKQ2T
+ aIVF/y3FMHHK2ZwFh0u/UTv9vQzCFKrpeAcXQyM1HyTG8gJNHyn2snrmaty5aPoA5yzK
+ cQx+2qLMnkVR6tJRtpOunkiWUhFAVlsRQQVr8v9JLH4ttLEtz2PNL4779qjvMdTuibX6
+ ksr2TEik4rYA/yoUFtEsOoIH0JqRZeuZGa50Onx92xwWMlmJ/xsfdw606kjDZ4t3gL6K
+ HTow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776171368; x=1776776168;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cipN3wxzUuC12n9kYMrK1ldVmk7FWHJ23evv2/U0hx8=;
- b=TWTC2m/n5Ln1rWl53A2tvq07GINWuqSTv1paxIp2DEswFKs3olAMr1vDSch5Wfz9TV
- PjF/sSSPrU7bGd+GS8C+UqeiAsc6xi1bL5z0uztpqzNDYjb7eFrKJ41x2LqtIyN/r2yy
- IMAsSvqxoYDAE05WtA2bOoZlgrpVxl3wpXEfvu6ddXPj2sYdKlfeO29w5LqkI/TwWXhZ
- vIoi7gI0Ua+vDp0lMvE/6dI15wKVykz6T3UWw6AdYenAavWEffjYyeApfVs8WnoLseW+
- RU2KQvSQ0mTbIMX/v7ehVsjkECIuB8O7EteEpGzD8dDgkPD7Gek0TLFCnnERoZw+YTzb
- GBeQ==
+ d=1e100.net; s=20251104; t=1776171726; x=1776776526;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7v7RAsPiBBjIsh3V4W8l0+fXdNpFpnv7O4lfHKteAWY=;
+ b=WvXbkjKx2G+xPBkPmOTBbEE+99yKphSX1zjxYxH3UCO/hlfPcRDskuavbM3EJ2DEiv
+ 0i67GEi2hqXxY9wDoYPJ5Zg/uXDKkDSalifq+KP4nG5aeKx+bYWIGsOrKxW+6gB7k2ge
+ dpcfyXBIiTPqutKkAjiksic2rRMVTjr2oNYOCgBxriDv167X/DIfNEWH9xLyaQPyzrc0
+ JrqCf+7chzHN7M6EAZN/mFkdJyjer1/7/93rzQ9Nag3AXtQpQiiaULoaADz5UiRFHK03
+ dUEePSZG8vSBWDNWaRQiz/ocKkisn9xKeKTs8n0/VKEjBwAg+CCG6hVY9dGwy4leMiA8
+ Wg+w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9VHEUtfKZ/y9TEptH/YLwB4+KmXMVEMzemD55gcyNhe4s5TpWb//gNfFk7U3+g5njeSnEcE746NrFD@nongnu.org
-X-Gm-Message-State: AOJu0YwmTjdnkY+rL5WHraye9FV20QwiJE6u0mXjureXn6kjo/PT1vHN
- FhIRB1LDLGrJW3f6DdJi/k8GOSkqgc5fbgmdrAdPm3j0kbQkjPjgsAPT
-X-Gm-Gg: AeBDiesnlk3NMPcgEl0BqPfDnnIJaEpi+MQBsEEEc4DZDf6jxocDhnVtNzK+sAB8yfL
- zt6BnVo4luiEjEWLoxTO2OmmmVOzszo21ufERDijurHphf/xqckCSn0XkgNsLwqkUyMYH674rHS
- I4KvZd0nmZ79sW3b7Mt2ypx9gdmXcy9hmJ715R2JYDthCotl9WLTiW+pr4mEUTQs8V9vb3bKyQt
- tgfpBW1p/yE0TaaGqC3y8E21bi6adQPWrz97j03qXkOWInOzqndEWRPMVcG2DWrJhNchY4RWD6m
- wy+jnX2qqvLvK79yh8FQCRR0nvUvhx3fghiLgaChSY4T0ytuIDOYH1T/IxX/pd+oaJ8t+IuFtWd
- 1cO2Vbhqy8+b6UsOVzTZjGbL6VPV02sAC+2ZLOIAZLiqeLo53Yc1iuqVlvr0dddxufUNRngeMjk
- pRV8pmirKsZ55Bi1yV6Qpfdoui2qlmqwJ/4p+UgWUuxVjGOfUTHAANfud1Dsx+AznjAHB7t7ZqC
- lzHUK+/NmGAJocfW7Cg
-X-Received: by 2002:a5d:5889:0:b0:43d:77f4:7149 with SMTP id
- ffacd0b85a97d-43d77f475d9mr12925946f8f.48.1776171368225; 
- Tue, 14 Apr 2026 05:56:08 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf1c6100004fcff454cbdf8f.dip0.t-ipconnect.de.
- [2003:fa:af1c:6100:4f:cff4:54cb:df8f])
+ AFNElJ/WqXVgmjb9k/iC5ziYNqyuukpz59ql1ATT8Z0g8uk+mRGuz6ScS6KOr9mCSqrQImobXuOxFWahVi9u@nongnu.org
+X-Gm-Message-State: AOJu0YzAWpqRGeV53pjIYrqAvtWsjPMbZyFwqtyXPABoKUsGIRFoo4sX
+ j6ZWuISEQnWgWXDropvhoZbvVxRFdgv+HRiBbLh56aAIN7gPEzl+hgvhKkzienzF70nEre6kr+u
+ 9c6qEvKkahlAY8Spa6UCHsBavys95NnIK5Pm+A1druXRiXMs1rJg1xCKp
+X-Gm-Gg: AeBDieu75t3hxTnA1zKt9NtnUyM7YB58QCicnpdZrL/YBKFe3haGJG01quiPu2QV9n6
+ +cnTw3tEnkb88kHdg1cf2hHH3Zi1eCYJAfZlBN9FB0kX05Tuc1bEt3AuUSUejBe2YrYh83uGkfo
+ dEsurQxLs70XzxG91D3Ph425r+AChEyHL1GVKo17lcGy8eVnIx5XjaXpVozwXp1MtguQT4ONq8n
+ L6OxUHX7CNDB93KidoqpRBpiY3uh6IAf3VXyfLhQ8l0wUe4OvyDM8Z8ewjvigHHVTrgfMobTC10
+ TmyXp/MmjFGtnuZIJAhpXr+jq+ZWSApxJmIGFFvANy5Ggwl8jgmbw4Od9rxDba73cSfCCrfc/xj
+ ZmvCw5/q2sujkHBuNHl04jrizE75Rjr9+D1KBntK6vwE=
+X-Received: by 2002:a05:6000:220b:b0:43d:70b3:7ee2 with SMTP id
+ ffacd0b85a97d-43d70b3811emr14611339f8f.1.1776171726084; 
+ Tue, 14 Apr 2026 06:02:06 -0700 (PDT)
+X-Received: by 2002:a05:6000:220b:b0:43d:70b3:7ee2 with SMTP id
+ ffacd0b85a97d-43d70b3811emr14611254f8f.1.1776171725343; 
+ Tue, 14 Apr 2026 06:02:05 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-25-21.inter.net.il. [80.230.25.21])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d6a1203b8sm37192387f8f.16.2026.04.14.05.56.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 05:56:07 -0700 (PDT)
-Date: Tue, 14 Apr 2026 12:56:05 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-devel@nongnu.org
-CC: pbonzini@redhat.com, peter.maydell@linaro.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv5_00/15=5D_Adding_comprehe?=
- =?US-ASCII?Q?nsive_support_for_i=2EMX8MM_EVK_board?=
-In-Reply-To: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
-References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
-Message-ID: <D3770294-A42E-4D24-8BF6-1E2B554DCF04@gmail.com>
+ ffacd0b85a97d-43d63e46713sm42626103f8f.21.2026.04.14.06.02.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 06:02:04 -0700 (PDT)
+Date: Tue, 14 Apr 2026 09:02:01 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org,
+ manos.pitsidianakis@linaro.org, slp@redhat.com,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ stefanha@redhat.com, stevensd@chromium.org,
+ Laurent Vivier <lvivier@redhat.com>, jasowang@redhat.com,
+ Peter Xu <peterx@redhat.com>, hi@alyssa.is,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, dbassey@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v14 0/7] vhost-user: Add SHMEM_MAP/UNMAP requests
+Message-ID: <20260414090046-mutt-send-email-mst@kernel.org>
+References: <20260304165223.2166175-1-aesteve@redhat.com>
+ <aak5QkV_RxUEnV_f@sgarzare-redhat>
+ <20260305032601-mutt-send-email-mst@kernel.org>
+ <CAGxU2F6sEwLZXLy1TrH-s9At0YiCc9AQMC5FWdyiHCXk-dE3vA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGxU2F6sEwLZXLy1TrH-s9At0YiCc9AQMC5FWdyiHCXk-dE3vA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,118 +129,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Apr 14, 2026 at 01:57:28PM +0200, Stefano Garzarella wrote:
+> On Thu, 5 Mar 2026 at 09:26, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Thu, Mar 05, 2026 at 09:06:20AM +0100, Stefano Garzarella wrote:
+> > > On Wed, Mar 04, 2026 at 05:52:16PM +0100, Albert Esteve wrote:
+> > > > Hi all,
+> > >
+> > > Thanks!
+> > >
+> > > This is now fully reviewed, Michael can we queue it?
+> > >
+> > > Thanks,
+> > > Stefano
+> >
+> >
+> > yes, I tagged it already.
+> 
+> Michael, I think we missed this series for v11.0 :-(
+> 
+> Can we use this for the next cycle, or Albert should repost it?
+> 
+> Thanks,
+> Stefano
 
+Indeed. Sorry I was less focused than usual. We can use it I think.
 
-Am 14=2E April 2026 05:37:00 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@=
-nxp=2Ecom>:
->Changes in v5:
->- Fixed SoC object reference counting by using object_new_with_props()
->  instead of object_new() + object_property_add_child()
->- Merged imx8mm-evk=2Erst documentation into imx8mp-evk=2Erst to avoid
->  duplication and updated the title accordingly
->- Added on-chip RAM (OCRAM) support to match iMX8MP dev
+-- 
+MST
 
-Checkpatch raises several errors (you may ignore its warnings)=2E Reproduc=
-e in the QEMU root src dir with the following command:
-
-  =2E/scripts/checkpatch=2Epl --branch origin/master=2E=2E
-
-Best regards,
-Bernhard
-
->
->Changes in v4:
->- Update Maintainers file
->- Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
->  specific property
->- Split up the patch that enabled CCM and Analog in the previous
->  revision=2E Now we have 3 patches to enable CCM and Analog in iMX8MM
->- Updated copyrights
->- Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
->
->Changes in v3:
->- Minor documentation change - Added KVM Acceleration section in docs/sys=
-tem/arm/imx8mm-evk=2Erst
->
->Changes in v2:
->- Fixed the DTB offset in functional testing script test_imx8mm_evk=2Epy
->  and preserved alphabetical order of machine names in tests/functional/a=
-arch64/meson=2Ebuild
->- Fixed a typo and updated the documentation
->- Modified structures type to static const in fsl-imx8mm=2Ec wherever
->  applicable=2E
->- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk=2Ec=
-=2E This
->  is needed because the default DTB in the iMX LF BSP images have CSI
->  and DSI enabled=2E Developers/Hobbyists using these BSP images will
->  observe CSI and DSI crash logs on the console since these are unimpleme=
-nted=2E
->  With this change, both debian and iMX LF images will boot up without an=
-y issues=2E
->
->Changes in v1:
->
->This patch series adds support for the NXP i=2EMX8MM EVK (Evaluation Kit)
->board to QEMU, enabling emulation of this ARM Cortex-A53 based developmen=
-t
->platform=2E
->
->The series includes:
->
->1=2E Core peripheral support (CCM clock controller, Analog module)
->2=2E GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
->3=2E GPIO,I2C,SPI,USDHC and USB Emulation support
->4=2E PCIe and ENET Controller Emulation support
->5=2E Documentation and functional test included
->
->Key features ported:
->- Basic boot support with Linux
->- UART console for serial communication
->- Interrupt handling
->- Clock and power management infrastructure
->
->Testing:
->- Linux kernel boots to console
->
->Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
->Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>=20
->
->
->Gaurav Sharma (15):
->  hw/arm: Add the i=2EMX 8MM EVK(Evaluation Kit) board
->  hw/misc/imx8mp_analog: Add property to analog device
->  hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
->  hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
->  hw/arm/fsl-imx8mm: Implemented support for SNVS
->  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
->  hw/arm/fsl-imx8mm: Add PCIe support
->  hw/arm/fsl-imx8mm: Add GPIO controllers
->  hw/arm/fsl-imx8mm: Adding support for I2C emulation
->  hw/arm/fsl-imx8mm: Adding support for SPI controller
->  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
->  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
->  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
->  hw/arm/fsl-imx8mm: Adding support for USB controller
->  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
->
-> MAINTAINERS                                 |  10 +
-> docs/system/arm/imx8mp-evk=2Erst              |  33 +-
-> docs/system/target-arm=2Erst                  |   1 +
-> hw/arm/Kconfig                              |  24 +
-> hw/arm/fsl-imx8mm=2Ec                         | 704 ++++++++++++++++++++
-> hw/arm/imx8mm-evk=2Ec                         | 130 ++++
-> hw/arm/meson=2Ebuild                          |   2 +
-> hw/misc/imx8mp_analog=2Ec                     |  12 +-
-> hw/timer/imx_gpt=2Ec                          |  26 +
-> include/hw/arm/fsl-imx8mm=2Eh                 | 242 +++++++
-> include/hw/misc/imx8mp_analog=2Eh             |   3 +
-> include/hw/timer/imx_gpt=2Eh                  |   2 +
-> tests/functional/aarch64/meson=2Ebuild        |   2 +
-> tests/functional/aarch64/test_imx8mm_evk=2Epy |  67 ++
-> 14 files changed, 1251 insertions(+), 7 deletions(-)
-> create mode 100644 hw/arm/fsl-imx8mm=2Ec
-> create mode 100644 hw/arm/imx8mm-evk=2Ec
-> create mode 100644 include/hw/arm/fsl-imx8mm=2Eh
-> create mode 100755 tests/functional/aarch64/test_imx8mm_evk=2Epy
->
 
