@@ -4,55 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CFCF9D0EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164A3F9D0ED
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCiQ5-0006W9-Kt; Tue, 14 Apr 2026 14:23:29 -0400
+	id 1wCiyd-0002jX-TA; Tue, 14 Apr 2026 14:59:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCiQ1-0006Sh-SF
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:25 -0400
-Received: from inva021.nxp.com ([92.121.34.21])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCiyc-0002hX-TC
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:59:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCiPy-0006gx-Rw
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:25 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id A46E92028D2;
- Tue, 14 Apr 2026 20:23:21 +0200 (CEST)
-Received: from aprdc01srsp001v.ap-rdc01.nxp.com
- (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 6FBEF201EC1;
- Tue, 14 Apr 2026 20:23:21 +0200 (CEST)
-Received: from lsv031015.swis.in-blr01.nxp.com
- (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id E0367180222A;
- Wed, 15 Apr 2026 02:23:20 +0800 (+08)
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv6 11/15] hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
-Date: Tue, 14 Apr 2026 23:53:09 +0530
-Message-Id: <20260414182313.1691519-12-gaurav.sharma_7@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
-References: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCiyZ-0000Hh-Js
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:59:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776193145;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ha2VArqBn5TWqki6Eab7lTRWvPu1dHUileltU7MzXrM=;
+ b=CTIY5pylUdVsWY9Dts0CGG+HE1sTYrDw1GTQhzPpKtI2DwAa29hIp7PBF7DZmYg3/mVGKC
+ yqKkNGLBKnEn6xavwDwwb0Polp4jH9S1Ajki8y4GgJW+mYMa5DhUTTRQR4vTJ0LcHgjr2U
+ U57T0YDyShzmvPbMBiocI3HvhQU1Lak=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-45VL48WzORGWjTQSGNhiRw-1; Tue, 14 Apr 2026 14:59:04 -0400
+X-MC-Unique: 45VL48WzORGWjTQSGNhiRw-1
+X-Mimecast-MFC-AGG-ID: 45VL48WzORGWjTQSGNhiRw_1776193143
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-50b52a2d70cso86480901cf.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 11:59:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776193142; x=1776797942; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ha2VArqBn5TWqki6Eab7lTRWvPu1dHUileltU7MzXrM=;
+ b=sb+UrFUq95QWShImnzyNPfEcRSL1qKpgAqem4ZF/+0RHiT//7GIOeDb6tVhwAC0ajB
+ 0rX0QdXE42xCy7khaQ50satWc4eI1lauYJtMJuCWFRgR/cfGnW3erNBPSwaQIrDRiiFX
+ 5WoW541noPnAPOnnUb8lScO84p9lw0auyMg8edTL5VjKNinIFruD1zvLYl7qJDZsgizT
+ ecs+TTHRgm+MkLVLYKVZenxci1uOp9XgocGXc801bG6RpvkF/mEAipru95KzNjuGyFUS
+ g5pEo14lilM8zYju+Y/hYh+3OH7EZspXPS9nFJBAIXxwmldMK1gwBXyFnocyAr+45k6o
+ 0d/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776193142; x=1776797942;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ha2VArqBn5TWqki6Eab7lTRWvPu1dHUileltU7MzXrM=;
+ b=DeNC5GLEGPKbEUs113JmS1oWMDXNd5SenmIHFCUpXqJoCQY7Tn5PTetb4A7KWDCvNw
+ YN4ucJgz7j/WRd1yrwrKLO2+adPIRxiqFKKLenalf675cKHlAHRP2LLIm+snQjE3Ouke
+ WUJ7ji8yEOqZz9v18bljVvs0ReBcD95Hpd4CfRhNc0ota7bDcQup93QzBnin1zKDlEgI
+ H+GL4RSJmQCnTjQ0jqWfwD8RSKWKf9SyUZHHZXqBKvQySfI/Fj9p9Uy5e021plnvC2er
+ AplyaYPIlWwu1CJHWPfl0gRxEg7YFUVhj1QA2XMty1Gk0mYhkSJtI/ZgBeo9Tj3psvBS
+ 5LtA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/rbS1507aphWT2iPjJjpA3Yww7QODv9LgQzMigHpeiZtgA+trFiHGLkDJOb0g/IefMbNZHhB8y7MSg@nongnu.org
+X-Gm-Message-State: AOJu0Yx7q00IM+nauJ7ZPaeWYWr1uCzgCvO6CESf2ZWmitjUrEvMGIJv
+ DXvfkSOzqw/bqTwfIDLhnckLlTb9+hjun+xsO4U1ikWCxxnd2KxbqGfp/wL3KIbvH4zpRBUhF0x
+ W1/tYAcQjxYxVR2CrkmzAfRgvjnbcNMk3DPuVx+e8LVUkNOGN9qEh0+XcGyC+I7Fq
+X-Gm-Gg: AeBDiesPnL6brQRburT9BEpK1LMlsFG5UNUWzpV/PwBc/csRhu7V6E/iOEMlSoOH8pN
+ +bTDRmhm8LcpzwoABrHvep+vlf+p5hYegRnM+abKbFedupMRoa1JcL7lNWmLPLtk4BXgDn+sNvm
+ Wl2+t/+/P9Hi3rQVzFnuCXMjCLE2e0byk/7oNSojSDW5M4R7XsMnP7zwQzqA3fsqzjr5v26z7UZ
+ 5Nh6Sv4AJtFt3HA0WaevMbqj9j0pl44/RS37R4fYtvyqIQ/mIfjWofw7XalaT3YBHpmiSeJTJ/o
+ AOWbzsn1OdU64S2pEg4Gjj8nj4i21mLoXqS3MmTOZkv4A+qGeV4GdkvWuXaD77JGNJjalzMBoln
+ ZY5ALxgJBUPyr7gau5coZgPq320ZgFnWWTz3UPhbeMBBYqyWrTMZS+kSglg==
+X-Received: by 2002:ac8:5855:0:b0:50d:83d8:2d19 with SMTP id
+ d75a77b69052e-50dd5c5d77fmr282009061cf.63.1776193142035; 
+ Tue, 14 Apr 2026 11:59:02 -0700 (PDT)
+X-Received: by 2002:ac8:5855:0:b0:50d:83d8:2d19 with SMTP id
+ d75a77b69052e-50dd5c5d77fmr282008561cf.63.1776193141428; 
+ Tue, 14 Apr 2026 11:59:01 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50dd561a34asm118382021cf.26.2026.04.14.11.58.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 11:59:00 -0700 (PDT)
+Date: Tue, 14 Apr 2026 14:58:58 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PULL 19/31] migration: Normalize tls arguments
+Message-ID: <ad6OcvW1II8Q3gO1@x1.local>
+References: <20251223142959.1460293-1-peterx@redhat.com>
+ <20251223142959.1460293-20-peterx@redhat.com>
+ <a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.21;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,123 +119,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It enables emulation of WDT in iMX8MM
-Added WDT IRQ lines
+On Tue, Apr 14, 2026 at 06:56:27PM +0200, Maciej S. Szmigiero wrote:
+> On 23.12.2025 15:29, Peter Xu wrote:
+> > From: Fabiano Rosas <farosas@suse.de>
+> > 
+> > The migration parameters tls_creds, tls_authz and tls_hostname
+> > currently have a non-uniform handling. When used as arguments to
+> > migrate-set-parameters, their type is StrOrNull and when used as
+> > return value from query-migrate-parameters their type is a plain
+> > string.
+> > 
+> > Not only having to convert between the types is cumbersome, but it
+> > also creates the issue of requiring two different QAPI types to be
+> > used, one for each command. MigrateSetParameters is used for
+> > migrate-set-parameters with the TLS arguments as StrOrNull while
+> > MigrationParameters is used for query-migrate-parameters with the TLS
+> > arguments as str.
+> > 
+> > Since StrOrNull could be considered a superset of str, change the type
+> > of the TLS arguments in MigrationParameters to StrOrNull. Also ensure
+> > that QTYPE_QNULL is never used.
+> > 
+> > 1) migrate-set-parameters will always write QTYPE_QSTRING to
+> >    s->parameters, either an empty or non-empty string.
+> > 
+> > 2) query-migrate-parameters will always return a QTYPE_QSTRING, either
+> >    empty or non-empty.
+> > 
+> > 3) the migrate_tls_* helpers will always return a non-empty string or
+> >    NULL, for the internal migration code's consumption.
+> > 
+> > Points (1) and (2) above help simplify the parameters validation and
+> > the query command handling because s->parameters is already kept in
+> > the format that query-migrate-parameters (and info migrate_paramters)
+> > expect. Point (3) is so people don't need to care about StrOrNull in
+> > migration code.
+> > 
+> > This will allow the type duplication to be removed in the next
+> > patches.
+> > 
+> > Note that the type of @tls_creds, @tls-hostname, @tls-authz changes
+> > from str to StrOrNull in introspection of the query-migrate-parameters
+> > command. We accept this imprecision to enable de-duplication.
+> > 
+> > There's no need to free the TLS options in
+> > migration_instance_finalize() because they're freed by the qdev
+> > properties .release method.
+> > 
+> > Temporary in this patch:
+> > migrate_params_test_apply() copies s->parameters into a temporary
+> > structure, so it's necessary to drop the references to the TLS options
+> > if they were not set by the user to avoid double-free. This is fixed
+> > in the next patches.
+> > 
+> > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > Link: https://lore.kernel.org/r/20251215220041.12657-6-farosas@suse.de
+> > [peterx: in hmp_info_migrate_parameters(), remove an extra dump of
+> >   max_postcopy_bandwidth, introduced likely by accident]
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >   qapi/migration.json            |   6 +-
+> >   migration/options.h            |   1 +
+> >   migration/migration-hmp-cmds.c |   6 +-
+> >   migration/options.c            | 144 +++++++++++++++++++--------------
+> >   migration/tls.c                |   2 +-
+> >   5 files changed, 93 insertions(+), 66 deletions(-)
+> > 
+> > diff --git a/migration/options.c b/migration/options.c
+> > index d55f3104be..6ef3c56fb6 100644
+> > --- a/migration/options.c
+> > +++ b/migration/options.c
+> (..)
+> > @@ -1243,7 +1274,7 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+> >   #ifdef CONFIG_LINUX
+> >       if (migrate_zero_copy_send() &&
+> >           ((params->has_multifd_compression && params->multifd_compression) ||
+> > -         (params->tls_creds && *params->tls_creds))) {
+> > +         *params->tls_creds->u.s)) {
+> >           error_setg(errp,
+> >                      "Zero copy only available for non-compressed non-TLS multifd migration");
+> >           return false;
+> The above change gives me easily triggerable NULL pointer dereference:
+> > $ qemu-system-x86_64 -monitor stdio -global migration.x-multifd=true -global migration.x-zero-copy-send=true
+> > QEMU 10.2.93 monitor - type 'help' for more information
+> > VNC server running on ::1:5900
+> > (qemu) migrate_set_parameter downtime-limit 500
+> > Segmentation fault
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
----
- hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx8mm.c         | 28 ++++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h |  7 +++++++
- 3 files changed, 36 insertions(+)
+Oops..
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 97ff6d9716..946c9eb693 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -630,6 +630,7 @@ config FSL_IMX8MM
-     select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
-+    select WDT_IMX2
- 
- config FSL_IMX8MM_EVK
-     bool
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index f433beeaf2..34645555d6 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -200,6 +200,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
-     }
- 
-+    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
-+        g_autofree char *name = g_strdup_printf("wdt%d", i);
-+        object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
-+    }
-+
-     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
-     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
-                             TYPE_FSL_IMX8M_PCIE_PHY);
-@@ -496,6 +501,28 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
-                     fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
- 
-+    /* Watchdogs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } wdog_table[FSL_IMX8MM_NUM_WDTS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG1].addr, FSL_IMX8MM_WDOG1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG2].addr, FSL_IMX8MM_WDOG2_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG3].addr, FSL_IMX8MM_WDOG3_IRQ },
-+        };
-+
-+        object_property_set_bool(OBJECT(&s->wdt[i]), "pretimeout-support",
-+                                 true, &error_abort);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[i]), 0, wdog_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[i]), 0,
-+                           qdev_get_gpio_in(gicdev, wdog_table[i].irq));
-+    }
-+
-     /* PCIe */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie), errp)) {
-         return;
-@@ -537,6 +564,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_SNVS_HP:
-         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
-         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
-+        case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
-             /* device implemented and treated above */
-             break;
- 
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 13c044412a..fd62b19a87 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -22,6 +22,7 @@
- #include "hw/pci-host/fsl_imx8m_phy.h"
- #include "hw/sd/sdhci.h"
- #include "hw/ssi/imx_spi.h"
-+#include "hw/watchdog/wdt_imx2.h"
- #include "qom/object.h"
- #include "qemu/units.h"
- 
-@@ -39,6 +40,7 @@ enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-+    FSL_IMX8MM_NUM_WDTS         = 3,
- };
- 
- struct FslImx8mmState {
-@@ -55,6 +57,7 @@ struct FslImx8mmState {
-     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     MemoryRegion ocram;
-     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-+    IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
- };
-@@ -200,6 +203,10 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_GPIO5_LOW_IRQ  = 72,
-     FSL_IMX8MM_GPIO5_HIGH_IRQ = 73,
- 
-+    FSL_IMX8MM_WDOG1_IRQ    = 78,
-+    FSL_IMX8MM_WDOG2_IRQ    = 79,
-+    FSL_IMX8MM_WDOG3_IRQ    = 10,
-+
-     FSL_IMX8MM_PCI_INTA_IRQ = 122,
-     FSL_IMX8MM_PCI_INTB_IRQ = 123,
-     FSL_IMX8MM_PCI_INTC_IRQ = 124,
+> 
+> I guess params->tls_creds really needs that NULL check before being accessed.
+
+Yeah, my gut feeling is we got this special casing of using a temp
+parameter object..  I'll leave Fabiano to double check on that and send
+patch..
+
+Thanks for the report!
+
 -- 
-2.34.1
+Peter Xu
 
 
