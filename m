@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39EDAF531CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Apr 2026 23:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E16DF531DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCR2R-0003fe-8G; Mon, 13 Apr 2026 19:49:55 -0400
+	id 1wCRfX-0001KP-6p; Mon, 13 Apr 2026 20:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCR2M-0003Wm-Tm
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:49:50 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRfS-0001J8-Pn
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:30:16 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCR2L-00029M-GP
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 19:49:50 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-35d95017a68so3099007a91.3
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 16:49:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRfQ-0002ib-VP
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:30:14 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488b8efed61so48075135e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776124188; x=1776728988; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rm3XD9tSc9Dz8iZFicd+HFy/MCy9N4KSfThTwybVKKQ=;
- b=c41tEmsbIMk/tdkrlsHqHBTlMSnykTKfXpmiJxKla9ba9c9osVv3m2BonyTXNvTLK4
- ayFXH27SQ3neQxMqpY3P50v1DotiskmVpEiveLSiak0NqNLG6DfFvvyY5XDloQQmVfPz
- a4YxaBlKmoxEwyBPMVO+FUdF9SybprxgKlsecral73Cs2JatGBMuT88ftVh01MweeF9P
- ElcOmFUcMlKIApJdq7zj7QZqfR0ORrfRNwCVbhiRfJVYtULAv9g2eskmQbc7nBGk/bt9
- sdK3+HbXpGfNVud7x9k+XzNmauDce+6bJ/lO+rB8KA65Sg305MhiGx5k5XtPtSvN0hV4
- IM5A==
+ d=linaro.org; s=google; t=1776126610; x=1776731410; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ic1a2UScFm+l31qFyAeBECmSh2Gb91aNOowxEajWjpI=;
+ b=n/3YsrQTztswBfRiq2esjfseFvG54/HZSXSx7K4chREEAu0SoQbppf3hDYx2G1XfSY
+ K8USQnq+mslq/NzfT+4JDlQQKnG0ers+tmqKNt1PPjsx6z4RsgayMjr1uKYVpXL8YrR9
+ qhPzlkIJ07NRmf/mPpr2KxgMU2jUJomTDJ6/fBZcGHbKuY5sH2EVH4QWz9XopAB/pzOw
+ bgRaNaaQRdBKm56D3bqC0ACB3/LYCYKQcFfzAqULC2w3QtmZ1gu2jMCpu0SWk3jB3SIH
+ XUMexxoxGS7kyMIrASuzcH3QXCKS/+BhPj2nACWMGdu2BwOMdekwqpftexGAGyVWLn1k
+ 3RjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776124188; x=1776728988;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rm3XD9tSc9Dz8iZFicd+HFy/MCy9N4KSfThTwybVKKQ=;
- b=cKT5mwekSKxGa3o5lAuvgk41Vpd25nSEi/K0vKyeQk1Ib5djhtGjtEwt+dbvSWWcWl
- tIWTv/xJTEGMdqGGX979T6LusW7A6Q7l5ZnFIUiJgrIbJOn/jKOF1G+A3IcGGaV4mBUU
- SY8FnAKfEBt4hxDz7dL0CkKxBOCWhSMAusHNHAXo6Rx30fKUx/Mr9Pg2ysbfv3qzutbJ
- M4TiWQ5WqGjK/AM+RxdVjBBjUHuKm+uKe9jekiX7HcUYXaeL5JN3Essp81drxV0KjKFJ
- xmfZ11w5MbNB201+GZ+lsZWkXsnQOJQlo9LlUGjOupEjOkvcTi3Gbk570ihPRB5SznzF
- cXZA==
-X-Gm-Message-State: AOJu0YzzHH6pqOyL+cdmOcR5UbbjnUjf6g85RlNCwXg43EXyDH+lPZ9q
- GP6ehBNfgLRfSAwaaMfwIlXG3rM3QwOORqnDKGoaFU5BPh1DX0GZBb+jaiUBgTetXb/7hVfh+ZW
- 1yD5U
-X-Gm-Gg: AeBDieuQVlBKE2vRuxsQxs3x7SKQ3bhPSjHIFA/6uA0wZx4p2vTO6ixq9hDc0htPxMU
- H9AZdec8w4+mNQlzXSb7w5ztFz0tzqJQa07qiGn8+RHDvCxsbgFFsiQ/at2UB/BnJQuotAOA90k
- UMozEK39JI4uan9KgFozh566ZV8nJPXMUXB2TDjPzkbFtGiC42uJ/F2QqRyFkD5d/jpDQUwUsHM
- sYMEAuLF0qW28CFP0C62UdHzHG65BwcdrBsZ3dym3btMldU3YVJgKcfYrktIPZ8qib27oZ6yGzO
- KFCIohK81qHS25FudJn09Vp20vKcI6Qf9xvn+HInQj5AMJG0+oXl8riOlGj22uzF/IfXsDesUA0
- 96x3fMA5brNOq4unS5LIoEAJOXZuefeuCN8EVuHgP8qpzbN0TQpCSpP38nGoIR8VVd2fuSp3zd+
- Q3x/YPEsOXBQ3HKAQoJGwT/1Og1ysz/Qvd9OSRaG42ZWmpglbHGjvxjPrOefDWvMESKiGNOavkB
- RhE1uvJqxsYbA==
-X-Received: by 2002:a17:90b:2d07:b0:35d:a3b4:2f0d with SMTP id
- 98e67ed59e1d1-35e4274e1damr14054913a91.6.1776124187928; 
- Mon, 13 Apr 2026 16:49:47 -0700 (PDT)
-Received: from ?IPV6:2401:d002:dc0f:2100:377f:61ec:6edd:e205?
- ([2401:d002:dc0f:2100:377f:61ec:6edd:e205])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b2d4f08b9esm131448205ad.41.2026.04.13.16.49.46
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 16:49:47 -0700 (PDT)
-Message-ID: <672c0e68-a82d-47e4-8ec0-64ecf0074ea6@linaro.org>
-Date: Tue, 14 Apr 2026 09:49:43 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] target/arm: Compile m_helper.c once
+ d=1e100.net; s=20251104; t=1776126610; x=1776731410;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ic1a2UScFm+l31qFyAeBECmSh2Gb91aNOowxEajWjpI=;
+ b=qwFxLYSCj2W21bbZlPjOzcEtoAX0GzBEWj2p5oHuVerXE8pN0pSTOev/k4tSJWR8/g
+ 52ObLiAMDas4KYdapvRUCM5yk5peRfQw0j0eIez3zucsvhiJb1ENoV0MgwciAw5hrtW9
+ uVuIjzKY1JhraD3bBcWOiwA5apc7R/H3fhk37lr/9H2xS43CqP+e7RZPvhkSYBSOw7Yk
+ P6GVY2Nv3Udwl1++3ajcbSC5gkT1cKJVzAg1RW/y5kXLvt+59xMuEzL0znwlSs6DXbht
+ xl4T1nbOIE4ZScFe9VhyYcx0H6VKQG1as4eAH8uPCiOH3tcqC76HPO+17+690+6Uxv4O
+ w2Aw==
+X-Gm-Message-State: AOJu0YxLz6JrEJHir6sboOmMsZF9PIbEaSF1KxTAsps1iLOBLhwICipV
+ NV3fHQaeHOYo0fT4vOLIOUIBINLncQDIaWF7tDPlyEEqPfOx/OeIH2JjNEiupTWpv67ERfzZ/Ns
+ PI210DA0=
+X-Gm-Gg: AeBDieviLqDod1PJEEIfUb7fpP18FwIZs/sCtFFVirs+6j5TaGlJbWkCVP7mnXCHQgL
+ ZGzJ4el++WIe3OiWUJEKtI7wlqldkYAgYmoMsm8TmZkmlHHwicEeSgwvZXWKQoczm7Xxpd8e5Da
+ ni2v8MsP1GjAiiK2YolfFs6DDPAQYi9s68bw+et3njmMWMzZzC4YIruyzKKpM0Nh+wdhowPsFyT
+ YgLkZWkfZ9PRdYeB+CPILBoGx9oi44OTOEuIsx1XTnBXdNCttBocCE1mcKwtsFlGl1rT88r0Hxt
+ agEmcziYckvHvPxO7uauJUmrPc7XERomOz5KwzbNvQBblr7odxcaCrxXXdiMvDEofbL+jRBz1Xk
+ K7Ukc5qTBJ8iBADjbp/ALmnRD+PujKsN9shd5hefKvVYnbau/2faGArdnFZbm5m73fHNheURKrN
+ ULJ/V0/57mz0kcf4IMKaFRI7O7t1QHndQnbqJX8Ds8A0UywAoC1L8hT9EhH6IsCD7yQopcvXaI
+X-Received: by 2002:a05:600c:4ecb:b0:485:3cef:d6ea with SMTP id
+ 5b1f17b1804b1-488dc76d45amr173706655e9.13.1776126610324; 
+ Mon, 13 Apr 2026 17:30:10 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d5df2062sm111489175e9.12.2026.04.13.17.30.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 13 Apr 2026 17:30:09 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20260410200628.19378-1-philmd@linaro.org>
- <20260410200628.19378-10-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260410200628.19378-10-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 01/27] stubs: Rename monitor* -> qmp* files
+Date: Tue, 14 Apr 2026 02:29:33 +0200
+Message-ID: <20260414003001.97571-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260414003001.97571-1-philmd@linaro.org>
+References: <20260414003001.97571-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,14 +104,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/26 06:06, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/arm/tcg/m_helper.c  | 2 +-
->   target/arm/tcg/meson.build | 3 ++-
->   2 files changed, 3 insertions(+), 2 deletions(-)
+We use 'HMP' for Human monitor and 'QMP' for 'Machine protocol'.
+These files aren't about human monitor but QMP, so rename them
+for clarity using the 'qmp-' prefix instead of 'monitor-'.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ MAINTAINERS                                      |  6 ++++++
+ stubs/{monitor-arm-gic.c => qmp-arm-gic.c}       |  0
+ ...nitor-cpu-s390x-kvm.c => qmp-cpu-s390x-kvm.c} |  0
+ stubs/{monitor-cpu-s390x.c => qmp-cpu-s390x.c}   |  0
+ stubs/{monitor-cpu.c => qmp-cpu.c}               |  0
+ stubs/{monitor-i386-rtc.c => qmp-i386-rtc.c}     |  0
+ stubs/{monitor-i386-sev.c => qmp-i386-sev.c}     |  0
+ stubs/{monitor-i386-sgx.c => qmp-i386-sgx.c}     |  0
+ stubs/{monitor-i386-xen.c => qmp-i386-xen.c}     |  0
+ stubs/meson.build                                | 16 ++++++++--------
+ 10 files changed, 14 insertions(+), 8 deletions(-)
+ rename stubs/{monitor-arm-gic.c => qmp-arm-gic.c} (100%)
+ rename stubs/{monitor-cpu-s390x-kvm.c => qmp-cpu-s390x-kvm.c} (100%)
+ rename stubs/{monitor-cpu-s390x.c => qmp-cpu-s390x.c} (100%)
+ rename stubs/{monitor-cpu.c => qmp-cpu.c} (100%)
+ rename stubs/{monitor-i386-rtc.c => qmp-i386-rtc.c} (100%)
+ rename stubs/{monitor-i386-sev.c => qmp-i386-sev.c} (100%)
+ rename stubs/{monitor-i386-sgx.c => qmp-i386-sgx.c} (100%)
+ rename stubs/{monitor-i386-xen.c => qmp-i386-xen.c} (100%)
 
-r~
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 535d1d3398e..eb212c31ac2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -121,6 +121,7 @@ F: include/hw/s390x/
+ F: include/hw/watchdog/wdt_diag288.h
+ F: pc-bios/s390-ccw/
+ F: pc-bios/s390-ccw.img
++F: stubs/qmp-cpu-s390x.c
+ F: target/s390x/
+ F: docs/system/target-s390x.rst
+ F: docs/system/s390x/
+@@ -496,6 +497,7 @@ M: Christian Borntraeger <borntraeger@linux.ibm.com>
+ R: Eric Farman <farman@linux.ibm.com>
+ R: Matthew Rosato <mjrosato@linux.ibm.com>
+ S: Supported
++F: stubs/qmp-cpu-s390x-kvm.c
+ F: target/s390x/kvm/
+ F: target/s390x/machine.c
+ F: target/s390x/sigp.c
+@@ -510,6 +512,8 @@ L: kvm@vger.kernel.org
+ S: Supported
+ F: docs/system/i386/amd-memory-encryption.rst
+ F: docs/system/i386/sgx.rst
++F: stubs/qmp-i386-sev.c
++F: stubs/qmp-i386-sgx.c
+ F: target/i386/kvm/
+ F: target/i386/sev*
+ F: scripts/kvm/vmxcap
+@@ -522,6 +526,7 @@ S: Supported
+ F: include/system/kvm_xen.h
+ F: target/i386/kvm/xen*
+ F: hw/i386/kvm/xen*
++F: stubs/qmp-i386-xen.c
+ F: tests/functional/x86_64/test_kvm_xen.py
+ 
+ Guest CPU Cores (other accelerators)
+@@ -800,6 +805,7 @@ F: include/hw/timer/a9gtimer.h
+ F: include/hw/timer/arm_mptimer.h
+ F: include/hw/timer/armv7m_systick.h
+ F: include/hw/misc/armv7m_ras.h
++F: stubs/qmp-arm-gic.c
+ F: tests/qtest/test-arm-mptimer.c
+ 
+ Bananapi M2U
+diff --git a/stubs/monitor-arm-gic.c b/stubs/qmp-arm-gic.c
+similarity index 100%
+rename from stubs/monitor-arm-gic.c
+rename to stubs/qmp-arm-gic.c
+diff --git a/stubs/monitor-cpu-s390x-kvm.c b/stubs/qmp-cpu-s390x-kvm.c
+similarity index 100%
+rename from stubs/monitor-cpu-s390x-kvm.c
+rename to stubs/qmp-cpu-s390x-kvm.c
+diff --git a/stubs/monitor-cpu-s390x.c b/stubs/qmp-cpu-s390x.c
+similarity index 100%
+rename from stubs/monitor-cpu-s390x.c
+rename to stubs/qmp-cpu-s390x.c
+diff --git a/stubs/monitor-cpu.c b/stubs/qmp-cpu.c
+similarity index 100%
+rename from stubs/monitor-cpu.c
+rename to stubs/qmp-cpu.c
+diff --git a/stubs/monitor-i386-rtc.c b/stubs/qmp-i386-rtc.c
+similarity index 100%
+rename from stubs/monitor-i386-rtc.c
+rename to stubs/qmp-i386-rtc.c
+diff --git a/stubs/monitor-i386-sev.c b/stubs/qmp-i386-sev.c
+similarity index 100%
+rename from stubs/monitor-i386-sev.c
+rename to stubs/qmp-i386-sev.c
+diff --git a/stubs/monitor-i386-sgx.c b/stubs/qmp-i386-sgx.c
+similarity index 100%
+rename from stubs/monitor-i386-sgx.c
+rename to stubs/qmp-i386-sgx.c
+diff --git a/stubs/monitor-i386-xen.c b/stubs/qmp-i386-xen.c
+similarity index 100%
+rename from stubs/monitor-i386-xen.c
+rename to stubs/qmp-i386-xen.c
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 7189ff63ed5..2d334a5a8f3 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -78,14 +78,14 @@ if have_system
+   stub_ss.add(files('target-monitor-defs.c'))
+   stub_ss.add(files('win32-kbd-hook.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
+-  stub_ss.add(files('monitor-arm-gic.c'))
+-  stub_ss.add(files('monitor-i386-rtc.c'))
+-  stub_ss.add(files('monitor-i386-sev.c'))
+-  stub_ss.add(files('monitor-i386-sgx.c'))
+-  stub_ss.add(files('monitor-i386-xen.c'))
+-  stub_ss.add(files('monitor-cpu.c'))
+-  stub_ss.add(files('monitor-cpu-s390x.c'))
+-  stub_ss.add(files('monitor-cpu-s390x-kvm.c'))
++  stub_ss.add(files('qmp-arm-gic.c'))
++  stub_ss.add(files('qmp-i386-rtc.c'))
++  stub_ss.add(files('qmp-i386-sev.c'))
++  stub_ss.add(files('qmp-i386-sgx.c'))
++  stub_ss.add(files('qmp-i386-xen.c'))
++  stub_ss.add(files('qmp-cpu.c'))
++  stub_ss.add(files('qmp-cpu-s390x.c'))
++  stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+ endif
+ 
+ if have_system or have_user
+-- 
+2.53.0
+
 
