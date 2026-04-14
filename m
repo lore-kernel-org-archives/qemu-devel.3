@@ -4,112 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E43F9D0DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D553F9D0E2
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCgMI-00050M-Fo; Tue, 14 Apr 2026 12:11:26 -0400
+	id 1wCgV6-0007cx-Dw; Tue, 14 Apr 2026 12:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCgMG-0004zR-Jj
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:11:24 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCgME-0004Nt-52
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:11:24 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4EE346A8C4;
- Tue, 14 Apr 2026 16:11:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776183079; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xWSVVoxSb5wBAmySmkuBOM4XrDfX0XFdBiMFTttefAw=;
- b=BlxPt5gOE+UF9cCGaxYY0MoiS1gDPxD8ILBRKVMQ9NEJkJ7CLPPR8VTuZRW05Y2fTq5tzY
- 7Mk77lA9h/NT79uMQlWC+5MYxJJEjL5C3zMz8dSoGqzH50OeGMm+MZjjoulxn54aiXh8hU
- czG8DTcJ2ZSDWJqqg3EsWjBGriUcv/k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776183079;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xWSVVoxSb5wBAmySmkuBOM4XrDfX0XFdBiMFTttefAw=;
- b=CI2Iq48u5nhSo6Qnfcmx9wKDkPaxiaj/2IUp8SFg0sTcONybOFwZ2EcJsXjoJbTfUPsGT8
- rcOhz6IxFxb6EWAg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=BlxPt5gO;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CI2Iq48u
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776183079; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xWSVVoxSb5wBAmySmkuBOM4XrDfX0XFdBiMFTttefAw=;
- b=BlxPt5gOE+UF9cCGaxYY0MoiS1gDPxD8ILBRKVMQ9NEJkJ7CLPPR8VTuZRW05Y2fTq5tzY
- 7Mk77lA9h/NT79uMQlWC+5MYxJJEjL5C3zMz8dSoGqzH50OeGMm+MZjjoulxn54aiXh8hU
- czG8DTcJ2ZSDWJqqg3EsWjBGriUcv/k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776183079;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xWSVVoxSb5wBAmySmkuBOM4XrDfX0XFdBiMFTttefAw=;
- b=CI2Iq48u5nhSo6Qnfcmx9wKDkPaxiaj/2IUp8SFg0sTcONybOFwZ2EcJsXjoJbTfUPsGT8
- rcOhz6IxFxb6EWAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFF1C4B521;
- Tue, 14 Apr 2026 16:11:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id HPd7KyZn3mlVYwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 14 Apr 2026 16:11:18 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Samuel Zhang <guoqing.zhang@amd.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, lizhijian@fujitsu.com, eblake@redhat.com,
- armbru@redhat.com, Emily.Deng@amd.com, Victor.Zhao@amd.com,
- PengJu.Zhou@amd.com, Qing.Ma@amd.com, Samuel Zhang <guoqing.zhang@amd.com>
-Subject: Re: [PATCH v5] migration/rdma: add x-rdma-chunk-size parameter
-In-Reply-To: <20260413035703.2602065-1-guoqing.zhang@amd.com>
-References: <20260413035703.2602065-1-guoqing.zhang@amd.com>
-Date: Tue, 14 Apr 2026 13:11:12 -0300
-Message-ID: <875x5tzfmn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCgV3-0007Wv-5B
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:20:29 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCgV0-0006iO-UM
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:20:28 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Xeowkv0M5+s2EfUlGJft9eQbpwlEmJJdDdg4qJ0QGRYLF00syITW8/3VMJmEviHeW34eqpjZCkXFItrssVw0rI7JuVb9pXue31m4qtZif4GZRJCxgbyZIzisgDHTWQziVude5O9sNiw+Qc/Y6ojSh4AUJGIqipOTe5nkV0UYCASfTUHytcG6j2y4/ks3dYqK9+8yEgrbYZ62Mwg5e+qzHHjG/DFL9hDjxQfGCnenL+q7oku6LOQRh2NBglF0GgmNdSrC4a0AP7EpqC8G7O1t+mvydfhaQj/v0CSzNm+iUxTBum2ABIluvzuK22MdNhDZB4YNJ/HnaiknCTvAae5Chw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fIDzx/pVWjYLxpUp4zC5KyQXgLaiVeC2DTEMBsPr+sc=;
+ b=Py+I9StgoS8MOgAaxrl36NEMaEXHd64GdBOSaS+Qd6piEM3rV1edXZ+ZEn1553NQUQUTM/kkfV0UELrNqo7HZ2iblzUEhbZkwS9Z4fIPYfLOKr1xc+i+wRSuqgaphlH3e0LV0jKpHaAERakhv9vM6kCzJ+xMqqy1xXPr92fxRU4K8pMWNFUwsb1qV+3jodet0HEmN/GA4Y9lRuKgOtBEUp/pJQu8VhTRSrCI0Mpew9YLi9LyVXlfM2nTE8SPFPeG0oipdBGLfnwQNG5GsT76KVxPE/aJOyKTLpDmwDKwDAo91COXYuoMqX+nZUiDWXn4147g1Ju3+GXnAUO48NR2uA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fIDzx/pVWjYLxpUp4zC5KyQXgLaiVeC2DTEMBsPr+sc=;
+ b=H2P5Z2AZX0xJJfupF4JsszHJmBHA+7fQ+QXnOCVK9vv+s5LCcvxTF5IC2xdgBReFZGUX0ylUfNnkXGBjpUeA0+2L3zI3rU/1Yrt29DJ1APNoMxoFW3bbcP8MibRymGRQfhtZi+Ep+lhiG4F8W8H5so4+a+9j6WAO8pC6td+EdDxOS5Wh8n7DXVdtLbsOvsy+8YOBjTIBx9IF7CHZ2G1DfPz//8GSRHYmTpaWZwQiw4iu1tVszSM1MQdtbRhFvokyOeYvUiMYldiYAVdTOzJJR1aBALHcn/9X9BZUFLq/bCuDx3SHC57nd8Jabyr5fekmmfFR/77yslxLalY9II2+1g==
+Received: from AM0PR04MB4370.eurprd04.prod.outlook.com (2603:10a6:208:6e::32)
+ by DUZPR04MB9981.eurprd04.prod.outlook.com (2603:10a6:10:4d8::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.46; Tue, 14 Apr
+ 2026 16:20:22 +0000
+Received: from AM0PR04MB4370.eurprd04.prod.outlook.com
+ ([fe80::fe3b:fb2c:9dfc:9b]) by AM0PR04MB4370.eurprd04.prod.outlook.com
+ ([fe80::fe3b:fb2c:9dfc:9b%6]) with mapi id 15.20.9745.035; Tue, 14 Apr 2026
+ 16:20:22 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "pbonzini@redhat.com" <pbonzini@redhat.com>
+Subject: RE: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM EVK(Evaluation
+ Kit) board
+Thread-Topic: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM
+ EVK(Evaluation Kit) board
+Thread-Index: AQHcy9DG4Tq2c1qndki/HWXadYKLu7XeiFsAgAAtqYCAAAP7AIAAAqNw
+Date: Tue, 14 Apr 2026 16:20:22 +0000
+Message-ID: <AM0PR04MB43704378E23DF09B87724B9A87252@AM0PR04MB4370.eurprd04.prod.outlook.com>
+References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
+ <20260414053715.1378021-2-gaurav.sharma_7@nxp.com>
+ <D981B877-F5F8-4873-B241-AE20CA354410@gmail.com>
+ <AM0PR04MB4370D4D69523579FA7971C8A87252@AM0PR04MB4370.eurprd04.prod.outlook.com>
+ <CAFEAcA9sgRbWtPeJ=B58nMBKNn4wciyXOgc0cX6xmPByAimuXQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9sgRbWtPeJ=B58nMBKNn4wciyXOgc0cX6xmPByAimuXQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM0PR04MB4370:EE_|DUZPR04MB9981:EE_
+x-ms-office365-filtering-correlation-id: 5b7c13c6-2e12-40b3-54f9-08de9a41ba7b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|19092799006|38070700021|56012099003|22082099003|18002099003;
+x-microsoft-antispam-message-info: MuLj3cx0yDovHnfobkqqP0kPuM+x2yaY+ttGOlkjLykvYHFdkOg/uYJTWehmkumV/Lhb+KoUT8xMVeS2DJFC7McwPd7qucid/c4flJ3pfW+fXFd8Y234FAkm2jAMccLkWx3vvOovT6SzcPyo6RVNrNiXQkDSWBBZT5TNmlV5kvGHYnCFWZzR1GTnOW31rMidOVj88dvNDE0kQvKvyM1pSWlH/BiutdBJgGBN34f2IdrpizU7QLcEi6jzWnec7bStDq7UuiRkk0LGwpLvbKOExiL7RCxdAMR1F2tcn58tlVblXgESO5thZFjUh+5b+/zIh6DnqskEImV4thPoszQgRJzm4hKXRTtHXQpo6NX62fRYLZ4rZ2uNIkuLX9x8b2aaAwspIOBNh80KR/vr37/eubdCH34RWo+VKIo83KE6KEQzOSSoUCklnoTR1e7h2QCpH+sypuoJk7HaY8NgOaj1t02+F+tDtuK6Ay9aoNlKq6G8oDn4/3gpKMiCRzewrA+yrz+EBADTSYKytnKvxygqhHeyRakoc/F/AHatAd1VTigP5z+qFtm26W4urIRI1F74oHkwcidAzhfPWZNJ18vtP6V3dGv+6+yTwrt1tWibKbFimavxK7m8IQ2ZJJ1kBJoEzS/+pUl/YmjJ05sIuq+5aT9kGKUcgQI/3x5+UIk+gg69IuFqq0dbzPte0OIZjjAi7x623ybM7Xjf3tzqGDvU5KJDxSaR+rcI/xVk5FfhujLmRNGCR7mG/JaYgWdT9p/Moeyfhl5pqNp2CuLMIxJn1rYOvREq3NB/OM6Vcso8RHA=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM0PR04MB4370.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(19092799006)(38070700021)(56012099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MzVTYUl4RVdyZ1dvWGFCak12cVJlK3o5QndRZjRVeXY3eWtjcjRJeW5YVWlH?=
+ =?utf-8?B?OFlvYzVJWk4vZ3drbnlqVU1mbVp5cURCKzVyZW1rcjlIT1pNWWIvTUNmSm8z?=
+ =?utf-8?B?dnVwMVlxN1h5S2ludDNtK1ByVUpyY2FVQnFpZWdSdVYzclRGV2IxclhybVdk?=
+ =?utf-8?B?a2ZBYVdibkdwWUNzWHJ3T3BKUThoSUZFVHowRkdlbmxDcnhleFN1ZTBwU0Fr?=
+ =?utf-8?B?YnhDMEdrL2VNZ09HZ1VuMUwwQW9hMExRN09YK0NrK2lHai96YVlHN2tZUzdS?=
+ =?utf-8?B?UzNUejZ6V2V5NkhnU2N4TGtMcDFKQ1kzMTFUYnpibXdCdXAzQVFBNkZJVmt3?=
+ =?utf-8?B?VytYS2J4eWs1UFJENXFzdEJTeXRLOE5uTVkydndTWmpDOXNxNHdFemRVV0cz?=
+ =?utf-8?B?NWxMOGRyY1lxTFBHTDdaVDZNRW03S0xScDdkTUNFanFKSWN6bWVqc1RzZFha?=
+ =?utf-8?B?ZjJMMTlsQTZFaDBxcnR6REF1bi9IMDVFRFRHSjhpWU1WcFViNVE4b0ptVUtP?=
+ =?utf-8?B?ZjRMQ1d0OGpSSmJjRFNQMWEzVDdxTDlmUE1uWnhNaTBMdFhjRkJkVElnQjNm?=
+ =?utf-8?B?VXBKM01qN1hKUFV3RDg4andrV3Y5NUFIajRINjdFOHFncTJoMDRzUWFVVDdP?=
+ =?utf-8?B?ekhMVXlBbld5VnRZalpWR0JLOGNnMTFqa1dFdlJ5UDRFYkJUTXpnUnVDSU9M?=
+ =?utf-8?B?V1VZaFJuM09TVTFNVUE0dFByRVVzS2NZTHRMbEZob0pSbUZjNFFBYUNtd3Vj?=
+ =?utf-8?B?WDZIUmxPbnp5dExwMWpTMmozOWhjK2NYVnkwYVdYcTNwdHFrRHZibFJRZFlj?=
+ =?utf-8?B?dlp2NTMxYzN0U0d1d0dvWVd1RU9DU2JnZkJ0L2Zvb3FIc1hUSE1NYmJZb1I3?=
+ =?utf-8?B?dzNiUzNJYXN3dUNickswbVRDV0h0dzFlSkJsMDVaMGU5c2RlUnNMY0NPN0lT?=
+ =?utf-8?B?SlFQazBod0tjMlNzK2M5T011YjZrdTZNa0dZaXZOTklYaFpSMkVJOFZFT2lN?=
+ =?utf-8?B?UFE1Z2hLR3lMc1B5NUY5eitXOXlQODltY2x6K0JYbXZBMzQrUnpURG5aN1dv?=
+ =?utf-8?B?U05QOTluUWFzQ1gzaXBmRmJjcWJpbTBEQUt5ZVpUZ0pnNnVrSE9ObXo4Q1BQ?=
+ =?utf-8?B?cXpmMXZkZnpyaGcrcGR1bjVtUnpoeWE3Um4wMnFWQStyR09XTDZFQTBMejk5?=
+ =?utf-8?B?ZmxkWUk1cW9iNXo0eHdrNUpVZG4zOWNQRFdjQkVmeVdSV2wyd28vUFBleTMx?=
+ =?utf-8?B?VVBZK3hUSGtQNDVXek9naWdsOXRhdGFlU3JYWVR6cERiMlcvbHZjU3dQT2ZW?=
+ =?utf-8?B?TkFaSHVBd1hnYmo0OGlKMUdOckRvUEVtTkE0eTdhQUtJdE9NR3V4b2tnNWhw?=
+ =?utf-8?B?SFdUdjhUdWVuZUc3K1FyY3BOdndzUldJVThZeEgyc1Y3MThQTTJodi9aZ3ZP?=
+ =?utf-8?B?dVJvMGpKRmdWYzcrQWVxYVNPejRkZU1qQ1ExY1Q3N0ZiZ3lQMnYyT00zSzJq?=
+ =?utf-8?B?YU1iU1VGMHV3bjVsMkdMZHpKQk1IdXlpWEl4ajBsNzNCOUd4UTRzQkxIRzBO?=
+ =?utf-8?B?NzcvaWxSNHlPSlQ2OFNES1oyQjFZNzZRTjhjNnFubklWNytGazd1S1crc3hE?=
+ =?utf-8?B?b3cvYXp0eEpKaURZeEpxc2wrV0pGWnRVeWZLbm45K1dFOFk2MytSMmNNVjVv?=
+ =?utf-8?B?ZjNtQmtjaWdjNzlVUG1kRlUvaTUybmlEM0UzQ1hadG5heExxVDZFWE84QjhC?=
+ =?utf-8?B?cnprNnQ1WTQ1QkZYMG51djQ1THMvMklYNGF2MTFER3pzaXNxekhDaVI1OGdR?=
+ =?utf-8?B?c3RWb0IwRDNCaFIxMFczeE1jRXRmUDAvemlzQWpnM21CaExqa3Q0UG5NV2ZN?=
+ =?utf-8?B?cndPWC93NTlJa0cxdjhQMFdBNWsyRUlJQWl4VmI1alFMSk5HYXBrMHNjT3Nz?=
+ =?utf-8?B?UEJtanFJOGJoVTErN3RMVkdDVVAwZkV4Zkp4a0U5WGU4UFE4RVl3WmUzZm1N?=
+ =?utf-8?B?R3Vqd3lLTWcrMml0RHI0TkZiSHUzdXF6ZTlqTlpSVG9nUkYwVkEyY2R0Y1Ur?=
+ =?utf-8?B?N1d6dTVub09yelVxeG9uNTF5Qk55enhGWHFsSENqWGNWbEx3aDMrYVlRL0p0?=
+ =?utf-8?B?NUpmbGxnUTl5RXF3dkJ2aEpIOGZBcENLNndseUxNeG8rZGxYc3J2WlFvdDh0?=
+ =?utf-8?B?YlprZmQyUFJ2amk2VzNPdnp3QUY2YnZ6VWdwSTdHZnJFWFJpZG1nSm1ZVDNE?=
+ =?utf-8?B?eGJJbkRISTV4M3ZQM2dscThNTjNRUWFiZUVmSkdzVG9tNldCVnlteVBISHZk?=
+ =?utf-8?B?ZEVhYmk4eUlvR3RmbDJjbkRaeU85bE5FekFPSVp2cStCQUo2dS9OUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[11]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid,suse.de:email,amd.com:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 4EE346A8C4
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB4370.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b7c13c6-2e12-40b3-54f9-08de9a41ba7b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Apr 2026 16:20:22.4798 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zYkcOoG4lzS7x/XLjpZwrfqpH9p8zThR0oldCEhYCwiD8CtWbmbQvZGkXXdOJKwElOgwAfjaoli2ygBgGqwyQA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR04MB9981
+Received-SPF: permerror client-ip=2a01:111:f403:c201::1;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,334 +156,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Samuel Zhang <guoqing.zhang@amd.com> writes:
-
-> The default 1MB RDMA chunk size causes slow live migration because
-> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
-> 1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
->
-> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
-> faster migration.
-> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
->
-> Performance with RDMA live migration of 8GB RAM VM:
->
-> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
-> |-----------------------|----------|-------------------|
-> | 1M (default)          | 37.915   |  1,007            |
-> | 32M                   | 17.880   |  2,260            |
-> | 1024M                 |  4.368   | 17,529            |
->
-> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> Acked-by: Li Zhijian <lizhijian@fujitsu.com>
-> Tested-by: Li Zhijian <lizhijian@fujitsu.com>
-> ---
-> v2:
-> - Renamed x-rdma-chunk-shift to x-rdma-chunk-size (byte count)
-> - Added validation in migrate_params_check()
-> - Added hmp_migrate_set_parameter() support
-> - Added hmp_info_migrate_parameters() support
-> - Added migrate_mark_all_params_present()
-> - Use qemu_strtosz() for size suffix support
-> v3: [Markus]
-> - Use visit_type_size() in HMP set parameter
-> - Use MiB/GiB constants
-> v4: [Markus]
-> - Remove superfluous comment on DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE
-> - Use "Only applies when migrating via RDMA" in QAPI doc
-> v5:
-> - Document that x-rdma-chunk-size must be set to the same value on both
->     source and destination before migration starts.
-> - Add Acked-by and Tested-by from Li Zhijian.
->
->  migration/migration-hmp-cmds.c | 11 +++++++++++
->  migration/options.c            | 33 ++++++++++++++++++++++++++++++++-
->  migration/options.h            |  1 +
->  migration/rdma.c               | 30 ++++++++++++++++--------------
->  qapi/migration.json            | 13 +++++++++++--
->  5 files changed, 71 insertions(+), 17 deletions(-)
->
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 0a193b8f54..4f6c1dbf89 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -451,6 +451,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
->                             params->direct_io ? "on" : "off");
->          }
->  
-> +        if (params->has_x_rdma_chunk_size) {
-> +            monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
-> +                           MigrationParameter_str(
-> +                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
-> +                           params->x_rdma_chunk_size);
-> +        }
-> +
->          assert(params->has_cpr_exec_command);
->          monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
->      }
-> @@ -734,6 +741,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
->          p->has_direct_io = true;
->          visit_type_bool(v, param, &p->direct_io, &err);
->          break;
-> +    case MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE:
-> +        p->has_x_rdma_chunk_size = true;
-> +        visit_type_size(v, param, &p->x_rdma_chunk_size, &err);
-> +        break;
->      case MIGRATION_PARAMETER_CPR_EXEC_COMMAND: {
->          /*
->           * NOTE: g_autofree will only auto g_free() the strv array when
-> diff --git a/migration/options.c b/migration/options.c
-> index 7556fbc06b..2b5158200b 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -13,6 +13,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/units.h"
->  #include "exec/target_page.h"
->  #include "qapi/clone-visitor.h"
->  #include "qapi/error.h"
-> @@ -90,6 +91,7 @@ const PropertyInfo qdev_prop_StrOrNull;
->  
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
-> +#define DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE           MiB
->  
->  const Property migration_properties[] = {
->      DEFINE_PROP_BOOL("store-global-state", MigrationState,
-> @@ -183,6 +185,9 @@ const Property migration_properties[] = {
->      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
->                         parameters.zero_page_detection,
->                         ZERO_PAGE_DETECTION_MULTIFD),
-> +    DEFINE_PROP_UINT64("x-rdma-chunk-size", MigrationState,
-> +                      parameters.x_rdma_chunk_size,
-> +                      DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE),
->  
->      /* Migration capabilities */
->      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-> @@ -1000,6 +1005,15 @@ ZeroPageDetection migrate_zero_page_detection(void)
->      return s->parameters.zero_page_detection;
->  }
->  
-> +uint64_t migrate_rdma_chunk_size(void)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    uint64_t size = s->parameters.x_rdma_chunk_size;
-> +
-> +    assert(MiB <= size && size <= GiB && is_power_of_2(size));
-> +    return size;
-> +}
-> +
->  /* parameters helpers */
->  
->  AnnounceParameters *migrate_announce_params(void)
-> @@ -1062,7 +1076,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
->          &p->has_announce_step, &p->has_block_bitmap_mapping,
->          &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
->          &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
-> -        &p->has_cpr_exec_command,
-> +        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
->      };
->  
->      len = ARRAY_SIZE(has_fields);
-> @@ -1273,6 +1287,15 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->          return false;
->      }
->  
-> +    if (params->has_x_rdma_chunk_size &&
-> +        (params->x_rdma_chunk_size < MiB ||
-> +         params->x_rdma_chunk_size > GiB ||
-> +         !is_power_of_2(params->x_rdma_chunk_size))) {
-> +        error_setg(errp, "Option x_rdma_chunk_size expects "
-> +                   "a power of 2 in the range 1MiB to 1024MiB");
-> +        return false;
-> +    }
-> +
->      return true;
->  }
->  
-> @@ -1398,6 +1421,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
->          dest->direct_io = params->direct_io;
->      }
->  
-> +    if (params->has_x_rdma_chunk_size) {
-> +        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
-> +    }
-> +
->      if (params->has_cpr_exec_command) {
->          dest->cpr_exec_command = params->cpr_exec_command;
->      }
-> @@ -1524,6 +1551,10 @@ static void migrate_params_apply(MigrationParameters *params)
->          s->parameters.direct_io = params->direct_io;
->      }
->  
-> +    if (params->has_x_rdma_chunk_size) {
-> +        s->parameters.x_rdma_chunk_size = params->x_rdma_chunk_size;
-> +    }
-> +
->      if (params->has_cpr_exec_command) {
->          qapi_free_strList(s->parameters.cpr_exec_command);
->          s->parameters.cpr_exec_command =
-> diff --git a/migration/options.h b/migration/options.h
-> index b502871097..b46221998a 100644
-> --- a/migration/options.h
-> +++ b/migration/options.h
-> @@ -87,6 +87,7 @@ const char *migrate_tls_creds(void);
->  const char *migrate_tls_hostname(void);
->  uint64_t migrate_xbzrle_cache_size(void);
->  ZeroPageDetection migrate_zero_page_detection(void);
-> +uint64_t migrate_rdma_chunk_size(void);
->  
->  /* parameters helpers */
->  
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 55ab85650a..3e37a1d440 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -45,10 +45,12 @@
->  #define RDMA_RESOLVE_TIMEOUT_MS 10000
->  
->  /* Do not merge data if larger than this. */
-> -#define RDMA_MERGE_MAX (2 * 1024 * 1024)
-> -#define RDMA_SIGNALED_SEND_MAX (RDMA_MERGE_MAX / 4096)
-> +static inline uint64_t rdma_merge_max(void)
-> +{
-> +    return migrate_rdma_chunk_size() * 2;
-> +}
->  
-> -#define RDMA_REG_CHUNK_SHIFT 20 /* 1 MB */
-> +#define RDMA_SIGNALED_SEND_MAX 512
->  
->  /*
->   * This is only for non-live state being migrated.
-> @@ -527,21 +529,21 @@ static int qemu_rdma_exchange_send(RDMAContext *rdma, RDMAControlHeader *head,
->  static inline uint64_t ram_chunk_index(const uint8_t *start,
->                                         const uint8_t *host)
->  {
-> -    return ((uintptr_t) host - (uintptr_t) start) >> RDMA_REG_CHUNK_SHIFT;
-> +    return ((uintptr_t) host - (uintptr_t) start) / migrate_rdma_chunk_size();
->  }
->  
->  static inline uint8_t *ram_chunk_start(const RDMALocalBlock *rdma_ram_block,
->                                         uint64_t i)
->  {
->      return (uint8_t *)(uintptr_t)(rdma_ram_block->local_host_addr +
-> -                                  (i << RDMA_REG_CHUNK_SHIFT));
-> +                                  (i * migrate_rdma_chunk_size()));
->  }
->  
->  static inline uint8_t *ram_chunk_end(const RDMALocalBlock *rdma_ram_block,
->                                       uint64_t i)
->  {
->      uint8_t *result = ram_chunk_start(rdma_ram_block, i) +
-> -                                         (1UL << RDMA_REG_CHUNK_SHIFT);
-> +                                         migrate_rdma_chunk_size();
->  
->      if (result > (rdma_ram_block->local_host_addr + rdma_ram_block->length)) {
->          result = rdma_ram_block->local_host_addr + rdma_ram_block->length;
-> @@ -1841,6 +1843,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
->      struct ibv_send_wr *bad_wr;
->      int reg_result_idx, ret, count = 0;
->      uint64_t chunk, chunks;
-> +    uint64_t chunk_size = migrate_rdma_chunk_size();
->      uint8_t *chunk_start, *chunk_end;
->      RDMALocalBlock *block = &(rdma->local_ram_blocks.block[current_index]);
->      RDMARegister reg;
-> @@ -1861,22 +1864,21 @@ retry:
->      chunk_start = ram_chunk_start(block, chunk);
->  
->      if (block->is_ram_block) {
-> -        chunks = length / (1UL << RDMA_REG_CHUNK_SHIFT);
-> +        chunks = length / chunk_size;
->  
-> -        if (chunks && ((length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-> +        if (chunks && ((length % chunk_size) == 0)) {
->              chunks--;
->          }
->      } else {
-> -        chunks = block->length / (1UL << RDMA_REG_CHUNK_SHIFT);
-> +        chunks = block->length / chunk_size;
->  
-> -        if (chunks && ((block->length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-> +        if (chunks && ((block->length % chunk_size) == 0)) {
->              chunks--;
->          }
->      }
->  
->      trace_qemu_rdma_write_one_top(chunks + 1,
-> -                                  (chunks + 1) *
-> -                                  (1UL << RDMA_REG_CHUNK_SHIFT) / 1024 / 1024);
-> +                                  (chunks + 1) * chunk_size / 1024 / 1024);
->  
->      chunk_end = ram_chunk_end(block, chunk + chunks);
->  
-> @@ -2176,7 +2178,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
->      rdma->current_length += len;
->  
->      /* flush it if buffer is too large */
-> -    if (rdma->current_length >= RDMA_MERGE_MAX) {
-> +    if (rdma->current_length >= rdma_merge_max()) {
->          return qemu_rdma_write_flush(rdma, errp);
->      }
->  
-> @@ -3522,7 +3524,7 @@ int rdma_registration_handle(QEMUFile *f)
->                  } else {
->                      chunk = reg->key.chunk;
->                      host_addr = block->local_host_addr +
-> -                        (reg->key.chunk * (1UL << RDMA_REG_CHUNK_SHIFT));
-> +                        (reg->key.chunk * migrate_rdma_chunk_size());
->                      /* Check for particularly bad chunk value */
->                      if (host_addr < (void *)block->local_host_addr) {
->                          error_report("rdma: bad chunk for block %s"
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 7134d4ce47..0db115ec5e 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -806,7 +806,7 @@
->  #
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -831,6 +831,7 @@
->             'mode',
->             'zero-page-detection',
->             'direct-io',
-> +           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
->             'cpr-exec-command'] }
->  
->  ##
-> @@ -1007,9 +1008,15 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
-> +#     Default is 1MiB.  Must be a power of 2 in the range
-> +#     [1MiB, 1024MiB].  Only applies when migrating via RDMA.
-> +#     Must be set to the same value on both source and destination
-> +#     before migration starts.  (Since 11.1)
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -1046,6 +1053,8 @@
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
->              '*direct-io': 'bool',
-> +            '*x-rdma-chunk-size': { 'type': 'uint64',
-> +                                    'features': [ 'unstable' ] },
->              '*cpr-exec-command': [ 'str' ]} }
->  
->  ##
-
-Acked-by: Fabiano Rosas <farosas@suse.de>
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGV0ZXIgTWF5ZGVsbCA8
+cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnPg0KPiBTZW50OiAxNCBBcHJpbCAyMDI2IDIxOjM4DQo+
+IFRvOiBHYXVyYXYgU2hhcm1hIDxnYXVyYXYuc2hhcm1hXzdAbnhwLmNvbT4NCj4gQ2M6IEJlcm5o
+YXJkIEJlc2Nob3cgPHNoZW50ZXlAZ21haWwuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnOw0K
+PiBwYm9uemluaUByZWRoYXQuY29tDQo+IFN1YmplY3Q6IFJlOiBbRVhUXSBSZTogW1BBVENIdjUg
+MDEvMTVdIGh3L2FybTogQWRkIHRoZSBpLk1YIDhNTQ0KPiBFVksoRXZhbHVhdGlvbiBLaXQpIGJv
+YXJkDQo+IA0KPiBDYXV0aW9uOiBUaGlzIGlzIGFuIGV4dGVybmFsIGVtYWlsLiBQbGVhc2UgdGFr
+ZSBjYXJlIHdoZW4gY2xpY2tpbmcgbGlua3Mgb3INCj4gb3BlbmluZyBhdHRhY2htZW50cy4gV2hl
+biBpbiBkb3VidCwgcmVwb3J0IHRoZSBtZXNzYWdlIHVzaW5nIHRoZSAnUmVwb3J0DQo+IHRoaXMg
+ZW1haWwnIGJ1dHRvbg0KPiANCj4gDQo+IE9uIFR1ZSwgMTQgQXByIDIwMjYgYXQgMTY6NTcsIEdh
+dXJhdiBTaGFybWEgPGdhdXJhdi5zaGFybWFfN0BueHAuY29tPg0KPiB3cm90ZToNCj4gPiA+IC0t
+LS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4gPiBGcm9tOiBCZXJuaGFyZCBCZXNjaG93IDxz
+aGVudGV5QGdtYWlsLmNvbT4gSSBnZXQgdHdvIHdhcm5pbmdzDQo+IGR1cmluZw0KPiA+ID4gY29t
+cGlsYXRpb246DQo+ID4gPg0KPiA+ID4gMSkNCj4gPiA+IC4vc3JjL2RvY3Mvc3lzdGVtL2FybS9p
+bXg4bXAtZXZrLnJzdDoyOiBXQVJOSU5HOiBUaXRsZSB1bmRlcmxpbmUgdG9vDQo+ID4gPiBzaG9y
+dC4NCj4gPiA+DQo+ID4gPiBOWFAgaS5NWCA4TSBQbHVzIGFuZCBpLk1YIDhNIE1pbmkgRXZhbHVh
+dGlvbiBLaXRzIChgYGlteDhtcC1ldmtgYCwNCj4gPiA+IGBgaW14OG1tLWV2a2BgKQ0KPiA9PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj4gPiA+IFtkb2N1
+dGlsc10NCj4gPiA+DQo+ID4gPg0KPiA+ID4gMikNCj4gPiA+IC4vc3JjL2RvY3Mvc3lzdGVtL3Rh
+cmdldC1hcm0ucnN0OjcxOiBXQVJOSU5HOiB0b2N0cmVlIGNvbnRhaW5zDQo+ID4gPiByZWZlcmVu
+Y2UgdG8gbm9uZXhpc3RpbmcgZG9jdW1lbnQgJ3N5c3RlbS9hcm0vaW14OG1tLWV2aycNCj4gPiA+
+IFt0b2Mubm90X3JlYWRhYmxlXQ0KPiA+ID4NCj4gPg0KPiA+IEkgaGF2ZSBiZWVuIGNvbmZpZ3Vy
+aW5nIGFuZCBjb21waWxpbmcgbGlrZSB0aGlzOi0NCj4gPg0KPiA+IC4uL2NvbmZpZ3VyZSAtLXRh
+cmdldC1saXN0PSJhYXJjaDY0LXNvZnRtbXUiIC0tZW5hYmxlLXdlcnJvciBtYWtlIC1qMzINCj4g
+Pg0KPiA+IFRoZSBidWlsZCB0dXJucyBvdXQgdG8gYmUgZmluZS4gTm90IHN1cmUgd2h5IGl0IGRv
+ZXNuJ3Qgc2hvdyB0aGVzZSB3YXJuaW5ncw0KPiBpbiBteSBidWlsZC4NCj4gDQo+IFlvdXIgc3lz
+dGVtIGlzIHByb2JhYmx5IG1pc3NpbmcgdGhlIG5lY2Vzc2FyeSBkZXBlbmRlbmNpZXMgdG8gYnVp
+bGQgdGhlDQo+IGRvY3VtZW50YXRpb24sIGFuZCBzbyBjb25maWd1cmUgZGlzYWJsZXMgaXQuDQo+
+IElmIHlvdSBwYXNzIGNvbmZpZ3VyZSAnLS1lbmFibGUtZG9jcycgaXQgd2lsbCBpbnNpc3QgdGhh
+dCBpdCBidWlsZHMgdGhlIGRvY3MgYW5kDQo+IGNvbmZpZ3VyZSB3aWxsIGZhaWwsIHRlbGxpbmcg
+eW91IHdoYXQgeW91IG5lZWQgdG8gaW5zdGFsbCwgaWYgaXQncyBtaXNzaW5nDQo+IHNvbWV0aGlu
+Zy4NCj4gDQo+IElmIHlvdSdyZSBhZGRpbmcgc29tZXRoaW5nIHRvIHRoZSBkb2NzIGl0J3MgYSBn
+b29kIGlkZWEgdG8gYWxzbyBjaGVjayB0aGUgYnVpbHQNCj4gSFRNTCAoaXQgYXBwZWFycyBpbiB0
+aGUgZG9jcy9tYW51YWwgc3ViZGlyIG9mIHlvdXIgYnVpbGQgdHJlZSkgaW4gYSB3ZWINCj4gYnJv
+d3NlciB0byBtYWtlIHN1cmUgaXQgbG9va3MgdGhlIHdheSB5b3UgZXhwZWN0IGl0IHRvLg0KPiAN
+CkdvdCBpdCBUaGFua3MhIEkgY2FuIHNlZSB0aGUgd2FybmluZ3MgYWZ0ZXIgcGFzc2luZyB0aGlz
+IGZsYWcgdG8gYnVpbGQgdGhlIGRvY3MuIFdpbGwgaW5jbHVkZSB0aGUgZml4IGluIHRoZSB1cGNv
+bWluZyBwYXRjaCBzZXJpZXMuDQoNCj4gLS0gUE1NDQo=
 
