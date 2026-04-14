@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC52F531EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 05:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9974BF531EA
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 05:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCWSm-0003ol-Tr; Tue, 14 Apr 2026 01:37:28 -0400
+	id 1wCWSn-0003p1-PD; Tue, 14 Apr 2026 01:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCWSj-0003nW-Kr
+ id 1wCWSj-0003nV-63
  for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:27 -0400
 Received: from inva021.nxp.com ([92.121.34.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCWSg-000449-F5
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:25 -0400
+ id 1wCWSg-00044C-HE
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 01:37:24 -0400
 Received: from inva021.nxp.com (localhost [127.0.0.1])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 63BC6202236;
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 6265B201B48;
  Tue, 14 Apr 2026 07:37:21 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 2C68320224F;
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 2A89020224D;
  Tue, 14 Apr 2026 07:37:21 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id A5D97180223E;
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 4AB7C1802227;
  Tue, 14 Apr 2026 13:37:20 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv5 05/15] hw/arm/fsl-imx8mm: Implemented support for SNVS
-Date: Tue, 14 Apr 2026 11:07:05 +0530
-Message-Id: <20260414053715.1378021-6-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCHv5 04/15] hw/arm/fsl-imx8mm: Add Clock Control Module IP to
+ iMX8MM
+Date: Tue, 14 Apr 2026 11:07:04 +0530
+Message-Id: <20260414053715.1378021-5-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
 References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
@@ -67,72 +69,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SNVS contains an RTC which allows Linux to deal correctly with time
+Add the Clock Control Module (CCM) device to i.MX8MM SoC.
+The CCM implementation is shared with i.MX8MP as the register
+layout is identical between the two variants.Hence iMX8MM will
+be using the source of iMX8MP CCM.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- hw/arm/fsl-imx8mm.c         | 12 +++++++++++-
+ hw/arm/Kconfig              |  1 +
+ hw/arm/fsl-imx8mm.c         | 10 ++++++++++
  include/hw/arm/fsl-imx8mm.h |  2 ++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ 3 files changed, 13 insertions(+)
 
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 1a9193fe1a..c785f3f3a3 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -622,6 +622,7 @@ config FSL_IMX8MM
+     bool
+     select ARM_GIC
+     select FSL_IMX8MP_ANALOG
++    select FSL_IMX8MP_CCM
+     select IMX
+ 
+ config FSL_IMX8MM_EVK
 diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index ec7c467068..8999bc701e 100644
+index 5145d1d72c..ec7c467068 100644
 --- a/hw/arm/fsl-imx8mm.c
 +++ b/hw/arm/fsl-imx8mm.c
-@@ -173,6 +173,8 @@ static void fsl_imx8mm_init(Object *obj)
+@@ -169,6 +169,8 @@ static void fsl_imx8mm_init(Object *obj)
  
+     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
+ 
++    object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX8MP_CCM);
++
      object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MP_ANALOG);
  
-+    object_initialize_child(obj, "snvs", &s->snvs, TYPE_IMX7_SNVS);
-+
      for (i = 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
-         g_autofree char *name = g_strdup_printf("uart%d", i + 1);
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-@@ -354,7 +356,14 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(get_system_memory(),
-                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].addr,
-                                 &s->ocram);
--    
-+
-+    /* SNVS */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+@@ -305,6 +307,13 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         }
+     }
+ 
++    /* CCM */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ccm), errp)) {
 +        return;
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
-+                    fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ccm), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_CCM].addr);
 +
-     /* Unimplemented devices */
+     /* Analog */
+     object_property_set_uint(OBJECT(&s->analog), "arm-pll-fdiv-ctl0-reset",
+                             0x000fa030, &error_abort);
+@@ -350,6 +359,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
      for (i = 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
          switch (i) {
-@@ -364,6 +373,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_ANA_PLL:
++        case FSL_IMX8MM_CCM:
+         case FSL_IMX8MM_GIC_DIST:
          case FSL_IMX8MM_GIC_REDIST:
          case FSL_IMX8MM_RAM:
-         case FSL_IMX8MM_OCRAM:
-+        case FSL_IMX8MM_SNVS_HP:
-         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
-             /* device implemented and treated above */
-             break;
 diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index df35f0f5ac..8a172b89e0 100644
+index 0a020c32a1..df35f0f5ac 100644
 --- a/include/hw/arm/fsl-imx8mm.h
 +++ b/include/hw/arm/fsl-imx8mm.h
-@@ -13,6 +13,7 @@
- #include "cpu.h"
+@@ -14,6 +14,7 @@
  #include "hw/char/imx_serial.h"
  #include "hw/intc/arm_gicv3_common.h"
-+#include "hw/misc/imx7_snvs.h"
  #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
++#include "hw/misc/imx8mp_ccm.h"
  #include "qom/object.h"
-@@ -37,6 +38,7 @@ struct FslImx8mmState {
+ #include "qemu/units.h"
+ 
+@@ -34,6 +35,7 @@ struct FslImx8mmState {
+ 
+     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
      GICv3State         gic;
-     IMX8MPCCMState     ccm;
++    IMX8MPCCMState     ccm;
      IMX8MPAnalogState  analog;
-+    IMX7SNVSState      snvs;
      IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
      MemoryRegion ocram;
- };
 -- 
 2.34.1
 
