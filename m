@@ -4,145 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B5F3F9D0FB
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 22:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67AB6F9D0FB
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 22:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCmMn-0002hs-Dd; Tue, 14 Apr 2026 18:36:21 -0400
+	id 1wCmO7-0003qR-39; Tue, 14 Apr 2026 18:37:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wCmMj-0002gx-P6
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:36:18 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wCmMg-00083j-F5
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:36:17 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63EHvor53059023
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 22:36:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- w2kRL8WYX/Xz2TKBYkukZcKpZiYYaxq8gTdzUUZCitQ=; b=KptE4w+PIwRFZv4E
- PdZEXjhM/q4DSz0msitTaa2A6XOebqh03LHvroTqiHKjk4CkOChnCcyehjDI9CXe
- bA+/aoVNTgKY+byG+bd3SZHDxksb/M91rP8yi4Ev5t8W3ROxoAmHmtmMkJSWEcEF
- pLUPGVkleAxDYBkTkE8raJXX6l4/F7EJl7xFRrny38WHqk6Qj3viwwcYW3z5C19I
- Qa5o1oApThYQPdCBLKhXayuKIrVZYwTX9PEzheWa2v30Nu3d0MC7vA6khg8tiLMi
- IKsHC9sEdud3x1JfKaR71GhPD4rbfW9wvUQjcr2Tn+whyERLz6GxlhIOXbhRXMNU
- T+bBjg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dhteprs5p-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 22:36:12 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2b2ec17dc21so33030445ad.2
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 15:36:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1776206171; x=1776810971; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w2kRL8WYX/Xz2TKBYkukZcKpZiYYaxq8gTdzUUZCitQ=;
- b=EI86OHAV4JkVPnKlZcl1XBEMeXDsdKG2z3ZFwMrM27+jm59Yv62sK467wmnCSE5nYU
- CiQaDbDHbzkUalBNxoDc3XF4K3tUtiotxh187FKOZ2vkLQzP15dfZJQKoMx6bIPwGZtz
- sbVJqwAzj8QGbTZKsQInH9KWj1mHJzd21isgphWp/dNzhP7aSgB1nKoYoy9YNAmKjI/n
- oMRw3RMBhkRSBNvRZeeXWW4XBGMVMF8qNNG3ovJZSRBPoRpSAGh2fGHetPfikPdUlbl7
- CxZz9jcGEdXx9fiJeiSkJ6i8RU+BcL7KIxgR+f6Ntj/EVZI7S/gOLambL4rflFTHgcfT
- Jhpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776206171; x=1776810971;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=w2kRL8WYX/Xz2TKBYkukZcKpZiYYaxq8gTdzUUZCitQ=;
- b=klzD+0ckoWYhgEtpHeb6sH+CQTxnaRqBNQvolRqAwoMxrF2h6/qtNZ/027KXNU5XgP
- RnGU7QE3sUDtqMWCk9+9Opteck+OGJiPmT8POeSy681OvyYgjdQy3eEzbBeTzy0Xzf8a
- MaAqvvWBN6TkvFheYDHz5heKCX13nDwGASMq1knm/jCwM0S6slXJgr4tt2k0rxBINo2M
- sVAbnML6wLyZ05VaevVti3hiB1b6kTnQqbhTQjYcJqKGfUdpiIPBOUm570JjUGtDx9wt
- ZDgJqsrneRMM7h3mJfHYV19XKNBSoEh25FT/w/B90FkzniZ90KZsDM70Ivrgu+mquTcQ
- OtAQ==
-X-Gm-Message-State: AOJu0YzU87kvSUU+vIWmdb5EjTpFoCik/y4sFDWPEZjBfgmCojYaSAtk
- kVadyMxTTZgYO9Kpba0Qp0kwvVxIRpN8RDH+vV9A9lgQka2HgCuOTSmjVKN7DtWi1S6lLVQKXRY
- qLELfuXVoSHww71r6zAy4ctIH4XYpXVNDj6coBTQcxNx6vle0Dj3Fr27RJjIiJIlQIKElWp8=
-X-Gm-Gg: AeBDietKdHv8DDO5hL+Y/MCW8PSxsQsT/wKi+KrGd6RacbjauPGeRlVcS2n3ecs9+h0
- lH/U7XUib7Jjv7qGhn0vTjCC85xhYhQrZcO7oAieRraMjE0GifqZGmR/IgdivEbkOp9tbb9Jr0V
- dybg2R4jMumC106zLHzqFb7zlkNxciP3HY8D8se7IpDk6660ANYjVCjPxz0IG1dGp9/uFD7RoSw
- mlMLGZyj+MBijrcy3KAhQqBb/8wZbYZxwJ2zS11k+sI7SRFDgH1jQT9dyErEqB1uuTLyDrfrEtn
- vWBbGCTCpvfBpQYf5D3wUCJs/bjfz5SbXel6T+bxAV8mtGZ6svVn/q01GyUmQnR8RVb1A3VitZW
- P5dNPB1sBuY2yZYtiyzUBX96JJpelppBBgJgXdGARm2dTZjbuK9sgEz+Rfu4N1woyuUDcIoAxt2
- mmlu4=
-X-Received: by 2002:a17:903:2c04:b0:2ae:c5fc:b2ef with SMTP id
- d9443c01a7336-2b2d5a558a4mr188127535ad.30.1776206171313; 
- Tue, 14 Apr 2026 15:36:11 -0700 (PDT)
-X-Received: by 2002:a17:903:2c04:b0:2ae:c5fc:b2ef with SMTP id
- d9443c01a7336-2b2d5a558a4mr188127235ad.30.1776206170843; 
- Tue, 14 Apr 2026 15:36:10 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b46151801dsm68901025ad.78.2026.04.14.15.36.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Apr 2026 15:36:10 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCmO4-0003pZ-V1
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:37:40 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCmO3-0008HE-3B
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:37:40 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 759576A8E9;
+ Tue, 14 Apr 2026 22:37:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776206257; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
+ b=dyk73w7vS7oxSQHHhS9nns1lp1zIaOfvd/e1Z7eUIxTcImgh+z5uMd9KEoIK0M0+LI0wQa
+ VHt4CJ030KTjK7QlV5Sd2rVcYsMn8f7zSomOZBibtvNl+v4yYqozVzEj9+yNbPK352aXLq
+ f3keQsfEv5j3BTjlPGpPUMaXuaW9bFY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776206257;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
+ b=6hsgq//Z+lTR8uQrKhVHQAhEUonH+q3bkArpiTvAaPzZaZrv6wzFBEtj5W2ish3jYES/Cv
+ kQXckk90co5GUuBg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776206256; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
+ b=iYT9gdC1dbt/qCVEo2J6DLw+Vu8+d4ZUmT7ILKD8QXrL9Wfw+tGjPyt7uYfmntNF4mLry6
+ JO8GDYe6ePlwW7phXQsDFQ73S4JYBZiVVCAm8u5MuDCQsIC7jlcKzvYgz5SV+zcHOdXNlI
+ BDu+XvFqCXcDYgpfv72pewsXlOSdZas=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776206256;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=WNOsvQPN/mjRJ8dQDJAMMsNsxvctAmMjLUyub5lQrgc=;
+ b=s5VhVk8iZMtM03UDpYzI+3izWoX2Zo8B0smdkpp36+UJER+/DkzEXNZOK8yewbyS2tcePO
+ ssmUIUpScnjJWSAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5560D4B6A3;
+ Tue, 14 Apr 2026 22:37:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id QAXPCa/B3mlmVwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 14 Apr 2026 22:37:35 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Burton <mburton@qti.qualcomm.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 1/2] MAINTAINERS: update address
-Date: Tue, 14 Apr 2026 15:36:02 -0700
-Message-ID: <20260414223604.104290-2-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260414223604.104290-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260414223604.104290-1-pierrick.bouvier@oss.qualcomm.com>
+Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
+ migrate_params_test_apply
+Date: Tue, 14 Apr 2026 19:37:18 -0300
+Message-ID: <20260414223718.23965-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: DglV5HqtfnoCRknEO0hv_dCoC0tLoQ7H
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDIxMSBTYWx0ZWRfXyz/d3ZAJlthG
- u/t59UI1pq30i7HsTtkARhX2sukjWCEgWHR8LkYgCndOVAhWB/NKDk1HQOhQf8UJaGSaAoZzoma
- 5KnJqzJJ/PNyptfbsd7d4jADA8HH2xq2yJxddBEmJGuuCQ8uzVS8FIjNVNgIBUxrg769kmgqLXN
- TsuDwg2bEQ7aa3KV7ISaCgkhQ1X/gMVCeCez3E4DOP5f72j6VwgDW/d/yC5QKY/UImc/cR7Tp9R
- HcbMgITPIX/Q1EoRaen4JqNYZmyL56ZvzYQEi/LmL41zYqyw2G4Y3mxPvgOirvO65wtuwZUBR3x
- npHWeCK0BOjU3vccVwVOixsZkQVadEY/X6wM0jZi6OUE1tSESNURb54I7NLowop7lO8ou/Kv0zu
- 0moCHkUATPbc7lpSvQW7+R2fkTpGgC21EidhYb4xzrUOByFeJ/DAz4NdldQEolXouc3Bz2fnuLv
- P64L9MKE45X2eLGXvMQ==
-X-Authority-Analysis: v=2.4 cv=CoGPtH4D c=1 sm=1 tr=0 ts=69dec15c cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=cplnpDx6AAAA:8 a=dGsWvjqBAAAA:8 a=pGLkceISAAAA:8 a=SqMvC5kiAAAA:8
- a=Xv82AFIBnWWXnF7l86oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22 a=cvBusfyB2V15izCimMoJ:22 a=bHwCOBSOUrNypjIvOSWD:22
- a=EwAE0RQWx3bH85eTCWcH:22 a=_o8VnCo6Hb5Oqlm6Mk7M:22
-X-Proofpoint-ORIG-GUID: DglV5HqtfnoCRknEO0hv_dCoC0tLoQ7H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-14_04,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
- malwarescore=0 spamscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604140211
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -160,52 +110,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- MAINTAINERS | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
+method makes the handling of the TLS strings more intuitive because it
+clones them as well.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ad215eced84..14bd822ddbe 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2038,7 +2038,7 @@ F: tests/functional/generic/test_empty_cpu_model.py
- F: tests/unit/test-smp-parse.c
+This also fixes a segfault when a NULL TLS option is accessed as part
+of a validation check for another option (e.g. in the zero-copy +
+multifd compression case). Details follow:
+
+Currently, after copying s->parameters to the temporary
+MigrationParameters object before migrate_params_check(), the
+references in temporary object to the TLS options are dropped, either
+because:
+
+a) the user set a new option, in which case that's fine as
+   s->parameters still holds the reference to the old memory or,
+
+b) the user did not set a new option, in which case keeping the
+   references in the temporary object would later cause them to be
+   freed along with it, leading to double-free when s->parameters is
+   also freed later on.
+
+In this second case, it was overlooked that the TLS options can be
+accessed already during migrate_params_check() as part of validation
+of another option. Those pointers should not have been cleared.
+
+Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
+is not stealing a reference from s->parameters anymore.
+
+Fixes: aed97f0563 ("migration: Normalize tls arguments")
+Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+NOTE#1: For the release we could have a simpler fix just checking for
+NULL, but that would allow two unsupported configurations to be
+accepted: zero-copy with either multifd compression or TLS.
+
+NOTE#2: CI is red due to pre-existing failure in functional tests with
+"exec:socat" migration.
+---
+ migration/options.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
+
+diff --git a/migration/options.c b/migration/options.c
+index 7556fbc06b..68441f0276 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1279,9 +1279,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+ static void migrate_params_test_apply(MigrationParameters *params,
+                                       MigrationParameters *dest)
+ {
+-    *dest = migrate_get_current()->parameters;
++    MigrationState *s = migrate_get_current();
  
- TargetInfo API
--M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Supported
- F: include/qemu/target-info*.h
-@@ -4075,7 +4075,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
+-    /* TODO use QAPI_CLONE() instead of duplicating it inline */
++    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
  
- Linux user
- M: Laurent Vivier <laurent@vivier.eu>
--R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Odd Fixes
- F: linux-user/
- F: configs/targets/*linux-user.mak
-@@ -4094,7 +4094,7 @@ F: include/tcg/
+     if (params->has_throttle_trigger_threshold) {
+         dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
+@@ -1300,24 +1300,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
+     }
  
- TCG Plugins
- M: Alex Bennée <alex.bennee@linaro.org>
--M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- T: git https://gitlab.com/stsquad/qemu plugins/next
- R: Alexandre Iooss <erdnaxe@crans.org>
- R: Mahmoud Mandour <ma.mandourr@gmail.com>
-@@ -4556,7 +4556,7 @@ L: devel@lists.libvirt.org
- F: docs/about/deprecated.rst
+     if (params->tls_creds) {
++        qapi_free_StrOrNull(dest->tls_creds);
+         dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
+-    } else {
+-        /* clear the reference, it's owned by s->parameters */
+-        dest->tls_creds = NULL;
+     }
  
- General Documentation
--M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Maintained
- F: docs/
+     if (params->tls_hostname) {
++        qapi_free_StrOrNull(dest->tls_hostname);
+         dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
+-    } else {
+-        /* clear the reference, it's owned by s->parameters */
+-        dest->tls_hostname = NULL;
+     }
  
+     if (params->tls_authz) {
++        qapi_free_StrOrNull(dest->tls_authz);
+         dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
+-    } else {
+-        /* clear the reference, it's owned by s->parameters */
+-        dest->tls_authz = NULL;
+     }
+ 
+     if (params->has_max_bandwidth) {
+@@ -1374,8 +1368,9 @@ static void migrate_params_test_apply(MigrationParameters *params,
+     }
+ 
+     if (params->has_block_bitmap_mapping) {
+-        dest->has_block_bitmap_mapping = true;
+-        dest->block_bitmap_mapping = params->block_bitmap_mapping;
++        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
++        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
++                                                params->block_bitmap_mapping);
+     }
+ 
+     if (params->has_x_vcpu_dirty_limit_period) {
+@@ -1399,7 +1394,8 @@ static void migrate_params_test_apply(MigrationParameters *params,
+     }
+ 
+     if (params->has_cpr_exec_command) {
+-        dest->cpr_exec_command = params->cpr_exec_command;
++        qapi_free_strList(dest->cpr_exec_command);
++        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
+     }
+ }
+ 
+@@ -1555,4 +1551,6 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+     }
+ 
+     migrate_tls_opts_free(&tmp);
++    qapi_free_BitmapMigrationNodeAliasList(tmp.block_bitmap_mapping);
++    qapi_free_strList(tmp.cpr_exec_command);
+ }
 -- 
-2.47.3
+2.51.0
 
 
