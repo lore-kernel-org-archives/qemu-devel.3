@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94995F531DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1AFFF531DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCRi3-0000LL-TH; Mon, 13 Apr 2026 20:32:55 -0400
+	id 1wCRhp-0007yX-8v; Mon, 13 Apr 2026 20:32:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRi2-0000KW-Rk
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:32:54 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRho-0007si-DW
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:32:40 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRi1-0003Rf-9G
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:32:54 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso41172535e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:32:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRhn-0003Qf-0d
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:32:40 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-488a14c31eeso41171555e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:32:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776126771; x=1776731571; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776126757; x=1776731557; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rxLEbMZsZkzsDTrSuMDqm5sZgfXseQNGksHS6C02fq4=;
- b=GnKbDW+VrUbCy8fUAEH+TPOo69e78WgfE9LBx5IjGxovN7j1SfJYXELIfjREVM6ghX
- mwWizmmzVVPtdT8CExjZ6fVD1NLuXR5eWqv2MQdJ7zMqezMMn7yl6ToI8VptT2yQxLl2
- gitBWzvS5UZA/o9c9Yn2IYqt5TNzI/mr0jelV1G7+ZO7DGkpJ42eNW5H9F9r3UqhyxrM
- qm6Y7GNXznoFL6T9FcO/FdiJpH5XkUcywyK14OB6j4n2ZtVrV1JPGoHoA9p//wf1my9O
- Hud+/kTmnpSrYxurw/dsKr//fdWQGQneORISnaD18+NkAj1/HZE+oc6T+t1d0KDk/wrQ
- R71Q==
+ bh=/VyMpbZZBycD9uof5+Mpu9kfOlAUg4ZoswdMUmEvtEU=;
+ b=fF1Qx1SOtv+N82yZCJqHFDysCP7ZWqobntnoGtUEV0HfT2c+y19cZ3S/oplMI8MRnj
+ AzqQPN2HTaxh+/kwoB8uj2f91W2DBHqie1WJ/fmcnUmDMX1cxcslaScTQPW8ifuLc/Xw
+ 1Uqd5vW3JjsFZ1v/AeA8MIyicK4LecWv3s7VwZTlwj1K8IvxrTvwotlk3PUJEIYDHvMT
+ pyV4OIvY6stwMsqShQ9L+Dd4DyfVi3S1yCMjK2nzyjLR9V/w7XjQGYekyhuDSmBAqTmq
+ uDCClodvBtFp3esNL/rktotN670z4Atj5fCoCm/D5Qnjl236oTlOGuGSglh6WVnbYEbH
+ y9Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776126771; x=1776731571;
+ d=1e100.net; s=20251104; t=1776126757; x=1776731557;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rxLEbMZsZkzsDTrSuMDqm5sZgfXseQNGksHS6C02fq4=;
- b=MKAjhNVgA/dwrwMzuerkBRHbCcVdYXRL75Fm7ywyuSjttR234sbiOQ+LICBwqqlAiJ
- GE1VtsRyJrjNqh8MVCVqqVG7/2zW2JN6p8BqXN4N5n789/bD1bNhsCf/Gg5iLELoPei3
- keFlad5RaEmSvP8NhMxXp08/9916WIBpwgAmxkQi+QOmAkXnNv0KYvkPD6XWRd1NRDKb
- Aq3q5lPt1CEHVolG+b1l8CgOfJHeLmdAqWW8BtU1I2f9iFRwSI3ogfTljZZZQanV/MIN
- GyvGnUmSevyXq0ka8hjDluwzlrGre+Zj2b+zdlyuOVR+JhjrFEQw2ruk04GcoKENYu1Z
- vc3g==
-X-Gm-Message-State: AOJu0Yy1ZvAKD29W/XWGfTl0jdXkL/NL7WqfciKfT1VLBSxnoMBTeuPp
- 98k3FXZ5tSwgNktSRqGx7wOwVidkBl8vSvKgL7PK2HExvif+LCeCUNAzjT1kwZ9VTQBm8+hhqDy
- GO843I+g=
-X-Gm-Gg: AeBDievtS51p4Kher7hxrxqZsQUUAk8BdNTV/r+fKvaR6XwPQ7a++uWSLx1EsDFpbnl
- s7mcczqKqW6nnNmizJ5PXK4mqtLHgWbqz9FBREfLj8kcq4B/iawpcn69bJDH+BDilHEXhBQDhPu
- wMbGBVaNAsmNwwl67FnZpfZ5Lbk0NudPmDDTgQgAbyKSVsVun5opjsTrQYUxiMMVqctyTG4nKNz
- Ni4XRtjLi4Tqu+l6r++YjlanosQpPseO6eSfHmmrG/9FOFKE4D0jyIril/rS8ZUHioG79t+voja
- teLGJw7GC+UsHIQwCUXGK+8JVHhAuZxPbYERC2wZAuvEZruIUx8UAFnpCJ9HCdSRWeAR6+RpJ5C
- 74naF0v23vwt3eHv42fb3mWMrK5B7ITkjTZMM9xKlDwlh/lBaVBiA98nQBWl/DfJHewlCEEckv3
- FdqSjS/8uiYxMETntM3wIxCOzjit9FIhdewbDtGzHk5XybCVyEckdN2ESGM6zUj2bQe8uAHL2v
-X-Received: by 2002:a05:600c:8883:b0:488:b87b:3052 with SMTP id
- 5b1f17b1804b1-488d689b400mr157810815e9.29.1776126771428; 
- Mon, 13 Apr 2026 17:32:51 -0700 (PDT)
+ bh=/VyMpbZZBycD9uof5+Mpu9kfOlAUg4ZoswdMUmEvtEU=;
+ b=cYh1+CrDhq/Axtf3RqvotpmjgxqDNeiuaLI+hHyv5ax5Yk14yAkSYZVVCLLzMZYkrL
+ racsa0N2MckVtN5NfMCWVY8od+2LsqxEiqpPj+klaDuQ7hiFPMGTAYoxBtgRG2BnJSj/
+ nHft3wf6SucEzLqupi5TTlcK0LNDbiGITAGLrJrZis3wWuQhbPZwrxkelEJ3PnnUdd+f
+ i0u4TYMM8yHPzVhKAMc9Vr0TckrsNwj673xwe4Dp+jHNZ26cfUI3MZbhZOi+ji/FxjT7
+ mF2DgwUquN6MkCOAG87AJKzToLX98PyW43hxUoAvGJ+sFKgY0umkMwpt/8ul4ObAJJd9
+ 0RIQ==
+X-Gm-Message-State: AOJu0Ywmxi8Xsfcp9LQLVhreOID6nnr/v5BrfDKElSh12+734ja3oMm/
+ lk/K55qYL3x/tb1ZFtKXszeIJK02Jh7f0YcUGsA37RV9rH0BeujDwrk8jYzS1iiIgnXCKbwKvga
+ Im4Fn8Uk=
+X-Gm-Gg: AeBDieudrHfZ2e/2VvAigk3bZwIItJLWUYrsrkXy3mrDqzpOuUSXWux6DIO75aLNeZj
+ LWYASd1aXgDkWxU/tTTW1upcxPinGIdpkYksMTVmzTSihHuAfW0GrH5qAScok04MK2cKNudBixB
+ Yg5whSpdirrp/w9Ajb0rrj9UZDZ2TpjLqkMJJmwjmCThZFfOybrD9ZWvrZciNJS9Z66gjZz+p8+
+ wCs+TwP2dhPZmf8hGLJ5i8i2mQ5u6LMD4B7xzbXjN2ikzoLtu5s9gR1D7a9Hp8/DxnjkHv7ABZq
+ uzDq1Arod4H45XPcaT6YUFPA+rJ2QbA1DW1WDIV9rXRcQzUWRgwsl0ua7MdcUN/s+o5/0/+Nkmk
+ EMlte0JYXt6c8SsA85ncsSStCgWVIsX5z7srZelz+AzeX4KsK62KfqRkXi1Gr3lrenr9C3uYlre
+ 7vS6Bmc8wRBc8JMWytGEIi+JcOWJ/HkUBk6xPbZwisjBsi+tDmaCzjdgnoIjW1nlFUUIvkmNph
+X-Received: by 2002:a05:600c:a416:b0:485:41c4:e2e4 with SMTP id
+ 5b1f17b1804b1-488d6860571mr145539645e9.23.1776126757174; 
+ Mon, 13 Apr 2026 17:32:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d681ecd5sm109676535e9.19.2026.04.13.17.32.50
+ 5b1f17b1804b1-488ede1513csm6532565e9.2.2026.04.13.17.32.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 13 Apr 2026 17:32:50 -0700 (PDT)
+ Mon, 13 Apr 2026 17:32:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,20 +70,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 23/27] target/i386: Replace target_monitor_defs ->
- SysemuCPUOps::monitor_defs
-Date: Tue, 14 Apr 2026 02:29:55 +0200
-Message-ID: <20260414003001.97571-24-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 21/27] monitor: Forward-declare the MonitorDef type
+Date: Tue, 14 Apr 2026 02:29:53 +0200
+Message-ID: <20260414003001.97571-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260414003001.97571-1-philmd@linaro.org>
 References: <20260414003001.97571-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,109 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict x86_monitor_defs[] to cpu.c, register it as
-SysemuCPUOps::monitor_defs hook, allowing to remove
-the target_monitor_defs() method.
+Rather than having core header forced to include "monitor/hmp.h"
+to get the MonitorDef type declaration, forward-declare it in
+"qemu/typedefs.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/cpu.c     | 29 +++++++++++++++++++++++++++++
- target/i386/monitor.c | 30 ------------------------------
- 2 files changed, 29 insertions(+), 30 deletions(-)
+ include/monitor/hmp.h   | 6 +++---
+ include/qemu/typedefs.h | 1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c6fd1dc00eb..4cb8c627295 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -39,6 +39,7 @@
- #include "exec/watchpoint.h"
- #ifndef CONFIG_USER_ONLY
- #include "confidential-guest.h"
-+#include "monitor/hmp.h"
- #include "system/reset.h"
- #include "qapi/qapi-commands-machine.h"
- #include "system/address-spaces.h"
-@@ -10685,6 +10686,33 @@ static const Property x86_cpu_properties[] = {
- };
- 
- #ifndef CONFIG_USER_ONLY
-+
-+static int64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
-+                              int offset)
-+{
-+    CPUArchState *env = mon_get_cpu_env(mon);
-+    int64_t ret = env->eip + env->segs[R_CS].base;
-+
-+    if (!(env->hflags & HF_CS64_MASK)) {
-+        ret = (int32_t)ret;
-+    }
-+    return ret;
-+}
-+
-+static const MonitorDef x86_monitor_defs[] = {
-+#define SEG(name, seg) \
-+    { name ".limit", offsetof(CPUX86State, segs[seg].limit) },
-+    SEG("cs", R_CS)
-+    SEG("ds", R_DS)
-+    SEG("es", R_ES)
-+    SEG("ss", R_SS)
-+    SEG("fs", R_FS)
-+    SEG("gs", R_GS)
-+    { "pc", 0, monitor_get_pc, },
-+    { NULL },
-+#undef SEG
-+};
-+
- #include "hw/core/sysemu-cpu-ops.h"
- 
- static const struct SysemuCPUOps i386_sysemu_ops = {
-@@ -10698,6 +10726,7 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
-     .write_elf64_note = x86_cpu_write_elf64_note,
-     .write_elf32_qemunote = x86_cpu_write_elf32_qemunote,
-     .write_elf64_qemunote = x86_cpu_write_elf64_qemunote,
-+    .monitor_defs = x86_monitor_defs,
-     .legacy_vmsd = &vmstate_x86_cpu,
- };
- #endif
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 1befb8ea824..a536712c755 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -591,33 +591,3 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
-                            flags);
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 8abe3168924..22784bd4c79 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -24,11 +24,11 @@
+         g_assert_not_reached(); \
      }
- }
--
--static int64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
--                              int offset)
--{
--    CPUArchState *env = mon_get_cpu_env(mon);
--    int64_t ret = env->eip + env->segs[R_CS].base;
--
--    if (!(env->hflags & HF_CS64_MASK)) {
--        ret = (int32_t)ret;
--    }
--    return ret;
--}
--
--const MonitorDef monitor_defs[] = {
--#define SEG(name, seg) \
--    { name ".limit", offsetof(CPUX86State, segs[seg].limit) },
--    SEG("cs", R_CS)
--    SEG("ds", R_DS)
--    SEG("es", R_ES)
--    SEG("ss", R_SS)
--    SEG("fs", R_FS)
--    SEG("gs", R_GS)
--    { "pc", 0, monitor_get_pc, },
--    { NULL },
--};
--
--const MonitorDef *target_monitor_defs(void)
--{
--    return monitor_defs;
--}
+ 
+-typedef struct MonitorDef {
++struct MonitorDef {
+     const char *name;
+     int offset;
+-    int64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int offset);
+-} MonitorDef;
++    int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
++};
+ 
+ const MonitorDef *target_monitor_defs(void);
+ 
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 416a8c9acea..07f2ae7c9f1 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -72,6 +72,7 @@ typedef struct MemoryRegionSection MemoryRegionSection;
+ typedef struct MigrationIncomingState MigrationIncomingState;
+ typedef struct MigrationState MigrationState;
+ typedef struct Monitor Monitor;
++typedef struct MonitorDef MonitorDef;
+ typedef struct MSIMessage MSIMessage;
+ typedef struct NetClientState NetClientState;
+ typedef struct NetFilterState NetFilterState;
 -- 
 2.53.0
 
