@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6859EF531DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F4AF531DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCRgS-0001pp-9T; Mon, 13 Apr 2026 20:31:16 -0400
+	id 1wCRgl-0002pC-Sy; Mon, 13 Apr 2026 20:31:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRgK-0001fQ-R4
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:31:10 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRgl-0002lS-2y
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:31:35 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRgI-0003B5-8q
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:31:07 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so34952325e9.2
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:31:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCRgj-0003F3-Ds
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:31:34 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488e1a8ac40so34955205e9.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776126663; x=1776731463; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776126692; x=1776731492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iqT5An8t/Rup8MOLjBq+qy6AZymRqDsPAbrkKupI24o=;
- b=Q6MhdpYxb4x1S+qHUdXHuDdMr6C06GtAMCXyHk3WE0ik4NlGKlt579ARBDvNbcD0BO
- 8kAmsNP6/mrupJlM/g4/U4j87iZsypmSz5xwX1lJfMZ74gOeXlZ+UbJYdt0Q+phsjur9
- BftCAekaimrNpL+b+TJY4yTD+ks7nARSLwOGfzm09MSsX3Y7YfrKfnneZGZrpBgfxTg+
- XTixRiN5SLa4oA5WCdBAVfXX7CqPHPU2RhC0XHHMp5G8vozBymqsVgjSZLNObvQ80wFf
- djZqB7xS1dotd7l+C/NVyoVX8Sv10AcUP7i5NmQrfR8FJthHdRZi9sfqvotumZ3sDshi
- WBxA==
+ bh=bt+4kyReD5cZ8XMM2eCoJcAo0IpKXrafGm4URfy/RPM=;
+ b=vgg2DXgiAQDowJFrSu+KqdEc8kILn9hc91SrGCLEc0ZleLJRBPehsKwGxAOq9XU5nc
+ 5w2BoBmB+QxUIrDSW1E83pFFPVJJgswZ2pAMNt7AnpL2YtmDJAFpUETdZvdAclvbKoml
+ B8gfq2Yk29/rPox7bv84wS3XLhBnoNj92sa1kRcdPtXlFXSwoc4d1SSHT4feI7rrpOVs
+ YB7+P3sM259EOr8TTdvTnOBArxIB8kSZ4OB67Jxg4Qz/XWER17q3sVKCuX1b+d7FdZQh
+ ueRMuIl/2bHdgms8bnQDHOT2WDStqf1QabvLdo9Y18Q/biH1pIZFmYvLSSJb3TbwKaBK
+ BV2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776126663; x=1776731463;
+ d=1e100.net; s=20251104; t=1776126692; x=1776731492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iqT5An8t/Rup8MOLjBq+qy6AZymRqDsPAbrkKupI24o=;
- b=Ze1oj6TYGeI4geh0a8NTg8iGu2LDsLSS5Cq1PtvyvUWskFuLU3TqcNGfohe7X9JwKv
- KALsGuqr1epp4yTqIhegrY+SykW6kT8ugFaU4Q4cFvYI/EfsxF3+guZG2BSF/H66FbRM
- +EmGWfgZAzyVDKfEgZi3TBNAIGGowPIu+6mwqjHBm1YNztCMLbyC3qC6bRXBxErOKw8k
- ixpCa9+H+0pmWytJ3dt1itAePLLYGMb+FeCy849nhpjZCpD9dQrJAyVo1fQoAWN67V8o
- GAyIknc9Wc9Vy2Y/ql832cncE4LoVGVgvvbTHpzwXH4X9XqeYVBZf8AFqnHpkecSC3dt
- +cTA==
-X-Gm-Message-State: AOJu0Yycr0MCgw3nQs7OLlcr+bKcOXQ/+xank0sfTz5NHEvEr3e1FT+b
- HVTGYRB4lGORZMkQ9GrbOVtwbBsSGLWUfYp2BzcmHDbcCKsgPtWjk9Nc/UIT5plThKHDixalu+p
- gOXbvdR0=
-X-Gm-Gg: AeBDiesEq4V2McfrTc9x/GRROkx3abNC5K8RbQdSIPCt7d2KYSKmKzAZmOh/ZjyGpqP
- d0T8cu05lFB5J83eXPDxtKwSsCLVUQlA7ANExh5l+Z4xys49Xztn6iJM70MicM4X9TJl3/Zg2B0
- KdHCiZPKaCh1PVmGbmIaQboTxIHzTKzXFomGa8Es89ZcRzA44Ah9PX/8XJkgQmBqxiAE+1Ipjm4
- D9ETi7P5jyZO51VyOl1Yjc3Dul4YzF8DuUOi60fOHkJOLrfUGP9faxUsyneP7H9RdRIN5eEBDz4
- wEYpj0jPgPWQefZqqz8P4ma6wtDBFqi+XtAxJr0dgBzWAlIBDk0OTCO6QsIjgSTL4hC8uuPoNWb
- xxV/1fyXFTcdHiwBVd+zS6XzPHxm011yWRCBS8KPDgOVHPNi36EiS+Uzt0TnByGl+TU4VbNskV+
- 9gEwTODpJrciuptZYEhhwDAkAYnJ7qZmx+gVjqmO1A9hDkwyISObgdhwOGr1gQlCLVgXKrEUo8
-X-Received: by 2002:a05:600c:43d5:b0:488:d8b6:abda with SMTP id
- 5b1f17b1804b1-488d8b6acdfmr118139995e9.19.1776126663425; 
- Mon, 13 Apr 2026 17:31:03 -0700 (PDT)
+ bh=bt+4kyReD5cZ8XMM2eCoJcAo0IpKXrafGm4URfy/RPM=;
+ b=Rooqe2baIW0LssJ+HiwQYlLEJUPSxa9oQztEZOuPq/jrZAjGvXmwjfeaD5KJLJIgtB
+ /zh0t4FKifzb2dG7Jha4VZtcqnd4Rm4Xs8D+q+Txx3NftH0wRo07yNXUwF1loT5AfBPE
+ 9aeN/k11tlfQ0mEjiRoko+Gm8R3dhXBqsVqbQ9R1AFKPbaIsFQCgBVL0Z/u91a7Ai6eL
+ UMuBiTz4pznArS9JVStO/KMXOS3QRxgsDUeoiv/igImoHm+f+YEgglFm8C9Gw6XYe5UO
+ Xzc0jCiNBOcPK8xe984e4P6YXSNEOqSlFBpu+PgfdJBhaA/Jo2nufOzY3b7FfCGAkEUZ
+ ppRA==
+X-Gm-Message-State: AOJu0YxEUAzPkB0f1/iIqsDe8RArWLv1XBj26Mo58lCZqw9S+iPJmuYE
+ OOstrNPHse8c8Cct+4965kQPhW014Cx+h+vI3EztXB4PIjFVGn5b+LYyAPUCZxgGOBxXDAxO2nn
+ DDu33Y3c=
+X-Gm-Gg: AeBDietpGopNvmKSX9br4XPQZiethdxk0SFzH+H0i09DVgjTT9sCTLwg0LrFv49/bLR
+ o7cArDEgOCm4n9ffQHz3mpZv8AIToFwOTk8yjzJXYen38VpkrTLkaKaR9FsXw8LcyJ60K2SuJtM
+ BiXFJ2W4BfKrdqaFPYQ8TtJaLlKxQkqCakvbYqJGQkzQAH2OPz3ySa1J06c7XHYTQKlVPItQmxI
+ n3rwBpy/tDddBdG7/x/Z5RSJM9abdwLihyw4ktMNN2JJvP9KH0LZMNVMZ8Jz8sbfB0NGrRqnHSA
+ VHgZ8TrxN3ulFU/pfXDhXERWvPQjwc1Wv8Wpceyhyk8MOHmC7HkKlTn5ResqCmQPyOpHON2yE8j
+ MNQVNohj8BiqvkjTlS0NQ2afV+pf4UZcuPvyhDvepi7qzLAHk8lsnpjrqWySBy25cFO/oBy1a08
+ vzme10aKY/c5PuHHYHRI7I5u/+bqKUL7JwVpDiOsOYPJqhFlz3CXFMg4ISEpDKv6dwJ6EsS9wi
+X-Received: by 2002:a05:600c:64c4:b0:485:30d4:6b9e with SMTP id
+ 5b1f17b1804b1-488d686c04fmr187577555e9.21.1776126691684; 
+ Mon, 13 Apr 2026 17:31:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d68479b2sm105283705e9.25.2026.04.13.17.31.02
+ 5b1f17b1804b1-488ede1e05bsm12018185e9.6.2026.04.13.17.31.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 13 Apr 2026 17:31:02 -0700 (PDT)
+ Mon, 13 Apr 2026 17:31:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -71,30 +71,27 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- qemu-s390x@nongnu.org
-Subject: [PATCH v3 08/27] hw/s390x: Reduce 'monitor/monitor.h' inclusions
-Date: Tue, 14 Apr 2026 02:29:40 +0200
-Message-ID: <20260414003001.97571-9-philmd@linaro.org>
+ Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ kvm@vger.kernel.org
+Subject: [PATCH v3 12/27] monitor: Do not check TARGET_I386 to build 'info
+ sev' command
+Date: Tue, 14 Apr 2026 02:29:44 +0200
+Message-ID: <20260414003001.97571-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260414003001.97571-1-philmd@linaro.org>
 References: <20260414003001.97571-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,102 +107,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to make the HMP commands available for all targets,
-move the declarations to "monitor/hmp.h" where all other
-are, and only include the monitor headers in the source files.
+This command is filtered at build-time for i386/x86_64 binaries.
+By using the recently introduced HMPCommand::arch_bitmask flag
+we can filter it at runtime, making it possible to compile
+hmp-commands-info.hx once.
+
+Since the method depends on the CONFIG_SEV definition, define it
+in its own stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Cornelia Huck <cohuck@redhat.com>
 ---
- include/hw/s390x/storage-attributes.h | 4 ----
- include/hw/s390x/storage-keys.h       | 3 ---
- include/monitor/hmp.h                 | 5 +++++
- hw/s390x/s390-skeys.c                 | 2 ++
- hw/s390x/s390-stattrib.c              | 2 ++
- 5 files changed, 9 insertions(+), 7 deletions(-)
+ MAINTAINERS                   |  1 +
+ stubs/hmp-cmd-info_sev.c      | 16 ++++++++++++++++
+ target/i386/sev-system-stub.c |  5 -----
+ hmp-commands-info.hx          |  3 +--
+ stubs/meson.build             |  1 +
+ 5 files changed, 19 insertions(+), 7 deletions(-)
+ create mode 100644 stubs/hmp-cmd-info_sev.c
 
-diff --git a/include/hw/s390x/storage-attributes.h b/include/hw/s390x/storage-attributes.h
-index 66716a97c05..0305873b019 100644
---- a/include/hw/s390x/storage-attributes.h
-+++ b/include/hw/s390x/storage-attributes.h
-@@ -13,7 +13,6 @@
- #define S390_STORAGE_ATTRIBUTES_H
- 
- #include "hw/core/qdev.h"
--#include "monitor/monitor.h"
- #include "qom/object.h"
- 
- #define TYPE_S390_STATTRIB "s390-storage_attributes"
-@@ -72,7 +71,4 @@ static inline Object *kvm_s390_stattrib_create(void)
- }
- #endif
- 
--void hmp_info_cmma(Monitor *mon, const QDict *qdict);
--void hmp_migrationmode(Monitor *mon, const QDict *qdict);
--
- #endif /* S390_STORAGE_ATTRIBUTES_H */
-diff --git a/include/hw/s390x/storage-keys.h b/include/hw/s390x/storage-keys.h
-index 2d02936c31c..666c05e2996 100644
---- a/include/hw/s390x/storage-keys.h
-+++ b/include/hw/s390x/storage-keys.h
-@@ -13,7 +13,6 @@
- #define S390_STORAGE_KEYS_H
- 
- #include "hw/core/qdev.h"
--#include "monitor/monitor.h"
- #include "qom/object.h"
- 
- #define TYPE_S390_SKEYS "s390-skeys"
-@@ -123,8 +122,6 @@ int s390_skeys_set(S390SKeysState *ks, uint64_t start_gfn,
- S390SKeysState *s390_get_skeys_device(void);
- 
- void s390_qmp_dump_skeys(const char *filename, Error **errp);
--void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
--void hmp_info_skeys(Monitor *mon, const QDict *qdict);
- 
- #define TYPE_DUMP_SKEYS_INTERFACE "dump-skeys-interface"
- 
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 9c2330205fc..d694bfdf768 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -173,4 +173,9 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
- void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
- void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
- 
-+void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
-+void hmp_info_skeys(Monitor *mon, const QDict *qdict);
-+void hmp_info_cmma(Monitor *mon, const QDict *qdict);
-+void hmp_migrationmode(Monitor *mon, const QDict *qdict);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 16a3d71af02..580a80ab254 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -515,6 +515,7 @@ S: Supported
+ F: docs/system/i386/amd-memory-encryption.rst
+ F: docs/system/i386/sgx.rst
+ F: hw/i386/sgx*
++F: stubs/hmp-cmd-info_sev.c
+ F: stubs/qmp-i386-sev.c
+ F: stubs/qmp-i386-sgx.c
+ F: target/i386/kvm/
+diff --git a/stubs/hmp-cmd-info_sev.c b/stubs/hmp-cmd-info_sev.c
+new file mode 100644
+index 00000000000..f3624423a33
+--- /dev/null
++++ b/stubs/hmp-cmd-info_sev.c
+@@ -0,0 +1,16 @@
++/*
++ * Human Monitor 'info sev' stub (CONFIG_SEV)
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- #endif
-diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
-index d974d97b5e7..7dca67d6618 100644
---- a/hw/s390x/s390-skeys.c
-+++ b/hw/s390x/s390-skeys.c
-@@ -24,6 +24,8 @@
- #include "system/kvm.h"
- #include "migration/qemu-file-types.h"
- #include "migration/register.h"
++#include "qemu/osdep.h"
 +#include "monitor/hmp.h"
 +#include "monitor/monitor.h"
- #include "trace.h"
++
++void hmp_info_sev(Monitor *mon, const QDict *qdict)
++{
++    monitor_printf(mon, "SEV is not available in this QEMU\n");
++}
+diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
+index fb84aee94d2..2ea85597cf9 100644
+--- a/target/i386/sev-system-stub.c
++++ b/target/i386/sev-system-stub.c
+@@ -32,11 +32,6 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+     g_assert_not_reached();
+ }
  
- #define S390_SKEYS_BUFFER_SIZE (128 * KiB)  /* Room for 128k storage keys */
-diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
-index 2e83aa211cd..74b23b0a995 100644
---- a/hw/s390x/s390-stattrib.c
-+++ b/hw/s390x/s390-stattrib.c
-@@ -15,6 +15,8 @@
- #include "system/ram_addr.h"
- #include "migration/qemu-file.h"
- #include "migration/register.h"
-+#include "monitor/hmp.h"
-+#include "monitor/monitor.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/s390x/storage-attributes.h"
- #include "qemu/error-report.h"
+-void hmp_info_sev(Monitor *mon, const QDict *qdict)
+-{
+-    monitor_printf(mon, "SEV is not available in this QEMU\n");
+-}
+-
+ void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size)
+ {
+ }
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index da9fdc0ab7b..336ab870a2c 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -812,15 +812,14 @@ SRST
+     enabled) memory in bytes.
+ ERST
+ 
+-#if defined(TARGET_I386)
+     {
+         .name       = "sev",
+         .args_type  = "",
+         .params     = "",
+         .help       = "show SEV information",
+         .cmd        = hmp_info_sev,
++        .arch_bitmask = QEMU_ARCH_I386,
+     },
+-#endif
+ 
+ SRST
+   ``info sev``
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 4d1a803c17c..4a1d687a111 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -86,6 +86,7 @@ if have_system
+   stub_ss.add(files('qmp-cpu.c'))
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
++  stub_ss.add(files('hmp-cmd-info_sev.c'))
+   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+   stub_ss.add(files('hmp-cmds-target-i386.c'))
+ endif
 -- 
 2.53.0
 
