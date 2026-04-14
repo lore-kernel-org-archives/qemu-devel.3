@@ -4,91 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E5DF9D0CA
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 11:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34AA2F9D0CA
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 11:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCcOp-0006w9-GK; Tue, 14 Apr 2026 07:57:47 -0400
+	id 1wCcQ0-0007N8-MK; Tue, 14 Apr 2026 07:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCcOn-0006vq-Uj
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:57:45 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCcOm-0002hW-7L
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:57:45 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d03db7f87so3386024f8f.3
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 04:57:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wCcPy-0007Ma-RA
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:58:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wCcPx-0002ot-Az
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:58:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776167936;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7wXjoqNLqgmtKuIWm7qVMBaYg2lhPSlBx3hWi0f9lKg=;
+ b=TAHQZZlUGie9uvZU3JVhZOOmpVgezlIQJfVEnako7cmOOOE+hVFot2k3kxl2xHmJeo4ynj
+ gXEEuglQiK8ETHvUynVjp+9ZSPjavzdbO7ZzflW166KWjubmQDkvOpOutD/Fpy7zFsbhIG
+ l1QLtHCyb1DQKZRyAez9ZriNddTg+98=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-502-HnwNQYh1OhGsmDEp60WyoA-1; Tue, 14 Apr 2026 07:57:42 -0400
+X-MC-Unique: HnwNQYh1OhGsmDEp60WyoA-1
+X-Mimecast-MFC-AGG-ID: HnwNQYh1OhGsmDEp60WyoA_1776167861
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-3568090851aso12428319a91.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 04:57:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776167861; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YhSsmUduFA0UdLhdKtFNi2oIGYUj/ABc/kJ7MauwafstnYni3Xxgx4CO0HW1KKpCpL
+ S0pO2gwVOBmnv4CIFrqFz+5hrpuzFb3MuaLoKGSuGQL8HHnb7r4FUdyoROgJE/RjQQWc
+ V6rM73Ra8EaTzMklqHIDvEfIlGn9KxTbzdEv1l2P57FQbFLAc1oUq0G568Uv0DVhGqWV
+ cFTdZ0458RZHIe6IV4MXLPTHx6pq/f4W/4qLiurSWTSICscmtG+RyUXI+PnMCwfDNbO5
+ zzB+orm8DMk1FzTFa8Yx0sAj3nBgbt+7BaIXlGHl0dp5wMMk0AUBeMMYwNn4T7AdxMFb
+ U2Xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7wXjoqNLqgmtKuIWm7qVMBaYg2lhPSlBx3hWi0f9lKg=;
+ fh=6wfRCG2K6ROGLsOmSJHDb77krC7aSm2FPM00yXrhoVo=;
+ b=kkBXnhcBjQftxj/DskaYSCfGfgE8F+TUORpuTFmsPQJlLObfitQkVg65kZj5nSaUTQ
+ iNshrc8XzEdO9KIuZqINAb8wN2rJk/tTKuK1/3tURXXAfzd47JCMwFoe6StB+wUZ1vU8
+ c55vQdHMFhLnDKyBm8vOsdr78fJEIgZo2NZFeR4Xcy/OYo4wdfoARA1VI0MHwVY7PPaR
+ t93jQOlbQ8v0kXF8H1xXTi1Db58vQb6xO2clWyxJh3xkA4G2LnUiB+Xu7uDXup9a/oqx
+ XQ2phB+JIIVfgSvPpTgWl3JhtDa1WcRT9nM4m/aZmL9FhZYWAGmbXo5MxUCnMMMA7JNY
+ h1ng==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776167862; x=1776772662; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gQKTuwmRxA+OIOiaFfMIP1eOIxafDejRlksno/Y/2T8=;
- b=EsCm7yygytuHNgrE/r+U+TM3FImE/DKFiK5Ghix3xih5lXHFVy5z3f9Fz13S4VhWrW
- ansnAIRvOFAxA6RCJAU2HuUo4pX77r7FU+HJ63wIvEPDKj7/GKZEkJVN5OUE51CTq9UC
- 23rx/CZxw9zncl4G3wqM1C12Z7MTj7P1yOjPAymG4s6DJekM8aki1md5OkMQWrQCOX3v
- LDkMFHDf6w4ss5f6VPgiKgr2YKaOL4g8f31fspTx/TaBCVynixSf/ltVhrMs+u79Kux1
- Ra06ieQHmBv55vyt5LEfBZXW3AF2sMbXN7jvSIj7ioJBRyHYuRjefe/L0nc/Y4NUxXAA
- w4EQ==
+ d=redhat.com; s=google; t=1776167861; x=1776772661; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7wXjoqNLqgmtKuIWm7qVMBaYg2lhPSlBx3hWi0f9lKg=;
+ b=OuXEJzA1sf9oj2jVpppuyaJoALcx56/y/4tOEBAl9xH+z+BdFb85Nhf8MiTOXBUbiH
+ uUuRpH8QhpuI9UHgNtjcwtCm2Nl+KvDaL1CHAyKVaKTNWVcEcIOs6/94RVOJjleXGix0
+ V+8xyNO+ZQ3dms1rnqsMghd5WeXcoo1b83nArej5z8/jbYlchQ0ZtBZ0yYpZn4ARpMbt
+ Q2NRlxa1pCKa60kODzTsz+ipX4YDtxA12hzp0mvGendP0nfVSI0teGBqrOlRcoKsKqkT
+ hYNEEx6hE0QxB0qQLTyTwd2jsuQETmjHI/21jnHg3HkIgFOL0/NFHsDq8GNK8aq/emkL
+ tgUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776167862; x=1776772662;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gQKTuwmRxA+OIOiaFfMIP1eOIxafDejRlksno/Y/2T8=;
- b=FRT7Gc8h/LEKtK1cloP96ODsbMBabW6Ycpnv6f2awDrTLnRG4YMJDyRoKsHY8RKhmS
- asbD4Z4mvDQEAZjqPHpOyD4bERflz+kxbNp2fJ34RP9XSBSV/CFFEzK82IgBCazm2JTw
- trge134IuP2mDqcFeigsa0wBG1inQU4q5NCrfXp/IJGcSEewVukJMDGvjKG5qKvx4/DU
- R3x+Cv+Brf70ulHEuHkiUBcD4cbDPk392EY059FDLU5slXij8ezv8ql+s2n5DeA5p+bm
- x1EZN56luD3kY6cqoxYj+foryxjbzRRYaLjnTJmhcdhNb5rGQyZDXK03EUCbLG8x6BBr
- MXPg==
+ d=1e100.net; s=20251104; t=1776167861; x=1776772661;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7wXjoqNLqgmtKuIWm7qVMBaYg2lhPSlBx3hWi0f9lKg=;
+ b=iutLRi0sFsim89Tf/1JYnJsitUMgkPJgVugoUVtCNDTthcVetnTDuWLpU0XqMAon4q
+ xCDf3EFToifNA/oSJuBas91lcERXrlBNv09eKloh+F015rc5e5WIezEE3ED61Quzv2Dh
+ YSZM5VVBe/4LxLL2eHBAZn/Wni4iV8MTy6bzcs4jKpL7xAq8P7e1kCbZkYH9j7i91CQ4
+ wq220ewX7Lnv9c6raTn2AHs1i8fKsWmOFe/+DQTH++D5a6vW94bHd/e3PxuIzjsffjCh
+ GpBs0GtfLFSBUnxI2BH9K+z7mWUcehXZvIlA9mi8Y7QEV3rjol/Bis/h6zx83O+VSjCd
+ Nj8w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8yqJ3efcHLhvuMaaSX7tPPjLn+ZksjBvNJzAzHPRwZsMd7c4vjKQGKS2p4m15cUyPKVUOSzXkrSIA0@nongnu.org
-X-Gm-Message-State: AOJu0Yy3C5yi6BjuPIEx9KlT+aZFcx1FTzfHc+ahcBWm9q8F6mFxfRCV
- AgpqiblmjeSxMy9mKfbJm56JgIQf8a5neyjYICicgMGIxTZa0rrMHcspbaXj3RHaIHs=
-X-Gm-Gg: AeBDieu66M5wFKmZGC3RMkXU0eIPo3KR0VjF5Za2q6qQJtLfmQktWSgS13vjoqYvnnl
- n+tYmWC1JVXMO8KBBiErx3BHp90gqhanpHwJzJhHdbNLqP/zRtLCApc838JtTZIYb+zSo/6O7il
- Nk+Ru6ns3xK/xzTIAohWarQINOKaIPnv1PUiBkJ/IoOFIxn78Ms6gXRV8bykHeobuQbndmouGpV
- 7X/Vv/l/HYoCSaIxiubA0wrmwc17iexGpoV7lgr/z0WE/0x7cF6wrIRQWmsoq5Ea878K4O0CFwt
- edeLmPfmK+3uM+lnQckZsdYF/80q3fcJcKRNLLsXER2Fbtd8gBr2UgvjiFJXkBgVWbaouz1fJBP
- /Ht7ynHkJkr6ieWXk4NggLRuaNiyASOHGlsvQMv7MnQlW8Dq/nATR79eSQ8nHQ0T3umurc59zr5
- Ij3K0jDWAblvd7jn+KJpN5FRaRBTP0rj3RN9TxOduAI+ahA5gUwP+6ajLhpDXXMNe8+Q==
-X-Received: by 2002:a05:6000:144a:b0:43d:78ae:b78c with SMTP id
- ffacd0b85a97d-43d78aeb861mr11656070f8f.14.1776167862398; 
- Tue, 14 Apr 2026 04:57:42 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d63e46713sm42148734f8f.21.2026.04.14.04.57.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ AFNElJ96L22ZjgeKKE14hmSRwLydNqtBaJ6EWxEoJTNMSjYCKV2tBYQE8H/RrkxbUmOTLhBGKkZ3u4LzScU/@nongnu.org
+X-Gm-Message-State: AOJu0YzZL8faCLzCY5M+kf2+eQW/0YKv42TCvIC9z2xGX2OpDM91ZGtO
+ z1fm7KRVjb0raXq+aoGgPyOSRGb9Q4AvZW0mrEQ2v6jVe6JmQYeTgMp1yi/3aN9zBYKQsvBXOF7
+ mIuZb5y8Lv2RdB7OtO8K6zlEeKNd7AyhVdku/o6XLK134bKp1vyBQGBjs1n1FFyf1FWWYVkKCIJ
+ hVzYyeUdYNq/75D+hjbmEVCMekxfiAZTE=
+X-Gm-Gg: AeBDietmi4zJnsfV8LPealXFB0T9Qtp35rKaBU5vVXe/vK0VlrARdXkXqrYZWBDAjAz
+ xqu23knWLp7bmunkaaM6OZ781xO4mH65EY0kKfCLEySjMjVMWUunGXm+xe4P3389aG0L6S9cpsi
+ vfkvzmhrMtxGc6+T0RGWEWx7gdnMpx06xWhvN/5iX7Nu44sImttQk36KaiApdYC5LMS2kCtAddV
+ FEv
+X-Received: by 2002:a17:90b:3c0c:b0:35f:b9ea:8f9f with SMTP id
+ 98e67ed59e1d1-35fb9ea912dmr6476539a91.16.1776167861187; 
  Tue, 14 Apr 2026 04:57:41 -0700 (PDT)
-Message-ID: <b763b4bc-3ec8-4815-9beb-58ed4c745a1b@linaro.org>
-Date: Tue, 14 Apr 2026 13:57:40 +0200
+X-Received: by 2002:a17:90b:3c0c:b0:35f:b9ea:8f9f with SMTP id
+ 98e67ed59e1d1-35fb9ea912dmr6476364a91.16.1776167860237; Tue, 14 Apr 2026
+ 04:57:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 60/65] hw/arm/virt: Create and connect GICv5
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-References: <20260327111700.795099-1-peter.maydell@linaro.org>
- <20260327111700.795099-61-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260327111700.795099-61-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260304165223.2166175-1-aesteve@redhat.com>
+ <aak5QkV_RxUEnV_f@sgarzare-redhat>
+ <20260305032601-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260305032601-mutt-send-email-mst@kernel.org>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Tue, 14 Apr 2026 13:57:28 +0200
+X-Gm-Features: AQROBzC24dTjigQr66Zm_BIEQ2Oq8FhH9yGz9R6hGWcJLKNtByf4Vde_N7f5-3c
+Message-ID: <CAGxU2F6sEwLZXLy1TrH-s9At0YiCc9AQMC5FWdyiHCXk-dE3vA@mail.gmail.com>
+Subject: Re: [PATCH v14 0/7] vhost-user: Add SHMEM_MAP/UNMAP requests
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org, 
+ manos.pitsidianakis@linaro.org, slp@redhat.com, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, stefanha@redhat.com, 
+ stevensd@chromium.org, Laurent Vivier <lvivier@redhat.com>, jasowang@redhat.com,
+ Peter Xu <peterx@redhat.com>, hi@alyssa.is, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, dbassey@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,70 +144,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/26 12:16, Peter Maydell wrote:
-> In this commit we create and connect up the GICv5.  We do not
-> advertise it in the ACPI tables or DTB; that will be done in a
-> following commit.
-> 
-> The user-facing gic-version property still only documents and permits
-> in its setter function the existing set of possible values; we won't
-> permit the user to select a GICv5 until all the code to handle it is
-> in place.
-> 
-> Although we currently implement only the IRS, and only for EL1,
-> we reserve space in the virt board's memory map now for all the
-> register frames that the GICv5 may use. Each interrupt domain has:
->   * one IRS config register frame
->   * one ITS config register frame
->   * one ITS translate register frame
-> and each of these frames is 64K in size and 64K aligned and must be
-> at a unique address (that is, it is not permitted to have all the IRS
-> config register frames at the same physical address in the different
-> S/NS/etc physical address spaces).
-> 
-> The addresses and layout of these frames are entirely up to the
-> implementation: software will be passed their addresses via firmware
-> data structures (ACPI or DTB).
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> ---
->   hw/arm/virt.c         | 101 ++++++++++++++++++++++++++++++++++++++++++
->   include/hw/arm/virt.h |  14 ++++++
->   2 files changed, 115 insertions(+)
+On Thu, 5 Mar 2026 at 09:26, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Thu, Mar 05, 2026 at 09:06:20AM +0100, Stefano Garzarella wrote:
+> > On Wed, Mar 04, 2026 at 05:52:16PM +0100, Albert Esteve wrote:
+> > > Hi all,
+> >
+> > Thanks!
+> >
+> > This is now fully reviewed, Michael can we queue it?
+> >
+> > Thanks,
+> > Stefano
+>
+>
+> yes, I tagged it already.
 
+Michael, I think we missed this series for v11.0 :-(
 
-> +static void create_gicv5(VirtMachineState *vms, MemoryRegion *mem)
-> +{
-> +    MachineState *ms = MACHINE(vms);
-> +    SysBusDevice *gicbusdev;
-> +    const char *gictype = gicv5_class_name();
-> +    QList *cpulist = qlist_new(), *iaffidlist = qlist_new();
-> +
-> +    vms->gic = qdev_new(gictype);
-> +    qdev_prop_set_uint32(vms->gic, "spi-range", NUM_IRQS);
-> +
-> +    object_property_set_link(OBJECT(vms->gic), "sysmem", OBJECT(mem),
-> +                             &error_fatal);
-> +
-> +    for (int i = 0; i < ms->smp.cpus; i++) {
-> +        qlist_append_link(cpulist, OBJECT(qemu_get_cpu(i)));
+Can we use this for the next cycle, or Albert should repost it?
 
-This is OK for the virt machine; real machines should care about
-correct cluster topology.
-
-> +        /*
-> +         * GICv5 IAFFIDs must be system-wide unique across all GICs.
-> +         * For virt we make them the same as the CPU index.
-> +         */
-> +        qlist_append_int(iaffidlist, i);
-> +    }
-> +    qdev_prop_set_array(vms->gic, "cpus", cpulist);
-> +    qdev_prop_set_array(vms->gic, "cpu-iaffids", iaffidlist);
-> +
-> +    gicbusdev = SYS_BUS_DEVICE(vms->gic);
-> +    sysbus_realize_and_unref(gicbusdev, &error_fatal);
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks,
+Stefano
 
 
