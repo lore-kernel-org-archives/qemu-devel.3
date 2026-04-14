@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38B1F9D0C9
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 12:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE2BF9D0C9
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 12:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCcap-0001cw-Kh; Tue, 14 Apr 2026 08:10:11 -0400
+	id 1wCcch-0003Fx-Rp; Tue, 14 Apr 2026 08:12:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCcan-0001cN-IA
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:10:10 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCccf-0003E4-DY
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:12:05 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCcah-0004yl-Lt
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:10:08 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso58158455e9.0
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 05:10:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCccc-0005TY-MC
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 08:12:05 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso67178135e9.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 05:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776168601; x=1776773401; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776168721; x=1776773521; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BGLiCqxc+sZUWsp9H4FUgQejtSA17QSl//MP5Mn+Bng=;
- b=nPGEh/AscnLXde9rY0hU+PFcDqZMH3xirLlN15edvBH+hC6l7jb3dD3eQBUcNmmGY6
- WqUdQ7o5d36+l3Uk0c5pFcvxAyFBqfTUqo1X6M8wEF6b9+//15cESsLxLJdg+EEn7CEY
- xHYXgfm4HqE+6e5wa7GNJuHjoJWMp4VpBgwx4TMnzf6yEg3TqoY3LUoAAXESq/0iJJjM
- NFBgAgB0d43kpPn7Cb+wqhLGU/Xpa7O4zMW1Q6jOm0xHWvyXG/dU/aj+HZT/dSRTxrEy
- N9PXRNFP+cCp5NA6OVnm0dYVrNA0y8Rv8mgOVFmxeRwpAktxeWavn/V0G/SdDAXtqI1E
- LUSQ==
+ bh=g+Gvc4ZIfyLzU7ILGQM5ksGs3WaLDY+fGxbCYym0yzY=;
+ b=tAADHMP/AZXINEzKUdibu1dRXkWeP6I/y1nDOhEiaqr/45NOil7WCsbddYy5osj84z
+ WUhzlCAwG92XBlcc7oXE5bCuGxA5+k3jiff0EKgv+cj1XOWXXU9lj/WflIKgA4LgMtlh
+ cr9Yu97ZcUUY+4vhNPoDjM7RHCQg632SqA/L9KLDyxIHGEwPOOEnQZfXK3VyoIbhXap6
+ zRuhPAfOxRAjjJHDJQyUD2pDaSr4GvWVhLa1q3ptCB1hp4ipym1xbgv9R9B6xZSeL0xj
+ sMbhH50XZ5bEu08Y/LsgQeUv36dMkTZTP1/nappE3fCIi+4jmC3dUiStBhUyWxMQndVM
+ L9vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776168601; x=1776773401;
+ d=1e100.net; s=20251104; t=1776168721; x=1776773521;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BGLiCqxc+sZUWsp9H4FUgQejtSA17QSl//MP5Mn+Bng=;
- b=oMSNIdF5AAWOp5m7KKsZbpk8A3GOIsAVEfGAA+upvDytv/v2ShclfzSv6fIhBgkbNI
- IR3zx5/2XEBmIHPYiSS1FFvpIJvAx2ER6gh3sOJMkk6ZxQsgttsBXeOdM3J05XCJ5SBf
- raAOPsBJlaz8YJOZMyzZeRk1cC9/zzEQ0xKxBhB77e42p3Hj9ZjZzuQnH8ugTwYREEQl
- gXX7IJlqgQ9TUSAxPI5i+WPYyWum2+WkhiaiFrNiFNg9gEkTYe0A9C8MGCXJXpKyVZB4
- VTlZ7Bden6NRm9A/jw3pDNSIwhNrp3vB7ANViMC5SGKwreSYGhK041M/unQLuEhWxgHW
- fakA==
+ bh=g+Gvc4ZIfyLzU7ILGQM5ksGs3WaLDY+fGxbCYym0yzY=;
+ b=YvGodFClpHPZjWYXYTyBAEfl8Pt7Vvt8RiKAPT8iFlDx5B8V+p8Lw5AyXnycKDHLjU
+ 0zN+hs4t1J+VGpTjtkFgMhaic8o3NLX91aPc55MsBdVm8yMocKG7l2/e5HSZRJxU4eIp
+ 7/CnBDgJNU15rly3yC/8vIjCHzmqlidRHv/7ByGsYxxy0O+Amq8yMg0O29JtZ5wFrzZ4
+ 35T00LdvcIVd3zkYiWyJffHI2jya3B/FIG/EhxPfQf6idbH440FLkPeedw2OadtpDVMr
+ q4GoVXAn1VWgmZb/NWBkKshEN8xHt5BtlPYX83ErSC/zUK1q6gp94kGaxJ4dQebrpF65
+ VzEQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/nBSv/sHw/2O0lfybchaQ+kM+mlHUpeJWrCilKTSLVh8LwHZl/s7Zvxv8r40lBDgGv+IO2M2yWZLlw@nongnu.org
-X-Gm-Message-State: AOJu0YxMH7Cs4tkQXdnR8NyJJZrvOp3k94uJ7UB1/+si47akWJsEpXYt
- hGxFsZfu6eM/hoShXoP+90BxBDuMoKKv8eKCwLLIEJpr1XiOi9XCRqpz
-X-Gm-Gg: AeBDieveMMFO21R2kRKx353c/1pBO1FfYVxB1KpwBmyZI40L9iBfZa8+5TOeWAbb466
- lMdgTtFjCRBNw4d8gALQ1Rn97+LynWAp86XoqSAa0F7xxhPIBcQ0Vy/b8zhS6kpt8g0i6goaE3+
- 3l++12Tfsb/eiVewrG0ke1C6I/YOl2pKbI0ASp1PCaRgzRtJue2z3YXycN+32BX+k+hqF9Wcsmj
- AmUGsyendRkq1qxu865BzPUf1QYjYX18kXk68VbQpMSTbiLkymM6gorEEKShDiGmW+JpLQXfhIi
- oy7iPqiN0g2XXEVFaUY3jjQjDB2oeaYpKS1m4C6sGEh4A/iES6oEYAk4Yjhelj4rxDF4YtK4bUF
- IQI9DydXEi0bbvkTucEY4RgmUONdaMFni3I3BoDFNjuwoyQI1b3Xi9RI3yNE20q4X4EMkohwYmJ
- 8fU8clP01+5QJ9++YcBGrHaCbjVUE7jGq0e8Lkq3PXL6XldkHq4U8w45s42adp/ZZGYWw/CB87F
- oNikyEfgaiWKH6osVug
-X-Received: by 2002:a05:600c:609a:b0:485:3e00:944a with SMTP id
- 5b1f17b1804b1-488d68ae78amr229494945e9.9.1776168600549; 
- Tue, 14 Apr 2026 05:10:00 -0700 (PDT)
+ AFNElJ/HpgYhls2nBvrV49buLCdE2cMvOKhxCYfu698S6LXjAod9WEYnF93cBhX7R7EbmdxpJiE3QY/WDGj0@nongnu.org
+X-Gm-Message-State: AOJu0Ywm67brZkOQxZIcJx5LA3Pgdh+WgEOEYnZf/qe+Lh/TDW5vc664
+ OOcfUiqFgCCe4Q4irIhROF4sHKbTSdJf9doL3KSzx2vy3/Hg6CfdatDH
+X-Gm-Gg: AeBDiet6jDZGb8tjFptyfGWaoR6E567u9sxskie/MVaO5N9mzYNcweHMYp9f3xA/Jsk
+ QKxbGVlxA+guxi1FMQDlYBkc+WQTf3NfKuJhxiLXcmOAwH1sJoqt1rze73Sgk/hDBd6izRMaln+
+ 0PsKy8wzhRyJzYM0O4WJ4HM02E5EqCr4Jq6+OOKoXoKh7PKJOJfTevdCuJ3+ZWYIcUVEUgQEvAM
+ Y53NejvOhmp4yiQ2lJaxsKTd2+chDauNnjgudLSbcNlA3pRTBVgvIACpDvPplDFVTODbi1iHTTd
+ 3P/B6ZYTEAGL+I0WbWcZA6+XObMdMHmojYFPTl/xabDtlQshN2INEmMUX3Rh1y8gSkpGUCoSAp/
+ tCop9ERx0nO+L4PCaYLMEOsZMhB/uQFGXGJbgxg0+fgKZXoVdsD7k2v6X2OBosx1O0KcFae4aoy
+ uf1ElhBIkNCjqQJ/PO7PRA5SdbdL19weXZUBcCyS2FTfx7FiiVhyhBFMQfTgExc7zX8ub4uLwHx
+ EoFhQ00dCaeO4jjkqLKN8qZNaZ79Ec=
+X-Received: by 2002:a05:600c:a105:b0:485:3af5:7e53 with SMTP id
+ 5b1f17b1804b1-488d6839821mr168465795e9.19.1776168720862; 
+ Tue, 14 Apr 2026 05:12:00 -0700 (PDT)
 Received: from ehlo.thunderbird.net
  (p200300faaf1c6100004fcff454cbdf8f.dip0.t-ipconnect.de.
  [2003:fa:af1c:6100:4f:cff4:54cb:df8f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ec77508csm70036345e9.0.2026.04.14.05.09.59
+ 5b1f17b1804b1-488eddb9751sm77832905e9.0.2026.04.14.05.11.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 05:10:00 -0700 (PDT)
-Date: Tue, 14 Apr 2026 12:09:57 +0000
+ Tue, 14 Apr 2026 05:12:00 -0700 (PDT)
+Date: Tue, 14 Apr 2026 12:11:58 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: Pavel Pisa <pisa@fel.cvut.cz>
+To: =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
 CC: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
  qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Pavel Pisa <pisa@fel.cvut.cz>, qemu-arm@nongnu.org,
+ Marc Kleine-Budde <mkl@pengutronix.de>,
  Oliver Hartkopp <socketcan@hartkopp.net>,
  Nikita Ostrenkov <n.ostrenkov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 4/7] hw/net/can/flexcan: NXP FlexCAN core emulation
-In-Reply-To: <202604140030.35350.pisa@fel.cvut.cz>
+Subject: Re: [PATCH v2 6/7] tests: Add qtests for FlexCAN
+In-Reply-To: <adzuRHcb4BVIRAS8@redhat.com>
 References: <cover.1773866323.git.matyas.bobek@gmail.com>
- <e790990bfaaebf2c1dd884c2c2f4eab5de6d4076.1773866323.git.matyas.bobek@gmail.com>
- <9c21bd91-3732-4438-9b83-dc36e09f9ec3@gmail.com>
- <202604140030.35350.pisa@fel.cvut.cz>
-Message-ID: <299DB2A5-4F8A-4985-8E84-A0530D540442@gmail.com>
+ <33d03d96698eb7511321690d9b5a054f03aa8bc7.1773866323.git.matyas.bobek@gmail.com>
+ <4244E4A0-CCE2-4E23-B32E-B6B9242FAA60@gmail.com>
+ <adzuRHcb4BVIRAS8@redhat.com>
+Message-ID: <FB523542-A8A0-4B5D-B757-2C6F7F7AD981@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,150 +114,544 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 13=2E April 2026 22:30:35 UTC schrieb Pavel Pisa <pisa@fel=2Ecvut=2Ecz>=
-:
->Dear Bernhard,
-
-Hi Pavel,
-
->thanks for time for review=2E I agree with all suggested
->changes except one where I express soft opinion
->to keep code as it is, see below=2E=20
->
->On Monday 13 of April 2026 12:56:40 Bernhard Beschow wrote:
->> Am 19=2E M=C3=A4rz 2026 19:13:11 UTC schrieb "Maty=C3=A1=C5=A1 Bobek"
->>
->> <matyas=2Ebobek@gmail=2Ecom>:
->> >Added the FlexCAN2 emulator implementation core, with
->> >CAN_FLEXCAN Kconfig flag and MAINTAINERS entry=2E
->> >
->> >FlexCAN2 version can be found in i=2EMX6 SoCs and others=2E
->> >
->> >More information about the implementation can be found in [1]=2E
->> >
->> >[1]
->> > http://dspace=2Ecvut=2Ecz/bitstream/handle/10467/122654/F3-BP-2025-Bo=
-bek-Maty
->> >as-BP_Bobek_FlexCAN_final_4=2Epdf
+Am 13=2E April 2026 13:23:16 UTC schrieb "Daniel P=2E Berrang=C3=A9" <berr=
+ange@redhat=2Ecom>:
+>On Mon, Apr 13, 2026 at 01:16:20PM +0000, Bernhard Beschow wrote:
+>>=20
+>>=20
+>> Am 19=2E M=C3=A4rz 2026 19:13:13 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <=
+matyas=2Ebobek@gmail=2Ecom>:
+>> >The tests do not test all of the FlexCAN emulator functionality=2E
 >> >
 >> >Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas=2Ebobek@gmail=2Ecom>
 >> >---
->=2E=2E=2E
->> >+    flexcan_irq_update(s);
->> >+}
->> >+
->> >+static void flexcan_mem_write(void *opaque, hwaddr addr, uint64_t val=
-,
->> >+                              unsigned size)
->> >+{
->> >+    FlexcanState *s =3D opaque;
->> >+
->> >+    flexcan_trace_mem_op(s, addr, val, size, true);
->> >+    flexcan_reg_write(s, addr, (uint32_t)val);
->>
->> The contribution of this method is now only to add a trace statement=2E=
- It
->> can now be merged with flexcan_reg_write(), keeping the
->> flexcan_mem_write() identifier=2E
->>
->> Note: I suggest to call the trace function just before the switch
->> statement, i=2Ee=2E after the variable declarations=2E
+>> > MAINTAINERS                |   1 +
+>> > tests/qtest/flexcan-test=2Ec | 424 ++++++++++++++++++++++++++++++++++=
++++
+>> > tests/qtest/meson=2Ebuild    |   1 +
+>> > 3 files changed, 426 insertions(+)
+>> > create mode 100644 tests/qtest/flexcan-test=2Ec
+>> >
+>> >diff --git a/MAINTAINERS b/MAINTAINERS
+>> >index e723863a6f=2E=2Edbb159f031 100644
+>> >--- a/MAINTAINERS
+>> >+++ b/MAINTAINERS
+>> >@@ -2090,6 +2090,7 @@ S: Maintained
+>> > F: hw/net/can/flexcan=2Ec
+>> > F: hw/net/can/flexcan_regs=2Eh
+>> > F: include/hw/net/flexcan=2Eh
+>> >+F: tests/qtest/flexcan-test=2Ec
+>> >=20
+>> > EDU
+>> > M: Jiri Slaby <jslaby@suse=2Ecz>
+>> >diff --git a/tests/qtest/flexcan-test=2Ec b/tests/qtest/flexcan-test=
+=2Ec
+>> >new file mode 100644
+>> >index 0000000000=2E=2Eb5880d4119
+>> >--- /dev/null
+>> >+++ b/tests/qtest/flexcan-test=2Ec
+>> >@@ -0,0 +1,424 @@
+>> >+/*
+>> >+ * QTests for FlexCAN CAN controller device model
+>> >+ *
+>> >+ * Copyright (c) 2025 Matyas Bobek <matyas=2Ebobek@gmail=2Ecom>
+>> >+ *
+>> >+ * This code is licensed under the GPL version 2 or later=2E  See
+>> >+ * the COPYING file in the top-level directory=2E
+>>=20
+>> IIUC this license text is redundant to the specifier below, but again, =
+IANAL=2E Daniel?
 >
->I would suggest to keep names
+>checkpatch=2Epl  should complain about this=2E
 >
->  flexcan_mem_write()
->  flexcan_mem_read()
->
->not to change one to flexcan_reg_write=2E The flexcan_reg_write()
->can be absorbed into flexcan_mem_write() for now
+>For *newly* written files, only the SPDX-License-Identifier should be
+>present=2E   Traditional license boilerplate is only permitted if we're
+>dealing with historical files where we're required to preserve existing
+>license text=2E
 
-Yes, that's what I meant=2E
+Thanks for the hint!
 
-> but for longer term
->I would like that message boxes (user memory) writes are separated
->from  register access though overlay structure describing registers
->and in addition even reads from registers are separated from memory
->area=2E That would better fit newer version of FlexCAN controllers=2E
->For example on the imxRT there is FD capable FlexCAN and ranges
->
-> 0x0000 to 0x007f (used up to 0x53) is range for registers
-> 0x0080 to 0x047F is for up to 64 frames, data 8 byte (16 bytes each)
-> 0x0880 to 0x097C is range for Rx Individual Mask Registers (RXIMR0 - RXI=
-MR63)
-> 0x0BF0 to 0x0D2f is again registers area, i=2Ee=2E enhanced CAN bit-timi=
-ng=20
-> 0x2000 to 0x204f is allocates the Enhanced Rx FIFO output
-> 0x3000 to 0x31FC is enhanced Rx FIFO filter element
->
->So this is mix and may it there are even more variations between
->different versions=2E So in these cases I would prefer to keep registers
->block as separate structures, which needs RO/RW masks side effects
->handling and memory areas in between as more regular RAM with no
->masking and simpler side effects rules=2E
->
->But I consider as the priority to have basic support which passes
->review, is mainlined and can be used for imx6 developmet and CI testing
->now=2E When we or somebody else find somebody with interrest at universit=
-y
->(i=2Ee=2E final thesis, GSoC project) or some company willing to provide
->some their developers time or funding, it can be base to move forward=2E
->But there is no plan on my side at this moment=2E All my organization
->and conceive of the QEMU CAN subsystem is personal activity without any
->income and I have lot of other much higher priority projects for teaching
->and even use in the the wild including space, so I cannot promise anythin=
-g
->nor predict any dates when something is ready=2E=2E=2E
-
-For now, I propose to keep the code simple and only introduce the complexi=
-ty that is actually used=2E That is, we can add the complexity once new dev=
-ice models are implemented which require it=2E
-
->
->By the way, I have noticed that you invest time into ESP32 mainlining
->support=2E
-
-Well, I haven't planned that=2E Maintaining it would be a lot of work, esp=
-ecially as a volunteer=2E Though I'd like to see Espressif upstreaming thei=
-r work=2E=2E=2E
+Though checkpatch=2Epl doesn't seem to catch this particular case=2E Is a =
+patch needed here?
 
 Best regards,
 Bernhard
 
->If you are willing to discuss that, I would open another
->therad=2E I have tested original Espressinf QEMU version and tried
->yours but end by segmentation-fault=2E May it be incorrect arguments
->to QEMU=2E
 >
->The ESP32C3 QEMU support could be interesting for RTEMS community which
->included basic ESP32C3 support in mainline
 >
->  https://users=2Ertems=2Eorg/t/rtems-support-for-esp32-xtensa-existing-b=
-sp-work/660
+>>=20
+>> >+ *
+>> >+ * SPDX-License-Identifier: GPL-2=2E0-or-later
+>> >+ */
+>> >+
+>> >+#include "qemu/osdep=2Eh"
+>> >+#include "libqtest-single=2Eh"
+>> >+
+>> >+#include "hw/net/flexcan=2Eh"
+>> >+#include "hw/net/can/flexcan_regs=2Eh"
+>> >+
+>> >+#define FSL_IMX6_CAN2_ADDR 0x02094000
+>> >+#define FSL_IMX6_CAN2_SIZE 0x4000
+>> >+#define FSL_IMX6_CAN1_ADDR 0x02090000
+>> >+#define FSL_IMX6_CAN1_SIZE 0x4000
+>> >+
+>> >+#define FC_QEMU_ARGS "-nographic -M sabrelite " \
+>> >+                     "-object can-bus,id=3Dqcan0  " \
+>> >+                     "-machine canbus0=3Dqcan0 -machine canbus1=3Dqca=
+n0"
+>> >+
+>> >+/* used for masking out unused/reserved bits */
+>> >+#define FC_MB_CNT_USED_MASK (~0xF080FFFFu)
+>> >+
+>> >+#define FCREG(BASE_ADDR, REG) ((BASE_ADDR) + offsetof(FlexcanRegs, RE=
+G))
+>> >+#define FCMB(BASE_ADDR, MB_IDX, WORD_IDX) (FCREG(BASE_ADDR, mbs) + \
+>> >+    0x10 * (MB_IDX) + 4 * (WORD_IDX))
+>> >+
+>> >+typedef struct FcTestFrame {
+>> >+    uint32_t id;
+>> >+    uint32_t data[2];
+>> >+    uint8_t len;
+>> >+    bool ide;
+>> >+    bool rtr;
+>> >+
+>> >+    /* rx only */
+>> >+    bool expect_overrun;
+>> >+} FcTestFrame;
+>> >+
+>> >+static const FcTestFrame fc_test_frame_1 =3D {
+>> >+    =2Eid =3D 0x5AF,
+>> >+    =2Elen =3D 8,
+>> >+    =2Edata =3D {
+>> >+        0x01020304,
+>> >+        0x0A0B0C0D
+>> >+    },
+>> >+    =2Eide =3D false
+>> >+};
+>> >+
+>> >+static const FcTestFrame fc_test_frame_1_ide =3D {
+>> >+    =2Eid =3D 0x105AF5AF,
+>> >+    =2Elen =3D 8,
+>> >+    =2Edata =3D {
+>> >+        0x01020304,
+>> >+        0x0A0B0C0D
+>> >+    },
+>> >+    =2Eide =3D true
+>> >+};
+>> >+
+>> >+static void fc_reset(hwaddr ba, uint32_t mcr_flags)
+>> >+{
+>> >+    /* disable */
+>> >+    writel(FCREG(ba, mcr), 0xD890000F);
+>> >+
+>> >+    /* enable in freeze mode */
+>> >+    writel(FCREG(ba, mcr), 0x5980000F);
+>> >+
+>> >+    /* soft reset */
+>> >+    writel(FCREG(ba, mcr), 0x5980000F | FLEXCAN_MCR_SOFTRST);
+>> >+
+>> >+    g_assert_cmpuint(readl(FCREG(ba, mcr)), =3D=3D, 0x5980000F);
+>> >+    g_assert_cmpuint(readl(FCREG(ba, ctrl)), =3D=3D, 0);
+>> >+    g_assert_cmpuint(readl(FCREG(ba, ctrl2)), =3D=3D, 0);
+>> >+
+>> >+    writel(FCREG(ba, mcr), (0x5980000F & ~FLEXCAN_MCR_HALT) | mcr_fla=
+gs);
+>> >+    writel(FCREG(ba, ctrl2), FLEXCAN_CTRL2_RRS);
+>> >+
+>> >+    /* initialize all mailboxes as rx inactive */
+>> >+    for (int i =3D 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+>> >+        writel(FCMB(ba, i, 0), FLEXCAN_MB_CODE_RX_INACTIVE);
+>> >+        writel(FCMB(ba, i, 1), 0);
+>> >+        writel(FCMB(ba, i, 2), 0);
+>> >+        writel(FCMB(ba, i, 3), 0);
+>> >+    }
+>> >+}
+>> >+
+>> >+static uint64_t fc_get_irqs(hwaddr ba)
+>> >+{
+>> >+    return (uint64_t)readl(FCREG(ba, iflag1)) |
+>> >+        ((uint64_t)readl(FCREG(ba, iflag2)) << 32);
+>> >+}
+>> >+
+>> >+static void fc_clear_irq(hwaddr ba, int idx)
+>> >+{
+>> >+    if (idx >=3D 32) {
+>> >+        writel(FCREG(ba, iflag2), (uint32_t)1 << (idx - 32));
+>> >+    } else {
+>> >+        writel(FCREG(ba, iflag1), (uint32_t)1 << idx);
+>> >+    }
+>> >+
+>> >+    g_assert_cmpuint(fc_get_irqs(ba) & ((uint64_t)1 << idx), =3D=3D, =
+0);
+>> >+}
+>> >+
+>> >+static void fc_setup_rx_mb(hwaddr ba, int mbidx)
+>> >+{
+>> >+    writel(FCMB(ba, mbidx, 0), FLEXCAN_MB_CODE_RX_EMPTY);
+>> >+    writel(FCMB(ba, mbidx, 1), 0);
+>> >+    /* the data value should be ignored for RX mb */
+>> >+    writel(FCMB(ba, mbidx, 2), 0);
+>> >+    writel(FCMB(ba, mbidx, 3), 0);
+>> >+
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 0)), =3D=3D, FLEXCAN_MB_CO=
+DE_RX_EMPTY);
+>> >+}
+>> >+
+>> >+static void fc_tx(hwaddr ba, int mbidx, const FcTestFrame *frame)
+>> >+{
+>> >+    g_assert_cmpuint(frame->len, <=3D, 8);
+>> >+
+>> >+    writel(FCMB(ba, mbidx, 0), FLEXCAN_MB_CODE_TX_INACTIVE);
+>> >+    uint32_t id =3D frame->ide ? frame->id : frame->id << 18;
+>> >+    writel(FCMB(ba, mbidx, 1), id);
+>> >+    writel(FCMB(ba, mbidx, 2), frame->data[0]);
+>> >+    writel(FCMB(ba, mbidx, 3), frame->data[1]);
+>> >+
+>> >+    uint32_t ctrl =3D FLEXCAN_MB_CODE_TX_DATA | FLEXCAN_MB_CNT_LENGTH=
+(frame->len);
+>> >+    if (frame->ide) {
+>> >+        ctrl |=3D FLEXCAN_MB_CNT_IDE | FLEXCAN_MB_CNT_SRR;
+>> >+    }
+>> >+    if (frame->rtr) {
+>> >+        ctrl |=3D FLEXCAN_MB_CNT_RTR;
+>> >+    }
+>> >+    writel(FCMB(ba, mbidx, 0), ctrl);
+>> >+
+>> >+    /* check frame was transmitted */
+>> >+    g_assert_cmpuint(fc_get_irqs(ba) & ((uint64_t)1 << mbidx),
+>> >+                     !=3D, 0);
+>> >+
+>> >+    uint32_t xpectd_ctrl =3D (ctrl & ~FLEXCAN_MB_CODE_MASK) |
+>> >+        FLEXCAN_MB_CODE_TX_INACTIVE;
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 0)) & FC_MB_CNT_USED_MASK,=
+ =3D=3D,
+>> >+                     xpectd_ctrl);
+>> >+    /* other fields should stay unchanged */
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 1)), =3D=3D, id);
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 2)), =3D=3D, frame->data[0=
+]);
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 3)), =3D=3D, frame->data[1=
+]);
+>> >+}
+>> >+
+>> >+static void fc_rx_check(hwaddr ba, int mbidx, const FcTestFrame *fram=
+e)
+>> >+{
+>> >+    uint32_t xpectd_ctrl =3D frame->expect_overrun ? FLEXCAN_MB_CODE_=
+RX_OVERRUN
+>> >+                             : FLEXCAN_MB_CODE_RX_FULL;
+>> >+    xpectd_ctrl |=3D FLEXCAN_MB_CNT_LENGTH(frame->len) | FLEXCAN_MB_C=
+NT_SRR;
+>> >+    if (frame->ide) {
+>> >+        xpectd_ctrl |=3D FLEXCAN_MB_CNT_IDE;
+>> >+    }
+>> >+    if (frame->rtr) {
+>> >+        xpectd_ctrl |=3D FLEXCAN_MB_CNT_RTR;
+>> >+    }
+>> >+
+>> >+    uint32_t xpectd_id =3D frame->ide ? frame->id : frame->id << 18;
+>> >+
+>> >+    uint32_t ctrl =3D readl(FCMB(ba, mbidx, 0)) & FC_MB_CNT_USED_MASK=
+;
+>> >+    if ((ctrl & FLEXCAN_MB_CODE_MASK) =3D=3D FLEXCAN_MB_CODE_RX_EMPTY=
+) {
+>> >+        fprintf(stderr, "expected frame (id=3D0x%X) not received\n", =
+frame->id);
+>> >+    }
+>> >+
+>> >+    g_assert_cmpuint(ctrl, =3D=3D, xpectd_ctrl);
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 1)), =3D=3D, xpectd_id);
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 2)), =3D=3D, frame->data[0=
+]);
+>> >+    g_assert_cmpuint(readl(FCMB(ba, mbidx, 3)), =3D=3D, frame->data[1=
+]);
+>> >+}
+>> >+
+>> >+static void fc_check_empty_multi(hwaddr ba, int idx_count, int mbidxs=
+[])
+>> >+{
+>> >+    for (int i =3D 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+>> >+        bool check_empty =3D true;
+>> >+        int ctrl =3D readl(FCMB(ba, i, 0));
+>> >+
+>> >+        for (int j =3D 0; j < idx_count; j++) {
+>> >+            if (i =3D=3D mbidxs[j]) {
+>> >+                check_empty =3D false;
+>> >+            }
+>> >+        }
+>> >+
+>> >+        if (check_empty) {
+>> >+            if (!(ctrl =3D=3D FLEXCAN_MB_CODE_RX_EMPTY ||
+>> >+                  ctrl =3D=3D FLEXCAN_MB_CODE_RX_INACTIVE)) {
+>> >+                g_assert_cmpuint(ctrl, =3D=3D, FLEXCAN_MB_CODE_RX_INA=
+CTIVE);
+>> >+            }
+>> >+            g_assert_cmpuint(readl(FCMB(ba, i, 1)), =3D=3D, 0);
+>> >+            g_assert_cmpuint(readl(FCMB(ba, i, 2)), =3D=3D, 0);
+>> >+            g_assert_cmpuint(readl(FCMB(ba, i, 3)), =3D=3D, 0);
+>> >+        } else {
+>> >+            g_assert_cmpuint(
+>> >+                ctrl & FLEXCAN_MB_CODE_MASK, !=3D,
+>> >+                FLEXCAN_MB_CODE_RX_INACTIVE
+>> >+            );
+>> >+        }
+>> >+    }
+>> >+}
+>> >+
+>> >+static void fc_check_empty(hwaddr ba, int mbidx)
+>> >+{
+>> >+    fc_check_empty_multi(ba, 1, &mbidx);
+>> >+}
+>> >+
+>> >+static void flexcan_test_linux_probe_impl(hwaddr fba)
+>> >+{
+>> >+    /* -- test a Linux driver-like probe sequence -- */
+>> >+    /* disable */
+>> >+    writel(FCREG(fba, mcr), 0xD890000F);
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xD890000F);
+>> >+    g_assert_cmpuint(readl(FCREG(fba, ctrl)), =3D=3D, 0);
+>> >+
+>> >+    /* set bit in reserved field we do not implement (CTRL_CLK_SRC) *=
+/
+>> >+    writel(FCREG(fba, ctrl), 0x00002000);
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xD890000F);
+>> >+
+>> >+    /* enable in freeze mode */
+>> >+    writel(FCREG(fba, mcr), 0x5980000F);
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0x5980000F);
+>> >+
+>> >+    /* enable Rx-FIFO */
+>> >+    writel(FCREG(fba, mcr), 0x7980000F);
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0x7980000F);
+>> >+    g_assert_cmpuint(readl(FCREG(fba, ecr)), =3D=3D, 0);
+>> >+
+>> >+    /* disable */
+>> >+    writel(FCREG(fba, mcr), 0xF890000F);
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xF890000F);
+>> >+}
+>> >+
+>> >+static void flexcan_test_freeze_disable_interaction_impl(hwaddr fba)
+>> >+{
+>> >+    /* -- test normal <=3D> freeze <=3D> disable transitions -- */
+>> >+
+>> >+    /* leave freeze in disabled, FRZ_ACK should stay cleared */
+>> >+    writel(FCREG(fba, mcr), 0xF890000F); /* disable */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xF890000F);
+>> >+    writel(FCREG(fba, mcr), 0xB890000F);  /* by clearing FRZ */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xB890000F);
+>> >+
+>> >+    writel(FCREG(fba, mcr), 0xF890000F); /* disable */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xF890000F);
+>> >+    writel(FCREG(fba, mcr), 0xE890000F);  /* by clearing HALT */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xE890000F);
+>> >+
+>> >+    writel(FCREG(fba, mcr), 0xF890000F); /* disable */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xF890000F);
+>> >+    writel(FCREG(fba, mcr), 0xA890000F);  /* by clearing both */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0xA890000F);
+>> >+
+>> >+    /* enter and leave freeze */
+>> >+    writel(FCREG(fba, mcr), 0x7980000F); /* enable in freeze mode */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0x7980000F);
+>> >+    writel(FCREG(fba, mcr), 0x3980000F); /* leave by clearing FRZ */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0x3080000F);
+>> >+
+>> >+    writel(FCREG(fba, mcr), 0x7980000F); /* enable in freeze mode */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0x7980000F);
+>> >+    writel(FCREG(fba, mcr), 0x6980000F); /* leave by clearing HALT */
+>> >+    g_assert_cmpuint(readl(FCREG(fba, mcr)), =3D=3D, 0x6080000F);
+>> >+}
+>> >+
+>> >+static void flexcan_test_mailbox_io_impl(hwaddr ba_tx, hwaddr ba_rx)
+>> >+{
+>> >+    /* -- test correct handling of mailbox IO -- */
+>> >+    const int test_1_mbidx =3D 0;
+>> >+    fc_reset(ba_tx,
+>> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_=
+COUNT));
+>> >+    fc_reset(ba_rx,
+>> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_=
+COUNT));
+>> >+
+>> >+    fc_setup_rx_mb(ba_rx, test_1_mbidx);
+>> >+    fc_tx(ba_tx, test_1_mbidx, &fc_test_frame_1_ide);
+>> >+    g_assert_cmpuint(fc_get_irqs(ba_rx), =3D=3D, 1 << test_1_mbidx);
+>> >+    fc_rx_check(ba_rx, test_1_mbidx, &fc_test_frame_1_ide);
+>> >+    readl(FCREG(ba_rx, timer)); /* reset lock */
+>> >+
+>> >+    writel(FCMB(ba_rx, test_1_mbidx, 0), 0);
+>> >+    g_assert_cmpuint(readl(FCMB(ba_rx, test_1_mbidx, 0)), =3D=3D, 0);
+>> >+    writel(FCMB(ba_rx, test_1_mbidx, 1), 0x99AABBCC);
+>> >+    g_assert_cmpuint(readl(FCMB(ba_rx, test_1_mbidx, 1)), =3D=3D, 0x9=
+9AABBCC);
+>> >+}
+>> >+
+>> >+static void flexcan_test_dual_transmit_receive_impl(hwaddr ba_tx, hwa=
+ddr ba_rx)
+>> >+{
+>> >+    /* -- test TX and RX between the two FlexCAN instances -- */
+>> >+    const int test_1_mbidx =3D 50;
+>> >+    const int test_rounds =3D 50;
+>> >+
+>> >+    /* self-receive enabled on tx FC */
+>> >+    fc_reset(ba_tx,
+>> >+             FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_COUNT));
+>> >+    fc_reset(ba_rx,
+>> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_=
+COUNT));
+>> >+
+>> >+    /* tests self-receive on tx and reception on rx */
+>> >+    fc_setup_rx_mb(ba_rx, test_1_mbidx);
+>> >+    fc_check_empty(ba_rx, test_1_mbidx);
+>> >+    fc_setup_rx_mb(ba_tx, test_1_mbidx + 1);
+>> >+    fc_check_empty(ba_tx, test_1_mbidx + 1);
+>> >+    g_assert_cmpuint(fc_get_irqs(ba_rx), =3D=3D, 0);
+>> >+    g_assert_cmpuint(fc_get_irqs(ba_tx), =3D=3D, 0);
+>> >+
+>> >+    fc_tx(ba_tx, test_1_mbidx, &fc_test_frame_1);
+>> >+    fc_clear_irq(ba_tx, test_1_mbidx);
+>> >+
+>> >+    fc_rx_check(ba_rx, test_1_mbidx, &fc_test_frame_1);
+>> >+    fc_check_empty(ba_rx, test_1_mbidx);
+>> >+    fc_rx_check(ba_tx, test_1_mbidx + 1, &fc_test_frame_1);
+>> >+    int tx_non_empty_mbidxs[] =3D {test_1_mbidx, test_1_mbidx + 1};
+>> >+
+>> >+    fc_check_empty_multi(ba_tx, 2, tx_non_empty_mbidxs);
+>> >+    fc_clear_irq(ba_rx, test_1_mbidx);
+>> >+    fc_clear_irq(ba_tx, test_1_mbidx + 1);
+>> >+    readl(FCREG(ba_rx, timer)); /* reset lock */
+>> >+
+>> >+    for (int ridx =3D 0; ridx < test_rounds; ridx++) {
+>> >+        /* test extended IDs sent to all mailboxes */
+>> >+        for (int i =3D 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+>> >+            fc_setup_rx_mb(ba_rx, i);
+>> >+        }
+>> >+        fc_check_empty_multi(ba_rx, 0, NULL);
+>> >+        g_assert_cmpuint(fc_get_irqs(ba_rx), =3D=3D, 0);
+>> >+        g_assert_cmpuint(fc_get_irqs(ba_tx), =3D=3D, 0);
+>> >+
+>> >+        for (int i =3D 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+>> >+            fc_tx(ba_tx, i, &fc_test_frame_1_ide);
+>> >+        }
+>> >+        g_assert_cmpuint(fc_get_irqs(ba_rx), =3D=3D, UINT64_MAX);
+>> >+        g_assert_cmpuint(fc_get_irqs(ba_tx), =3D=3D, UINT64_MAX);
+>> >+        for (int i =3D 0; i < FLEXCAN_MAILBOX_COUNT; i++) {
+>> >+            fc_rx_check(ba_rx, i, &fc_test_frame_1_ide);
+>> >+        }
+>> >+
+>> >+        /* reset interrupts */
+>> >+        writel(FCREG(ba_rx, iflag1), UINT32_MAX);
+>> >+        writel(FCREG(ba_rx, iflag2), UINT32_MAX);
+>> >+        writel(FCREG(ba_tx, iflag1), UINT32_MAX);
+>> >+        writel(FCREG(ba_tx, iflag2), UINT32_MAX);
+>> >+        g_assert_cmpuint(fc_get_irqs(ba_rx), =3D=3D, 0);
+>> >+        g_assert_cmpuint(fc_get_irqs(ba_tx), =3D=3D, 0);
+>> >+    }
+>> >+}
+>> >+
+>> >+static void flexcan_test_tx_abort_impl(hwaddr ba)
+>> >+{
+>> >+    /* -- test the TX abort feature -- */
+>> >+    fc_reset(ba,
+>> >+             FLEXCAN_MCR_SRX_DIS | FLEXCAN_MCR_MAXMB(FLEXCAN_MAILBOX_=
+COUNT));
+>> >+
+>> >+
+>> >+    for (int mbidx =3D 0; mbidx < FLEXCAN_MAILBOX_COUNT; mbidx++) {
+>> >+        fc_tx(ba, mbidx, &fc_test_frame_1);
+>> >+
+>> >+        writel(FCMB(ba, mbidx, 0), FLEXCAN_MB_CODE_TX_ABORT);
+>> >+        g_assert_cmpuint(readl(FCMB(ba, mbidx, 0)), =3D=3D,
+>> >+                         FLEXCAN_MB_CODE_TX_INACTIVE);
+>> >+    }
+>> >+}
+>> >+
+>> >+static void flexcan_test_freeze_disable_interaction(void)
+>> >+{
+>> >+    qtest_start(FC_QEMU_ARGS);
+>> >+    flexcan_test_freeze_disable_interaction_impl(FSL_IMX6_CAN1_ADDR);
+>> >+    flexcan_test_freeze_disable_interaction_impl(FSL_IMX6_CAN2_ADDR);
+>> >+    qtest_end();
+>> >+}
+>> >+
+>> >+static void flexcan_test_linux_probe(void)
+>> >+{
+>> >+    qtest_start(FC_QEMU_ARGS);
+>> >+    flexcan_test_linux_probe_impl(FSL_IMX6_CAN1_ADDR);
+>> >+    flexcan_test_linux_probe_impl(FSL_IMX6_CAN2_ADDR);
+>> >+    qtest_end();
+>> >+}
+>> >+
+>> >+static void flexcan_test_dual_transmit_receive(void)
+>> >+{
+>> >+    qtest_start(FC_QEMU_ARGS);
+>> >+    flexcan_test_dual_transmit_receive_impl(FSL_IMX6_CAN1_ADDR,
+>> >+                                            FSL_IMX6_CAN2_ADDR);
+>> >+    flexcan_test_dual_transmit_receive_impl(FSL_IMX6_CAN2_ADDR,
+>> >+                                            FSL_IMX6_CAN1_ADDR);
+>> >+    qtest_end();
+>> >+}
+>> >+
+>> >+static void flexcan_test_tx_abort(void)
+>> >+{
+>> >+    qtest_start(FC_QEMU_ARGS);
+>> >+    flexcan_test_tx_abort_impl(FSL_IMX6_CAN1_ADDR);
+>> >+    flexcan_test_tx_abort_impl(FSL_IMX6_CAN2_ADDR);
+>> >+    qtest_end();
+>> >+}
+>> >+
+>> >+static void flexcan_test_mailbox_io(void)
+>> >+{
+>> >+    qtest_start(FC_QEMU_ARGS);
+>> >+    flexcan_test_mailbox_io_impl(FSL_IMX6_CAN1_ADDR, FSL_IMX6_CAN2_AD=
+DR);
+>> >+    flexcan_test_mailbox_io_impl(FSL_IMX6_CAN2_ADDR, FSL_IMX6_CAN1_AD=
+DR);
+>> >+    qtest_end();
+>> >+}
+>> >+
+>> >+int main(int argc, char **argv)
+>> >+{
+>> >+    g_test_init(&argc, &argv, NULL);
+>> >+
+>> >+    qtest_add_func("/net/flexcan/linux_probe", flexcan_test_linux_pro=
+be);
+>> >+    qtest_add_func("/net/flexcan/freeze_disable_interaction",
+>> >+                   flexcan_test_freeze_disable_interaction);
+>> >+    qtest_add_func("/net/flexcan/dual_transmit_receive",
+>> >+                   flexcan_test_dual_transmit_receive);
+>> >+    qtest_add_func("/net/flexcan/tx_abort",
+>> >+                   flexcan_test_tx_abort);
+>> >+    qtest_add_func("/net/flexcan/mailbox_io", flexcan_test_mailbox_io=
+);
+>> >+
+>> >+    return g_test_run();
+>> >+}
+>> >diff --git a/tests/qtest/meson=2Ebuild b/tests/qtest/meson=2Ebuild
+>> >index be4fa627b5=2E=2E33239f1880 100644
+>> >--- a/tests/qtest/meson=2Ebuild
+>> >+++ b/tests/qtest/meson=2Ebuild
+>> >@@ -246,6 +246,7 @@ qtests_arm =3D \
+>> >   (config_all_devices=2Ehas_key('CONFIG_MICROBIT') ? ['microbit-test'=
+] : []) + \
+>> >   (config_all_devices=2Ehas_key('CONFIG_STM32L4X5_SOC') ? qtests_stm3=
+2l4x5 : []) + \
+>> >   (config_all_devices=2Ehas_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspe=
+ed_fsi-test'] : []) + \
+>> >+  (config_all_devices=2Ehas_key('CONFIG_CAN_FLEXCAN') ? ['flexcan-tes=
+t'] : []) + \
+>> >   (config_all_devices=2Ehas_key('CONFIG_STM32L4X5_SOC') and
+>> >    config_all_devices=2Ehas_key('CONFIG_DM163')? ['dm163-test'] : [])=
+ + \
+>> >   ['arm-cpu-features',
+>>=20
+>> I like that the test attempts to mimic real device driver behavior, whi=
+ch makes its intent recognizable=2E
+>>=20
+>> With the license text comment addressed:
+>> Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>>=20
 >
->and I have tested Michal Lenc's contributed RTEMS SJA1000 CAN driver
->with real ESP32C3 chip up to detect and configuration phase and QEMU woul=
-d
->be great for CI and Espressinf and Yours QEMU already maps SJA1000/TWAI=
-=2E
->The RTEMS ESP32C6 support has proposal for this year RTEMS GSoC=2E
->The ESP32C5 and ESP32S31 are even more interesting because they provide
->motion control, CAN FD and the last one even wired Ethernet=2E=20
->
->Best wishes
->
->                Pavel
->
->                Pavel Pisa
->    phone:      +420 603531357
->    e-mail:     pisa@cmp=2Efelk=2Ecvut=2Ecz
->    Department of Control Engineering FEE CVUT
->    Karlovo namesti 13, 121 35, Prague 2
->    university: http://control=2Efel=2Ecvut=2Ecz/
->    personal:   http://cmp=2Efelk=2Ecvut=2Ecz/~pisa
->    social:     https://social=2Ekernel=2Eorg/ppisa
->    projects:   https://www=2Eopenhub=2Enet/accounts/ppisa
->    CAN related:http://canbus=2Epages=2Efel=2Ecvut=2Ecz/
->    RISC-V education: https://comparch=2Eedu=2Ecvut=2Ecz/
->    Open Technologies Research Education and Exchange Services
->    https://gitlab=2Efel=2Ecvut=2Ecz/otrees/org/-/wikis/home
+>With regards,
+>Daniel
 
