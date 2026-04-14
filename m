@@ -4,140 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A28F9D0EF
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 19:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C92F9D0EF
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 19:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCjWo-0001XA-K1; Tue, 14 Apr 2026 15:34:30 -0400
+	id 1wCjX3-0001Yd-SJ; Tue, 14 Apr 2026 15:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wCjWm-0001Wg-SK
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 15:34:28 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wCjWj-0003tC-Nd
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 15:34:27 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63EGBlie1778940
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 19:34:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- f/RTA0EhVEFuSMh1iWoW3YxV+jiHPW5ybFu+2oyD55U=; b=jzUkqAxU6resR2rd
- vHdN+ls/f85bNPh13Ze0B7MFIQm9mWM4qZQAowY6YsKsEWQ4T6Y5Mqt5gZ7g9HMs
- rNxUpYzOeXN/JK0TnlXVUJx5U+FambVjKsndnJ6L1QlKmJlLSbQSlHc2wncFia4S
- RzWk+onXX1kO8N/Cf4OEBZgEsbLumPupgz2Mv1fL8Du5Gcq85r4fLPShH9kPvRdh
- ObkzruVeXKKOFjs8H0PIfJj1VuoG9RKOBFG7MsGK9mOLhejDX/bZO5NsZ18xPZjh
- wV4M0K2bby79ivIvsdG1PFf3f/wwFjON/yveMVsVHW8ee1OL2KLaP2CWwTfUmPEA
- fhdJNA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dhrw00qhj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 19:34:22 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8aca3b7b536so76550526d6.3
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 12:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1776195261; x=1776800061; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=f/RTA0EhVEFuSMh1iWoW3YxV+jiHPW5ybFu+2oyD55U=;
- b=H5ZyhlM8sF1oqNBfcXwh/cprdVkCnKHpMm8eCSt2ptQ3fInsL1xuTBAbWVR436V3uW
- mEWd13vLuqYPiw73Aft2W9U+FGxKab+sZ7LO0yabKvSRd5djFibQmxHq/ZA3DwVx9FfL
- ZFly+ZQkJJtH/PMyt57DuVkqqdKGkbXIOemJJvaovDyvIt9jYezRriVbGRv5nLzuE73J
- iLMe3nzI4lh4elwLLjRDhOWdg98EO6bXe4uWy6PP/HoqdJHqQ1gjFBQ2NEQ8DobM3khg
- sEpT6VrB2FrqGIAhPV6tTbzuclkGGFwc2Ytub20Fm5/gH8UmyKItXgnaKRME2s/YmrN9
- K/Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776195261; x=1776800061;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=f/RTA0EhVEFuSMh1iWoW3YxV+jiHPW5ybFu+2oyD55U=;
- b=IqfoOoYGIZTEpNcUdu/c2Vr4qT0qN88nRAylzYVsXp6IF144F9aXDWmIibqMGR3/Ia
- ObCAA/z48UbNGBFNHHz5oS6IeCsdbeqzz8HbwaXVk/ZbthKz0S6stpdjPB764egYxLu0
- 8k3JOUNHhCfHYC9Liubb1JRzt9Yq7bIpLhoS5PXISda39PXPS+kr4roiSzqnii2oZicl
- Cv8gojfutmvlN6AYk0D7XIT8Jx076hesKtNHoyJb/8R5KtkjKK5QCqRZmsIh+6DVM1lF
- 91rddvrk4vruDrdgcb1NSuerzy2ovQ5AnMM1+b+wQlT/PdNCh8dqnA5L37iK7AKlZ9O+
- woPA==
-X-Gm-Message-State: AOJu0Yyp5I7rNaR2e9W4YVwY/91yoRSHO1MwFYWdIReVg5Nhq3Lxamnz
- 29vGlAT9h702Nh8stes4doOpyDZUmOEUS8+kmI/G0yQkGH+hw2ybjI4jMahwV9icM8UoWWXtkKz
- NdmOIqcOD8bwyj5f35LRGD28E/RbGyKM3hI4cUF2JW2sJHcYK9OeWZUTXrw==
-X-Gm-Gg: AeBDiesbpScenoIysd/SRMZvY2SFDEgjJVzCD0oN1Tu+L58uwGwxgow9WOWMT0RO7KP
- nSdjE7Wj8APHIiDLgFVyjfxY9RxoBy2FYnlNfdY3rF+/RbzuMetIvUgRoL0lcCqjwl7yB574xL7
- SbWwerneueaZOPKckKyrzsiyNENhvxdzZ6hn0N4xKOnedsV5WScEDwtZIIfJq+yy/75IPOjanZR
- H15AeBkkPs34S/uK0LmC31xQFum5D1/lYI4Hl3YeVoOEeN52X35bsancQCYuWnCEg7vTqSaI9/j
- /3SOW5234BR2u3+L4LgnfApqYBND39/kryJPzgMJi6ktGhE/uy0zuHLHJf/bpeBm9SXyQ5823HL
- tQC5xeXyoJ2nb/OktRBersWsgZ+2RWVuQWJ7i7Q+9Nbz1uRCOkXqxIlASWegOefHgiHQ=
-X-Received: by 2002:a05:6214:2b86:b0:8ae:6264:53bf with SMTP id
- 6a1803df08f44-8ae62645694mr48091736d6.52.1776195261123; 
- Tue, 14 Apr 2026 12:34:21 -0700 (PDT)
-X-Received: by 2002:a05:6214:2b86:b0:8ae:6264:53bf with SMTP id
- 6a1803df08f44-8ae62645694mr48091056d6.52.1776195260590; 
- Tue, 14 Apr 2026 12:34:20 -0700 (PDT)
-Received: from [192.168.68.100] ([187.10.234.35])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ac84c4acd5sm123702326d6.23.2026.04.14.12.34.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 12:34:20 -0700 (PDT)
-Message-ID: <e4ff407d-fb4c-4fe1-ad02-dd6242419b49@oss.qualcomm.com>
-Date: Tue, 14 Apr 2026 16:34:16 -0300
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCjX2-0001YU-Rl
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 15:34:44 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wCjWz-0003we-Hp
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 15:34:43 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 0E5BA6A7D0;
+ Tue, 14 Apr 2026 19:34:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776195277; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3B8MLEkllSQ+melihNx1n1KRo8qJWb94Umq8HvGWcTs=;
+ b=ZRsJeVU8hmwBmw0x8hmwTphk0vGL2Uvhm6jMpU2ufXsleFfoAlp5y6FGzH0s2KYdjV4eIL
+ I/17qdT2WrjsXA9c+tygm5XQ93iBjTSFpuHXyIr6xiv/dXXWCWRR5Ghr3clyTc7+3jhOj5
+ QDDFxaS1xKjsGC7aTGJvDSXicSAQ/MY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776195277;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3B8MLEkllSQ+melihNx1n1KRo8qJWb94Umq8HvGWcTs=;
+ b=3PKCglFyN5vjiY2hzSIjfa+zfTzRLac37C+XS2RT20bq7BSte4Uc96QJN7EBGbcTvrgJQy
+ 7ZY9w6UJwiJxDKAA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776195277; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3B8MLEkllSQ+melihNx1n1KRo8qJWb94Umq8HvGWcTs=;
+ b=ZRsJeVU8hmwBmw0x8hmwTphk0vGL2Uvhm6jMpU2ufXsleFfoAlp5y6FGzH0s2KYdjV4eIL
+ I/17qdT2WrjsXA9c+tygm5XQ93iBjTSFpuHXyIr6xiv/dXXWCWRR5Ghr3clyTc7+3jhOj5
+ QDDFxaS1xKjsGC7aTGJvDSXicSAQ/MY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776195277;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3B8MLEkllSQ+melihNx1n1KRo8qJWb94Umq8HvGWcTs=;
+ b=3PKCglFyN5vjiY2hzSIjfa+zfTzRLac37C+XS2RT20bq7BSte4Uc96QJN7EBGbcTvrgJQy
+ 7ZY9w6UJwiJxDKAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A0C464B5EE;
+ Tue, 14 Apr 2026 19:34:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id q4NBHMyW3mnCKQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 14 Apr 2026 19:34:36 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, "Maciej S. Szmigiero"
+ <mail@maciej.szmigiero.name>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PULL 19/31] migration: Normalize tls arguments
+In-Reply-To: <ad6OcvW1II8Q3gO1@x1.local>
+References: <20251223142959.1460293-1-peterx@redhat.com>
+ <20251223142959.1460293-20-peterx@redhat.com>
+ <a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name>
+ <ad6OcvW1II8Q3gO1@x1.local>
+Date: Tue, 14 Apr 2026 16:34:30 -0300
+Message-ID: <87340xz67t.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] tests/data/acpi: Update SPCR golden-ref for RISC-V virt
-To: Chao Liu <chao.liu.zevorn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, tangtao1634@phytium.com.cn
-References: <20260412012501.1808602-1-chao.liu.zevorn@gmail.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260412012501.1808602-1-chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 4MHKYJKZ2Br9IMmv5CUQnrF1huCm-wS0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDE4MiBTYWx0ZWRfXzA5P92sl5ERY
- 3it6jmg3zNLxJOCV9GaB6lHTBnyEYKWNd7c8FeUd9CBetQVWX1hFaioFgs+BewmOCIK89Zm6hC1
- ht05ISbwttSdBtdhSVdMhOHI+dU0p+ufyuSf9XxvP1I2cyMrlf91MqQyv356JIumX8uvKERnpc8
- 9KuumoTGlYRoWLaSDGuwp1eE+Vvm9KDmjRWDlev8xmv6oKf4EIxg4i5/kz4HkC8Tcnt0zusEHMD
- /cS4lzDICHSXaW6cqESAdlMmgAxA8FfvUmiE6wrdYezyRlofHGLEMVEJTk+TAOkhgciv2ynQi6B
- bkpwVei+FPuPqStudIzkzriyouce4uTkwZKDpC6l23GTkjeUBITdcpDQ1tPp4AQxlInfmN4KdBS
- XdXU5OKG/pHlcQtD/U2Ew1c49VDVaoC+L+xoiCMwA27BMiMX8qaPC6k05RdviAkULrCFpFQViX3
- iiD58UIzD2ErbamHTkA==
-X-Proofpoint-ORIG-GUID: 4MHKYJKZ2Br9IMmv5CUQnrF1huCm-wS0
-X-Authority-Analysis: v=2.4 cv=YMGvDxGx c=1 sm=1 tr=0 ts=69de96be cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=oVRcNo5O0Zbo5d60hn4F5w==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=fgrLqfBXAAAA:8 a=EUspDBNiAAAA:8
- a=phTcdrftAHWE3h-k6CMA:9 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
- a=_Ge82aPy-h_wFa7gWU4u:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-14_04,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 spamscore=0
- suspectscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604140182
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,36 +117,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
+> On Tue, Apr 14, 2026 at 06:56:27PM +0200, Maciej S. Szmigiero wrote:
+>> On 23.12.2025 15:29, Peter Xu wrote:
+>> > From: Fabiano Rosas <farosas@suse.de>
+>> > 
+>> > The migration parameters tls_creds, tls_authz and tls_hostname
+>> > currently have a non-uniform handling. When used as arguments to
+>> > migrate-set-parameters, their type is StrOrNull and when used as
+>> > return value from query-migrate-parameters their type is a plain
+>> > string.
+>> > 
+>> > Not only having to convert between the types is cumbersome, but it
+>> > also creates the issue of requiring two different QAPI types to be
+>> > used, one for each command. MigrateSetParameters is used for
+>> > migrate-set-parameters with the TLS arguments as StrOrNull while
+>> > MigrationParameters is used for query-migrate-parameters with the TLS
+>> > arguments as str.
+>> > 
+>> > Since StrOrNull could be considered a superset of str, change the type
+>> > of the TLS arguments in MigrationParameters to StrOrNull. Also ensure
+>> > that QTYPE_QNULL is never used.
+>> > 
+>> > 1) migrate-set-parameters will always write QTYPE_QSTRING to
+>> >    s->parameters, either an empty or non-empty string.
+>> > 
+>> > 2) query-migrate-parameters will always return a QTYPE_QSTRING, either
+>> >    empty or non-empty.
+>> > 
+>> > 3) the migrate_tls_* helpers will always return a non-empty string or
+>> >    NULL, for the internal migration code's consumption.
+>> > 
+>> > Points (1) and (2) above help simplify the parameters validation and
+>> > the query command handling because s->parameters is already kept in
+>> > the format that query-migrate-parameters (and info migrate_paramters)
+>> > expect. Point (3) is so people don't need to care about StrOrNull in
+>> > migration code.
+>> > 
+>> > This will allow the type duplication to be removed in the next
+>> > patches.
+>> > 
+>> > Note that the type of @tls_creds, @tls-hostname, @tls-authz changes
+>> > from str to StrOrNull in introspection of the query-migrate-parameters
+>> > command. We accept this imprecision to enable de-duplication.
+>> > 
+>> > There's no need to free the TLS options in
+>> > migration_instance_finalize() because they're freed by the qdev
+>> > properties .release method.
+>> > 
+>> > Temporary in this patch:
+>> > migrate_params_test_apply() copies s->parameters into a temporary
+>> > structure, so it's necessary to drop the references to the TLS options
+>> > if they were not set by the user to avoid double-free. This is fixed
+>> > in the next patches.
+>> > 
+>> > Acked-by: Markus Armbruster <armbru@redhat.com>
+>> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> > Link: https://lore.kernel.org/r/20251215220041.12657-6-farosas@suse.de
+>> > [peterx: in hmp_info_migrate_parameters(), remove an extra dump of
+>> >   max_postcopy_bandwidth, introduced likely by accident]
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >   qapi/migration.json            |   6 +-
+>> >   migration/options.h            |   1 +
+>> >   migration/migration-hmp-cmds.c |   6 +-
+>> >   migration/options.c            | 144 +++++++++++++++++++--------------
+>> >   migration/tls.c                |   2 +-
+>> >   5 files changed, 93 insertions(+), 66 deletions(-)
+>> > 
+>> > diff --git a/migration/options.c b/migration/options.c
+>> > index d55f3104be..6ef3c56fb6 100644
+>> > --- a/migration/options.c
+>> > +++ b/migration/options.c
+>> (..)
+>> > @@ -1243,7 +1274,7 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>> >   #ifdef CONFIG_LINUX
+>> >       if (migrate_zero_copy_send() &&
+>> >           ((params->has_multifd_compression && params->multifd_compression) ||
+>> > -         (params->tls_creds && *params->tls_creds))) {
+>> > +         *params->tls_creds->u.s)) {
+>> >           error_setg(errp,
+>> >                      "Zero copy only available for non-compressed non-TLS multifd migration");
+>> >           return false;
+>> The above change gives me easily triggerable NULL pointer dereference:
+>> > $ qemu-system-x86_64 -monitor stdio -global migration.x-multifd=true -global migration.x-zero-copy-send=true
+>> > QEMU 10.2.93 monitor - type 'help' for more information
+>> > VNC server running on ::1:5900
+>> > (qemu) migrate_set_parameter downtime-limit 500
+>> > Segmentation fault
+>
+> Oops..
+>
 
-On 4/11/2026 10:25 PM, Chao Liu wrote:
-> Update the expected SPCR binary to match the corrected field
-> sequence after the Terminal Type and Language fields were swapped
-> back to their proper order.
-> 
-> This fixes the qtest-riscv64/bios-tables-test CI failure:
->    https://gitlab.com/TaoTang/qemu/-/jobs/13879552268
-> 
-> Fixes: 977c6fefcd04 ("hw/acpi: correct field sequence in SPCR table")
-> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
+Why do you guys still let me touch this codebase?
 
+>> 
+>> I guess params->tls_creds really needs that NULL check before being accessed.
+>
+> Yeah, my gut feeling is we got this special casing of using a temp
+> parameter object..  I'll leave Fabiano to double check on that and send
+> patch..
+>
+> Thanks for the report!
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Good that I write my bugs with matching fixes to go along.
 
+https://lore.kernel.org/r/20260202224101.20568-3-farosas@suse.de
 
->   tests/data/acpi/riscv64/virt/SPCR | Bin 90 -> 90 bytes
->   1 file changed, 0 insertions(+), 0 deletions(-)
-> 
-> diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-> index 09617f8793a6f7b1f08172f735b58aa748671540..59d2c8f7f215a604612cbd0294c18bc6301e208a 100644
-> GIT binary patch
-> delta 10
-> Rcma!wnqbGo%rMbG3IGpM0&@TW
-> 
-> delta 10
-> Rcma!wnqbGoz&z1G3IGpJ0&@TW
-> 
-
+I'll repost with a better commit message.
 
