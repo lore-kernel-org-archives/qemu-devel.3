@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D9BED7B92
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 09:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F7BED7B91
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 09:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCZyt-0002sR-Po; Tue, 14 Apr 2026 05:22:51 -0400
+	id 1wCa2F-0003j3-VD; Tue, 14 Apr 2026 05:26:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCZys-0002ri-Jj
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:22:50 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCa2E-0003iu-Vz
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:26:19 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCZyq-0002go-MN
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:22:50 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488b00ed86fso55442735e9.3
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 02:22:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCa2C-0003O0-UG
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:26:18 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43cfde3c3f3so5359196f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 02:26:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776158567; x=1776763367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776158773; x=1776763573; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=napVYKet5wfgKuxipXOGqoJX84ZK+ADDAP9uEoPAauw=;
- b=Ll9ECSPJxBE8ULWo2u2KPvXkHpWX7UBKFbAZTqppI1o6wQeZyCbSbtEYBkukhxjfzs
- Jv/m1v4m7pZYkyZMPbCQOJ0PbQk8P9a63sxKdlatm5/RsxRerrCSDPXbv1BI4Rznu0m2
- B2/YZhXGn5X16XVIQGlAuUy94wSfHosB54O5/Em0GBqRotPz3HMrm9/5gFCmN0naRjS4
- KldT03rIKnk9JH2wiZW9YtwtkSZFl0AlT3KwFvDUUlxsAKc5ERY2HQsTIGLlhJOUncc4
- bsiMTCRBvdlFOVnpyCjOFqqAxF0fhK9ySvqsbX6aAgo5GFJ2xamSUQqSg+QCRZudaM0s
- Ufug==
+ bh=wg0GlMQGOvVBOcb3NEcGxnHstHUff6kWFznPEsSj80s=;
+ b=kVDznVT1U8ZbPvy/IjvFDdNoa/KYPfOH5NBeGKEyggpXXSnoF64ma15YdQKFeDMjci
+ WWksFmmUeKZ4g5GL0inwpeBBpWPxceCOGL5p1e066FCOrAtO2daOzaLN5LQBCAJFuG+/
+ l5VhhScd8WOksoBNjvdURAaqsj6wR7AigFu3BH3fSQYlaUJpCwG1YuVPsHBXTs8cu2JT
+ CbX6N6z7NEhyjIAq+ZgGgdVr1onWPtq7vfh77TmDn/wfMX3db4Q+9WyJO2EQuuRqUUAP
+ xnc/lzMAxATMbacQYiyZvJJWriVCWrArla6aSnaIzJmu8JK36E/hh4Pa++Lm+URtYjBn
+ gZHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776158567; x=1776763367;
+ d=1e100.net; s=20251104; t=1776158773; x=1776763573;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=napVYKet5wfgKuxipXOGqoJX84ZK+ADDAP9uEoPAauw=;
- b=eezmGzhGzD0DXtksN6RsaRs7Nv5EO4nZmW5aal9zwJx7YaaRsuPRzlDTY83CLXsmIs
- VpBPJ6vNgRkqDkpCV3+wrXw82MzRakBWfICI2XYVGevYEBAm5VlINYl4OfdwF0C/Au4p
- MquAOBcZgb0GF8xdNfI52L5e/3uewCXk1Wk28UTg5uehBaEHvMh3HLDohakRN1F6Cm1m
- Enhw4VskFpgy4ZgyF7ZN5qA/VtNJMq4QXKgBGzkUlsVeMf7qUZINrVEXiKMRGUWEf2yC
- LvOzRoY46pzioAiqh5yViBND4DK07g0+/ia21/TKtzHN07/R5FVjL9neuIbAOcGw/8fH
- 36DQ==
+ bh=wg0GlMQGOvVBOcb3NEcGxnHstHUff6kWFznPEsSj80s=;
+ b=W6gnlu/+PBRcuGu4XRWvH+2t5VqEv2B7UMmy8MDEjkVaowZe94AM8mpfUqU+2OeZdz
+ 6KLfLYJYKOTPNYXsQ2F0mB97E9l3h9PrZXoomKQNOsl9nyGZwF4wHJCZOmIKZ8ou3uaa
+ nQhtqvqXDaOyAUMNX76GPv0wJiEMvOoTl37fGkRkhhVqRHrakfOJPr39hJkssFRM3OyV
+ X5M4sbxlMyIDBBupI54HF6LQR8CQuuz5d1DVL9jxyki8eJWdCZzMn2m/92A2yW23Igwh
+ WvQDn/egqrIjkBIR01c16n6Ywiaj+yM5wM2AabBgd2lSMdx7D4tLCB/TUz0+kJgfQiry
+ RIqw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9B+2w8iYqULKl5IPcLb6qfHeCH5PNOxjpu021w7JaKvAT04iXvIMjXr0UCy/mBnuaBD/XPlf49xlQJ@nongnu.org
-X-Gm-Message-State: AOJu0YxtHSt57Br6GO2BUZHUkdSA7IGipvi6vTIhBxluhxIa7h9zvWVo
- e9+jgrzuFbVZo7a1bFDYYvfcS9SPbe/VaAlAUI9EfpoKiOFtf81gaoysZgUJfLR3gOA=
-X-Gm-Gg: AeBDieu+RwaNm8MyycsScdTuOfuX0cZh1FJ1lymeTXDgAsgJEcwpHvqQHsi5Bc46d+g
- U8VVITsmXRYl7zj/n7VoJNgVWtlh7GokRC1mVUwBv4DiK/X2DzZP/qR1X4baMyaM+bBoSKqiobL
- cdvvWy6o39NaNISqVCgUy/Ga+VAXlQNDTDhxQPbcnwmzPIcldVGbVD8KoH3PBfDvr1ctDxXsIyc
- VqgRg9V2QlXOhgEe6g0ILCnVmhf3ZyGqYp+PWxIeFXwtJ32r/q2mY1+vlcdekxTBtM1LS97fo6X
- v66n97SAVpvNPH5iGoSliaqebo6ulEDr+O/76WWehFSzZtsOLsQcDgFVdIg88BpZsc5C0zeJJlV
- M1vvXWbetgDesfsJlr2GY9iZjpiOFHihZ9BhqK4rsbrBDBzrfrJEjvuYe7sqT9a3KfgKXfuM1Tw
- pBfF8jRrjY9AjMPy1iOOEHebsAxu1YPipizvJXlSphSVXv+X7mZHwkEPiYSIPCFssjDg==
-X-Received: by 2002:a05:600c:4715:b0:488:9e54:94c0 with SMTP id
- 5b1f17b1804b1-488d67e7dd4mr245692415e9.8.1776158566868; 
- Tue, 14 Apr 2026 02:22:46 -0700 (PDT)
+ AFNElJ/Cr+SezPOS64+Rer3jC158YTA23460hyQtaAOmndguWxez3VRGZXSwMbCa7ZDirB6SUk0DLkGBZVYY@nongnu.org
+X-Gm-Message-State: AOJu0Yx+24StDEnoYDG15a1sRmlfvlKLjuSVCI4C/YlRoy9KVZZ6a2zk
+ N1ib9Slbh0nnOMG1LbD5c3z/1hiZE4wFcLCLY+DoeuGJHEKdzHW6hW3FAQjgYbIUYF4Hsl40Rdd
+ sYGVy2hQ=
+X-Gm-Gg: AeBDiesdzn1LcaGYeUUFZEWR7oUO0KR8QVdaP/QuXUw9S0ckcAdC4OdsMJgMK4Huryu
+ VW2fw/gr/naNnvTyye47HjoFpvpDdnr2t1/xc5M03562Gl91r5sPgMOBjHlietF/TUgQxqwdjFq
+ bvVQfwczw3WK4UgQpDhHUJXe8FdxdmkJHSQlhoEyQU+DPKWv2CcXriiITnAxznybPx6INnStBcE
+ PzUjtLbJ09h7QcXKF4Su3wX+W30iGipTl2JEFzYZp+ZTB0dSvVkkKutaxu47Tl+18gY1P5o8CVs
+ a2SqqIBaTZfH8ykB+wiedBgBKYWbbbZyOLaXsSY0yzwd07MLqmkTXnpJfzT9kTCmjeira972cSR
+ Q88FIVGn6d8GK5GDn9KfDX/ff2KMJun0zR8fi2DJBRgAk7LyBCjmPBaC8Zy0RNmJCO0joFoeRvS
+ 9AdAVaLUTPGhE1hz8AusgGR7ISHlcnvlhpB6/1PZmKpfJWliJW4eIitn1eXIlXC19Q7A==
+X-Received: by 2002:a5d:5d02:0:b0:43d:1df7:ed24 with SMTP id
+ ffacd0b85a97d-43d642a64b1mr24141577f8f.21.1776158772653; 
+ Tue, 14 Apr 2026 02:26:12 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ee042ff9sm40765095e9.14.2026.04.14.02.22.44
+ ffacd0b85a97d-43d7400708dsm21467285f8f.25.2026.04.14.02.26.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 02:22:45 -0700 (PDT)
-Message-ID: <7eb32749-dd83-48ea-94a4-41935cc90aca@linaro.org>
-Date: Tue, 14 Apr 2026 11:22:44 +0200
+ Tue, 14 Apr 2026 02:26:11 -0700 (PDT)
+Message-ID: <e9536f25-a027-4961-8bae-cb34c74c979a@linaro.org>
+Date: Tue, 14 Apr 2026 11:26:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/17] hw/usb/hcd-ehci: Change descriptor addresses to
- 64-bit
+Subject: Re: [PATCH-for-11.0] hw: q35: fix VGA text console with SMM disabled
 Content-Language: en-US
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260414080025.3005916-1-jamin_lin@aspeedtech.com>
- <20260414080025.3005916-7-jamin_lin@aspeedtech.com>
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260413170407.57574-1-mohamed@unpredictable.fr>
+ <a55bac0f-dc63-4541-aad5-40214c6691a5@tls.msk.ru>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260414080025.3005916-7-jamin_lin@aspeedtech.com>
+In-Reply-To: <a55bac0f-dc63-4541-aad5-40214c6691a5@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,98 +107,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/26 10:00, Jamin Lin wrote:
-> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
+On 14/4/26 09:31, Michael Tokarev wrote:
+> On 13.04.2026 20:04, Mohamed Mediouni wrote:
+>> Work around black screen in VGA mode with SMM disabled.
+>>
+>> Required by NVMM, HVF and WHPX backends.
+>>
+>> https://gnats.NetBSD.org/59721
+>> https://gitlab.com/qemu-project/qemu/-/issues/2608
+>> https://gitlab.com/qemu-project/qemu/-/work_items/3085
+>>
+>> Patch written by Taylor R Campbell <riastradh@NetBSD.org>
+>>
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > 
-> The following fields are updated:
-> - EHCIPacket::qtdaddr
-> - EHCIQueue::{qhaddr, qtdaddr}
-> - EHCIState::{a_fetch_addr, p_fetch_addr}
+> Since this is effectively a reworked-for-later-qemu my patch from
+> https://lore.kernel.org/qemu-devel/3458e5b7-b53e-4057- 
+> baea-03a729452255@tls.msk.ru/,
 > 
-> Update get_dwords() and put_dwords() to take 64-bit addresses and
-> propagate the type change through the descriptor traversal paths.
-> 
-> Adjust NLPTR_GET() to operate on 64-bit values:
-> 
->      #define NLPTR_GET(x) ((x) & ~0x1fULL)
-> 
-> so that link pointer masking works correctly when descriptor
-> addresses exceed 32-bit space. The previous mask (0xffffffe0)
-> implicitly truncated addresses to 32 bits.
-> 
-> This patch does not change the on-wire descriptor layout yet.
-> It only removes the internal 32-bit address limit and prepares
-> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
-> 
-> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
-> use uint64_t for the address argument and print it with PRIx64. This
-> ensures full 64-bit addresses are shown in trace output and improves
-> debugging of queue heads and transfer descriptors.
-> 
-> Since the type of fetch_addr changes from 32-bit to 64-bit,
-> bump the VMState version.
-> 
-> No functional change.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/usb/hcd-ehci.h   | 12 ++++++----
->   hw/usb/hcd-ehci.c   | 57 +++++++++++++++++++++++++++------------------
->   hw/usb/trace-events | 24 +++++++++----------
->   3 files changed, 53 insertions(+), 40 deletions(-)
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Cc: qemu-stable@nongnu.org
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> @@ -294,8 +294,10 @@ struct EHCIState {
->       EHCIQueueHead pqueues;
->   
->       /* which address to look at next */
-> -    uint32_t a_fetch_addr;
-> -    uint32_t p_fetch_addr;
-> +    uint32_t a_fetch_addr_pre_v3;
-> +    uint32_t p_fetch_addr_pre_v3;
-> +    uint64_t a_fetch_addr;
-> +    uint64_t p_fetch_addr;
-
-
-> @@ -2441,6 +2445,11 @@ static int usb_ehci_post_load(void *opaque, int version_id)
->           }
->       }
->   
-> +    if (version_id < 3) {
-> +        s->a_fetch_addr = s->a_fetch_addr_pre_v3;
-> +        s->p_fetch_addr = s->p_fetch_addr_pre_v3;
-> +    }
-> +
->       return 0;
->   }
->   
-> @@ -2472,7 +2481,7 @@ static void usb_ehci_vm_state_change(void *opaque, bool running, RunState state)
->   
->   const VMStateDescription vmstate_ehci = {
->       .name        = "ehci-core",
-> -    .version_id  = 2,
-> +    .version_id  = 3,
->       .minimum_version_id  = 1,
->       .pre_save    = usb_ehci_pre_save,
->       .post_load   = usb_ehci_post_load,
-> @@ -2501,8 +2510,10 @@ const VMStateDescription vmstate_ehci = {
->           /* schedule state */
->           VMSTATE_UINT32(astate, EHCIState),
->           VMSTATE_UINT32(pstate, EHCIState),
-> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
-> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
-> +        VMSTATE_UINT32_V(a_fetch_addr_pre_v3, EHCIState, 2),
-> +        VMSTATE_UINT32_V(p_fetch_addr_pre_v3, EHCIState, 2),
-
-IIUC we want VMSTATE_UINT32_TEST(..., 3) here, for "<3".
-
-> +        VMSTATE_UINT64_V(a_fetch_addr, EHCIState, 3),
-> +        VMSTATE_UINT64_V(p_fetch_addr, EHCIState, 3),
-
-These ones are correct (">=3").
-
->           VMSTATE_END_OF_LIST()
->       }
->   };
+> 
+> Thanks,
+> 
+> /mjt
+> 
+>> ---
+>>   hw/pci-host/q35.c | 22 +++++++++++++---------
+>>   1 file changed, 13 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+>> index e85e4227b3..05ef5222f7 100644
+>> --- a/hw/pci-host/q35.c
+>> +++ b/hw/pci-host/q35.c
+>> @@ -372,6 +372,10 @@ static void mch_update_smram(MCHPCIState *mch)
+>>           memory_region_set_enabled(&mch->high_smram, false);
+>>       }
+>> +    if (!mch->has_smm_ranges) {
+>> +        goto out;
+>> +    }
+>> +
+>>       if ((pd->config[MCH_HOST_BRIDGE_ESMRAMC] & 
+>> MCH_HOST_BRIDGE_ESMRAMC_T_EN) &&
+>>           (pd->config[MCH_HOST_BRIDGE_SMRAM] & SMRAM_G_SMRAME)) {
+>>           switch (pd->config[MCH_HOST_BRIDGE_ESMRAMC] &
+>> @@ -405,7 +409,7 @@ static void mch_update_smram(MCHPCIState *mch)
+>>                                 mch->below_4g_mem_size - tseg_size);
+>>       memory_region_set_alias_offset(&mch->tseg_window,
+>>                                      mch->below_4g_mem_size - tseg_size);
+>> -
+>> +out:
+>>       memory_region_transaction_commit();
+>>   }
+>> @@ -474,15 +478,15 @@ static void mch_write_config(PCIDevice *d,
+>>           mch_update_pciexbar(mch);
+>>       }
+>> -    if (!mch->has_smm_ranges) {
+>> -        return;
+>> -    }
+>> -
+>>       if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
+>>                          MCH_HOST_BRIDGE_SMRAM_SIZE)) {
+>>           mch_update_smram(mch);
+>>       }
+>> +    if (!mch->has_smm_ranges) {
+>> +        return;
+>> +    }
+>> +
+>>       if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
+>>                          MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
+>>           mch_update_ext_tseg_mbytes(mch);
+>> @@ -585,10 +589,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>>                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+>>       }
+>> -    if (!mch->has_smm_ranges) {
+>> -        return;
+>> -    }
+>> -
+>>       /* if *disabled* show SMRAM to all CPUs */
+>>       memory_region_init_alias(&mch->smram_region, OBJECT(mch), 
+>> "smram-region",
+>>                                mch->pci_address_space, 
+>> MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>> @@ -604,6 +604,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>>                                           &mch->open_high_smram, 1);
+>>       memory_region_set_enabled(&mch->open_high_smram, false);
+>> +    if (!mch->has_smm_ranges) {
+>> +        return;
+>> +    }
+>> +
+>>       /* smram, as seen by SMM CPUs */
+>>       memory_region_init(&mch->smram, OBJECT(mch), "smram", 4 * GiB);
+>>       memory_region_set_enabled(&mch->smram, true);
+> 
+> 
 
 
