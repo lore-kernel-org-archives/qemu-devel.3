@@ -4,55 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 717DFF9D0EF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0106AF9D0F0
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCiQ2-0006UG-O9; Tue, 14 Apr 2026 14:23:26 -0400
+	id 1wCiPh-0006Ax-Kf; Tue, 14 Apr 2026 14:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCiQ0-0006RA-Lf
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:24 -0400
-Received: from inva020.nxp.com ([92.121.34.13])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCiPS-00067S-Tj
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:51 -0400
+Received: from pv-2005h-snip4-7.eps.apple.com ([57.103.66.248]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCiPx-0006gR-Oi
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:24 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id A4EE11A286B;
- Tue, 14 Apr 2026 20:23:20 +0200 (CEST)
-Received: from aprdc01srsp001v.ap-rdc01.nxp.com
- (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 69D9B1A2864;
- Tue, 14 Apr 2026 20:23:20 +0200 (CEST)
-Received: from lsv031015.swis.in-blr01.nxp.com
- (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id C3A9E1800098;
- Wed, 15 Apr 2026 02:23:19 +0800 (+08)
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wCiPQ-0006Ua-Dl
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:50 -0400
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPS id
+ A3A2F1800108; Tue, 14 Apr 2026 18:22:45 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776190967; x=1778782967;
+ bh=tT4F++bSuONbY+c7bgtCCb6QKbPZ19v7x1ehrozqyHo=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=fW6u+ORigS+O6Pk7YAhgz6rsavDy7P3hZ+z1TKixvAGV7T1UdxZuKauL1E9a3NfqjAFMgbGZHjHWpSTwr2fMcvRKWcfE8PJIHl8wwl1kHuiL1v2ImET/hXR8A1uABVoOvXZCL68eNvhPjuYq/++ukRyP3G+a16yzmJSEFsR446ajJYuF+/JGX1YffVPoi1S1SyUGMyqH5yIQlp0MGyXKL3c9Rgu9sNMO6Z8WCckbx27nXJMpmvHYhocIh6BEsUGll3lDAsFTRRZXzHuRJISB5DbCZJc1UVGAYqwkWA4XWOd0YOgUWTHU8ZeVzLHFqipeJQhK/h+XO2hhlXCbHWROhw==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPSA id
+ F261618013AE; Tue, 14 Apr 2026 18:22:43 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv6 08/15] hw/arm/fsl-imx8mm: Add GPIO controllers
-Date: Tue, 14 Apr 2026 23:53:06 +0530
-Message-Id: <20260414182313.1691519-9-gaurav.sharma_7@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
-References: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6/7] target: i386: HLT type that ignores EFLAGS.IF
+Date: Tue, 14 Apr 2026 20:22:30 +0200
+Message-ID: <20260414182231.18776-7-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260414182231.18776-1-mohamed@unpredictable.fr>
+References: <20260414182231.18776-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.13;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDE3MSBTYWx0ZWRfX5/ls1LiVJwEh
+ 7F6c4jtssZKWOWA3UnyNXtmwc1ygtBe6nZaBjAOi2JwjYdZnWhVMok4FTUQ2AIRELYnDQDJtZju
+ 3XtcioRKTyRnU2Ku9onGxf9zO5ss5E+YGB62m2W1OXZDAEGcHxN97syCHwnfJyWdyKGBSgARPCx
+ aSOBRT/wtcyhAm2PPfN1m5FoWFBwNRWEIS1/EBCsPIqIC9K3o+IeKd3Xa8m41G1zhv8qeZSQRKd
+ Tnr94MDHtHmog3n/bKp852mghUzmqARkuOBLaWmHKwMqbsthDjXn5RCwTSbIDcndnR//rnL0ig/
+ P06adoeVJhYi0nOSzFit1xeV6u7AHHq4ixA3LHjKiDC5YAfI2bDeXiwMOMAjsA=
+X-Authority-Info-Out: v=2.4 cv=KJ1XzVFo c=1 sm=1 tr=0 ts=69de85f6
+ cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=ZtXhj7NgbhMgH__AbsQA:9
+X-Proofpoint-GUID: H12iFphNauZtdUD9oA64BRiLR7IOtK4E
+X-Proofpoint-ORIG-GUID: H12iFphNauZtdUD9oA64BRiLR7IOtK4E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-14_03,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1030 mlxlogscore=937
+ spamscore=0 phishscore=0 malwarescore=0 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604140171
+Received-SPF: pass client-ip=57.103.66.248;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,143 +90,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enabled GPIO controller emulation
-Also updated the GPIO IRQ lines of iMX8MM
+The TLFS says:
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> A partition which possesses the AccessGuestIdleMsr privilege may trigger
+> entry into the virtual processor idle sleep state through a read to the
+> hypervisor-defined MSR HV_X64_MSR_GUEST_IDLE. The virtual processor will
+> be woken when an interrupt arrives, regardless of whether the interrupt
+> is enabled on the virtual processor or not.
+
+Meanwhile, Windows 24H2+ calls this MSR anyway without the privilege being set.
+
+Add the infrastructure to support it on the generic QEMU side.
+
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- hw/arm/fsl-imx8mm.c         | 54 +++++++++++++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h | 14 ++++++++++
- 2 files changed, 68 insertions(+)
+ target/i386/cpu.c | 10 ++++++----
+ target/i386/cpu.h |  2 ++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 633b121630..85bce5a788 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -180,6 +180,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-     }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0000093fa3..b18e40666e 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10482,13 +10482,15 @@ int x86_cpu_pending_interrupt(CPUState *cs, int interrupt_request)
+                    (((env->hflags2 & HF2_VINTR_MASK) &&
+                      (env->hflags2 & HF2_HIF_MASK)) ||
+                     (!(env->hflags2 & HF2_VINTR_MASK) &&
+-                     (env->eflags & IF_MASK &&
+-                      !(env->hflags & HF_INHIBIT_IRQ_MASK))))) {
++                     ((env->eflags & IF_MASK &&
++                      !(env->hflags & HF_INHIBIT_IRQ_MASK))
++                        || env->hflags2 & HF2_HYPERV_HLT_MASK)))) {
+             return CPU_INTERRUPT_HARD;
+         } else if (env->hflags2 & HF2_VGIF_MASK) {
+             if((interrupt_request & CPU_INTERRUPT_VIRQ) &&
+-                   (env->eflags & IF_MASK) &&
+-                   !(env->hflags & HF_INHIBIT_IRQ_MASK)) {
++                   ((env->eflags & IF_MASK &&
++                      !(env->hflags & HF_INHIBIT_IRQ_MASK))
++                        || env->hflags2 & HF2_HYPERV_HLT_MASK)) {
+                         return CPU_INTERRUPT_VIRQ;
+             }
+         }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0b539155c4..67f508dc10 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -225,6 +225,7 @@ typedef enum X86Seg {
+ #define HF2_NPT_SHIFT            6 /* Nested Paging enabled */
+ #define HF2_IGNNE_SHIFT          7 /* Ignore CR0.NE=0 */
+ #define HF2_VGIF_SHIFT           8 /* Can take VIRQ*/
++#define HF2_HYPERV_HLT_SHIFT     9 /* Hyper-V HV_X64_MSR_GUEST_IDLE */
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-+        g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
-+        object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
-+    }
-+
-     for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
-         g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
-         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-@@ -365,6 +370,54 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].addr,
-                                 &s->ocram);
+ #define HF2_GIF_MASK            (1 << HF2_GIF_SHIFT)
+ #define HF2_HIF_MASK            (1 << HF2_HIF_SHIFT)
+@@ -235,6 +236,7 @@ typedef enum X86Seg {
+ #define HF2_NPT_MASK            (1 << HF2_NPT_SHIFT)
+ #define HF2_IGNNE_MASK          (1 << HF2_IGNNE_SHIFT)
+ #define HF2_VGIF_MASK           (1 << HF2_VGIF_SHIFT)
++#define HF2_HYPERV_HLT_MASK     (1 << HF2_HYPERV_HLT_SHIFT)
  
-+    /* GPIOs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq_low;
-+            unsigned int irq_high;
-+        } gpio_table[FSL_IMX8MM_NUM_GPIOS] = {
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO1].addr,
-+                FSL_IMX8MM_GPIO1_LOW_IRQ,
-+                FSL_IMX8MM_GPIO1_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO2].addr,
-+                FSL_IMX8MM_GPIO2_LOW_IRQ,
-+                FSL_IMX8MM_GPIO2_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO3].addr,
-+                FSL_IMX8MM_GPIO3_LOW_IRQ,
-+                FSL_IMX8MM_GPIO3_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO4].addr,
-+                FSL_IMX8MM_GPIO4_LOW_IRQ,
-+                FSL_IMX8MM_GPIO4_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO5].addr,
-+                FSL_IMX8MM_GPIO5_LOW_IRQ,
-+                FSL_IMX8MM_GPIO5_HIGH_IRQ
-+            },
-+        };
-+        object_property_set_bool(OBJECT(&s->gpio[i]), "has-edge-sel", true,
-+                                 &error_abort);
-+        object_property_set_bool(OBJECT(&s->gpio[i]), "has-upper-pin-irq",
-+                                 true, &error_abort);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
-+                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_low));
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 1,
-+                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_high));
-+    }
-+
-     /* USDHCs */
-     for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
-         static const struct {
-@@ -423,6 +476,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_CCM:
-         case FSL_IMX8MM_GIC_DIST:
-         case FSL_IMX8MM_GIC_REDIST:
-+        case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
-         case FSL_IMX8MM_PCIE1:
-         case FSL_IMX8MM_PCIE_PHY1:
-         case FSL_IMX8MM_RAM:
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 3181c02574..4fe27b9575 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -12,6 +12,7 @@
- 
- #include "cpu.h"
- #include "hw/char/imx_serial.h"
-+#include "hw/gpio/imx_gpio.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
-@@ -30,6 +31,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
- 
- enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_CPUS         = 4,
-+    FSL_IMX8MM_NUM_GPIOS        = 5,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-@@ -40,6 +42,7 @@ struct FslImx8mmState {
- 
-     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
-     GICv3State         gic;
-+    IMXGPIOState       gpio[FSL_IMX8MM_NUM_GPIOS];
-     IMX8MPCCMState     ccm;
-     IMX8MPAnalogState  analog;
-     IMX7SNVSState      snvs;
-@@ -171,6 +174,17 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_UART3_IRQ    = 28,
-     FSL_IMX8MM_UART4_IRQ    = 29,
- 
-+    FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
-+    FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
-+    FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
-+    FSL_IMX8MM_GPIO2_HIGH_IRQ = 67,
-+    FSL_IMX8MM_GPIO3_LOW_IRQ  = 68,
-+    FSL_IMX8MM_GPIO3_HIGH_IRQ = 69,
-+    FSL_IMX8MM_GPIO4_LOW_IRQ  = 70,
-+    FSL_IMX8MM_GPIO4_HIGH_IRQ = 71,
-+    FSL_IMX8MM_GPIO5_LOW_IRQ  = 72,
-+    FSL_IMX8MM_GPIO5_HIGH_IRQ = 73,
-+
-     FSL_IMX8MM_PCI_INTA_IRQ = 122,
-     FSL_IMX8MM_PCI_INTB_IRQ = 123,
-     FSL_IMX8MM_PCI_INTC_IRQ = 124,
+ #define CR0_PE_SHIFT 0
+ #define CR0_MP_SHIFT 1
 -- 
-2.34.1
+2.50.1 (Apple Git-155)
 
 
