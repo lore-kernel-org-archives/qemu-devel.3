@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E5DF9D0E8
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA07F9D0EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 17:27:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wChXe-0002pQ-WC; Tue, 14 Apr 2026 13:27:15 -0400
+	id 1wChXc-0002oQ-HY; Tue, 14 Apr 2026 13:27:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmeneghi@redhat.com>)
- id 1wCeOU-0006SS-G6
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 10:05:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmeneghi@redhat.com>)
- id 1wCeOS-0003NE-CR
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 10:05:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776175531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mkQQavxHk9rktK6aib/cIzQJH5DUsOdCQXoImVpnSH8=;
- b=MIrUTu6cNe5789ALGa5K1BS2/xn570HLnNBzQVVz8rouhc9xAdGcBIBtSFofm1q1xjaGZp
- jjiOA1XZPeIIybHIHsO613mFllZbZSCgJ4AGJ2r2xqs1Fvr7GKMms7NVoMG96pV4OmbF8O
- 5F8bRxdSFO5aC2HXVQA2T9g9Lzgfr2w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-oUcD_zD3MVil7A2r81LgIA-1; Tue,
- 14 Apr 2026 10:04:19 -0400
-X-MC-Unique: oUcD_zD3MVil7A2r81LgIA-1
-X-Mimecast-MFC-AGG-ID: oUcD_zD3MVil7A2r81LgIA_1776175454
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 541DE180034F; Tue, 14 Apr 2026 14:04:14 +0000 (UTC)
-Received: from [10.17.17.11] (unknown [10.17.17.11])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 942A0195608E; Tue, 14 Apr 2026 14:04:12 +0000 (UTC)
-Message-ID: <0743e428-cde4-436a-9af4-7477271fd8ab@redhat.com>
-Date: Tue, 14 Apr 2026 10:04:11 -0400
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wCTuN-0004Sa-Dd
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 22:53:47 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wCTuM-0004aP-0Q
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 22:53:47 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-78fc4425b6bso47267667b3.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 19:53:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776135224; x=1776740024; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YBdiT7AseZaWPAh14FHjZWZ6g6o27t+1V3jw9kY798M=;
+ b=RBWjV6B6F+C+3qAP+AHxkhYjJWVtVRY6sFJuVt27+bA1JsomxR/v1dd/KHO0fgISGx
+ hJ9kfjOYw+8pn2dgsmG4WFU1EPtoNUgpRfgKPbWJ8ryaeR3M51ymHM0lq8TCbxBVaZiF
+ aYHHlnzIDwQw90MtP8tK8xEgwH2LIpX5R9KG5vcQ/5bPcZq4JLgTEPHIu0VItXihV0QH
+ IEDHuTnIVYLwOZaQfR7UzY6lE77IfT7/NDzCFqCYyMxiXq4vTEiLBrpDmWNK3wJZPFBt
+ zQZiofxgbQyUTtKpixq3SudKsxI6jt2ADTPFKABYdmVL0Bb/4IrWX/M06LTTqmEfm0He
+ aTeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776135224; x=1776740024;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YBdiT7AseZaWPAh14FHjZWZ6g6o27t+1V3jw9kY798M=;
+ b=PmQb6NIVgcrzRgbczLcAf4FRSEdYQ60lgnfEiAzJLH7DhD4IiOkG7DOBCDzDb38hm+
+ 75S1SSEyDaf8BqriunwhDiBCYDJ90TxcAZoHiVVl/dot9wXmelPnr4Ar3b71HVrYU3KA
+ 6jIUUWV8A4X89DjORDeISeT6W+bjr1XwYPtxaha888p7DG0nSbYQS5ea8gbJMxBsd6GZ
+ 96sJJN8vcMBdplDG3c2bHQ9HIHIeksAIaVnEBgJxGLdmD9PYUOqgWzaIvu8vzSlU0lO6
+ fby0lzX2nM06teBOjquL5gdTIiQAS2kkKF0bb4J+nepNrgL/tdMCML5zNZqYiin6Mxf0
+ I0IQ==
+X-Gm-Message-State: AOJu0YwW2Ns+/pcA6+Rraz+XO/s+MRyp2NTpUhQOtp1f1F/5aqkbjAoL
+ rAD6rbPiEWg4TveY1PuPpxr5ffBSi76XuFqd7ZaoOYE0eAaEv38IE9jn
+X-Gm-Gg: AeBDiesHJlBwidlecnRkj670gb5iuArI6zTDYfwbAFfcdRVnNY64r6VDBn+5zs+dCzc
+ nysi4FzWgeg521ps3Bv+HmRLu6yHrz+vOp3Pt3fblxLav2k5fVG0Km2r3N/3zSuRtgMZcRLvEok
+ cR5tR5Jvhywa1OgbzeOItNAt00tsDOFj4dBkhrr8z6Es/F4V/YR3nxWZR2XjbpIUNroNpxFxLCI
+ HPjgFd0E8qfumMIBzIiEFZDzufzVP0D9q78ZNXMeJoBugxPk64YsGsNnfGO9TdTDaF1kqDTQp6N
+ 3pqd37a6sAX3Fr8Fgr3H/DpyemoBWKu3tMhYhf42Yd4pns9DGesnw4RdkoKcGuc9DBWmzdAaDIs
+ xBRJrFCwxH1JmE8Kqm0Gxt2SugO5iV+cK+HEnuK9An1Z7DrHimMy2QjrbZ1AyZZKGs0KRbU8Y/R
+ g+Tp7kOAYHCIugBg6I2V4=
+X-Received: by 2002:a05:690c:101:b0:7a1:6e8:d8fb with SMTP id
+ 00721157ae682-7af6f03b254mr178694397b3.3.1776135224077; 
+ Mon, 13 Apr 2026 19:53:44 -0700 (PDT)
+Received: from localhost ([76.195.202.134])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 00721157ae682-7b414d0faf4sm14305387b3.22.2026.04.13.19.53.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Apr 2026 19:53:43 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
+To: Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org,
+	Matt Turner <mattst88@gmail.com>
+Subject: [PATCH] linux-user/ppc: Fix ppc64 rt_sigframe stack offset
+Date: Mon, 13 Apr 2026 22:53:35 -0400
+Message-ID: <20260414025335.2847358-1-mattst88@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
-To: Stefan Hajnoczi <stefanha@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
- Nilay Shroff <nilay@linux.ibm.com>
-Cc: mr-083 <matthieu@minio.io>, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- kbusch@kernel.org, mr-083 <matthieu@min.io>
-References: <20260409060155.94704-1-matthieu@min.io>
- <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
- <20260414124221.GB111076@fedora>
-Content-Language: en-US
-From: John Meneghini <jmeneghi@redhat.com>
-Organization: RHEL Core Storge Team
-In-Reply-To: <20260414124221.GB111076@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmeneghi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 14 Apr 2026 13:27:13 -0400
+X-Mailman-Approved-At: Tue, 14 Apr 2026 13:27:11 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,54 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding Nilay who has done a lot of work on nvme hot plug.
+The kernel's 64-bit signal delivery (signal_64.c) uses:
 
-Nilay please take look at these patches and let us know if they can work on powerpc
+    newsp = frame - __SIGNAL_FRAMESIZE
 
-I'll set up a test bed and try this out with x86_64.
+while the 32-bit path (signal_32.c) uses:
 
-John A. Meneghini
-Senior Principal Platform Storage Engineer
-RHEL SST - Platform Storage Group
-jmeneghi@redhat.com
+    newsp = frame - (__SIGNAL_FRAMESIZE + 16)
 
-On 4/14/26 8:42 AM, Stefan Hajnoczi wrote:
-> On Mon, Apr 13, 2026 at 07:17:37PM +0200, Klaus Jensen wrote:
->> On Apr  9 08:01, mr-083 wrote:
->>> This series adds two features that together enable transparent NVMe disk
->>> hot-swap simulation in QEMU, matching the behavior of physical NVMe
->>> drives being pulled and reinserted in the same PCIe slot.
->>>
->>
->> I don't understand this. From an NVMe perspective you can't hotplug a
->> namespace. You can hotplug a PCIe-based NVM Subsystem.
-> 
-> Hi Klaus,
-> It would be great if someone with more NVMe experience than myself can
-> find a definite answer, but I think the Namespace List can change
-> asynchronously even on a NVMe PCIe controller as long as it supports
-> Namespace Management commands.
-> 
-> There are instances in the NVMe Express Base Specification 2.0b like:
-> - 8.3.1 Capacity Management Overview
->    "a Namespace Attribute Changed event is generated for hosts other than
->    the host which issued the Capacity Management command"
-> - 8.11 Namespace Management
->    "If Namespace Attribute Notices are enabled, any controller(s) not
->    processing the Namespace Management command that was attached to the
->    namespace reports a Namespace Attribute Changed asynchronous event to
->    the host."
-> 
-> I imagine this functionality would be useful in storage offload cards
-> (IPUs/DPUs) that present as NVMe PCIe controllers instead of as
-> NVMe-over-Fabrics. This makes sense when the host is not supposed to
-> manage the storage itself. When the card's control plane configures a
-> new volume, the NVMe Namespace List changes and the host is notified.
-> 
-> Linux and Windows NVMe PCI drivers support this according to the testing
-> that Matthieu and I have done.
-> 
-> Thanks,
-> Stefan
+The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
+at the same offsets as older kernels (see the comment in signal_32.c).
+The 64-bit rt_sigframe starts with ucontext directly and does not need
+this adjustment.
+
+QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
+for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
+on ppc64. Signal delivery and return still worked because do_rt_sigreturn
+had the matching wrong offset, but the vDSO DWARF unwind info encodes
+the correct kernel offset. This caused any DWARF unwinder (libunwind,
+libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
+register values from the signal frame.
+
+Guard the +16 with #if !defined(TARGET_PPC64) in both setup_rt_frame
+and do_rt_sigreturn to match the kernel.
+
+This was verified by A/B testing with libunwind's test suite:
+
+  ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
+           and Ltest-sig-context all change from FAIL to PASS.
+  ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
+           from FAIL to PASS.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ linux-user/ppc/signal.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git ./linux-user/ppc/signal.c ./linux-user/ppc/signal.c
+index 24e5a02a78..b21aa2430e 100644
+--- ./linux-user/ppc/signal.c
++++ ./linux-user/ppc/signal.c
+@@ -525,7 +525,15 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+     env->fpscr = 0;
+ 
+     /* Create a stack frame for the caller of the handler.  */
++#if defined(TARGET_PPC64)
++    newsp = rt_sf_addr - SIGNAL_FRAMESIZE;
++#else
++    /*
++     * The +16 is to get the siginfo and ucontext in the same positions
++     * as in older kernels. See Linux's arch/powerpc/kernel/signal_32.c.
++     */
+     newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + 16);
++#endif
+     err |= put_user(env->gpr[1], newsp, target_ulong);
+ 
+     if (err)
+@@ -641,7 +649,11 @@ long do_rt_sigreturn(CPUPPCState *env)
+     struct target_rt_sigframe *rt_sf = NULL;
+     target_ulong rt_sf_addr;
+ 
++#if defined(TARGET_PPC64)
++    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE;
++#else
+     rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + 16;
++#endif
+     if (!lock_user_struct(VERIFY_READ, rt_sf, rt_sf_addr, 1))
+         goto sigsegv;
+ 
+-- 
+2.52.0
 
 
