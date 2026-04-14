@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2615F9D0CA
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C7C0F9D0CA
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCdyC-00085z-OO; Tue, 14 Apr 2026 09:38:24 -0400
+	id 1wCdyf-0008GA-VN; Tue, 14 Apr 2026 09:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdy9-00085H-UF
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:38:21 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdyd-0008Ar-FP
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:38:51 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdy7-0006c6-K2
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:38:21 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso52599955e9.3
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:38:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdyb-0006vG-VY
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:38:51 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43d43e09de5so3341695f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:38:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776173898; x=1776778698; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776173927; x=1776778727; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EURxgzx/Zt8dqm62J0aO5vTStNu8jG/WOHHoBEotsXo=;
- b=ktRVEwdV020mjv4Xugw+zyfB0QyP3XKrSqpckyLPd3Wfpis//Yj9BuoamL17yWLiCX
- bZWZyWRQJ633vuY79QKk6an6eU39nOUKKTnjUV1nuktSUF7X5zpl/Lmg49wek54Fg4ON
- heUGvmKVAWRSdJIwC1l60fvThGnWL/dzl0rQDIx1Vv7IH98SgasMEgEGJnzvNGwegz+q
- NJ8QVkVsDhG/WtrISUSWAjR8fNchqmBDPBnNoncDc4KdqfSVgXS5mlljsMK+0OFbg4uT
- 3GsfRdOVxM73uNBniLk8kOYNFem+N2rypAoQmeuneDqZ1niE5L1ixFYw48VX9KZNJcsa
- IEMA==
+ bh=whDB8VhwGqbTEyY3Qa+uEJyCMg/7E8YmI9DuRxzW/zo=;
+ b=PRj1KDV+Hi2sgQEHUEV4ekbxxM0DjR2MceE3yiqThi83TG/ooDPEIDE6YDKDuyrMkx
+ qAeKjdysapkMfgz8qXwwp6lKLC8MYBmO//bE2ONLqto6yw96PEmpO+/ZvNOUOZaLOTVS
+ +6NtHOGw8/0XdKzJm00HtUiAVq8f9g2g1c1eJdanDLbdwXKV0K7+aCQHKbpWRp2n6cqy
+ /6JzAG6+eqgWKmis/MY/bidJakVeQOMK8aKQqavVsZ0CEezjSB3rbdtLgHKx7CCyWsUX
+ S6qNiSalUinWHIneiru4CBu7neA3yBShCHYJ1dnCa7K+WVUxeqP5QIJXYXqPo5rMpjin
+ WG8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776173898; x=1776778698;
+ d=1e100.net; s=20251104; t=1776173927; x=1776778727;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EURxgzx/Zt8dqm62J0aO5vTStNu8jG/WOHHoBEotsXo=;
- b=gS/xiooeT5PMTgUILx0Ugy7zf+7SSFSWdP/PlXQKz2iIUfbHCY8mp9Hbv+Y9dKRiKr
- DRjpWEoURcd9w0o1Y2lKnRyOcLijpQXv5po+GSRNrc3NQKEEVp5xg0PkxqJ9XZSBeuMC
- uj03ul7WbzM6pnfUPCA7NOnZZM4UpYBcI1IQe9YpYBrPn7hwE/x/4vT0PgFUQCMBukI7
- 1aalRKOgVcVtRnIrOzLuBqn68WVAxx53J/QQJJUFBWMJ2yR2EqzhoE9CHGv6nO5Q09MY
- cmzk8CCMKUym0xarFTETI0RfcylXh8x5X4ys42ZO3mUvllQLzBcrYED1C2swhBRlJrWJ
- F27A==
+ bh=whDB8VhwGqbTEyY3Qa+uEJyCMg/7E8YmI9DuRxzW/zo=;
+ b=UpH8x9STYGTZQzuWCADnYRjIB7vWb0dXcU0zxNB0CX6ncGBLPlPX58TH8n3a8lGB9F
+ jiQTNLdl4Hj7gFRHNR7Eg2uTvW2LKho+oJRIuL5w/b5lC2IOJ6q6T8gyvWan5AlLYT4Y
+ 1mPkBSoflFSO/ao8F+7qtgm+JM8UrZeuKkTnOhL9Ap5opJyIFzqXTPCe0hYQfOxgSDBP
+ 3NYStwtut4CVsdiTKV9lMIbry9XzLnlN+IkdVc9p5MnJkGd9y94TBa41cP5xYkVXuXQx
+ 0sx5G0SrNJ+NbNmwcxULoFgbxFM1btHhZ3fRFdQYSMXb0dO+VIBamoVodZT27YSojEut
+ AMOA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+GVmLdtbmuUgWOTw8wsxwfEArGcUoEbYe/+21Z4rI8wTEVxDqeLrNUQmDD7070xUOWBxyip7UQ69+4@nongnu.org
-X-Gm-Message-State: AOJu0Yy6ADQcDQZRAE4MfnkNYTpsl/4sEtMs3wXCI7Iw1oGY7sx+6rO/
- xSRb+dB4Kx6h7va/FfgQtj7yEslOP8e+rynKGv8AynlyCREy8dwcKl3s/MuyTMQAhC8=
-X-Gm-Gg: AeBDies1CdV7/6KZ2h6ocRtJDRYSzDR3eOAakurDwgrl3kN5YBJ85vijZaTNBq5Oc76
- vpcQC195SsHu2NksXBkEU9/BN4E6uhYsLpmkrirmJbLO+2dFdC/moA7yOmc5dK59QgtJa8gLINo
- 9szqiQfuTePR9CXdGTF3LrLDwqhMVEGkLJmhbpP2LU00zt095j3FjImReRC1qOuD97hrO3Z7ENz
- HD0uIpQUK8J7VfaE8l4Q6WBZBv3MokLnc9B0peZfkaiLbTpeoDLRleyKX1Uj0Q/2RZJwtjRQW/g
- bWmhNMIv4+3gLFnPNMk/i3ZmbH6cw1VoXrEFXgwf/w4RDWJ63TGHRgRk9iZkMYOMuoOj+M4ifZq
- WCjrT9Xbq1EqUX31mxgZojXYJtLL9h2L5MNzXXKve/FSagCOq1Sx+nJd+AfZDf9x0aIsbTERQ3N
- iYUlpUO0Kob46izHmku4e2PYXu4KoCALepDd5znprdKcsVhC9K53lh7RtpTsO8PC9m/A==
-X-Received: by 2002:a05:600c:c0c9:b0:487:1826:d89b with SMTP id
- 5b1f17b1804b1-488d67e262cmr161465815e9.9.1776173897808; 
- Tue, 14 Apr 2026 06:38:17 -0700 (PDT)
+ AFNElJ8hZyhCb9NXzt76aE7Eqa3uOfK5zxvyrfx3JvhX47Pg4SqWQq0kvX4tNchgKKMkwEPI36qtE30JRfI7@nongnu.org
+X-Gm-Message-State: AOJu0YyugdZ0wQPaT2PPAJX2q1kP8FKYdhe6FeFw/28eaSLaE39+bfbS
+ ZVZMIdHRZp51F2xThj70Y1CRx08Pr5O1B6CbIG9dlMZVrzt6AnKQuBWXPqGOGGJUYd0=
+X-Gm-Gg: AeBDietXyLvljqyKikIZhVvUCUGAxDb3I+q56PJIzzbGrHH9wZ2ABOVVOEqwToq3Yfz
+ Qh72HkcwoAVhMANBhbOgtyOv9bNOJpBPRgWQJcsTyxpDweDfsZ/SBAzaZorrze6DPFuKQM3g0EM
+ 9HMXJRI9nbjShhwAIm99DTeMz2j+Twg9AdrTLJKjjE+CNCnsnV8s8HoqOVfd6CDRN0n8teICgx4
+ LOsqzcOOu7gbPtX+ifdzu1S/2NovK+IMwlmQJGyHLEKmqj7SSNfrJXtKl3JvV005IDCgIn48sVT
+ BKEQixsG/wE44oyFb8/SRvSg8MC/ofXyDiEFMXUGuDlAYKEX/wkiTWs86URD6UF1ukIVc2izDX0
+ M6Ou0hAxnfoGxv+U6SAsWC7CQnLqjwNWIFyzjVzDvgTJqItQH/uifXEbuOOgTcinFyKvF1BV86m
+ xwDxy9Zr8FjEkMu2lkOgxCIFYuAXUD8iteTrJHDA8Sciz/EQIM4wlEFgBTS62lYa0+lA==
+X-Received: by 2002:a05:6000:2411:b0:43b:4f86:e985 with SMTP id
+ ffacd0b85a97d-43d642c0e02mr27022557f8f.33.1776173927342; 
+ Tue, 14 Apr 2026 06:38:47 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488eddb9751sm86496805e9.0.2026.04.14.06.38.16
+ ffacd0b85a97d-43d7c135fd6sm22453329f8f.28.2026.04.14.06.38.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 06:38:17 -0700 (PDT)
-Message-ID: <1df47b0b-a94c-483b-a4c5-629af22353a5@linaro.org>
-Date: Tue, 14 Apr 2026 15:38:16 +0200
+ Tue, 14 Apr 2026 06:38:46 -0700 (PDT)
+Message-ID: <437b2fc7-123d-4a94-9f60-033998b6ecdd@linaro.org>
+Date: Tue, 14 Apr 2026 15:38:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] hw/sd: Switch read/write primitive to buf+len
+Subject: Re: [PATCH v3 2/6] hw/sd/sd: Allow multi-byte read/write for generic
+ paths
 Content-Language: en-US
 To: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
 References: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
- <20260204-sdcard-performance-b4-v3-1-dc1cf172ee57@avm.de>
+ <20260204-sdcard-performance-b4-v3-2-dc1cf172ee57@avm.de>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260204-sdcard-performance-b4-v3-1-dc1cf172ee57@avm.de>
+In-Reply-To: <20260204-sdcard-performance-b4-v3-2-dc1cf172ee57@avm.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,251 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Christian,
-
 On 4/2/26 14:22, Christian Speich wrote:
-> Currently, read/writes are broken down into individual bytes which result
-> in many function calls. This is quite bad for performance and since both
-> the layer below and above work with larger buffers, it should be
-> corrected.
-> 
-> This patch is the first that switches the corresponding interface over to
-> use a buf+len instead of a single byte. However, for most cases the
-> implementation still only reads one byte and is then called again with
-> the remaining buffer.
-> 
-> Optimizations taking advantage of this new interface are to follow in the
-> next commits.
+> Paths that use sd_generic_write/read_data can now write/read multiple
+> bytes with one call.
 > 
 > Signed-off-by: Christian Speich <c.speich@avm.de>
 > ---
->   hw/sd/core.c       | 26 ++++++++++++++---------
->   hw/sd/sd.c         | 62 +++++++++++++++++++++++++++++++++++-------------------
->   include/hw/sd/sd.h | 22 +++++++++++++------
->   3 files changed, 71 insertions(+), 39 deletions(-)
-> 
-> diff --git a/hw/sd/core.c b/hw/sd/core.c
-> index 3568a81e809fe107cfd0b5cc33b8b5761b11ce04..594c5e011ba30940a33799f9032c92494ee0ca19 100644
-> --- a/hw/sd/core.c
-> +++ b/hw/sd/core.c
-> @@ -113,21 +113,24 @@ void sdbus_write_byte(SDBus *sdbus, uint8_t value)
->       if (card) {
->           SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
->   
-> -        sc->write_byte(card, value);
-> +        sc->write_data(card, &value, 1);
->       }
->   }
->   
->   void sdbus_write_data(SDBus *sdbus, const void *buf, size_t length)
->   {
->       SDState *card = get_card(sdbus);
-> -    const uint8_t *data = buf;
->   
->       if (card) {
->           SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
->   
-> -        for (size_t i = 0; i < length; i++) {
-> -            trace_sdbus_write(sdbus_name(sdbus), data[i]);
-
-Instead of removing this trace event,
-
-> -            sc->write_byte(card, data[i]);
-> +        while (length > 0) {
-> +            size_t written = sc->write_data(card, buf, length);
-> +
-
-move it here, using qemu_hexdump_line().
-
-> +            g_assert(written >= 1);
-> +
-> +            buf += written;
-> +            length -= written;
->           }
->       }
->   }
-> @@ -140,7 +143,7 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
->       if (card) {
->           SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
->   
-> -        value = sc->read_byte(card);
-> +        sc->read_data(card, &value, 1);
->       }
->       trace_sdbus_read(sdbus_name(sdbus), value);
->   
-> @@ -150,14 +153,17 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
->   void sdbus_read_data(SDBus *sdbus, void *buf, size_t length)
->   {
->       SDState *card = get_card(sdbus);
-> -    uint8_t *data = buf;
->   
->       if (card) {
->           SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
->   
-> -        for (size_t i = 0; i < length; i++) {
-> -            data[i] = sc->read_byte(card);
-> -            trace_sdbus_read(sdbus_name(sdbus), data[i]);
-> +        while (length > 0) {
-> +            size_t read = sc->read_data(card, buf, length);
-> +
-
-Ditto with trace_sdbus_read().
-
-> +            g_assert(read >= 1);
-> +
-> +            buf += read;
-> +            length -= read;
->           }
->       }
->   }
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 37f6e0702b0bce85915ef727ba1ec05f02f9c32c..135113add29b5ee3cb11d9d535355eba8f6cb3f7 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -2638,30 +2638,37 @@ static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
->       return false;
->   }
->   
-> -static void sd_write_byte(SDState *sd, uint8_t value)
-> +static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
->   {
->       unsigned int partition_access;
->       int i;
-> +    const uint8_t *value = buf;
->   
->       if (!sd->blk || !blk_is_inserted(sd->blk)) {
-> -        return;
-> +        return length;
->       }
->   
->       if (sd->state != sd_receivingdata_state) {
->           qemu_log_mask(LOG_GUEST_ERROR,
->                         "%s: not in Receiving-Data state\n", __func__);
-> -        return;
-> +        return length;
->       }
->   
->       if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
-> -        return;
-> +        return length;
-> +
-> +    /*
-> +     * Only read one byte at a time. We will be called again with the
-> +     * remaining.
-> +     */
-> +    length = 1;
->   
->       trace_sdcard_write_data(sd->proto->name,
->                               sd->last_cmd_name,
-> -                            sd->current_cmd, sd->data_offset, value);
-> +                            sd->current_cmd, sd->data_offset, value[0]);
-
-Another qemu_hexdump_line() candidate.
-
->       switch (sd->current_cmd) {
->       case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
-> -        if (sd_generic_write_byte(sd, value)) {
-> +        if (sd_generic_write_byte(sd, value[0])) {
->               /* TODO: Check CRC before committing */
->               sd->state = sd_programming_state;
->               sd_blk_write(sd, sd->data_start, sd->data_offset);
-> @@ -2686,7 +2693,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
->                   }
->               }
->           }
-> -        sd->data[sd->data_offset++] = value;
-> +        sd->data[sd->data_offset++] = value[0];
->           if (sd->data_offset >= sd->blk_len) {
->               /* TODO: Check CRC before committing */
->               sd->state = sd_programming_state;
-> @@ -2716,7 +2723,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
->           break;
->   
->       case 26:  /* CMD26:  PROGRAM_CID */
-> -        if (sd_generic_write_byte(sd, value)) {
-> +        if (sd_generic_write_byte(sd, value[0])) {
->               /* TODO: Check CRC before committing */
->               sd->state = sd_programming_state;
->               for (i = 0; i < sizeof(sd->cid); i ++)
-> @@ -2734,7 +2741,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
->           break;
->   
->       case 27:  /* CMD27:  PROGRAM_CSD */
-> -        if (sd_generic_write_byte(sd, value)) {
-> +        if (sd_generic_write_byte(sd, value[0])) {
->               /* TODO: Check CRC before committing */
->               sd->state = sd_programming_state;
->               for (i = 0; i < sizeof(sd->csd); i ++)
-> @@ -2757,7 +2764,7 @@ static void sd_write_byte(SDState *sd, uint8_t value)
->           break;
->   
->       case 42:  /* CMD42:  LOCK_UNLOCK */
-> -        if (sd_generic_write_byte(sd, value)) {
-> +        if (sd_generic_write_byte(sd, value[0])) {
->               /* TODO: Check CRC before committing */
->               sd->state = sd_programming_state;
->               sd_lock_command(sd);
-> @@ -2767,36 +2774,47 @@ static void sd_write_byte(SDState *sd, uint8_t value)
->           break;
->   
->       case 56:  /* CMD56:  GEN_CMD */
-> -        sd_generic_write_byte(sd, value);
-> +        sd_generic_write_byte(sd, value[0]);
->           break;
->   
->       default:
->           g_assert_not_reached();
->       }
-> +
-> +    return length;
->   }
->   
-> -static uint8_t sd_read_byte(SDState *sd)
-> +static size_t sd_read_data(SDState *sd, void *buf, size_t length)
->   {
->       /* TODO: Append CRCs */
->       const uint8_t dummy_byte = 0x00;
->       unsigned int partition_access;
-> -    uint8_t ret;
->       uint32_t io_len;
-> +    uint8_t *value = buf;
->   
->       if (!sd->blk || !blk_is_inserted(sd->blk)) {
-> -        return dummy_byte;
-> +        memset(buf, dummy_byte, length);
-> +        return length;
->       }
->   
->       if (sd->state != sd_sendingdata_state) {
->           qemu_log_mask(LOG_GUEST_ERROR,
->                         "%s: not in Sending-Data state\n", __func__);
-> -        return dummy_byte;
-> +        memset(buf, dummy_byte, length);
-> +        return length;
->       }
->   
->       if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION)) {
-> -        return dummy_byte;
-> +        memset(buf, dummy_byte, length);
-> +        return length;
->       }
->   
-> +    /*
-> +     * We will only read one byte at a time. We will be called again with the
-> +     * remaining buffer.
-> +     */
-> +    length = 1;
-> +
->       io_len = sd_blk_len(sd);
->   
->       trace_sdcard_read_data(sd->proto->name,
-
-and I suppose we also need to update this trace event to use
-qemu_hexdump_line.
-
-The trace events changes can be done as a cleanup patch on top,
-so:
+>   hw/sd/sd.c | 62 +++++++++++++++++++++++++++++++++++---------------------------
+>   1 file changed, 35 insertions(+), 27 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
