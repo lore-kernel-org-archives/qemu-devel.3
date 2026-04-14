@@ -4,143 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D553F9D0E2
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC6CF9D0E7
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:42:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCgV6-0007cx-Dw; Tue, 14 Apr 2026 12:20:32 -0400
+	id 1wCgpx-0003u8-U2; Tue, 14 Apr 2026 12:42:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCgV3-0007Wv-5B
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:20:29 -0400
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCgpv-0003u0-OY
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:42:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wCgV0-0006iO-UM
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:20:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xeowkv0M5+s2EfUlGJft9eQbpwlEmJJdDdg4qJ0QGRYLF00syITW8/3VMJmEviHeW34eqpjZCkXFItrssVw0rI7JuVb9pXue31m4qtZif4GZRJCxgbyZIzisgDHTWQziVude5O9sNiw+Qc/Y6ojSh4AUJGIqipOTe5nkV0UYCASfTUHytcG6j2y4/ks3dYqK9+8yEgrbYZ62Mwg5e+qzHHjG/DFL9hDjxQfGCnenL+q7oku6LOQRh2NBglF0GgmNdSrC4a0AP7EpqC8G7O1t+mvydfhaQj/v0CSzNm+iUxTBum2ABIluvzuK22MdNhDZB4YNJ/HnaiknCTvAae5Chw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fIDzx/pVWjYLxpUp4zC5KyQXgLaiVeC2DTEMBsPr+sc=;
- b=Py+I9StgoS8MOgAaxrl36NEMaEXHd64GdBOSaS+Qd6piEM3rV1edXZ+ZEn1553NQUQUTM/kkfV0UELrNqo7HZ2iblzUEhbZkwS9Z4fIPYfLOKr1xc+i+wRSuqgaphlH3e0LV0jKpHaAERakhv9vM6kCzJ+xMqqy1xXPr92fxRU4K8pMWNFUwsb1qV+3jodet0HEmN/GA4Y9lRuKgOtBEUp/pJQu8VhTRSrCI0Mpew9YLi9LyVXlfM2nTE8SPFPeG0oipdBGLfnwQNG5GsT76KVxPE/aJOyKTLpDmwDKwDAo91COXYuoMqX+nZUiDWXn4147g1Ju3+GXnAUO48NR2uA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fIDzx/pVWjYLxpUp4zC5KyQXgLaiVeC2DTEMBsPr+sc=;
- b=H2P5Z2AZX0xJJfupF4JsszHJmBHA+7fQ+QXnOCVK9vv+s5LCcvxTF5IC2xdgBReFZGUX0ylUfNnkXGBjpUeA0+2L3zI3rU/1Yrt29DJ1APNoMxoFW3bbcP8MibRymGRQfhtZi+Ep+lhiG4F8W8H5so4+a+9j6WAO8pC6td+EdDxOS5Wh8n7DXVdtLbsOvsy+8YOBjTIBx9IF7CHZ2G1DfPz//8GSRHYmTpaWZwQiw4iu1tVszSM1MQdtbRhFvokyOeYvUiMYldiYAVdTOzJJR1aBALHcn/9X9BZUFLq/bCuDx3SHC57nd8Jabyr5fekmmfFR/77yslxLalY9II2+1g==
-Received: from AM0PR04MB4370.eurprd04.prod.outlook.com (2603:10a6:208:6e::32)
- by DUZPR04MB9981.eurprd04.prod.outlook.com (2603:10a6:10:4d8::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.46; Tue, 14 Apr
- 2026 16:20:22 +0000
-Received: from AM0PR04MB4370.eurprd04.prod.outlook.com
- ([fe80::fe3b:fb2c:9dfc:9b]) by AM0PR04MB4370.eurprd04.prod.outlook.com
- ([fe80::fe3b:fb2c:9dfc:9b%6]) with mapi id 15.20.9745.035; Tue, 14 Apr 2026
- 16:20:22 +0000
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "pbonzini@redhat.com" <pbonzini@redhat.com>
-Subject: RE: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM EVK(Evaluation
- Kit) board
-Thread-Topic: [EXT] Re: [PATCHv5 01/15] hw/arm: Add the i.MX 8MM
- EVK(Evaluation Kit) board
-Thread-Index: AQHcy9DG4Tq2c1qndki/HWXadYKLu7XeiFsAgAAtqYCAAAP7AIAAAqNw
-Date: Tue, 14 Apr 2026 16:20:22 +0000
-Message-ID: <AM0PR04MB43704378E23DF09B87724B9A87252@AM0PR04MB4370.eurprd04.prod.outlook.com>
-References: <20260414053715.1378021-1-gaurav.sharma_7@nxp.com>
- <20260414053715.1378021-2-gaurav.sharma_7@nxp.com>
- <D981B877-F5F8-4873-B241-AE20CA354410@gmail.com>
- <AM0PR04MB4370D4D69523579FA7971C8A87252@AM0PR04MB4370.eurprd04.prod.outlook.com>
- <CAFEAcA9sgRbWtPeJ=B58nMBKNn4wciyXOgc0cX6xmPByAimuXQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA9sgRbWtPeJ=B58nMBKNn4wciyXOgc0cX6xmPByAimuXQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM0PR04MB4370:EE_|DUZPR04MB9981:EE_
-x-ms-office365-filtering-correlation-id: 5b7c13c6-2e12-40b3-54f9-08de9a41ba7b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|19092799006|38070700021|56012099003|22082099003|18002099003;
-x-microsoft-antispam-message-info: MuLj3cx0yDovHnfobkqqP0kPuM+x2yaY+ttGOlkjLykvYHFdkOg/uYJTWehmkumV/Lhb+KoUT8xMVeS2DJFC7McwPd7qucid/c4flJ3pfW+fXFd8Y234FAkm2jAMccLkWx3vvOovT6SzcPyo6RVNrNiXQkDSWBBZT5TNmlV5kvGHYnCFWZzR1GTnOW31rMidOVj88dvNDE0kQvKvyM1pSWlH/BiutdBJgGBN34f2IdrpizU7QLcEi6jzWnec7bStDq7UuiRkk0LGwpLvbKOExiL7RCxdAMR1F2tcn58tlVblXgESO5thZFjUh+5b+/zIh6DnqskEImV4thPoszQgRJzm4hKXRTtHXQpo6NX62fRYLZ4rZ2uNIkuLX9x8b2aaAwspIOBNh80KR/vr37/eubdCH34RWo+VKIo83KE6KEQzOSSoUCklnoTR1e7h2QCpH+sypuoJk7HaY8NgOaj1t02+F+tDtuK6Ay9aoNlKq6G8oDn4/3gpKMiCRzewrA+yrz+EBADTSYKytnKvxygqhHeyRakoc/F/AHatAd1VTigP5z+qFtm26W4urIRI1F74oHkwcidAzhfPWZNJ18vtP6V3dGv+6+yTwrt1tWibKbFimavxK7m8IQ2ZJJ1kBJoEzS/+pUl/YmjJ05sIuq+5aT9kGKUcgQI/3x5+UIk+gg69IuFqq0dbzPte0OIZjjAi7x623ybM7Xjf3tzqGDvU5KJDxSaR+rcI/xVk5FfhujLmRNGCR7mG/JaYgWdT9p/Moeyfhl5pqNp2CuLMIxJn1rYOvREq3NB/OM6Vcso8RHA=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM0PR04MB4370.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(19092799006)(38070700021)(56012099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MzVTYUl4RVdyZ1dvWGFCak12cVJlK3o5QndRZjRVeXY3eWtjcjRJeW5YVWlH?=
- =?utf-8?B?OFlvYzVJWk4vZ3drbnlqVU1mbVp5cURCKzVyZW1rcjlIT1pNWWIvTUNmSm8z?=
- =?utf-8?B?dnVwMVlxN1h5S2ludDNtK1ByVUpyY2FVQnFpZWdSdVYzclRGV2IxclhybVdk?=
- =?utf-8?B?a2ZBYVdibkdwWUNzWHJ3T3BKUThoSUZFVHowRkdlbmxDcnhleFN1ZTBwU0Fr?=
- =?utf-8?B?YnhDMEdrL2VNZ09HZ1VuMUwwQW9hMExRN09YK0NrK2lHai96YVlHN2tZUzdS?=
- =?utf-8?B?UzNUejZ6V2V5NkhnU2N4TGtMcDFKQ1kzMTFUYnpibXdCdXAzQVFBNkZJVmt3?=
- =?utf-8?B?VytYS2J4eWs1UFJENXFzdEJTeXRLOE5uTVkydndTWmpDOXNxNHdFemRVV0cz?=
- =?utf-8?B?NWxMOGRyY1lxTFBHTDdaVDZNRW03S0xScDdkTUNFanFKSWN6bWVqc1RzZFha?=
- =?utf-8?B?ZjJMMTlsQTZFaDBxcnR6REF1bi9IMDVFRFRHSjhpWU1WcFViNVE4b0ptVUtP?=
- =?utf-8?B?ZjRMQ1d0OGpSSmJjRFNQMWEzVDdxTDlmUE1uWnhNaTBMdFhjRkJkVElnQjNm?=
- =?utf-8?B?VXBKM01qN1hKUFV3RDg4andrV3Y5NUFIajRINjdFOHFncTJoMDRzUWFVVDdP?=
- =?utf-8?B?ekhMVXlBbld5VnRZalpWR0JLOGNnMTFqa1dFdlJ5UDRFYkJUTXpnUnVDSU9M?=
- =?utf-8?B?V1VZaFJuM09TVTFNVUE0dFByRVVzS2NZTHRMbEZob0pSbUZjNFFBYUNtd3Vj?=
- =?utf-8?B?WDZIUmxPbnp5dExwMWpTMmozOWhjK2NYVnkwYVdYcTNwdHFrRHZibFJRZFlj?=
- =?utf-8?B?dlp2NTMxYzN0U0d1d0dvWVd1RU9DU2JnZkJ0L2Zvb3FIc1hUSE1NYmJZb1I3?=
- =?utf-8?B?dzNiUzNJYXN3dUNickswbVRDV0h0dzFlSkJsMDVaMGU5c2RlUnNMY0NPN0lT?=
- =?utf-8?B?SlFQazBod0tjMlNzK2M5T011YjZrdTZNa0dZaXZOTklYaFpSMkVJOFZFT2lN?=
- =?utf-8?B?UFE1Z2hLR3lMc1B5NUY5eitXOXlQODltY2x6K0JYbXZBMzQrUnpURG5aN1dv?=
- =?utf-8?B?U05QOTluUWFzQ1gzaXBmRmJjcWJpbTBEQUt5ZVpUZ0pnNnVrSE9ObXo4Q1BQ?=
- =?utf-8?B?cXpmMXZkZnpyaGcrcGR1bjVtUnpoeWE3Um4wMnFWQStyR09XTDZFQTBMejk5?=
- =?utf-8?B?ZmxkWUk1cW9iNXo0eHdrNUpVZG4zOWNQRFdjQkVmeVdSV2wyd28vUFBleTMx?=
- =?utf-8?B?VVBZK3hUSGtQNDVXek9naWdsOXRhdGFlU3JYWVR6cERiMlcvbHZjU3dQT2ZW?=
- =?utf-8?B?TkFaSHVBd1hnYmo0OGlKMUdOckRvUEVtTkE0eTdhQUtJdE9NR3V4b2tnNWhw?=
- =?utf-8?B?SFdUdjhUdWVuZUc3K1FyY3BOdndzUldJVThZeEgyc1Y3MThQTTJodi9aZ3ZP?=
- =?utf-8?B?dVJvMGpKRmdWYzcrQWVxYVNPejRkZU1qQ1ExY1Q3N0ZiZ3lQMnYyT00zSzJq?=
- =?utf-8?B?YU1iU1VGMHV3bjVsMkdMZHpKQk1IdXlpWEl4ajBsNzNCOUd4UTRzQkxIRzBO?=
- =?utf-8?B?NzcvaWxSNHlPSlQ2OFNES1oyQjFZNzZRTjhjNnFubklWNytGazd1S1crc3hE?=
- =?utf-8?B?b3cvYXp0eEpKaURZeEpxc2wrV0pGWnRVeWZLbm45K1dFOFk2MytSMmNNVjVv?=
- =?utf-8?B?ZjNtQmtjaWdjNzlVUG1kRlUvaTUybmlEM0UzQ1hadG5heExxVDZFWE84QjhC?=
- =?utf-8?B?cnprNnQ1WTQ1QkZYMG51djQ1THMvMklYNGF2MTFER3pzaXNxekhDaVI1OGdR?=
- =?utf-8?B?c3RWb0IwRDNCaFIxMFczeE1jRXRmUDAvemlzQWpnM21CaExqa3Q0UG5NV2ZN?=
- =?utf-8?B?cndPWC93NTlJa0cxdjhQMFdBNWsyRUlJQWl4VmI1alFMSk5HYXBrMHNjT3Nz?=
- =?utf-8?B?UEJtanFJOGJoVTErN3RMVkdDVVAwZkV4Zkp4a0U5WGU4UFE4RVl3WmUzZm1N?=
- =?utf-8?B?R3Vqd3lLTWcrMml0RHI0TkZiSHUzdXF6ZTlqTlpSVG9nUkYwVkEyY2R0Y1Ur?=
- =?utf-8?B?N1d6dTVub09yelVxeG9uNTF5Qk55enhGWHFsSENqWGNWbEx3aDMrYVlRL0p0?=
- =?utf-8?B?NUpmbGxnUTl5RXF3dkJ2aEpIOGZBcENLNndseUxNeG8rZGxYc3J2WlFvdDh0?=
- =?utf-8?B?YlprZmQyUFJ2amk2VzNPdnp3QUY2YnZ6VWdwSTdHZnJFWFJpZG1nSm1ZVDNE?=
- =?utf-8?B?eGJJbkRISTV4M3ZQM2dscThNTjNRUWFiZUVmSkdzVG9tNldCVnlteVBISHZk?=
- =?utf-8?B?ZEVhYmk4eUlvR3RmbDJjbkRaeU85bE5FekFPSVp2cStCQUo2dS9OUT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCgpt-0003gI-PM
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:42:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776184920;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=f/rNg2G8LVLSGObtFJQYT5FoGLMARNFUzEUSGrzAYQA=;
+ b=SFKmp709eO/1f29bdZ22LvNiLgWZ2QB44Yt24Eapq1NZKbBmGhuvLq3uddbR1YuX/moxux
+ Wpl3o8ZTZbr1hXknashdfhxlZhBzKpDg7Z8HQiAQNjp9HH8XvOuKSxoetSOkkuwqDAYrRN
+ KEXR+U7iBe0p7Td9FyvLZbhXCDSgKhE=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-549-wCp-__XxOb-IZaa0NgPyOA-1; Tue, 14 Apr 2026 12:41:59 -0400
+X-MC-Unique: wCp-__XxOb-IZaa0NgPyOA-1
+X-Mimecast-MFC-AGG-ID: wCp-__XxOb-IZaa0NgPyOA_1776184918
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8a1accb970fso153583076d6.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 09:41:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776184918; x=1776789718; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=f/rNg2G8LVLSGObtFJQYT5FoGLMARNFUzEUSGrzAYQA=;
+ b=fm5m/3bts1s2QI3g79UklbRFV5/rTwxn8afj9/1LBjP4KNCu4ruz8/ah/UebS5I6hf
+ Ns7I4Hm2MzsOrdSjiciCOqGGoCo1R3esZaWwf/ysGxtHzyEri2KCubB8HEW+trqPp0fv
+ kuhwBXrVlgtgmKEjLUeR+JFWDkWOf2Z/OZaaSy8sk7yPicNkHsTGomlXOsdf03ErJn6H
+ QwTE6Ysz4rv7HX2f1ECnuD5RqkPUqADCsWmIilClmHV3FzyNryJnbIK9s2KIs5hqJ7YT
+ Szwl7X0J0209T32IzK/BeazuVWwSkqUtMyxF2y3jOwTqu8lV+SKrZAAWuaV6fRwmlyi8
+ oyuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776184918; x=1776789718;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f/rNg2G8LVLSGObtFJQYT5FoGLMARNFUzEUSGrzAYQA=;
+ b=itRTr40IopxnUVo8m2WeX2Ck1YVhSvCK102eIwAiWSh9NfQ72WPr09xAr6uOnyFG/D
+ LHhkUMbWN/0RKjEfEkx1hmomtzzOt3ZfUX3VKzpRKPuGFQMkOp8FpZik0qs7NMIm7Uvm
+ x20PeUlyxwmKyBZMj9UC5+oZqJ2w2RDRA8APHBAFlknrYTfFJ28xsDKgzQ8r5V3z9duy
+ 5WRQ+O4Qmra42RPdaTMKGK7wYTp86GQJBiRDyerQy99GwtLYTzSDSd+Fz0GnlnSn1ATB
+ SHikjCEuFPhWNXY9Jevr8vXfQmZvcvWne1I1WnP8R7G2i/oWXS6wUZOJWVS99+W3hu6g
+ /tXw==
+X-Gm-Message-State: AOJu0Yw06GPD1PFVPtpHvMutG7rin/K/kaUotQ4LE4e0Pqh50mtPJH1Q
+ PpPhE2xtCJmjRxV1b1W1pMb7Ill1aYuq+Bpjs1OOk1Umo0rOrHizgsw20ZHgkDBam1TEu+P+1NE
+ flS8CxP+r1CGfKNhUASXF7nMKXaw+SS+/G3ZCiD7GVvt7WXlhn/JmG9Y1
+X-Gm-Gg: AeBDietqz7WtyCO4/r+NRfn94Ibx1PWaV6z3ntKxeYuszi0cPJ50A4A71sMbv6ZM7GO
+ tvGdWy9O250mxGSkhJFwIuyF7p+j5x1iZvVC2yS4GUlCBk05cPqqPUNnWeuvvzpObeX8ICH4dQF
+ YBrLV6sVzxK8SBi3XZfDnu3g0C58yjCPmRcYXE97dnOcFrKsVx5ycZjLqQYpFoxsz0vLjfYIafw
+ JoB02GmBxCD6EoPnq6DKijkxfkH8mvqpwQB6Ngrc2GbM5hN5olyMQ9oWxvP6cQ/NHZ1Mw9hN+HT
+ Ps/MAJ2Bs603xbPeaQ3Phx9G1ZDVAIbqEvFwUL0xYVRumkg1gaqND1TgngFHypaDU4qK8FViqSV
+ BaqKuPKmfKM3taRdkBRxtJ4vQHXc1XNvP4g/tHG8q70CeRfRPeMECx/aBEg==
+X-Received: by 2002:a05:6214:1bca:b0:8ac:b2e8:8681 with SMTP id
+ 6a1803df08f44-8acb2e8905fmr119564156d6.5.1776184917880; 
+ Tue, 14 Apr 2026 09:41:57 -0700 (PDT)
+X-Received: by 2002:a05:6214:1bca:b0:8ac:b2e8:8681 with SMTP id
+ 6a1803df08f44-8acb2e8905fmr119563526d6.5.1776184917321; 
+ Tue, 14 Apr 2026 09:41:57 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ac84a47a0dsm125927756d6.22.2026.04.14.09.41.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 09:41:56 -0700 (PDT)
+Date: Tue, 14 Apr 2026 12:41:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Li Zhijian <lizhijian@fujitsu.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH] migration/ram: avoid page population in ram_handle_zero
+ via madvise
+Message-ID: <ad5uUqgY1IDvq37g@x1.local>
+References: <20260328130110.166469-1-vikingtc4@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB4370.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5b7c13c6-2e12-40b3-54f9-08de9a41ba7b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Apr 2026 16:20:22.4798 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: zYkcOoG4lzS7x/XLjpZwrfqpH9p8zThR0oldCEhYCwiD8CtWbmbQvZGkXXdOJKwElOgwAfjaoli2ygBgGqwyQA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR04MB9981
-Received-SPF: permerror client-ip=2a01:111:f403:c201::1;
- envelope-from=gaurav.sharma_7@nxp.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260328130110.166469-1-vikingtc4@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,42 +117,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGV0ZXIgTWF5ZGVsbCA8
-cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnPg0KPiBTZW50OiAxNCBBcHJpbCAyMDI2IDIxOjM4DQo+
-IFRvOiBHYXVyYXYgU2hhcm1hIDxnYXVyYXYuc2hhcm1hXzdAbnhwLmNvbT4NCj4gQ2M6IEJlcm5o
-YXJkIEJlc2Nob3cgPHNoZW50ZXlAZ21haWwuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnOw0K
-PiBwYm9uemluaUByZWRoYXQuY29tDQo+IFN1YmplY3Q6IFJlOiBbRVhUXSBSZTogW1BBVENIdjUg
-MDEvMTVdIGh3L2FybTogQWRkIHRoZSBpLk1YIDhNTQ0KPiBFVksoRXZhbHVhdGlvbiBLaXQpIGJv
-YXJkDQo+IA0KPiBDYXV0aW9uOiBUaGlzIGlzIGFuIGV4dGVybmFsIGVtYWlsLiBQbGVhc2UgdGFr
-ZSBjYXJlIHdoZW4gY2xpY2tpbmcgbGlua3Mgb3INCj4gb3BlbmluZyBhdHRhY2htZW50cy4gV2hl
-biBpbiBkb3VidCwgcmVwb3J0IHRoZSBtZXNzYWdlIHVzaW5nIHRoZSAnUmVwb3J0DQo+IHRoaXMg
-ZW1haWwnIGJ1dHRvbg0KPiANCj4gDQo+IE9uIFR1ZSwgMTQgQXByIDIwMjYgYXQgMTY6NTcsIEdh
-dXJhdiBTaGFybWEgPGdhdXJhdi5zaGFybWFfN0BueHAuY29tPg0KPiB3cm90ZToNCj4gPiA+IC0t
-LS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4gPiBGcm9tOiBCZXJuaGFyZCBCZXNjaG93IDxz
-aGVudGV5QGdtYWlsLmNvbT4gSSBnZXQgdHdvIHdhcm5pbmdzDQo+IGR1cmluZw0KPiA+ID4gY29t
-cGlsYXRpb246DQo+ID4gPg0KPiA+ID4gMSkNCj4gPiA+IC4vc3JjL2RvY3Mvc3lzdGVtL2FybS9p
-bXg4bXAtZXZrLnJzdDoyOiBXQVJOSU5HOiBUaXRsZSB1bmRlcmxpbmUgdG9vDQo+ID4gPiBzaG9y
-dC4NCj4gPiA+DQo+ID4gPiBOWFAgaS5NWCA4TSBQbHVzIGFuZCBpLk1YIDhNIE1pbmkgRXZhbHVh
-dGlvbiBLaXRzIChgYGlteDhtcC1ldmtgYCwNCj4gPiA+IGBgaW14OG1tLWV2a2BgKQ0KPiA9PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj4gPiA+IFtkb2N1
-dGlsc10NCj4gPiA+DQo+ID4gPg0KPiA+ID4gMikNCj4gPiA+IC4vc3JjL2RvY3Mvc3lzdGVtL3Rh
-cmdldC1hcm0ucnN0OjcxOiBXQVJOSU5HOiB0b2N0cmVlIGNvbnRhaW5zDQo+ID4gPiByZWZlcmVu
-Y2UgdG8gbm9uZXhpc3RpbmcgZG9jdW1lbnQgJ3N5c3RlbS9hcm0vaW14OG1tLWV2aycNCj4gPiA+
-IFt0b2Mubm90X3JlYWRhYmxlXQ0KPiA+ID4NCj4gPg0KPiA+IEkgaGF2ZSBiZWVuIGNvbmZpZ3Vy
-aW5nIGFuZCBjb21waWxpbmcgbGlrZSB0aGlzOi0NCj4gPg0KPiA+IC4uL2NvbmZpZ3VyZSAtLXRh
-cmdldC1saXN0PSJhYXJjaDY0LXNvZnRtbXUiIC0tZW5hYmxlLXdlcnJvciBtYWtlIC1qMzINCj4g
-Pg0KPiA+IFRoZSBidWlsZCB0dXJucyBvdXQgdG8gYmUgZmluZS4gTm90IHN1cmUgd2h5IGl0IGRv
-ZXNuJ3Qgc2hvdyB0aGVzZSB3YXJuaW5ncw0KPiBpbiBteSBidWlsZC4NCj4gDQo+IFlvdXIgc3lz
-dGVtIGlzIHByb2JhYmx5IG1pc3NpbmcgdGhlIG5lY2Vzc2FyeSBkZXBlbmRlbmNpZXMgdG8gYnVp
-bGQgdGhlDQo+IGRvY3VtZW50YXRpb24sIGFuZCBzbyBjb25maWd1cmUgZGlzYWJsZXMgaXQuDQo+
-IElmIHlvdSBwYXNzIGNvbmZpZ3VyZSAnLS1lbmFibGUtZG9jcycgaXQgd2lsbCBpbnNpc3QgdGhh
-dCBpdCBidWlsZHMgdGhlIGRvY3MgYW5kDQo+IGNvbmZpZ3VyZSB3aWxsIGZhaWwsIHRlbGxpbmcg
-eW91IHdoYXQgeW91IG5lZWQgdG8gaW5zdGFsbCwgaWYgaXQncyBtaXNzaW5nDQo+IHNvbWV0aGlu
-Zy4NCj4gDQo+IElmIHlvdSdyZSBhZGRpbmcgc29tZXRoaW5nIHRvIHRoZSBkb2NzIGl0J3MgYSBn
-b29kIGlkZWEgdG8gYWxzbyBjaGVjayB0aGUgYnVpbHQNCj4gSFRNTCAoaXQgYXBwZWFycyBpbiB0
-aGUgZG9jcy9tYW51YWwgc3ViZGlyIG9mIHlvdXIgYnVpbGQgdHJlZSkgaW4gYSB3ZWINCj4gYnJv
-d3NlciB0byBtYWtlIHN1cmUgaXQgbG9va3MgdGhlIHdheSB5b3UgZXhwZWN0IGl0IHRvLg0KPiAN
-CkdvdCBpdCBUaGFua3MhIEkgY2FuIHNlZSB0aGUgd2FybmluZ3MgYWZ0ZXIgcGFzc2luZyB0aGlz
-IGZsYWcgdG8gYnVpbGQgdGhlIGRvY3MuIFdpbGwgaW5jbHVkZSB0aGUgZml4IGluIHRoZSB1cGNv
-bWluZyBwYXRjaCBzZXJpZXMuDQoNCj4gLS0gUE1NDQo=
+On Sat, Mar 28, 2026 at 10:01:10PM +0900, Trieu Huynh wrote:
+> When the destination receives a zero page during precopy migration,
+> ram_handle_zero() calls buffer_is_zero() which reads the page. For
+> anonymous mmap this is benign (reads map to the shared zero page), but
+> for memory-backend-memfd (mmap(MAP_SHARED) of a memfd) even a read
+> commits a physical page in the tmpfs page cache.
+> 
+> As a result, after migration all zero pages of the guest are committed
+> on the destination, turning a sparse RSS into a fully-populated one
+> (see GitLab issue #2839: a 256 GB VM went from ~4 GB RSS before
+> migration to ~256 GB after).
+> 
+> Add a bool can_discard parameter and call madvise(MADV_DONTNEED) when
+> it is true. This releases tmpfs/anonymous pages back to the kernel's
+> zero-page pool without reading the mapping at all. The madvise is
+> issued before any read or write, preventing the initial page fault
+> entirely.
+
+Trieu,
+
+Thanks again for the patch.
+
+> 
+> Callers pass can_discard = !(block->flags & RAM_PREALLOC) so that
+
+I wonder if this will be enough.  E.g. see ram_block_discard_range() where
+it special cased RAM_READONLY_FD.
+
+> backends with prealloc=on are unaffected: deliberately pre-faulted pages
+> must not be discarded. On the destination side vCPUs are paused
+> (RUN_STATE_INMIGRATE) while precopy pages are loaded, so madvise is
+> race-free.
+> 
+> After migration for VM with 4GB RAM, the RSS on destination was reduced
+> to 247 MB (vs 4148 MB before change), measured via VmRSS in
+> /proc/$PID/status.
+> 
+> Relates-to: https://wiki.qemu.org/ToDo/LiveMigration#Avoid_page_population_when_page_is_not_populated
+> See-also: https://gitlab.com/qemu-project/qemu/-/issues/2839
+
+Please always loop in people that were involved in the discussions.  I'm
+adding Dan here.
+
+> 
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> ---
+>  migration/ram.c  | 16 +++++++++++++---
+>  migration/ram.h  |  2 +-
+>  migration/rdma.c |  9 ++++++++-
+>  3 files changed, 22 insertions(+), 5 deletions(-)
+> 
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 2a7e958e87..e57613e29d 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3638,9 +3638,13 @@ static inline void *colo_cache_from_block_offset(RAMBlock *block,
+>   *
+>   * @host: host address for the zero page
+>   * @size: size of the zero page
+> + * @can_discard: check whether RAMBlock was created with prealloc=on
+
+This is fine, but let's avoid mentioning "prealloc=on" details.  It may not
+always be the case. As a helper function, we should normally describe what
+it implies when can_discard is set, not when it will be set.
+
+>   */
+> -void ram_handle_zero(void *host, uint64_t size)
+> +void ram_handle_zero(void *host, uint64_t size, bool can_discard)
+>  {
+> +    if (can_discard && qemu_madvise(host, size, QEMU_MADV_DONTNEED) == 0) {
+
+I also don't know if DONTNEED will always work as expected.  E.g. when
+there're shared mappings and if the same page/folio is mapped elsewhere,
+DONTNEED may not be enough.  Again, see ram_block_discard_range() on the
+cases where ramblock is shared, or fd>0.
+
+I wonder if we should just pass in ramblock itself as parameter with offset
+to zero..  then we can do all the checks here and directly invoke
+ram_block_discard_range() when it's applicable.
+
+> +        return;
+> +    }
+>      if (!buffer_is_zero(host, size)) {
+>          memset(host, 0, size);
+>      }
+> @@ -4086,7 +4090,7 @@ static bool handle_zero_mapped_ram(RAMBlock *block, unsigned long from_bit_idx,
+>                     block->idstr);
+>          return false;
+>      }
+> -    ram_handle_zero(host, size);
+> +    ram_handle_zero(host, size, !(block->flags & RAM_PREALLOC));
+>  
+>      return true;
+>  }
+> @@ -4421,7 +4425,13 @@ static int ram_load_precopy(QEMUFile *f)
+>                  ret = -EINVAL;
+>                  break;
+>              }
+> -            ram_handle_zero(host, TARGET_PAGE_SIZE);
+> +            {
+> +                ram_addr_t ram_offset;
+> +                RAMBlock *rb = qemu_ram_block_from_host(host, false,
+> +                                                        &ram_offset);
+> +                bool can_discard = rb && !(rb->flags & RAM_PREALLOC);
+
+IMHO there's no need to redo the lookup, we can extend the lifespan of the
+"block" variable right above when calculating the host address.
+
+> +                ram_handle_zero(host, TARGET_PAGE_SIZE, can_discard);
+> +            }
+>              break;
+>  
+>          case RAM_SAVE_FLAG_PAGE:
+> diff --git a/migration/ram.h b/migration/ram.h
+> index 41697a7599..faa80f27d1 100644
+> --- a/migration/ram.h
+> +++ b/migration/ram.h
+> @@ -90,7 +90,7 @@ int ram_discard_range(const char *block_name, uint64_t start, size_t length);
+>  int ram_postcopy_incoming_init(MigrationIncomingState *mis, Error **errp);
+>  int ram_load_postcopy(QEMUFile *f, int channel);
+>  
+> -void ram_handle_zero(void *host, uint64_t size);
+> +void ram_handle_zero(void *host, uint64_t size, bool can_discard);
+>  
+>  void ram_transferred_add(uint64_t bytes);
+>  void ram_release_page(const char *rbname, uint64_t offset);
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 55ab85650a..d4c36af5b9 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -28,6 +28,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qemu/main-loop.h"
+>  #include "qemu/module.h"
+> +#include "system/ramblock.h"
+>  #include "qemu/rcu.h"
+>  #include "qemu/sockets.h"
+>  #include "qemu/bitmap.h"
+> @@ -3413,7 +3414,13 @@ int rdma_registration_handle(QEMUFile *f)
+>                               comp->value);
+>                  goto err;
+>              }
+> -            ram_handle_zero(host_addr, comp->length);
+> +            {
+> +                ram_addr_t ram_offset;
+> +                RAMBlock *rb = qemu_ram_block_from_host(host_addr, false,
+> +                                                        &ram_offset);
+
+Similar here, a slight difference is RDMA manages ramblocks with its own
+internal data structure, so I wonder if we want to simply cache the block
+pointer somewhere in qemu_rdma_init_one_block() if we want to make
+ram_handle_zero() take the ramblock ptr directly.
+
+The other thing is I'm not yet sure if you have tested this code.  Please
+keep that in mind whatever patches one posted need to be properly tested.
+It's definitely not good to send whatever not tested for merging.  Here,
+this changes RDMA code path.  You can have a look at our RDMA unit tests,
+but you'll also need to setup it.  There's a helper you can use, see
+scripts/rdma-migration-helper.sh.
+
+> +                bool can_discard = rb && !(rb->flags & RAM_PREALLOC);
+> +                ram_handle_zero(host_addr, comp->length, can_discard);
+> +            }
+>              break;
+>  
+>          case RDMA_CONTROL_REGISTER_FINISHED:
+> -- 
+> 2.43.0
+> 
+
+-- 
+Peter Xu
+
 
