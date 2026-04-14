@@ -4,54 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87112FA0C22
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6547FA0C27
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 04:08:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCrXy-0006qv-8H; Wed, 15 Apr 2026 00:08:14 -0400
+	id 1wCrXf-0006n6-6r; Wed, 15 Apr 2026 00:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wCr2D-0003Ii-W5
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 23:35:26 -0400
-Received: from mail-08.mail-europe.com ([57.129.93.249])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wCr2B-0004WV-T8
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 23:35:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=wkzmw6rflvda7ptiszs42aun7u.protonmail; t=1776224119; x=1776483319;
- bh=gyMe/evFtAjnP45j2Qwezv5c2Xqu3b+xiRro6I6OZHY=;
- h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=dSptrJe3ZmCLM3gmWUPqC11LWnS9hsq1jW3mynrPue4i2p4pMCm73+0IHhVpNx9Vm
- uEg+xmPIlhmfX5AuIuICAiNjjpPzoTaY//INEwES21vDIjr5A0+SNvU+u2kW6t+3WI
- q1l4uEqIF7IJFQG8zFiJIBwJeSWJQcZGRyQ1LHsRlcImYSRUkARoiOc6vv3A95CQ/S
- gMd8RbQuM6Gwj+1D/fWt0hYJhpp7NOrf0eXyIef17ceT1avDnFNL3vdCNuutLiNHKb
- dPrH+DO/+FulBDoGPKfx9RCbBWxiqvznbSnoIyceGLIWdPyE9gTqkn1iVMad/GF56f
- rH4PyKHgXt/Uw==
-Date: Wed, 15 Apr 2026 03:35:14 +0000
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-From: Feifan Qian <bea1e@proton.me>
-Subject: [PATCH 2/2] hw/display/ati: reset host_data.next on early returns in
- ati_host_data_flush()
-Message-ID: <U62ZPP3C0eUIUhmFb68h6Zbpn_gAjGsyJL3MlLsNd6Y4685t5cgo1IQEs3jQpw27LX8rbQaav04Kd-xLwbQXykyIUq2ouFnbFlMgXoKB_NY=@proton.me>
-Feedback-ID: 93226294:user:proton
-X-Pm-Message-ID: 23620f30d5ebc3c75f4892067fdcd37bc892c339
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wCnee-0008F7-P8
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 19:58:52 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wCnec-0003X9-Nb
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 19:58:52 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43cf7258875so428958f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 16:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776211129; x=1776815929; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=uqvJg/Mgtv6OwVCd/aP++X0wBdWO0zPsmqBCsAcI/WQ=;
+ b=gn1QZLriw27dIV7VAxwziwGLAI9ZsKlQjYJV41tgm+W1/z0HWjH7OCHjn+99IFFeDc
+ 7VAd/y+UFfzPEyigEipnOiq6WwP30hA+rKUlGF2w8idE9iQSjXgX39woHt9M8ZCjS/uP
+ Tcd4XUcehhSnUm3H2o+eZOqR2wQt/Jnmldyve5K6K0s2sQc5tH0QjzsEhajRSpozotNN
+ HyrvlAmHtvb3ZultY3qfWIVRUuJ8ER1j4xoUr5rm4ri3C9TZhR33RxqDBWdZBbwFtsYv
+ l7VlKcKl1rOHMPoZOldNGk31pZDzzx3TtdJ1FGdX63OO/qSIlIOUcSR7xUjMVf+MROXc
+ Q6cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776211129; x=1776815929;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=uqvJg/Mgtv6OwVCd/aP++X0wBdWO0zPsmqBCsAcI/WQ=;
+ b=cinv0EBwJ4fho3yXLQqoi7N3/Dfsgslxe8tuvSV6LElXAfJ0xDTAbuuN7qxYZlTNRn
+ LGj9Y/srj0QkAzuVF9BhO+zBDeyOUorgfWd8yLNRCW2z+1FWMzZYsxpRx+ajGt1f+bmu
+ 4ve4LOhh5eYTO8xNeHFs1E54kZFlPOVHIqpGHsYDw+ZBaa8Porsi5Rt4B0i2dnmfhkHQ
+ HHol9AYwF9Uu3SL+13/7EOH8VjO5kQajVFXl2XfInV/cZ/TnUWlyVI7qDcGMk5/WadWB
+ EOkP7XMCpoQpC4o2mzyLU2f5VOj7iI0bX17MeR6A3E13+5ch46Fi3AenPz+Ifd7i8yp1
+ nSzg==
+X-Gm-Message-State: AOJu0Yz9x0QWAN/eeAInJIo+YdhxyGffjTuY6RqZkPAua/mx2LCNsfHK
+ rCrtRsJSiUyF4PtHFBVN7AA4Dda7Bnixp6ftCS0ilA1we1j83GUx92ua
+X-Gm-Gg: AeBDieuDBXeaD40YjLmwKhP1rHJFyJwy/p/A1JmiT7vAV1s6NLlKpYYrq7Dgn7TSmf+
+ rXKht0cRCzyHZeWXumYvvUTWCojbDLrUZtWTQ0knLsApXZwmWSx3wWckVc6EBu7Acf6nFoty1is
+ IudD/rtFx6bBSv98orD3cOazzgtBjvPv27VyX4DlgjDj361iXvxn8QlMGMO89VLcZShOXiG23rx
+ dYInE5QulZ8MlTaiUUdRHDCAP6SHYyOLFMpeLVWFv8g7TzauQSkzMhdPBwI8hIHIPt+fZXo/ovs
+ fIIDpjOgpn/VpT0iu1QM2tcx/3Sl/QmAMbuJiUS5Gkqpn/H2Ra7BfJNFZBzJjjdELOkliTgxub/
+ rk4Z0o3VSmvTlxxoXLFzVCRflQSYKJ+B6t4agRKsjeHAcP6mwxM4j3hClTgsdYe6SC9YuHdilJV
+ xcZfZhvr1CkULf8Mv0RIBQlYGXTKsoIBQH
+X-Received: by 2002:a05:6000:2109:b0:43d:74dc:7e9 with SMTP id
+ ffacd0b85a97d-43eacfa1546mr117387f8f.1.1776211128977; 
+ Tue, 14 Apr 2026 16:58:48 -0700 (PDT)
+Received: from [192.168.10.11] ([182.181.137.32])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43ead3d5f11sm115535f8f.18.2026.04.14.16.58.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 16:58:48 -0700 (PDT)
+From: Ali Raza <elirazamumtaz@gmail.com>
+Date: Wed, 15 Apr 2026 04:58:34 +0500
+Subject: [PATCH 1/3] linux-user: Filter /proc/*/task/ to hide QEMU-internal
+ threads
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1=_0UhdhCjW0xLfQvwfYNgHJWHvfkyvnsBBWH9RdKnao"
-Received-SPF: pass client-ip=57.129.93.249; envelope-from=bea1e@proton.me;
- helo=mail-08.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260415-master-v1-1-8dd2ef111eee@gmail.com>
+References: <20260415-master-v1-0-8dd2ef111eee@gmail.com>
+In-Reply-To: <20260415-master-v1-0-8dd2ef111eee@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Ali Raza <elirazamumtaz@gmail.com>, morgan@kernel.org
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=elirazamumtaz@gmail.com; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 15 Apr 2026 00:08:10 -0400
+X-Mailman-Approved-At: Wed, 15 Apr 2026 00:07:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,200 +101,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---b1=_0UhdhCjW0xLfQvwfYNgHJWHvfkyvnsBBWH9RdKnao
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+When a guest process reads /proc/<pid>/task/ via getdents/getdents64,
+the host kernel returns directory entries for all host threads in the
+process, including QEMU-internal threads (RCU, TCG workers) that have
+no guest CPUState.  This causes problems for guest libraries like
+libcap's PSX that enumerate threads via /proc/self/task/ and send
+signals to each one -- signals sent to QEMU-internal threads are never
+handled, leading to deadlocks.
 
-YXRpX2hvc3RfZGF0YV9mbHVzaCgpIHJlc2V0cyBob3N0X2RhdGEubmV4dCB0byAwIG9ubHkgb24g
-dGhlCnN1Y2Nlc3MgcGF0aC4gVGhyZWUgZWFybHktcmV0dXJuIHBhdGhzIGV4aXQgd2l0aG91dCBy
-ZXNldHRpbmcgaXQ6CgoxLiBicHAgPT0gMjQgKHVuc3VwcG9ydGVkIG1vZGUpCjIuIHVuc3VwcG9y
-dGVkIGJsaXQgZGlyZWN0aW9uCjMuIGJwcCA9PSAwIChpbnZhbGlkIGRwX2RhdGF0eXBlIG5pYmJs
-ZSkgd2hpY2ggYWRkaXRpb25hbGx5CmNhdXNlcyBhbiBpbnRlZ2VyIGRpdmlkZS1ieS16ZXJvIGF0
-OgpwaXhfY291bnQgLz0gY3R4LmJwcDsgLyogMTI4IC8gMCAtPiBTSUdGUEUgKi8KCldoZW4gbmV4
-dCBpcyBub3QgcmVzZXQgaXQgc3RheXMgPj0gNCwgYWxsb3dpbmcgdGhlIEhPU1RfREFUQSB3cml0
-ZQpoYW5kbGVyIHRvIGluZGV4IHBhc3QgdGhlIGVuZCBvZiBob3N0X2RhdGEuYWNjW10gb24gdGhl
-IG5leHQgd3JpdGUuCgpSZXNldCBob3N0X2RhdGEubmV4dCA9IDAgb24gZXZlcnkgZWFybHktcmV0
-dXJuIHBhdGguIEFsc28gYWRkIGFuCmV4cGxpY2l0IGJwcCA9PSAwIGd1YXJkICh3aXRoIExPR19H
-VUVTVF9FUlJPUikgYmVmb3JlIHRoZSBicHAgPT0gMjQKY2hlY2sgdG8gcHJldmVudCB0aGUgZGl2
-aWRlLWJ5LXplcm8uCgpTaWduZWQtb2ZmLWJ5OiBGZWlmYW4gUWlhbiA8YmVhMWVAcHJvdG9uLm1l
-PgotLS0KaHcvZGlzcGxheS9hdGlfMmQuYyB8IDggKysrKysrKysKMSBmaWxlIGNoYW5nZWQsIDgg
-aW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2h3L2Rpc3BsYXkvYXRpXzJkLmMgYi9ody9kaXNw
-bGF5L2F0aV8yZC5jCmluZGV4IDUwNGQxYzU3MDguLmUwMTk4Y2E2ZWEgMTAwNjQ0Ci0tLSBhL2h3
-L2Rpc3BsYXkvYXRpXzJkLmMKKysrIGIvaHcvZGlzcGxheS9hdGlfMmQuYwpAQCAtMzY3LDkgKzM2
-NywxNiBAQCBib29sIGF0aV9ob3N0X2RhdGFfZmx1c2goQVRJVkdBU3RhdGUgKnMpCgpzZXR1cF8y
-ZF9ibHRfY3R4KHMsICZjdHgpOwoKKyBpZiAoIWN0eC5icHApIHsKKyBxZW11X2xvZ19tYXNrKExP
-R19HVUVTVF9FUlJPUiwKKyAiaG9zdF9kYXRhX2JsdDogaW52YWxpZCBicHBcbiIpOworIHMtPmhv
-c3RfZGF0YS5uZXh0ID0gMDsKKyByZXR1cm4gZmFsc2U7CisgfQppZiAoY3R4LmJwcCA9PSAyNCkg
-ewpxZW11X2xvZ19tYXNrKExPR19VTklNUCwKImhvc3RfZGF0YV9ibHQ6IHVuc3VwcG9ydGVkIGlu
-IDI0IGJpdHMgbW9kZVxuIik7Cisgcy0+aG9zdF9kYXRhLm5leHQgPSAwOwpyZXR1cm4gZmFsc2U7
-Cn0KaWYgKCFjdHgubGVmdF90b19yaWdodCB8fCAhY3R4LnRvcF90b19ib3R0b20pIHsKQEAgLTM3
-Nyw2ICszODQsNyBAQCBib29sIGF0aV9ob3N0X2RhdGFfZmx1c2goQVRJVkdBU3RhdGUgKnMpCiJo
-b3N0X2RhdGFfYmx0OiB1bnN1cHBvcnRlZCBibGl0IGRpcmVjdGlvbiAlYyVjXG4iLApjdHgubGVm
-dF90b19yaWdodCA/ICc+JyA6ICc8JywKY3R4LnRvcF90b19ib3R0b20gPyAndicgOiAnXicpOwor
-IHMtPmhvc3RfZGF0YS5uZXh0ID0gMDsKcmV0dXJuIGZhbHNlOwp9CgotLQoyLjQzLjAKCk9uIFdl
-ZG5lc2RheSwgQXByaWwgMTV0aCwgMjAyNiBhdCBBTSAxMTozNCwgRmVpZmFuIFFpYW4gPGJlYTFl
-QHByb3Rvbi5tZT4gd3JvdGU6Cgo+IFRoZSBIT1NUX0RBVEEgd3JpdGUgaGFuZGxlciBzdG9yZXMg
-Z3Vlc3Qtc3VwcGxpZWQgZHdvcmRzIGludG8gYQo+IDQtZWxlbWVudCBhY2N1bXVsYXRvciBhcnJh
-eSAoaG9zdF9kYXRhLmFjY1swLi4zXSkgYW5kIGNhbGxzCj4gYXRpX2hvc3RfZGF0YV9mbHVzaCgp
-IG9uY2UgZm91ciBlbnRyaWVzIGFyZSBjb2xsZWN0ZWQuIFdoZW4KPiBhdGlfaG9zdF9kYXRhX2Zs
-dXNoKCkgcmV0dXJucyBlYXJseSB3aXRob3V0IHJlc2V0dGluZyBuZXh0IChlLmcuCj4gZm9yIHVu
-c3VwcG9ydGVkIDI0LWJwcCBvciBkaXJlY3Rpb24gbW9kZXMpLCBuZXh0IHJlbWFpbnMgPj0gNC4K
-PiBCZWNhdXNlIHRoZSB3cml0ZSBhY2NbbmV4dCsrXSBvY2N1cnMgYmVmb3JlIHRoZSBuZXh0ID49
-IDQgY2hlY2ssCj4gdGhlIHN1YnNlcXVlbnQgSE9TVF9EQVRBIGR3b3JkIGlzIHN0b3JlZCBhdCBh
-Y2NbNF0g4oCUIG9uZSBlbGVtZW50Cj4gcGFzdCB0aGUgZW5kIG9mIEFUSUhvc3REYXRhU3RhdGUs
-IHRoZSBsYXN0IGZpZWxkIG9mIHRoZQo+IGhlYXAtYWxsb2NhdGVkIEFUSVZHQVN0YXRlIG9iamVj
-dC4gVGhlIHBheWxvYWQgaXMgZ3Vlc3QtY29udHJvbGxlZAo+IGFuZCB0aGUgb3ZlcmZsb3cgaXMg
-cmVwZWF0YWJsZS4KPgo+IENvbmZpcm1lZCB3aXRoIEFkZHJlc3NTYW5pdGl6ZXI6IGhlYXAtYnVm
-ZmVyLW92ZXJmbG93IFdSSVRFIG9mCj4gNCBieXRlcyBhdCBhdGkuYzoxMDMyIG9uIFFFTVUgMTEu
-MC4wLXJjMyB2aWEgUVRlc3QuCj4KPiBBZGQgYW4gZXhwbGljaXQgYm91bmRzIGNoZWNrIG9uIG5l
-eHQgYmVmb3JlIGluZGV4aW5nIGFjY1tdOyBsb2cgYQo+IGd1ZXN0IGVycm9yIGFuZCBicmVhayB3
-aXRob3V0IHdyaXRpbmcgaWYgbmV4dCBpcyBvdXQgb2YgcmFuZ2UuCj4KPiBTaWduZWQtb2ZmLWJ5
-OiBGZWlmYW4gUWlhbiA8YmVhMWVAcHJvdG9uLm1lPgo+IC0tLQo+IGh3L2Rpc3BsYXkvYXRpLmMg
-fCA1ICsrKysrCj4gMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQo+Cj4gZGlmZiAtLWdp
-dCBhL2h3L2Rpc3BsYXkvYXRpLmMgYi9ody9kaXNwbGF5L2F0aS5jCj4gaW5kZXggODhhNWJiYmYw
-Ny4uMzAzOTYwNjIwMiAxMDA2NDQKPiAtLS0gYS9ody9kaXNwbGF5L2F0aS5jCj4gKysrIGIvaHcv
-ZGlzcGxheS9hdGkuYwo+IEBAIC0xMDI5LDYgKzEwMjksMTEgQEAgc3RhdGljIHZvaWQgYXRpX21t
-X3dyaXRlKHZvaWQgKm9wYXF1ZSwgaHdhZGRyIGFkZHIsCj4gaWYgKCFzLT5ob3N0X2RhdGEuYWN0
-aXZlKSB7Cj4gYnJlYWs7Cj4gfQo+ICsgaWYgKHMtPmhvc3RfZGF0YS5uZXh0ID49IEFSUkFZX1NJ
-WkUocy0+aG9zdF9kYXRhLmFjYykpIHsKPiArIHFlbXVfbG9nX21hc2soTE9HX0dVRVNUX0VSUk9S
-LAo+ICsgIkhPU1RfREFUQTogYWNjdW11bGF0b3Igb3ZlcmZsb3csIGlnbm9yaW5nXG4iKTsKPiAr
-IGJyZWFrOwo+ICsgfQo+IHMtPmhvc3RfZGF0YS5hY2Nbcy0+aG9zdF9kYXRhLm5leHQrK10gPSBk
-YXRhOwo+IGlmIChhZGRyID09IEhPU1RfREFUQV9MQVNUKSB7Cj4gYXRpX2hvc3RfZGF0YV9maW5p
-c2gocyk7Cj4gLS0yLjQzLjA=
+Add filtering to do_getdents() and do_getdents64() that detects when
+the fd refers to a /proc/<pid>/task/ directory and skips entries whose
+TID does not belong to a guest thread.  Guest thread TIDs are
+identified by iterating the CPU list via CPU_FOREACH(), matching the
+existing pattern used for /proc/self/stat num_threads.
 
---b1=_0UhdhCjW0xLfQvwfYNgHJWHvfkyvnsBBWH9RdKnao
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
+This fixes the psx_test hang reported in containers using QEMU
+user-mode emulation for cross-architecture builds.
 
-PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
-cHg7Ij48L2Rpdj48c3Bhbj5hdGlfaG9zdF9kYXRhX2ZsdXNoKCkgcmVzZXRzIGhvc3RfZGF0YS5u
-ZXh0IHRvIDAgb25seSBvbiB0aGU8L3NwYW4+PGRpdj48c3Bhbj5zdWNjZXNzIHBhdGguICZuYnNw
-O1RocmVlIGVhcmx5LXJldHVybiBwYXRocyBleGl0IHdpdGhvdXQgcmVzZXR0aW5nIGl0Ojwvc3Bh
-bj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAxLiBicHAgPT0gMjQgKHVu
-c3VwcG9ydGVkIG1vZGUpPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7IDIuIHVuc3VwcG9y
-dGVkIGJsaXQgZGlyZWN0aW9uPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7IDMuIGJwcCA9
-PSAwIChpbnZhbGlkIGRwX2RhdGF0eXBlIG5pYmJsZSkgd2hpY2ggYWRkaXRpb25hbGx5PC9zcGFu
-PjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDtjYXVzZXMgYW4gaW50ZWdlciBk
-aXZpZGUtYnktemVybyBhdDo8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDtwaXhfY291bnQgLz0gY3R4LmJwcDsgJm5ic3A7IC8qIDEyOCAvIDAgLSZndDsg
-U0lHRlBFICovPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4+V2hlbiBuZXh0
-IGlzIG5vdCByZXNldCBpdCBzdGF5cyAmZ3Q7PSA0LCBhbGxvd2luZyB0aGUgSE9TVF9EQVRBIHdy
-aXRlPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+aGFuZGxlciB0byBpbmRleCBwYXN0IHRoZSBlbmQg
-b2YgaG9zdF9kYXRhLmFjY1tdIG9uIHRoZSBuZXh0IHdyaXRlLjwvc3Bhbj48L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2PjxzcGFuPlJlc2V0IGhvc3RfZGF0YS5uZXh0ID0gMCBvbiBldmVyeSBlYXJs
-eS1yZXR1cm4gcGF0aC4gJm5ic3A7QWxzbyBhZGQgYW48L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5l
-eHBsaWNpdCBicHAgPT0gMCBndWFyZCAod2l0aCBMT0dfR1VFU1RfRVJST1IpIGJlZm9yZSB0aGUg
-YnBwID09IDI0PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Y2hlY2sgdG8gcHJldmVudCB0aGUgZGl2
-aWRlLWJ5LXplcm8uPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4+U2lnbmVk
-LW9mZi1ieTogRmVpZmFuIFFpYW4gJmx0OzxhIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vcmVmZXJy
-ZXIgbm9mb2xsb3cgbm9vcGVuZXIiIGhyZWY9Im1haWx0bzpiZWExZUBwcm90b24ubWUiPmJlYTFl
-QHByb3Rvbi5tZTwvYT4mZ3Q7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+LS0tPC9zcGFuPjwvZGl2
-PjxkaXY+PHNwYW4+Jm5ic3A7aHcvZGlzcGxheS9hdGlfMmQuYyB8IDggKysrKysrKys8L3NwYW4+
-PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsxIGZpbGUgY2hhbmdlZCwgOCBpbnNlcnRpb25zKCspPC9z
-cGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4+ZGlmZiAtLWdpdCBhL2h3L2Rpc3Bs
-YXkvYXRpXzJkLmMgYi9ody9kaXNwbGF5L2F0aV8yZC5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+
-aW5kZXggNTA0ZDFjNTcwOC4uZTAxOThjYTZlYSAxMDA2NDQ8L3NwYW4+PC9kaXY+PGRpdj48c3Bh
-bj4tLS0gYS9ody9kaXNwbGF5L2F0aV8yZC5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+KysrIGIv
-aHcvZGlzcGxheS9hdGlfMmQuYzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPkBAIC0zNjcsOSArMzY3
-LDE2IEBAIGJvb2wgYXRpX2hvc3RfZGF0YV9mbHVzaChBVElWR0FTdGF0ZSAqcyk8L3NwYW4+PC9k
-aXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwO3NldHVwXzJk
-X2JsdF9jdHgocywgJmFtcDtjdHgpOzwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxz
-cGFuPisgJm5ic3A7ICZuYnNwO2lmICghY3R4LmJwcCkgezwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFu
-PisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cWVtdV9sb2dfbWFzayhMT0dfR1VFU1RfRVJS
-T1IsPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7Imhvc3RfZGF0
-YV9ibHQ6IGludmFsaWQgYnBwXG4iKTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwO3MtJmd0O2hvc3RfZGF0YS5uZXh0ID0gMDs8L3NwYW4+PC9kaXY+
-PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3JldHVybiBmYWxzZTs8L3Nw
-YW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDt9PC9zcGFuPjwvZGl2PjxkaXY+PHNw
-YW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDtpZiAoY3R4LmJwcCA9PSAyNCkgezwvc3Bhbj48L2Rpdj48
-ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtxZW11X2xvZ19tYXNr
-KExPR19VTklNUCw8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyJob3N0X2RhdGFfYmx0OiB1bnN1cHBvcnRlZCBpbiAyNCBiaXRzIG1vZGVcbiIpOzwvc3Bh
-bj48L2Rpdj48ZGl2PjxzcGFuPisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cy0mZ3Q7aG9z
-dF9kYXRhLm5leHQgPSAwOzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDtyZXR1cm4gZmFsc2U7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5i
-c3A7ICZuYnNwOyAmbmJzcDt9PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAm
-bmJzcDtpZiAoIWN0eC5sZWZ0X3RvX3JpZ2h0IHx8ICFjdHgudG9wX3RvX2JvdHRvbSkgezwvc3Bh
-bj48L2Rpdj48ZGl2PjxzcGFuPkBAIC0zNzcsNiArMzg0LDcgQEAgYm9vbCBhdGlfaG9zdF9kYXRh
-X2ZsdXNoKEFUSVZHQVN0YXRlICpzKTwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJz
-cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
-OyAmbmJzcDsgJm5ic3A7Imhvc3RfZGF0YV9ibHQ6IHVuc3VwcG9ydGVkIGJsaXQgZGlyZWN0aW9u
-ICVjJWNcbiIsPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDtjdHgubGVmdF90b19yaWdodCA/ICcmZ3Q7JyA6ICcmbHQ7Jyw8L3NwYW4+PC9kaXY+PGRpdj48
-c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2N0eC50b3BfdG9fYm90dG9tID8gJ3YnIDog
-J14nKTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
-O3MtJmd0O2hvc3RfZGF0YS5uZXh0ID0gMDs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cmV0dXJuIGZhbHNlOzwvc3Bhbj48L2Rpdj48ZGl2
-PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7fTwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48
-ZGl2PjxzcGFuPi0tPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Mi40My4wPC9zcGFuPjwvZGl2Pjxz
-cGFuPjwvc3Bhbj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTogQXJpYWwsIHNhbnMtc2VyaWY7IGZv
-bnQtc2l6ZTogMTRweDsiPjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3F1b3RlIj4N
-CiAgICAgICAgT24gV2VkbmVzZGF5LCBBcHJpbCAxNXRoLCAyMDI2IGF0IEFNIDExOjM0LCBGZWlm
-YW4gUWlhbiAmbHQ7YmVhMWVAcHJvdG9uLm1lJmd0OyB3cm90ZTo8YnI+DQogICAgICAgIDxibG9j
-a3F1b3RlIGNsYXNzPSJwcm90b25tYWlsX3F1b3RlIiB0eXBlPSJjaXRlIj4NCiAgICAgICAgICAg
-IDxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAx
-NHB4OyI+PC9kaXY+PHNwYW4+PHNwYW4+PC9zcGFuPjxzcGFuPlRoZSBIT1NUX0RBVEEgd3JpdGUg
-aGFuZGxlciBzdG9yZXMgZ3Vlc3Qtc3VwcGxpZWQgZHdvcmRzIGludG8gYTwvc3Bhbj48ZGl2Pjxz
-cGFuPjQtZWxlbWVudCBhY2N1bXVsYXRvciBhcnJheSAoaG9zdF9kYXRhLmFjY1swLi4zXSkgYW5k
-IGNhbGxzPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+YXRpX2hvc3RfZGF0YV9mbHVzaCgpIG9uY2Ug
-Zm91ciBlbnRyaWVzIGFyZSBjb2xsZWN0ZWQuICZuYnNwO1doZW48L3NwYW4+PC9kaXY+PGRpdj48
-c3Bhbj5hdGlfaG9zdF9kYXRhX2ZsdXNoKCkgcmV0dXJucyBlYXJseSB3aXRob3V0IHJlc2V0dGlu
-ZyBuZXh0IChlLmcuPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Zm9yIHVuc3VwcG9ydGVkIDI0LWJw
-cCBvciBkaXJlY3Rpb24gbW9kZXMpLCBuZXh0IHJlbWFpbnMgJmd0Oz0gNC48L3NwYW4+PC9kaXY+
-PGRpdj48c3Bhbj5CZWNhdXNlIHRoZSB3cml0ZSBhY2NbbmV4dCsrXSBvY2N1cnMgYmVmb3JlIHRo
-ZSBuZXh0ICZndDs9IDQgY2hlY2ssPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+dGhlIHN1YnNlcXVl
-bnQgSE9TVF9EQVRBIGR3b3JkIGlzIHN0b3JlZCBhdCBhY2NbNF0g4oCUIG9uZSBlbGVtZW50PC9z
-cGFuPjwvZGl2PjxkaXY+PHNwYW4+cGFzdCB0aGUgZW5kIG9mIEFUSUhvc3REYXRhU3RhdGUsIHRo
-ZSBsYXN0IGZpZWxkIG9mIHRoZTwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPmhlYXAtYWxsb2NhdGVk
-IEFUSVZHQVN0YXRlIG9iamVjdC4gJm5ic3A7VGhlIHBheWxvYWQgaXMgZ3Vlc3QtY29udHJvbGxl
-ZDwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPmFuZCB0aGUgb3ZlcmZsb3cgaXMgcmVwZWF0YWJsZS48
-L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj5Db25maXJtZWQgd2l0aCBBZGRy
-ZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVyZmxvdyBXUklURSBvZjwvc3Bhbj48L2Rpdj48
-ZGl2PjxzcGFuPjQgYnl0ZXMgYXQgYXRpLmM6MTAzMiBvbiBRRU1VIDExLjAuMC1yYzMgdmlhIFFU
-ZXN0Ljwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPkFkZCBhbiBleHBsaWNp
-dCBib3VuZHMgY2hlY2sgb24gbmV4dCBiZWZvcmUgaW5kZXhpbmcgYWNjW107IGxvZyBhPC9zcGFu
-PjwvZGl2PjxkaXY+PHNwYW4+Z3Vlc3QgZXJyb3IgYW5kIGJyZWFrIHdpdGhvdXQgd3JpdGluZyBp
-ZiBuZXh0IGlzIG91dCBvZiByYW5nZS48L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48
-c3Bhbj5TaWduZWQtb2ZmLWJ5OiBGZWlmYW4gUWlhbiAmbHQ7PGEgdGFyZ2V0PSJfYmxhbmsiIHJl
-bD0ibm9yZWZlcnJlciBub2ZvbGxvdyBub29wZW5lciIgaHJlZj0ibWFpbHRvOmJlYTFlQHByb3Rv
-bi5tZSI+YmVhMWVAcHJvdG9uLm1lPC9hPiZndDs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4tLS08
-L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDtody9kaXNwbGF5L2F0aS5jIHwgNSArKysrKzwv
-c3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOzEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMo
-Kyk8L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj5kaWZmIC0tZ2l0IGEvaHcv
-ZGlzcGxheS9hdGkuYyBiL2h3L2Rpc3BsYXkvYXRpLmM8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5p
-bmRleCA4OGE1YmJiZjA3Li4zMDM5NjA2MjAyIDEwMDY0NDwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFu
-Pi0tLSBhL2h3L2Rpc3BsYXkvYXRpLmM8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rKysgYi9ody9k
-aXNwbGF5L2F0aS5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+QEAgLTEwMjksNiArMTAyOSwxMSBA
-QCBzdGF0aWMgdm9pZCBhdGlfbW1fd3JpdGUodm9pZCAqb3BhcXVlLCBod2FkZHIgYWRkciw8L3Nw
-YW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7aWYg
-KCFzLSZndDtob3N0X2RhdGEuYWN0aXZlKSB7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7YnJlYWs7PC9zcGFuPjwv
-ZGl2PjxkaXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO308L3NwYW4+
-PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2lmIChzLSZndDto
-b3N0X2RhdGEubmV4dCAmZ3Q7PSBBUlJBWV9TSVpFKHMtJmd0O2hvc3RfZGF0YS5hY2MpKSB7PC9z
-cGFuPjwvZGl2PjxkaXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
-ICZuYnNwO3FlbXVfbG9nX21hc2soTE9HX0dVRVNUX0VSUk9SLDwvc3Bhbj48L2Rpdj48ZGl2Pjxz
-cGFuPisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IkhPU1RfREFUQTogYWNjdW11
-bGF0b3Igb3ZlcmZsb3csIGlnbm9yaW5nXG4iKTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7YnJlYWs7PC9zcGFuPjwvZGl2
-PjxkaXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt9PC9zcGFuPjwvZGl2Pjxk
-aXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3MtJmd0O2hvc3RfZGF0
-YS5hY2Nbcy0mZ3Q7aG9zdF9kYXRhLm5leHQrK10gPSBkYXRhOzwvc3Bhbj48L2Rpdj48ZGl2Pjxz
-cGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtpZiAoYWRkciA9PSBIT1NUX0RB
-VEFfTEFTVCkgezwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2F0aV9ob3N0X2RhdGFfZmluaXNoKHMpOzwvc3Bhbj48
-L2Rpdj48ZGl2PjxzcGFuPi0tPC9zcGFuPjwvZGl2PjxzcGFuPjIuNDMuMDwvc3Bhbj48c3Bhbj48
-L3NwYW4+PC9zcGFuPjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsg
-Zm9udC1zaXplOiAxNHB4OyIgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj48ZGl2
-IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1wcm90b24iPg0KICAgIDwvZGl2Pg0K
-PC9kaXY+DQoNCiAgICAgICAgPC9ibG9ja3F1b3RlPjxicj4NCiAgICA8L2Rpdj4=
+Resolves: https://github.com/AndrewGMorgan/libcap_mirror/issues/6
+Signed-off-by: Ali Raza (@locus-x64)
+---
+ linux-user/syscall.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
 
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index f4b74ad350..b5a912dc22 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -9108,6 +9108,50 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
+     return 0;
+ }
+ 
++/*
++ * Check if a directory fd refers to /proc/<pid>/task/ for the current
++ * process.  Used to filter out QEMU-internal host threads (RCU, TCG)
++ * that are not guest threads from directory listings.
++ */
++static bool is_proc_pid_task_dir(int dirfd)
++{
++    char link_path[64];
++    char link_target[PATH_MAX];
++    ssize_t len;
++    char expected[80];
++    int expected_len;
++
++    snprintf(link_path, sizeof(link_path), "/proc/self/fd/%d", dirfd);
++    len = readlink(link_path, link_target, sizeof(link_target) - 1);
++    if (len < 0) {
++        return false;
++    }
++    link_target[len] = '\0';
++
++    expected_len = snprintf(expected, sizeof(expected),
++                            "/proc/%d/task", getpid());
++    return strncmp(link_target, expected, expected_len) == 0
++           && (link_target[expected_len] == '\0'
++               || link_target[expected_len] == '/');
++}
++
++/*
++ * Check if a given host TID belongs to a guest thread by looking it up
++ * in the CPU list.  Must be called under RCU read lock.
++ */
++static bool is_guest_tid(pid_t tid)
++{
++    CPUState *cpu;
++
++    CPU_FOREACH(cpu) {
++        TaskState *ts = get_task_state(cpu);
++        if (ts->ts_tid == tid) {
++            return true;
++        }
++    }
++    return false;
++}
++
+ #ifdef TARGET_NR_getdents
+ static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
+ {
+@@ -9116,6 +9160,7 @@ static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
+     int hlen, hoff, toff;
+     int hreclen, treclen;
+     off_t prev_diroff = 0;
++    bool filter_task = is_proc_pid_task_dir(dirfd);
+ 
+     hdirp = g_try_malloc(count);
+     if (!hdirp) {
+@@ -9150,6 +9195,23 @@ static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
+ 
+         namelen = strlen(hde->d_name);
+         hreclen = hde->d_reclen;
++
++        /*
++         * Filter /proc/<pid>/task/ listings to hide QEMU-internal
++         * host threads (RCU, TCG) that have no guest CPUState.
++         */
++        if (filter_task) {
++            char *endp;
++            long tid = strtol(hde->d_name, &endp, 10);
++            if (tid > 0 && *endp == '\0') {
++                WITH_RCU_READ_LOCK_GUARD() {
++                    if (!is_guest_tid(tid)) {
++                        treclen = 0;
++                        continue;
++                    }
++                }
++            }
++        }
+         treclen = offsetof(struct target_dirent, d_name) + namelen + 2;
+         treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent));
+ 
+@@ -9203,6 +9265,7 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
+     int hlen, hoff, toff;
+     int hreclen, treclen;
+     off_t prev_diroff = 0;
++    bool filter_task = is_proc_pid_task_dir(dirfd);
+ 
+     hdirp = g_try_malloc(count);
+     if (!hdirp) {
+@@ -9226,6 +9289,23 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
+ 
+         namelen = strlen(hde->d_name) + 1;
+         hreclen = hde->d_reclen;
++
++        /*
++         * Filter /proc/<pid>/task/ listings to hide QEMU-internal
++         * host threads (RCU, TCG) that have no guest CPUState.
++         */
++        if (filter_task) {
++            char *endp;
++            long tid = strtol(hde->d_name, &endp, 10);
++            if (tid > 0 && *endp == '\0') {
++                WITH_RCU_READ_LOCK_GUARD() {
++                    if (!is_guest_tid(tid)) {
++                        treclen = 0;
++                        continue;
++                    }
++                }
++            }
++        }
+         treclen = offsetof(struct target_dirent64, d_name) + namelen;
+         treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent64));
+ 
 
---b1=_0UhdhCjW0xLfQvwfYNgHJWHvfkyvnsBBWH9RdKnao--
+-- 
+2.43.0
 
 
