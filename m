@@ -4,114 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9EDFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE80FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITp1-0006Sa-5m; Thu, 30 Apr 2026 12:01:03 -0400
+	id 1wITrS-0007qB-R6; Thu, 30 Apr 2026 12:03:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wITol-0006PM-4M
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:01:01 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wITrK-0007cA-TJ; Thu, 30 Apr 2026 12:03:30 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wIToe-0006dI-Kl
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:00:41 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63UEd5VD2932084; Thu, 30 Apr 2026 16:00:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=QshvW5
- LIMMYO9Qy5MvI9WO+6U2DnJmm9L7L3fE4iSn8=; b=V9U8uxwBCW0IJFGx+64DwT
- sqleY4zY79OLMfCOgYTel/zNZjnmODaaGtG3q8riSDcOxv5xCV5tqXp76iZIiKyR
- wssEZJMFJepXQjOKLpknx2MV+riXcOIeKDg2+72ngC31EBJJDwz6QxSr4diyTnC6
- 83j1qCsvOz7fr/SnyfFX9iKtWek4tQ8KnBJRwXBHjc4jXt5plgrP94cghr/Z6Pko
- 5lSY2BYXxin8QzXMA3som6EHZ0JEAZ9RYpCkbF4D30QbWpoXHU2nBu/uT9WZrJwY
- 2y2DCWZKxLNzWDGskFoX+iHpeEjw8PLAEzhazuG6Hysn+9OrV93C48XC/OJTxIog
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn9rgmxj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 16:00:38 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63UFrneP015780;
- Thu, 30 Apr 2026 16:00:37 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamykfdq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 16:00:37 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63UG09Ud26411760
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Apr 2026 16:00:09 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7A2DC58051;
- Thu, 30 Apr 2026 16:00:36 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C3A55805E;
- Thu, 30 Apr 2026 16:00:36 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Apr 2026 16:00:36 +0000 (GMT)
-Message-ID: <b7e36906-04f3-4018-8e02-338567f488a6@linux.ibm.com>
-Date: Thu, 30 Apr 2026 12:00:35 -0400
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1wITrG-00079Y-7Q; Thu, 30 Apr 2026 12:03:26 -0400
+DKIM-Signature: a=rsa-sha256; bh=5CJSSplXBWzwOKftMniqF9csQcjNBZIZr2WVOB8vGes=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1777564993; v=1;
+ b=mzAFVgt/+mLoRP9qs4hGPiYrWfzmWTn3uw3rBa0O9M7xxXAqJiTAyCxjFuvskJTlMP4j6PGs
+ qe6ZUBHobGeKIc01aSVTY8JnxXaIWXbtLjjbDidaOLIjhGqy1AWhdxuYP2WW1DNigE8/5JRC+fB
+ uOqLfddhXvrqmzMFuYYbb+8J7XTPQin5kZiljGiYAs/lbBNmvzB0oEJdFapTtSI6Eg/0xbZdWXN
+ EdUMGGsyFDWEADdfhdW9CKLscN8/4tZ4C1LXP9lMZHLX8+pxlhRrOELZULTO3fRQuoIEXF2KHyz
+ zMlI9lz3uVMiDJ70sjMLjCK7PAUMsNAEqiZKRnogRJ0dg==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 83EF020C81;
+ Thu, 30 Apr 2026 16:03:13 +0000 (UTC)
+From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
+Date: Tue, 14 Apr 2026 13:45:41 +0100
+Subject: [PATCH qemu v4 7/9] ot_uart: handle break condition
+Message-ID: <177756498815.8917.12449488721849651971-7@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <177756498815.8917.12449488721849651971-0@git.sr.ht>
+To: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org,
+ Amit Kumar-Hermosillo <amitkh@google.com>,
+ nabihestefan <nabihestefan@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] tpm_emulator: Reject a buffer size larger than
- what was requested
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, armenon@redhat.com
-References: <20260430142337.2104726-1-stefanb@linux.ibm.com>
- <20260430142337.2104726-2-stefanb@linux.ibm.com>
- <3a981e61-67d4-45ee-8bb8-efce9c8849d0@linaro.org>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <3a981e61-67d4-45ee-8bb8-efce9c8849d0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: EZpjh9zDI-0hUlrp16hMSouDWR5Z3IPH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDE2MyBTYWx0ZWRfX+4IvvZ9420kc
- qyY9Xuk1CQsHGj2NtyjbrNqAFCsMW6KobgWz/jXIjDJHtu5UxuhhQ0XYHv+jHtV2Dk8WRio6dQn
- 06Vqm0Gopa2RQtf8ZuvrJSAYZj4rMUFWF4lmx5YSbvc5ag+/EK/nhaQXKtEgE6Ip4FTPB0Jw/59
- OAVrHS9ix/6r3TpYhg4p59Gw1thKnBRKEXq8D697IuNhbqfIubM8BCCxb9f/h89YlFMIKUE27Db
- kqKwtpDVwQYrT5XKzc3+grb5oP43VM038CCmBUoxTOE4PECZSd98Jqi2dnAYSUbLclgqmLYn8+R
- LZhXZh7O8t/UEpb3vWAUkSxCE8JpIBzm3G1QmX6B+iwOQAECpbR6r0pYWQrBlZt4piYK8i04h02
- wv4QI/iOX3SbvzLN5l6Xsw0aDhW5qLRPEK4P2DJxyLbg1gy2MLNdNIEZ77sLdJbZqgg7HXCBtWm
- omv1Cc5HQ3xdnmQ/ccQ==
-X-Authority-Analysis: v=2.4 cv=Kc7idwYD c=1 sm=1 tr=0 ts=69f37ca6 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=KKAkSRfTAAAA:8 a=KKVpSTfhNPv512mO7v0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: EZpjh9zDI-0hUlrp16hMSouDWR5Z3IPH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-30_04,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
- malwarescore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2604300163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 17
+X-Spam_score: 1.7
+X-Spam_bar: +
+X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,32 +68,293 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Lex Bailey <lex.bailey@lowrisc.org>
 
+What is a break event:
+Normally, a UART wire is held high by the transmitting device any time the
+communication channel is idle (nothing to transmit). If a receiver does not s=
+ee
+that its receive line is high, this means one of two things:
+    1. there is a transmission happening now
+    2. there is no transmitter connected, and the line is floating or pulled
+       low, or the transmitting device is in a bad state or reset state and so
+       it has not yet asserted its TX output.
 
-On 4/30/26 11:39 AM, Philippe Mathieu-Daudé wrote:
-> On 30/4/26 16:23, Stefan Berger wrote:
->> When the TIS, SPAPR, or CRB frontends negotiate a buffer size with the
->> TPM backend, then the tpm_emulator (swtpm) could still adjust this size
->> of the buffer to within bounds supported by swtpm+libtpms if the chosen
->> size was outside the acceptable range. This could theoretically lead to
->> the TPM 2 using a bigger buffer than what was requested and memory
->> allocated for. In practice this would not happend since the requested 
->> size
->> of 4096 bytes for TIS and SPAPR and 3968 bytes for CRB are in the
->> (currently) supported range of ~2.5kb to 4096 bytes. With PQC support
->> the range will have an upper bound of 8kb and a lower bound that will
->> support the (pre-PQC) CRB with 3968 bytes.
->>
->> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
->> ---
->>   backends/tpm/tpm_emulator.c | 13 ++++++++++++-
->>   1 file changed, 12 insertions(+), 1 deletion(-)
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-Thanks. I changed this also for v3 to require and exact match of buffer 
-sizes.
+In case 1, the line will go high again very soon.
+In case 2, it is sometimes useful to detect that this is the case and signal =
+to
+the software that this has happened (normally by means of an interrupt)
+
+The ot_uart device does exactly this in case 2. It detects that this is
+happening by detecting when the RX pin stays low for an extended period. This
+period can be configured to be 2, 4, 8, or 16 times a character period. The
+character period itself depends on the configuration of the device (baud rate,
+and parity bit)
+
+for more details about how this works, there is documentation about the UART
+break detection on this page:
+https://opentitan.org/book/hw/ip/uart/doc/theory_of_operation.html#rx_break_e=
+rr
+
+This commit adds a handler for the UART break event, and logic to emulate a
+break when oversampling is enabled and there is a break event.
+
+Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
+---
+ docs/system/riscv/opentitan-uart.rst | 43 +++++++++++++
+ hw/char/ot_uart.c                    | 92 +++++++++++++++++++++++++++-
+ include/hw/char/ot_uart.h            |  4 ++
+ 3 files changed, 136 insertions(+), 3 deletions(-)
+ create mode 100644 docs/system/riscv/opentitan-uart.rst
+
+diff --git a/docs/system/riscv/opentitan-uart.rst b/docs/system/riscv/opentit=
+an-uart.rst
+new file mode 100644
+index 0000000000..7ca596712d
+--- /dev/null
++++ b/docs/system/riscv/opentitan-uart.rst
+@@ -0,0 +1,43 @@
++# OpenTitan UART Support
++
++## Connecting to the UART
++
++* `-serial mon:stdio`, used as the first `-serial` option, redirects the vir=
+tual UART0 to the
++  current console/shell.
++
++* `-chardev socket,id=3Dserial1,host=3Dlocalhost,port=3D8001,server=3Don,wai=
+t=3Doff` and
++  `-serial chardev:serial1` can be used to redirect UART1 (in this example) =
+to a TCP socket. These
++  options are not specific to OpenTitan emulation, but are useful to communi=
+cate over a UART.
++  Note that QEMU offers many `chardev` backends, please check QEMU documenta=
+tion for details.
++
++## Sending Break Conditions
++
++Break conditions can be sent to the UART on select supported CharDev backend=
+s (telnet, mux)
++or by sending the `chardev-send-break` command with the CharDev ID via the Q=
+EMU Monitor.
++Break conditions are treated as transient events and the length of time of a=
+ break condition
++is not considered.
++
++## Oversampling
++
++OpenTitan's UART has a `VAL` register which oversamples the RX pin 16 times =
+per bit.
++This cannot be emulated by QEMU which uses a CharDev backend and does not ha=
+ve a notion of
++accurate sampling times.
++
++If software wishes to poll the `VAL` register to determine break conditions,=
+ there are
++some properties available to help with emulating this use case:
++
++* `-global ot-uart.oversample-break=3Dtrue` is used to enable UART break ove=
+rsampling.
++  This will attempt to display 16 samples of the last bit received in the `V=
+AL` register,
++  which will be 16 high bits after any UART frame is transmitted (as these e=
+nd with a stop
++  bit, which is high), or 16 low bits if the UART previously received a brea=
+k condition
++  and has not received any frames since. That is, enabling this property ass=
+umes that
++  transmitted break conditions are "held" until the next UART transfer in te=
+rms of what
++  is being shown in the oversampled `VAL` register.
++
++* `-global ot-uart.toggle-break=3Dtrue` is used to provide more control over=
+ "holding"
++  the UART RX break condition like a GPIO strap, and changes the behavior of=
+ a UART
++  such that received break condition events now *toggle* the break condition=
+ state
++  rather than keeping it asserted until the next transfer. This allows any d=
+evice talking
++  to OpenTitan via UART to have more precise control over when the UART VAL =
+register
++  displays idle and when it displays a break condition, as it can precisely =
+toggle the
++  break condition on or off like a GPIO strapping being held down.
+diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
+index 3511a42fbe..cdf02da62b 100644
+--- a/hw/char/ot_uart.c
++++ b/hw/char/ot_uart.c
+@@ -179,6 +179,11 @@ static void ot_uart_receive(void *opaque, const uint8_t =
+*buf, int size)
+     uint32_t rx_watermark_level;
+     size_t count =3D MIN(fifo8_num_free(&s->rx_fifo), (size_t)size);
+=20
++    if (size && !s->toggle_break) {
++        /* no longer breaking, so emulate idle in oversampled VAL register */
++        s->in_break =3D false;
++    }
++
+     for (int index =3D 0; index < size; index++) {
+         fifo8_push(&s->rx_fifo, buf[index]);
+     }
+@@ -331,9 +336,40 @@ static void ot_uart_reset_enter(Object *obj, ResetType t=
+ype)
+=20
+     s->char_tx_time =3D (NANOSECONDS_PER_SECOND / 230400) * 10;
+=20
++    /*
++     * do not reset `s->in_break`, as that tracks whether we are currently
++     * receiving a break condition over UART RX from some device talking
++     * to OpenTitan, which should survive resets. The QEMU CharDev only
++     * supports transient break events and not the notion of holding the
++     * UART in break, so remembering breaks like this is required to
++     * support mocking of break conditions in the oversampled `VAL` reg.
++     */
++    if (s->in_break) {
++        /* ignore CTRL.RXBLVL as we have no notion of break "time" */
++        s->regs[R_INTR_STATE] |=3D INTR_RX_BREAK_ERR_MASK;
++    }
++
+     ot_uart_update_irqs(s);
+ }
+=20
++static void ot_uart_event_handler(void *opaque, QEMUChrEvent event)
++{
++    OtUARTState *s =3D opaque;
++
++    if (event =3D=3D CHR_EVENT_BREAK) {
++        if (!s->in_break || !s->oversample_break) {
++            /* ignore CTRL.RXBLVL as we have no notion of break "time" */
++            s->regs[R_INTR_STATE] |=3D INTR_RX_BREAK_ERR_MASK;
++            ot_uart_update_irqs(s);
++            /* emulate break in the oversampled VAL register */
++            s->in_break =3D true;
++        } else if (s->toggle_break) {
++            /* emulate toggling break off in the oversampled VAL register */
++            s->in_break =3D false;
++        }
++    }
++}
++
+ static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
+ {
+     uint8_t val;
+@@ -355,6 +391,17 @@ static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
+     return val;
+ }
+=20
++static gboolean ot_uart_watch_cb(void *do_not_use, GIOCondition cond,
++                                 void *opaque)
++{
++    OtUARTState *s =3D opaque;
++
++    s->watch_tag =3D 0;
++    ot_uart_xmit(s);
++
++    return FALSE;
++}
++
+ static uint64_t ot_uart_get_baud(OtUARTState *s)
+ {
+     uint64_t baud;
+@@ -424,6 +471,26 @@ static uint64_t ot_uart_read(void *opaque, hwaddr addr, =
+unsigned int size)
+         break;
+=20
+     case R_VAL:
++        /*
++         * This is not trivially implemented due to the QEMU UART
++         * interface. There is no way to reliably sample or oversample
++         * given our emulated interface, but some software might poll the
++         * value of this register to determine break conditions.
++         *
++         * As such, default to reporting 16 of the last sample received
++         * instead. This defaults to 16 idle high samples (as a stop bit is
++         * always the last received), except for when the `oversample-break`
++         * property is set and a break condition is received over UART RX,
++         * where we then show 16 low samples until the next valid UART
++         * transmission is received (or break is toggled off with the
++         * `toggle-break` property enabled). This will not be accurate, but
++         * should be sufficient to support basic software flows that
++         * essentially use UART break as a strapping mechanism.
++         */
++        retvalue =3D (s->in_break && s->oversample_break) ? 0u : UINT16_MAX;
++        qemu_log_mask(LOG_UNIMP, "%s: VAL only shows idle%s\n", __func__,
++                      (s->oversample_break ? "/break" : ""));
++        break;
+     case R_OVRD:
+     case R_TIMEOUT_CTRL:
+         retvalue =3D s->regs[reg];
+@@ -607,8 +674,27 @@ static const VMStateDescription vmstate_ot_uart =3D {
+=20
+ static const Property ot_uart_properties[] =3D {
+     DEFINE_PROP_CHR("chardev", OtUARTState, chr),
++    DEFINE_PROP_BOOL("oversample-break", OtUARTState, oversample_break, fals=
+e),
++    DEFINE_PROP_BOOL("toggle-break", OtUARTState, toggle_break, false),
+ };
+=20
++static int ot_uart_fe_change(void *opaque)
++{
++    OtUARTState *s =3D opaque;
++
++    qemu_chr_fe_set_handlers(&s->chr, ot_uart_can_receive, ot_uart_receive,
++                             ot_uart_event_handler, ot_uart_fe_change, s, NU=
+LL,
++                             true);
++
++    if (s->watch_tag > 0) {
++        g_source_remove(s->watch_tag);
++        s->watch_tag =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP,
++                                             ot_uart_watch_cb, s);
++    }
++
++    return 0;
++}
++
+ static void ot_uart_init(Object *obj)
+ {
+     OtUARTState *s =3D OT_UART(obj);
+@@ -644,9 +730,9 @@ static void ot_uart_realize(DeviceState *dev, Error **err=
+p)
+     fifo8_create(&s->tx_fifo, OT_UART_TX_FIFO_SIZE);
+     fifo8_create(&s->rx_fifo, OT_UART_RX_FIFO_SIZE);
+=20
+-    qemu_chr_fe_set_handlers(&s->chr, ot_uart_can_receive,
+-                             ot_uart_receive, NULL, NULL,
+-                             s, NULL, true);
++    qemu_chr_fe_set_handlers(&s->chr, ot_uart_can_receive, ot_uart_receive,
++                             ot_uart_event_handler, ot_uart_fe_change, s, NU=
+LL,
++                             true);
+ }
+=20
+ static void ot_uart_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
+index a2c5ff8b33..997bf2f367 100644
+--- a/include/hw/char/ot_uart.h
++++ b/include/hw/char/ot_uart.h
+@@ -56,10 +56,14 @@ struct OtUARTState {
+     Fifo8 tx_fifo;
+     Fifo8 rx_fifo;
+     uint32_t tx_watermark_level;
++    bool in_break;
++    guint watch_tag;
+=20
+     Clock *f_clk;
+=20
+     CharFrontend chr;
++    bool oversample_break; /* Should mock break in the oversampled VAL reg? =
+*/
++    bool toggle_break; /* Are incoming breaks temporary or toggled? */
+ };
+=20
+ struct OtUARTClass {
+--=20
+2.49.1
+
 
