@@ -4,91 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF5FBF9D0D8
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 21:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E823CF9D0DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 22:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wClM4-0000Ok-6V; Tue, 14 Apr 2026 17:31:32 -0400
+	id 1wCmFk-00012e-OO; Tue, 14 Apr 2026 18:29:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wClM2-0000OZ-Cw
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 17:31:30 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wClM0-0003I3-C5
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 17:31:30 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488a9033b2cso73880235e9.2
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 14:31:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCmFj-000129-31
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:29:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wCmFg-0005bS-AX
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 18:29:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776205738;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zewDre8tVzBiQqxXIbPZP8lZjMKB2dFlmxkMOoQQwl4=;
+ b=PNZ0rlTKl6PahoiKfn45gsfLcQ3s/FazT38DdjSyPB7hwYFYy2aHFMGxj36W0bFiuaLtss
+ b7T3SYvKB6zA5dQ2n/fcL8K0TldIR8n4kbfyXv/uL1CDdqN+xZuGJWJn2yUye5B9DoLTKE
+ Si2H6bBro9decTQNYeHYSnI9hVe18Mo=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-114-R9iL85ttPym5r_g-D9P2Tw-1; Tue, 14 Apr 2026 18:28:56 -0400
+X-MC-Unique: R9iL85ttPym5r_g-D9P2Tw-1
+X-Mimecast-MFC-AGG-ID: R9iL85ttPym5r_g-D9P2Tw_1776205736
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8d5107ec672so1670017185a.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 15:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776202286; x=1776807086; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5CRMRZ6KwHmBSM4nIFrY3AvrZBRDI1zoFU0Uy2HkTeQ=;
- b=C0fCKSmxLHxOi/SBGiM5IFC4o6KDB4KWC/T8z2HyhUoNXEyKi8Xr8OiwPF7K1lWTct
- x36h1fHvCe5h4I83ZiqseFMtbaZHBHuAFlcrGJiGWJORN9qOGS+U9KQ5JUF3OUPD5+e3
- 4N9vFT7BM6pd9wZtKTFVrXRHBIxYT1I2rjefPFTqQMCqBo1r3R681fAMmSImzkG/L9EK
- KW+Aid4xidouj9zL0WYvuhLpKKGA0G4Ni/cxLWDS6k/4R6+NhmMlrLQbPcCVepz7Sx/B
- S7nBCK2FPQW5CGiF+Tv/Z9jUiJtKtwncDfBAsOSieMYPcVLwOA3L6AJgDS/vHSoLBR4T
- lTIQ==
+ d=redhat.com; s=google; t=1776205736; x=1776810536; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zewDre8tVzBiQqxXIbPZP8lZjMKB2dFlmxkMOoQQwl4=;
+ b=jGwzQRIa44YOHAyo4HaufBCrh2NCkD49uOVYqHkCDGCD28a0fnxvOGDxXxdMjJAO+s
+ AOjbqrv69L3Hgms2IZI1+qt9DpHxHmLHiPAHwz1XGDLRr5zspLaRdUinLHMA52xOq/HW
+ DRYlVvkZvc2sz84p8oapYyJi7N8Dgn8RSFShSovLillbnQIOjx/JBPkEtvYLKsl4OaRQ
+ H/sXCXhJlQQ3c0J6ZMXVlxA+r1ihQznE4Zq/ju6YYPOAlgEcxknPcymN9vQVpwz48VB2
+ dC7pPrL5LmBpehslxaPtJIEK6rZtl3qlCZ9sGn5DzbSEoeQiNLTZh8ydh0/3S9vC92vd
+ syHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776202286; x=1776807086;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5CRMRZ6KwHmBSM4nIFrY3AvrZBRDI1zoFU0Uy2HkTeQ=;
- b=srEuvKUwd2NJD86C7uObTsEed1utdkgjDTvq4LWhaKBx/iIfZ86tLgrDvPzJEK/uSS
- EgQ9Hm7JXFR9pTwdu+aQZYxfP+tsoCKDKzse1A0m+TN47GoGK+9YxzxIQ1HjIl3oLT+8
- QCkoNFH5/6zS7FZ+4qk/neMvE1iJfSlVmqDT4UOR9rLSoyB9S3QWrTHgyPoozfPBzx4f
- zKRoG7SuBbl3LzZDywWq+vIgxEacXpPanTdraxeWXDilfIIpTbTlUKXDY52FUMMy+Q4X
- cBVcE0i4j3qgzWLSBQYDdJkzQ7TmRPYg5J5SrJjV2wL8fx+fuZ8+vDCLeRCIbt1tvFKI
- hfyA==
-X-Gm-Message-State: AOJu0YzBEnPzCdNEeVcfzked48yq3BxaZ3go5WXXQtLmp3sLO6YK6J/T
- Lv1Ug1S0JdB9sbCV/dpzY+ArO2vlzDtaNEej/vfr2mdOdoLY+IHDc0tq1FHn7j27SSqtt3P0T8X
- p1W2CA3k=
-X-Gm-Gg: AeBDiesnDWMFPA9wQtudWhkzxpF7jV6k+/1e/BwubZzVEN5tMdKOoAd8vmDyPuxaYNl
- Yr0YvRZLf4u8W1qukJMYeJ/f42yeSNEm0yXleR8i4KAR0lpYIdSaZY6K/eZA2Srckw4n+ISEuuG
- 60DE58M9eIipzXk/sXqY2nwkgcuYKsA9Gyyd8NYPQcwj4RO3Wf5YJS4iUiEW8XJi6oNwuBvsiTX
- cQ8Dbc9j6MswU85PGS9lkzCW1AXBVOGMrENOifb5apwVNQREHCBpjje65VL2/FFBGJTi0V58iX/
- KEV46kp32Lab/dun2yRL4OKslJp4/lMelaSfTgxvr2kM0XxtIkXDGRIsOrl8rpsaC5xtSxqRoKG
- 4Mtajg+aR5sgXNNJ/Nz743h9QAS7Ln+qI7SPaDy10ydETqR9Nhi0wKpo3JlTMWOJvjJyrBCpRl1
- YlDB//JES6bQs8V9UfWCFIh9PyrKY40AsJyTxxNzsqDjjfWCL6wW0v8md1k7muM1PKsB7j8d/b
-X-Received: by 2002:a05:600c:5303:b0:488:b196:d249 with SMTP id
- 5b1f17b1804b1-488d67bf74fmr259156725e9.5.1776202285580; 
- Tue, 14 Apr 2026 14:31:25 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ede25a12sm69216495e9.9.2026.04.14.14.31.24
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Apr 2026 14:31:24 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH v4 2/2] target/mips: Translate MSA vector store opcode
- (ST.df)
-Date: Tue, 14 Apr 2026 23:31:08 +0200
-Message-ID: <20260414213108.66786-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260414213108.66786-1-philmd@linaro.org>
-References: <20260414213108.66786-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1776205736; x=1776810536;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zewDre8tVzBiQqxXIbPZP8lZjMKB2dFlmxkMOoQQwl4=;
+ b=ECd0CDZ8kbgRQDCyO+G9Hj5wTwnklGDdHWAUCHWWoSCqYdUwLeRkui7h0BMCmztMwb
+ lWzD33fFHiPoHU/3l41iPHmMS/5ZWsxa6gDVO/Z7y0yYG+DOG2RJprXuTSbYVlba7rEN
+ aA1sNv/KVF27J/TCnqcJyq60tsyMmv/dnPpEpehkosKpqIRN7FBtarhYxrGecxkafqpr
+ EgtSgm48kXoHfsKxHITFvr0eSjTNE88wAYKGgre4EtB1tZAJhf3OkDtg7mexrKp0DEO5
+ DfHcRLFx+326XwUbr8wd1arFMwCT1TzGS/VK9U9yOg4YlWhyG7Du2vTux6jRHB/x4i1m
+ rBxQ==
+X-Gm-Message-State: AOJu0Yzuz47zyDZRWN08GqaLfW5ENRdcj1W1HOcvEzCb+lrDWmuMHtQH
+ 4z3gnOtmTfXVV9ltRzHfQwpdG9kw/v0/bgU1IqsHNmrALlckQj3r3ZzfzgezDmzIGju6o5i4WM+
+ nF+ZcNMOHnAzVT8XmOK6cxzzi1WLPF0Njd9fh0xn5/kKYo64QrDQtm6W8
+X-Gm-Gg: AeBDieukSvKbMaUo0uZc3gadEiQELajanpnNnJQt3AOouQMPTkSbEVRbIBeaSAbQ70U
+ y1x9wMNR8LpyTmZP5kti98rHpYliwShwnrQF6drahIm9GtR5nI+3xA9xjgYaPkwIuWY5SzbEtnc
+ aOjgAqOLk6DrayEC3U8baxOmVqdphmhepYkyxmNewuUbfQzkhq1M6mX1odIKlp81e8lt3EWAyJj
+ F6UQKLPUrUJRNocCajylSe0ySQz6+og7TlduX2B9PoQ6e0VJS7Ez9P8qRatMWM1KkI0i6bKHgZe
+ B1LldvUeF+G6ziMi5TVIcNewF90Z0XgO5skkQvNKrjBQno7BwQThfp7u1vSGnUOzvLEL4MQPPp2
+ oHphGZc7FDgQTjjvCej7VquEIdGaBfQJZ3WWq3HqqGiateSTySJ/ztMQsyA==
+X-Received: by 2002:a05:620a:f03:b0:8cd:c011:fcc3 with SMTP id
+ af79cd13be357-8ddcd502f3fmr2800108285a.24.1776205735779; 
+ Tue, 14 Apr 2026 15:28:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:f03:b0:8cd:c011:fcc3 with SMTP id
+ af79cd13be357-8ddcd502f3fmr2800102285a.24.1776205735101; 
+ Tue, 14 Apr 2026 15:28:55 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8ddb6373926sm1244790185a.13.2026.04.14.15.28.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 15:28:54 -0700 (PDT)
+Date: Tue, 14 Apr 2026 18:28:52 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v2 1/2] migration/vmstate: Add VMState support for
+ GByteArray
+Message-ID: <ad6_pO1r8olukkzO@x1.local>
+References: <20260409175126.5921-1-armenon@redhat.com>
+ <20260409175126.5921-2-armenon@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260409175126.5921-2-armenon@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,240 +120,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace helpers by translation.
+On Thu, Apr 09, 2026 at 11:21:24PM +0530, Arun Menon wrote:
+> From: Arun Menon <armenon@redhat.com>
+> 
+> In GLib, GByteArray is an object managed by the library. Currently,
+> migrating a GByteArray requires treating it as a raw C struct and using
+> VMSTATE_VBUFFER_ALLOC_UINT32. For example, see vmstate_vdba in
+> ui/vdagent.c
+> 
+> QEMU cannot pretend that GByteArray is a C struct and simply use
+> VMS_ALLOC to g_malloc() the buffer. This is because, VMS_ALLOC blindly
+> overwrites the data pointer with a newly allocated buffer, thereby
+> leaking the previous memory. Besides, GLib tracks the array's capacity
+> in a hidden alloc field. Bypassing GLib APIs leave this capacity out of
+> sync with the newly allocated buffer, potentially leading to heap buffer
+> overflows during subsequent g_byte_array_append() calls.
+> 
+> This commit introduces VMSTATE_GBYTEARRAY which uses specific library
+> API calls (g_byte_array_set_size()) to safely resize and populate the
+> buffer.
+> 
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> Fix-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>  include/migration/vmstate.h | 10 ++++++++++
+>  migration/vmstate-types.c   | 37 +++++++++++++++++++++++++++++++++++++
+>  2 files changed, 47 insertions(+)
+> 
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 62c2abd0c4..f503a40ec0 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
+>  extern const VMStateInfo vmstate_info_qtailq;
+>  extern const VMStateInfo vmstate_info_gtree;
+>  extern const VMStateInfo vmstate_info_qlist;
+> +extern const VMStateInfo vmstate_info_g_byte_array;
+>  
+>  #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
+>  /*
+> @@ -892,6 +893,15 @@ extern const VMStateInfo vmstate_info_qlist;
+>      .start        = offsetof(_type, _next),                              \
+>  }
+>  
+> +#define VMSTATE_GBYTEARRAY(_field, _state, _version) {                   \
+> +    .name         = (stringify(_field)),                                 \
+> +    .version_id   = (_version),                                          \
+> +    .size         = sizeof(GByteArray),                                  \
+> +    .info         = &vmstate_info_g_byte_array,                          \
+> +    .flags        = VMS_SINGLE,                                          \
+> +    .offset       = vmstate_offset_pointer(_state, _field, GByteArray),  \
+> +}
+> +
+>  /* _f : field name
+>     _f_n : num of elements field_name
+>     _n : num of elements
+> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> index 89cb211472..743c2092e9 100644
+> --- a/migration/vmstate-types.c
+> +++ b/migration/vmstate-types.c
+> @@ -942,3 +942,40 @@ const VMStateInfo vmstate_info_qlist = {
+>      .get  = get_qlist,
+>      .put  = put_qlist,
+>  };
+> +
+> +static int get_g_byte_array(QEMUFile *f, void *pv, size_t size,
+> +                            const VMStateField *field)
+> +{
+> +    GByteArray **byte_array = (GByteArray **)pv;
+> +    uint32_t len = qemu_get_be32(f);
+> +
+> +    if (*byte_array == NULL) {
+> +        *byte_array = g_byte_array_new();
+> +    }
 
-Remove legacy cpu_st*_data_ra() calls, replacing by
-tcg_gen_qemu_st() which allow to respect atomicity.
+Not an immediate problem when GByteArray* will always be pre-allocated
+(even if with len=0) in the vdagent use case, but just to mention..
 
-Remove the ensure_writable_pages() hack and the bswap
-NxM helpers.
+This is kind of over-taking the VMS_ALLOC semantics, and it will be error
+prone too as vmstate core has special handling of NULL pointers, you can
+see e.g. vmstate_save_state_v() has this piece of code:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/tcg/msa_helper.h.inc |   8 ---
- target/mips/tcg/msa_helper.c     | 104 -------------------------------
- target/mips/tcg/msa_translate.c  |  54 ++++++++++++----
- 3 files changed, 42 insertions(+), 124 deletions(-)
+                if (!curr_elem && size) {
+                    /*
+                     * If null pointer found (which should only happen in
+                     * an array of pointers), use null placeholder and do
+                     * not follow.
+                     */
+                    inner_field = vmsd_create_fake_nullptr_field(field);
+                    is_null = true;
+                } else {
+                    inner_field = field;
+                    is_null = false;
+                }
 
-diff --git a/target/mips/tcg/msa_helper.h.inc b/target/mips/tcg/msa_helper.h.inc
-index 7ede16f327a..e994353056f 100644
---- a/target/mips/tcg/msa_helper.h.inc
-+++ b/target/mips/tcg/msa_helper.h.inc
-@@ -432,11 +432,3 @@ DEF_HELPER_4(msa_ftint_s_df, void, env, i32, i32, i32)
- DEF_HELPER_4(msa_ftint_u_df, void, env, i32, i32, i32)
- DEF_HELPER_4(msa_ffint_s_df, void, env, i32, i32, i32)
- DEF_HELPER_4(msa_ffint_u_df, void, env, i32, i32, i32)
--
--#define MSALDST_PROTO(type)                         \
--DEF_HELPER_3(msa_st_ ## type, void, env, i32, tl)
--MSALDST_PROTO(b)
--MSALDST_PROTO(h)
--MSALDST_PROTO(w)
--MSALDST_PROTO(d)
--#undef MSALDST_PROTO
-diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-index 3a0ba420b9d..28148ea9c8b 100644
---- a/target/mips/tcg/msa_helper.c
-+++ b/target/mips/tcg/msa_helper.c
-@@ -8205,107 +8205,3 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, uint32_t df, uint32_t wd,
- 
-     msa_move_v(pwd, pwx);
- }
--
--/* Data format min and max values */
--#define DF_BITS(df) (1 << ((df) + 3))
--
--/* Element-by-element access macros */
--#define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
--
--static inline uint64_t bswap16x4(uint64_t x)
--{
--    uint64_t m = 0x00ff00ff00ff00ffull;
--    return ((x & m) << 8) | ((x >> 8) & m);
--}
--
--static inline uint64_t bswap32x2(uint64_t x)
--{
--    return ror64(bswap64(x), 32);
--}
--
--#define MSA_PAGESPAN(x) \
--        ((((x) & ~TARGET_PAGE_MASK) + MSA_WRLEN / 8 - 1) >= TARGET_PAGE_SIZE)
--
--static inline void ensure_writable_pages(CPUMIPSState *env,
--                                         target_ulong addr,
--                                         int mmu_idx,
--                                         uintptr_t retaddr)
--{
--    /* FIXME: Probe the actual accesses (pass and use a size) */
--    if (unlikely(MSA_PAGESPAN(addr))) {
--        /* first page */
--        probe_write(env, addr, 0, mmu_idx, retaddr);
--        /* second page */
--        addr = (addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
--        probe_write(env, addr, 0, mmu_idx, retaddr);
--    }
--}
--
--void helper_msa_st_b(CPUMIPSState *env, uint32_t wd,
--                     target_ulong addr)
--{
--    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = mips_env_mmu_index(env);
--    uintptr_t ra = GETPC();
--
--    ensure_writable_pages(env, addr, mmu_idx, ra);
--
--    /* Store 8 bytes at a time.  Vector element ordering makes this LE.  */
--    cpu_stq_le_data_ra(env, addr + 0, pwd->d[0], ra);
--    cpu_stq_le_data_ra(env, addr + 8, pwd->d[1], ra);
--}
--
--void helper_msa_st_h(CPUMIPSState *env, uint32_t wd,
--                     target_ulong addr)
--{
--    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = mips_env_mmu_index(env);
--    uintptr_t ra = GETPC();
--    uint64_t d0, d1;
--
--    ensure_writable_pages(env, addr, mmu_idx, ra);
--
--    /* Store 8 bytes at a time.  See helper_msa_ld_h. */
--    d0 = pwd->d[0];
--    d1 = pwd->d[1];
--    if (mips_env_is_bigendian(env)) {
--        d0 = bswap16x4(d0);
--        d1 = bswap16x4(d1);
--    }
--    cpu_stq_le_data_ra(env, addr + 0, d0, ra);
--    cpu_stq_le_data_ra(env, addr + 8, d1, ra);
--}
--
--void helper_msa_st_w(CPUMIPSState *env, uint32_t wd,
--                     target_ulong addr)
--{
--    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = mips_env_mmu_index(env);
--    uintptr_t ra = GETPC();
--    uint64_t d0, d1;
--
--    ensure_writable_pages(env, addr, mmu_idx, ra);
--
--    /* Store 8 bytes at a time.  See helper_msa_ld_w. */
--    d0 = pwd->d[0];
--    d1 = pwd->d[1];
--    if (mips_env_is_bigendian(env)) {
--        d0 = bswap32x2(d0);
--        d1 = bswap32x2(d1);
--    }
--    cpu_stq_le_data_ra(env, addr + 0, d0, ra);
--    cpu_stq_le_data_ra(env, addr + 8, d1, ra);
--}
--
--void helper_msa_st_d(CPUMIPSState *env, uint32_t wd,
--                     target_ulong addr)
--{
--    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = mips_env_mmu_index(env);
--    uintptr_t ra = GETPC();
--
--    ensure_writable_pages(env, addr, mmu_idx, GETPC());
--
--    cpu_stq_data_ra(env, addr + 0, pwd->d[0], ra);
--    cpu_stq_data_ra(env, addr + 8, pwd->d[1], ra);
--}
-diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-index 0ad8c2c0dc9..c48e5108fe9 100644
---- a/target/mips/tcg/msa_translate.c
-+++ b/target/mips/tcg/msa_translate.c
-@@ -164,7 +164,6 @@ static inline bool check_msa_enabled(DisasContext *ctx)
-     return true;
- }
- 
--typedef void gen_helper_piv(TCGv_ptr, TCGv_i32, TCGv);
- typedef void gen_helper_pii(TCGv_ptr, TCGv_i32, TCGv_i32);
- typedef void gen_helper_piii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32);
- typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
-@@ -175,9 +174,6 @@ typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
-     }; \
-     TRANS(NAME, trans_func, NAME##_tab[a->df])
- 
--#define TRANS_DF_iv(NAME, trans_func, gen_func) \
--    TRANS_DF_x(iv, NAME, trans_func, gen_func)
--
- #define TRANS_DF_ii(NAME, trans_func, gen_func) \
-     TRANS_DF_x(ii, NAME, trans_func, gen_func)
- 
-@@ -801,25 +797,59 @@ static bool trans_LD(DisasContext *ctx, arg_msa_i *a)
-     return true;
- }
- 
--static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a,
--                           gen_helper_piv *gen_msa_ldst)
-+static bool trans_ST(DisasContext *ctx, arg_msa_i *a)
- {
--    TCGv taddr;
-+    TCGv_va addr;
-+    TCGv_i128 d16;
-+    MemOp mop;
-+    int d0 = a->wd << 1;
-+    int d1 = d0 + 1;
- 
-     if (!check_msa_enabled(ctx)) {
-         return true;
-     }
- 
--    taddr = tcg_temp_new();
-+    addr = tcgv_va_temp_new();
-+    gen_base_offset_addr(ctx, addr, a->ws, a->sa << a->df);
- 
--    gen_base_offset_addr(ctx, taddr, a->ws, a->sa << a->df);
--    gen_msa_ldst(tcg_env, tcg_constant_i32(a->wd), taddr);
-+    mop = MO_128 | MO_LE;
-+    if (a->df == 0) {
-+        mop |= MO_ATOM_NONE;
-+    } else if (a->df == 3) {
-+        mop |= MO_ATOM_IFALIGN_PAIR;
-+    } else {
-+        mop |= MO_ATOM_SUBALIGN; /* slightly stronger than required */
-+    }
-+    mop |= a->df << MO_ASHIFT; /* MO_ALIGN */
-+
-+    d16 = tcg_temp_new_i128();
-+
-+    if (mo_endian(ctx) != MO_LE) {
-+        TCGv_i64 t0 = tcg_temp_new_i64();
-+        TCGv_i64 t1 = tcg_temp_new_i64();
-+
-+        if (a->df == 1) {
-+            tcg_gen_hswap_i64(t0, msa_wr_d[d0]);
-+            tcg_gen_hswap_i64(t1, msa_wr_d[d1]);
-+            tcg_gen_concat_i64_i128(d16, t0, t1);
-+        } else if (a->df == 2) {
-+            tcg_gen_wswap_i64(t0, msa_wr_d[d0]);
-+            tcg_gen_wswap_i64(t1, msa_wr_d[d1]);
-+            tcg_gen_concat_i64_i128(d16, t0, t1);
-+        } else {
-+            tcg_gen_ld_i128(d16, tcg_env,
-+                            offsetof(CPUMIPSState, active_fpu.fpr[d0]));
-+        }
-+    } else {
-+        tcg_gen_ld_i128(d16, tcg_env,
-+                        offsetof(CPUMIPSState, active_fpu.fpr[d0]));
-+    }
-+
-+    tcg_gen_qemu_st_i128(d16, addr, ctx->mem_idx, mop);
- 
-     return true;
- }
- 
--TRANS_DF_iv(ST, trans_msa_ldst, gen_helper_msa_st);
--
- static bool trans_LSA(DisasContext *ctx, arg_r *a)
- {
-     return gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa + 1);
+IIUC it'll start to generate nullptr markers if someone by accident removes
+the initialization of VDAgentChardev.outbuf someday, expecting it to work
+reading this code.
+
+Maybe it's easier we stick with non-NULL for most of vmstates, assert that
+the GByteArray* pointer to be valid while get() it.  Same to put().
+
+> +
+> +    g_byte_array_set_size(*byte_array, len);
+> +    if (len > 0) {
+> +        qemu_get_buffer(f, (*byte_array)->data, len);
+> +    }
+> +    return 0;
+> +}
+> +
+> +static int put_g_byte_array(QEMUFile *f, void *pv, size_t size,
+> +                            const VMStateField *field, JSONWriter *vmdesc)
+> +{
+> +    GByteArray *byte_array = *(GByteArray **)pv;
+> +    uint32_t len = byte_array ? byte_array->len : 0;
+> +
+> +    qemu_put_be32(f, len);
+> +    if (len > 0) {
+> +        qemu_put_buffer(f, byte_array->data, len);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +const VMStateInfo vmstate_info_g_byte_array = {
+> +    .name = "GByteArray",
+> +    .get  = get_g_byte_array,
+> +    .put  = put_g_byte_array,
+> +};
+
+The other thing to mention is, if it's only about one
+g_byte_array_set_size() call after getting LEN and before getting the byte
+array, we could also use tricks like pre_load(), e.g., instead of the
+current VMSD defined as this:
+
+static const VMStateDescription vmstate_vdba = {
+    .name = "vdagent/bytearray",
+    .version_id = 0,
+    .minimum_version_id = 0,
+    .fields = (const VMStateField[]) {
+        VMSTATE_UINT32(len, GByteArray),
+        VMSTATE_VBUFFER_ALLOC_UINT32(data, GByteArray, 0, 0, len),
+        VMSTATE_END_OF_LIST()
+    }
+};
+
+We could change VMSTATE_VBUFFER_ALLOC_UINT32() to be a
+VMSTATE_STRUCT_POINTER, then within that the internal vmsd can provide a
+pre_load() hook doing g_byte_array_set_size(): since all fields will be
+loaded in order, when reaching there it's guaranteed LEN is loaded.
+
+It'll avoid introducing get()/put() completely, IIUC.  But no strong
+feelings on either approach.
+
+Thanks,
+
 -- 
-2.53.0
+Peter Xu
 
 
