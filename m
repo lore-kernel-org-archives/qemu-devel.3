@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF56F9D0C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 11:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BADF9D0C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 11:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCc1S-0001X5-7I; Tue, 14 Apr 2026 07:33:38 -0400
+	id 1wCc8Y-0003Ml-Bv; Tue, 14 Apr 2026 07:40:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wCc1Q-0001WJ-3Z
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:33:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wCc1O-0005WC-FC
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:33:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776166412;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sYGCQP3LEboU00ZnsL8lHLudaj7xBod+k/td90B2G8s=;
- b=UtCEUIi/TGZsEcfySm0+xmBuLawJH8JVrq6TDhyyz5NMkL56PVPZ7nZ9Hg5f6nvD1V8cpt
- RebOi9+U2dscP68VRaKcZ92UrRt0EgydtanykLNtX+Nc+ws5qL5tAzwesr4/NVt1NE5n1e
- VRYCFiDr0giJ8LR+mmWUHcnI3EpbTQo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-bOU_TqFHPnygWcnzogi2yw-1; Tue,
- 14 Apr 2026 07:33:29 -0400
-X-MC-Unique: bOU_TqFHPnygWcnzogi2yw-1
-X-Mimecast-MFC-AGG-ID: bOU_TqFHPnygWcnzogi2yw_1776166407
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12D8618002C0; Tue, 14 Apr 2026 11:33:27 +0000 (UTC)
-Received: from localhost (dhcp-192-192.str.redhat.com [10.33.192.192])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01A8818002A6; Tue, 14 Apr 2026 11:33:25 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Matthew Rosato
- <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, Ilya Leoshkevich
- <iii@linux.ibm.com>, Anton Johansson <anjo@rev.ng>, Eric Farman
- <farman@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>, Halil Pasic
- <pasic@linux.ibm.com>, qemu-s390x@nongnu.org, David Hildenbrand
- <david@kernel.org>
-Subject: Re: [PATCH 0/5] target/s390x: Forbid to use legacy ldst_phys() API
-In-Reply-To: <640ddcc2-f373-4738-8e66-50effe56de4e@linaro.org>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20260319185203.11799-1-philmd@linaro.org>
- <f0965bf8-b736-4e53-b809-374945f0f48e@linux.ibm.com>
- <63ddd321-067b-4c44-99e1-9c6c0ac60003@linaro.org>
- <640ddcc2-f373-4738-8e66-50effe56de4e@linaro.org>
-User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Tue, 14 Apr 2026 13:33:23 +0200
-Message-ID: <87tstdbwu4.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCc8X-0003MY-IM
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:40:57 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wCc8W-0007XS-1j
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 07:40:57 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488d2079582so49600795e9.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 04:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776166852; x=1776771652; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7L46d3RVA+pndHKf7BmgScwp74EmHepatmTW1GWELZg=;
+ b=fBD04iHvjUJ631bvSa+sB86tDxK6yyRH8Mue0O+cL5LrBedb9tt62SYyTHiz2JI2Ou
+ j4y5aSWAQoOoWDEduibJPLEFInYHlAFd823iw2v3/HjGexw9WELYCym0HTvld9UuPZ36
+ YFuVh4IZtmklnpmXm06/pEQnyGmRox7DGeER/iTsrkjnoSRCDpLuzJorRI7eGt+cOqKb
+ fbywqdCakYuTxK0V0R1OEgrzyDv8AUNw78bmxbRYYKCbWceDIzadKnmiaSX6yChcuTyF
+ 6LSPnXYvZhVs2vfE4NL+nhppB3IKiWoy8lYz6Ii69pnXTr6gIag8QUxygghDnbuc2fvs
+ CwGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776166852; x=1776771652;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7L46d3RVA+pndHKf7BmgScwp74EmHepatmTW1GWELZg=;
+ b=rLmafkS3t/pMKwtgPhOAms42Ju0ef4hhEdU2kOnobUQB5k8OfHJB+WjOTYNWO92IDG
+ EOdas5j3D8q4WIV7OAYExB6C5LsssYlUnV3n8QYIjTDZLrKljbTWJyBo1m43ylMnDhPe
+ 8/cOJKDTXgX1FpVwlE/MQ+CWZtTLC1LnujgtPp8RaaKSx7a/0ujJsTBQjqvmhUPKvva8
+ Z3lt9/kqf1C6NPNvs7a5alUIJObBdpGNGV1d7B9MYC667Fekm8ZgBB0DDdKBpQGdWB2Y
+ Vay5axf0PYvRDvmjPAbUiEGpaKVY6SlsSGoj/l1CWvBg3iHs8bhX6SxJRWPUPf4N9D3l
+ gR5A==
+X-Gm-Message-State: AOJu0YwBbACd+7mUq4cPhFnjVvKGV6jNTBjc254CYY+Mo0xQoz5XNrZT
+ jy8ZKDFaROdzOJwGe8sRYW3FALkLNjbxoae2ajBXXOLKfXlNATTO9YPx7BZKNQ==
+X-Gm-Gg: AeBDiesGKGdvfZ2WkGxxAxXAtvXbTi6rQh11BEgyLfSyPEu6quQj39ogBEdC+foFCyW
+ 228gy6FQBSaas973GExzybGlqgIhnC3MZYidkS2LmOf05kgs6r9tRu6LG3g2UaAy234b5XrC1BN
+ DcQXHeas79mLutrJV0DBSq6MaBeWLMKD0YkggMHM4ZFcqYbE7/Xs4eL3YzoQebWSMLledDCVZYw
+ 0gvCBS/QsWNdKp6R+V8l44JMmSwrWIRJXqSpoMTNgq9jOz8e5btwuUwRLzfJ2HE4AfpNiAgM/Cf
+ i+QK+trum2JpYBhxeiqeElccVja2T6id5XwejcvSu+Y7MIJYlHCmamjZ9qbck50eM0YNHWVCqIn
+ Jf94rZfPNFsxUykmC+8i+7Fqo5FJ74CEEqIBVKe2zJbrJ2QZ0AhnKNQ8+uhfwr2rdjD4tlpTb6B
+ s6ltyZfj66uTDs7dwF6K1VlnzjSd8IwGG2BQnabpfU1JE1LnyyO4HUW21dSuNnyDI=
+X-Received: by 2002:a05:600c:3b24:b0:488:b811:51c4 with SMTP id
+ 5b1f17b1804b1-488d6872ed0mr237746525e9.25.1776166851663; 
+ Tue, 14 Apr 2026 04:40:51 -0700 (PDT)
+Received: from archlinux (pd9ed75d7.dip0.t-ipconnect.de. [217.237.117.215])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488d67b4a46sm267821125e9.4.2026.04.14.04.40.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 04:40:51 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Weil <sw@weilnetz.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-stable@nongnu.org
+Subject: [PATCH] util/cutils: Fix heap corruption under Windows
+Date: Tue, 14 Apr 2026 13:40:33 +0200
+Message-ID: <20260414114033.2360-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,40 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 14 2026, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+Under Windows, QEMU would only sporadically start successfully. In the
+G_OS_WIN32 case, get_relocated_path() first determines a cursor
+to the end of the "result" string and then increases its size with
+g_string_set_size(). Since g_string_set_size() may reallocate, the
+cursor may become dangling. Windows may detect this and crash the QEMU
+process with the following message:
 
-> On 21/3/26 16:26, Philippe Mathieu-Daud=C3=A9 wrote:
->> On 20/3/26 20:28, Matthew Rosato wrote:
->>> On 3/19/26 2:51 PM, Philippe Mathieu-Daud=C3=A9 wrote:
->>>> Replace legacy ld/st_phys() by address_space_ld/st()
->>>> then lock the target again further legacy API uses.
->>>>
->>>> Philippe Mathieu-Daud=C3=A9 (5):
->>>> =C2=A0=C2=A0 target/s390x: Replace legacy ld/st_phys -> address_space_=
-ld/st (cpu)
->>>> =C2=A0=C2=A0 target/s390x: Replace legacy ld/st_phys -> address_space_=
-ld/st (mmu)
->>>> =C2=A0=C2=A0 target/s390x: Replace legacy ld/st_phys -> address_space_=
-ld/st (tcg)
->>>> =C2=A0=C2=A0 target/s390x: Replace legacy ld/st_phys -> address_space_=
-ld/st (kvm)
->>>> =C2=A0=C2=A0 configs/targets: Restrict the legacy ldst_phys() API on s=
-390x target
->>>
->>> For the series:
->>>
->>> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
->>>
->>> For good measure I also ran some s390x kvm regression tests, took a=20
->>> less comprehensive spin with a tcg s390x guest (on s390 host), and=20
->>> forced a few of these codepaths as a sanity check.
->
-> Does that mean we can also add:
->
->    Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
->
-> ?
+  HEAP: Free Heap block 000000000499B640 modified at 000000000499B684 after it was freed
 
-I was planning to pick this via s390-next, I can add T-b if desired.
+Furthermore, QEMU crashes spontaneously, even long after the guest has
+booted. For example, it presumably chrashes due to the guest setting a
+new cursor icon which may be a result of the heap corruption.
+
+Fix this by determining the cursor on the resized string.
+
+Fixes: cf60ccc3306c ("cutils: Introduce bundle mechanism")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ util/cutils.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/util/cutils.c b/util/cutils.c
+index 9803f11a59..76a9442085 100644
+--- a/util/cutils.c
++++ b/util/cutils.c
+@@ -1165,9 +1165,10 @@ char *get_relocated_path(const char *dir)
+ 
+         PCWSTR wdir_skipped_root;
+         if (PathCchSkipRoot(wdir, &wdir_skipped_root) == S_OK) {
++            char *cursor;
+             size = wcsrtombs(NULL, &wdir_skipped_root, 0, &(mbstate_t){0});
+-            char *cursor = result->str + result->len;
+             g_string_set_size(result, result->len + size);
++            cursor = result->str + result->len - size;
+             wcsrtombs(cursor, &wdir_skipped_root, size + 1, &(mbstate_t){0});
+         } else {
+             g_string_append(result, dir);
+-- 
+2.53.0
 
 
