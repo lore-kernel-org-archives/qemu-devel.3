@@ -4,103 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B45EBF531E6
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 02:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B26AF531E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 02:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCTlE-0002eL-QU; Mon, 13 Apr 2026 22:44:20 -0400
+	id 1wCTqV-0003Lw-DY; Mon, 13 Apr 2026 22:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wCTlC-0002dk-1C
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 22:44:18 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wCTlA-000124-2s
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 22:44:17 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c76eea1672aso1734766a12.1
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 19:44:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776134653; cv=none;
- d=google.com; s=arc-20240605;
- b=XtmK75RN0jvq55oT4FI11WVyn/20wLGs12wy9CV5H+1OCMR93QRvvChyfQCOcIfDKI
- 1fKFr9emkgp4PsEI7Gy7gO7eFfVzBqRzOklJ4yvp0W7Lx9+pYnOaGeQGu0ajNhW9IDjA
- hXO65poLhqibZNJt8n7LdiQxxpqxZ1aZ8BkFPtOvbN6vdl4Sfw5tiYTbhcvnGxTDpZdN
- 10p9QUeYVvRmwrAE2u3OYBf2KvXfjhIMEEAkM1LicC233ZzEUzi0q6ZAWFGiesJrvbVL
- qxys3Ag1fdRZ1qkscKHgNlj+5Vk0AgCy8NgfW7hWKZZqa8k2+XXHXxMwzBH67NZirg++
- HkjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jHnHwpU6+1fA7nzBnIVa04mhK2Yk89d9kJyilcrjSd0=;
- fh=GnmRbJ6oH7GfxUPIM2ND+IrLwiLhn2jdjMCJOqQX1fw=;
- b=P0RY3y/6QC5QpFj1yqZRSxScXIwbCj60ME23ADrdRyN35CLtLeqEltMn8LKmqyrnSn
- wQby1NqijqPEASIEbTdhN4+lgb4c/8TIeIiPRbcP3IefkmLZeqpRrlRlybJPXBTtdhFb
- plkJGSjlKJozfjPJSZ9bh8+Oql3jLITGmNmRkquveyUYu6TsZAcEKfSdmQTDZ2VFrTCP
- Uh8/fR8In5xKacBQ69vAVtpQ+L8XBcC2h3QVhbbUJ4GzS7ydiGTlsXe463ZtcxrEkLBA
- 4QvNMVTE1I85YWKHDEJOoObFDXrmV2LVFXG7bIR2erBSRTAyVIpe0Co8CJDl3eLzbHMz
- D/gg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1776134653; x=1776739453;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jHnHwpU6+1fA7nzBnIVa04mhK2Yk89d9kJyilcrjSd0=;
- b=0iafAlTDHSQPJtn3xW9s6znyZC65GFIO08RlvZFkwT7LZEQ4VB3TcSH1UwKHeQtZ6c
- rZv8tvoUAR90MQFv9+YeJWawmBjCUCJ3xebgMNAIwWiZ3bk+HheWR1ghcSNVeOB7N2XR
- qYdNWXxpYbDbzHvlUii7SezWChwZxrJRKfmUQx2tz/slU5DZYgwL0xSdGTwQv9x4Qfw3
- DfKmCIlaNaOe2ixVWIOrDeOQ8juKsu8Nmb43jjeoMngO1YFG9/CQFfmoOx5zbX214n/0
- /ER9BL3jXZ+m7Rw9NIRqKEH9wHrjwPEKFj7cOhf9i3uxK169A2SaxeYTWGfXZE6OFn/2
- SkMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776134653; x=1776739453;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jHnHwpU6+1fA7nzBnIVa04mhK2Yk89d9kJyilcrjSd0=;
- b=gSjDVPtRyLgXqy4wx92gHHAF3Ug9/nIcKeqfLFqWm8k+QDvFSOmMjbeZaid3tvw80F
- ANN+TAz4wKsa+2y0QKamZdx/uQp1pr4HBF0AHICBrERKB+l04UqQ2ud97QNcvQu51yc3
- lALfHAl2nEFcS/jsPucX8EbfXouzKKohDEeCaNMLWq2RlyKWuptqVkye1rKwbZO+6CUx
- GdNhN1R8OyKPm84elC8Wuqjwap8tJ9begmramGsGd+f88xmp9koeeEeexngyqqxXJcvY
- IqkRNMWeQF756eR7bKOs0CVGOOOORIoSw3ovCAT58719kBI96P+UTfPcz/WSYwJlkNOi
- 5TEQ==
-X-Gm-Message-State: AOJu0Yzgj2LNF/NyvvKRgqRhF68fLAc123KqeXzszG3dPHyMlAv2hQsD
- eBw6Zk/4s33hZflQNaR8SKPmj5+HM2F2qoGOy9HgEe2/HziqJl2Z+T6OMtPXaDLnBb4ka8O3JRf
- AM5LKitv2WnlumDXM23dKf4+RQJztQDP4XyarwNMwFQ==
-X-Gm-Gg: AeBDieuCPlIV6C6tcVFpmZfyoqVdsVj99NXJpNs32XuGmUR4HYgKpPCm18cF7eK4QFG
- cSbmCuahTqw+WNR+4azAtyn1K125Jz8d57eXHTusufEw8vcpbPHiF7zhSU1GEQjz3w5rtxbICA3
- ZHsDWm9m0TddAVkF6ZfO6NMylLnc1BYkNymKFxq1Bb2nKNihHizHG33cm4D5EGP7mGke38Zf1KK
- ySzYfVH8NaqE+1682HP7sFcwKJUlZtL2vPrB38giMu/icgKSbZ+2Qzi6MDjEO2CuiFaSlAWlAQE
- eSAxWCrQ9wfaj/p/mnN7pCyKiVmWFo3AkvZepg==
-X-Received: by 2002:a05:6a20:7486:b0:398:b346:b13 with SMTP id
- adf61e73a8af0-39fe3d0dfafmr17613349637.16.1776134653447; Mon, 13 Apr 2026
- 19:44:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wCTqT-0003Lj-6D
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 22:49:45 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wCTqP-0002rj-R1
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 22:49:44 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8DxsOo+q91pZl4AAA--.1836S3;
+ Tue, 14 Apr 2026 10:49:35 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJCxOME5q91p25ZsAA--.62094S3;
+ Tue, 14 Apr 2026 10:49:33 +0800 (CST)
+Subject: Re: [PATCH v2] target/loongarch: Add support for dbar hint variants
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org,
+ lixianglai@loongson.cn, yijun@loongson.cn, chenhuacai@loongson.cn
+References: <20260410033723.1225983-1-gaosong@loongson.cn>
+ <331159fe-8596-e406-32d5-c9c8c2ad6f8b@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <a53e90a6-28e7-6e07-36c5-faf3a750df6a@loongson.cn>
+Date: Tue, 14 Apr 2026 10:50:49 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
- <20260413-syscall-nr-v1-1-f70408d042ea@bsdimp.com>
- <934e73a1-0dcc-499c-b0c4-bbcc3cfe26f2@linaro.org>
-In-Reply-To: <934e73a1-0dcc-499c-b0c4-bbcc3cfe26f2@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 13 Apr 2026 20:44:02 -0600
-X-Gm-Features: AQROBzDQqUdIgPJ8mBkvq3qPOMtx8XA_jqvMXGJZknZ3VLpm_aVdFDHZbyYKPkY
-Message-ID: <CANCZdfqwQKExBX-3g_+_0crJUi7qgU92PM7W2pAgBdRO0nO9FA@mail.gmail.com>
-Subject: Re: [PATCH 1/5] bsd-user: Add syscall header generator for FreeBSD
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000017a48c064f629383"
-Received-SPF: none client-ip=2607:f8b0:4864:20::536;
- envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <331159fe-8596-e406-32d5-c9c8c2ad6f8b@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJCxOME5q91p25ZsAA--.62094S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3JryDWFy7ZF15tr4fZr48Xwc_yoW3JFW8pr
+ 1kCFWUKFWUtr93Aw18JrW5ZFy5ZrWxG3W2q34IqFyrur47Gr10gr10grZ0gF17Gr4kXF18
+ ZF18ZwsrZF9xXFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UWHqcU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.135,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,147 +83,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000017a48c064f629383
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Apr 13, 2026 at 4:21=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
-
-> On 13/4/26 17:31, Warner Losh wrote:
-> > Generate the syscall numbers from the installed header that has them.
-> > Ideally, we'd use FreeBSD's lua infra for this, but that requires that
-> > we have those files installed, and they aren't quite the same across
-> > supported versions yet, so use this simple, but effective hack.
-> >
-> > Signed-off-by: Warner Losh <imp@bsdimp.com>
-> > ---
-> >   bsd-user/freebsd/syscallhdr.sh | 9 +++++++++
-> >   1 file changed, 9 insertions(+)
-> >
-> > diff --git a/bsd-user/freebsd/syscallhdr.sh
-> b/bsd-user/freebsd/syscallhdr.sh
-> > new file mode 100644
-> > index 0000000000..fa38500775
-> > --- /dev/null
-> > +++ b/bsd-user/freebsd/syscallhdr.sh
-> > @@ -0,0 +1,9 @@
-> > +#!/bin/sh
-> > +# Copyright (c) 2026 Warner Losh <imp@bsdimp.com>
-> > +# SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +in=3D"$1"
-> > +out=3D"$2"
-> > +bsd=3D"$3"
-> > +
+在 2026/4/13 下午5:32, Bibo Mao 写道:
 >
-
-Hey, thanks for the review.
-
-
-> echo '/* This file is autogenerated by syscallhdr.sh, do not edit. */' >
-
-$out
-> echo '/* SPDX-License-Identifier: GPL-2.0-or-later */' >> $out
 >
-
-These aren't needed. The generated file starts off:
-/*
- * System call numbers.
- *
- * DO NOT EDIT-- this file is automatically @generated.
- */
-...
-we're just doing sed -e s/SYS/TARGET_FREEBSD_NR/g on
-that file (though awk is mildly more convenient). No need to add
-a license, since it's already in the public domain, and you don't
-need a license to do anything you want to public domain material
-(including incorporating it into a GPL'd work). Since the generated
-file isn't committed to the repo, there's no style checker to appease.
-
-Warner
-
-> +awk -v bsd=3D"$3" '{sub("SYS_", "TARGET_" bsd "_NR_", $0); print;}' < $i=
-n
-> > $out
+> On 2026/4/10 上午11:37, Song Gao wrote:
+>> LoongArch architecture (since LA664) introduces fine-grained dbar
+>> hints that allow controlling which memory accesses are ordered by
+>> the barrier. Previously, all dbar instructions were treated as a
+>> full barrier (TCG_MO_ALL | TCG_BAR_SC).
+>>
+>> This patch adds support for decoding dbar hints and emitting the
+>> appropriate TCG memory barrier flags. For CPUs that do not advertise
+>> the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
+>> fall back to a full barrier, preserving compatibility.
+>>
+>> The hint encoding follows the LoongArch v1.10 specification:
+>>   * Bit3: barrier for previous read (0: true, 1: false)
+>>   * Bit2: barrier for previous write (0: true, 1: false)
+>>   * Bit1: barrier for succeeding read (0: true, 1: false)
+>>   * Bit0: barrier for succeeding write (0: true, 1: false)
+>>
+>> The mapping to TCG memory order flags is as follows:
+>>    TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_LD_ST;
+>>    TCG_BAR_SC |TCG_MO_ST_LD | TCG_MO_ST_ST;
+>>    TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_ST_LD;
+>>    TCG_BAR_SC |TCG_MO_ST_ST | TCG_MO_LD_ST;
+>>
+>> Special hint handling:
+>> - hint 0x700: LL/SC loop barrier, treated as a full barrier as 
+>> recommended.
+>> - hint 0xf and 0x1f: reserved/no-op, treated as no operation
+>>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   target/loongarch/cpu.c                        |  4 ++
+>>   .../tcg/insn_trans/trans_memory.c.inc         | 62 ++++++++++++++++++-
+>>   target/loongarch/tcg/translate.c              |  1 +
+>>   target/loongarch/translate.h                  |  3 +
+>>   4 files changed, 68 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index e22568c84a..d8d106b07e 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
+>>           data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
+>>           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
+>>           cpu->env.cpucfg[2] = data;
+>> +
+>> +        data = cpu->env.cpucfg[3];
+>> +        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
+>> +        cpu->env.cpucfg[3] = data;
+>>       }
+>>   }
+>>   diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
+>> index e287d46363..e1146fe9ec 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
+>> @@ -137,11 +137,69 @@ static bool trans_preldx(DisasContext *ctx, 
+>> arg_preldx * a)
+>>       return true;
+>>   }
+>>   +/*
+>> + * Decode dbar hint and emit appropriate TCG memory barrier.
+>> + *
+>> + * The hint is a 5-bit field (0-31) encoded in the instruction.
+>> + * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
+>> + *
+>> + * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
+>> + */
+>>   static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
+>>   {
+>> -    tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
+>> +    int hint = a->imm;
+>> +    TCGBar bar_flags = 0;
+>> +
+>> +    /* Reserved/no-op hints: 0xf and 0x1f */
+>> +    if (hint == 0xf || hint == 0x1f) {
+>> +        return true;
+>> +    }
+>> +
+>> +    /* If the CPU does not support fine-grained hints,or for the 
+>> special LL/SC
+>> +     * loop barrier (0x700), emit a full barrier.
+>> +     */
+>> +    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
+>> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+>> +        return true;
+>> +    }
+>> +
+>> +    /*
+>> +     * Fine-grained hint decoding:
+>> +     * Bits 3-0 control which accesses must be ordered.
+>> +     * Bit3: barrier for previous read (0: true, 1: false)
+>> +     * Bit2: barrier for previous write (0: true, 1: false)
+>> +     * Bit1: barrier for succeeding read (0: true, 1: false)
+>> +     * Bit0: barrier for succeeding write (0: true, 1: false)
+> Hi Song,
 >
->    ... >> $out
+> This is much better than before, I think it will be better if some 
+> comments for BIT4 is added here showing it is discarded here.
+>> +     *
+>> +     * For each combination, we set the corresponding TCG_MO_* flag 
+>> if both
+>> +     * sides of the barrier require ordering.
+>> +     */
+>> +
+>> +    bool prev_rd = !(hint & 0x08); /* bit3 */
+>> +    bool prev_wr = !(hint & 0x04); /* bit2 */
+>> +    bool succ_rd = !(hint & 0x02); /* bit1 */
+>> +    bool succ_wr = !(hint & 0x01); /* bit0 */
+>> +
+>> +    if (prev_rd) {
+>> +        bar_flags |= TCG_MO_LD_LD | TCG_MO_LD_ST;
+>> +    }
+>> +    if (prev_wr) {
+>> +        bar_flags |= TCG_MO_ST_LD | TCG_MO_ST_ST;
+>> +    }
+>> +    if (succ_rd) {
+>> +        bar_flags |= TCG_MO_LD_LD | TCG_MO_ST_LD;
+>> +    }
+>> +    if (succ_wr) {
+>> +        bar_flags |= TCG_MO_ST_ST | TCG_MO_LD_ST;
+>> +    }
+> Previously I hear that TCG_MO_LD_ST should be default enabled on 
+> LoongArch, but I am not sure. Is that correct?
 >
-> With the header changes:
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Hi,
+
+I don't quite understand the issue you're referring to. Could you please 
+explain it in more detail?
+
+Thanks.
+Song Gao
+
+
+> The others looks good to me.
 >
+> Regards
+> Bibo Mao
+>
+>> +
+>> +    if (bar_flags == 0) {
+>> +        bar_flags = TCG_MO_ALL;
+>> +    }
+>> +
+>> +    tcg_gen_mb(bar_flags | TCG_BAR_SC);
+>>       return true;
+>> -}
+>> + }
+>>     static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
+>>   {
+>> diff --git a/target/loongarch/tcg/translate.c 
+>> b/target/loongarch/tcg/translate.c
+>> index b9ed13d19c..49280b1dd3 100644
+>> --- a/target/loongarch/tcg/translate.c
+>> +++ b/target/loongarch/tcg/translate.c
+>> @@ -149,6 +149,7 @@ static void 
+>> loongarch_tr_init_disas_context(DisasContextBase *dcbase,
+>>         ctx->cpucfg1 = env->cpucfg[1];
+>>       ctx->cpucfg2 = env->cpucfg[2];
+>> +    ctx->cpucfg3 = env->cpucfg[3];
+>>   }
+>>     static void loongarch_tr_tb_start(DisasContextBase *dcbase, 
+>> CPUState *cs)
+>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+>> index ba1c89e57b..8aa8325dc6 100644
+>> --- a/target/loongarch/translate.h
+>> +++ b/target/loongarch/translate.h
+>> @@ -43,6 +43,8 @@
+>>   #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, 
+>> LLACQ_SCREL))
+>>   #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
+>>   +#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, 
+>> DBAR_HINTS))
+>> +
+>>   /*
+>>    * If an operation is being performed on less than TARGET_LONG_BITS,
+>>    * it may require the inputs to be sign- or zero-extended; which will
+>> @@ -66,6 +68,7 @@ typedef struct DisasContext {
+>>       bool va32; /* 32-bit virtual address */
+>>       uint32_t cpucfg1;
+>>       uint32_t cpucfg2;
+>> +    uint32_t cpucfg3;
+>>   } DisasContext;
+>>     void generate_exception(DisasContext *ctx, int excp);
+>>
 
---00000000000017a48c064f629383
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Apr 13, 2026=
- at 4:21=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philm=
-d@linaro.org" target=3D"_blank">philmd@linaro.org</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">On 13/4/26 17:31, Warner L=
-osh wrote:<br>
-&gt; Generate the syscall numbers from the installed header that has them.<=
-br>
-&gt; Ideally, we&#39;d use FreeBSD&#39;s lua infra for this, but that requi=
-res that<br>
-&gt; we have those files installed, and they aren&#39;t quite the same acro=
-ss<br>
-&gt; supported versions yet, so use this simple, but effective hack.<br>
-&gt; <br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/freebsd/syscallhdr.sh | 9 +++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 9 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/freebsd/syscallhdr.sh b/bsd-user/freebsd/syscall=
-hdr.sh<br>
-&gt; new file mode 100644<br>
-&gt; index 0000000000..fa38500775<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/bsd-user/freebsd/syscallhdr.sh<br>
-&gt; @@ -0,0 +1,9 @@<br>
-&gt; +#!/bin/sh<br>
-&gt; +# Copyright (c) 2026 Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com=
-" target=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; +# SPDX-License-Identifier: GPL-2.0-or-later<br>
-&gt; +<br>
-&gt; +in=3D&quot;$1&quot;<br>
-&gt; +out=3D&quot;$2&quot;<br>
-&gt; +bsd=3D&quot;$3&quot;<br>
-&gt; +<br></blockquote><div><br></div><div>Hey, thanks for the review.</div=
-><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-echo &#39;/* This file is autogenerated by syscallhdr.sh, do not edit. */&#=
-39; &gt;</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">$out=
-<br>
-echo &#39;/* SPDX-License-Identifier: GPL-2.0-or-later */&#39; &gt;&gt; $ou=
-t<br></blockquote><div><br></div><div>These aren&#39;t needed. The generate=
-d file starts off:</div><div>/*</div><div>=C2=A0* System call numbers.<br>=
-=C2=A0*<br>=C2=A0* DO NOT EDIT-- this file is automatically @generated.<br>=
-=C2=A0*/</div><div>...</div><div>we&#39;re just doing sed -e s/SYS/TARGET_F=
-REEBSD_NR/g on</div><div>that file (though awk is mildly more convenient). =
-No need to add</div><div>a license, since it&#39;s already in the public do=
-main, and you don&#39;t</div><div>need a license to do anything you want to=
- public domain material</div><div>(including incorporating it into a GPL&#3=
-9;d work). Since the generated</div><div>file isn&#39;t committed to the re=
-po, there&#39;s no style checker to appease.</div><div><br></div><div>Warne=
-r</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&gt=
-; +awk -v bsd=3D&quot;$3&quot; &#39;{sub(&quot;SYS_&quot;, &quot;TARGET_&qu=
-ot; bsd &quot;_NR_&quot;, $0); print;}&#39; &lt; $in &gt; $out<br>
-<br>
-=C2=A0 =C2=A0... &gt;&gt; $out<br>
-<br>
-With the header changes:<br>
-Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
-o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
-</blockquote></div></div>
-</div>
-
---00000000000017a48c064f629383--
 
