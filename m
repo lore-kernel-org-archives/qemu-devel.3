@@ -4,76 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73905F9D0F0
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B556DF9D0EF
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:23:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCiPY-00068e-59; Tue, 14 Apr 2026 14:22:56 -0400
+	id 1wCiQ6-0006WW-4z; Tue, 14 Apr 2026 14:23:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCiPN-00065e-Kd
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:45 -0400
-Received: from pv-2005i-snip4-5.eps.apple.com ([57.103.66.196]
- helo=outbound.pv.icloud.com)
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCiQ2-0006Sn-02
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:26 -0400
+Received: from inva021.nxp.com ([92.121.34.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCiPL-0006T3-EA
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:45 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPS id
- 50A6118017A6; Tue, 14 Apr 2026 18:22:36 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776190958; x=1778782958;
- bh=NVxxxPHNZR19YqKhkbdqecMHsddaxqh7WDU8dhWlP/E=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=edyM3tzpj3gn4dYwFy+YWDiVA3KO53py0CsHh9BiQxXYKxmn1sMtkIqDdIITVEJ/t3FSqG6EPzHLgIRA4T3R5GhBwX372MMZaCIpCZPMBIL7lXeVRat4Hvc6fzfpOOaSCe6OAf+JyvE0GDhGU4iyoIn1hm9GCVhI6ZrPcgEcaNi7YvcaC9xRBm8J79ty1p9oViAINqgAVNnnKAy5dHdFYN1XaHy/Q3FFlvfqytMXIcg9E60x9INdOhWRVHmvJByMcwEC0B3/cbSXLgQiYXS/cdBS9hU50PHD2byK9h3vmvBXvQ+R4W1aX7YRfT510J7t8CGVq6a/wV0GQjDj5RenPA==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPSA id
- 5D0BF18001DB; Tue, 14 Apr 2026 18:22:34 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCiPz-0006hA-LG
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:25 -0400
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 529C82028F2;
+ Tue, 14 Apr 2026 20:23:22 +0200 (CEST)
+Received: from aprdc01srsp001v.ap-rdc01.nxp.com
+ (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 1EA802028F0;
+ Tue, 14 Apr 2026 20:23:22 +0200 (CEST)
+Received: from lsv031015.swis.in-blr01.nxp.com
+ (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 98D9118000A4;
+ Wed, 15 Apr 2026 02:23:21 +0800 (+08)
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 0/7] whpx: i386: Some more changes
-Date: Tue, 14 Apr 2026 20:22:24 +0200
-Message-ID: <20260414182231.18776-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: [PATCHv6 13/15] hw/arm/fsl-imx8mm: Adding support for ENET ethernet
+ controller
+Date: Tue, 14 Apr 2026 23:53:11 +0530
+Message-Id: <20260414182313.1691519-14-gaurav.sharma_7@nxp.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
+References: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=U/qfzOru c=1 sm=1 tr=0 ts=69de85ed
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=oOLWm9IBL3BG_uuw-oUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Bwy4s5e7HmDEjrxFgZDGBuNQHX5YhvUS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDE3MiBTYWx0ZWRfXwljp5hcHXi4F
- qb7HXb7UkVV3FUErhBBJWZEij7CbfyOqNBThOzkh0BztEx+JvLtqOuhY8erR19lrKUBT/QiPNpd
- LvV5z6W5NmnHUkcaz2t1K2AdfhjgyVftYf/EFnMDtRwLA00eTlEy1HzBI4RLeVqTPMwbMTqJOID
- lGnOZGDIXGMMP2aVTeg+QBPVhQO8fJmGGcKscTQZGFzIQ38r8hf3z/hN1I3y+1xmyShhT/ROUgS
- u5f9yOSunbFw6N1BkaOhSFtGsv2g+zd2HeZSRHQtmNsiGmMhEjGlMJ+YPOvRNbsnsk94GyTAkrP
- G9a8G5fGQQuE6WHym9/qgZFQIK39q40JSxMPIBbWh0vKyR9/N3sEE7o0KVGBBo=
-X-Proofpoint-ORIG-GUID: Bwy4s5e7HmDEjrxFgZDGBuNQHX5YhvUS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-14_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 clxscore=1030 phishscore=0 mlxlogscore=710 spamscore=0
- adultscore=0 mlxscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2604140172
-Received-SPF: pass client-ip=57.103.66.196;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Virus-Scanned: ClamAV using ClamSMTP
+Received-SPF: pass client-ip=92.121.34.21;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,31 +68,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This applies on top of the "whpx: i386: bug fixes, feature probing and CPUID" series.
+It enables emulation of ENET ethernet controller in iMX8MM
+Enables testing and debugging of network dependent drivers
+Added ENET MAC IRQ lines
 
-"target: i386: HLT type that ignores EFLAGS.IF" is probably the most worthwhile patch
-here, and that not-quite-an-HLT might be what's needed to reduce CPU idle on KVM on
-recent Windows versions too..
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+---
+ hw/arm/Kconfig              |  1 +
+ hw/arm/fsl-imx8mm.c         | 26 +++++++++++++++++++++++++-
+ hw/arm/imx8mm-evk.c         |  1 +
+ include/hw/arm/fsl-imx8mm.h | 10 +++++++++-
+ 4 files changed, 36 insertions(+), 2 deletions(-)
 
-Based-on: <20260413205208.50643-1-mohamed@unpredictable.fr>
-
-Mohamed Mediouni (7):
-  whpx: i386: set apicbase value only on success
-  whpx: i386: unknown MSR configurability
-  whpx: i386: enable GuestIdleReg enlightenment
-  whpx: i386: tighten APIC base validity check
-  whpx: i386: ignore vpassist when kernel-irqchip=off
-  target: i386: HLT type that ignores EFLAGS.IF
-  whpx: i386: add HV_X64_MSR_GUEST_IDLE when !kernel-irqchip
-
- accel/whpx/whpx-common.c       | 38 ++++++++++++++++++
- include/system/whpx-internal.h |  1 +
- target/i386/cpu.c              | 10 +++--
- target/i386/cpu.h              |  2 +
- target/i386/whpx/whpx-all.c    | 70 +++++++++++++++++++++++++++++++---
- 5 files changed, 112 insertions(+), 9 deletions(-)
-
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 07a3f3273b..45d10e34dc 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -626,6 +626,7 @@ config FSL_IMX8MM
+     select FSL_IMX8MP_ANALOG
+     select FSL_IMX8MP_CCM
+     select IMX
++    select IMX_FEC
+     select IMX_I2C
+     select OR_IRQ
+     select SDHCI
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index e3c618751b..f1c173dbec 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -212,6 +212,8 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
+     }
+ 
++    object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
++
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -547,6 +549,21 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, spi_table[i].irq));
+     }
+ 
++    /* ENET1 */
++    object_property_set_uint(OBJECT(&s->enet), "phy-num", s->phy_num,
++                             &error_abort);
++    object_property_set_uint(OBJECT(&s->enet), "tx-ring-num", 3, &error_abort);
++    qemu_configure_nic_device(DEVICE(&s->enet), true, NULL);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->enet), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->enet), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_ENET1].addr);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
++                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
++
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+         return;
+@@ -609,7 +626,8 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_GIC_REDIST:
+         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
+         case FSL_IMX8MM_GPT1 ... FSL_IMX8MM_GPT6:
+-    case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
++        case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
++        case FSL_IMX8MM_ENET1:
+         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
+         case FSL_IMX8MM_PCIE1:
+         case FSL_IMX8MM_PCIE_PHY1:
+@@ -631,10 +649,16 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static const Property fsl_imx8mm_properties[] = {
++    DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mmState, phy_num, 0),
++    DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mmState, phy_connected, true),
++};
++
+ static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
++    device_class_set_props(dc, fsl_imx8mm_properties);
+     dc->realize = fsl_imx8mm_realize;
+ 
+     dc->desc = "i.MX 8MM SoC";
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index dfdf3cd4f8..6b7774d3e2 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -79,6 +79,7 @@ static void imx8mm_evk_init(MachineState *machine)
+ 
+     s = FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machine),
+                                          "soc", &error_fatal, NULL));
++    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
+     memory_region_add_subregion(get_system_memory(), FSL_IMX8MM_RAM_START,
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index 607ac86666..bc5a0922ad 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -18,7 +18,8 @@
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+ #include "hw/misc/imx8mp_ccm.h"
+-#include "hw/or-irq.h"
++#include "hw/net/imx_fec.h"
++#include "hw/core/or-irq.h"
+ #include "hw/pci-host/designware.h"
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+@@ -60,11 +61,15 @@ struct FslImx8mmState {
+     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+     MemoryRegion ocram;
++    IMXFECState        enet;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+     OrIRQState         gpt5_gpt6_irq;
++
++    uint32_t           phy_num;
++    bool               phy_connected;
+ };
+ 
+ enum FslImx8mmMemoryRegions {
+@@ -218,6 +223,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_WDOG2_IRQ    = 79,
+     FSL_IMX8MM_WDOG3_IRQ    = 10,
+ 
++    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
++    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
++
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+     FSL_IMX8MM_PCI_INTC_IRQ = 124,
 -- 
-2.50.1 (Apple Git-155)
+2.34.1
 
 
