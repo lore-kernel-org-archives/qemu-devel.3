@@ -4,98 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F31F9D0E7
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 541FCF9D0E7
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 16:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCgyv-0007GR-Gv; Tue, 14 Apr 2026 12:51:21 -0400
+	id 1wCh4B-0001Ih-W8; Tue, 14 Apr 2026 12:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1wCgyt-0007DF-Rb
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:51:19 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mwilck@suse.com>) id 1wCgyr-000648-JA
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:51:19 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 4FDB95BE1D;
- Tue, 14 Apr 2026 16:51:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1776185473; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lX/0w9YP/DqUSMVQKYBI6gVtw0w+IriCgUYJkQMZhC4=;
- b=OlBnJzyZvmp3UPVSUQsyusZ9pEPL2ajzr9byn8pu9Vl4kB2whopRvw+nwNCRukl8c1nUkm
- EvjtOeC0oP6ILGHU/Dp+x5TEnHqPhtLt+y8CX/5rf/BjOzdo3op5gB8Ak9nxYJl8/TcASf
- mZHekjdFcGTOpfN9TFF4WX4oC3yngiU=
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=OlBnJzyZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1776185473; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lX/0w9YP/DqUSMVQKYBI6gVtw0w+IriCgUYJkQMZhC4=;
- b=OlBnJzyZvmp3UPVSUQsyusZ9pEPL2ajzr9byn8pu9Vl4kB2whopRvw+nwNCRukl8c1nUkm
- EvjtOeC0oP6ILGHU/Dp+x5TEnHqPhtLt+y8CX/5rf/BjOzdo3op5gB8Ak9nxYJl8/TcASf
- mZHekjdFcGTOpfN9TFF4WX4oC3yngiU=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2716C4B549;
- Tue, 14 Apr 2026 16:51:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id XVNrCIFw3mm5CwAAD6G6ig
- (envelope-from <mwilck@suse.com>); Tue, 14 Apr 2026 16:51:13 +0000
-Message-ID: <3d54a532eb5b3111d8f8849458a009493d3d8845.camel@suse.com>
-Subject: Re: [PATCH RFC] qga: Add selinux-helper for guest-exec subcommand
- (bsc#1237450)
-From: Martin Wilck <mwilck@suse.com>
-To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Cathy Hu
- <cathy.hu@suse.com>
-Cc: qemu-devel@nongnu.org, Cathy Hu <cahu@suse.de>, Fabiano Rosas
- <fabiano.rosas@suse.com>, KVM Bugs <kvm-bugs@suse.de>
-Date: Tue, 14 Apr 2026 18:51:12 +0200
-In-Reply-To: <acaVRtE-NPUa5Ujy@redhat.com>
-References: <20260327102515.502822-5-cathy.hu@suse.com>
- <acaVRtE-NPUa5Ujy@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.0 
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wCh49-0001IQ-W2
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:56:46 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wCh47-0007GO-M1
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 12:56:45 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wCh3w-00000000Wm4-3Cfc; Tue, 14 Apr 2026 18:56:32 +0200
+Message-ID: <a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name>
+Date: Tue, 14 Apr 2026 18:56:27 +0200
 MIME-Version: 1.0
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[libvirt.org:url,suse.de:email,suse.com:dkim,suse.com:mid,suse.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.com:s=susede1];
- DKIM_TRACE(0.00)[suse.com:+]
-X-Rspamd-Queue-Id: 4FDB95BE1D
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=mwilck@suse.com; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 19/31] migration: Normalize tls arguments
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20251223142959.1460293-1-peterx@redhat.com>
+ <20251223142959.1460293-20-peterx@redhat.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20251223142959.1460293-20-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,111 +103,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2026-03-27 at 14:33 +0000, Daniel P. Berrang=C3=A9 wrote:
-> On Fri, Mar 27, 2026 at 11:25:19AM +0100, Cathy Hu wrote:
-> > From: Cathy Hu <cahu@suse.de>
-> >=20
-> > Problem:
-> >=20
-> > ATM the QEMU Guest Agent and SELinux are not working together
-> > properly.
-> > The fedora (and therefor also the openSUSE) policy confine the
-> > qemu-guest-agent
-> > service in the domain `qemu_ga_t`. That means, qemu-guest-agent
-> > is only allowed to do what the policy says.
-> >=20
-> > However, the `guest-exec` command allows arbitrary execution
-> > of code from a privileged service, which conflicts with the
-> > notion of SELinux confinement.
-> >=20
-> > ATM, the policy allows only some accesses that are used
-> > by other qemu-guest-agent commands.
-> > That means, the qemu-guest-agent fails sporadically, depending
-> > on what is allowed for other commands.
-> > However, `guest-exec` would need to allow everything.
-> >=20
-> > see https://bugzilla.suse.com/show_bug.cgi?id=3D1237450
-> >=20
-> > Solution:
-> >=20
-> > This is not an great solution, but it works like this:
-> > We add a "wrapper" which is executed instead of the program
-> > that is called via `guest-exec`. The "wrapper" just
-> > re-executes the command given by `guest-exec`.
-> > This way, on the SELinux policy side we can give that
-> > wrapper executable a label on the file system.
-> > With that label, we can transition into a more broader
-> > unconfined domain _and_ toggle that transition with a
-> > SELinux boolean. That would make `guest-exec`
-> > consistently allowed to execute or not by policy.
-> >=20
-> > This needs a change on the SELinux policy side to
-> > accompany this with:
-> > https://github.com/fedora-selinux/selinux-policy/pull/3122
-> >=20
-> > What other options have been tried unsuccessfully:
-> >=20
-> > - Fixing via SELinux policy: It is not possible for
-> > =C2=A0 one domain to have different permissions depending on
-> > =C2=A0 code path. It is also not possible to toggle the permissive
-> > =C2=A0 state via a SELinux boolean, so users would need
-> > =C2=A0 to add it via semanage.
-> > - Setting the domain of the executed commands directly
-> > =C2=A0 to a broader domain with setcon/setexeccon.
-> > =C2=A0 The SELinux kernel does not allow to spawn a process
-> > =C2=A0 directly with those that has broader privileges than the parent.
-> >=20
-> > What other options are there to solve this issue:
-> >=20
-> > - Making the qemu-guest-agent unconfined by default
-> > - Document the workaround to use semanage to make the domain
-> > permissive
-> > =C2=A0 if `exec-guest` is needed as works as intended and ignore the
-> > problem
->=20
-> IMHO, the 'exec' command should never have been added to the
-> QEMU guest agent, for precisely this reason that it makes it
-> impractical to put any meaningful security controls around it.
-> Likewise the commands which allow arbitrary file read/write.
->=20
-> QEMU guest agent should focus on specific targetted tasks
-> with dedicated commands.
->=20
-> NB: in RHEL we disable all those unconfinable commands.
->=20
+On 23.12.2025 15:29, Peter Xu wrote:
+> From: Fabiano Rosas <farosas@suse.de>
+> 
+> The migration parameters tls_creds, tls_authz and tls_hostname
+> currently have a non-uniform handling. When used as arguments to
+> migrate-set-parameters, their type is StrOrNull and when used as
+> return value from query-migrate-parameters their type is a plain
+> string.
+> 
+> Not only having to convert between the types is cumbersome, but it
+> also creates the issue of requiring two different QAPI types to be
+> used, one for each command. MigrateSetParameters is used for
+> migrate-set-parameters with the TLS arguments as StrOrNull while
+> MigrationParameters is used for query-migrate-parameters with the TLS
+> arguments as str.
+> 
+> Since StrOrNull could be considered a superset of str, change the type
+> of the TLS arguments in MigrationParameters to StrOrNull. Also ensure
+> that QTYPE_QNULL is never used.
+> 
+> 1) migrate-set-parameters will always write QTYPE_QSTRING to
+>    s->parameters, either an empty or non-empty string.
+> 
+> 2) query-migrate-parameters will always return a QTYPE_QSTRING, either
+>    empty or non-empty.
+> 
+> 3) the migrate_tls_* helpers will always return a non-empty string or
+>    NULL, for the internal migration code's consumption.
+> 
+> Points (1) and (2) above help simplify the parameters validation and
+> the query command handling because s->parameters is already kept in
+> the format that query-migrate-parameters (and info migrate_paramters)
+> expect. Point (3) is so people don't need to care about StrOrNull in
+> migration code.
+> 
+> This will allow the type duplication to be removed in the next
+> patches.
+> 
+> Note that the type of @tls_creds, @tls-hostname, @tls-authz changes
+> from str to StrOrNull in introspection of the query-migrate-parameters
+> command. We accept this imprecision to enable de-duplication.
+> 
+> There's no need to free the TLS options in
+> migration_instance_finalize() because they're freed by the qdev
+> properties .release method.
+> 
+> Temporary in this patch:
+> migrate_params_test_apply() copies s->parameters into a temporary
+> structure, so it's necessary to drop the references to the TLS options
+> if they were not set by the user to avoid double-free. This is fixed
+> in the next patches.
+> 
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Link: https://lore.kernel.org/r/20251215220041.12657-6-farosas@suse.de
+> [peterx: in hmp_info_migrate_parameters(), remove an extra dump of
+>   max_postcopy_bandwidth, introduced likely by accident]
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   qapi/migration.json            |   6 +-
+>   migration/options.h            |   1 +
+>   migration/migration-hmp-cmds.c |   6 +-
+>   migration/options.c            | 144 +++++++++++++++++++--------------
+>   migration/tls.c                |   2 +-
+>   5 files changed, 93 insertions(+), 66 deletions(-)
+> 
+> diff --git a/migration/options.c b/migration/options.c
+> index d55f3104be..6ef3c56fb6 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+(..)
+> @@ -1243,7 +1274,7 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>   #ifdef CONFIG_LINUX
+>       if (migrate_zero_copy_send() &&
+>           ((params->has_multifd_compression && params->multifd_compression) ||
+> -         (params->tls_creds && *params->tls_creds))) {
+> +         *params->tls_creds->u.s)) {
+>           error_setg(errp,
+>                      "Zero copy only available for non-compressed non-TLS multifd migration");
+>           return false;
+The above change gives me easily triggerable NULL pointer dereference:
+> $ qemu-system-x86_64 -monitor stdio -global migration.x-multifd=true -global migration.x-zero-copy-send=true
+> QEMU 10.2.93 monitor - type 'help' for more information
+> VNC server running on ::1:5900
+> (qemu) migrate_set_parameter downtime-limit 500
+> Segmentation fault
 
-Downstream bug reporter here. My use case, for which Cathy has come up
-with the solution proposed, was to be able to run the ansible libvirt
-connection plugin to connect to a freshly installed VM before sshd was
-actually configured on the VM, or on a VM that didn't allow ssh access
-at all.
+I guess params->tls_creds really needs that NULL check before being accessed.
 
-My thinking was that the access control was done by libvirt in this
-case. The user running ansible would either need to have access to
-qemu:///system, or to some remote libvirt server via libvirt's access
-controls (in my case, ssh). Users with this permission level would be
-able to pause, hard-reset, or destroy the VM in question, so I was
-thinking that being able to execute arbitrary commands inside the VM
-was not that problematic. But I may be overlooking something, of
-course.
+Thanks,
+Maciej
 
-> If users want to support an ability to have arbitrary command
-> execution, then that should be done with SSH over VSock, where
-> the guest owner can choose whether to require authentication
-> first or not, and use SSH authorized_keys if desired to limit
-> what commands can be run for a given recorded key.
->=20
-> These days systemd installs magic to allow SSH'ing directly
-> to a guest using VSOCK addresses, and libvirt further
-> enhances that to allow SSH'ing to a named VM.
-
-Thanks, I wasn't aware of this feature so far. I suppose you're
-referring to https://libvirt.org/ssh-proxy.html. I'll need to
-experiment with it. IIUC this works for local libvirt connections only?
-If that's the case, it wouldn't be a full replacement for qemu-agent
-based access, which I've found to be particularly handy for remote
-libvirt instances.
-
-Regards,
-Martin
 
