@@ -4,77 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0106AF9D0F0
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C119AF9D0EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 18:24:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCiPh-0006Ax-Kf; Tue, 14 Apr 2026 14:23:05 -0400
+	id 1wCiQ4-0006VM-Dg; Tue, 14 Apr 2026 14:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCiPS-00067S-Tj
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:51 -0400
-Received: from pv-2005h-snip4-7.eps.apple.com ([57.103.66.248]
- helo=outbound.pv.icloud.com)
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCiQ3-0006Uj-70
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:27 -0400
+Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wCiPQ-0006Ua-Dl
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:22:50 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPS id
- A3A2F1800108; Tue, 14 Apr 2026 18:22:45 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776190967; x=1778782967;
- bh=tT4F++bSuONbY+c7bgtCCb6QKbPZ19v7x1ehrozqyHo=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=fW6u+ORigS+O6Pk7YAhgz6rsavDy7P3hZ+z1TKixvAGV7T1UdxZuKauL1E9a3NfqjAFMgbGZHjHWpSTwr2fMcvRKWcfE8PJIHl8wwl1kHuiL1v2ImET/hXR8A1uABVoOvXZCL68eNvhPjuYq/++ukRyP3G+a16yzmJSEFsR446ajJYuF+/JGX1YffVPoi1S1SyUGMyqH5yIQlp0MGyXKL3c9Rgu9sNMO6Z8WCckbx27nXJMpmvHYhocIh6BEsUGll3lDAsFTRRZXzHuRJISB5DbCZJc1UVGAYqwkWA4XWOd0YOgUWTHU8ZeVzLHFqipeJQhK/h+XO2hhlXCbHWROhw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-9 (Postfix) with ESMTPSA id
- F261618013AE; Tue, 14 Apr 2026 18:22:43 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wCiQ0-0006he-0S
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 14:23:26 -0400
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id B1C8B1A2865;
+ Tue, 14 Apr 2026 20:23:22 +0200 (CEST)
+Received: from aprdc01srsp001v.ap-rdc01.nxp.com
+ (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 7C26C1A2864;
+ Tue, 14 Apr 2026 20:23:22 +0200 (CEST)
+Received: from lsv031015.swis.in-blr01.nxp.com
+ (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id EA0D71802227;
+ Wed, 15 Apr 2026 02:23:21 +0800 (+08)
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6/7] target: i386: HLT type that ignores EFLAGS.IF
-Date: Tue, 14 Apr 2026 20:22:30 +0200
-Message-ID: <20260414182231.18776-7-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260414182231.18776-1-mohamed@unpredictable.fr>
-References: <20260414182231.18776-1-mohamed@unpredictable.fr>
+Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>
+Subject: [PATCHv6 14/15] hw/arm/fsl-imx8mm: Adding support for USB controller
+Date: Tue, 14 Apr 2026 23:53:12 +0530
+Message-Id: <20260414182313.1691519-15-gaurav.sharma_7@nxp.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
+References: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDE3MSBTYWx0ZWRfX5/ls1LiVJwEh
- 7F6c4jtssZKWOWA3UnyNXtmwc1ygtBe6nZaBjAOi2JwjYdZnWhVMok4FTUQ2AIRELYnDQDJtZju
- 3XtcioRKTyRnU2Ku9onGxf9zO5ss5E+YGB62m2W1OXZDAEGcHxN97syCHwnfJyWdyKGBSgARPCx
- aSOBRT/wtcyhAm2PPfN1m5FoWFBwNRWEIS1/EBCsPIqIC9K3o+IeKd3Xa8m41G1zhv8qeZSQRKd
- Tnr94MDHtHmog3n/bKp852mghUzmqARkuOBLaWmHKwMqbsthDjXn5RCwTSbIDcndnR//rnL0ig/
- P06adoeVJhYi0nOSzFit1xeV6u7AHHq4ixA3LHjKiDC5YAfI2bDeXiwMOMAjsA=
-X-Authority-Info-Out: v=2.4 cv=KJ1XzVFo c=1 sm=1 tr=0 ts=69de85f6
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=ZtXhj7NgbhMgH__AbsQA:9
-X-Proofpoint-GUID: H12iFphNauZtdUD9oA64BRiLR7IOtK4E
-X-Proofpoint-ORIG-GUID: H12iFphNauZtdUD9oA64BRiLR7IOtK4E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-14_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- suspectscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1030 mlxlogscore=937
- spamscore=0 phishscore=0 malwarescore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604140171
-Received-SPF: pass client-ip=57.103.66.248;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Virus-Scanned: ClamAV using ClamSMTP
+Received-SPF: pass client-ip=92.121.34.13;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,69 +68,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TLFS says:
+It enables emulation of USB on iMX8MM
+Enables testing and debugging of USB drivers
 
-> A partition which possesses the AccessGuestIdleMsr privilege may trigger
-> entry into the virtual processor idle sleep state through a read to the
-> hypervisor-defined MSR HV_X64_MSR_GUEST_IDLE. The virtual processor will
-> be woken when an interrupt arrives, regardless of whether the interrupt
-> is enabled on the virtual processor or not.
-
-Meanwhile, Windows 24H2+ calls this MSR anyway without the privilege being set.
-
-Add the infrastructure to support it on the generic QEMU side.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- target/i386/cpu.c | 10 ++++++----
- target/i386/cpu.h |  2 ++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ hw/arm/Kconfig              |  1 +
+ hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h |  6 ++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0000093fa3..b18e40666e 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10482,13 +10482,15 @@ int x86_cpu_pending_interrupt(CPUState *cs, int interrupt_request)
-                    (((env->hflags2 & HF2_VINTR_MASK) &&
-                      (env->hflags2 & HF2_HIF_MASK)) ||
-                     (!(env->hflags2 & HF2_VINTR_MASK) &&
--                     (env->eflags & IF_MASK &&
--                      !(env->hflags & HF_INHIBIT_IRQ_MASK))))) {
-+                     ((env->eflags & IF_MASK &&
-+                      !(env->hflags & HF_INHIBIT_IRQ_MASK))
-+                        || env->hflags2 & HF2_HYPERV_HLT_MASK)))) {
-             return CPU_INTERRUPT_HARD;
-         } else if (env->hflags2 & HF2_VGIF_MASK) {
-             if((interrupt_request & CPU_INTERRUPT_VIRQ) &&
--                   (env->eflags & IF_MASK) &&
--                   !(env->hflags & HF_INHIBIT_IRQ_MASK)) {
-+                   ((env->eflags & IF_MASK &&
-+                      !(env->hflags & HF_INHIBIT_IRQ_MASK))
-+                        || env->hflags2 & HF2_HYPERV_HLT_MASK)) {
-                         return CPU_INTERRUPT_VIRQ;
-             }
-         }
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 0b539155c4..67f508dc10 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -225,6 +225,7 @@ typedef enum X86Seg {
- #define HF2_NPT_SHIFT            6 /* Nested Paging enabled */
- #define HF2_IGNNE_SHIFT          7 /* Ignore CR0.NE=0 */
- #define HF2_VGIF_SHIFT           8 /* Can take VIRQ*/
-+#define HF2_HYPERV_HLT_SHIFT     9 /* Hyper-V HV_X64_MSR_GUEST_IDLE */
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 45d10e34dc..1b26bd3431 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -632,6 +632,7 @@ config FSL_IMX8MM
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
++    select USB_DWC3
+     select WDT_IMX2
  
- #define HF2_GIF_MASK            (1 << HF2_GIF_SHIFT)
- #define HF2_HIF_MASK            (1 << HF2_HIF_SHIFT)
-@@ -235,6 +236,7 @@ typedef enum X86Seg {
- #define HF2_NPT_MASK            (1 << HF2_NPT_SHIFT)
- #define HF2_IGNNE_MASK          (1 << HF2_IGNNE_SHIFT)
- #define HF2_VGIF_MASK           (1 << HF2_VGIF_SHIFT)
-+#define HF2_HYPERV_HLT_MASK     (1 << HF2_HYPERV_HLT_SHIFT)
+ config FSL_IMX8MM_EVK
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index f1c173dbec..97c3f8542c 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -202,6 +202,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+     }
  
- #define CR0_PE_SHIFT 0
- #define CR0_MP_SHIFT 1
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
++        g_autofree char *name = g_strdup_printf("usb%d", i);
++        object_initialize_child(obj, name, &s->usb[i], TYPE_USB_DWC3);
++    }
++
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         g_autofree char *name = g_strdup_printf("spi%d", i + 1);
+         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
+@@ -529,6 +534,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
+     }
+ 
++    /* USBs */
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } usb_table[FSL_IMX8MM_NUM_USBS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB1].addr, FSL_IMX8MM_USB1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB2].addr, FSL_IMX8MM_USB2_IRQ },
++        };
++
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p2", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p3", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usb[i]), errp)) {
++            return;
++        }
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
++                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
++    }
++
+     /* ECSPIs */
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         static const struct {
+@@ -635,6 +661,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_OCRAM:
+         case FSL_IMX8MM_SNVS_HP:
+         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
++        case FSL_IMX8MM_USB1 ... FSL_IMX8MM_USB2:
+         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
+         case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
+             /* device implemented and treated above */
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index bc5a0922ad..60d79a6e3c 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -25,6 +25,7 @@
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
+ #include "hw/timer/imx_gpt.h"
++#include "hw/usb/hcd-dwc3.h"
+ #include "hw/watchdog/wdt_imx2.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
+@@ -43,6 +44,7 @@ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_I2CS         = 4,
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
++    FSL_IMX8MM_NUM_USBS         = 2,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
+     FSL_IMX8MM_NUM_WDTS         = 3,
+ };
+@@ -64,6 +66,7 @@ struct FslImx8mmState {
+     IMXFECState        enet;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
++    USBDWC3            usb[FSL_IMX8MM_NUM_USBS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+     OrIRQState         gpt5_gpt6_irq;
+@@ -202,6 +205,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_I2C3_IRQ     = 37,
+     FSL_IMX8MM_I2C4_IRQ     = 38,
+ 
++    FSL_IMX8MM_USB1_IRQ     = 40,
++    FSL_IMX8MM_USB2_IRQ     = 41,
++
+     FSL_IMX8MM_GPT1_IRQ      = 55,
+     FSL_IMX8MM_GPT2_IRQ      = 54,
+     FSL_IMX8MM_GPT3_IRQ      = 53,
 -- 
-2.50.1 (Apple Git-155)
+2.34.1
 
 
