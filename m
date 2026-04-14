@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D13FED7B8B
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 09:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D9BED7B92
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 09:23:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCZt7-0001yM-FV; Tue, 14 Apr 2026 05:16:53 -0400
+	id 1wCZyt-0002sR-Po; Tue, 14 Apr 2026 05:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCZt6-0001y8-KP
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:16:52 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCZys-0002ri-Jj
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:22:50 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCZt4-0008G6-TI
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:16:52 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso51249865e9.1
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 02:16:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCZyq-0002go-MN
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 05:22:50 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b00ed86fso55442735e9.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 02:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776158209; x=1776763009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776158567; x=1776763367; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=F9crJcEHJxv6WuEhcRiQRs8t+RpvdyFT6HSI1ygGFMg=;
- b=pdYNEKieXAqkBBRb+Jurxu8y0cZQAM3iIiz+Ky+wbtqSKSWm345R/Md8cIytExEI4K
- zvhIaqPkbXvcIzJ3+l+XlwT2HmeBMVoDsP/rECyoYA+fjufudNZgzsqzbMCGCFE+z7Aw
- G+/VsItU4/dsdGLWDPGtP7L0jT2QjZe8Roe0y6fWfjJ/WEQYUnB6S5CL5+6YrSKGnT6x
- 2Cqx6nWbXlatxPbXFMBxBOK/qrrG0MmKie51amZ6Ap5WkTxo//hfLlQtEpL8QnsaETcJ
- 98usKQ2PgIoTZhW2Z5Q2FWUFE+d6ilXhBg+msS7sm1Jmu0NVwFEzmuRe+q1nve/UhYcJ
- 9z+A==
+ bh=napVYKet5wfgKuxipXOGqoJX84ZK+ADDAP9uEoPAauw=;
+ b=Ll9ECSPJxBE8ULWo2u2KPvXkHpWX7UBKFbAZTqppI1o6wQeZyCbSbtEYBkukhxjfzs
+ Jv/m1v4m7pZYkyZMPbCQOJ0PbQk8P9a63sxKdlatm5/RsxRerrCSDPXbv1BI4Rznu0m2
+ B2/YZhXGn5X16XVIQGlAuUy94wSfHosB54O5/Em0GBqRotPz3HMrm9/5gFCmN0naRjS4
+ KldT03rIKnk9JH2wiZW9YtwtkSZFl0AlT3KwFvDUUlxsAKc5ERY2HQsTIGLlhJOUncc4
+ bsiMTCRBvdlFOVnpyCjOFqqAxF0fhK9ySvqsbX6aAgo5GFJ2xamSUQqSg+QCRZudaM0s
+ Ufug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776158209; x=1776763009;
+ d=1e100.net; s=20251104; t=1776158567; x=1776763367;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=F9crJcEHJxv6WuEhcRiQRs8t+RpvdyFT6HSI1ygGFMg=;
- b=MsQFhna0es6WuKkV+Pj41J8EzBFCwj3euNxgDiIaDV/DZGvsaQGz98ank+qJ7/pZll
- tshwOGusW0vbeb2kbXGeLaGaPfaCfPdJE6o32d/zoREiVJrGsbRu3Bioke/iSOXxE3Uf
- EX41kfFjyI57N4IHle+BRRGQKfKzogs0A5j3G4w+ZarW3SOxFCtH3eFMHg4nLIgNMuAF
- OpYa9RidUCHUWqiNpPWqG7ix97rSI/lpbb8S1g+/mRn7cDlSgsydxxixHTOOyutkGJN5
- 3NADVh2igQATsHnQp4ECgK3r/D70pMAweuX8mgO2ijX3l6h+ymiNpQ752xVYziD58d8C
- zVWw==
-X-Gm-Message-State: AOJu0YxSGxbPojvFg/1J1pQKr03bILfIMJlDrLh769CX/GJ9qFZfotZE
- tNXDKDVvkE3PAkKVFVsCCtrLijPbSjKKtNwjUFdhCkkfqXDv8wQMYG7vB0VTJ5Un4mQ=
-X-Gm-Gg: AeBDietb3kTmrjGNANjWuRC02dh3Q2UOUWXvSJaF1xLTk1Ce9++xQB1H/D9vPe3uveG
- c6G8YVIWvsrI1sRqcPb557/CJSV1vA94kQfVztSGL3ZNvoikaXBQKqrYEvTAmEFjmMjTaj70OVG
- qqUxAuhEADKDdixR2cYzO1YPUZQ9hpEItTnphGPSJli3dYV9qyFd9zlmSmoHOvg8D3inBfxG0FC
- 8QdG3DRDYS39MFC4qIxRf/Ia7/0Ouv10NWyunro7Eq1vFFrbeeeJndg5Qe2dUI2xDdGsugJSgyf
- BHiikZSkz8tSpBRsFU2BGXjOF8xfgZi3TPMRPNo3te6hLGUNgZ66pk9gMMmUB3B5fpmRmB/HDv1
- DM9H8+1RVmjiw+mIHWjHtjEnXzS+oXrvy2enwPSwSmcmhXjezdHL/Se8SXVq1A3jqlKfgDibtWA
- 0h4WHvqsEDzGSrUjjAp23ubU7NZgiiE6IfC0wyvzqBa8I7i0TdXvO5BfUyoIj0ipKp93+bI+FLN
- 4gC
-X-Received: by 2002:a05:600c:8883:b0:488:869c:eda4 with SMTP id
- 5b1f17b1804b1-488d689b4edmr165447325e9.21.1776158208717; 
- Tue, 14 Apr 2026 02:16:48 -0700 (PDT)
+ bh=napVYKet5wfgKuxipXOGqoJX84ZK+ADDAP9uEoPAauw=;
+ b=eezmGzhGzD0DXtksN6RsaRs7Nv5EO4nZmW5aal9zwJx7YaaRsuPRzlDTY83CLXsmIs
+ VpBPJ6vNgRkqDkpCV3+wrXw82MzRakBWfICI2XYVGevYEBAm5VlINYl4OfdwF0C/Au4p
+ MquAOBcZgb0GF8xdNfI52L5e/3uewCXk1Wk28UTg5uehBaEHvMh3HLDohakRN1F6Cm1m
+ Enhw4VskFpgy4ZgyF7ZN5qA/VtNJMq4QXKgBGzkUlsVeMf7qUZINrVEXiKMRGUWEf2yC
+ LvOzRoY46pzioAiqh5yViBND4DK07g0+/ia21/TKtzHN07/R5FVjL9neuIbAOcGw/8fH
+ 36DQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9B+2w8iYqULKl5IPcLb6qfHeCH5PNOxjpu021w7JaKvAT04iXvIMjXr0UCy/mBnuaBD/XPlf49xlQJ@nongnu.org
+X-Gm-Message-State: AOJu0YxtHSt57Br6GO2BUZHUkdSA7IGipvi6vTIhBxluhxIa7h9zvWVo
+ e9+jgrzuFbVZo7a1bFDYYvfcS9SPbe/VaAlAUI9EfpoKiOFtf81gaoysZgUJfLR3gOA=
+X-Gm-Gg: AeBDieu+RwaNm8MyycsScdTuOfuX0cZh1FJ1lymeTXDgAsgJEcwpHvqQHsi5Bc46d+g
+ U8VVITsmXRYl7zj/n7VoJNgVWtlh7GokRC1mVUwBv4DiK/X2DzZP/qR1X4baMyaM+bBoSKqiobL
+ cdvvWy6o39NaNISqVCgUy/Ga+VAXlQNDTDhxQPbcnwmzPIcldVGbVD8KoH3PBfDvr1ctDxXsIyc
+ VqgRg9V2QlXOhgEe6g0ILCnVmhf3ZyGqYp+PWxIeFXwtJ32r/q2mY1+vlcdekxTBtM1LS97fo6X
+ v66n97SAVpvNPH5iGoSliaqebo6ulEDr+O/76WWehFSzZtsOLsQcDgFVdIg88BpZsc5C0zeJJlV
+ M1vvXWbetgDesfsJlr2GY9iZjpiOFHihZ9BhqK4rsbrBDBzrfrJEjvuYe7sqT9a3KfgKXfuM1Tw
+ pBfF8jRrjY9AjMPy1iOOEHebsAxu1YPipizvJXlSphSVXv+X7mZHwkEPiYSIPCFssjDg==
+X-Received: by 2002:a05:600c:4715:b0:488:9e54:94c0 with SMTP id
+ 5b1f17b1804b1-488d67e7dd4mr245692415e9.8.1776158566868; 
+ Tue, 14 Apr 2026 02:22:46 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488d687b241sm114979185e9.32.2026.04.14.02.16.45
+ 5b1f17b1804b1-488ee042ff9sm40765095e9.14.2026.04.14.02.22.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2026 02:16:47 -0700 (PDT)
-Message-ID: <d0f10fe8-1df2-488e-ae4a-03534573ba29@linaro.org>
-Date: Tue, 14 Apr 2026 11:16:45 +0200
+ Tue, 14 Apr 2026 02:22:45 -0700 (PDT)
+Message-ID: <7eb32749-dd83-48ea-94a4-41935cc90aca@linaro.org>
+Date: Tue, 14 Apr 2026 11:22:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] bsd-user: Add syscall header generator for FreeBSD
+Subject: Re: [PATCH v2 06/17] hw/usb/hcd-ehci: Change descriptor addresses to
+ 64-bit
 Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com>
- <20260413-syscall-nr-v1-1-f70408d042ea@bsdimp.com>
- <934e73a1-0dcc-499c-b0c4-bbcc3cfe26f2@linaro.org>
- <CANCZdfqwQKExBX-3g_+_0crJUi7qgU92PM7W2pAgBdRO0nO9FA@mail.gmail.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260414080025.3005916-1-jamin_lin@aspeedtech.com>
+ <20260414080025.3005916-7-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CANCZdfqwQKExBX-3g_+_0crJUi7qgU92PM7W2pAgBdRO0nO9FA@mail.gmail.com>
+In-Reply-To: <20260414080025.3005916-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,66 +111,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/26 04:44, Warner Losh wrote:
+On 14/4/26 10:00, Jamin Lin wrote:
+> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
 > 
+> The following fields are updated:
+> - EHCIPacket::qtdaddr
+> - EHCIQueue::{qhaddr, qtdaddr}
+> - EHCIState::{a_fetch_addr, p_fetch_addr}
 > 
-> On Mon, Apr 13, 2026 at 4:21 PM Philippe Mathieu-Daudé 
-> <philmd@linaro.org <mailto:philmd@linaro.org>> wrote:
+> Update get_dwords() and put_dwords() to take 64-bit addresses and
+> propagate the type change through the descriptor traversal paths.
 > 
->     On 13/4/26 17:31, Warner Losh wrote:
->      > Generate the syscall numbers from the installed header that has them.
->      > Ideally, we'd use FreeBSD's lua infra for this, but that requires
->     that
->      > we have those files installed, and they aren't quite the same across
->      > supported versions yet, so use this simple, but effective hack.
->      >
->      > Signed-off-by: Warner Losh <imp@bsdimp.com <mailto:imp@bsdimp.com>>
->      > ---
->      >   bsd-user/freebsd/syscallhdr.sh | 9 +++++++++
->      >   1 file changed, 9 insertions(+)
->      >
->      > diff --git a/bsd-user/freebsd/syscallhdr.sh b/bsd-user/freebsd/
->     syscallhdr.sh
->      > new file mode 100644
->      > index 0000000000..fa38500775
->      > --- /dev/null
->      > +++ b/bsd-user/freebsd/syscallhdr.sh
->      > @@ -0,0 +1,9 @@
->      > +#!/bin/sh
->      > +# Copyright (c) 2026 Warner Losh <imp@bsdimp.com
->     <mailto:imp@bsdimp.com>>
->      > +# SPDX-License-Identifier: GPL-2.0-or-later
->      > +
->      > +in="$1"
->      > +out="$2"
->      > +bsd="$3"
->      > +
+> Adjust NLPTR_GET() to operate on 64-bit values:
 > 
+>      #define NLPTR_GET(x) ((x) & ~0x1fULL)
 > 
-> Hey, thanks for the review.
+> so that link pointer masking works correctly when descriptor
+> addresses exceed 32-bit space. The previous mask (0xffffffe0)
+> implicitly truncated addresses to 32 bits.
 > 
->     echo '/* This file is autogenerated by syscallhdr.sh, do not edit. */' >
+> This patch does not change the on-wire descriptor layout yet.
+> It only removes the internal 32-bit address limit and prepares
+> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
 > 
->     $out
->     echo '/* SPDX-License-Identifier: GPL-2.0-or-later */' >> $out
+> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
+> use uint64_t for the address argument and print it with PRIx64. This
+> ensures full 64-bit addresses are shown in trace output and improves
+> debugging of queue heads and transfer descriptors.
 > 
+> Since the type of fetch_addr changes from 32-bit to 64-bit,
+> bump the VMState version.
 > 
-> These aren't needed. The generated file starts off:
-> /*
->   * System call numbers.
->   *
->   * DO NOT EDIT-- this file is automatically @generated.
->   */
-> ...
-> we're just doing sed -e s/SYS/TARGET_FREEBSD_NR/g on
-> that file (though awk is mildly more convenient). No need to add
-> a license, since it's already in the public domain, and you don't
-> need a license to do anything you want to public domain material
-> (including incorporating it into a GPL'd work). Since the generated
-> file isn't committed to the repo, there's no style checker to appease.
+> No functional change.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/usb/hcd-ehci.h   | 12 ++++++----
+>   hw/usb/hcd-ehci.c   | 57 +++++++++++++++++++++++++++------------------
+>   hw/usb/trace-events | 24 +++++++++----------
+>   3 files changed, 53 insertions(+), 40 deletions(-)
 
-Ah great, thanks for clarifying! R-b stands.
 
-> 
-> Warner
+> @@ -294,8 +294,10 @@ struct EHCIState {
+>       EHCIQueueHead pqueues;
+>   
+>       /* which address to look at next */
+> -    uint32_t a_fetch_addr;
+> -    uint32_t p_fetch_addr;
+> +    uint32_t a_fetch_addr_pre_v3;
+> +    uint32_t p_fetch_addr_pre_v3;
+> +    uint64_t a_fetch_addr;
+> +    uint64_t p_fetch_addr;
+
+
+> @@ -2441,6 +2445,11 @@ static int usb_ehci_post_load(void *opaque, int version_id)
+>           }
+>       }
+>   
+> +    if (version_id < 3) {
+> +        s->a_fetch_addr = s->a_fetch_addr_pre_v3;
+> +        s->p_fetch_addr = s->p_fetch_addr_pre_v3;
+> +    }
+> +
+>       return 0;
+>   }
+>   
+> @@ -2472,7 +2481,7 @@ static void usb_ehci_vm_state_change(void *opaque, bool running, RunState state)
+>   
+>   const VMStateDescription vmstate_ehci = {
+>       .name        = "ehci-core",
+> -    .version_id  = 2,
+> +    .version_id  = 3,
+>       .minimum_version_id  = 1,
+>       .pre_save    = usb_ehci_pre_save,
+>       .post_load   = usb_ehci_post_load,
+> @@ -2501,8 +2510,10 @@ const VMStateDescription vmstate_ehci = {
+>           /* schedule state */
+>           VMSTATE_UINT32(astate, EHCIState),
+>           VMSTATE_UINT32(pstate, EHCIState),
+> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
+> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
+> +        VMSTATE_UINT32_V(a_fetch_addr_pre_v3, EHCIState, 2),
+> +        VMSTATE_UINT32_V(p_fetch_addr_pre_v3, EHCIState, 2),
+
+IIUC we want VMSTATE_UINT32_TEST(..., 3) here, for "<3".
+
+> +        VMSTATE_UINT64_V(a_fetch_addr, EHCIState, 3),
+> +        VMSTATE_UINT64_V(p_fetch_addr, EHCIState, 3),
+
+These ones are correct (">=3").
+
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
+
 
