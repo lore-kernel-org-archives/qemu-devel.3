@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0C6F531DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EEBEF531DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 00:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCRxr-0007dX-Vi; Mon, 13 Apr 2026 20:49:16 -0400
+	id 1wCS2O-0000Ex-Hh; Mon, 13 Apr 2026 20:53:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCRxo-0007ce-GZ
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:49:12 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCS2N-0000Ef-AD
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:53:55 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wCRxm-0007it-OS
- for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:49:12 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-824c9da9928so3476833b3a.3
- for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:49:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCS2L-0000It-Q5
+ for qemu-devel@nongnu.org; Mon, 13 Apr 2026 20:53:55 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso60634515e9.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Apr 2026 17:53:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776127749; x=1776732549; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=psAieoi9wJYJkxHTxcj1/8XSDLS22akGCnQF77/4XHg=;
- b=uYDDwDR6/2MnOXYpWdKaqdmwPrWSHAvRNvP3wYxJUSxBNy54ue+tqIQe0s9TTGA1LZ
- B0MeQMOEi1nbnjCDmt/1MEZLkgTt9Q4jLN/hdhrbJDu45Cl9mb2MV7rMevoMefxj4sNo
- 2F6RZVC9TYAYus5aOY/RyyIgW7bD2mBiDCFNLAaa+TUkOZRNeq8PPi0BqCDMW/+n5Uh6
- n4U+uy/D37th0fW5Z+7EgfUr7c7gLYq+HPRotEdPnfUVlDFbHx3LP4FGM/fy2wWiqdyJ
- sGZalpNJfIo9GR8Y20JIDd6Kh2AX6qrSaWnSCYgxfzsAbiNplus6JHEKta+TDSE3qf0s
- YShA==
+ d=linaro.org; s=google; t=1776128032; x=1776732832; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BLI43CMKKgCVQgB5y9bVNRIgkIWGcbGh9bdZMwpHqyk=;
+ b=w6pV0tdE4d05+S1RU4MSZHI2XEoKvP2p9rov74zA1e1aNoHaLgauLL31140so8gBHD
+ lSfI5D7z7S1yIPQ9m3+vSPTJY+jlXFaa2wt8mlNQ4DlDvBRaZml4BWGrfmropVKVPW26
+ bqzrs/5isM+N7DK6KaXoQNm9LidZCo2EVatCWHwQhtF0tr2vn4vpVEd1B5BWxNccDF5f
+ 2G25fx1tmkxKjVVpEpw6MA+Qs0awJ5jjtN3+ACFv9Whh6z/YOpJDsDbsCRm1lRkMomn+
+ 7jS3DhCdK8gT5CmjBcn+9gCCKwFJO83Gnk7F6owFQth4Uiw6a2tiwW54GPTSK4Rz3WiC
+ QHVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776127749; x=1776732549;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=psAieoi9wJYJkxHTxcj1/8XSDLS22akGCnQF77/4XHg=;
- b=P4VGg+lzOCPqO41Z+jCqY6LIv5LjlaJv2KdeZucTGSeYze4B2Zb/eGHlNU4QTX88aq
- fbacepXoF1xCVE737Un3iJmny3zBPKyTB8yTfbRvL5/lu9XcEaRO5G7DH+qQnMfrONB/
- ahcivEjQ2uzMykcguKQ3zJpTr4HQ9xAHD1d9mBkBptBavqodDXeoGLpSRl6Y+rhlBx0F
- wb8eq8GGhIltH32jZPduU4SFA6o4IHNJjTQbfUraUOq3tiD/0u1DEF20lF3kap1qtn4k
- +cpOYwZq2hm9P9OX1SQOlkm1dqB0e+U3g+25DG721n8PYGprlD/MAUiYnMCJAOdNQTMo
- v9yw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9N7gK1HISF4oIL8ThPwkh4cX6z5T82w1DiUDc1NCTSb7EvUakHvNKODI4dW8AYShs3rtMcpqBuLhuu@nongnu.org
-X-Gm-Message-State: AOJu0YxUc3NJadwPcsCEF7xklKxJDTiju33aZFKxS1isyUAe8uoaPjb4
- ktrUpd5azcmp3NED8FH8LJFVpin27Y089hMvprenRWZ4hAlrYB03qrDZTIlUSbrIxkY=
-X-Gm-Gg: AeBDieuJp4tZe/h8hvQ9acitemHQ2zueLGcIAn1TdOycFmMuRMi2VsaLnqlyVADKtL8
- ssdMUkuyVhN0Zq+J4chpqZ6n1StqqJvMiJZAKBXKZ1sOMPQDD/OwPEVw3AM60wPhTbrrde6ifg2
- tMgAGGXirK7N7K1CN1pzjyOWSaU6MhA/GDwF6XoMnUy6WQ7lZ9MJ68jfmdZZlxI8c7IacgRt15u
- IbkI0XxULI00R3GwkbjSU30iyAzvckuBbodSKrjGGyZFcVnzfv3pYUxDKHYn49W0+sDeUT/Hi8R
- FpCcjPg+S4iVC0D/kWWwe3WMt03lz4ulkfv3B7ee+wxu6/nLYxpX7iA5FRbufueBJ+hIPegms6C
- UMn8v1JUV1sUekzLu8kVPz9xxDZOKWxDNbz/zdmWLDLW/I+mRl9WcQpCRct1katymhWMyKXBRop
- zmPLPX5vTRjSXx4jQP3+8DplC6fIWP1h52t6MQ73S9Gm+NymHUkwayhS+FMMzG6cwgpma/nvPAd
- A6rpT74Jl+sEQ==
-X-Received: by 2002:a05:6a00:2c8a:b0:82f:37e3:ae67 with SMTP id
- d2e1a72fcca58-82f37e3b1b9mr4640398b3a.27.1776127748800; 
- Mon, 13 Apr 2026 17:49:08 -0700 (PDT)
-Received: from ?IPV6:2401:d002:dc0f:2100:377f:61ec:6edd:e205?
- ([2401:d002:dc0f:2100:377f:61ec:6edd:e205])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f0c339570sm12406056b3a.16.2026.04.13.17.49.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2026 17:49:08 -0700 (PDT)
-Message-ID: <f24c4dc6-a2fe-4ffd-a42c-ec7b1b4e8b43@linaro.org>
-Date: Tue, 14 Apr 2026 10:49:02 +1000
+ d=1e100.net; s=20251104; t=1776128032; x=1776732832;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BLI43CMKKgCVQgB5y9bVNRIgkIWGcbGh9bdZMwpHqyk=;
+ b=aJw6lElHOk0h/KUUb5JZvbZsAW2p1XiIvgVVGSfTx0/z3n79DJ5o9Wb6LYGutFev5l
+ rDTeQ3VuD/EUG8b1sI97dLjJSlQAJr5IsDTbc3UKNjqapWHXrCKl4zYoJRo9Kmg15FxF
+ 481xW7StA59f74TlwRVr0VB/kRP1BQAB0kHAN8tR+4d4UcvMTm6w8HH9U55nvliIHgFT
+ R8tuPuRnqdVk0rfFQUgv5T+aBhPsRfGWWY+oqSN9WOa35omTAWAshiyxushZ8x/C4c19
+ GAKAAxNeFcyy8LFWLafYxfNLXawVev0G6HDMNz19p5D+R3wNsXUNKmWm3vSb9hhpKzpS
+ 06sQ==
+X-Gm-Message-State: AOJu0YyiLWs4HS3pNjGpkTZhisnrpU916tCy60OqZVJWJWdPi0wht18/
+ 0SMiXPfIcB28hFdQhPmB7Dyu5bIbOwTEfF4jrvkq3wS0GncxYfBITNiufJkDzWq8UMdT3VpEbLQ
+ 6iQ3eGnw=
+X-Gm-Gg: AeBDietONKlV2culPmp/9hhHGuCAvmixKmtQfAkU4zk6EXk5hAFJXPRzJoX6b9FfzfY
+ 5g8ee/TL3D94He54sU1l8gj/Oxd3vf2og8WJLPZCp0kUFWK56LFQs8NZqFwe+txwVXMnxdQIvUy
+ LnPrhuEHTqCPSpL9l/CWbEw1LDyQbxMvhaW8DEVsQ9NdCa8QrXUnDjTBjgLaagsdNEBtMDVuU15
+ LBL1LITVSSiHvhvb9h9DpY0EbUTIX+7xkEJjmLUeCPR+imBPtviVbkVYT+xh+aziFkcOpjeBafZ
+ SlE1D5iPHK8wFL3zif3wV/xNC63eX3w1ujnc5hIHfTtzvnnPpWaPaU5RsVjV3OSzxG3NvlrKy+3
+ eX4ci7Rk5NmowCXHUFkzfhWqxojdE9l9a4ULafksrjWEx17XZgmLgONMjv/lG5rTthIA1dSdkUb
+ QLeRGaCE5OAvX6AUSQUjXpxl/Tj99P1YQ6uyfCFlA6tKcfRKFoCHvxThRGmdeEplR5tpov/d+aE
+ TA+5Cw8o8c=
+X-Received: by 2002:a05:600c:8907:b0:488:c744:49b with SMTP id
+ 5b1f17b1804b1-488d67d2cfcmr145831695e9.7.1776128031944; 
+ Mon, 13 Apr 2026 17:53:51 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488ede2ba0esm6365235e9.11.2026.04.13.17.53.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 13 Apr 2026 17:53:51 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/9] target/arm: Remove MO_TE to compile MVE/M helpers once
+Date: Tue, 14 Apr 2026 02:53:39 +0200
+Message-ID: <20260414005348.4767-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/27] monitor: Have MonitorDef::get_value() always
- return int64_t type
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20260414003001.97571-1-philmd@linaro.org>
- <20260414003001.97571-19-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260414003001.97571-19-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,21 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/14/26 10:29, Philippe Mathieu-Daudé wrote:
-> SimplifyMonitorDef::get_value() handler by having it always
-> return a int64_t type.
-> 
-> Let the single caller (x86 targets) sign-extend the returned
-> value, directly handling 64-bit CPUs in 32-bit or 16-bit mode.
-> 
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/monitor/hmp-target.h |  6 +-----
->   target/i386/monitor.c        | 11 ++++++++---
->   2 files changed, 9 insertions(+), 8 deletions(-)
+Missing review: #5
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Replace build-time MO_TE definition by runtime mo_endian()
+helper, allowing to compile m_helper.c and mve_helper.c once.
 
-r~
+Philippe Mathieu-Daudé (9):
+  target/arm: Ignore endianness when setting MTE tags
+  target/arm: Explode MO_TExx -> MO_TE | MO_xx
+  target/arm: Hoist MO_TE into mve_advance_vpt()
+  target/arm: Hoist MO_TE into MVE DO_VSTR() macro
+  target/arm: Introduce mo_endian() helper
+  target/arm: Replace MO_TE -> mo_endian() for MVE helpers
+  target/arm: Compile mve_helper.c once
+  target/arm: Replace MO_TE -> mo_endian() for Cortex-M helpers
+  target/arm: Compile m_helper.c once
+
+ target/arm/internals.h      |   6 +++
+ target/arm/tcg/helper-a64.c |   2 +-
+ target/arm/tcg/m_helper.c   |   8 +--
+ target/arm/tcg/mve_helper.c | 102 +++++++++++++++++++++---------------
+ target/arm/tcg/meson.build  |   6 ++-
+ 5 files changed, 75 insertions(+), 49 deletions(-)
+
+-- 
+2.53.0
+
 
