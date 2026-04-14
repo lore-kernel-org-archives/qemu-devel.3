@@ -4,87 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8F6F9D0D6
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 15:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A64F9D0D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 15:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCfeN-0006CQ-92; Tue, 14 Apr 2026 11:26:03 -0400
+	id 1wCfhE-0006pA-1T; Tue, 14 Apr 2026 11:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wCfeH-0006C0-LQ
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:25:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wCfeE-00081F-TI
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:25:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776180353;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rel6SgX8xCHrFBvPzRq4sS4l9bDBYQUrauTdttVj9Jo=;
- b=Kho8oFq5NEInlPTgT5c5p9ZZp3dusBjYwcLiXQGK1lI1BUsmBUj/faGFkG72ttx7N8AXDn
- R0MaGsnpA51pTczSFAFHW99CB7GvHSc6TdSKxTFiwzjUm4SYIIRYjZ5bHcRcrjZTiC/rnH
- aw0IdoK+zQP8WDX8JSx5fXQaYa7LIA4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-z2F2MSV9O2OnLzHKK3DKLw-1; Tue,
- 14 Apr 2026 11:25:47 -0400
-X-MC-Unique: z2F2MSV9O2OnLzHKK3DKLw-1
-X-Mimecast-MFC-AGG-ID: z2F2MSV9O2OnLzHKK3DKLw_1776180346
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8787519560BA; Tue, 14 Apr 2026 15:25:45 +0000 (UTC)
-Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.101])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8558E1800451; Tue, 14 Apr 2026 15:25:41 +0000 (UTC)
-Date: Tue, 14 Apr 2026 16:25:38 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Christian Brauner <brauner@kernel.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 02/17] monitor: replace 'common' with 'parent' in
- MonitorQMP
-Message-ID: <ad5ccvLw2XpdEn7-@redhat.com>
-References: <20260410160458.3778874-1-berrange@redhat.com>
- <20260410160458.3778874-3-berrange@redhat.com>
- <db93e5db-92f7-445d-b1a7-b2be39a9a059@nutanix.com>
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wCfhB-0006oh-6e
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:28:57 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wCfh9-0000ja-8Q
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 11:28:56 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-5a2beddab48so5509271e87.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 08:28:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776180533; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CXLSX5XKi9H+w682CoQhY0hpOPSYiPQde3V+HFVGz4vyQMGK9tpBmCjWQ1lHRQ6unl
+ bGg1ae29GECYlfalwrmuA4MOHoRh6qjm2CwnUV+xTobrgkZ/xjMXJRMrgqmkr7Xjg/I8
+ oDRQv1zxvNvi+YmTwtSxkS6tj8Bpg4S660NeuC/fGnqa5HYBBsJeeu+mX/7ag3hHsdfU
+ SUZzihp9J4zQ/95XHOlNlOeNNUau14KalTWdjZ57q5w+K799c2bzIbvSzv4iSq6i/jJB
+ 040OCrOboEd272dWbAPEs3ATvWGeKYxkTs1qLkfTSp7/9448LanMsEQ/vRgA8qtdCSgJ
+ PKbA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=r4fRx9uMLiAF9kvQv2xyM9tR/zWxCvqPzXkqpbQJD6c=;
+ fh=zMqNfbU/2zNkKF+Cag57LKHm2/PU2HxigWdxjzl/lRQ=;
+ b=c2XXxmGuLdnqdDeX8nEnSaiBy8+0T3ayN5/X+9MrReXqNoiIwPmmdUKiQ26XCD1Dod
+ Vjt96zvYHshJmvXbhmvmEefMvuSdXz6w8K9q+pVw3ONpRaQBns/YisjIPTRm/xYAs3EZ
+ 3CHDkQxKWW/5Smvismv7kcApQz/J0uS0PebDxFj0VMAtsk7gcABW8PqnCkk9a1wGYdvy
+ yyDOLzrvKzdIrEn7GyWkZiw0L084Uj8QZ17M+U90hIrdnW7rAb9Dthj5AIKv/Hcto80r
+ JQWWboVUIFg7MuH/EHyH3QbD5fdJ4/Ld32+tPoDTFiB3imMljjOzVMwmbIVOXgpk8xLu
+ 66rg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1776180533; x=1776785333; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=r4fRx9uMLiAF9kvQv2xyM9tR/zWxCvqPzXkqpbQJD6c=;
+ b=PYALa9s0LrLfri+eykHVrsXYhGn9jUY3fUB6QQR2jz1U1pGSA/5WfevJAe6y/CtfZk
+ XS++gf94sSyH2EbPnAkOMN61TulzcAc9iJpZ8JpqoeojjiB7yfggg86ac+LxTKJcks3Y
+ bHLbbzvTcvfvo6fX6pLgudQUzosZl8u5b6krU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776180533; x=1776785333;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=r4fRx9uMLiAF9kvQv2xyM9tR/zWxCvqPzXkqpbQJD6c=;
+ b=Fs8qi4QF6nt+usJ8DGbN/GUS9oquRDyvz+OeZYM/A2QhBXKSM0dzf2ZBYtkhd3HJ+l
+ /yqgA2MIAfSHLmTBZ5x/+T54/y+NrrupuxSC7zkNTyOo1yiVg3ore6/o9P5pvJG1hSzs
+ bI1C2pNNKMv6RDufNAQOUFJIRiPV8LqkYkK3GHhgjSXyG60UvXLIN+yX+8xcOjNMxNEr
+ BRv7T64c9OPcWPSLh97hLRY02+2Lg6OVaXyoavH75CkVDYrdnaWXL30c53WhxZ/i8Bc3
+ Ireo3XCloZeJlAnvxY2bgskgHVYrvzsOzNwaEnCOnH0hD4zyaB41nWZhtGsHJTrOf34y
+ ydKw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8Td4k6kahUjzvd1inV0VJwShi0iNBCtnZjYeiNJiiaBcl333zCSz2uMbWtQ3o43l36DvMlYfXZk1hy@nongnu.org
+X-Gm-Message-State: AOJu0YxQlqyURKsZ+MPS1csvJPgATOx+htWhDFGUHTIEsKXq5hmrVEw1
+ uEeVALVzpX0ZqgTAu4ovINrKcAp5A6CDab12bHsSeE9cP+n1HQZVIFzsjoy4k9hWBVs5E8a5gC0
+ XtIYuBOPemKUKvUERdN1vCvDP1obO66Wpajq6uBzPNA==
+X-Gm-Gg: AeBDieuahQc/MQJExAJI4qTmqq0vRIEWIFs7vRxmYMUCR89WLlMNrwNb6XmOWw04qtU
+ tYlMjHAc1Gk/RNLomJ2dCHD226b6FXJml5lqoi/HCRBo1c9j9Q8h4nOwP1GH40aoirMoPJyrB1z
+ 6P+jFn+um0n/aVphoVLt8vS3zAq/D0/pXW2CawL28qVCovVSDG73o8XD+eiMv9WnlNKii5RUNxR
+ E1IRMu7LAIf+5uDgRzrGEqmktabHofKuzGx3EnZa7HE+LUmnwzXYI7w/amZeDsmyrmmJzYAoDsV
+ 5B9oudIbVsURKLZEVq117NHs6QCfs6d+wo3DLv8=
+X-Received: by 2002:a05:6512:3d0f:b0:5a2:b889:3b79 with SMTP id
+ 2adb3069b0e04-5a3efb43c15mr5419550e87.2.1776180532191; Tue, 14 Apr 2026
+ 08:28:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <db93e5db-92f7-445d-b1a7-b2be39a9a059@nutanix.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260401202844.673494-1-peterx@redhat.com>
+ <CAJqdLrr9yyxr29U53NpFhghn7Nycd5LkA8U7eLSb9tjz3Huppw@mail.gmail.com>
+ <87jyu9zhtq.fsf@suse.de>
+In-Reply-To: <87jyu9zhtq.fsf@suse.de>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Tue, 14 Apr 2026 17:28:40 +0200
+X-Gm-Features: AQROBzA9W3bzAkIFHnv7p6pTjCC8733e1WvgveEaF-O0MVpLx-ZQaC4477zR0WI
+Message-ID: <CAJqdLrpS-Ha5M8EqjzD7L1SiuaZwgO_x_onUULNuwo1QApWwGg@mail.gmail.com>
+Subject: Re: [PATCH 00/11] vmstate: Implement VMS_ARRAY_OF_POINTER_AUTO_ALLOC
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Juraj Marcin <jmarcin@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,232 +112,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 14, 2026 at 04:15:42PM +0100, Mark Cave-Ayland wrote:
-> On 10/04/2026 17:04, Daniel P. Berrangé wrote:
-> 
-> > The field name 'parent' is standard practice for QOM structs
-> > so align the QMP monitor.
-> 
-> This is not correct: the first field of a QOM object struct should be called
-> parent_obj, followed by an empty line as per our style guidelines at https://qemu.readthedocs.io/en/master/devel/style.html#qemu-object-model-declarations.
+Am Di., 14. Apr. 2026 um 17:23 Uhr schrieb Fabiano Rosas <farosas@suse.de>:
+>
+> Alexander Mikhalitsyn <alexander@mihalicyn.com> writes:
+>
+> > Dear friends,
+> >
+> > when I can expect this to be landed in master? I would like to prepare
+> > and send next version of my
+> > NVMe live migration patchset, that's why I'm asking.
+> >
+>
+> I intend to send a pull request as soon as the release happens and the
+> next development cycle opens.  Probably by the end of this week, unless
+> we need to have another -rc.
+>
 
-Sigh, of course we're massively inconsistent in this :-(
+Thank you, Fabiano! And sorry for bothering with this question ;-)
 
-I initially just checked 1st level objects, which favours 'parent'
-
-  $ git grep 'Object parent;' | wc -l
-  34
-  $ git grep 'Object parent_obj;' | wc -l
-  18
-
-but I should have checked more deeply
-
- $ git grep -E '(\w+) parent_obj;'  | wc -l
- 859
- $ git grep -E '(\w+) parent;'  | wc -l
- 269
-
-I'll switch to 'parent_obj' here.
-
-> 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   monitor/monitor-internal.h |  2 +-
-> >   monitor/monitor.c          |  4 ++--
-> >   monitor/qmp-cmds-control.c |  4 ++--
-> >   monitor/qmp.c              | 40 +++++++++++++++++++-------------------
-> >   4 files changed, 25 insertions(+), 25 deletions(-)
-> > 
-> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> > index ae0cf8c1da..0922588ad9 100644
-> > --- a/monitor/monitor-internal.h
-> > +++ b/monitor/monitor-internal.h
-> > @@ -132,7 +132,7 @@ struct MonitorHMP {
-> >   };
-> >   typedef struct {
-> > -    Monitor common;
-> > +    Monitor parent;
-> >       JSONMessageParser parser;
-> >       bool pretty;
-> >       /*
-> > diff --git a/monitor/monitor.c b/monitor/monitor.c
-> > index 6532796edb..6b183edcf5 100644
-> > --- a/monitor/monitor.c
-> > +++ b/monitor/monitor.c
-> > @@ -308,7 +308,7 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
-> >               continue;
-> >           }
-> > -        qmp_mon = container_of(mon, MonitorQMP, common);
-> > +        qmp_mon = container_of(mon, MonitorQMP, parent);
-> >           {
-> >               QEMU_LOCK_GUARD(&mon->mon_lock);
-> >               if (qmp_mon->commands == &qmp_cap_negotiation_commands) {
-> > @@ -625,7 +625,7 @@ void monitor_data_destroy(Monitor *mon)
-> >       g_free(mon->mon_cpu_path);
-> >       qemu_chr_fe_deinit(&mon->chr, false);
-> >       if (monitor_is_qmp(mon)) {
-> > -        monitor_data_destroy_qmp(container_of(mon, MonitorQMP, common));
-> > +        monitor_data_destroy_qmp(container_of(mon, MonitorQMP, parent));
-> >       } else {
-> >           readline_free(container_of(mon, MonitorHMP, parent)->rs);
-> >       }
-> > diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
-> > index 150ca9f5cb..ca471bc1c7 100644
-> > --- a/monitor/qmp-cmds-control.c
-> > +++ b/monitor/qmp-cmds-control.c
-> > @@ -76,7 +76,7 @@ void qmp_qmp_capabilities(bool has_enable, QMPCapabilityList *enable,
-> >       MonitorQMP *mon;
-> >       assert(monitor_is_qmp(cur_mon));
-> > -    mon = container_of(cur_mon, MonitorQMP, common);
-> > +    mon = container_of(cur_mon, MonitorQMP, parent);
-> >       if (mon->commands == &qmp_commands) {
-> >           error_set(errp, ERROR_CLASS_COMMAND_NOT_FOUND,
-> > @@ -126,7 +126,7 @@ CommandInfoList *qmp_query_commands(Error **errp)
-> >       MonitorQMP *mon;
-> >       assert(monitor_is_qmp(cur_mon));
-> > -    mon = container_of(cur_mon, MonitorQMP, common);
-> > +    mon = container_of(cur_mon, MonitorQMP, parent);
-> >       qmp_for_each_command(mon->commands, query_commands_cb, &list);
-> > diff --git a/monitor/qmp.c b/monitor/qmp.c
-> > index 687019811f..69d9e40e32 100644
-> > --- a/monitor/qmp.c
-> > +++ b/monitor/qmp.c
-> > @@ -80,7 +80,7 @@ static void monitor_qmp_caps_reset(MonitorQMP *mon)
-> >   {
-> >       memset(mon->capab_offered, 0, sizeof(mon->capab_offered));
-> >       memset(mon->capab, 0, sizeof(mon->capab));
-> > -    mon->capab_offered[QMP_CAPABILITY_OOB] = mon->common.use_io_thread;
-> > +    mon->capab_offered[QMP_CAPABILITY_OOB] = mon->parent.use_io_thread;
-> >   }
-> >   static void qmp_request_free(QMPRequest *req)
-> > @@ -124,7 +124,7 @@ static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
-> >            * when we get here while the monitor is suspended.  An
-> >            * unfortunately timed CHR_EVENT_CLOSED can do the trick.
-> >            */
-> > -        monitor_resume(&mon->common);
-> > +        monitor_resume(&mon->parent);
-> >       }
-> >   }
-> > @@ -139,7 +139,7 @@ void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
-> >       trace_monitor_qmp_respond(mon, json->str);
-> >       g_string_append_c(json, '\n');
-> > -    monitor_puts(&mon->common, json->str);
-> > +    monitor_puts(&mon->parent, json->str);
-> >       g_string_free(json, true);
-> >   }
-> > @@ -166,7 +166,7 @@ static void monitor_qmp_dispatch(MonitorQMP *mon, QObject *req)
-> >       QDict *error;
-> >       rsp = qmp_dispatch(mon->commands, req, qmp_oob_enabled(mon),
-> > -                       &mon->common);
-> > +                       &mon->parent);
-> >       if (mon->commands == &qmp_cap_negotiation_commands) {
-> >           error = qdict_get_qdict(rsp, "error");
-> > @@ -207,7 +207,7 @@ static QMPRequest *monitor_qmp_requests_pop_any_with_lock(void)
-> >               continue;
-> >           }
-> > -        qmp_mon = container_of(mon, MonitorQMP, common);
-> > +        qmp_mon = container_of(mon, MonitorQMP, parent);
-> >           qemu_mutex_lock(&qmp_mon->qmp_queue_lock);
-> >           req_obj = g_queue_pop_head(qmp_mon->qmp_requests);
-> >           if (req_obj) {
-> > @@ -302,7 +302,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
-> >           oob_enabled = qmp_oob_enabled(mon);
-> >           if (oob_enabled
-> >               && mon->qmp_requests->length == QMP_REQ_QUEUE_LEN_MAX - 1) {
-> > -            monitor_resume(&mon->common);
-> > +            monitor_resume(&mon->parent);
-> >           }
-> >           /*
-> > @@ -343,7 +343,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
-> >           }
-> >           if (!oob_enabled) {
-> > -            monitor_resume(&mon->common);
-> > +            monitor_resume(&mon->parent);
-> >           }
-> >           qmp_request_free(req_obj);
-> > @@ -408,7 +408,7 @@ static void handle_qmp_command(void *opaque, QObject *req, Error *err)
-> >            */
-> >           if (!qmp_oob_enabled(mon) ||
-> >               mon->qmp_requests->length == QMP_REQ_QUEUE_LEN_MAX - 1) {
-> > -            monitor_suspend(&mon->common);
-> > +            monitor_suspend(&mon->parent);
-> >           }
-> >           /*
-> > @@ -462,7 +462,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
-> >       switch (event) {
-> >       case CHR_EVENT_OPENED:
-> > -        WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
-> > +        WITH_QEMU_LOCK_GUARD(&mon->parent.mon_lock) {
-> >               mon->commands = &qmp_cap_negotiation_commands;
-> >               monitor_qmp_caps_reset(mon);
-> >           }
-> > @@ -504,27 +504,27 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
-> >       MonitorQMP *mon = opaque;
-> >       GMainContext *context;
-> > -    assert(mon->common.use_io_thread);
-> > +    assert(mon->parent.use_io_thread);
-> >       context = iothread_get_g_main_context(mon_iothread);
-> >       assert(context);
-> > -    qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
-> > +    qemu_chr_fe_set_handlers(&mon->parent.chr, monitor_can_read,
-> >                                monitor_qmp_read, monitor_qmp_event,
-> > -                             NULL, &mon->common, context, true);
-> > -    monitor_list_append(&mon->common);
-> > +                             NULL, &mon->parent, context, true);
-> > +    monitor_list_append(&mon->parent);
-> >   }
-> >   void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-> >   {
-> >       MonitorQMP *mon = g_new0(MonitorQMP, 1);
-> > -    if (!qemu_chr_fe_init(&mon->common.chr, chr, errp)) {
-> > +    if (!qemu_chr_fe_init(&mon->parent.chr, chr, errp)) {
-> >           g_free(mon);
-> >           return;
-> >       }
-> > -    qemu_chr_fe_set_echo(&mon->common.chr, true);
-> > +    qemu_chr_fe_set_echo(&mon->parent.chr, true);
-> >       /* Note: we run QMP monitor in I/O thread when @chr supports that */
-> > -    monitor_data_init(&mon->common, true, false,
-> > +    monitor_data_init(&mon->parent, true, false,
-> >                         qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
-> >       mon->pretty = pretty;
-> > @@ -533,7 +533,7 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-> >       mon->qmp_requests = g_queue_new();
-> >       json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
-> > -    if (mon->common.use_io_thread) {
-> > +    if (mon->parent.use_io_thread) {
-> >           /*
-> >            * Make sure the old iowatch is gone.  It's possible when
-> >            * e.g. the chardev is in client mode, with wait=on.
-> > @@ -553,9 +553,9 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-> >                                   monitor_qmp_setup_handlers_bh, mon);
-> >           /* The bottom half will add @mon to @mon_list */
-> >       } else {
-> > -        qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
-> > +        qemu_chr_fe_set_handlers(&mon->parent.chr, monitor_can_read,
-> >                                    monitor_qmp_read, monitor_qmp_event,
-> > -                                 NULL, &mon->common, NULL, true);
-> > -        monitor_list_append(&mon->common);
-> > +                                 NULL, &mon->parent, NULL, true);
-> > +        monitor_list_append(&mon->parent);
-> >       }
-> >   }
-> 
-> 
-> ATB,
-> 
-> Mark.
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Kind regards,
+Alex
 
