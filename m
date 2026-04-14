@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBDCFF9D0CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A699F9D0CA
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Apr 2026 13:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCdhh-0000qE-BV; Tue, 14 Apr 2026 09:21:21 -0400
+	id 1wCdkF-0003qb-RT; Tue, 14 Apr 2026 09:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdhf-0000q0-VK
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:21:19 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdkE-0003qM-Jv
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:23:58 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdhe-000809-57
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:21:19 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d74086e5bso1858061f8f.0
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:21:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCdkC-0001HK-VN
+ for qemu-devel@nongnu.org; Tue, 14 Apr 2026 09:23:58 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488a29e6110so60859245e9.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 06:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776172876; x=1776777676; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iR6Z60525WsUcAHnGzZLKIJqtugk1SSKoNFtM74g22c=;
- b=mWTBhqiLyjx88Grp7ur6Fe8IoF185uhRPfE5/ZFPoA4joBRJJRLxFsWSJ5udUnH2gU
- Ux2V3qCG7to1Q1X3T7l0LLYA0aHs/uAi34Kn09ZhEhq+O3WWHLoT5LIESsYZZKYhM6AK
- +hocTTwNFp9Btv/0b/sdfbkHjUhealBwzhZUOAs2NBLiQZponjtPk6B+M0N0g9JQ3OPC
- CsGoFIiWh3SCR8BDXBWsqZxXYWQij86zSK6mjv486+7wIJxgFwKP17OVeXlJy1YG/GOU
- Dp/19oaeoJnq1pKsFNhRB8H3uIHnUJ8vxlD+ohga1GNAX0vO9GgsKQoyiXm0CqPbAjBl
- DzDQ==
+ d=linaro.org; s=google; t=1776173035; x=1776777835; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fFGBXNObjmSGSFnpuHSqIcNQxPNr0H1Q6j6ng522NCY=;
+ b=Me6I1l2AMOUZcORtZaS7J8AGx9sKY3sVevoTJszHqdw/3HfLK/m32B9A6+sTUk8A2K
+ 1IxPa6HQ2u6x5TDJfN0RWOBTRlA3br1whpNOEZRx1TOMS5nL0OyTGq1e1MjEpr0Uv7XE
+ b1YCFuQdgejlOQ1zptvqvydexIT2urEMe1OcCO+5bhS12tdU8Vhcdlivkrp09jMktcTN
+ fc4tp0z36GkxwEdlD4HOS2YiAJKT4p57MXq7DBrkB9cdkce/MjQjmC7H2SctRD79gTEh
+ r+qdbVtPRomCUFjv8v4vP2nIJKKTwbGpfQyNT+MJWeOOSdPMIq/0Q4vkuK9Rz7bwSAcZ
+ qtkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776172876; x=1776777676;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=iR6Z60525WsUcAHnGzZLKIJqtugk1SSKoNFtM74g22c=;
- b=XkNbz9+OPH9mCxPU4u3X0XzZUIJkMxH17tMqS5hcKhJvO1IyZwYgtYYdfwJC/QilZn
- U6+HYtD+RF/QoDsAPqBzD7iZ4yFWs5w9sVl1ARk3UP6ovbjyqTO+DXPXyiYkVfQ3mnib
- J2j+Jbcnh0oram5Xm5gxKaqi1yud6pinKQ9t/5YGva+bImlCubl9Jod0UuCbhRD7SmuM
- vgQP6KyhXhOpbE22AYZo9wrZjiRUv+36Pcf9dKYxBpthE1RnaRS7Q5rFb557toJJYSDD
- +nqIFEcOZb5YetTYF9GrSZfGoF3lP4YWOv8F0WcvYcrMertmxtA6wfCGLF0S22i3lWRo
- qBzQ==
-X-Gm-Message-State: AOJu0YwhnVockztkkAL1J2XOrsmzALWQdBj++EEWrTxTp1qu3boSS6LJ
- OfufAdfNC4ixe566zdYRN6XRO6sI5pDQb846M7xk/eMunZ4S3OLzfdIGL27LoZoXyYcKv38Xf+T
- W1eRfKDI=
-X-Gm-Gg: AeBDietRPnMgF1kLv+oXSjnynXGLiwnClq30i3WWlWAlWZpcyHTGy1Fxe8z0XC8O0QX
- wveD1pVn0MyZ92YIqTKFcmjkitjCUwDCc32IdDEOHq+eH+1yfKixpWRBsy4FtiacexzA9LdLo1k
- u7okl/dCIgluCidpRZ18hf7kjaFYXM6hb7BYKkQJ+NINmTr+gzsXJolyCe7MD/W1BK2i39ElTTd
- zCyPdVCTkqB3wLQuBJz1Smpep5xdzeD29AHBZofov4j7HJAD0EBrcdF/kD+REMnXtovNabojsVY
- mlCn/qrnaNRv23v8QXGWHNdqnmdqg18bYhoKyxAj5CHOqlJDZ62Q1yhr0fO8VVRPg4mlFQz9eUd
- OIh9AIYcXeK/spVO6FEiPOKeUdUy5N/14Od9D5Rg+WHUapcJkligIvVEcBVZpYNsXNHouwXDsHS
- ceOchq2BGS9OX3JXXzYNq0W8QrBR7/foE306+ujAj+agLmAQY2X2aZcaFSjMss59pQyiDJ4IOm
-X-Received: by 2002:a5d:6a90:0:b0:43d:6fb7:fedb with SMTP id
- ffacd0b85a97d-43d6fb801bamr10964943f8f.36.1776172876195; 
- Tue, 14 Apr 2026 06:21:16 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1776173035; x=1776777835;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fFGBXNObjmSGSFnpuHSqIcNQxPNr0H1Q6j6ng522NCY=;
+ b=AUCexCYVJSn1E53U3ApH2sZlZXsE/lkNDkkxhgISAugo2WyJyVSyvbctSJLjDSSdjL
+ fWzAAt7LjX39Y8NDmbOiWhYWjJvWZrO7m9mx2jWeGsJvXQI5hxIrYSnjvMN94SC3QKoQ
+ OUF1vQAvZbnosIxtvZVWhj32/Uy1r4fE4jBxAUW/iyUtQMOGPUT+9QQNuvgTLHdEdO8c
+ X0FjrxT5i0ZClhNHc8STZbR5gVPjIo5fkupzQo5Qhz3ybji3t8xjMiRYSG4qOHEHmk9S
+ U9P6ZaVqxp+5kxXhCCCYD/gumfBj7jPl5X/9kLUsLMc8Hvm6af2YayJ+bCGG79k5zDeD
+ 9Y4Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/igdhzl5sdP9+HVaSkOmfzUlTKVRWP8E2VrDQq84p/VKylXrWB7j7svZTvCRx4f3P8nE1E4uF1Bkc8@nongnu.org
+X-Gm-Message-State: AOJu0YyvsJiUQjdpHtl0odod/mOuGFtmG3muqrUDGSL/xbkeQ8LhR2Yn
+ UlOaGDens7BA0G/5MA81Dxl+E8jHpEG/PDau/cV55OnQKWYirvdBZPHUrihDkNfqXN0jAWY6LsY
+ JNdT8ZzU=
+X-Gm-Gg: AeBDieuyqBc3elpn5lMV7A7gZceta3gRhDQ4CUhNkHy9ijno+tWaHXTb42eMQ1HRE31
+ nl5xU2tyG/rkqfUgyGQr/o6DSJULKndezyWKXu+FNNrEJCHxEXq1T7pVm9XY8nruQS7cSt4Yo7q
+ 1qSSpewUjKQb+gWnImK1De7waMiO/OvvxSFxM/VbicUqdl11qrQY5QmXviE58pRGMT7VhKsn35p
+ rcFTjwwNaz29kKz6oFUigRXbFqSLzGtAYQpuULfd0moUw6BkitvoxQfkk9ES9+rAxX5thHEzyNG
+ R+ylsyrcQfkx5Z9SR8K+JqJR9np9d7MrrIbRBawoxSm6deiCI8LTniSLeEqDqYmIU3x4vlnYOF9
+ BlgRE9P0pY0PBwKh8X/Vxu+6dYDm4thNNRvo4989GIeHfeHpLdnQErQQnIgGvZkh309rKDIMNxk
+ JBm2w5XGtmjJvcmYJ3W4l+GPBn22o+gEdmOehJ32MAWdJ8Fb3/yiQwOGE/IHwo1MUDBQ==
+X-Received: by 2002:a05:600c:a11c:b0:488:af14:f1da with SMTP id
+ 5b1f17b1804b1-488d67f9a25mr173887085e9.7.1776173035112; 
+ Tue, 14 Apr 2026 06:23:55 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43d6a1203b8sm37370938f8f.16.2026.04.14.06.21.15
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Apr 2026 06:21:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 2/3] hw: q35: fix VGA text console with SMM disabled
-Date: Tue, 14 Apr 2026 15:20:58 +0200
-Message-ID: <20260414132100.53861-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260414132100.53861-1-philmd@linaro.org>
-References: <20260414132100.53861-1-philmd@linaro.org>
+ 5b1f17b1804b1-488d5d78cfdsm123676355e9.4.2026.04.14.06.23.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Apr 2026 06:23:54 -0700 (PDT)
+Message-ID: <7be383bc-40f1-4da2-96c7-241946e6e52d@linaro.org>
+Date: Tue, 14 Apr 2026 15:23:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] accel/hvf: fix double hv_vcpu_destroy() causing
+ teardown error on ARM
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, slp@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, mads@ynddal.dk, brian.cain@oss.qualcomm.com,
+ mburton@qti.qualcomm.com, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+References: <ee6f642af1dab29aaf99f86ac9254ddd25765bf8.1776172276.git.matheus.bernardino@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <ee6f642af1dab29aaf99f86ac9254ddd25765bf8.1776172276.git.matheus.bernardino@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,94 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+On 14/4/26 15:11, Matheus Tavares Bernardino wrote:
+> The following callstack causes hv_vcpu_destroy() to be called twice,
+> producing HV_BAD_ARGUMENT on the already-destroyed handler:
+> 
+> hvf_vcpu_destroy
+>   |
+>   |_ hv_vcpu_destroy
+>   |
+>   |_ hvf_arch_vcpu_destroy
+>       |
+>       |_ hv_vcpu_destroy
+> 
+> The first hv_vcpu_destroy call covers both x86 and arm. Let's remove the
+> second one, as it is redundant.
+> 
+> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> ---
+> v1: https://lore.kernel.org/qemu-devel/70cca2a5cdde3e6531e5c8f1e399e0b584d51ad6.1776096073.git.matheus.bernardino@oss.qualcomm.com/
+> 
+> Changed in v2: removed second call instead of first one to avoid
+> breaking x86 (thanks Philippe!)
+> 
+>   target/arm/hvf/hvf.c | 4 ----
+>   1 file changed, 4 deletions(-)
 
-Work around black screen in VGA mode with SMM disabled.
-
-Required by NVMM, HVF and WHPX backends.
-
-https://gnats.NetBSD.org/59721
-https://gitlab.com/qemu-project/qemu/-/issues/2608
-https://gitlab.com/qemu-project/qemu/-/work_items/3085
-
-Patch written by Taylor R Campbell <riastradh@NetBSD.org>
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260413170407.57574-1-mohamed@unpredictable.fr>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/pci-host/q35.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
-
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index e85e4227b37..05ef5222f7a 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -372,6 +372,10 @@ static void mch_update_smram(MCHPCIState *mch)
-         memory_region_set_enabled(&mch->high_smram, false);
-     }
- 
-+    if (!mch->has_smm_ranges) {
-+        goto out;
-+    }
-+
-     if ((pd->config[MCH_HOST_BRIDGE_ESMRAMC] & MCH_HOST_BRIDGE_ESMRAMC_T_EN) &&
-         (pd->config[MCH_HOST_BRIDGE_SMRAM] & SMRAM_G_SMRAME)) {
-         switch (pd->config[MCH_HOST_BRIDGE_ESMRAMC] &
-@@ -405,7 +409,7 @@ static void mch_update_smram(MCHPCIState *mch)
-                               mch->below_4g_mem_size - tseg_size);
-     memory_region_set_alias_offset(&mch->tseg_window,
-                                    mch->below_4g_mem_size - tseg_size);
--
-+out:
-     memory_region_transaction_commit();
- }
- 
-@@ -474,15 +478,15 @@ static void mch_write_config(PCIDevice *d,
-         mch_update_pciexbar(mch);
-     }
- 
--    if (!mch->has_smm_ranges) {
--        return;
--    }
--
-     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
-                        MCH_HOST_BRIDGE_SMRAM_SIZE)) {
-         mch_update_smram(mch);
-     }
- 
-+    if (!mch->has_smm_ranges) {
-+        return;
-+    }
-+
-     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
-                        MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
-         mch_update_ext_tseg_mbytes(mch);
-@@ -585,10 +589,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
-                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
-     }
- 
--    if (!mch->has_smm_ranges) {
--        return;
--    }
--
-     /* if *disabled* show SMRAM to all CPUs */
-     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
-                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
-@@ -604,6 +604,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
-                                         &mch->open_high_smram, 1);
-     memory_region_set_enabled(&mch->open_high_smram, false);
- 
-+    if (!mch->has_smm_ranges) {
-+        return;
-+    }
-+
-     /* smram, as seen by SMM CPUs */
-     memory_region_init(&mch->smram, OBJECT(mch), "smram", 4 * GiB);
-     memory_region_set_enabled(&mch->smram, true);
--- 
-2.53.0
-
 
