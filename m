@@ -4,161 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B61EAF419A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 13:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD174F419A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 13:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCzum-0001Et-G0; Wed, 15 Apr 2026 09:04:21 -0400
+	id 1wD00l-0002hM-64; Wed, 15 Apr 2026 09:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1wCzuj-0001Ed-7x
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:04:17 -0400
-Received: from smarthost1.eviden.com ([80.78.11.82])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1wCzuf-0007Ow-34
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:04:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=bull.com; i=@bull.com; q=dns/txt; s=mail;
- t=1776258253; x=1807794253;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=q5KE/B8fpCzRC+j5REjVqOl7APTVQSfyesdaTA4w1t4=;
- b=DFzT9Ma7/6SX9JBFulCl1B2uPzb2dzrGAXibMV+kFdbMW+3lsnhdS3gK
- Eva5Qd099WTA1iqdlXCAkscoppC9MVs1JdKkFH2aCgHkRk/RTfc1JqTVF
- 8bNHU6xZrYTUqm+CLxR53Ad0E/sWEHPtVqiQyeWfv4aiU9HmJ95baYPL4
- akDTgNr+IiXy04xV2lUyqKPOwf2C/uhihI0tutR14y7vYShWGMBuTxgNl
- CfDhL1fffqz0LXLWFo5DK6D7ynj07Jvk0f2SFH0yqQ//+EP/2neRpnHUQ
- wEwahji27nKmtoofsult8Li8O9GW7tjf/t/SN/htx4bxmITHKcRrgw+hH g==;
-X-CSE-ConnectionGUID: qgbY0sF7Swqq63UWxdlM1A==
-X-CSE-MsgGUID: lAZQCQyzQeCOv2VO3hDJNw==
-IronPort-SDR: 69df8cc7_VxgdSacb9zLvCFLi7CxuB6VNRXJw5rCWRZ6wqo3vWQOElh3
- cc9y7bMnIoCsjFEHgHni1H/DsDEB0HtqeWmM1MA==
-X-IronPort-AV: E=Sophos;i="6.23,179,1770591600"; d="scan'208";a="47537657"
-X-MGA-submission: =?us-ascii?q?MDG1Od/WvYN5cIm9xxdVk1mAkUH9g3nJXdUqoe?=
- =?us-ascii?q?i0rJ57/M0JvsvKh2D0PJSYaFq3aaEOLkOFxAKieFPCi5UZfoaRiUv4R7?=
- =?us-ascii?q?jyoIf9xtgc7oIzK6qs9g/lajK2GHf1fkxREKjy1ikIf5K/Ru47wX5Hb4?=
- =?us-ascii?q?Xfn1pgN4d1TvOJn1ZtjyMZ2g=3D=3D?=
-Received: from mail-westeuropeazon11013061.outbound.protection.outlook.com
- (HELO AM0PR02CU008.outbound.protection.outlook.com) ([52.101.72.61])
- by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 15 Apr 2026 15:04:06 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Rmx/2O2WI73um4O8Nyhm3Lvm1o0IBkDG3tu8lHXU1raw8szCD1fhyrZosHmbwkW097Y+sfV/Xcp1iCghSTof4t6t75VDvgAK/U/1j0KUgGndPHv0RGXdnqiwRlLCi7ROFBcCseH1uF2LXKDhV+XPf0Cz9CRgvjz5yonccHWzaQDmKrLi5cWIoLlRNcvefJ6roQaFOmJ4YZ63lwwDfu2kD6qRULvnHsHXuLzgaBZlafFXjFn8l9r0XbM6XHlnzb1otuWs2k/pVFHI/LhhICMg3ovy9IwBPAkQq4BkDKpnD4E3LK8F4Kh2ahW7iUBK74Gn4P9kurfg2AtvPKN+3mofYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q5KE/B8fpCzRC+j5REjVqOl7APTVQSfyesdaTA4w1t4=;
- b=aYnMHPyzGxYtzXXbmE2yT5GvV++o3L6E9cHlAL53/xL1OFyulAt/32np+uvhtLzZC2ItxOPlziCOzmVD4u1KZEpc1TjpxgcVl7rvGgRHE+cV1tiBaWpFRQSkfP12rxIczEbO7jLeFubN3sICDQv++MGVp6MF5+czif4cIlAbJBcl+FhaRoPQi1u4BOATNo0xdJEAMvSPf7gQarPayUJqadGgepXmYibHSuQJRKQ7MpWBdT/h1Kx3s5Z0Afx5rDDIR3E9FXBoGREXK3AJi5lRse1ThD/sdDl0W71dhdXg0xjbGtud3FbLxRvYS0YYhSgYzPo0PpV7yJkT16z04ws09w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
- dkim=pass header.d=bull.com; arc=none
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by AS2PR07MB9124.eurprd07.prod.outlook.com (2603:10a6:20b:55b::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.48; Wed, 15 Apr
- 2026 13:04:03 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf%6]) with mapi id 15.20.9769.046; Wed, 15 Apr 2026
- 13:04:03 +0000
-From: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
- <clement.mathieu--drif@bull.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>, Yi Liu
- <yi.l.liu@intel.com>
-Subject: Re: [PATCH] intel_iommu: Re-expose VTD_ECAP_PT
-Thread-Topic: [PATCH] intel_iommu: Re-expose VTD_ECAP_PT
-Thread-Index: AQHczL5zu7eE5OGysUqASVMPREHk27XgFvoA
-Date: Wed, 15 Apr 2026 13:04:03 +0000
-Message-ID: <6fd7a51125963dabe9e9b3732e2ece5086b666d6.camel@bull.com>
-References: <20260415095832.9631-1-zhenzhong.duan@intel.com>
-In-Reply-To: <20260415095832.9631-1-zhenzhong.duan@intel.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|AS2PR07MB9124:EE_
-x-ms-office365-filtering-correlation-id: 1aa98b98-d0c6-40a9-7606-08de9aef7807
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|56012099003|38070700021|18002099003|22082099003;
-x-microsoft-antispam-message-info: 8mkaVSDK4nAgYl4KpV+KO9BcKQrBT0rCfqkSyVFLaCXaosDwf25bN6St9DvJsaFnaK7Hlbdb8dIglAZobiRKQtP+KBH2ytK9qb1BP68Uh42YUzT9R1yPLW3Ti2EkEMjEEs9DG26vlZkB1XZ8ZfqHyNdCh9kgdY6UMO7H1uZuio6TUvZYdQOOckT0lVK7BrxIUHuObA8ID2yq6eE0/dXVErAbvClA6PcSBAQXD/IKAmSi3pd+QtM5zdSrcSlMm6y4f04g/FTEXaCvRekKH80exoj3Gbcjj0eOE15Ob3/aQjIsgb8qOCT5WTptGfH8qOZK/zIB9epTLnolE+JpmK/dAImXeWZMPbohANjFzOmwXob2alHIQ0SGxwoJ2zOCtEU1tgdt5RTX9ibew7vD53T6nEmnd1G8vRvXT+ISxirIJeTIivvDog79Nm4qNrtHwBkAG9dUnLRwI4qCvlOODQd+30/ndEUtQ3svHXAcA9jV9jTjhkuU1+sICVssEbsVcna1Ih0oHGj5WR/0xvFIjcfGPiKlKrXQXEw9UkLLd8peh/vF+U+m5nrDpy6tBksT89gu7MAvEcyAp7PkSieDPM+83TVkuRkcGgjTmUcCETlaX4VZPiAMKfMj1fSMnckj3laeVUaqXj9usKuxFNpzGGsUDiMa0hDg/zPtsVvCWYkYi2ViUqZC6MNOsj8VWaXBVuV8BZ9Tt5C8m17Ycmewk4cWmH21t7Joo0xwsLh0C7Z+Om8+RxfQV3rxsE6YbAkKdjku
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(56012099003)(38070700021)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MExpNUc5b2RQVnFaR2dpdFJialJ4UUdhVmZZQWN4QzI0ZC8zb2lUMXNsaW81?=
- =?utf-8?B?Y2djWVRuWHMwUzhOeHk3alhwcEY2STZ5cFlRMmNsWjVlM2VOT1haSmY3cHZX?=
- =?utf-8?B?OG0vaUQ5OFdEVGs3L3F2SWFwMU4zekZVS0RoK3hJbFB0OE44UGpUZWlPZjV3?=
- =?utf-8?B?OWU2K3dtRitTelJJemZpemtBNlBIT3BTRk4xWXRNZktqY3Iya0VEbkF1L3lo?=
- =?utf-8?B?OExFWWNMOUZuaEgzQXIzakRBYlBoZ1oxcHB6ZCtTRFRaUlVselF2Z1hJZ2x6?=
- =?utf-8?B?NzNHTGliUHZnb3RQSlliRVdWZmZhOW9JUTc0UHRoclZPYWJPb29HRlgxRk5h?=
- =?utf-8?B?WGU4N0Y5aUFPaWFJeDllR3Q5QnY1eVFMSjM2VDRaTkdFcmcwQW1yemlmM1I5?=
- =?utf-8?B?R1loRTBvdmFkSUtDQWxGSGtYKzQ0azNFMVRpaC9VZUVtTFhhQjBEdFkyT2Rm?=
- =?utf-8?B?MUxYVjRDSmdxbmR4K3V6RmFLWHJlZFRaNmF4UUJ1a0JPMm5iUWlGMjZhRVln?=
- =?utf-8?B?SG1ucjRhQzg3WHMydis0OUlIVjZMS1E3cUVWSDYwUTc0T21iQTdWbUJ2NDdZ?=
- =?utf-8?B?VDZyRjUrYXhOclFFSVZuNFM3THpOSlo0UFFrL2pvaE5vUHVpN3owVG1iSU1U?=
- =?utf-8?B?dW9mOFVIK3pIYUVwQzlpcGNoS1JTRGcvd3JxY0Y3YTdLcVJQckE1cmovMFFK?=
- =?utf-8?B?SnZkMWsrOUp2NndJNnU2ZVN2MTVOSzNJK1I3MGVjUzRDT2JEeFpwOS9Mb3lu?=
- =?utf-8?B?STc3bzIwMnM2eldDbU52aTQvMXBXVG1LcndNdUNwRWllMk9VRTRYRC9NenJw?=
- =?utf-8?B?aElDNUkvWVB5UzJrbDFiTng1cnBZN0JYVm1YZ2FlTmt5a0RuUGxiS01vdi9l?=
- =?utf-8?B?UHJROHY0ZGpBdTVQaG5rYnZwTlJYNHhRem9PK0JYY09BRldQTWVodVZ0Mjc1?=
- =?utf-8?B?NzF1aHUxSStzUG5pak9RK2QvbGRrcGRhY0hKM1RiWmZxZmxQaGsvUit2OFRQ?=
- =?utf-8?B?SG43b0N1QlBDb3RvSWh4QWlwYnZTM0ZjNUl2TFNmOTNvRkhUREN3bTR5di9L?=
- =?utf-8?B?am5hODdPUmtsNHkwbk4wOXVVVjZUaGQ1aVh4RDZjM0YyT1YrU1J4alJTQ2No?=
- =?utf-8?B?WUVLaHFKSGFCTDRUQ3FuSFhNS2FHMlB6ZnhoUEdVS1pjM3JzRmMrUmdtSkhJ?=
- =?utf-8?B?ajVFL2lheW9RMUpIeE9DcGJrMm5XQTZ1ZDdZb0c5VVpLWE1zTWNPMnFrNTIr?=
- =?utf-8?B?NWhHTCs0S0s0cW1FSnJ1eGFabFFXcUYxMGhxMXFFSFJQbGhpZHJGWXhjbFFU?=
- =?utf-8?B?b3BIR24vcC8zTUJmeTFJV0lTSGh3Vk42a2F2MlFqMnVWM2c5dEkyV1hoK3Bv?=
- =?utf-8?B?NHZOV1FKOFQwUDF2OVR2THVpNkFuNVhMSjUvTVFNalVuK09Zb1lWdE9YV2pB?=
- =?utf-8?B?NG1iZGt2ei9peFMzbmc5ZXRSenMrNVlqT2tibGdoMDRJSTFYUXppTzlzZXRP?=
- =?utf-8?B?L3c3VjlnakdGTGREbGZKTjFQc053dmZCM1UwbWNhSFZ4RUtwbEhXenV1SHZh?=
- =?utf-8?B?aFpSYXltcTFhQ2lteGdkMzVIN2lPVEdxamNmSlFvWWd6STdvS0UrZDNkSlFx?=
- =?utf-8?B?S2ZBcnhQSjlSaEYwbWswVHd0MTlqd3g5RWt4blZxdzcrSEpHVGZHOFVvaWVs?=
- =?utf-8?B?QW9ObkRSaUt1S2xLM3RZWXNBcWhoQUpOUW5BQUVkRTFnNnJtYWJBY2IyNEo3?=
- =?utf-8?B?KzEwWHQzK0xnc3pnem96eXlnbUJuUlIySkJoR1EwbE9neTNTMGFtb3hkUmtW?=
- =?utf-8?B?cWl4YlBNQXZCcjF5MEM0NjM2b1FDMmhvZXk4UUF6b21WSHFQMEozZllPSjVH?=
- =?utf-8?B?NFlyeXh0OXhrSDNrT0h1Vm9iS0tqVHdyUWJNUFdEcWI5YnNiTlZtZjdnVnRN?=
- =?utf-8?B?bEFQZUpmOEcyTElqdzZHaHdJbG5DZ01LWWFjaWRZRHhPcWJyQm0xRkRjUzA1?=
- =?utf-8?B?dnpwRGlGdTRtRXpENGJPNVhyKzdDSkk2VnFGM0JlMTNxS2VsT2tsTklDZ29r?=
- =?utf-8?B?N0V3QThoY3dmeG0zNTZvRWltRzBxeDcxRXFIOTJaRVlqbmtad1FEYUs4ZXMz?=
- =?utf-8?B?TE9vdG1EVkxEZjBrbVBDMW90aXJ4UlNxbVcxcjd6blhYTk9vVFZiYkZ2elFn?=
- =?utf-8?B?T0NPZWZocUZQaUgvNEI5L1A0MFZjMFR5amY0NVgySnRJNjBvMEw4UlVBbXZw?=
- =?utf-8?B?MlBxb3YxZ1dDUlN5YXl0c1RWK0I3dlVESlA1UnRxM3NCaGVWckRweFFjQ3hU?=
- =?utf-8?B?SGdvQUZPeDF1ZkN0R0F4dUVPMDVMMUp5NFpXNzgxWGhFdm1pc3k3eWNLYjFq?=
- =?utf-8?Q?HSbyXoqBgT+G/mJSvw29DTu33krV6w3mVNvQn?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4BE351A9578FF34DA3C5678717E9526F@eurprd07.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wD00i-0002g2-IR
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:10:28 -0400
+Received: from mail-dy1-x132d.google.com ([2607:f8b0:4864:20::132d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wD00g-0000Ne-NA
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:10:28 -0400
+Received: by mail-dy1-x132d.google.com with SMTP id
+ 5a478bee46e88-2d52c7f92b1so5985244eec.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 06:10:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776258625; cv=none;
+ d=google.com; s=arc-20240605;
+ b=RuXGcOgMfPpMjpRPYYp6LKxkXzxyELGHS/w9kx6FsWTQj0gRTD9Lo5hE+WBPpsmrUN
+ qXiBy+h6ZsEwFDYRKSqyIgXn/Wmz4Ms3XsoyWQUiM16mIVsnF5xJPuCAAoTmSvmV1g1D
+ 4eKiAS3lW/206sZ1A6wbtox21jTwmMnpwVnKsrwK7Lc5J9pmE1RegA5VNVDT7b/cPFcC
+ 6hATabRPu1M/8UvTZpOcA5r/EPq5uxXdjjJTJt1W0MmbiRzwK25xViKdIpDlqOaoH7Lm
+ 6cRaUQB+2BTlBlFusfgsHGGq3uPfd1KS1NJM/kEeUKjF/sYLrezFXLW7+aqVRZ74sghf
+ fqpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BZIuC+Ka19PenuknxSmp6m/LwXW1y/APu3C1ALcXZaM=;
+ fh=Rq361VBSSCpVwgpDpWmtmoS1gCbjr/aepb+Zsf4+S80=;
+ b=Q3X0luOf4ZCt+9EgqmELk1GBKSC0hv6G8htJSLp/PbfBQGVjYzJ1h5tYDSEcR4/pEQ
+ 9cm/I3/VjLAWpPvsUJL7T+JQ+01OYUOL8mFTpfbdmrEY6IrptsoRnlI9w6doTLZjJJ+g
+ YOV1UP11QoI1uvaWYSWlrVUvmbk21fNNZUCAuh1gERtTvoZz1KxG93ClEMLF/u1W20mA
+ wQx3gbU2Z8AZeEUwF5I+yvpBaG7J/ALKSx+dJecN6l4RqZvfNF4jOAhm7DNxKy0xf1lp
+ akiGQ6V0V9JliITJaSG7QqmANr+NTvcCfSg9s1UMziBaH5RORRQlHhlW4F6KB44JCX6O
+ jOpw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776258625; x=1776863425; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BZIuC+Ka19PenuknxSmp6m/LwXW1y/APu3C1ALcXZaM=;
+ b=eYy7e3j3uoeVGcnmufUceDxh/HWaa0+B5N0qAXl2E+YBYZmTmDT+P2dFG/tRv3Z21I
+ ZS1Ij/PNX5+D60O+Tj3QgPuN2TA/57H/8L8K3bjorXEqq5Ky0cbofA73rpasHLlJzdRo
+ kebpXbsRskDVKN5CCQ/6y8h4uB6w6vtHQJ+Pm87sLt+cr6QRVa2hFdXuQzf7Dr+p44uN
+ Tjbf+iifq2KqrSr32176R7MtRFTKmD3+jkl1QglmZk7frMF7qLEr5v8B8RPRR7HQc0uE
+ znZISbdlVHgA2tnmSHqh4wXW8I0cG6gw7frige8JfRoK2Om9u/kb+KyYtsVIrEUeiEat
+ VKBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776258625; x=1776863425;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BZIuC+Ka19PenuknxSmp6m/LwXW1y/APu3C1ALcXZaM=;
+ b=hqdx1gKoSXC9ltg+AQRHWZvgHbOug7/ltllrvrTRL1E2BBCZD18OzmURD95OMWZD2K
+ s+XS1vnc7eRIpTGcyqgB/havxT6/yi5RQpVTmwXMyrpRlFLSwpVZehRKu1pIy953CYo7
+ eZpc/gkcjkT51IeFRyKhUzLFh/fQyKxP0Yie+4qeM3kodWnRjfyiEtjHpSni5YiOFNFj
+ lUS9j1FAp9zmMNwItcfykNSZ3n00fWfOkr+sw4jutXKjte4hikrGS0g6fIrZtyc3fZeb
+ YZCifUzAfw0lmFaVmGbn5y3FMP3jt4L7FiuTmFlZ9gE2kZV5tCxQ8BsARBZ1gKDhLCYa
+ V6Xw==
+X-Gm-Message-State: AOJu0YxGJr9/Z41nWthGWC1PiLYsTJSzms6xLOrSSgK6ZStugvB/9CVm
+ jEnBpa4GN0CTVt+ysnbC58/KyS5Z6Gh7vTAaYISNlnZk4fGGY9V3Jp69Oq1+d3IANUZa08+OACp
+ KJ9R+qb216KhdfnuhnOlpGnAXxhoPxJk=
+X-Gm-Gg: AeBDietZLL8dJVJvV1YblhbWxrEc60qX+JhEzvKk0YeS1BppFr77ef5t84AyoMCXg2x
+ J0VZJLyLf+wFT0DcHm9sithP0o6I1EOb31QjFIDcPEFC06yCePZZQhkKU9d+ibajhFwgHITKJ9s
+ Qna5ipRx0iXw5cXe5CU07Y0jJ0OL3SVgnY2oEpfmCqnmGXnLSxHP0OBLHSljAB5/uG60Wloh/q0
+ NxbT8d7LAFzFfnVBsAFnfH57zeaOQIid9sx1QuOz/FsuAjl7/1NP8DW0u4Re84PTeNYKVFLe010
+ MXPU1MkLnty86QLaxACnNfIthI9QJDfVWgguAIJy
+X-Received: by 2002:a05:7301:6788:b0:2c1:67e1:61c7 with SMTP id
+ 5a478bee46e88-2d587b83f71mr11081333eec.11.1776258624814; Wed, 15 Apr 2026
+ 06:10:24 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: o3b2L5ZnUDkudtm7glJvlYLsxpMWDpNroVG3boW7PoDzF0k1AY8ntCuwgcYqiJZpl/jR0te3rtf0JR1DbdfvyrQg4n4rRWZFbCd0dgCI9fl5Bb04Daxr7C3BhnzuRlplGmPw/fvRtMoV6k2vtcwwFGW8qU3XzvmJuqkCeD1GeXqTDv76rL2zHJOrMXUyECCb2LGLi7ZgKbgTl5Er3yuRMw862+FflLvyQoLL1KKpgRZRJ2Fw999qy2xCcKXsPSmjVfKP1qKW1aRujcWCdBTwcWoySbb447IXec4z97ZiwacJTsIQctFSZhWusDmJpfL/ATMuh6F3hPMhZ4CMabrvyw==
-X-OriginatorOrg: bull.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1aa98b98-d0c6-40a9-7606-08de9aef7807
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Apr 2026 13:04:03.4125 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: n9kCIYsmYjHJZphspX2mXFRkoJB/HSo8/+QOVDp/VS57z1FCQd+Yd7vBDmDtEsPBImm4bSXwc1f7Kg/UbMRHDRsDkD/0PEwa5PGPcW6k1G4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR07MB9124
-Received-SPF: pass client-ip=80.78.11.82;
- envelope-from=clement.mathieu--drif@bull.com; helo=smarthost1.eviden.com
+References: <20260409144639.3610-1-benno.fuenfstueck@neodyme.io>
+ <CAJ+F1CKYu4UfJyFJxPYLe9gjQhOD9QA7BrTmBXSCPuCDFgPf1A@mail.gmail.com>
+ <CAP-XHHCuVyP=21LyME1KmNB0heRDXAdq7QdCsoVomAK38ZRi7A@mail.gmail.com>
+In-Reply-To: <CAP-XHHCuVyP=21LyME1KmNB0heRDXAdq7QdCsoVomAK38ZRi7A@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 15 Apr 2026 17:10:12 +0400
+X-Gm-Features: AQROBzCnlqbLYQOQZW_jbtprnu39zJzjZpszUBENPZWrr1TvhztjU2P6KLK-XUg
+Message-ID: <CAJ+F1CJPiXH2Sf2Tqz4QoHeP23bUpMdfi=cPsYYnGoGwWeKJ8w@mail.gmail.com>
+Subject: Re: [PATCH] virtio-gpu: fix inverted mouse cursor
+To: =?UTF-8?B?QmVubm8gRsO8bmZzdMO8Y2s=?= <benno.fuenfstueck@neodyme.io>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132d;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,38 +120,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgWmhlbnpob25nLA0KDQpIYXZlIHlvdSBzZWVuIHRoaXM/DQoNCmh0dHBzOi8vcGF0Y2hldy5v
-cmcvUUVNVS9DQUZGRTJhdnJIREtaZDVtN2ozRTN4NT1GPXB6bi0zYzl2ekdXUDMrOS1BVlB3UW5n
-N3dAbWFpbC5nbWFpbC5jb20vDQoNCk9uIFdlZCwgMjAyNi0wNC0xNSBhdCAwNTo1OCAtMDQwMCwg
-Wmhlbnpob25nIER1YW4gd3JvdGU6DQo+IENvbW1pdCBjN2IyZTIyYmQ5NTcgY2xlYXJlZCBWVERf
-RUNBUF9QVCBpbiBlY2FwIHJlZ2lzdGVyIGFuZCBzZXQgUEhNVCBiaXQgIA0KPiBpbiBjYXAgcmVn
-aXN0ZXIsIG1ha2VzIHZJT01NVSBwYXNzdGhyb3VnaCB1bnN1cHBvcnRlZCwgZml4IGl0Lg0KPiAN
-Cj4gRml4ZXM6IGM3YjJlMjJiZDk1NyAoImh3L2kzODYveDg2LWlvbW11OiBSZW1vdmUgWDg2SU9N
-TVVTdGF0ZTo6cHRfc3VwcG9ydGVkIGZpZWxkIikgIA0KPiBTaWduZWQtb2ZmLWJ5OiBaaGVuemhv
-bmcgRHVhbiA8W3poZW56aG9uZy5kdWFuQGludGVsLmNvbV0obWFpbHRvOnpoZW56aG9uZy5kdWFu
-QGludGVsLmNvbSk+ICANCj4gLS0tICANCj4gwqBody9pMzg2L2ludGVsX2lvbW11LmMgfCA2ICsr
-Ky0tLSAgDQo+IMKgMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMo
-LSkNCj4gDQo+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11LmMgYi9ody9pMzg2L2lu
-dGVsX2lvbW11LmMgIA0KPiBpbmRleCBmMzk1ZmEyNDhjLi42YjhmNzVhOGI2IDEwMDY0NCAgDQo+
-IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXUuYyAgDQo+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9t
-bXUuYyAgDQo+IEBAIC00OTk4LDggKzQ5OTgsOCBAQCBzdGF0aWMgdm9pZCB2dGRfY2FwX2luaXQo
-SW50ZWxJT01NVVN0YXRlICpzKSAgDQo+IMKgeyAgDQo+IMKgwqDCoMKgIFg4NklPTU1VU3RhdGUg
-Kng4Nl9pb21tdSA9IFg4Nl9JT01NVV9ERVZJQ0Uocyk7ICANCj4gwqAgIA0KPiAtwqDCoMKgIHMt
-PmNhcCA9IFZURF9DQVBfRlJPIHwgVlREX0NBUF9ORlIgfCBWVERfQ0FQX05EIHwgVlREX0VDQVBf
-UFQgfCAgDQo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgVlREX0NBUF9NQU1WIHwgVlREX0NB
-UF9QU0kgfCBWVERfQ0FQX1NTTFBTIHwgVlREX0NBUF9EUkFJTiB8ICANCj4gK8KgwqDCoCBzLT5j
-YXAgPSBWVERfQ0FQX0ZSTyB8IFZURF9DQVBfTkZSIHwgVlREX0NBUF9ORCB8IFZURF9DQVBfTUFN
-ViB8ICANCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBWVERfQ0FQX1BTSSB8IFZURF9DQVBf
-U1NMUFMgfCBWVERfQ0FQX0RSQUlOIHwgIA0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBW
-VERfQ0FQX0VTUlRQUyB8IFZURF9DQVBfTUdBVyhzLT5hd19iaXRzKTsgIA0KPiDCoMKgwqDCoCBp
-ZiAoeDg2X2lvbW11LT5kbWFfdHJhbnNsYXRpb24pIHsgIA0KPiDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgaWYgKHMtPmF3X2JpdHMgPj0gVlREX0hPU1RfQVdfMzlCSVQpIHsgIA0KPiBAQCAtNTAw
-OSw3ICs1MDA5LDcgQEAgc3RhdGljIHZvaWQgdnRkX2NhcF9pbml0KEludGVsSU9NTVVTdGF0ZSAq
-cykgIA0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHMtPmNhcCB8
-PSBWVERfQ0FQX1NBR0FXXzQ4Yml0OyAgDQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9ICAN
-Cj4gwqDCoMKgwqAgfSAgDQo+IC3CoMKgwqAgcy0+ZWNhcCA9IFZURF9FQ0FQX1FJIHwgVlREX0VD
-QVBfSVJPOyAgDQo+ICvCoMKgwqAgcy0+ZWNhcCA9IFZURF9FQ0FQX1FJIHwgVlREX0VDQVBfSVJP
-IHwgVlREX0VDQVBfUFQ7ICANCj4gwqAgIA0KPiDCoMKgwqDCoCBpZiAoeDg2X2lvbW11X2lyX3N1
-cHBvcnRlZCh4ODZfaW9tbXUpKSB7ICANCj4gwqDCoMKgwqDCoMKgwqDCoCBzLT5lY2FwIHw9IFZU
-RF9FQ0FQX0lSIHwgVlREX0VDQVBfTUhNVjs=
+Hi
+
+On Wed, Apr 15, 2026 at 5:01=E2=80=AFPM Benno F=C3=BCnfst=C3=BCck
+<benno.fuenfstueck@neodyme.io> wrote:
+>
+> Hi Marc-Andr=C3=A9,
+>
+> On Mon, 13 Apr 2026 at 15:23, Marc-Andr=C3=A9 Lureau <marcandre.lureau@gm=
+ail.com> wrote:
+>>
+>> Arguably, this is a bug in virgl vrend_renderer_get_cursor_content(),
+>> since the function doesn't return y0_top it should always return the
+>> data in the correct orientation.
+>>
+>> We may have a temporary workaround in qemu though for older virgl, but
+>> I think it should be solved there too.
+>
+>
+> Thanks, I didn't know about this. I submitted a MR to virglrenderer now a=
+s well to fix it there: https://gitlab.freedesktop.org/virgl/virglrenderer/=
+-/merge_requests/1611
+>
+
+great
+
+> How should I change the patch to make it a temporary fix? Some kind of ve=
+rsion gate (but not sure yet in which version of virglrenderer the fix will=
+ end up being release)?
+
+Since it is not released yet, it's acceptable to not have a
+VIRGL_CHECK_VERSION yet. Just leave TODO comment so we can later add
+it when virgl has the fix.
+
+thanks
+
+>
+>>
+>>
+>> > ---
+>> >  hw/display/virtio-gpu-gl.c | 20 +++++++++++++++++++-
+>> >  1 file changed, 19 insertions(+), 1 deletion(-)
+>> >
+>> > diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+>> > index 2b7a41c466..4562d3405e 100644
+>> > --- a/hw/display/virtio-gpu-gl.c
+>> > +++ b/hw/display/virtio-gpu-gl.c
+>> > @@ -33,6 +33,9 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOG=
+PU *g,
+>> >      VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+>> >      uint32_t width, height;
+>> >      uint32_t pixels, *data;
+>> > +    bool y_0_top =3D true;
+>> > +    int ret;
+>> > +    struct virgl_renderer_resource_info info;
+>> >
+>> >      if (gl->renderer_state !=3D RS_INITED) {
+>> >          return;
+>> > @@ -49,8 +52,23 @@ static void virtio_gpu_gl_update_cursor_data(VirtIO=
+GPU *g,
+>> >          return;
+>> >      }
+>> >
+>> > +    memset(&info, 0, sizeof(info));
+>> > +    ret =3D virgl_renderer_resource_get_info(resource_id, &info);
+>> > +    if (ret =3D=3D 0) {
+>> > +        y_0_top =3D info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP;
+>> > +    }
+>> > +
+>> >      pixels =3D s->current_cursor->width * s->current_cursor->height;
+>> > -    memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
+>> > +    if (y_0_top) {
+>> > +        memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_=
+t));
+>> > +    } else {
+>> > +        uint32_t *dst =3D s->current_cursor->data;
+>> > +        for (uint32_t y =3D 0; y < height; y++) {
+>> > +            memcpy(dst + y * width,
+>> > +                   data + (height - 1 - y) * width,
+>> > +                   width * sizeof(uint32_t));
+>> > +        }
+>> > +    }
+>> >      free(data);
+>> >  }
+>> >
+>> > --
+>> > 2.50.1 (Apple Git-155)
+>> >
+>> >
+>> > --
+>> > Neodyme AG
+>> > Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |
+>> > 85748 Garching b.M=C3=BCnchen
+>> > Postanschrift: Rosenthaler Stra=C3=9Fe 72a | 10119
+>> > Berlin
+>> >
+>> > Registergericht / Registry court: M=C3=BCnchen, HRB 269168
+>> > Vorstand /
+>> > Management Board: Thomas Lambertz | Tobias Madl
+>> > Aufsichtsratsvorsitzender /
+>> > Chairman of the Supervisory Board: Hendrik Hofstadt
+>> >
+>> >
+>> >
+>> >
+>> >
+>>
+>>
+>> --
+>> Marc-Andr=C3=A9 Lureau
+>
+>
+> Neodyme AG
+>
+> Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 | 85748 Garch=
+ing b.M=C3=BCnchen
+> Postanschrift: Rosenthaler Stra=C3=9Fe 72a | 10119 Berlin
+> Registergericht / Registry court: M=C3=BCnchen, HRB 269168
+> Vorstand / Management Board: Thomas Lambertz | Tobias Madl
+> Aufsichtsratsvorsitzender / Chairman of the Supervisory Board: Hendrik Ho=
+fstadt
+
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
