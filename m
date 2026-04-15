@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417EAF433CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 21:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E38F433CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 21:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD8DV-0002K2-DR; Wed, 15 Apr 2026 17:56:13 -0400
+	id 1wD8E5-0002kp-24; Wed, 15 Apr 2026 17:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8DO-0002HG-QJ
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:56:07 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8Dw-0002bC-Rc
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:56:40 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8DL-0002jL-LH
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:56:06 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso311205e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 14:56:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8Du-0002sm-Ju
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:56:40 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43cfd832155so5059383f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 14:56:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776290162; x=1776894962; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776290197; x=1776894997; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3YcATVaIISTbgVGscn8e0nT489EMZwoo2OUk1DH7jcY=;
- b=ULCXDeA47qpjtuY9x+BL6qRbuLadcmM9f+Im7pKFIfCq4bTwqwiJE1+rGCOwQWHNDM
- oyp1KZC88kNC/74O/IUSJoeYIxwCtwjV/JN+s/PcS9mlF4yWbTlxN3ReesObdMbHSZiE
- W7/sDzIUBpJJdsi9vZFlMTMiL9YoFJQBo6kQtYf+7Wq/SQTymMZ8i9/yAmUvS9cCjbE5
- HZGNCYTpWSW9TBRGvj4CCkQeRZfjiP2AcVXlS01smhb/3h5f2KoHUvXOy0ZLtQ6A7ods
- Z8tfhayFxQjpBdPZOGV71R4KqEODdPi/1LR2nbx2LEqZhoKBAjm89H/VvqlOitcImVev
- bXJg==
+ bh=vuIqjkDFYw/UkV0TZBDvRk6uXE3wlZHhGyuhp0aPUMA=;
+ b=RBKDgv7ximPB2GInQa14ECT1DEJGv4A/AdgyP+RbMjl8kGjtMnOc5X1JkqwqoQnmc6
+ +KomiWK1hPZ2CfXcxesobPv0clIQ1niG0i8cXGcPg2FhSZw9z9/1oeRzTQkNmVA/akW9
+ x8jvlEQEJYXX+V050irB8IiMOUEjQvxyQKLBwahmcTyKC7HKZI9mvDYPK2sgm98LPtz9
+ znWuMexzUxjTzqL1W266+8PzjcBdn52vfOlU2kHH/O9Ao29LAIu42p9CS/rTcQZlNKT6
+ 8JNz/b/tr5op9VB5E6yOGcxe0rI22BtU+hlDAHpZtpA4GeJyhcCfXmzB45rAhcaWDSYA
+ ni1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776290162; x=1776894962;
+ d=1e100.net; s=20251104; t=1776290197; x=1776894997;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3YcATVaIISTbgVGscn8e0nT489EMZwoo2OUk1DH7jcY=;
- b=IzZW3Zclxzud57qoOTTtE9o059YiDxgsOQ1mOTfdZ+53JwbndRkZmtkuat2Z/XwAMx
- NSlmZrcyFnNARmi+RLJVCTLHW9c2vpSFCNjzHsiIwRMmZ4Kf6txEjncf6LARK3gC6Taj
- ZSnBezi5dAtauLR4oqkC7crV4sxBkXo++bMApg2HOJpbP6RLw6ORGGMolRu2g0s2t96y
- vegaQhdpV5MMne+fptJwCBfI5lex4qs1iw+XXDklxyCRQ83yIfJ6j3GMTt9XLerm9XFh
- +4rDLT2djtOJ3JCJQ7BmW/Jbp7AJLcu7IRsEjBYN9GRe/C+lo/+VRvuALcEeR8H/mMAs
- 7jSQ==
-X-Gm-Message-State: AOJu0Yy/L5re16L6D+iqrPkf5YJGSCugGMXVEReoSzJ9PyRjNm0Uf/Wy
- REbN3fY3LF6qTeM+A66u771Ry9P1EsdksB160b/OubURkrxd7DkhsOKV11Lg8VGLk0Ha+BLC0Lg
- Dh83wYGE=
-X-Gm-Gg: AeBDiest23wh+0B7Vp++tR8Kc+XImC6drW7SIg+rP5QIARZ9qlrYUK9rOhXcfnFzeNy
- CDzWyl8enOQpuaX+wsZ3TkVh/60aWWD/VLbK1Orxm/Xho3Wztffv5IyojUYLgV1ZaJ/Znw/iabU
- W6q9b13kQ4n/2kW+r+69dCL5eedE8k74JU2Zbxr5H+IPZiTqn3fiMPaGxBMruq1xvWXAGiAl9nY
- mYJlo8H3vSrBeSOePAbBmTfIu0wDZuJcnGJF9O78G2zEVnIPSz3U3NKySUS6UaPf1jDhMkVxK/B
- cVG82oYANpo3W1L1S3ckRV866MTKuG/HioWcp9mVcwHABfFYlBH+hNHEauLTRKGoH6FtYJ0MtJO
- H74gH/Ue0ZrT3FmrEGFVdajIc8OTocMNUjkNj3dEiL/YQrNpOBz2Zk8kgIMBd9j0p/RMuRh+cu3
- 3Qxztn+KXWjq+CoYw1vVKtInPSzkSMJvD7TsRBMLH4v8QWVlw1g9ONTdP+9PnS4EOpEnzHvOSA
-X-Received: by 2002:a05:600c:c090:b0:485:fbd2:f72 with SMTP id
- 5b1f17b1804b1-488f45cc70amr10941795e9.1.1776290161823; 
- Wed, 15 Apr 2026 14:56:01 -0700 (PDT)
+ bh=vuIqjkDFYw/UkV0TZBDvRk6uXE3wlZHhGyuhp0aPUMA=;
+ b=N267g47wUdFpMVOfBFeNN1VFvKr8MNwl0oFnEHFrtUNM7T9dXzijaLzXDmMUBzecs5
+ BzUyOQkkHYe3pFPRgKarF1gruBvxJELvf4+5HobRs5/IeUvUPbCepOe/3N9UBI25Wxsn
+ cz4hutZHhFzjkq4R0+h++xAoWRjRBbbKiDuxcRuiK46zocCDU6sbS/O+AhKOPRdtunXU
+ aTkj47HM11rylwVhuu2RUiSTAuV+jHMwJ/DpT1jeEXfjJARHNyczM0KxIAD9qSHhTmxW
+ 8jm77fMCAnjpzVf8x0FPBVvChKFsDuTFQ89F3mG2c5OjhLkEtpdWJn/YOtqokPDJm0CZ
+ Vi/Q==
+X-Gm-Message-State: AOJu0YyLmj7oyjUUl+kryNAXs7ULL24j8NlSlkNeYbM2WNHRBFDbh279
+ fLhTbMBc7nb8t9dTi50hSuGlXQWrBS+FtBxf+2O5V4EUYOpvWmXyJOYO6WaVw4TAB81Yc/lXXBY
+ DH/8yQ9c=
+X-Gm-Gg: AeBDiesk/if4hqemWtTBFT5twtWI8x+0DKM//cf0OGF+p7+oVllvRWA/ZtMbiMQhbtv
+ OHcTBa2mO3R4cMDqGe0QiIW1glZz1P5MDQ+wVY7D3tNg3eXSDXRxjJBdnPddkpZr7vxSEjf0CuO
+ B/4loDuamKEnDJzoWkhUaq9paLNWxAEpL/vthhaR2grAhly+BEyMLUGZUjht2t6lR61jkEObUpy
+ +dhl5K/sj7rcbtr+niYeZE5+dMWWrHzvDqbH9l6xGDkTzS+LrCI8m9EkFQDtry7kZOat2uwwiEE
+ +MP7MQB6aAQos3DiJikiKZy3cIl6/Tn+RY4QkWzmnLO3PkQDq0aYweuyrlFtGp2ZDWCz7+/BX7p
+ zP/fb/1cweO//bFFbifo1YFk7skpS9XHVM2J/xVneAuVaeBAWIA2nLDvPkd0xdrIdnZRx2u0WLG
+ 5fOq5weiJY9OB1Fwj3+0yJoHuJmxqdihyokAv4aNO3xz7jYki0GyIoyzMH3hZtSABFOv/CLcJo
+X-Received: by 2002:a5d:5f92:0:b0:43b:60f7:2283 with SMTP id
+ ffacd0b85a97d-43d64289753mr35084545f8f.22.1776290196656; 
+ Wed, 15 Apr 2026 14:56:36 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f5818e51sm1034545e9.5.2026.04.15.14.56.00
+ ffacd0b85a97d-43ead3dfff3sm7480881f8f.26.2026.04.15.14.56.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Apr 2026 14:56:01 -0700 (PDT)
+ Wed, 15 Apr 2026 14:56:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  qemu-block@nongnu.org
-Subject: [PATCH 3/8] cocci: Do not initialize variable used by
- QSIMPLEQ_FOREACH macro
-Date: Wed, 15 Apr 2026 23:55:34 +0200
-Message-ID: <20260415215539.92629-4-philmd@linaro.org>
+Subject: [PATCH 8/8] target/riscv: Iterate vCPUs using CPU_FOREACH() macro
+Date: Wed, 15 Apr 2026 23:55:39 +0200
+Message-ID: <20260415215539.92629-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260415215539.92629-1-philmd@linaro.org>
 References: <20260415215539.92629-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -101,56 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QSIMPLEQ_FOREACH() macro, defined in "qemu/queue.h",
-always assigns its iterator variable when entering the
-loop. Remove the pointless and possibly misleading
-assignment.
-
-Mechanical patch using the following coccinelle spatch:
-
-  @@
-  type T;
-  identifier e;
-  iterator FOREACH_MACRO =~ ".*_FOREACH.*";
-  statement S;
-  @@
-  -    T *e = ...;
-  +    T *e;
-       ... when != e
-       FOREACH_MACRO(e, ...) S
+Most code iterates over vCPUs using the CPU_FOREACH()
+macro. Prefer cpu_env(cpu) over &cpu->env.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- block/blkdebug.c               | 2 +-
- migration/block-dirty-bitmap.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/riscv/boot.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/block/blkdebug.c b/block/blkdebug.c
-index 8a4a8cb85ea..fdc96d1f45d 100644
---- a/block/blkdebug.c
-+++ b/block/blkdebug.c
-@@ -591,7 +591,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-                                    uint64_t bytes, BlkdebugIOType iotype)
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index e5490beda00..61e21678cd1 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -490,10 +490,11 @@ void riscv_setup_direct_kernel(hwaddr kernel_addr, hwaddr fdt_addr)
  {
-     BDRVBlkdebugState *s = bs->opaque;
--    BlkdebugRule *rule = NULL;
-+    BlkdebugRule *rule;
-     int error;
-     bool immediately;
+     CPUState *cs;
  
-diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-index a061aad8177..87009c45182 100644
---- a/migration/block-dirty-bitmap.c
-+++ b/migration/block-dirty-bitmap.c
-@@ -1216,7 +1216,7 @@ fail:
- static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-     DBMSaveState *s = &((DBMState *)opaque)->save;
--    SaveBitmapState *dbms = NULL;
-+    SaveBitmapState *dbms;
+-    for (cs = first_cpu; cs; cs = CPU_NEXT(cs)) {
+-        RISCVCPU *riscv_cpu = RISCV_CPU(cs);
+-        riscv_cpu->env.kernel_addr = kernel_addr;
+-        riscv_cpu->env.fdt_addr = fdt_addr;
++    CPU_FOREACH(cs) {
++        CPURISCVState *env = cpu_env(cs);
++
++        env->kernel_addr = kernel_addr;
++        env->fdt_addr = fdt_addr;
+     }
+ }
  
-     if (init_dirty_bitmap_migration(s, errp) < 0) {
-         return -1;
 -- 
 2.53.0
 
