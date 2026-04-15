@@ -4,119 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E45CF43858
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 16:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96FE6F43854
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 16:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD31f-00010Q-Ih; Wed, 15 Apr 2026 12:23:39 -0400
+	id 1wD3Ep-0002ce-9i; Wed, 15 Apr 2026 12:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wD31c-0000zs-Te
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 12:23:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wD3En-0002c5-7F; Wed, 15 Apr 2026 12:37:13 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wD31a-00050u-CX
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 12:23:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776270212;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fFPbSRw1mOq72J72szuT2OZS3PuzeH5eik2GRyAc00U=;
- b=aDC9r2tNz8siTcPxfwItQCTToJwtMRIoA8qldVwb71jPYg3yeXjLaltePI6ZYYTuWfwKNd
- 7fTMuv/ElpJU44EYiN0pAQJwAMaiC9p1W8tBuTK1TYmMrfC5jjl0Mog2eOZPXfb/VIylf5
- qg+DgyTaIOzQeqsPwHtyzq3UYbqHQko=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-tmuje5xHNLuhIjBHoVmWzQ-1; Wed, 15 Apr 2026 12:23:31 -0400
-X-MC-Unique: tmuje5xHNLuhIjBHoVmWzQ-1
-X-Mimecast-MFC-AGG-ID: tmuje5xHNLuhIjBHoVmWzQ_1776270210
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8ac566014e0so190335206d6.2
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 09:23:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776270210; x=1776875010; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=fFPbSRw1mOq72J72szuT2OZS3PuzeH5eik2GRyAc00U=;
- b=NsNSUAxvLK1AuCvT6BQXhEsRDnSpzcPdK4vsSIXEZpIq9MvIDaTasIAIk1ihicXhDE
- uVcaW7k8xVwlYlBGbaJZpgP9K6ZOsVcH2eNBenM8TidetY/pBRtDE9Kqlef2s4jiPkJN
- NeZtj2NV8bAhoousjAVgLpzLw/tRHwAtTPvvRn0595n9LADj8abx/rf1QhOC80MiKp9M
- zScyt40RPH8fPzn/pN3CO37dqaV4gcCoCZcAZtFxW/1e7ALbJTl8Jqep0kzea1M9T1+X
- btR0uohlqoPqvc0C/06384C59U20tk52qSnaLvvxNnZ8h+6UwVcg9/D3TCYK3nAYD51x
- LHTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776270210; x=1776875010;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fFPbSRw1mOq72J72szuT2OZS3PuzeH5eik2GRyAc00U=;
- b=HSddUONqoLFc6pgiSkk1BA0YIHt6v1iZuabdobCa17jRJsSKw2W/R10q4TqlB6VgwT
- on58GGd2WfktwXz+Ib65FNo1/9npzuSBe6GsH80Yxta97oCnlUG2Dbhjks2+3diVoP8b
- 2lRJ2QVm+VZURNCF0rfPR5H+/WTSfEIzdvyBP7Jl9tH8DXwZEYA0CjG3Oys4o917gGkH
- Sg7REJWchSB9PlkQJASxbRVsFNAuu0bPMWhaWsW2qD49mH5BbauxlXfMRBvdPdFBQHNy
- J9yls16V/ZfAPrfqJQsToLeAXuLbaLr6m/I4NGPFz5rZARxCYH6mDgqogNBbTHp7xYpr
- TEaA==
-X-Gm-Message-State: AOJu0YwqjkqzvvGIG51iwWFfsjwr6OzksXyeSzyhHsWhZco01fylVNWL
- xt+ObnlBKDpydPK/4dzGQgKGHZudmyswcUlzKM7G2hF750AVLtrbxxPZTtsfGkVJDLQ2OzCnVs6
- 9iSK7XMvvO6cu3uzYgMF0WhUW9N8WlmvQdKmoEsoEUQIU65Iu5s9HeWgs
-X-Gm-Gg: AeBDies9vkXJRUbOb6UjlnTh6qdN5feaplI3Fkcu+ZfG71YvAvJb12BIwB1/TCI/THZ
- fIYLl9v2fI78nOhAk395R14FemZQU3QIv044P2J8OEuWhx/oaIZf7dkzsDYWLQ+q0EwsTjY/sOh
- hKB0z77AI4w+pYUvxHgByk0pUy1PEqJpy3uVbc6mkwiAtnhVes+St8GVkb9eAo8YkZQon+PgfJa
- 0dKe9IfNBR+FIAO+Nop8yJwjXYfcnhWVUc+ZAwARCws7/AAlGYqUGxnO8upr6/DKDBqgClnXVqz
- V/gF6m1CXznJACTx/FtzNxXq5/8gqv180KZVAi4eJaaMlti7Z01vd9RDRVTQma9nWkvEAiI6FTU
- 2KVdB6h7b/qmdH50sxesBfeIzShjnn58g4j7OCUgD7J/hGAnz0eTa2NvYdg==
-X-Received: by 2002:a05:6214:4497:b0:8a0:22bb:1d51 with SMTP id
- 6a1803df08f44-8ac8624e071mr344843686d6.53.1776270210270; 
- Wed, 15 Apr 2026 09:23:30 -0700 (PDT)
-X-Received: by 2002:a05:6214:4497:b0:8a0:22bb:1d51 with SMTP id
- 6a1803df08f44-8ac8624e071mr344842996d6.53.1776270209608; 
- Wed, 15 Apr 2026 09:23:29 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ae6cb9eb66sm15274976d6.31.2026.04.15.09.23.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Apr 2026 09:23:28 -0700 (PDT)
-Date: Wed, 15 Apr 2026 12:23:27 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 04/14] migration/treewide: Merge
- @state_pending_{exact|estimate} APIs
-Message-ID: <ad-7f30zV6XfYEE1@x1.local>
-References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-5-peterx@redhat.com>
- <adfdUBTJweN-V-ZP@fedora>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wD3El-0002tZ-Ik; Wed, 15 Apr 2026 12:37:12 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63F3K5F71860578; Wed, 15 Apr 2026 16:36:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=n0snwV
+ AWDggHfhXr2YeMr4nfkV61EEfx5BSuuoBw/ts=; b=kZw6q8Mo8CPGX9U9Vk45Du
+ 5Y8rxpn4GdOdyNgOhyazqxaUZpbU7mYRp+DUKXx3kgtk8uTa2l5334molrWfGx4e
+ Q6Yd2tRT1J57EEg8/qn3WlK4TXBUXObaG1GfTP2Hta0Y0LlDzTgLcRrykRw1WCP2
+ aWNDw9gScnztqiZa7Yuaa8zDjJ+mmyr8ZVm38DhRfwucNr7XKPXwbltRMt12yAX+
+ JuicDvchmVo9nj57kfcDgGQGXaOdwrRhDZRbaGsrOnsMw3Gp9hhdMYXk3GDefBWH
+ G9wXoBVZkiFiyaeteUBKKVpQU47EqN5q9mBTv9JHAcBcXtUe5G3Jf2PRZMuuWoaw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89pgjvs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Apr 2026 16:36:59 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63FCICFH031138;
+ Wed, 15 Apr 2026 16:36:58 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dg10yf5dm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Apr 2026 16:36:58 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63FGavZa28443166
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Apr 2026 16:36:57 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5755558056;
+ Wed, 15 Apr 2026 16:36:57 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 30ED858052;
+ Wed, 15 Apr 2026 16:36:56 +0000 (GMT)
+Received: from [9.61.102.229] (unknown [9.61.102.229])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 15 Apr 2026 16:36:56 +0000 (GMT)
+Message-ID: <d2aff9be-2597-4d58-9185-0c805114669a@linux.ibm.com>
+Date: Wed, 15 Apr 2026 12:36:55 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <adfdUBTJweN-V-ZP@fedora>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 20/30] pc-bios/s390-ccw: Add signed component address
+ overlap checks
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ pierrick.bouvier@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com,
+ brueckner@linux.ibm.com, jdaley@linux.ibm.com
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
+ <20260402221453.1602899-21-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20260402221453.1602899-21-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: aKRoTsZa4K1EExtf9yUsteM2opv8msrD
+X-Proofpoint-ORIG-GUID: aKRoTsZa4K1EExtf9yUsteM2opv8msrD
+X-Authority-Analysis: v=2.4 cv=WbE8rUhX c=1 sm=1 tr=0 ts=69dfbeab cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=ABqtuHcFZ0KkfVKGhysA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDE1MSBTYWx0ZWRfX8q3sqKujXH5Y
+ W+/s8bE9TWHQIHhmOCCtROpUwBeEo5GVKGbPGO1lup/bgZCmikc7giZD7P8kjwiSsutQT08+NZy
+ dn8mmQ9dM1FIK0xqklo8dIRZyTDO8NjXL6kwyVwkpXXdmQAqN8W2HWgapnJOSTxfZpREbbkpwTY
+ +7ehiYyUvHhfHkhAPWeiD8W0ub8Vb490w0NPcayoGqDXe3aG3aaYE4TuU2vqUAJI5yNqEqFUm0P
+ /a8g616+Kv7daEstC9XXyBX8bs5tDk4IrTSrGxP6tdmeZZB/xo8BO1wFCpB36evArL2flXMqRtP
+ GelgJGlcWTt5IM1RDJ5gCYI2q8hmGzzbveI6EMfwBxPNbXBQ8RhaULMj8OVNOGhoY0I3CYkysl2
+ 2TnAkd3iruJpltbEMBs9HC98eKlsNf+W0KxthDycPk26hiriWvqJPiZeG5kqKBaKM7Yp3xLrXc6
+ Z1zBKUQgYAI6G8HQlQg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-15_01,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 spamscore=0 clxscore=1015
+ phishscore=0 impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604150151
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,52 +128,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 09, 2026 at 07:10:56PM +0200, Juraj Marcin wrote:
-> > -    /**
-> > -     * @state_pending_exact
-> > -     *
-> > -     * This calculates the exact remaining data to transfer
-> > +     * @save_query_pending
-> >       *
-> > -     * Sum of @can_postcopy and @must_postcopy is the whole amount of
-> > -     * pending data.
-> > +     * This estimates the remaining data to transfer on the source side.
-> > +     * It's highly suggested that the module should implement both fastpath
-> > +     * and slowpath version of it when it can be slow (for more information
-> > +     * please check pending->fastpath field).
-> 
-> There is no pending->fastpath field anymore.
-
-Yep I missed it..  When at it, I rewrote this part to make it read better,
-latest version now:
-
-    /**
-     * @save_query_pending
-     *
-     * This estimates the remaining data to transfer on the source side.
-     *
-     * When @exact is true, a module must report accurate results.  When
-     * @exact is false, a module may report estimates.
-     *
-     * It's highly recommended that modules implement a faster version of
-     * the query path (for example, by proper caching on the counters) if
-     * an accurate query will be time-consuming.
-     *
-     * @opaque: data pointer passed to register_savevm_live()
-     * @pending: pointer to a MigPendingData struct
-     * @exact: set to true for an accurate (slow) query
-     */
 
 
-[...]
+On 4/2/26 6:14 PM, Zhuoying Cai wrote:
+> Add address range tracking and overlap checks to ensure that no
+> component overlaps with a signed component during secure IPL.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/secure-ipl.c | 58 ++++++++++++++++++++++++++++++++---
+>   pc-bios/s390-ccw/secure-ipl.h | 15 +++++++++
+>   2 files changed, 69 insertions(+), 4 deletions(-)
+>
+> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
+> index b66ca9ca7e..d2079e19bc 100644
+> --- a/pc-bios/s390-ccw/secure-ipl.c
+> +++ b/pc-bios/s390-ccw/secure-ipl.c
+> @@ -211,6 +211,49 @@ static void init_lists(IplDeviceComponentList *comp_list,
+>       cert_list->ipl_info_header.len = sizeof(cert_list->ipl_info_header);
+>   }
+>   
+> +static bool is_comp_overlap(SecureIplCompAddrRangeList *range_list,
+> +                            SecureIplCompEntryInfo comp_entry_info)
+> +{
+> +    uint64_t start_addr;
+> +    uint64_t end_addr;
+> +
+> +    start_addr = comp_entry_info.addr;
+> +    end_addr = comp_entry_info.addr + comp_entry_info.len;
+> +
+> +    /*
+> +     * Check component's address range does not overlap with any
+> +     * signed component's address range.
+> +     */
+> +    for (int i = 0; i < range_list->index; i++) {
+> +        if ((range_list->comp_addr_range[i].start_addr < end_addr &&
+> +            start_addr < range_list->comp_addr_range[i].end_addr) &&
+> +            range_list->comp_addr_range[i].is_signed) {
+Check 'is_signed' first so that we don't bother with unsigned components.
 
-> Apart from that one comment above, it looks good to me!
-> 
-> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> +            return true;
+> +       }
+> +    }
+> +    return false;
+> +}
+> +
+> +static void comp_addr_range_add(SecureIplCompAddrRangeList *range_list,
+> +                                SecureIplCompEntryInfo comp_entry_info,
+> +                                bool is_signed)
+> +{
+> +    uint64_t start_addr;
+> +    uint64_t end_addr;
+> +
+> +    start_addr = comp_entry_info.addr;
+> +    end_addr = comp_entry_info.addr + comp_entry_info.len;
+> +
+> +    if (range_list->index >= MAX_CERTIFICATES) {
+> +        zipl_secure_handle("Component address range update failed due to out-of-range"
+> +                           " index; Overlapping validation cannot be guaranteed");
+> +    }
+This check can be done before calling.  We should break early and stop 
+calling this function once the max is reached.
 
-Thanks, Juraj!
+> +
+> +    range_list->comp_addr_range[range_list->index].is_signed = is_signed;
+> +    range_list->comp_addr_range[range_list->index].start_addr = start_addr;
+> +    range_list->comp_addr_range[range_list->index].end_addr = end_addr;
+> +}
+> +
+>   static int zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
+>   {
+>       if (zipl_load_segment(entry, sig_sec) < 0) {
+> @@ -253,6 +296,7 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+>        * exists for the certificate).
+>        */
+>       int cert_list_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1 };
+> +    SecureIplCompAddrRangeList range_list = { 0 };
+>       int signed_count = 0;
+>   
+>       if (!secure_ipl_supported()) {
+> @@ -282,14 +326,20 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+>                   goto out;
+>               }
+>   
+> -            if (!sig_len) {
+> -                break;
+> -            }
+> -
+>               comp_entry_info = (SecureIplCompEntryInfo){ 0 };
+>               comp_entry_info.addr = comp_addr;
+>               comp_entry_info.len = (uint64_t)comp_len;
+>   
+> +            if (is_comp_overlap(&range_list, comp_entry_info)) {
+> +                zipl_secure_handle("Component addresses overlap");
+> +            }
+> +            comp_addr_range_add(&range_list, comp_entry_info, !!sig_len);
+> +            range_list.index += 1;
+> +
+> +            if (!sig_len) {
+> +                break;
+> +            }
+> +
+>               verified = verify_signature(comp_entry_info,
+>                                           sig_len, (uint64_t)sig,
+>                                           &cert_len, &cert_table_idx);
+> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+> index 6d65cd5596..c625ac2e3a 100644
+> --- a/pc-bios/s390-ccw/secure-ipl.h
+> +++ b/pc-bios/s390-ccw/secure-ipl.h
+> @@ -24,6 +24,21 @@ typedef struct SecureIplCompEntryInfo {
+>       uint8_t  flags;
+>   } SecureIplCompEntryInfo;
+>   
+> +typedef struct SecureIplCompAddrRange {
+> +    bool is_signed;
+> +    uint64_t start_addr;
+> +    uint64_t end_addr;
+> +} SecureIplCompAddrRange;
+> +
+> +/*
+> + * Custom struct for managing a list of secure IPL component address ranges.
+> + * Tracks up to MAX_CERTIFICATES address ranges with an index counter.
+> + */
+> +typedef struct SecureIplCompAddrRangeList {
+> +    SecureIplCompAddrRange comp_addr_range[MAX_CERTIFICATES];
+> +    int index;
+> +} SecureIplCompAddrRangeList;
+I don't think 'index' is the correct name for the variable. Something 
+like 'num' would be better, since it is the total number of address 
+ranges, right?
 
--- 
-Peter Xu
+> +
+>   static inline void zipl_secure_handle(const char *message)
+>   {
+>       switch (boot_mode) {
 
+Regards,
+Jared Rossi
 
