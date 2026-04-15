@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97BD9F433D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 23:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5772DF433D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 23:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD9fv-00016F-5m; Wed, 15 Apr 2026 19:29:39 -0400
+	id 1wD9oJ-000397-LU; Wed, 15 Apr 2026 19:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wD9fi-00013x-IP
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:29:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wD9fg-00011W-4p
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:29:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776295763;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QDdW5psnASriwqAha13B7nHWu8m/JIs4baxXcH9bxPQ=;
- b=hArgLsOQMwDrU5TJbXLwE5hIKhV/sInuVsbeY3M0yraiyI/1w4WRBn9S1anVtJ3CzvVRQD
- XJ9aNkOX+66HAjN9+QoaGGQygKB3NrFpCBH0YPGsKi8Yev+wTI3/D5dGoPwcVWWdZog+5z
- FYVHMGRVM2Mp7ThzX/Y9Hp6VxMDb3a0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-p2vHyAZfPgSei7bvYP_a7A-1; Wed,
- 15 Apr 2026 19:29:20 -0400
-X-MC-Unique: p2vHyAZfPgSei7bvYP_a7A-1
-X-Mimecast-MFC-AGG-ID: p2vHyAZfPgSei7bvYP_a7A_1776295759
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 56F0A18005A9; Wed, 15 Apr 2026 23:29:19 +0000 (UTC)
-Received: from localhost (unknown [10.44.34.70])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C36B1955F43; Wed, 15 Apr 2026 23:29:17 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- <qemu-block@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 2/2] scsi: handle reservation changes across migration
-Date: Wed, 15 Apr 2026 19:29:06 -0400
-Message-ID: <20260415232906.212349-3-stefanha@redhat.com>
-In-Reply-To: <20260415232906.212349-1-stefanha@redhat.com>
-References: <20260415232906.212349-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wD9oG-00038O-Qm
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:38:17 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wD9oE-0003bD-5G
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:38:16 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-35da2d35eccso5413520a91.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 16:38:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776296292; x=1776901092; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QcnKwBt9815Xn9LSiKD/C5NHxwDsPf8fWRupq+/ZkXM=;
+ b=GEFKKlVL4Vdw5esUXcfvTbCHiZ6BbB8Gv8udoAzxJQdx/JKX0DNH0ao7bs16O/brUr
+ OzXn4lgKgH/tV3/XfbcvB+5YTfNyFqMlXCZm387Z5UdLFWHsAqgGHxpE1vHOEgyfIh7M
+ U7Wz5Z7EWIkAvqDTLI7fK6D47zjpJfhYYK1p0tyH0NgdoLDpRk9Z5x4xHoGhOPQybFXE
+ MnODnqtXZZGKRcgxtLmzdhpcl/VSlLVVZyVlOheMfCPMqF11z8KZgUvD48iiHdaJ7MBk
+ 8Ad2QpGfPqTapAm3f4PUK3u2V7K4Vji2NBY0NHSpHfDgkymR5W+XXvCZVk3iskJ+c/wA
+ jonA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776296292; x=1776901092;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QcnKwBt9815Xn9LSiKD/C5NHxwDsPf8fWRupq+/ZkXM=;
+ b=FYvpwlfWYyLEFeX7GyDUQkHUvS1itwmB8XszLZrDbuF7j9SsdOuCwyunqVB8Yzl31c
+ Dz4IvEExQDaeUt4K3eq2egEKQGTwUyNapp6GHE/mhp1LR94PAj0lcMmcEmWHFE4/VRS8
+ 0GVMUZAdt/IS9K0kj0FNJSDozAcJC51jGGdNd9WLyy4/17dN63R0raqYLz/ZgTOZcnyP
+ 6cm4fHoKVL4V1K9bSMkdBYXo3Ua2alDYNk6khAiOn1uclS/KFMDWVMABmas0ez7jgoUq
+ QNx/GYfQNRcYwxXUtlVw66y2B97vaiKcwGhmzc5HBH0AvB9/Y+kFeSPUme1Y6gCxtBNm
+ umEA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8LtI4SnajAKsrRR/cye/qIo3aXYWcYJwSY31cYzBz6rPPws1hmik/t8RCYv4uZNdRQNnKQ+w2NQPj3@nongnu.org
+X-Gm-Message-State: AOJu0YzunMXPSc9TddZ1EpuQma0Csm2KhfXbGc8joVMlMFEM7A4i1lyy
+ jfRIhaTUZaDy4K+ZSSZQGwbE0DwEg1T6Cn2BP/wdvrUnN4G1SoUqlhFa
+X-Gm-Gg: AeBDietrukuBXx57kFoe1630aWwZ73vQKYEUIlLZSMoFYG4UG5jf2ytHvQZiVAWYowM
+ XReKktXVDxduFLIz9pTF6coD9GNQG81RgdJKttpl/gRwcyIRAe8ragTChunZCn1EdTLlWhmsVYE
+ k8FksJ//pHdQ5ASJvqf/tQespp7UnHhDpBCzl774EgOFNn21SN/rCjnT/ltGVndKbsgeevKSuOC
+ 1gE2hLnNmADsD9XmSUP/A9SwczUCPDdnFAkBwtbWFHmohTZ/NetpZsK0fc0qbOozgUaQeGFL8rZ
+ d2NuNvPWE4wYE46pnAWAiL93wAxLY6ooutoc11btUtC5Lza1qaFqmSLAvrKsiozlxe0thrl2zoU
+ wLPcbO6cioZAkERnco2j21Y0EP29eQW9RDc6Lc1t0mJybDPZ1i2kbLNypcVKwY9QbQ09xE7Zj6o
+ inmf15H82gn8B/JZM+M1iPklUlqiCYq49vgR19z/Fo
+X-Received: by 2002:a17:903:7cc:b0:2b2:539b:d2ad with SMTP id
+ d9443c01a7336-2b2d5a90e96mr170139815ad.42.1776296292485; 
+ Wed, 15 Apr 2026 16:38:12 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b47826ea53sm32341675ad.52.2026.04.15.16.38.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Apr 2026 16:38:11 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v2 2/4] linux-user/strace: Use pointer type for read and write
+ values
+Date: Thu, 16 Apr 2026 09:37:38 +1000
+Message-ID: <20260415233740.3027321-3-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260415233740.3027321-1-alistair.francis@wdc.com>
+References: <20260415233740.3027321-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,234 +107,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Other nodes in the cluster can preempt or clear SCSI Persistent
-Reservations at any time. When this happens across live migration, the
-reservation state transferred with the guest might be outdated.
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Attempt to handle such cases gracefully by checking the current
-reservation or registered keys to detect stale state before restoring.
-If the actual state of the disk has changed, do not modify it and accept
-that as the most up-to-date state.
+The stack pointer is being truncated as 32-bits for qemu-riscv64, so
+let's use %p to print the syscall pointer argument.
 
-Do this using READ RESERVATION when the guest holds a reservation or
-READ KEYS when the guest has registered a key but does not hold a
-reservation.
-
-There is still a race condition between checking and restoring state,
-but it seems unavoidable and is no worse than before.
-
-Buglink: https://redhat.atlassian.net/browse/RHEL-153123
-Fixes: ab57b51f1375b6a6f098a74c6f79207a9630948d ("scsi: save/load SCSI reservation state")
-Reported-by: Qing Wang
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/scsi/scsi-generic.c | 173 +++++++++++++++++++++++++++++++++++------
- 1 file changed, 149 insertions(+), 24 deletions(-)
+v2:
+ - Remove the custom read/write print functions and use %p instead
 
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 29bc952af5..8999f3b720 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -479,13 +479,84 @@ static bool scsi_generic_pr_preempt(SCSIDevice *s, uint64_t key,
-     return true;
- }
- 
-+/*
-+ * Returns true if the given key is registered or false otherwise (including
-+ * errors).
-+ */
-+static bool scsi_generic_pr_key_registered(SCSIDevice *s, uint64_t key,
-+                                           Error **errp)
-+{
-+    const size_t key_list_offset = 8; /* in READ KEYS parameter data */
-+    uint64_t key_be = cpu_to_be64(key);
-+    uint8_t cmd[10] = {};
-+    size_t buf_len;
-+    g_autofree uint8_t *buf = NULL;
-+    uint32_t additional_length = 16 * 8; /* initial key list size */
-+
-+    /*
-+     * Loop to resize parameter data buffer when there are many keys. It would
-+     * be simpler to hardcode the maximum buffer size (it's only 64 KB), but
-+     * SG_IO can fail with EINVAL if the host kernel blkdev queue limits are
-+     * too low.
-+     */
-+    do {
-+        uint16_t allocation_length_be;
-+        int ret;
-+
-+        buf_len = key_list_offset + additional_length;
-+        buf = g_realloc(buf, buf_len);
-+        memset(buf, 0, buf_len);
-+
-+        cmd[0] = PERSISTENT_RESERVE_IN;
-+        cmd[1] = PRI_READ_KEYS;
-+        allocation_length_be = cpu_to_be16(buf_len);
-+        memcpy(&cmd[7], &allocation_length_be, sizeof(allocation_length_be));
-+
-+        ret = scsi_SG_IO(s->conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
-+                         buf, buf_len, s->io_timeout, errp);
-+        if (ret < 0) {
-+            error_prepend(errp, "PERSISTENT RESERVE IN with READ KEYS: ");
-+            return false;
-+        }
-+
-+        memcpy(&additional_length, &buf[4], sizeof(additional_length));
-+        be32_to_cpus(&additional_length);
-+
-+        /*
-+         * The parameter data's ADDITIONAL LENGTH must not overflow the CDB's
-+         * 16-bit ALLOCATION LENGTH field since the next loop iteration will
-+         * compute ALLOCATION LENGTH based on ADDITIONAL LENGTH.
-+         */
-+        if (additional_length > UINT16_MAX - key_list_offset) {
-+            error_setg(errp, "got invalid ADDITIONAL LENGTH %" PRIu32
-+                       " from READ KEYS", additional_length);
-+            return false;
-+        }
-+
-+        for (size_t i = key_list_offset; i < buf_len; i += sizeof(key_be)) {
-+            if (i - key_list_offset >= additional_length) {
-+                break; /* end of parameter list */
-+            }
-+
-+            if (memcmp(&key_be, &buf[i], sizeof(key_be)) == 0) {
-+                return true; /* key found */
-+            }
-+        }
-+    } while (additional_length > buf_len - key_list_offset);
-+
-+    return false; /* key not found */
-+}
-+
- /* Register keys and preempt reservations after live migration */
- bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
- {
-     SCSIPRState *pr_state = &s->pr_state;
-+    Error *local_err = NULL;
-+    bool check_stale_key = true;
-     uint64_t key;
-     uint8_t resv_type;
- 
-+    /* Get the migrated PR state */
-     WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-         key = pr_state->key;
-         resv_type = pr_state->resv_type;
-@@ -493,36 +564,90 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
- 
-     trace_scsi_generic_pr_state_preempt(key, resv_type);
- 
--    if (key) {
--        if (!scsi_generic_pr_register(s, key, errp)) {
-+    /* Handle stale PR state (e.g. another node preempted) */
-+    if (resv_type) {
-+        uint64_t dev_key;
-+        uint8_t dev_resv_type;
-+
-+        if (scsi_generic_read_reservation(s, &dev_key, &dev_resv_type,
-+                                          errp) < 0) {
-             return false;
-         }
- 
--        /*
--         * Two cases:
--         *
--         * 1. There is no reservation (resv_type is 0) and the other I_T nexus
--         *    will be unregistered. This is important so the source host does
--         *    not leak registered keys across live migration.
--         *
--         * 2. There is a reservation (resv_type is not 0) and the other I_T
--         *    nexus will be unregistered and its reservation is atomically
--         *    taken over by us. This is the scenario where a reservation is
--         *    migrated along with the guest.
--         */
--        if (!scsi_generic_pr_preempt(s, key, resv_type, errp)) {
-+        if (dev_resv_type != resv_type) {
-+            /* vmstate had a stale reservation type */
-+            g_autofree char *name = qdev_get_human_name(&s->qdev);
-+            warn_report("Expected SCSI reservation type 0x%x on device '%s', "
-+                        "got 0x%x, using new type",
-+                        resv_type, name, dev_resv_type);
-+            resv_type = dev_resv_type;
-+        }
-+
-+        if (dev_key == key) {
-+            /* The reservation exists, no need to check for a stale key */
-+            check_stale_key = false;
-+        } else {
-+            g_autofree char *name = qdev_get_human_name(&s->qdev);
-+            warn_report("Expected SCSI reservation with key 0x%" PRIx64
-+                        " on device '%s', got 0x%" PRIx64 ", ignoring "
-+                        "reservation",
-+                        key, name, dev_key);
-+            resv_type = 0; /* vmstate had a stale reservation */
-+        }
-+    }
-+
-+    if (key != 0 && check_stale_key &&
-+        !scsi_generic_pr_key_registered(s, key, &local_err)) {
-+        if (local_err) {
-+            error_propagate(errp, local_err);
-             return false;
-         }
- 
--        /*
--         * Some SCSI targets, like the Linux LIO target, remove our
--         * registration when preempting without a reservation (resv_type is 0).
--         * Try to register again but ignore the error since a RESERVATION
--         * CONFLICT is expected if our registration remained in place.
--         */
--        if (resv_type == 0) {
--            scsi_generic_pr_register(s, key, NULL);
--        }
-+        g_autofree char *name = qdev_get_human_name(&s->qdev);
-+        warn_report("SCSI reservation key 0x%" PRIx64 " on device '%s' not "
-+                    "registered after migration, ignoring",
-+                    key, name);
-+        key = 0; /* vmstate had a stale key */
-+    }
-+
-+    /* Stale PR state may have been updated */
-+    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+        pr_state->key = key;
-+        pr_state->resv_type = resv_type;
-+    }
-+
-+    if (key == 0) {
-+        return true; /* no PR state, do nothing */
-+    }
-+
-+    if (!scsi_generic_pr_register(s, key, errp)) {
-+        return false;
-+    }
-+
-+    /*
-+     * Two cases:
-+     *
-+     * 1. There is no reservation (resv_type is 0) and the other I_T nexus
-+     *    will be unregistered. This is important so the source host does
-+     *    not leak registered keys across live migration.
-+     *
-+     * 2. There is a reservation (resv_type is not 0) and the other I_T
-+     *    nexus will be unregistered and its reservation is atomically
-+     *    taken over by us. This is the scenario where a reservation is
-+     *    migrated along with the guest.
-+     */
-+    if (!scsi_generic_pr_preempt(s, key, resv_type, errp)) {
-+        return false;
-+    }
-+
-+    /*
-+     * Some SCSI targets, like the Linux LIO target, remove our
-+     * registration when preempting without a reservation (resv_type is 0).
-+     * Try to register again but ignore the error since a RESERVATION
-+     * CONFLICT is expected if our registration remained in place.
-+     */
-+    if (resv_type == 0) {
-+        scsi_generic_pr_register(s, key, NULL);
-     }
-     return true;
- }
+ linux-user/strace.list | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 35f001fecd..6162a407f9 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1114,7 +1114,7 @@
+ { TARGET_NR_quotactl, "quotactl" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_read
+-{ TARGET_NR_read, "read" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_read, "read" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_readahead
+ { TARGET_NR_readahead, "readahead" , NULL, NULL, NULL },
+@@ -1674,7 +1674,7 @@
+                      print_syscall_ret_waitpid },
+ #endif
+ #ifdef TARGET_NR_write
+-{ TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_write, "write" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_writev
+ { TARGET_NR_writev, "writev" , "%s(%d,%p,%#x)", NULL, NULL },
 -- 
 2.53.0
 
