@@ -4,92 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9F1FA0C3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 07:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E38FA0C43
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 08:01:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCulN-0008A0-OG; Wed, 15 Apr 2026 03:34:18 -0400
+	id 1wCvBA-00037Y-DN; Wed, 15 Apr 2026 04:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wCulL-00089C-K6
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 03:34:15 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wCulH-0003vM-GB
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 03:34:15 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-35d99bae2ebso5502099a91.3
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 00:34:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776238450; x=1776843250; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=4DmJnDS2TtvtZ5B5Vy2jF/Xa5Ct3BX4VbnR5p9AoeB4=;
- b=SsIWmQXf1ufcgPzU10d85Vh1MEBoO0G4Lr1vjvuS33t6Q01Y7/FjU3JFzY4ei4QOqC
- YF/hLI0lBR3UbGV0Sky+mPdTpr5TAmW7epqMgbfBFcILB1Y20fvZfKZONR1DSP/3iKPL
- Ob+BjjCN8warSqKPd7FAbtfeLIxPbZmPjPpF3GWcixLsluVP8tG91LWukrEJdRHouWon
- zKHvBRtZVr9b7uHHS+TqjdszzWWK4a69at/smweYXqsCruNqV/6vU++sWTsIzBAuX6Q3
- qSlw3/CaUwCKc23uhIJABc0b1dh/RIAzpK1Z2K+DGG2/174LTirGCVgYK9z8zNaGfeTc
- XmGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776238450; x=1776843250;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4DmJnDS2TtvtZ5B5Vy2jF/Xa5Ct3BX4VbnR5p9AoeB4=;
- b=Aj/4SauqK9EW8oFAEwygjxas4sXAzU5O/Vion7YUnr3xyYpxUm18lLdNu7LyC5n8TO
- fNU6Ns2H4TLY6oGqo1wbzWOLlpi4jc3Bd60+N2RtsNoGJB0qT81hhKvKk8lPnj3eIzD7
- gCFrU3cY6w3Frc4RfLZ6+QFxUDvVQFeup7sqAtwfmmpUaxqsouQrORzc/d2Nb/RdzVpP
- 13rJhqYR8k0jsv6MuH5jjihZZMaN4aq0anMG1xsuqDiokmk+pfXSV2lV5GjU/e/5e5rU
- Z2KZDwr3hhfycL5vHzrlCotOwIZyaYvErYpSJ4T6dh9PDveE1XwMdcUzOwJIrB+1CO1C
- qw3A==
-X-Gm-Message-State: AOJu0YyzjKK3Ro4u2vCAvyv4mE/Q7iXRuxykjFnNvgIYP0pxxFXNpa4F
- K8dDv+G3nq5i3C16soW0bFMlmie/utqUP9WWCSCoFo1L3lwPWqgVBOCOKoekCRKW
-X-Gm-Gg: AeBDieuDCqS6AWXqT+5CSrokbFnXXtbI+TAbwgMDyXIvIb3J2aDSWqGqFvAeVVDVYcg
- JYO3Htjt2Wi3LGYziaSN6stOaxMIUYU7jLo4uMJS0cTfKEgC6AuH/xZ4uGqKa9Ur3uBdJXpDdaw
- Vty++w27o18rCiDZvz8MOK33kMmjJBf36dkCjQrHoRq0qTrAGABA56q292JQHcnDGeolQRCD0ln
- 7HfMIYe+QF+uT4XIHwjVBffsXJYoADcnamKpcHUSRs+f61sB3mPMK6lrsUKOt6UK2s077Nwj3VE
- Ws7ujXBG9gYQ7I6YusaiUo0o1NecSFeFIYgo4uIePFv9XiKBJvHPJH9zc7+oUyTOmxI6ax/4KCr
- LSCLFtxO7FaNzy0zC3qfGFjYmT4mg2wbfFXdprbft5ArNZzS9HSvh+YrcWqfsVj4jjYGUfElW6O
- yHlR2ppM/HgoFlVcbbLAezlLWhvRM1AWcKeeZKiJ1njGphjVwjGvJY20UnDuQ+5vozOAblDF4Qs
- pA2Z8hqmhLLn//iPUiDKw==
-X-Received: by 2002:a17:90b:4c0c:b0:35f:b306:5d47 with SMTP id
- 98e67ed59e1d1-35fb306602emr12292873a91.1.1776238449667; 
- Wed, 15 Apr 2026 00:34:09 -0700 (PDT)
-Received: from donnager-debian.. ([45.124.203.19])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35fd308cf98sm1072994a91.7.2026.04.15.00.34.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Apr 2026 00:34:09 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Chris Rauer <crauer@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alano Song <alanosong@163.com>, qemu-riscv@nongnu.org,
- Hao Wu <wuhaotsh@google.com>
-Subject: [PATCH v2] hw/i2c: Add designware i2c controller
-Date: Wed, 15 Apr 2026 17:33:31 +1000
-Message-ID: <20260415073341.690754-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wCvB8-00037K-Td
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 04:00:54 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wCvB5-0001JJ-NF
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 04:00:54 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 4A18342EE9
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 08:00:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1776240049;
+ bh=ZYA1uabyTbAd8lzBr+E23M3e7oliOnLmIcP7To4/p8Q=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=qmBAKvKTOVPipptVmegdpLBLEdMtpqyo4xxiXUzGhYn1KDwNEWvWzgIoo0iLwgty9
+ eqJ+sOOIPGmUPwtmBPkelY89XDIpO06zN8AIDS/PUQbHhqTHcK9dNmLAoQqrFXUCig
+ JoMOJ5i9TQr5GQuK0Qrw7Mat0FYwlvQVPUcYxuIiYyqB0v8KsNLWAhm5vN2xKS89wZ
+ BRRk7hbMs8MNg2/ApKRR6VSx2nzsYzYPHvoEULMaTkK2hg9uHj94vndbvI5J/AVC1M
+ S8KHL8esduHNi3WGrPbi9IhnRwTw6bMNfvHjtBXtYp21eLlTLpl171+ssNL3byIlW0
+ +kKfLu8ZhwEDQ==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 417797F26E
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 08:00:49 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.248,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 15 Apr 2026 07:52:32 -0000
+From: Christian Ehrhardt <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Fix Released; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe; component=main;
+ status=Fix Released; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
+ sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
+ sourcepackage=qemu-hwe; component=main; status=Fix Released;
+ importance=Undecided; assignee=None; 
+X-Launchpad-Bug-Tags: server-todo
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <177623955240.2842369.17759260785397092538.malone@juju-98d295-prod-launchpad-53>
+Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
+ handler
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="866d07beecca8ac2e3326342adf6c1740cd3e7b3";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 141e4675e735b7b07a026519bcca542e6d3db57e
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -98,1033 +113,169 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chris Rauer <crauer@google.com>
+@Heinrich - it is fixed in resolute with the preliminary changes known.
+A decision for backporting should wait for whatever will be the final form =
+to make it upstream and your judgement - do you have an opinion?
+Do you think this change is SRUable?
+Do you think it is needed - can someone run resolute guests on e.g. noble w=
+ithout this?
 
-In the past this model has been submitted for use with the arm virt
-machine, however in this case it will be used by the upcoming
-Tenstorrent Atlantis RISC-V machine.
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
 
-This is a re-submission of the model with Chris' permission, with a
-light touch of updates to make it build with qemu master.
+Title:
+  [SRU] RISC-V vector state not restored by signal handler
 
-Reviewed-by: Hao Wu <wuhaotsh@google.com>
-Signed-off-by: Chris Rauer <crauer@google.com>
-Link: https://lore.kernel.org/qemu-devel/20220110214755.810343-2-venture@google.com
-[jms: rebase and minor build fixes for class_init and reset callback]
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
-v2: Add trace event for read and write, document Alano and myself as
-reviewers.
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu-hwe package in Ubuntu:
+  Fix Released
+Status in qemu source package in Noble:
+  New
+Status in qemu-hwe source package in Noble:
+  New
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu-hwe source package in Plucky:
+  New
+Status in qemu source package in Questing:
+  New
+Status in qemu-hwe source package in Questing:
+  New
+Status in qemu source package in Resolute:
+  Fix Released
+Status in qemu-hwe source package in Resolute:
+  Fix Released
 
-This supersedes my v1 submission as well as Alano's similar submission
-from January:
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
 
- https://lore.kernel.org/qemu-devel/20260106131253.16192-1-AlanoSong@163.com/
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
 
----
- MAINTAINERS                     |   8 +
- include/hw/i2c/designware_i2c.h | 101 ++++
- hw/i2c/designware_i2c.c         | 818 ++++++++++++++++++++++++++++++++
- hw/i2c/Kconfig                  |   4 +
- hw/i2c/meson.build              |   1 +
- hw/i2c/trace-events             |   4 +
- 6 files changed, 936 insertions(+)
- create mode 100644 include/hw/i2c/designware_i2c.h
- create mode 100644 hw/i2c/designware_i2c.c
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index aa4267b15806..e1942a86eba5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2716,6 +2716,14 @@ S: Orphan
- F: hw/gpio/pcf8574.c
- F: include/gpio/pcf8574.h
- 
-+DesignWare I2C
-+M: Chris Rauer <crauer@google.com>
-+R: Alano Song <alanosong@163.com>
-+R: Joel Stanley <joel@jms.id.au>
-+S: Maintained
-+F: hw/i2c/designware_i2c.c
-+F: include/hw/i2c/designware_i2c.h
-+
- Generic Loader
- M: Alistair Francis <alistair@alistair23.me>
- S: Maintained
-diff --git a/include/hw/i2c/designware_i2c.h b/include/hw/i2c/designware_i2c.h
-new file mode 100644
-index 000000000000..0d8f904f51b7
---- /dev/null
-+++ b/include/hw/i2c/designware_i2c.h
-@@ -0,0 +1,101 @@
-+/*
-+ * DesignWare I2C Module.
-+ *
-+ * Copyright 2021 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef DESIGNWARE_I2C_H
-+#define DESIGNWARE_I2C_H
-+
-+#include "hw/i2c/i2c.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/sysbus.h"
-+
-+/* Size of the FIFO buffers. */
-+#define DESIGNWARE_I2C_RX_FIFO_SIZE 16
-+#define DESIGNWARE_I2C_TX_FIFO_SIZE 16
-+
-+typedef enum DesignWareI2CStatus {
-+    DW_I2C_STATUS_IDLE,
-+    DW_I2C_STATUS_SENDING_ADDRESS,
-+    DW_I2C_STATUS_SENDING,
-+    DW_I2C_STATUS_RECEIVING,
-+} DesignWareI2CStatus;
-+
-+/*
-+ * struct DesignWareI2CState - DesignWare I2C device state.
-+ * @bus: The underlying I2C Bus
-+ * @irq: GIC interrupt line to fire on events
-+ * @ic_con: : I2C control register
-+ * @ic_tar: I2C target address register
-+ * @ic_sar: I2C slave address register
-+ * @ic_ss_scl_hcnt: Standard speed i2c clock scl high count register
-+ * @ic_ss_scl_lcnt: Standard speed i2c clock scl low count register
-+ * @ic_fs_scl_hcnt: Fast mode or fast mode plus i2c clock scl high count
-+ *                  register
-+ * @ic_fs_scl_lcnt:Fast mode or fast mode plus i2c clock scl low count
-+ *                  register
-+ * @ic_intr_mask: I2C Interrupt Mask Register
-+ * @ic_raw_intr_stat: I2C raw interrupt status register
-+ * @ic_rx_tl: I2C receive FIFO threshold register
-+ * @ic_tx_tl: I2C transmit FIFO threshold register
-+ * @ic_enable: I2C enable register
-+ * @ic_status: I2C status register
-+ * @ic_txflr: I2C transmit fifo level register
-+ * @ic_rxflr: I2C receive fifo level register
-+ * @ic_sda_hold: I2C SDA hold time length register
-+ * @ic_tx_abrt_source: The I2C transmit abort source register
-+ * @ic_sda_setup: I2C SDA setup register
-+ * @ic_enable_status: I2C enable status register
-+ * @ic_fs_spklen: I2C SS, FS or FM+ spike suppression limit
-+ * @ic_comp_param_1: Component parameter register
-+ * @ic_comp_version: I2C component version register
-+ * @ic_comp_type: I2C component type register
-+ * @rx_fifo: The FIFO buffer for receiving in FIFO mode.
-+ * @rx_cur: The current position of rx_fifo.
-+ * @status: The current status of the SMBus.
-+ */
-+typedef struct DesignWareI2CState {
-+    SysBusDevice parent;
-+
-+    MemoryRegion iomem;
-+
-+    I2CBus      *bus;
-+    qemu_irq     irq;
-+
-+    uint32_t ic_con;
-+    uint32_t ic_tar;
-+    uint32_t ic_sar;
-+    uint32_t ic_ss_scl_hcnt;
-+    uint32_t ic_ss_scl_lcnt;
-+    uint32_t ic_fs_scl_hcnt;
-+    uint32_t ic_fs_scl_lcnt;
-+    uint32_t ic_intr_mask;
-+    uint32_t ic_raw_intr_stat;
-+    uint32_t ic_rx_tl;
-+    uint32_t ic_tx_tl;
-+    uint32_t ic_enable;
-+    uint32_t ic_status;
-+    uint32_t ic_txflr;
-+    uint32_t ic_rxflr;
-+    uint32_t ic_sda_hold;
-+    uint32_t ic_tx_abrt_source;
-+    uint32_t ic_sda_setup;
-+    uint32_t ic_enable_status;
-+    uint32_t ic_fs_spklen;
-+    uint32_t ic_comp_param_1;
-+    uint32_t ic_comp_version;
-+    uint32_t ic_comp_type;
-+
-+    uint8_t      rx_fifo[DESIGNWARE_I2C_RX_FIFO_SIZE];
-+    uint8_t      rx_cur;
-+
-+    DesignWareI2CStatus status;
-+} DesignWareI2CState;
-+
-+#define TYPE_DESIGNWARE_I2C "designware-i2c"
-+#define DESIGNWARE_I2C(obj) OBJECT_CHECK(DesignWareI2CState, (obj), \
-+                                        TYPE_DESIGNWARE_I2C)
-+
-+#endif /* DESIGNWARE_I2C_H */
-diff --git a/hw/i2c/designware_i2c.c b/hw/i2c/designware_i2c.c
-new file mode 100644
-index 000000000000..3e0e7dab2333
---- /dev/null
-+++ b/hw/i2c/designware_i2c.c
-@@ -0,0 +1,818 @@
-+/*
-+ * DesignWare I2C Module.
-+ *
-+ * Copyright 2021 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "hw/i2c/designware_i2c.h"
-+#include "migration/vmstate.h"
-+#include "qemu/bitops.h"
-+#include "qemu/guest-random.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "qemu/units.h"
-+#include "trace.h"
-+
-+enum DesignWareI2CRegister {
-+    DW_IC_CON                   = 0x00,
-+    DW_IC_TAR                   = 0x04,
-+    DW_IC_SAR                   = 0x08,
-+    DW_IC_DATA_CMD              = 0x10,
-+    DW_IC_SS_SCL_HCNT           = 0x14,
-+    DW_IC_SS_SCL_LCNT           = 0x18,
-+    DW_IC_FS_SCL_HCNT           = 0x1c,
-+    DW_IC_FS_SCL_LCNT           = 0x20,
-+    DW_IC_INTR_STAT             = 0x2c,
-+    DW_IC_INTR_MASK             = 0x30,
-+    DW_IC_RAW_INTR_STAT         = 0x34,
-+    DW_IC_RX_TL                 = 0x38,
-+    DW_IC_TX_TL                 = 0x3c,
-+    DW_IC_CLR_INTR              = 0x40,
-+    DW_IC_CLR_RX_UNDER          = 0x44,
-+    DW_IC_CLR_RX_OVER           = 0x48,
-+    DW_IC_CLR_TX_OVER           = 0x4c,
-+    DW_IC_CLR_RD_REQ            = 0x50,
-+    DW_IC_CLR_TX_ABRT           = 0x54,
-+    DW_IC_CLR_RX_DONE           = 0x58,
-+    DW_IC_CLR_ACTIVITY          = 0x5c,
-+    DW_IC_CLR_STOP_DET          = 0x60,
-+    DW_IC_CLR_START_DET         = 0x64,
-+    DW_IC_CLR_GEN_CALL          = 0x68,
-+    DW_IC_ENABLE                = 0x6c,
-+    DW_IC_STATUS                = 0x70,
-+    DW_IC_TXFLR                 = 0x74,
-+    DW_IC_RXFLR                 = 0x78,
-+    DW_IC_SDA_HOLD              = 0x7c,
-+    DW_IC_TX_ABRT_SOURCE        = 0x80,
-+    DW_IC_SLV_DATA_NACK_ONLY    = 0x84,
-+    DW_IC_DMA_CR                = 0x88,
-+    DW_IC_DMA_TDLR              = 0x8c,
-+    DW_IC_DMA_RDLR              = 0x90,
-+    DW_IC_SDA_SETUP             = 0x94,
-+    DW_IC_ACK_GENERAL_CALL      = 0x98,
-+    DW_IC_ENABLE_STATUS         = 0x9c,
-+    DW_IC_FS_SPKLEN             = 0xa0,
-+    DW_IC_CLR_RESTART_DET       = 0xa8,
-+    DW_IC_COMP_PARAM_1          = 0xf4,
-+    DW_IC_COMP_VERSION          = 0xf8,
-+    DW_IC_COMP_TYPE             = 0xfc,
-+};
-+
-+/* DW_IC_CON fields */
-+#define DW_IC_CON_STOP_DET_IF_MASTER_ACTIV  BIT(10)
-+#define DW_IC_CON_RX_FIFO_FULL_HLD_CTRL     BIT(9)
-+#define DW_IC_CON_TX_EMPTY_CTRL             BIT(8)
-+#define DW_IC_CON_STOP_IF_ADDRESSED         BIT(7)
-+#define DW_IC_CON_SLAVE_DISABLE             BIT(6)
-+#define DW_IC_CON_IC_RESTART_EN             BIT(5)
-+#define DW_IC_CON_10BITADDR_MASTER          BIT(4)
-+#define DW_IC_CON_10BITADDR_SLAVE           BIT(3)
-+#define DW_IC_CON_SPEED(rv)                 extract32((rv), 1, 2)
-+#define DW_IC_CON_MASTER_MODE               BIT(0)
-+
-+/* DW_IC_TAR fields */
-+#define DW_IC_TAR_IC_10BITADDR_MASTER  BIT(12)
-+#define DW_IC_TAR_SPECIAL              BIT(11)
-+#define DW_IC_TAR_GC_OR_START          BIT(10)
-+#define DW_IC_TAR_ADDRESS(rv)          extract32((rv), 0, 10)
-+
-+/* DW_IC_DATA_CMD fields */
-+#define DW_IC_DATA_CMD_RESTART  BIT(10)
-+#define DW_IC_DATA_CMD_STOP     BIT(9)
-+#define DW_IC_DATA_CMD_CMD      BIT(8)
-+#define DW_IC_DATA_CMD_DAT(rv)  extract32((rv), 0, 8)
-+
-+/* DW_IC_INTR_STAT/INTR_MASK/RAW_INTR_STAT fields */
-+#define DW_IC_INTR_RESTART_DET  BIT(12)
-+#define DW_IC_INTR_GEN_CALL     BIT(11)
-+#define DW_IC_INTR_START_DET    BIT(10)
-+#define DW_IC_INTR_STOP_DET     BIT(9)
-+#define DW_IC_INTR_ACTIVITY     BIT(8)
-+#define DW_IC_INTR_RX_DONE      BIT(7)
-+#define DW_IC_INTR_TX_ABRT      BIT(6)
-+#define DW_IC_INTR_RD_REQ       BIT(5)
-+#define DW_IC_INTR_TX_EMPTY     BIT(4) /* Hardware clear only. */
-+#define DW_IC_INTR_TX_OVER      BIT(3)
-+#define DW_IC_INTR_RX_FULL      BIT(2) /* Hardware clear only. */
-+#define DW_IC_INTR_RX_OVER      BIT(1)
-+#define DW_IC_INTR_RX_UNDER     BIT(0)
-+
-+/* DW_IC_ENABLE fields */
-+#define DW_IC_ENABLE_TX_CMD_BLOCK  BIT(2)
-+#define DW_IC_ENABLE_ABORT         BIT(1)
-+#define DW_IC_ENABLE_ENABLE        BIT(0)
-+
-+/* DW_IC_STATUS fields */
-+#define DW_IC_STATUS_SLV_ACTIVITY  BIT(6)
-+#define DW_IC_STATUS_MST_ACTIVITY  BIT(5)
-+#define DW_IC_STATUS_RFF           BIT(4)
-+#define DW_IC_STATUS_RFNE          BIT(3)
-+#define DW_IC_STATUS_TFE           BIT(2)
-+#define DW_IC_STATUS_TFNF          BIT(1)
-+#define DW_IC_STATUS_ACTIVITY      BIT(0)
-+
-+/* DW_IC_TX_ABRT_SOURCE fields */
-+#define DW_IC_TX_TX_FLUSH_CNT          extract32((rv), 23, 9)
-+#define DW_IC_TX_ABRT_USER_ABRT        BIT(16)
-+#define DW_IC_TX_ABRT_SLVRD_INTX       BIT(15)
-+#define DW_IC_TX_ABRT_SLV_ARBLOST      BIT(14)
-+#define DW_IC_TX_ABRT_SLVFLUSH_TXFIFO  BIT(13)
-+#define DW_IC_TX_ARB_LOST              BIT(12)
-+#define DW_IC_TX_ABRT_MASTER_DIS       BIT(11)
-+#define DW_IC_TX_ABRT_10B_RD_NORSTRT   BIT(10)
-+#define DW_IC_TX_ABRT_SBYTE_NORSTRT    BIT(9)
-+#define DW_IC_TX_ABRT_HS_NORSTRT       BIT(8)
-+#define DW_IC_TX_ABRT_SBYTE_ACKDET     BIT(7)
-+#define DW_IC_TX_ABRT_HS_ACKDET        BIT(6)
-+#define DW_IC_TX_ABRT_GCALL_READ       BIT(5)
-+#define DW_IC_TX_ABRT_GCALL_NOACK      BIT(4)
-+#define DW_IC_TX_ABRT_TXDATA_NOACK     BIT(3)
-+#define DW_IC_TX_ABRT_10ADDR2_NOACK    BIT(2)
-+#define DW_IC_TX_ABRT_10ADDR1_NOACK    BIT(1)
-+#define DW_IC_TX_ABRT_7B_ADDR_NOACK    BIT(0)
-+
-+
-+/* IC_ENABLE_STATUS fields */
-+#define DW_IC_ENABLE_STATUS_SLV_RX_DATA_LOST         BIT(2)
-+#define DW_IC_ENABLE_STATUS_SLV_DISABLED_WHILE_BUSY  BIT(1)
-+#define DW_IC_ENABLE_STATUS_IC_EN                    BIT(0)
-+
-+/* Masks for writable registers. */
-+#define DW_IC_CON_MASK          0x000003ff
-+#define DW_IC_TAR_MASK          0x00000fff
-+#define DW_IC_SAR_MASK          0x000003ff
-+#define DW_IC_SS_SCL_HCNT_MASK  0x0000ffff
-+#define DW_IC_SS_SCL_LCNT_MASK  0x0000ffff
-+#define DW_IC_FS_SCL_HCNT_MASK  0x0000ffff
-+#define DW_IC_FS_SCL_LCNT_MASK  0x0000ffff
-+#define DW_IC_INTR_MASK_MASK    0x00001fff
-+#define DW_IC_ENABLE_MASK       0x00000007
-+#define DW_IC_SDA_HOLD_MASK     0x00ffffff
-+#define DW_IC_SDA_SETUP_MASK    0x000000ff
-+#define DW_IC_FS_SPKLEN_MASK    0x000000ff
-+
-+/* Reset values */
-+#define DW_IC_CON_INIT_VAL          0x7d
-+#define DW_IC_TAR_INIT_VAL          0x1055
-+#define DW_IC_SAR_INIT_VAL          0x55
-+#define DW_IC_SS_SCL_HCNT_INIT_VAL  0x190
-+#define DW_IC_SS_SCL_LCNT_INIT_VAL  0x1d6
-+#define DW_IC_FS_SCL_HCNT_INIT_VAL  0x3c
-+#define DW_IC_FS_SCL_LCNT_INIT_VAL  0x82
-+#define DW_IC_INTR_MASK_INIT_VAL    0x8ff
-+#define DW_IC_STATUS_INIT_VAL       0x6
-+#define DW_IC_SDA_HOLD_INIT_VAL     0x1
-+#define DW_IC_SDA_SETUP_INIT_VAL    0x64
-+#define DW_IC_FS_SPKLEN_INIT_VAL    0x2
-+
-+#define DW_IC_COMP_PARAM_1_HAS_ENCODED_PARAMS   BIT(7)
-+#define DW_IC_COMP_PARAM_1_HAS_DMA              0 /* bit 6 - DMA disabled. */
-+#define DW_IC_COMP_PARAM_1_INTR_IO              BIT(5)
-+#define DW_IC_COMP_PARAM_1_HC_COUNT_VAL         0 /* bit 4 - disabled */
-+#define DW_IC_COMP_PARAM_1_HIGH_SPEED_MODE      (BIT(2) | BIT(3))
-+#define DW_IC_COMP_PARAM_1_APB_DATA_WIDTH_32    BIT(1) /* bits 0, 1 */
-+#define DW_IC_COMP_PARAM_1_INIT_VAL             \
-+    (DW_IC_COMP_PARAM_1_APB_DATA_WIDTH_32 | \
-+    DW_IC_COMP_PARAM_1_HIGH_SPEED_MODE | \
-+    DW_IC_COMP_PARAM_1_HC_COUNT_VAL | \
-+    DW_IC_COMP_PARAM_1_INTR_IO | \
-+    DW_IC_COMP_PARAM_1_HAS_DMA | \
-+    DW_IC_COMP_PARAM_1_HAS_ENCODED_PARAMS | \
-+    ((DESIGNWARE_I2C_RX_FIFO_SIZE - 1) << 8) | \
-+    ((DESIGNWARE_I2C_TX_FIFO_SIZE - 1) << 16))
-+#define DW_IC_COMP_VERSION_INIT_VAL             0x3132302a
-+#define DW_IC_COMP_TYPE_INIT_VAL                0x44570140
-+
-+static void dw_i2c_update_irq(DesignWareI2CState *s)
-+{
-+    int level;
-+    uint32_t intr = s->ic_raw_intr_stat & s->ic_intr_mask;
-+
-+    level = !!((intr & DW_IC_INTR_RX_UNDER) |
-+        (intr & DW_IC_INTR_RX_OVER) |
-+        (intr & DW_IC_INTR_RX_FULL) |
-+        (intr & DW_IC_INTR_TX_OVER) |
-+        (intr & DW_IC_INTR_TX_EMPTY) |
-+        (intr & DW_IC_INTR_RD_REQ) |
-+        (intr & DW_IC_INTR_TX_ABRT) |
-+        (intr & DW_IC_INTR_RX_DONE) |
-+        (intr & DW_IC_INTR_ACTIVITY) |
-+        (intr & DW_IC_INTR_STOP_DET) |
-+        (intr & DW_IC_INTR_START_DET) |
-+        (intr & DW_IC_INTR_GEN_CALL) |
-+        (intr & DW_IC_INTR_RESTART_DET)
-+        );
-+    qemu_set_irq(s->irq, level);
-+}
-+
-+static uint32_t dw_i2c_read_ic_data_cmd(DesignWareI2CState *s)
-+{
-+    uint32_t value = s->rx_fifo[s->rx_cur];
-+
-+    if (s->status != DW_I2C_STATUS_RECEIVING) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Attempted to read from RX fifo when not in receive "
-+                      "state.\n", DEVICE(s)->canonical_path);
-+        if (s->status != DW_I2C_STATUS_IDLE) {
-+            s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_UNDER;
-+            dw_i2c_update_irq(s);
-+        }
-+        return 0;
-+    }
-+
-+    s->rx_cur = (s->rx_cur + 1) % DESIGNWARE_I2C_RX_FIFO_SIZE;
-+
-+    if (s->ic_rxflr > 0) {
-+        s->ic_rxflr--;
-+    } else {
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_UNDER;
-+        dw_i2c_update_irq(s);
-+        return 0;
-+    }
-+
-+    if (s->ic_rxflr <= s->ic_rx_tl) {
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_FULL;
-+        dw_i2c_update_irq(s);
-+    }
-+
-+    return value;
-+}
-+
-+static uint64_t dw_i2c_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    uint64_t value = 0;
-+
-+    DesignWareI2CState *s = opaque;
-+
-+    switch (offset) {
-+    case DW_IC_CON:
-+        value = s->ic_con;
-+        break;
-+    case DW_IC_TAR:
-+        value = s->ic_tar;
-+        break;
-+    case DW_IC_SAR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported read - ic_sar\n",
-+                      DEVICE(s)->canonical_path);
-+        value = s->ic_sar;
-+        break;
-+    case DW_IC_DATA_CMD:
-+        value = dw_i2c_read_ic_data_cmd(s);
-+        break;
-+    case DW_IC_SS_SCL_HCNT:
-+        value = s->ic_ss_scl_hcnt;
-+        break;
-+    case DW_IC_SS_SCL_LCNT:
-+        value = s->ic_ss_scl_lcnt;
-+        break;
-+    case DW_IC_FS_SCL_HCNT:
-+        value = s->ic_fs_scl_hcnt;
-+        break;
-+    case DW_IC_FS_SCL_LCNT:
-+        value = s->ic_fs_scl_lcnt;
-+        break;
-+    case DW_IC_INTR_STAT:
-+        value = s->ic_raw_intr_stat & s->ic_intr_mask;
-+        break;
-+    case DW_IC_INTR_MASK:
-+        value = s->ic_intr_mask;
-+        break;
-+    case DW_IC_RAW_INTR_STAT:
-+        value = s->ic_raw_intr_stat;
-+        break;
-+    case DW_IC_RX_TL:
-+        value = s->ic_rx_tl;
-+        break;
-+    case DW_IC_TX_TL:
-+        value = s->ic_tx_tl;
-+        break;
-+    case DW_IC_CLR_INTR:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_GEN_CALL |
-+            DW_IC_INTR_RESTART_DET |
-+            DW_IC_INTR_START_DET |
-+            DW_IC_INTR_STOP_DET |
-+            DW_IC_INTR_ACTIVITY |
-+            DW_IC_INTR_RX_DONE |
-+            DW_IC_INTR_TX_ABRT |
-+            DW_IC_INTR_RD_REQ |
-+            DW_IC_INTR_TX_OVER |
-+            DW_IC_INTR_RX_OVER |
-+            DW_IC_INTR_RX_UNDER);
-+        s->ic_tx_abrt_source = 0;
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_RX_UNDER:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_RX_UNDER);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_RX_OVER:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_RX_OVER);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_TX_OVER:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_TX_OVER);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_RD_REQ:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_RD_REQ);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_TX_ABRT:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_TX_ABRT);
-+        s->ic_tx_abrt_source = 0;
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_RX_DONE:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_RX_DONE);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_ACTIVITY:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_ACTIVITY);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_STOP_DET:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_STOP_DET);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_START_DET:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_START_DET);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_CLR_GEN_CALL:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_GEN_CALL);
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_ENABLE:
-+        value = s->ic_enable;
-+        break;
-+    case DW_IC_STATUS:
-+        value = s->ic_status;
-+        break;
-+    case DW_IC_TXFLR:
-+        value = s->ic_txflr;
-+        break;
-+    case DW_IC_RXFLR:
-+        value = s->ic_rxflr;
-+        break;
-+    case DW_IC_SDA_HOLD:
-+        value = s->ic_sda_hold;
-+        break;
-+    case DW_IC_TX_ABRT_SOURCE:
-+        value = s->ic_tx_abrt_source;
-+        break;
-+    case DW_IC_SLV_DATA_NACK_ONLY:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unsupported read - ic_slv_data_nack_only\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_DMA_CR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported read - ic_dma_cr\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_DMA_TDLR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported read - ic_dma_tdlr\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_DMA_RDLR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported read - ic_dma_rdlr\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_SDA_SETUP:
-+        value = s->ic_sda_setup;
-+        break;
-+    case DW_IC_ACK_GENERAL_CALL:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported read - ic_ack_general_call\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_ENABLE_STATUS:
-+        value = s->ic_enable_status;
-+        break;
-+    case DW_IC_FS_SPKLEN:
-+        value = s->ic_fs_spklen;
-+        break;
-+    case DW_IC_CLR_RESTART_DET:
-+        s->ic_raw_intr_stat &= ~(DW_IC_INTR_RESTART_DET);
-+        break;
-+    case DW_IC_COMP_PARAM_1:
-+        value = s->ic_comp_param_1;
-+        break;
-+    case DW_IC_COMP_VERSION:
-+        value = s->ic_comp_version;
-+        break;
-+    case DW_IC_COMP_TYPE:
-+        value = s->ic_comp_type;
-+        break;
-+
-+    /* This register is invalid at this point. */
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: read from invalid offset 0x%" HWADDR_PRIx "\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        break;
-+    }
-+
-+    trace_dw_i2c_read(DEVICE(s)->canonical_path, offset, value);
-+
-+    return value;
-+}
-+
-+static void dw_i2c_write_ic_con(DesignWareI2CState *s, uint32_t value)
-+{
-+    if (value & DW_IC_CON_RX_FIFO_FULL_HLD_CTRL) {
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unsupported ic_con flag - RX_FIFO_FULL_HLD_CTRL\n",
-+                      DEVICE(s)->canonical_path);
-+    }
-+
-+    if (!(s->ic_enable & DW_IC_ENABLE_ENABLE)) {
-+        s->ic_con = value & DW_IC_CON_MASK;
-+    } else {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: invalid setting to ic_con %d when ic_enable[0]==1\n",
-+                      DEVICE(s)->canonical_path, value);
-+    }
-+}
-+
-+static void dw_i2c_reset_to_idle(DesignWareI2CState *s)
-+{
-+        s->ic_enable_status &= ~DW_IC_ENABLE_STATUS_IC_EN;
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_TX_EMPTY;
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_FULL;
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_UNDER;
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_OVER;
-+        s->ic_rxflr = 0;
-+        s->ic_status &= ~DW_IC_STATUS_ACTIVITY;
-+        s->status = DW_I2C_STATUS_IDLE;
-+        dw_i2c_update_irq(s);
-+}
-+
-+static void dw_ic_tx_abort(DesignWareI2CState *s, uint32_t src)
-+{
-+    s->ic_tx_abrt_source |= src;
-+    s->ic_raw_intr_stat |= DW_IC_INTR_TX_ABRT;
-+    dw_i2c_reset_to_idle(s);
-+    dw_i2c_update_irq(s);
-+}
-+
-+static void dw_i2c_write_ic_data_cmd(DesignWareI2CState *s, uint32_t value)
-+{
-+    int recv = !!(value & DW_IC_DATA_CMD_CMD);
-+
-+    if (s->status == DW_I2C_STATUS_IDLE ||
-+        s->ic_raw_intr_stat & DW_IC_INTR_TX_ABRT) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Attempted to write to TX fifo when it is held in "
-+                      "reset.\n", DEVICE(s)->canonical_path);
-+        return;
-+    }
-+
-+    /* Send the address if it hasn't been sent yet. */
-+    if (s->status == DW_I2C_STATUS_SENDING_ADDRESS) {
-+        int rv = i2c_start_transfer(s->bus, DW_IC_TAR_ADDRESS(s->ic_tar), recv);
-+        if (rv) {
-+            dw_ic_tx_abort(s, DW_IC_TX_ABRT_7B_ADDR_NOACK);
-+            return;
-+        }
-+        s->status = recv ? DW_I2C_STATUS_RECEIVING : DW_I2C_STATUS_SENDING;
-+    }
-+
-+    /* Send data */
-+    if (!recv) {
-+        int rv = i2c_send(s->bus, DW_IC_DATA_CMD_DAT(value));
-+        if (rv) {
-+            i2c_end_transfer(s->bus);
-+            dw_ic_tx_abort(s, DW_IC_TX_ABRT_TXDATA_NOACK);
-+            return;
-+        }
-+        dw_i2c_update_irq(s);
-+    }
-+
-+    /* Restart command */
-+    if (value & DW_IC_DATA_CMD_RESTART && s->ic_con & DW_IC_CON_IC_RESTART_EN) {
-+        s->ic_raw_intr_stat |= DW_IC_INTR_RESTART_DET |
-+                               DW_IC_INTR_START_DET |
-+                               DW_IC_INTR_ACTIVITY;
-+        s->ic_status |= DW_IC_STATUS_ACTIVITY;
-+        dw_i2c_update_irq(s);
-+
-+        if (i2c_start_transfer(s->bus, DW_IC_TAR_ADDRESS(s->ic_tar), recv)) {
-+            dw_ic_tx_abort(s, DW_IC_TX_ABRT_7B_ADDR_NOACK);
-+            return;
-+        }
-+
-+        s->status = recv ? DW_I2C_STATUS_RECEIVING : DW_I2C_STATUS_SENDING;
-+    }
-+
-+    /* Receive data */
-+    if (recv) {
-+        uint8_t pos = (s->rx_cur + s->ic_rxflr) % DESIGNWARE_I2C_RX_FIFO_SIZE;
-+
-+        if (s->ic_rxflr < DESIGNWARE_I2C_RX_FIFO_SIZE) {
-+            s->rx_fifo[pos] = i2c_recv(s->bus);
-+            s->ic_rxflr++;
-+        } else {
-+            s->ic_raw_intr_stat |= DW_IC_INTR_RX_OVER;
-+            dw_i2c_update_irq(s);
-+        }
-+
-+        if (s->ic_rxflr > s->ic_rx_tl) {
-+            s->ic_raw_intr_stat |= DW_IC_INTR_RX_FULL;
-+            dw_i2c_update_irq(s);
-+        }
-+        if (value & DW_IC_DATA_CMD_STOP) {
-+            i2c_nack(s->bus);
-+        }
-+    }
-+
-+    /* Stop command */
-+    if (value & DW_IC_DATA_CMD_STOP) {
-+        s->ic_raw_intr_stat |= DW_IC_INTR_STOP_DET;
-+        s->ic_status &= ~DW_IC_STATUS_ACTIVITY;
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_TX_EMPTY;
-+        i2c_end_transfer(s->bus);
-+        dw_i2c_update_irq(s);
-+    }
-+}
-+
-+static void dw_i2c_write_ic_enable(DesignWareI2CState *s, uint32_t value)
-+{
-+    if (value & DW_IC_ENABLE_ENABLE && !(s->ic_con & DW_IC_CON_SLAVE_DISABLE)) {
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: Designware I2C slave mode is not supported.\n",
-+                      DEVICE(s)->canonical_path);
-+        return;
-+    }
-+
-+    s->ic_enable = value & DW_IC_ENABLE_MASK;
-+
-+    if (value & DW_IC_ENABLE_ABORT || value & DW_IC_ENABLE_TX_CMD_BLOCK) {
-+        dw_ic_tx_abort(s, DW_IC_TX_ABRT_USER_ABRT);
-+        return;
-+    }
-+
-+    if (value & DW_IC_ENABLE_ENABLE) {
-+        s->ic_enable_status |= DW_IC_ENABLE_STATUS_IC_EN;
-+        s->ic_status |= DW_IC_STATUS_ACTIVITY;
-+        s->ic_raw_intr_stat |= DW_IC_INTR_ACTIVITY |
-+                               DW_IC_INTR_START_DET |
-+                               DW_IC_INTR_TX_EMPTY;
-+        s->status = DW_I2C_STATUS_SENDING_ADDRESS;
-+        dw_i2c_update_irq(s);
-+    } else if ((value & DW_IC_ENABLE_ENABLE) == 0) {
-+        dw_i2c_reset_to_idle(s);
-+    }
-+
-+}
-+
-+static void dw_i2c_write_ic_rx_tl(DesignWareI2CState *s, uint32_t value)
-+{
-+    /* Note that a value of 0 for ic_rx_tl indicates a threashold of 1. */
-+    if (value > DESIGNWARE_I2C_RX_FIFO_SIZE - 1) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: invalid setting to ic_rx_tl %d\n",
-+                      DEVICE(s)->canonical_path, value);
-+        s->ic_rx_tl = DESIGNWARE_I2C_RX_FIFO_SIZE - 1;
-+    } else {
-+        s->ic_rx_tl = value;
-+    }
-+
-+    if (s->ic_rxflr > s->ic_rx_tl && s->ic_enable & DW_IC_ENABLE_ENABLE) {
-+        s->ic_raw_intr_stat |= DW_IC_INTR_RX_FULL;
-+    } else {
-+        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_FULL;
-+    }
-+    dw_i2c_update_irq(s);
-+}
-+
-+static void dw_i2c_write_ic_tx_tl(DesignWareI2CState *s, uint32_t value)
-+{
-+    /*
-+     * Note that a value of 0 for ic_tx_tl indicates a threashold of 1.
-+     * However, the tx threshold is not used in the model because commands are
-+     * always sent out as soon as they are written.
-+     */
-+    if (value > DESIGNWARE_I2C_TX_FIFO_SIZE - 1) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: invalid setting to ic_tx_tl %d\n",
-+                      DEVICE(s)->canonical_path, value);
-+        s->ic_tx_tl = DESIGNWARE_I2C_TX_FIFO_SIZE - 1;
-+    } else {
-+        s->ic_tx_tl = value;
-+    }
-+}
-+
-+static void dw_i2c_write(void *opaque, hwaddr offset, uint64_t value,
-+                              unsigned size)
-+{
-+    DesignWareI2CState *s = opaque;
-+
-+    trace_dw_i2c_write(DEVICE(s)->canonical_path, offset, value);
-+
-+    /* The order of the registers are their order in memory. */
-+    switch (offset) {
-+    case DW_IC_CON:
-+        dw_i2c_write_ic_con(s, value);
-+        break;
-+    case DW_IC_TAR:
-+        s->ic_tar = value & DW_IC_TAR_MASK;
-+        break;
-+    case DW_IC_SAR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_sar\n",
-+                      DEVICE(s)->canonical_path);
-+        s->ic_sar = value & DW_IC_SAR_MASK;
-+        break;
-+    case DW_IC_DATA_CMD:
-+        dw_i2c_write_ic_data_cmd(s, value);
-+        break;
-+    case DW_IC_SS_SCL_HCNT:
-+        s->ic_ss_scl_hcnt = value & DW_IC_SS_SCL_HCNT_MASK;
-+        break;
-+    case DW_IC_SS_SCL_LCNT:
-+        s->ic_ss_scl_lcnt = value & DW_IC_SS_SCL_LCNT_MASK;
-+        break;
-+    case DW_IC_FS_SCL_HCNT:
-+        s->ic_fs_scl_hcnt = value & DW_IC_FS_SCL_HCNT_MASK;
-+        break;
-+    case DW_IC_FS_SCL_LCNT:
-+        s->ic_fs_scl_lcnt = value & DW_IC_FS_SCL_LCNT_MASK;
-+        break;
-+    case DW_IC_INTR_MASK:
-+        s->ic_intr_mask = value & DW_IC_INTR_MASK_MASK;
-+        dw_i2c_update_irq(s);
-+        break;
-+    case DW_IC_RX_TL:
-+        dw_i2c_write_ic_rx_tl(s, value);
-+        break;
-+    case DW_IC_TX_TL:
-+        dw_i2c_write_ic_tx_tl(s, value);
-+        break;
-+    case DW_IC_ENABLE:
-+        dw_i2c_write_ic_enable(s, value);
-+        break;
-+    case DW_IC_SDA_HOLD:
-+        s->ic_sda_hold = value & DW_IC_SDA_HOLD_MASK;
-+        break;
-+    case DW_IC_SLV_DATA_NACK_ONLY:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unsupported write - ic_slv_data_nack_only\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_DMA_CR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_dma_cr\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_DMA_TDLR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_dma_tdlr\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_DMA_RDLR:
-+        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_dma_rdlr\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_SDA_SETUP:
-+        s->ic_sda_setup = value & DW_IC_SDA_SETUP_MASK;
-+        break;
-+    case DW_IC_ACK_GENERAL_CALL:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unsupported write - ic_ack_general_call\n",
-+                      DEVICE(s)->canonical_path);
-+        break;
-+    case DW_IC_FS_SPKLEN:
-+        s->ic_fs_spklen = value & DW_IC_FS_SPKLEN_MASK;
-+        break;
-+
-+    /* This register is invalid at this point. */
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: write to invalid offset or readonly register 0x%"
-+                      HWADDR_PRIx "\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps designware_i2c_ops = {
-+    .read = dw_i2c_read,
-+    .write = dw_i2c_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+        .unaligned = false,
-+    },
-+};
-+
-+static void designware_i2c_enter_reset(Object *obj, ResetType type)
-+{
-+    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
-+
-+    s->ic_con = DW_IC_CON_INIT_VAL;
-+    s->ic_tar = DW_IC_TAR_INIT_VAL;
-+    s->ic_sar = DW_IC_SAR_INIT_VAL;
-+    s->ic_ss_scl_hcnt = DW_IC_SS_SCL_HCNT_INIT_VAL;
-+    s->ic_ss_scl_lcnt = DW_IC_SS_SCL_LCNT_INIT_VAL;
-+    s->ic_fs_scl_hcnt = DW_IC_FS_SCL_HCNT_INIT_VAL;
-+    s->ic_fs_scl_lcnt = DW_IC_FS_SCL_LCNT_INIT_VAL;
-+    s->ic_intr_mask = DW_IC_INTR_MASK_INIT_VAL;
-+    s->ic_raw_intr_stat = 0;
-+    s->ic_rx_tl = 0;
-+    s->ic_tx_tl = 0;
-+    s->ic_enable = 0;
-+    s->ic_status = DW_IC_STATUS_INIT_VAL;
-+    s->ic_txflr = 0;
-+    s->ic_rxflr = 0;
-+    s->ic_sda_hold = DW_IC_SDA_HOLD_INIT_VAL;
-+    s->ic_tx_abrt_source = 0;
-+    s->ic_sda_setup = DW_IC_SDA_SETUP_INIT_VAL;
-+    s->ic_enable_status = 0;
-+    s->ic_fs_spklen = DW_IC_FS_SPKLEN_INIT_VAL;
-+    s->ic_comp_param_1 = DW_IC_COMP_PARAM_1_INIT_VAL;
-+    s->ic_comp_version = DW_IC_COMP_VERSION_INIT_VAL;
-+    s->ic_comp_type = DW_IC_COMP_TYPE_INIT_VAL;
-+
-+    s->rx_cur = 0;
-+    s->status = DW_I2C_STATUS_IDLE;
-+}
-+
-+static void designware_i2c_hold_reset(Object *obj, ResetType type)
-+{
-+    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
-+
-+    qemu_irq_lower(s->irq);
-+}
-+
-+static const VMStateDescription vmstate_designware_i2c = {
-+    .name = TYPE_DESIGNWARE_I2C,
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32(ic_con, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_tar, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_sar, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_ss_scl_hcnt, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_ss_scl_lcnt, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_fs_scl_hcnt, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_fs_scl_lcnt, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_intr_mask, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_raw_intr_stat, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_rx_tl, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_tx_tl, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_enable, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_status, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_txflr, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_rxflr, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_sda_hold, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_tx_abrt_source, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_sda_setup, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_enable_status, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_fs_spklen, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_comp_param_1, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_comp_version, DesignWareI2CState),
-+        VMSTATE_UINT32(ic_comp_type, DesignWareI2CState),
-+        VMSTATE_UINT32(status, DesignWareI2CState),
-+        VMSTATE_UINT8_ARRAY(rx_fifo, DesignWareI2CState,
-+                        DESIGNWARE_I2C_RX_FIFO_SIZE),
-+        VMSTATE_UINT8(rx_cur, DesignWareI2CState),
-+        VMSTATE_END_OF_LIST(),
-+    },
-+};
-+
-+static void designware_i2c_smbus_init(Object *obj)
-+{
-+    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+
-+    sysbus_init_irq(sbd, &s->irq);
-+
-+    memory_region_init_io(&s->iomem, obj, &designware_i2c_ops, s,
-+                          "regs", 4 * KiB);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+
-+    s->bus = i2c_init_bus(DEVICE(s), "i2c-bus");
-+}
-+
-+static void designware_i2c_class_init(ObjectClass *klass, const void *data)
-+{
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "Designware I2C";
-+    dc->vmsd = &vmstate_designware_i2c;
-+    rc->phases.enter = designware_i2c_enter_reset;
-+    rc->phases.hold = designware_i2c_hold_reset;
-+}
-+
-+static const TypeInfo designware_i2c_types[] = {
-+    {
-+        .name = TYPE_DESIGNWARE_I2C,
-+        .parent = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(DesignWareI2CState),
-+        .class_init = designware_i2c_class_init,
-+        .instance_init = designware_i2c_smbus_init,
-+    },
-+};
-+DEFINE_TYPES(designware_i2c_types);
-diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
-index 596a7a3165ad..d3f394edeb9c 100644
---- a/hw/i2c/Kconfig
-+++ b/hw/i2c/Kconfig
-@@ -18,6 +18,10 @@ config ARM_SBCON_I2C
-     bool
-     select BITBANG_I2C
- 
-+config DESIGNWARE_I2C
-+    bool
-+    select I2C
-+
- config ACPI_SMBUS
-     bool
-     select SMBUS
-diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
-index c459adcb596c..88aea35662dd 100644
---- a/hw/i2c/meson.build
-+++ b/hw/i2c/meson.build
-@@ -11,6 +11,7 @@ i2c_ss.add(when: 'CONFIG_MPC_I2C', if_true: files('mpc_i2c.c'))
- i2c_ss.add(when: 'CONFIG_ALLWINNER_I2C', if_true: files('allwinner-i2c.c'))
- i2c_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('microbit_i2c.c'))
- i2c_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_smbus.c'))
-+i2c_ss.add(when: 'CONFIG_DESIGNWARE_I2C', if_true: files('designware_i2c.c'))
- i2c_ss.add(when: 'CONFIG_SMBUS_EEPROM', if_true: files('smbus_eeprom.c'))
- i2c_ss.add(when: 'CONFIG_ARM_SBCON_I2C', if_true: files('arm_sbcon_i2c.c'))
- i2c_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_i2c.c'))
-diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
-index 1ad0e95c0e60..8a78d2d3c8de 100644
---- a/hw/i2c/trace-events
-+++ b/hw/i2c/trace-events
-@@ -61,3 +61,7 @@ pca954x_read_data(uint8_t value) "PCA954X read data: 0x%02x"
- 
- imx_i2c_read(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] -> 0x%02" PRIx64
- imx_i2c_write(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] <- 0x%02" PRIx64
-+
-+# designware_i2c.c
-+dw_i2c_read(const char *id, uint64_t ofs, uint64_t value) "%s: offset 0x%02" PRIx64 " -> value: 0x%02" PRIx64
-+dw_i2c_write(const char *id, uint64_t ofs, uint64_t value) "%s: offset: 0x%02" PRIx64 " <- value: 0x%02" PRIx64
--- 
-2.47.3
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
+
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
+
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
+
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
+
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
 
 
