@@ -4,83 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBB7F433CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 23:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50F2F433CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 23:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD9o7-00035r-9g; Wed, 15 Apr 2026 19:38:07 -0400
+	id 1wDA0Q-0006Pc-0g; Wed, 15 Apr 2026 19:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wD9o5-00035W-Tt
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:38:06 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1wDA0O-0006PK-8x
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:50:48 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wD9o4-0003VF-3I
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:38:05 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2b45cb89f7eso26155015ad.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 16:38:03 -0700 (PDT)
+ id 1wDA0M-0000rE-Ix
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 19:50:47 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-651c5d525f6so4174977d50.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 16:50:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776297045; cv=none;
+ d=google.com; s=arc-20240605;
+ b=HSqWvCwkK0PVH7H0dEloGoSlia8qOY0Pd827M1aGGjhqkIzQmO+8oXCvFcdk+PJw0s
+ M9HQqe0PxJ61QQxY1JfYHoi3SEGLKrFlyC/5L79g2F4GwxxAz/qTdagspCydKoFtFvxI
+ FmElFTU6QMjFR02X2Kgi9mt3CaEW5TJwB2esxnJXQlEHOlJ2BVJFZ8JDxu4d9vWQeKoy
+ Gr3qs9qDg5Qh4jHHrEKIQK7TBWwTA9CtFsp9NI4IkSV6v9H6Zn6zfgirSIAe9jqhKG8w
+ 5N/F3meANcMfKrvmWl1I9sWGqA7joPFGfq+AewCz9F5yTZObG/TjFglr/4LYqZJYDhsh
+ Yrxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=/B7AJ0oXGJ94EUmuCAKA9MH347wZ16W29PTMRxEV2hg=;
+ fh=Y7awTd27tr334JwSiN65+A/N5KCPEXhaOH9gk8oiOGI=;
+ b=JgB4ShBqV08BhQ2XLqenaIcuCZeIG2mCTJCVK46zFqILNyfJI3u9D51iU342gKbKYx
+ m4iQ0wqzmWLNicaKLDbM6kcfbtcLNrzDQw26kcTECjSph0SqaR7L/BvIAuNk7gw50Dpw
+ WemWCT2GtRuUWz3PD4QWxipqshU4AiwsxhFObf1uhPFOolnY+7fMZoFGxdgAMEA8uXnD
+ 430bZCFECBysHTJp0YNB0WldmOG5Y9gOcvWu2auaX90P3a5YnTxC65yH6CCzv4xVlQBy
+ IKdCBVIy6i8RzyBv28bohtik8NORWYVRopw6KgqzN2GKMGGt9WY/3D4D5qIkmS+riz0r
+ neTg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776296282; x=1776901082; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=o1WD8bko4bKhlZxIRJWO1zXeUuLtkAb75CPCAzggKxg=;
- b=XbrMwsRMW8j5ioK3j97DBupxKa2u4at9NcQ5D342tr3rNQps0xFIhd+alPtKS0L92w
- LHbZqZj2UsKwtLTcwFEvQ8KUTAMu0z/9smex02aAIaGsUvrG9RFxrnMaaZWPoojz5w98
- nmhx3NEJJ3PogFRMw/GJMcf7bqlIi2EEXR3EFxE4PPwuHSb3uQq3lFiVcf8mJHHqwVJA
- qi7kShrHaoBwZlHmbKpHbgUyal2FNLaqNSPHm/zCztz9DkbcnYL+PpZHUhvab+AB8p4I
- ep3+M4bbzt8Bi6DG4PO+wQlgD1JI5ISnTiRUKxZL16SR2WFqTGZRpPrahEWJAG6nKD2W
- /5QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776296282; x=1776901082;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1776297045; x=1776901845; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o1WD8bko4bKhlZxIRJWO1zXeUuLtkAb75CPCAzggKxg=;
- b=B7v42Vh2W9MtGgh3LqOYxPXQPlucOu7sdziZGElTVJH3+TpznnC7QC8xnAfq05koh0
- tkHqWrH7O4icWPmoudq8GyVaQ1g0m68S7nOEzQIaU22u33RhbytHDWgYgnwjE8TAYiyp
- ZwX5VQ0J8wHL45xMArN6g3M6Z4kfppxNkhjNH5kvGRcCIvWOCc5LHHf2ipwpwXJlFFvi
- CVvje8brOiSx7it9JKnYuBMc8atzo+NQVP9xWDwYwgQqz7xcka3ZXvYEPLQ0+kdI2ERn
- xG7in/bYZYPpILFFVgZCpPTLVb40cDn8ZEp35i66cPhCWLcRBwUPcxiTmDEvcIwAvoeh
- mS4g==
+ bh=/B7AJ0oXGJ94EUmuCAKA9MH347wZ16W29PTMRxEV2hg=;
+ b=L/69uU3tEsUul7hkJd9jCNYtoaxC1nI5S8y5oErt3eSeFoOT7QZMyUSs/KhBQUH8XT
+ 8LTpEEXe0sPGg2tVg3K10zkvcvy8XDVA8SE780mYdD3Ho39Nty8RdS5HYQEf0GzLsbrp
+ i+RLJAu8b0KXQffUUDeC30vBnG5+3edioRwPtX6/hVxbxeqlYXdZIx3eh8Mkn0itdm1b
+ o/SsP49DhLTAzkzqYve0vrPfoNs1BiYwdTkIEIZyTgO73Uxz3ekqyi/3G9plSNFI5Pwo
+ 4UWP/c8WAkpqS8vRmKSmMycdEeqL1lTBlVyeX61NJuaowumH5X9ixpG47Ug787UpQaRM
+ E+Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776297045; x=1776901845;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/B7AJ0oXGJ94EUmuCAKA9MH347wZ16W29PTMRxEV2hg=;
+ b=b41jeqCmEBVICO5mfGNATMmu2a2TWyb19liq0SQeb1J6T5889g9OlRFfKUi4aSFKqr
+ ZS6sm2n+I6fYH2VKGurgb56JYEfna3HRIbbvDeb7V2b7nrweq1yZ5F2gwuZyXr3xS/sO
+ uf8PET2uRawDINNyuprdgJoadGOsz3ZYe6Zp0VA/VIkum5lRBpSByiTVOcxznHsiVafQ
+ 0HqyB0hDD8tPvPeNkJvOKaBMCWPyoGnbYRQz4z81wt9Uf2OOyQLYb2G7WMoDUU2qoGhZ
+ p9cC/LKKT4j9eTveWT55RxcUfFZGfo4z4y+cpEPtK9jUIObX/Pcb/VaVcT0rWjsm+W8s
+ Lkhg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/UtUhZlLIomKJXV+EFvY5egq2etLgk8TYPQ1FVpdSrHRE+mOM9pz3ADQ00SzqHvZpR3JQgQr3ekfrK@nongnu.org
-X-Gm-Message-State: AOJu0YyPyVTkJ0IJ+DwGfsyaJIcgpsXWi/75FV2IztOSMzbhN2Od45re
- zmDd4nG89DsdC0aPCG7kHzJ1EnYtL+Z+lqdMBrttdsMPEOdm1yCesolG
-X-Gm-Gg: AeBDietjXYKF24McQMQL7ScQsF2GKN7IwvnfAAA2X5soz/3mxMoWhQ0WsTk9tXAZ8Xv
- MgYg+Z+H51jKssFN9/sA/P/So3kCwbiDUdgZavw0pY5AZxGH7dkaORUgtRl+gp009GGfOz2endh
- 0tcM3wji+0mUq6kVFTGMnmid6QAvh3WF5/pCXRHw8TaOMX21JkO77kFMBWWF8J8kIyWv8JjiOGn
- 8V9u3MXxqA/FbXgIQHLdWcfwAjHV6rEuudRpagkSNiLyXnsXidnNV/1FdHv2kiy2CAzrv0ac8xO
- 26n3B4GdBWTltUXJ/yxe+p/1WUN2dvZwlxyX4v6vQVdzaEyo2ch6xvpVW4Tm6om1FU7GpLy4uUA
- s5dIZaNo606luNTwaiU7uuPiYzU4EMY4cbfsnJB/Ld3MnoVE5ydw+Egepf5aeFJG9/kBJb+FX1E
- VfgarzYKiDbErcugb+EAVWKeM6YPLYOZIcg7aABVh7
-X-Received: by 2002:a17:903:25cc:b0:2b2:42b1:adac with SMTP id
- d9443c01a7336-2b2d591cc4fmr176357265ad.3.1776296282171; 
- Wed, 15 Apr 2026 16:38:02 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b47826ea53sm32341675ad.52.2026.04.15.16.37.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Apr 2026 16:38:01 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 0/4] target/riscv: A collection of bug fixes
-Date: Thu, 16 Apr 2026 09:37:36 +1000
-Message-ID: <20260415233740.3027321-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.53.0
+ AFNElJ8XU5UUAnMF1yKzh94d4ukR4i9ervfiZHJgH4cNHBJgaTCot0SvgiZpminIZ6xptdHlEB8w1cxdfVml@nongnu.org
+X-Gm-Message-State: AOJu0YwlS3a8mnq+MDpQwnqeNLN42ab4vyF/WyB8OjUdYHh8XuWcc+s1
+ zAuNv2HeK2LY//jxkCgng2/pABqk3g2TPYQB2zGczFg4ctUoFFw02Ugp9tuIwnKq3gMZdTak00d
+ rv8tjioTfpniRAN49lJiu8/fZLAt/AHc=
+X-Gm-Gg: AeBDietIf/AqqcHRPnzogbWFWQigA1jBGNcOF9igMbvir6boTsKtdv1dWs2jc+3B6TJ
+ WxpKF/gnyM3VtM8kuOJSBDH4Bq89+UrZrI6xyDxUDSstJmZJoiOqWC3A5bAKv9mbrvQeVHptJZi
+ b/fmAnk76wtUL4hrlx9CVyGniSDgQLbZHiPJtDqM2z/51yI3wauBQnKb/cH8pTWIzeyYLPVkHLv
+ vuRgProjBpIxdemdfd2KKOAmxO9wcN4yVLHu2PP8V0/5jFb9lXzsK6t+jvFNJpUGFUb0umIIMyF
+ bOxhf5tIk1gTFM65Q06AvV1uEUtdN3sknl4zQA==
+X-Received: by 2002:a53:d009:0:b0:651:bcbc:6e2d with SMTP id
+ 956f58d0204a3-651da59aafamr9349019d50.65.1776297045081; Wed, 15 Apr 2026
+ 16:50:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
+References: <20260415064838.652297-1-joel@jms.id.au>
+ <20260415064838.652297-4-joel@jms.id.au>
+In-Reply-To: <20260415064838.652297-4-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 16 Apr 2026 09:50:17 +1000
+X-Gm-Features: AQROBzAFJT7V62D4L9yMoyMZBcFAdbjRcRFN8pPw5QV7F8ugBQHoADrgyy_7Mu0
+Message-ID: <CAKmqyKOjxs5_w5durMkGyYXu6_m4cZ8B=8K=ydSi_oy+e9aKMQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] hw/riscv/boot: Warn if a ELF format file is loaded
+ as a binary
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>, 
+ Nick Piggin <npiggin@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=alistair23@gmail.com; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -88,7 +111,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,33 +127,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+On Wed, Apr 15, 2026 at 4:50=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
+:
+>
+> From: Nicholas Piggin <npiggin@gmail.com>
+>
+> It is possible that an ELF file can not be loaded, in that
+> case the loader falls back to loading the file as a binary
+> blob. Print a warning in this case because it is likely that
+> it is not intended.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-This is a collection of patches to fix a few of the open RISC-V bugs [1].
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-1: https://gitlab.com/qemu-project/qemu/-/work_items?first_page_size=20&label_name%5B%5D=target%3A%20riscv&sort=created_date&state=opened
+Alistair
 
-v2:
- - Drop merged patches
- - Fixup typos
- - Removed read/write syscall print functions and use %p instead
- - Rework "Don't OR mip.SEIP when mvien is one" patch
-
-Alistair Francis (4):
-  target/riscv: Generate access fault if sc comparison fails
-  linux-user/strace: Use pointer type for read and write values
-  target/riscv: Don't OR mip.SEIP when mvien is one
-  target/riscv: Use ELEN for Fractional LMUL check
-
- target/riscv/helper.h                   |  3 +++
- target/riscv/csr.c                      |  8 ++++++++
- target/riscv/op_helper.c                | 14 ++++++++++++++
- target/riscv/vector_helper.c            |  9 ++++-----
- target/riscv/insn_trans/trans_rva.c.inc |  6 ++++++
- linux-user/strace.list                  |  4 ++--
- 6 files changed, 37 insertions(+), 7 deletions(-)
-
--- 
-2.53.0
-
+> ---
+>  hw/riscv/boot.c | 23 +++++++++++++++++++----
+>  1 file changed, 19 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index f3857e984240..3ea95c175c14 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -179,13 +179,27 @@ hwaddr riscv_load_firmware(MachineState *machine,
+>
+>      g_assert(firmware_filename !=3D NULL);
+>
+> -    if (load_elf_ram_sym(firmware_filename, NULL, NULL, NULL,
+> -                         &firmware_entry, NULL, &firmware_end, NULL,
+> -                         0, EM_RISCV, 1, 0, NULL, true, sym_cb) > 0) {
+> +    firmware_size =3D load_elf_ram_sym(firmware_filename, NULL, NULL, NU=
+LL,
+> +                                     &firmware_entry, NULL, &firmware_en=
+d,
+> +                                     NULL, 0, EM_RISCV, 1, 0, NULL, fals=
+e,
+> +                                     sym_cb);
+> +    if (firmware_size > 0) {
+>          *firmware_load_addr =3D firmware_entry;
+>          return firmware_end;
+>      }
+>
+> +    if (firmware_size !=3D ELF_LOAD_NOT_ELF) {
+> +        /*
+> +         * If the user specified an ELF format firmware that could not b=
+e
+> +         * loaded as an ELF, it's possible that loading it as a binary i=
+s
+> +         * not what was intended.
+> +         */
+> +        warn_report("could not load ELF format firmware '%s' (%s). "
+> +                    "Attempting to load as binary.",
+> +                    firmware_filename,
+> +                    load_elf_strerror(firmware_size));
+> +    }
+> +
+>      firmware_size =3D load_image_targphys_as(firmware_filename,
+>                                             *firmware_load_addr,
+>                                             mem_size, NULL,
+> @@ -195,7 +209,8 @@ hwaddr riscv_load_firmware(MachineState *machine,
+>          return *firmware_load_addr + firmware_size;
+>      }
+>
+> -    error_report("could not load firmware '%s'", firmware_filename);
+> +    error_report("could not load firmware '%s': %s", firmware_filename,
+> +                 load_elf_strerror(firmware_size));
+>      exit(1);
+>  }
+>
+> --
+> 2.47.3
+>
+>
 
