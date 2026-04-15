@@ -4,104 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96A9AF41980
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 09:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7A0F41989
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 09:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCwrW-0008FD-6C; Wed, 15 Apr 2026 05:48:46 -0400
+	id 1wCx1N-0001Yg-GV; Wed, 15 Apr 2026 05:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wCwrU-0008EY-1k
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:48:44 -0400
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wCwrS-0003uP-2C
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:48:43 -0400
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-2b6b0500e06so12436547eec.1
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 02:48:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776246520; cv=none;
- d=google.com; s=arc-20240605;
- b=ToOKlCIAxipK+hitwxwLbhQ1OVWWSQpW/MQgCduuj/w9TIlHSqSTpTgbM5qFi748Cu
- /Vifv/sbBN3RhKq+xsMNzE+nRba03voYwkZ5IzXZAV4Osh7sRRYp9hVrIXjy8gFL1k3T
- ixXWmm2Vx/HUiVlvBcfm/qa6i88csWKXqevmN1OTfRXYxTC7SUIeBYiEQOeOjXjZzqOz
- x9ucv3WlnTOSX3Vq4ckXRFhWPTo15zsAqOIov/ROj3REendfq3KrKU9N/Q4ogj0mg0el
- 4jdjnSS8AX97eHjlRzpVCMx8VcNfB6ZlvLwCSW1izStiaKgy61Wqvug8iKAOPvehbZv4
- 1mRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zn2b50tY026EE/sybTX+yDj4CYErgWLza+0zOzkCKB8=;
- fh=5sV4ndrvjvymr/oiDT4cMm2hI32i1qZ5NC+WqYkdp9Y=;
- b=VHom8dRc3/f+50l3qeAhcuXEmp8cXd8NIFGSsoXv9sqQ9Ciosb0YmuI6iQGZh1Y7TC
- Orj6IYBI/IMdh5qsAbRC7jNEfRDmhH3+TqgImkFZD8cCfk2E6ogwbCzUMR/g+UZZjOx2
- TxgpMwLY/BDuOuDUIVldb2EwqoULCA00K3ST9wuZtUsBpuVl8roD/wrou9bhmsS+C4KR
- cnWo4RQUqyQ/TBAfCSdYMSatyTYTWffOJxLyL1UNH3d2/11ejGpGRLULusFO6/mOB1dp
- I1odLVXpQiYmxDWCgFMDi2oGppBs0NcGLxeb2SP76/Ff0f3CPFkqTOcziIIdyfJJT0Os
- T5tg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776246520; x=1776851320; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zn2b50tY026EE/sybTX+yDj4CYErgWLza+0zOzkCKB8=;
- b=mIa/LZY4w6aJYNvEsSPy58d4l8li+SBgov7Wx49vWmhVpSsd/90yn7/HQfyQeNsVMd
- prA+D7NnwWVvDWlVvmlQ1A8uXCAgxD2NXk/oiX2ntT0PRgBWlMDgicz0B2UPpf0ImlqK
- cS8uDi6/tFdh3nvCdY3bMX+3xm2+LSMSJRM+KOAhKOFSGvgrswJ2Yfaum7d2Mti9VRmE
- KjYnelTXUIdVYpQ9TV24SpbCc6HRK+mxHYdeichBoCPcBA660WdlJKci65Cc7uSD889e
- 7fUT8sNo2aq6gfhFa8LpqwAYy1mJU0nU3AAzxPBMTbpB+80/0BeNIRi9mJ/FKe6+ejpN
- tz1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776246520; x=1776851320;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zn2b50tY026EE/sybTX+yDj4CYErgWLza+0zOzkCKB8=;
- b=RMlEFZoRp46dmXEwumSofL8FkgUt6iv0pkzWOqPBwwbBmOqRJXvti/ZlJ5LeLDIU+h
- EnZdFxjtMufhhwPrp/G/ULi5uChqbVgR2TXBWmxACzgm3aG24PZ/bRyiQ70380qasAHr
- VsloTNHB5gOHl9AJlpBfR2AITAj8UBDd1C/fRanvNybyUjZPhM/chWhWp4aCGNtNd9pY
- 1qWkFC/MnKrt/Ek7fXYPsAaL19WeHYWNtnVOVqdENPFTWFxv08zG3MlfTqGmN16G++em
- FqfwwoSX8MB4Q/7dR+CWDl3yZpQP8TlhTkE22uf5nkd3A1GFadpHcPN4dPu5W/frxrgm
- 4NKA==
-X-Gm-Message-State: AOJu0YyaFNIOuZfCk8av91rPhx9zqHRAr50lEMpBzWQUoTFC8EgzTAqQ
- 6aveF4fq6c/0I18/jv5Uwl0fSfY5E5iLAr1YzI1Bjt0wUM36N5liycjfDaGLEU5PHgQd36/J4GD
- Tc7LRPpL2V1JSt9ngUBM3lvzbT8B2Yos=
-X-Gm-Gg: AeBDietAGUz+rjL2RpdEmamLChyQtiT2Q+24KftxrtOoJXSShegGl1sXLAX+XRdXM6A
- 4tacsL6aVWj9h4Txk8XBMEMGeWLG3oeOQ+3/Yx7tQ+kbDLttlqS6Hnnk73uzpKxQud79yBAjAHm
- YOhQUk686fCa/o60i9upr/H2+YhRbvokfqddzT+FI62/ibteGy7iw4dbFNg13+QcuTIY0eXsUR3
- PH1CyWJrsnAZMj/dlY00Y29X/Q9tQm9pKoUZvPpDbpa6MezYlqIA34oAi7+h9/AUJMGvadQIqKl
- FawCcMtjvJ8pdXPsrev5INCRNKBNWqFwe2t5Ua9h
-X-Received: by 2002:a05:7300:7255:b0:2c0:c415:cfd6 with SMTP id
- 5a478bee46e88-2d587d83956mr11981294eec.13.1776246519936; Wed, 15 Apr 2026
- 02:48:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wCx1H-0001Xv-D1
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:58:53 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wCx1E-0007Va-Pd
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:58:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1776247129; x=1807783129;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=8hatjBc+edWAbEN26Ul9Ih+6a76CtBZCWOyl3l0WcRE=;
+ b=SW+CCoN5/QuXBlsj7dEvaWpwJNeUwBIo/yTmtkx0UbSqgAp6uNuutsr6
+ mZ7ZtLKIEhrJyNJ5d1StYSKaryXXFkiaP5AbUPimbnYaZagO36rZCIL5E
+ vBZrO6a8ZqpEXgNH3HA6AlkRIfPGjbE5qKSMgIwVjYmk8NHxZayAQHyLh
+ H9AxrpDf8md/JZ6DPytfr1xphbmO9u3T7O8mOK8Ej7U9gCRmPWG9/2cE1
+ JFBONnJkS8/ckMe5oWFcTTW++SgLA9fHSSaBr2EKFJChyKfGrMEAqjFOe
+ A8zgxX1NK5RU0rarreYEWE65Fwc9e70fLnAfVriem4hsMnHZ8EC84cl6r g==;
+X-CSE-ConnectionGUID: MQi7iuClRpeToajLjesSgA==
+X-CSE-MsgGUID: 8nF++n5tRxiW/jVXRTy6cg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11759"; a="77125582"
+X-IronPort-AV: E=Sophos;i="6.23,179,1770624000"; d="scan'208";a="77125582"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Apr 2026 02:58:42 -0700
+X-CSE-ConnectionGUID: dnfPAyV4Rh+xZNMF/HiMhQ==
+X-CSE-MsgGUID: zCg73EVURqWAmUwJRnwgSQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,179,1770624000"; d="scan'208";a="253596600"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Apr 2026 02:58:40 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, philmd@linaro.org,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@bull.com>
+Subject: [PATCH] intel_iommu: Re-expose VTD_ECAP_PT
+Date: Wed, 15 Apr 2026 05:58:32 -0400
+Message-ID: <20260415095832.9631-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-References: <20260413164338.42894-1-mohamed@unpredictable.fr>
- <20260413164338.42894-2-mohamed@unpredictable.fr>
-In-Reply-To: <20260413164338.42894-2-mohamed@unpredictable.fr>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 15 Apr 2026 13:48:27 +0400
-X-Gm-Features: AQROBzCiaxdHjz5_lIwVTSmDw1iX3AG8LHVyivOwkebWU_pRe-Zde9LfcmJgyoM
-Message-ID: <CAJ+F1C+8Lgb3kNRfpHfuMN4L_O_uWqsNe+55stCsct86LHUCTQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] serial COM: windows serial COM PollingFunc don't sleep
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Werner de Carne <werner@carne.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,89 +82,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Commit c7b2e22bd957 cleared VTD_ECAP_PT in ecap register and set PHMT bit
+in cap register, makes vIOMMU passthrough unsupported, fix it.
 
-On Mon, Apr 13, 2026 at 8:56=E2=80=AFPM Mohamed Mediouni
-<mohamed@unpredictable.fr> wrote:
->
-> From: Werner de Carne <werner@carne.de>
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1802
-> Signed-off-by: Werner de Carne <werner@carne.de>
-> ---
->  chardev/char-win.c | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
->
-> diff --git a/chardev/char-win.c b/chardev/char-win.c
-> index fef45e83aa..f13d526e2f 100644
-> --- a/chardev/char-win.c
-> +++ b/chardev/char-win.c
-> @@ -28,7 +28,7 @@
->  #include "qapi/error.h"
->  #include "chardev/char-win.h"
->
-> -static void win_chr_read(Chardev *chr, DWORD len)
-> +static int win_chr_read(Chardev *chr, DWORD len)
->  {
->      WinChardev *s =3D WIN_CHARDEV(chr);
->      int max_size =3D qemu_chr_be_can_write(chr);
-> @@ -40,7 +40,7 @@ static void win_chr_read(Chardev *chr, DWORD len)
->          len =3D max_size;
->      }
->      if (len =3D=3D 0) {
-> -        return;
-> +        return 0;
->      }
->
->      ZeroMemory(&s->orecv, sizeof(s->orecv));
-> @@ -56,6 +56,8 @@ static void win_chr_read(Chardev *chr, DWORD len)
->      if (size > 0) {
->          qemu_chr_be_write(chr, buf, size);
->      }
-> +
-> +    return size > 0 ? 1 : 0;
->  }
->
->  static int win_chr_serial_poll(void *opaque)
-> @@ -67,8 +69,9 @@ static int win_chr_serial_poll(void *opaque)
->
->      ClearCommError(s->file, &comerr, &status);
->      if (status.cbInQue > 0) {
-> -        win_chr_read(chr, status.cbInQue);
-> -        return 1;
-> +        if (win_chr_read(chr, status.cbInQue)) {
-> +                       return 1;
+Fixes: c7b2e22bd957 ("hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-indent is off
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index f395fa248c..6b8f75a8b6 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4998,8 +4998,8 @@ static void vtd_cap_init(IntelIOMMUState *s)
+ {
+     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+ 
+-    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |
+-             VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS | VTD_CAP_DRAIN |
++    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_CAP_MAMV |
++             VTD_CAP_PSI | VTD_CAP_SSLPS | VTD_CAP_DRAIN |
+              VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
+     if (x86_iommu->dma_translation) {
+             if (s->aw_bits >= VTD_HOST_AW_39BIT) {
+@@ -5009,7 +5009,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
+                     s->cap |= VTD_CAP_SAGAW_48bit;
+             }
+     }
+-    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO;
++    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO | VTD_ECAP_PT;
+ 
+     if (x86_iommu_ir_supported(x86_iommu)) {
+         s->ecap |= VTD_ECAP_IR | VTD_ECAP_MHMV;
+-- 
+2.47.3
 
-> +               }
->      }
->      return 0;
->  }
-> @@ -147,8 +150,9 @@ int win_chr_pipe_poll(void *opaque)
->
->      PeekNamedPipe(s->file, NULL, 0, NULL, &size, NULL);
->      if (size > 0) {
-> -        win_chr_read(chr, size);
-> -        return 1;
-> +       if (win_chr_read(chr, size)) {
-> +                       return 1;
-
-same
-
-Otherwise
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-> +               }
->      }
->      return 0;
->  }
-> --
-> 2.50.1 (Apple Git-155)
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
