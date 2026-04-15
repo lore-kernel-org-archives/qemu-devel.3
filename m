@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FA4F428E0
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 20:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79CFF428E0
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 20:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD6qa-0002SM-9o; Wed, 15 Apr 2026 16:28:28 -0400
+	id 1wD6uN-0005oh-1f; Wed, 15 Apr 2026 16:32:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6qX-0002PJ-49
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:28:25 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6uB-0005io-IQ
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:32:12 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6qV-0006dG-KA
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:28:24 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso58061975e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:28:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6u9-0004gI-OV
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:32:11 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488aa77a06eso118674825e9.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776284902; x=1776889702; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776285127; x=1776889927; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lYP3LpjdWdcmqEdQaJ3hEaYO67ejQhMf+OP5WIUzSVs=;
- b=RsQ6nnIe5BTg34FeQqMGCnseSdihvxC5n9l53TBQyMfFsSSqz81yiy2xMX9qq1S8l5
- j9UjMwHncZcSvfp3UwmJj8sqDZCcj4jG19Nf1IcGeitqV0CfTylDvB44z7w3Kt1c5JQr
- RjpAftQC7Gy4iCbJvAz2dAG/UVZPGgzeSTNT5BnjZ++MJYuC5PwOtzY5+/kkrP9p3DhI
- QV56b2p1MXJrvGwVERVVIWdEtjZ9OriOnLd/Liz8ZIlNbRP7qJo/wwyaut0RyW5BeKcJ
- lYGUx901ftaVnWPGocII3jVZ92cTXusn/ve0b+jxKFUGLIZ/qPwe02+HCrauvf6iXN9T
- aJOg==
+ bh=51eo0uHbeoTspXPKqvdXrtHhn6IyF/D2c8Jdej6F49M=;
+ b=wevpdzcJfG5Z4aaPIagPnyiUpsSC8BwdbIsUfEFjboxgbeonh8RwOHUPeIs95XztWf
+ mwivW6fnPXokcacZ/5OCfluqa+2WJWCwSK7lE7vxr5F1If+8FJFdpRNYUIovV9d3DqB7
+ qfWDDZzv3OHpaWOBScOMUbku00VFp1b6ja2zT5T+56IlDXmcl40D5PHZUHEcC5ecXPwZ
+ NnGg8mabWAhj2e515QpC7RK9QYGaCuvGrYKJ02aBz9550Z9UPgcl6ew5bTOXDw4dSGzp
+ uw55wLd6//WqHhPZyDyl3KAAetNxSVvUaqcljUmMHQRwt95xRx73aumxKMSrU1w5dZwb
+ sFkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776284902; x=1776889702;
+ d=1e100.net; s=20251104; t=1776285127; x=1776889927;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lYP3LpjdWdcmqEdQaJ3hEaYO67ejQhMf+OP5WIUzSVs=;
- b=mD0S4XRm/gaY5VQHgxuHQ6akZ9Q3tcuoR4+upNc+7Rinzo6eXqKrDyIz1NSg8aVqJJ
- 1CUicNsAnsDiiLJvcV9rfj+5QV9/IvnDuZkwaWhaCwiqEx5u03nBvLNE1hrbsKcwbH8s
- SBYD5Oy2+iCaZWNevbVvN0K79pYvkJeaDBJ53siycLR1D9mYCjyis6Z2PYTpxmy+aDn7
- H2SLkTNaPMVnAgXTDuvjVj3if93t2m9ihhOv7xYdR+0v4BjgObJE9cDWxx6c/UvcvhWa
- Yxcslb222Nlp8HVD9frFI/SZhxx2IcdL+kHa4V7jE+1g+T5kzX/17ME1azi9g/NUU/ZT
- q1xg==
+ bh=51eo0uHbeoTspXPKqvdXrtHhn6IyF/D2c8Jdej6F49M=;
+ b=dZDmeBVi1ifItIPt1q2zYsyy9bvU/7cG+Kx8mILXRF85qNehC1fDOsCNv+2xVOYRPI
+ mn9KeuaojfBuI2AeCHZkrjrSghnSGM5jjn+mI0IUnzfPdjVczV+ife+nc8YO1ZPUfTXv
+ mblvA1wf2MDHP/lHYYM76u96S+NQYcVMaDiHMjXdXsD9EH2HXuSMfSzimLG3t8yZv5st
+ t7lF8763WFH5czXK1bU/7+CjN52y9T0B/zsPsPlo5AYhjBrx2ZCKE0IM6IoQ9hcUzig5
+ twXjITd67QpxALd6btBaz1uv9jl87pUtxI2eSjOW3rdmVzbN+FE8O6EC9s4rRFXuxbtN
+ kP/Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8LKZx/y1dEMsrrvoTfPPolJXHCu0cgXFgNvh932wCNrLHBiOYMnIrD4FyrJnM7OYNY9l3IWHV9v2AM@nongnu.org
-X-Gm-Message-State: AOJu0YzRDYP3BN27TMy2LPEul973YhBD6xjW0SBgnXHt+rHaFRRtm210
- daAcxgh1tu1nENTikwvVUJRmcnqMPa7ZkVT1zMUTz4pu3tFcWmVU8jtEhV6cU3Fyuto=
-X-Gm-Gg: AeBDiev3iXKkPyewnh/BkLzIeh22fCC4gWyn5bQ6nNWBrkOeMeBD3ffhDT0jmUYcge2
- 5pyAEaUFr/gv+t+mQfFCBZ3CiR5cLW59DEwXsveorWeiGGVZfI3YLIUkvGxuV/INA8Y5+WKutZL
- NAGdWHnohF+tHcAUzATuOm0coVZcvOBCny1qNJbC704k0Suz4TIbFJdgNaQdWSt6AL6QWUmIZxb
- OlTiO4mkYw38eBvNlCGgkaSEc/RMzD/vc09v78hzOn0PmHa4XE997RrtgcmGyPpqUTBIy7R4A1h
- kc0dKpZZ7PsfssW9a3Oqz+qkg014OD1q3orbrEjIl2rkWFUhQ4RF4Ixk2xMayzBgVo0R2w/K3rg
- dZHo4hwFC4YpFEMsRq9hRguZM/NcNxRIurtbGnTGSBgSgpE1/JTtAn2XqRY0ltdAAimNAD4pfxy
- OL95sXJYoUmE+6LiKY/mf7sCBsyLLBEpE34HtgiO8xomukDwo7jPCJm1E/lD5oPlATXMRGfTCyZ
- t8n
-X-Received: by 2002:a05:600c:a106:b0:486:fbe1:2499 with SMTP id
- 5b1f17b1804b1-488d685fcf7mr225830335e9.22.1776284901737; 
- Wed, 15 Apr 2026 13:28:21 -0700 (PDT)
+ AFNElJ+ltKVrhgthqX+iboBSNfjGLDtWZuOklUsZRvAxOQoO2p8gx5tOw9MVm3TmndArN0jpIWgneprft83e@nongnu.org
+X-Gm-Message-State: AOJu0Yw2PwqfnKVsuDDziPsJWtKAgblaHbOl4aWQYGiqitVFkL7tNKVI
+ j4sSw6xg66rwPig9rKXMNlX9DEGEFQKhG2x9wtOmhAUL9HICLj0x6W+KWr+sr6sen5I=
+X-Gm-Gg: AeBDievD+n8b0AGad0S/6CksJndROl9bLwp/dEIhSyDoFY+YgkEcQQMQELdkEePklFv
+ HGEmTv3r0IA58htVeR8oYLMzijjSw95nQpj1XgzkKthglPEBRTv0xxeOtV4lfVmrfSB9lAwkLJA
+ MloORMVoUnd9QdnBwRg5JCvKlcFu/Pov2ZWbJLbOo4jqTn78dEwNPKMVmRAX7rIajlS7gymOI8L
+ uKAu5tFsO6TiL+naxGREDlJJfEy93qswBq5c5vLwa0MHt/99RVfpmR0kuRO5ol7K8xA6ueUy0Dx
+ ATtEZE7nu6F6UVPZJkb9TE/2Irt/NfpO29PJ30SVgZb7HbE0EQxd2Jy74AsQNYjJN9YdwahS/q8
+ BzscYsee6oyj9OI1qsTEr1NokyC0Gsk0ubOM3QKbnrSX3jG+nCm18tQZU5TdgurlN0RJNgP0Isz
+ JcLRorzHcL5U2b77raeKnsgmSuk9ka53yvsK8NB5oNZzb5sMboaG4hjtfUwsQVSyR9Vw==
+X-Received: by 2002:a05:600c:3149:b0:488:ae6c:42c6 with SMTP id
+ 5b1f17b1804b1-488d684319emr318681255e9.14.1776285127356; 
+ Wed, 15 Apr 2026 13:32:07 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f093d7fdsm41915425e9.2.2026.04.15.13.28.18
+ 5b1f17b1804b1-488ede1e050sm266699575e9.5.2026.04.15.13.32.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 13:28:19 -0700 (PDT)
-Message-ID: <d68f975d-0450-4928-b758-bea1e657eae7@linaro.org>
-Date: Wed, 15 Apr 2026 22:28:18 +0200
+ Wed, 15 Apr 2026 13:32:06 -0700 (PDT)
+Message-ID: <a081957f-4d23-4aab-ba5c-e0ed2cb75c6c@linaro.org>
+Date: Wed, 15 Apr 2026 22:32:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/sd/sdcard: Add support for pre-setting the
- authentication key
+Subject: Re: [PATCH 0/2] sd: Small improvements around RPMB emulation
 Content-Language: en-US
 To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  Ilias Apalodimas <ilias.apalodimas@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>,
+ Jerome Forissier <jerome.forissier@arm.com>,
  Jens Wiklander <jens.wiklander@linaro.org>
 References: <cover.1776231967.git.jan.kiszka@siemens.com>
- <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
+In-Reply-To: <cover.1776231967.git.jan.kiszka@siemens.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,37 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jan,
+(Cc'ing Jerome to his new email)
 
 On 15/4/26 07:46, Jan Kiszka wrote:
-> From: Jan Kiszka <jan.kiszka@siemens.com>
+> Besides a cosmetic fix for the emmc disk image generation script, this
+> adds a property to the emmc model that allows to preset the
+> authentication key. And that enables to build OPTEE without key writing
+> support, bringing the related firmware much closer to real setups.
 > 
-> In contrast to real eMMCs, we are not (yet) persisting the full state
-> of the device. This particularly includes the authentication key used
-> for RPMB access, complicating testing of firmware images which do not
-> support initial provisioning of the key.
+> An alternative to this option would have been persisting additional
+> state such as the key or the write counter on the disk image as well.
+> This is still an option for the future, e.g. to model also write
+> protection groups or other persistent states. As this requires another
+> format extension of the eMMC disk image, I want for this much simpler
+> and less invasive approach.
 > 
-> One way to address this would be, e.g., extending the eMMC disk image
-> with a special sector to store further state. A simpler approach is used
-> here: Add another device property that allows to specify the
-> authentication key, bringing up the eMMC as if the key has already been
-> provisioned before.
+> Jan
 > 
-> This is how to tell qemu to use the OP-TEE test key:
+> Jan Kiszka (2):
+>    scripts: mkemmc.sh: Fix output pollution on missing images
+>    hw/sd/sdcard: Add support for pre-setting the authentication key
 > 
-> -device emmc,[...],auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
+>   hw/sd/sd.c        | 23 +++++++++++++++++++++++
+>   scripts/mkemmc.sh |  4 ++--
+>   2 files changed, 25 insertions(+), 2 deletions(-)
 > 
-> Or use this for machine-configured eMMCs:
-> 
-> -global emmc.auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-> 
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-> ---
->   hw/sd/sd.c | 23 +++++++++++++++++++++++
->   1 file changed, 23 insertions(+)
 
-Do you mind mentioning it in docs/system/devices/emmc.rst?
-
-Otherwise,
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
