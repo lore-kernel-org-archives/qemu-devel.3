@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B37F433CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 21:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E31F433CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 21:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD8D9-00025p-2A; Wed, 15 Apr 2026 17:55:51 -0400
+	id 1wD8Di-0002S2-5a; Wed, 15 Apr 2026 17:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8D4-00024s-7N
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:55:46 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8Dd-0002OS-Tm
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:56:23 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8D1-0002bF-EN
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:55:45 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43cfe71e5d3so5649979f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 14:55:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8Db-0002me-7n
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 17:56:21 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so96838505e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 14:56:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776290141; x=1776894941; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0gK3ebuBLsO9TL29eLiofU5GeQFOBK3V3k+ulyTqFcs=;
- b=gCU9Nw9CiHA8609uO+qeLTsYlFVjc9D2NHpB2dfGLnN5UfkLaNUQFDovv9lWP7KCpH
- rgLJS/b38xpZ0/kcdWoA51/UlEHQETISjqbyz1tzijL3mi36z4dx20pGUBPyJBYzhltd
- 26yRk0NZdLsUGTEUy/ioEhdn7+aIslWBStSB0EXmkF9g+YUEiYGTFMLLDUI+Wjp2mexV
- 5a4ok9z/qvtfyp0xXgLUyM/UaHasewtsAiZvMuTIJNHLiT3nLGWFXsA1tJ5cfYtUmFAG
- AkD8+bnsnURvVezQU/vv67OJHB51xth0qaJd5TiH2gA9LJJk/aZhrcHXcbZsGT4ZRK64
- WuzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776290141; x=1776894941;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1776290176; x=1776894976; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0gK3ebuBLsO9TL29eLiofU5GeQFOBK3V3k+ulyTqFcs=;
- b=k35cbZETVlcNlDNMSGIYlvPbAt5HoxShIESwLhf+2k8eEjjBoH2qANb2CiXAAWQKf4
- 6crQe3tPIrkOOQ71QzNno0ZTeh0N7UeSz7F/SLi4/Jkc33tjfPFDoX13JFV4cMoo62y4
- OyvCVndrWZgJH2n+s1sAIK/j/FDPoJ51lSETyAfS5rj+j0QHkceIFPDQjyGZrXMjtcdR
- NY74IPRLZW/5s9L2V88gupYZgnp6WNt7L2npl735FRRDX0eAj7cWZ6vUWlzBX43U+ejx
- 1ZsvCh19ZXagCFLX+Awuxs9HvJOJhOD4FNzIqY4MG3f7fzqCxq+mncUHJtPQG/nyE0dt
- a9TQ==
-X-Gm-Message-State: AOJu0Yxi7ua8p7n05UqAie60J7ndZzuMUxEdx4aAPuOmnzHmD6wCC5J8
- 5Lxqxx9GeUJqleS7O5lHkX2yxvvNGnFwfh1imy+JMeSoKTX4FHi7fbvAcNAf9sspbkpt8okfS7m
- TSUf4r6o=
-X-Gm-Gg: AeBDietkEwWKnYjD3a7yU7bGS4+1h6AqmTTMd0AeFmNehN1qhdKUBjKj9C7C1ZiFifv
- GVoEkSz9tdeaYeqsHsZvoaa5IURMJJQy+XPiUAN2KnQCEqUseyq2PsQzYs0K+RyB1THAHVAqjTS
- zY19Hp7WavUmvBSwHBaR3SL32MRfFyd3uV7sVoLzteophWKQQ13MLFRRpMgZNeNuIg8erD6FSOz
- 6bEZuU+P1x/sS1Q16BC+Ayoc+JqhOvMCokQqoimZvDLbJTU3cNDYrFPD5yshKctrh263L31zi+U
- E7woCEB852USG5IuvaTAIPCZKyCxxdHSC/ayEPnSQ2vQ+sP946lFImVrZykrI/DJiGGSCHGmAXC
- 4wI7mDzRVGqx2O0598OaXTiNjcdhL5SQsc9OfY1sOlG+FBSmYBv07wbc3mGd8VOvqOFEssqDH75
- qJcRphGTJu1hp51GvjJ4DPU1QZGHnRmjP95cMoKJzmfT4QJlaCXD0QLadd0tIeEYk067HW9cFl
-X-Received: by 2002:a05:6000:1844:b0:43e:a8ad:975e with SMTP id
- ffacd0b85a97d-43ea8ad9b14mr11012064f8f.27.1776290141237; 
- Wed, 15 Apr 2026 14:55:41 -0700 (PDT)
+ bh=J61p27Quk4EZorcOVqxk0jX5dP0dgc/X3RVLAwpYOiA=;
+ b=kpInVKQGAMeTNalefhpPzZAscPAh/ks+gblWUXCFG1YP97XLsf2INUBFOVR5sgEXCA
+ c+HxmMNDNasWdtHAC7eK92y23t5H7UHjQeRaJYGczoxL8qvnHNcXS1CSuJ0LB/4l2txO
+ zcYG0X30Q4v6mUXvlK+bsR5CJ6nc4YI28fvgcsuosgaxV7hC8Kwpg8uZD96WpG1/w2P7
+ 01P/6Jql6Zil/MurgeQYn7g9nvkqbzzJQD6d6Gt1oOh6Bowqoi+eP5q3UmkAdwFOxfBR
+ ekscZO70tDNooZi9fhbCyjZwSPKwawIJ9TSYSms8HOJImT5i55vhr3zxblEnV8AKHTEq
+ r98g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776290176; x=1776894976;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=J61p27Quk4EZorcOVqxk0jX5dP0dgc/X3RVLAwpYOiA=;
+ b=f1nIyzEDARbqIYdB0lsnDhzi0ACbQbogHCZVu1+mCgITjJTdWqtXDgrTGFBMYUS7G2
+ LfZaOXMfHAhL2r+lTDJoJO1y+zrRMza/iPGfBbTnHSIaeh1z2dV+nH2toDHFSNGz7EFi
+ ex/Sr1+7AOnY9j0Kflx+q55VLN3gDCxDqfi6U0zo6cJJr/Mq9Sxls5qcWUClel+Ry0hx
+ e+glyBPSZxssrRVtyVzCSryhDBeVOtoSnOatjbooA8bKjIQWCn23drfEfSy7cOUEJ1AX
+ 5nkMy3z1BNthfn1Hxw9ETUnMYzgtHmAlXLxm++xY39Zzt555Q6137HN61fbwCtACMK20
+ s5vQ==
+X-Gm-Message-State: AOJu0Yw+BZ289YPDjcFS8f4la1q7ijBm/5jNxnmKAUiSR+1DgxPApJF/
+ tsfVBC74IclgmW7V16aNChZZCwH7uaHkyYMZYe/S0nJcLmMkFZVJyHnjnjdsphxqmprHHFFrZgo
+ Me6PPCeU=
+X-Gm-Gg: AeBDieuPn4AlqFFhmDBv075p5rbH5byGFgpGTI3SVj1HwpYdz/AgJ487KRjruCVFFbF
+ u3wDvBiY44ctgayr/9/1bbq0K1v8xjiXd5SuTdo8ZJaZyzmllhdKa+dHoVuLJjpVeGSam9hsjEH
+ 2uSiL3CNYQeowC/iNI88+iIcDYxG1wFXsj42N6GkZJ4O91uFKZH7Y9HJgXWln+qsUdvuiM41ux+
+ B7/WULLl/PVawnQIS9AGPp1n2WlriALKTMrF5Cs1ZEThcRGwlvYXP3jwyvwvxaHz2EMVIDcvGAw
+ R1LS5aaK1N0HnMm/K7fl/GUBRVfiFbDb/iQZ0XJJCRHGEt3kVASIClATlMOF7FcXb6jGqvhWzgJ
+ Zcb4ShQCHQdKHR+xF40+L807vuU4iMMIVsWov7C/ZBm/MmYLS1qmgNpE14Z+W3yW8DkzhbHQmao
+ JP7KR7ih7FX1RrXGZRFEA5aIDj02brqXay5gdNzbaZsrl5WWNS8xZEJuc37UmNOD1L97KcnLMO
+X-Received: by 2002:a05:600c:a105:b0:486:d76c:fa57 with SMTP id
+ 5b1f17b1804b1-488d685b75emr226950265e9.17.1776290175874; 
+ Wed, 15 Apr 2026 14:56:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead33d6d3sm8682428f8f.8.2026.04.15.14.55.39
+ 5b1f17b1804b1-488f5818da1sm651695e9.6.2026.04.15.14.56.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Apr 2026 14:55:40 -0700 (PDT)
+ Wed, 15 Apr 2026 14:56:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  qemu-block@nongnu.org
-Subject: [PATCH 0/8] cocci: Do not initialize variable used by *FOREACH*()
- macro
-Date: Wed, 15 Apr 2026 23:55:31 +0200
-Message-ID: <20260415215539.92629-1-philmd@linaro.org>
+Subject: [PATCH 5/8] cocci: Do not initialize variable used by
+ RAMBLOCK_FOREACH* macro
+Date: Wed, 15 Apr 2026 23:55:36 +0200
+Message-ID: <20260415215539.92629-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260415215539.92629-1-philmd@linaro.org>
+References: <20260415215539.92629-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -98,48 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most of our *FOREACH*() macros take a pointer argument,
-then assign it upon entry before iterating. Thus there
-is no need to initialize the variable used as argument.
-But sometimes we do, which is confusing (for example
-&first_cpu). This series uses a Coccinelle script to
-clean these unnecessary usages. (and 2 bonus cleanup
-patches at the end).
+The RAMBLOCK_FOREACH_MIGRATABLE() macro, defined in
+migration/ram.h, ends up calling QLIST_FOREACH_RCU()
+which always assigns its iterator variable when entering
+the loop. Remove the pointless and possibly misleading
+assignment.
 
-Philippe Mathieu-Daudé (8):
-  cocci: Do not initialize variable used by QLIST_FOREACH macro
-  cocci: Do not initialize variable used by QSLIST_FOREACH macro
-  cocci: Do not initialize variable used by QSIMPLEQ_FOREACH macro
-  cocci: Do not initialize variable used by QTAILQ_FOREACH macro
-  cocci: Do not initialize variable used by RAMBLOCK_FOREACH* macro
-  cocci: Do not initialize variable used by CPU_FOREACH macro
-  target/mips: Reduce CPUState scope when used with CPU_FOREACH()
-  target/riscv: Iterate vCPUs using CPU_FOREACH() macro
+Mechanical patch using the following coccinelle spatch:
 
- target/mips/internal.h              | 11 ++++++-----
- block/blkdebug.c                    |  2 +-
- block/blkio.c                       |  2 +-
- block/gluster.c                     |  4 ++--
- ebpf/ebpf.c                         |  2 +-
- hw/arm/virt-acpi-build.c            |  2 +-
- hw/i386/xen/xen-hvm.c               |  4 ++--
- hw/misc/mips_cpc.c                  |  4 ++--
- hw/ppc/spapr.c                      |  2 +-
- hw/ppc/spapr_events.c               |  4 ++--
- hw/riscv/boot.c                     |  9 +++++----
- hw/riscv/riscv-iommu.c              |  2 +-
- hw/vfio/cpr-legacy.c                |  2 +-
- hw/vfio/listener.c                  |  4 ++--
- hw/xen/xen_pt_config_init.c         |  4 ++--
- migration/block-dirty-bitmap.c      |  2 +-
- migration/dirtyrate.c               |  4 ++--
- net/colo-compare.c                  |  4 ++--
- net/net.c                           |  2 +-
- target/mips/tcg/system/cp0_helper.c | 28 ++++++++++++++++------------
- target/mips/tcg/system/tlb_helper.c |  7 +++----
- target/s390x/kvm/stsi-topology.c    |  2 +-
- 22 files changed, 56 insertions(+), 51 deletions(-)
+  @@
+  type T;
+  identifier e;
+  iterator FOREACH_MACRO =~ ".*_FOREACH.*";
+  statement S;
+  @@
+  -    T *e = ...;
+  +    T *e;
+       ... when != e
+       FOREACH_MACRO(e, ...) S
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ migration/dirtyrate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+index 58f04670629..b360f49efea 100644
+--- a/migration/dirtyrate.c
++++ b/migration/dirtyrate.c
+@@ -485,7 +485,7 @@ static bool record_ramblock_hash_info(struct RamblockDirtyInfo **block_dinfo,
+ {
+     struct RamblockDirtyInfo *info = NULL;
+     struct RamblockDirtyInfo *dinfo = NULL;
+-    RAMBlock *block = NULL;
++    RAMBlock *block;
+     int total_count = 0;
+     int index = 0;
+     bool ret = false;
+@@ -568,7 +568,7 @@ static bool compare_page_hash_info(struct RamblockDirtyInfo *info,
+                                   int block_count)
+ {
+     struct RamblockDirtyInfo *block_dinfo = NULL;
+-    RAMBlock *block = NULL;
++    RAMBlock *block;
+ 
+     RAMBLOCK_FOREACH_MIGRATABLE(block) {
+         if (skip_sample_ramblock(block)) {
 -- 
 2.53.0
 
