@@ -4,54 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D83EF419A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 12:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A11DF419A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 12:46:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCzcD-0005SS-H7; Wed, 15 Apr 2026 08:45:09 -0400
+	id 1wCzd0-0005dj-PL; Wed, 15 Apr 2026 08:45:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wCzbz-0005NQ-It
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 08:44:55 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wCzcw-0005bX-Tk
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 08:45:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wCzbw-0002dT-TW
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 08:44:55 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 90CED596EAA;
- Wed, 15 Apr 2026 14:44:49 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Hj_2Wf2MWENl; Wed, 15 Apr 2026 14:44:47 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 895D0596EA1; Wed, 15 Apr 2026 14:44:47 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 87E99596EA9;
- Wed, 15 Apr 2026 14:44:47 +0200 (CEST)
-Date: Wed, 15 Apr 2026 14:44:47 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Feifan Qian <bea1e@proton.me>
-cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- Chad Jablonski <chad@jablonski.xyz>
-Subject: Re: [PATCH 2/2] hw/display/ati: reset host_data.next on early returns
- in ati_host_data_flush()
-In-Reply-To: <U62ZPP3C0eUIUhmFb68h6Zbpn_gAjGsyJL3MlLsNd6Y4685t5cgo1IQEs3jQpw27LX8rbQaav04Kd-xLwbQXykyIUq2ouFnbFlMgXoKB_NY=@proton.me>
-Message-ID: <42adf9e0-6e57-08e1-5fce-94a43ebad32a@eik.bme.hu>
-References: <U62ZPP3C0eUIUhmFb68h6Zbpn_gAjGsyJL3MlLsNd6Y4685t5cgo1IQEs3jQpw27LX8rbQaav04Kd-xLwbQXykyIUq2ouFnbFlMgXoKB_NY=@proton.me>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wCzcu-00036t-LW
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 08:45:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776257150;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=a4YL+q5AGi6nO3nCACP7fANYPbFkTFgwwCYem+atEJg=;
+ b=e/Jn59gShPx4tf+IlHD0jgFhmKBtn4bA5FMNeUjykS7UjgFwqEeDATIN3tkcZt7zJAEr/y
+ YatwugvDR+B9yPamabZXdu1XKCDMksHnRRGvq9TMuJlowd4nUpTWt63T7V7xwCawghvtVI
+ pXQZ4b9g170H+cd+5d0LC1Mts8AMNxI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-a2cRu78sOGKSe834vI7MgA-1; Wed,
+ 15 Apr 2026 08:45:47 -0400
+X-MC-Unique: a2cRu78sOGKSe834vI7MgA-1
+X-Mimecast-MFC-AGG-ID: a2cRu78sOGKSe834vI7MgA_1776257145
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3A989180049F; Wed, 15 Apr 2026 12:45:45 +0000 (UTC)
+Received: from localhost (unknown [10.44.34.70])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 39558180044F; Wed, 15 Apr 2026 12:45:43 +0000 (UTC)
+Date: Wed, 15 Apr 2026 08:45:42 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Matthieu Rolla <matthieu@minio.io>
+Cc: kbusch@kernel.org, Klaus Jensen <its@irrelevant.dk>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ mr-083 <matthieu@min.io>, John Meneghini <jmeneghi@redhat.com>
+Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
+Message-ID: <20260415124542.GB163810@fedora>
+References: <20260409060155.94704-1-matthieu@min.io>
+ <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
+ <20260414124221.GB111076@fedora>
+ <A0EE1F55-E562-4315-BE08-1D3CF70706AD@minio.io>
+ <20260414181030.GB136064@fedora>
+ <C8F5F496-2401-45AC-82D3-EE0E3E1F2B21@minio.io>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-133826381-1776257087=:97186"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Ufh6uJhM4JmAAARw"
+Content-Disposition: inline
+In-Reply-To: <C8F5F496-2401-45AC-82D3-EE0E3E1F2B21@minio.io>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,113 +91,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-133826381-1776257087=:97186
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+--Ufh6uJhM4JmAAARw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Wed, 15 Apr 2026, Feifan Qian wrote:
-> ati_host_data_flush() resets host_data.next to 0 only on the
-> success path. Three early-return paths exit without resetting it:
->
-> 1. bpp == 24 (unsupported mode)
-> 2. unsupported blit direction
-> 3. bpp == 0 (invalid dp_datatype nibble) which additionally
-> causes an integer divide-by-zero at:
-> pix_count /= ctx.bpp; /* 128 / 0 -> SIGFPE */
->
-> When next is not reset it stays >= 4, allowing the HOST_DATA write
-> handler to index past the end of host_data.acc[] on the next write.
->
-> Reset host_data.next = 0 on every early-return path. Also add an
-> explicit bpp == 0 guard (with LOG_GUEST_ERROR) before the bpp == 24
-> check to prevent the divide-by-zero.
->
-> Signed-off-by: Feifan Qian <bea1e@proton.me>
-> ---
-> hw/display/ati_2d.c | 8 ++++++++
-> 1 file changed, 8 insertions(+)
->
-> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-> index 504d1c5708..e0198ca6ea 100644
-> --- a/hw/display/ati_2d.c
-> +++ b/hw/display/ati_2d.c
-> @@ -367,9 +367,16 @@ bool ati_host_data_flush(ATIVGAState *s)
->
-> setup_2d_blt_ctx(s, &ctx);
->
-> + if (!ctx.bpp) {
-> + qemu_log_mask(LOG_GUEST_ERROR,
-> + "host_data_blt: invalid bpp\n");
-> + s->host_data.next = 0;
-> + return false;
-> + }
-> if (ctx.bpp == 24) {
-> qemu_log_mask(LOG_UNIMP,
-> "host_data_blt: unsupported in 24 bits mode\n");
-> + s->host_data.next = 0;
-> return false;
-> }
-> if (!ctx.left_to_right || !ctx.top_to_bottom) {
-> @@ -377,6 +384,7 @@ bool ati_host_data_flush(ATIVGAState *s)
-> "host_data_blt: unsupported blit direction %c%c\n",
-> ctx.left_to_right ? '>' : '<',
-> ctx.top_to_bottom ? 'v' : '^');
-> + s->host_data.next = 0;
-> return false;
-> }
+On Tue, Apr 14, 2026 at 08:14:16PM +0200, Matthieu Rolla wrote:
+> To clarify,  we're not swapping to a different backend. It's the same disk file being disconnected and reconnected, simulating a physical drive being pulled and reinserted.
 
-Patch again misformatted. So with this patch 1/2 should not be needed. I'd 
-let Chad decide how this could be fixed best.
+Is it necessary to drive_del to simulate PCIe Surprise Down? Can you
+perform just the PCIe actions without removing the drive from the NVMe
+device? That way the drive_insert command is not necessary.
 
-Regards,
-BALATON Zoltan
+Stefan
 
-> --
-> 2.43.0
->
-> On Wednesday, April 15th, 2026 at AM 11:34, Feifan Qian <bea1e@proton.me> wrote:
->
->> The HOST_DATA write handler stores guest-supplied dwords into a
->> 4-element accumulator array (host_data.acc[0..3]) and calls
->> ati_host_data_flush() once four entries are collected. When
->> ati_host_data_flush() returns early without resetting next (e.g.
->> for unsupported 24-bpp or direction modes), next remains >= 4.
->> Because the write acc[next++] occurs before the next >= 4 check,
->> the subsequent HOST_DATA dword is stored at acc[4] — one element
->> past the end of ATIHostDataState, the last field of the
->> heap-allocated ATIVGAState object. The payload is guest-controlled
->> and the overflow is repeatable.
->>
->> Confirmed with AddressSanitizer: heap-buffer-overflow WRITE of
->> 4 bytes at ati.c:1032 on QEMU 11.0.0-rc3 via QTest.
->>
->> Add an explicit bounds check on next before indexing acc[]; log a
->> guest error and break without writing if next is out of range.
->>
->> Signed-off-by: Feifan Qian <bea1e@proton.me>
->> ---
->> hw/display/ati.c | 5 +++++
->> 1 file changed, 5 insertions(+)
->>
->> diff --git a/hw/display/ati.c b/hw/display/ati.c
->> index 88a5bbbf07..3039606202 100644
->> --- a/hw/display/ati.c
->> +++ b/hw/display/ati.c
->> @@ -1029,6 +1029,11 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->> if (!s->host_data.active) {
->> break;
->> }
->> + if (s->host_data.next >= ARRAY_SIZE(s->host_data.acc)) {
->> + qemu_log_mask(LOG_GUEST_ERROR,
->> + "HOST_DATA: accumulator overflow, ignoring\n");
->> + break;
->> + }
->> s->host_data.acc[s->host_data.next++] = data;
->> if (addr == HOST_DATA_LAST) {
->> ati_host_data_finish(s);
->> --2.43.0
---3866299591-133826381-1776257087=:97186--
+--Ufh6uJhM4JmAAARw
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnfiHYACgkQnKSrs4Gr
+c8jrDwf9H3i0m9q3czqHQoZndwTwxuJrDSWxapf3Q4vMQgM+V32ZepdmfG0SKDWz
+40OGwcfu1g0/ogdDmsJlLto1bcHayibNUg6Ez6x6ahzqGJbMyfpoDYETbOfjQ6gN
+sUUM53TumT/aBl0fuwfA7OmUJxBN2m/YWR1MQ68gQDYmoGVBHJO1PQlzvI3ZtfnK
+VdT5gqhDlQAoFCDE/oa3MPmSrEyxiVw6Mw7Wju9CZ6oiG7VSJz86t7SJ66zBGJdl
+0C9qUYvMgMejRUJm7FqyxzrFLfd2vtxfsHiETYXiv06BAIU6Cth7zDJR3FAI8I9W
+t9Ht4OIqJB471pzrpHPirrnjlZ/CrA==
+=Cfbo
+-----END PGP SIGNATURE-----
+
+--Ufh6uJhM4JmAAARw--
+
 
