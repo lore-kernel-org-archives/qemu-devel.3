@@ -4,147 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2600AF428C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 18:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1FB1F428C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 18:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD55Y-00046I-9K; Wed, 15 Apr 2026 14:35:48 -0400
+	id 1wD58F-0004aN-82; Wed, 15 Apr 2026 14:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wD55V-00045W-Oj
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 14:35:45 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wD58E-0004aA-1R; Wed, 15 Apr 2026 14:38:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wD55T-0005p0-Kh
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 14:35:44 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63FIZdhF2772748
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 18:35:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- tk1k25mHTbUInJoMAgeea6AeksT7eR/9x0TO95VDOQk=; b=Y62cNxw1QqwuHDy+
- Kd2bwmv+TcLm9lXI+LNjDqF8Y03FrtiN/9R4Nk6uF3hrRn9XjCabE6BNdfEBJhSw
- s4wAq/hEqPR9Acg9jMVBCkPlIkwZu2u1OJ22RAPXWFaLsib+G96ASF3J8uvqgidZ
- IygkMTLUi81PD0Gqekpg0Y5Y6VlcmhYx7QfqlumCVahXEeC/yQ65oQmHiAY8KNTf
- qO/EOHIViPe9wPB0uY5VOGZDUeoXAheaAy6klFEBMJqmFd0fqPFtkzNs14hXQBg8
- pcTrC47Ut2xpkNKkdkGlrxrT5RGEV+rHGGGvFNBHjnJBLUHULOkF8MK7TcHQaSwz
- iFYozQ==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dj50v2r14-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 18:35:41 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-2da19227bc1so12257801eec.1
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 11:35:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1776278141; x=1776882941; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tk1k25mHTbUInJoMAgeea6AeksT7eR/9x0TO95VDOQk=;
- b=gwaRRrGoFi8GBKS97vJsPZA9ToRURXWY1TqQ2/SK896nPjyhwozXx3SfKKNX+NzIsP
- MPTUcR8aL5GrUFDlMteOUyKcay0cpnZnq8zKzeriB9lOScrkXd12WVK7BoRs7BI3Auqx
- lbScDrj5kMPIfE01l/E/JHu1cWc7W8oLwTp1nMW7sUlQvQNBEzPSqdeOEaW1S9E8h7Hs
- trCRpAqBc2SqtDFZ1M/qPMu+ZyJtn7hQO/yie3SG3z4c5TY/LzIkha3tjSnfxesHx3HK
- q5vY7TjA+hnd8sACJOG9ab5/gERwThvXhOJ6rXqRWikLl/WbxF75tidCCom1VqOmT4UB
- MlnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776278141; x=1776882941;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tk1k25mHTbUInJoMAgeea6AeksT7eR/9x0TO95VDOQk=;
- b=EDJ5cx+eYRUQxUC67tEAfk66W3Vj/AcmRkRi49W7IxHqFEiJ8F8hr5vUOkPborrYz0
- jbMyJ85i72slzzqmexKY9HqOkU28AR8gC2T8xCNgcRcc0140GT9czNozdzZG/3JTPlf2
- fXvnpLzzz+zhlDNEf45T32iIk0Hn0QWiue/oW56TFcpSnDpcRO0BS3OeKKB15myr17sY
- L429PpBMB6h4nd3lwGacJdMPT8+dWn/yJgg5m50+wKLlb9xJkRnnL/HBRqdxNX52OkTq
- nNc3jgAJlwxflHm4qE8Chw7TK4dMwt1eVAsTyDaI8DqZhYwHtACBaWdGNaEcXnDrHkV+
- RZeA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8yKNOmf6TOcV83dUFBW3Z66wzX9B9qoJ79GpDfjfPipMwsXEl7rmRL18kjFdRtWsi6NtIt4s79m6oH@nongnu.org
-X-Gm-Message-State: AOJu0Yx+nu+SDSpKP0mX6dVnheUB9268Ttk/qwm59Qn3QrrlvtjFwx+N
- gioEku8HlwOd3mqdID2xRG7XWZEJ8bBMOcAvJKEO91Tq4uIvbb8irARdpCrDO3Tc7ASOEwDdQ4p
- qrn5zsNfFHd8StjPeGkMRQmYtEZdzOL8p57OT63FSHytOQIk97FrWDA94ZQ==
-X-Gm-Gg: AeBDievgOJxOIP1sIRe83oAxbiZW1wp1M4fLKOXelsIKexst2XSV+WFmpHZ7A3SVpm2
- duzZrNQIgF/YQeuS3iK4IeOWqAnYsZ0P7TgcfINAzSgGJz7nRkeNfh45PSMfQx2+ZaQrjrwmZu7
- FX5+zSR/CrmAcf3mM575rxpUX+ZO2YEEEcq9hKUTJxp2ok3++8wQDoUOA1WryQgQqB7U1ecbe4I
- uAT+2N7oQUIaWHYbfrPK3vT9CeKAij3TMrWayAJt2vDFtF+LbxbHOM6RLdTn8NJBPwPQvPTNUdh
- rGayFDuHZWliFSQr38aLg5yFruh2i2KAjIo7jM04t9Y6fj96JB8Ix2cwdabDF7QEK933Cf9hx+G
- 6HyGliAJYFmOaFCsnaLZkxqxVCWx4Y5WrrzsFo3pgzVOckWxujLZXlt8otLwbCXlutcccTl9Z6B
- ihuCJchfuOvQ==
-X-Received: by 2002:a05:7300:7b86:b0:2d4:62f0:b2d4 with SMTP id
- 5a478bee46e88-2d586ea98e8mr15128287eec.13.1776278141014; 
- Wed, 15 Apr 2026 11:35:41 -0700 (PDT)
-X-Received: by 2002:a05:7300:7b86:b0:2d4:62f0:b2d4 with SMTP id
- 5a478bee46e88-2d586ea98e8mr15128256eec.13.1776278140369; 
- Wed, 15 Apr 2026 11:35:40 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2de8c10a688sm5155561eec.4.2026.04.15.11.35.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 11:35:39 -0700 (PDT)
-Message-ID: <ef7f7c12-0dc5-4c03-a402-eb1570de0bff@oss.qualcomm.com>
-Date: Wed, 15 Apr 2026 11:35:38 -0700
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wD58C-0006JM-IA; Wed, 15 Apr 2026 14:38:33 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63FGwOpJ1733768; Wed, 15 Apr 2026 18:38:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=VXUDRL
+ zP2t4a7Dz933Ce5SkTlEUxtstRgAeiy2ItUy4=; b=of6ws8oZpRVmA3JH4Ctges
+ QNi78oOMvMnfQIm65fgLlVEKdC2hse8KsgrzYqkHGLg8gvq03lz/un0Wxhd6oKR4
+ 4NZrGfL6mbuz7B/5RFrYDvRK8Q+GI6/HjZIUW2QLnm5Ivpusgfs932Zb2kFfV52e
+ xrJrAbPb2prr1GC8Mf21HD5o2rF3vGw3gD594IGxCIGHw4sWollIn+QkDAvuHCZ+
+ Q00bzMZPGx6QlNhnrxMqx/9V3e6vzbyMJYh8ZQQ/mOFiW1sKWSqVDnS//DNaXVV6
+ 5LJJulwOPII9lDvYUVxp9MwfZPTV89Gak0Tlb6Kpn2lMomHcjLGFZhWsAUsSMksQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89m92v9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Apr 2026 18:38:28 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63FHiBBa003385;
+ Wed, 15 Apr 2026 18:38:27 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4djbh9141h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Apr 2026 18:38:27 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63FIcPr264946638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Apr 2026 18:38:25 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CB0645805A;
+ Wed, 15 Apr 2026 18:38:25 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 211CB58054;
+ Wed, 15 Apr 2026 18:38:24 +0000 (GMT)
+Received: from [9.61.11.27] (unknown [9.61.11.27])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 15 Apr 2026 18:38:24 +0000 (GMT)
+Message-ID: <31cedd4c-daba-420f-a46a-364e15911e37@linux.ibm.com>
+Date: Wed, 15 Apr 2026 14:38:23 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] hw/arm/smmuv3: Avoid including CONFIG_DEVICES in
- hw/ header
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- Eric Auger <eric.auger@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20260410200031.18572-1-philmd@linaro.org>
- <20260410200031.18572-3-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v10 15/30] hw/s390x/ipl: Add IPIB flags to IPL Parameter
+ Block
+To: walling@linux.ibm.com, Jared Rossi <jrossi@linux.ibm.com>,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ pierrick.bouvier@linaro.org, david@kernel.org, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ jdaley@linux.ibm.com
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
+ <20260402221453.1602899-16-zycai@linux.ibm.com>
+ <575cc67c-3f78-4600-8be1-df92696a372b@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260410200031.18572-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: iY9c98XVOjKtfwfY-2gsPVPCzxVFYoOo
-X-Authority-Analysis: v=2.4 cv=eLMjSnp1 c=1 sm=1 tr=0 ts=69dfda7d cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=nq8n1J83xunWhl9p0hoA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
- a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDE3MyBTYWx0ZWRfXy3zcnoKMq9HD
- 3rTL8GW9UTJNPpOjUwpAFzooKPY4D9no7g9yIeRF57HJjmhLYPi0Qh0m+W2kOgqSEg99MBmr2uA
- l8H53xyxPS7KxW2VGGNPLA4xcFpsKd7RQwP9KZAstumPhtbTezJpduAOYafFojPT73HG6BmyZpO
- CYlkKISBJA8LZI6s+FoMLeQVw6d/It0JG+ZXFLdM9kNAIIDLremAOtSB3Nw4tPwFNpL3MCHF7Lj
- pPdaOzfVweqQQ2nYz5fr3+ynFi/qrS2TeohD6pryl/AZtuyJDt+vBXFI0eML5TKSh/ueA0igLYF
- f0tsFB0yBwpqbYXIP4LIWD/DQfL/vFUw7ovWTvBl/C+UBx4zy1hdj7NNnFlRaA9avb5NdTf1j4E
- Trx+nC2DXOdt7Ln5B8yoXJryEugR+dA4qtjrVEGnu6qshOOjjafBva+xFQqEiIMbx96X406B4WI
- 3STTUaJ+fJ5anzkLL/w==
-X-Proofpoint-ORIG-GUID: iY9c98XVOjKtfwfY-2gsPVPCzxVFYoOo
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <575cc67c-3f78-4600-8be1-df92696a372b@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=69dfdb24 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=c_Byt48B1GHtWo4dOTYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: xrrbr0jAa8dsZ5P4SlkySbAcNTM2k-ET
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDE3MSBTYWx0ZWRfX2OGWNeB/2ius
+ oDNR3J16DNYCnfFo6LXqmi1/2K+V8mpiNaVPUlB4g7jKLzq1eUBcYIfe0+QWbfksKvhjw3sUBrR
+ YSBm0AStvz/bpryT7qKQxaCDGKUGsU1ndRlUoJPIRHeznjEQRxDdyaWf3vF0fKLdQrQHTQnQeVu
+ rgcgSuJyj2/qrFlMnXC7LhtbvN/lpETFVh1yvkzwY/YPBsoRZcZku6DO/kWI4RgEKzIsQ3Yzte7
+ QhnrYatkE70pG0Gt/MT/mLA+q5zNYjUGe4jODNGzyJsLceBingHi2aiXPxsTsXKRJnSLBryHIfN
+ BuOt8Vx8lz7RWgl2efm4IGSEjGH4eBfhuXnB7FP9UunfP2HE+078ZTEtzQ23uUwoCm4gLndqQm8
+ wZbOHClgoeNXrlZmvzdXBIhNARr3lrGzXL+oPNBvq4v9QgaIuarA521xEFvcIbsxRj0mZmeIS7j
+ puIQ9tDBepIBOp1HlBQ==
+X-Proofpoint-ORIG-GUID: xrrbr0jAa8dsZ5P4SlkySbAcNTM2k-ET
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-15_01,2026-04-13_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 impostorscore=0
- suspectscore=0 malwarescore=0 priorityscore=1501 spamscore=0 phishscore=0
+ malwarescore=0 bulkscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
+ suspectscore=0 impostorscore=0 phishscore=0 spamscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604150173
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604150171
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,20 +129,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/10/2026 1:00 PM, Philippe Mathieu-Daudé wrote:
-> By turning the inline functions into stubs we can avoid the
-> use of target-specific CONFIG_DEVICES include in a hw/ header,
-> allowing to build the source files including it as common objects.
+On 4/10/26 3:16 PM, Jared Rossi wrote:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/arm/smmuv3-accel.h       | 42 ------------------------------
->   hw/arm/smmuv3-accel-stubs.c | 52 +++++++++++++++++++++++++++++++++++++
->   hw/arm/meson.build          |  5 ++--
->   3 files changed, 55 insertions(+), 44 deletions(-)
->   create mode 100644 hw/arm/smmuv3-accel-stubs.c
 > 
+> On 4/2/26 6:14 PM, Zhuoying Cai wrote:
+>> <snip...>
+>>   
+>> -#define DIAG_308_RC_OK              0x0001
+>> -#define DIAG_308_RC_NO_CONF         0x0102
+>> -#define DIAG_308_RC_INVALID         0x0402
+>> -#define DIAG_308_RC_NO_PV_CONF      0x0902
+>> -#define DIAG_308_RC_INVAL_FOR_PV    0x0a02
+>> -
+>> -#define DIAG308_RESET_MOD_CLR       0
+>> -#define DIAG308_RESET_LOAD_NORM     1
+>> -#define DIAG308_LOAD_CLEAR          3
+>> -#define DIAG308_LOAD_NORMAL_DUMP    4
+>> -#define DIAG308_SET                 5
+>> -#define DIAG308_STORE               6
+>> -#define DIAG308_PV_SET              8
+>> -#define DIAG308_PV_STORE            9
+>> -#define DIAG308_PV_START            10
+>> +#define S390_IPL_TYPE_FCP 0x00
+>> +#define S390_IPL_TYPE_CCW 0x02
+>> +#define S390_IPL_TYPE_PV 0x05
+>> +#define S390_IPL_TYPE_QEMU_SCSI 0xff
+>>   
+>>   #define S390_IPLB_HEADER_LEN 8
+>>   #define S390_IPLB_MIN_PV_LEN 148
+>> @@ -112,6 +100,7 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
+>>   #define S390_IPLB_MIN_FCP_LEN 384
+>>   #define S390_IPLB_MIN_PCI_LEN 376
+>>   #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
+>> +#define S390_IPLB_MAX_LEN 4096
+>>   
+>> <..snip>
+> 
+> Collin correctly pointed out that S390_IPL_TYPE* already exists as an 
+> enum in 'include/hw/s390x/ipl/qipl.h', so no need to define here.
+> 
+> I suggest we also move the various IPLB length definitions to qipl.h 
+> while we are cleaning this up, since they are architected values anyway.
+> 
+> Regards,
+> Jared Rossi
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Thanks for pointing this out. I'll also move the other IPLB related
+definitions to qipl.h in the next version.
 
