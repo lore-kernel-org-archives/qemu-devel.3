@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5318F42105
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B206FF42100
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD4CR-000096-QQ; Wed, 15 Apr 2026 13:38:51 -0400
+	id 1wD4Cb-0000Bn-RE; Wed, 15 Apr 2026 13:39:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4CN-00008p-PY
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:38:47 -0400
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4CZ-0000AQ-7c
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:38:59 -0400
 Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4CL-0002ic-LP
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:38:47 -0400
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4CX-0002kn-FC
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:38:58 -0400
 Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso57112605e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 10:38:45 -0700 (PDT)
+ 5b1f17b1804b1-488a29e6110so75767855e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 10:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minio.io; s=minio; t=1776274724; x=1776879524; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Fm1uSt8v3N52EDQqCSTygQcIRULkfTeQnbM96/UzDVE=;
- b=pvcTJWYig9Y7xnLHJRjDa26f7/zCGCFBvCfoXrE0Bp/oCi4Lm02pKuicKkEyykv8Xo
- ggvlhtwsW6TsH3PJ/1PBBlrvapjI1SLF40mx/50XjDNpEsPkztrgitQYQLbrUcmrxLc8
- bmlPizUwZQZnNSJ0zDqa4l3MQnIc4oivZK8Gqoe7EL+eW12QV9FgWzNjJwVzgdbQZECT
- fWbotsaSetlDStYjD3quLgTngMUZqLFmkIHa4HGw1YFmscLGTpxtJ96z+uFzwwNxvCyO
- z4+5ViyOJ7ZxV8fOSe6KU9whxV3b0NoiWlXRGA/6Z1gg7U4uCgS68jfWCyuvZxGMhhek
- CQ0g==
+ d=minio.io; s=minio; t=1776274736; x=1776879536; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=czMoe/c8/XX5KWWs2YbJoq4mu8G0tJQUrKnaro6zT2M=;
+ b=SmyD8BSQ590BU28c9vs6K5UFLRcP9DSeHT1gG6z8Wsp7CYTBaOiOWucmfl3jsRnczd
+ u+OtausaHc9ksIcSXN8Z7EBaNNISZGvMvlz8DgFgyht/wXXfjXtfV77R0XrL9Ne+QyBZ
+ ZP4JB2iiwF6YdTrSxJdgXDG80zGgOYrKoG6rS9ZNH62jykzcMVfh15Dgu7j5CJWA41/r
+ pRDQBisQAo5UX4jrxHLvvpt/HAfu122AANdtBEWHYdjFUp2Q5+EaDeR5NLSFjow8pEnS
+ Wy9FH0GiIfGG/3wCYRmApcRUmt69aA2+y6g0McVb+RSUJhaW8eslQaKpp13sn1wqP4g5
+ 1+pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776274724; x=1776879524;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Fm1uSt8v3N52EDQqCSTygQcIRULkfTeQnbM96/UzDVE=;
- b=icAFcHgTcRfnCNbnotKaOCkibtg3gNPtuTWuc9fwtwQMr2vk80a5n8T4HXNFxC9Mb/
- 3y0kUu68775ws8e8Fo+FjGeq4J3JsouB9NqCgwr5irwsZvPIBrAsGuTuvSGxXNG9+iMN
- AkHIL7BFtwwGnhxNlLFE9H+54nqLvGTRESA17UeJ0UtiGPAjIA3/8cBQIpaCxxTUwwGp
- qoujCeXwNX2912DzkexfFR9PjybP1om2ZfNO+eXfy3h3IySxuCUw3z3j/ZgfpUsun88K
- G+UwD1cJxGveLjVFJau3Qk/3zKynBd5Y2C/33XaXm6goupJRI4XLXstTuLaJpS+494kE
- DUYg==
-X-Gm-Message-State: AOJu0YzBs/MaPLpscPhTdtV3FGLOic4Xv4MIH6zmDgU+rvn5tyeoUUGt
- QOLh0ej8khM5sGJymjp2oOp4yL4IIJCopPf4MOGY82wRmQe8yG6MewyDqP5VdYLhefstlaGfxxC
- 3Lhp6T+4xxmy1vArWUokNIOtJdV/A3Iinejjvkd1SWEjybDWJUUKgxgcMvwAtrsXjp8GxnhBgxd
- QY1VasDhc6uQwHkbeYV/BW47vF1tpxmMu7yzXZNIY=
-X-Gm-Gg: AeBDievTkhRKH/LkzR0T2Mu9547OU9kxPBtqpB/nkSAR82sAk7EA1bqb25/cw97wRFw
- MLOVpBcI9H7Y5eFeZ8/KfBtZFfYg+TySWRq7JiuFARvtNoiwiZyTN+gjB6ypCS5RIcjgpafVV1b
- 63pGKyRkV04zGl0cW3Ot/UsydkupaqQcFUoeJIkXW7RKNx2QAfAGl+T91R3lG8qI3c+jyrQvNJ4
- ZG1MZ11W/F36pKofAj67/0uSc8ZN3e4n+TQk6SXKfyvwsnk/Ur6BU6Ds+tLP37Mg0saSTJmLIBb
- qPoCSeGmWFZVjxMexlT1rSP/5F0N+4MCrz6sQfohyzzhzmre+1qOLXgEAOSc+CAvcI1E/XkKIzJ
- ckaN00Mj3IiyRgxzwmQORp5ihMKf4gwzgvkUh8WqCxkWn46Bl4RCBxu/YDqNDlrWqoAxPbl3qv/
- nxiVBCmTtghqhZYxMNCInEJ0K4ezvXBsmRzOwV7Jx/Ie66rlJNSsEWv3oJFoLbYR+9O3o0RGNgB
- 5MYoQhRJ5JxtpO5mvMX6dDKRHfkBWOmSx85xhi9vsebrpWc1C1BhcK67N2tN6oakwfoFsw=
-X-Received: by 2002:a05:600c:c10d:b0:488:ae4e:51a5 with SMTP id
- 5b1f17b1804b1-488d683d633mr217192825e9.15.1776274723436; 
- Wed, 15 Apr 2026 10:38:43 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776274736; x=1776879536;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=czMoe/c8/XX5KWWs2YbJoq4mu8G0tJQUrKnaro6zT2M=;
+ b=FeqXwlWyr/Zn5/wh5vJYYd/NhPjnkxmJcOzAHoKiMns30Ey54IVvxoELFUYXBfEHja
+ IoXSb9IsEVpOSn7zEMH07lCvFSj+KWLzxbsk5eD2/EU9ltuK7lA/K3yeTFo2DarX8gKb
+ gNyqYjldSLdC8jdMZBmUdWaw6kR8AAmF7QZj94ix9Ke+TQAUqj9Sq7uGEXxxr+CcMoP7
+ fqXYLqfxL31UASUzi2PULY2NsjhMDTKM4lhUZllxn33f+CrHHaRcP5WGwf3s7Awp+Vri
+ /mNC4VsBWGJq8PTnzVKKrHvO2c7VamzHyOdsx+9CbzHJmkFsGbmeiAjpeyYOkVDjVwx3
+ EeXw==
+X-Gm-Message-State: AOJu0YxQzR1yRjqBSCUTozJLjSvyMLDkoXqhxIxMmz31T6eaKmAwjzQY
+ wE1uJcbqQ9d7mGH0L7z9/eKiM034zY03ScT91D34loXdavihnTTPANteE/GEMtnEeGdQFASMyow
+ zVjAPPCPgtfkHfCZW+MvmCU0SNmFF6L7+ptfW09ebsSFS+ewtLJ91VctG1cY6AnWk16hRnRz3qk
+ 6CpeVACRTslq/4eilhl8skx1Z6rvq+CWLJNlN9WxQ=
+X-Gm-Gg: AeBDievMbdFozrg1fBfXXwJFiXpu/FY1APfEvz3/y9rNrJQ+LLXxI1Vx1TELuWX8UCD
+ KOJvZ+dOytOFIRDCHZPeLN/YSp13R2KrQpvGHSkv8VS3nX+GMXHb+3++fXbc4onSWJQLo2I2EdG
+ FbqDyuPXlZGb00TQH9ImE9F9xu2SfTJJ1Ih1ZzIXcEEjsHvGGpyOxgYiaJwLXylyEC0Kx51kYhs
+ MLA8hTJuVg2DZDeuBoccaP89IHV1EGWcNZ+Wrtw291au+mhlK9yG0q8NDvECuiCSXsJhdLaMgP6
+ lx47J07HnMQfiF2DwbDt+N0KagbBeL4bTJiG/oxRATwEB1DBTaaXfK/I41peCRJaV6PUkV/aDKl
+ z4LlVdQmzjzn9HM8tFCSc75/zbt+XEsL7fgyr2jGLocA8sOPGEcZ8wPzgW2aOVmOzKcUafvjKSM
+ TbN80ecC+cWZCyBtPtqvOKnW/TcwQucUegEWGD8j8xrZiBkflVwKSdA2KVffLGIbOlNoa0bruyh
+ ChGN0I6tSTmdN9fOYrN43KXhlDK/M7xoGnfZP6Vx6/ebqJKJIaTY0skpPklqGLu7IoKfEhH6RGX
+ ZkdZTQ==
+X-Received: by 2002:a05:600c:a305:b0:488:ab37:b442 with SMTP id
+ 5b1f17b1804b1-488d68c7f92mr216679995e9.28.1776274735540; 
+ Wed, 15 Apr 2026 10:38:55 -0700 (PDT)
 Received: from localhost (2a01cb001411480010f92e9cd3b40a22.ipv6.abo.wanadoo.fr.
  [2a01:cb00:1411:4800:10f9:2e9c:d3b4:a22])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-488f0ea65b9sm39069835e9.5.2026.04.15.10.38.42
+ 5b1f17b1804b1-488f0edaf47sm24184345e9.35.2026.04.15.10.38.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 10:38:43 -0700 (PDT)
+ Wed, 15 Apr 2026 10:38:55 -0700 (PDT)
 From: mr-083 <matthieu@minio.io>
 X-Google-Original-From: mr-083 <matthieu@min.io>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: its@irrelevant.dk, kbusch@kernel.org, stefanha@redhat.com,
- mr-083 <matthieu@min.io>
-Subject: [PATCH v4] hw/nvme: add namespace hotplug support
-Date: Wed, 15 Apr 2026 19:38:52 +0200
-Message-ID: <20260415173852.71135-1-matthieu@min.io>
+ berrange@redhat.com, mr-083 <matthieu@min.io>
+Subject: [PATCH] block: add blockdev-attach QMP command
+Date: Wed, 15 Apr 2026 19:39:05 +0200
+Message-ID: <20260415173905.71224-1-matthieu@min.io>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260409060155.94704-1-matthieu@min.io>
-References: <20260409060155.94704-1-matthieu@min.io>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
  envelope-from=matthieu@minio.io; helo=mail-wm1-x32c.google.com
@@ -105,226 +102,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add hotplug support for nvme-ns devices on the NvmeBus. This enables
-NVMe namespace-level hot-add and hot-remove via device_add and
-device_del with proper Asynchronous Event Notification (AEN), so the
-guest kernel can react to namespace topology changes.
+Add a blockdev-attach QMP command that attaches a block driver state
+tree to a device's block backend.  Unlike blockdev-insert-medium, this
+works for non-removable devices such as NVMe namespaces.
 
-Mark nvme-ns devices as hotpluggable and register the NvmeBus as a
-hotplug handler with proper plug and unplug callbacks:
+After drive_del removes a device's backing store, the BlockBackend
+remains attached to the guest device but has no BlockDriverState.
+blockdev-attach reconnects a block node (previously created with
+blockdev-add) to the device's BlockBackend via blk_insert_bs().
 
-- plug: attach namespace to all started controllers and send an
-  Asynchronous Event Notification (AEN) with NS_ATTR_CHANGED so
-  the guest kernel rescans namespaces and adds the block device
-- unplug: drain in-flight I/O, detach from all controllers, send
-  AEN, then unrealize the device. The guest kernel rescans and
-  removes the block device.
+This separates the two concerns as recommended: blockdev-add creates
+the block node, blockdev-attach associates it with the device.
 
-The plug handler skips controllers that haven't started yet
-(qs_created == false) to avoid interfering with boot-time namespace
-attachment in nvme_start_ctrl().
-
-The unplug handler drains in-flight I/O via nvme_ns_drain() before
-detaching the namespace from controllers, so pending requests can
-complete normally without touching freed state.
-
-For symmetry with nvme_ns_realize() which sets subsys->namespaces[nsid],
-nvme_ns_unrealize() now clears that slot too making the namespace
-lifecycle complete.
-
-Both the controller bus and subsystem bus are configured as hotplug
-handlers via qbus_set_bus_hotplug_handler() since nvme-ns devices
-may reparent to the subsystem bus during realize.
-
-Example hot-swap sequence using the NVMe subsystem model:
-
-  # Boot with: -device nvme-subsys,id=subsys0
-  #            -device nvme,id=ctrl0,subsys=subsys0
-  #            -device nvme-ns,id=ns0,drive=drv0,bus=ctrl0,nsid=1
-
-  device_del ns0             # guest receives AEN, removes /dev/nvme0n1
+Example usage with NVMe namespace hot-swap:
   drive_del drv0
-  drive_add 0 file=disk.qcow2,format=qcow2,id=drv0,if=none
-  device_add nvme-ns,id=ns0,drive=drv0,bus=ctrl0,nsid=1
-                              # guest receives AEN, adds /dev/nvme0n1
+  blockdev-add node-name=node0 driver=qcow2 file.driver=file \
+               file.filename=disk.qcow2
+  blockdev-attach id=ns0 node-name=node0
 
-Tested with Linux 6.1 guest (NVMe driver processes AEN and rescans
-namespace list automatically).
+An HMP wrapper is included for convenience.
 
 Signed-off-by: Matthieu <matthieu@min.io>
 ---
- hw/nvme/ctrl.c   | 88 ++++++++++++++++++++++++++++++++++++++++++++++++
- hw/nvme/ns.c     |  8 +++++
- hw/nvme/subsys.c |  2 ++
- 3 files changed, 98 insertions(+)
+ block/monitor/block-hmp-cmds.c | 10 ++++++++++
+ block/qapi-system.c            | 36 ++++++++++++++++++++++++++++++++++
+ hmp-commands.hx                | 16 +++++++++++++++
+ include/block/block-hmp-cmds.h |  1 +
+ qapi/block.json                | 33 +++++++++++++++++++++++++++++++
+ 5 files changed, 96 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index be6c7028cb..2024b0ff75 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -206,6 +206,7 @@
- #include "system/hostmem.h"
- #include "hw/pci/msix.h"
- #include "hw/pci/pcie_sriov.h"
-+#include "hw/core/qdev.h"
- #include "system/spdm-socket.h"
- #include "migration/vmstate.h"
+diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+index 1fd28d59eb..8a3d821e01 100644
+--- a/block/monitor/block-hmp-cmds.c
++++ b/block/monitor/block-hmp-cmds.c
+@@ -195,6 +195,16 @@ unlock:
+     hmp_handle_error(mon, err);
+ }
  
-@@ -9293,6 +9294,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-     }
- 
-     qbus_init(&n->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
-+    qbus_set_bus_hotplug_handler(BUS(&n->bus));
- 
-     if (nvme_init_subsys(n, errp)) {
-         return;
-@@ -9553,10 +9555,96 @@ static const TypeInfo nvme_info = {
-     },
- };
- 
-+static void nvme_ns_hot_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-+                              Error **errp)
++void hmp_blockdev_attach(Monitor *mon, const QDict *qdict)
 +{
-+    NvmeNamespace *ns = NVME_NS(dev);
-+    NvmeSubsystem *subsys = ns->subsys;
-+    uint32_t nsid = ns->params.nsid;
-+    int i;
++    const char *id = qdict_get_str(qdict, "id");
++    const char *node_name = qdict_get_str(qdict, "node-name");
++    Error *err = NULL;
 +
-+    /*
-+     * Attach to all started controllers and notify via AEN.
-+     * Skip controllers that haven't started yet (boot-time realize) —
-+     * nvme_start_ctrl() will attach namespaces during controller init.
-+     */
-+    for (i = 0; i < NVME_MAX_CONTROLLERS; i++) {
-+        NvmeCtrl *ctrl = nvme_subsys_ctrl(subsys, i);
-+        if (!ctrl || !ctrl->qs_created) {
-+            continue;
-+        }
-+
-+        if (nvme_csi_supported(ctrl, ns->csi) && !ns->params.detached) {
-+            nvme_attach_ns(ctrl, ns);
-+            nvme_update_dsm_limits(ctrl, ns);
-+
-+            if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
-+                nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
-+                                   NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
-+                                   NVME_LOG_CHANGED_NSLIST);
-+            }
-+        }
-+    }
++    qmp_blockdev_attach(id, node_name, &err);
++    hmp_handle_error(mon, err);
 +}
 +
-+static void nvme_ns_hot_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
-+                               Error **errp)
-+{
-+    NvmeNamespace *ns = NVME_NS(dev);
-+    NvmeSubsystem *subsys = ns->subsys;
-+    uint32_t nsid = ns->params.nsid;
-+    int i;
-+
-+    /*
-+     * Drain in-flight I/O before tearing down the namespace.
-+     * This must happen while the namespace is still attached to the
-+     * controllers so any pending requests can complete normally.
-+     */
-+    nvme_ns_drain(ns);
-+
-+    /*
-+     * Detach from all controllers and notify the guest via AEN.
-+     * The guest kernel will rescan namespaces and remove the block device.
-+     */
-+    for (i = 0; i < NVME_MAX_CONTROLLERS; i++) {
-+        NvmeCtrl *ctrl = nvme_subsys_ctrl(subsys, i);
-+        if (!ctrl || !nvme_ns(ctrl, nsid)) {
-+            continue;
-+        }
-+
-+        nvme_detach_ns(ctrl, ns);
-+        nvme_update_dsm_limits(ctrl, NULL);
-+
-+        if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
-+            nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
-+                               NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
-+                               NVME_LOG_CHANGED_NSLIST);
-+        }
-+    }
-+
-+    /*
-+     * Unrealize: removes from subsystem (in nvme_ns_unrealize), flushes,
-+     * cleans up structures, and removes from QOM.
-+     */
-+    qdev_unrealize(dev);
-+}
-+
-+static void nvme_bus_class_init(ObjectClass *klass, const void *data)
-+{
-+    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
-+    hc->plug = nvme_ns_hot_plug;
-+    hc->unplug = nvme_ns_hot_unplug;
-+}
-+
- static const TypeInfo nvme_bus_info = {
-     .name = TYPE_NVME_BUS,
-     .parent = TYPE_BUS,
-     .instance_size = sizeof(NvmeBus),
-+    .class_init = nvme_bus_class_init,
-+    .interfaces = (const InterfaceInfo[]) {
-+        { TYPE_HOTPLUG_HANDLER },
-+        { }
-+    },
- };
- 
- static void nvme_register_types(void)
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index b0106eaa5c..f4f755c6fc 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -719,10 +719,17 @@ void nvme_ns_cleanup(NvmeNamespace *ns)
- static void nvme_ns_unrealize(DeviceState *dev)
+ void hmp_commit(Monitor *mon, const QDict *qdict)
  {
-     NvmeNamespace *ns = NVME_NS(dev);
-+    NvmeSubsystem *subsys = ns->subsys;
-+    uint32_t nsid = ns->params.nsid;
+     const char *device = qdict_get_str(qdict, "device");
+diff --git a/block/qapi-system.c b/block/qapi-system.c
+index 54b7409b2b..ec89645bc1 100644
+--- a/block/qapi-system.c
++++ b/block/qapi-system.c
+@@ -304,6 +304,42 @@ void qmp_blockdev_insert_medium(const char *id, const char *node_name,
+     blockdev_insert_medium(NULL, id, node_name, errp);
+ }
  
-     nvme_ns_drain(ns);
-     nvme_ns_shutdown(ns);
-     nvme_ns_cleanup(ns);
++void qmp_blockdev_attach(const char *id, const char *node_name,
++                         Error **errp)
++{
++    BlockBackend *blk;
++    BlockDriverState *bs;
++    int ret;
 +
-+    /* Symmetric with nvme_ns_realize() which sets subsys->namespaces[nsid]. */
-+    if (subsys && nsid && subsys->namespaces[nsid] == ns) {
-+        subsys->namespaces[nsid] = NULL;
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    blk = qmp_get_blk(NULL, id, errp);
++    if (!blk) {
++        return;
 +    }
- }
++
++    if (blk_bs(blk)) {
++        error_setg(errp, "Device already has a medium inserted");
++        return;
++    }
++
++    bs = bdrv_find_node(node_name);
++    if (!bs) {
++        error_setg(errp, "Node '%s' not found", node_name);
++        return;
++    }
++
++    if (bdrv_has_blk(bs)) {
++        error_setg(errp, "Node '%s' is already in use", node_name);
++        return;
++    }
++
++    ret = blk_insert_bs(blk, bs, errp);
++    if (ret < 0) {
++        return;
++    }
++}
++
+ void qmp_blockdev_change_medium(const char *device,
+                                 const char *id,
+                                 const char *filename,
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 5cc4788f12..ce32ed33ab 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -207,6 +207,22 @@ SRST
+   actions (drive options rerror, werror).
+ ERST
  
- void nvme_ns_atomic_configure_boundary(bool dn, uint16_t nabsn,
-@@ -937,6 +944,7 @@ static void nvme_ns_class_init(ObjectClass *oc, const void *data)
-     dc->bus_type = TYPE_NVME_BUS;
-     dc->realize = nvme_ns_realize;
-     dc->unrealize = nvme_ns_unrealize;
-+    dc->hotpluggable = true;
-     device_class_set_props(dc, nvme_ns_props);
-     dc->desc = "Virtual NVMe namespace";
- }
-diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
-index 777e1c620f..fa35055d3c 100644
---- a/hw/nvme/subsys.c
-+++ b/hw/nvme/subsys.c
-@@ -9,6 +9,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
-+#include "hw/core/qdev.h"
++    {
++        .name       = "blockdev-attach",
++        .args_type  = "id:s,node-name:s",
++        .params     = "id node-name",
++        .help       = "attach a block node to a device (non-removable)",
++        .cmd        = hmp_blockdev_attach,
++    },
++
++SRST
++``blockdev-attach`` *id* *node-name*
++  Attach a block driver state tree (created with ``blockdev-add``) to a
++  device's block backend. Unlike ``blockdev-insert-medium``, this works
++  for non-removable devices such as NVMe namespaces. The device must
++  have no medium inserted (e.g. after ``drive_del``).
++ERST
++
+     {
+         .name       = "change",
+         .args_type  = "device:B,force:-f,target:F,arg:s?,read-only-mode:s?",
+diff --git a/include/block/block-hmp-cmds.h b/include/block/block-hmp-cmds.h
+index 71113cd7ef..34d30915fc 100644
+--- a/include/block/block-hmp-cmds.h
++++ b/include/block/block-hmp-cmds.h
+@@ -21,6 +21,7 @@ void hmp_drive_add(Monitor *mon, const QDict *qdict);
  
- #include "nvme.h"
+ void hmp_commit(Monitor *mon, const QDict *qdict);
+ void hmp_drive_del(Monitor *mon, const QDict *qdict);
++void hmp_blockdev_attach(Monitor *mon, const QDict *qdict);
  
-@@ -205,6 +206,7 @@ static void nvme_subsys_realize(DeviceState *dev, Error **errp)
-     NvmeSubsystem *subsys = NVME_SUBSYS(dev);
+ void hmp_drive_mirror(Monitor *mon, const QDict *qdict);
+ void hmp_drive_backup(Monitor *mon, const QDict *qdict);
+diff --git a/qapi/block.json b/qapi/block.json
+index 46955bbb3e..c05d3b5ac1 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -295,6 +295,39 @@
+   'data': { 'id': 'str',
+             'node-name': 'str'} }
  
-     qbus_init(&subsys->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
-+    qbus_set_bus_hotplug_handler(BUS(&subsys->bus));
- 
-     nvme_subsys_setup(subsys, errp);
- }
++##
++# @blockdev-attach:
++#
++# Attach a block driver state tree to a device's block backend.
++# Unlike blockdev-insert-medium, this works for non-removable
++# devices such as NVMe namespaces.  The device must currently have
++# no medium inserted (e.g. after drive_del removed the backing).
++#
++# @id: The name or QOM path of the guest device
++#
++# @node-name: name of a node in the block driver state graph
++#
++# Since: 11.1
++#
++# .. qmp-example::
++#
++#     -> { "execute": "blockdev-add",
++#          "arguments": {
++#              "node-name": "node0",
++#              "driver": "qcow2",
++#              "file": { "driver": "file",
++#                        "filename": "disk.qcow2" } } }
++#     <- { "return": {} }
++#
++#     -> { "execute": "blockdev-attach",
++#          "arguments": { "id": "ns0",
++#                         "node-name": "node0" } }
++#     <- { "return": {} }
++##
++{ 'command': 'blockdev-attach',
++  'data': { 'id': 'str',
++            'node-name': 'str'} }
++
+ ##
+ # @BlockdevChangeReadOnlyMode:
+ #
 -- 
 2.53.0
 
