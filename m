@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F769F43854
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CE8F43854
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD3c0-0006e8-Im; Wed, 15 Apr 2026 13:01:12 -0400
+	id 1wD3cU-0006xq-Nb; Wed, 15 Apr 2026 13:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wD3bf-0006aF-Bf
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:51 -0400
+ id 1wD3bY-0006YN-8Z
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:47 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wD3bT-0005xp-47
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:44 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wD3bM-0005xV-Ur
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:38 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 974B220B7128;
- Wed, 15 Apr 2026 10:00:32 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 974B220B7128
+ by linux.microsoft.com (Postfix) with ESMTPSA id 36A4620B7136;
+ Wed, 15 Apr 2026 10:00:28 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 36A4620B7136
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776272434;
- bh=aTVxvEVz5lQHNdZmbaeb9TChVHr9SVG0hmQSZJZieN0=;
+ s=default; t=1776272429;
+ bh=xH4HagDCiBk6gATgsEXyD93463ehoI+ZwQqXAAzAVR4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=I0QQ7goLBeIIQWKHvIb+k2FvDV+lL7dcOJC4rxsznZw3aiOILNJ7bfn4Q11WDVMHF
- lfhCo7aGZkSPbTFJYa+WPwXy0GPtayNpHrfMOIg5PL9sZsoLRAEJ4DvCFQHBIRqmY9
- wPLmIeSGo7Ulxby2I3pSEPn8RqtgnbFAXYXRUg98=
+ b=Z95+RymtUxcQIG+1ssnqns2JqdQTcDlbF1zk9lTEzlgI4JTmJdur9oAGOsma62PSU
+ qa+X3w6yejiqn9NZeThJYQJThEZHV/tUx+x27XYueRnPfv7hUtxKE7vR+PFr6TBOjo
+ svttfoQ9xOwlMS6V+R0uJmrhn/jZnDob49KIMTH8=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v5 7/9] target/i386/mshv: populate xsave area offsets
-Date: Wed, 15 Apr 2026 19:00:10 +0200
-Message-Id: <20260415170012.520934-8-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v5 5/9] target/i386/mshv: set cpu model name on -cpu host
+Date: Wed, 15 Apr 2026 19:00:08 +0200
+Message-Id: <20260415170012.520934-6-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
 References: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
@@ -68,62 +68,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function is copied verbatim from kvm_cpu_xsave_init(), for MSHV we
-need to populate the offsets similarly.
+By registering a cpu_accel_class for mshv, we can report an accurate
+model name on -cpu host.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
  target/i386/mshv/mshv-cpu.c | 31 +++++++++++++++++++++++++++++++
  1 file changed, 31 insertions(+)
 
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 3b392533b4..ee25eb5f6f 100644
+index e42b5a614d..09878ef357 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -1706,11 +1706,42 @@ int mshv_arch_post_init_vm(int vm_fd)
+@@ -24,10 +24,13 @@
+ #include "hw/i386/apic_internal.h"
+ 
+ #include "cpu.h"
++#include "host-cpu.h"
+ #include "emulate/x86_decode.h"
+ #include "emulate/x86_emu.h"
+ #include "emulate/x86_flags.h"
+ 
++#include "accel/accel-cpu-target.h"
++
+ #include "trace-accel_mshv.h"
+ #include "trace.h"
+ 
+@@ -1675,3 +1678,31 @@ int mshv_arch_post_init_vm(int vm_fd)
+ 
      return ret;
  }
- 
-+static void mshv_cpu_xsave_init(void)
++
++static void mshv_cpu_instance_init(CPUState *cs)
 +{
-+    static bool first = true;
-+    uint32_t eax, ebx, ecx, edx;
-+    int i;
++    X86CPU *cpu = X86_CPU(cs);
 +
-+    if (!first) {
-+        return;
-+    }
-+    first = false;
-+
-+    /* x87 and SSE states are in the legacy region of the XSAVE area. */
-+    x86_ext_save_areas[XSTATE_FP_BIT].offset = 0;
-+    x86_ext_save_areas[XSTATE_SSE_BIT].offset = 0;
-+
-+    for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
-+        ExtSaveArea *esa = &x86_ext_save_areas[i];
-+
-+        if (!esa->size) {
-+            continue;
-+        }
-+        host_cpuid(0xd, i, &eax, &ebx, &ecx, &edx);
-+        if (eax != 0) {
-+            assert(esa->size == eax);
-+            esa->offset = ebx;
-+            esa->ecx = ecx;
-+        }
-+    }
++    host_cpu_instance_init(cpu);
 +}
 +
- static void mshv_cpu_instance_init(CPUState *cs)
- {
-     X86CPU *cpu = X86_CPU(cs);
- 
-     host_cpu_instance_init(cpu);
-+    mshv_cpu_xsave_init();
- }
- 
- static void mshv_cpu_accel_class_init(ObjectClass *oc, const void *data)
++static void mshv_cpu_accel_class_init(ObjectClass *oc, const void *data)
++{
++    AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
++
++    acc->cpu_instance_init = mshv_cpu_instance_init;
++}
++
++static const TypeInfo mshv_cpu_accel_type_info = {
++    .name = ACCEL_CPU_NAME("mshv"),
++    .parent = TYPE_ACCEL_CPU,
++    .class_init = mshv_cpu_accel_class_init,
++    .abstract = true,
++};
++
++static void mshv_cpu_accel_register_types(void)
++{
++    type_register_static(&mshv_cpu_accel_type_info);
++}
++
++type_init(mshv_cpu_accel_register_types);
 -- 
 2.34.1
 
