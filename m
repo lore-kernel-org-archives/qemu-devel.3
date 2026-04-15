@@ -4,106 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60346F41998
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 12:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FECAF419A2
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 13:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCzhp-00077N-WF; Wed, 15 Apr 2026 08:50:58 -0400
+	id 1wCzsH-0000Ke-00; Wed, 15 Apr 2026 09:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wCzho-00077F-42
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 08:50:56 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wCzhl-0004cc-FJ
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 08:50:55 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 1DF0842062
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 12:50:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1776257451;
- bh=qaCpiZUOyHnskplpJKFuwpHgikE2MQyOzktmViZ8N84=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=Cr0fu6x1EhIF1ky+Wf2L5b6Sq+zZyDXrcyzZh4Vc4obqvn0aRrZXbd+JHbNntz9rc
- 2IqhB9KZ3eLLmlUDPZJVJ6wVk14qffJvRiItdt9EyXt2b/Cdw37gD6srGLZMx71HAg
- Oq247tI2S5e7wf3tlpsOjqlKIyYUNakPRjpUl/khwhUoz7crjufa77g9SXlgfm+mb2
- iSfde2N0X8kVXP+87twXk3MuoyzIrtVjv2Hx9xSWe75CI4hRXy16f1t7kuSEGpgWLM
- z6NAx719rKT11COzdaO6HZU70Pc0n1QFDSmtU3r/cszeQyGyFIhxa4fiT3rTHC+AHL
- LqJwoMEbFG2wQ==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 0DAED7F2B1
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 12:50:51 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <benno.fuenfstueck@neodyme.io>)
+ id 1wCzsA-0000KN-O1
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:01:38 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <benno.fuenfstueck@neodyme.io>)
+ id 1wCzs8-0006pz-2I
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:01:38 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b980785a0bfso895512166b.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 06:01:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776258092; cv=none;
+ d=google.com; s=arc-20240605;
+ b=dSi3gndIvT933Eq+H1WJ0Q/PO6nYm48nG/Zb+KKFxJmrZsblRZMJEJFKB7EVQZN/Zk
+ ssHyDbytwIPBa5NtfDpmpR/899Sc1jE6ZNF1Tu5Kie/pw2P1g5euwVeR3qYtPi5XN5C4
+ NJeRSEAStMgFiEm1JTACkT8/LDZSjQ92WEEOG6BpL4O7NqmieOb4oS9MJdxDB2U9Dx1k
+ JOtze4iy6LYXk+52KjOktmxXLN9qgg+DbxPmhzvlJHzVCCKWTcdE6X9DCVhWI30oMFYv
+ lINwp8kPG8wDRC+LQY5DUoELZMqRfA1YkZlPV1OnHT9plgMsbZFNqmT4JfQn53EaFGNq
+ pp7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=9mvKZz9T7ZTKnjmqUudVYht/iKfNOKfvU2iWhDo9o6k=;
+ fh=5DtwW8VDym1e0k1+6VgeguCLLQmQuHFGrQGNU3lyEOY=;
+ b=OeWIysPIsO7+x0qrqBYi4aApbOk1sjaCvvbnwFpvEzvjYH4toKAETB7QnGB6AgEn71
+ OjTRewqqL7So6MidGjywVandqAhVBBLs96EmXiichP+Wy+CCtd+zA0QE3HXXCw8r7Ws1
+ RJgq+CUE6oBm05h0YqzTkWeqwi/4mDVRA/MrYRlGsfuv/8F89EeJxg+g1iDwYBtO9rqR
+ nBMYLIIHUs6/mb1MasTBNNRn4CgUk+W70ARXsPbHKjo7vcWlgKIRM6pT6CzrdropyXed
+ +j5uE7w57+W0ZIFlv2kyLVgukhnscWE7kqnwKVc8JH+t1HoTlgxO+QGpRYnvK8h0uT1D
+ U/Tw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=neodyme.io; s=google; t=1776258092; x=1776862892; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9mvKZz9T7ZTKnjmqUudVYht/iKfNOKfvU2iWhDo9o6k=;
+ b=kVX9Tl25xZrYt/8u/R9Wrm+WHMdEn+1oQjM+bIlPvkMCaWaxoXECoC4IcA7EaWjojE
+ C0uPyec+jhOIGiITJNDC4bh4SAcbMkAoK6Z/FO8URrfEmg7cHH541oGQOK2iBwiuoyUo
+ hezK7dAWnqsPjSnDNo8emxwieOUAlJZQY4cpPzm6JsCWTyMCu2Xx2+6YJe3sdmDbSj+o
+ 3fK+RkPObvziILrGY9r6+LnDvOKOiNJjGzu9kGjDWce5XxR2rvjikf24vMepvq/K2P7v
+ o7MSlNicaB7bv0qcy2q4c9S8qeVoVTeuL+StKkFyWhHKAEO9KjtzZzyqFQh7+p24n8+X
+ Kn9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776258092; x=1776862892;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9mvKZz9T7ZTKnjmqUudVYht/iKfNOKfvU2iWhDo9o6k=;
+ b=oGVtVAU4xVXs9POwxnvMNqHpf78ra2lO0JrAdQiHzaSYVwZPS5Z8u5pUYjTYmgoOqn
+ 8BB1sjUKcbOTozbF1uZOaAYujTPi+SlnGCJnBVlw8oSNDIvmtw8wpYHGqTnSpoWrQwHS
+ MZT6VR3Y60wJmh1HbTrAemMgEl0f+YIzqSNemGOueXGqeVQkcNSjybmXjbb0KdalzjYG
+ SESpdvmbq7vRIeLttAqcjzKRMgGyeqPnhGao60uzJtm2pvncAIOX7yA5Xjez0i5mN0Tw
+ g039RzlaU2yar+PvllxQzTVI4a/bE0oFKHSgvEBJI4zGoPLzcxKJpg6GMTmdtVfNbICY
+ lEMA==
+X-Gm-Message-State: AOJu0Yzso/9Ucn9JGUIttQCA8HM8eNgkDUWv235lR0wy4RovTC+I1Kly
+ jv27QKAMSaceZ29mZBsT7SlQCogA7Z+nOh4cIGFN8WDXC7mhs1Jn8dKNJWA5jxANbVKMUQhdoFo
+ OCQLhS3+2QmOu6Hlnw7c+8lgYckk9rCMNRE835MQYl9AOyd5GjLoDRx1ZQksvjU4OGg4zGB9Zmm
+ Mde3ZPwoy6KjQFGpPZu3x2Wm9cqw==
+X-Gm-Gg: AeBDieslk9C92q6wM1RF+31O0DB2c66cEvYdUrnstRBzSGsHNTrB0dJ6bjIe8kYbzpX
+ xE9fSWZMhr2/jTluyj9YGl/uoq/daPKwg0dAUsMorSxl1ziHFY5vpllK7z7I382fVb7UqnD8O53
+ E2brxTWInVz4s1EqfrtKKH//bddYa/be/pzYTQmi2GHXYgY4Jig5vmiiqKzohZhZ86IsjgLUhmI
+ 3xgJMla4lRKNEh95baAZ/ueT59moAFXE6g2Lf+VzqON1t9g7wbk+rUJBcS0Sh+GdmwNEwZEOhyN
+ K/fHZvqGxCtLYc4BscXPeXmVon/zUqRhe2yaVYgPTSIyKKrWeA==
+X-Received: by 2002:a17:907:7b87:b0:b9d:c34f:2a2b with SMTP id
+ a640c23a62f3a-b9dc34f39e6mr778052966b.40.1776258091966; Wed, 15 Apr 2026
+ 06:01:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 15 Apr 2026 12:44:32 -0000
-From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Fix Released; importance=High; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe; component=main;
- status=Fix Released; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
- sourcepackage=qemu-hwe; component=None; status=New; importance=Undecided;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
- sourcepackage=qemu-hwe; component=main; status=Fix Released;
- importance=Undecided; assignee=None; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
-X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
-References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <177625707268.3139486.13672253028729386595.malone@juju-98d295-prod-launchpad-53>
-Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
- handler
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="866d07beecca8ac2e3326342adf6c1740cd3e7b3";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: d324fad945ca1878caa6331e7b84307b753a8b59
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260409144639.3610-1-benno.fuenfstueck@neodyme.io>
+ <CAJ+F1CKYu4UfJyFJxPYLe9gjQhOD9QA7BrTmBXSCPuCDFgPf1A@mail.gmail.com>
+In-Reply-To: <CAJ+F1CKYu4UfJyFJxPYLe9gjQhOD9QA7BrTmBXSCPuCDFgPf1A@mail.gmail.com>
+From: =?UTF-8?B?QmVubm8gRsO8bmZzdMO8Y2s=?= <benno.fuenfstueck@neodyme.io>
+Date: Wed, 15 Apr 2026 15:01:20 +0200
+X-Gm-Features: AQROBzB0WO42TBaCVWjR6R9Y89Bp2bDPxPWZNapABDhfM4QmDExxEc1tmG6ZUI8
+Message-ID: <CAP-XHHCuVyP=21LyME1KmNB0heRDXAdq7QdCsoVomAK38ZRi7A@mail.gmail.com>
+Subject: Re: [PATCH] virtio-gpu: fix inverted mouse cursor
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Type: multipart/alternative; boundary="00000000000099f587064f7f50d4"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=benno.fuenfstueck@neodyme.io; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -112,186 +115,257 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Christian,
+--00000000000099f587064f7f50d4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I can start a resolute riscv64 container on Ubuntu 24.04 amd64, but
-running
+Hi Marc-Andr=C3=A9,
 
-cmake --system-information
+On Mon, 13 Apr 2026 at 15:23, Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmai=
+l.com>
+wrote:
 
-ends in the same error as reported here.
+> Arguably, this is a bug in virgl vrend_renderer_get_cursor_content(),
+> since the function doesn't return y0_top it should always return the
+> data in the correct orientation.
+>
+> We may have a temporary workaround in qemu though for older virgl, but
+> I think it should be solved there too.
+>
 
-QEMU 8.2 lacks support for extensions zicbop (Cache-Block Prefetch
-Instructions), zicbom (Maybe Operations) required by RVA23 which is
-presumed by Ubuntu 25.10+.
+Thanks, I didn't know about this. I submitted a MR to virglrenderer now as
+well to fix it there:
+https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1611
 
-Zicbop opcodes are encoded as HINT instructions (ORI with rd=3Dx0). So thes=
-e should not trap.
-Zicbom are probably unused in Ubuntu 26.04.
+How should I change the patch to make it a temporary fix? Some kind of
+version gate (but not sure yet in which version of virglrenderer the fix
+will end up being release)?
 
-I was not able to start the preinstalled resolute RISC-V server image
-using QEMU from Ubuntu 24.04 amd64.
 
-Best regards
-
-Heinrich
+>
+> > ---
+> >  hw/display/virtio-gpu-gl.c | 20 +++++++++++++++++++-
+> >  1 file changed, 19 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> > index 2b7a41c466..4562d3405e 100644
+> > --- a/hw/display/virtio-gpu-gl.c
+> > +++ b/hw/display/virtio-gpu-gl.c
+> > @@ -33,6 +33,9 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGP=
+U
+> *g,
+> >      VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+> >      uint32_t width, height;
+> >      uint32_t pixels, *data;
+> > +    bool y_0_top =3D true;
+> > +    int ret;
+> > +    struct virgl_renderer_resource_info info;
+> >
+> >      if (gl->renderer_state !=3D RS_INITED) {
+> >          return;
+> > @@ -49,8 +52,23 @@ static void
+> virtio_gpu_gl_update_cursor_data(VirtIOGPU *g,
+> >          return;
+> >      }
+> >
+> > +    memset(&info, 0, sizeof(info));
+> > +    ret =3D virgl_renderer_resource_get_info(resource_id, &info);
+> > +    if (ret =3D=3D 0) {
+> > +        y_0_top =3D info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP;
+> > +    }
+> > +
+> >      pixels =3D s->current_cursor->width * s->current_cursor->height;
+> > -    memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
+> > +    if (y_0_top) {
+> > +        memcpy(s->current_cursor->data, data, pixels *
+> sizeof(uint32_t));
+> > +    } else {
+> > +        uint32_t *dst =3D s->current_cursor->data;
+> > +        for (uint32_t y =3D 0; y < height; y++) {
+> > +            memcpy(dst + y * width,
+> > +                   data + (height - 1 - y) * width,
+> > +                   width * sizeof(uint32_t));
+> > +        }
+> > +    }
+> >      free(data);
+> >  }
+> >
+> > --
+> > 2.50.1 (Apple Git-155)
+> >
+> >
+> > --
+> > Neodyme AG
+> > Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |
+> > 85748 Garching b.M=C3=BCnchen
+> > Postanschrift: Rosenthaler Stra=C3=9Fe 72a | 10119
+> > Berlin
+> >
+> > Registergericht / Registry court: M=C3=BCnchen, HRB 269168
+> > Vorstand /
+> > Management Board: Thomas Lambertz | Tobias Madl
+> > Aufsichtsratsvorsitzender /
+> > Chairman of the Supervisory Board: Hendrik Hofstadt
+> >
+> >
+> >
+> >
+> >
+>
+>
+> --
+> Marc-Andr=C3=A9 Lureau
+>
 
 --=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133188
+Neodyme AG
+Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |=C2=A0
+85748 Garching b.M=C3=BCnchen
+Postanschrift:=C2=A0=E2=80=8BRosenthaler Stra=C3=9Fe 72a |=C2=A0=E2=80=8B10=
+119=20
+Berlin
 
-Title:
-  [SRU] RISC-V vector state not restored by signal handler
-
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu-hwe package in Ubuntu:
-  Fix Released
-Status in qemu source package in Noble:
-  New
-Status in qemu-hwe source package in Noble:
-  New
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu-hwe source package in Plucky:
-  New
-Status in qemu source package in Questing:
-  New
-Status in qemu-hwe source package in Questing:
-  New
-Status in qemu source package in Resolute:
-  Fix Released
-Status in qemu-hwe source package in Resolute:
-  Fix Released
-
-Bug description:
-  # Title
-  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
-et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
-
-  ## Summary
-  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
- 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
-gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
- (core dumped)" or "died with signal 4". The illegal instruction is observe=
-d inside glibc's memset implementation at an instruction that uses RISC-V v=
-ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
-e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
-nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
-lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
-code generation / state corruption), not a cmake bug.
-
-  ## Affects
-  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
-untu3)
-  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
-qemu-user static interpreter
-
-  ## Environment / Context
-  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
-  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
-  - Container image: ubuntu:26.04 for riscv64
-  - qemu package used:
-    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
-b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
--user_10.0.6+ds-0+deb13u2).=20
-    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
-ost and registered via /proc/sys/fs/binfmt_misc/register
-  - CMake version used inside container (bootstrap/build may use system-pro=
-vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
-ggers crash)
-  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
-eral consecutive successes or failures)
-  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
-t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
-QEMU_STRACE also makes it much harder to reproduce.
-   =20
-
-  ## Full reproduction steps
-  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
-ry:
-     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
-uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
-     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
--5ubuntu3_amd64
-     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
-in/qemu-riscv64-static
-
-  2. Register qemu-riscv64 with binfmt_misc:
-     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
-     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
-00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
-\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
- >/proc/sys/fs/binfmt_misc/register
-
-  3. Start riscv64 ubuntu container:
-     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
-4 bash
-     docker exec -it ubuntu26 bash -i
-
-  4. Inside container:
-     apt update
-     apt install -y build-essential cmake
-
-  5. Reproducer 1:
-     cmake --system-information
-     -> Often fails with:
-        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
-        Illegal instruction (core dumped)
-
-  6. Reproducer 2 (minimal C project):
-     Create test_cmake/CMakeLists.txt:
-     cmake_minimum_required(VERSION 3.10)
-     project(HelloCMake C)
-     add_executable(hello main.c)
-
-     Create test_cmake/main.c:
-     #include <stdio.h>
-     int main() {
-         printf("Hello, CMake!\n");
-         return 0;
-     }
-
-     cd test_cmake
-     cmake .
-     -> Crash with:
-        -- Detecting C compiler ABI info
-        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
-
-  7. Reproducer 3 (rebuild cmake from source inside container):
-     apt source cmake
-     cd cmake
-     apt-get build-dep .
-     dpkg-buildpackage -us -uc -b
-     -> Bootstrapping error:
-        Illegal instruction (core dumped)
-        Error when bootstrapping CMake:
-        Problem while running initial CMake
-
-  8. Observed crash location (from gdb/QEMU_STRACE when available):
-     - Illegal instruction is in memset@@GLIBC_2.27+0x52
-     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
-bit elements)
+Registergericht / Registry court: M=C3=BCnchen, HRB 269168
+Vorstand /=20
+Management Board: Thomas Lambertz | Tobias Madl
+Aufsichtsratsvorsitzender /=20
+Chairman of the Supervisory Board: Hendrik Hofstadt
 
 
-  ## Workarounds
-  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
- using vectorized memset.
-  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
-=E2=80=94 both make the failure much less likely.
 
-  Note: The same workload does not reproduce the crash when run under
-  qemu-system (full-system emulation). The issue appears specific to
-  qemu-user
 
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
 
+--00000000000099f587064f7f50d4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Marc-Andr=C3=A9,</div><br><div class=3D"gmail_quot=
+e gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 13 A=
+pr 2026 at 15:23, Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lu=
+reau@gmail.com">marcandre.lureau@gmail.com</a>&gt; wrote:<br></div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">Arguably, this is a bug in virgl =
+vrend_renderer_get_cursor_content(),<br>
+since the function doesn&#39;t return y0_top it should always return the<br=
+>
+data in the correct orientation.<br>
+<br>
+We may have a temporary workaround in qemu though for older virgl, but<br>
+I think it should be solved there too.<br></blockquote><div><br></div><div>=
+Thanks, I didn&#39;t know about this. I submitted a MR to virglrenderer now=
+ as well to fix it there:=C2=A0<a href=3D"https://gitlab.freedesktop.org/vi=
+rgl/virglrenderer/-/merge_requests/1611">https://gitlab.freedesktop.org/vir=
+gl/virglrenderer/-/merge_requests/1611</a><br><br></div><div>How should I c=
+hange the patch to make it a temporary fix? Some kind of version gate (but =
+not sure yet in which version of virglrenderer the fix will end up being re=
+lease)?</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
+1ex">
+<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/display/virtio-gpu-gl.c | 20 +++++++++++++++++++-<br>
+&gt;=C2=A0 1 file changed, 19 insertions(+), 1 deletion(-)<br>
+&gt;<br>
+&gt; diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c<b=
+r>
+&gt; index 2b7a41c466..4562d3405e 100644<br>
+&gt; --- a/hw/display/virtio-gpu-gl.c<br>
+&gt; +++ b/hw/display/virtio-gpu-gl.c<br>
+&gt; @@ -33,6 +33,9 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOG=
+PU *g,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 uint32_t width, height;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 uint32_t pixels, *data;<br>
+&gt; +=C2=A0 =C2=A0 bool y_0_top =3D true;<br>
+&gt; +=C2=A0 =C2=A0 int ret;<br>
+&gt; +=C2=A0 =C2=A0 struct virgl_renderer_resource_info info;<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (gl-&gt;renderer_state !=3D RS_INITED) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; @@ -49,8 +52,23 @@ static void virtio_gpu_gl_update_cursor_data(VirtIO=
+GPU *g,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;<br>
+&gt; +=C2=A0 =C2=A0 memset(&amp;info, 0, sizeof(info));<br>
+&gt; +=C2=A0 =C2=A0 ret =3D virgl_renderer_resource_get_info(resource_id, &=
+amp;info);<br>
+&gt; +=C2=A0 =C2=A0 if (ret =3D=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 y_0_top =3D info.flags &amp; VIRTIO_GPU_R=
+ESOURCE_FLAG_Y_0_TOP;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 pixels =3D s-&gt;current_cursor-&gt;width * s-&gt;=
+current_cursor-&gt;height;<br>
+&gt; -=C2=A0 =C2=A0 memcpy(s-&gt;current_cursor-&gt;data, data, pixels * si=
+zeof(uint32_t));<br>
+&gt; +=C2=A0 =C2=A0 if (y_0_top) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 memcpy(s-&gt;current_cursor-&gt;data, dat=
+a, pixels * sizeof(uint32_t));<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t *dst =3D s-&gt;current_cursor-&g=
+t;data;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (uint32_t y =3D 0; y &lt; height; y++=
+) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memcpy(dst + y * width,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+data + (height - 1 - y) * width,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+width * sizeof(uint32_t));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 free(data);<br>
+&gt;=C2=A0 }<br>
+&gt;<br>
+&gt; --<br>
+&gt; 2.50.1 (Apple Git-155)<br>
+&gt;<br>
+&gt;<br>
+&gt; --<br>
+&gt; Neodyme AG<br>
+&gt; Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |<br>
+&gt; 85748 Garching b.M=C3=BCnchen<br>
+&gt; Postanschrift: Rosenthaler Stra=C3=9Fe 72a | 10119<br>
+&gt; Berlin<br>
+&gt;<br>
+&gt; Registergericht / Registry court: M=C3=BCnchen, HRB 269168<br>
+&gt; Vorstand /<br>
+&gt; Management Board: Thomas Lambertz | Tobias Madl<br>
+&gt; Aufsichtsratsvorsitzender /<br>
+&gt; Chairman of the Supervisory Board: Hendrik Hofstadt<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+<br>
+<br>
+-- <br>
+Marc-Andr=C3=A9 Lureau<br>
+</blockquote></div></div>
+
+<br>
+<font face=3D"Arial" style=3D"background-color:white" color=3D"#808080" siz=
+e=3D"2">Neodyme AG</font><div><font color=3D"#808080" face=3D"Arial" size=
+=3D"2"><br></font><div><div><font face=3D"Arial" size=3D"2"><span style=3D"=
+color:rgb(128,128,128);text-align:center">Sitz der Gesellschaft / Address: =
+Dirnismaning 55 | Halle 13 |</span><span style=3D"color:rgb(128,128,128);te=
+xt-align:center">=C2=A0</span><span style=3D"color:rgb(128,128,128);text-al=
+ign:center">85748 Garching b.M=C3=BCnchen</span></font></div><div><font fac=
+e=3D"Arial" size=3D"2"><font color=3D"#808080"><span style=3D"text-align:ce=
+nter">Postanschrift:=C2=A0</span>=E2=80=8BRosenthaler Stra=C3=9Fe 72a |=C2=
+=A0=E2=80=8B10119 Berlin</font><span style=3D"color:rgb(128,128,128);text-a=
+lign:center"><br></span></font></div><div><span style=3D"color:rgb(128,128,=
+128);text-align:center"><font face=3D"Arial" size=3D"2">Registergericht / R=
+egistry court: M=C3=BCnchen, HRB 269168</font></span></div><div><div><div><=
+font face=3D"Arial" style=3D"background-color:white" color=3D"#808080" size=
+=3D"2">Vorstand / Management Board: Thomas Lambertz | Tobias Madl</font></d=
+iv><div><font face=3D"Arial" size=3D"2"><font color=3D"#808080">Aufsichtsra=
+tsvorsitzender / Chairman of the Supervisory Board</font><span style=3D"col=
+or:rgb(128,128,128)">: Hendrik Hofstadt</span></font></div></div></div></di=
+v></div>
+--00000000000099f587064f7f50d4--
 
