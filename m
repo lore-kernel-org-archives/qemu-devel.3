@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48217F428E0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA726F428DA
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 20:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD6jX-0005mR-VJ; Wed, 15 Apr 2026 16:21:11 -0400
+	id 1wD6jT-0005lK-7E; Wed, 15 Apr 2026 16:21:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6jT-0005lJ-Ae
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:21:09 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6jO-0005kd-93
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:21:04 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6jO-00020t-2j
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:21:06 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488a88aeec9so96088325e9.2
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:20:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6jC-0001pc-LR
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:20:53 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43cf7683a28so4899894f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776284454; x=1776889254; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776284446; x=1776889246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=spGxmOhOSsGGCE7d6Xa2sLvNfzB1VyOj40S+qP0AZgw=;
- b=By+R9G4IWKBjhevZeceZuzzheXwN1KSk1ZvFrVS10N54+dDv9NK9t3umSw9Kzb/68m
- QZSnPCNQcE2SJFNgg9a7lYZzgdooLIwvtRYbbkljSnSvS4zFOd42wwvVQiXGh1vRkGZj
- 0N6Zsm7QGfqm7EoAEc02iVeS30aQj9+746pz/VtQUY2eoUiOr4LKD/l6+wgGOqBqeqym
- QBmC65IWWiiXNTPDBcKKjB8i30UHweG0dLLhUTfeXg2NxpS0ApMniVZxsXtsuTuvQEQh
- rwXLqWuKGMqBf2WRQ4j9fzUqQh/lXGqpg6wae75c+eDDywCXSTAc9t0y4rChwcAp+B22
- 2T3g==
+ bh=4LXW55SWZ5i76XTZpCWe3HLcWznDOC4tq1zgusBrG7Y=;
+ b=QEG68PCbr8IT1dHvlyLwElGynUyja8fbahApNZpSU7kUmdP0UTOJHKA/BZPRASBaat
+ jGRXLpS9H3Z1MbCnOQ8WXlvJeHsy/UaeeXbg9n2f0lkU0KiyU0dQxW46HrE3vKptI7OQ
+ XEQ+ImwvqBW2Mcu0ZpDzJ0fuZD1zPNzhkm2/1mL7s1Jb9bcK0Wz4SqnB703p3+oC4spe
+ 7Hr/gObiPWUnyvxbq3Du2WlN87Nr6UYaEhqjd1TO3CdQ8JR7smI2TnYlLdHxiTbTIDDp
+ RhdkTds4Sd6IBLtq5I+QyMG/hRsUyeBVrRd6OXvqhCHK0jBHhr+BY//mMfVB/SXKKodw
+ IfIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776284454; x=1776889254;
+ d=1e100.net; s=20251104; t=1776284446; x=1776889246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=spGxmOhOSsGGCE7d6Xa2sLvNfzB1VyOj40S+qP0AZgw=;
- b=etPGKG3IwAkbBhOVZAboTcC4VpfI3HmuXr9Jdeu07YvOSdzHJp35dZhB9gMz2NUiVt
- j6U6aFp/pMhYK6rMX72zFDkp1OkVeRzOsDjmBlNTMYdbkdndrdUL0Xehtlq17CagyqZB
- Y4msnaHlWhfntN/qH4iGVvwH4tzXFfOkTl8l/y9hGFnpPh9WgojfxkFvd9NFLflxRMdv
- 772K7D8Tbwoz2vIVnUZnt0DZIvjKfEZUTkfVUqN5ptEgTihWbCVvd7bk6JrgDo9q0h9z
- CunnOb1PdJ8VeeaQKV3aqXETl9DXxds4Tea1o0klU2V8pkJJXAQlmop+7//NkbzYqFJb
- FPtQ==
-X-Gm-Message-State: AOJu0YzRdEYBTskTYHTlJYU3WTpaKQNPVY70Aar8feMZWIfJPQjwExUB
- suh4b7fH8GpW/pfGi5hFOdO5p5FmHAyITqekz4qmYLeChstbE3JNB1XWbIf9JOqPUWcIHs8Aea/
- IgboGp20=
-X-Gm-Gg: AeBDietshFEF3QCCMlFFYBGlWO4xXEo3vd2BLDk68UQLefIQBuA4hwq+dU1pJItXwFq
- ALXTxfsRSlGxM7s3ygYNK/WxWuN9cELy1BcJfcO6jt8npPLAe12lYKkqWL+Phy3fHwNGp3kQFcl
- D3lb2DhxZoaXV2TZ/VZOya/gbkgTPD39r6X0EShcElD5ctk5C5WzstwEWU6EBh2Sx8yD/VTH15I
- NR10SKKO1eNc3iKGQgblb+CItmzjOcNCCT6Wp3ZP5Ie/oqERej89HGYfrHx4hG9z99qtZKeIx5E
- kd9acTKatnHdxL0DFnCbH53V5cgcuRQax+NYychvOuubMEXaVCjj2Vn8SaKlu34UYNXxfU+4D1w
- q+ZeyTQ+7khS579xXz7WpZguzjbTDrh9p8zO52+REs+ty1i34wAlpdULEzAKiNAv4ymqPiGYIuB
- ZUAO0Mr7AR87fP4SRXJLs4ZHzjJW2PN8A51/jHMvATljtEiJSWWWwsmtj+DxOLzyY7ENd3bqAF
-X-Received: by 2002:a05:600c:a404:b0:488:bfc3:ef3 with SMTP id
- 5b1f17b1804b1-488d6671271mr285797805e9.0.1776284453909; 
- Wed, 15 Apr 2026 13:20:53 -0700 (PDT)
+ bh=4LXW55SWZ5i76XTZpCWe3HLcWznDOC4tq1zgusBrG7Y=;
+ b=AGVE9mjCOABVUbQywq4A2ULtuKXsnz0iKTNFnBgxHI0et/vRyfOkNAzmSIyh66mxAE
+ 4GaoDTahIVgU21/cyDNzIXISVqWqDM03QmN8sbVNsM8GCJZG8c2woKh3LbdlaI/5KP8Y
+ 7GBuvrSKwDJctQGcJjyQpRy88c5YgrOEqdDH56HpDj3HbzA2PP1l/SnGuLpgccEYgwDp
+ +fOiXZwoASYBh/2lL1rkNX80QdDRwcZ7NB3MmsfefzJV4AVvP+R6HmlqqbWaBFIg/u5P
+ CkiQ83bXwGMQTquSDUfecq4OYUglhR6FjXch9tKXwHZS9MFoUkifR6cWG4YMUaBhp2yt
+ hlWw==
+X-Gm-Message-State: AOJu0Ywm1w5Xhw9sS+IU5wCzbDREr7tfBH+UfqiggSim7ZYO1q4uiSoj
+ NXaYVPX4O9LNArGiHjgXCz98PJFQ2581OoQqXXxr7eff23RfofekynNNpZVr9b0YIWEuO47vFG0
+ lu6fDsIo=
+X-Gm-Gg: AeBDietI2thyp4X1YtoR+l04lSkjhNNHPIhNHpX1EUUEw0y8gNNN7YpeCgnxqh78ISH
+ psWKegN1n5sID6b8jKUosQy/c3Im4nsxJUolHFLFhXWtXZZOaUjGLdB5VCXey0gM3qXnbh/2tNY
+ iP6fGwUtF5dpgf6ZNMhLs/DutkTQ1/dE/Bc8ny+HKx9rpzf19Zvebmtq+F7strbom05dkWy/LCF
+ 8DyIAJdKIDUeZOoiUEIP+0FecOuEmf+tjKeQnxaWRUEUuww/yV+mXhe97Q8QYWy96q7DgYLlXZh
+ wn7JucLBPVUBs0OrO++Y2qyAEx3yvzedfQbyM5/vYG0E2j+XXd533VOJhP8OBW9DH33pI3uyYoz
+ YuNvSXRJ2OdVEvQ9vNhLrjY3Vm5ZE49IsuxWTVDHAV9DJ99CRyQlz9fkgvC5CUR1zdhNbU4yyDv
+ 1zU25juSv7yUZforx3vwSDsg8ppFmLndM91D+fZSftQoWtm8FdCtlDaEccKPtfOwkXg38zMKp2
+X-Received: by 2002:a05:6000:60f:b0:43e:a69b:d814 with SMTP id
+ ffacd0b85a97d-43ea69bd9fcmr12554190f8f.28.1776284446287; 
+ Wed, 15 Apr 2026 13:20:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f208451bsm62746255e9.14.2026.04.15.13.20.52
+ ffacd0b85a97d-43ead33d6e9sm7792609f8f.1.2026.04.15.13.20.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Apr 2026 13:20:52 -0700 (PDT)
+ Wed, 15 Apr 2026 13:20:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
@@ -70,17 +70,17 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>
-Subject: [RFC PATCH v5 3/6] target/mips: Convert MSA LD/ST.H (Halfword Vector)
-Date: Wed, 15 Apr 2026 22:20:23 +0200
-Message-ID: <20260415202027.83008-4-philmd@linaro.org>
+Subject: [RFC PATCH v5 2/6] target/mips: Convert MSA LD/ST.B (Byte Vector)
+Date: Wed, 15 Apr 2026 22:20:22 +0200
+Message-ID: <20260415202027.83008-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260415202027.83008-1-philmd@linaro.org>
 References: <20260415202027.83008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,164 +108,137 @@ Replace runtime helpers by translation.
 Replace the legacy cpu_ld/st*_data_ra() calls by
 tcg_gen_qemu_ld/st() which allow to respect atomicity.
 
+Consider the host endianness.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
  target/mips/tcg/msa_helper.h.inc |  1 -
- target/mips/tcg/msa_helper.c     | 48 --------------------------------
- target/mips/tcg/msa_translate.c  | 32 +++++++++++++++++----
- 3 files changed, 26 insertions(+), 55 deletions(-)
+ target/mips/tcg/msa_helper.c     | 28 ----------------------------
+ target/mips/tcg/msa_translate.c  | 30 ++++++++++++++++++++++++------
+ 3 files changed, 24 insertions(+), 35 deletions(-)
 
 diff --git a/target/mips/tcg/msa_helper.h.inc b/target/mips/tcg/msa_helper.h.inc
-index 50a2732e916..86a79bf804c 100644
+index 4963d1553a0..50a2732e916 100644
 --- a/target/mips/tcg/msa_helper.h.inc
 +++ b/target/mips/tcg/msa_helper.h.inc
 @@ -436,7 +436,6 @@ DEF_HELPER_4(msa_ffint_u_df, void, env, i32, i32, i32)
  #define MSALDST_PROTO(type)                         \
  DEF_HELPER_3(msa_ld_ ## type, void, env, i32, tl)   \
  DEF_HELPER_3(msa_st_ ## type, void, env, i32, tl)
--MSALDST_PROTO(h)
+-MSALDST_PROTO(b)
+ MSALDST_PROTO(h)
  MSALDST_PROTO(w)
  MSALDST_PROTO(d)
- #undef MSALDST_PROTO
 diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-index d9f35fca657..5489d8830dd 100644
+index f554b3d10ee..d9f35fca657 100644
 --- a/target/mips/tcg/msa_helper.c
 +++ b/target/mips/tcg/msa_helper.c
-@@ -8212,38 +8212,11 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, uint32_t df, uint32_t wd,
- /* Element-by-element access macros */
- #define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
- 
--static inline uint64_t bswap16x4(uint64_t x)
--{
--    uint64_t m = 0x00ff00ff00ff00ffull;
--    return ((x & m) << 8) | ((x >> 8) & m);
--}
--
- static inline uint64_t bswap32x2(uint64_t x)
- {
+@@ -8223,20 +8223,6 @@ static inline uint64_t bswap32x2(uint64_t x)
      return ror64(bswap64(x), 32);
  }
  
--void helper_msa_ld_h(CPUMIPSState *env, uint32_t wd,
+-void helper_msa_ld_b(CPUMIPSState *env, uint32_t wd,
 -                     target_ulong addr)
 -{
 -    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
 -    uintptr_t ra = GETPC();
 -    uint64_t d0, d1;
 -
--    /*
--     * Load 8 bytes at a time.  Use little-endian load, then for
--     * big-endian target, we must then swap the four halfwords.
--     */
+-    /* Load 8 bytes at a time.  Vector element ordering makes this LE.  */
 -    d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
 -    d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
--    if (mips_env_is_bigendian(env)) {
--        d0 = bswap16x4(d0);
--        d1 = bswap16x4(d1);
--    }
 -    pwd->d[0] = d0;
 -    pwd->d[1] = d1;
 -}
 -
- void helper_msa_ld_w(CPUMIPSState *env, uint32_t wd,
+ void helper_msa_ld_h(CPUMIPSState *env, uint32_t wd,
                       target_ulong addr)
  {
-@@ -8296,27 +8269,6 @@ static inline void ensure_writable_pages(CPUMIPSState *env,
+@@ -8310,20 +8296,6 @@ static inline void ensure_writable_pages(CPUMIPSState *env,
      }
  }
  
--void helper_msa_st_h(CPUMIPSState *env, uint32_t wd,
+-void helper_msa_st_b(CPUMIPSState *env, uint32_t wd,
 -                     target_ulong addr)
 -{
 -    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
 -    int mmu_idx = mips_env_mmu_index(env);
 -    uintptr_t ra = GETPC();
--    uint64_t d0, d1;
 -
 -    ensure_writable_pages(env, addr, mmu_idx, ra);
 -
--    /* Store 8 bytes at a time.  See helper_msa_ld_h. */
--    d0 = pwd->d[0];
--    d1 = pwd->d[1];
--    if (mips_env_is_bigendian(env)) {
--        d0 = bswap16x4(d0);
--        d1 = bswap16x4(d1);
--    }
--    cpu_stq_le_data_ra(env, addr + 0, d0, ra);
--    cpu_stq_le_data_ra(env, addr + 8, d1, ra);
+-    /* Store 8 bytes at a time.  Vector element ordering makes this LE.  */
+-    cpu_stq_le_data_ra(env, addr + 0, pwd->d[0], ra);
+-    cpu_stq_le_data_ra(env, addr + 8, pwd->d[1], ra);
 -}
 -
- void helper_msa_st_w(CPUMIPSState *env, uint32_t wd,
+ void helper_msa_st_h(CPUMIPSState *env, uint32_t wd,
                       target_ulong addr)
  {
 diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-index 340a0a14aaf..111d9eedd11 100644
+index 2e1a769e032..340a0a14aaf 100644
 --- a/target/mips/tcg/msa_translate.c
 +++ b/target/mips/tcg/msa_translate.c
-@@ -754,10 +754,27 @@ TRANS(FTINT_U,  trans_msa_2rf, gen_helper_msa_ftint_u_df);
- TRANS(FFINT_S,  trans_msa_2rf, gen_helper_msa_ffint_s_df);
- TRANS(FFINT_U,  trans_msa_2rf, gen_helper_msa_ffint_u_df);
+@@ -756,8 +756,16 @@ TRANS(FFINT_U,  trans_msa_2rf, gen_helper_msa_ffint_u_df);
  
-+/*
-+ * Byte pattern: ab.cd.ef.gh -> ba.dc.fe.bg
-+ */
-+static void gen_bswap16x4_i64(TCGv_i64 dst, TCGv_i64 src)
-+{
-+    uint64_t m = 0x00ff00ff00ff00ffull;
-+    TCGv_i64 t0 = tcg_temp_new_i64();
-+    TCGv_i64 t1 = tcg_temp_new_i64();
-+                                        /* src = abcdefgh */
-+    tcg_gen_andi_i64(t0, src, m);       /*  t0 = .b.d.f.h */
-+    tcg_gen_shli_i64(t0, t0, 8);        /*  t0 = b.d.f.h. */
-+    tcg_gen_shri_i64(t1, src, 8);       /*  t1 = habcdefg */
-+    tcg_gen_andi_i64(t1, t1, m);        /*  t1 = .a.c.e.g */
-+    tcg_gen_or_i64(dst, t0, t1);        /* dst = badcfebg */
-+}
-+
  static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
  {
-     static const MemOp mo_atom_df[4] = {
-         MO_ATOM_NONE,
-+        MO_ATOM_SUBALIGN, /* Slightly stronger than required */
-     };
++    static const MemOp mo_atom_df[4] = {
++        MO_ATOM_NONE,
++    };
      TCGv_i32 wd;
-     TCGv_i128 t16;
-@@ -778,9 +795,6 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
++    TCGv_i128 t16;
+     TCGv_va addr;
++    MemOp mop;
++    int idx = a->wd << 1;
++    TCGv_i64 d0 = msa_wr_d[idx +  FP_ENDIAN_IDX];
++    TCGv_i64 d1 = msa_wr_d[idx + !FP_ENDIAN_IDX];
+ 
+     if (!check_msa_enabled(ctx)) {
+         return true;
+@@ -770,9 +778,6 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
  
      if (is_load) {
          switch (a->df) {
--        case 1:
--            gen_helper_msa_ld_h(tcg_env, wd, addr);
+-        case 0:
+-            gen_helper_msa_ld_b(tcg_env, wd, addr);
 -            return true;
-         case 2:
-             gen_helper_msa_ld_w(tcg_env, wd, addr);
+         case 1:
+             gen_helper_msa_ld_h(tcg_env, wd, addr);
              return true;
-@@ -790,9 +804,6 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+@@ -785,9 +790,6 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
          }
      } else {
          switch (a->df) {
--        case 1:
--            gen_helper_msa_st_h(tcg_env, wd, addr);
+-        case 0:
+-            gen_helper_msa_st_b(tcg_env, wd, addr);
 -            return true;
-         case 2:
-             gen_helper_msa_st_w(tcg_env, wd, addr);
+         case 1:
+             gen_helper_msa_st_h(tcg_env, wd, addr);
              return true;
-@@ -813,6 +824,15 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
-         tcg_gen_extr_i128_i64(d0, d1, t16);
+@@ -800,6 +802,22 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+         }
      }
  
-+    if (mo_endian(ctx) != MO_LE) {
-+        switch (a->df) {
-+        case 1:
-+            gen_bswap16x4_i64(d0, d0);
-+            gen_bswap16x4_i64(d1, d1);
-+            break;
-+        }
++    t16 = tcg_temp_new_i128();
++
++    mop = MO_128 | MO_LE;
++    mop |= a->df << MO_ASHIFT; /* MO_ALIGN */
++    mop |= mo_atom_df[a->df];
++
++    if (is_load) {
++        tcg_gen_qemu_ld_i128(t16, addr, ctx->mem_idx, mop);
++        tcg_gen_extr_i128_i64(d0, d1, t16);
 +    }
 +
-     if (!is_load) {
-         tcg_gen_concat_i64_i128(t16, d0, d1);
-         tcg_gen_qemu_st_i128(t16, addr, ctx->mem_idx, mop);
++    if (!is_load) {
++        tcg_gen_concat_i64_i128(t16, d0, d1);
++        tcg_gen_qemu_st_i128(t16, addr, ctx->mem_idx, mop);
++    }
++
+     return true;
+ }
+ 
 -- 
 2.53.0
 
