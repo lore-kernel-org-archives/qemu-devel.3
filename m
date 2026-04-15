@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A04BDF43858
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DAE0F43858
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD3cU-0006uS-2W; Wed, 15 Apr 2026 13:01:42 -0400
+	id 1wD3cX-0006zf-78; Wed, 15 Apr 2026 13:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wD3bh-0006aY-7V
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:56 -0400
+ id 1wD3bR-0006Y1-Dp
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:47 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wD3bY-0005yM-1Y
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:50 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wD3bJ-0005wV-C9
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:32 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 05FB420B7129;
- Wed, 15 Apr 2026 10:00:36 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 05FB420B7129
+ by linux.microsoft.com (Postfix) with ESMTPSA id C163720B7135;
+ Wed, 15 Apr 2026 10:00:25 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C163720B7135
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776272438;
- bh=2XUiZ+jxk1/PxTmiAGq1JsfHV8ZXkhwbR5imyDWcLhM=;
+ s=default; t=1776272427;
+ bh=3qKH/AOjRjhm/x8a9eu7OnZ3TkDZ/w2V+YOycx7vrL0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fzwNo+O56qpj3+zH5+kvkN7Fz7+ZUY0XI6FJVWZgCnpwYbqypGI4HPR6jYARR4mrE
- UEQ2/wfJtA9ZdaJ3CCHCxh8hcDMMJn2wdNoCa45OamyF4hGLvsIr0DGY4nUHRmq/pA
- VbxKvKwI1bzdta8xsNTObJu018uFJhhB2bsMKhN0=
+ b=M2MDa9pSUuL1QlHXZY+VKOnV/SpE8hN8MpdlL4nDXxHh5puk8M0ZP97rakmerMWd9
+ sjnoSRhkshUiOwADDMjnXqeWqgYercp3b0nScS3hfsF79JeUio0oZCiXvgYvAzQJ3v
+ BQWxY8x47jnw4PyKuXYqw0Jyz5dgiFnkRN8dPoA0=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v5 9/9] accel/mshv: disable la57 (5lvl paging)
-Date: Wed, 15 Apr 2026 19:00:12 +0200
-Message-Id: <20260415170012.520934-10-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v5 4/9] target/i386/mshv: change cpuid mask to UINT32_MAX
+Date: Wed, 15 Apr 2026 19:00:07 +0200
+Message-Id: <20260415170012.520934-5-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
 References: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
@@ -68,91 +68,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change disable la57 paging on the mshv hypervisor on both the
-mshv processor feature bitmap and mask the cpuid feature leaf to the
-guest.
-
-Since the removal of hypervisor-assisted gva=>gpa translation in
-1c85a4a3d7 we have seen MMIO errors in guests on la57-enabled hw. We
-will have to investigate and test this further.
+The current implementation would only override the feature bits that are
+enabled, however we also want to consider disabled features, hence all
+bits are set on the masks in the hypercall argument.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- accel/mshv/mshv-all.c       |  7 +++++++
- include/system/mshv_int.h   |  2 ++
- target/i386/mshv/mshv-cpu.c | 12 ++++++++++++
- 3 files changed, 21 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index c50641f174..a557623531 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -142,6 +142,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     int ret;
-     uint64_t pt_flags, host_proc_features;
-     union hv_partition_processor_xsave_features disabled_xsave_features;
-+    union hv_partition_processor_features disabled_partition_features = {0};
-+
-     struct mshv_create_partition_v2 args = {0};
- 
-     QEMU_BUILD_BUG_ON(MSHV_NUM_CPU_FEATURES_BANKS != 2);
-@@ -177,6 +179,11 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     }
-     args.pt_cpu_fbanks[1] = ~host_proc_features;
- 
-+    /* arch-specific features we disable regardless of host support */
-+    mshv_arch_disable_partition_proc_features(&disabled_partition_features);
-+    args.pt_cpu_fbanks[0] |= disabled_partition_features.as_uint64[0];
-+    args.pt_cpu_fbanks[1] |= disabled_partition_features.as_uint64[1];
-+
-     /* populate args structure */
-     args.pt_flags = pt_flags;
-     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 35386c422f..ca156cdf4b 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -94,6 +94,8 @@ void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
-+void mshv_arch_disable_partition_proc_features(
-+     union hv_partition_processor_features *disabled_features);
- int mshv_arch_post_init_vm(int vm_fd);
- 
- typedef struct mshv_root_hvcall mshv_root_hvcall;
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 5360a9e190..5054262351 100644
+index 4183727a86..e42b5a614d 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -1129,6 +1129,12 @@ void mshv_arch_amend_proc_features(
-     features->access_guest_idle_reg = 1;
- }
- 
-+void mshv_arch_disable_partition_proc_features(
-+     union hv_partition_processor_features *disabled_features)
-+{
-+    disabled_features->la57_support = 1;
-+}
-+
- static int set_memory_info(const struct hyperv_message *msg,
-                            struct hv_x64_memory_intercept_message *info)
- {
-@@ -1684,6 +1690,12 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
- 
-     if (func == 0x07 && idx == 0 && reg == R_ECX) {
-         ret &= ~CPUID_7_0_ECX_CET_SHSTK;
-+        /*
-+         * LA57 (5-level paging) causes incorrect GVA=>GPA translations
-+         * in the instruction decoder/emulator. Disable until page table
-+         * walk in x86_mmu.c works w/ 5-level paging.
-+         */
-+        ret &= ~CPUID_7_0_ECX_LA57;
-     }
- 
-     return ret;
+@@ -538,22 +538,17 @@ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
+         .input.always_override = always_override,
+         .input.padding = 0,
+         /*
+-         * With regard to masks - these are to specify bits to be overwritten
+-         * The current CpuidEntry structure wouldn't allow to carry the masks
+-         * in addition to the actual register values. For this reason, the
+-         * masks are set to the exact values of the corresponding register bits
+-         * to be registered for an overwrite. To view resulting values the
+-         * hypervisor would return, HvCallGetVpCpuidValues hypercall can be
+-         * used.
++         * Masks specify which bits to override. Set to 0xFFFFFFFF to
++         * override all bits with the values from the QEMU CPU model.
+          */
+         .result.eax = entry->eax,
+-        .result.eax_mask = entry->eax,
++        .result.eax_mask = 0xFFFFFFFF,
+         .result.ebx = entry->ebx,
+-        .result.ebx_mask = entry->ebx,
++        .result.ebx_mask = 0xFFFFFFFF,
+         .result.ecx = entry->ecx,
+-        .result.ecx_mask = entry->ecx,
++        .result.ecx_mask = 0xFFFFFFFF,
+         .result.edx = entry->edx,
+-        .result.edx_mask = entry->edx,
++        .result.edx_mask = 0xFFFFFFFF,
+     };
+     union hv_register_intercept_result_parameters parameters = {
+         .cpuid = cpuid_params,
 -- 
 2.34.1
 
