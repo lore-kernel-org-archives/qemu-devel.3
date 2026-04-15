@@ -4,109 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC53FA0C30
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 06:29:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A12FA0C36
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 06:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCtjj-0006CZ-7M; Wed, 15 Apr 2026 02:28:31 -0400
+	id 1wCttx-0007rs-3k; Wed, 15 Apr 2026 02:39:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wCtjg-0006Bw-Op
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 02:28:28 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wCtje-0004qY-72
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 02:28:28 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-79a60975dc5so72509467b3.0
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 23:28:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776234504; cv=none;
- d=google.com; s=arc-20240605;
- b=Z9AphRvriVfZ438rvITVjIyLr89oJGZSJrRriuefcMWQGK6oPRbog/scVGsF3d/2Fl
- CkLxPXfAtGlXcIjBF24rYzuhHmEge/ESut+++yay+r9fKSr1YE8yzaBUTne8l2Dp5YDq
- gGbl2s4ToD+ErxmmhA87IzaZ5UmM23Z8o/Evs6/QSnVECv8o8f+7i2ZE1TTGfR4kz8lD
- 1w1n86bqm1p5qniaCurGUQZCdZc6p/mGypSeq5K/9i07EOoW4OnBzM47n9T+FHuzfwWR
- FgKwvq2h53w3DwI3+09c1sxRT58MgaswMRBaDUlkBdYzIn3Xi7fITreFvaT4D77vtrFv
- LxkQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=0pXMJYmyEc1LrSDdraoyNnODw4s0qtxGCz9y4VUwrIo=;
- fh=mAmlY5Klec4LSvKoayEMI3ZzjiPnDuQ++f3Dm55lTn8=;
- b=Gn5w55yabb1nLyf3hVP9/fZg79SwFKbSqX494iljWfqMg3sQSqLnyI6xWyCIbKGll2
- M/IcdsGiC8k5Szebd6AqT+zMR0NWSqh9ZDP4V8q9oYy1D97H2c6d1PzEgghWul7ZGik5
- x/0K6ta+iIhmHZan0SrKcTbHoAxk8Eyz9BOIdDnjuAJtlMzE2FTGmUYJohFKbjGTAIlW
- dzsHGWkWGwe0cUl2Eu+P0L1BUU10w7uNRJyQVwDqYKxxq/iWbulwkNjPpb2lC8E9QcXR
- Aau7xiqR55Ay53L3omMvMLXqrDYnxGjT/dwh4Cy8zL6Qnlz69iCUO6K7YJ2K6ia2Myl5
- O5sA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wCttt-0007ra-Sj
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 02:39:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wCttr-0007fQ-E2
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 02:39:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776235135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TlUvblGUZFmpowKcYrdITWRBi4imocF9Ym6v0uJYyp0=;
+ b=IghixYFUoxBL34KDOsaSezbNYCC3fOJI/8XbSMRV2K/WZ0QhHMDLWZn6r8hgHkaiLie6Fz
+ MIJJIxV0iNacarX3LbbgSk0u1NrxC7a5JRW9c0qtQ2K1EyiNac8QCdNtswLVZWjcX0iQDD
+ 2sjV12H6vENrRRv8CprYc85rd5R7m8s=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-653-rstIY0MsMqGXZWqKnUNZHw-1; Wed, 15 Apr 2026 02:38:54 -0400
+X-MC-Unique: rstIY0MsMqGXZWqKnUNZHw-1
+X-Mimecast-MFC-AGG-ID: rstIY0MsMqGXZWqKnUNZHw_1776235133
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-358f058973fso6676243a91.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 23:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1776234504; x=1776839304; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0pXMJYmyEc1LrSDdraoyNnODw4s0qtxGCz9y4VUwrIo=;
- b=JKHSz+TyK90T+SPiz8DMA7YINTxMO1QYYISkc3dpPsxlL2ZJFdqEUoSoJ50BV3YuQS
- joRHq5mAkxhTY8Aq6DqsCVweOqpbJ7lfiT60H01/FJXj6PSBSfKY1Gze7zyEkXtfRUdV
- P9a/uuQM2h4qod+S6hM5XeiytOYwfWU1XJV20=
+ d=redhat.com; s=google; t=1776235133; x=1776839933; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TlUvblGUZFmpowKcYrdITWRBi4imocF9Ym6v0uJYyp0=;
+ b=gSDrdWtHG1IVw7T6GD1SVoFrIMInC3zgdSH6DqoDreeW8pYi9MYkslp6apJ2JMuwxS
+ nj41UVm4QY4nAJiXN7YUDkcMBQJRtdaXG/aTqf8DcLfWsgOu7RK5+gwDwh4stMIhdJcq
+ TYTenQ7mf1RJVGY8F6saZgQLRuo31zWkh4bz4nlnLnIjgOyskJxu46eM+vnXd4ZneFE/
+ +4QrasKifUiJGH5civICZx9gEzdCXdK/vvpzsKgmlwiCjz6eF8TMsay/6po1CpE/LbXv
+ FZu5pfi7mdm5H0FJ+j447n8vxfcmw16NZrQAX+6Zl0SVgumS1J/J/VxwGXYnUFvgZsNE
+ zzeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776234504; x=1776839304;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1776235133; x=1776839933;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0pXMJYmyEc1LrSDdraoyNnODw4s0qtxGCz9y4VUwrIo=;
- b=YsMXVUUjdJndV0REqWQ9H1TyFCBh//Q9SAAVqDLrMWNi6gawtyycJJ+1wIsAGj5TNM
- nzukyaGVU5Y8xBI7qYDf1YeKbQto1jawJL2r2u5T3utPoiuhvK3FjeiHyzkR0fnwJ6Nl
- qi+ifwSRxmTfG8SJEmwXDz94+JpwUmm+JALcC2O2qpVrC08LWLduxIhUFv9QCdsZSrcG
- dKIEICbtK+fh54tM+gwz9h6IBHaxQCWy/uct6NyfUS6AFZuCpHbzAASYocoIb3XwxjeZ
- iy1chY686WNOiTI8tbQc4FYGINht8eZ16icjejmDWbpId56qeT/fOp4i9Vci2amdxcZi
- tAgg==
+ bh=TlUvblGUZFmpowKcYrdITWRBi4imocF9Ym6v0uJYyp0=;
+ b=eOoK6eb14VRo/9AuXCLe0q+8nvGiwcHSEFaFWymxqB23TrUZ35dIRnA4Ja3L3MHJdw
+ /LjnZOLWAgGXYRfOs0PPM3cuyG47Eh3DoywSO64neCb/Lxb5bVmgZ4lcgFO5SWdxxtkG
+ gxa9IZaGxo3vGpx5Yay2z5nVHq5bgUb4KsTr2VNpIIM5JKPHJV0Z/igs8PQAbbskrtbY
+ SlJiNsYwCwS8FE3XsSvBdNONX3eX/tlxp+TIejqjUTFl2ACRArvFaNatbqmqbv0aAJ1T
+ o3ksb8d+CwTFUell4a/sp5K9kUn0K6REOGjGmf6QeX7qcYXeYMEVq4IMrzOkjtYvo8/T
+ 4s9Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9CdsUvWM0o4BvNzovRh9yPAFzXYIwwN7HSu5ATTfal0y71Ef9sQVEfJBfOPSh/eJ907UzbXXq0Sphh@nongnu.org
-X-Gm-Message-State: AOJu0YyolQHbdYwDPXXnx/w5WzJeye2j99uLNIjCZ9xEmV6/CKuzz2aj
- 6JY+uzrnpYCWSsw3jcPFrUeoL1cDM1n7S/GZPC1m7IQwY09IF+Tfj2KMPYbkt/81k1tK2/zEDJx
- PfwquFsrbuNv85zN+W+gj4oViJPRdXXQ=
-X-Gm-Gg: AeBDieu+5y8rapL1ed70xnzkrZNeLyqjoA7mHe1p/czmQq/KccB5izuJ+NthOk91BUQ
- rgYeJRf3k0WeX7Ta77tkBeTHaaPUjfollPXS68wNlnkYdt8luQ/Ynni31dZsYyzVPrbbzPOcDUr
- THKfmt4oTQJgZV4ZyfWIY71tHBAEPRyi9CCR4CP1lE3Nflu7LIrhDjWla1Z2dDS9gVxmlnAE70l
- B5Oq2Z4SKD0sNiQujYgzAKL1HqrPpU6Vbuy6wZFrCcYqq+S1NCWvmBy9ldxUc1q63PRy1hQgje0
- QemaF2Dj2Ykb8qqPLBYDm60GMwQJdjfYBVyLn/+ey+qzX6JOF+koUCyL4407pPMkKNwZ
-X-Received: by 2002:a05:690c:e4c6:b0:798:cf16:1c6e with SMTP id
- 00721157ae682-7af6fdf1dd9mr170353017b3.21.1776234504007; Tue, 14 Apr 2026
- 23:28:24 -0700 (PDT)
+ AFNElJ9VufpyXZKnZXmf1Q6K1J7KQ2r6Shy0r4f5m4cY1MIQRiVNl3tSG/fcqhXBJX1vnQXYh0Kgl8mcXl7y@nongnu.org
+X-Gm-Message-State: AOJu0YwMdxX6HqSbT10nvciQ/4vOWrBOypIiqRH9X3U0NFz9sGxGmf80
+ IW0mFNzmk2KOnag8dFiMUmVzCBDrCzjTPpLL+cJmwwOfr/6G8qg7mxNIqTCRFoKI42t/VoEcQWH
+ ooHeEZTfOTwh1cbbMRK0qxKVEw5aPjhu4++bmbclLTd4mwkCJi7xWrpPd
+X-Gm-Gg: AeBDietSHc6Sf1FblEgmHy7QCxnX9dNr3ER624JwdKVpVffxqxxvn055LW+nnpMl8kU
+ /wXPDmFLrVn9zyIgFpiaX83h8wIYRrstupKrtKPFJcM2eMCQu2PrUvZ2xfi0rbSt8BVBl9q3axx
+ JK+3cveD5nG6+sXA+4XOfDpl8FNSIMr6+n5N+ySY5C5RPepkjKIgx92h3qgxnuqUAPykKBLYbxY
+ Jx/TBK8RmWdAAEn2P3FQaBEnqKSiebC3Rmt6nVh8K+1HRN+aOnHsJGQsG33gqgdTCCiiB4/MWWT
+ Ar6/J2diydlnkbF8v1Sm+7/4XYLaQYcG4koMsdmJ6uzKnJpaezMVElNbbsy8CWAriJIzUAMfcn+
+ VYCzlbqe1ikfVfk2jfVaUDozym5fzVcBUS3ePuj03gzHZBrCTLXinCd63FNBzxyPjfE2vqgD/Ek
+ lLnGUtDg==
+X-Received: by 2002:a17:90b:2e8c:b0:35f:d56d:1c45 with SMTP id
+ 98e67ed59e1d1-35fd56d1c7emr382512a91.12.1776235133093; 
+ Tue, 14 Apr 2026 23:38:53 -0700 (PDT)
+X-Received: by 2002:a17:90b:2e8c:b0:35f:d56d:1c45 with SMTP id
+ 98e67ed59e1d1-35fd56d1c7emr382485a91.12.1776235132490; 
+ Tue, 14 Apr 2026 23:38:52 -0700 (PDT)
+Received: from localhost.localdomain ([122.163.114.34])
+ by smtp.googlemail.com with ESMTPSA id
+ 98e67ed59e1d1-35fd07a972esm596362a91.4.2026.04.14.23.38.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Apr 2026 23:38:52 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, peter.maydell@linaro.org,
+ philmd@linaro.org, kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH for-11.1] accel/kvm: refactor and clean up
+ do_kvm_irqchip_create
+Date: Wed, 15 Apr 2026 12:08:35 +0530
+Message-ID: <20260415063835.85540-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-References: <20260109131657.396794-1-joel@jms.id.au>
- <20260109131657.396794-5-joel@jms.id.au>
- <66870d68-0d48-4c78-aa51-37c24a82baee@ventanamicro.com>
-In-Reply-To: <66870d68-0d48-4c78-aa51-37c24a82baee@ventanamicro.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 15 Apr 2026 15:58:12 +0930
-X-Gm-Features: AQROBzCCTJ5jD326weSAfKXCROokZzTb1YHETYpzFf5CedtPG6UjIiuzsv6_hX4
-Message-ID: <CACPK8XfimpPtVzfrmXNUVwtq5KoWAt=ipUcQg=Skw9sHOPPnwA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] hw/riscv/boot: Provide a simple halting payload
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Vijai Kumar K <vijai@behindbytes.com>, 
- Ran Wang <wangran@bosc.ac.cn>, Michael Ellerman <mpe@oss.tenstorrent.com>, 
- Joel Stanley <jms@oss.tenstorrent.com>,
- Nick Piggin <npiggin@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=joel.stan@gmail.com; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.248,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,41 +120,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Jan 2026 at 03:25, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
->
->
-> On 1/9/2026 10:16 AM, Joel Stanley wrote:
-> > From: Nicholas Piggin <npiggin@gmail.com>
-> >
-> > OpenSBI hangs before any console output if the domain init code sees the
-> > next stage is not in an executable region.
-> >
-> > If no kernel payload is provided to QEMU, the next stage address is
-> > NULL, and the riscv virt machine memory map ends up covering the 0
-> > address with the catch all S-mode RWX region and so OpenSBI prints
-> > console messages and does not hang until the next stage boot.
-> >
-> > The TT Atlantis address map has RAM starting at 0 and it loads OpenSBI
-> > there, so it is M-mode and not accessible by S-mode, tripping the early
-> > check and hang.
->
-> Please note that these patches were split from the main Atlantis series,
-> meaning this patch can land upstream earlier than the main Atlantis
-> board work. In this context, saying "The TT Atlantis address map has RAM
-> starting at 0" makes no sense because there's no Atlantis board in QEMU.
->
-> I suggest adding something like:
->
-> "The soon to be added Tenstorrent Atlantis board address map ..."
->
-> To make it clear that, as far as this commit goes, we're talking about a
-> board that will be added in future.
+Refactor do_kvm_irqchip_create() so it has specific return codes for specific
+cases. Clean up the logic and add some clarifying comments. Adjust the
+function call logic accourdingly. Should be no material change.
 
-Good idea, I'll re-send with that fixed up. Thanks for the reviews.
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ accel/kvm/kvm-all.c | 48 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 18 deletions(-)
 
-Cheers,
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 92af42503b..788cbf8693 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2575,6 +2575,13 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, qemu_irq irq, int gsi)
+     g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
+ }
+ 
++/**
++ * do_kvm_irqchip_create - create irqchip
++ * @s: The KVMState pointer
++ *
++ * Returns: -errno on fatal errors, 0 on success and
++ *          non-negative on non-fatal errors.
++ */
+ static int do_kvm_irqchip_create(KVMState *s)
+ {
+     int ret;
+@@ -2583,32 +2590,34 @@ static int do_kvm_irqchip_create(KVMState *s)
+     } else if (kvm_check_extension(s, KVM_CAP_S390_IRQCHIP)) {
+         ret = kvm_vm_enable_cap(s, KVM_CAP_S390_IRQCHIP, 0);
+         if (ret < 0) {
+-            fprintf(stderr, "Enable kernel irqchip failed: %s\n", strerror(-ret));
+-            exit(1);
++            error_report("Enable kernel irqchip failed: %s", strerror(-ret));
++            return ret;
+         }
+     } else {
+-        return -EOPNOTSUPP;
++        /*
++         * neither KVM_CAP_IRQCHIP nor KVM_CAP_S390_IRQCHIP capabilities are
++         * present. We can't proceed. Bail.
++         */
++        return 1;
+     }
+ 
+-    if (kvm_check_extension(s, KVM_CAP_IRQFD) <= 0) {
+-        fprintf(stderr, "kvm: irqfd not implemented\n");
+-        exit(1);
+-    }
++    assert(kvm_check_extension(s, KVM_CAP_IRQFD));
+ 
+     /* First probe and see if there's a arch-specific hook to create the
+      * in-kernel irqchip for us */
+     ret = kvm_arch_irqchip_create(s);
+     if (ret == 0) {
+-        if (s->kernel_irqchip_split == ON_OFF_AUTO_ON) {
+-            error_report("Split IRQ chip mode not supported.");
+-            exit(1);
+-        } else {
+-            ret = kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
+-        }
++        /*
++         * If we are here, it means we are going to do an in-kernel irqchip.
++         * Lets make sure that the kernel_irqchip_split setting is not set to
++         * split mode.
++         */
++        assert(s->kernel_irqchip_split != ON_OFF_AUTO_ON);
++        ret = kvm_vm_ioctl(s, KVM_CREATE_IRQCHIP);
+     }
+     if (ret < 0) {
+-        fprintf(stderr, "Create kernel irqchip failed: %s\n", strerror(-ret));
+-        exit(1);
++        error_report("Create kernel irqchip failed: %s", strerror(-ret));
++        return ret;
+     }
+ 
+     return 0;
+@@ -2616,9 +2625,13 @@ static int do_kvm_irqchip_create(KVMState *s)
+ 
+ static void kvm_irqchip_create(KVMState *s)
+ {
++    int ret;
+     assert(s->kernel_irqchip_split != ON_OFF_AUTO_AUTO);
+ 
+-    if (do_kvm_irqchip_create(s) < 0) {
++    ret = do_kvm_irqchip_create(s);
++    assert(ret >= 0);
++    if (ret) {
++        /* required kvm capabilities missing, we can't proceed. */
+         return;
+     }
+     kvm_kernel_irqchip = true;
+@@ -2839,8 +2852,7 @@ static int kvm_reset_vmfd(MachineState *ms)
+     }
+ 
+     if (s->kernel_irqchip_allowed) {
+-        /* ignore return from this function */
+-        do_kvm_irqchip_create(s);
++        assert(do_kvm_irqchip_create(s) >= 0);
+     }
+ 
+     /*
+-- 
+2.49.0
 
-Joel
 
