@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9FBAF428DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 20:28:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FA4F428E0
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 20:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD6pv-0001xx-Fe; Wed, 15 Apr 2026 16:27:47 -0400
+	id 1wD6qa-0002SM-9o; Wed, 15 Apr 2026 16:28:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6pt-0001wX-CT
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:27:45 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6qX-0002PJ-49
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:28:25 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6pr-0006FY-H0
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:27:44 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43cfd1f9fd1so4663336f8f.3
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:27:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6qV-0006dG-KA
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:28:24 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488a14c31eeso58061975e9.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776284862; x=1776889662; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776284902; x=1776889702; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NU+AXEjsac782dkezHvHDjXEPt9JVPm6uRyENh42VoI=;
- b=QB6NbVyTQu9o/Pvs4lFJEKwrCu+ZjNhlmJtUJQ2XxDt57sTfKPN502E+3RF2ednCEf
- r67nkG36+XZ9fl+9nJdnz4gqe3vRLbVxtl2tMAJnliAOPjlyBaxx5TxuyPtb750UEwWT
- DvSgk4GWA8TIcODzloSCgkpERZ3x00liedolB9/E0aM9Gx43ufApJaVhci7q4RQQF0de
- ySq9x5P2QOZIu8/Ehyl6GLd5j2nrQKl+XoSd+G41rXm1V7Hp4Uj+hWFSu0NulUiKtD44
- +LZSTTrGy0QTSpewhbEsGL5b6YUHjO+YZOC+L8cpc5guJ+95OTcCxgnN1xl1Pm59u1wj
- pYvQ==
+ bh=lYP3LpjdWdcmqEdQaJ3hEaYO67ejQhMf+OP5WIUzSVs=;
+ b=RsQ6nnIe5BTg34FeQqMGCnseSdihvxC5n9l53TBQyMfFsSSqz81yiy2xMX9qq1S8l5
+ j9UjMwHncZcSvfp3UwmJj8sqDZCcj4jG19Nf1IcGeitqV0CfTylDvB44z7w3Kt1c5JQr
+ RjpAftQC7Gy4iCbJvAz2dAG/UVZPGgzeSTNT5BnjZ++MJYuC5PwOtzY5+/kkrP9p3DhI
+ QV56b2p1MXJrvGwVERVVIWdEtjZ9OriOnLd/Liz8ZIlNbRP7qJo/wwyaut0RyW5BeKcJ
+ lYGUx901ftaVnWPGocII3jVZ92cTXusn/ve0b+jxKFUGLIZ/qPwe02+HCrauvf6iXN9T
+ aJOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776284862; x=1776889662;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776284902; x=1776889702;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NU+AXEjsac782dkezHvHDjXEPt9JVPm6uRyENh42VoI=;
- b=BPNVUI/+IXociKCbia1KqblJCxaEzfR/cai05Yy0PkC2ujsYj0XVo38oRm6IMsSIuM
- 0SyABNtuPcM4f9L7/LG216uxRWR3BbgIfFIJFKUgrq3gUfH5teTmRkBQV23sCGvTVFE4
- Ulp6RBhb4buqSYrMzV7QVuj7z8AjNph2P0DJwJTFr+EQOpUxgRhQdZIQQR0pkZRZz1fJ
- Dmp8Kjk2EJHJFRPkFuldNyE761JAEEFsdnFjQBIZMaMKvtCY72eTLbflEqWIHmhZ+2Rv
- I1vWjXT9fvJGtZ3obCS6ixQ6gaeOp+R6rqYxuZ3pdUUyMWSvhq7CED7wGrYXZJ/e7DQn
- O6WA==
+ bh=lYP3LpjdWdcmqEdQaJ3hEaYO67ejQhMf+OP5WIUzSVs=;
+ b=mD0S4XRm/gaY5VQHgxuHQ6akZ9Q3tcuoR4+upNc+7Rinzo6eXqKrDyIz1NSg8aVqJJ
+ 1CUicNsAnsDiiLJvcV9rfj+5QV9/IvnDuZkwaWhaCwiqEx5u03nBvLNE1hrbsKcwbH8s
+ SBYD5Oy2+iCaZWNevbVvN0K79pYvkJeaDBJ53siycLR1D9mYCjyis6Z2PYTpxmy+aDn7
+ H2SLkTNaPMVnAgXTDuvjVj3if93t2m9ihhOv7xYdR+0v4BjgObJE9cDWxx6c/UvcvhWa
+ Yxcslb222Nlp8HVD9frFI/SZhxx2IcdL+kHa4V7jE+1g+T5kzX/17ME1azi9g/NUU/ZT
+ q1xg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/eeF2NyxrsFeiOrVu4lJu0wRj9xDKAH3PRdQpObQlxLhSawJO+d8uDLFQkMES2y10Jk4T9uFDjOPG8@nongnu.org
-X-Gm-Message-State: AOJu0YzTsuud6gmF1HMWZB/CQ8z246WI+Ws3dQcPbIliy75WnSgR61ck
- XD05lPQ7dc22TER6lJ0F0kzyVn7ev16oJJsPmfxmCFR1NF6WZiYYfjy5ucshjIeRbp1lZywvHgy
- s9WOA3yA=
-X-Gm-Gg: AeBDiesyha+pzKRj3lXO9kBRHv+zRmlzabBkZxbuUOBabpsTLOPRqP9z6HRGi4bpHGl
- fOjhm8nNcxnWXpwqA+aK7eCsrnym9kIVq/IwmpQ0lX6iqlPY5DYM1j+nrADknaDNxwxodQeWkSw
- KgF1UBseIQ0Gst+J1O4Yi/0WMuVLUc3S4tYOYjVeynMDaVLRXoRxRcXSxkqH2X0RvNVC0MNl8No
- W/wQoO1goOBuJErHu97IQ+RYvjHD9YiFhCFJpDU5Es30mAyp28Pj7+pPWC7DhR9n7h1S/bjEunc
- Uqo3vm6/XVD0VB7sYdgqUUoWAxDxvup+yytaDKNMGVoMoEGPwyuj/i5k0Q38k4rkx/PH/vc7Z6c
- 5kmf1vnAQ2JfY7/s89VbtNGqeEbD1BqCxzdC525ZcDGtaNpRlEsuqRS2MuC1vUVTluiDi+2tT7S
- iMNlOCsjsDa334s4Po2xt+BUEbHWa4LDZ9Wbs3tY6Pfjho0txTlBtSSjmNMSn7XECrmw==
-X-Received: by 2002:a5d:5f44:0:b0:439:ca9b:1f61 with SMTP id
- ffacd0b85a97d-43d6428a2a2mr33196619f8f.17.1776284861515; 
- Wed, 15 Apr 2026 13:27:41 -0700 (PDT)
+ AFNElJ8LKZx/y1dEMsrrvoTfPPolJXHCu0cgXFgNvh932wCNrLHBiOYMnIrD4FyrJnM7OYNY9l3IWHV9v2AM@nongnu.org
+X-Gm-Message-State: AOJu0YzRDYP3BN27TMy2LPEul973YhBD6xjW0SBgnXHt+rHaFRRtm210
+ daAcxgh1tu1nENTikwvVUJRmcnqMPa7ZkVT1zMUTz4pu3tFcWmVU8jtEhV6cU3Fyuto=
+X-Gm-Gg: AeBDiev3iXKkPyewnh/BkLzIeh22fCC4gWyn5bQ6nNWBrkOeMeBD3ffhDT0jmUYcge2
+ 5pyAEaUFr/gv+t+mQfFCBZ3CiR5cLW59DEwXsveorWeiGGVZfI3YLIUkvGxuV/INA8Y5+WKutZL
+ NAGdWHnohF+tHcAUzATuOm0coVZcvOBCny1qNJbC704k0Suz4TIbFJdgNaQdWSt6AL6QWUmIZxb
+ OlTiO4mkYw38eBvNlCGgkaSEc/RMzD/vc09v78hzOn0PmHa4XE997RrtgcmGyPpqUTBIy7R4A1h
+ kc0dKpZZ7PsfssW9a3Oqz+qkg014OD1q3orbrEjIl2rkWFUhQ4RF4Ixk2xMayzBgVo0R2w/K3rg
+ dZHo4hwFC4YpFEMsRq9hRguZM/NcNxRIurtbGnTGSBgSgpE1/JTtAn2XqRY0ltdAAimNAD4pfxy
+ OL95sXJYoUmE+6LiKY/mf7sCBsyLLBEpE34HtgiO8xomukDwo7jPCJm1E/lD5oPlATXMRGfTCyZ
+ t8n
+X-Received: by 2002:a05:600c:a106:b0:486:fbe1:2499 with SMTP id
+ 5b1f17b1804b1-488d685fcf7mr225830335e9.22.1776284901737; 
+ Wed, 15 Apr 2026 13:28:21 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead3566c4sm7311017f8f.12.2026.04.15.13.27.39
+ 5b1f17b1804b1-488f093d7fdsm41915425e9.2.2026.04.15.13.28.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 13:27:39 -0700 (PDT)
-Message-ID: <64c0c47c-680f-44b9-b174-bcb2f62893db@linaro.org>
-Date: Wed, 15 Apr 2026 22:27:38 +0200
+ Wed, 15 Apr 2026 13:28:19 -0700 (PDT)
+Message-ID: <d68f975d-0450-4928-b758-bea1e657eae7@linaro.org>
+Date: Wed, 15 Apr 2026 22:28:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] scripts: mkemmc.sh: Fix output pollution on missing
- images
+Subject: Re: [PATCH 2/2] hw/sd/sdcard: Add support for pre-setting the
+ authentication key
+Content-Language: en-US
 To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  Ilias Apalodimas <ilias.apalodimas@linaro.org>,
@@ -80,21 +81,20 @@ Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  Jerome Forissier <jerome.forissier@linaro.org>,
  Jens Wiklander <jens.wiklander@linaro.org>
 References: <cover.1776231967.git.jan.kiszka@siemens.com>
- <b9d603b7396719f38e03cd969a4ac1b48f5ea96a.1776231967.git.jan.kiszka@siemens.com>
+ <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <b9d603b7396719f38e03cd969a4ac1b48f5ea96a.1776231967.git.jan.kiszka@siemens.com>
+In-Reply-To: <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,16 +110,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Jan,
+
 On 15/4/26 07:46, Jan Kiszka wrote:
 > From: Jan Kiszka <jan.kiszka@siemens.com>
 > 
-> Reorder the redirections so that the 2>/dev/null can actually take
-> effect.
+> In contrast to real eMMCs, we are not (yet) persisting the full state
+> of the device. This particularly includes the authentication key used
+> for RPMB access, complicating testing of firmware images which do not
+> support initial provisioning of the key.
+> 
+> One way to address this would be, e.g., extending the eMMC disk image
+> with a special sector to store further state. A simpler approach is used
+> here: Add another device property that allows to specify the
+> authentication key, bringing up the eMMC as if the key has already been
+> provisioned before.
+> 
+> This is how to tell qemu to use the OP-TEE test key:
+> 
+> -device emmc,[...],auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
+> 
+> Or use this for machine-configured eMMCs:
+> 
+> -global emmc.auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
 > 
 > Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 > ---
->   scripts/mkemmc.sh | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   hw/sd/sd.c | 23 +++++++++++++++++++++++
+>   1 file changed, 23 insertions(+)
 
+Do you mind mentioning it in docs/system/devices/emmc.rst?
+
+Otherwise,
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
