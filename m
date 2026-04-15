@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CE8F43854
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3500DF4385A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD3cU-0006xq-Nb; Wed, 15 Apr 2026 13:01:42 -0400
+	id 1wD3cN-0006fQ-SA; Wed, 15 Apr 2026 13:01:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wD3bY-0006YN-8Z
+ id 1wD3bP-0006Xw-5w
  for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:47 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wD3bM-0005xV-Ur
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:38 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wD3bH-0005w9-Oo
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:31 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 36A4620B7136;
- Wed, 15 Apr 2026 10:00:28 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 36A4620B7136
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6980B20B712D;
+ Wed, 15 Apr 2026 10:00:23 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6980B20B712D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776272429;
- bh=xH4HagDCiBk6gATgsEXyD93463ehoI+ZwQqXAAzAVR4=;
+ s=default; t=1776272425;
+ bh=ItrHOC5nPemd66dEK2NgZsgS7P6ajPcgEYGrhuuCrYE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Z95+RymtUxcQIG+1ssnqns2JqdQTcDlbF1zk9lTEzlgI4JTmJdur9oAGOsma62PSU
- qa+X3w6yejiqn9NZeThJYQJThEZHV/tUx+x27XYueRnPfv7hUtxKE7vR+PFr6TBOjo
- svttfoQ9xOwlMS6V+R0uJmrhn/jZnDob49KIMTH8=
+ b=O7rub9prgnUAaXbkqJ8rOX2arYbouwDyWiJBhSHRg0L8pQc0aOzPSlz6l07V8il9m
+ quvabD03VUJw9NoUwoOQc6KiEfEpy7mC5MmHeJJBumI8zxBZ6ug8T9XWr/50KGxmma
+ NaMlJT4/kVt1tyHSHZjnEOKY7iUXORQRP0dcLfOs=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v5 5/9] target/i386/mshv: set cpu model name on -cpu host
-Date: Wed, 15 Apr 2026 19:00:08 +0200
-Message-Id: <20260415170012.520934-6-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v5 3/9] target/i386/mshv: fix various cpuid traversal bugs
+Date: Wed, 15 Apr 2026 19:00:06 +0200
+Message-Id: <20260415170012.520934-4-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
 References: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
@@ -68,65 +68,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By registering a cpu_accel_class for mshv, we can report an accurate
-model name on -cpu host.
+- Hardcoded max_leaf was not accurate. We query leaf 0x0 and 0x80000000 to
+  get the actual max leaves
+
+- On all 0 zeroes on leaf 0x0d, we register 0-63 subleaves with zeros
+  indicating XSAVE is disabled
+
+- Subleaf 0 was hardcoded, so the Hypervisor returned defaults for other
+  subleaves
+
+- Subleaf 0 was hardcoded, so we were passing 0 instead of actual subleaf
+  when adding entries. We now pass the correct subleaf value to
+  add_cpuid_entry()
+
+- Leaves 0x04,0x07,0d,0f,10 weren't marked as subleaf-specific
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- target/i386/mshv/mshv-cpu.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 88 +++++++++++++++++++++++++------------
+ 1 file changed, 61 insertions(+), 27 deletions(-)
 
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index e42b5a614d..09878ef357 100644
+index f1cc4abc5c..4183727a86 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -24,10 +24,13 @@
- #include "hw/i386/apic_internal.h"
+@@ -465,14 +465,17 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
+     CPUX86State *env = &x86_cpu->env;
+     uint32_t eax, ebx, ecx, edx;
+     uint32_t leaf, subleaf;
+-    size_t max_leaf = 0x1F;
+-    size_t max_subleaf = 0x20;
+-
+-    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
++    uint32_t max_basic_leaf, max_extended_leaf;
++    uint32_t max_subleaf = 0x20;
++    uint32_t leaves_with_subleaves[] = {0x04, 0x07, 0x0d, 0x0f, 0x10};
+     int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
  
- #include "cpu.h"
-+#include "host-cpu.h"
- #include "emulate/x86_decode.h"
- #include "emulate/x86_emu.h"
- #include "emulate/x86_flags.h"
- 
-+#include "accel/accel-cpu-target.h"
+-    /* Regular leaves without subleaves */
+-    for (leaf = 0; leaf <= max_leaf; leaf++) {
++    /* Get maximum basic and and extended CPUID leaves */
++    cpu_x86_cpuid(env, 0, 0, &max_basic_leaf, &ebx, &ecx, &edx);
++    cpu_x86_cpuid(env, 0x80000000, 0, &max_extended_leaf, &ebx, &ecx, &edx);
 +
- #include "trace-accel_mshv.h"
- #include "trace.h"
++    /* Collect basic leaves (0x0 to max_basic_leaf) */
++    for (leaf = 0; leaf <= max_basic_leaf; leaf++) {
+         bool has_subleaves = false;
+         for (int i = 0; i < n_subleaf_leaves; i++) {
+             if (leaf == leaves_with_subleaves[i]) {
+@@ -483,27 +486,40 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
  
-@@ -1675,3 +1678,31 @@ int mshv_arch_post_init_vm(int vm_fd)
+         if (!has_subleaves) {
+             cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
+-            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
+-                /* all zeroes indicates no more leaves */
+-                continue;
+-            }
+-
+             add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
+             continue;
+         }
  
-     return ret;
++        /*
++         * Valid XSAVE components can exist at a higher index se we need to set
++         * all subleaves for leaf 0x0d, even if we encounter an empty one.
++         */
++        if (leaf == 0x0d) {
++            for (subleaf = 0; subleaf <= 63; subleaf++) {
++                cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
++                add_cpuid_entry(cpuid_entries, leaf, subleaf,
++                                eax, ebx, ecx, edx);
++            }
++            continue;
++        }
++
+         subleaf = 0;
+         while (subleaf < max_subleaf) {
+             cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
+ 
+             if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
+-                /* all zeroes indicates no more leaves */
+                 break;
+             }
+-            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            add_cpuid_entry(cpuid_entries, leaf, subleaf, eax, ebx, ecx, edx);
+             subleaf++;
+         }
+     }
++
++    /* Collect extended leaves (0x80000000 to max_extended_leaf) */
++    for (leaf = 0x80000000; leaf <= max_extended_leaf; leaf++) {
++        cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
++        add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++    }
  }
-+
-+static void mshv_cpu_instance_init(CPUState *cs)
-+{
-+    X86CPU *cpu = X86_CPU(cs);
-+
-+    host_cpu_instance_init(cpu);
-+}
-+
-+static void mshv_cpu_accel_class_init(ObjectClass *oc, const void *data)
-+{
-+    AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
-+
-+    acc->cpu_instance_init = mshv_cpu_instance_init;
-+}
-+
-+static const TypeInfo mshv_cpu_accel_type_info = {
-+    .name = ACCEL_CPU_NAME("mshv"),
-+    .parent = TYPE_ACCEL_CPU,
-+    .class_init = mshv_cpu_accel_class_init,
-+    .abstract = true,
-+};
-+
-+static void mshv_cpu_accel_register_types(void)
-+{
-+    type_register_static(&mshv_cpu_accel_type_info);
-+}
-+
-+type_init(mshv_cpu_accel_register_types);
+ 
+ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
+@@ -576,22 +592,40 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
+         subleaf_specific = 0;
+         always_override = 1;
+ 
+-        /* Intel */
+-        /* 0xb - Extended Topology Enumeration Leaf */
+-        /* 0x1f - V2 Extended Topology Enumeration Leaf */
+-        /* AMD */
+-        /* 0x8000_001e - Processor Topology Information */
+-        /* 0x8000_0026 - Extended CPU Topology */
+-        if (entry->function == 0xb
+-            || entry->function == 0x1f
+-            || entry->function == 0x8000001e
+-            || entry->function == 0x80000026) {
++        /*
++         * Intel
++         * 0xb - Extended Topology Enumeration Leaf
++         * 0x1f - V2 Extended Topology Enumeration Leaf
++         * AMD
++         * 0x8000_001e - Processor Topology Information
++         * 0x8000_0026 - Extended CPU Topology
++         */
++        if (entry->function == 0xb ||
++            entry->function == 0x1f ||
++            entry->function == 0x8000001e ||
++            entry->function == 0x80000026) {
++            subleaf_specific = 1;
++            always_override = 1;
++        /*
++         * Feature enumeration leaves (subleaf-specific)
++         * 0x04: Deterministic Cache Parameters
++         * 0x07: Structured Extended Feature Flags
++         * 0x0D: Processor Extended State Enumeration
++         * 0x0F: Platform QoS Monitoring
++         * 0x10: Platform QoS Enforcement
++         */
++        } else if (entry->function == 0x04 ||
++                   entry->function == 0x07 ||
++                   entry->function == 0x0d ||
++                   entry->function == 0x0f ||
++                   entry->function == 0x10) {
+             subleaf_specific = 1;
+             always_override = 1;
+-        } else if (entry->function == 0x00000001
+-            || entry->function == 0x80000000
+-            || entry->function == 0x80000001
+-            || entry->function == 0x80000008) {
++        /* Basic feature leaves (no subleaves) */
++        } else if (entry->function == 0x00000001 ||
++                   entry->function == 0x80000000 ||
++                   entry->function == 0x80000001 ||
++                   entry->function == 0x80000008) {
+             subleaf_specific = 0;
+             always_override = 1;
+         }
 -- 
 2.34.1
 
