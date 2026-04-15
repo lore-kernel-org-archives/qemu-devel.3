@@ -4,104 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF54DF43854
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 16:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B28F43858
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:01:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD3HA-000366-Lt; Wed, 15 Apr 2026 12:39:40 -0400
+	id 1wD3c0-0006eI-TU; Wed, 15 Apr 2026 13:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wD3H5-00035r-8s
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 12:39:35 -0400
-Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wD3H3-0003di-Li
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 12:39:35 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 31CA87A01D3;
- Wed, 15 Apr 2026 12:39:30 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Wed, 15 Apr 2026 12:39:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1776271169; x=1776357569; bh=eFPGxPaHYVbekxOqsM4tYRcuFMkMZ5zT
- ctnWlZ36XoM=; b=HcKk269mZOpowkFTSF2ICE3ShKJNR0s56CGimdwpIJwoOLVi
- x+wOOy51UdOPa+q+uYspCum2N7oBM06J8xeY8QM0fqNp3MU9i9+DbqWqg3Erms20
- X/wvvYXzqx+LbOXswF1JJU2UO0xdG6UziAFOme6dmvPxloEYutGAhP1NtEAqnt2w
- EMPNDSwZw8Hf3s95bxhCklCcp9sZdtpT1XK18iDgkN/YIu7kkICRErYBc/QwKRe6
- MZAGfgPoH4cmLiLVul+eLlPNRZo+RYXQf0qlE7asLGScFPFAnTmqMwrxql/xBLLM
- /QjGYYoBCAfUZFZkjDH/R+jxPR1XqgO/PlZqxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776271169; x=
- 1776357569; bh=eFPGxPaHYVbekxOqsM4tYRcuFMkMZ5zTctnWlZ36XoM=; b=G
- skTbOy4DSTxz3aKPjw4i8TNjWiN2zipbeeGofgmQLEOTy5sFP3tLlBQbLd4dZ9gd
- Xb4hEde3dWWb3udcABDj4zpbE3WjFlhJR2Kr5aOQIKthNpTYU6wnU/XOZii1HMsY
- mdEQcNzkrmM/n39u5DBfLLCskxZIBaTNogUToOB3rSAfiqt8Y6CC4LJpFXsbuXTH
- k5Y9+PHrQ305W7aZ4m7xQOBFYQ9k3jEuYjgSxakdFhLx9ZbSKG04v+hl5I9Onz7S
- MOKj+cuy1IP2/9zA4GXhceOcRMOfpB79BoEQfxROy+n8XorDr0O54EZF8wD0Rea8
- ZEMycuZ5NI1gHe1a/ic9A==
-X-ME-Sender: <xms:Qb_faREl5GfN59wLZWTynzDSf8NYRm7fHF6PNbCOujkK9S9NEJZ9YQ>
- <xme:Qb_fadXOS4Lo5LOIgGVGmuAdh_L3HzBbgWPpa2b0yn-ORqL53RkGXGsLiOIZ6BSWK
- VGQ80SliFOPvWQyFOEyAGfy254Ws5pEnHYWVTn0ELjQzTpZTRht3Qt3>
-X-ME-Received: <xmr:Qb_faYJ8YGbMO6oS8uGdL86quaF2qafPqIG68EqBDYvZOtgcULwbG0rYnX8o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggeehlecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
- cuvffnffculdejtddmnecujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdej
- necuhfhrohhmpedfvehhrgguucflrggslhhonhhskhhifdcuoegthhgrugesjhgrsghloh
- hnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhephfefudffkeffheduffetledvkeet
- vdejhedtheektefhhedvgefhheethfffkeegnecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhn
- sggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsrghlrg
- htohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhk
- ihdrgiihiidprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpd
- hrtghpthhtohepsggvrgduvgesphhrohhtohhnrdhmvg
-X-ME-Proxy: <xmx:Qb_faV_d6aOCYo3HMhmrdNzCpgq4kpFEAVtwVhKvJCCjbnv0PHZurw>
- <xmx:Qb_faTLRSwpLhLFfRNDj067Joeu6OkU5-UTN1BsGNAZJigRKcl736A>
- <xmx:Qb_faSlM6QSAcVHZJsA5VUN7uxPUQfx11SUBRZs_mmT7MHoNUkUrOA>
- <xmx:Qb_fafNWef2MlqthjdJeGCNsC45AjCKo2HKXaoemtAvSgXIcVsC4PQ>
- <xmx:Qb_faXaEDx_7pwUfecKuYAj0C4VUIvOt86LGU6zd7y3DToeF9DPZdRIs>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 12:39:29 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 8b15c769;
- Wed, 15 Apr 2026 16:39:28 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 15 Apr 2026 12:39:28 -0400
-Message-Id: <DHTVKTNF92GX.1CR2SGLBUGI6N@jablonski.xyz>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Chad Jablonski"
- <chad@jablonski.xyz>
-Subject: Re: [PATCH 2/2] hw/display/ati: reset host_data.next on early
- returns in ati_host_data_flush()
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Feifan Qian" <bea1e@proton.me>
-X-Mailer: aerc 0.21.0
-References: <U62ZPP3C0eUIUhmFb68h6Zbpn_gAjGsyJL3MlLsNd6Y4685t5cgo1IQEs3jQpw27LX8rbQaav04Kd-xLwbQXykyIUq2ouFnbFlMgXoKB_NY=@proton.me>
- <42adf9e0-6e57-08e1-5fce-94a43ebad32a@eik.bme.hu>
-In-Reply-To: <42adf9e0-6e57-08e1-5fce-94a43ebad32a@eik.bme.hu>
-Received-SPF: pass client-ip=202.12.124.157; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b6-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1wD3bh-0006aX-6x
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:56 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wD3bY-0005y3-1M
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:00:48 -0400
+Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
+ by linux.microsoft.com (Postfix) with ESMTPSA id C15B320B712B;
+ Wed, 15 Apr 2026 10:00:34 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C15B320B712B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1776272436;
+ bh=OoWA/l83V5921S6Aaii2fi8kk8wsUhPlqdFKGh7bggY=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ORqVd955DvcP3OwPVOhXqMJFmOqZYGVZYs+/39CeT0E0mmY7ndm8t4De76Tv7non+
+ vt4mi3UqL8EascKlxd8c7baUNW0sYv2yuhKBAmrcxt8PVxJ5tUgl0lhoPzfrX34C8o
+ 4h/HrpMvmgbp2VZ56kSWzyEUzwe/G4+uKS7+nYMQ=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH v5 8/9] target/i386/mshv: use hv-provided [0xD,1+2].EBX
+Date: Wed, 15 Apr 2026 19:00:11 +0200
+Message-Id: <20260415170012.520934-9-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
+References: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,20 +68,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I agree with Zoltan on the overflow issue. I think it may be best fixed
-by resetting next in the write handler after both ati_host_data_finish
-and ati_host_data_flush. The next reset could be removed from inside of
-ati_host_data_flush entirely. That way the write handler handles the full
-lifecycle of next and it's both clearer and much harder to miss if new
-failure cases are added.
+We cannot statically set the responses for CPUID[0xD,{1,2}].EBX, b/c
+those are dynamic, dependent on which features the guest enables.
 
->> + if (!ctx.bpp) {
->> + qemu_log_mask(LOG_GUEST_ERROR,
->> + "host_data_blt: invalid bpp\n");
->> + s->host_data.next =3D 0;
->> + return false;
->> + }
+Hence we mask EBX when registering answers for those subleaves at the
+hypervisor, which will result in the hypervisor providing us answers,
+considering XCR0 and XSS.
 
-This guard is separate from the acc overflow issue but worth keeping.
+The reported size now reflects the field masks properly (without the
+mask they were 576 and 10728, which is wrong):
+
+$ cpuid -l 0xd -s 0
+CPU 0:
+   XSAVE features (0xd/0):
+      XCR0 valid bit field mask               = 0x00000000000600e7
+      ...
+      bytes required by fields in XCR0        = 0x00002b00 (11008)
+      bytes required by XSAVE/XRSTOR area     = 0x00002b00 (11008)
+
+$ cpuid -l 0xd -s 1
+CPU 0:
+   XSAVE features (0xd/1):
+      ...
+      SAVE area size in bytes                     = 0x000029c0 (10688)
+      IA32_XSS lower 32 bits valid bit field mask = 0x00001800
+      IA32_XSS upper 32 bits valid bit field mask = 0x00000000
+
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ target/i386/mshv/mshv-cpu.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
+
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index ee25eb5f6f..5360a9e190 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -528,6 +528,7 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
+ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
+                                                  uint8_t subleaf_specific,
+                                                  uint8_t always_override,
++                                                 uint32_t ebx_mask,
+                                                  struct hv_cpuid_entry *entry)
+ {
+     int ret;
+@@ -543,11 +544,12 @@ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
+         /*
+          * Masks specify which bits to override. Set to 0xFFFFFFFF to
+          * override all bits with the values from the QEMU CPU model.
++         * A mask of 0 lets the hypervisor supply its own value.
+          */
+         .result.eax = entry->eax,
+         .result.eax_mask = 0xFFFFFFFF,
+         .result.ebx = entry->ebx,
+-        .result.ebx_mask = 0xFFFFFFFF,
++        .result.ebx_mask = ebx_mask,
+         .result.ecx = entry->ecx,
+         .result.ecx_mask = 0xFFFFFFFF,
+         .result.edx = entry->edx,
+@@ -582,6 +584,7 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
+     int ret = 0, entry_ret;
+     struct hv_cpuid_entry *entry;
+     uint8_t subleaf_specific, always_override;
++    uint32_t ebx_mask;
+ 
+     for (size_t i = 0; i < cpuid->nent; i++) {
+         entry = &cpuid->entries[i];
+@@ -589,6 +592,7 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
+         /* set defaults */
+         subleaf_specific = 0;
+         always_override = 1;
++        ebx_mask = 0xFFFFFFFF;
+ 
+         /*
+          * Intel
+@@ -628,8 +632,22 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
+             always_override = 1;
+         }
+ 
+-        entry_ret = register_intercept_result_cpuid_entry(cpu, subleaf_specific,
++        /*
++         * CPUID[0xD,0].EBX and CPUID[0xD,1].EBX report the XSAVE area
++         * size based on features currently enabled in XCR0/XSS. These
++         * values are dynamic and must not be overridden with static
++         * results from the QEMU CPU model. Setting ebx_mask to 0 lets
++         * the hypervisor supply EBX based on the guest's actual state.
++         */
++        if (entry->function == 0x0d &&
++           (entry->index == 0 || entry->index == 1)) {
++            ebx_mask = 0;
++        }
++
++        entry_ret = register_intercept_result_cpuid_entry(cpu,
++                                                          subleaf_specific,
+                                                           always_override,
++                                                          ebx_mask,
+                                                           entry);
+         if ((entry_ret < 0) && (ret == 0)) {
+             ret = entry_ret;
+@@ -1663,6 +1681,11 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
+     if (func == 0x01       && reg == R_ECX) {
+         ret &= ~CPUID_EXT_VMX;
+     }
++
++    if (func == 0x07 && idx == 0 && reg == R_ECX) {
++        ret &= ~CPUID_7_0_ECX_CET_SHSTK;
++    }
++
+     return ret;
+ }
+ 
+-- 
+2.34.1
 
 
