@@ -4,66 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB12F43821
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 14:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E000F43824
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 14:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD1GY-0000lh-OT; Wed, 15 Apr 2026 10:30:55 -0400
+	id 1wD1GM-0000jB-JT; Wed, 15 Apr 2026 10:30:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wD1GW-0000lW-O3
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 10:30:52 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wD1GI-0000hP-6b
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 10:30:38 -0400
+Received: from p-east2-cluster6-host1-snip4-10.eps.apple.com ([57.103.76.181]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wD1GS-0006ba-6s
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 10:30:52 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63FEUXl6006163
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 15 Apr 2026 23:30:34 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=eNOKKw0SnlBp1MELFohMtMB456mn5aK9rF1MLaI5VJY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1776263434; v=1;
- b=LnQL3HXdqfk6meO7dlAzcsq2RaHSReT64/57AGLteQ7QAuHDy01KdEQNmrIARS9t
- KiWyCuLalSVk7DNqkln84JX2Hlk/R5IqlNtG0lr7bcGLXEFfV9IKOxFTESMgbuxf
- hHmMp5h2AganK6Xdhl7MeNTJZCGRTG5f/WPLBb12JwYF3feyQUYr39NzsgfI9ejs
- 1feToqKxvjZFV0KHVHb2hlYNd67tbdGKBNGjBjpX+DlfbC/7T/XzLg1K4lBxZtmw
- 9p+RuinTmxbiiZEStYJlHI1UzbY33fgrUdqnaD9gDG5AhejZOQdJhCyFyMmBhO9k
- KwmXNqKmyZlpGkSeTd6M0g==
-Message-ID: <40fb4df5-20a7-49ce-a087-d9c048255d05@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 15 Apr 2026 23:30:33 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-gpu: fix inverted mouse cursor
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?B?QmVubm8gRsO8bmZzdMO8Y2s=?= <benno.fuenfstueck@neodyme.io>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260409144639.3610-1-benno.fuenfstueck@neodyme.io>
- <CAJ+F1CKYu4UfJyFJxPYLe9gjQhOD9QA7BrTmBXSCPuCDFgPf1A@mail.gmail.com>
- <CAP-XHHCuVyP=21LyME1KmNB0heRDXAdq7QdCsoVomAK38ZRi7A@mail.gmail.com>
- <CAJ+F1CJPiXH2Sf2Tqz4QoHeP23bUpMdfi=cPsYYnGoGwWeKJ8w@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJ+F1CJPiXH2Sf2Tqz4QoHeP23bUpMdfi=cPsYYnGoGwWeKJ8w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wD1GE-0006Y7-Qz
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 10:30:37 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
+ 02C90180037E; Wed, 15 Apr 2026 14:30:29 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776263432; x=1778855432;
+ bh=ICu7ZGHxMud+D8wf+7zf+7R4yABri7DrwnMk/kW6/QA=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=DvFGwIC5R46QeDp4qaKbDxtrOSCFS6d3Az2+asfiCnTRIhOVriSdBmiv38QqsJi6jB1t6uqB/Xh1f2yhT6B5m09acpqtTDayMsoWycWzKEzxqMFQi2nh65TspS43Sr0xBdjBQ6p8FtAm1P54mjJBUpVn2Lx2MLgUJ2ntbMR3teUPBNQXs3NzjUXoayCQENw2AJTqZhFQaqPVMHpSbbJdFQ8V2NLSm/3SUVZFpxVyFLQTujnRxoxBG/z6BLFkchsjebLCUdlQmjLXYo3++jIT6P3QA8dvhaBWNeYUA6tZSyamhpWDe6stLtmkPXavHRCa7lFSHnPbE21m0UE8opzreQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
+ 94563180191C; Wed, 15 Apr 2026 14:30:22 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v4 8/9] target/i386/mshv: filter out CET bits in cpuid
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <ad+eOA8gz26GBgzD@example.com>
+Date: Wed, 15 Apr 2026 16:30:10 +0200
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Wei Liu <wei.liu@kernel.org>, Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CC49AF2B-9E21-47BF-BC92-531F77606D14@unpredictable.fr>
+References: <20260414155433.483186-1-magnuskulke@linux.microsoft.com>
+ <20260414155433.483186-9-magnuskulke@linux.microsoft.com>
+ <32594f82-0268-4844-830a-4147bd1598f6@redhat.com>
+ <ad+eOA8gz26GBgzD@example.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDEzNCBTYWx0ZWRfX4o2+mlpixPNc
+ O4JwWcyhmaJ9bKyAqdmUAO5akHBCy/ibQvMdB6kaHwIBc0UCVyuqMH8G1/Up/49iZXHmjxM68lS
+ A7x+IacXRDrADzu18I9SMIFekp03pWZ0LHraozjyOLFtuimhwz7/vxE2FxsCGEVRzZ7mxvd5RaQ
+ sEASaj56ZTrZbUNKk6NOUQbqtwyW9N/xMfZ4vS/MgGPR1c3aZNdWPQkSocQj7rS7FmkL4u3preJ
+ k+W29D4tzU1qCr1MMerxc2DvLtGY/UWEqbMnM5wI2mauUnKsiYTkNM4XmGPgbeFRZVvBkn+ERt5
+ 6MyfUNu+9MKwb7B4hgr/W37BgZmUJD9xDOvAlylWetB/mFxn7TyOfSNryequ/w=
+X-Authority-Info-Out: v=2.4 cv=HNLO14tv c=1 sm=1 tr=0 ts=69dfa106
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=vrMa2spNJQEUmAP-M0IA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: UMzBClDkeawbQb6nXUFUXKrXaWYKkP9p
+X-Proofpoint-GUID: UMzBClDkeawbQb6nXUFUXKrXaWYKkP9p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-15_01,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
+ adultscore=0 phishscore=0 suspectscore=0 clxscore=1030 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604150134
+Received-SPF: pass client-ip=57.103.76.181;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,130 +97,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/04/15 22:10, Marc-André Lureau wrote:
-> Hi
-> 
-> On Wed, Apr 15, 2026 at 5:01 PM Benno Fünfstück
-> <benno.fuenfstueck@neodyme.io> wrote:
->>
->> Hi Marc-André,
->>
->> On Mon, 13 Apr 2026 at 15:23, Marc-André Lureau <marcandre.lureau@gmail.com> wrote:
->>>
->>> Arguably, this is a bug in virgl vrend_renderer_get_cursor_content(),
->>> since the function doesn't return y0_top it should always return the
->>> data in the correct orientation.
->>>
->>> We may have a temporary workaround in qemu though for older virgl, but
->>> I think it should be solved there too.
->>
->>
->> Thanks, I didn't know about this. I submitted a MR to virglrenderer now as well to fix it there: https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1611
->>
-> 
-> great
-> 
->> How should I change the patch to make it a temporary fix? Some kind of version gate (but not sure yet in which version of virglrenderer the fix will end up being release)?
-> 
-> Since it is not released yet, it's acceptable to not have a
-> VIRGL_CHECK_VERSION yet. Just leave TODO comment so we can later add
-> it when virgl has the fix.
-> 
-> thanks
 
-I'm worried that updating virgl silently breaks the fix. I don't think 
-there is an easy way to prevent that.
 
-Perhaps a temporary fix may not be necessary. I don't have a reason to 
-believe that deploying the virglrenderer-side fix takes longer than 
-deploying the QEMU-side fix.
+> On 15. Apr 2026, at 16:18, Magnus Kulke =
+<magnuskulke@linux.microsoft.com> wrote:
+>=20
+> On Tue, Apr 14, 2026 at 06:10:19PM +0200, Paolo Bonzini wrote:
+>> I don't understand this, but it seems to be a Linux bug.  Don't *all* =
+xsave
+>> features cause changes to CPUID[0xD,1].EBX?
+>=20
+> oh, you're right, thx. the CPUID[0xD,1].EBX responses (also =
+CPUID[0xD,0])
+> returned wrong responses in all cases the introduction of CET in QEMU
+> probably just triggered some overflow, but it was broken before.
+>=20
+> We cannot statically register size responses for xsave features that a
+> guest can dynamically enable/disable.
 
-Regards,
-Akihiko Odaki
+Hello,
 
-> 
->>
->>>
->>>
->>>> ---
->>>>   hw/display/virtio-gpu-gl.c | 20 +++++++++++++++++++-
->>>>   1 file changed, 19 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
->>>> index 2b7a41c466..4562d3405e 100644
->>>> --- a/hw/display/virtio-gpu-gl.c
->>>> +++ b/hw/display/virtio-gpu-gl.c
->>>> @@ -33,6 +33,9 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *g,
->>>>       VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
->>>>       uint32_t width, height;
->>>>       uint32_t pixels, *data;
->>>> +    bool y_0_top = true;
->>>> +    int ret;
->>>> +    struct virgl_renderer_resource_info info;
->>>>
->>>>       if (gl->renderer_state != RS_INITED) {
->>>>           return;
->>>> @@ -49,8 +52,23 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *g,
->>>>           return;
->>>>       }
->>>>
->>>> +    memset(&info, 0, sizeof(info));
->>>> +    ret = virgl_renderer_resource_get_info(resource_id, &info);
->>>> +    if (ret == 0) {
->>>> +        y_0_top = info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP;
->>>> +    }
->>>> +
->>>>       pixels = s->current_cursor->width * s->current_cursor->height;
->>>> -    memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
->>>> +    if (y_0_top) {
->>>> +        memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
->>>> +    } else {
->>>> +        uint32_t *dst = s->current_cursor->data;
->>>> +        for (uint32_t y = 0; y < height; y++) {
->>>> +            memcpy(dst + y * width,
->>>> +                   data + (height - 1 - y) * width,
->>>> +                   width * sizeof(uint32_t));
->>>> +        }
->>>> +    }
->>>>       free(data);
->>>>   }
->>>>
->>>> --
->>>> 2.50.1 (Apple Git-155)
->>>>
->>>>
->>>> --
->>>> Neodyme AG
->>>> Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |
->>>> 85748 Garching b.München
->>>> Postanschrift: Rosenthaler Straße 72a | 10119
->>>> Berlin
->>>>
->>>> Registergericht / Registry court: München, HRB 269168
->>>> Vorstand /
->>>> Management Board: Thomas Lambertz | Tobias Madl
->>>> Aufsichtsratsvorsitzender /
->>>> Chairman of the Supervisory Board: Hendrik Hofstadt
->>>>
->>>>
->>>>
->>>>
->>>>
->>>
->>>
->>> --
->>> Marc-André Lureau
->>
->>
->> Neodyme AG
->>
->> Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 | 85748 Garching b.München
->> Postanschrift: Rosenthaler Straße 72a | 10119 Berlin
->> Registergericht / Registry court: München, HRB 269168
->> Vorstand / Management Board: Thomas Lambertz | Tobias Madl
->> Aufsichtsratsvorsitzender / Chairman of the Supervisory Board: Hendrik Hofstadt
-> 
-> 
-> 
+Is CPUID performance such a problem?
+>=20
+> I was planning to implement a dynamic handler for the xsave size
+> responses anyway, but maybe there's an easier way: We can provide an =
+ebx
+> mask =3D 0 in the payload when we register the cpuid responses at the
+> hypervisor. If we do that for CPUID[0xD,{0,1}], the hypervisor should
+> return the answer based on the guest state (XCR0,XSS).
+>=20
+> I'll test this approach and probably post a new revision with one of
+> those options.
+>=20
+
+What I have from WHPX on this - where for now CPUID vmexits are used=20
+instead of this fancy interface* - although that might change in the =
+future:
+
+Those have been seen to vary dynamically for a vCPU:
+
+CPUID[1:EDX].APIC
+CPUID_7_0_EDX_CET_IBT
+CPUID_7_0_ECX_CET_SHSTK
+CPUID_7_0_ECX_OSPKE
+CPUID_EXT_OSXSAVE
+The whole 0xD leave
+
+I used the default result to override with the Hyper-V stock response =
+for those bits,
+although masking as provided by the new interface would work too.
+
+* not using it yet because Windows 10 Hyper-V didn=E2=80=99t have it, =
+and the perf impact for CPUIDs
+ didn=E2=80=99t sound like an actual problem so trapped as much leaves =
+as it could make sense
+
+
 
 
