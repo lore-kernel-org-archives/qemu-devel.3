@@ -4,66 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85763FA0C30
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 05:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC53FA0C30
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 06:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCtEa-0007Fy-6Y; Wed, 15 Apr 2026 01:56:20 -0400
+	id 1wCtjj-0006CZ-7M; Wed, 15 Apr 2026 02:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <fm-294854-2026041505460989a3cfb7970002079b-q97qC2@rts-flowmailer.siemens.com>)
- id 1wCtEY-0007FP-9X
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 01:56:18 -0400
-Received: from mta-65-226.siemens.flowmailer.net ([185.136.65.226])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <fm-294854-2026041505460989a3cfb7970002079b-q97qC2@rts-flowmailer.siemens.com>)
- id 1wCtEV-000506-VM
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 01:56:18 -0400
-Received: by mta-65-226.siemens.flowmailer.net with ESMTPSA id
- 2026041505460989a3cfb7970002079b for <qemu-devel@nongnu.org>;
- Wed, 15 Apr 2026 07:46:09 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm2;
- d=siemens.com; i=jan.kiszka@siemens.com;
- h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
- bh=VIy4BuoOYDrOsEWURNMpXvgUEQxseoHsEGpeQhJpWqM=;
- b=ZXE2Q9H1I7/by0OxV5ZD8mUpyk0qUpyaxyIru6L3T+ebOG9rB5lIlcUqzXE4dVq2v5DoG8
- zQ8WmFQNvSf+XvGBCC2tRpMjaAV8FSRHWz449y3xpMscjWJXC8gVoE7M3yMzfWRy5mBnykA5
- ejX5YXIlJVkMtywSoTGD8yFPEpv3jjd/Wtw++K9KM6OeAQXy9nzV76YtBdw3v+Hb8qelotsp
- eiXA4I354IfXgYOdXvGZbAmjNIa0uBsN4YXhw8wh56IBKmzmw4bz8Q4oDuCS/+W7NVCibv3h
- i/gzoU3mjreodoIzIuMj5xSsMTaD335rY1s1WdAawBNZ4q8flcxMgMsg==;
-From: Jan Kiszka <jan.kiszka@siemens.com>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 2/2] hw/sd/sdcard: Add support for pre-setting the
- authentication key
-Date: Wed, 15 Apr 2026 07:46:07 +0200
-Message-ID: <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
-In-Reply-To: <cover.1776231967.git.jan.kiszka@siemens.com>
-References: <cover.1776231967.git.jan.kiszka@siemens.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wCtjg-0006Bw-Op
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 02:28:28 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wCtje-0004qY-72
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 02:28:28 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-79a60975dc5so72509467b3.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 23:28:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776234504; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Z9AphRvriVfZ438rvITVjIyLr89oJGZSJrRriuefcMWQGK6oPRbog/scVGsF3d/2Fl
+ CkLxPXfAtGlXcIjBF24rYzuhHmEge/ESut+++yay+r9fKSr1YE8yzaBUTne8l2Dp5YDq
+ gGbl2s4ToD+ErxmmhA87IzaZ5UmM23Z8o/Evs6/QSnVECv8o8f+7i2ZE1TTGfR4kz8lD
+ 1w1n86bqm1p5qniaCurGUQZCdZc6p/mGypSeq5K/9i07EOoW4OnBzM47n9T+FHuzfwWR
+ FgKwvq2h53w3DwI3+09c1sxRT58MgaswMRBaDUlkBdYzIn3Xi7fITreFvaT4D77vtrFv
+ LxkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=0pXMJYmyEc1LrSDdraoyNnODw4s0qtxGCz9y4VUwrIo=;
+ fh=mAmlY5Klec4LSvKoayEMI3ZzjiPnDuQ++f3Dm55lTn8=;
+ b=Gn5w55yabb1nLyf3hVP9/fZg79SwFKbSqX494iljWfqMg3sQSqLnyI6xWyCIbKGll2
+ M/IcdsGiC8k5Szebd6AqT+zMR0NWSqh9ZDP4V8q9oYy1D97H2c6d1PzEgghWul7ZGik5
+ x/0K6ta+iIhmHZan0SrKcTbHoAxk8Eyz9BOIdDnjuAJtlMzE2FTGmUYJohFKbjGTAIlW
+ dzsHGWkWGwe0cUl2Eu+P0L1BUU10w7uNRJyQVwDqYKxxq/iWbulwkNjPpb2lC8E9QcXR
+ Aau7xiqR55Ay53L3omMvMLXqrDYnxGjT/dwh4Cy8zL6Qnlz69iCUO6K7YJ2K6ia2Myl5
+ O5sA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1776234504; x=1776839304; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=0pXMJYmyEc1LrSDdraoyNnODw4s0qtxGCz9y4VUwrIo=;
+ b=JKHSz+TyK90T+SPiz8DMA7YINTxMO1QYYISkc3dpPsxlL2ZJFdqEUoSoJ50BV3YuQS
+ joRHq5mAkxhTY8Aq6DqsCVweOqpbJ7lfiT60H01/FJXj6PSBSfKY1Gze7zyEkXtfRUdV
+ P9a/uuQM2h4qod+S6hM5XeiytOYwfWU1XJV20=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776234504; x=1776839304;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0pXMJYmyEc1LrSDdraoyNnODw4s0qtxGCz9y4VUwrIo=;
+ b=YsMXVUUjdJndV0REqWQ9H1TyFCBh//Q9SAAVqDLrMWNi6gawtyycJJ+1wIsAGj5TNM
+ nzukyaGVU5Y8xBI7qYDf1YeKbQto1jawJL2r2u5T3utPoiuhvK3FjeiHyzkR0fnwJ6Nl
+ qi+ifwSRxmTfG8SJEmwXDz94+JpwUmm+JALcC2O2qpVrC08LWLduxIhUFv9QCdsZSrcG
+ dKIEICbtK+fh54tM+gwz9h6IBHaxQCWy/uct6NyfUS6AFZuCpHbzAASYocoIb3XwxjeZ
+ iy1chY686WNOiTI8tbQc4FYGINht8eZ16icjejmDWbpId56qeT/fOp4i9Vci2amdxcZi
+ tAgg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9CdsUvWM0o4BvNzovRh9yPAFzXYIwwN7HSu5ATTfal0y71Ef9sQVEfJBfOPSh/eJ907UzbXXq0Sphh@nongnu.org
+X-Gm-Message-State: AOJu0YyolQHbdYwDPXXnx/w5WzJeye2j99uLNIjCZ9xEmV6/CKuzz2aj
+ 6JY+uzrnpYCWSsw3jcPFrUeoL1cDM1n7S/GZPC1m7IQwY09IF+Tfj2KMPYbkt/81k1tK2/zEDJx
+ PfwquFsrbuNv85zN+W+gj4oViJPRdXXQ=
+X-Gm-Gg: AeBDieu+5y8rapL1ed70xnzkrZNeLyqjoA7mHe1p/czmQq/KccB5izuJ+NthOk91BUQ
+ rgYeJRf3k0WeX7Ta77tkBeTHaaPUjfollPXS68wNlnkYdt8luQ/Ynni31dZsYyzVPrbbzPOcDUr
+ THKfmt4oTQJgZV4ZyfWIY71tHBAEPRyi9CCR4CP1lE3Nflu7LIrhDjWla1Z2dDS9gVxmlnAE70l
+ B5Oq2Z4SKD0sNiQujYgzAKL1HqrPpU6Vbuy6wZFrCcYqq+S1NCWvmBy9ldxUc1q63PRy1hQgje0
+ QemaF2Dj2Ykb8qqPLBYDm60GMwQJdjfYBVyLn/+ey+qzX6JOF+koUCyL4407pPMkKNwZ
+X-Received: by 2002:a05:690c:e4c6:b0:798:cf16:1c6e with SMTP id
+ 00721157ae682-7af6fdf1dd9mr170353017b3.21.1776234504007; Tue, 14 Apr 2026
+ 23:28:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Flowmailer-Platform: Siemens
-Feedback-ID: 519:519-294854:519-21489:flowmailer
-Received-SPF: pass client-ip=185.136.65.226;
- envelope-from=fm-294854-2026041505460989a3cfb7970002079b-q97qC2@rts-flowmailer.siemens.com;
- helo=mta-65-226.siemens.flowmailer.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260109131657.396794-1-joel@jms.id.au>
+ <20260109131657.396794-5-joel@jms.id.au>
+ <66870d68-0d48-4c78-aa51-37c24a82baee@ventanamicro.com>
+In-Reply-To: <66870d68-0d48-4c78-aa51-37c24a82baee@ventanamicro.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 15 Apr 2026 15:58:12 +0930
+X-Gm-Features: AQROBzCCTJ5jD326weSAfKXCROokZzTb1YHETYpzFf5CedtPG6UjIiuzsv6_hX4
+Message-ID: <CACPK8XfimpPtVzfrmXNUVwtq5KoWAt=ipUcQg=Skw9sHOPPnwA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] hw/riscv/boot: Provide a simple halting payload
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Vijai Kumar K <vijai@behindbytes.com>, 
+ Ran Wang <wangran@bosc.ac.cn>, Michael Ellerman <mpe@oss.tenstorrent.com>, 
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=joel.stan@gmail.com; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.248,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,81 +122,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+On Fri, 16 Jan 2026 at 03:25, Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+>
+>
+> On 1/9/2026 10:16 AM, Joel Stanley wrote:
+> > From: Nicholas Piggin <npiggin@gmail.com>
+> >
+> > OpenSBI hangs before any console output if the domain init code sees the
+> > next stage is not in an executable region.
+> >
+> > If no kernel payload is provided to QEMU, the next stage address is
+> > NULL, and the riscv virt machine memory map ends up covering the 0
+> > address with the catch all S-mode RWX region and so OpenSBI prints
+> > console messages and does not hang until the next stage boot.
+> >
+> > The TT Atlantis address map has RAM starting at 0 and it loads OpenSBI
+> > there, so it is M-mode and not accessible by S-mode, tripping the early
+> > check and hang.
+>
+> Please note that these patches were split from the main Atlantis series,
+> meaning this patch can land upstream earlier than the main Atlantis
+> board work. In this context, saying "The TT Atlantis address map has RAM
+> starting at 0" makes no sense because there's no Atlantis board in QEMU.
+>
+> I suggest adding something like:
+>
+> "The soon to be added Tenstorrent Atlantis board address map ..."
+>
+> To make it clear that, as far as this commit goes, we're talking about a
+> board that will be added in future.
 
-In contrast to real eMMCs, we are not (yet) persisting the full state
-of the device. This particularly includes the authentication key used
-for RPMB access, complicating testing of firmware images which do not
-support initial provisioning of the key.
+Good idea, I'll re-send with that fixed up. Thanks for the reviews.
 
-One way to address this would be, e.g., extending the eMMC disk image
-with a special sector to store further state. A simpler approach is used
-here: Add another device property that allows to specify the
-authentication key, bringing up the eMMC as if the key has already been
-provisioned before.
+Cheers,
 
-This is how to tell qemu to use the OP-TEE test key:
-
--device emmc,[...],auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-
-Or use this for machine-configured eMMCs:
-
--global emmc.auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
----
- hw/sd/sd.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
-
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 37f6e0702b..13ea54df38 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -205,6 +205,7 @@ struct SDState {
-     QEMUTimer *ocr_power_timer;
-     uint8_t dat_lines;
-     bool cmd_line;
-+    char *preset_auth_key;
- };
- 
- static void sd_realize(DeviceState *dev, Error **errp);
-@@ -3132,6 +3133,27 @@ static void sd_realize(DeviceState *dev, Error **errp)
-                           "The RPMB partition size must be multiples of 128K"
-                           "and not larger than 16384K.\n");
-     }
-+    if (sd_is_emmc(sd) && sd->preset_auth_key) {
-+        if (strlen(sd->preset_auth_key) != 64) {
-+            error_setg(errp,
-+                       "Authentication key must be 32 bytes long, "
-+                       "encoded hexadecimally");
-+            return;
-+        }
-+
-+        char *pos = sd->preset_auth_key;
-+        unsigned int n;
-+        for (n = 0; n < RPMB_KEY_MAC_LEN; n++, pos += 2) {
-+            int chrs;
-+            if (sscanf(pos, "%02hhx%n", &sd->rpmb.key[n], &chrs) != 1 ||
-+                chrs != 2) {
-+                error_setg(errp,
-+                           "Authentication key contains invalid characters");
-+                return;
-+            }
-+        }
-+        sd->rpmb.key_set = 1;
-+    }
- }
- 
- static void emmc_realize(DeviceState *dev, Error **errp)
-@@ -3156,6 +3178,7 @@ static const Property emmc_properties[] = {
-     DEFINE_PROP_UINT64("boot-partition-size", SDState, boot_part_size, 0),
-     DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
-     DEFINE_PROP_UINT64("rpmb-partition-size", SDState, rpmb_part_size, 0),
-+    DEFINE_PROP_STRING("auth-key", SDState, preset_auth_key),
- };
- 
- static void sdmmc_common_class_init(ObjectClass *klass, const void *data)
--- 
-2.47.3
-
+Joel
 
