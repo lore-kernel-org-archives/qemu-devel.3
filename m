@@ -4,142 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A671AF433CE
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 22:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D621FF433CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 22:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD8IQ-0007vc-Qn; Wed, 15 Apr 2026 18:01:18 -0400
+	id 1wD8L9-0000I0-55; Wed, 15 Apr 2026 18:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wD8IL-0007up-5r
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 18:01:14 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wD8IH-0004po-Mc
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 18:01:12 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63FFFo7h1792541
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 22:01:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Bh3eSiFjGrGUzXTANPTKFs94mGxC5Gtrw/UPDWVy1YE=; b=eYz82mUC7HYsxL+p
- EEuOETNMccpBMAlybz9j1wgfDRumUxzBmI57qVPrkENx0AUzLnKURE1zSO3wB2u1
- TxTse8oFEVnDRkXWXKV4m5g59URiecZ45kkMvBL72ZkxzxBhnL6MPIcUrE3rV2MU
- zsjlNWrZUqXp0DydKjNnweByCg549ncE+8MbbPYGdiv5juwRf1+G4E+R23zbdKgU
- N/cLU8N5SpqTcn0JpaDkX5gMCgDO+Jf/Q1JGb6ZDBWGYmoySdFfyZ6wmVy9I9E3+
- 7QdwngV2m2DRnoHVnTIz8eXdLefdDbxSP24wWSLx/mgK8Rb/+5Uk/x4bM85JBeXo
- S2QZ/g==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djd5ps84u-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 22:01:07 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1273dfdaf5dso52540c88.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 15:01:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8L6-0000Hf-0d
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 18:04:04 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD8L4-0006YG-72
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 18:04:03 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso71823085e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 15:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1776290467; x=1776895267; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Bh3eSiFjGrGUzXTANPTKFs94mGxC5Gtrw/UPDWVy1YE=;
- b=HvF6oqLy/3Ubv/PNrJaaZRK8V7xH8uScvhqhvIefp9HaDKN771E8a09vprdjFnQYXX
- 6+s4llGPdND+KklkZdSv8oHqGTnOKv7Hf55Sn0b5EBKcdOGYp/tjFGttwDhVvFTVhZ76
- evzOMRAmyDM6OUBw4CZ32fdfwQFoQboEaK3dD0z4MLZtPBRFLCfonSxn/Ywhhw+mM4Dd
- EvN2/yplnu2U+fvIL60KT5GqEyGECaOs9lI7DCB1QGDhosbNMLVHV5wotbJffppL80SW
- OhCfAuoROhoVERMY/tg3etvEYd16lDv7m2dPtIB4B2EsVul1q8OtY42PDFp5MB7VTemU
- IPHQ==
+ d=linaro.org; s=google; t=1776290640; x=1776895440; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gLjCsJo9+pOroEIlYtanmlE+LE1B4Ag6f7dTvZPO3M0=;
+ b=wRiV93BHqfOSegsHPBeFGIxJ+caGlO9XgJagv0D8UdcvPIBR1f691wpFbB97A1J4bB
+ zQN09OZm85WSql5+IkGR5Lr1XeVXlOLEKvW/BkP8g4iew2vmyUuCvF59Ow93RKt1Zcbg
+ R+xrRoo7kGDSJbgOiYxm7JmjLfXaHcY79lhrweWk8sa8x7C27Nrn71ieifzMlsDNbPcH
+ 07wY8UNhYTNSK7OjK7aP5zXD5Me/JkeL/T3Gja35jxeWGEac44JdwrHE2xnv2b5odUhB
+ 92WUP+XDDgmS+lhzNYuiLZ+FhE4vaZnp2Epvpuu3IKsqRA7/85g7Z9mPUbjd73dnGBCB
+ OYig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776290467; x=1776895267;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Bh3eSiFjGrGUzXTANPTKFs94mGxC5Gtrw/UPDWVy1YE=;
- b=XCx2rieEIj2On8B+HvLAaZqlKhrWrVHfZR/nijN87cdOuFToafTlzj1vpQbqedXsmh
- gEpJ5yubL8lXB0HmnTof2fIgpny+aV1AEYAbnMw/ZjjPT55gEHYlc/+g9nIgscwc+nGd
- fTWIsET82kWFtdIDewLZdrQw0s/UsxK5o9Yl8X357GUePvLoS5W9/EjiLfI4S3e4swRi
- X10Z5vm9FMv4ycD0V4KdownECQBZCG9SXj4qtbf0n8zPFPjtnkFR4MpumShhN3GgjywA
- Zq1BJfi4VqtBPoB49o8IcDxujjVjQNVQnF2lDgkH1FeALjUPoDKDfCNyqniP2hI4M5O1
- 0idA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+ybdJuO0dEfySE542rfT3krWyfQPZqklLL1ayiPN3W7pxBgjayF74y+6lYxug1dhCMvgoFuyCTnAAm@nongnu.org
-X-Gm-Message-State: AOJu0YyJsBSnsCmL/faRJeQQlM2LW+3BUqRg5zJcaM/zLQt4jB3CznuG
- kjFuVernWJbVWpHrNAn3XdUimVsqMww3kdlswT0hvwvXc7OcH1jODjbfN697heVgOcSZTa1uI/f
- xkN2LZSDyuuCdzdszyqYQA2HpAurn71Q+ruYGD0zv77jJSx5rosL3JLeVcw==
-X-Gm-Gg: AeBDiesAPX9nNIfR7RtE4BqNAE/l38J6icq23FeUuYnPzeSjVCJk3Hw/7RyTDPk1vRc
- FPEOaDrX5DnsyaOq1rtF/InYrPDd5mtuS95gm2DaC4KUmwKIms/816/YjRTcjm5aumZc326FjL3
- +m+uBQHDbnvMbv3v+eRZTSRrUcJhjjZ1lq5rpUt/InF4iIWCrV7X1eFEfbmMUyoQCNkyC4usp0B
- ML0yiWYkRlhZc+Zw8vKkLIvJrKoDA/V12T/nntVJbnUjm7OpdZMjTdJ1HPDniIWVEOmNjFfowBn
- RZYCMgj4MbYeg4FVJDBKwUvtlMDgsuLa6ZtAKhd+N4Xvd0y8N5K4gi3vMOYC9ffkG2ku0vDjjRl
- wxxAtr7CCuMbPpeECV1uQdve5q08Gp9c9mrJxruoKYZWm534md5uddXsWCj+wYzYVA4WRB4mcgR
- 2nshg0VxqSPw==
-X-Received: by 2002:a05:7022:128b:b0:11a:fb0a:ceca with SMTP id
- a92af1059eb24-12c631217a9mr687537c88.16.1776290466166; 
- Wed, 15 Apr 2026 15:01:06 -0700 (PDT)
-X-Received: by 2002:a05:7022:128b:b0:11a:fb0a:ceca with SMTP id
- a92af1059eb24-12c631217a9mr687509c88.16.1776290465444; 
- Wed, 15 Apr 2026 15:01:05 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2de8f569f4bsm4413086eec.21.2026.04.15.15.01.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 15:01:05 -0700 (PDT)
-Message-ID: <94bf8494-1ad5-44de-9669-865223c08875@oss.qualcomm.com>
-Date: Wed, 15 Apr 2026 15:01:04 -0700
+ d=1e100.net; s=20251104; t=1776290640; x=1776895440;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gLjCsJo9+pOroEIlYtanmlE+LE1B4Ag6f7dTvZPO3M0=;
+ b=mWVO9McVw7OiTYVRsKs25D/T7EtWNO8T2vgNQELJwKwlmRgyNQ8QQHWkje6pnquw8A
+ THhTjInnn+u1xly4e4f2Iav7PHp3lALl9aGRbcwy3ANUjrr0qs1n/W3FY8sHHX9BSfrw
+ Esqv6fP+HnRbGPLEcH/EQdnSxEa+qabOsHTuBAIQctU4anpnSlRLPA1Qz3DZAN3ZsMxD
+ 2Sad/szPJG4xtKbX65qnXY3bCOlDE673p3i6lO8SFXwvg3st1snEl2zY33c0HATETGCZ
+ nlxN9AzLUv/X8onHcd1/XOmIn8fAO+g3n/0f4pDTucIko2oTFAT57Fyaw0rOBjPiwMNw
+ Fobw==
+X-Gm-Message-State: AOJu0YyJ/V1HmAgooYSNqO2zZJ6xjqo3dKqAu5p8hcM5GJhIr5qj53c3
+ WSGoswmDe6jEL06t+mpmUz7oqzrEmE4rcg2+Vma1A7TKjEKy8+tN3XezEHIN70BNi9oDWhxkWlO
+ Q55En5Zk=
+X-Gm-Gg: AeBDies5mAFjlY93wc7CO+PPLGWqE6WVQg2/joC/cZkegjF99nZAop7j7D30CG5dvzj
+ 8EHTPbUtMH6X/NdENYN5/9ZvDRxAkgPd5jgOuaEkfq/zU6onmXr5BEsxMiGItc2jd44bjW/RkxE
+ uO5eOesT/sx5lF6W9RH+6E2Moxj4Dj0aAL77GJpZ9c6iB+tAu8O66HU1wSbzOURP+k31tH5n02O
+ vkIJRuXjM2U2qlFbdLrRLDmOQoIreU3+VTk5DXEjHCpuqltNibB2wfH3uk7+AU5ZvflYAqeoza/
+ w5eH4URDVVMSS9FhN/geMAL8c0tfax75lI0Opha/d+ud8z/x3QHTxNho3RjAeVTOE1BfxAl8QDd
+ rHhSiyOjEP1QNvcGWGpHyaIrpYV39VlXY1TS++L/E/+/cUx4j96jAUEhPIeqanQ5LS/0H3fLN4m
+ /q2XoTDgoyfhKA2xis4bLrsnynpe7IeVSSHnGh2w04BVCUo6lyzoy/fUMz9HG33gOU/yON5sil
+X-Received: by 2002:a05:6000:2085:b0:43e:a70d:763c with SMTP id
+ ffacd0b85a97d-43ea70d79b3mr13502286f8f.42.1776290640054; 
+ Wed, 15 Apr 2026 15:04:00 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43ead2decafsm6999141f8f.0.2026.04.15.15.03.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 15 Apr 2026 15:03:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/s390x: Prefer MO_128 definition over magic value
+Date: Thu, 16 Apr 2026 00:03:57 +0200
+Message-ID: <20260415220358.93063-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] cocci: Do not initialize variable used by *FOREACH*()
- macro
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
- qemu-block@nongnu.org
-References: <20260415215539.92629-1-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260415215539.92629-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: b0OYnlV6iy6QYdY5TggOUyryAXdAQphV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDIwNiBTYWx0ZWRfX4p7FnnWbiwAP
- ZV0asj7WxD9JDrTcvt94f+V0YfZMF189UHc2rb7OE8BaavjVww0xa5ceIWqipdU384SEnYHPsid
- VydY3MRimzTxbl2LuYMEhZO42qZyNUQjyOVjLX/ERTLgbT9XIHb8CU90SFZp4+YDnOuX6ZrGOYS
- ZYuEd3vr/9QIe8ZzqdBGcwybR+kX3y/FwtyGkA2JmcVGTKYJAITKf4c+agtyBOTJW6n8UDKmcOb
- QN68Djo0Cn1nmLzYH9fyYQW6q+Bk6tGU9Hq3DRfJdzpseWlrGh5DXmwWDLZK31UHaP7RoXv2KMH
- u5rTeiv4cQVsWzpkDSu6cN95xJEPbPEzVHRyftVHqMR7DMKydxqv7yuDmqONNlcy0zwCm2wVAOE
- ospGnpuf/LleO+GcUpXDRRCY/4ovzAWXnxxXqN8CYxIWig4JAMbTj7be0+pJVQd2t8WkC2PI2ZJ
- +3MAbE/gsdBpZ+r+vqA==
-X-Authority-Analysis: v=2.4 cv=AcmB2XXG c=1 sm=1 tr=0 ts=69e00aa3 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=1CZdNKJIaicOdOL1u6UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-GUID: b0OYnlV6iy6QYdY5TggOUyryAXdAQphV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-15_01,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 priorityscore=1501
- phishscore=0 malwarescore=0 impostorscore=0 clxscore=1015 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604150206
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,51 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/2026 2:55 PM, Philippe Mathieu-Daudé wrote:
-> Most of our *FOREACH*() macros take a pointer argument,
-> then assign it upon entry before iterating. Thus there
-> is no need to initialize the variable used as argument.
-> But sometimes we do, which is confusing (for example
-> &first_cpu). This series uses a Coccinelle script to
-> clean these unnecessary usages. (and 2 bonus cleanup
-> patches at the end).
-> 
-> Philippe Mathieu-Daudé (8):
->    cocci: Do not initialize variable used by QLIST_FOREACH macro
->    cocci: Do not initialize variable used by QSLIST_FOREACH macro
->    cocci: Do not initialize variable used by QSIMPLEQ_FOREACH macro
->    cocci: Do not initialize variable used by QTAILQ_FOREACH macro
->    cocci: Do not initialize variable used by RAMBLOCK_FOREACH* macro
->    cocci: Do not initialize variable used by CPU_FOREACH macro
->    target/mips: Reduce CPUState scope when used with CPU_FOREACH()
->    target/riscv: Iterate vCPUs using CPU_FOREACH() macro
-> 
->   target/mips/internal.h              | 11 ++++++-----
->   block/blkdebug.c                    |  2 +-
->   block/blkio.c                       |  2 +-
->   block/gluster.c                     |  4 ++--
->   ebpf/ebpf.c                         |  2 +-
->   hw/arm/virt-acpi-build.c            |  2 +-
->   hw/i386/xen/xen-hvm.c               |  4 ++--
->   hw/misc/mips_cpc.c                  |  4 ++--
->   hw/ppc/spapr.c                      |  2 +-
->   hw/ppc/spapr_events.c               |  4 ++--
->   hw/riscv/boot.c                     |  9 +++++----
->   hw/riscv/riscv-iommu.c              |  2 +-
->   hw/vfio/cpr-legacy.c                |  2 +-
->   hw/vfio/listener.c                  |  4 ++--
->   hw/xen/xen_pt_config_init.c         |  4 ++--
->   migration/block-dirty-bitmap.c      |  2 +-
->   migration/dirtyrate.c               |  4 ++--
->   net/colo-compare.c                  |  4 ++--
->   net/net.c                           |  2 +-
->   target/mips/tcg/system/cp0_helper.c | 28 ++++++++++++++++------------
->   target/mips/tcg/system/tlb_helper.c |  7 +++----
->   target/s390x/kvm/stsi-topology.c    |  2 +-
->   22 files changed, 56 insertions(+), 51 deletions(-)
-> 
+The MO_128 definition was not existing when commit 6d841663be8
+("s390x/tcg: Implement VECTOR GATHER ELEMENT") introduced the
+ES_128 definition. It was added 2 years later in commit 4b473e0c60d
+("tcg: Expand MO_SIZE to 3 bits"). Since it is now available,
+replace the magic '4' by the more explicit 'MO_128'.
 
-For the series:
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/s390x/tcg/translate_vx.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/s390x/tcg/translate_vx.c.inc b/target/s390x/tcg/translate_vx.c.inc
+index b53e9e52639..447641df25c 100644
+--- a/target/s390x/tcg/translate_vx.c.inc
++++ b/target/s390x/tcg/translate_vx.c.inc
+@@ -50,7 +50,7 @@
+ #define ES_16   MO_16
+ #define ES_32   MO_32
+ #define ES_64   MO_64
+-#define ES_128  4
++#define ES_128  MO_128
+ 
+ /* Floating-Point Format */
+ #define FPF_SHORT       2
+-- 
+2.53.0
 
 
