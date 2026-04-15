@@ -4,101 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 903A3F531E3
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 09:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC5AFA0C5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 09:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCwAF-0001st-S8; Wed, 15 Apr 2026 05:04:03 -0400
+	id 1wCwN4-0003ut-Aq; Wed, 15 Apr 2026 05:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCwAD-0001s4-Ta
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:04:01 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wCwAC-0008GD-Ei
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:04:01 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43d03db7f87so4050677f8f.3
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 02:04:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776243838; x=1776848638; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=08ibk2THlU+RKclf2uoZTy9mDuqcett2w1CO4buhgfg=;
- b=lhf/YQ3o6w2GMONK8fY9Jd1bqmxsIYfJx2r98vpdJBYOQvnVLSdjDNVDsCNIBDQuse
- KgHonpYOfxERaD+iWcyr5rjMaoNe68elCD5/YFFHEWegtFAjQ+5yJoLdWZZsxA6Xk/wC
- +5kyVX3IRwbMIX/T2vE95SFpEDUsL/hN0Vl6qRiYcZBHTwS3bvjFI4JrvNr4kRyQGsqy
- Dr+l8aQrxgOQPh7U+dVOvxwdetTOLTKSwoPNQQmDsMhFqJ0g/1xzkZIX0Putox09LvwI
- 7wNmiNlgNguqbtdebAYBFmeO9ehqXhDaqC31qqRH8gAIc2URzUwE/PeBNS0pTY4SnO5T
- 91TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776243838; x=1776848638;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=08ibk2THlU+RKclf2uoZTy9mDuqcett2w1CO4buhgfg=;
- b=JqA3rAhZnWKpDt4RPgxajWmLZko81BqnMffbyo4KN3Kpkh/dYu51h0rn/oIAgcCc8U
- y6g79Uf+6CBVK2vZrJd4nI+zuuEBavxAZAzlxbPyN5UUKKXD5CI+JoX+vVn2boV9x9zt
- lnhCrb1P9GuUFYVJOOUcvGoTHzrM+GlGAiQth5ofshvekO8j4F9JHxfzkPdW0uS4FXpP
- 1PXOn0RAfSODjhZX01Y98GQ7Na0ovF8XxVnrVf6owS8ru96YglvUPlv5xIce6h0K4uNQ
- RUne3KbrvAJ4T9I30Wiv73MA5poZ39FYcp3Li1eMK33JOoyLx8GVmG5VpMe4l7T6vGBp
- GxgA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9GJOPIyasLSPxk613nSR6peAxwXinh+UYYUovQnag3kwhvwfIicp9LCS918MNZDqmpOK7uMGQVWHu9@nongnu.org
-X-Gm-Message-State: AOJu0Yx8XpouzZs42KYVfSb45BxpOud5eY8abV6ePyQqjRsfKiSP2dtc
- wWrTXAU4c/ojNObQ+QenkNsiO3kCb1RnuZ43dITiVVBTzGQ5oKxDxjtoikvHp9t13QN+KzaOmIg
- 5PBrN6AI=
-X-Gm-Gg: AeBDiev9Jrr3DfdomwVJl+O160PfzTmgTFxAHsas9Lq2Cgp5/xRGxieBH4wuTUfSE5Q
- 6eIT9+lPPfe/gJJDNcldsBc/EXJHZZNdnknFumyQCPYc9rZYpsoKJo9pcD/q8McSXbNxY6qGyng
- p1pm1lOsbLtvtsQEq9kmYL1Z+OmpBB9QFHE97tkOmoH28jpTZ3Oy4kZ/DE0N4Qg4d6DNTXla/WW
- XTIh6IMF8fwIkQz71lM6eE9a19njahFc6Pyd+yyt3ZKs0zkqnXC0GGNIVx3ZF/qQPzK9hKv9iw6
- qCwOEbs12RZjjJHNbOcKldsn1dcM0f9VWY2POXvf94WVyHLozZuox5Ng6L4GthpJboUnnu0ZO6t
- q5tRKoRovjNavhEB1xgTgqr7Y8FTU20o9uvewtUzULRIJZWexVb/AVgQULtJ8xSXIV0pnhAoSV8
- jLHgcVayEdONpJdbvhmjvsE/GZ3YF0npwMJv0DuQtqK+xxo+j9rnHzEIllFe5Wha2H+Q==
-X-Received: by 2002:a05:6000:26cf:b0:43d:613:4036 with SMTP id
- ffacd0b85a97d-43d642be547mr29898627f8f.37.1776243838368; 
- Wed, 15 Apr 2026 02:03:58 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead402ee8sm3504249f8f.37.2026.04.15.02.03.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 02:03:57 -0700 (PDT)
-Message-ID: <08d68fea-7f34-4590-a3d7-2727303f4f38@linaro.org>
-Date: Wed, 15 Apr 2026 11:03:55 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wCwMz-0003uL-Dw
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:17:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wCwMw-0003qa-Vp
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 05:17:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776244628;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sqFMsVG3wLfKJt8actPNmTeh4Q0RQamQrNtsD/e/0Vw=;
+ b=gWrD/6JateC0jx66grFLJKAgt6XhFIaDWA8rVQsxXiP6UvW79p83uS393P3WCBJsikltPF
+ nmInlglPF0nep4OkWA6V5k0/JzQmqG3mdYV1Fu7C2OgkbCqjk+Z6wCIBV+xzc24b8yoXTx
+ cKgR/qNEwOGgDuYA3o5D2434JfKdjBg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-567-4QLkob80MC67x3QCn8A2Cw-1; Wed,
+ 15 Apr 2026 05:17:06 -0400
+X-MC-Unique: 4QLkob80MC67x3QCn8A2Cw-1
+X-Mimecast-MFC-AGG-ID: 4QLkob80MC67x3QCn8A2Cw_1776244625
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0518F18002CA
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 09:17:05 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 23E7A1800446; Wed, 15 Apr 2026 09:17:03 +0000 (UTC)
+Date: Wed, 15 Apr 2026 10:17:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 06/67] ui/vnc-jobs: narrow taking the queue lock
+Message-ID: <ad9XjRERCOa8zElX@redhat.com>
+References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
+ <20260410-qemu-vnc-v2-6-231416f76dc3@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/17] hw/usb/hcd-ehci: Change descriptor addresses to
- 64-bit
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260414080025.3005916-1-jamin_lin@aspeedtech.com>
- <20260414080025.3005916-7-jamin_lin@aspeedtech.com>
- <7eb32749-dd83-48ea-94a4-41935cc90aca@linaro.org>
- <TYPPR06MB820645B6F63582C2FC44F7BEFC222@TYPPR06MB8206.apcprd06.prod.outlook.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <TYPPR06MB820645B6F63582C2FC44F7BEFC222@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260410-qemu-vnc-v2-6-231416f76dc3@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,64 +87,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/4/26 02:54, Jamin Lin wrote:
-> Hi Philippe
+On Fri, Apr 10, 2026 at 11:18:28PM +0400, Marc-André Lureau wrote:
+> It's not needed unless manipulating the queue.
 > 
->>>    const VMStateDescription vmstate_ehci = {
->>>        .name        = "ehci-core",
->>> -    .version_id  = 2,
->>> +    .version_id  = 3,
->>>        .minimum_version_id  = 1,
->>>        .pre_save    = usb_ehci_pre_save,
->>>        .post_load   = usb_ehci_post_load,
->>> @@ -2501,8 +2510,10 @@ const VMStateDescription vmstate_ehci = {
->>>            /* schedule state */
->>>            VMSTATE_UINT32(astate, EHCIState),
->>>            VMSTATE_UINT32(pstate, EHCIState),
->>> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
->>> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
->>> +        VMSTATE_UINT32_V(a_fetch_addr_pre_v3, EHCIState, 2),
->>> +        VMSTATE_UINT32_V(p_fetch_addr_pre_v3, EHCIState, 2),
->>
->> IIUC we want VMSTATE_UINT32_TEST(..., 3) here, for "<3".
->>
->>> +        VMSTATE_UINT64_V(a_fetch_addr, EHCIState, 3),
->>> +        VMSTATE_UINT64_V(p_fetch_addr, EHCIState, 3),
->>
->> These ones are correct (">=3").
->>
->>>            VMSTATE_END_OF_LIST()
->>>        }
->>>    };
-> 
-> Thanks for the review and suggestion.
-> How about the following changes?
-> Thanks-Jamin
-> 
-> +static bool ehci_core_is_before_version_3(void *opaque, int version_id)
-> +{
-> +    return version_id < 3;
-> +}
-> +
->   const VMStateDescription vmstate_ehci = {
->       .name        = "ehci-core",
->       .version_id  = 3,
-> @@ -2510,8 +2515,10 @@ const VMStateDescription vmstate_ehci = {
->           /* schedule state */
->           VMSTATE_UINT32(astate, EHCIState),
->           VMSTATE_UINT32(pstate, EHCIState),
-> -        VMSTATE_UINT32_V(a_fetch_addr_pre_v3, EHCIState, 2),
-> -        VMSTATE_UINT32_V(p_fetch_addr_pre_v3, EHCIState, 2),
-> +        VMSTATE_UINT32_TEST(a_fetch_addr_pre_v3, EHCIState,
-> +                            ehci_core_is_before_version_3),
-> +        VMSTATE_UINT32_TEST(p_fetch_addr_pre_v3, EHCIState,
-> +                            ehci_core_is_before_version_3),
->           VMSTATE_UINT64_V(a_fetch_addr, EHCIState, 3),
->           VMSTATE_UINT64_V(p_fetch_addr, EHCIState, 3),
->           VMSTATE_END_OF_LIST()
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>  ui/vnc-jobs.c | 17 +++++++++++------
+>  1 file changed, 11 insertions(+), 6 deletions(-)
 
-LGTM, thanks!
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
