@@ -4,56 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30843F41986
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 11:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C48DEF41986
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 11:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCyGL-0000Dv-ES; Wed, 15 Apr 2026 07:18:30 -0400
+	id 1wCyIz-000147-EH; Wed, 15 Apr 2026 07:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@rail5.org>) id 1wCyGG-0000DH-DR
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 07:18:24 -0400
-Received: from layka.disroot.org ([178.21.23.139])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <andrew@rail5.org>) id 1wCyGE-00018c-IV
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 07:18:23 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
- by disroot.org (Postfix) with ESMTP id 88CC72650C;
- Wed, 15 Apr 2026 13:18:16 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id 6tAwmskDO1UY; Wed, 15 Apr 2026 13:18:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rail5.org; s=mail;
- t=1776251896; bh=UR6UQSfqlww9S8q5dRVffbCW+mZBwQCATEBpNojYDmY=;
- h=From:To:Cc:Subject:Date;
- b=RAAYM8P0KPgqOFlzhDR8ld7+N3gNZHoyEqbW0UOpxt+PEJ174DsXU+/88b2r7SJ5h
- EIoIUPGCw+ExlGAa/XfIM0UhXl4Id0uJx8PgnkyJynpZsb1BE3sDTihYo1NlYEdkU0
- tTJqdAcZBswB1AEfxTNBDcX/mfrGIWpzQWZp6FYEV4BZxNmQWDVqVG4A/VRcBEatpN
- rWQqBBEqOXM4A924YF/6KIWXWZg7eyThyv2ww8/7O+QSrteZmkdmNw4Ct9wCH656W6
- dqCZNK5FKdloGQC3fXdtq/NGht5bgWJaz/mOy8AJq7JdU8cNLJyiufkZZuyXRKwu6K
- 92reBbsiukKDg==
-To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, "Andrew S. Rightenburg" <andrew@rail5.org>
-Subject: [PATCH] target/loongarch: Fix SWI interrupt delivery via CSR_ESTAT
-Date: Wed, 15 Apr 2026 19:17:07 +0800
-Message-ID: <20260415111738.3264448-1-andrew@rail5.org>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wCyIx-00013V-C5
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 07:21:11 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wCyIv-0001eO-4Q
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 07:21:11 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id BBF4A43C59
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 11:21:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1776252066;
+ bh=xKbACOa765+9NL78KR0jrQ8Jx40CGHXKww4oJAqAXLk=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=u//y6mL+XAPcaN8Fg6Ml4Xc0KiAhQW4FB3qCpy9+X4n4B5LFS24oDeEsfMQPoY2Qy
+ qOR9ZrUxEbs1TNEUTiBCU41ghVp7T6r+MTBumrBQp9CPeLfCmbwqS3BUmLXwscMkVj
+ K5ZsUYogGgsVHHaXKtdsbGXAOH8v04bMneV7Ge4zFQ5efAO5K8bluyUSYE/yrtrGJE
+ +u19U2ACR1xl5VFxIhmlvLnFJ42d1JlMaWT/e8OF/XPPnAPeX5r/0SPvDPOZYKKiAS
+ mG4MIvwvmlQ3EWu3DZGzsCyZW8yZOa4TbHpWGh3SL2UJUw4SPcZOWS3Cq8Epwo5Oq1
+ 2dP/fiV2V1ZaQ==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 8D4EF7F2B2
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 11:21:06 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.21.23.139; envelope-from=andrew@rail5.org;
- helo=layka.disroot.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 15 Apr 2026 11:13:26 -0000
+From: Heinrich Schuchardt <2133804@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Low;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=Confirmed; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug-Tags: server-todo
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: hectorcao janitor mjt+launchpad-tls paelzer
+ utkarsh xypron
+X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
+References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <177625160683.3166196.18312404763342161945.malone@juju-98d295-prod-launchpad-55>
+Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="866d07beecca8ac2e3326342adf6c1740cd3e7b3";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 58113ee7dd1511055382362b10975828394c73f6
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -62,55 +104,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Andrew S. Rightenburg" <andrew@rail5.org>
-From:  "Andrew S. Rightenburg" via qemu development <qemu-devel@nongnu.org>
+Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In TCG mode, helper_csrwr_estat() updates CSR.ESTAT.IS[1:0] (SWI0/SWI1)
-when the guest writes CSR_ESTAT, but it did not update the CPU interrupt
-request state. As a result, software interrupts could be observed as pending
-in CSR.ESTAT while no interrupt exception was taken.
+Hello Christian,
 
-Update CPU_INTERRUPT_HARD after modifying CSR_ESTAT, matching the behavior of
-loongarch_cpu_set_irq(). The helper runs without the Big QEMU Lock (BQL), so
-take the BQL while calling cpu_interrupt().
+The failure due to missing IOCTL TCGETS2 is not RISC-V specific but is
+reproducible on Ubuntu 24.04 amd64 also when trying to run an Ubuntu
+26.04 arm64 container. The fix should be backported irrespective of LP
+2133188.
 
-Fixes: 5b1dedfe848b ("target/loongarch: Add LoongArch CSR instruction")
-Reported-by: Andrew S. Rightenburg <andrew@rail5.org>
-Signed-off-by: Andrew S. Rightenburg <andrew@rail5.org>
----
- target/loongarch/tcg/csr_helper.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Best regards
 
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index cd35ca93c7..0a5ed52eb6 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -98,10 +98,22 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
- target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
- {
-     int64_t old_v = env->CSR_ESTAT;
-+    CPUState *cs = env_cpu(env);
- 
-     /* Only IS[1:0] can be written */
-     env->CSR_ESTAT = deposit64(env->CSR_ESTAT, 0, 2, val);
- 
-+    /*
-+     * Software interrupts (SWI0/SWI1) are latched in CSR.ESTAT.IS[1:0].
-+     * Make sure the CPU interrupt request state tracks the pending bits,
-+     * matching the behavior of loongarch_cpu_set_irq().
-+     */
-+    if (FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS)) {
-+        bql_lock();
-+        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-+        bql_unlock();
-+    }
-+
-     return old_v;
- }
- 
--- 
-2.47.3
+Heinrich
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133804
+
+Title:
+  QEMU does not emulate IOCTL TCGETS2
+
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu source package in Jammy:
+  Confirmed
+Status in qemu source package in Noble:
+  Confirmed
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu source package in Questing:
+  Confirmed
+Status in qemu source package in Resolute:
+  Fix Released
+
+Bug description:
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
+  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
+  arm64, ...).
+
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.=20
+  A detailed analysis is contained in LP #2133188.
+
+  A proper implementation of the missing IOCTLs will include:
+
+  Functions:
+
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+
+  Definitions:
+
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
 
 
