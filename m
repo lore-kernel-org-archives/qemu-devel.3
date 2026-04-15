@@ -4,56 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FEC9FA0C26
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 04:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB6B1FA0C22
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 04:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCrXt-0006qB-Ko; Wed, 15 Apr 2026 00:08:09 -0400
+	id 1wCrhD-0003FH-Fk; Wed, 15 Apr 2026 00:17:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wCr1J-00036w-GX
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 23:34:29 -0400
-Received: from mail-07.mail-europe.com ([188.165.51.139])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wCrh8-0003F1-Uv
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 00:17:43 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wCr1H-00046d-IO
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 23:34:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1776224063; x=1776483263;
- bh=PrZuSg3oQZv7NVn3eZ4im9PeiwWnqlWLvRLY2PdxJ1I=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=i+CaYEW2YkyVI1ojd1jBfuEdbrZyAEZDNNXCsm+V6tr0ml/OHeoi9sNmKbzElKfUz
- pWBisQNbWBHObw218HTvNTYpeyudmoGwSCd5GZdcS/ZGp7wADBIdNrPHkKppwlbAW1
- a6DGgOqTZu7dVeI2npduQStuLSHC1qHsE7PpMD6b12fVopKxmsFNXJTLONcFYevZ4i
- D8KQlEF4HVeH5zjSahk0RtRe0yoAbGF+FnCojKkvEl68+tQMyDOJSDFCgfOGqxz6+C
- fY5uBeNVTqVHNTVZtmC+u8qWSQl6ozU3FOWEtybL5uQreM2IjShOy2dIYC/5LcZsmW
- jEqMmSxoUsV9g==
-Date: Wed, 15 Apr 2026 03:34:21 +0000
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-From: Feifan Qian <bea1e@proton.me>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/2] hw/display/ati: guard HOST_DATA accumulator index before
- write
-Message-ID: <Czyl6yVfL6sHl_o1kRk8N_LpwXMMRVhO9vgz1qCVJFagn9D4nHSKuiux39iOLty0Q3acxQq_FeovPhTQvSKus2htwjI9lTajLZmqovr0Wxs=@proton.me>
-Feedback-ID: 93226294:user:proton
-X-Pm-Message-ID: 5f935776a85b4332188653bc7fa3cac184c9a7a1
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wCrh5-0006qM-I6
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 00:17:42 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63F4HPEP013113
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 15 Apr 2026 13:17:25 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=EzUPHJ8tJhEWZc6O5WfAZQ1VjI4NtaQb5lKeRYg4asE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1776226645; v=1;
+ b=MbmmjsZyTw+4uzgz094+qBylojb1NJYOhg5we6U0pwxbRkOqaAuHyJiGksqFANbE
+ aYomPB9lpL7UCGEi8Y08Lii4u+RbXrz+yxfKhS59NVUONh084Gj8QtI89LZNDLnm
+ 0p9/Zs/b8BGcHAsXq6NXp6GnM+xDQIa52Pc7fS6VYqWFKST5QwtYG9pyv25iRQJ+
+ mHSFm8msXh8Pd7s874zQnMS+8Hj2eLVFP0dvuwlkOFpq2UzY+JuXFR6NyiaT2v1E
+ aFXU6rOJVsRYba7vXZgWbndeBWTY+QJC7y9JW+9mYTYgXhdc/j0dUirOh003wHvm
+ Bm49qotiIKjCPeWH78Z9Cw==
+Message-ID: <24cf0201-8104-4964-b992-847aaf56a7b0@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 15 Apr 2026 13:17:24 +0900
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1=_rW3sxZK8wMFEVFgJunok9hGl1gX1K1naCy11I"
-Received-SPF: pass client-ip=188.165.51.139; envelope-from=bea1e@proton.me;
- helo=mail-07.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] add a refresh_rate option to virtio-gpu
+To: slonkazoid <slonkazoid@slonk.ing>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260414-virtio-gpu-refresh-rate-v1-1-59e6320eb24e@slonk.ing>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260414-virtio-gpu-refresh-rate-v1-1-59e6320eb24e@slonk.ing>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 15 Apr 2026 00:08:07 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,100 +75,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---b1=_rW3sxZK8wMFEVFgJunok9hGl1gX1K1naCy11I
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-
-VGhlIEhPU1RfREFUQSB3cml0ZSBoYW5kbGVyIHN0b3JlcyBndWVzdC1zdXBwbGllZCBkd29yZHMg
-aW50byBhCjQtZWxlbWVudCBhY2N1bXVsYXRvciBhcnJheSAoaG9zdF9kYXRhLmFjY1swLi4zXSkg
-YW5kIGNhbGxzCmF0aV9ob3N0X2RhdGFfZmx1c2goKSBvbmNlIGZvdXIgZW50cmllcyBhcmUgY29s
-bGVjdGVkLiBXaGVuCmF0aV9ob3N0X2RhdGFfZmx1c2goKSByZXR1cm5zIGVhcmx5IHdpdGhvdXQg
-cmVzZXR0aW5nIG5leHQgKGUuZy4KZm9yIHVuc3VwcG9ydGVkIDI0LWJwcCBvciBkaXJlY3Rpb24g
-bW9kZXMpLCBuZXh0IHJlbWFpbnMgPj0gNC4KQmVjYXVzZSB0aGUgd3JpdGUgYWNjW25leHQrK10g
-b2NjdXJzIGJlZm9yZSB0aGUgbmV4dCA+PSA0IGNoZWNrLAp0aGUgc3Vic2VxdWVudCBIT1NUX0RB
-VEEgZHdvcmQgaXMgc3RvcmVkIGF0IGFjY1s0XSDigJQgb25lIGVsZW1lbnQKcGFzdCB0aGUgZW5k
-IG9mIEFUSUhvc3REYXRhU3RhdGUsIHRoZSBsYXN0IGZpZWxkIG9mIHRoZQpoZWFwLWFsbG9jYXRl
-ZCBBVElWR0FTdGF0ZSBvYmplY3QuIFRoZSBwYXlsb2FkIGlzIGd1ZXN0LWNvbnRyb2xsZWQKYW5k
-IHRoZSBvdmVyZmxvdyBpcyByZXBlYXRhYmxlLgoKQ29uZmlybWVkIHdpdGggQWRkcmVzc1Nhbml0
-aXplcjogaGVhcC1idWZmZXItb3ZlcmZsb3cgV1JJVEUgb2YKNCBieXRlcyBhdCBhdGkuYzoxMDMy
-IG9uIFFFTVUgMTEuMC4wLXJjMyB2aWEgUVRlc3QuCgpBZGQgYW4gZXhwbGljaXQgYm91bmRzIGNo
-ZWNrIG9uIG5leHQgYmVmb3JlIGluZGV4aW5nIGFjY1tdOyBsb2cgYQpndWVzdCBlcnJvciBhbmQg
-YnJlYWsgd2l0aG91dCB3cml0aW5nIGlmIG5leHQgaXMgb3V0IG9mIHJhbmdlLgoKU2lnbmVkLW9m
-Zi1ieTogRmVpZmFuIFFpYW4gPGJlYTFlQHByb3Rvbi5tZT4KLS0tCmh3L2Rpc3BsYXkvYXRpLmMg
-fCA1ICsrKysrCjEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS9o
-dy9kaXNwbGF5L2F0aS5jIGIvaHcvZGlzcGxheS9hdGkuYwppbmRleCA4OGE1YmJiZjA3Li4zMDM5
-NjA2MjAyIDEwMDY0NAotLS0gYS9ody9kaXNwbGF5L2F0aS5jCisrKyBiL2h3L2Rpc3BsYXkvYXRp
-LmMKQEAgLTEwMjksNiArMTAyOSwxMSBAQCBzdGF0aWMgdm9pZCBhdGlfbW1fd3JpdGUodm9pZCAq
-b3BhcXVlLCBod2FkZHIgYWRkciwKaWYgKCFzLT5ob3N0X2RhdGEuYWN0aXZlKSB7CmJyZWFrOwp9
-CisgaWYgKHMtPmhvc3RfZGF0YS5uZXh0ID49IEFSUkFZX1NJWkUocy0+aG9zdF9kYXRhLmFjYykp
-IHsKKyBxZW11X2xvZ19tYXNrKExPR19HVUVTVF9FUlJPUiwKKyAiSE9TVF9EQVRBOiBhY2N1bXVs
-YXRvciBvdmVyZmxvdywgaWdub3JpbmdcbiIpOworIGJyZWFrOworIH0Kcy0+aG9zdF9kYXRhLmFj
-Y1tzLT5ob3N0X2RhdGEubmV4dCsrXSA9IGRhdGE7CmlmIChhZGRyID09IEhPU1RfREFUQV9MQVNU
-KSB7CmF0aV9ob3N0X2RhdGFfZmluaXNoKHMpOwotLTIuNDMuMA==
-
---b1=_rW3sxZK8wMFEVFgJunok9hGl1gX1K1naCy11I
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
-cHg7Ij48L2Rpdj48c3Bhbj48c3Bhbj48L3NwYW4+PHNwYW4+VGhlIEhPU1RfREFUQSB3cml0ZSBo
-YW5kbGVyIHN0b3JlcyBndWVzdC1zdXBwbGllZCBkd29yZHMgaW50byBhPC9zcGFuPjxkaXY+PHNw
-YW4+NC1lbGVtZW50IGFjY3VtdWxhdG9yIGFycmF5IChob3N0X2RhdGEuYWNjWzAuLjNdKSBhbmQg
-Y2FsbHM8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5hdGlfaG9zdF9kYXRhX2ZsdXNoKCkgb25jZSBm
-b3VyIGVudHJpZXMgYXJlIGNvbGxlY3RlZC4gJm5ic3A7V2hlbjwvc3Bhbj48L2Rpdj48ZGl2Pjxz
-cGFuPmF0aV9ob3N0X2RhdGFfZmx1c2goKSByZXR1cm5zIGVhcmx5IHdpdGhvdXQgcmVzZXR0aW5n
-IG5leHQgKGUuZy48L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5mb3IgdW5zdXBwb3J0ZWQgMjQtYnBw
-IG9yIGRpcmVjdGlvbiBtb2RlcyksIG5leHQgcmVtYWlucyAmZ3Q7PSA0Ljwvc3Bhbj48L2Rpdj48
-ZGl2PjxzcGFuPkJlY2F1c2UgdGhlIHdyaXRlIGFjY1tuZXh0KytdIG9jY3VycyBiZWZvcmUgdGhl
-IG5leHQgJmd0Oz0gNCBjaGVjayw8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj50aGUgc3Vic2VxdWVu
-dCBIT1NUX0RBVEEgZHdvcmQgaXMgc3RvcmVkIGF0IGFjY1s0XSDigJQgb25lIGVsZW1lbnQ8L3Nw
-YW4+PC9kaXY+PGRpdj48c3Bhbj5wYXN0IHRoZSBlbmQgb2YgQVRJSG9zdERhdGFTdGF0ZSwgdGhl
-IGxhc3QgZmllbGQgb2YgdGhlPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+aGVhcC1hbGxvY2F0ZWQg
-QVRJVkdBU3RhdGUgb2JqZWN0LiAmbmJzcDtUaGUgcGF5bG9hZCBpcyBndWVzdC1jb250cm9sbGVk
-PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+YW5kIHRoZSBvdmVyZmxvdyBpcyByZXBlYXRhYmxlLjwv
-c3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPkNvbmZpcm1lZCB3aXRoIEFkZHJl
-c3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92ZXJmbG93IFdSSVRFIG9mPC9zcGFuPjwvZGl2Pjxk
-aXY+PHNwYW4+NCBieXRlcyBhdCBhdGkuYzoxMDMyIG9uIFFFTVUgMTEuMC4wLXJjMyB2aWEgUVRl
-c3QuPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4+QWRkIGFuIGV4cGxpY2l0
-IGJvdW5kcyBjaGVjayBvbiBuZXh0IGJlZm9yZSBpbmRleGluZyBhY2NbXTsgbG9nIGE8L3NwYW4+
-PC9kaXY+PGRpdj48c3Bhbj5ndWVzdCBlcnJvciBhbmQgYnJlYWsgd2l0aG91dCB3cml0aW5nIGlm
-IG5leHQgaXMgb3V0IG9mIHJhbmdlLjwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxz
-cGFuPlNpZ25lZC1vZmYtYnk6IEZlaWZhbiBRaWFuICZsdDs8YSB0YXJnZXQ9Il9ibGFuayIgcmVs
-PSJub3JlZmVycmVyIG5vZm9sbG93IG5vb3BlbmVyIiBocmVmPSJtYWlsdG86YmVhMWVAcHJvdG9u
-Lm1lIj5iZWExZUBwcm90b24ubWU8L2E+Jmd0Ozwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPi0tLTwv
-c3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwO2h3L2Rpc3BsYXkvYXRpLmMgfCA1ICsrKysrPC9z
-cGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7MSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygr
-KTwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPmRpZmYgLS1naXQgYS9ody9k
-aXNwbGF5L2F0aS5jIGIvaHcvZGlzcGxheS9hdGkuYzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPmlu
-ZGV4IDg4YTViYmJmMDcuLjMwMzk2MDYyMDIgMTAwNjQ0PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+
-LS0tIGEvaHcvZGlzcGxheS9hdGkuYzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPisrKyBiL2h3L2Rp
-c3BsYXkvYXRpLmM8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5AQCAtMTAyOSw2ICsxMDI5LDExIEBA
-IHN0YXRpYyB2b2lkIGF0aV9tbV93cml0ZSh2b2lkICpvcGFxdWUsIGh3YWRkciBhZGRyLDwvc3Bh
-bj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtpZiAo
-IXMtJmd0O2hvc3RfZGF0YS5hY3RpdmUpIHs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDticmVhazs8L3NwYW4+PC9k
-aXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7fTwvc3Bhbj48
-L2Rpdj48ZGl2PjxzcGFuPisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7aWYgKHMtJmd0O2hv
-c3RfZGF0YS5uZXh0ICZndDs9IEFSUkFZX1NJWkUocy0mZ3Q7aG9zdF9kYXRhLmFjYykpIHs8L3Nw
-YW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
-Jm5ic3A7cWVtdV9sb2dfbWFzayhMT0dfR1VFU1RfRVJST1IsPC9zcGFuPjwvZGl2PjxkaXY+PHNw
-YW4+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsiSE9TVF9EQVRBOiBhY2N1bXVs
-YXRvciBvdmVyZmxvdywgaWdub3JpbmdcbiIpOzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPisgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDticmVhazs8L3NwYW4+PC9kaXY+
-PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO308L3NwYW4+PC9kaXY+PGRp
-dj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cy0mZ3Q7aG9zdF9kYXRh
-LmFjY1tzLSZndDtob3N0X2RhdGEubmV4dCsrXSA9IGRhdGE7PC9zcGFuPjwvZGl2PjxkaXY+PHNw
-YW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2lmIChhZGRyID09IEhPU1RfREFU
-QV9MQVNUKSB7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7YXRpX2hvc3RfZGF0YV9maW5pc2gocyk7PC9zcGFuPjwv
-ZGl2PjxkaXY+PHNwYW4+LS08L3NwYW4+PC9kaXY+PHNwYW4+Mi40My4wPC9zcGFuPjxzcGFuPjwv
-c3Bhbj48L3NwYW4+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBm
-b250LXNpemU6IDE0cHg7IiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2siPjxkaXYg
-Y2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXByb3RvbiI+DQogICAgPC9kaXY+DQo8
-L2Rpdj4NCg==
+On 2026/04/15 3:39, slonkazoid wrote:
+> Signed-off-by: slonkazoid <slonkazoid@slonk.ing>
+> ---
+> currently, the virtio-gpu module does not set a refresh rate, making it
+> default to 75Hz in the qemu edid generation logic. i wrote a sloppy patch
+> that adds a `refresh_rate` option to virtio-gpu, which propagates to all
+> the devices based on it (i was interested in virtio-vga-gl). it's not of
+> much use by itself but when combined with something like Sunshine or
+> looking-glass, it can provide *far* smoother guest graphics than the
+> inbuilt display devices. i have done a bare minimum amount of manual
+> testing (virtio-vga-gl with venus XOR amdgpu drm native context streaming
+> video games) and it functions as intended, and should not break the code
+> path to fetch the refresh rate from the active display device (?), however,
+> i have never contributed to QEMU before and i don't know the customs
+> concerning testing, documentation, etc. if there's more i should do, please
+> tell me! if this is something that would benefit QEMU, feel free to merge it.
 
 
---b1=_rW3sxZK8wMFEVFgJunok9hGl1gX1K1naCy11I--
+Hi,
+
+I think it's fine as long as you confirmed the change actually works.
+
+> it's probably not a copyrightable change anyways.
+> ---
+>   hw/display/virtio-gpu-base.c   | 1 +
+>   include/hw/virtio/virtio-gpu.h | 4 +++-
+>   2 files changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+> index cb76302e2d..d87f6604d0 100644
+> --- a/hw/display/virtio-gpu-base.c
+> +++ b/hw/display/virtio-gpu-base.c
+> @@ -232,6 +232,7 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+>   
+>       g->req_state[0].width = g->conf.xres;
+>       g->req_state[0].height = g->conf.yres;
+> +    g->req_state[0].refresh_rate = g->conf.refresh_rate;
+>   
+>       for (output_idx = 0, node = g->conf.outputs;
+>            node && output_idx < g->conf.max_outputs;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index f69fc19462..66cf921045 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -131,6 +131,7 @@ struct virtio_gpu_base_conf {
+>       uint32_t flags;
+>       uint32_t xres;
+>       uint32_t yres;
+> +    uint32_t refresh_rate;
+>       uint64_t hostmem;
+>       VirtIOGPUOutputList *outputs;
+>   };
+> @@ -176,7 +177,8 @@ struct VirtIOGPUBaseClass {
+>       DEFINE_PROP_BIT("edid", _state, _conf.flags, \
+>                       VIRTIO_GPU_FLAG_EDID_ENABLED, true), \
+>       DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
+> -    DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+> +    DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800), \
+> +    DEFINE_PROP_UINT32("refresh_rate", _state, _conf.refresh_rate, 60000)
+
+Please keep the old default value. Not only it is a good practice for 
+usability, it is a requirement for migration compatibility.
+(c.f., docs/devel/migration/compatibility.rst)
+
+I prefer having a macro to define the default value and share it here 
+and at edid-generate.c. (ideally xres and yres should have such macros, 
+but it is out of scope of this change so you are not required to add them.)
+
+Regards,
+Akihiko Odaki
+
+>   
+>   typedef struct VGPUDMABuf {
+>       QemuDmaBuf *buf;
+> 
+> ---
+> base-commit: 985062e2319e6bf4a4be9c216ede6d34379e5777
+> change-id: 20260414-virtio-gpu-refresh-rate-37b388e7dd72
+> 
+> Best regards,
 
 
