@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B206FF42100
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E744F419B9
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 17:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD4Cb-0000Bn-RE; Wed, 15 Apr 2026 13:39:01 -0400
+	id 1wD4Cy-0000HI-Q5; Wed, 15 Apr 2026 13:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4CZ-0000AQ-7c
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:38:59 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4Cw-0000G4-AQ
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:39:22 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4CX-0002kn-FC
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:38:58 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488a29e6110so75767855e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 10:38:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wD4Cu-0002uM-B4
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 13:39:22 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488c21c636dso43390295e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 10:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minio.io; s=minio; t=1776274736; x=1776879536; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=czMoe/c8/XX5KWWs2YbJoq4mu8G0tJQUrKnaro6zT2M=;
- b=SmyD8BSQ590BU28c9vs6K5UFLRcP9DSeHT1gG6z8Wsp7CYTBaOiOWucmfl3jsRnczd
- u+OtausaHc9ksIcSXN8Z7EBaNNISZGvMvlz8DgFgyht/wXXfjXtfV77R0XrL9Ne+QyBZ
- ZP4JB2iiwF6YdTrSxJdgXDG80zGgOYrKoG6rS9ZNH62jykzcMVfh15Dgu7j5CJWA41/r
- pRDQBisQAo5UX4jrxHLvvpt/HAfu122AANdtBEWHYdjFUp2Q5+EaDeR5NLSFjow8pEnS
- Wy9FH0GiIfGG/3wCYRmApcRUmt69aA2+y6g0McVb+RSUJhaW8eslQaKpp13sn1wqP4g5
- 1+pg==
+ d=minio.io; s=minio; t=1776274758; x=1776879558; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4oScoIx2BqLcj3tzztPnjsvXOCIkBnEain/aaImOuac=;
+ b=WdsrzZntNqScg28wm2ZOfqzKn84/B60eiFj4j+sxd2uTxEP2QKdyjS15GWTt0u/vZb
+ kjdlC/2/Fm2+3bYRLdXrJY0JDvOU9661V1d0XSxaI+hAU4ROS8Zi283eEey9JAIKOE3x
+ 58JyxpmfRvESEL9GwqesX5B0k1tKMI80dwe6Uv52slym2JEEonSp8ZDC5IxDwhhaKOIv
+ Tinm7Hf/e9Tql5GgQrF3QmzUR44ITMwOVXU1U6LXqFv3Dy6vQ78Ntomr7jaIBiy15PZS
+ w2RjFY6PrlxJTD96jv4RV1PS3wwC4vYOiHKhsD4z6eZsiwtEDUTRP/LeAb4BF2/RfoPv
+ ReCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776274736; x=1776879536;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=czMoe/c8/XX5KWWs2YbJoq4mu8G0tJQUrKnaro6zT2M=;
- b=FeqXwlWyr/Zn5/wh5vJYYd/NhPjnkxmJcOzAHoKiMns30Ey54IVvxoELFUYXBfEHja
- IoXSb9IsEVpOSn7zEMH07lCvFSj+KWLzxbsk5eD2/EU9ltuK7lA/K3yeTFo2DarX8gKb
- gNyqYjldSLdC8jdMZBmUdWaw6kR8AAmF7QZj94ix9Ke+TQAUqj9Sq7uGEXxxr+CcMoP7
- fqXYLqfxL31UASUzi2PULY2NsjhMDTKM4lhUZllxn33f+CrHHaRcP5WGwf3s7Awp+Vri
- /mNC4VsBWGJq8PTnzVKKrHvO2c7VamzHyOdsx+9CbzHJmkFsGbmeiAjpeyYOkVDjVwx3
- EeXw==
-X-Gm-Message-State: AOJu0YxQzR1yRjqBSCUTozJLjSvyMLDkoXqhxIxMmz31T6eaKmAwjzQY
- wE1uJcbqQ9d7mGH0L7z9/eKiM034zY03ScT91D34loXdavihnTTPANteE/GEMtnEeGdQFASMyow
- zVjAPPCPgtfkHfCZW+MvmCU0SNmFF6L7+ptfW09ebsSFS+ewtLJ91VctG1cY6AnWk16hRnRz3qk
- 6CpeVACRTslq/4eilhl8skx1Z6rvq+CWLJNlN9WxQ=
-X-Gm-Gg: AeBDievMbdFozrg1fBfXXwJFiXpu/FY1APfEvz3/y9rNrJQ+LLXxI1Vx1TELuWX8UCD
- KOJvZ+dOytOFIRDCHZPeLN/YSp13R2KrQpvGHSkv8VS3nX+GMXHb+3++fXbc4onSWJQLo2I2EdG
- FbqDyuPXlZGb00TQH9ImE9F9xu2SfTJJ1Ih1ZzIXcEEjsHvGGpyOxgYiaJwLXylyEC0Kx51kYhs
- MLA8hTJuVg2DZDeuBoccaP89IHV1EGWcNZ+Wrtw291au+mhlK9yG0q8NDvECuiCSXsJhdLaMgP6
- lx47J07HnMQfiF2DwbDt+N0KagbBeL4bTJiG/oxRATwEB1DBTaaXfK/I41peCRJaV6PUkV/aDKl
- z4LlVdQmzjzn9HM8tFCSc75/zbt+XEsL7fgyr2jGLocA8sOPGEcZ8wPzgW2aOVmOzKcUafvjKSM
- TbN80ecC+cWZCyBtPtqvOKnW/TcwQucUegEWGD8j8xrZiBkflVwKSdA2KVffLGIbOlNoa0bruyh
- ChGN0I6tSTmdN9fOYrN43KXhlDK/M7xoGnfZP6Vx6/ebqJKJIaTY0skpPklqGLu7IoKfEhH6RGX
- ZkdZTQ==
-X-Received: by 2002:a05:600c:a305:b0:488:ab37:b442 with SMTP id
- 5b1f17b1804b1-488d68c7f92mr216679995e9.28.1776274735540; 
- Wed, 15 Apr 2026 10:38:55 -0700 (PDT)
-Received: from localhost (2a01cb001411480010f92e9cd3b40a22.ipv6.abo.wanadoo.fr.
+ d=1e100.net; s=20251104; t=1776274758; x=1776879558;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4oScoIx2BqLcj3tzztPnjsvXOCIkBnEain/aaImOuac=;
+ b=YoR5WVXftepE0gh89QQ1OieFfffdeSuKh7JfewiI5qNGHP5lYhNmLWiL5WZzu6qmlX
+ MeXdJ47e/2oldwfA2volZGAlDA0OjYp58Hfg8/wGvMLaIHxlojK+ftHX881hZ3ejd80A
+ l7ojWVvbu+PMxmDhVLHYPrwBprs+GsqviZMdxOrhRas8fZT4MHhoAIR6EsCVlvK8F4FV
+ GSEQrWIUsZ4xs0hVxIEebMkshw9MBkm9pvK2PkvHXbV3WT0zfCbgKsTHm45CcfZ/bCve
+ nUOh3cQLcNUQjdwN7bNhL9jCi70KPgHlMWTFqEgxGADWN4t/sFIBrbF6KWjESexie+iO
+ xJlA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+LBWu5SCjJBoVrW4715sj8Yo4of2fyX5bswU4wQky8QZsc6rF1AHg8Mb8e18uETHPE5I4vN7J1Ks7X@nongnu.org
+X-Gm-Message-State: AOJu0Yz+U+CQIHRZXoKxMvUZvYE53CbYHvgIqaYcU3ioxlV5xpUTyjIk
+ hCERozIKRBjapVcABNZ96YlGPdJMWStj4LwoxsXvyCFW6307fJMETLXmaXl6URYlxaY=
+X-Gm-Gg: AeBDievycBRE/HXCu1Qi5s4RVgaPj086DEEXQYHKrdED6z3uA/XpkY3qsL8tyaguZc9
+ xkSwCYEt8y9D5RVz282rBDyp6het90JOVTX0ew+9EBa+oHtludVhdXX+ZL0llDExZIz8CS6vT6/
+ pYR0Ys/7d7kpumy73KExzqVYBgkprdSmp/FkWw8bwwCDR+ulZfF2mQaaoGmQEPK3iQbqll4dVHy
+ YK8VwEQTpjfFWMxgnR1jv7qiK5nWv6wDHXFCgBeyymzrb9tGKtBCrXopgT+ih5cVw3Jl9xv+kr+
+ lOhU/upi42uaitdhQyE3QkgIkYLHlRCJraWlseWF4i8ayiI4X13VGuMLKIp+kc79nNBbjNse7dh
+ tNjGFHe7jtgUwCdtvdDWXmd6zDToLrsByBbmf0EI8SqYz88aPrzIG3cV7zKgxcEBH836TvVVyA/
+ b+2GmmU3Alr2/R2H/uEbrVM5V+wA9/OUb7ywAiA2EojNzBAil5yIFgZDeXSdOfDqod0Wa59u72B
+ 7iNftZ9a2yUaJcJBKiZXkzE/yswhCZCTbMVx7LmNFyE4i5uP8nCN+svo2eMWwaJ8ehq+Srqb5nM
+ 234m37k=
+X-Received: by 2002:a05:600c:3f16:b0:485:3f30:6250 with SMTP id
+ 5b1f17b1804b1-488d6894bf6mr334658165e9.20.1776274757854; 
+ Wed, 15 Apr 2026 10:39:17 -0700 (PDT)
+Received: from smtpclient.apple
+ (2a01cb001411480010f92e9cd3b40a22.ipv6.abo.wanadoo.fr.
  [2a01:cb00:1411:4800:10f9:2e9c:d3b4:a22])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-488f0edaf47sm24184345e9.35.2026.04.15.10.38.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 10:38:55 -0700 (PDT)
-From: mr-083 <matthieu@minio.io>
-X-Google-Original-From: mr-083 <matthieu@min.io>
-To: qemu-devel@nongnu.org,
-	qemu-block@nongnu.org
-Cc: its@irrelevant.dk, kbusch@kernel.org, stefanha@redhat.com,
- berrange@redhat.com, mr-083 <matthieu@min.io>
-Subject: [PATCH] block: add blockdev-attach QMP command
-Date: Wed, 15 Apr 2026 19:39:05 +0200
-Message-ID: <20260415173905.71224-1-matthieu@min.io>
-X-Mailer: git-send-email 2.53.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=matthieu@minio.io; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HK_NAME_MR_MRS=0.998,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488f1de4a2csm68563045e9.4.2026.04.15.10.39.16
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 15 Apr 2026 10:39:17 -0700 (PDT)
+From: Matthieu Rolla <matthieu@minio.io>
+Message-Id: <069BD540-A4EF-4BDF-8A05-6670A9EE0C05@minio.io>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_1A8B0AFD-6584-45ED-97B4-88B18168C048"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
+Date: Wed, 15 Apr 2026 19:39:18 +0200
+In-Reply-To: <20260415124542.GB163810@fedora>
+Cc: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, mr-083 <matthieu@min.io>,
+ John Meneghini <jmeneghi@redhat.com>, kbusch@kernel.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
+To: mr-083 <matthieu@min.io>
+References: <20260409060155.94704-1-matthieu@min.io>
+ <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
+ <20260414124221.GB111076@fedora>
+ <A0EE1F55-E562-4315-BE08-1D3CF70706AD@minio.io>
+ <20260414181030.GB136064@fedora>
+ <C8F5F496-2401-45AC-82D3-EE0E3E1F2B21@minio.io>
+ <20260415124542.GB163810@fedora>
+X-Mailer: Apple Mail (2.3864.400.21)
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=matthieu@minio.io; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,187 +113,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a blockdev-attach QMP command that attaches a block driver state
-tree to a device's block backend.  Unlike blockdev-insert-medium, this
-works for non-removable devices such as NVMe namespaces.
 
-After drive_del removes a device's backing store, the BlockBackend
-remains attached to the guest device but has no BlockDriverState.
-blockdev-attach reconnects a block node (previously created with
-blockdev-add) to the device's BlockBackend via blk_insert_bs().
+--Apple-Mail=_1A8B0AFD-6584-45ED-97B4-88B18168C048
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-This separates the two concerns as recommended: blockdev-add creates
-the block node, blockdev-attach associates it with the device.
+Hello,
 
-Example usage with NVMe namespace hot-swap:
-  drive_del drv0
-  blockdev-add node-name=node0 driver=qcow2 file.driver=file \
-               file.filename=disk.qcow2
-  blockdev-attach id=ns0 node-name=node0
+Thanks everyone for the reviews.
+I just sent v4 of the namespace hotplug patch (Series 1) with the I/O =
+drain fix and nvme_ns_unrealize symmetry as discussed.
+As suggested by Stefan, the backend reassociation is sent as a separate =
+series (Series 2).=20
 
-An HMP wrapper is included for convenience.
+Per Daniel's feedback, it is implemented as a QMP command =
+(blockdev-attach) that pairs with the existing blockdev-add, with an HMP =
+wrapper. This allows reconnecting a block node to a non-removable =
+device's backend after drive_del, without the removable media =
+restriction of blockdev-insert-medium.
 
-Signed-off-by: Matthieu <matthieu@min.io>
----
- block/monitor/block-hmp-cmds.c | 10 ++++++++++
- block/qapi-system.c            | 36 ++++++++++++++++++++++++++++++++++
- hmp-commands.hx                | 16 +++++++++++++++
- include/block/block-hmp-cmds.h |  1 +
- qapi/block.json                | 33 +++++++++++++++++++++++++++++++
- 5 files changed, 96 insertions(+)
+Both patches tested with Linux 6.1 guest under DirectPV/MinIO AIStor =
+storage stack. Scenarios covered:
+Namespace attach/detach via device_del + device_add (Series 1)
+Backend disconnect/reconnect via drive_del + blockdev-add + =
+blockdev-attach + PCIe AER SDN (Series 2)
+Same device name preserved across detach/attach cycles
+Detach under heavy I/O (warp benchmark, 16 concurrent uploads)
+Short disconnect (<3s): XFS mounts intact, DirectPV Ready, MinIO 12/12
+Long disconnect (60s+): XFS journal shutdown, recovery via kubectl =
+directpv repair, full 12/12 recovery (minio trigger healing on disk)
+Multiple disks across multiple nodes (6 disks, 3 nodes)
 
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 1fd28d59eb..8a3d821e01 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -195,6 +195,16 @@ unlock:
-     hmp_handle_error(mon, err);
- }
- 
-+void hmp_blockdev_attach(Monitor *mon, const QDict *qdict)
-+{
-+    const char *id = qdict_get_str(qdict, "id");
-+    const char *node_name = qdict_get_str(qdict, "node-name");
-+    Error *err = NULL;
-+
-+    qmp_blockdev_attach(id, node_name, &err);
-+    hmp_handle_error(mon, err);
-+}
-+
- void hmp_commit(Monitor *mon, const QDict *qdict)
- {
-     const char *device = qdict_get_str(qdict, "device");
-diff --git a/block/qapi-system.c b/block/qapi-system.c
-index 54b7409b2b..ec89645bc1 100644
---- a/block/qapi-system.c
-+++ b/block/qapi-system.c
-@@ -304,6 +304,42 @@ void qmp_blockdev_insert_medium(const char *id, const char *node_name,
-     blockdev_insert_medium(NULL, id, node_name, errp);
- }
- 
-+void qmp_blockdev_attach(const char *id, const char *node_name,
-+                         Error **errp)
-+{
-+    BlockBackend *blk;
-+    BlockDriverState *bs;
-+    int ret;
-+
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-+    blk = qmp_get_blk(NULL, id, errp);
-+    if (!blk) {
-+        return;
-+    }
-+
-+    if (blk_bs(blk)) {
-+        error_setg(errp, "Device already has a medium inserted");
-+        return;
-+    }
-+
-+    bs = bdrv_find_node(node_name);
-+    if (!bs) {
-+        error_setg(errp, "Node '%s' not found", node_name);
-+        return;
-+    }
-+
-+    if (bdrv_has_blk(bs)) {
-+        error_setg(errp, "Node '%s' is already in use", node_name);
-+        return;
-+    }
-+
-+    ret = blk_insert_bs(blk, bs, errp);
-+    if (ret < 0) {
-+        return;
-+    }
-+}
-+
- void qmp_blockdev_change_medium(const char *device,
-                                 const char *id,
-                                 const char *filename,
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 5cc4788f12..ce32ed33ab 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -207,6 +207,22 @@ SRST
-   actions (drive options rerror, werror).
- ERST
- 
-+    {
-+        .name       = "blockdev-attach",
-+        .args_type  = "id:s,node-name:s",
-+        .params     = "id node-name",
-+        .help       = "attach a block node to a device (non-removable)",
-+        .cmd        = hmp_blockdev_attach,
-+    },
-+
-+SRST
-+``blockdev-attach`` *id* *node-name*
-+  Attach a block driver state tree (created with ``blockdev-add``) to a
-+  device's block backend. Unlike ``blockdev-insert-medium``, this works
-+  for non-removable devices such as NVMe namespaces. The device must
-+  have no medium inserted (e.g. after ``drive_del``).
-+ERST
-+
-     {
-         .name       = "change",
-         .args_type  = "device:B,force:-f,target:F,arg:s?,read-only-mode:s?",
-diff --git a/include/block/block-hmp-cmds.h b/include/block/block-hmp-cmds.h
-index 71113cd7ef..34d30915fc 100644
---- a/include/block/block-hmp-cmds.h
-+++ b/include/block/block-hmp-cmds.h
-@@ -21,6 +21,7 @@ void hmp_drive_add(Monitor *mon, const QDict *qdict);
- 
- void hmp_commit(Monitor *mon, const QDict *qdict);
- void hmp_drive_del(Monitor *mon, const QDict *qdict);
-+void hmp_blockdev_attach(Monitor *mon, const QDict *qdict);
- 
- void hmp_drive_mirror(Monitor *mon, const QDict *qdict);
- void hmp_drive_backup(Monitor *mon, const QDict *qdict);
-diff --git a/qapi/block.json b/qapi/block.json
-index 46955bbb3e..c05d3b5ac1 100644
---- a/qapi/block.json
-+++ b/qapi/block.json
-@@ -295,6 +295,39 @@
-   'data': { 'id': 'str',
-             'node-name': 'str'} }
- 
-+##
-+# @blockdev-attach:
-+#
-+# Attach a block driver state tree to a device's block backend.
-+# Unlike blockdev-insert-medium, this works for non-removable
-+# devices such as NVMe namespaces.  The device must currently have
-+# no medium inserted (e.g. after drive_del removed the backing).
-+#
-+# @id: The name or QOM path of the guest device
-+#
-+# @node-name: name of a node in the block driver state graph
-+#
-+# Since: 11.1
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "blockdev-add",
-+#          "arguments": {
-+#              "node-name": "node0",
-+#              "driver": "qcow2",
-+#              "file": { "driver": "file",
-+#                        "filename": "disk.qcow2" } } }
-+#     <- { "return": {} }
-+#
-+#     -> { "execute": "blockdev-attach",
-+#          "arguments": { "id": "ns0",
-+#                         "node-name": "node0" } }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'blockdev-attach',
-+  'data': { 'id': 'str',
-+            'node-name': 'str'} }
-+
- ##
- # @BlockdevChangeReadOnlyMode:
- #
--- 
-2.53.0
 
+
+	.=09
+Matthieu
+
+matthieu@min.io <>=20
+
+> On Apr 15, 2026, at 2:45=E2=80=AFPM, Stefan Hajnoczi =
+<stefanha@redhat.com> wrote:
+>=20
+> On Tue, Apr 14, 2026 at 08:14:16PM +0200, Matthieu Rolla wrote:
+>> To clarify,  we're not swapping to a different backend. It's the same =
+disk file being disconnected and reconnected, simulating a physical =
+drive being pulled and reinserted.
+>=20
+> Is it necessary to drive_del to simulate PCIe Surprise Down? Can you
+> perform just the PCIe actions without removing the drive from the NVMe
+> device? That way the drive_insert command is not necessary.
+>=20
+> Stefan
+
+
+--Apple-Mail=_1A8B0AFD-6584-45ED-97B4-88B18168C048
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><p style=3D"white-space: pre-wrap; =
+margin-top: 0.1em; margin-bottom: 0.2em; color: rgb(64, 64, 64); =
+font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, =
+sans-serif; font-size: 13px; font-variant-ligatures: =
+normal;">Hello,</p><p style=3D"white-space: pre-wrap; margin-top: 0.1em; =
+margin-bottom: 0.2em; color: rgb(64, 64, 64); font-family: =
+-apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, sans-serif; =
+font-size: 13px; font-variant-ligatures: normal;"><br></p><p =
+style=3D"white-space: pre-wrap; margin-top: 0.1em; margin-bottom: 0.2em; =
+color: rgb(64, 64, 64); font-family: -apple-system, system-ui, =
+&quot;Segoe UI&quot;, Roboto, sans-serif; font-size: 13px; =
+font-variant-ligatures: normal;">Thanks everyone for the reviews.</p><p =
+style=3D"white-space: pre-wrap; margin-top: 0.1em; margin-bottom: 0.2em; =
+color: rgb(64, 64, 64); font-family: -apple-system, system-ui, =
+&quot;Segoe UI&quot;, Roboto, sans-serif; font-size: 13px; =
+font-variant-ligatures: normal;">I just sent v4 of the namespace hotplug =
+patch (Series 1) with the I/O drain fix and nvme_ns_unrealize symmetry =
+as discussed.</p><p style=3D"white-space: pre-wrap; margin-top: 0.1em; =
+margin-bottom: 0.2em; color: rgb(64, 64, 64); font-family: =
+-apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, sans-serif; =
+font-size: 13px; font-variant-ligatures: normal;">As suggested by =
+Stefan, the backend reassociation is sent as a separate series (Series =
+2).&nbsp;</p><p style=3D"white-space: pre-wrap; margin-top: 0.1em; =
+margin-bottom: 0.2em; color: rgb(64, 64, 64); font-family: =
+-apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, sans-serif; =
+font-size: 13px; font-variant-ligatures: normal;"><br></p><p =
+style=3D"white-space: pre-wrap; margin-top: 0.1em; margin-bottom: 0.2em; =
+color: rgb(64, 64, 64); font-family: -apple-system, system-ui, =
+&quot;Segoe UI&quot;, Roboto, sans-serif; font-size: 13px; =
+font-variant-ligatures: normal;">Per Daniel's feedback, it is =
+implemented as a QMP command (blockdev-attach) that pairs with the =
+existing blockdev-add, with an HMP wrapper. This allows reconnecting a =
+block node to a non-removable device's backend after drive_del, without =
+the removable media restriction of blockdev-insert-medium.</p><p =
+style=3D"white-space: pre-wrap; margin-top: 0.1em; margin-bottom: 0.2em; =
+color: rgb(64, 64, 64); font-family: -apple-system, system-ui, =
+&quot;Segoe UI&quot;, Roboto, sans-serif; font-size: 13px; =
+font-variant-ligatures: normal;"><br></p><p style=3D"white-space: =
+pre-wrap; margin-top: 0.1em; margin-bottom: 0.2em; color: rgb(64, 64, =
+64); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, =
+Roboto, sans-serif; font-size: 13px; font-variant-ligatures: =
+normal;">Both patches tested with Linux 6.1 guest under DirectPV/MinIO =
+AIStor storage stack. Scenarios covered:</p><ul =
+style=3D"padding-inline-start: 2em; color: rgb(64, 64, 64); font-family: =
+-apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, sans-serif; =
+font-size: 13px; font-variant-ligatures: normal;"><li>Namespace =
+attach/detach via device_del + device_add (Series 1)</li><li>Backend =
+disconnect/reconnect via drive_del + blockdev-add + blockdev-attach + =
+PCIe AER SDN (Series 2)</li><li>Same device name preserved across =
+detach/attach cycles</li><li>Detach under heavy I/O (warp benchmark, 16 =
+concurrent uploads)</li><li>Short disconnect (&lt;3s): XFS mounts =
+intact, DirectPV Ready, MinIO 12/12</li><li>Long disconnect (60s+): XFS =
+journal shutdown, recovery via kubectl directpv repair, full 12/12 =
+recovery (minio trigger healing on disk)</li><li>Multiple disks across =
+multiple nodes (6 disks, 3 nodes)</li></ul><p style=3D"white-space: =
+pre-wrap; margin-top: 0.1em; margin-bottom: 0.2em; color: rgb(64, 64, =
+64); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, =
+Roboto, sans-serif; font-size: 13px; font-variant-ligatures: =
+normal;"><br></p><div>
+<br>
+<br>
+<table>
+   <tbody>
+       <tr>
+           <td style=3D"padding: 0 50px 0 0;"><img =
+src=3D"https://cdn.bfldr.com/Q955TODV/at/f5h9pjj8f8t3ng5t6vxs2n/emailsigna=
+ture-logo-standalone.png?auto=3Dwebp&amp;format=3Dpng" height=3D"34"></td>=
+
+           <td style=3D"width: 1px; padding: 0; background-color: =
+#D6DAE1; color: #D6DAE1; font-size: 1px;">.</td>
+           <td style=3D"padding:0 20px 0 50px;">
+               <div style=3D"margin-top: -6px; margin-bottom: -4px;">
+                   <strong><span =
+style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: =
+1.1em; color: #353638;" color=3D"#353638">Matthieu</span></strong><br>
+                   <div style=3D"height: 6px;"><br></div>
+                   <a =
+style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: 1em; =
+color: #353638; text-decoration: none; line-height: 118%;" =
+color=3D"#353638">matthieu@min.io</a>
+               </div>
+           </td>
+       </tr>
+   </tbody>
+</table>
+
+</div>
+<div><br><blockquote type=3D"cite"><div>On Apr 15, 2026, at 2:45=E2=80=AFP=
+M, Stefan Hajnoczi &lt;stefanha@redhat.com&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div>On Tue, Apr 14, 2026 at =
+08:14:16PM +0200, Matthieu Rolla wrote:<br><blockquote type=3D"cite">To =
+clarify, &nbsp;we're not swapping to a different backend. It's the same =
+disk file being disconnected and reconnected, simulating a physical =
+drive being pulled and reinserted.<br></blockquote><br>Is it necessary =
+to drive_del to simulate PCIe Surprise Down? Can you<br>perform just the =
+PCIe actions without removing the drive from the NVMe<br>device? That =
+way the drive_insert command is not =
+necessary.<br><br>Stefan<br></div></div></blockquote></div><br></body></ht=
+ml>=
+
+--Apple-Mail=_1A8B0AFD-6584-45ED-97B4-88B18168C048--
 
