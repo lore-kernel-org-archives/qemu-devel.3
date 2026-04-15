@@ -4,91 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECBBF419A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 13:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C4EEF419A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 13:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD0PO-0003Tv-HL; Wed, 15 Apr 2026 09:35:58 -0400
+	id 1wD0PN-0003Tu-KK; Wed, 15 Apr 2026 09:35:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wD0PM-0003TX-M5
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:35:56 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wD0PL-0003TN-DE
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:35:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wD0PK-0006Py-HM
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:35:56 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wD0PG-00000000dRq-0Pil; Wed, 15 Apr 2026 15:35:50 +0200
-Message-ID: <d8d560ad-045a-419e-b44c-3c8c61d5d94e@maciej.szmigiero.name>
-Date: Wed, 15 Apr 2026 15:35:44 +0200
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wD0PJ-0006Pz-OW
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 09:35:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776260153;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OZgxnJiKlhpfgg42CnMY+u7qWO3b1+KZaeAjDVG+U9g=;
+ b=aIsg7t/E+gRI2MJTN3m52r/Ia08OYEsRVpOVCm2ZT5ShufoK/eYGD3f3N5Cs91ImUsPhZg
+ 816dzET5kzD4YL6cJ6KrIiyNPTcJXJLnf6bpesudx3JENlCHsvgD/R2xd+/qVdGY9nFl8q
+ jWBs/C9O0YmFP/a7VIPdLOmPKu5MAKo=
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-636-oen-oT7IMMe_BNT-UUH_Hg-1; Wed, 15 Apr 2026 09:35:50 -0400
+X-MC-Unique: oen-oT7IMMe_BNT-UUH_Hg-1
+X-Mimecast-MFC-AGG-ID: oen-oT7IMMe_BNT-UUH_Hg_1776260150
+Received: by mail-oa1-f72.google.com with SMTP id
+ 586e51a60fabf-42467c9547bso1663420fac.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 06:35:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776260149; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bxCnPFWvjiUi79+s4BGFRFbsDmICiPLLMyxgATZF/WIxroCVUS4atg25RYr0W2cJfx
+ NG5TDS/kuQ+4YKTTkdNV80YMBjOuklrOeXqHGvIi7tYfnORI9sLLScGnR/tlsugePSEm
+ YwUwj50Tuj/40bAm3JyRIAmcS9WtoTwzD3D0hygaE67VLqiP1swrGuJKqMTqUd+bRCRB
+ dmNbFyHJSnTubnJoxupAYJ0B4H/YFmLV7lx98gETdSFynz/egrcGcBgnQJpRlSOMWoxU
+ N+yqmY3WoP6Q5GXJUbEWwFIz2J5RiM8VXn2hUzy9rREChWA6C2QRRuUBtD4sCTbEJBdl
+ H7/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=OZgxnJiKlhpfgg42CnMY+u7qWO3b1+KZaeAjDVG+U9g=;
+ fh=Xrp2glQicIvkcDLzKDtQ4JXqZnWs2rFpNaCudBPk6pA=;
+ b=GvWQyEDd9Bj+IYWo8zxA7vw9pL6n1MlUcRydfWZQT+LptO15cpLpnQYSVo4smeXar2
+ aMydlt3pyyFDcs4Tswl+rxBB/ggayhP8gK/pvbAcaEVTYa6YHLwRwBnFAyy4ezQ3PNwB
+ CNmYQMOnccylnAuTP3s4MlZGG/aWSXymaOABtb7FT+raXwYJ/cLegVX/J/ymNUySijBM
+ 9yg/RQ7jvvDUc3NA3jzU24VYCqayA6Z+/okCh6xavbid20VRd33bDaYzssIb1n+fYzMQ
+ PDfnWKt1qeA4JlA2DJdMZQ8CtmmQs+kw4OEM1e1r9agkxT8cW0kBFgKidxNywd4ouj8J
+ WBow==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776260149; x=1776864949; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OZgxnJiKlhpfgg42CnMY+u7qWO3b1+KZaeAjDVG+U9g=;
+ b=LiBXDZUqXenM9fJOcB0qOSXq79rHfVG03azufO8KA+Tqp1BP1+V0NjSrvp5nQcmI6N
+ 7n9DgeFb1p+1mJAFvAgNkp7MZW1fXmArOLKkF/VLOsQnSUxuxoTL/99CmF0ENSMrW21e
+ PKRWJHnr0Cts09Ub8o5ueXx7FRQ+QjWDY4+e3ZCEK5fzJlp6GI/fapH4Tz7cKDjT8eq8
+ zMrrNarwGrMuvVQbne3oG5zg7NwBxz4Eh4/LI9pgr0yanQOPIcfqhmiDTEPuOBnGlYvx
+ MoXua9eBq+AkjEHBGdL6c8f/ulcGML524XQLAI+XayDqq28WeveNf/J9hzlB0ctnUomj
+ a9Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776260149; x=1776864949;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OZgxnJiKlhpfgg42CnMY+u7qWO3b1+KZaeAjDVG+U9g=;
+ b=duzfBt7sjxD9jUE5ppzoQkLEkDgVMtjUi0br3A1TqVkETD6hdtkUTZ1zKIMMt04mTg
+ 8AW2kFTGSRkvQkBh59na2IiSMaF9QURP6lDHtYBWLYyDMY4qlaXwiFvotzGk2GP1ibSA
+ ksXouXDDY2x8SfFAlPxKQscb3gx53C4XFGOFMSnBWKUetgjU8t9x+Cwb5HHEIE26703p
+ Qb3GKsOVflky4jaljo+Si0ZkPVJeadGmbrjW0Ngbr+0PyjVhLaPed5rZPwEGqQHDaomb
+ osqZgRLTiO0i1p157VqjrEIEzKZ3DOvgY4xwF3KlcJw9mXlYP2CiiJR5XjrH4pMAhFS3
+ lUKA==
+X-Gm-Message-State: AOJu0YyDAaASoPxFa7ikRBTl+K6C5aWrRbmR3e+XBqwTELB1S27wr+87
+ 7hj93iuiKbUgOkzJZNxdyb3BpLNESRWT8VI/JfYEJ2mJ4G8pok6819EJoSJshBnjTrGiQrwtpee
+ fJ1D/pdeK/XVuEFvuMsd8WB09qFRHBwrCGxKc3gi5+RuBadgvZFs8ZVtmq/D+3UgJnPeupAhDfI
+ 0kGOjOWTIq2lpBIaz1XOdHEmAURpzWs/Q23Zol9nM=
+X-Gm-Gg: AeBDieuzptFgQV+kkoKJWwIO00UXddaJ1cvKM5ZA371EXa32g+T3TF7vlJb2QcVHjgQ
+ fzJue8NQRFM2tzgN4NhYyISj1Yly+/2fgPD/r1JwrFjSBhaddOIQa32HDzOmk/cR7TIZ3OFutAr
+ irSNn9eh64yUeTzTJCte3hq4mO+4D5ZDFh+qtdYAemgc7JsnZzkmK1cPYHXDXnscB+VzhncdiCz
+ yeh3dqx7nrlOvxdo7CpxggmJx3lx14aqpGe2kI3wEySRg==
+X-Received: by 2002:a05:6820:16a8:b0:68d:9ba5:de27 with SMTP id
+ 006d021491bc7-68d9ba5e476mr7838362eaf.56.1776260149268; 
+ Wed, 15 Apr 2026 06:35:49 -0700 (PDT)
+X-Received: by 2002:a05:6820:16a8:b0:68d:9ba5:de27 with SMTP id
+ 006d021491bc7-68d9ba5e476mr7838345eaf.56.1776260148811; Wed, 15 Apr 2026
+ 06:35:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
- migrate_params_test_apply
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel@nongnu.org
-References: <20260414223718.23965-1-farosas@suse.de>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20260414223718.23965-1-farosas@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260406141735.25844-1-armenon@redhat.com>
+ <20260406141735.25844-2-armenon@redhat.com>
+ <CAMxuvazscrXMNc+VV_jpTLY1aRjCKAbmBoZ-LCcsZ-4iazBfvg@mail.gmail.com>
+In-Reply-To: <CAMxuvazscrXMNc+VV_jpTLY1aRjCKAbmBoZ-LCcsZ-4iazBfvg@mail.gmail.com>
+From: Arun Menon <armenon@redhat.com>
+Date: Wed, 15 Apr 2026 19:05:11 +0530
+X-Gm-Features: AQROBzACRi4jHsRjCjqcLutU4nHp-Jl0oT6DIy9403R2yIU_hKfI99zCFZkZ2LU
+Message-ID: <CAE_eyq9QqcsQcRY53rH5tbBhnYNWtXHYjQUQu7HKpGtDQOaoHw@mail.gmail.com>
+Subject: Re: [PATCH v3 01/10] hw/tpm: Add TPM CRB chunking fields
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Stefan Berger <stefanb@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,55 +145,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.04.2026 00:37, Fabiano Rosas wrote:
-> Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
-> method makes the handling of the TLS strings more intuitive because it
-> clones them as well.
-> 
-> This also fixes a segfault when a NULL TLS option is accessed as part
-> of a validation check for another option (e.g. in the zero-copy +
-> multifd compression case). Details follow:
-> 
-> Currently, after copying s->parameters to the temporary
-> MigrationParameters object before migrate_params_check(), the
-> references in temporary object to the TLS options are dropped, either
-> because:
-> 
-> a) the user set a new option, in which case that's fine as
->     s->parameters still holds the reference to the old memory or,
-> 
-> b) the user did not set a new option, in which case keeping the
->     references in the temporary object would later cause them to be
->     freed along with it, leading to double-free when s->parameters is
->     also freed later on.
-> 
-> In this second case, it was overlooked that the TLS options can be
-> accessed already during migrate_params_check() as part of validation
-> of another option. Those pointers should not have been cleared.
-> 
-> Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
-> is not stealing a reference from s->parameters anymore.
-> 
-> Fixes: aed97f0563 ("migration: Normalize tls arguments")
-> Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-> Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
-> NOTE#1: For the release we could have a simpler fix just checking for
-> NULL, but that would allow two unsupported configurations to be
-> accepted: zero-copy with either multifd compression or TLS.
-> 
-> NOTE#2: CI is red due to pre-existing failure in functional tests with
-> "exec:socat" migration.
-> ---
+On Tue, Apr 07, 2026 at 11:49:54AM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> Hi
+>
+> On Mon, Apr 6, 2026 at 6:18=E2=80=AFPM Arun Menon <armenon@redhat.com> wr=
+ote:
+> >
+> > From: Arun Menon <armenon@redhat.com>
+> >
+> > - Add new fields to the CRB Interface Identifier and the CRB
+> >   Control Start registers.
+> > - CRB_CTRL_START now has 2 new settings, that can be toggled using the
+> >   nextChunk and crbRspRetry bits.
+> > - CapCRBChunk bit (10) was Reserved1 previously. The field is reused in
+> >   this revision of the specification.
+> > - Refer to section 6.4.2.2 of [1]
+> >
+> > [1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Spec=
+ific-Platform-TPM-Profile-for-TPM-2p0-v1p07_rc1_121225.pdf
+>
+> You may update the link to the released version
+> https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-P=
+latform-TPM-Profile-for-TPM-2p0-v1p07_Pub.pdf
+>
+> >
+> > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> > ---
+> >  hw/tpm/tpm_crb.c      | 3 +++
+> >  include/hw/acpi/tpm.h | 5 ++++-
+> >  2 files changed, 7 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> > index 8723536f93..0a1c7ecdc6 100644
+> > --- a/hw/tpm/tpm_crb.c
+> > +++ b/hw/tpm/tpm_crb.c
+> > @@ -59,6 +59,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
+> >  #define CRB_INTF_CAP_FIFO_NOT_SUPPORTED 0b0
+> >  #define CRB_INTF_CAP_CRB_SUPPORTED 0b1
+> >  #define CRB_INTF_IF_SELECTOR_CRB 0b1
+> > +#define CRB_INTF_CAP_CRB_CHUNK 0b1
+> >
+> >  #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
+> >
+> > @@ -262,6 +263,8 @@ static void tpm_crb_reset(void *dev)
+> >                       CapCRB, CRB_INTF_CAP_CRB_SUPPORTED);
+> >      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+> >                       InterfaceSelector, CRB_INTF_IF_SELECTOR_CRB);
+> > +    ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+> > +                     CapCRBChunk, CRB_INTF_CAP_CRB_CHUNK);
+> >      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+> >                       RID, 0b0000);
+> >      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID2,
+> > diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
+> > index d2bf6637c5..03d452d2b5 100644
+> > --- a/include/hw/acpi/tpm.h
+> > +++ b/include/hw/acpi/tpm.h
+> > @@ -149,7 +149,7 @@ REG32(CRB_INTF_ID, 0x30)
+> >    FIELD(CRB_INTF_ID, InterfaceVersion, 4, 4)
+> >    FIELD(CRB_INTF_ID, CapLocality, 8, 1)
+> >    FIELD(CRB_INTF_ID, CapCRBIdleBypass, 9, 1)
+> > -  FIELD(CRB_INTF_ID, Reserved1, 10, 1)
+> > +  FIELD(CRB_INTF_ID, CapCRBChunk, 10, 1)
+> >    FIELD(CRB_INTF_ID, CapDataXferSizeSupport, 11, 2)
+> >    FIELD(CRB_INTF_ID, CapFIFO, 13, 1)
+> >    FIELD(CRB_INTF_ID, CapCRB, 14, 1)
+> > @@ -168,6 +168,9 @@ REG32(CRB_CTRL_STS, 0x44)
+> >    FIELD(CRB_CTRL_STS, tpmIdle, 1, 1)
+> >  REG32(CRB_CTRL_CANCEL, 0x48)
+> >  REG32(CRB_CTRL_START, 0x4C)
+> > +  FIELD(CRB_CTRL_START, invoke, 0, 1)
+>
+> Any reason to diverge from the spec "Start" naming here?
 
-Thanks for the quick fix Fabiano.
+No reason; I think I should stick to spec. I saw cancel invoke and I
+thought start should also have an invoke.
+I will change it to FIELD(CRB_CTRL_START, start, 0, 1)
 
-The patch seems to fix the issue, so:
-Tested-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>
+> > +  FIELD(CRB_CTRL_START, crbRspRetry, 1, 1)
+> > +  FIELD(CRB_CTRL_START, nextChunk, 2, 1)
+> >  REG32(CRB_INT_ENABLED, 0x50)
+> >  REG32(CRB_INT_STS, 0x54)
+> >  REG32(CRB_CTRL_CMD_SIZE, 0x58)
+> > --
+> > 2.53.0
+> >
+>
 
-Thanks,
-Maciej
+Regards,
+Arun Menon
 
 
