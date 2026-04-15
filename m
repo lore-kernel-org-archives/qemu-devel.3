@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB6B1FA0C22
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 04:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC07BFA0C32
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 05:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCrhD-0003FH-Fk; Wed, 15 Apr 2026 00:17:48 -0400
+	id 1wCtEb-0007Gi-8m; Wed, 15 Apr 2026 01:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wCrh8-0003F1-Uv
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 00:17:43 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from
+ <fm-294854-2026041505460849760da85e000207cb-5jPIr4@rts-flowmailer.siemens.com>)
+ id 1wCtEY-0007FO-4p
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 01:56:18 -0400
+Received: from mta-65-225.siemens.flowmailer.net ([185.136.65.225])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wCrh5-0006qM-I6
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 00:17:42 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63F4HPEP013113
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 15 Apr 2026 13:17:25 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=EzUPHJ8tJhEWZc6O5WfAZQ1VjI4NtaQb5lKeRYg4asE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1776226645; v=1;
- b=MbmmjsZyTw+4uzgz094+qBylojb1NJYOhg5we6U0pwxbRkOqaAuHyJiGksqFANbE
- aYomPB9lpL7UCGEi8Y08Lii4u+RbXrz+yxfKhS59NVUONh084Gj8QtI89LZNDLnm
- 0p9/Zs/b8BGcHAsXq6NXp6GnM+xDQIa52Pc7fS6VYqWFKST5QwtYG9pyv25iRQJ+
- mHSFm8msXh8Pd7s874zQnMS+8Hj2eLVFP0dvuwlkOFpq2UzY+JuXFR6NyiaT2v1E
- aFXU6rOJVsRYba7vXZgWbndeBWTY+QJC7y9JW+9mYTYgXhdc/j0dUirOh003wHvm
- Bm49qotiIKjCPeWH78Z9Cw==
-Message-ID: <24cf0201-8104-4964-b992-847aaf56a7b0@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 15 Apr 2026 13:17:24 +0900
+ (Exim 4.90_1) (envelope-from
+ <fm-294854-2026041505460849760da85e000207cb-5jPIr4@rts-flowmailer.siemens.com>)
+ id 1wCtEW-000507-0o
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 01:56:17 -0400
+Received: by mta-65-225.siemens.flowmailer.net with ESMTPSA id
+ 2026041505460849760da85e000207cb for <qemu-devel@nongnu.org>;
+ Wed, 15 Apr 2026 07:46:08 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm2;
+ d=siemens.com; i=jan.kiszka@siemens.com;
+ h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
+ bh=ljlMNRxDeYe3LJA5qlN/A4oHLI+j+bfEkm76penXCXI=;
+ b=ZY5x6augZl5yoNpVC6gEv3o+A2o9HVXu1K57XDFY1vTSNYG350Ufz3RxTDKeHYX8+N2L9e
+ 897KwQ3g9ow5AqsczW5JHvOBnWEWkwMWcPkjbcEqOOMwgWr/SFvwtexuxD3fxiawKtxf7ChJ
+ 4kZqGsbatEXsmQ/Zhwy1yzbF5OOm3BDQ1cLaLvVyCNNwVy6A9omaO+fteqMbpinRz87OtoxL
+ sntRWl4OFmqgq/dVV+UpZikYWw97o5OTFB3dIchYZx3KblMq4giS5+MxmXTtm8ry3zIid0r0
+ I8Pbh7YayTh5+Koxy04SfdpzLDU/HrxR73KkirdpMwsam/D0EXKlVxeQ==;
+From: Jan Kiszka <jan.kiszka@siemens.com>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 1/2] scripts: mkemmc.sh: Fix output pollution on missing images
+Date: Wed, 15 Apr 2026 07:46:06 +0200
+Message-ID: <b9d603b7396719f38e03cd969a4ac1b48f5ea96a.1776231967.git.jan.kiszka@siemens.com>
+In-Reply-To: <cover.1776231967.git.jan.kiszka@siemens.com>
+References: <cover.1776231967.git.jan.kiszka@siemens.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] add a refresh_rate option to virtio-gpu
-To: slonkazoid <slonkazoid@slonk.ing>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260414-virtio-gpu-refresh-rate-v1-1-59e6320eb24e@slonk.ing>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260414-virtio-gpu-refresh-rate-v1-1-59e6320eb24e@slonk.ing>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Flowmailer-Platform: Siemens
+Feedback-ID: 519:519-294854:519-21489:flowmailer
+Received-SPF: pass client-ip=185.136.65.225;
+ envelope-from=fm-294854-2026041505460849760da85e000207cb-5jPIr4@rts-flowmailer.siemens.com;
+ helo=mta-65-225.siemens.flowmailer.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,85 +78,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/04/15 3:39, slonkazoid wrote:
-> Signed-off-by: slonkazoid <slonkazoid@slonk.ing>
-> ---
-> currently, the virtio-gpu module does not set a refresh rate, making it
-> default to 75Hz in the qemu edid generation logic. i wrote a sloppy patch
-> that adds a `refresh_rate` option to virtio-gpu, which propagates to all
-> the devices based on it (i was interested in virtio-vga-gl). it's not of
-> much use by itself but when combined with something like Sunshine or
-> looking-glass, it can provide *far* smoother guest graphics than the
-> inbuilt display devices. i have done a bare minimum amount of manual
-> testing (virtio-vga-gl with venus XOR amdgpu drm native context streaming
-> video games) and it functions as intended, and should not break the code
-> path to fetch the refresh rate from the active display device (?), however,
-> i have never contributed to QEMU before and i don't know the customs
-> concerning testing, documentation, etc. if there's more i should do, please
-> tell me! if this is something that would benefit QEMU, feel free to merge it.
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
+Reorder the redirections so that the 2>/dev/null can actually take
+effect.
 
-Hi,
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+---
+ scripts/mkemmc.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I think it's fine as long as you confirmed the change actually works.
-
-> it's probably not a copyrightable change anyways.
-> ---
->   hw/display/virtio-gpu-base.c   | 1 +
->   include/hw/virtio/virtio-gpu.h | 4 +++-
->   2 files changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-> index cb76302e2d..d87f6604d0 100644
-> --- a/hw/display/virtio-gpu-base.c
-> +++ b/hw/display/virtio-gpu-base.c
-> @@ -232,6 +232,7 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
->   
->       g->req_state[0].width = g->conf.xres;
->       g->req_state[0].height = g->conf.yres;
-> +    g->req_state[0].refresh_rate = g->conf.refresh_rate;
->   
->       for (output_idx = 0, node = g->conf.outputs;
->            node && output_idx < g->conf.max_outputs;
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-> index f69fc19462..66cf921045 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -131,6 +131,7 @@ struct virtio_gpu_base_conf {
->       uint32_t flags;
->       uint32_t xres;
->       uint32_t yres;
-> +    uint32_t refresh_rate;
->       uint64_t hostmem;
->       VirtIOGPUOutputList *outputs;
->   };
-> @@ -176,7 +177,8 @@ struct VirtIOGPUBaseClass {
->       DEFINE_PROP_BIT("edid", _state, _conf.flags, \
->                       VIRTIO_GPU_FLAG_EDID_ENABLED, true), \
->       DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
-> -    DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
-> +    DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800), \
-> +    DEFINE_PROP_UINT32("refresh_rate", _state, _conf.refresh_rate, 60000)
-
-Please keep the old default value. Not only it is a good practice for 
-usability, it is a requirement for migration compatibility.
-(c.f., docs/devel/migration/compatibility.rst)
-
-I prefer having a macro to define the default value and share it here 
-and at edid-generate.c. (ideally xres and yres should have such macros, 
-but it is out of scope of this change so you are not required to add them.)
-
-Regards,
-Akihiko Odaki
-
->   
->   typedef struct VGPUDMABuf {
->       QemuDmaBuf *buf;
-> 
-> ---
-> base-commit: 985062e2319e6bf4a4be9c216ede6d34379e5777
-> change-id: 20260414-virtio-gpu-refresh-rate-37b388e7dd72
-> 
-> Best regards,
+diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
+index 429388213c..3d8546cdaa 100755
+--- a/scripts/mkemmc.sh
++++ b/scripts/mkemmc.sh
+@@ -40,7 +40,7 @@ process_size() {
+     alignment=$3
+     image_arg=$4
+     if [ "${image_arg#*:}" = "$image_arg"  ]; then
+-        if ! size=$(wc -c < "$image_file" 2>/dev/null); then
++        if ! size=$(wc -c 2>/dev/null < "$image_file"); then
+             echo "Missing $name image '$image_file'." >&2
+             exit 1
+         fi
+@@ -102,7 +102,7 @@ check_truncation() {
+     if [ "$image_file" = "/dev/zero" ]; then
+         return
+     fi
+-    if ! actual_size=$(wc -c < "$image_file" 2>/dev/null); then
++    if ! actual_size=$(wc -c 2>/dev/null < "$image_file"); then
+         echo "Missing image '$image_file'." >&2
+         exit 1
+     fi
+-- 
+2.47.3
 
 
