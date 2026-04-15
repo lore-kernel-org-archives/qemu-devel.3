@@ -4,145 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C67EFF43834
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 15:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73073F43847
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 15:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD25w-0003Di-4R; Wed, 15 Apr 2026 11:24:00 -0400
+	id 1wD27I-0004Tk-Aa; Wed, 15 Apr 2026 11:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
- id 1wD25g-00036U-M7; Wed, 15 Apr 2026 11:23:46 -0400
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ id 1wD27G-0004Sy-43; Wed, 15 Apr 2026 11:25:22 -0400
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
- id 1wD25V-0007x4-8F; Wed, 15 Apr 2026 11:23:34 -0400
+ id 1wD27E-0000Nm-98; Wed, 15 Apr 2026 11:25:21 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JDzK7WWkEbNx/kDksOmf/1T0orGgUG2/DbxTQbeNFtaHar/4QVRMHq2lxiYz4EllM/o0IpV4pQzX24YwnjOSv1ETiUgD07R+7cH9x0RqZTeixPhf24bKEIYjaHlmSwWbIZHWGchUDJCAFYcZkdyQAGprGU8FeIz+aJpj8IArs0Mlw8LRQoSUEAVq4WYqbH5XTm27l9k1rdwwWOu0Mo0+bSCF0Kyr71wwOj1ZpWTOGK8R0d61aleimhX8egqK2FlruP0WGm5a+dXcZYIr5tyElAQ0KNpxIj7bXXfQIjOyqPpiYSDbxrG/9Ltz0eEP+EiwKz8qTQrUFBo2hfwhN8eP6Q==
+ b=w1AogIjE/w1JGt73H6RHYvI0R28u/ShqJuIbz2TPhS2rpRDamMG9q9d+0DzpfEw7OuCV/Hc13q9xuGY2syDTYB6l0jSzrotTofM/8YwdJgC4bQ0vIPJBWW9qrKrnORbvaD1DU5X7QqU+g57M7DFiAK4MktjhSvVGBhNzAHXw+x5+Mz19n6DHUiaI8zoeu9vdSbVpgecHNRvPv68LCasamBy2sECcxeGoPTmeGNnA4QwB25Fy6/EVCT/kb/h1h74+IMVIsbQBDUFfCZzwdynaQ8G8xbcTyWt8lSmiAoAq2ggUzKbBOnuxOQUf5oco22A8HFsJDmxEvlCBljBvVEVuoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qWeFXn8BGHksdZCkJZgiwu8FehmaZIkXS8akSzGFp78=;
- b=SWHop90BYgzQ5K5n2cz30jbtIoyY8ZBBIwNoOzEY6RJKUaI0YCONb3aRyJW3ks47P62N4UVUi7DMyiGMJ6MPSc8rudWYVlbIEOTy0fycP4ZpSI0tSBGbiDWF4cLWPRFcbICB/VWPHD2HSaIykDj6gXkh99pow9PIZTREMKsj6z9w6Bccc8jEn22gPcNtNf/qRXvbZjvT4dCnjA96Hx6pLAW8WXLMX7lfDix24hMuNnVa1LhS+KQTjWaE9CIMsgTMUcDcJsQ7dS73D6UINMgvcEUTdWoGJdLWOdaPU1RA48Tany+a8AHc4MIS2JUduW6HEcRf6sBlT09Wp9rCkiyoeg==
+ bh=dE/ZWXopzoPSWh9orDpBm8ci2l9rX4b22ppHimCIxhg=;
+ b=fwiBmfo2rj+0k6cSGfpQHNQH9fQ+vHiRCwnj+bDpjkBHRbPWnjZQLo8N2vfKme3JjHAu91iCLqIkCUJZFmL8MKgA7M/UqUaSsspUq6GUu2UPtrWBqJ9NvIwnZ4oIhkr2DmxcdWXG3aMMqLxAannrGhku1VMgQSZy1Vss3Yd24NJ8Q7+NQb1AiWZbqhCX7GA90j9R/TRKHQIkiqNzJzM2ZJFu7DRbVa/R1DeBzS9xR6fNtrY8+Q2EhmQ0T37cHFn/Z30ERQEguNyxyc3fRAyBn3QXmiCqOxVcjhdyzg9HsV3CjF58o6n8yHiQpQ9tpVA6TYL5EBaZ7PTiE6cjcGiF2Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qWeFXn8BGHksdZCkJZgiwu8FehmaZIkXS8akSzGFp78=;
- b=bxKp4HERmPwH8YkLE/yEF13yFdcO9IRDYmpBL5E2reRr3WlRY94SkHN2yEjDRh6M/qw4IYsg2RH9oLT1xPJsZdi9U0t9L22OMYTPgP5Vp/O05zAxPfC+hh8oIcPa0YNIY/LSjKTYFDws8yryX+NeugnEbNOj+EcPtN3W87iZPbJFAt5KPTTwS94DiZts5TcEDCcqZ1pkuE+jVphHvR63UU5xAhWEhUDP+Iaz4rlgcmiHR2qFmUHGQpMKhamfMmVQEyxBFmESKZja+4Ww58aNks9ryfxw8/DLoWqlB1qXDqrdTJJW8zy2Oy1cLrLu+zlin7tMJkdLvYinNR4JLUagCg==
+ bh=dE/ZWXopzoPSWh9orDpBm8ci2l9rX4b22ppHimCIxhg=;
+ b=g3SctmJPMzx9kF7dX7bDbGXn8/Ifi6XrOF9MXMnN3DVVCT2ZafnxPG+xxBA8Fz2eOopcIsvOnagWgdOxabvryEMDXfhy7NL8tyJpBJwLWlWtTETDWwpAO8sFkKfsrL2PyanrKmt8l98WXrzDoYrWEWnNpS/Gv0qp6uocu4E8TqUH2E+SVtQdYr0yeIllma4VDKzxvhHwANuKFPX0OnhZFBhtsCE/XwNGDc36+nNCRWSl0173Vmjp597tVWNgtuj453J+YlSHrCoU/mz+KgeCbG/aozvcLOQ0g5qI7Rli/Mub64OTSlQ7WNgBX2AJsKUqmKmnotcz9be/554Zoi/H/w==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from SN7PR12MB7226.namprd12.prod.outlook.com (2603:10b6:806:2a9::18)
- by CH3PR12MB7740.namprd12.prod.outlook.com (2603:10b6:610:145::8)
- with Microsoft SMTP Server (version=TLS1_2,
+ by DM4PR12MB5722.namprd12.prod.outlook.com (2603:10b6:8:5d::11) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.20; Wed, 15 Apr
- 2026 15:23:26 +0000
+ 2026 15:25:13 +0000
 Received: from SN7PR12MB7226.namprd12.prod.outlook.com
  ([fe80::c07d:130a:7def:6807]) by SN7PR12MB7226.namprd12.prod.outlook.com
  ([fe80::c07d:130a:7def:6807%5]) with mapi id 15.20.9818.017; Wed, 15 Apr 2026
- 15:23:25 +0000
-Message-ID: <4c6a57cc-5174-4678-95fe-8578096074ef@nvidia.com>
-Date: Wed, 15 Apr 2026 17:23:11 +0200
+ 15:25:12 +0000
+Message-ID: <82d9d2d5-7102-4b34-ad7d-df0e8f77b509@nvidia.com>
+Date: Wed, 15 Apr 2026 17:24:44 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] vhost-user-blk: make inflight-migration prop
- mutable
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, zhenwei pi <zhenwei.pi@linux.dev>,
- Hanna Reitz <hreitz@redhat.com>, virtio-fs@lists.linux.dev,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
- <20260330095226.158386-3-dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH] vhost-user-blk: add seg-max-adjust flag
+To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+References: <20260401230548.136541-1-heifetz@yandex-team.com>
 Content-Language: en-US
 From: Raphael Norwitz <rnorwitz@nvidia.com>
-In-Reply-To: <20260330095226.158386-3-dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260401230548.136541-1-heifetz@yandex-team.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PR3PR09CA0028.eurprd09.prod.outlook.com
- (2603:10a6:102:b7::33) To SN7PR12MB7226.namprd12.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PR3PR09CA0026.eurprd09.prod.outlook.com
+ (2603:10a6:102:b7::31) To SN7PR12MB7226.namprd12.prod.outlook.com
  (2603:10b6:806:2a9::18)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN7PR12MB7226:EE_|CH3PR12MB7740:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0a539c8d-18cb-4575-5c50-08de9b02f055
+X-MS-TrafficTypeDiagnostic: SN7PR12MB7226:EE_|DM4PR12MB5722:EE_
+X-MS-Office365-Filtering-Correlation-Id: bb804ad8-84f1-4a8e-8a10-08de9b033023
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info: ukEGK6aNPoLPn1HfF6v3mQQTZjKYHNqtlCJWH66jTNBnZHE0SEdWZCv+U5/54SY8CSMvrak2aMvZ4bAQtG9j2J1Z8Ht0MhhlhEC9+ujJ9Ludy2oIFqaOUn+IKn+A+w3XrqIAvdC3ddCUcMrSYz1cnfBN9ZLshGoLoOIj5tVymsRr5QwACJoSzTeEaFDQrM2XNEn7oJRX0OUDD9DbHkTD9z+4aQxg4EY8RoD9CObmPWCn3xsM4vOJ5+zHq05/atv3LUGOsMvfzHd9n77J8KHgFso4hGUHUPfEClX2vwZWFEcWZDVz0Ig67m1I2e2lZo6RBVfKiBxuWlgFL1zPoRDlk53MMPM83QXlHk70qojde/2C+R/rretEnkZ2iAgKnZATtVrhshim2WEtZ52/O8hmalECkdz7hbkhlx3ueGkwBw3w6oPTHcAxOsSshljPTAC0AWrGAL4SLvZsIToUZGNdPoeOLBT+3IkyQvCMj6Kg8ozKv2kCyyJH1agnCPkR+aAOSgBWDidHiBftiBgYLZr7LZN5R66AdLA8erVsQO6rwZ2p4s4047F05HFcK/1jrQE+raeGgt1H2j8xJ0EqXKrKRZX/XYWqH96QWxNMiowCIsl/kMOB4lSEVeKiWpl82GfCzaKc6XYSQ32WAS6BCRCNtO8g5c82GISBxtu0AJTH2TjpQY8dj/OH6XmYendRLKF29JPtvVeN5JUQdKGgPGgkJKwbiMwevXcZ5Kdgo0hBeSQ=
+ ARA:13230040|376014|366016|1800799024|56012099003|22082099003|18002099003; 
+X-Microsoft-Antispam-Message-Info: EG6ADv7nSrY92rjMydT0pWkjz8921kGiPSYPHM1DIa1izW7pmD1Yis8pg+qZyP17PzBRtgRPiHDEHqHTNgih5PfqJetJilDPXinMjzCHYaZ4o2cyoRNLE4tMngwDsuomMsbVApfKq2FqwEtWePybnZDPBwtaevRrrcY9WfhjeyHIQ0yMxlBL/2kw7mE7WXcJIOkAe6HAFlttnGAguiYpI9f7KhAQd29x3v+ertSIlGNfYCrHMxy0y6l4nZdspgutFN8gJx+B2MbRVGo7VkkwEQvsFDp+aSd/8zDQgeTpryO2TV8QChBI1btFbzEq+cGxF79FifGfbp5w3WCtR7s56kYS5fpY/vNro/d/vLUF2J3diIwgLMHe4MsU+d7S6eBNU3IWpx0D3iJyi3A39S+ErGON3Pepvz98VbMdaFjqARYRIeg7fDBupouxEA41ZJz/8EYCbGlDAexyPasXS5TcSOZsI+38zUszM03s5PgoMZO5hm/1IiqJo8xWTS93k/yi+HsLPpc6T8gNOAr1o72G/9Hz+4avdxEMOdLcVjLIR5l0ccwSrnJ67HkksAU2DOtxfjDEj4OIa9cOtlosDGwQK8oQiNU3rw7x38x+J4jUl0UWE8UR3jraIQDwGUfjMDg82Y92QtE9aiY+33WyOwbsfZ+nq5iz8YiQY28owbMs9Qrn0jUV5Gfx50b4sZtLBAHlpnLaO8V8fvgkhkeKhwpxcZgNH4si50O9x1f/lUlaQP0=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SN7PR12MB7226.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(18002099003)(22082099003)(56012099003);
+ SFS:(13230040)(376014)(366016)(1800799024)(56012099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UXBrcEdWVWp0N21LUGY2UFYzTkJINzJ4aW9maENrcGNNVzNTeGJyMGlhK0x1?=
- =?utf-8?B?SGE3Z3ZTT0RWM3RZL29JdjhnYlYxSy80Wk5YeGV3Mnd4OHgwUng2M09SY3lt?=
- =?utf-8?B?NFliMnVqSGZOdFR0QzZSTzZFczQwYWNtUHdodUhtR2daRGsrTEU0YStHNUxC?=
- =?utf-8?B?TFZBZGFPUFNDUmErWHYxMU5JRkhsSTc3QVpSTHZHZUxlRE1OR3oydENsckVG?=
- =?utf-8?B?RGJEQm45bG1FMXJTZXFmUWJBdEZYT1BKMjBSVUpkREx0alhINFdaYldkMmYy?=
- =?utf-8?B?THFWS2pJa1o2bjdtNllNa1hvMzRhK2doRmhMdVlGaWNwKzlueGVkSmo1MnM2?=
- =?utf-8?B?R2IxbnBtdmljSUxCWWwxS0xVSU1uY2VkcFpXOHliVGkwZk1ZZHpSVXVmTUpa?=
- =?utf-8?B?bmZiRDZibjVraCswMlZ5SzEyV0g3WEU4QThBMktaaDBsS2dONUxJZGJCa2xl?=
- =?utf-8?B?dnFNUmI2TUdmNTZmNURDZ2xjcndXajVLMUxhQkQyRlZLUndiM3hWLzJyNzFY?=
- =?utf-8?B?Uk1Dd2RPdEpwcDlyVkdnUytqM1RRSmRGTm1JUVhrcVJ5NVVtNnNMRWhhY1NI?=
- =?utf-8?B?SCtwUlB3MzZ1cWgxNGJBc0dvZ3gvcHhIcFJadzF4NWRYZXBvUFY1VlJ0TGt3?=
- =?utf-8?B?dnB1MUZuTVdYaGZNNzRINm83QTBLSWY2b1dYSVlSbDRxQjB3MEhwbFJ2ZThJ?=
- =?utf-8?B?TE5RK0VUaEJRdjNWaTl1eGo4eXpiK2Q4aXlWUWhzMDVyVHZSaWN2UkNOanpj?=
- =?utf-8?B?MHZxdXdRbEJaejFSM0xKbUlQS2N5cVhldnBDT293cVlqdkZ1NjRvTUtXUUw0?=
- =?utf-8?B?aW1vcHg3dWlndzhVNFhsK3pBSDZQUWlUanlzalRzRm5lZ0ExdThqTEVwR0dz?=
- =?utf-8?B?U0VzNEdOOTBHekhQVDBVck5rN3BleGxtd1VxQVRCR2U0RU1Uejl3cXlxL1pJ?=
- =?utf-8?B?bjVyVjNQV21VcUVaaFl0clpjcktOQlZRWTMrVmtkU3I4NkFocUc0U3FFZU40?=
- =?utf-8?B?em1XZkY3QmlqRWN6UFAvTG9Lc1J5dWxWNHJnMFB0UzlVbjNnTGxXS3gvMW12?=
- =?utf-8?B?NHMzbDhTcEFXQkRwOGJvUmx0YktpT0VVaGg2UFFGWGpCK2ZqSDUrS0RaN0Ew?=
- =?utf-8?B?Mm5TODlRcURBSFZxRWNvQm9yanZONmJrNW41VTYrVDMyZk52K2ZteVZ5Sm1J?=
- =?utf-8?B?ZmZWbVlTTURXd0FJZFlQT3h1WlV4QTVHOEtvMG9XZ0dNb2FmenZJYmVHdENH?=
- =?utf-8?B?WFhnWXlyRGJGYUJzanhGME1HaGlmN1JVZ0IyNVQ1d3Q3d3YzQUJIL0tHTjNC?=
- =?utf-8?B?OGRSVW9EcG1uc1RCaHFKQTZ5azNGOHlKNFJjdjluVWw2VW5EWlN3amRwdHcw?=
- =?utf-8?B?bW82M1ltbTc0NzNUeW0reUNiUTJTalFDdFZQRWNGblpiS1VsUHkzY2s2NjR6?=
- =?utf-8?B?SEdjSGZ6emk5cEhKK1BXRTV5MDN2WE5xNnphdnZNRmxaRmo3TUxEQ2p3UkE2?=
- =?utf-8?B?R1dMTE4rSCtpMkdLQXJicWxBYlV4d0NQZStrOW9kbFZ3dXVWc2VPOEJwNnpM?=
- =?utf-8?B?RlZGajBJZHJpVXNMMzJ1M2tJbzZOYnlMM1Zzek5MYkp1T2hKQ3lFY1JyT1I0?=
- =?utf-8?B?VUo5SU5rOFVXaDRUSG1yamFEeCsxcWd0Y1ZNSUJSRFIvZFprTk1oeURWL2lD?=
- =?utf-8?B?MDZVQjcvTlBlWWZqdmJvRlp0REgvSHZPRmlvVnp4SlViMjV3dng2K25kZkx1?=
- =?utf-8?B?WnRoczhXaXdoeTlFSWRoblo4N3k5VlhIM2NlcUZVMm1zaUwzVFljU2cvU2VK?=
- =?utf-8?B?VkhLaW1ETWhCbHRNOUNtQ3d3NDV2TGJNSzN6N1A2Qyt0c2I3TXI2ZW9RY2RU?=
- =?utf-8?B?bGh2d2ppd21RMm9tUitudmVYQ1VLUDNoOUQ0TTVMUDcrZWJrcjljKzB4QUd4?=
- =?utf-8?B?OS83aTcrald2eFFhZ0hQSU5LMGJwTk9kVlk1dkEvS29OUUZZMnoyOXQxU1Zx?=
- =?utf-8?B?ZmgvcXFzWWpwWndubjVRMGJLNFZmNXFKNDFZR1diNUo4RFArcWJpV3ZsZkNW?=
- =?utf-8?B?K1ZERWxZTWt0dGVpQlFndXFRSE53OFFNbFhLaGtCeWlKa1NaQmpFNnFnY1Z0?=
- =?utf-8?B?MGNuQVJYdGQ5ckh4a3VWTDBCMW5SZ3MzRlJpb0tDNlVMb3dWWllRSFpJcStQ?=
- =?utf-8?B?dHZxZFhCKzlXU1ZSMjVWRlBCcXNTODVpSXVmalBhUmpHY0trNkphSS9aWDVs?=
- =?utf-8?B?OGlQZXIydjZQVXlrRFl6MS9JRUJuOFB3TTZjNHJtdmhuUDFiVE5ONnB6SDJC?=
- =?utf-8?B?SVlLVTN4WlhGdkRJZU9zZWpBVkxxMWg3ejRZWUhtN0YzWUl6MGtEUT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RFozZnBuaUEzb1FRZUQ3N2xQZURIWlIxL2ZyY0dtLzFUcy9KNnFmbHBGQVk3?=
+ =?utf-8?B?c0I2ZktiNjREQWxPc3FuaUZoVHk3MVJxTk1IZWorRCtmSVlKMk9DWGdnZnlm?=
+ =?utf-8?B?Q2M1MUR5QkVoUHBjeUpDck0vTWcyd3lvelpiQVVoUW1iaDdFanVreWlreFhJ?=
+ =?utf-8?B?N0VwVEdaMWYwZEFrRkxMVlBjOUVuTnd6YVhUQ2dST3VMRkNVb0kxeWs3MXo5?=
+ =?utf-8?B?RFVZeER4SDZudllHNE5yUUY4dmdrQVZ3a054eEhuTTNvVFNCalB5eDcrS3g1?=
+ =?utf-8?B?TmkyQkZiUnozS2RIWmxZMWZic2p4aDRSL24zQTkvenRaNkduYmlqUWVCR3Uv?=
+ =?utf-8?B?ZHhnbHVFcENnQlZ6NmhqVzNlODR4UlRkUXBjb25rWUNUMzFrZHBkR2VEV2Rx?=
+ =?utf-8?B?QUJsRWRVZGFwbC9BRWY2UjZTU2RTOXhIQTVuay9WK0RZQ0dGRExjazNmR2Uy?=
+ =?utf-8?B?V1JmK1NiMmpxMndNTllwdWhDM3hRREVKN3BXZ1A0emVOK3pacVl1TE00bkcw?=
+ =?utf-8?B?M1dGdkc0Wkl5dWVCQzJXZFlJUXQ3clZaU3NZV3RUYVhiYkxPUTJPbGhxcTE0?=
+ =?utf-8?B?Y3RURk9OMWFBYUtyZHl1WTZmYmp1WEtKVFdudWdTK3ZTNi8wTE1WbVRLWUNv?=
+ =?utf-8?B?OEZsbnVpNSt2dWhHYnNtNkJoYXlVYVBUZm5hMVlORU1QVVNHYkJuLzM1WXli?=
+ =?utf-8?B?SDVITUNkN3VGNEVCTEpQRnpCWEdEZnlqQ09XUEtucjBRM2p3cmxwUmhkZDFm?=
+ =?utf-8?B?NkpJMllDRUtWaEJwUnFjUnJYYmw1eGdsaVhESEdpZFNMeWJybU5XbEdxUXAz?=
+ =?utf-8?B?SlZuN0NqWEQwcnhFL1hId05kcit4eFFacDF5VTdlWWtyRStVMERmTDU1eENy?=
+ =?utf-8?B?OThPVVh4NE82elVpTmxoRVJucWZFOTR1YlZadGlzdWNNbDhCOFJURjYvUy9J?=
+ =?utf-8?B?cWN1czRSV2dnS0Q0TDRUejAxWGRSdVJZRlh5eDlobGxvRkxLdFJZNTNjUDBy?=
+ =?utf-8?B?akY1NEFkYmxDeFhQVWFnQmh0VEhoKzluN0F6ckJnZ1UwdmhmMTNLeGhJbTVS?=
+ =?utf-8?B?d3c1RjlFNEo1RzRMWWdaTTRWZzhqSDQ5YkUvM1R1aEFWSzVqN0VxeUhIMU0x?=
+ =?utf-8?B?ZnFEdVZTWkV5Mk11ZUxtSklkY2RUUFU5SWJ5S3VLdXZnUzJCWXE5Sy9Bdk5s?=
+ =?utf-8?B?aWIvaUY1MllsZXVDdDlIM2pQVXl1Ylp4ajlBcmw2Yi9RUnl6ZTdOcktQaXVL?=
+ =?utf-8?B?UkwvUWExZkdEU3FTUjBWemo5ODdEMGpyMVM3LzhGdXIxUnZZNWtSdGpIK3Rj?=
+ =?utf-8?B?SjlYSm5DWG9nS2wrZS84T05hSkRpSEZSN04rK2xDR2xyaVl1azNXNlJMczJY?=
+ =?utf-8?B?L2ZqSC9ZcUxrRmxpMDdHQ1EzR2ZkOWpJNG1VSmhFVlJuQit2UVJvcVgyeDJO?=
+ =?utf-8?B?SGFPN0dLNHBtT1BEZXE0eElXS0hMZmpOT3IvMlNnVjI1TlMzN090SzczTHlD?=
+ =?utf-8?B?ajRVN2RGOS91QUU5N0R5aGw4bTBvZXZzSW4zTFpIMTlPSmowZFVaalRsZ1hZ?=
+ =?utf-8?B?Q3lpZlE5Tk1KMlByRUlrVHN4YysrZnpqQVZEUG5lMlN5OEhsOURIQkpTdlBC?=
+ =?utf-8?B?clh3Q3d5a3hQdHExUkNBNm93Nzd4djNERU9PMHRRTHRUOWV4cFVyS1h0YmhX?=
+ =?utf-8?B?d3BFTCtaK3R3emlWSG5LMW9hOFFnaTM1UVhzYXlYN2pXV0pHazV0WHNsdEhU?=
+ =?utf-8?B?THh6VExxNHlQZ0lSYnRLdUtDYVp1ZlJjTEhXeG82ZEVFcDdRalc4Qm43cTVH?=
+ =?utf-8?B?a2JSMHdZNW92bEdKR2RWaUlmaTZHNWIwdGlZZ0NVclIvZ2RsSjFBY3hZbFZo?=
+ =?utf-8?B?VFRuMXE2QkoyL0ZqNVh6eVh0M1JxaHRYa1o0WXRRbG96UGJBOG50TWl3eUdk?=
+ =?utf-8?B?Q1VOaUJtTTVJTkFhcm5pR3FETzArMjZGZWlTK3R5Q2lnU2NlRlN2cVlLSDZa?=
+ =?utf-8?B?SGE5ZXJOWmxTRHR1ZjV2cFNlVmFiNjVLSHNIL3l5R3ZVSmdvMFlINzlFMS9E?=
+ =?utf-8?B?d0NjNXpYRHBmeHIvZTZKYkNRbnhVWktyVFZ2THkzS2dkcXozc2NoSVlucXRu?=
+ =?utf-8?B?b1FuZml3U08rR2p3MzBxWXVRRU5HQ01SSGxnQ0p4MHFDRmFiZVFKdEJPeFQ1?=
+ =?utf-8?B?cE14UDZTMnlBd3RBSm4xUnZYU0R1d0k1cGIzZjExdFBxSlFxWDNUSU5ScWd2?=
+ =?utf-8?B?cytVWUxrajY2OCs1QXRtY2IzVzlhelRJaFFMRzlxTElzSDAxeVRsV2dDL0Q3?=
+ =?utf-8?B?NW10NWdma1FCUGhyZnQ1dmpCV0RNQUM1M1o0dzQ3U2dheEJRTG1lZz09?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0a539c8d-18cb-4575-5c50-08de9b02f055
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb804ad8-84f1-4a8e-8a10-08de9b033023
 X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB7226.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2026 15:23:25.8462 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2026 15:25:12.9058 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jzbCzn0qOXlsw2PdkdWLo1Mbvn2SlDe280KyhgW1HVMfXALy273xidID6j2iT+I6yEJ79w6mwXc2hj2fOKdg4A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7740
-Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+X-MS-Exchange-CrossTenant-UserPrincipalName: UsZCgMyRL+GHZVm3mh9uNaEp2J8Afs3sfNhVge07XmJjFwUZw1Hx9p+gQcEEHoIg48vHA+42aJtyIZjyLolQUw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5722
+Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
  envelope-from=rnorwitz@nvidia.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,50 +150,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Acked-by: Raphael Norwitz <rnorwitz@nvidia.com>
+Looks in keeping with how virtio-blk does things with seg_max_adjust, so 
+I’m happy in principle.
 
-On 3/30/26 11:52 AM, Alexandr Moshkov wrote:
-> Now this property can be turned on or off using the qom-set
+Just a nit and a question.
+
+On 4/2/26 1:05 AM, Sergei Heifetz wrote:
+> [You don't often get email from heifetz@yandex-team.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 > 
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> The virtio specification is not completely clear about seg_max and its
+> relationship with queue_size. Some drivers (for example, the modern
+> Linux kernel driver) rely on seg_max to set the maximum number of
+> segments used in a request. If seg_max is set larger than queue_size,
+> such a driver might overwhelm a virtqueue by trying to send more
+> segments than it can handle. As a result, it either hangs or faults.
+> 
+> One might argue that it is the vhost-user server's responsibility to set
+> a valid seg_max value. However, due to the issue described in the
+> previous paragraph, this value should generally depend on queue_size.
+> That's why it may be necessary to control it on QEMU's side.
+> 
+> This patch adds the seg-max-adjust flag. A flag with the same name
+> already exists for virtio-blk (and it exists to solve the same problem,
+> except that here we have a vhost-user server to consult).
+> 
+> If seg-max-adjust is set, the final seg_max is the minimum of the value
+> provided by the vhost-user server and (queue_size - 2). It is not
+> enabled by default.
+> 
+> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 > ---
->   hw/block/vhost-user-blk.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
+>   hw/block/vhost-user-blk.c          | 11 +++++++++++
+>   include/hw/virtio/vhost-user-blk.h |  1 +
+>   2 files changed, 12 insertions(+)
 > 
 > diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index c151e83677..179f027cb4 100644
+> index c151e836770..23f910d9fe3 100644
 > --- a/hw/block/vhost-user-blk.c
 > +++ b/hw/block/vhost-user-blk.c
-> @@ -603,6 +603,8 @@ static const VMStateDescription vmstate_vhost_user_blk = {
->       }
->   };
->   
-> +static PropertyInfo vhost_user_blk_inflight_migration_prop;
+> @@ -65,6 +65,11 @@ static void vhost_user_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+>       /* Our num_queues overrides the device backend */
+>       virtio_stw_p(vdev, &s->blkcfg.num_queues, s->num_queues);
+> 
+> +    if (s->seg_max_adjust) {
+
+NIT: declaration at the top of the function
+
+> +        uint32_t seg_max = MIN(s->blkcfg.seg_max, s->queue_size - 2);
+> +        virtio_stl_p(vdev, &s->blkcfg.seg_max, seg_max);
+> +    }
 > +
->   static const Property vhost_user_blk_properties[] = {
->       DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
->       DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
-> @@ -616,8 +618,9 @@ static const Property vhost_user_blk_properties[] = {
->                         VIRTIO_BLK_F_WRITE_ZEROES, true),
->       DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
->                        skip_get_vring_base_on_force_shutdown, false),
-> -    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
-> -                     inflight_migration, false),
-> +    DEFINE_PROP("inflight-migration", VHostUserBlk, inflight_migration,
-> +                vhost_user_blk_inflight_migration_prop, bool,
-> +                .set_default = true, .defval.u = false),
->   };
->   
->   static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
-> @@ -649,6 +652,9 @@ static const TypeInfo vhost_user_blk_info = {
->   
->   static void virtio_register_types(void)
->   {
-> +    vhost_user_blk_inflight_migration_prop = qdev_prop_bool;
-> +    vhost_user_blk_inflight_migration_prop.realized_set_allowed = true;
-> +
->       type_register_static(&vhost_user_blk_info);
+>       memcpy(config, &s->blkcfg, vdev->config_len);
 >   }
->   
+> 
+> @@ -474,6 +479,10 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+>           error_setg(errp, "queue size must be non-zero");
+>           return;
+>       }
+
+Can you explain why queue size must be greater than 4 if seg_max_adjust 
+is set? Sorry if I'm missing something obvious.
+
+> +    if (s->queue_size < 4 && s->seg_max_adjust) {
+> +        error_setg(errp, "queue size must be >= 4 when seg-max-adjust is set");
+> +        return;
+> +    }
+>       if (s->queue_size > VIRTQUEUE_MAX_SIZE) {
+>           error_setg(errp, "queue size must not exceed %d",
+>                      VIRTQUEUE_MAX_SIZE);
+> @@ -608,6 +617,8 @@ static const Property vhost_user_blk_properties[] = {
+>       DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+>                          VHOST_USER_BLK_AUTO_NUM_QUEUES),
+>       DEFINE_PROP_UINT32("queue-size", VHostUserBlk, queue_size, 128),
+> +    DEFINE_PROP_BOOL("seg-max-adjust", VHostUserBlk, seg_max_adjust,
+> +                      false),
+>       DEFINE_PROP_BIT64("config-wce", VHostUserBlk, parent_obj.host_features,
+>                         VIRTIO_BLK_F_CONFIG_WCE, true),
+>       DEFINE_PROP_BIT64("discard", VHostUserBlk, parent_obj.host_features,
+> diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
+> index 1e41a2bcdf6..dee848cfd81 100644
+> --- a/include/hw/virtio/vhost-user-blk.h
+> +++ b/include/hw/virtio/vhost-user-blk.h
+> @@ -34,6 +34,7 @@ struct VHostUserBlk {
+>       struct virtio_blk_config blkcfg;
+>       uint16_t num_queues;
+>       uint32_t queue_size;
+> +    bool seg_max_adjust;
+>       struct vhost_dev dev;
+>       struct vhost_inflight *inflight;
+>       VhostUserState vhost_user;
+> --
+> 2.53.0
+> 
 
 
