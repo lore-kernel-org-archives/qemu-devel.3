@@ -4,137 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5DCCF43834
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 15:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B02D0F43832
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 15:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD1jA-0007lr-2C; Wed, 15 Apr 2026 11:00:28 -0400
+	id 1wD23w-0002PP-Gd; Wed, 15 Apr 2026 11:21:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wD1j6-0007kl-Un; Wed, 15 Apr 2026 11:00:24 -0400
-Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
- ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
+ id 1wD23t-0002P3-JY; Wed, 15 Apr 2026 11:21:53 -0400
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wD1j4-0000W2-DV; Wed, 15 Apr 2026 11:00:24 -0400
+ (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
+ id 1wD23q-0007CS-3L; Wed, 15 Apr 2026 11:21:53 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EioBcsabvOFVTv2XO18zymHNrq+zoK0gg4owo/Ov4dIaYvuFro9Dfghq0YaNcOKeNtflV54lBF26mf412tmvBpkddYV9Noj8uSnV3YsUeQxFzwvTJBEH4yEOKwFxRzETidQoSD1D9ZAWxXvKqZGqo1+hm2tcUjFdp3GeUmQOUNHHbfz85m/G0uprqOMfkkMrLPaJP+lurOvneLMhNAl/sFnjjU8/MUg/M1wX3DbmZstN4Z46vyLGaCdSlCQ/RJ8mUkw5QZKUeZ/2BsMrCaK7WWpJ5nJHMTEUyAbSOVeqg9ZlCP3LqzNqFioF0Zb02TeQSnYZsDwH9+I0w3WKjQpmIA==
+ b=nw/JMYzb6PJ26erK618ZW78tqWiKgNFMW0P80jx8UUoZxQfMI1c9NwppHAaoAwHTFGTFElwOsUT0cfAitxutybYHQ58uIkbYbXsslFvC1mWQItF1GsQdHHjRjIer+jHI29hm4jyVd8KA24DafoSULCR2qbtVGG4BYvwjjFdG1dwA9IWDMxwca7VodtoTSoZAtf1JNFj4k+6QjFgHEzWpS2QC9XaYUmL/r5HOel7tGafPOBH5nRRNblU8ltUxMkjxPq7I3Q8G3LnByde4g1atVz2dlAnA9IrHxUe1fO5+PdzG7dISuh5Mr9lgmzTgsDUEu6QEprM4lbMjfuZGViwpZA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Gdz4LiL3VaA1y2Iqjf4iDV0KDWxM4MSaCe6JTvEe5/0=;
- b=qs2w7lk1SEUdvqJOJe8yOk8gYryeBOM/QR8YtkmRvKKt5WcYNHqP2nUlM6WjOufnmGx/PJblDsNBl4W5ZM1uSmomNOFBqSphZdqQ9GIIJTtzSO340skKHCLf/uIFYFIvI3D9aIeg3YdQnb0G3A8GldXVvPwch6c03sZTjkCpVcNSptddsI2K+Nuli+IymDzOBvwOnAw5WWg4rkMe0czyQYodMfFJRtHLkn/6J9qtQL29Lf8NmcnLA9kkNVWG+iutCsrQN+k6zJtnXNYH2SeiT2GOGpkNVaCAu5JilMt21R6msVQ7OypmvbQhR+ZwKWtAcxI5RBW2vYdTDf4py3bsUw==
+ bh=HnIJJKy0LcXBq+Q35jTrh+f7QbF+2JJ5wG/yZLDO0VE=;
+ b=pipM9y393+tls1Wx/dEtu8ZTI0X//95kEahtjxWiyrw4cHYjB3PM4wo0caLks3QKR++kZVxBgCRbZc17K9m8tkdyGEaB9zQyX294LjX/detdh4RRsJ4Tsr5Z/LNOY6txXUR1riBGS1eAvnt1eYep2Wsh1VfYscZdKK6qxjugoDYb3fvZbp589oUZJGh1Ftq2SnvFUF4PqPVEDFtHxCzFm5IOy8Js/6Y3RPkiD1QFklL334a++F1dbY1n6ZYrWTGRjsB3o8CspMsKxXRJYVdjX+V2mlrjCDfMY1dF5wsc2pE3cOKvHM+NWt7nQ70Tp3+Iulj2G7fZyABF13dv3KQV6A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Gdz4LiL3VaA1y2Iqjf4iDV0KDWxM4MSaCe6JTvEe5/0=;
- b=Lht0duIhJkZ9R5a4WPhS3ARG2XFcy+Zj4JhAC5ZAbzEjb8MuZ69/Nv+2cnz0/AjZPsGOLIcx/3y0Od3QBodGnfNtYKe9XLVSurHyw5CZCTz4Zxs0D0+SIn4Wkjar7ncMvK8by5qK9WGaH0o1nTppidxyg61gZnXW5CJ3vyrZ2lT4PZMLuFTJPUZYWof8ydl2XhFEGm/ZkkFnabSA4rmXy3hkHMU0FloYr42BGDfkBbGvLCQlXn+5kwz+J5GstCTzw94JuDZiXIQlD0t55PI1u5vdYqOh725DR28O0SjFmFUxD47dRZ7K2+1kHDPM7C6mdC0FVj7WvCpL3oB25sBuEQ==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by IA0PR12MB8974.namprd12.prod.outlook.com (2603:10b6:208:488::21)
+ bh=HnIJJKy0LcXBq+Q35jTrh+f7QbF+2JJ5wG/yZLDO0VE=;
+ b=iZNghOV8o/QXEPigSJig533KrmfonyN3hgUYJScArLrn73JjKljNS/e81b9UbmMiCRb9TtEnLdU7DPqQorxT7ppl7vHFI0WbQjr9jAN3z0nzRgxLt8GmwS6IG4KaaB5RI8H+sy1GVge6MSkFi6QGz+G7Ekap1tqcM8tz1siw+zsBvgiFrWQShJeGPd3I5u2DNbmKwLZQHiB2CqgJMczmPqbrCpigxldKnhY5tUrvVRLhd+Jv8Sa+5kdto9yZIpIhy9MCAOhOdFimh3LqU2pF8RPLEJyn30XBWacg1QSfsxJ4Hd40dtrPdAsrmrguRoPhxScI8IKgvJdqBJd1AvvmPw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from SN7PR12MB7226.namprd12.prod.outlook.com (2603:10b6:806:2a9::18)
+ by CH3PR12MB7740.namprd12.prod.outlook.com (2603:10b6:610:145::8)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.20; Wed, 15 Apr
- 2026 15:00:08 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9818.017; Wed, 15 Apr 2026
- 14:59:59 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Anton Kuchin <antonkuchin@nebius.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>, "ddutile@redhat.com"
- <ddutile@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
- Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, "wangzhou1@hisilicon.com"
- <wangzhou1@hisilicon.com>, "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, 
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>, NB-Core Team
- <NB-CoreTeam@nebius.com>
-Subject: RE: [PATCH v9 12/37] hw/arm/smmuv3-accel: Add set/unset_iommu_device
- callback
-Thread-Topic: [PATCH v9 12/37] hw/arm/smmuv3-accel: Add set/unset_iommu_device
- callback
-Thread-Index: AQHcjrDucxlFepYcq0iavyq5T4OrZrXgktwAgAAHqJA=
-Date: Wed, 15 Apr 2026 14:59:59 +0000
-Message-ID: <CH3PR12MB7548AB11BC6EB44358F2548FAB222@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260126104342.253965-1-skolothumtho@nvidia.com>
- <20260126104342.253965-13-skolothumtho@nvidia.com>
- <00b11b44-6625-4d3a-9bd5-6fd55f35a15d@nebius.com>
-In-Reply-To: <00b11b44-6625-4d3a-9bd5-6fd55f35a15d@nebius.com>
-Accept-Language: en-US, en-GB
+ 2026 15:21:33 +0000
+Received: from SN7PR12MB7226.namprd12.prod.outlook.com
+ ([fe80::c07d:130a:7def:6807]) by SN7PR12MB7226.namprd12.prod.outlook.com
+ ([fe80::c07d:130a:7def:6807%5]) with mapi id 15.20.9818.017; Wed, 15 Apr 2026
+ 15:21:33 +0000
+Message-ID: <613f140f-de27-4f83-8a02-5370833dd659@nvidia.com>
+Date: Wed, 15 Apr 2026 17:21:22 +0200
+User-Agent: Mozilla Thunderbird
+From: Raphael Norwitz <rnorwitz@nvidia.com>
+Subject: Re: [PATCH v3 5/5] vhost-user: add skip_drain param to GET_VRING_BASE
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>, virtio-fs@lists.linux.dev,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
+ <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|IA0PR12MB8974:EE_
-x-ms-office365-filtering-correlation-id: a4dfac34-aaaf-4c57-bb06-08de9affaa2a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|7416014|22082099003|18002099003|56012099003|38070700021;
-x-microsoft-antispam-message-info: KibuWtQKWUFcd+V7fmyPjvMq5odviV4Y9166uVdWmCkFt5zbthx53bE4P1hsduGQv+1SfGXOeqfX7bmZsJugHoPIR7Wn3qfTyjX9K3wTCpCoRRfKfCNO/G37lHy69aUqdLO9LMRQPfguf+fIMK98YnoLcdEnDzby8ZTwJg9fXD+pNWYsrfKe6kRX2iG45m/dDOyW2ZZcSkpxtpym/k+kGayKuqnO6mlJWUyuCoExmKg6GfdJflwMtt9M8mn/zMOrm65SMz3WhXrR6fKqcCgkQNbHHpnW488LMR3Yfq8F3KJlbHrZmEyGAMxwsdmKF2NsjsVFWvtioZjZQVOPSO+vXjaKaWhlDIF9pIKdz0rqvtYu8s3g1l5EBWiAPm0VThDhSH1giNfLKQF3Z2guBE1/m3b+TFms4XFmspgeeFCVpa9BANIu3244MAN5njVGkK0sLgepIZ6g6ftosihMpE/IkZ7iThHg6rN6TAXRmQC0BsboUqLIYs9begPjijEifTFaYT8V4DsU2WBrsZbAa0w1n217K0YXFdEuPxdLWL4H1fFFyxlaZva/MRbHXsItsUhtDmrBMsQMNWye1EiIYYLQHPDIxPO+i364lwzDQBKuf1X+0ZFbEkPxy9rnWDEoDHEHQs5QDMbTBkv46xmJB2yh7hHYYetccMzRqax/WUd6xUhCEX/FTrOsvoD02Xf5DAeFLAUZCFIVs8y29OI8UxYl9D560sQj8bugCfLAEd2ev1FaNoDdP6GT6czmd6qp2cWHlMy6huGp3R5QOcfZ4aTt6fmXVvQr/J6kV8bQpZpxxcc=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7416014)(22082099003)(18002099003)(56012099003)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?MTsbeuxTAqK4jZukMalhKyfN4NO9F1+aw9WlPwb4Hm6AW8MdZXssgUpC6yAj?=
- =?us-ascii?Q?A+M0yLnf9Ru9IY199DEH33pFVU5wEdpVokA5A6n5L+LKIXtL7Sn5wXzCwKKR?=
- =?us-ascii?Q?IR+xb4pWsc627atT/UYAmlYVEEJQrepg9dEXVulzEB2zySB5EhGSwscTPsC1?=
- =?us-ascii?Q?SLnu5Cwc8uozJ2SmitO/xMg4U42yvvyjkwuX1cMXGaHXdkJIgexgu/KbW88s?=
- =?us-ascii?Q?tfEDMI21JnzE3tq6HC0B22nI2iUpaOsHN29eO/bRjBQX/GVSIUCZuxRWm5kY?=
- =?us-ascii?Q?0Y3qp5KtR0A57Fkx4y7U+bKKCHsIsbYNugOo/GC3PVSbx/2WBj5ebkhLaMAb?=
- =?us-ascii?Q?smCOpUhRGAsJIwdnYqCjW0/c1fFI6pVD4Q6gNkcG/Xxc77FOe42PG0sVaIq1?=
- =?us-ascii?Q?aeebFbJmxLizv9ATSY/CCdGBEEPjoUxtV7TT5z3H+KjmNBalaPRkqie6yy1l?=
- =?us-ascii?Q?0XAjXxXhfYvp4tW7WHPBAp0cA4yPWX/hg4KjtqH34E+XDRHrqjdJTgNuDmb4?=
- =?us-ascii?Q?qK3nfsOFq9RPfsvA/v82hbGYU64LKLS9sy6YmaETGNmJ8SaKDGP3C/rcpQp5?=
- =?us-ascii?Q?mo1/hYclkpho1SwMjs241ys/l1y/7Wf/Y5YMxgKLqQsPwWnVYO3Ke2RVYGXH?=
- =?us-ascii?Q?UJ1x7BO+PnCV1oi8LHX1njwql6XmLsNqZ+ZBl/b3aHzbgZJ3LOA9kl91rkhm?=
- =?us-ascii?Q?5G+4BomhgTctl+ia11m8WezEfAl6hbvKR6Vnr854UZPxQzEr+vMIgkLIvLVA?=
- =?us-ascii?Q?bG92PcoA7i+YBdddvzZOMUDsm99/2CvxSltkHynSdDAVCsNg6c8At//eWlB5?=
- =?us-ascii?Q?nPnbf5UTynmQxB8jTflfq9FzbXwMwgVz4mfAEY5LuDrvSQZhvu9NqTEB1s3Y?=
- =?us-ascii?Q?EpOiqlLn2mHZiPXRg89U0FKEpd8ZaAgtbrbIuOXLg2DNWLLKW15SihKwAZqZ?=
- =?us-ascii?Q?3d+RATgzHd3vggEyPof9yvDHDbKYBbsxUaSj7623hkOM+fXqk7kABbq3ievT?=
- =?us-ascii?Q?MeCfPh0uRYomgcnz2StoXn3la+vO5MVLOjiQ21DIi1ACxBjrQB95T2XUY4ux?=
- =?us-ascii?Q?gq4nX0XcgLAI/4FRZhKmxE8DSLFw5WM25OeGqnKEG5yTTfqPxG16CO2of+oK?=
- =?us-ascii?Q?76cWl9lB4sRg6jjUpCMzg4fZdoz9ZWeASlVs/WCUJdx/wf/VAhjdfqk8Z8/g?=
- =?us-ascii?Q?l48cXnupDM55Q7MCFqTS8s/xoVZ6D6ZEKEvhexAPc4XvgXjQg3MUuPpkNfeY?=
- =?us-ascii?Q?0b8HJuTqpMCS2m/rtTA5MczCVYip3wJVdOrQBxBMZQiEdntLs8csSs9onP/m?=
- =?us-ascii?Q?IQE/bgsZLxmtg0P8PObAJwWHLrygvZFJS9g4rftNi5fnBx3KPqJiCoWF9w2b?=
- =?us-ascii?Q?2Z6JxYY9bTAmtM+Jm5iA0YZRvI4ee7OupZm4I/JjVzIkidGzf13pI+JQ4akE?=
- =?us-ascii?Q?kSEjmPvm5dQfZ9X6c1qkMB/cPEMNpUICm0FtGagwXn7K2HPz0MvvNO2FIDob?=
- =?us-ascii?Q?3EOAlS0C23u82wL4/ezEAKUyu6wf4ONrJG8r9sGk0VVQ8kGFlxFuYE3kOGoL?=
- =?us-ascii?Q?PtOIJ52vBradD/YgF5lKwP9KsmIkTPDrE3gJl5BYe30OvfcXUiK3zAYH25Wn?=
- =?us-ascii?Q?t5Dejni9hlSa+GuJBwgmr05OW4+slKgsl3hnQfaiNd7lLDx6IcJHeABL6rsy?=
- =?us-ascii?Q?n5/5ic27vIa8WhVVEO1qMjq3QJHZXr7tguP4RAap6d2IFCB/s7f9c0+UV1sH?=
- =?us-ascii?Q?OCFwkmtceg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PR1P264CA0157.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:347::8) To SN7PR12MB7226.namprd12.prod.outlook.com
+ (2603:10b6:806:2a9::18)
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR12MB7226:EE_|CH3PR12MB7740:EE_
+X-MS-Office365-Filtering-Correlation-Id: f44680f4-3238-4ce1-189e-08de9b02ad13
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|366016|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: KbvtopAITvhQUN6Z8PlJK8x+bdyqNJ7b0x87n95uLhl/ZRmOMeX9DVLEwZL5pasENYNahchMy3Gf1s5OUmFZTVFYHmogfCXzs2Tc1U46H2M575l5IBjIB7PmURm7/LQs2jkXxKghGZ3r58ZVzGqKCBdN8MGQxJWZwNVnrjPFDDiAVob1+ayNP8PONhla/cwuz6MHePLtWU0L6JhdxomkpmWxJfCMbbbR3jPrvv4I10xSKx02qGgh5c7eNQVGDuJIccS87UOxqadbjduR3+PIXZL5aUakz5Z/CL3jR2KdtVe7jVFOrHYLuPfgKpAWepR4M4NC6Z3uMy+EUX9Jab9qg0Sbn4IBr87iIGv/VjeuErUtAMZumnYejz2WfdCfzKUlEzqWheKV9/crVY7xlLFgvtYKDFifuGR5jc+irkBztEySfggepOsQIzY+T99g8ZhYV+o2vWAN3ekJGBnLq90w1Oc9N2Gw1nCoBGibReF6lRs33fQnMqk8Q8C6ltrC61WJ95+AGOF54xdv4fdIswdFr8nb1/oYC2HEQbig7S1DKC9+spQ1FZhj0GBSxpuW9bF1C+yd7NgnoJbzj7iPHu5Xrg0XTpSR3HNylmmXT1eRDoCOKsDQr7KnbJd29OJMm98guvVLksEdTDCQBp7Uw8glGWIi6Wp05ZwOsXF/kw/3s0wOI2q+MXL3nZdq7rEeVUltDnYjEr03F130q3m/xTlVmBuBGMPLTTLJFj1SebWjj84=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN7PR12MB7226.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TzZxK0QxL1NpUy9EMTRQUzdLalJZQ2k5Sk50MFpSNkJmM0NVL2xQc2Qvek9W?=
+ =?utf-8?B?UmNJc1RVckhyZm1VTExrUnNmWGpNY21vQjh2QUVkQVJyNFVyNmhxRmR2NGRM?=
+ =?utf-8?B?Q1IwTndFbEc2NUpVSi9kbVpJeGRVRG0yUHUvTm1sRWpBZEJwa0cyZmE1WlJQ?=
+ =?utf-8?B?R0dIUUpMVi8wWmpjOFFSWVpaanRxK1FlS3BKN1dKZTVtamticDJWNVl0VVJE?=
+ =?utf-8?B?U1VTQXk5WHk5d3FHd3huOWNPNEVUZWpQK0NFdFNrUStBM2ZHMXg0UFl5dkhG?=
+ =?utf-8?B?S2R2ZFU2Smx2RkI3WEF5bzhpYmkvaklQOXNUNWV5SjF1anRyVkM3VlBBSU5B?=
+ =?utf-8?B?Nkh0NFRqaTk0Q0QyYlBka3BIbk9wZ0xYMi84c2dHeldNb1hDWXdtSVJwSVBR?=
+ =?utf-8?B?T1ZoL3BXUzVOUWxvbXFKaU40dGJzcWV0Q1Njc1B5OWJJbUJHMUFoZ2daRzBx?=
+ =?utf-8?B?aEw2M3hEZENaR254NUEyUTd5Z2hWQ3ZDMGM5UlFILy90YTV4cXdWWnl1Ui9s?=
+ =?utf-8?B?aEh5cHEydHhKTzRxdXNuQmd6ekFIVytYVkEzZ21TTmNtaElPaDFUSlhYalJj?=
+ =?utf-8?B?VGVpOXZ4TGtQeGFrd0FNYU9Cb1NBY1o3US80L2lYaVJQUFhZczlqRFRDZGd0?=
+ =?utf-8?B?bGJxSXcxcGxXdHlOMmllNGpRSG5SeVFjcVBBc2d6RVhjTUUvam1RQTlha2dM?=
+ =?utf-8?B?QzQvci9OaWVsNnJQVVBLckpHV3Z3cVBWc1llTjlMcVZzaU05U25xbjM4ZXZG?=
+ =?utf-8?B?eUIvOVNyNmg5U1VxWU02dHhLeU04a1NkREJTeldmVmhJaFUrSm5CZGd4dXN1?=
+ =?utf-8?B?L1NQUnFKNWNneC93WW5VUTZ3WWhZRXNkRmRvZmNMa2lzNjdFM0dVRHlHeTdq?=
+ =?utf-8?B?TUdmN25SWnQ4eWl1VXowdlprNDh6M2o3QVUrdjlpdTBXS25NOXkxWjFXdDRP?=
+ =?utf-8?B?K0VqeE5HZmgyaEhzTGswS092aFdFeGZzQzIwSGVFL3NMWmh0cHRUWEthS1li?=
+ =?utf-8?B?aVpjN1FMTUU4MGlBZnR3NmlYeHhheVZka0RaaGE4U2JTamh5UFlJaVdWQ2h2?=
+ =?utf-8?B?SU5yaWxlZXMvaVRGdVYyemlWQW9uTk9EQzZ3Z2Q2L2tHT3VUYzdMUkl3eWR2?=
+ =?utf-8?B?NTZ5aUlpTzF5Sk1iNnJZdUN5K2VtdUhDcHRrbGlhZUQ4K0Zza3JFV292MTl2?=
+ =?utf-8?B?ck1BQXZLaExIb0NXd2w2Z1RobEFnWnpCVmIzT2Rxem56S1hlaU9HWEVNYXIx?=
+ =?utf-8?B?R2I5UUY5aGR1c2phdHZmZTNhR00zRGJnY3NDMGxIalNGS01pcDhqOXFyc1gy?=
+ =?utf-8?B?Rk53TnU3RXI2QkszVktXKzMvT1hiWDlQcE5zVW4wL2RSTThnOWc0V3hKY3pq?=
+ =?utf-8?B?d1RxcmtJVHcwczl6Zm1JZE9IUDZVZzlaelV5cnhhazdnajNyRlNMZTN2cE1I?=
+ =?utf-8?B?QnF2QTYvbERFZmZna2N5VzVlbCs5R2EwWmdRQkhuZjJ6c2QrNzlvelR0RFpM?=
+ =?utf-8?B?R3NXbnJFVWlGL1pYMEVKZm5MYlExNno2bS8vMnVrVzIxcnQ0Z0lYUmtNS2VT?=
+ =?utf-8?B?YXJSUS9sMnFVdmUwTjdCcXRycnRMNUxieTd1SjFKT0Rhdk5IV0VrY3IxYURS?=
+ =?utf-8?B?c0pBMjZKVW9Iazd3UEVGaGZkQWMrWnc0QWFBdTdYUkoxK29lWWRKMFlCS3di?=
+ =?utf-8?B?NnRmbjhoKzJHaHZ5ZnIxR0Y3V09uQmxRbTVmZ09pbWxIeWovOEUxendJbUF1?=
+ =?utf-8?B?UkVBSjJsMk5GcFFPQVp0SkNhSFREcHN3ZEcvNUtacE5DRTZNL1ZFS3dGV2Jq?=
+ =?utf-8?B?OVd4RHFNVzBIa2ZZSXEwUHJ6ajBJcGJMdU4vMm5XMVd4aUk1K0podU5POGZN?=
+ =?utf-8?B?bFpkeUZ5YmhxWXkzTStSaERldHg4c2t1bVNvUGt0RGNpZUJES2RIZXhOSUZR?=
+ =?utf-8?B?UHUvUUVIeEt2N1FXMEI4UlZzSy92UkhWcE5hL3Y1MklpZEcwU1dFZVBZZWJi?=
+ =?utf-8?B?YVdyRCthWEJwME8ySkhLK0lIMGIxb2NEbDZ0WHBCQmQ5NVR6Q1ZUSVROSVk1?=
+ =?utf-8?B?Y0N5VmNvMEx6dTlwb1A1ejNyelZ2NDEvdEtMZkdUdmI4N1pmYk03UFlyWXA5?=
+ =?utf-8?B?ME1DYmxzNVdOYUtXS1JGU3lVY2EwU0lsRTJQVElzTHN6OHBmMVFOMFJ1RGls?=
+ =?utf-8?B?cWpBNjNHa3FGbzN3YUlEbnFLT2NKdW1Cb0VDTklWWXNWdlY2aVhDVDdTYVY2?=
+ =?utf-8?B?N0E5MlI5TDlVSDVWUWprSUhIYXhRcVlCNFdHajA3Q1ZNSVBhTkRPRmgvSk1w?=
+ =?utf-8?B?WDNFeVVVbCthK1NZb1lrRWtwU05rT0VzVDcxa0s0YjJ6NDk2TGhhUT09?=
 X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f44680f4-3238-4ce1-189e-08de9b02ad13
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB7226.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a4dfac34-aaaf-4c57-bb06-08de9affaa2a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Apr 2026 14:59:59.5305 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: vRntY+ybkQHGUm/EvFPiprUGspr4oTwjb2C8l1QpzBeI9xyxK0hALVNlxcoc9uwFOiLrsjjS8EGMQ9bNbuz+vg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8974
-Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
- envelope-from=skolothumtho@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2026 15:21:33.0216 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VSW9a3WhJ5GKHeR7e57ifwzQqqpEXYEkmFJE8i7mQqsXKFYHDEVMu9bHLEF85j9nxAs/jjP/XB+WZ323JhpcKg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7740
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+ envelope-from=rnorwitz@nvidia.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -157,282 +159,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+I’m not sure I like using the num field in vhost_vring_state to set 
+magic values which affect protocol behavior for GET_VRING_BASE. It feels 
+like a hack to me. I would think the proper solution if we want to 
+support migration from new to old would be to have new use a different 
+new message entirely. Can we do that?
 
+On 3/30/26 11:52 AM, Alexandr Moshkov wrote:
+> In case of migration of QEMU from the new version (where the
+> inllight-migration parameter is present), to the old one (where it is
 
-> -----Original Message-----
-> From: Anton Kuchin <antonkuchin@nebius.com>
-> Sent: 15 April 2026 14:03
-> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
-> arm@nongnu.org; qemu-devel@nongnu.org
-> Cc: eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
-> <jgg@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; ddutile@redhat.com;
-> berrange@redhat.com; clg@redhat.com; alex@shazbot.org; Nathan Chen
-> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
-> smostafa@google.com; wangzhou1@hisilicon.com;
-> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
-> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
-> Krishnakant Jaju <kjaju@nvidia.com>; NB-Core Team <NB-
-> CoreTeam@nebius.com>
-> Subject: Re: [PATCH v9 12/37] hw/arm/smmuv3-accel: Add
-> set/unset_iommu_device callback
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> Hello! It seems to me that there is a problems with this patch and I
-> want to check if I understand this correctly or maybe I'm just doing
-> something wrong.
->=20
-> Current master 11.0.0-rc4 doesn't work for multiple vfio devices behind
-> the same expander with accelerated SMMU. Qemu fails to start with "vfio
-> 0009:03:00.0: [iommufd=3D250] error attach 0009:03:00.0 (257) to id=3D9:
-> Invalid argument" error.
->=20
-> I've tested v4 of this series and it worked great. Between v5 and v6
-> attach of HWPT based on SMMUv3 GBPA.ABORT value was added to
-> smmuv3_accel_alloc_viommu() and I suspect this to be the root cause.
-> More details inline.
->=20
->=20
-> Not sure this message will properly attach to the original thread, so
-> here is the link just in case:
-> https://nam11.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Flore.
-> kernel.org%2Fqemu-devel%2F20260126104342.253965-13-
-> skolothumtho%40nvidia.com%2F&data=3D05%7C02%7Cskolothumtho%40nvi
-> dia.com%7C0c6fd4366c8344b59fb008de9aef4554%7C43083d15727340c1
-> b7db39efd9ccc17a%7C0%7C0%7C639118549639467993%7CUnknown%7
-> CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOi
-> JXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3D
-> fTpbtuKL5OXtvt0XpO12%2FpE7PIx%2Fznyqe%2B7TfBy8DAA%3D&reserved=3D
-> 0
->=20
-> On 26/01/2026 11:43, Shameer Kolothum wrote:
-> > From: Nicolin Chen <nicolinc@nvidia.com>
-> >
-> > Implement the VFIO/PCI callbacks to attach and detach a HostIOMMUDevice
-> > to a vSMMUv3 when accel=3Don,
-> >
-> >   - set_iommu_device(): attach a HostIOMMUDevice to a vIOMMU
-> >   - unset_iommu_device(): detach and release associated resources
-> >
-> > In SMMUv3 accel=3Don mode, the guest SMMUv3 is backed by the host
-> SMMUv3 via
-> > IOMMUFD. A vIOMMU object (created via IOMMU_VIOMMU_ALLOC)
-> provides a per-VM,
-> > security-isolated handle to the physical SMMUv3. Without a vIOMMU, the
-> > vSMMUv3 cannot relay guest operations to the host hardware nor maintain
-> > isolation across VMs or devices. Therefore, set_iommu_device() allocate=
-s
-> > a vIOMMU object if one does not already exist.
-> >
-> > There are two main points to consider in this implementation:
-> >
-> > 1) VFIO core allocates and attaches a S2 HWPT that acts as the nesting
-> >     parent for nested HWPTs(IOMMU_DOMAIN_NESTED). This parent HWPT
-> will
-> >     be shared across multiple vSMMU instances within a VM.
-> >
-> > 2) A device cannot attach directly to a vIOMMU. Instead, it attaches
-> >     through a proxy nested HWPT (IOMMU_DOMAIN_NESTED). Based on the
-> STE
-> >     configuration,there are three types of nested HWPTs: bypass, abort,
-> >     and translate.
-> >      -The bypass and abort proxy HWPTs are pre-allocated. When SMMUv3
-> >       operates in global abort or bypass modes, as controlled by the GB=
-PA
-> >       register, or issues a vSTE for bypass or abort we attach these
-> >       pre-allocated nested HWPTs.
-> >      -The translate HWPT requires a vDEVICE to be allocated first, sinc=
-e
-> >       invalidations and events depend on a valid vSID.
-> >      -The vDEVICE allocation and attach operations for vSTE based HWPTs
-> >       are implemented in subsequent patches.
-> >
-> > In summary, a device placed behind a vSMMU instance must have a vSID fo=
-r
-> > translate vSTE. The bypass and abort vSTEs are pre-allocated as proxy
-> > nested HWPTs and is attached based on GBPA register. The core-managed
-> > nesting parent S2 HWPT is used as parent S2 HWPT for all the nested
-> > HWPTs and is intended to be shared across vSMMU instances within the
-> > same VM.
-> >
-> > set_iommu_device():
-> >    - Reuse an existing vIOMMU for the same physical SMMU if available.
-> >      If not, allocate a new one using the nesting parent S2 HWPT.
-> >    - Pre-allocate two proxy nested HWPTs (bypass and abort) under the
-> >      vIOMMU and install one based on GBPA.ABORT value.
-> >    - Add the device to the vIOMMU's device list.
-> >
-> > unset_iommu_device():
-> >    - Re-attach device to the nesting parent S2 HWPT.
-> >    - Remove the device from the vIOMMU's device list.
-> >    - If the list is empty, free the proxy HWPTs (bypass and abort)
-> >      and release the vIOMMU object.
-> >
-> > Introduce struct SMMUv3AccelState, representing an accelerated SMMUv3
-> > instance backed by an iommufd vIOMMU object, and storing the bypass and
-> > abort proxy HWPT IDs.
-> >
-> > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> > Signed-off-by: Shameer Kolothum
-> <shameerali.kolothum.thodi@huawei.com
-> > Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> > Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-> > Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> > Tested-by: Eric Auger <eric.auger@redhat.com>
-> > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> > ---
-> >   hw/arm/smmuv3-accel.c          | 156
-> +++++++++++++++++++++++++++++++++
-> >   hw/arm/smmuv3-accel.h          |  18 ++++
-> >   hw/arm/trace-events            |   4 +
-> >   include/hw/arm/smmuv3-common.h |   3 +
-> >   include/hw/arm/smmuv3.h        |   1 +
-> >   5 files changed, 182 insertions(+)
-> >
-> > diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> > index be09cf8b73..9c2b917a11 100644
-> > --- a/hw/arm/smmuv3-accel.c
-> > +++ b/hw/arm/smmuv3-accel.c
-> > @@ -8,6 +8,7 @@
-> >
-> >   #include "qemu/osdep.h"
-> >   #include "qemu/error-report.h"
-> > +#include "trace.h"
-> >
-> >   #include "hw/arm/smmuv3.h"
-> >   #include "hw/core/iommu.h"
-> > @@ -15,6 +16,7 @@
-> >   #include "hw/pci-host/gpex.h"
-> >   #include "hw/vfio/pci.h"
-> >
-> > +#include "smmuv3-internal.h"
-> >   #include "smmuv3-accel.h"
-> >
-> >   /*
-> > @@ -43,6 +45,157 @@ static SMMUv3AccelDevice
-> *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
-> >       return accel_dev;
-> >   }
-> >
-> > +static uint32_t smmuv3_accel_gbpa_hwpt(SMMUv3State *s,
-> SMMUv3AccelState *accel)
-> > +{
-> > +    return FIELD_EX32(s->gbpa, GBPA, ABORT) ?
-> > +           accel->abort_hwpt_id : accel->bypass_hwpt_id;
-> > +}
-> > +
-> > +static bool
-> > +smmuv3_accel_alloc_viommu(SMMUv3State *s,
-> HostIOMMUDeviceIOMMUFD *idev,
-> > +                          Error **errp)
-> > +{
-> > +    SMMUv3AccelState *accel =3D s->s_accel;
-> > +    struct iommu_hwpt_arm_smmuv3 bypass_data =3D {
-> > +        .ste =3D { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
-> > +    };
-> > +    struct iommu_hwpt_arm_smmuv3 abort_data =3D {
-> > +        .ste =3D { SMMU_STE_VALID, 0x0ULL },
-> > +    };
-> > +    uint32_t s2_hwpt_id =3D idev->hwpt_id;
-> > +    uint32_t viommu_id, hwpt_id;
-> > +    IOMMUFDViommu *viommu;
-> > +
-> > +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> > +                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-> > +                                      s2_hwpt_id, &viommu_id, errp)) {
-> > +        return false;
-> > +    }
-> > +
-> > +    viommu =3D g_new0(IOMMUFDViommu, 1);
-> > +    viommu->viommu_id =3D viommu_id;
-> > +    viommu->s2_hwpt_id =3D s2_hwpt_id;
-> > +    viommu->iommufd =3D idev->iommufd;
-> > +
-> > +    /*
-> > +     * Pre-allocate HWPTs for S1 bypass and abort cases. These will be
-> attached
-> > +     * later for guest STEs or GBPAs that require bypass or abort
-> configuration.
-> > +     */
-> > +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> viommu_id,
-> > +                                    0, IOMMU_HWPT_DATA_ARM_SMMUV3,
-> > +                                    sizeof(abort_data), &abort_data,
-> > +                                    &accel->abort_hwpt_id, errp)) {
-> > +        goto free_viommu;
-> > +    }
-> > +
-> > +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> viommu_id,
-> > +                                    0, IOMMU_HWPT_DATA_ARM_SMMUV3,
-> > +                                    sizeof(bypass_data), &bypass_data,
-> > +                                    &accel->bypass_hwpt_id, errp)) {
-> > +        goto free_abort_hwpt;
-> > +    }
-> > +
-> > +    /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
-> > +    hwpt_id =3D smmuv3_accel_gbpa_hwpt(s, accel);
-> > +    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
-> > +        goto free_bypass_hwpt;
-> > +    }
->=20
-> My research points to this change. Here we attach
-> IOMMU_HWPT_DATA_ARM_SMMUV3 abort HWPT to device, replacing the
-> default
-> IOMMU_HWPT_DATA_NONE one allocated and attached earlier in
-> iommufd_cdev_autodomains_get(). The problem I see is that when the
-> second device in the same group initializes its default HWPT it no
-> longer matches the updated abort HWPT in kernel, so device allocates a
-> new IOAS and HWPT but kernel returns error for attach HWPT request
-> because iommufd_group in kernel already has different HWPT assigned.
+nit: spelling inllight-migration
 
-Thanks for debugging.
+> absent) there is no way to disable this feature on the backend during
+> runtime.
+> 
+> This commit slightly changes the semantics of the protocol feature
+> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+> adds a new parameter for GET_VRING_BASE, which allows to control the
+> drain in-flight requests on the backend.
+> Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
+> on anytime.
+> 
+> In vhost-user-blk use inflight_migration param to enable skip_drain to
+> suspend in-flight I/O requests, and then migrate them throught inflight
+> subsection.
+> 
+> Also now QEMU will always try to setup
+> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
+> backend. This will allow to use skip_drain parameter on GET_VRING_BASE
+> message.
+> 
+> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>   docs/interop/vhost-user.rst    |  6 ++----
+>   hw/block/vhost-user-blk.c      | 30 ++++++++++++++++++++++++------
+>   hw/virtio/vhost-user.c         |  3 +--
+>   hw/virtio/vhost.c              |  1 +
+>   include/hw/virtio/vhost-user.h |  1 -
+>   5 files changed, 28 insertions(+), 13 deletions(-)
+> 
+> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> index bfa75ff9a3..63efc87264 100644
+> --- a/docs/interop/vhost-user.rst
+> +++ b/docs/interop/vhost-user.rst
+> @@ -1255,14 +1255,12 @@ Front-end message types
+>     *suspended*, see :ref:`Suspended device state
+>     <suspended_device_state>`.
+>   
+> -  The request payload's *num* field is currently reserved and must be
+> -  set to 0.
+> -
+>     By default, the back-end must complete all inflight I/O requests for the
+>     specified vring before stopping it.
+>   
+>     If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+> -  feature has been negotiated, the back-end may suspend in-flight I/O
+> +  feature has been negotiated, using request payload's *num* field,
+> +  when *num* is set to 1, QEMU can tell the back-end to suspend in-flight I/O
+>     requests and record them as described in :ref:`Inflight I/O tracking
+>     <inflight_io_tracking>` instead of completing them before stopping the vring.
+>     How to suspend an in-flight request depends on the implementation of the back-end
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index a3ecd83f54..522e9d34b5 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -134,10 +134,7 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
+>   {
+>       struct VHostUserBlk *s = opaque;
+>   
+> -    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
+> -                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+> -
+> -    return inflight_migration;
+> +    return s->inflight_migration;
+>   }
+>   
+>   
+> @@ -232,11 +229,14 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+>           return 0;
+>       }
+>   
+> +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
 
-Just to clarify,  when you say "multiple vfio devices behind the same
-expander", do you mean they are placed under the same QEMU pxb-pcie
-expander, or that they are also under the same physical SMMU
-on the host?
+nit: declarations on top
 
-If the passthrough devices are not under the same physical SMMUv3,
-then a shared vSMMU will not work, as the kernel currently does not
-support sharing the nesting parent domain (S2) across different
-physical SMMUv3 instances. In that case, the expected topology is
-one vSMMU per physical SMMU.
+> +                      runstate_check(RUN_STATE_FINISH_MIGRATE);
+> +
+>       force_stop = s->skip_get_vring_base_on_force_shutdown &&
+>                    qemu_force_shutdown_requested();
+>   
+>       ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+> -                       vhost_dev_stop(&s->dev, vdev, true, false);
+> +                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
+>   
+>       if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+>           error_report("vhost guest notifier cleanup failed: %d", ret);
+> @@ -364,7 +364,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+>       vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+>   
+>       s->vhost_user.supports_config = true;
+> -    s->vhost_user.supports_inflight_migration = s->inflight_migration;
+>       ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
+>                            errp);
+>       if (ret < 0) {
+> @@ -580,10 +579,29 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+>       return &s->dev;
+>   }
+>   
+> +static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
+> +{
+> +    VHostUserBlk *s = VHOST_USER_BLK(opaque);
+> +
+> +    bool inflight_migration_enabled = virtio_has_feature(
+> +        s->dev.protocol_features,
+> +        VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+> +    if (vhost_user_blk_inflight_needed(s) && !inflight_migration_enabled) {
+> +        error_setg(errp, "can't migrate vhost-user-blk device: "
+> +                         "backend doesn't support "
+> +                         "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
+> +                         "protocol feature");
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static const VMStateDescription vmstate_vhost_user_blk_inflight = {
+>       .name = "vhost-user-blk/inflight",
+>       .version_id = 1,
+>       .needed = vhost_user_blk_inflight_needed,
+> +    .pre_save_errp = vhost_user_blk_pre_save,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+>           VMSTATE_END_OF_LIST()
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index bb8f8eab77..ed95ec7523 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+>               }
+>           }
+>   
+> -        if (!u->user->supports_inflight_migration ||
+> -            !virtio_has_feature(protocol_features,
+> +        if (!virtio_has_feature(protocol_features,
+>                                   VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+>               protocol_features &= ~(1ULL <<
+>                                  VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index ac4d6fca73..54e4ce2660 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1398,6 +1398,7 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+>       int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>       struct vhost_vring_state state = {
+>           .index = vhost_vq_index,
+> +        .num = skip_drain,
+>       };
+>       int r = 0;
+>   
+> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+> index 53fe996686..c95bad5ddc 100644
+> --- a/include/hw/virtio/vhost-user.h
+> +++ b/include/hw/virtio/vhost-user.h
+> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
+>       GPtrArray *notifiers;
+>       int memory_slots;
+>       bool supports_config;
+> -    bool supports_inflight_migration;
+>   } VhostUserState;
+>   
+>   /**
 
-Could you please confirm the host topology?
-
->=20
-> How it worked before v6: during initialization phase abort and bypass
-> HWPTs were allocated and stored for vIOMMU, but not attached to devices.
-> Devices used default IOMMU_HWPT_DATA_NONE HWPTs to be properly
-> assigned
-> to iommufd_groups, and then at the end of machine creation
-> qdev_machine_creation_done() calls smmuv3_accel_reset() which attaches
-> same abort HWPT for all devices in the group.
-> Could you please confirm my understanding is correct?
-
-It is true that QEMU behaviour changed between v5 and v6.=20
-From v6 onwards we try attaching a GBPA based HWPT as soon as vIOMMU
-is allocated. And at this instance, we are not sure of the vSID of the devi=
-ce and=20
-cannot reliably do an iommufd_backend_alloc_vdev(). So, it requires the bel=
-ow
-patch in host kernel to be a valid attachment.
-
-"iommu/arm-smmu-v3-iommufd: Allow attaching nested domain for GBPA cases"
-https://lore.kernel.org/all/20251103172755.2026145-1-nicolinc@nvidia.com/
-
-But if the above patch is missing, you should see error with the v9 series(=
-or from v6
-onwards) with only one device assignment itself.
-
-Could you please confirm your host kernel includes the above?
-
-If all the above cases are not valid, could you please provide the QEMU
-cmdline used, lspci -tv output from host as well as host kernel version=20
-used?
-
-Thanks,
-Shameer=20
 
