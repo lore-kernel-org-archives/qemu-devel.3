@@ -4,91 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41F0FA0C22
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 04:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D6FFA0C22
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 04:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCrXj-0006nV-IY; Wed, 15 Apr 2026 00:07:59 -0400
+	id 1wCrXt-0006pr-KG; Wed, 15 Apr 2026 00:08:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wCnee-0008Ez-5R
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 19:58:52 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wCnec-0003Wy-LU
- for qemu-devel@nongnu.org; Tue, 14 Apr 2026 19:58:51 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488965a9ca1so7324555e9.2
- for <qemu-devel@nongnu.org>; Tue, 14 Apr 2026 16:58:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776211128; x=1776815928; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UWDbxBPK/BZFXhhwQFxLsVfyB0Qk54iF0W/vZfXiw+U=;
- b=APWli2AMy/vYJrwwKbMcQhylBlwdb81l7JwO7DNg6Am7gNZKtuyYd0bJ5d+yDmXxHf
- gkPQGHxl7gv2+LS0e4Akd4A92ohalSIVpGR7TV+U5LETRKGYMwDr/bteZXsZh/lDkYyc
- W93A0gqfBzsZG1FsEhRLCNqUsYjoJ16tRSYXhUMnyC/RR2iWYRWYg2fft8ofFnThIrqi
- gZxoMZ781xVn2KSMqxrDTPuytHJEYeQCCRdGWoZOnUThNd/L4I6iawJEIohpWR47xnCT
- 4SacI1FeoGjviOchIXhaU8CQih/rnQ5ydtPJTOvNLH0a7FgoAADz3wq6rc9wxilOthZN
- AkaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776211128; x=1776815928;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UWDbxBPK/BZFXhhwQFxLsVfyB0Qk54iF0W/vZfXiw+U=;
- b=TaJTRpDQMw7E6tQ9ZNRWu/YxyXu7cDnaL/jDPUx2swuku+Er5RbQkubCwdrGkqu2OE
- rn8DIdp6bw/RhNPJ9v9KCT9xJgSj7EKcGtPzb8wH4pwASg+IRPRjYlmewNl1zb5nFFcN
- A2UsuLyn4/XKx19Ei4znR4uoqIipLROLnj76y40tmRkvJH987omw1Gru4Nu0ffguwcEY
- 9xS2IuUN+lYkV3k5y1kvNJfXEQglKWQEnEpaomY00JTPM6RYYbaeniTSbbX6VgDijyzf
- 33TpMnGqJvqECPRu3Rc1rZbVSUOqA0mcQk3MDx2i3zgqIGAB18S6DN7Jupgts5nYR39E
- eTYQ==
-X-Gm-Message-State: AOJu0YzTQg6zaHOLCHCDxW6xVR3avYWy7cLOvk19Ai2zIAenA8odyaZb
- PQvGzLP3XrOLLWV3V7aWSv65WTWfTdpo49SBrLqlfB5nSkPWt+OVzDikMUeu3Ba9
-X-Gm-Gg: AeBDietJryFKxuz+lCmh7ESS2S+MVzXUM0KyF9Q+FXJe/GhuG+sYmU/vOmSWEYElwRx
- 8KhUiQ/gn02qITikga11zSAvxc8rMTE8/Cfwt8Fw8fvYelVzSnoyD9Qqv6kRas2CFCi8bJCOwrv
- RIHMqlSHallB049qxY2agbQJ7KEFuZ3FLE5WHzQlxdF39F6/zMtPdDo0+4tvS3H+XSUioxXlZRO
- brgEYcSCasCYdHxjgJrQlvhDrUad1M1ux8HWQlR2LSy6tWa/Kbj4IjOt9rBBMWA7Frn4zeX3btL
- an94Wx1ALnDhzm5Wy4+lEIXoOKSk09AoDMV3VSzQ2PXEAadCXhWCiP6C4zJSZe3TQIN8LndA8Pj
- 3m5iG72LbMLg+YAFbsThOJ8OemN/tW0EPfUktlCBByXSzd/H+vGpBgG2yX7vIRFEMLa0dh/O+T7
- F/x+c1G0ICFiHFITsYkKnfnsPddaDZkaJV
-X-Received: by 2002:a05:600c:1c04:b0:488:7fd3:5cd5 with SMTP id
- 5b1f17b1804b1-488f212990dmr1214565e9.1.1776211127351; 
- Tue, 14 Apr 2026 16:58:47 -0700 (PDT)
-Received: from [192.168.10.11] ([182.181.137.32])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead3d5f11sm115535f8f.18.2026.04.14.16.58.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Apr 2026 16:58:46 -0700 (PDT)
-From: Ali Raza <elirazamumtaz@gmail.com>
-Subject: [PATCH 0/3] linux-user: Filter /proc/*/task/ and validate tkill
- targets
-Date: Wed, 15 Apr 2026 04:58:33 +0500
-Message-Id: <20260415-master-v1-0-8dd2ef111eee@gmail.com>
+ (Exim 4.90_1) (envelope-from <bea1e@proton.me>)
+ id 1wCqun-0002WP-Q5; Tue, 14 Apr 2026 23:27:46 -0400
+Received: from mail-4325.protonmail.ch ([185.70.43.25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bea1e@proton.me>)
+ id 1wCqul-0002kP-Pl; Tue, 14 Apr 2026 23:27:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1776223659; x=1776482859;
+ bh=YQNJxHgdQ/LGXAaVbMh2x40P8QP6CYv2MhOBUo0dpVY=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=ix/BHRBAOg5F9M3yIXeFdKFalAmQFxoctzIG6TpI3MQ9YPGBu5O/ZiyVM8d6xaRt4
+ 2zPXWokh7xVkE7nxh1vSpdmwWKZBKVjkgNMAV32Bpc3tVIOfNYYx99bqJ7srGD0fBs
+ KmM7wibnBcf3mVXNKF5aiOWGu2QGyqMIr0jHD4K+rhsAo8smWPMZGYOJuqNVF6gCkE
+ 73OnDdsY3W363BO1xy3QkxARdiOCaZvtDnGoRZDx6kQRD3L1TOnIZUeN/xoF+TcUSy
+ XXqfXXgMSeryPQNHrX9/ITHdfeFxExaJU5EhwwdhUqSVbm7fI4HY03n92cQ5FmmDLn
+ WmVKihtmToREA==
+Date: Wed, 15 Apr 2026 03:27:34 +0000
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+From: Feifan Qian <bea1e@proton.me>
+Cc: Bernhard Beschow <shentey@gmail.com>, Jason Wang <jasowang@redhat.com>,
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>
+Subject: [PATCH] hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
+Message-ID: <0NssTF_XyAbzwx4DB1ecmeaWsoqoRMwGSrf6SCVUaBsAR3aN_FinUY8ucoU3PrTya2Jdf09HrEMWR9mwdFI0HW_ZF6SBe6gi6aIgrVpZd3g=@proton.me>
+In-Reply-To: <ad4b1u-MEfso3miW@redhat.com>
+References: <rxuL-6ZdTjc0-X6Ez2rU4TPEObWUUb4HjRf6X2__bLs3i-9N2d5NX3HbQK2Zyrh5V2c1szltCX91cL-s-WHxX1XoBDSyx5_m6FCvmBmblIY=@proton.me>
+ <ad4b1u-MEfso3miW@redhat.com>
+Feedback-ID: 93226294:user:proton
+X-Pm-Message-ID: 970a6343a6c3b7b60d6196dbff8ae24393009f25
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKnU3mkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDE0NT3dzE4pLUIl3jRIO0RKPUpDSjFFMloOKCotS0zAqwQdGxEH5xaVJ
- WanIJSLdSbS0AYRMj6GoAAAA=
-X-Change-ID: 20260415-master-3a0fa2ebf2d5
-To: qemu-devel@nongnu.org
-Cc: Ali Raza <elirazamumtaz@gmail.com>, morgan@kernel.org
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=elirazamumtaz@gmail.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/mixed;
+ boundary="b1=_xKSgLQP1ojGygnmeTHMx8nQ99lie8qZSbQ0eAnKTyg"
+Received-SPF: pass client-ip=185.70.43.25; envelope-from=bea1e@proton.me;
+ helo=mail-4325.protonmail.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 15 Apr 2026 00:07:55 -0400
+X-Mailman-Approved-At: Wed, 15 Apr 2026 00:08:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,31 +72,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes a problem where QEMU user-mode exposes internal
-host threads (RCU, TCG workers) to guest processes via /proc/*/task/
-and allows the guest to signal them via tkill/tgkill.
- 
-Patch 1: Filters getdents/getdents64 on /proc/<pid>/task/
-Patch 2: Validates tkill/tgkill targets against guest CPU list
-Patch 3: Adds a multiarch test exercising both fixes
+--b1=_xKSgLQP1ojGygnmeTHMx8nQ99lie8qZSbQ0eAnKTyg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Ali Raza <elirazamumtaz@gmail.com>
+The TX Frame Control Block (FCB) is prepended to a TX frame when
+BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
+fields that process_tx_fcb() uses to locate L3/L4 headers within
+the frame buffer:
+
+  l3_header_offset =3D FCB byte 3 (0..255)
+  l4_header_offset =3D FCB byte 2 (0..255)
+
+These offsets are applied without any bounds check. When the
+UDP-no-CTU branch is taken, the function writes zero to
+l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
+write target is:
+
+  tx_buffer + 8 + 255 + 255 + 6/7 =3D tx_buffer + 525
+
+A malicious guest can therefore corrupt up to 509 bytes of heap
+memory beyond a minimally-sized (16 B) TX frame.
+
+Fix: reject the frame and log a guest error when the minimum
+required buffer length
+
+  8 (FCB) + l3_header_offset + l4_header_offset + 8
+
+exceeds tx_buffer_len. Move the l3_header and l4_header pointer
+declarations past the new guard so that out-of-bounds pointers
+are never materialised.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Feifan Qian <bea1e@proton.me>
 ---
-Ali Raza (3):
-      linux-user: Filter /proc/*/task/ to hide QEMU-internal threads
-      linux-user: Validate tkill/tgkill targets are guest threads
-      tests/tcg: Add test for /proc/self/task/ filtering and tkill validation
+ hw/net/fsl_etsec/rings.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
- linux-user/syscall.c                        | 114 +++++++++++++++++-
- tests/tcg/multiarch/Makefile.target         |   2 +
- tests/tcg/multiarch/linux/linux-proc-task.c | 178 ++++++++++++++++++++++++++++
- 3 files changed, 292 insertions(+), 2 deletions(-)
----
-base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
-change-id: 20260415-master-3a0fa2ebf2d5
+diff --git a/hw/net/fsl_etsec/rings.c b/hw/net/fsl_etsec/rings.c
+index 22660c32b8..e60303f52c 100644
+--- a/hw/net/fsl_etsec/rings.c
++++ b/hw/net/fsl_etsec/rings.c
+@@ -176,15 +176,30 @@ static void tx_padding_and_crc(eTSEC *etsec, uint32_t=
+ min_frame_len)
+ static void process_tx_fcb(eTSEC *etsec)
+ {
+     uint8_t flags =3D (uint8_t)(*etsec->tx_buffer);
+-    /* L3 header offset from start of frame */
++    /* L3 header offset from start of frame (FCB byte 3) */
+     uint8_t l3_header_offset =3D (uint8_t)*(etsec->tx_buffer + 3);
+-    /* L4 header offset from start of L3 header */
++    /* L4 header offset from start of L3 header (FCB byte 2) */
+     uint8_t l4_header_offset =3D (uint8_t)*(etsec->tx_buffer + 2);
++    uint8_t *l3_header;
++    uint8_t *l4_header;
++    int csum =3D 0;
++
++    /*
++     * Validate FCB header offsets before pointer arithmetic. The highest
++     * byte accessed is l4_header[7], at offset
++     *   8 (FCB size) + l3_header_offset + l4_header_offset + 7
++     * from tx_buffer. Drop the frame if this exceeds the buffer length.
++     */
++    if (etsec->tx_buffer_len < 8u + l3_header_offset + l4_header_offset + =
+8u) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "eTSEC: FCB offsets exceed frame length, dropping\n"=
+);
++        return;
++    }
++
+     /* L3 header */
+-    uint8_t *l3_header =3D etsec->tx_buffer + 8 + l3_header_offset;
++    l3_header =3D etsec->tx_buffer + 8 + l3_header_offset;
+     /* L4 header */
+-    uint8_t *l4_header =3D l3_header + l4_header_offset;
+-    int csum =3D 0;
++    l4_header =3D l3_header + l4_header_offset;
 
-Best regards,
---  
-Ali Raza <elirazamumtaz@gmail.com>
+     /* if packet is IP4 and IP checksum is requested */
+     if (flags & FCB_TX_IP && flags & FCB_TX_CIP) {
+--
+2.43.0
+
+--b1=_xKSgLQP1ojGygnmeTHMx8nQ99lie8qZSbQ0eAnKTyg
+Content-Type: text/x-patch; name=0001-hw-net-fsl_etsec-validate-FCB-offsets-in-process_tx_.patch
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=0001-hw-net-fsl_etsec-validate-FCB-offsets-in-process_tx_.patch
+
+RnJvbSBjYTY1N2Q0ZWZhZjRkN2EwNjQ0ZGM2OTZhNDVjMDllOWY2ZmY5MTY4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBGZWlmYW4gUWlhbiA8YmVhMWVAcHJvdG9uLm1lPgpEYXRlOiBX
+ZWQsIDE1IEFwciAyMDI2IDExOjA4OjQ2ICswODAwClN1YmplY3Q6IFtQQVRDSCAxLzNdIGh3L25l
+dC9mc2xfZXRzZWM6IHZhbGlkYXRlIEZDQiBvZmZzZXRzIGluCiBwcm9jZXNzX3R4X2ZjYigpCgpU
+aGUgVFggRnJhbWUgQ29udHJvbCBCbG9jayAoRkNCKSBpcyBwcmVwZW5kZWQgdG8gYSBUWCBmcmFt
+ZSB3aGVuCkJEX1RYX1RPRVVOIGlzIHNldC4gSXQgY29udGFpbnMgdHdvIGd1ZXN0LWNvbnRyb2xs
+ZWQgdTggb2Zmc2V0CmZpZWxkcyB0aGF0IHByb2Nlc3NfdHhfZmNiKCkgdXNlcyB0byBsb2NhdGUg
+TDMvTDQgaGVhZGVycyB3aXRoaW4KdGhlIGZyYW1lIGJ1ZmZlcjoKCiAgbDNfaGVhZGVyX29mZnNl
+dCA9IEZDQiBieXRlIDMgKDAuLjI1NSkKICBsNF9oZWFkZXJfb2Zmc2V0ID0gRkNCIGJ5dGUgMiAo
+MC4uMjU1KQoKVGhlc2Ugb2Zmc2V0cyBhcmUgYXBwbGllZCB3aXRob3V0IGFueSBib3VuZHMgY2hl
+Y2suIFdoZW4gdGhlClVEUC1uby1DVFUgYnJhbmNoIGlzIHRha2VuLCB0aGUgZnVuY3Rpb24gd3Jp
+dGVzIHplcm8gdG8KbDRfaGVhZGVyWzZdIGFuZCBsNF9oZWFkZXJbN10uIFdpdGggYm90aCBvZmZz
+ZXRzIHNldCB0byAweEZGIHRoZQp3cml0ZSB0YXJnZXQgaXM6CgogIHR4X2J1ZmZlciArIDggKyAy
+NTUgKyAyNTUgKyA2LzcgPSB0eF9idWZmZXIgKyA1MjUKCkEgbWFsaWNpb3VzIGd1ZXN0IGNhbiB0
+aGVyZWZvcmUgY29ycnVwdCB1cCB0byA1MDkgYnl0ZXMgb2YgaGVhcAptZW1vcnkgYmV5b25kIGEg
+bWluaW1hbGx5LXNpemVkICgxNiBCKSBUWCBmcmFtZS4KCkZpeDogcmVqZWN0IHRoZSBmcmFtZSBh
+bmQgbG9nIGEgZ3Vlc3QgZXJyb3Igd2hlbiB0aGUgbWluaW11bQpyZXF1aXJlZCBidWZmZXIgbGVu
+Z3RoCgogIDggKEZDQikgKyBsM19oZWFkZXJfb2Zmc2V0ICsgbDRfaGVhZGVyX29mZnNldCArIDgK
+CmV4Y2VlZHMgdHhfYnVmZmVyX2xlbi4gTW92ZSB0aGUgbDNfaGVhZGVyIGFuZCBsNF9oZWFkZXIg
+cG9pbnRlcgpkZWNsYXJhdGlvbnMgcGFzdCB0aGUgbmV3IGd1YXJkIHNvIHRoYXQgb3V0LW9mLWJv
+dW5kcyBwb2ludGVycwphcmUgbmV2ZXIgbWF0ZXJpYWxpc2VkLgoKQ2M6IHFlbXUtc3RhYmxlQG5v
+bmdudS5vcmcKU2lnbmVkLW9mZi1ieTogRmVpZmFuIFFpYW4gPGJlYTFlQHByb3Rvbi5tZT4KLS0t
+CiBody9uZXQvZnNsX2V0c2VjL3JpbmdzLmMgfCAyNSArKysrKysrKysrKysrKysrKysrKy0tLS0t
+CiAxIGZpbGUgY2hhbmdlZCwgMjAgaW5zZXJ0aW9ucygrKSwgNSBkZWxldGlvbnMoLSkKCmRpZmYg
+LS1naXQgYS9ody9uZXQvZnNsX2V0c2VjL3JpbmdzLmMgYi9ody9uZXQvZnNsX2V0c2VjL3Jpbmdz
+LmMKaW5kZXggMjI2NjBjMzJiOC4uZTYwMzAzZjUyYyAxMDA2NDQKLS0tIGEvaHcvbmV0L2ZzbF9l
+dHNlYy9yaW5ncy5jCisrKyBiL2h3L25ldC9mc2xfZXRzZWMvcmluZ3MuYwpAQCAtMTc2LDE1ICsx
+NzYsMzAgQEAgc3RhdGljIHZvaWQgdHhfcGFkZGluZ19hbmRfY3JjKGVUU0VDICpldHNlYywgdWlu
+dDMyX3QgbWluX2ZyYW1lX2xlbikKIHN0YXRpYyB2b2lkIHByb2Nlc3NfdHhfZmNiKGVUU0VDICpl
+dHNlYykKIHsKICAgICB1aW50OF90IGZsYWdzID0gKHVpbnQ4X3QpKCpldHNlYy0+dHhfYnVmZmVy
+KTsKLSAgICAvKiBMMyBoZWFkZXIgb2Zmc2V0IGZyb20gc3RhcnQgb2YgZnJhbWUgKi8KKyAgICAv
+KiBMMyBoZWFkZXIgb2Zmc2V0IGZyb20gc3RhcnQgb2YgZnJhbWUgKEZDQiBieXRlIDMpICovCiAg
+ICAgdWludDhfdCBsM19oZWFkZXJfb2Zmc2V0ID0gKHVpbnQ4X3QpKihldHNlYy0+dHhfYnVmZmVy
+ICsgMyk7Ci0gICAgLyogTDQgaGVhZGVyIG9mZnNldCBmcm9tIHN0YXJ0IG9mIEwzIGhlYWRlciAq
+LworICAgIC8qIEw0IGhlYWRlciBvZmZzZXQgZnJvbSBzdGFydCBvZiBMMyBoZWFkZXIgKEZDQiBi
+eXRlIDIpICovCiAgICAgdWludDhfdCBsNF9oZWFkZXJfb2Zmc2V0ID0gKHVpbnQ4X3QpKihldHNl
+Yy0+dHhfYnVmZmVyICsgMik7CisgICAgdWludDhfdCAqbDNfaGVhZGVyOworICAgIHVpbnQ4X3Qg
+Kmw0X2hlYWRlcjsKKyAgICBpbnQgY3N1bSA9IDA7CisKKyAgICAvKgorICAgICAqIFZhbGlkYXRl
+IEZDQiBoZWFkZXIgb2Zmc2V0cyBiZWZvcmUgcG9pbnRlciBhcml0aG1ldGljLiBUaGUgaGlnaGVz
+dAorICAgICAqIGJ5dGUgYWNjZXNzZWQgaXMgbDRfaGVhZGVyWzddLCBhdCBvZmZzZXQKKyAgICAg
+KiAgIDggKEZDQiBzaXplKSArIGwzX2hlYWRlcl9vZmZzZXQgKyBsNF9oZWFkZXJfb2Zmc2V0ICsg
+NworICAgICAqIGZyb20gdHhfYnVmZmVyLiBEcm9wIHRoZSBmcmFtZSBpZiB0aGlzIGV4Y2VlZHMg
+dGhlIGJ1ZmZlciBsZW5ndGguCisgICAgICovCisgICAgaWYgKGV0c2VjLT50eF9idWZmZXJfbGVu
+IDwgOHUgKyBsM19oZWFkZXJfb2Zmc2V0ICsgbDRfaGVhZGVyX29mZnNldCArIDh1KSB7CisgICAg
+ICAgIHFlbXVfbG9nX21hc2soTE9HX0dVRVNUX0VSUk9SLAorICAgICAgICAgICAgICAgICAgICAg
+ICJlVFNFQzogRkNCIG9mZnNldHMgZXhjZWVkIGZyYW1lIGxlbmd0aCwgZHJvcHBpbmdcbiIpOwor
+ICAgICAgICByZXR1cm47CisgICAgfQorCiAgICAgLyogTDMgaGVhZGVyICovCi0gICAgdWludDhf
+dCAqbDNfaGVhZGVyID0gZXRzZWMtPnR4X2J1ZmZlciArIDggKyBsM19oZWFkZXJfb2Zmc2V0Owor
+ICAgIGwzX2hlYWRlciA9IGV0c2VjLT50eF9idWZmZXIgKyA4ICsgbDNfaGVhZGVyX29mZnNldDsK
+ICAgICAvKiBMNCBoZWFkZXIgKi8KLSAgICB1aW50OF90ICpsNF9oZWFkZXIgPSBsM19oZWFkZXIg
+KyBsNF9oZWFkZXJfb2Zmc2V0OwotICAgIGludCBjc3VtID0gMDsKKyAgICBsNF9oZWFkZXIgPSBs
+M19oZWFkZXIgKyBsNF9oZWFkZXJfb2Zmc2V0OwogCiAgICAgLyogaWYgcGFja2V0IGlzIElQNCBh
+bmQgSVAgY2hlY2tzdW0gaXMgcmVxdWVzdGVkICovCiAgICAgaWYgKGZsYWdzICYgRkNCX1RYX0lQ
+ICYmIGZsYWdzICYgRkNCX1RYX0NJUCkgewotLSAKMi40My4wCgo=
+
+--b1=_xKSgLQP1ojGygnmeTHMx8nQ99lie8qZSbQ0eAnKTyg--
 
 
