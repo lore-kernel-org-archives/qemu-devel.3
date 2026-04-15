@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2519F428DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150E4F428E0
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 20:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wD6iz-0005ZN-RC; Wed, 15 Apr 2026 16:20:37 -0400
+	id 1wD6j6-0005gS-FO; Wed, 15 Apr 2026 16:20:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6ix-0005W7-LW
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:20:35 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6j4-0005cq-Nb
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:20:42 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6iu-0001NK-Qv
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:20:34 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488a29e6110so77078205e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:20:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wD6j3-0001kX-3D
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 16:20:42 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43d7a5e77b1so2277523f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 13:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776284430; x=1776889230; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PTL+l/GwuosD3O/hbwf2MONUrJtnAid2gbNyzfmgsSw=;
- b=yyrg6D9RESZ1ckLBn4XNtEJBPsUK1ZqBs1U36P6XzTdRFsfhzgXKuuVJH4k0lHJLce
- 5EfkhuMYV6UqVjqoqtgcVlisK+1uGSZ1omAqd5kshmsQBCDp9R1HP4Ozfqs92vxtqjdl
- /NNm2jGMiREgVh1lt67G6GnPcKJ8Y5N3gYGi5qYeIN78dhpcoWI/1BojlWd2s/ZAuybh
- d/Qm2fNZJGdR/z8pXHU8rYYAtmd5OSPg1AxdwgUr6i95H6kxlXWvG2Gg3F78OCWvOx3t
- T0zzXQw/6jgbgZlRVKHYs9UfFbJe7Ru7ioiLx+JfY1FbpgEk3qOoSXVtMCJHBSBFEG4L
- Dunw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776284430; x=1776889230;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1776284439; x=1776889239; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PTL+l/GwuosD3O/hbwf2MONUrJtnAid2gbNyzfmgsSw=;
- b=P8ZU5jsf9GwBoTa1zByuqmzsWENKi0Ge2Clyr/KhHtC0LjKpHLyoz8+uO2jQypDwZ6
- mOLRAcWdjOdB93/CluwBeNCheWy5yJVeyML+1uqUMjXfqZAYpMUvxjM4Jc7uIAKrwEuN
- NpyHewo4/xCVgtUeqms/cM1mA8SIcvM3hfayCadLC74JKmXsJ7Q0/SGmHA1k4/JDwuIX
- MiMICbbSb9F4yfSpmtwoX7rCOFT6vF6tgSYaNnr7v+gFlJ0iwzxXaOGofgJ0dZVkV32O
- i9A52pmBN6pRHcGERrJmxXpQ3pr0hrkHoQCYDlBfa6Lu3REN9e8PCky/L+K82V2YRm+v
- 6wiA==
-X-Gm-Message-State: AOJu0YxQ549MueXmYrn6Iy0uXAKMt/7RfHIuNH4jxMqngDo3OHD8HPid
- JfpcogA9/b1AxPNV1kv4ydhTlxpssaL7uNNWlc+iWeBAtYFY2d67PfdFzypxvcEV3vTyFpYghBp
- fEXBF28g=
-X-Gm-Gg: AeBDietgYlgclxLEySXDSy2YBpH3cHjoAfnlsvTKvU3JNM8TwJnfUEkONzEJO/WAJZ4
- 4olpfM9/wxrFj0E8TnxmCXR8tmrUwTfug7skyZseWLBHu4nqBHGS4Fo+3ng2bDe2i49aIXpZrNq
- E8P3toDAwY7+8pU2/bcIAs8IXAL4i01aEI6g6jFl0b6anE7MEWuxczb7yJULRQpTdlM3cW2WNo6
- oxKSxtpNRlOty2tRyuIb/r+nbGpRmqS71Nd9I+NTURYtsna+3NXJuEjyYRvqKYz8kgsdMToAxz2
- EF5FrQ1sKNvDqCpSEWSA+AZphV+fHercEXjXWXpRnj16UGtqvxP1Lf+xPUUjhAmkK+2ApA0+kzL
- 79sWUKXbAw2AY2QFfs/9U8fJkJ91mIrDqhkxMJKD17LEvUEzgJuaPnhJtyfIvyeK8xnJk2QjfQ5
- 6DSEmYAq+N0xavr4D6ejVVxaUPZ7lXUr0EP/7DIxdUCAC85mwMonz5qOE1+G3YmnO3g6x8hhZ35
- 6COS4fuFTY=
-X-Received: by 2002:a05:600c:5292:b0:486:fe39:28b7 with SMTP id
- 5b1f17b1804b1-488d67fa48emr332984365e9.9.1776284430096; 
- Wed, 15 Apr 2026 13:20:30 -0700 (PDT)
+ bh=V/fJbCFAPRAVo1uJrZAiFTkDKhoSheG/KaRtMAVYIKE=;
+ b=tZU5TrsRIfC/Hlb+eCAIU7UwBt3V7UJqIXUoReRtCVxxotGKNdyXxxEQXh8JD7CVtS
+ vCeZpFHpJ8npRqS/VP/a7YUqu2o/lpaLIZSlSg6/9Ylk+kuuspxJhX7DMz/UPSyUTmNB
+ GwMR1Du7zQfLv6ovaE8Gqm9+wHFm+8hrtffvpjVOXCXbu+Dm6GgZt4kB0BQ7gx2X59wA
+ 8XwQGUuTo8YrDE7w38E+rud0Jm75kVYhJNho5byBc7c3jisoA6gdemgWcWmK+cA7jsMu
+ LLy5ff1W93lX9iTs5f5+wA0vgBuKlklcmIs/wUSHj8ys/H9v5mB3VPcvdnZdGWUWIuYw
+ 107A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776284439; x=1776889239;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=V/fJbCFAPRAVo1uJrZAiFTkDKhoSheG/KaRtMAVYIKE=;
+ b=o/eO/s/IdK+wUh8qgl8o2axvz6C+MgD6xmqTWYQCQohbv6DFWpkLX8FWNTKvCfeXj2
+ Knanb4+z8BmVgfHNV4umiC5WjQ1eg5FplcmyS73vOwVfbu6QVEVa6mmrf+dvrD4FP6rg
+ ysCQe35QZlcTrnP37y0B53lL8lLuVSC1BMNT5ym0gdldxA6ZT0gWOf7OxCY3TVmrgs05
+ 3f/vYp/2IM4/BDYFlzXMnDZ7kveCqjsekkonFW9P5E+ZLtO0ZObgKNFrtXlsVj8/XM7R
+ mNUpIiFrMVhm+4KyPy2fJTdSLXLHMHdbusYxFT+KJqIMw9vWgETyfQ85qo6lqOvB4Ur9
+ p6ng==
+X-Gm-Message-State: AOJu0YxpUaczN3dI3vIKmarxQTwx5gKDWH/a5WZxzsOL3ZDqMAqFcNwi
+ f3CPoEvmwxpk/VSVK8T65JsKSowmSesprodKWX0+9KYhRKT7iiHL6s/chbavX1BLQH81dlyrSZK
+ tiQ+D1b4=
+X-Gm-Gg: AeBDietOANEqoqnReN+jcSMqx6GJBiyRF2C7qjpxRrcv/Y+wJ/NXflxPj6zKetI92Jq
+ XgW3nsVDRLoX1Mi4kYdUMaFEfn6mRvdWFiAE9dFCvN90zgKhQlclhqz+FYFk8/IIwv/YuXN2qt2
+ 01xsC91gLDyblNprjveZ3gKCz3uWr26AMUY+CpDylRK84VTQALLC6TS9+nCUemSZKHWRK8S6RFF
+ v0hpGulmOV8lIrRZcdJmMIcpkLEIpKlB4NX05oUU7SZu7pE0k7T7/FdOf8xwHXAANKhOTLAzudA
+ 1Z4hVPAe0Wc4HvO5aR/94QFcRyw9eL8ZlJznwv4QCLZUCQv4ZVwHSdEmbhVau1pUClDqUeMfO5R
+ w0j/haCSuRnu0reJi94JG4+FxmfbAGt8gV7H5PcAGX/4ZN20u8iiP/p0huhlRJjXBK1gFfXuK2+
+ QWbowrTal0uTumEDq5rTFbDylN80PzI+2PzZiCaIvd9Hy//yBvkgxUCcN65JtfknJh/v6jR3iK
+X-Received: by 2002:a05:6000:2812:b0:439:ccd7:cdcc with SMTP id
+ ffacd0b85a97d-43eb10e5a7bmr720188f8f.18.1776284439048; 
+ Wed, 15 Apr 2026 13:20:39 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ede24eb0sm173207295e9.8.2026.04.15.13.20.28
+ ffacd0b85a97d-43ead35662csm7070366f8f.14.2026.04.15.13.20.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Apr 2026 13:20:28 -0700 (PDT)
+ Wed, 15 Apr 2026 13:20:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
@@ -70,16 +70,18 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>
-Subject: [RFC PATCH v5 0/6] target/mips: Translate MSA vector load/store
- opcodes
-Date: Wed, 15 Apr 2026 22:20:20 +0200
-Message-ID: <20260415202027.83008-1-philmd@linaro.org>
+Subject: [RFC PATCH v5 1/6] target/mips: Expand TRANS_DF_iv() macro for MSA
+ Load/Store
+Date: Wed, 15 Apr 2026 22:20:21 +0200
+Message-ID: <20260415202027.83008-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260415202027.83008-1-philmd@linaro.org>
+References: <20260415202027.83008-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +104,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v4:
-- No algorithm change
-- Split to ease review
+In order to ease the conversion of MSA Load/Store runtime
+helpers to translated code, expand the TRANS_DF_iv() macro.
 
-Hi Richard,
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/tcg/msa_translate.c | 59 ++++++++++++++++++++++++++-------
+ 1 file changed, 47 insertions(+), 12 deletions(-)
 
-I tried to implement your suggestion from v3 [*]. Unfortunately
-the box where I had the MSA test suite got erased, so it will
-take me some time to restore the setup. I was surprised these
-patches pass our CI tests so I added a pair of abort() which
-didn't fire, so this code path isn't tested at all there.
-Anyhow, do you mind having a quick look to see this is going
-in the right direction?
-
-Thanks!
-
-Phil.
-
-[*] https://lore.kernel.org/qemu-devel/2680c481-088b-4366-abc3-7d48d90db0b5@linaro.org/
-
-Philippe Mathieu-Daudé (6):
-  target/mips: Expand TRANS_DF_iv() macro for MSA Load/Store
-  target/mips: Convert MSA LD/ST.B (Byte Vector)
-  target/mips: Convert MSA LD/ST.H (Halfword Vector)
-  target/mips: Convert MSA LD/ST.W (Word Vector)
-  target/mips: Convert MSA LD/ST.D (Doubleword Vector)
-  target/mips: Endian-swap MSA LD/ST.D (Doubleword Vector)
-
- target/mips/tcg/msa_helper.h.inc |   9 --
- target/mips/tcg/msa_helper.c     | 176 -------------------------------
- target/mips/tcg/msa_translate.c  |  93 +++++++++++++---
- 3 files changed, 81 insertions(+), 197 deletions(-)
-
+diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
+index 82b149922fa..2e1a769e032 100644
+--- a/target/mips/tcg/msa_translate.c
++++ b/target/mips/tcg/msa_translate.c
+@@ -164,7 +164,6 @@ static inline bool check_msa_enabled(DisasContext *ctx)
+     return true;
+ }
+ 
+-typedef void gen_helper_piv(TCGv_ptr, TCGv_i32, TCGv);
+ typedef void gen_helper_pii(TCGv_ptr, TCGv_i32, TCGv_i32);
+ typedef void gen_helper_piii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32);
+ typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
+@@ -175,9 +174,6 @@ typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
+     }; \
+     TRANS(NAME, trans_func, NAME##_tab[a->df])
+ 
+-#define TRANS_DF_iv(NAME, trans_func, gen_func) \
+-    TRANS_DF_x(iv, NAME, trans_func, gen_func)
+-
+ #define TRANS_DF_ii(NAME, trans_func, gen_func) \
+     TRANS_DF_x(ii, NAME, trans_func, gen_func)
+ 
+@@ -758,25 +754,64 @@ TRANS(FTINT_U,  trans_msa_2rf, gen_helper_msa_ftint_u_df);
+ TRANS(FFINT_S,  trans_msa_2rf, gen_helper_msa_ffint_s_df);
+ TRANS(FFINT_U,  trans_msa_2rf, gen_helper_msa_ffint_u_df);
+ 
+-static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a,
+-                           gen_helper_piv *gen_msa_ldst)
++static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+ {
+-    TCGv taddr;
++    TCGv_i32 wd;
++    TCGv_va addr;
+ 
+     if (!check_msa_enabled(ctx)) {
+         return true;
+     }
+ 
+-    taddr = tcg_temp_new();
++    addr = tcgv_va_temp_new();
++    gen_base_offset_addr(ctx, addr, a->ws, a->sa << a->df);
+ 
+-    gen_base_offset_addr(ctx, taddr, a->ws, a->sa << a->df);
+-    gen_msa_ldst(tcg_env, tcg_constant_i32(a->wd), taddr);
++    wd = tcg_constant_i32(a->wd);
++
++    if (is_load) {
++        switch (a->df) {
++        case 0:
++            gen_helper_msa_ld_b(tcg_env, wd, addr);
++            return true;
++        case 1:
++            gen_helper_msa_ld_h(tcg_env, wd, addr);
++            return true;
++        case 2:
++            gen_helper_msa_ld_w(tcg_env, wd, addr);
++            return true;
++        case 3:
++            gen_helper_msa_ld_d(tcg_env, wd, addr);
++            return true;
++        }
++    } else {
++        switch (a->df) {
++        case 0:
++            gen_helper_msa_st_b(tcg_env, wd, addr);
++            return true;
++        case 1:
++            gen_helper_msa_st_h(tcg_env, wd, addr);
++            return true;
++        case 2:
++            gen_helper_msa_st_w(tcg_env, wd, addr);
++            return true;
++        case 3:
++            gen_helper_msa_st_d(tcg_env, wd, addr);
++            return true;
++        }
++    }
+ 
+     return true;
+ }
+ 
+-TRANS_DF_iv(LD, trans_msa_ldst, gen_helper_msa_ld);
+-TRANS_DF_iv(ST, trans_msa_ldst, gen_helper_msa_st);
++static bool trans_LD(DisasContext *ctx, arg_msa_i *a)
++{
++    return trans_msa_ldst(ctx, a, true);
++}
++
++static bool trans_ST(DisasContext *ctx, arg_msa_i *a)
++{
++    return trans_msa_ldst(ctx, a, false);
++}
+ 
+ static bool trans_LSA(DisasContext *ctx, arg_r *a)
+ {
 -- 
 2.53.0
 
