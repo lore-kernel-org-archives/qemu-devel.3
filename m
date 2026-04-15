@@ -4,99 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C4E9FA0C43
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 08:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38242FA0C48
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Apr 2026 08:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wCvLD-0004jz-Rh; Wed, 15 Apr 2026 04:11:20 -0400
+	id 1wCvQv-0002PD-6X; Wed, 15 Apr 2026 04:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wCvL8-0004dE-EM
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 04:11:14 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1wCvQt-0002Ku-J8
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 04:17:11 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wCvL2-0003qC-TQ
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 04:11:12 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1wCvQr-0004rO-EH
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 04:17:11 -0400
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 9AF8040155
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 08:11:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1776240666;
- bh=5EuUzCLZ6D5IKsoQu9hi6nc5HT5G+bEClTfrkVDsFac=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=hJjUyEUaxvzisNrk5YFJSdZUgXCJnW9L6F/b+3fIcgNPUSFlQn7X3CjgnFFmNgqab
- jPLTlSWQbgazs1DmFFggtHI99zhOyQYLwY6kriOu4YQrLU8hnXKMmDUP6VjzGTXQLV
- xAe5pYmgk0DU5igtq0J8lKm15mVzL395kJAzCzaP/elbY3hiGtoPXsC4way2s9k8CQ
- IhlCIUdkikJBEaemt+H6swZqmORq58v++tx4wp5EDFBLjDJpViJVB1SDnBWxT22KOe
- tqtm4J1GQgUfPLAD61Rbk89KcYU+8ADMgPG8p6iDYV62gU59a8NMMbYZnwVDsQGEoP
- EV/gpBtr0jKBw==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 880C07F26E
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 08:11:06 +0000 (UTC)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 7F0093F6B1
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 08:17:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1776241026;
+ bh=bAzfcynvIl0xCNstMQsFagx8f4Jwt8qtXq16KuGWHA4=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=WFJe6aO14UAGlclUZEgo353NiWbQXgKf5cZIneNnC2cWvW78zkJ0bOhtvl7t4xWRt
+ /t7T8J0cO4AwP9iBpiYmE5IO5qrItfv9R98D1qnH4GvZjdbvw0ceCPAXBGSXOHIBcz
+ qUyGilPmt0bD/5vVmMc0bvkCk1fFBqg+DHfANQcqQNjcCWovR+zio/5fQoNxvcvPDz
+ q5AZ1yYVmpAN/tKSNNtVodRT0pqL+Nz1XggXWguHL+X6AxRAOsiK116F5tZqw8hQ+G
+ Z5GN4XsmlriVWNNBnVOLKzav7vIFKXUtNgTb/oSmGGX7kZc8n0nji0mvT34OPXz1ct
+ U8qQxasQbhVrJ7/CA699tXh9jbaAedoW7DcbatGBe0MPgSZnIF+dowYN5aJyig9GTL
+ teoMNZSEb3a+ct2lJ5SMZxDd0Iltp9hbW+yWs+usAMRheGOR26pr1jBkFZh5BMbvuR
+ +DtX7dPwHT+UTAwB5bT7Pko1O8Zrqf9cvD+d7zvtvm6nSqxjyHDTMQcZ/7majqUOQD
+ tCb3AhiCI6iSKfvt+Xvbbx0o0VJtVHnO/e4G0WAypbX34Ri91nBczE9ZB0/ZsRDWlq
+ AKiIopqki0u/Z3mApWaeYkrgLNBiiiClGEAjwlvEa+WD/5AbF9/6mY/m/f2BGmsTDZ
+ HAT4H4H3NsCwSjso1EUaP/YE=
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-488cc31ea57so40838965e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 01:17:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776241026; x=1776845826;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bAzfcynvIl0xCNstMQsFagx8f4Jwt8qtXq16KuGWHA4=;
+ b=JKozsct4T6Gz/0eA1PgD4fBxIXyJP1Uxn/EAM0bBUYrARvHLSuLVBym9bY9SabS6O2
+ BFgj7zykY2O7Tm55ZHF4qvKq/vO6OfehzyEspyYRb/rgwsrjziQA5komKksMKyXNtuUW
+ pnslJrxn6XWoIZgYirZttvsjtx1X/bGh6WzMpc3Z3wpcJZYAJS1yKlJfjJ/5nVEFyA7f
+ ZG2uA+c+hvCZ5fqOD1TE8RpqJgVq+7rxwJ6aWmghZR2Zu8ZEZUZ31cSBchq2BC15upSP
+ zghm3DoWGVOfcX2Ukf8ylJpznI/BqSAjYPaHFzipzfmj+ti+EG4NNFzIoP0n0/c55Kex
+ VhOA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8tur29CYNwDxeuwxJ6uHsP/6sibabJ1Wn5lL4yooIUJ6TmH9ZFwZjjJ6aIRVIS6CXLD/6TQAicsW8O@nongnu.org
+X-Gm-Message-State: AOJu0YzncxSvuuTuSYi0VgHjinEOh4LMgVfjBlgNz/lCe9RAzv72VSyd
+ AUxX8z79db1+F5MLMpvLbeZEqy6lYHtc8e2NktK3/EB5iuBvIceVuaWRgu3refM7JICWBgfp8Va
+ EOQtXq8JY1+JQAoWrdMJ5njwIN1sEg/Z5b0UmkZDYUkUOB0l/H3nvJwZ1kDzv+xg0FIwDYD0V
+X-Gm-Gg: AeBDievsA2kij1ZORZCzfq1JQhH4+YkujnHPoSL2k52hhymWvTmqStTRDrm0Zi2MpBb
+ lwzncq3aac7mszcZG8/OurbwwVOuHu54JyXnJ5fP3IOkBDdwiEbVnzhwulQgs1X/krbA1ACvBIr
+ 6BcQGy6XbHtuZ5Ewgvujk58UrsHJvIxZVMHCmGrpKo5tobefi1K3Cia5zFNGgGj8ttNKbXrJ1da
+ BYdOhkgB5ULicQa7QIPFbyN4lZIXPHAKSqdgIisDmeimsgWrq6uUQHeKmdrN6K3NvfHC20nO0JV
+ LjT1QAPgw1ch2NztPwL3JHZ9a3WTxSoMTj/GdVCWNlIo8THdzpxHQUxG+ObGNPFGpllV117gZXf
+ 3bIaEp18uTDQT8E8OEJLPPuXjUxLGUJ+Hk2PGqyOFYOgYgKfyDqLybMONh94vSUeDx6VPXU57z+
+ 39+hvW700vz1THtVSOhOqDYgu/mdRIG7xDtrcncS+2rm4pDmjZ7y73Vrae5IyEpMr9x48=
+X-Received: by 2002:a05:600c:45c9:b0:488:869c:edaa with SMTP id
+ 5b1f17b1804b1-488d67e269amr283726365e9.7.1776241025965; 
+ Wed, 15 Apr 2026 01:17:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:45c9:b0:488:869c:edaa with SMTP id
+ 5b1f17b1804b1-488d67e269amr283725605e9.7.1776241025367; 
+ Wed, 15 Apr 2026 01:17:05 -0700 (PDT)
+Received: from [192.168.103.132]
+ (ip-176-199-115-125.um44.pools.vodafone-ip.de. [176.199.115.125])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488ecde5b26sm124220735e9.2.2026.04.15.01.17.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Apr 2026 01:17:04 -0700 (PDT)
+Message-ID: <4cfd4f96-f761-459b-9233-da81c0a8d492@canonical.com>
+Date: Wed, 15 Apr 2026 10:17:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 15 Apr 2026 08:02:03 -0000
-From: Christian Ehrhardt <2133804@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Low;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Confirmed; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: hectorcao janitor mjt+launchpad-tls paelzer
- utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177624012342.2916206.1361440706849997427.malone@juju-98d295-prod-launchpad-54>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="866d07beecca8ac2e3326342adf6c1740cd3e7b3";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: c2a3d6b52ba64d20fb7375455d1d6aeee0e993a2
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/5] linux-user/riscv: add vector state to signal
+ context
+To: Michael Tokarev <mjt@tls.msk.ru>, Alistair Francis <alistair23@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
+ Christian Ehrhardt <christian.ehrhardt@canonical.com>
+References: <20260321141345.599105-1-npiggin@gmail.com>
+ <2e752dc3-0ba5-4d38-9d38-d19b2b841b07@tls.msk.ru>
+ <CAKmqyKM2boFhCnnFOq85xK_sjrVbr3pye45tAUgueDcyR3eBdQ@mail.gmail.com>
+ <0087dcb7-ef45-4f1d-b178-9ab9a78ced54@tls.msk.ru>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <0087dcb7-ef45-4f1d-b178-9ab9a78ced54@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
 X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -105,89 +125,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Heinrich,
+On 4/3/26 21:57, Michael Tokarev wrote:
+> On 01.04.2026 07:31, Alistair Francis wrote:
+>> On Fri, Mar 27, 2026 at 9:13 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
+> 
+>>>> Nicholas Piggin (5):
+>>>>     tests/tcg/riscv64: Add a user signal handling test
+>>>>     linux-user/riscv: Allow restore_sigcontext to return error
+>>>>     linux-user/riscv: Add extended state to sigcontext
+>>>>     linux-user/riscv: Add vector state to signal context
+>>>>     tests/tcg/riscv64: Add vector state to signal test
+>>>
+>>> While a bit large-ish, and being sort of new feature, but it feels this
+>>> patchset should be picked up for currently active qemu stable releases,
+>>> when applied to the master branch.  Back-porting possibility to older
+>>> releases hasn't tested yet, though.
+>>
+>> I don't think it's high priority to backport, as Vector support is
+>> still few and far between
 
-the changes
-d0be1b581c9 linux-user: fixup termios2 related things on PowerPC
-22a55fc7df1 linux-user: Add termios2 support to sparc target
-c1fac5fbfe6 linux-user: Add termios2 support to sh4 target
-ce78d40265c linux-user: Add termios2 support to mips target
-06cfe78536d linux-user: Add termios2 support to hppa target
-20b93df8d79 linux-user: Add termios2 support to alpha target
-5380228f7fb linux-user: Add termios2 support
-are in 10.2.1 and thereby good in resolute.
+With the SpacemiT K3 an RVA23 compliant RISC-V CPU with both vector and 
+hypervisor support exists.
 
-But IIRC this is needed to run resolute guests at all, so do you agree
-that this should need to be backported to at least Noble? Or am I
-missing a point here and that would not be needed?
+The Ubuntu distribution is on RVA23 since release 25.10 and requires 
+vector support.
 
-Depending on what you answer on bug 2133188 they might also go well
-together for testing.
+> 
+> I noticed ubuntu had to pick these up for one of their releases, -
+> apparently they had an important-enough use case for that stuff, -
+> that's why I thought to include these too.  Hopefully it wont break
+> anything :)
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
+As described in https://bugs.launchpad.net/bugs/2133188 running riscv64 
+containers on x86_64 crashes on QEMU without this patch series.
 
-Title:
-  QEMU does not emulate IOCTL TCGETS2
+The v2 series was added to QEMU in Ubuntu 26.04. We would prefer to use 
+whatever is going to be backported to upstream QEMU 10.2.
 
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Confirmed
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Confirmed
-Status in qemu source package in Resolute:
-  Fix Released
+Best regards
 
-Bug description:
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
-
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.=20
-  A detailed analysis is contained in LP #2133188.
-
-  A proper implementation of the missing IOCTLs will include:
-
-  Functions:
-
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
-
-  Definitions:
-
-  in linux-user/syscall.c
-  #define termios2 host_termios2
-
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
-
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
-
+Heinrich
 
