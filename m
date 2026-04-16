@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB9FF428F5
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 06:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84340F433FE
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 06:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDFuv-0000lp-3i; Thu, 16 Apr 2026 02:09:33 -0400
+	id 1wDG1v-0003M7-GZ; Thu, 16 Apr 2026 02:16:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDFuq-0000lO-J1
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:09:28 -0400
-Received: from mail-qk1-x742.google.com ([2607:f8b0:4864:20::742])
+ id 1wDG1s-0003Kn-Ol
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:16:45 -0400
+Received: from mail-qt1-x841.google.com ([2607:f8b0:4864:20::841])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDFup-0007iS-0r
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:09:28 -0400
-Received: by mail-qk1-x742.google.com with SMTP id
- af79cd13be357-8cfc5941028so1098321985a.1
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 23:09:26 -0700 (PDT)
+ id 1wDG1p-0004l9-QH
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:16:44 -0400
+Received: by mail-qt1-x841.google.com with SMTP id
+ d75a77b69052e-50de80b9567so36757241cf.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 23:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776319766; x=1776924566; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776320200; x=1776925000; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=fTBRgxvyc6aW3/mzgCV1Qa+v73bqNPK/M3R0CLsC+wc=;
- b=NgsYmetqtV+/4cv/DGmatdl4W9qWwI7wuauKiGFCeY1lebXoNl8MAuZ7pf5nx+Urlf
- hNaXLJttJ2Px1pxRy+DLrLlS1Vt3upxH9lcX+1W4y+o78BAylVlBjbwRjR0dvLHe7fNK
- j7aEd6c80PFijsQFAtlUMUUWkB97gdcRvueg++K15bNk3jeAsviDpfI34JxthMR+PZlF
- TIFW94JFAQaxFspJ70FbWLHJ+HlgXeqt7R2hvEEfi0dBCsptPoCh7s70mi08YlPFIz9m
- /yz67cyDC60zg9sDhTe8dT29Z5tV1tuV22cuNdJG1hKmJrh3yCtosVMtmW8DQMR+0SGo
- 3wXA==
+ bh=ZJQDMWH5ur3qM09o1p0Grix2QSj4F54IGu1BMz5buBU=;
+ b=hXGJaiSpZoXOzGZYbWEPADoUunEBEZB7oBIrP+EMZH+UwPf2Z3h9TNFba0dfkCVuOh
+ g3uenAGOJV5RDo7jZ0J7hyl+prxRfnD2Fs3rbHfTp7sr5CO0ruNCQqd6cvDlkKN2i+Si
+ xUJrIjstEyfVHKlnrt+F7wl3dF7ot1YxFQ3qoKiXioezo+hLFEuvVKxxs+S5R+Qg7g8A
+ YQRmwZI3BM53ZujVb4mg5wQZ4pKCADmPZwViZnySqE/T0iOK1dfiKfrKURx4Pvip0mnM
+ 2mkK71PihbdSEuXXaAvs4YolfNZKETFj24TY+WagtzDixdK30cjfQQIAyoQFM6cfUDzc
+ mVww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776319766; x=1776924566;
+ d=1e100.net; s=20251104; t=1776320200; x=1776925000;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fTBRgxvyc6aW3/mzgCV1Qa+v73bqNPK/M3R0CLsC+wc=;
- b=O1AqFR5kt/H3zqNZKtGJEZJnFfSz8Ha9aETxScg5aRAo0jruX3mu82GEwJgydAtUve
- pla1BA99WXucFzHqt5flTrP7dnBdnrvZOWo7lZ+MVYXSocAPB3Gs3k3hZnvtE6gUWwmt
- F+RFgCL9DRuIK0q+7H7L40VIUMyazZ6YiAlaw4bMNhwKw+oyNWZxgkl02MwXF7carCnw
- uddNYFn3T+GCCD19kBI5H6zHv86DbyEHPiOxbpNS7nBgS0t5XzOUimY20asDP4jpsBw3
- ch8BGrbaVm1ia0EuV/w3mSZ5QqGCZpwrRcH6hz3CkzIDdukVpiJhy6/3otS/8BI5Z/DJ
- m+MA==
+ bh=ZJQDMWH5ur3qM09o1p0Grix2QSj4F54IGu1BMz5buBU=;
+ b=IL3pUStAb0kD1jLzwwZwcPWgv6foaiSajbLZ0xFPLn/Y8HlmOzAuAQAqvuRlScRffY
+ Ywg6qMZ+G5Ie9N6JtJfr2xbe3pln1yySOi08IRbQ+1+GzyJmtfm/DWvIDWywbeVp9MNj
+ AYlzqrMTX72v06easdjNam6M4OGIiZv61lg3pV0LOlBy4k9bttV38noTw9iNy9zddMRR
+ bneWgZGSLv2FJSUVP2Y92AoFlPjOziUuy3WSh/a25uupbeFzlPf15pilucyWfB6D43JD
+ 04sXrvDoM40bbfnEtNJVu2WQ3dN77xm/v3nCRxAgt2pIhm12AGrPts4w5v+3xQLyKbL8
+ 3a7A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8P7dYT1OC2L4RhglAryNbO8OaeVZBTgRf+RzjF8bfw+Pb8BbdkoYonrRGhr3Z1fFskC3DrWoOq0dnz@nongnu.org
-X-Gm-Message-State: AOJu0YyiGZGD4i11ey+Li2sIELtdgKYlVypeagwsphRJS4eX2GK8zO6p
- 1wFefB50BaQtxHF4Tk9rKXDYF5j5QC85qcXojJSJg75bTZJhjB8PJXNc
-X-Gm-Gg: AeBDiev0BkBR0MT0P6M+8fhRvT/bhT9xBtA9zHMPVg+mk1PBU7XPaA2w3GtV4S1QX9w
- IbdETf0QzWDIdk/f3Qnk31RTAzgRawv8yq6Tupb4b8XxGRAeGrR9b6v1OBvR0nGlDtwWoKjcY2E
- 0/xjYgNOxHVfk6SUrOZSicalFSx0ZJKbktCqYHbfWyM9fdABafzL1yDzpXePAugIsMroKD8VjDg
- SBdzAsgryzHQoJEiWuIuZH5qJSp0KJ3CMb7q0iApEtRUGpk41hsV5s5mrJGU3jLk9MwkmkYohG0
- zCNIksu+Knt77hpoleGDabnCtCt32QJztbGb+Varrbn1Yz1M202FdKjG37xREjWZBFmTD84VzE9
- BfiiAff0O5TqoCuOsHaplFXBuhfHCbGoE7zpxyfBWNwR4hjd66MElJiu65QXvhEPTIk6qBOuT/W
- /uc05WLuwpn9xoln9jL2Mb6z4ugdkg6NU6E4L10gVkVHclZsLg/LZOBDppmaiByUMjOsaDMXBQ
-X-Received: by 2002:a05:620a:4041:b0:8cd:bfd9:e2a2 with SMTP id
- af79cd13be357-8ddcfbad95amr3597552485a.43.1776319765843; 
- Wed, 15 Apr 2026 23:09:25 -0700 (PDT)
+ AFNElJ9UvvdalMWIOO3ekEXEVtRDsyo6mFQHNI3tkvf6kr4RFVu/pFoqysc6o96HbYj90xj+vPixxIbTxuQL@nongnu.org
+X-Gm-Message-State: AOJu0YxjJ//bJlh7JWNeQoTQ3WIGu04vvTlgQrRGlYRw9eu/bBTcwUl4
+ OJpNoN6f5jfphZbf6WPboBS9ZGtilHaJQc8iKu6u0R0cXQEOaeMFnwKV
+X-Gm-Gg: AeBDietdZBYaL0XzuyeIbKhXrILsaqJkEECQWW129f5V5oRpb5z35nExs3JBqbB2lZ5
+ nFVQDpQoquspZpkb0Sv7t/6rv9vUrgtEIIiHGzWTYePyhAlLoCipMUHQVJGHlcT/qXEzfVjjYd/
+ b2FG+++Qj84mqdMov4Lemjk9vwjUxSrPQm0OyGdo/r4WjZa2bOjxKwiuNlqxC54woxqrZF+SCm1
+ Cy80BSoWK0pUSVxloL+4XUYIt1KyQT+U1RtRd6Py186iOV6cHM3lqYgXwwMSd9dI4pFBLtIZ/Ps
+ 6u+vro0rB1GzWq70T8bKBuifVm0j6n8Y13IqfXkh8JiEVXQODfIS8Rbc4lNIkWhrMKWkeO/6VLq
+ AeFK/H+xnvkjGOudw6NCLycXrOyH4hwUDPPX6GAgBhAE3HI1c9jyEruW9IC9TQEB7iI1gCo4XyP
+ Bqm9AHJ7ZbtoixMHin+BkZS72XNyYJ/Te174UMRAgjY8rIffEd/dj5azYFZnDCZaId3e3RFtiI
+X-Received: by 2002:ac8:5a88:0:b0:50d:84a7:72d0 with SMTP id
+ d75a77b69052e-50dd5c3d7a9mr360254601cf.36.1776320200280; 
+ Wed, 15 Apr 2026 23:16:40 -0700 (PDT)
 Received: from ZEVORN-PC.localdomain ([162.244.208.119])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8e4eed6ed8asm300728285a.1.2026.04.15.23.09.20
+ d75a77b69052e-50e1b016a2asm38379871cf.31.2026.04.15.23.16.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Apr 2026 23:09:25 -0700 (PDT)
-Date: Thu, 16 Apr 2026 14:08:30 +0800
+ Wed, 15 Apr 2026 23:16:39 -0700 (PDT)
+Date: Thu, 16 Apr 2026 14:15:47 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: munkhuu0825@gmail.com, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- tangtao1634@phytium.com.cn, qemu-riscv@nongnu.org, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2] hw/char/riscv_htif: Fix format specifier for uint64_t
-Message-ID: <aeB8vRtG0njYb3zt@ZEVORN-PC.localdomain>
-References: <20260415134826.1742308-1-chao.liu.zevorn@gmail.com>
- <CAKmqyKPeqzjYDvG9GfmQ37psGEiqmx+tFGR=YES87YUd-FA7SA@mail.gmail.com>
+To: alistair23@gmail.com
+Cc: palmer@dabbelt.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v2 3/4] target/riscv: Don't OR mip.SEIP when mvien is one
+Message-ID: <aeB-WjzO_-bpQZ4p@ZEVORN-PC.localdomain>
+References: <20260415233740.3027321-1-alistair.francis@wdc.com>
+ <20260415233740.3027321-4-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKPeqzjYDvG9GfmQ37psGEiqmx+tFGR=YES87YUd-FA7SA@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::742;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x742.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260415233740.3027321-4-alistair.francis@wdc.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::841;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qt1-x841.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,33 +107,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 16, 2026 at 01:50:39PM +1000, Alistair Francis wrote:
-> On Wed, Apr 15, 2026 at 11:51 PM Chao Liu <chao.liu.zevorn@gmail.com> wrote:
-> >
-> > Use PRIx64 instead of %llx for uint64_t arguments to avoid
-> > -Werror=format warnings on platforms where uint64_t is not
-> > long long.
-> >
-> > This fixes the cross-riscv64-system CI failure:
-> >
-> >   ../hw/char/riscv_htif.c: In function 'htif_handle_tohost_write':
-> >   ../hw/char/riscv_htif.c:175:38: error: format '%llx' expects argument
-> >   of type 'long long unsigned int', but argument 2 has type 'uint64_t'
-> >   {aka 'long unsigned int'} [-Werror=format=]
-> >
-> > Fixes: d98f7a541c2c ("riscv_htif: reject invalid signature ranges (end <= begin)")
-> > Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-> > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+On Thu, Apr 16, 2026 at 09:37:39AM +1000, alistair23@gmail.com wrote:
+> From: Alistair Francis <alistair.francis@wdc.com>
 > 
-> Again, is it ok if I squash this patch with "reject invalid signature
-> ranges (end <= begin)" to maintain bisectability?
-Agreed, this is a good idea.
+> The RISC-V spec states that
+> 
+> """
+> But when bit 9 of mvien is one, bit SEIP in mip is read-only and does
+> not include the value of bit 9 of mvip. Rather, the value of mip.SEIP
+> is simply the supervisor external interrupt signal from the hart’s
+> external interrupt controller (APLIC or IMSIC).
+> """
+> 
+> As such let's mark the mip.SEIP in rmw_mip64().
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2828
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
 Thanks,
 Chao
-
+> ---
+> v2:
+>  - Move the changes to rmw_mip64() instead
 > 
-> Alistair
+>  target/riscv/csr.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index a75281539b..29dd596ae4 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -3671,6 +3671,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+>      uint64_t old_mip, mask = wr_mask & delegable_ints;
+>      uint32_t gin;
+>  
+> +    /*
+> +     * When mvien[9]=1, mip.SEIP is read-only and reflects only
+> +     * the external interrupt signal from the interrupt controller.
+> +     */
+> +    if (env->mvien & MIP_SEIP) {
+> +        mask &= ~MIP_SEIP;
+> +    }
+> +
+>      if (mask & MIP_SEIP) {
+>          env->software_seip = new_val & MIP_SEIP;
+>          new_val |= env->external_seip * MIP_SEIP;
+> -- 
+> 2.53.0
+> 
 
