@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FF78F433E5
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 05:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B30F433E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 05:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDFaX-0003U9-F1; Thu, 16 Apr 2026 01:48:30 -0400
+	id 1wDFaR-0003Rh-Vc; Thu, 16 Apr 2026 01:48:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wDFaT-0003Sw-G1
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:48:25 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wDFaQ-0003RB-MY
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:48:22 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wDFaR-000177-MB
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:48:25 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso116479845e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 22:48:23 -0700 (PDT)
+ id 1wDFaP-00016K-95
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:48:22 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48897fd88ebso76308845e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 22:48:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776318502; x=1776923302; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=F2jYUyzKmM1Ih+knLVuBivXQ4AWzwy4G2sMPSe8xIm8=;
- b=picWPq9Y6W7sXr/WbLnPVy6Qt3fV1w8v3mUWuWO+hQU4syM3atR8OBS/j6hYKcMPwP
- NV4asLu99uZyrHUHLV2FX0p4cRCeKXhe17vpDfuXN+a03PK0TVOCyeqBHuHXqYfar9Tb
- XjOLMKda2MPjvauGvL3jUnT2Aq2aT7Cble54PZONKOAykUtROixt00+TuSyhx4LXo+rQ
- au36c0nxxHt9SSpOaI4pXECuCHA7pamw3MrlYthSUT03xUd67oDhexiI+BSl3NVXEvRZ
- kAiyYHrN1bMI5V+h7Z11k4BN4tWxK2sl8UxbFVl2c+CoI1/mIGY659TRqUATVMQ4M6A5
- r3fA==
+ d=linaro.org; s=google; t=1776318500; x=1776923300; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7y7TM7zrf/HNpopW1RlexWweeCSKf1nKomanOa5KSZk=;
+ b=XzGsGuXxhahzEEpn/6HYseuQ82Y9vYm6OET03hap5oUiK2HJ1ox40Hd/jw5xN/vgWg
+ pujw9rFF0+BWLdCHF9AYbs6h2HR6+yVDaMCw7aHpAicBQ8gTg6XeSeXT3XWcttGugxwx
+ wMmLxyJ2ftVO2yqd6ETWhqvOSbMvBIA/zFqc1DeScTlh/nNjkbTZLlc8Fn7XHdVAO2Ja
+ GUSPdmg5iroG3Q446Rg67qsx1GVgtZx9VLw48VzdUA/1Ef4mAn1MbjYxpXIAcOsvvjgy
+ Q9faP1ZYIm+1TdnrcT2aU/Pvby8etBB8Zqdh72f3XPX7qquOkKGaZfZRV+aZynKohYej
+ 7Y6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776318502; x=1776923302;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=F2jYUyzKmM1Ih+knLVuBivXQ4AWzwy4G2sMPSe8xIm8=;
- b=flmLaMqW3CfS8OvBniOnAUrz7fNRhrYoxRYPhfhSUVHM/F4+r/7hSOHsBIwOLEJjtQ
- Kv8Stl0uLJaLxHBM2n8kPrvI+CHOlpID4r0E0wjk0HO0Kg6g8/25aywrq9WEW4FSusiB
- KdVwdn7ccYu4shEtRjcicq8VcjyCGDZYcqFn4N/vFm9QeuFm6cV5n8aiHFFXUwH7gvWK
- 73uO/WbyzMY2TIoftZ9UWtvhwCWmBKI4EJfU5zP9hdQUB7w96cfVzA+UoRG+Jc5+mQbE
- 0byLUz8hX3muZQc2pIHeS/FEmrF3ev059XKsbl7jy5ek23khT1V0IniWd5cu8SUpA96X
- Jugw==
-X-Gm-Message-State: AOJu0Yx3ybFiayMPPfTffgwkLKHCa0Tp4wtlspbUeeOeR1jrNbQcQ1fh
- Vb29xjNsxdJVE2BrJew5F56lgfQY3MimRa7TtUQHxww4eYHDbX+bls5e8Fdexn7O2YA=
-X-Gm-Gg: AeBDies/OW7oI3Vv8XI8glo1Q1aR5nmpy9XAJ2E5E8sGMkJAIQKPjVj4aU+IRacEIXl
- eZc23GDfHNMkhKX44hDDyXiVNQfRIekY8LoUbXbHC4+HbR1U7EEiQu4wy626Ib90oy5Hkwic1Dg
- yEI+cTY+0PYj84E5vKy2xm6OyRb69QQ8sV5nEdoOsILaLHEujMb1id9m/vwi6OODi/wqO0FjlgE
- RgYu0Q63DVrREbGxBI5pIEhu5JV5NFcRu7IL8XyX+nE0zbsLgLjO+7GQ361CVnHd0zSgjD0swzu
- K/J0TCnY3CSy8lf02HiKu4XfagFRJYWRiMdNs2PuCJmAUlso20q2Ei71m9LntCjBv5+hc8pgWJj
- 5NGFFAIFXttDTvBgsEiTBiNXQHFc0gy0ZsimUaQVLL1jkH/k31+vY4AsPNab88+r1xNfQmLhiNl
- MUrE8ZsI2oeQTsbZbQWhqjWVw1gbKVUOlYxklrcgv6gOwAroCqdza4zSiZPc6cCRq3k5epgZXrD
- D/yNaEqH8n4tYjQWk3DXe6drexu4xxzRnzcplD9
-X-Received: by 2002:a05:600c:c16d:b0:488:be21:54ae with SMTP id
- 5b1f17b1804b1-488d66504bfmr364443315e9.0.1776318501986; 
- Wed, 15 Apr 2026 22:48:21 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776318500; x=1776923300;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7y7TM7zrf/HNpopW1RlexWweeCSKf1nKomanOa5KSZk=;
+ b=ax1FXKtR1BLU82y+BQOdkPMtSXJVAO3PkIemFUqjAD0xXN+742Gz/iXyb2ZOzI/95X
+ aGpBXdnokBsOKe95Rx3k0IjjOmIlQ3vBgxdiqFSFbmSZ1Af5tB54GUH8ewlwAkkb47XO
+ myCUJY1/htwMaZLt4X/Ua92JvwX0pNTuINeLezvckms0hjg2Fzwp9pBHFIE1diJvk5gM
+ oQtC92q0xpagGI6dCtf9lEVJKNLdCa0D55PSer2kDCw0OcOAECJfmXEHK17rz3Lq7m0E
+ mLfHWaSUG8I7Yf8WBdN6bB7lywJyKRTL3uXBXuRusJRpxGn+KCFw/+6e11FefVgcOoyM
+ a83w==
+X-Gm-Message-State: AOJu0YwlcMeEReuUVXOUUgmaxAUWMBr9LsyXOOYw25dc+GmulKDSThaj
+ +DHCHXzjSTmiSEa4UZK6jwzNg0XJNI/fSNiL9S0F82+54EW7AQ4o/GE8ucEOtwhQhQk=
+X-Gm-Gg: AeBDies7PvI0NnTKCZdHOxyYTjFxJmZGEeXAt+FTfClkeaNaVnJKX4uMFRqY1BuU1oW
+ ZSz9DUAaImAZFq9iHcMjTIKXAJniUobdLG4M9qBqUMM7LWvpC62dsng8/6eE1QeYhF86qkvimB3
+ I3ZQWMlxF1mqxp0bLLzdhXhZyeppe7IG28718g5tPOgXZ+2m7+2l803O5hg1KijRzZskfTDD0II
+ 1SvnAo2pwkCl5gGs/gy+plnOWBdMhWt7lPOyYFCw0WgDbqR9Ihg120rpXPYxtT/qePukv2T6Nvi
+ cBSl8t2E2c4P9B8uReVs6tjzHB9Zo/1MlmhxlgTUfFbmGe/HilNcRCAeXP/zk3ycDZVBk/qBXHg
+ a6uo4iP3SBU4WB0ApztYwSH6lTk4tmsq+jcwmM1jiTm+tsuyvVUPJEGuX1Mi3Y2Io7F6PepTIYj
+ +hXx+wRrNZRIEmrjL4EMdSXNUrwhIJPElX0OuhLcZFO3vdsIGOyC4YjY64mU174yO708OyWqgFr
+ vq+wpelWs0Jqf0OR3sz5BFXqHnnmdab4jtvIhY+
+X-Received: by 2002:a05:600c:528c:b0:488:a2ac:a337 with SMTP id
+ 5b1f17b1804b1-488d68c2bffmr312352795e9.21.1776318499777; 
+ Wed, 15 Apr 2026 22:48:19 -0700 (PDT)
 Received: from [127.0.1.1] (athedsl-4440559.home.otenet.gr. [79.129.177.223])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f5818e51sm39201895e9.5.2026.04.15.22.48.21
+ 5b1f17b1804b1-488f5818e51sm39201895e9.5.2026.04.15.22.48.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Apr 2026 22:48:21 -0700 (PDT)
+ Wed, 15 Apr 2026 22:48:19 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 16 Apr 2026 08:48:10 +0300
-Subject: [PATCH 2/2] virtio-snd: check for overflow before g_malloc0
+Subject: [PATCH 0/2] More virtio-snd fortifications/coverity fixes
+Date: Thu, 16 Apr 2026 08:48:08 +0300
+Message-Id: <20260416-virtio-fixups-v1-0-ec14e2de0852@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260416-virtio-fixups-v1-2-ec14e2de0852@linaro.org>
-References: <20260416-virtio-fixups-v1-0-ec14e2de0852@linaro.org>
-In-Reply-To: <20260416-virtio-fixups-v1-0-ec14e2de0852@linaro.org>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIABh44GkC/x2MSwqAIBQArxJvneCnD3SVaGH6qrdR0ZJAvHvSc
+ hhmCiSMhAmWrkDETIm8ayD6Dsyl3YmMbGOQXE58ECPLFG/y7KD3CYmp3SgttDBWztCaELGZ/7d
+ utX5wHHwkXwAAAA==
+X-Change-ID: 20260415-virtio-fixups-3bc3a1a1cd27
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -80,30 +82,30 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  qemu-stable@nongnu.org, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2754;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=510;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=xDZS3tY6bYSiiCPsg7erlUolIXhnU1SspuDcZfqcF18=;
+ bh=jQZ0+8hcE0wbiElgkbitPaqYS4LFfx0kI1hdIY+zdUM=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQnA0SGdpbnlVMURieUVaUC96MUJNL0xsamhLZ25ECjUyNHdIc0NESkFhL2ppNWVn
- d3VKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYWVCNElnQUt
- DUkIzS2Nkd2YzNEowTVZ4RC85dEd5YlUxVUVSaE5BNWJ2UGJaVEJxYS9tcWM5L3BxVGJDY1REKw
- prQ2xaTFc4VzRvbmU5Nm51K1JzY1Zlc3lTUXFqZTcvVk0xeFkrN2lrUFBwcHhyOHkzeFg0S0JaY
- 0I5c3ZhRzJYCnAzZ0l6SWwvU1NtazRFeDRZYjdCSlFHOUpLOGhvVmN3MDk2cWtmL2xqQ3J5VHBn
- Smh2Q1plSWtnMWxmRjdKUnEKWmVYT3V6SUlLNCtHRFl6Q0FvenoyYXhSeEsvcFg1L2JMMk9KYnM
- 0VWtQajBXb0xHeFNySnRuYjM1WEJTS3U2ZgpLWGUvNFZ5YzAzZGhWOUxuRFJBeElIOFpQREwwek
- FIbHdZYzc2WkxRUk4relNMTFJaYVR0UDFGOWMvZlFiQVcrCnhLRjhOcVZ2bXF5azh0elIrckxJd
- WRISTNoa0dXWi96S2Z6d2lMRVFOUkdlcDJWeUtXS2tBdld2Ymc0YWhsNGwKa1J5dFdvRzVUUkQx
- a1IxUk5KUVpIcm9HSDZZaVdiaVhpRExzMzg1d29HVGJnZk5SSUx1V29lcWNLNmczYURxbApnMG5
- TcXg1UzUzZjVwdTZLMWJKUkJHa1hqNW9FVldNd1Y5Q3pBT2lRUGxZWXRrRTFDSWY3Wng5VUlMam
- kwOHV3Cm00SkY2ZUUrMXpxckN1bzV5SFJsb0hHMm5KWDJSc3ZDT281Q05iZWEyQ1dkM3VnN2xyd
- 0c4dkdBajhYY21rVVEKa3hrNHI2S2t0azVGK3NKRkpYcElSTnQwV3ZKaEJicC8rdWJ2Y2FheGFi
- S3FldVhoU3llYi9jK3kzVkc3b3czNAovdVdqb2JqamVycTlrNlZ0M1FHdm5iV0VYbjkwV3psOFJ
- aUXppRzdGTGtuaU1EaTRlbzhsOWNTelB0endieCtJCmV0UjFZdz09Cj05cDcxCi0tLS0tRU5EIF
+ 25RQWNzbVlnQnA0SGdpQkFNTlZVbzA2RUhDV25WUnhtNFpxK2ZNCjNrQjE1d3I4RzBUYkxsVjJY
+ TzZKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYWVCNElnQUt
+ DUkIzS2Nkd2YzNEowSjkrRUFDUFdNR3VLQWswRFVPbVh2cTVCdzFHTXJ6TlJFZ2dPbVNvc3dBQg
+ pJN3RDY2dlOVkxbGlXdWw2ZFUxVVlIVVlWcEpjay8zbUVEWUM5Sk42WXlRZEY0dWVBT3hRT2c1S
+ ytnQ0R4WVlYCmZGR2o0bTM2Y2JFcHlPOVU4c0JmNThzb1YzcmhVekp2TUJyQ1VYVTFuTklwbVJr
+ M25OSWd0Zlh0S3VISE9GelIKL1RlV0h0bGlVZ3BNcFc0dnZWRWtTSDAzeHpES3NpVHdubGNPbVN
+ JcDZtWEw4cUJRdVBneTBlODNZNjVjWU1adwo2SDhFeFVYSFBVOHZoT0FnMWEzblcxREdlNXpuY3
+ BjRDg2MWJTTDk1aFpqSWJtVFpPWWthVnhEU0J6MjdQM2RFCkRaV3JUWnY3UDRCalZwL1NPeWNSb
+ TZaYnJVY3BRL3p5WmRFS2xYK3R3dlBsVWlEdkg0bTJWTEZXenBnYmtpWFcKR3B2QmN3YUxkaDdv
+ bEdTalNxRXRZZ1VFRjB2RzNYemszenB2S3BiVlJNYUNVN254K0wyN0J5QWZDa0h3ZjlBeApmb29
+ ROVJUeHZGaFZ1RlpRdUNURlFuZEFibUNrWnRmYlRkMmdCa2g4NG1qQnNCeHRlMkF1bmNnS1h0UE
+ ZUbzNaCmp2UCthczdJZ3dlWVBGSWdXakk1ak5uL1luS2RDb0FCVElyTU9DQkkvUzVvcEdsakJRT
+ GhQeXJJQ3k5eEZUZW0KcjFMRERJRE56d0trRnFGRzllb2J6SnpPQ2hyc3dtd1RtK2dzZngyY2FO
+ MkZ3VjFmLzdjVnVybjFCZmhmQkZmMQpsZ3I0b1lGMEJnRnQySThoQTlUZUhNaXVOSzRuSHpXNnQ
+ xeXJNQU9LY1Y5d1FLOEx4YjVuOUpRWko2Z2ZuVTRHCnV6NWlPdz09Cj1JOHVQCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,73 +128,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity points out one g_malloc0 overflow, but it seems to be a false
-positive. Add a check to it regardless to fortify the code, and also add
-checks for every other g_malloc0 use.
+Added checks for stuff coverity pointed out.
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- hw/audio/virtio-snd.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+Manos Pitsidianakis (2):
+      virtio-snd: check rx buffer descriptor size
+      virtio-snd: check for overflow before g_malloc0
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 93fbcfb43f7fdcfd5c164b496015da743822f5eb..a294d267b097249d0171722a5ec131159a5e7027 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -850,7 +850,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-     VirtIOSound *vsnd = VIRTIO_SND(vdev);
-     VirtIOSoundPCMBuffer *buffer;
-     VirtQueueElement *elem;
--    size_t msg_sz, size;
-+    size_t msg_sz, size, tmp;
-     virtio_snd_pcm_xfer hdr;
-     uint32_t stream_id;
-     /*
-@@ -880,6 +880,8 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
-             goto tx_err;
-         }
-+        assert(iov_size(elem->out_sg, elem->out_num) >= msg_sz);
-+        size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
-         stream_id = le32_to_cpu(hdr.stream_id);
- 
-         if (stream_id >= vsnd->snd_conf.streams
-@@ -892,9 +894,11 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-             goto tx_err;
-         }
- 
-+        /* Check for g_malloc0 overflow. */
-+        if (!g_uint_checked_add(&tmp, sizeof(VirtIOSoundPCMBuffer), size)) {
-+            goto tx_err;
-+        }
-         WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
--
-             buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-             buffer->elem = elem;
-             buffer->populated = false;
-@@ -932,7 +936,7 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-     VirtIOSound *vsnd = VIRTIO_SND(vdev);
-     VirtIOSoundPCMBuffer *buffer;
-     VirtQueueElement *elem;
--    size_t msg_sz, size;
-+    size_t msg_sz, size, tmp;
-     virtio_snd_pcm_xfer hdr;
-     uint32_t stream_id;
-     /*
-@@ -977,6 +981,10 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-             goto rx_err;
-         }
-         size -= sizeof(virtio_snd_pcm_status);
-+        /* Check for g_malloc0 overflow. */
-+        if (!g_uint_checked_add(&tmp, sizeof(VirtIOSoundPCMBuffer), size)) {
-+            goto rx_err;
-+        }
-         WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
-             buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-             buffer->elem = elem;
+ hw/audio/virtio-snd.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+---
+base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
+change-id: 20260415-virtio-fixups-3bc3a1a1cd27
 
--- 
-2.47.3
+--
+γαῖα πυρί μιχθήτω
 
 
