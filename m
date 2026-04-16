@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E86F8D778
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 20:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25BDF8D779
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 20:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDSxq-0008Nz-It; Thu, 16 Apr 2026 16:05:26 -0400
+	id 1wDSyN-0000WI-6I; Thu, 16 Apr 2026 16:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSxk-0008MB-SZ
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:22 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSxx-0008U6-BJ
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:35 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSxi-0008Fu-GZ
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:20 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488b8efed61so11483645e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 13:05:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSxp-0008HL-Es
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:28 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488b00ed86fso84383575e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 13:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776369916; x=1776974716; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iIDvrYkfkxlNfLo5huZXzJCtpw+6DRe3OveamPggIQA=;
- b=Tn8ONED8HJJxTPZCSEPX4JgIPCjEHeYYfIHr5t2PZZy0DvClEtm2e0/JXXEqEM0ips
- fOH1OpaAGyaCbLwPaXUwhVMep7bVw1ZV8bT+WYyvxkiUSaFd3bIn18zJZj5sfQFzVhA1
- olXvwwW9pbTncx6ikBZHKzibE40ldfzTsI4F3em8eu3ZvpubYWNsziOaQABWKXUDBuSQ
- OuVKbEelKlkP/KW54nTMcrJHYcUVk7M0yzmiHYR2HDqpYSW5KpM+xBhBS2QeQf4AyswN
- 5qqhMsLtKs8wQhNwgIiRPvAABAbyWwb57P3pLFpxE1E/uLZDNVcM0ZerIGjK4POFzsDt
- 9dPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776369916; x=1776974716;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1776369923; x=1776974723; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iIDvrYkfkxlNfLo5huZXzJCtpw+6DRe3OveamPggIQA=;
- b=OSmjnh4fzxfZYxC25VJN7/H1UTwMrt/35iSndxEtns4VOPpSokxgczcWGdr14PlGq6
- Qgm74hRZISCrV+aRmhb06c9iwHijptlhq05Z8BHjuQzA9arl+vtEKFH0apa37aN/+1KT
- 1+GRJpYkLJ5EoknwXV5o+PhebP14xW0w05QrgrAroocsBn0sLeWha8ZWIrAld0qK4oqR
- ifYcxJ1QaAo+oU31SqkonVUt6vKmxZ7cVW++CXy6UfXinT97fuR6ivE4QqKW7CPpFrI4
- Rxnol7SZmNFnPcIQXsfgMGKrBcnZplPtEyeAk8alvSWGePdkyPo+V1CHElMvCgDNk0m5
- VyIA==
-X-Gm-Message-State: AOJu0YzjQmzY6FJcOBzCUUSTG+KkK3NA4kpssrd8T8XWrOU+3xxUE2YB
- wjMhj+so8Y3OeSJDzdHHApO5/l1p4HeoN/5U0+st+pJNU9qgLgNn6tiFl6rNLui+YGPs/K4dnNK
- VqbTXsXk=
-X-Gm-Gg: AeBDievd9CaGvAUxTGUz8/2SdDQuQZSDdql6koE0wpTOjj23NYcrNW715ZMaO9dLKQc
- JtE4BO36Xg2VWtCxbYoWFH0p07+b1NJvHpS0XaLbJGVf8xLL3KOkzUBWZit2ZfDycnz8sMhM0N/
- xgtqV/vvL6ILpbfZCpFUTA6+Nz1P+dhSCoSJt4/MgBTp38apXoXcEBK8iK3v20tVUWfCEaWQViB
- LMI4jkxXBoFSY5cVKSsCMSqANdkqmRqMEDWDMLmCB1bNqMC4gB1+nF9LSYtCVw/B0GmMQlg7mJ5
- EHpNIteLuITWSolTZ89Awph1od3nIHdbVgOtwOJpauesR+TNgMR6q3wrgPcvHFDKoxuR/W6sGR9
- QZ+qiEwR7jYSRGB7qiX4v9NVSF3/QdnEMmLcLOCiORqOSqmJERmf9SYd23YvLsrH/ZSqG5UO1uK
- sgobJkCNQB2OgytyF1/7ISl0P/H1ntfjpJVBW6SSiS5nj4vrbj56HQnyj3qX77a4TrrIDQ8g9Vv
- NSupRcXmC0=
-X-Received: by 2002:a05:600c:4ecc:b0:486:fe83:861c with SMTP id
- 5b1f17b1804b1-488fa7e5272mr7492475e9.7.1776369916173; 
- Thu, 16 Apr 2026 13:05:16 -0700 (PDT)
+ bh=r2/j0lOvBO3DmQSFFQJaOFAPLEgLpTImUbZ3zpQz9DI=;
+ b=SUSsVD69TzYeAJk3CMcqUB57yjNjo1BYKLQYm21oLiV9gPN0ExkAsnqj5kfOxYEiWP
+ MK7BvwBO36eHHlzF/Tuf4Zr/Kxjw0lJ5zz1rM8Pk9oyIPLqD4+eHT+84FX0BEXMFjXkE
+ REeQO4vmZQre/0dzQk3gxDuIkGKXkvpxDUFEeITPfueOorl35/zFskTD/JDzZ3Co8iXq
+ k9QodA+8mF6aIGOR/6YQybsekZeC935EFuB18vvg8Il7L1K2cGmyWliDCyj8y0VpobvE
+ HyHFh5cCHtViHK9vchUOvvTfNHCoBtFOFhSm/ET5DRColMOqtrTKGDq1K6+X4veypWTi
+ TcSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776369923; x=1776974723;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=r2/j0lOvBO3DmQSFFQJaOFAPLEgLpTImUbZ3zpQz9DI=;
+ b=W8NCyLjB4mVePG7KOFPTK8AURdwE2cdoyE4D2aP6nJFRcZYjBUZjxzhoXYcNLDng4+
+ Zx2c7uMg0lOCG7B6MAHiph9cmBJdOjTWfAWhcE/RDv8AezO1sF1Cdtr1i1l3db+Ad8kj
+ Z9wF4bNKh+Wjh8CIuPBJTAV37J4YuwgmCd790Li4rC3E9DXx2iL7hcCpHlGkOyru6GjV
+ IF8OoVgGEUyYAhVZuN7DGmnoOw9lqRJ7HA3lvl3T2mZzNy2pZX3ustqdotLbp+SXS4Gh
+ 6DQW1wjjEpmUXYbqqNOeWBohH49mMpqW/HvnM7K9q2YxSnPPU6jmPfkcUDoUHRJkRFhN
+ YbNA==
+X-Gm-Message-State: AOJu0YywtWkUgFkZNfE68HjrKwPW0pghz8NzkXFIFHi9hjNCCrfJDymP
+ aBc/rvXiPpjJ8Cw8aPq3JX5xHsVGL2bzjw/KLFxONQLLYTx6b7lBWuWKnGH46G8Q7i2uQ318xU4
+ SoYRyHZA=
+X-Gm-Gg: AeBDies9Arpc84KfZmI/0DlMyoSjMHLZKkB/c+oT/1EQBrvQekOG0C+kHyr4kwSpEzA
+ 1VNiuBnf1P8u9W4WMpoILRTrzd2j94Op6smec57RH2o1mJOz6efvh47u+r9WELse70LrDTDVpDM
+ 5W24K3nSLmc9GWcTzCR9EtM8I9GzNDu+it/RMxRzwkhiofK2znfTE/vX7PnrlzjkMEygVEJkD3a
+ ngg5f2tUi6SgOYrYOB2gcdLokAWoJ4/WlaqKnNeXVgicvM5Rm7lGT2zsxkWcwPPFXqE+y7VZs1o
+ dtlUEF93CHXQ6m2nrxDGAnMFcz98KYh+VgUgoJxpkTZhsnbmoGTvumFwXKbmc6k6IaAzaTEESum
+ tuCqRF8KSWCoP16qNCNC4hZUxkLYBCnWkPJqGwxno9zrYnBmEumtUKWVQpzERmDeMaRZX9A+qGK
+ xmPBfw0dobd0eBkwl8g5A65M/i0MlgSOjA7FmoyRhg1hoqXvgVxtg96sJiobBII8gayiK7gFQjv
+ PCCi7mjBng=
+X-Received: by 2002:a05:600d:8449:b0:488:869c:edaa with SMTP id
+ 5b1f17b1804b1-488fb74e103mr506125e9.7.1776369923076; 
+ Thu, 16 Apr 2026 13:05:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb6e0b15sm581365e9.0.2026.04.16.13.05.14
+ 5b1f17b1804b1-488f582368dsm93064155e9.11.2026.04.16.13.05.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Apr 2026 13:05:14 -0700 (PDT)
+ Thu, 16 Apr 2026 13:05:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,16 +71,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PATCH v5 0/2] target/mips: Use probe_access_full() in Atomic
+Subject: [PATCH v5 1/2] target/mips: Pass MemOpIdx argument to Linked
  Load/Store helpers
-Date: Thu, 16 Apr 2026 22:05:11 +0200
-Message-ID: <20260416200513.27100-1-philmd@linaro.org>
+Date: Thu, 16 Apr 2026 22:05:12 +0200
+Message-ID: <20260416200513.27100-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260416200513.27100-1-philmd@linaro.org>
+References: <20260416200513.27100-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,24 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v4:
-- Moved MO_ALIGN change
+In preparation of using the MemOp content in the next commit
+(thus stopping ignoring it), pass it as MemOpIdx.
 
-Following Richard suggestion in [*], use probe_access_full()
-and replace legacy cpu_ld*_mmuidx_ra() by cpu_ld*_mmu() in Atomic
-Load/Store helpers.
+The helper prototype declaration always took a TCGv_i32 as
+last argument, correct that.
 
-[*] https://lore.kernel.org/qemu-devel/ee4ebd4e-b475-4d76-8fd2-8b04c30b183c@linaro.org/
+Rename the ignored 'mem_idx' argument on user emulation.
 
-Philippe Mathieu-Daudé (2):
-  target/mips: Pass MemOpIdx argument to Linked Load/Store helpers
-  target/mips: Use probe_access_full() in Atomic Load/Store helpers
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/helper.h          | 4 ++--
+ target/mips/tcg/ldst_helper.c | 5 ++++-
+ target/mips/tcg/translate.c   | 7 ++++---
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
- target/mips/helper.h          |  4 ++--
- target/mips/tcg/ldst_helper.c | 22 +++++++++++++++++-----
- target/mips/tcg/translate.c   |  7 ++++---
- 3 files changed, 23 insertions(+), 10 deletions(-)
-
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index e70a3942fac..10c6470514d 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -10,9 +10,9 @@ DEF_HELPER_4(swl, void, env, tl, tl, int)
+ DEF_HELPER_4(swr, void, env, tl, tl, int)
+ 
+ #ifndef CONFIG_USER_ONLY
+-DEF_HELPER_3(ll, tl, env, tl, int)
++DEF_HELPER_3(ll, tl, env, tl, i32)
+ #ifdef TARGET_MIPS64
+-DEF_HELPER_3(lld, tl, env, tl, int)
++DEF_HELPER_3(lld, tl, env, tl, i32)
+ #endif
+ #endif
+ 
+diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
+index 10319bf03a6..b725c6d0333 100644
+--- a/target/mips/tcg/ldst_helper.c
++++ b/target/mips/tcg/ldst_helper.c
+@@ -30,8 +30,11 @@
+ #ifndef CONFIG_USER_ONLY
+ 
+ #define HELPER_LD_ATOMIC(name, insn, almask, do_cast)                         \
+-target_ulong helper_##name(CPUMIPSState *env, target_ulong arg, int mem_idx)  \
++target_ulong helper_##name(CPUMIPSState *env, target_ulong arg,               \
++                           uint32_t memop_idx)                                \
+ {                                                                             \
++    MemOpIdx oi = memop_idx; \
++    unsigned mem_idx = get_mmuidx(oi); \
+     if (arg & almask) {                                                       \
+         if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
+             env->CP0_BadVAddr = arg;                                          \
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 6d4b6412d70..839bfe18bab 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -1922,7 +1922,7 @@ FOP_CONDNS(s, FMT_S, 32, gen_store_fpr32(ctx, fp0, fd))
+ /* load/store instructions. */
+ #ifdef CONFIG_USER_ONLY
+ #define OP_LD_ATOMIC(insn, memop)                                          \
+-static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
++static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx_ignored,  \
+                                 DisasContext *ctx)                         \
+ {                                                                          \
+     TCGv t0 = tcg_temp_new();                                              \
+@@ -1932,11 +1932,12 @@ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
+     tcg_gen_st_tl(ret, tcg_env, offsetof(CPUMIPSState, llval));            \
+ }
+ #else
+-#define OP_LD_ATOMIC(insn, ignored_memop)                                  \
++#define OP_LD_ATOMIC(insn, memop)                                          \
+ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
+                                 DisasContext *ctx)                         \
+ {                                                                          \
+-    gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(mem_idx));      \
++    MemOpIdx oi = make_memop_idx(memop, mem_idx);                          \
++    gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(oi));           \
+ }
+ #endif
+ OP_LD_ATOMIC(ll, mo_endian(ctx) | MO_SL);
 -- 
 2.53.0
 
