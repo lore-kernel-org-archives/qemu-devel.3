@@ -4,84 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF1C8F8D753
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 15:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EBFF8D758
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 15:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDOJi-0000P3-S8; Thu, 16 Apr 2026 11:07:42 -0400
+	id 1wDOLr-000164-2W; Thu, 16 Apr 2026 11:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wDOJg-0000ON-JS
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:07:40 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDOLo-00015G-47
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:09:52 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wDOJe-0000ou-Q9
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:07:40 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488d2079582so75981865e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 08:07:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDOLl-0001F4-Kt
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:09:51 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-649278a69c5so6777955d50.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 08:09:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776352188; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Uq60F+P3oV2AvEc/o+QmtXxJkVz4+95I0l8wJ65NzHzb3Z4DtrGYHfC4JcPQ+Lx7GO
+ qebZvcXD1MVXCEO8oFcmqtjFo0fsd6YwY4q1q2PmQTn023Tyk7EOKb3IrZ++kmSoZBkN
+ hA6QU82424fvDjYyyGH9fBa/zp19NtIkkXaOYRVJWm8rJpOt45IJv70jD1/VsSl6mQRN
+ +H0ROOw4RJ84nPHODX7Is60y/e9iWYdzKV3csbDFf9xTXZmWR/8XrEK1wj7tjcoOlWPP
+ /ZtmlIsG2GbNAPmf6T+VewaRI5hwy9sRN3NFTjj+lvjXYOt/Ul/zRevC4udk9Io6w1ca
+ Sp+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bLA/rAadm/yc1USjm6l1SxXZl5g88QyOODPYo62B8tg=;
+ fh=Au+jGT3xffWA1pWHWE+FnwvF8oqIhjEYOwMidNenEGs=;
+ b=NaKZdDpPL8aZlIiM6uBAaq62Q9MCoygNf3AYAOm8qpRIdY4O5S5zjkGckxkPMta+qV
+ 2/YcrGwhBmw2XMt/ND9XSHkrZkmUuueUXx90KBynXlvHmI778kO2rCeocuGq10ZLIH4b
+ lalYliZWdkVU3B0wqIXFMKWKei3rmUzCgl963ACt65MKSENp2xaUdJbK7cay75bYLjDP
+ geyDS7mOU0jykLOcSRyd8j9JupgMA+zNkjVFfnVObnBHtiuitiqNcPm3Bx7XKNsxrWWX
+ 1ewP+iCXD4ZdPdJTIi8x6JSPy11tIWpZ17S7UZ9PH7rIFlpR5GzpUPFoD9e3bqCnhINC
+ SSpw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776352056; x=1776956856; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=jDJzDSUW5yyoEw79Hj2zronbZKMozm2nU8sFNYNEOJY=;
- b=ADvJZBLaD3Tg4XkBb3IbNvNb1fPlj8fhuIe9X17tzcY9dGFoJY+Q7NBZOiVpbu72pn
- H65fYdInNCtktVbh1egS/h8Jx1IabRlMvjNyhteHsRToVq/kiCZidXdFKBQDTgC/Adh6
- ADw4vOMGQQFF9j+ui+OYYl9tliACuvli6TLGo9V6mXTrAY83iiTdorRME8abf1po2zdA
- 8VYfdDP+9SoKEsSVMHPluqi3aqs4MQKgXzTsmdMDPJypJOmMED0DovqArjkJ3cazyJWL
- lRJ0Nn5AxLoSJn/Gy7jC4wXRylQ/actk/9tWaMPfgWdfHV86usBBiyf1cl9e580kqp6D
- /abA==
+ d=linaro.org; s=google; t=1776352188; x=1776956988; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bLA/rAadm/yc1USjm6l1SxXZl5g88QyOODPYo62B8tg=;
+ b=cLsgUzMiOeLm722yF75MhAYkqO+D+aHYqLOaEJZ8c3LC1DJJzuLt+xoGs/HoIeLkp3
+ 0BKTp9KOE5fBGPCRJ8hqWHweDcer3NBGf5TD2uFVTNKB/5HxbiXgqJEDQ+CS+oZxC7xX
+ INFFY1qxICodiuxW4yF7b/M7YpcqxRNZkTXRxnd4cdg9G8RNKaS7RI+u9Vyh32nX3yA8
+ GbYcio3+Zkac0mu/oS0EBZCWK1y+LFeRWEpuMbsxMv1IqBBlX3Bp7+AIbrF3Wjiqiu7z
+ pVe+Sano/K2i1/zdSgMAp2LiDxFEhnM3QZETsQB7S6GBzZifpfH/diin5W5B+eS9IyLZ
+ CQzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776352056; x=1776956856;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jDJzDSUW5yyoEw79Hj2zronbZKMozm2nU8sFNYNEOJY=;
- b=SeTHD7kVTfT3bqiCwFicCjsrTvpP8DRJC6VWOORLRbVkU4UqWZSz7M4UP9gUav+3Bo
- qxmINs2RPok/nSl7/2n59TUj2Wzu0hbE9Vv2iLEeKAyL44SgbWhipwv1187+FnynCCY4
- 5N7BmihrhSWMKu9IrU5qBKFK95Qnzkz7UMS4CSwBUdinR6dbVqlbAkTQBiPzTtCj/dd/
- C6PhySns5npxFgTCKv6F0AhQuehzUHh1zD902tVd/+HFfgeDFK5UCtzt3PoR9wGs31bp
- VOVuVp5mq8U6slAyKSjKONlte7/7H23qdT4VroiGQ0zKbcURaJkwOGbxEc75fZoyZJAs
- RZUQ==
-X-Gm-Message-State: AOJu0YwJhiGK394O/wtbdGhc0bo3f+ywzt1gXMKg0B7v83WdakZxLJsI
- +r3yQ9boA1ONRPCFm25Q1s8E/dKV2mLT77n5+tIMOrPiqXhswBcLPulC6ysOikl0
-X-Gm-Gg: AeBDiesp5c/P+rwd547DghEkBTLZDidl4XmU3AJDQYq47N9z29W8aBL59DujtyZf1Ye
- rRA+vzR2PE5yQSV0TzZlyZj/RmdJZB4RbsxwQMPqXt/6ZhcMufyzHJsmQjV6yp/92JPwktXeEEI
- 1aRynNvzWrtIOZ5TYTT6XmkKCuD8DiQRqhINob0j2faJSrDFHbW3HZ9t54R0e00ZerIj+Po/0HB
- tJGIqkH5MYXveUaMn4OIRIZ6jZg5aeBHe4/noHLS824SP0NmmPdQwtW+Al8ha732Q/6WzsdvTxC
- Al38SDGaqF3ldnIqc/Zz7Icb3N0+YnrY6nIZlZ1RrYRwr0ZatIpiP5jfEYdFF2h5wW0+aRlcF+B
- p2PXVn4r3KTYMkACSC+JiayqF7FwD9WnRZ3YiKfktpaMY45XXzrGPToQff9VMLwn6XjvmMAwB/H
- IHG+f6/v3YVPJ/MaRewOIXKDw5ExMnQR7xNDYJF1LXXNXkWwgfmVkeHgtOgvfyNUBlfEIPlo45U
- 2G2f3xXBpc3ZT8I
-X-Received: by 2002:a05:600c:3b24:b0:488:b811:51c4 with SMTP id
- 5b1f17b1804b1-488d6872ed0mr373473815e9.25.1776352055403; 
- Thu, 16 Apr 2026 08:07:35 -0700 (PDT)
-Received: from localhost
- (brnt-04-b2-v4wan-170138-cust2432.vm7.cable.virginm.net. [94.175.9.129])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f582368dsm71289045e9.11.2026.04.16.08.07.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 08:07:34 -0700 (PDT)
-Date: Thu, 16 Apr 2026 16:07:33 +0100
-From: Stafford Horne <shorne@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 17/28] MAINTAINERS: Remove Jia Liu
-Message-ID: <aeD7NZS8slZ-ki4a@antec>
-References: <20260416091654.316158-1-peter.maydell@linaro.org>
- <20260416091654.316158-18-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1776352188; x=1776956988;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bLA/rAadm/yc1USjm6l1SxXZl5g88QyOODPYo62B8tg=;
+ b=WVMVMIbSNy4aV0ybyAF7kVt9l58NNyw3lKIyIjG6vG/LoZttW4Notq+HgkX+3/kZ8Z
+ mimWEkH+a7mW5+T/mpqWEJt3DmpRzGwFnsyheiXFHGbpxfSwFnwDeFk9bYk2Cc5Fdm4a
+ f79RYSsGjWVY6AjtcVNHvGoLJU6YfsoB+sg7O9+6I94j7X+pYZxwyCw82MLy4Ud5D1q5
+ 8Twr5nSQOSSX3JBkEZWnhk9IQtX1LWU90kARQ4MKYEqfIjOy3h79Pfal+dSaigZI8Zkl
+ SwBmJZmfX+zYN6wnjwVz82onX09Qq6+OIPhV9CMmHe+QprYlYDTQ0RAbTzJa/m9aAOKJ
+ ADaw==
+X-Gm-Message-State: AOJu0Yz3ZFCsQx3dZntystzp2i9/hXvWpmEHSd0ITSW+opz1Py1S4+6g
+ 0/i2HofvvtqPVq3tI7K5OJqkLMDrcXdM6i5cbx1n+GOceVVpWqwDrVBz5sqn7YIlLL4IwfZ+WiV
+ /F3RHWrr+L6JxBG8w1Tr9cTYDDJSIbRnZcqSIdyOpOw==
+X-Gm-Gg: AeBDieuvgohQ41GI+D2UkCiRWBWeSvUikAFghLG5QS/tbMw3tmfEt1DEmSWfEcdBSOR
+ fm0XKV/e/TJiq3YsdafbvkWWc70xuoVtyOj0lLfqLyg/tbm0VpV886u6aMHxjfoJM7jsyaTKAqW
+ qj53NmGkXMop4/uiAS7m8LZkigfLFewV5CS5MnepiEUQCGR2W5TJJ0j6b5xtAeC887v8Ni/2F1H
+ zGoBmZN79DNqgk+O0nyvx/uH01ibTyuYLAtBQNeJI1V1kH1U2B2eqptwm5CPlMGnKle3yhWL4Gp
+ AI6APJgWFAKy91i01eAuQToGb1NP3s1Gx+Rd/ceLBtvRHCNhUemcKwb4FnpD/xhz9bXtAwrLQ92
+ h1A==
+X-Received: by 2002:a05:690e:484f:b0:650:16fb:e7f3 with SMTP id
+ 956f58d0204a3-65198c7ca80mr15834486d50.59.1776352187896; Thu, 16 Apr 2026
+ 08:09:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260416091654.316158-18-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=shorne@gmail.com; helo=mail-wm1-x32e.google.com
+References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ <20260416091654.316158-18-peter.maydell@linaro.org> <aeD7NZS8slZ-ki4a@antec>
+In-Reply-To: <aeD7NZS8slZ-ki4a@antec>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Apr 2026 16:09:36 +0100
+X-Gm-Features: AQROBzD4qqLQSNsL94KSpA9JHZeL84kSD0wrECHRW_KtUhFfFgcqmBAdCehEplc
+Message-ID: <CAFEAcA94djCNnf7nxJWwE8uiOGb8vVZEiGQc7JpJQGRpk=K2qw@mail.gmail.com>
+Subject: Re: [PATCH 17/28] MAINTAINERS: Remove Jia Liu
+To: Stafford Horne <shorne@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,43 +115,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 16, 2026 at 10:16:43AM +0100, Peter Maydell wrote:
-> Jia Liu has not posted to qemu-devel in some years and did not
-> respond to a query about whether they still wished to be listed in
-> our MAINTAINERS file.  Remove them, on the assumption that they are
-> no longer active in QEMU.
-> 
-> This makes the or1k-sim OpenRISC machine orphan.
+On Thu, 16 Apr 2026 at 16:07, Stafford Horne <shorne@gmail.com> wrote:
+>
+> On Thu, Apr 16, 2026 at 10:16:43AM +0100, Peter Maydell wrote:
+> > Jia Liu has not posted to qemu-devel in some years and did not
+> > respond to a query about whether they still wished to be listed in
+> > our MAINTAINERS file.  Remove them, on the assumption that they are
+> > no longer active in QEMU.
+> >
+> > This makes the or1k-sim OpenRISC machine orphan.
+>
+> This looks ok to me, the time I have worked on the the project I have never
+> heard from Jia.
+>
+> I think I would like to mark myself as maintainer on this and the other OpenRISC
+> machines.  Should I sent a patch on top of your series after it is merged?
 
-This looks ok to me, the time I have worked on the the project I have never
-heard from Jia.
+Yes, I think that's probably the easiest way to manage it.
+I'll try to merge this series early in the 11.1 cycle.
 
-I think I would like to mark myself as maintainer on this and the other OpenRISC
-machines.  Should I sent a patch on top of your series after it is merged?
-
--Stafford
-
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  MAINTAINERS | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index a7a345c514..c16a726cde 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1496,8 +1496,7 @@ F: include/hw/pci-host/xilinx-pcie.h
->  OpenRISC Machines
->  -----------------
->  or1k-sim
-> -M: Jia Liu <proljc@gmail.com>
-> -S: Maintained
-> +S: Orphan
->  F: docs/system/or1k/or1k-sim.rst
->  F: hw/intc/ompic.c
->  F: hw/or1k/or1k-sim.c
-> -- 
-> 2.43.0
-> 
-> 
+-- PMM
 
