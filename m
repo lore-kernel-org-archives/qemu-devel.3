@@ -4,114 +4,176 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE45F433D6
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 01:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E04AF433D4
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 01:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDBma-0006hs-HA; Wed, 15 Apr 2026 21:44:40 -0400
+	id 1wDBpx-0007RQ-0r; Wed, 15 Apr 2026 21:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wDBmY-0006hW-Mf
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 21:44:38 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wDBmV-0005XQ-Ex
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 21:44:38 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b9c01854477so1234899666b.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 18:44:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776303873; cv=none;
- d=google.com; s=arc-20240605;
- b=PZW+sD5q6VBbxvm/zIlI66zAqxTyQO7M64V7zeHJOTuwzgxGEsioQbAE3jBv0e0ROE
- +HMGIy8g0+SPwrYYMV6rvdJbp8tip25q7xFgAK9a6XAinSJvFwRBGcLBgGKRvtodZhZz
- 2w89WRQTMtndfVpf8lvMOEJysig0VFO5mZT/cMqPH4eP0rKs7lawS+IZRBpid2ulWE5h
- NyVZV9IChjZEyC11DzbCsP7dHq6/lde57WJxjv81HGf4rzoxkrQdg+WizZSpkGJFv7bx
- j6hfvAM2+unTVHqv+lqqALFSxTCAIlzSv4H7qegV+rS17wErUSrdvb6pQXjmAxOXEkqq
- tc6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=5A1if7fDg5Z0Sy3YQoKlOD+tXMurPc3JHSGzyN1IXCg=;
- fh=IQxp+w2EzNLZG5F8Bclkxy6p5E/alfALRHBntq2HxOo=;
- b=NG0AQNolD9HwMSIgbKiyZ6KWvbwROllgCdCZZP1ITG+nV6w/i7b0K3iNc5/T4iEwmJ
- xsFFPFxHGeS9P5aDgZunL2kszKAHWqVIJtWFPOoTTTHW2XUKmiNd4cJLpGVOs7F8/NDh
- hp9HgBFB42wjlmlofnuOcT4EGdjDpP7CB25d24u70E+vKhE5f/dR7d/27NFJHoCMF4AH
- b6Pq6l693ywIe+ynB5KD05Shc12O+9E9v+UNNIbkkM5GkSy9mRc1ToRYOXo4AA5XHD1H
- ao49n+aLR4D3j2I0rMTbho7yjbwLDcij3a8CBiyWgMrITyRTpkINIHcVwgzfMEjn8u5Z
- ymdg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776303873; x=1776908673; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5A1if7fDg5Z0Sy3YQoKlOD+tXMurPc3JHSGzyN1IXCg=;
- b=XTHXCKHH963i+jf85LH7I1D6D946zJ0QYWFYpYUU0aiahqEz/LfJfjDxwXd/Imbord
- FYcX1lobu4E8L0vSea571cKTdlXI3kvnc+zu4u3h30FD9BrVq2S6C6ZfF9dsUDL4wBxW
- YFKtgCwgNpxK6w2KtVlt9TSkycZv8z7dH7oRsfNaEixDmW39RmQ+kodsj9pbDFlqTdnq
- ozgtWk8R4so6Iaw1dWIe+9X3eup1oNThZNMiPgl/rH0dSqB9m7O5g6eFXDsimOJiBzmv
- Ju0X5WKPFnxpOZ20PQ9syWaXZRUkx0rtSRKIFfHMKU7wfhdQisFM/yU3M61qzeEKdIpH
- KeBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776303873; x=1776908673;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5A1if7fDg5Z0Sy3YQoKlOD+tXMurPc3JHSGzyN1IXCg=;
- b=QK+/IASVjz7ROreuQ94/ujf+7T5LZRBiFd77IzWPhzdAGabg20uuv5Womw7M3dvsTn
- QfcaS9f5NU38G+YMwtYr+L7B9wQO6aNioYo4q+z7KXrkaAsxw5qdvQSWfqwVviLQcQKa
- kW0Yp1bkGt1oAa/ziIaj7Zwt8eHGj39KrVXAmgDvRRcSojzGLNtyfpuS65iYvtPVIZ65
- rR6Om0dgb+txbZ5PGT1eQsBY10PKhzfqmeuRXrJJ73QOk8GZ6Ap3/QyrtKe7llqH9Kw/
- JBItPO8KvfdlX3+E0Izfst13iNZsfMbjO+d6htBLSrw0juWsbttp2c7EvRoyxZRWrik5
- h2Tg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Ezitr1nHYAHTm+Ku9+RDLtx8peKi4CurfsMJXM3DqxMR09O+nLkjab6RDYQeU7qJwb3OMCrldG33m@nongnu.org
-X-Gm-Message-State: AOJu0YyAlGu7zvA0DorRbtWSNHQQXmnaoKrzHGYerwrcaZDiq9cxzImM
- g3pHdqiVP3W2RNo2eGN2P40JgtqoWEhoPfNOOksPrhEHSRgFz7CCgvRK6mkN31c1mV38UPKn5x+
- MEFwgoE2CFSWCuXxOa5Tlq9w4M7RiCwM=
-X-Gm-Gg: AeBDietxR9TtUGGN4TMJhPpYtDspfZFVs8kQPMVaqMGVIEgf2Uk24HsGbeKJPIvs6t3
- 8G3nDXQPUce6keDdYWJl1z2OWDUuRSgEXoOmo7ZTFbSXOdgnkklnmos8V4atMb+ozkDhAeKu2mA
- UBpQByrGJhmKkN4vPzwBHRBxtG244WFAOMDD4V08Mjl6HE0f/Jvk96IFOIr3EnNimbgHNHtTlhv
- xLvdiZmNg2AUgTJ3p91ux8ad8k/yubGGtvV6p5JPOVBz76M7MUG+HLdMfa8YENhgnJPvxnGI4pi
- +TCAiSV0pqfXeAPSqizbpxv4+SIIT/NItNYfYAiE0L4vt1Im
-X-Received: by 2002:a17:907:788:b0:b9c:2a5f:41c4 with SMTP id
- a640c23a62f3a-b9d72683456mr1355479766b.40.1776303873190; Wed, 15 Apr 2026
- 18:44:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wDBpv-0007RF-19
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 21:48:07 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wDBpr-0006j0-5D
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 21:48:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1776304081; x=1807840081;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=trZK6iewbHp1pzIgDJ4HFlxoIzd7iFScD/YkvbUpnE8=;
+ b=idz+fonwyulMjClzdjVKS7pz0Kkf82B069/Pj5ORqtjliB0GoqabDUoI
+ VvNVe9JaMBIj0wrQuFzaxi52HzJ4wAyF7+crpf7PCZroPuWB24FKnrcTH
+ fMlJ0FjWIRRAzWWhGLM7xx5C3NZJPCc2XwA9+Tkk98o4+zLkNWeb2simP
+ m8D8tb5sAhbJYQBbvZMDxOaEFZan5NJ68t6dGDvojXpMiIauFeUA5sCi2
+ zp6ssJBmHfW44k9TqfkI0R/lZWXXksI3k/2tsg9/X4IJGqB7gZ8M4CDp/
+ 3Mcn7A/cCYSdn7NotTsfNq8E3zAbirmW5ZcOTUnpqa74dicwISrolcRwr g==;
+X-CSE-ConnectionGUID: o9M+1w7XQPOeEk7cttaM9A==
+X-CSE-MsgGUID: Ldk8L3ytSmOCMuYaKpitqQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11760"; a="94865290"
+X-IronPort-AV: E=Sophos;i="6.23,181,1770624000"; d="scan'208";a="94865290"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Apr 2026 18:47:56 -0700
+X-CSE-ConnectionGUID: WeFH/ZpaSz2RyY4EEQNUug==
+X-CSE-MsgGUID: VjtU+GBgT2KiyF6z8XgcjA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,181,1770624000"; d="scan'208";a="230824518"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+ by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Apr 2026 18:47:58 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 15 Apr 2026 18:47:57 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Wed, 15 Apr 2026 18:47:57 -0700
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.52) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 15 Apr 2026 18:47:56 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z2w1JfgsAGafHKYEQsT/NBw/nPmz4qCdtAHt+2/G/7llSqvuFp5eEhHJQ6OW5fIoRNegP9b2v3rfl10Vfjl9TXq8VIWA0dLh4+TTonRXDBYYpNtqOM/KfPcxRUSvYJr0AQwOMw2lflVScG55LAw41CjxMeEc67ygA8+91D3Vrwk3NImVuylt53CXgXJKZMXK7CsjCIox6Zs/ZGIP4Ki3e0QYKJ8OANkLuA7kN4huDsUZ1CvydJKboyU6betN2UlsNbNdeuEzEAxw1PxrQfpZrtL79ExH7yD93tHf7vOejk+wDoanhMKxBupIy+fM4ZHZtk/3EsAiRWnUsF/E8NuKSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=trZK6iewbHp1pzIgDJ4HFlxoIzd7iFScD/YkvbUpnE8=;
+ b=HlttdCB+uez428hY38aH9QB+eCxzpmw8MTIWzRhFsNDAseaJsB7S51HnhTvjoQrNu7zaat/pii/dkDTRwno2OPgomJ5Pb6XzsqSqHI8hWs2et05K+WqJoviv3z5n7q6sS2cCwvj/RXEokhKUnPjOUcVZcjI9cIvbyKFj9kIZGC8GksTo/+4cJOEXal6WmUy94zQOd4yUXPdmm68cS37+AqEASBqZYf/8Vv8mZ3Gz/KrVY47bnvBIYj+5VcNzZ8jGjvnyvNISkZ/fkI8v7B+pS/YXQFm4gUcRU8rNT4JAiBgWtXxN7Yu4MYAw8QdWovrW175wntbZqXrDOxnMOZDtOQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by DS0PR11MB8685.namprd11.prod.outlook.com (2603:10b6:8:193::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.48; Thu, 16 Apr
+ 2026 01:47:51 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9769.011; Thu, 16 Apr 2026
+ 01:47:51 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
+ <clement.mathieu--drif@bull.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>, "Liu, Yi L"
+ <yi.l.liu@intel.com>
+Subject: RE: [PATCH] intel_iommu: Re-expose VTD_ECAP_PT
+Thread-Topic: [PATCH] intel_iommu: Re-expose VTD_ECAP_PT
+Thread-Index: AQHczL54bfuYgfL9lUCDi0QGrCdERrXgFy2AgADVOIA=
+Date: Thu, 16 Apr 2026 01:47:50 +0000
+Message-ID: <IA3PR11MB9136DA7E04C3BA29BE1F5F6092232@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260415095832.9631-1-zhenzhong.duan@intel.com>
+ <6fd7a51125963dabe9e9b3732e2ece5086b666d6.camel@bull.com>
+In-Reply-To: <6fd7a51125963dabe9e9b3732e2ece5086b666d6.camel@bull.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DS0PR11MB8685:EE_
+x-ms-office365-filtering-correlation-id: 07416895-ccf5-4367-a77e-08de9b5a2b58
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|38070700021|22082099003|56012099003|18002099003;
+x-microsoft-antispam-message-info: 5dik2KAaf/hmptczsQh0mr+pw/HdyVeDwPky1KBcdB2c8hxDjuSSXq54gXOsVp4gis4+eBeN4EHEv3a+3TMKtH/5YF6cnYEfBe284r5hXt9PgwMbO+fLYerWizhUrzaZBYstcogWBy/+aaMWVlXXOgKBseQP9zitEhRJO/ALj/aNn5QIEY2mgpu1SYHaMJiQjjqzh5ikjG7ugMgqSXCWpOfkzIKRgoN2Iaeyit/6JwrKjMQvtE3vh5e4qYFW9zjD4SsN973TDTiI4vHacZlwvIWqBo4NIDp00dyiPVnmQDVCk3a6rWiYoDqRqO4zXA6tvsS5zgGjHpRT1E0ghJhdkC/NR3sfj8kTQ1bCYEUgi34pJGHU0rvHX0N4yYw/hhy03yxYiHpwm+yQTaRrnhWdpcUr2AdZ6AGQbrJ7mDqtlNG6jAw/N6ST1Ssddy+EppswjBCDciYDOODscT9iQyzosU8d1YN052aw3AKNqjTSTSuEOiXOoV6rem9x8ixDGDpmfWDjyAGaLv6MUPbtreUH9/eY6BHFqfRBH1jWfg9+34etRaDWqlB7IwcCELAfhV4+dG5uE/xxzKXjWsZ9CtI15hGrqhipwiuWvMbHyLiHN4sdL9FWCm4vaDb0vMjAYuc9ax2O9rAYUGemxFLUMuIVBn2BRu9HK+JVPtI6oKZigBThDu1On6x97+gtuP7fgL7DezxxRUq/x6wHec2e15oE1ZpyxTupZwcCop7pvqumLKkVcCMw3QxUU4zY1uSdlJq4
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(22082099003)(56012099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?T0czRGVSR2RaZThrVXBscXJnRmE3aWJRSjBtVlMxclF5OFNiY295aWZPb0Z1?=
+ =?utf-8?B?WUFmQ0lEZmN5L2V4T3BFUnJUUXI1bWUzMEVCTEM2dVFhNnkrcEI4amlleUVD?=
+ =?utf-8?B?b3dsdlkvK3M1bXFZQkNKbzZFa1BQaTBMd200cGxqd09lTWVlN3F2TlpLclli?=
+ =?utf-8?B?cjNZcllzZW8rMWFwTzBFN012RVNUY04ybERNWVZMM3gvaVQxOFBVeHFVY3h3?=
+ =?utf-8?B?WTR2bUc4Z3F6Q2tzeDJwaHlZMHVyOGVod0ZrcEVmWEEzbDhIMGpJa3VvUGpW?=
+ =?utf-8?B?U1Z3Unl5VmxkMWlyQnBFWFVvaXJ4MW93eCtKUE41RWQ2R0Y5Mk9RTW43ZW9Z?=
+ =?utf-8?B?dUphVG04RXFSWW91bHJ0U09Ndmd4Vkg5Z2l6NzZBQTZtbWFxeFBpeWMwcXJz?=
+ =?utf-8?B?SS8yUXhxaUlXQ09MYWNEaVBxYlhxL3VnZHA1NW1WZXZDRG0rTmY3WVZrNHJz?=
+ =?utf-8?B?bEdCNWJVZVZRVlRBYWMyaUdyWGt6dVlDaUdVYUduZzNiekdZdHVndnAybE5t?=
+ =?utf-8?B?ZFFpb1U4UXNxYzhPVlZ3VGsrb055NVpPWFB5OEpHaFlZanlhcGxvSkVxRy8y?=
+ =?utf-8?B?YU5OYlVLVC9SbmZqNlc1bDZMSFJxNkpRcTdRTnlXcmEvNzdsTnVQMWM3NUtq?=
+ =?utf-8?B?YzcxMWpUZUVlc2J4NmJrRjN4V2NxUi9yVDZaTWU5bmEvczlxcVpHbTlrNUox?=
+ =?utf-8?B?MzFsMHVLZnBuRk9XSmpQVzcrSkhiM1JhUnpTQnBZZHRjSFNETElySXpKOFY3?=
+ =?utf-8?B?NEl3cERHQjVkdjhubldYaFJPdTVVektjWnM0d01wOHBJUHdDWHRrbUZLeTdD?=
+ =?utf-8?B?QTVsOXhvcEtMcTFDU2RYY3BuT0FXSzY0clBGN21kY0ZOK0o5VmJyZFc0SHBn?=
+ =?utf-8?B?NmZMZG9NZSt0YkVOdWhQaGlOTTVZdCtYTlhBUkZYa2hGRWltZ2tIMHFkbkdI?=
+ =?utf-8?B?OXp2SUpxNUFmK05aQnNocUVMYUZCWHNXNHdHZWdQaTNORmwzUEZyVFRRY1B2?=
+ =?utf-8?B?OTFPMEdaZjg0N2tSWUFOa2hEQTl0ZWkxR1NtUi9lVURQWUFLYmpRVFhBQ1d0?=
+ =?utf-8?B?czREZC9DTVBhNldJOGZMUk53TmdqRUEvUVgvRmFPN3ZXVzNKeGx1dkpmMVZV?=
+ =?utf-8?B?Y3IyK0xDVS9aV25IWDAvaEgvQ2NyNytSZmoxSmFIVDRoRmN5elhlTXpVdEZ1?=
+ =?utf-8?B?Y21RQU5CRVNwSkxENGJsQzFZbEUvdzRSRmdTWGo0bmtSNzROalh6OEd6U1gv?=
+ =?utf-8?B?UzllVWEwU2F6V21kN0pZSFRvR2h4M1BsQ2psUmtrSzRLZWh5THYrVTd3Ujgx?=
+ =?utf-8?B?Z3dNL0tKVFo2LzhidzF4UDlMalJGUTRLV1R1RzZNZzEvUm5Gbm1aSXJ5QU1w?=
+ =?utf-8?B?Y1BURXphRDdJTUEwY2dUOGtUeCtZSFN5MmdHb3Yxd1BScGhHL0hQMGtVMDVK?=
+ =?utf-8?B?bTdXSWlWb1FoakRDc1VWbGJnTkM1MFVpNEtObGNibEQwNVcvLzZ5Q3A4eFJI?=
+ =?utf-8?B?bUlaL2cxek1MclZFNytIUjRaTTMreDU2RFE0bFRvNG5UbkcvVVh6QmxuN1cy?=
+ =?utf-8?B?aDJvUUtoNWo2Y2dSL0FPVWp5Qk5ueGxLeWZ4TGt5SHZIVkF6cHFudGFoMXl1?=
+ =?utf-8?B?OXRvZUJQTmgxQUtmczNNWU1KM2lMQmdTWkdsRW4zWGpIVVk4OEZQNnpFcEx3?=
+ =?utf-8?B?ZHE0dGZRRkJzNk4vZDM0bVQrVU9vc2dUeHlnN2NaU1hTdFFSeWtld0dTWHFp?=
+ =?utf-8?B?aGxrSDh2dUl0NzRBcHA3TDVyOUFGblp1c2o5ZnMrZktFOGs5dlpVWllpQXYz?=
+ =?utf-8?B?QS93Q0JZVjlzRHRzQnAyLzZzY1lPaDJDa2hhMTFxeWZJeU5pS1kyRHdycDNZ?=
+ =?utf-8?B?S29kSFBNeFRxTFYxUWxqN1B5WkNEZjFocEYzaWZUamxOdnV6YU1JeXExREQr?=
+ =?utf-8?B?b0pveTUyUVZRa3FrdjZxa1I3SjZFcGhkYjJ2eU5TR3JEb0hKNVhXNlBnS2VW?=
+ =?utf-8?B?TndNbWRpd0tIQ0dhbkhWc1ZhbnBRY2xtK2I4UkVTZS9Xek9xeUdlV2hFSEQr?=
+ =?utf-8?B?c3NESUVyenZuQmtDTFhyOExFNXdzbVRuNEVCMUNIVGd6Wmp2RE9aR0t6SVBy?=
+ =?utf-8?B?ZTdCbGJRTDFiaFAzbWZndDZOSUpqVkM0UE5YSTZpK1lxSWJDNzI1eTA3ME5H?=
+ =?utf-8?B?VHpnMGFzdWJEKzJYLzdwRW1uTXhSdzRnNzR5VFVJVEFIanRkQXZZc0dySGc5?=
+ =?utf-8?B?VmVhNzVUTWh1aC9RR3pvRjNxRU9ad0x0MkJWb3dZUDRHWWZxZUhDZlhibEpL?=
+ =?utf-8?B?Wm82SE0vYU9SQlFxM3J6b0VwQys1T2puYUpmVjJ4WWswZHB3U3NUUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <177618728515.4917.14466194789826252277-0@git.sr.ht>
- <177618728515.4917.14466194789826252277-7@git.sr.ht>
-In-Reply-To: <177618728515.4917.14466194789826252277-7@git.sr.ht>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 16 Apr 2026 11:44:06 +1000
-X-Gm-Features: AQROBzDOd-LI14eDBiezsrFN_qnauj9MKt-PUgM5Z32u6F_AswIEBOYVvZstwrc
-Message-ID: <CAKmqyKPcbJA1aiFE29oraWCNrtOS3sUp1YT3-O69BxLNppUA9w@mail.gmail.com>
-Subject: Re: [PATCH qemu v3 07/10] ot_uart: handle break condition
-To: "~lexbaileylowrisc" <lex.bailey@lowrisc.org>
-Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, 
- Amit Kumar-Hermosillo <amitkh@google.com>,
- nabihestefan <nabihestefan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Exchange-RoutingPolicyChecked: I4zOxC6s+oDau447uwRaU6JAFNoO3QyMFYTHcd0j4KM3QtD7GPDiRgUIopmUbmd3GKnDscsrcaPlbbMxTB5epEob7xC6DTvdtXgYgU6/1Bfk3LliVpDguGB88silYQujjB9PX5kraSRcnYUcVXHGv77QPifztNLOm7aCyqhKuMCxEwADnqejMk/TOJdOpnHSo6aGR4E9RpRuANOa5elF5/ve3h8Wi5JO4eexevk/UL9oTYIe8U2J+bArH5y9qRC1bSqrR/zPGZKv91CWUD+Ea5xSY7aGVPTQgEWPIlSBgvbIWZZDKqERm592IEAMJ6aZhP1mXz6ktavpyxft8WMYdw==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07416895-ccf5-4367-a77e-08de9b5a2b58
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Apr 2026 01:47:50.9232 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: WgO6kpJd+2wFQVJS70a5M9y5o+zQrlQu8fzxjduJgd6hRDcfTQHudGVJqsV7mrT4YjjN9n2BTUXoUiyIADe9/UezNo317dY6RPfQD1uaKow=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8685
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.8;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,220 +189,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 15, 2026 at 3:22=E2=80=AFAM ~lexbaileylowrisc
-<lexbaileylowrisc@git.sr.ht> wrote:
->
-> From: Lex Bailey <lex.bailey@lowrisc.org>
->
-> This adds a handler for the UART break event, and logic to emulate a brea=
-k
-> when oversampling is enabled and there is a break event.
-
-I'm not clear why we need to model break events. Can you explain what
-a break event is (I assume holding the line low) and why you are
-modelling it in the commit message?
-
-Also we need some documentation of the new properties, as it isn't
-clear what they are and when they should be set. Maybe add that to the
-OT machine docs?
-
-
-Alistair
-
->
-> Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
-> ---
->  hw/char/ot_uart.c         | 92 +++++++++++++++++++++++++++++++++++++--
->  include/hw/char/ot_uart.h |  4 ++
->  2 files changed, 93 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/char/ot_uart.c b/hw/char/ot_uart.c
-> index 3511a42fbe..cdf02da62b 100644
-> --- a/hw/char/ot_uart.c
-> +++ b/hw/char/ot_uart.c
-> @@ -179,6 +179,11 @@ static void ot_uart_receive(void *opaque, const uint=
-8_t *buf, int size)
->      uint32_t rx_watermark_level;
->      size_t count =3D MIN(fifo8_num_free(&s->rx_fifo), (size_t)size);
->
-> +    if (size && !s->toggle_break) {
-> +        /* no longer breaking, so emulate idle in oversampled VAL regist=
-er */
-> +        s->in_break =3D false;
-> +    }
-> +
->      for (int index =3D 0; index < size; index++) {
->          fifo8_push(&s->rx_fifo, buf[index]);
->      }
-> @@ -331,9 +336,40 @@ static void ot_uart_reset_enter(Object *obj, ResetTy=
-pe type)
->
->      s->char_tx_time =3D (NANOSECONDS_PER_SECOND / 230400) * 10;
->
-> +    /*
-> +     * do not reset `s->in_break`, as that tracks whether we are current=
-ly
-> +     * receiving a break condition over UART RX from some device talking
-> +     * to OpenTitan, which should survive resets. The QEMU CharDev only
-> +     * supports transient break events and not the notion of holding the
-> +     * UART in break, so remembering breaks like this is required to
-> +     * support mocking of break conditions in the oversampled `VAL` reg.
-> +     */
-> +    if (s->in_break) {
-> +        /* ignore CTRL.RXBLVL as we have no notion of break "time" */
-> +        s->regs[R_INTR_STATE] |=3D INTR_RX_BREAK_ERR_MASK;
-> +    }
-> +
->      ot_uart_update_irqs(s);
->  }
->
-> +static void ot_uart_event_handler(void *opaque, QEMUChrEvent event)
-> +{
-> +    OtUARTState *s =3D opaque;
-> +
-> +    if (event =3D=3D CHR_EVENT_BREAK) {
-> +        if (!s->in_break || !s->oversample_break) {
-> +            /* ignore CTRL.RXBLVL as we have no notion of break "time" *=
-/
-> +            s->regs[R_INTR_STATE] |=3D INTR_RX_BREAK_ERR_MASK;
-> +            ot_uart_update_irqs(s);
-> +            /* emulate break in the oversampled VAL register */
-> +            s->in_break =3D true;
-> +        } else if (s->toggle_break) {
-> +            /* emulate toggling break off in the oversampled VAL registe=
-r */
-> +            s->in_break =3D false;
-> +        }
-> +    }
-> +}
-> +
->  static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
->  {
->      uint8_t val;
-> @@ -355,6 +391,17 @@ static uint8_t ot_uart_read_rx_fifo(OtUARTState *s)
->      return val;
->  }
->
-> +static gboolean ot_uart_watch_cb(void *do_not_use, GIOCondition cond,
-> +                                 void *opaque)
-> +{
-> +    OtUARTState *s =3D opaque;
-> +
-> +    s->watch_tag =3D 0;
-> +    ot_uart_xmit(s);
-> +
-> +    return FALSE;
-> +}
-> +
->  static uint64_t ot_uart_get_baud(OtUARTState *s)
->  {
->      uint64_t baud;
-> @@ -424,6 +471,26 @@ static uint64_t ot_uart_read(void *opaque, hwaddr ad=
-dr, unsigned int size)
->          break;
->
->      case R_VAL:
-> +        /*
-> +         * This is not trivially implemented due to the QEMU UART
-> +         * interface. There is no way to reliably sample or oversample
-> +         * given our emulated interface, but some software might poll th=
-e
-> +         * value of this register to determine break conditions.
-> +         *
-> +         * As such, default to reporting 16 of the last sample received
-> +         * instead. This defaults to 16 idle high samples (as a stop bit=
- is
-> +         * always the last received), except for when the `oversample-br=
-eak`
-> +         * property is set and a break condition is received over UART R=
-X,
-> +         * where we then show 16 low samples until the next valid UART
-> +         * transmission is received (or break is toggled off with the
-> +         * `toggle-break` property enabled). This will not be accurate, =
-but
-> +         * should be sufficient to support basic software flows that
-> +         * essentially use UART break as a strapping mechanism.
-> +         */
-> +        retvalue =3D (s->in_break && s->oversample_break) ? 0u : UINT16_=
-MAX;
-> +        qemu_log_mask(LOG_UNIMP, "%s: VAL only shows idle%s\n", __func__=
-,
-> +                      (s->oversample_break ? "/break" : ""));
-> +        break;
->      case R_OVRD:
->      case R_TIMEOUT_CTRL:
->          retvalue =3D s->regs[reg];
-> @@ -607,8 +674,27 @@ static const VMStateDescription vmstate_ot_uart =3D =
-{
->
->  static const Property ot_uart_properties[] =3D {
->      DEFINE_PROP_CHR("chardev", OtUARTState, chr),
-> +    DEFINE_PROP_BOOL("oversample-break", OtUARTState, oversample_break, =
-false),
-> +    DEFINE_PROP_BOOL("toggle-break", OtUARTState, toggle_break, false),
->  };
->
-> +static int ot_uart_fe_change(void *opaque)
-> +{
-> +    OtUARTState *s =3D opaque;
-> +
-> +    qemu_chr_fe_set_handlers(&s->chr, ot_uart_can_receive, ot_uart_recei=
-ve,
-> +                             ot_uart_event_handler, ot_uart_fe_change, s=
-, NULL,
-> +                             true);
-> +
-> +    if (s->watch_tag > 0) {
-> +        g_source_remove(s->watch_tag);
-> +        s->watch_tag =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_=
-HUP,
-> +                                             ot_uart_watch_cb, s);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->  static void ot_uart_init(Object *obj)
->  {
->      OtUARTState *s =3D OT_UART(obj);
-> @@ -644,9 +730,9 @@ static void ot_uart_realize(DeviceState *dev, Error *=
-*errp)
->      fifo8_create(&s->tx_fifo, OT_UART_TX_FIFO_SIZE);
->      fifo8_create(&s->rx_fifo, OT_UART_RX_FIFO_SIZE);
->
-> -    qemu_chr_fe_set_handlers(&s->chr, ot_uart_can_receive,
-> -                             ot_uart_receive, NULL, NULL,
-> -                             s, NULL, true);
-> +    qemu_chr_fe_set_handlers(&s->chr, ot_uart_can_receive, ot_uart_recei=
-ve,
-> +                             ot_uart_event_handler, ot_uart_fe_change, s=
-, NULL,
-> +                             true);
->  }
->
->  static void ot_uart_class_init(ObjectClass *klass, const void *data)
-> diff --git a/include/hw/char/ot_uart.h b/include/hw/char/ot_uart.h
-> index a2c5ff8b33..997bf2f367 100644
-> --- a/include/hw/char/ot_uart.h
-> +++ b/include/hw/char/ot_uart.h
-> @@ -56,10 +56,14 @@ struct OtUARTState {
->      Fifo8 tx_fifo;
->      Fifo8 rx_fifo;
->      uint32_t tx_watermark_level;
-> +    bool in_break;
-> +    guint watch_tag;
->
->      Clock *f_clk;
->
->      CharFrontend chr;
-> +    bool oversample_break; /* Should mock break in the oversampled VAL r=
-eg? */
-> +    bool toggle_break; /* Are incoming breaks temporary or toggled? */
->  };
->
->  struct OtUARTClass {
-> --
-> 2.49.1
->
->
+T2gsIEkgaGF2ZSBub3QsIHRoYW5rcyBmb3Igc2hhcmluZy4NCg0KPi0tLS0tT3JpZ2luYWwgTWVz
+c2FnZS0tLS0tDQo+RnJvbTogQ2zDqW1lbnQgTUFUSElFVS0tRFJJRiA8Y2xlbWVudC5tYXRoaWV1
+LS1kcmlmQGJ1bGwuY29tPg0KPlNlbnQ6IFdlZG5lc2RheSwgQXByaWwgMTUsIDIwMjYgOTowNCBQ
+TQ0KPlRvOiBEdWFuLCBaaGVuemhvbmcgPHpoZW56aG9uZy5kdWFuQGludGVsLmNvbT47IHFlbXUt
+ZGV2ZWxAbm9uZ251Lm9yZw0KPkNjOiBtc3RAcmVkaGF0LmNvbTsgamFzb3dhbmdAcmVkaGF0LmNv
+bTsgcGhpbG1kQGxpbmFyby5vcmc7IExpdSwgWWkgTA0KPjx5aS5sLmxpdUBpbnRlbC5jb20+DQo+
+U3ViamVjdDogUmU6IFtQQVRDSF0gaW50ZWxfaW9tbXU6IFJlLWV4cG9zZSBWVERfRUNBUF9QVA0K
+Pg0KPkhpIFpoZW56aG9uZywNCj4NCj5IYXZlIHlvdSBzZWVuIHRoaXM/DQo+DQo+aHR0cHM6Ly9w
+YXRjaGV3Lm9yZy9RRU1VL0NBRkZFMmF2ckhES1pkNW03ajNFM3g1PUY9cHpuLTNjOXZ6R1dQMys5
+LQ0KPkFWUHdRbmc3d0BtYWlsLmdtYWlsLmNvbS8NCj4NCj5PbiBXZWQsIDIwMjYtMDQtMTUgYXQg
+MDU6NTggLTA0MDAsIFpoZW56aG9uZyBEdWFuIHdyb3RlOg0KPj4gQ29tbWl0IGM3YjJlMjJiZDk1
+NyBjbGVhcmVkIFZURF9FQ0FQX1BUIGluIGVjYXAgcmVnaXN0ZXIgYW5kIHNldCBQSE1UIGJpdA0K
+Pj4gaW4gY2FwIHJlZ2lzdGVyLCBtYWtlcyB2SU9NTVUgcGFzc3Rocm91Z2ggdW5zdXBwb3J0ZWQs
+IGZpeCBpdC4NCj4+DQo+PiBGaXhlczogYzdiMmUyMmJkOTU3ICgiaHcvaTM4Ni94ODYtaW9tbXU6
+IFJlbW92ZQ0KPlg4NklPTU1VU3RhdGU6OnB0X3N1cHBvcnRlZCBmaWVsZCIpDQo+PiBTaWduZWQt
+b2ZmLWJ5OiBaaGVuemhvbmcgRHVhbg0KPjxbemhlbnpob25nLmR1YW5AaW50ZWwuY29tXShtYWls
+dG86emhlbnpob25nLmR1YW5AaW50ZWwuY29tKT4NCj4+IC0tLQ0KPj4gwqBody9pMzg2L2ludGVs
+X2lvbW11LmMgfCA2ICsrKy0tLQ0KPj4gwqAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCsp
+LCAzIGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11
+LmMgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4+IGluZGV4IGYzOTVmYTI0OGMuLjZiOGY3NWE4
+YjYgMTAwNjQ0DQo+PiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4+ICsrKyBiL2h3L2kz
+ODYvaW50ZWxfaW9tbXUuYw0KPj4gQEAgLTQ5OTgsOCArNDk5OCw4IEBAIHN0YXRpYyB2b2lkIHZ0
+ZF9jYXBfaW5pdChJbnRlbElPTU1VU3RhdGUgKnMpDQo+PiDCoHsNCj4+IMKgwqDCoMKgIFg4NklP
+TU1VU3RhdGUgKng4Nl9pb21tdSA9IFg4Nl9JT01NVV9ERVZJQ0Uocyk7DQo+Pg0KPj4gLcKgwqDC
+oCBzLT5jYXAgPSBWVERfQ0FQX0ZSTyB8IFZURF9DQVBfTkZSIHwgVlREX0NBUF9ORCB8IFZURF9F
+Q0FQX1BUIHwNCj4+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgVlREX0NBUF9NQU1WIHwgVlRE
+X0NBUF9QU0kgfCBWVERfQ0FQX1NTTFBTIHwgVlREX0NBUF9EUkFJTg0KPnwNCj4+ICvCoMKgwqAg
+cy0+Y2FwID0gVlREX0NBUF9GUk8gfCBWVERfQ0FQX05GUiB8IFZURF9DQVBfTkQgfCBWVERfQ0FQ
+X01BTVYNCj58DQo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFZURF9DQVBfUFNJIHwgVlRE
+X0NBUF9TU0xQUyB8IFZURF9DQVBfRFJBSU4gfA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgVlREX0NBUF9FU1JUUFMgfCBWVERfQ0FQX01HQVcocy0+YXdfYml0cyk7DQo+PiDCoMKgwqDC
+oCBpZiAoeDg2X2lvbW11LT5kbWFfdHJhbnNsYXRpb24pIHsNCj4+IMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBpZiAocy0+YXdfYml0cyA+PSBWVERfSE9TVF9BV18zOUJJVCkgew0KPj4gQEAgLTUw
+MDksNyArNTAwOSw3IEBAIHN0YXRpYyB2b2lkIHZ0ZF9jYXBfaW5pdChJbnRlbElPTU1VU3RhdGUg
+KnMpDQo+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHMtPmNhcCB8
+PSBWVERfQ0FQX1NBR0FXXzQ4Yml0Ow0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0NCj4+
+IMKgwqDCoMKgIH0NCj4+IC3CoMKgwqAgcy0+ZWNhcCA9IFZURF9FQ0FQX1FJIHwgVlREX0VDQVBf
+SVJPOw0KPj4gK8KgwqDCoCBzLT5lY2FwID0gVlREX0VDQVBfUUkgfCBWVERfRUNBUF9JUk8gfCBW
+VERfRUNBUF9QVDsNCj4+DQo+PiDCoMKgwqDCoCBpZiAoeDg2X2lvbW11X2lyX3N1cHBvcnRlZCh4
+ODZfaW9tbXUpKSB7DQo+PiDCoMKgwqDCoMKgwqDCoMKgIHMtPmVjYXAgfD0gVlREX0VDQVBfSVIg
+fCBWVERfRUNBUF9NSE1WOw0K
 
