@@ -4,114 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14EF2F8D761
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 17:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BE7F8D761
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 17:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDQAe-0002Zk-Hs; Thu, 16 Apr 2026 13:06:28 -0400
+	id 1wDQAh-0002aB-1Y; Thu, 16 Apr 2026 13:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nilay@linux.ibm.com>)
- id 1wDJhW-0007cM-7f; Thu, 16 Apr 2026 06:11:58 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nilay@linux.ibm.com>)
- id 1wDJhU-0000uj-Cl; Thu, 16 Apr 2026 06:11:57 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63G8wGlg1733768; Thu, 16 Apr 2026 10:11:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=PW+d0u
- usYcglTAyZdUGVF5INcu+1nsW+wWDFiizuqeE=; b=oiFg3qWq7zgRUBUoJHTwyE
- ASRQrnql3Rr7IUvVZwJZj1MzerY/nA4hXNFbjBe1MD61OGtmTAp9nwG7zzBO5tCz
- Mw+QAjpPtT9eDTtFVJB9KixNLcIyUBxzml1yLNGfasfTcGpKI0BhJcOr7KbI2Orh
- Ct39ur5sq1hIDu107u4G4VLbqQ7Z/iwd4TaNwhpib5DsdGCkTSmrafFBBgfns60V
- f/merYWoFyq9hmjk5zVWXnpM4DETy7WWq3q5nzBKymYXOLXfMbY8dqGx7riE91+p
- yo9ZCLHsOmV1IvrlQCDd85ZSmynZVy7hYv4g2fHSDf7vBhY8uHeihPqAVpxXhDGg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89mbxu7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Apr 2026 10:11:48 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63G6PmIu015149;
- Thu, 16 Apr 2026 10:11:47 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dg0mstjqy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Apr 2026 10:11:47 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63GABkt223200434
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Apr 2026 10:11:46 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B2F0A58066;
- Thu, 16 Apr 2026 10:11:46 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB1D05804B;
- Thu, 16 Apr 2026 10:11:43 +0000 (GMT)
-Received: from [9.123.7.57] (unknown [9.123.7.57])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Apr 2026 10:11:43 +0000 (GMT)
-Message-ID: <2160c130-eff7-4068-8377-6c28b89ac046@linux.ibm.com>
-Date: Thu, 16 Apr 2026 15:41:42 +0530
+ (Exim 4.90_1) (envelope-from <luc.fast2004@gmail.com>)
+ id 1wDMkR-000666-D1
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 09:27:11 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luc.fast2004@gmail.com>)
+ id 1wDMkP-0006dC-EL
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 09:27:10 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-6501d242e3fso7605193d50.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 06:27:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776346028; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ZwyNGW9yApSqkgbeYQo/Ulpeqczsc80balDBh24uIhTd20GkKdqqLaFAl4lnb8CY3O
+ LEzjjurTtK8XFMTvQFDNe7+aHV/hq+C3Yn17UmaTERqYgpzW+vwZ+ArDRIOyFs29Z6xe
+ +6QVTskSrvvIkFND0JPFW3ZIfbpVH8i4rRRIJw5RO6bSeRmvj/XXMlThH5k9a3bwmi4v
+ dzbjFa2Ndh/yN1EJE+sLG+2/PjOAV1EBIlv42ZyTfh9BchOL3LZ/8A/lNSXX0d6Zxtro
+ gBvKuD0f/HKd9TKovYbviyqNUSpq+uzt8gv25rTn2Yj9yyQ3UKuBm5cL2JP7iz73MpOd
+ DyYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=/lKTwosgKuz4jaTb9HsdYAnjyUTznLxk9qfvWLPKFhQ=;
+ fh=Z/ChBmagr0Yunxz3rPKeskrqrJshrQ1YmuVp9/a/R7E=;
+ b=WzoNzE+tX/j65KbV+SMH5Aim96bPgPc570hsyhMne1hhj95k1aU2I10yqll/0WkWtl
+ 8NRZh2K4c/YAYOnEPJWVspDIw8OMv/npCZioiWSudhP2EubQhRHgSpwdJ1nvzc4W4pi+
+ sfDFkrU2OZ72aJOt9IFSbq5wLgO9fJEBRFiKlx/jU0nb7uaCAghgTmlOBx25nE/uxWJu
+ P+Y/YAvyjXEdowEN6tDkSjNfXZFHCVsjMd8REMG2eJ0bMwr80f7V6y+KKzD+0pUYfPLg
+ uP5QlkB2re/3HBzfSzQ02NNoN/oPrnGEXBUBQhzk4KLVZIRq/OwBggJhjyOSFD4nMZpi
+ 9bKA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776346028; x=1776950828; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=/lKTwosgKuz4jaTb9HsdYAnjyUTznLxk9qfvWLPKFhQ=;
+ b=iDivo5pQvdk9vO2uQ46h4T7VolJFOrt+xX0f4MTPTcuBdUSU65SEg795LCHSrVUu9X
+ Bj0hPPRUzpbvERMZN0rTUQbMRgtKQtjT2iQq/BX4+a2MAhd8Am3KWAAq86orVmrAVx1p
+ D+qRJDJS6konO3OyuvbD+cq+lkYYWaaX50gmInG1x0xlcTz6pbdFVLZYv7+f8m4NHGpk
+ og/hjWN53+YxEgRpM+PHMp8lQZGkF/MNkwwzHUR/2neEYePfK4e8U/pj/qV20LCfcWkt
+ iIvdD3K8uqEbi51sUlahGaEZ1U564t0edM7wlNYmsXJdeXPjWCwX0Sy8F4g4S+PPo8jI
+ fpZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776346028; x=1776950828;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/lKTwosgKuz4jaTb9HsdYAnjyUTznLxk9qfvWLPKFhQ=;
+ b=rgoADikJbhcoZNkF0TPU98bd/AeGAlF+/kykNCRKMfMGtJaj1ojT1r70fQS38V4BGf
+ dNgZbj/RC1ZEFDPDx7Ep92Z+ZwpFOyv4K9AEnCi3a/Q3wnjw+fEkRj0HQczTRvyacZEd
+ l5PYgT7Crq14AiLNjzyKnyDkUBMM6Ia+kRZF2LHLrID8i3hdMpGI2ee2HdtLLNkhwMpq
+ /Pp/4gCeJT0meKL0eb9mlQsl6Y5UeHGwl3IUfkuCgLvHfMuzLJS7mFEzLgIF556HDw7r
+ MqA8HN8Mulg0N8lnO7vqviKprX7oMfnI1lJhzq4Gw9DIwsLGbwb7VQGzx/PAaUPSIJnv
+ 8C6Q==
+X-Gm-Message-State: AOJu0YyBL5aVO9JzyA+JWyqteFQXuy/QlZoZWyiqcpT8teVprC4yTsXv
+ U5kD67Ea/cjtup4zmYmfa4ZWKFygBjGDbnWO4GcPgu/wj+8c0esES0o76T93Y/s8QW2g4reNK0J
+ FkSeW+3oKHsOni6Ozi/y02UaUBFZhbxaCFmgr
+X-Gm-Gg: AeBDievFk2vV3dSKt267w2haCC0Cph77F4CKiYIM3GFKgpXElGHUrj2bR1CnzfKLScq
+ R3ZhDFQb4hJAVX9Vt0HwRj/GVkY1R0JpPz1l3+SGaUctPDJm+MyRKPK9ssFr4PrXjG+zNUwclvN
+ KLr90V7J57ArIXS/kkAjBvpoRAWbNlKY3HPbDNVDSpOAf7jtnLQ1CvX3QxmUS6YWssoO/ch+dO9
+ XqMEOKtv9Rw90DL+A/RE0xqn6XS3yX8er12l+/hQ2qBdeYf4cUsqoLZXSau60EebhFD8nfgIJXR
+ gJYVn5ElXziYWBw+QAWL1VA6J9ox3yi4K/jggsu8
+X-Received: by 2002:a53:b546:0:b0:651:9538:1905 with SMTP id
+ 956f58d0204a3-65198ab48d5mr16436977d50.27.1776346027483; Thu, 16 Apr 2026
+ 06:27:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
-To: John Meneghini <jmeneghi@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Klaus Jensen <its@irrelevant.dk>
-Cc: mr-083 <matthieu@minio.io>, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- kbusch@kernel.org, mr-083 <matthieu@min.io>
-References: <20260409060155.94704-1-matthieu@min.io>
- <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
- <20260414124221.GB111076@fedora>
- <0743e428-cde4-436a-9af4-7477271fd8ab@redhat.com>
-Content-Language: en-US
-From: Nilay Shroff <nilay@linux.ibm.com>
-In-Reply-To: <0743e428-cde4-436a-9af4-7477271fd8ab@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=69e0b5e4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=jsQgLUCoJTa5QCtIDiEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: MNv83AAjAvJg8aGRF20FFjPfYMCBhvGz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDA5MiBTYWx0ZWRfX8sz1VGATontX
- Li9+JfOITsG9xZW3h33RIZDbkJHKSbAu2GMFEC+TVUdpcBRMYoWtRXevT1g5fXDQDjwUUyK3pVA
- K8cFJZAGpmug2/WnbJhLHMB6pWShc4cNjaT7S8QXSl5XNBrUPDYjvRuOXEKgvPXkayvBQKgHNyY
- TlFeySwbb9yuKU8HK1rEtu3LExQifOMXtFLcVi3HmO0jydTWTOAiihPvQ6B4ZjAESo3QmCUR1gz
- izYKUVThTmD2a1qvXyrWYDq03BmIK5zkgkIgzKYJDDoCXcuwcuBYVJ5yffePkoVg1yyNpnEYbXd
- omWNaJEG61lXkuTJTmn4RuKvTS8KJQht22wbp591Am3vWuuIzR94b9f674wi1SF0Q7OjrF/qhgf
- 9FBK+yxuzxVKaAMfi9pPiplRa3WuhoLZcdlHiFdEuHvCLnf64oMU2MOZLB+1Zuqsrx87OxNXJdT
- I7gAyOCfaSqSSOBNp0w==
-X-Proofpoint-ORIG-GUID: MNv83AAjAvJg8aGRF20FFjPfYMCBhvGz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-16_02,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 clxscore=1011 adultscore=0 lowpriorityscore=0
- suspectscore=0 impostorscore=0 phishscore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604160092
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=nilay@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Lucas Cardoso <luc.fast2004@gmail.com>
+Date: Thu, 16 Apr 2026 10:26:56 -0300
+X-Gm-Features: AQROBzBrcDtd1NOYZUREKLlO3m_d_TxNvtj0R3o9prw8bBgshxq55Q1WDxcR4Q8
+Message-ID: <CAHMzB=iZB24QqPwcMjJrfp4GjCkKKpa_0aG0Qx=YOFGUxab8Lg@mail.gmail.com>
+Subject: First-time contributor looking to work on malloc/calloc cleanups
+To: qemu-devel@nongnu.org
+Cc: "jsnow@redhat.com" <jsnow@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000f764dd064f93c95d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=luc.fast2004@gmail.com; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 16 Apr 2026 13:06:26 -0400
+X-Mailman-Approved-At: Thu, 16 Apr 2026 13:06:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -126,42 +111,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi John,
+--000000000000f764dd064f93c95d
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/14/26 7:34 PM, John Meneghini wrote:
-> Adding Nilay who has done a lot of work on nvme hot plug.
-> 
-> Nilay please take look at these patches and let us know if they can work on powerpc
-> 
-> I'll set up a test bed and try this out with x86_64.
-> 
+Hi everyone,
 
-Thanks for looping me in.
+I am looking to make my first contribution to QEMU and would like to start
+by tackling the remaining cleanups for the GitLab issue: "conversions of
+malloc/calloc/free to g_malloc/g_new/g_free etc" (
+https://gitlab.com/qemu-project/qemu/-/work_items/1798).
 
-I tested this patch series on pseries QEMU, and overall it works as expected.
-For the first patch (NVMe namespace hotplug), the functionality behaves correctly
-and achieves its intended goal. That said, from an NVMe specification perspective,
-the operation appears closer to a namespace attach/detach rather than a traditional
-“hotplug.” I understand that in the QEMU device model, this is framed as a hotplug
-event, which is likely why the terminology is used here, but it may still be somewhat
-confusing when viewed through the NVMe spec lens.
+I've checked the codebase and saw that some files mentioned in the original
+issue still have remaining malloc calls that need converting:
+- hw/audio/fmopl.c
+- target/xtensa/translate.c
+- disas/m68k.c
+- disas/sparc.c
+Also, this file still has a calloc call that needs converting:
+- hw/xtensa/mx_pic.c
 
-For the second patch (drive_insert), the implementation also works as intended on
-pseries. However, I have a concern regarding how the backend is handled. The flow
-effectively removes the backing storage using drive_del and later reattaches it
-using drive_insert. While the expectation is to reconnect the same backing store,
-there is currently no enforcement of this. As a result, it is possible—perhaps
-unintentionally—to reattach a different backing file. If this happens, it may lead
-to inconsistencies with the in-memory state maintained by the kernel (e.g., page
-cache or filesystem metadata), especially if the original device was already in use
-or mounted. This may potentially result in data corruption or undefined behavior
-from the guest’s perspective. It might be worth considering whether some form of
-validation or restriction should be added to ensure that the same backing store
-is reattached, or at least to make this behavior more explicit.
+I checked the mailing list archive, and saw that someone else tried to
+tackle this issue a month ago. They made some progress on hw/audio/fmopl.c,
+but it seems as if they've stopped working on it.
+I would like to start working on these one file at a time, starting with
+hw/audio/fmopl.c for malloc conversions and hw/xtensa/mx_pic.c for calloc.
 
-Overall, both patches are functional on pseries, but the above points may be worth
-addressing.
+Following the 'Contribute/BiteSizedTasks' wiki page, I decided to send this
+email. Could you let me know if anyone is currently working on these
+specific files, or if it's safe for me to proceed? If so, I'd appreciate it
+if someone could assign the corresponding GitLab issue to me.
 
 Thanks,
---Nilay
+Lucas Cardoso
+@lucasac00 on Gitlab
+
+--000000000000f764dd064f93c95d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi everyone,<br><br>I am looking to make my first con=
+tribution to QEMU and would like to start by tackling the remaining cleanup=
+s for the GitLab issue: &quot;conversions of malloc/calloc/free to g_malloc=
+/g_new/g_free etc&quot; (<a href=3D"https://gitlab.com/qemu-project/qemu/-/=
+work_items/1798">https://gitlab.com/qemu-project/qemu/-/work_items/1798</a>=
+).<br><br>I&#39;ve checked the codebase and saw that some files mentioned i=
+n the original issue still have remaining malloc calls that need converting=
+:<br>- hw/audio/fmopl.c<br>- target/xtensa/translate.c<br>- disas/m68k.c<br=
+>- disas/sparc.c<br>Also, this file still has a calloc call that needs conv=
+erting:<br>- hw/xtensa/mx_pic.c<br><br>I checked the mailing list archive, =
+and saw that someone else tried to tackle this issue a month ago. They made=
+ some progress on hw/audio/fmopl.c, but it seems as if they&#39;ve stopped =
+working on it.<br>I would like to start working on these one file at a time=
+, starting with hw/audio/fmopl.c for malloc conversions and hw/xtensa/mx_pi=
+c.c for calloc. <br><br>Following the &#39;Contribute/BiteSizedTasks&#39; w=
+iki page, I decided to send this email. Could you let me know if anyone is =
+currently working on these specific files, or if it&#39;s safe for me to pr=
+oceed? If so, I&#39;d appreciate it if someone could assign the correspondi=
+ng GitLab issue to me.<br><br>Thanks,<br>Lucas Cardoso<br></div>@lucasac00 =
+on Gitlab</div>
+
+--000000000000f764dd064f93c95d--
 
