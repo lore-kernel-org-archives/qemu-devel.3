@@ -4,50 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C3CF8A16A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BD2F8A160
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLay-0002cm-0y; Thu, 16 Apr 2026 08:13:20 -0400
+	id 1wDLhh-0004ij-2f; Thu, 16 Apr 2026 08:20:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wDLaq-0002Ux-R8
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:13:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wDLan-00030T-07
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:13:12 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxQ_BJ0uBp8SABAA--.4982S3;
- Thu, 16 Apr 2026 20:12:57 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxvsJI0uBpsnpuAA--.13529S2;
- Thu, 16 Apr 2026 20:12:56 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org,
- lixianglai@loongson.cn, yijun@loongson.cn, chenhuacai@loongson.cn
-Subject: [PATCH v3] target/loongarch: Add support for dbar hint variants
-Date: Thu, 16 Apr 2026 19:47:15 +0800
-Message-Id: <20260416114715.3309072-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wDLha-0004eM-7K
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:20:11 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wDLhY-0005BW-7f
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:20:09 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 1B6DB5BCFA;
+ Thu, 16 Apr 2026 12:20:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776342003; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
+ b=N70j+XNWvF+GBDp5mrectjGptgRc4m0r9UcRkA5JDhgUrt6JLISa+S3W+SVEZGfBfqrip6
+ kGpBiEmRBXs0lLbakwembJN45m2PaExMs+s1UPZB/Vb0D8WLFEoloHCQHe7768cwnc6/qZ
+ M8czQFWuueM9AVSuHj8VD8zyJXQFeDA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776342003;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
+ b=bDD0lFNY8PnZiRLEAoRwyTqrkmeak//6f0VZtB+TKV76tSla0ugQFOqVqlqxeYhfVYKfPq
+ 99a+W678lPklcGBg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776342002; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
+ b=oN6VDfbnDNUaLld/w/oyu/0yPiMhI5iZ+GMGfBsmNbN7vDnzL+mFl0lvPeLxdF3FFcql4V
+ NeF5kM5BUKTiZQ14L1M9IjITNOGLjnYF8IBP6h6TxTLkLIDIFfT13d/WucGaXIfaCZVkrD
+ i7WTBSkZ5Bi8GmTthUoQmh9X6C1q2oY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776342002;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
+ b=nTtAWcOLsM52qkif6FQRlVH96EUK+y48vSg0ZvMSJ5hAUScngXSYmvTmmIkLJzJbi5S+6S
+ yknEdYiwFym3yQAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AAB52593A3;
+ Thu, 16 Apr 2026 12:20:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id RJE3HvHT4Gm+FAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 16 Apr 2026 12:20:01 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, "Maciej S.
+ Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
+ migrate_params_test_apply
+In-Reply-To: <CAFEAcA8dwXxFodsg6gk473aEWBXynFAwaohrMqY3ca5c4FxzMw@mail.gmail.com>
+References: <20260414223718.23965-1-farosas@suse.de> <87zf34xp7k.fsf@suse.de>
+ <CAFEAcA8dwXxFodsg6gk473aEWBXynFAwaohrMqY3ca5c4FxzMw@mail.gmail.com>
+Date: Thu, 16 Apr 2026 09:19:51 -0300
+Message-ID: <87wly7xfko.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxvsJI0uBpsnpuAA--.13529S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,168 +116,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LoongArch architecture (since LA664) introduces fine-grained dbar
-hints that allow controlling which memory accesses are ordered by
-the barrier. Previously, all dbar instructions were treated as a
-full barrier (TCG_MO_ALL | TCG_BAR_SC).
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-This patch adds support for decoding dbar hints and emitting the
-appropriate TCG memory barrier flags. For CPUs that do not advertise
-the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
-fall back to a full barrier, preserving compatibility.
+> On Wed, 15 Apr 2026 at 15:39, Fabiano Rosas <farosas@suse.de> wrote:
+>>
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>> > Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
+>> > method makes the handling of the TLS strings more intuitive because it
+>> > clones them as well.
+>> >
+>> > This also fixes a segfault when a NULL TLS option is accessed as part
+>> > of a validation check for another option (e.g. in the zero-copy +
+>> > multifd compression case). Details follow:
+>> >
+>> > Currently, after copying s->parameters to the temporary
+>> > MigrationParameters object before migrate_params_check(), the
+>> > references in temporary object to the TLS options are dropped, either
+>> > because:
+>> >
+>> > a) the user set a new option, in which case that's fine as
+>> >    s->parameters still holds the reference to the old memory or,
+>> >
+>> > b) the user did not set a new option, in which case keeping the
+>> >    references in the temporary object would later cause them to be
+>> >    freed along with it, leading to double-free when s->parameters is
+>> >    also freed later on.
+>> >
+>> > In this second case, it was overlooked that the TLS options can be
+>> > accessed already during migrate_params_check() as part of validation
+>> > of another option. Those pointers should not have been cleared.
+>> >
+>> > Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
+>> > is not stealing a reference from s->parameters anymore.
+>> >
+>> > Fixes: aed97f0563 ("migration: Normalize tls arguments")
+>> > Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+>> > Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
+>> > Reviewed-by: Peter Xu <peterx@redhat.com>
+>> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> > ---
+>> > NOTE#1: For the release we could have a simpler fix just checking for
+>> > NULL, but that would allow two unsupported configurations to be
+>> > accepted: zero-copy with either multifd compression or TLS.
+>> >
+>>
+>> Peter Xu just pointed out on IRC that it's actually only the zero-copy +
+>> TLS configuration that will be allowed with the simpler fix. I think
+>> it's best we go that route instead and hold this patch until after the
+>> release.
+>
+> rc4 has already been tagged and I really don't want to put anything
+> more into 11.0 unless it is a super high priority release-blocker
+> kind of a bug. The fact that this is a fix for a commit that's
+> been in git for pretty much the whole of the 11.0 cycle without anybody
+> noticing earlier suggests it probably isn't that important ?
+>
+> If we want to put it in then the commit message needs to clearly
+> state the severity (e.g. "everybody trying to use migration
+> hits a segfault") that makes it release-critical.
+>
+> Otherwise we should put this into 11.1 and with the usual cc:stable
+> so it is backported to the 11.0 stable series.
+>
 
-The hint encoding follows the LoongArch v1.10 specification:
-The hint is a 5-bit field (bits 4-0). Bit4 is reserved and currently
-ignored/discarded. Only bits 3-0 are used for ordering control.
- * Bit3: barrier for previous read (0: true, 1: false)
- * Bit2: barrier for previous write (0: true, 1: false)
- * Bit1: barrier for succeeding read (0: true, 1: false)
- * Bit0: barrier for succeeding write (0: true, 1: false)
+Makes sense.
 
-The mapping to TCG memory order flags is as follows:
-  TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_LD_ST;
-  TCG_BAR_SC |TCG_MO_ST_LD | TCG_MO_ST_ST;
-  TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_ST_LD;
-  TCG_BAR_SC |TCG_MO_ST_ST | TCG_MO_LD_ST;
+@Peter Xu, do you agree with leaving this to stable? Given that
+it needs multifd and zero-copy-send to be both set, I'd say it doesn't
+have that large of a user base.
 
-Special hint handling:
-- hint 0x700: LL/SC loop barrier, treated as a full barrier as recommended.
-- hint 0xf and 0x1f: reserved/no-op, treated as no operation
-
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu.c                        |  4 ++
- .../tcg/insn_trans/trans_memory.c.inc         | 63 ++++++++++++++++++-
- target/loongarch/tcg/translate.c              |  1 +
- target/loongarch/translate.h                  |  3 +
- 4 files changed, 69 insertions(+), 2 deletions(-)
-
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index e22568c84a..d8d106b07e 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
-         data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
-         data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
-         cpu->env.cpucfg[2] = data;
-+
-+        data = cpu->env.cpucfg[3];
-+        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
-+        cpu->env.cpucfg[3] = data;
-     }
- }
- 
-diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-index e287d46363..dcecf02e54 100644
---- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-@@ -137,11 +137,70 @@ static bool trans_preldx(DisasContext *ctx, arg_preldx * a)
-     return true;
- }
- 
-+/*
-+ * Decode dbar hint and emit appropriate TCG memory barrier.
-+ *
-+ * The hint is a 5-bit field (0-31) encoded in the instruction.
-+ * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
-+ *
-+ * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
-+ */
- static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
- {
--    tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
-+    int hint = a->imm;
-+    TCGBar bar_flags = 0;
-+
-+    /* Reserved/no-op hints: 0xf and 0x1f */
-+    if (hint == 0xf || hint == 0x1f) {
-+        return true;
-+    }
-+
-+    /* If the CPU does not support fine-grained hints,or for the special LL/SC
-+     * loop barrier (0x700), emit a full barrier.
-+     */
-+    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
-+        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-+        return true;
-+    }
-+
-+    /*
-+     * Fine-grained hint decoding:
-+     * The hint is a 5-bit field (bits 4-0). Bit4 is reserved and currently
-+     * ignored/discarded. Only bits 3-0 are used for ordering control.
-+     * Bit3: barrier for previous read (0: true, 1: false)
-+     * Bit2: barrier for previous write (0: true, 1: false)
-+     * Bit1: barrier for succeeding read (0: true, 1: false)
-+     * Bit0: barrier for succeeding write (0: true, 1: false)
-+     *
-+     * For each combination, we set the corresponding TCG_MO_* flag if both
-+     * sides of the barrier require ordering.
-+     */
-+
-+    bool prev_rd = !(hint & 0x08); /* bit3 */
-+    bool prev_wr = !(hint & 0x04); /* bit2 */
-+    bool succ_rd = !(hint & 0x02); /* bit1 */
-+    bool succ_wr = !(hint & 0x01); /* bit0 */
-+
-+    if (prev_rd) {
-+        bar_flags |= TCG_MO_LD_LD | TCG_MO_LD_ST;
-+    }
-+    if (prev_wr) {
-+        bar_flags |= TCG_MO_ST_LD | TCG_MO_ST_ST;
-+    }
-+    if (succ_rd) {
-+        bar_flags |= TCG_MO_LD_LD | TCG_MO_ST_LD;
-+    }
-+    if (succ_wr) {
-+        bar_flags |= TCG_MO_ST_ST | TCG_MO_LD_ST;
-+    }
-+
-+    if (bar_flags == 0) {
-+        bar_flags = TCG_MO_ALL;
-+    }
-+
-+    tcg_gen_mb(bar_flags | TCG_BAR_SC);
-     return true;
--}
-+ }
- 
- static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
- {
-diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-index b9ed13d19c..49280b1dd3 100644
---- a/target/loongarch/tcg/translate.c
-+++ b/target/loongarch/tcg/translate.c
-@@ -149,6 +149,7 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
- 
-     ctx->cpucfg1 = env->cpucfg[1];
-     ctx->cpucfg2 = env->cpucfg[2];
-+    ctx->cpucfg3 = env->cpucfg[3];
- }
- 
- static void loongarch_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
-diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-index ba1c89e57b..8aa8325dc6 100644
---- a/target/loongarch/translate.h
-+++ b/target/loongarch/translate.h
-@@ -43,6 +43,8 @@
- #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LLACQ_SCREL))
- #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
- 
-+#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, DBAR_HINTS))
-+
- /*
-  * If an operation is being performed on less than TARGET_LONG_BITS,
-  * it may require the inputs to be sign- or zero-extended; which will
-@@ -66,6 +68,7 @@ typedef struct DisasContext {
-     bool va32; /* 32-bit virtual address */
-     uint32_t cpucfg1;
-     uint32_t cpucfg2;
-+    uint32_t cpucfg3;
- } DisasContext;
- 
- void generate_exception(DisasContext *ctx, int excp);
--- 
-2.47.3
-
+@Maciej, what's the impact for you?
 
