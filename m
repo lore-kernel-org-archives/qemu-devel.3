@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A21F8DFCC
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 21:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4967AF8DFCC
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 22:01:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDUTb-0007DU-Et; Thu, 16 Apr 2026 17:42:19 -0400
+	id 1wDUle-00010N-BJ; Thu, 16 Apr 2026 18:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rafettaskindev@gmail.com>)
- id 1wDUTa-0007DD-0n
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:42:18 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDUlZ-00010C-SJ
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:00:55 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rafettaskindev@gmail.com>)
- id 1wDUTY-0003uc-6n
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:42:17 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-68be75dc734so12221eaf.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 14:42:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776375735; cv=none;
- d=google.com; s=arc-20240605;
- b=LR1LyPtF53xA+TlIWQBCiNwbcKicj7f4Iz4q90Yuhud2EWndM/zM/mxQUHDGeII+vD
- n27iG5FYCymDhY4wTSTK351LL3URrd96BMdiVXyo2iuhevaR0tdpiZphHzRmpd38gVCo
- 8ol7FFmDV7JRvFJjvK7pYm5hkDsXYwqC/Qc1/0lztRbdKHoHzqcAhym3xVNF5WTmwSQZ
- uNO5MwVLICb7SnBA5U9MV7rw2jldbCOTp4bpQnDiW4NBvhBzfNh+76wcLjTrjgoRwhhx
- 26ZNh/hdCtpm8kv9ZTgnDfmLBZ+J1MFXh13zKVNhxVY1m1ySTEr503hJSxkPhSZL2504
- EWLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mEoZrGP3WLfVGUTvEJ19j/ReXmXPSdwHLEFedqzvpwU=;
- fh=thzXvac9Kk3nSBPKBjQdF0CC0tJ/iBA2wDKvogBbYYY=;
- b=VmbeK+Nt9T6z6iAFcZbsu+OwbKDrcu35MwokmOdVc7veHbt/TWFmGKaWuGH82dcKsk
- 2qpi4aRtVYHTQCrnQ4k0A33f2ZDZfyRlWiPl3KOlX7Hw27uQDVM6SL12JPVlg6wJTUYD
- DXAW+xNiIRueDXnpomh1NNwXQTf8fvrsnYmHIxX4BsXfyuhGHdcUYJKVov0ZJ3erc9fC
- 8gZNZhhwV8gpYY05LwNJ04ESCF9EKpVQ+VcNGfQyJNukCQi5LZbqmKk7r1KwseoBhK+6
- Oxf/8o1cSYuRIXFI79mHs1EEdSvy+rN9hGav7sqTm0vNzU5tts4+KerclaslH1bStSVJ
- 5rjA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDUlY-0003lL-Cl
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:00:53 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-3590042fa8eso42063a91.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 15:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776375735; x=1776980535; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mEoZrGP3WLfVGUTvEJ19j/ReXmXPSdwHLEFedqzvpwU=;
- b=rcDu9SbO7FTnbFRz1AQnDH2MLjlojZecA9v6KNRJ6dC7aR+YI/XRdXHne9gDywD/x+
- Y8cNBhDsLAKb1hZlm+ubN9+IPk2QGxtSA6of0ZBRERgckotYTVn7AHG6ZHoL9980S7PE
- Rxpo3zO0dmJNJMOb2102tFnFX2ZM2tno1RQz/gUQP8N/ZilzD4Gqp1BoaDes6W83FlhQ
- txQwf0eG8eHewehorYqY7+GiVddwS18DXExRVEt5ISu7zZlkPdkuTG6GYHzSujfXfsqK
- FVTNW6h9c5mJ1ZJ9kcx1SN5T/mIPDja54AUQnoZ4Pn+zuN5JuVTVcvPOTCufHkkFoWLB
- zp+g==
+ d=linaro.org; s=google; t=1776376848; x=1776981648; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aLzobJG50jYWmKZQvLRRaXVGk9hzIyFK902cWt/lXbY=;
+ b=HUjQNrn+2WuMlhRhnr2WU2RmEyjnTcAwY9pWU6P/xTL/LdoZVWyQp1jtysROFf30yG
+ qGXsyn7lliVUk2U+b22Hx0ZznB92LXNMjzFm98xOG8H29TU5OgptNknx7MFPuWloRaZN
+ hjITmJKZD6ZoFHqKcJPoctJWB+4edgpRQd6gUXmKBDIAqF15LTXkq/t+iY8Vg+npFgLt
+ nr0fcg3K6mTeVSm52J8NXdpVBdAV7h+7A65ZnhKUJ/XJ5VvTVLvKUQPuvGEqi92VtwKw
+ RinU9VCGdVUPxQYZbDZj/B5tKt1HVBIcueQJEX7TK4A691XD5ybTIJURKk9/qnE/aCyV
+ NB+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776375735; x=1776980535;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mEoZrGP3WLfVGUTvEJ19j/ReXmXPSdwHLEFedqzvpwU=;
- b=aEpgO2GyVcHNYbQO/6OMIzIO8fVEw4fDUPbx38tN75egUgA5QvvtFMjXBgnE6zQV5L
- oEqH96w9RmKSIc3YZJQ9wSGDX4ALN0SnsrI0wQSd4LxOmzkF7tK9SuP5Wmo6rd4kQOKc
- /E5c7CMHewCxkliXvMXLcQR0oxUHh+8lUnKu6VcnA7CoCyhEFbe1cDt2dVMeYv84CxRh
- N8lC8KTeITOLIxOJZSeuF1eFiyDf+Ph1Lk1to5byCH0+lLbVQ84Fmgt3OHQ5LRJDyFXO
- 7TedEhW+SiPf/aQZym3l5g9MNKSpdPCdXEDN1GvfjryqPws/P+M7MabGX6XlfQN9sBzk
- Hsaw==
-X-Gm-Message-State: AOJu0Yw8V+kAIdcrFX09m5ECYC+TmrsTrDp5yrMjbLwcaDZyVUYHh4Q9
- VRa7Y3u41nfkwjq3GQIwh8rJD+cgVKzWF4clZi2jArp9iGqtL8e7QOCALwsjt5nSIh5m6FEnZj0
- WzxXDpwonQEjRZ0w+gzdmynI82f/CIPM=
-X-Gm-Gg: AeBDieteNcEwybAx7HD75W+QvW/XyCgX2lqV3fK4cSvLaVPZetbX72dq5mSUSeZqKAJ
- v6bmnA6E2Nt52tyNuLAXE/moIcJ+FhIPJZo8JMiE6Vt4oVeXXsZu4tBjiinbvXXD3bVM3IbyhU+
- oOD+F6T+B8Z2UCRI3TjOn59MOMF0YqG31z83xy3SkEXBaPaYU0NFca2NWj+/CrvZUvC5KclRONk
- B3+BsFsh1hvXhf3xhNasGtaYE4iOSnbDw46gCgVd1Atj91JD1FzdcqZ++T+F6c/dSiYb0u4fmRj
- YzlU0nvKY0bHqh2l
-X-Received: by 2002:a05:6820:1686:b0:67d:e9ce:cb23 with SMTP id
- 006d021491bc7-69462ee05c3mr209543eaf.38.1776375734992; Thu, 16 Apr 2026
- 14:42:14 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776376848; x=1776981648;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aLzobJG50jYWmKZQvLRRaXVGk9hzIyFK902cWt/lXbY=;
+ b=hJdsBxbiqEgWlJBHyhDxRNji+Sr1Ohl/WIpiydDRWKgePP2Uo67brxLXPvN1X9OA5d
+ tOojTv3RmceaDWKrn6/y5GyYVvfPn01Yq15TS8bZO5gKbmfgxwwZifiIJknnIIh9tEcx
+ E9ujbmoPjFOZTr55HXqrizZ+Mxsgc4D2TgAxqDiQ8PUUlyLaJ/RIVnCvm+7S3Uhg+Z5/
+ efH7zknWC+rXKRP+x7SKX9YB/sMMxI57r2FxqRpnbn2kj8XkWk6ozsGGNynlknI57Cca
+ juV2a1NgKofxFMBNt2OEBS0zKIpJqBX6/anyHNfsEIc/6jPgVvIUTbM9cY4p6Dc5+DQ7
+ 117A==
+X-Gm-Message-State: AOJu0YyFefPZf6z0snCfnlTbw7EbEvaiv3HjraZvgzWs1G2cBNoAcyDk
+ RwSZ1f61ldTqTnYO3LlgQrxBlVzIZog00wCeSwno49eXMmHLcjPYHOBw370gF1lCefcfO97Izu8
+ gxiDmL2M=
+X-Gm-Gg: AeBDieudqtcyvgMSldhsaNDjwvxol6jcHIDL72qJuhNCADhvFhscpLyrE7qpt7XGjBt
+ +C7QsFP43J/f7a9GXii98BIXBP/8G//4TnucxDpZiG5WoVZM9MJX+3KCDVIPgH0PMImhw4kf6RM
+ JQiPiRFYA7h1K2Xi+Q4qdmH9t5tMn5Q/3vGNTDqXKM83PmmFgFOWUxD5KT1cn8/Hmc3bU0+DJL1
+ 4LiXqdO/eZszrjFHX98vDk/i4nCkGhiWg+bAHRtz0TuLzURWrwkdosQiDfrJIe4+rhMjM4/gyDx
+ qRq2wjWb3SFifzAhjuvvNuKL0kOt/bwTi4dxMs6HzMq/GavVqRsAEDOgGi8NyZ0oLa6TQ5D8Zs/
+ xDg9H2kP0WpU/332LqDNp0qclAIq/wiUc0ZQ2+5HABoXFjK5tyIMuhU+DrOFyhErH8AV7P54Rie
+ H/8nYVHGx/Sx05HugKU6/j0a3AmH06w7hYwh3k/lY8L21Aat8LSVWrZCBxcTMFddCTEikUZVPOi
+ u2EDlMq8CpZb8pcNikPJFYn3DA3Fdvir98FatolpEijDZknwQZv8mQG3u4S3asnaA==
+X-Received: by 2002:a17:90b:384e:b0:35e:5a24:3c43 with SMTP id
+ 98e67ed59e1d1-3614040861dmr139761a91.8.1776376848068; 
+ Thu, 16 Apr 2026 15:00:48 -0700 (PDT)
+Received: from ?IPV6:2401:d002:dc0f:2100:a60a:7c34:dd75:e66c?
+ (bg30dj02y68bx09myf73.ip6.superloop.au.
+ [2401:d002:dc0f:2100:a60a:7c34:dd75:e66c])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36132cd538asm3471596a91.8.2026.04.16.15.00.45
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 15:00:47 -0700 (PDT)
+Message-ID: <34e08369-8b5e-4b71-94d9-b5c8860eba5a@linaro.org>
+Date: Fri, 17 Apr 2026 08:00:42 +1000
 MIME-Version: 1.0
-References: <20260416173448.88831-1-rafettaskindev@gmail.com>
- <c2ec0a72-8c35-44de-bd7c-cef445c646f4@gmx.de>
-In-Reply-To: <c2ec0a72-8c35-44de-bd7c-cef445c646f4@gmx.de>
-From: Rafet T <rafettaskindev@gmail.com>
-Date: Fri, 17 Apr 2026 00:42:03 +0300
-X-Gm-Features: AQROBzD3NuPbel7NPjTWXq_Ra6fozUhlJ30b-TxjvZ5VU2HPiH_vVZAZdBhloDc
-Message-ID: <CA+JCratdkXwmk29sZEO-zegSA0kvei2C=x0toZvZQWTjS7DNuA@mail.gmail.com>
-Subject: Re: [PATCH RFC] hw/scsi: Add SCSI tape device emulation
-To: Helge Deller <deller@gmx.de>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, fam@euphon.net
-Content-Type: multipart/alternative; boundary="000000000000ac0542064f9ab4d7"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=rafettaskindev@gmail.com; helo=mail-oo1-xc32.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] virtio-snd: check for overflow before g_malloc0
+To: qemu-devel@nongnu.org
+References: <20260416-virtio-fixups-v1-0-ec14e2de0852@linaro.org>
+ <20260416-virtio-fixups-v1-2-ec14e2de0852@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260416-virtio-fixups-v1-2-ec14e2de0852@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,31 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ac0542064f9ab4d7
-Content-Type: text/plain; charset="UTF-8"
+On 4/16/26 15:48, Manos Pitsidianakis wrote:
+> +        /* Check for g_malloc0 overflow. */
+> +        if (!g_uint_checked_add(&tmp, sizeof(VirtIOSoundPCMBuffer), size)) {
+> +            goto tx_err;
+> +        }
 
-Hello Helge,
+This works by accident because of _GLIB_HAVE_BUILTIN_OVERFLOW_CHECKS.
 
-I honestly didn't give much thought about whether sending patches before
-being choosen was okay or not. I was interested in project and wanted to
-try something. Sorry if it caused any disturbance, that wasn't my intent.
+The variables are of size_t, so g_size_checked_add is what you want.
 
-Thanks, Rafet
 
---000000000000ac0542064f9ab4d7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p class=3D"gmail-font-claude-response-body gmail-break-wo=
-rds gmail-whitespace-normal gmail-leading-[1.7]">Hello Helge,</p>
-<p class=3D"gmail-font-claude-response-body gmail-break-words gmail-whitesp=
-ace-normal gmail-leading-[1.7]">I honestly didn&#39;t give much thought abo=
-ut whether sending patches before being=C2=A0choosen was okay or not. I was=
- interested in project and=C2=A0wanted to try something. Sorry if it caused=
- any disturbance, that wasn&#39;t my intent.</p>
-<p class=3D"gmail-font-claude-response-body gmail-break-words gmail-whitesp=
-ace-pre-wrap gmail-leading-[1.7]">Thanks,
-Rafet</p></div>
-
---000000000000ac0542064f9ab4d7--
+r~
 
