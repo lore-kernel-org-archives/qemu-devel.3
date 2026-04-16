@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8228AF8A14A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734CFF8A14B
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDIry-0007e3-Q8; Thu, 16 Apr 2026 05:18:42 -0400
+	id 1wDIrp-0006ED-8u; Thu, 16 Apr 2026 05:18:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqf-0005He-Ox
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:21 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wDIqj-0005JL-AG
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:36 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqe-0007qJ-9y
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:21 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488a9033b2cso93513025e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:17:19 -0700 (PDT)
+ id 1wDIqg-0007qe-76
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:23 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48897fd88ebso78404855e9.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776331039; x=1776935839; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776331041; x=1776935841; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=q2V577G961STCISYwEEPKvXFA/Bc5cWtINI02EFduts=;
- b=xzP5fsbVddZi3BCTCQE2BU6z9Q0TGr2BO6K9JSkULt5Y36yaUf3Mex8WhkvRr4kk+i
- NMoTX57dHQ+oUZCO0lMxuimbtCBwBSfJj7PjslzsAWCjhD+EgJHXNw6iO+FEzW3+ZAth
- XMitysZ0ek9dk2v5OmEP2TLs3am/n4HNfSstZmdOjQ1jZdg96S4SgBAejTP5ZlhKRZ+O
- fS9zi4WsqcGah+WbnGZU//6e2ly6DJvA6REtjoZYTYBC0tKNgo3Zr5PCnr/Ech7popOD
- LPGSpG3b1QX87UPKWH8oX4O7Hmd0eALTkd7GeaPhf2WBpibpUl9wNe0ngHk8OhBOtNOx
- 9Drw==
+ :reply-to; bh=JuPO4uFBl65kDGkG1gjbDe4+0gSW2d4Gf2OZu/Qakf8=;
+ b=aP1S/dAAEyKLc+ugYdN/tMVXaLGQM7pFbbZyfy3wbfTMLc8KZG178HGBVRvNrBL9Eu
+ btNnuP8Ez1XkYvYDrnsOxnhzAVqPQqPzyGTE2IDRL0dnL5ySHJgCo5D+gXk9w9l8gMYd
+ 0S9qhqmPssc29uz/ew3gf4zY7aok4RGhj5yeg8e53eZela8OGkkxogz5a3L6RoBA9dBl
+ GYzk71xHNLOjvW6a7PN8p3UvluBx1FWiVNbQ9XvbjgUT0FHxtsXARSVMK3q2kYa8V5S6
+ KJjYZ/MiwXN+gc9EfgVOGw5FTTdGS2+EVbd/7cROWCZrRAUJx+8ReD1ZejOM6Z5aSf0/
+ mfzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776331039; x=1776935839;
+ d=1e100.net; s=20251104; t=1776331041; x=1776935841;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=q2V577G961STCISYwEEPKvXFA/Bc5cWtINI02EFduts=;
- b=U2wiYlQzSFCIzBGx8oTSN4QzTCT1qGAdumQzR8jCv8G/0SwyW52iHELxI3vJdPUX01
- Rayg0vBSNMg20qZ2IgsHJKqfKiRTo0qvVI4CpWjdwRQ8eQKXXPag5kTLlJ2VI9LydcD/
- 8m7GzdKvKN7PWTS2FdyGElHovH9Li4d5G6mYjvz05hrOEgHzBfbCntrMnbqZW7MuLjoo
- wgiZi0kwsQZOUAYIogkI1XdhRKh7kRVTQnkH/WDwCtXuaMrQBRYXkK5i6/mSguAhzUUm
- yiU3ThmgOuq4K5ZdwwBBUrorOpZ2vNpfIySup9EM6tnNreLhdUqhr+sz+uq9qRHIwr2W
- TPyg==
-X-Gm-Message-State: AOJu0YxTptZ179nUUVowzYYj9zeEer+hWogmT0DrtHZXwu0bvYazdrx9
- SSWXZsWE1udk+6w3Mc1T5MCnLNW60iLIZTOeNpN4lr0usyTpzUzLJCqsbccnUhh79D+P8jcXK3v
- egux3BLY=
-X-Gm-Gg: AeBDiesTW/mmilwAqRBow24we7/PRgjbFTUk4/9bj9QD4ap5yuwcf+2rPPfMfdC0Qp0
- dFqkT9pJZSH4I6b/9QHAhbBLkvqSc+a9rIRR3C+ezVe2LfBesg3FiVdFnkyFWW7PQBTVG7YxVbD
- +5IVxBRfU1ihBj+REm8VzBmxDFrc6E0YVTGusVMpsyJXSMqhDEcvandsM3FvsEgBWScHil7IZWu
- ORas8TcIDBH0hRcquCXEMFStKgG2AXiHB1FjD6212Fz5ROTpGV0nwcK+NI2OL2LmbBpDlI+7sJR
- oeBEdbYtZEDX/vqr6d/ZMjy5uGpJTzqbva67ndeyyF+kA8G4PjE3RMe7DT120ofgv/NLraz6GrR
- czZlpFlBUhQuMGQVC1oCyA4i45uR8XCSAT0f7oCPGSS7M4QpMQEou1TheqgcrppByLxP+PMrcuQ
- +js09a6h1xV5XGNKAwwQlwNuJg/mAUL3jcmRrkhuPklWOYD/wWylXXnIlz+iIUAozuPn+KWHuin
- JPvZjzvr7ggB1ZTDcbUdYzO5ADWbVRnYdEmhSjkbg==
-X-Received: by 2002:a05:600c:45c9:b0:480:4a8f:2d5c with SMTP id
- 5b1f17b1804b1-488d689cf9emr336114695e9.29.1776331038871; 
- Thu, 16 Apr 2026 02:17:18 -0700 (PDT)
+ bh=JuPO4uFBl65kDGkG1gjbDe4+0gSW2d4Gf2OZu/Qakf8=;
+ b=F+xfFEfXjEXTpCqjM8/buA9i4CHicRbe/VwHRqGI0uL56cBwPg8aMrNME1edvJ7JaE
+ XDCC40wSsllpVGP8pEs1AHohaDa2Ep1j2hjqhzAa+AMCheXtNH72T3aN09hxQdayOeI0
+ YPp0vm97I0Myixh68EtU9Y64liU0l7+sKTBAsTKzo8A3Hs0ewaAf+jbTsPwfABspxkFY
+ NtZFqfdvCk/X4NcBULEkCIHc46Dmep5bICm5A3P4NvcBkSqX0PW+cdFhVMFL/7n3Vs4f
+ 3o+AukI8P7C8e9N/+l1QBT+DOX+nmQvkcPdRkj76fOmxfmZyBojBsTjDEpb2PEGuURDf
+ b1bQ==
+X-Gm-Message-State: AOJu0YwnWRO2y6w9i947metTcf+s3BbNVo40eAqrijki9F8l1hSyoS3H
+ c3qxJof09L8xx1NwPayy5lnkX93C02j6CRm7cJH77iYOqP8jfVUZOmZEVw+WxRn/jZxnWX9CqT6
+ D/d/VGng=
+X-Gm-Gg: AeBDieudUGGyEXpQ2R3zUexTgpjdWZYIPBzgG9cgQCwiAefG8Osm4wZBgbhRyqMecZv
+ Om+l/tS8ux/LRG2ikPfdaZpwQ2MMqDpZytzS5LiTKWdFIty7PGC0KWSMSv8P2vzpgyLd/nvuee5
+ I56kFIU7NzC3WrwMYgM6pYrig80/+jxv39HVvJPsQWYNMM3EeXI5oB+xBeE4eJstYRguH6dy0tH
+ tq0e7udkK0IecPnyLsXx3yFXoxV4/a0i3XEdmuu5ZlpujXfH3FZStvWOeG2mG59BHT4rQJOOrH1
+ hXkSVQv8jrkl3ympYMwwbeaEvocwtdOFzWQY1KRGYhaZluYRMpV0ANOtTGBFoJg6L9BjnkJXPyn
+ N+ElQZng8YPRFmfzOI6/+01rHwoHB5nt8EL2blXhBzqcQboYMmml+vlX2Vfh1MSrcilQEwIi5dB
+ qaapc9rYBVEAVzEDOAVF1G+cVUclOqGpCqXjgl1d/wE78nxNiTrGBJiw6ABWhZLJ3Z/LtpixN/n
+ Nz9kOyH5fCmUlGjd+cZNheoaO1lEf/W1jX/tT5gdNsiDaIzzmb3
+X-Received: by 2002:a05:600c:c108:b0:487:12c:e7e1 with SMTP id
+ 5b1f17b1804b1-488d68539e3mr237705015e9.11.1776331040753; 
+ Thu, 16 Apr 2026 02:17:20 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f5818da1sm37186565e9.6.2026.04.16.02.17.17
+ 5b1f17b1804b1-488f5818da1sm37186565e9.6.2026.04.16.02.17.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 02:17:17 -0700 (PDT)
+ Thu, 16 Apr 2026 02:17:20 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 22/28] MAINTAINERS: Remove Shannon Zhao
-Date: Thu, 16 Apr 2026 10:16:48 +0100
-Message-ID: <20260416091654.316158-23-peter.maydell@linaro.org>
+Subject: [PATCH 24/28] MAINTAINERS: Remove Vijai Kumar K
+Date: Thu, 16 Apr 2026 10:16:50 +0100
+Message-ID: <20260416091654.316158-25-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260416091654.316158-1-peter.maydell@linaro.org>
 References: <20260416091654.316158-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,12 +100,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shannon Zhao has not posted to qemu-devel in some years and did not
+Vijai Kumar K has not posted to qemu-devel in some years and did not
 respond to a query about whether they still wished to be listed in
 our MAINTAINERS file.  Remove them, on the assumption that they are
 no longer active in QEMU.
 
-This makes the "ARM ACPI Subsystem" orphan.
+This makes the Shakti C class RISC-V SoC orphan.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
@@ -113,20 +113,20 @@ Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 48dd571fd7..8f50575083 100644
+index 9ef51955e0..043d26b0c4 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2184,9 +2184,8 @@ F: docs/specs/acpi_pci_hotplug.rst
- F: docs/specs/acpi_hw_reduced_hotplug.rst
+@@ -1732,9 +1732,8 @@ F: include/hw/misc/mchp_pfsoc_ioscb.h
+ F: include/hw/misc/mchp_pfsoc_sysreg.h
  
- ARM ACPI Subsystem
--M: Shannon Zhao <shannon.zhaosl@gmail.com>
- L: qemu-arm@nongnu.org
--S: Maintained
+ Shakti C class SoC
+-M: Vijai Kumar K <vijai@behindbytes.com>
+ L: qemu-riscv@nongnu.org
+-S: Supported
 +S: Orphan
- F: hw/arm/virt-acpi-build.c
- 
- RISC-V ACPI Subsystem
+ F: docs/system/riscv/shakti-c.rst
+ F: hw/riscv/shakti_c.c
+ F: hw/char/shakti_uart.c
 -- 
 2.43.0
 
