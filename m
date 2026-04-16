@@ -4,91 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F22F8D775
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF40F8D776
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 20:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDSyG-0000KY-Hj; Thu, 16 Apr 2026 16:05:52 -0400
+	id 1wDSxg-0008Ft-Jx; Thu, 16 Apr 2026 16:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSxz-0008V5-C4
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:37 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSxx-0008I9-3m
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:34 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43d76dd4ee8so4325910f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 13:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776369930; x=1776974730; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9K4LtXD4htqKcuCzEDGNxbXS9ukINIj2XSlyTHvWnFM=;
- b=QEhotvu2VHZ77qHEUeRPgtDdDRi4C8IchU+XmXAwp943n2fK3jwl5B7wg2ydgUW4xQ
- UdnbecfyCeLOWR6AeehA8l97pffn0jljWs5z+WSUxIb5Ms2tslbRalwjTDEx+Fb2O/f8
- 0+M6easQBcD45OpSZn/pR9rnrcHltbKnyti4bcDXIZvuDzKIDsN4gtAOB/UjS4CclY3v
- R30UjMVRGvLUJgZFNBVNT4BC+/+s9HQ7c1A4706BWNTUybVcdCmEFul1JBn6jR70KlJL
- fEoZ0H565yw1m5YkEmX/D/VIsLzQs5lce+qPFwdWE1QmlsTM9A3IiqtADSNVzWOfFSDU
- /O7w==
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1wDSxZ-0008FT-4N
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:10 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1wDSxU-00081s-5j
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:05:06 -0400
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 308C83F867
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 20:05:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1776369900;
+ bh=I8Wmzce83Qaglm/E/OuPhtAxgZT+LNUHczg0wcNfiwU=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=i4E7AgVQruhvyIlT/6E/OvCj3hU7u0T1bUZLuNhCSpg7tzlBC5JHdLIxvIGNy7n03
+ hwasdNndZrN2fuJy/DMoR1TvsDWpzOhfHXpapOvD+uoCIeNAmHjbYexTAvL9Jet3HU
+ 7QbootFdgYfCePMyKnZvvwUx2CICPdzbQ6tuYyOIzM5WpoGHAJ4mBpVG+Od4YdtPNp
+ nXSG5R43H3XOMueAXu2qvuQgigy+jrCxfP9QOcutUvV0gC6ocGl5y0YiJO4j+0SrtG
+ LBzgb/AQcEcZLMUnbrib6JZmbZoqYnJwca81+XbgopZwjDbFD6x73ZMdECe6abNfOU
+ Z0Thic2X6z1dMmEc3Rlp8o7tDR4DK8sI1OyBSDFzKVUB1iX368zmzYGEz70TWS0DzD
+ k+uhFxcwkFdG1btjk6hTFUyiFHuGndtyLYmSY1aDYli7R6r/N2cwX0EfY/mkLo9qnd
+ 3OUO4DVJkujdqWySrEVDF3iU1TyAxWNXilQ8o98d0aFJbivg4VuS2uCvi5tepoxP+V
+ 5XQ7/FfscV6PYv1FJUgOrSWcodG/8AH6yXr1DjEj8lPHD4YXecchgQqh4020b5cGpH
+ 8GyAcTERenNvr0ErFImeffCDMdOfg7kbVcYdVsXuKeM+6gvun4aqZWr63jMTxxAH20
+ 7426oCvG5Oyd9mf+AWzs9bu4=
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-488d56f87e8so59066885e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 13:05:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776369930; x=1776974730;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9K4LtXD4htqKcuCzEDGNxbXS9ukINIj2XSlyTHvWnFM=;
- b=MogmlHciErmDhRdaclaqpyAdZEHlI977ljW0lmAooDCTsMxVUINM0zL3c2fp0hpRGX
- jW+IBitHSJ1+1++isEjGOIS6Y7Me09DLsaMMtKlxhRUwVUN+7FMIuDWGJnsZuceTexS8
- IM61grvB+VgX08i0R5FnqqIFXd/rPmnmN448EDqoh0QR8WybBRwQi/a1Qhy/8AcMaqs9
- qr2LLMw89C3ddvHYxRLliqpkABV9jOdBtlgGr9EYC8GcyfnOy3HWyIHiC17ZkMspyibm
- DYq0WFYDuhduRKeKwAtK1gzsc+fvneXRjUm1Qqeg6rSJGUUDpcxlZvUZ7BLkkRJ2Cdcw
- p8uw==
-X-Gm-Message-State: AOJu0Yzl9I74PrF4GPYKqaXKauDk7sZYunRvetjxXHoCO8XKWhbQxrhi
- rXzPHewJfBDVqrCdxT2LkWzceOLlBmfY4T0YI5xZ1FqlRhqymKqe9RwJzhUBGf5JD9egkWVVzPt
- AU+WEtE8=
-X-Gm-Gg: AeBDietL71Iw/0aMf0JfUuQByBVcooB5vvJER5aSLO1v23YR0Qt7DUfU59BLGYPFThq
- mNfXig9c+faVpu3WaLTxSw+ILKQlHcByJs0n4ze1m2/fV+O19X7mVkV6+itQUV9hB7869hoVJo2
- 0vINpoWgB3OwqIwMf/TbimYaiXrt8Z7YjlaUnl89gouHOdcrsKEUbHiroBJN+cwfSI8dD56Cl6s
- 9dmvOoo/i+8vyoA7XIQyQjlQ27Gtm/5mQHJPdAzAaz83Z7wQulUvHGGK0vRyOtvvtZkooELLViZ
- DWaANyx3++NR7jTdRF1wMp4GwiivcOnsNT5WRPcOK9TtqCkBsJFU3NqrfNmBSQXqA6hC4ACDHCR
- nrCsYS2Rr0/FnZ0fsptlbYVWi+vWla9b5U2881pNmTQgdRbiXW+xOl8P8wFVlnQ6iUkIuiBm13J
- zIA18whyAv1AjucvKCDqEzusG+rKK3Lst/0XGSxpOD4/763Gb8xhbQf0hKvGKFVDH2gFwrtsiXn
- v1b7Y6+LUE=
-X-Received: by 2002:a5d:64e3:0:b0:43d:7b23:bc99 with SMTP id
- ffacd0b85a97d-43fe0eaf176mr1181929f8f.15.1776369930018; 
- Thu, 16 Apr 2026 13:05:30 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead3ebaaasm16889893f8f.32.2026.04.16.13.05.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Apr 2026 13:05:29 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PATCH v5 2/2] target/mips: Use probe_access_full() in Atomic
- Load/Store helpers
-Date: Thu, 16 Apr 2026 22:05:13 +0200
-Message-ID: <20260416200513.27100-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260416200513.27100-1-philmd@linaro.org>
-References: <20260416200513.27100-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1776369900; x=1776974700;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I8Wmzce83Qaglm/E/OuPhtAxgZT+LNUHczg0wcNfiwU=;
+ b=sX3xsd4/uWMh8gthUvQYRFQtfY36nVrD5n0a5/V6I6WxQVWx7H4ZpUMNlkO0Fk64K8
+ Tw6xvTVSqpjsg9YQfu2RXtqvYS8lEG0/wIJOd0cEZ15u6j0KzbaQslzUb+raGo+IK305
+ 4HKSEpcZnrsRmimko7ARiqJDCS0qPiJ6aFpAgGs4KhpagymjOtWBFzwBGAsSO3WDxD3D
+ 6stNI75H06lgilYDW8ALCguFlEDVD7XhopiMGNoZDeueBlDzABU5oQOtLO0iDsB1mYwn
+ tHFD8isVUXEvzxVpWXp36YaxtCWxfzH2Iiw+hROH2w+XSKlRNMm2xGb6tQ7dLKvop8y1
+ FhEA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+9WuG6lG1sJQyG8UV3vU3qp0HSey35LZabzRrLzOBob4i7hPg9DJYSUn/wuQUYBtJzEJQcZ143zQ/V@nongnu.org
+X-Gm-Message-State: AOJu0YwzyMEeofb+19gZL5DYqf83NExsTdWZzRnAsQdVZOawgRQCAqlC
+ Yurj+SWNVKifFzSi+ZxbbOOPh8/XqxXvMhiUpXCrewtJl8cUWvBQgPj1w+RN7bp78cf2jpMQSUT
+ CZT5WFONAicU5Z87ZpR5ctX7KHSYV3Mc9j12qv0e0moVzfhYII6HN3Hv/bLQAcDy79ufr5OfF
+X-Gm-Gg: AeBDiev6K3GP919zSzpjdpkJaQ0jVbnIv96d/67/XQF0goyWqimFwSYFQMayZ+QcJcR
+ NthLZRwU4Jrz2hEFBQ1GO032iWSeyugUGW3xtDy71bj//d+ONIpH+L6k4jzHgsukejIFYfwCPNo
+ je9ntxCJutK+F0KbXNIGKyVdGnWo58YzrldlrFioPLS9sznkqHiPfkFYXUMvPq5kPenpsLY3Vun
+ aYYwbH9oLJUgwwDzx5aaWZ9y6LGwsi35sRJ0sBxyN2UFb3IFYgxK/Tb/MKiNjBqfozu0R03NLlq
+ DR08b8ZqynIYeJ4ZY4mu8uV9VTC9Z52mPVDpQu0XRylrLrDqiqIY5F/hicED845oLs9jdKURQtz
+ 3UU8cdIuIGJ3FKX6RNDYX3+4yuJQZ5UdQrEYoc72xZ4xpwtbgqmPKlO8Xc0a+ZYoPknQ6KMEEcp
+ 2Azef29jqFmIMzX0F75Ti/7+Nqktcx2B7/pAaZPKWtkWu9k9lW2JC4JFvudlV6/3EWcWQ=
+X-Received: by 2002:a05:600c:6297:b0:486:d76c:fa57 with SMTP id
+ 5b1f17b1804b1-488fb77155dmr569565e9.17.1776369899742; 
+ Thu, 16 Apr 2026 13:04:59 -0700 (PDT)
+X-Received: by 2002:a05:600c:6297:b0:486:d76c:fa57 with SMTP id
+ 5b1f17b1804b1-488fb77155dmr569235e9.17.1776369899391; 
+ Thu, 16 Apr 2026 13:04:59 -0700 (PDT)
+Received: from [192.168.123.154]
+ (ip-176-199-115-125.um44.pools.vodafone-ip.de. [176.199.115.125])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488f584e243sm148274265e9.10.2026.04.16.13.04.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 13:04:58 -0700 (PDT)
+Message-ID: <8112ea21-10ca-4784-b530-2143218dbb05@canonical.com>
+Date: Thu, 16 Apr 2026 22:04:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] tests/data/acpi: Update SPCR golden-ref for RISC-V virt
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, tangtao1634@phytium.com.cn,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260412012501.1808602-1-chao.liu.zevorn@gmail.com>
+ <CAKmqyKP9k5ku8hfNbq=4XxPrukAn0Php_QyZuero=MEHVtd0BA@mail.gmail.com>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <CAKmqyKP9k5ku8hfNbq=4XxPrukAn0Php_QyZuero=MEHVtd0BA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,79 +128,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let the probe_access() API check the address alignment
-(request MO_ALIGN in the MemOp bits).
+On 4/16/26 04:35, Alistair Francis wrote:
+> On Sun, Apr 12, 2026 at 11:25 AM Chao Liu <chao.liu.zevorn@gmail.com> wrote:
+>>
+>> Update the expected SPCR binary to match the corrected field
+>> sequence after the Terminal Type and Language fields were swapped
+>> back to their proper order.
+>>
+>> This fixes the qtest-riscv64/bios-tables-test CI failure:
+>>    https://gitlab.com/TaoTang/qemu/-/jobs/13879552268
+>>
+>> Fixes: 977c6fefcd04 ("hw/acpi: correct field sequence in SPCR table")
+>> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+>> Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+> 
+> Thanks for the fix!
+> 
+> Do you guys (Heinrich and Chao) mind if I squash this with "hw/acpi:
+> correct field sequence in SPCR table"? They are both in my tree and if
+> I can squash them then it keeps the tree bisectable
+> 
+> Alistair
 
-Move env->CP0_LLAddr and env->lladdr assignments so we
-don't update them when an alignment fault occurs.
+Sounds reasonable to me.
 
-Since we have a handy MemOpIdx, replace the legacy
-cpu_ld*_mmuidx_ra() calls by cpu_ld*_mmu() equivalent.
+Best regards
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/tcg/ldst_helper.c | 21 +++++++++++++++------
- target/mips/tcg/translate.c   |  2 +-
- 2 files changed, 16 insertions(+), 7 deletions(-)
+Heinrich
 
-diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-index b725c6d0333..4ebf72d610e 100644
---- a/target/mips/tcg/ldst_helper.c
-+++ b/target/mips/tcg/ldst_helper.c
-@@ -28,23 +28,32 @@
- #include "internal.h"
- 
- #ifndef CONFIG_USER_ONLY
-+#include "accel/tcg/probe.h"
-+#include "exec/tlb-flags.h"
- 
- #define HELPER_LD_ATOMIC(name, insn, almask, do_cast)                         \
- target_ulong helper_##name(CPUMIPSState *env, target_ulong arg,               \
-                            uint32_t memop_idx)                                \
- {                                                                             \
--    MemOpIdx oi = memop_idx; \
--    unsigned mem_idx = get_mmuidx(oi); \
--    if (arg & almask) {                                                       \
-+    MemOpIdx oi = memop_idx;                                                  \
-+    unsigned mem_idx = get_mmuidx(oi);                                        \
-+    unsigned size = memop_size(get_memop(oi));                                \
-+    uintptr_t ra = GETPC();                                                   \
-+    CPUTLBEntryFull *full;                                                    \
-+    void *host_unused;                                                        \
-+    int flags;                                                                \
-+                                                                              \
-+    env->llval = do_cast cpu_##insn##_mmu(env, arg, oi, ra);                  \
-+    flags = probe_access_full(env, arg, size, MMU_DATA_LOAD, mem_idx,         \
-+                              true, &host_unused, &full, ra);                 \
-+    if (unlikely(flags & TLB_INVALID_MASK)) {                                 \
-         if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
-             env->CP0_BadVAddr = arg;                                          \
-         }                                                                     \
-         do_raise_exception(env, EXCP_AdEL, GETPC());                          \
-     }                                                                         \
--    env->CP0_LLAddr = cpu_mips_translate_address(env, arg, MMU_DATA_LOAD,     \
--                                                 GETPC());                    \
-+    env->CP0_LLAddr = full->phys_addr;                                        \
-     env->lladdr = arg;                                                        \
--    env->llval = do_cast cpu_##insn##_mmuidx_ra(env, arg, mem_idx, GETPC());  \
-     return env->llval;                                                        \
- }
- HELPER_LD_ATOMIC(ll, ldl, 0x3, (target_long)(int32_t))
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 839bfe18bab..4889bd1e518 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -1936,7 +1936,7 @@ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx_ignored,  \
- static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
-                                 DisasContext *ctx)                         \
- {                                                                          \
--    MemOpIdx oi = make_memop_idx(memop, mem_idx);                          \
-+    MemOpIdx oi = make_memop_idx(memop | MO_ALIGN, mem_idx);               \
-     gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(oi));           \
- }
- #endif
--- 
-2.53.0
+> 
+>> ---
+>>   tests/data/acpi/riscv64/virt/SPCR | Bin 90 -> 90 bytes
+>>   1 file changed, 0 insertions(+), 0 deletions(-)
+>>
+>> diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+>> index 09617f8793a6f7b1f08172f735b58aa748671540..59d2c8f7f215a604612cbd0294c18bc6301e208a 100644
+>> GIT binary patch
+>> delta 10
+>> Rcma!wnqbGo%rMbG3IGpM0&@TW
+>>
+>> delta 10
+>> Rcma!wnqbGoz&z1G3IGpJ0&@TW
+>>
+>> --
+>> 2.53.0
+>>
+>>
 
 
