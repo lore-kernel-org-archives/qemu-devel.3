@@ -4,55 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E2EF8A167
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:08:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1153CF8A16B
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLVN-0007EC-Ha; Thu, 16 Apr 2026 08:07:33 -0400
+	id 1wDLXe-0007hr-II; Thu, 16 Apr 2026 08:09:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDLV3-0007Dh-VW
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:07:15 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLV2-0001Uh-JN
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:07:13 -0400
-Received: from example.com (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 0881D20B7128;
- Thu, 16 Apr 2026 05:07:09 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0881D20B7128
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776341231;
- bh=0zpssSWeGlcgfOyr2x6FLeqEomlYlZp0/XFqQBAXZds=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=rzIbGxM2bE32Ccd3Zo4gpYFfumpo745p8zmFwE2VWsudWHjnnJFM2rGq5PUhnKP8q
- /mzgc/kQTmcsgPqFnEUb1JMwXS3XxmsnRumUbBrLgq6xyEqgWd8QMVZz4Kix9EBlX2
- sxQh21A1WXr9MTWyakDzP/sH4lQSntPk748Tawto=
-Date: Thu, 16 Apr 2026 14:07:06 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Wei Liu <liuwe@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v5 8/9] target/i386/mshv: use hv-provided [0xD,1+2].EBX
-Message-ID: <aeDQ6jvV94BWRte6@example.com>
-References: <20260415170012.520934-1-magnuskulke@linux.microsoft.com>
- <20260415170012.520934-9-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wDLXV-0007gk-HB; Thu, 16 Apr 2026 08:09:46 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wDLX9-0001u9-P8; Thu, 16 Apr 2026 08:09:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D85FE596EA1;
+ Thu, 16 Apr 2026 14:09:18 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 7xbrzfO7odFa; Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 3BB245969F6; Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 398205969EC;
+ Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
+Date: Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+cc: "philmd@linaro.org" <philmd@linaro.org>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, 
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, 
+ Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>, 
+ "nabihestefan@google.com" <nabihestefan@google.com>
+Subject: Re: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn structure
+ and dead code
+In-Reply-To: <20260416014928.1279360-2-jamin_lin@aspeedtech.com>
+Message-ID: <d7e9d943-fd8d-dd48-5a86-e54613c466dd@eik.bme.hu>
+References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
+ <20260416014928.1279360-2-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260415170012.520934-9-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,18 +74,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 15, 2026 at 07:00:11PM +0200, Magnus Kulke wrote:
->      }
-> +
-> +    if (func == 0x07 && idx == 0 && reg == R_ECX) {
-> +        ret &= ~CPUID_7_0_ECX_CET_SHSTK;
-> +    }
+On Thu, 16 Apr 2026, Jamin Lin wrote:
+> The EHCIfstn structure, defined according to EHCI spec section 3.7,
+> is currently unused in the EHCI implementation. Remove it to reduce
+> unused code and improve maintainability.
+>
+> Additionally, drop a block of disabled (#if 0) code in
+> ehci_state_advqueue() that was never implemented. This code path
+> is incomplete and has no functional impact.
+>
+> No functional change.
+>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+> hw/usb/hcd-ehci.h |  7 -------
+> hw/usb/hcd-ehci.c | 11 -----------
+> 2 files changed, 18 deletions(-)
+>
+> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
+> index 0ae8c06331..3aec0e047c 100644
+> --- a/hw/usb/hcd-ehci.h
+> +++ b/hw/usb/hcd-ehci.h
+> @@ -202,13 +202,6 @@ typedef struct EHCIqh {
+> #define BUFPTR_SBYTES_SH              5
+> } EHCIqh;
+> 
+> -/*  EHCI spec version 1.0 Section 3.7
+> - */
+> -typedef struct EHCIfstn {
+> -    uint32_t next;                    /* Standard next link pointer */
+> -    uint32_t backptr;                 /* Standard next link pointer */
+> -} EHCIfstn;
+> -
+> enum async_state {
+>     EHCI_ASYNC_NONE = 0,
+>     EHCI_ASYNC_INITIALIZED,
+> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+> index 57f930b099..5ea8461f70 100644
+> --- a/hw/usb/hcd-ehci.c
+> +++ b/hw/usb/hcd-ehci.c
+> @@ -1756,17 +1756,6 @@ static int ehci_state_fetchsitd(EHCIState *ehci, int async)
+> /* Section 4.10.2 - paragraph 3 */
+> static int ehci_state_advqueue(EHCIQueue *q)
+> {
+> -#if 0
+> -    /* TO-DO: 4.10.2 - paragraph 2
+> -     * if I-bit is set to 1 and QH is not active
+> -     * go to horizontal QH
+> -     */
 
-gah, sorry about that, please disregard. this is a leftover
-that will disable CET shadowstack anyway. I'll post a new
-revision.
+Is it worth to keep the comment in case it's still valid to remind we have 
+something missing here?
 
->  
+Regards,
+BALATON Zoltan
+
+> -    if (I-bit set) {
+> -        ehci_set_state(ehci, async, EST_HORIZONTALQH);
+> -        goto out;
+> -    }
+> -#endif
+> -
+>     /*
+>      * want data and alt-next qTD is valid
+>      */
 > -- 
-> 2.34.1
+> 2.43.0
+>
 
