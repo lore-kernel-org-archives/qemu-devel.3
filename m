@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FB9F8DFCB
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 21:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C752F8DFCB
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 21:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDUOq-0005V0-Fs; Thu, 16 Apr 2026 17:37:24 -0400
+	id 1wDUQ2-0005ue-UF; Thu, 16 Apr 2026 17:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDUOo-0005Uj-L7
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:37:22 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDUQ0-0005uM-NB
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:38:36 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDUOn-0001q8-7A
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:37:22 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso70885e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 14:37:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDUPz-0002LZ-43
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:38:36 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488b8efed61so356375e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 14:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776375438; x=1776980238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776375513; x=1776980313; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eK1uuOg3zE6b5HYZ4Scrak5zX4QkXhqcS38nPiKEfO4=;
- b=IFvnksi15uupYPztiAq9qDemMar/rBI3IAbwjrX+IMjTfb21e1MPisfZFC5bs1JGPz
- M9OHVZOzBjEZz4QeQlSzHjAXBhs8GXbq3zoWo5wTuPklaStUwUUD832RFR8kDqBZNnyp
- WgbPiiKKL9x8KOJw3d/c1BiWv+oXTd5ZKYt5ge5W6b3jQQAUGYSZIK8gNSlruOwy69UC
- 7ybM3r4T8SuKuGU7R8w6EvVT0aZml8j+QlRDCz7K8h/WmjNQeKSAoErEPR4304YHkgV0
- iaEBctSbbchz8DnCB/DlsTpDI8CgL1bZRooAUNtsiqgF7C1cEZaVG8W5uOn2VE7+0i+K
- u+3w==
+ bh=HKGPiNifk9FDEGyvQkGz1zmdc2/gjCRhfZWQ/72xnDY=;
+ b=rAyatHBz8nX/2vtN6uBzQ/lV2dB1D52sj4B9X4d1E6VtOYTrH0ad2toPMtXydAAXQp
+ 0I0j65Qbbxswn8NM+NiwUS3JIQrRCEOcJ2QBwLNHgefg5d+MmC9H1g64YFC721YY19L5
+ IiBTSyZyjyEX5aRf07Mj49z4EVC/7Rbnt3P5iZxzQW8j/9/Oo72hoQpgOyFXVCbQ/gS5
+ JEoLgTdawBj/z7rqwOlUUiyRT0ZiV8ZTnHZshdG/vDzk7WfA5dinY6H/FIFxkl51n8Iy
+ uZaSa4mugjmZeXkDDnF+s2iB/ONQF8qV5I7A69GYo9X25sfcDa5rvDwBKLd3r1sc0VI2
+ TkLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776375438; x=1776980238;
+ d=1e100.net; s=20251104; t=1776375513; x=1776980313;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eK1uuOg3zE6b5HYZ4Scrak5zX4QkXhqcS38nPiKEfO4=;
- b=phKRfcWBB0rENta0xfDzXgRZXPjA905R538kCkeVzta4F6JvRg3ARSC5LiomkNJWNB
- wvRy56veTTFBHNa0PCdUJhX0mx7azlJoLvdZj35KlhMMlJJmAgbGy7khqQ7uUb1Yf29L
- 1ffMfqZ2IbmugBufIvympyD/dLHc6cdpO+Zkm5D20ScOUdc7dVyziOeeebMHAzuyeUo/
- mLZ1fzckAPhR13rdYbP58ZsEZzbUVoyoLJxT3dKuZznCb7alN3rYHg3/eZ9P7dd+CGj4
- JPAYC2mMmUmXBUQGnGi1ZcOS8GJMKhKC04P81go9PMSSIp8I+dc+oG5MsAaXfpf0pkCC
- QAFA==
+ bh=HKGPiNifk9FDEGyvQkGz1zmdc2/gjCRhfZWQ/72xnDY=;
+ b=Voooj18cbQc6/f8h5uPlEohAGxvgXm66z3wcuDxCbHrmkPusVbECpuqnM30+wmNvSF
+ 0pHAWWh3tWlgx/xVDh0JrspVG3BuHHuJ9AsEqXWHrEANraMRhG5aaFx0pUwir9XwLMZ6
+ RgyE0cnajCxuBqgYskWEd9hTapuAOw3vW5CSbg5U9d/DzGP1dQnCM6e0zRI4w5BuisNg
+ yH5Z/mbRngjBoAnRD/qdMw1J2AfHG8k9PEeNuY00FxR3k/sMnx+Dq5Ks002p690FPbOb
+ +/uxSnObOLOdGaeLFUDVtOdWjVq5jGfTkfQBj3s6vN1IcDsy80Dg8L5RaxsMjtVhuVBp
+ NF7Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/mMsQyAhaYAG4NTV2j6OjJ2P9e4WOD32v82FyxOmmrhhWGmxAwvKGQSNacIuDHGDDZ0fTjj3eeFe8U@nongnu.org
-X-Gm-Message-State: AOJu0YxAoJjH/GddYKN6TN87yb5lqzVloeiZoRJtIui97MI5JPlvT3Te
- /4jy0azk9dBDbQzS4iJwQ7fV1n5Ta4qtZefkq06WE9gxsLe+IwW6lwA0T066truZrVw=
-X-Gm-Gg: AeBDievKxsyD66xVHPEvWF6WX2QerlUFhAzFwoFhmCmCELEEm1n18eFmhtpIJ2E4Bi3
- nC6vxmMXrCm0n6Jv+PRul5NhqV7gKkwwvjhTHw1hpFexZ+ygcHs2ojRTaGbPH59DkTQwrmNiXdI
- NpNwxuDHjAQZOcO2loxSEzhON7l9o3cM8tS1k4Wv+r1DemmDCvThW8Iim8x5UeQigHaXgTbRP5Y
- VANiz9P+Kr7Xognhh4cnnDQKzfokRmFNr7e0jTiygVE1uyeS+HDIb/E+8DXV1yRkIrf6iaJjjF1
- CMgV3zlQl5ZOLt0d9KDjUD/MGN08pxHJUIM4b0xveFWfK/cK4Ef0Cruq86vZGe/UFXpkDvxYtvj
- E+Rub/sIolgeQX2cNCxgrBM/A6oPAwpe4G1LRXu34bxyEwyqJU/S5MjmGXsHn9+yh7+BjXnVo8k
- ijTVRKOclBLDMW8RnVIK24dG7uBlpzJmu/VFzrbsaqJBFR+GNvaIDSfa2f/P4+XNjV9BqLrw8us
- X9GCCbjcU4il20=
-X-Received: by 2002:a05:600c:4515:b0:488:c282:e77e with SMTP id
- 5b1f17b1804b1-488fb7879b0mr3383565e9.28.1776375438289; 
- Thu, 16 Apr 2026 14:37:18 -0700 (PDT)
+ AFNElJ+pS/OjIiriqXNPXK7b3qGhrQoE6tcBYetwFsmwlcImf6aM6NBHnQNBz4omn4Z1xjsmKlnR7O0IrtlC@nongnu.org
+X-Gm-Message-State: AOJu0YzSY6ns3tR8FUFb+dPA1Y/S8lLUpj2Kl48XBwPyZhdHEH0DygNF
+ 0bEU6QX6fHIN840Evw9BWKB+gWS5Ave9Ai57riY6p6gcJI5i2M6lbgIpu1yRuvrZulw=
+X-Gm-Gg: AeBDieszwducxstUA13l1co0OwFLakJaiWszZk5XqGqxWDzwJW3nm4yHlfyl2AvSWJx
+ SRp2R0m1kQ+RAUtwdm1x5pWGxH3oXOhQZwGo0oO0y49cttaW72DmFZUNrceB8PDICXK5s1UtTU3
+ 5lCXhB2OQb4zCHvNis6OkiLKhOsz20ojDAUi+ztmaFNc60DpzAg6ITjIXGjnyE4OiSFK6sE7+3j
+ nQXoCHLdVDx+r/5sFk0hZyYwiW+9KL8craxarwHWdt9i9LclcTQ9SR19sopU8She4BIrBKz46Sb
+ ldhz5EPqc6xASf+VdK1LCVZ0gi/tqYxoVOV09DgifLIcSVNVP2f5Gf2JmN8iYpm/aJCgP3WIr3w
+ EfSUFmDrDjWDdMnr93uqfT0ItBASZY83+QBWZQ9xvkrNZKJRW0ejCOf8QIBaOFIo/g/CGNQzCdA
+ ZmcAfDgVc2BQG7QnK5FL/+kLizuvEG3c8gIQukWP1kimw+utO3NRrCcTKCUNwU4I5PMRZksPMAC
+ XPJ
+X-Received: by 2002:a05:600c:3ba0:b0:486:faa8:9e4 with SMTP id
+ 5b1f17b1804b1-488fb8b91a7mr1306105e9.12.1776375512712; 
+ Thu, 16 Apr 2026 14:38:32 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f581b9fbsm80913295e9.5.2026.04.16.14.37.17
+ 5b1f17b1804b1-488f581bc3asm79725155e9.6.2026.04.16.14.38.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 14:37:17 -0700 (PDT)
-Message-ID: <a02e2440-6f88-4554-b7ae-f9989a7800aa@linaro.org>
-Date: Thu, 16 Apr 2026 23:37:16 +0200
+ Thu, 16 Apr 2026 14:38:32 -0700 (PDT)
+Message-ID: <54e1b7a2-9591-418d-a54e-5e6524282c71@linaro.org>
+Date: Thu, 16 Apr 2026 23:38:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/16] hexagon: group cpu configurations in their own
- struct
+Subject: Re: [PATCH v5 05/16] hexagon: print info on "-d in_asm" for disabled
+ IEEE FP instructions
 Content-Language: en-US
 To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
  qemu-devel@nongnu.org
@@ -80,13 +80,13 @@ Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
  marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com
 References: <cover.1776339451.git.matheus.bernardino@oss.qualcomm.com>
- <8f9a2e2ccfd2eeda73a63d1a6abbfd6e5458b44c.1776339451.git.matheus.bernardino@oss.qualcomm.com>
+ <1bdc772e4a795ecd9f5bf2b7e7143cc4b297318c.1776339451.git.matheus.bernardino@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8f9a2e2ccfd2eeda73a63d1a6abbfd6e5458b44c.1776339451.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <1bdc772e4a795ecd9f5bf2b7e7143cc4b297318c.1776339451.git.matheus.bernardino@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,65 +110,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/4/26 13:38, Matheus Tavares Bernardino wrote:
-> This will be used in a follow up commit.
+> When cpu->cfg.ieee_fp_extension is off, IEEE FP instructions don't get
+> executed. Let's print that info on the "-d in_asm" output to help users.
+> This will generate an output like the following:
+> 
+> 0x00020e30:  0x1f82e1c0 {       V0.sf = vadd(V1.sf,V2.sf) (disabled: no ieee_fp) }
 > 
 > Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 > Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 > ---
->   target/hexagon/cpu.h       | 10 +++-------
->   target/hexagon/cpu_bits.h  |  7 +++++++
->   target/hexagon/cpu.c       | 14 +++++++-------
->   target/hexagon/translate.c |  6 +++---
->   4 files changed, 20 insertions(+), 17 deletions(-)
-> 
-> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-> index 77822a48b6..d28beaa92f 100644
-> --- a/target/hexagon/cpu.h
-> +++ b/target/hexagon/cpu.h
-> @@ -119,19 +119,15 @@ typedef struct HexagonCPUClass {
->       ResettablePhases parent_phases;
->   } HexagonCPUClass;
->   
-> +#include "cpu_bits.h"
+>   target/hexagon/cpu_bits.h  | 3 ++-
+>   target/hexagon/printinsn.h | 2 +-
+>   disas/hexagon.c            | 3 ++-
+>   target/hexagon/cpu.c       | 2 ++
+>   target/hexagon/decode.c    | 4 ++--
+>   target/hexagon/printinsn.c | 7 ++++++-
+>   6 files changed, 15 insertions(+), 6 deletions(-)
 
-Pre-existing but preferably "target/hexagon/cpu_bits.h".
-
->   struct ArchCPU {
->       CPUState parent_obj;
->   
->       CPUHexagonState env;
-> -
-> -    bool lldb_compat;
-> -    target_ulong lldb_stack_adjust;
-> -    bool short_circuit;
-> -    bool ieee_fp_extension;
-> +    HexagonCPUConfig cfg;
->   };
->   
-> -#include "cpu_bits.h"
-> -
->   FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
->   
->   G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
-> diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
-> index 19beca81c0..83d13de569 100644
-> --- a/target/hexagon/cpu_bits.h
-> +++ b/target/hexagon/cpu_bits.h
-> @@ -20,6 +20,13 @@
->   
->   #include "qemu/bitops.h"
->   
-> +typedef struct HexagonCPUConfig {
-> +    bool lldb_compat;
-> +    uint32_t lldb_stack_adjust;
-> +    bool short_circuit;
-> +    bool ieee_fp_extension;
-
-Maybe group boolean together?
-
-> +} HexagonCPUConfig;
-
-Minor nitpicking comments, otherwise:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
