@@ -4,94 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84340F433FE
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 06:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E87E6F428F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 06:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDG1v-0003M7-GZ; Thu, 16 Apr 2026 02:16:48 -0400
+	id 1wDG4s-00050F-CK; Thu, 16 Apr 2026 02:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDG1s-0003Kn-Ol
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:16:45 -0400
-Received: from mail-qt1-x841.google.com ([2607:f8b0:4864:20::841])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDG1p-0004l9-QH
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:16:44 -0400
-Received: by mail-qt1-x841.google.com with SMTP id
- d75a77b69052e-50de80b9567so36757241cf.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 23:16:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776320200; x=1776925000; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ZJQDMWH5ur3qM09o1p0Grix2QSj4F54IGu1BMz5buBU=;
- b=hXGJaiSpZoXOzGZYbWEPADoUunEBEZB7oBIrP+EMZH+UwPf2Z3h9TNFba0dfkCVuOh
- g3uenAGOJV5RDo7jZ0J7hyl+prxRfnD2Fs3rbHfTp7sr5CO0ruNCQqd6cvDlkKN2i+Si
- xUJrIjstEyfVHKlnrt+F7wl3dF7ot1YxFQ3qoKiXioezo+hLFEuvVKxxs+S5R+Qg7g8A
- YQRmwZI3BM53ZujVb4mg5wQZ4pKCADmPZwViZnySqE/T0iOK1dfiKfrKURx4Pvip0mnM
- 2mkK71PihbdSEuXXaAvs4YolfNZKETFj24TY+WagtzDixdK30cjfQQIAyoQFM6cfUDzc
- mVww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776320200; x=1776925000;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZJQDMWH5ur3qM09o1p0Grix2QSj4F54IGu1BMz5buBU=;
- b=IL3pUStAb0kD1jLzwwZwcPWgv6foaiSajbLZ0xFPLn/Y8HlmOzAuAQAqvuRlScRffY
- Ywg6qMZ+G5Ie9N6JtJfr2xbe3pln1yySOi08IRbQ+1+GzyJmtfm/DWvIDWywbeVp9MNj
- AYlzqrMTX72v06easdjNam6M4OGIiZv61lg3pV0LOlBy4k9bttV38noTw9iNy9zddMRR
- bneWgZGSLv2FJSUVP2Y92AoFlPjOziUuy3WSh/a25uupbeFzlPf15pilucyWfB6D43JD
- 04sXrvDoM40bbfnEtNJVu2WQ3dN77xm/v3nCRxAgt2pIhm12AGrPts4w5v+3xQLyKbL8
- 3a7A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9UvvdalMWIOO3ekEXEVtRDsyo6mFQHNI3tkvf6kr4RFVu/pFoqysc6o96HbYj90xj+vPixxIbTxuQL@nongnu.org
-X-Gm-Message-State: AOJu0YxjJ//bJlh7JWNeQoTQ3WIGu04vvTlgQrRGlYRw9eu/bBTcwUl4
- OJpNoN6f5jfphZbf6WPboBS9ZGtilHaJQc8iKu6u0R0cXQEOaeMFnwKV
-X-Gm-Gg: AeBDietdZBYaL0XzuyeIbKhXrILsaqJkEECQWW129f5V5oRpb5z35nExs3JBqbB2lZ5
- nFVQDpQoquspZpkb0Sv7t/6rv9vUrgtEIIiHGzWTYePyhAlLoCipMUHQVJGHlcT/qXEzfVjjYd/
- b2FG+++Qj84mqdMov4Lemjk9vwjUxSrPQm0OyGdo/r4WjZa2bOjxKwiuNlqxC54woxqrZF+SCm1
- Cy80BSoWK0pUSVxloL+4XUYIt1KyQT+U1RtRd6Py186iOV6cHM3lqYgXwwMSd9dI4pFBLtIZ/Ps
- 6u+vro0rB1GzWq70T8bKBuifVm0j6n8Y13IqfXkh8JiEVXQODfIS8Rbc4lNIkWhrMKWkeO/6VLq
- AeFK/H+xnvkjGOudw6NCLycXrOyH4hwUDPPX6GAgBhAE3HI1c9jyEruW9IC9TQEB7iI1gCo4XyP
- Bqm9AHJ7ZbtoixMHin+BkZS72XNyYJ/Te174UMRAgjY8rIffEd/dj5azYFZnDCZaId3e3RFtiI
-X-Received: by 2002:ac8:5a88:0:b0:50d:84a7:72d0 with SMTP id
- d75a77b69052e-50dd5c3d7a9mr360254601cf.36.1776320200280; 
- Wed, 15 Apr 2026 23:16:40 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50e1b016a2asm38379871cf.31.2026.04.15.23.16.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Apr 2026 23:16:39 -0700 (PDT)
-Date: Thu, 16 Apr 2026 14:15:47 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: alistair23@gmail.com
-Cc: palmer@dabbelt.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- qemu-riscv@nongnu.org, 
- qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v2 3/4] target/riscv: Don't OR mip.SEIP when mvien is one
-Message-ID: <aeB-WjzO_-bpQZ4p@ZEVORN-PC.localdomain>
-References: <20260415233740.3027321-1-alistair.francis@wdc.com>
- <20260415233740.3027321-4-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1wDG4p-0004zB-A0; Thu, 16 Apr 2026 02:19:47 -0400
+Received: from canpmsgout02.his.huawei.com ([113.46.200.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1wDG4l-0006KQ-7j; Thu, 16 Apr 2026 02:19:47 -0400
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=CKeG4NKoud2Y+L57h2y/FZ1rl6p4OfPbPkWHjnAj/TY=;
+ b=UoXm3Xw7ir5Hvd/Yid5/aVvvmbMPWK40acQkZSgkTewp+r60Q2nLoFXdRWt4111j+PVoS6nxI
+ eCm6mzC397PGnZHoyxI9OjfWC6ngyr0AXuI1/PHvCBnVkuI29stEacNAy5GDesnavVXVNdBectZ
+ mJyuSbiaS/DWBYZDlcF3CwY=
+Received: from mail.maildlp.com (unknown [172.19.162.144])
+ by canpmsgout02.his.huawei.com (SkyGuard) with ESMTPS id 4fx73j3lL9zcb29;
+ Thu, 16 Apr 2026 14:13:05 +0800 (CST)
+Received: from dggpemf200006.china.huawei.com (unknown [7.185.36.61])
+ by mail.maildlp.com (Postfix) with ESMTPS id 36BD840572;
+ Thu, 16 Apr 2026 14:19:37 +0800 (CST)
+Received: from DESKTOP-EH3TE8S.china.huawei.com (10.174.54.174) by
+ dggpemf200006.china.huawei.com (7.185.36.61) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 16 Apr 2026 14:19:36 +0800
+From: Gonglei <arei.gonglei@huawei.com>
+To: <arei.gonglei@huawei.com>, <qemu-devel@nongnu.org>,
+ <zhenwei.pi@linux.dev>, <berrange@redhat.com>, <qemu-security@nongnu.org>
+CC: <mcascell@redhat.com>, Buzzy <buzzy0257@gmail.com>
+Subject: [PATCH v2] backends/cryptodev-lkcf: fix use-after-free in session
+ lifecycle
+Date: Thu, 16 Apr 2026 14:19:32 +0800
+Message-ID: <20260416061933.1982-1-arei.gonglei@huawei.com>
+X-Mailer: git-send-email 2.52.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260415233740.3027321-4-alistair.francis@wdc.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::841;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qt1-x841.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.174.54.174]
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ dggpemf200006.china.huawei.com (7.185.36.61)
+Received-SPF: pass client-ip=113.46.200.217;
+ envelope-from=arei.gonglei@huawei.com; helo=canpmsgout02.his.huawei.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,54 +73,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 16, 2026 at 09:37:39AM +1000, alistair23@gmail.com wrote:
-> From: Alistair Francis <alistair.francis@wdc.com>
-> 
-> The RISC-V spec states that
-> 
-> """
-> But when bit 9 of mvien is one, bit SEIP in mip is read-only and does
-> not include the value of bit 9 of mvip. Rather, the value of mip.SEIP
-> is simply the supervisor external interrupt signal from the hart’s
-> external interrupt controller (APLIC or IMSIC).
-> """
-> 
-> As such let's mark the mip.SEIP in rmw_mip64().
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2828
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+The cryptodev-lkcf backend had a race condition where session close
+could free a session while tasks using that session were still pending
+in the queue. This leads to use-after-free when the worker thread
+later accesses the freed session pointer.
 
-Thanks,
-Chao
-> ---
-> v2:
->  - Move the changes to rmw_mip64() instead
-> 
->  target/riscv/csr.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index a75281539b..29dd596ae4 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3671,6 +3671,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
->      uint64_t old_mip, mask = wr_mask & delegable_ints;
->      uint32_t gin;
->  
-> +    /*
-> +     * When mvien[9]=1, mip.SEIP is read-only and reflects only
-> +     * the external interrupt signal from the interrupt controller.
-> +     */
-> +    if (env->mvien & MIP_SEIP) {
-> +        mask &= ~MIP_SEIP;
-> +    }
-> +
->      if (mask & MIP_SEIP) {
->          env->software_seip = new_val & MIP_SEIP;
->          new_val |= env->external_seip * MIP_SEIP;
-> -- 
-> 2.53.0
-> 
+Add reference counting (in_use) and pending_close flag to ensure:
+- New operations are rejected when a session is closing
+- Session close waits for all in-flight tasks to complete
+- No use-after-free can occur
+
+Fixes: CVE-2026-6288
+Fixes: 39fff6f3e8 ("cryptodev: Add a lkcf-backend for cryptodev")
+Reported-by: Buzzy <buzzy0257@gmail.com>
+Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+Tested-by: Buzzy <buzzy0257@gmail.com>
+---
+Changes:
+
+v2: 
+ * moved sess->pending_close checking before @task allocated
+   in cryptodev_lkcf_operation().
+
+---
+ backends/cryptodev-lkcf.c | 59 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
+
+diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
+index 40c7bd3c5a..3a93c81372 100644
+--- a/backends/cryptodev-lkcf.c
++++ b/backends/cryptodev-lkcf.c
+@@ -66,6 +66,9 @@ typedef struct CryptoDevBackendLKCFSession {
+     size_t keylen;
+     QCryptoAkCipherKeyType keytype;
+     QCryptoAkCipherOptions akcipher_opts;
++    int in_use;  /* number of tasks currently using this session */
++    /* session close requested, waiting for in_use to become 0 */
++    bool pending_close;
+ } CryptoDevBackendLKCFSession;
+ 
+ typedef struct CryptoDevLKCFTask CryptoDevLKCFTask;
+@@ -428,6 +431,18 @@ out:
+     if (key_id >= 0) {
+         keyctl_unlink(key_id, KCTL_KEY_RING);
+     }
++
++    /*
++     * Decrement session in_use counter and signal if session is pending close.
++     * This allows close_session to proceed after all tasks complete.
++     */
++    qemu_mutex_lock(&task->lkcf->mutex);
++    task->sess->in_use--;
++    if (task->sess->pending_close && task->sess->in_use == 0) {
++        qemu_cond_broadcast(&task->lkcf->cond);
++    }
++    qemu_mutex_unlock(&task->lkcf->mutex);
++
+     task->status = status;
+ 
+     qemu_mutex_lock(&task->lkcf->rsp_mutex);
+@@ -486,12 +501,32 @@ static int cryptodev_lkcf_operation(
+         return -VIRTIO_CRYPTO_INVSESS;
+     }
+ 
+-    sess = lkcf->sess[op_info->session_id];
+     if (algtype != QCRYPTODEV_BACKEND_ALGO_TYPE_ASYM) {
+         error_report("algtype not supported: %u", algtype);
+         return -VIRTIO_CRYPTO_NOTSUPP;
+     }
+ 
++    /*
++     * Check if session is pending close and increment in_use counter
++     * atomically under the mutex. This prevents the session from being
++     * freed while a task is pending.
++     */
++    qemu_mutex_lock(&lkcf->mutex);
++    sess = lkcf->sess[op_info->session_id];
++    if (!sess) {
++        qemu_mutex_unlock(&lkcf->mutex);
++        error_report("Cannot find a valid session id: %" PRIu64 "",
++                     op_info->session_id);
++        return -VIRTIO_CRYPTO_INVSESS;
++    }
++    if (sess->pending_close) {
++        qemu_mutex_unlock(&lkcf->mutex);
++        error_report("Session %" PRIu64 " is closing", op_info->session_id);
++        return -VIRTIO_CRYPTO_INVSESS;
++    }
++    sess->in_use++;
++    qemu_mutex_unlock(&lkcf->mutex);
++
+     task = g_new0(CryptoDevLKCFTask, 1);
+     task->op_info = op_info;
+     task->cb = op_info->cb;
+@@ -606,8 +641,30 @@ static int cryptodev_lkcf_close_session(CryptoDevBackend *backend,
+     CryptoDevBackendLKCFSession *session;
+ 
+     assert(session_id < MAX_SESSIONS && lkcf->sess[session_id]);
++
++    qemu_mutex_lock(&lkcf->mutex);
+     session = lkcf->sess[session_id];
++
++    /*
++     * Mark session as pending close. New operations using this session
++     * will be rejected. We hold the mutex until in_use becomes 0 to
++     * prevent race conditions.
++     */
++    session->pending_close = true;
++
++    /*
++     * Wait for all in-flight tasks using this session to complete.
++     * The worker thread decrements in_use after task execution.
++     */
++    while (session->in_use > 0) {
++        qemu_cond_wait(&lkcf->cond, &lkcf->mutex);
++    }
++
++    /*
++     * Now safe to remove session and free resources.
++     */
+     lkcf->sess[session_id] = NULL;
++    qemu_mutex_unlock(&lkcf->mutex);
+ 
+     g_free(session->key);
+     g_free(session);
+-- 
+2.43.0
+
 
