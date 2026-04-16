@@ -4,144 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7686F8D758
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 14:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BBF2F8D753
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 15:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDOAT-0004iD-8A; Thu, 16 Apr 2026 10:58:09 -0400
+	id 1wDOHs-00079Z-Ti; Thu, 16 Apr 2026 11:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1wDOAR-0004hh-HQ
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 10:58:07 -0400
-Received: from mout.web.de ([212.227.17.12])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wDOHr-00079P-6t
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:05:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1wDOAP-0007TY-TS
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 10:58:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
- s=s29768273; t=1776351483; x=1776956283; i=lukasstraub2@web.de;
- bh=fI9/VNyos2T/pDhgYXRFQrPAzurkDgvjA7WJsA4x7+U=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Type:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=IONwy6z7TeIM592Jrp4iaA8OLqz1P8fQ3I/I6OzrAby91RwxoslFyHSvYdLy6OCd
- Hs0U0pVwa6njgPVn8/fDpZsqJrNtX8igp82Bu4RGThstb9v37YoMTUb5Xg140s8oH
- ZvIiiHBjY6hXbBYQPe3zycESUG0MVNhUUsJadFdI9DmrAvH/kRQu6bg934a8iixZb
- cDmRkkZJ2/ojK2X6DIZkF2KnLQwodikqV1G4aq89DlKZnT79Oj69NS5kkEJzXGzfm
- OG/gdMgXjVLvgbP8+LESGrRKHE55Q1Cmu8rVui2e5zCJ/JC4SZac9dEtHkfLuvO+r
- PR2mM2unemfkbaaBHQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MzTPW-1vQleV3Khk-013JGr; Thu, 16
- Apr 2026 16:58:03 +0200
-Date: Thu, 16 Apr 2026 16:58:01 +0200
-From: Lukas Straub <lukasstraub2@web.de>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 28/28] MAINTAINERS: Remove Xie Changlong
-Message-ID: <20260416165801.5795ef14@penguin>
-In-Reply-To: <20260416091654.316158-29-peter.maydell@linaro.org>
-References: <20260416091654.316158-1-peter.maydell@linaro.org>
- <20260416091654.316158-29-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wDOHj-0000V0-GP
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:05:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776351938;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=21ZZeS43MTHuxp8Gt8OYHhwFrHS8FLAVEX+HWpUWFKQ=;
+ b=CmllE53/3vJ0M5mOtebVyYvniuQH7M/Ra3nATM1vXRHK9XW5e8BS8CApc7CgQ1m67aMbs8
+ iLes+x88Tg4+YMoKEebgkR7eW7ZOWvP3gfgz7Uv7E5KnVDF42/VUesAAG/cqONsM7DUECk
+ 7x/JzMpbPdIZAxS8AMjEzSw5nYEJQ4E=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-166-dd7Zmxt5PqCHRh3ZAnLdTg-1; Thu, 16 Apr 2026 11:05:35 -0400
+X-MC-Unique: dd7Zmxt5PqCHRh3ZAnLdTg-1
+X-Mimecast-MFC-AGG-ID: dd7Zmxt5PqCHRh3ZAnLdTg_1776351934
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b938cb02038so92648766b.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 08:05:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776351934; x=1776956734; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=21ZZeS43MTHuxp8Gt8OYHhwFrHS8FLAVEX+HWpUWFKQ=;
+ b=HXZv/FGelbtp0tWK0tgFFMV8m88l9uGhhHkD/K6UDTq1o9eAIUurwYPbBT8k7YXTQg
+ mgbL8FqKT8nGfAOHnR1GWofRT73/Jd4vHGhiwLxaFZOSf3Ggpkkpn26rpkL8CurU+nwn
+ GTc0oIfzN7cVuh1k6tsGveFN7h/A6d+e9DnTKUWfdfCqbEXOZaTC4TJ17q+3x5Qj7dXJ
+ nkDo0/OQYNFdRT5HRe0lSWixmAaMc8D/YT9unEwOGtjx9UwfLFe3Hib0teIwwB16CTWB
+ 8WUsjew5TZ43L/75LoUjqAys/23wjDLEE3s8/57IDSKaM/hNfSTv51TUx9nWrvHmOB/D
+ kaGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776351934; x=1776956734;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=21ZZeS43MTHuxp8Gt8OYHhwFrHS8FLAVEX+HWpUWFKQ=;
+ b=g9KjuqhonLUZAQ7F+jXnmDitLt9hlBi2aG34u4/uHQhVxDO09V0em6u/qH4aP2WVyF
+ 2qEonpBizIbb3e0L3HDsoXm1erTga+cOq2+KA7CWPCn2/fvYqZF5jl9+QUfKFkN0DRAH
+ iyXnOl02SmZb8UORItrrWX8c321Z6iTKRv9pLDMK6nUXiIZRkOtgu8P97tUk4jMC300j
+ X44pd/IqCdi11qgG5LiIxe+Vm5GWONZ6xKv67RaiMewZJ7k2zbOwCFKjFnXsrOaQaAbV
+ x2+UjKVDIRysRi9+/rQFzk5iUOjbkSO/RUtRg8pxQdxpe0Hr71f0A/KCD0naoqHUbaPN
+ 7bvQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8W8l6S3yjX3+tVjn7UWAhxt82Cc2Endav37uPbT7AuraBE4cC9R7E7JhsQ1mcnD+If0GkSJ7XTnP2h@nongnu.org
+X-Gm-Message-State: AOJu0YzngbwauQ1U7HnUDeqaNfbmva9gIMk607WbZU5S4B9n4+igs11t
+ iYN+9WoiJuXrm4IDdN3WM42RPBiezzXio6FwGwIAlpDW76/u6uJGv/CjDS2Nto7L2no3ngIepu4
+ WCNE1vOibF2EsSjhy+mJ/2nZeP1excK5O4yyRXAMUQyKpb0BsnfcIyFmh
+X-Gm-Gg: AeBDiets1rONBXLzW666jiA1DCq7yUhYP30nMPbui23e/gDPaBgXhisszrGAlmKGHzS
+ 4Yjw9oH0rx5kMkL4HqAwI/w/0BHMGMo/EGaVQg0VPpC0xblPneoC03jhOYmHCXwj8lp4jAyqhRB
+ OyMsB67rTrQc8Cku2tFHvFaaUanI/88ID4K167KuTc4BvSWC4UiIQgLxskZV8kY6dD2AvU7Sn6n
+ Fsydwr3AgnrCH/l2xFF957BNMNAWNHBPwmCUKTJMw8fC5+XhER9+6O83ECzEuuOz1NukRPUkpGq
+ RevsdRZc5g1tXU2HOJr0LopAiOS/i5xOGEOIDoFqaTT7WnAyXFCqBiCSIaJbpFA62wbjG2oOzFC
+ aMNASxfZP/FB6y7UdOe7mz6DkUMnwo/kQJlR53jjHSfLoenR30RLFG7f0IwNC
+X-Received: by 2002:a17:907:d27:b0:b9b:1ea2:e694 with SMTP id
+ a640c23a62f3a-ba269ed06ebmr214657666b.31.1776351934277; 
+ Thu, 16 Apr 2026 08:05:34 -0700 (PDT)
+X-Received: by 2002:a17:907:d27:b0:b9b:1ea2:e694 with SMTP id
+ a640c23a62f3a-ba269ed06ebmr214654566b.31.1776351933634; 
+ Thu, 16 Apr 2026 08:05:33 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-67237d842f6sm1325185a12.9.2026.04.16.08.05.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 08:05:33 -0700 (PDT)
+Message-ID: <b6276aca-b979-430f-a2bf-1bdc2f1e4c07@redhat.com>
+Date: Thu, 16 Apr 2026 17:05:32 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/jXfrnrNX+ceZwnya13g.nSF";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-X-Provags-ID: V03:K1:JrofK3jj3PGBvjxg71JcoHAQhPAcG0/JPAisOS982hdYvHVr6Po
- /DjSNE6eJLiiZXKqrPRi3FHsc7PsEg+FTplWW26L8YlBueuENKgdTuLCMC9UzUpQ3DVep9y
- HdF6nU3uKiNJxIdv2lWu8IPqS3gaAQvyjB6sJowukn4RxNmYRIbxmogycjrKorLA7xggeWj
- 33daE0RHvaexHpwU26ORg==
-UI-OutboundReport: notjunk:1;M01:P0:yiBAYvtDSZg=;N6l6/nqpOLIr16ZiX2/w+4fSQD4
- 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
- Goc0S8vl+/my536vALghBiyrm6zZOc5D1xNw=
-Received-SPF: pass client-ip=212.227.17.12; envelope-from=lukasstraub2@web.de;
- helo=mout.web.de
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] hw/vfio/ap: Callbacks for migration of guests with
+ pass-through access to AP devices
+To: Anthony Krowiak <akrowiak@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex@shazbot.org, cohuck@redhat.com
+References: <20260409141352.997844-1-akrowiak@linux.ibm.com>
+ <20260409141352.997844-3-akrowiak@linux.ibm.com>
+ <be428e83-258e-407f-ade3-e1d48a80b074@redhat.com>
+ <aadd1d51-231a-4406-9543-ce258653ce28@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <aadd1d51-231a-4406-9543-ce258653ce28@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,64 +172,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---Sig_/jXfrnrNX+ceZwnya13g.nSF
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On 4/13/26 17:23, Anthony Krowiak wrote:
+> 
+> 
+> On 4/10/26 4:19 AM, Cédric Le Goater wrote:
+>> On 4/9/26 16:13, Anthony Krowiak wrote:
+>>> From: Anthony  Krowiak <akrowiak@linux.ibm.com>
+>>>
+>>> Implements the callbacks used by the VFIO migration framework to migrate
+>>> guests with pass-through access to s390 crypto devices.
+>>>
+>>> Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+>>> ---
+>>>   hw/vfio/ap.c | 43 +++++++++++++++++++++++++++++++++++++++----
+>>>   1 file changed, 39 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+>>> index fd68983702..49947b18c3 100644
+>>> --- a/hw/vfio/ap.c
+>>> +++ b/hw/vfio/ap.c
+>>> @@ -32,6 +32,7 @@
+>>>   #include "hw/s390x/ap-bridge.h"
+>>>   #include "system/address-spaces.h"
+>>>   #include "qom/object.h"
+>>> +#include "vfio-migration-internal.h"
+>>>     #define TYPE_VFIO_AP_DEVICE      "vfio-ap"
+>>>   @@ -47,6 +48,7 @@ static const VMStateDescription vmstate_ap_device = {
+>>>       .name = "vfio-ap-device",
+>>>       .version_id = 1,
+>>>       .minimum_version_id = 1,
+>>> +    .unmigratable = 0,
+>>
+>> unneeded.
+>>
+>>>       .fields = (const VMStateField[]) {
+>>>           VMSTATE_END_OF_LIST()
+>>>       },
+>>> @@ -66,17 +68,44 @@ static void __attribute__((constructor)) vfio_ap_global_init(void)
+>>>       qemu_mutex_init(&cfg_chg_events_lock);
+>>>   }
+>>>   +static int vfio_ap_save_config(VFIODevice *vdev, QEMUFile *f, Error **errp)
+>>> +{
+>>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
+>>> +
+>>> +    return vmstate_save_state(f, &vmstate_ap_device, vapdev, NULL, errp);
+>>> +}
+>>> +
+>>> +static int vfio_ap_load_config(VFIODevice *vdev, QEMUFile *f)
+>>> +{
+>>> +    VFIOAPDevice *vapdev = container_of(vdev, VFIOAPDevice, vdev);
+>>> +    Error *err = NULL;
+>>> +    int ret;
+>>> +
+>>> +    ret = vmstate_load_state(f, &vmstate_ap_device, vapdev, 1, &err);
+>>> +    if (ret) {
+>>> +        error_report_err(err);
+>>> +    }
+>>> +
+>>> +    return ret;
+>>> +}
+>>> +
+>>> +static Object *vfio_ap_get_object(VFIODevice *vbasedev)
+>>> +{
+>>> +    VFIOAPDevice *vdev = container_of(vbasedev, VFIOAPDevice, vdev);
+>>> +
+>>> +    return OBJECT(vdev);
+>>> +}
+>>> +
+>>>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+>>>   {
+>>>       vdev->needs_reset = false;
+>>>   }
+>>>   -/*
+>>> - * We don't need vfio_hot_reset_multi and vfio_eoi operations for
+>>> - * vfio-ap device now.
+>>> - */
+>>>   struct VFIODeviceOps vfio_ap_ops = {
+>>>       .vfio_compute_needs_reset = vfio_ap_compute_needs_reset,
+>>> +    .vfio_save_config = vfio_ap_save_config,
+>>> +    .vfio_load_config = vfio_ap_load_config,
+>>> +    .vfio_get_object = vfio_ap_get_object,
+>>>   };
+>>>     static void vfio_ap_req_notifier_handler(void *opaque)
+>>> @@ -251,6 +280,10 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+>>>           goto error;
+>>>       }
+>>>   +    if (!vfio_migration_realize(vbasedev, errp)) {
+>>> +        goto error;
+>>> +    }
+>>> +
+>>>       if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_REQ_IRQ_INDEX, &err)) {
+>>>           /*
+>>>            * Report this error, but do not make it a failing condition.
+>>> @@ -287,6 +320,8 @@ static void vfio_ap_unrealize(DeviceState *dev)
+>>>     static const Property vfio_ap_properties[] = {
+>>>       DEFINE_PROP_STRING("sysfsdev", VFIOAPDevice, vdev.sysfsdev),
+>>> +    DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOAPDevice,
+>>> +                            vdev.enable_migration, ON_OFF_AUTO_ON),
+>>
+>> Why not ON_OFF_AUTO_AUTO ? This would enable migration only if kernel
+>> has migration support. If not, the VM would still start but migration
+>> would be blocked.
+> 
+> I made this change and migration failed on the destination host with the
+> following error message:
+> 
+> error: Requested operation is not valid: cannot migrate domain: 62177883-f1bb-47f0-914d-32a22e3a8804: VFIO device doesn't support device and IOMMU dirty tracking
+> 
+> This despite having the following property defined:
+> 
+> DEFINE_PROP_ON_OFF_AUTO("x-device-dirty-page-tracking", VFIOAPDevice, vdev.device_dirty_page_tracking, ON_OFF_AUTO_ON)
 
-On Thu, 16 Apr 2026 10:16:54 +0100
-Peter Maydell <peter.maydell@linaro.org> wrote:
 
-> Xie Changlong has not posted to qemu-devel in some years and did not
-> respond to a query about whether they still wished to be listed in
-> our MAINTAINERS file.  Remove them, on the assumption that they are
-> no longer active in QEMU.
->=20
-> This makes the "Replication" block filter orphan.
->=20
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  MAINTAINERS | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1fb56bdac8..a50e5dbaab 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4382,8 +4382,7 @@ F: block/export/vduse-blk.c
->  F: block/export/vduse-blk.h
-> =20
->  Replication
-> -M: Xie Changlong <xiechanglong.d@gmail.com>
-> -S: Supported
-> +S: Orphan
->  F: replication*
->  F: block/replication.c
->  F: tests/unit/test-replication.c
+try adding dummy vfio_log_ops handlers in the driver.
 
-Reviewed-by: Lukas Straub <lukasstraub2@web.de>
 
-I will take over maintainsership for this component.
+static int mtty_log_start(struct vfio_device *vdev,
+			  struct rb_root_cached *ranges,
+			  u32 nnodes, u64 *page_size)
+{
+	return 0;
+}
 
---Sig_/jXfrnrNX+ceZwnya13g.nSF
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+static int mtty_log_stop(struct vfio_device *vdev)
+{
+	return 0;
+}
 
------BEGIN PGP SIGNATURE-----
+static int mtty_log_read_and_clear(struct vfio_device *vdev,
+				   unsigned long iova, unsigned long length,
+				   struct iova_bitmap *dirty)
+{
+	return 0;
+}
 
-iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAmng+PkACgkQNasLKJxd
-slj++A//Q4Vk8vvC5QOcGZTkmLfN/LRPIqEET5mWNNYoHcixo19viOrqSNY/m1wo
-EjDyWr8ZJ7CxG/dwEhDtuWLGcYzyzFl/Bfpwfe/B3q37Rw3NJeSslDfhVW/AYRl9
-HzFF1/N+hhytYNPMwTMiEGzDiMjNp7D9sfx/DBiofdUl0R6yrkxBgiXLEU5TYX2g
-GsjKD2RVD8MIgPFiuXZCaNDEkFtWidWCMxcdPVgObDhpO+K2LnpQ3Uotad96D4hS
-09fLFzT9Ob7NnZPPetlgvE54395gdzq/AO4dV4j5VkbRyGvsFtQ8ekdVKVSOuQzn
-m8LKFnL7miPMBkCnHj1+irorNhCpX06eJhtqDRW7VNPgmTdcHUOMImsIcVtFndTS
-xr1n9h0g/bFUnEpX2o4jVDp2ssFXvjWYa4C4tlpHbFTCasybbo2c863GRtR6Bc7o
-jufRc0C1bSqKJbhPY3zhznkg72oEbb4tCuKG2Rk4YWM8AHYDt1EW8H06PyWZnmWV
-i4h90WgaeD09V6Lo7qLGvrL1iJPgHxSGzcj6UqVYfQ137nULztxMr7RuqeSovfiM
-FRLHPVBmvEtvUki3yfqjcFCHPo7VBqGaNd58oBlgVdoCbdUBzxD6BNSGDM59Cfm1
-8fuNwb7HLOeANqNfSpQWjzqYILl7U6fy7mIZ99umEYZrGDau9lc=
-=7U+r
------END PGP SIGNATURE-----
+static const struct vfio_log_ops mtty_log_ops = {
+	.log_start = mtty_log_start,
+	.log_stop = mtty_log_stop,
+	.log_read_and_clear = mtty_log_read_and_clear,
+};
 
---Sig_/jXfrnrNX+ceZwnya13g.nSF--
+See samples/vfio-mdev/mtty.c.
+
+C.
+
+
 
