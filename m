@@ -4,96 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20780F8D762
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 16:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14EF2F8D761
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 17:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDPyi-0006Ae-4P; Thu, 16 Apr 2026 12:54:08 -0400
+	id 1wDQAe-0002Zk-Hs; Thu, 16 Apr 2026 13:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wDPyg-00069u-KL
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 12:54:06 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wDPye-0007jI-AX
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 12:54:06 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-82f8893bff3so20023b3a.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 09:54:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776358442; x=1776963242; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=LpFrAMn9SzxvH41Ix8JXYbngNaBdtT89ppdy3NnFfl8=;
- b=ABCkoUKUJKnzh4tetSesEB47N6Ti5PekDMpSYfAKBRrk0iOsV8Q2/WE5sD42dtQQIw
- zKE+MdrEIIYzOc94AJP7sQqPRY3nwr1rq+LEb9mljM7FqKaRFe1gphGgQsqTu5hbHXQE
- o9ZuFRlONDpkhL83J0KhHFYlSKffcV7II7fq7Cp/G8wUl2ADmS5RnEDx4y8prw1fPjBn
- 6Qdp8nkWbX0HAE5zkMotEkiEyq6n2SO89UQoBWPy94WR69zPsBc2qU7fkXOtLpDbtETP
- Hy7fiDhilUuapsGIN3dmCccp6jaxFpEBQloX2GXmyQJojlwo0/ybjJIRt0jmP+QqrJkX
- djvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776358442; x=1776963242;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LpFrAMn9SzxvH41Ix8JXYbngNaBdtT89ppdy3NnFfl8=;
- b=XvndXoRhBFgjNvJFsD7h6qxQUjxrF8OL1u4APYeowHnsAfMaBrdXOrvhLXZ5BYsDN2
- w+QblvZWLUV7OUSX2XLLuY+adrtD1TECR+7rG33W/x+s7q3oUBkrSuoljOutES3nSylD
- X0y5twRkF8wPbF+dLEPE2uONsJFMNuIuuqseA6qwZVlibjcE04wf2Kv8I5Un1n9yRK6D
- CKOtWvrNhh16BqSmXfjSAtvMZkc13ygcnjjeo3OZz4f6I29tSMkm/6Ihi7S7/nn7EYo+
- GE72I5J6vi5VOBvGOA6njMM6DN7R57pi9E+nrwjKiAHXsdtR2xIRfl7g83WdpQEejnQD
- vCxg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ88o+BJTcatSujtsfDbxx06i6UWP6VfDwskJ15+2wYFtFcc1XKQS7DgfcgPTEsxrjFZdKHxWUYIgSWz@nongnu.org
-X-Gm-Message-State: AOJu0YyR1OzaW0THwg9YpaGQhyl9DJLh+5Sii4diTZD0HY4u4Qmloe+O
- pRpN/RJyn8GWf3L5++uUa+nv/gwGekhOPhPPEAWfHLngcO1KlfzH2s11
-X-Gm-Gg: AeBDiesAgf3DblJTUnsCYyYlZpDDVzcPQYIMFwaJAprOwwBPQlrliAYwropEnzZ1Cxn
- +4nyac2bV9Tkm88gj5fmuAuZk9Nb9YHybMn4OAEoOHvZGu63HpR65lWTrUymmWZCQVIvgHefyS3
- W/hySMUEZo9+EP7YbxyOL0rV5yBZwXMGjO18w2/DuKfjO6wKmr26hMGNzNgZVY92vJJ+frpGeH2
- Y6z57lEkaGexTNa9y+TEzqq/qMnHJj9VRSVK+VOORuMWzKWdkWQN1vjYEvkdx3LNqq4EsPENfj9
- befiwl6KBTQLmSKTyKwU6zJei8mWZZA8P/lGekXOO5DFRg+CUND4gx31Z/ll5JgvvFd5b3DPj2O
- lIkYv588+cn4guNoLkOoNMBTludTYa7/8dDKF5Inx8dCUlJtL79KvpHRWH73p9MMl7UkDkFH/rW
- AHos4YI74G5325/FvL2jG2O7hBvHYz5IpJjfBJLEWVIO3AMNk8axdXbhE=
-X-Received: by 2002:a05:6a00:3994:b0:82f:3436:42d7 with SMTP id
- d2e1a72fcca58-82f88594842mr117654b3a.2.1776358442066; 
- Thu, 16 Apr 2026 09:54:02 -0700 (PDT)
-Received: from localhost ([42.114.219.141]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f67478fd9sm5818990b3a.61.2026.04.16.09.53.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 09:54:00 -0700 (PDT)
-Date: Thu, 16 Apr 2026 23:53:55 +0700
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Claudio Fontana <cfontana@suse.de>, Fabiano Rosas <farosas@suse.de>, 
- qemu-devel@nongnu.org, Jim Fehlig <jfehlig@suse.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH 0/2] migration: include timing and RAM stats on
- destination when query-migrate
-Message-ID: <spjcuqt626vglmkxxal6ntrttaiwlapcbltrix5eslmyr7yirx@cegi5c5lvay2>
-References: <20260405152612.93027-1-viking4@gmail.com> <878qb05gq7.fsf@suse.de>
- <ada038hgmY9hNqPK@x1.local>
- <5f29c2dd-95eb-44c6-b22e-1909f7453cdf@suse.de>
- <ad1a9GaGQFHS4UHx@x1.local>
+ (Exim 4.90_1) (envelope-from <nilay@linux.ibm.com>)
+ id 1wDJhW-0007cM-7f; Thu, 16 Apr 2026 06:11:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nilay@linux.ibm.com>)
+ id 1wDJhU-0000uj-Cl; Thu, 16 Apr 2026 06:11:57 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63G8wGlg1733768; Thu, 16 Apr 2026 10:11:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=PW+d0u
+ usYcglTAyZdUGVF5INcu+1nsW+wWDFiizuqeE=; b=oiFg3qWq7zgRUBUoJHTwyE
+ ASRQrnql3Rr7IUvVZwJZj1MzerY/nA4hXNFbjBe1MD61OGtmTAp9nwG7zzBO5tCz
+ Mw+QAjpPtT9eDTtFVJB9KixNLcIyUBxzml1yLNGfasfTcGpKI0BhJcOr7KbI2Orh
+ Ct39ur5sq1hIDu107u4G4VLbqQ7Z/iwd4TaNwhpib5DsdGCkTSmrafFBBgfns60V
+ f/merYWoFyq9hmjk5zVWXnpM4DETy7WWq3q5nzBKymYXOLXfMbY8dqGx7riE91+p
+ yo9ZCLHsOmV1IvrlQCDd85ZSmynZVy7hYv4g2fHSDf7vBhY8uHeihPqAVpxXhDGg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89mbxu7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Apr 2026 10:11:48 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63G6PmIu015149;
+ Thu, 16 Apr 2026 10:11:47 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dg0mstjqy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Apr 2026 10:11:47 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63GABkt223200434
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Apr 2026 10:11:46 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B2F0A58066;
+ Thu, 16 Apr 2026 10:11:46 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EB1D05804B;
+ Thu, 16 Apr 2026 10:11:43 +0000 (GMT)
+Received: from [9.123.7.57] (unknown [9.123.7.57])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Apr 2026 10:11:43 +0000 (GMT)
+Message-ID: <2160c130-eff7-4068-8377-6c28b89ac046@linux.ibm.com>
+Date: Thu, 16 Apr 2026 15:41:42 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] NVMe namespace hotplug and drive reconnection support
+To: John Meneghini <jmeneghi@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Klaus Jensen <its@irrelevant.dk>
+Cc: mr-083 <matthieu@minio.io>, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ kbusch@kernel.org, mr-083 <matthieu@min.io>
+References: <20260409060155.94704-1-matthieu@min.io>
+ <ad0lMYOrRa-K1Ach@AALNPWKJENSEN.aal.scsc.local>
+ <20260414124221.GB111076@fedora>
+ <0743e428-cde4-436a-9af4-7477271fd8ab@redhat.com>
+Content-Language: en-US
+From: Nilay Shroff <nilay@linux.ibm.com>
+In-Reply-To: <0743e428-cde4-436a-9af4-7477271fd8ab@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ad1a9GaGQFHS4UHx@x1.local>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=69e0b5e4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=jsQgLUCoJTa5QCtIDiEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: MNv83AAjAvJg8aGRF20FFjPfYMCBhvGz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDA5MiBTYWx0ZWRfX8sz1VGATontX
+ Li9+JfOITsG9xZW3h33RIZDbkJHKSbAu2GMFEC+TVUdpcBRMYoWtRXevT1g5fXDQDjwUUyK3pVA
+ K8cFJZAGpmug2/WnbJhLHMB6pWShc4cNjaT7S8QXSl5XNBrUPDYjvRuOXEKgvPXkayvBQKgHNyY
+ TlFeySwbb9yuKU8HK1rEtu3LExQifOMXtFLcVi3HmO0jydTWTOAiihPvQ6B4ZjAESo3QmCUR1gz
+ izYKUVThTmD2a1qvXyrWYDq03BmIK5zkgkIgzKYJDDoCXcuwcuBYVJ5yffePkoVg1yyNpnEYbXd
+ omWNaJEG61lXkuTJTmn4RuKvTS8KJQht22wbp591Am3vWuuIzR94b9f674wi1SF0Q7OjrF/qhgf
+ 9FBK+yxuzxVKaAMfi9pPiplRa3WuhoLZcdlHiFdEuHvCLnf64oMU2MOZLB+1Zuqsrx87OxNXJdT
+ I7gAyOCfaSqSSOBNp0w==
+X-Proofpoint-ORIG-GUID: MNv83AAjAvJg8aGRF20FFjPfYMCBhvGz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-16_02,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 clxscore=1011 adultscore=0 lowpriorityscore=0
+ suspectscore=0 impostorscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604160092
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=nilay@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 16 Apr 2026 13:06:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,148 +126,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 13, 2026 at 05:07:00PM -0400, Peter Xu wrote:
-> On Thu, Apr 09, 2026 at 12:08:34PM +0200, Claudio Fontana wrote:
-> > On 4/8/26 22:04, Peter Xu wrote:
-> > > On Mon, Apr 06, 2026 at 11:02:56AM -0300, Fabiano Rosas wrote:
-> > >> Trieu Huynh <vikingtc4@gmail.com> writes:
-> > >>
-> > >>> From: Trieu Huynh <vikingtc4@gmail.com>
-> > >>>
-> > >>> When query-migrate is called on the *destination* QEMU after a precopy
-> > >>> migration completes it returns only {"status": "completed"} — no timing,
-> > >>> no RAM statistics.  The source correctly returns total-time, downtime,
-> > >>> setup-time, and full ram stats.
-> > >>>
-> > >>> This series fixes the gap in two commits:
-> > >>>
-> > >>> * commit 1: Track start/end timestamps and per-page-type counters in
-> > >>>   MigrationIncomingState, recorded in the receive path.
-> > >>>
-> > >>> * commit 2: Make source-only MigrationStats fields optional in the QAPI
-> > >>>   schema so the destination can populate info->ram with only the fields
-> > >>>   that are meaningful on the receive side.  Fields computed from tracked
-> > >>>   counters (transferred, normal, duplicate, mbps, pages-per-second) are
-> > >>>   shown; source-only fields (dirty-sync-count, precopy-bytes, etc.) are
-> > >>>   absent.
-> > >>>
-> > >>> The QAPI change (commit 2) is ABI-compatible: optional fields that are
-> > >>> not set are simply absent from the output.  Source-side callers are
-> > >>> unaffected because populate_ram_info() sets all optional fields via
-> > >>> has_* setters, so the source output is identical to before.
-> > >>>
-> > >>> On dst, {"execute":"query-migrate"}
-> > >>> * As-is:
-> > >>> {
-> > >>>     "return": {
-> > >>>         "status": "completed"
-> > >>> }
-> > >>> * To-be:
-> > >>> {
-> > >>>     "return": {
-> > >>>         "status": "completed",
-> > >>>         "total-time": 94,
-> > >>>         "ram": {
-> > >>>             "total": 554508288,
-> > >>>             "pages-per-second": 1440234,
-> > >>>             "page-size": 4096,
-> > >>>             "remaining": 0,
-> > >>>             "mbps": 97.955404255319152,
-> > >>>             "transferred": 1150976,
-> > >>>             "duplicate": 135101,
-> > >>>             "normal-bytes": 1150976,
-> > >>>             "normal": 281
-> > >>>         }
-> > >>>     }
-> > >>> }
-> > >>>
-> > >>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3151
-> > >>>
-> > >>> Trieu Huynh (2):
-> > >>>   migration: track timing and received pages in MigrationIncomingState
-> > >>>   migration: expose RAM stats and timing on destination via
-> > >>>     query-migrate
-> > >>>
-> > >>>  migration/migration.c | 37 +++++++++++++++++++++++++++++++++++++
-> > >>>  migration/migration.h | 17 +++++++++++++++++
-> > >>>  migration/ram.c       |  3 +++
-> > >>>  qapi/migration.json   | 14 +++++++-------
-> > >>>  4 files changed, 64 insertions(+), 7 deletions(-)
-> > >>
-> > >> Hi, remember to copy the interested people in your series. Using
-> > >> get_maintainers is correct, but when there's already a discussion about
-> > >> the topic it's good to add some CCs manually.
-> > >>
-> > >> +CC Daniel and Claudio
-> > > 
-> > > The request is a valid one.  Said that, redo accounting on both sides seem
-> > > to be a duplicated work and overkill to me, if src has everything.
-> > > 
-> > > Is there a way we can make Libvirt always query the results before src dies
-> > > and report it somewhere?  I recall these info were captured somewhere, do
-> > > we at least dump them into logs?
-> > > 
-> > > Thanks,
-> > > 
-> > 
-> > I am interested in the outcome, but I think the approach shown here is fine, the amount of duplication seems minimal to me.
-> > 
-> > That said if we _have_ to keep libvirt in the picture, I think I see a possible alternative, but then the feature is not available to anyone that does not use libvirt. At the same time, if libvirt is not used, one is free to keep source QEMU alive and query the stats, like I think Proxmox does.
+Hi John,
+
+On 4/14/26 7:34 PM, John Meneghini wrote:
+> Adding Nilay who has done a lot of work on nvme hot plug.
 > 
-> The problem is here from QEMU's perspective we have all the information,
-> and "not quit" is the default behavior for src QEMU.  It means by default
-> all info is available.. this is true for no matter what upper mgmt is in
-> use.
+> Nilay please take look at these patches and let us know if they can work on powerpc
 > 
-> > 
-> > So with libvirt, I think we need a way to tell libvirt to keep the source QEMU alive before the actual switchover and the source QEMU is destroyed,
-> > so that we can do everything that needs to be done from the platform layer before the source QEMU is lost.
-> > It might go beyond querying for stats using QEMU and libvirt.
-> > 
-> > Something similar to (and potentially combined with) virDomainMigrateFlags VIR_MIGRATE_PAUSE, for example:
-> > 
-> > VIR_MIGRATE_NO_SOURCE_SHUTOFF
-> > 
-> > So one might say:
-> > 
-> > flags = VIR_MIGRATE_LIVE | VIR_MIGRATE_PERSIST_DEST | VIR_MIGRATE_UNDEFINE_SOURCE | VIR_MIGRATE_PAUSE | VIR_MIGRATE_NO_SOURCE_SHUTOFF
-> > new_domain = virDomainMigrate3(old_domain, conn, params, nparams, flags)
-> > 
-> > and then we could do everything that needs to be done from the platform layer,
-> > then issue a virDomainResume to start the domain on destination,
-> > and maybe a virDomainDestroyFlags on the original domain to terminate it on the source.
-> > 
-> > But I would still favor the simplicity and the overall applicability of this series from Trieu Huynh.
+> I'll set up a test bed and try this out with x86_64.
 > 
-> I still think it'll be great we only do accounting once, and above sounds
-> like a libvirt question that I don't know the answer. Adding Jiri and
-> libvirt list in case we can collect some inputs.
-> 
-> If you're looking for this feature, IMHO it'll be great if you can have a
-> look at least from libvirt side to see if there's any blocker for
-> collecting this info from src, then we can evaluate the rest. E.g. there's
-> at least another option to forward statistic data from src to dest.  Then
-> we don't worry on mismatched accounting, or when fixing / add new
-> accounting we don't need to do it both sides, which will be awkward.
-Hello Peter,
-One specific use case where the source is completely unavailable is loading 
-from a migration snapshot (non-live).
-In this scenario, there is no active source QEMU to query_for_stats. The 
-dst (IMHO) is the only entity that can report how long the loading took 
-and how much data was actually processed from the snapshot file.
-This use case is a little bit niche but still a valid one though, isn't it?
-> 
-> Thanks,
-> 
-> > 
-> > Thanks,
-> > 
-> > Claudio
-> > 
-> 
-> -- 
-> Peter Xu
-> 
-BRs,
-Trieu Huynh
+
+Thanks for looping me in.
+
+I tested this patch series on pseries QEMU, and overall it works as expected.
+For the first patch (NVMe namespace hotplug), the functionality behaves correctly
+and achieves its intended goal. That said, from an NVMe specification perspective,
+the operation appears closer to a namespace attach/detach rather than a traditional
+“hotplug.” I understand that in the QEMU device model, this is framed as a hotplug
+event, which is likely why the terminology is used here, but it may still be somewhat
+confusing when viewed through the NVMe spec lens.
+
+For the second patch (drive_insert), the implementation also works as intended on
+pseries. However, I have a concern regarding how the backend is handled. The flow
+effectively removes the backing storage using drive_del and later reattaches it
+using drive_insert. While the expectation is to reconnect the same backing store,
+there is currently no enforcement of this. As a result, it is possible—perhaps
+unintentionally—to reattach a different backing file. If this happens, it may lead
+to inconsistencies with the in-memory state maintained by the kernel (e.g., page
+cache or filesystem metadata), especially if the original device was already in use
+or mounted. This may potentially result in data corruption or undefined behavior
+from the guest’s perspective. It might be worth considering whether some form of
+validation or restriction should be added to ensure that the same backing store
+is reattached, or at least to make this behavior more explicit.
+
+Overall, both patches are functional on pseries, but the above points may be worth
+addressing.
+
+Thanks,
+--Nilay
 
