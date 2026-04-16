@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC90AF8E48F
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 23:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80EDF8E486
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 23:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDVlw-0007IN-1r; Thu, 16 Apr 2026 19:05:20 -0400
+	id 1wDVnB-0007g8-Er; Thu, 16 Apr 2026 19:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDVlo-0007Ey-1I
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:05:12 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1wDVn9-0007fy-QD
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:06:35 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDVlm-0005O8-7V
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:05:11 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-35d95017a68so64075a91.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 16:05:09 -0700 (PDT)
+ id 1wDVn8-0005ja-CQ
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:06:35 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c79467f128cso17740a12.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 16:06:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776380708; x=1776985508; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776380793; x=1776985593; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=S+6veR2pGHlHj7K/mhDttRxbVu6/5iF4oun6Ke7K+qA=;
- b=IuR1goEanX5HWcdbRhYEeO3SE5vVP31BpFh3l0IWoTJIw20FL4WmrvghJ3uLzl6OqC
- I5AAjvuAlcDYiqKTR1ojT6poM1pN1vWiY59te3vW1cafViavibVnGWyAWPjZEL0IShmR
- KR2t7tcEdV/j4xc2iuTviuDLfOJAHGburKq8MNtgXqU5R7bFa1F3/bd1aLw150C3PBpT
- IOw6+zuOqdbbTHpKz+lWHYtcKI3/5u9gZ7Bqkysr/AGms16iTHGhccfYgNdZbbWcAgUn
- dyY10Otr1nkV5uyhfv/DwoQGOZ0xtTb/o5O8kV2w8hcirNBVDs9RmaTrifynuyGg1GjH
- FIIQ==
+ bh=CZhBS2K7rFqQDlqNU0wfiHvCdwY2ra4Pfyk0+ZCu0kc=;
+ b=o5bBKOULJzXl/TxlPuH+u9dnWUOqPeLEE9Yx6KGeqNeB6GTrZixoVNxhCN68DuM6VQ
+ MgtduBV3jWEkUoSNRu7a9VDD+ZACVCTq7uO+iv9+lBaVMQNVrveTuIYDJbe9g8smhPfJ
+ +nuyZhbq3UyXagjARgorXrBvd/DWTj3Y+774puzJgBzzOC95P9MLPB+D9rcwFOagmS3u
+ 6GWMAKsDyiTT/oxWKd8fDIv/KXAMovuWOnkOSCMC+WT6fvnRkwgDd2WpxxWjDXQI9aY4
+ hFJ+UejX6iFGwOelhP/qV5kOytkTIxWs+nZgm11Ps4pNyGY1jchnvl3hZvCXbouM0oKJ
+ pMnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776380708; x=1776985508;
+ d=1e100.net; s=20251104; t=1776380793; x=1776985593;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=S+6veR2pGHlHj7K/mhDttRxbVu6/5iF4oun6Ke7K+qA=;
- b=FArPqqiXHcLO3iK2T9QJ/OjbtrtcD5D+cN5Y6AQLJI6UOQGX0fgTxmg4TpXlVT2os0
- e2wPkODZu+VQurIiA31LN1/h7CkpidCVrwrDzXmWw41BThwJVlKFtn+Xug/tdpSlKtof
- ewWOJcU0ifxTotLyWs3WWZd+9tqEaKWXNVdcFKmSGWNdTJXx5fRNyGmqmmMP4P5hyNZI
- H3Y8WWx7iK0V06Jx7FdqVx9rzL7rP0EZEbkkb2ZaG5PTCACXwhfMsUSvF48CR2z9nh25
- dCg2bU05IVZBExlizw57XFuBhQLKnCy0XkRJtIl7DXykqWIdMREa/fqmUYmb+vFrPrLL
- bRTA==
+ bh=CZhBS2K7rFqQDlqNU0wfiHvCdwY2ra4Pfyk0+ZCu0kc=;
+ b=iBxK4x6zhfGi0LGC5FBdfifZXQCeHDtQk49H9yGRKBuIyjTFh6Q106Xnk04XmusU+p
+ fVOjSu7IUkel7lP6r8SX30pObY57EHzkh28j40sXIp9sX1e0gbYAID02ieWohHl+GTH2
+ malWhb1iZEQscH8pv8F6GWFmII9pPQUSCPbO8DnxmCgIu+0FzsYfEDagHI34WrTU7ItM
+ GKVibHkp6Nw8Ao1b4AwaPVw9e8fzVv1t0goTh00BHrE8FEqpyk0zdtQrS/SuhAxkehcg
+ d3i6VdQ0feLOzTzhpEeaRsS3Ut6r4781K9y1p0X8Hb6S6aJmYI57QXfjRWtcJIu6eK1p
+ ja3g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8UpjMc3WXRlto7A8WexOF2dz81u5uvsyrNhFAZzSiyw/CYlOQLI5Z3gCtZZlNcj7JNwgs6yoxu04BY@nongnu.org
-X-Gm-Message-State: AOJu0Yw9lt59dH7pSgI0I8yT6mHfp4tEpUwfvZQ/yB3kbaIa8ohvIdYI
- GZ1G/W7TtNwvLFkecT3SwOLDfDvmLkjW9BPDVMT+4xZbExh+pYx6rrvYsEsPaVda0Nc=
-X-Gm-Gg: AeBDiesDiV2hn/6waTZ75kUnZ9o3QXkxxsoFUUP6vBL42gksX+6lyACFOSKXr0MPj4g
- nr7Y0GW4LMyD7pVxnuqvwZqe+P0wHVOV0gLMicuRG47B5N1rQGoUOhVxrtdG9PkZL00ArcQDkJP
- Ad5bbQzmxOxjxqeTzJIPaAu7LB/OM3dkv2fmJBD+lDfX6ks9QIgSImczyPPxzPclgnVj5GrHpX4
- cjSSKYFFX+hLq0AaBr/NPPhLMrwpBVb0oaqMMkWODlTdsR672Oe1nxhpskJlrIUA9Om/cOmtFjA
- P6Rzn8Mlzk5fNr+KaNTyA+tYnFVdiG5waKJvzSsFdWOOnf8rXnBxzyz4S3r/S5JO1Amm3wuMJZS
- xZ9gTY4aVQDfZpdeCFxiiWgeyZFwruQr76Uih8rX6cv4BWkpUeVMA5/ddv7QjKDU6zlzJ6HJUq5
- xCwC29U+pFs700bOcz6/jBEXNN8NAQbzI6jplSBXdI1loCp1qfgH7q+N7KgbZF4Qw7rxRdmLcVI
- yIsHZWgu6HRjQa88xKR6wbBIpCrsJPodH9pVXEReH3R9UPErybR+WKJVVrhb6Rrng==
-X-Received: by 2002:a17:90a:da8c:b0:35e:581c:6bca with SMTP id
- 98e67ed59e1d1-361403ca597mr324739a91.3.1776380708156; 
- Thu, 16 Apr 2026 16:05:08 -0700 (PDT)
+ AFNElJ8C7mwYcwnvKSlkaC2//0NfFNmlPF2dGsOWTeHwLFMRUK5wspOpMdY25pI+P6GXkQBp/or9MEt1kTnL@nongnu.org
+X-Gm-Message-State: AOJu0YxvNTxxRQpnzoiuqxc/yQyREwdCFGF2wIj2oSukxYHroLEZSuwU
+ VGz/FPbKZ87kPeGDt+8FW7GaQmpjGpf/RKGThbdF9r68z1ejISAEliPYtDzq9Z8B4TM=
+X-Gm-Gg: AeBDieuUmJO6icpVYjkazJZDE0E2Nmagfu9Kf8iX/ubWAbBX32xNRZsV0lUqgOTz3eB
+ wU7SqlrWwTfMfCun5B1cJ8wjXEU+x4AACHGysmSDm6MyFYzyXiALszsnJxDAtYVL2jJT4L7f4qE
+ 0J+qJymHii7KGdmw7friH13rnbnZIfLR6Z57wUtnPIJ5VUINfp+/BCogzPOYZppDmzzOGrh9eJB
+ TcD+TSMhabvMAQ3klmybOlMWcH8fUoG+GrnMCepFeL4CWOt/eqqxo5en378ZErtiVIdgI9uh8sZ
+ 6jqGMLNgYzUwuPB7qZAsd+yCYZsKhN57rraSkhfs2AcwEaPXbntHbNPTee3n99mz92P9y+shQFg
+ argo7u6SySV8zgtFpiEHaTd/FF5slxbu80VGejLI3YswdWaKDcqnyoAL4quDvWgVSga7K6LYF2G
+ pyIUqLNfnG9bXtghP4pOjT31Nthk01pTUjj5REXD4m6KGaqo1djOto7+qKPMnexhcl099V0Ycra
+ ucT3+cF92o9JxD12bJURsLpMcradr3Rts2C4UeCnrnQiUfG6DgPh/rU8rLtWfw4oA==
+X-Received: by 2002:a17:902:db10:b0:2b2:4a9a:b149 with SMTP id
+ d9443c01a7336-2b5f9e79dcfmr3647545ad.9.1776380792675; 
+ Thu, 16 Apr 2026 16:06:32 -0700 (PDT)
 Received: from ?IPV6:2401:d002:dc0f:2100:a60a:7c34:dd75:e66c?
  (bg30dj02y68bx09myf73.ip6.superloop.au.
  [2401:d002:dc0f:2100:a60a:7c34:dd75:e66c])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36140fe07c7sm10988a91.5.2026.04.16.16.05.05
+ d9443c01a7336-2b5fa4716a8sm825655ad.28.2026.04.16.16.06.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 16:05:07 -0700 (PDT)
-Message-ID: <223c45a0-1fcb-4976-aa3a-89b8127d04e9@linaro.org>
-Date: Fri, 17 Apr 2026 09:04:57 +1000
+ Thu, 16 Apr 2026 16:06:32 -0700 (PDT)
+Message-ID: <dbe36ccf-6f89-4aca-8c45-f517383931c2@linaro.org>
+Date: Fri, 17 Apr 2026 09:06:26 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] target/mips: Remove unnecessary target_ulong uses
- in LD/ST Multiple
+Subject: Re: [PATCH v4 3/4] target/mips: Inline cpu_ld/st_mmuidx_ra() calls in
+ LD/ST Multiple
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
 References: <20260416210508.30686-1-philmd@linaro.org>
- <20260416210508.30686-3-philmd@linaro.org>
+ <20260416210508.30686-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260416210508.30686-3-philmd@linaro.org>
+In-Reply-To: <20260416210508.30686-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,52 +112,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/17/26 07:05, Philippe Mathieu-Daudé wrote:
-> @do_r31 is a boolean, @base_reglist a size (size_t) and @i an
-> unsigned index.
+> In preparation of removing the cpu_ld*_mmuidx_ra() and
+> cpu_st*_mmuidx_ra() calls, inline them. Expand MO_TE to
+> mo_endian_env(env) in gen_ldst_multiple().
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/mips/tcg/ldst_helper.c | 32 ++++++++++++--------------------
->   1 file changed, 12 insertions(+), 20 deletions(-)
-> 
-> diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-> index 7be2cad89d6..fdc192e9c14 100644
-> --- a/target/mips/tcg/ldst_helper.c
-> +++ b/target/mips/tcg/ldst_helper.c
-> @@ -228,13 +228,11 @@ void helper_lwm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
->   {
->       MemOpIdx oi = memop_idx;
->       unsigned mem_idx = get_mmuidx(oi);
-> -    target_ulong base_reglist = reglist & 0xf;
-> -    target_ulong do_r31 = reglist & 0x10;
-> +    size_t base_reglist = reglist & 0xf;
+>   target/mips/tcg/ldst_helper.c             | 40 +++++++++++------------
+>   target/mips/tcg/micromips_translate.c.inc |  2 ++
+>   2 files changed, 21 insertions(+), 21 deletions(-)
 
-Why size_t, for what is clearly a 4-bit quantity...
-
-> +    bool do_r31 = reglist & 0x10;
->   
->       if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
-> -        target_ulong i;
-> -
-> -        for (i = 0; i < base_reglist; i++) {
-> +        for (unsigned i = 0; i < base_reglist; i++) {
-
-... which you later compare with plain 'unsigned'?
-
-Using 'unsigned' everywhere is fine.
-
-
-> @@ -252,13 +250,11 @@ void helper_swm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
->   {
->       MemOpIdx oi = memop_idx;
->       unsigned mem_idx = get_mmuidx(oi);
-> -    target_ulong base_reglist = reglist & 0xf;
-> -    target_ulong do_r31 = reglist & 0x10;
-> +    size_t base_reglist = reglist & 0xf;
-> +    bool do_r31 = !!(reglist & 0x10);
-
-You don't need the "!!".  That's implied in the assignment to bool.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
