@@ -4,94 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A2AF8D775
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 19:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2DC0F8D775
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 19:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDSkY-000414-Ha; Thu, 16 Apr 2026 15:51:42 -0400
+	id 1wDSlO-0004GS-Aq; Thu, 16 Apr 2026 15:52:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSkW-00040f-R5
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:51:40 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDSkV-0004TN-BG
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:51:40 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso66592545e9.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 12:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776369098; x=1776973898; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kQGGhomqIL6L6Vmuy+gI2rr2SCBTHNJKM8cuxcyUo2g=;
- b=FoA5brEzB/y1dsraxQteMN6Fn6o/FnQ/xKjxE5AuWOHwtecuHCWCn2/E6b2sjyP9hi
- OPpeyKw0V+DvGJS0pw3A07OD65ytgDBBfl+l3o1B82oRVVOxe8PKgz0LY65glUIUvaZi
- 6diIHqpUr1IO12uUsYwkT+2k7dNB6dpaL82Ng3vl9BDuo6R+2K2tKudUNPqsygJNX9Mh
- ZLl0Y0DHABWE4i/UYZqFE+lSMELUH99NDV5dt/ivLx1aYrqBWpRnHm8053WT+7uBgY0t
- MTlE3DINxKAWOorDjXCrkxcqdT5abRKs+y5Puj9gtjqgDO8ESxC+rPnW2OoGaK9wZyw+
- hdOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776369098; x=1776973898;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kQGGhomqIL6L6Vmuy+gI2rr2SCBTHNJKM8cuxcyUo2g=;
- b=MHK8truyVlhGSUvTT07OqzL28ve+Ygb29hK2TQ2sAQW34sq9eILJkRdoGMdthc3pCI
- 8rgs8PzwTEwnjv17tAufCDlTiQ8wVxeio3mnvi+obexPveg6UFwU5G51Uq61+8sY4aqo
- QZq65lhpDxR+gEdEVWBs/JappTEbMnSCPJzBv2b35uoXT5BwdFQDenISCZm7IzydfNoH
- 1b/oN6Vfh5vwRTa80COEDD7VhioRrTt5i3b0n+AoQWxaq6poByolAtt0rr32sjbbUXtn
- B9OTBVmRTp+9JarfF3Efbubxgo0TdJTcEq2dKXb5oxIPWv070eevzhK+OvK7+t13FRmm
- ZdIg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+yu7KNYMtdsRGwX4ueJC8Zc3Kj4/bqeDl8d88hZkZk8vofvOM9OBUBEzsodL7RbCRIl1T9DL+UIVFz@nongnu.org
-X-Gm-Message-State: AOJu0YxgND5CZH80rcccdAnTfpJ+heK0DTvgXsB6O8BgTdGpPQfwu8Ed
- 7siVC82apcU/sQ/cHaV7ZN38f9cJL32Ot2iN0YhRuLszZQeC0lJyMccatViDoFyyVfY=
-X-Gm-Gg: AeBDievHL1e82bmr9kbjMJk8RiVYBkOTZ8JOqSSIMyZcankyM5xpw/NnHpy8kYHceCz
- yo2UkCoHUXSptpdZAFKoP4MoINY10h7nfaGSBgvheb25xVphvrH9YVljYWBLUS8akKkGH3UKMoc
- P9Cyq8V1p6YrSJows5cHwqmOYgDzL5YIaD7KoWPYZnxsWOdCTOgDeuRaoZzyp6RjVgB3Y+hAfI3
- Q7s/l88LMu7AIKTwJxA8jxG2eON4l8UAFIWnSRfpGJDcMEpuyQxWUbnJccX/XmTe6P2iUN2QsvQ
- vykQbGELAG16QV3s3dOVADv2SdiMogCdgBg3RhAWyoExN0mPgfh3ZDi1MZgPPwSsoy0bIWZnOdH
- Gxsa4Z+Vl9QknPs6cLia+MDSDwAGyKK106eDzv/cJkrSgI+In8TEM/v5SyaSrQ3LnDYKl/Iuxje
- y2lRc7h1V4gfKthb00hK4dH440Sph8u0hePTQB1wIT7C43V9o5vmBFgrd5gaJGKCtM0wDZwX2yi
- y01
-X-Received: by 2002:adf:f08e:0:b0:43f:e211:1090 with SMTP id
- ffacd0b85a97d-43fe21110dcmr468632f8f.1.1776369097485; 
- Thu, 16 Apr 2026 12:51:37 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead2decafsm14813107f8f.0.2026.04.16.12.51.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 12:51:36 -0700 (PDT)
-Message-ID: <73d6cb95-454d-49c3-b8eb-d8711941ec2d@linaro.org>
-Date: Thu, 16 Apr 2026 21:51:35 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wDSlF-0004Ft-0k
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:52:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wDSlC-0004h2-7X
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:52:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776369140;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ggQtieDdbug4MvR4EdSB0lZHe7gF9fQZ6xaokz7e7bQ=;
+ b=HtGMLvUfMuBtKoFbVodIpBNwAKKbw+bhpIdhgdmWHljLHruoTPwdO8hilRZVtsrqBmrRuv
+ KqFTRst/0XVBrv10+JJo2DF5ed2H96WsaM1NamCWyB2jpuo533Hank5aU6gghk42aLYn/i
+ kXc/POXqBllrqxw6OSHPF8HkI7AjZ0Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-VBxl6ntqN3eF-df_4xWIQg-1; Thu,
+ 16 Apr 2026 15:52:16 -0400
+X-MC-Unique: VBxl6ntqN3eF-df_4xWIQg-1
+X-Mimecast-MFC-AGG-ID: VBxl6ntqN3eF-df_4xWIQg_1776369132
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5412619560AA; Thu, 16 Apr 2026 19:52:12 +0000 (UTC)
+Received: from localhost (unknown [10.44.48.32])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 954FC1800446; Thu, 16 Apr 2026 19:52:10 +0000 (UTC)
+Date: Thu, 16 Apr 2026 15:52:08 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Matthieu Rolla <matthieu@minio.io>
+Cc: =?iso-8859-1?Q?=22Daniel_P=2E_Berrang=E9=22?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, its@irrelevant.dk,
+ kbusch@kernel.org, mr-083 <matthieu@min.io>
+Subject: Re: [PATCH 2/2] block/monitor: add drive_insert HMP command
+Message-ID: <20260416195208.GB258343@fedora>
+References: <20260409060155.94704-1-matthieu@min.io>
+ <20260409060155.94704-3-matthieu@min.io>
+ <ad9s9CRT0niUAPQn@redhat.com>
+ <7E17AD80-CF52-44FC-A0FE-29B481EF5B40@minio.io>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] tests/functional/aarch64: Add basic test of TCG
- aarch64=off
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-References: <20260416165353.589569-1-peter.maydell@linaro.org>
- <20260416165353.589569-4-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260416165353.589569-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="sOgxC4cYjq/PLA2P"
+Content-Disposition: inline
+In-Reply-To: <7E17AD80-CF52-44FC-A0FE-29B481EF5B40@minio.io>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,18 +90,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/26 18:53, Peter Maydell wrote:
-> Add a basic test of the TCG 'aarch64=off' functionality; this is the
-> same as our existing arm/test_virt test, but it runs the AArch32
-> guest kernel on qemu-system-aarch64 with -cpu max,aarch64=off.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   tests/functional/aarch64/meson.build          |  1 +
->   .../aarch64/test_virt_aarch64_off.py          | 37 +++++++++++++++++++
->   2 files changed, 38 insertions(+)
->   create mode 100755 tests/functional/aarch64/test_virt_aarch64_off.py
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+--sOgxC4cYjq/PLA2P
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Apr 15, 2026 at 02:32:39PM +0200, Matthieu Rolla wrote:
+> Thanks Daniel,=20
+>=20
+> It makes sense Thanks.=20
+>=20
+> Looking at the existing code, blockdev-insert-medium already does the bac=
+kend/frontend association via blk_insert_bs(), but is restricted to removab=
+le devices.=20
+> A new QMP command like blockdev-attach could reuse the same logic without=
+ the removable restriction, paired with blockdev-add for creating the block=
+ node.
+>=20
+> Would that be a better approach ?=20
+
+Hi Matthieu,
+I was wondering whether the blockdev needs to be changed at all. Since
+the disk image remains the same, is it sufficient to inject the PCIe SDN
+and then recover the NVMe PCI controller?
+
+I don't understand the test scenario well enough, but it seems like
+you're testing at the PCIe level here rather than nothin NVMe- or
+blockdev-specific. Therefore blockdev commands may not be necessary.
+
+If the testing can be done completely at the PCIe level then that would
+also allow other device types to be tested in the same way, which would
+be nice.
+
+Stefan
+
+--sOgxC4cYjq/PLA2P
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEyBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnhPecACgkQnKSrs4Gr
+c8gUpgf3TtuBFC4KYnaO98Boo4Vleum/I/gCdlXm+YQ5uSMQ0sHMZ9N5trbNs9+o
+D3vbX6e5vBMI260ihBbucZjQr+9WCQXiu8h+jLNbf+xpoRfLnAtM6CUgv0t9UGgx
+2PWnq9Ec9+lVekFoYMbjszCldoiUW8jgsaJBIBnX2GtvAkA7Nkxggejc1SxOjOaY
+xNErGCM0s0fIWXax/t5Q0roGb5mVzcUgo0Hb0G7OK9vwrOUhE+aaFuYZkuFGVH6f
+0is7ls0cAKEOuYce6Q8AbussfxCsgQclywh8g01DO//W/uSziRLoFutG8R6SDqck
+vfjKGm7Qj5nMaYPdBN54oYWCoPqF
+=8WjN
+-----END PGP SIGNATURE-----
+
+--sOgxC4cYjq/PLA2P--
+
 
