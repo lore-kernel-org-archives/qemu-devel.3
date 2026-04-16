@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BD2F8A160
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E65CCF8A16B
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:22:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLhh-0004ij-2f; Thu, 16 Apr 2026 08:20:17 -0400
+	id 1wDLj8-0005ST-Ta; Thu, 16 Apr 2026 08:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wDLha-0004eM-7K
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:20:11 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wDLhY-0005BW-7f
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:20:09 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1B6DB5BCFA;
- Thu, 16 Apr 2026 12:20:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776342003; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
- b=N70j+XNWvF+GBDp5mrectjGptgRc4m0r9UcRkA5JDhgUrt6JLISa+S3W+SVEZGfBfqrip6
- kGpBiEmRBXs0lLbakwembJN45m2PaExMs+s1UPZB/Vb0D8WLFEoloHCQHe7768cwnc6/qZ
- M8czQFWuueM9AVSuHj8VD8zyJXQFeDA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776342003;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
- b=bDD0lFNY8PnZiRLEAoRwyTqrkmeak//6f0VZtB+TKV76tSla0ugQFOqVqlqxeYhfVYKfPq
- 99a+W678lPklcGBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776342002; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
- b=oN6VDfbnDNUaLld/w/oyu/0yPiMhI5iZ+GMGfBsmNbN7vDnzL+mFl0lvPeLxdF3FFcql4V
- NeF5kM5BUKTiZQ14L1M9IjITNOGLjnYF8IBP6h6TxTLkLIDIFfT13d/WucGaXIfaCZVkrD
- i7WTBSkZ5Bi8GmTthUoQmh9X6C1q2oY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776342002;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EaUuFcR2IcdWo9pL/06FbovWY2y2zLnNz1jjK83GdUg=;
- b=nTtAWcOLsM52qkif6FQRlVH96EUK+y48vSg0ZvMSJ5hAUScngXSYmvTmmIkLJzJbi5S+6S
- yknEdYiwFym3yQAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AAB52593A3;
- Thu, 16 Apr 2026 12:20:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id RJE3HvHT4Gm+FAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 16 Apr 2026 12:20:01 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, "Maciej S.
- Szmigiero" <mail@maciej.szmigiero.name>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wDLj6-0005S0-WD
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:21:45 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wDLj4-0005eH-Nc
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:21:44 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wDLiu-00000000kcq-0XzL; Thu, 16 Apr 2026 14:21:32 +0200
+Message-ID: <2c8e4690-0f77-48c0-9a07-a3c9b20ac5c2@maciej.szmigiero.name>
+Date: Thu, 16 Apr 2026 14:21:26 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
  migrate_params_test_apply
-In-Reply-To: <CAFEAcA8dwXxFodsg6gk473aEWBXynFAwaohrMqY3ca5c4FxzMw@mail.gmail.com>
+To: Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
 References: <20260414223718.23965-1-farosas@suse.de> <87zf34xp7k.fsf@suse.de>
  <CAFEAcA8dwXxFodsg6gk473aEWBXynFAwaohrMqY3ca5c4FxzMw@mail.gmail.com>
-Date: Thu, 16 Apr 2026 09:19:51 -0300
-Message-ID: <87wly7xfko.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <87wly7xfko.fsf@suse.de>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <87wly7xfko.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,75 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Wed, 15 Apr 2026 at 15:39, Fabiano Rosas <farosas@suse.de> wrote:
+On 16.04.2026 14:19, Fabiano Rosas wrote:
+> Peter Maydell <peter.maydell@linaro.org> writes:
+> 
+>> On Wed, 15 Apr 2026 at 15:39, Fabiano Rosas <farosas@suse.de> wrote:
+>>>
+>>> Fabiano Rosas <farosas@suse.de> writes:
+>>>
+>>>> Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
+>>>> method makes the handling of the TLS strings more intuitive because it
+>>>> clones them as well.
+>>>>
+>>>> This also fixes a segfault when a NULL TLS option is accessed as part
+>>>> of a validation check for another option (e.g. in the zero-copy +
+>>>> multifd compression case). Details follow:
+>>>>
+>>>> Currently, after copying s->parameters to the temporary
+>>>> MigrationParameters object before migrate_params_check(), the
+>>>> references in temporary object to the TLS options are dropped, either
+>>>> because:
+>>>>
+>>>> a) the user set a new option, in which case that's fine as
+>>>>     s->parameters still holds the reference to the old memory or,
+>>>>
+>>>> b) the user did not set a new option, in which case keeping the
+>>>>     references in the temporary object would later cause them to be
+>>>>     freed along with it, leading to double-free when s->parameters is
+>>>>     also freed later on.
+>>>>
+>>>> In this second case, it was overlooked that the TLS options can be
+>>>> accessed already during migrate_params_check() as part of validation
+>>>> of another option. Those pointers should not have been cleared.
+>>>>
+>>>> Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
+>>>> is not stealing a reference from s->parameters anymore.
+>>>>
+>>>> Fixes: aed97f0563 ("migration: Normalize tls arguments")
+>>>> Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+>>>> Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
+>>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>>> ---
+>>>> NOTE#1: For the release we could have a simpler fix just checking for
+>>>> NULL, but that would allow two unsupported configurations to be
+>>>> accepted: zero-copy with either multifd compression or TLS.
+>>>>
+>>>
+>>> Peter Xu just pointed out on IRC that it's actually only the zero-copy +
+>>> TLS configuration that will be allowed with the simpler fix. I think
+>>> it's best we go that route instead and hold this patch until after the
+>>> release.
 >>
->> Fabiano Rosas <farosas@suse.de> writes:
+>> rc4 has already been tagged and I really don't want to put anything
+>> more into 11.0 unless it is a super high priority release-blocker
+>> kind of a bug. The fact that this is a fix for a commit that's
+>> been in git for pretty much the whole of the 11.0 cycle without anybody
+>> noticing earlier suggests it probably isn't that important ?
 >>
->> > Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
->> > method makes the handling of the TLS strings more intuitive because it
->> > clones them as well.
->> >
->> > This also fixes a segfault when a NULL TLS option is accessed as part
->> > of a validation check for another option (e.g. in the zero-copy +
->> > multifd compression case). Details follow:
->> >
->> > Currently, after copying s->parameters to the temporary
->> > MigrationParameters object before migrate_params_check(), the
->> > references in temporary object to the TLS options are dropped, either
->> > because:
->> >
->> > a) the user set a new option, in which case that's fine as
->> >    s->parameters still holds the reference to the old memory or,
->> >
->> > b) the user did not set a new option, in which case keeping the
->> >    references in the temporary object would later cause them to be
->> >    freed along with it, leading to double-free when s->parameters is
->> >    also freed later on.
->> >
->> > In this second case, it was overlooked that the TLS options can be
->> > accessed already during migrate_params_check() as part of validation
->> > of another option. Those pointers should not have been cleared.
->> >
->> > Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
->> > is not stealing a reference from s->parameters anymore.
->> >
->> > Fixes: aed97f0563 ("migration: Normalize tls arguments")
->> > Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
->> > Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
->> > Reviewed-by: Peter Xu <peterx@redhat.com>
->> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> > ---
->> > NOTE#1: For the release we could have a simpler fix just checking for
->> > NULL, but that would allow two unsupported configurations to be
->> > accepted: zero-copy with either multifd compression or TLS.
->> >
+>> If we want to put it in then the commit message needs to clearly
+>> state the severity (e.g. "everybody trying to use migration
+>> hits a segfault") that makes it release-critical.
 >>
->> Peter Xu just pointed out on IRC that it's actually only the zero-copy +
->> TLS configuration that will be allowed with the simpler fix. I think
->> it's best we go that route instead and hold this patch until after the
->> release.
->
-> rc4 has already been tagged and I really don't want to put anything
-> more into 11.0 unless it is a super high priority release-blocker
-> kind of a bug. The fact that this is a fix for a commit that's
-> been in git for pretty much the whole of the 11.0 cycle without anybody
-> noticing earlier suggests it probably isn't that important ?
->
-> If we want to put it in then the commit message needs to clearly
-> state the severity (e.g. "everybody trying to use migration
-> hits a segfault") that makes it release-critical.
->
-> Otherwise we should put this into 11.1 and with the usual cc:stable
-> so it is backported to the 11.0 stable series.
->
+>> Otherwise we should put this into 11.1 and with the usual cc:stable
+>> so it is backported to the 11.0 stable series.
+>>
+> 
+> Makes sense.
+> 
+> @Peter Xu, do you agree with leaving this to stable? Given that
+> it needs multifd and zero-copy-send to be both set, I'd say it doesn't
+> have that large of a user base.
+> 
+> @Maciej, what's the impact for you?
 
-Makes sense.
+Minimal - I can just run my tests with patched QEMU.
 
-@Peter Xu, do you agree with leaving this to stable? Given that
-it needs multifd and zero-copy-send to be both set, I'd say it doesn't
-have that large of a user base.
+Thanks,
+Maciej
 
-@Maciej, what's the impact for you?
 
