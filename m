@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0051F8A16B
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B84F8A16C
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLZP-0008SA-R1; Thu, 16 Apr 2026 08:11:43 -0400
+	id 1wDLZS-0008V5-Fm; Thu, 16 Apr 2026 08:11:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDLZL-0008PI-Fk
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:40 -0400
+ id 1wDLZQ-0008Ts-Ir
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:44 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZI-0002Oj-Uw
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:38 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZO-0002Pm-TF
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:44 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 11D1220B712B;
- Thu, 16 Apr 2026 05:11:33 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 11D1220B712B
+ by linux.microsoft.com (Postfix) with ESMTPSA id D532220B712B;
+ Thu, 16 Apr 2026 05:11:40 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D532220B712B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776341495;
- bh=d9/BQeP8wUYO1IyE343ZkHR9ZgOOFZiIbPXo9Fv94yA=;
+ s=default; t=1776341502;
+ bh=DZsSiTRYYYWERd2emTJ5lJqB6CAtgOgvEgvN3Gna9x4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=U4hzwuqS+uL7Y3XWBB5GSPKGj7OLvjSgTQC9KpLu56suZyG7A9Idi9Fx+QxbsNh4d
- TkvSJ7PhTkcamrq2LmpPmWh8+quTAAGOZ9BIzFjiOWr3vBNdZcU4oEdQ6Us5I1YMLO
- kw2AwMc+muXJikSPEeO6vbOahmEhsIcAHwE+ZgDU=
+ b=arGSoVhpZgU313kM7IngW55g7EMhtu7jh4vnhY8fa8uWSlks0QbTwTR3J87vQIvfv
+ bqO0jJWxlNqPh8/KLmBwMih3QK8vyvX4Gv0y+RiYjNQjH7qq5b/zINPqSfnA+rkfOi
+ mpGmuxDaTfH87Nb1azeYVsmipkgUU+BVNVx3HWlo=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>
-Subject: [PATCH v6 6/9] target/i386: query mshv accel for supported cpuids
-Date: Thu, 16 Apr 2026 14:11:13 +0200
-Message-Id: <20260416121116.527927-7-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v6 9/9] accel/mshv: disable la57 (5lvl paging)
+Date: Thu, 16 Apr 2026 14:11:16 +0200
+Message-Id: <20260416121116.527927-10-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
 References: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
@@ -68,94 +68,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We implement mshv_get_supported_cpuid() and invoke it in
-x86_cpu_get_supported_feature_word() retrieve the cpu features that the
-host is supporting. Initially we mask the virtualization capabilitities
-potentially we might need to mask more in the future.
+This change disable la57 paging on the mshv hypervisor on both the
+mshv processor feature bitmap and mask the cpuid feature leaf to the
+guest.
+
+Since the removal of hypervisor-assisted gva=>gpa translation in
+1c85a4a3d7 we have seen MMIO errors in guests on la57-enabled hw. We
+will have to investigate and test this further.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
 ---
- include/system/mshv.h       |  3 +++
- target/i386/cpu.c           |  8 ++++++++
- target/i386/mshv/mshv-cpu.c | 27 +++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+)
+ accel/mshv/mshv-all.c       |  7 +++++++
+ include/system/mshv_int.h   |  2 ++
+ target/i386/mshv/mshv-cpu.c | 15 +++++++++++++++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 75286baf16..51b0420735 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -60,4 +60,7 @@ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
-                                         const EventNotifier *rn, int virq);
- int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
- 
-+/* cpuid */
-+uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index c50641f174..a557623531 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -142,6 +142,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     int ret;
+     uint64_t pt_flags, host_proc_features;
+     union hv_partition_processor_xsave_features disabled_xsave_features;
++    union hv_partition_processor_features disabled_partition_features = {0};
 +
- #endif
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c6fd1dc00e..4dd9752fd0 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -26,6 +26,7 @@
- #include "tcg/helper-tcg.h"
- #include "exec/translation-block.h"
- #include "system/hvf.h"
-+#include "system/mshv.h"
- #include "hvf/hvf-i386.h"
- #include "kvm/kvm_i386.h"
- #include "kvm/tdx.h"
-@@ -8087,6 +8088,13 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
-         r = hvf_get_supported_cpuid(wi->cpuid.eax,
-                                     wi->cpuid.ecx,
-                                     wi->cpuid.reg);
-+    } else if (mshv_enabled()) {
-+        if (wi->type != CPUID_FEATURE_WORD) {
-+            return 0;
-+        }
-+        r = mshv_get_supported_cpuid(wi->cpuid.eax,
-+                                     wi->cpuid.ecx,
-+                                     wi->cpuid.reg);
-     } else if (tcg_enabled() || qtest_enabled()) {
-         r = wi->tcg_features;
-     } else {
+     struct mshv_create_partition_v2 args = {0};
+ 
+     QEMU_BUILD_BUG_ON(MSHV_NUM_CPU_FEATURES_BANKS != 2);
+@@ -177,6 +179,11 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     }
+     args.pt_cpu_fbanks[1] = ~host_proc_features;
+ 
++    /* arch-specific features we disable regardless of host support */
++    mshv_arch_disable_partition_proc_features(&disabled_partition_features);
++    args.pt_cpu_fbanks[0] |= disabled_partition_features.as_uint64[0];
++    args.pt_cpu_fbanks[1] |= disabled_partition_features.as_uint64[1];
++
+     /* populate args structure */
+     args.pt_flags = pt_flags;
+     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 35386c422f..ca156cdf4b 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -94,6 +94,8 @@ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
++void mshv_arch_disable_partition_proc_features(
++     union hv_partition_processor_features *disabled_features);
+ int mshv_arch_post_init_vm(int vm_fd);
+ 
+ typedef struct mshv_root_hvcall mshv_root_hvcall;
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 09878ef357..3b392533b4 100644
+index b90e2983c8..eb3e167c0d 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -1639,6 +1639,33 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-     g_clear_pointer(&env->emu_mmio_buf, g_free);
+@@ -1129,6 +1129,12 @@ void mshv_arch_amend_proc_features(
+     features->access_guest_idle_reg = 1;
  }
  
-+uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
++void mshv_arch_disable_partition_proc_features(
++     union hv_partition_processor_features *disabled_features)
 +{
-+    uint32_t eax, ebx, ecx, edx;
-+    uint32_t ret = 0;
-+
-+    host_cpuid(func, idx, &eax, &ebx, &ecx, &edx);
-+    switch (reg) {
-+    case R_EAX:
-+        ret = eax; break;
-+    case R_EBX:
-+        ret = ebx; break;
-+    case R_ECX:
-+        ret = ecx; break;
-+    case R_EDX:
-+        ret = edx; break;
-+    }
-+
-+    /* Disable nested virtualization features not yet supported by MSHV */
-+    if (func == 0x80000001 && reg == R_ECX) {
-+        ret &= ~CPUID_EXT3_SVM;
-+    }
-+    if (func == 0x01       && reg == R_ECX) {
-+        ret &= ~CPUID_EXT_VMX;
-+    }
-+    return ret;
++    disabled_features->la57_support = 1;
 +}
 +
- /*
-  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-  * fault to the guest if it tries to access it. It is possible to override
+ static int set_memory_info(const struct hyperv_message *msg,
+                            struct hv_x64_memory_intercept_message *info)
+ {
+@@ -1682,6 +1688,15 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
+         ret &= ~CPUID_EXT_VMX;
+     }
+ 
++    if (func == 0x07 && idx == 0 && reg == R_ECX) {
++        /*
++         * LA57 (5-level paging) causes incorrect GVA=>GPA translations
++         * in the instruction decoder/emulator. Disable until page table
++         * walk in x86_mmu.c works w/ 5-level paging.
++         */
++        ret &= ~CPUID_7_0_ECX_LA57;
++    }
++
+     return ret;
+ }
+ 
 -- 
 2.34.1
 
