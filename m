@@ -4,99 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 585A0F8A15F
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 11:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E15F8A165
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 11:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDL4W-0005JP-R9; Thu, 16 Apr 2026 07:39:48 -0400
+	id 1wDL45-00056S-UU; Thu, 16 Apr 2026 07:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDL4H-000584-1q
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:39:33 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDL4D-0003Co-PU
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:39:32 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488a29e6110so83041535e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 04:39:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wDL44-00055t-4d
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:39:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wDL3y-00039y-Tr
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:39:19 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63G90YD22979251
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 11:39:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=Deo326n2qmw
+ FTkLiBkqpjqgcq8M3rSAS5nM+pXYoWxY=; b=NRreBNDXiUH/0MBBNFYzSvMC0l2
+ eYOuX4Gt3F7C354/6F+siRNJyCcYusFr/k9EQEvEFVy6Fb2SHbwkiyH+XH62HJcP
+ /VXGy+E4wsMeDY2kcPAb/b8iNJ9rn3C/MWr6X16rlgousEWKxBKKFnz3q/7lmptx
+ nhJyUGDVYbzrLRi7x613pAUkdMRF4DXshRYO0voY8FUVepHzrviy46NImPWVnwwv
+ 0PVGT7EYNgXtAAks69gEuSafUrejum4nejG3chaoWtS7Da+nTk36zvNZvH33WX4w
+ 7gnzrgnUU3be5Z6nvKamLz5uUtfllBH/vcNxSxN2sUv+BKi5EWqkU6XO/Pw==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djvru8hmn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 11:39:13 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2cc75e79b97so30180117eec.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 04:39:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776339567; x=1776944367; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Qk8Z1h5dKpOHv3yTgvCrCejDOzT/M8/9C50jIFLDzfw=;
- b=h+SLHIZm2AzexU/FnzsF+hucKArrVHdlm4fN2J6+CUWf9/TIiLhZiIIyVRqTeAKnNn
- FwDmz2SozyCng6CRLl9NpRyAURudko+Iv9Lc3wSqfJcvItam1XnbTnzptrzDtmWVCxfG
- 51JdxkERcMFMOHxCiE5gYti3PbiBcY0/BTg+WbjE83X2iLg5vpIlyFhz7uKki2dPrCl+
- JmhfsXvpzMYvtMcAqg7Kyh3GYxZMmEYNZ/eXVYYxy+Nr+7au8H9L0OaZqE5zXUwvob6a
- jpsSAGHrJLgGGkVh+KJjTSjbGer2GoAlNJjYysVOuIiv6F/N7/hHLjD0rG3gXmri4XFW
- VHhw==
+ d=oss.qualcomm.com; s=google; t=1776339553; x=1776944353; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Deo326n2qmwFTkLiBkqpjqgcq8M3rSAS5nM+pXYoWxY=;
+ b=e7r13KwRwTs3YUaYBtMmg5oNuakoSqwPQCuVEbh+0hQjl9OXWH6AWfSio3GzapJzkL
+ ghSGBqXXKbkfs1E6Hp/4r/UkfSyogFZI7IBwD6Wj4OH7seBDJcvqJwO1oDfqi3mAF/Gs
+ DzY2HdyFpSEGvzrYWJgLIQBPHoHvQ9q+M0iBRPvHJ82zY062tdvwwXYdnoxtRbbnAngK
+ RH6/DRRfzZ9ndtO2UHWeKPlL+sySwkyhvcGz0QP0SJvJDL9Os2ipWwTxI9drE7uUL+iL
+ LHkLw4tszGzar5TR9jXcwZt0tybD1w10qrPM8poqqGLlyewjSVwjlLJKZ8aTG3vWZYeO
+ mVAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776339567; x=1776944367;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Qk8Z1h5dKpOHv3yTgvCrCejDOzT/M8/9C50jIFLDzfw=;
- b=ll3uomXA+bwOPqtxW0Tb1dUQGmpqICHZzv4DjcM48dvXPqgeoGAT8mlT1O0LRlGekS
- GCjdbZ0XZmLI+0gSMcnxETuzD+IMQ5N4Ge11H8X1psd8ndS1FqceoG2O6OR2BMCeou1N
- fGZwh9EYC5Z0DT/4MGx4kmTbfdMGyAuAuxiOi9xf5AXZNz1+eLfJy+TkVNtYuiv8K0xr
- YX5vgxrZrh6hwD7+Q2WmP3aZD/7j9jTXW8zoX+4y/i57MicJh1G72bn2/U5u7xx5L0lH
- T12d+kb+EtrUhSif6+pvzqWisTQWIm6D4fVClkaEWtDob89h1fhk80KGlxEu2Oz57flo
- uIhg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8EMivUj6gHgWU9uipb6EdYADkcXttKnPhO5sqpYjC9A9LVGQImjfb7gI4yvPGbiIbaHGUNp5lv7bTV@nongnu.org
-X-Gm-Message-State: AOJu0YzID6IXU8nQcZqSR6iHJDnyRhQPlqxfTMNabM+ZqoVxA8cqzQPU
- tI6llRQ/jMUBIGB8DM2cNw9VfiXMJM62nzy4vk5xT4x8898IRBsKf7o7LR2PsPWG+20=
-X-Gm-Gg: AeBDietixBcaJ6l8Via2YIlctLlqym+qdWwtxBF/IMtN9T+ZQHwnXJWbBs4sXlJj6Q+
- M+mTNrWzdXmr/YMFLxSQNWdYPWEyuIN3+iN+yGiIr9tfwQhkDw5GhEbie0ZfY3V5CCBgk3zCmW/
- F9AujyXrDFkZQ/hLr8NgeC1dWm25wyi1Jy5c34Zn5fG3X70Vvk9T946ZjMafBl493/14NejCW/k
- yigVxfYTwtsJtaP4s6UCvseQOcb+wv6yIzcrcGYGEupthxsxlE/O63U7Ag5HiO8CrDK5hYVUWxM
- s0s5gZzQNTHcDKmMSOTBsCRa3QqYbC0gad8OKqCYg+j4JUKrJhBciPOw+6D7qhg9WdIMik6yOrf
- tp8FAegZN0zzIQxwxq+wAi+SCWXU6RDbM+bhlVAmxSGc0oylYVIrnYuzsz0/FBcjNtAeQGUZkKo
- q1061+yrq5YGqhd/+qnmW80zddCCGkWy9lmuFlP4uRoCADTNYUu9ag4TueSvZRgJVuEyy+OvpEu
- 4eT
-X-Received: by 2002:a05:600c:19cf:b0:485:4453:401d with SMTP id
- 5b1f17b1804b1-488d67ebc79mr329309555e9.2.1776339566798; 
- Thu, 16 Apr 2026 04:39:26 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f08b960esm72380245e9.0.2026.04.16.04.39.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 04:39:26 -0700 (PDT)
-Message-ID: <5bf8fe62-a8e8-4327-b887-e203d9066ce6@linaro.org>
-Date: Thu, 16 Apr 2026 13:39:25 +0200
+ d=1e100.net; s=20251104; t=1776339553; x=1776944353;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Deo326n2qmwFTkLiBkqpjqgcq8M3rSAS5nM+pXYoWxY=;
+ b=iNXeMoSpEHFeB0ty0cN6IzYliO1QxITBnjDucYMEvc9ce9/VhbtLx/YKD87fZH+g56
+ RvZDS6juZJ3tV0EZhzfymgGkFNnuBOx8XaXd42FEjyIfs7hpLnWBFMm75zq6RQS4mDEb
+ CFUrL9olwyJ8DQTfvV0UNg3JVIMNsWYuzpi08M1+wWWc3pNfXXNFDh4N7cEsVXQ1yAV8
+ AV09EaWUcCadC6Jio+DWwWNe1f0ZyFiM71+CQkEYZsgVMmfrbkzQ3b0SwyXVtRAqDnSQ
+ m/yup8tZpAyyXQW5lEYSq5zTejotW6tHB2epNzDPgWDnXx8jpGMqJ3JkkxEVSVS1Gtnd
+ gAbQ==
+X-Gm-Message-State: AOJu0YzrpO5dlrbQ0JJJ8fZM9DNLF2cxE13A59BHQeVvc7uZS49LAfO/
+ 2R5b67vWYHOwOr6NczfmgfvgANekmK1nYs+qXXfK1snh4CCFqAavETcUWklfRo5HA8yy05nu/NA
+ l9uMQZbWXIBz+Fwft972WWdhijyMgD6ZIJoEtaOsvLcGzDfMj/Q4nB72PVTbkunJH1nJl
+X-Gm-Gg: AeBDiesZMCQbAIPgaY5oan7x9WRPalcwa+bE7MBweIFgGO4kSKEgp3TKe8QajLklXtt
+ zJP41aqeG1/QuTg6aYPMfKOsI6PcjmJA7TpPtD/LXo5KuOGZ8T7HZYwxYu23R77wrUKy+B6/+UF
+ fl+1tc7Eso9dXgo6dZnSK+P1dz+KaVh7NTNVD8+haQ2QgoMlVlDLKi/mdRSDXH/wPBZeX6jGRK9
+ UsRL8Uh7UztcWoVf+StWe0ZppN0+2Ie3bMwttHwjKomCtdITzhbH+gyUYf4VXCcavSDyhaVO6vK
+ 4rgNwaK/6tXDDUOtwEZvwqcKNwvkbF0Wsi1nKQth/lNMrZYJmBHxZ1p6e7/sz6wR+/Uze8Hln0B
+ XcHO38/akSajYDlemK9UUQMjocd1Gr6gZkJhnqdueaFD0wjZZCrLg4Q0Fn22eK+VLAG7oaP2h1t
+ oLrxCqh47Nijhg08Jt3fE=
+X-Received: by 2002:a05:7300:a284:b0:2da:4216:7ea3 with SMTP id
+ 5a478bee46e88-2da42169606mr8509845eec.14.1776339552640; 
+ Thu, 16 Apr 2026 04:39:12 -0700 (PDT)
+X-Received: by 2002:a05:7300:a284:b0:2da:4216:7ea3 with SMTP id
+ 5a478bee46e88-2da42169606mr8509824eec.14.1776339552104; 
+ Thu, 16 Apr 2026 04:39:12 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2de8c10a65asm6845391eec.6.2026.04.16.04.39.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Apr 2026 04:39:11 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
+ brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ marco.liebel@oss.qualcomm.com, philmd@linaro.org,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Subject: [PATCH v5 04/16] hexagon: group cpu configurations in their own struct
+Date: Thu, 16 Apr 2026 04:38:53 -0700
+Message-Id: <8f9a2e2ccfd2eeda73a63d1a6abbfd6e5458b44c.1776339451.git.matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <cover.1776339451.git.matheus.bernardino@oss.qualcomm.com>
+References: <cover.1776339451.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] target/s390x: Forbid to use legacy ldst_phys() API
-Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Anton Johansson <anjo@rev.ng>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, qemu-s390x@nongnu.org,
- David Hildenbrand <david@kernel.org>
-References: <20260319185203.11799-1-philmd@linaro.org>
- <f0965bf8-b736-4e53-b809-374945f0f48e@linux.ibm.com>
- <63ddd321-067b-4c44-99e1-9c6c0ac60003@linaro.org>
- <640ddcc2-f373-4738-8e66-50effe56de4e@linaro.org> <87tstdbwu4.fsf@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87tstdbwu4.fsf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDExMCBTYWx0ZWRfX27yTu/YaTXpV
+ nj6RWIgkKuNplm610I80sqK29d2cQq5dd9533yGjHdmzVg9lDR0DacETb6rK+7zKUuGCIPSQcD1
+ bry1nYH+047OADH7rGiGMTrIOns+yNwqaXC4gFbQjvOAS7HNhbRnKPJ/TIKpSu2L0WRq30AgPFr
+ w3aKKks+7ja4mfuRbgZK4L56BloJy8bujzO+G1kgGfijk5HXNYDSuCbcIOhe0cV5lZy2Tjstn+/
+ 8qHX/veBbqu29uhjFc0QVKKKhV5YTR+if+qJA0DO8b2H8/WXy6v/NMYJo8rgeGnPRLownuy5ztN
+ MxwH5RSAJe5BssHArHluNX++9LybNyhSMAB+TbdYhHp6BgKdi0bImt/bp2KONgaiDIEG94t8gfQ
+ xC8SwrQMyFtsIyjHFGzAQltj2EI76uMLEwhRw1BA26x4Jj2Ia0Be0gydzC6K6Ac5sn2r9Y6Glx0
+ ncysHNufBenoMhZtlQw==
+X-Proofpoint-GUID: 2mz1PFc3c2E69X2nPpsGjO1t7JimMrlS
+X-Proofpoint-ORIG-GUID: 2mz1PFc3c2E69X2nPpsGjO1t7JimMrlS
+X-Authority-Analysis: v=2.4 cv=GcInWwXL c=1 sm=1 tr=0 ts=69e0ca61 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=pGLkceISAAAA:8
+ a=EUspDBNiAAAA:8 a=AHWWR7nXwgbOQO2z_T8A:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-16_03,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
+ impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
+ definitions=main-2604160110
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,37 +150,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/26 13:33, Cornelia Huck wrote:
-> On Tue, Apr 14 2026, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> 
->> On 21/3/26 16:26, Philippe Mathieu-Daudé wrote:
->>> On 20/3/26 20:28, Matthew Rosato wrote:
->>>> On 3/19/26 2:51 PM, Philippe Mathieu-Daudé wrote:
->>>>> Replace legacy ld/st_phys() by address_space_ld/st()
->>>>> then lock the target again further legacy API uses.
->>>>>
->>>>> Philippe Mathieu-Daudé (5):
->>>>>     target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (cpu)
->>>>>     target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (mmu)
->>>>>     target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (tcg)
->>>>>     target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (kvm)
->>>>>     configs/targets: Restrict the legacy ldst_phys() API on s390x target
->>>>
->>>> For the series:
->>>>
->>>> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
->>>>
->>>> For good measure I also ran some s390x kvm regression tests, took a
->>>> less comprehensive spin with a tcg s390x guest (on s390 host), and
->>>> forced a few of these codepaths as a sanity check.
->>
->> Does that mean we can also add:
->>
->>     Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
->>
->> ?
-> 
-> I was planning to pick this via s390-next, I can add T-b if desired.
+This will be used in a follow up commit.
 
-Thank you Conny :)
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+---
+ target/hexagon/cpu.h       | 10 +++-------
+ target/hexagon/cpu_bits.h  |  7 +++++++
+ target/hexagon/cpu.c       | 14 +++++++-------
+ target/hexagon/translate.c |  6 +++---
+ 4 files changed, 20 insertions(+), 17 deletions(-)
+
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index 77822a48b6..d28beaa92f 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -119,19 +119,15 @@ typedef struct HexagonCPUClass {
+     ResettablePhases parent_phases;
+ } HexagonCPUClass;
+ 
++#include "cpu_bits.h"
++
+ struct ArchCPU {
+     CPUState parent_obj;
+ 
+     CPUHexagonState env;
+-
+-    bool lldb_compat;
+-    target_ulong lldb_stack_adjust;
+-    bool short_circuit;
+-    bool ieee_fp_extension;
++    HexagonCPUConfig cfg;
+ };
+ 
+-#include "cpu_bits.h"
+-
+ FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
+ 
+ G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
+diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+index 19beca81c0..83d13de569 100644
+--- a/target/hexagon/cpu_bits.h
++++ b/target/hexagon/cpu_bits.h
+@@ -20,6 +20,13 @@
+ 
+ #include "qemu/bitops.h"
+ 
++typedef struct HexagonCPUConfig {
++    bool lldb_compat;
++    uint32_t lldb_stack_adjust;
++    bool short_circuit;
++    bool ieee_fp_extension;
++} HexagonCPUConfig;
++
+ #define PCALIGN 4
+ #define PCALIGN_MASK (PCALIGN - 1)
+ 
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 8b72a5d3c8..5470d9c7ce 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -50,11 +50,11 @@ static ObjectClass *hexagon_cpu_class_by_name(const char *cpu_model)
+ }
+ 
+ static const Property hexagon_cpu_properties[] = {
+-    DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
+-    DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, lldb_stack_adjust, 0,
+-                         qdev_prop_uint32, target_ulong),
+-    DEFINE_PROP_BOOL("short-circuit", HexagonCPU, short_circuit, true),
+-    DEFINE_PROP_BOOL("ieee-fp", HexagonCPU, ieee_fp_extension, true),
++    DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, cfg.lldb_compat, false),
++    DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, cfg.lldb_stack_adjust,
++                         0, qdev_prop_uint32, target_ulong),
++    DEFINE_PROP_BOOL("short-circuit", HexagonCPU, cfg.short_circuit, true),
++    DEFINE_PROP_BOOL("ieee-fp", HexagonCPU, cfg.ieee_fp_extension, true),
+ };
+ 
+ const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS] = {
+@@ -77,7 +77,7 @@ const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS] = {
+ static target_ulong adjust_stack_ptrs(CPUHexagonState *env, target_ulong addr)
+ {
+     HexagonCPU *cpu = env_archcpu(env);
+-    target_ulong stack_adjust = cpu->lldb_stack_adjust;
++    target_ulong stack_adjust = cpu->cfg.lldb_stack_adjust;
+     target_ulong stack_start = env->stack_start;
+     target_ulong stack_size = 0x10000;
+ 
+@@ -181,7 +181,7 @@ static void hexagon_dump(CPUHexagonState *env, FILE *f, int flags)
+ {
+     HexagonCPU *cpu = env_archcpu(env);
+ 
+-    if (cpu->lldb_compat) {
++    if (cpu->cfg.lldb_compat) {
+         /*
+          * When comparing with LLDB, it doesn't step through single-cycle
+          * hardware loops the same way.  So, we just skip them here
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index fa8f615a9e..ce3af96675 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -987,8 +987,8 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+     ctx->num_hvx_insns = 0;
+     ctx->branch_cond = TCG_COND_NEVER;
+     ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
+-    ctx->short_circuit = hex_cpu->short_circuit;
+-    ctx->ieee_fp_extension = hex_cpu->ieee_fp_extension;
++    ctx->short_circuit = hex_cpu->cfg.short_circuit;
++    ctx->ieee_fp_extension = hex_cpu->cfg.ieee_fp_extension;
+ }
+ 
+ static void hexagon_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+@@ -1041,7 +1041,7 @@ static void hexagon_tr_translate_packet(DisasContextBase *dcbase, CPUState *cpu)
+          * so end the TLB after every packet.
+          */
+         HexagonCPU *hex_cpu = env_archcpu(env);
+-        if (hex_cpu->lldb_compat && qemu_loglevel_mask(CPU_LOG_TB_CPU)) {
++        if (hex_cpu->cfg.lldb_compat && qemu_loglevel_mask(CPU_LOG_TB_CPU)) {
+             ctx->base.is_jmp = DISAS_TOO_MANY;
+         }
+     }
+-- 
+2.37.2
+
 
