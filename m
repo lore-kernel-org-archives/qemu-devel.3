@@ -4,112 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38688F433C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 05:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C46F433E7
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 05:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDFNZ-00014e-RE; Thu, 16 Apr 2026 01:35:05 -0400
+	id 1wDFTu-0002Mp-Fl; Thu, 16 Apr 2026 01:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ilias.apalodimas@linaro.org>)
- id 1wDFNU-00013y-Dp
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:35:02 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ilias.apalodimas@linaro.org>)
- id 1wDFNQ-0004mc-PU
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:34:59 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-79db5e18ac6so2368417b3.1
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 22:34:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776317691; cv=none;
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wDFTt-0002MY-64
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:41:37 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wDFTq-0006gm-ST
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 01:41:36 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63G27dZX4052561
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 05:41:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ P8lfikykxm5siW13bDJwPXa8hrsDtJ/c5KLESjyJys0=; b=AMQuQ0VANRJRqw39
+ +Usd7w2UWi9ZaeWQy6p23ShExaIvcwvv+uRCC3lfSyELMbHmQI4EOS79t2AABSpl
+ AlktTrQvwO940YpiKQPkLr1hG4xbivz50ruhEYcAfqqxJUle7OlluqsDQL7CllF0
+ YA7lKB121dLdUVALhECrc/znEtCc3h+pFsOIz8j3/Pd5Y6vDVl5B236XtK8m0lBb
+ FgsYfkCVktXTduhN/VNBsIsnrTUmRQmRTARndwease6ug9SPJj5boHnx3wRnviX0
+ 0E+hXO+lPeBnRWzJdTCl9vNzEEwbWX0kr6ZH1rOgXGwNbxoTHxnCip3XfAMmaL49
+ seT8XA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dj7s5unxj-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 05:41:31 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2dd1c74508cso6267505eec.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 22:41:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776318091; cv=none;
  d=google.com; s=arc-20240605;
- b=Bwb2P2JZMHjeMdvm9OelPTn1Z5H8mwCt58+pchoqUPsWg8cAo3HWz8MQ6UR2i7CqMx
- nsyI0ikz7kwTv+BE1aA1QK9Iy4xZFKSjlUcuAma9c12cd+YoXDwws+oIXXsT8namLDVz
- sMBxoy7ly9/Nq3PLyIQDwdhk9thb2R8nBWIv7hP4s9HMtXzuK1EfxhUt/B76v8yTLlp4
- NwmSjaOVNS9b2S+MHHXW/c8UU8UrEK/hGyqoeneTYjjvg3dbzVI3hHu7N2nFhxjeqYZ0
- ra1Bgg8La3X7zh0IKW7xouSfp+h+Rl0AQZ0MXFWknPA5jk/K0OtznilA3+SEAGXG3x2l
- cnRA==
+ b=d2IM5BxMwVxaNcJ+TTVs1bUTfd7zWINjUuHw7JD5eIwr4jVxHMDn103Je7AijXOyNn
+ 6r/mXjzNbJtMaOPHzwM59Q3dsR46RVjfr5v9N0Z/OswRI5f/9NHoXVmus7nj8CwYGZ7v
+ Zz4mL8/0F1/G9rFE7F85tSIRilj+MHJNxstGBtMa9PwKd0jRE+EDsf5veVWCjGCTF3zZ
+ siNSKD2DtGqCAytRDcIwGcrtGSAsXElbYc/Oy+rVCVBKROAUcNffTFAfxk40/INPUm+f
+ HIycAn/3PQtF6njS99pTHR9gTrZFWFj+k0CSCM+oE8uKBtt8R1oDTYWAkidO0LkjgBYd
+ HWOQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ExzvDa+TdHIPATaHqeUymt4V//79es+dfrTSQ9aYYGg=;
- fh=7UGIPE6lkGdU6fsPnBkfWzWTYRnchdV/MD6UOa7TNvM=;
- b=A7MGPpx2DPdxmN08Pnxm8TvicjpAd4LMupyIiSHOLgzZbjcSSxQLfXAg6ml4Dq8K+P
- 3zV1Q5Ncokgum9s2eIzs78yb/KqYH0hmK051kjkHxhH5NPu3mAxHYDC/+OqdOEdlx/aY
- KJfX4VcNMRZB0IBAskzTtigJesucQ2hf6cdUd/OszIisnzEh8QjyEckGGKz1CDGyc8JG
- jkmLpgQQnxfkydvmrVjB6i0WVmLuYzQLRBCiV93iV44THi9FxEbUrhk6aMqd5Yz8LzjI
- WHzsoN4lP5/VoTatsJZG8ruRlvA/33t1SiMEMI6o6bZRV5fYC+yqlgWDCTy8+nrKsEcq
- SHpg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=P8lfikykxm5siW13bDJwPXa8hrsDtJ/c5KLESjyJys0=;
+ fh=PkrySe7Iz6OkJaXSLqhvOT/1xZZtg64T259FluyFQxk=;
+ b=FbzaEp/6AEv+BjpUryIlvMrT9I5xZNnzYv5G7Hl2NECVJOZpTgxu1Ouq69CW49x1tk
+ b+lEFMNE8UN8t0kTODbghrjwSdsoH4mY0kHdX+5wFYfJa2EvCTEe4mhCtBVL7NBaTohn
+ UlT8WI6nPNkibYoh/rM4g9pF8oMrogwxRHeSI3KZ7aefZzhRGNZdhr8ZcdOupz6PZwNJ
+ PdXNCHec3bXkO94Xgj4DRYglyjrjWt5I0FCGnhLs20m9ZfI4GK92IlWU+zY3OAWV5YZH
+ gSa0dRV1tmWspWGxckpFYYVjIoPpe9VmtK4vt6wfKeI0OKZ3wXZu2YQjbQPPWz+mVu82
+ XS5w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776317691; x=1776922491; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ExzvDa+TdHIPATaHqeUymt4V//79es+dfrTSQ9aYYGg=;
- b=S8C8BXmWkEhrY5muoBKCaxH/VuwlsSbf3BZ1UXmIc41qVsDTkOVdtp+/tgXuMib67g
- 3VY6y+2NVG6oe93NN3btSJCjA6np0nBwpA0gdguvgPay0RUW6QG1CpOEV+E/b1/IxJyI
- IdeCU6lazG+REDoDYqcyyVY4itpmKtkLfcW/UNNPUCRjXL9UbcjEtv4JMKwXqWZ2C7y8
- v3JgeioAM+Sx3zQvgzJxJXLD5fSqLGA3pQpnvN21EbSZhPx6evmz1maZb5HU5nX1KQPD
- y+y6aAaEtOPtsfduWp7AXOm9+ET56UuRoormKs+TMEH+UcrP3XiRCGQ1JXJj3jBbMB01
- 7ZKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776317691; x=1776922491;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1776318091; x=1776922891; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ExzvDa+TdHIPATaHqeUymt4V//79es+dfrTSQ9aYYGg=;
- b=TJhyeexzUK6oxhwXKPKFtoGuh7NSJc0/Ey0NplyEs9OhuGfRoQDEcXrjilOLV2vtXm
- q0iswL4MbSZ7gKzXxGtwaezpOMczUc5o9l2K/zGuyM+iym6VHAonk51gQ1AdDbRAjogx
- LujzRMNCLS/9B4bSSSUgBuQVCAqqhUC5URl27kJLTjXjJ1yRwv/mKrZmuiwZbx2LVs2h
- ic85PjZTZczkNNn7t8XLd/OIs6B10/3rUjxORn7mIYepizgY/cSki9RG2wnEbCMypRLD
- NTN4xwqzwgrPYrLky49ddCw4Mn9F2ZVg4ZaLPYOB1zFF5NI9opQn4/mWxAQooB4XadqW
- VERQ==
-X-Gm-Message-State: AOJu0Yx7WazpuVnRiQiGiOLzUPlTWNGcDQqhLyRDzmhUA+pJk1TOR6iH
- BtWqK6KHM9GTlRG9aIjfP+quqU4R1pzdNtBTifKmBVQ5o9JRO3MEObireLjVJwhXXMdpQaaQjSE
- 4umSLzVDXM+tbLhkps+wgdXlVgb4XIe7I2Vc+lPDHAw==
-X-Gm-Gg: AeBDievIVoHXR2wPykOoSTtdi//Vss2DTY7i/oVUtsRz8qZS+a855+4trWgReqH/vCn
- DgKs0jRnFJ6UbPk/YSnVkIDQ/lvduc6onVXs0mnvIlZE6u6jQlcqYm2mD3Y5ExlaXO/N1l1Pin7
- NzjBadCOoGBR2S+KHeKxpoG3UTx1PsSUHKZnBWeamzzVSl+v+mF9sc8ka76K/PGSlWVrWSFI6xB
- Pl84a2KDXjkCPClFVhiHppY1koKo335NPS+U2WEJzfye474DHzyh7m7nz7+ZJQh6TIbLnr9rwZi
- RPhN8z41ETjNS9OcbBTD/tkw3c1bG+ORzGlHB+qTNbpZjP+5Zwn63Uvgs0BvJhYYmA2VzFei2WY
- PTA6n1qHN662I3fc14GcsazCfa0BnDwegeHVLGNJ2sYp7wh9fqCvp5QBEc7GtgyJKlQkrwrGY1/
- NZ0f6AAW5lmJXs/aBNYaRhnWaqXkGOxY3iBPy705tOmgpd2rxMAcKy0llSxvmKVkSSEcQmNURGs
- Ue90J6V6/r2j5+OrpUb0dhkxN9uT9kxFD4aRde3yEenMCaKV+FM6A65zxXfSVhEJ/1s+IEDC0R0
- b0WywDob7/b718VLhfJaQTSZTwd2fx999taz5S03e2Yb
-X-Received: by 2002:a05:690e:419a:b0:650:1d24:2adc with SMTP id
- 956f58d0204a3-652f654b5f4mr1460837d50.42.1776317691464; Wed, 15 Apr 2026
- 22:34:51 -0700 (PDT)
+ bh=P8lfikykxm5siW13bDJwPXa8hrsDtJ/c5KLESjyJys0=;
+ b=XoOABbt/l2huyHaII0AyuzkohGlxPXL0irEMxDUZhtNEMVPx9lPefYr9vuntfJImVf
+ BpUxWHEge8LT4uyXjmsxZYOmm8j2YkeM3JyknEBqAUWBEdJHKwdraYmGqmnj/QxwGJta
+ UIJL9jUxXPrsCj8sFMy3hh+lzDntImdfdubyyZKP2OOHPYB9AfnMAYtNvuh7kilocJmk
+ Cca2ghGDHRTe9/flEIWDDzaY1Wz887yMxzdGsG8HQI3LhiG5+F00nf/pTUS54VJwfib4
+ LSxt4ovmc0Yd4IPIn0Gy23GERKyj2z6avvlgH6MxmLSeAlLF0kZBMuLmzvh4yfsj/gNL
+ XoyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776318091; x=1776922891;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=P8lfikykxm5siW13bDJwPXa8hrsDtJ/c5KLESjyJys0=;
+ b=Vz3bB9tSvemsme0cB7FeDVTCGePhKO8TTx8WLdwPLF6a1LeTtYsvgQQ8VSi7xQn3RO
+ /8QVtKhEW4cQgrprAXFO63UAXOiNY0PDP1s2rMydSnrYgluaLWuJDv9UaDAOnSLkvBxO
+ CCQZQfo1qYe3VOF3pq5FU1j+iLvMaKjg+xRG+g7Yul3F5GDkPvHsFBHUiDRhiBN7H808
+ U5V7trUFlrMt0DOFsFQD1KEJHkxXQGFZS5loEsxn6Ovo87WevtJVYRTMNUjSQFwJwEbW
+ nDunTjThkzVV0Pv7ACcan6h/PTavIcytLR660kk/DowjLkL7K79fsFhuqhalOg0QDByA
+ o4zw==
+X-Gm-Message-State: AOJu0Yxm/ExakqlK9iguVEnXdFo8H18PXqrCTUOXOmikvJAsfvR7roX0
+ GokLMXR1g0PVme8pzrFAK9ls7ggyZAABYZM670YjzZ+5n7UUp0L9TZ6F4t8WGbQSo2ezZ9llDDD
+ cOX0IWK1VYSzJ/vPmNhAwpvGZ2TWbo5MDVATFY3BB65656UOzQ6m4NBW4abC5sk/uKo0tz591A+
+ l+JlHFIln8Ytd7GAFNz+HqBlepRD8yWxoG
+X-Gm-Gg: AeBDieu25tvYhZLPqWyd+pwt645Jx7aVxpESpojhk0uZsaaiI2HLUfi3Vjxfmr+0N28
+ RnvRdoxuimAvs5bdsTBMeMuJRfdJ9Qsl/e0FngCQgdEFgxlmDLMClP4Xn4nq/fK6t2kQ6e+PRvv
+ +erAeoI0UWw75Xa/1d3XeFtGGLO0pY6e9AK6QqwQDRP6rxnzKujdol3r9Wx+qMf2BhT1zGw7p2V
+ CIybqA=
+X-Received: by 2002:a05:7022:389:b0:12b:f8f0:80c7 with SMTP id
+ a92af1059eb24-12c34eed8d6mr12530997c88.21.1776318090498; 
+ Wed, 15 Apr 2026 22:41:30 -0700 (PDT)
+X-Received: by 2002:a05:7022:389:b0:12b:f8f0:80c7 with SMTP id
+ a92af1059eb24-12c34eed8d6mr12530983c88.21.1776318089895; Wed, 15 Apr 2026
+ 22:41:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1776231967.git.jan.kiszka@siemens.com>
- <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
-In-Reply-To: <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
-From: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Date: Thu, 16 Apr 2026 08:34:15 +0300
-X-Gm-Features: AQROBzCZ9qkUJNdFd-Vyeo9GWs80LjHQyX3n1l4cDVbFRN4tXHykBUOntWrPWso
-Message-ID: <CAC_iWj+VFo67zaRjE93aUwn7jp2A=_WMCsMOicH_7Z8uPKjj+w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/sd/sdcard: Add support for pre-setting the
- authentication key
-To: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>, 
- Jerome Forissier <jerome.forissier@linaro.org>,
- Jens Wiklander <jens.wiklander@linaro.org>
+References: <20260408042149.1902796-1-brian.cain@oss.qualcomm.com>
+ <20260408042149.1902796-4-brian.cain@oss.qualcomm.com>
+ <9e3d8ee8-0988-48dc-8cd9-938a21c7dcb2@linaro.org>
+In-Reply-To: <9e3d8ee8-0988-48dc-8cd9-938a21c7dcb2@linaro.org>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Thu, 16 Apr 2026 00:41:13 -0500
+X-Gm-Features: AQROBzAKTFiaUWc5V1XsibzxIiGSn8PY8qljPW3MX1rfnVjsecWjhjoi9g0pbOY
+Message-ID: <CAEqNhNbxfzMtGEHpiriShRNq=R0JReH+32RTD9B57tt3qx9PtQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/9] hw/hexagon: Add machine configs for sysemu
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, ltaylorsimpson@gmail.com,
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Mike Lambert <mlambert@quicinc.com>, Sid Manning <sidneym@quicinc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=ilias.apalodimas@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=A7Zc+aWG c=1 sm=1 tr=0 ts=69e0768b cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=DJpcGTmdVt4CTyJn9g5Z:22 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=20KFwNOVAAAA:8
+ a=EUspDBNiAAAA:8 a=RRKGVEWSvAwmeymheLQA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: BTV4GxY2H3Azx1mcT5gGnJTYcHI_9Bjs
+X-Proofpoint-GUID: BTV4GxY2H3Azx1mcT5gGnJTYcHI_9Bjs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDA1MSBTYWx0ZWRfX8yPEfS0cIXYg
+ lYhF3oAs3DI3es2e8tieWLxewfXgin+l53TLaCdvMu5Z8+B5HehYsmAHDrYcgttxNKlv3hg/kZv
+ 30g3WU6VPhnvV4ZCyhnGe/IP526cnvcjHM0+O0qmFTsxcORou+lI1LKGpYM7yuwoAfpJ7mwRFLg
+ Tbpzyf5JzKEoFTsLzjhpGrGv4PKipZBePoVfOz45NYqzm1yhSBC2KvXWgQUop4bwvtrg/nqEfFo
+ 2gnw0cJEZH5q11CAvmfxUgnTOpYZNWEf4ntiObcXq0Tg1frAn7Zy/AoG/KRNni17pSZIeJiAheD
+ AomVOLCyd+hsA96OJKeSG3hFaASDXmccnP8r4vccKafGPS75WDNLH8+kt/IRtnINCPo6pwIzn9D
+ 31ivSPNpHKKPlFzpl3wj0wvc62Va5AU2RlydC32o2X0adlKyH2aFgwM2fgtLHi2iCiXTdw7mnGr
+ 4mbNZ5xBE/F1JKrxs2w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-16_01,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 adultscore=0 bulkscore=0 priorityscore=1501
+ phishscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604160051
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,86 +171,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 Apr 2026 at 08:46, Jan Kiszka <jan.kiszka@siemens.com> wrote:
+On Thu, Apr 9, 2026 at 4:00=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
 >
-> From: Jan Kiszka <jan.kiszka@siemens.com>
+> Hi Brian,
 >
-> In contrast to real eMMCs, we are not (yet) persisting the full state
-> of the device. This particularly includes the authentication key used
-> for RPMB access, complicating testing of firmware images which do not
-> support initial provisioning of the key.
+> On 8/4/26 06:21, Brian Cain wrote:
+> > From: Brian Cain <bcain@quicinc.com>
+> >
+> > Some header includes are modified here: these are uniquely required for
+> > basic system emulation functionality and had not been required for linu=
+x-user.
+> >
+> > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > Co-authored-by: Mike Lambert <mlambert@quicinc.com>
+> > Co-authored-by: Sid Manning <sidneym@quicinc.com>
+> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> > ---
+> >   MAINTAINERS                            |   2 +
+> >   include/hw/hexagon/hexagon.h           | 150 +++++++++++++++++++++++
+> >   hw/hexagon/machine_cfg_v66g_1024.h.inc |  64 ++++++++++
+> >   hw/hexagon/hexagon_dsp.c               | 161 ++++++++++++++++++++++++=
++
+> >   system/qdev-monitor.c                  |   2 +-
+> >   target/hexagon/translate.c             |   1 +
+> >   hw/Kconfig                             |   1 +
+> >   hw/hexagon/Kconfig                     |   5 +
+> >   hw/hexagon/meson.build                 |   6 +
+> >   hw/meson.build                         |   1 +
+> >   10 files changed, 392 insertions(+), 1 deletion(-)
+> >   create mode 100644 include/hw/hexagon/hexagon.h
+> >   create mode 100644 hw/hexagon/machine_cfg_v66g_1024.h.inc
+> >   create mode 100644 hw/hexagon/hexagon_dsp.c
+> >   create mode 100644 hw/hexagon/Kconfig
+> >   create mode 100644 hw/hexagon/meson.build
 >
-> One way to address this would be, e.g., extending the eMMC disk image
-> with a special sector to store further state. A simpler approach is used
-> here: Add another device property that allows to specify the
-> authentication key, bringing up the eMMC as if the key has already been
-> provisioned before.
 >
-> This is how to tell qemu to use the OP-TEE test key:
+> > diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> > index ae980c087f0..15258a203b3 100644
+> > --- a/target/hexagon/translate.c
+> > +++ b/target/hexagon/translate.c
+> > @@ -32,6 +32,7 @@
+> >   #include "translate.h"
+> >   #include "genptr.h"
+> >   #include "printinsn.h"
+> > +#include "exec/target_page.h"
 >
-> -device emmc,[...],auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
->
-> Or use this for machine-configured eMMCs:
->
-> -global emmc.auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
->
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> Why? Rebase left-over?
 
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Will be removed.
 
-> ---
->  hw/sd/sd.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
 >
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 37f6e0702b..13ea54df38 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -205,6 +205,7 @@ struct SDState {
->      QEMUTimer *ocr_power_timer;
->      uint8_t dat_lines;
->      bool cmd_line;
-> +    char *preset_auth_key;
->  };
+> >   #define HELPER_H "helper.h"
+> >   #include "exec/helper-info.c.inc"
 >
->  static void sd_realize(DeviceState *dev, Error **errp);
-> @@ -3132,6 +3133,27 @@ static void sd_realize(DeviceState *dev, Error **errp)
->                            "The RPMB partition size must be multiples of 128K"
->                            "and not larger than 16384K.\n");
->      }
-> +    if (sd_is_emmc(sd) && sd->preset_auth_key) {
-> +        if (strlen(sd->preset_auth_key) != 64) {
-> +            error_setg(errp,
-> +                       "Authentication key must be 32 bytes long, "
-> +                       "encoded hexadecimally");
-> +            return;
-> +        }
-> +
-> +        char *pos = sd->preset_auth_key;
-> +        unsigned int n;
-> +        for (n = 0; n < RPMB_KEY_MAC_LEN; n++, pos += 2) {
-> +            int chrs;
-> +            if (sscanf(pos, "%02hhx%n", &sd->rpmb.key[n], &chrs) != 1 ||
-> +                chrs != 2) {
-> +                error_setg(errp,
-> +                           "Authentication key contains invalid characters");
-> +                return;
-> +            }
-> +        }
-> +        sd->rpmb.key_set = 1;
-> +    }
->  }
 >
->  static void emmc_realize(DeviceState *dev, Error **errp)
-> @@ -3156,6 +3178,7 @@ static const Property emmc_properties[] = {
->      DEFINE_PROP_UINT64("boot-partition-size", SDState, boot_part_size, 0),
->      DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
->      DEFINE_PROP_UINT64("rpmb-partition-size", SDState, rpmb_part_size, 0),
-> +    DEFINE_PROP_STRING("auth-key", SDState, preset_auth_key),
->  };
+> > diff --git a/hw/hexagon/Kconfig b/hw/hexagon/Kconfig
+> > new file mode 100644
+> > index 00000000000..7b9577f68f7
+> > --- /dev/null
+> > +++ b/hw/hexagon/Kconfig
+> > @@ -0,0 +1,5 @@
+> > +config HEX_DSP
+> > +    bool
+> > +    default y
+> > +    depends on HEXAGON && TCG
 >
->  static void sdmmc_common_class_init(ObjectClass *klass, const void *data)
-> --
-> 2.47.3
+> No need to check for TCG.
 >
+> > +    imply PTIMER
+>
+> Usually you want "select" here, not "imply", but
+> I don't see any PTIMER code being used.
+
+Thanks - I will include fixes for these in v5.
 
