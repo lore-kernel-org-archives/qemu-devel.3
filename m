@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BAEF43841
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 07:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9FCF8A140
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 07:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDHWo-0002PS-Ru; Thu, 16 Apr 2026 03:52:50 -0400
+	id 1wDHZf-0003fZ-6m; Thu, 16 Apr 2026 03:55:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1wDHWg-0002Mi-0u; Thu, 16 Apr 2026 03:52:38 -0400
-Received: from mail.avm.de ([212.42.244.120])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1wDHWd-0002En-8M; Thu, 16 Apr 2026 03:52:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
- t=1776325948; bh=+rQ6Mq8t9Ww7ybN73ZkZJV/J3RecsSjVW13aI7EZTJY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=lrx8xnsnEqRw6/yBtlo/q+VXeP7tkeXFU/e7l3D8WBaTcR79+zEnzZhrV8xAbnhGA
- 2ZGKEH/rCcTVdLKAuSJKyAGNa0T5LmxVBAp/4z4wjkDE2qVUl+cxHBQ4krQCoVGmPb
- PL0LCh1hgyi6UDHimDOhBH1dpC5I4Sihwk5gcFCk=
-Received: from [172.16.0.1] (helo=mail.avm.de)
- by mail.avm.de with ESMTP (eXpurgate 4.55.2)
- (envelope-from <c.speich@avm.de>)
- id 69e0953c-044c-7f0000032729-7f000001b078-1
- for <multiple-recipients>; Thu, 16 Apr 2026 09:52:28 +0200
-Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
- by mail.avm.de (Postfix) with ESMTP;
- Thu, 16 Apr 2026 09:52:28 +0200 (CEST)
-Received: from l-cspeich ([172.17.89.139])
- by mail-notes.avm.de (HCL Domino Release 14.0FP4)
- with ESMTP id 2026041609522884-1496 ;
- Thu, 16 Apr 2026 09:52:28 +0200 
-Date: Thu, 16 Apr 2026 09:52:27 +0200
-From: Christian Speich <c.speich@avm.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v3 4/6] hw/sd/sdhci: Don't use bounce buffer for ADMA
-Message-ID: <t4mncbf2hpzecg23tmuu3rd7ha4zs7fftqyk54n7cfqltk66hw@gnnqucv72rbk>
-References: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
- <20260204-sdcard-performance-b4-v3-4-dc1cf172ee57@avm.de>
- <4e0536d5-d7a8-45f7-b2b2-bff9fe2d92cc@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDHZd-0003fI-4j
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:55:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDHZZ-0003Wl-QV
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:55:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776326136;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3ui3KwYRDAXYSUkrNOPvTawAC6r2BCuYBTBt9t5YU5o=;
+ b=Y4kYas64/zpl0mQx6TbNWNkaUeuj2NAWzFMUIkdKUWnJWuQdxrBQv5Tvc5QPIbweLJtxL3
+ YaYsWQOgHSp1e0q8ZPQxlqi+Vk1J9FA8/7/x5koqWOsZfs6YQeuUHrqHgFPhAYXOhttxoG
+ 1SXP8odNVgae0gzFXRX9Qcmm66EtofI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-cyNR74i6NvWB1Oxn0RU4EA-1; Thu,
+ 16 Apr 2026 03:55:30 -0400
+X-MC-Unique: cyNR74i6NvWB1Oxn0RU4EA-1
+X-Mimecast-MFC-AGG-ID: cyNR74i6NvWB1Oxn0RU4EA_1776326129
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0760195608B; Thu, 16 Apr 2026 07:55:29 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0AB7195608E; Thu, 16 Apr 2026 07:55:27 +0000 (UTC)
+Date: Thu, 16 Apr 2026 08:55:24 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Mitsuya Ikuya =?utf-8?B?KOS4ieODhOWxiyDpg4Hlk4kp?=
+ <mitsuya.ikuya@jp.panasonic.com>, 
+ KUZU KAZUKI =?utf-8?B?KOiRm+eUnyDkuIDmqLkp?= <kuzu.kazuki@jp.panasonic.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] virtio: Add vhost-user-rtc and vhost-user-rtc-pci
+Message-ID: <aeCV0CAJctvKKylx@redhat.com>
+References: <20260416-vhost-user-rtc-v1-1-1b2d44f0c889@linaro.org>
+ <aeCNR5CmtcbuNRm_@redhat.com>
+ <CAAjaMXbUBka_r-=vP-gvywS9CqT6F-0q+x5G5qx3PUmRgbmLgQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <4e0536d5-d7a8-45f7-b2b2-bff9fe2d92cc@linaro.org>
-X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
- 2025) at 16.04.2026 09:52:28,
- Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
- 16.04.2026 09:52:28, Serialize complete at 16.04.2026 09:52:28
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-purgate-ID: 149429::1776325948-71FF9960-689643FA/0/0
-X-purgate-type: clean
-X-purgate-size: 4910
-X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
-X-purgate: This mail is considered clean (visit https://www.eleven.de for
- further information)
-X-purgate: clean
-Received-SPF: pass client-ip=212.42.244.120; envelope-from=c.speich@avm.de;
- helo=mail.avm.de
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAAjaMXbUBka_r-=vP-gvywS9CqT6F-0q+x5G5qx3PUmRgbmLgQ@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,114 +92,321 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 14, 2026 at 03:51:24PM +0200, Philippe Mathieu-Daud� wrote:
-> On 4/2/26 14:22, Christian Speich wrote:
-> > Currently, ADMA will temporarily store data into a local bounce buffer
-> > when transferring it. This will produce unneeded copies of the data and
-> > limit us to the bounce buffer size for each step.
-> > 
-> > This patch now maps the requested DMA address and passes this buffer
-> > directly to sdbus_{read,write}_data. This allows to pass much larger
-> > buffers down to increase the performance. sdbus_{read,write}_data is
-> > already able to handle arbitrary length and alignments, so we do not
-> > need to ensure this.
-> > 
-> > Signed-off-by: Christian Speich <c.speich@avm.de>
-> > ---
-> >   hw/sd/sdhci.c | 102 +++++++++++++++++++++++++++++++---------------------------
-> >   1 file changed, 55 insertions(+), 47 deletions(-)
-> > 
-> > diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> > index c86dfa281f4b0218bf6dda7a38d46abfc9638450..6e07711478cb6ca046a7d371a82e2c682ebbda00 100644
-> > --- a/hw/sd/sdhci.c
-> > +++ b/hw/sd/sdhci.c
-> > @@ -775,7 +775,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
-> >   static void sdhci_do_adma(SDHCIState *s)
-> >   {
-> > -    unsigned int begin, length;
-> > +    unsigned int length;
-> >       const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
-> >       const MemTxAttrs attrs = { .memory = true };
-> >       ADMADescr dscr = {};
-> > @@ -817,66 +817,74 @@ static void sdhci_do_adma(SDHCIState *s)
-> >               if (s->trnmod & SDHC_TRNS_READ) {
-> >                   s->prnsts |= SDHC_DOING_READ;
-> >                   while (length) {
-> > -                    if (s->data_count == 0) {
-> > -                        sdbus_read_data(&s->sdbus, s->fifo_buffer, block_size);
-> > -                    }
-> > -                    begin = s->data_count;
-> > -                    if ((length + begin) < block_size) {
-> > -                        s->data_count = length + begin;
-> > -                        length = 0;
-> > -                     } else {
-> > -                        s->data_count = block_size;
-> > -                        length -= block_size - begin;
-> > -                    }
-> > -                    res = dma_memory_write(s->dma_as, dscr.addr,
-> > -                                           &s->fifo_buffer[begin],
-> > -                                           s->data_count - begin,
-> > -                                           attrs);
-> > -                    if (res != MEMTX_OK) {
-> > +                    dma_addr_t dma_len = length;
-> > +
-> > +                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
-> > +                                               DMA_DIRECTION_FROM_DEVICE,
-> > +                                               attrs);
-> 
-> We know the descriptor is a consecutive range. Couldn't we map/unmap
-> outside of the while() loop? (Ditto write path).
-
-The loop is there to handle dma_memory_map mapping less that we've requested. I'm not
-really sure if there are any guranteed cases where it always maps the requested length
-fully (at least there are non in the dma_memory_map doc string).
-
-Iff this is guranteed to always map the requested length, we could remove the whie()
-loop completly.
-
-Kind Regards,
-Christian
-
-> 
-> > +
-> > +                    if (buf == NULL) {
-> > +                        res = MEMTX_ERROR;
-> >                           break;
-> > +                    } else {
-> > +                        res = MEMTX_OK;
-> >                       }
-> > -                    dscr.addr += s->data_count - begin;
-> > -                    if (s->data_count == block_size) {
-> > -                        s->data_count = 0;
-> > -                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
-> > -                            s->blkcnt--;
-> > -                            if (s->blkcnt == 0) {
-> > -                                break;
-> > -                            }
-> > +
-> > +                    sdbus_read_data(&s->sdbus, buf, dma_len);
-> > +                    length -= dma_len;
-> > +                    dscr.addr += dma_len;
-> > +
-> > +                    dma_memory_unmap(s->dma_as, buf, dma_len,
-> > +                                     DMA_DIRECTION_FROM_DEVICE, dma_len);
-> > +
-> > +                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
-> > +                        size_t transfered = s->data_count + dma_len;
-> > +
-> > +                        s->blkcnt -= transfered / block_size;
-> > +                        s->data_count = transfered % block_size;
-> > +
-> > +                        if (s->blkcnt == 0) {
-> > +                            s->data_count = 0;
-> > +                            break;
-> >                           }
-> >                       }
-> >                   }
-> >               } else {
+On Thu, Apr 16, 2026 at 10:23:12AM +0300, Manos Pitsidianakis wrote:
+> On Thu, Apr 16, 2026 at 10:18 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> >
+> > Missing commit message.....
 > 
 > 
+> Commit title is self-explanatory.
+
+The unusual authorship/copyright situation requires explanation in the
+commit message
+
+> > On Thu, Apr 16, 2026 at 08:54:40AM +0300, Manos Pitsidianakis wrote:
+> > > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > ---
+> > >  include/hw/virtio/vhost-user-rtc.h        | 22 ++++++++++
+> > >  MAINTAINERS                               |  6 +++
+> > >  docs/system/devices/virtio/vhost-user.rst |  3 ++
+> > >  hw/virtio/Kconfig                         |  5 +++
+> > >  hw/virtio/meson.build                     |  3 ++
+> > >  hw/virtio/vhost-user-rtc-pci.c            | 70 +++++++++++++++++++++++++++++++
+> > >  hw/virtio/vhost-user-rtc.c                | 64 ++++++++++++++++++++++++++++
+> > >  7 files changed, 173 insertions(+)
+> > >
+> > > diff --git a/include/hw/virtio/vhost-user-rtc.h b/include/hw/virtio/vhost-user-rtc.h
+> > > new file mode 100644
+> > > index 0000000000000000000000000000000000000000..6b7b53c28f93032886d82687199585aba0edd917
+> > > --- /dev/null
+> > > +++ b/include/hw/virtio/vhost-user-rtc.h
+> > > @@ -0,0 +1,22 @@
+> > > +/*
+> > > + * Vhost-user RTC virtio device
+> > > + *
+> > > + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
+> >
+> > This commit is only signed off by yourself, as @linaro.org but the
+> > newest copyright is from Panasonic.  What is the situation with
+> > authorship here ?
+> >
+> > If it was co-authored by people from multiple companies then I'd
+> > expect to see multiple signed-off-bys, so that each company is
+> > represented.
+> 
+> 
+> It is authored solely by me for Panasonic, but based on existing
+> vhost-user devices I wrote in 2025, so the copyright is mixed.
+
+Please include that in the commit message.
+
+> 
+> 
+> >
+> > > + *
+> > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > + */
+> > > +
+> > > +#ifndef QEMU_VHOST_USER_RTC_H
+> > > +#define QEMU_VHOST_USER_RTC_H
+> > > +
+> > > +#include "hw/virtio/vhost-user-base.h"
+> > > +
+> > > +#define TYPE_VHOST_USER_RTC "vhost-user-rtc"
+> > > +OBJECT_DECLARE_SIMPLE_TYPE(VHostUserRTC, VHOST_USER_RTC)
+> > > +
+> > > +struct VHostUserRTC {
+> > > +    VHostUserBase parent_obj;
+> > > +};
+> > > +
+> > > +#endif /* QEMU_VHOST_USER_RTC_H */
+> > > diff --git a/MAINTAINERS b/MAINTAINERS
+> > > index ad215eced84d1ac58956ea374ee012acbb3cbd18..da6376b0f5e6fa99495504e88da9fef5a7a969e3 100644
+> > > --- a/MAINTAINERS
+> > > +++ b/MAINTAINERS
+> > > @@ -2573,6 +2573,12 @@ S: Maintained
+> > >  F: include/hw/virtio/vhost-user-spi.h
+> > >  F: hw/virtio/vhost-user-spi*
+> > >
+> > > +vhost-user-rtc
+> > > +M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > +S: Supported
+> > > +F: include/hw/virtio/vhost-user-rtc.h
+> > > +F: hw/virtio/vhost-user-rtc*
+> > > +
+> > >  virtio-crypto
+> > >  M: Gonglei <arei.gonglei@huawei.com>
+> > >  S: Supported
+> > > diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/devices/virtio/vhost-user.rst
+> > > index 2806d81ca201551a91246a10e0d98fd36d74200b..acfbd609d0f9c87e3af684797adf156a8a61bc88 100644
+> > > --- a/docs/system/devices/virtio/vhost-user.rst
+> > > +++ b/docs/system/devices/virtio/vhost-user.rst
+> > > @@ -61,6 +61,9 @@ platform details for what sort of virtio bus to use.
+> > >    * - vhost-user-spi
+> > >      - Proxy spi devices to host
+> > >      - `vhost-device-spi <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-spi>`_
+> > > +  * - vhost-user-rtc
+> > > +    - Real time clock
+> > > +    - `vhost-device-rtc <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-rtc>`_
+> > >
+> > >  The referenced *daemons* are not exhaustive, any conforming backend
+> > >  implementing the device and using the vhost-user protocol should work.
+> > > diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+> > > index 8895682c619402eb3c9cd7269d3319f39711b4bd..2ebdac16b31aec3ec283c0285a4dcfa67f0a5157 100644
+> > > --- a/hw/virtio/Kconfig
+> > > +++ b/hw/virtio/Kconfig
+> > > @@ -136,3 +136,8 @@ config VHOST_USER_TEST
+> > >      bool
+> > >      default y
+> > >      depends on VIRTIO && VHOST_USER
+> > > +
+> > > +config VHOST_USER_RTC
+> > > +    bool
+> > > +    default y
+> > > +    depends on VIRTIO && VHOST_USER
+> > > diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+> > > index 415e359e9fc79b6b1adbbcfc4f87a7106ef1d4a6..e0566a60de7989c4048956e268f151659467fe34 100644
+> > > --- a/hw/virtio/meson.build
+> > > +++ b/hw/virtio/meson.build
+> > > @@ -27,6 +27,7 @@ if have_vhost
+> > >      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files('vhost-user-snd.c'))
+> > >      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input.c'))
+> > >      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SPI', if_true: files('vhost-user-spi.c'))
+> > > +    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RTC', if_true: files('vhost-user-rtc.c'))
+> > >
+> > >      # PCI Stubs
+> > >      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_TEST'],
+> > > @@ -43,6 +44,8 @@ if have_vhost
+> > >                           if_true: files('vhost-user-input-pci.c'))
+> > >      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SPI'],
+> > >                           if_true: files('vhost-user-spi-pci.c'))
+> > > +    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_RTC'],
+> > > +                         if_true: files('vhost-user-rtc-pci.c'))
+> > >    endif
+> > >    if have_vhost_vdpa
+> > >      system_virtio_ss.add(files('vhost-vdpa.c'))
+> > > diff --git a/hw/virtio/vhost-user-rtc-pci.c b/hw/virtio/vhost-user-rtc-pci.c
+> > > new file mode 100644
+> > > index 0000000000000000000000000000000000000000..449368d27009acde20aa4af2542a912ac8b82cbc
+> > > --- /dev/null
+> > > +++ b/hw/virtio/vhost-user-rtc-pci.c
+> > > @@ -0,0 +1,70 @@
+> > > +/*
+> > > + * Vhost-user RTC virtio device PCI glue
+> > > + *
+> > > + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
+> > > + *
+> > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > + */
+> > > +
+> > > +#include "qemu/osdep.h"
+> > > +#include "hw/virtio/vhost-user-rtc.h"
+> > > +#include "hw/virtio/virtio-pci.h"
+> > > +
+> > > +struct VHostUserRTCPCI {
+> > > +    VirtIOPCIProxy parent_obj;
+> > > +    VHostUserRTC vdev;
+> > > +};
+> > > +
+> > > +typedef struct VHostUserRTCPCI VHostUserRTCPCI;
+> > > +
+> > > +#define TYPE_VHOST_USER_RTC_PCI "vhost-user-rtc-pci-base"
+> > > +
+> > > +DECLARE_INSTANCE_CHECKER(VHostUserRTCPCI, VHOST_USER_RTC_PCI,
+> > > +                         TYPE_VHOST_USER_RTC_PCI)
+> > > +
+> > > +static void vhost_user_rtc_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+> > > +{
+> > > +    VHostUserRTCPCI *dev = VHOST_USER_RTC_PCI(vpci_dev);
+> > > +    DeviceState *vdev = DEVICE(&dev->vdev);
+> > > +
+> > > +    vpci_dev->nvectors = 1;
+> > > +
+> > > +    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
+> > > +}
+> > > +
+> > > +static void vhost_user_rtc_pci_class_init(ObjectClass *klass, const void *data)
+> > > +{
+> > > +    DeviceClass *dc = DEVICE_CLASS(klass);
+> > > +    VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
+> > > +    PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
+> > > +    k->realize = vhost_user_rtc_pci_realize;
+> > > +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> > > +    pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
+> > > +    pcidev_k->device_id = 0; /* Set by virtio-pci based on virtio id */
+> > > +    pcidev_k->revision = 0x00;
+> > > +    pcidev_k->class_id = PCI_CLASS_SYSTEM_RTC;
+> > > +}
+> > > +
+> > > +static void vhost_user_rtc_pci_instance_init(Object *obj)
+> > > +{
+> > > +    VHostUserRTCPCI *dev = VHOST_USER_RTC_PCI(obj);
+> > > +
+> > > +    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
+> > > +                                TYPE_VHOST_USER_RTC);
+> > > +}
+> > > +
+> > > +static const VirtioPCIDeviceTypeInfo vhost_user_rtc_pci_info = {
+> > > +    .base_name = TYPE_VHOST_USER_RTC_PCI,
+> > > +    .non_transitional_name = "vhost-user-rtc-pci",
+> > > +    .instance_size = sizeof(VHostUserRTCPCI),
+> > > +    .instance_init = vhost_user_rtc_pci_instance_init,
+> > > +    .class_init = vhost_user_rtc_pci_class_init,
+> > > +};
+> > > +
+> > > +static void vhost_user_rtc_pci_register(void)
+> > > +{
+> > > +    virtio_pci_types_register(&vhost_user_rtc_pci_info);
+> > > +}
+> > > +
+> > > +type_init(vhost_user_rtc_pci_register);
+> > > diff --git a/hw/virtio/vhost-user-rtc.c b/hw/virtio/vhost-user-rtc.c
+> > > new file mode 100644
+> > > index 0000000000000000000000000000000000000000..88b0c70b903363fc9ac7ccb65a1b1755e095c6bc
+> > > --- /dev/null
+> > > +++ b/hw/virtio/vhost-user-rtc.c
+> > > @@ -0,0 +1,64 @@
+> > > +/*
+> > > + * Vhost-user RTC virtio device
+> > > + *
+> > > + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
+> > > + *
+> > > + * Simple wrapper of the generic vhost-user-device.
+> > > + *
+> > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > + */
+> > > +
+> > > +#include "qemu/osdep.h"
+> > > +#include "qapi/error.h"
+> > > +#include "hw/virtio/vhost-user-rtc.h"
+> > > +#include "standard-headers/linux/virtio_ids.h"
+> > > +
+> > > +static const VMStateDescription vu_rtc_vmstate = {
+> > > +    .name = "vhost-user-rtc",
+> > > +    .unmigratable = 1,
+> > > +};
+> > > +
+> > > +static const Property vrtc_properties[] = {
+> > > +    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+> > > +};
+> > > +
+> > > +static void vu_rtc_base_realize(DeviceState *dev, Error **errp)
+> > > +{
+> > > +    VHostUserBase *vub = VHOST_USER_BASE(dev);
+> > > +    VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
+> > > +
+> > > +    vub->virtio_id = VIRTIO_ID_CLOCK;
+> > > +    vub->num_vqs = 2;
+> > > +    vub->config_size = 0;
+> > > +    vub->vq_size = 1024;
+> > > +
+> > > +    vubs->parent_realize(dev, errp);
+> > > +}
+> > > +
+> > > +static void vu_rtc_class_init(ObjectClass *klass, const void *data)
+> > > +{
+> > > +    DeviceClass *dc = DEVICE_CLASS(klass);
+> > > +    VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
+> > > +
+> > > +    dc->vmsd = &vu_rtc_vmstate;
+> > > +    device_class_set_props(dc, vrtc_properties);
+> > > +    device_class_set_parent_realize(dc, vu_rtc_base_realize,
+> > > +                                    &vubc->parent_realize);
+> > > +
+> > > +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> > > +}
+> > > +
+> > > +static const TypeInfo vu_rtc_info = {
+> > > +    .name = TYPE_VHOST_USER_RTC,
+> > > +    .parent = TYPE_VHOST_USER_BASE,
+> > > +    .instance_size = sizeof(VHostUserRTC),
+> > > +    .class_init = vu_rtc_class_init,
+> > > +};
+> > > +
+> > > +static void vu_rtc_register_types(void)
+> > > +{
+> > > +    type_register_static(&vu_rtc_info);
+> > > +}
+> > > +
+> > > +type_init(vu_rtc_register_types)
+> > >
+> > > ---
+> > > base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
+> > > change-id: 20260416-vhost-user-rtc-ce8ff0377356
+> > >
+> > > --
+> > > γαῖα πυρί μιχθήτω
+> > >
+> > >
+> >
+> > With regards,
+> > Daniel
+> > --
+> > |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> > |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> > |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> >
+> 
+> 
+> 
+> --
+> Manos Pitsidianakis
+> Emulation and Virtualization Engineer at Linaro Ltd
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
