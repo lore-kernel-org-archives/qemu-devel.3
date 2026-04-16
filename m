@@ -4,109 +4,188 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67946F433FE
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 07:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6A8F8809D
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 07:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDH4l-0006LN-LS; Thu, 16 Apr 2026 03:23:47 -0400
+	id 1wDHVC-0001qx-VD; Thu, 16 Apr 2026 03:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wDH4j-0006LB-Hc
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:23:45 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wDH4g-0004NN-C7
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:23:44 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d572f7437so4799056f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 00:23:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776324220; cv=none;
- d=google.com; s=arc-20240605;
- b=Sc0/B/bxD4sQ65yD2Z9S9K1N6xNO2FfBKibHtg8v3M6ZgwMByzVjD4yk1j9ihKPSvZ
- tbLKOnz/ivlA/sIqA+AYV3j8Fw+JMj5xeryqQgVtSizXlSKv2qKp96//XwAKeCvibTaA
- 0GUL3QgtNuYrFzLV3Er3skWBq5YsGqos7PN6GCaBhebQ6iZ6I7Cf2bNuOLE5Y/rktHzo
- /ta+sXNNOIXRP1hIynt+lnvCJ6jzX6uRCTK4N5DwfTwWPh/fvu5Fyass1tEvJMaSIkxz
- dkxrG4mStLTJSvyFGfWddbKwxjGUhAbRtYfbFHkKOi+iYC9s6D6lqqhpSPtWWlgK4pqy
- wjVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=98VW48OvCZt4Y1KolkSz4s8/iC9l/QVZlDk3uXBYNS4=;
- fh=twGKalWFE6mAUg76ntPFb2qzAJ/rF1XSn+WP06v4Mko=;
- b=J/fhBzQag/fl/e5ZLPJfzjhqaDuinj8QApGQxjLcatIJMvmck6RInFquV0PUsr7Jlu
- 48AVOV4o1bkEJqw9yB/t0uZruxUEbVgUKeG3mLzWecfoQ6BBloWfQtVWx+4YvCyvrL0o
- 3DM0G/tPC1EKf8oE0zIaODXKJoClhyhun3pd6FHT39LcO0ctu96tUFtsi59l8I0AwAwt
- Quwn0tDJjtc7hhW2iDFpjKPopZF9SYYfjSP0EutiT+Ha1g8t1rXRjf8oQ1fZK+vq4cGV
- VRhXqkhyevmt0BIaIJ8Wpqt57WL4xa7Xsj0Fb2Blj2xSNmPqq78lk3rhDzAJ0418VA3P
- 2gXg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776324220; x=1776929020; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=98VW48OvCZt4Y1KolkSz4s8/iC9l/QVZlDk3uXBYNS4=;
- b=vQtwX7uMJP9Ud0mlO4UdNGaTRonsdPZ3JHaXXTPOkoabEwOTKasTd4/zD7kXfdTaOy
- KGGClk75V97FX1IEvb9PId/trtelM8YXKg4mryhF9n5hKwk9YhmLZv/dM0L8t8BcxoUv
- ahW9By41pHfmL1aivSOxAEpoWIFrT93MQz5FzHlpPai5XmWtTMzDDZ4NvbO0gkw4mi+Y
- MPsCXIPLenChLT8AwslWxIo1qbs+GDYhrXlbw9dApDIw0rfODMFh+VBZBbLoxKHi0qFj
- Ga7oKJp7TMtwlY790Rszk5zIdJzWxuXz3TdE7pJrx6SiLFgR/gt6ni5ruBtzlPHRE0BP
- MxzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776324220; x=1776929020;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=98VW48OvCZt4Y1KolkSz4s8/iC9l/QVZlDk3uXBYNS4=;
- b=fict0GDa0yIi9+3IerL28Yoqa/XiruzhasNctWOeapwB/rOSdJbRYhjzZ2hM1Jtjld
- ouQFeYDgzKelwzVH6q9f3FxJGxQVZVCvVmJpwW0Etk/hioVy9L2odANrJRD9O8iV3SZr
- q/t88YI1umdcRvhvKb6W1T4+WnMBk2juMG5WLfeiAblAIVvI6DkASDjm/yXU7U1x52w4
- ZhOEJx8jwjbq+jBDmC1o8Vp5k1CqKAZ95z28YA7/yAHBTyNZqkYQKYd8qOUZ2cQmHbaH
- d1y0PEk6BpCOkJdQw1/TJi7fdo5JR82ZXVEYPhHf8csy00xNGXaoizte+3UKx2fMQb1B
- 2ByA==
-X-Gm-Message-State: AOJu0YzzIiOEnc0y/dcJ6mY7fLe8lABqmhMcv8UVGGap/MBHafBRCIXj
- Q7v22rIbGYdGRAVvIw9o4A2uua/EUaA+U58u04BuSsoeZGUdpqz7omClD9q+87NoTGosaWp/lTm
- w6+tTKtqajEibEZa0nhaGh9rtDKjhsYZz7oCoa4g2MuSRI3qkICEwKWo=
-X-Gm-Gg: AeBDievxZdU4+wpQQdktV6D76iNlwGRHd6al1ZQYk5ekGU0J8lhwKlkwCXfA685U6Tk
- JXJAy35ovp1EDnOEntO0RQVetOnPAtAr49ErnqnyBXCtlS/MWGRfByxs7cFirzOYvWnF29Qoflq
- au4kh3BH2dZIxbrdg1DFIschHNeeHjIPXQ0SeIQRTBRYblZvTYW1Moi8i0NUkcY2ry8eC1v8XIF
- GviwGxy51xmRpgXmyoUJi0oQwm5Z6t6AAapbJdeA09VDZRzdPj/YArUVeWF8e8Y5czv7NwFu0u4
- Kl7sDB5AizxdwxENOonyW0kQit8/i2/i/5mhUS88ea10+9xl9d+Q
-X-Received: by 2002:a05:6000:400e:b0:43d:1c39:26fd with SMTP id
- ffacd0b85a97d-43d642dc79bmr37029675f8f.43.1776324220336; Thu, 16 Apr 2026
- 00:23:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1wDHV9-0001qK-Ra; Thu, 16 Apr 2026 03:51:05 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1wDHV8-0001oY-1M; Thu, 16 Apr 2026 03:51:03 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qO/YPzxyTaZ16l6j8Q/YEwaIEXzZYWLnygX+TIqE7gaKlLP3Yc14Noce/O2hlxJW9Dy8zNQTOQyoAuuyroU38A4hgbj88YfyQt1ruzhgyxJ68rQxwMcCBS2syLtPqNecCk2XlLupb/6wqszE65O5R7+Dn5NeWusP48BGtl/UH+auEX2RBZAEXHNUa9KrbkGR187nVoIi9zowNCUJQDG6qi1VSmAM8uaCQ2ORyeSGAMumIEEB2m7VPf3JHVFnHJRJ2wzzcD3dBubyjNurGkrK3eSmNQWMit6OInwp+/bQrcwvw8eCwy8rbOcdeVJ5SHUoU+E7i8gpeUTREcfdnHwRBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=T9wcQhMAuKu1TgaPR7td064UoKb6vv8x1x//KXsTfbM=;
+ b=UZhrEsuMx0aC0+O3OrgpWlgf5sAJFn8U6dCwpBpasDdzX4C/wTOt3AooyBGQYfqcx37lNKjoT0zwL1wnaSuSse7gryNtd1wLHKuniQpDC6AEmTO0LdUiy+DVfoO2Y/VB4CUSmvVB5+ddre0YAlYV+5hhYVQheDTfFyXKZwRXGhHs1BX//MxvL4OipryVxKhIaOWiOmGCmmAPtwVFD5u21K3KDW7L4LOwo5SE5WuyFuBrBXO/1WEG79OkNN0SDBczlIKBmWe8UdiKcS+YiY5tYv3QPWBi5pOWynlSIX2jpH8TbwcZRcesmdTYVjcHOdmmrqH9dQkwTWutYttcl5HlIQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=T9wcQhMAuKu1TgaPR7td064UoKb6vv8x1x//KXsTfbM=;
+ b=q6z/8E55GZrh0GkWIhKzK+r6SbjGRxecanegznDFZ69GHIY1u+Bv/ni6blokmfcYh1upRV4f7CzuVoC5UOBK54viAffQ3qXXNY9fFsJ4jo24oIvjMZVsnnUSi4QypqNDs9cKsPi3bSRscju7S+yxbqI0yhzzuU3uVg6l/UL3wxDGIkRgHwOI+q9NiMqwXP0JKZCoqnrjQ+Cm+gdAqvNR7jYXEDs61WtjqXOU92B6coZY+CfU53Lx519fCAB7w1POBA5dWF8BMSFOSrzHPWeIzFG9yJlxtEWaqHv6foPXQaTuwDMQSqlfxJXslnFb96gPJpCz/thfdDjOtIFLDMCohA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:588::19)
+ by AS2PR10MB7801.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:64a::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Thu, 16 Apr
+ 2026 07:50:53 +0000
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::be9f:e8ca:ee9:83e1]) by AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::be9f:e8ca:ee9:83e1%3]) with mapi id 15.20.9769.046; Thu, 16 Apr 2026
+ 07:50:52 +0000
+Message-ID: <60d47301-08f4-44e9-9cd6-2a12bb9e56de@siemens.com>
+Date: Thu, 16 Apr 2026 09:50:50 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] hw/sd/sdcard: Add support for pre-setting the
+ authentication key
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Jens Wiklander <jens.wiklander@linaro.org>
+References: <cover.1776231967.git.jan.kiszka@siemens.com>
+ <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
+ <d68f975d-0450-4928-b758-bea1e657eae7@linaro.org>
+Content-Language: en-US
+From: Jan Kiszka <jan.kiszka@siemens.com>
+Autocrypt: addr=jan.kiszka@siemens.com; keydata=
+ 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
+In-Reply-To: <d68f975d-0450-4928-b758-bea1e657eae7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR2P281CA0176.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:9f::14) To AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:588::19)
 MIME-Version: 1.0
-References: <20260416-vhost-user-rtc-v1-1-1b2d44f0c889@linaro.org>
- <aeCNR5CmtcbuNRm_@redhat.com>
-In-Reply-To: <aeCNR5CmtcbuNRm_@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 16 Apr 2026 10:23:12 +0300
-X-Gm-Features: AQROBzD0cWyfCmVPwiu8jWzAHo3-0BZ-DiXYpKjDRO_HMZ0UI8P4tPKd9zSzDok
-Message-ID: <CAAjaMXbUBka_r-=vP-gvywS9CqT6F-0q+x5G5qx3PUmRgbmLgQ@mail.gmail.com>
-Subject: Re: [PATCH] virtio: Add vhost-user-rtc and vhost-user-rtc-pci
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- =?UTF-8?B?TWl0c3V5YSBJa3V5YSAo5LiJ44OE5bGLIOmDgeWTiSk=?=
- <mitsuya.ikuya@jp.panasonic.com>, 
- =?UTF-8?B?S1VaVSBLQVpVS0kgKOiRm+eUnyDkuIDmqLkp?=
- <kuzu.kazuki@jp.panasonic.com>, Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS4PR10MB6181:EE_|AS2PR10MB7801:EE_
+X-MS-Office365-Filtering-Correlation-Id: 12354120-a040-4616-78fc-08de9b8ce1f0
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|18002099003|22082099003|56012099003|55112099003;
+X-Microsoft-Antispam-Message-Info: jrk3fGvXsVFSEJNlCnS4hWqh0Sk9eWTVXYsbpbPsC+NKPRd97r6XlxX2qPdGgEf9c+a31cDfIH07YYZ0r8syxakX7QLUHzEm9/eH2lPoGW0v7V2MceIiHqM+WD4/RAauqyiTRhP23EVOnADSyzwI7j6efeW+ZH0iNlONycz+kOesAkYjjasrZSl3+ErpWVMGymFRJpEhopeRVCb8tPNj1sk++t22nPM15Qx4oQ+DKzSWVz7exP0y1iHvIE63A7zA+JVaRgv0tTrHX/WZKweB6LQEnO1izBxw8GB3JGS9yt6qM+JSMRlCmr9jZUhwPP9gv2QTnV+jl/hMGdNdpseD124kEahEfQpHbql1gITNhqXz71eFHMplWCfyv75z967aclCn3smAW65mVgGWSLd2UWBS8S3cdOnUn0ZaK2o17uYN3D6rjGDFG8EvilPkju1KNBIvdj7tvKycJqTkjGlZ5mL28NV/TpaUsbxBtgHDy5i5n/NyelOCWUK4ju0q0rtHmz+rt1mXUaG/QDPGJNGWfSM/0qYtfFhoVbIloLVshkkMM24Q1d1yWPPz93iJY6crbXdP7vBQh4SbxtRXtP19wY2ZebO2NT+E5iiSWEVjL8utXyFnViUFu/C5Hj8WWFCFadIwJliHc+3qD5cCNMzYXfpM4/9RUSt2bq+mvwIUU7rNi0Qq8LsOCUZk1vkf4gjmbgQLM8bVEfAqF9gwE4xTCvb6GhQbMKTm8QYikYjL+h0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(18002099003)(22082099003)(56012099003)(55112099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dVVYOCtxdU5ZZG5yK3NUK2FDSlRpRmFVVTFSdlRUc21SZXBsdXd4bmdYWUJv?=
+ =?utf-8?B?ZG50U0pIWTdFYUg1WVJkVEFndlI1alpJM1NtUG5aVmlSVTFWT0FPaGxIbHQ3?=
+ =?utf-8?B?OXl5YloyR2dyVWtXbUs5enVZNTBRVi9OUmh3WkVjWDNmczJRRm44aCtiUjVG?=
+ =?utf-8?B?Wmhma0hsNExsVTlCYk1QOVBsK2dPYTQ4MHZzT3ZQY2xTdWNhYmZtUUYzeVkz?=
+ =?utf-8?B?Rkxpdkl6WHhubFFjS3VncUNaRXYvMHhmdmUwclZ3bGxiSmxtbHExOHgvckpn?=
+ =?utf-8?B?S3J3NW1XNDRhYTUvbFNVeER1QXlmaDNISkZhR1BQS2NjQ0x0aEY2V3I2Y1Iy?=
+ =?utf-8?B?cnBSZVFDWlM0N2ZROU9oSW5vNG1RbS9LeC9EUHdkOFpuSTBmMGdvNjkxdkQ2?=
+ =?utf-8?B?c3VxTzJyU0F6NndSekMwWjNERm83Y3E2eVJvU25ybmFvZzNqZHprdUhnMFBK?=
+ =?utf-8?B?aHZMQmtWWDg3aTBNc2R5WkpqSmJTczhadWFBSTJ2YW5ZUTBSRllvbm9mb1lh?=
+ =?utf-8?B?aUdrRUc5ZFE5RjB4cDFmWk9DQ2U4dmRxREtmMGVpdVMzQzVTQklzczdCS1Fo?=
+ =?utf-8?B?YU1vU0hnRXhkcHhkN2JTWXlzY3JQd1JYQkpqT1BUQWlCWTB2dHB2aXRUMW1O?=
+ =?utf-8?B?QlhkNEVXQzNaTVhod1psY2VhSktzV2N4eVpEVUJsbVJZQmRnVldOdTdkVFBu?=
+ =?utf-8?B?d3pyR3ppa2VNZWJJWDhPZTBoTklhL2Z5ZWhITHhoWVFRTVMvZzBZMDV2bWZR?=
+ =?utf-8?B?dEdMdDFBQkJDZ3JLK0t2Ym0zdTBGd29TaHI4SVpwZFRLZzRlYmdSY0hCWmFB?=
+ =?utf-8?B?K2pYV01tQVJIMENUbTZZcUVleVVwKzBBOWdrUzFSNlVOZFhKTEkzSWNBOUs4?=
+ =?utf-8?B?K3lDRTdTR09JWHd0QW55K2h4MHk2ZTh6c3VHQWt0OEU0ZnkxdjJhM25SbDZh?=
+ =?utf-8?B?QkVBOVRiMTJLejNrZ1dNdThKVlNnZjdCNkJrdnlXQituY3NGb0ZBTTBmK0Fl?=
+ =?utf-8?B?OCt5ZU1uUENjQXlKTDh3eWxzR0dWeGgyTURIYVFJeGFjZXdkcDBEbTZ0RUlI?=
+ =?utf-8?B?OERzRHpNbWtwS2VQVlV3RlAveWpBY3RSY1YrTGZaTERMN2k4WkJzVC96bU1B?=
+ =?utf-8?B?RElWQms2OGNoei9zZDVWbEJDc1I5R2RMQ0ZkcGQyZnhVdXlVOVROS3NlY2VL?=
+ =?utf-8?B?eWZ2Mk1RdU1rRHNERjRYaTc1RjNiazV4L2FyK1VrYmluSGRJQWpMWll6UWVQ?=
+ =?utf-8?B?bjZtMThlajhFT1N3Qktuc0ZvNGk0OFJKMjIrbW1JRjYxci8yMDFzOTAvK1Na?=
+ =?utf-8?B?VHlFYW96a0VWckhDTmJqcGdtUGJ0bkQxeDFMdFIyZE9IelVRLzVBTWFOSmJI?=
+ =?utf-8?B?eWZFcGFRWnVVMUpjM24xVjZxWG0rSTVHSFZCZFdVd0FzRWFKK2VyTVYwWTk4?=
+ =?utf-8?B?Z3RHSnAvSzZMUkdXcit2ZzdXSEpLN25VNCtWMXJpWFRmNVRod3o4N0t2S2FY?=
+ =?utf-8?B?S2xFUlJQMXZFb2xvZE1LN21UVEJnK2pqc1pMdGZsYlA3dFZWT05GOFA5RlZM?=
+ =?utf-8?B?b2czU3YwSEtacDd3ZWZ3VTZJYWpvZHI4eWRRdFJxeXBQblBDNnVjcmlMQWsw?=
+ =?utf-8?B?T1g2QlRDbllrZTlxelJXNU9DeEtscjRBdkIwaGhJR2ZLQ1JkZ2dWNkNTSU9x?=
+ =?utf-8?B?SjBtZDVxdEU4RFNtMm5NVFNiTmRsRnNYTUhDeDFhK3BpT2lCcmNReFhWUjIz?=
+ =?utf-8?B?ZTFmbzJ0dXh1dUtoQXVEYmI4eFVEZUcrWmp2dzJOSS9GRTRXdkc2aUNDcTlk?=
+ =?utf-8?B?UkJtTlBRYVlaUitVUHNEOTRmOHNCanNOSFZYZHR3OGRFZmVJSGNpa1Y5K1Rt?=
+ =?utf-8?B?OGJBRFZqN29Qd00xUldzalVQSkVvTkRYa2xWeXFnU3hJS2JvRWpLVFFaZjFp?=
+ =?utf-8?B?N2J6QWovNms0NzNBcTJuUkNoYnNhazYwSG1vRFNBcFI4SGJpUDN6QVpIV2ZF?=
+ =?utf-8?B?cENzYmdwb0pyU0UxNlhHcVYzQ3RscXFJT2RmY0dESnNrNXV2bkFVYWhTMGox?=
+ =?utf-8?B?WEFQN200cUI3bUdLd3dqRldzaXAzMFJjWXFjd1kzTXN4MlBpRjN4andhS2F1?=
+ =?utf-8?B?TXhzVEkvd3pXODlFR3VibFB2b1ZFcDRlZTdWaFRwSnRIMTRCOGtvRU9iNWxH?=
+ =?utf-8?B?MlVkQ1psL3BwRHN2VTdjdlVHbmVCc0U3QnMwZ25DS0RZZXBuSnVNazdwYU1W?=
+ =?utf-8?B?NmpMYVBmNEVPT01HeW5CNmVyMFlLTkVFbklMS29ibkF6VGplRzQrdmt3dTk1?=
+ =?utf-8?B?R09EZ1drcEhqSjQzMHFJUlI3QWVIaHBQaEVxdThTYm1kTkRtUjZRQT09?=
+X-OriginatorOrg: siemens.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 12354120-a040-4616-78fc-08de9b8ce1f0
+X-MS-Exchange-CrossTenant-AuthSource: AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2026 07:50:52.3189 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lrdeYucBYq/ZWDLP8MD1Azqom1ptCsnfKd1GC1yU8jPTh0yHysuSUH//nHN7R9YhJlrk4e2b8aSe5JJe5osmEw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR10MB7801
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
+ envelope-from=jan.kiszka@siemens.com;
+ helo=AS8PR04CU009.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,332 +201,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 16, 2026 at 10:18=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
->
-> Missing commit message.....
+On 15.04.26 22:28, Philippe Mathieu-Daudé wrote:
+> Hi Jan,
+> 
+> On 15/4/26 07:46, Jan Kiszka wrote:
+>> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>
+>> In contrast to real eMMCs, we are not (yet) persisting the full state
+>> of the device. This particularly includes the authentication key used
+>> for RPMB access, complicating testing of firmware images which do not
+>> support initial provisioning of the key.
+>>
+>> One way to address this would be, e.g., extending the eMMC disk image
+>> with a special sector to store further state. A simpler approach is used
+>> here: Add another device property that allows to specify the
+>> authentication key, bringing up the eMMC as if the key has already been
+>> provisioned before.
+>>
+>> This is how to tell qemu to use the OP-TEE test key:
+>>
+>> -device emmc,[...],auth-
+>> key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
+>>
+>> Or use this for machine-configured eMMCs:
+>>
+>> -global emmc.auth-
+>> key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
+>>
+>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+>> ---
+>>   hw/sd/sd.c | 23 +++++++++++++++++++++++
+>>   1 file changed, 23 insertions(+)
+> 
+> Do you mind mentioning it in docs/system/devices/emmc.rst?
 
+Right, there was something... v2 our patch on top, what do you prefer?
 
-Commit title is self-explanatory.
+Jan
 
->
->
-> On Thu, Apr 16, 2026 at 08:54:40AM +0300, Manos Pitsidianakis wrote:
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > ---
-> >  include/hw/virtio/vhost-user-rtc.h        | 22 ++++++++++
-> >  MAINTAINERS                               |  6 +++
-> >  docs/system/devices/virtio/vhost-user.rst |  3 ++
-> >  hw/virtio/Kconfig                         |  5 +++
-> >  hw/virtio/meson.build                     |  3 ++
-> >  hw/virtio/vhost-user-rtc-pci.c            | 70 +++++++++++++++++++++++=
-++++++++
-> >  hw/virtio/vhost-user-rtc.c                | 64 +++++++++++++++++++++++=
-+++++
-> >  7 files changed, 173 insertions(+)
-> >
-> > diff --git a/include/hw/virtio/vhost-user-rtc.h b/include/hw/virtio/vho=
-st-user-rtc.h
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..6b7b53c28f93032886d8268=
-7199585aba0edd917
-> > --- /dev/null
-> > +++ b/include/hw/virtio/vhost-user-rtc.h
-> > @@ -0,0 +1,22 @@
-> > +/*
-> > + * Vhost-user RTC virtio device
-> > + *
-> > + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.=
-org>
-> > + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
->
-> This commit is only signed off by yourself, as @linaro.org but the
-> newest copyright is from Panasonic.  What is the situation with
-> authorship here ?
->
-> If it was co-authored by people from multiple companies then I'd
-> expect to see multiple signed-off-bys, so that each company is
-> represented.
+> 
+> Otherwise,
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
-It is authored solely by me for Panasonic, but based on existing
-vhost-user devices I wrote in 2025, so the copyright is mixed.
-
-
->
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#ifndef QEMU_VHOST_USER_RTC_H
-> > +#define QEMU_VHOST_USER_RTC_H
-> > +
-> > +#include "hw/virtio/vhost-user-base.h"
-> > +
-> > +#define TYPE_VHOST_USER_RTC "vhost-user-rtc"
-> > +OBJECT_DECLARE_SIMPLE_TYPE(VHostUserRTC, VHOST_USER_RTC)
-> > +
-> > +struct VHostUserRTC {
-> > +    VHostUserBase parent_obj;
-> > +};
-> > +
-> > +#endif /* QEMU_VHOST_USER_RTC_H */
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index ad215eced84d1ac58956ea374ee012acbb3cbd18..da6376b0f5e6fa99495504e=
-88da9fef5a7a969e3 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -2573,6 +2573,12 @@ S: Maintained
-> >  F: include/hw/virtio/vhost-user-spi.h
-> >  F: hw/virtio/vhost-user-spi*
-> >
-> > +vhost-user-rtc
-> > +M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > +S: Supported
-> > +F: include/hw/virtio/vhost-user-rtc.h
-> > +F: hw/virtio/vhost-user-rtc*
-> > +
-> >  virtio-crypto
-> >  M: Gonglei <arei.gonglei@huawei.com>
-> >  S: Supported
-> > diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/de=
-vices/virtio/vhost-user.rst
-> > index 2806d81ca201551a91246a10e0d98fd36d74200b..acfbd609d0f9c87e3af6847=
-97adf156a8a61bc88 100644
-> > --- a/docs/system/devices/virtio/vhost-user.rst
-> > +++ b/docs/system/devices/virtio/vhost-user.rst
-> > @@ -61,6 +61,9 @@ platform details for what sort of virtio bus to use.
-> >    * - vhost-user-spi
-> >      - Proxy spi devices to host
-> >      - `vhost-device-spi <https://github.com/rust-vmm/vhost-device/tree=
-/main/vhost-device-spi>`_
-> > +  * - vhost-user-rtc
-> > +    - Real time clock
-> > +    - `vhost-device-rtc <https://github.com/rust-vmm/vhost-device/tree=
-/main/vhost-device-rtc>`_
-> >
-> >  The referenced *daemons* are not exhaustive, any conforming backend
-> >  implementing the device and using the vhost-user protocol should work.
-> > diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-> > index 8895682c619402eb3c9cd7269d3319f39711b4bd..2ebdac16b31aec3ec283c02=
-85a4dcfa67f0a5157 100644
-> > --- a/hw/virtio/Kconfig
-> > +++ b/hw/virtio/Kconfig
-> > @@ -136,3 +136,8 @@ config VHOST_USER_TEST
-> >      bool
-> >      default y
-> >      depends on VIRTIO && VHOST_USER
-> > +
-> > +config VHOST_USER_RTC
-> > +    bool
-> > +    default y
-> > +    depends on VIRTIO && VHOST_USER
-> > diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-> > index 415e359e9fc79b6b1adbbcfc4f87a7106ef1d4a6..e0566a60de7989c4048956e=
-268f151659467fe34 100644
-> > --- a/hw/virtio/meson.build
-> > +++ b/hw/virtio/meson.build
-> > @@ -27,6 +27,7 @@ if have_vhost
-> >      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files=
-('vhost-user-snd.c'))
-> >      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: fil=
-es('vhost-user-input.c'))
-> >      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SPI', if_true: files=
-('vhost-user-spi.c'))
-> > +    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RTC', if_true: files=
-('vhost-user-rtc.c'))
-> >
-> >      # PCI Stubs
-> >      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USE=
-R_TEST'],
-> > @@ -43,6 +44,8 @@ if have_vhost
-> >                           if_true: files('vhost-user-input-pci.c'))
-> >      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USE=
-R_SPI'],
-> >                           if_true: files('vhost-user-spi-pci.c'))
-> > +    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USE=
-R_RTC'],
-> > +                         if_true: files('vhost-user-rtc-pci.c'))
-> >    endif
-> >    if have_vhost_vdpa
-> >      system_virtio_ss.add(files('vhost-vdpa.c'))
-> > diff --git a/hw/virtio/vhost-user-rtc-pci.c b/hw/virtio/vhost-user-rtc-=
-pci.c
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..449368d27009acde20aa4af=
-2542a912ac8b82cbc
-> > --- /dev/null
-> > +++ b/hw/virtio/vhost-user-rtc-pci.c
-> > @@ -0,0 +1,70 @@
-> > +/*
-> > + * Vhost-user RTC virtio device PCI glue
-> > + *
-> > + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.=
-org>
-> > + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "hw/virtio/vhost-user-rtc.h"
-> > +#include "hw/virtio/virtio-pci.h"
-> > +
-> > +struct VHostUserRTCPCI {
-> > +    VirtIOPCIProxy parent_obj;
-> > +    VHostUserRTC vdev;
-> > +};
-> > +
-> > +typedef struct VHostUserRTCPCI VHostUserRTCPCI;
-> > +
-> > +#define TYPE_VHOST_USER_RTC_PCI "vhost-user-rtc-pci-base"
-> > +
-> > +DECLARE_INSTANCE_CHECKER(VHostUserRTCPCI, VHOST_USER_RTC_PCI,
-> > +                         TYPE_VHOST_USER_RTC_PCI)
-> > +
-> > +static void vhost_user_rtc_pci_realize(VirtIOPCIProxy *vpci_dev, Error=
- **errp)
-> > +{
-> > +    VHostUserRTCPCI *dev =3D VHOST_USER_RTC_PCI(vpci_dev);
-> > +    DeviceState *vdev =3D DEVICE(&dev->vdev);
-> > +
-> > +    vpci_dev->nvectors =3D 1;
-> > +
-> > +    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-> > +}
-> > +
-> > +static void vhost_user_rtc_pci_class_init(ObjectClass *klass, const vo=
-id *data)
-> > +{
-> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> > +    VirtioPCIClass *k =3D VIRTIO_PCI_CLASS(klass);
-> > +    PCIDeviceClass *pcidev_k =3D PCI_DEVICE_CLASS(klass);
-> > +    k->realize =3D vhost_user_rtc_pci_realize;
-> > +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> > +    pcidev_k->vendor_id =3D PCI_VENDOR_ID_REDHAT_QUMRANET;
-> > +    pcidev_k->device_id =3D 0; /* Set by virtio-pci based on virtio id=
- */
-> > +    pcidev_k->revision =3D 0x00;
-> > +    pcidev_k->class_id =3D PCI_CLASS_SYSTEM_RTC;
-> > +}
-> > +
-> > +static void vhost_user_rtc_pci_instance_init(Object *obj)
-> > +{
-> > +    VHostUserRTCPCI *dev =3D VHOST_USER_RTC_PCI(obj);
-> > +
-> > +    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
-> > +                                TYPE_VHOST_USER_RTC);
-> > +}
-> > +
-> > +static const VirtioPCIDeviceTypeInfo vhost_user_rtc_pci_info =3D {
-> > +    .base_name =3D TYPE_VHOST_USER_RTC_PCI,
-> > +    .non_transitional_name =3D "vhost-user-rtc-pci",
-> > +    .instance_size =3D sizeof(VHostUserRTCPCI),
-> > +    .instance_init =3D vhost_user_rtc_pci_instance_init,
-> > +    .class_init =3D vhost_user_rtc_pci_class_init,
-> > +};
-> > +
-> > +static void vhost_user_rtc_pci_register(void)
-> > +{
-> > +    virtio_pci_types_register(&vhost_user_rtc_pci_info);
-> > +}
-> > +
-> > +type_init(vhost_user_rtc_pci_register);
-> > diff --git a/hw/virtio/vhost-user-rtc.c b/hw/virtio/vhost-user-rtc.c
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..88b0c70b903363fc9ac7ccb=
-65a1b1755e095c6bc
-> > --- /dev/null
-> > +++ b/hw/virtio/vhost-user-rtc.c
-> > @@ -0,0 +1,64 @@
-> > +/*
-> > + * Vhost-user RTC virtio device
-> > + *
-> > + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.=
-org>
-> > + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
-> > + *
-> > + * Simple wrapper of the generic vhost-user-device.
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "qapi/error.h"
-> > +#include "hw/virtio/vhost-user-rtc.h"
-> > +#include "standard-headers/linux/virtio_ids.h"
-> > +
-> > +static const VMStateDescription vu_rtc_vmstate =3D {
-> > +    .name =3D "vhost-user-rtc",
-> > +    .unmigratable =3D 1,
-> > +};
-> > +
-> > +static const Property vrtc_properties[] =3D {
-> > +    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-> > +};
-> > +
-> > +static void vu_rtc_base_realize(DeviceState *dev, Error **errp)
-> > +{
-> > +    VHostUserBase *vub =3D VHOST_USER_BASE(dev);
-> > +    VHostUserBaseClass *vubs =3D VHOST_USER_BASE_GET_CLASS(dev);
-> > +
-> > +    vub->virtio_id =3D VIRTIO_ID_CLOCK;
-> > +    vub->num_vqs =3D 2;
-> > +    vub->config_size =3D 0;
-> > +    vub->vq_size =3D 1024;
-> > +
-> > +    vubs->parent_realize(dev, errp);
-> > +}
-> > +
-> > +static void vu_rtc_class_init(ObjectClass *klass, const void *data)
-> > +{
-> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> > +    VHostUserBaseClass *vubc =3D VHOST_USER_BASE_CLASS(klass);
-> > +
-> > +    dc->vmsd =3D &vu_rtc_vmstate;
-> > +    device_class_set_props(dc, vrtc_properties);
-> > +    device_class_set_parent_realize(dc, vu_rtc_base_realize,
-> > +                                    &vubc->parent_realize);
-> > +
-> > +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> > +}
-> > +
-> > +static const TypeInfo vu_rtc_info =3D {
-> > +    .name =3D TYPE_VHOST_USER_RTC,
-> > +    .parent =3D TYPE_VHOST_USER_BASE,
-> > +    .instance_size =3D sizeof(VHostUserRTC),
-> > +    .class_init =3D vu_rtc_class_init,
-> > +};
-> > +
-> > +static void vu_rtc_register_types(void)
-> > +{
-> > +    type_register_static(&vu_rtc_info);
-> > +}
-> > +
-> > +type_init(vu_rtc_register_types)
-> >
-> > ---
-> > base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
-> > change-id: 20260416-vhost-user-rtc-ce8ff0377356
-> >
-> > --
-> > =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
-=CE=B8=CE=AE=CF=84=CF=89
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
-
-
-
---
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+-- 
+Siemens AG, Foundational Technologies
+Linux Expert Center
 
