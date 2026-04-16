@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87760F8A145
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B0F0F8A145
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDIrv-00079Q-Ev; Thu, 16 Apr 2026 05:18:39 -0400
+	id 1wDIrv-0007EO-Th; Thu, 16 Apr 2026 05:18:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqe-0005HJ-Oq
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:21 -0400
+ id 1wDIqW-0005EU-1s
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:12 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqd-0007pN-87
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:20 -0400
+ id 1wDIqT-0007lG-5b
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:11 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488aa77a06eso126798455e9.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:17:18 -0700 (PDT)
+ 5b1f17b1804b1-488b0046078so75184315e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776331038; x=1776935838; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776331027; x=1776935827; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gy6SvnnNxcAyYApni9wjJpLBWPu4eq2cYDkXqWaL+rI=;
- b=Bde/vZ6YEabGvPZhG1nb4bRU7X7jl4NYvyj12rQrgSsjlZlcs0Wz5X8WtWGUQTyJPQ
- +WIzEoJ7FceIohFFRAXMZiUp87Cz/yj7FhsK3l3eQHUMf7sp3tIepz1x6rSTXPSNUSFl
- rtOc2lxj+ww81XUVZoOoJVoTddHlhAeWTCWVINCMhqtK85hGst36v8zsuxFKRRRAuSH3
- sJnebVbxAnbx8YP9OA117ZiNItY5yxBjVRxLYaP2G67nvSNO3YYeLiReS5CiRtE4EOyJ
- 3IVKC5wy9Cc921BV2O6dDu7th2g+cH1RvO3v5NsEAeiCyilApC3o6m6xLKWysQaIx1cO
- eVIw==
+ :reply-to; bh=Zk2oBkFeQmDacXaWJvXyO4dUP0LfA/9Xb17MaMH0S48=;
+ b=KWI3gYnYqG8njfsH4/YHQtxefNkUcr6G/iWQpPvBoKswatohzAS/oMAIo1Wi3HOwUk
+ SX4taUVGOKrkb650+67vtQHekCIm4VtdAh3JONcBsEp22+XSJ5ioDIzeh1izhIdtn5Dt
+ EaBxqB9IynzeDIkq8qLA8/5csLWsABhq7H7MnFHm8G1WC4MFf2hvHz2lBuwj15ReUs9n
+ cAZfCZj+sCXYeytAKAyOt5gisn/QviuvcN5WF7j2BDue2no0KdD9yU2Za/tHGFSSsX+B
+ 3JnEEX520n0oXT2SZIdPNd470DNURmH/oWIhbHRzhRd4vDUk3CjpahVdUbageWlGqMCf
+ MtJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776331038; x=1776935838;
+ d=1e100.net; s=20251104; t=1776331027; x=1776935827;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=gy6SvnnNxcAyYApni9wjJpLBWPu4eq2cYDkXqWaL+rI=;
- b=kpUE4z+B9ZYNwIYznxfwvRm8zOzn7jMb2Un/OSwt1lJjVbU5ZclwiOg/1yOjE7ZoJm
- PUu+2WVcO3bZvLYHBaifru78c2MlYqM3H+cYCneOg3y4qXOU9ZlIQKHnCW0SQcCLdu3B
- omfSpTq3Nzb18YgeJCGAJiq0qzyP+5rA96YSyBQr3kEFe1vEhfmkddrxZtn8mPU8WOv2
- OnMeA937N0v4IfAFHLas/OLTBCkHuvz36B9s0O0SEEk81S9K1bfO/mqN3YcFAi9UY/aU
- j4G4kDt8CvLZjVv3Y8HsH/Ixv5EmHE5Br7GqAI51X1IQ4XCOHylEiH5e3r05TD1h5DJd
- Jgmw==
-X-Gm-Message-State: AOJu0YwOqaW5HRuTBRytKvBu/ShxQqLXgkj8E+YweMyYM0ua5hYIwjCJ
- pixIzlGindJsPAdODQbNedT6n7llP2gsIdOdZBLPE7stkj8u21SI7dw+TzbfbXyacUhmIEBGFvQ
- iCOAjK5k=
-X-Gm-Gg: AeBDies12kB4N1EUr+gsQJbCoUUcev6IzpTzwfvENIVZRwEXWeG0OHj+8Uvb6r0ugJC
- S3d+kAoWKyRLFXkxHyi2suyfTiQFZHL89IxVWf3S+Z80fCzPwqZAdtMC2W1H9LjSILEZtpfsq/i
- vtKeT4DiSc/3ln6fnwwWLg3f/0jCWhHs83QUkt67TydPFhZKhUh7mbTE5izELAkFw4k2I8NOLRH
- Q7eKeSIsy+reCcNGNPqxLjr4RopY0wrD4jgknBEcUml1cnKRVIxeD73m5f6MJvMVmADch8eyuqb
- FOH2hdpl/Lx2w8rQNb3Xj+XY0NRAqu+r1Ix44lBse+SojrrNvhDfPVgVe2ERc/ybUzx2IwJaXSN
- b84dLbH9oqkes9TluyUEr/kvYN+bujlANc2WDgRJew+f4g0K4VyqmBIOjT7rs4cWbDN7bQ0Jcjn
- TV104ZDTFhx17jPST8bqHwl/PSS2k2Ocnc+dARsAV11lNFlstkB2QhhTbLOFV68216fjdGfvmb/
- XeNb8jYcqExQ0eXdX6NK7LDgxe3iVp++WAdIRs4Wg==
-X-Received: by 2002:a05:600c:c0cc:b0:488:8840:e5ae with SMTP id
- 5b1f17b1804b1-488d686dab1mr242760875e9.24.1776331037689; 
- Thu, 16 Apr 2026 02:17:17 -0700 (PDT)
+ bh=Zk2oBkFeQmDacXaWJvXyO4dUP0LfA/9Xb17MaMH0S48=;
+ b=n/u2hK6TOXPjwoyawvMlkRYW9/pNz6393mSEh6mc3pcyUtiKmbJxGHjQhhKMYyaMH0
+ B2gxRVg0AbBH1K4SaGURDaI5CYmatAew+x3l4huruJDd5aDI8YZG55lLp+T9GiTDt3bs
+ zCMrH/ZAlmAMZuMLjRd/CXexUfDIPF5B5aTAa4MBODDcN5tLun+qgNykswqQ0VKGkWrk
+ sYxsK+oWCmLt60c5mQ0+vjHqautrcTn52qBshwjxoTF82grpNF170jsEEbLC6WeJLPs0
+ QrgYu2ZhXkBR20p0i2pkGbPOTjQ9O5CsS7MX35YZKchZhiGt+CQUb+fT6LhYTLO28S3X
+ 8W/g==
+X-Gm-Message-State: AOJu0YwrScXt+o1Q4F0m+L2FPyk8UZXsFvky6On6PR/tRPUcmX8QjnZx
+ 3YD/c+g3r/xfZ7H/QDsPxezyI6+Ltk37JKOABZ3PC1jvCYuRUUWXF4y9Arwu3I1o4i2/LWicS6D
+ GdncULW8=
+X-Gm-Gg: AeBDieu0y19C4FQQakiEiCjTBNAHeShfoWG7LJPDRo0XAVyHRCE6JB3UIZGYAfAaHCX
+ phEFCGZJ8FfOk7UD8RVpdLLyOhk0vwdnSGdqMFPJJluqS0wpj8nQJMmLQGbIl+zbwq3fOBp++KW
+ yZe3iUDLahkFUcjTDAfy2Wk/dvqCVHLSdmqpkPkQcbxezJL9eNNYKYKHI46PN58z6P90RPE0374
+ Gh25qgQLE0Nr0kr0FoS3XlDfFR19F7NURtmhAkj3COoa6mupKru95mm5ARZA3GPutaDCeSHB1BW
+ PbamjEWPqdwAOfGqXrablcxvzyYb4BI2FWff1NoxxfBP/6McoUzzLkhAYUiibDwG2+IWhvyujpk
+ vn/bNZh7JysMUlu4eT64JVfkpQsaYwGwpHtc2lIyNgFa/3aDWsZWBluOt+h9cEK8BPFJFdKOUoF
+ 04MY2uThzl1E/SP3cIL2/YD+NOcqoZ8wtrZf+TyxFpzsb+oBmGSj1bglO2Sb/XFo+W3RPzqizO3
+ uLnPnxBUGV53EjagApKno7T3gwJcjck8BjHwL1z8g==
+X-Received: by 2002:a05:600c:19cd:b0:485:17a7:b9c7 with SMTP id
+ 5b1f17b1804b1-488d67e3671mr344661185e9.10.1776331027492; 
+ Thu, 16 Apr 2026 02:17:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f5818da1sm37186565e9.6.2026.04.16.02.17.16
+ 5b1f17b1804b1-488f5818da1sm37186565e9.6.2026.04.16.02.17.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 02:17:16 -0700 (PDT)
+ Thu, 16 Apr 2026 02:17:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 21/28] MAINTAINERS: Remove Ryo ONODERA
-Date: Thu, 16 Apr 2026 10:16:47 +0100
-Message-ID: <20260416091654.316158-22-peter.maydell@linaro.org>
+Subject: [PATCH 11/28] MAINTAINERS: Remove Bastian Koppelmann
+Date: Thu, 16 Apr 2026 10:16:37 +0100
+Message-ID: <20260416091654.316158-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260416091654.316158-1-peter.maydell@linaro.org>
 References: <20260416091654.316158-1-peter.maydell@linaro.org>
@@ -100,28 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ryo ONODERA has not posted to qemu-devel in some years and did not
+Bastian Koppelmann has not posted to qemu-devel in some years and did not
 respond to a query about whether they still wished to be listed in
 our MAINTAINERS file.  Remove them, on the assumption that they are
 no longer active in QEMU.
 
+This makes the Tricore TCG CPUs orphan.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 7fac11b3f7..48dd571fd7 100644
+index bc7c9b61da..7817a1c97d 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -670,7 +670,6 @@ F: include/qemu/*posix*.h
+@@ -446,8 +446,7 @@ F: include/hw/xtensa/xtensa-isa.h
+ F: configs/devices/xtensa*/default.mak
  
- NETBSD
- M: Reinoud Zandijk <reinoud@netbsd.org>
--M: Ryo ONODERA <ryoon@netbsd.org>
- S: Maintained
- K: ^Subject:.*(?i)NetBSD
- 
+ TriCore TCG CPUs
+-M: Bastian Koppelmann <kbastian@rumtueddeln.de>
+-S: Odd Fixes
++S: Orphan
+ F: target/tricore/
+ F: hw/tricore/
+ F: include/hw/tricore/
 -- 
 2.43.0
 
