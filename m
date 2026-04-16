@@ -4,93 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C649F8DFC5
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 21:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25636F8DFC3
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 21:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDU0Y-0006Oo-C0; Thu, 16 Apr 2026 17:12:19 -0400
+	id 1wDU3i-00005l-KS; Thu, 16 Apr 2026 17:15:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDU0U-0006Nq-JW
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:12:14 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wDU3Y-0008VZ-UF
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:15:26 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDU0T-0003rp-0g
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:12:14 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43cf8d550bdso7704058f8f.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 14:12:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776373931; x=1776978731; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=h7HtmNeSlzJlliYd6IcLHgFl48vgsg/j4igni+zIcOk=;
- b=rPUQqqVf9RE5D1A31W6tkYQ81FetEdraWG5ea/btf57M1+lP5LRp/GuVYGgSa+fgm+
- AwG3Nuxe+20q1LR/NcMBVZkIm8O4pOh5fuNqrjn/ONUI7eVfPPsTKKepx7A4yEaC2dlX
- 1fkr6wYHo6DwfSuJWR9hinLc3fPcB8jtfHhdebM46Z14k8flbep2vPPyUz5Eqv7Ua0Q4
- nr8o4S6KC6o4lnaC0QwyZ1oUam3g3w/epS3H1xSYEkbBsIb25s5e8/R4c/Gtxxm/xQk9
- g2fma8+fbgHt3TmEVEEgO3LwOFd/adw6uzHYC9DZP6vcAC0gVup0SyCR3ojB0o1MaFO4
- rDEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776373931; x=1776978731;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=h7HtmNeSlzJlliYd6IcLHgFl48vgsg/j4igni+zIcOk=;
- b=DUAdzT2WZ8Ad7kI0DbGIY9RrxIqJOQaHWZU7co//W+9OKINlK6iP9P6EOKllbmO6k+
- 1Z7L7buNpmumTLJezbCZqhxcEVTNb5vx80IAdoyuvLNiwpNoLBLfE4Am9k1ZXIiWfZL1
- HywNHPtYoG0KGCBgJup1dk+HjTghY9BOYKVMnoo2SIYF2QCth76TDwrlpYOwicRahVS+
- TX1izae7Dvw1/PM/voRqoBiNjalQhPGOLYRTI/eHsz2eATBxDqo4xnklbGQjH89epChz
- eIm6KSxaYuknVq/C+MxR3E4w4MmikMUPU7Vx+Gl4ocZuJgJnLGLjcyDX8PZIwqsh8AsS
- Z4CQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8bgIRcxwQtFvC5zqo05KY8os0A3QzIGSO51b/eG+gIMns7q67LKPxLQ23auG2CivzEbxUcsNgY8Yyw@nongnu.org
-X-Gm-Message-State: AOJu0Yy1JJETvU1Bim2KinMWBu6x9mdw7mm0lJQQ38xFQ6k8YMdo5/4e
- WfiZ+3k6XDLfVPSuxXfo2A/PQrXqomJZCGw1IVyuRCB+1dGaydMMPndHPyDXwu0e5CM=
-X-Gm-Gg: AeBDietzERTtPDkkAiqlBDY7pLwyhAWzu1ApIcPSmURU+Yp7+5KZJGyOCrXfFpwLwVh
- 7qJvnz2NIegY/5JH6dJvhUcPWV7Pl+Xk1Np+9gGPiC6B3sFk7wBymMiOQz+yEJA0MlE5cwEukO8
- KWmkDh6lqGewhm9lysYpKGbHaROGFwSMZJSnWu/nVxo3SUdiujz/VbYZIx8EtUQj956zpPQUQO4
- E00wXrwZ0wSlppNNWToPMndZcvTXxOfNQF0Tc4agveXhtLSkK7uKYnQVs5oYMEIqnVfZMKmE56U
- yd4tWHpL9rlBKX1s0fkprtL/6bQglDhvm/HxDZsUHe4zyP2j947Ioi8PxYYRtmUZ3AEvXb0ujfy
- 2CLvSqfuGCWtaQ0+viPnBNxoQUTCNBZ7K7NPb2uXZ21QztOW2cnVLx7iRYygNaRt1NFfsKgzwZo
- Tp0AEK48LNwoEpm4TLV0khn5QB3G50bL+c4QMHB7v++EsXFteDXZjycnz053eSyACn0n2Ve4jDa
- yu2
-X-Received: by 2002:a05:6000:4283:b0:43d:7b85:6c95 with SMTP id
- ffacd0b85a97d-43fe3e144d7mr133108f8f.33.1776373931421; 
- Thu, 16 Apr 2026 14:12:11 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead401ca0sm14626190f8f.36.2026.04.16.14.12.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 14:12:10 -0700 (PDT)
-Message-ID: <b33a0552-7202-48f3-a6c3-89157e54312e@linaro.org>
-Date: Thu, 16 Apr 2026 23:12:09 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wDU3X-0004bf-AD
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:15:24 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 0FEE96A819;
+ Thu, 16 Apr 2026 21:15:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776374120; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jw/sNkW5CJ2pSiJZkGYNjsAYZAtiXrpF+Lqqgm7nYXI=;
+ b=YGuACo/sEWu2m1/HSQ5io1anFTP+GPDIPhJA7T6Li04xMOjFs4msJ1gf7hpywXWilJBCVw
+ ozpXRe2F53GPsUlwmKKhirZvCt5R+roHRC8rJtLnnOIIv14ElTTXt9E9i4EArfc5Zb0taI
+ rzHdXILR+BTx0wt795M3AWKURAnGwAc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776374120;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jw/sNkW5CJ2pSiJZkGYNjsAYZAtiXrpF+Lqqgm7nYXI=;
+ b=cID+4p1VaIznQa8/I3/Q1uwHQGgZ67IHuOSQYM33Q4KFPaBBt4XlVcgJxr58ZQVj6PH4dt
+ 0JPq00p22hJS/MDA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="YGuACo/s";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cID+4p1V
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776374120; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jw/sNkW5CJ2pSiJZkGYNjsAYZAtiXrpF+Lqqgm7nYXI=;
+ b=YGuACo/sEWu2m1/HSQ5io1anFTP+GPDIPhJA7T6Li04xMOjFs4msJ1gf7hpywXWilJBCVw
+ ozpXRe2F53GPsUlwmKKhirZvCt5R+roHRC8rJtLnnOIIv14ElTTXt9E9i4EArfc5Zb0taI
+ rzHdXILR+BTx0wt795M3AWKURAnGwAc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776374120;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jw/sNkW5CJ2pSiJZkGYNjsAYZAtiXrpF+Lqqgm7nYXI=;
+ b=cID+4p1VaIznQa8/I3/Q1uwHQGgZ67IHuOSQYM33Q4KFPaBBt4XlVcgJxr58ZQVj6PH4dt
+ 0JPq00p22hJS/MDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 47B40593A3;
+ Thu, 16 Apr 2026 21:15:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id spo3BWdR4WmYHgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 16 Apr 2026 21:15:19 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, Prasad
+ Pandit <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Kirti
+ Wankhede <kwankhede@nvidia.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>, Joao
+ Martins <joao.m.martins@oracle.com>, Markus Armbruster
+ <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>, Hyman Huang
+ <yong.huang@smartx.com>, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 09/14] migration: Move iteration counter out of RAM
+In-Reply-To: <aeEnNQO_c6LzM2FD@x1.local>
+References: <20260408165559.157108-1-peterx@redhat.com>
+ <20260408165559.157108-10-peterx@redhat.com> <8734136atk.fsf@suse.de>
+ <aeEnNQO_c6LzM2FD@x1.local>
+Date: Thu, 16 Apr 2026 18:15:08 -0300
+Message-ID: <87qzoey5cz.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/9] hw/hexagon: Add globalreg model
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
- marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
- pierrick.bouvier@oss.qualcomm.com
-References: <20260416210305.2255579-1-brian.cain@oss.qualcomm.com>
- <20260416210305.2255579-2-brian.cain@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260416210305.2255579-2-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[15];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
+X-Rspamd-Queue-Id: 0FEE96A819
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,22 +136,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/26 23:02, Brian Cain wrote:
-> Some of the system registers are shared among all threads
-> in the core.  This object contains the representation and
-> interface to the system registers.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> Reviewed-by: Sid Manning <sid.manning@oss.qualcomm.com>
-> ---
->   include/hw/hexagon/hexagon_globalreg.h |  56 ++++++
->   hw/hexagon/hexagon_globalreg.c         | 240 +++++++++++++++++++++++++
->   2 files changed, 296 insertions(+)
->   create mode 100644 include/hw/hexagon/hexagon_globalreg.h
->   create mode 100644 hw/hexagon/hexagon_globalreg.c
+Peter Xu <peterx@redhat.com> writes:
 
-Assuming you'll end merging this:
+> On Thu, Apr 09, 2026 at 07:14:15PM -0300, Fabiano Rosas wrote:
+>> > diff --git a/migration/ram.c b/migration/ram.c
+>> > index e5b7217bf5..686162643d 100644
+>> > --- a/migration/ram.c
+>> > +++ b/migration/ram.c
+>> > @@ -1136,8 +1136,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+>> >      RAMBlock *block;
+>> >      int64_t end_time;
+>> >  
+>> > -    qatomic_add(&mig_stats.dirty_sync_count, 1);
+>> > -
+>> >      if (!rs->time_last_bitmap_sync) {
+>> >          rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+>> 
+>> Tangent: aren't these updates to time_last_bitmap_sync racy with the
+>> sync from the throttle code?
+>
+> It looks fine to me.  This variable (along with log sync) should require
+> BQL, so I expect normal form of race condition won't happen.
+>
+> But maybe you meant when migration_bitmap_sync() can be invoked by the
+> timer kick-offed in cpu_throttle_dirty_sync_timer_tick()?
+>
 
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Yep.
 
+> Indeed that could happen together with the migration thread trying to sync
+> by other reasons, but so far I see no issues: time_last_bitmap_sync might
+> get updated sooner, but it should always reflect the time that whoever
+> synced the last, and when both want to do it they contend on BQL, which
+> looks ok.
+>
+
+Hm, I think I need to do a deeper audit, there's several access to
+RAMState there. But I agree on the surface there's nothing too
+egregious.
+
+> So the expectation is that timer just makes sure sync happens slightly more
+> frequently, where QEMU src might used to sync toooo less times on huge VMs
+> (because each iteration took tooo long).
 
