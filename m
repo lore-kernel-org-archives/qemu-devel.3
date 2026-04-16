@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B84F8A16C
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E8FF8A16A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLZS-0008V5-Fm; Thu, 16 Apr 2026 08:11:46 -0400
+	id 1wDLZN-0008PJ-9f; Thu, 16 Apr 2026 08:11:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDLZQ-0008Ts-Ir
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:44 -0400
+ id 1wDLZF-0008OG-EJ
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:33 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZO-0002Pm-TF
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:44 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZD-0002O1-AI
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:32 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id D532220B712B;
- Thu, 16 Apr 2026 05:11:40 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D532220B712B
+ by linux.microsoft.com (Postfix) with ESMTPSA id 7F96020B712B;
+ Thu, 16 Apr 2026 05:11:27 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7F96020B712B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776341502;
- bh=DZsSiTRYYYWERd2emTJ5lJqB6CAtgOgvEgvN3Gna9x4=;
+ s=default; t=1776341489;
+ bh=ItrHOC5nPemd66dEK2NgZsgS7P6ajPcgEYGrhuuCrYE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=arGSoVhpZgU313kM7IngW55g7EMhtu7jh4vnhY8fa8uWSlks0QbTwTR3J87vQIvfv
- bqO0jJWxlNqPh8/KLmBwMih3QK8vyvX4Gv0y+RiYjNQjH7qq5b/zINPqSfnA+rkfOi
- mpGmuxDaTfH87Nb1azeYVsmipkgUU+BVNVx3HWlo=
+ b=IZ7Ew7ha/2gTcDEO019z57VIyEFqCP5+NuqkDCHpmfHueSOicCaTS2FE+U7It+tDs
+ NMUmfpjIIYAr/d2zirH+qIuFdXJ/6ip8lp7k0LKhLwNpfF1unlphgkd5DZHEzsgXTG
+ rMoYBEI9ng4oVuLEdmS1/gQ/vsjj3LAJ//4okEoI=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>
-Subject: [PATCH v6 9/9] accel/mshv: disable la57 (5lvl paging)
-Date: Thu, 16 Apr 2026 14:11:16 +0200
-Message-Id: <20260416121116.527927-10-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v6 3/9] target/i386/mshv: fix various cpuid traversal bugs
+Date: Thu, 16 Apr 2026 14:11:10 +0200
+Message-Id: <20260416121116.527927-4-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
 References: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
@@ -68,94 +68,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change disable la57 paging on the mshv hypervisor on both the
-mshv processor feature bitmap and mask the cpuid feature leaf to the
-guest.
+- Hardcoded max_leaf was not accurate. We query leaf 0x0 and 0x80000000 to
+  get the actual max leaves
 
-Since the removal of hypervisor-assisted gva=>gpa translation in
-1c85a4a3d7 we have seen MMIO errors in guests on la57-enabled hw. We
-will have to investigate and test this further.
+- On all 0 zeroes on leaf 0x0d, we register 0-63 subleaves with zeros
+  indicating XSAVE is disabled
+
+- Subleaf 0 was hardcoded, so the Hypervisor returned defaults for other
+  subleaves
+
+- Subleaf 0 was hardcoded, so we were passing 0 instead of actual subleaf
+  when adding entries. We now pass the correct subleaf value to
+  add_cpuid_entry()
+
+- Leaves 0x04,0x07,0d,0f,10 weren't marked as subleaf-specific
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Acked-by: Wei Liu <wei.liu@kernel.org>
 ---
- accel/mshv/mshv-all.c       |  7 +++++++
- include/system/mshv_int.h   |  2 ++
- target/i386/mshv/mshv-cpu.c | 15 +++++++++++++++
- 3 files changed, 24 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 88 +++++++++++++++++++++++++------------
+ 1 file changed, 61 insertions(+), 27 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index c50641f174..a557623531 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -142,6 +142,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     int ret;
-     uint64_t pt_flags, host_proc_features;
-     union hv_partition_processor_xsave_features disabled_xsave_features;
-+    union hv_partition_processor_features disabled_partition_features = {0};
-+
-     struct mshv_create_partition_v2 args = {0};
- 
-     QEMU_BUILD_BUG_ON(MSHV_NUM_CPU_FEATURES_BANKS != 2);
-@@ -177,6 +179,11 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     }
-     args.pt_cpu_fbanks[1] = ~host_proc_features;
- 
-+    /* arch-specific features we disable regardless of host support */
-+    mshv_arch_disable_partition_proc_features(&disabled_partition_features);
-+    args.pt_cpu_fbanks[0] |= disabled_partition_features.as_uint64[0];
-+    args.pt_cpu_fbanks[1] |= disabled_partition_features.as_uint64[1];
-+
-     /* populate args structure */
-     args.pt_flags = pt_flags;
-     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 35386c422f..ca156cdf4b 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -94,6 +94,8 @@ void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
-+void mshv_arch_disable_partition_proc_features(
-+     union hv_partition_processor_features *disabled_features);
- int mshv_arch_post_init_vm(int vm_fd);
- 
- typedef struct mshv_root_hvcall mshv_root_hvcall;
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index b90e2983c8..eb3e167c0d 100644
+index f1cc4abc5c..4183727a86 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -1129,6 +1129,12 @@ void mshv_arch_amend_proc_features(
-     features->access_guest_idle_reg = 1;
- }
+@@ -465,14 +465,17 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
+     CPUX86State *env = &x86_cpu->env;
+     uint32_t eax, ebx, ecx, edx;
+     uint32_t leaf, subleaf;
+-    size_t max_leaf = 0x1F;
+-    size_t max_subleaf = 0x20;
+-
+-    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
++    uint32_t max_basic_leaf, max_extended_leaf;
++    uint32_t max_subleaf = 0x20;
++    uint32_t leaves_with_subleaves[] = {0x04, 0x07, 0x0d, 0x0f, 0x10};
+     int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
  
-+void mshv_arch_disable_partition_proc_features(
-+     union hv_partition_processor_features *disabled_features)
-+{
-+    disabled_features->la57_support = 1;
-+}
+-    /* Regular leaves without subleaves */
+-    for (leaf = 0; leaf <= max_leaf; leaf++) {
++    /* Get maximum basic and and extended CPUID leaves */
++    cpu_x86_cpuid(env, 0, 0, &max_basic_leaf, &ebx, &ecx, &edx);
++    cpu_x86_cpuid(env, 0x80000000, 0, &max_extended_leaf, &ebx, &ecx, &edx);
 +
- static int set_memory_info(const struct hyperv_message *msg,
-                            struct hv_x64_memory_intercept_message *info)
- {
-@@ -1682,6 +1688,15 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-         ret &= ~CPUID_EXT_VMX;
-     }
++    /* Collect basic leaves (0x0 to max_basic_leaf) */
++    for (leaf = 0; leaf <= max_basic_leaf; leaf++) {
+         bool has_subleaves = false;
+         for (int i = 0; i < n_subleaf_leaves; i++) {
+             if (leaf == leaves_with_subleaves[i]) {
+@@ -483,27 +486,40 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
  
-+    if (func == 0x07 && idx == 0 && reg == R_ECX) {
+         if (!has_subleaves) {
+             cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
+-            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
+-                /* all zeroes indicates no more leaves */
+-                continue;
+-            }
+-
+             add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
+             continue;
+         }
+ 
 +        /*
-+         * LA57 (5-level paging) causes incorrect GVA=>GPA translations
-+         * in the instruction decoder/emulator. Disable until page table
-+         * walk in x86_mmu.c works w/ 5-level paging.
++         * Valid XSAVE components can exist at a higher index se we need to set
++         * all subleaves for leaf 0x0d, even if we encounter an empty one.
 +         */
-+        ret &= ~CPUID_7_0_ECX_LA57;
-+    }
++        if (leaf == 0x0d) {
++            for (subleaf = 0; subleaf <= 63; subleaf++) {
++                cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
++                add_cpuid_entry(cpuid_entries, leaf, subleaf,
++                                eax, ebx, ecx, edx);
++            }
++            continue;
++        }
 +
-     return ret;
+         subleaf = 0;
+         while (subleaf < max_subleaf) {
+             cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
+ 
+             if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
+-                /* all zeroes indicates no more leaves */
+                 break;
+             }
+-            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            add_cpuid_entry(cpuid_entries, leaf, subleaf, eax, ebx, ecx, edx);
+             subleaf++;
+         }
+     }
++
++    /* Collect extended leaves (0x80000000 to max_extended_leaf) */
++    for (leaf = 0x80000000; leaf <= max_extended_leaf; leaf++) {
++        cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
++        add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++    }
  }
  
+ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
+@@ -576,22 +592,40 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
+         subleaf_specific = 0;
+         always_override = 1;
+ 
+-        /* Intel */
+-        /* 0xb - Extended Topology Enumeration Leaf */
+-        /* 0x1f - V2 Extended Topology Enumeration Leaf */
+-        /* AMD */
+-        /* 0x8000_001e - Processor Topology Information */
+-        /* 0x8000_0026 - Extended CPU Topology */
+-        if (entry->function == 0xb
+-            || entry->function == 0x1f
+-            || entry->function == 0x8000001e
+-            || entry->function == 0x80000026) {
++        /*
++         * Intel
++         * 0xb - Extended Topology Enumeration Leaf
++         * 0x1f - V2 Extended Topology Enumeration Leaf
++         * AMD
++         * 0x8000_001e - Processor Topology Information
++         * 0x8000_0026 - Extended CPU Topology
++         */
++        if (entry->function == 0xb ||
++            entry->function == 0x1f ||
++            entry->function == 0x8000001e ||
++            entry->function == 0x80000026) {
++            subleaf_specific = 1;
++            always_override = 1;
++        /*
++         * Feature enumeration leaves (subleaf-specific)
++         * 0x04: Deterministic Cache Parameters
++         * 0x07: Structured Extended Feature Flags
++         * 0x0D: Processor Extended State Enumeration
++         * 0x0F: Platform QoS Monitoring
++         * 0x10: Platform QoS Enforcement
++         */
++        } else if (entry->function == 0x04 ||
++                   entry->function == 0x07 ||
++                   entry->function == 0x0d ||
++                   entry->function == 0x0f ||
++                   entry->function == 0x10) {
+             subleaf_specific = 1;
+             always_override = 1;
+-        } else if (entry->function == 0x00000001
+-            || entry->function == 0x80000000
+-            || entry->function == 0x80000001
+-            || entry->function == 0x80000008) {
++        /* Basic feature leaves (no subleaves) */
++        } else if (entry->function == 0x00000001 ||
++                   entry->function == 0x80000000 ||
++                   entry->function == 0x80000001 ||
++                   entry->function == 0x80000008) {
+             subleaf_specific = 0;
+             always_override = 1;
+         }
 -- 
 2.34.1
 
