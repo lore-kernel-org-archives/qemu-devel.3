@@ -4,157 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FBB9F8D761
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 17:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 353C7F8D761
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 17:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDQAb-0002Yp-BV; Thu, 16 Apr 2026 13:06:25 -0400
+	id 1wDQOS-0005ul-2q; Thu, 16 Apr 2026 13:20:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jerome.Forissier@arm.com>)
- id 1wDHcM-0004Av-NZ; Thu, 16 Apr 2026 03:58:30 -0400
-Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDQOQ-0005uQ-Iz
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 13:20:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jerome.Forissier@arm.com>)
- id 1wDHcK-0004q4-03; Thu, 16 Apr 2026 03:58:30 -0400
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=yl2qLvXwygkE8OdJRfdHs4K4lNGfYkB/68sDNo0UbHyJi/zN8gm8oJ1cw8zo8tHWpcf/UH5leC/HeJh+b83AZwAILD8kx7W0U9BS5p5exax2KTxLhJza2GifEgYoP979qasqoKwsX0rWfA11083XAdXXt5y4K8a76/oEb8OVlvkdcDdLR3wbcf96WUkllLWWQ5q3ym/eL9lginG3isHf2LpwDU46c+daSYHI98XB5AbFdePwMdGVDIEXokqxPfqMVxQm9nEoV9v29ZqQHnlg49GTPjLVIIhVHOO4oBlxlngrYeQWbBKhF5s2bgSKKPamEaHozc0K2bt7yU6QJ26DVg==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pLxaYEwXh80ygWjcltfOq79ZJaKurBoo8/IaINn1jOU=;
- b=Uam0DXbS082U+BW/Q0x0RUctZU2CdchTnOxEtV/xfDUHzqWbfPSRbNgBG60xRkksCHok2FnNMZ4L4h6bOoQ4a4NWYjqa+BYZVSlXU4K1qbTiUf+IYHAOEiMocORAEcEXSFV5MY2pVUQN/zfk7AsOz87XNwm+2vdsW1izXH30HiBVqkJWg7GvVsAq3EPwc8kU0YwZhKGgzKwUJ+UrmZKxrVWxFNFiLgHSvl94onm0uDTR+nPkBTh0jLD4bHjlr7UydQYvE8wyYAUyhyNttoXTwstyZ8J4bMNdayLt4p4sjx1AkVYJOs7d5uRGb4xWprODXwGNZzjq4acghcK1Kt/atw==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=linaro.org smtp.mailfrom=arm.com; dmarc=pass
- (p=none sp=none pct=100) action=none header.from=arm.com; dkim=pass
- (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pLxaYEwXh80ygWjcltfOq79ZJaKurBoo8/IaINn1jOU=;
- b=kod/Jo2p8+INmtTCSbYPblAs/9sf0WmkvgSUBKhzTAzsMFPr6QYvRWze4HITRbaUUktCzPtQOLcDD5PKBggi80P6chh2wZ/JTvT6u4Yft0qQE/++6k7n/7Jx5x9Gpkt5xO0H7gxuwC1/AlmeCMfKAHoWe6w+43qd/3mhnFj6Cvk=
-Received: from DB9PR05CA0014.eurprd05.prod.outlook.com (2603:10a6:10:1da::19)
- by AS8PR08MB5878.eurprd08.prod.outlook.com (2603:10a6:20b:29b::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Thu, 16 Apr
- 2026 07:58:18 +0000
-Received: from DU2PEPF00028D07.eurprd03.prod.outlook.com
- (2603:10a6:10:1da:cafe::d8) by DB9PR05CA0014.outlook.office365.com
- (2603:10a6:10:1da::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9769.51 via Frontend Transport; Thu,
- 16 Apr 2026 07:58:18 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
- smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- DU2PEPF00028D07.mail.protection.outlook.com (10.167.242.167) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9745.21
- via Frontend Transport; Thu, 16 Apr 2026 07:58:18 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CE7OVxk91uun8aSUwqNdxwXtreecOXZ9KQU5oBf6j2JiCeKgfoino4crifz9p+3aNipK9s4y9A6LH6DOksSE3MTTREbxwkEaYYw4Tkuoha6NxRAdnM27UKBGKU2H2ltDbELzpa4EFqHNtb4NBa5NQU/2IeT9QIQI5wfjQ8O1qw/9UAYVKRqBstA3MKb1gYRpJyNHjv/dSO1esq8MR+BqqBBsgAxXhR+0CKTvSqhGy3UGcBAaQexEVSNdBsbFnv4klmEb7sXPo1NkRfyq/G8lZ0GmdH5kH5Bu8rpfLCvjQo1A+leCgEZbaeHkcrpalAWyIQ3NqkXsGa66aYEx5O72vA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pLxaYEwXh80ygWjcltfOq79ZJaKurBoo8/IaINn1jOU=;
- b=fAQhDxifahtqg+qdBabrbL6cI10Ugv8kupsZM6Wo36U6YAlEce8BLAD7IdcmeLYchQ2zQ3jaXsQIq+NjuSVGwq16FowZ4yNKJ/S6ubMOnMzucIoZZLWTmYEpVhU2ZOivq+/qi8BUwRDmtsA1mmkNHVaP3Cj8LUSelyw5JAJcmeFDZklavh0SwHt+kH1m81vqud0hE+1JmQwBEjm4ZTMHYw7W7rF8AeC2qqHINYDaZBkRlA2MCLzv/uWh3jZSJdy1FVmnIMBbiKPJGRJDuptcNzRoY965j7PCPNY10QDzPJnKfOivFi5IBmoRTWkT9Z2lWCvuLiXrJk9g1+C5XaHuRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pLxaYEwXh80ygWjcltfOq79ZJaKurBoo8/IaINn1jOU=;
- b=kod/Jo2p8+INmtTCSbYPblAs/9sf0WmkvgSUBKhzTAzsMFPr6QYvRWze4HITRbaUUktCzPtQOLcDD5PKBggi80P6chh2wZ/JTvT6u4Yft0qQE/++6k7n/7Jx5x9Gpkt5xO0H7gxuwC1/AlmeCMfKAHoWe6w+43qd/3mhnFj6Cvk=
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arm.com;
-Received: from AM0PR08MB11733.eurprd08.prod.outlook.com
- (2603:10a6:20b:740::16) by PAWPR08MB10947.eurprd08.prod.outlook.com
- (2603:10a6:102:468::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Thu, 16 Apr
- 2026 07:57:14 +0000
-Received: from AM0PR08MB11733.eurprd08.prod.outlook.com
- ([fe80::29d7:e9ba:ff69:a0c3]) by AM0PR08MB11733.eurprd08.prod.outlook.com
- ([fe80::29d7:e9ba:ff69:a0c3%3]) with mapi id 15.20.9818.023; Thu, 16 Apr 2026
- 07:57:14 +0000
-Message-ID: <febe1e94-2611-4140-974e-52c502fb9d4d@arm.com>
-Date: Thu, 16 Apr 2026 09:57:12 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] sd: Small improvements around RPMB emulation
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jens Wiklander <jens.wiklander@linaro.org>, nd@arm.com
-References: <cover.1776231967.git.jan.kiszka@siemens.com>
- <a081957f-4d23-4aab-ba5c-e0ed2cb75c6c@linaro.org>
-Content-Language: en-US
-From: Jerome Forissier <jerome.forissier@arm.com>
-In-Reply-To: <a081957f-4d23-4aab-ba5c-e0ed2cb75c6c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO4P123CA0451.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:1aa::6) To AM0PR08MB11733.eurprd08.prod.outlook.com
- (2603:10a6:20b:740::16)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDQOM-00055a-Q8
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 13:20:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776360033;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=g2z/O6ur1dRQQCyc6S+pH4WdXfjB7pO4l9lwKWBswRU=;
+ b=N5zeE3Kfo1q1zSHguV4IpgsD89WAQMiLlIE/CG2FodrBnNFGjagk2EaqEvFM84893HgX49
+ gcxnj2O7MK5CV0ZmnvK5A5xnZ0icyFaYkb+WI6R4Hsqx08sScdWbS+LHKddLYDm7FGRUje
+ m2K7JT3D8BKegqAXlfsI6jljsAozvz0=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-64FTXvBGMDmthlCHgjF-XA-1; Thu, 16 Apr 2026 13:20:32 -0400
+X-MC-Unique: 64FTXvBGMDmthlCHgjF-XA-1
+X-Mimecast-MFC-AGG-ID: 64FTXvBGMDmthlCHgjF-XA_1776360031
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8d397a12778so2368201485a.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 10:20:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776360031; x=1776964831; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=g2z/O6ur1dRQQCyc6S+pH4WdXfjB7pO4l9lwKWBswRU=;
+ b=m7mEKOerg35hwzJN5qZVSA5yS/fVLSFKBgRN1R8g8BCtcj5KqKhCO2xc5ScbkblOaI
+ 7bU1vmCRbWTW4NBGBPJIBGEz7ezIU0xkOI+QVZNdiDPM+QuYsDTsoSBj2L4Alj/C8YhM
+ 5lLtKwFbhxhZr9FmjR6G0isnCKaUK3oPcsTGB1bWusuQ/LAyW4UZ5aYG8t3IHtkCr9fy
+ 2nylADfgwRra8TeAnSfVbe6xjMCX92/YM0mox+ykDeAzCcNknnwhNow1vdBbqqqsI0kg
+ QDL2SDRSgDXUD4/VR1tHXTtP4sQQ16twijEqH/gX6xHBEfFI6EcO9ct1qtCHH1JfmHlA
+ j3xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776360031; x=1776964831;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=g2z/O6ur1dRQQCyc6S+pH4WdXfjB7pO4l9lwKWBswRU=;
+ b=S0vEgsurfPgAcdbK+tNyEUXaIMIhJ/3H1WJ8PwmIgYQSEsq1oNIJglbSu89kubkHHZ
+ dEmEHQjpmfDHRoXjSyAnqGj76TowG85wEq7N5f3cdFPvUk1eoEanBnyGX4jyz0ZR5aAw
+ C0qrSh3gV5QhNjeBpMOAfBP+K490FMx0yz/PEECgH9TL7T4yPJG4AR/vkV8PajhZmlTe
+ ZUONnibRR4A7TkW8+JeexeMQmKoELmHGz7sMY2UCg3JzyOr9woLuE7N0Ma7MnHP6Q8/a
+ IfXYR67NtJUwhGkrPoBuUqIoob9AFdqWDgo2kj1kravS9NT5uTRaFyHb0Is4vAal3dsu
+ Ynlg==
+X-Gm-Message-State: AOJu0YwfpP9mFUJfYh/2bvONPzmQ3MNA40d4WemRYqVN4Ol37X3MMlaC
+ ccKwQjwsfKkLgwodepHtZahXhoOix3NsOvbStF9kBu21REdYu3Y4VFghuy4kN9shzCU7XuZApxT
+ KzjCxIShClSNHcoMHPCdIuQGdf7vxeDeKgGqUYX3s1rPaveXBMZFytj7c
+X-Gm-Gg: AeBDieuc3O0MUxEA39we/AgqXBG5mFZBJ1CIFzuy3R0CRzAidf3io+l55hurpUp9thH
+ eoqJ8fKfmE4pf6Yxn/cZSSlwR4GeLZvTOxL9pcW77lnF+v8K7AappTQ8XQzXms80HBCmsx2g+Te
+ Ua1EQZTVks7mCJz/FQ4t9jc6eK/nzUHVGI4Eww+blb9ta09TsP8g4MgHkyeDRzpr20PRnMt+Twi
+ bJwt1cz2sRUMW8KjWDG+CL4vsjFPJ02o3RMFeKVNJxmxQdSiWIn409k/PaMP9Yk9KUijVshL3uq
+ p0eGj8eMc8B2bASkf0wjlq0bPt68+nKjrDxmnHDfeYHQTwEBm6SExOqKfVgqvyIPq70qyLrt/3+
+ v6/lu2Ob8+2vYlRLDKaf3tVVrWwdXQJgWbAbQ37d/CiiBnJiHCtUBo4I8LQ==
+X-Received: by 2002:a05:620a:4146:b0:8d9:4e4a:94ff with SMTP id
+ af79cd13be357-8e74b2bbeb7mr36198185a.37.1776360031163; 
+ Thu, 16 Apr 2026 10:20:31 -0700 (PDT)
+X-Received: by 2002:a05:620a:4146:b0:8d9:4e4a:94ff with SMTP id
+ af79cd13be357-8e74b2bbeb7mr36192185a.37.1776360030635; 
+ Thu, 16 Apr 2026 10:20:30 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8e4f243f1fbsm390941485a.31.2026.04.16.10.20.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Apr 2026 10:20:29 -0700 (PDT)
+Date: Thu, 16 Apr 2026 13:20:28 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>, Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Zhiyi Guo <zhguo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
+Subject: Re: [PATCH 06/14] migration: Introduce stopcopy_bytes in
+ save_query_pending()
+Message-ID: <aeEaXLXGokjjODKR@x1.local>
+References: <20260408165559.157108-1-peterx@redhat.com>
+ <20260408165559.157108-7-peterx@redhat.com>
+ <adfhtgEeWtsMxEmv@fedora>
 MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic: AM0PR08MB11733:EE_|PAWPR08MB10947:EE_|DU2PEPF00028D07:EE_|AS8PR08MB5878:EE_
-X-MS-Office365-Filtering-Correlation-Id: ae513130-988f-4001-2303-08de9b8debdc
-x-checkrecipientrouted: true
-NoDisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;
- ARA:13230040|376014|366016|1800799024|18002099003|56012099003|22082099003; 
-X-Microsoft-Antispam-Message-Info-Original: gkhAX8O7JpUkyj3IPMf6Du7hPfYSF5lc0fxEyuRwo4Olfjar0+BtEUV3w6BAzKWYhy/EKxS++5N7aybuUyk5eQhrYU7R92DmHqsxOsPofsj3oroh1fXphNp/HX52NYn8TMTI5NuTG2jAyOqwThAMyxkn+hz4ZO6S5QjK13n5GPN3HYjJMqaHiajkJo1rVYHF/FHtwg/Ve/vzSr27lTs7i3tSn4ygxJ++orCpU8MTetShsxzKhMsVhhJEYA6vK8RE1P6apDQA+tEYpjGgoBCH+XL/+HFNY7fhvLHc3a7qwlSL0rMS0kUjwZsuQFFNN+L8nuB+VPjNdMTXjV34c3wNScRVgyTTVTtn5/Gg0TqibgstM5dlhnbUNKli1c/OGmFaqCbNTxMtlkgsVhnMweWEnw20WtD1jRjtmDjDBPm6KjXuqOMBn3hrJjFAJVNqzN8f7Xw0hoaJz59VzHAztLSAG7VMlzFSdGTyJpTZlkxqn7EvbCvgxt9ZxAqt0EjYzG62ASQA88vgIiwAh4cpeQsPyIp2oANcfLdXjG8r9vF2kCXFtHSkDNNI5FHD3j4c+gT7vpleEByoxj+TIxrub6WJsLxNBkJufKp+NvJX3G0HB8XflEUfpiPxmaTejWJ+yX9bFyXREzRkrdKfAJdhO4CYrZghcReV/tlBECJlYwjvstKfgLez8gfnc1iYwjccbg0pIIhBhz3+EyUq7Ixz4ecrvYWWyAHmv5dF+Ql4CONsNt8=
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:AM0PR08MB11733.eurprd08.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(18002099003)(56012099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-Exchange-RoutingPolicyChecked: swcDQTvl09pK7C+EmkDiA9AJ45MG+cP5yfLqLJuyXMIk7IFWiBIsZcXcPgRUmu5L3CFvyC/HEUbfvktMXBP2pl5O2nbdy5+AlayGJtKbK8rCO3DwXfu86iFZP6kolGwlHeu9EySbV9PYOAoPafwFIbGIdBWZf4Gl9G+xoCdlkvKOdH8ZmS1U3cU7oBGGpGTn77tFKqsodNU9xWtPxN0YqT9ITeSCsYAlI7BKtkW97v526n0sDH/J9Ev41NaT0GLhYp0O/ockHbeeMCZsHzLlBR2g5uZep34J3GwGbnpFEnte2XGWR1J6YYHc6yxCs9E1wAbMoZF5aZ1MGOQWzm76tw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB10947
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: DU2PEPF00028D07.eurprd03.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 3c613d85-9e28-45b9-b4f5-08de9b8dc590
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|35042699022|14060799003|82310400026|36860700016|1800799024|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info: tONbjd5GXnc63VVhFUDA+U7Qh0WpgNKTFtShus2Ij4WVTh6iXLtYlxvQ0GTLVH7RDLV1KUVofW5IDwXVKPpc/PKeMJYO23vVtsfrBwqy5bMl8L3suLR62FJo8Jq5HvR0rdKrrRqBfhIL9kOf0Kdadu1bqXD6vd+aQtsECZ5iiIykmObZo/cuvV/KOuyyv1pPPpNYrxxQBPRZw2RGNlYp6ULAqKNbAWalu/cVPIXxa1o7PdTomkyXQt9N+FTD27+wwTNHUpKac27nY7OGJvsKFZkuj8J+JoVJC1mCL5hMMSzHfp+cPLEVvMlWXBDB0YpZzhQUuv594LMIi1T1zEOgUbmQMRYNkPfP+c6YdBeBAuNZeck54uRlUkZOpHTnY+wxD7tzcqQfx+vSi/CK3irX+oTr2oIasoDlN3ZgmZruzEE/rA4abycgP/Y/Ghxpwu1E9RXd2z/WAwRFR0YaBgkuuZYW1lLGwk2I6YdWZDvmutTnSZ7Rl82mFddKqlJrphHhg/0uEtY5HcL8wnpxKMk0ibAjUrWPjefLDSxQSWO7VqyuOm4jpSnQ/soZnFdg5ePE+I8TL8eKVq9cIHDj9b9uLG3ximX+iTkIY1nHak5GxZZUqY7W5psWpfFe1HPTAKRbsWm9VoDpJeKvagM0vaVcWZOKtCUr1k+WAotspAnypowxCwxfoJUC1PAWGUQ49PDuPbOrQwoOOAFlLotaFiZRnIQ8phWMqHRHMZyustYpOt0u2+D5TXwqEQI5lhY24AWX2b16esPXPb/TlHjY09tnMg==
-X-Forefront-Antispam-Report: CIP:4.158.2.129; CTRY:GB; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:outbound-uk1.az.dlp.m.darktrace.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(35042699022)(14060799003)(82310400026)(36860700016)(1800799024)(18002099003)(56012099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: E7Zw05mKD92HqBXcBObNFBF4/S7ZZ2ahnr9wqrYk42YppTyQw+QTtcuHkg1ShlGHJpltEMtheCkidlRIuJP8q2taov0+9AIXOqweTCKI1vXQG/MtmfKeqaIq6iSLLx8cNlIbDIwetUgbm0DiUCHLwfFjLa65XqHbOj2weT02+Yb82Up4DnWoZ0n06ZfROiL8X7XlRX/3Jy+AOhE3wqQ7WW88f6AJgMJPKy7QuFjgqURrIUjzIQsCL+85U+Wq79EcpQpRCE7Qtt8E7IvpRJeBFbBLixB5/3rdLSowzZeAlf5N/q/oek4Wtvm0/eH4RpRXe5cjswg75qpgEFO1lY1jT06ozOlcm4ZsHAagQO/S9ltAQQpLj6w1Q+iNmvuZIbk1oFb+fxwv1IAy33Lrywvs4Ke5of9f8s1PCEFXUhHAp5IEXKzy41iQlHIgaH3/ruW5
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2026 07:58:18.1877 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae513130-988f-4001-2303-08de9b8debdc
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d; Ip=[4.158.2.129];
- Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource: DU2PEPF00028D07.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB5878
-Received-SPF: pass client-ip=2a01:111:f403:c207::3;
- envelope-from=Jerome.Forissier@arm.com;
- helo=MRWPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <adfhtgEeWtsMxEmv@fedora>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 16 Apr 2026 13:06:24 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -169,44 +123,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 15/04/2026 22:32, Philippe Mathieu-Daudé wrote:
-> (Cc'ing Jerome to his new email)
-
-Thanks :)
-
-> On 15/4/26 07:46, Jan Kiszka wrote:
->> Besides a cosmetic fix for the emmc disk image generation script, this
->> adds a property to the emmc model that allows to preset the
->> authentication key. And that enables to build OPTEE without key writing
->> support, bringing the related firmware much closer to real setups.
->>
->> An alternative to this option would have been persisting additional
->> state such as the key or the write counter on the disk image as well.
->> This is still an option for the future, e.g. to model also write
->> protection groups or other persistent states. As this requires another
->> format extension of the eMMC disk image, I want for this much simpler
->> and less invasive approach.
-
-That's coool! For the series:
-
-Reviewed-by: Jerome Forissier <jerome.forissier@arm.com>
-
-Thanks,
--- 
-Jerome
-
->> Jan
->>
->> Jan Kiszka (2):
->>    scripts: mkemmc.sh: Fix output pollution on missing images
->>    hw/sd/sdcard: Add support for pre-setting the authentication key
->>
->>   hw/sd/sd.c        | 23 +++++++++++++++++++++++
->>   scripts/mkemmc.sh |  4 ++--
->>   2 files changed, 25 insertions(+), 2 deletions(-)
->>
+On Thu, Apr 09, 2026 at 07:36:51PM +0200, Juraj Marcin wrote:
+> Hi Peter,
 > 
+> actually, I do have one question, see inline
+
+[...]
+
+> shouldn't also the condition that triggers postcopy migration be updated?
+> As total_bytes is calculated as sum of all three
+> (precopy_bytes + stopcopy_bytes + postcopy_bytes), this implies to me
+> that stopcopy_bytes is not subset of precopy_bytes and would also need
+> to be migrated during switchover before postcopy.
+
+For now it shouldn't matter when VFIO never works with postcpoy yet, but
+it's a good point. We'd better make it right from the start.
+
+When looking at this, I also found we may be reporting wrong things in the
+query results when pmem is available on postcopy bits, it's about when this
+hits:
+
+static bool ram_has_postcopy(void *opaque)
+{
+    RAMBlock *rb;
+    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+        if (ram_block_is_pmem(rb)) {
+            info_report("Block: %s, host: %p is a nvdimm memory, postcopy"
+                         "is not supported now!", rb->idstr, rb->host);
+            return false;
+        }
+    }
+
+    return migrate_postcopy_ram();
+}
+
+So I think we should also report differently based on whether pmem is
+present in ramblocks.. IOW, I think the module should make sure its
+save_query_pending() to match its has_postcopy() when they're both present.
+Or, maybe we don't even need has_postcopy()..
+
+If it's a problem, it should be an old problem.  Let me address the
+comments so far on this patch, so a fixup planned to be squashed (I also
+added the trace parameter Avihai requested), feel free to comment before I
+repost, thanks.
+
+From 594b85b66b2d1abd9a38fae4051e01ffc73aa8ff Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Thu, 16 Apr 2026 13:09:16 -0400
+Subject: [PATCH] fixup! migration: Introduce stopcopy_bytes in
+ save_query_pending()
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/migration.c  | 13 +++++++++++--
+ migration/savevm.c     |  3 ++-
+ migration/trace-events |  2 +-
+ 3 files changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index c2aa145106..62299ff3c0 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3276,6 +3276,16 @@ static void migration_iteration_go_next(MigPendingData *pending)
+     }
+ }
+ 
++static bool postcopy_should_start(MigrationState *s, MigPendingData *pending)
++{
++    /* If postcopy's switchver will violate user specified downtime, stop */
++    if (pending->precopy_bytes + pending->stopcopy_bytes > s->threshold_size) {
++        return false;
++    }
++
++    return qatomic_read(&s->start_postcopy);
++}
++
+ /*
+  * Return true if continue to the next iteration directly, false
+  * otherwise.
+@@ -3323,8 +3333,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+         }
+ 
+         /* Should we switch to postcopy now? */
+-        if (pending.precopy_bytes <= s->threshold_size &&
+-            can_switchover && qatomic_read(&s->start_postcopy)) {
++        if (can_switchover && postcopy_should_start(s, &pending)) {
+             if (postcopy_start(s, &local_err)) {
+                 migrate_error_propagate(s, error_copy(local_err));
+                 error_report_err(local_err);
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 1d3fce45b9..7f38be0ee1 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1804,7 +1804,8 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+ 
+     trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
+                                     pending->stopcopy_bytes,
+-                                    pending->postcopy_bytes);
++                                    pending->postcopy_bytes,
++                                    pending->total_bytes);
+ }
+ 
+ void qemu_savevm_state_cleanup(MigrationState *s)
+diff --git a/migration/trace-events b/migration/trace-events
+index 2f86ad448e..d2134af862 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
+ qemu_loadvm_state_post_main(int ret) "%d"
+ qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
+ qemu_savevm_send_packaged(void) ""
+-qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64
++qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
+ loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
+ loadvm_state_setup(void) ""
+ loadvm_state_cleanup(void) ""
+-- 
+2.53.0
+
+
+-- 
+Peter Xu
 
 
