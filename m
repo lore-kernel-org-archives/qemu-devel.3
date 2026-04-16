@@ -4,110 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 353C7F8D761
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 17:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A4EEF8D762
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 17:27:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDQOS-0005ul-2q; Thu, 16 Apr 2026 13:20:44 -0400
+	id 1wDQUC-0006lE-4v; Thu, 16 Apr 2026 13:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDQOQ-0005uQ-Iz
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 13:20:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDQOM-00055a-Q8
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 13:20:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776360033;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=g2z/O6ur1dRQQCyc6S+pH4WdXfjB7pO4l9lwKWBswRU=;
- b=N5zeE3Kfo1q1zSHguV4IpgsD89WAQMiLlIE/CG2FodrBnNFGjagk2EaqEvFM84893HgX49
- gcxnj2O7MK5CV0ZmnvK5A5xnZ0icyFaYkb+WI6R4Hsqx08sScdWbS+LHKddLYDm7FGRUje
- m2K7JT3D8BKegqAXlfsI6jljsAozvz0=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-64FTXvBGMDmthlCHgjF-XA-1; Thu, 16 Apr 2026 13:20:32 -0400
-X-MC-Unique: 64FTXvBGMDmthlCHgjF-XA-1
-X-Mimecast-MFC-AGG-ID: 64FTXvBGMDmthlCHgjF-XA_1776360031
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8d397a12778so2368201485a.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 10:20:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDQUA-0006kk-0x
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 13:26:38 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDQU6-00068q-Dz
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 13:26:37 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488aa77a06eso134939975e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 10:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776360031; x=1776964831; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=g2z/O6ur1dRQQCyc6S+pH4WdXfjB7pO4l9lwKWBswRU=;
- b=m7mEKOerg35hwzJN5qZVSA5yS/fVLSFKBgRN1R8g8BCtcj5KqKhCO2xc5ScbkblOaI
- 7bU1vmCRbWTW4NBGBPJIBGEz7ezIU0xkOI+QVZNdiDPM+QuYsDTsoSBj2L4Alj/C8YhM
- 5lLtKwFbhxhZr9FmjR6G0isnCKaUK3oPcsTGB1bWusuQ/LAyW4UZ5aYG8t3IHtkCr9fy
- 2nylADfgwRra8TeAnSfVbe6xjMCX92/YM0mox+ykDeAzCcNknnwhNow1vdBbqqqsI0kg
- QDL2SDRSgDXUD4/VR1tHXTtP4sQQ16twijEqH/gX6xHBEfFI6EcO9ct1qtCHH1JfmHlA
- j3xA==
+ d=linaro.org; s=google; t=1776360390; x=1776965190; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dguMNu+rblwGHa+gUuLRqPdQYImX3ZlNd0zX09DdGe4=;
+ b=leqm9TcFn2DWp4wNJO3Y6XUJ7/NHMnrTCZV2m69xib8+L+gqbN0Td3tJ0Sa519gzVe
+ eZh9r1Ag9M0fsUL7otIGOzDFK4faNCa/MatS9ASy1b0jBNSR8neLFhkZwsVHrBQAYbZ+
+ ItPYrb/ACmdcUVckHBfATC9YJu6t4AOkAo4Ci549YiTCSM75ISqmXjBO+9sa7zYNhU+O
+ PBHq8Qmuj10S0u23INOYeLcIUDJZ2H/xKSXXEG5BsIoh2sFeX8Uq1+KJtU74Y4ytJG1C
+ d5nbvkHE9st5+J+0SYwpKxAPkqYoH7XNReHb3HWMbdX1udh9ULhJ6XbM9nizEqOU6SRR
+ Eplg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776360031; x=1776964831;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=g2z/O6ur1dRQQCyc6S+pH4WdXfjB7pO4l9lwKWBswRU=;
- b=S0vEgsurfPgAcdbK+tNyEUXaIMIhJ/3H1WJ8PwmIgYQSEsq1oNIJglbSu89kubkHHZ
- dEmEHQjpmfDHRoXjSyAnqGj76TowG85wEq7N5f3cdFPvUk1eoEanBnyGX4jyz0ZR5aAw
- C0qrSh3gV5QhNjeBpMOAfBP+K490FMx0yz/PEECgH9TL7T4yPJG4AR/vkV8PajhZmlTe
- ZUONnibRR4A7TkW8+JeexeMQmKoELmHGz7sMY2UCg3JzyOr9woLuE7N0Ma7MnHP6Q8/a
- IfXYR67NtJUwhGkrPoBuUqIoob9AFdqWDgo2kj1kravS9NT5uTRaFyHb0Is4vAal3dsu
- Ynlg==
-X-Gm-Message-State: AOJu0YwfpP9mFUJfYh/2bvONPzmQ3MNA40d4WemRYqVN4Ol37X3MMlaC
- ccKwQjwsfKkLgwodepHtZahXhoOix3NsOvbStF9kBu21REdYu3Y4VFghuy4kN9shzCU7XuZApxT
- KzjCxIShClSNHcoMHPCdIuQGdf7vxeDeKgGqUYX3s1rPaveXBMZFytj7c
-X-Gm-Gg: AeBDieuc3O0MUxEA39we/AgqXBG5mFZBJ1CIFzuy3R0CRzAidf3io+l55hurpUp9thH
- eoqJ8fKfmE4pf6Yxn/cZSSlwR4GeLZvTOxL9pcW77lnF+v8K7AappTQ8XQzXms80HBCmsx2g+Te
- Ua1EQZTVks7mCJz/FQ4t9jc6eK/nzUHVGI4Eww+blb9ta09TsP8g4MgHkyeDRzpr20PRnMt+Twi
- bJwt1cz2sRUMW8KjWDG+CL4vsjFPJ02o3RMFeKVNJxmxQdSiWIn409k/PaMP9Yk9KUijVshL3uq
- p0eGj8eMc8B2bASkf0wjlq0bPt68+nKjrDxmnHDfeYHQTwEBm6SExOqKfVgqvyIPq70qyLrt/3+
- v6/lu2Ob8+2vYlRLDKaf3tVVrWwdXQJgWbAbQ37d/CiiBnJiHCtUBo4I8LQ==
-X-Received: by 2002:a05:620a:4146:b0:8d9:4e4a:94ff with SMTP id
- af79cd13be357-8e74b2bbeb7mr36198185a.37.1776360031163; 
- Thu, 16 Apr 2026 10:20:31 -0700 (PDT)
-X-Received: by 2002:a05:620a:4146:b0:8d9:4e4a:94ff with SMTP id
- af79cd13be357-8e74b2bbeb7mr36192185a.37.1776360030635; 
- Thu, 16 Apr 2026 10:20:30 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8e4f243f1fbsm390941485a.31.2026.04.16.10.20.29
+ d=1e100.net; s=20251104; t=1776360390; x=1776965190;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dguMNu+rblwGHa+gUuLRqPdQYImX3ZlNd0zX09DdGe4=;
+ b=fk9ffrtsgMiKGrLN0NBRobNbkYt0olTdiG4nzpud9+7BuZCic0wNhou/4ci1fb8gms
+ hzN8At57t7QpfjLzbEtZxLn9jVyGBhk7Td7fwprLu1+ZUPB3Px8TpHoXS06rk1ZNxmqd
+ uZkhh3wiIQc97MqE1k37A4B5swzwplDBpyhjAIpQ9T/Ucy0c4CjZWDt5KQm17aBoGQ9B
+ DxcVN9+ElmyoFBPe/GGhN9B58YnaYLiwc4vhkYpWtFm1wrT9p+HSS+kbYT2s2G/EWlpl
+ A6WW+6M9J/km/gNN86W1Vf5kqWU7xcyXgYF77YviNwL6CADPmYWNOL6tcyB8bP3UlReY
+ AydQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8rCdxY4WQet5cK31dvbw+1D7clXWQZe6+i/Gy18PuFUwGf32+NQkw4V+Gxm2wqcb5MFFirKGauFW3P@nongnu.org
+X-Gm-Message-State: AOJu0YwI8Eth+DtUMDFZFKB7mLKncuyiELmESps75vcRgyJRUi9ODuyz
+ lh5BAAijnIs5fASvyhjRmaeenJf51EME/vfMOKD2SHEFnm4pwnxTv7m0v3qIP6Lqn3ZW4i7KWsu
+ XANNXuS8=
+X-Gm-Gg: AeBDieu4od/aPJInf0H7WoGxO2MrDWoKvDPYdF89atCUb3Hyy7xUHRx9xVOzbFOEycL
+ MRi01II1yWCWNcyE2IcdKmDgzPavd8a96b1ysTeltIi424cgVuqjuROAjJ4JQA7Bm1D7bNYSPHh
+ SdndueBEKwM7JFJFfV+fhcSxPNH4DaHU+BvPlHmh63JWsCOU93qOu7/ht/2hsYk7cTEJtKcNyA7
+ b/OTF7pqb0GgbRp9skZwHlFkaL3Q0FyUnQ48DBb0hJ6+082/9Mv39bHxAWc2o+x3atYexshIOFs
+ PcKGLnhbm37tdGAVQRKx2bodcs4QRG7uuODiL8Hmvcao9eDhoqu/zmBNvJJeC1tk0VPMKh0E+qj
+ mXCJ0MY1zp0TDH2RZqTqEt6R8TrwphMxDaLZlVHlCAq9NZ9HPzSiEkdQKebrneCu/EqIteT5XG+
+ wdSChZio71bT0r2QDTZQjvAZ0038phaYdw5Q6Ra7UamNgRQHj1r2jrNi5BuwkKnK8O2aMDKNza1
+ UH5Fv+zgZIANwGWd36G9DdbzYEwHoS9J9eubtz2Uw==
+X-Received: by 2002:a05:600c:c108:b0:488:c282:e78c with SMTP id
+ 5b1f17b1804b1-488d684bd3amr260538165e9.19.1776360390170; 
+ Thu, 16 Apr 2026 10:26:30 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fa73cbe3sm2022615e9.0.2026.04.16.10.26.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 10:20:29 -0700 (PDT)
-Date: Thu, 16 Apr 2026 13:20:28 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>, Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: Re: [PATCH 06/14] migration: Introduce stopcopy_bytes in
- save_query_pending()
-Message-ID: <aeEaXLXGokjjODKR@x1.local>
-References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-7-peterx@redhat.com>
- <adfhtgEeWtsMxEmv@fedora>
+ Thu, 16 Apr 2026 10:26:28 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH] hw: Move ARM_SYSCTL_GPIO definitions to arm sysctl specific
+ header
+Date: Thu, 16 Apr 2026 18:26:27 +0100
+Message-ID: <20260416172627.690396-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <adfhtgEeWtsMxEmv@fedora>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,126 +101,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 09, 2026 at 07:36:51PM +0200, Juraj Marcin wrote:
-> Hi Peter,
-> 
-> actually, I do have one question, see inline
+include/hw/arm/primecell.h used to be more expansive, but now the
+only thing it defines is the ARM_SYSCTL_GPIO_* constants for the GPIO
+lines for the arm-sysctl system-control device used on the Realview,
+Versatile and Versatile Express boards.
 
-[...]
+Replace it with a header file specific to that device.
 
-> shouldn't also the condition that triggers postcopy migration be updated?
-> As total_bytes is calculated as sum of all three
-> (precopy_bytes + stopcopy_bytes + postcopy_bytes), this implies to me
-> that stopcopy_bytes is not subset of precopy_bytes and would also need
-> to be migrated during switchover before postcopy.
+virt.c and vmapple.c included primecell.h despite not using the
+constants it defined; there we can simply drop the include entirely.
 
-For now it shouldn't matter when VFIO never works with postcpoy yet, but
-it's a good point. We'd better make it right from the start.
-
-When looking at this, I also found we may be reporting wrong things in the
-query results when pmem is available on postcopy bits, it's about when this
-hits:
-
-static bool ram_has_postcopy(void *opaque)
-{
-    RAMBlock *rb;
-    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-        if (ram_block_is_pmem(rb)) {
-            info_report("Block: %s, host: %p is a nvdimm memory, postcopy"
-                         "is not supported now!", rb->idstr, rb->host);
-            return false;
-        }
-    }
-
-    return migrate_postcopy_ram();
-}
-
-So I think we should also report differently based on whether pmem is
-present in ramblocks.. IOW, I think the module should make sure its
-save_query_pending() to match its has_postcopy() when they're both present.
-Or, maybe we don't even need has_postcopy()..
-
-If it's a problem, it should be an old problem.  Let me address the
-comments so far on this patch, so a fixup planned to be squashed (I also
-added the trace parameter Avihai requested), feel free to comment before I
-repost, thanks.
-
-From 594b85b66b2d1abd9a38fae4051e01ffc73aa8ff Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Thu, 16 Apr 2026 13:09:16 -0400
-Subject: [PATCH] fixup! migration: Introduce stopcopy_bytes in
- save_query_pending()
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- migration/migration.c  | 13 +++++++++++--
- migration/savevm.c     |  3 ++-
- migration/trace-events |  2 +-
- 3 files changed, 14 insertions(+), 4 deletions(-)
+Trivial cleanup; I was trying out emacs eglot and it flagged
+up that virt.c includes primecell.h unnecessarily, which led
+me to this.
+---
+ MAINTAINERS                  |  2 +-
+ hw/arm/realview.c            |  2 +-
+ hw/arm/vexpress.c            |  2 +-
+ hw/arm/virt.c                |  1 -
+ hw/misc/arm_sysctl.c         |  2 +-
+ hw/vmapple/vmapple.c         |  1 -
+ include/hw/arm/primecell.h   | 12 ------------
+ include/hw/misc/arm_sysctl.h | 16 ++++++++++++++++
+ 8 files changed, 20 insertions(+), 18 deletions(-)
+ delete mode 100644 include/hw/arm/primecell.h
+ create mode 100644 include/hw/misc/arm_sysctl.h
 
-diff --git a/migration/migration.c b/migration/migration.c
-index c2aa145106..62299ff3c0 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3276,6 +3276,16 @@ static void migration_iteration_go_next(MigPendingData *pending)
-     }
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ad215eced8..7f2b34d652 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -761,7 +761,6 @@ F: hw/ssi/pl022.c
+ F: include/hw/ssi/pl022.h
+ F: hw/rtc/pl031.c
+ F: include/hw/rtc/pl031.h
+-F: include/hw/arm/primecell.h
+ F: hw/timer/cmsdk-apb-timer.c
+ F: include/hw/timer/cmsdk-apb-timer.h
+ F: tests/qtest/cmsdk-apb-timer-test.c
+@@ -1106,6 +1105,7 @@ F: hw/*/versatile*
+ F: hw/i2c/arm_sbcon_i2c.c
+ F: include/hw/i2c/arm_sbcon_i2c.h
+ F: hw/misc/arm_sysctl.c
++F: include/hw/misc/arm_sysctl.h
+ F: docs/system/arm/versatile.rst
  
-+static bool postcopy_should_start(MigrationState *s, MigPendingData *pending)
-+{
-+    /* If postcopy's switchver will violate user specified downtime, stop */
-+    if (pending->precopy_bytes + pending->stopcopy_bytes > s->threshold_size) {
-+        return false;
-+    }
+ Virt
+diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+index c9558be4d4..bfcce4419a 100644
+--- a/hw/arm/realview.c
++++ b/hw/arm/realview.c
+@@ -12,9 +12,9 @@
+ #include "cpu.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/arm/boot.h"
+-#include "hw/arm/primecell.h"
+ #include "hw/arm/machines-qom.h"
+ #include "hw/core/split-irq.h"
++#include "hw/misc/arm_sysctl.h"
+ #include "hw/net/lan9118.h"
+ #include "hw/net/smc91c111.h"
+ #include "hw/pci/pci.h"
+diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+index cc6ae7d4c4..9db8a68ba9 100644
+--- a/hw/arm/vexpress.c
++++ b/hw/arm/vexpress.c
+@@ -26,8 +26,8 @@
+ #include "qemu/datadir.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/arm/boot.h"
+-#include "hw/arm/primecell.h"
+ #include "hw/arm/machines-qom.h"
++#include "hw/misc/arm_sysctl.h"
+ #include "hw/net/lan9118.h"
+ #include "hw/i2c/i2c.h"
+ #include "net/net.h"
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ec0d8475ca..16e905dca8 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -36,7 +36,6 @@
+ #include "monitor/qdev.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/arm/boot.h"
+-#include "hw/arm/primecell.h"
+ #include "hw/arm/virt.h"
+ #include "hw/arm/machines-qom.h"
+ #include "hw/block/flash.h"
+diff --git a/hw/misc/arm_sysctl.c b/hw/misc/arm_sysctl.c
+index 7b320f89c1..ebc95b9bb5 100644
+--- a/hw/misc/arm_sysctl.c
++++ b/hw/misc/arm_sysctl.c
+@@ -14,8 +14,8 @@
+ #include "system/runstate.h"
+ #include "qemu/bitops.h"
+ #include "hw/core/sysbus.h"
++#include "hw/misc/arm_sysctl.h"
+ #include "migration/vmstate.h"
+-#include "hw/arm/primecell.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qom/object.h"
+diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
+index b1379eafef..607181f517 100644
+--- a/hw/vmapple/vmapple.c
++++ b/hw/vmapple/vmapple.c
+@@ -32,7 +32,6 @@
+ #include "hw/core/sysbus.h"
+ #include "hw/usb/usb.h"
+ #include "hw/arm/boot.h"
+-#include "hw/arm/primecell.h"
+ #include "hw/char/pl011.h"
+ #include "hw/intc/arm_gic.h"
+ #include "hw/intc/arm_gicv3_common.h"
+diff --git a/include/hw/arm/primecell.h b/include/hw/arm/primecell.h
+deleted file mode 100644
+index 7337c3b3ca..0000000000
+--- a/include/hw/arm/primecell.h
++++ /dev/null
+@@ -1,12 +0,0 @@
+-#ifndef PRIMECELL_H
+-#define PRIMECELL_H
+-
+-/* Declarations for ARM PrimeCell based periperals.  */
+-/* Also includes some devices that are currently only used by the
+-   ARM boards.  */
+-
+-/* arm_sysctl GPIO lines */
+-#define ARM_SYSCTL_GPIO_MMC_WPROT 0
+-#define ARM_SYSCTL_GPIO_MMC_CARDIN 1
+-
+-#endif
+diff --git a/include/hw/misc/arm_sysctl.h b/include/hw/misc/arm_sysctl.h
+new file mode 100644
+index 0000000000..424069cd6e
+--- /dev/null
++++ b/include/hw/misc/arm_sysctl.h
+@@ -0,0 +1,16 @@
++/*
++ * Status and system control registers for ARM RealView/Versatile boards.
++ *
++ * Copyright (c) Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    return qatomic_read(&s->start_postcopy);
-+}
++#ifndef HW_MISC_ARM_SYSCTL_H
++#define HW_MISC_ARM_SYSCTL_H
 +
- /*
-  * Return true if continue to the next iteration directly, false
-  * otherwise.
-@@ -3323,8 +3333,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-         }
- 
-         /* Should we switch to postcopy now? */
--        if (pending.precopy_bytes <= s->threshold_size &&
--            can_switchover && qatomic_read(&s->start_postcopy)) {
-+        if (can_switchover && postcopy_should_start(s, &pending)) {
-             if (postcopy_start(s, &local_err)) {
-                 migrate_error_propagate(s, error_copy(local_err));
-                 error_report_err(local_err);
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 1d3fce45b9..7f38be0ee1 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1804,7 +1804,8 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
- 
-     trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
-                                     pending->stopcopy_bytes,
--                                    pending->postcopy_bytes);
-+                                    pending->postcopy_bytes,
-+                                    pending->total_bytes);
- }
- 
- void qemu_savevm_state_cleanup(MigrationState *s)
-diff --git a/migration/trace-events b/migration/trace-events
-index 2f86ad448e..d2134af862 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
- qemu_loadvm_state_post_main(int ret) "%d"
- qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
- qemu_savevm_send_packaged(void) ""
--qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64
-+qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
- loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
- loadvm_state_setup(void) ""
- loadvm_state_cleanup(void) ""
++/* arm_sysctl inbound GPIO lines */
++#define ARM_SYSCTL_GPIO_MMC_WPROT 0
++#define ARM_SYSCTL_GPIO_MMC_CARDIN 1
++
++#endif
 -- 
-2.53.0
-
-
--- 
-Peter Xu
+2.43.0
 
 
