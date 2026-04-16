@@ -4,104 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B3CF8E489
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 22:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C9DF8E48C
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 22:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDVPB-00020b-BC; Thu, 16 Apr 2026 18:41:49 -0400
+	id 1wDVWd-0002ws-Cr; Thu, 16 Apr 2026 18:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.ferst@gmail.com>)
- id 1wDVP9-00020O-MS
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:41:47 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDVWc-0002wi-5i
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:49:30 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matheus.ferst@gmail.com>)
- id 1wDVP7-0003aA-KT
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:41:47 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-35e576110adso62017a91.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 15:41:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776379304; cv=none;
- d=google.com; s=arc-20240605;
- b=ShJ4WqcyAYb0JWmAPn2ZXRbax/UTP0hOJfHmkFKXuPJOSdUGFko1SNnTnc6dz7tHTF
- bcvr0+gynjaQcPE3FqY0PCPWKO+4cpmf8jqsL1ZDzNhVwBxyWcI3xuPQJeWWpE0aGXaC
- TFW/ZyfirvsBkAxxX7HG9Kw4b5BfjaTN3GGysms5WFxGwg6FjFtO4HBDVONG3HJiPn5B
- mFNR6CK5Y6c0yR4/d1zne+O9Pn1+SqN2bJkfed2YPHdnp3ctrTQ7CP/dxs/JJJSob5PQ
- BaSui2S3Ym/sb6SxqFG821jzUIqlkSpy7szThqCJHaI+0CVatBcICUuquFVHJB2NcvVq
- kVTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=OImrMwYKrZ1adQfrvSiEl3H5ZwG6DfAw5hK2SeDcILs=;
- fh=lSaylozGwWQvC9mpdwVhjl6H30Ek99ulxf5iATbC+ds=;
- b=krL+TA4Ik5UxJuM4m7Osy80K9L4Cb3d6D45VMn+ivsHcHFfOxv41GYsPH7oD8MTJwg
- cuscVRbkiMBbUmvwr+ttOhVnZJucgpvBVXCQMsoAp2jb1hfd/cUJFm31amR5URA+BihO
- 1wLMFciT4Q7KFTrPWa0TVJkvZv7BwelebPuVg/wrJl3nqh1AKtYKDfLbOXgVZc5gIupp
- dPYxo2iyoJSS0EHvb6p1kGUxjjrgEZefxtoGEaZ8V7fQV7U9UEXGZ0eG3jT2uNwI74L0
- 5YX0Nby8zbuxlLol9hxd0l5PNDaecT/pTZdnCSK0GVa832cGljW0mGm+gVQGPHfwaiun
- YPZg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDVWa-0005xO-HL
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:49:29 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2ad9516a653so145935ad.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 15:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776379304; x=1776984104; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OImrMwYKrZ1adQfrvSiEl3H5ZwG6DfAw5hK2SeDcILs=;
- b=A/1cJolCsaBRWsAhPBJQYQQko66Zt5ftoIrCs1MyJ1oYHg+SpW3Ecvt/8g5rknn2e4
- OFFm6biPXUp2Ybix5qHOiNV+OYafV2w79lcoLwwIg5JnzrktsADKKcTPC362+0+/HRl+
- NDydUFrtRQKMk3XQLM16EQnuATLR95GRpbffC8eFdwtalgPNmgptCvJNlO8GYbOqp6Ih
- ZUi8vHMXAB3GJYf381qJ08A/lKJQTZZgaT+pvPsGksLzcFrSYw0ArDqABCqDdZCYGshr
- hHZbnumj9Ss6op8Q2vq2ZEY9706k18Hd22O0LKlG7bFqJmsySvaFeSTrlSXFLoGHBFfX
- qv+Q==
+ d=linaro.org; s=google; t=1776379766; x=1776984566; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0Z6R4N4ERWxEmvQadqcvyWhwR3tIcn1DxI6w0HzrxOQ=;
+ b=HeqEODwL1WNDbyFx7ZandwdWn/SuJGj1WyezYwR1efPcA5H/4V5UiBsOE3NRK4dNRe
+ /DaurHPzAEdKeh+AdYrl28MBLmh053LKl5hGCjU9p1hiQixlkk8nbLrAbj35KWFQ11CF
+ fHbRWiFtlcFktfW58B4i9/zjJBtJUSakf7p1DXB4FIhC6cW0+HxeKDZ9hbRUXzMFUTpk
+ LlL9t/j1g5pBaGY+nrUQC8sNB/Ae9fQ94GlorQ1aHSU36YpWoJtq/UkLeORYv8j8U1U1
+ CGT5wl9keIR98kXkUFfLPoTNs5DCJlSQI4cJiBRTnh3UPDv1nZYP5nvAbol5tu3RxbUt
+ vHzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776379304; x=1776984104;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OImrMwYKrZ1adQfrvSiEl3H5ZwG6DfAw5hK2SeDcILs=;
- b=IPCg2c55qKFV204OyVVyOK2UFBlzak5HQXSgU2OccfXe5NT8QGATZNsgkaMplcDGej
- BSYMq2chEZ+nSj7IUI06FP+Pd0OmIjspCr+ZHfRpo36+dBTyqS5rSNh7c1ysIAE6PtoQ
- 6z3eZhAVt3EgpiPihWW+5hMxVrApfKSuMi9XMOosb8nh7TGAHXRRNXF55R6mH7VsmAWr
- hZ9NDMGxPwTjT9FtbC3C3qQ9CbRabfU9r8WdfbIEy3C4woMVqzZ/VxiGxK0y9g3w2Qgi
- +H4KJaWyfVTNwFDUg+V9NPRdiJtgfStvKpKJLxNf2cJrGmBLSerJzn5DY9eYScmx7Zo5
- Bhtg==
+ d=1e100.net; s=20251104; t=1776379766; x=1776984566;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0Z6R4N4ERWxEmvQadqcvyWhwR3tIcn1DxI6w0HzrxOQ=;
+ b=FYCctUUtJXPF1D89dVv7MjJIgQCjfi8kZ5GVbFPxq8f+GOiM8Txya5gE2HPDfJ6s/h
+ 2765JGqqrd4vO/ZnHn+GlNEyw4xdlwsz630er9lb7yvhssxCsEVpSBllBWeAiRbROdUm
+ zKZvQg+JswSmVv2wSEC30u771QFVcsk1d9TUzdwDt95Wbmsl+//NcRgtatLLnCC8vUFC
+ j0y9Zrc19dL5b/MWPZu1CUhIwCIzuqWVBzzTB99EB3nC3m2uWsvNKyyiF+FWPFq3x29Q
+ wvduxq/da76Wa4U68+50k8hDka1JUnta3d2pObYuXU/fI6QPvqsXLYlK27s9G1tVbqBD
+ g4kg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/MrsAs6h+5oz8ulz/BlEL7gBuiB8SPKzTPufnoO5FdjclhkK0NZ0T9tvGtTA9T8CykJ1aHZ667RQwZ@nongnu.org
-X-Gm-Message-State: AOJu0YyYLVdCgFkX+PcEA0i5Gzo0j7QvfMla5qd/mCOCfTZo4nExVRbk
- beByaDQKdbh0gbi7qEsTVfv4Wzrq2scCfGNZ5WOruNS4d5afDtSRyvn3kzCO4+2CLU57V6RcLjC
- X6kkVHevtcaa4p/fT1Lc/ssEA9E9Xh65spg==
-X-Gm-Gg: AeBDiet+gvEsELaWKW8eSAKs2b5EUbtwkRaZnA1q5CAY5V1W7WM79Dow9qhuGfWy1q3
- bGt0K42zVokOp6xMfZlM5ZB5eoNDkQHX6sDOpqx5Pn6DZsBXtVtU4fq/2y6PCMbPI8bwIZsRqnl
- kzoOKKrQSRLWKeoiZLzU6D8NGq+siJDI/Mo7zjuxeada2cbEr81CTiRcrpdHNLfqX1RoDYqWBtk
- E/xXgTsDbNcr3JZcFcWLmRpaDoTdHLpyqN4lQxZuXHDRlYUaabzvkNhHiUYW/+RFriBQjmj1zEa
- WyPW9OSUAtw3jBrkq8nLnaQ9A+Nv7uA/Qaat0vcmzeuAoGEJbQ==
-X-Received: by 2002:a17:90a:d604:b0:35b:952c:43ab with SMTP id
- 98e67ed59e1d1-361401eb6e8mr204375a91.4.1776379303574; Thu, 16 Apr 2026
- 15:41:43 -0700 (PDT)
+ AFNElJ/9gVdqW7d+x75UT22Sda8YaPk/34Z+tC39PWXwLS+W7ys1SmmY/9xVRNaLxthLUs5UfAaiHxwnijF6@nongnu.org
+X-Gm-Message-State: AOJu0YwxOsbpaLsmJpZs7W8BY6EWeMAK1xqX9xe/NpT0Nx6+UJ/V4kDz
+ 3CpsEmy1AP3BpYzMNEABBKe0jazvjvWlUjdAtMleuFH5BTbzJk17Jb+xyrevZRQnzbM=
+X-Gm-Gg: AeBDies+pkuikEmTbULHVDHYdc5Leyn7DTD13ve6Stwe6o5IRXhEq5qg41MgNbqnNj6
+ BHOp7AfT+1kVy91AWlQgxyJ6HgqBTjV/UhkWhxJmtnc20e2tHC3IErgEthNFCDVfRntbnMFZj1l
+ u9dj7kTcyXjWQuiJU7TSzKOroBNMX1H/8R5ISgTKBuA/vmDQXLs4msJA6FqaJ3qr/sEr/S27ioX
+ YSQ6h0zUoJJPXYgcSAZCZ2pnC40DAqRqww4neHadvodxX1WFBEe0AWJGHPZZDBhfUtZxsNcPnqE
+ yBwDHC6JmImTErOn4XpjWNQXPMAboi2BdasywP1oNOFQiuiuAMygGjqpB11gxAJpAYaCWG6w7Jt
+ eYHbalWy2XNfIy3a9+UylFWC98ChCSHrWOhPpPg9NVBk4YjP0ht3rCn4qyCE6ksXDKHLXFCfXIl
+ /oAwZMTAOVsxtHcRti70CZPFraajVsNgLV0KP7M7rOlNojY25mSDP8/9zGUv8M+AuxNGQDV0DQb
+ stv0emfS0zj+bMd7/bRByDF20XDePzz4qBiUwo+4BX71nvGatDrE+d1Iec9VsO2Vg==
+X-Received: by 2002:a17:903:11ce:b0:2b4:5ff5:e51f with SMTP id
+ d9443c01a7336-2b5f9f51dfemr3108355ad.36.1776379766475; 
+ Thu, 16 Apr 2026 15:49:26 -0700 (PDT)
+Received: from ?IPV6:2401:d002:dc0f:2100:a60a:7c34:dd75:e66c?
+ (bg30dj02y68bx09myf73.ip6.superloop.au.
+ [2401:d002:dc0f:2100:a60a:7c34:dd75:e66c])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b5fa5b2027sm413765ad.71.2026.04.16.15.49.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 15:49:26 -0700 (PDT)
+Message-ID: <73a6d4c3-9108-4172-b1b6-11ee857909fc@linaro.org>
+Date: Fri, 17 Apr 2026 08:49:20 +1000
 MIME-Version: 1.0
-References: <20260313194849.859579-1-matheus.ferst@eldorado.org.br>
- <CAOrDodHP9wmqk9ZG48vDfGW_e2WqYWbBQRFL+cEzLP4cJ82MVw@mail.gmail.com>
-In-Reply-To: <CAOrDodHP9wmqk9ZG48vDfGW_e2WqYWbBQRFL+cEzLP4cJ82MVw@mail.gmail.com>
-From: "Matheus K. Ferst" <matheus.ferst@gmail.com>
-Date: Thu, 16 Apr 2026 19:41:32 -0300
-X-Gm-Features: AQROBzBXFvK1VInHY1BND9KoZso7WynT2c9koUIU5vbqetGk6r0u3FHDXWoWFFk
-Message-ID: <CAOrDodFB=0z+ZEhERnwoa7ZEzLjVtVHuC-znOfoSQC5W1CYXsw@mail.gmail.com>
-Subject: Re: [RFC PATCH] net/tap-win32.c: fix segmentation faults when
- multiple -netdev tap are used
-To: Matheus Ferst <matheus.ferst@eldorado.org.br>, qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, sw@weilnetz.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=matheus.ferst@gmail.com; helo=mail-pj1-x1035.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] target/mips: Use probe_access_full() in Atomic
+ Load/Store helpers
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
+References: <20260416150649.23671-1-philmd@linaro.org>
+ <20260416150649.23671-3-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260416150649.23671-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,201 +111,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping
+On 4/17/26 01:06, Philippe Mathieu-Daudé wrote:
+> Let the probe_access() API check the address alignment.
 
-Em sex., 27 de mar. de 2026 =C3=A0s 09:22, Matheus K. Ferst
-<matheus.ferst@gmail.com> escreveu:
->
-> ping
->
-> Em sex., 13 de mar. de 2026 =C3=A0s 17:19, Matheus Ferst via qemu develop=
-ment <qemu-devel@nongnu.org> escreveu:
->>
->> The static declaration of tap_overlapped does not work when multiple
->> "-netdev tap" are used, tap_win32_overlapped_init will be called with
->> the same struct but a different handler, and the already running thread
->> with tap_win32_thread_entry will have the semaphores and free lists
->> changed under its feet.
->>
->> Make tap_win32_overlapped_t a member of TAPState to be allocated with
->> qemu_new_net_client, and move out the tap_win32_overlapped_init and
->> CreateThread calls from tap_win32_open to tap_win32_init.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3314
->> Signed-off-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
->> ---
->> I'm no longer seeing the segfaults with this patch, but I only have
->> connectivity when using the e1000 or virtio-net-pci devices. With
->> virtio-net-device (as shown in the issue with aarch64) I cannot ping
->> anything when two interfaces are used. I'm not sure if it's a problem
->> with this patch or a different problem, since it works with the other
->> devices.
->> ---
->>  net/tap-win32.c | 47 +++++++++++++++++++++--------------------------
->>  1 file changed, 21 insertions(+), 26 deletions(-)
->>
->> diff --git a/net/tap-win32.c b/net/tap-win32.c
->> index 38baf90e0b..af20c62868 100644
->> --- a/net/tap-win32.c
->> +++ b/net/tap-win32.c
->> @@ -114,8 +114,6 @@ typedef struct tap_win32_overlapped {
->>      tun_buffer_t* output_queue_back;
->>  } tap_win32_overlapped_t;
->>
->> -static tap_win32_overlapped_t tap_overlapped;
->> -
->>  static tun_buffer_t* get_buffer_from_free_list(tap_win32_overlapped_t* =
-const overlapped)
->>  {
->>      tun_buffer_t* buffer =3D NULL;
->> @@ -589,8 +587,7 @@ static void tap_win32_free_buffer(tap_win32_overlapp=
-ed_t *overlapped,
->>      put_buffer_on_free_list(overlapped, buffer);
->>  }
->>
->> -static int tap_win32_open(tap_win32_overlapped_t **phandle,
->> -                          const char *preferred_name)
->> +static HANDLE tap_win32_open(const char *preferred_name)
->>  {
->>      g_autofree char *device_path =3D NULL;
->>      char device_guid[0x100];
->> @@ -604,7 +601,6 @@ static int tap_win32_open(tap_win32_overlapped_t **p=
-handle,
->>          unsigned long debug;
->>      } version;
->>      DWORD version_len;
->> -    DWORD idThread;
->>
->>      if (preferred_name !=3D NULL) {
->>          snprintf(name_buffer, sizeof(name_buffer), "%s", preferred_name=
-);
->> @@ -612,7 +608,7 @@ static int tap_win32_open(tap_win32_overlapped_t **p=
-handle,
->>
->>      rc =3D get_device_guid(device_guid, sizeof(device_guid), name_buffe=
-r, sizeof(name_buffer));
->>      if (rc)
->> -        return -1;
->> +        return INVALID_HANDLE_VALUE;
->>
->>      device_path =3D g_strdup_printf("%s%s%s",
->>                USERMODEDEVICEDIR,
->> @@ -629,7 +625,7 @@ static int tap_win32_open(tap_win32_overlapped_t **p=
-handle,
->>          0 );
->>
->>      if (handle =3D=3D INVALID_HANDLE_VALUE) {
->> -        return -1;
->> +        return INVALID_HANDLE_VALUE;
->>      }
->>
->>      bret =3D DeviceIoControl(handle, TAP_IOCTL_GET_VERSION,
->> @@ -638,34 +634,28 @@ static int tap_win32_open(tap_win32_overlapped_t *=
-*phandle,
->>
->>      if (bret =3D=3D FALSE) {
->>          CloseHandle(handle);
->> -        return -1;
->> +        return INVALID_HANDLE_VALUE;
->>      }
->>
->>      if (!tap_win32_set_status(handle, TRUE)) {
->> -        return -1;
->> +        return INVALID_HANDLE_VALUE;
->>      }
->>
->> -    tap_win32_overlapped_init(&tap_overlapped, handle);
->> -
->> -    *phandle =3D &tap_overlapped;
->> -
->> -    CreateThread(NULL, 0, tap_win32_thread_entry,
->> -                 (LPVOID)&tap_overlapped, 0, &idThread);
->> -    return 0;
->> +    return handle;
->>  }
->>
->>  /********************************************/
->>
->>   typedef struct TAPState {
->>       NetClientState nc;
->> -     tap_win32_overlapped_t *handle;
->> +     tap_win32_overlapped_t tap_overlapped;
->>   } TAPState;
->>
->>  static void tap_cleanup(NetClientState *nc)
->>  {
->>      TAPState *s =3D DO_UPCAST(TAPState, nc, nc);
->>
->> -    qemu_del_wait_object(s->handle->tap_semaphore, NULL, NULL);
->> +    qemu_del_wait_object(s->tap_overlapped.tap_semaphore, NULL, NULL);
->>
->>      /* FIXME: need to kill thread and close file handle:
->>         tap_win32_close(s);
->> @@ -676,7 +666,7 @@ static ssize_t tap_receive(NetClientState *nc, const=
- uint8_t *buf, size_t size)
->>  {
->>      TAPState *s =3D DO_UPCAST(TAPState, nc, nc);
->>
->> -    return tap_win32_write(s->handle, buf, size);
->> +    return tap_win32_write(&s->tap_overlapped, buf, size);
->>  }
->>
->>  static void tap_win32_send(void *opaque)
->> @@ -688,7 +678,7 @@ static void tap_win32_send(void *opaque)
->>      uint8_t min_pkt[ETH_ZLEN];
->>      size_t min_pktsz =3D sizeof(min_pkt);
->>
->> -    size =3D tap_win32_read(s->handle, &buf, max_size);
->> +    size =3D tap_win32_read(&s->tap_overlapped, &buf, max_size);
->>      if (size > 0) {
->>          orig_buf =3D buf;
->>
->> @@ -700,7 +690,7 @@ static void tap_win32_send(void *opaque)
->>          }
->>
->>          qemu_send_packet(&s->nc, buf, size);
->> -        tap_win32_free_buffer(s->handle, orig_buf);
->> +        tap_win32_free_buffer(&s->tap_overlapped, orig_buf);
->>      }
->>  }
->>
->> @@ -716,9 +706,11 @@ static int tap_win32_init(NetClientState *peer, con=
-st char *model,
->>  {
->>      NetClientState *nc;
->>      TAPState *s;
->> -    tap_win32_overlapped_t *handle;
->> +    HANDLE handle;
->> +    DWORD idThread;
->>
->> -    if (tap_win32_open(&handle, ifname) < 0) {
->> +    handle =3D tap_win32_open(ifname);
->> +    if (handle =3D=3D INVALID_HANDLE_VALUE) {
->>          printf("tap: Could not open '%s'\n", ifname);
->>          return -1;
->>      }
->> @@ -727,11 +719,14 @@ static int tap_win32_init(NetClientState *peer, co=
-nst char *model,
->>
->>      s =3D DO_UPCAST(TAPState, nc, nc);
->>
->> +    tap_win32_overlapped_init(&s->tap_overlapped, handle);
->> +
->> +    CreateThread(NULL, 0, tap_win32_thread_entry,
->> +                 (LPVOID)&s->tap_overlapped, 0, &idThread);
->> +
->>      qemu_set_info_str(&s->nc, "tap: ifname=3D%s", ifname);
->>
->> -    s->handle =3D handle;
->> -
->> -    qemu_add_wait_object(s->handle->tap_semaphore, tap_win32_send, s);
->> +    qemu_add_wait_object(s->tap_overlapped.tap_semaphore, tap_win32_sen=
-d, s);
->>
->>      return 0;
->>  }
->> --
->> 2.43.0
->>
->>
+The probe_access will not check the alignment.
+The use of the memory access before the probe checks the alignment.
+
+> 
+> Move env->CP0_LLAddr and env->lladdr assignments so we
+> don't update them when an alignment fault occurs.
+> 
+> Since we have a handy MemOpIdx, replace the legacy
+> cpu_ld*_mmuidx_ra() calls by cpu_ld*_mmu() equivalent.
+> 
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/tcg/ldst_helper.c | 21 +++++++++++++++------
+>   1 file changed, 15 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
+> index b725c6d0333..4ebf72d610e 100644
+> --- a/target/mips/tcg/ldst_helper.c
+> +++ b/target/mips/tcg/ldst_helper.c
+> @@ -28,23 +28,32 @@
+>   #include "internal.h"
+>   
+>   #ifndef CONFIG_USER_ONLY
+> +#include "accel/tcg/probe.h"
+> +#include "exec/tlb-flags.h"
+>   
+>   #define HELPER_LD_ATOMIC(name, insn, almask, do_cast)                         \
+>   target_ulong helper_##name(CPUMIPSState *env, target_ulong arg,               \
+>                              uint32_t memop_idx)                                \
+>   {                                                                             \
+> -    MemOpIdx oi = memop_idx; \
+> -    unsigned mem_idx = get_mmuidx(oi); \
+> -    if (arg & almask) {                                                       \
+> +    MemOpIdx oi = memop_idx;                                                  \
+> +    unsigned mem_idx = get_mmuidx(oi);                                        \
+> +    unsigned size = memop_size(get_memop(oi));                                \
+> +    uintptr_t ra = GETPC();                                                   \
+> +    CPUTLBEntryFull *full;                                                    \
+> +    void *host_unused;                                                        \
+> +    int flags;                                                                \
+> +                                                                              \
+> +    env->llval = do_cast cpu_##insn##_mmu(env, arg, oi, ra);                  \
+
+This performs the access, filling the tlb in the process.
+If the tlb cannot be filled, access is not permitted an an exception is raised.
+
+> +    flags = probe_access_full(env, arg, size, MMU_DATA_LOAD, mem_idx,         \
+> +                              true, &host_unused, &full, ra);                 \
+
+Which means this probe for the tlb entry *must* succeed, because we can't reach here 
+unless it was confirmed present by the access above.
+
+> +    if (unlikely(flags & TLB_INVALID_MASK)) {    
+
+Which means this must be
+
+     assert(!(flags & TLB_INVALID_MASK));
+                              \
+>           if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
+>               env->CP0_BadVAddr = arg;                                          \
+>           }                                                                     \
+>           do_raise_exception(env, EXCP_AdEL, GETPC());                          \
+>       }                                                    
+
+... and the rest of the IF is dead code.
+
+
+r~
 
