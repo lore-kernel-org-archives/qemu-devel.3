@@ -4,91 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3A0F8E489
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 22:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0182F8E489
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 22:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDVLZ-0007kk-NY; Thu, 16 Apr 2026 18:38:06 -0400
+	id 1wDVLV-0007ib-GD; Thu, 16 Apr 2026 18:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aaron1esau@gmail.com>)
- id 1wDSzo-00022Z-Cs
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:07:28 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wDRPx-0001cX-6l
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:26:21 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aaron1esau@gmail.com>)
- id 1wDSzm-0000He-Ri
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 16:07:28 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-6888f36ceaaso136202eaf.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 13:07:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wDRPv-00055F-4z
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:26:20 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-38e12c67a6fso80366541fa.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 11:26:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776363976; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KC1maOGqk0ulpyDZzz9xLKOUY39wXO2UsZr88RlyPy0m0x5K08KRet3VHZHWyy9V+x
+ nLUtbyqgvFY5BgfqmUv7CKIcQLNJe5GN7d31eaOcfJ1y+SyRWplSgN2OwgBo/uccROxj
+ gbG31twB5qvSfMptGX1EssthmUGPqjaTz8Q+fdDefUWyiadxHQ9GsGe/b4UA4zx2/O0+
+ rk4aG+46tM4NmoVMWH9pdJ1DC3VGhABHzZFdFPq8bjRSssDvWLM5iUTbGu2w290CzVks
+ kORDZsY/VCqyjCISsQqQCSQF4UEQ6FWUIs6IWG8zKhVO4Plm+n0FyrU0DzDt+OtGbJPT
+ CAMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=c1qnHnDC21rc2qnRNXpbQnsnHAND2NNX5H+qjiZpkUI=;
+ fh=ol/Wi41AR/5Vq4MHPw05npUxk4Ch5gj+/0nYmuILowI=;
+ b=A1DR5xlqmCKlLMPOH3deu6q+FQwUPitqpK1aLi7aSG4/mdNAT6X+KmsrynWYNn/cSq
+ 9FLUdpyGqckMJyKIs5tSAD3g4lvGxCvoN92LGIwhNf2wr3ItTk6ke2EEpwVw5mnwz97H
+ XgXxHlD6AJAyRkQxknF8/tv17+HnVnwgJDKCKXxpjf1TC59Ta45KdXXHCxyjmoq5eQlG
+ m35gN6PsCSoQhd/httbFMfcGFkhBWp7DMQ3Xn2XaGrb4D/XB0x/A0418C5U6cSQbTaUb
+ WXwDZ0WiwnoT+9HFyea8l9B/+BtJmmfSSaK1n3V1yX9Qf7O5kXgttSF3+kNNIoXExwni
+ Ji3g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776370045; x=1776974845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1776363976; x=1776968776; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KCsFtdTDgbFc/U88ymKe8zR4zhuBtfCqsEs0LceHIRo=;
- b=SDw1r8WbJ17GV93Eh5EZSg0p2fcCToOw9DV+KM/2xjS9tIPI7UKZmcuhEwWKPdVfNC
- nN4dyg/vaA1fvD5ZZUYo9+JuONdtGV4Bs3EnFyp1XskJaQWPvtWjnTFmg/8PCETzlxCs
- 39HzRsSdyiBACYP7eSvjmjJWA/3qOJdHeJxa0+/rzLK/8md4+eq7gwJqGWUOs/hdTo0P
- SJbPniT74FfClL7YNf4JqUFfwfmfEWGqXkzXYmQGGcx3atIMk5ynEqoJWYAXfkj/NgJb
- cQw8k/ekanlRZ4tnNMNoZGV3tcmK1KJWkqO/IrtbA3xFj5fpHsv78VzXYeHDgx0NTGi9
- myTg==
+ bh=c1qnHnDC21rc2qnRNXpbQnsnHAND2NNX5H+qjiZpkUI=;
+ b=Ah68nYeRoaCnPtnTY1HpfJHPb9w1vCFRWrkXpH7vC/k071CPTscz5RxwsirKAJ0HLR
+ dhaWbABd6B1NY88v966T/b5wFX8EgSOS3H2HdjixS4Fulnjyiyzv2NbZBzSwaWT97Jt3
+ yVQC+Bi8lYma99prcXtUhWsZQdv/8FDcPF/MEDFupTeSZUce89DR+RZY4Q0wRYF2HpGv
+ juCr2ln91JdHMdGUtBMMBnvC0a4XrC+KIQ1xM7jS2Px8CFF9iHpqlPCwei4vGxQG3z3u
+ DEpl7eOCFY5A3TN0lqLROEPxk5jyLgjArPYd3SrBiDZoTdBcqujvnknADSE1F40a/2sD
+ JtEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776370045; x=1776974845;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1776363976; x=1776968776;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KCsFtdTDgbFc/U88ymKe8zR4zhuBtfCqsEs0LceHIRo=;
- b=Hgyisxa6hkbVNGxrGn0j3Pnj+yFOG8WvZ2OzP+tRG8MgFehBxIBuJDI7gNSgK851gv
- vJ37WplWwzNibe6GORziSzFa32nI5Sbgn/T58JbjePaU4N67BviMC15kHxKLIw0rlNNN
- 0Q853JNsgDf0AFE1n3LX66QHULgyzfNE25ckROMgl7oXpVvj6vFq9peEfjrZtKyj4FaM
- WbGNYc8191p3KGjCglDQ2Z3hFmR64ck2Z9o8HzugPjmsGboVH8J71OAepR+ITwa82Z+E
- GYXEiuxGy7FnS6CzuWX4a2qTPlu4SbZ2rZA0O9u3mUe8Gfq2sdBNJsMjd5BFAO6v9V1n
- tMrw==
-X-Gm-Message-State: AOJu0Yzm4kqermUJlJQF4bTvU+HxTghhBu33SWreeUOvBb/asIHaHgVk
- TngQ+wIOdgLBNb/o95/RfeOYHAgcaAMKw2nYlORyF4V/QF5az3TTagj/8AisqWNP
-X-Gm-Gg: AeBDieuHrB6VJOypjXyb0R2dmhUJgYud8hirQTQkJVgl6GXQajiFcYy6xNiKUn7BU6R
- hWyFSknszIzvL6IinsGP0ZmtJKjCzj0/+4kyqe4DQ6nCok19JNzNBc2yv76pZbhf/QylHMfRw5F
- vWaWPqWyiHFw5A1HzRNEpAlWmbF3kllojllRUhv1r1O13SkY9oQ3KU35UIPlw95CgGqWS2wX7Fq
- CJ2+VGws65YmxuE7ppualpyI8ymNxB/qZUdfsy6LabobPg3YRO/eg+U5Ijjch5tiUZwgQSfx7Ln
- qUceQfqCt54stV+AlLjT0rOyyY9uTtr9q7E9IRc1mFpg7P0JOFP1GaJCoE9KKR4ruo15DmcelWz
- 3zHsVG+lTiyrBTSu1RxFEr5v/9dGuhQNUWoBGY0tlboiIEg+H1BTpgu9Vdk8ErB1YAoYNhSfnZ4
- SNlnaUVAoluXyPMU83QZM5E/zQJFkaSRzGivRiC2TupGx4/4tAKn6A1Xh2G1ouLiQ94QyWePql/
- Da4MqLZ+3ceDHi46dFccTbT/CrBZG6ydPU=
-X-Received: by 2002:a4a:e1bc:0:b0:67e:1552:16cf with SMTP id
- 006d021491bc7-69462f04df4mr18380eaf.2.1776370045239; 
- Thu, 16 Apr 2026 13:07:25 -0700 (PDT)
-Received: from localhost ([136.49.184.116]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6946044199fsm521624eaf.14.2026.04.16.13.07.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 13:07:24 -0700 (PDT)
-From: Aaron Esau <aaron1esau@gmail.com>
-X-Google-Original-From: Aaron Esau <git@aaronesau.com>
-To: qemu-devel@nongnu.org
-Cc: Jonathan.Cameron@huawei.com, jic23@kernel.org, berrange@redhat.com,
- Aaron Esau <aaron1esau@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH 1/2] hw/cxl: fix OOB read in Get Log command due to incorrect
- pointer arithmetic
-Date: Thu, 16 Apr 2026 15:07:01 -0500
-Message-ID: <20260416200702.2374709-2-git@aaronesau.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260416200702.2374709-1-git@aaronesau.com>
-References: <20260416200702.2374709-1-git@aaronesau.com>
+ bh=c1qnHnDC21rc2qnRNXpbQnsnHAND2NNX5H+qjiZpkUI=;
+ b=NYYNh1AAVW+QwVSBMlyhRMSGzlbF/yrYwPleeJmZlhDZT/cebsEnW54mSmVIPEPv5H
+ 2nWjTPAi+BdCW+sM69jxNUqVO7CFdj+MhyrLZZZyCzW8rIa2QuYkmVEZJtbB7OIImk/N
+ 2oxVJAp03Y/3cYvy8ItonMNNZl4Tvg4Y/+xMDIrebMEaEkn9re4RMtGBJTxfoNMkuhGU
+ Tg+vFxuzrawxBmDRl4SBoeOcrS14kF26wSTnAV1n+3Qw7C7l8Ehd1S/yp5QElCS8He/5
+ 9/H2H6IcOeZdVsHWG0o24Mc90gd0x1jC2uc6yaR0pq+Okp+WxnCciSvCYzbXodD+4GSg
+ gH5g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+XgqZa8sS8HHAzgnjebUgBYA2S/ZOeeRAGNRjaW09JzXQ+0hIzXb8tD1bMS37MiKJUXt9/rUI1b0kQ@nongnu.org
+X-Gm-Message-State: AOJu0Yzfojh3qEiwwBDnTI9FxIFAQenT/eEGYteaelJJpFZt6AjrLYEN
+ t77o267yxM+xPWG6cZ0bpOW0JmWM3ZRFRKL4LRr/A/1KmHLGg2eJmKhD0kkpuk0BcDE1FJwzSMH
+ aH8CC+J7ziiO2jtPZcjESPozqqmKhcy0=
+X-Gm-Gg: AeBDies/iaQ/zBqF2SiKlNQckrmJH0FCGQDVIbHQT0aBZiVi/oODHe7z2TMJesPXa2R
+ PTby35hKXKgu/k1qtyXumeLP9Mt+NUXYa/AJpRYQjnl9UAoHx/Gh0q5jfcQRGWhT47rIdkwqSa7
+ 33LW+73hnkBd/FkyzM82mYXxWRDfqiD3WnBNTlS6gqjtwCPAfYf2H9AcssNGfrMiCJ94f3JGL8O
+ LAvq3aZLDZv3h09srCSzP7cey/QfqM6oTLfhgMAp6bjfQ29RKoF2N+cPe5wP6QS9fJhSv40+FnN
+ YW1B9vU7lWs2tCk=
+X-Received: by 2002:a2e:a994:0:b0:38e:ae31:f0ae with SMTP id
+ 38308e7fff4ca-38ec530d74bmr502741fa.0.1776363976046; Thu, 16 Apr 2026
+ 11:26:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=aaron1esau@gmail.com; helo=mail-oo1-xc30.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260414025335.2847358-1-mattst88@gmail.com>
+ <CAFEAcA_PZ2RWNNrBoM0nzOrDZZ36p2sMOviT_NeRXWdab=6T+Q@mail.gmail.com>
+In-Reply-To: <CAFEAcA_PZ2RWNNrBoM0nzOrDZZ36p2sMOviT_NeRXWdab=6T+Q@mail.gmail.com>
+From: Matt Turner <mattst88@gmail.com>
+Date: Thu, 16 Apr 2026 14:26:04 -0400
+X-Gm-Features: AQROBzDrlK588kunGkzaTLgd6gXff6-gLp6dQQ74oztKK0dGfrcqIreooFssO2A
+Message-ID: <CAEdQ38Gc0ov68Lkvm-Mzk=71yGkBv_FEOM5sfV7urLfCWp1t7g@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/ppc: Fix ppc64 rt_sigframe stack offset
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 16 Apr 2026 18:38:05 -0400
+X-Mailman-Approved-At: Thu, 16 Apr 2026 18:37:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,49 +120,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aaron Esau <aaron1esau@gmail.com>
+On Thu, Apr 16, 2026 at 10:19=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+>
+> On Tue, 14 Apr 2026 at 18:27, Matt Turner <mattst88@gmail.com> wrote:
+> >
+> > The kernel's 64-bit signal delivery (signal_64.c) uses:
+> >
+> >     newsp =3D frame - __SIGNAL_FRAMESIZE
+> >
+> > while the 32-bit path (signal_32.c) uses:
+> >
+> >     newsp =3D frame - (__SIGNAL_FRAMESIZE + 16)
+> >
+> > The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
+> > at the same offsets as older kernels (see the comment in signal_32.c).
+> > The 64-bit rt_sigframe starts with ucontext directly and does not need
+> > this adjustment.
+> >
+> > QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
+> > for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
+> > on ppc64. Signal delivery and return still worked because do_rt_sigretu=
+rn
+> > had the matching wrong offset, but the vDSO DWARF unwind info encodes
+> > the correct kernel offset. This caused any DWARF unwinder (libunwind,
+> > libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
+> > register values from the signal frame.
+> >
+> > Guard the +16 with #if !defined(TARGET_PPC64) in both setup_rt_frame
+> > and do_rt_sigreturn to match the kernel.
+> >
+> > This was verified by A/B testing with libunwind's test suite:
+> >
+> >   ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
+> >            and Ltest-sig-context all change from FAIL to PASS.
+> >   ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
+> >            from FAIL to PASS.
+> >
+> > Signed-off-by: Matt Turner <mattst88@gmail.com>
+> > ---
+> >  linux-user/ppc/signal.c | 12 ++++++++++++
+> >  1 file changed, 12 insertions(+)
+> >
+> > diff --git ./linux-user/ppc/signal.c ./linux-user/ppc/signal.c
+> > index 24e5a02a78..b21aa2430e 100644
+> > --- ./linux-user/ppc/signal.c
+> > +++ ./linux-user/ppc/signal.c
+> > @@ -525,7 +525,15 @@ void setup_rt_frame(int sig, struct target_sigacti=
+on *ka,
+> >      env->fpscr =3D 0;
+> >
+> >      /* Create a stack frame for the caller of the handler.  */
+> > +#if defined(TARGET_PPC64)
+> > +    newsp =3D rt_sf_addr - SIGNAL_FRAMESIZE;
+> > +#else
+> > +    /*
+> > +     * The +16 is to get the siginfo and ucontext in the same position=
+s
+> > +     * as in older kernels. See Linux's arch/powerpc/kernel/signal_32.=
+c.
+> > +     */
+> >      newsp =3D rt_sf_addr - (SIGNAL_FRAMESIZE + 16);
+> > +#endif
+> >      err |=3D put_user(env->gpr[1], newsp, target_ulong);
+> >
+> >      if (err)
+> > @@ -641,7 +649,11 @@ long do_rt_sigreturn(CPUPPCState *env)
+> >      struct target_rt_sigframe *rt_sf =3D NULL;
+> >      target_ulong rt_sf_addr;
+> >
+> > +#if defined(TARGET_PPC64)
+> > +    rt_sf_addr =3D env->gpr[1] + SIGNAL_FRAMESIZE;
+> > +#else
+> >      rt_sf_addr =3D env->gpr[1] + SIGNAL_FRAMESIZE + 16;
+> > +#endif
+> >      if (!lock_user_struct(VERIFY_READ, rt_sf, rt_sf_addr, 1))
+> >          goto sigsegv;
+>
+> Thanks for this patch; comparing against the kernel code QEMU is
+> definitely wrong here.
+>
+>
+> I think I would prefer it if we avoided the in-code ifdefs
+> and instead had something like this defined at the top of
+> the file, e.g. below the target_rt_sigframe definition:
+>
+> #ifdef TARGET_PPC64
+> #define RT_SIGFRAME_ADJUST 0
+> #else
+> /*
+>  * For 32-bit rt sigframes we have an extra 16 bytes of gap
+>  * on top of __SIGNAL_FRAMESIZE; this is to get the siginfo
+>  * and ucontext in the same positions as in older kernels.
+>  * See Linux's arch/powerpc/kernel/signal_32.c.
+>  */
+> #define RT_SIGFRAME_ADJUST 16
+> #endif
+>
+> Then we can have the code unconditionally do
+>    newsp =3D rt_sf_addr - (SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST);
+> etc.
+>
+> thanks
+> -- PMM
 
-The memmove in cmd_logs_get_log() uses cci->cel_log + get_log->offset,
-which performs pointer arithmetic in units of sizeof(struct cel_log)
-(4 bytes per element). However, per CXL r3.1 Section 8.2.9.5.2, the
-offset field is a byte offset into the log.
-
-The existing bounds check correctly treats offset as a byte value:
-
-    (uint64_t)get_log->offset + get_log->length >= sizeof(cci->cel_log)
-
-But the memmove reads from a position that is get_log->offset *
-sizeof(cel_log[0]) bytes past the start, which can be well beyond the
-array even when the bounds check passes. For example, offset=65536 and
-length=512 passes the check (66048 < sizeof(cel_log)) but the memmove
-reads from byte 262144 past cel_log, leaking adjacent heap data.
-
-Fix by casting to uint8_t * before adding the byte offset, matching the
-semantics assumed by the bounds check.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 056172691b ("hw/cxl/device: Add log commands (8.2.9.4) + CEL")
-Reported-by: Aaron Esau <aaron1esau@gmail.com>
-Signed-off-by: Aaron Esau <aaron1esau@gmail.com>
----
- hw/cxl/cxl-mailbox-utils.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index d8ba7e8625..0adf1e72c8 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1217,7 +1217,8 @@ static CXLRetCode cmd_logs_get_log(const struct cxl_cmd *cmd,
-     /* Store off everything to local variables so we can wipe out the payload */
-     *len_out = get_log->length;
- 
--    memmove(payload_out, cci->cel_log + get_log->offset, get_log->length);
-+    memmove(payload_out, (uint8_t *)cci->cel_log + get_log->offset,
-+            get_log->length);
- 
-     return CXL_MBOX_SUCCESS;
- }
--- 
-2.53.0
-
+Thanks Peter! That is definitely a lot cleaner. I've sent a revised patch.
 
