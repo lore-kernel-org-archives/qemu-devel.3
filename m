@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B562F8A144
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 08:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E1DF8A144
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 08:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDI3T-0000rS-JZ; Thu, 16 Apr 2026 04:26:31 -0400
+	id 1wDI4R-0001Vv-Rx; Thu, 16 Apr 2026 04:27:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDI3R-0000qj-S0
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:26:29 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDI4P-0001VX-RN
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:27:29 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDI3Q-0003OK-1h
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:26:29 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488afb0427eso90747135e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 01:26:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDI4O-0003Vq-3a
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:27:29 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso72286005e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 01:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776327986; x=1776932786; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776328046; x=1776932846; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2K2+xyyVdq2JuQOengyXVpX3Ib5ES/uKxtLJ/BmWnQs=;
- b=ahJA2O2A4v70kv199L8FuP2abu+KavZaPyqZ4e1Nt68OL/b/f94CYWTDdILb6QFTnH
- k1ZpUXQiMUQ3T1UH1DZzRD9yNIhwgRwoKdrKB3JjcuMxWlTNxIZwXuzvKbi/ys7cN3Z2
- 4hRt6TgiiUJTr0WnnZsba0yA3jP9JwH2v0sVG+/mhhCThC5A0ADab9MFK4pyPxs83CxT
- QSf8sTtDELIcmQ63iT2fZNa8WqCQB3AVtETzd8fy1N9TYWtQ1V2LepaWTz2ZfpsoCEZz
- rNkxhwwIURb0aYiKTnbBjFMVStQDf67XJieBB7FHsUQD9T31JZCyqNeKfc/pu7V9Je/Z
- 3yaQ==
+ bh=kUcGl4gTuoEgqk6T3KyMqtYbdhNgGPNhAouthNBAjnI=;
+ b=H0o0RVe3q/LiPup8vL3cvLFI8v2qvSsXe54ZbOD4jyHflGOXKosleRcHSwzTznZ2cT
+ G0wGpNx25Wm96iX8lybwu4s56D+PW1BFhVJnq4ZjdgR/sRVAUaTHw1K3IMhAui92ZYzj
+ GWVCgkZrHdV3pGc3m5Nh61KtV2UoP4MJYwnYp6Nv34SoPxtsiTOevzcubW9U6VRNAO75
+ vXU7hO5L2beQTPs0n8EcaVfcnHyiJ1d+kKdCNCH1xUkBPKBLfu2mrORTEq54d4JM8NEw
+ Q6NRi1FpDsqgWIHzl/l69Yh4zSg7d/CnkAa0fPwStMjSjAW5B8fnOsVqQz40saYg/2Eg
+ RODw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776327986; x=1776932786;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776328046; x=1776932846;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2K2+xyyVdq2JuQOengyXVpX3Ib5ES/uKxtLJ/BmWnQs=;
- b=kFnTbfWDsAC1xGNZxDObOyuN/suloc6NaIueqlv2k0AUM1+3Li8jxnhrhtk4wTbiPm
- HPfXUiBf7TZ0Ps/UQTXpYfWewOYjcWF1jketNjByzIGgWvT56f/Wnc9UmU1gjO1ryFaf
- MvvO+SCL3fTZ6ZRKZejDHlrFEfKHHAB5bQOiSNBOCuI58fo7AFGXutin/3r6xDndMu54
- 8bRZUhqm3+QZgffWz+mxfQMFO6P+qnDkgJboSdUVcaPOm3T/yjIjH3Og/EOddFk5uC0O
- 5Vw8mEeBpsLzBC0AEXhPvMMqVONmkhHmFmsIpUqw7ru6H9YzDIeKsRK/kaVVf0vEQ/rZ
- yo5w==
-X-Gm-Message-State: AOJu0Yw5biq3tpzLMwZvomFxWyYJMPwWhoRKZelLbTH7ZPkRJClJKtW+
- SsxalY3DGNNfr+L1EK9/ajWtsSSgkqiE8uH//B4P+FeypXQ0iaOtXU/HBB+c4E7xpoY=
-X-Gm-Gg: AeBDiev6wYaJr6RUO0lAZUtmwtoOeueuNY0fHXjSOleTvlf4IhRE72DmJa2kGflas+t
- TQyyF81kFRbjW4+oxhTuHFbJzycNiVkfhEzjqVVoBLVNLao9u/xBPtBdKifFGeM/T8m1iaZh1Mt
- XSNPTXtNDiZ326mGzKSgI4Eo7mnpIm1ySOaMdvRLUpYxnyFcD2j3prA5VgTp3OoyvqlYOMAPwaZ
- c64+aYMUAnF+n3Kj9aPhDNteYbV05uNh53YvSQa3h60KPs3XcibYnRHQ1+m7dOKbRPS75DL00wY
- 4jZQvrpsz9hGp4trgw29XmNQc/OkkHUx+5VP7votF3DYnH509nJ6Oh8Ruo+snFxdXj9Zpr8T40E
- NW9togYDJ60u4bR1wV4Z4sh5JF6320pNlkR19cl9NXO2RmmB/8G9JlWjN36GkLak8v0AYjEAJ3T
- U0z+tDbz2I/iOq4xBJSNVR1iKbFG34ZFXrazM=
-X-Received: by 2002:a05:600c:a408:b0:488:8b99:54a1 with SMTP id
- 5b1f17b1804b1-488d68865f6mr267253775e9.28.1776327985513; 
- Thu, 16 Apr 2026 01:26:25 -0700 (PDT)
+ bh=kUcGl4gTuoEgqk6T3KyMqtYbdhNgGPNhAouthNBAjnI=;
+ b=joLa8wzy/UIzbJeQoim0Cf8+ZZD4Pkhr2xgUjpChSIq4Xlu565OuuvsIvEGXp/8EZv
+ ENXg+cidZE3daiOIKNXqhDX2O4uIzxRLjmlA5rfzZMaSTqvwOPhYdcOoMDtKfruajTIE
+ LF2LkcGADEEVMhWg1lfRcTWxMilqu76EaC2nVj6FKa2QgPqTfelHR0XjvFDAjKgrVaVT
+ 90ElCKrdBcksRRoDGesNzHrIVrFqi8Fv0r9d5Qe0porV3a5Q2oKc46dwgHce63hsvz59
+ Dk3ZFTx6rmguLBOJiOtWhHNvBiaFVrkiHJX2GH2GTY1n7ijQYitrNdxXB9391Pxv5aPY
+ m3qg==
+X-Gm-Message-State: AOJu0YxS7WKMd9HgUKh1HD23Z7BbZVv/QwEugPvCFClWA6zkqyka0EuS
+ ixC+wbtRnL3nIb1/4cuMn0euBNORoJwZiK7HcwrkzvdCtEsuV2oAN3fHXhiFYF6iU1U=
+X-Gm-Gg: AeBDievcIdOo7BdXg6Z/Du8jgtm+kDPytnbiujfWVjDy7oNKZYIO8z5a1wDqk4uYWfa
+ kXLyQFeevpxG8OAlRzty56f0sDNnBw5m68ABpFrHxS2rs0fflu/784Kqd+rGPj+/zvJhh79LfOg
+ sOuBEEu5tstqmcAERF3Rb9A+ZUQo+eOhHgHfXBPNiXzq3n5n/jwTdc2TuMVw88k5iDKEP6fPV0G
+ INCupJTLFeNGg3H9q5vTw1M2eQ+e7WKczUkMlO6UMy5rblbaBJkbEzQU18JlJwh+aT834vDSNTS
+ qNHvDyv8C5sAUUIH32em1eMcyBjDRLj3mncEoCZiaToslwKE1KzjgMWV8LIkHGfQIf2l4z5hA9X
+ c9WZ1TgjsdpNzC9sjP/mrYN4TuXYuLlu/BcenzNW0sc/8KGVj6yX9keL4ING0N6M1zjwWJqzf41
+ TzrqvJa2J/Mqz5pwyinhXW7f/S0LkxCb4pQfQ=
+X-Received: by 2002:a05:600c:1987:b0:488:b187:d8ed with SMTP id
+ 5b1f17b1804b1-488d67bf765mr350633815e9.2.1776328046376; 
+ Thu, 16 Apr 2026 01:27:26 -0700 (PDT)
 Received: from [192.168.69.228] ([88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f5489217sm20945775e9.2.2026.04.16.01.26.24
+ 5b1f17b1804b1-488f5813954sm31486885e9.3.2026.04.16.01.27.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 01:26:24 -0700 (PDT)
-Message-ID: <3bb1340a-b7cb-4ce3-ba72-fedbbd5839bf@linaro.org>
-Date: Thu, 16 Apr 2026 10:26:21 +0200
+ Thu, 16 Apr 2026 01:27:25 -0700 (PDT)
+Message-ID: <df6688f7-1111-474a-b4f9-8d7eec3ce8d9@linaro.org>
+Date: Thu, 16 Apr 2026 10:27:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/6] hw/sd/sdcard: Add erase-blocks-as-zero option.
-To: Christian Speich <c.speich@avm.de>
+Subject: Re: [PATCH v3 4/6] hw/sd/sdhci: Don't use bounce buffer for ADMA
+Content-Language: en-US
+To: Christian Speich <c.speich@avm.de>, Stefan Hajnoczi
+ <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
 References: <20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de>
- <20260204-sdcard-performance-b4-v3-5-dc1cf172ee57@avm.de>
- <8d358e4b-d6a0-417f-b357-99a0ae06164e@linaro.org>
- <atp673czap4hd3ozv2u5y7fiie6fsoqkvy4ou5vwp5ukxz5iw5@ac6356oe52jw>
+ <20260204-sdcard-performance-b4-v3-4-dc1cf172ee57@avm.de>
+ <4e0536d5-d7a8-45f7-b2b2-bff9fe2d92cc@linaro.org>
+ <t4mncbf2hpzecg23tmuu3rd7ha4zs7fftqyk54n7cfqltk66hw@gnnqucv72rbk>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <atp673czap4hd3ozv2u5y7fiie6fsoqkvy4ou5vwp5ukxz5iw5@ac6356oe52jw>
+In-Reply-To: <t4mncbf2hpzecg23tmuu3rd7ha4zs7fftqyk54n7cfqltk66hw@gnnqucv72rbk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,109 +104,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/26 10:02, Christian Speich wrote:
-> On Tue, Apr 14, 2026 at 05:02:34PM +0200, Philippe Mathieu-Daudé wrote:
+Cc'ing Paolo &  Stefan.
+
+On 16/4/26 09:52, Christian Speich wrote:
+> On Tue, Apr 14, 2026 at 03:51:24PM +0200, Philippe Mathieu-Daudé wrote:
 >> On 4/2/26 14:22, Christian Speich wrote:
->>> Currently, erased blocks are filled with 0xFF. However SCR Bit 55
->>> (DATA_STAT_AFTER_ERASE) indicates that an erase produces zeros. One of
->>> them is wrong.
+>>> Currently, ADMA will temporarily store data into a local bounce buffer
+>>> when transferring it. This will produce unneeded copies of the data and
+>>> limit us to the bounce buffer size for each step.
 >>>
->>> This patch does two things.
->>>
->>> First it fixes the reporting of DATA_STAT_AFTER_ERASE in SCR to
->>> correctly reflect the content of erased blocks. We also increase the
->>> Product Revision (REV in CID) to indicate to the guest that
->>> DATA_STAT_AFTER_ERASE is now reliable.
->>>
->>> Secondly, we introduce a erase-blocks-as-zero option, which allows the
->>> user to choose if erased blocks should contain 0xFF or 0x00. The default
->>> is still 0xFF to remain compatible with current users.
+>>> This patch now maps the requested DMA address and passes this buffer
+>>> directly to sdbus_{read,write}_data. This allows to pass much larger
+>>> buffers down to increase the performance. sdbus_{read,write}_data is
+>>> already able to handle arbitrary length and alignments, so we do not
+>>> need to ensure this.
 >>>
 >>> Signed-off-by: Christian Speich <c.speich@avm.de>
 >>> ---
->>>    hw/sd/sd.c | 15 +++++++++++++--
->>>    1 file changed, 13 insertions(+), 2 deletions(-)
+>>>    hw/sd/sdhci.c | 102 +++++++++++++++++++++++++++++++---------------------------
+>>>    1 file changed, 55 insertions(+), 47 deletions(-)
 >>>
->>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->>> index c9cfd3620b563fbe7520cfe361e14b57cd8f7472..5ddaa08d77b6b7606005fb59f42f107d254d6e5c 100644
->>> --- a/hw/sd/sd.c
->>> +++ b/hw/sd/sd.c
->>> @@ -162,6 +162,7 @@ struct SDState {
->>>        /* Static properties */
->>>        uint8_t spec_version;
->>> +    bool erase_blocks_as_zero;
->>>        uint64_t boot_part_size;
->>>        uint64_t rpmb_part_size;
->>>        BlockBackend *blk;
->>> @@ -439,6 +440,9 @@ static void sd_set_scr(SDState *sd)
->>>        sd->scr[0] |= 2;            /* Spec Version 2.00 or Version 3.0X */
->>>        sd->scr[1] = (2 << 4)       /* SDSC Card (Security Version 1.01) */
->>>                     | 0b0101;      /* 1-bit or 4-bit width bus modes */
->>> +    if (!sd->erase_blocks_as_zero) {
->>> +        sd->scr[1] |= (1 << 7); /* DATA_STAT_AFTER_ERASE: Erase produces 0xFF */
->>> +    }
->>>        sd->scr[2] = 0x00;          /* Extended Security is not supported. */
->>>        if (sd->spec_version >= SD_PHY_SPECv3_01_VERS) {
->>>            sd->scr[2] |= 1 << 7;   /* Spec Version 3.0X */
->>> @@ -456,7 +460,7 @@ static void sd_set_scr(SDState *sd)
->>>    #define MID     0xaa
->>>    #define OID     "XY"
->>>    #define PNM     "QEMU!"
->>> -#define PRV     0x01
->>> +#define PRV     0x02
->>>    #define MDT_YR  2006
->>>    #define MDT_MON 2
->>> @@ -1363,7 +1367,12 @@ static void sd_erase(SDState *sd)
->>>        sd->erase_end = INVALID_ADDRESS;
->>>        sd->csd[14] |= 0x40;
->>> -    memset(sd->data, 0xff, erase_len);
->>> +    if (sd->erase_blocks_as_zero) {
->>> +        memset(sd->data, 0x0, erase_len);
->>> +    } else {
->>> +        memset(sd->data, 0xFF, erase_len);
->>> +    }
+>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+>>> index c86dfa281f4b0218bf6dda7a38d46abfc9638450..6e07711478cb6ca046a7d371a82e2c682ebbda00 100644
+>>> --- a/hw/sd/sdhci.c
+>>> +++ b/hw/sd/sdhci.c
+>>> @@ -775,7 +775,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+>>>    static void sdhci_do_adma(SDHCIState *s)
+>>>    {
+>>> -    unsigned int begin, length;
+>>> +    unsigned int length;
+>>>        const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
+>>>        const MemTxAttrs attrs = { .memory = true };
+>>>        ADMADescr dscr = {};
+>>> @@ -817,66 +817,74 @@ static void sdhci_do_adma(SDHCIState *s)
+>>>                if (s->trnmod & SDHC_TRNS_READ) {
+>>>                    s->prnsts |= SDHC_DOING_READ;
+>>>                    while (length) {
+>>> -                    if (s->data_count == 0) {
+>>> -                        sdbus_read_data(&s->sdbus, s->fifo_buffer, block_size);
+>>> -                    }
+>>> -                    begin = s->data_count;
+>>> -                    if ((length + begin) < block_size) {
+>>> -                        s->data_count = length + begin;
+>>> -                        length = 0;
+>>> -                     } else {
+>>> -                        s->data_count = block_size;
+>>> -                        length -= block_size - begin;
+>>> -                    }
+>>> -                    res = dma_memory_write(s->dma_as, dscr.addr,
+>>> -                                           &s->fifo_buffer[begin],
+>>> -                                           s->data_count - begin,
+>>> -                                           attrs);
+>>> -                    if (res != MEMTX_OK) {
+>>> +                    dma_addr_t dma_len = length;
 >>> +
->>>        for (erase_addr = erase_start; erase_addr <= erase_end;
->>>             erase_addr += erase_len) {
->>>            if (sdsc) {
->>> @@ -3287,6 +3296,8 @@ static void emmc_realize(DeviceState *dev, Error **errp)
->>>    static const Property sdmmc_common_properties[] = {
->>>        DEFINE_PROP_DRIVE("drive", SDState, blk),
->>> +    DEFINE_PROP_BOOL("erase-blocks-as-zero", SDState, erase_blocks_as_zero,
->>> +                     false),
->>>    };
+>>> +                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
+>>> +                                               DMA_DIRECTION_FROM_DEVICE,
+>>> +                                               attrs);
 >>
->> Keep it enabled for previous versions adding in hw/core/machine.c:
+>> We know the descriptor is a consecutive range. Couldn't we map/unmap
+>> outside of the while() loop? (Ditto write path).
+> 
+> The loop is there to handle dma_memory_map mapping less that we've requested. I'm not
+> really sure if there are any guranteed cases where it always maps the requested length
+> fully (at least there are non in the dma_memory_map doc string).
+> 
+> Iff this is guranteed to always map the requested length, we could remove the whie()
+> loop completly.
+> 
+> Kind Regards,
+> Christian
+> 
 >>
->> GlobalProperty hw_compat_11_0[] = {
->>      { "sdmmc-common", "erase-blocks-as-zero", "true" },
->> };
+>>> +
+>>> +                    if (buf == NULL) {
+>>> +                        res = MEMTX_ERROR;
+>>>                            break;
+>>> +                    } else {
+>>> +                        res = MEMTX_OK;
+>>>                        }
+>>> -                    dscr.addr += s->data_count - begin;
+>>> -                    if (s->data_count == block_size) {
+>>> -                        s->data_count = 0;
+>>> -                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
+>>> -                            s->blkcnt--;
+>>> -                            if (s->blkcnt == 0) {
+>>> -                                break;
+>>> -                            }
+>>> +
+>>> +                    sdbus_read_data(&s->sdbus, buf, dma_len);
+>>> +                    length -= dma_len;
+>>> +                    dscr.addr += dma_len;
+>>> +
+>>> +                    dma_memory_unmap(s->dma_as, buf, dma_len,
+>>> +                                     DMA_DIRECTION_FROM_DEVICE, dma_len);
+>>> +
+>>> +                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
+>>> +                        size_t transfered = s->data_count + dma_len;
+>>> +
+>>> +                        s->blkcnt -= transfered / block_size;
+>>> +                        s->data_count = transfered % block_size;
+>>> +
+>>> +                        if (s->blkcnt == 0) {
+>>> +                            s->data_count = 0;
+>>> +                            break;
+>>>                            }
+>>>                        }
+>>>                    }
+>>>                } else {
 >>
->> (Although I wonder about the PRV bit).
-> 
-> If I understand the hw_compat correctly, this would mean sdcards would switch from
-> `erase as 0xFF` (old behaviour) to `erase as 0x00` when using the migration path?
-> 
-> I don't think this is a good idea as an guest might depend on the erase behaviour (e.g.
-> looking if an block is erased by comparing a "well-known" byte in the block for the
-> eraseure value. Changing this unexpectantly might confuse the guest to think used blocks
-> are empty and vice versa).
-> 
-> The other way around would be to change the default to true, and use compat to keep it
-> at false when migrating. This would make more sense, I think?
+>>
 
-Oops yes this is what I meant, keep "erase as 0xff" old behavior for
-up to v11.0, then from now on start using "erase as 0x00" by default 
-because optimizable, except if the user request otherwise. So:
-
-     DEFINE_PROP_BOOL("erase-blocks-as-zero", SDState,
-                      erase_blocks_as_zero, true),
-
-and:
-
-   GlobalProperty hw_compat_11_0[] = {
-        { "sdmmc-common", "erase-blocks-as-zero", "false" },
-   };
-
-WDYT?
 
