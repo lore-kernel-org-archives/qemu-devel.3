@@ -4,119 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8319F8A16F
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 13:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F39CF8A16F
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 13:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDMJn-0000Bf-Kd; Thu, 16 Apr 2026 08:59:39 -0400
+	id 1wDMPR-00020S-Rq; Thu, 16 Apr 2026 09:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wDMJb-00009c-NS; Thu, 16 Apr 2026 08:59:27 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDMPQ-0001zR-62
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 09:05:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wDMJX-0003Bm-Sn; Thu, 16 Apr 2026 08:59:26 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63G8GKgF1734194; Thu, 16 Apr 2026 12:59:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=AlyoXe
- YpTHsc04TnHYcqY9O+phcolzSLo+ifQP0GdSg=; b=JzE4KyjvsSubsZmlFwStqa
- bWhSjSQz70vyCktk200RDWlZaucSrNdol5qdnO6QMFUytL13pOeMYG35IRVH/Ikk
- fMGrknFGxdtjv+zEJDe53q9ItcfMJdM7oP6W9SP699zLUtTJbcWCSScQJPCfiiy8
- /08RJxVCCuRzuJadnCRNNuhQB1isNN908f9M3KPZqkdWDapv1q8Z10LE8X23TLO+
- r8uT3nCYWp3hyV2Y7ZbX1F6L9YsHxKgoI5xDPn9Rnj7mCQL37OqFx/rIcXwUULBO
- BLVCToyDI3vpywPpLP0JtsRWodv7hgAlPK9/me40YejiVnxBnQob7X+urvs7oS3A
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89mcjew-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Apr 2026 12:59:19 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63G8ZkqF026284;
- Thu, 16 Apr 2026 12:59:19 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dg2ujtpxb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Apr 2026 12:59:18 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63GCwpLi31457806
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Apr 2026 12:58:51 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB45B5804E;
- Thu, 16 Apr 2026 12:59:16 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9ECAE5803F;
- Thu, 16 Apr 2026 12:59:15 +0000 (GMT)
-Received: from [9.61.14.120] (unknown [9.61.14.120])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Apr 2026 12:59:15 +0000 (GMT)
-Message-ID: <e0fba17b-08f2-4b97-b79a-385c967ac23b@linux.ibm.com>
-Date: Thu, 16 Apr 2026 08:59:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDMPL-00055f-TE
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 09:05:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776344720;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d7JsCJPKfXxxtQPXE9OV3XBcMz9VeFWGPz3q4hIelfc=;
+ b=LawY1ofrLRzQz5T6ELKysSFjjtgdkYJ78uW9YJuWyedrCrIBFfB/KMWJGY7rSzja1Y0kQw
+ AA+aNNOiIV93EWq4IFsCtUJFc0IDRMOxi8ytk64rZbZ1Nn6vUYRA8kR7JJyfyAfCBgOv3O
+ ytozeFyCcXtTRq4ld5RQ6FuZyfpxUaU=
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com
+ [74.125.82.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-348-qHkPtQm_NvKZ2j7PhkQ89Q-1; Thu, 16 Apr 2026 09:05:18 -0400
+X-MC-Unique: qHkPtQm_NvKZ2j7PhkQ89Q-1
+X-Mimecast-MFC-AGG-ID: qHkPtQm_NvKZ2j7PhkQ89Q_1776344717
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-12c283a1212so8329217c88.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 06:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776344717; x=1776949517; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=d7JsCJPKfXxxtQPXE9OV3XBcMz9VeFWGPz3q4hIelfc=;
+ b=EVm9LQq4EWuHHINXZUjV5DYI6FCpy+boLWnT7rSV5pnK9WRH7EWNfFBCFm8XNe+W+z
+ LgAX81irqXx8yPJLMVIEiwmLc6FXvHELVunGykGWUxVUwEJhMCT/e8GbJrTGsrP03+ou
+ 70dBdHY2RfCqzjdXt9c1EjXgdSMsKmwkQ/oZaKL/cS0mDwsJcMz/gCHfE51Ypbnmtk8U
+ 16jXJ67ZLLU8I38jeUQGnzbI/In8gfjgSCZDoAPCu3FNJwEDd7PdGCZmfffWFsQ0LaFl
+ EU5gLIilHTz58B8ToNwE+/EX5oyv1DFMTGRrXmnutnPXTR6enFRmOfR07WnDtdsjtciZ
+ KsvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776344717; x=1776949517;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=d7JsCJPKfXxxtQPXE9OV3XBcMz9VeFWGPz3q4hIelfc=;
+ b=iwi4xn99OiBla9K2thCUrNFOmq7C2rGhfdywM8Ca/mjeFdS4hKdcHJXi1U91UbCvNu
+ dBn0Y4Cg3Nc0d8FVDO2uf/DoARmnm7kZuBBoIWBIvVTLZzCZDKqPjAVSCCSuC0Ax7UIa
+ oEUwWFT9HjLYg14F0lMYfva25FQ29Sg4PcibmjAi94hgdmqAAItrPxbVgVdJ2DymGEtr
+ lIssqgvfOIlh1cJSLjQlK7zRbGHUV+IvPPwl+BKpBy6cOzItZih6cVW91xCBSCUjvhj1
+ NLiHMkjTIr2NxW33RKxUmr2ecmkFeYdLxO60OLu6RiZF1+AjV46c5eVEZyNgwKW6JPmc
+ +mtg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9GXjCk66PiLHcjbXnNOs7L2xDiZQixWxB5wB2y34wHvTrG+jmr3R2VxTGjgkba3Qkuha1iJJ2sF345@nongnu.org
+X-Gm-Message-State: AOJu0YzBe1I6iYc4rDcVZeAKHpKLjuFx/hINpewij1JbCOiYFgHsSPJH
+ mONrBPbjRrB+SAggDl8V1nRFYJWsdCeHynXQykUQIMMeByJVIlHqx51BVrPrEM4TMlXs7eAmbs3
+ Pwltsh7IPq9wXQvFcsgtKx+o2Y354zH0//tOUmBAg9su/VYACizyP8qJG
+X-Gm-Gg: AeBDies3CZQ/SlLHBy3xZtRS5wkxmbXtKZkybnFbHj9VHJrwOiHUpL7Q8jwiXSWNIb8
+ bZiIK6fHfgBDXWqJKM+0q/XRxmow77bEbBTcpBIklekCyjliOOVwz6Awjbo6RbIBW3J/U89N27R
+ CIuuIrNzTssdy9vY6jXHQYfq5LH0ji4BlEI46vj5nz6PVUCTOIvW2KgPfD21UV7Jjqy7FQY1e3B
+ mIgjf2afwPihFXx74fYWCGdKKIgLJOp61Djxx7ckkAt4hlD1U0JhMdGLl1Pyu4+kqG8GO7WgV9S
+ lJzYFDZSE4ajt4TdDgd7rCupWwVAmOdkBorgkVoPX0OZhtVV204UHmBFEyW4fTgwww0bHL/9pxP
+ 88t2AWEuLTl80qO8OlxisWYyWJQ7yalQziVIycmXla/5XZWcHAq4/9s/lag==
+X-Received: by 2002:a05:7022:2581:b0:12b:ec96:c936 with SMTP id
+ a92af1059eb24-12c34eab249mr15648221c88.14.1776344716939; 
+ Thu, 16 Apr 2026 06:05:16 -0700 (PDT)
+X-Received: by 2002:a05:7022:2581:b0:12b:ec96:c936 with SMTP id
+ a92af1059eb24-12c34eab249mr15648132c88.14.1776344715968; 
+ Thu, 16 Apr 2026 06:05:15 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50e25888c19sm19582701cf.7.2026.04.16.06.05.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Apr 2026 06:05:15 -0700 (PDT)
+Date: Thu, 16 Apr 2026 09:05:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
+ migrate_params_test_apply
+Message-ID: <aeDeig7styFZanf2@x1.local>
+References: <20260414223718.23965-1-farosas@suse.de> <87zf34xp7k.fsf@suse.de>
+ <CAFEAcA8dwXxFodsg6gk473aEWBXynFAwaohrMqY3ca5c4FxzMw@mail.gmail.com>
+ <87wly7xfko.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] target/s390x: Forbid to use legacy ldst_phys() API
-To: Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Anton Johansson <anjo@rev.ng>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, qemu-s390x@nongnu.org,
- David Hildenbrand <david@kernel.org>
-References: <20260319185203.11799-1-philmd@linaro.org>
- <f0965bf8-b736-4e53-b809-374945f0f48e@linux.ibm.com>
- <63ddd321-067b-4c44-99e1-9c6c0ac60003@linaro.org>
- <640ddcc2-f373-4738-8e66-50effe56de4e@linaro.org> <87tstdbwu4.fsf@redhat.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <87tstdbwu4.fsf@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=69e0dd27 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=KKAkSRfTAAAA:8
- a=VnNF1IyMAAAA:8 a=B64LVIAMxX8YIRYdwhAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 4sqA-m1nz1j2PtmhC2TnVqDPLix3qZbo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDEyMiBTYWx0ZWRfX7Ce6Z3VF7jpc
- THSsYzTNXTpvNti7nhLow54vApLtfS5zrbnoe4ytqga15mOY/TE5iEIwH4MRC1uHox65KuVaiLm
- ODVn3nntYjBUwgGIqYyaYOHFb8TaHyKp/VC9TpLNrQp4943v7eG2hDEKmWjcY/3MFVIcd/46VXz
- mgd0FFViRRX2GRPlOtESRY4l5hO4gwBl2MP00H9w+cKU5GEhacavNy7STAgVXY3S7GMMfTHkTCl
- I0uPsvAhVwwQ7nHHNS3b6m4DMQCyTXHxnJeHw1zjBWIuOy5ytRJWTese3uNFBd3jR/ttOF95rnd
- vYeYKvvHRia13GQraxauEH9ObZaij2EQuwVXf19qqh/gP50XJcwkVjVQm4JpRQSTurKG1hc6bXE
- +frPusEMiesSSvF/w4665lk29aFQmKWcSt5RM0G7bFv8HsqyP8aAVMicVhEGhj+Lkh10sBqgETp
- qB711l5z4IlrhfkBtiA==
-X-Proofpoint-ORIG-GUID: 4sqA-m1nz1j2PtmhC2TnVqDPLix3qZbo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-16_03,2026-04-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
- suspectscore=0 impostorscore=0 phishscore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604160122
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87wly7xfko.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,41 +120,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/14/26 7:33 AM, Cornelia Huck wrote:
-> On Tue, Apr 14 2026, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> 
->> On 21/3/26 16:26, Philippe Mathieu-Daudé wrote:
->>> On 20/3/26 20:28, Matthew Rosato wrote:
->>>> On 3/19/26 2:51 PM, Philippe Mathieu-Daudé wrote:
->>>>> Replace legacy ld/st_phys() by address_space_ld/st()
->>>>> then lock the target again further legacy API uses.
->>>>>
->>>>> Philippe Mathieu-Daudé (5):
->>>>>    target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (cpu)
->>>>>    target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (mmu)
->>>>>    target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (tcg)
->>>>>    target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (kvm)
->>>>>    configs/targets: Restrict the legacy ldst_phys() API on s390x target
->>>>
->>>> For the series:
->>>>
->>>> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
->>>>
->>>> For good measure I also ran some s390x kvm regression tests, took a 
->>>> less comprehensive spin with a tcg s390x guest (on s390 host), and 
->>>> forced a few of these codepaths as a sanity check.
->>
->> Does that mean we can also add:
->>
->>    Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
->>
->> ?
-> 
-> I was planning to pick this via s390-next, I can add T-b if desired.
-> 
+On Thu, Apr 16, 2026 at 09:19:51AM -0300, Fabiano Rosas wrote:
+> @Peter Xu, do you agree with leaving this to stable? Given that
+> it needs multifd and zero-copy-send to be both set, I'd say it doesn't
+> have that large of a user base.
 
-Sorry I missed this question earlier - Sure, feel free to add my T-b.
+Yes.
 
-Thanks,
-Matt
+-- 
+Peter Xu
+
 
