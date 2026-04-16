@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B9CF8D762
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 18:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A093F8D762
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 18:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDRFV-0007w6-3n; Thu, 16 Apr 2026 14:15:33 -0400
+	id 1wDRK8-0000C3-JA; Thu, 16 Apr 2026 14:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDRFT-0007vt-Iv
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:15:31 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDRJu-00009l-Mx
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:20:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDRFR-0008Ur-A8
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:15:31 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDRJn-00027k-LV
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:20:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776363326;
+ s=mimecast20190719; t=1776363596;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Aq/S0MebFgjU792o/q35DiVbEF+cp7GafhuA3o5DMb8=;
- b=aIfe5zGLoaX/gT8RORd8ukk0KUZ1PUx3TrRunpJkZndP69iGn1Shz+KhlWhI0JgDZ1H8bh
- lAhWXY29HgEoU1SFPTm7BXDYeefpbd1tu+ve1rgb3vZf87uIRxAr9AHfOlKDK0djaw5aO0
- kXIMJuaZ8QPujLS6enzSO7tW+/3Dhos=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sLRJRBioMpMNJiKqNQXQmm873F/Td60HS+WfJHVay04=;
+ b=JyG0xcydv9rQyyiVRcfEs9REirxW2dfMmYN6tCPSEEKJmsE3ZAgVi9K27LaH/lv99S8Ih/
+ VeusqjIOneW+PtB5+jePiRnV2A06KGXVkGOfsWzIFQjyZ9CdlfcMICIUeBKa9DdpPNfgrF
+ Txqe8+wGWCdbh+E6dXHazppQcXaJ7lM=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-uPDxUEuBNXi5A-gK5pjoFw-1; Thu, 16 Apr 2026 14:15:21 -0400
-X-MC-Unique: uPDxUEuBNXi5A-gK5pjoFw-1
-X-Mimecast-MFC-AGG-ID: uPDxUEuBNXi5A-gK5pjoFw_1776363321
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-794d80fea59so176075467b3.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 11:15:21 -0700 (PDT)
+ us-mta-681-X94mV-iTM12CjPbbpJvMrQ-1; Thu, 16 Apr 2026 14:19:54 -0400
+X-MC-Unique: X94mV-iTM12CjPbbpJvMrQ-1
+X-Mimecast-MFC-AGG-ID: X94mV-iTM12CjPbbpJvMrQ_1776363594
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8acad256115so144638626d6.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 11:19:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776363321; x=1776968121; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776363594; x=1776968394; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Aq/S0MebFgjU792o/q35DiVbEF+cp7GafhuA3o5DMb8=;
- b=osD6oY6fWPtzoLznMdYhgI4fKwrAlTi+yRyYeW5fMxI3fAywLiuA7Jr0sri574tONg
- MJlzz08ATe7bIrk9AWwM7/5zh2l+FF3jd3Vuz8TLRRLPH5AYiwklhcMVbjBCL06W+KxA
- Fj+VJz3RgETgrp+poJsJxsAQ6ntY/FwBBDtyjdXwKjUA5bIwL1F82gdMW9oYPAQ+Am3l
- +EvjyxD+6EGQd/H+oX4kJ/U9ZAv//bRscxOxQlMMzv0tRfclInxzg3cibnX6afYCLCNj
- Y+DnVQZatqjUWY/mStcvX96XZe/DJcuqy39+PhLopFvo9x9c1n92vpEZVeG2tTfAeoZd
- yrOg==
+ bh=sLRJRBioMpMNJiKqNQXQmm873F/Td60HS+WfJHVay04=;
+ b=T6HcHeuHoNAqPYRdiedley+ZHuPlgs2g74P5TS2/Dws/1sfNISwVcynh4VaRRCAWPV
+ T5DVcmX5N+5jlof/BhzWBmNf1erxfgQAoqgIj3eDXz4a1RrCFpMiQqJxhw1xNJcPYj8V
+ nQHu0ErRWTv7yTBbeYljGWQPjD1O5+t89EYJScvTR13+ZvhLQBtRc4SXPBeJpOnqrgD+
+ CW/0Ey3KFj9IMpb8+QPxHave2IdBavNjRPfQe8T5XcEdytrUr/zG3GVKqlNxrjqQWSiy
+ 80Eh/1BwSN/EyWJ34DDC3jrgDR0kMBoGPRDY4Enu44JozBoZi18x7bysM5zxLNERoGZK
+ zLxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776363321; x=1776968121;
+ d=1e100.net; s=20251104; t=1776363594; x=1776968394;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Aq/S0MebFgjU792o/q35DiVbEF+cp7GafhuA3o5DMb8=;
- b=Pol1c+n+l94GWN+hQ4/4C+Fb+kZWIz3/F9HcT1Iw0NOFunau7WAKKiWDysg6yVVapM
- T8P0D2qG6/8MPtRB5bFgLSM6B6tgZ7C66403xsMhdowtCpfl12yz0Xk6QptJcldrFk6Q
- 6QznTny8+FBnOoBuOrzTWhcA7R33oiACo6dBZ7ENGWDe6zrg2MDZgcW+exZ74SR27vIl
- 9Vr6gIijN5pyMJUCBBUZzfgg6hVbBQ0ww0XGUgfbB8MK6ocwiI65mH1oJ+gUI1Rn9KNr
- tui/5rDTkeoLx1JkG22d3Gfc64dYfOn9/iHBrt3rEoqVtGJvsAnA+cw662nGsOqOqiZp
- 4jbA==
-X-Gm-Message-State: AOJu0Yxo7hNxLiMumAsqSb7U0ATmz9mdtQdKuf4MuC5CUo7bx5tYecwH
- dO/tK82Aw5D0+D/L+1H9pShVdbu5B4bGK4su2Lm6g79rqMg1lh9VDa3o+m+WCXllFXnC4YpyqhV
- 8CTxMb6j185MrP8Tuydojoz2UkcE+x5VcOHNeMwHBaelFLs+wCE5gE0YL
-X-Gm-Gg: AeBDieuSp/ytF3y1Ute0MQOPDePfIOcqM7F9KgsfhisCYzK5FTvRMdVjrGCRNYr+2oA
- 08Dh2hXOqidTJnnGYfGdxAXMfF0KPfmF4DXuoBonf1Ebr6aYjypRdT1Z7hoeUh9Ue0VZ9nnRCTK
- t90iAE6PTjY9qr6ktxON91dSRqF+IXaUPW58INe94BvTVPYgJybm8bjiOsUmTH+XC/MDF3lxjIz
- mBUO8TlqK+rnfmZd3T7yx3dbdQj7bGCRncu/s5iVgkllQp5mms6IYvwW3jvPcMzTyV1pMq1gpK1
- 3ws5uldgmHeP0I0hOVxd0F+6GNFPEvry2+2XNyQtv1LxOD1idm1KWEkqbSEichfH2B7vLqfdAyb
- 4+6UBGaUSV2ZTKF72tqHC+hK3qKeq5vuBXC6Bx0Ux6+FL1SBRmlTyZSaeQQ==
-X-Received: by 2002:a05:690c:6503:b0:7b2:1bf1:801b with SMTP id
- 00721157ae682-7b9e16fe6b2mr1824797b3.5.1776363320755; 
- Thu, 16 Apr 2026 11:15:20 -0700 (PDT)
-X-Received: by 2002:a05:690c:6503:b0:7b2:1bf1:801b with SMTP id
- 00721157ae682-7b9e16fe6b2mr1824267b3.5.1776363320076; 
- Thu, 16 Apr 2026 11:15:20 -0700 (PDT)
+ bh=sLRJRBioMpMNJiKqNQXQmm873F/Td60HS+WfJHVay04=;
+ b=bPijPSfjefiectNOoGEBjpYzub0EcQl0Mkdr5T4UCjMp76seiU4sqKf13nFilXzY5s
+ Ye6+VfBgSvtkIQq/zUE3UQabI0Lay5Q9TNhkXBVx14fLSR1Dy/BleizB5Z2k2zBg/mY7
+ 2hrZmO+WtgTgupmO4EZSSDUTWH9sPvaADgPcgH+Ck0gBbq6z4Enj0onOSoOoxz2N2RUT
+ ZD87vhsE8ZMNXYp4SQYS5Wqp6wSdaKbi0U/3DPjvKJHvJ6t3GfN19zdjZXQc0Js0CBlo
+ 4niXMwQwXa64rOIQvsObsuuKmHryWLgLU/T8Dp//8qQz/Y0oALqdg7MbEB4FI43Ym1sM
+ pV0A==
+X-Gm-Message-State: AOJu0YzUyFvhPUKxzGoOTDn8Wn9KqVJfRMvvJh0Mj6pTnopDyGuiHXbQ
+ wO7XCLChDTyGuW+Zu5NaaMfT3SPRw5SMo/gcFqZqTq3fP7XGpymUVDZQF3jZAFP6XpJoAdWZSsq
+ ea1lYWFU+SEyd9JFe4IO1oF5c+xTnk8RrQcMicMFWoKB/3prniHPwALio
+X-Gm-Gg: AeBDieudhw6J/FjJaSaksQgdbtMnBCT/GHFkWUaNRJbwlYOuJsstqc8IYXPxMOSdjrs
+ cA+68WZqtZHPjoIyF7BObYS26ks17tIjPV1knAVEBXNdXWhAZDr+8Z90zcSa9493YsrSwbIbh/l
+ hNoCbEFyZYWdUvptCf3g1g6en6gCJOvVvJOKTEZ7CUz4K+NTnnIVeX2b9QRHyu3dWCZ6WiZL6LI
+ yUWF74DTiPOUHjnOIRRABVPCiVLiw2Ja3m4tlZeO8Ak/GnK1HLNX3s2/aakB3MICPLUeS3wh7/P
+ 3hAY4TrcyD1AXLSe4nL6JWE5BnJ36QwArUxwbITgiBb7CC64VhCcd3NOX2/m6/LcWroe0dxjOv6
+ J2kzUzHGeUzW2Pd3Y8S5Cv6g80XZxrwJrYvaJV4wtbYdBly6El/b9otPAYw==
+X-Received: by 2002:a05:6214:4c8a:b0:8ac:b2b2:b2f0 with SMTP id
+ 6a1803df08f44-8b025db7f10mr5070276d6.1.1776363593922; 
+ Thu, 16 Apr 2026 11:19:53 -0700 (PDT)
+X-Received: by 2002:a05:6214:4c8a:b0:8ac:b2b2:b2f0 with SMTP id
+ 6a1803df08f44-8b025db7f10mr5069766d6.1.1776363593397; 
+ Thu, 16 Apr 2026 11:19:53 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7b7667f8de7sm27708707b3.19.2026.04.16.11.15.18
+ 6a1803df08f44-8ae6c96a165sm43840166d6.15.2026.04.16.11.19.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 11:15:19 -0700 (PDT)
-Date: Thu, 16 Apr 2026 14:15:17 -0400
+ Thu, 16 Apr 2026 11:19:52 -0700 (PDT)
+Date: Thu, 16 Apr 2026 14:19:51 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
@@ -88,17 +88,17 @@ Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  Kirti Wankhede <kwankhede@nvidia.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>,
- Hyman Huang <yong.huang@smartx.com>, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 09/14] migration: Move iteration counter out of RAM
-Message-ID: <aeEnNQO_c6LzM2FD@x1.local>
+ Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
+Subject: Re: [PATCH 12/14] migration: Fix calculation of expected_downtime to
+ take VFIO info
+Message-ID: <aeEoR2mMRqiOpJqP@x1.local>
 References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-10-peterx@redhat.com>
- <8734136atk.fsf@suse.de>
+ <20260408165559.157108-13-peterx@redhat.com>
+ <87y0iv4w3b.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8734136atk.fsf@suse.de>
+In-Reply-To: <87y0iv4w3b.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -124,38 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 09, 2026 at 07:14:15PM -0300, Fabiano Rosas wrote:
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index e5b7217bf5..686162643d 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -1136,8 +1136,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-> >      RAMBlock *block;
-> >      int64_t end_time;
-> >  
-> > -    qatomic_add(&mig_stats.dirty_sync_count, 1);
-> > -
-> >      if (!rs->time_last_bitmap_sync) {
-> >          rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+On Thu, Apr 09, 2026 at 07:17:44PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Tangent: aren't these updates to time_last_bitmap_sync racy with the
-> sync from the throttle code?
+> > QEMU will provide an expected downtime for the whole system during
+> > migration, by remembering the total dirty RAM that we synced the last time,
+> > divides the estimated switchover bandwidth.
+> >
+> > That was flawed when VFIO is taking into account: consider there is a VFIO
+> > GPU device that contains GBs of data to migrate during stop phase.  Those
+> > will not be accounted in this math.
+> >
+> > Fix it by updating dirty_bytes_last_sync properly only when we go to the
+> > next iteration, rather than hide this update in the RAM code.  Meanwhile,
+> > fetch the total (rather than RAM-only) portion of dirty bytes, so as to
+> > include GPU device states too.
+> >
+> > Update the comment of the field to reflect its new meaning.
+> >
+> > Now after this change, the expected-downtime to be read from query-migrate
+> > should be very accurate even with VFIO devices involved.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/migration-stats.h |  8 +++-----
+> >  migration/migration.c       | 11 ++++++++---
+> >  migration/ram.c             |  1 -
+> >  3 files changed, 11 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+> > index 326ddb0088..1447316802 100644
+> > --- a/migration/migration-stats.h
+> > +++ b/migration/migration-stats.h
+> > @@ -31,11 +31,9 @@
+> >   */
+> >  typedef struct {
+> >      /*
+> > -     * Number of bytes that were dirty last time that we synced with
+> > -     * the guest memory.  We use that to calculate the downtime.  As
+> > -     * the remaining dirty amounts to what we know that is still dirty
+> > -     * since last iteration, not counting what the guest has dirtied
+> > -     * since we synchronized bitmaps.
+> > +     * Number of bytes that were reported dirty after the lastest
+> 
+> typo: latest
+> 
+> > +     * system-wise synchronization on dirty information.  It is used to
+> 
+> s/on/of/ ?
+> 
+> I can fix these at merge time.
 
-It looks fine to me.  This variable (along with log sync) should require
-BQL, so I expect normal form of race condition won't happen.
-
-But maybe you meant when migration_bitmap_sync() can be invoked by the
-timer kick-offed in cpu_throttle_dirty_sync_timer_tick()?
-
-Indeed that could happen together with the migration thread trying to sync
-by other reasons, but so far I see no issues: time_last_bitmap_sync might
-get updated sooner, but it should always reflect the time that whoever
-synced the last, and when both want to do it they contend on BQL, which
-looks ok.
-
-So the expectation is that timer just makes sure sync happens slightly more
-frequently, where QEMU src might used to sync toooo less times on huge VMs
-(because each iteration took tooo long).
+Thanks, I'll repost and fix them.
 
 -- 
 Peter Xu
