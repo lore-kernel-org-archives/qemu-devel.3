@@ -4,61 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1153CF8A16B
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59B8F8A16B
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLXe-0007hr-II; Thu, 16 Apr 2026 08:09:59 -0400
+	id 1wDLZF-0008OE-CO; Thu, 16 Apr 2026 08:11:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wDLXV-0007gk-HB; Thu, 16 Apr 2026 08:09:46 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wDLX9-0001u9-P8; Thu, 16 Apr 2026 08:09:45 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D85FE596EA1;
- Thu, 16 Apr 2026 14:09:18 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 7xbrzfO7odFa; Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3BB245969F6; Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 398205969EC;
- Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
-Date: Thu, 16 Apr 2026 14:09:16 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Jamin Lin <jamin_lin@aspeedtech.com>
-cc: "philmd@linaro.org" <philmd@linaro.org>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Joel Stanley <joel@jms.id.au>, 
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>, 
- Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>, 
- "nabihestefan@google.com" <nabihestefan@google.com>
-Subject: Re: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn structure
- and dead code
-In-Reply-To: <20260416014928.1279360-2-jamin_lin@aspeedtech.com>
-Message-ID: <d7e9d943-fd8d-dd48-5a86-e54613c466dd@eik.bme.hu>
-References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
- <20260416014928.1279360-2-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1wDLZ9-0008Nb-T2
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:29 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZ7-0002NR-M4
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:27 -0400
+Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 06DBD20B7129;
+ Thu, 16 Apr 2026 05:11:22 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 06DBD20B7129
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1776341484;
+ bh=UbQCp/z8d0UWo4lIFYXYd0mdek+SJnwAX0PfzqX1kKY=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=biW8XN1LYlY/IzsUYTEhd6bNYy14k7ZNiaYxE/scgbsXMMMNVRYVAlT6S/DIlpQIT
+ aFw+tdJqvyUkhoHIG+igYBEfpvz+CDnyCeiM/ilf0SieTudlhqs1ObFkBMkgqQNzR5
+ JFtXUZyJE5dNaT/6PhSEANg3lS6Z9nTWain2m/DQ=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Wei Liu <wei.liu@kernel.org>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>
+Subject: [PATCH v6 1/9] accel/mshv: use mshv_create_partition_v2 payload
+Date: Thu, 16 Apr 2026 14:11:08 +0200
+Message-Id: <20260416121116.527927-2-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
+References: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,71 +68,336 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Apr 2026, Jamin Lin wrote:
-> The EHCIfstn structure, defined according to EHCI spec section 3.7,
-> is currently unused in the EHCI implementation. Remove it to reduce
-> unused code and improve maintainability.
->
-> Additionally, drop a block of disabled (#if 0) code in
-> ehci_state_advqueue() that was never implemented. This code path
-> is incomplete and has no functional impact.
->
-> No functional change.
->
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
-> hw/usb/hcd-ehci.h |  7 -------
-> hw/usb/hcd-ehci.c | 11 -----------
-> 2 files changed, 18 deletions(-)
->
-> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
-> index 0ae8c06331..3aec0e047c 100644
-> --- a/hw/usb/hcd-ehci.h
-> +++ b/hw/usb/hcd-ehci.h
-> @@ -202,13 +202,6 @@ typedef struct EHCIqh {
-> #define BUFPTR_SBYTES_SH              5
-> } EHCIqh;
-> 
-> -/*  EHCI spec version 1.0 Section 3.7
-> - */
-> -typedef struct EHCIfstn {
-> -    uint32_t next;                    /* Standard next link pointer */
-> -    uint32_t backptr;                 /* Standard next link pointer */
-> -} EHCIfstn;
-> -
-> enum async_state {
->     EHCI_ASYNC_NONE = 0,
->     EHCI_ASYNC_INITIALIZED,
-> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-> index 57f930b099..5ea8461f70 100644
-> --- a/hw/usb/hcd-ehci.c
-> +++ b/hw/usb/hcd-ehci.c
-> @@ -1756,17 +1756,6 @@ static int ehci_state_fetchsitd(EHCIState *ehci, int async)
-> /* Section 4.10.2 - paragraph 3 */
-> static int ehci_state_advqueue(EHCIQueue *q)
-> {
-> -#if 0
-> -    /* TO-DO: 4.10.2 - paragraph 2
-> -     * if I-bit is set to 1 and QH is not active
-> -     * go to horizontal QH
-> -     */
+When using the extended request format we can instruct the hypervisor to
+provision enough space for requested XSAVE features. This is required
+for supporting QEMU models provided via the -cpu flag properly.
 
-Is it worth to keep the comment in case it's still valid to remind we have 
-something missing here?
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Acked-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+---
+ accel/mshv/mshv-all.c          |  71 ++++++++++--
+ include/hw/hyperv/hvgdk_mini.h |   2 +
+ include/hw/hyperv/hvhdk.h      | 195 +++++++++++++++++++++++++++++++++
+ 3 files changed, 261 insertions(+), 7 deletions(-)
 
-Regards,
-BALATON Zoltan
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index d4cc7f5371..c50641f174 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -110,21 +110,78 @@ static int resume_vm(int vm_fd)
+     return 0;
+ }
+ 
++static int get_host_partition_property(int mshv_fd, uint32_t property_code,
++                                       uint64_t *value)
++{
++    int ret;
++    struct hv_input_get_partition_property in = {0};
++    struct hv_output_get_partition_property out = {0};
++    struct mshv_root_hvcall args = {0};
++
++    in.property_code = property_code;
++
++    args.code    = HVCALL_GET_PARTITION_PROPERTY;
++    args.in_sz   = sizeof(in);
++    args.in_ptr  = (uint64_t)&in;
++    args.out_sz  = sizeof(out);
++    args.out_ptr = (uint64_t)&out;
++
++    ret = ioctl(mshv_fd, MSHV_ROOT_HVCALL, &args);
++    if (ret < 0) {
++        error_report("Failed to get host partition property bank: %s",
++                     strerror(errno));
++        return -1;
++    }
++
++    *value = out.property_value;
++    return 0;
++}
++
+ static int create_partition(int mshv_fd, int *vm_fd)
+ {
+     int ret;
+-    struct mshv_create_partition args = {0};
++    uint64_t pt_flags, host_proc_features;
++    union hv_partition_processor_xsave_features disabled_xsave_features;
++    struct mshv_create_partition_v2 args = {0};
++
++    QEMU_BUILD_BUG_ON(MSHV_NUM_CPU_FEATURES_BANKS != 2);
+ 
+     /* Initialize pt_flags with the desired features */
+-    uint64_t pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
+-                        (1ULL << MSHV_PT_BIT_X2APIC) |
+-                        (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES);
++    pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
++               (1ULL << MSHV_PT_BIT_X2APIC) |
++               (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
++               (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
++
++    /* enable all */
++    disabled_xsave_features.as_uint64 = 0;
++
++    /*
++     * query host for supported processor features and disable unsupported
++     * features: (0 means supported, 1 means disabled, hence the negation)
++     */
++    ret = get_host_partition_property(mshv_fd,
++                                      HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
++                                      &host_proc_features);
++    if (ret < 0) {
++        error_report("Failed to get host processor feature bank 0");
++        return -1;
++    }
++    args.pt_cpu_fbanks[0] = ~host_proc_features;
+ 
+-    /* Set default isolation type */
+-    uint64_t pt_isolation = MSHV_PT_ISOLATION_NONE;
++    ret = get_host_partition_property(mshv_fd,
++                                      HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
++                                      &host_proc_features);
++    if (ret < 0) {
++        error_report("Failed to get host processor feature bank 1");
++        return -1;
++    }
++    args.pt_cpu_fbanks[1] = ~host_proc_features;
+ 
++    /* populate args structure */
+     args.pt_flags = pt_flags;
+-    args.pt_isolation = pt_isolation;
++    args.pt_isolation = MSHV_PT_ISOLATION_NONE;
++    args.pt_disabled_xsave = disabled_xsave_features.as_uint64;
++    args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
+ 
+     ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
+     if (ret < 0) {
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index c3a8f33280..367519143e 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -454,6 +454,8 @@ typedef struct hv_input_set_vp_registers {
+     struct hv_register_assoc elements[];
+ } QEMU_PACKED hv_input_set_vp_registers;
+ 
++#define MSHV_VP_MAX_REGISTERS   128
++
+ union hv_interrupt_control {
+     uint64_t as_uint64;
+     struct {
+diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+index 41af743847..9ad16c47da 100644
+--- a/include/hw/hyperv/hvhdk.h
++++ b/include/hw/hyperv/hvhdk.h
+@@ -11,6 +11,16 @@
+ 
+ #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
+ 
++struct hv_input_get_partition_property {
++    uint64_t partition_id;
++    uint32_t property_code; /* enum hv_partition_property_code */
++    uint32_t padding;
++} QEMU_PACKED;
++
++struct hv_output_get_partition_property {
++    uint64_t property_value;
++} QEMU_PACKED;
++
+ struct hv_input_set_partition_property {
+     uint64_t partition_id;
+     uint32_t property_code; /* enum hv_partition_property_code */
+@@ -161,6 +171,191 @@ union hv_partition_synthetic_processor_features {
+     };
+ };
+ 
++union hv_partition_processor_xsave_features {
++    struct {
++        uint64_t xsave_support:1;
++        uint64_t xsaveopt_support:1;
++        uint64_t avx_support:1;
++        uint64_t avx2_support:1;
++        uint64_t fma_support:1;
++        uint64_t mpx_support:1;
++        uint64_t avx512_support:1;
++        uint64_t avx512_dq_support:1;
++        uint64_t avx512_cd_support:1;
++        uint64_t avx512_bw_support:1;
++        uint64_t avx512_vl_support:1;
++        uint64_t xsave_comp_support:1;
++        uint64_t xsave_supervisor_support:1;
++        uint64_t xcr1_support:1;
++        uint64_t avx512_bitalg_support:1;
++        uint64_t avx512_i_fma_support:1;
++        uint64_t avx512_v_bmi_support:1;
++        uint64_t avx512_v_bmi2_support:1;
++        uint64_t avx512_vnni_support:1;
++        uint64_t gfni_support:1;
++        uint64_t vaes_support:1;
++        uint64_t avx512_v_popcntdq_support:1;
++        uint64_t vpclmulqdq_support:1;
++        uint64_t avx512_bf16_support:1;
++        uint64_t avx512_vp2_intersect_support:1;
++        uint64_t avx512_fp16_support:1;
++        uint64_t xfd_support:1;
++        uint64_t amx_tile_support:1;
++        uint64_t amx_bf16_support:1;
++        uint64_t amx_int8_support:1;
++        uint64_t avx_vnni_support:1;
++        uint64_t avx_ifma_support:1;
++        uint64_t avx_ne_convert_support:1;
++        uint64_t avx_vnni_int8_support:1;
++        uint64_t avx_vnni_int16_support:1;
++        uint64_t avx10_1_256_support:1;
++        uint64_t avx10_1_512_support:1;
++        uint64_t amx_fp16_support:1;
++        uint64_t reserved1:26;
++    };
++    uint64_t as_uint64;
++};
++
++#define HV_PARTITION_PROCESSOR_FEATURES_BANKS 2
++#define HV_PARTITION_PROCESSOR_FEATURES_RESERVEDBANK1_BITFIELD_COUNT 4
++
++
++union hv_partition_processor_features {
++    uint64_t as_uint64[HV_PARTITION_PROCESSOR_FEATURES_BANKS];
++    struct {
++        uint64_t sse3_support:1;
++        uint64_t lahf_sahf_support:1;
++        uint64_t ssse3_support:1;
++        uint64_t sse4_1_support:1;
++        uint64_t sse4_2_support:1;
++        uint64_t sse4a_support:1;
++        uint64_t xop_support:1;
++        uint64_t pop_cnt_support:1;
++        uint64_t cmpxchg16b_support:1;
++        uint64_t altmovcr8_support:1;
++        uint64_t lzcnt_support:1;
++        uint64_t mis_align_sse_support:1;
++        uint64_t mmx_ext_support:1;
++        uint64_t amd3dnow_support:1;
++        uint64_t extended_amd3dnow_support:1;
++        uint64_t page_1gb_support:1;
++        uint64_t aes_support:1;
++        uint64_t pclmulqdq_support:1;
++        uint64_t pcid_support:1;
++        uint64_t fma4_support:1;
++        uint64_t f16c_support:1;
++        uint64_t rd_rand_support:1;
++        uint64_t rd_wr_fs_gs_support:1;
++        uint64_t smep_support:1;
++        uint64_t enhanced_fast_string_support:1;
++        uint64_t bmi1_support:1;
++        uint64_t bmi2_support:1;
++        uint64_t hle_support_deprecated:1;
++        uint64_t rtm_support_deprecated:1;
++        uint64_t movbe_support:1;
++        uint64_t npiep1_support:1;
++        uint64_t dep_x87_fpu_save_support:1;
++        uint64_t rd_seed_support:1;
++        uint64_t adx_support:1;
++        uint64_t intel_prefetch_support:1;
++        uint64_t smap_support:1;
++        uint64_t hle_support:1;
++        uint64_t rtm_support:1;
++        uint64_t rdtscp_support:1;
++        uint64_t clflushopt_support:1;
++        uint64_t clwb_support:1;
++        uint64_t sha_support:1;
++        uint64_t x87_pointers_saved_support:1;
++        uint64_t invpcid_support:1;
++        uint64_t ibrs_support:1;
++        uint64_t stibp_support:1;
++        uint64_t ibpb_support:1;
++        uint64_t unrestricted_guest_support:1;
++        uint64_t mdd_support:1;
++        uint64_t fast_short_rep_mov_support:1;
++        uint64_t l1dcache_flush_support:1;
++        uint64_t rdcl_no_support:1;
++        uint64_t ibrs_all_support:1;
++        uint64_t skip_l1df_support:1;
++        uint64_t ssb_no_support:1;
++        uint64_t rsb_a_no_support:1;
++        uint64_t virt_spec_ctrl_support:1;
++        uint64_t rd_pid_support:1;
++        uint64_t umip_support:1;
++        uint64_t mbs_no_support:1;
++        uint64_t mb_clear_support:1;
++        uint64_t taa_no_support:1;
++        uint64_t tsx_ctrl_support:1;
++        uint64_t reserved_bank0:1;
++
++        /* N.B. Begin bank 1 processor features. */
++        uint64_t a_count_m_count_support:1;
++        uint64_t tsc_invariant_support:1;
++        uint64_t cl_zero_support:1;
++        uint64_t rdpru_support:1;
++        uint64_t la57_support:1;
++        uint64_t mbec_support:1;
++        uint64_t nested_virt_support:1;
++        uint64_t psfd_support:1;
++        uint64_t cet_ss_support:1;
++        uint64_t cet_ibt_support:1;
++        uint64_t vmx_exception_inject_support:1;
++        uint64_t enqcmd_support:1;
++        uint64_t umwait_tpause_support:1;
++        uint64_t movdiri_support:1;
++        uint64_t movdir64b_support:1;
++        uint64_t cldemote_support:1;
++        uint64_t serialize_support:1;
++        uint64_t tsc_deadline_tmr_support:1;
++        uint64_t tsc_adjust_support:1;
++        uint64_t fzl_rep_movsb:1;
++        uint64_t fs_rep_stosb:1;
++        uint64_t fs_rep_cmpsb:1;
++        uint64_t tsx_ld_trk_support:1;
++        uint64_t vmx_ins_outs_exit_info_support:1;
++        uint64_t hlat_support:1;
++        uint64_t sbdr_ssdp_no_support:1;
++        uint64_t fbsdp_no_support:1;
++        uint64_t psdp_no_support:1;
++        uint64_t fb_clear_support:1;
++        uint64_t btc_no_support:1;
++        uint64_t ibpb_rsb_flush_support:1;
++        uint64_t stibp_always_on_support:1;
++        uint64_t perf_global_ctrl_support:1;
++        uint64_t npt_execute_only_support:1;
++        uint64_t npt_ad_flags_support:1;
++        uint64_t npt1_gb_page_support:1;
++        uint64_t amd_processor_topology_node_id_support:1;
++        uint64_t local_machine_check_support:1;
++        uint64_t extended_topology_leaf_fp256_amd_support:1;
++        uint64_t gds_no_support:1;
++        uint64_t cmpccxadd_support:1;
++        uint64_t tsc_aux_virtualization_support:1;
++        uint64_t rmp_query_support:1;
++        uint64_t bhi_no_support:1;
++        uint64_t bhi_dis_support:1;
++        uint64_t prefetch_i_support:1;
++        uint64_t sha512_support:1;
++        uint64_t mitigation_ctrl_support:1;
++        uint64_t rfds_no_support:1;
++        uint64_t rfds_clear_support:1;
++        uint64_t sm3_support:1;
++        uint64_t sm4_support:1;
++        uint64_t secure_avic_support:1;
++        uint64_t guest_intercept_ctrl_support:1;
++        uint64_t sbpb_supported:1;
++        uint64_t ibpb_br_type_supported:1;
++        uint64_t srso_no_supported:1;
++        uint64_t srso_user_kernel_no_supported:1;
++        uint64_t vrew_clear_supported:1;
++        uint64_t tsa_l1_no_supported:1;
++        uint64_t tsa_sq_no_supported:1;
++        uint64_t lass_support:1;
++        uint64_t idle_hlt_intercept_support:1;
++        uint64_t msr_list_support:1;
++    };
++};
++
+ enum hv_translate_gva_result_code {
+     HV_TRANSLATE_GVA_SUCCESS                    = 0,
+ 
+-- 
+2.34.1
 
-> -    if (I-bit set) {
-> -        ehci_set_state(ehci, async, EST_HORIZONTALQH);
-> -        goto out;
-> -    }
-> -#endif
-> -
->     /*
->      * want data and alt-next qTD is valid
->      */
-> -- 
-> 2.43.0
->
 
