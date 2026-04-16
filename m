@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A0C4F8D758
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 15:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF1C8F8D753
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 15:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDOJG-0007rp-Rg; Thu, 16 Apr 2026 11:07:14 -0400
+	id 1wDOJi-0000P3-S8; Thu, 16 Apr 2026 11:07:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDOJC-0007n3-SU
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:07:10 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wDOJg-0000ON-JS
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:07:40 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDOJB-0000lH-Cv
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:07:10 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso79210795e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 08:07:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wDOJe-0000ou-Q9
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:07:40 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488d2079582so75981865e9.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 08:07:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776352027; x=1776956827; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/8eTKiduCZMg9yJhYc+PUDvB0qmyxyEaSBVvhdpHjpQ=;
- b=VnNAT0OumMm8S25cvdMesFlgWfRI8bVlbbM2dnYLLBh9H17S+43KqVeesMpm/5HwPZ
- dzM8U1HSimV8TEmXMfGgEiRM8da596JL+ZLHalydnQ2hH6XkR1osOAeyT8xrAE73yfSq
- VdLLqTf29KPYY9xwQDqfD5yGVtls54oYe7CiWMP13omQCYlmCDgyDzObb8V0n3FexB8N
- E4pc0D9gegGozYF+3RmaFcSId9nmRP8QqWuPKKDsvgbQAqHJi1/GyUzbUESDWlvZem4M
- l5yjtF1dvLB3sva/l3nj5QhFRlr6S+APoDsqFRwMuyvIKNrnqrfpdgSip0a2Q6eSo2+x
- czZA==
+ d=gmail.com; s=20251104; t=1776352056; x=1776956856; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=jDJzDSUW5yyoEw79Hj2zronbZKMozm2nU8sFNYNEOJY=;
+ b=ADvJZBLaD3Tg4XkBb3IbNvNb1fPlj8fhuIe9X17tzcY9dGFoJY+Q7NBZOiVpbu72pn
+ H65fYdInNCtktVbh1egS/h8Jx1IabRlMvjNyhteHsRToVq/kiCZidXdFKBQDTgC/Adh6
+ ADw4vOMGQQFF9j+ui+OYYl9tliACuvli6TLGo9V6mXTrAY83iiTdorRME8abf1po2zdA
+ 8VYfdDP+9SoKEsSVMHPluqi3aqs4MQKgXzTsmdMDPJypJOmMED0DovqArjkJ3cazyJWL
+ lRJ0Nn5AxLoSJn/Gy7jC4wXRylQ/actk/9tWaMPfgWdfHV86usBBiyf1cl9e580kqp6D
+ /abA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776352027; x=1776956827;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/8eTKiduCZMg9yJhYc+PUDvB0qmyxyEaSBVvhdpHjpQ=;
- b=FgimNhkN1mqpZqio5VynOTBDbye7uTVH4SjnHoBMJixKVQGpxuDcdiLOXgL4aE1Teg
- tqEROvvTk8S7Tq79zjs93mMyFTX8Cr7jK1D+oYi081Yo2uY1cOqb+xyZyWcr2SOggqPy
- wCJF5nO2ZCD7Nqgd3szGMfclsDI674daPK9s7sMIWcqALwS1qILD7e/5QWLYSSiCCVFB
- pJuLOXaJC6+1+6Vdn5G6DRVwX2nF8+GJktVvkCo3lEYWOWaqo40FkoDLGFRudWNjYo8m
- Bp4ik7k6wJB24vVM/T8P2arKdszl3PI7yARFNjJkd13olXRn4+T+PN+WWcJozlRcRjph
- t+6A==
-X-Gm-Message-State: AOJu0Yw4ImHAnn3fUpiLVynw/9rMmZ6AmHK+zAqMQWk77yIAmC9R6/oe
- +80YcKbAZN+AX34Xowht4C3QyvECyXDBHUoLQzxCTzG6PfF8kDXqEKv3+8QxyMRzb1vk9VQdQmV
- Bg++x2uo=
-X-Gm-Gg: AeBDieuhU6gxW63nUh5kZ/pT77gjg5vIeWx3m+0rlRow9iLkty1+p4SAvspcqW+eR4K
- IITVEd+4w2RuN9V2ivH35aoWTh6X61ptyjwu8Gh9pAmrolCsYXUfcZCkyfNXWNMNC/B1O1H6j51
- dOYzMv6XlDRoGPVwntqcFM91VWkvHoAUDEOLKafonFDTJLpcjXU6RiZOIL1rH776X07jYeW7QPB
- slJdKsbX+L50ajS4Hcg1IbN66Uh2fpQf21JrIdpDQlUFTssYw0MYVIuvjuSulIWcuqgnZtIHSZB
- 6OQ2EIgCerEh+7wpaUwLCa0wSwHwxIkiOL7e1T+u/0e04ts6W1aHrKrQeUkaItFtkx775utGe9/
- V/pa/rQq36Y+ES1ztdsR3VbIZ9n1vEx6fGqfV6rn04e+DgiuBKlsVv9XgRcBuP9OM4guyacrNm7
- q0f5MvONW+jNL7F3P/7xD//CPl6a6ldKg2OMEtW+2ck96TonjqYo8vAS5JBpOyiNvz11jp3YcC
-X-Received: by 2002:a05:600c:5292:b0:486:fe39:28b7 with SMTP id
- 5b1f17b1804b1-488d67fa48emr383437815e9.9.1776352027386; 
- Thu, 16 Apr 2026 08:07:07 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f0e71f5dsm68350215e9.6.2026.04.16.08.07.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Apr 2026 08:07:06 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v4 2/2] target/mips: Use probe_access_full() in Atomic
- Load/Store helpers
-Date: Thu, 16 Apr 2026 17:06:49 +0200
-Message-ID: <20260416150649.23671-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260416150649.23671-1-philmd@linaro.org>
-References: <20260416150649.23671-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1776352056; x=1776956856;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jDJzDSUW5yyoEw79Hj2zronbZKMozm2nU8sFNYNEOJY=;
+ b=SeTHD7kVTfT3bqiCwFicCjsrTvpP8DRJC6VWOORLRbVkU4UqWZSz7M4UP9gUav+3Bo
+ qxmINs2RPok/nSl7/2n59TUj2Wzu0hbE9Vv2iLEeKAyL44SgbWhipwv1187+FnynCCY4
+ 5N7BmihrhSWMKu9IrU5qBKFK95Qnzkz7UMS4CSwBUdinR6dbVqlbAkTQBiPzTtCj/dd/
+ C6PhySns5npxFgTCKv6F0AhQuehzUHh1zD902tVd/+HFfgeDFK5UCtzt3PoR9wGs31bp
+ VOVuVp5mq8U6slAyKSjKONlte7/7H23qdT4VroiGQ0zKbcURaJkwOGbxEc75fZoyZJAs
+ RZUQ==
+X-Gm-Message-State: AOJu0YwJhiGK394O/wtbdGhc0bo3f+ywzt1gXMKg0B7v83WdakZxLJsI
+ +r3yQ9boA1ONRPCFm25Q1s8E/dKV2mLT77n5+tIMOrPiqXhswBcLPulC6ysOikl0
+X-Gm-Gg: AeBDiesp5c/P+rwd547DghEkBTLZDidl4XmU3AJDQYq47N9z29W8aBL59DujtyZf1Ye
+ rRA+vzR2PE5yQSV0TzZlyZj/RmdJZB4RbsxwQMPqXt/6ZhcMufyzHJsmQjV6yp/92JPwktXeEEI
+ 1aRynNvzWrtIOZ5TYTT6XmkKCuD8DiQRqhINob0j2faJSrDFHbW3HZ9t54R0e00ZerIj+Po/0HB
+ tJGIqkH5MYXveUaMn4OIRIZ6jZg5aeBHe4/noHLS824SP0NmmPdQwtW+Al8ha732Q/6WzsdvTxC
+ Al38SDGaqF3ldnIqc/Zz7Icb3N0+YnrY6nIZlZ1RrYRwr0ZatIpiP5jfEYdFF2h5wW0+aRlcF+B
+ p2PXVn4r3KTYMkACSC+JiayqF7FwD9WnRZ3YiKfktpaMY45XXzrGPToQff9VMLwn6XjvmMAwB/H
+ IHG+f6/v3YVPJ/MaRewOIXKDw5ExMnQR7xNDYJF1LXXNXkWwgfmVkeHgtOgvfyNUBlfEIPlo45U
+ 2G2f3xXBpc3ZT8I
+X-Received: by 2002:a05:600c:3b24:b0:488:b811:51c4 with SMTP id
+ 5b1f17b1804b1-488d6872ed0mr373473815e9.25.1776352055403; 
+ Thu, 16 Apr 2026 08:07:35 -0700 (PDT)
+Received: from localhost
+ (brnt-04-b2-v4wan-170138-cust2432.vm7.cable.virginm.net. [94.175.9.129])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488f582368dsm71289045e9.11.2026.04.16.08.07.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Apr 2026 08:07:34 -0700 (PDT)
+Date: Thu, 16 Apr 2026 16:07:33 +0100
+From: Stafford Horne <shorne@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 17/28] MAINTAINERS: Remove Jia Liu
+Message-ID: <aeD7NZS8slZ-ki4a@antec>
+References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ <20260416091654.316158-18-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260416091654.316158-18-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=shorne@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,64 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let the probe_access() API check the address alignment.
+On Thu, Apr 16, 2026 at 10:16:43AM +0100, Peter Maydell wrote:
+> Jia Liu has not posted to qemu-devel in some years and did not
+> respond to a query about whether they still wished to be listed in
+> our MAINTAINERS file.  Remove them, on the assumption that they are
+> no longer active in QEMU.
+> 
+> This makes the or1k-sim OpenRISC machine orphan.
 
-Move env->CP0_LLAddr and env->lladdr assignments so we
-don't update them when an alignment fault occurs.
+This looks ok to me, the time I have worked on the the project I have never
+heard from Jia.
 
-Since we have a handy MemOpIdx, replace the legacy
-cpu_ld*_mmuidx_ra() calls by cpu_ld*_mmu() equivalent.
+I think I would like to mark myself as maintainer on this and the other OpenRISC
+machines.  Should I sent a patch on top of your series after it is merged?
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/tcg/ldst_helper.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+-Stafford
 
-diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-index b725c6d0333..4ebf72d610e 100644
---- a/target/mips/tcg/ldst_helper.c
-+++ b/target/mips/tcg/ldst_helper.c
-@@ -28,23 +28,32 @@
- #include "internal.h"
- 
- #ifndef CONFIG_USER_ONLY
-+#include "accel/tcg/probe.h"
-+#include "exec/tlb-flags.h"
- 
- #define HELPER_LD_ATOMIC(name, insn, almask, do_cast)                         \
- target_ulong helper_##name(CPUMIPSState *env, target_ulong arg,               \
-                            uint32_t memop_idx)                                \
- {                                                                             \
--    MemOpIdx oi = memop_idx; \
--    unsigned mem_idx = get_mmuidx(oi); \
--    if (arg & almask) {                                                       \
-+    MemOpIdx oi = memop_idx;                                                  \
-+    unsigned mem_idx = get_mmuidx(oi);                                        \
-+    unsigned size = memop_size(get_memop(oi));                                \
-+    uintptr_t ra = GETPC();                                                   \
-+    CPUTLBEntryFull *full;                                                    \
-+    void *host_unused;                                                        \
-+    int flags;                                                                \
-+                                                                              \
-+    env->llval = do_cast cpu_##insn##_mmu(env, arg, oi, ra);                  \
-+    flags = probe_access_full(env, arg, size, MMU_DATA_LOAD, mem_idx,         \
-+                              true, &host_unused, &full, ra);                 \
-+    if (unlikely(flags & TLB_INVALID_MASK)) {                                 \
-         if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
-             env->CP0_BadVAddr = arg;                                          \
-         }                                                                     \
-         do_raise_exception(env, EXCP_AdEL, GETPC());                          \
-     }                                                                         \
--    env->CP0_LLAddr = cpu_mips_translate_address(env, arg, MMU_DATA_LOAD,     \
--                                                 GETPC());                    \
-+    env->CP0_LLAddr = full->phys_addr;                                        \
-     env->lladdr = arg;                                                        \
--    env->llval = do_cast cpu_##insn##_mmuidx_ra(env, arg, mem_idx, GETPC());  \
-     return env->llval;                                                        \
- }
- HELPER_LD_ATOMIC(ll, ldl, 0x3, (target_long)(int32_t))
--- 
-2.53.0
-
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  MAINTAINERS | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a7a345c514..c16a726cde 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1496,8 +1496,7 @@ F: include/hw/pci-host/xilinx-pcie.h
+>  OpenRISC Machines
+>  -----------------
+>  or1k-sim
+> -M: Jia Liu <proljc@gmail.com>
+> -S: Maintained
+> +S: Orphan
+>  F: docs/system/or1k/or1k-sim.rst
+>  F: hw/intc/ompic.c
+>  F: hw/or1k/or1k-sim.c
+> -- 
+> 2.43.0
+> 
+> 
 
