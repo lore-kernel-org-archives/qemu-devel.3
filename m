@@ -4,80 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09077F8A14B
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D56B9F8A14B
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDIrx-0007Qp-9s; Thu, 16 Apr 2026 05:18:41 -0400
+	id 1wDIwa-0007ZG-8n; Thu, 16 Apr 2026 05:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqc-0005F8-L8
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:19 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wDIwY-0007Yp-IA
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:23:26 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqa-0007mV-FL
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:17 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488a041eae5so57672865e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:17:14 -0700 (PDT)
+ id 1wDIwU-0001UL-Ut
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:23:26 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-79a74765703so67428807b3.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:23:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776331402; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TuA8iwWtNzleUIRKVqeKxJf2LczzNfx/TBgJyluHxngHeUNSVjd4lIEd3Hao0yNYO6
+ t3FzxMTML38HofcxccIoudW3TIBesqfT3bIzl1k4ZMkBKhDOK81M5Wqx5cVsm0DsmA2G
+ 8lDIB8cMvjONGHIbVd3AC3pCZgaxFlUeMK7OaVund2YA6oxtnF6iYOTsiVpoLIlcREaO
+ cKgS5/uQjvqxUklLmWj3sYt3Z4D7JApJAAiT9DDSsFQyTzhNd53RGKqAnM0CFCXRalxF
+ mRVIB/5gyU9nswQp83dB7bp5asZ6jiFOsYE6cCJWZzgCKZw/IILLnNLyuh85LxWHxHAU
+ Zklw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=u2Qzt78b4+S6CwHhERqqOrM0tHgGbJSVjiBA2yKVNa8=;
+ fh=dTRcQ5M/KzudIbA+Yj3+r3aPPzjKbHiVzFuLZQMNqgo=;
+ b=CgQNWc8cP+Tijt7iuIzyAFGnAlmEOx0hVVk0v3kYgPaLntkzoVvtnkbvxUxCunNk5X
+ +E973BWalx6p841F9+NlshRkD71mIEuyrBB+04urxQbLiwQlBCJSuXo5YkA7IlIiTm5B
+ kpBf1dnt9VZE/BKD172WbXJlntvz6b90tVtKtoaWe+F/KjbCUuNHZkKX0WBjJOR9q5mR
+ aKkpbK/jFv6JUUPNfrgolMgzELkCxmjeCnNKQ8LX1UoCLsav/YT3nEzbT7PSAkNiQeP9
+ 94dJKnJp+mZSmGCym1T7sNZPVk1+3/+xKTv7Z5NwsMXbe9lqQR5llRcOTMEOlIQF4R2p
+ Mkww==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776331033; x=1776935833; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2dJ19r2IfmxCT2paequ891P8+GxLMo/EW6WWdMo/Wrg=;
- b=qLFzbzxnbqvMjJnOrLLBSWQbuK5wwD95r4aNJ6BQ6ITFmNAtXobwL8LD5DUg5culkU
- 0SdCpykj1YHWdozYb87U+H+0wdAmSG8wrm0/Ma89c8+wYpbfzXcjCRI0iZ7G3szVT+Yy
- c32bvZBOKg11YcLllwyFP93tO5j+evPoJBivUhFl3vI4AL/vGaXuvYWFuCCSSFJ+lAxB
- r3IbCOSIUhyAGqvR1jKOI2NIhYpYQ3/zAfASq42A76ffNnEQuLKF1FQM0bgY/He7K4Av
- a9YIFxMLfvTtYhCDsYFHrBIM9+dEs4biSUNRCN+dJGkF8PNriMVGO02B9h6omnTozHuq
- TE2g==
+ d=linaro.org; s=google; t=1776331402; x=1776936202; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=u2Qzt78b4+S6CwHhERqqOrM0tHgGbJSVjiBA2yKVNa8=;
+ b=buZtWpB2r78kyo1TKRKBKBPDmPKuPTnxSsfHYOrg9WNpxamvfyOYYPSA2yh9x4YsiE
+ MVsKQzuOMdk1fNu6TQcZ9S/TT9CoO99DIwm+h6qbDRb/qBonAnlS1WCF95719eIzqzvO
+ aoO8mGnTtPzh0oIiV4VP9eI8Td+w98CSkznFd7LKq1IsWyQCZ7KY1CSsMMNUklSepPqN
+ lg0OBXMKjmw6Q9wdzaQSv1JOE/QHZmWQYNSJbN6QOT7z/Rof5hAcyvTC+EA12Loejc+L
+ 0jBy+d45R+H3KSydt1moxMcvkirB1ylSXklswcWho8eCIDsSphOhjMFy7uFStByv+MAQ
+ 5zQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776331033; x=1776935833;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=2dJ19r2IfmxCT2paequ891P8+GxLMo/EW6WWdMo/Wrg=;
- b=BBwruR9D4bCmjjADuSCI9Ncf76MZYiGsU1HJX4Usj5ghO681QFskcrSeqbNWEftDCg
- 5L7kB4Afjl2zVc5LJHYf9Jxoon3UPXURCE2AG5ob1x1ezS4N7iyK8KvhOrroAAw4a7xc
- hkO8MBH+WrFABS1oaDskFr/GZXusWAlPr7t7ocVzKJDhPmZQzqCwujj94P7rlHwhlXY+
- +YhcD1z9h9hb18d0YWarK7UHPMGJZ7ftzaG4uWWNtiqmagC+qbabGK+aGklMozU+iRoV
- c2NGoq5Bh4b3P89f+6CPspAf10Er/oX32oYDczwgj0i42dVXoS1JIS9jwm/9L46zwBWZ
- cFcQ==
-X-Gm-Message-State: AOJu0Yy3rs/jOI51rFIztJ4fXtLdewb9HKEVEqi1/ufjsxkbDgyRU5qO
- aRAvD7WGgmUibMSD4OXjH5iawpp4C1hBvzHE9Cf384GPkaVaFDOtjVGtyhcMZ7LCeHJ7VCpDwIn
- jFzOkKak=
-X-Gm-Gg: AeBDieuVGtMXRm+FBrK5QeiQREiTx/BK1UD03/G7ezryFiLaL98YWInymtz9+29LF0U
- KggV6VDoFT3G7ZvUAc4Jvf0NNhS7j55ewnZZTvg6LiIgo9FH8DUmrEkgb44/eC5vcuCsgETV8uN
- ucBA9OHPTIa2uGQ83KmFMb0AG+X4l+MBBM+bh0uHz6fFCoeT1ZTj5HieYc1f02XfwUEwlEG7NEz
- vyYAmA6DipbRwdgZ18h9H57A5Os3xZxITdqIbqs5ge8DtL8K6A3EVNEt/smuK5XVP45t2myQMan
- S9+nM66o0Hdf2Pn5TW/db/D/SlqEl/VGD7NU14Uz47J/8HpGZqDI0oFF8c5IUNY8/6c5+BYnAdK
- 0jKd5FXt0+xFrIIqlou9IveuVoFSICXFV10Xw5qcKBoyTaGbbSruHn9hwDTYGlQTpHLNUnLPi/G
- Wwp5uO+tcqM6N/HGjK0/PDEygQNOhLC9BDe+tmPluTW0JHIC8uGwrm4nNKkBBTV0Fn1NsWlQ+RG
- dg1bvKTgsm0ZugufZ1659oZWAZUCzb2Rk+sD3MZdQ==
-X-Received: by 2002:a05:600c:c0c8:b0:488:af14:f1de with SMTP id
- 5b1f17b1804b1-488d67b8de8mr258714985e9.4.1776331032795; 
- Thu, 16 Apr 2026 02:17:12 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f5818da1sm37186565e9.6.2026.04.16.02.17.11
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 02:17:12 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH 16/28] MAINTAINERS: Remove Paul Burton
-Date: Thu, 16 Apr 2026 10:16:42 +0100
-Message-ID: <20260416091654.316158-17-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260416091654.316158-1-peter.maydell@linaro.org>
-References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1776331402; x=1776936202;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u2Qzt78b4+S6CwHhERqqOrM0tHgGbJSVjiBA2yKVNa8=;
+ b=Ra02SKcH8nqMHXd54r5P0g0EbFPIAdRKrPmvphM85i8lWKNnOvy0vtx+Y5up5AqQja
+ 8UbSV7dBAIe2KTa2zWu+ygP2xp139PlFSr8S2lGabHb8jpPIHzq1fGDtZF+ri229Q3vc
+ vL34QM3E4k/hJQqw4RL0YJuRKq8DT6I9PZgvvpVpOhpc2DPxwZ7oNYLQcJanRnJqsIl5
+ 6INfXLt6B5XB0Ps+hQERtteGCn5AOqe2aArL/h2GlSU8I5/N3w4CHKSoqZ9UqBxniQZn
+ zIsg1P/z6SkRJJZhxzBCQ4J4vJKytH8E/kpXf+n4D3JOo9H6loTjkrJ4ozwJhmd1H8xk
+ mVFA==
+X-Gm-Message-State: AOJu0Yx03Q3iWszEgPJ5GKDUZU2P/+jU+NPYOYxoL0IS6zeQvB8meRIG
+ 3bfHQmWTxIlveh/Tb9XTQ8Y0ceT0FnSeBN6YqQRKbiteWapq4Pgvd00LgGyngw5oLNt0cODwoeX
+ zEus5vcPIas6PpLOF3D95Eej4p9tbQH69LZwZ4mRDVQ==
+X-Gm-Gg: AeBDieux+5loyAgaPSNEnYYpCS7h4pSRyYukV7h0Is9B4czKMSYnxZuTEfeZeXgD+f0
+ Vay4Q1FIfzFOTnoYBzi0nYrlZQ6jeg9a/wKG6Ku3e2EYr30Bil2R9z1B6rKI383ZhB0kNvBuK/v
+ CBHVzO2OYN/oI/sBkOpNA1yiqJ6zjZGgGpwhw92gaQ9GvNXp3CmHwxvqw+lUm4vlwNH+FL5TXZD
+ vjeS57UEnP9jw76BhIZWo9kyTGVY2ambzLhdTisjgAkeKr9ux0zcE5TfYggvXt+3hN1XPh4PZ0P
+ 88k4TkdEXa2HzEXesTUXZ9DzqSz7gIRm+GPuCs3+jmxau8PFloX42vh9aVxsdtxd4Rtv4AZAxLx
+ Oog==
+X-Received: by 2002:a05:690e:42c2:b0:64e:d622:9d1a with SMTP id
+ 956f58d0204a3-65198a2e33fmr18044526d50.4.1776331401658; Thu, 16 Apr 2026
+ 02:23:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+References: <20260414223718.23965-1-farosas@suse.de> <87zf34xp7k.fsf@suse.de>
+In-Reply-To: <87zf34xp7k.fsf@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Apr 2026 10:23:10 +0100
+X-Gm-Features: AQROBzDNLZLmcIeeS8C7BLmcZLINvyA17PRaGK5pgZ5rLnrIetwHoM0jRUe5pOs
+Message-ID: <CAFEAcA8dwXxFodsg6gk473aEWBXynFAwaohrMqY3ca5c4FxzMw@mail.gmail.com>
+Subject: Re: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
+ migrate_params_test_apply
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,29 +116,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paul Burton has not posted to qemu-devel in some years and did not
-respond to a query about whether they still wished to be listed in
-our MAINTAINERS file.  Remove them, on the assumption that they are
-no longer active in QEMU.
+On Wed, 15 Apr 2026 at 15:39, Fabiano Rosas <farosas@suse.de> wrote:
+>
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+> > Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
+> > method makes the handling of the TLS strings more intuitive because it
+> > clones them as well.
+> >
+> > This also fixes a segfault when a NULL TLS option is accessed as part
+> > of a validation check for another option (e.g. in the zero-copy +
+> > multifd compression case). Details follow:
+> >
+> > Currently, after copying s->parameters to the temporary
+> > MigrationParameters object before migrate_params_check(), the
+> > references in temporary object to the TLS options are dropped, either
+> > because:
+> >
+> > a) the user set a new option, in which case that's fine as
+> >    s->parameters still holds the reference to the old memory or,
+> >
+> > b) the user did not set a new option, in which case keeping the
+> >    references in the temporary object would later cause them to be
+> >    freed along with it, leading to double-free when s->parameters is
+> >    also freed later on.
+> >
+> > In this second case, it was overlooked that the TLS options can be
+> > accessed already during migrate_params_check() as part of validation
+> > of another option. Those pointers should not have been cleared.
+> >
+> > Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
+> > is not stealing a reference from s->parameters anymore.
+> >
+> > Fixes: aed97f0563 ("migration: Normalize tls arguments")
+> > Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+> > Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > ---
+> > NOTE#1: For the release we could have a simpler fix just checking for
+> > NULL, but that would allow two unsupported configurations to be
+> > accepted: zero-copy with either multifd compression or TLS.
+> >
+>
+> Peter Xu just pointed out on IRC that it's actually only the zero-copy +
+> TLS configuration that will be allowed with the simpler fix. I think
+> it's best we go that route instead and hold this patch until after the
+> release.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+rc4 has already been tagged and I really don't want to put anything
+more into 11.0 unless it is a super high priority release-blocker
+kind of a bug. The fact that this is a fix for a commit that's
+been in git for pretty much the whole of the 11.0 cycle without anybody
+noticing earlier suggests it probably isn't that important ?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6cbb1e049a..a7a345c514 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1486,7 +1486,6 @@ F: include/hw/intc/loongson_liointc.h
- F: tests/functional/mips64el/test_loongson3v.py
- 
- Boston
--M: Paul Burton <paulburton@kernel.org>
- R: Aleksandar Rikalo <arikalo@gmail.com>
- S: Odd Fixes
- F: hw/core/loader-fit.c
--- 
-2.43.0
+If we want to put it in then the commit message needs to clearly
+state the severity (e.g. "everybody trying to use migration
+hits a segfault") that makes it release-critical.
 
+Otherwise we should put this into 11.1 and with the usual cc:stable
+so it is backported to the 11.0 stable series.
+
+thanks
+-- PMM
 
