@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F18DF8A146
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 10:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C489F8A15F
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 11:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDJxU-0000QD-Re; Thu, 16 Apr 2026 06:28:28 -0400
+	id 1wDKeB-0005mP-2N; Thu, 16 Apr 2026 07:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wDJxH-0000PZ-5u
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 06:28:18 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDKe6-0005mC-Nq
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:12:30 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wDJxD-00076e-DG
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 06:28:14 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2b45cb89f7eso29273555ad.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 03:28:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDKe5-0003z4-5N
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:12:30 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43d75312379so363244f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 04:12:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1776335288; x=1776940088; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Qi9XnqqjL5K2l4kSEs0tZfHuwwnHGSBH7vPdyVmSJPc=;
- b=NV3ffbSi1wJtWNlKRKppMeu7Jq3h8NpTTPm7YU2ORIizPoxlSGVzehRxZ/Lhsn4vMV
- KlcfyvnOTZhrR31lspXjVADkhzhK/3zIZtebRO7qCxXBhRKs78lqueYe9ldvAmRQzs35
- c+Y2vCBlWjc8jI+Xs7uxlfJnimFi+Yiikvu3KXmhUkD/jD7utr0PuUSJwoKY4Al+XqSW
- ubPGd6arA+ZaEm6cnawJ2I1IkhWdJxJ7ZmhODDJ5JXBoPjbgaz/xeSn4f6FcZeiMMb8+
- iQW7pDpGe7zAaX9EKpQ6f8zYiNpZVu9Brsov1jejvVoVlkCbOFZjRfS1k8NAPsI9hk7O
- ySkg==
+ d=linaro.org; s=google; t=1776337946; x=1776942746; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DpoupK5sFkNMW5ehWsERuQXNUSrKBYM30ysyhw6HGt8=;
+ b=KjbmTVNlwNGys7NoIHA0D+wZ/Q+roh9Z9AXbMZqmqU1m1edbSi3ohKbOwkkTLFRXlc
+ zOWwpad4l3en5akJK9aAuVhmlCeCHyhZ1bcSHuAVCdhjDONw4uYf9yk2d7PABYlecsTW
+ cwMAREjS6/V9trqvNXDHZvDrm3bFvL1wnEvoq7zbEp66LkuaWFCthVyiyn0hmAgji8UN
+ XfiPHTl51sPxsX/qb5Z1mcLlmTjoAItTjAaFgwed2nwHgNb+JNkDwKrCelNRdBrjvlJB
+ tYiwjR0yWROC8f83i5YF2bhOojsqeqZyujyyEIxMlDvovGxlGzzppkGA+HY9MrwAI+L4
+ DC5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776335288; x=1776940088;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Qi9XnqqjL5K2l4kSEs0tZfHuwwnHGSBH7vPdyVmSJPc=;
- b=UBQ4X4IVjzJ2nKrn/Ib7F2+m4ATK5y0Hi9gdSQ5RmwmbLDoO5VIXD5lW8AowOi83Os
- PN8TK3lZ/rQwVUbYTY2wFOXmVqyRuTKFMqDMUyf9zUXnUdmw/bCe5r1s4Sxdg4oOEh2J
- P0ULOCJhO2/rIV+TWCoCZstdjd7qtrN2Vll6y6H8SnEIVE8yZiNAASQmfbyXJ3VDEXca
- 29vIOf2coZyRNupZXAw9jx+r1w1+ys8r35tNsz8xupdSDU4E7jUJu6UMhy1OcNHWndxN
- YXwQYYLUPJyhSzkhOCnYQYCmvmOgY8HEjMOblmLYbD3O2aFoayT8YpbOO0aHvTmWMw3n
- jw/A==
-X-Gm-Message-State: AOJu0YxVMRFMWqUMrjnTPsMOaM1I+O9c4LYWmZiK7yI3P+ycW0f86QeK
- zBWYsrGnQtPtQlPrdFfwVHStgimaflm8raMEwNPJeCXLvuBm5NUn+XttYV1RllPjtFc=
-X-Gm-Gg: AeBDieumLmujijprbVPVU129kCA5KQzUhvoW7ZJJCFDQviHVfcMSedekYKXNF4mUeQi
- t1CVpZcBvQolto1+DAb3h74COtwDSMPDiMb4kVobszM3GNor/zuLhIkQe8wgOS4M+bTCKfqYhLJ
- 1vbq3wwlnUOi/4ZKp/6ElxuUTFJGUl+yADm8vsPm72ZKvveFlTfJt03chBTLFKgr/IxCSAB0H6g
- AniYppCAb9lhZHWaYy5IYJ0HInCWiX+D1Noj7CyEWNdqPOVqS61sYXvzr1UAmooVXM78141clGx
- WEeaFgMi0r2WQPm9tOWfxcTHhObfJimzO+iCfotX8i6Jk0YhbbZUQoa/wbfoF2uWNfqOnrsSJMS
- Wg+jyRj4zpaNDNNNTFibZnyOOzpkYgArfYpRToO85+0mphZmsMNVRib9Hoz7sdFwHPX/tzSyb6h
- jGHPqWeILGES3EmenwDDB3rzTawKnQXjGPW5ICkwkE5MB7r7GnKiHf1Mj18J6K7Zi4
-X-Received: by 2002:a17:903:1b66:b0:2ad:9b86:ddc2 with SMTP id
- d9443c01a7336-2b2d5a18e13mr249025135ad.22.1776335288073; 
- Thu, 16 Apr 2026 03:28:08 -0700 (PDT)
-Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b4780ef741sm49410425ad.11.2026.04.16.03.28.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 03:28:07 -0700 (PDT)
-Date: Thu, 16 Apr 2026 18:28:04 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v4 12/14] target/riscv: rvv: Add vfext.vf2 instruction
- for Zvfofp4min extension
-Message-ID: <aeCymertMAq3AZd8@sifive.com>
-References: <20260304134006.2908449-1-max.chou@sifive.com>
- <20260304134006.2908449-13-max.chou@sifive.com>
- <aahK0egnN_1lEWnH@ZEVORN-PC.localdomain>
+ d=1e100.net; s=20251104; t=1776337946; x=1776942746;
+ h=content-transfer-encoding:in-reply-to:cc:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DpoupK5sFkNMW5ehWsERuQXNUSrKBYM30ysyhw6HGt8=;
+ b=aHMyX8QqEu/q3VvX2BMRgKTRnLFoMpxUuG+Uq7a80+j37eZO88LGADFRdjbpj+/ODT
+ oWJNhsnmgMFiTdIAv4IliRrx0Bn1kEg5tHpNE/BrioF8eRfCmFJzheCQGJ+82U7y8P5c
+ N6J0k1Zwj1FFtcGHlYL9icO+7V00LHkB2GLGtWPJYmxA36I5GjGS66KafrCvF2hY2HZx
+ t6IDkWLR4vhG1928k87bIV/zJtNC+yv46SN74CsyzotMl2Swdhlt55R0Sd75cJ8mlWrT
+ cdEBgjx7uPceZuDba7zG+D42Pb83PiieNIC2swVqRpTupKl2TpKl1F2jG+yV5Mb3aywY
+ Z07Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9euByD9Yc/UZIBzzjrwQJcQ+6wyH4BZjOhFE4C7CKH9Wnp9IJatu1Aben+iQ5HPWEhp+G4EUWRI7em@nongnu.org
+X-Gm-Message-State: AOJu0Yye2SN7Y6ZAYJ6AkUnrB4i10BaIdCyZG7a1aLITND7vso0gGuKB
+ JvGWv6TKjIVAScCSEln2cYXuxOFsBfUR7rAPO5hWc8DfnjZywpLXHaOMyk+P5jU8QNE=
+X-Gm-Gg: AeBDietfpHYbm3DNVMHfoY7KK64wF9wCK/niGrzfdDrTrWcy1UQjjBGkT5MVMIW5zXy
+ 3CLaTVT1ZCwgYiXRKtW5VbSaQWcvsL5oe+nB29TMGg/5daoYEYur1/Q3qZk6JLTiMo18HTTdmVS
+ edUseez5IrKu530qipgCeN/7sgyRc61vrcQ9X9VeqtGtOJ7b3epeCLSTggMdsJd2eB92BAGSmLe
+ Ybl04ZNSj8yQJAxdNQsXNHKbFAaCqEcXh2qUN5eBMVGbwZo73CaQcURFJqmkQM39MnlZanrr2uN
+ WlarpQRZ8FucVXbP3F+XDd+/7/S8WLrWc/CZ47DRIozn7miotKq8EGChC+AZ6FI00As/IvzBC2G
+ Lkhr07mrMgZxqO+/Td5f4CBO7TjpIFZNXeb1GgwSFyIfa50a/b9qjNx6q5JgJs0fJttXAVbroFg
+ wvRfT11L/1xE4UvpKiZOJAZeT/fj6AJOReBn3epg3jn/izKb29lfbQcmqvg3vUj6cQUA==
+X-Received: by 2002:a05:6000:3cd:b0:43d:788c:de83 with SMTP id
+ ffacd0b85a97d-43eb107fc6cmr4005920f8f.6.1776337946057; 
+ Thu, 16 Apr 2026 04:12:26 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43ead33d518sm13166914f8f.6.2026.04.16.04.12.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 04:12:25 -0700 (PDT)
+Message-ID: <2cedb580-c483-4c8a-a3ff-297ad5d4ba77@linaro.org>
+Date: Thu, 16 Apr 2026 13:12:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aahK0egnN_1lEWnH@ZEVORN-PC.localdomain>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x634.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 23/28] MAINTAINERS: Remove Su Hang
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ <20260416091654.316158-24-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Alistair Francis <alistair@alistair23.me>
+In-Reply-To: <20260416091654.316158-24-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-03-04 23:13, Chao Liu wrote:
-> > +static bool trans_vfext_vf2(DisasContext *s, arg_rmr *a)
-> > +{
-> > +    if (vext_zvfofp4min_check(s, a)) {
-> Missing REQUIRE_FPU here.
++Alistair
+
+On 16/4/26 11:16, Peter Maydell wrote:
+> Su Hang has not posted to qemu-devel in some years and did not
+> respond to a query about whether they still wished to be listed in
+> our MAINTAINERS file.  Remove them, on the assumption that they are
+> no longer active in QEMU.
 > 
-> All other FP vector instruction translation functions
-> in this series (trans_vfncvtbf16_sat_f_f_w, trans_vfncvt_f_f_q,
-> trans_vfncvt_sat_f_f_q, trans_vfwcvtbf16_f_f_v,
-> trans_vfncvtbf16_f_f_w) have REQUIRE_FPU at the top.
+> This makes the Intel Hexadecimal Object File Loader orphan.
+
+$ git grep -wl load_targphys_hex_as
+hw/core/generic-loader.c
+hw/core/loader.c
+include/hw/core/loader.h
+
+We should cover these under "Generic Loader" now.
+
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   MAINTAINERS | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> Without it, this instruction could execute even when FPU
-> is disabled.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 8f50575083..9ef51955e0 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2716,8 +2716,7 @@ F: docs/system/guest-loader.rst
+>   F: tests/functional/aarch64/test_xen.py
+>   
+>   Intel Hexadecimal Object File Loader
+> -M: Su Hang <suhang16@mails.ucas.ac.cn>
+> -S: Maintained
+> +S: Orphan
+>   F: tests/qtest/hexloader-test.c
+>   F: tests/data/hex-loader/test.hex
+>   
 
-According to the Zvfofp4min specification,
-
-"The vfext.vf2 instruction does not access the fcsr and is not considered
- a floating-point instruction for the purposes of the floating-point
- context status (FS) settings."
-
-As a result, the vfext.vf2 instruction will not raise an illegal
-instruction exception when the mstatus.fs flag is disabled.
-
-rnax
 
