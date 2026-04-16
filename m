@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D398DF8A160
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D395AF8A15F
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 11:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDKeb-0005rc-26; Thu, 16 Apr 2026 07:13:01 -0400
+	id 1wDKeY-0005pt-9Z; Thu, 16 Apr 2026 07:12:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wDKeX-0005pA-7U
+ id 1wDKeX-0005oz-0y
  for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:12:57 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wDKeV-0004C4-G6
+ id 1wDKeU-0004By-Oy
  for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:12:56 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso5504775e9.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 04:12:55 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43d7213b6ebso2875440f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 04:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776337974; x=1776942774; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776337973; x=1776942773; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hHF4jmysHEoMGaoQmGTkv09M59NSp+KdqlbbYIyd3Sw=;
- b=PjUwGKPuZ8OSHZ9U/+cjcC0ianTNOYVmM5h233Ngnaiaqrm6Nz5t6OQsXvN88Hq4YT
- ayEO5c5K1Uw0lZz/ioxf2PKupmZkw5hQv5UmFTBAgZqXrb7eKHvh8Uy/Y/dyswyuMb13
- R29Cxko8SS+184QUwqFrq8YUkZ7J0YL7akRmu4uasoQHDZV8W+WESK3c8SArgP3CiNjH
- c57QyfyH76cskO6q2imkrQ3u75ToRAYTBZHHS2bijxW505KkrEnjCpL2b6MCC74tfc60
- gaR0wnXCwsxfhAGQuYiontZa9T9bGX0J7hHKhTN2jKP/6svGW275cuRkf6ZN73EtTxja
- nMqw==
+ :reply-to; bh=eVGzGoRJ05drDuKHfFYMYPcHhmNWrBssZ8qHB4Zhj5M=;
+ b=crUIpbwLUVi1uAuvjPSXckVYLOHHXq2vr8zsQ2FJsezPtjhwh4NUL9MblJ4NJtnKOZ
+ rnZBrIk1it36OG+/paAwUrRh6fxgsRnb/bLfH65v7R6+NmN8s8yfU8SeFDkRtTaTo1+M
+ QucXvkPjjxcRjyrs0WjdpVQv6F9mwlKPDaNMBTsVuI40bwIJGAi5eJgD6Ftln6qk9I/Z
+ DdmM+YZqh1GA4mutgCZfFktQe8SRNSheUAqEDL3roF2GpL6wul8XxOLJfxfpaBLmZ9a1
+ hkATJZu++SREGoLUBds9da5bB/FwfR8GiYLSgb/v48mM5X3AQJVe46VsyMsw6oAcOmCg
+ wnyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776337974; x=1776942774;
+ d=1e100.net; s=20251104; t=1776337973; x=1776942773;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=hHF4jmysHEoMGaoQmGTkv09M59NSp+KdqlbbYIyd3Sw=;
- b=it8N3JMa084yxrCQ3Qg0rLr/tWz4GAbrB7GZygOll18DGgagkJsT6lPkP9VMTmdrAT
- 82KmC2or9Xe8gxrSfFbI7hRhC3p0RS7J/9jSn2zkbnQlyJpZ6lNvZuM3P6AwAiYIjevC
- /HPXC98P4rPVcKRUZjxNm0JZbGmtkHF0Fe11rAcJEwKFQD8rbvXxJAEaP3IhIJaWc7tb
- lUJf355nXzyth9xoNHCIVTdMKwYGj9eOhSSd6wTV3a1VhdT2BDtwM4KgjPP/PAQ90+4n
- gEhK3De6GHxNvmZimKNnkE7xPlBWZIltodXJxq/5gNVnNJy3bK64ZvTpPOxewQwwTcM8
- HXzQ==
-X-Gm-Message-State: AOJu0Yx5M5aix4U5d7RZ/Tq/4ilfwHHgK0W2QYIJHRzHaLugtuo6X6tP
- 1y9fCs4dlNKZQAktjKJE5bEyjHGXZhpbdCcnZxFDfNUARjt0PS5DemMnGZr2bZmLkPA=
-X-Gm-Gg: AeBDievSwF+SgmOPmh7W0QcTjftd7Yc6lazmGro33u4O3gMuD5AWHfA7aigaGKSO0bH
- m1f9Qt39svFJEMTPMNvz/eaXTFyF9GFX0uRVDyMbeqwlqCVYzumISKdvU+ZeeV81Q1UMq9aQlZh
- IEyalOLht8+4iFnYCYGZvZE2SLpW7hpew9NJW2HwgEsB5fQZz3Y+aXde6kwZJnJ58+PbFM6xDiO
- RmDz8jjilq7Q2QxmbIVfOv9RLVYDOGDOxSxXFfDPB/cvWf69oxUxu0mG+fw/4hhKFIJyyXIi99J
- WZPIDq6MbfOQDEH4241FTrF8YF6uv0peLZYMI3Pb+jFx7lzV00vWRDxPUYUWzbIqDwbTUl1l9Ft
- npATKO62Q/wFaHIXW96JQyKO/o39YkepV9V4oz1iz1OlNdLzVJBGLrYsyk/8m9slSS1I06TmqL8
- iKiJ6ImcJ++q07hPqq1gPFT1p1yf2T+Ahs9cEz
-X-Received: by 2002:a05:600c:a101:b0:488:9ec1:4976 with SMTP id
- 5b1f17b1804b1-488f45c6406mr34888935e9.8.1776337973763; 
+ bh=eVGzGoRJ05drDuKHfFYMYPcHhmNWrBssZ8qHB4Zhj5M=;
+ b=WKcIrB+zlohIYAgBXKbKiMZz7G8RzByorxShcj3SLW4VifJDS1d9ZQ4DssnSnFwjB3
+ DIwxruE8MsXeqrzzhzeh4lNlXTwBQ5FhiPxiDQBMadpCR9stWPmSs1N241JqTjiNckH5
+ LMyVqSkyyvqfM1GPAOyPSQK4CPe2Kjo5hwIB9PhjvtmYdA+RHnSSyFw70mxCUfZLs+s4
+ kgZZpBWe1LJxL8sE/lVEW+hlgtlOozie8f3xeYUacm3cbgL2tWjRaObIkgCfKTHi7s63
+ PNLX7j85mW8NgT1LFdOxRjurfuJcDPg85L8/QRAlbF5QU0sksHGr0mCTdO0hb7KbE07p
+ lybw==
+X-Gm-Message-State: AOJu0Ywcvyb0LYr2YWcOj3N2zy7r9DNRhFiHA8ajcNgAawqXOE6vgRj7
+ c8Y30Bus/91Wmq2btxJkV8vfkKBqmqziwVa1rqJch81YXl/hnLYQSjfS3pF62kOsD+3dI9BHHPW
+ 4b1FO
+X-Gm-Gg: AeBDieu4rVZGTiVWZD6PA0+LO+hFWTzQSdc52ajFIRZ92zLW/2/OK27wz2bJ7eY+HYa
+ g4mH4w+XccNp2Yd+pHEgaJwUOyaDhbtn2Vnkc8Cazjqs04kbTwP9NNC/CAzGrNatemdULRP3dUJ
+ XARsjoZxOmbCMQvo8Q75FN95etZ2LDEy/iWJAIDWcBrmKprcOVFv8+I1ofPGZ4GreQmDnIO6TOi
+ dfV+rsv2DV3v8/eGeJ8Mk63oOAT6KUhlpNkJgE9RSSviQ7cJyOjwL9wflOa2PgwFZ/+TsVta5Hq
+ PjYs71MMwQC9eBi0mmoOA6d90IP+vYohLxNvpVTuYuWpMKywAtLVw1CHRqmUM8pkIV0sC4SPX/c
+ lIzxSaHtvFetKbheAmvlKdkR1H/f18wPdXZmpCM9XnweigsW6gUeGmhBU77ipk0MWg+bmEnRyhh
+ 3QoySiJbLIqhTcx9hqiybe5xBx7EYMa09mR3jt
+X-Received: by 2002:a5d:6acb:0:b0:43d:71f4:7ed4 with SMTP id
+ ffacd0b85a97d-43d71f48099mr20169433f8f.15.1776337973240; 
  Thu, 16 Apr 2026 04:12:53 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:8f74:d82:f9ec:90cd])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead2decafsm11513078f8f.0.2026.04.16.04.12.53
+ ffacd0b85a97d-43ead2decafsm11513078f8f.0.2026.04.16.04.12.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 16 Apr 2026 04:12:53 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Thu, 16 Apr 2026 12:12:40 +0100
-Subject: [PATCH 3/3] tests/tcg/aarch64/system/rme_gdi.c: Very basic test of GDI
+Date: Thu, 16 Apr 2026 12:12:39 +0100
+Subject: [PATCH 2/3] target/arm/ptw.c: Add two new spaces to the granule
+ protection case
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260416-jmac-feat_rme_gdi-v1-3-d9fa0781ed58@linaro.org>
+Message-Id: <20260416-jmac-feat_rme_gdi-v1-2-d9fa0781ed58@linaro.org>
 References: <20260416-jmac-feat_rme_gdi-v1-0-d9fa0781ed58@linaro.org>
 In-Reply-To: <20260416-jmac-feat_rme_gdi-v1-0-d9fa0781ed58@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  Jim MacArthur <jim.macarthur@linaro.org>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,76 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simply tests GDI's prerequisites; that if GDI is enabled then
-so are FEAT_RME and FEAT_RME_GPC2.
+This makes no functional difference, it just marks out two cases for
+future use.
 
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- tests/tcg/aarch64/system/rme_gdi.c | 56 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ target/arm/ptw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tests/tcg/aarch64/system/rme_gdi.c b/tests/tcg/aarch64/system/rme_gdi.c
-new file mode 100644
-index 0000000000..0921b791bd
---- /dev/null
-+++ b/tests/tcg/aarch64/system/rme_gdi.c
-@@ -0,0 +1,56 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ *
-+ * FEAT_RME_GDI Feature presence and enabled bits test
-+ *
-+ * Copyright (c) 2026 Linaro Ltd
-+ *
-+ */
-+
-+#include <stdint.h>
-+#include <minilib.h>
-+
-+#define ID_AA64PFR0_EL1 "S3_0_C0_C4_0"
-+#define ID_AA64MMFR4_EL1 "S3_0_C0_C7_4"
-+
-+int main()
-+{
-+    uint64_t mmfr4;
-+    uint64_t pfr0;
-+    int rme_status;
-+    int rmegdi_status;
-+
-+    asm("mrs %[pfr0], " ID_AA64PFR0_EL1 "\n\t"
-+        : [pfr0] "=r" (pfr0));
-+
-+    /* rme_status is 1 for RME, 2 for RME + GPC2, 3 for RME+GPC3 */
-+    rme_status = (pfr0 >> 52) & 0xF;
-+
-+    asm("mrs %[mmfr4], " ID_AA64MMFR4_EL1 "\n\t"
-+        : [mmfr4] "=r" (mmfr4));
-+
-+    rmegdi_status = ((mmfr4 >> 28) & 0xF);
-+
-+    switch (rmegdi_status) {
-+    case 0:
-+        ml_printf("SKIP: GDI not implemented\n");
-+        return 0;
-+    case 1:
-+        /* GDI is implemented, so continue testing */
-+        break;
-+    default:
-+        ml_printf("FAIL: GDI status is %d, only values 0 and 1 are defined\n",
-+                  rmegdi_status);
-+        return 1;
-+    }
-+
-+    if (rmegdi_status != 0) {
-+        /* Check FEAT_RME and FEAT_RME_GPC2 also present */
-+        if (rme_status < 2) {
-+            ml_printf("FAIL: GDI is %d, but RME is %d; RME should be >= 2\n",
-+                      rmegdi_status, rme_status);
-+            return 1;
-+        }
-+    }
-+    return 0;
-+}
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 7b993bb5b3..d4b63a365a 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -510,6 +510,11 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+         break;
+     case 0b1111: /* all access */
+         return true;
++    case 0b0100: /* system agent only */
++    case 0b0101: /* non-secure protected */
++        /* System Agent and Non-secure Protected are GDI extensions. */
++        /* No processing element should have access to these. */
++        goto fault_walk;
+     case 0b1000: /* secure */
+         if (!config.support_sel2) {
+             goto fault_walk;
 
 -- 
 2.43.0
