@@ -4,175 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2988FF43841
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 06:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B3F0F8808E
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 07:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDGGm-0007BI-A1; Thu, 16 Apr 2026 02:32:08 -0400
+	id 1wDGki-0002Mq-VA; Thu, 16 Apr 2026 03:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1wDGGT-00079F-Kr
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:31:53 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1wDGkg-0002MC-Jq; Thu, 16 Apr 2026 03:03:02 -0400
+Received: from mail-koreacentralazolkn190130003.outbound.protection.outlook.com
+ ([2a01:111:f403:d40f::3] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1wDGGO-0005Ta-Fm
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 02:31:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1776321106; x=1807857106;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=Vap7VZXFmWsPG0vqnJYb1WlcNZrT21gjsDsBifI/jXk=;
- b=DXMUxfs6KH50k6UMMnCBhTRUJ7Vw6Kxo3aqbuFUJ6Hr8ckz5yTFF9YeK
- Mk+5iD0/yEiYY0345ZxASflbJDE6oOCA8ZUQBpWaxRbU8UbEc8Dzvs8Ph
- WdIcjDn8cV3auXm3I3N3baQZp5HCVtxkJVpnim/kSLh//ZK+ikkOK0Go6
- OopFJfIDz5yxt/tvLf7dHZPvgMu/rs1Pv+QOcOwNt66sZ+Dhfl4VT7YOe
- RLiygnBYcxCzgLb4gnYCghZWZ3VWajmPwAv8fGG+del+KhHDO87+oA4NO
- TaMJ0bWuBkUKCr8xUm0itLt8ERveT5m9uEeI+jMW9f+M5GPqj4ngoTIRo A==;
-X-CSE-ConnectionGUID: oYIUSGdAQ0KfYlhxi8yGSw==
-X-CSE-MsgGUID: YqB/mJx5RDW/KMu9VVsG6A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11760"; a="79894415"
-X-IronPort-AV: E=Sophos;i="6.23,181,1770624000"; d="scan'208";a="79894415"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Apr 2026 23:31:36 -0700
-X-CSE-ConnectionGUID: 4CWNeOwFRyadhLNOQ2qs+g==
-X-CSE-MsgGUID: zYgHmRw1R8qY0FKvnj9ohw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,181,1770624000"; d="scan'208";a="227489662"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Apr 2026 23:31:35 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 15 Apr 2026 23:31:34 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 15 Apr 2026 23:31:34 -0700
-Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.2) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 15 Apr 2026 23:31:33 -0700
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1wDGke-00033C-Pn; Thu, 16 Apr 2026 03:03:02 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BRNJvuLijRfkpI/ovQmz5D8IfEO4oWtCZ3VhRwzQ+8avse+1HUWsf+op/I0UJPUB/WDjQo2Rh0fd4FgxPHm2rvk63oGLHcNzwNoxKRxcqkmYnUoIt72pt52b0yn6s6/E9aU7ZiOd2CkWR5hqh6C6sG8izdRuLnNsWvRVtaqOMegp63nb4xSlo76NjoaOmRCbbOHOwYAYJMwlOspx6FGhLRvXpY5Ao6DGCFc3uVQQ1MDug93QWLd+M7oHY+eCBl2IriQkdXLbcameiq5xo0iVlaXB6Jp2reO5irUCGuEe4DMwYcHrtZt+/4PVC9iIh7fdxZkwvYV30z0fLVAI98kwcQ==
+ b=xuqLbimnx5Kg7DXpGVcPTdF5FXF0F7c207iBPQmgU0x7LNbmHqsfbVZ211CEVgeBCJxkhqiRhtnWoGCGG/EX1UZIF8OHvkxdzy4oL3vzK5YIBhv9C3TYYvVV8IbLgc1C0q+v12+qhqULfTjkvtiDk7vNkor9U7tpJ2hUKf1CL5sd6L4SjYIYQRUlOv2RiprdgNOA2m8PxpHHWY/jixyfeKO7SHcb/2rWqOIoKhhrzPaSQrqBtWK8HZP04ZpYae3hd6/Ppz7z9cUf0KsP+e0JshbbtliUiw3q9yEBIzMCzxbHMlSdnplLuWJdGHlgcuYKpctrJ+jh8uirud0bWUKFxg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t/o7CHhJ36fMpfewsuGp2YwVfMcdbC/P/gjvZitoC9U=;
- b=kiKPgVyVAxoZSHpnTBR5E0W/oR4blYW0vEw9nqHMkh108zFrwXTJkhTZSG5+S3Odjc/tnmrzaWziBCWSMGWViuXlPUxwiziO7a+d4ckTQYEkHthlS02OIVstuvvZZwjJt46q4AELh4BBpjGWpCnQh4OCmjBwhkcUDDDUK+lBIQcVPq5+Vn7c33FZVDpZEeK+rOneOuxxHnurSSoXF0z//dPQ8VHgpd8grZFqkVN8opPtRH0U64Y41oD0WSQtx/wQKJUd4K+UkZhm9m3dLtXk3gOhCr7znXx92oR5KmDJ0SLbv4Q7DTpSJjgRr5IEK0RiOq3Q2voVehjamCyjj/Yjpg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by IA0PR11MB7934.namprd11.prod.outlook.com (2603:10b6:208:40d::12)
+ bh=Qm/H2H31i1XknV2mM/bWF0xBNJ/MJc5I2nzyBZ4HtHI=;
+ b=eqc8i9vEMD2808zo1f1uY6oIR4D48Av2m5X9nIWB/z6A9RqgndVRf5yL8D0xzdkR7RBRFYc3b1C16r4kxbx8RDW09R2FwXZMJwt4eMtpfRSUBbQFknh7gZIbnUCJOvuMpkMQCoLp47xm1pK3hSm8MJfyg2u0wkr5mICB1Lu13yxNljOYHdcKsLFVEhSpDc4ITifjXOA4FtZMJAWADR3O/oJNgDvobK2ErjeLGqHhaU4482mmpMKXhOK5Ho+fb4RLVZdY4CJ68MYxBBCtY2izeuHYldjB4J88e+K+psbL7rsIxs9UUFISOqeK+KqbQYPEQykFJWfNuHEI14C2tOMr3Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Qm/H2H31i1XknV2mM/bWF0xBNJ/MJc5I2nzyBZ4HtHI=;
+ b=OTJgUe3BFyIB5U8MvB8VeEFzwtABIBMU3XL9Ybl9Gj+Hjak4ENPkSYfq9bMORQV9Xhdeeg1nMIYWGk7Knfhc4RndhLzo5D2uZhdlicXIIroMIUS5W9x6g4JwIZqThvw6Z6tx18OY1DV/cLB/mdXUUZ9H0PDNh1r3EtoNyt+RXds9kE8AHTOax+tmXplsHcBBcufvHF87MGpnGKukZm91QVGAipvR1l3ZjYJoiaZ9TG/C4DFtmrCbeEdDoGybcZuxFPallGVOyk6lLQKkoQt1qL+ZzgkZ0dfgnU2VA7jMKQqFQeokt62qslVVr4QDe5R2AS+OvdM996zVp/gUd/nrHA==
+Received: from SE3PR04MB8922.apcprd04.prod.outlook.com (2603:1096:101:2e9::7)
+ by SE1PPFD1DAE8B78.apcprd04.prod.outlook.com (2603:1096:108:1::52d)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Thu, 16 Apr
- 2026 06:31:25 +0000
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::9f37:cb81:5463:300e%5]) with mapi id 15.20.9818.017; Thu, 16 Apr 2026
- 06:31:25 +0000
-From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>
-CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>
-Subject: RE: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-Thread-Topic: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-Thread-Index: AQHct2CBd1EkLKy70EmTrlWjg/HgLrW8bKeAgAANlYCAAO/SgIAAuJ2ggADRFQCAIdYwQA==
-Date: Thu, 16 Apr 2026 06:31:25 +0000
-Message-ID: <IA0PR11MB7185F5B516E3FAC39290B6A0F8232@IA0PR11MB7185.namprd11.prod.outlook.com>
-References: <20260319052023.2088685-1-vivek.kasireddy@intel.com>
- <20260319052023.2088685-10-vivek.kasireddy@intel.com>
- <a112aab0-df42-47b6-a5de-f6827321c8d5@redhat.com>
- <IA0PR11MB718579B3F8EFCB2C2E2D1E93F848A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <3434becb-639b-435d-a36a-71b5a3760ba2@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71851F5FD322F30FAD53D1F4F849A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <09f02fe2-63cb-4283-899e-4cffc5f60cf1@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <09f02fe2-63cb-4283-899e-4cffc5f60cf1@rsg.ci.i.u-tokyo.ac.jp>
-Accept-Language: en-US
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Thu, 16 Apr
+ 2026 07:02:47 +0000
+Received: from SE3PR04MB8922.apcprd04.prod.outlook.com
+ ([fe80::3450:f139:5238:8f58]) by SE3PR04MB8922.apcprd04.prod.outlook.com
+ ([fe80::3450:f139:5238:8f58%6]) with mapi id 15.20.9769.046; Thu, 16 Apr 2026
+ 07:02:47 +0000
+Message-ID: <SE3PR04MB8922F4F93B35076CF01F87A8F3232@SE3PR04MB8922.apcprd04.prod.outlook.com>
+Date: Thu, 16 Apr 2026 15:02:39 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] linux-user/strace: Use pointer type for read and
+ write values
+To: alistair23@gmail.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-stable@nongnu.org
+References: <20260415233740.3027321-1-alistair.francis@wdc.com>
+ <20260415233740.3027321-3-alistair.francis@wdc.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|IA0PR11MB7934:EE_
-x-ms-office365-filtering-correlation-id: 8d577b87-a0e2-4549-3973-08de9b81c8aa
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|38070700021|22082099003|18002099003|56012099003;
-x-microsoft-antispam-message-info: izihUwl7tOiQLvah0zAfv3X9CdKvuM3rWxf7rgtslsmyU+pVKiO9iB3M60io7/HK2Ot1WpX+kozJuXlZvyEeUO76PNTU+feBcg+HvppYVvdrcnE02PHWaCvHAKTCYZB6VJY47IahETyPSweUCDv/P6IK3UI3YnEv9+MPkOyBYlu15bqjtE3m1YPwvYvAu83tbtwrrIhvtIH4lodesEzjUIX0xA3OTDGiXzk18zfCLQZ0XfEVMnO0kJzSBr453JP1Ayv5vfGEWhfarI6/wMemUy4/Isb3YEoBAAOnMq6l+LtYVqFJjkvaowSKzNpb5RH3uZNOpgSmIBuAMiJpinl0TPE7lZ3+l94S+gKCuQbA4CC/kdWM+Xcstn9068x0vKt2BefybpchZNeQDIH53ltzuXA/EpNXUu2iVohJhRU7fNVpUst9gBU+s8KuXiq9fW+RNYbfRTgTN0nHtxMrkcK7t9pmBbQXdOnKaB0r9ene5iI66uVWaLmi3/1ky2AfjWXyoiMRFULkCXGY16eSOegtdNiGRQV3exqVKQMebOy3Kqopy65CLEDk4T5zFAsAMP4QwOU/dathnkevsvIPXosiDSZuawe7XQhY90Va0rfQRdOQnfNFQ0vA4/eLIkvFZNa4aPvBCl2Bmhpszv7O9WJP/nxFPtSkiMF8cr6nKyUT6knaVlABLECH3VjHqA1Z3KABk1ui9+ue+7VVRoS4YpgX6NG1OGpmsUhinAYKwsNatXLQGeuOuQzeIC55qYoVZ0/XfIRwxO1rBErxyv0HuW2QKjt1LqA0bcLM37lGTfAjqvk=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?IMaAk3x+q/MAHfzmPt+5KnaJFCHiKdDVWLUlZOrroguIqSxdfakxhp2CAv?=
- =?iso-8859-1?Q?4zwFd/d3yzjVN64z2JbaX9MDSrsOahtuVK/L980xuqjODVWVmAXg5/I//2?=
- =?iso-8859-1?Q?wCSw3BV1o+vl1JTzivN7Oym2zMHcnf7TBzpOCYUHRQXjgrB9Q3zJcET5+g?=
- =?iso-8859-1?Q?plGJKI2Cam3IgnTgozEAIbYtUM9zUaIc1Yk4x3gpcFL23TVudyB2DzVDfY?=
- =?iso-8859-1?Q?Bd/DBVRkEJriHpY6CuhjQUXm0Uv+NPAbhMIY9+aNNbmGgOG/65p/M+xXMv?=
- =?iso-8859-1?Q?TgkvSzcQvjBS8VAnYt/HkE7nnmVdhuS9JXI8nOhOrrRqSbyzR9IUgYNmEZ?=
- =?iso-8859-1?Q?CIA1v5dLyHyI15Y3Bpbhx39kL+QDNzwF3sir3GvGqu7/Hh51KYrpjmAz9S?=
- =?iso-8859-1?Q?CS1saRHo9S17z2QZ+Lz4fc6IgQqLE6Pw3CTwRYez7rYOh/63rpNZA0WyHH?=
- =?iso-8859-1?Q?aBwedl1U/Wvwne/7Q+PDv0uPH+qVCz7SSjRUsRrGRQRY4waZflWKquQpYo?=
- =?iso-8859-1?Q?l82Ugbrd3BaRx+xtuvSL0QRS2W2f2GB+LWq8xlNSTr87gHimwN7LNMPkdi?=
- =?iso-8859-1?Q?LG1q5H4txQK6XdRIzQYHiDhP3VL8AHM2w2UrTSQa9y6HjsQAfBicwMOtXX?=
- =?iso-8859-1?Q?nWAcdiOyBCf8obr0lQgGBSoyaRtvOXNOwLBOX9yrbFJOY5wTKVxesxaSdH?=
- =?iso-8859-1?Q?D7d4J4UQr+RPuqO0TSqTwe6QQZ6nnl9KLHEGL126nlvFW9Vldo+NfN/ayf?=
- =?iso-8859-1?Q?5wxzzmf7mAnlvUL+ZAgXS/TWxhjtAIxQQLLk2SN3ZxwxY5SW7IJL1sSIKe?=
- =?iso-8859-1?Q?LyjYWdAxEX0Y0GbhV6NHIRn6JPpjBfA48arHGoA8T09tBnMoANf72mqmWY?=
- =?iso-8859-1?Q?89NHOAoakVqk4LLtM64C0rGEi1SSTvLl6JUNRFjAsFwmnWUKMXzl7cfT4P?=
- =?iso-8859-1?Q?FxE0QB5kAuW6FbHbSQ29DXqvqp4WMB4TddBUZnAZGzBdp9xg4g9UjImJC/?=
- =?iso-8859-1?Q?aOW1pThz85KHgf4zUvATPgDD6zmzI2D33TYFnVhWhHv0Bme53u7mbzuNQP?=
- =?iso-8859-1?Q?XRMRdGPGmqzvjl9nxVjPs9VITmdxxy9Wv7t8M//NQFwEKB4F/XqNjrl+if?=
- =?iso-8859-1?Q?6dLtKZdLN/h59KCYsz3qE68lpu3+pO+DdFE17vVWtqxs6KNCu0YdrBbsJ9?=
- =?iso-8859-1?Q?Nerj2CgLqcQoP940SDS272nFiKV3nxirNvDQf/upOsXYs6e77ssi2TbTqK?=
- =?iso-8859-1?Q?/LAZPgc8vxdb3NqJ100JA+CZmTzytJROpHy7LYmG4oI3zVlsRnyzvlNmbO?=
- =?iso-8859-1?Q?MXr4XB+58NZArQHi52zoG3gTnrEA0G892aYjmTkWDwamw36Lk49B74Xup7?=
- =?iso-8859-1?Q?ZpKXPkF6VD4Z+kvNULyKxAr7GbNNtsxv4uIFhuN8OKv5wB8Rv5NZD0VNX0?=
- =?iso-8859-1?Q?9XK4+y+cYlQY+l3zQUsRcEQqGw0wUu5crXFxzD9KZ/xdDM6mLDZ1iAk9vX?=
- =?iso-8859-1?Q?yyWUoNwPzmurXWhM6hFJUjhkyaQllEM7ovDdHqblDti99saMcdl5wdABpo?=
- =?iso-8859-1?Q?nFpldNVGcUue1pTYhj7a7VDmXJcaZvELbEyYbE9Q8HDqeNGU2VYYrP59hP?=
- =?iso-8859-1?Q?XGv/85LNSdhYZ41GogbeXq9Fu+jhgCEdSPDSXWpMr2nN2QkdEcSMR7nSLf?=
- =?iso-8859-1?Q?CdBYgQFnMrEYxhAktqA+BMQfjVsGwdSRTokeVDRG03poosFl61HSFevlnU?=
- =?iso-8859-1?Q?3WVsY+ZbEboCaTe//IWYn+obKCMvod7kdqgWqjT8HKhaMwW+WbKvT8UhHr?=
- =?iso-8859-1?Q?LNmvDbcIBw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <20260415233740.3027321-3-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2P153CA0028.APCP153.PROD.OUTLOOK.COM (2603:1096:4:190::9)
+ To SE3PR04MB8922.apcprd04.prod.outlook.com
+ (2603:1096:101:2e9::7)
+X-Microsoft-Original-Message-ID: <147b0b45-a45a-4201-b1a0-1d155f325ecb@hotmail.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: v0uIKL3DzjfMMMXmsa939psiZ3IEFu2LWMeoY+vAjzpFAG8vLT01lmoX3EF//PTaLNPmVsNkHysRLBol6IaY7s3KBF6XA1aCHdnV4WlTyjafyLGnNN8KbwzUixsdZANUzZvA77QPi14Ss2BQFSyQWuCBFcbVKm/y6kvOygixULUOjT8Ud5N1RlzJbqYvmXDruUdTDWWnrIjOSzTmuOyN1w1+ibJu9ubv/za51Jj43mpm7UBFKEdam1NefhpbN+LnCS3WKpVKUabq+BClQtaB6OgMU2bajCuVQLRonXxomsT4MghtJRSLcqJJIZwZNWa6IrCZkY9l8NriBM0sU0PFFQ==
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SE3PR04MB8922:EE_|SE1PPFD1DAE8B78:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1144db51-4994-439d-3822-08de9b8629f6
+X-MS-Exchange-SLBlob-MailProps: Om8TgR6f4EAEdu9ieeuz9D5SeZesE0h2xYLU3lxtGSzaz5FU41IcYUSBEbOTJf27btbttCHHePbtJsWrHKR+CwPSZhIWzrwUeEAQMAcHxHohuESWeQb5Mk/FWzAYTo+0fxmplZiNwMBdYOpf9wmWpPl4RGsApdKeUWBgrdbj2z3LG5UiqHehB6j4QzVprmbOjsg5qD7gRRqzIsDJ8nsuF0lycynY41H8trgd37fzgnrW9bUnvbda2rgMpTeqiqw93MixA9QWy2KAn+Mt22qM/Os2ZiMsQ3avSHu5A+x6UpPrVN5jhVhjXjfCAiH4HrGnVDUzy2Ks3ftyUz8Fr8yd0rfY5ZnZRGepn1Hj12XevkpBiHXcyRRLqst6rG3zVtEYM/mKljCEWSG/hkG4jMsfidOzkBoEW6xmhxnKoEU84PF97pWB1PWZaAPocHU3pafPGJjwGMCrAlaVznHXjIGZdrWCmGSU6Xe7dBehNkKI9ZMJy1jwtbmvXbvCbFDQSkrmmzDNxp2YO0oeTzGvtsLojOhp5zTVS2Cb11kv/X757eGx4acqBPpi5vhukJgnIrNlq+bBYTbSjvrYTg/dkMlH7lg4yUovvnmqx/qcDoa+veyjkls3/jRAmTpdpNZrYyN0KpAjcWM9SqfIRMKVO5d/0n7AWjZ1BgeWnsKrYELdUxgDUmlrxbz33qcy18gAomWaix3qaIxzpI3Zt3O7XZjmcq768eufmGJrCvaVqad7xr35DMi/qGATI1lp1ukyhxkz6axrsh5rxdl7ITRrY2FQvstvj7RlLdNolr5Uz35hwO262FeGm3dVMGpRTyEbEe5LiWqjfjh2zf66M2IwZiJ+LwhdEPwLsyyP
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|15080799012|51005399006|19110799012|6090799003|461199028|5072599009|8060799015|23021999003|10035399007|440099028|3412199025|4302099013|40105399003|1602099012;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SENIU3RxWFVRcEN0c2grcFJ6NWVRUlB6bVJVb2tzakpMMDBnWXZJRSt2ZDBP?=
+ =?utf-8?B?NWxBSExabmU0QkJic1dlS2FjZmRpMk9jV0NpdXhDaXVxL3hSUHE0dk1pSTBV?=
+ =?utf-8?B?blpRSWVDU1ZSNGtsUmVFVjk0ZDZJbVJ3ZlpXQ2MwTGUzaFVOMDRrT1RaczE5?=
+ =?utf-8?B?blBhbjBvZzRNZ3NxR3VVU1hBRk1sb0FTSUE1N3BDckV6UmU0OHN0bUd5YUZR?=
+ =?utf-8?B?Q2pzUWM4azUybnQ0WFhpT0ZtcG16c3NncmQzYlovVGErdHJadGpTd2ZlMVVT?=
+ =?utf-8?B?ZGdjS0p5MmNRUGdaOXlRU3JyYnhqc1VFV3hsTklQMXJFeER0bUhTL000NWNE?=
+ =?utf-8?B?UVZYVWxWWUZEK2Rpb2lSaUVHclB6ZEJCVnZJQkhidXRGaFNZUXViTjRzTGls?=
+ =?utf-8?B?anUrL3ppcG41OGY2RWN4L25VWnQvdHBEYUxWRkpSRWpYcVZsdDJPTjZBUktX?=
+ =?utf-8?B?RzNIRDVtQ1h3a0xEanowbVhDNjBKam9UaXBYUHpvSzg3SUNyWC94WXpvdlNw?=
+ =?utf-8?B?MmVUazFONi85U3ErRFJvWlFzb3JzQjR5c1gwRHNHdDIwMlVyeGRGL1pPV1B2?=
+ =?utf-8?B?a1ZSWHpGOUoyV2dnR0k2U1NLYTl2UDJGbjh5QXhxOFo4ZEpwRUJsQkVTVHhB?=
+ =?utf-8?B?UitIZVYxUVdRaElTbThRaEpPcnZqRzhBMkQyZ1hQK1diUWdaN1JrTlVLQzFV?=
+ =?utf-8?B?cTNZSXQwOU1pV0JmaXhvd0UwMXFHa1dja21IVGFrY0Z0eHVpUmFla1ZIYkl3?=
+ =?utf-8?B?MkFOV3I2QlUwOUtHQTN0R1IxUFN2K3VIUExrV1hpSG83SmdabWNrSFRsWVlQ?=
+ =?utf-8?B?NDhUVVg5RXZKUGw3TGVDWG9nY2lETmNLcmRHRXJwUEo1eHh6Z05DQXhrUnNG?=
+ =?utf-8?B?SGc0eHBBbjJzV3dHN05mNmFlOENxQSsweGdSNlV0OUhjbUgvZXNaaFYvZ0lz?=
+ =?utf-8?B?eU1JbGpkU00wNGJZeHMxeDk1d0svaEZjVk9wampldi9GYllyYUlPUFF0UWh3?=
+ =?utf-8?B?dGROS1YrT2FYeGNQQklYU2VjalZxTTVVKzBMY0QwZXdxQms0MzhXeVVZOVB4?=
+ =?utf-8?B?N3lqRElqb2hodXRXNGY3Uy9CMTlPbWF3V1B4L2g2U1RIUm5zTWl1RXRmWWh1?=
+ =?utf-8?B?UDQ0RVVLRXdQaUJ2VklKbVh2MFdlZms4dU96QmE2Z040bW4rY2xNdGFQMFVa?=
+ =?utf-8?B?T0czanJkZWRoZ3JZeCtJYmpuK3pSRWRJb2RtZFlqYnk4SkViWXA1dmQwbjNJ?=
+ =?utf-8?B?QXpKRkExcUowSEgyNnM3eEIxZFhRWjlNSCs4QVRkRFNzVEhFa0ZyZFM3dGE5?=
+ =?utf-8?B?UFVYNW5MMHpyKytaQVpROEg3OVNlNGFBdUdIUmVEclFNc2ozNDliU2I0TFp3?=
+ =?utf-8?B?Y3pQRWZuMXdSRFlHYkd6TERvVFZReXFlRGVPR1FHMVRiYmdsemtUL1dPSXdV?=
+ =?utf-8?Q?hPyUv73X?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dlZWZnFuNExwYkJaQTlpOVZkMkRhUjBING5zTXVNbHVoQUxvS3VMMk5DaVYw?=
+ =?utf-8?B?MXAyTzk3WEVxWW85aDV1R3JPemNheldycHI4NXRvR3lpdU4xc3FzaUkyaVdz?=
+ =?utf-8?B?RDVGNnZ6OTgyMEVzc2E0cVJFbFBvTDYrZXRYR3FFdklIUU9pcTgzeEFPSGU4?=
+ =?utf-8?B?eFJYdXQrajBQZjdOS1RaaVk5ZlQzUUx2SWVnczVUM0ovRGhLVmFNeVNvQ2l4?=
+ =?utf-8?B?NU4vV1EvZHY3TU5oNVdBQ1U2QUdaSXlZRGxDMTFOek5nM2pnYXpwTFBNbzlV?=
+ =?utf-8?B?NDlHUUdWS21QcVdod2FHN0FlNUVEbnZ6UDNCUnA5VFZYSlBCMFRwdVdOTXZ2?=
+ =?utf-8?B?NEpYMU1DdlRuMEdjcXNQTmpKcWlTd3VRazhhTWlvWFdEU2wrTkd3anI1aHZk?=
+ =?utf-8?B?MDlUUUlkcFljR01DZnNhYTE0R2krUW8rRVB6ZFJnUUJNTzVNdTNxOUE5NkRi?=
+ =?utf-8?B?M1ZSRTl0d0dDVTVCODZvZlBMUEg2S0o3NDc5UGxiOHZyQTBQRXhPemhmUFB4?=
+ =?utf-8?B?WFJMYzQxZHdyV3VsbnQvUmxMU0c4UDJpTEk0SFFTbHpYclR6RVFPdWhPNkJy?=
+ =?utf-8?B?QlR6N2JjNVlrOWxVVUpyWm43Uk11ZGpGa1dYcWdFSGNDQWJSSXRySDEra05K?=
+ =?utf-8?B?dkhBaEtkT0k0b3doam1LMWhpeitwc3RoR3A1a2RKUUpTUklGVXBvbTVSL0p0?=
+ =?utf-8?B?blVpUkwyT2JFQU1vR0wzRGxjdDIxYkRQWFh1bnh4ZXczY2NVWUNjRzd6SWdY?=
+ =?utf-8?B?R3BybHBQU3Y0bTRNRk51dVIrTTU2NWN3Wko2VW1hWGFSQ2ZFaWRSTldJN2hS?=
+ =?utf-8?B?VGxEbnBTR245Z21WWTkySkpQTUtJOUI2Rmt6YzdvMnA4WWVHUEVlSWROaWZJ?=
+ =?utf-8?B?bS9DNVlDZ3B4V2tUcWgzMW5mZUd2aU0rcVdjVXNkWjRtMmZRYUozb1JQRGYr?=
+ =?utf-8?B?UUlPakhselpNeVJ4MlpRNDlOTjBSYmFkQUNkZnh3dEtPbXdKWUtKZXR0REEx?=
+ =?utf-8?B?YjB6cFlFZ0tjRnZENlBDazEvTzBuRzVSZFBNT3BibCt3TDFoOE45VmJ3YWlC?=
+ =?utf-8?B?eWFGVmdaeUxjbE4xR0oyQ205YjVEZjJMVVMrczhQUlRXeUE4WUlCdzlrb2Ux?=
+ =?utf-8?B?ek5oVjJiWkxNWFphdDR5VGxPbnkrY3lndUpaQm95MjhheWVXWklRWTJIbkw3?=
+ =?utf-8?B?cVJVcTFzeEllcVhwTGpnWUJiVGxLdHd4WnQ5a3pta05yV3hvMi8razE0TnVU?=
+ =?utf-8?B?M3k2dVNsWFloTm42NGN4RFJIVFZ4ZnJoNXpnMGN0RHdVclh1TWpaSzRKRFZt?=
+ =?utf-8?B?SkxsMHZYTGE2UGVUSUloYlJ5UEk2MDE1K3dVcFQ5NzlJdTV1bStrZVk1UFBN?=
+ =?utf-8?B?K0svOU90RTJLeHI1MmtUTHJFejh1cGNRcU5jaUlmejFhV2cyQldiK1Jaa1Rn?=
+ =?utf-8?B?MWZyMWd0QW5xZkpFdWhreFVVNnlmelNtQklOYWo3QWVOQmpTeHlLeEgwbTdH?=
+ =?utf-8?B?YkdsYXBMdnE5OWdHWlhLV2tmNFR2UWM5NVk5ZWhmL1FjUlFkYk1KVDVJWlh2?=
+ =?utf-8?B?RHBiUkVsd282Ymc2S1BXM1ZzdDZrRTdBcnQxZnpXTnc3Y2xNNU1URmZLeEYz?=
+ =?utf-8?B?cDVlMEVjbTcyN1hqUVcwbThMbGt2Uit5ZUhIQ2QrcExCaTVyRDkzRE4zd0Jv?=
+ =?utf-8?B?ck1BMk1TOG5rSVVwWVIwTkR2alZ6Tm9KWGlsRS9saDFHbytaRkg5bEgvRnk1?=
+ =?utf-8?B?UUpFa0Y1R1lyVXZ4eUdhUmJuL3FzaDZubDVuVXQ4dThjY2NmWFpOaTdtWVFE?=
+ =?utf-8?B?ZVhXREhYd05MRDdvZ1RpbWVzWHhwV0I4NmhBM1YzYzB4WDIydUZYWFA1ZkVx?=
+ =?utf-8?Q?5cxLF8a1Ec0mQ?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1144db51-4994-439d-3822-08de9b8629f6
+X-MS-Exchange-CrossTenant-AuthSource: SE3PR04MB8922.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8d577b87-a0e2-4549-3973-08de9b81c8aa
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Apr 2026 06:31:25.2699 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: oFINgzHZolrcN+kTexnFpLHeUUN9qCAvdEuGHLrBXT3PseuzKiUw0wjdrFGTLg36/85QxcrKMCTHGipQ3QUxMSpD/5TvfDFbjRuL6bJtW8A=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7934
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2026 07:02:47.1479 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPFD1DAE8B78
+Received-SPF: pass client-ip=2a01:111:f403:d40f::3;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,304 +161,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cedric,
 
-> Subject: Re: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error
-> handling with 'Error **' and err enum
->=20
-> On 2026/03/25 14:31, Kasireddy, Vivek wrote:
-> > Hi Akihiko,
-> >
-> >> Subject: Re: [PATCH v12 09/10] virtio-gpu-dmabuf: Improve error
-> >> handling with 'Error **' and err enum
-> >>>>
-> >>>> On 3/19/26 06:15, Vivek Kasireddy wrote:
-> >>>>> Make the error handling more robust in
-> virtio_gpu_init_udmabuf()
-> >>>>> by introducing 'Error **' parameter to capture errors and using
-> >>>>> an enum from VFIO to categorize different errors. This allows for
-> >>>>> better error reporting and handling of errors from
-> >>>>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
-> >>>>>
-> >>>>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
-> >>>>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
-> >>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> >>>>> Cc: Alex Williamson <alex@shazbot.org>
-> >>>>> Cc: C=E9dric Le Goater <clg@redhat.com>
-> >>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> >>>>> ---
-> >>>>>     hw/display/virtio-gpu-dmabuf.c | 67
-> +++++++++++++++++++++++--
-> >> -----
-> >>>> ----
-> >>>>>     1 file changed, 45 insertions(+), 22 deletions(-)
-> >>>>>
-> >>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-
-> gpu-
-> >>>> dmabuf.c
-> >>>>> index e35f7714a9..89aa487654 100644
-> >>>>> --- a/hw/display/virtio-gpu-dmabuf.c
-> >>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
-> >>>>> @@ -18,6 +18,7 @@
-> >>>>>     #include "ui/console.h"
-> >>>>>     #include "hw/virtio/virtio-gpu.h"
-> >>>>>     #include "hw/virtio/virtio-gpu-pixman.h"
-> >>>>> +#include "hw/vfio/vfio-device.h"
-> >>>>>     #include "trace.h"
-> >>>>>     #include "system/ramblock.h"
-> >>>>>     #include "system/hostmem.h"
-> >>>>> @@ -27,16 +28,18 @@
-> >>>>>     #include "standard-headers/linux/udmabuf.h"
-> >>>>>     #include "standard-headers/drm/drm_fourcc.h"
-> >>>>>
-> >>>>> -static void virtio_gpu_create_udmabuf(struct
-> >>>> virtio_gpu_simple_resource *res)
-> >>>>> +static int virtio_gpu_create_udmabuf(struct
-> >>>> virtio_gpu_simple_resource *res,
-> >>>>> +                                     Error **errp)
-> >>>>>     {
-> >>>>>         g_autofree struct udmabuf_create_list *list =3D NULL;
-> >>>>>         RAMBlock *rb;
-> >>>>>         ram_addr_t offset;
-> >>>>> -    int udmabuf, i;
-> >>>>> +    int udmabuf, i, fd;
-> >>>>>
-> >>>>>         udmabuf =3D udmabuf_fd();
-> >>>>>         if (udmabuf < 0) {
-> >>>>> -        return;
-> >>>>> +        error_setg(errp, "udmabuf device not available or
-> enabled");
-> >>>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
-> >>>>
-> >>>> The function virtio_gpu_create_udmabuf() is returning
-> >> VFIO_DMABUF_*
-> >>>> enum
-> >>>> values, which is problematic because the function creates a
-> >> udmabuf,
-> >>>> not
-> >>>> a VFIO dmabuf.
-> >>>>
-> >>>> This creates a layering violation. The virtio-gpu-dmabuf code
-> (which
-> >>>> handles both udmabuf and VFIO dmabuf creation) is using error
-> >> codes
-> >>>> defined in the VFIO-specific header.
-> >>
-> >> The rationale of using error codes is as follows:
-> >>
-> >>   > In that case, using it for udmabuf is cheating, but I think it's f=
-ine
-> >>   > since it's locally-contained in virtio-gpu-dmabuf.c, its intent is
-> >>   > still clear, and it has no adverse effect for users (at least ther=
-e
-> >>   > will be no bug).
-> >>
-> >> https://lore.kernel.org/qemu-devel/becde56b-90bd-40ca-9329-
-> >> 0c92b9519a67@rsg.ci.i.u-tokyo.ac.jp/
-> >>
-> >>>>
-> >>>> Please find another solution.
-> >>> Other solutions I can think of are either move these error enums
-> into
-> >> virtio-gpu
-> >>> (and disregard the error return type from vfio) or move them to
-> some
-> >> other header
-> >>> where they are visible to both virtio-gpu and vfio. I'd like hear
-> >> Akihiko's thoughts/
-> >>> comments on how to proceed given that he had reviewed virtio-gpu
-> >> patches in
-> >>> this series.
-> >>
-> >> Disregarding the error conditions of VFIO is not OK. That can cause a
-> >> guest error to be reported as a host error.
-> >>
-> >> I think the simplest alternative is just to have a duplicate enum for
-> >> virtio-gpu.
-> > That would address the layering violation but Cedric's other concern is
-> > that he believes having errp is sufficient and using these error enums
-> in
-> > VFIO would be overkill.
->=20
-> It would be beneficial to describe the rationale behind the enums; the
-> patch message only says "better error reporting", which is quite
-> insufficient.
->=20
-> The rationale is that we need a special handling for the INVALID_IOV
-> case. The INVALID_IOV case can happen in two cases:
-> - The memory is backed by VFIO. It will result in the INVALID_IOV error
->    for the first attempt to use udmabuf, but this error can be properly
->    recovered by letting the VFIO code to create a DMA-BUF instead.
-> - The memory is not backed by memfd nor VFIO. In this case, the error
->    is a guest's fault, so we should:
->    - Use qemu_log_mask(LOG_GUEST_ERROR, ...) instead of
->      error_report_err().
->    - Emit a message useful to diagnose the guest error, which we have
->      discussed in this thread.
->=20
-> A common pattern is to return -errno to let the caller implement a
-> special error handling, but in this case we specifically need to
-> distinguish the INVALID_IOV case from the others and these enums are
-> more convenient for this.
-With the addition of the above rationale provided by Akihiko as to why thes=
-e
-enums are needed in VFIO, would this solution (having duplicate enums in
-virtio-gpu that mimic VFIO's enums behavior to address layering violation)
-be acceptable to you?
+On 4/16/2026 7:37 AM, alistair23@gmail.com wrote:
+> From: Alistair Francis <alistair.francis@wdc.com>
+>
+> The stack pointer is being truncated as 32-bits for qemu-riscv64, so
+> let's use %p to print the syscall pointer argument.
+>
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
 Thanks,
-Vivek
->=20
-> Regards,
-> Akihiko Odaki
->=20
-> >
-> > Thanks,
-> > Vivek
-> >>
-> >>>
-> >>>>
-> >>>>
-> >>>>
-> >>>>>         }
-> >>>>>
-> >>>>>         list =3D g_malloc0(sizeof(struct udmabuf_create_list) +
-> >>>>> @@ -45,7 +48,8 @@ static void
-> virtio_gpu_create_udmabuf(struct
-> >>>> virtio_gpu_simple_resource *res)
-> >>>>>         for (i =3D 0; i < res->iov_cnt; i++) {
-> >>>>>             rb =3D qemu_ram_block_from_host(res->iov[i].iov_base,
-> false,
-> >>>> &offset);
-> >>>>>             if (!rb || rb->fd < 0) {
-> >>>>> -            return;
-> >>>>> +            error_setg(errp, "IOV memory address incompatible with
-> >>>> udmabuf ");
-> >>>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-> >>>>>             }
-> >>>>>
-> >>>>>             list->list[i].memfd  =3D rb->fd;
-> >>>>> @@ -56,22 +60,28 @@ static void
-> >> virtio_gpu_create_udmabuf(struct
-> >>>> virtio_gpu_simple_resource *res)
-> >>>>>         list->count =3D res->iov_cnt;
-> >>>>>         list->flags =3D UDMABUF_FLAGS_CLOEXEC;
-> >>>>>
-> >>>>> -    res->dmabuf_fd =3D ioctl(udmabuf, UDMABUF_CREATE_LIST,
-> list);
-> >>>>> -    if (res->dmabuf_fd < 0) {
-> >>>>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
-> >>>>> -                    strerror(errno));
-> >>>>> +    fd =3D ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
-> >>>>> +    if (fd < 0) {
-> >>>>> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST:
-> ioctl
-> >>>> failed");
-> >>>>> +        if (errno =3D=3D EINVAL || errno =3D=3D EBADFD) {
-> >>>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-> >>>>> +        }
-> >>>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
-> >>>>>         }
-> >>>>> +    return fd;
-> >>>>>     }
-> >>>>>
-> >>>>> -static void virtio_gpu_remap_dmabuf(struct
-> >>>> virtio_gpu_simple_resource *res)
-> >>>>> +static void *virtio_gpu_remap_dmabuf(struct
-> >>>> virtio_gpu_simple_resource *res,
-> >>>>> +                                     Error **errp)
-> >>>>>     {
-> >>>>> -    res->remapped =3D mmap(NULL, res->blob_size, PROT_READ,
-> >>>>> -                         MAP_SHARED, res->dmabuf_fd, 0);
-> >>>>> -    if (res->remapped =3D=3D MAP_FAILED) {
-> >>>>> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
-> >>>>> -                    strerror(errno));
-> >>>>> -        res->remapped =3D NULL;
-> >>>>> +    void *map;
-> >>>>> +
-> >>>>> +    map =3D mmap(NULL, res->blob_size, PROT_READ,
-> MAP_SHARED,
-> >>>> res->dmabuf_fd, 0);
-> >>>>> +    if (map =3D=3D MAP_FAILED) {
-> >>>>> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
-> >>>>> +        return NULL;
-> >>>>>         }
-> >>>>> +    return map;
-> >>>>>     }
-> >>>>>
-> >>>>>     static void virtio_gpu_destroy_dmabuf(struct
-> >>>> virtio_gpu_simple_resource *res)
-> >>>>> @@ -125,22 +135,35 @@ bool virtio_gpu_have_udmabuf(void)
-> >>>>>
-> >>>>>     void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
-> >> *res)
-> >>>>>     {
-> >>>>> +    Error *local_err =3D NULL;
-> >>>>>         void *pdata =3D NULL;
-> >>>>>
-> >>>>> -    res->dmabuf_fd =3D -1;
-> >>>>>         if (res->iov_cnt =3D=3D 1 &&
-> >>>>>             res->iov[0].iov_len < 4096) {
-> >>>>> +        res->dmabuf_fd =3D -1;
-> >>>>>             pdata =3D res->iov[0].iov_base;
-> >>>>>         } else {
-> >>>>> -        virtio_gpu_create_udmabuf(res);
-> >>>>> +        res->dmabuf_fd =3D virtio_gpu_create_udmabuf(res,
-> >> &local_err);
-> >>>>> +        if (res->dmabuf_fd =3D=3D
-> >>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
-> >>>>> +            error_free_or_abort(&local_err);
-> >>>>
-> >>>> Why not report the error in the QEMU log below ?
-> >>> I think the idea is that in the case of INVALID_IOV error, it is
-> sufficient
-> >>> to just report that the Guest passed in incompatible memory
-> >> addresses.
-> >>> But I guess we could also just do:
-> >>> qemu_log_mask(LOG_GUEST_ERROR, "%s\n",
-> >> error_get_pretty(local_err));
-> >>
-> >> The error message may not be useful. e.g., "UDMABUF_CREATE_LIST:
-> >> ioctl
-> >> failed" does not tell what error the guest made and how to fix it.
-> >>
-> >> Regards,
-> >> Akihiko Odaki
-> >>
-> >>>
-> >>> Thanks,
-> >>> Vivek
-> >>>>
-> >>>>> +
-> >>>>> +            qemu_log_mask(LOG_GUEST_ERROR,
-> >>>>> +                          "Cannot create dmabuf: incompatible
-> memory\n");
-> >>>>> +            return;
-> >>>>> +        } else if (res->dmabuf_fd >=3D 0) {
-> >>>>> +            pdata =3D virtio_gpu_remap_dmabuf(res, &local_err);
-> >>>>> +            if (!pdata) {
-> >>>>> +                virtio_gpu_destroy_dmabuf(res);
-> >>>>> +            }
-> >>>>> +        } else {
-> >>>>> +            res->dmabuf_fd =3D -1;
-> >>>>> +        }
-> >>>>> +
-> >>>>>             if (res->dmabuf_fd < 0) {
-> >>>>> +            error_report_err(local_err);
-> >>>>>                 return;
-> >>>>>             }
-> >>>>> -        virtio_gpu_remap_dmabuf(res);
-> >>>>> -        if (!res->remapped) {
-> >>>>> -            return;
-> >>>>> -        }
-> >>>>> -        pdata =3D res->remapped;
-> >>>>> +        res->remapped =3D pdata;
-> >>>>>         }
-> >>>>>
-> >>>>>         res->blob =3D pdata;
-> >>>
-> >
-
+Nutty
+> ---
+> v2:
+>   - Remove the custom read/write print functions and use %p instead
+>
+>   linux-user/strace.list | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/linux-user/strace.list b/linux-user/strace.list
+> index 35f001fecd..6162a407f9 100644
+> --- a/linux-user/strace.list
+> +++ b/linux-user/strace.list
+> @@ -1114,7 +1114,7 @@
+>   { TARGET_NR_quotactl, "quotactl" , NULL, NULL, NULL },
+>   #endif
+>   #ifdef TARGET_NR_read
+> -{ TARGET_NR_read, "read" , "%s(%d,%#x,%d)", NULL, NULL },
+> +{ TARGET_NR_read, "read" , "%s(%d,%p,%d)", NULL, NULL },
+>   #endif
+>   #ifdef TARGET_NR_readahead
+>   { TARGET_NR_readahead, "readahead" , NULL, NULL, NULL },
+> @@ -1674,7 +1674,7 @@
+>                        print_syscall_ret_waitpid },
+>   #endif
+>   #ifdef TARGET_NR_write
+> -{ TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
+> +{ TARGET_NR_write, "write" , "%s(%d,%p,%d)", NULL, NULL },
+>   #endif
+>   #ifdef TARGET_NR_writev
+>   { TARGET_NR_writev, "writev" , "%s(%d,%p,%#x)", NULL, NULL },
 
