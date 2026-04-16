@@ -4,112 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE460F88089
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 07:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42C1CF88089
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 07:19:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDGyc-00059H-4m; Thu, 16 Apr 2026 03:17:26 -0400
+	id 1wDGzw-0005bd-Ob; Thu, 16 Apr 2026 03:18:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wDGyb-00058m-5Z
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:17:25 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wDGyZ-0002K1-Fo
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:17:24 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-38ea6a5a0b3so9468041fa.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 00:17:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776323839; cv=none;
- d=google.com; s=arc-20240605;
- b=XrbgGF5FxYc5u5fmCn7n1T3yBckl50IZd8t0knYPuAN4aXq0q6APMv9VqVtI12Z7Yc
- bP4/Hx/UUAgLHrczmURqaeK4WpIInu1DsnYwOVzFuu0JcHAyOZkRQgil/upoKMa0N/nI
- ywyIXSA/T3QUTxNSMjpTbcdBfbwGgTJZHaKk1hTwFPduPhJMMOJW0/8q/ta39gxI+Qli
- OjI1impgjwgTvLPkW4G+b4ubid2AMn993AF3XsRL9CPOFD/3XJfWTB7B1kJWSYo5dkio
- I1QmVa+ytB/Ln5DLS2pTcJhQ79r6ItWcifSDSod54Uy+3kJujAGsyW2TJxhukELJFlYT
- fFFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AKr4okNZNLNSjUGPZBkf0k8pFmH5OMo09p+IYMIrO2I=;
- fh=O3rzrV6S0hETXie+puRJbh+nDBDd2TOFQAdmkpP9rgU=;
- b=EfHgJ//evoqcCHTiNUwjRoiHBSm1Gbc9FK/9nWwhltTC7DRMGmhUP2uGmdkLHFlO3N
- 9YTzycwG9thQU0tsB3kSUM8vhO7bZSiOuJv4c/Qi6822CxBEzXzfIRKnCWUHTcyRhK/o
- dg3dTA/uwj0e4ZyZXWS9N0vBxxuTk2BOSeS5vat2hphh1JFvedHS+piYUiZ21MgNiwBx
- P6xiyLo2CQNUFcwyB0OdJRjYvEkCjeVB5VKgQD+oRdRPWhSnRQrYOLpv1bsOBDGWwZ/E
- YmSmZ7yPDeqtmtOXta3mbDjwp7OOtDZyczPeiiGlmcpUUj9MoHQ9XksLtP3VzRVu2dr3
- a3HA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776323839; x=1776928639; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=AKr4okNZNLNSjUGPZBkf0k8pFmH5OMo09p+IYMIrO2I=;
- b=sZNHQZesX3xWt/ooxjYnbtfQ/2dOU/BducOz5Tk5R1RkZxXcZqoqF2uNtgask+dNbE
- N9Ys1dZ1PVUcKXdhqUt0vPMzOgYfYI+7DRDa5xoxQtTalSQVuvzEGJ8kiGXb2jV/05lS
- 1lDJn9umRT/NUwKHmCtxM+p3VeoSTDVlSeIYHKZuNmn/5A0RTuCExo8S21iVzb+Z2nxE
- SIpCwXzGfGRV1uvex23leuu6n7RND3YfHbqI6bnYdaQl+dIz8Te/5UOhY0F58CMvoqtZ
- MPKnVdjP9Hj9pgSBZ4S/GoQ3/ofW40Ree6NZgSZ6USQVtYUB9uGMaW6v02DsEyswJom2
- dUyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776323839; x=1776928639;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AKr4okNZNLNSjUGPZBkf0k8pFmH5OMo09p+IYMIrO2I=;
- b=aGI1XFD4lTBtHJraThZYdI1O4SQvz3z9Tg/3eVNs5a3NPkzML0r4poL+4Yk2BRuHQm
- 6fU1O0PyUUw/GwmbExDkfZE0bopLnA2AA1LnAkdufk8y9NB0o9Urn6WvM9dSKPdAh5d3
- DLlshZKG0GdtafKMP/IA4NH94DjSf7oYj3JSlI5jv4dcP45b1QKKBuvI9oTGg6RjJY7W
- WOU6WSfsn1YKEJ9bT0+df/zDBWS8TF9h7RvUenXTzEUyWC/1VoFYo4KMGMoIfOPP8YYW
- VqL93jJPX/dXYoEx1uRvid0P1VY9hsjHfFoaC8a7S/5aFkk+1d24uKqIqvdbpPpZ9CeI
- pKEQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8YtH2YvDk3zQ1vY7qHa4W0eQG099OdeyZ/PAWT7O8DiObwdT8c0ydo3jPKHmi+l7Hr7jxcRtYNMDHC@nongnu.org
-X-Gm-Message-State: AOJu0Yxa6Tpfy/+KMb2M110qvLplYbuhDjSyXqu9A6r/rVOi9Bdjn6/F
- Yimlk+EVvTJ7osVrujeLgP8gLjIY5lSBTr7rtx9dv/hlOec7j4P/1D6Vci7/wFsfvD55jcQqYIu
- AdKYfmBrhW1lsQ0jv0RTg6+nuBwiHK4g=
-X-Gm-Gg: AeBDievL9652e7/wmetoJ1BYDsQDd8yzayldQXt19iREY2OYJsvxELBPcjozigz72a1
- n71rt/mdD9Se7S92nEs3vVtqY6fwD8p92aezYx38r2iH+G4ugqxMT5vKbdvD9+7T3gbW02g6Ius
- asHGmuAfGFz4vTtE2Go8UoqMvgj92wk7P12KuQ0tmNaYEHqepJ/YSFDI1eK3WmfUZw6xXrYvQA1
- lbOkMiBK4mqNx4vegwuZXJGhtlXMARW8FTzNd8uQrf0JP3WnZ0RSrZ2mAY+tNy9bEK2RdRZehVD
- Wb1/9QCG
-X-Received: by 2002:a2e:a553:0:b0:38b:e639:443e with SMTP id
- 38308e7fff4ca-38e4bf53b0emr77354221fa.26.1776323839114; Thu, 16 Apr 2026
- 00:17:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDGzv-0005bT-2T
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:18:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDGzs-0002sh-K3
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 03:18:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776323922;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XnZYZmkGidVvlTyRTnmDtycEam8frS6hp84MyCN2aYE=;
+ b=hijmYVfKExTz+dDC5+BKZMw4LxHXjdpCIIkQulahlQBdYECpqEUbBidMzdzpKtmEOyl5vT
+ 59uwFnmEBDx1XUYzWCyYItZI5cRH+heSIU9FNAERp45KuZKtlXLuZ6rWgQ+HFmHsJxLTwF
+ uCimHMCv8IHn0cf59GaXkLe1x1P8mNM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-369-DD6BEPwnOna9dS8TsZwKvQ-1; Thu,
+ 16 Apr 2026 03:18:40 -0400
+X-MC-Unique: DD6BEPwnOna9dS8TsZwKvQ-1
+X-Mimecast-MFC-AGG-ID: DD6BEPwnOna9dS8TsZwKvQ_1776323919
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D990A1956095; Thu, 16 Apr 2026 07:18:38 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.rdu2.dc.redhat.com
+ [10.11.142.86])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 682831800446; Thu, 16 Apr 2026 07:18:35 +0000 (UTC)
+Date: Thu, 16 Apr 2026 08:18:31 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Mitsuya Ikuya =?utf-8?B?KOS4ieODhOWxiyDpg4Hlk4kp?=
+ <mitsuya.ikuya@jp.panasonic.com>, 
+ KUZU KAZUKI =?utf-8?B?KOiRm+eUnyDkuIDmqLkp?= <kuzu.kazuki@jp.panasonic.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] virtio: Add vhost-user-rtc and vhost-user-rtc-pci
+Message-ID: <aeCNR5CmtcbuNRm_@redhat.com>
+References: <20260416-vhost-user-rtc-v1-1-1b2d44f0c889@linaro.org>
 MIME-Version: 1.0
-References: <20260415134826.1742308-1-chao.liu.zevorn@gmail.com>
- <CAKmqyKPeqzjYDvG9GfmQ37psGEiqmx+tFGR=YES87YUd-FA7SA@mail.gmail.com>
- <aeB8vRtG0njYb3zt@ZEVORN-PC.localdomain>
-In-Reply-To: <aeB8vRtG0njYb3zt@ZEVORN-PC.localdomain>
-From: Munkhbaatar Enkhbaabar <munkhuu0825@gmail.com>
-Date: Thu, 16 Apr 2026 15:17:06 +0800
-X-Gm-Features: AQROBzCgJm6_jTB8KYsLzdTLcurHo2T1RuUgFyPeioa8d4OART9q9eUcuY8p-u4
-Message-ID: <CA+0p-WyCijikCrwgtF3xGtNfvfU8xpFwzq6rjk7+o764-ViNwg@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/char/riscv_htif: Fix format specifier for uint64_t
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: Alistair Francis <alistair23@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- tangtao1634@phytium.com.cn, qemu-riscv@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000006fc226064f8e9f86"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=munkhuu0825@gmail.com; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260416-vhost-user-rtc-v1-1-1b2d44f0c889@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
 X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,108 +91,288 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006fc226064f8e9f86
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Sounds good to me, thanks.
+Missing commit message.....
 
-On Thu, Apr 16, 2026 at 2:09=E2=80=AFPM Chao Liu <chao.liu.zevorn@gmail.com=
-> wrote:
+On Thu, Apr 16, 2026 at 08:54:40AM +0300, Manos Pitsidianakis wrote:
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  include/hw/virtio/vhost-user-rtc.h        | 22 ++++++++++
+>  MAINTAINERS                               |  6 +++
+>  docs/system/devices/virtio/vhost-user.rst |  3 ++
+>  hw/virtio/Kconfig                         |  5 +++
+>  hw/virtio/meson.build                     |  3 ++
+>  hw/virtio/vhost-user-rtc-pci.c            | 70 +++++++++++++++++++++++++++++++
+>  hw/virtio/vhost-user-rtc.c                | 64 ++++++++++++++++++++++++++++
+>  7 files changed, 173 insertions(+)
+> 
+> diff --git a/include/hw/virtio/vhost-user-rtc.h b/include/hw/virtio/vhost-user-rtc.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..6b7b53c28f93032886d82687199585aba0edd917
+> --- /dev/null
+> +++ b/include/hw/virtio/vhost-user-rtc.h
+> @@ -0,0 +1,22 @@
+> +/*
+> + * Vhost-user RTC virtio device
+> + *
+> + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
 
-> On Thu, Apr 16, 2026 at 01:50:39PM +1000, Alistair Francis wrote:
-> > On Wed, Apr 15, 2026 at 11:51=E2=80=AFPM Chao Liu <chao.liu.zevorn@gmai=
-l.com>
-> wrote:
-> > >
-> > > Use PRIx64 instead of %llx for uint64_t arguments to avoid
-> > > -Werror=3Dformat warnings on platforms where uint64_t is not
-> > > long long.
-> > >
-> > > This fixes the cross-riscv64-system CI failure:
-> > >
-> > >   ../hw/char/riscv_htif.c: In function 'htif_handle_tohost_write':
-> > >   ../hw/char/riscv_htif.c:175:38: error: format '%llx' expects argume=
-nt
-> > >   of type 'long long unsigned int', but argument 2 has type 'uint64_t=
-'
-> > >   {aka 'long unsigned int'} [-Werror=3Dformat=3D]
-> > >
-> > > Fixes: d98f7a541c2c ("riscv_htif: reject invalid signature ranges (en=
-d
-> <=3D begin)")
-> > > Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-> > > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> >
-> > Again, is it ok if I squash this patch with "reject invalid signature
-> > ranges (end <=3D begin)" to maintain bisectability?
-> Agreed, this is a good idea.
->
-> Thanks,
-> Chao
->
-> >
-> > Alistair
->
+This commit is only signed off by yourself, as @linaro.org but the
+newest copyright is from Panasonic.  What is the situation with
+authorship here ?
 
---0000000000006fc226064f8e9f86
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+If it was co-authored by people from multiple companies then I'd
+expect to see multiple signed-off-bys, so that each company is
+represented.
 
-<div dir=3D"ltr"><span style=3D"color:rgb(0,0,0)"><font face=3D"arial, sans=
--serif">Sounds good to me, thanks.</font></span><br></div><br><div class=3D=
-"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">O=
-n Thu, Apr 16, 2026 at 2:09=E2=80=AFPM Chao Liu &lt;<a href=3D"mailto:chao.=
-liu.zevorn@gmail.com">chao.liu.zevorn@gmail.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">On Thu, Apr 16, 2026 at 01:5=
-0:39PM +1000, Alistair Francis wrote:<br>
-&gt; On Wed, Apr 15, 2026 at 11:51=E2=80=AFPM Chao Liu &lt;<a href=3D"mailt=
-o:chao.liu.zevorn@gmail.com" target=3D"_blank">chao.liu.zevorn@gmail.com</a=
->&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt; Use PRIx64 instead of %llx for uint64_t arguments to avoid<br>
-&gt; &gt; -Werror=3Dformat warnings on platforms where uint64_t is not<br>
-&gt; &gt; long long.<br>
-&gt; &gt;<br>
-&gt; &gt; This fixes the cross-riscv64-system CI failure:<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 =C2=A0../hw/char/riscv_htif.c: In function &#39;htif_handle=
-_tohost_write&#39;:<br>
-&gt; &gt;=C2=A0 =C2=A0../hw/char/riscv_htif.c:175:38: error: format &#39;%l=
-lx&#39; expects argument<br>
-&gt; &gt;=C2=A0 =C2=A0of type &#39;long long unsigned int&#39;, but argumen=
-t 2 has type &#39;uint64_t&#39;<br>
-&gt; &gt;=C2=A0 =C2=A0{aka &#39;long unsigned int&#39;} [-Werror=3Dformat=
-=3D]<br>
-&gt; &gt;<br>
-&gt; &gt; Fixes: d98f7a541c2c (&quot;riscv_htif: reject invalid signature r=
-anges (end &lt;=3D begin)&quot;)<br>
-&gt; &gt; Tested-by: Tao Tang &lt;<a href=3D"mailto:tangtao1634@phytium.com=
-.cn" target=3D"_blank">tangtao1634@phytium.com.cn</a>&gt;<br>
-&gt; &gt; Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:ph=
-ilmd@linaro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
-&gt; &gt; Reviewed-by: Alistair Francis &lt;<a href=3D"mailto:alistair.fran=
-cis@wdc.com" target=3D"_blank">alistair.francis@wdc.com</a>&gt;<br>
-&gt; &gt; Signed-off-by: Chao Liu &lt;<a href=3D"mailto:chao.liu.zevorn@gma=
-il.com" target=3D"_blank">chao.liu.zevorn@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; Again, is it ok if I squash this patch with &quot;reject invalid signa=
-ture<br>
-&gt; ranges (end &lt;=3D begin)&quot; to maintain bisectability?<br>
-Agreed, this is a good idea.<br>
-<br>
-Thanks,<br>
-Chao<br>
-<br>
-&gt; <br>
-&gt; Alistair<br>
-</blockquote></div>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QEMU_VHOST_USER_RTC_H
+> +#define QEMU_VHOST_USER_RTC_H
+> +
+> +#include "hw/virtio/vhost-user-base.h"
+> +
+> +#define TYPE_VHOST_USER_RTC "vhost-user-rtc"
+> +OBJECT_DECLARE_SIMPLE_TYPE(VHostUserRTC, VHOST_USER_RTC)
+> +
+> +struct VHostUserRTC {
+> +    VHostUserBase parent_obj;
+> +};
+> +
+> +#endif /* QEMU_VHOST_USER_RTC_H */
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index ad215eced84d1ac58956ea374ee012acbb3cbd18..da6376b0f5e6fa99495504e88da9fef5a7a969e3 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2573,6 +2573,12 @@ S: Maintained
+>  F: include/hw/virtio/vhost-user-spi.h
+>  F: hw/virtio/vhost-user-spi*
+>  
+> +vhost-user-rtc
+> +M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> +S: Supported
+> +F: include/hw/virtio/vhost-user-rtc.h
+> +F: hw/virtio/vhost-user-rtc*
+> +
+>  virtio-crypto
+>  M: Gonglei <arei.gonglei@huawei.com>
+>  S: Supported
+> diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/devices/virtio/vhost-user.rst
+> index 2806d81ca201551a91246a10e0d98fd36d74200b..acfbd609d0f9c87e3af684797adf156a8a61bc88 100644
+> --- a/docs/system/devices/virtio/vhost-user.rst
+> +++ b/docs/system/devices/virtio/vhost-user.rst
+> @@ -61,6 +61,9 @@ platform details for what sort of virtio bus to use.
+>    * - vhost-user-spi
+>      - Proxy spi devices to host
+>      - `vhost-device-spi <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-spi>`_
+> +  * - vhost-user-rtc
+> +    - Real time clock
+> +    - `vhost-device-rtc <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-rtc>`_
+>  
+>  The referenced *daemons* are not exhaustive, any conforming backend
+>  implementing the device and using the vhost-user protocol should work.
+> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+> index 8895682c619402eb3c9cd7269d3319f39711b4bd..2ebdac16b31aec3ec283c0285a4dcfa67f0a5157 100644
+> --- a/hw/virtio/Kconfig
+> +++ b/hw/virtio/Kconfig
+> @@ -136,3 +136,8 @@ config VHOST_USER_TEST
+>      bool
+>      default y
+>      depends on VIRTIO && VHOST_USER
+> +
+> +config VHOST_USER_RTC
+> +    bool
+> +    default y
+> +    depends on VIRTIO && VHOST_USER
+> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+> index 415e359e9fc79b6b1adbbcfc4f87a7106ef1d4a6..e0566a60de7989c4048956e268f151659467fe34 100644
+> --- a/hw/virtio/meson.build
+> +++ b/hw/virtio/meson.build
+> @@ -27,6 +27,7 @@ if have_vhost
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files('vhost-user-snd.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SPI', if_true: files('vhost-user-spi.c'))
+> +    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RTC', if_true: files('vhost-user-rtc.c'))
+>  
+>      # PCI Stubs
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_TEST'],
+> @@ -43,6 +44,8 @@ if have_vhost
+>                           if_true: files('vhost-user-input-pci.c'))
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SPI'],
+>                           if_true: files('vhost-user-spi-pci.c'))
+> +    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_RTC'],
+> +                         if_true: files('vhost-user-rtc-pci.c'))
+>    endif
+>    if have_vhost_vdpa
+>      system_virtio_ss.add(files('vhost-vdpa.c'))
+> diff --git a/hw/virtio/vhost-user-rtc-pci.c b/hw/virtio/vhost-user-rtc-pci.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..449368d27009acde20aa4af2542a912ac8b82cbc
+> --- /dev/null
+> +++ b/hw/virtio/vhost-user-rtc-pci.c
+> @@ -0,0 +1,70 @@
+> +/*
+> + * Vhost-user RTC virtio device PCI glue
+> + *
+> + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/virtio/vhost-user-rtc.h"
+> +#include "hw/virtio/virtio-pci.h"
+> +
+> +struct VHostUserRTCPCI {
+> +    VirtIOPCIProxy parent_obj;
+> +    VHostUserRTC vdev;
+> +};
+> +
+> +typedef struct VHostUserRTCPCI VHostUserRTCPCI;
+> +
+> +#define TYPE_VHOST_USER_RTC_PCI "vhost-user-rtc-pci-base"
+> +
+> +DECLARE_INSTANCE_CHECKER(VHostUserRTCPCI, VHOST_USER_RTC_PCI,
+> +                         TYPE_VHOST_USER_RTC_PCI)
+> +
+> +static void vhost_user_rtc_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+> +{
+> +    VHostUserRTCPCI *dev = VHOST_USER_RTC_PCI(vpci_dev);
+> +    DeviceState *vdev = DEVICE(&dev->vdev);
+> +
+> +    vpci_dev->nvectors = 1;
+> +
+> +    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
+> +}
+> +
+> +static void vhost_user_rtc_pci_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
+> +    PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
+> +    k->realize = vhost_user_rtc_pci_realize;
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> +    pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
+> +    pcidev_k->device_id = 0; /* Set by virtio-pci based on virtio id */
+> +    pcidev_k->revision = 0x00;
+> +    pcidev_k->class_id = PCI_CLASS_SYSTEM_RTC;
+> +}
+> +
+> +static void vhost_user_rtc_pci_instance_init(Object *obj)
+> +{
+> +    VHostUserRTCPCI *dev = VHOST_USER_RTC_PCI(obj);
+> +
+> +    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
+> +                                TYPE_VHOST_USER_RTC);
+> +}
+> +
+> +static const VirtioPCIDeviceTypeInfo vhost_user_rtc_pci_info = {
+> +    .base_name = TYPE_VHOST_USER_RTC_PCI,
+> +    .non_transitional_name = "vhost-user-rtc-pci",
+> +    .instance_size = sizeof(VHostUserRTCPCI),
+> +    .instance_init = vhost_user_rtc_pci_instance_init,
+> +    .class_init = vhost_user_rtc_pci_class_init,
+> +};
+> +
+> +static void vhost_user_rtc_pci_register(void)
+> +{
+> +    virtio_pci_types_register(&vhost_user_rtc_pci_info);
+> +}
+> +
+> +type_init(vhost_user_rtc_pci_register);
+> diff --git a/hw/virtio/vhost-user-rtc.c b/hw/virtio/vhost-user-rtc.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..88b0c70b903363fc9ac7ccb65a1b1755e095c6bc
+> --- /dev/null
+> +++ b/hw/virtio/vhost-user-rtc.c
+> @@ -0,0 +1,64 @@
+> +/*
+> + * Vhost-user RTC virtio device
+> + *
+> + * Copyright (c) 2025 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
+> + *
+> + * Simple wrapper of the generic vhost-user-device.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/virtio/vhost-user-rtc.h"
+> +#include "standard-headers/linux/virtio_ids.h"
+> +
+> +static const VMStateDescription vu_rtc_vmstate = {
+> +    .name = "vhost-user-rtc",
+> +    .unmigratable = 1,
+> +};
+> +
+> +static const Property vrtc_properties[] = {
+> +    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+> +};
+> +
+> +static void vu_rtc_base_realize(DeviceState *dev, Error **errp)
+> +{
+> +    VHostUserBase *vub = VHOST_USER_BASE(dev);
+> +    VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
+> +
+> +    vub->virtio_id = VIRTIO_ID_CLOCK;
+> +    vub->num_vqs = 2;
+> +    vub->config_size = 0;
+> +    vub->vq_size = 1024;
+> +
+> +    vubs->parent_realize(dev, errp);
+> +}
+> +
+> +static void vu_rtc_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
+> +
+> +    dc->vmsd = &vu_rtc_vmstate;
+> +    device_class_set_props(dc, vrtc_properties);
+> +    device_class_set_parent_realize(dc, vu_rtc_base_realize,
+> +                                    &vubc->parent_realize);
+> +
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> +}
+> +
+> +static const TypeInfo vu_rtc_info = {
+> +    .name = TYPE_VHOST_USER_RTC,
+> +    .parent = TYPE_VHOST_USER_BASE,
+> +    .instance_size = sizeof(VHostUserRTC),
+> +    .class_init = vu_rtc_class_init,
+> +};
+> +
+> +static void vu_rtc_register_types(void)
+> +{
+> +    type_register_static(&vu_rtc_info);
+> +}
+> +
+> +type_init(vu_rtc_register_types)
+> 
+> ---
+> base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
+> change-id: 20260416-vhost-user-rtc-ce8ff0377356
+> 
+> --
+> γαῖα πυρί μιχθήτω
+> 
+> 
 
---0000000000006fc226064f8e9f86--
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
