@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80EDF8E486
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 23:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C55F8E48F
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 23:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDVnB-0007g8-Er; Thu, 16 Apr 2026 19:06:37 -0400
+	id 1wDVo5-000825-RU; Thu, 16 Apr 2026 19:07:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDVn9-0007fy-QD
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:06:35 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1wDVo3-00081x-3m
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:07:31 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDVn8-0005ja-CQ
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:06:35 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c79467f128cso17740a12.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 16:06:34 -0700 (PDT)
+ id 1wDVnz-0005uY-UY
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:07:30 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c6e2355739dso25989a12.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 16:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776380793; x=1776985593; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776380846; x=1776985646; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CZhBS2K7rFqQDlqNU0wfiHvCdwY2ra4Pfyk0+ZCu0kc=;
- b=o5bBKOULJzXl/TxlPuH+u9dnWUOqPeLEE9Yx6KGeqNeB6GTrZixoVNxhCN68DuM6VQ
- MgtduBV3jWEkUoSNRu7a9VDD+ZACVCTq7uO+iv9+lBaVMQNVrveTuIYDJbe9g8smhPfJ
- +nuyZhbq3UyXagjARgorXrBvd/DWTj3Y+774puzJgBzzOC95P9MLPB+D9rcwFOagmS3u
- 6GWMAKsDyiTT/oxWKd8fDIv/KXAMovuWOnkOSCMC+WT6fvnRkwgDd2WpxxWjDXQI9aY4
- hFJ+UejX6iFGwOelhP/qV5kOytkTIxWs+nZgm11Ps4pNyGY1jchnvl3hZvCXbouM0oKJ
- pMnw==
+ bh=PYezGaLfKIsjTRMYKShj9GRcmD/igR3F5YkF1vZXRRk=;
+ b=MnjYbu4F6UId6J+iR/lt4UbHVEgTIrx6FeUEakxOuh1kXhw6kgMq/yMT33vbA+B4qr
+ IfIYX+PPxRbSYXLttysEMoX7Ai5MM5WXmhiDgxBgWDNIjm1fN7Kfo/2Q8WufgW6HGqhu
+ R6VLJAkxv4NPLbLgerT954FgBWnjbbXMKK/FZN1LnqTfbMCog3ESyXGiUIdv/xqOddY0
+ U5iFkjp2OapwFll2H6wjk3gwlkKUbhtYIvQuxm+5iX8d54aqGHU7x1WFbnKVEFpU4Ze2
+ XqQFqpYX1XObp/DkzI4dXPm8j4ndtrteKGbptKePOUt6tlzAg5IxRNX5pw0kpVu0DAaH
+ Iz3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776380793; x=1776985593;
+ d=1e100.net; s=20251104; t=1776380846; x=1776985646;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CZhBS2K7rFqQDlqNU0wfiHvCdwY2ra4Pfyk0+ZCu0kc=;
- b=iBxK4x6zhfGi0LGC5FBdfifZXQCeHDtQk49H9yGRKBuIyjTFh6Q106Xnk04XmusU+p
- fVOjSu7IUkel7lP6r8SX30pObY57EHzkh28j40sXIp9sX1e0gbYAID02ieWohHl+GTH2
- malWhb1iZEQscH8pv8F6GWFmII9pPQUSCPbO8DnxmCgIu+0FzsYfEDagHI34WrTU7ItM
- GKVibHkp6Nw8Ao1b4AwaPVw9e8fzVv1t0goTh00BHrE8FEqpyk0zdtQrS/SuhAxkehcg
- d3i6VdQ0feLOzTzhpEeaRsS3Ut6r4781K9y1p0X8Hb6S6aJmYI57QXfjRWtcJIu6eK1p
- ja3g==
+ bh=PYezGaLfKIsjTRMYKShj9GRcmD/igR3F5YkF1vZXRRk=;
+ b=V7xAhY8VlSnIBBAS+iUcRVtUhLHzVtoS6tAK4RV7vO/Gj9Hy09ggV1xgAvJp1ElciH
+ f8yb8J7FeD6YElBbWQp8hpDkUMUTNU0r3X0BbsVI3ksU1iINPblGmHXbI6M+zGzaUDre
+ Dxs4picWoZQUhxkPWl7xAqVS505XKM9y9XOvzsmzNHj61OU+dTC4zMiWYJpAhmws71/R
+ T6KWASrNdFG69pB9w2YErbemsyZwDxkdpbUvqNSzFWbA8yFe0oOmCnJ8XPiU2J2P9eV9
+ Gp/ZtucJy6PudFkbGJqnC2+otXs5d0gO3HvgwGhQTbh9jgiz3K/VnlqBTE9Nt+e/yfO4
+ +fRg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8C7mwYcwnvKSlkaC2//0NfFNmlPF2dGsOWTeHwLFMRUK5wspOpMdY25pI+P6GXkQBp/or9MEt1kTnL@nongnu.org
-X-Gm-Message-State: AOJu0YxvNTxxRQpnzoiuqxc/yQyREwdCFGF2wIj2oSukxYHroLEZSuwU
- VGz/FPbKZ87kPeGDt+8FW7GaQmpjGpf/RKGThbdF9r68z1ejISAEliPYtDzq9Z8B4TM=
-X-Gm-Gg: AeBDieuUmJO6icpVYjkazJZDE0E2Nmagfu9Kf8iX/ubWAbBX32xNRZsV0lUqgOTz3eB
- wU7SqlrWwTfMfCun5B1cJ8wjXEU+x4AACHGysmSDm6MyFYzyXiALszsnJxDAtYVL2jJT4L7f4qE
- 0J+qJymHii7KGdmw7friH13rnbnZIfLR6Z57wUtnPIJ5VUINfp+/BCogzPOYZppDmzzOGrh9eJB
- TcD+TSMhabvMAQ3klmybOlMWcH8fUoG+GrnMCepFeL4CWOt/eqqxo5en378ZErtiVIdgI9uh8sZ
- 6jqGMLNgYzUwuPB7qZAsd+yCYZsKhN57rraSkhfs2AcwEaPXbntHbNPTee3n99mz92P9y+shQFg
- argo7u6SySV8zgtFpiEHaTd/FF5slxbu80VGejLI3YswdWaKDcqnyoAL4quDvWgVSga7K6LYF2G
- pyIUqLNfnG9bXtghP4pOjT31Nthk01pTUjj5REXD4m6KGaqo1djOto7+qKPMnexhcl099V0Ycra
- ucT3+cF92o9JxD12bJURsLpMcradr3Rts2C4UeCnrnQiUfG6DgPh/rU8rLtWfw4oA==
-X-Received: by 2002:a17:902:db10:b0:2b2:4a9a:b149 with SMTP id
- d9443c01a7336-2b5f9e79dcfmr3647545ad.9.1776380792675; 
- Thu, 16 Apr 2026 16:06:32 -0700 (PDT)
+ AFNElJ9MIJxYKIXCbfVkm9+azBttsB8bJ/X7O5OuFM8ULYzPR11Oj0ttTGNsfxm0sBoW1dAamsjQk/wO7xtk@nongnu.org
+X-Gm-Message-State: AOJu0YxfWOYxLB4zrGRRYV/5kbgeCC/VzLTi9E0nMMb1XZ1Bjpu8zkF4
+ ZHgCM44p1MkfuvRsLJsXN1DaH7pJumQEhtatChoTNrqqM21rrXqWAXFopL1TxmlfhRA=
+X-Gm-Gg: AeBDieu4W+O8QeU/V+JcS20NoZ/SvdiZDxUhQ5YA1Z+9TD7O3mAgpp2T5mKNVYa0z6I
+ B5xT3si1ZlWNq8elnKU8M6Fk1Y4kQReOF5CP81pBm41T2+/SZet8uRPR3XufFzhzn/q0offd80K
+ j8MEAKOz2U9SCZoPfQyBn3F7Giu9f7Y/9F0/BeKFWptQyage7Wl2Kp/FAA3arV92lDC86Ogy9LU
+ 17fb/ESHbKRS56kwBg6OgNipJz8bxzbRoeR4Hpehc7i4eMmS4QVrmB0+SUO1TgJd8TBEfQ+yME0
+ h84RmWIUqNEIWjbJ6JBsdc7Nqkp5cUn6fhVCA+FQHdjUOcTimVstHMt/my9/BMiFv0QfjybHvk1
+ NoniNBwc0qF6nk6OZUL4QQykvOkWP6zQ3DnMG4hzPtqMe61rblNMf42tZAABKLObMs3O61VMyYK
+ plWPfkWShYOOAZQfw64T9/mScOGQKtLiwqQtA2nTTgVJUr3uMALXEbb9hrQGbsFjhtNvoVrFkS2
+ qeTi5Mmy07wcC+Bo4X5fhZNn4tffysxLAJgk7OHKJHY5c2aFbmQVeoWkkk+6KCbZA==
+X-Received: by 2002:a17:902:7248:b0:2b4:696b:7bb7 with SMTP id
+ d9443c01a7336-2b5f9e9a539mr2285925ad.15.1776380846336; 
+ Thu, 16 Apr 2026 16:07:26 -0700 (PDT)
 Received: from ?IPV6:2401:d002:dc0f:2100:a60a:7c34:dd75:e66c?
  (bg30dj02y68bx09myf73.ip6.superloop.au.
  [2401:d002:dc0f:2100:a60a:7c34:dd75:e66c])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fa4716a8sm825655ad.28.2026.04.16.16.06.29
+ d9443c01a7336-2b5fa59dda1sm645585ad.58.2026.04.16.16.07.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 16:06:32 -0700 (PDT)
-Message-ID: <dbe36ccf-6f89-4aca-8c45-f517383931c2@linaro.org>
-Date: Fri, 17 Apr 2026 09:06:26 +1000
+ Thu, 16 Apr 2026 16:07:25 -0700 (PDT)
+Message-ID: <bcbfb47e-022b-4db5-90d9-a91599ed227f@linaro.org>
+Date: Fri, 17 Apr 2026 09:07:20 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] target/mips: Inline cpu_ld/st_mmuidx_ra() calls in
- LD/ST Multiple
+Subject: Re: [PATCH v4 4/4] target/mips: Check alignment for microMIPS pre-R6
+ LD/ST multiple
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
 References: <20260416210508.30686-1-philmd@linaro.org>
- <20260416210508.30686-4-philmd@linaro.org>
+ <20260416210508.30686-5-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260416210508.30686-4-philmd@linaro.org>
+In-Reply-To: <20260416210508.30686-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,15 +112,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/17/26 07:05, Philippe Mathieu-Daudé wrote:
-> In preparation of removing the cpu_ld*_mmuidx_ra() and
-> cpu_st*_mmuidx_ra() calls, inline them. Expand MO_TE to
-> mo_endian_env(env) in gen_ldst_multiple().
+> Pre-REL6 microMIPS requires alignment while REL6 microMIPS does not.
+> Pass the MemOp alignment as argument to gen_ldst_multiple(). Keep
+> using MO_UNALN for REL6 decoder but use MO_ALIGN for the pre-REL6
+> part.
 > 
+> Fixes: 3c824109da0 ("target-mips: microMIPS ASE support")
+> Reported-by: Richard Henderson<richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/mips/tcg/ldst_helper.c             | 40 +++++++++++------------
->   target/mips/tcg/micromips_translate.c.inc |  2 ++
->   2 files changed, 21 insertions(+), 21 deletions(-)
+>   target/mips/tcg/micromips_translate.c.inc | 16 +++++++++-------
+>   1 file changed, 9 insertions(+), 7 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
