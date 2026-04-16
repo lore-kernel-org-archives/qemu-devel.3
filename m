@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F65CF8D761
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 18:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B9CF8D762
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 18:16:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDR7I-0005yO-Fn; Thu, 16 Apr 2026 14:07:04 -0400
+	id 1wDRFV-0007w6-3n; Thu, 16 Apr 2026 14:15:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDR7G-0005yA-Ic
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:07:02 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDRFT-0007vt-Iv
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:15:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDR7D-0002QS-Hi
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:07:02 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDRFR-0008Ur-A8
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 14:15:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776362818;
+ s=mimecast20190719; t=1776363326;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wuy06UwPjfNOSCYfDjIvejbNXvtdNyLWV2cR2ScV7XY=;
- b=Z6C+IHs13O81T9LeBP4HuLA8Rmdu3c6HczbocRJ7yuZWahKaFnXECnTOYcRSE9fy/43mPO
- 6TKjj/1YbbeUq7DSZHJLj+jZcvsWvFhoHkNAGY6mAQdRRCppc5Eh4SPCCIWO5fySPBaPHI
- zPFbKH8S2B/il7HeRGme5bOTTp7TjVI=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Aq/S0MebFgjU792o/q35DiVbEF+cp7GafhuA3o5DMb8=;
+ b=aIfe5zGLoaX/gT8RORd8ukk0KUZ1PUx3TrRunpJkZndP69iGn1Shz+KhlWhI0JgDZ1H8bh
+ lAhWXY29HgEoU1SFPTm7BXDYeefpbd1tu+ve1rgb3vZf87uIRxAr9AHfOlKDK0djaw5aO0
+ kXIMJuaZ8QPujLS6enzSO7tW+/3Dhos=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677--5nDmRfiM72UXMNv6uVbNg-1; Thu, 16 Apr 2026 14:06:55 -0400
-X-MC-Unique: -5nDmRfiM72UXMNv6uVbNg-1
-X-Mimecast-MFC-AGG-ID: -5nDmRfiM72UXMNv6uVbNg_1776362815
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8ae6aa148a7so32476826d6.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 11:06:55 -0700 (PDT)
+ us-mta-449-uPDxUEuBNXi5A-gK5pjoFw-1; Thu, 16 Apr 2026 14:15:21 -0400
+X-MC-Unique: uPDxUEuBNXi5A-gK5pjoFw-1
+X-Mimecast-MFC-AGG-ID: uPDxUEuBNXi5A-gK5pjoFw_1776363321
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-794d80fea59so176075467b3.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 11:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776362814; x=1776967614; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776363321; x=1776968121; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wuy06UwPjfNOSCYfDjIvejbNXvtdNyLWV2cR2ScV7XY=;
- b=WUPowVHQZGqiIxg2v8E9im/DSL0uvTFgQ5y6B1oGIVKT5d0+NswfVVqv3iWKkT+6NP
- 817zOTtHy2O6TQxmlhEere+8D9ZyhGjlMZDlDUPd91oJJ9a0OowJffd3/x+vQArMSuTO
- 1wSWY43eu/WKgVC4ESBV3ki/cmXxfV2Xq3vBERxnWhrluk0th0kEpxY97Pb6iZkDHX1J
- GImtbnuTd9v26rdkDLDyNsewgtDlW8AhF9B9vL56W637mY2Yw5ySohbmFzaRTfihCdPL
- 6I0Ooo4HJ+MDfXW6EWQ/xH+M6xOMIXlwQ+hwC+obCyGdPZhJV3o71puI8pM+1LKuCPrS
- xYkw==
+ bh=Aq/S0MebFgjU792o/q35DiVbEF+cp7GafhuA3o5DMb8=;
+ b=osD6oY6fWPtzoLznMdYhgI4fKwrAlTi+yRyYeW5fMxI3fAywLiuA7Jr0sri574tONg
+ MJlzz08ATe7bIrk9AWwM7/5zh2l+FF3jd3Vuz8TLRRLPH5AYiwklhcMVbjBCL06W+KxA
+ Fj+VJz3RgETgrp+poJsJxsAQ6ntY/FwBBDtyjdXwKjUA5bIwL1F82gdMW9oYPAQ+Am3l
+ +EvjyxD+6EGQd/H+oX4kJ/U9ZAv//bRscxOxQlMMzv0tRfclInxzg3cibnX6afYCLCNj
+ Y+DnVQZatqjUWY/mStcvX96XZe/DJcuqy39+PhLopFvo9x9c1n92vpEZVeG2tTfAeoZd
+ yrOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776362814; x=1776967614;
+ d=1e100.net; s=20251104; t=1776363321; x=1776968121;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wuy06UwPjfNOSCYfDjIvejbNXvtdNyLWV2cR2ScV7XY=;
- b=XWugtDIwL/3HFa8B/L/eMAIyBpHjiB58iHccY+eunvGMu+uDDfOnWx+tmxho5iqvlZ
- jhOAA4czbPV0ZLhd7pYGua8SWoMVC48SMvTjA+5Essit2fWRYGSOLsiwJBAtxAzuClOs
- UsUAr+E8tlvGnafRQCa8oIL8MMPEPuEBgTcwyyfJ0J7eO53TZvLTBcWusWTU78RBLdTZ
- YdZhoCRjzjZSi4OYN8XSr3xj41dwZXJYo+8lF/SVffTAOWo6aorTHmn4pCIYoiDLQ+UB
- JdY2jDjHf8U0/U91Eja9MiGvH68knq0henRwsxSc4Ziyd4zXPs06PsQtetBl8QzAWPVL
- ambw==
-X-Gm-Message-State: AOJu0Yx788kO97qW4/4rIGJkN2NuaVAck9woynv3PL7PLUx3RkuCfjag
- 25GLO3xEXotzHe/Ec/uQe75cj3nqBDjSDbV2+H/cb+a/+E7WrljLjKqLzuEun4y/HU7togC6Mw8
- Gi4esIw4seNtfQI3xifZ/ZeCgWHI3unnTqfSVvN3prPUDxLx9MUYZCreu
-X-Gm-Gg: AeBDietnlTX7s950Ilbt2sIuETkp/gwqw+QneD774KeyjALXoHcoMC0zwkPnWgzwcmn
- shRn0jSIQQuuijpR8JA7FK0x/ywU5QO1aoNX7j4FS9uu2joHTA3+zYhJmh6jbLUJTBYQ4htON7J
- 7njWTK5lzD6d+P86z8AHNXH78kCfnl9lKFyC2SVuRBwp0Dx1nwbpoa8wh1N2T3gA3QiML3nT36p
- +KfKkANYb1taAL85t5uLEGqwNoMUlVylQ8j2UPqHojydNEIlXRGSFbP3ivIPFkW8mhAJY7rF94a
- dZshV9/ej+/RwHvYDqH0zP6iZN/R0fkMyFRcAeZ7aQmHzn0E2u4Ln7rw51bm5WH14WC2HPB3g4T
- mMzVoLuQYkb9X9EdNkJ3W9DY78UdHQDkrwBPhM3u4iJc++Aia9IQW3OA/OA==
-X-Received: by 2002:a05:6214:8011:b0:89c:6692:1d83 with SMTP id
- 6a1803df08f44-8b025d3ee6cmr4004806d6.3.1776362814510; 
- Thu, 16 Apr 2026 11:06:54 -0700 (PDT)
-X-Received: by 2002:a05:6214:8011:b0:89c:6692:1d83 with SMTP id
- 6a1803df08f44-8b025d3ee6cmr4004126d6.3.1776362813833; 
- Thu, 16 Apr 2026 11:06:53 -0700 (PDT)
+ bh=Aq/S0MebFgjU792o/q35DiVbEF+cp7GafhuA3o5DMb8=;
+ b=Pol1c+n+l94GWN+hQ4/4C+Fb+kZWIz3/F9HcT1Iw0NOFunau7WAKKiWDysg6yVVapM
+ T8P0D2qG6/8MPtRB5bFgLSM6B6tgZ7C66403xsMhdowtCpfl12yz0Xk6QptJcldrFk6Q
+ 6QznTny8+FBnOoBuOrzTWhcA7R33oiACo6dBZ7ENGWDe6zrg2MDZgcW+exZ74SR27vIl
+ 9Vr6gIijN5pyMJUCBBUZzfgg6hVbBQ0ww0XGUgfbB8MK6ocwiI65mH1oJ+gUI1Rn9KNr
+ tui/5rDTkeoLx1JkG22d3Gfc64dYfOn9/iHBrt3rEoqVtGJvsAnA+cw662nGsOqOqiZp
+ 4jbA==
+X-Gm-Message-State: AOJu0Yxo7hNxLiMumAsqSb7U0ATmz9mdtQdKuf4MuC5CUo7bx5tYecwH
+ dO/tK82Aw5D0+D/L+1H9pShVdbu5B4bGK4su2Lm6g79rqMg1lh9VDa3o+m+WCXllFXnC4YpyqhV
+ 8CTxMb6j185MrP8Tuydojoz2UkcE+x5VcOHNeMwHBaelFLs+wCE5gE0YL
+X-Gm-Gg: AeBDieuSp/ytF3y1Ute0MQOPDePfIOcqM7F9KgsfhisCYzK5FTvRMdVjrGCRNYr+2oA
+ 08Dh2hXOqidTJnnGYfGdxAXMfF0KPfmF4DXuoBonf1Ebr6aYjypRdT1Z7hoeUh9Ue0VZ9nnRCTK
+ t90iAE6PTjY9qr6ktxON91dSRqF+IXaUPW58INe94BvTVPYgJybm8bjiOsUmTH+XC/MDF3lxjIz
+ mBUO8TlqK+rnfmZd3T7yx3dbdQj7bGCRncu/s5iVgkllQp5mms6IYvwW3jvPcMzTyV1pMq1gpK1
+ 3ws5uldgmHeP0I0hOVxd0F+6GNFPEvry2+2XNyQtv1LxOD1idm1KWEkqbSEichfH2B7vLqfdAyb
+ 4+6UBGaUSV2ZTKF72tqHC+hK3qKeq5vuBXC6Bx0Ux6+FL1SBRmlTyZSaeQQ==
+X-Received: by 2002:a05:690c:6503:b0:7b2:1bf1:801b with SMTP id
+ 00721157ae682-7b9e16fe6b2mr1824797b3.5.1776363320755; 
+ Thu, 16 Apr 2026 11:15:20 -0700 (PDT)
+X-Received: by 2002:a05:690c:6503:b0:7b2:1bf1:801b with SMTP id
+ 00721157ae682-7b9e16fe6b2mr1824267b3.5.1776363320076; 
+ Thu, 16 Apr 2026 11:15:20 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ae6ceb40a5sm41469196d6.42.2026.04.16.11.06.52
+ 00721157ae682-7b7667f8de7sm27708707b3.19.2026.04.16.11.15.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 11:06:53 -0700 (PDT)
-Date: Thu, 16 Apr 2026 14:06:51 -0400
+ Thu, 16 Apr 2026 11:15:19 -0700 (PDT)
+Date: Thu, 16 Apr 2026 14:15:17 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
+ Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: Re: [PATCH 08/14] migration: Make qemu_savevm_query_pending()
- available anytime
-Message-ID: <aeElO8Wkkbqh439l@x1.local>
+ Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ Hyman Huang <yong.huang@smartx.com>, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 09/14] migration: Move iteration counter out of RAM
+Message-ID: <aeEnNQO_c6LzM2FD@x1.local>
 References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-9-peterx@redhat.com>
- <adfegWEjLcGmDTPi@fedora>
+ <20260408165559.157108-10-peterx@redhat.com>
+ <8734136atk.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <adfegWEjLcGmDTPi@fedora>
+In-Reply-To: <8734136atk.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -123,132 +124,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 09, 2026 at 07:15:28PM +0200, Juraj Marcin wrote:
-> On 2026-04-08 12:55, Peter Xu wrote:
-> > After qemu_savevm_query_pending() be exposed to more code paths, it can be
-> > used at very early stage when migration started and this may expose some
-> > race conditions that we don't use to have.  This patch make it prepared
-> > for such use cases so this API is fine to be used almost anytime.
-> > 
-> > What matters here is, querying pending for each module normally depends on
-> > save_setup() being run first, otherwise modules may not be ready for the
-> > query request.
-> > 
-> > Consider an early cancellation of migration after SETUP status but before
-> > invocations of save_setup() hooks, source QEMU may fall into CANCELLING
-> > stage directly from SETUP (not ACTIVE, which is the normal use case), in
-> > which case save_setup() may not have been invoked and modules are not
-> > ready.  However qemu_savevm_query_pending() may still be used in QMP
-> > commands like query-migrate and causing crashes.
-> > 
-> > Guard such use case by introducing a boolean reflecting the availability of
-> > vmstate save handlers on correct completions of save_setup()s.  So far,
-> > only protect qemu_savevm_query_pending() with it.  Logically other hooks
-> > face similar concern, but most of them shouldn't be reachable from random
-> > code path except migration thread so it should be fine.
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/migration.h |  8 ++++++++
-> >  migration/savevm.h    |  2 +-
-> >  migration/migration.c |  2 +-
-> >  migration/savevm.c    | 37 +++++++++++++++++++++++++++++++++----
-> >  4 files changed, 43 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/migration/migration.h b/migration/migration.h
-> > index b6888daced..e504df6915 100644
-> > --- a/migration/migration.h
-> > +++ b/migration/migration.h
-> > @@ -522,6 +522,14 @@ struct MigrationState {
-> >       * anything as input.
-> >       */
-> >      bool has_block_bitmap_mapping;
-> > +
-> > +    /*
-> > +     * This boolean reflects if the vmstate handlers have been properly
-> > +     * setup on source side.  It is set after vmstate save_setup() hooks
-> > +     * are successfully invoked, and cleared after save_cleanup()s.  It
-> > +     * reflects a general availability of vmstate hooks on the source side.
-> > +     */
-> > +    bool save_setup_ready;
-> >  };
+On Thu, Apr 09, 2026 at 07:14:15PM -0300, Fabiano Rosas wrote:
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index e5b7217bf5..686162643d 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -1136,8 +1136,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+> >      RAMBlock *block;
+> >      int64_t end_time;
 > >  
-> >  void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
-> > diff --git a/migration/savevm.h b/migration/savevm.h
-> > index 96fdf96d4e..04ed09cec2 100644
-> > --- a/migration/savevm.h
-> > +++ b/migration/savevm.h
-> > @@ -42,7 +42,7 @@ int qemu_savevm_state_resume_prepare(MigrationState *s);
-> >  void qemu_savevm_send_header(QEMUFile *f);
-> >  void qemu_savevm_state_header(QEMUFile *f);
-> >  int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
-> > -void qemu_savevm_state_cleanup(void);
-> > +void qemu_savevm_state_cleanup(MigrationState *s);
-> >  void qemu_savevm_state_complete_postcopy(QEMUFile *f);
-> >  int qemu_savevm_state_complete_precopy(MigrationState *s);
-> >  void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index bb17bd0e68..a9ee3360e1 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -1283,7 +1283,7 @@ static void migration_cleanup(MigrationState *s)
-> >      g_free(s->hostname);
-> >      s->hostname = NULL;
-> >  
-> > -    qemu_savevm_state_cleanup();
-> > +    qemu_savevm_state_cleanup(s);
-> >      cpr_state_close();
-> >      cpr_transfer_source_destroy(s);
-> >  
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index b75c311a95..1d3fce45b9 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -1387,7 +1387,8 @@ int qemu_savevm_state_non_iterable_early(QEMUFile *f,
-> >      return 0;
-> >  }
-> >  
-> > -static int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-> > +static int qemu_savevm_state_setup(MigrationState *s, QEMUFile *f,
-> > +                                   Error **errp)
-> >  {
-> >      SaveStateEntry *se;
-> >      int ret;
-> > @@ -1409,6 +1410,13 @@ static int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-> >          }
-> >      }
-> >  
-> > +    /*
-> > +     * Logically, it should be paired with any hook being used who needs to
-> > +     * load_acquire() the flag first.  So far, only save_query_pending()
-> > +     * uses it.
-> > +     */
-> > +    qatomic_store_release(&s->save_setup_ready, true);
+> > -    qatomic_add(&mig_stats.dirty_sync_count, 1);
+> > -
+> >      if (!rs->time_last_bitmap_sync) {
+> >          rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
 > 
-> What other savevm functions would benefit from this? Would it make sense
-> to include them in this patch/series?
+> Tangent: aren't these updates to time_last_bitmap_sync racy with the
+> sync from the throttle code?
 
-I don't yet know any other hook would need this.
+It looks fine to me.  This variable (along with log sync) should require
+BQL, so I expect normal form of race condition won't happen.
 
-AFAIU, the rational is most of the hooks should only be invoked in
-migration_thread(), where it's always guaranteed that save_setup() is
-always done before hand.
+But maybe you meant when migration_bitmap_sync() can be invoked by the
+timer kick-offed in cpu_throttle_dirty_sync_timer_tick()?
 
-Here, when we make save_query_pending() to be more flexible to be able to
-get invoked in QMP handlers, then it opens the races and only that hook is
-special.
+Indeed that could happen together with the migration thread trying to sync
+by other reasons, but so far I see no issues: time_last_bitmap_sync might
+get updated sooner, but it should always reflect the time that whoever
+synced the last, and when both want to do it they contend on BQL, which
+looks ok.
 
-We actually have another option, which is to keep another cached variable
-for global remaining data, then only update it in migration_thread().  Then
-it will keep the rational as before.
-
-But then that var will only be used for this purpose, and I thought it
-might also be confusing: remember that we have per-module counter caches
-already for querying the remaining data fields, like what RAM and VFIO do.
-
-So I chose the current approach.  Let me know what you think.
-
-Thanks,
+So the expectation is that timer just makes sure sync happens slightly more
+frequently, where QEMU src might used to sync toooo less times on huge VMs
+(because each iteration took tooo long).
 
 -- 
 Peter Xu
