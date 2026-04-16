@@ -4,94 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ECFDF433CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 00:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06177F433CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 00:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDAMw-0002ch-CM; Wed, 15 Apr 2026 20:14:07 -0400
+	id 1wDAQ4-0003Ic-NN; Wed, 15 Apr 2026 20:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDAMn-0002bo-PV
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:13:59 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wDAQ2-0003II-Bc
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:17:18 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDAMd-0001bA-0l
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:13:49 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-35da9c0c007so6371361a91.2
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 17:13:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wDAQ0-0003Eg-Mr
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:17:18 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b9e00649769so451728166b.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 17:17:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776298635; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ODktnlOhgYRlE3U0Fsn0wPRGFah40e9fQvDWyjZc+XQzEJfWx9MRkZHHhbH8zhOQtI
+ 9IY0OpqdZ06wEY0iH+lt1QOWylQPnpf9GN+N13/hnmHxp5x/kdCoqzY9HAphEmOeXH2g
+ zNNpoyWql+JrQKHGAc5p400SX2H36SbrN2t8yPhBuMFI05STQTPyXlOZpBnQSTpRUiGr
+ D4H8GRDiILsZQjglqtansrIBQAJ8Kjc602+Lm847FW05NQhDIJI43ST17kCPUcljgu/Z
+ eYoKV9LvwSRFTlYmqI/4SwU6EilbLLY/fJEgaHpeBB65tid+tSveIRFn4fgPRkDBuzi8
+ q7+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=mcbOg68yttaqURDn2If0DJhKbrCknjQGSBUQttd01mU=;
+ fh=ECBz6U0tu6q70ZdKKpS1JHd+/WXNYToi6haWKa2Zu0g=;
+ b=inM0BvrAcCgnKU+vy9nRAOt5TDtELCBz7biMu6iOfyBCfSJmtBmvFa7r/nV5uJ9/Tp
+ dHUYF4M/wxKok+EargWrFpU9yqTcFc2W2UvTArwZYzbvV1qTmsJNf1QXkmrVpmHKuYeu
+ 5lRneck1xOHpVPFFR4IIinJpbCxK6hxE+5S9+mKx0M3MXRVGDd+imgQG73lJGKGSkG17
+ /Rf3c4+WQJFz6ftbms33Xxeg3GGNfp2AEyQVFXArcAEbCEBEXgrYCSzhu7TchPT1bPn7
+ Kut4UpxSG6azoqudilnlGWDiUUdqYPwJraPyuHfWD2ehAcE9AUN+AuKQmoRB1ch0NBZ6
+ H8rg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776298424; x=1776903224; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lpkKDjg6Vu6h1LoOrgCu9eIJd19m+jEndX2bVajX6CM=;
- b=tPtL2W6IgriBKR414m8/TW30ceLY9bQ/vefnvNvFKAikAPKk24++LU0AYoXMnt/0Td
- /0Hye99xcvo3dZRI6X/V+LLXKNgE6WV9FQShlhDXbr8+xeUJhFWOkCf8TJvcDimqywM1
- guzuquJ84syLKd2ejUK/++wunVfgSf9gIqrdz8ekNBWunooPhe+kL0rQhp/u/i0DInkY
- ZozpKVMpjHU8FFLrlqVI9bSDgLDtMZ+xQMTXudWFu6Vacfx9vzDGS5QnuYUHLOb6c7H6
- QD9rrsqMWxAgJbWF75GfbeZVzq0q9V3iCcdMw83zneaLuu4XlDUzNrlBZdeGQIZNyoba
- ZIsw==
+ d=gmail.com; s=20251104; t=1776298635; x=1776903435; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mcbOg68yttaqURDn2If0DJhKbrCknjQGSBUQttd01mU=;
+ b=o2bwcskF1/l1EbBVlTq1UWtlWB68WWI0Qj36+Gy2lp41mwl3awdpItg9uRAOvCpn3j
+ LDVQGze444ItcwFFe5cbLOfzzT6KmRDmIbdcNtBO9GDGYBpjBV1Ndx5HMWTyYal46R64
+ SPkes92SmmFFN0njHCzUB/5Nuf3fho7k/vOV5/RODrpIGJAYI/0j9Fc8ka9gXSAhrrpv
+ 87c96dEAkI+tgr4kxxIFMSZu3cE2Z/Q//ygpxDDfn4tnYqHa+yFyJ2rI1XJAcWs6Sz+1
+ 7Ri7HNsyML9+JSpd+A50lO3u2/RPDO/j6xOIYbf+OXYFtuZWaXSyAvOwbRzUHaPgeITe
+ 33Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776298424; x=1776903224;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lpkKDjg6Vu6h1LoOrgCu9eIJd19m+jEndX2bVajX6CM=;
- b=KJf7hDN0g3C8UHikMAE4gL/ArK5tIb9BL6jfOMvMP4mS2qj25HbJjAvTmwSDSw0bHd
- 53uYHRR+N6cz7POHWnlsCZfAkxeyl9y7+RuMnhiMb9ZaW6XCvJR9Q5fYzQETq9rr4rzd
- Q96kQSz9DC4xLP68bdc3seXQlopkBxpOTKVSuqFnzuTMWnsPwPEzOlXaOYya9jT62BHR
- GvxuKPSkqQwdQzsUdn/TIEyC6kWanLf7sVjRiME6OM/sIzc4vCVCwMmZDGh/fEUSKeqN
- mSqSmkU4n5lBdCvGsndIt6McvJpISuZo6kl4QKkwtOyJ/s84MmTl95LbyZCrGkSEglZe
- rEOg==
+ d=1e100.net; s=20251104; t=1776298635; x=1776903435;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mcbOg68yttaqURDn2If0DJhKbrCknjQGSBUQttd01mU=;
+ b=bTJzSaGMGfOj6kr+lm5sQoXtw70gWXYitUdSQusTtZettXjn/kFoaUJF6PaZWLC77I
+ hapRvhXWkDHvBcup0zmblKH8EUaQhEfUcgGvFUPwPt4K0DM+HK8N5cn2MBi+1B6L8B/E
+ QgGC+pqDrOCUl/C5llQ/jpGOhNwloSlBw7c0xnNOW35gFnCdZW71hFiC4O0rcWamXevI
+ 8So1/rtFsVAZHxjC+alsUvPkIUzH9CA13zTzproJLLGuQ8zKtd9LGyf7dpJ3G64fZcef
+ DPZU8e/UZK+QwapEVZi+XiaBxLrWpN8nwtlvqUAIVQu/rJzxlLd45lzAHBhsentwHvhA
+ aFzA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8Sx7ix4wtvgUO/SK+P0tu6EbohwE2GmSso5TK3wyJR24x77Eurij9CGRA08icJ6ao25VWM/RFxI3DY@nongnu.org
-X-Gm-Message-State: AOJu0Ywj7bjs4AbTYPbs7PCPELPKy81kSlxOkKRrlR8b4i46icvDjNS8
- f6gYrdQPKextGGZ732KTIgmSVGdFQk5/MBcmc2SHXiL8s6lf1cWLYp6BE0qayO7d7LI=
-X-Gm-Gg: AeBDietMI7TBPiQR5at4aX8Ta9lAX4nyFyS6eXvaWf5fjT6ooMrb+zB4WFClXEsQIPL
- Y5dTm1ozeWuDyyxg5KLm3YUoelolbtxaxiNuDLJoR9GunfBO36uzbiOl2fpS3pPrvWRoX+MpBke
- kAtwE8KDuViCEydO3q18s6/1gRMyS8mYnTx2Ey5V3mhQkiu21HhLU4fPt++bPRmnhsEgxQY9z34
- mw9EuW+N0vI0EabTqdw+oJr8K8BE8jOksA3wl8Y+A/rP0CWyhSDVWXSf8Uab0haXH+560cS8LdZ
- z+gk+J1lCrUDxBMjnmeQqQUmCB5Xrr9bdy++Cpz9c6sbsd9T2nii/9Efisb407+IKwancYLaXDd
- 20lCGPmBKN+JNJWXovL/8QhWeCtHdMbQ8ASPyLWVdja8wJ8osrIjMwIqHx2fKuJS+169JIcVxqx
- CZ3XcRQmuvrFFxwiWZEMd370Gy8ANdSKPIWzOMfvYNznuYe8lf4olSu/6G4g5DM0tIfzxrVvt0h
- eEdJSquMZDdZh5ujHooDcXK
-X-Received: by 2002:a17:90b:38ca:b0:35d:93ff:2855 with SMTP id
- 98e67ed59e1d1-35e42763a73mr24002550a91.8.1776298423935; 
- Wed, 15 Apr 2026 17:13:43 -0700 (PDT)
-Received: from ?IPV6:2401:d002:dc0f:2100:31f2:aa94:4389:37f8?
- ([2401:d002:dc0f:2100:31f2:aa94:4389:37f8])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35fd076a563sm2020699a91.3.2026.04.15.17.13.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 17:13:43 -0700 (PDT)
-Message-ID: <34374075-e340-4294-ae43-62d1422b5029@linaro.org>
-Date: Thu, 16 Apr 2026 10:13:37 +1000
+ AFNElJ8VMAgQeVXWCjTxb9M56Var4zCchLhV/VHDDuK45ZMTrmpOkSmDaQ+vs7QbYsLGZPKec68ZKbsMYVLe@nongnu.org
+X-Gm-Message-State: AOJu0YzcXK88jBZ5PlyQ3vO/o3h4J+ZVs+/wt1JkFj8OVd0Zc/oSSQXN
+ E9N/p0U7lsQMA208ReEBYF2H10TOgIXrphkrscEMbFqauIQO4W4SVgrPcMTvzF7hp+lfnNZfZlr
+ FqTU3gPjZn11PgW+YWKaG9sB3suloHGk=
+X-Gm-Gg: AeBDiesmdaDHxEhOWd+Iwj5/3e2+KdbG2Ow+Jyw7GjOn91vUyu9XgbrEam1wmhnrsl8
+ lhLr6Yx+y8FbKRJtQJUpHzCnKUh/n20HS/bPxXn6y5TS7PamcNhMpdDtN1yBIu1ggd5jkIPCK+8
+ wwOASY8usLwXcV8E3BOry7unrTTfz5nNq9vw4hSglFDUrEm3/Tw3zKlVwcfmsVlcObeBllprk+d
+ Z192CVhMs5UemG4Wwhmt4x1T7SQeEBwOBt/0tp4CUbV/whHz2jm24iD1SGS5L+DhG+Bw4bD3E/m
+ UTz8PIu07KccNylAhpA2wqfSoPfFAqMBO1ZZAw==
+X-Received: by 2002:a17:907:9803:b0:b9e:345b:a900 with SMTP id
+ a640c23a62f3a-b9e345baa82mr587624666b.31.1776298634648; Wed, 15 Apr 2026
+ 17:17:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 4/6] target/mips: Convert MSA LD/ST.W (Word Vector)
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20260415202027.83008-1-philmd@linaro.org>
- <20260415202027.83008-5-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260415202027.83008-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260415064838.652297-1-joel@jms.id.au>
+In-Reply-To: <20260415064838.652297-1-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 16 Apr 2026 10:16:48 +1000
+X-Gm-Features: AQROBzAk_ENYIncnpfyRYu8XeRktvBIo40uqJ_r-Wd4oG7Gl-iwKp44cWyv2mvo
+Message-ID: <CAKmqyKPt02n1GmYYHL+RWTdpvkuek9UdQCdH2w6Ji8LJQsu2dg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] hw/riscv: Boot setup improvements
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, 
+ Weiwei Li <liwei1518@gmail.com>, Michael Ellerman <mpe@oss.tenstorrent.com>, 
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,158 +124,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/16/26 06:20, Philippe Mathieu-Daudé wrote:
-> Replace runtime helpers by translation.
-> 
-> Replace the legacy cpu_ld/st*_data_ra() calls by
-> tcg_gen_qemu_ld/st() which allow to respect atomicity.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/msa_helper.h.inc |  1 -
->   target/mips/tcg/msa_helper.c     | 47 --------------------------------
->   target/mips/tcg/msa_translate.c  | 20 ++++++++++----
->   3 files changed, 14 insertions(+), 54 deletions(-)
+On Wed, Apr 15, 2026 at 4:50=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
+:
+>
+> v2: Tweak commit message in patch 4, add Daniel's r-b
+>
+> The first two patches improve the boot infrastructure for riscv so
+> machines with split memory regions can load payloads into the correct
+> region.
+>
+> The second two patches improve usability when attempting to run opensbi
+> in less common situations.
+>
+> This series are prerequisites for the Atlantis machine.
+>
+> Nicholas Piggin (4):
+>   hw/riscv/boot: Describe discontiguous memory in boot_info
+>   hw/riscv/boot: Account for discontiguous memory when loading firmware
+>   hw/riscv/boot: Warn if a ELF format file is loaded as a binary
+>   hw/riscv/boot: Provide a simple halting payload
 
-Modulo new temps for store,
+I have pulled out and applied patch 3 to help, as I know this series
+and a few others from you got lost with some mailing list issues I
+had.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+In future please ping patches if you think they have been ignored,
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#if-your-patc=
+h-seems-to-have-been-ignored
 
+Alistair
 
-r~
-
-> 
-> diff --git a/target/mips/tcg/msa_helper.h.inc b/target/mips/tcg/msa_helper.h.inc
-> index 86a79bf804c..f0d31ceef29 100644
-> --- a/target/mips/tcg/msa_helper.h.inc
-> +++ b/target/mips/tcg/msa_helper.h.inc
-> @@ -436,6 +436,5 @@ DEF_HELPER_4(msa_ffint_u_df, void, env, i32, i32, i32)
->   #define MSALDST_PROTO(type)                         \
->   DEF_HELPER_3(msa_ld_ ## type, void, env, i32, tl)   \
->   DEF_HELPER_3(msa_st_ ## type, void, env, i32, tl)
-> -MSALDST_PROTO(w)
->   MSALDST_PROTO(d)
->   #undef MSALDST_PROTO
-> diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-> index 5489d8830dd..c93c0cddebc 100644
-> --- a/target/mips/tcg/msa_helper.c
-> +++ b/target/mips/tcg/msa_helper.c
-> @@ -8212,32 +8212,6 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, uint32_t df, uint32_t wd,
->   /* Element-by-element access macros */
->   #define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
->   
-> -static inline uint64_t bswap32x2(uint64_t x)
-> -{
-> -    return ror64(bswap64(x), 32);
-> -}
-> -
-> -void helper_msa_ld_w(CPUMIPSState *env, uint32_t wd,
-> -                     target_ulong addr)
-> -{
-> -    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
-> -    uintptr_t ra = GETPC();
-> -    uint64_t d0, d1;
-> -
-> -    /*
-> -     * Load 8 bytes at a time.  Use little-endian load, then for
-> -     * big-endian target, we must then bswap the two words.
-> -     */
-> -    d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
-> -    d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
-> -    if (mips_env_is_bigendian(env)) {
-> -        d0 = bswap32x2(d0);
-> -        d1 = bswap32x2(d1);
-> -    }
-> -    pwd->d[0] = d0;
-> -    pwd->d[1] = d1;
-> -}
-> -
->   void helper_msa_ld_d(CPUMIPSState *env, uint32_t wd,
->                        target_ulong addr)
->   {
-> @@ -8269,27 +8243,6 @@ static inline void ensure_writable_pages(CPUMIPSState *env,
->       }
->   }
->   
-> -void helper_msa_st_w(CPUMIPSState *env, uint32_t wd,
-> -                     target_ulong addr)
-> -{
-> -    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
-> -    int mmu_idx = mips_env_mmu_index(env);
-> -    uintptr_t ra = GETPC();
-> -    uint64_t d0, d1;
-> -
-> -    ensure_writable_pages(env, addr, mmu_idx, ra);
-> -
-> -    /* Store 8 bytes at a time.  See helper_msa_ld_w. */
-> -    d0 = pwd->d[0];
-> -    d1 = pwd->d[1];
-> -    if (mips_env_is_bigendian(env)) {
-> -        d0 = bswap32x2(d0);
-> -        d1 = bswap32x2(d1);
-> -    }
-> -    cpu_stq_le_data_ra(env, addr + 0, d0, ra);
-> -    cpu_stq_le_data_ra(env, addr + 8, d1, ra);
-> -}
-> -
->   void helper_msa_st_d(CPUMIPSState *env, uint32_t wd,
->                        target_ulong addr)
->   {
-> diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-> index 111d9eedd11..8486508f5ba 100644
-> --- a/target/mips/tcg/msa_translate.c
-> +++ b/target/mips/tcg/msa_translate.c
-> @@ -770,11 +770,21 @@ static void gen_bswap16x4_i64(TCGv_i64 dst, TCGv_i64 src)
->       tcg_gen_or_i64(dst, t0, t1);        /* dst = badcfebg */
->   }
->   
-> +/*
-> + * Byte pattern: abcd.efgh -> dcba.hgfe
-> + */
-> +static void gen_bswap32x2_i64(TCGv_i64 dst, TCGv_i64 src)
-> +{
-> +    tcg_gen_bswap64_i64(dst, src);
-> +    tcg_gen_rotri_i64(dst, dst, 32);
-> +}
-> +
->   static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
->   {
->       static const MemOp mo_atom_df[4] = {
->           MO_ATOM_NONE,
->           MO_ATOM_SUBALIGN, /* Slightly stronger than required */
-> +        MO_ATOM_SUBALIGN, /* Slightly stronger than required */
->       };
->       TCGv_i32 wd;
->       TCGv_i128 t16;
-> @@ -795,18 +805,12 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
->   
->       if (is_load) {
->           switch (a->df) {
-> -        case 2:
-> -            gen_helper_msa_ld_w(tcg_env, wd, addr);
-> -            return true;
->           case 3:
->               gen_helper_msa_ld_d(tcg_env, wd, addr);
->               return true;
->           }
->       } else {
->           switch (a->df) {
-> -        case 2:
-> -            gen_helper_msa_st_w(tcg_env, wd, addr);
-> -            return true;
->           case 3:
->               gen_helper_msa_st_d(tcg_env, wd, addr);
->               return true;
-> @@ -830,6 +834,10 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
->               gen_bswap16x4_i64(d0, d0);
->               gen_bswap16x4_i64(d1, d1);
->               break;
-> +        case 2:
-> +            gen_bswap32x2_i64(d0, d0);
-> +            gen_bswap32x2_i64(d1, d1);
-> +            break;
->           }
->       }
->   
-
+>
+>  include/hw/riscv/boot.h    | 14 +++++++-
+>  hw/riscv/boot.c            | 73 ++++++++++++++++++++++++++++++++------
+>  hw/riscv/microchip_pfsoc.c |  6 ++--
+>  hw/riscv/opentitan.c       |  6 ++--
+>  hw/riscv/shakti_c.c        |  6 +++-
+>  hw/riscv/sifive_u.c        |  3 +-
+>  hw/riscv/spike.c           |  6 ++--
+>  hw/riscv/virt.c            |  7 ++--
+>  hw/riscv/xiangshan_kmh.c   |  6 +++-
+>  9 files changed, 104 insertions(+), 23 deletions(-)
+>
+> --
+> 2.47.3
+>
+>
 
