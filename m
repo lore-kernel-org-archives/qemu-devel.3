@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F56BF8DFCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 22:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A90F8DFD0
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 22:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDUlz-00011W-Dv; Thu, 16 Apr 2026 18:01:21 -0400
+	id 1wDUyR-0002Sg-ST; Thu, 16 Apr 2026 18:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wDUlf-00010Y-Un
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:01:01 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDUyP-0002SY-TA
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:14:10 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matthieu@minio.io>) id 1wDUld-0003ln-Mk
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:00:59 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so263815e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 15:00:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDUyO-00060j-9V
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 18:14:09 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-c79662bbd2eso26462a12.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 15:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minio.io; s=minio; t=1776376854; x=1776981654; darn=nongnu.org;
- h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=BXI04NMFSSTWOtM3ULIgE7tuoWA2OYu7gaVH4mAExpQ=;
- b=KAQkMciVl9owYhf5LZmPZmAW7M4b7PFXUGCwiZruG1wJCMxtUtYPlr37DaczROMeUV
- Bcp510mBkn8Gn3D+7daRdEapFdOHarnPZSAxFcmE+FdAGO9Ig54QvjgpZnSGPUFjIaxS
- Qs86VHwuaXIjl0zEX7qY7fg3lOZmr6iR9FOScXbA/E1bPVFe+0yJDBOc3Xm/bOq1rWRB
- sP60ZFa/9YLJxf9JktpQ8Dj8JUB6JuLOBnLTAYnpUfm4Y7opTIpopZ9beeDBscXWNzKj
- uPf3f7n8qX4GyIhGkfTtHQvIxrtNh/N4AFItNMCwwbnGofzVMKuEmwIiRcxXGSculvBF
- ckaQ==
+ d=linaro.org; s=google; t=1776377646; x=1776982446; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gf9pO1FMDvnjAn+niAKCLwJB+VsYcLOsdva0xwYyZcY=;
+ b=WoQa0xrAzVhqlLwjfNHhcGNLu6ntMP1rqplplsPd9iOuEuIcGZDVMiMPRO8Z09Tr9+
+ mdQ6e/ITJ7q33ygxueoEneis5OU55GosBnSA3PEdErGsl6juGdxde0ZBrj2Eroz58QBx
+ EqjBTZncjxo2YbN43FLZ95dS1xKs94LYyQ/fFJJZUlN3E80NEzETw5S39yBVfGlWYn23
+ GswzPkGcsLsimZzWLkdzN1b1r9qbM0Sj5S/LF2PuZ+OST621acncgnrude5A0mA2m9/P
+ PDHgL70jk1c67wxoMLKDC5jVKdXwXu+OKu+QTwhPaByOHMvGHcLV7iS2EwuCSO99vp3a
+ isDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776376854; x=1776981654;
- h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1776377646; x=1776982446;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BXI04NMFSSTWOtM3ULIgE7tuoWA2OYu7gaVH4mAExpQ=;
- b=aHx1ARrIw5fqE7YzkgPZpaaOLUAqK4cHlw9D5aW07Rjmaa3KdjgOTKSwYtMayn+iA3
- yQeX80m2CmFyX+QW03qGGAkx1/9PK/KCnxZsPtRqZWbpRt0293gypDqEl8QoD6bTSVc/
- RdG95alctY1WU3WaunCo1JFLfDJrx7rudYLuHXkvQzZhFeb9k2jKv7vRnCha6WX+J4SR
- CJgP0GQa0LexH9X15GNcTfeOS1zScnQ8wQKNbRCUkAtVEqpXXzzSH1XqKDPXyUKjwGYM
- VaJU7jMHjPTfJQOwRJ3FdfskyBSiGZN/rJ6Po/Y72jbHWOzH8ElX+ZKU9Y84BpT2qt3+
- zlvw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9981UV5ENjxq8bk4rOJ/Uh1g+wwNf9W1YEGU8kI5QXv2aY7ScrJLUw4nUojm3lJlrgWzEaYmPN8GKp@nongnu.org
-X-Gm-Message-State: AOJu0YzirwltbQyyX7RG3kpdfY27pwVejNnekw1YKhPIGaf856TrQ0+Y
- PRe/RFzSgr9CbPalsyqMa/BrWeMmR391fETbmhA5fbIq6vxxK5LDtXumZYESDfw5HTM=
-X-Gm-Gg: AeBDievOkJDCgBU0KcD3slrD1j0yp46CVDXDqKlkxPE1VE9ky+RSKXDRhG98YvbBSsh
- b7q2xAvkF55PcBCqeBmCopuCHAlbakq8zWtCT5Zp9a2pok3I8oXB01QF8C14JOfINbRafbq8g3C
- MOvDSMWbmafkype57aO5dWjVWKcz5HNWsN7NAkes3cURiambmk3FuJcGgQKqbqOPRZhdZ7AP1u+
- ouYKFvdDzvo2GGvshm2iLxm8jAcszUV7VsdNC6Vp9XwJrMdQfkUfBDdsEaml7FyPtJzuuOQxOVD
- gIvIuIODc5oZJmg5DrNXyY8e/u3XlwT8kFDkH7GidmHnDhEuswAKz2KKJ4yTLYYNy0hPHu/vJ6/
- xnXvCav6hk7RE3uzQsLRBtthdk1sMv+0DZrmCEqbO2+Fu92qohwkC6rVUgM8FDT+8SPl32MXspL
- ZMJJci14dFI/WKEQ8es16hzwOV3V1w3mXdZ+sX12pgimMn8fX1aKkGvl88N6h+iBnbb4o/KmV0U
- ZyiCgeTIfHhGVkeUVa8a/5/0miSSX0XiJMvb4f93hRGUu3BdtEDddj8+aYphFo5sevhx6PHCthp
- MPlFyYDG5dkCCoYXHFE=
-X-Received: by 2002:a05:600c:8909:b0:488:e6cf:671a with SMTP id
- 5b1f17b1804b1-488fb789f3fmr3006885e9.25.1776376854287; 
- Thu, 16 Apr 2026 15:00:54 -0700 (PDT)
-Received: from smtpclient.apple
- (2a01cb001411480028ecb5ca8086bc4b.ipv6.abo.wanadoo.fr.
- [2a01:cb00:1411:4800:28ec:b5ca:8086:bc4b])
+ bh=gf9pO1FMDvnjAn+niAKCLwJB+VsYcLOsdva0xwYyZcY=;
+ b=Y5T5+Xqc0WD6gV5WHug97a3o2H/WhAN1+lFlhZeWgcgtK0h0wTaKmvh/Dd2bWlUdLh
+ VhQ/7lG+mi1c4Z8fUUGg0f24mE8CgNKXjHj6u52oqet0KKtJCiGEY5/ibJp9hANOAAj7
+ KMBFZcR3anKJPQ9hudEE/Fvlxr2tgj1BDIkLS0qn0R7+ZgmlQba54ifMET2OUHeKsRwZ
+ QGsDtUWVkXiyErYYA2oX9aUQkBj6HCZJm7Zbs12Z4x8vxvD2nKkwQKGosLR7wfd5q1LZ
+ KTXtHSzCJ1XLhY4hWU9BE1Gox+POuSewLQvHoxZUK5mjLnk7fizaJlm4NcPmSogZEc18
+ iSVQ==
+X-Gm-Message-State: AOJu0Yw79tWu9y0l/9+rVknmV3yEscxeyCE6PalpGHs5vaUiZMzlguJQ
+ Bl0f8up7FPX9bzk+JTQWiKa5Vn1Dic9ro+N00187JUAl0lkYp32cTm6zlOW4GxR9Ifo8bC1pyZG
+ rgdzXPNQ=
+X-Gm-Gg: AeBDiettg0s1dY5yEg2pUgBBlnqg2ydmNObO0orxTpf/h6y9hXQF5W4C7Jnn8I9J8E7
+ fyegIfcGFiz8TzNa9UdDi/w1TzLfoCwvtcbsAxH83D9wxZ5CGQaVXz/8y3TP3AHikIPNTgNd2n5
+ 76U9g6tXptWh65q1BQjI5xubmgC8Wyh+aNH8RWG5QKkO+8supiZbF1VV9Biq+Pe1SNgnNdKzNsR
+ lYHRjHiZw6zFIu8bFX7Pqvs+9g8pGWCpn8K11kmezcpIVkVy3EjevcE2KlNyt6Vg/96UCRJq2sJ
+ eiB1fw4t0/GjuJSKGSnmVMcKawGlkKQuIePGZ+pUjq+F08Sdl1c4d6D5gN7dah6wxxqLwgbqUPr
+ +lSKXC0NwobJ9K0Iu3s5dtvHCh9wob5NGSeALHHY9bV8tMeFuM7A0CykagvM3bZnFHmRFqfVzo3
+ GLZIb/ERRwCcCdhCEYtlfttGt9eMhIaquXtcd+XC7SrtqT6Ysub/aSOaQaIUPAPfRm28dBoq44A
+ vSrEd8WC6sVgYEOb+GGzve9
+X-Received: by 2002:a05:6a20:9392:b0:39e:f994:f671 with SMTP id
+ adf61e73a8af0-3a08d68e495mr153212637.11.1776377645693; 
+ Thu, 16 Apr 2026 15:14:05 -0700 (PDT)
+Received: from ?IPV6:2401:d002:dc0f:2100:a60a:7c34:dd75:e66c?
+ ([2401:d002:dc0f:2100:a60a:7c34:dd75:e66c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb75a279sm2041025e9.10.2026.04.16.15.00.53
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 16 Apr 2026 15:00:53 -0700 (PDT)
-From: Matthieu Rolla <matthieu@minio.io>
-Message-Id: <644BFF29-7432-4F01-866E-7CA099EEEEFD@minio.io>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_18338BC0-A49C-402C-B3DC-04A1C89A09C8"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH 2/2] block/monitor: add drive_insert HMP command
-Date: Fri, 17 Apr 2026 00:00:54 +0200
-In-Reply-To: <20260416195208.GB258343@fedora>
-Cc: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, its@irrelevant.dk,
- kbusch@kernel.org, mr-083 <matthieu@min.io>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-References: <20260409060155.94704-1-matthieu@min.io>
- <20260409060155.94704-3-matthieu@min.io> <ad9s9CRT0niUAPQn@redhat.com>
- <7E17AD80-CF52-44FC-A0FE-29B481EF5B40@minio.io>
- <20260416195208.GB258343@fedora>
-X-Mailer: Apple Mail (2.3864.400.21)
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=matthieu@minio.io; helo=mail-wm1-x32a.google.com
+ 41be03b00d2f7-c79581a2d85sm5030478a12.19.2026.04.16.15.14.03
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 15:14:04 -0700 (PDT)
+Message-ID: <f68c53a0-1ea0-4265-9fe6-8b726cca7029@linaro.org>
+Date: Fri, 17 Apr 2026 08:13:44 +1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/arm/cpu-features.c: Add RMEGDI to AA64MMFR4
+To: qemu-devel@nongnu.org
+References: <20260416-jmac-feat_rme_gdi-v1-0-d9fa0781ed58@linaro.org>
+ <20260416-jmac-feat_rme_gdi-v1-1-d9fa0781ed58@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260416-jmac-feat_rme_gdi-v1-1-d9fa0781ed58@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,169 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/16/26 21:12, Jim MacArthur wrote:
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+> ---
+>   target/arm/cpu-features.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index b683c9551a..3f2a9a0c36 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -348,6 +348,7 @@ FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
+>   
+>   FIELD(ID_AA64MMFR4, ASID2, 8, 4)
+>   FIELD(ID_AA64MMFR4, E2H0, 24, 4)
+> +FIELD(ID_AA64MMFR4, RMEGDI, 28, 4)
+>   
+>   FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
+>   FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
+> 
 
---Apple-Mail=_18338BC0-A49C-402C-B3DC-04A1C89A09C8
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Thanks Stefan.
-
-I tested SDN alone on 6 disks across 3 nodes,  controllers freeze, =
-auto-recover via AER in ~200ms, and resume I/O. This works well for =
-simulating transient PCIe errors and as you noted, it should be generic =
-across device types.
-
-However, SDN alone can't simulate a prolonged disk outage,  the =
-controller recovers immediately. The test scenarios need to cover:
-
-- Transient disk failure: brief I/O disruption, automatic recovery (SDN =
-alone works here)
-- Prolonged disk failure: disk offline for minutes/hours, filesystem =
-corruption, manual recovery required
-- Disk replacement: failed disk swapped for a new one, storage stack =
-heals data
-
-For the last two scenarios, we need the disk to actually stay =
-disconnected. This requires drive_del to disconnect the backing store, =
-and blockdev-attach to reconnect it later, preserving the guest device =
-name since drive_del has no existing counterpart for non-removable =
-devices.
-
-So the two series address different scenarios:
-- Series 1 (namespace hotplug): namespace topology changes via =
-device_del/device_add with AEN
-- Series 2 (blockdev-attach): prolonged disk disconnect/reconnect while =
-preserving the guest device name
-
-Please let me know if you have any questions
+It's often worthwhile to simply sync the entire register with the docs.
+The current M.a.a document has 10 fields here.
 
 
-	.=09
-Matthieu
-www.min.io <>
-matthieu@min.io <>=20
-
-> On Apr 16, 2026, at 9:52=E2=80=AFPM, Stefan Hajnoczi =
-<stefanha@redhat.com> wrote:
->=20
-> On Wed, Apr 15, 2026 at 02:32:39PM +0200, Matthieu Rolla wrote:
->> Thanks Daniel,=20
->>=20
->> It makes sense Thanks.=20
->>=20
->> Looking at the existing code, blockdev-insert-medium already does the =
-backend/frontend association via blk_insert_bs(), but is restricted to =
-removable devices.=20
->> A new QMP command like blockdev-attach could reuse the same logic =
-without the removable restriction, paired with blockdev-add for creating =
-the block node.
->>=20
->> Would that be a better approach ?
->=20
-> Hi Matthieu,
-> I was wondering whether the blockdev needs to be changed at all. Since
-> the disk image remains the same, is it sufficient to inject the PCIe =
-SDN
-> and then recover the NVMe PCI controller?
->=20
-> I don't understand the test scenario well enough, but it seems like
-> you're testing at the PCIe level here rather than nothin NVMe- or
-> blockdev-specific. Therefore blockdev commands may not be necessary.
->=20
-> If the testing can be done completely at the PCIe level then that =
-would
-> also allow other device types to be tested in the same way, which =
-would
-> be nice.
->=20
-> Stefan
-
-
---Apple-Mail=_18338BC0-A49C-402C-B3DC-04A1C89A09C8
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><div><div>Thanks =
-Stefan.</div><div><br></div><div>I tested SDN alone on 6 disks across 3 =
-nodes, &nbsp;controllers freeze, auto-recover via AER in ~200ms, and =
-resume I/O. This works well for simulating transient PCIe errors and as =
-you noted, it should be generic across device =
-types.</div><div><br></div><div>However, SDN alone can't simulate a =
-prolonged disk outage, &nbsp;the controller recovers immediately. The =
-test scenarios need to cover:</div><div><br></div><div>- Transient disk =
-failure: brief I/O disruption, automatic recovery (SDN alone works =
-here)</div><div>- Prolonged disk failure: disk offline for =
-minutes/hours, filesystem corruption, manual recovery =
-required</div><div>- Disk replacement: failed disk swapped for a new =
-one, storage stack heals data</div><div><br></div><div>For the last two =
-scenarios, we need the disk to actually stay disconnected. This requires =
-drive_del to disconnect the backing store, and blockdev-attach to =
-reconnect it later, preserving the guest device name since drive_del has =
-no existing counterpart for non-removable =
-devices.</div><div><br></div><div>So the two series address different =
-scenarios:</div><div>- Series 1 (namespace hotplug): namespace topology =
-changes via device_del/device_add with AEN</div><div>- Series 2 =
-(blockdev-attach): prolonged disk disconnect/reconnect while preserving =
-the guest device name</div></div><div><br></div><div>Please let me know =
-if you have any questions</div><div>
-<br>
-<br>
-<table>
-   <tbody>
-       <tr>
-           <td style=3D"padding: 0 50px 0 0;"><img =
-src=3D"https://cdn.bfldr.com/Q955TODV/at/f5h9pjj8f8t3ng5t6vxs2n/emailsigna=
-ture-logo-standalone.png?auto=3Dwebp&amp;format=3Dpng" height=3D"34"></td>=
-
-           <td style=3D"width: 1px; padding: 0; background-color: =
-#D6DAE1; color: #D6DAE1; font-size: 1px;">.</td>
-           <td style=3D"padding:0 20px 0 50px;">
-               <div style=3D"margin-top: -6px; margin-bottom: -4px;">
-                   <strong><span =
-style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: =
-1.1em; color: #353638;" color=3D"#353638">Matthieu</span></strong><br>
-                   <div style=3D"height: 6px;"></div>
-                   <a =
-style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: 1em; =
-color: #353638; text-decoration: none; line-height: 118%;" =
-color=3D"#353638">www.min.io</a><br>
-                   <a =
-style=3D"font-family:'Geist',Arial,Helvetica,sans-serif; font-size: 1em; =
-color: #353638; text-decoration: none; line-height: 118%;" =
-color=3D"#353638">matthieu@min.io</a>
-               </div>
-           </td>
-       </tr>
-   </tbody>
-</table>
-
-</div>
-<div><br><blockquote type=3D"cite"><div>On Apr 16, 2026, at 9:52=E2=80=AFP=
-M, Stefan Hajnoczi &lt;stefanha@redhat.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><div>On Wed, Apr 15, 2026 at =
-02:32:39PM +0200, Matthieu Rolla wrote:<br><blockquote =
-type=3D"cite">Thanks Daniel, <br><br>It makes sense Thanks. =
-<br><br>Looking at the existing code, blockdev-insert-medium already =
-does the backend/frontend association via blk_insert_bs(), but is =
-restricted to removable devices. <br>A new QMP command like =
-blockdev-attach could reuse the same logic without the removable =
-restriction, paired with blockdev-add for creating the block =
-node.<br><br>Would that be a better approach ? <br></blockquote><br>Hi =
-Matthieu,<br>I was wondering whether the blockdev needs to be changed at =
-all. Since<br>the disk image remains the same, is it sufficient to =
-inject the PCIe SDN<br>and then recover the NVMe PCI =
-controller?<br><br>I don't understand the test scenario well enough, but =
-it seems like<br>you're testing at the PCIe level here rather than =
-nothin NVMe- or<br>blockdev-specific. Therefore blockdev commands may =
-not be necessary.<br><br>If the testing can be done completely at the =
-PCIe level then that would<br>also allow other device types to be tested =
-in the same way, which would<br>be =
-nice.<br><br>Stefan<br></div></div></blockquote></div><br></body></html>=
-
---Apple-Mail=_18338BC0-A49C-402C-B3DC-04A1C89A09C8--
+r~
 
