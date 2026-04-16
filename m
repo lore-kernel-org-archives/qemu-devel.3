@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F18F433CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 00:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E92A3F433CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 00:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDARf-00048s-LM; Wed, 15 Apr 2026 20:18:59 -0400
+	id 1wDASM-0004Ve-JU; Wed, 15 Apr 2026 20:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDARe-00048j-FR
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:18:58 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1wDASK-0004V0-Pm
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:19:40 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDARc-0003nF-SL
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:18:58 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2b461310af5so381755ad.1
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 17:18:56 -0700 (PDT)
+ id 1wDASI-0004H4-Va
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:19:40 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-3591cc98871so3452214a91.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 17:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776298735; x=1776903535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776298776; x=1776903576; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=G21MTiAWYMgeeYQmBJuqFRfusIrCDrz3BYAAKOl5oOo=;
- b=U6At3i5xP0z8os9Evx7Heku9xwgSWbiuDtxNZFgjSdYNxB290qKBIh1X2rzGddIZ8c
- dwhlhLbzR6N8jm0ubmMKxhO/2K5WVm8ZbkmVx4TAy6N/6xYJYoNKO0VeDRvg3wl/f1Kj
- IqCm1MxNghQy5OOncIyL8jBp/J9YrawY2nZkAJ1wIRwixcFKH6opaS20HT4wZ/m7rxgP
- XpnDKoY4axwNC2sDkU1F3+xxrRNuuC1QU4w4BO+VX7F1oUG7qNPSd1DXB2LkdP4HJdTM
- Kkvmm4CUFMkrz7d1cnuWawLWq1wUWDsAV5DkiunDqSDb5CK/ZsoN5QmCGWnWGCA+pqHx
- uT9A==
+ bh=UKm0urRhCWEb0CaMVpRTveGJe3wNsDBaxLtHvvM75lY=;
+ b=TRiPwhnd5LLEU/TyUOJyWYQOFVSGlI2RGKB9AYH0/S0OX3HBCoFN8KKzCfsYZlXEVp
+ aFxtILKf1fL3AJBV0fHE2R3pu3QsnmI1QECAk4TJLsyG2tkK2A0RjISbKY8+vWY+XaZI
+ pVPGAso+k6cGmHdi60jfOKsbej0YgJ/FfV38dKkqV790DQJYMNpDAqY5r7enxD7spOrr
+ qLL1Zaw/AMiGOSErO0QVOcyhU3JZIp8jmI2NcYkm7lwbqzNGou6Xq8vd+fg5GgSOsJjF
+ kF6NifcJGwEs/4y+ehSvMMnxXdUzPugWHDhlWEGXzyBBSDfRNBjtXPX73K/zsGtMTXNO
+ 83RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776298735; x=1776903535;
+ d=1e100.net; s=20251104; t=1776298776; x=1776903576;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=G21MTiAWYMgeeYQmBJuqFRfusIrCDrz3BYAAKOl5oOo=;
- b=Oxh5lUwFD6LBWPTSgBP+dgifRCJuQ5JYQ2ZZahTAJB738DuzGCWiMBSmnmlwL+AoAz
- hKsRY8uU9oTpT9XsrCZCA1ChC06GV4z6kRmPAQU3zJTFBpHitLMTkrfLpAOC1adtzZM6
- +JJIWM3/3vXao16rCK7eM4v4KN4ht65TJQCHET/0miR92S9joxMyfDeW+JgXtONFT1+6
- tOJA6iZocWQ81VYQYHWaf+JiXH6ueDerceSO1SnXWOCeblFAw8NfF5hltbjXvseUfrKd
- vUL30vz3+xhZaWzVP3Hw76Dd9xF3T4Ap/96fMsW6UARHxF/vOcyq9MgWUJJCh0QGdzjq
- CQXQ==
+ bh=UKm0urRhCWEb0CaMVpRTveGJe3wNsDBaxLtHvvM75lY=;
+ b=Gw1DLAVu7SVBnH1ggcXkGsJDO0p8J3K13AB96wD0NbDT3bt6qvuAtrf83f4aZ94rv2
+ +hY+revKpVCmm9Jla211kq0SKGLDiO4ew05zHco2SYJXDiDymDFgmHIRM9d63660rfeP
+ IdcBgRS0srCC8GPGg6S+AhIsjw2QwhctWiG3uC5mW4DJ07hHXqWoNmwK7l8WRBjJ9Bnf
+ 3wgkiZ64sBiNMSmv6YzxrWrjaG3cBdLq7Zz1Udvwb2NoB5V6E6QAFuZP2I7Q67YL1d+Q
+ eSJ/a0J/h9BSO5BGKCC6Br52aNwWo8pONen157geZNY/9IPwZLhAy3eXSBX/TChhRRtR
+ cd2g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ86X34SqIKp84BmAzq8Oq96tArsA2LD3Xl106gus6IrOE05jVIiky7Q9j66+GSVtcUhhMMgCy6WChCo@nongnu.org
-X-Gm-Message-State: AOJu0Yzsmhiifiv9sJh5VarktpWi0MLA9O/a6n9VMiIbpsA2A17xVhCk
- KC4DoKYmEDsMjKOqbhtxsRRaLOGhnG/FzpfAKjXLIlI8mGLJ3lcwZt6BjSMdqlOvJno=
-X-Gm-Gg: AeBDietY9P1nRnnYCNc0yyjy4eVH5kDT2htP+lK+89rfIA/5A/VH0SRcefL+EZN6we8
- ZD5Brk0poBcTwqOgjkrrerdS7UHlQqWk7JZkb4yz0E+QYhrOY7uPCexLqz819tS6IXiC5M9Jf4G
- zoVICw0yclTCfdO6enAOaYn4AYcPAmU+zPc2AxOw/QrdMngpkzcWsfhipXDLbEcvzPNILooyEg/
- JNvpgQtOkWyQYJ6h9+T2ZaCf8I29zOxXP6ZNxAYsQIe7BLx5kJlPiGTzqg8jhkE3nFiqOToB+T+
- 6NAO321tDXxIXpkmGzNsyikie1tqO+qeBSCIJH93vRWwMeBovlDy17s5HpKyzo2o1WeNY7SlVLU
- 013nAbb8w1N3Xxu6Wd1m31PghaIJv84SSnAbiB2sJUZnkil/i2GvJm8ZHHnp3Q3rgsxwB8LJfo5
- KPK/Xwx6a5FjhzB+ZcQUA+YvYAMTS02IDZs/545+qudGNE2QcqCHK2Dn5KGGeE4kq9zzJ6FGHmG
- Q9DlId8uxLTOPHvsgVsuFPe0vwqR/3i77vQSmvUjdVoNh2AFET0KwdN6mDvP523hg==
-X-Received: by 2002:a17:903:11c4:b0:2b4:6122:10f8 with SMTP id
- d9443c01a7336-2b5eab1b687mr13182615ad.21.1776298734554; 
- Wed, 15 Apr 2026 17:18:54 -0700 (PDT)
+ AFNElJ+D8hKWvgRNlBdQV9gw7E0TkY/aBWV/rKeLuJv4R5gNgAtnFZ7GBhl1VOaelK8/7rX/svlUkmjcv0eb@nongnu.org
+X-Gm-Message-State: AOJu0Yz+e0VPNH0GZvZ82CApKagzpNhNHcFwFgKyPOPXSB87hOIolIMP
+ aIw5oPsmXPq74H2n4u04cdP7Ga/bJyK1c7q52OqxlZMbZjGtqDEoxc8o4ISYUhUTAWY=
+X-Gm-Gg: AeBDieuqE7h5FQkcUDrf1BiirZbWqFhhanKraroj8F92RHQNA+BXXLArAUKtgrZZOpm
+ R+mQ7XXvK+ofioeqhGvtn3L28ROsbQzRP8NoRcPvFKrXmK9ErEGq9lZy3U2brfzRehSnKJPZ8NF
+ lY+6R+YwYg2U11V9O/26Q7Bg3Hr+lZfPdOxVt35/tbmuHsNZmi8ylbNXc27MCrUEix/59CTbkAT
+ NIoeLJFWgqoywJ5VWuO0AGR9Wj4rMPIDuk3LgoZ436IfZ4HlrmvPGz3Es/xF8p9ukXj/oeFdSaK
+ z3BByEawGoZQ4j9PAYrZq+98beODZnpbJq0/ulbuekVisKuTZPqFLOyxoZ/OuZ4tnfEdJ+WSpXN
+ DHJkmu5HOOCe+A2npLYcZTyxVp+ue6Rpnx4Q5z01ZriQUNMoq5adE6mUOgX0BNJUu5QI4cY4n9Q
+ uYmRdWhpX9fulDkFvQjIUqPtMZr1Fk42UJM0KUe1GePJjIbNBU1FhnovXsaPyRMXxIQLrbtVAky
+ Tdmf5nqCiQzlZgjUllgmIwU
+X-Received: by 2002:a17:90b:1d8a:b0:35e:30bc:96ed with SMTP id
+ 98e67ed59e1d1-35e42781abdmr23950450a91.10.1776298776461; 
+ Wed, 15 Apr 2026 17:19:36 -0700 (PDT)
 Received: from ?IPV6:2401:d002:dc0f:2100:31f2:aa94:4389:37f8?
- (bg30dhzr9yyk68wp6s9g.ip6.superloop.au.
- [2401:d002:dc0f:2100:31f2:aa94:4389:37f8])
+ ([2401:d002:dc0f:2100:31f2:aa94:4389:37f8])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b47826e90csm33545775ad.38.2026.04.15.17.18.51
+ 98e67ed59e1d1-36132c8bc5bsm211121a91.2.2026.04.15.17.19.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2026 17:18:54 -0700 (PDT)
-Message-ID: <a490461d-9598-411e-87ed-4d555d0b19af@linaro.org>
-Date: Thu, 16 Apr 2026 10:18:47 +1000
+ Wed, 15 Apr 2026 17:19:36 -0700 (PDT)
+Message-ID: <3d3e8e68-ab67-4da7-8463-618722b941e8@linaro.org>
+Date: Thu, 16 Apr 2026 10:19:29 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 6/6] target/mips: Endian-swap MSA LD/ST.D
- (Doubleword Vector)
+Subject: Re: [PATCH] target/s390x: Prefer MO_128 definition over magic value
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20260415202027.83008-1-philmd@linaro.org>
- <20260415202027.83008-7-philmd@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
+References: <20260415220358.93063-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260415202027.83008-7-philmd@linaro.org>
+In-Reply-To: <20260415220358.93063-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,36 +109,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/16/26 06:20, Philippe Mathieu-Daudé wrote:
-> Doubleword Vector entries need to be swapped w.r.t. endianness.
+On 4/16/26 08:03, Philippe Mathieu-Daudé wrote:
+> The MO_128 definition was not existing when commit 6d841663be8
+> ("s390x/tcg: Implement VECTOR GATHER ELEMENT") introduced the
+> ES_128 definition. It was added 2 years later in commit 4b473e0c60d
+> ("tcg: Expand MO_SIZE to 3 bits"). Since it is now available,
+> replace the magic '4' by the more explicit 'MO_128'.
 > 
-> Fixes: 83be6b54123 ("Fix MSA instructions LD.<B|H|W|D> on big endian host")
-> Fixes: 6decc572dce ("Fix MSA instructions ST.<B|H|W|D> on big endian host")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Probably optimizable since tcg_gen_qemu_ld/st_i128 handles MO_BSWAP.
-> ---
->   target/mips/tcg/msa_translate.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>   target/s390x/tcg/translate_vx.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-> index b1d764bd179..63d797a39b7 100644
-> --- a/target/mips/tcg/msa_translate.c
-> +++ b/target/mips/tcg/msa_translate.c
-> @@ -822,6 +822,10 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
->               gen_bswap32x2_i64(d0, d0);
->               gen_bswap32x2_i64(d1, d1);
->               break;
-> +        case 3:
-> +            tcg_gen_bswap64_i64(d0, d0);
-> +            tcg_gen_bswap64_i64(d1, d1);
-> +            break;
->           }
->       }
+> diff --git a/target/s390x/tcg/translate_vx.c.inc b/target/s390x/tcg/translate_vx.c.inc
+> index b53e9e52639..447641df25c 100644
+> --- a/target/s390x/tcg/translate_vx.c.inc
+> +++ b/target/s390x/tcg/translate_vx.c.inc
+> @@ -50,7 +50,7 @@
+>   #define ES_16   MO_16
+>   #define ES_32   MO_32
+>   #define ES_64   MO_64
+> -#define ES_128  4
+> +#define ES_128  MO_128
 >   
+>   /* Floating-Point Format */
+>   #define FPF_SHORT       2
 
-No, this is just a fix to patch 5.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
