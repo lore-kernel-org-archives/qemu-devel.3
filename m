@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC56F8D77C
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 21:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A436DF8D77C
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 21:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDTuZ-0003ii-Fl; Thu, 16 Apr 2026 17:06:07 -0400
+	id 1wDTuW-0003f7-Fo; Thu, 16 Apr 2026 17:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDTuF-0003Jj-QH
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:05:50 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDTuA-0002o4-3i
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDTu9-0003D4-B0
  for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:05:45 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43eada6d900so1955969f8f.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 14:05:40 -0700 (PDT)
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDTu2-0002c7-8f
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 17:05:38 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43d03db7f87so5300260f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 14:05:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776373538; x=1776978338; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776373531; x=1776978331; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rUAhKFrbXgJ52TQIirz4eY3ZfxYReDQPGbifO+GayW4=;
- b=m5+RshzOqMX/rRMrKYydaqUbOO32aoGPLMfj+efTs09tDN6FbMKGkO/1Xhv1ZWbL1X
- xNEJeNzxYlpU7D9RMjeLy9sE1LMYunp13PxN5eDe1mWAi3Paaeh3/HGD6TVBRoBBMhXg
- V8/uoWV5WjS4gbcgQV1uyZ4XMe0Obvu6hUp9/xTXYxiPiVvhxozplEK1sEJulCSlNL7k
- NX4h7xT9+g9Y9aUUOu1TKWzCqV+Lx1oVPIy9cZYfL4DJeDAjXtJajoQAPuEQTyWNGnIe
- EqJTvCk2S7bTIX1sqI9s8jqebhn55NeduENA1ht3LPtuMzGvQaNc8H+3QYBUbLFQspQQ
- l/SA==
+ bh=MD26nLjJpw1YpqaIAYx+Rr+tkzTp5lNUVRFHhNtT6wI=;
+ b=wF1f1p85ajP0o2X2CGv4spC76GG6iWJJN6V7pcSq/LWLu2CVe0l1Eh8zxKHcSUJxI5
+ 66oDY8F/wQ5XFcqj5nP3KW7d+7OidveOxoyEeo1yFCGNQ6iEX+N7vNEsopPlMX9i+t5m
+ I0nN9GufAEne5XJF9MQjy3cl0AWh1dNZfOVGbtD73hSKUazQkc5goV+mgtZD+T9B9uDo
+ QKW0seTbl69d7YgG4THFojDvBLih1IVpAFrG+B0pU/gVHaOnghAlk3RzbT6CQtUu/5iO
+ HjXIUVlVfb+3XYwPscQ3bw3OWAc+JmBzbeqgxjDIzL8Ue3ZHonPORqitMNiUOGV/60gh
+ O7Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776373538; x=1776978338;
+ d=1e100.net; s=20251104; t=1776373531; x=1776978331;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rUAhKFrbXgJ52TQIirz4eY3ZfxYReDQPGbifO+GayW4=;
- b=EqDPha2iIAPTb2K1p1IK5yA2ro4bTHZ89NK19UMvlBEgh/TA6lFydxpvH1RlcDzSpN
- h9fI2kxlbf3/7Us5FZqx+pQlbQUOMx/C2h5AJiBdw239jiOpzB0PhJ8FusrOLUVT4Ae2
- n8fuvdsCbww6Y/5k5IEeeJN+LN3TnT5Iglt9moFA034jhOkJRtM5kNLervf7CSsl3lvl
- v6fhbc2ooYpKRHgAvTAGQMK5pP4zEX22iKtvCGN1IMa8EEQKSXb9AjJC0cUjqIT39dDa
- orSm3xs754D0NoQGXc/pVLsLwLeWmh0Mff2pwTrvHfTePZEqb+TAdP4k7JdUUx0fu3Vz
- cueg==
-X-Gm-Message-State: AOJu0YwPGNNLWIjw/LbQ9Se+4cFTkExmhwDijIwULPwr5RRypeB2p9PU
- TfpzwX3vSGYogM8iL0vUMHU0cNJN2mJToi6b+pL6t4toCfoHZmEtWoTSUCwPmW4XC3e0KXdi0J3
- AN/maQF4=
-X-Gm-Gg: AeBDiessrpqSM5yH/xR40Cj78HjhXG22r053GkvduOaDzzaejpLs2OFb53RsZjfGSuF
- EL1aF95H18uos0nMWZ/QntD76hR5Uv5L0a8FwRQPKLwQ7Bl2EeWAAMXsizLr/W2GOTzuxj0uM4o
- vEuZdOrEoiADoQI4EeM8r2Kjeen3vFlyy6btFwGD92vSwuYXN/dXrcadRcYHpPCl2YpRl+qYyhE
- HrSevPubie2KAqIBI/+AJT4XHXDVdOf4+MDnlRsIPH5dDYmbSsO61in3t5WM7YklyYo3/Yg89ki
- lRmQ1Getk1hpboJZCnv0JxpyS5NP5h3jP2RQ1UtRX7UKewHTvyUA94+LQP/O5rFqPc7OfAd97lm
- nT+kyMv6fOwd96wuwFwzNBYXfky8Hj2bgEv/FKFgbsAAWSoZsocAk8x3c6HiO0509aoN1/CX+LS
- hwuRAgGvPEPrtMprb6fh60XnVwFuE6U965Ixw8vqZAbBAS+KwlIjUhRLJg34tr+lvCXXA0O+u+9
- Y0qs7iKqRMd08e/hXjWDw==
-X-Received: by 2002:a05:6000:18a3:b0:439:b8b2:fabc with SMTP id
- ffacd0b85a97d-43fe3dd4b7dmr138757f8f.21.1776373538433; 
- Thu, 16 Apr 2026 14:05:38 -0700 (PDT)
+ bh=MD26nLjJpw1YpqaIAYx+Rr+tkzTp5lNUVRFHhNtT6wI=;
+ b=O187ZpH0hE2Quokpq1KGaNwoL74j+kfU9mqR2txapGOIXfk5OCJkmfwTUFIFruv3mn
+ pMxG/fAt+TcJ8U0vaB++pV0I7LdVsGVNeH28F6W7VBZfOGfsqt9J1cHNsMXk2tUpODJ+
+ lzQtbLnijpM0+gvGp+bdlGNU7dkrq39O8ykKwCA8I/EUQGL5IvIL704L8HRQgVZfLAuh
+ saILzEyIkkzr5jQxZcBqOI92oa4JgotTSQqwNKHDFGIGR40oQXd1nb/tIlydPZtS1n4E
+ /S7ofp/ltS3Kb1c3iV7Bp2RoId+7xN0ePuPxLKahLpUZDhwDmcYrasrEoLhYE1GWYs1i
+ NwlA==
+X-Gm-Message-State: AOJu0YzSrgEYB9bk/O+uHM3bRPy/PzRNYdx2HYXeiXQ2L5S4bCU+2wBH
+ euR3WslZ9vq1HHWgajupr8fQcv9yY51gcjPZYuuQafgghtWXthtaFtTpifabIcuVv5kWVgxQNEK
+ Qf7EAT/I=
+X-Gm-Gg: AeBDieuERHAoNGZCfvRlz7gA5Y9G7en79Vk2OBurx10fE39gwv9X7So810UeM6JE7TS
+ cAjZlkj4a3ckAOS4z5chHltey8uV/f/O9CoxZnkgArmErn/5Bsee9Q0N3apEG/8Ordi3Zg4CP7P
+ tQis3XjqBGt3mTjcbas42RYxPCBAdN+NmXRJBOT32puPuAsh9pyb2JGjhRs1ATqoXIgkugP/rkt
+ SnDbs6vQWVHhXiG/GlY8lN9xYMS+XlEJ+PPN1VzxOaJHxq2pYVJMltZN8pBQD2ACHAb4bRL8tQo
+ YJAxl6oge7/mRtk5NlRkpnM4JY4nYSssz9QXjs0vs3KLFuB2ozT1c338HuM58CuWvhjtom19d1b
+ nfDGUXILG+Bs4XCaLe8iSDasNeKVv04+QwU2ASWmz1hvPR23SX09IXwsRzEdOqUq8rs2/UeH5XN
+ CtHsjVpQb4y6AXTp20IH9FezEYW55ktePS1iNZI0QuweyCIKF2dGIa2UUEueRo8UMW2hVGcCWoh
+ 2yqa4bk3VQ=
+X-Received: by 2002:a05:6000:25c7:b0:43c:f0c0:c571 with SMTP id
+ ffacd0b85a97d-43fe3e12b2bmr122423f8f.47.1776373531367; 
+ Thu, 16 Apr 2026 14:05:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead3d5f11sm17954920f8f.18.2026.04.16.14.05.37
+ ffacd0b85a97d-43ead3d5ea9sm17001852f8f.21.2026.04.16.14.05.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Apr 2026 14:05:37 -0700 (PDT)
+ Thu, 16 Apr 2026 14:05:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -71,18 +71,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 4/4] target/mips: Check alignment for microMIPS pre-R6
- LD/ST multiple
-Date: Thu, 16 Apr 2026 23:05:08 +0200
-Message-ID: <20260416210508.30686-5-philmd@linaro.org>
+Subject: [PATCH v4 3/4] target/mips: Inline cpu_ld/st_mmuidx_ra() calls in
+ LD/ST Multiple
+Date: Thu, 16 Apr 2026 23:05:07 +0200
+Message-ID: <20260416210508.30686-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260416210508.30686-1-philmd@linaro.org>
 References: <20260416210508.30686-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,82 +105,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pre-REL6 microMIPS requires alignment while REL6 microMIPS does not.
-Pass the MemOp alignment as argument to gen_ldst_multiple(). Keep
-using MO_UNALN for REL6 decoder but use MO_ALIGN for the pre-REL6
-part.
+In preparation of removing the cpu_ld*_mmuidx_ra() and
+cpu_st*_mmuidx_ra() calls, inline them. Expand MO_TE to
+mo_endian_env(env) in gen_ldst_multiple().
 
-Fixes: 3c824109da0 ("target-mips: microMIPS ASE support")
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/micromips_translate.c.inc | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ target/mips/tcg/ldst_helper.c             | 40 +++++++++++------------
+ target/mips/tcg/micromips_translate.c.inc |  2 ++
+ 2 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index fb107eb91fe..efd9781c53b 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -690,10 +690,9 @@ static void gen_andi16(DisasContext *ctx)
+diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
+index fdc192e9c14..81c0631a119 100644
+--- a/target/mips/tcg/ldst_helper.c
++++ b/target/mips/tcg/ldst_helper.c
+@@ -227,21 +227,20 @@ void helper_lwm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
+ {
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     size_t base_reglist = reglist & 0xf;
+     bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
+ 
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            env->active_tc.gpr[multiple_regs[i]] =
+-                (target_long)cpu_ldl_mmuidx_ra(env, addr, mem_idx, GETPC());
++            gpr[multiple_regs[i]] = (target_long)cpu_ldl_mmu(env, addr, oi, ra);
+             addr += 4;
+         }
+     }
+ 
+     if (do_r31) {
+-        env->active_tc.gpr[31] =
+-            (target_long)cpu_ldl_mmuidx_ra(env, addr, mem_idx, GETPC());
++        gpr[31] = (target_long)cpu_ldl_mmu(env, addr, oi, ra);
+     }
  }
  
- static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
--                              int base, int16_t offset)
-+                              int base, int16_t offset, MemOp mop)
+@@ -249,20 +248,20 @@ void helper_swm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
  {
-     TCGv t0, t1;
--    MemOp mop = MO_UNALN;
-     MemOpIdx oi;
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     size_t base_reglist = reglist & 0xf;
+-    bool do_r31 = !!(reglist & 0x10);
++    bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
  
-     if (ctx->hflags & MIPS_HFLAG_BMASK) {
-@@ -772,7 +771,7 @@ static void gen_pool16c_insn(DisasContext *ctx)
-             int offset = ZIMM(ctx->opcode, 0, 4);
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            cpu_stl_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
+-                              mem_idx, GETPC());
++            cpu_stl_mmu(env, addr, gpr[multiple_regs[i]], oi, ra);
+             addr += 4;
+         }
+     }
  
-             gen_ldst_multiple(ctx, LWM32, lwm_convert[(ctx->opcode >> 4) & 0x3],
--                              29, offset << 2);
-+                              29, offset << 2, MO_ALIGN);
-         }
-         break;
-     case SWM16 + 0:
-@@ -784,7 +783,7 @@ static void gen_pool16c_insn(DisasContext *ctx)
-             int offset = ZIMM(ctx->opcode, 0, 4);
+     if (do_r31) {
+-        cpu_stl_mmuidx_ra(env, addr, env->active_tc.gpr[31], mem_idx, GETPC());
++        cpu_stl_mmu(env, addr, gpr[31], oi, ra);
+     }
+ }
  
-             gen_ldst_multiple(ctx, SWM32, swm_convert[(ctx->opcode >> 4) & 0x3],
--                              29, offset << 2);
-+                              29, offset << 2, MO_ALIGN);
+@@ -271,21 +270,20 @@ void helper_ldm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
+ {
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     size_t base_reglist = reglist & 0xf;
+-    bool do_r31 = !!(reglist & 0x10);
++    bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
+ 
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            env->active_tc.gpr[multiple_regs[i]] =
+-                cpu_ldq_mmuidx_ra(env, addr, mem_idx, GETPC());
++            gpr[multiple_regs[i]] = cpu_ldq_mmu(env, addr, oi, ra);
+             addr += 8;
          }
-         break;
-     case JR16 + 0:
-@@ -887,7 +886,8 @@ static void gen_pool16c_r6_insn(DisasContext *ctx)
-         {
-             int lwm_converted = 0x11 + extract32(ctx->opcode, 8, 2);
-             int offset = extract32(ctx->opcode, 4, 4);
--            gen_ldst_multiple(ctx, LWM32, lwm_converted, 29, offset << 2);
-+            gen_ldst_multiple(ctx, LWM32, lwm_converted, 29, offset << 2,
-+                              MO_UNALN);
+     }
+ 
+     if (do_r31) {
+-        env->active_tc.gpr[31] =
+-            cpu_ldq_mmuidx_ra(env, addr, mem_idx, GETPC());
++        gpr[31] = cpu_ldq_mmu(env, addr, oi, ra);
+     }
+ }
+ 
+@@ -293,20 +291,20 @@ void helper_sdm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
+ {
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     size_t base_reglist = reglist & 0xf;
+-    bool do_r31 = !!(reglist & 0x10);
++    bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
+ 
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            cpu_stq_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
+-                              mem_idx, GETPC());
++            cpu_stq_mmu(env, addr, gpr[multiple_regs[i]], oi, ra);
+             addr += 8;
          }
-         break;
-     case R6_JRC16: /* JRCADDIUSP */
-@@ -927,7 +927,8 @@ static void gen_pool16c_r6_insn(DisasContext *ctx)
-         {
-             int swm_converted = 0x11 + extract32(ctx->opcode, 8, 2);
-             int offset = extract32(ctx->opcode, 4, 4);
--            gen_ldst_multiple(ctx, SWM32, swm_converted, 29, offset << 2);
-+            gen_ldst_multiple(ctx, SWM32, swm_converted, 29, offset << 2,
-+                              MO_UNALN);
-         }
-         break;
-     case JALRC16: /* BREAK16, SDBBP16 */
-@@ -1861,7 +1862,8 @@ static void decode_micromips32_opc(CPUMIPSState *env, DisasContext *ctx)
-             /* fall through */
-         case LWM32:
-         case SWM32:
--            gen_ldst_multiple(ctx, minor, rt, rs, SIMM(ctx->opcode, 0, 12));
-+            gen_ldst_multiple(ctx, minor, rt, rs, SIMM(ctx->opcode, 0, 12),
-+                              MO_ALIGN);
-             break;
-         default:
-             MIPS_INVAL("pool32b");
+     }
+ 
+     if (do_r31) {
+-        cpu_stq_mmuidx_ra(env, addr, env->active_tc.gpr[31], mem_idx, GETPC());
++        cpu_stq_mmu(env, addr, gpr[31], oi, ra);
+     }
+ }
+ 
+diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
+index 4dca11b84b4..fb107eb91fe 100644
+--- a/target/mips/tcg/micromips_translate.c.inc
++++ b/target/mips/tcg/micromips_translate.c.inc
+@@ -701,6 +701,8 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
+         return;
+     }
+ 
++    mop |= mo_endian(ctx);
++
+     t0 = tcg_temp_new();
+ 
+     gen_base_offset_addr(ctx, t0, base, offset);
 -- 
 2.53.0
 
