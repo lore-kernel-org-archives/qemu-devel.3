@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C55F8E48F
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 23:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF70F8E48F
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 23:12:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDVo5-000825-RU; Thu, 16 Apr 2026 19:07:33 -0400
+	id 1wDVsf-0000CR-W6; Thu, 16 Apr 2026 19:12:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDVo3-00081x-3m
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:07:31 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1wDVsd-0000Bv-RM
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:12:15 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDVnz-0005uY-UY
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:07:30 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c6e2355739dso25989a12.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 16:07:27 -0700 (PDT)
+ id 1wDVsb-0001oS-VL
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:12:15 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-82f37c09352so835745b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 16:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776380846; x=1776985646; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776381132; x=1776985932; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PYezGaLfKIsjTRMYKShj9GRcmD/igR3F5YkF1vZXRRk=;
- b=MnjYbu4F6UId6J+iR/lt4UbHVEgTIrx6FeUEakxOuh1kXhw6kgMq/yMT33vbA+B4qr
- IfIYX+PPxRbSYXLttysEMoX7Ai5MM5WXmhiDgxBgWDNIjm1fN7Kfo/2Q8WufgW6HGqhu
- R6VLJAkxv4NPLbLgerT954FgBWnjbbXMKK/FZN1LnqTfbMCog3ESyXGiUIdv/xqOddY0
- U5iFkjp2OapwFll2H6wjk3gwlkKUbhtYIvQuxm+5iX8d54aqGHU7x1WFbnKVEFpU4Ze2
- XqQFqpYX1XObp/DkzI4dXPm8j4ndtrteKGbptKePOUt6tlzAg5IxRNX5pw0kpVu0DAaH
- Iz3w==
+ bh=/dvvYZNuIIL0udKkQ2r0/fW6xAgZnL6SZ1paVP1amiA=;
+ b=xhKbLwV481pbq04jMKmog/gJGDL3QFm3q7q0jeFsnVeARzWxu8KFemGrFo8eMYNRYP
+ P6IJ6s3yVkAqYW79pl0PsmWM9hayRaYTELWEdMpwpKZpCGZkVYC9sWlepFxog/i5baAA
+ 4upAoax1+qbt1A+5wOKpvizmQN3h9grsr1KzJW42+wIM+ooa8HeCoEA8KlHqt8SCdY3w
+ hyVI8Hk2XtefIbJwAEAmcELm0qk+rit/TzqEU5/IJJ4kasoC2FX3HHDuKgMtoUeOPejl
+ dG5Yg995NVmAfyaRG6tVwRGL1dCdN5mOjJGtFa9gfDtWFxN+roT4vboWVbx1WACjIS1M
+ sAMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776380846; x=1776985646;
+ d=1e100.net; s=20251104; t=1776381132; x=1776985932;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PYezGaLfKIsjTRMYKShj9GRcmD/igR3F5YkF1vZXRRk=;
- b=V7xAhY8VlSnIBBAS+iUcRVtUhLHzVtoS6tAK4RV7vO/Gj9Hy09ggV1xgAvJp1ElciH
- f8yb8J7FeD6YElBbWQp8hpDkUMUTNU0r3X0BbsVI3ksU1iINPblGmHXbI6M+zGzaUDre
- Dxs4picWoZQUhxkPWl7xAqVS505XKM9y9XOvzsmzNHj61OU+dTC4zMiWYJpAhmws71/R
- T6KWASrNdFG69pB9w2YErbemsyZwDxkdpbUvqNSzFWbA8yFe0oOmCnJ8XPiU2J2P9eV9
- Gp/ZtucJy6PudFkbGJqnC2+otXs5d0gO3HvgwGhQTbh9jgiz3K/VnlqBTE9Nt+e/yfO4
- +fRg==
+ bh=/dvvYZNuIIL0udKkQ2r0/fW6xAgZnL6SZ1paVP1amiA=;
+ b=TuXy0QTqVdxwMZnSZecXupwEMLHtNyWGjexQV1RIrMj5t4dw4Mds6bbZz23V0YpOGB
+ rql2CGAM78uoTSjYizcYvQ3JmlJJrBVMKo5Yul/Jo0T2bY8DngVRLi2hgl8ZTu0RqdIT
+ laoRZkvhYTiysIsw+Yd41G3RzQBTet68uCQyTISOMehc0VMEecZzPrhPJiXaG4mckltz
+ tnJrnTYQNxRduRIVpeSH0x+g7iiWBGU0neuJuiJzCyqyKumoB+XpxpM1KHeLDBdBrKlL
+ mYDS8PN2vyDo0D62t31iyxinPRwwqn5WYHzL8W04XyLU8raYrXJUJf38QSz/GoTizDd6
+ QI+w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9MIJxYKIXCbfVkm9+azBttsB8bJ/X7O5OuFM8ULYzPR11Oj0ttTGNsfxm0sBoW1dAamsjQk/wO7xtk@nongnu.org
-X-Gm-Message-State: AOJu0YxfWOYxLB4zrGRRYV/5kbgeCC/VzLTi9E0nMMb1XZ1Bjpu8zkF4
- ZHgCM44p1MkfuvRsLJsXN1DaH7pJumQEhtatChoTNrqqM21rrXqWAXFopL1TxmlfhRA=
-X-Gm-Gg: AeBDieu4W+O8QeU/V+JcS20NoZ/SvdiZDxUhQ5YA1Z+9TD7O3mAgpp2T5mKNVYa0z6I
- B5xT3si1ZlWNq8elnKU8M6Fk1Y4kQReOF5CP81pBm41T2+/SZet8uRPR3XufFzhzn/q0offd80K
- j8MEAKOz2U9SCZoPfQyBn3F7Giu9f7Y/9F0/BeKFWptQyage7Wl2Kp/FAA3arV92lDC86Ogy9LU
- 17fb/ESHbKRS56kwBg6OgNipJz8bxzbRoeR4Hpehc7i4eMmS4QVrmB0+SUO1TgJd8TBEfQ+yME0
- h84RmWIUqNEIWjbJ6JBsdc7Nqkp5cUn6fhVCA+FQHdjUOcTimVstHMt/my9/BMiFv0QfjybHvk1
- NoniNBwc0qF6nk6OZUL4QQykvOkWP6zQ3DnMG4hzPtqMe61rblNMf42tZAABKLObMs3O61VMyYK
- plWPfkWShYOOAZQfw64T9/mScOGQKtLiwqQtA2nTTgVJUr3uMALXEbb9hrQGbsFjhtNvoVrFkS2
- qeTi5Mmy07wcC+Bo4X5fhZNn4tffysxLAJgk7OHKJHY5c2aFbmQVeoWkkk+6KCbZA==
-X-Received: by 2002:a17:902:7248:b0:2b4:696b:7bb7 with SMTP id
- d9443c01a7336-2b5f9e9a539mr2285925ad.15.1776380846336; 
- Thu, 16 Apr 2026 16:07:26 -0700 (PDT)
-Received: from ?IPV6:2401:d002:dc0f:2100:a60a:7c34:dd75:e66c?
- (bg30dj02y68bx09myf73.ip6.superloop.au.
- [2401:d002:dc0f:2100:a60a:7c34:dd75:e66c])
+ AFNElJ8V1HhYzYPlzur3vKgAdmNlUCchsSMvd17/KiSmQnP9bNL3NTvzwgck7ZbP7TzkIeCwakRPefUNQUWy@nongnu.org
+X-Gm-Message-State: AOJu0Yz0P9El64IX79g+Mz1y0HRBh+j9QhE6ptE2smOM3cwodjLiZf+p
+ EcIwC7wM7arZeCiFtvAgPBLB+9ZGH0l91ypRy7gvCSfqyf4KbVZQoyMknEch6Ic1lB4=
+X-Gm-Gg: AeBDiesfUkD18hE2a2nAcZJEq1zpV42QYK748Nx/Jl2RoZyAP01zJ16kXCnIHDR5jPv
+ g8K1qvCx5X2VOCsICr3hdELHskWwWmLMBzCe+Ao3p5mKQs3HnJ1/V34L3xHCaJyK+24wrvrVu42
+ OjabQwIXhg4TxNTDpm3zTebrrBZ9z19qZ6CI8BNdSLF77X8pgx7pQIb93FlvBOQOZXQXmSHvr7q
+ i81DoVstqM2cOfSWNvujPPQfciLtjcLEZqLsIpkQ31csgv++QATnQac4+AO0K4GS0W2FYi7oNR7
+ 63bd9RjBzA6hGsTSaEN37M+0x9rNnCa6upcK0/+1cu/pljpv3iWcsdWOIMwVxtmtATh38dIypEv
+ 6x6YXJUzrOQUxtwClVCWtfsFIdZTCPNP2zsdHrsnWwVhGlZEvuWT6ByPcmDVtGxo/BC2ib8hbBc
+ ZmZaSTUj21BzDeMhkEMSRSuiBoguwNXC6hZr9uc0++z65jKSWI5zxaCXEoh+qY
+X-Received: by 2002:a05:6a21:6d9d:b0:395:acfc:b679 with SMTP id
+ adf61e73a8af0-3a08ca743d5mr302050637.18.1776381132226; 
+ Thu, 16 Apr 2026 16:12:12 -0700 (PDT)
+Received: from [192.168.20.21] ([115.186.231.75])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fa59dda1sm645585ad.58.2026.04.16.16.07.23
+ 41be03b00d2f7-c79581a3020sm5576844a12.20.2026.04.16.16.12.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 16:07:25 -0700 (PDT)
-Message-ID: <bcbfb47e-022b-4db5-90d9-a91599ed227f@linaro.org>
-Date: Fri, 17 Apr 2026 09:07:20 +1000
+ Thu, 16 Apr 2026 16:12:11 -0700 (PDT)
+Message-ID: <8d640a27-01d1-4f74-bf6a-8acfd211ec89@linaro.org>
+Date: Fri, 17 Apr 2026 09:12:00 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] target/mips: Check alignment for microMIPS pre-R6
- LD/ST multiple
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH v2 1/3] target/arm: Clear AArch64 ID regs from
+ ARMISARegisters if AArch64 disabled
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
-References: <20260416210508.30686-1-philmd@linaro.org>
- <20260416210508.30686-5-philmd@linaro.org>
+Cc: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+References: <20260416165353.589569-1-peter.maydell@linaro.org>
+ <20260416165353.589569-2-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260416210508.30686-5-philmd@linaro.org>
+In-Reply-To: <20260416165353.589569-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,18 +107,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/26 07:05, Philippe Mathieu-Daudé wrote:
-> Pre-REL6 microMIPS requires alignment while REL6 microMIPS does not.
-> Pass the MemOp alignment as argument to gen_ldst_multiple(). Keep
-> using MO_UNALN for REL6 decoder but use MO_ALIGN for the pre-REL6
-> part.
+On 4/17/26 02:53, Peter Maydell wrote:
+> If we create a normally-AArch64 CPU and configure it with
+> aarch64=off, this will by default leave all the AArch64 ID register
+> values in its ARMISARegisters struct untouched.  That in turn means
+> that tests of cpu_isar_feature(aa64_something, cpu) will return true.
 > 
-> Fixes: 3c824109da0 ("target-mips: microMIPS ASE support")
-> Reported-by: Richard Henderson<richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Until now we have had a design policy that you shouldn't check an
+> aa64_ feature unless you know that the CPU has AArch64; but this is
+> quite fragile as it's easy to forget and only causes a problem in the
+> corner case where AArch64 was turned off.  In particular, when we
+> extend the ability to disable AArch64 from only KVM to also TCG there
+> are many more aa64 feature check points which we would otherwise have
+> to audit for whether they needed to be guarded with a check on
+> ARM_FEATURE_AARCH64.
+> 
+> Instead, make the CPU realize function zero out all the 64-bit ID
+> registers if a TCG CPU doesn't have AArch64; this will make aa64_
+> feature tests generally return false.
+> 
+> We only do this for TCG because only TCG really needs it, and for
+> KVM it might be confusing to have QEMU's idea of the ID registers
+> be different from KVM's.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/mips/tcg/micromips_translate.c.inc | 16 +++++++++-------
->   1 file changed, 9 insertions(+), 7 deletions(-)
+> v1->v2: limit scope of register clearing to TCG, as I suggested
+> after posting and testing the v1 version:
+>   https://patchew.org/QEMU/20251002101648.2455374-1- 
+> peter.maydell@linaro.org/20251002101648.2455374-2-peter.maydell@linaro.org/
+> ---
+>   target/arm/cpu.c | 35 +++++++++++++++++++++++++++++++++++
+>   target/arm/cpu.h |  3 ++-
+>   2 files changed, 37 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
