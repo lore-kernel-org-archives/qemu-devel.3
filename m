@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77DC6F8A144
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 08:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EC0F8A149
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 08:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDI6Q-00026a-Lf; Thu, 16 Apr 2026 04:29:36 -0400
+	id 1wDITq-0005OS-Ci; Thu, 16 Apr 2026 04:53:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDI6M-000261-Qi
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:29:31 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDITm-0005Ny-HD
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:53:43 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDI6K-0004Lq-Oa
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:29:30 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43cfde3c3f3so7812533f8f.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 01:29:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDITk-0008F0-Q4
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 04:53:42 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-651c5d525f6so4492088d50.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 01:53:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776329618; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OqiXrVL2rooa2pM7ImWHsyuWTP8twUTPe5qP0SBBfgqfyWUeXBtkV4CiuO0bIp7VHW
+ PnN7KUKyKokDiRzQupuIMtqRsrmntqL+LskgSyk/PdUqVq5DuL7O11tL3cJ3wc8yg/jo
+ n0z9OpX/UTQQ9YF1naPFOop8K/HzP1mkDwnBwJgGX7QU2Aed52rgTbkAGgrl8IRnGz2/
+ BDuIrIwvZWO2UHdNWuqkByMh/xpder4NKRVLPzPPRI7szztEAAR62o5ir5WSxnaCEoF+
+ GHUCIoFGZ4JMpVgiW/Yb53aYVWJ3SPW4+cqkmQZJFhsCX3KgWAyE0+ASTKeHNvWgtySY
+ vQXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=x5BDxbEeXuc3Pvvy5dNgf2LyYZeCp/NMK+KYefCTdyY=;
+ fh=9DRnXINmPzvpmyEzFbwKbIaANfyGNvJUJ/hQx57tZow=;
+ b=lYipgvaiikclEvDKoCia1ncR155bAb4Nn446KzCnO7KLmwIUYU1dSuUV8g6WcHdU/a
+ u5eJE/7c9Q8IyVxIYn+LpPnPIiopdHJww19yjpC/BAoz3wXQPuDSvnD5FYUj57u2yfcg
+ rOYtxRiFaWs4BwMNJ56GtilOpJ04vgjeEvDLMNINt1GR4l/mZFqNBbfdNbnFVCLxB8mB
+ X1Xk1th8xiJ4JGYzy8lV/Tazz/OOSneFFUPWseGiQJ4+OeTQSzr/eAGWrJ1SwnINgGmL
+ /ZsVMUHkcx7VqufdffP24OtAPXC2A39Eo3FGa3J35k+RUB+v86eP6NHaSS2N+YPNCBcQ
+ AWBw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776328167; x=1776932967; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=i5TJizu3Mcgj00sssF1bKVqn2aMTeGrGx/WNoebfjVo=;
- b=sPS5zvCcVRnSQpc30CXarEOVYjm4rFN7WcNl6F5SwzWPFwZ3W2KdNrTKjP098mdSLv
- wv4SiWWoie7Al3S3mev96kCRwQq4DDH+g5LOkV0/vZe/1yTgKaxOv6XVTbblFG/Vy7Dq
- mcOMQrmON2OPiEfYGK92c66KqB2yytqB8tWHM+Z05wGBZrSdiuUZzfhhhMmt+r2U3g4n
- Tl1YNcs4Q7EHnkO581cV7DEzovQ2VQSvT4DqxlJZcdZsvM2VJdY5mndxUxjIPCYav/Sw
- LKjAlTNqiGxyRqiqtdmPda1Lv8UrihWIZAEk7MuA/ERVeu/jgM2LjG9YQuEDan2kouqB
- +Y+w==
+ d=linaro.org; s=google; t=1776329618; x=1776934418; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=x5BDxbEeXuc3Pvvy5dNgf2LyYZeCp/NMK+KYefCTdyY=;
+ b=HHflbZR16AtrZ0fuz5CIE5lGFMzNcqHOZ67BvChI057K78qpfQOq0N1AP1RWqT4/7W
+ IWzSqQOxjCltF5ExJUp6PP7YbFYJ3A2EWhrtXePxPRvLhYMCx1zfz5uIaepaCfSTDxix
+ +ANIz8VktEwbu8tHHsCBrABPhILyo+bug8OijL1dV3TNBr4LPGlqBoUuLjcV3qvupV3B
+ ekC6EOR2DRtbTBsYom/my8VFK3LYV5yVEeB7scpKMLSddl13FKPnYYsWLnP7xjtDMdh6
+ Y/5N3QRvB8yScc7Qk7lJqYh4cW7Zd3Z//iRF2HNMCYrcbPBT/5vVcPzYgXetaaq3lJCE
+ 1Gtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776328167; x=1776932967;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=i5TJizu3Mcgj00sssF1bKVqn2aMTeGrGx/WNoebfjVo=;
- b=EIpBpGc14V7gOYpGsk3dfdMzTZis3Ytz2F79n1K8Uwon63IEsLkitJTrq4Ul4gkhWp
- IzkNjbl6W/vVqEKCJ4arlkR4Kt0hT9TSlLb2VkU3vcnTUwmNYBvtJodFO6ABP4mpWywB
- R1hIwz14Y4F3Ow8UVVI5OxXd1I3Pdt2OVKvbHhIgt6vxHf0V9FzaBCABHpACPwTf6zIg
- w2iqYGayJCR4qn89Q9fQgS4TWUxk/IhxA1gcrF9qM+lUCh/e9JvOyPX8hyCXTxv535Jl
- 9MvaDTRGjCCI1ZqNG0cL44O9ogAmssseocycfaMdYgN5RHo8pKbAVHG2DZ0XNAhL/E8E
- jyXw==
+ d=1e100.net; s=20251104; t=1776329618; x=1776934418;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x5BDxbEeXuc3Pvvy5dNgf2LyYZeCp/NMK+KYefCTdyY=;
+ b=oKD5+G8+xmM9JIGP1EL3/zlGEZZfwI034rb2F7CEZ3s/O/wPA6xSUKwSZdbnskVME1
+ 5kHLvRKFbUqWlBYvnRiercFnp8NEkmBFiYkfKqA4o0La6ggzHC/T36Q+3Z/HZz/TEY3H
+ ei2VAZgLzCHi1PiFmvtMWuWuzIepfFxsUFw1B2aK6SJbKU/5+Us+BzwPJ1Jr+OkD4neU
+ jfX6TwW2qC2X/D2+PT/m/Z4wv4H9MPyCFmmlPCtlvMtBVYaO5iLIa0gKTvgB18jJyP/V
+ QqYz0a6YVHCxsVbSdd2m6q7gebZzTFVkXAeuZpKqP98ymQjRgufV48jDHZGh167o9P9Z
+ GIvw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+u01DxkldjmgHpsXy5uola/2DDxI/Ah624etiwaSQnt0misX2qPZ6I43tvlsoVH1fN2YRyBuUAeSC2@nongnu.org
-X-Gm-Message-State: AOJu0Yw/579pDhEtSdJb3fPV1M8BcKzE5tLU4T6H3Fe8X3zITL3Ou0D4
- AZoWTl4HRkHwEJM7KObHKHXcnBPzlhTBLWedAfRlj4ntZAdOQMW60wUES/e+d/yPYi8=
-X-Gm-Gg: AeBDietGI02yEkUCKRh8z82MJgpzwE4uVP4eLpDSFYAaib7W8MDMwvKqwab1tX4QvqK
- TbPxByZmnFM17WhlEfs1Mib24+n64rLk8C9H9qUonkOTyaIC+HeIAyCd4jNFEHgSTH5sGzgSkGS
- dj0kSu0WeDwOQim7znZIrBHNggQ+IdcLf92gumgIVKmX/3hD4Bh3VBetk/9zgQHnnaNKli1bHEF
- lxmmBB55YQfruG5LTHg7u3GLqaDEPnAjyHhYa0GMc5XoEInD+jpgHwq9aT+gDArDTjjTgt8tgwt
- +KKY3lfMkqEJtb0fJjePMsIAJkaYkE2GrbNPU1kfQeFhgnipgB+u28H11/sVzCH7JxdXgmJhgmW
- 2ND822XczQ84rfVJo8rAdL0Pey7RJ5H8m431JgmRGxS6G4OnkddYNPL5dSFsO0aZx0bqsnvO4bi
- 2q6qpiEUXXgjekTSeWWCpFDJ1ufEm/I5Gkg7A=
-X-Received: by 2002:a05:6000:1ac5:b0:439:b60a:b400 with SMTP id
- ffacd0b85a97d-43d642c8697mr37626069f8f.31.1776328166713; 
- Thu, 16 Apr 2026 01:29:26 -0700 (PDT)
-Received: from [192.168.69.228] ([88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead3d5f06sm12162550f8f.17.2026.04.16.01.29.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 01:29:26 -0700 (PDT)
-Message-ID: <183ce56e-cbd9-41a5-8d68-9281aa6ddd54@linaro.org>
-Date: Thu, 16 Apr 2026 10:29:23 +0200
+ AFNElJ9fnFULJhUeuoaprzLoJdNDvt7swvXVRRMri4KjaxBn1vE551Iz4NpbAnpT1f1woBkis8asHgGfH1Qs@nongnu.org
+X-Gm-Message-State: AOJu0YzwS37ztkump5WFzSebcBLPOPRIYs2QZIQSAguS6baRZotOfPNB
+ o8K6Wr2OVM0J6bo/3ySu/dqv1ZrBYv06JRQpr4WcxoyfM/OltGYVOngx7D3X8ZfWTSYp7gj5tam
+ MGzMTxepp0PgbIQfad3LM+qwZ1VSrmIB4sgVUeBEeyA==
+X-Gm-Gg: AeBDiev1nVs889YDVYcbSPGI4AF2fU3x+FEx17MoiYAoElGOsWxFSG1ZWVw1h+IwSi/
+ d2OLc7I9gK/FyZhc5dYDtT2k3FV8JM7b4wy+0AmrWo6G/kwvrHPjIheFqjUS6OfWIt39fo0skr9
+ ozYN8x0di4PALltlfoeFqacT3j2P04hx7qoeFIpQ9dwjpv1kdqfkWgeOr+zQqns62XWV5+Jfqf6
+ HPkzI+5H5/jG5CazNgKjZ+gwc2HVkyV/qEPb15ozzotHavvT3knRBF96m1vrf4IYJz93efINLXH
+ KlaJQWrIaa44H8ajDh/PEre5EtnvaGPEEPbXC/97ujQQwtl0luo5A49K0bI89S7zDkWIDiJSnFa
+ Xzg==
+X-Received: by 2002:a05:690e:d45:b0:651:bed1:19f8 with SMTP id
+ 956f58d0204a3-651bed12ac2mr15152924d50.26.1776329618558; Thu, 16 Apr 2026
+ 01:53:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/sd/sdcard: Add support for pre-setting the
- authentication key
-Content-Language: en-US
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jens Wiklander <jens.wiklander@linaro.org>
-References: <cover.1776231967.git.jan.kiszka@siemens.com>
- <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
- <d68f975d-0450-4928-b758-bea1e657eae7@linaro.org>
- <60d47301-08f4-44e9-9cd6-2a12bb9e56de@siemens.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <60d47301-08f4-44e9-9cd6-2a12bb9e56de@siemens.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+References: <CAFsMJvCLRw2Q=4muDNG1Ojj3oL+UgTrVzpYM6VULRvdFxgR=KA@mail.gmail.com>
+ <df1c484f-bc30-49d5-9928-de6e17dd2816@linaro.org>
+ <CAFsMJvDWFmMx2t+9JXmBsWP+8r0XZDP+LRm6bN9k8wF5b6CSLQ@mail.gmail.com>
+ <d56c0dd2-720a-2973-865d-c9d16b90b69f@loongson.cn>
+ <CAFsMJvBKkLf=F=g=6H5_-FX4wJAzC6MhweoapqVTPx+7V9e9bw@mail.gmail.com>
+ <CAAhV-H6tAdv9BwrkgPTLWKpy35jJx+aG0xHGK2=CWdx5cUeiPg@mail.gmail.com>
+ <CAFsMJvAhdCdXEAFC27JJceA4Mc2Y3fADC7ASHBPitqeLgHMJKA@mail.gmail.com>
+ <73b6b6c0-81ee-b054-ad59-3067a718b492@loongson.cn>
+In-Reply-To: <73b6b6c0-81ee-b054-ad59-3067a718b492@loongson.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Apr 2026 09:53:27 +0100
+X-Gm-Features: AQROBzCmoW9pMp_7ZZGodcYA9Zhgf1Ez-WADljCTqBgkrSwEJA6BBopE1Z3_lug
+Message-ID: <CAFEAcA9hdGZQzqs6AL1OotjJat=SuNfXo_m=XSE2F0brDjngTQ@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: fix usage of struct target_stat64 for
+ TARGET_LOONGARCH64 in syscall_defs.h
+To: gaosong <gaosong@loongson.cn>
+Cc: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, laurent@vivier.eu,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ bibo mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,52 +128,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/26 09:50, Jan Kiszka wrote:
-> On 15.04.26 22:28, Philippe Mathieu-Daudé wrote:
->> Hi Jan,
->>
->> On 15/4/26 07:46, Jan Kiszka wrote:
->>> From: Jan Kiszka <jan.kiszka@siemens.com>
->>>
->>> In contrast to real eMMCs, we are not (yet) persisting the full state
->>> of the device. This particularly includes the authentication key used
->>> for RPMB access, complicating testing of firmware images which do not
->>> support initial provisioning of the key.
->>>
->>> One way to address this would be, e.g., extending the eMMC disk image
->>> with a special sector to store further state. A simpler approach is used
->>> here: Add another device property that allows to specify the
->>> authentication key, bringing up the eMMC as if the key has already been
->>> provisioned before.
->>>
->>> This is how to tell qemu to use the OP-TEE test key:
->>>
->>> -device emmc,[...],auth-
->>> key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
->>>
->>> Or use this for machine-configured eMMCs:
->>>
->>> -global emmc.auth-
->>> key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
->>>
->>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
->>> ---
->>>    hw/sd/sd.c | 23 +++++++++++++++++++++++
->>>    1 file changed, 23 insertions(+)
->>
->> Do you mind mentioning it in docs/system/devices/emmc.rst?
-> 
-> Right, there was something... v2 our patch on top, what do you prefer?
+On Mon, 13 Apr 2026 at 04:04, gaosong <gaosong@loongson.cn> wrote:
+> I confirm that the same issue exists in the 9.2-tcg-old branch,
+> and you have clearly identified the root cause of the problem.
+> There is no doubt that the patch itself is fine, but what confuses
+> me is that you attempted to run (ABI 1.0.0) using QEMU (ABI 2.0),
+> which led to the misconception that QEMU (2.0) is compatible with
+> 1.0, when in fact QEMU has never been compatible with 1.0.
+> As far as I understand, the differences between the ABI 2.0 and
+> ABI 1.0 environments should be quite significant.
+>
+> Therefore, I am unsure whether we should accept this patch.
 
-If there is no need for v2, my preference is an inlined diff that I
-can apply directly saving both of us time :)
+For upstream QEMU, we (as a policy choice) aren't supporting the
+old ABI. So we care only about the new ABI. Below I'm going to talk
+only about the new ABI and what we do upstream; decisions about the
+old-ABI fork are for whoever maintains that.
 
-> 
-> Jan
-> 
->>
->> Otherwise,
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+Defining the target_stat64 struct and TARGET_HAS_STRUCT_STAT64
+affects these syscalls:
+ TARGET_NR_stat64
+ TARGET_NR_lstat64
+ TARGET_NR_fstat64
+ TARGET_NR_fstatat64
+ TARGET_NR_newfstatat
 
+(these are the only ones which call host_to_target_stat64().)
+
+Of these, loongarch64-linux-user defines only TARGET_NR_newfstatat.
+(You can check this by looking at the generated
+libqemu-loongarch64-linux-user.a.p/syscall_nr.h in the build tree.
+Exactly what gets defined here is controlled by the TARGET_SYSTBL_ABI
+setting in configs/targets/loongarch64-linux-user.mak plus the
+linux-user/loongarch64/syscall.tbl table.)
+
+The kernel defines 'struct stat64' only if
+__BITS_PER_LONG != 64 || defined(__ARCH_WANT_STAT64).
+loongarch64 doesn't set __ARCH_WANT_STAT64, and it isn't 32-bit,
+so it won't get this struct.
+
+The kernel also only provides the newfstatat syscall if
+the architecture sets __ARCH_WANT_STAT64 or __ARCH_WANT_SYS_NEWFSTATAT.
+loongarch64 doesn't set either.
+
+So:
+
+(1) We are providing newfstatat on this architecture when we
+should not; that's a separate bug we should fix.
+
+(2) we don't want to define the stat64 struct in QEMU,
+but it has gone unnoticed that we got this wrong because
+the struct isn't actually used by any syscalls for this
+architecture.
+
+The code change in this patch is correct, and I think we should
+take it, but it would be helpful to adjust the commit message
+to make it clear that for ABI-2.0 this doesn't actually
+have any guest-code visible effects.
+
+thanks
+-- PMM
 
