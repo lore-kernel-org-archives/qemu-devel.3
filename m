@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B313F8D758
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 15:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFECF8D758
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 15:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDOMW-0001dJ-Dc; Thu, 16 Apr 2026 11:10:36 -0400
+	id 1wDOVI-0003HP-6u; Thu, 16 Apr 2026 11:19:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDOMU-0001d6-VV
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:10:35 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDOVF-0003Gw-Iz
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:19:37 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDOMT-0001g5-Dp
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:10:34 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-79ea87af213so11662997b3.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 08:10:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776352232; cv=none;
- d=google.com; s=arc-20240605;
- b=kYzo2MbDmt6vhGGlXxhUg0qZ8jScljttwcrmhVEyVpiPk1aK9t9695YCIFUz9UnqSV
- MoIKymYB9KLqHL7tHi/9XaKO6fHqNjC6zeRA7kG3vwuMR97kE478dv/nn2S2dYHwKJYB
- czYPzfqavysi2/yLQcWDD1pQKxuY48lyYxZnmRw2bAI8+PVRJ5zRBl9y+Ax8NgclR+mu
- ujZn9B/9WJgVC6NljE8tvrAjc4Ku3hmsL8DdnbcRsWtZZwCgv5dLQSdUogN862CS/3Vx
- E6MlkRatBFXKgZzYHyXBGpp9w40fbSrCDvy3Ir/prcCrWJEmV2V5UEfHiP8QbJwHgzu0
- cJ3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Ay/xT79tumIsvGOuKM+3HVLVNXsLPFEg+b+LWCp7Q90=;
- fh=yaPSKUJydE8GPG0gagCK0Pgig7hJS8VHDRsQea6XOuY=;
- b=HuB9QKJPNMDBTHwFHppNbZ7Lir2GESH4h+K3Sf4BZdSOfQalF13JuXH4IjtcYXvswA
- SwLrxj7wlZSUxusyNeTd577Fr1BrJgMJ+VsIFP7/LAGY4ID89woa9uzh8aucPQQs/5Ib
- Qydgy/VMQCpjBCFUbyjWRJHhLq+z8AmR0WEL0GR89CNvwrJyBDIdo6pABaiHKJoDudKJ
- kRErs9drSVMHcoky46qIpvNXcK69i6+u4ifO9jRmEmdRQUYMusVLQU2U4R/0rBCjrfAz
- +TSeFvyFxTJvs7q3OZjAbtoTBmOdD5pcrs9fG508q0bcSoy+npJ/QW0RDJxILPlPwUf4
- 64cQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDOVD-0003UY-Tb
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 11:19:37 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488af96f6b2so107531865e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 08:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776352232; x=1776957032; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Ay/xT79tumIsvGOuKM+3HVLVNXsLPFEg+b+LWCp7Q90=;
- b=r/y7VpzGuOu3+JPyRUe1XqTUJmedX+0qfdZOiWGJ8eU7xDjwdDM3v1sttOFsFcg4NS
- bvQNUIoIJgBACLZf7Bx85NbG8tnM48KltK+3K647lRMHYKi7xyJXhCeR/IEUSb2Z7g08
- FVFWag2Rjl8fWMhxIvXHGk3ZHoGralC+tRQM5eC1brCt2xpfFVk502EA00hEGqyJsEyh
- TxZS90P+pKiOoJD6scOUtQchR0rIitt8ZSUPn9ijOK9Rxe7f5imOTeg9TgIc4Eryyasv
- PF0zs2Hwd86dzFuCC5QOjeIL7SB3VLW98PJQ9fzGaaHxD2ylJtgk6wz0Kxmg1z7Bvudw
- K5RQ==
+ d=linaro.org; s=google; t=1776352774; x=1776957574; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Cm9DhN9qeOqvJmzp7A+inBp61xXu7ErgVFtYcoKtPOk=;
+ b=CV6dtYYAxrfO3ZPc9PzRQHABskxmY3Pl5rrTMqLR7W797JH2/nV1ZhbVD3RyeZsV5g
+ yuKLmuSSPmaaEj27DSUXlAp8dYtY3j/pY7Xq3tfIejhNTACgTLRhtg35vSWZ0gP45i8+
+ JqTJUuEWCFWk+t4PXRkTm0Cez3GeDGr+sxz8ED7ficuFNySqJmiCMDhQrF7hS5iwSJcv
+ rG/UNZ5Oc21aZ8XXf8YDZ42bFXhpVOXF+Zl6u0DqyeE70X4/gR7+9RWdUySutBd9D303
+ 8yim55hPLK19wdoOi+O1W0dysk6TuFVyWM5D7P6PllmU3iGzEWlHUywd10oChvvOpLN0
+ ISGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776352232; x=1776957032;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ay/xT79tumIsvGOuKM+3HVLVNXsLPFEg+b+LWCp7Q90=;
- b=fel3Pn/1BhdhL4eRCjv2NgSxLJNXIYT2hX8Af+39AfrS3vXb5dbfDwb9U0hNZ9ncEG
- JIIp+NzyZz4CfduJhiwd14gb/9EchO28ECSTuJmGHJWFekJ0KCm0E1UxIT4iKozdXjq1
- UmeJsAM3RCdAL01cnzYtBTUvwLDd6Gt51RtAWPwuxwyAYwqgoWGLJkx2Rhqfy3Nt/jVV
- A8MSEXa0MyYFatHnsT0CBe8hMWCS6KN/PQmIIWb1rF5Yh2MbQ/YhRC0cqu9r7uLjY6Vq
- V1pZEzU3WuxXbYPy8B3Xm8iqq0ZJpLUjJ+DRR7y6gDb1bKFUcxRnF5dFh4n5IbljrTVo
- DDgQ==
-X-Gm-Message-State: AOJu0YzJiV5MQWBCdxyIjig6sFqLa/zEvJWrGyC/3pDRwiVKB/p6dmZC
- AmMaJMmL4FYXdp8qMw/432S9tlKKbZQ5kb12cX02xOQu3Ros2NRmq25UYyuMD9N+X/9xIJORBiR
- qIQ6oJERjDGN/XzcWIM7oDkbCpH3aQNx/3x4hXlEffQ==
-X-Gm-Gg: AeBDiev0dOBfHyHjiu4txjaX6xo3WfhK23Rgs0vdYOtKKItmlsZAlofN8BDb/029enN
- yfcIltiNXY9ajv1zzO4UPfWrsfMQ6mSC3qQ7lvSUaauCHMjdwkN7AhSAGyBpJKlgVq8wXf6JaUg
- 0WTPbDdyMLSRjrTDMOBRgjF14izJYdgskT3UuzuMdz5XjY4QdS+A3R+jEsEhdO4wPdqvV361Vab
- qtHiys7PSmhHBEJ6NXEEZs6HTYKPgxgpyVSaYRkbZVwaAaRAengTcBBqa7XDjVpdCQy8UGYt8qo
- PbAF3hhdaB3A9XhKDoRBLj1NbJBV2A6clPxQD4LVnS6cV0saDHrAV+4GIJazWUpVihzl7gz2xOx
- pXQ==
-X-Received: by 2002:a05:690e:1687:b0:64a:d18a:66c3 with SMTP id
- 956f58d0204a3-652f65a3a4dmr3347246d50.48.1776352232105; Thu, 16 Apr 2026
- 08:10:32 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776352774; x=1776957574;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Cm9DhN9qeOqvJmzp7A+inBp61xXu7ErgVFtYcoKtPOk=;
+ b=SoKziJrKIBr/yCq8etyWkeEwG3wqsaj4W55YpvvaqcfCtiVJdKuJLn3OYC7Op0tKcv
+ OWpMoo07rLEnKzfnuLbgBxRlCAnJwFPeKksE/0R17BlyhquUP7z2gpKGQ7VcwalRczC6
+ /0DuSfnu5myQrGXlnKcU7rdU9xHtkHc0j2V3aRYH3ca6CbaEGGLSPjR0REencdJ6hKJW
+ qMmd4R/GhU+enAhIZRtZ2f4zsWUDpycmXglfBr2RQGAdeYhxXg6g99XMnzdU3jAna2xE
+ SBgkrI3osNxO+MdwYbUk63BJP1p+BNJJD/AT80ZZJSR4LZb5LHXZqIWDLysuft1p6P3I
+ FxVg==
+X-Gm-Message-State: AOJu0YzJjs4FMlHX4zaZZ2QKe0gdhlb0Kd8ClctB7M5uY3setSHebshX
+ Fe7oHlFRU10+UWAcFEppo40m+Ew0oGgvgEupH6LZ3pvfaDJ+LXB1AV37VuB4Abz8lCwFbYEqjk4
+ toXKyIdo=
+X-Gm-Gg: AeBDieuCGd7T1XspiN+ryugTff7T4tF+26ZUZRWf6ruW5tgry14FLC1CP6A4CoSU28b
+ 9rwdTQ2VllXh7GMiG0ct3FRDc//0xnykw6EIB+BAhBGADfKwFwFu/1OGGaalc9b5G1SEzt4ShIN
+ cX5Xp6FKqVc6JlEbc26svMxrYC0dfBR24zzG1FBEOlYEmsW9zAs2aqe7MPueawrI0ut9JxXnlXZ
+ 2cM5sBRk0mdkHGkuK7A1+q1067iT2rUvctvuG3QfzHADXz8TIOD7TfUZEr6t5cljVqHZsCBoeVg
+ n0LPSRHlsN0MGrHsl0vg0PGUU5CmrIeCk/VpKGnLkmTJVlCJKd7eNCo3qtdKdnW4Bmk4fa9KtNl
+ bnMtdSiGHyIiFnyuEHSxDY1F1RHNyAfL1c/qtJCu2Zsp6GPtNnVF9RVB51nu0ByhWgWlLgpgJZ6
+ ul6nWvYu5E2BPVZQhWcPr0wVsE+q8EI65BcM9O/vLqHsvAdGiLt8i0y8X3OXRSuk1vUA==
+X-Received: by 2002:a05:600c:8904:b0:488:c257:a73b with SMTP id
+ 5b1f17b1804b1-488d67effd0mr248706635e9.9.1776352773647; 
+ Thu, 16 Apr 2026 08:19:33 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488f095ceeesm60522105e9.8.2026.04.16.08.19.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 08:19:32 -0700 (PDT)
+Message-ID: <725334d3-4990-4d16-98b3-4aeac073478f@linaro.org>
+Date: Thu, 16 Apr 2026 17:19:31 +0200
 MIME-Version: 1.0
-References: <20260416091654.316158-1-peter.maydell@linaro.org>
- <20260416091654.316158-29-peter.maydell@linaro.org>
- <20260416165801.5795ef14@penguin>
-In-Reply-To: <20260416165801.5795ef14@penguin>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 16 Apr 2026 16:10:20 +0100
-X-Gm-Features: AQROBzBnx4EOor6DhpuaB-KcX59L9mAIi0ydpIhIAX_KFnjGaVYrQPVNMCMVTi0
-Message-ID: <CAFEAcA-eVwwpRXCZWAg24gMKBsEhwu_6V77PstA=GUYEha+PHw@mail.gmail.com>
-Subject: Re: [PATCH 28/28] MAINTAINERS: Remove Xie Changlong
-To: Lukas Straub <lukasstraub2@web.de>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] target/mips: Pass MemOpIdx argument to Linked
+ Load/Store helpers
+To: qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>
+References: <20260416150649.23671-1-philmd@linaro.org>
+ <20260416150649.23671-2-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260416150649.23671-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,46 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Apr 2026 at 15:58, Lukas Straub <lukasstraub2@web.de> wrote:
->
-> On Thu, 16 Apr 2026 10:16:54 +0100
-> Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> > Xie Changlong has not posted to qemu-devel in some years and did not
-> > respond to a query about whether they still wished to be listed in
-> > our MAINTAINERS file.  Remove them, on the assumption that they are
-> > no longer active in QEMU.
-> >
-> > This makes the "Replication" block filter orphan.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >  MAINTAINERS | 3 +--
-> >  1 file changed, 1 insertion(+), 2 deletions(-)
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 1fb56bdac8..a50e5dbaab 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -4382,8 +4382,7 @@ F: block/export/vduse-blk.c
-> >  F: block/export/vduse-blk.h
-> >
-> >  Replication
-> > -M: Xie Changlong <xiechanglong.d@gmail.com>
-> > -S: Supported
-> > +S: Orphan
-> >  F: replication*
-> >  F: block/replication.c
-> >  F: tests/unit/test-replication.c
->
-> Reviewed-by: Lukas Straub <lukasstraub2@web.de>
->
-> I will take over maintainsership for this component.
+On 16/4/26 17:06, Philippe Mathieu-Daudé wrote:
+> In preparation of using the MemOp content in the next commit
+> (thus stopping ignoring it), pass it as MemOpIdx.
+> 
+> The helper prototype declaration always took a TCGv_i32 as
+> last argument, correct that.
+> 
+> Rename the ignored 'mem_idx' argument on user emulation.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/helper.h          | 4 ++--
+>   target/mips/tcg/ldst_helper.c | 5 ++++-
+>   target/mips/tcg/translate.c   | 7 ++++---
+>   3 files changed, 10 insertions(+), 6 deletions(-)
 
-Thanks for volunteering. I think the easiest thing is if
-once this series is merged (which I'll try to do early in
-the 11.1 cycle) you send a patch to add yourself
-to the section.
 
--- PMM
+> -#define OP_LD_ATOMIC(insn, ignored_memop)                                  \
+> +#define OP_LD_ATOMIC(insn, memop)                                          \
+>   static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
+>                                   DisasContext *ctx)                         \
+>   {                                                                          \
+> -    gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(mem_idx));      \
+> +    MemOpIdx oi = make_memop_idx(memop | MO_ALIGN, mem_idx);               \
+
+Oops, MO_ALIGN is part of the following patch.
+
+> +    gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(oi));           \
+>   }
+>   #endif
+>   OP_LD_ATOMIC(ll, mo_endian(ctx) | MO_SL);
+
 
