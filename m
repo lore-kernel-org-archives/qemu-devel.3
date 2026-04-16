@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87CA4F8A16A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:12:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ADB8F8A16A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:12:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLZQ-0008Sn-6C; Thu, 16 Apr 2026 08:11:44 -0400
+	id 1wDLZJ-0008OQ-Az; Thu, 16 Apr 2026 08:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDLZO-0008QP-Mq
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:42 -0400
+ id 1wDLZ7-0008Mm-6W
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:29 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZM-0002Oj-Og
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:42 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZ5-0002NC-GH
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:24 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9D59920B7129;
- Thu, 16 Apr 2026 05:11:38 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9D59920B7129
+ by linux.microsoft.com (Postfix) with ESMTPSA id B97FE20B7128;
+ Thu, 16 Apr 2026 05:11:20 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B97FE20B7128
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776341500;
- bh=zdYRIkg+oa2YRSRRDin+ckBgXO9q8zPFkYu1dCSFXfQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=b1grMpiw8on1/7hA1D6Fx8F20wcgzNVUsyexkgCnNzx6nVZ3pRhzSfaNvNKNWaJP0
- Otzs5X0Mve4GMCpUMpUrvuAV9vpBNJhAfLKsqwUdqrE03TsGJa0sKYcnsAUOEpH+1K
- 5vATUK3KAAEi5bLgjwdyWbnqlvJb9iR/VNPOEEk4=
+ s=default; t=1776341482;
+ bh=0dd2YzP5jbl57VQvyh98LM+O3Ibn7cVZD1sgDeIXYvc=;
+ h=From:To:Cc:Subject:Date:From;
+ b=shdoLkJMCFjtxKSnt0DvRrZC0mUpbgQTVUwy0HPFFwAhQ7SFhams7yagU+1f9EIzG
+ Xirag2NAzDv3FAa3Z73/IccBpxzSiFDqpCw5Z1SwmHVPr4xlwaun/tfa13IByE3/nb
+ X9JwtYdOaM87NcDG/3yMSCzEC7qNORXZyNUUEpVA=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>
-Subject: [PATCH v6 8/9] target/i386/mshv: use hv-provided [0xD,1+2].EBX
-Date: Thu, 16 Apr 2026 14:11:15 +0200
-Message-Id: <20260416121116.527927-9-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v6 0/9] Support QEMU cpu models in MSHV accelerator
+Date: Thu, 16 Apr 2026 14:11:07 +0200
+Message-Id: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
-References: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
@@ -68,111 +67,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We cannot statically set the responses for CPUID[0xD,{1,2}].EBX, b/c
-those are dynamic, dependent on which features the guest enables.
+Hey all,
 
-Hence we mask EBX when registering answers for those subleaves at the
-hypervisor, which will result in the hypervisor providing us answers,
-considering XCR0 and XSS.
+In the current MSHV accelerator code passing CPU features via the -cpu
+flag doesn't work as intended yet. When using the MSHV hypervisor we
+either silently discard the specified model/features and leave it up
+to the hypervisor to provide a sensible set of features or if the user
+selects -cpu host, the hypervisor might refuse to create a partition.
 
-The reported size now reflects the field masks properly (without the
-mask they were 576 and 10728, which is wrong):
+This changeset introduces a more comprehensive support for passing
+desired guest cpu features to the hypervisor. It's also a prerequisite
+for Live Migration support.
 
-$ cpuid -l 0xd -s 0
-CPU 0:
-   XSAVE features (0xd/0):
-      XCR0 valid bit field mask               = 0x00000000000600e7
-      ...
-      bytes required by fields in XCR0        = 0x00002b00 (11008)
-      bytes required by XSAVE/XRSTOR area     = 0x00002b00 (11008)
+Changes since v5:
 
-$ cpuid -l 0xd -s 1
-CPU 0:
-   XSAVE features (0xd/1):
-      ...
-      SAVE area size in bytes                     = 0x000029c0 (10688)
-      IA32_XSS lower 32 bits valid bit field mask = 0x00001800
-      IA32_XSS upper 32 bits valid bit field mask = 0x00000000
+- Remove leftover masking of CET shadowstack bit
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+Changes since v4:
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index ee25eb5f6f..b90e2983c8 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -528,6 +528,7 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
- static int register_intercept_result_cpuid_entry(const CPUState *cpu,
-                                                  uint8_t subleaf_specific,
-                                                  uint8_t always_override,
-+                                                 uint32_t ebx_mask,
-                                                  struct hv_cpuid_entry *entry)
- {
-     int ret;
-@@ -543,11 +544,12 @@ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
-         /*
-          * Masks specify which bits to override. Set to 0xFFFFFFFF to
-          * override all bits with the values from the QEMU CPU model.
-+         * A mask of 0 lets the hypervisor supply its own value.
-          */
-         .result.eax = entry->eax,
-         .result.eax_mask = 0xFFFFFFFF,
-         .result.ebx = entry->ebx,
--        .result.ebx_mask = 0xFFFFFFFF,
-+        .result.ebx_mask = ebx_mask,
-         .result.ecx = entry->ecx,
-         .result.ecx_mask = 0xFFFFFFFF,
-         .result.edx = entry->edx,
-@@ -582,6 +584,7 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
-     int ret = 0, entry_ret;
-     struct hv_cpuid_entry *entry;
-     uint8_t subleaf_specific, always_override;
-+    uint32_t ebx_mask;
- 
-     for (size_t i = 0; i < cpuid->nent; i++) {
-         entry = &cpuid->entries[i];
-@@ -589,6 +592,7 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
-         /* set defaults */
-         subleaf_specific = 0;
-         always_override = 1;
-+        ebx_mask = 0xFFFFFFFF;
- 
-         /*
-          * Intel
-@@ -628,8 +632,22 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
-             always_override = 1;
-         }
- 
--        entry_ret = register_intercept_result_cpuid_entry(cpu, subleaf_specific,
-+        /*
-+         * CPUID[0xD,0].EBX and CPUID[0xD,1].EBX report the XSAVE area
-+         * size based on features currently enabled in XCR0/XSS. These
-+         * values are dynamic and must not be overridden with static
-+         * results from the QEMU CPU model. Setting ebx_mask to 0 lets
-+         * the hypervisor supply EBX based on the guest's actual state.
-+         */
-+        if (entry->function == 0x0d &&
-+           (entry->index == 0 || entry->index == 1)) {
-+            ebx_mask = 0;
-+        }
-+
-+        entry_ret = register_intercept_result_cpuid_entry(cpu,
-+                                                          subleaf_specific,
-                                                           always_override,
-+                                                          ebx_mask,
-                                                           entry);
-         if ((entry_ret < 0) && (ret == 0)) {
-             ret = entry_ret;
-@@ -1663,6 +1681,7 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-     if (func == 0x01       && reg == R_ECX) {
-         ret &= ~CPUID_EXT_VMX;
-     }
-+
-     return ret;
- }
- 
+- Use hypervisor-provided values in CPUID[0xD,{1,2}].EBX to get
+  proper XSAVE sizes via EBX mask:
+- Drop masking of CET feature bits (workaround not required anymore)
+
+Changes since v3:
+
+- Rebased onto current master
+
+Changes since v2:
+
+- move disabling of la57 to arch specific code
+- assert MSHV_NUM_CPU_FEATURES_BANKS == 2
+- dropped QEMU_PACKED changes to hv headers (address in individal patch)
+
+Changes since v1:
+
+- query hypervisor for supported processor features instead of the host OS
+- disable la57 (5 level page tables)
+
+best,
+
+magnus
+
+Magnus Kulke (9):
+  accel/mshv: use mshv_create_partition_v2 payload
+  target/i386/mshv: fix cpuid propagation bug
+  target/i386/mshv: fix various cpuid traversal bugs
+  target/i386/mshv: change cpuid mask to UINT32_MAX
+  target/i386/mshv: set cpu model name on -cpu host
+  target/i386: query mshv accel for supported cpuids
+  target/i386/mshv: populate xsave area offsets
+  target/i386/mshv: use hv-provided [0xD,1+2].EBX
+  accel/mshv: disable la57 (5lvl paging)
+
+ accel/mshv/mshv-all.c          |  78 ++++++++++-
+ include/hw/hyperv/hvgdk_mini.h |   2 +
+ include/hw/hyperv/hvhdk.h      | 195 +++++++++++++++++++++++++++
+ include/system/mshv.h          |   3 +
+ include/system/mshv_int.h      |   2 +
+ target/i386/cpu.c              |   8 ++
+ target/i386/mshv/mshv-cpu.c    | 238 +++++++++++++++++++++++++++------
+ 7 files changed, 476 insertions(+), 50 deletions(-)
+
 -- 
 2.34.1
 
