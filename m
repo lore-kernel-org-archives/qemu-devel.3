@@ -4,103 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF04AF8D76E
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 19:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C138F8D776
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 19:43:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDSHY-0003yx-V4; Thu, 16 Apr 2026 15:21:45 -0400
+	id 1wDSc1-0001rS-LX; Thu, 16 Apr 2026 15:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDSHX-0003yM-3U
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:21:43 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wDSbx-0001q5-6c
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:42:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDSHU-0008MG-6a
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:21:42 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wDSbv-0002CS-A3
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 15:42:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776367298;
+ s=mimecast20190719; t=1776368565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tuiIN56V4Kn2uLeM9wkgmdRP0gvzqIG/X6VledVJGIs=;
- b=LQQYPQc1Q7216+KCaX7mmLjTETkvPVWRydL2XC2+BYZd2THxFqUSRET2L/xbtMmL1rik+G
- +4AHSGXzASwg3O9bohSRXYruZnVJBAv0rjhwb7jBd8jzt5Mz0xH//seHmat2MZRk9pVSdR
- 50P9ryPUadt/6guet07DS0VZ1PMt3TU=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-MD1yN95IMx-NjPMZKPdJZQ-1; Thu, 16 Apr 2026 15:21:36 -0400
-X-MC-Unique: MD1yN95IMx-NjPMZKPdJZQ-1
-X-Mimecast-MFC-AGG-ID: MD1yN95IMx-NjPMZKPdJZQ_1776367296
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8d654ade33aso233989485a.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 12:21:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776367296; x=1776972096; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=tuiIN56V4Kn2uLeM9wkgmdRP0gvzqIG/X6VledVJGIs=;
- b=W7fYpg5VWNg/MI6MovlDjI1c4v3wPCr6EY0xNjQYfTdFXujTNmHe8wNXZKaJvJFs0M
- t6JuixNMALKKP8dgD+6HVFqrqrvvJ3na9aeXSlJ/rFStmAGBM4Q7rlgpoRvTK+IcavGd
- VUAodfM+5yiYe9fFYheJm2tM8yOgIup6R67JwN1vcI2gt+PpRD2RPsQJtSlZs50ZZoCu
- fgGvGjblnc/G8Zao9gzsg80Lid+Rk7KGybPZg1DDTCAsrBi10G0g2BFxtFlELrDloLa5
- k6g+C2N2Q8vwnZTC1hVvrG1TN/m11TUu1u82uE7y40XkFbQ7PQ/sRiQwwwWrOCUCNIo8
- Z4mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776367296; x=1776972096;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tuiIN56V4Kn2uLeM9wkgmdRP0gvzqIG/X6VledVJGIs=;
- b=PT/gzrwXgXdZpmKYA5KT7c+oQjKfiVx5RCdb8Xk6qZR0gIHfxA5IvvfvGTHVwR6lB9
- 5LWO5ApiHG747MmP7BldhIp1TRoKc1GU1SgiuApwmCeC1aPSUwySptRDEXSXW/qsXfjD
- GW/Kj6N4BQEapEXvgP+/YX3pJssUvSqXyV/gJ2/ouG6hFr75TrSm223Ne/kPYBEPf8n8
- nGNJfeuELh+QbEbdtcLkaLwMsl5eQM0W/m7+66ASbwz0O5Ibf3epGpLEw78ubwcvwgmJ
- njeFe+HE2gTXBcglUlC7n4NuHdEgqw56ltrDTP9cslUL6fK52VlexKYBgVaFoSvlZyoc
- u26A==
-X-Gm-Message-State: AOJu0YzqFOSFz0KW4HHk3SxsTG+ao3a0xoT3Tgx7NRrWI8RGhD/cjDmU
- UKvE/n+iZuAhmVLxQJeNAuyaqqqzY0yK9R0fm6iijh/mDI3xSvXLYrFf06O2Sod9Vsgr/ODxV/1
- bCYDldBFqxNRfLm7fXwuDsX8RLj9TP+rgt+QWGFbi0m3dCglHKXfDadqM
-X-Gm-Gg: AeBDiesFp3Rs1tpPGyOwmDprUBfGuEoaeCMeXi1QR+AqB7eH82bkGnTvUm6qBvFm2P1
- L5SuFqFxntuT/pW5nPhp/SQ1JtKVkm2AGobJU7IfisEAdo43chNEbophyQlPF1WsKqcZipW3Afw
- h0BK1mP1/8d7tzj2AGPryGMO9MF9Lm/WuguyM6vc101VyZC3Rdiwg/Oq9pW6zb7WEcF1zJh0jWA
- stodilVvPKnWdGHXesLxsCpjvTO2nL3gwh4qbQaAvkTEbHHoxPlb/nrPUU9ReZxuhgRF2p9iyAc
- 2F8YasJmKLz+82Gv9kx7CgWIUa8ZzHHL2kSwwx9y4/74JWntOpBC4yAXcE9jv9pFL/hXJ1foMJj
- o4ahNiL9adxJEMfjhe3lPxg7IUaVLjFJ9DHKDwDhnaexq22jw5M8Xjozi6Q==
-X-Received: by 2002:a05:620a:6914:b0:8cd:d688:7aef with SMTP id
- af79cd13be357-8e751ffea79mr77695985a.19.1776367296171; 
- Thu, 16 Apr 2026 12:21:36 -0700 (PDT)
-X-Received: by 2002:a05:620a:6914:b0:8cd:d688:7aef with SMTP id
- af79cd13be357-8e751ffea79mr77691585a.19.1776367295565; 
- Thu, 16 Apr 2026 12:21:35 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8e4ec18f2b0sm428153485a.0.2026.04.16.12.21.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 12:21:35 -0700 (PDT)
-Date: Thu, 16 Apr 2026 15:21:33 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH] migration: expose per-device state save times via
- query-migrate
-Message-ID: <aeE2ve7YrEXHtvrb@x1.local>
-References: <20260416175659.41215-1-viking4@gmail.com>
+ bh=KuYKXzY/dT1prCAUF+XAZfKm+aQRp9FKDF6kurzfCYk=;
+ b=LwvoaqSmQii0V1TgJHMfJQJp6vEIQSBRFydR7X0mexUwChe/EwOsKSw4adHfgYKGjv24Wa
+ LPSVXu1/S5e0H2Vmqw9eTHrSIGwN2IjXC13Jf60VNkBZAcuLh2vis/p8m8gg+kTdeGjBi7
+ TUyaf5HMrCT9Mqr9BCy3yJQZiewmvSU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-lRMp6mmvM3aN3CL-ak-xKw-1; Thu,
+ 16 Apr 2026 15:42:40 -0400
+X-MC-Unique: lRMp6mmvM3aN3CL-ak-xKw-1
+X-Mimecast-MFC-AGG-ID: lRMp6mmvM3aN3CL-ak-xKw_1776368559
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C22701956056; Thu, 16 Apr 2026 19:42:38 +0000 (UTC)
+Received: from localhost (unknown [10.44.48.32])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7471830001A4; Thu, 16 Apr 2026 19:42:37 +0000 (UTC)
+Date: Thu, 16 Apr 2026 15:42:34 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: mr-083 <matthieu@minio.io>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, its@irrelevant.dk,
+ kbusch@kernel.org, mr-083 <matthieu@min.io>
+Subject: Re: [PATCH v4] hw/nvme: add namespace hotplug support
+Message-ID: <20260416194234.GA258343@fedora>
+References: <20260409060155.94704-1-matthieu@min.io>
+ <20260415173852.71135-1-matthieu@min.io>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="XICr/xxE8Ini9PdR"
 Content-Disposition: inline
-In-Reply-To: <20260416175659.41215-1-viking4@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260415173852.71135-1-matthieu@min.io>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,50 +86,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 17, 2026 at 12:56:59AM +0700, Trieu Huynh wrote:
-> From: Trieu Huynh <vikingtc4@gmail.com>
-> 
-> The stop-and-copy phase pauses the VM and saves all non-iterable device
-> states. qemu_savevm_state_non_iterable() already measures per-device
-> elapsed time for tracing (trace_vmstate_downtime_save, added in
-> commit 3c80f14272), but this information is never stored or surfaced
-> to somewhere.
-> 
-> Expose the result through a new 'device-state-times' list in
-> MigrationInfo, filled by qemu_savevm_get_device_state_times() helper
-> and returned by query-migrate when status is completed.
-> 
-> A new QAPI type is introduced:
-> DeviceSaveStateTime { 'name': 'str', 'instance-id': 'int', 'save-time': 'int' }
-> where 'save-time' is the elapsed time in microseconds.
 
-Hi, Trieu,
+--XICr/xxE8Ini9PdR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks again for your patch, especially during your spare time.
+On Wed, Apr 15, 2026 at 07:38:52PM +0200, mr-083 wrote:
+> Add hotplug support for nvme-ns devices on the NvmeBus. This enables
+> NVMe namespace-level hot-add and hot-remove via device_add and
+> device_del with proper Asynchronous Event Notification (AEN), so the
+> guest kernel can react to namespace topology changes.
+>=20
+> Mark nvme-ns devices as hotpluggable and register the NvmeBus as a
+> hotplug handler with proper plug and unplug callbacks:
+>=20
+> - plug: attach namespace to all started controllers and send an
+>   Asynchronous Event Notification (AEN) with NS_ATTR_CHANGED so
+>   the guest kernel rescans namespaces and adds the block device
+> - unplug: drain in-flight I/O, detach from all controllers, send
+>   AEN, then unrealize the device. The guest kernel rescans and
+>   removes the block device.
+>=20
+> The plug handler skips controllers that haven't started yet
+> (qs_created =3D=3D false) to avoid interfering with boot-time namespace
+> attachment in nvme_start_ctrl().
+>=20
+> The unplug handler drains in-flight I/O via nvme_ns_drain() before
+> detaching the namespace from controllers, so pending requests can
+> complete normally without touching freed state.
+>=20
+> For symmetry with nvme_ns_realize() which sets subsys->namespaces[nsid],
+> nvme_ns_unrealize() now clears that slot too making the namespace
+> lifecycle complete.
+>=20
+> Both the controller bus and subsystem bus are configured as hotplug
+> handlers via qbus_set_bus_hotplug_handler() since nvme-ns devices
+> may reparent to the subsystem bus during realize.
+>=20
+> Example hot-swap sequence using the NVMe subsystem model:
+>=20
+>   # Boot with: -device nvme-subsys,id=3Dsubsys0
+>   #            -device nvme,id=3Dctrl0,subsys=3Dsubsys0
+>   #            -device nvme-ns,id=3Dns0,drive=3Ddrv0,bus=3Dctrl0,nsid=3D1
+>=20
+>   device_del ns0             # guest receives AEN, removes /dev/nvme0n1
+>   drive_del drv0
+>   drive_add 0 file=3Ddisk.qcow2,format=3Dqcow2,id=3Ddrv0,if=3Dnone
+>   device_add nvme-ns,id=3Dns0,drive=3Ddrv0,bus=3Dctrl0,nsid=3D1
+>                               # guest receives AEN, adds /dev/nvme0n1
+>=20
+> Tested with Linux 6.1 guest (NVMe driver processes AEN and rescans
+> namespace list automatically).
+>=20
+> Signed-off-by: Matthieu <matthieu@min.io>
+> ---
+>  hw/nvme/ctrl.c   | 88 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  hw/nvme/ns.c     |  8 +++++
+>  hw/nvme/subsys.c |  2 ++
+>  3 files changed, 98 insertions(+)
 
-Though I need to say this is another example I want to mention, that QMP is
-an API that QEMU relies on a lot, and we're serious on what it exposes.  We
-need to justify whatever new info to be exposed.
+This is useful functionality because PCI hotplug is cumbersome as it
+requires preallocating PCIe root ports at guest creation time. Users may
+not know how many devices they will eventually hotplug, and so it's
+convenient to hotplug multiple namespaces onto an existing NVMe PCI
+controller.
 
-So if we start to report something in QAPI, we'd better be very certain at
-least someone will be consuming this at the very least.  Starting from the
-1st day this API got merged, we will need to stick with it and it can be
-forever; we can obsolete things, but we need to evaluate risk.  Before that
-risk analysis, we better evaluate why an API is needed in the first place.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-What is much less controversial is, if you could look at how to improve any
-of these numbers reported, say, if we can shrink some device save/load
-time, that'll always be a performance improvements.
+--XICr/xxE8Ini9PdR
+Content-Type: application/pgp-signature; name=signature.asc
 
-And just to mention Joao's effort was not discontinued and gone, it's just
-done instead by tracepoints here rather than QMP queries (before we're more
-confident that we can leverage some new data in query-migrate):
+-----BEGIN PGP SIGNATURE-----
 
-https://lore.kernel.org/all/20231030163346.765724-6-peterx@redhat.com/
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnhO6oACgkQnKSrs4Gr
+c8glCggAuEP9HRhKNrO0c5/2wOVsl7XIEJnM7TY2AEeEGLSZGqTkhMXhcwDktEyI
+NWw/BT+pFpPwBodgBOl3GpsQmsOarne/J4Zh+jA4jM6lZUuv/so1/RJhbJ+a1u2U
+lSm5eZhYyxaUskaFC6b2WLQOb4T+Pw/8C+c5UCutUeHb3tJeuEgUcb9yF5rY4y3u
+gXzcZVs5j3cHASqUkFy7SgCVeU+7k6AX2iOHjizgQByKZCutFvz8yOETuEwcaiwq
+pF9Ntdmt3RkW9kLFzTdMcq2DIlUt91EQpnwpU8Yg8hiMg+UFYp0dCFB08zM5K4Tr
+RbH91071KVqnv0KpJCrBzpLZyLiW6A==
+=UAtd
+-----END PGP SIGNATURE-----
 
-Thanks,
-
--- 
-Peter Xu
+--XICr/xxE8Ini9PdR--
 
 
