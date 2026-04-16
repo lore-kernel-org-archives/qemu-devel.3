@@ -4,114 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E10DF433D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 00:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F081F433CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 00:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDA9c-0007a4-Km; Wed, 15 Apr 2026 20:00:20 -0400
+	id 1wDAE5-0008Rg-OI; Wed, 15 Apr 2026 20:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wDA9a-0007Zl-LA
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:00:18 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDAE3-0008RQ-Sf
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:04:55 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wDA9Y-0004cF-KU
- for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:00:18 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-652f220595fso823341d50.0
- for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 17:00:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776297615; cv=none;
- d=google.com; s=arc-20240605;
- b=HdY6TgQelvPSmOJElUoY/LI0bmMxcA/vkdGc+C0a/2jr3QVSErzBvC8G3vkXVVgISk
- h6oWF2zGzlXhF6pXRe+hE7lUIF4hWFxoJZADlLvF10Vf24coCa8a8TUX3+Zd/jf7N0fl
- Bn02qeWtq/2Ga2xpWzp+7rtyeVCkgosfBMJ+EPDWd4A5luz4ljKGs36YcBw6Zhm4uEhM
- 9l7i/nMZHwu2/SE6KJZbV3GMEGYIcQXABUJVfKDn0fzIJr6TgOOka4tzhiFDWjZy+YtE
- 1RZsxFyNr5azjaUijDp6A5hrk0ffZeGgNTGxL8PUltQWRDADxacFn3Z10IZ8+bVfFUWn
- qdFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Hafj6m/O4ih1Yo7dTCBbATpZXa0Z5uMNOvsKs78TsDk=;
- fh=3IwB7GlzQWqGZlNRsAsXu9Hkolrug9Aot1+MAtnck6Q=;
- b=YJhh5z9JBt81Y5s/tNnOLCsxnjvXZ9YlOezlifCvqXg8ZSgHQKPWOKnzQ2nsWF9+Ro
- DVbmt38dY984zTntt84xHnIw2Wh5pCk3WzAaj4j98GCSQNlrIl4JPkgmEhtyX7DZsORO
- gGAdSzycJxtemyQ6RqTFizpHOnHWzy5tawi+opZvDdfANHMV9d7K6ujOAZoA3Rzh+2r4
- t9g4KdYh20FafdY6u+pBprtyY2G0PGqNYp3GEIAOZzmUG0pSzta3St9u/F3h2JAI6ZVF
- LOn2k+01SG1Rlx28CUWaHAZQ1pn8kSzHwQ8l4ilMGdQ3kImP3vcynCqvSGNQEdnsznqM
- q7KQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wDAE1-0005v1-Ss
+ for qemu-devel@nongnu.org; Wed, 15 Apr 2026 20:04:55 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-35fc0d7c310so2114097a91.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Apr 2026 17:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776297615; x=1776902415; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hafj6m/O4ih1Yo7dTCBbATpZXa0Z5uMNOvsKs78TsDk=;
- b=QYYX3X1UM0uiLGypxSZTHAu8mcookGQlYj3U0xehU7Xrc9DpyIw4SH24hXrmTWItpo
- j3dXZtrTm3RiA8Tf9jsdC6KnwroZgNIerzMast9fbZ/S58hgGN36JG91SYi7dPIo7iXo
- FPrUFP1M883i6JuzeQStvRyrjZNQXQSisCK1ZY1Alt4b3e5DlVrvlnx1NKHoLz+sKKaV
- dDojizGJfBVzfZoFT6aiOJqzaZK2q6ol/Gaogh7t9gwH99Iklz/acghundA0QV1rSbPj
- zaYIu2eaUTeroumu29VJ7hMtRguwmSbY1jwN1kKvkW1An+62lnXtiQi73JEPN6OGZXF0
- uIKQ==
+ d=linaro.org; s=google; t=1776297892; x=1776902692; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dXNuO8b4QLN2kjc/aihzSjn++hkaps0Hdvi3LAgHxXk=;
+ b=MQ7gGXtiT4BcuALr/iIdbABsoXJyPi/3VXNmPlVgxynf4Dnn7horX+XMZaWU4LZ81B
+ kanzMN6v8TakslhOYhp5ZYed49zkRFGJO9TVqFUAAicmnCRVBCjkhI71dcjrIrGfEakT
+ vJMxdRP66To8/cvAGTKUwkk2bt1kmt5pJtuLE7ne6T18xHbpIeFWdMZFsfORdSRMaGqq
+ tdtHBDOp2nASKWBWvyffVtReVXmIy6A91mSaMcoKbz6Fy1Xe/tHQsv4fN9R9iYv6y51A
+ AUxFSeTnINoqhWJHThqOqPMYHmB3VVf+q6MBpp4aIvynZq2lblNrjvJLYCSQy8ibkc/6
+ 6qMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776297615; x=1776902415;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Hafj6m/O4ih1Yo7dTCBbATpZXa0Z5uMNOvsKs78TsDk=;
- b=R8NJXaHK7qVWId9DYRjnDBPSr+lNkamG1rRmCVhiUbujBdN4Ff7/9WxId+g7OuGpXV
- APB0ec3oUo9dgaT9llBGAimxOsijq1dkMZlzu9uYXWI5VBTHf6oUI7I9EpbB7Javjy5q
- vnsdswFBL99fZYbUKtaF4h7CafH1fs3B87M9dJCDVcZZeOrC5ga4gC6S2o67cDc1lRqO
- OxxpD4ccABD6jtPt+2IZcNvXDYiqkJBovjYSjNAzvpSMQReSV3iZ6whXL52OMrC//Pnf
- YWxpzTXM4K4vTlSPbioYhytR2dP/MgYekONP+q0gYDW0LW/Kyx5jGnNBWxRPNz1zgy2X
- PfjQ==
+ d=1e100.net; s=20251104; t=1776297892; x=1776902692;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dXNuO8b4QLN2kjc/aihzSjn++hkaps0Hdvi3LAgHxXk=;
+ b=DE9pxdmWF0touIcJ/pD37OQvIx0GLdWV+LtAvQI11jWyoX0lsgFI8Bxc5w3hJS7hGr
+ qMSQ6UyChI5Lvvz0/pC8FEbcVypYmg8u5lNpriaVmvLFkfXZiMLrba9sw5czsgQkz+je
+ 7AzgGsxj41Z6oq5lV5NwCPBLL+rPMuIgMzwYOAqVZZm4ibm36j4d3fsJRDZ2R3u/rBDG
+ mNn08rbR04PvRLcGK3z3DBQ7jSnaqelmQ1V9c0gRSXIlwqou/alMhahRTvHk+imbxikg
+ 0bBUhnVN9j0kKFZFiSLpZvk6UlQ2zplHo/Eb2WMaUDGmWwBh4DB4SbnqYCmYy77mLwrf
+ wvIg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/hGNV5w54mUWwFOCaylg4MEEhR8KdArMiE/+FWKKHVJWwLpFgKkcgN18ihWgbCzvMNoYuoAUvK4olE@nongnu.org
-X-Gm-Message-State: AOJu0Yzj+sj8O2QeSySRHBU1l8bHdBokb8gJR3QQ3I/jPb4hV+BEhnie
- zzvdX/XotSCvZaPYxVb8afiQNoIOy2f0uCn1witd2vWj53R5vHqmgLOszeqwxXR4QhHfj0NXKt2
- 4IFpUk/jGH141ex3CKVYimvRCqBmecas=
-X-Gm-Gg: AeBDieuXUtNKQSgG9ZAxqRiUfl8gT7v2Sgx6Pz0Ixsg68hHwgN7bCVJiYm8YRTdPE6z
- t4MGfnfme/wC+++NC1Ek5EWcq8m3s+RBj3/gkex+N4RyJ3Ct1P1El6zH8auW7kA7ua+h6RVOMIr
- toDw9SZSrQB4ev6tCnNOZaKKjcwABHiRVFqqf9xdpjul1+t/fPEy2WSZv6GQNwRMHm+2w1kczef
- u8vmLsS/dt7hxLtiBJSzcPu4ZyRfSg/bak+cl7T91jM+NIdl31ifrkywjYG3x+bM66OFsMh3tMa
- R0ySf3r21+zaxzgBTmFQK9Kcj/ZW6UKZ0X2XJA==
-X-Received: by 2002:a05:690e:1488:b0:651:be70:9261 with SMTP id
- 956f58d0204a3-651be70a3d5mr14723774d50.43.1776297614974; Wed, 15 Apr 2026
- 17:00:14 -0700 (PDT)
+ AFNElJ+nP4ilI6LPFx5F+P2sUCF4vKrvLjBxQ2LgNUDGtoVPrIXNXqgNSdTZUhvEg+cCoQbIL4OdXH8Fyuq3@nongnu.org
+X-Gm-Message-State: AOJu0YwAsxhtob/wv6+l/8wLB4Vl0o0XOL8CfyEE0Rh6zqsbN/BdCF8Z
+ KboDuyHPTiA4k8ClsImhqzKWqsUKHDmqMhHUqfwUcMc43F+gMdBMXk28oEIy4Ayrz+A=
+X-Gm-Gg: AeBDiesNyOGBnv4xshWmImfWBnadz3/iErVdwt44MQzAe2WSjQtX6TQ16ZPHy+KDdi3
+ 8woQTo28tvj2lv/f9wqAXsFWDQpGXYVqmjLy6+dhSyUfK0mytsAuh6IVhbj4q7wu7OLrEwRndwy
+ 65Lqut+jxbN5e9y5kNu597lhnXBWE2Czb3BhUA+MhKiakTy8tP8vXiLvmSuZrZDs77NsDpKHu2l
+ z770SpdIs2yvj8tbGEQU32OCtBGF8w5j0GKLgYL01xMixVom6pdL9EkUO1uA3Id1fGFHbeWYrMv
+ ih7ZPgmisLTy0jMYolWDXTgYC3hRIbXeZxKEwOTw1iEYPav5+5P6ju+671qlU0fNkreil6kqQfW
+ Oc+YRJ7I0LT2Kq8OoSwNOlQUcDajmH+00CvBv2Ku3z7H4jM4JA2e4Rj/H0gG3qCjM+vbJbD8hT6
+ yVk+htR9GZtV/FL9jh3uwQvdxgj5hKl982u/EQD+ww+Y7CLwc5xojCIJJ7KePwXKFaNuYMAtfYw
+ CfbOLWWDQLR7FAW9Az+BWXU
+X-Received: by 2002:a17:90b:4ac5:b0:359:fdc0:4621 with SMTP id
+ 98e67ed59e1d1-35e42786883mr26217354a91.11.1776297891704; 
+ Wed, 15 Apr 2026 17:04:51 -0700 (PDT)
+Received: from ?IPV6:2401:d002:dc0f:2100:31f2:aa94:4389:37f8?
+ ([2401:d002:dc0f:2100:31f2:aa94:4389:37f8])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36132d0157bsm194535a91.15.2026.04.15.17.04.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Apr 2026 17:04:51 -0700 (PDT)
+Message-ID: <a69127c0-cdff-4e1c-aeee-7f4f916be283@linaro.org>
+Date: Thu, 16 Apr 2026 10:04:44 +1000
 MIME-Version: 1.0
-References: <20260415064838.652297-1-joel@jms.id.au>
- <20260415064838.652297-3-joel@jms.id.au>
-In-Reply-To: <20260415064838.652297-3-joel@jms.id.au>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 16 Apr 2026 09:59:47 +1000
-X-Gm-Features: AQROBzAh10H2J666lb0GCx5yvb9y7q2Ax0ySsdJjd9DLduxyL27U_5ZoG9bmIUA
-Message-ID: <CAKmqyKNBJVecdsq0pqEYS4nuO4B7RJDeOwunZFP6EM9u=UmnNQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] hw/riscv/boot: Account for discontiguous memory
- when loading firmware
-To: Joel Stanley <joel@jms.id.au>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Michael Ellerman <mpe@oss.tenstorrent.com>,
- Joel Stanley <jms@oss.tenstorrent.com>, 
- Nick Piggin <npiggin@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=alistair23@gmail.com; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 1/6] target/mips: Expand TRANS_DF_iv() macro for
+ MSA Load/Store
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
+References: <20260415202027.83008-1-philmd@linaro.org>
+ <20260415202027.83008-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260415202027.83008-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,164 +110,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 15, 2026 at 4:50=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
-:
->
-> From: Nicholas Piggin <npiggin@gmail.com>
->
-> This loads firmware into the first (low) memory range,
-> accounting for machines having discontiguous memory regions.
-
-Your new riscv_boot_info_init_discontig_mem() function is unused though...
-
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+On 4/16/26 06:20, Philippe Mathieu-Daudé wrote:
+> In order to ease the conversion of MSA Load/Store runtime
+> helpers to translated code, expand the TRANS_DF_iv() macro.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/riscv/boot.h    |  5 ++++-
->  hw/riscv/boot.c            | 18 ++++++++++++------
->  hw/riscv/microchip_pfsoc.c |  6 ++++--
->  hw/riscv/opentitan.c       |  6 ++++--
->  hw/riscv/shakti_c.c        |  6 +++++-
->  hw/riscv/sifive_u.c        |  3 ++-
->  hw/riscv/spike.c           |  6 ++++--
->  hw/riscv/virt.c            |  7 ++++---
->  hw/riscv/xiangshan_kmh.c   |  6 +++++-
->  9 files changed, 44 insertions(+), 19 deletions(-)
->
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index 115e3222174f..fb90bf12399e 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -53,13 +53,16 @@ void riscv_boot_info_init_discontig_mem(RISCVBootInfo=
- *info,
->  vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
->                                     hwaddr firmware_end_addr);
->  hwaddr riscv_find_and_load_firmware(MachineState *machine,
-> +                                    RISCVBootInfo *info,
->                                      const char *default_machine_firmware=
-,
->                                      hwaddr *firmware_load_addr,
->                                      symbol_fn_t sym_cb);
->  const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
->  char *riscv_find_firmware(const char *firmware_filename,
->                            const char *default_machine_firmware);
-> -hwaddr riscv_load_firmware(const char *firmware_filename,
-> +hwaddr riscv_load_firmware(MachineState *machine,
-> +                           RISCVBootInfo *info,
-> +                           const char *firmware_filename,
->                             hwaddr *firmware_load_addr,
->                             symbol_fn_t sym_cb);
->  void riscv_load_kernel(MachineState *machine,
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 9babb85b0458..f3857e984240 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -145,6 +145,7 @@ char *riscv_find_firmware(const char *firmware_filena=
-me,
->  }
->
->  hwaddr riscv_find_and_load_firmware(MachineState *machine,
-> +                                    RISCVBootInfo *info,
->                                      const char *default_machine_firmware=
-,
->                                      hwaddr *firmware_load_addr,
->                                      symbol_fn_t sym_cb)
-> @@ -157,7 +158,8 @@ hwaddr riscv_find_and_load_firmware(MachineState *mac=
-hine,
->
->      if (firmware_filename) {
->          /* If not "none" load the firmware */
-> -        firmware_end_addr =3D riscv_load_firmware(firmware_filename,
-> +        firmware_end_addr =3D riscv_load_firmware(machine, info,
-> +                                                firmware_filename,
->                                                  firmware_load_addr, sym_=
-cb);
->          g_free(firmware_filename);
->      }
-> @@ -165,10 +167,13 @@ hwaddr riscv_find_and_load_firmware(MachineState *m=
-achine,
->      return firmware_end_addr;
->  }
->
-> -hwaddr riscv_load_firmware(const char *firmware_filename,
-> +hwaddr riscv_load_firmware(MachineState *machine,
-> +                           RISCVBootInfo *info,
-> +                           const char *firmware_filename,
->                             hwaddr *firmware_load_addr,
->                             symbol_fn_t sym_cb)
->  {
-> +    uint64_t mem_size =3D info->ram_low_size ?: machine->ram_size;
->      uint64_t firmware_entry, firmware_end;
->      ssize_t firmware_size;
->
-> @@ -183,7 +188,7 @@ hwaddr riscv_load_firmware(const char *firmware_filen=
-ame,
->
->      firmware_size =3D load_image_targphys_as(firmware_filename,
->                                             *firmware_load_addr,
-> -                                           current_machine->ram_size, NU=
-LL,
-> +                                           mem_size, NULL,
->                                             NULL);
->
->      if (firmware_size > 0) {
-> @@ -197,7 +202,7 @@ hwaddr riscv_load_firmware(const char *firmware_filen=
-ame,
->  static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info=
-)
->  {
->      const char *filename =3D machine->initrd_filename;
-> -    uint64_t mem_size =3D machine->ram_size;
-> +    uint64_t mem_size =3D info->ram_low_size ?: machine->ram_size;
->      void *fdt =3D machine->fdt;
->      hwaddr start, end;
->      ssize_t size;
-> @@ -243,6 +248,7 @@ void riscv_load_kernel(MachineState *machine,
->                         bool load_initrd,
->                         symbol_fn_t sym_cb)
->  {
-> +    uint64_t mem_size =3D info->ram_low_size ?: machine->ram_size;
->      const char *kernel_filename =3D machine->kernel_filename;
->      ssize_t kernel_size;
->      void *fdt =3D machine->fdt;
-> @@ -274,7 +280,7 @@ void riscv_load_kernel(MachineState *machine,
->      }
->
->      kernel_size =3D load_image_targphys_as(kernel_filename, kernel_start=
-_addr,
-> -                                         current_machine->ram_size, NULL=
-, NULL);
-> +                                         mem_size, NULL, NULL);
->      if (kernel_size > 0) {
->          info->kernel_size =3D kernel_size;
->          info->image_low_addr =3D kernel_start_addr;
-> @@ -370,7 +376,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwa=
-ddr dram_size,
->      dtb_start =3D QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
->
->      if (dtb_start_limit && (dtb_start < dtb_start_limit)) {
-> -        error_report("No enough memory to place DTB after kernel/initrd"=
-);
-> +        error_report("Not enough memory to place DTB after kernel/initrd=
-");
->          exit(1);
->      }
->
-> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index 743f31f00578..1d1ddb05a882 100644
-> --- a/hw/riscv/microchip_pfsoc.c
-> +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -618,18 +618,20 @@ static void microchip_icicle_kit_machine_init(Machi=
-neState *machine)
->          firmware_load_addr =3D RESET_VECTOR;
->      }
->
-> +    riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
+>   target/mips/tcg/msa_translate.c | 59 ++++++++++++++++++++++++++-------
+>   1 file changed, 47 insertions(+), 12 deletions(-)
 
-The Microchip board has high and low memory, so you should use your
-new riscv_boot_info_init_discontig_mem() function here.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Alistair
+r~
+
+> 
+> diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
+> index 82b149922fa..2e1a769e032 100644
+> --- a/target/mips/tcg/msa_translate.c
+> +++ b/target/mips/tcg/msa_translate.c
+> @@ -164,7 +164,6 @@ static inline bool check_msa_enabled(DisasContext *ctx)
+>       return true;
+>   }
+>   
+> -typedef void gen_helper_piv(TCGv_ptr, TCGv_i32, TCGv);
+>   typedef void gen_helper_pii(TCGv_ptr, TCGv_i32, TCGv_i32);
+>   typedef void gen_helper_piii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32);
+>   typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
+> @@ -175,9 +174,6 @@ typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
+>       }; \
+>       TRANS(NAME, trans_func, NAME##_tab[a->df])
+>   
+> -#define TRANS_DF_iv(NAME, trans_func, gen_func) \
+> -    TRANS_DF_x(iv, NAME, trans_func, gen_func)
+> -
+>   #define TRANS_DF_ii(NAME, trans_func, gen_func) \
+>       TRANS_DF_x(ii, NAME, trans_func, gen_func)
+>   
+> @@ -758,25 +754,64 @@ TRANS(FTINT_U,  trans_msa_2rf, gen_helper_msa_ftint_u_df);
+>   TRANS(FFINT_S,  trans_msa_2rf, gen_helper_msa_ffint_s_df);
+>   TRANS(FFINT_U,  trans_msa_2rf, gen_helper_msa_ffint_u_df);
+>   
+> -static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a,
+> -                           gen_helper_piv *gen_msa_ldst)
+> +static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+>   {
+> -    TCGv taddr;
+> +    TCGv_i32 wd;
+> +    TCGv_va addr;
+>   
+>       if (!check_msa_enabled(ctx)) {
+>           return true;
+>       }
+>   
+> -    taddr = tcg_temp_new();
+> +    addr = tcgv_va_temp_new();
+> +    gen_base_offset_addr(ctx, addr, a->ws, a->sa << a->df);
+>   
+> -    gen_base_offset_addr(ctx, taddr, a->ws, a->sa << a->df);
+> -    gen_msa_ldst(tcg_env, tcg_constant_i32(a->wd), taddr);
+> +    wd = tcg_constant_i32(a->wd);
+> +
+> +    if (is_load) {
+> +        switch (a->df) {
+> +        case 0:
+> +            gen_helper_msa_ld_b(tcg_env, wd, addr);
+> +            return true;
+> +        case 1:
+> +            gen_helper_msa_ld_h(tcg_env, wd, addr);
+> +            return true;
+> +        case 2:
+> +            gen_helper_msa_ld_w(tcg_env, wd, addr);
+> +            return true;
+> +        case 3:
+> +            gen_helper_msa_ld_d(tcg_env, wd, addr);
+> +            return true;
+> +        }
+> +    } else {
+> +        switch (a->df) {
+> +        case 0:
+> +            gen_helper_msa_st_b(tcg_env, wd, addr);
+> +            return true;
+> +        case 1:
+> +            gen_helper_msa_st_h(tcg_env, wd, addr);
+> +            return true;
+> +        case 2:
+> +            gen_helper_msa_st_w(tcg_env, wd, addr);
+> +            return true;
+> +        case 3:
+> +            gen_helper_msa_st_d(tcg_env, wd, addr);
+> +            return true;
+> +        }
+> +    }
+>   
+>       return true;
+>   }
+>   
+> -TRANS_DF_iv(LD, trans_msa_ldst, gen_helper_msa_ld);
+> -TRANS_DF_iv(ST, trans_msa_ldst, gen_helper_msa_st);
+> +static bool trans_LD(DisasContext *ctx, arg_msa_i *a)
+> +{
+> +    return trans_msa_ldst(ctx, a, true);
+> +}
+> +
+> +static bool trans_ST(DisasContext *ctx, arg_msa_i *a)
+> +{
+> +    return trans_msa_ldst(ctx, a, false);
+> +}
+>   
+>   static bool trans_LSA(DisasContext *ctx, arg_r *a)
+>   {
+
 
