@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AAD9F8A15E
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 11:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42029F8A160
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 11:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDKeX-0005ox-7h; Thu, 16 Apr 2026 07:12:57 -0400
+	id 1wDKr6-0002f2-Vx; Thu, 16 Apr 2026 07:25:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wDKeV-0005oc-ON
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:12:55 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDKr4-0002et-Nt
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:25:54 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wDKeU-0004Bm-6S
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:12:55 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43d7650202fso3540798f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 04:12:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDKr2-0000WN-VO
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 07:25:54 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488c2690057so79608615e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 04:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776337972; x=1776942772; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VN+jDUrX4GWZ+biVA/W5Cql4Uc3y2Sb/xOJTXeGdJ6Q=;
- b=JciiVvc88SmcNUjMVEUL1deno5IFTlj57VgJ1rG2ad82XVadLczdd1kEC5C+35fU55
- gzzzYe5fg8y6RsE2hkBS2KWzzS5eGssQo4wu/YiDZsa7YuuzA8xpzyj5v6Er1Y1ZbpZT
- Lkdz4clwyyQ+omIHYmac2B4KdruRIc3Lw1ImYdQpXy9SpumyWBaz/ajw+Mf8w8hbDWoR
- T6nX3oF7F7hcFEaDNX1bQbqBZQZBDVlZtOBRGyjEHoya99gRPc+HUoYPo+498iJLq1pK
- +B9KZ52sBjoGfWgPZagETLToTA8WaRYuej4R3az+BVwZKSdkrdGtE8u3Xd+YHn81GiOb
- wuCQ==
+ d=linaro.org; s=google; t=1776338751; x=1776943551; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v4ydU8RqlM2saQrWN6PseVqMlzx4G6VqDed8mujhY8M=;
+ b=b7NsiNZzsMIVFbkHABpZkBXn4Tk672G105pk8l8itBHyF44yYztRRUv+j+iCrEd0+c
+ i/e1NOPkfgNLIqgw5/3DrptGcKh7KofFpJELJ2wAUuaYYCSxNKJ53UrR+oHnXRtl9A4s
+ aOhqe1upZZ24fKiwLbZW2pAH1QQgXqQz0gxOxv8CdffVwcIdEGI9G+VvmMSjAQR97S+g
+ l0j36tC3mIhD4UmGxwmYMtx4nMmq5zWLbwERxo5I/pHmdE/MkWhqs8m/l2PuicBVWn5/
+ Lj4V6UgbuGrjiHp0Gh1Fc9lpILe0zHmdGOTBUd1gPINOmmnk6Hetxw2QDFBlDLnlv5kL
+ qO8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776337972; x=1776942772;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VN+jDUrX4GWZ+biVA/W5Cql4Uc3y2Sb/xOJTXeGdJ6Q=;
- b=QjWFE1irjwVtJQU8VL7AigN4RqMq9rFyLJVvrjazl70TQs+O2NvQvKytGxsvUyvbsR
- xhBJEP8V0EzWv5EFbhnsGNqQ0xLipHcLpX6hOIAs5PWAmaH74tLVIzharaBAnZtCl4Qc
- EOhtgKOXtqT9oQvmr1rZnRCPWa9NgNe5kPnq9BAhu6szGmj8wDupooYqiYZRTjJbbem8
- /axxgEQMrAJewqvg5d2KCmEu6wtFpQfudxW+HHLw78vl+F0k0iLxM7SlfsW1CCM05qCY
- 6oBiNavHXUWlQ6nIEAMgUbJ7aFuF6FBJHLZakhen5eMbeAzz9ckPXbNXnV0Z40dKq1YR
- oPNQ==
-X-Gm-Message-State: AOJu0YyEj1Saxu5D9qijjQXEM+FDjLbKpx9Ot+dTsQdcE75Q89IBV9Zd
- ujhLgzibTx8Gd0Vn4pzalLbKaSkfPQDCIUn2gSfq0UB76XJAENWRKY+fi4tLwSgZd6w=
-X-Gm-Gg: AeBDiev1muZlTVK4UlYLlUuTy4ODXlG5iuh03SElmNL8DMY+tnxbJZNu6GNxAw68EIR
- Np0IqvoHAIJgR3Ti0bL4HscwBth8uv9rvULtfp72qbcly5ZutXCoYojMjvQbNUvmNIeteJDNwiN
- PWm8RA446LDuTOURI0EujOsfdoVx7sfELn0jVNiy+HJJ29PcKuL1M9UqKUzxUBUs4n3QdrsQvBu
- uWioHpEXzFUhXYKNHqyyfAJMW/skmwkjGg3hdEmFSYhcIauLTedDWu6R073h3quqFQd2iI2Ty4j
- W+5ZxbSvVUXO5W5NyCh2AkZs3EhMQTVD+6pFeNlwUxjoWHqLKdgDHnMcNnGiyGh1nfkA8TNjY5R
- JoXV5INKTiQFaexT8MM9e4aAH09uqg00TdydsLemCoPQn7zeDxiOYNwuygM/9dBfc/msuh0SEeB
- MSeK5xzqDXov5b6o7JiCshyjlwREFjG8LFTcYy
-X-Received: by 2002:a05:6000:1ac5:b0:439:b60a:b400 with SMTP id
- ffacd0b85a97d-43d642c8697mr38566918f8f.31.1776337972224; 
- Thu, 16 Apr 2026 04:12:52 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:8f74:d82:f9ec:90cd])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43ead2decafsm11513078f8f.0.2026.04.16.04.12.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 04:12:51 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH 0/3] FEAT_RME_GDI initial work
-Date: Thu, 16 Apr 2026 12:12:37 +0100
-Message-Id: <20260416-jmac-feat_rme_gdi-v1-0-d9fa0781ed58@linaro.org>
+ d=1e100.net; s=20251104; t=1776338751; x=1776943551;
+ h=content-transfer-encoding:in-reply-to:cc:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v4ydU8RqlM2saQrWN6PseVqMlzx4G6VqDed8mujhY8M=;
+ b=dx6AHmz1M5TOPFn3SNvfpz0GgFLuVH9UFkxaeQ1e5LEByHvFWL181k/EEm4nJIrdGt
+ USvEOjo8X0koO5TK2a3cDULYP/iFyDwcJSKXkpjx0F7tbgHVFYyzjmo42UXYQa00UJI7
+ R5MUdBAPqYgicU7JoXh/czTH7YzH1A4hXJPMhynHuik95tg6QvZeft9PpJPgekgJDJEn
+ p8s6dsSVrOQSMmbcqFu/4JjC0t5P+QP1Jq0aETXasVqIacrx08OmDdr5XtJzrGrF8QfT
+ R8idytyIbGK6rJ5pjDLWhoufnQUW4DbBckQoOZZkJ2p+R1SeqnzKg7z7ZWCM9r/x8g5S
+ my/g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8XKZUlMMDpjbaN2oEVVjXqqC1IR5w6IVx9cyvtyJC6b3T+8QsbcS2MsUqbPTNGX6xYrV3c8msEVX3O@nongnu.org
+X-Gm-Message-State: AOJu0YyRfASnni0vqb/9taPtosjAnYxSDqkMzdxM2w0d6E3rigU6DyN8
+ ozVN+RlVMzEKrFUzagtbi2YWoyiOCosmup45QXpa7nRFDCaf06IT8xqTBrR0Bet0OAw=
+X-Gm-Gg: AeBDietyyk3xqN4jsiNSXUFhQ2hyHo/F5rNJMs7lXDc8+09qcGmawVUE9n9gTqU0ToD
+ IcHMos/OryaiTphnt57Wqj8DDAj3BA7O0d0TTZfUTa78wjNxod9uE6ugXi42Kqs9N42bPQt9plJ
+ wBN7pp5WAUvW1J4efeVWdMSK8zcYMqEaB8ojo6XIGIQYf1T36Cxl4lSoSoTnzqslnbbl0i99Tm5
+ gpsND8fTQlykExPxJhlTbnem9oTR8E8psN5ecdd8O92NwMoL3QAo1vZw8FEmoNOWvImpXpceN+J
+ O2RYBXmXr1y2cbaE2RkA+3BVoWWjkE2x3Kd4iKR/1uemhPBRQJdeK8oMLiU1FcLbUzdOo68eFLt
+ 30BB0spfGvKZgJ/8+hKnUgXooWQBRxBHIec3kJfmmlP59KjzGGJoZ0QU/lUxZxWdCgr7752eC/P
+ ELoncCRaive03oMHwpNlnZbpB5p+nTjyHacgvG4C4T0issH0q6RedmJG6UC0xsGwjxdA==
+X-Received: by 2002:a05:600c:64c4:b0:486:fbd1:9dc0 with SMTP id
+ 5b1f17b1804b1-488d68c2c56mr314664145e9.22.1776338750878; 
+ Thu, 16 Apr 2026 04:25:50 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488f582048bsm45917485e9.7.2026.04.16.04.25.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 04:25:50 -0700 (PDT)
+Message-ID: <e41baa82-d096-41e3-bd27-5a4be359f842@linaro.org>
+Date: Thu, 16 Apr 2026 13:25:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACXE4GkC/x3MTQqAIBBA4avIrBNUQqGrRIg4Y03QDxoRSHdPW
- n6L9yoUykwFBlEh082Fj71BdwLiEvaZJGMzGGWs6rWV6xaiTBQunzfyM7J0Oho0iNY5Ba07MyV
- +/uc4ve8HVstyyWMAAAA=
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x431.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/28] MAINTAINERS: Remove WANG Xuerui
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ <20260416091654.316158-10-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu@xen0n.name, Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20260416091654.316158-10-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,36 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds FEAT_RME_GDI, some extra cases to arm_granule_protection_check,
-and a very basic TCG test to check the prerequisites of FEAT_RME_GDI:
-FEAT_RME and FEAT_RME_GPC2.
+On 16/4/26 11:16, Peter Maydell wrote:
+> WANG Xuerui has not posted to qemu-devel in some years and did not
+> respond to a query about whether they still wished to be listed in
+> our MAINTAINERS file.  Remove them, on the assumption that they are
+> no longer active in QEMU.
+> 
+> This makes "LoongArch64 TCG target" orphan.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   MAINTAINERS | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a7fb4e4770..0b2adbc247 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4115,8 +4115,7 @@ S: Maintained
+>   F: tcg/x86_64/
+>   
+>   LoongArch64 TCG target
+> -M: WANG Xuerui <git@xen0n.name>
+> -S: Maintained
+> +S: Orphan
+>   F: tcg/loongarch64/
 
-FEAT_RME_GDI is not enabled yet as no functional support has been
-added; it can easily be enabled in cpu_arm_set_rme in future.
+FWIW Xuěruì posted a patch 4 months ago that we ignored:
+https://patchwork.kernel.org/project/qemu-devel/patch/20251207055626.3685415-1-i.qemu@xen0n.name/
 
-In the future we should correctly set bits in the fault address
-registers such as PFAR_EL2, but I don't see any apparent support for
-these in the existing GPT mechanism. Testing this also gets tricky as
-I think this would have to be done from EL3 (e.g. by modifying
-test_rme_virt.py)
-
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
-Jim MacArthur (3):
-      target/arm/cpu-features.c: Add RMEGDI to AA64MMFR4
-      target/arm/ptw.c: Add two new spaces to the granule protection case
-      tests/tcg/aarch64/system/rme_gdi.c: Very basic test of GDI
-
- target/arm/cpu-features.h          |  1 +
- target/arm/ptw.c                   |  5 ++++
- tests/tcg/aarch64/system/rme_gdi.c | 56 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+)
----
-base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
-change-id: 20260416-jmac-feat_rme_gdi-71c2d2dd6770
-
-Best regards,
--- 
-Jim MacArthur <jim.macarthur@linaro.org>
-
+(Cc'ed the qemu@xen0n.name email hoping it triggers something)
 
