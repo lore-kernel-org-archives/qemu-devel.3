@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E8FF8A16A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30372F8A16B
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 12:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDLZN-0008PJ-9f; Thu, 16 Apr 2026 08:11:41 -0400
+	id 1wDLZP-0008Qp-8t; Thu, 16 Apr 2026 08:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDLZF-0008OG-EJ
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:33 -0400
+ id 1wDLZM-0008PP-VX
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:41 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZD-0002O1-AI
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:32 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDLZL-0002Pm-8L
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 08:11:40 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 7F96020B712B;
- Thu, 16 Apr 2026 05:11:27 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7F96020B712B
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6802720B7128;
+ Thu, 16 Apr 2026 05:11:36 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6802720B7128
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776341489;
- bh=ItrHOC5nPemd66dEK2NgZsgS7P6ajPcgEYGrhuuCrYE=;
+ s=default; t=1776341498;
+ bh=aTVxvEVz5lQHNdZmbaeb9TChVHr9SVG0hmQSZJZieN0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IZ7Ew7ha/2gTcDEO019z57VIyEFqCP5+NuqkDCHpmfHueSOicCaTS2FE+U7It+tDs
- NMUmfpjIIYAr/d2zirH+qIuFdXJ/6ip8lp7k0LKhLwNpfF1unlphgkd5DZHEzsgXTG
- rMoYBEI9ng4oVuLEdmS1/gQ/vsjj3LAJ//4okEoI=
+ b=dycYcJk4Yrs5dUJ/9VlczwO+vgC1457H2N8qCB0U9nw0eSLh3qxrB9V/A2cTk0WWC
+ ySJruv41vTn9O/ib4RZkewCkNhBsDIUPB8wgaygNWYYE7VFKLjjYw9FHOnpvFJ4OTV
+ Ip3edgRWyG6FeefS2E+lh5vyZR7b3VjC8PjiqeLw=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>
-Subject: [PATCH v6 3/9] target/i386/mshv: fix various cpuid traversal bugs
-Date: Thu, 16 Apr 2026 14:11:10 +0200
-Message-Id: <20260416121116.527927-4-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v6 7/9] target/i386/mshv: populate xsave area offsets
+Date: Thu, 16 Apr 2026 14:11:14 +0200
+Message-Id: <20260416121116.527927-8-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
 References: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
@@ -68,158 +68,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Hardcoded max_leaf was not accurate. We query leaf 0x0 and 0x80000000 to
-  get the actual max leaves
-
-- On all 0 zeroes on leaf 0x0d, we register 0-63 subleaves with zeros
-  indicating XSAVE is disabled
-
-- Subleaf 0 was hardcoded, so the Hypervisor returned defaults for other
-  subleaves
-
-- Subleaf 0 was hardcoded, so we were passing 0 instead of actual subleaf
-  when adding entries. We now pass the correct subleaf value to
-  add_cpuid_entry()
-
-- Leaves 0x04,0x07,0d,0f,10 weren't marked as subleaf-specific
+This function is copied verbatim from kvm_cpu_xsave_init(), for MSHV we
+need to populate the offsets similarly.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- target/i386/mshv/mshv-cpu.c | 88 +++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 27 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index f1cc4abc5c..4183727a86 100644
+index 3b392533b4..ee25eb5f6f 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -465,14 +465,17 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
-     CPUX86State *env = &x86_cpu->env;
-     uint32_t eax, ebx, ecx, edx;
-     uint32_t leaf, subleaf;
--    size_t max_leaf = 0x1F;
--    size_t max_subleaf = 0x20;
--
--    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
-+    uint32_t max_basic_leaf, max_extended_leaf;
-+    uint32_t max_subleaf = 0x20;
-+    uint32_t leaves_with_subleaves[] = {0x04, 0x07, 0x0d, 0x0f, 0x10};
-     int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
- 
--    /* Regular leaves without subleaves */
--    for (leaf = 0; leaf <= max_leaf; leaf++) {
-+    /* Get maximum basic and and extended CPUID leaves */
-+    cpu_x86_cpuid(env, 0, 0, &max_basic_leaf, &ebx, &ecx, &edx);
-+    cpu_x86_cpuid(env, 0x80000000, 0, &max_extended_leaf, &ebx, &ecx, &edx);
-+
-+    /* Collect basic leaves (0x0 to max_basic_leaf) */
-+    for (leaf = 0; leaf <= max_basic_leaf; leaf++) {
-         bool has_subleaves = false;
-         for (int i = 0; i < n_subleaf_leaves; i++) {
-             if (leaf == leaves_with_subleaves[i]) {
-@@ -483,27 +486,40 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
- 
-         if (!has_subleaves) {
-             cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
--            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
--                /* all zeroes indicates no more leaves */
--                continue;
--            }
--
-             add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-             continue;
-         }
- 
-+        /*
-+         * Valid XSAVE components can exist at a higher index se we need to set
-+         * all subleaves for leaf 0x0d, even if we encounter an empty one.
-+         */
-+        if (leaf == 0x0d) {
-+            for (subleaf = 0; subleaf <= 63; subleaf++) {
-+                cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
-+                add_cpuid_entry(cpuid_entries, leaf, subleaf,
-+                                eax, ebx, ecx, edx);
-+            }
-+            continue;
-+        }
-+
-         subleaf = 0;
-         while (subleaf < max_subleaf) {
-             cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
- 
-             if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
--                /* all zeroes indicates no more leaves */
-                 break;
-             }
--            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-+            add_cpuid_entry(cpuid_entries, leaf, subleaf, eax, ebx, ecx, edx);
-             subleaf++;
-         }
-     }
-+
-+    /* Collect extended leaves (0x80000000 to max_extended_leaf) */
-+    for (leaf = 0x80000000; leaf <= max_extended_leaf; leaf++) {
-+        cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
-+        add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-+    }
+@@ -1706,11 +1706,42 @@ int mshv_arch_post_init_vm(int vm_fd)
+     return ret;
  }
  
- static int register_intercept_result_cpuid_entry(const CPUState *cpu,
-@@ -576,22 +592,40 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
-         subleaf_specific = 0;
-         always_override = 1;
++static void mshv_cpu_xsave_init(void)
++{
++    static bool first = true;
++    uint32_t eax, ebx, ecx, edx;
++    int i;
++
++    if (!first) {
++        return;
++    }
++    first = false;
++
++    /* x87 and SSE states are in the legacy region of the XSAVE area. */
++    x86_ext_save_areas[XSTATE_FP_BIT].offset = 0;
++    x86_ext_save_areas[XSTATE_SSE_BIT].offset = 0;
++
++    for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
++        ExtSaveArea *esa = &x86_ext_save_areas[i];
++
++        if (!esa->size) {
++            continue;
++        }
++        host_cpuid(0xd, i, &eax, &ebx, &ecx, &edx);
++        if (eax != 0) {
++            assert(esa->size == eax);
++            esa->offset = ebx;
++            esa->ecx = ecx;
++        }
++    }
++}
++
+ static void mshv_cpu_instance_init(CPUState *cs)
+ {
+     X86CPU *cpu = X86_CPU(cs);
  
--        /* Intel */
--        /* 0xb - Extended Topology Enumeration Leaf */
--        /* 0x1f - V2 Extended Topology Enumeration Leaf */
--        /* AMD */
--        /* 0x8000_001e - Processor Topology Information */
--        /* 0x8000_0026 - Extended CPU Topology */
--        if (entry->function == 0xb
--            || entry->function == 0x1f
--            || entry->function == 0x8000001e
--            || entry->function == 0x80000026) {
-+        /*
-+         * Intel
-+         * 0xb - Extended Topology Enumeration Leaf
-+         * 0x1f - V2 Extended Topology Enumeration Leaf
-+         * AMD
-+         * 0x8000_001e - Processor Topology Information
-+         * 0x8000_0026 - Extended CPU Topology
-+         */
-+        if (entry->function == 0xb ||
-+            entry->function == 0x1f ||
-+            entry->function == 0x8000001e ||
-+            entry->function == 0x80000026) {
-+            subleaf_specific = 1;
-+            always_override = 1;
-+        /*
-+         * Feature enumeration leaves (subleaf-specific)
-+         * 0x04: Deterministic Cache Parameters
-+         * 0x07: Structured Extended Feature Flags
-+         * 0x0D: Processor Extended State Enumeration
-+         * 0x0F: Platform QoS Monitoring
-+         * 0x10: Platform QoS Enforcement
-+         */
-+        } else if (entry->function == 0x04 ||
-+                   entry->function == 0x07 ||
-+                   entry->function == 0x0d ||
-+                   entry->function == 0x0f ||
-+                   entry->function == 0x10) {
-             subleaf_specific = 1;
-             always_override = 1;
--        } else if (entry->function == 0x00000001
--            || entry->function == 0x80000000
--            || entry->function == 0x80000001
--            || entry->function == 0x80000008) {
-+        /* Basic feature leaves (no subleaves) */
-+        } else if (entry->function == 0x00000001 ||
-+                   entry->function == 0x80000000 ||
-+                   entry->function == 0x80000001 ||
-+                   entry->function == 0x80000008) {
-             subleaf_specific = 0;
-             always_override = 1;
-         }
+     host_cpu_instance_init(cpu);
++    mshv_cpu_xsave_init();
+ }
+ 
+ static void mshv_cpu_accel_class_init(ObjectClass *oc, const void *data)
 -- 
 2.34.1
 
