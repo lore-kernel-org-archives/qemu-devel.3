@@ -4,127 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C0CF8D74A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 14:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122B1F8D750
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 14:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDNYl-0005a5-79; Thu, 16 Apr 2026 10:19:11 -0400
+	id 1wDNYz-0005b8-FP; Thu, 16 Apr 2026 10:19:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1wDNYj-0005Zt-35
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 10:19:09 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1wDNYh-0004TI-DY
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 10:19:08 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63G0RVBK448054; Thu, 16 Apr 2026 14:18:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=QU+pEJ
- f7XKlhs9ZuHflV855M/GoePN8N7HvH0iC5m8E=; b=O/dRGAJSKFDBP2CrRLhZjB
- ysH7OU+PlFc8GSO8L5lMZs62TC5qpzQTge2Kp58Mb/XzzUaZ58qxP1cw2hWzfdkY
- vFewJW+uInKQburp86CoqOsHOYVMYxr/pGtDQ7o2NehZGi9q6eiPHfo9vSgEe7JY
- dhw8KnYx/uF58rkKVvn+i4dR6WdOtW3MUGOFkyNXRhkD72/pzZ4wYeqg4840HACz
- OxJr0drmWGAO3DL9guq+n211kSrKssTydqIAWyMpu4svvQ2vDWtzX8+y7dap60+h
- d4Wy4LqhO7ltzMXo9rxy5KCwU9kM6DUE3WsYJB11MULbIt/nvEWZkuhhDoTgwTXA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89nnwmr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Apr 2026 14:18:58 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63GC5kY1003557;
- Thu, 16 Apr 2026 14:18:57 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dg1mnk6up-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Apr 2026 14:18:57 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63GEItwq524810
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Apr 2026 14:18:55 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25EF458059;
- Thu, 16 Apr 2026 14:18:55 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B586E58058;
- Thu, 16 Apr 2026 14:18:52 +0000 (GMT)
-Received: from [9.61.155.222] (unknown [9.61.155.222])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Apr 2026 14:18:52 +0000 (GMT)
-Message-ID: <f0944f1a-0c56-46ad-94d5-4164a72e123b@linux.ibm.com>
-Date: Thu, 16 Apr 2026 10:18:52 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDNYv-0005al-3r
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 10:19:23 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDNYt-0004fj-Aq
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 10:19:20 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-6501c4857b2so5431070d50.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 07:19:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776349158; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WwvVlZD/6kGxNYvy8AlZgLNaz4w6L2oT8TGJk+FcjBQgloLnNRTdTkpu2s4yW+rY4x
+ Iee1/5r2dXMcpTNj3LbGz1Jyzb4VQyUGt6aUQyPHi31SgyjQRyes6CjCDLh2U5hiTnPD
+ zP43XYsKDj0fGm4qQUOxpdxsGS9Ju5vYFJ+PbWYo/ZOe3fFD9zOf7tDs6gUO+2YlV/P2
+ n3hafBv5a/d+zIoJ0ahmbiIM3D3aBYs26QCj5X4Y7yRQTSbU1aC1fHWY/5eRrFiT6pEB
+ if+hFH3vLGzsb7MxTrF5QUYAhFuK2zteRXiFyOG1H3nkLUTgkXSWOEqdzVsN9ZtDVgBu
+ wSlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=1geutfm8KPG93vOVreUN9aiOgGXCL5WUa6O64Iz+8QQ=;
+ fh=1oF5DrJG9LIHDfFiSnej3zqcNO8fJceBJ8nnryHnEUk=;
+ b=V2M4RDZUUw+YSZtdtaVyBDHOkSuju2onH0cOCa7Vlfn/tQADQQ1ehsipiyAXOY7PUj
+ /YR9+CSgCFxNjiV2Qt06TKllT3YVMUVIbSMZRBh4jXzO84Ri9H8ecKdNXA4sIF2/3HPC
+ 86z4KsPvFhQqGB/xY9OnsDj5o+qhNRr28W+kDHqJ7kup+nJAaTWY7xUATcANl5tkb+G6
+ +WMANbnSKEYVTuwMuzv3rCh/YVpnMxV+qhXrBOAaqczqPk45m1VZKe25aXhmYmDtstH+
+ ZrTbbB88NMO1IUO3+5h/FFoz4gBgFMVSdbhUYYp2g7OdhhLfyB48eZPBqiD1JVgQhfFf
+ B2DA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776349158; x=1776953958; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1geutfm8KPG93vOVreUN9aiOgGXCL5WUa6O64Iz+8QQ=;
+ b=wv/KEfp5QeEHgP0NdjTSVpfDg2tIZLkjETzqhd8/5OU1OV0SfBv+C77qoOX4MvcScT
+ FYKKy9dx0rQy133SL6VWD4E/rMlzIc2DdKuBI55zhfuLd4OxjSB9dBJSS+L+zyLC5GTt
+ v59Ze64mkOCJlJtyBT8o8lpVs5J7/dbwpU5hNw/+P23MyTX5dJQlxFkBEj+LUg7LFwVh
+ 5h/lPiG04sjBitpj36nGKa7XgyWa5m/v5inEQQzdq9GOg6uNZYgfQQFzni9g68vaN3il
+ rzOsPfDke5V79HnFmYWSPQ67hxiBAh0O3yJJyHur7bZhhwo++Hi7RbSmpb4uSjclWywS
+ BmcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776349158; x=1776953958;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1geutfm8KPG93vOVreUN9aiOgGXCL5WUa6O64Iz+8QQ=;
+ b=WENaAE/VSSnUNKdsr5muyfWYK/KGrqfCHLoa650hOqTnhSJiliV9fekVmZhQidUGQh
+ 1psR8jpeuYNmsIZw51N10qOV5iRwnEWuTgL96rHnUOIx/IiN7lyaK9a0Po+NRyy/t73o
+ QYJuTt/eAQVCz21nxh3dOA5iYroht/0MGwsWs6fuY2EoeqXOzSzM53Ml/1oEE40U5kfj
+ fziYu+FBhvB/6LwGAjRjBy+ZWzScwAsYJO7kMTf/YdkchTliS0MW/9eWHteChR4Fm2fn
+ ECPP/UEgD5vrFJm8psf+U+ht5PM9w8Ojknd22qsqySVXT5dHOUCpeBVuDZUMxuZas281
+ yNgw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/i1TBjkBxZ1fjaZD9SnurwlqLAOMLvVq0XDa8XVbrpPWpgM3aTgZ5QbPKAOFTYoq7aCAasM1aI5SEQ@nongnu.org
+X-Gm-Message-State: AOJu0YxUtNqQhUsKUDNBBgFf+oKj/5uQut762YNVV0ZYJZbyL6ZvWEbq
+ MzgVUt5kobys5Lj1lbnELAUhLAYefH9ZuHf/4YLCUaYFnZYJnzM7PxfvwtU7GC/EDvNcx/vuK30
+ vB7P4EMoOX8zQ0jgW/VYuS9QTije97uMz69uPBrwmQg==
+X-Gm-Gg: AeBDievkVJV4V7wRV+4vWO8OBttakXtHqH1g5SN0jah4OzmVFT6IaK2pisrIXiVqNJT
+ hlrQMt6hVPbK9DziHnPYlmr8ZJyGqYJv6tEqepMjJkkjq0nT2sLpKMNYsMtxyw9BK1xydPGq5ne
+ FEqjsqTfz5vCdacXs6jK9mi/Tb28kqMWGJ677ro9DJzOo9kBQn0KNaN7QqeCVRyY5FQzYkANT35
+ KIOdw3AC92JSkahVV4p9uIpxGSbvhmuTG+lA/JGX1Vnkf1WdOSx1d3cs786YScBVGc94Eike4Vn
+ fxzvcq9oWgXIex7TVmIxKgqB64C5XWRkRyb5kWcF5vR8U9EgylbI4ShAHU1f12ui1zmipzI1oZ3
+ 9xw==
+X-Received: by 2002:a05:690e:2448:b0:64f:fc0d:624b with SMTP id
+ 956f58d0204a3-65198b9f915mr17785441d50.56.1776349157993; Thu, 16 Apr 2026
+ 07:19:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/14] migration/treewide: Merge
- @state_pending_{exact|estimate} APIs
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhiyi Guo <zhguo@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- Kirti Wankhede <kwankhede@nvidia.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-5-peterx@redhat.com>
-Content-Language: en-US
-From: "Jason J. Herne" <jjherne@linux.ibm.com>
-In-Reply-To: <20260408165559.157108-5-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: pFDM7TdSid2kOFbwcfp40rvNMKfdFjHJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDEzNyBTYWx0ZWRfX8UBmfY2Gtqhu
- LJA1m9hxpTPwTiIkz0vGanydMLD02gZPG/emVJo0HKN3K6nulc7jYhWgRbuYM2MOTQjb48i/RRS
- ipRCvcRV2KmejIFY5NAeyZ6DRhvOPD/lMdRkiRcKEv5Ut34q9nqkzd6qn+cSm70UExgKv16VsF1
- Fwfm7fYydVl6fWHS/6cJsGZYSt47FbEYRAzPOhmuwCRmyF/St+OoAY9dWtgyKPoJRJLnvfRd2Ss
- tXACEN7Oox2iZUamzkQkZKPx6lv28PBNX+xOxT/jcenMO0eQDTsC94tWkOSKwxev9ZthT9QQxLS
- TJywFNxQy7WfDB5xSwySMs29oLRAtPLqFnoUsLVnUFf5l5/cCAPFR7mv9d2xC9dpc6uqeICtszs
- IKBi0whbyOeIse39IrIw3CKH5a9XkFJFeSW+WeNQF7ST5BjpiN2i5wlaqnXJ0shkSBUFvKDR1FK
- uyA7WGboevHnEzdjE6Q==
-X-Proofpoint-ORIG-GUID: pFDM7TdSid2kOFbwcfp40rvNMKfdFjHJ
-X-Authority-Analysis: v=2.4 cv=FY4HAp+6 c=1 sm=1 tr=0 ts=69e0efd2 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=RS0Bc_3cr1L00H40IvgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-16_03,2026-04-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1011 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604160137
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260414025335.2847358-1-mattst88@gmail.com>
+In-Reply-To: <20260414025335.2847358-1-mattst88@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Apr 2026 15:19:05 +0100
+X-Gm-Features: AQROBzAuZnITnrfbKYnBrJQ0spgVDEqSuxJSm41lQM-chJZ_KrtoLjM0cEzkdEY
+Message-ID: <CAFEAcA_PZ2RWNNrBoM0nzOrDZZ36p2sMOviT_NeRXWdab=6T+Q@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/ppc: Fix ppc64 rt_sigframe stack offset
+To: Matt Turner <mattst88@gmail.com>
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,41 +116,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- > ...
-> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
-> index d808ece3b9..a22469a9e9 100644
-> --- a/hw/s390x/s390-stattrib.c
-> +++ b/hw/s390x/s390-stattrib.c
-> @@ -187,15 +187,15 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
->       return 0;
->   }
->   
-> -static void cmma_state_pending(void *opaque, uint64_t *must_precopy,
-> -                               uint64_t *can_postcopy)
-> +static void cmma_state_pending(void *opaque, MigPendingData *pending,
-> +                               bool exact)
->   {
->       S390StAttribState *sas = S390_STATTRIB(opaque);
->       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
->       long long res = sac->get_dirtycount(sas);
->   
->       if (res >= 0) {
-> -        *must_precopy += res;
-> +        pending->precopy_bytes += res;
->       }
->   }
->   
-> @@ -340,8 +340,7 @@ static SaveVMHandlers savevm_s390_stattrib_handlers = {
->       .save_setup = cmma_save_setup,
->       .save_live_iterate = cmma_save_iterate,
->       .save_complete = cmma_save_complete,
-> -    .state_pending_exact = cmma_state_pending,
-> -    .state_pending_estimate = cmma_state_pending,
-> +    .save_query_pending = cmma_state_pending,
->       .save_cleanup = cmma_save_cleanup,
->       .load_state = cmma_load,
->       .is_active = cmma_active,
-LGTM,
+On Tue, 14 Apr 2026 at 18:27, Matt Turner <mattst88@gmail.com> wrote:
+>
+> The kernel's 64-bit signal delivery (signal_64.c) uses:
+>
+>     newsp = frame - __SIGNAL_FRAMESIZE
+>
+> while the 32-bit path (signal_32.c) uses:
+>
+>     newsp = frame - (__SIGNAL_FRAMESIZE + 16)
+>
+> The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
+> at the same offsets as older kernels (see the comment in signal_32.c).
+> The 64-bit rt_sigframe starts with ucontext directly and does not need
+> this adjustment.
+>
+> QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
+> for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
+> on ppc64. Signal delivery and return still worked because do_rt_sigreturn
+> had the matching wrong offset, but the vDSO DWARF unwind info encodes
+> the correct kernel offset. This caused any DWARF unwinder (libunwind,
+> libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
+> register values from the signal frame.
+>
+> Guard the +16 with #if !defined(TARGET_PPC64) in both setup_rt_frame
+> and do_rt_sigreturn to match the kernel.
+>
+> This was verified by A/B testing with libunwind's test suite:
+>
+>   ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
+>            and Ltest-sig-context all change from FAIL to PASS.
+>   ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
+>            from FAIL to PASS.
+>
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
+> ---
+>  linux-user/ppc/signal.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git ./linux-user/ppc/signal.c ./linux-user/ppc/signal.c
+> index 24e5a02a78..b21aa2430e 100644
+> --- ./linux-user/ppc/signal.c
+> +++ ./linux-user/ppc/signal.c
+> @@ -525,7 +525,15 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+>      env->fpscr = 0;
+>
+>      /* Create a stack frame for the caller of the handler.  */
+> +#if defined(TARGET_PPC64)
+> +    newsp = rt_sf_addr - SIGNAL_FRAMESIZE;
+> +#else
+> +    /*
+> +     * The +16 is to get the siginfo and ucontext in the same positions
+> +     * as in older kernels. See Linux's arch/powerpc/kernel/signal_32.c.
+> +     */
+>      newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + 16);
+> +#endif
+>      err |= put_user(env->gpr[1], newsp, target_ulong);
+>
+>      if (err)
+> @@ -641,7 +649,11 @@ long do_rt_sigreturn(CPUPPCState *env)
+>      struct target_rt_sigframe *rt_sf = NULL;
+>      target_ulong rt_sf_addr;
+>
+> +#if defined(TARGET_PPC64)
+> +    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE;
+> +#else
+>      rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + 16;
+> +#endif
+>      if (!lock_user_struct(VERIFY_READ, rt_sf, rt_sf_addr, 1))
+>          goto sigsegv;
 
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+Thanks for this patch; comparing against the kernel code QEMU is
+definitely wrong here.
+
+
+I think I would prefer it if we avoided the in-code ifdefs
+and instead had something like this defined at the top of
+the file, e.g. below the target_rt_sigframe definition:
+
+#ifdef TARGET_PPC64
+#define RT_SIGFRAME_ADJUST 0
+#else
+/*
+ * For 32-bit rt sigframes we have an extra 16 bytes of gap
+ * on top of __SIGNAL_FRAMESIZE; this is to get the siginfo
+ * and ucontext in the same positions as in older kernels.
+ * See Linux's arch/powerpc/kernel/signal_32.c.
+ */
+#define RT_SIGFRAME_ADJUST 16
+#endif
+
+Then we can have the code unconditionally do
+   newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST);
+etc.
+
+thanks
+-- PMM
 
