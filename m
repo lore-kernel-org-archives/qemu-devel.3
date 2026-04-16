@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB4FF8A14A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90557F8A145
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 09:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDIrC-0005Pg-Vm; Thu, 16 Apr 2026 05:18:04 -0400
+	id 1wDIrm-000620-By; Thu, 16 Apr 2026 05:18:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqa-0005F3-TV
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:19 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1wDIqd-0005H4-Js
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:20 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDIqY-0007mF-F3
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:15 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488b00ed86fso78446775e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:17:13 -0700 (PDT)
+ id 1wDIqb-0007n6-AJ
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 05:17:19 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b8bc6bc9so55275545e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 02:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776331032; x=1776935832; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776331036; x=1776935836; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=23Oy57xs+bclVlMhemFNB8YHTiEX+rZeE9kF1B0kY2Q=;
- b=SCu1P8FCWcFpthVn1pllWKlXG05OqnS3QKZlHQE0I7ccOf6WNaQTnAEAZRBQhHn/Rl
- Tz7W6IKqsA5AJIWcaAHeOHmsqn8xJLNujE/O7R8LG9f/GWGuW/Zde3xRbGaAQhE6Dm1G
- IrGCmnH+0dIulT6qWoNQK/Qjl7S25COIUejS3+kgFALA8W3+cH08OGrdPjEGAlHZnejo
- Oefwr/YOSQv9QijliSZnPz80mxQmZpWjLDq6HT082zUyM9CPQ+PHtCw2q6NRjvAqiAnz
- ddW5TTRFzJTbskanlj6B64ISNUDpJZRvhD/QDRURWRHDsFOWdafW3MoaTZtZgDrmd3Cw
- jPPQ==
+ :reply-to; bh=jZkKdHqCTZ+oag6vibvyhQL+Cty3Vox88AzHxFpH2tY=;
+ b=xmXqc5ledfULAppYvKfOQH5rBA/lxT2KEZ+A0n8MHsfMjgHuxUUwGPz5MIphpdulw6
+ nHpqfAIboKlQ0cozBttb/2C2RM2xm6oZ88EWjDi1VX7vam5Vtz0s1LS1V1ihZgyQuSdX
+ vAxpUkRXXzyigRHMBrM5Kld5Mg2934DRUP7wLftu/mMe/yhtjX2mzAZYmFlPPPDV11O/
+ IYCUMmDSL71v6+fJx22mY25PWglWgRGy61GLrC8Bk0IWCqEZ5Q9ekhRKEO3CzKfOeMB0
+ TktJtOirSimzpYKRWEyqqQdGEjdfPPK3xdXILSyOZn2+YnEs7b2dpLsqIJ/KrWRZ3MhR
+ a2XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776331032; x=1776935832;
+ d=1e100.net; s=20251104; t=1776331036; x=1776935836;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=23Oy57xs+bclVlMhemFNB8YHTiEX+rZeE9kF1B0kY2Q=;
- b=QNux10qnPTp6aA2PdcXrdgAq2F2jR0F6R6tVamhm9tDF15f/Ex2IFMD2hUnfZjW7ye
- kDJEE8styFb2/AMwlY4ZdWGpnZ24e0aN9ccPo7YalkT7O1xBEjgPhQ19vUUWeFgv5EY6
- Lnk0/qwLm/CziNilqYMf8QmwfRrxUnNa4rs/KFCLFcCyVnMn9SXJnENA+NxlGmke3dat
- cZJU5ay3fYwEtK5bZ9XokBvbQBBcTdLM3pt3hqABQL/vQtiWhKoxoX2bv9Se/zbAYZcY
- ouH2750whFbiQ75LxPCakwEkzqjV0wN3MnGj1QvJNUXxlb9Tukw0RVD/Q5D/9efsLKN6
- T34g==
-X-Gm-Message-State: AOJu0YyKbUMXpybL4cVrrzIvaxfZfgWcw9o8a8jbUVBT9F5y2B67jWCl
- t5QDC7+p9zFZnMJeK7+grztVK/3zBtGJ0R2gbWqz53gdFSK+WqvDwcyg7SgpPY0AxsUbM5Wp4BX
- Pq5MKV9c=
-X-Gm-Gg: AeBDievqakhVpT6WtveHiftEAQiAmAnBhsaT17TS63OhSp8rZiQ7WcSgXnDxJQKs+W5
- CYP/uXOYG1VLnzhtcXIhxU2k/1f3Ylac569y70w4Znk44+2si94KqgwgGzgsW21OdbcCEPHPW8T
- JUGROSbKar/VQboGwz4vkKn5bi7m4pHQmO+oV/X7dXpcA535E5P26/rlPQCAS0Nsxg+5R0dBJHJ
- LEFM5IdKTfvI9Q+mbQqJjWR4hXNX7WBHftwnIFSsW3MGKUoqIIMNM+m+e7wUoeE0fDUd7rYtW9V
- 9QcGkyg/FBnGAnkC45AGJqGvuAgkv3mzmDzQebTVdDAAzY2dnsBcCk/rbrt640qn60BE+VEO0fA
- DwsP2UKcEjswqr1C1YZgTILM9rzW09zypIprooSiW9HUh2JdzoHGlJ7aXnVb/mqU8orcpzZquRi
- TX3esNxNkfBMikzIyiETjFIknZWJdSXs9dDjqa8xWOnlYDflhxMlPYk9UQ8wtJMhE7DDHEXERSZ
- zf35qfe4GvVFX2gUJITQCLWUh3632C9a2UN01/Cx6B7M2mz45O4
-X-Received: by 2002:a05:600c:871a:b0:488:c683:be89 with SMTP id
- 5b1f17b1804b1-488d67f0b8fmr362080215e9.9.1776331031849; 
- Thu, 16 Apr 2026 02:17:11 -0700 (PDT)
+ bh=jZkKdHqCTZ+oag6vibvyhQL+Cty3Vox88AzHxFpH2tY=;
+ b=fxzaKyO8d7+lriWpMstsV/YRvsxC+fWH8C8nHSM7LFAKqqaQo1NYw3sqXeRLdrbCRT
+ cU3Z+Dwe4cpc4t0MZcKqzLM2zduPAF6L6ja12BoHHe2J/N5uvgrptT0f3tsrlTG4z06Q
+ B/QNR/6EkE2tSzafcq0JF68mGiM1HJEXrdEVGEcXPBjh89cmYf0mrpow9ZTtEtxqxQR4
+ ek0nIbmLlGQr0cOTgUqYZkueiI4bfqls2pG7O2vCgw19RmCC6iqGbis31xKpEqzAvi8i
+ 6prNtU0lNSww/SY42g+ehQZqH9lKna62J18KCHTbBppoBKSLy2I24qrSmR6nxB/mpl6b
+ 4Ykg==
+X-Gm-Message-State: AOJu0YxEfVi0Kkz76Ipw41lzK6HcEeUNIwfSPA7bC4WAibhYwyc2KoZg
+ cfwJDkx6HHbM5vunGzBGKli8T14VjY4jZDCwweDGtQ4PAlU5opVsh28+5qfV6bnvpXgAjGpjXnP
+ j3mL2VAE=
+X-Gm-Gg: AeBDies5Gv939c6MTV3yym5K4Ws3HCS5CIr9wh66WzUSwyw0eFwONGJa3MV+kWONOgg
+ L4TJY0jU4MzrAOJg5ZKpDrm+buRjilbwksbX84l68UPM+8XPWn7TUbhrYtkyNMuvZ7/omqu6ycY
+ VFplJrMBVvnYoQtLJDlhVIId265igj73lj3h3Um1WeAXRm5ru4kOuvoA3Sxnl/YKT54k3E1O8c2
+ V3N0FflrKPm0BPc5fo6LqH6f1wJSNCu6S6C/Rj2QQGJC+EE1dSGth8JauYkb3jiHl/dNpxmOCkl
+ 7iDx/fFKHb1jA+gkvD9FZIUOP0O611z9O7k18kZAtRcnzTzBANVstPjpRZaDu2FPy+TD6TCEnIc
+ /GL+/qMQJiXtOUcK7h8/QXh8mWGoNwPXBqoSbv8H2kK/wP8Y/dCDAA7w5ZeP7CT7QJb5+hXqBIB
+ MRv9iuXKdL+cH7MKllugs6rwmlytwAIk6/i2R/WDvICbiXKZGfYXqEMKBliT4E2AtoyVGxMatPQ
+ OVYiqNjLQ/NPK4NR6C/hsp2IlDHFUVUMEF8b0MMynD0tFyF7VXo
+X-Received: by 2002:a05:600c:450a:b0:488:a882:b7 with SMTP id
+ 5b1f17b1804b1-488d6ad17e6mr332512335e9.29.1776331035650; 
+ Thu, 16 Apr 2026 02:17:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488f5818da1sm37186565e9.6.2026.04.16.02.17.10
+ 5b1f17b1804b1-488f5818da1sm37186565e9.6.2026.04.16.02.17.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 02:17:11 -0700 (PDT)
+ Thu, 16 Apr 2026 02:17:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 15/28] MAINTAINERS: Remove Aarushi Mehta
-Date: Thu, 16 Apr 2026 10:16:41 +0100
-Message-ID: <20260416091654.316158-16-peter.maydell@linaro.org>
+Subject: [PATCH 19/28] MAINTAINERS: Remove Luigi Rizzo
+Date: Thu, 16 Apr 2026 10:16:45 +0100
+Message-ID: <20260416091654.316158-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260416091654.316158-1-peter.maydell@linaro.org>
 References: <20260416091654.316158-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,7 +100,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Aarushi Mehta has not posted to qemu-devel in some years and did not
+Luigi Rizzo has not posted to qemu-devel in some years and did not
 respond to a query about whether they still wished to be listed in
 our MAINTAINERS file.  Remove them, on the assumption that they are
 no longer active in QEMU.
@@ -111,17 +111,17 @@ Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 64c97043db..6cbb1e049a 100644
+index fae251a642..375e3e111c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4319,7 +4319,6 @@ F: block/file-win32.c
- F: block/win32-aio.c
+@@ -3412,7 +3412,6 @@ T: git https://github.com/jasowang/qemu.git net
+ F: qapi/net.json
  
- Linux io_uring
--M: Aarushi Mehta <mehta.aaru20@gmail.com>
- M: Julia Suvorova <jusual@redhat.com>
- M: Stefan Hajnoczi <stefanha@redhat.com>
- R: Stefano Garzarella <sgarzare@redhat.com>
+ Netmap network backend
+-M: Luigi Rizzo <rizzo@iet.unipi.it>
+ M: Giuseppe Lettieri <g.lettieri@iet.unipi.it>
+ M: Vincenzo Maffione <v.maffione@gmail.com>
+ W: http://info.iet.unipi.it/~luigi/netmap/
 -- 
 2.43.0
 
