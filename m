@@ -4,63 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B343FF4368E
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D9DF4368A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgtN-0002GQ-DE; Fri, 17 Apr 2026 06:57:45 -0400
+	id 1wDguK-00073X-Gv; Fri, 17 Apr 2026 06:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgtK-00022B-Rw
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:42 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgtI-0001cB-Ti
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:42 -0400
-Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
- [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 3FB0020B712B;
- Fri, 17 Apr 2026 03:57:27 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3FB0020B712B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423450;
- bh=woE1TvbqFZZTyZVe1cjv9efbwCWr2liX43DCXsc8dHo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=F15xUZaaKJXoks7R/bmLO1uLjfKTWI39N+Mp36n1Y7ER5Yzi6eOxpGKamn6K4KpT1
- XUoLHMNxAnJUxRNjdRYgIR4ly2BuvkwmJ14Mx477TTbbbi4DRsyclzyD4ByaSF+vac
- 58Vm/yf67v1UmHmk750SZICCCy3sm+NAIkPag0GY=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <liuwe@microsoft.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Alex Williamson <alex@shazbot.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 18/34] accel/mshv: store partition proc features
-Date: Fri, 17 Apr 2026 12:56:02 +0200
-Message-Id: <20260417105618.3621-19-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
-References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1wDguJ-0006sg-4Q; Fri, 17 Apr 2026 06:58:43 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1wDguG-0001va-HU; Fri, 17 Apr 2026 06:58:42 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=m4+A64u4XGTxuGx5B/Y/Jew1Y3EWx6qUOGk4MQuwiH47YeRKAwsyXUms5aLjTD0s7nEJN+QxuUR5F+ILzZabNAgbm+rSmCNqq3IpBL6ft58gg9S8/iOOjYRCHUARQUu5FTzNkb3BX72QDnv7iKC2uJwAS9rKWMJj8sSOZcBNbf82Bhfb0m+SbHOcJWZ2EP5PaoMiuQj7Jpqvd/IYiakFipWel+n6t6Sm6If2qIkfHiv8J5OEZmjRm8JLNtf135tF+dGyxwhlHLXpst0LgujxTv+u2AW2UN3eGTFFQnMVvhu+eIy5jrgOQlcs4RJS/7l97/+2/0irzE7mcFiA/LarYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rWbDoF5WRNIrr/DhZez7QKCR9nhOkidSGNfJLuaHsUs=;
+ b=V3Y4q+ybxq63u2nn6AfcmHfrn1daBU3zmzZvkTsmpoCBi1uWE1WI8BWHaEIQeDfcb9+BH5KAf69qm3wZf0OiasCNfgygpb7Lei02kr/wEEj6SvgScIKKFA9nBDOhBD6l2UI50eN14Lvpo2H9lf2WwxHF39xzS8t1filiB68EXtpR3A3LaJogAKTwCEeOzWJppfTR/tIl7rlC+V4SEnQyJb4ruRNj3W5kijZe8zmzqTsGcsyR2VyDDyga39aThaxAi0WAmdq+2ITPhiiWtsCbEhRGlLdFBKtD4YCRF2hIznpwadJnvP5mp6pH+MqdpmGHMPxOD3Lz5x1gi9FSmStnHg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rWbDoF5WRNIrr/DhZez7QKCR9nhOkidSGNfJLuaHsUs=;
+ b=cSaE/uY2KhV8AFA5kKvpEekM2Qkm0oOqL4WsGWI66pvYVuTPPBal1v/H5aWGNr61iG/3LZgQM6RYE4fSG1KKUeTO1FQi4FVZyaBtw23KVdrJmOCCqmRlFIjchtHqYK9KVxDM7ULMN5onMCFVeyc4Cf88ndnlKE/jP1ZbiNOSA0BZay/KxU7dSdV/caxSTHp1HHvdbM+kOvUFX7aov8Lp42a4gyUGDYFg5Bl0+NP+huCw1NfRMSS+MR8pEfI3eWwrL+/lv9sw4alYm3SjOT4H6ObbJuXBGbyarglWDkM0518eR8P7rxNSxuNYlacVUAS2RIgYZkWMC+TE/s+6jNXQTA==
+Received: from PA2PR09MB7634.eurprd09.prod.outlook.com (2603:10a6:102:412::6)
+ by DB8PR09MB3915.eurprd09.prod.outlook.com (2603:10a6:10:123::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Fri, 17 Apr
+ 2026 10:58:34 +0000
+Received: from PA2PR09MB7634.eurprd09.prod.outlook.com
+ ([fe80::c461:b510:b6b9:f442]) by PA2PR09MB7634.eurprd09.prod.outlook.com
+ ([fe80::c461:b510:b6b9:f442%3]) with mapi id 15.20.9818.023; Fri, 17 Apr 2026
+ 10:58:34 +0000
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Alistair
+ Francis <alistair23@gmail.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org"
+ <qemu-riscv@nongnu.org>, "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com"
+ <mst@redhat.com>, "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, "thuth@redhat.com"
+ <thuth@redhat.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: Re: [PATCH v6 2/7] target/riscv: Add big-endian CPU property
+Thread-Topic: [PATCH v6 2/7] target/riscv: Add big-endian CPU property
+Thread-Index: AQHcxdz7upla7z38V0m76mmMu7gfv7XTpuqAgAJ4ToCAABGbAIAAA2kAgAzgMoCAAAPSgIAADkmA
+Date: Fri, 17 Apr 2026 10:58:34 +0000
+Message-ID: <87030c88-0245-4219-955f-76bdcf8422aa@htecgroup.com>
+References: <20260406154935.144674-1-djordje.todorovic@htecgroup.com>
+ <20260406154935.144674-3-djordje.todorovic@htecgroup.com>
+ <884193da-0078-44f0-804d-e5ccaf5f3398@linaro.org>
+ <CAKmqyKPZRQ6djtJU2w5y=5i6Bt3Nkr7yOe+K0vnj-m_XKvG=Kg@mail.gmail.com>
+ <55bf85d3-3b62-4dab-9b21-ec1ca193dd15@linaro.org>
+ <CAKmqyKN=pn997tWzN+-7rFT5ksN6hq7ae3nLW2yDczcCqCWhnw@mail.gmail.com>
+ <ed6e6e5c-3cb9-4cf1-a773-e3cbe77a4552@htecgroup.com>
+ <5a737cad-3b66-462c-975b-24937fd92075@linaro.org>
+In-Reply-To: <5a737cad-3b66-462c-975b-24937fd92075@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA2PR09MB7634:EE_|DB8PR09MB3915:EE_
+x-ms-office365-filtering-correlation-id: 388455c7-af82-4392-6ed0-08de9c70453a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|366016|376014|1800799024|22082099003|18002099003|56012099003|38070700021;
+x-microsoft-antispam-message-info: eKjGKMKAtjaqJSVcfiYwkXICl39XMxAjkNlSvEZ0ANdVed4QFLE/dyOY8wBxs8ve6Hnl7IDZ4gtMnwtpVrYgGPswLigr4ZPCZFMXdQzoN1bqiBNvs0nZvgD7n9uBjPk0u0EnzvcgbMgJvSHE08a80DLPk43Ed48WH6ecxegWjNjHTy4E3MV8y6pGQk5RTpTIUYDSPrphCJ5Z+TOXApgfiVfi7Ba5uQD+9BIiqLlDf32m7s40HZCiJmKX4a4QSnOLIkMG40iR5rmqiZav5BMeRfF56MQtZbDCiUKjhfE/Q6IRDJ6l2H22q0+hudLxojVhUtUNxpig7Yv9cD7+rHzQRhOMKC0fwuGkzOjwJSwhapGM+1sMoMeTD6mpoqp/BqohOAX9sChcXOfb922wNk89uAnlJkfcM4fQx57anVEiXJzgWkxr5ZG796b3cnOAJCbBrGpNEVXVzD4c6UD7NqRjiNY9bLRzCJ7mFT+PIkdXq3pvbpbi0ddPuQRanctWRGDTUEemoYk50+KoFgQa0VRCwiJG/IdadDVgzi0zEl5S9Cr6yC0480j/CJFB8fycsnYeEbht2G5e2us/wyF+K0WGAvWRroNxjcaE1KSIDo5YZsWSO+oVzupZEM7J5Ovq84E25Jy+DlV08h2MQynuZf1kIub+olmAItcCwgGLNK6kzOUlRyEPxDpQVaxNb972LQ4YwvTY20enive/Cs6It8xE3MY3VxClhqGxFHo1J1be9Fk11wB/Bp5Axeo02WSCaiBipnHQeMQthT6W8V6PM5aDmfUfo94I9BkV3VrKNBi65rs=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PA2PR09MB7634.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(366016)(376014)(1800799024)(22082099003)(18002099003)(56012099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OEdYdDFrQ1BBN0c3TzY1TXJnWUhsUk9PSmwzaC95VHhsTzVZZXRrSktNeW9t?=
+ =?utf-8?B?eXFwWWhlRXBWTU9qdkpVS1VOUElac0t3c240RWJSRFA3Ulk1UVl2aHRleU9B?=
+ =?utf-8?B?ZzdTQWtad3kyYm1kS05UNGRlM1RzR0l0ZC9HV3FDY2wrVmVMZ09rSXh2WVNI?=
+ =?utf-8?B?UWIzbjk2Q2tVZExkamNJeWlWSG45YWZrYmNoV2V2c1Z0MEh6SnIvSUVxWC9J?=
+ =?utf-8?B?V1pjZEtKbklFSmx5bCt2d0ZIdVFkV09ERldEYjllUHdyYkpnNW1DNVdDaUky?=
+ =?utf-8?B?cnQrOUUvM0wzSlI3VFBjRldqZTZRbklkNkJNR1RiSm15cEo0OHpCMmRHb1Vi?=
+ =?utf-8?B?MDFBeVlDV2dmRVM5N0JIU2hib1BKRFdzTCtyV2U3am5SSHk0Ym9BbE9JSUw3?=
+ =?utf-8?B?Y3NERisycndpSTAybENQRnZKWkJJNHJZRW9zTHd2cTJHNGtDMzd3ZWU0bG9P?=
+ =?utf-8?B?SmR0VHh2dHJUOFlEOUVRcDVjdVhra0pISDRYSkR5ZVpQVTlhT0htbkoxWCtk?=
+ =?utf-8?B?c2dHSTFxazh2YkVNWHNOYytxWVhTaFNodjZvS1FxbGtrdGlIRDhHOTVyNDYr?=
+ =?utf-8?B?QlpnYUJNM20veFNsbEZrZGtOejlNTC9UUGN4dHRMZEY0aURmdmp5OFV0V282?=
+ =?utf-8?B?SGh3b0VWSkJmaGUxeFFXVlNMRGVKQWJTWlBvSEVncm9NMFlnb09rNmZTSjFU?=
+ =?utf-8?B?Wkpva0w5MGU2dTZsakwwT0ZWQWpSN1RSMUpaa0tGRHdFck9DT24yeHVJSkNy?=
+ =?utf-8?B?YnczVUV1SUdXdHpYR0FISmRlbEVkM1FZQldKcnVYZU1UWDZsUHlBbHVPR2NZ?=
+ =?utf-8?B?SzVETW1YbzZ4RUJ0N1pRNHoxb0RmejhvK1d2TGFjNzB3NEo0ODEyS0NPM2JZ?=
+ =?utf-8?B?dFUzV1h6dUlWdkFpMStncHFvSFpoVHVQamRCQzFBTWZ4cHJtUVcyZFI1Q3pP?=
+ =?utf-8?B?cVEzaEd0UW9HaDBjNXFMSkYya0Z1M2Q5WVBwSWdxV0U5dHEvOFEwZHJPTmI3?=
+ =?utf-8?B?Y0V0RXJiM1JQU3VWQ3FuSExSdHdOYnBHbW5sK201UG5IOFEzc1pQZ0NGRkNG?=
+ =?utf-8?B?dmRGK1hDSjhYNndCajJRTWZwNzAyVERBOWpLdlRBUDVCVUluTVNCTGMzL0FE?=
+ =?utf-8?B?aWwwUG5IRHhCN1djSHJ3eG5JdmtKUHRJN2ZLRUNNcGt1RWtlTTZZWW1KRmhv?=
+ =?utf-8?B?Zmh3VDE0TlBXRzFCb3liSkVKN3VrMHJ6NDVZYVhuYlZwVG9mSkJRVmp6RGlj?=
+ =?utf-8?B?bVlFdG4zZW5Kb2xFRUdacE5FaUlWaWs2eTVPL1NwT3BpdFRURTZNVnVQM05y?=
+ =?utf-8?B?M3ErQlhMaDdybEczQ0pvUW1vaENwU3p0b2JmRFFNYnJodFloUWlOa3RrRkxi?=
+ =?utf-8?B?TFNJalNzSzA0SjNaMXgzSFhKRzNOd0dLZm11QXp1R2R3VUZlcEF0aDcxRHRC?=
+ =?utf-8?B?SHAwT0w1dGZ4UHBzczQ5Mmx3U3lGQ2pGM2N4Szd4R25rTkJ2aENqNW9aK3Q0?=
+ =?utf-8?B?OXZOcmhVSThNSW4vR2N5QUpyeFMrTmd0Z2s0Z2JKeDRTYUdDSHNZV3M5NmdN?=
+ =?utf-8?B?U2ZYaEdpdTNzOGYzajdRWVBvazVhVmRMcjF4bHBYU2NER25HZlowbklBbVZo?=
+ =?utf-8?B?K3h5Z2VSYTZKWG9lekxvKzNGaGtzL2FMYWNjSGNQSmN3WUsrU3U3eGlPSm9W?=
+ =?utf-8?B?Q0xBOFM5bjFGQi9oVGtTUlZ1d1EwcUVUOHlFU2h1NXNwOFcvV2hTU1EvdEpC?=
+ =?utf-8?B?cysxMFRIeXNWeXl4Z1E5ZmRnaDR4RWZUNlV4Nm1jV0M0WEhrN0tPNldHZ20y?=
+ =?utf-8?B?d2dxZFA4dWFub2s5UzVJbXJTU21QblFnZFQwVm1XcG1aTE9JVDdqSE81TE5h?=
+ =?utf-8?B?ajRIREZaK2gxaWJyQ2doMUNmNmxabGgxY2luSHdQalpQRFFDNE9SR29iZFkx?=
+ =?utf-8?B?T1UzRVVoWTUveUVJTGlvZ0p0RHRCd3NZNWxTeW5BVGZ0b1lMZm9UM0JjZU91?=
+ =?utf-8?B?NFFvYVZGc1J1Um93SG13RVZiamkyeDBoKzkwbW50RUpsRDhQWjJpa2tqYXow?=
+ =?utf-8?B?MENWN1BqQnNQdGxEYU9iSkFEWDJhTEl3UTJZQkt1RmxXZUFjNjhlTjlFVlVa?=
+ =?utf-8?B?RlpzNWtWZ2xTZlFzM3lZWDdtYm8zTFN2Wno4UW9VOWg3Qy9DdzRLbDY2Z2Fr?=
+ =?utf-8?B?L0xabm1CeGFoalE3cFJCaUR4dkRXS0dmNWRxS2dkWG9mYWRkOEJuWDdoWkpW?=
+ =?utf-8?B?bFcwZWpoTmpaa05ueDBwUGljaEtra3hkeUY3MituZFlIRU1PZlFVUnNaM1Iw?=
+ =?utf-8?B?MG1pVVNoK2pQOW8weWJ3NTlWcytReStnLzE3MHlkNlJ4YVRrZ3FVUW9UZW1x?=
+ =?utf-8?Q?Y8iIowNG1bfHbe2QsPFXAUi6efYYMB11VdiO+?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D0FC1DA670DBE843BA65EC9FF8BBD6CB@eurprd09.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA2PR09MB7634.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 388455c7-af82-4392-6ed0-08de9c70453a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 10:58:34.4897 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vQPoX1AkyC42x1NfpW/1PxazG0Q0LsKQEMA9KHsGY8OeDsutevZ/o9/peqgrrYJ3gHCWt+isKyoK9KawzfcuRBnMUhzlT6kvjaWAWz33yIU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR09MB3915
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
+ envelope-from=Djordje.Todorovic@htecgroup.com;
+ helo=AS8PR04CU009.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,280 +163,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We retrieve and store processor features on the state, so we can query
-them later when deciding which MSRs to migrate.
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- accel/mshv/mshv-all.c     |  57 +++++++++++++++
- include/hw/hyperv/hvhdk.h | 150 ++++++++++++++++++++++++++++++++++++++
- include/system/mshv_int.h |   2 +
- 3 files changed, 209 insertions(+)
-
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 056b19b3b8..4c1a42d002 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -106,6 +106,57 @@ static int resume_vm(int vm_fd)
-     return 0;
- }
- 
-+static int get_partition_property(int vm_fd, uint32_t feature_bank,
-+                                  uint64_t *value)
-+{
-+    struct hv_input_get_partition_property in = {0};
-+    struct hv_output_get_partition_property out = {0};
-+    struct mshv_root_hvcall args = {0};
-+    int ret;
-+
-+    in.property_code = feature_bank;
-+
-+    args.code    = HVCALL_GET_PARTITION_PROPERTY;
-+    args.in_sz   = sizeof(in);
-+    args.in_ptr  = (uint64_t)&in;
-+    args.out_sz  = sizeof(out);
-+    args.out_ptr = (uint64_t)&out;
-+
-+    ret = ioctl(vm_fd, MSHV_ROOT_HVCALL, &args);
-+    if (ret < 0) {
-+        error_report("Failed to get guest partition property bank: %s",
-+                     strerror(errno));
-+        return -1;
-+    }
-+
-+    *value = out.property_value;
-+    return 0;
-+}
-+
-+static int get_proc_features(int vm_fd,
-+                             union hv_partition_processor_features *features)
-+{
-+    int ret;
-+
-+    ret = get_partition_property(vm_fd,
-+                                 HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
-+                                 features[0].as_uint64);
-+    if (ret < 0) {
-+        error_report("Failed to get processor features bank 0");
-+        return -1;
-+    }
-+
-+    ret = get_partition_property(vm_fd,
-+                                 HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
-+                                 features[1].as_uint64);
-+    if (ret < 0) {
-+        error_report("Failed to get processor features bank 1");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- static int create_partition(int mshv_fd, int *vm_fd)
- {
-     int ret;
-@@ -441,6 +492,12 @@ static int mshv_init(AccelState *as, MachineState *ms)
- 
-     s->vm = vm_fd;
-     s->fd = mshv_fd;
-+
-+    ret = get_proc_features(vm_fd, &s->processor_features);
-+    if (ret < 0) {
-+        return -1;
-+    }
-+
-     s->nr_as = 1;
-     s->as = g_new0(MshvAddressSpace, s->nr_as);
- 
-diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-index 41af743847..95524f317c 100644
---- a/include/hw/hyperv/hvhdk.h
-+++ b/include/hw/hyperv/hvhdk.h
-@@ -11,6 +11,16 @@
- 
- #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
- 
-+struct hv_input_get_partition_property {
-+    uint64_t partition_id;
-+    uint32_t property_code; /* enum hv_partition_property_code */
-+    uint32_t padding;
-+} QEMU_PACKED;
-+
-+struct hv_output_get_partition_property {
-+    uint64_t property_value;
-+} QEMU_PACKED;
-+
- struct hv_input_set_partition_property {
-     uint64_t partition_id;
-     uint32_t property_code; /* enum hv_partition_property_code */
-@@ -161,6 +171,146 @@ union hv_partition_synthetic_processor_features {
-     };
- };
- 
-+#define HV_PARTITION_PROCESSOR_FEATURES_BANKS 2
-+#define HV_PARTITION_PROCESSOR_FEATURES_RESERVEDBANK1_BITFIELD_COUNT 4
-+
-+
-+union hv_partition_processor_features {
-+    uint64_t as_uint64[HV_PARTITION_PROCESSOR_FEATURES_BANKS];
-+    struct {
-+        uint64_t sse3_support:1;
-+        uint64_t lahf_sahf_support:1;
-+        uint64_t ssse3_support:1;
-+        uint64_t sse4_1_support:1;
-+        uint64_t sse4_2_support:1;
-+        uint64_t sse4a_support:1;
-+        uint64_t xop_support:1;
-+        uint64_t pop_cnt_support:1;
-+        uint64_t cmpxchg16b_support:1;
-+        uint64_t altmovcr8_support:1;
-+        uint64_t lzcnt_support:1;
-+        uint64_t mis_align_sse_support:1;
-+        uint64_t mmx_ext_support:1;
-+        uint64_t amd3dnow_support:1;
-+        uint64_t extended_amd3dnow_support:1;
-+        uint64_t page_1gb_support:1;
-+        uint64_t aes_support:1;
-+        uint64_t pclmulqdq_support:1;
-+        uint64_t pcid_support:1;
-+        uint64_t fma4_support:1;
-+        uint64_t f16c_support:1;
-+        uint64_t rd_rand_support:1;
-+        uint64_t rd_wr_fs_gs_support:1;
-+        uint64_t smep_support:1;
-+        uint64_t enhanced_fast_string_support:1;
-+        uint64_t bmi1_support:1;
-+        uint64_t bmi2_support:1;
-+        uint64_t hle_support_deprecated:1;
-+        uint64_t rtm_support_deprecated:1;
-+        uint64_t movbe_support:1;
-+        uint64_t npiep1_support:1;
-+        uint64_t dep_x87_fpu_save_support:1;
-+        uint64_t rd_seed_support:1;
-+        uint64_t adx_support:1;
-+        uint64_t intel_prefetch_support:1;
-+        uint64_t smap_support:1;
-+        uint64_t hle_support:1;
-+        uint64_t rtm_support:1;
-+        uint64_t rdtscp_support:1;
-+        uint64_t clflushopt_support:1;
-+        uint64_t clwb_support:1;
-+        uint64_t sha_support:1;
-+        uint64_t x87_pointers_saved_support:1;
-+        uint64_t invpcid_support:1;
-+        uint64_t ibrs_support:1;
-+        uint64_t stibp_support:1;
-+        uint64_t ibpb_support:1;
-+        uint64_t unrestricted_guest_support:1;
-+        uint64_t mdd_support:1;
-+        uint64_t fast_short_rep_mov_support:1;
-+        uint64_t l1dcache_flush_support:1;
-+        uint64_t rdcl_no_support:1;
-+        uint64_t ibrs_all_support:1;
-+        uint64_t skip_l1df_support:1;
-+        uint64_t ssb_no_support:1;
-+        uint64_t rsb_a_no_support:1;
-+        uint64_t virt_spec_ctrl_support:1;
-+        uint64_t rd_pid_support:1;
-+        uint64_t umip_support:1;
-+        uint64_t mbs_no_support:1;
-+        uint64_t mb_clear_support:1;
-+        uint64_t taa_no_support:1;
-+        uint64_t tsx_ctrl_support:1;
-+        uint64_t reserved_bank0:1;
-+
-+        /* N.B. Begin bank 1 processor features. */
-+        uint64_t a_count_m_count_support:1;
-+        uint64_t tsc_invariant_support:1;
-+        uint64_t cl_zero_support:1;
-+        uint64_t rdpru_support:1;
-+        uint64_t la57_support:1;
-+        uint64_t mbec_support:1;
-+        uint64_t nested_virt_support:1;
-+        uint64_t psfd_support:1;
-+        uint64_t cet_ss_support:1;
-+        uint64_t cet_ibt_support:1;
-+        uint64_t vmx_exception_inject_support:1;
-+        uint64_t enqcmd_support:1;
-+        uint64_t umwait_tpause_support:1;
-+        uint64_t movdiri_support:1;
-+        uint64_t movdir64b_support:1;
-+        uint64_t cldemote_support:1;
-+        uint64_t serialize_support:1;
-+        uint64_t tsc_deadline_tmr_support:1;
-+        uint64_t tsc_adjust_support:1;
-+        uint64_t fzl_rep_movsb:1;
-+        uint64_t fs_rep_stosb:1;
-+        uint64_t fs_rep_cmpsb:1;
-+        uint64_t tsx_ld_trk_support:1;
-+        uint64_t vmx_ins_outs_exit_info_support:1;
-+        uint64_t hlat_support:1;
-+        uint64_t sbdr_ssdp_no_support:1;
-+        uint64_t fbsdp_no_support:1;
-+        uint64_t psdp_no_support:1;
-+        uint64_t fb_clear_support:1;
-+        uint64_t btc_no_support:1;
-+        uint64_t ibpb_rsb_flush_support:1;
-+        uint64_t stibp_always_on_support:1;
-+        uint64_t perf_global_ctrl_support:1;
-+        uint64_t npt_execute_only_support:1;
-+        uint64_t npt_ad_flags_support:1;
-+        uint64_t npt1_gb_page_support:1;
-+        uint64_t amd_processor_topology_node_id_support:1;
-+        uint64_t local_machine_check_support:1;
-+        uint64_t extended_topology_leaf_fp256_amd_support:1;
-+        uint64_t gds_no_support:1;
-+        uint64_t cmpccxadd_support:1;
-+        uint64_t tsc_aux_virtualization_support:1;
-+        uint64_t rmp_query_support:1;
-+        uint64_t bhi_no_support:1;
-+        uint64_t bhi_dis_support:1;
-+        uint64_t prefetch_i_support:1;
-+        uint64_t sha512_support:1;
-+        uint64_t mitigation_ctrl_support:1;
-+        uint64_t rfds_no_support:1;
-+        uint64_t rfds_clear_support:1;
-+        uint64_t sm3_support:1;
-+        uint64_t sm4_support:1;
-+        uint64_t secure_avic_support:1;
-+        uint64_t guest_intercept_ctrl_support:1;
-+        uint64_t sbpb_supported:1;
-+        uint64_t ibpb_br_type_supported:1;
-+        uint64_t srso_no_supported:1;
-+        uint64_t srso_user_kernel_no_supported:1;
-+        uint64_t vrew_clear_supported:1;
-+        uint64_t tsa_l1_no_supported:1;
-+        uint64_t tsa_sq_no_supported:1;
-+        uint64_t lass_support:1;
-+        uint64_t idle_hlt_intercept_support:1;
-+        uint64_t msr_list_support:1;
-+    } QEMU_PACKED;
-+};
-+
- enum hv_translate_gva_result_code {
-     HV_TRANSLATE_GVA_SUCCESS                    = 0,
- 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index f86c7a3be6..2b6d7b2f35 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -15,6 +15,7 @@
- #define QEMU_MSHV_INT_H
- 
- #define MSHV_MSR_ENTRIES_COUNT 64
-+#include "hw/hyperv/hvhdk.h"
- 
- struct mshv_get_set_vp_state;
- 
-@@ -55,6 +56,7 @@ struct MshvState {
-     int nr_allocated_irq_routes;
-     unsigned long *used_gsi_bitmap;
-     unsigned int gsi_count;
-+    union hv_partition_processor_features processor_features;
- };
- 
- typedef struct MshvMsiControl {
--- 
-2.34.1
-
+DQpPbiA0LzE3LzI2IDEyOjA3LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gQ0FV
+VElPTjogVGhpcyBlbWFpbCBvcmlnaW5hdGVkIGZyb20gb3V0c2lkZSBvZiB0aGUgb3JnYW5pemF0
+aW9uLiBEbyANCj4gbm90IGNsaWNrIGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgdW5sZXNzIHlv
+dSByZWNvZ25pemUgdGhlIHNlbmRlciANCj4gYW5kIGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZS4N
+Cj4NCj4NCj4gT24gMTcvNC8yNiAxMTo1NCwgRGpvcmRqZSBUb2Rvcm92aWMgd3JvdGU6DQo+Pg0K
+Pj4gT24gNC85LzI2IDA3OjE2LCBBbGlzdGFpciBGcmFuY2lzIHdyb3RlOg0KPj4+IENBVVRJT046
+IFRoaXMgZW1haWwgb3JpZ2luYXRlZCBmcm9tIG91dHNpZGUgb2YgdGhlIG9yZ2FuaXphdGlvbi4g
+RG8gDQo+Pj4gbm90IGNsaWNrIGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgdW5sZXNzIHlvdSBy
+ZWNvZ25pemUgdGhlIHNlbmRlciANCj4+PiBhbmQga25vdyB0aGUgY29udGVudCBpcyBzYWZlLg0K
+Pj4+DQo+Pj4NCj4+PiBPbiBUaHUsIEFwciA5LCAyMDI2IGF0IDM6MDTigK9QTSBQaGlsaXBwZSBN
+YXRoaWV1LURhdWTDqSANCj4+PiA8cGhpbG1kQGxpbmFyby5vcmc+IHdyb3RlOg0KPj4+PiBPbiA5
+LzQvMjYgMDY6MDAsIEFsaXN0YWlyIEZyYW5jaXMgd3JvdGU6DQo+Pj4+PiBPbiBXZWQsIEFwciA4
+LCAyMDI2IGF0IDEyOjE34oCvQU0gUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kNCj4+Pj4+IDxwaGls
+bWRAbGluYXJvLm9yZz4gd3JvdGU6DQo+Pj4+Pj4gT24gNi80LzI2IDE3OjQ5LCBEam9yZGplIFRv
+ZG9yb3ZpYyB3cm90ZToNCj4+Pj4+Pj4gQWRkIGEgImJpZy1lbmRpYW4iIGJvb2xlYW4gcHJvcGVy
+dHkgdG8gdGhlIFJJU0MtViBDUFUgDQo+Pj4+Pj4+IGNvbmZpZ3VyYXRpb24sDQo+Pj4+Pj4+IGRl
+ZmF1bHRpbmcgdG8gZmFsc2UgKGxpdHRsZS1lbmRpYW4pLiBUaGlzIHByb3BlcnR5IGFsbG93cyBt
+YWNoaW5lDQo+Pj4+Pj4+IG1vZGVscyB0byBjb25maWd1cmUgaW5kaXZpZHVhbCBIQVJUcyBmb3Ig
+YmlnLWVuZGlhbiBkYXRhIG9wZXJhdGlvbi4NCj4+Pj4+Pj4NCj4+Pj4+Pj4gVGhlIFJJU0MtViBJ
+U0Egc3VwcG9ydHMgYmlnLWVuZGlhbiBkYXRhIGFjY2Vzc2VzIHZpYSB0aGUgbXN0YXR1cw0KPj4+
+Pj4+PiBTQkUvTUJFL1VCRSBiaXRzLCB3aGlsZSBpbnN0cnVjdGlvbnMgcmVtYWluIGFsd2F5cyBs
+aXR0bGUtZW5kaWFuLg0KPj4+Pj4+PiBUaGlzIHByb3BlcnR5IHByb3ZpZGVzIHRoZSBjb25maWd1
+cmF0aW9uIGludGVyZmFjZTsgc3Vic2VxdWVudA0KPj4+Pj4+PiBwYXRjaGVzIHdpbGwgY29ubmVj
+dCBpdCB0byB0aGUgQ1BVIHN0YXRlIGFuZCB0cmFuc2xhdGlvbiBsb2dpYy4NCj4+Pj4+Pj4NCj4+
+Pj4+Pj4gU2lnbmVkLW9mZi1ieTogRGpvcmRqZSBUb2Rvcm92aWMgPGRqb3JkamUudG9kb3Jvdmlj
+QGh0ZWNncm91cC5jb20+DQo+Pj4+Pj4+IFJldmlld2VkLWJ5OiBDaGFvIExpdSA8Y2hhby5saXUu
+emV2b3JuQGdtYWlsLmNvbT4NCj4+Pj4+Pj4gLS0tDQo+Pj4+Pj4+IMKgwqDCoMKgIHRhcmdldC9y
+aXNjdi9jcHUuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDEgKw0KPj4+Pj4+PiDC
+oMKgwqDCoCB0YXJnZXQvcmlzY3YvY3B1X2NmZ19maWVsZHMuaC5pbmMgfCAxICsNCj4+Pj4+Pj4g
+wqDCoMKgwqAgMiBmaWxlcyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKykNCj4+Pj4+Pg0KPj4+Pj4+
+PiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L3Jpc2N2L2NwdV9jZmdfZmllbGRzLmguaW5jIA0KPj4+Pj4+
+PiBiL3RhcmdldC9yaXNjdi9jcHVfY2ZnX2ZpZWxkcy5oLmluYw0KPj4+Pj4+PiBpbmRleCA3MGVj
+NjUwYWJmLi41MTQzNmRhYWJmIDEwMDY0NA0KPj4+Pj4+PiAtLS0gYS90YXJnZXQvcmlzY3YvY3B1
+X2NmZ19maWVsZHMuaC5pbmMNCj4+Pj4+Pj4gKysrIGIvdGFyZ2V0L3Jpc2N2L2NwdV9jZmdfZmll
+bGRzLmguaW5jDQo+Pj4+Pj4+IEBAIC0xNTQsNiArMTU0LDcgQEAgQk9PTF9GSUVMRChleHRfeG1p
+cHNjYm9wKQ0KPj4+Pj4+PiDCoMKgwqDCoCBCT09MX0ZJRUxEKGV4dF94bWlwc2Ntb3YpDQo+Pj4+
+Pj4+IMKgwqDCoMKgIEJPT0xfRklFTEQoZXh0X3htaXBzbHNwKQ0KPj4+Pj4+Pg0KPj4+Pj4+PiAr
+Qk9PTF9GSUVMRChiaWdfZW5kaWFuKQ0KPj4+Pj4+IFNpbmNlIGl0IGlzIHJ1bnRpbWUgaXQgZG9l
+c24ndCBiZWxvbmcgdG8gUklTQ1ZDUFVDb25maWcuDQo+Pj4+PiBJIHRoaW5rIHRoZSBpZGVhIGlz
+IHRoYXQgYSB1c2VyIGNhbiBzZXQgdGhlIGBiaWctZW5kaWFuYCBwcm9wZXJ0eQ0KPj4+Pj4gKGZy
+b20gdGhlIGNvbW1hbmQgbGluZSBvciBtYWNoaW5lKSBhbmQgdGhlbiBNQkUsIFNCRSBhbmQgVUJF
+IGFyZQ0KPj4+Pj4gYWx3YXlzIDEgYW5kIGJpZyBlbmRpYW4gaXMgYWx3YXlzIGVuYWJsZWQuIEJh
+c2ljYWxseSB0byBtb2RlbA0KPj4+Pj4gYmlnLWVuZGlhbiBvbmx5IGhhcmR3YXJlDQo+Pj4+Pg0K
+Pj4+Pj4gU28gaW4gdGhhdCBjb250ZXh0IGl0IGlzbid0IHJ1bnRpbWUsIGJ1dCBpdCdzIG5vdCBj
+bGVhciBmcm9tIHRoZQ0KPj4+Pj4gY29tbWl0IGRlc2NyaXB0aW9uLiBBbHNvIGlmIHdlIGFyZSBh
+ZGRpbmcgYSBwcm9wZXJ0eSB0aGUgcHJvcGVydHkNCj4+Pj4+IHNob3VsZCBiZSBleHBvc2VkIGxh
+c3QsIGFzIGluIG9uY2UgYWxsIG9mIHRoZSBmdW5jdGlvbmFsaXR5IGlzDQo+Pj4+PiBzdXBwb3J0
+ZWQuIFRoYXQgd2F5IHdlIGRvbid0IGhhdmUgYSBwcm9wZXJ0eSB0aGF0IGRvZXNuJ3QgZG8gDQo+
+Pj4+PiBhbnl0aGluZy4NCj4+Pj4+IFdlIHdvdWxkIGFsc28gbmVlZCBkb2N1bWVudGF0aW9uIGFk
+ZGVkLg0KPj4+PiBSZWFkaW5nICIzLjEuNi4zIE1lbW9yeSBQcml2aWxlZ2UgaW4gbXN0YXR1cyBS
+ZWdpc3RlciIgaXQgaXMgbm90DQo+Pj4+IGNsZWFyIHRvIG1lIHdoZXRoZXIgTUJFIGFuZCBTQkUg
+YXJlIGhhcmQtd2lyZWQsIEknZCBoYXZlIGV4cGVjdGVkDQo+Pj4gVGhleSBkb24ndCBoYXZlIHRv
+IGJlIGhhcmQtd2lyZWQuIFRoZXJlIGlzIGEgbm90ZSBpbiBzZWN0aW9uIDMuMS42LjUgDQo+Pj4g
+dGhhdCBzYXlzOg0KPj4+DQo+Pj4gIiIiDQo+Pj4gQW4gaW1wbGVtZW50YXRpb24gc3VwcG9ydHMg
+b25seSBsaXR0bGUtZW5kaWFuIG1lbW9yeSBhY2Nlc3NlcyBpZg0KPj4+IGZpZWxkcyBNQkUsIFNC
+RSwgYW5kIFVCRQ0KPj4+IGFyZSBhbGwgcmVhZC1vbmx5IDAuIEFuIGltcGxlbWVudGF0aW9uIHN1
+cHBvcnRzIG9ubHkgYmlnLWVuZGlhbiBtZW1vcnkNCj4+PiBhY2Nlc3NlcyAoYXNpZGUgZnJvbQ0K
+Pj4+IGluc3RydWN0aW9uIGZldGNoZXMpIGlmIE1CRSBpcyByZWFkLW9ubHkgMSBhbmQgU0JFIGFu
+ZCBVQkUgYXJlIGVhY2gNCj4+PiByZWFkLW9ubHkgMSB3aGVuIFMtbW9kZQ0KPj4+IGFuZCBVLW1v
+ZGUgYXJlIHN1cHBvcnRlZC4NCj4+PiAiIiINCj4+Pg0KPj4+PiBhIEhBUlQgdG8gYmUgYWJsZSB0
+byByZXNldCBpdHNlbGYgaW4gYSBkaWZmZXJlbnQgZW5kaWFubmVzcywgYW5kDQo+Pj4+IGluIHRo
+YXQgY2FzZSB0aGUgY3VycmVudCByaXNjdl9jcHVfcmVzZXRfaG9sZCgpIHdvdWxkIG92ZXJ3cml0
+ZSB0aGF0Lg0KPj4+IEkgc3VzcGVjdCBhIGxvdCBvZiBiaWctZW5kaWFuIGhhcnRzIGFyZSBqdXN0
+IGFsd2F5cyBiaWctZW5kaWFuLg0KPj4+IFN3YXBwaW5nIGF0IHJ1bnRpbWUgc2VlbXMgdHJpY2t5
+LCBhbHRob3VnaCBzb21ldGhpbmcgd2UgY2FuIHN1cHBvcnQuDQo+Pj4NCj4+PiBUaGlzIHNob3Vs
+ZCBhbGwgYmUgbWFkZSBjbGVhciBpbiB0aGUgY29tbWl0IG1lc3NhZ2UgYW5kIHNvbWUgDQo+Pj4g
+ZG9jdW1lbnRhdGlvbg0KPj4+DQo+Pj4gQWxpc3RhaXINCj4+DQo+PiBUaGFua3MgUGhpbGlwcGUs
+IEFsaXN0YWlyLg0KPj4NCj4+IFRvIGNsYXJpZnk6IGJpZ19lbmRpYW4gaXMgbm90IGEgcnVudGlt
+ZSBmbGFnIOKAlCBpdCBtb2RlbHMgYmlnLWVuZGlhbi1vbmx5DQo+PiBoYXJkd2FyZSBhcyBkZXNj
+cmliZWQgaW4gdGhlIHByaXZpbGVnZWQgc3BlYyBzZWN0aW9uIDMuMS42LjUsIHdoZXJlDQo+PiBN
+QkUvU0JFL1VCRQ0KPj4gYXJlIGhhcmR3aXJlZCB0byAxLiBJdCBiZWxvbmdzIGluIFJJU0NWQ1BV
+Q29uZmlnIGJlY2F1c2UgaXQncyBhIHN0YXRpYywNCj4+IHBlci1DUFUgaGFyZHdhcmUgcHJvcGVy
+dHkgKHNhbWUgY2F0ZWdvcnkgYXMgbW11IG9yIHBtcCksIG5vdCBzb21ldGhpbmcNCj4+IHRoZSBn
+dWVzdCB0b2dnbGVzIGF0IHJ1bnRpbWUuDQo+Pg0KPj4gVGhlIE1CRS9TQkUvVUJFIGJpdHMgYXJl
+IGFscmVhZHkgZWZmZWN0aXZlbHkgaGFyZHdpcmVkIGluIHRoZSBleGlzdGluZw0KPj4gY29kZWJh
+c2U6IG5vbmUgb2YgdGhlIHdyaXRlX21zdGF0dXMvd3JpdGVfbXN0YXR1c2gvd3JpdGVfc3N0YXR1
+cyBDU1IgDQo+PiBwYXRocw0KPj4gaW5jbHVkZSB0aGVtIGluIHRoZWlyIHdyaXRhYmxlIG1hc2ss
+IHNvIHdoYXRldmVyIHZhbHVlIGlzIHNldCBhdCByZXNldA0KPj4gcGVyc2lzdHMgZm9yIHRoZSBs
+aWZldGltZSBvZiB0aGUgQ1BVLg0KPg0KPiBXaGF0IGRvIHlvdSByZWZlciB0byBieSAiZXhpc3Rp
+bmcgY29kZWJhc2UiPw0KPg0KSSBtZWFudCBjdXJyZW50IGltcGxlbWVudGF0aW9uIG9mIHdyaXRl
+X21zdGF0dXMoKSwgd3JpdGVfbXN0YXR1c2goKSwgYW5kDQoNCndyaXRlX3NzdGF0dXMoKSBkb24n
+dCBpbmNsdWRlIFVCRS9TQkUvTUJFIGluIHRoZWlyIHdyaXRhYmxlIG1hc2tzLg0KDQo+IFNlY3Rp
+b24gMy4xLjYuNSBub3RlOg0KPg0KPiDCoCBbLi4uXSBlbmRpYW5uZXNzIGNvbnRyb2wgaGFzIGJl
+ZW4gZGVmaW5lZCBzbyBhcyB0byBwZXJtaXQsIGZvcg0KPiDCoCBpbnN0YW5jZSwgYW4gT1Mgb2Yg
+b25lIGVuZGlhbm5lc3MgdG8gZXhlY3V0ZSB1c2VyLW1vZGUgcHJvZ3JhbXMNCj4gwqAgb2YgdGhl
+IG9wcG9zaXRlIGVuZGlhbm5lc3MuIENvbnNpZGVyYXRpb24gaGFzIGJlZW4gZ2l2ZW4gYWxzbyB0
+bw0KPiDCoCB0aGUgcG9zc2liaWxpdHkgb2Ygbm9uLXN0YW5kYXJkIHVzYWdlcyB3aGVyZWJ5IHNv
+ZnR3YXJlIGZsaXBzIHRoZQ0KPiDCoCBlbmRpYW5uZXNzIG9mIG1lbW9yeSBhY2Nlc3NlcyBhcyBu
+ZWVkZWQuDQo+DQo+IFdoaWNoIEkgaW50ZXJwcmV0ZSBhcyAicnVudGltZSBzd2FwIi4gSSdtIG5v
+dCBzZWVpbmcgZXhwbGljaXQgbWVudGlvbiBvZg0KPiBoYXJkLXdpcmVkIGJpdHMuDQoNCkhtbS4g
+VGhhdCBpcyByaWdodCwgYnV0IEkgd2FzIGxvb2tpbmcgdG8gdGhlIHNlY3Rpb246DQoNCiJBbiBp
+bXBsZW1lbnRhdGlvbiBzdXBwb3J0cyBvbmx5IGxpdHRsZS1lbmRpYW4gbWVtb3J5IGFjY2Vzc2Vz
+IGlmDQpmaWVsZHMgTUJFLCBTQkUsIGFuZCBVQkUgYXJlIGFsbCByZWFkLW9ubHkgMC4gQW4gaW1w
+bGVtZW50YXRpb24NCnN1cHBvcnRzIG9ubHkgYmlnLWVuZGlhbiBtZW1vcnkgYWNjZXNzZXMgWy4u
+Ll0gaWYgTUJFIGlzIHJlYWQtb25seSAxDQphbmQgU0JFIGFuZCBVQkUgYXJlIGVhY2ggcmVhZC1v
+bmx5IDEgd2hlbiBTLW1vZGUgYW5kIFUtbW9kZSBhcmUNCnN1cHBvcnRlZC4iDQoNCndoZXJlIGl0
+IGlzIGtpbmQgb2YgaW1wbGljYXRlZC4NCg0KVGhhbmtzLA0KRGpvcmRqZQ0KDQo=
 
