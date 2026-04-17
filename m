@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20824F43689
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0248F43689
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDfcS-0004J0-Ce; Fri, 17 Apr 2026 05:36:12 -0400
+	id 1wDfeQ-0005De-9o; Fri, 17 Apr 2026 05:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wDfcQ-0004Ik-E2
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:36:10 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDfeM-0005CV-Hk
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:38:10 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wDfcO-0004n6-4r
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:36:10 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488b150559bso3950205e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 02:36:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDfeK-00052h-QZ
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:38:10 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488c2690057so4559235e9.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 02:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776418566; x=1777023366; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wln8V5vkw86wIpESTdwtYOSdtJhh5bJtSRh+wlnwG2M=;
- b=OJVyPHNJo/X/JaD7mQIifb+4RwY+RIoeiZryZwqoW3iA/+QKqAHu9O+Fwyl2IfKrpc
- Q2a3jWtdBasV77WybvTWRjjgvGnURtYNc0iVhFfag0fjO6MjjpkjZAtPtXodoBRm53VI
- EtAVYmnw/QkW8rgcIXvNA9E9pPESGw611xy6EDhuEPZaU5/cz1xNWJj9Ie08EFOqurBt
- daSK5L09EY+KGb/cKmk52Vsj/Yz0tJ9yqSCLjoOedAlwCQy4OsArMxQbchVUswTImaYy
- ZpoWyDkKhSar2zTuEpW9K0XBWmT5CATemNaKiiYqCRRUgQkOLSCCyyNufu9OhxviYOSX
- Ic+g==
+ d=linaro.org; s=google; t=1776418686; x=1777023486; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=A141vI3/UoGYhzPPu08TWpps2ytxzNsFg5NMoVqZZ9k=;
+ b=KG0BQ8j1cwyGCHJ64ButfNJGuXYseEk5gWAaX7KVyJ4cKZaUNEt87DQJQIotzvpAEs
+ cSWzC/HEw9TP6KMt7Ph0hdGFTcF0B+hB0rVNEV8WH4yH5IrZurMz2iwIjqE7GmwdIT6V
+ UH+ks4gHBMvCu80w4Jg2bKkM40s/maVbWBRUqWoe/f757NtW1YowlezsCxRRz9XWoela
+ tZdUVAAThU2n4AQGxCZ7klHjN9e09/cq+GUs2oudfEoma3+83rdMeM0cLVbfOlfp04fE
+ 32Tbrb7DGxt1/yT9z6BYy9BSXjUBhmLsLZBLn3sC+/Jfpo6tZWrRoI8IC+eYUIW+qgPR
+ htbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776418566; x=1777023366;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wln8V5vkw86wIpESTdwtYOSdtJhh5bJtSRh+wlnwG2M=;
- b=LDsDpXBAJ/tFJdRzC0krxG0pHFsxsnMjRKqtS9K2350e4jBQBdjg5ic8kK6V2XSfXC
- 8HqMfJY8PRpkPRph7g7HwTGwoKQf32MyW64eh5X3FLdldkvdUnhNfco9c4UANcQetHzG
- SdRrbvoUdErFy3TqyE7KmymiHoJX1C3wAlD1hPCGYljfOkqpsWIo6yaFitGXrTo5pXHq
- 2qPSxJues8AQedM5ggPjT+b9vXazs09VVexoC12oOISi3GkuJAvj7OC9JVtyfs9SExFZ
- DSwQhZIkRTRKWmQ55g/YerLX7hN2ZEA5QpB7T6uhBHW6CwDk0Fg+Qb///QlBPMStGYE4
- SBhg==
+ d=1e100.net; s=20251104; t=1776418686; x=1777023486;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A141vI3/UoGYhzPPu08TWpps2ytxzNsFg5NMoVqZZ9k=;
+ b=IOrvq+vDGhmos9S2ARLUPWPws8vpaLupG+C+HsnIG3PyBvcddmh6AQ2XQNDSpqujQU
+ 68XYPg8j6ALRUYmP7Zru954TXv5L90O33t14LvwOq6IrVPZFQdZft1HxAj192S3JZwjf
+ HvuY+14CvA84mfBsrLojuND2sqAnUvZsJeeLci+1fd3zWTeY28oPIZJV7Zy2gk35FQAB
+ QhUBRnNVnhe0vYD7ga1FRAS149VZgraxRZXcauuZ/GWvpJtNr8kbLqo52VjigOyPwPg/
+ WqHBCcDAbvTajzFAPi03tkrqvDo3PinZHXYbEaUVgb6JUQ7wqOPazx5u61D5gm1tmamB
+ RQdA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8WC8bF7OAQ1RBKrMGwntdU2mlVQ9nTOMwVTNu/ieqDUk9JYqj7oCpj0jiOC2d1wFBYwTwdUDSvYLOE@nongnu.org
-X-Gm-Message-State: AOJu0Yz/IUSzqWEIOiOS9L/UJDcXhmHjoVKeb8bZKLFTDuUgMeeECDrh
- c1Jr/ZhHTP+M0xSGmIIjJw884VMPbNRF/Umez8gme9boBhSC+EwldC34
-X-Gm-Gg: AeBDieuPxnKPaClvlCgmZc0qX8v7x5QooYD/QJ+ueOOSG5m54kXGKd3Vhu5aPT3Z7mx
- 1UdIR36/Km4PTtjvl00SMn0q/nVUzunG/G5lGUPkJ/aqupTDNWlD/gnTwoBoMj8GApT+HN2Hu2m
- m+aLv9+6mEEFcBC7aLtxDXBm8s2IQp2c3IZgHTdqxFsY0FbubAK0qfZsBsB61zwLaDxNRjKmO3r
- VBO6nVOu7xjHwQHOTphGvav8iqD3g3KxT5N2qA9OPfUC+qryMVWaRX3v47hLesJOCGUEhm2l4NO
- M1Ju7q929RB5sUY2YARE4XlYKv05lSpIWd+FLzaGCQRrMlLCRlrztbFmErBDqQI9RTASbiDs5rM
- r5lGKwQj5BcluV+R/8IE1bJokGUCSJl/3QdOuwEchGhvReezOLDM8gDF54JkChTiEHc9upGGDeq
- BzmyCehSiDfjBI8NmX5QiJzNYY0rEAbiVWdqemXTThA+bm9HxNBUmy8y0lVJrad8+ksN9h758NA
- ExrWr5qlwbWiogmDCFfppcZ+RVg7BFhsucVBuLlr+4=
-X-Received: by 2002:a05:6000:24ca:b0:43e:a70d:7632 with SMTP id
- ffacd0b85a97d-43fe3e0b463mr3112889f8f.25.1776418566152; 
- Fri, 17 Apr 2026 02:36:06 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf1c6100c87fe1c3d3c00c97.dip0.t-ipconnect.de.
- [2003:fa:af1c:6100:c87f:e1c3:d3c0:c97])
+ AFNElJ85VRZYmhW8ilYTtlTcMPiVPzLa0HMWSLtc8iFX//FegaSNTjNRsKaMcpPfc/taY7LfGzpnwxL+xJkV@nongnu.org
+X-Gm-Message-State: AOJu0Yz/DOV6bVTDfmjjCf2hJkKTaEfpyZGjraYxryfhaPgDb1OkyjR4
+ oXU4p/JUv7gvTrn83gejF7qEmQI38lRe46qbJSc2C1z+4O1cmXwGjmmZW6V2LxI04gU=
+X-Gm-Gg: AeBDiev3oXj+c/c19RGBsLrbGvjM1l/etdwNKrHx2NvjeHzQsOoSkVEVbBo1c43aAqd
+ Zize4oJ56IoZb14fLiKKNTBqcc6cjXpTSRPKo9SV/qgreSrk2hq+XBOv19UhI1gWGleFab7eHbQ
+ jRzca2d0ckFFt0aifnmxhSnabjq+ZMVhMmt5u2BRqQbV0AMR1N0PBGKxmSmqQWpyg05u6GpG7y2
+ UXmxKVeF4WwgUIaBqNbCPDxghxs+bHme8nXXDV9BB+wKB2dl2rkfZUN/riWwEj+YZZgKMmIjrSK
+ 1xPg6t3crMpuHXfso6L0rso69vuPuGKQ5oEo3De+Zaoc+w1+j+BT2TTAUyEl29TEXKA3n/eVsOt
+ Ne03SsvZLIlmgmeJlNpEvX/cIe2xL/gQJ9vNqr1pso4C4nhYbHQ6hGFbxl6B5ZFQIUaBWOc6DeD
+ WrFUWs0pRjQjaCluPmUBYV9NROZFOCY4X/+Tp9Q1nepBzZTY6ElGNzGvwDFQCV5mIEDCMb2B2E3
+ XDv6jcRZQ5Ufr7+yKF9eTHKEBQj7K4Hrnlr+nXVCQ==
+X-Received: by 2002:a05:600c:48a3:b0:488:caed:5ccf with SMTP id
+ 5b1f17b1804b1-488fb8d1865mr14133525e9.16.1776418686529; 
+ Fri, 17 Apr 2026 02:38:06 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc375dsm2910047f8f.14.2026.04.17.02.36.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Apr 2026 02:36:05 -0700 (PDT)
-Date: Fri, 17 Apr 2026 09:36:03 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-devel@nongnu.org
-CC: pbonzini@redhat.com, peter.maydell@linaro.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv6_00/15=5D_Adding_comprehe?=
- =?US-ASCII?Q?nsive_support_for_i=2EMX8MM_EVK_board?=
-In-Reply-To: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
-References: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
-Message-ID: <90624B7D-1B69-48C0-A159-4837ED9A1CBA@gmail.com>
+ 5b1f17b1804b1-488fc18bccfsm28611615e9.8.2026.04.17.02.38.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Apr 2026 02:38:05 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>
+Subject: [PATCH] hw/arm,
+ hw/ppc: Remove unnecessary audio.h includes from board code
+Date: Fri, 17 Apr 2026 10:38:05 +0100
+Message-ID: <20260417093805.1076954-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,129 +102,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Some boards (mostly arm, but also ppc/prep) include audio.h, but they
+don't need anything from it.  Drop the unnecessary include lines.
 
+These seem to have been introduced with commits 2b16397264a8e,
+b8ab0303de, which added the machine-default audiodev handling, but as
+far as I can tell they were unecessary right from the start, as the
+machine_add_audiodev_property() function has always been in boards.h.
 
-Am 14=2E April 2026 18:22:58 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@=
-nxp=2Ecom>:
->Changes in v6:
->- Fixed checkpatch errors
->- Moved maintainer entry of test_imx8mm_evk=2Epy to the patch 0015
->- Renamed imx8mp-evk=2Erst document name to imx8m=2Erst
->- Fixed warnings that are generated while building documentation
->
->Changes in v5:
->- Fixed SoC object reference counting by using object_new_with_props()
->  instead of object_new() + object_property_add_child()
->- Merged imx8mm-evk=2Erst documentation into imx8mp-evk=2Erst to avoid
->  duplication and updated the title accordingly
->- Added on-chip RAM (OCRAM) support to match iMX8MP dev
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/integratorcp.c | 1 -
+ hw/arm/musicpal.c     | 1 -
+ hw/arm/realview.c     | 1 -
+ hw/arm/versatilepb.c  | 1 -
+ hw/arm/vexpress.c     | 1 -
+ hw/arm/xlnx-zcu102.c  | 1 -
+ hw/ppc/prep.c         | 1 -
+ 7 files changed, 7 deletions(-)
 
-Please keep my R-b tags from v5=2E You can conveniently add them to all pa=
-tches in the series using b4:
+diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
+index 0bf519b6bb..03633f3d4f 100644
+--- a/hw/arm/integratorcp.c
++++ b/hw/arm/integratorcp.c
+@@ -27,7 +27,6 @@
+ #include "hw/core/irq.h"
+ #include "hw/sd/sd.h"
+ #include "qom/object.h"
+-#include "qemu/audio.h"
+ #include "target/arm/cpu-qom.h"
+ 
+ #define TYPE_INTEGRATOR_CM "integrator_core"
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index 250fdb49b6..441a11100a 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -37,7 +37,6 @@
+ #include "qemu/cutils.h"
+ #include "qom/object.h"
+ #include "hw/net/mv88w8618_eth.h"
+-#include "qemu/audio.h"
+ #include "qemu/error-report.h"
+ #include "target/arm/cpu-qom.h"
+ 
+diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+index c9558be4d4..e9c19e7e6e 100644
+--- a/hw/arm/realview.c
++++ b/hw/arm/realview.c
+@@ -30,7 +30,6 @@
+ #include "hw/core/irq.h"
+ #include "hw/i2c/arm_sbcon_i2c.h"
+ #include "hw/sd/sd.h"
+-#include "qemu/audio.h"
+ #include "target/arm/cpu-qom.h"
+ 
+ #define SMP_BOOT_ADDR 0xe0000000
+diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
+index 254b1610b3..c6991a52e6 100644
+--- a/hw/arm/versatilepb.c
++++ b/hw/arm/versatilepb.c
+@@ -26,7 +26,6 @@
+ #include "hw/char/pl011.h"
+ #include "hw/sd/sd.h"
+ #include "qom/object.h"
+-#include "qemu/audio.h"
+ #include "target/arm/cpu-qom.h"
+ #include "qemu/log.h"
+ 
+diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+index cc6ae7d4c4..b178798085 100644
+--- a/hw/arm/vexpress.c
++++ b/hw/arm/vexpress.c
+@@ -45,7 +45,6 @@
+ #include "hw/sd/sd.h"
+ #include "qobject/qlist.h"
+ #include "qom/object.h"
+-#include "qemu/audio.h"
+ #include "target/arm/cpu-qom.h"
+ 
+ #define VEXPRESS_BOARD_ID 0x8e0
+diff --git a/hw/arm/xlnx-zcu102.c b/hw/arm/xlnx-zcu102.c
+index 3ba2736bab..4e48970274 100644
+--- a/hw/arm/xlnx-zcu102.c
++++ b/hw/arm/xlnx-zcu102.c
+@@ -26,7 +26,6 @@
+ #include "system/device_tree.h"
+ #include "qom/object.h"
+ #include "net/can_emu.h"
+-#include "qemu/audio.h"
+ 
+ struct XlnxZCU102 {
+     MachineState parent_obj;
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index e973b34099..2672eb9e7a 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -46,7 +46,6 @@
+ #include "trace.h"
+ #include "elf.h"
+ #include "qemu/units.h"
+-#include "qemu/audio.h"
+ 
+ /* SMP is not enabled, for now */
+ #define MAX_CPUS 1
+-- 
+2.43.0
 
-  b4 trailers -u -F 20260414182313=2E1691519-1-gaurav=2Esharma_7@nxp=2Ecom
-
-where the last argument is the message ID of the cover letter of v5=2E See=
- <https://www=2Eqemu=2Eorg/docs/master/devel/submitting-a-patch=2Ehtml#use-=
-b4> how to set up b4=2E
-
-Best regards,
-Bernhard
-
->
->Changes in v4:
->- Update Maintainers file
->- Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
->  specific property
->- Split up the patch that enabled CCM and Analog in the previous
->  revision=2E Now we have 3 patches to enable CCM and Analog in iMX8MM
->- Updated copyrights
->- Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
->
->Changes in v3:
->- Minor documentation change - Added KVM Acceleration section in docs/sys=
-tem/arm/imx8mm-evk=2Erst
->
->Changes in v2:
->- Fixed the DTB offset in functional testing script test_imx8mm_evk=2Epy
->  and preserved alphabetical order of machine names in tests/functional/a=
-arch64/meson=2Ebuild
->- Fixed a typo and updated the documentation
->- Modified structures type to static const in fsl-imx8mm=2Ec wherever
->  applicable=2E
->- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk=2Ec=
-=2E This
->  is needed because the default DTB in the iMX LF BSP images have CSI
->  and DSI enabled=2E Developers/Hobbyists using these BSP images will
->  observe CSI and DSI crash logs on the console since these are unimpleme=
-nted=2E
->  With this change, both debian and iMX LF images will boot up without an=
-y issues=2E
->
->Changes in v1:
->
->This patch series adds support for the NXP i=2EMX8MM EVK (Evaluation Kit)
->board to QEMU, enabling emulation of this ARM Cortex-A53 based developmen=
-t
->platform=2E
->
->The series includes:
->
->1=2E Core peripheral support (CCM clock controller, Analog module)
->2=2E GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
->3=2E GPIO,I2C,SPI,USDHC and USB Emulation support
->4=2E PCIe and ENET Controller Emulation support
->5=2E Documentation and functional test included
->
->Key features ported:
->- Basic boot support with Linux
->- UART console for serial communication
->- Interrupt handling
->- Clock and power management infrastructure
->
->Testing:
->- Linux kernel boots to console
->
->Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
->Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>=20
->
->
->Gaurav Sharma (15):
->  hw/arm: Add the i=2EMX 8MM EVK(Evaluation Kit) board
->  hw/misc/imx8mp_analog: Add property to analog device
->  hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
->  hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
->  hw/arm/fsl-imx8mm: Implemented support for SNVS
->  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
->  hw/arm/fsl-imx8mm: Add PCIe support
->  hw/arm/fsl-imx8mm: Add GPIO controllers
->  hw/arm/fsl-imx8mm: Adding support for I2C emulation
->  hw/arm/fsl-imx8mm: Adding support for SPI controller
->  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
->  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
->  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
->  hw/arm/fsl-imx8mm: Adding support for USB controller
->  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
->
-> MAINTAINERS                                   |  12 +-
-> docs/system/arm/{imx8mp-evk=2Erst =3D> imx8m=2Erst} |  35 +-
-> docs/system/target-arm=2Erst                    |   2 +-
-> hw/arm/Kconfig                                |  24 +
-> hw/arm/fsl-imx8mm=2Ec                           | 704 ++++++++++++++++++
-> hw/arm/imx8mm-evk=2Ec                           | 130 ++++
-> hw/arm/meson=2Ebuild                            |   2 +
-> hw/misc/imx8mp_analog=2Ec                       |  12 +-
-> hw/timer/imx_gpt=2Ec                            |  26 +
-> include/hw/arm/fsl-imx8mm=2Eh                   | 242 ++++++
-> include/hw/misc/imx8mp_analog=2Eh               |   3 +
-> include/hw/timer/imx_gpt=2Eh                    |   2 +
-> tests/functional/aarch64/meson=2Ebuild          |   2 +
-> tests/functional/aarch64/test_imx8mm_evk=2Epy   |  67 ++
-> 14 files changed, 1253 insertions(+), 10 deletions(-)
-> rename docs/system/arm/{imx8mp-evk=2Erst =3D> imx8m=2Erst} (68%)
-> create mode 100644 hw/arm/fsl-imx8mm=2Ec
-> create mode 100644 hw/arm/imx8mm-evk=2Ec
-> create mode 100644 include/hw/arm/fsl-imx8mm=2Eh
-> create mode 100755 tests/functional/aarch64/test_imx8mm_evk=2Epy
->
 
