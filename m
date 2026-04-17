@@ -4,144 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE22F99C61
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 19:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEA4DF99C60
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 20:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDpEt-000827-Ar; Fri, 17 Apr 2026 15:52:31 -0400
+	id 1wDpqD-00047S-PP; Fri, 17 Apr 2026 16:31:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wDpEr-00081y-SL
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 15:52:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wDpEq-0001qe-4Z
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 15:52:29 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63HG4Hln4068746
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 19:52:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- R7GgNgpaFoyiZAohKRO6C+MbRnsb5iRJHpZoYmgqciY=; b=jmWBtVSBrbwuhidV
- H/EOvqrymhSEcp9bSmhXndsD5JnFuhRKKYTeHE3TwDjnhYjNI9CBcXifen6rwrzb
- 9w+eDKyig/NZm0PJUdxXodLntA33uNRnJSYpAen7upYy//s2mHrlgZ0dqwdHmMw5
- dxCwiarXWSa5cqEavowLytFzw1Rwm58sgthBoihw+8FgEjh5rwlf3wW7EkMnN3jQ
- Qjm235lXzPgJBlVx9uHiUnjnRIkdjZX6erMni39Fm25ejOg3cKqSHhJk0oet2wan
- Jnao7IH73IF+3aYtqZf/34VMu0CCxE4Me01tD5HJO2+EsjvQ2HBdpGu1qxHlTUYA
- mxWcfA==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkhpu265y-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 19:52:25 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2c16233ee11so1611738eec.1
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 12:52:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wDpqA-00046p-Pj
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 16:31:02 -0400
+Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wDpq9-0004DF-2x
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 16:31:02 -0400
+Received: by mail-dy1-x1336.google.com with SMTP id
+ 5a478bee46e88-2d96243c91fso1899334eec.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 13:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1776455544; x=1777060344; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R7GgNgpaFoyiZAohKRO6C+MbRnsb5iRJHpZoYmgqciY=;
- b=LYB/wmN4/MZ37YsP0E7AZs6HlbUYkozGv+/EaOdi4odNWefMwRgviRg+ypKA0UACR8
- Mfz+8SSsibMr4Bc0c1LS0X3/57gH+4t48kBdyylNAjD+bSy7Z+DhPvOAEQkgO8YkZMVo
- giveBnJ4Jg2WAKtHTsq3nTFxaKw/0RXoZ4kG/jhWsA6NQ9R2myza/hyAo+ICBOdu96Fq
- REjr6ocErZZALNg5cvmN3hvTe2FuKMlWVoJjsxzQhpfv6KGyFO7/TqPuD0ti4IB7/RIm
- cogqKMiB8gq4rysc+mLfD47SdncnC9rfY9W1IWHMtGxLLPNY+Me66YO5cgvgtdS04Nh/
- 3RQg==
+ d=gmail.com; s=20251104; t=1776457859; x=1777062659; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wm0ksYbTxwDgtEXUCBhmNsLhqZyZ3sU07nxL8yqdlyE=;
+ b=GyrFl65gD9ay3Bg8BNdV6uO1+xpzA3PZ+vAiKmJ+mS3azI1V88e1+udhm/q85Rmw17
+ UohbVvPtRWzCRPKtH/I7UY4WRVJY26db3Cg1Zx+Tpf+B/cX+Y3JOiTL+Ye8Inct1GIt+
+ 0UGDqesATRIOKEdjNWsgycwStXopAOj2A4I0YgRC/mGcD1ET2R0rw4rPlXO7T/H4nA9R
+ ImzL7SmZqmQoXui96iY3F0FeyA38+sFd/zoGlEVb4SxfVMDEvgI6EXIgEVYi96e0YVKA
+ RHH0gjg0b7Um+taAf/KWTFHvhCIsclWQzpjt+bwmO8rn/pqv9YJYU6PNNQQ3Cwke5KAl
+ yhYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776455544; x=1777060344;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=R7GgNgpaFoyiZAohKRO6C+MbRnsb5iRJHpZoYmgqciY=;
- b=MUA5pygPgmsi3Buhoofe2/6NletbtRuS+0P9EZBh7R3YMq9PD+qk6SF3AqHC8RoiDD
- YxAxzPiHzTjQ/1kPcHUrOJ1/op5HbUDNBD02IXUxCFwcTuKPj7/kB9UinrZq4cdmxDLY
- cNQBFshjjV/3LbQ1LxyZczv8ZoFAG514n8AKX8SvbsE41ICeimCagTxBIVVKzCh3LAYk
- w/W/XA5vyMPCgQCuqYR9SfG9gYDgjMO0nV4VkYuHopLZxL1PQYRA5trvTVeNaukBQspg
- aLO9EUVOB8TPkMdG0aSyvbjazhA0/+I/iqvGPQHSmmhidDLIAKp2PChHyQt51RAETSzT
- 6Gbg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/01O8QH0k+FKjTO+qBYK/P1+ZQJ62vxouMQETJEALoN+o+wUW/czPaAKNPuS5kv2IiXRngQC7rSilE@nongnu.org
-X-Gm-Message-State: AOJu0YylSCKdlYiz/1ZzhKJy008AzEWj/CLF1ammXhZtRxMJ4qkJ9c+B
- v3ITy0XtF+zIs6J067BXclds4wSZ9nde1YD3A0laebR0Q38b6lT6zBTPp8TNnIsTX/4Yp1U329j
- LNCgoA2koM9f07a5cKF3RuN1WdTd+KQiLrD9id4fps64csoRQjv+lM+EQFg==
-X-Gm-Gg: AeBDievoBwjmJ8JAJnQhLmItx64YncBfRIQRFcJOP15qaXjg7fc72v6Yrrw4mgx0vmI
- k7pokxUUvEj78mZPSvwks4szGZtoPbuhsEml+M+EEjoQPjhthVkXiQVtBdtzQlZO/yQVzoCGjg9
- S6/11ZFpy+yefOG9HYi3LmkxdmxOhkZQD+YPY8fu+7W3gJH3iwtNOJH2XcLcaEd2N7pD+LatFTd
- yjC1Mnks1d8hup7/XPXRq3ACMSSZeudwSxuryd7zaESFb9R6JLpOYh0ltyLOjpu6j9i+A3ABgJu
- FV/3kmnd/HWZrUMl3MWpQPK3p4XkF2ucGsrbyFF0zd77UWX9cd2KDbR4TI1wrM6ELRDsQ104w85
- ShcMmbm10zyvg1Yg1qaZncKTvnDewo9sMOJWTA5BLlHDL503rOuvySkIyUzjcjUs8WcAhjCrChW
- BH/U3shx+k4IDUYo+x4wvhtxYT
-X-Received: by 2002:a05:7301:129b:b0:2d0:239a:23cb with SMTP id
- 5a478bee46e88-2e47873bccamr1828210eec.16.1776455544286; 
- Fri, 17 Apr 2026 12:52:24 -0700 (PDT)
-X-Received: by 2002:a05:7301:129b:b0:2d0:239a:23cb with SMTP id
- 5a478bee46e88-2e47873bccamr1828201eec.16.1776455543739; 
- Fri, 17 Apr 2026 12:52:23 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2e53ab8b89csm3589147eec.12.2026.04.17.12.52.22
+ d=1e100.net; s=20251104; t=1776457859; x=1777062659;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wm0ksYbTxwDgtEXUCBhmNsLhqZyZ3sU07nxL8yqdlyE=;
+ b=qvyuq5emFFSky5i+/bcEhyD+PVik/h5Z3UnEgKrQuc8hHC7blQGzfvlg8Xff1FrJCE
+ 2TwPpzUX+69G7QtzzFjYlEh8ELBRunvprSbopWQEFbGLxmLzgkGZCsjhRXF23tpQYQ3y
+ /NhlvIMLrGp1ek2bO7hBwAH79CsvblaHYICceHuIK7RMiJqPYpl4WO0b789kuRUz7P4n
+ DSaMHvha9WjTGUVLtTIwiAG0bKe+IzI8lxoqs5LkrP37ZUjREc4ww6Y45OsSGvBeT9F9
+ HfeRqGJdJ1ICAX47cxcJlpql0DnR11XDktIv8VdentxwkTzUB78IWuMkBRUE4EoO/uA3
+ zgyg==
+X-Gm-Message-State: AOJu0Yzb9ilYZAJy3Q3h5ZPTVK4xjPF8F1A/HtiIshXLdj0Qcg/gGKzL
+ J0isHqRwfEgDvyFYlGb7XOvcYhAvOgGYSLzYYKOYVIUMlXJiBjtImlOx
+X-Gm-Gg: AeBDieuRFVTIMXyIgRW1HxswhvkkqWfJ6mcHrFgYpI27Y/CAyOGdWf9edMcdT60yzo4
+ ErrKlE5+RdnRXt6KJMCrgp2dk7vWgxW5Y3IqIAjrdBNyFq2eFA3cRbYSR8MifOXhsgLx4M5JeT9
+ qdA64JVQ38vYUoZqN9/SYQ3GDOAx+smUmq7+7J6ilIHq8ApJ0q7zbMe+BeJ6GARHFdc54y221Xc
+ pEQrD2M8onSIvardtCd9YzgEbI7xMmXS3thY6hKUl2zGlijwGdKv9TtVhHIKzP8Gcl/KmIrkBMZ
+ pa+5tPCBIcUKnpvei5SxxZfYamzKWyoPCDfyFt3UqaunTYmysaUc+3StFtWWnq/fdpMAfvt2ohR
+ cwYV1Shphaie0YJmfIUYT8eWVaB1flJyNlquRwd24aHYFqeP1g2qDuIlJw9YQrhuZuYWctFn/Ft
+ NGogHsd3haS+CG6tKrgh58TRVr7au8/sn/ldFnYVeHrw96HFpIH8e2BbaJJMGgCtssQmf8mkUdd
+ /QKf/5PHm5efjUDoez8
+X-Received: by 2002:a05:7300:e12a:b0:2d1:d434:cfe3 with SMTP id
+ 5a478bee46e88-2e4528c967bmr2468840eec.0.1776457859188; 
+ Fri, 17 Apr 2026 13:30:59 -0700 (PDT)
+Received: from localhost ([2601:645:8200:47:b4a9:7592:ad4:897a])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2e53ccce440sm3666751eec.14.2026.04.17.13.30.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Apr 2026 12:52:23 -0700 (PDT)
-Message-ID: <d1cd6fd6-67b0-41f5-8f19-7e7c5a3b5308@oss.qualcomm.com>
-Date: Fri, 17 Apr 2026 12:52:21 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] MAINTAINERS: Transfer CI maintenance to Pierrick
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20260417110550.70068-1-philmd@linaro.org>
- <20260417110550.70068-8-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260417110550.70068-8-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Kd7idwYD c=1 sm=1 tr=0 ts=69e28f79 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=NEAV23lmAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=GKQJgnKHtkyUwfQ1Bg4A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: LSol5vwHXeZFNG0l3VWNVnkTZ8dNrpgs
-X-Proofpoint-ORIG-GUID: LSol5vwHXeZFNG0l3VWNVnkTZ8dNrpgs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDE5OSBTYWx0ZWRfX8k+stSMQNf95
- QvIazlSowR8ZOd/S3RyTJJNCW900ASAOkwbOG+28mLX5L2H98u7QKbltipYrPrTgopWYOdsvher
- 5aWuRwcaKXRxh4bgN9PEs5a8TpiunMJN/pJZG/oDG9uOaWrype7lBNi3FlY+yPFKmkw2/DC8FKQ
- 8PaHD7wmTlHBXVmPTYPT5tVtVM/+DgJaqCrz94X7raH8NNFCbtHJ18RBA29SdWYqeD0DQeiZ2DB
- /Y+vC21g/o6mdD8EM84gIyibqETDu1xxOSo4SL1ZJgNg2fkxMSkVqR/VqYwq2GCdqEDgVwP2O4I
- oIQCO5Pm8exVynUZXPQwLZb4Y/1p772PDVCWLNveePLlDEFYjGnEimfa6i696Jyk+KGpFEsB+S2
- jZTWDkkxGdOkskNUIJ0RJgi4RPlzanJcL5zQZB14/T3kiEfBJ7EDhqR3gwhZSgfP8k6nyfQbvi9
- WjcTQ6bnMNX0pt1t6hA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-17_02,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- adultscore=0 spamscore=0 phishscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604170199
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ Fri, 17 Apr 2026 13:30:58 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 17 Apr 2026 13:30:57 -0700
+Message-Id: <DHVPR5CMUKMG.3803OP5N2C9J3@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <rbolshakov@ddn.com>,
+ <phil@philjordan.eu>, <agraf@csgraf.de>, <peter.maydell@linaro.org>,
+ "Mohamed Mediouni" <mohamed@unpredictable.fr>
+Subject: Re: [PATCH v2] target/arm/hvf: Fix WFI halting to stop idle vCPU
+ spinning
+From: "Scott J. Goldman" <scottjgo@gmail.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Scott J.
+ Goldman" <scottjgo@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260410044726.61853-1-scottjgo@gmail.com>
+ <20260410055045.63001-1-scottjgo@gmail.com>
+ <86D19C52-2A31-4802-ADF2-703D9AE83E75@unpredictable.fr>
+ <DHUW6DNJWPDC.1MEF4S1911AJ1@gmail.com>
+ <803470a9-5669-4c29-89fb-2c9be4656512@linaro.org>
+In-Reply-To: <803470a9-5669-4c29-89fb-2c9be4656512@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
+ envelope-from=scottjgo@gmail.com; helo=mail-dy1-x1336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,25 +109,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/2026 4:05 AM, Philippe Mathieu-Daudé wrote:
-> Pass the torch to Pierrick who does much better and useful
-> work in this area: https://github.com/p-b-o/qemu-ci
-> 
-> Remove me from custom runner files since I don't have
-> contact with OSUOSL or IBM.
-> 
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Fri Apr 17, 2026 at 2:57 AM PDT, Philippe Mathieu-Daud=C3=A9 wrote:
+> Hi Scott,
+>
+> On 16/4/26 23:20, Scott J. Goldman wrote:
+>> Philippe-- apologies for the nag here but this is a fix for a unfortunat=
+e
+>> regression. Any chance you could take a look? Thanks!
+>>=20
+>> On Thu Apr 9, 2026 at 11:18 PM PDT, Mohamed Mediouni wrote:
+>>>
+>>>
+>>>> On 10. Apr 2026, at 07:50, Scott J. Goldman <scottjgo@gmail.com> wrote=
+:
+>>>>
+>>>> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+>>>> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+>>>> returning EXCP_HLT, intending QEMU's main event loop to handle the
+>>>> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+>>>> always returns false and the vCPU thread spins at 100% CPU per core
+>>>> while the guest is idle.
+>>>>
+>>>> Fix this by:
+>>>>
+>>>> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps on
+>>>>    halt_cond in qemu_process_cpu_events().
+>>>>
+>>>> 2. Arming a host-side QEMU_CLOCK_HOST timer to fire when the guest's
+>>>>    virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>>>>    because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>>>>    hv_vcpu_run(), which is not called while the CPU is halted. The
+>>>>    timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>>>>    vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>>>>    interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+>>>>
+>>>> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>>>>    indicates a pending interrupt, and cancelling the WFI timer.
+>>>>
+>>>> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+>>>> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+>>>
+>>> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>>> ---
+>>>> include/system/hvf_int.h |  1 +
+>>>> target/arm/hvf/hvf.c     | 65 +++++++++++++++++++++++++++++++++++++++-
+>>>> 2 files changed, 65 insertions(+), 1 deletion(-)
+>
+> I haven't looked at your patch yet. While looking at commit
+> b5f8f77271 I noticed the previous a14afa985e3 ("accel/hvf: Skip
+> WFI if CPU has work to do") is different in my local tree, where
+> I have:
+>
+> -- >8 --
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 5fc8f6bbbd9..1a76c9cf402 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -2037,6 +2037,11 @@ static int hvf_wfi(CPUState *cpu)
+>           return 0;
+>       }
+>
+> +    if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD | CPU_INTERRUPT_FIQ))=
+ {
+> +        /* Interrupt pending, no need to wait */
+> +        return EXCP_INTERRUPT;
+> +    }
+> +
+>       return EXCP_HLT;
+>   }
+>
 > ---
->   MAINTAINERS | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
+>
+> Does that help? Now I'm really confused.
 
-Thanks Philippe, I'm glad to help on this.
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Regards,
-Pierrick
+Hi Phillipe-- Appreciate your help here. The good news is the bug is
+very easy to reproduce (start a linux VM with 1 cpu, watch the vCPU on
+the host will always spin 100%). The bad news is I double checked my
+bisect and you can see before b5f8f77271 there is no problem, and after
+the commit is introduced, the problem appears. I also applied the
+additional cpu_test_interrupt() patch you suggested and it did not
+change the behavior.
 
+thanks
+-sjg
 
