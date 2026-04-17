@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484B8F4368F
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64C1F4368D
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDh1b-0008PA-Pq; Fri, 17 Apr 2026 07:06:15 -0400
+	id 1wDh1n-0000FR-Cl; Fri, 17 Apr 2026 07:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1O-0008Oi-Vq
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:03 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1f-00005K-1s
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:20 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1N-0003ia-Jz
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:02 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so7538205e9.2
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1d-0003l8-GM
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:18 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43d73352cf2so475466f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776423960; x=1777028760; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776423975; x=1777028775; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=noBITy7UK4OHaEIlj1g5Ct15qjTgADyomjiDJenN4XU=;
- b=WNiP/qgUSK0DlAn2JwrJsnfTrQhzQcijX+sME/lDNZO81FMPwE58++9rrbNlt/9DmU
- nSxgiDbDfcYBdAjHA1q1RTznEAPfgUl8JhfF2Xegj8gnbmzKfR0aD2P27h1YeYxEgMoZ
- HxaKqgiHRZ9tv1RTGlZyf6Tg8IWPDmW5qxcNzVgJw0pfcE8/NvA1Vn6+8UMoDtaUg2lX
- T5Qhcm+eU9eXYnwyp8FRIlpnd1v1PGGR3Ud+LE3AWvVjESIPvX/KHMi/RbfJW+MJLO7Y
- QYjUthLDsRRn+gJ37gI7vf8SBQpdWw4gndULSzqnEtzcu2iL8IK0wiAj5KlyoB9WyB+N
- qrSA==
+ bh=ZN14khrJwspWgCASk1X5psK/KI78gmKsSGDmKRmyCu8=;
+ b=q3dsi/Tfs6irT1zknGsc1plKwDcAqEr3cuOICNTlHY+c3MOeaDcjGn3iZs7o0+UgtI
+ mf7gmtRmSRekA2BRmBu5HNzp+wmmQEYhIzap0q6luEMh7UaG6oVLnqYQA5VxjblKQOp+
+ jOQHyb2/lnOa0towaXVAXuSxEBnzU7JhWmwcrppjxcBiLcO8a/s6VUU2TWLp50O3gHSo
+ ucZPgyGcTDbX+Y6UZ4D77ZIAyM7C6W1zUsYnffzCMW/6fve7k9p61H64zybgp67Uj8Xq
+ PHCziXWx2HOPMQcTLyXR5jukxHQEyWqrQ/4MHOqL5aDsuWHFZCygcT+oSQokye1reg9v
+ E2Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776423960; x=1777028760;
+ d=1e100.net; s=20251104; t=1776423975; x=1777028775;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=noBITy7UK4OHaEIlj1g5Ct15qjTgADyomjiDJenN4XU=;
- b=AnrcOuntnAinp5liLtayttG80lgQNxxO1lYrcEmkR//4rYQnt5+QYgXtGQYDxr/gKG
- ZDXZvRR0ifcd0H8JVCNr4CxT0T4ue4wR/QUGVXh1+q3lNi555+Ouq7I7n232fEFpo6Sk
- jP6cQ3OGJCjIFkg6Ne3rsorFFWLvGOLFf65pPBIGi0+K6URQBqgKKdFVhv/yX3b0sPpO
- PykiBHDrTp3A13Uc2HCeJEK2/XflQnlOLmcFWxorXQQ9n8VVpL9N2+XPaHC/bEilXV1R
- lTb7XRt6D2HtfvVSBZM5nyB7FNxgjblrqwwW4vEEgroP18BwMLJ2xXow+gnKG1EgSkm0
- gzzw==
-X-Gm-Message-State: AOJu0YwjWPSABXnCLJ7/yKtmTz/qWat8u9fWlGQ93ic48MysrssoVHee
- bPbY2ZJrJPiCjrMyaewr1txWqz5iCMYCpwojSqTFmmtYNk3cpU8yBYa5KZ/Q3yo7rsRVCZdibf7
- PmSOn1o8=
-X-Gm-Gg: AeBDietW3eob28DLwn6cz7F7eTwo0dYg4ltNoLVAlkJGanQUaU6EnelhuQ4nx7wHuk3
- iwj4SdsV6WszZtrcWxGyFwUmJncb7YXGxoItUT7cSewO2D7/AASAdiLxjrhdUwvn+stDF8y6PS5
- WBWa5eLwpQzn84fP7TJjWYbugL0CPPX88Ykopnh+6eKWtRgrrHCnNlfpTciZRi5wulctZDfG7xO
- D2lm2uNCdxSnPs1TZ519Ox4FgZzj0ZQ9DuSPHfzOZH6gMQcaKbzWOqjHjJOih9to+kqjLpYg8KW
- 82YgvDx6QUC7R+Vz6g8j/0+Sxfhso8XkP820vO6sdvi7P6ROho0BICdgJSI/hC/k6123SbB7QcK
- fMEEGm8JcfkR3v+QBaf9Kfp0I5a6SLwNletznQwK64xpZWncu00TeYwPXcADR8Mn9PMkLHY/FVE
- 63ZE6UrY8Soj6bIYaNQBiiN1aDFZzEBqvrcnSGRAwT0CHkXUFpb0NBd7tvjdaw/M5jIvpssuOiC
- GbH0SlS2L4=
-X-Received: by 2002:a05:600c:8115:b0:488:8577:d9cc with SMTP id
- 5b1f17b1804b1-488fb77faacmr30665815e9.20.1776423959795; 
- Fri, 17 Apr 2026 04:05:59 -0700 (PDT)
+ bh=ZN14khrJwspWgCASk1X5psK/KI78gmKsSGDmKRmyCu8=;
+ b=T0IPO9Z8f8oHng7q7Rqj8Fqw6MYEDDbuk0yYPYUNkr+1Nyfy3h4ChTE85XSnEXGRBi
+ LGaqT/pGgEsgWHfhYyPdmo1VPuHjAhTHtSUoxTe51uriK4mB/Xm76tbgk2p36/6N/QdV
+ Ku2rQ9YnfBboFcQmrb91kKKihd2SaKfcQcbbh7Fx0u2sjs4pbbbjgvwCzSrtMqi+w1Bv
+ cOZWwQ6GHBV0qPiBb42Vp6Voubt/A8XQ0dRkn+sgf+UP4w14tItFSLCTd6bWqQGLQHgR
+ P00ef1BN4U6jpopKPpPCAQkNr6N1Xun4d/+KypD7b+GPIr215Q7kfGOFLyuZB+9libpl
+ hepQ==
+X-Gm-Message-State: AOJu0YwZidPCupSnA68MTYnH0/CtLcLQpWPMFcej0cbwziypUtNsGajn
+ M8wad0qi6wCKWoFEZdhH2Rr32HKtN0ogUqfbHzKXDcRINQx7E8HLl4Y8uxhxeXUIbSIa2xqn7Ez
+ Mj3ggp50=
+X-Gm-Gg: AeBDietOoa0pGcxmf8Glpyh9V4/GBo9Nnbra6WbSkY5qjAmZpvTDqNLawcvNWUMPKcV
+ gBx/D9SGwQ/ibYAeoz9FYbEP3CC/wWrnlsBs9YlPIjH4s8qMNIdCFpL2XBSUNTXST05MgnxXpm2
+ o8B/TPZ5BvdIOqIVGX3QjDt0abRXkNw6kadK6AB94kFuGpsJYRd7ng7CEsjZ+Rf+4c/YoF48Uab
+ OtrsEhtWzYm1nWvdUD+0Rfr7uu9FWcD7kXXlBz6qf3aOdtrEBxCmDKN2mNVBLOgDO8kmrYdHZcN
+ X8ZKpV+oDiXaJkNUiMolbYBxDWNx43xxkQmd64hUb0Tq4MrUfGJr0Z4cvg+gnU2za0M3gGKZebG
+ S9utgdI4RL+HIn37w79kMu2JSfU8RTmHJuzNlFaU8p8EfM0lNVR/8paZFK9rUhOvC6G8VjCDirj
+ vxl94Uz/WUmspmNoFD/eEWsR9HjkOAaVxfh8XYGkvUXSTihL0yJdeateSAZlz/62vzprnIhEE03
+ 28gPtqIMdc=
+X-Received: by 2002:a05:6000:18a3:b0:439:b8b2:fabc with SMTP id
+ ffacd0b85a97d-43fe3dd4b7dmr3475498f8f.21.1776423974734; 
+ Fri, 17 Apr 2026 04:06:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1001bdsm60772095e9.6.2026.04.17.04.05.58
+ ffacd0b85a97d-43fe4e3a18csm4250279f8f.20.2026.04.17.04.06.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Apr 2026 04:05:58 -0700 (PDT)
+ Fri, 17 Apr 2026 04:06:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 1/7] MAINTAINERS: Maintain MIPS Boston
-Date: Fri, 17 Apr 2026 13:05:43 +0200
-Message-ID: <20260417110550.70068-2-philmd@linaro.org>
+ Tao Tang <tangtao1634@phytium.com.cn>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 3/7] MAINTAINERS: Merge PCIe DOE section within SPDM
+Date: Fri, 17 Apr 2026 13:05:45 +0200
+Message-ID: <20260417110550.70068-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260417110550.70068-1-philmd@linaro.org>
 References: <20260417110550.70068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,25 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Maintain the Boston board as just another MIPS board.
+SPDM depends on PCIe DOE, so it makes sense to cover
+these files there. Cover the spdm.rst document. Add
+Tao Tang who volunteered to be designated reviewer:
+https://lore.kernel.org/qemu-devel/44abaece-6a6f-43c6-b29a-53d6eb08033c@phytium.com.cn/
 
+Cc: Tao Tang <tangtao1634@phytium.com.cn>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index a50e5dbaaba..f0950479ab2 100644
+index 11bf50a9ecf..eccc0d64331 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1485,6 +1485,7 @@ F: include/hw/intc/loongson_liointc.h
- F: tests/functional/mips64el/test_loongson3v.py
+@@ -2150,11 +2150,6 @@ F: docs/pci*
+ F: docs/specs/*pci*
+ F: docs/system/sriov.rst
  
- Boston
-+M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Aleksandar Rikalo <arikalo@gmail.com>
+-PCIE DOE
+-S: Orphan
+-F: include/hw/pci/pcie_doe.h
+-F: hw/pci/pcie_doe.c
+-
+ ARM PCI Hotplug
+ M: Gustavo Romero <gustavo.romero@linaro.org>
+ L: qemu-arm@nongnu.org
+@@ -3693,11 +3688,15 @@ F: tests/qtest/*tpm*
+ F: docs/specs/tpm.rst
+ T: git https://github.com/stefanberger/qemu-tpm.git tpm-next
+ 
+-SPDM
++SPDM, PCIe DOE
+ M: Alistair Francis <alistair.francis@wdc.com>
++R: Tao Tang <tangtao1634@phytium.com.cn>
+ S: Maintained
+ F: backends/spdm-socket.c
+ F: include/system/spdm-socket.h
++F: include/hw/pci/pcie_doe.h
++F: hw/pci/pcie_doe.c
++F: docs/specs/spdm.rst
+ 
+ Checkpatch
  S: Odd Fixes
- F: hw/core/loader-fit.c
 -- 
 2.53.0
 
