@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3A40F43688
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891D9F43688
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:58:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDfxo-0003ca-QR; Fri, 17 Apr 2026 05:58:16 -0400
+	id 1wDfxE-0002tq-3k; Fri, 17 Apr 2026 05:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1wDfxC-0002qB-1D; Fri, 17 Apr 2026 05:57:38 -0400
+ id 1wDfx9-0002jU-EZ; Fri, 17 Apr 2026 05:57:35 -0400
 Received: from mail.avm.de ([2001:bf0:244:244::119])
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1wDfx9-000385-Fu; Fri, 17 Apr 2026 05:57:37 -0400
+ id 1wDfx5-0002zL-HP; Fri, 17 Apr 2026 05:57:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
- t=1776419846; bh=SRP0r66lkPbAsXef7wraN73YdZHRb8aL7UMn1EI5U3Q=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=R98l8PsuL/yWR09LLVXQ6ScreJePL0C6Aj7xtTdXrjSQJIZmvLwu13Ep/steuNdP8
- N5TQw3Uhe+DD++DaHZ711S8QK5gA7qHeq3yzCLFjYw7U6CU4Vlqsqb+vIxbRUDir+Y
- gDEMMW+uYtcHsg7NMC+PjM1xEueP2RkmydvBiuMA=
+ t=1776419845; bh=hMZI9Of630JExhvUar0FTq2FjOJ5OfP7PFDSsZ5OJ8A=;
+ h=From:Subject:Date:To:Cc:From;
+ b=aXmWWnx4XW4wW5naiW2n26WFxN8IrFiZ2QMNjVeuSQzSxMqGuN7FL5LTS4Z7tth2V
+ cLgk5eR68hl0fK6/LwuxlVhGtFlPlvxKvbb5dUme80MVIrik5RLk5YOXqUqkDfzM8S
+ MeiFGlJB61IjdB47lipUx9jy+Ux1iuYKtun4C9qE=
 Received: from [172.16.0.1] (helo=mail.avm.de)
  by mail.avm.de with ESMTP (eXpurgate 4.55.2)
  (envelope-from <c.speich@avm.de>)
- id 69e20406-1e6c-7f0000032729-7f000001b2d8-1
- for <multiple-recipients>; Fri, 17 Apr 2026 11:57:26 +0200
+ id 69e20405-1e6c-7f0000032729-7f000001c50a-1
+ for <multiple-recipients>; Fri, 17 Apr 2026 11:57:25 +0200
 Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
  by mail.avm.de (Postfix) with ESMTP;
- Fri, 17 Apr 2026 11:57:26 +0200 (CEST)
+ Fri, 17 Apr 2026 11:57:25 +0200 (CEST)
 Received: from [127.0.1.1] ([172.17.89.139])
  by mail-notes.avm.de (HCL Domino Release 14.0FP4)
- with ESMTP id 2026041711572446-2980 ;
+ with ESMTP id 2026041711572441-2973 ;
  Fri, 17 Apr 2026 11:57:24 +0200 
 From: Christian Speich <c.speich@avm.de>
-Date: Fri, 17 Apr 2026 11:51:40 +0200
-Subject: [PATCH v4 7/7] hw/sd: Update trace events for buf+len data
+Subject: [PATCH v4 0/7] hw/sd: Improve performance of read/write/erase
+Date: Fri, 17 Apr 2026 11:51:33 +0200
+Message-Id: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
 MIME-Version: 1.0
-Message-Id: <20260417-sdcard-performance-b4-v4-7-119e66be10c2@avm.de>
-References: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
-In-Reply-To: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
+X-B4-Tracking: v=1; b=H4sIAKUC4mkC/3XNzQrCMAzA8VeRnq0kWeesJ99DPPQjcz3sg1aKM
+ vbudoKCh10C/0B+mUXiGDiJ824WkXNIYRxKqP1OuM4Md5bBlxYEVINGksk7E72cOLZj7M3gWFo
+ lvYaTtbY2AEqU2ylyG54f93or3YX0GOPr8ybjuv2KekPMKEEyQtWwOqFBfTG5P3gWK5fpR2AZW
+ wQVwitSGixiRfRHVF/iCARqi6hWwqFrsSHmuvkRy7K8Afyn7Ek9AQAA
+X-Change-ID: 20250912-sdcard-performance-b4-d908bbb5a004
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
  <bmeng.cn@gmail.com>, qemu-block@nongnu.org, Marcel Apfelbaum
@@ -52,13 +55,13 @@ X-Mailer: b4 0.14.2
 X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
  2025) at 17.04.2026 11:57:24,
  Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
- 17.04.2026 11:57:26, Serialize complete at 17.04.2026 11:57:26
+ 17.04.2026 11:57:24, Serialize complete at 17.04.2026 11:57:24
 X-TNEFEvaluated: 1
 Content-Transfer-Encoding: 7bit
 Content-Type: text/plain; charset="utf-8"
-X-purgate-ID: 149429::1776419846-48727373-546759EF/0/0
+X-purgate-ID: 149429::1776419845-8E72B373-383F0CAF/0/0
 X-purgate-type: clean
-X-purgate-size: 6295
+X-purgate-size: 3153
 X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
 X-purgate: This mail is considered clean (visit https://www.eleven.de for
  further information)
@@ -86,162 +89,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After switching sdbuf and sdcard over to use buf+len instead of single
-byte operation, the trace events need to be updated.
+This patch series improves the performance of read/write/erase operations
+on sdcards.
 
-This patch updates sdbus_{read,write} and sdcard_write_data to output the
-buffer that is worked on.
+This is done by increasing the maximum buffer size that is worked on.
+From 1 byte (master) to 512 bytes (commit 1-3) to larger than 512
+(adma commit).
 
-sdcard_read_data is left unchanged, as it did not print the read byte
-before anyways.
+Testing on my system with fio I see the following rough performance
+values in MiB/s.
+
+              read write readwrite
+       master:   6     6     3/  3
+ first commit:  51    43    23/ 23
+second commit: 392   180   144/143
+
+Tested on a 2GiB raw image with:
+  fio --filename=/dev/mmcblk0 --direct=1 --runtime=60 --time_based --bs=128k --rw={mode}
+
+The adma values are somewhat unstable but always >100MiB/s, I'm not sure
+why but I guess it has something to do with the host side caching.
+
+The fifth commit fixes the DATA_STAT_AFTER_ERASE bit in SCR and
+introduces an option to allow to erase blocks to 0x00.
+
+The sixth commit optimizes block erase when erase-blocks-as-zero=true
+is used, by passing the zeroing request down the to the block device.
+Erasing 2GiB now takes 0.1s instead of 26s.
 
 Signed-off-by: Christian Speich <c.speich@avm.de>
 ---
- hw/sd/core.c       | 27 +++++++++++++++++++++++++--
- hw/sd/sd.c         | 19 +++++++++++++++----
- hw/sd/trace-events |  6 +++---
- 3 files changed, 43 insertions(+), 9 deletions(-)
+Changes in v4:
+- Rebase onto master, no changes needed.
+- Renames:
+  - sd_blk_{read,write} -> sd_blk_{read,write}_bounce_buffer
+  - sd_blk_{read,write}_direct -> sd_blk_{read,write}
+  - to_erase -> erase_len
+- Extract erase logic into sd_blk_erase helper
+- Enable erase-blocks-as-zero by default. Add compat for 11.0 and below
+  to keep it disabled.
+- Add cleanup commit to update trace events.
+- Link to v3: https://lore.kernel.org/qemu-devel/20260204-sdcard-performance-b4-v3-0-dc1cf172ee57@avm.de
 
-diff --git a/hw/sd/core.c b/hw/sd/core.c
-index 594c5e011ba30940a33799f9032c92494ee0ca19..eaa186fbfca3cdf000c200c3a844aac373ba7fec 100644
---- a/hw/sd/core.c
-+++ b/hw/sd/core.c
-@@ -24,6 +24,7 @@
- #include "hw/sd/sd.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-+#include "qemu/cutils.h"
- #include "sdmmc-internal.h"
- #include "trace.h"
- 
-@@ -43,6 +44,26 @@ static SDState *get_card(SDBus *sdbus)
-     return SDMMC_COMMON(kid->child);
- }
- 
-+static void sdbus_write_dump(const char *bus_name, const void *buf, size_t len)
-+{
-+    g_autoptr(GString) str = NULL;
-+
-+    if (trace_event_get_state_backends(TRACE_SDBUS_WRITE)) {
-+        str = qemu_hexdump_line(NULL, buf, len, 8, 0);
-+        trace_sdbus_write(bus_name, str->str);
-+    }
-+}
-+
-+static void sdbus_read_dump(const char *bus_name, const void *buf, size_t len)
-+{
-+    g_autoptr(GString) str = NULL;
-+
-+    if (trace_event_get_state_backends(TRACE_SDBUS_READ)) {
-+        str = qemu_hexdump_line(NULL, buf, len, 8, 0);
-+        trace_sdbus_read(bus_name, str->str);
-+    }
-+}
-+
- uint8_t sdbus_get_dat_lines(SDBus *sdbus)
- {
-     SDState *slave = get_card(sdbus);
-@@ -109,7 +130,7 @@ void sdbus_write_byte(SDBus *sdbus, uint8_t value)
- {
-     SDState *card = get_card(sdbus);
- 
--    trace_sdbus_write(sdbus_name(sdbus), value);
-+    sdbus_write_dump(sdbus_name(sdbus), &value, 1);
-     if (card) {
-         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-@@ -121,6 +142,7 @@ void sdbus_write_data(SDBus *sdbus, const void *buf, size_t length)
- {
-     SDState *card = get_card(sdbus);
- 
-+    sdbus_write_dump(sdbus_name(sdbus), buf, length);
-     if (card) {
-         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-@@ -145,7 +167,7 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
- 
-         sc->read_data(card, &value, 1);
-     }
--    trace_sdbus_read(sdbus_name(sdbus), value);
-+    sdbus_read_dump(sdbus_name(sdbus), &value, 1);
- 
-     return value;
- }
-@@ -166,6 +188,7 @@ void sdbus_read_data(SDBus *sdbus, void *buf, size_t length)
-             length -= read;
-         }
-     }
-+    sdbus_read_dump(sdbus_name(sdbus), buf, length);
- }
- 
- bool sdbus_receive_ready(SDBus *sdbus)
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index d1ff9badb39b699ce734a533ccebfab894958d2d..13039187fcda2444d1b4aa173ab64c601bc71924 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2690,11 +2690,22 @@ static bool sd_generic_read_data(SDState *sd, void *buf, size_t *len)
-     return false;
- }
- 
-+static void sdcard_write_data_dump(const char *proto, const char *cmd_desc,
-+                                   uint8_t cmd, uint32_t offset,
-+                                   const void *buf, size_t len)
-+{
-+    g_autoptr(GString) str = NULL;
-+
-+    if (trace_event_get_state_backends(TRACE_SDCARD_WRITE_DATA)) {
-+        str = qemu_hexdump_line(NULL, buf, len, 8, 0);
-+        trace_sdcard_write_data(proto, cmd_desc, cmd, offset, str->str);
-+    }
-+}
-+
- static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
- {
-     unsigned int partition_access;
-     int i;
--    const uint8_t *value = buf;
- 
-     if (!sd->blk || !blk_is_inserted(sd->blk)) {
-         return length;
-@@ -2709,9 +2720,9 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
-         return length;
- 
--    trace_sdcard_write_data(sd->proto->name,
--                            sd->last_cmd_name,
--                            sd->current_cmd, sd->data_offset, value[0]);
-+    sdcard_write_data_dump(sd->proto->name,
-+                           sd->last_cmd_name,
-+                           sd->current_cmd, sd->data_offset, buf, length);
-     switch (sd->current_cmd) {
-     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
-         if (sd_generic_write_data(sd, buf, &length)) {
-diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index 4ec52d2a81995ddf8d4ebef9dcc79224c90a2982..c6811f3a08e018fc45ec4f259b5895998b86bd77 100644
---- a/hw/sd/trace-events
-+++ b/hw/sd/trace-events
-@@ -15,8 +15,8 @@ bcm2835_sdhost_update_irq(uint32_t irq) "IRQ bits 0x%x"
- 
- # core.c
- sdbus_command(const char *bus_name, uint8_t cmd, uint32_t arg) "@%s CMD%02d arg 0x%08x"
--sdbus_read(const char *bus_name, uint8_t value) "@%s value 0x%02x"
--sdbus_write(const char *bus_name, uint8_t value) "@%s value 0x%02x"
-+sdbus_read(const char *bus_name, const char *hexdump) "@%s data %s"
-+sdbus_write(const char *bus_name, const char *hexdump) "@%s data %s"
- sdbus_set_voltage(const char *bus_name, uint16_t millivolts) "@%s %u (mV)"
- sdbus_get_dat_lines(const char *bus_name, uint8_t dat_lines) "@%s dat_lines: %u"
- sdbus_get_cmd_line(const char *bus_name, bool cmd_line) "@%s cmd_line: %u"
-@@ -54,7 +54,7 @@ sdcard_unlock(void) ""
- sdcard_req_addr(uint32_t req_arg, uint64_t addr) "req 0x%" PRIx32 " addr 0x%" PRIx64
- sdcard_read_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
- sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
--sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
-+sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, const char *hexdump) "%s %20s/ CMD%02d ofs %"PRIu32" data %s"
- sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint64_t size, uint32_t blklen) "%s %20s/ CMD%02d ofs %"PRIu32" size %"PRIu64" blklen %" PRIu32
- sdcard_set_voltage(uint16_t millivolts) "%u mV"
- sdcard_ext_csd_update(unsigned index, uint8_t oval, uint8_t nval) "index %u: 0x%02x -> 0x%02x"
+Changes in v3:
+- Rebase onto master, updating read/write path for newly added RBMP
+- Split up commit 1 into multiple commits
+  - change interface to allow "short" read/writes that are continued
+    by the core later by calling again
+- Link to v2: https://lore.kernel.org/qemu-devel/20251202-sdcard-performance-b4-v2-0-d42490b11322@avm.de
 
+Changes in v2:
+- Properly set DATA_STAT_AFTER_ERASE in SCR
+- Add erase-blocks-as-zero option to allow the user to switch between
+  0x00 and 0xFF for erased blocks.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250919-sdcard-performance-b4-v1-0-e1037e481a19@avm.de
+
+---
+Christian Speich (7):
+      hw/sd: Switch read/write primitive to buf+len
+      hw/sd/sd: Allow multi-byte read/write for generic paths
+      hw/sd/sd: Use multi-byte/block writes for block path
+      hw/sd/sdhci: Don't use bounce buffer for ADMA
+      hw/sd/sdcard: Add erase-blocks-as-zero option.
+      hw/sd/sdcard: Optimize erase blocks as zero.
+      hw/sd: Update trace events for buf+len data
+
+ hw/core/machine.c  |   5 +
+ hw/sd/core.c       |  53 ++++++--
+ hw/sd/sd.c         | 353 ++++++++++++++++++++++++++++++++++++++++-------------
+ hw/sd/sdhci.c      | 102 +++++++++-------
+ hw/sd/trace-events |   6 +-
+ include/hw/sd/sd.h |  22 ++--
+ 6 files changed, 389 insertions(+), 152 deletions(-)
+---
+base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
+change-id: 20250912-sdcard-performance-b4-d908bbb5a004
+
+Best regards,
 -- 
-2.43.0
+Christian Speich <c.speich@avm.de>
 
 
