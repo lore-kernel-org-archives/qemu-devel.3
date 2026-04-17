@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755A2F4368E
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1064CF4368E
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgtS-0002Xt-7W; Fri, 17 Apr 2026 06:57:51 -0400
+	id 1wDgtM-0002Bb-Hc; Fri, 17 Apr 2026 06:57:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgtO-0002N5-75
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:46 -0400
+ id 1wDgtI-0001gX-0m
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:40 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgtM-0001cN-Cx
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:45 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgtF-0001c4-Hm
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:39 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id E2EE420B7135;
- Fri, 17 Apr 2026 03:57:30 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E2EE420B7135
+ by linux.microsoft.com (Postfix) with ESMTPSA id B5E3620B712D;
+ Fri, 17 Apr 2026 03:57:23 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B5E3620B712D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423453;
- bh=TTuSp5B82/x3pbIoI8fHe3m5HZiAwQrEBaQYsqUU9hs=;
+ s=default; t=1776423446;
+ bh=JjZO2/X3lUM54v7gEfoxaHgi6BZofDR2FWQNRjmIZ3g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jDvFFNcIDzXXmeg5/NelrGGkYyKivRrefjMnQcbm6f7mlqNe/zAGyHI04Zi73oywF
- DIfS31nMDHMhRhT6fWBTPUPjfoS1DnFXb5ArZZutRAMFabhXmVcilaFNme/ocBXEoI
- sXoYz6SBbR4ya+mvjeeHtXicl0E1fY/Z2fyHDkcg=
+ b=qirjhkdQcMzjLk6HfksO0+ovH184o9WCffMpzPW296JKa5yVkHlaEy1qGtHCyh4aW
+ Uv5yG5+j6MvT6Ng6DxBADhs8pInRDfg29mMyFNJ2k5dDgG7sm2AMLw6GFJngvz/DIz
+ BAg5FK4FLfYF+d97VdoOh3SOf/OUINhwVSsrbIks=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 19/34] target/i386/mshv: expose msvh_get_generic_regs
-Date: Fri, 17 Apr 2026 12:56:03 +0200
-Message-Id: <20260417105618.3621-20-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 17/34] target/i386/mshv: move msr code to arch
+Date: Fri, 17 Apr 2026 12:56:01 +0200
+Message-Id: <20260417105618.3621-18-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,89 +76,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We expose the fn, so we can call them from the other source files
-(msr.c).
+The MSR code is x86 specific, hence it's better suited in the arch
+tree.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv_int.h   |  2 ++
- target/i386/mshv/mshv-cpu.c | 15 ++++++---------
- 2 files changed, 8 insertions(+), 9 deletions(-)
+ accel/mshv/meson.build            | 1 -
+ target/i386/mshv/meson.build      | 1 +
+ {accel => target/i386}/mshv/msr.c | 0
+ 3 files changed, 1 insertion(+), 1 deletion(-)
+ rename {accel => target/i386}/mshv/msr.c (100%)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 2b6d7b2f35..2c5d16bf9a 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -81,6 +81,8 @@ int mshv_configure_vcpu(const CPUState *cpu);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-                           size_t n_regs);
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                          size_t n_regs);
- int mshv_arch_store_vcpu_state(const CPUState *cpu);
- int mshv_arch_load_vcpu_state(CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 22c962c5ac..2d1f90637e 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -108,9 +108,6 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
- };
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+index c1b1787c5e..e433187cde 100644
+--- a/accel/mshv/meson.build
++++ b/accel/mshv/meson.build
+@@ -1,6 +1,5 @@
+ system_ss.add(when: 'CONFIG_MSHV', if_true: files(
+   'irq.c',
+   'mem.c',
+-  'msr.c',
+   'mshv-all.c'
+ ))
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index 5eb6e833a6..f44e84688d 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -3,6 +3,7 @@ i386_mshv_ss = ss.source_set()
+ i386_mshv_ss.add(files(
+   'mshv-apic.c',
+   'mshv-cpu.c',
++  'msr.c',
+ ))
  
- static int set_special_regs(const CPUState *cpu);
--static int get_generic_regs(CPUState *cpu,
--                            struct hv_register_assoc *assocs,
--                            size_t n_regs);
- 
- static int get_lapic(CPUState *cpu)
- {
-@@ -187,7 +184,7 @@ static int get_fpu(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = FPU_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get special registers");
-         return -errno;
-@@ -207,7 +204,7 @@ static int get_xc_reg(CPUState *cpu)
- 
-     assocs[0].name = HV_X64_REGISTER_XFEM;
- 
--    ret = get_generic_regs(cpu, assocs, 1);
-+    ret = mshv_get_generic_regs(cpu, assocs, 1);
-     if (ret < 0) {
-         error_report("failed to get xcr0");
-         return -1;
-@@ -300,8 +297,8 @@ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-     return 0;
- }
- 
--static int get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
--                            size_t n_regs)
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                          size_t n_regs)
- {
-     int cpu_fd = mshv_vcpufd(cpu);
-     int vp_index = cpu->cpu_index;
-@@ -450,7 +447,7 @@ static int get_standard_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = STANDARD_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get standard registers");
-         return -1;
-@@ -527,7 +524,7 @@ static int get_special_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = SPECIAL_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get special registers");
-         return -errno;
+ i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+diff --git a/accel/mshv/msr.c b/target/i386/mshv/msr.c
+similarity index 100%
+rename from accel/mshv/msr.c
+rename to target/i386/mshv/msr.c
 -- 
 2.34.1
 
