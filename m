@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64C1F4368D
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA17F4368F
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDh1n-0000FR-Cl; Fri, 17 Apr 2026 07:06:27 -0400
+	id 1wDh1h-00009o-Nv; Fri, 17 Apr 2026 07:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1f-00005K-1s
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:20 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1X-0008PE-Ee
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:15 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1d-0003l8-GM
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:18 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43d73352cf2so475466f8f.1
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1V-0003j5-JK
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:10 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43fe3e22e33so354327f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776423975; x=1777028775; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776423968; x=1777028768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZN14khrJwspWgCASk1X5psK/KI78gmKsSGDmKRmyCu8=;
- b=q3dsi/Tfs6irT1zknGsc1plKwDcAqEr3cuOICNTlHY+c3MOeaDcjGn3iZs7o0+UgtI
- mf7gmtRmSRekA2BRmBu5HNzp+wmmQEYhIzap0q6luEMh7UaG6oVLnqYQA5VxjblKQOp+
- jOQHyb2/lnOa0towaXVAXuSxEBnzU7JhWmwcrppjxcBiLcO8a/s6VUU2TWLp50O3gHSo
- ucZPgyGcTDbX+Y6UZ4D77ZIAyM7C6W1zUsYnffzCMW/6fve7k9p61H64zybgp67Uj8Xq
- PHCziXWx2HOPMQcTLyXR5jukxHQEyWqrQ/4MHOqL5aDsuWHFZCygcT+oSQokye1reg9v
- E2Cw==
+ bh=eeNtk+biZKcoxZRr7VwHdoOP/dSEF6ejSZGgF6c0V9Q=;
+ b=kSfvc9ERted1Iad9q4ZdqoLnDBc/DJZvlE+js62bYkQ107RlF6mHgFFZkyAEX3Yxin
+ XcZKju9pWOna4ZoAdCLy/yVKB0EVAtWDRxUCAOHEht2RxNHIWSdiI0MM9wGPQ2jpuX7u
+ xnIVqvwKIHMnDsZ2bBt4D8WFrWGRpASi5eoqJOQ+wg6UIXOSr9w/uSj0UxcmL0ossMg/
+ t9t3jFZUag+6s+UZrB44PSsv8xHob6s6nXemMY6FE22csFQYmoewiPNHVSIKTFkNTYXu
+ 1bamrqoGLXY4oRXwUDcKcWEL2xaJFycdguU/Ct9/jfJ8pIpoHqKo/m1rosNw9RJNB4Jo
+ 0B4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776423975; x=1777028775;
+ d=1e100.net; s=20251104; t=1776423968; x=1777028768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZN14khrJwspWgCASk1X5psK/KI78gmKsSGDmKRmyCu8=;
- b=T0IPO9Z8f8oHng7q7Rqj8Fqw6MYEDDbuk0yYPYUNkr+1Nyfy3h4ChTE85XSnEXGRBi
- LGaqT/pGgEsgWHfhYyPdmo1VPuHjAhTHtSUoxTe51uriK4mB/Xm76tbgk2p36/6N/QdV
- Ku2rQ9YnfBboFcQmrb91kKKihd2SaKfcQcbbh7Fx0u2sjs4pbbbjgvwCzSrtMqi+w1Bv
- cOZWwQ6GHBV0qPiBb42Vp6Voubt/A8XQ0dRkn+sgf+UP4w14tItFSLCTd6bWqQGLQHgR
- P00ef1BN4U6jpopKPpPCAQkNr6N1Xun4d/+KypD7b+GPIr215Q7kfGOFLyuZB+9libpl
- hepQ==
-X-Gm-Message-State: AOJu0YwZidPCupSnA68MTYnH0/CtLcLQpWPMFcej0cbwziypUtNsGajn
- M8wad0qi6wCKWoFEZdhH2Rr32HKtN0ogUqfbHzKXDcRINQx7E8HLl4Y8uxhxeXUIbSIa2xqn7Ez
- Mj3ggp50=
-X-Gm-Gg: AeBDietOoa0pGcxmf8Glpyh9V4/GBo9Nnbra6WbSkY5qjAmZpvTDqNLawcvNWUMPKcV
- gBx/D9SGwQ/ibYAeoz9FYbEP3CC/wWrnlsBs9YlPIjH4s8qMNIdCFpL2XBSUNTXST05MgnxXpm2
- o8B/TPZ5BvdIOqIVGX3QjDt0abRXkNw6kadK6AB94kFuGpsJYRd7ng7CEsjZ+Rf+4c/YoF48Uab
- OtrsEhtWzYm1nWvdUD+0Rfr7uu9FWcD7kXXlBz6qf3aOdtrEBxCmDKN2mNVBLOgDO8kmrYdHZcN
- X8ZKpV+oDiXaJkNUiMolbYBxDWNx43xxkQmd64hUb0Tq4MrUfGJr0Z4cvg+gnU2za0M3gGKZebG
- S9utgdI4RL+HIn37w79kMu2JSfU8RTmHJuzNlFaU8p8EfM0lNVR/8paZFK9rUhOvC6G8VjCDirj
- vxl94Uz/WUmspmNoFD/eEWsR9HjkOAaVxfh8XYGkvUXSTihL0yJdeateSAZlz/62vzprnIhEE03
- 28gPtqIMdc=
-X-Received: by 2002:a05:6000:18a3:b0:439:b8b2:fabc with SMTP id
- ffacd0b85a97d-43fe3dd4b7dmr3475498f8f.21.1776423974734; 
- Fri, 17 Apr 2026 04:06:14 -0700 (PDT)
+ bh=eeNtk+biZKcoxZRr7VwHdoOP/dSEF6ejSZGgF6c0V9Q=;
+ b=e6IzuI+3j1AD7Do5IfvcCrWfYF2ZgxwfFRSKgRrc4imrnbbo5wEtktwWQ0ZUIoH5N8
+ QUYEvfPOJ65/lZ046JN2uz4sTo8TMOuKEUgvH5KD6uerA6UQPuunXfGFpwV8gYjXFcB7
+ +t1JId67Sssn+Acy2YLnRKfJyenj5iocxVkh1KzZ/098iy1UaNcZpjdOoYSmKiUVmhBi
+ xwzqmtScc9FZd5ut+fO3c7gYe248sWT/ZWV+6wHtO/uzuLlly7GaiXGSW7GOn337fHxv
+ HaTZbe5miQL8z00Vao3HlLBcWKzVTMkxttMZWSdsCDD0eoLQAxiMXWX0qVH847KJ1RHU
+ fqdw==
+X-Gm-Message-State: AOJu0Yxmc3GCd1SiHomIr9GPv7j1wjJe2zy8NZII3DaznA4qn+eKvIQh
+ jQycQMOEC2QXzrfWkaxYGlRFKyxUYvp+Vfkpd5wIIxpovngVWSWzh+w1kKyIZqxKY1eei7RKDcC
+ 20zzHtIU=
+X-Gm-Gg: AeBDieuYro0DdjJZQfNfXYPqDoyCx74Nud6c8ScqyKvqWcneNfG869U4RsmLXToJHf6
+ OKHilv487GddTihvRAOemog6x/0KzZyyC5qPnTGTaRJ3CD6kXva4F7fZhihcQ4HWwAkPbe4/Kkb
+ O/RejB9cyxxl9iCVX0uhIt3JHW4mHnsl9J0buklVMzUD7tHJEVSh6kUTz1HBxWoiSPMoboyBtNe
+ rukkLJQjq7oVakD0qSscJVNIk2EFKJWpUOcmLuORMagyJETsDy1k6M0dQFT1lYxLN2U7ZKO3Aim
+ CsSZEHj6GqxRnSMo9hqzj/uzBQxwq7y0vuSxCC9aPVe2StLXCTqN3JjBMVnUq6hkTRCkbce+Q1n
+ Ok7JqK1vURd2uV5jwZf/eIWEoAJ5vX6+hQaMGgROqs0WL3MKpb4NR9lR7I7PmAk0LXKIb6hNsPi
+ BmYBOsn8cbyX5RX6+Wo/B4/bvV51IBR3Sfj9jzLaofPUtVZPqhQmqUGDA+rVz0F2+PtmANesMSe
+ YGfSGJ+er0=
+X-Received: by 2002:a5d:5f46:0:b0:43d:761d:5423 with SMTP id
+ ffacd0b85a97d-43fe3dcc03bmr3503456f8f.16.1776423967586; 
+ Fri, 17 Apr 2026 04:06:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a18csm4250279f8f.20.2026.04.17.04.06.13
+ ffacd0b85a97d-43fe4e4d5b1sm3859352f8f.30.2026.04.17.04.06.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Apr 2026 04:06:14 -0700 (PDT)
+ Fri, 17 Apr 2026 04:06:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 3/7] MAINTAINERS: Merge PCIe DOE section within SPDM
-Date: Fri, 17 Apr 2026 13:05:45 +0200
-Message-ID: <20260417110550.70068-4-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH 2/7] MAINTAINERS: Step up to maintain core machine code
+Date: Fri, 17 Apr 2026 13:05:44 +0200
+Message-ID: <20260417110550.70068-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260417110550.70068-1-philmd@linaro.org>
 References: <20260417110550.70068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,53 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SPDM depends on PCIe DOE, so it makes sense to cover
-these files there. Cover the spdm.rst document. Add
-Tao Tang who volunteered to be designated reviewer:
-https://lore.kernel.org/qemu-devel/44abaece-6a6f-43c6-b29a-53d6eb08033c@phytium.com.cn/
+The 'Machine core' section is orphan. Being acquainted
+with the code, step up to maintain it.
 
-Cc: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>
+Cc: Yanan Wang <wangyanan55@huawei.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 11bf50a9ecf..eccc0d64331 100644
+index f0950479ab2..11bf50a9ecf 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2150,11 +2150,6 @@ F: docs/pci*
- F: docs/specs/*pci*
- F: docs/system/sriov.rst
+@@ -2006,9 +2006,9 @@ F: include/hw/i386/nitro_enclave.h
+ F: docs/system/i386/nitro-enclave.rst
  
--PCIE DOE
--S: Orphan
--F: include/hw/pci/pcie_doe.h
--F: hw/pci/pcie_doe.c
--
- ARM PCI Hotplug
- M: Gustavo Romero <gustavo.romero@linaro.org>
- L: qemu-arm@nongnu.org
-@@ -3693,11 +3688,15 @@ F: tests/qtest/*tpm*
- F: docs/specs/tpm.rst
- T: git https://github.com/stefanberger/qemu-tpm.git tpm-next
- 
--SPDM
-+SPDM, PCIe DOE
- M: Alistair Francis <alistair.francis@wdc.com>
-+R: Tao Tang <tangtao1634@phytium.com.cn>
- S: Maintained
- F: backends/spdm-socket.c
- F: include/system/spdm-socket.h
-+F: include/hw/pci/pcie_doe.h
-+F: hw/pci/pcie_doe.c
-+F: docs/specs/spdm.rst
- 
- Checkpatch
- S: Odd Fixes
+ Machine core
+-R: Philippe Mathieu-Daudé <philmd@linaro.org>
++M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Zhao Liu <zhao1.liu@intel.com>
+-S: Supported
++S: Maintained
+ F: hw/core/cpu-common.c
+ F: hw/core/cpu-system.c
+ F: hw/core/machine-qmp-cmds.c
 -- 
 2.53.0
 
