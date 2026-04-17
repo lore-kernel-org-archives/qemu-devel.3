@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30683F8E4AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 05:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D46CF8E4AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 06:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDcAl-00071N-8F; Fri, 17 Apr 2026 01:55:23 -0400
+	id 1wDcNY-0002EH-RU; Fri, 17 Apr 2026 02:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcAj-000714-4c
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 01:55:21 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcNX-0002E8-Pl
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:08:35 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcAg-0001QO-E9
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 01:55:20 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-488afb0427eso3560125e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 22:55:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcNV-0003Ku-RS
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:08:35 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso2941495e9.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 23:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776405316; x=1777010116; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776406112; x=1777010912; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+h1YT9hF8lsMJwhvlCp/x+pnYM0VZyZHosj9cINn+sQ=;
- b=a6G7lWR+gfm8eDyz5JFZRy6XJssHwXcFF62pebzTzLZOJNgamAaK5TK9k6RGDs9OJG
- B5bQfe6OGV+4GAX5tbe57/aYZ9P/XKix7nXaYrjhW4XRzHm+xTUud4uVK90/4C//YXpc
- MnitaOD4wnANXX1DTzUbU7RcnxG+pZk6FGSQSQj38Z1NHQdv9Mtdal7y9UpikB1SbKmv
- PVfriW3mNtfr58jqUTe4o5905RJVfNmU6ohIgX2+jAKjNSHxKJg5/JOe+OP7FQkOJ3KI
- 9FHDXPNCuvqpVutiENX4N2t2VfTKaMTknHopWMksbzjEcFdmWC36PoGzZ6QV6UmXq1Xb
- Vbaw==
+ bh=aWBnK5N/Sf1Og1ZrN/He67DYsISn5Rkcdx0Z8W2UiQE=;
+ b=OEq3Qg2zvdhB0nNALcqTx6lPk6z0bGJjCRpeTPz76c70v3t+5oJZvYvpG4PuH3yYM0
+ l+hKseul+5oIo83LPuqA836AZINFk9HePDMduqKTmcTVE8ioJeotq6Z7dSJxL+Ay2YJd
+ JQMU+xPqQhFZld7QETcRJtBLhDHBAvt67GoYHQWbtbWNLFGf6cKHN9P5oIBk6Gi9FWdE
+ iKLq6f9rr9ATLuqjeHGFW4aqM7bLBNKASzkmVpydsmDz7ukXm//FfITNJxljAhZGlx6M
+ pAyOSq8QkYKH5BmKABosGx6cJj9sAZcLX0erZDwON8aJYvGziAZZ/ZACYTwvDbBcAWP+
+ X0Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776405316; x=1777010116;
+ d=1e100.net; s=20251104; t=1776406112; x=1777010912;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+h1YT9hF8lsMJwhvlCp/x+pnYM0VZyZHosj9cINn+sQ=;
- b=emur75NBlcxqjTU5Ph0zdUyCPTNjiE20JilPpRmBGQkOFXjzSHzIJKSxi1x1bJbaWx
- lYX0auQBk6N/Qn57es40EE/hz4KypKfWR/oKHDVlwxfIzgBe/I/M0zL+GgkwmruR4m+P
- Ft1Qw+jQK4FIij7Pc0oxXw+Z8k+pECFn8Hfj1w1IMjMaRXGGejY9sEhUZ7bvNBCY7JGV
- 8XaE3aXAvjDeln5bdcH1qeLTsW3ywhKtT4CjY2j8jQ0o9u4A4H1QBy9BG7AuMG7BAQt2
- tzdsuohftDKX0bKUTpx/SDL9tDMspp4G2XnmOqOCOo7qm13bP/ykEMOSNlBM71z2a241
- edTw==
+ bh=aWBnK5N/Sf1Og1ZrN/He67DYsISn5Rkcdx0Z8W2UiQE=;
+ b=FiHwesUdwijKIbnMEPF026u7D7ChSvsDp9goU+O5C69NEynnW920RGwQeeq3bEKw5B
+ 0DZ8MeBtTYhDstaHYmHHVwwl61sLnTgP7AD2y0FAu8syr/h5fVOfZdzZdJ8uE61Rhn0E
+ js1x4HfsnBS24L7aDfFSNE/ewzWYKTrlEBerRxoZY1I++zt8VFmZyXfEudHJuz/I2xzP
+ ZQ3IA5oJaoZZ0dGY9cOUyWq8XdyY41MkbBkoGNcMS56H1lrmrQ3ftcB1eaTNsXLIfXuz
+ VLlwx2EEcpx5X77jq6q6HaO1bTxq+yFmdbx1NXMe1qpF6WSZeuEEd1eDJcE4shSSRYZ5
+ etZg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9otolz8LnHFqT3+vPt0rcAxVQCDYIuagj+cZZmuZLE3KVI3i7tcKXyfI+W/pECxvlJZkTO6Ypc/au5@nongnu.org
-X-Gm-Message-State: AOJu0Yz+FW7O7rAF8n0/zeDduOi7cBppgGO/MqAdHvugNwhKObDR2XBE
- kcR47DSC1ak/eUEbVa/Pb6136Xj5aN6GCRAyPk8SkNZOllUpxN8F3R4CENy2A5hfYMc=
-X-Gm-Gg: AeBDiesiwxZPC/kzF37BIo6otRPuecblKQy3sgXLprXDipRx9jK0aSFaIbOzd3iEvS2
- n2yPJBHOMHsATG4J5FITdWPf5kVSyOodSZ3v0JT8mcetcBotxbWzHu95Bk05N1BKauhW3GRAEet
- YqFo349pmnLct6et5ts0uRE40zFAjuuguzjjKB8IFT+GBPItjRk4hwzQLnkO/zp2IPRMYwc7Gms
- bdwv/PphGpX3ajaSWlXvAyxpgXYIV3umlwCahfuqRFIIOJZWJD7XggqgLdTyOclL8IADdNrSIR9
- 5rjzUvaVHqGFqsLRQpT013vI82qcoGuHdZudAtgkIzaY95wFFyWaQr+D05H0ZUr1206M7mL9mGW
- Pk+7LuBMD4SR+6j5VUk9PFLRSPCCsizFRk271trN7ealoCp+gdfirebOKPvpCE+6jmPc5L1JWgP
- IZieCENBmPo9SquNcelBPJFtnT3Qm6SXi3nJqPL+Mb50/VQCA+r4j9y/u6Wsh4p2kt0h4WSab27
- ckG
-X-Received: by 2002:a5d:5f43:0:b0:43d:73d4:b27 with SMTP id
- ffacd0b85a97d-43fe3e1575dmr1847724f8f.32.1776405315621; 
- Thu, 16 Apr 2026 22:55:15 -0700 (PDT)
+ AFNElJ/hoG3SgjvXxGge7k0lEGXm5ob51x1rvFqqRljOBoSM+KbpHn+hvnG+66FSr5ffMYGON9aKe9H5etqE@nongnu.org
+X-Gm-Message-State: AOJu0YyUP9x9dDSdzwPPlEkwzgi8P0RgcFK0jM5a+/n3vcsfczJgL21O
+ SJ3GGxgHC084r4J31ta2kccNcuJHLy4zlVl9sLlKOPijF6MXqcN3G0pz5Bdpg9yfYs8=
+X-Gm-Gg: AeBDieuvASd96VieoI3ONN242ofbxnOvx4f6MxFxeU0+UNuj4gxSkG+QbMhX1CqjK3D
+ kmedzANoS58cRoVQ+PNGDshHaWzL07J0JfhO1yhv2rvmUI3LA6JT98Y/fvijfpAWtU9uOXfT1Id
+ sw7+CbTLWQsBngpJ8HiNERE6xt5W/7ik5yCLg1hfjljIyeZgzJ9QSyjyI2OeW483Otb4YpTnaLi
+ qSCTQcKxM6tXbrZdapJieyGBzKywPWU2iDxioxzL5v4cuQbjvmnhZGKlf99BHrE2daqVLA6T88f
+ iKz2c4HNuoFCYTaoDP7tX7BASHvhOEmO9StZgJ14T6C1w1+OjqYzMNAnELwUeany/ShSJkQbe3Z
+ HRcbFor2f80BvQpN4yLG82u5jEZ6ikAGgJ/fdhKz04gYAVRxPa8xRAVAPes9mWGBG2H9aKJda2f
+ nz96bTSyI4CHZnHBD2BBNFpQVYcLMc/SBoQcstVOKkdGKiyP6HjEwpYLzSekWMDPzq4CxDqsKxk
+ Z5i
+X-Received: by 2002:a05:600c:888b:b0:485:4bd1:4c64 with SMTP id
+ 5b1f17b1804b1-488fb796f95mr13289395e9.31.1776406111914; 
+ Thu, 16 Apr 2026 23:08:31 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc2cacsm1748058f8f.13.2026.04.16.22.55.14
+ 5b1f17b1804b1-488fc1c01c4sm31495415e9.9.2026.04.16.23.08.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 22:55:14 -0700 (PDT)
-Message-ID: <90529ec8-9f54-43f7-98ed-a161ea1576eb@linaro.org>
-Date: Fri, 17 Apr 2026 07:55:13 +0200
+ Thu, 16 Apr 2026 23:08:31 -0700 (PDT)
+Message-ID: <846108b0-74cd-47e8-bed3-7b1f0fd39ea0@linaro.org>
+Date: Fri, 17 Apr 2026 08:08:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 34/37] hw/hexagon: Introduce hexagon TLB device
+Subject: Re: [PATCH v6 35/37] target/hexagon: Add stubs for
+ modify_ssr/get_exe_mode
 Content-Language: en-US
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
 References: <20260401152657.314902-1-brian.cain@oss.qualcomm.com>
- <20260401152657.314902-35-brian.cain@oss.qualcomm.com>
+ <20260401152657.314902-36-brian.cain@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260401152657.314902-35-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260401152657.314902-36-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,44 +108,153 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/4/26 17:26, Brian Cain wrote:
-> Add the hexagon TLB QOM device model.
+> Add hex_mmu.[ch], cpu mode helpers, and additional includes/stubs
+> that integrate the TLB device with the CPU model.
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   include/hw/hexagon/hexagon_tlb.h |  46 +++
->   target/hexagon/cpu.h             |   7 +
->   hw/hexagon/hexagon_tlb.c         | 466 +++++++++++++++++++++++++++++++
->   target/hexagon/cpu.c             |   3 +
->   4 files changed, 522 insertions(+)
->   create mode 100644 include/hw/hexagon/hexagon_tlb.h
->   create mode 100644 hw/hexagon/hexagon_tlb.c
+>   target/hexagon/cpu-param.h  |   4 +
+>   target/hexagon/cpu.h        |  17 +++
+>   target/hexagon/hex_mmu.h    |  26 ++++
+>   target/hexagon/internal.h   |   9 ++
+>   target/hexagon/sys_macros.h |   3 +
+>   target/hexagon/cpu.c        |  24 ++++
+>   target/hexagon/hex_mmu.c    | 268 ++++++++++++++++++++++++++++++++++++
+>   target/hexagon/translate.c  |   2 +-
+>   8 files changed, 352 insertions(+), 1 deletion(-)
+>   create mode 100644 target/hexagon/hex_mmu.h
+>   create mode 100644 target/hexagon/hex_mmu.c
+
+
+> @@ -181,12 +196,14 @@ struct ArchCPU {
+
+
+>   FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
+> +FIELD(TB_FLAGS, MMU_INDEX, 1, 3)
+>   FIELD(TB_FLAGS, PCYCLE_ENABLED, 4, 1)
 
 
 > diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index ab5bfb0ed0e..4da1b01fcd1 100644
+> index 4da1b01fcd1..4e9c65f785a 100644
 > --- a/target/hexagon/cpu.c
 > +++ b/target/hexagon/cpu.c
-> @@ -23,6 +23,7 @@
->   #include "qapi/error.h"
->   #include "hw/core/qdev-properties.h"
->   #include "fpu/softfloat-helpers.h"
-> +#include "hw/hexagon/hexagon_tlb.h"
+> @@ -27,6 +27,13 @@
 >   #include "tcg/tcg.h"
 >   #include "exec/gdbstub.h"
 >   #include "accel/tcg/cpu-ops.h"
-> @@ -50,6 +51,8 @@ static ObjectClass *hexagon_cpu_class_by_name(const char *cpu_model)
->   }
+> +#include "cpu_helper.h"
+> +#include "hex_mmu.h"
+> +
+> +#ifndef CONFIG_USER_ONLY
+> +#include "sys_macros.h"
+> +#include "accel/tcg/cpu-ldst.h"
+> +#endif
+>   
+>   static void hexagon_v66_cpu_init(Object *obj) { }
+>   static void hexagon_v67_cpu_init(Object *obj) { }
+> @@ -52,6 +59,7 @@ static ObjectClass *hexagon_cpu_class_by_name(const char *cpu_model)
 >   
 >   static const Property hexagon_cpu_properties[] = {
-> +#if !defined(CONFIG_USER_ONLY)
-> +#endif
+>   #if !defined(CONFIG_USER_ONLY)
+> +    DEFINE_PROP_UINT32("htid", HexagonCPU, htid, 0),
+>   #endif
 >       DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
 >       DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, lldb_stack_adjust, 0,
->                            qdev_prop_uint32, target_ulong),
+> @@ -279,7 +287,11 @@ static TCGTBCPUState hexagon_get_tb_cpu_state(CPUState *cs)
+>       }
+>   
+>   #ifndef CONFIG_USER_ONLY
+> +    hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, MMU_INDEX,
+> +                           cpu_mmu_index(env_cpu(env), false));
+>       hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, PCYCLE_ENABLED, 1);
+> +#else
+> +    hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, MMU_INDEX, MMU_USER_IDX);
 
-Changes in cpu.c belong to the next patch.
+Maybe move this change (and translate.c below) in a preliminary patch.
 
-It could make more sense to include the rest of the patch
-(hexagon_tlb.c) in part 3 (HW/), since the following patches
-of this series don't access CPU::tlb.
+>   #endif
+>   
+>       return (TCGTBCPUState){ .pc = pc, .flags = hex_flags };
+> @@ -299,11 +311,15 @@ static void hexagon_restore_state_to_opc(CPUState *cs,
+>       cpu_env(cs)->gpr[HEX_REG_PC] = data[0];
+>   }
+>   
+> +
+>   static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
+>   {
+>       CPUState *cs = CPU(obj);
+>       HexagonCPUClass *mcc = HEXAGON_CPU_GET_CLASS(obj);
+>       CPUHexagonState *env = cpu_env(cs);
+> +#ifndef CONFIG_USER_ONLY
+> +    HexagonCPU *cpu = HEXAGON_CPU(cs);
+> +#endif
+>   
+>       if (mcc->parent_phases.hold) {
+>           mcc->parent_phases.hold(obj, type);
+> @@ -317,7 +333,14 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
+>       memset(env->t_sreg, 0, sizeof(uint32_t) * NUM_SREGS);
+>       memset(env->greg, 0, sizeof(uint32_t) * NUM_GREGS);
+>       env->wait_next_pc = 0;
+> +    env->tlb_lock_state = HEX_LOCK_UNLOCKED;
+> +    env->k0_lock_state = HEX_LOCK_UNLOCKED;
+> +    env->tlb_lock_count = 0;
+> +    env->k0_lock_count = 0;
+>       env->next_PC = 0;
+> +
+> +    env->t_sreg[HEX_SREG_HTID] = cpu->htid;
+> +    env->threadId = cpu->htid;
+>   #endif
+>       env->cause_code = HEX_EVENT_NONE;
+>   }
+> @@ -346,6 +369,7 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
+>                                gdb_find_static_feature("hexagon-hvx.xml"));
+>   
+>       qemu_init_vcpu(cs);
+> +
+>       cpu_reset(cs);
+>       mcc->parent_realize(dev, errp);
+>   }
+
+This is where we start to use the shared TLB, so 1/ consider adding
+this hunk in this patch (not in part 3/3, that confused me):
+
+-- >8 --
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 355abb4fd24..01781a76caf 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -68,6 +68,8 @@ static ObjectClass *hexagon_cpu_class_by_name(const 
+char *cpu_model)
+
+  static const Property hexagon_cpu_properties[] = {
+  #if !defined(CONFIG_USER_ONLY)
++    DEFINE_PROP_LINK("tlb", HexagonCPU, tlb, TYPE_HEXAGON_TLB,
++                     HexagonTLBState *),
+      DEFINE_PROP_UINT32("exec-start-addr", HexagonCPU, boot_addr, 
+0xffffffff),
+      DEFINE_PROP_LINK("global-regs", HexagonCPU, globalregs,
+          TYPE_HEXAGON_GLOBALREG, HexagonGlobalRegState *),
+---
+
+but 2/ there should be a check in hexagon_cpu_realize() that this "tlb"
+link property is set, otherwise exit as fatal error.
+
+I haven't looked at Hexagon architecture much yet but have the gut
+feeling we should model as a container of various related cores and a
+shared TLB (and surely few other components in that container).
+
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 91dff442c80..07829063868 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -1005,7 +1005,7 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+>       HexagonCPU *hex_cpu = env_archcpu(cpu_env(cs));
+>       uint32_t hex_flags = dcbase->tb->flags;
+>   
+> -    ctx->mem_idx = MMU_USER_IDX;
+> +    ctx->mem_idx = FIELD_EX32(hex_flags, TB_FLAGS, MMU_INDEX);
+>       ctx->num_packets = 0;
+>       ctx->num_insns = 0;
+>       ctx->num_hvx_insns = 0;
+
 
