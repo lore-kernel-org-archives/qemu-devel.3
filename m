@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2754F436B4
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 16:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2029BF436BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 16:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDmIN-0003S3-JV; Fri, 17 Apr 2026 12:43:55 -0400
+	id 1wDmLd-00073z-N6; Fri, 17 Apr 2026 12:47:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wDmI4-0003OE-QK
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:43:38 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wDmLZ-00073X-Qu
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:47:14 -0400
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wDmI1-0004rz-JI
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:43:35 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so11791265e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 09:43:33 -0700 (PDT)
+ id 1wDmLY-0005lF-3z
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:47:13 -0400
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so13519695e9.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 09:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776444212; x=1777049012; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1776444430; x=1777049230; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CoM5YIgDCI4LaK2PcP9hwlCuHqwwsV6FnJoskoTZop4=;
- b=L1DEPqMMO8PA+XCP4exq6cwa66CjOcBcHoV8dcaJpW6IheqPNqQoOgNRyI/QJQ97Rb
- EyGbhCu6uinFuw3uFxUwLaRriO/Iaby0d1LWz3l8F4/LyJuElG9t1SNroSJ4MTc4YcPU
- npM1ywheVtOZF92ZDwY6BHxGZBNx0GpOicPqxDs6ZYdL0KKXEgAyatP1+mnaHVreRG3A
- Qkvr4RsU47lB55jmJAWplSRapSs+pAcLzAeABn01zg4YvPqQBDSD+PoyBKuktZb6I86V
- 5r13ohkPY3G3IJs12oH8Oac1PA/6tuJ+W38KhgtedXuWIW1sKqKvDrLS9ocF1aVTHFry
- KvNw==
+ bh=nQ4h1UD4AUxGiWPVBEk10Epis/sCNJJ+eXo3oJDn2hc=;
+ b=kw2T73u6/Mi6rq4P7s1eNO/CRafvxcl7ZH3auVk1S+pdd09T7QmTzbNglfSTCTa/wu
+ g3AkJos30mJHOLfzP+UeJUe4nPWt+60hguDckAOT9o585hIqteB54WVLeImJvkRVLCiV
+ vhEnfIz84gzzChv+DvR5j3/U+fqutw9qp4t5TlaTLXXIFMJrmIvuTw1Nf6X1QRetMxjm
+ wmrEsIOrFQe8k9aKHFV84M3m+xG0a9qmpl/ecC1UV433jIbLDusl99FnjqHvaYUV2oTx
+ GtWXU/fIiTRP3h9FSfJhv/ya65YnTzeae8P0Ij+GbNtsazUkNrFop5ZhoTOpUTcDZPqW
+ EOTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776444212; x=1777049012;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CoM5YIgDCI4LaK2PcP9hwlCuHqwwsV6FnJoskoTZop4=;
- b=iaItdXMzkk3msfkLpu7uAJRWNuqzxDNwUV/wua/txugnjA8eD89qAvyVxKZQIA0Imy
- 5dotCWS9qGThEnZ1MnVrMfcwwUxc/yJ/9CYR66OsgjyVeYdlbKMeq2veuxJy0sJbKoLj
- bx60L05BEPUk90nNnHOMdWd/A+hEzMa5a0sCaOH2uIX9ZvU06Tl3loIvnSCoj0KB4hBD
- 7kwK4/8ZFFSKGIvYTgARmQWniHCs76NNMYgZpKYPDnVByXw7wD58fhwMuHaPBDPI72BK
- lvVUMDdYreDxEIr7n00P8jUMpXySo2aVXRROLEI5tZOcfUzYH4XcYvzE8OqK1SAn0IXw
- SYuA==
-X-Gm-Message-State: AOJu0YzHHe562AywgszPPqcJ8yz1pvTAqzdYAcPRhd6FtuDwrQRfMN4Y
- maanXhuiBImPG2B8b4P+yyp44iT29dlCCI4+IDeDfH9z1cQHGFhEjHDp3Uc4QswPTNV411udsPC
- ZMcHVWQo=
-X-Gm-Gg: AeBDieuN9nEv9Qvt9p39h/rPaLEXkJrOsLYYj/K1IHxVNkBZslu9fea7fx7W54vOxGp
- s08qFBDYq6kyzWRy2N4luczLoV6Dkkf8QnQhOzcginp5WbsIRUQxvlmlvLpHH3NOa4mxPXq4vIx
- 2AE7JG6YmRlYctl/tDU6HuaUvD/xY072fwAMF7K15PqK6crB2nvFX/Ph4TpBjG00tscFi5yTIk8
- qwqujSWrHwFU2n1oW+s4qqzfE3SoLgFaBQz4quJ8DMghtgSfD6vriq2VocV9yIK0SpglC1/Frb7
- FCSeOiT+/ldyvyRV5l3dj6yqAYNtmIUSvkPjgnHZ44S44shC92I22cIe5+CJXr5ep3FbDdTgz3m
- lBO7kRO0nAg/u8e878tp2tmBXYGIfGER4OWkTRZ89TuRwlhJnIB5Sr45nNL/KMN4gozdneqJoKU
- JzEcRMa7KmYhUdiUPGbZlIqUo1CMnE8fYPfg==
-X-Received: by 2002:a05:600c:c089:b0:487:1fc:14f9 with SMTP id
- 5b1f17b1804b1-488fb771576mr37520525e9.15.1776444211998; 
- Fri, 17 Apr 2026 09:43:31 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776444430; x=1777049230;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nQ4h1UD4AUxGiWPVBEk10Epis/sCNJJ+eXo3oJDn2hc=;
+ b=b52QDjWb8uLJUKtOMcds98rXuEHRhB/74BhzeZbSeQJTiWkrdwAzHsDgYzyvtV7wuO
+ 8nflxCt2bFlcGJnhdrigTbS4eS/Zz/C3ABcg1bIBfjBm/beI4jX2t6GhRhDpoNHGhMx9
+ S88K52XQUi+9Ktak1nToCA0nu4GPZCV0ZDbuqzCw3YGAlZs+SEyW3/d+NOQx6sWui01V
+ wMvVWNlTE070hUBjbMxdMRrR7uPzwI25Zc9i84A+glVjk+MryVX4ZI/8a1GnKXymua/S
+ PhcvKyKIvotVaTBMv91fX5K8AeJT2UgRUcLwTYGZkSQhKQcbbLuMHCpJ2TAhPSThoh+3
+ /vhw==
+X-Gm-Message-State: AOJu0YzVeut7LET/8dqwcAnneUxz4Hu9CPsKnQvfDuKndoURRiK8DHEM
+ 0COZnWzRT8fhab+r7phGnu+gFTZt0boBTm5ow5emPb+96nEAuO2x9Smkp9SqSIdfnqKwtngC871
+ ySceM/9Hwhg==
+X-Gm-Gg: AeBDievjzmiqLVulCrSQN8pYroNJMbKTe6PmFFPtUbwq8DXWIKt4D3/bRPZ4cu1oRcU
+ LzcNZFUxybALmxwWLfv2C6aGk96INHvyPGmdRe7FOMcD2bU2IcOMaG+NsNfqLyWWMR26ZDNUjNc
+ A5lUvpUoU/B9l/BgAQBpqa9SIzS3Z1mXOh2KDKRHd2qsHcFJMS6uSUryTz703XfQuObGv9xIQcR
+ kjifU/xDvuCo//+GFzTCYPIoBOhBAp1NPNvly2CuBuBfGuc95lkVPab4OUJTeluIbLLppAA5pZh
+ yvh/zGrvFfNT0T2h4ru1esstUXC7QJXk5L5aHj3l4cEvQ9KEtIh2d08eEXQ3QXtf6BqijSoMuFq
+ z/kcW3kv8h2f7ktg5ovV5FbC0GLInASu2cifN7JCwjYobu3CvbA60wfn/wbLPYkXcmF8dQr8yXe
+ /rZnhUlPSJyZBYFXB1yBieOEpuBlTP+1bxAg==
+X-Received: by 2002:a05:600c:8582:b0:485:4006:960c with SMTP id
+ 5b1f17b1804b1-488fb7710e1mr40723245e9.16.1776444430491; 
+ Fri, 17 Apr 2026 09:47:10 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb794e26sm29177745e9.6.2026.04.17.09.43.29
+ 5b1f17b1804b1-488fc1c0354sm50295405e9.11.2026.04.17.09.47.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 09:43:30 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B459A5F9CE;
- Fri, 17 Apr 2026 17:43:28 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 3/7] tests/tcg: convert aarch64 asid2 test to use sysreg
- helpers
-Date: Fri, 17 Apr 2026 17:43:23 +0100
-Message-ID: <20260417164328.1009132-4-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260417164328.1009132-1-alex.bennee@linaro.org>
-References: <20260417164328.1009132-1-alex.bennee@linaro.org>
+ Fri, 17 Apr 2026 09:47:09 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 212325F94F;
+ Fri, 17 Apr 2026 17:47:09 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Anthony Roberts <anthony.roberts@linaro.org>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] ui/sdl2: Fix assumption of EGL presence at runtime
+In-Reply-To: <20260409110256.684-1-anthony.roberts@linaro.org> (Anthony
+ Roberts's message of "Thu, 9 Apr 2026 12:02:55 +0100")
+References: <20260409110256.684-1-anthony.roberts@linaro.org>
+User-Agent: mu4e 1.14.1-pre2; emacs 30.1
+Date: Fri, 17 Apr 2026 17:47:09 +0100
+Message-ID: <87zf31pm9e.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,99 +105,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we are at it we can reduce the number of temporary variables
-needed and fix a format string error.
+Anthony Roberts <anthony.roberts@linaro.org> writes:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/tcg/aarch64/system/asid2.c | 35 ++++++++++++++------------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+> The original commit had a section of code which worked on the assumption
+> that if OpenGL was enabled at build, it was present on the end user machi=
+ne,
+> and calls could be made to it. This is not always the case (such as Windo=
+ws
+> on Arm devices).
+>
+> This line should have also included a runtime check.
+>
+> This commit moves the relevant line to inside a runtime check for OpenGL.
+>
+> Fixes: 52053b7e0a0e ("ui/sdl2: Implement dpy dmabuf functions")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3347
+> Signed-off-by: Anthony Roberts <anthony.roberts@linaro.org>
 
-diff --git a/tests/tcg/aarch64/system/asid2.c b/tests/tcg/aarch64/system/asid2.c
-index 7d5466af34a..8c93024b858 100644
---- a/tests/tcg/aarch64/system/asid2.c
-+++ b/tests/tcg/aarch64/system/asid2.c
-@@ -9,10 +9,11 @@
- 
- #include <stdint.h>
- #include <minilib.h>
-+#include "sysregs.h"
- 
--#define ID_AA64MMFR3_EL1 "S3_0_C0_C7_3"
--#define ID_AA64MMFR4_EL1 "S3_0_C0_C7_4"
--#define TCR2_EL1 "S3_0_C2_C0_3"
-+#define ID_AA64MMFR3_EL1 S3_0_C0_C7_3
-+#define ID_AA64MMFR4_EL1 S3_0_C0_C7_4
-+#define TCR2_EL1 S3_0_C2_C0_3
- 
- int main()
- {
-@@ -23,7 +24,7 @@ int main()
-      * not enabled and read as the written value if A2 is enabled.
-      */
- 
--    uint64_t out;
-+    uint64_t read_tcr2;
-     uint64_t idreg3;
-     uint64_t idreg4;
-     int tcr2_present;
-@@ -31,11 +32,8 @@ int main()
- 
-     /* Mask is FNG1, FNG0, and A2 */
-     const uint64_t feature_mask = (1ULL << 18 | 1ULL << 17 | 1ULL << 16);
--    const uint64_t in = feature_mask;
--
--    asm("mrs %[idreg3], " ID_AA64MMFR3_EL1 "\n\t"
--        : [idreg3] "=r" (idreg3));
- 
-+    idreg3 = read_sysreg(ID_AA64MMFR3_EL1);
-     tcr2_present = ((idreg3 & 0xF) != 0);
- 
-     if (!tcr2_present) {
-@@ -43,33 +41,30 @@ int main()
-         return 0;
-     }
- 
--    asm("mrs %[idreg4], " ID_AA64MMFR4_EL1 "\n\t"
--        : [idreg4] "=r" (idreg4));
--
-+    idreg4 = read_sysreg(ID_AA64MMFR4_EL1);
-     asid2_present = ((idreg4 & 0xF00) != 0);
- 
--    asm("msr " TCR2_EL1 ", %[x0]\n\t"
--        "mrs %[x1], " TCR2_EL1 "\n\t"
--        : [x1] "=r" (out)
--        : [x0] "r" (in));
-+    /* write the feature mask and read back */
-+    write_sysreg(feature_mask, TCR2_EL1);
-+    read_tcr2 = read_sysreg(TCR2_EL1);
- 
-     if (asid2_present) {
--        if ((out & feature_mask) == in) {
-+        if ((read_tcr2 & feature_mask) == feature_mask) {
-             ml_printf("OK\n");
-             return 0;
-         } else {
-             ml_printf("FAIL: ASID2 present, but read value %lx != "
-                       "written value %lx\n",
--                      out & feature_mask, in);
-+                      read_tcr2 & feature_mask, feature_mask);
-             return 1;
-         }
-     } else {
--        if (out == 0) {
-+        if (read_tcr2 == 0) {
-             ml_printf("TCR2_EL1 reads as RES0 as expected\n");
-             return 0;
-         } else {
--            ml_printf("FAIL: ASID2, missing but read value %lx != 0\n",
--                      out & feature_mask, in);
-+            ml_printf("FAIL: ASID2, missing but read value %lx != %lx\n",
-+                      read_tcr2 & feature_mask, feature_mask);
-             return 1;
-         }
-     }
--- 
-2.47.3
+As this got missed I've queued to virtio-gpu/next, thanks.
 
+> ---
+>  ui/sdl2.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index aaaede56e0..987ad334bb 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -120,15 +120,15 @@ void sdl2_window_create(struct sdl2_console *scon)
+>=20=20
+>          scon->winctx =3D SDL_GL_CreateContext(scon->real_window);
+>          SDL_GL_SetSwapInterval(0);
+> +
+> +#ifdef CONFIG_OPENGL
+> +        qemu_egl_display =3D eglGetCurrentDisplay();
+> +#endif
+>      } else {
+>          /* The SDL renderer is only used by sdl2-2D, when OpenGL is disa=
+bled */
+>          scon->real_renderer =3D SDL_CreateRenderer(scon->real_window, -1=
+, 0);
+>      }
+>=20=20
+> -#ifdef CONFIG_OPENGL
+> -    qemu_egl_display =3D eglGetCurrentDisplay();
+> -#endif
+> -
+>      sdl_update_caption(scon);
+>  }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
