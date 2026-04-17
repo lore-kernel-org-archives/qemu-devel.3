@@ -4,72 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AC5F43695
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 12:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B63F43699
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 12:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDhxJ-0005Hu-UQ; Fri, 17 Apr 2026 08:05:55 -0400
+	id 1wDhyG-0005Uu-Vs; Fri, 17 Apr 2026 08:06:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wDhx9-0005GX-0o
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:05:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wDhx6-0006Zg-BB
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:05:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776427537;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=vkrEgX75jNy7p50vX4ufIbRArxGERLn7U2N8OKwD/5I=;
- b=II4KKfT9dvyNwfNEttSs1vBwifcItByFjqUHCRUmV0opKZhfvN4CPvBFZIZl787Rg5/7f5
- YnHbTYUyKiBZgunJRtTUMmqZ5Ubd4tig8mv9sI9N1PAO2pWklNCMcw2Zfgr5422weP47Dm
- FJiv89TjlJIKVD2WWuLkrmu9XlmS3Sc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-55EHQJJGOtuGW0MFDiFZjQ-1; Fri,
- 17 Apr 2026 08:05:36 -0400
-X-MC-Unique: 55EHQJJGOtuGW0MFDiFZjQ-1
-X-Mimecast-MFC-AGG-ID: 55EHQJJGOtuGW0MFDiFZjQ_1776427535
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C98C21956062; Fri, 17 Apr 2026 12:05:34 +0000 (UTC)
-Received: from toolbx.redhat.corp (headnet01.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.101])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 49D3C30001A4; Fri, 17 Apr 2026 12:05:32 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Brad Smith <brad@comstyle.com>,
- qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] util: fix use of pthread_get_name_np on OpenBSD
-Date: Fri, 17 Apr 2026 13:05:31 +0100
-Message-ID: <20260417120531.2215549-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
+ id 1wDhy4-0005SU-Fu
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:06:42 -0400
+Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
+ id 1wDhy2-0006eV-MQ
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:06:40 -0400
+Received: by mail-oo1-xc30.google.com with SMTP id
+ 006d021491bc7-68be75dc734so155827eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 05:06:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tenstorrent.com; s=google; t=1776427597; x=1777032397; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D7Rc6tnNGYnMJDZo//oFhE/boIZ5aw0YgE9oBeIZlIU=;
+ b=TWVNkpxkRsuGqcH8Lk9l1/9T2z13e3eXhTWi8Xzzwh02L0nQGVc1kA7KYVZ9e/2IbG
+ oo3bCovJotSsMr4bJD8BvAgLemnDJqwVIBifs5nNarmZEk5vqWUFiI/7UWUiSkjv66f3
+ hmwfEgCG+q5q0LDZKE/sj1IpqNQt/8y8koHplW63YtfXbLhX1dwk6t2GQP01huxaiKhn
+ 48Sx0FV+rYHID3Pf5uJMd+8xBKsdOnFnGb/fHqaTeeBl11/hUWnieSqf76I5QPhYmgTB
+ A2zHqPU38H7fR/3/1cpmwEurdv9C+F26yfbkyb2Mcu5EpduCwzA6/9mdSkxqzoPIT2No
+ jZZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776427597; x=1777032397;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=D7Rc6tnNGYnMJDZo//oFhE/boIZ5aw0YgE9oBeIZlIU=;
+ b=RbQLkuooVvalUz1mL1fdG66MJDYYmcAutHrJ8Rkul2Yhx8tHH7XNM/SWaJ9gVKoLbA
+ nliuEWg7btlqjGLPcFykFAlea0Yf0xtsMEEz92p2WXR0U5Sgq3V+hIoHintoPDahygMC
+ DnwHr6ZoLGYIJx27QQdys5+iKjcfai68IR8yI8NQ8wDs3IWcStOZlZrIa3DnfxowoI4v
+ 7GBmLpxaC6qPkBnjY0Dsx+lIgjh62iYik4NRbWWBxtQ7mH1sTFbKEkWvah4ZJ04o31VB
+ wGaA0i24rj6r2u2KNnWi4VR6AuC7PwEjuuET5SkNiYHSHvYmJjOf/Ae62kUVWK0r8012
+ zaHQ==
+X-Gm-Message-State: AOJu0YzSNFpYbf87jekib+sxyQVXk3kH8KUubOa/PSD7JBp4USVkK5gn
+ ayVN0R+/3xqxA9BeRuooM3VWaU2moU1BcLVsO02FsP8OfqN79i2F+zZHdbXfCSpUwiFpIigl0hu
+ hiO+xJPk=
+X-Gm-Gg: AeBDievy6qqoGe2WOsi5KYWG9Gq9KSyzSF68qHkd6m4bI2iCrNm7DD6A/TBnle2VoD3
+ zJmEdpZNZK3g9JCfF8+qKnXz1dFk0rfa9Lllg6MfgiaE16uL3o7Apl8gMK4lG59rkmE1I+vBYNp
+ XjtDu2dwicA5fHWfzQxvZrVsFBBnumFIw3gYkxi8VNHgmuNilJ9wj75PxE8nq+CJeE04FqI09ub
+ Cbv6BJgfVYhMcdo+iYQuYLENI9Pp9B7PNRoQMvF6720s9lpDlsHpD/HKdIRluIxb20dofz44Gjl
+ qaPITHdQG94CKXea1Q/ijTJByfQF1Pkf1U+4yjMe3KTkmtXoMm8qHq35+FgoN6hcozea0r7GQFk
+ Tsbhss27xvWSk9JcOXfsz+X/SrE30vaHz+ncmxU/FQlw3q64YLRd3UoGSmT4CBzgvZpvQ17+fBD
+ E43PkqSDEcUUXY26F7ETrLUEQI+ZHBHwDvUTxUVi9m97BlHxNdExZp147G55FDhws++6fnfOPBZ
+ jCp7g==
+X-Received: by 2002:a05:6820:3092:b0:692:9c90:8e9a with SMTP id
+ 006d021491bc7-69462f2036dmr1185825eaf.45.1776427596686; 
+ Fri, 17 Apr 2026 05:06:36 -0700 (PDT)
+Received: from ausc-rvsw-c-01-anton.tenstorrent.com ([38.104.49.66])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-69464fe4084sm744062eaf.12.2026.04.17.05.06.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Apr 2026 05:06:35 -0700 (PDT)
+From: Anton Blanchard <antonb@tenstorrent.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ liujingqi@lanxincomputing.com, max.chou@sifive.com,
+ Anton Blanchard <antonb@tenstorrent.com>
+Subject: [PATCH] target/riscv: rvv: Handle mask/source overlap of vector
+ reduction instructions
+Date: Fri, 17 Apr 2026 12:06:26 +0000
+Message-Id: <20260417120626.77415-1-antonb@tenstorrent.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
+ envelope-from=antonb@tenstorrent.com; helo=mail-oo1-xc30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,38 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pthread_get_name_np function is present on FreeBSD and OpenBSD
-and has 'void' return not 'int'. We didn't notice this build problem
-on FreeBSD since it also has pthread_getname_np which does return
-int like Linux and we use the latter preferentially.
+Masked vector reduction instructions must not use v0 as a source register.
+Check rs1 and rs2 against the mask register when vm=0.
 
-Fixes: 215235d365e49c72a85ea2940751e45419676031
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3399
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
 ---
+ target/riscv/insn_trans/trans_rvv.c.inc | 2 ++
+ 1 file changed, 2 insertions(+)
 
-This is a regression in the 11.0 release, but on the assumption it
-is too late for further fixes, I'm CC'ing qemu-stable so this can
-go into the future stable-11.0 branch
-
- util/qemu-thread-posix.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index bd1c2ad2a5..089606c93f 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -568,7 +568,8 @@ const char *qemu_thread_get_name(void)
- # if defined(CONFIG_PTHREAD_GETNAME_NP)
-     rv = pthread_getname_np(pthread_self(), namebuf, sizeof(namebuf));
- # elif defined(CONFIG_PTHREAD_GET_NAME_NP)
--    rv = pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
-+    pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
-+    rv = 0;
- # else
-     rv = -1;
- # endif
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index d9a0027e0b..6e8d32636e 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3046,6 +3046,8 @@ static bool reduction_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
+            vext_check_isa_ill(s) &&
++           require_vm(a->vm, a->rs1) &&
++           require_vm(a->vm, a->rs2) &&
+            vext_check_reduction(s, a->rs2);
+ }
+ 
 -- 
-2.53.0
+2.34.1
 
 
