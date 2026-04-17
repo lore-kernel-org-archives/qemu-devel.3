@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C8CF4368A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F00F43688
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDfkx-0006FE-Ez; Fri, 17 Apr 2026 05:44:59 -0400
+	id 1wDflU-0006SP-6w; Fri, 17 Apr 2026 05:45:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wDfkv-0006Ev-Ok
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:44:57 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wDfkt-0006Rv-PN
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:44:57 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso4203785e9.3
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 02:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776419093; x=1777023893; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=95kL8o9wIOGj8/U74zkb4wUZKKITt6J6HXnMFnuJ9VU=;
- b=L9nwcpDmUEkHHcuNpMAtogYak/+h/p2lq7ApU/TXmVT5ktzzoKNq2ZVSFGCOV/B1Bw
- CrdQWxnzr/SXQwIfQfwy18i6O8404ufMoftXuFcTeEYsMl6gMCx6A4PZW//CK0gC93aM
- D8aKk/DIYvpqMfmMjZFk1veayGj2u8pSvqreBM0IUsiolJcFhc1phlRgBHzn6rgL7zdl
- AKLfTItwbNM6ICbYDUVfxkCqZEUziO0SH/OBoOeEcwUp/j7ybea2w5rK8+Qkga7MPLPx
- +40pdtLYyOtJC7t0/08xdLM4a8+iql9ER8QwGgjfs4Z0GS1295M8U1IytGaga2YRrCwd
- dkAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776419093; x=1777023893;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=95kL8o9wIOGj8/U74zkb4wUZKKITt6J6HXnMFnuJ9VU=;
- b=BYI87Lc/yaGhsjHf/gP7Am1/Cg3evGKakjN7QYsSAPINqnJyqFbVJtgcqoMQ0X3D/E
- 5kse61GRPNAz0DvWZz5itfIyCphIUXhixfG/jO0YSpbWFD9fiC3Grm1ecYc6hQWQhhhR
- 27qG+vipo1G7gTwMxwP3cgeTRLrF9TgvZK/6zopKh7gbwD2EnZoR/5PYFvdfdpLAXe9/
- i1tp4Bl4v69l2u2SRIK8p5ttb4Y+Z3NBB8Q6wrRcuyHxioqpZtwiAyCFC0glQ7ZXNUNB
- IEF47KJpZAcymCKVyo94A/k8gyZaAcsgQLU/bSJO3UhK/vYxIeXLPYV0ezyWRvCjF0ft
- MdTA==
-X-Gm-Message-State: AOJu0YzwlPLPMJOTcqr0MAu3V/Zw7eFgsnspyEEVOlz+SPeULD+TBdnY
- At/l+2eOdtNTRqrmAFw9bSNWxjHI5mqr3lXNcTMqQyl6IUXmVj4uvB/fxcdMJyHA7aY=
-X-Gm-Gg: AeBDieu3qM0sz8mAc4qQgtKH9puPse6ddeCZmPyNMTOZbj5pB4IhoWv8/OzT0CrDJ3F
- xmqqi5oPgs7GSXEbAei2txHuX9HLnuHSroOHERskM4gmimFD0FEtkNGM9Dx/Ey4Xw7UIOK2UycB
- dTjrxMjRXAXhO9jKVOYMt2rMmgLK7qm3TA8Zb7DZU+RL28sTPkjyqDLDXWWH1hij0az6FG8wjxp
- C0jeVxGj0aqU43t0vx6aED2aPsin4PPTBrJtdQxsN8ww25xGz//dHabMoPpg/w8ZjeUpojpgxn6
- bsx148pnoVzEL5fp30ZYu8kNJrO1613FS/jNUD6AppBLxoZMk41/i9/HRittQsTgWHuI8VkJk8+
- T1xKaTypCEg4AALabfeugXQqfDo4pvNyDrW1GeggmA31FrJwVr/OEeszwcONeoIBUQEyEnlSZB1
- mqUy3kKJyBrTmxohjIf73sf7e/qhj9T0iRUg==
-X-Received: by 2002:a05:600c:a00c:b0:488:c51f:e04e with SMTP id
- 5b1f17b1804b1-488fb765e65mr26192995e9.13.1776419093461; 
- Fri, 17 Apr 2026 02:44:53 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a166sm3383545f8f.19.2026.04.17.02.44.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 02:44:52 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 233F65F94F;
- Fri, 17 Apr 2026 10:44:52 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [RFC PATCH] hw/display: don't accidentally autofree existing virgl
- resources
-Date: Fri, 17 Apr 2026 10:44:43 +0100
-Message-ID: <20260417094443.785462-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDflM-0006Qs-Ug
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:45:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDflI-0006UX-VE
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:45:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776419119;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Gx9+xoBRDExEtYDBbeyH9pWjfATQ5L4fnruZmSOYmgU=;
+ b=FCtNTex9iVsSt0ExWh4JiG2krBCO3VNTUrpWO+Q0sMDMXaLmpL3FhD7Ka6NJ5L1dIQVJx5
+ ZaIeObEbAw24AXkASvIu2TkJM5edGaYtqh9rsKixu9jRgjaqZSC0wIPTWa0ENBJdkw2mUG
+ fvTe21j2Q4QOBk039PXSPRHN8XKXEg8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-OGvyVOJyPumdZmmwJstFSg-1; Fri,
+ 17 Apr 2026 05:45:15 -0400
+X-MC-Unique: OGvyVOJyPumdZmmwJstFSg-1
+X-Mimecast-MFC-AGG-ID: OGvyVOJyPumdZmmwJstFSg_1776419114
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53D191800473; Fri, 17 Apr 2026 09:45:14 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B21A719560AB; Fri, 17 Apr 2026 09:45:12 +0000 (UTC)
+Date: Fri, 17 Apr 2026 10:45:09 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Junjie Cao <junjie.cao@intel.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de
+Subject: Re: [PATCH v3 1/4] io/channel: introduce
+ qio_channel_pread{v,}_all{,_eof}()
+Message-ID: <aeIBJQQ9ZSjFEBX4@redhat.com>
+References: <20260413214549.926435-1-junjie.cao@intel.com>
+ <20260413214549.926435-2-junjie.cao@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260413214549.926435-2-junjie.cao@intel.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,53 +87,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While sanity checking a create blob operation the use of the auto
-freed res variable could lead to inadvertently freeing an existing
-blob.
+On Tue, Apr 14, 2026 at 05:45:46AM +0800, Junjie Cao wrote:
+> qio_channel_pread() and qio_channel_preadv() perform a single
+> positioned read and may return a short result.  Callers that need all
+> bytes currently have to open-code a retry loop or simply treat a short
+> read as an error.
+> 
+> Introduce four new helpers following the existing read_all / readv_all
+> pattern:
+> 
+>   qio_channel_preadv_all_eof()  -- retry loop; returns 1 on success,
+>                                     0 on clean EOF, -1 on error.
+>   qio_channel_preadv_all()      -- wraps _eof; treats early EOF as
+>                                     error; returns 0 / -1.
+>   qio_channel_pread_all_eof()   -- single-buffer convenience wrapper
+>                                     around preadv_all_eof().
+>   qio_channel_pread_all()       -- single-buffer convenience wrapper
+>                                     around preadv_all().
+> 
+> These advance the file offset internally after each partial read.
+> All four are marked coroutine_mixed_fn, consistent with the existing
+> _all helpers.
+> 
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> ---
+>  include/io/channel.h | 92 ++++++++++++++++++++++++++++++++++++++++++++
+>  io/channel.c         | 91 +++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 183 insertions(+)
 
-Avoid this by in-lining the virtio_gpu_virgl_find_resource() check as
-the value is not needed anyway.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
 
-While at it add a comment to the end and use g_steal_pointer to make
-it clearer the object lifetime exceeds the function bounds if we pass
-all the checks.
 
-Fixes: 7c092f17cce (virtio-gpu: Handle resource blob commands)
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: qemu-stable@nongnu.org
----
- hw/display/virtio-gpu-virgl.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index b7a2d160ddd..add85bd4e61 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -830,8 +830,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
- 
--    res = virtio_gpu_virgl_find_resource(g, cblob.resource_id);
--    if (res) {
-+    if (virtio_gpu_virgl_find_resource(g, cblob.resource_id)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
-                       __func__, cblob.resource_id);
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-@@ -884,8 +883,9 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
- 
-     res->base.dmabuf_fd = info.fd;
- 
-+    /* Now live, cleaned up in virtio_gpu_virgl_resource_unref */
-     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
--    res = NULL;
-+    g_steal_pointer(&res);
- }
- 
- static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
