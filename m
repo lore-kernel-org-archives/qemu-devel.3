@@ -4,97 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC58CF43689
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF2FF4368A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgA4-0005R0-99; Fri, 17 Apr 2026 06:10:56 -0400
+	id 1wDgCJ-00060K-BQ; Fri, 17 Apr 2026 06:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDgA3-0005Qc-2r
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:10:55 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDgA0-0008V3-BZ
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:10:54 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so4376655e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 03:10:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776420650; x=1777025450; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ic2kaI0uKrtg/VOh1crcQp2SMlWMf8Rp/cFBLVjLTmU=;
- b=OVvkML/5c51QuTLebYd/BGeLAIq6tm9UatywPf2/coajwPSxtHr+/RJuJOh+YvN04g
- 4qAyUv2PEQ66R7aOJh2VieRtdBBJW0ojI/DWH4dVrwe29pwwJ53UV+H2fTcpUsYGe9uW
- difUa1MdJuwZmfVYiy3mW1pdTqUNvq4+TNpn1hIPCnYC45bwTebS0cYIpZ8Nv7eu9btq
- oPf+0hJ/5/44Ee2Tu3dmfMcfWUivwXwSnjjPHXHXAQisj2UADqVVdXLcemQmRdKW7oaw
- 81CfFxVFOaKcsBqsHPnLi35xY3VGHaHcteliLaVwnEG0CHzGmBGMwuV6tQtET7mK7Vb2
- Bd1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776420650; x=1777025450;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ic2kaI0uKrtg/VOh1crcQp2SMlWMf8Rp/cFBLVjLTmU=;
- b=OKrWNKW27FOrD0G5/hhOG7DCUEvDQtel6wB50d057sz/jjluiX1l0UDdbb3WnId54g
- 3Geba2adtOxiNjLYOhgwvOBBV6W2EwUlx+CGYcdOH2F+Kh+047h6myrie8Ezv72yuGBF
- sj13fid/CNUSSQm5ROt8+3j51OlJC4a+zoTmuwU+83l4Vrz4jfYzFHiKOJXy6vsRu40G
- Rb4XQsdZXUx05vGpJqvFEQ1fGYrmLpWDOdkIFkKFZyxxckDdVYpmRzYOK63F58rm/q04
- R93pzFKM1IPdRRrR9iaz3UscDTmvBDnHkUi6lf9GGrlvIEnIJORVoeRbHO5V1PRTJKzw
- dBvg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8M8IqL3FLVyESKM0ZNGzDJFXUNT/4UTGySj6BoPGXclW/jA15dzMSqDPTDvQKYIGCOtrwoAtgD6XHI@nongnu.org
-X-Gm-Message-State: AOJu0Yz8BB9XDobBGsZBQwzJMhdVxXc3J4MEKb4x3LsScMvxaPGAr+Cv
- XqyARZ+92lThZM3Bbw/J4phzggryRfRYqes7hy4IGdjsqst9y5QS/Sr7x00McHuI2kg=
-X-Gm-Gg: AeBDiet5Jf8rLdQFNcwrDwJDc3T2T+RBdr73xjTwLAlp7UHdwPn2QFJncRYXXMst7NQ
- MYSIXSbjM4WRi5Y2Wy02wNJurTJRgu6+D+yPqH+49wfN5PWmiux8yHM5wu8oKgvGH0WOYfqac6i
- K6Jh2tV0YXZ0xDycMX3v3D0X9xX6ObWLxHLmY2tgtMu8zz6URl21HNDNcULop5ag5nWI92u9lxP
- IkbuhgHfXZP7uo4tdPUZDvvFCe978upyqL+wS5DxnZhAMhlgyvzMTiobvIPk6m0Q2SCEhj6tm0z
- e6Ut/oxwqe9/XvcfZP5NIXYAoeSnvRpAkGdNk20o8IQiuOJ5YuIKneKvY9b5tB8Gv2XMskR1z/O
- VhBRwTK3jqL1rxcKmmlv3UGiujcyRAgTVfX5O6KK3qHz8tySSHwvYaC6aBcoQicbp4VPFo6phAu
- 3PLF0SWHOBqltze5Ejlg5HXT/LzSyjWbhQakw6UWOY58SCfXI/2FAXPzpVb2aefEafpGLHLf8hR
- Axu
-X-Received: by 2002:a05:600c:190b:b0:488:ab5b:d711 with SMTP id
- 5b1f17b1804b1-488fb77e3bfmr29158955e9.23.1776420650339; 
- Fri, 17 Apr 2026 03:10:50 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb74c789sm13060165e9.5.2026.04.17.03.10.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Apr 2026 03:10:48 -0700 (PDT)
-Message-ID: <18f7f436-c146-4353-9ae6-7b124ee45b76@linaro.org>
-Date: Fri, 17 Apr 2026 12:10:45 +0200
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1wDgCG-000607-Sq
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:13:12 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>) id 1wDgCD-0000x6-E8
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:13:12 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAXH6OmB+JptM+UAA--.49146S2;
+ Fri, 17 Apr 2026 18:12:54 +0800 (CST)
+Received: from [10.31.91.158] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAf8DwS5GlB+JpePEKAA--.3805S2;
+ Fri, 17 Apr 2026 18:12:54 +0800 (CST)
+Message-ID: <44abaece-6a6f-43c6-b29a-53d6eb08033c@phytium.com.cn>
+Date: Fri, 17 Apr 2026 18:12:52 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/6] target/riscv: Add test for RISC-V BE
-Content-Language: en-US
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>
-References: <20260417100302.162260-1-djordje.todorovic@htecgroup.com>
- <20260417100302.162260-7-djordje.todorovic@htecgroup.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260417100302.162260-7-djordje.todorovic@htecgroup.com>
+Subject: Re: [PATCH 10/28] MAINTAINERS: Remove Huai-Cheng Kuo
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ <20260416091654.316158-11-peter.maydell@linaro.org>
+ <58a32864-6c05-432c-bdc2-5763e32cda99@linaro.org>
+ <02e21af2-d6e8-4418-9cab-af56c81afc27@phytium.com.cn>
+ <a75dcca3-9cab-49e3-818c-4d52c2a1bdd6@linaro.org>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <a75dcca3-9cab-49e3-818c-4d52c2a1bdd6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: AQAAf8DwS5GlB+JpePEKAA--.3805S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAHBWnf5fgEpQAJsA
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7tw15Gr1rZrWfZry8trW7XFb_yoW8KF1kpF
+ ykJas2kFZrJr1xAFs3K3WSvFn5ta9Yyw1xXwnFgry5Zr9Fvr9xKa17Kr15CFyDWr4xXrWY
+ 9Fy3tw1xXa1kAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,18 +79,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/4/26 12:03, Djordje Todorovic wrote:
-> Add functional test for RISC-V big-endian.
-> 
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/riscv64/meson.build       |  1 +
->   tests/functional/riscv64/test_bigendian.py | 57 ++++++++++++++++++++++
->   2 files changed, 58 insertions(+)
->   create mode 100644 tests/functional/riscv64/test_bigendian.py
 
-I'd name that test "test_endianness.py", anyway:
+On 2026/4/17 16:58, Philippe Mathieu-Daudé wrote:
+> On 16/4/26 18:07, Tao Tang wrote:
+>>
+>> On 2026/4/16 19:28, Philippe Mathieu-Daudé wrote:
+>>> On 16/4/26 11:16, Peter Maydell wrote:
+>>>> Huai-Cheng Kuo has not posted to qemu-devel in some years and did not
+>>>> respond to a query about whether they still wished to be listed in
+>>>> our MAINTAINERS file.  Remove them, on the assumption that they are
+>>>> no longer active in QEMU.
+>>>>
+>>>> This makes "PCIE DOE" orphan.
+>>>
+>>> Cc'ing Tao & Gustavo who are working on Security Protocol and Data 
+>>> Model
+>>> (SPDM) which IIUC use DOE.
+>>
+>>
+>> Thanks Philippe. DOE is indeed relevant to SPDM and RME-DA work we 
+>> have been looking at.
+>
+> Commit 4f947b10d52 ("hw/nvme: Add SPDM over DOE support"), described as:
+>
+>     Setup Data Object Exchange (DOE) as an extended capability for
+>     the NVME controller and connect SPDM to it (CMA) to it.
+>
+> introduced the docs/specs/spdm.rst file which isn't maintained:
+>
+> $ ./scripts/get_maintainer.pl -f docs/specs/spdm.rst
+> get_maintainer.pl: No maintainers found, printing recent contributors.
+> get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
+>
+> Would it make sense to move hw/pci/pcie_doe.* to the SPDM section
+> instead of orphanize them?
+>
+>   SPDM
+>   M: Alistair Francis <alistair.francis@wdc.com>
+>   S: Maintained
+>   F: backends/spdm-socket.c
+>   F: include/system/spdm-socket.h
+>
+> Added in Cc contributors who might be interested in being listed
+> as co-maintainer or reviewer ;)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Hi Philippe,
+
+If useful, I would be glad to be listed as a reviewer and help review 
+changes in this area going forward.
+
+
+Thanks,
+
+Tao
+
+
+
+>
+>>
+>> I will help review changes in this area as they come up.
+>>
+>>
+>> Best regards,
+>>
+>> Tao
+>>
+>>
+>>>
+>>>>
+>>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>>> ---
+>>>>   MAINTAINERS | 3 +--
+>>>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>>> index 0b2adbc247..bc7c9b61da 100644
+>>>> --- a/MAINTAINERS
+>>>> +++ b/MAINTAINERS
+>>>> @@ -2160,8 +2160,7 @@ F: docs/specs/*pci*
+>>>>   F: docs/system/sriov.rst
+>>>>     PCIE DOE
+>>>> -M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
+>>>> -S: Supported
+>>>> +S: Orphan
+>>>>   F: include/hw/pci/pcie_doe.h
+>>>>   F: hw/pci/pcie_doe.c
+>>
+
 
