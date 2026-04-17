@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE72F4368D
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CABE2F43690
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDh1r-0000PD-EI; Fri, 17 Apr 2026 07:06:33 -0400
+	id 1wDh25-0000d6-Oc; Fri, 17 Apr 2026 07:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1n-0000Kw-HC
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:27 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1s-0000TR-VQ
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:33 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1k-0003lf-QC
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:27 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so8722265e9.2
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1r-0003oU-IZ
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:32 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43d73422431so402215f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776423982; x=1777028782; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776423990; x=1777028790; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1kkK6SH8LUtlT/ml+uU1J6eqO7qp6PRZ4PrQ0Ifd1i8=;
- b=v9kvEZ2CQsC8nYa2RtlodoNuLiO90UqJnU58I7KLs9201tnxBv7OnZsYVTUGsvl9Ii
- d6LZybzpKUSnKZFM3rrRpx7JUjKwXm35P+101HkO1RbQRlJ4fKoFPngM4KixQzls3icy
- HMbcqVznUtCP/rx4fk/eyioITC6V8A1v2UR8q0TYhA7GFYBfsvAE7gXyqdC2pG8EAIAn
- LnfJzQJzss4Og2wrM9O7+R+QujvA4BlT4myWdUtulfuWI5/cR6tqFCpuDJaz7aKfZU4T
- xaz41zMrzmoDPrTHLgV5bUXXCps2IU9+EK9MAWQgU2u8AGOq9aoE1hO98l8oRn4Ij3JY
- jf3g==
+ bh=d7zIbXV3N0b/RBTQjkJbbOoErq2rXFNeYVrRRPCYViI=;
+ b=HcfhDPKOKx/GF83a9DpzMPE/JzweHqjEXt+OU6XCHVoaz+edmu6HpjtxWBJ3AEQtnJ
+ gZVCWbo2ASDMrGnKE7ZZ+1X95ifH8B18iUbI7WF4yPyyfT1AiFvWt9nvWVijAJy9U9fd
+ Ml1quQ7CaZrKOhEkRhDm/v5ptLOB+/YnnSFy2Hh/z+1Oo0AE/mQiStCu7gfChjTA6kaw
+ BGOWFsb7e6YK1BZSL3OYKHm+2croeDgGJYt4oWKrrO3Hgi5F0l2Y7wTaXVG7p11RTbBx
+ R15t0mgS/w1wTNSxIzOekpnsuC57t8L935MHZLKJEuRiWIdKbnijMcrRBE17jBtBi6jd
+ LjQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776423982; x=1777028782;
+ d=1e100.net; s=20251104; t=1776423990; x=1777028790;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1kkK6SH8LUtlT/ml+uU1J6eqO7qp6PRZ4PrQ0Ifd1i8=;
- b=MHEMwyjFNKlt0/ElVr0u0enASYfyAtRu+M80lmd4K3vMpjjC6NVYKNyLmFw8RX4gCp
- 81CIXpdPec5vFRGco4qjJ1bAp9Ca+cf9nrF2OMK0L2/2CGlMJn170ECYIqmw5DQHjXnl
- PVrtPKXxWUktCJstn6oEyUFcLECnPDlvrz+Fc9YxD49riPUlZJ9sIXSts3r0MARsZeBE
- W8JYyUihGXcDCmI8C+GxWJ293RGGvjwV4q/Mbru3Vdr/4q9OxgqZolyCJ0n3UrhwI6fc
- 9MwFob7yP9KiWpuULjoeyogDZ1/cMmG9w48meFgc8eaZY135tVsVAp+xGhnK9yv/UZqn
- LUXw==
-X-Gm-Message-State: AOJu0YxxFddCM7pF+VwdBel7r/SoxTlRjQGWA+e8YteR//gZaoq8/Xbm
- ksOKsaHD3JbMYTyeKQYH1h7dDcMxslvd6SZYUq5oSP4bYruCdyZIGFajjIf4ce/p434rUfkFPso
- Ue9i45bM=
-X-Gm-Gg: AeBDiet3X0zs1Bg2Ltzc77beILuoMadLMPDpHhRtyOVq6CaLqbVJ//5IpsASlA2anyy
- jG4HaELxBGS2UuWV/XgvYlaEDApCh6WYpllthGqbTkGyniSw69lf5J1HJIgoQrQlSF0qMLtrjT2
- 7Am8wUBAG1Ras6u8ba3Q/m/2hmocJ6oWtd5cHib7+E17X9cB25adxi3428a9nRc9WwbWYJbbUEY
- fW8uEv/3TF44rt4SnG89jjaLKHuaqbjs1UVGAjBaB9LeCeD8qiLwflYPcJhSa75Wh6eTh0CPTu1
- 21waKevwu4EpM2lanyVw6eWcfBsygypwvvByKLpUoblpT6cpAoYgKU4e38cYX9sxcBzagJIuTK3
- 7DL4iJaXymFp8SGVjJwmi6bw5yMOgv4z/EuByYwa0kE0I02jGxpqZGsj3XhfVIRiCbIhX1UNp3f
- t9A97Muzt/gaPDhdtfFLSevjfZK1otPzxp7cwGwYgaz/ZAFwR7Mrzvrd0tmrCbjHwWILuLg4T0f
- xTbKdBFWhU=
-X-Received: by 2002:a05:600c:621b:b0:487:5c0:671f with SMTP id
- 5b1f17b1804b1-488fb742e74mr36826755e9.9.1776423982415; 
- Fri, 17 Apr 2026 04:06:22 -0700 (PDT)
+ bh=d7zIbXV3N0b/RBTQjkJbbOoErq2rXFNeYVrRRPCYViI=;
+ b=ZsK/GXxZF3jo63jKyka6V15K9aVH5RXnLRx5CMOkTlfhEQLAa0BrCKsBxbabjelNjG
+ NKoCu+9k54E1etIVG5CYR2S9nlKwHNsCEwU5ReYWjxJz97dhL7jxAcMlB3SjhW6PA7pm
+ jmE/uFa/gaxMXZPPADc/v4Lt7hW3f7oV2bQZhU3VjXLu6EAyK30x1d+O+N3IZ9K9QOjm
+ Mp9a1UjgThECdLmsbQkfvnYFmR7XVrw2uW56FHOfRhBDrUq4tVzzz1JHb8V8Zq7AZMg9
+ OuGkgUiZM1hDEgDupE6KrauLHN/fu+dZY9LHjnva6wA9uf9TRhymLgiqICBfQvBDZxMS
+ ZUxw==
+X-Gm-Message-State: AOJu0Yy9zXZ3OXtBFZSZE1HPg4wssARF73Ta1Be3xoQVJqsd7/UwUOnh
+ x5AWgCLtlH+d7dYVMBOcXhCHqPttRI6mKaxZjOtSsHNbVydT6e5LrVopsCtzZC+kBYC3HuIB+qt
+ VqqqRtRY=
+X-Gm-Gg: AeBDieu3zH4yPQFm3HKInZpgObBrq0xo8Pvyx4EmcMEjtmn/GEP1jpx76vn4lypBeDz
+ sUlPqoTnKn1F6wTW67zOaZlsyNDA5TpjULyXfksz0LxSK9JFh/ZyTshlT8meRRxZjJ9yBgjyCf0
+ 9JIrZCCWnplIDw5ao3oAdPhqVEb1j8mT/hVyY+nQBBRYla7YrZNlAhF1pkg/Dorfdd1ighsUQzA
+ biil8TPR+ml7KnV5U9xFtSRuQTs2vOppas0aSj4nHDyjNPpiqDhP1IeCbmUXdKHq+zoFIl2RoEM
+ YY0JqAV8MU/3coxig51PXraoyAuykgkao3OxaJ4xtQ1zAhsNJS+49Oi8ChPyPQGoA/5PBbweyT2
+ lH04PBslC4C70pSPT+14TauEh57lpXZzIcBcQ34nugFFIi4IMQyd8TrnZoC4dsTSILtraX7mCc2
+ YJn5PYZ8MY/rwXoGo2pStZp3NdWyB/NVGtdJ5un+5qGEE5PGbkX4MDZyrzznP+OOkjsyCoTMS2X
+ i6AWbokLXjnGl1Q+g1f7g==
+X-Received: by 2002:a05:6000:420a:b0:43e:a69b:d813 with SMTP id
+ ffacd0b85a97d-43fe3e0d459mr3745009f8f.25.1776423989436; 
+ Fri, 17 Apr 2026 04:06:29 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb74c796sm14474935e9.6.2026.04.17.04.06.20
+ ffacd0b85a97d-43fe4e4daf2sm3504685f8f.33.2026.04.17.04.06.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Apr 2026 04:06:21 -0700 (PDT)
+ Fri, 17 Apr 2026 04:06:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH 4/7] MAINTAINERS: Cover hexloader tests under the Generic
- Loader section
-Date: Fri, 17 Apr 2026 13:05:46 +0200
-Message-ID: <20260417110550.70068-5-philmd@linaro.org>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>
+Subject: [PATCH 5/7] MAINTAINERS: Remove PhilMD from firmware sections
+Date: Fri, 17 Apr 2026 13:05:47 +0200
+Message-ID: <20260417110550.70068-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260417110550.70068-1-philmd@linaro.org>
 References: <20260417110550.70068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,41 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop the orphan 'Intel Hexadecimal Object File Loader' section
-but keep the tests covered under the Generic Loader section, since
-both loader.c and generic-loader.c calls load_targphys_hex_as().
+I'm not paid to support this code. I haven't followed
+it neither, so be fair and just remove myself.
+Demote the status to 'Odd Fixes'.
 
-Cc: Alistair Francis <alistair@alistair23.me>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Daniel P. Berrange <berrange@redhat.com>
+Cc: Kashyap Chamarthy <kchamart@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ MAINTAINERS | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index eccc0d64331..d5e766ca6c9 100644
+index d5e766ca6c9..df8413c79e7 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2701,6 +2701,8 @@ F: hw/core/generic-loader.c
- F: hw/core/uboot_image.h
- F: include/hw/core/generic-loader.h
- F: docs/system/generic-loader.rst
-+F: tests/qtest/hexloader-test.c
-+F: tests/data/hex-loader/test.hex
+@@ -2837,9 +2837,8 @@ F: hw/usb/vt82c686-uhci-pci.c
+ F: include/hw/isa/vt82c686.h
  
- Guest Loader
- M: Alex Bennée <alex.bennee@linaro.org>
-@@ -2709,11 +2711,6 @@ F: hw/core/guest-loader.c
- F: docs/system/guest-loader.rst
- F: tests/functional/aarch64/test_xen.py
+ Firmware configuration (fw_cfg)
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Gerd Hoffmann <kraxel@redhat.com>
+-S: Supported
++S: Odd Fixes
+ F: docs/specs/fw_cfg.rst
+ F: hw/nvram/fw_cfg*.c
+ F: stubs/fw_cfg.c
+@@ -3955,14 +3954,12 @@ F: docs/specs/fsi.rst
+ F: tests/qtest/aspeed_fsi-test.c
  
--Intel Hexadecimal Object File Loader
--S: Orphan
--F: tests/qtest/hexloader-test.c
--F: tests/data/hex-loader/test.hex
--
- CHRP NVRAM
- M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+ Firmware schema specifications
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Daniel P. Berrange <berrange@redhat.com>
+ R: Kashyap Chamarthy <kchamart@redhat.com>
  S: Maintained
+ F: docs/interop/firmware.json
+ 
+ EDK2 Firmware
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ M: Gerd Hoffmann <kraxel@redhat.com>
+ S: Supported
+ F: hw/i386/*ovmf*
 -- 
 2.53.0
 
