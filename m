@@ -4,114 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637FCF4368A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CEFBF43688
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDfxr-0003qA-Ld; Fri, 17 Apr 2026 05:58:21 -0400
+	id 1wDfxH-00031t-4P; Fri, 17 Apr 2026 05:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wDfxk-0003YJ-26
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:58:14 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wDfxg-0003MI-IF
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:58:10 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b9c6680aaf8so90904366b.3
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 02:58:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776419887; cv=none;
- d=google.com; s=arc-20240605;
- b=U0ATBmHHvlx59NoJ9YYaWEW0UrlK7aRhTCDPo9WwaRy/LG7HEqb5dINN3JeBJnS03Q
- ibD5ODg9FlAaLD0yoUZDFq5OR2DbN0bHRtAS1GynVQAaWhi+o1eDI3Qmxjc+/Vq6JEwN
- ngQS8diEQlURc+K1zpUETAQ5xkXMnsvAQ8aCmsTpIRu5afgX78kb1FouaCPZkDVItv1o
- aEUxx9Gji9G2ipyeOWSbuW+NC+RwVnUJ9nrgJqP4c2VW/efs4D7bneWM7/Lp/orF3slD
- 0pWkrDWoX6SM6ZpSp311Uev24KdRduGP0cQkW+4jYV9rcW/9k82Vj9fgVsumgECwtFYC
- pdgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=wg1KuTtaSvZV1naO23Ae8NZFw9i6uBmBWD+NLek5x6o=;
- fh=0rFLonDjf1x7nu1Z4Bhj5EugRREEa3hVinoztSRbPqA=;
- b=hUwa+9/shWwldHqHC8ZWLc7RSlwIJQ6g3qu1pWlYJGkSBlYR792or2xuW5ZbBbPP88
- dlxhh3lsz3TkGtU8Afe+ylcScQLoQFQKgcebJ7pXeIKb7evtRK6/Z10sp8BK7pW4JDf4
- YzvjqyOJiKIh/47BvaWmISv7Kixj0WjHko0nqT0pjk7n4HgQlp+mYWrdclL3GjvAfJjb
- PwbHg8JeREj5ubGLwnQC73PyH0qiWDwxLvsAkIXRl8apdCkbS9E3yJXAuEuxT04OIqrk
- mpg1dDHQnV0bMmBbS28jQmYf+7f2n/rb2/MmQER4UMHXyam4XHc2mlR1AsQfCQc0XnFH
- KNZA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776419887; x=1777024687; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wg1KuTtaSvZV1naO23Ae8NZFw9i6uBmBWD+NLek5x6o=;
- b=mWfZzXftv48iM2uVdGRwCdVAm7AYujc5gS7UT/eQiPcdxhLc6kcCjtrUsENBVUZABF
- DIaD6wjMfigeFs95hnU/ZOaBqNUMywdSY2wwhB0T8CpYpNGqCT4XLTqSBWiJ6fs3XaYl
- ISK0F9azcwSWHJnugPpPweenMsAfuCv/PY2tL0wa7NliZ5zl3HC/WnnAfXxP/I2qR3Dp
- ckKodE21giuJndLth30nN8IYxZprb3ZmClsRIojCDQJNAlsHOEPklGu733gu9DLNgYLP
- 4sNT4mvQUN3heRugpXMizQ+Tq3Vq1POVkwwL0/5YsPNd5hmWm2VqJ3wsrF9c2AniirBB
- VR3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776419887; x=1777024687;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wg1KuTtaSvZV1naO23Ae8NZFw9i6uBmBWD+NLek5x6o=;
- b=ExoRD7Bu/ADrTLn/paGuRSGW5Jr0HiT8xJKIj7m+KlJFnzrmBN3Ftl7EJDOChCF5BX
- 0KgyQF1xZAJvIc09OQMmbYI3Tn6i/Lt94lvFb3xqC58wSl865v9lFZwf3bt1YRXuA5C3
- yugq90EY61V1J4H6z5hYJnh5/86X6NX+fklCWmRlUJFuMGit3VKSn7aLnAiWBQlPfddM
- FuuGKEwHz+6XoIEb+/eYMnp2bN15nqgtfO4WW8wFfjFowe5EXjuFpR9QCevcRY1x53qC
- X8ZsAOgVOjGWgslBTrDG1VGT7LA60PPw8aHV2Do6xSy8myzfUncz48NMtoUXJzmP91KZ
- jn5w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Fdrd51mA4sKpJhYqpZTuqbBGRkfYxzQYkEnPO1EjLUtDKPzO2ASLSLtvCEYRpKxy4dAWHfQ5hY237@nongnu.org
-X-Gm-Message-State: AOJu0YxkKWKel0h+Jml3QTpY2qR1sc/0Z5wVLcyPUMuB68uBJvE0k0f7
- 0ujFCpx7AzUv3CijzTwFJYI5KyeSDiNWH8vqW4MA+sBtNY1TG/uP7j6JlchrIr9OPIatVHrvf6p
- jjondmowwL+nCbAcdMtsEVxOPLRPHqdXnUQ==
-X-Gm-Gg: AeBDies7F9PFwCJiShPIPPEfi8UcdlqehLr387ekcq1HLLJZp46/vaLZSGgEOHNGDk0
- LP9/Jx6CwVuQST67TY/EXhBNiJBqNeS+AQis0ukp3SR9ZxRm6SuleKcOMhkrWk4Ao8oh+1p4nSS
- KNAvbjSWwIdIgMvKmCcSUlJGl7Pd0OMvtI3NYAESSuikHwV9kRati0z+DsB/DkgkIaQIAaOoUAy
- 2MPQWx2rh+LtfXv8GK4G0LBnT+vfk87ymcuetMw1ZMM56GYwSILzbc1zpYfL4J/9Pw58GPTJ0yr
- UH5Vs62BCkROJHgjKxx7T/Y9v05htojhWLa5uaEAgu/XU9P8
-X-Received: by 2002:a17:906:5190:20b0:b9d:166f:ff82 with SMTP id
- a640c23a62f3a-ba41916f331mr85808666b.6.1776419886429; Fri, 17 Apr 2026
- 02:58:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
+ id 1wDfx9-0002jp-Uj; Fri, 17 Apr 2026 05:57:35 -0400
+Received: from mail.avm.de ([212.42.244.119])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
+ id 1wDfx5-00030T-HO; Fri, 17 Apr 2026 05:57:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+ t=1776419845; bh=QoyvxQROiGbE6vAvJxaG+85jruxRTacuSs9YktkmEG0=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=OPKm0GxdEpwO+n7aXHamI33uktNSIId8uheR7V3/x/MCVl1IjvdFq85n1S1ChZs/c
+ gBk5D1rjOAVORQGUdDDXoXEfUwPZvU066FU9OYQ91F2ZWPaCwGI42O13y7GfQ6mIo0
+ V2TwgMroMnWGDsXUXuy5qsEZOIL3LL0uZ7tcUino=
+Received: from [172.16.0.1] (helo=mail.avm.de)
+ by mail.avm.de with ESMTP (eXpurgate 4.55.2)
+ (envelope-from <c.speich@avm.de>)
+ id 69e20405-1e6c-7f0000032729-7f000001c51e-1
+ for <multiple-recipients>; Fri, 17 Apr 2026 11:57:25 +0200
+Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
+ by mail.avm.de (Postfix) with ESMTP;
+ Fri, 17 Apr 2026 11:57:25 +0200 (CEST)
+Received: from [127.0.1.1] ([172.17.89.139])
+ by mail-notes.avm.de (HCL Domino Release 14.0FP4)
+ with ESMTP id 2026041711572443-2976 ;
+ Fri, 17 Apr 2026 11:57:24 +0200 
+From: Christian Speich <c.speich@avm.de>
+Date: Fri, 17 Apr 2026 11:51:36 +0200
+Subject: [PATCH v4 3/7] hw/sd/sd: Use multi-byte/block writes for block
+ path
 MIME-Version: 1.0
-References: <20260416091654.316158-1-peter.maydell@linaro.org>
- <20260416091654.316158-11-peter.maydell@linaro.org>
- <58a32864-6c05-432c-bdc2-5763e32cda99@linaro.org>
- <02e21af2-d6e8-4418-9cab-af56c81afc27@phytium.com.cn>
- <a75dcca3-9cab-49e3-818c-4d52c2a1bdd6@linaro.org>
-In-Reply-To: <a75dcca3-9cab-49e3-818c-4d52c2a1bdd6@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 17 Apr 2026 19:57:39 +1000
-X-Gm-Features: AQROBzBmq9jOVoiN6-9iv8EFNigagNc7sokbtWB4zybCx-m29HZmI5pzSDiNOfo
-Message-ID: <CAKmqyKMf+RhUb_jzOfTVCiQV7EW25e5z3C1fjdarcWVS3V3-7g@mail.gmail.com>
-Subject: Re: [PATCH 10/28] MAINTAINERS: Remove Huai-Cheng Kuo
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>, 
- qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Message-Id: <20260417-sdcard-performance-b4-v4-3-119e66be10c2@avm.de>
+References: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
+In-Reply-To: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
+ <bmeng.cn@gmail.com>, qemu-block@nongnu.org, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Christian Speich <c.speich@avm.de>
+X-Mailer: b4 0.14.2
+X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
+ 2025) at 17.04.2026 11:57:24,
+ Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
+ 17.04.2026 11:57:25, Serialize complete at 17.04.2026 11:57:25
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-purgate-ID: 149429::1776419845-4BF2C233-2AF0D54D/0/0
+X-purgate-type: clean
+X-purgate-size: 12969
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+Received-SPF: pass client-ip=212.42.244.119; envelope-from=c.speich@avm.de;
+ helo=mail.avm.de
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,93 +89,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 17, 2026 at 6:59=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 16/4/26 18:07, Tao Tang wrote:
-> >
-> > On 2026/4/16 19:28, Philippe Mathieu-Daud=C3=A9 wrote:
-> >> On 16/4/26 11:16, Peter Maydell wrote:
-> >>> Huai-Cheng Kuo has not posted to qemu-devel in some years and did not
-> >>> respond to a query about whether they still wished to be listed in
-> >>> our MAINTAINERS file.  Remove them, on the assumption that they are
-> >>> no longer active in QEMU.
-> >>>
-> >>> This makes "PCIE DOE" orphan.
-> >>
-> >> Cc'ing Tao & Gustavo who are working on Security Protocol and Data Mod=
-el
-> >> (SPDM) which IIUC use DOE.
-> >
-> >
-> > Thanks Philippe. DOE is indeed relevant to SPDM and RME-DA work we have
-> > been looking at.
->
-> Commit 4f947b10d52 ("hw/nvme: Add SPDM over DOE support"), described as:
->
->      Setup Data Object Exchange (DOE) as an extended capability for
->      the NVME controller and connect SPDM to it (CMA) to it.
->
-> introduced the docs/specs/spdm.rst file which isn't maintained:
+When writing/reading blocks via WRITE/READ_MULTIPLE_BLOCK we try to
+directly pass this request down to the block layer. This can only be done
+for properly sized and aligned accesses, other access still use a bounce
+buffer but still benefit from copying as much data in one memcpy as
+possible.
 
-Urgh, I can fix that.
+RPMB is limited to the slow path using a bounce buffer.
 
->
-> $ ./scripts/get_maintainer.pl -f docs/specs/spdm.rst
-> get_maintainer.pl: No maintainers found, printing recent contributors.
-> get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
->
-> Would it make sense to move hw/pci/pcie_doe.* to the SPDM section
-> instead of orphanize them?
+Signed-off-by: Christian Speich <c.speich@avm.de>
+---
+ hw/sd/sd.c | 228 ++++++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 172 insertions(+), 56 deletions(-)
 
-Yeah, I think it would make sense under the SPDM section. DOE can be
-used for other things, but right now SPDM seems to be the major use
-case.
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 2c81776df316feda75f97e15cc9bbd1538f1a21c..b27fed2e563e5971dd32787498eb8abed9ffe9be 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1112,24 +1112,36 @@ static const VMStateDescription sd_vmstate = {
+     },
+ };
+ 
+-static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
++static void sd_blk_read(SDState *sd, void* buf, uint64_t addr,
++                        uint32_t len)
+ {
+     trace_sdcard_read_block(addr, len);
+     addr += sd_part_offset(sd);
+-    if (!sd->blk || blk_pread(sd->blk, addr, len, sd->data, 0) < 0) {
++    if (!sd->blk || blk_pread(sd->blk, addr, len, buf, 0) < 0) {
+         fprintf(stderr, "sd_blk_read: read error on host side\n");
+     }
+ }
+ 
+-static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
++static void sd_blk_read_bounce_buffer(SDState *sd, uint64_t addr, uint32_t len)
++{
++    sd_blk_read(sd, sd->data, addr, len);
++}
++
++static void sd_blk_write(SDState *sd, const void *buf, uint64_t addr,
++                         uint32_t len)
+ {
+     trace_sdcard_write_block(addr, len);
+     addr += sd_part_offset(sd);
+-    if (!sd->blk || blk_pwrite(sd->blk, addr, len, sd->data, 0) < 0) {
++    if (!sd->blk || blk_pwrite(sd->blk, addr, len, buf, 0) < 0) {
+         fprintf(stderr, "sd_blk_write: write error on host side\n");
+     }
+ }
+ 
++static void sd_blk_write_bounce_buffer(SDState *sd, uint64_t addr, uint32_t len)
++{
++    sd_blk_write(sd, sd->data, addr, len);
++}
++
+ static bool rpmb_calc_hmac(SDState *sd, const RPMBDataFrame *frame,
+                            unsigned int num_blocks, uint8_t *mac)
+ {
+@@ -1363,7 +1375,7 @@ static void sd_erase(SDState *sd)
+                 continue;
+             }
+         }
+-        sd_blk_write(sd, erase_addr, erase_len);
++        sd_blk_write_bounce_buffer(sd, erase_addr, erase_len);
+     }
+ }
+ 
+@@ -1984,7 +1996,7 @@ static sd_rsp_type_t sd_cmd_READ_SINGLE_BLOCK(SDState *sd, SDRequest req)
+         return sd_r1;
+     }
+ 
+-    sd_blk_read(sd, addr, sd->blk_len);
++    sd_blk_read_bounce_buffer(sd, addr, sd->blk_len);
+     return sd_cmd_to_sendingdata(sd, req, addr, NULL, sd->blk_len);
+ }
+ 
+@@ -2673,7 +2685,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         if (sd_generic_write_data(sd, buf, &length)) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+-            sd_blk_write(sd, sd->data_start, sd->data_offset);
++            sd_blk_write_bounce_buffer(sd, sd->data_start, sd->data_offset);
+             sd->blk_written ++;
+             sd->csd[14] |= 0x40;
+             /* Bzzzzzzztt .... Operation complete.  */
+@@ -2682,44 +2694,85 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         break;
+ 
+     case 25:  /* CMD25:  WRITE_MULTIPLE_BLOCK */
+-        /*
+-         * Only read one byte at a time. We will be called again with the
+-         * remaining.
+-         */
+-        length = 1;
+-
+-        if (sd->data_offset == 0) {
+-            /* Start of the block - let's check the address is valid */
+-            if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
+-                                  sd->data_start, sd->blk_len)) {
+-                break;
++        if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
++                            sd->data_start + sd->data_offset, length)) {
++            /* Limit writing data to our device size */
++            length = sd->size - sd->data_start - sd->data_offset;
++
++            /* We've read past the end, return a dummy write. */
++            if (length == 0) {
++                return 1;
+             }
+-            if (sd->size <= SDSC_MAX_CAPACITY) {
+-                if (sd_wp_addr(sd, sd->data_start)) {
++        }
++
++        if (sd->size <= SDSC_MAX_CAPACITY) {
++            uint64_t start = sd->data_start + sd->data_offset;
++
++            /*
++             * Check if any covered address violates WP. If so, limit our write
++             * up to the allowed address.
++             */
++            for (uint64_t addr = start; addr < start + length;
++                 addr = ROUND_UP(addr + 1, WPGROUP_SIZE)) {
++                if (sd_wp_addr(sd, addr)) {
+                     sd->card_status |= WP_VIOLATION;
++
++                    length = addr - start - 1;
+                     break;
+                 }
+             }
+         }
+-        sd->data[sd->data_offset++] = value[0];
+-        if (sd->data_offset >= sd->blk_len) {
+-            /* TODO: Check CRC before committing */
+-            sd->state = sd_programming_state;
+-            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+-                    & EXT_CSD_PART_CONFIG_ACC_MASK;
+-            if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+-                emmc_rpmb_blk_write(sd, sd->data_start, sd->data_offset);
+-            } else {
+-                sd_blk_write(sd, sd->data_start, sd->data_offset);
++
++        partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                            & EXT_CSD_PART_CONFIG_ACC_MASK;
++
++        /* Partial write or RPMB (single block only for now) */
++        if (sd->data_offset > 0
++            || partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++            length = MIN(sd->blk_len - sd->data_offset, length);
++
++            memcpy(sd->data + sd->data_offset, buf, length);
++            sd->data_offset += length;
++
++            if (sd->data_offset >= sd->blk_len) {
++                sd->state = sd_programming_state;
++                if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++                    emmc_rpmb_blk_write(sd, sd->data_start, sd->data_offset);
++                } else {
++                    sd_blk_write_bounce_buffer(sd, sd->data_start,
++                                               sd->data_offset);
++                }
++                sd->blk_written++;
++                sd->data_start += sd->blk_len;
++                sd->data_offset = 0;
++                sd->csd[14] |= 0x40;
++
++                /* Bzzzzzzztt .... Operation complete.  */
++                if (sd->multi_blk_cnt != 0) {
++                    if (--sd->multi_blk_cnt == 0) {
++                        /* Stop! */
++                        sd->state = sd_transfer_state;
++                        break;
++                    }
++                }
++
++                sd->state = sd_receivingdata_state;
+             }
+-            sd->blk_written++;
+-            sd->data_start += sd->blk_len;
+-            sd->data_offset = 0;
++        }
++        /* Try to write multiple of block sizes */
++        else if (length >= sd->blk_len) {
++            length = QEMU_ALIGN_DOWN(length, sd->blk_len);
++
++            sd->state = sd_programming_state;
++            sd_blk_write(sd, buf, sd->data_start, length);
++            sd->blk_written += length / sd->blk_len;
++            sd->data_start += length;
+             sd->csd[14] |= 0x40;
+ 
+-            /* Bzzzzzzztt .... Operation complete.  */
+             if (sd->multi_blk_cnt != 0) {
+-                if (--sd->multi_blk_cnt == 0) {
++                sd->multi_blk_cnt -= length / sd->blk_len;
++
++                if (sd->multi_blk_cnt == 0) {
+                     /* Stop! */
+                     sd->state = sd_transfer_state;
+                     break;
+@@ -2728,6 +2781,12 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+ 
+             sd->state = sd_receivingdata_state;
+         }
++        /* Partial write */
++        else if (length > 0) {
++            memcpy(sd->data, buf, length);
++            sd->data_offset = length;
++        }
++
+         break;
+ 
+     case 26:  /* CMD26:  PROGRAM_CID */
+@@ -2798,7 +2857,6 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+     const uint8_t dummy_byte = 0x00;
+     unsigned int partition_access;
+     uint32_t io_len;
+-    uint8_t *value = buf;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+         memset(buf, dummy_byte, length);
+@@ -2838,36 +2896,94 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+         break;
+ 
+     case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
++        if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
++                              sd->data_start + sd->data_offset, length)) {
++            /* Limit reading data to our device size */
++            length = sd->size - sd->data_start - sd->data_offset;
++
++            /* We read past the end, return a dummy read. */
++            if (length == 0) {
++                memset(buf, dummy_byte, 1);
++                return 1;
++            }
++        }
++
++        partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                & EXT_CSD_PART_CONFIG_ACC_MASK;
++
++        /* We have a partially read block. */
++        if (sd->data_offset > 0) {
++            length = MIN(sd->data_size - sd->data_offset, length);
++
++            memcpy(buf, sd->data + sd->data_offset, length);
++
++            sd->data_offset += length;
++
++            /* Partial read is complete, clear state. */
++            if (sd->data_offset >= sd->data_size) {
++                sd->data_start += io_len;
++                sd->data_size = 0;
++                sd->data_offset = 0;
++
++                if (sd->multi_blk_cnt != 0) {
++                    if (--sd->multi_blk_cnt == 0) {
++                        sd->state = sd_transfer_state;
++                    }
++                }
++            }
++        }
+         /*
+-         * We will only read one byte at a time. We will be called again with
+-         * the remaining buffer.
++         * Try to read multiples of the block size directly bypassing the local
++         * bounce buffer.
++         * Not for RPMB.
+          */
+-        length = 1;
++        else if (length >= io_len
++                 && partition_access != EXT_CSD_PART_CONFIG_ACC_RPMB) {
++            length = QEMU_ALIGN_DOWN(length, io_len);
+ 
+-        if (sd->data_offset == 0) {
+-            if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
+-                                  sd->data_start, io_len)) {
+-                return dummy_byte;
++            /* For limited reads, only read the requested block count. */
++            if (sd->multi_blk_cnt != 0) {
++                length = MIN(length, sd->multi_blk_cnt * io_len);
+             }
+-            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+-                    & EXT_CSD_PART_CONFIG_ACC_MASK;
++
++            sd_blk_read(sd, buf, sd->data_start, length);
++
++            sd->data_start += length;
++
++            if (sd->multi_blk_cnt != 0) {
++                sd->multi_blk_cnt -= length / io_len;
++
++                if (sd->multi_blk_cnt == 0) {
++                    sd->state = sd_transfer_state;
++                }
++            }
++        }
++        /* Read partial at the end or sinlge-block RPMB */
++        else if (length > 0) {
++            length = MIN(length, io_len);
++
++            /* Fill the buffer */
+             if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+                 emmc_rpmb_blk_read(sd, sd->data_start, io_len);
+             } else {
+-                sd_blk_read(sd, sd->data_start, io_len);
++                sd_blk_read_bounce_buffer(sd, sd->data_start, io_len);
+             }
+-        }
+-        *value = sd->data[sd->data_offset++];
+ 
+-        if (sd->data_offset >= io_len) {
+-            sd->data_start += io_len;
+-            sd->data_offset = 0;
++            memcpy(buf, sd->data, length);
+ 
+-            if (sd->multi_blk_cnt != 0) {
+-                if (--sd->multi_blk_cnt == 0) {
+-                    /* Stop! */
+-                    sd->state = sd_transfer_state;
+-                    break;
++            sd->data_size = io_len;
++            sd->data_offset = length;
++
++            if (sd->data_offset >= io_len) {
++                sd->data_start += io_len;
++                sd->data_offset = 0;
++
++                if (sd->multi_blk_cnt != 0) {
++                    if (--sd->multi_blk_cnt == 0) {
++                        /* Stop! */
++                        sd->state = sd_transfer_state;
++                        break;
++                    }
+                 }
+             }
+         }
 
-Would you like me to send it Peter? I can apply it after this seris if you =
-want
+-- 
+2.43.0
 
-Alistair
-
->
->    SPDM
->    M: Alistair Francis <alistair.francis@wdc.com>
->    S: Maintained
->    F: backends/spdm-socket.c
->    F: include/system/spdm-socket.h
->
-> Added in Cc contributors who might be interested in being listed
-> as co-maintainer or reviewer ;)
->
-> >
-> > I will help review changes in this area as they come up.
-> >
-> >
-> > Best regards,
-> >
-> > Tao
-> >
-> >
-> >>
-> >>>
-> >>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> >>> ---
-> >>>   MAINTAINERS | 3 +--
-> >>>   1 file changed, 1 insertion(+), 2 deletions(-)
-> >>>
-> >>> diff --git a/MAINTAINERS b/MAINTAINERS
-> >>> index 0b2adbc247..bc7c9b61da 100644
-> >>> --- a/MAINTAINERS
-> >>> +++ b/MAINTAINERS
-> >>> @@ -2160,8 +2160,7 @@ F: docs/specs/*pci*
-> >>>   F: docs/system/sriov.rst
-> >>>     PCIE DOE
-> >>> -M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
-> >>> -S: Supported
-> >>> +S: Orphan
-> >>>   F: include/hw/pci/pcie_doe.h
-> >>>   F: hw/pci/pcie_doe.c
-> >
->
->
 
