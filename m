@@ -4,141 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFBF7F436AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 14:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3238F436AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 14:50:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDkVb-0004um-9x; Fri, 17 Apr 2026 10:49:27 -0400
+	id 1wDkWB-000693-VG; Fri, 17 Apr 2026 10:50:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1wDkVZ-0004t0-Cn; Fri, 17 Apr 2026 10:49:25 -0400
-Received: from mail-swedencentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c202::7] helo=GVXPR05CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1wDkVX-0007DI-3w; Fri, 17 Apr 2026 10:49:25 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N4NalR/flrCpkuD1Fw9k7eA3bJ1kQ79CIHWSHIRuLkzmT+VIf8VFjv7QUpEBAl9j9KOmKU3g0ZvFnjhiMFI+WZk0HDHX57VDKvZ5sq5d+qJHpZzjkFkgcWoliPc6mTJ7cnfHDEvROKV9sPi7SNJijrID3gNM+OG6WH1IIl5iQVXb6bJU8qr4usZ+5/4oWqf7xqrFYr4xk31ffy8M8ncuS0XeR3NcBUsvwAVu3gr/PSiTBcja9GKxYautq784e0nG498QqPe+5RWlDRrjJMSR4DJXrHUNW/faMC0nvZVr8XFkez9FuDl8P60AxIX+hmvKFoKZ2Z7VQiTD6vijY+UGsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZLAw7E1uzOHIJoqM0jhNr6YgtQVVa/bzupNMV5yl6HM=;
- b=wZb85LgMYWSaq6rk4fOwYG1QI7IPisjaCWh6yMmZa+y4KA5EPLG/QN30FrfwANRvc3cXe4F5iEJJQKyOUAMe/dNm1rgr4fnvmqSzJ8kdh+G535W8emoMy8FEr2FYn6uynR6sVnCijl9yBT7MUsj6RHNbIbLRzKqm2W0ztjWWLevKHL8/TaC2VGuLu3pvr4XdGw6i38yD/hSTECRFoqL31yP2N2qSkA/3sPR73BIucs95JFObKPqxpLvRV7kZVnGvoQNGydQo/iPNgUP3rUA7NpYYoPsZ8G02wsu4kQUAC6917khGdLqr37c5ZJ6a8aVgP13Ykj4PDnHxxeqsrpEDYg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=htecgroup.com; dmarc=pass action=none
- header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZLAw7E1uzOHIJoqM0jhNr6YgtQVVa/bzupNMV5yl6HM=;
- b=u+cuk7TLkRFyEOoqiML3wLG6fWAouXDIxD846W36apoM+MS8yBd0w0xBJV+2A66J2CM4hwbPpElEnuY8KW9A78+/UD1vHUO0pl9OjM34R4CHBnaXJQNsyj/2Bgf7wDA/RtXAcoAU1h4V+BEqlKaEqvovep7CGCfxa04u5rz7Ib4cc3BPJQZJpmKfvOdje1GaCHfzEpSlNR3lZHdsopoV0q8m1ZECW0B8MQvlrOppX7N4afsdQyh+0cQQw2waCQAT7s173wqhgvqncQeutzKdQEmj8EMSpuom40h/2DFxmX7pPtvpTIyRb8Oy0+i44sLQHzjYbEkKLdrdlnycOI4HJA==
-Received: from PA2PR09MB7634.eurprd09.prod.outlook.com (2603:10a6:102:412::6)
- by VI0PR09MB8150.eurprd09.prod.outlook.com (2603:10a6:800:2ad::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Fri, 17 Apr
- 2026 14:49:12 +0000
-Received: from PA2PR09MB7634.eurprd09.prod.outlook.com
- ([fe80::c461:b510:b6b9:f442]) by PA2PR09MB7634.eurprd09.prod.outlook.com
- ([fe80::c461:b510:b6b9:f442%3]) with mapi id 15.20.9818.023; Fri, 17 Apr 2026
- 14:49:12 +0000
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
- <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
- <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH v8 0/7] Add RISC-V big-endian target support
-Thread-Topic: [PATCH v8 0/7] Add RISC-V big-endian target support
-Thread-Index: AQHcznlapgkVN1gNu0qfz0cstgIj0A==
-Date: Fri, 17 Apr 2026 14:49:12 +0000
-Message-ID: <20260417144905.178056-1-djordje.todorovic@htecgroup.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=htecgroup.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PA2PR09MB7634:EE_|VI0PR09MB8150:EE_
-x-ms-office365-filtering-correlation-id: 25633a07-dd28-459d-e55c-08de9c907d65
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|38070700021|18002099003|56012099003; 
-x-microsoft-antispam-message-info: Ze5VQT6+Hsv6HxFWhAN2cvHubw1XvK/xWKdrQpO85A0dLcnzzQmx7fGTUdR9ULPRsKPOoKmOPhQnTJbBC3kuR2FEn5VI9qshLzLZwQd9Zx55hfc4BNaEj+YiRJK6B9e2PvvXD+71v1gzVFtZql5ZPPt1l1rJ/NcHW+NEPEIZ9tQJI1HKJ3MvQpA30mRrllzc/7JguTUc71ZvULlUHvuWV3bBne3o4f/XHlAE9nPwj9diaoZuTASEP43/72YLZSmz5dBzDN9/k0bFHyLvwtGn3qgzwKy4Py1bHCsSbqBZMcydQK9FqKE0MeMdLHQmLfssI77TKrjoVHDs+gYwS4G7s4L98USjgZbMO/dQIuDDkxZkGF5evrcyCO5icdMVFC4n+s2/xva5Eo7nMBaSXexqcVp0klFS5nhVAfTURM+WiGZEYVkksfulI3PRUjtmLlPQRpmUutg6rFCDDBcYisR8qIqQLpEOcq5qo0hxCy4CwU8VFrsLzeitk+pnacIV73717dAg+79k0gFgiQ6KPqN5WYBQJUSweZQDSsSx8I7P3ztPX6gqaQagtjKSjod6HGqQxcQfLOBMRBBBDTi9b/JfQ8VGbKAx1LLWBGVJzOEm0V+zC35gC7U9moX9d3LJpUqPjHlz4s/2M/YGMO88Ks/dJV4OXL5mjj6xpYAw390ke5nqAkNaZIMWbp2pfBKP7JfCjAAxn951nSRbtpRlC0eF/z7l2L/4EIzNcy4Of71VuHvAi1crxcfjmz6gMIrferGeEai9xnmNamIhLZDzXOABAIJJOJ3hETIGP6R3YcQ8T6c=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PA2PR09MB7634.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(18002099003)(56012099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?T2JKTVBVd2U4b3lZeU5oSFZCSHhzQXVQNmIzNFdtVStzcnBEODFnSGE4dUM2?=
- =?utf-8?B?SEVObTdvY1NjbWd0a1dvL1I5Sk9sb3NJbzhCR3drL2RTNGlPSWhSblIzazlB?=
- =?utf-8?B?WWtic1MrRWJ3Z0V3VVo3WEdleHRCWFlhNkJjeUdvMDhxQ3lHdFg2cXVSMmtu?=
- =?utf-8?B?aXk0UDVYMG1kemJRYVNBZDBHRFB6eVFzTWtVWS9uV0lqRitzYWFxblBycElv?=
- =?utf-8?B?QUdvUm54ZUNYQXFybEdBNExBU1FYMSt3Rzd1ajRCeUFGL3k0cWhxTDVkTFVH?=
- =?utf-8?B?TGUyS0pNQ1NsUytRNFNzR2lCM1hHSytyR1gzSVc2NllITjkyRVBUcytFWmtM?=
- =?utf-8?B?N05FSGhrMmM3OStmSjFyWnpxUWRBRFYxbjc5WW96cVRYYm9QYmhUZmlhM2xa?=
- =?utf-8?B?a2VTOFF6MSt5M1p2MGlFbEF1UG5vamRtMi9scytMcTlTZ3VuWmZIbjkzYVlm?=
- =?utf-8?B?UWM5RSs1dHdsVnY5akx0QVB0ZDd3V1BLbWhIQ21sRElTbnBJOEltYXh0QzEr?=
- =?utf-8?B?K0szbW1tSzUxMUg4WittVSs1Q0pDMTlodEVEbitYaGd4NmRINTd4VUJZRXpN?=
- =?utf-8?B?SnkzWXRRaEU2c3cyS1RnVllmMXdSLy9QZXlYQkNSb21abG5LMUNVeGdDQUJp?=
- =?utf-8?B?SFhrQjJVZDYvTDA4TEhyS0JxVHgyck1IRGl1U3JSOG1wWXhTck5McXRIUDZO?=
- =?utf-8?B?WEVVcmZZWXNreDQwc1p1Z0RDUzNScVZ2MUpJN0ZsMWoyUkFmZG02akpGTTFv?=
- =?utf-8?B?USt1eGw2emtIZ212VzN0SWJQN1VmK2piN2wxaDJPcWw4SnFXZmhHNDRaOXdv?=
- =?utf-8?B?NHRaY0tKWXlncjR0b1RZSnZHdHYrN2NZOHVJYmpzSDg4bWVyd3EwdGtncVhO?=
- =?utf-8?B?dkFLa1BVU0w1VkxjbkJ5bS80WU1WOHQrN2NRelZ1ZlRQQVdsWDFwdUk4c0Fy?=
- =?utf-8?B?TGdQVEQ1bkRYMmthVlVLblgyZHc4elNQTHc4WTlxcytMRkVsdGRmWWRWLytJ?=
- =?utf-8?B?TWZJR1JKdG1ZdTRsYmNhNmRkbWxrT3ZQRmZXRDhSU0ZESytjOWJBc3UvN0Va?=
- =?utf-8?B?RjZwNnpEQVN3N2JCWnFodU1BcDN0ZTZrZmZFWXpqQlo1WUVUMlZERmRVYTlU?=
- =?utf-8?B?UW0ydFF3RGlidFVhcWNMNlN1S0hJcG40SmQwWHE3VU1HZlNja1pja3RZa0pV?=
- =?utf-8?B?Skp3Z01iZXFYNlVFL2prQ2g3Sm9QVnRwd1BBNm9PdUIyV3RqMGpMRUdNWVVL?=
- =?utf-8?B?Y04vU3hxcElFSWFiUmpBMTdWM0NvTEF0MFA3M1R2M0NETURwdUVzcHdoZHRH?=
- =?utf-8?B?dmhEVDBLcVU0L3pheGcvVUNnUTVjN0NLQXpHMlhxM2xuWS9oVmxTZy9HOHRp?=
- =?utf-8?B?WFl1K3lNWjVJcW1wcWo1ZE81UU9hbDRlK2dYUUFvUW5wdFBGTTlZaHJUMXcy?=
- =?utf-8?B?Y2hpdGhER2dKT1UxQmhScVU4ZTcyMjlSMlZobDJVNk53ZFg0cmtDdEc1YWor?=
- =?utf-8?B?aERWV0JCeHY3Zmx6NEIrZnFyb1NCZWU5TTNmckVHdFBGN0JtNG5DTElhNUdC?=
- =?utf-8?B?Skt1WGdpZ1A4bUNYS0NrMFJHUGJEQ0ZiRGR1VHNpcVZpT2hkN2Q0K1dKdm5l?=
- =?utf-8?B?OHdwc3hzSHJuVDc0TUFhMGNKZXB1UkZxNHdmWVYyK0p2QVBmR2hkNUNtMThI?=
- =?utf-8?B?cTBVNHhXUHVRV1VyYzRNRk9KMGxMQndDZnNibWVkRmVaNGpaTFFRcmFhU0dW?=
- =?utf-8?B?QllZVHo0Qi9GTXB2b3RSUEdVcmdDaXhVK3RnMnRrd1JpWVI4Mm9nTWFIdjlE?=
- =?utf-8?B?RUpENklvU3VqbHhoZ1NLVUFaL0haOEttZ1picFZmdnNmUDBJUVpjRWlTbHhl?=
- =?utf-8?B?ZmU5WW95eHRLclZYVHc2b2g0QW5EMXRCMEhtb0J6UGZUdHp2YnljWm9wRWhQ?=
- =?utf-8?B?WXFETzdxRXJrQ0hBeXFwY3J0RjVqSEQvdld2cTRXZUFTYVNkdkVRSGZtRDVS?=
- =?utf-8?B?ZlEzUE5pK1BUOXBCamdhNVdzUDNhMlVNb0JCdXVZRWl6eDFIYjJzeGtJdmVl?=
- =?utf-8?B?R0l0SWtSbEl6TEVNVFFYUzNhNE5qSzR4eGpBKzQ5R3FaMnRZVHZxcXA1UVZx?=
- =?utf-8?B?ajdxREZXY2MrRjdLa0dBWTNlb01xMHQ5bGFCUEVFZ3pXRjRCVFExODhmcTZL?=
- =?utf-8?B?blRqcEZMTzNzRnhPMmYvSWJ5L3AxakVJSGRqVlRRcVJ0Sks2QTNIWWQxZXF4?=
- =?utf-8?B?b0R0b3NqK0JZNTdnNjBaK0ZSdy9hbEZCSTRYd3VsdUd1bWJMUml1YzhlQnd2?=
- =?utf-8?B?a0UxVWgzbmNuWittdVoyUVVDUzNQYnJycmU1V2xqRlF4U09NUU1XOFp5Rncr?=
- =?utf-8?Q?XPL15mXakDcVTRQLCiUY4/vVvc8SYFvqwT23M?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <37AB416E090460458C69C3AD3C08D6C6@eurprd09.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wDkWA-00065d-0g
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 10:50:02 -0400
+Received: from mail-vk1-xa41.google.com ([2607:f8b0:4864:20::a41])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wDkW7-0007K7-GC
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 10:50:01 -0400
+Received: by mail-vk1-xa41.google.com with SMTP id
+ 71dfb90a1353d-56faf1cfe04so75970e0c.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 07:49:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776437398; x=1777042198; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Re5DyUwcF8JZxjBhQgkUafRPBAnFADGG1yW9O0XHGKI=;
+ b=RQ+vtk0SSDnqSCsp/CN62o7VNiHuiD9I8dQRrADc2ML45llhM/MbDMVEz93c5tWrIC
+ gKxCfMDpzcecSnhhWuzq/HWFf1YLkwDHojqbXPekI3FL6iLCmVXAaxeazx1MiDrj0tFJ
+ SsCYaNATRJgzVuemGoY3PUMCeNpxeigsY+nm+9kUSJo9JU3ucgZi6Wln7t9wFYzrE2Um
+ zYnB3G8nhuLJMLtUKfCP4uBh0wzHXYQXiQQhruMQUI/t8OCY2M+n0FSp5KRMfz2mQP58
+ iaqmRbUzrTprd+yF05f8CdrSwTm9X+2WhJQTEUYtTVuNfd5ZkuOasTEV8kzZiTjSG4Q7
+ JOqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776437398; x=1777042198;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Re5DyUwcF8JZxjBhQgkUafRPBAnFADGG1yW9O0XHGKI=;
+ b=s+jnrfZ/21cPDLVpKBd4tTKtrVFwfnCQgl9yohEWcNbRM2WdnhSaAkC5gioUXGiiXv
+ VCLkPmF1X6ZKPVIKAJ+6zL8XUtUCIq+/Lkx9DZM1WbdI2xdoAmpRKM8fS/56E685r54e
+ a5i/jGnJoKkX/9Br9CvlyEDqdsaQiNVRjd7mZre/F+J9I03ZDowWvkndX9oUWYh8BJV/
+ eJ1TM6LpFj/fkLSzxPyI3hw5jSdOtRTKoV71OXRuwTSQ9HZQFSyCHQw4fgRMRVgQDKxa
+ N1NBe2DadUauxhU0W6bbZkJvn/KqT+OFogPNYDsJeFmBoJLA5OejEylP7KgQ+uiSvT72
+ mILQ==
+X-Gm-Message-State: AOJu0YyB1l4itAEqX5tSGkXlGyieZZkjPdXVoJG8E6/O3brQcPwH9YlC
+ VS805BiipQzoLH5x5+nudUGGKgAD25+3r0imIL95SiOm564/rOFp4lbo
+X-Gm-Gg: AeBDieuHJC8tJH3nGEOL6F7zaf7axJFgJa2x8Ds0JiE6jEH+BGIGdadYpMMvlBdet3H
+ o0aH77Ymk0Sqn/Qa0QmyM8BY1Su9i8kXCw1avD5KgWlwaHUdqPMBp1O31H7Ct3hx2CAelTwVPvD
+ s+WCwGmE9oNoxrfiEo/Uf+txnng+9KP2torIiRa56CzZfpprZzRqUMx+atJxjcHaBCSH0B2xv2a
+ h1HJP1KXfcqrju0LYk5NkMBh3HyF5+Aecg22aPBks6Qbi5NZtXdVH/H03AuXRyYFCq0/NepjrnC
+ uUkcvYlwIqVIeG9RBUpAiR+EQES8+v6yjXykbb1aIJW5WvphItSX18sQWy4bsWttYmZgx5gYG/Q
+ P9yexIT7jmChubRxHEfV+/2N22IKIPvklcXuR1UcCdO9az2OcHYHCBoj1iT6rOQ0L/A8HcqqB20
+ YhvUQg/NBrcFy/4BXTYcus1pLotOPeTcbjOIcq+N8i7dYh2c9gU4ejaQw8KNWZRwtFVyN0eRFhv
+ g5u9rw=
+X-Received: by 2002:a05:6122:3b0d:b0:56f:7300:37c9 with SMTP id
+ 71dfb90a1353d-56fa5996dc2mr1325521e0c.10.1776437398232; 
+ Fri, 17 Apr 2026 07:49:58 -0700 (PDT)
+Received: from ZEVORN-PC.bbrouter ([162.244.208.119])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-56fa92f21bbsm954365e0c.11.2026.04.17.07.49.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Apr 2026 07:49:57 -0700 (PDT)
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Savini <paolo.savini@embecosm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Eric Biggers <ebiggers@kernel.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v10 1/2] target/riscv: Use tcg nodes for strided vector ld/st
+ generation
+Date: Fri, 17 Apr 2026 22:49:31 +0800
+Message-ID: <8ab885ce490cede31b8e9e7f6a67295c1aa353f7.1776437127.git.chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1776437127.git.chao.liu.zevorn@gmail.com>
+References: <cover.1776437127.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: htecgroup.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PA2PR09MB7634.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25633a07-dd28-459d-e55c-08de9c907d65
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 14:49:12.5724 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eKoue4/R5o+4eFrtlwIoeIzh38L7Y+hPWfwTUSelTXISfiUvMH4Pso864+5ixc83Gthro45ZNdmM5tkApcCTrHWlcoRYFbRRxBkLfKWM5C8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR09MB8150
-Received-SPF: pass client-ip=2a01:111:f403:c202::7;
- envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=GVXPR05CU001.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a41;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-vk1-xa41.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,45 +109,440 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGhpcyBwYXRjaCBzZXQgaXMgYmFzZWQgb24gUGhpbGlwcGUncyAiW1BBVENILWZvci0xMS4xXSB0
-YXJnZXQvcmlzY3Y6DQpGb3JiaWQgdG8gdXNlIGxlZ2FjeSBuYXRpdmUgZW5kaWFubmVzcyBBUEki
-DQoNCkkgYWRkcmVzcyBjb21tZW50cyBJIGdvdCBvbiB2Ny4NCg0KLSByZW5hbWVkIHRoZSB0ZXN0
-DQotIHNwbGl0IG9uZSBwYXRjaCBpbnRvIHR3bw0KDQpUaGFua3MgZXZlcnlvbmUhDQoNCkRqb3Jk
-amUgVG9kb3JvdmljICg3KToNCiAgdGFyZ2V0L3Jpc2N2OiBEZWZpbmUgTVNUQVRVU19TQkUgYW5k
-IE1TVEFUVVNfTUJFIGJpdCBtYXNrcw0KICB0YXJnZXQvcmlzY3Y6IEFkZCBiaWctZW5kaWFuIENQ
-VSBjb25maWd1cmF0aW9uIGZpZWxkIGFuZCByZXNldCBsb2dpYw0KICB0YXJnZXQvcmlzY3Y6IElt
-cGxlbWVudCBydW50aW1lIGRhdGEgZW5kaWFubmVzcyB2aWEgTVNUQVRVUyBiaXRzDQogIGh3L3Jp
-c2N2OiBNYWtlIGJvb3QgY29kZSBlbmRpYW5uZXNzLWF3YXJlIGF0IHJ1bnRpbWUNCiAgdGFyZ2V0
-L3Jpc2N2OiBGaXggcGFnZSB0YWJsZSB3YWxrIGVuZGlhbm5lc3MgZm9yIGJpZy1lbmRpYW4gaGFy
-dHMNCiAgdGFyZ2V0L3Jpc2N2OiBFeHBvc2UgYmlnLWVuZGlhbiBDUFUgcHJvcGVydHkgYW5kIGFk
-ZCBkb2N1bWVudGF0aW9uDQogIHRhcmdldC9yaXNjdjogQWRkIGVuZGlhbm5lc3MgdGVzdCBmb3Ig
-UklTQy1WIEJFDQoNCiBkb2NzL3N5c3RlbS90YXJnZXQtcmlzY3YucnN0ICAgICAgICAgICAgICAg
-ICAgfCAyNCArKysrKysNCiBody9yaXNjdi9ib290LmMgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgfCA4MSArKysrKysrKysrKysrKysrLS0tDQogaW5jbHVkZS9leGVjL3RyYW5zbGF0aW9u
-LWJsb2NrLmggICAgICAgICAgICAgIHwgIDMgKy0NCiBpbmNsdWRlL2h3L3Jpc2N2L2Jvb3QuaCAg
-ICAgICAgICAgICAgICAgICAgICAgfCAgMSArDQogdGFyZ2V0L3Jpc2N2L2NwdS5jICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIHwgMTEgKy0tDQogdGFyZ2V0L3Jpc2N2L2NwdS5oICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIHwgMjggKysrKysrKw0KIHRhcmdldC9yaXNjdi9jcHVfYml0cy5o
-ICAgICAgICAgICAgICAgICAgICAgICB8ICAyICsNCiB0YXJnZXQvcmlzY3YvY3B1X2NmZ19maWVs
-ZHMuaC5pbmMgICAgICAgICAgICAgfCAgMSArDQogdGFyZ2V0L3Jpc2N2L2NwdV9oZWxwZXIuYyAg
-ICAgICAgICAgICAgICAgICAgIHwgMjggKysrKystLQ0KIHRhcmdldC9yaXNjdi9pbnNuX3RyYW5z
-L3RyYW5zX3J2YS5jLmluYyAgICAgICB8ICA0ICstDQogdGFyZ2V0L3Jpc2N2L2luc25fdHJhbnMv
-dHJhbnNfcnZkLmMuaW5jICAgICAgIHwgIDQgKy0NCiB0YXJnZXQvcmlzY3YvaW5zbl90cmFucy90
-cmFuc19ydmYuYy5pbmMgICAgICAgfCAgNCArLQ0KIHRhcmdldC9yaXNjdi9pbnNuX3RyYW5zL3Ry
-YW5zX3J2aS5jLmluYyAgICAgICB8ICA4ICstDQogdGFyZ2V0L3Jpc2N2L2luc25fdHJhbnMvdHJh
-bnNfcnZ6YWNhcy5jLmluYyAgIHwgIDQgKy0NCiB0YXJnZXQvcmlzY3YvaW5zbl90cmFucy90cmFu
-c19ydnphbGFzci5jLmluYyAgfCAgNCArLQ0KIHRhcmdldC9yaXNjdi9pbnNuX3RyYW5zL3RyYW5z
-X3J2emNlLmMuaW5jICAgICB8ICA0ICstDQogdGFyZ2V0L3Jpc2N2L2luc25fdHJhbnMvdHJhbnNf
-cnZ6ZmguYy5pbmMgICAgIHwgIDQgKy0NCiB0YXJnZXQvcmlzY3YvaW5zbl90cmFucy90cmFuc19y
-dnppY2Zpc3MuYy5pbmMgfCAgNCArLQ0KIHRhcmdldC9yaXNjdi9pbnNuX3RyYW5zL3RyYW5zX3ht
-aXBzLmMuaW5jICAgICB8ICA4ICstDQogdGFyZ2V0L3Jpc2N2L2luc25fdHJhbnMvdHJhbnNfeHRo
-ZWFkLmMuaW5jICAgIHwgMTYgKystLQ0KIHRhcmdldC9yaXNjdi9pbnNuX3RyYW5zL3RyYW5zX3pp
-bHNkLmMuaW5jICAgICB8ICA0ICstDQogdGFyZ2V0L3Jpc2N2L2ludGVybmFscy5oICAgICAgICAg
-ICAgICAgICAgICAgIHwgIDkgKy0tDQogdGFyZ2V0L3Jpc2N2L3RjZy90Y2ctY3B1LmMgICAgICAg
-ICAgICAgICAgICAgIHwgIDcgKy0NCiB0YXJnZXQvcmlzY3YvdHJhbnNsYXRlLmMgICAgICAgICAg
-ICAgICAgICAgICAgfCAyMiArKy0tLQ0KIHRlc3RzL2Z1bmN0aW9uYWwvcmlzY3Y2NC9tZXNvbi5i
-dWlsZCAgICAgICAgICB8ICAxICsNCiB0ZXN0cy9mdW5jdGlvbmFsL3Jpc2N2NjQvdGVzdF9lbmRp
-YW5uZXNzLnB5ICAgfCA1NyArKysrKysrKysrKysrDQogMjYgZmlsZXMgY2hhbmdlZCwgMjYxIGlu
-c2VydGlvbnMoKyksIDgyIGRlbGV0aW9ucygtKQ0KIGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0cy9m
-dW5jdGlvbmFsL3Jpc2N2NjQvdGVzdF9lbmRpYW5uZXNzLnB5DQoNCi0tIA0KMi4zNC4xDQo=
+This commit improves the performance of QEMU when emulating strided vector
+loads and stores by substituting the call for the helper function with the
+generation of equivalent TCG operations.
+
+PS:
+
+An implementation is permitted to cause an illegal instruction if vstart
+is not 0 and it is set to a value that can not be produced implicitly by
+the implementation, but memory accesses will generally always need to
+deal with page faults.
+
+So, if a strided vector memory access instruction has non-zero vstart,
+check it through vlse/vsse helpers function.
+
+Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/insn_trans/trans_rvv.c.inc | 354 ++++++++++++++++++++++--
+ 1 file changed, 337 insertions(+), 17 deletions(-)
+
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 5b72926b3c..4cf3643cbd 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -16,6 +16,7 @@
+  */
+ #include "tcg/tcg-op-gvec.h"
+ #include "tcg/tcg-gvec-desc.h"
++#include "tcg/tcg-temp-internal.h"
+ #include "internals.h"
+ 
+ static inline bool is_overlapped(const int8_t astart, int8_t asize,
+@@ -872,15 +873,290 @@ static bool st_us_mask_check(DisasContext *s, arg_vsm_v *a, uint8_t eew)
+ GEN_VEXT_TRANS(vlm_v, MO_8, vlm_v, ld_us_mask_op, ld_us_mask_check)
+ GEN_VEXT_TRANS(vsm_v, MO_8, vsm_v, st_us_mask_op, st_us_mask_check)
+ 
++/*
++ * MAXSZ returns the maximum vector size can be operated in bytes,
++ * which is used in GVEC IR when vl_eq_vlmax flag is set to true
++ * to accelerate vector operation.
++ */
++static inline uint32_t MAXSZ(DisasContext *s)
++{
++    int max_sz = s->cfg_ptr->vlenb << 3;
++    return max_sz >> (3 - s->lmul);
++}
++
++static inline uint32_t get_log2(uint32_t a)
++{
++    assert(is_power_of_2(a));
++    return ctz32(a);
++}
++
++typedef void gen_tl_ldst(TCGv, TCGv_ptr, tcg_target_long);
++
++static void gen_ldst_vreg(DisasContext *s, TCGv_i64 dest_offs, TCGv_i64 addr,
++                          gen_tl_ldst *ld_fn, gen_tl_ldst *st_fn, bool is_load)
++{
++    MemOp atomicity = (s->sew == 0) ? MO_ATOM_NONE : MO_ATOM_IFALIGN_PAIR;
++    TCGv_ptr dest_ptr = tcg_temp_new_ptr();
++    TCGv_i64 vreg = tcg_temp_new_i64();
++    tcg_gen_trunc_i64_ptr(dest_ptr, dest_offs);
++
++    if (is_load) {
++        tcg_gen_qemu_ld_tl(vreg, addr, s->mem_idx, MO_LE | s->sew | atomicity);
++        st_fn(vreg, dest_ptr, 0);
++    } else {
++        ld_fn(vreg, dest_ptr, 0);
++        tcg_gen_qemu_st_tl(vreg, addr, s->mem_idx, MO_LE | s->sew | atomicity);
++    }
++    tcg_temp_free_ptr(dest_ptr);
++    tcg_temp_free_i64(vreg);
++}
++
++/*
++ * Check whether the i bit of the mask is 0 or 1.
++ *
++ * static inline int vext_elem_mask(void *v0, int index)
++ * {
++ *     int idx = index / 64;
++ *     int pos = index % 64;
++ *     return (((uint64_t *)v0)[idx] >> pos) & 1;
++ * }
++ *
++ * And
++ *
++ * if (vext_elem_mask(v0, i) != 0) {
++ *     goto label;
++ * }
++ */
++static void gen_check_vext_elem_mask(DisasContext *s, TCGLabel *label,
++                                     TCGv_i64 mask_offs)
++{
++    TCGv_i64 temp = tcg_temp_new_i64();
++    TCGv_ptr ptr = tcg_temp_new_ptr();
++    TCGv_i64 elem = tcg_temp_new_i64();
++
++    tcg_gen_shri_tl(temp, mask_offs, 3);
++    tcg_gen_trunc_i64_ptr(ptr, temp);
++    tcg_gen_add_ptr(ptr, ptr, tcg_env);
++
++    tcg_gen_ld8u_i64(elem, ptr, 0);
++    tcg_gen_andi_tl(temp, mask_offs, 7);
++    tcg_gen_shr_tl(elem, elem, temp);
++    tcg_gen_brcond_i64(TCG_COND_TSTNE, elem, tcg_constant_i64(1), label);
++
++    tcg_temp_free_i64(temp);
++    tcg_temp_free_ptr(ptr);
++    tcg_temp_free_i64(elem);
++}
++
++static void gen_vext_set_elems_1s(TCGv dest, TCGv_i64 mask_offs, int sew,
++                                  gen_tl_ldst *st_fn, bool is_load)
++{
++    if (is_load) {
++        TCGv_ptr ptr = tcg_temp_new_ptr();
++        tcg_gen_shli_tl(mask_offs, mask_offs, sew);
++        tcg_gen_add_tl(mask_offs, mask_offs, dest);
++        tcg_gen_trunc_i64_ptr(ptr, mask_offs);
++        st_fn(tcg_constant_tl(-1), ptr, 0);
++        tcg_temp_free_ptr(ptr);
++    }
++}
++
++/*
++ * Simulate the strided load/store main loop:
++ *
++ * for (i = env->vstart; i < env->vl; env->vstart = ++i) {
++ *     k = 0;
++ *     while (k < nf) {
++ *         if (!vm && !vext_elem_mask(v0, i)) {
++ *             vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
++ *                               (i + k * max_elems + 1) * esz);
++ *             k++;
++ *             continue;
++ *         }
++ *         target_ulong addr = base + stride * i + (k << log2_esz);
++ *         ldst(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
++ *         k++;
++ *     }
++ * }
++ */
++static void gen_ldst_stride_main_loop(DisasContext *s, TCGv dest, uint32_t rs1,
++                                      uint32_t rs2, uint32_t vm, uint32_t nf,
++                                      gen_tl_ldst *ld_fn, gen_tl_ldst *st_fn,
++                                      bool is_load)
++{
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv base = get_gpr(s, rs1, EXT_NONE);
++    TCGv stride = get_gpr(s, rs2, EXT_NONE);
++
++    TCGv i = tcg_temp_new();
++    TCGv i_esz = tcg_temp_new();
++    TCGv k = tcg_temp_new();
++    TCGv k_esz = tcg_temp_new();
++    TCGv k_max = tcg_temp_new();
++    TCGv_i64 mask_offs = tcg_temp_new_i64();
++    TCGv_i64 dest_offs = tcg_temp_new_i64();
++    TCGv_i64 stride_offs = tcg_temp_new_i64();
++
++    uint32_t max_elems = MAXSZ(s) >> s->sew;
++
++    TCGLabel *start = gen_new_label();
++    TCGLabel *end = gen_new_label();
++    TCGLabel *start_k = gen_new_label();
++    TCGLabel *inc_k = gen_new_label();
++    TCGLabel *end_k = gen_new_label();
++
++    /* Start of outer loop. */
++    tcg_gen_mov_tl(i, cpu_vstart);
++    gen_set_label(start);
++    tcg_gen_brcond_tl(TCG_COND_GE, i, cpu_vl, end);
++    tcg_gen_shli_tl(i_esz, i, s->sew);
++
++    /* Start of inner loop. */
++    tcg_gen_movi_tl(k, 0);
++    gen_set_label(start_k);
++    tcg_gen_brcond_tl(TCG_COND_GE, k, tcg_constant_tl(nf), end_k);
++
++    /*
++     * If we are in mask agnostic regime and the operation is not unmasked we
++     * set the inactive elements to 1.
++     */
++    if (!vm && s->vma) {
++        TCGLabel *active_element = gen_new_label();
++        /* (i + k * max_elems) * esz */
++        tcg_gen_shli_tl(mask_offs, k, get_log2(max_elems << s->sew));
++        tcg_gen_add_tl(mask_offs, mask_offs, i_esz);
++
++        /*
++         * Check whether the i bit of the mask is 0 or 1.
++         * If it is 0, set masked-off elements;
++         * otherwise, directly load/store the vector register.
++         */
++        gen_check_vext_elem_mask(s, active_element, mask_offs);
++
++        /*
++         * Set masked-off elements in the destination vector register to 1s.
++         * Store instructions simply skip this bit as memory ops access memory
++         * only for active elements.
++         */
++        gen_vext_set_elems_1s(dest, mask_offs, s->sew, st_fn, is_load);
++
++        tcg_gen_br(inc_k);
++        gen_set_label(active_element);
++    }
++
++    /*
++     * The element is active, calculate the address with stride:
++     * target_ulong addr = base + stride * i + (k << log2_esz);
++     */
++    tcg_gen_mul_tl(stride_offs, stride, i);
++    tcg_gen_shli_tl(k_esz, k, s->sew);
++    tcg_gen_add_tl(stride_offs, stride_offs, k_esz);
++    tcg_gen_add_tl(addr, base, stride_offs);
++
++    /* Calculate the offset in the dst/src vector register. */
++    tcg_gen_shli_tl(k_max, k, get_log2(max_elems));
++    tcg_gen_add_tl(dest_offs, i, k_max);
++    tcg_gen_shli_tl(dest_offs, dest_offs, s->sew);
++    tcg_gen_add_tl(dest_offs, dest_offs, dest);
++
++    /* Load/Store vector register. */
++    gen_ldst_vreg(s, dest_offs, addr, ld_fn, st_fn, is_load);
++
++    /*
++     * We don't execute the load/store above if the element was inactive.
++     * We jump instead directly to incrementing k and continuing the loop.
++     */
++    if (!vm && s->vma) {
++        gen_set_label(inc_k);
++    }
++    tcg_gen_addi_tl(k, k, 1);
++    tcg_gen_br(start_k);
++
++    /* End of the inner loop. */
++    gen_set_label(end_k);
++
++    tcg_gen_addi_tl(i, i, 1);
++    tcg_gen_mov_tl(cpu_vstart, i);
++    tcg_gen_br(start);
++
++    /* End of the outer loop. */
++    gen_set_label(end);
++
++    return;
++}
++
++/*
++ * Set the tail bytes of the strided loads/stores to 1:
++ *
++ * for (k = 0; k < nf; ++k) {
++ *     cnt = (k * max_elems + vl) * esz;
++ *     tot = (k * max_elems + max_elems) * esz;
++ *     for (i = cnt; i < tot; i += esz) {
++ *         store_1s(-1, vd[vl+i]);
++ *     }
++ * }
++ */
++static void gen_ldst_stride_tail_loop(DisasContext *s, TCGv dest, uint32_t nf,
++                                      gen_tl_ldst *st_fn)
++{
++    TCGv i = tcg_temp_new();
++    TCGv k = tcg_temp_new();
++    TCGv tail_cnt = tcg_temp_new();
++    TCGv tail_tot = tcg_temp_new();
++    TCGv tail_addr = tcg_temp_new();
++
++    TCGLabel *start = gen_new_label();
++    TCGLabel *end = gen_new_label();
++    TCGLabel *start_i = gen_new_label();
++    TCGLabel *end_i = gen_new_label();
++
++    uint32_t max_elems_b = MAXSZ(s);
++    uint32_t esz = 1 << s->sew;
++
++    /* Start of the outer loop. */
++    tcg_gen_movi_tl(k, 0);
++    tcg_gen_shli_tl(tail_cnt, cpu_vl, s->sew);
++    tcg_gen_movi_tl(tail_tot, max_elems_b);
++    tcg_gen_add_tl(tail_addr, dest, tail_cnt);
++    gen_set_label(start);
++    tcg_gen_brcond_tl(TCG_COND_GE, k, tcg_constant_tl(nf), end);
++
++    /* Start of the inner loop. */
++    tcg_gen_mov_tl(i, tail_cnt);
++    gen_set_label(start_i);
++    tcg_gen_brcond_tl(TCG_COND_GE, i, tail_tot, end_i);
++
++    /* store_1s(-1, vd[vl+i]); */
++    st_fn(tcg_constant_tl(-1), (TCGv_ptr)tail_addr, 0);
++    tcg_gen_addi_tl(tail_addr, tail_addr, esz);
++    tcg_gen_addi_tl(i, i, esz);
++    tcg_gen_br(start_i);
++
++    /* End of the inner loop. */
++    gen_set_label(end_i);
++
++    /* Update the counts */
++    tcg_gen_addi_tl(tail_cnt, tail_cnt, max_elems_b);
++    tcg_gen_addi_tl(tail_tot, tail_cnt, max_elems_b);
++    tcg_gen_addi_tl(k, k, 1);
++    tcg_gen_br(start);
++
++    /* End of the outer loop. */
++    gen_set_label(end);
++
++    return;
++}
++
+ /*
+  *** stride load and store
+  */
+ typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv_ptr, TCGv,
+                                     TCGv, TCGv_env, TCGv_i32);
+ 
+-static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
+-                              uint32_t data, gen_helper_ldst_stride *fn,
+-                              DisasContext *s)
++static
++bool gen_call_helper_ldst_stride(uint32_t vd, uint32_t rs1, uint32_t rs2,
++                                 uint32_t data, gen_helper_ldst_stride *fn,
++                                 DisasContext *s)
+ {
+     TCGv_ptr dest, mask;
+     TCGv base, stride;
+@@ -904,11 +1180,66 @@ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
+     return true;
+ }
+ 
++static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
++                              uint32_t data, gen_helper_ldst_stride *fn,
++                              DisasContext *s, bool is_load)
++{
++    if (!s->vstart_eq_zero) {
++        /* vstart != 0 helper slowpath */
++        return gen_call_helper_ldst_stride(vd, rs1, rs2, data, fn, s);
++    }
++
++    TCGv dest = tcg_temp_new();
++
++    uint32_t nf = FIELD_EX32(data, VDATA, NF);
++    uint32_t vm = FIELD_EX32(data, VDATA, VM);
++
++    /* Destination register and mask register */
++    tcg_gen_addi_tl(dest, (TCGv)tcg_env, vreg_ofs(s, vd));
++
++    /*
++     * Select the appropriate load/store to retrieve data from the vector
++     * register given a specific sew.
++     */
++    static gen_tl_ldst * const ld_fns[4] = {
++        tcg_gen_ld8u_tl, tcg_gen_ld16u_tl,
++        tcg_gen_ld32u_tl, tcg_gen_ld_tl
++    };
++
++    static gen_tl_ldst * const st_fns[4] = {
++        tcg_gen_st8_tl, tcg_gen_st16_tl,
++        tcg_gen_st32_tl, tcg_gen_st_tl
++    };
++
++    gen_tl_ldst *ld_fn = ld_fns[s->sew];
++    gen_tl_ldst *st_fn = st_fns[s->sew];
++
++    if (ld_fn == NULL || st_fn == NULL) {
++        return false;
++    }
++
++    mark_vs_dirty(s);
++
++    gen_ldst_stride_main_loop(s, dest, rs1, rs2, vm, nf, ld_fn, st_fn, is_load);
++
++    tcg_gen_movi_tl(cpu_vstart, 0);
++
++    /*
++     * Set the tail bytes to 1 if tail agnostic:
++     */
++    if (s->vta != 0 && is_load) {
++        gen_ldst_stride_tail_loop(s, dest, nf, st_fn);
++    }
++
++    finalize_rvv_inst(s);
++    return true;
++}
++
+ static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
+ {
+     uint32_t data = 0;
+     gen_helper_ldst_stride *fn;
+-    static gen_helper_ldst_stride * const fns[4] = {
++    static gen_helper_ldst_stride *const fns[4] = {
+         gen_helper_vlse8_v, gen_helper_vlse16_v,
+         gen_helper_vlse32_v, gen_helper_vlse64_v
+     };
+@@ -924,7 +1255,7 @@ static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
+     data = FIELD_DP32(data, VDATA, NF, a->nf);
+     data = FIELD_DP32(data, VDATA, VTA, s->vta);
+     data = FIELD_DP32(data, VDATA, VMA, s->vma);
+-    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
++    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
+ }
+ 
+ static bool ld_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
+@@ -958,7 +1289,7 @@ static bool st_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
+         return false;
+     }
+ 
+-    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
++    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
+ }
+ 
+ static bool st_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
+@@ -1281,17 +1612,6 @@ GEN_LDST_WHOLE_TRANS(vs8r_v, int8_t, 8, false)
+  *** Vector Integer Arithmetic Instructions
+  */
+ 
+-/*
+- * MAXSZ returns the maximum vector size can be operated in bytes,
+- * which is used in GVEC IR when vl_eq_vlmax flag is set to true
+- * to accelerate vector operation.
+- */
+-static inline uint32_t MAXSZ(DisasContext *s)
+-{
+-    int max_sz = s->cfg_ptr->vlenb * 8;
+-    return max_sz >> (3 - s->lmul);
+-}
+-
+ static bool opivv_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
+-- 
+2.53.0
+
 
