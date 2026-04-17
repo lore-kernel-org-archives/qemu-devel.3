@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792E1F8E4AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 06:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F5BF8E4AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 06:33:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDckc-0004UT-Kl; Fri, 17 Apr 2026 02:32:29 -0400
+	id 1wDclF-0004i5-Sn; Fri, 17 Apr 2026 02:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDckM-0004Hr-Es
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:32:12 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDckb-0004Ym-KZ
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:32:28 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDckK-0007iq-UT
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:32:10 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so4788635e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 23:32:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcka-0007kJ-A5
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:32:25 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488b8bc6bc9so1774705e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 23:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776407527; x=1777012327; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776407543; x=1777012343; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+MVTjnaaisN4lgdXwQZh7jONO9DLw2/laxbMfsSMywk=;
- b=MnM1HUhg1TB0bFe4634AARquDdttSLYhQ7zwuOxj0L3lwLHTNSBw6DA9xMx4oabik7
- YnRtR/PkPjgU4A0OjHXPYodbpuVTtazqUYW3q1SyBaJrbxNXyRiuIorIVXdd6mKN+FrP
- eM37hR149PvfPrWw19kB3uqLXk6wfi3qvxyh0lZz1VOX8KBiiV0kv8xkMO0UcOTlplCZ
- QTcO5cEgeMjIIYHpr4ZXVS/rDTmr454By+onMg14VQgiIY7NPPxg8Cp8yGJRP3fzKIJl
- GG2uAvhC9mMYcWFOBqqPgoVMap8d3VkhfBirkB5+DF1njlLvR4I+6OhydT2scCbuxzKZ
- xotA==
+ bh=Sx91WCaH4gOMMZe6B9WCAXQOhfJ82aEdbwpuUzMbY/w=;
+ b=ssuZl5cgaX35ob5sIXt6fFeSsEmBBQX5r5ridoN4Wl9VPb1T5KhHCLrQ7q7rCX1NsU
+ ahEf0+5ifdciYXG/Avv36k8NJyIIm8pyW40UxQ3jNuc7VGpUOI/QLea5jwWhTL2fq5CU
+ 2rWUen7YdP6NJ/I/MTfcPyYDIW97V2dfkbVbM++ywmLgFm/gkXhkpxcfp5xlxYqCYiNu
+ 0ReiJx0teHtpPPG1pSGkgMT2Yux61QTMvgstqhdfgCLVd4nAswY1IlMPT9DwDnPwBN7a
+ yzG0Mb+ebR5o2XoX1D4fVj9bC7VpVFF3lYrmZEW9wtECN0V5+vWqLSNo8Dfp1MRtHia7
+ TZRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776407527; x=1777012327;
+ d=1e100.net; s=20251104; t=1776407543; x=1777012343;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+MVTjnaaisN4lgdXwQZh7jONO9DLw2/laxbMfsSMywk=;
- b=DvEFdOXxXdBvlSVbEYNgWql+/tEsri4tfE9DC+DvIpvlM/WwdtIMNYwIJdCokCdq3P
- KdS1WSToH6CTc4e0XDpjVvFNCqroBa2eQw774i1L2OX2GooJ0Q/Lwmce/Xnp4T0jweLC
- /XJP+u4zdWfgbxaFPInKnOf8wAKylJ8XpHqQcI0aiAh5lVeGxFMdQXRChLP8uzJoarTp
- wxuvMbzDJxuVoMINZ3NAe7Y8Y80dKJOBnssaYyrQXfeUF+9NahkHSQ1l9XP3xFmSOsa7
- mRlE0NJR4eJqCPvgp0qZ4dsJGUY6uBPl/aCLHXPA7XnFzVlXdIbt8oKrEQCg7omeNfxV
- 6Fkg==
+ bh=Sx91WCaH4gOMMZe6B9WCAXQOhfJ82aEdbwpuUzMbY/w=;
+ b=qt2ObHKier0KbMAUTEPmPHtuZ8ugo5d2wK7UtKcO1rhnjeTksXbLGe7vYqDeM3EFOK
+ bCUloLzRVjIChi1JpoQ8m2jZkpqIQXSZFGwLySlJErq9MFzw88gtXrBg7/gnDVF/xDb3
+ DOgnoxMgU0MPv25bS21Apd+ImlawszzIpAfNvClckPygy/cYJyEH4PLffwii6amKj02M
+ T+chXZHLNL2Xpg3SmsLg20xANXlicUFJj+HOqYJRlYIsMe75NP8VGa3P6Uc8xTuBHaLa
+ /LkHY5hFwL4kxrjAgG0/9WKlrUWf+AeM8uUd7sfJf4Hf46oFk/tKCYZndTg/xRfCtUiF
+ eK8A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/rnj4fxsF6ncK/YQ9z+W//Y6Q/Rl3zhWa/hTIkGdZPkz0ha/mJ3c8yLEPvngBmmPVu6l/neKWfczuT@nongnu.org
-X-Gm-Message-State: AOJu0YyZ0e9lpFXKz4bKDzMoswMIGs6udcAC56wKVG46SLjJhocT7KxH
- CgjF+TZdZGg4Q3cCg9vRvtQs3Cj4iu/kxId3R7wffb6CXWpGtbCgQSxkfVmdFYzujJM=
-X-Gm-Gg: AeBDieuo0Tb/+Z+1x/MlVXmgBwUlZM295ukNF1B6upFF9+bpZDG+HgaGK7Dx42+NiSs
- LcgXw6r23tzMIq4YvovJqmCK7hMvsyGYI44GiJuIrbIPnAIRRH/Sl0p3oTA9BLY+ixI4BUZk16s
- O79eNkHozbZtyo+tDaR+hM6FdGIKrq4rKXShCeHr47+9JYkVDrZCB6fqDPAGsNpL8hF4/XluUZb
- dEG3lnZZciSo8JyNicXmEvdXKC4ieRGlenH6+0mY/X+o2v7rCAceMr0+nkFOJbbl5VPKRcciCJU
- fHytMyo6Kv6NCwTBLn1WSoaJJstvYU7J9cZpKOKQsqBZBuOXpmFoykylZzCZzly8RMF2MEfqRh5
- EqCfNla4Q6pJ+5md39hByBGYiReGMZaJWojpkq35OuqtbVekPyPxfdpaOmd8ARSO00n0a+mnfS/
- hhIvt7yFqnNMfTccMFNn8dAVeyzEqf5GF3LDcoBagXI9oBnIucSHk9MsL7ZsP3Yur0jhE2PcUty
- Oqc
-X-Received: by 2002:a05:600c:a318:b0:485:3e19:9e01 with SMTP id
- 5b1f17b1804b1-488fb7844dcmr13607745e9.28.1776407527478; 
- Thu, 16 Apr 2026 23:32:07 -0700 (PDT)
+ AFNElJ9GDuw6ieun33Ji2hGGJu474Pb1BnBmlHIuionsDNuuyLq83zN6lBBh4RDdNA+JywmKOhYWU5XQVNbY@nongnu.org
+X-Gm-Message-State: AOJu0YxCusK79r+/2MuUGJ178hUca2ARwvbo2s2zY1U7BDmGQ9Rwo/04
+ hqb7ER9QpaKgOhVXHdn2Azxb2LmHzbUP5BZHoJf1xcJqR6EA8Yw1GFEG6rbdUurYW3g=
+X-Gm-Gg: AeBDietv82E7CPs2LZZDX6k2XIPYk6xmUR18+suuQ1xndXG8GAbbTVY8JzXD8OBqAes
+ HXV3SCNy1OXl3D7G1cAE0ODTeqh0c7NrLqWk9GwhLRK3vouhzMb2u/UYC70CuPy6ZMLW86tt0IR
+ SXrMrsawSFu3FLeflLNNDnnxyrWtvvPJvZazzGqiWkX0KfSLVoYHhIydTDxkmjMu8fTXMPxl5p6
+ QbIevCe+0GviCO41SWUaHT+YzpIUefw+Aeif8JYnMmZO3XzGqRXIImXTvZLs7q6/2dY3ecGm6Um
+ js0zyaVDCmLl5LSLuKsOIL703GvsqMLOOCd1pB3/EKRGf4GUSAIAJRT/PVq3jBc7w3a7+G4tQEG
+ 06VZZ+EHrAhTuhXvomnNsQHx1gkOZ8x2IYHAqqHENkF8beThS/IqsGtRoz2nEbPryjA+0mtGElE
+ FJxmFwVSZ8e/+TsrXRCmNKkkdoM6t+caCx588E84ta+G8xdQAP8eYvmBUzieZeflqClb7dxTIOO
+ +Ru
+X-Received: by 2002:a05:600c:a105:b0:486:fb69:4960 with SMTP id
+ 5b1f17b1804b1-488fb7786e4mr12956055e9.19.1776407542718; 
+ Thu, 16 Apr 2026 23:32:22 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb7bf696sm9473825e9.32.2026.04.16.23.32.06
+ 5b1f17b1804b1-488fb7c0eacsm9411185e9.35.2026.04.16.23.32.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 23:32:06 -0700 (PDT)
-Message-ID: <8cbcb8ec-ec87-4de5-9036-971ed8b4925f@linaro.org>
-Date: Fri, 17 Apr 2026 08:32:05 +0200
+ Thu, 16 Apr 2026 23:32:22 -0700 (PDT)
+Message-ID: <3721aac8-3e0e-41dc-b20a-2c5d28a0847a@linaro.org>
+Date: Fri, 17 Apr 2026 08:32:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/17] hw/usb/hcd-ehci.c: Fix coding style issues
+Subject: Re: [PATCH v3 02/17] hw/usb/hcd-ehci.h: Fix coding style issues
  reported by checkpatch
 Content-Language: en-US
 To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
@@ -81,22 +81,23 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
+ "nabihestefan@google.com" <nabihestefan@google.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
- <20260416014928.1279360-4-jamin_lin@aspeedtech.com>
+ <20260416014928.1279360-3-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260416014928.1279360-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260416014928.1279360-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,9 +117,10 @@ On 16/4/26 03:49, Jamin Lin wrote:
 > No functional change.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   hw/usb/hcd-ehci.c | 126 +++++++++++++++++++++++++---------------------
->   1 file changed, 69 insertions(+), 57 deletions(-)
+>   hw/usb/hcd-ehci.h | 17 +++++++++++------
+>   1 file changed, 11 insertions(+), 6 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
