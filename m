@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46078F8E4A6
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 03:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8C88F8E4A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 03:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDZtA-0002Hb-De; Thu, 16 Apr 2026 23:29:04 -0400
+	id 1wDZsy-0002Ae-To; Thu, 16 Apr 2026 23:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wDZt7-0002Fz-RI; Thu, 16 Apr 2026 23:29:01 -0400
+ id 1wDZsw-00029p-FG; Thu, 16 Apr 2026 23:28:50 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wDZt6-0005oG-6P; Thu, 16 Apr 2026 23:29:01 -0400
+ id 1wDZst-0005oG-SP; Thu, 16 Apr 2026 23:28:50 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XVN7kKppo2yl4d7bxp2G03pGeXayseZZJpmp3FJg1ualzpORbcE1A79b7NxzwGaNUWIvMsfQul+rqWk4H3OlcE2ES0F9Y4jQvIKER0JnFHCw3OfseI5ymT1535xaJrGb9hjq/vifvNOwUqayMWVJJVTXxKFWnlMP5G9FXGml6guW1o1Fe1/VJvZnOVVbQ7b3rXJHBBA0uFEn/QFn4OAz1c3JDN7w4eDhXHS/o0Nr7dmel6v5z69bJrynAdWuDqYYLSq7QTqnWlrX9CPRokmB07NrT1zi1p4MPW7pmhdAR4pzXaBo/89J9t494s8p/+UvcUCXZ9HktYx98ULxE+BQFA==
+ b=oMGI9YIsxQXZ5Lf3atX+GdGGyDwyNU1xAOWcA0BjC1gf+ajvTbc35oVjbGHhC+IR6fYbonb6gGpYeCRObfBUj7LuivHurIBd1ZeC9+ISVLTykRLC3zrzmYpTWzx7AajHmvjhpQsI+7+9vGaabM2JmRzKcyiTKyv+j4t6VrCi3lqCwmAfgBODpHY7e61xg5xizGSjzULiEzFdfDyziacorJE059MUluarATIlxDx7Bdc0HwnsunWI+4DZw760FoT5aYTAO/Fq7BfZZaJJPrC7wQjtD10d3wB68UmN0dC/lyONDSEyxKMLPm+Z/OWhacMhC8pGWP0vWId21+B8fACqNA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AktkBAvubOQDaPkP/6jl0OxPG+pMjV4dIMTJkEgY28E=;
- b=LG9D4QRWgM/1ky8iJ8AmfZ/eNWupj7OhDWAN3cxbz2GZYEFTwjK4vSEuu5GJ40pZmB/n15951iV33yXmGOGINU41p84yb6sEhxsCNZGVasYtc2p+fkLNcoENsH5Zf/Di0zBwt0HAN+SAAyA74BWr+qjke+K1WJhNtexEQgt4U8XfGVsLHSkoizKDdzb/x+iNKDS8NOtESEXVkYGmFWeP2bbwtlZmpnaJXtCEWv7F/7such0ptM5gh0/p/IqRsAFl0pJpPQqj7e3lhHc1SEXveYNkaF5ZZTiXb82lgS1hCFWIFILZNFFQppcJML6MgiK5QnzE81fVP0mMXNvSh+OD2Q==
+ bh=X1/CUfImRJKUwTDSTvyffV8Z4qr6OFYqWkkd5PBicsc=;
+ b=CkBr+P7sbMoVOM9bPU96Q+WOrbF0GhJhzIaxqVniE87vZukphN/LHW7S6Mgmclcb/4QXjxUxqYkKASY33SvwfjfjYYiejnlx6kHzypq05sJ2EYMo8712FX5AH+9dko+l4HkANHZyqT2MDVXJYLv/LCnZ1ckO3tiK7I7juFjRr+zGKMcEH9LasVVJdU6AkCJufaUOaSJH0+gUoBECUIG9ONa4Wfa7hwjZCcXRgW6CC4YRULTqaIsw6ADJAiDSF3PFBPzWpTpf7nW/8HX9J9dmP4ncIbYnyQbLcY2lNQ7d1KCTrXss5sJl3fZQ+2ahDK6u2GhFe53w//Yd57QIKeLY5w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AktkBAvubOQDaPkP/6jl0OxPG+pMjV4dIMTJkEgY28E=;
- b=aX+OZL7ZsCAAhEpZ+C/sSPMD5ulBtxjyHJUmWCvNzndRmoJnvoMgi1KEms3x8Yu4RVW4oxT6SKqVHh/yvUS0Gl7VvtoHySl/hU7c/WNf4dfM8fRoOQdJn2ZLpqXXEqCM71xWuX10ix27zfvVuH5EbvoTr7KeIpPL/BBsv48eXKBy1J1HjN1HcV5T8Wfv9VVseYjlgJiZ7KsMEjtKQL6qT27Zu4iqBoo2ZPbAG9pu9AzWZGly3/ZnyZBfxdW3/2iTsWVMktmKMugsM4dDW4PJnK00iaN6uJlNf1+KmjIMq+8mCCn2la9m8mcQCGhJL13dW8seaov0JJopyytUvxvQTg==
+ bh=X1/CUfImRJKUwTDSTvyffV8Z4qr6OFYqWkkd5PBicsc=;
+ b=RFSr4F2smvIwB2LHTwAdy2OfZHTI7nlOo3iSXmbreTouBp2zoPJApjn23iWBAyv12afHkOPAdk3MqTtSec+MIxDCjUEYEUP2VRxKnfYY8q2GbCbSX8O4H4YUmZWWpJNdAZe12loY86Kolqh6A5QJsq4TZKQ8KwQxSYYM/qBzPCh3bXgHYeVhqbKD+tigSOKnanCWO8ygH5+V6V+Fv51s03rvLjfKwRWP+Q03UXyd4pDtpo8n2kvRgs1EuHSVrz0WzjzQQBqAMaAvIpmX9dBuQJZQFqqnnfQF89I/F7Y8aWE7nMGvaQ+ImUzOWPy+FCwihA2v0OPA1drWUMx+eGQScA==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by KL1PR06MB6299.apcprd06.prod.outlook.com (2603:1096:820:ce::14)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Fri, 17 Apr
- 2026 03:28:47 +0000
+ 2026 03:28:40 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9818.023; Fri, 17 Apr 2026
- 03:28:47 +0000
+ 03:28:39 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -54,12 +54,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  list:All patches CC here" <qemu-devel@nongnu.org>, "open list:Block layer
  core" <qemu-block@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 06/21] hw/arm/ast27x0: Add DRAM alias for TSP SDRAM remap
-Thread-Topic: [PATCH v4 06/21] hw/arm/ast27x0: Add DRAM alias for TSP SDRAM
- remap
-Thread-Index: AQHczhpMkx3sJBOGaE2RsX7hjxRZxA==
-Date: Fri, 17 Apr 2026 03:28:46 +0000
-Message-ID: <20260417032837.2664122-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 01/21] hw/misc/aspeed_scu: Introduce Aspeed2700SCU subclass
+ and separate from generic SCU
+Thread-Topic: [PATCH v4 01/21] hw/misc/aspeed_scu: Introduce Aspeed2700SCU
+ subclass and separate from generic SCU
+Thread-Index: AQHczhpIwQwUTbK4GEqFW40cS4W0FQ==
+Date: Fri, 17 Apr 2026 03:28:39 +0000
+Message-ID: <20260417032837.2664122-2-jamin_lin@aspeedtech.com>
 References: <20260417032837.2664122-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260417032837.2664122-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -70,61 +71,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KL1PR06MB6299:EE_
-x-ms-office365-filtering-correlation-id: db780275-cd31-4302-cf85-08de9c316f77
+x-ms-office365-filtering-correlation-id: 03ca410f-7a5f-40ad-09e5-08de9c316b38
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|376014|7416014|366016|921020|38070700021|56012099003|18002099003|22082099003;
-x-microsoft-antispam-message-info: u7tebZC99sDAivOWEK+ShxDJhLb8R6z6py42uTsifLsutpyF/nEiSBzA4kHbzIOWzHhGGZZl1Slp6WQPw1tfZuRJPxarA+QDdEdvs1eEa3ZI3WonOvpleiCCr36S3Cp3Lc/ujIexQVLW8O1+3zZ8ql/vTToblwp8OuLAMKoepDKx7PA/hP0Om87uNu19TP5jOClxgzftM1zN8YCh2MHeYfpwfGU59JHXV1vUUybvLQ9zeum2rOHkAwoOGZ0y83W3pEp2gwZIxq4COA0+ahgCm4dhIYW1RmPD/6KgnSHXAIl1IczVe0qYDKkPsmxK0XMYPG8AHlUqOIqQM3EPRTqmFIuJW3UYd6uO6xFTVWi1EKeYeb47NNI8ewSHrFRnTyyCl44Y5Ql3gDzP/Ctyc2rH6aQd8A1nm0sUjL6GyIVGNNfvztyB5oeYE2K//25otNFmEv6PQQc1D0Z5L9ccD2U8Yq+6Dh1h4DjaSU4aTWodtb94nLF96G7AFqegwrXHiKqAM1pfYzT1sAwlA4ITi7xrXqxlaSCN2n2J4ITso4D9kCPiOvQh+HVdnE+CXTtzHr7aqlffLdFFS6zR5OuoZ7wDUZJwk/QiW1YKm4u/OmPfFZVeWszm36uDdV1Brc5VHhn/ndBF1rVuzr0bym/cKklkLO+Uu8o910Kx+I/l+dcAEWofVyCQ3vnzGIx/uleMvzGBNq2kBywO60mRUfkFuNOCyTIJ2tAoq0Zp6B9S/+unyWy3IBnzb89lRBN5ntS1fgIBDsDx9fEzVDlVQ37eSUAXbCjIDmM1jtgTqwO+CUjsS1X1uBIviXHXTrV4KushBjWw
+x-microsoft-antispam-message-info: JeCAiaAePqc1kPG3tNMf7XQmdnDe1HNooiqrJmhwNzrGu/uqJpoKTLtCP2GEsVWWfWyay2VkXfB71Jyogz0JmhGK3SgVJhWjz+NOPGaIXavzkppJmNVCqQXnQqnBKPKehWnmSCNy6njt/fP86kNP9mJo1pSNi3Zpl7teOAOUeck0dBu9EJpQaejnHA8hkA5GAcadKyHXmod2GolaVA6UuspdXompkH/gTcmf7m0wEt/vtBlOyhzXH0DHf7BjTZsC/HdQ5831aBCHU61FIhirkvb6+yLVwahLoxyCUiakWbxQ/lV2g+p1GFTSLxbQjXp91DharoSxpOItPoF1QTBTRAusS6naG5P1PaRbQkH7uZS35FOErx3/5h2RcxAOqp/yLsJ1fS/wvC5b0RCjdl7dmw29LpcIuwMnxhpev9hT+cazbbkPa+ThdAlLvwIOFXgaTN2t+WIexNhwCAHIk/aPtuo4zf6mksZpQfsQi3wqxzPn9ziPX6OR+5fMPLdlQckAsbOuPpK4fYj4bjZU4mn6T3SK5Iz356WVhmDz3ghimVS1h1fTGav78k4UvqvI7YfTgvVxRxLw7N/3VPzpfvquYWb/aS+RdwxD5+SF7dgGW5jO7rnpVN7zZ/NC6ecZ51BlSW+hK8OTjG/ej4rgmXlL7k6tK6Lts3mmT5DCR4lUin6PPnC5m74ZnMjfM6YnmS4G3elN2wUlaxEyuRy4wEpVoDvRpEmEl+AUpl+9wrPJxtsFST4pNbDWrgd12Nh0/RskwlqHhY3NJAOQz3vpCve8nNP7bmj20EnrrApisQ+ARh4QXIlWC9VF8+zXXvVvxVOp
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(376014)(7416014)(366016)(921020)(38070700021)(56012099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?w0gTRnTaKiDfDUahgBNJARdmKG+RxEKksr0jVArbLpguHjAvPFbeGQ4E4O?=
- =?iso-8859-1?Q?pGvniWaIqfUvmITsiOZ/UNCj4TLP2sJ20h/5Ap9yQRLcDoGsY1nj4+06eR?=
- =?iso-8859-1?Q?CcJzYov+NsqLgKb2JA0cHxYPXD22pMpaAh9oYhoB/mdARRyx82DdPH/kXB?=
- =?iso-8859-1?Q?gq+qh9ie9po/vZaJLqnA4fbTDf6LmQTBS2cMwNgxbBSHd7zUSSWEPh8RkX?=
- =?iso-8859-1?Q?ukmulcXwiNWvCA8EEyTav+0x+aoUGylTTenwiBuOwmFVhw1u/Kp5Z0G6o4?=
- =?iso-8859-1?Q?iig2KaNVsTc5155EmfolnkuyrsakeeY5lFrKLVcNO9QEgIJCuoSjrYpH8k?=
- =?iso-8859-1?Q?WiVVqBhhlKBn4WYzoifqR2eGq3aNtwC/I3CnDxbj/ovdxQ3yktzxZNVGgF?=
- =?iso-8859-1?Q?ZKlicUCGl/0uwwpPDuXnH4lATZZIPICQ/D0vX51eDdWZsFzrUGGkc4JDpb?=
- =?iso-8859-1?Q?8nodtlDdM2vVdWSBIZRMmaES43tVnGhvTvOFCK2NlGnUYvyPezTfCK2sMw?=
- =?iso-8859-1?Q?oFs5IG8RWR8VDqeeYLS8wfIG0fPex9xQ+rMXGvZFd8zpv4fHeGsk3egWMi?=
- =?iso-8859-1?Q?izFyhr8CqRfALP/w4kFLMtTvOZV4OFKs7bM0t/yan5vqYHtKCjGBe8w4DD?=
- =?iso-8859-1?Q?2nZpPm7OZ6+jo0FPZiFs9XTcExkplKKZxKMetmA3HkRj3RHg42pL7WMHig?=
- =?iso-8859-1?Q?U5UauWwmEfHeraR8OnZE65B3YO+hM3SUQEvYQ22I9Fps5dIfhetvrRaiW8?=
- =?iso-8859-1?Q?/S6Omj5vyzbKOGgOoFgHgeNOn74ReUZWZ+A0hN3Ehg7hnWYhgSdBLTNWqn?=
- =?iso-8859-1?Q?bWLJ2BivFdVy7c3ZPdctFo79/i2HacHKG7sLt1g8nfA6Lpa7CIkCK03sU3?=
- =?iso-8859-1?Q?t0Oed44sBndTeRqTVr1ZX+PEiTMv1NdJ342QRnygx6aQxt/lC55LLHN3um?=
- =?iso-8859-1?Q?QlcwxOCWZv80HCEgW85iniX8BqekEWK3Z3NQka0ujqXoMWS8pdwM1c4fGL?=
- =?iso-8859-1?Q?Y75YE4rQeTa16329O2FmEA7EsNYPwWBgEVJr8FcYm05rC8C+Nl8zJ4Ernm?=
- =?iso-8859-1?Q?3PJ/YLgGPn4hnAhuIsuLWIU0UXn2u+IxvTTSgj/eDvB85LG9dNyyZmC5xY?=
- =?iso-8859-1?Q?DYSdmTKq0Bpv4edvBAYB34O+m/rkdG50eNRxQDKHaYpoSkYC/pMEMrtx4N?=
- =?iso-8859-1?Q?AMGiWoERjB+bw86NZF/YzePlj3PwARnLWhfCW8wlVGlqZjqcgkfXp9ByY8?=
- =?iso-8859-1?Q?MQPlTAklEHjxr0rRT7CppIghzbam7z6S4oh/gsq6nA4ArFwVIoAWnu4VYB?=
- =?iso-8859-1?Q?9LtfE0enqBoMkqZadaEjEz13PjLQ16y9cpIi59zC9qAyzkt15QSw7qe4+I?=
- =?iso-8859-1?Q?p13WbQZkW89k/zz7VEIewX5dm3wALm/rs2qXwyIgCAFkZb1r0Ytm7PWkhT?=
- =?iso-8859-1?Q?hxO3TyYSqtB9m3mbUsZJD9KEOdf6sb+3HnLWBm9GUeM/kiXHZjrPiwvr4C?=
- =?iso-8859-1?Q?Ntqg66Z0t6S5JIRzhuhOYWZBkmarHLlajgU4cUywbSBzNDneD58dJ+6aE5?=
- =?iso-8859-1?Q?seVtXvSX37Bv6PjQ9VxhaOWQ6pfPLKxdqlxUD74fQbmE+IKSEQMa4E1Riy?=
- =?iso-8859-1?Q?i1XGjG5RoPxNEAi+pq1cUv58winJlJP1tO3BZ/MbClc4SCCJocRClmHRj9?=
- =?iso-8859-1?Q?gD7cgeEcLJas/uc2vFvCPU7C8Ikkw17Iw/vl8RJYrrtyTCT4QtQeu6bhfn?=
- =?iso-8859-1?Q?XHMmU6rEQg8kKblJ4RDylpAaPpE6XfVMrj3y23teEciQDmkhSKE+Zqf71s?=
- =?iso-8859-1?Q?nyEBduRr1Q=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?QdP/W28z+vrlX+hcWcmLS/toWctK5wRfK+H6VAIx/A+dCf0bnt3jqaGbaS?=
+ =?iso-8859-1?Q?l+XUhQsUO7og7pYzvamniYVzQFEu0QVsQkZ2UeESjamLDhaB/DryFgXth9?=
+ =?iso-8859-1?Q?ShPSu9erDi8IZSnA1OLE/3qmnwIdYcJ9rplBcGpMfKWrtna+L4l0g09k2M?=
+ =?iso-8859-1?Q?gArTA0CJg3DjU4cGhNM5BIEyHKDhxQk31AbKy1RNP28rCbRxxWti4VWnnL?=
+ =?iso-8859-1?Q?9rdGCeG+Jj7KsGMJrF6HosumAJCl/uQIAil2cePz6h1S7QB8FreDvR9/DY?=
+ =?iso-8859-1?Q?SiNTSEZ8pOEAYOTqHkqBltN9MS5bQwi5OzOthM0NSgce18uwn884hvhTWm?=
+ =?iso-8859-1?Q?eKnOdi1HqnQLK/NbgdV9eQnjpQYLOlPMmJLzpE5qMW89ctgbPYmIgPs0cR?=
+ =?iso-8859-1?Q?TvmD9netUoUeQ33heK+BqHJzW+bqO/mo/q0wVDT5M95TKX+AarxxerNOn7?=
+ =?iso-8859-1?Q?lh9Nck35olZTDyZkwf+bllgMBuzhteoiXCcWxBdZx7cpLW9YsP34uI1nzO?=
+ =?iso-8859-1?Q?8MW3v6HXc3b5Lc2iUfq5S/yVUAL1jrwSQcQ6p2y20GZCbqnwBkPVo0EB3c?=
+ =?iso-8859-1?Q?JTexbgQzRLKvq+h0o63aFZ6mP/HcwF2Ikz79sBKRptVivvoQ0jVl+ddD62?=
+ =?iso-8859-1?Q?ZSvo228MIemrPeulz0QTJNU42hANeH69w3oVvLGmoateEN3LBDw8+n362o?=
+ =?iso-8859-1?Q?a10LvFXbXWo/emHve7AKPtYvfuNuaZIerTGAiKS2PCQNnrAeOMp8a6e9J5?=
+ =?iso-8859-1?Q?o0JQJxLA/YVETMuPsTpRz1Bv/G8UeHoeVbSj5xrakY8/RgbxXgtbaCOcCA?=
+ =?iso-8859-1?Q?BySYTeFBEVxZZM4gZG/I1aeXNpY2Hk6h29xchCa43568rHbz+XOeqPPEkX?=
+ =?iso-8859-1?Q?9a+SIU3rqQ/oFiridH/WLH0r3dFQulUHYM/X2evfh1O1TUdyHUPm5+73+3?=
+ =?iso-8859-1?Q?XAEN4yNfryeuOkJ4K3mlJ08o4+YY/engPzoyzVvPHRmN2p145W+RAogNUl?=
+ =?iso-8859-1?Q?1Wgf5kM2leA+kY/c41wB4xLoXhbjllxRnnO1rAriNMCII2LtWtFaPoPa9G?=
+ =?iso-8859-1?Q?RbwJQgckl4UJPNa9pAAbqctwldkYxwR9Cyvs+4NfG9dXIFnmw8Sib9JHHT?=
+ =?iso-8859-1?Q?SkInKNmQfzZTpDM51fczmjar90cc8QGr4EHQuSc+FajhZl4AvHoSkhbV54?=
+ =?iso-8859-1?Q?A4qq5YPs70Cjc485S9Sy/XZaK7u8RBU06jFD19YdFDUdDdnAdCr9Rp13ks?=
+ =?iso-8859-1?Q?LZnpjxqkOPIlgyeRBHknpHwetRgS7TxfHCtHW9s0aISpxaJZD2CUQRRZH0?=
+ =?iso-8859-1?Q?PU1GkVAjaoL1iv7vOnrqWBOOAZhve/E5P93Bceq9fR81M0FGSmxriTazkL?=
+ =?iso-8859-1?Q?huSjKS5m8UaKeOG1sErJ+peEwnJmW42xzs75KWw0vle1c08fK6ayaXrmoI?=
+ =?iso-8859-1?Q?+YjE0IeMC1Bo+Ck3zlvnPx6kfUSPc6DzT97xwDuIqa/5vBTe11lmfO0RG+?=
+ =?iso-8859-1?Q?fD8oiFMKF+mfY5M8MuhlpBKGy6U6kZa8jnT4Wavoka4urlJZzMCU/yA4UQ?=
+ =?iso-8859-1?Q?ugL/wmlbYYmGB1syJxh/jjlN54/nh6EU/ho2/mvo+aOBcsYUiWHah4GgPy?=
+ =?iso-8859-1?Q?itLxaSbDupSgqdHu/xgQFln449BYke8NBMlJVZNTFo+zrnNprtAqqbEOYV?=
+ =?iso-8859-1?Q?avOTqHNx2ugWuI8XTlUadBay0kGTTo9MO3o1msVtTN6PN+m0ZH67nzg2pF?=
+ =?iso-8859-1?Q?ZNxEHv68RWg/fxNA1clr/sqq1s4woWUyXUwhYf0kw3MKkRtkG1ZlUK+h01?=
+ =?iso-8859-1?Q?FEhedio3/g=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: beupc2hBPXFO/WVTc9L16aqqLM6eo+gUPIANT7JkSCxjnWKwKvncJWdufLqUHyAb4MetNqSUQ9Sv15fpFnyKXKYcNIG0GYCOuyunqR2gMOGnPs3BRoZOQA4kerEWKzqjhoRLn5oeVmLOQUxZsvXMbauPMSOA5625mB8lwUofU2pyfPnbi3OmaBo04kjWfr3xsn1uxPUpxNV/TJ7IPVnWeXVNA1crGZun5GRME7AmSaFrI9KRF2NvokK4UpCgXT96HaSkbttUU9cr/jIbaWB+cEnj2lP5CBWJTEyelqktyRwSe1leegPm7fO5ItpCY55te7F5Iig00zGBKVK8X3NGIA==
+X-Exchange-RoutingPolicyChecked: P6Bj+g71chr7/e0iwtoTiU1BT6E2OjCgwk2xr5Vj8aIq52ZuH+n+j5v8jM2oHpubAFfyaxBRlTuIu8YBO6G3/KWmeULFtiuHUu8ypl6Krdo13c4YujWTXqKXx9fsm8NHKt/JqPjWKUVbfvw4OnZeb+7bF95cMv8S6V6yTwaY8RjtPCq4cxdUdRTgSxFvD/EodHHQi73ZdYoKiq0uGDHXZWLSs03hZVW+c8tPayXexz5n3JLV/ibHOInFyzCrMCDfky2grT07Ux6fnA9JqLVX18RcBNLswcRLj9lN33OzWu2mSVvVIuLio76VpdKF6xWgm6kxlSnd7vIXYUrSSTMsMw==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: db780275-cd31-4302-cf85-08de9c316f77
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 03:28:47.0171 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 03ca410f-7a5f-40ad-09e5-08de9c316b38
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 03:28:39.8951 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: SS3gnGKUVtLe+vIPlZuD1Q94WxpQjTu+WrVHiiUQMA0aME1uz97cOIqGeAt9mZqpGJsb7JNx4MpVkDoVH10efdW7ceYDANIu8bhf7uBDKfk=
+X-MS-Exchange-CrossTenant-userprincipalname: igrXCXqm/LaDPCqeI11AGYAXEJpqKZ4eOEE4Bgykef6wOwC8++6fGwqkdoSIgapWgRbBfNBvcsjxvjzYX7obMh0J3tXRLrncY18+9lm2a9M=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6299
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -150,127 +151,361 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a MemoryRegion alias to support PSP access to=0A=
-TSP SDRAM through shared memory remapping.=0A=
+Introduce a dedicated Aspeed2700SCUState subclass to isolate AST2700-specif=
+ic=0A=
+behavior from the generic AspeedSCUState implementation.=0A=
 =0A=
-The TSP coprocessor exposes one DRAM alias:=0A=
-- remap maps PSP DRAM at 0x42E000000 to TSP SDRAM offset 0x0=0A=
+Previously, AST17x0/27x0 platforms reused AspeedSCUState directly, includin=
+g=0A=
+in coprocessor paths. With AST2700 introducing additional requirements (e.g=
+.=0A=
+future coprocessor features such as DRAM remapping), continuing to extend t=
+he=0A=
+generic SCU risks impacting other SoCs.=0A=
 =0A=
-These mappings follow the default SCU register configuration used by=0A=
-the ASPEED SDK firmware, which defines the memory window mapping=0A=
-between PSP and TSP.=0A=
+To address this, add Aspeed2700SCUState as a subclass of AspeedSCUState and=
 =0A=
-Set TSP CPUID 5.=0A=
+migrate all AST2700-related users to it, including:=0A=
+- AST1700 SoC=0A=
+- AST27x0 SoC=0A=
+- AST27x0 FC=0A=
+- AST27x0 coprocessors=0A=
+=0A=
+As part of this refactoring:=0A=
+- Remove SCU linkage from the common AspeedCoprocessorState=0A=
+- Add a dedicated 'scu' link property to Aspeed27x0CoprocessorState=0A=
+- Update SCU memory aliasing to reference the subclass (parent_obj.iomem)=
+=0A=
+=0A=
+This separation keeps the common code generic while enabling AST2700-specif=
+ic=0A=
+extensions in both SCU and coprocessor paths.=0A=
+=0A=
+No functional change.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- include/hw/misc/aspeed_scu.h |  1 +=0A=
- hw/arm/aspeed_ast27x0-fc.c   |  2 ++=0A=
- hw/arm/aspeed_ast27x0-tsp.c  |  3 +++=0A=
- hw/arm/aspeed_ast27x0.c      |  2 ++=0A=
- hw/misc/aspeed_scu.c         | 16 +++++++++++++++-=0A=
- 5 files changed, 23 insertions(+), 1 deletion(-)=0A=
+ include/hw/arm/aspeed_ast1700.h     |  2 +-=0A=
+ include/hw/arm/aspeed_coprocessor.h |  5 +++--=0A=
+ include/hw/arm/aspeed_soc.h         |  1 +=0A=
+ include/hw/misc/aspeed_scu.h        |  5 +++++=0A=
+ hw/arm/aspeed_ast27x0-fc.c          |  4 ++--=0A=
+ hw/arm/aspeed_ast27x0-ssp.c         | 14 ++++++++++----=0A=
+ hw/arm/aspeed_ast27x0-tsp.c         | 14 ++++++++++----=0A=
+ hw/arm/aspeed_ast27x0.c             | 16 ++++++++--------=0A=
+ hw/arm/aspeed_coprocessor_common.c  |  2 --=0A=
+ hw/misc/aspeed_scu.c                |  8 +++++++-=0A=
+ 10 files changed, 47 insertions(+), 24 deletions(-)=0A=
 =0A=
-diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h=0A=
-index 106ab4b04a..839cd30361 100644=0A=
---- a/include/hw/misc/aspeed_scu.h=0A=
-+++ b/include/hw/misc/aspeed_scu.h=0A=
-@@ -48,6 +48,7 @@ struct Aspeed2700SCUState {=0A=
-     MemoryRegion dram_remap_alias[3];=0A=
-     MemoryRegion *dram;=0A=
-     int ssp_cpuid;=0A=
-+    int tsp_cpuid;=0A=
+diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast170=
+0.h=0A=
+index f7bd4e8650..39c5977cf1 100644=0A=
+--- a/include/hw/arm/aspeed_ast1700.h=0A=
++++ b/include/hw/arm/aspeed_ast1700.h=0A=
+@@ -41,7 +41,7 @@ struct AspeedAST1700SoCState {=0A=
+     MemoryRegion sram;=0A=
+     AspeedSMCState spi;=0A=
+     AspeedADCState adc;=0A=
+-    AspeedSCUState scu;=0A=
++    Aspeed2700SCUState scu;=0A=
+     AspeedGPIOState gpio;=0A=
+     AspeedSGPIOState sgpiom[AST1700_SGPIO_NUM];=0A=
+     AspeedI2CState i2c;=0A=
+diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_co=
+processor.h=0A=
+index 4a50f688ec..4db995d251 100644=0A=
+--- a/include/hw/arm/aspeed_coprocessor.h=0A=
++++ b/include/hw/arm/aspeed_coprocessor.h=0A=
+@@ -20,10 +20,8 @@ struct AspeedCoprocessorState {=0A=
+     MemoryRegion *sram;=0A=
+     MemoryRegion sram_alias;=0A=
+     MemoryRegion uart_alias;=0A=
+-    MemoryRegion scu_alias;=0A=
+     Clock *sysclk;=0A=
+ =0A=
+-    AspeedSCUState *scu;=0A=
+     AspeedSCUState scuio;=0A=
+     AspeedTimerCtrlState timerctrl;=0A=
+     SerialMM *uart;=0A=
+@@ -50,6 +48,9 @@ struct Aspeed27x0CoprocessorState {=0A=
+     UnimplementedDeviceState scuio;=0A=
+ =0A=
+     ARMv7MState armv7m;=0A=
++=0A=
++    MemoryRegion scu_alias;=0A=
++    Aspeed2700SCUState *scu;=0A=
  };=0A=
  =0A=
+ #define TYPE_ASPEED27X0SSP_COPROCESSOR "aspeed27x0ssp-coprocessor"=0A=
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
+index d7b3647ca1..adf2f2898a 100644=0A=
+--- a/include/hw/arm/aspeed_soc.h=0A=
++++ b/include/hw/arm/aspeed_soc.h=0A=
+@@ -151,6 +151,7 @@ struct Aspeed27x0SoCState {=0A=
+     AspeedINTCState intcioexp[ASPEED_IOEXP_NUM];=0A=
+     GICv3State gic;=0A=
+     MemoryRegion dram_empty;=0A=
++    Aspeed2700SCUState scu;=0A=
+ };=0A=
+ =0A=
+ #define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"=0A=
+diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h=0A=
+index d003955428..fd30313e69 100644=0A=
+--- a/include/hw/misc/aspeed_scu.h=0A=
++++ b/include/hw/misc/aspeed_scu.h=0A=
+@@ -20,6 +20,7 @@ OBJECT_DECLARE_TYPE(AspeedSCUState, AspeedSCUClass, ASPEE=
+D_SCU)=0A=
+ #define TYPE_ASPEED_2500_SCU TYPE_ASPEED_SCU "-ast2500"=0A=
+ #define TYPE_ASPEED_2600_SCU TYPE_ASPEED_SCU "-ast2600"=0A=
+ #define TYPE_ASPEED_2700_SCU TYPE_ASPEED_SCU "-ast2700"=0A=
++OBJECT_DECLARE_SIMPLE_TYPE(Aspeed2700SCUState, ASPEED_2700_SCU)=0A=
+ #define TYPE_ASPEED_2700_SCUIO TYPE_ASPEED_SCU "io" "-ast2700"=0A=
+ #define TYPE_ASPEED_1030_SCU TYPE_ASPEED_SCU "-ast1030"=0A=
+ =0A=
+@@ -41,6 +42,10 @@ struct AspeedSCUState {=0A=
+     uint32_t hw_prot_key;=0A=
+ };=0A=
+ =0A=
++struct Aspeed2700SCUState {=0A=
++    AspeedSCUState parent_obj;=0A=
++};=0A=
++=0A=
  #define AST2400_A1_SILICON_REV   0x02010303U=0A=
+ #define AST2500_A1_SILICON_REV   0x04010303U=0A=
+ #define AST2600_A3_SILICON_REV   0x05030303U=0A=
 diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c=0A=
-index 0688750e78..62bd6a0568 100644=0A=
+index 5eb6680da9..46f0c97329 100644=0A=
 --- a/hw/arm/aspeed_ast27x0-fc.c=0A=
 +++ b/hw/arm/aspeed_ast27x0-fc.c=0A=
-@@ -102,6 +102,8 @@ static bool ast2700fc_ca35_init(MachineState *machine, =
-Error **errp)=0A=
-                             sc->uarts_num, serial_hd(2));=0A=
-     object_property_set_int(OBJECT(&s->ca35), "ssp-cpuid", 4,=0A=
-                             &error_abort);=0A=
-+    object_property_set_int(OBJECT(&s->ca35), "tsp-cpuid", 5,=0A=
-+                            &error_abort);=0A=
-     if (!qdev_realize(DEVICE(&s->ca35), NULL, errp)) {=0A=
+@@ -156,7 +156,7 @@ static bool ast2700fc_ssp_init(MachineState *machine, E=
+rror **errp)=0A=
+     object_property_set_link(OBJECT(&s->ssp), "sram",=0A=
+                              OBJECT(&psp->sram), &error_abort);=0A=
+     object_property_set_link(OBJECT(&s->ssp), "scu",=0A=
+-                             OBJECT(&psp->scu), &error_abort);=0A=
++                             OBJECT(&s->ca35.scu), &error_abort);=0A=
+     if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {=0A=
          return false;=0A=
      }=0A=
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c=0A=
-index b30f2afd62..4da4741d8a 100644=0A=
---- a/hw/arm/aspeed_ast27x0-tsp.c=0A=
-+++ b/hw/arm/aspeed_ast27x0-tsp.c=0A=
-@@ -199,6 +199,9 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *=
-dev_soc, Error **errp)=0A=
-     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCU],=0A=
-                                 &a->scu_alias);=0A=
+@@ -188,7 +188,7 @@ static bool ast2700fc_tsp_init(MachineState *machine, E=
+rror **errp)=0A=
+     object_property_set_link(OBJECT(&s->tsp), "sram",=0A=
+                              OBJECT(&psp->sram), &error_abort);=0A=
+     object_property_set_link(OBJECT(&s->tsp), "scu",=0A=
+-                             OBJECT(&psp->scu), &error_abort);=0A=
++                             OBJECT(&s->ca35.scu), &error_abort);=0A=
+     if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {=0A=
+         return false;=0A=
+     }=0A=
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+index 8b84300e0f..9a2079668b 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-ssp.c=0A=
++++ b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+@@ -186,11 +186,11 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState=
+ *dev_soc, Error **errp)=0A=
+                                 &s->sram_alias);=0A=
  =0A=
-+    /* SDRAM remap alias used by PSP to access TSP SDRAM */=0A=
-+    memory_region_add_subregion(&s->sdram, 0, &a->scu->dram_remap_alias[2]=
+     /* SCU */=0A=
+-    memory_region_init_alias(&s->scu_alias, OBJECT(s), "scu.alias",=0A=
+-                             &s->scu->iomem, 0,=0A=
+-                             memory_region_size(&s->scu->iomem));=0A=
++    memory_region_init_alias(&a->scu_alias, OBJECT(a), "scu.alias",=0A=
++                             &a->scu->parent_obj.iomem, 0,=0A=
++                             memory_region_size(&a->scu->parent_obj.iomem)=
 );=0A=
-+=0A=
+     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCU],=0A=
+-                                &s->scu_alias);=0A=
++                                &a->scu_alias);=0A=
+ =0A=
      /* INTC */=0A=
      if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {=0A=
-         return;=0A=
+@@ -257,6 +257,11 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState =
+*dev_soc, Error **errp)=0A=
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);=
+=0A=
+ }=0A=
+ =0A=
++static const Property aspeed_27x0_coprocessor_properties[] =3D {=0A=
++    DEFINE_PROP_LINK("scu", Aspeed27x0CoprocessorState, scu,=0A=
++                     TYPE_ASPEED_2700_SCU, Aspeed2700SCUState *),=0A=
++};=0A=
++=0A=
+ static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,=0A=
+                                              const void *data)=0A=
+ {=0A=
+@@ -270,6 +275,7 @@ static void aspeed_soc_ast27x0ssp_class_init(ObjectClas=
+s *klass,=0A=
+     /* Reason: The Aspeed Coprocessor can only be instantiated from a boar=
+d */=0A=
+     dc->user_creatable =3D false;=0A=
+     dc->realize =3D aspeed_soc_ast27x0ssp_realize;=0A=
++    device_class_set_props(dc, aspeed_27x0_coprocessor_properties);=0A=
+ =0A=
+     sc->valid_cpu_types =3D valid_cpu_types;=0A=
+     sc->irqmap =3D aspeed_soc_ast27x0ssp_irqmap;=0A=
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c=0A=
+index e7c7b74491..674307103e 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-tsp.c=0A=
++++ b/hw/arm/aspeed_ast27x0-tsp.c=0A=
+@@ -186,11 +186,11 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState=
+ *dev_soc, Error **errp)=0A=
+                                 &s->sram_alias);=0A=
+ =0A=
+     /* SCU */=0A=
+-    memory_region_init_alias(&s->scu_alias, OBJECT(s), "scu.alias",=0A=
+-                             &s->scu->iomem, 0,=0A=
+-                             memory_region_size(&s->scu->iomem));=0A=
++    memory_region_init_alias(&a->scu_alias, OBJECT(a), "scu.alias",=0A=
++                             &a->scu->parent_obj.iomem, 0,=0A=
++                             memory_region_size(&a->scu->parent_obj.iomem)=
+);=0A=
+     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCU],=0A=
+-                                &s->scu_alias);=0A=
++                                &a->scu_alias);=0A=
+ =0A=
+     /* INTC */=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {=0A=
+@@ -257,6 +257,11 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState =
+*dev_soc, Error **errp)=0A=
+                                   sc->memmap[ASPEED_DEV_SCUIO], 0x1000);=
+=0A=
+ }=0A=
+ =0A=
++static const Property aspeed_27x0_coprocessor_properties[] =3D {=0A=
++    DEFINE_PROP_LINK("scu", Aspeed27x0CoprocessorState, scu,=0A=
++                     TYPE_ASPEED_2700_SCU, Aspeed2700SCUState *),=0A=
++};=0A=
++=0A=
+ static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass,=0A=
+                                              const void *data)=0A=
+ {=0A=
+@@ -270,6 +275,7 @@ static void aspeed_soc_ast27x0tsp_class_init(ObjectClas=
+s *klass,=0A=
+     /* Reason: The Aspeed Coprocessor can only be instantiated from a boar=
+d */=0A=
+     dc->user_creatable =3D false;=0A=
+     dc->realize =3D aspeed_soc_ast27x0tsp_realize;=0A=
++    device_class_set_props(dc, aspeed_27x0_coprocessor_properties);=0A=
+ =0A=
+     sc->valid_cpu_types =3D valid_cpu_types;=0A=
+     sc->irqmap =3D aspeed_soc_ast27x0tsp_irqmap;=0A=
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c=0A=
-index e38b829cc7..46cc116ef2 100644=0A=
+index 87dcb82e1b..e84975a9c4 100644=0A=
 --- a/hw/arm/aspeed_ast27x0.c=0A=
 +++ b/hw/arm/aspeed_ast27x0.c=0A=
-@@ -434,6 +434,8 @@ static void aspeed_soc_ast2700_init(Object *obj)=0A=
+@@ -425,12 +425,12 @@ static void aspeed_soc_ast2700_init(Object *obj)=0A=
+ =0A=
+     object_initialize_child(obj, "gic", &a->gic, gicv3_class_name());=0A=
+ =0A=
+-    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_2700_SCU);=0A=
+-    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev",=0A=
++    object_initialize_child(obj, "scu", &a->scu, TYPE_ASPEED_2700_SCU);=0A=
++    qdev_prop_set_uint32(DEVICE(&a->scu), "silicon-rev",=0A=
+                          sc->silicon_rev);=0A=
+-    object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu),=0A=
++    object_property_add_alias(obj, "hw-strap1", OBJECT(&a->scu),=0A=
+                               "hw-strap1");=0A=
+-    object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),=0A=
++    object_property_add_alias(obj, "hw-prot-key", OBJECT(&a->scu),=0A=
                                "hw-prot-key");=0A=
-     object_property_add_alias(obj, "ssp-cpuid", OBJECT(&a->scu),=0A=
-                               "ssp-cpuid");=0A=
-+    object_property_add_alias(obj, "tsp-cpuid", OBJECT(&a->scu),=0A=
-+                              "tsp-cpuid");=0A=
  =0A=
      object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUI=
 O);=0A=
-     qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",=0A=
+@@ -794,10 +794,10 @@ static void aspeed_soc_ast2700_realize(DeviceState *d=
+ev, Error **errp)=0A=
+                                 sc->memmap[ASPEED_DEV_VBOOTROM], &s->vboot=
+rom);=0A=
+ =0A=
+     /* SCU */=0A=
+-    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {=0A=
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->scu), errp)) {=0A=
+         return;=0A=
+     }=0A=
+-    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->scu), 0,=0A=
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->scu), 0,=0A=
+                     sc->memmap[ASPEED_DEV_SCU]);=0A=
+ =0A=
+     /* SCU1 */=0A=
+@@ -915,7 +915,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev=
+, Error **errp)=0A=
+         AspeedWDTClass *awc =3D ASPEED_WDT_GET_CLASS(&s->wdt[i]);=0A=
+         hwaddr wdt_offset =3D sc->memmap[ASPEED_DEV_WDT] + i * awc->iosize=
+;=0A=
+ =0A=
+-        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&s->scu=
+),=0A=
++        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&a->scu=
+),=0A=
+                                  &error_abort);=0A=
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {=0A=
+             return;=0A=
+@@ -1018,7 +1018,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *d=
+ev, Error **errp)=0A=
+                        aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_EMMC));=0A=
+ =0A=
+     /* Timer */=0A=
+-    object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&s->scu)=
+,=0A=
++    object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&a->scu)=
+,=0A=
+                              &error_abort);=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {=0A=
+         return;=0A=
+diff --git a/hw/arm/aspeed_coprocessor_common.c b/hw/arm/aspeed_coprocessor=
+_common.c=0A=
+index a0a4c73d08..43026d2a55 100644=0A=
+--- a/hw/arm/aspeed_coprocessor_common.c=0A=
++++ b/hw/arm/aspeed_coprocessor_common.c=0A=
+@@ -27,8 +27,6 @@ static const Property aspeed_coprocessor_properties[] =3D=
+ {=0A=
+                      TYPE_MEMORY_REGION, MemoryRegion *),=0A=
+     DEFINE_PROP_LINK("sram", AspeedCoprocessorState, sram, TYPE_MEMORY_REG=
+ION,=0A=
+                      MemoryRegion *),=0A=
+-    DEFINE_PROP_LINK("scu", AspeedCoprocessorState, scu, TYPE_ASPEED_SCU,=
+=0A=
+-                     AspeedSCUState *),=0A=
+     DEFINE_PROP_LINK("uart", AspeedCoprocessorState, uart, TYPE_SERIAL_MM,=
+=0A=
+                      SerialMM *),=0A=
+     DEFINE_PROP_INT32("uart-dev", AspeedCoprocessorState, uart_dev, 0),=0A=
 diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c=0A=
-index 7080bd6241..2150261f40 100644=0A=
+index e4160356e4..0a2dad4537 100644=0A=
 --- a/hw/misc/aspeed_scu.c=0A=
 +++ b/hw/misc/aspeed_scu.c=0A=
-@@ -966,7 +966,7 @@ static void aspeed_2700_scu_realize(DeviceState *dev, E=
-rror **errp)=0A=
- =0A=
-     aspeed_scu_realize(dev, errp);=0A=
- =0A=
--    if (a->ssp_cpuid > 0) {=0A=
-+    if (a->ssp_cpuid > 0 || a->tsp_cpuid > 0) {=0A=
-         if (!a->dram) {=0A=
-             error_setg(errp, TYPE_ASPEED_2700_SCU ": 'dram' link not set")=
-;=0A=
-             return;=0A=
-@@ -990,10 +990,24 @@ static void aspeed_2700_scu_realize(DeviceState *dev,=
- Error **errp)=0A=
-                                  "ssp.dram.remap2", a->dram,=0A=
-                                  0x2c000000, 0x05880000);=0A=
-     }=0A=
-+=0A=
-+    if (a->tsp_cpuid > 0) {=0A=
-+        /*=0A=
-+         * The TSP coprocessor uses one memory alias (remap) to access a s=
-hared=0A=
-+         * region in the PSP DRAM:=0A=
-+         *=0A=
-+         * - remap maps PSP DRAM at 0x42E000000 (size: 32MB) to TSP SDRAM=
+@@ -959,6 +959,11 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)=
 =0A=
-+         *   offset 0x0=0A=
-+         */=0A=
-+        memory_region_init_alias(&a->dram_remap_alias[2], OBJECT(a),=0A=
-+                                 "tsp.dram.remap", a->dram,=0A=
-+                                 0x2e000000, 32 * MiB);=0A=
-+    }=0A=
+     s->regs[AST2700_HW_STRAP1] =3D s->hw_strap1;=0A=
  }=0A=
  =0A=
- static const Property aspeed_2700_scu_properties[] =3D {=0A=
-     DEFINE_PROP_INT32("ssp-cpuid", Aspeed2700SCUState, ssp_cpuid, -1),=0A=
-+    DEFINE_PROP_INT32("tsp-cpuid", Aspeed2700SCUState, tsp_cpuid, -1),=0A=
-     DEFINE_PROP_LINK("dram", Aspeed2700SCUState, dram, TYPE_MEMORY_REGION,=
-=0A=
-                      MemoryRegion *),=0A=
++static void aspeed_2700_scu_realize(DeviceState *dev, Error **errp)=0A=
++{=0A=
++    aspeed_scu_realize(dev, errp);=0A=
++}=0A=
++=0A=
+ static void aspeed_2700_scu_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+ {=0A=
+     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
+@@ -966,6 +971,7 @@ static void aspeed_2700_scu_class_init(ObjectClass *kla=
+ss, const void *data)=0A=
+ =0A=
+     dc->desc =3D "ASPEED 2700 System Control Unit";=0A=
+     device_class_set_legacy_reset(dc, aspeed_ast2700_scu_reset);=0A=
++    dc->realize =3D aspeed_2700_scu_realize;=0A=
+     asc->resets =3D ast2700_a0_resets;=0A=
+     asc->calc_hpll =3D aspeed_2600_scu_calc_hpll;=0A=
+     asc->get_apb =3D aspeed_2700_scu_get_apb_freq;=0A=
+@@ -1097,7 +1103,7 @@ static void aspeed_2700_scuio_class_init(ObjectClass =
+*klass, const void *data)=0A=
+ static const TypeInfo aspeed_2700_scu_info =3D {=0A=
+     .name =3D TYPE_ASPEED_2700_SCU,=0A=
+     .parent =3D TYPE_ASPEED_SCU,=0A=
+-    .instance_size =3D sizeof(AspeedSCUState),=0A=
++    .instance_size =3D sizeof(Aspeed2700SCUState),=0A=
+     .class_init =3D aspeed_2700_scu_class_init,=0A=
  };=0A=
+ =0A=
 -- =0A=
 2.43.0=0A=
 
