@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1213DF4368A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8863F4368B
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgjX-0001GI-GR; Fri, 17 Apr 2026 06:47:35 -0400
+	id 1wDgjq-0001XR-Ue; Fri, 17 Apr 2026 06:47:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wDgjN-00015R-RB; Fri, 17 Apr 2026 06:47:27 -0400
+ id 1wDgjo-0001Tu-Hj; Fri, 17 Apr 2026 06:47:52 -0400
 Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wDgjI-0007zM-NP; Fri, 17 Apr 2026 06:47:25 -0400
+ id 1wDgjl-000846-F4; Fri, 17 Apr 2026 06:47:52 -0400
 Received: from Huawei.localdomain (unknown [36.110.52.2])
- by APP-01 (Coremail) with SMTP id qwCowAB3H2ulD+JpLDmSDQ--.804S10;
- Fri, 17 Apr 2026 18:47:16 +0800 (CST)
+ by APP-01 (Coremail) with SMTP id qwCowAB3H2ulD+JpLDmSDQ--.804S16;
+ Fri, 17 Apr 2026 18:47:25 +0800 (CST)
 From: Molly Chen <xiaoou@iscas.ac.cn>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
@@ -28,19 +28,20 @@ To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
 Cc: xiaoou@iscas.ac.cn,
 	qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 08/14] target/riscv: rvp: add pure multiplication operations
-Date: Fri, 17 Apr 2026 18:46:45 +0800
-Message-Id: <20260417104652.17857-9-xiaoou@iscas.ac.cn>
+Subject: [PATCH 14/14] target/riscv: rvp: update to v020,
+ add SHL and PNCLIP[U]P.* instructions
+Date: Fri, 17 Apr 2026 18:46:51 +0800
+Message-Id: <20260417104652.17857-15-xiaoou@iscas.ac.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417104652.17857-1-xiaoou@iscas.ac.cn>
 References: <20260417104652.17857-1-xiaoou@iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAB3H2ulD+JpLDmSDQ--.804S10
-X-Coremail-Antispam: 1UD129KBjvAXoWfXr1kAr1UGr45JF4xtF1rtFb_yoWrXF4xKo
- W3Gw1Yy3s3Gw1xuw4rCa1UXw17ZrWIvw1DJw4Fvr45Xas7Gr17KF15J34kAayxGrWSyrW8
- WFZavF1fJF9Ik3srn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
- AaLaJ3UjIYCTnIWjp_UUUOj7AC8VAFwI0_Wr0E3s1l1xkIjI8I6I8E6xAIw20EY4v20xva
+X-CM-TRANSID: qwCowAB3H2ulD+JpLDmSDQ--.804S16
+X-Coremail-Antispam: 1UD129KBjvAXoWfJF4UWrWxCFyfXr4UGFyUZFb_yoW8Gw1xZo
+ WrKw45Ar1fGw13u34F9w4UXr1UZr92vw1kGr48Zr42qas7Wr12gFn8J3s5AF40qrWayrW7
+ XrZ3WryrtF1akr9rn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UjIYCTnIWjp_UUUOb7AC8VAFwI0_Wr0E3s1l1xkIjI8I6I8E6xAIw20EY4v20xva
  j40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l82xGYIkIc2x26280x7IE14v26r126s0DM28Irc
  Ia0xkI8VCY1x0267AKxVW5JVCq3wA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l
  84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJV
@@ -50,10 +51,10 @@ X-Coremail-Antispam: 1UD129KBjvAXoWfXr1kAr1UGr45JF4xtF1rtFb_yoWrXF4xKo
  JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_Jw
  0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AK
  xVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrx
- kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v2
- 6F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
- 1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUqLvNU
- UUUU=
+ kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v2
+ 6r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfU5Tmh
+ DUUUU
 X-Originating-IP: [36.110.52.2]
 X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
 Received-SPF: pass client-ip=159.226.251.21; envelope-from=xiaoou@iscas.ac.cn;
@@ -82,1326 +83,530 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
 ---
- target/riscv/helper.h                   |   62 ++
- target/riscv/insn32.decode              |   92 ++
- target/riscv/insn_trans/trans_rvp.c.inc |   62 ++
- target/riscv/psimd_helper.c             | 1066 +++++++++++++++++++++++
- 4 files changed, 1282 insertions(+)
+ target/riscv/helper.h                   |  14 +
+ target/riscv/insn32.decode              |  22 ++
+ target/riscv/insn_trans/trans_rvp.c.inc |  18 ++
+ target/riscv/psimd_helper.c             | 370 ++++++++++++++++++++++++
+ 4 files changed, 424 insertions(+)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 78ae034331..4b3f01f8d0 100644
+index 85d4fe1b67..a9dbe53dbf 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -1543,3 +1543,65 @@ DEF_HELPER_4(merge, tl, env, tl, tl, tl)
- DEF_HELPER_2(cls, tl, env, tl)
- DEF_HELPER_2(clsw, i64, env, i64)
+@@ -1483,6 +1483,14 @@ DEF_HELPER_3(ssha, i32, env, i32, i32)
+ DEF_HELPER_3(sshar, i32, env, i32, i32)
+ DEF_HELPER_3(sha, i64, env, i64, i64)
+ DEF_HELPER_3(shar, i64, env, i64, i64)
++DEF_HELPER_3(psshl_hs, tl, env, tl, tl)
++DEF_HELPER_3(psshlr_hs, tl, env, tl, tl)
++DEF_HELPER_3(psshl_ws, i64, env, i64, i64)
++DEF_HELPER_3(psshlr_ws, i64, env, i64, i64)
++DEF_HELPER_3(sshl, i32, env, i32, i32)
++DEF_HELPER_3(sshlr, i32, env, i32, i32)
++DEF_HELPER_3(shl, i64, env, i64, i64)
++DEF_HELPER_3(shlr, i64, env, i64, i64)
  
-+/* Packed SIMD - Pure Multiplication Operations */
-+DEF_HELPER_3(pmulh_h, tl, env, tl, tl)
-+DEF_HELPER_3(pmulhsu_h, tl, env, tl, tl)
-+DEF_HELPER_3(pmulhu_h, tl, env, tl, tl)
-+DEF_HELPER_3(pmulhr_h, tl, env, tl, tl)
-+DEF_HELPER_3(pmulhrsu_h, tl, env, tl, tl)
-+DEF_HELPER_3(pmulhru_h, tl, env, tl, tl)
-+DEF_HELPER_3(pmulh_w, i64, env, i64, i64)
-+DEF_HELPER_3(pmulhr_w, i64, env, i64, i64)
-+DEF_HELPER_3(pmulhsu_w, i64, env, i64, i64)
-+DEF_HELPER_3(pmulhrsu_w, i64, env, i64, i64)
-+DEF_HELPER_3(pmulhu_w, i64, env, i64, i64)
-+DEF_HELPER_3(pmulhru_w, i64, env, i64, i64)
-+DEF_HELPER_3(mulhr, i32, env, i32, i32)
-+DEF_HELPER_3(mulhrsu, i32, env, i32, i32)
-+DEF_HELPER_3(mulhru, i32, env, i32, i32)
-+DEF_HELPER_3(pmulh_h_b0, tl, env, tl, tl)
-+DEF_HELPER_3(pmulh_h_b1, tl, env, tl, tl)
-+DEF_HELPER_3(pmulhsu_h_b0, tl, env, tl, tl)
-+DEF_HELPER_3(pmulhsu_h_b1, tl, env, tl, tl)
-+DEF_HELPER_3(mulh_h0, i32, env, i32, i32)
-+DEF_HELPER_3(mulh_h1, i32, env, i32, i32)
-+DEF_HELPER_3(mulhsu_h0, i32, env, i32, i32)
-+DEF_HELPER_3(mulhsu_h1, i32, env, i32, i32)
-+DEF_HELPER_3(pmulh_w_h0, i64, env, i64, i64)
-+DEF_HELPER_3(pmulh_w_h1, i64, env, i64, i64)
-+DEF_HELPER_3(pmulhsu_w_h0, i64, env, i64, i64)
-+DEF_HELPER_3(pmulhsu_w_h1, i64, env, i64, i64)
-+DEF_HELPER_3(pmul_h_b00, tl, env, tl, tl)
-+DEF_HELPER_3(pmul_h_b01, tl, env, tl, tl)
-+DEF_HELPER_3(pmul_h_b11, tl, env, tl, tl)
-+DEF_HELPER_3(pmulsu_h_b00, tl, env, tl, tl)
-+DEF_HELPER_3(pmulsu_h_b11, tl, env, tl, tl)
-+DEF_HELPER_3(pmulu_h_b00, tl, env, tl, tl)
-+DEF_HELPER_3(pmulu_h_b01, tl, env, tl, tl)
-+DEF_HELPER_3(pmulu_h_b11, tl, env, tl, tl)
-+DEF_HELPER_3(pmul_w_h00, i64, env, i64, i64)
-+DEF_HELPER_3(pmul_w_h01, i64, env, i64, i64)
-+DEF_HELPER_3(pmul_w_h11, i64, env, i64, i64)
-+DEF_HELPER_3(pmulsu_w_h00, i64, env, i64, i64)
-+DEF_HELPER_3(pmulsu_w_h11, i64, env, i64, i64)
-+DEF_HELPER_3(pmulu_w_h00, i64, env, i64, i64)
-+DEF_HELPER_3(pmulu_w_h01, i64, env, i64, i64)
-+DEF_HELPER_3(pmulu_w_h11, i64, env, i64, i64)
-+DEF_HELPER_3(pm2sadd_h, tl, env, tl, tl)
-+DEF_HELPER_3(pm2sadd_hx, tl, env, tl, tl)
-+DEF_HELPER_3(mul_h00, i32, env, i32, i32)
-+DEF_HELPER_3(mul_h01, i32, env, i32, i32)
-+DEF_HELPER_3(mul_h11, i32, env, i32, i32)
-+DEF_HELPER_3(mulsu_h00, i32, env, i32, i32)
-+DEF_HELPER_3(mulsu_h11, i32, env, i32, i32)
-+DEF_HELPER_3(mulu_h00, i32, env, i32, i32)
-+DEF_HELPER_3(mulu_h01, i32, env, i32, i32)
-+DEF_HELPER_3(mulu_h11, i32, env, i32, i32)
-+DEF_HELPER_3(mul_w00, i64, env, i64, i64)
-+DEF_HELPER_3(mul_w01, i64, env, i64, i64)
-+DEF_HELPER_3(mul_w11, i64, env, i64, i64)
-+DEF_HELPER_3(mulsu_w00, i64, env, i64, i64)
-+DEF_HELPER_3(mulsu_w11, i64, env, i64, i64)
-+DEF_HELPER_3(mulu_w00, i64, env, i64, i64)
-+DEF_HELPER_3(mulu_w01, i64, env, i64, i64)
-+DEF_HELPER_3(mulu_w11, i64, env, i64, i64)
+ /* Packed SIMD - Exchange Operations */
+ DEF_HELPER_3(pas_hx, tl, env, tl, tl)
+@@ -1538,6 +1546,12 @@ DEF_HELPER_4(srx, tl, env, tl, tl, tl)
+ DEF_HELPER_4(mvm, tl, env, tl, tl, tl)
+ DEF_HELPER_4(mvmn, tl, env, tl, tl, tl)
+ DEF_HELPER_4(merge, tl, env, tl, tl, tl)
++DEF_HELPER_3(pnclipp_b, i64, env, i64, i64)
++DEF_HELPER_3(pnclipup_b, i64, env, i64, i64)
++DEF_HELPER_3(pnclipp_h, i64, env, i64, i64)
++DEF_HELPER_3(pnclipup_h, i64, env, i64, i64)
++DEF_HELPER_3(pnclipp_w, i64, env, i64, i64)
++DEF_HELPER_3(pnclipup_w, i64, env, i64, i64)
+ 
+ /* Packed SIMD - Count Leading Operations */
+ DEF_HELPER_2(cls, tl, env, tl)
 diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 09bb69b302..bd3b14af5b 100644
+index 7be0b9e5e6..d7aebd55e2 100644
 --- a/target/riscv/insn32.decode
 +++ b/target/riscv/insn32.decode
-@@ -1321,3 +1321,95 @@ merge       1010110 ..... ..... 001 ..... 0111011 @r
- cls    01100 0000011 ..... 001 ..... 0010011 @r2
- clsw   01100 0000011 ..... 001 ..... 0011011 @r2
+@@ -1293,6 +1293,18 @@ psshar_hs  1111100 ..... ..... 010 ..... 0011011 @r
+ }
+ sha        1110111 ..... ..... 010 ..... 0011011 @r
+ shar       1111111 ..... ..... 010 ..... 0011011 @r
++psshl_hs   1010100 ..... ..... 010 ..... 0011011 @r
++psshlr_hs  1011100 ..... ..... 010 ..... 0011011 @r
++{
++  psshl_ws   1010101 ..... ..... 010 ..... 0011011 @r
++  sshl       1010101 ..... ..... 010 ..... 0011011 @r
++}
++{
++  psshlr_ws  1011101 ..... ..... 010 ..... 0011011 @r
++  sshlr      1011101 ..... ..... 010 ..... 0011011 @r
++}
++shl        1010111 ..... ..... 010 ..... 0011011 @r
++shlr       1011111 ..... ..... 010 ..... 0011011 @r
  
-+# Packed SIMD - Pure Multiplication Operations
-+pmulh_h     10000 00 ..... ..... 111 ..... 0111011 @r
-+pmulhsu_h   11000 00 ..... ..... 111 ..... 0111011 @r
-+pmulhu_h    10010 00 ..... ..... 111 ..... 0111011 @r
-+pmulhr_h    10000 10 ..... ..... 111 ..... 0111011 @r
-+pmulhrsu_h  11000 10 ..... ..... 111 ..... 0111011 @r
-+pmulhru_h   10010 10 ..... ..... 111 ..... 0111011 @r
-+pmulh_w     10000 01 ..... ..... 111 ..... 0111011 @r
-+{
-+  mulhr     10000 11 ..... ..... 111 ..... 0111011 @r
-+  pmulhr_w  10000 11 ..... ..... 111 ..... 0111011 @r
-+}
-+pmulhsu_w   11000 01 ..... ..... 111 ..... 0111011 @r
-+{
-+  mulhrsu   11000 11 ..... ..... 111 ..... 0111011 @r
-+  pmulhrsu_w    11000 11 ..... ..... 111 ..... 0111011 @r
-+}
-+pmulhu_w    10010 01 ..... ..... 111 ..... 0111011 @r
-+{
-+  mulhru    10010 11 ..... ..... 111 ..... 0111011 @r
-+  pmulhru_w 10010 11 ..... ..... 111 ..... 0111011 @r
-+}
-+pmulh_h_b0      10100 00 ..... ..... 111 ..... 0111011 @r
-+pmulh_h_b1      10110 00 ..... ..... 111 ..... 0111011 @r
-+pmulhsu_h_b0    10100 10 ..... ..... 111 ..... 0111011 @r
-+pmulhsu_h_b1    10110 10 ..... ..... 111 ..... 0111011 @r
-+{
-+  mulh_h0       10100 01 ..... ..... 111 ..... 0111011 @r
-+  pmulh_w_h0    10100 01 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mulh_h1       10110 01 ..... ..... 111 ..... 0111011 @r
-+  pmulh_w_h1    10110 01 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mulhsu_h0     10100 11 ..... ..... 111 ..... 0111011 @r
-+  pmulhsu_w_h0  10100 11 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mulhsu_h1     10110 11 ..... ..... 111 ..... 0111011 @r
-+  pmulhsu_w_h1  10110 11 ..... ..... 111 ..... 0111011 @r
-+}
-+pmul_h_b00      10000 00 ..... ..... 011 ..... 0111011 @r
-+pmul_h_b01      10010 00 ..... ..... 001 ..... 0111011 @r
-+pmul_h_b11      10010 00 ..... ..... 011 ..... 0111011 @r
-+pmulsu_h_b00    11100 00 ..... ..... 011 ..... 0111011 @r
-+pmulsu_h_b11    11110 00 ..... ..... 011 ..... 0111011 @r
-+pmulu_h_b00     10100 00 ..... ..... 011 ..... 0111011 @r
-+pmulu_h_b01     10110 00 ..... ..... 001 ..... 0111011 @r
-+pmulu_h_b11     10110 00 ..... ..... 011 ..... 0111011 @r
-+{
-+  mul_h00       10000 01 ..... ..... 011 ..... 0111011 @r
-+  pmul_w_h00    10000 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  mul_h01       10010 01 ..... ..... 001 ..... 0111011 @r
-+  pmul_w_h01    10010 01 ..... ..... 001 ..... 0111011 @r
-+}
-+{
-+  mul_h11       10010 01 ..... ..... 011 ..... 0111011 @r
-+  pmul_w_h11    10010 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  mulsu_h00     11100 01 ..... ..... 011 ..... 0111011 @r
-+  pmulsu_w_h00  11100 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  mulsu_h11     11110 01 ..... ..... 011 ..... 0111011 @r
-+  pmulsu_w_h11  11110 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  mulu_h00      10100 01 ..... ..... 011 ..... 0111011 @r
-+  pmulu_w_h00   10100 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  mulu_h01      10110 01 ..... ..... 001 ..... 0111011 @r
-+  pmulu_w_h01   10110 01 ..... ..... 001 ..... 0111011 @r
-+}
-+{
-+  mulu_h11      10110 01 ..... ..... 011 ..... 0111011 @r
-+  pmulu_w_h11   10110 01 ..... ..... 011 ..... 0111011 @r
-+}
-+pm2sadd_h       11000 10 ..... ..... 101 ..... 0111011 @r
-+pm2sadd_hx      11010 10 ..... ..... 101 ..... 0111011 @r
-+mul_w00         10000 11 ..... ..... 011 ..... 0111011 @r
-+mul_w01         10010 11 ..... ..... 001 ..... 0111011 @r
-+mul_w11         10010 11 ..... ..... 011 ..... 0111011 @r
-+mulsu_w00       11100 11 ..... ..... 011 ..... 0111011 @r
-+mulsu_w11       11110 11 ..... ..... 011 ..... 0111011 @r
-+mulu_w00        10100 11 ..... ..... 011 ..... 0111011 @r
-+mulu_w01        10110 11 ..... ..... 001 ..... 0111011 @r
-+mulu_w11        10110 11 ..... ..... 011 ..... 0111011 @r
+ # Packed SIMD - Exchange Operations
+ pas_hx     1000000 ..... ..... 110 ..... 0111011 @r
+@@ -1346,6 +1358,12 @@ srx         1010111 ..... ..... 001 ..... 0111011 @r
+ mvm         1010100 ..... ..... 001 ..... 0111011 @r
+ mvmn        1010101 ..... ..... 001 ..... 0111011 @r
+ merge       1010110 ..... ..... 001 ..... 0111011 @r
++pnclipp_b   1100000 ..... ..... 010 ..... 0111011 @r
++pnclipup_b  1000000 ..... ..... 010 ..... 0111011 @r
++pnclipp_h   1100001 ..... ..... 010 ..... 0111011 @r
++pnclipup_h  1000001 ..... ..... 010 ..... 0111011 @r
++pnclipp_w   1100011 ..... ..... 010 ..... 0111011 @r
++pnclipup_w  1000011 ..... ..... 010 ..... 0111011 @r
+ 
+ # Packed SIMD - Count Leading Operations
+ cls    01100 0000011 ..... 001 ..... 0010011 @r2
+@@ -1790,12 +1808,16 @@ psrl_dhs    0000100 ..... .... 1110 .... 00011011 @r_p_3
+ psra_dhs    0100100 ..... .... 1110 .... 00011011 @r_p_3
+ pssha_dhs   0110100 ..... .... 0110 .... 00011011 @r_p_3
+ psshar_dhs  0111100 ..... .... 0110 .... 00011011 @r_p_3
++psshl_dhs   0010100 ..... .... 0110 .... 00011011 @r_p_3
++psshlr_dhs  0011100 ..... .... 0110 .... 00011011 @r_p_3
+ padd_dws    0001101 ..... .... 0110 .... 00011011 @r_p_3
+ psll_dws    0000101 ..... .... 0110 .... 00011011 @r_p_3
+ psrl_dws    0000101 ..... .... 1110 .... 00011011 @r_p_3
+ psra_dws    0100101 ..... .... 1110 .... 00011011 @r_p_3
+ pssha_dws   0110101 ..... .... 0110 .... 00011011 @r_p_3
+ psshar_dws  0111101 ..... .... 0110 .... 00011011 @r_p_3
++psshl_dws   0010101 ..... .... 0110 .... 00011011 @r_p_3
++psshlr_dws  0011101 ..... .... 0110 .... 00011011 @r_p_3
+ 
+ # register-pair operands
+ ppaire_db    1000000 .... 0 .... 1110 .... 00011011 @r_p_2
 diff --git a/target/riscv/insn_trans/trans_rvp.c.inc b/target/riscv/insn_trans/trans_rvp.c.inc
-index fc6254b395..b01656ffb0 100644
+index ca459293a3..b4142adcfb 100644
 --- a/target/riscv/insn_trans/trans_rvp.c.inc
 +++ b/target/riscv/insn_trans/trans_rvp.c.inc
-@@ -712,3 +712,65 @@ GEN_SIMD_TRANS_ACC(merge)
- GEN_SIMD_TRANS_R1(cls)
- GEN_SIMD_TRANS_R1_64(clsw)
+@@ -686,6 +686,14 @@ GEN_SIMD_TRANS_32(ssha)
+ GEN_SIMD_TRANS_32(sshar)
+ GEN_SIMD_TRANS_64(sha)
+ GEN_SIMD_TRANS_64(shar)
++GEN_SIMD_TRANS(psshl_hs)
++GEN_SIMD_TRANS(psshlr_hs)
++GEN_SIMD_TRANS_64(psshl_ws)
++GEN_SIMD_TRANS_64(psshlr_ws)
++GEN_SIMD_TRANS_32(sshl)
++GEN_SIMD_TRANS_32(sshlr)
++GEN_SIMD_TRANS_64(shl)
++GEN_SIMD_TRANS_64(shlr)
  
-+/* Packed SIMD - Pure Multiplication Operations */
-+GEN_SIMD_TRANS(pmulh_h)
-+GEN_SIMD_TRANS(pmulhsu_h)
-+GEN_SIMD_TRANS(pmulhu_h)
-+GEN_SIMD_TRANS(pmulhr_h)
-+GEN_SIMD_TRANS(pmulhrsu_h)
-+GEN_SIMD_TRANS(pmulhru_h)
-+GEN_SIMD_TRANS_64(pmulh_w)
-+GEN_SIMD_TRANS_64(pmulhr_w)
-+GEN_SIMD_TRANS_64(pmulhsu_w)
-+GEN_SIMD_TRANS_64(pmulhrsu_w)
-+GEN_SIMD_TRANS_64(pmulhu_w)
-+GEN_SIMD_TRANS_64(pmulhru_w)
-+GEN_SIMD_TRANS_32(mulhr)
-+GEN_SIMD_TRANS_32(mulhrsu)
-+GEN_SIMD_TRANS_32(mulhru)
-+GEN_SIMD_TRANS(pmulh_h_b0)
-+GEN_SIMD_TRANS(pmulh_h_b1)
-+GEN_SIMD_TRANS(pmulhsu_h_b0)
-+GEN_SIMD_TRANS(pmulhsu_h_b1)
-+GEN_SIMD_TRANS_32(mulh_h0)
-+GEN_SIMD_TRANS_32(mulh_h1)
-+GEN_SIMD_TRANS_32(mulhsu_h0)
-+GEN_SIMD_TRANS_32(mulhsu_h1)
-+GEN_SIMD_TRANS_64(pmulh_w_h0)
-+GEN_SIMD_TRANS_64(pmulh_w_h1)
-+GEN_SIMD_TRANS_64(pmulhsu_w_h0)
-+GEN_SIMD_TRANS_64(pmulhsu_w_h1)
-+GEN_SIMD_TRANS(pmul_h_b00)
-+GEN_SIMD_TRANS(pmul_h_b01)
-+GEN_SIMD_TRANS(pmul_h_b11)
-+GEN_SIMD_TRANS(pmulsu_h_b00)
-+GEN_SIMD_TRANS(pmulsu_h_b11)
-+GEN_SIMD_TRANS(pmulu_h_b00)
-+GEN_SIMD_TRANS(pmulu_h_b01)
-+GEN_SIMD_TRANS(pmulu_h_b11)
-+GEN_SIMD_TRANS_64(pmul_w_h00)
-+GEN_SIMD_TRANS_64(pmul_w_h01)
-+GEN_SIMD_TRANS_64(pmul_w_h11)
-+GEN_SIMD_TRANS_64(pmulsu_w_h00)
-+GEN_SIMD_TRANS_64(pmulsu_w_h11)
-+GEN_SIMD_TRANS_64(pmulu_w_h00)
-+GEN_SIMD_TRANS_64(pmulu_w_h01)
-+GEN_SIMD_TRANS_64(pmulu_w_h11)
-+GEN_SIMD_TRANS(pm2sadd_h)
-+GEN_SIMD_TRANS(pm2sadd_hx)
-+GEN_SIMD_TRANS_32(mul_h00)
-+GEN_SIMD_TRANS_32(mul_h01)
-+GEN_SIMD_TRANS_32(mul_h11)
-+GEN_SIMD_TRANS_32(mulsu_h00)
-+GEN_SIMD_TRANS_32(mulsu_h11)
-+GEN_SIMD_TRANS_32(mulu_h00)
-+GEN_SIMD_TRANS_32(mulu_h01)
-+GEN_SIMD_TRANS_32(mulu_h11)
-+GEN_SIMD_TRANS_64(mul_w00)
-+GEN_SIMD_TRANS_64(mul_w01)
-+GEN_SIMD_TRANS_64(mul_w11)
-+GEN_SIMD_TRANS_64(mulsu_w00)
-+GEN_SIMD_TRANS_64(mulsu_w11)
-+GEN_SIMD_TRANS_64(mulu_w00)
-+GEN_SIMD_TRANS_64(mulu_w01)
-+GEN_SIMD_TRANS_64(mulu_w11)
+ /* Packed SIMD - Exchange Operations */
+ GEN_SIMD_TRANS(pas_hx)
+@@ -739,6 +747,12 @@ GEN_SIMD_TRANS_ACC(srx)
+ GEN_SIMD_TRANS_ACC(mvm)
+ GEN_SIMD_TRANS_ACC(mvmn)
+ GEN_SIMD_TRANS_ACC(merge)
++GEN_SIMD_TRANS_64(pnclipp_b)
++GEN_SIMD_TRANS_64(pnclipup_b)
++GEN_SIMD_TRANS_64(pnclipp_h)
++GEN_SIMD_TRANS_64(pnclipup_h)
++GEN_SIMD_TRANS_64(pnclipp_w)
++GEN_SIMD_TRANS_64(pnclipup_w)
+ 
+ /* Packed SIMD - Count Leading Operations */
+ GEN_SIMD_TRANS_R1(cls)
+@@ -1066,8 +1080,12 @@ GEN_SIMD_TRANS_REG_PAIR_3(psrl_dhs, psrl_hs)
+ GEN_SIMD_TRANS_REG_PAIR_3(psra_dhs, psra_hs)
+ GEN_SIMD_TRANS_REG_PAIR_3(pssha_dhs, pssha_hs)
+ GEN_SIMD_TRANS_REG_PAIR_3(psshar_dhs, psshar_hs)
++GEN_SIMD_TRANS_REG_PAIR_3(psshl_dhs, psshl_hs)
++GEN_SIMD_TRANS_REG_PAIR_3(psshlr_dhs, psshlr_hs)
+ GEN_SIMD_TRANS_REG_PAIR_DW(pssha_dws, ssha)
+ GEN_SIMD_TRANS_REG_PAIR_DW(psshar_dws, sshar)
++GEN_SIMD_TRANS_REG_PAIR_DW(psshl_dws, sshl)
++GEN_SIMD_TRANS_REG_PAIR_DW(psshlr_dws, sshlr)
+ 
+ GEN_SIMD_TRANS_REG_PAIR_2(ppairo_db, ppairo_b)
+ GEN_SIMD_TRANS_REG_PAIR_2(ppairo_dh, ppairo_h)
 diff --git a/target/riscv/psimd_helper.c b/target/riscv/psimd_helper.c
-index 4080aab234..b60fd3094c 100644
+index 4c91800128..96e016d90d 100644
 --- a/target/riscv/psimd_helper.c
 +++ b/target/riscv/psimd_helper.c
-@@ -3616,3 +3616,1069 @@ uint64_t HELPER(clsw)(CPURISCVState *env, uint64_t rs1)
- 
-     return c;
+@@ -2704,6 +2704,242 @@ uint64_t HELPER(shar)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+     }
  }
-+
-+/* Pure multiplication operations */
-+
+ 
 +/**
-+ * PMULH.H - Packed signed 16-bit multiply high
-+ * For each halfword: rd[i] = (rs1[i] * rs2[i]) >> 16
++ * PSSHL.HS - Packed 16-bit variable shift with unsigned saturation
++ * Positive shift left (saturating), negative shift right (logical)
 + */
-+target_ulong HELPER(pmulh_h)(CPURISCVState *env,
-+                             target_ulong rs1, target_ulong rs2)
++target_ulong HELPER(psshl_hs)(CPURISCVState *env, target_ulong rs1,
++                              target_ulong rs2)
 +{
 +    target_ulong rd = 0;
 +    int elems = ELEMS_H(rd);
++    int sat = 0;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
 +
 +    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
-+        int32_t prod = (int32_t)e1 * (int32_t)e2;
-+        uint16_t high = (uint16_t)(prod >> 16);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHSU.H - Packed signed x unsigned 16-bit multiply high
-+ */
-+target_ulong HELPER(pmulhsu_h)(CPURISCVState *env,
-+                               target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        uint16_t e2 = EXTRACT16(rs2, i);
-+        int32_t prod = (int32_t)e1 * (uint32_t)e2;
-+        uint16_t high = (uint16_t)(prod >> 16);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHU.H - Packed unsigned 16-bit multiply high
-+ */
-+target_ulong HELPER(pmulhu_h)(CPURISCVState *env,
-+                              target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t e1 = EXTRACT16(rs1, i);
-+        uint16_t e2 = EXTRACT16(rs2, i);
-+        uint32_t prod = (uint32_t)e1 * (uint32_t)e2;
-+        uint16_t high = (uint16_t)(prod >> 16);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHR.H - Packed signed 16-bit multiply high with rounding
-+ */
-+target_ulong HELPER(pmulhr_h)(CPURISCVState *env,
-+                              target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
-+        int32_t prod = (int32_t)e1 * (int32_t)e2 + (1 << 15);
-+        uint16_t high = (uint16_t)(prod >> 16);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHRSU.H - Packed signed x unsigned 16-bit multiply high with rounding
-+ */
-+target_ulong HELPER(pmulhrsu_h)(CPURISCVState *env,
-+                                target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        uint16_t e2 = EXTRACT16(rs2, i);
-+        int32_t prod = (int32_t)e1 * (uint32_t)e2 + (1 << 15);
-+        uint16_t high = (uint16_t)(prod >> 16);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHRU.H - Packed unsigned 16-bit multiply high with rounding
-+ */
-+target_ulong HELPER(pmulhru_h)(CPURISCVState *env,
-+                               target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t e1 = EXTRACT16(rs1, i);
-+        uint16_t e2 = EXTRACT16(rs2, i);
-+        uint32_t prod = (uint32_t)e1 * (uint32_t)e2 + (1 << 15);
-+        uint16_t high = (uint16_t)(prod >> 16);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULH.W - Packed signed 32-bit multiply high (RV64 only)
-+ */
-+uint64_t HELPER(pmulh_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
-+        int64_t prod = (int64_t)e1 * (int64_t)e2;
-+        uint32_t high = (uint32_t)(prod >> 32);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHR.W - Packed signed 32-bit multiply high with rounding (RV64 only)
-+ */
-+uint64_t HELPER(pmulhr_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
-+        int64_t prod = (int64_t)e1 * (int64_t)e2 + (1LL << 31);
-+        uint32_t high = (uint32_t)(prod >> 32);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHSU.W - Packed signed x unsigned 32-bit multiply high (RV64 only)
-+ */
-+uint64_t HELPER(pmulhsu_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        uint32_t e2 = EXTRACT32(rs2, i);
-+        int64_t prod = (int64_t)e1 * (uint64_t)e2;
-+        uint32_t high = (uint32_t)(prod >> 32);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHRSU.W - Packed signed x unsigned 32-bit
-+ * multiply high with rounding (RV64 only)
-+ */
-+uint64_t HELPER(pmulhrsu_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        uint32_t e2 = EXTRACT32(rs2, i);
-+        int64_t prod = (int64_t)e1 * (uint64_t)e2 + (1LL << 31);
-+        uint32_t high = (uint32_t)(prod >> 32);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHU.W - Packed unsigned 32-bit multiply high (RV64 only)
-+ */
-+uint64_t HELPER(pmulhu_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint32_t e1 = EXTRACT32(rs1, i);
-+        uint32_t e2 = EXTRACT32(rs2, i);
-+        uint64_t prod = (uint64_t)e1 * (uint64_t)e2;
-+        uint32_t high = (uint32_t)(prod >> 32);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHRU.W - Packed unsigned 32-bit multiply high with rounding (RV64 only)
-+ */
-+uint64_t HELPER(pmulhru_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint32_t e1 = EXTRACT32(rs1, i);
-+        uint32_t e2 = EXTRACT32(rs2, i);
-+        uint64_t prod = (uint64_t)e1 * (uint64_t)e2 + (1LL << 31);
-+        uint32_t high = (uint32_t)(prod >> 32);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * MULHR - 32-bit signed multiply high with rounding
-+ */
-+uint32_t HELPER(mulhr)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
-+{
-+    int32_t a = (int32_t)rs1;
-+    int32_t b = (int32_t)rs2;
-+    int64_t prod = (int64_t)a * (int64_t)b + (1LL << 31);
-+    return (uint32_t)(prod >> 32);
-+}
-+
-+/**
-+ * MULHRSU - 32-bit signed x unsigned multiply high with rounding
-+ */
-+uint32_t HELPER(mulhrsu)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
-+{
-+    int32_t a = (int32_t)rs1;
-+    uint32_t b = rs2;
-+    int64_t prod = (int64_t)a * (uint64_t)b + (1LL << 31);
-+    return (uint32_t)(prod >> 32);
-+}
-+
-+/**
-+ * MULHRU - 32-bit unsigned multiply high with rounding
-+ */
-+uint32_t HELPER(mulhru)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
-+{
-+    uint32_t a = rs1;
-+    uint32_t b = rs2;
-+    uint64_t prod = (uint64_t)a * (uint64_t)b + (1LL << 31);
-+    return (uint32_t)(prod >> 32);
-+}
-+
-+/**
-+ * PMULH.H.B0 - Multiply halfword by low byte, result high halfword
-+ */
-+target_ulong HELPER(pmulh_h_b0)(CPURISCVState *env,
-+                                target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        int8_t e2 = (int8_t)EXTRACT8(rs2, i * 2);
-+        int32_t prod = (int32_t)e1 * (int32_t)e2;
-+        uint16_t high = (uint16_t)(prod >> 8);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULH.H.B1 - Multiply halfword by high byte, result high halfword
-+ */
-+target_ulong HELPER(pmulh_h_b1)(CPURISCVState *env,
-+                                target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        int8_t e2 = (int8_t)EXTRACT8(rs2, i * 2 + 1);
-+        int32_t prod = (int32_t)e1 * (int32_t)e2;
-+        uint16_t high = (uint16_t)(prod >> 8);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHSU.H.B0 - Multiply signed halfword by unsigned
-+ * low byte, result high halfword
-+ */
-+target_ulong HELPER(pmulhsu_h_b0)(CPURISCVState *env,
-+                                  target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        uint8_t e2 = EXTRACT8(rs2, i * 2);
-+        int32_t prod = (int32_t)e1 * (uint32_t)e2;
-+        uint16_t high = (uint16_t)(prod >> 8);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHSU.H.B1 - Multiply signed halfword by unsigned
-+ * high byte, result high halfword
-+ */
-+target_ulong HELPER(pmulhsu_h_b1)(CPURISCVState *env,
-+                                  target_ulong rs1, target_ulong rs2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
-+        uint8_t e2 = EXTRACT8(rs2, i * 2 + 1);
-+        int32_t prod = (int32_t)e1 * (uint32_t)e2;
-+        uint16_t high = (uint16_t)(prod >> 8);
-+        rd = INSERT16(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * MULH.H0 - 32-bit multiply by low halfword, result high 16 bits
-+ */
-+uint32_t HELPER(mulh_h0)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
-+{
-+    int32_t a = (int32_t)rs1;
-+    int16_t b = (int16_t)(rs2 & 0xFFFF);
-+    int64_t prod = (int64_t)a * (int64_t)b;
-+    return (uint32_t)(prod >> 16);
-+}
-+
-+/**
-+ * MULH.H1 - 32-bit multiply by high halfword, result high 16 bits
-+ */
-+uint32_t HELPER(mulh_h1)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
-+{
-+    int32_t a = (int32_t)rs1;
-+    int16_t b = (int16_t)((rs2 >> 16) & 0xFFFF);
-+    int64_t prod = (int64_t)a * (int64_t)b;
-+    return (uint32_t)(prod >> 16);
-+}
-+
-+/**
-+ * MULHSU.H0 - 32-bit signed multiply by unsigned
-+ * low halfword, result high 16 bits
-+ */
-+uint32_t HELPER(mulhsu_h0)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
-+{
-+    int32_t a = (int32_t)rs1;
-+    uint16_t b = (uint16_t)(rs2 & 0xFFFF);
-+    int64_t prod = (int64_t)a * (uint64_t)b;
-+    return (uint32_t)(prod >> 16);
-+}
-+
-+/**
-+ * MULHSU.H1 - 32-bit signed multiply by unsigned
-+ * high halfword, result high 16 bits
-+ */
-+uint32_t HELPER(mulhsu_h1)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
-+{
-+    int32_t a = (int32_t)rs1;
-+    uint16_t b = (uint16_t)((rs2 >> 16) & 0xFFFF);
-+    int64_t prod = (int64_t)a * (uint64_t)b;
-+    return (uint32_t)(prod >> 16);
-+}
-+
-+/**
-+ * PMULH.W.H0 - Multiply word by low halfword, result high word (RV64 only)
-+ */
-+uint64_t HELPER(pmulh_w_h0)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+
-+    for (int i = 0; i < 2; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        int16_t e2 = (int16_t)EXTRACT16(rs2, i * 2);
-+        int64_t prod = (int64_t)e1 * (int64_t)e2;
-+        uint32_t high = (uint32_t)(prod >> 16);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULH.W.H1 - Multiply word by high halfword, result high word (RV64 only)
-+ */
-+uint64_t HELPER(pmulh_w_h1)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+
-+    for (int i = 0; i < 2; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        int16_t e2 = (int16_t)EXTRACT16(rs2, i * 2 + 1);
-+        int64_t prod = (int64_t)e1 * (int64_t)e2;
-+        uint32_t high = (uint32_t)(prod >> 16);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHSU.W.H0 - Multiply signed word by unsigned
-+ * low halfword, result high word (RV64 only)
-+ */
-+uint64_t HELPER(pmulhsu_w_h0)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+
-+    for (int i = 0; i < 2; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        uint16_t e2 = EXTRACT16(rs2, i * 2);
-+        int64_t prod = (int64_t)e1 * (uint64_t)e2;
-+        uint32_t high = (uint32_t)(prod >> 16);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULHSU.W.H1 - Multiply signed word by unsigned
-+ * high halfword, result high word (RV64 only)
-+ */
-+uint64_t HELPER(pmulhsu_w_h1)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+
-+    for (int i = 0; i < 2; i++) {
-+        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
-+        uint16_t e2 = EXTRACT16(rs2, i * 2 + 1);
-+        int64_t prod = (int64_t)e1 * (uint64_t)e2;
-+        uint32_t high = (uint32_t)(prod >> 16);
-+        rd = INSERT32(rd, high, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMUL.H.B00 - Multiply halfword by low byte of each halfword
-+ * For each halfword: rd[i] = rs1[i][7:0] * rs2[i][7:0]
-+ */
-+target_ulong HELPER(pmul_h_b00)(CPURISCVState *env,
-+                                target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        int8_t s1_b0 = (int8_t)(s1_h & 0xFF);
-+        int8_t s2_b0 = (int8_t)(s2_h & 0xFF);
-+        int16_t mul = (int16_t)s1_b0 * (int16_t)s2_b0;
-+        rd = INSERT16(rd, (uint16_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMUL.H.B01 - Multiply halfword low byte by halfword high byte
-+ * For each halfword: rd[i] = rs1[i][7:0] * rs2[i][15:8]
-+ */
-+target_ulong HELPER(pmul_h_b01)(CPURISCVState *env,
-+                                target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        int8_t s1_b0 = (int8_t)(s1_h & 0xFF);
-+        int8_t s2_b1 = (int8_t)((s2_h >> 8) & 0xFF);
-+        int16_t mul = (int16_t)s1_b0 * (int16_t)s2_b1;
-+        rd = INSERT16(rd, (uint16_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMUL.H.B11 - Multiply halfword high byte by halfword high byte
-+ * For each halfword: rd[i] = rs1[i][15:8] * rs2[i][15:8]
-+ */
-+target_ulong HELPER(pmul_h_b11)(CPURISCVState *env,
-+                                target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        int8_t s1_b1 = (int8_t)((s1_h >> 8) & 0xFF);
-+        int8_t s2_b1 = (int8_t)((s2_h >> 8) & 0xFF);
-+        int16_t mul = (int16_t)s1_b1 * (int16_t)s2_b1;
-+        rd = INSERT16(rd, (uint16_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULSU.H.B00 - Signed x unsigned multiply, low bytes
-+ * For each halfword: rd[i] = (signed)rs1[i][7:0] * (unsigned)rs2[i][7:0]
-+ */
-+target_ulong HELPER(pmulsu_h_b00)(CPURISCVState *env,
-+                                  target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        int8_t s1_b0 = (int8_t)(s1_h & 0xFF);
-+        uint8_t s2_b0 = (uint8_t)(s2_h & 0xFF);
-+        int16_t mul = (int16_t)s1_b0 * (uint16_t)s2_b0;
-+        rd = INSERT16(rd, (uint16_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULSU.H.B11 - Signed x unsigned multiply, high bytes
-+ * For each halfword: rd[i] = (signed)rs1[i][15:8] * (unsigned)rs2[i][15:8]
-+ */
-+target_ulong HELPER(pmulsu_h_b11)(CPURISCVState *env,
-+                                  target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        int8_t s1_b1 = (int8_t)((s1_h >> 8) & 0xFF);
-+        uint8_t s2_b1 = (uint8_t)((s2_h >> 8) & 0xFF);
-+        int16_t mul = (int16_t)s1_b1 * (uint16_t)s2_b1;
-+        rd = INSERT16(rd, (uint16_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULU.H.B00 - Unsigned multiply, low bytes
-+ * For each halfword: rd[i] = rs1[i][7:0] * rs2[i][7:0] (unsigned)
-+ */
-+target_ulong HELPER(pmulu_h_b00)(CPURISCVState *env,
-+                                 target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        uint8_t s1_b0 = (uint8_t)(s1_h & 0xFF);
-+        uint8_t s2_b0 = (uint8_t)(s2_h & 0xFF);
-+        uint16_t mul = (uint16_t)s1_b0 * (uint16_t)s2_b0;
-+        rd = INSERT16(rd, mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULU.H.B01 - Unsigned multiply, rs1 low byte x rs2 high byte
-+ * For each halfword: rd[i] = rs1[i][7:0] * rs2[i][15:8] (unsigned)
-+ */
-+target_ulong HELPER(pmulu_h_b01)(CPURISCVState *env,
-+                                 target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        uint8_t s1_b0 = (uint8_t)(s1_h & 0xFF);
-+        uint8_t s2_b1 = (uint8_t)((s2_h >> 8) & 0xFF);
-+        uint16_t mul = (uint16_t)s1_b0 * (uint16_t)s2_b1;
-+        rd = INSERT16(rd, mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULU.H.B11 - Unsigned multiply, high bytes
-+ * For each halfword: rd[i] = rs1[i][15:8] * rs2[i][15:8] (unsigned)
-+ */
-+target_ulong HELPER(pmulu_h_b11)(CPURISCVState *env,
-+                                 target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_H(rd);
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h = EXTRACT16(s1, i);
-+        uint16_t s2_h = EXTRACT16(s2, i);
-+        uint8_t s1_b1 = (uint8_t)((s1_h >> 8) & 0xFF);
-+        uint8_t s2_b1 = (uint8_t)((s2_h >> 8) & 0xFF);
-+        uint16_t mul = (uint16_t)s1_b1 * (uint16_t)s2_b1;
-+        rd = INSERT16(rd, mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMUL.W.H00 - Multiply word by low halfword of each word
-+ * For each word: rd[i] = rs1[i][15:0] * rs2[i][15:0]
-+ */
-+uint64_t HELPER(pmul_w_h00)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t s1_h0 = (int16_t)EXTRACT16(rs1, i * 2);
-+        int16_t s2_h0 = (int16_t)EXTRACT16(rs2, i * 2);
-+        int32_t mul = (int32_t)s1_h0 * (int32_t)s2_h0;
-+        rd = INSERT32(rd, (uint32_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMUL.W.H01 - Multiply word by low halfword x high halfword
-+ * For each word: rd[i] = rs1[i][15:0] * rs2[i][31:16]
-+ */
-+uint64_t HELPER(pmul_w_h01)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t s1_h0 = (int16_t)EXTRACT16(rs1, i * 2);
-+        int16_t s2_h1 = (int16_t)EXTRACT16(rs2, i * 2 + 1);
-+        int32_t mul = (int32_t)s1_h0 * (int32_t)s2_h1;
-+        rd = INSERT32(rd, (uint32_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMUL.W.H11 - Multiply word by high halfword x high halfword
-+ * For each word: rd[i] = rs1[i][31:16] * rs2[i][31:16]
-+ */
-+uint64_t HELPER(pmul_w_h11)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t s1_h1 = (int16_t)EXTRACT16(rs1, i * 2 + 1);
-+        int16_t s2_h1 = (int16_t)EXTRACT16(rs2, i * 2 + 1);
-+        int32_t mul = (int32_t)s1_h1 * (int32_t)s2_h1;
-+        rd = INSERT32(rd, (uint32_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULSU.W.H00 - Signed x unsigned multiply, low halfwords
-+ * For each word: rd[i] = (signed)rs1[i][15:0] * (unsigned)rs2[i][15:0]
-+ */
-+uint64_t HELPER(pmulsu_w_h00)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t s1_h0 = (int16_t)EXTRACT16(rs1, i * 2);
-+        uint16_t s2_h0 = EXTRACT16(rs2, i * 2);
-+        int32_t mul = (int32_t)s1_h0 * (uint32_t)s2_h0;
-+        rd = INSERT32(rd, (uint32_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULSU.W.H11 - Signed x unsigned multiply, high halfwords
-+ * For each word: rd[i] = (signed)rs1[i][31:16] * (unsigned)rs2[i][31:16]
-+ */
-+uint64_t HELPER(pmulsu_w_h11)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        int16_t s1_h1 = (int16_t)EXTRACT16(rs1, i * 2 + 1);
-+        uint16_t s2_h1 = EXTRACT16(rs2, i * 2 + 1);
-+        int32_t mul = (int32_t)s1_h1 * (uint32_t)s2_h1;
-+        rd = INSERT32(rd, (uint32_t)mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULU.W.H00 - Unsigned multiply, low halfwords
-+ * For each word: rd[i] = rs1[i][15:0] * rs2[i][15:0] (unsigned)
-+ */
-+uint64_t HELPER(pmulu_w_h00)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h0 = EXTRACT16(rs1, i * 2);
-+        uint16_t s2_h0 = EXTRACT16(rs2, i * 2);
-+        uint32_t mul = (uint32_t)s1_h0 * (uint32_t)s2_h0;
-+        rd = INSERT32(rd, mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULU.W.H01 - Unsigned multiply, low halfword x high halfword
-+ * For each word: rd[i] = rs1[i][15:0] * rs2[i][31:16] (unsigned)
-+ */
-+uint64_t HELPER(pmulu_w_h01)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h0 = EXTRACT16(rs1, i * 2);
-+        uint16_t s2_h1 = EXTRACT16(rs2, i * 2 + 1);
-+        uint32_t mul = (uint32_t)s1_h0 * (uint32_t)s2_h1;
-+        rd = INSERT32(rd, mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PMULU.W.H11 - Unsigned multiply, high halfwords
-+ * For each word: rd[i] = rs1[i][31:16] * rs2[i][31:16] (unsigned)
-+ */
-+uint64_t HELPER(pmulu_w_h11)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint64_t rd = 0;
-+    int elems = 2;
-+
-+    for (int i = 0; i < elems; i++) {
-+        uint16_t s1_h1 = EXTRACT16(rs1, i * 2 + 1);
-+        uint16_t s2_h1 = EXTRACT16(rs2, i * 2 + 1);
-+        uint32_t mul = (uint32_t)s1_h1 * (uint32_t)s2_h1;
-+        rd = INSERT32(rd, mul, i);
-+    }
-+    return rd;
-+}
-+
-+/**
-+ * PM2SADD.H - Packed saturating multiply-add (non-crossed)
-+ *
-+ * For each 32-bit word:
-+ *   result = sat32(rs1[31:16] * rs2[31:16] + rs1[15:0] * rs2[15:0])
-+ *
-+ * Special case: if both halfwords in both sources are 0x8000 (-32768),
-+ *   result saturates to 0x7FFFFFFF and sets vxsat
-+ */
-+target_ulong HELPER(pm2sadd_h)(CPURISCVState *env,
-+                                target_ulong s1, target_ulong s2)
-+{
-+    target_ulong rd = 0;
-+    int elems = ELEMS_W(rd);  /* Number of 32-bit words */
-+    int global_sat = 0;
-+
-+    for (int i = 0; i < elems; i++) {
-+        /* Extract both halfwords from each source for this word */
-+        uint32_t s1_word = EXTRACT32(s1, i);
-+        uint32_t s2_word = EXTRACT32(s2, i);
-+
-+        int16_t s1_h0 = (int16_t)EXTRACT16(s1_word, 0);
-+        int16_t s1_h1 = (int16_t)EXTRACT16(s1_word, 1);
-+        int16_t s2_h0 = (int16_t)EXTRACT16(s2_word, 0);
-+        int16_t s2_h1 = (int16_t)EXTRACT16(s2_word, 1);
-+
-+        uint32_t result;
-+
-+        /* Check for the special saturation case: all halfwords are -32768 */
-+        if ((s1_h0 == -32768) && (s1_h1 == -32768) &&
-+            (s2_h0 == -32768) && (s2_h1 == -32768)) {
-+            result = 0x7FFFFFFF;
-+            global_sat = 1;
++        uint16_t e1 = (uint16_t)EXTRACT16(rs1, i);
++        uint16_t res;
++
++        if (shamt >= 0) {
++            uint32_t shifted = (shamt >= 16) ? ((uint32_t)e1 << 16)
++                                             : ((uint32_t)e1 << shamt);
++            res = unsigned_saturate_h(shifted, &sat);
 +        } else {
-+            /* Normal case: compute products and sum */
-+            int32_t mul_00 = (int32_t)s1_h0 * (int32_t)s2_h0;
-+            int32_t mul_11 = (int32_t)s1_h1 * (int32_t)s2_h1;
-+
-+            /* The sum may overflow 32 bits; the result is truncated. */
-+            result = (uint32_t)(mul_00 + mul_11);
++            int right = -shamt;
++            if (right >= 16) {
++                res = 0;
++            } else {
++                res = e1 >> right;
++            }
 +        }
 +
-+        rd = INSERT32(rd, result, i);
++        rd = INSERT16(rd, res, i);
 +    }
 +
-+    if (global_sat) {
++    if (sat) {
 +        env->vxsat = 1;
 +    }
 +    return rd;
 +}
 +
 +/**
-+ * PM2SADD.HX - Packed saturating multiply-add crossed
-+ *
-+ * For each 32-bit word:
-+ *   result = sat32(rs1[31:16] * rs2[15:0] + rs1[15:0] * rs2[31:16])
-+ *
-+ * Special case: if both halfwords in both sources are 0x8000 (-32768),
-+ *   result saturates to 0x7FFFFFFF and sets vxsat
++ * PSSHLR.HS - Packed 16-bit variable shift with rounding
++ * and unsigned saturation
++ * Positive shift left (saturating), negative shift right (logical, rounded)
 + */
-+target_ulong HELPER(pm2sadd_hx)(CPURISCVState *env,
-+                                 target_ulong s1, target_ulong s2)
++target_ulong HELPER(psshlr_hs)(CPURISCVState *env, target_ulong rs1,
++                               target_ulong rs2)
 +{
 +    target_ulong rd = 0;
-+    int elems = ELEMS_W(rd);  /* Number of 32-bit words */
-+    int global_sat = 0;
++    int elems = ELEMS_H(rd);
++    int sat = 0;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
 +
 +    for (int i = 0; i < elems; i++) {
-+        /* Extract both halfwords from each source for this word */
-+        uint32_t s1_word = EXTRACT32(s1, i);
-+        uint32_t s2_word = EXTRACT32(s2, i);
++        uint16_t e1 = (uint16_t)EXTRACT16(rs1, i);
++        uint16_t res;
 +
-+        int16_t s1_h0 = (int16_t)EXTRACT16(s1_word, 0);
-+        int16_t s1_h1 = (int16_t)EXTRACT16(s1_word, 1);
-+        int16_t s2_h0 = (int16_t)EXTRACT16(s2_word, 0);
-+        int16_t s2_h1 = (int16_t)EXTRACT16(s2_word, 1);
-+
-+        uint32_t result;
-+
-+        /* Check for the special saturation case: all halfwords are -32768 */
-+        if ((s1_h0 == -32768) && (s1_h1 == -32768) &&
-+            (s2_h0 == -32768) && (s2_h1 == -32768)) {
-+            result = 0x7FFFFFFF;
-+            global_sat = 1;
++        if (shamt >= 0) {
++            uint32_t shifted = (shamt >= 16) ? ((uint32_t)e1 << 16)
++                                             : ((uint32_t)e1 << shamt);
++            res = unsigned_saturate_h(shifted, &sat);
 +        } else {
-+            /* Crossed products: s1_h0 * s2_h1 and s1_h1 * s2_h0 */
-+            int32_t mul_01 = (int32_t)s1_h0 * (int32_t)s2_h1;
-+            int32_t mul_10 = (int32_t)s1_h1 * (int32_t)s2_h0;
-+
-+            /* Sum the crossed products */
-+            result = (uint32_t)(mul_01 + mul_10);
++            int right = -shamt;
++            if (right > 16) {
++                res = 0;
++            } else {
++                uint32_t rounded = ((uint32_t)e1 >> (right - 1)) + 1;
++                res = (uint16_t)(rounded >> 1);
++            }
 +        }
 +
-+        rd = INSERT32(rd, result, i);
++        rd = INSERT16(rd, res, i);
 +    }
 +
-+    if (global_sat) {
++    if (sat) {
 +        env->vxsat = 1;
 +    }
 +    return rd;
 +}
 +
 +/**
-+ * MUL.H00 - 32-bit signed multiply, low halfwords
-+ * Returns product of low halfwords of rs1 and rs2
++ * PSSHL.WS - Packed 32-bit variable shift with unsigned saturation (RV64 only)
++ * Positive shift left (saturating), negative shift right (logical)
 + */
-+uint32_t HELPER(mul_h00)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint64_t HELPER(psshl_ws)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    int16_t s1_h0 = (int16_t)EXTRACT16(rs1, 0);
-+    int16_t s2_h0 = (int16_t)EXTRACT16(rs2, 0);
-+    int32_t mul = (int32_t)s1_h0 * (int32_t)s2_h0;
-+    return (uint32_t)mul;
++    uint64_t rd = 0;
++    int sat = 0;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
++
++    for (int i = 0; i < 2; i++) {
++        uint32_t e1 = (uint32_t)EXTRACT32(rs1, i);
++        uint32_t res;
++
++        if (shamt >= 0) {
++            uint64_t shifted = (shamt >= 32) ? ((uint64_t)e1 << 32)
++                                             : ((uint64_t)e1 << shamt);
++            res = unsigned_saturate_w(shifted, &sat);
++        } else {
++            int right = -shamt;
++            if (right >= 32) {
++                res = 0;
++            } else {
++                res = e1 >> right;
++            }
++        }
++
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
 +/**
-+ * MUL.H01 - 32-bit signed multiply, rs1 low halfword x rs2 high halfword
-+ * Returns product of low halfword of rs1 and high halfword of rs2
++ * PSSHLR.WS - Packed 32-bit variable shift with rounding
++ * and unsigned saturation (RV64 only)
++ * Positive shift left (saturating), negative shift right (logical, rounded)
 + */
-+uint32_t HELPER(mul_h01)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint64_t HELPER(psshlr_ws)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    int16_t s1_h0 = (int16_t)EXTRACT16(rs1, 0);
-+    int16_t s2_h1 = (int16_t)EXTRACT16(rs2, 1);
-+    int32_t mul = (int32_t)s1_h0 * (int32_t)s2_h1;
-+    return (uint32_t)mul;
++    uint64_t rd = 0;
++    int sat = 0;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
++
++    for (int i = 0; i < 2; i++) {
++        uint32_t e1 = (uint32_t)EXTRACT32(rs1, i);
++        uint32_t res;
++
++        if (shamt >= 0) {
++            uint64_t shifted = (shamt >= 32) ? ((uint64_t)e1 << 32)
++                                             : ((uint64_t)e1 << shamt);
++            res = unsigned_saturate_w(shifted, &sat);
++        } else {
++            int right = -shamt;
++            if (right > 32) {
++                res = 0;
++            } else {
++                uint64_t rounded = ((uint64_t)e1 >> (right - 1)) + 1;
++                res = (uint32_t)(rounded >> 1);
++            }
++        }
++
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
 +/**
-+ * MUL.H11 - 32-bit signed multiply, high halfwords
-+ * Returns product of high halfwords of rs1 and rs2
++ * SSHL - 32-bit scalar variable shift with unsigned saturation
 + */
-+uint32_t HELPER(mul_h11)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint32_t HELPER(sshl)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
 +{
-+    int16_t s1_h1 = (int16_t)EXTRACT16(rs1, 1);
-+    int16_t s2_h1 = (int16_t)EXTRACT16(rs2, 1);
-+    int32_t mul = (int32_t)s1_h1 * (int32_t)s2_h1;
-+    return (uint32_t)mul;
++    int sat = 0;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
++
++    if (shamt < 0) {
++        int right = -shamt;
++        return (right >= 32) ? 0 : (rs1 >> right);
++    } else {
++        uint64_t shifted = (shamt >= 32) ? ((uint64_t)rs1 << 32)
++                                         : ((uint64_t)rs1 << shamt);
++        uint32_t res = unsigned_saturate_w(shifted, &sat);
++        if (sat) {
++            env->vxsat = 1;
++        }
++        return res;
++    }
 +}
 +
 +/**
-+ * MULSU.H00 - 32-bit signed x unsigned multiply, low halfwords
-+ * Returns product of low halfword of rs1 (signed)
-+ * and low halfword of rs2 (unsigned)
++ * SSHLR - 32-bit scalar variable shift with rounding and unsigned saturation
 + */
-+uint32_t HELPER(mulsu_h00)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint32_t HELPER(sshlr)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
 +{
-+    int16_t s1_h0 = (int16_t)EXTRACT16(rs1, 0);
-+    uint16_t s2_h0 = EXTRACT16(rs2, 0);
-+    int32_t mul = (int32_t)s1_h0 * (uint32_t)s2_h0;
-+    return (uint32_t)mul;
++    int sat = 0;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
++
++    if (shamt < 0) {
++        int right = -shamt;
++        if (right > 32) {
++            return 0;
++        } else {
++            uint64_t rounded = ((uint64_t)rs1 >> (right - 1)) + 1;
++            return rounded >> 1;
++        }
++    } else {
++        uint64_t shifted = (shamt >= 32) ? ((uint64_t)rs1 << 32)
++                                         : ((uint64_t)rs1 << shamt);
++        uint32_t res = unsigned_saturate_w(shifted, &sat);
++        if (sat) {
++            env->vxsat = 1;
++        }
++        return res;
++    }
 +}
 +
 +/**
-+ * MULSU.H11 - 32-bit signed x unsigned multiply, high halfwords
-+ * Returns product of high halfword of rs1 (signed)
-+ * and high halfword of rs2 (unsigned)
++ * SHL - 64-bit scalar variable logical shift
 + */
-+uint32_t HELPER(mulsu_h11)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint64_t HELPER(shl)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    int16_t s1_h1 = (int16_t)EXTRACT16(rs1, 1);
-+    uint16_t s2_h1 = EXTRACT16(rs2, 1);
-+    int32_t mul = (int32_t)s1_h1 * (uint32_t)s2_h1;
-+    return (uint32_t)mul;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
++
++    if (shamt < 0) {
++        int right = -shamt;
++        return (right >= 64) ? 0 : (rs1 >> right);
++    } else {
++        return (shamt >= 64) ? 0 : (rs1 << shamt);
++    }
 +}
 +
 +/**
-+ * MULU.H00 - 32-bit unsigned multiply, low halfwords
-+ * Returns product of low halfwords of rs1 and rs2 (unsigned)
++ * SHLR - 64-bit scalar variable logical shift with rounding
 + */
-+uint32_t HELPER(mulu_h00)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint64_t HELPER(shlr)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    uint16_t s1_h0 = EXTRACT16(rs1, 0);
-+    uint16_t s2_h0 = EXTRACT16(rs2, 0);
-+    uint32_t mul = (uint32_t)s1_h0 * (uint32_t)s2_h0;
-+    return mul;
++    int8_t shamt = (int8_t)(rs2 & 0xFF);
++
++    if (shamt < 0) {
++        int right = -shamt;
++        if (right > 64) {
++            return 0;
++        } else {
++            uint64_t rounded = (rs1 >> (right - 1)) + 1;
++            return rounded >> 1;
++        }
++    } else {
++        return (shamt >= 64) ? 0 : (rs1 << shamt);
++    }
++}
++
+ /* Exchange operations (AS/SA/AS/SA with X suffix) */
+ 
+ /**
+@@ -3573,6 +3809,140 @@ target_ulong HELPER(merge)(CPURISCVState *env, target_ulong rs1,
+     return (~rd & rs1) | (rd & rs2);
+ }
+ 
++/**
++ * PNCLIPP.B - Pack narrow clip signed halfwords to bytes (RV64 only)
++ */
++uint64_t HELPER(pnclipp_b)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int sat = 0;
++
++    for (int i = 0; i < 4; i++) {
++        int16_t lo = (int16_t)EXTRACT16(rs1, i);
++        int16_t hi = (int16_t)EXTRACT16(rs2, i);
++        int8_t res_lo = signed_saturate_b(lo, &sat);
++        int8_t res_hi = signed_saturate_b(hi, &sat);
++
++        rd = (uint64_t)INSERT8(rd, res_lo, i);
++        rd = (uint64_t)INSERT8(rd, res_hi, i + 4);
++    }
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
 +/**
-+ * MULU.H01 - 32-bit unsigned multiply, rs1 low halfword x rs2 high halfword
-+ * Returns product of low halfword of rs1 and high halfword of rs2 (unsigned)
++ * PNCLIPUP.B - Pack narrow clip unsigned halfwords to bytes (RV64 only)
 + */
-+uint32_t HELPER(mulu_h01)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint64_t HELPER(pnclipup_b)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    uint16_t s1_h0 = EXTRACT16(rs1, 0);
-+    uint16_t s2_h1 = EXTRACT16(rs2, 1);
-+    uint32_t mul = (uint32_t)s1_h0 * (uint32_t)s2_h1;
-+    return mul;
++    uint64_t rd = 0;
++    int sat = 0;
++
++    for (int i = 0; i < 4; i++) {
++        uint16_t lo = (uint16_t)EXTRACT16(rs1, i);
++        uint16_t hi = (uint16_t)EXTRACT16(rs2, i);
++        uint8_t res_lo = unsigned_saturate_b(lo, &sat);
++        uint8_t res_hi = unsigned_saturate_b(hi, &sat);
++
++        rd = (uint64_t)INSERT8(rd, res_lo, i);
++        rd = (uint64_t)INSERT8(rd, res_hi, i + 4);
++    }
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
 +/**
-+ * MULU.H11 - 32-bit unsigned multiply, high halfwords
-+ * Returns product of high halfwords of rs1 and rs2 (unsigned)
++ * PNCLIPP.H - Pack narrow clip signed words to halfwords (RV64 only)
 + */
-+uint32_t HELPER(mulu_h11)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++uint64_t HELPER(pnclipp_h)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    uint16_t s1_h1 = EXTRACT16(rs1, 1);
-+    uint16_t s2_h1 = EXTRACT16(rs2, 1);
-+    uint32_t mul = (uint32_t)s1_h1 * (uint32_t)s2_h1;
-+    return mul;
++    uint64_t rd = 0;
++    int sat = 0;
++
++    for (int i = 0; i < 2; i++) {
++        int32_t lo = (int32_t)EXTRACT32(rs1, i);
++        int32_t hi = (int32_t)EXTRACT32(rs2, i);
++        int16_t res_lo = signed_saturate_h(lo, &sat);
++        int16_t res_hi = signed_saturate_h(hi, &sat);
++
++        rd = (uint64_t)INSERT16(rd, res_lo, i);
++        rd = (uint64_t)INSERT16(rd, res_hi, i + 2);
++    }
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
 +/**
-+ * MUL.W00 - 64-bit signed multiply, low word x low word
-+ * Returns full 64-bit product of low 32 bits of rs1 and rs2
++ * PNCLIPUP.H - Pack narrow clip unsigned words to halfwords (RV64 only)
 + */
-+uint64_t HELPER(mul_w00)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
++uint64_t HELPER(pnclipup_h)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    int32_t s1_w0 = (int32_t)EXTRACT32(rs1, 0);
-+    int32_t s2_w0 = (int32_t)EXTRACT32(rs2, 0);
-+    int64_t mul = (int64_t)s1_w0 * (int64_t)s2_w0;
-+    return (uint64_t)mul;
++    uint64_t rd = 0;
++    int sat = 0;
++
++    for (int i = 0; i < 2; i++) {
++        uint32_t lo = (uint32_t)EXTRACT32(rs1, i);
++        uint32_t hi = (uint32_t)EXTRACT32(rs2, i);
++        uint16_t res_lo = unsigned_saturate_h(lo, &sat);
++        uint16_t res_hi = unsigned_saturate_h(hi, &sat);
++
++        rd = (uint64_t)INSERT16(rd, res_lo, i);
++        rd = (uint64_t)INSERT16(rd, res_hi, i + 2);
++    }
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
 +/**
-+ * MUL.W01 - 64-bit signed multiply, low word x high word
-+ * Returns full 64-bit product of low 32 bits of rs1 and high 32 bits of rs2
++ * PNCLIPP.W - Pack narrow clip signed doublewords to words (RV64 only)
 + */
-+uint64_t HELPER(mul_w01)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
++uint64_t HELPER(pnclipp_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    int32_t s1_w0 = (int32_t)EXTRACT32(rs1, 0);
-+    int32_t s2_w1 = (int32_t)EXTRACT32(rs2, 1);
-+    int64_t mul = (int64_t)s1_w0 * (int64_t)s2_w1;
-+    return (uint64_t)mul;
++    uint64_t rd = 0;
++    int sat = 0;
++    int32_t res_lo = signed_saturate_w((int64_t)rs1, &sat);
++    int32_t res_hi = signed_saturate_w((int64_t)rs2, &sat);
++
++    rd = (uint64_t)(uint32_t)res_lo;
++    rd |= (uint64_t)(uint32_t)res_hi << 32;
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
 +/**
-+ * MUL.W11 - 64-bit signed multiply, high word x high word
-+ * Returns full 64-bit product of high 32 bits of rs1 and high 32 bits of rs2
++ * PNCLIPUP.W - Pack narrow clip unsigned doublewords to words (RV64 only)
 + */
-+uint64_t HELPER(mul_w11)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
++uint64_t HELPER(pnclipup_w)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
 +{
-+    int32_t s1_w1 = (int32_t)EXTRACT32(rs1, 1);
-+    int32_t s2_w1 = (int32_t)EXTRACT32(rs2, 1);
-+    int64_t mul = (int64_t)s1_w1 * (int64_t)s2_w1;
-+    return (uint64_t)mul;
++    uint64_t rd = 0;
++    int sat = 0;
++    uint32_t res_lo = unsigned_saturate_w(rs1, &sat);
++    uint32_t res_hi = unsigned_saturate_w(rs2, &sat);
++
++    rd = (uint64_t)res_lo;
++    rd |= (uint64_t)res_hi << 32;
++
++    if (sat) {
++        env->vxsat = 1;
++    }
++    return rd;
 +}
 +
-+/**
-+ * MULSU.W00 - 64-bit signed x unsigned multiply, low word x low word
-+ * Returns full 64-bit product of low 32 bits of rs1
-+ * (signed) and low 32 bits of rs2 (unsigned)
-+ */
-+uint64_t HELPER(mulsu_w00)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    int32_t s1_w0 = (int32_t)EXTRACT32(rs1, 0);
-+    uint32_t s2_w0 = EXTRACT32(rs2, 0);
-+    int64_t mul = (int64_t)s1_w0 * (uint64_t)s2_w0;
-+    return (uint64_t)mul;
-+}
-+
-+/**
-+ * MULSU.W11 - 64-bit signed x unsigned multiply, high word x high word
-+ * Returns full 64-bit product of high 32 bits of rs1
-+ * (signed) and high 32 bits of rs2 (unsigned)
-+ */
-+uint64_t HELPER(mulsu_w11)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    int32_t s1_w1 = (int32_t)EXTRACT32(rs1, 1);
-+    uint32_t s2_w1 = EXTRACT32(rs2, 1);
-+    int64_t mul = (int64_t)s1_w1 * (uint64_t)s2_w1;
-+    return (uint64_t)mul;
-+}
-+
-+/**
-+ * MULU.W00 - 64-bit unsigned multiply, low word x low word
-+ * Returns full 64-bit product of low 32 bits of rs1
-+ * and low 32 bits of rs2 (unsigned)
-+ */
-+uint64_t HELPER(mulu_w00)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint32_t s1_w0 = EXTRACT32(rs1, 0);
-+    uint32_t s2_w0 = EXTRACT32(rs2, 0);
-+    uint64_t mul = (uint64_t)s1_w0 * (uint64_t)s2_w0;
-+    return mul;
-+}
-+
-+/**
-+ * MULU.W01 - 64-bit unsigned multiply, low word x high word
-+ * Returns full 64-bit product of low 32 bits of rs1
-+ * and high 32 bits of rs2 (unsigned)
-+ */
-+uint64_t HELPER(mulu_w01)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint32_t s1_w0 = EXTRACT32(rs1, 0);
-+    uint32_t s2_w1 = EXTRACT32(rs2, 1);
-+    uint64_t mul = (uint64_t)s1_w0 * (uint64_t)s2_w1;
-+    return mul;
-+}
-+
-+/**
-+ * MULU.W11 - 64-bit unsigned multiply, high word x high word
-+ * Returns full 64-bit product of high 32 bits of rs1
-+ * and high 32 bits of rs2 (unsigned)
-+ */
-+uint64_t HELPER(mulu_w11)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+{
-+    uint32_t s1_w1 = EXTRACT32(rs1, 1);
-+    uint32_t s2_w1 = EXTRACT32(rs2, 1);
-+    uint64_t mul = (uint64_t)s1_w1 * (uint64_t)s2_w1;
-+    return mul;
-+}
+ /* Count leading operations */
+ 
+ /**
 -- 
 2.34.1
 
