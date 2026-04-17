@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE78DF8E4A9
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 04:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6883AF8E4A9
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 04:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDbC1-0001ku-62; Fri, 17 Apr 2026 00:52:37 -0400
+	id 1wDbE4-0002FN-AV; Fri, 17 Apr 2026 00:54:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDbBy-0001kF-JT
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 00:52:34 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDbDu-0002Dl-7Z
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 00:54:34 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDbBw-0004bW-IK
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 00:52:33 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43fe3e22e33so126871f8f.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 21:52:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDbDs-0005DF-CL
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 00:54:33 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488a14c31eeso1557185e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 21:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776401549; x=1777006349; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776401670; x=1777006470; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GZqUvniB/hbtoN3vsAlK9Y8uDhOLEKm5n62oz/zRGmQ=;
- b=q9jqyjIzxLV5Ka0uTzYckAxgtVrs3IUE3uI3/eMX1sXMLdIwnIUOA1Izf23FEEfXyi
- jtl8WUCoeS02Vu7TGbIGvy/S+ajt6YR+Lz0UcUnx/BaOF/erV9l6Rz1Gds90Vhtvh9YM
- 9zYtZ3xGsy5paY5JHilbHvdVa/ZoUKJMFk2WYENXVN5fGyUS6tl6wZ6gldh0jsGaT7fV
- a7MDRBZTNtRsStqaVhlZWdjyO2zs0eaekHI76mL9wcmtJOr2EQOueac+MRngzuCyDsqz
- j08BizNVyf+o+29NcoE7mOGd/fkZIjJrYMn6fLqW47ou9cqbN0ykhWVwhkbjX51YagWC
- 0Imw==
+ bh=RswCezjul7SiRoikcBxbY5C2ZOOnN8Qs8fMA80JbeJI=;
+ b=EilcURQhGAy/dd0ZcFV10Nd1L7RM3zhDhy5O3+cFy/qKVImH9RMjg0TmO2kB0KyUAj
+ Eg9vzhRwNj1S6A34viopr1AEtqykpPoO6BZXQhHUweOsQI0wW0V2kCS4nOQvCl1FPck3
+ MLa/WlfZkP8TAKHIIRUaagjoBYSy3hLe18GC5P5gAbsgPnZtZaYQ5U9e/8ggZxUlItMw
+ uVw5BeCTkb8aPtccfcIKzJ65FnJp0TTfZjNFJsOiaOqlgWhzuvQTUuBTzC37rqoAbpnq
+ GAEwGd7soRzs7ShehvFZ1yDyCfvHwG3yu3NokQWTXgsq39A8hwPqwZDSyzp7/lNrHAQ/
+ Zl7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776401549; x=1777006349;
+ d=1e100.net; s=20251104; t=1776401670; x=1777006470;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GZqUvniB/hbtoN3vsAlK9Y8uDhOLEKm5n62oz/zRGmQ=;
- b=R8ynfpOV3/yRJJDlqGxaYVrq4xfiQUl8utZURVL8UmVElBMVGS4qc/Suf0uxMFfQnK
- c281YnZhrGo6C57wuVre6mTT34Mz7LPbII1OjQpC56TfjGD39ODqBd/r6hfWFEaAfvAX
- MV4OKpdLFChuepQdXX1lOwb4oIO5lxIlmtzIsg8+zHCRWBU7xMuNX+VaW8clSL4bVEZj
- 4/YZXN7Lf76N8fYNuFPoHqR/5baeilcR/GHVnjVdxLlj0/wtgKywqxuw/gsjQuRhZHzb
- cQHWfETAgGohQsFFwN3gSQgHEX5waue49GFOfGLBqc8OC/7c2XUQgEs7rN2CefuO38um
- zmiw==
+ bh=RswCezjul7SiRoikcBxbY5C2ZOOnN8Qs8fMA80JbeJI=;
+ b=lAixKEfqHiSmxLatVEeucLs8YWnkIFwCq3OUPbRSEnPoc8rIIUK9VMISzk8Ba9Pfrf
+ j+JwJgYcUHSYIs7JXh12+4xElR31NN30V9WhiAv5FHt0E+VLqGKxXztuH1FkgCeR+LR2
+ V3fcnABQbQQjPGO9BaXEHWNDyZcWFtRVrte88+pNoxw1wmSeD0K9HIKY0nxE7mArlYxd
+ bT4O4lAS1nnFWz/gRCWJXYoeM62ZHOBn63so59zl1zy6NPCFo/d1NI/sRn0cVA6ECQ65
+ sFYkfV+6YKFiIT7r33YjuEUPFIOd3g/Q/hbWc4kU00fClTnSM21zVSyYyf6H9TxH/W2Z
+ u7Pg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8Chbq+mGsP+ZmXLbsmcdG/nGRpLEfgUXMUr87cNM/D9KZghdEt/EWm9NmMA2/v7nfRXF8dsk7sQZCk@nongnu.org
-X-Gm-Message-State: AOJu0YxtLsfK0Luh0lyIg7Rb5MXInvan2iAroaptq3icFspP9foU4f+K
- 1Fdhh9VsRuT4/Df6SUB6DjxYdZp4B00MluauVntDk8m758/kJzxnKu0Vu7x3vMuiID4=
-X-Gm-Gg: AeBDiesvpaOg1E5GgJkZkhDhDwDM3vWp0mrfgj/IRwTFXfkbwS7C8oom5P+O7gNIypS
- uSaCGYIwigtKzAqow6/VA2qFpnMXqHOU8i6DmO2W/Ux9ZnrhcVE/0d5KDkNr6S7/sSp6445sak6
- GDDEGZ244UbzRpBy7EQy/8U+lp2Afg7jqVtCSlpWO4sCOJSpNFzUc8CI35Vt+j6QJmQpnt3bCF7
- EWqhp/mxWteQl626D6mzy1wzYzoXXeZlEzRQjrbyJTo5Ld2fGQVjguVoRjzoKN3DNuHSmK8SG7R
- N8l5XZ2kd3+e0ZtX7Njt7Tn8Kus4qNn6LyiksMe9tiwD70IH7vzIotftYxi8lxZuf7zFXqJtW2w
- Lt3w/aOJ9FxgJNQyrPMFUVlV26Y5HYZxSuK/wm8Y9Lsr3HxY8dp3ImpHStJrgm0jIZfQHrEohxD
- Cnnd8QyiOwnzLl9xVXk6xNqQxEDiLKb4noX6jwSOFeuXUaODTzrgm1c9pQ9VggjFLCxx0NoM1yi
- OlRxQE0MKKxCyg=
-X-Received: by 2002:a05:6000:2f83:b0:439:c661:3245 with SMTP id
- ffacd0b85a97d-43fe3e1128dmr1674550f8f.34.1776401548995; 
- Thu, 16 Apr 2026 21:52:28 -0700 (PDT)
+ AFNElJ9ANLUEcuDapF4eSQLPQHvp9pOirBJMYcSHnXHDyOmybXcGBmXzVJ2ayt4PnQnHjMnxmLafdpF0wgjP@nongnu.org
+X-Gm-Message-State: AOJu0YxgLUt8UmuCV/hAE2xXoQhDsFwXNZMC77HZgqkpYlfW3lRI4Vtz
+ suD7p+NeP3gmIIYj9/EZ3yO6ACKTkBjKSbf0Q0eQLeOp7XhcBN6fRm5zzOaUNYrCN3M=
+X-Gm-Gg: AeBDieuhql0dlxzEMCtxbfsd1Ai6bQMdWUmsydDhuQckpx2rqoBZUoOM4S1ahV4OMxx
+ f8YPNXxTrU3c72CpVkrfunTfjZbH4bgDqOn8N5gr74TMtgQvcHjlRweem7vuRWWgo7xyoVk6SnQ
+ qD7QkcdY9AYDfCe0m3GZup9Yx8KkyCGQ2toyGNbgOj/p6q0InEwXuPBgVjP4S1HFk8AL8GweR++
+ /+yDVlXuRfXLwBfnYTjXcujoKe8Le+NCXrL4wqBkrCdEbGqRzBiyzd+OqQtbZ4PuHMAb/QvVZiz
+ THgTy5jfNkzj4IRdNNAQl9ONp/LdUfOcChsQrQgcQDde0EN0nfyTg/DEC1buIv9uIg29C8uEFwy
+ E95NDVw88c17tBnZM1e8YVW1BPK33mIz6T4Dn1ImTdjhcw6x7vDMzse+qJJe8sQrVXskE3UZkgA
+ +OZHyeTUbKPe0wIk5JmnsjeDsSdUcBCO+sYbDNZVsCNAHeJjkQplKmvvqHUAYja63gVApEXrFxB
+ Wy5
+X-Received: by 2002:a05:600c:c096:b0:488:af14:f1de with SMTP id
+ 5b1f17b1804b1-488fb73b27dmr11566325e9.4.1776401669998; 
+ Thu, 16 Apr 2026 21:54:29 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4daf2sm1379919f8f.33.2026.04.16.21.52.27
+ ffacd0b85a97d-43fe4e4daf2sm1389605f8f.33.2026.04.16.21.54.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 21:52:28 -0700 (PDT)
-Message-ID: <dcfd9953-487c-4c05-bc03-9f87b490f05b@linaro.org>
-Date: Fri, 17 Apr 2026 06:52:27 +0200
+ Thu, 16 Apr 2026 21:54:28 -0700 (PDT)
+Message-ID: <c49201c7-55ac-43ae-a8ee-3efeb804ddbc@linaro.org>
+Date: Fri, 17 Apr 2026 06:54:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/sd/sdcard: Add support for pre-setting the
- authentication key
+Subject: Re: [PATCH v3 06/17] hw/usb/hcd-ehci: Change descriptor addresses to
+ 64-bit
 Content-Language: en-US
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jens Wiklander <jens.wiklander@linaro.org>
-References: <cover.1776231967.git.jan.kiszka@siemens.com>
- <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
- <d68f975d-0450-4928-b758-bea1e657eae7@linaro.org>
- <60d47301-08f4-44e9-9cd6-2a12bb9e56de@siemens.com>
- <183ce56e-cbd9-41a5-8d68-9281aa6ddd54@linaro.org>
- <5add8989-b670-4350-a251-eab8503082a3@siemens.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
+ <20260416014928.1279360-7-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5add8989-b670-4350-a251-eab8503082a3@siemens.com>
+In-Reply-To: <20260416014928.1279360-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,84 +112,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/26 17:31, Jan Kiszka wrote:
-> On 16.04.26 10:29, Philippe Mathieu-Daudé wrote:
->> On 16/4/26 09:50, Jan Kiszka wrote:
->>> On 15.04.26 22:28, Philippe Mathieu-Daudé wrote:
->>>> Hi Jan,
->>>>
->>>> On 15/4/26 07:46, Jan Kiszka wrote:
->>>>> From: Jan Kiszka <jan.kiszka@siemens.com>
->>>>>
->>>>> In contrast to real eMMCs, we are not (yet) persisting the full state
->>>>> of the device. This particularly includes the authentication key used
->>>>> for RPMB access, complicating testing of firmware images which do not
->>>>> support initial provisioning of the key.
->>>>>
->>>>> One way to address this would be, e.g., extending the eMMC disk image
->>>>> with a special sector to store further state. A simpler approach is
->>>>> used
->>>>> here: Add another device property that allows to specify the
->>>>> authentication key, bringing up the eMMC as if the key has already been
->>>>> provisioned before.
->>>>>
->>>>> This is how to tell qemu to use the OP-TEE test key:
->>>>>
->>>>> -device emmc,[...],auth-
->>>>> key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
->>>>>
->>>>> Or use this for machine-configured eMMCs:
->>>>>
->>>>> -global emmc.auth-
->>>>> key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
->>>>>
->>>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
->>>>> ---
->>>>>     hw/sd/sd.c | 23 +++++++++++++++++++++++
->>>>>     1 file changed, 23 insertions(+)
->>>>
->>>> Do you mind mentioning it in docs/system/devices/emmc.rst?
->>>
->>> Right, there was something... v2 our patch on top, what do you prefer?
->>
->> If there is no need for v2, my preference is an inlined diff that I
->> can apply directly saving both of us time :)
->>
+On 16/4/26 03:49, Jamin Lin wrote:
+> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
 > 
-> Here we go:
+> The following fields are updated:
+> - EHCIPacket::qtdaddr
+> - EHCIQueue::{qhaddr, qtdaddr}
+> - EHCIState::{a_fetch_addr, p_fetch_addr}
 > 
-> diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
-> index e62adfd68e..e7d67c809d 100644
-> --- a/docs/system/devices/emmc.rst
-> +++ b/docs/system/devices/emmc.rst
-> @@ -53,3 +53,26 @@ SDHCI controllers while assuming that the firmware needs a boot partitions of
->       -drive file=emmc.img,if=none,format=raw,id=emmc-img
->       -device sdhci-pci
->       -device emmc,drive=emmc-img,boot-partition-size=1048576,rpmb-partition-size=2097152
-> +
-> +RPMB Authentication Key
-> +=======================
-> +
-> +A private shared key is used for authenticating requests of the host to the
-> +RPMB. A real eMMC stores this persistently and permits no reprogramming once it
-> +is set. QEMU emulates key programming but does not persist the key state
-> +across restarts. To emulate the state "key is set", the eMMC can be created
-> +with a user-provided key via the ``auth-key`` property:
-> +
-> +.. code-block:: console
-> +
-> +    -device emmc,[...],auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-> +
-> +This sets the well-known test key of OP-TEE on emmc device creation. In case an
-> +eMMC is instantiated by the machine model already:
-> +
-> +.. code-block:: console
-> +
-> +    -global emmc.auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-> +
-> +A key always consists of 32 bytes that have to be encoded as hex numbers,
-> +left-padding with zeros as needed.
+> Update get_dwords() and put_dwords() to take 64-bit addresses and
+> propagate the type change through the descriptor traversal paths.
+> 
+> Adjust NLPTR_GET() to operate on 64-bit values:
+> 
+>      #define NLPTR_GET(x) ((x) & ~0x1fULL)
+> 
+> so that link pointer masking works correctly when descriptor
+> addresses exceed 32-bit space. The previous mask (0xffffffe0)
+> implicitly truncated addresses to 32 bits.
+> 
+> This patch does not change the on-wire descriptor layout yet.
+> It only removes the internal 32-bit address limit and prepares
+> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
+> 
+> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
+> use uint64_t for the address argument and print it with PRIx64. This
+> ensures full 64-bit addresses are shown in trace output and improves
+> debugging of queue heads and transfer descriptors.
+> 
+> Migration compatibility:
+> 
+> The fetch address fields in EHCIState are extended from 32-bit to
+> 64-bit, requiring a VMState version bump (v2 -> v3).
+> 
+> Backward compatibility is preserved by keeping the legacy 32-bit
+> fields (a_fetch_addr_pre_v3, p_fetch_addr_pre_v3) for pre-v3
+> migration streams via VMSTATE_UINT32_TEST(), and introducing new
+> 64-bit fields for v3+.
+> 
+> In post_load, pre-v3 state is promoted to the 64-bit fields.
+> 
+> No functional change.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/usb/hcd-ehci.h   | 12 +++++----
+>   hw/usb/hcd-ehci.c   | 64 +++++++++++++++++++++++++++++----------------
+>   hw/usb/trace-events | 24 ++++++++---------
+>   3 files changed, 60 insertions(+), 40 deletions(-)
 
-Thanks, series queued!
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
