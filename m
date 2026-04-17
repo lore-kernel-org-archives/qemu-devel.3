@@ -4,83 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE916F43690
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D8FF4368D
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDh2C-00017L-NC; Fri, 17 Apr 2026 07:06:52 -0400
+	id 1wDh5t-0003Iy-Gx; Fri, 17 Apr 2026 07:10:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh2A-000103-HX
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:50 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDh5r-0003Im-NH
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:10:39 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh28-0003xL-L8
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:50 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso4854005e9.3
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDh5q-000596-6W
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:10:39 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-64e87a81639so544666d50.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:10:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776424237; cv=none;
+ d=google.com; s=arc-20240605;
+ b=V6CPleK5tIFoLydLZ4lKSjrLirJM3cf55g56oI9OKkiiEBg413nZrHhFYy87n5jBjT
+ DQTuJTojqFXrTKTEIHeqbNUXAmZA63Z5zJxrUpzcV7yQ8OIknOn0wcAbjkuQLqz6ww8E
+ 2hAMQpP9G25ES0tousQy2eQMxXfS0V6zY9xU0V+Ua0XIZpNGXTkmFwBfEKbYQcpaUyVY
+ 1zn4Hig2BpOX3v426QphbRW06unR6bYFSEwdK7aN43/lWsalwqG1+nkT9D2s5sqgu+86
+ aHB5CW+9GCFaD7Ce1TCiN7pIQkJVcG8A4mQEEVV8+C6jNH0l+5emdpi7BNX9HMQAPArY
+ pNAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=cij6y007mDu+PmjEqlZipzmcf7SbTqqcemD0dmQoJaY=;
+ fh=we6erNTLm1HCUnqNhKVhSBfAycLgCNsGPlCyTs2iRXU=;
+ b=QpLfQnB8gHZwY5vRMIb2EanozxQ8G059rP4OQWKBy/bnLuAy8Jk8NzbV/Q8b7B/cdj
+ 3JiBN1usKwpttS3yKWK0gA59LLGieQ9mDvVKcLUXrAwI+Nn3e9PrU6ryCHjyESUdiQQz
+ aKbPyJUDmuZ5A7upL0e3oNYYXkifiauGsLzrGnvN27F5x+ut5YOm4sx6wsZC3MDy4OPf
+ 13mWnm7tTHnKhj8ej4T73NEndQ9fAxKJAminnVu/WBBsVWopI/C4bVp1aJJ60UR9+xgB
+ ninv3qvk5FTMTHvii4uJp31SRFbJE68mIBgkyY5aPqccmYLbXgLrnENwvWWT7Wi08HZ3
+ MlxA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776424006; x=1777028806; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1776424237; x=1777029037; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eEvEamOQHBmameDSDr8g36Lk+2QPMHsbUKiwvPJl8u8=;
- b=WVmwTNnBqdhon05T+7aPI4ukzrkWeeaXFt0CMVcErBA0i33STP0gyiVv5dId9d5p3E
- flJl5CaLTIWY5Gdp8K4oCb0ZtevkDPbgJur4KPEyxnLXC2IEk7VpyrKUTz1flqUZViHD
- dCWLtw4RP5HQw3Brc/SRzfIcIv30rwC4bixbRKvGiROdQMeqWcViQJT5p1/rCiluN7VB
- CNJerdr3SZYteGuDm3yaekbhPwdaO+auGMioqPdomdeFd/6kDbqhpFJgMKCsndk5u8D2
- TVfHFfEeiG/NKEOxQibVLDxSrNPoj0bVuhgJeI/wdSvbZfotVrWdS9cWwf4wXCcaX9T9
- aPLw==
+ bh=cij6y007mDu+PmjEqlZipzmcf7SbTqqcemD0dmQoJaY=;
+ b=oXIz26xf4XpyFiOPjmBTLDA1W8VqNCB7DBgZGiauUsq7WDsUF2VSKHVnbQMwvLmy0g
+ XTudhvZtGDsJM7fHouaBsCKy90MyzU6HuwPFLC7LkTyuqgrW73tE2HqVJVUC58ILGKJ7
+ QTEuWS16c20iERbo5aPShFyWj5MeogTylREK/p0A2r+nJf9nFnWHbMHfGdw1ab3m6ZWh
+ qJVdtFz2DeotE2rSFjf8gfgU5SrWuK1qgABFMwtcITtZyfjUsTp4Q8cJNqzmWAwlRhas
+ 7D1m7Nnv4pNN501WUJIIV7uA9RwiR7jmhyZLiDNQbJ08aWB4l3FZnoI1JxYMbIt0lM01
+ 0Z0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776424006; x=1777028806;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1776424237; x=1777029037;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=eEvEamOQHBmameDSDr8g36Lk+2QPMHsbUKiwvPJl8u8=;
- b=S8SkJCRrdgGOHji3VGlrNhSJ1Q/j0OgjFyvqj3DArLfArGYxqGZFVaWVRKBJdc+FnW
- xGLQEvEDZBRc3qUEN1YWhY+sHOJWWd6YCNlkElLPV59e9LLhDnfMLjb/sChR9Shosa2T
- w1EBeg6NePi6u8WbU7M7AFEkg7erL1mlhxWd/S4ffZUQyDAtRCdEag+aWaf3k5FWfAIX
- nvefHVS6g5XSPN8RO0/r9WQep+phoU5sLElJd+C/+sr6FpTfubZ1vH3H6POzywb4Pmd0
- 9ds8ABcc0a7X0r9jug8ZGnDQD5A4kZ+nszlm4MR+OzVd0n27SSZZsI+x8EMgIP3zzGIO
- /Q6w==
-X-Gm-Message-State: AOJu0Yyl2hE0jTAD0pTnumHLiM+2N1iHS98mx6PtAkM5r0ST1jn4HPLC
- /ufkBfIISiMV6AIc7N6XD6WhiBoaNtwqpExzJpuLu9vhPtD5/xqsBua4Bs7plMWoGFmvk5cwk9J
- kgJqTqdQ=
-X-Gm-Gg: AeBDietE6OVMpCjQ93Dfqt57w4UiG70fTTNof0vM5AvuAZAUDO97h9Q798QgZnGXBRz
- 27vKn9yo+DjVyvEumI64j+wiEjSTsyBg7ToVCLehuCDU589B75s9Z/3cEp/gKFozMh+Q01n4xgb
- D0LYT8QY3icPL59alvKqdCmxIHmMDC6VkbKUgcYRzm/BLbuoYsh8FiVsVKRfAX3C4KfGqDOtbgs
- hwwtUyZmmN1h5J3FZBvwXCwY9JYiErOfbotsCCB1/hvmn5zD8TcHgUI6PvESD/Im7CTpgftW8di
- CvAzjeTlih9rSqclXMdBL/pPKeFCd6hDVs9SNoyx0Iknty5Kqu00ISzxILRL2g3gAS0UJgZhgdJ
- hgnUyVaBwPxxBlg/sj+d6nF46+LwsCJfj5HHAgbJ3AqinQCq454VIqhBKR1TitR5hTWCJWe/v+P
- X+IcjZZnY+J/H1U4HAJhssyr68+l+oJqgqaL8ONc+L7NN2ayuRunG+bxAu+cMh9Mrkk992zcrXA
- cQN3d1uFRQ=
-X-Received: by 2002:a05:600c:858f:b0:488:af7f:7751 with SMTP id
- 5b1f17b1804b1-488fb768837mr23751115e9.15.1776424006485; 
- Fri, 17 Apr 2026 04:06:46 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc0b4c85sm35398165e9.0.2026.04.17.04.06.45
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Apr 2026 04:06:45 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 7/7] MAINTAINERS: Transfer CI maintenance to Pierrick
-Date: Fri, 17 Apr 2026 13:05:49 +0200
-Message-ID: <20260417110550.70068-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260417110550.70068-1-philmd@linaro.org>
-References: <20260417110550.70068-1-philmd@linaro.org>
+ bh=cij6y007mDu+PmjEqlZipzmcf7SbTqqcemD0dmQoJaY=;
+ b=sb26Yj0cBNf1shzsJloDW7cfgg/sN2ZX6fb2Gg2tbRKz9fm/dGO4jlQCm6lD5dKbyW
+ 2gWGjgYWw648hsn2a3lNo0mTOiynSdvStG3NiW02a/Wdt55RXoRmtRHoxksDL8eJOj/X
+ cDzOLzCME3V80PP/hDzKQCjwZl19NiIP/DQvibT256N/5ZyzIAmelSyl36jigCPEONBM
+ vpBw7YuPawCKUzLJEFq4b53ev+h6KHw2KIdSWM7SL3W8RsCFB6I9gzlGXZFJQE3q5W2g
+ jyvm1RruVTXo9QnF1jY3jAoJxFOz+x/Pp5mms3xPMjs/KC6wJemZf+XmdV8jQFEMVkCG
+ h0Fg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/V5Ij2OO/aDV19MS3lpu6oAxfH+rWKDxeJAVHeyGl73PxXAhz8v5cTdfbFw+gau0EnYfdOyvMPzHnC@nongnu.org
+X-Gm-Message-State: AOJu0YxjAnednpOu8uCv5RE7xuv2N+Xz/U2Vew6xKQ8EJDWFrKuMyoyT
+ fjodn+O5txJulO1wP/qtNuag2KPQmZCw80xsbHU+85OcE+0OLHbVuqOuNF4LD5Rs8ImizKM/MJm
+ 5b2L2LZt4N4AA7n9OKR0WHpsPiEFHaAYZTdinbFau4w==
+X-Gm-Gg: AeBDieupA/eYtSmWalDpGYpQ5jwk6PTphO2fZLi6Mib56JVSpPQnKDATa4IcVBVhkPd
+ NxSqQfct/IrTlQe7yivFlN3W8ZIwWPoUm5EcSvWaU4/LG7YFo3BM2wFHI/KBlZso6AN4BnOi0Tj
+ UBmbnamuIUeX5LWqwcSsb3xmwBPw/EMftmZn5M86NDnyjH3wB0ahXTmhFxD9FJrez3CDH7ksOlw
+ hOfgzTinNFEYDFPfblila8nE1w8xrOXGCb2PfGKODDL/gcNM+D+wtJPowOIaLphTjZJ91L0GYA1
+ KexTr0hJMgd6L0ji6agaT8lNZw+cljwsXIZrxfkadgGKn/4DpbBruQRqSjdRt2sqbQmfoDvfp3z
+ X+moYco5K02mh
+X-Received: by 2002:a53:ac8a:0:b0:651:d383:3f13 with SMTP id
+ 956f58d0204a3-65310a0aa98mr2293164d50.39.1776424237012; Fri, 17 Apr 2026
+ 04:10:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ <20260416091654.316158-11-peter.maydell@linaro.org>
+ <58a32864-6c05-432c-bdc2-5763e32cda99@linaro.org>
+ <02e21af2-d6e8-4418-9cab-af56c81afc27@phytium.com.cn>
+ <a75dcca3-9cab-49e3-818c-4d52c2a1bdd6@linaro.org>
+ <CAKmqyKMf+RhUb_jzOfTVCiQV7EW25e5z3C1fjdarcWVS3V3-7g@mail.gmail.com>
+In-Reply-To: <CAKmqyKMf+RhUb_jzOfTVCiQV7EW25e5z3C1fjdarcWVS3V3-7g@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Apr 2026 12:10:25 +0100
+X-Gm-Features: AQROBzDElH1LL0QhQTP9anOTeyhJzsK2A4_eZx7ppOHTfqXXJdA9rB4aefIqeQ8
+Message-ID: <CAFEAcA-P1aw7+pwVCrbCqBtypGUM+KTNoZTErXXLW+cKdKa7vA@mail.gmail.com>
+Subject: Re: [PATCH 10/28] MAINTAINERS: Remove Huai-Cheng Kuo
+To: Alistair Francis <alistair23@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Tao Tang <tangtao1634@phytium.com.cn>, qemu-devel@nongnu.org, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Klaus Jensen <k.jensen@samsung.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,55 +129,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the torch to Pierrick who does much better and useful
-work in this area: https://github.com/p-b-o/qemu-ci
+On Fri, 17 Apr 2026 at 10:58, Alistair Francis <alistair23@gmail.com> wrote=
+:
+>
+> On Fri, Apr 17, 2026 at 6:59=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> <philmd@linaro.org> wrote:
+> >
+> > On 16/4/26 18:07, Tao Tang wrote:
+> > >
+> > > On 2026/4/16 19:28, Philippe Mathieu-Daud=C3=A9 wrote:
+> > >> On 16/4/26 11:16, Peter Maydell wrote:
+> > >>> Huai-Cheng Kuo has not posted to qemu-devel in some years and did n=
+ot
+> > >>> respond to a query about whether they still wished to be listed in
+> > >>> our MAINTAINERS file.  Remove them, on the assumption that they are
+> > >>> no longer active in QEMU.
+> > >>>
+> > >>> This makes "PCIE DOE" orphan.
+> > >>
+> > >> Cc'ing Tao & Gustavo who are working on Security Protocol and Data M=
+odel
+> > >> (SPDM) which IIUC use DOE.
+> > >
+> > >
+> > > Thanks Philippe. DOE is indeed relevant to SPDM and RME-DA work we ha=
+ve
+> > > been looking at.
+> >
+> > Commit 4f947b10d52 ("hw/nvme: Add SPDM over DOE support"), described as=
+:
+> >
+> >      Setup Data Object Exchange (DOE) as an extended capability for
+> >      the NVME controller and connect SPDM to it (CMA) to it.
+> >
+> > introduced the docs/specs/spdm.rst file which isn't maintained:
+>
+> Urgh, I can fix that.
+>
+> >
+> > $ ./scripts/get_maintainer.pl -f docs/specs/spdm.rst
+> > get_maintainer.pl: No maintainers found, printing recent contributors.
+> > get_maintainer.pl: Do not blindly cc: them on patches!  Use common sens=
+e.
+> >
+> > Would it make sense to move hw/pci/pcie_doe.* to the SPDM section
+> > instead of orphanize them?
+>
+> Yeah, I think it would make sense under the SPDM section. DOE can be
+> used for other things, but right now SPDM seems to be the major use
+> case.
+>
+> Would you like me to send it Peter? I can apply it after this seris if yo=
+u want
 
-Remove me from custom runner files since I don't have
-contact with OSUOSL or IBM.
+Thanks; yes, I think my preference with this series is to apply it
+as-is and then let people send in patches on top that take
+ownership / readjust the arrangement of / etc the now-orphaned
+sections.
 
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3cbb5d30709..1c326421848 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4444,7 +4444,7 @@ Build and test automation
- Build and test automation, general continuous integration
- M: Alex Bennée <alex.bennee@linaro.org>
- T: git https://gitlab.com/stsquad/qemu testing/next
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Maintained
- F: .github/workflows/lockdown.yml
- F: .gitlab-ci.yml
-@@ -4489,13 +4489,11 @@ F: .gitlab-ci.d/windows.yml
- 
- Guest Test Compilation Support
- M: Alex Bennée <alex.bennee@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Maintained
- F: tests/tcg/Makefile.target
- 
- GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
- M: Alex Bennée <alex.bennee@linaro.org>
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Maintained
- F: .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
- F: .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
-@@ -4530,6 +4528,7 @@ M: Paolo Bonzini <pbonzini@redhat.com>
- R: Marc-André Lureau <marcandre.lureau@redhat.com>
- R: Daniel P. Berrange <berrange@redhat.com>
- R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Maintained
- F: meson.build
- F: meson_options.txt
--- 
-2.53.0
-
+-- PMM
 
