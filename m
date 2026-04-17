@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CABE2F43690
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE916F43690
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDh25-0000d6-Oc; Fri, 17 Apr 2026 07:06:45 -0400
+	id 1wDh2C-00017L-NC; Fri, 17 Apr 2026 07:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1s-0000TR-VQ
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:33 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh2A-000103-HX
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:50 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh1r-0003oU-IZ
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:32 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43d73422431so402215f8f.2
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDh28-0003xL-L8
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:06:50 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4852b81c73aso4854005e9.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776423990; x=1777028790; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776424006; x=1777028806; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=d7zIbXV3N0b/RBTQjkJbbOoErq2rXFNeYVrRRPCYViI=;
- b=HcfhDPKOKx/GF83a9DpzMPE/JzweHqjEXt+OU6XCHVoaz+edmu6HpjtxWBJ3AEQtnJ
- gZVCWbo2ASDMrGnKE7ZZ+1X95ifH8B18iUbI7WF4yPyyfT1AiFvWt9nvWVijAJy9U9fd
- Ml1quQ7CaZrKOhEkRhDm/v5ptLOB+/YnnSFy2Hh/z+1Oo0AE/mQiStCu7gfChjTA6kaw
- BGOWFsb7e6YK1BZSL3OYKHm+2croeDgGJYt4oWKrrO3Hgi5F0l2Y7wTaXVG7p11RTbBx
- R15t0mgS/w1wTNSxIzOekpnsuC57t8L935MHZLKJEuRiWIdKbnijMcrRBE17jBtBi6jd
- LjQQ==
+ bh=eEvEamOQHBmameDSDr8g36Lk+2QPMHsbUKiwvPJl8u8=;
+ b=WVmwTNnBqdhon05T+7aPI4ukzrkWeeaXFt0CMVcErBA0i33STP0gyiVv5dId9d5p3E
+ flJl5CaLTIWY5Gdp8K4oCb0ZtevkDPbgJur4KPEyxnLXC2IEk7VpyrKUTz1flqUZViHD
+ dCWLtw4RP5HQw3Brc/SRzfIcIv30rwC4bixbRKvGiROdQMeqWcViQJT5p1/rCiluN7VB
+ CNJerdr3SZYteGuDm3yaekbhPwdaO+auGMioqPdomdeFd/6kDbqhpFJgMKCsndk5u8D2
+ TVfHFfEeiG/NKEOxQibVLDxSrNPoj0bVuhgJeI/wdSvbZfotVrWdS9cWwf4wXCcaX9T9
+ aPLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776423990; x=1777028790;
+ d=1e100.net; s=20251104; t=1776424006; x=1777028806;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=d7zIbXV3N0b/RBTQjkJbbOoErq2rXFNeYVrRRPCYViI=;
- b=ZsK/GXxZF3jo63jKyka6V15K9aVH5RXnLRx5CMOkTlfhEQLAa0BrCKsBxbabjelNjG
- NKoCu+9k54E1etIVG5CYR2S9nlKwHNsCEwU5ReYWjxJz97dhL7jxAcMlB3SjhW6PA7pm
- jmE/uFa/gaxMXZPPADc/v4Lt7hW3f7oV2bQZhU3VjXLu6EAyK30x1d+O+N3IZ9K9QOjm
- Mp9a1UjgThECdLmsbQkfvnYFmR7XVrw2uW56FHOfRhBDrUq4tVzzz1JHb8V8Zq7AZMg9
- OuGkgUiZM1hDEgDupE6KrauLHN/fu+dZY9LHjnva6wA9uf9TRhymLgiqICBfQvBDZxMS
- ZUxw==
-X-Gm-Message-State: AOJu0Yy9zXZ3OXtBFZSZE1HPg4wssARF73Ta1Be3xoQVJqsd7/UwUOnh
- x5AWgCLtlH+d7dYVMBOcXhCHqPttRI6mKaxZjOtSsHNbVydT6e5LrVopsCtzZC+kBYC3HuIB+qt
- VqqqRtRY=
-X-Gm-Gg: AeBDieu3zH4yPQFm3HKInZpgObBrq0xo8Pvyx4EmcMEjtmn/GEP1jpx76vn4lypBeDz
- sUlPqoTnKn1F6wTW67zOaZlsyNDA5TpjULyXfksz0LxSK9JFh/ZyTshlT8meRRxZjJ9yBgjyCf0
- 9JIrZCCWnplIDw5ao3oAdPhqVEb1j8mT/hVyY+nQBBRYla7YrZNlAhF1pkg/Dorfdd1ighsUQzA
- biil8TPR+ml7KnV5U9xFtSRuQTs2vOppas0aSj4nHDyjNPpiqDhP1IeCbmUXdKHq+zoFIl2RoEM
- YY0JqAV8MU/3coxig51PXraoyAuykgkao3OxaJ4xtQ1zAhsNJS+49Oi8ChPyPQGoA/5PBbweyT2
- lH04PBslC4C70pSPT+14TauEh57lpXZzIcBcQ34nugFFIi4IMQyd8TrnZoC4dsTSILtraX7mCc2
- YJn5PYZ8MY/rwXoGo2pStZp3NdWyB/NVGtdJ5un+5qGEE5PGbkX4MDZyrzznP+OOkjsyCoTMS2X
- i6AWbokLXjnGl1Q+g1f7g==
-X-Received: by 2002:a05:6000:420a:b0:43e:a69b:d813 with SMTP id
- ffacd0b85a97d-43fe3e0d459mr3745009f8f.25.1776423989436; 
- Fri, 17 Apr 2026 04:06:29 -0700 (PDT)
+ bh=eEvEamOQHBmameDSDr8g36Lk+2QPMHsbUKiwvPJl8u8=;
+ b=S8SkJCRrdgGOHji3VGlrNhSJ1Q/j0OgjFyvqj3DArLfArGYxqGZFVaWVRKBJdc+FnW
+ xGLQEvEDZBRc3qUEN1YWhY+sHOJWWd6YCNlkElLPV59e9LLhDnfMLjb/sChR9Shosa2T
+ w1EBeg6NePi6u8WbU7M7AFEkg7erL1mlhxWd/S4ffZUQyDAtRCdEag+aWaf3k5FWfAIX
+ nvefHVS6g5XSPN8RO0/r9WQep+phoU5sLElJd+C/+sr6FpTfubZ1vH3H6POzywb4Pmd0
+ 9ds8ABcc0a7X0r9jug8ZGnDQD5A4kZ+nszlm4MR+OzVd0n27SSZZsI+x8EMgIP3zzGIO
+ /Q6w==
+X-Gm-Message-State: AOJu0Yyl2hE0jTAD0pTnumHLiM+2N1iHS98mx6PtAkM5r0ST1jn4HPLC
+ /ufkBfIISiMV6AIc7N6XD6WhiBoaNtwqpExzJpuLu9vhPtD5/xqsBua4Bs7plMWoGFmvk5cwk9J
+ kgJqTqdQ=
+X-Gm-Gg: AeBDietE6OVMpCjQ93Dfqt57w4UiG70fTTNof0vM5AvuAZAUDO97h9Q798QgZnGXBRz
+ 27vKn9yo+DjVyvEumI64j+wiEjSTsyBg7ToVCLehuCDU589B75s9Z/3cEp/gKFozMh+Q01n4xgb
+ D0LYT8QY3icPL59alvKqdCmxIHmMDC6VkbKUgcYRzm/BLbuoYsh8FiVsVKRfAX3C4KfGqDOtbgs
+ hwwtUyZmmN1h5J3FZBvwXCwY9JYiErOfbotsCCB1/hvmn5zD8TcHgUI6PvESD/Im7CTpgftW8di
+ CvAzjeTlih9rSqclXMdBL/pPKeFCd6hDVs9SNoyx0Iknty5Kqu00ISzxILRL2g3gAS0UJgZhgdJ
+ hgnUyVaBwPxxBlg/sj+d6nF46+LwsCJfj5HHAgbJ3AqinQCq454VIqhBKR1TitR5hTWCJWe/v+P
+ X+IcjZZnY+J/H1U4HAJhssyr68+l+oJqgqaL8ONc+L7NN2ayuRunG+bxAu+cMh9Mrkk992zcrXA
+ cQN3d1uFRQ=
+X-Received: by 2002:a05:600c:858f:b0:488:af7f:7751 with SMTP id
+ 5b1f17b1804b1-488fb768837mr23751115e9.15.1776424006485; 
+ Fri, 17 Apr 2026 04:06:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4daf2sm3504685f8f.33.2026.04.17.04.06.28
+ 5b1f17b1804b1-488fc0b4c85sm35398165e9.0.2026.04.17.04.06.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Apr 2026 04:06:28 -0700 (PDT)
+ Fri, 17 Apr 2026 04:06:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>
-Subject: [PATCH 5/7] MAINTAINERS: Remove PhilMD from firmware sections
-Date: Fri, 17 Apr 2026 13:05:47 +0200
-Message-ID: <20260417110550.70068-6-philmd@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 7/7] MAINTAINERS: Transfer CI maintenance to Pierrick
+Date: Fri, 17 Apr 2026 13:05:49 +0200
+Message-ID: <20260417110550.70068-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260417110550.70068-1-philmd@linaro.org>
 References: <20260417110550.70068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,48 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm not paid to support this code. I haven't followed
-it neither, so be fair and just remove myself.
-Demote the status to 'Odd Fixes'.
+Pass the torch to Pierrick who does much better and useful
+work in this area: https://github.com/p-b-o/qemu-ci
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Daniel P. Berrange <berrange@redhat.com>
-Cc: Kashyap Chamarthy <kchamart@redhat.com>
+Remove me from custom runner files since I don't have
+contact with OSUOSL or IBM.
+
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ MAINTAINERS | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d5e766ca6c9..df8413c79e7 100644
+index 3cbb5d30709..1c326421848 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2837,9 +2837,8 @@ F: hw/usb/vt82c686-uhci-pci.c
- F: include/hw/isa/vt82c686.h
- 
- Firmware configuration (fw_cfg)
+@@ -4444,7 +4444,7 @@ Build and test automation
+ Build and test automation, general continuous integration
+ M: Alex Bennée <alex.bennee@linaro.org>
+ T: git https://gitlab.com/stsquad/qemu testing/next
 -M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Gerd Hoffmann <kraxel@redhat.com>
--S: Supported
-+S: Odd Fixes
- F: docs/specs/fw_cfg.rst
- F: hw/nvram/fw_cfg*.c
- F: stubs/fw_cfg.c
-@@ -3955,14 +3954,12 @@ F: docs/specs/fsi.rst
- F: tests/qtest/aspeed_fsi-test.c
- 
- Firmware schema specifications
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Daniel P. Berrange <berrange@redhat.com>
- R: Kashyap Chamarthy <kchamart@redhat.com>
++M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
  S: Maintained
- F: docs/interop/firmware.json
+ F: .github/workflows/lockdown.yml
+ F: .gitlab-ci.yml
+@@ -4489,13 +4489,11 @@ F: .gitlab-ci.d/windows.yml
  
- EDK2 Firmware
+ Guest Test Compilation Support
+ M: Alex Bennée <alex.bennee@linaro.org>
+-R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: tests/tcg/Makefile.target
+ 
+ GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
+ M: Alex Bennée <alex.bennee@linaro.org>
 -M: Philippe Mathieu-Daudé <philmd@linaro.org>
- M: Gerd Hoffmann <kraxel@redhat.com>
- S: Supported
- F: hw/i386/*ovmf*
+ S: Maintained
+ F: .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+ F: .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+@@ -4530,6 +4528,7 @@ M: Paolo Bonzini <pbonzini@redhat.com>
+ R: Marc-André Lureau <marcandre.lureau@redhat.com>
+ R: Daniel P. Berrange <berrange@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
++R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ S: Maintained
+ F: meson.build
+ F: meson_options.txt
 -- 
 2.53.0
 
