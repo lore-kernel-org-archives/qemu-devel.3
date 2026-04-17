@@ -4,106 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6309F436A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 13:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F451F436AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 14:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDjbv-00029i-2g; Fri, 17 Apr 2026 09:51:55 -0400
+	id 1wDjok-00055P-Hx; Fri, 17 Apr 2026 10:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDjbt-00029Z-8H
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:51:53 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDjbr-0003Uo-BN
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:51:53 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-652fcd5a6d7so900045d50.2
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 06:51:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776433910; cv=none;
- d=google.com; s=arc-20240605;
- b=VM56juJUrs08iSQAgRwFMeKFEJBx6pzaCUIsxAZjzxwSMUoLHoo4WNUTswkr6HmvLp
- lsB6qtwbs1ZzBnpAd5gPE7IiMi7SzQME/6eDgp3I0qyRyNvPbr3ffKH2wD6Qp2FzCuiD
- Dm2i5nqI/jp7AQAK+B3/RIpiiJaZdujbDvWbGzDfRC+RL2u0Mh6xgHUN+F/vmJ94a3vP
- d/ftQbT+Bgfzh4ny3T8OxdDmQEAK7LyOb7xxpFakJIqRFFyx5gpUjUATFw7FL+SNT8kl
- QmJ2XmNpsqPNr6Y6jav0yQTZLhoy4Z6xIBRIXwM7ke77C09jweEEmArPmguEJmZZDpix
- IH3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=UGzMdPmooc4crl711aDL3SR1pBew9RJ50/omtb+hpzY=;
- fh=L0+NiO1dk2svgH8TdO1hLVvvgiN+SVSZdG3CsBcLNBc=;
- b=T34Kr8NShBfn9wkvIoZoAUF+DhbDz1129oB3DgoWnAPQ5sKEFoX+3xWTVjsosH0/xl
- 35VDPpR/8gnQXzHGut4PM4PsjGxuBH+pHDryigAIhItSRYryO0D3+qBipxX19zSm6ZUD
- QP1HI0G/LBrqmAU4S4ZG9d2/laXsOEaHb0bc1Oh8xCzmAhIB6dIMYj6WatrrZCYGucge
- SnRbP3IiPgz60BtRPOS3lL/T06iq3Jw/RzKpoc6qDb4cFIRs2cbG4XYKgiIna1pTnQbV
- XBNPD56Yy1lInKnyLYymyfhuUFyUwDsnYvKNsmDxs2XuUOUV9xr8gGhPSGGeSaiT/aF9
- Maxg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDjoi-00051g-CS
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 10:05:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wDjof-0006AX-KV
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 10:05:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776434703;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LxSHP6Xe6L3p5zpTwc7n+O9JU76cgmgHEJWzQL5MrXg=;
+ b=THBEDJcVmajHLpFV3n3Mqq708NA8F+DABkd/m7gLLhTBSkDVR+9jdy6O+wXR9y1iGsYlL1
+ hlPCXAaJ6s/EZN1qkbNsMVN0ANbKIqwfVbJDozFkFl2Lwwdecb4Sdw6pvH683GMAW8EW5P
+ catcE33HEVRkTjEzgjZkZ9mfZI17vUE=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-586-f3_YwFwIMR--otNiUfUvZw-1; Fri, 17 Apr 2026 10:05:01 -0400
+X-MC-Unique: f3_YwFwIMR--otNiUfUvZw-1
+X-Mimecast-MFC-AGG-ID: f3_YwFwIMR--otNiUfUvZw_1776434698
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8d3e4c19307so134533985a.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 07:04:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776433910; x=1777038710; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UGzMdPmooc4crl711aDL3SR1pBew9RJ50/omtb+hpzY=;
- b=jaCFdPn+GkmXV1qko9iR1tK9/xTEBCb6HP5rSuo0ZPwy6hHWYJUEDd/bV3uw2kIuZZ
- rh04xinOcFOdnf4cEIK3GgdHh2n7YMVqbI6/SOh7gXgHAWwAU8mYnlYO8kUPADeqDtcA
- TIKdQ33cUImoOOZnIjhOIuSfo9MX6ao6MmMqXCUZgKYfyJwFBYXifxN3lAB754ffy/dV
- lcoGTt6vWSv3OOTND6yvOaPOLgxh4z4xnkBHe7+7vMSnbv+xyE/NlVDHyVPIYQeaumue
- 0HXTgwbUdgzexhvNbTOWlvtQ9p0Bzuh+R0zRTso24GmzUCfGW1PyDFt+hpp2zSGhjox9
- UafA==
+ d=redhat.com; s=google; t=1776434698; x=1777039498; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=LxSHP6Xe6L3p5zpTwc7n+O9JU76cgmgHEJWzQL5MrXg=;
+ b=bG8WpnDtgkOGpcd/uHB4klAxXJlV1tB1rHwfHMyFfgaCCGLH7FnuGb1acICM/ui6Wk
+ f05e2+q8uNk77O4gO+NYnRGCV6LRv/bqbXQukBKMktgU6PR3+2pnTBVJVVnItwScKBFH
+ K01r0JVp1k2IjSj5tei3M4K0SgPgtVfIvwCFfsbceHMsk5CT96D2oID0872Y8syRBisx
+ EjmQ+NoxT+FWVrKkRz31vIIEUxx2se57A7LqThgD5c1RLihakEfjzUlzxX1qGLW4bJxd
+ qJ+xQQztAD9sOqYJ43rTEunNiiH2k1gQpjaLT1LR3pmHfOMLZPK6QewvV9jEoBtNBaC9
+ QylQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776433910; x=1777038710;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=UGzMdPmooc4crl711aDL3SR1pBew9RJ50/omtb+hpzY=;
- b=a/X38F1CKkP54L7pZY189o6VKM/7o3f3lGh5qEf59n8Paf1E6qIfKz92agNgOLmgcZ
- UKtGaYbybx3+PeofEnpITEaq/iD85cvlOq0/wIMfwMFpDS4og+dqENpoHxlB2Agq/UEx
- CEsb8rQZHrK0Nbe9WbAj2saABXANe8QUeMrDWDDOhxCT8+vwLRKEHUHPuS0BwFsGQT8d
- O5lIdPGKpRzfXwv3L4zDaROjMrjIMouxNKjY6Bqpxue/NICmW5iQcp7EZqk/BIbNa6OE
- CPFZjLAsl+rgyQZQegQSJCmHRNJ4LaZmlG1o5ePYa8qlkiVaBhHrTvB42Dbu0z1iXDl2
- 0zNg==
-X-Gm-Message-State: AOJu0YylOH0bOnajqfdY0zuj82XkesO8V/CEiwbS+5NfblZ5KUGOyta0
- uJCRq9bzqWXBwBiEtLP4/sdAzcFyotNFwFi53l+3VI8r2BbOnu4MQ6P9o8sgluVGVValHqCAolf
- aVJG7FRPyHBlxCr+No/j1XaWKR2LLqSVwhZEeuP3ljQ==
-X-Gm-Gg: AeBDiet2M/fxhP0gnYJ0+X6Eg2Qad/TbujkTndGESePW5wp4CEIeRMDLyCORdbwImRe
- itFFAeVkTpvfghUEMcGWG5MH+w2dMC5CnNueAAF/aC9LA7GbuJyJWLlWxcwE1LYqY+fundWIZFj
- +VckoDAVuSSirODJWxHWMOHMVZT1W68gBSctk80JuNt0JJRuO9m8t+iLGGBpgiCXalznvJkH5GB
- DGjqis8nrrVJRSAeGjfvFE0EwFFZs9IlLEzePXvIqQWcWpcfWs36T6NyYFki5O50RVoLj97uVlx
- e3D0FG/qrX4cfftujeVjE1aOBvBuC92fpfdahDuwMksgEDb2YNhj5ohLXRsFzKk23Yt8NHjROGp
- wBQ==
-X-Received: by 2002:a05:690e:d49:b0:651:8944:c0de with SMTP id
- 956f58d0204a3-65310b9478dmr2401511d50.63.1776433909618; Fri, 17 Apr 2026
- 06:51:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776434698; x=1777039498;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LxSHP6Xe6L3p5zpTwc7n+O9JU76cgmgHEJWzQL5MrXg=;
+ b=eLQwoOpXcJiF15aZS353CvGHbrKsUzUG+3N08cgtaTZGsr3XRBi6afjkbvLftVW+G0
+ JmRlXbE0Qyq3tvBZS0PLcFus2SjyjEa8VBaZeiCDNjwa6YUJ8eZ0dTHVHxzb6easklHP
+ 1JzVPSYg6VVdfHI0lJfSnBbmxejj9iQjnVfdycce3V1cxoY8NqZ0qC8oKYCiVNJ6mDMw
+ i8hkL+wf+7LS4ofjXEsR2QrWbzej/Hfj3VfMhAC34OarqQokjTGtMijwA9JDGJHOfBvI
+ kTDwnkYWfsYyLSBqvV1l3Qm/mRgpmgor4/vOBH9j4JTWCiE/W4sOqljfVxanCef32ALe
+ VOYw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9jpH886dGZm0Zc0YPQFRylrBZkQWd8dgfE6aMD2HrrvC328t0Q50zztPismWbQFgUzBr3a34h+T0XY@nongnu.org
+X-Gm-Message-State: AOJu0YznjCeb6y2FXvzF7HMs+d5ARpvTZHFGgeCO1lB+NWxpFt7AxV5T
+ 0OotuJABeYTIvjztQ5X0z4g0YQzE0vtxZgizYVz45M14RVY019uEye65H+0Erir7KZGaajr2LFg
+ jUzk/lnFAn8wlX0mkjTX8xYRfp0/JxPVHs5LWc6dDVLT5PK1AU1Cz88jC
+X-Gm-Gg: AeBDiesF90J8a0JSoNtH8R7VBA2bAJL1kXQ4+yUCzhLr7gmWyefta5hiPxsJmFWk/s/
+ FOGEZmoHpvARG9AKq4a+VLVb1oDJ8950rtm/vrPHQ7OVY0lE+xzMYZFAlLvE/ljblAbLC3+p2Xk
+ IcPk9pxIsrK+XCFUHYtzXumSwPMJ0VL7/e4sWjF0kSx0jFUFwfJt1E4y/9ZoTrq3+RkTzDef5MJ
+ Geiq6SHxDBoF4eWRI9pcPVwGZERBZZvAPJuiMI1teCW0S+yt2gxfICgC41G4eiWdvvSxDTvBXFo
+ psYDEwWgtUAfCZnHX47EYWmik9v1arNHsWbmz0ZeyKwECUzbhP1jMARnWAckm5R0vrvi0bKYt95
+ 89MyYmrWwe8m1QdM14/Hc1YpK1I+kMdF7plaqGBSur4DCmzp+LtAoSZ7bTQ==
+X-Received: by 2002:a05:620a:45a0:b0:8cd:b317:a0b4 with SMTP id
+ af79cd13be357-8e78fb19171mr426479185a.27.1776434698008; 
+ Fri, 17 Apr 2026 07:04:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:45a0:b0:8cd:b317:a0b4 with SMTP id
+ af79cd13be357-8e78fb19171mr426473385a.27.1776434697424; 
+ Fri, 17 Apr 2026 07:04:57 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8e7d5fe8edcsm120070485a.6.2026.04.17.07.04.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Apr 2026 07:04:56 -0700 (PDT)
+Date: Fri, 17 Apr 2026 10:04:55 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH v3 0/4] io/channel: complete pread/pwrite_all API and fix
+ multifd_file_recv_data
+Message-ID: <aeI-B3fna39LXklj@x1.local>
+References: <20260413214549.926435-1-junjie.cao@intel.com>
+ <20260417165155.7714-1-junjie.cao@intel.com>
+ <aeIB8HvFb-sJp1NP@redhat.com>
 MIME-Version: 1.0
-References: <20250802110549.23438-1-pali@kernel.org>
- <20250810130948.3yzymcxtkmfkgk67@pali>
- <20251109134141.ur2s3bk5e6dgquxv@pali>
-In-Reply-To: <20251109134141.ur2s3bk5e6dgquxv@pali>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 17 Apr 2026 14:51:38 +0100
-X-Gm-Features: AQROBzARdogvX8285Q7m7vaG2qTvoLetPol_Jt1gBg5kpKZUtRFgjle9tpQ_V0k
-Message-ID: <CAFEAcA8+cycE_JvFDEtAmbJtXwRVwU026rOBYNV+cZaq5wZ+XQ@mail.gmail.com>
-Subject: Re: [PATCH] qemu-options: Improve description for -smb option
-To: =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
-Cc: qemu-devel@nongnu.org, Samuel Thibault <samuel.thibault@ens-lyon.org>, 
- Jason Wang <jasowang@redhat.com>, Mohamed Mediouni <mohamed@unpredictable.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aeIB8HvFb-sJp1NP@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,76 +122,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 9 Nov 2025 at 13:42, Pali Roh=C3=A1r <pali@kernel.org> wrote:
->
-> Any comments?
->
-> On Sunday 10 August 2025 15:09:48 Pali Roh=C3=A1r wrote:
-> > +cc slirp & network maintainers
-> >
-> > On Saturday 02 August 2025 13:05:49 Pali Roh=C3=A1r wrote:
-> > > Add #PRE and #NOFNR flags to LMHOSTS example line.
-> > > Include information about LMHOSTS path on Windows 3.x.
-> > >
-> > > Windows NT 3.1 requires #NOFNR flag for successful hostname resolving=
- as
-> > > described in MS article Q103765 because qemu/smbd does not respond to
-> > > netbios name verification queries. #PRE is suggested in that article =
-too
-> > > and decrease delay on Windows 3.x for the first connection.
-> > >
-> > > Signed-off-by: Pali Roh=C3=A1r <pali@kernel.org>
-> > > ---
-> > >  qemu-options.hx | 6 +++---
-> > >  1 file changed, 3 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/qemu-options.hx b/qemu-options.hx
-> > > index ab23f14d2178..d5654756f125 100644
-> > > --- a/qemu-options.hx
-> > > +++ b/qemu-options.hx
-> > > @@ -3307,10 +3307,10 @@ SRST
-> > >
-> > >          ::
-> > >
-> > > -            10.0.2.4 smbserver
-> > > +            10.0.2.4 smbserver #PRE #NOFNR
-> > >
-> > > -        must be added in the file ``C:\WINDOWS\LMHOSTS`` (for window=
-s
-> > > -        9x/Me) or ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (Windows
-> > > +        must be added in the file ``C:\WINDOWS\LMHOSTS`` (for Window=
-s
-> > > +        3x/9x/Me) or ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (Wind=
-ows
-> > >          NT/2000).
-> > >
-> > >          Then ``dir`` can be accessed in ``\\smbserver\qemu``.
+On Fri, Apr 17, 2026 at 10:48:32AM +0100, Daniel P. Berrangé wrote:
+> On Sat, Apr 18, 2026 at 12:51:55AM +0800, Junjie Cao wrote:
+> > Hi Daniel, Peter,
+> > 
+> > Just checking in on this series -- does v3 look alright to you?
+> > 
+> > I have a follow-up series that depends on this one to fix the
+> > remaining positioned I/O call sites in migration, so it would be
+> > great to get this moving.
+> 
+> I've ackd the io subsystem patches, so Peter / Fabiano can just
+> include them in a migration pull request.
 
-Apologies for this not having been picked up earlier. The problem (as I
-mentioned in our IRC conversation) I think is the lack of anybody who knows
-anything about SMB or old Windows versions who felt competent to review it.
-But since nobody has, and as you say you've tested it with this, I guess
-we should take it.
+Junjie, sorry for the late response. It looks all good here, thanks for
+your work!
 
-My only concern is whether the "#PRE #NOFNR" advice is still valid
-for newer Windows versions, or whether it really is only something that
-NT 3.1 and Windows 3x needed. In particular this more recent LMHOSTS
-documentation from MS:
-https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nbte/01f85=
-bfc-cfa3-4be0-b659-4ca0eddb5996
-includes #PRE in its list of LMHOSTS known keywords, but not #NOFNR.
+I bet Fabiano will pick this up for his first pull when 11.1 dev window
+opens.
 
-I think also we could probably helpfully explain what those two tags do,
-something like:
+-- 
+Peter Xu
 
-   (The #PRE tag tells Windows to pre-cache the mapping to speed up initial
-   connection. The #NOFNR tag tells Windows not to attempt to send QEMU
-   Name Queries, because QEMU doesn't understand them.)
-
-Then anybody who finds they need to adapt this to some other version
-of Windows will have a better idea whether they can just drop them
-or what they might need to change them to.
-
-thanks
--- PMM
 
