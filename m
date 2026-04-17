@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C310F436BB
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 16:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F640F436BD
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 16:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDmI3-0003Nr-Bn; Fri, 17 Apr 2026 12:43:35 -0400
+	id 1wDmIO-0003SA-Uy; Fri, 17 Apr 2026 12:43:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wDmI1-0003Mm-Hc
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:43:33 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wDmI6-0003OP-LG
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:43:38 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wDmHz-0004rM-Tn
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:43:33 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488aa77a06eso15264025e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 09:43:31 -0700 (PDT)
+ id 1wDmI4-0004tD-EV
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 12:43:38 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43fe608cb92so529484f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 09:43:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776444210; x=1777049010; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776444214; x=1777049014; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mnj1sUSGnQtu/nyeEQy5Pwcrz7WuG7Co9e+aKnd+EfA=;
- b=dqNyJVL8zRxEVKRVcz1044UmKq58C8986kveyz9Sfw/VG4ldkfKPTZSMqXLgc95519
- a5fvbkugTXmysQsD2vuN7o/0PNeWvDn74qYzEdq7eUoheILLAaQODwoFs725WEh69ZhO
- wUVRgwGu3j6XbdP7ne19KUEdB8Ojxhu5ZpiqF10ROq7sWsD1KA2rhDRjfQ0BsVd9VHqp
- VIJrxT9IEPjeOouBO0kVKkB4RCqmu58XvDaxid6khRJ+ijCq359oI89F3Tki4LHeS93U
- YZINKfLCu19GC+KIOCSsUP5zMkt43lfAVOv3+0fbmMo6hCR1vYVZ1sluXfRd/pbwP8Ik
- b2/A==
+ bh=liTcDcF3GIDEEzIN8ew1+DtNcgI89x7Dsh408ugPSo4=;
+ b=Hr2HUZcxwZngdf2ghSBOHVI+OPF3EyO0j+b+I7GFvNfXvXc8bum5ACtth25+nxWWGK
+ jOtD2r8gYIK2zi+hOmQmKTbpIA5Icx1zFLu4w1lXgooU/ySYuna9BNPlhED+kQy/ptHP
+ GL3dZAagWcK1eBhWXVY1fn4N+QzGvqvE15Cfr4Ozb+KUk1F2peLuhmTs077M9fqLj+u7
+ 8zv8hlD0u1cKe2GIZlDHvLFT9M/Qp5ErI6cGKJEdQI4RuDZlihVgdSoR7mN/nIzBITxt
+ rRFujLZbtMbODXLE/NabvTzAIgQheoTN6lJMq3ZSFBl58yj1Pcbdoumc5hkvRoORVtQP
+ x2OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776444210; x=1777049010;
+ d=1e100.net; s=20251104; t=1776444214; x=1777049014;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mnj1sUSGnQtu/nyeEQy5Pwcrz7WuG7Co9e+aKnd+EfA=;
- b=BEdtexiZFPXG8zPgYRlso+QNw6JUIcDLk3FYKx8Pbdo38GSJe8UvHF2sZMAelJYBGd
- eO0UGToN0C1c7ytcicE2jqVLtGSZxSYkfeniSBREY3fDBy7sBUdT1oUN9AsEec2sQKTu
- wSlQa6vv/Y1Bj9KRmpcuabPwL/xHfJ6Jf4Xtbb5u+oGBobKSVXYkWpxxoOAxFeSwUM0d
- mYsbZctgnhopFdcmKuuiSYT5gd8XainpKO/izL6lUWVpLBkLt6yAnK9pKCWw1eRiNyL2
- AHlFpUldVxgIj2U89hwhbmyzIfP+F8j/PoeISFwGT/NPZ7KkLFFJaylr6UJwX+5buCab
- HOzQ==
-X-Gm-Message-State: AOJu0YzZawW7xLvLs0uCAXGkNLiMQICh0EDwupV6B+oiKL+ha1HQB4pP
- yTCTCpBLlVIgvN4IIpc7DIwGJtL/KOe90YuNK4Omixi2C7GNUndkAr+vXT+InusCMfM=
-X-Gm-Gg: AeBDiet5EaWiPQ1yrcJVBp3lq7LWFhFLSC9INuPCU9Gy4DqiL250pm6hWVUhpwjJYRs
- uyRKL7hPlyOezNtXr0/IrgaxBoxDXAjg3NYlx2+GdU7UEK1x5CUWGbCPZfTj7/glgrb6kG8rV30
- 6fzE6ufvefdMd3DRaoX+UniZcP7BrXb2pjHr2fDItZhL5yXO+6f2KPMJWKWebd/Uwl+i15trHGQ
- NJmDtQ5m3ZkSuh5qxEDBUeTYkFkQigsfaVbJpJKghEZBxdPkEoBlVE4S9hJwhXIVY6dFsixxRoz
- nBx9awJ6dUm3Ngg7L0KwXkY/KubDiDieUt6uJhifQDWazue/Apd/muJzRDVhlDj9lVhSc7O1d0L
- Slidk+rWhb1+mmuSXg3QQz33JwRSlb6a2VDOV9mDrspaketJFz05FewtQ4HTGaFZHJD1XtCxOT8
- tNBb2ciqDp9Z85rq63pBRikVM8d77p0yQgZ2LhmN6774SW
-X-Received: by 2002:a05:600c:444a:b0:487:1520:d107 with SMTP id
- 5b1f17b1804b1-488fb793580mr48989795e9.31.1776444209860; 
- Fri, 17 Apr 2026 09:43:29 -0700 (PDT)
+ bh=liTcDcF3GIDEEzIN8ew1+DtNcgI89x7Dsh408ugPSo4=;
+ b=NkFft7EoEfaaqxo+x+oMpd2h5PmrTRqHHplHVgy3djl7BOyo6m7RMgzElu91+fcu2T
+ nCIUn32fhpozfPYFR5p/H/zBB5nBzSGnhFTHceV8N2dLFerXlb+VUF3exhfVHA28f81L
+ O+YcjybJ8DvqMtK6Pep1NTGPjRiuNcG52oQU0zGXjqghpu7VhvwFSAPEJS0kM5WEs7QL
+ N3G9DUZmKfcj02Q5wgoISi1qyL5+Ox9u6gdaKf8ae8waOeG9bj9FNI+g/tsq5wMvSDBp
+ bGQqJj2F5SuhfGOpteOsp0KnAKx71949snAuejqhpkfD1gT6Mdgll2mLZb6yGBqAuMGl
+ 3Rog==
+X-Gm-Message-State: AOJu0Yy0s60MV972S9p4i8TcP1oTD125EVQMnBAh02b1LrSaSyGolmAt
+ CXBc09leBpJUQhdYIoz6j1GIa7Xj0ZAHP22E8+tZAmeSokCdV823TrfyVUtBF5bcpCY=
+X-Gm-Gg: AeBDieuqMY/KEFhUUXbGaaPVdNDdj94BwK83iM7dRWwWRWQDhF99uVeN2dE7ykp4EE8
+ 0TY/YAThc3iyKm6dBWdon5QvkGWJGaNqL5fKXtVMd3Q99C0DB9O98n0WGabz7WprawUk5Bps89f
+ q9xjO50l42WmcpJ4mBoVzg0Jj1dkk5ov2oeLtxSNLAihphb0gSpoBLbd2LlE6FkNFOGWbNHJWg+
+ tIXRc+igRXsM0qU6xaRMpvakrkOvSQBwYaXrQBGhblqqMT7qzUfuxwr+RwgnGOk1HQTS5myarZv
+ e2J8SaZZG5NeCrDQS7HCKibDtEl8vInHQtJwC5gGpDwxsT+6F6HeGnp2RTx38/q1pRgmZgutsDl
+ XFYB3peW8teztiOCDW+dmtYUt3yON4wTS9W/cRL2y4baUzSpD8/hwQPN+KAS6rCUIpMyb2o6nWB
+ wsnU0yoYsEEfJEuSbKWq/S+6qPBWsA+gHrBg==
+X-Received: by 2002:a05:6000:2005:b0:43d:77a8:3ba7 with SMTP id
+ ffacd0b85a97d-43fe3e12484mr5358574f8f.44.1776444214270; 
+ Fri, 17 Apr 2026 09:43:34 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e591cesm8147138f8f.36.2026.04.17.09.43.29
+ ffacd0b85a97d-43fe4e3a7b4sm5579073f8f.22.2026.04.17.09.43.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 09:43:29 -0700 (PDT)
+ Fri, 17 Apr 2026 09:43:32 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8AAE55F954;
- Fri, 17 Apr 2026 17:43:28 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 25F2C5FA53;
+ Fri, 17 Apr 2026 17:43:29 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 1/7] tests/tcg: introduce a lib dir for aarch64 system tests
-Date: Fri, 17 Apr 2026 17:43:21 +0100
-Message-ID: <20260417164328.1009132-2-alex.bennee@linaro.org>
+Subject: [PATCH 7/7] tests/tcg: add basic test for aarch64 wf[ie][t] insns
+Date: Fri, 17 Apr 2026 17:43:27 +0100
+Message-ID: <20260417164328.1009132-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260417164328.1009132-1-alex.bennee@linaro.org>
 References: <20260417164328.1009132-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,110 +103,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are about to add some more helpers but lets start by adding a
-simple wrapper for reading and writing system registers.
-
-Do note the subtle switch of ordering for write_sysreg() which matches
-the change the kernel made sometime in 2021 (see 272a067df in linux.git).
+This is based on a generated test case which I've since refined and
+cleaned up.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/aarch64/system/lib/sysregs.h    | 22 ++++++++++++++++++++++
- tests/tcg/aarch64/system/vtimer.c         | 23 ++++-------------------
- tests/tcg/aarch64/Makefile.softmmu-target |  3 ++-
- 3 files changed, 28 insertions(+), 20 deletions(-)
- create mode 100644 tests/tcg/aarch64/system/lib/sysregs.h
+ tests/tcg/aarch64/system/wfx.c            | 143 ++++++++++++++++++++++
+ tests/tcg/aarch64/Makefile.softmmu-target |   8 ++
+ tests/tcg/aarch64/system/boot.S           |  16 ++-
+ 3 files changed, 164 insertions(+), 3 deletions(-)
+ create mode 100644 tests/tcg/aarch64/system/wfx.c
 
-diff --git a/tests/tcg/aarch64/system/lib/sysregs.h b/tests/tcg/aarch64/system/lib/sysregs.h
+diff --git a/tests/tcg/aarch64/system/wfx.c b/tests/tcg/aarch64/system/wfx.c
 new file mode 100644
-index 00000000000..b1c465e0746
+index 00000000000..fa4c6761215
 --- /dev/null
-+++ b/tests/tcg/aarch64/system/lib/sysregs.h
-@@ -0,0 +1,22 @@
++++ b/tests/tcg/aarch64/system/wfx.c
+@@ -0,0 +1,143 @@
 +/*
-+ * AArch64 system register helpers
++ * WFX Instructions Test (WFI, WFE, WFIT, WFET)
 + *
-+ * Based on the helpers from Linux
++ * Copyright (c) 2026 Linaro Ltd
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#define __stringify_1(x...) #x
-+#define __stringify(x...)   __stringify_1(x)
-+
-+#define read_sysreg(r) ({                                           \
-+            uint64_t __val;                                         \
-+            asm volatile("mrs %0, " __stringify(r) : "=r" (__val)); \
-+            __val;                                                  \
-+})
-+
-+#define write_sysreg(v, r) do {                     \
-+        uint64_t __val = (uint64_t)(v);             \
-+        asm volatile("msr " __stringify(r) ", %x0"  \
-+                 : : "rZ" (__val));                 \
-+} while (0)
-diff --git a/tests/tcg/aarch64/system/vtimer.c b/tests/tcg/aarch64/system/vtimer.c
-index 7d725eced34..b6bde49ce30 100644
---- a/tests/tcg/aarch64/system/vtimer.c
-+++ b/tests/tcg/aarch64/system/vtimer.c
-@@ -8,22 +8,7 @@
- 
- #include <stdint.h>
- #include <minilib.h>
--
--/* grabbed from Linux */
--#define __stringify_1(x...) #x
--#define __stringify(x...)   __stringify_1(x)
--
--#define read_sysreg(r) ({                                           \
--            uint64_t __val;                                         \
--            asm volatile("mrs %0, " __stringify(r) : "=r" (__val)); \
--            __val;                                                  \
--})
--
--#define write_sysreg(r, v) do {                     \
--        uint64_t __val = (uint64_t)(v);             \
--        asm volatile("msr " __stringify(r) ", %x0"  \
--                 : : "rZ" (__val));                 \
--} while (0)
++#include <stdint.h>
++#include <stdbool.h>
++#include <minilib.h>
 +#include "sysregs.h"
- 
- int main(void)
- {
-@@ -31,9 +16,9 @@ int main(void)
- 
-     ml_printf("VTimer Test\n");
- 
--    write_sysreg(cntvoff_el2, 1);
--    write_sysreg(cntv_cval_el0, -1);
--    write_sysreg(cntv_ctl_el0, 1);
-+    write_sysreg(1, cntvoff_el2);
-+    write_sysreg(-1, cntv_cval_el0);
-+    write_sysreg(1, cntv_ctl_el0);
- 
-     ml_printf("cntvoff_el2=%lx\n", read_sysreg(cntvoff_el2));
-     ml_printf("cntv_cval_el0=%lx\n", read_sysreg(cntv_cval_el0));
++#include "gicv3.h"
++
++#define TIMEOUT 200000
++
++#define sev() asm volatile("sev" : : : "memory")
++#define sevl() asm volatile("sevl" : : : "memory")
++#define wfi() asm volatile("wfi" : : : "memory")
++#define wfe() asm volatile("wfe" : : : "memory")
++#define wfit(reg) asm volatile("wfit %0" : : "r" (reg) : "memory")
++#define wfet(reg) asm volatile("wfet %0" : : "r" (reg) : "memory")
++
++#define enable_irq()  asm volatile("msr daifclr, #2" : : : "memory")
++#define disable_irq() asm volatile("msr daifset, #2" : : : "memory")
++
++static bool check_elapsed(uint64_t start, uint64_t threshold, const char *test, bool more)
++{
++    uint64_t end = read_sysreg(cntvct_el0);
++    uint64_t elapsed = end - start;
++    if (more ? elapsed < threshold : elapsed > threshold) {
++        ml_printf("FAILED: %s %s (%ld ticks)\n", test,
++                  more ? "woke too early" : "slept despite SEV",
++                  elapsed);
++        return false;
++    }
++    ml_printf("PASSED (%ld ticks)\n", elapsed);
++    return true;
++}
++
++int main(void)
++{
++    uint64_t start, timeout;
++
++    gicv3_init();
++    gicv3_enable_irq(27); /* Virtual Timer PPI */
++
++    ml_printf("WFx[T] Tests\n");
++
++    /*
++     * 1. Test WFI with timer interrupt
++     *
++     * We don't have a full interrupt handler, but WFI should wake up
++     * when the interrupt is pending even if we have it masked at the CPU.
++     * PSTATE.I is set by boot code.
++     *
++     * We unmask interrupts here to ensure the CPU can take the minimal
++     * exception handler defined in boot.S.
++     */
++    ml_printf("Testing WFI...");
++
++    start = read_sysreg(cntvct_el0);
++    write_sysreg(TIMEOUT, cntv_tval_el0);
++    write_sysreg(1, cntv_ctl_el0); /* Enable timer, no mask */
++    isb();
++
++    enable_irq();
++    wfi();
++    disable_irq();
++
++    if (!check_elapsed(start, TIMEOUT, "WFI", true)) {
++        return 1;
++    }
++
++    /* Validate the timer fired and then disable for future tests */
++    if (!read_sysreg(cntv_ctl_el0) & 0x4) {
++        ml_printf("Time ISTATUS not set!\n");
++        return 1;
++    }
++    write_sysreg(0, cntv_ctl_el0);
++
++    /*
++     * 2. Test WFE and SEV[L]
++     *
++     * There are two SEV instructions, the normal one is a broadcast
++     * from any PE on the system, the other is local only.
++     * Functionally they have the same effect (setting the event
++     * register) and should be immediately consumed by the WFE.
++     *
++     * As we want to detect an early exit the sense of the timeout
++     * check is reversed.
++     */
++    ml_printf("Testing WFE/SEV...");
++    sev();
++    start = read_sysreg(cntvct_el0);
++    wfe();
++    if (!check_elapsed(start, TIMEOUT, "WFE", false)) {
++        return 1;
++    }
++
++    ml_printf("Testing WFE/SEVL...");
++    sevl();
++    start = read_sysreg(cntvct_el0);
++    wfe();
++    if (!check_elapsed(start, TIMEOUT, "WFE", false)) {
++        return 1;
++    }
++
++    /*
++     * 3. Test WFIT
++     *
++     * With the timer now disabled and no other IRQ sources firing the
++     * WFIT instruction should timeout. Although the architecture
++     * permits this being treated as a NOP we have enabled it.
++     */
++    ml_printf("Testing WFIT...");
++    start = read_sysreg(cntvct_el0);
++    timeout = start + TIMEOUT;
++    wfit(timeout);
++    if (!check_elapsed(start, TIMEOUT, "WFIT", true)) {
++        return 1;
++    }
++
++    /*
++     * 4. Test WFET
++     *
++     * Much like WFIT there are no IRQs to wake us up. However the
++     * event_register is a latch so we must first consume the event
++     * register with a normal WFE before we do the timeout version.
++       */
++    ml_printf("Testing WFET...");
++    sev();
++    wfe();
++    start = read_sysreg(cntvct_el0);
++    timeout = start + TIMEOUT;
++    wfet(timeout);
++    if (!check_elapsed(start, TIMEOUT, "WFET", true)) {
++        return 1;
++    }
++
++    ml_printf("ALL WFX TESTS PASSED\n");
++    return 0;
++}
 diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
-index f7a7d2b800f..c7f44803c73 100644
+index 543d638e819..6a1e867fba0 100644
 --- a/tests/tcg/aarch64/Makefile.softmmu-target
 +++ b/tests/tcg/aarch64/Makefile.softmmu-target
-@@ -4,6 +4,7 @@
+@@ -108,6 +108,14 @@ endif
  
- AARCH64_SRC=$(SRC_PATH)/tests/tcg/aarch64
- AARCH64_SYSTEM_SRC=$(AARCH64_SRC)/system
-+AARCH64_SYSTEM_LIB=$(AARCH64_SRC)/system/lib
+ gicv3.o: gicv3.c gicv3.h
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
++
++wfx: CFLAGS += -march=armv8.7-a
++wfx: LDFLAGS += gicv3.o
++wfx: gicv3.o
++
++QEMU_GICV3_MACHINE=-M virt,gic-version=3 -cpu max -display none
++run-wfx: QEMU_OPTS=$(QEMU_GICV3_MACHINE) $(QEMU_BASE_ARGS) -kernel
++
+ ifneq ($(CROSS_CC_HAS_ARMV8_MTE),)
+ QEMU_MTE_ENABLED_MACHINE=-M virt,mte=on -cpu max -display none
+ QEMU_OPTS_WITH_MTE_ON = $(QEMU_MTE_ENABLED_MACHINE) $(QEMU_BASE_ARGS) -kernel
+diff --git a/tests/tcg/aarch64/system/boot.S b/tests/tcg/aarch64/system/boot.S
+index bee8d9372e7..ba9000a749d 100644
+--- a/tests/tcg/aarch64/system/boot.S
++++ b/tests/tcg/aarch64/system/boot.S
+@@ -35,7 +35,7 @@ vector_table:
  
- VPATH+=$(AARCH64_SYSTEM_SRC)
+ 	/* Current EL with SPx.	 */
+ 	ventry	curr_spx_sync		/* Synchronous	*/
+-	ventry	curr_spx_irq		/* IRQ/vIRQ  */
++	ventry	curr_spx_irq		/* Basic handler for IRQ/vIRQ */
+ 	ventry	curr_spx_fiq		/* FIQ/vFIQ  */
+ 	ventry	curr_spx_serror		/* SError/VSError  */
  
-@@ -24,7 +25,7 @@ LINK_SCRIPT=$(AARCH64_SYSTEM_SRC)/kernel.ld
- LDFLAGS=-Wl,-T$(LINK_SCRIPT)
- TESTS+=$(AARCH64_TESTS) $(MULTIARCH_TESTS)
- EXTRA_RUNS+=$(MULTIARCH_RUNS)
--CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
-+CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC) -I $(AARCH64_SYSTEM_LIB)
- LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+@@ -54,13 +54,12 @@ vector_table:
+ 	.text
+ 	.align 4
  
- config-cc.mak: Makefile
+-	/* Common vector handling for now */
++	/* Apart from curr_spx_irq we error out with an unexpected exception */
+ curr_sp0_sync:
+ curr_sp0_irq:
+ curr_sp0_fiq:
+ curr_sp0_serror:
+ curr_spx_sync:
+-curr_spx_irq:
+ curr_spx_fiq:
+ curr_spx_serror:
+ lower_a64_sync:
+@@ -275,6 +274,17 @@ _exit:
+ 	semihosting_call
+ 	/* never returns */
+ 
++	/*
++	 * IRQ handler
++	 */
++	.global curr_spx_irq
++curr_spx_irq:
++	/* Minimal IRQ handler: just mask the timer and return */
++	mrs	x0, cntv_ctl_el0
++	orr	x0, x0, #2		/* IMASK=1 */
++	msr	cntv_ctl_el0, x0
++	eret
++
+ 	/*
+ 	 * Helper Functions
+ 	*/
 -- 
 2.47.3
 
