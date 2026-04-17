@@ -4,130 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60DFEF43689
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44FEF43688
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDg5T-0003yB-FZ; Fri, 17 Apr 2026 06:06:13 -0400
+	id 1wDg6o-0004UA-V4; Fri, 17 Apr 2026 06:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wDg5M-0003xU-T8
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:06:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wDg5K-0007UF-Ha
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:06:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776420359;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VuoU/4vfRh12JnF+ATnmf/X/TJTszT2MWxXRBGQ1Lk4=;
- b=M+lnC1C3jOAt90Hv7HP+ArRJkGU0eXC0lXmTtsfBvTcNJaF13FIN050U1D7YEzUUFPn+vy
- gGmTk4zgA4YKMpXqJMf+15Q7gjZ8gznydxYBIQAjnx733pDVzpTQ0FHrSlvK9qhCMZtxRk
- LZZPgX3Y+00eReMAko2J5LjQGFru0Tg=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-ApysnqS2O6CNoRDriMQ69Q-1; Fri, 17 Apr 2026 06:05:57 -0400
-X-MC-Unique: ApysnqS2O6CNoRDriMQ69Q-1
-X-Mimecast-MFC-AGG-ID: ApysnqS2O6CNoRDriMQ69Q_1776420357
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3614272b00cso366591a91.3
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 03:05:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776420356; cv=none;
- d=google.com; s=arc-20240605;
- b=ghI0Bo5+mG5htsduwm+tg2je/R50sZoz31l+376zRFnlnZFUruh2CCO9sW8iJxlwav
- Jn3wii67siDH/irg2brFk9cYVp7fPFTRTFmv5RgyddPJiDB1vtpWvKTCMEATOGPwDRL5
- 2Qp9FppT4kKYMrxhXJow8Li9etA87MfMrOKs2TWRcesGXPFolW+0F7PN4jkr9o4b5odi
- aGEUIze2EwcU7tTUIk2TJEozVKw7+QJUwGfqd+LSO+WaJI1iluC+M219O3UUbcFOSlfN
- OS9WcCUJqXEDetgCXj5FNKfEmzQ8Lqhwzuia42mBZ1g0dg1w1bvF9DsLrZbklTxcG3Js
- 5jlw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=VuoU/4vfRh12JnF+ATnmf/X/TJTszT2MWxXRBGQ1Lk4=;
- fh=h5FViOrhn2IDkmAFZAH5/l4sraoR/OFvdqiWrW+PL0g=;
- b=Pj5lQ1j5JKVBcH42femetGfcQZ6rinF6rqBGcnbAcIqEvpFRtWdK6jK67C9WNx5hhu
- dJ6QulLqI+mPw2EZlU2//IxgEBlqsP5g4XBZgCYYdU3OIVtTo0zQeGavCvu9pTeuVCu2
- B1bh1u191ZpJdJgBnUhuN+qIxMx+m2n3jfjYmBvTQB6P56fcKyjIDH+OLL+HXjBYYUYP
- JfPntavxe/D/AyWyGciRxiZ7h5bO76mSCV/BOmZJSvH1uh6A6LHlvEqnBScve14A7ZYZ
- qhS9tAdkKQwPMDnjLxM2Dc2UVTZGi1SvVzdrEV6iINMcCWxXQxIkh3IdbYkEgKy80qXo
- r4nw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDg6l-0004Tf-Ed
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:07:31 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDg6i-0007i3-Pq
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:07:30 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-43eb012ac4fso308296f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 03:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776420356; x=1777025156; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VuoU/4vfRh12JnF+ATnmf/X/TJTszT2MWxXRBGQ1Lk4=;
- b=LtDiuAuqGpNnzfyPDuyESc2kJiWd+nAI99/WdzYkxkULZ0icURljsj2pLnCkn5YmXo
- AONf2SFpbAzmfwxVWDaZ3uwKyoM+jbSG5nbX712P7G+D1BVWWM4ANKjUg1HSS+X5CsYO
- O7Xw7bN7gMPabjnLoPq9ZQNMUkurL0YR9pWky/Y19pyXc3gazmfsXc1rWdls5BoiVfCl
- y3sW7bE5Vr9DtJVwtxTrEL3uD7Mv9JNDdyXCC5JuW/PQcaxAfzD9aY4OUfoBFO2SrclZ
- /Mh3o1UxU7F4GKL/kF32mnqIkGlOFXmEve+UB5usKgSe6Ol7rAZ7BAlp18qln4nv8yH7
- Vg9w==
+ d=linaro.org; s=google; t=1776420447; x=1777025247; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=w00wy+8DffmkCYua+mrtVHSKyagTUvEZRc8Z1p2G8JE=;
+ b=LA3sGAnaJzwN+qXD5aTgPNI4vhOINmEBCVcNXqbBkyr4S5Lr1Xbo32HvXFCrk10NVp
+ FTA2BVCrdPuKEhI/xuv3fKzM7pYeMeJBuyAQbSrwUnMyNWOz4Gv+CQ7UazbPvjh+/0I1
+ +q/9Q8rcTXEolszSN+0NlvGNHQmaYamjVnyOmws0kExb/D6aDbkeCS0OvXFWSGJYCA6P
+ 9mxgwTHL6Q2AeZHCrZjwmE535KKYDx7Zv7rbkNb/3wVk0k/Z9q6kPjrN2CMWcUBZWBT5
+ P6rmDYHyam+A6sw6VAYUX8/DUCWps0R+KH/yxruywp5jyCMW/c/vrYMwgqdApvoweeXq
+ efNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776420356; x=1777025156;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VuoU/4vfRh12JnF+ATnmf/X/TJTszT2MWxXRBGQ1Lk4=;
- b=d4m4qPsGYPZpg2St4EIC1JeU7cofwUvtMNZNfOe3Mki2KiJnZuQ4CsSsOVIc7SDYX9
- XWRJ7ua7sdZxdQBb5nJwVpSI1Y+9dmYokBNxVUjUi/cTUPRaHzul1WCQolo7fbpksqy7
- 89jae3LRc5orYWSid/CIk6y/BhmDpzeV23TDy1to+NbJHsUuWLm8HPbfpiCStnQyPyEk
- Wswlsr2cpnslnfY9lRt4r517i7OBG7LaYW3SSmN8XCy2+qhONVDRWkrzSinVYnokUc2x
- cmxVUKA4nDjV/lDJyjZsJhC8msLF1TDmzM46D7OpMXDINHgDX31TbWr7TP7+DvHkywW0
- AiQQ==
-X-Gm-Message-State: AOJu0YwEbncdCrHDCX2JHgsqvHqvy9GZpld1qP3nKm7kugwV1eZ11XjV
- GFaA8Bd2Qi3USsoQ2ahCJxSKHtjo9z2BMft0ZyIZUWSGjEUb7ZLQRW0BPVCAo3zQYhnQoJTyMJC
- 5VTXknidR8tKd5mimIvzgLSPbKGYoMoMHVk8WxlfVrFsFNxyTUbaVL5zoeRdnUTvt2Bn+fjisel
- DGXa7uQLE1sKJ7pgjgJkN38X+OllI/TlI=
-X-Gm-Gg: AeBDieuaWwWsodCCluRqP8hKikVomX13LPnYC32VkXsH8IU3LQOTz/gfjUQqqxVV6Fy
- LkQJA1r0EW5Sadq2ykmanGsiIrotKMe70PkHxeyqw+vbMC7nTiYf0BIno53iQNWTuSTFnifRr5a
- fRwBHu7B5/uBGd1SU4Y+SfcBpK9jXNk8ST9O3DKfY4GBEE33qV9dmAG6kkt17ZSvB/+5XErJCIf
- M76wW/cXHn6SydjnG5eTgjMZFTv9o7hCuHSvQwo7eZqKTZESm4OnwoR1hWWml8+xwfDNl1OB+Xg
- JBNMLSuBod2JKtXm+/zQ20cQqsau7xJNX9U=
-X-Received: by 2002:a17:90b:3c8d:b0:35d:93ff:284f with SMTP id
- 98e67ed59e1d1-36140462afcmr2367699a91.15.1776420356535; 
- Fri, 17 Apr 2026 03:05:56 -0700 (PDT)
-X-Received: by 2002:a17:90b:3c8d:b0:35d:93ff:284f with SMTP id
- 98e67ed59e1d1-36140462afcmr2367649a91.15.1776420356088; Fri, 17 Apr 2026
- 03:05:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776420447; x=1777025247;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w00wy+8DffmkCYua+mrtVHSKyagTUvEZRc8Z1p2G8JE=;
+ b=qcBCdAXH+zlxXGaa+LR22yoMqwDnEVe3INvIaBZnm9Zw+sNsMFhr+VRyTxFJf+fPK4
+ Jmd5MdDYGjjuYg7hq16aPN/pEQcjVDB8Wl8QIAE+Yg2/JMEoNScuxrCCb9lgHed4jcfK
+ jQdk9ltF9EWyhTTRr6WuLuwKrV7rXiPzaADT3+dQAWJY7BYJzBF48W3GmiEz92JLL1y0
+ Zc4BZSsPjFTljpPVkM3LaShR2cXtI9lvkSG2taPO0LbUSuD8U1C9HQT8UMzUHaXzhsGQ
+ 5hpp4tc4KRpT/9fwkavxqu8CTn5m/rY3gvJTyZ8pZD9rVxcVQKavY6YFYMoj6HdHFNDr
+ PP7A==
+X-Gm-Message-State: AOJu0Yxkp+ApEzDqkPHxw5z+MHO+Ua1GDDQagr3t4gZknMRJY8ipMQxI
+ vLwtqOhvGN77fRuWm/7EVh9sZ7bJw84WcY2A8Aww107et+7rJHzJKW4LLZ6leeSsrUA7yxj+hiO
+ CIr99O9w=
+X-Gm-Gg: AeBDievrrg7FhAneoDawzskKt95rFYikPB9V5ahBQF9rFYF/72OLDbWM8Lz1vlo27FN
+ oZ/usbd8JQ3IJcnyHPnkMQ73za0Dod6SJnnZPjM0pYfh32r9AEydOe3u41ROl2kDyiKFHVtcLTh
+ GpzX3tWuwe6F8IZ9nFCSFkubA8Y2u/NQyzLE+KnCdxCbI39ce7l0UAmZxXWWXTGwBmT7FspGJ8t
+ DCP2NZs2EgDiHf9TfgGroBr5GUNEgtVy/J9gOhIWM1imGCPHxp5JwkRNWUq0BMTHnCviyUV+2C0
+ p2i5mXoWDIg2jWlP7uE8nFDkF+kvOdr8BHbVIkP39ybx+xLVbiy14oQaV9/dq16Ky7BmIE4vox4
+ QmeMF54SEPDcXtu4GlgnTWFjR+EXebwm30bSZDJnBPlTYoU218T2NcXiKbN1znIeDz2w/fqpSC2
+ RgBkwkFLbAjx04jsAdWCSBMzu0dE6Blvgh+GYDrfGTBEdrw7Z4PlJZtZDhwa9f5pNqunW38+uPZ
+ FQA
+X-Received: by 2002:a05:6000:2888:b0:43d:67d1:2022 with SMTP id
+ ffacd0b85a97d-43fe3dcb8cemr3222348f8f.19.1776420446976; 
+ Fri, 17 Apr 2026 03:07:26 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4e59f97sm3455336f8f.37.2026.04.17.03.07.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Apr 2026 03:07:26 -0700 (PDT)
+Message-ID: <5a737cad-3b66-462c-975b-24937fd92075@linaro.org>
+Date: Fri, 17 Apr 2026 12:07:25 +0200
 MIME-Version: 1.0
-References: <20260414082915.112122-1-armenon@redhat.com>
- <20260414082915.112122-2-armenon@redhat.com>
-In-Reply-To: <20260414082915.112122-2-armenon@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 17 Apr 2026 14:05:43 +0400
-X-Gm-Features: AQROBzBvpWksEd1HXrnamFSSQnH7ih6_-sUTbeP1cBLqkKoLKeIBgFLmGd2LcIw
-Message-ID: <CAMxuvaw2=uupgJFynh_-2Nkj2VV+V6CqeOOB02A_p0LkOCFy9A@mail.gmail.com>
-Subject: Re: [PATCH v4 01/10] hw/tpm: Add TPM CRB chunking fields
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>, 
- Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Igor Mammedov <imammedo@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Stefan Berger <stefanb@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/7] target/riscv: Add big-endian CPU property
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Alistair Francis <alistair23@gmail.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
+ <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "thuth@redhat.com" <thuth@redhat.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260406154935.144674-1-djordje.todorovic@htecgroup.com>
+ <20260406154935.144674-3-djordje.todorovic@htecgroup.com>
+ <884193da-0078-44f0-804d-e5ccaf5f3398@linaro.org>
+ <CAKmqyKPZRQ6djtJU2w5y=5i6Bt3Nkr7yOe+K0vnj-m_XKvG=Kg@mail.gmail.com>
+ <55bf85d3-3b62-4dab-9b21-ec1ca193dd15@linaro.org>
+ <CAKmqyKN=pn997tWzN+-7rFT5ksN6hq7ae3nLW2yDczcCqCWhnw@mail.gmail.com>
+ <ed6e6e5c-3cb9-4cf1-a773-e3cbe77a4552@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ed6e6e5c-3cb9-4cf1-a773-e3cbe77a4552@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,91 +114,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 17/4/26 11:54, Djordje Todorovic wrote:
+> 
+> On 4/9/26 07:16, Alistair Francis wrote:
+>> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
+>>
+>>
+>> On Thu, Apr 9, 2026 at 3:04 PM Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>> On 9/4/26 06:00, Alistair Francis wrote:
+>>>> On Wed, Apr 8, 2026 at 12:17 AM Philippe Mathieu-Daudé
+>>>> <philmd@linaro.org> wrote:
+>>>>> On 6/4/26 17:49, Djordje Todorovic wrote:
+>>>>>> Add a "big-endian" boolean property to the RISC-V CPU configuration,
+>>>>>> defaulting to false (little-endian). This property allows machine
+>>>>>> models to configure individual HARTs for big-endian data operation.
+>>>>>>
+>>>>>> The RISC-V ISA supports big-endian data accesses via the mstatus
+>>>>>> SBE/MBE/UBE bits, while instructions remain always little-endian.
+>>>>>> This property provides the configuration interface; subsequent
+>>>>>> patches will connect it to the CPU state and translation logic.
+>>>>>>
+>>>>>> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+>>>>>> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+>>>>>> ---
+>>>>>>      target/riscv/cpu.c                | 1 +
+>>>>>>      target/riscv/cpu_cfg_fields.h.inc | 1 +
+>>>>>>      2 files changed, 2 insertions(+)
+>>>>>
+>>>>>> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+>>>>>> index 70ec650abf..51436daabf 100644
+>>>>>> --- a/target/riscv/cpu_cfg_fields.h.inc
+>>>>>> +++ b/target/riscv/cpu_cfg_fields.h.inc
+>>>>>> @@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
+>>>>>>      BOOL_FIELD(ext_xmipscmov)
+>>>>>>      BOOL_FIELD(ext_xmipslsp)
+>>>>>>
+>>>>>> +BOOL_FIELD(big_endian)
+>>>>> Since it is runtime it doesn't belong to RISCVCPUConfig.
+>>>> I think the idea is that a user can set the `big-endian` property
+>>>> (from the command line or machine) and then MBE, SBE and UBE are
+>>>> always 1 and big endian is always enabled. Basically to model
+>>>> big-endian only hardware
+>>>>
+>>>> So in that context it isn't runtime, but it's not clear from the
+>>>> commit description. Also if we are adding a property the property
+>>>> should be exposed last, as in once all of the functionality is
+>>>> supported. That way we don't have a property that doesn't do anything.
+>>>> We would also need documentation added.
+>>> Reading "3.1.6.3 Memory Privilege in mstatus Register" it is not
+>>> clear to me whether MBE and SBE are hard-wired, I'd have expected
+>> They don't have to be hard-wired. There is a note in section 3.1.6.5 that says:
+>>
+>> """
+>> An implementation supports only little-endian memory accesses if
+>> fields MBE, SBE, and UBE
+>> are all read-only 0. An implementation supports only big-endian memory
+>> accesses (aside from
+>> instruction fetches) if MBE is read-only 1 and SBE and UBE are each
+>> read-only 1 when S-mode
+>> and U-mode are supported.
+>> """
+>>
+>>> a HART to be able to reset itself in a different endianness, and
+>>> in that case the current riscv_cpu_reset_hold() would overwrite that.
+>> I suspect a lot of big-endian harts are just always big-endian.
+>> Swapping at runtime seems tricky, although something we can support.
+>>
+>> This should all be made clear in the commit message and some documentation
+>>
+>> Alistair
+> 
+> Thanks Philippe, Alistair.
+> 
+> To clarify: big_endian is not a runtime flag — it models big-endian-only
+> hardware as described in the privileged spec section 3.1.6.5, where
+> MBE/SBE/UBE
+> are hardwired to 1. It belongs in RISCVCPUConfig because it's a static,
+> per-CPU hardware property (same category as mmu or pmp), not something
+> the guest toggles at runtime.
+> 
+> The MBE/SBE/UBE bits are already effectively hardwired in the existing
+> codebase: none of the write_mstatus/write_mstatush/write_sstatus CSR paths
+> include them in their writable mask, so whatever value is set at reset
+> persists for the lifetime of the CPU.
 
-On Tue, Apr 14, 2026 at 12:30=E2=80=AFPM Arun Menon <armenon@redhat.com> wr=
-ote:
->
-> From: Arun Menon <armenon@redhat.com>
->
-> - Add new fields to the CRB Interface Identifier and the CRB
->   Control Start registers.
-> - CRB_CTRL_START now has 2 new settings, that can be toggled using the
->   nextChunk and crbRspRetry bits.
-> - CapCRBChunk bit (10) was Reserved1 previously. The field is reused in
->   this revision of the specification.
-> - Refer to section 6.4.2.2 of [1]
->
-> [1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specif=
-ic-Platform-TPM-Profile-for-TPM-2p0-v1p07_Pub.pdf
->
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/tpm/tpm_crb.c      | 3 +++
->  include/hw/acpi/tpm.h | 5 ++++-
->  2 files changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-> index 8723536f93..0a1c7ecdc6 100644
-> --- a/hw/tpm/tpm_crb.c
-> +++ b/hw/tpm/tpm_crb.c
-> @@ -59,6 +59,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
->  #define CRB_INTF_CAP_FIFO_NOT_SUPPORTED 0b0
->  #define CRB_INTF_CAP_CRB_SUPPORTED 0b1
->  #define CRB_INTF_IF_SELECTOR_CRB 0b1
-> +#define CRB_INTF_CAP_CRB_CHUNK 0b1
->
->  #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
->
-> @@ -262,6 +263,8 @@ static void tpm_crb_reset(void *dev)
->                       CapCRB, CRB_INTF_CAP_CRB_SUPPORTED);
->      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
->                       InterfaceSelector, CRB_INTF_IF_SELECTOR_CRB);
-> +    ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
-> +                     CapCRBChunk, CRB_INTF_CAP_CRB_CHUNK);
+What do you refer to by "existing codebase"?
 
-We should not expose that new capability to guests without an explicit
-"cap-chunk=3Don".
+Section 3.1.6.5 note:
 
-It should reject if any chunk request is made when cap-chunk=3Doff in
-later patches.
+   [...] endianness control has been defined so as to permit, for
+   instance, an OS of one endianness to execute user-mode programs
+   of the opposite endianness. Consideration has been given also to
+   the possibility of non-standard usages whereby software flips the
+   endianness of memory accesses as needed.
 
-I don't think x-migrate-buffers is necessary. If cap-chunk=3Don, it can
-be migrated with 11.1, with older machine version just add a migration
-blocker.
-
-
-
->      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
->                       RID, 0b0000);
->      ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID2,
-> diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
-> index d2bf6637c5..6eece21397 100644
-> --- a/include/hw/acpi/tpm.h
-> +++ b/include/hw/acpi/tpm.h
-> @@ -149,7 +149,7 @@ REG32(CRB_INTF_ID, 0x30)
->    FIELD(CRB_INTF_ID, InterfaceVersion, 4, 4)
->    FIELD(CRB_INTF_ID, CapLocality, 8, 1)
->    FIELD(CRB_INTF_ID, CapCRBIdleBypass, 9, 1)
-> -  FIELD(CRB_INTF_ID, Reserved1, 10, 1)
-> +  FIELD(CRB_INTF_ID, CapCRBChunk, 10, 1)
->    FIELD(CRB_INTF_ID, CapDataXferSizeSupport, 11, 2)
->    FIELD(CRB_INTF_ID, CapFIFO, 13, 1)
->    FIELD(CRB_INTF_ID, CapCRB, 14, 1)
-> @@ -168,6 +168,9 @@ REG32(CRB_CTRL_STS, 0x44)
->    FIELD(CRB_CTRL_STS, tpmIdle, 1, 1)
->  REG32(CRB_CTRL_CANCEL, 0x48)
->  REG32(CRB_CTRL_START, 0x4C)
-> +  FIELD(CRB_CTRL_START, Start, 0, 1)
-> +  FIELD(CRB_CTRL_START, crbRspRetry, 1, 1)
-> +  FIELD(CRB_CTRL_START, nextChunk, 2, 1)
->  REG32(CRB_INT_ENABLED, 0x50)
->  REG32(CRB_INT_STS, 0x54)
->  REG32(CRB_CTRL_CMD_SIZE, 0x58)
-> --
-> 2.53.0
->
-
+Which I interprete as "runtime swap". I'm not seeing explicit mention of
+hard-wired bits.
 
