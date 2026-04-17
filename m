@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B35EF4368A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBD3F4368F
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:57:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgsN-0000Le-G3; Fri, 17 Apr 2026 06:56:43 -0400
+	id 1wDgsG-0000KV-Be; Fri, 17 Apr 2026 06:56:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgsM-0000LE-NC
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:42 -0400
+ id 1wDgsE-0000KI-MD
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:34 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsK-0001Vc-OC
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:42 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsC-0001NJ-Ud
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:34 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9D32D20B7135;
- Fri, 17 Apr 2026 03:56:36 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9D32D20B7135
+ by linux.microsoft.com (Postfix) with ESMTPSA id 08B5520B712B;
+ Fri, 17 Apr 2026 03:56:28 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 08B5520B712B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423399;
- bh=gdJ6bc0jDPbL1vpVuF0aTcfrjU8S2va52X+iE755j4U=;
+ s=default; t=1776423391;
+ bh=YCyjkeVZjehmvMqQkFEvROL42xs/v9qbwCcFiaYqzZg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RIZwG9bhgESNWloKmcgz7NfweWpVExJR0h8Tjc9jy1Xo+J+wu3KEP7mmiFJbSGQQc
- nxGKDWZfGCBup1rLIAC4XCBdMcGAfyXQwA4Fc3ssINOOwnOrCkBcUOnB1VJRwI2kwV
- qu9Pk5SWrToUFroAJiiK4JP2hw4VDssS8tASS31E=
+ b=WW6lXpiZ5ztwWAzYMi8+dtuwB9y949MCfQCX38vw3l+U4W4YJ2SGBTAp855NjeSbD
+ XhCStMIDj0zqzXoBfiMs84yW1P5ofQyvvAU/JLbI2EO67M1qIIu/YMZCRKc0AdKonQ
+ 06xwyRay3IWObgsVJpGwL1w7Wca9b0tTJ/5gtE0c=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 04/34] accel/accel-irq: add AccelRouteChange abstraction
-Date: Fri, 17 Apr 2026 12:55:48 +0200
-Message-Id: <20260417105618.3621-5-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 02/34] target/i386/mshv: use generic FPU/xcr0 state
+Date: Fri, 17 Apr 2026 12:55:46 +0200
+Message-Id: <20260417105618.3621-3-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,267 +76,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The accelerated irqchip routines use a record of changes to batch
-changes when programming routes.
-
-Currently this mechanism is coupled to the KVM accelerator, this change
-introduces an abstraction that replaces KVMRouteChange and keeps a
-pointer to an abstract AccelState instead of the concrete type,
-converting the state where necessary.
-
-This is done to further align the irqchip programming in the MSHV
-accelerator with the existing KVM code in QEMU. Subsequent commits will
-introduce AccelRouteChange to the MSHV accelerator code.
+Instead of using an mshv-specific FPU state representation we switch to
+the generic i386 representation of the registers.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c           |  4 ++--
- accel/kvm/kvm-all.c         |  6 +++---
- accel/stubs/kvm-stub.c      |  2 +-
- hw/misc/ivshmem-pci.c       |  2 +-
- hw/vfio/pci.c               |  2 +-
- hw/virtio/virtio-pci.c      |  3 +--
- include/accel/accel-route.h | 17 +++++++++++++++++
- include/system/accel-irq.h  |  5 +++--
- include/system/kvm.h        | 21 ++++++++++-----------
- include/system/mshv.h       |  1 +
- target/i386/kvm/kvm.c       |  2 +-
- 11 files changed, 41 insertions(+), 24 deletions(-)
- create mode 100644 include/accel/accel-route.h
+ include/system/mshv_int.h   | 15 +-------
+ target/i386/mshv/mshv-cpu.c | 76 ++++++++++++++++++++++---------------
+ 2 files changed, 47 insertions(+), 44 deletions(-)
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 7f864e35c4..0aa04c033d 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -16,7 +16,7 @@
- #include "system/mshv.h"
- #include "system/accel-irq.h"
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index a142dd241a..e3d1867a77 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -58,19 +58,6 @@ typedef struct MshvMsiControl {
+ #define mshv_vcpufd(cpu) (cpu->accel->cpufd)
  
--int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-@@ -42,7 +42,7 @@ int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
-     return -ENOSYS;
+ /* cpu */
+-typedef struct MshvFPU {
+-    uint8_t fpr[8][16];
+-    uint16_t fcw;
+-    uint16_t fsw;
+-    uint8_t ftwx;
+-    uint8_t pad1;
+-    uint16_t last_opcode;
+-    uint64_t last_ip;
+-    uint64_t last_dp;
+-    uint8_t xmm[16][16];
+-    uint32_t mxcsr;
+-    uint32_t pad2;
+-} MshvFPU;
+ 
+ typedef enum MshvVmExit {
+     MshvVmExitIgnore   = 0,
+@@ -81,7 +68,7 @@ typedef enum MshvVmExit {
+ void mshv_init_mmio_emu(void);
+ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
+ void mshv_remove_vcpu(int vm_fd, int cpu_fd);
+-int mshv_configure_vcpu(const CPUState *cpu, const MshvFPU *fpu, uint64_t xcr0);
++int mshv_configure_vcpu(const CPUState *cpu);
+ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
+ int mshv_arch_load_regs(CPUState *cpu);
+ int mshv_arch_store_regs(CPUState *cpu);
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 9456e75277..78b218e596 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -108,6 +108,9 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
+ };
+ 
+ static int set_special_regs(const CPUState *cpu);
++static int get_generic_regs(CPUState *cpu,
++                            struct hv_register_assoc *assocs,
++                            size_t n_regs);
+ 
+ static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
+                          uint64_t flags)
+@@ -717,48 +720,65 @@ static int set_special_regs(const CPUState *cpu)
+     return 0;
  }
  
--void accel_irqchip_commit_route_changes(KVMRouteChange *c)
-+void accel_irqchip_commit_route_changes(AccelRouteChange *c)
+-static int set_fpu(const CPUState *cpu, const struct MshvFPU *regs)
++static int set_fpu(const CPUState *cpu)
  {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 92af42503b..4e4234beff 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2359,11 +2359,11 @@ int kvm_irqchip_send_msi(KVMState *s, MSIMessage msg)
-     return kvm_vm_ioctl(s, KVM_SIGNAL_MSI, &msi);
- }
- 
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     struct kvm_irq_routing_entry kroute = {};
-     int virq;
--    KVMState *s = c->s;
-+    KVMState *s = KVM_STATE(c->accel);
-     MSIMessage msg = {0, 0};
- 
-     if (pci_available && dev) {
-@@ -2506,7 +2506,7 @@ int kvm_irqchip_send_msi(KVMState *s, MSIMessage msg)
-     abort();
- }
- 
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     return -ENOSYS;
- }
-diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-index c4617caac6..32b4b07403 100644
---- a/accel/stubs/kvm-stub.c
-+++ b/accel/stubs/kvm-stub.c
-@@ -44,7 +44,7 @@ int kvm_on_sigbus(int code, void *addr)
-     return 1;
- }
- 
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev)
- {
-     return -ENOSYS;
- }
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index c987eebb98..aa8f271755 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -424,7 +424,7 @@ static void ivshmem_add_kvm_msi_virq(IVShmemState *s, int vector,
-                                      Error **errp)
- {
-     PCIDevice *pdev = PCI_DEVICE(s);
--    KVMRouteChange c;
-+    AccelRouteChange c;
+     struct hv_register_assoc assocs[ARRAY_SIZE(FPU_REGISTER_NAMES)];
+     union hv_register_value *value;
+-    size_t fp_i;
+     union hv_x64_fp_control_status_register *ctrl_status;
+     union hv_x64_xmm_control_status_register *xmm_ctrl_status;
      int ret;
+     size_t n_regs = ARRAY_SIZE(FPU_REGISTER_NAMES);
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    size_t i, fp_i;
++    bool valid;
  
-     IVSHMEM_DPRINTF("ivshmem_add_kvm_msi_virq vector:%d\n", vector);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 1945751ffd..79c503c8ae 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -51,7 +51,7 @@
- #include "vfio-helpers.h"
- 
- /* Protected by BQL */
--static KVMRouteChange vfio_route_change;
-+static AccelRouteChange vfio_route_change;
- 
- static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
- static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index bcab2d18b8..5010572784 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -869,7 +869,7 @@ static int kvm_virtio_pci_vq_vector_use(VirtIOPCIProxy *proxy,
-     int ret;
- 
-     if (irqfd->users == 0) {
--        KVMRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
-+        AccelRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
-         ret = accel_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
-         if (ret < 0) {
-             return ret;
-@@ -2695,4 +2695,3 @@ static void virtio_pci_register_types(void)
- }
- 
- type_init(virtio_pci_register_types)
--
-diff --git a/include/accel/accel-route.h b/include/accel/accel-route.h
-new file mode 100644
-index 0000000000..07fac27e2a
---- /dev/null
-+++ b/include/accel/accel-route.h
-@@ -0,0 +1,17 @@
-+/*
-+ * Accelerator MSI route change tracking
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ACCEL_ROUTE_H
-+#define ACCEL_ROUTE_H
-+
-+#include "qemu/accel.h"
-+
-+typedef struct AccelRouteChange {
-+    AccelState *accel;
-+    int changes;
-+} AccelRouteChange;
-+
-+#endif /* ACCEL_ROUTE_H */
-diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
-index a2caa06f54..a148920711 100644
---- a/include/system/accel-irq.h
-+++ b/include/system/accel-irq.h
-@@ -25,9 +25,10 @@ static inline bool accel_irqchip_is_split(void)
-     return mshv_msi_via_irqfd_enabled() || kvm_irqchip_is_split();
- }
- 
--int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev);
-+int accel_irqchip_add_msi_route(AccelRouteChange *c, int vector,
-+                                PCIDevice *dev);
- int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev);
--void accel_irqchip_commit_route_changes(KVMRouteChange *c);
-+void accel_irqchip_commit_route_changes(AccelRouteChange *c);
- void accel_irqchip_commit_routes(void);
- void accel_irqchip_release_virq(int virq);
- int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 5fa33eddda..ccf90b8341 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -18,6 +18,7 @@
- 
- #include "exec/memattrs.h"
- #include "qemu/accel.h"
-+#include "accel/accel-route.h"
- #include "qom/object.h"
- 
- #ifdef COMPILING_PER_TARGET
-@@ -183,11 +184,6 @@ extern KVMState *kvm_state;
- typedef struct Notifier Notifier;
- typedef struct NotifierWithReturn NotifierWithReturn;
- 
--typedef struct KVMRouteChange {
--     KVMState *s;
--     int changes;
--} KVMRouteChange;
--
- /* external API */
- 
- unsigned int kvm_get_max_memslots(void);
-@@ -466,7 +462,7 @@ void kvm_init_cpu_signals(CPUState *cpu);
- 
- /**
-  * kvm_irqchip_add_msi_route - Add MSI route for specific vector
-- * @c:      KVMRouteChange instance.
-+ * @c:      AccelRouteChange instance.
-  * @vector: which vector to add. This can be either MSI/MSIX
-  *          vector. The function will automatically detect whether
-  *          MSI/MSIX is enabled, and fetch corresponding MSI
-@@ -475,20 +471,23 @@ void kvm_init_cpu_signals(CPUState *cpu);
-  *          as @NULL, an empty MSI message will be inited.
-  * @return: virq (>=0) when success, errno (<0) when failed.
-  */
--int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev);
-+int kvm_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int kvm_irqchip_update_msi_route(KVMState *s, int virq, MSIMessage msg,
-                                  PCIDevice *dev);
- void kvm_irqchip_commit_routes(KVMState *s);
- 
--static inline KVMRouteChange kvm_irqchip_begin_route_changes(KVMState *s)
-+static inline AccelRouteChange kvm_irqchip_begin_route_changes(KVMState *s)
- {
--    return (KVMRouteChange) { .s = s, .changes = 0 };
-+    return (AccelRouteChange) {
-+        .accel = ACCEL(s),
-+        .changes = 0,
-+    };
- }
- 
--static inline void kvm_irqchip_commit_route_changes(KVMRouteChange *c)
-+static inline void kvm_irqchip_commit_route_changes(AccelRouteChange *c)
- {
-     if (c->changes) {
--        kvm_irqchip_commit_routes(c->s);
-+        kvm_irqchip_commit_routes(KVM_STATE(c->accel));
-         c->changes = 0;
+     /* first 16 registers are xmm0-xmm15 */
+-    for (size_t i = 0; i < 16; i++) {
++    for (i = 0; i < 16; i++) {
+         assocs[i].name = FPU_REGISTER_NAMES[i];
+         value = &assocs[i].value;
+-        memcpy(&value->reg128, &regs->xmm[i], 16);
++        value->reg128.low_part  = env->xmm_regs[i].ZMM_Q(0);
++        value->reg128.high_part = env->xmm_regs[i].ZMM_Q(1);
      }
+ 
+     /* next 8 registers are fp_mmx0-fp_mmx7 */
+-    for (size_t i = 16; i < 24; i++) {
+-        assocs[i].name = FPU_REGISTER_NAMES[i];
++    for (i = 16; i < 24; i++) {
+         fp_i = (i - 16);
++        assocs[i].name = FPU_REGISTER_NAMES[i];
+         value = &assocs[i].value;
+-        memcpy(&value->reg128, &regs->fpr[fp_i], 16);
++        value->fp.mantissa        = env->fpregs[fp_i].d.low;
++        value->fp.biased_exponent = env->fpregs[fp_i].d.high & 0x7FFF;
++        value->fp.sign            = (env->fpregs[fp_i].d.high >> 15) & 0x1;
++        value->fp.reserved        = 0;
+     }
+ 
+     /* last two registers are fp_control_status and xmm_control_status */
+     assocs[24].name = FPU_REGISTER_NAMES[24];
+     value = &assocs[24].value;
+     ctrl_status = &value->fp_control_status;
+-    ctrl_status->fp_control = regs->fcw;
+-    ctrl_status->fp_status = regs->fsw;
+-    ctrl_status->fp_tag = regs->ftwx;
++
++    ctrl_status->fp_control = env->fpuc;
++    /* bits 11,12,13 are the top of stack pointer */
++    ctrl_status->fp_status = (env->fpus & ~0x3800) | ((env->fpstt & 0x7) << 11);
++
++    ctrl_status->fp_tag = 0;
++    for (i = 0; i < 8; i++) {
++        valid = (env->fptags[i] == 0);
++        if (valid) {
++            ctrl_status->fp_tag |= (1u << i);
++        }
++    }
++
+     ctrl_status->reserved = 0;
+-    ctrl_status->last_fp_op = regs->last_opcode;
+-    ctrl_status->last_fp_rip = regs->last_ip;
++    ctrl_status->last_fp_op = env->fpop;
++    ctrl_status->last_fp_rip = env->fpip;
+ 
+     assocs[25].name = FPU_REGISTER_NAMES[25];
+     value = &assocs[25].value;
+     xmm_ctrl_status = &value->xmm_control_status;
+-    xmm_ctrl_status->xmm_status_control = regs->mxcsr;
+-    xmm_ctrl_status->xmm_status_control_mask = 0;
+-    xmm_ctrl_status->last_fp_rdp = regs->last_dp;
++    xmm_ctrl_status->xmm_status_control = env->mxcsr;
++    xmm_ctrl_status->xmm_status_control_mask = 0x0000ffff;
++    xmm_ctrl_status->last_fp_rdp = env->fpdp;
+ 
+     ret = mshv_set_generic_regs(cpu, assocs, n_regs);
+     if (ret < 0) {
+@@ -769,12 +789,15 @@ static int set_fpu(const CPUState *cpu, const struct MshvFPU *regs)
+     return 0;
  }
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 75286baf16..1e96b3a606 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -21,6 +21,7 @@
- #include "qapi/qapi-types-common.h"
- #include "system/memory.h"
- #include "accel/accel-ops.h"
-+#include "accel/accel-route.h"
  
- #ifdef COMPILING_PER_TARGET
- #ifdef CONFIG_MSHV
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9e352882c8..478a5573cd 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6678,7 +6678,7 @@ void kvm_arch_init_irq_routing(KVMState *s)
-     kvm_gsi_routing_allowed = true;
+-static int set_xc_reg(const CPUState *cpu, uint64_t xcr0)
++static int set_xc_reg(const CPUState *cpu)
+ {
+     int ret;
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++
+     struct hv_register_assoc assoc = {
+         .name = HV_X64_REGISTER_XFEM,
+-        .value.reg64 = xcr0,
++        .value.reg64 = env->xcr0,
+     };
  
-     if (kvm_irqchip_is_split()) {
--        KVMRouteChange c = kvm_irqchip_begin_route_changes(s);
-+        AccelRouteChange c = kvm_irqchip_begin_route_changes(s);
-         int i;
+     ret = mshv_set_generic_regs(cpu, &assoc, 1);
+@@ -785,8 +808,7 @@ static int set_xc_reg(const CPUState *cpu, uint64_t xcr0)
+     return 0;
+ }
  
-         /* If the ioapic is in QEMU and the lapics are in KVM, reserve
+-static int set_cpu_state(const CPUState *cpu, const MshvFPU *fpu_regs,
+-                         uint64_t xcr0)
++static int set_cpu_state(const CPUState *cpu)
+ {
+     int ret;
+ 
+@@ -798,11 +820,11 @@ static int set_cpu_state(const CPUState *cpu, const MshvFPU *fpu_regs,
+     if (ret < 0) {
+         return ret;
+     }
+-    ret = set_fpu(cpu, fpu_regs);
++    ret = set_fpu(cpu);
+     if (ret < 0) {
+         return ret;
+     }
+-    ret = set_xc_reg(cpu, xcr0);
++    ret = set_xc_reg(cpu);
+     if (ret < 0) {
+         return ret;
+     }
+@@ -951,8 +973,7 @@ static int setup_msrs(const CPUState *cpu)
+  * CPUX86State *env = &x86cpu->env;
+  * X86CPUTopoInfo *topo_info = &env->topo_info;
+  */
+-int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
+-                        uint64_t xcr0)
++int mshv_configure_vcpu(const CPUState *cpu)
+ {
+     int ret;
+     int cpu_fd = mshv_vcpufd(cpu);
+@@ -969,7 +990,7 @@ int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
+         return -1;
+     }
+ 
+-    ret = set_cpu_state(cpu, fpu, xcr0);
++    ret = set_cpu_state(cpu);
+     if (ret < 0) {
+         error_report("failed to set cpu state");
+         return -1;
+@@ -986,14 +1007,9 @@ int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
+ 
+ static int put_regs(const CPUState *cpu)
+ {
+-    X86CPU *x86cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86cpu->env;
+-    MshvFPU fpu = {0};
+     int ret;
+ 
+-    memset(&fpu, 0, sizeof(fpu));
+-
+-    ret = mshv_configure_vcpu(cpu, &fpu, env->xcr0);
++    ret = mshv_configure_vcpu(cpu);
+     if (ret < 0) {
+         error_report("failed to configure vcpu");
+         return ret;
 -- 
 2.34.1
 
