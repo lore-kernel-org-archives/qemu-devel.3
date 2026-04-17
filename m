@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B63F43699
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 12:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE50CF43695
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 12:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDhyG-0005Uu-Vs; Fri, 17 Apr 2026 08:06:53 -0400
+	id 1wDhyQ-0005dM-V5; Fri, 17 Apr 2026 08:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1wDhy4-0005SU-Fu
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:06:42 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDhyK-0005ZP-3A
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:06:56 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1wDhy2-0006eV-MQ
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:06:40 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-68be75dc734so155827eaf.1
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 05:06:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDhyI-0006k5-9L
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 08:06:55 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48897fd88ebso6513815e9.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 05:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1776427597; x=1777032397; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=D7Rc6tnNGYnMJDZo//oFhE/boIZ5aw0YgE9oBeIZlIU=;
- b=TWVNkpxkRsuGqcH8Lk9l1/9T2z13e3eXhTWi8Xzzwh02L0nQGVc1kA7KYVZ9e/2IbG
- oo3bCovJotSsMr4bJD8BvAgLemnDJqwVIBifs5nNarmZEk5vqWUFiI/7UWUiSkjv66f3
- hmwfEgCG+q5q0LDZKE/sj1IpqNQt/8y8koHplW63YtfXbLhX1dwk6t2GQP01huxaiKhn
- 48Sx0FV+rYHID3Pf5uJMd+8xBKsdOnFnGb/fHqaTeeBl11/hUWnieSqf76I5QPhYmgTB
- A2zHqPU38H7fR/3/1cpmwEurdv9C+F26yfbkyb2Mcu5EpduCwzA6/9mdSkxqzoPIT2No
- jZZw==
+ d=linaro.org; s=google; t=1776427612; x=1777032412; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hCdyTlCSQ+qsdrb4C2omNNEWgL5VkAyB7DrklKSduxs=;
+ b=PGjTFkcp60suNTfkehUdL0HTnkjxXVyiexr6Gz/nk6f7OBFZ6QR9oPo65mgKuHb8UO
+ 6XZM6LtmgjYPOf4j4W1DgnVAFrFVs3WMI2xqixqimOwLIkheJLlb24p/SYCliUr8Cu8U
+ sm3VFMe9QYJAUQ9adA0quY7WwkCbhXyuIJ9MUI8WqKANmYY4gghvz1ouKy+LuiwIMXEi
+ acNTa2t9C8GwifSdolRYIY17Taqei0m4TINh+gvSn79i9BzlIAlkcXuhyIg4MtRvgnEN
+ GbxZGDeseMIdz346WEewC1eTc8NpI2jCW6C+5u3Cr1oIW6Mx++ZagTdwJpkRUsAg6J3+
+ e7mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776427597; x=1777032397;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D7Rc6tnNGYnMJDZo//oFhE/boIZ5aw0YgE9oBeIZlIU=;
- b=RbQLkuooVvalUz1mL1fdG66MJDYYmcAutHrJ8Rkul2Yhx8tHH7XNM/SWaJ9gVKoLbA
- nliuEWg7btlqjGLPcFykFAlea0Yf0xtsMEEz92p2WXR0U5Sgq3V+hIoHintoPDahygMC
- DnwHr6ZoLGYIJx27QQdys5+iKjcfai68IR8yI8NQ8wDs3IWcStOZlZrIa3DnfxowoI4v
- 7GBmLpxaC6qPkBnjY0Dsx+lIgjh62iYik4NRbWWBxtQ7mH1sTFbKEkWvah4ZJ04o31VB
- wGaA0i24rj6r2u2KNnWi4VR6AuC7PwEjuuET5SkNiYHSHvYmJjOf/Ae62kUVWK0r8012
- zaHQ==
-X-Gm-Message-State: AOJu0YzSNFpYbf87jekib+sxyQVXk3kH8KUubOa/PSD7JBp4USVkK5gn
- ayVN0R+/3xqxA9BeRuooM3VWaU2moU1BcLVsO02FsP8OfqN79i2F+zZHdbXfCSpUwiFpIigl0hu
- hiO+xJPk=
-X-Gm-Gg: AeBDievy6qqoGe2WOsi5KYWG9Gq9KSyzSF68qHkd6m4bI2iCrNm7DD6A/TBnle2VoD3
- zJmEdpZNZK3g9JCfF8+qKnXz1dFk0rfa9Lllg6MfgiaE16uL3o7Apl8gMK4lG59rkmE1I+vBYNp
- XjtDu2dwicA5fHWfzQxvZrVsFBBnumFIw3gYkxi8VNHgmuNilJ9wj75PxE8nq+CJeE04FqI09ub
- Cbv6BJgfVYhMcdo+iYQuYLENI9Pp9B7PNRoQMvF6720s9lpDlsHpD/HKdIRluIxb20dofz44Gjl
- qaPITHdQG94CKXea1Q/ijTJByfQF1Pkf1U+4yjMe3KTkmtXoMm8qHq35+FgoN6hcozea0r7GQFk
- Tsbhss27xvWSk9JcOXfsz+X/SrE30vaHz+ncmxU/FQlw3q64YLRd3UoGSmT4CBzgvZpvQ17+fBD
- E43PkqSDEcUUXY26F7ETrLUEQI+ZHBHwDvUTxUVi9m97BlHxNdExZp147G55FDhws++6fnfOPBZ
- jCp7g==
-X-Received: by 2002:a05:6820:3092:b0:692:9c90:8e9a with SMTP id
- 006d021491bc7-69462f2036dmr1185825eaf.45.1776427596686; 
- Fri, 17 Apr 2026 05:06:36 -0700 (PDT)
-Received: from ausc-rvsw-c-01-anton.tenstorrent.com ([38.104.49.66])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69464fe4084sm744062eaf.12.2026.04.17.05.06.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 05:06:35 -0700 (PDT)
-From: Anton Blanchard <antonb@tenstorrent.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- liujingqi@lanxincomputing.com, max.chou@sifive.com,
- Anton Blanchard <antonb@tenstorrent.com>
-Subject: [PATCH] target/riscv: rvv: Handle mask/source overlap of vector
- reduction instructions
-Date: Fri, 17 Apr 2026 12:06:26 +0000
-Message-Id: <20260417120626.77415-1-antonb@tenstorrent.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20251104; t=1776427612; x=1777032412;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hCdyTlCSQ+qsdrb4C2omNNEWgL5VkAyB7DrklKSduxs=;
+ b=fXuqHxVjY9rETRKm/Ws2FrrpJFz650Uwm+3B5R+kTuoYrqyVLzRkQDj1viYw3+G/Zn
+ TzNXiiO6HuVMcLN4lw8+zT6pkplw4emRD08vsQNPE/HaVRu7C2zp/+pjecV1rOOCs4Ks
+ Cjnk9j2O2lAsclxm0nDL7u5T8t4WRE3tYbl+JEzRGQJL0bI7UO3yeHdNRGmDQXhturnD
+ sfgnlT33oCnTuPFNquvR1xg+EkMlMRRqi7ho5nO8LV9zmYAHDJjn+/0SGMKrRNX9BUDt
+ viZX6Y7PXWH2p4g52b7jkcdMS09Emro20FSq8FgQYqxl/39X9vj61HGvzy/wiPx3Yshx
+ zwUQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8F0596pkFJxAmMrsM+MDAOrQwqnzTdZFQ4zi1ylS5uyO/abc7R9ISBS45KRNFPw4M+lIdc9FU07zo2@nongnu.org
+X-Gm-Message-State: AOJu0YzXafVz1JjbILDLcmT5qovryWhu1+JKf1NlTx1P2zSp2uMuf9T2
+ U9s4P/vief9R1JO/QltJb976KBXGZC3yWah6rjQkeVqQXlI01/zfqh0QKFCf85FAI20=
+X-Gm-Gg: AeBDievI6xZDnxYrbH8TB4Fe6pWeFL90QWufjXri6/ArwvOjRRbs/2Dqvo6GZWgQYWQ
+ 71FE/xrnFJZmdabnEtg5SUTdehAfA4sHxMhg4R1/BbMPT3c3NhO3lo/vyNuPDWzbVjfwTcsPc1I
+ ZwiUE+S8tF0UxOnT+CRoRngIDBFG5VCZB1vm1LCP70jLX65Yrpd5ShDrMSn8YPMRfWCJ/r9iedJ
+ Xh8BpCB2BAnNHguJntSH7RTJWfc/e0CsvkuJqHZZCQoKMv+50KPXFT0LYB06MC38la2YoHtc2fQ
+ H2Co9Xffj915bGtthYQ5LKgMNSD570f3ICg3olB+s2irLe0fCztpp/Y/CJEUEBmQaIDa0iFDBlG
+ mUesf1zXD8/ojRQ3+IECqTISXTXA6Piw2hUsyh2y+OwZLctAMAOgX7gCcglXqSQiY3Pe+oyBigs
+ 3y1drP7inE5SgSpV8vAVEE6+vLjWcbqEvY6ngCz6jCS7ITM1VH7rb4pV7HWIMz9BEWeUr7sVy9w
+ 4/n
+X-Received: by 2002:a05:600c:e40b:b0:487:1fbf:e0bb with SMTP id
+ 5b1f17b1804b1-488fb73d78amr29191125e9.6.1776427612389; 
+ Fri, 17 Apr 2026 05:06:52 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fb78cddcsm20918655e9.4.2026.04.17.05.06.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Apr 2026 05:06:51 -0700 (PDT)
+Message-ID: <2bdfa874-468b-4f59-b0c8-a7f51fc9d5d9@linaro.org>
+Date: Fri, 17 Apr 2026 14:06:50 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/7] hw/sd/sdcard: Add erase-blocks-as-zero option.
+Content-Language: en-US
+To: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
+ <20260417-sdcard-performance-b4-v4-5-119e66be10c2@avm.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260417-sdcard-performance-b4-v4-5-119e66be10c2@avm.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=antonb@tenstorrent.com; helo=mail-oo1-xc30.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,28 +106,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Masked vector reduction instructions must not use v0 as a source register.
-Check rs1 and rs2 against the mask register when vm=0.
+On 17/4/26 11:51, Christian Speich wrote:
+> Currently, erased blocks are filled with 0xFF. However SCR Bit 55
+> (DATA_STAT_AFTER_ERASE) indicates that an erase produces zeros. One of
+> them is wrong.
+> 
+> This patch does two things.
+> 
+> First it fixes the reporting of DATA_STAT_AFTER_ERASE in SCR to
+> correctly reflect the content of erased blocks. We also increase the
+> Product Revision (REV in CID) to indicate to the guest that
+> DATA_STAT_AFTER_ERASE is now reliable.
+> 
+> Secondly, we introduce a erase-blocks-as-zero option, which allows the
+> user to choose if erased blocks should contain 0xFF or 0x00. The default
+> is still 0xFF to remain compatible with current users.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
----
- target/riscv/insn_trans/trans_rvv.c.inc | 2 ++
- 1 file changed, 2 insertions(+)
+I'll update as:
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index d9a0027e0b..6e8d32636e 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3046,6 +3046,8 @@ static bool reduction_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
-+           require_vm(a->vm, a->rs1) &&
-+           require_vm(a->vm, a->rs2) &&
-            vext_check_reduction(s, a->rs2);
- }
- 
--- 
-2.34.1
+   Secondly, we introduce a erase-blocks-as-zero option, which allows the
+   user to choose if erased blocks should contain 0xFF or 0x00. While
+   previous QEMU versions keep using the 'erase as 0xFF' pattern, the new
+   default becomes the more efficient 'erase as 0x00'.
+
+Does it look OK to you?
+
+> Signed-off-by: Christian Speich <c.speich@avm.de>
+> ---
+>   hw/core/machine.c |  5 +++++
+>   hw/sd/sd.c        | 15 +++++++++++++--
+>   2 files changed, 18 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 0aa77a57e956693208d77fea6af5853ed4904234..54e4c05c96e3cf35ab2e702ee81fba36457cadd7 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -38,6 +38,11 @@
+>   #include "hw/acpi/generic_event_device.h"
+>   #include "qemu/audio.h"
+>   
+> +GlobalProperty hw_compat_11_0[] = {
+> +    { "sdmmc-common", "erase-blocks-as-zero", "false" },
+> +};
+> +const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+> +
+>   GlobalProperty hw_compat_10_2[] = {
+>       { "scsi-block", "migrate-pr", "off" },
+>       { "isa-cirrus-vga", "global-vmstate", "true" },
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index b27fed2e563e5971dd32787498eb8abed9ffe9be..0f997ed8cc80e38645101cb8f47c86f1c30d5a25 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+
+> @@ -3287,6 +3296,8 @@ static void emmc_realize(DeviceState *dev, Error **errp)
+>   
+>   static const Property sdmmc_common_properties[] = {
+>       DEFINE_PROP_DRIVE("drive", SDState, blk),
+> +    DEFINE_PROP_BOOL("erase-blocks-as-zero", SDState, erase_blocks_as_zero,
+> +                     true),
+>   };
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
