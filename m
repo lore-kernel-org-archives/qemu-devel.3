@@ -4,145 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E10CF8E48C
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Apr 2026 23:19:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 081E4F8E49B
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 01:17:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDVzB-0002Xk-Id; Thu, 16 Apr 2026 19:19:01 -0400
+	id 1wDXog-0005cn-Pq; Thu, 16 Apr 2026 21:16:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wDVzA-0002XS-2k
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:19:00 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wDXoe-0005cC-S2; Thu, 16 Apr 2026 21:16:16 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wDVz8-0006V2-DW
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 19:18:59 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63GHDr591245083
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 23:18:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qp7/atX+l33C5gpL9aBiVAQa8DajHQWIjznwPqOENv8=; b=SaD0lDs5OXSuCJpJ
- mhIgzDMIhs8Knqs1yG3OAxGlLODPdtD2na4cTifLp5w6cXCmuGIkr8f2oa/7zy5w
- WCA7B7+I0pXJgzeUCZXhT7wKfUx0dCgWEQBKsM1XEfIyG7StZFfI5KG8Ph1/G02l
- FEtXIArA3QTctSpK4NSB4o6BYqlyOvkAwVuwiXwG+JhG/JEdBQ9JXNEAwIRQzwsv
- SEQ7Hvd7Qz6unfiEljmvhagkHEkVc8nXxvTH5WcQS2VTdBAgZ4aqm+LRDPXWJjLs
- R8l17ok9slMU08IA/sYQPhDcwmV4QndL7JvIvpxaqHAZSfa9DYgGL0ylA9ACna9Z
- TvJAIw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djx4kakmw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 23:18:56 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2b2ead99f5dso1146805ad.0
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 16:18:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1776381536; x=1776986336; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qp7/atX+l33C5gpL9aBiVAQa8DajHQWIjznwPqOENv8=;
- b=dlnEMx35/v57n/0Ctes1NusTBM7QScJPa4KM24v5CYSOG13F/4M9oGuMw9/NdsleWx
- yEYnKR+3KUGAwoibx4FBjPwukxmgfkbcyWKluqJkSCua1ztx7jDxcaTAMvxhR2qRoWRT
- bv0aLKwliP7eKp6brbxB5DSJIysyvQpwUYofYe5EGvWjtMxWLKxsJCIOlFNJLubcff3s
- Z+fReBzdVCTvpYjI25dtqqrhSVC+tz0P7/Y7YavetCD3xKInHorGMhsPkyRj+2Gx3+kn
- mgdddp0Z3lcgDjq0f1YYlEHj3PvcdXgoYXCjNDdNkAyWcRIeJq+33kA1WQ85DA9fiGM+
- p7sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776381536; x=1776986336;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qp7/atX+l33C5gpL9aBiVAQa8DajHQWIjznwPqOENv8=;
- b=evWqo/upvMFBaC+PbkNOJWjYTNlYCJJM59deGu4S14gqsqCUnXp9EDbSPQ76YMEZMs
- p6ahBOK16p/iUPmJKnvec2H5f/ihKW+EHSal3yfyuSdQsigt2MFrmuvfjQ+71nnZe/XB
- Ny74O/WIuDOkTOUMZDchyg6DWT5W6Gk2jrQ00ZUsp2mk4t0/eGYhjIVvI22Gfw9ErwPQ
- pcyr1hLf9vCRAVjhOF/QRWesudhoGhJX5QIHhsoRoAT3dl1zSVokTDseTtj5biCWgEKh
- TMaHXNDaCClSlNwW8BRyzGoSReK1954zNR2S2ptiESacenyMVkZul1QfGwjY0XsxtA+J
- 7OMA==
-X-Gm-Message-State: AOJu0Yy9vFTkLufCZwh1MFvIqjGlaiMZb2MEi8pXo0dSdVmf+7rt64Wg
- 0DSLL4SjugpEBFDoah2dk8OBiu/4ay/3W74PcnB2z5uNoux6ufjdl5+WB9aJ9hhutx0INuEKVGa
- 3rmwzwA4HGjtlP4+eHbHIyBo5RBVdFB5E08GPFN9gpMUdic3YP7OdLHZj2e7qfRvFnQ==
-X-Gm-Gg: AeBDiesDl/Ks/8Q5mQJgIBrhmTn7u6pt9P+Qg3QBQJpuWVwEFI4uW5vMeVO+plgsyN7
- 2lLm8QbUNXEcjFDpUamSnLZ/wSY9iW7k+3qa8ySlabO+qwo6d3jeoZnby7NLFv04gKbhhU2GaHX
- 1zt6IcEmUKElp/FUJ08+8HUACSYvNSpUQ0UwKjpp+vRCJETooAmsOzf5fQovrQ/oBMJnZvFoWb1
- JpBMpr8JllZVypNRqix3hTZHBUOhmNQaA2PRmyNdoIEZzXH7YkfMUTio3Ci9ltVRqRhgH700tUw
- 627oZZoOYuLvZHzU/vrZR2ckvwTXN9ipmwOcoaYQ+xWkwfxh4dti8YgvjokCcqsPW9bC6kkRopQ
- fdAF4ct38SKRddfjWhQPQhOHbJhvSAAYD7O6Pw3/mJZFh32PA5UvsgGAUwbXrfl3CXeGd+8iqfy
- x4zhw9aQ1nVyWNs5rPqw==
-X-Received: by 2002:a17:903:b06:b0:2b2:5491:e32b with SMTP id
- d9443c01a7336-2b5f9f2bd43mr3312585ad.23.1776381535592; 
- Thu, 16 Apr 2026 16:18:55 -0700 (PDT)
-X-Received: by 2002:a17:903:b06:b0:2b2:5491:e32b with SMTP id
- d9443c01a7336-2b5f9f2bd43mr3312505ad.23.1776381535150; 
- Thu, 16 Apr 2026 16:18:55 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fa59dda1sm800485ad.58.2026.04.16.16.18.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 16:18:54 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 1/2] MAINTAINERS: update address
-Date: Thu, 16 Apr 2026 16:18:23 -0700
-Message-ID: <20260416231824.349872-2-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260416231824.349872-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260416231824.349872-1-pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wDXob-00053T-N2; Thu, 16 Apr 2026 21:16:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ou94RaDpTzh7R+br4GeCYJuq6ghCJWacGdkHZd1Qw08a00BNGlKsENHNzsqL5SYPMM28iGNzbT2QFUSoYiNEd6XNWbJL+16Rsk21KJr34dmFukTdQ7QuaagQmKBBKylRGuiXvV5EHi44TwmJPE2wAfIFnvOm9gmE7DouxW9tYutO2x0sIxP9+pmVnZq0AE+iESazC8LQhEdu4Ev9HaWkkOmK02j3MKN5YQYZR9qzd4IpfP1whUWybSBkghqfLU8JoVwPbeAgu8aGaLhiRSQXCmwEdG6v5tPpnurxXYKAQtMYLb5NWU5S6Hu1s8WlDwng8FJFFELqF+e66dm4xEWNFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uKvmDcLafk3RPtCFjX+esrM/9ByXS03vIblNKwniRu8=;
+ b=WfHCuOlGIAN9zvoin7eTN0WdMFmPG75cYXbdaukY57ucxgSdJcaaIfuPPYkyx/9fYUDk2TxR0M2MvRUCxcD0ylotOEqnjbu5EmsJOXCdMuDc+E1EuBGOTGL6kardkpwZMQ/rx4XlaB3NtULk5+Qlmr/rHxONrK5t9P70HCGSP/sZO/uEC0UN7G9WZbJplXkC8I8iQLU+0OHyx0ClX5spGmcJM/JEInGGwATImrnPzJvsqFnuCsCnSkuXygZXZ+1Z5NoJtF6k0iY6QZO1mFZ2e2+OtH8cnWj8eR4j2ucf6II+eLkPLz+BXE/eEnqbrOzNlaezRnTfgJwvChrLUTlhnQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uKvmDcLafk3RPtCFjX+esrM/9ByXS03vIblNKwniRu8=;
+ b=HFMNNxCywKFggi67keZwQ5VfOGyyIu7AgjgDBOj9QD2OrpvcVjDvLHF7JTK5tsboEEr0EK/PK44G9N3I+HJeMLHams0LGemuu1wqmIDfGL84DiYd42ZjHGT0K51M6HZprrOr5lrjD3g8rMxWfzbMJqy2mdziR8bmj333TQhVwxBcUEzOvemQHqr+utWJ20zVYw1gBKS5x1Upy8+32n546Iim0+LCrGdOI2fkhmNaVabDTaZw8yrfYvhPgrLTE6e/PLAi9ywP6ZXsRVz7lfLa+LNJV/dHL644a5af38LJ8jk+g0mrc7Bu3wDSyGFUuxoUYsBcYVEQTgg7loQNKUGVfg==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by TYUPR06MB5927.apcprd06.prod.outlook.com (2603:1096:400:350::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Fri, 17 Apr
+ 2026 01:16:05 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9818.023; Fri, 17 Apr 2026
+ 01:16:05 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: "philmd@linaro.org" <philmd@linaro.org>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, Troy Lee <troy_lee@aspeedtech.com>,
+ "flwu@google.com" <flwu@google.com>, "nabihestefan@google.com"
+ <nabihestefan@google.com>
+Subject: RE: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn
+ structure and dead code
+Thread-Topic: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn
+ structure and dead code
+Thread-Index: AQHczUNFhK5MCMsaPESXZcYoH3r+fLXhmSoAgADa5RA=
+Date: Fri, 17 Apr 2026 01:16:05 +0000
+Message-ID: <TYPPR06MB820623725F12A9326E19B44FFC202@TYPPR06MB8206.apcprd06.prod.outlook.com>
+References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
+ <20260416014928.1279360-2-jamin_lin@aspeedtech.com>
+ <d7e9d943-fd8d-dd48-5a86-e54613c466dd@eik.bme.hu>
+In-Reply-To: <d7e9d943-fd8d-dd48-5a86-e54613c466dd@eik.bme.hu>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TYUPR06MB5927:EE_
+x-ms-office365-filtering-correlation-id: 2edae423-abd4-4bb2-8e8a-08de9c1ee5db
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|366016|376014|1800799024|18002099003|22082099003|56012099003|38070700021;
+x-microsoft-antispam-message-info: qh2B4G5FOskhDS/cQ5QBZkzPM06GktQ1jAhpsaKFdhro9b9w9ZP2kNLod8ALb6P17HMIcfHcYotEtd0Zmn3O73Yu/3xlkQbSmUeOndhkXVPoIKklOSlHTXcasINJv2YAQUoP1bzDIwYIBX6HFMUvl8G7dVQUiCT9kDYImbHZ3HXxt0lohWJZtlNALWSlzKmUqQjsf6ix+LDAOJ8jGuF6GL5oN9eVaGcA0BgCH6GwoeWQX0RxVzxQW6GFv6sWTa90EITY/etCEvEv8zLa6ZEG7bbEibGcpqBGoH2NF4OWbbD3cDSm6bVZu5MftK9Ei1cqc8L9SZx0DNcC5/54D/Cmy31jeYbqmxDgTZMnJucdiTMaNrXY7xyqyqCLhjXfnM6lPnasFTFj/0ua8FaIiTbgj70jPzJRtkxblrvSmYiPtLtXUnltJNcjQuFmhYWZE9zXoLouyxZo2pjE+O3HNEg6N2ovG6fZvwn/HIaOUHthuG2M5hkU+wc/pNaHehxf6srN2bVyXY+XOnTG03f18/WkWqTFMo7IkzBG4YrkTTMMxZ44bUHUeFFO8K+sL34IlvUMq/wuMYs1sv3EX3zcQwNktqH2c/nTEN7YLXxWI+bIFWtV4ZRbtaxfd2x3e/6Bs9U9LKKstX2csk7YX1+LeFESIG0F2kqa0z0V45rfq57QHyJYuTYL0RE2aplPvFjQzMzfx10gRYhH0spsxuCIe1MwJsMal5mxBbzYlnoYOICGoIxs6JU2hCqx/3fEf/czcICPSvm5YOpQnrxZzelDhk6L+Fu9zEMmTaJeKXe9vKxgjGM=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(7416014)(366016)(376014)(1800799024)(18002099003)(22082099003)(56012099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?HFMXT3M3YTE1ui99TGpfeno174zf5hu8wW2ZZ9EnhJ7uww0mLGYVtDOMWz?=
+ =?iso-8859-1?Q?EizKn/4o+6QIy660lw1asNL+vKVnLlnFxLonoTk2bsUL2zE5AJP0LtWKuD?=
+ =?iso-8859-1?Q?Q42t2H2vGHHQltlRO1yflw2aVVbZ9VDCjqrNK3Ud3k3DafxtyTtC9rexdI?=
+ =?iso-8859-1?Q?SIq4DkT13XWDsVBiBupluUDGDEUcxTJxe5pN4PqeBajFdP9smZ/dvGyvDz?=
+ =?iso-8859-1?Q?7o1n9KJdG/4njJBYntK6NdKpJDCLifQ9+I0AjWbpqDqjqT2EmLZETcX/Ke?=
+ =?iso-8859-1?Q?tTBFzu73GLPUB+2raBjFX/ALQigSgMihCJP2e6GG6GL6aIoP7phoOylFTh?=
+ =?iso-8859-1?Q?6kG4cOIJv3nrtidPztLcxLVvTHT8mELbEdLZcvNNQ7aPgq0VTy9LGAyLFZ?=
+ =?iso-8859-1?Q?Y2S2tNwskdX2mXRvtFzWzVArkSgV+WMMiNSfgtDMRym7aBvp60ofXhCywW?=
+ =?iso-8859-1?Q?Lcmo1X9voERfC0DC1iouZ2b6T/VdPLZl70Oa+AJebLTekUrPFhRKEHhgt+?=
+ =?iso-8859-1?Q?LDQHqdT3j7FvBkgQTKfCBAA8NwR/UHE34p8UKGVU0cGmUgmMqRkaPx/3up?=
+ =?iso-8859-1?Q?2dGe0DgiRcrpL0EhDzaYAPK8vRhYLIXk8Mv4ev6flEuprvMmOmttm/NHSg?=
+ =?iso-8859-1?Q?x3p8ae0tMDEBX5eXEoidrSKrxKDK/VzyogF59y8ivYJkrR/8DlrwwEkZUj?=
+ =?iso-8859-1?Q?4i9UTaYFi3bq8Cy1I+f/N/J7Wqg2qR8mBAk1PlnrHFlURbwFDYg1KpplmI?=
+ =?iso-8859-1?Q?WLrPYKfslf1uKff909H1tb22lokeg6lWdd7ONkkpk+N+9GykookBJRd78s?=
+ =?iso-8859-1?Q?zHawQwlJ5p3/nBGTPLEIRcDsTh5MCLIS8/gArH9YaImOqzQc+P1GupNeke?=
+ =?iso-8859-1?Q?ARmcrcUl9TIpDSJJXfTIDvN1aVXBcc0OWmyemLT9b8chjtOEQnV9c1qdPX?=
+ =?iso-8859-1?Q?565cQkijwlY30LS03obVxASq/Z+gi4F3IwRWCp6Eq0G9YyUTcaGVMdzQCa?=
+ =?iso-8859-1?Q?4HlM0NVFxpFgqDroINsDe7UYkrpUD0sr+mJ+ljFJ+8MauOkNmUudukuxGo?=
+ =?iso-8859-1?Q?FJ7BuakswQa2lopNG+q5cjhDgw3oyh2H4fuyLwGAuCPuIHdjndx559NPJs?=
+ =?iso-8859-1?Q?Z4AXJYILSjz/mOzrMfH/Sd51A/IvCi+IlzfM1pimSk6+19eXFGtnW9BHz1?=
+ =?iso-8859-1?Q?n2DPGncIqmf27Eqn3IKMBWuYMRv21Zex/LvwpTAIBQGEipXvU0mMp4hrTt?=
+ =?iso-8859-1?Q?dFrEVtV3oa6I5ipRbFPKdk08aLObpBpj/Qt5tJ9oKtu4P0F3a46hhBo5yO?=
+ =?iso-8859-1?Q?B9caSJaDTlBNKBCAmN0I/9ytoCkmHpb7JtLlcx0j2DDH6DOXkSvNAOTQ1d?=
+ =?iso-8859-1?Q?44AbsdixBj9zeB/xPxe5hj/k5nfuhM+qfosJm2MuE9DXM9a3pJiPfTE2GB?=
+ =?iso-8859-1?Q?ahlyyPdfMQ4mel/yIiLlnI3UNN7849c+e1UQ2RXO2o+9W6mFjYMKjF3eNr?=
+ =?iso-8859-1?Q?fLOY90sZ2KvJXdQ/vzj6+fQNERdlEIrDLKjoPIcnxQyPDEaZhtmi46MgjH?=
+ =?iso-8859-1?Q?V3P5nsIefZRZMzHunvXVVqC4H+UAEPkDhoX+9thcvMPna4dSBB070lw+Mg?=
+ =?iso-8859-1?Q?cGFhMXnR2G+UEGWvm+QvGWo01F138MNrb29hLuQLyEa2jL+4w3+vE7yeNo?=
+ =?iso-8859-1?Q?E1YzplgeO948SIUcdVzn6lgZ9KCek1anjf/3UrtKsvtrK3VZ+OyrTekVIS?=
+ =?iso-8859-1?Q?daPCP5xEb8UfjP7RgxrFg0TfJ5N6hUIdb8EymEundWHITCjKkpPfvIph3h?=
+ =?iso-8859-1?Q?ebgSK7PERA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: fNWuyHrcajWmCYgYEgVCEBdWHI4kLy65
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDIyMSBTYWx0ZWRfX+k/2/4ONzaz4
- w6HN2xRR9MO+qUc4Ox0mrRG/ijgyVHp5wE+228l1L11RGh2hhS4JLLVLrd1+rBLtDRW3eRLVOf6
- iefhjCk/n2NgwS8vOJtw9+Ro5s/z64L2t5DIXtvFvdBcyiTILkLIMiEyWoYGWNtIcm02KdNJ+p6
- //kCFt7KuCXF5t94WCMGPgVSw74rI+7I5n9EmmTvZYSEz0DeapIO6rrVCJjGp1QmT4YPSmh01oY
- aKqyC9e1vDNdXprlUuoX44JI6UyFpwKeErGCdd0I9Tf0RnABvHbDvP5Eyr+iTigRBi9G5JjRFNE
- MUu8PpkaAXPVCwYZaR04qed7WC6ML1vd8+bp699QQlCSE62V+15QUPM7jDV/DABzr01d3d+1k9o
- +VDuvdXj0i3I4SlzUKYJZrmnMhWLh6N9uqHfWEvTiZJ8u/szAAeLVuC0FuXWFkT1Ca1KFC9iXq/
- gn2t7Wa3kIJTh+e0e1A==
-X-Authority-Analysis: v=2.4 cv=H47rBeYi c=1 sm=1 tr=0 ts=69e16e60 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8
- a=KKAkSRfTAAAA:8 a=cplnpDx6AAAA:8 a=dGsWvjqBAAAA:8 a=pGLkceISAAAA:8
- a=SqMvC5kiAAAA:8 a=FyogFE7hAAAA:8 a=Ixn1CAxRAAAA:8 a=20KFwNOVAAAA:8
- a=ciZXtekWAAAA:8 a=lB0dNpNiAAAA:8 a=-c9VzbpeAAAA:8 a=0FD05c-RAAAA:8
- a=TMBx9dqlAAAA:8 a=QktKnYkmAAAA:8 a=uYLkEQlkUP3FWBz33VgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22 a=cvBusfyB2V15izCimMoJ:22
- a=bHwCOBSOUrNypjIvOSWD:22 a=EwAE0RQWx3bH85eTCWcH:22 a=_o8VnCo6Hb5Oqlm6Mk7M:22
- a=p2WyBLmlf5vdw_nX_QRo:22 a=_0vDLAJOulx5KDpLVjVP:22 a=GnyklBnmId1nB8FO2ck3:22
- a=c-ZiYqmG3AbHTdtsH08C:22 a=WAq88MDkwfy8HpmZFCM0:22 a=l1rpMCqCXRGZwUSuRcM3:22
- a=hD-SeztmQn9HBm-AZg8e:22 a=XkBopB_elf-j1KJO54R-:22
-X-Proofpoint-ORIG-GUID: fNWuyHrcajWmCYgYEgVCEBdWHI4kLy65
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-16_03,2026-04-16_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604160221
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Exchange-RoutingPolicyChecked: ITxCW/8rjMuScqufhpuT4YwNQGcfCdEfW4KDIrHWvRuso2jSlfyrcRDIIYyQbXF9zXX3D126WBfaVrbmwwj9/D4c4RVC6FdWjCP8RtoGvL7tOejNjYZFaH5aUIZGHLSx6yBhmRxxl0hYNwDPLOf2kSa/haStmoIa52HTEA5+IQlFo/49HK3dDBq4B74UO7EeracLuCz55Q6UFidxMBQphie0lQFhhJb2IKLtqeDZahGXw2udDkkBUWr+k0KYGMvB1rEjKtdvQ/fth+G8T/22fab0mHdyascdJyLJWTVKEKi6+jERXV0wm9xCzgZNT8/eSEP+itL/mTYl/Qk5hmnbnw==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2edae423-abd4-4bb2-8e8a-08de9c1ee5db
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 01:16:05.2039 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: /GnpYTeindyDANcPhxcwhhI9U2QD3Z9Xc+iXCNloJA1nWuyRnPkfiV7PuIx5jn4S5EVo/ylbO0V3xckuwenVRSq0QBrln0gSHD3nrMVBlyI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYUPR06MB5927
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,67 +154,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260416231455.346504-2-pierrick.bouvier@oss.qualcomm.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- MAINTAINERS | 8 ++++----
- .mailmap    | 1 +
- 2 files changed, 5 insertions(+), 4 deletions(-)
+Hi all,=20
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ad215eced84..14bd822ddbe 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2038,7 +2038,7 @@ F: tests/functional/generic/test_empty_cpu_model.py
- F: tests/unit/test-smp-parse.c
- 
- TargetInfo API
--M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Supported
- F: include/qemu/target-info*.h
-@@ -4075,7 +4075,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
- 
- Linux user
- M: Laurent Vivier <laurent@vivier.eu>
--R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Odd Fixes
- F: linux-user/
- F: configs/targets/*linux-user.mak
-@@ -4094,7 +4094,7 @@ F: include/tcg/
- 
- TCG Plugins
- M: Alex Bennée <alex.bennee@linaro.org>
--M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- T: git https://gitlab.com/stsquad/qemu plugins/next
- R: Alexandre Iooss <erdnaxe@crans.org>
- R: Mahmoud Mandour <ma.mandourr@gmail.com>
-@@ -4556,7 +4556,7 @@ L: devel@lists.libvirt.org
- F: docs/about/deprecated.rst
- 
- General Documentation
--M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Maintained
- F: docs/
- 
-diff --git a/.mailmap b/.mailmap
-index 383948400a2..ce569d83f4a 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -107,6 +107,7 @@ Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
- Philippe Mathieu-Daudé <philmd@linaro.org> <f4bug@amsat.org>
- Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@redhat.com>
- Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@fungible.com>
-+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> <pierrick.bouvier@linaro.org>
- Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
- Stefan Brankovic <stefan.brankovic@syrmia.com> <stefan.brankovic@rt-rk.com.com>
--- 
-2.47.3
+> Subject: Re: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn
+> structure and dead code
+>=20
+> On Thu, 16 Apr 2026, Jamin Lin wrote:
+> > The EHCIfstn structure, defined according to EHCI spec section 3.7, is
+> > currently unused in the EHCI implementation. Remove it to reduce
+> > unused code and improve maintainability.
+> >
+> > Additionally, drop a block of disabled (#if 0) code in
+> > ehci_state_advqueue() that was never implemented. This code path is
+> > incomplete and has no functional impact.
+> >
+> > No functional change.
+> >
+> > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> > ---
+> > hw/usb/hcd-ehci.h |  7 -------
+> > hw/usb/hcd-ehci.c | 11 -----------
+> > 2 files changed, 18 deletions(-)
+> >
+> > diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h index
+> > 0ae8c06331..3aec0e047c 100644
+> > --- a/hw/usb/hcd-ehci.h
+> > +++ b/hw/usb/hcd-ehci.h
+> > @@ -202,13 +202,6 @@ typedef struct EHCIqh {
+> > #define BUFPTR_SBYTES_SH              5
+> > } EHCIqh;
+> >
+> > -/*  EHCI spec version 1.0 Section 3.7
+> > - */
+> > -typedef struct EHCIfstn {
+> > -    uint32_t next;                    /* Standard next link pointer */
+> > -    uint32_t backptr;                 /* Standard next link pointer */
+> > -} EHCIfstn;
+> > -
+> > enum async_state {
+> >     EHCI_ASYNC_NONE =3D 0,
+> >     EHCI_ASYNC_INITIALIZED,
+> > diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c index
+> > 57f930b099..5ea8461f70 100644
+> > --- a/hw/usb/hcd-ehci.c
+> > +++ b/hw/usb/hcd-ehci.c
+> > @@ -1756,17 +1756,6 @@ static int ehci_state_fetchsitd(EHCIState
+> > *ehci, int async)
+> > /* Section 4.10.2 - paragraph 3 */
+> > static int ehci_state_advqueue(EHCIQueue *q) { -#if 0
+> > -    /* TO-DO: 4.10.2 - paragraph 2
+> > -     * if I-bit is set to 1 and QH is not active
+> > -     * go to horizontal QH
+> > -     */
+>=20
+> Is it worth to keep the comment in case it's still valid to remind we hav=
+e
+> something missing here?
+>=20
+> Regards,
+> BALATON Zoltan
+>=20
 
+If we decide to keep these comments as reminders for unimplemented parts,
+please let me know. I will resend the patch series and drop this patch.
+
+Thanks,
+Jamin
+
+> > -    if (I-bit set) {
+> > -        ehci_set_state(ehci, async, EST_HORIZONTALQH);
+> > -        goto out;
+> > -    }
+> > -#endif
+> > -
+> >     /*
+> >      * want data and alt-next qTD is valid
+> >      */
+> > --
+> > 2.43.0
+> >
 
