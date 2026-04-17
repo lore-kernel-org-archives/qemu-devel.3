@@ -4,129 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E871F8D75C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A2F2FA0C5E
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 19:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDp8w-0005aY-DE; Fri, 17 Apr 2026 15:46:22 -0400
+	id 1wDp8y-0005ap-0e; Fri, 17 Apr 2026 15:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wDp8u-0005Zl-Me
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 15:46:20 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wDp8v-0005a8-6D
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 15:46:21 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wDp8s-0000YT-VY
+ id 1wDp8s-0000YR-FL
  for qemu-devel@nongnu.org; Fri, 17 Apr 2026 15:46:20 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63HG4GfA4068652
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 19:46:17 GMT
+ 63HG4SJq2945226
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 19:46:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=fGP3gocxg9D
- DFvbhrHBAp7idp6gnT68s92vqozL/d8s=; b=CzfVT1AQtra+Zs47w6SPzyHFuYm
- pe/B0mVY+hZMKWKPCZpEAxczd4V+RYuzFyKa+eaimW+m0t3ruDuk+oPNR5XGIDiM
- MKVjV9lDv5L/AwOfG8zuXMz5xGDd9KQQvX5wy90miiTO7k/iz2JFRAuAiQduzwjZ
- BiOkzS9E0ezsFqf7u7ZDSTWWzM2XiNL50/h5zpjasALv4aLSWy49EuxAlO3g3eJx
- Y/ecDpouJouvgMyXjzmawp8Z10lN6RAendFLBIzAfuZAw0ZSU5HoU994/5tbVOaY
- /fQwN5N/2PD+qXeb8p06Pb9VTv91JhmapF2CgAQ3pVRV61FpU93tPV1XTfQ==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkhpu25pc-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=t/IaNMz0/ou
+ P9Lh56eKStXQsx4b7fRQ1h6cw0izNVyc=; b=g5MBlvAYFHRq/MT4ljo0XObFDq8
+ WNlPRKp/rBSF9G/3m57Dxem/lcdGRs4Jt0Arj6L/pKzf7shyvyRnnxl1DoiXV0jO
+ +uLZk4IqQHSxZmRFJuu6QYp8ot+TtuL+sr5v5weZc2qVf5gdCpHjGPozK0HwvDvu
+ 3on0mBQVYKPuw6Vz5VSPMAE2EYa1F7fD6XGRCD1TzScjOlfPYJWbS6/oP0dRsLu0
+ KS3a7HkZAv72dyN0r3aRragGi+F/whQ0ZrLt9gxFx6BJoom3vpqX9mnbLBCgnQwr
+ moEvhwi8/+BE7boY2QIzMb5qVaUIu0kos7+ZN7uVdYLT4MQrQHDs3cUZ4sA==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkdgy33q9-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 19:46:17 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-2d889997495so1844941eec.0
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 12:46:17 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 19:46:16 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-12bf921cf49so1174810c88.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 12:46:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oss.qualcomm.com; s=google; t=1776455176; x=1777059976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fGP3gocxg9DDFvbhrHBAp7idp6gnT68s92vqozL/d8s=;
- b=cpsrgMDXST8DUe4HOagdmTfs728U4kvVq8ezVqpvRwWmYrb+ZTy77xT9B2WXThW/ma
- Z8bR5qU+IyRfE/3sHVoStdTNG4/lbJVp9RKrN301pCjdE86rY2igrO3xYz0CTD/ZRsDE
- Cs7SWyd7cjIBakjVo78nS/TBiMCZE95zdSski+RErr+icN6b/W7ifqPURQA3khAAlPcz
- SjhhiFF5f9ldYR9a+brnNqIRFTlx5WBn3neg+hSVZgucsKZBkpig4aS0tEiMI2hasiZF
- ixQNtA6haLxUhno2edjJqyEhJYo9dnK+IxsFmSkufmiq2n3V8UVv9MSoj7+rGcIDnUjv
- QM0A==
+ bh=t/IaNMz0/ouP9Lh56eKStXQsx4b7fRQ1h6cw0izNVyc=;
+ b=Ocl65r4thph00i8FJkryAtIHUtDHW7KA1IpNA7tiZUKzdzNs6knN3jzebnqhUYa7jV
+ ayKLRfiEBGwDyoHEE7n0gXU8LkS5KXHp1MCvFjtJsze2i4yELt0CmeMjX8SdMv7Cr2px
+ iApq89GGJsKyZFn9aYDUkkmQUYSAfJ6AKaAv20m2POfUn96dzdIYG8dd8tITvpdncNh3
+ M8P7P45B+xTzal/xxTOH9v0rj5vimN3JmVQbxRyDm3GuD4m4IKZxV2Oi+0Yb4OAyYNNH
+ nlXf5LVbRKiOHCzZ43mbFFNLxkOnZMHV96oG9Dclh8630gajoM6CSBioRFkx+SOYODQ5
+ C1DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1776455176; x=1777059976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fGP3gocxg9DDFvbhrHBAp7idp6gnT68s92vqozL/d8s=;
- b=UyGC0IkzLghAWtyQp62rrJHOfYhiC21nd6zSolXKwpngN8Ke+jpL1f7FKSuhs4occP
- V6dJYwUGDfV2PxRmWqdbDijAjzTSb9N6gssoSkMoDsB2JXeA2yTIic0yGWIcgskpfX4O
- YHiwTC0XAZ9IEbxO0//wvqPaatJCmzUEcBAN+5fRNdWV76XUOPoR9sIDNnIwDNyQvbPu
- LJtPmxq7RPU+Nq5cssTDbeRPEfQCFjbI/0NrKVEV+5yhexpUEr0yl77hx55KPA30pKpr
- tdbdYABY+9/hNvKoK7eiUJHu08BynycB3rz0iFuYkMqu0dbF59ncRbpDLx5DagjTxN8a
- q0ng==
-X-Gm-Message-State: AOJu0YwnIUcGJb9S/Y4j0iffg511ywC8dVHn4AUHbXx8EpbHblL0Eoqu
- 4m4rU0J1ahcGyVvicXv2QsuIfB8u/jOC8i03SwvxvB7u6HF4AibrhDJ4ImIB9ym2c0foHoe1g2b
- QAvIrY2omN0sBcT3F0yb5VzbMj/NfENkkFpQGDCfxe0pIk7nFGoS++lRJ6GBS73w/jQ==
-X-Gm-Gg: AeBDieuCEhSBz3zJx5T7bKnl03SWnWUdmVjoJuzDoVuXzP0dBU6l6Iq43o+zl1V26ip
- XUm/u/i2K5Tknk32MDVQv+2JGwWtOyJbkiFr7//wKNsKMXtdB9SWJuFE6cjoJan93PkWyYM8/hS
- 8A8eYojsSM87Q566g8thCRx9UwwKSPPxAtCzhztjyjt7yf8UF5FvoLSLFtMG+oJKpILnHWaMmQo
- qpKf0HCdAO6ypKOvBXsMfw8nN4PL9FTYMXlQALb0tNeO9pIQ6BhFVSxSToZHI17hdK5Q+Cp/VIy
- MOlwJf2DD+CNgTkuVQ+e0SJ8+hVVUbg+hJxyIj9iPQ03mRn4UkBOBkIpqU0CMRTY0AqUqM7sQUI
- Qzil95jxpRaAyp6/wJgWK6X75h9Iviox22DMd8yJFMy+/kZzjj3wJIx5NoP9wpkBy3vu8CMSn1q
- AgnIcjLYljbviBghSjeTFidJB5Jgg=
-X-Received: by 2002:a05:7022:2511:b0:12a:b932:81d2 with SMTP id
- a92af1059eb24-12c73f92ebemr2512056c88.21.1776455176326; 
- Fri, 17 Apr 2026 12:46:16 -0700 (PDT)
-X-Received: by 2002:a05:7022:2511:b0:12a:b932:81d2 with SMTP id
- a92af1059eb24-12c73f92ebemr2512023c88.21.1776455175607; 
+ bh=t/IaNMz0/ouP9Lh56eKStXQsx4b7fRQ1h6cw0izNVyc=;
+ b=Y5eFgjExmOvohD0uZ47IJCS7m2qn+T36CJFd7MWhnhk85sniRPuTpJ1JwAh+PKVo2L
+ r2BXQ1y/mD8J6nHdbOsO+wTY2/oCMZjh6VpDgH6RzHTVyGIsLPNwHI6WjQhJJdnOyxdB
+ LYCqBZe8iOVKFyYJaqBCPSzSeNVIgUvV2VZh7AKCtHHQqZ86WfJQIeB4DOLp2ipA6nSN
+ oQ39hLVIhDsomczzCt5xtJh3tExuXnTKK88euLbXG61WagbCDb7sjX6OI9q2WP/T3gvN
+ DFBvJHZL/eaKpSsmYr8P56D7NFARMV6kZp9i4TlJi3oum4DZqZCgF3FBtr+YnNs0Ihe7
+ umiQ==
+X-Gm-Message-State: AOJu0YwU2DCxKBKKUuxi4MCVRZP/p5+xIi8GcoP/ZS7cMHphPD08273p
+ 3COzfglvXFRABbI5y5QSZ9/Wbpvz7LbGBv7FGbELH2lXf1JQ9CducuPXr0sFwFO1QLQqG5maNqd
+ M3/pvNhnQkY77VuVA4/HUOCh5zX6ShzK2PFWx+fmrntDTbflgXyPGerWzvFY5kKREFw==
+X-Gm-Gg: AeBDievRQtdFgkTW/+IX+zlZyCJLPjziBU2mxwDo4hVee5ODxw/DmioiyGt7+L6GOkT
+ LhC9/xmTPTbXI20dyIFx3IJGpBwghWsH0I/WXPlJDyYr4egwds5jQA7C1Yrg6EGegITMt2jkfqB
+ rto7JKK/Q96qKhL/zmxFB0TcnJwcJ6+EFUIeT9x9w5Fo7SX0kU+yMqd/a0NyHe1prVAoLSiug4j
+ Sb6weHcu+HDYADfPsgqhkU83KKIg6UJhYJwlskDGCE/8+HoJLPmdIQfAaflaToNP/SjCeEr5A5e
+ V/uXngE5NGs8gQqfVvXFJ9vnHIhqYVhYWKmm6JcXkEykfNDqeC0etJN8wus8bEQJWCS/EBYmz6f
+ jmNRkNdqlTk0aqHl18JKEeJrGAu4YfQez591iOxIxitOE7QNEl/1KyWQ+a2gvNU4chlnDx/X1mm
+ A0x4DMSldOSx/rE9IbRowv4JWj7FE=
+X-Received: by 2002:a05:7022:60f:b0:12b:ed30:5a32 with SMTP id
+ a92af1059eb24-12c73f6e183mr1917089c88.5.1776455175443; 
  Fri, 17 Apr 2026 12:46:15 -0700 (PDT)
+X-Received: by 2002:a05:7022:60f:b0:12b:ed30:5a32 with SMTP id
+ a92af1059eb24-12c73f6e183mr1917059c88.5.1776455174624; 
+ Fri, 17 Apr 2026 12:46:14 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c749d29f3sm4634325c88.5.2026.04.17.12.46.14
+ a92af1059eb24-12c749d29f3sm4634325c88.5.2026.04.17.12.46.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 12:46:15 -0700 (PDT)
+ Fri, 17 Apr 2026 12:46:14 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  matheus.bernardino@oss.qualcomm.com,
  Marco Liebel <marco.liebel@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 2/2] target/hexagon/meson.build: simplify source generation
-Date: Fri, 17 Apr 2026 12:46:06 -0700
-Message-ID: <20260417194606.39997-3-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 1/2] target/hexagon/meson.build: simplify decodetree file
+ generation
+Date: Fri, 17 Apr 2026 12:46:05 -0700
+Message-ID: <20260417194606.39997-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260417194606.39997-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260417194606.39997-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Kd7idwYD c=1 sm=1 tr=0 ts=69e28e09 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: 7j91LSiK0LTMoWglQ7IoStI5bGPHsY2n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDE5OSBTYWx0ZWRfXzd5jPfrZ/Qtx
+ JILT/JQOZv8BFDSIqQqhTxw1OOw3JqrZVLNPCssJ7op/l6gcPglsjY7A0bjoHxhZQ7fBC5ZHkv5
+ CbzDuW/8Y69yyz/lo4wgUEHm6mC8BeJ4oH9RUVxdkxt09G68Xkb4G6dWQsS+F0gfVjBQ+a3BR0I
+ fIyPa50WhxzWnLb8eM+kZ3VZac6s4UB+oNIv3bNEqmokfUbrMK/MkgEFojaQrIw7mT9N6nxBBW/
+ 5mOKkYjXdLTQT8OQ/n06i9jZlT0XsFnY+ZxKCuA9WQC2R8/pFy0q8ZA9veAyoebRXjVtVhVuh1q
+ +Te3reTRWHKDfg7vcit/3AYA+aGjBHKgU8S+rdiXzINw2lcC0s5GnF2dgkOXXZqT053cG/wLvW0
+ qdfPqoO6ttByocUSm1lHQ9V5Oiy3tiXAsnJeETfW8S/D6DWPiRDxCjGn4O4BW2iRkluWiTnsBLB
+ pUpI5Xu2BW5p+6zCXGw==
+X-Authority-Analysis: v=2.4 cv=GN041ONK c=1 sm=1 tr=0 ts=69e28e08 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=FTf7aCJKHYTX9i_lVYIA:9 a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-GUID: 64xvcEfJlGNqWhcmx8A-4Bl1iFm3JTzT
-X-Proofpoint-ORIG-GUID: 64xvcEfJlGNqWhcmx8A-4Bl1iFm3JTzT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDE5OSBTYWx0ZWRfX7JqzZNJvP88S
- FqSVIoibTDyQVtxP9chAYlMaUQ9wmUOlnbYq2pMOEf6KA5X3zA9o+R1Wnt+5Bj6nGuRe2+nJZHm
- ZZNQ5zVwu149ZhkeEkuDwkxaG62NGs2cU/tQXIQaXCSqC5bRMNhkPspIYvqGl2jZNmLcEVklCM2
- BO4WvizCqe3BOQ+3yddSnteFGyFBN53FeEReZySqYUD8iRsFzwap5YM6vFt5+lVpgYM19OFSta4
- CwaoeDcJ78+Yn9t0tPpnHX1WvDnpZ8kDvEHZs50VoZofBQs4IQBjavEdxDNra1TBZ1xvzCelnbX
- HWMfT8LHE+ktPznL0jheaSMmr5EUV858JKp7eu6o5VTkJvrcW9QUdHYYefJBydmkZCKXvZ0nA9g
- 07+Ws+5xy/ZdfTMaQ75RMKU0mImgXQuj3qMEVHabkLUyMMTOa9lMkwsFYIXMQmnwOa0U03cPqJy
- knKVNh18TMDnYzCZm3A==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=0OY9Ckch0cO6u8H8HYMA:9 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-GUID: 7j91LSiK0LTMoWglQ7IoStI5bGPHsY2n
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-17_02,2026-04-17_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- adultscore=0 spamscore=0 phishscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604170199
-Received-SPF: pass client-ip=205.220.180.131;
+ clxscore=1015 priorityscore=1501 spamscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604170199
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,75 +149,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a for loop with a dictionary instead of repeating custom targets.
+Use a loop over instructions sets and decodetree generator instead of
+manual custom targets repeated.
+Modify included files accordingly in target/hexagon/decode.c.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/hexagon/meson.build | 48 +++++++++++---------------------------
- 1 file changed, 13 insertions(+), 35 deletions(-)
+ target/hexagon/decode.c    |  14 ++--
+ target/hexagon/meson.build | 145 +++++--------------------------------
+ 2 files changed, 26 insertions(+), 133 deletions(-)
 
+diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+index dbc9c630e8..4de0541536 100644
+--- a/target/hexagon/decode.c
++++ b/target/hexagon/decode.c
+@@ -67,15 +67,15 @@ static int shift_left(DisasContext *ctx, int x, int n, int immno)
+ }
+ 
+ /* Include the generated decoder for 32 bit insn */
+-#include "decode_normal_generated.c.inc"
+-#include "decode_hvx_generated.c.inc"
++#include "decode-normal.c.inc"
++#include "decode-ext_mmvec.c.inc"
+ 
+ /* Include the generated decoder for 16 bit insn */
+-#include "decode_subinsn_a_generated.c.inc"
+-#include "decode_subinsn_l1_generated.c.inc"
+-#include "decode_subinsn_l2_generated.c.inc"
+-#include "decode_subinsn_s1_generated.c.inc"
+-#include "decode_subinsn_s2_generated.c.inc"
++#include "decode-subinsn_a.c.inc"
++#include "decode-subinsn_l1.c.inc"
++#include "decode-subinsn_l2.c.inc"
++#include "decode-subinsn_s1.c.inc"
++#include "decode-subinsn_s2.c.inc"
+ 
+ /* Include the generated helpers for the decoder */
+ #include "decodetree_trans_funcs_generated.c.inc"
 diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index d993e1b520..db3f3a5d32 100644
+index d169cf71b2..d993e1b520 100644
 --- a/target/hexagon/meson.build
 +++ b/target/hexagon/meson.build
-@@ -241,44 +241,22 @@ endif
+@@ -93,135 +93,28 @@ hexagon_ss.add(iset_py)
+ # Step 4
+ # Generate the input to the QEMU decodetree.py script
  #
- # Step 5
- # We use Python scripts to generate the following files
--#     helper_protos_generated.h.inc
--#     helper_funcs_generated.c.inc
--#     tcg_funcs_generated.c.inc
--#
--helper_protos_generated = custom_target(
--    'helper_protos_generated.h.inc',
--    output: 'helper_protos_generated.h.inc',
--    depends: helper_dep,
--    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
--    command: [python, files('gen_helper_protos.py'), helper_in, '@OUTPUT@'],
--)
--hexagon_ss.add(helper_protos_generated)
- 
--helper_funcs_generated = custom_target(
--    'helper_funcs_generated.c.inc',
--    output: 'helper_funcs_generated.c.inc',
--    depends: helper_dep,
--    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
--    command: [python, files('gen_helper_funcs.py'), helper_in, '@OUTPUT@'],
--)
--hexagon_ss.add(helper_funcs_generated)
--
--tcg_funcs_generated = custom_target(
--    'tcg_funcs_generated.c.inc',
--    output: 'tcg_funcs_generated.c.inc',
--    depends: helper_dep,
--    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
--    command: [python, files('gen_tcg_funcs.py'), helper_in, '@OUTPUT@'],
--)
--hexagon_ss.add(tcg_funcs_generated)
-+hexagon_gen_files = {
-+  'helper_protos_generated.h.inc': 'gen_helper_protos.py',
-+  'helper_funcs_generated.c.inc': 'gen_helper_funcs.py',
-+  'tcg_funcs_generated.c.inc': 'gen_tcg_funcs.py',
-+  'analyze_funcs_generated.c.inc': 'gen_analyze_funcs.py',
+-normal_decode_generated = custom_target(
+-    'normal_decode_generated',
+-    output: 'normal_decode_generated',
++insn_sets = {
++'NORMAL':     ['--static-decode=decode_normal'],
++'EXT_mmvec':  ['--static-decode=decode_hvx'],
++'SUBINSN_A':  ['--static-decode=decode_subinsn_a', '--insnwidth=16'],
++'SUBINSN_L1': ['--static-decode=decode_subinsn_l1', '--insnwidth=16'],
++'SUBINSN_L2': ['--static-decode=decode_subinsn_l2', '--insnwidth=16'],
++'SUBINSN_S1': ['--static-decode=decode_subinsn_s1', '--insnwidth=16'],
++'SUBINSN_S2': ['--static-decode=decode_subinsn_s2', '--insnwidth=16'],
 +}
- 
--analyze_funcs_generated = custom_target(
--    'analyze_funcs_generated.c.inc',
--    output: 'analyze_funcs_generated.c.inc',
-+foreach file, gen_script : hexagon_gen_files
-+  t = custom_target(
-+    file,
-+    output: file,
-     depends: helper_dep,
-     depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
--    command: [python, files('gen_analyze_funcs.py'), helper_in, '@OUTPUT@'],
++
++foreach insn_set, decodetree_options : insn_sets
++  decodetree_file_name = insn_set.to_lower() + '.decode'
++  # generate decodetree file
++  decodetree_file = custom_target(
++    output: decodetree_file_name,
+     depends: [iset_py, semantics_generated],
+     env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files('gen_decodetree.py'), semantics_generated, 'NORMAL', '@OUTPUT@'],
 -)
--hexagon_ss.add(analyze_funcs_generated)
-+    command: [python, files(gen_script), helper_in, '@OUTPUT@'])
-+  hexagon_ss.add(t)
+-hexagon_ss.add(normal_decode_generated)
++    command: [python, files('gen_decodetree.py'), semantics_generated, insn_set, '@OUTPUT@'])
+ 
+-hvx_decode_generated = custom_target(
+-    'hvx_decode_generated',
+-    output: 'hvx_decode_generated',
+-    depends: [iset_py, semantics_generated],
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files('gen_decodetree.py'), semantics_generated, 'EXT_mmvec', '@OUTPUT@'],
+-)
+-hexagon_ss.add(hvx_decode_generated)
+-
+-subinsn_a_decode_generated = custom_target(
+-    'subinsn_a_decode_generated',
+-    output: 'subinsn_a_decode_generated',
+-    depends: [iset_py, semantics_generated],
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files('gen_decodetree.py'), semantics_generated, 'SUBINSN_A', '@OUTPUT@'],
+-)
+-hexagon_ss.add(subinsn_a_decode_generated)
+-
+-subinsn_l1_decode_generated = custom_target(
+-    'subinsn_l1_decode_generated',
+-    output: 'subinsn_l1_decode_generated',
+-    depends: [iset_py, semantics_generated],
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files('gen_decodetree.py'), semantics_generated, 'SUBINSN_L1', '@OUTPUT@'],
+-)
+-hexagon_ss.add(subinsn_l1_decode_generated)
+-
+-subinsn_l2_decode_generated = custom_target(
+-    'subinsn_l2_decode_generated',
+-    output: 'subinsn_l2_decode_generated',
+-    depends: [iset_py, semantics_generated],
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files('gen_decodetree.py'), semantics_generated, 'SUBINSN_L2', '@OUTPUT@'],
+-)
+-hexagon_ss.add(subinsn_l2_decode_generated)
+-
+-subinsn_s1_decode_generated = custom_target(
+-    'subinsn_s1_decode_generated',
+-    output: 'subinsn_s1_decode_generated',
+-    depends: [iset_py, semantics_generated],
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files('gen_decodetree.py'), semantics_generated, 'SUBINSN_S1', '@OUTPUT@'],
+-)
+-hexagon_ss.add(subinsn_s1_decode_generated)
+-
+-subinsn_s2_decode_generated = custom_target(
+-    'subinsn_s2_decode_generated',
+-    output: 'subinsn_s2_decode_generated',
+-    depends: [iset_py, semantics_generated],
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files('gen_decodetree.py'), semantics_generated, 'SUBINSN_S2', '@OUTPUT@'],
+-)
+-hexagon_ss.add(subinsn_s2_decode_generated)
+-
+-#
+-# Run the QEMU decodetree.py script to produce the instruction decoder
+-#
+-decodetree_py = meson.current_source_dir() / '../../scripts/decodetree.py'
+-decode_normal_generated = custom_target(
+-    'decode_normal_generated.c.inc',
+-    output: 'decode_normal_generated.c.inc',
+-    input: normal_decode_generated,
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files(decodetree_py), normal_decode_generated, '--static-decode=decode_normal', '-o', '@OUTPUT@'],
+-)
+-hexagon_ss.add(decode_normal_generated)
+-
+-decode_hvx_generated = custom_target(
+-    'decode_hvx_generated.c.inc',
+-    output: 'decode_hvx_generated.c.inc',
+-    input: hvx_decode_generated,
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files(decodetree_py), hvx_decode_generated, '--static-decode=decode_hvx', '-o', '@OUTPUT@'],
+-)
+-hexagon_ss.add(decode_hvx_generated)
+-
+-decode_subinsn_a_generated = custom_target(
+-    'decode_subinsn_a_generated.c.inc',
+-    output: 'decode_subinsn_a_generated.c.inc',
+-    input: subinsn_a_decode_generated,
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files(decodetree_py), subinsn_a_decode_generated, ['--static-decode=decode_subinsn_a', '--insnwidth=16'], '-o', '@OUTPUT@'],
+-)
+-hexagon_ss.add(decode_subinsn_a_generated)
+-
+-decode_subinsn_l1_generated = custom_target(
+-    'decode_subinsn_l1_generated.c.inc',
+-    output: 'decode_subinsn_l1_generated.c.inc',
+-    input: subinsn_l1_decode_generated,
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files(decodetree_py), subinsn_l1_decode_generated, ['--static-decode=decode_subinsn_l1', '--insnwidth=16'], '-o', '@OUTPUT@'],
+-)
+-hexagon_ss.add(decode_subinsn_l1_generated)
+-
+-decode_subinsn_l2_generated = custom_target(
+-    'decode_subinsn_l2_generated.c.inc',
+-    output: 'decode_subinsn_l2_generated.c.inc',
+-    input: subinsn_l2_decode_generated,
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files(decodetree_py), subinsn_l2_decode_generated, ['--static-decode=decode_subinsn_l2', '--insnwidth=16'], '-o', '@OUTPUT@'],
+-)
+-hexagon_ss.add(decode_subinsn_l2_generated)
+-
+-decode_subinsn_s1_generated = custom_target(
+-    'decode_subinsn_s1_generated.c.inc',
+-    output: 'decode_subinsn_s1_generated.c.inc',
+-    input: subinsn_s1_decode_generated,
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files(decodetree_py), subinsn_s1_decode_generated, ['--static-decode=decode_subinsn_s1', '--insnwidth=16'], '-o', '@OUTPUT@'],
+-)
+-hexagon_ss.add(decode_subinsn_s1_generated)
+-
+-decode_subinsn_s2_generated = custom_target(
+-    'decode_subinsn_s2_generated.c.inc',
+-    output: 'decode_subinsn_s2_generated.c.inc',
+-    input: subinsn_s2_decode_generated,
+-    env: {'PYTHONPATH': meson.current_build_dir()},
+-    command: [python, files(decodetree_py), subinsn_s2_decode_generated, ['--static-decode=decode_subinsn_s2', '--insnwidth=16'], '-o', '@OUTPUT@'],
+-)
+-hexagon_ss.add(decode_subinsn_s2_generated)
++  # Run the QEMU decodetree.py script to produce the instruction decoder
++  hexagon_ss.add(decodetree.process(decodetree_file, extra_args: decodetree_options))
 +endforeach
  
- target_arch += {'hexagon': hexagon_ss}
+ #
+ # Generate the trans_* functions that the decoder will use
 -- 
 2.47.3
 
