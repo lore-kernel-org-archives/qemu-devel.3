@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D30F4368A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63DADF4368E
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:57:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgt2-0001G1-8y; Fri, 17 Apr 2026 06:57:26 -0400
+	id 1wDgsU-0000N5-UB; Fri, 17 Apr 2026 06:56:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgsx-0001Cl-P8
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:20 -0400
+ id 1wDgsT-0000Mp-A0
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:49 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsv-0001bL-HM
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:19 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsR-0001XG-OI
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:49 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id EFCDC20B7129;
- Fri, 17 Apr 2026 03:57:12 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EFCDC20B7129
+ by linux.microsoft.com (Postfix) with ESMTPSA id 063B620B7128;
+ Fri, 17 Apr 2026 03:56:43 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 063B620B7128
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423435;
- bh=kAv+LDx2C4ktwPdqcp1byyxTrJZIOpxr4ispcmeai88=;
+ s=default; t=1776423406;
+ bh=/agQnXNBT1WkQmDfzU3UPBeR7shsVTN7r5KTnFUfoDg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pCtQQ8/u06ztShHZMaxq6QkWoKHL8hHK02vn3C0K60/tUu5/7j8mcQQ+4Ok7atcFd
- oVBtwIbsq5FDCg9Jvx4y3fTUd2b5lk3Om0/K4DVLd3uLOrEYYezvMV91aJ6Dhd7gsL
- 4zYPoIPWIAAiDTPD9b44kZQLNKrOS9yCfLN67oww=
+ b=kE/Mp9sglD4u3Y+T7H/EYSbuNQFxkKd9hWWVFtf9UaBFTMOGGk8kPeFwc3cASeQVf
+ IcXb1/vF4mER7Hz+UZ3tc+VMjCU6Y24E4PfPYoU4ahASH3ixljrQ8sCaCXapsp4F90
+ MyYNNc/RfIBbZ5Tmsr/oXhEqB7MZnQIlbAyMdicg=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 14/34] target/i386/mshv: move apic logic into own file
-Date: Fri, 17 Apr 2026 12:55:58 +0200
-Message-Id: <20260417105618.3621-15-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 06/34] accel/accel-irq: add generic commit_route_changes
+Date: Fri, 17 Apr 2026 12:55:50 +0200
+Message-Id: <20260417105618.3621-7-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,139 +76,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a new file to unclutter the vcpu code gradually from APIC related
-logic.
+A generic accel_irqchip_commit_route_changes() fn has been introduced for
+usage in the MSHV accelerator. The respective kvm_ fn can be removed
+since we handle the commit op in a generic way.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv_int.h    |  8 ++++
- target/i386/mshv/meson.build |  1 +
- target/i386/mshv/mshv-apic.c | 78 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+)
- create mode 100644 target/i386/mshv/mshv-apic.c
+ accel/accel-irq.c     | 10 +++-------
+ hw/misc/ivshmem-pci.c |  2 +-
+ hw/vfio/pci.c         |  4 ++--
+ include/system/kvm.h  |  8 --------
+ target/i386/kvm/kvm.c |  2 +-
+ 5 files changed, 7 insertions(+), 19 deletions(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 7af5bcf022..f86c7a3be6 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -16,6 +16,8 @@
+diff --git a/accel/accel-irq.c b/accel/accel-irq.c
+index 3815f6727c..7e71b52555 100644
+--- a/accel/accel-irq.c
++++ b/accel/accel-irq.c
+@@ -45,13 +45,9 @@ int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
  
- #define MSHV_MSR_ENTRIES_COUNT 64
+ void accel_irqchip_commit_route_changes(AccelRouteChange *c)
+ {
+-#ifdef CONFIG_MSHV_IS_POSSIBLE
+-    if (mshv_msi_via_irqfd_enabled()) {
+-        mshv_irqchip_commit_routes();
+-    }
+-#endif
+-    if (kvm_enabled()) {
+-        kvm_irqchip_commit_route_changes(c);
++    if (c->changes) {
++        accel_irqchip_commit_routes();
++        c->changes = 0;
+     }
+ }
  
-+struct mshv_get_set_vp_state;
-+
- typedef struct hyperv_message hv_message;
+diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+index fa23562886..536475e9de 100644
+--- a/hw/misc/ivshmem-pci.c
++++ b/hw/misc/ivshmem-pci.c
+@@ -436,7 +436,7 @@ static void ivshmem_add_kvm_msi_virq(IVShmemState *s, int vector,
+         error_setg(errp, "kvm_irqchip_add_msi_route failed");
+         return;
+     }
+-    kvm_irqchip_commit_route_changes(&c);
++    accel_irqchip_commit_route_changes(&c);
  
- typedef struct MshvHvCallArgs {
-@@ -84,6 +86,12 @@ void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
- int mshv_arch_post_init_vm(int vm_fd);
-+int mshv_set_lapic(int cpu_fd,
-+                   const struct hv_local_interrupt_controller_state *state);
-+int mshv_get_lapic(int cpu_fd,
-+                   struct hv_local_interrupt_controller_state *state);
-+int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
-+int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
+     s->msi_vectors[vector].virq = ret;
+     s->msi_vectors[vector].pdev = pdev;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 35b4545482..fb20902412 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -695,7 +695,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+             } else {
+                 vfio_route_change = accel_irqchip_begin_route_changes();
+                 vfio_pci_add_kvm_msi_virq(vdev, vector, nr, true);
+-                kvm_irqchip_commit_route_changes(&vfio_route_change);
++                accel_irqchip_commit_route_changes(&vfio_route_change);
+                 vfio_connect_kvm_msi_virq(vector, nr);
+             }
+         }
+@@ -804,7 +804,7 @@ void vfio_pci_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+     assert(vdev->defer_kvm_irq_routing);
+     vdev->defer_kvm_irq_routing = false;
  
- typedef struct mshv_root_hvcall mshv_root_hvcall;
- int mshv_hvcall(int fd, const mshv_root_hvcall *args);
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-index 49f28d4a5b..5eb6e833a6 100644
---- a/target/i386/mshv/meson.build
-+++ b/target/i386/mshv/meson.build
-@@ -1,6 +1,7 @@
- i386_mshv_ss = ss.source_set()
+-    kvm_irqchip_commit_route_changes(&vfio_route_change);
++    accel_irqchip_commit_route_changes(&vfio_route_change);
  
- i386_mshv_ss.add(files(
-+  'mshv-apic.c',
-   'mshv-cpu.c',
- ))
+     for (i = 0; i < vdev->nr_vectors; i++) {
+         vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i], i);
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index fec24d2135..cdd1856ac5 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -476,14 +476,6 @@ int kvm_irqchip_update_msi_route(KVMState *s, int virq, MSIMessage msg,
+                                  PCIDevice *dev);
+ void kvm_irqchip_commit_routes(KVMState *s);
  
-diff --git a/target/i386/mshv/mshv-apic.c b/target/i386/mshv/mshv-apic.c
-new file mode 100644
-index 0000000000..e0e8b8cacf
---- /dev/null
-+++ b/target/i386/mshv/mshv-apic.c
-@@ -0,0 +1,78 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/memalign.h"
-+#include "qemu/error-report.h"
-+
-+#include "system/mshv.h"
-+#include "system/mshv_int.h"
-+
-+#include "linux/mshv.h"
-+#include "hw/hyperv/hvgdk.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "hw/hyperv/hvgdk_mini.h"
-+
-+#include <sys/ioctl.h>
-+
-+int mshv_get_lapic(int cpu_fd,
-+                   struct hv_local_interrupt_controller_state *state)
-+{
-+    int ret;
-+    size_t size = 4096;
-+    /* buffer aligned to 4k, as *state requires that */
-+    void *buffer = qemu_memalign(size, size);
-+    struct mshv_get_set_vp_state mshv_state = { 0 };
-+
-+    mshv_state.buf_ptr = (uint64_t) buffer;
-+    mshv_state.buf_sz = size;
-+    mshv_state.type = MSHV_VP_STATE_LAPIC;
-+
-+    ret = mshv_get_vp_state(cpu_fd, &mshv_state);
-+    if (ret == 0) {
-+        memcpy(state, buffer, sizeof(*state));
-+    }
-+    qemu_vfree(buffer);
-+    if (ret < 0) {
-+        error_report("failed to get lapic");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+int mshv_set_lapic(int cpu_fd,
-+                   const struct hv_local_interrupt_controller_state *state)
-+{
-+    int ret;
-+    size_t size = 4096;
-+    /* buffer aligned to 4k, as *state requires that */
-+    void *buffer = qemu_memalign(size, size);
-+    struct mshv_get_set_vp_state mshv_state = { 0 };
-+
-+    if (!state) {
-+        error_report("lapic state is NULL");
-+        return -1;
-+    }
-+    memcpy(buffer, state, sizeof(*state));
-+
-+    mshv_state.buf_ptr = (uint64_t) buffer;
-+    mshv_state.buf_sz = size;
-+    mshv_state.type = MSHV_VP_STATE_LAPIC;
-+
-+    ret = mshv_set_vp_state(cpu_fd, &mshv_state);
-+    qemu_vfree(buffer);
-+    if (ret < 0) {
-+        error_report("failed to set lapic: %s", strerror(errno));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
+-static inline void kvm_irqchip_commit_route_changes(AccelRouteChange *c)
+-{
+-    if (c->changes) {
+-        kvm_irqchip_commit_routes(KVM_STATE(c->accel));
+-        c->changes = 0;
+-    }
+-}
+-
+ int kvm_irqchip_get_virq(KVMState *s);
+ void kvm_irqchip_release_virq(KVMState *s, int virq);
+ 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 03312922d5..64cc421abe 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -6690,7 +6690,7 @@ void kvm_arch_init_irq_routing(KVMState *s)
+                 exit(1);
+             }
+         }
+-        kvm_irqchip_commit_route_changes(&c);
++        accel_irqchip_commit_route_changes(&c);
+     }
+ }
+ 
 -- 
 2.34.1
 
