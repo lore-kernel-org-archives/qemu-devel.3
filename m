@@ -4,96 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18077F436A3
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 13:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B187F436A3
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 13:33:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDjI4-0005jd-JA; Fri, 17 Apr 2026 09:31:24 -0400
+	id 1wDjK7-0006HW-0b; Fri, 17 Apr 2026 09:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wDjI2-0005jV-S2
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:31:23 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1wDjK5-0006Gy-94
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:33:29 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wDjI0-0001WS-Ms
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:31:22 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wDjHo-00000000sFj-0HaR; Fri, 17 Apr 2026 15:31:08 +0200
-Message-ID: <6ffa975c-9d13-4569-bd50-59df75c89b9c@maciej.szmigiero.name>
-Date: Fri, 17 Apr 2026 15:31:02 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 25/32] crypto: fix lifecycle handling of gnutls credentials
- objects
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, Laurent Vivier <lvivier@redhat.com>
-References: <20251103133727.423041-1-berrange@redhat.com>
- <20251103133727.423041-26-berrange@redhat.com>
- <9163e2f3-4bb9-4010-964f-20ca66ba964f@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <9163e2f3-4bb9-4010-964f-20ca66ba964f@maciej.szmigiero.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1wDjK3-0002QG-8P
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:33:29 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id 4295CEC011D;
+ Fri, 17 Apr 2026 09:33:25 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-02.internal (MEProxy); Fri, 17 Apr 2026 09:33:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+ t=1776432805; x=1776519205; bh=ebQVo28ykEouTYcWlYkvKa13I7iv0swc
+ 7G6GTtqJSIk=; b=cW7YjJkt1yvfIpBkgkxkyhI2qYqGyJ2ii0GWhWSTCldWMaud
+ F4OMj8SiTdQZz8/Opsw5dVsylfSFjV3aGNa2O6lMnFJ0HKFNNFh6hTzJG/Gc73ZG
+ Ycecvp9lD2/Z2xk/MPF6Tmff6Vn7dGEhZhLhQ/7/qyLpYmJCFpNeJydrSjCmD5aD
+ 44Ub/ribvb+d7qlmy80fXXz8HF1G+zLhCY9SdiQFTMkLVeIaB8HNhYMZBzNQdRYv
+ RYb9vyowigBiSw1F1KAko64bvLWzJPmHfQGrp/+iRxaN1mC4raTzoInNgM8BawFK
+ fVXK0B7wrFmOAzlAu94FQ8mDS5quGtcBjCeblA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776432805; x=
+ 1776519205; bh=ebQVo28ykEouTYcWlYkvKa13I7iv0swc7G6GTtqJSIk=; b=Z
+ RBp8b6QjcYx8PpTgtU6Z3OrbbrhiqdH30gWGZwOfGBC84yCmTXjrqnqeCqEQUY9F
+ X5w+2FbwT8atNEshCKTr5vDijg1K0rxUfZy6po3wIzgLOSG7Hmdq3tWFyLqQhIvz
+ mAvYtG4Ja213okgMuQ3TgbDKSYRXJy70ua2u83Wxz5ambLrbTBgHQaakF7D/cgqY
+ PBLl8RvWCUX6nG6N1uj5xsS/E+DQ5+prdLW7aekyQtsbo8e0ekoJmAIxZ5KmjqKx
+ 0gyaZnllG2eGOXEe0bfhRvOVDjRb03+dK5wrnsCL2TA6TaiLykSju/i2vzz3MKEk
+ zydhGNDKCMvNHxNIKu3GA==
+X-ME-Sender: <xms:pDbiabObYTxJVAxGJwjgtnhKgsdTaAQYIoidi5q0uZCc4ZJqXjiI9A>
+ <xme:pDbiac_dpI0sxytLV7RqiTdcUHC1X3KrAeD-Pm_Q5FXEEfGX_JiCkvSJhEtNDpaXN
+ Oij_M4KhbJyCW6EybQSAfyzVoI5sE7_hOYBTJLk-_09--oHnvuCci4>
+X-ME-Received: <xmr:pDbiafR4ONk7GVzdAp3TmPEpGStkAitRDMZMBz2gmDQemepY5VPvkLVOlegO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehtddtudcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
+ cuvffnffculdejtddmnecujfgurhepggfgtgffkffhvfevuffofhgjsehtqhertdertdej
+ necuhfhrohhmpedfvehhrgguucflrggslhhonhhskhhifdcuoegthhgrugesjhgrsghloh
+ hnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepvedukeeffedtkeekgfdvgeduheef
+ ueegheeftdeuheeiheeggfegtedthefgheetnecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhn
+ sggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvggrud
+ gvsehprhhothhonhdrmhgvpdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdig
+ hiiipdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoh
+ epqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:pDbiaenFxits_DMXoMbENipzv9v5_sMMU0AMyC-tAxIDdNwdddTTTQ>
+ <xmx:pDbiafTPfmcawMChlIGFxzrBYuDjMRGyu_UPuO25aK0040s-cj8lQg>
+ <xmx:pDbiacMQWpueZOF5Pq06zgtGV5I3fuXCx4TsamCOYCPmBQwITSEnlg>
+ <xmx:pDbiaYVoFyZsaLMF4UyIr7wREpsyqTcUl0YaytFndUVuFNYo_AiSzA>
+ <xmx:pTbiabiAHLcNQBXeffTiIPLVQj7vXqb8e9lVwXM4M698OvNFt7II3nPb>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Apr 2026 09:33:24 -0400 (EDT)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id c7a3817e;
+ Fri, 17 Apr 2026 13:33:23 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 17 Apr 2026 09:33:23 -0400
+Message-Id: <DHVGVFPUN8S7.3N0XBLZGL3UZE@jablonski.xyz>
+From: "Chad Jablonski" <chad@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
+ <chad@jablonski.xyz>
+Cc: "Feifan Qian" <bea1e@proton.me>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/2] hw/display/ati: reset host_data.next on early
+ returns in ati_host_data_flush()
+X-Mailer: aerc 0.21.0
+References: <U62ZPP3C0eUIUhmFb68h6Zbpn_gAjGsyJL3MlLsNd6Y4685t5cgo1IQEs3jQpw27LX8rbQaav04Kd-xLwbQXykyIUq2ouFnbFlMgXoKB_NY=@proton.me>
+ <42adf9e0-6e57-08e1-5fce-94a43ebad32a@eik.bme.hu>
+ <DHTVKTNF92GX.1CR2SGLBUGI6N@jablonski.xyz>
+ <376dc5c2-5e10-ce42-3b2f-bebaf9f0f646@eik.bme.hu>
+In-Reply-To: <376dc5c2-5e10-ce42-3b2f-bebaf9f0f646@eik.bme.hu>
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=chad@jablonski.xyz;
+ helo=fout-a1-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,81 +120,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.04.2026 20:25, Maciej S. Szmigiero wrote:
-> On 3.11.2025 14:37, Daniel P. Berrangé wrote:
->> As described in the previous commit, the gnutls credentials need to
->> be kept alive for as long as the gnutls session object exists. Convert
->> the QCryptoTLSCreds objects to use QCryptoTLSCredsBox and holding the
->> gnutls credential objects. When loading the credentials into a gnutls
->> session, store a reference to the box into the QCryptoTLSSession object.
+On Wed Apr 15, 2026 at 4:10 PM EDT, BALATON Zoltan wrote:
+> On Wed, 15 Apr 2026, Chad Jablonski wrote:
+>> I agree with Zoltan on the overflow issue. I think it may be best fixed
+>> by resetting next in the write handler after both ati_host_data_finish
+>> and ati_host_data_flush. The next reset could be removed from inside of
+>> ati_host_data_flush entirely. That way the write handler handles the ful=
+l
+>> lifecycle of next and it's both clearer and much harder to miss if new
+>> failure cases are added.
 >>
->> This has the useful side effect that the QCryptoTLSSession code no
->> longer needs to know about all the different credential types, it can
->> use the generic pointer stored in the box.
+>>>> + if (!ctx.bpp) {
+>>>> + qemu_log_mask(LOG_GUEST_ERROR,
+>>>> + "host_data_blt: invalid bpp\n");
+>>>> + s->host_data.next =3D 0;
+>>>> + return false;
+>>>> + }
 >>
->> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->> ---
-> (..)
->> diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
->> index 5c55b07b2f..0a728ccbf6 100644
->> --- a/crypto/tlscredsanon.c
->> +++ b/crypto/tlscredsanon.c
->> @@ -36,6 +36,7 @@ static int
->>   qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
->>                               Error **errp)
->>   {
->> +    g_autoptr(QCryptoTLSCredsBox) box = NULL;
->>       g_autofree char *dhparams = NULL;
->>       int ret;
->> @@ -43,6 +44,8 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
->>               creds->parent_obj.dir ? creds->parent_obj.dir : "<nodir>");
->>       if (creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER) {
->> +        box = qcrypto_tls_creds_box_new_server(GNUTLS_CRD_ANON);
->> +
->>           if (creds->parent_obj.dir &&
->>               qcrypto_tls_creds_get_path(&creds->parent_obj,
->>                                          QCRYPTO_TLS_CREDS_DH_PARAMS,
->> @@ -50,7 +53,7 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
->>               return -1;
->>           }
->> -        ret = gnutls_anon_allocate_server_credentials(&creds->data.server);
->> +        ret = gnutls_anon_allocate_server_credentials(&box->data.anonserver);
->>           if (ret < 0) {
->>               error_setg(errp, "Cannot allocate credentials: %s",
->>                          gnutls_strerror(ret));
->> @@ -58,42 +61,26 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
->>           }
->>           if (qcrypto_tls_creds_get_dh_params_file(&creds->parent_obj, dhparams,
->> -                                                 &creds->parent_obj.dh_params,
->> -                                                 errp) < 0) {
->> +                                                 &box->dh_params, errp) < 0) {
->>               return -1;
->>           }
->> -        gnutls_anon_set_server_dh_params(creds->data.server,
->> -                                         creds->parent_obj.dh_params);
->> +        gnutls_anon_set_server_dh_params(box->data.anonserver,
->> +                                         box->dh_params);
->>       } else {
->> -        ret = gnutls_anon_allocate_client_credentials(&creds->data.client);
->> +        ret = gnutls_anon_allocate_client_credentials(&box->data.anonclient);
-> 
-> Pointed question - where's the object pointed to by "box" allocated in this case
-> of an anonymous TLS client being loaded? :)
+>> This guard is separate from the acc overflow issue but worth keeping.
+>
+> Without context I'm not sure where this was proposed to be added but=20
+> there's such check in ati_2d_do_blt. If we move this check out from there=
+=20
+> that one is not needed after adding similar check in ati_2d_blt too.=20
+> Having duplicate check seems unnecessary. Then should we move the=20
+> dst_stride check out of ati_2d_do_blt too?
+>
+> Regards,
+> BALATON Zoltan
 
-To be clear, that was supposed to be a humorous report of a regression introduced
-by the above commit - sorry if it wasn't communicated well.
 
-Reproducer:
-> $ qemu-system-x86_64 -object tls-creds-anon,endpoint=client,id=test
-> Segmentation fault
-
-The above code branch really needs something like
-"box = qcrypto_tls_creds_box_new_client(GNUTLS_CRD_ANON)".
-
-The bug is also present in the stable QEMU 10.2.
-
-Thanks,
-Maciej
-
+Good point, I missed that the check also happens in ati_2d_blt. It was
+proposed to also add it to ati_host_data_flush. There is a possibility
+for a division by zero there before ati_2d_do_blt is called. A non-host
+data blit also calls ati_2d_blt so removing the check from that function
+means that path will no longer be covered. There may be a better way to
+organize this to avoid the duplication but does it make sense to get the
+overflow fix in first?
 
