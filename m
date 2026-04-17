@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8092EF4368F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97A4F43690
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgu9-0005fY-TU; Fri, 17 Apr 2026 06:58:33 -0400
+	id 1wDgtl-0003Db-IN; Fri, 17 Apr 2026 06:58:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgu8-0005Rs-4B
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:32 -0400
+ id 1wDgtf-0002ph-AI
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:04 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgu6-0001tc-1q
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:31 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgtd-0001lP-LC
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:02 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id EFA3E20B7001;
- Fri, 17 Apr 2026 03:58:15 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EFA3E20B7001
+ by linux.microsoft.com (Postfix) with ESMTPSA id 80B5120B7129;
+ Fri, 17 Apr 2026 03:57:46 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 80B5120B7129
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423498;
- bh=7gTom78x3K6oKCng+OiNrUvvmUvSvvHVMp0/uAOVRMk=;
+ s=default; t=1776423469;
+ bh=S92dx0H1HZeFjxrVBmrak0WH0pq895/vNqGc9ASOqFs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UG7EHl7L2JY25yroZFasVEt+gzalDMZViyWRdOXwO1behKsqN0XyOVSSvYlQxdGPE
- WwFGURb5Ezjs61qyP34lljWsnhXbCjII/tr5gEh3o8g3Hu+MNsrxf47jpvggB10E9R
- h+0dgd+68bWHM3OlJAcxoeFc2rPPkhrLXiSvzLEg=
+ b=QzG34/USBCzLRxtfv5Cfx0sEjeo1SylWPk4y4zWIlWIewfUlKAhglnunro8MJfv+8
+ WCTTwoq/QIt3HL80tqW5tW4Vi6tI/q++c85z8pQ5tOErvqywwrpP8oLifxQkN++19N
+ ROttbN3jyNWSKd2HX/dhPYE9FXj40826SBC9xhes=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 31/34] target/i386/mshv: migrate XSAVE state
-Date: Fri, 17 Apr 2026 12:56:15 +0200
-Message-Id: <20260417105618.3621-32-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 23/34] target/i386/mshv: migrate CET/SS MSRs
+Date: Fri, 17 Apr 2026 12:56:07 +0200
+Message-Id: <20260417105618.3621-24-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,181 +76,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We implement fn's that roundtrip XSAVE state in migration. We are using
-the xsave_helper routines to move individual components from CPUX86State
-to an xsave_buf and then we have to compact the buffer to XSAVEC format,
-which is what the hypervisor expects.
-
-And the same applies in the other direction for restoring state from the
-hypervisor.
+This change migrates the MSRs required for CET shadow stack and indirect
+branch tracking. They are gated behind cet_ss_support || cet_ibt_support
+mshv processor feature flags.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/cpu.h           |   2 +-
- target/i386/mshv/mshv-cpu.c | 100 +++++++++++++++++++++++++++++++++++-
- 2 files changed, 100 insertions(+), 2 deletions(-)
+ include/hw/hyperv/hvgdk_mini.h | 11 +++++++++++
+ target/i386/mshv/msr.c         | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index cd5d5a5369..0f30f0dd5b 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2272,7 +2272,7 @@ typedef struct CPUArchState {
-     int64_t user_tsc_khz; /* for sanity check only */
-     uint64_t apic_bus_freq;
-     uint64_t tsc;
--#if defined(CONFIG_KVM) || defined(CONFIG_HVF)
-+#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_MSHV)
-     void *xsave_buf;
-     uint32_t xsave_buf_len;
- #endif
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 517b38a32d..5b0b8bda16 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -109,6 +109,78 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index 4d1e062e48..75e953b86c 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -168,6 +168,17 @@ typedef enum hv_register_name {
+     HV_X64_REGISTER_TSC_DEADLINE    = 0x00080095,
+     HV_X64_REGISTER_TSC_ADJUST      = 0x00080096,
  
- static int set_special_regs(const CPUState *cpu);
++    /* CET / Shadow Stack */
++    HV_X64_REGISTER_U_XSS                    = 0x0008008B,
++    HV_X64_REGISTER_U_CET                    = 0x0008008C,
++    HV_X64_REGISTER_S_CET                    = 0x0008008D,
++    HV_X64_REGISTER_SSP                      = 0x0008008E,
++    HV_X64_REGISTER_PL0_SSP                  = 0x0008008F,
++    HV_X64_REGISTER_PL1_SSP                  = 0x00080090,
++    HV_X64_REGISTER_PL2_SSP                  = 0x00080091,
++    HV_X64_REGISTER_PL3_SSP                  = 0x00080092,
++    HV_X64_REGISTER_INTERRUPT_SSP_TABLE_ADDR = 0x00080093,
++
+     /* Other MSRs */
+     HV_X64_REGISTER_MSR_IA32_MISC_ENABLE = 0x000800A0,
  
-+static int get_xsave_state(CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int ret;
-+    void *xsavec_buf;
-+    const size_t page = HV_HYP_PAGE_SIZE;
-+    size_t xsavec_buf_len = page;
+diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
+index 4881e15f4b..b985500797 100644
+--- a/target/i386/mshv/msr.c
++++ b/target/i386/mshv/msr.c
+@@ -83,6 +83,26 @@ static const MshvMsrEnvMap msr_env_map[] = {
+     { IA32_MSR_MTRR_DEF_TYPE, HV_X64_REGISTER_MSR_MTRR_DEF_TYPE,
+                               offsetof(CPUX86State, mtrr_deftype) },
+ 
++    /* CET / Shadow Stack */
++    { MSR_IA32_U_CET,       HV_X64_REGISTER_U_CET,
++                            offsetof(CPUX86State, u_cet) },
++    { MSR_IA32_S_CET,       HV_X64_REGISTER_S_CET,
++                            offsetof(CPUX86State, s_cet) },
++    { MSR_IA32_PL0_SSP,     HV_X64_REGISTER_PL0_SSP,
++                            offsetof(CPUX86State, pl0_ssp) },
++    { MSR_IA32_PL1_SSP,     HV_X64_REGISTER_PL1_SSP,
++                            offsetof(CPUX86State, pl1_ssp) },
++    { MSR_IA32_PL2_SSP,     HV_X64_REGISTER_PL2_SSP,
++                            offsetof(CPUX86State, pl2_ssp) },
++    { MSR_IA32_PL3_SSP,     HV_X64_REGISTER_PL3_SSP,
++                            offsetof(CPUX86State, pl3_ssp) },
++    { MSR_IA32_INT_SSP_TAB, HV_X64_REGISTER_INTERRUPT_SSP_TABLE_ADDR,
++                            offsetof(CPUX86State, int_ssp_table) },
 +
-+    /* TODO: should properly determine xsavec size based on CPUID */
-+    xsavec_buf = qemu_memalign(page, xsavec_buf_len);
-+    memset(xsavec_buf, 0, xsavec_buf_len);
++    /* XSAVE Supervisor State */
++    { MSR_IA32_XSS,         HV_X64_REGISTER_U_XSS,
++                            offsetof(CPUX86State, xss) },
 +
-+    struct mshv_get_set_vp_state args = {
-+        .type = MSHV_VP_STATE_XSAVE,
-+        .buf_sz = xsavec_buf_len,
-+        .buf_ptr = (uintptr_t)xsavec_buf,
-+    };
-+
-+    ret = ioctl(cpu_fd, MSHV_GET_VP_STATE, &args);
-+    if (ret < 0) {
-+        error_report("failed to get xsave state: %s", strerror(errno));
-+        return -errno;
-+    }
-+
-+    ret = decompact_xsave_area(xsavec_buf, xsavec_buf_len, env);
-+    g_free(xsavec_buf);
-+    if (ret < 0) {
-+        error_report("failed to decompact xsave area");
-+        return ret;
-+    }
-+    x86_cpu_xrstor_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
-+
-+    return 0;
-+}
-+
-+static int set_xsave_state(const CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int ret;
-+    void *xsavec_buf;
-+    size_t page = HV_HYP_PAGE_SIZE, xsavec_buf_len;
-+
-+    /* allocate and populate compacted buffer */
-+    xsavec_buf = qemu_memalign(page, page);
-+    xsavec_buf_len = page;
-+
-+    /* save registers to standard format buffer */
-+    x86_cpu_xsave_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
-+
-+    /* store compacted version of xsave area in xsavec_buf */
-+    compact_xsave_area(env, xsavec_buf, xsavec_buf_len);
-+
-+    struct mshv_get_set_vp_state args = {
-+        .type = MSHV_VP_STATE_XSAVE,
-+        .buf_sz = xsavec_buf_len,
-+        .buf_ptr = (uintptr_t)xsavec_buf,
-+    };
-+
-+    ret = ioctl(cpu_fd, MSHV_SET_VP_STATE, &args);
-+    g_free(xsavec_buf);
-+    if (ret < 0) {
-+        error_report("failed to set xsave state: %s", strerror(errno));
-+        return -errno;
-+    }
-+
-+    return 0;
-+}
-+
- static int get_lapic(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-@@ -766,6 +838,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
-         return ret;
+     /* Other */
+ 
+     /* TODO: find out processor features that correlate to unsupported MSRs. */
+@@ -291,6 +311,16 @@ static bool msr_supported(uint32_t name)
+         return mshv_state->processor_features.tsc_adjust_support;
+     case HV_X64_REGISTER_TSC_DEADLINE:
+         return mshv_state->processor_features.tsc_deadline_tmr_support;
++    case HV_X64_REGISTER_U_CET:
++    case HV_X64_REGISTER_S_CET:
++    case HV_X64_REGISTER_PL0_SSP:
++    case HV_X64_REGISTER_PL1_SSP:
++    case HV_X64_REGISTER_PL2_SSP:
++    case HV_X64_REGISTER_PL3_SSP:
++    case HV_X64_REGISTER_INTERRUPT_SSP_TABLE_ADDR:
++    case HV_X64_REGISTER_U_XSS:
++        return mshv_state->processor_features.cet_ss_support ||
++               mshv_state->processor_features.cet_ibt_support;
      }
  
-+    ret = get_xsave_state(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     ret = get_lapic(cpu);
-     if (ret < 0) {
-         return ret;
-@@ -1258,6 +1335,11 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-         return ret;
-     }
- 
-+    ret = set_xsave_state(cpu);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-     /* INVARIANT: special regs (APIC_BASE) must be restored before LAPIC */
-     ret = set_lapic(cpu);
-     if (ret < 0) {
-@@ -1786,9 +1868,10 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     AccelCPUState *state = cpu->accel;
--    size_t page = HV_HYP_PAGE_SIZE;
-+    size_t page = HV_HYP_PAGE_SIZE, xsave_len;
-     void *mem = qemu_memalign(page, 2 * page);
-     int ret;
-+    X86XSaveHeader *header;
- 
-     /* sanity check, to make sure we don't overflow the page */
-     QEMU_BUILD_BUG_ON((MAX_REGISTER_COUNT
-@@ -1802,6 +1885,17 @@ void mshv_arch_init_vcpu(CPUState *cpu)
- 
-     env->emu_mmio_buf = g_new(char, 4096);
- 
-+    /* Initialize XSAVE buffer page-aligned */
-+    /* TODO: pick proper size based on CPUID */
-+    xsave_len = page;
-+    env->xsave_buf = qemu_memalign(page, xsave_len);
-+    env->xsave_buf_len = xsave_len;
-+    memset(env->xsave_buf, 0, env->xsave_buf_len);
-+
-+    /* we need to set the compacted format bit in xsave header for mshv */
-+    header = (X86XSaveHeader *)(env->xsave_buf + sizeof(X86LegacyXSaveArea));
-+    header->xcomp_bv = header->xstate_bv | (1ULL << 63);
-+
-     /*
-      * TODO: populate topology info:
-      * X86CPUTopoInfo *topo_info = &env->topo_info;
-@@ -1826,6 +1920,10 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-     g_free(state->hvcall_args.base);
-     state->hvcall_args = (MshvHvCallArgs){0};
-     g_clear_pointer(&env->emu_mmio_buf, g_free);
-+
-+    qemu_vfree(env->xsave_buf);
-+    env->xsave_buf = NULL;
-+    env->xsave_buf_len = 0;
- }
- 
- /*
+     return true;
 -- 
 2.34.1
 
