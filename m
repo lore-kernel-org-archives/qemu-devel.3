@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30AABF43690
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50EB0F4368E
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgsm-0000cb-Up; Fri, 17 Apr 2026 06:57:09 -0400
+	id 1wDgsY-0000Nu-4g; Fri, 17 Apr 2026 06:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgsl-0000Vq-Go
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:07 -0400
+ id 1wDgsW-0000NU-UT
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:52 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsj-0001ZL-SD
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:07 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsV-0001XU-Ck
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:52 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 50B1120B7129;
- Fri, 17 Apr 2026 03:57:02 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 50B1120B7129
+ by linux.microsoft.com (Postfix) with ESMTPSA id A678520B712D;
+ Fri, 17 Apr 2026 03:56:47 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A678520B712D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423425;
- bh=+449kqpsT3rs/26cTO+xTXYI56NYmCzZVttigepvBaE=;
+ s=default; t=1776423410;
+ bh=Q99VB31zJMe+kwy7P7q526bcuOKPTBKL3PaUmcduhVg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=YXOysCp9b2cic8VB8v4Yk2Kt0mt2YtL+E/6nLHunSHSEYj3cA2B+xd7+PBnJWsjr4
- 8pn5T9CE2Ju4HSP9UOqxrnVeqrMMCx10cy6bMw+0wikb1tEyueQiN/kATzK3WEakLr
- 56S076zZmobUTKRnZgHFINObZhFLjI2BfpPW+1HE=
+ b=SkPXj0BqV5Sz7eDBWcWL5BLnQialbzeLC5dE8Wwt0G+CXMcBchC35s3DzM3+xKHRO
+ KmJS9l4CcHgS7RXkOF7rGJQCVsOsTjjNpDorf9kGudl+iKXS7kFOAJKWdHPJJONLE2
+ QjEszt93PUpiJ0FqWPA864vtinSIirkg1Z/vydKk=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 11/34] accel/mshv: use s->irq_routes in commit_routes
-Date: Fri, 17 Apr 2026 12:55:55 +0200
-Message-Id: <20260417105618.3621-12-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 07/34] accel/mshv: add irq_routes to state
+Date: Fri, 17 Apr 2026 12:55:51 +0200
+Message-Id: <20260417105618.3621-8-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,84 +76,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mshv_irqchip_commit_routes() the entries that have been accumulated
-in s->irq_routes are committed directly to MSHV's irqchip.
+This change adds fields related to irq routing to the MSHV state, following
+similar fields in the KVM implementation.
 
-The old commit_msi_routing_table() fn will be removed in a subsquent commit.
+So far the fields are only initialized, they will be used in subsequent
+commits for bookkeeping purposes and storing uncommitted interrupt routes.
+
+The TYPE_MSHV_ACCEL defines have been moved to the header.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c       | 2 +-
- accel/mshv/irq.c        | 7 ++++---
- accel/stubs/mshv-stub.c | 2 +-
- include/system/mshv.h   | 2 +-
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ accel/mshv/irq.c          | 10 ++++++++++
+ accel/mshv/mshv-all.c     |  6 ++----
+ include/system/mshv.h     |  7 +++++++
+ include/system/mshv_int.h |  5 +++++
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 0cb3ef78d3..4303e10e40 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -55,7 +55,7 @@ void accel_irqchip_commit_routes(void)
- {
- #ifdef CONFIG_MSHV_IS_POSSIBLE
-     if (mshv_msi_via_irqfd_enabled()) {
--        mshv_irqchip_commit_routes();
-+        mshv_irqchip_commit_routes(mshv_state);
-     }
- #endif
-     if (kvm_enabled()) {
 diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 990ce34620..9ba837f0e2 100644
+index 3c238c33c3..82f2022c7c 100644
 --- a/accel/mshv/irq.c
 +++ b/accel/mshv/irq.c
-@@ -394,16 +394,17 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+@@ -396,3 +396,13 @@ int mshv_reserve_ioapic_msi_routes(int vm_fd)
+ 
      return 0;
  }
++
++void mshv_init_irq_routing(MshvState *s)
++{
++    int gsi_count = MSHV_MAX_MSI_ROUTES;
++
++    s->irq_routes = g_malloc0(sizeof(*s->irq_routes));
++    s->nr_allocated_irq_routes = 0;
++    s->gsi_count = gsi_count;
++    s->used_gsi_bitmap = bitmap_new(gsi_count);
++}
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 04d248fe1d..8acb080db1 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -43,10 +43,6 @@
+ #include <err.h>
+ #include <sys/ioctl.h>
  
--void mshv_irqchip_commit_routes(void)
-+void mshv_irqchip_commit_routes(MshvState *s)
- {
-     int ret;
--    int vm_fd = mshv_state->vm;
-+    int vm_fd = s->vm;
+-#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
+-
+-DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
+-
+ bool mshv_allowed;
  
--    ret = commit_msi_routing_table(vm_fd);
-+    ret = ioctl(vm_fd, MSHV_SET_MSI_ROUTING, s->irq_routes);
-     if (ret < 0) {
-         error_report("Failed to commit msi routing table");
-         abort();
-     }
-+    trace_mshv_commit_msi_routing_table(vm_fd, s->irq_routes->nr);
- }
+ MshvState *mshv_state;
+@@ -457,6 +453,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
  
- int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *event,
-diff --git a/accel/stubs/mshv-stub.c b/accel/stubs/mshv-stub.c
-index dadf05511a..8b69539a85 100644
---- a/accel/stubs/mshv-stub.c
-+++ b/accel/stubs/mshv-stub.c
-@@ -28,7 +28,7 @@ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
-     return -ENOSYS;
- }
+     mshv_state = s;
  
--void mshv_irqchip_commit_routes(void)
-+void mshv_irqchip_commit_routes(MshvState *s)
- {
- }
- 
++    mshv_init_irq_routing(s);
++
+     register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
+                                   0, "mshv-memory");
+     memory_listener_register(&mshv_io_listener, &address_space_io);
 diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 2033beed70..0c9a4f927c 100644
+index 1e96b3a606..0d1745315b 100644
 --- a/include/system/mshv.h
 +++ b/include/system/mshv.h
-@@ -62,8 +62,8 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+@@ -45,7 +45,13 @@ extern bool mshv_allowed;
+ #define mshv_msi_via_irqfd_enabled() mshv_enabled()
+ #endif
  
- int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
--void mshv_irqchip_commit_routes(void);
- void mshv_irqchip_release_virq(MshvState *s, int virq);
-+void mshv_irqchip_commit_routes(MshvState *s);
++#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
++
+ typedef struct MshvState MshvState;
++
++DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
++                         TYPE_MSHV_ACCEL)
++
+ extern MshvState *mshv_state;
+ 
+ /* interrupt */
+@@ -60,5 +66,6 @@ void mshv_irqchip_release_virq(int virq);
  int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
                                          const EventNotifier *rn, int virq);
  int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
++void mshv_init_irq_routing(MshvState *s);
+ 
+ #endif
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 70631ca6ba..56fda76a9c 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -48,6 +48,11 @@ struct MshvState {
+     int nr_as;
+     MshvAddressSpace *as;
+     int fd;
++    /* irqchip routing */
++    struct mshv_user_irq_table *irq_routes;
++    int nr_allocated_irq_routes;
++    unsigned long *used_gsi_bitmap;
++    unsigned int gsi_count;
+ };
+ 
+ typedef struct MshvMsiControl {
 -- 
 2.34.1
 
