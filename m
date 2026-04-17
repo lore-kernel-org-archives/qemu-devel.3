@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD98F4368A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC57F4368A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgu1-0004aE-84; Fri, 17 Apr 2026 06:58:25 -0400
+	id 1wDgsr-00011A-6Q; Fri, 17 Apr 2026 06:57:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgtx-0004Gk-Vd
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:22 -0400
+ id 1wDgsp-0000r0-6g
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:11 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgtv-0001sf-UX
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:21 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsn-0001Zi-Cs
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:10 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id E495620B7017;
- Fri, 17 Apr 2026 03:58:04 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E495620B7017
+ by linux.microsoft.com (Postfix) with ESMTPSA id D7EB120B712B;
+ Fri, 17 Apr 2026 03:57:05 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D7EB120B712B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423487;
- bh=4cX7kwrC8tL3yJ980nP1aC4n5bj8Kias0ChJgrNCaVA=;
+ s=default; t=1776423428;
+ bh=apZ0c23LEobuYLV/xQNkaE00YRO3wUE05eRvWn9R9qc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=C6IStHff1j2Bwd7EN76TXJIE7y5260bQaYIAsQUo/yyYZn6Dx+ZPETH9SunNpo9UF
- 9YAWVAqCF7lhDMi38YdNYvX+GhyOAlr2eas0Tfixw12EnOMG8fdhz+xpIdk1D+QLn4
- rdnaMM+rMT6AtBQs4oz+KZzDf53Mtf7Eyzb/5Ez0=
+ b=BGZOPnJcx1ZsrIs+bn+McAgX7yPIVHiapkungveFKCxa1fnFH+Nv5QJq1/M9DU1bi
+ 4Grg03FgRxLh6QiRG2/Qt4ePVTpbkikVGtGGMJtb2j2VMscAcsU4faVfHkx4cudK5+
+ 5g6Ulwi3K+t0Dg0+rGlBMjhy9HferEYqOpO/IJsw=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 28/34] accel/mshv: migrate REFERENCE_TIME
-Date: Fri, 17 Apr 2026 12:56:12 +0200
-Message-Id: <20260417105618.3621-29-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 12/34] accel/mshv: reserve ioapic routes on s->irq_routes
+Date: Fri, 17 Apr 2026 12:55:56 +0200
+Message-Id: <20260417105618.3621-13-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,102 +76,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a partition-wide state that we use a dedicated handler for. It
-is stored as-is in the "mshv" savevm_live field. We might have to extend
-this later if we have more partition-wide state to roundtrip.
+We reserve 24 ioapic routes using the new functions that operate on the
+mshv apic state.
+
+commit/add_msi_routing() fn's can be removed now.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 70 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 69 insertions(+), 1 deletion(-)
+ accel/mshv/irq.c          | 115 ++++++--------------------------------
+ accel/mshv/mshv-all.c     |   5 --
+ include/system/mshv_int.h |   1 -
+ 3 files changed, 18 insertions(+), 103 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index e97f480551..facdc733e7 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -85,13 +85,81 @@ static int set_time_freeze(int vm_fd, int freeze)
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 9ba837f0e2..52b8ac9479 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -36,93 +36,6 @@ void mshv_init_msicontrol(void)
+     msi_control->updated = false;
+ }
+ 
+-static int add_msi_routing(uint64_t addr, uint32_t data)
+-{
+-    struct mshv_user_irq_entry *route_entry;
+-    uint32_t high_addr = addr >> 32;
+-    uint32_t low_addr = addr & 0xFFFFFFFF;
+-    int gsi;
+-    GHashTable *gsi_routes;
+-
+-    trace_mshv_add_msi_routing(addr, data);
+-
+-    assert(msi_control);
+-
+-    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
+-        /* find an empty slot */
+-        gsi = 0;
+-        gsi_routes = msi_control->gsi_routes;
+-        while (gsi < MSHV_MAX_MSI_ROUTES) {
+-            route_entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
+-            if (!route_entry) {
+-                break;
+-            }
+-            gsi++;
+-        }
+-        if (gsi >= MSHV_MAX_MSI_ROUTES) {
+-            error_report("No empty gsi slot available");
+-            return -1;
+-        }
+-
+-        /* create new entry */
+-        route_entry = g_new0(struct mshv_user_irq_entry, 1);
+-        route_entry->gsi = gsi;
+-        route_entry->address_hi = high_addr;
+-        route_entry->address_lo = low_addr;
+-        route_entry->data = data;
+-
+-        g_hash_table_insert(gsi_routes, GINT_TO_POINTER(gsi), route_entry);
+-        msi_control->updated = true;
+-    }
+-
+-    return gsi;
+-}
+-
+-static int commit_msi_routing_table(int vm_fd)
+-{
+-    guint len;
+-    int i, ret;
+-    size_t table_size;
+-    struct mshv_user_irq_table *table;
+-    GHashTableIter iter;
+-    gpointer key, value;
+-
+-    assert(msi_control);
+-
+-    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
+-        if (!msi_control->updated) {
+-            /* nothing to update */
+-            return 0;
+-        }
+-
+-        /* Calculate the size of the table */
+-        len = g_hash_table_size(msi_control->gsi_routes);
+-        table_size = sizeof(struct mshv_user_irq_table)
+-                     + len * sizeof(struct mshv_user_irq_entry);
+-        table = g_malloc0(table_size);
+-
+-        g_hash_table_iter_init(&iter, msi_control->gsi_routes);
+-        i = 0;
+-        while (g_hash_table_iter_next(&iter, &key, &value)) {
+-            struct mshv_user_irq_entry *entry = value;
+-            table->entries[i] = *entry;
+-            i++;
+-        }
+-        table->nr = i;
+-
+-        trace_mshv_commit_msi_routing_table(vm_fd, len);
+-
+-        ret = ioctl(vm_fd, MSHV_SET_MSI_ROUTING, table);
+-        g_free(table);
+-        if (ret < 0) {
+-            error_report("Failed to commit msi routing table");
+-            return -1;
+-        }
+-        msi_control->updated = false;
+-    }
+-    return 0;
+-}
+-
+ /* Pass an eventfd which is to be used for injecting interrupts from userland */
+ static int irqfd(int vm_fd, int fd, int resample_fd, uint32_t gsi,
+                  uint32_t flags)
+@@ -420,37 +333,45 @@ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *event,
+     return irqchip_update_irqfd_notifier_gsi(event, NULL, virq, false);
+ }
+ 
+-int mshv_reserve_ioapic_msi_routes(int vm_fd)
++static int mshv_reserve_ioapic_msi_routes(MshvState *s)
+ {
+-    int ret, gsi;
++    int ret, i;
++    int gsi = 0;
++    struct mshv_user_irq_entry blank_entry = { 0 };
+ 
+     /*
+      * Reserve GSI 0-23 for IOAPIC pins, to avoid conflicts of legacy
+      * peripherals with MSI-X devices
+      */
+-    for (gsi = 0; gsi < IOAPIC_NUM_PINS; gsi++) {
+-        ret = add_msi_routing(0, 0);
++    for (i = 0; i < IOAPIC_NUM_PINS; i++) {
++        /* ret = add_msi_routing(0, 0); */
++        ret = irqchip_allocate_gsi(s, &gsi);
+         if (ret < 0) {
+-            error_report("Failed to reserve GSI %d", gsi);
++            error_report("Failed to reserve GSI %d: %s", gsi, strerror(-ret));
+             return -1;
+         }
++        blank_entry.gsi = gsi;
++        add_routing_entry(s, &blank_entry);
+     }
+ 
+-    ret = commit_msi_routing_table(vm_fd);
+-    if (ret < 0) {
+-        error_report("Failed to commit reserved IOAPIC MSI routes");
+-        return -1;
+-    }
++    mshv_irqchip_commit_routes(s);
+ 
      return 0;
  }
  
-+static int get_reference_time(int vm_fd, uint64_t *ref_time)
-+{
-+    int ret;
-+    struct hv_input_get_partition_property in = {0};
-+    struct hv_output_get_partition_property out = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_REFERENCE_TIME;
-+
-+    args.code = HVCALL_GET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+    args.out_sz = sizeof(out);
-+    args.out_ptr = (uint64_t)&out;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to get reference time");
-+        return -1;
-+    }
-+
-+    *ref_time = out.property_value;
-+    return 0;
-+}
-+
- static void mshv_save_state(QEMUFile *f, void *opaque)
+ void mshv_init_irq_routing(MshvState *s)
  {
--    return;
-+    MshvState *s = opaque;
-+    uint64_t ref_time;
 +    int ret;
+     int gsi_count = MSHV_MAX_MSI_ROUTES;
+ 
+     s->irq_routes = g_malloc0(sizeof(*s->irq_routes));
+     s->nr_allocated_irq_routes = 0;
+     s->gsi_count = gsi_count;
+     s->used_gsi_bitmap = bitmap_new(gsi_count);
 +
-+    ret = get_reference_time(s->vm, &ref_time);
++    ret = mshv_reserve_ioapic_msi_routes(s);
 +    if (ret < 0) {
-+        error_report("Failed to get reference time for migration");
++        error_report("Failed to reserve IOAPIC MSI routes");
 +        abort();
 +    }
-+
-+    qemu_put_be64(f, ref_time);
-+}
-+
-+static int set_reference_time(int vm_fd, uint64_t ref_time)
-+{
-+    int ret;
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_REFERENCE_TIME;
-+    in.property_value = ref_time;
-+
-+    args.code = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set reference time");
-+        return -1;
-+    }
-+
-+    return 0;
  }
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 8acb080db1..08bc26713f 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -200,11 +200,6 @@ static int create_vm(int mshv_fd, int *vm_fd)
+         return -1;
+     }
  
- static int mshv_load_state(QEMUFile *f, void *opaque, int version_id)
- {
-+    MshvState *s = opaque;
-+    uint64_t ref_time;
-+    int ret;
-+
-+    ref_time = qemu_get_be64(f);
-+
-+    ret = set_reference_time(s->vm, ref_time);
-+    if (ret < 0) {
-+        error_report("Failed to set reference time after migration");
-+        return -1;
-+    }
-     return 0;
- }
+-    ret = mshv_reserve_ioapic_msi_routes(*vm_fd);
+-    if (ret < 0) {
+-        return -1;
+-    }
+-
+     ret = mshv_arch_post_init_vm(*vm_fd);
+     if (ret < 0) {
+         return -1;
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 56fda76a9c..9bc56e70cf 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -120,6 +120,5 @@ int mshv_configure_msr(const CPUState *cpu, const MshvMsrEntry *msrs,
  
+ /* interrupt */
+ void mshv_init_msicontrol(void);
+-int mshv_reserve_ioapic_msi_routes(int vm_fd);
+ 
+ #endif
 -- 
 2.34.1
 
