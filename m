@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E7EF8E4A7
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 06:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3731EF8E4A7
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 06:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDce1-0000sY-Ar; Fri, 17 Apr 2026 02:25:37 -0400
+	id 1wDcfi-0001q6-3q; Fri, 17 Apr 2026 02:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcdu-0000oP-Mx
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:25:30 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcff-0001ny-0Q
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:27:19 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcdt-0006VY-3d
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:25:30 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso2333575e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 23:25:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDcfd-0006kD-6M
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 02:27:18 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso2348375e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 23:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776407127; x=1777011927; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776407229; x=1777012029; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=o1/hejH9prSEAqV29hSvwmrGNQTJ/M93YPjB8sxTQ44=;
- b=GZ4Eo7Y6KgIJOwJAPbwgQQiBQLeEDIPGYgx90cU7QhnhVP12BjlEK7cuI9MfH7Y2jq
- Vld3B1VSJ57GwYdICtahTDQXSoPMKxGYID36MX3SN9hChKoLKy3lHAovoHCe0/rruf7K
- Hv0PUNp29dP9skjWlpVsI6JVOgtyYQvodhyqgf+21X946z80sUrnRJSIRaHT1TsPQzAX
- /QwSPJNC1bj9D/K4ZXZK6N2qGZlRJpV06W6jBCuStfRiZd+lGlolZfmBs8ikZ9CTQwAS
- +azDdAtVxED23h0NnViSK8MtrgCADqYbdSnvtSkOz0bp8JaA09SXhOjXFgs4fenqxBTD
- bOyw==
+ bh=uZBK7VnQA184JDVn213bMuprP8pWfTARfJ1pC1t6qzk=;
+ b=J45i7XewuHsAUzD/id32G5i9GIgxcC4Hj3t2kWvLqGHY3enc1gTxCmNpy7FjwHtf6D
+ XybKErk9OW9Ww5OGOYFa3O+eiCFH03FLEcqBAU/8X6RhwA11BjIILDlewgczJujo6IdH
+ 0hwUA0tF92ovJKQgZrcqxWrVqcOtOjOeH/2WgPk3zXFYGHozisMg1iXDtYTiZnoOU18V
+ Xz1Ybs+vJfenTRC++ZFHh68nF6egHaI2gi3+AdMwASPhA08G5F8iGS3CPiRMzZc7hrDh
+ 4iZDY3SFJEU3n8vXDhy51WFNh26FEEP1uyHA7RKknYFVa9lOoOS1InCu1puP0x4eJKjq
+ YTBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776407127; x=1777011927;
+ d=1e100.net; s=20251104; t=1776407229; x=1777012029;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=o1/hejH9prSEAqV29hSvwmrGNQTJ/M93YPjB8sxTQ44=;
- b=KtVnrTaYxZtMjWSxyCicsCJcPos0rQTHRGOdsnKmkgaTFTB1VoU4FfaJ3XzeM/+MSl
- MeDfNrnWEZCnzU9mlhOki5rUwOidrtvKpcceGs9lSxHTo1IB42nnlUihUzC9Di5gB6Yf
- o9Hu0s8WCGh4DBLNZJWcJO6HMpfvPphn8umeq3SkviiItutYYSg3AS4UvqWegKGo3kBL
- WJ/zfJtWaEARXG925W+CXzempC1LXSn36NdTb29Db5LljkiP9ScZpAqznnI7jW5/TUsd
- z8n71jPd9+5uEoMxzCQ1SAB7abpSSZ//0kK1KZ8Aqs7L3mIZ2uxLjZj03id9Je0NsKsw
- Br8w==
+ bh=uZBK7VnQA184JDVn213bMuprP8pWfTARfJ1pC1t6qzk=;
+ b=UE8BmF1ciPPj99UBXekk1nIeW9ahkm0OitNZad6L6B4jmIVWY9IgGnW63A1yGFBbSc
+ Kv0ZAasPUm1GChZ0iEGQTexI8ZCWFxL4tKWaEXwxsK6ByFjv/cIHfbdXAnKngGMw/Ter
+ t1B+0X4kEa2XxiJmlZQ+HXORYdPtygFaoNx02fG/EedPHxX2jV7XqMiONu5orfcUuiEU
+ nmP/kbNZ1S+QHB+BBwMJYvXFqU8j5/EJeFTRnjiV46HiKZNczoNF9wPr48Upu7ff18zq
+ 5Byqxayo4RmBnHLtDd1IJMmvj7ibheyLNsFyIPVGeJSomIXsZBx7slmcKILvXETheP7v
+ jLmw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ85Yj1zLO2gze18Hyov9Rzl0pJ9kXjvBMXeXaRCMDFhp0kgFxsYUQmGasMHTqhC+dwTKYXWfvOHy3IV@nongnu.org
-X-Gm-Message-State: AOJu0Yw6eJ8Xkv8vZJRlymAcLrT4yoDipliQ2kQJPd4W96gX+XzJncJz
- OvUrd3W9BkI8TPgu1vwodajL/pe/SJdfCMv1L/7XdUmKW3q8V9QOznZwGS6BMXgGp38=
-X-Gm-Gg: AeBDieuSiS2e168CvHw+2WbCGrDNXHwuyznKfXqhO6fKVhQEv/kikNTMU7iXlTpCjoB
- 21Zpw/3AWSu/A2+BklzD4gsQFf7C4grqaKsLoQJS5yx7xzwishEHj0e7ky1IKpxY+0FE/FBtmJB
- q0Nw1FetxbCW3VzpG2zOQl4h6EE2XXXOPl3m93n6LV5SWCehxqh4tWr742YuPdavb8qOd+skEx3
- s/9gk9vaW2B0kYJWAGQISQsM8XfiEtqHUlyDGxQtbwhPNaMhOX/I6FAesg1UmNIWA7CzFZTW/0Q
- qd7cfKvqYBZE1ZlP0FkYvM/Z4O1AmBbqx3C1EHgyB1nJ1qf0bw8XoSvNkRFyJr75b8/WXNX7MU3
- rVf4il+qkxu0mM398eTHjV5mq7hH0vacqI4gJ7cW9BIEJ8dnJ1jhUcU2PNsgz6ABJtou1mTF21V
- ZxIMFR301mnlpPoohXSld8ypLu7eBXQdr+jUdvFezCpHNdBmQmQCNJnzMUhPJTV7lDb82A22x1W
- N5jhiIKZKEAh6Q=
-X-Received: by 2002:a05:600c:a00f:b0:486:fe83:8621 with SMTP id
- 5b1f17b1804b1-488fb788924mr20000265e9.23.1776407126854; 
- Thu, 16 Apr 2026 23:25:26 -0700 (PDT)
+ AFNElJ8lpqU4JSRYvnfcXsBLIMKQqg+7iHTTWn83I5xaxGbNkMiNa41vv4xeeuGAUggTo5/OsKidCP7A/kd2@nongnu.org
+X-Gm-Message-State: AOJu0Ywixk4QT2ATM/vF88sFwjYIZyyQzdju4eHd/DFgX4HqCREYRaey
+ 3tuFQ3RI9XXFP6lfa1PEGiPWclr1cpyPlZxyH8Pl17Y4qRK82E3SG9lVKAa9strevJk=
+X-Gm-Gg: AeBDieue6cBVdapGl8MRTva2jDPM6POW3M1+UfvbFJXDA9Ua6r5thIBd4bmCE438r7u
+ chax6W2MCwRV41PLN4gI53Rpyh5jy4JGoZXqR5YcmjJUQ+o9sLbaxw0kxZGWe1dGBOoFbx0TKCb
+ qCcEmindZHpmxDYbKf3jBW97Xi/e9v5SAtY/mK5EGXyqog2s+x2AtQqb9RmZWIm0ivljuDAAjit
+ gK+91NBepyWka+MW1xrvcpC8AxAv/hTrQGCGA21Tu3uziK8LpNvLIEyb0suxprx3szGc/hB7ruP
+ mSg464mjop67OKBzPyCutkc3NNfp10V3vQPbRpwbwgxRfmVEnzy8zyZ5CeA5sNyC3j0LcWKwETd
+ fbyDcnJM7sQqJh2NYjgLAS72oQZ6Nz8oRdqm7Wo0ZiSJcuOdp1BtmgmaovKUUZFOg1ZMikBPrah
+ 96Zxr49u1E7IOPjPiMazULMm9jG2V1+LjvOi9a3K1Ke0RRy86aTmR+zYDDEYzXg+0yLUyNiXXGL
+ D5E
+X-Received: by 2002:a05:600c:3513:b0:488:a977:8de with SMTP id
+ 5b1f17b1804b1-488fb77a3a7mr18327335e9.16.1776407229345; 
+ Thu, 16 Apr 2026 23:27:09 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb7c2167sm8949195e9.36.2026.04.16.23.25.25
+ ffacd0b85a97d-43fe4cb1365sm1944840f8f.7.2026.04.16.23.27.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Apr 2026 23:25:26 -0700 (PDT)
-Message-ID: <0503f085-784f-40fd-842d-07c6b66373b3@linaro.org>
-Date: Fri, 17 Apr 2026 08:25:25 +0200
+ Thu, 16 Apr 2026 23:27:08 -0700 (PDT)
+Message-ID: <1738caec-dfa0-4d88-b7dd-5eabc075f5ef@linaro.org>
+Date: Fri, 17 Apr 2026 08:27:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/17] hw/arm/aspeed_ast27x0: Set EHCI descriptor
- address offset
+Subject: Re: [PATCH v3 16/17] tests/functional/arm/test_aspeed_ast2600_sdk:
+ Add USB EHCI test for AST2600 SDK
 Content-Language: en-US
 To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
@@ -83,13 +83,13 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
 Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>
 References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
- <20260416014928.1279360-16-jamin_lin@aspeedtech.com>
+ <20260416014928.1279360-17-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260416014928.1279360-16-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260416014928.1279360-17-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,40 +113,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/4/26 03:50, Jamin Lin wrote:
-> On AST2700 platforms, system DRAM is mapped above 4GB with the
-> base address at 0x400000000.
+> Add a functional test to verify USB EHCI support on the AST2600
+> SDK machine by attaching a USB keyboard device and checking its
+> enumeration via lsusb.
 > 
-> The Linux EHCI driver programs the segment register to zero when
-> 64-bit addressing is supported. As a result, descriptor addresses
-> derived from the EHCI registers do not include the DRAM base
-> address.
-> 
-> Descriptor memory is allocated through the DMA API with a 64-bit
-> DMA mask, which allows descriptors to be placed in DRAM above 4GB.
-> When running on AST2700, this means EHCI queue heads (QH) and queue
-> element transfer descriptors (qTD) reside at addresses starting
-> from 0x400000000.
-> 
-> Set the descriptor-addr-offset property to the DRAM base so the
-> emulated EHCI controller can construct the correct descriptor
-> addresses when accessing system memory.
+> This introduces a helper routine that runs lsusb in the guest
+> and validates that the emulated "QEMU USB Keyboard" is detected.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 4a1f7cad73..3cdbf78ac1 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -858,6 +858,9 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->       for (i = 0; i < sc->ehcis_num; i++) {
->           object_property_set_bool(OBJECT(&s->ehci[i]), "caps-64bit-addr", true,
->                                    &error_abort);
-> +        object_property_set_int(OBJECT(&s->ehci[i]), "descriptor-addr-offset",
-> +                                sc->memmap[ASPEED_DEV_SDRAM],
-> +                                &error_abort);
+>   tests/functional/arm/test_aspeed_ast2600_sdk.py | 7 +++++++
+>   1 file changed, 7 insertions(+)
 
-Squash with previous? Or invert 14 <-> 15 order?
+This should be patch #1 :)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
