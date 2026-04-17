@@ -4,107 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B187F436A3
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 13:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B186F436A3
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 13:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDjK7-0006HW-0b; Fri, 17 Apr 2026 09:33:31 -0400
+	id 1wDjNM-0006xp-Mg; Fri, 17 Apr 2026 09:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wDjK5-0006Gy-94
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:33:29 -0400
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wDjK3-0002QG-8P
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:33:29 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id 4295CEC011D;
- Fri, 17 Apr 2026 09:33:25 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Fri, 17 Apr 2026 09:33:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1776432805; x=1776519205; bh=ebQVo28ykEouTYcWlYkvKa13I7iv0swc
- 7G6GTtqJSIk=; b=cW7YjJkt1yvfIpBkgkxkyhI2qYqGyJ2ii0GWhWSTCldWMaud
- F4OMj8SiTdQZz8/Opsw5dVsylfSFjV3aGNa2O6lMnFJ0HKFNNFh6hTzJG/Gc73ZG
- Ycecvp9lD2/Z2xk/MPF6Tmff6Vn7dGEhZhLhQ/7/qyLpYmJCFpNeJydrSjCmD5aD
- 44Ub/ribvb+d7qlmy80fXXz8HF1G+zLhCY9SdiQFTMkLVeIaB8HNhYMZBzNQdRYv
- RYb9vyowigBiSw1F1KAko64bvLWzJPmHfQGrp/+iRxaN1mC4raTzoInNgM8BawFK
- fVXK0B7wrFmOAzlAu94FQ8mDS5quGtcBjCeblA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776432805; x=
- 1776519205; bh=ebQVo28ykEouTYcWlYkvKa13I7iv0swc7G6GTtqJSIk=; b=Z
- RBp8b6QjcYx8PpTgtU6Z3OrbbrhiqdH30gWGZwOfGBC84yCmTXjrqnqeCqEQUY9F
- X5w+2FbwT8atNEshCKTr5vDijg1K0rxUfZy6po3wIzgLOSG7Hmdq3tWFyLqQhIvz
- mAvYtG4Ja213okgMuQ3TgbDKSYRXJy70ua2u83Wxz5ambLrbTBgHQaakF7D/cgqY
- PBLl8RvWCUX6nG6N1uj5xsS/E+DQ5+prdLW7aekyQtsbo8e0ekoJmAIxZ5KmjqKx
- 0gyaZnllG2eGOXEe0bfhRvOVDjRb03+dK5wrnsCL2TA6TaiLykSju/i2vzz3MKEk
- zydhGNDKCMvNHxNIKu3GA==
-X-ME-Sender: <xms:pDbiabObYTxJVAxGJwjgtnhKgsdTaAQYIoidi5q0uZCc4ZJqXjiI9A>
- <xme:pDbiac_dpI0sxytLV7RqiTdcUHC1X3KrAeD-Pm_Q5FXEEfGX_JiCkvSJhEtNDpaXN
- Oij_M4KhbJyCW6EybQSAfyzVoI5sE7_hOYBTJLk-_09--oHnvuCci4>
-X-ME-Received: <xmr:pDbiafR4ONk7GVzdAp3TmPEpGStkAitRDMZMBz2gmDQemepY5VPvkLVOlegO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehtddtudcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
- cuvffnffculdejtddmnecujfgurhepggfgtgffkffhvfevuffofhgjsehtqhertdertdej
- necuhfhrohhmpedfvehhrgguucflrggslhhonhhskhhifdcuoegthhgrugesjhgrsghloh
- hnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepvedukeeffedtkeekgfdvgeduheef
- ueegheeftdeuheeiheeggfegtedthefgheetnecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhn
- sggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvggrud
- gvsehprhhothhonhdrmhgvpdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdig
- hiiipdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoh
- epqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:pDbiaenFxits_DMXoMbENipzv9v5_sMMU0AMyC-tAxIDdNwdddTTTQ>
- <xmx:pDbiafTPfmcawMChlIGFxzrBYuDjMRGyu_UPuO25aK0040s-cj8lQg>
- <xmx:pDbiacMQWpueZOF5Pq06zgtGV5I3fuXCx4TsamCOYCPmBQwITSEnlg>
- <xmx:pDbiaYVoFyZsaLMF4UyIr7wREpsyqTcUl0YaytFndUVuFNYo_AiSzA>
- <xmx:pTbiabiAHLcNQBXeffTiIPLVQj7vXqb8e9lVwXM4M698OvNFt7II3nPb>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Apr 2026 09:33:24 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id c7a3817e;
- Fri, 17 Apr 2026 13:33:23 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 17 Apr 2026 09:33:23 -0400
-Message-Id: <DHVGVFPUN8S7.3N0XBLZGL3UZE@jablonski.xyz>
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
- <chad@jablonski.xyz>
-Cc: "Feifan Qian" <bea1e@proton.me>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 2/2] hw/display/ati: reset host_data.next on early
- returns in ati_host_data_flush()
-X-Mailer: aerc 0.21.0
-References: <U62ZPP3C0eUIUhmFb68h6Zbpn_gAjGsyJL3MlLsNd6Y4685t5cgo1IQEs3jQpw27LX8rbQaav04Kd-xLwbQXykyIUq2ouFnbFlMgXoKB_NY=@proton.me>
- <42adf9e0-6e57-08e1-5fce-94a43ebad32a@eik.bme.hu>
- <DHTVKTNF92GX.1CR2SGLBUGI6N@jablonski.xyz>
- <376dc5c2-5e10-ce42-3b2f-bebaf9f0f646@eik.bme.hu>
-In-Reply-To: <376dc5c2-5e10-ce42-3b2f-bebaf9f0f646@eik.bme.hu>
-Received-SPF: pass client-ip=103.168.172.144; envelope-from=chad@jablonski.xyz;
- helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDjNL-0006xZ-MR
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:36:51 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDjNK-0003oL-8n
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:36:51 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-488b150559bso5748265e9.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 06:36:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776433008; x=1777037808; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mShtuxJaJqzrioPkBLtonDyEYnArQLDycE8usXmr4qU=;
+ b=IBiz05T3gMUIhW7BpW0KwQTUhdV5w4YAJV0XqEAVAZfkUuW8GtkYlJRkjKhS5EE9ld
+ +EBmwpjRZXP6bq7JfU9+ac6Q3XuEyo6c1Oc3Xhkc9xT4nHTSOssfD8xzRm1yPy2FaowM
+ tXT6PLfEtZPaPWZXAnNgkARdobNO2GEFRHEhcwD9xPQbMo13Z+gjHvJd/JydMUyfjyYx
+ XJ4dxbFbZO8WLplbg4wyb6MrmzNRCt2yGjBs1k6FcWSm/njGB3JUNvsCaRZr2MQEGmMv
+ xSmCkxb4g0pg0gPmpJEf+BDn4K0oQ76DIhPGm1sxhpnOzZJFp8Z7VQNNzN3LV90zeBxc
+ qnzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776433008; x=1777037808;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mShtuxJaJqzrioPkBLtonDyEYnArQLDycE8usXmr4qU=;
+ b=AzQgmYC9LQhiWa0Gfj3Je5rBbdfCC8Eg4BlPWIFdrq0GuEpjGFjURw3C7x9ZNQJISm
+ foR2qjR7Ow6J4uSmKzOAiBp86P56DKEAoB5KmUcb6TUUi/hpHQ7YPnaQDeBfpdiZCwqm
+ b/qONPxsJrFt7MZyc9xyth5/Iz9zHTkdh66CY4WWZx+H4XI6xAGgGfbK9eY6fakPnkX8
+ 5kj0pS8+GmUXjPbxK1TCQ+Q7sczNV1heHJc7lCWKjmKRcG4De7ZUZx04x82hDxKtUbtk
+ I5uKIaLXnGYczaiLeBDw6bVDdGKTBD1M2CQ1FIOh/zEjOzEzH2bkgpfLbMLh5Bj0tk1m
+ PCVw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/5Nibqjb7aY1BjviA9qF+DxnW6BiNocfnrtsdDTW2D8PgMTimg0aUFqLbawczLkooolQ6deJfttjeo@nongnu.org
+X-Gm-Message-State: AOJu0YxqiL68k22/VbP7/UYi3kFn+X1+Il60QjxJwndLPlKlXzCQS5tx
+ Ew3nTJhYT0HGN/BCwmuN0iTnqPXy4N7k9NxxMnylv5QxBweXwTJdSUFZzO4zF0KdYcs=
+X-Gm-Gg: AeBDietcoXykCAwuWgcVatT33WU1MkrmNRqSmL+DutMQgo73NOV40ula1tD8/CwMuk3
+ kLMUtjKykmmCCcS56OephPhNinR+5BtMXA/zDa7i/dPaeSmMNzyc01FBLXu0SMDQ3cujvdif5f3
+ BumMjyGbpfFUTy7AZqCVDrq+YjkoWg9lJglu12cRYUBpg4HryX/T363PdZbtc5o/F8BNtdx8p1L
+ ri3eSHbGWhwY2zfywe8PTxMc5Q17S57Yoac18QzJ80sMIRzfmIUkrppF+gtoSVME7XfpNglfjLE
+ CqdDQeiXUUT0LSmMwkTod+bIlzIPiIyn9twUjmcR7zEHXXrLhiDA+vEp7Pwe1d4AvP3EiRvfRPi
+ x1aDh74wxmgTELwzReU7Otey4xGUgMEQtPfqTy8pzQcbVbqTSu3tEPu7tVMPomacFgvlK2OikRN
+ RwWwyUr+CB7Oy+P84AzpoR2NNA/dIA2H8JykoGSu2JCnkJZ2w4yJYNvff8dqmqWzxM2IyVZwwkM
+ ZK7
+X-Received: by 2002:adf:fe8b:0:b0:43f:e414:1bed with SMTP id
+ ffacd0b85a97d-43fe4141c7bmr2851040f8f.0.1776433008207; 
+ Fri, 17 Apr 2026 06:36:48 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4cc09b1sm4877983f8f.9.2026.04.17.06.36.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Apr 2026 06:36:47 -0700 (PDT)
+Message-ID: <fbb50386-e2e9-436d-b488-68f81a47fe42@linaro.org>
+Date: Fri, 17 Apr 2026 15:36:46 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/7] hw/sd/sdhci: Don't use bounce buffer for ADMA
+Content-Language: en-US
+To: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
+ <20260417-sdcard-performance-b4-v4-4-119e66be10c2@avm.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260417-sdcard-performance-b4-v4-4-119e66be10c2@avm.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,41 +106,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Apr 15, 2026 at 4:10 PM EDT, BALATON Zoltan wrote:
-> On Wed, 15 Apr 2026, Chad Jablonski wrote:
->> I agree with Zoltan on the overflow issue. I think it may be best fixed
->> by resetting next in the write handler after both ati_host_data_finish
->> and ati_host_data_flush. The next reset could be removed from inside of
->> ati_host_data_flush entirely. That way the write handler handles the ful=
-l
->> lifecycle of next and it's both clearer and much harder to miss if new
->> failure cases are added.
->>
->>>> + if (!ctx.bpp) {
->>>> + qemu_log_mask(LOG_GUEST_ERROR,
->>>> + "host_data_blt: invalid bpp\n");
->>>> + s->host_data.next =3D 0;
->>>> + return false;
->>>> + }
->>
->> This guard is separate from the acc overflow issue but worth keeping.
->
-> Without context I'm not sure where this was proposed to be added but=20
-> there's such check in ati_2d_do_blt. If we move this check out from there=
-=20
-> that one is not needed after adding similar check in ati_2d_blt too.=20
-> Having duplicate check seems unnecessary. Then should we move the=20
-> dst_stride check out of ati_2d_do_blt too?
->
-> Regards,
-> BALATON Zoltan
+On 17/4/26 11:51, Christian Speich wrote:
+> Currently, ADMA will temporarily store data into a local bounce buffer
+> when transferring it. This will produce unneeded copies of the data and
+> limit us to the bounce buffer size for each step.
+> 
+> This patch now maps the requested DMA address and passes this buffer
+> directly to sdbus_{read,write}_data. This allows to pass much larger
+> buffers down to increase the performance. sdbus_{read,write}_data is
+> already able to handle arbitrary length and alignments, so we do not
+> need to ensure this.
+> 
+> Signed-off-by: Christian Speich <c.speich@avm.de>
+> ---
+>   hw/sd/sdhci.c | 102 +++++++++++++++++++++++++++++++---------------------------
+>   1 file changed, 55 insertions(+), 47 deletions(-)
 
-
-Good point, I missed that the check also happens in ati_2d_blt. It was
-proposed to also add it to ati_host_data_flush. There is a possibility
-for a division by zero there before ati_2d_do_blt is called. A non-host
-data blit also calls ati_2d_blt so removing the check from that function
-means that path will no longer be covered. There may be a better way to
-organize this to avoid the duplication but does it make sense to get the
-overflow fix in first?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
