@@ -4,111 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76B31F436A1
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 13:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18077F436A3
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 13:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDjDu-0003xJ-4T; Fri, 17 Apr 2026 09:27:06 -0400
+	id 1wDjI4-0005jd-JA; Fri, 17 Apr 2026 09:31:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wDjDr-0003wl-1l
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:27:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wDjI2-0005jV-S2
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:31:23 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wDjDp-0008T7-Kl
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:27:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776432420;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TkKEtBNLy2N5J1c6O82yD0C+DpO7PoG1KTI1MijcaHc=;
- b=NqXf6oe+CDLvOnbYwI4vN3c3EWcykSDOiYWuRTsbW9bVsrgAUquWC41gYlmhO8iQJJ9FPd
- kVhAuLx/EgwNnei1tvws0jPSq+mbBj3YLMzuOyQcZWBYHVTIWQzyUxIbISSc9nM8v4dUmm
- mWWSfiiH8hZrBrD4KRESjQso4/5AeFM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-Bp_rsrDeM8qFEL25jYRISA-1; Fri, 17 Apr 2026 09:26:59 -0400
-X-MC-Unique: Bp_rsrDeM8qFEL25jYRISA-1
-X-Mimecast-MFC-AGG-ID: Bp_rsrDeM8qFEL25jYRISA_1776432418
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-488d2cd2674so5688045e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 06:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776432417; x=1777037217; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TkKEtBNLy2N5J1c6O82yD0C+DpO7PoG1KTI1MijcaHc=;
- b=lgzCXc2mDYbOeIBt4Bo0+ZgNRd3/kNNmHPqb+giWC6LFwpzAzkbA+cdjrsvNBo3Tn4
- ssIvk4L1iTQffunjBygrwZrqqSQMH1BGfTA2mPKsPqKRQd4KRm75cZ2OcXHUI3r4dmM/
- 6cHLy5NP1QcHjulwyADw249i9zYcxxqjjXoBpjqn2r21EJ/HKG7+s5KRJLqDOKvoC0Ax
- N9aB3tKAlZ6dMWBH9dTpWuLiF4TL8zpAn+O4CeSnIoxJvEuFAe9Lr6YL86NS3vYfs50M
- 3C0TH3ZPKMv8yXbeEkNcg0NTGk7MvsoXNJC/I0YHoCCNlGWpyoS6fv5jrrJOEA2gsTCQ
- /FYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776432417; x=1777037217;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TkKEtBNLy2N5J1c6O82yD0C+DpO7PoG1KTI1MijcaHc=;
- b=SJT0UZw4yordYXCwQhdn2MDk9c8RCvuiANIsOiyM18XLoIg0K5vj6dtX9drGUeiWm6
- fCFlA2gpbiYT/JvZdmF6IJgQhlYrJs/Wpjh34f/Y0hQ/SWGI9eEqI6Fe8NOmTSOX9VY2
- lUtnRAs+oo7eDw3sQIDkP5V0HYgBzUXU+gIXRUm3mAq13S2SKnZNWLXrYEjnZ3e39T4W
- MwlPEdvAW85L/7uk1nOhqNFbDzqZxPVuwK0Vh4hTOD7Gf1ZEO1wqLkIwx5EuIyVFicVg
- +TG0g08MIaADhLJTztYAPn/hkKJESApyyOCgtZFreX6he5F2avbKDJ09H4n70bAmUFBy
- 5Qkg==
-X-Gm-Message-State: AOJu0Yyr24coylA2dlguyYpoVuth433ulDCPytIPbCiXQE+774inHSK5
- yTtHzHX6rDkRJjat0VSW7TPrTfZyAdUQVpzNIqVvTsZgy7cnreKFt0BNeFDOhpDmGzgZcGLqjIJ
- u+ER1+c/6D3DFWQzNSq2ZBmoZeFEh8Ffg20B25zqPfcbJUGxTLNGKFN4AmuWCTaVKAslg23XQCo
- AxLdRQcoRLBtEPNVLfBf8R4wv0dL3lrUzNYUtUzTA7
-X-Gm-Gg: AeBDiesv9mUosCLLg/V88B5ykUl0jw97v+TeYe7Fc5Af3NuOg+TDrV6V7W7sgmGOjL+
- AiDhlyMo4iIPWdLxz4LXleXd9FYEEhZ4JHwPbkVKSzYiRWcfzqBAdZt1xcpXNHzDOAjyPq59DeY
- smZs89ZtH992z0rd0wCdijoAIYAe1oCkbDMMS9/abU/Vv1icLimhZonwiWGOCqQTlZANeNsGt0F
- KC0MD2lhhK0qtDiBDhv9JL8R5jedZONHF/ZhSkaH4aVqN327GO4AnbdgBSy4Dua1O6jk+LhjwJ7
- Fw3C1jkxUi8xXJpMxTGpfKupNYg1PYifeRRxfAUqcPIAPCTKdtAjDquwUIYw5unk0EQ28qsoWCo
- qKt23b5uRCsWP/ujbZhdyQFCraJflEQgnJmsBuGOCviuzDjrpaoJFUs7EzWUwJNgLQpkZGFxTOT
- /40J8O3r1+
-X-Received: by 2002:a05:600c:8588:b0:488:9619:9bf4 with SMTP id
- 5b1f17b1804b1-488fb771b04mr32560365e9.20.1776432417193; 
- Fri, 17 Apr 2026 06:26:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:8588:b0:488:9619:9bf4 with SMTP id
- 5b1f17b1804b1-488fb771b04mr32559645e9.20.1776432416610; 
- Fri, 17 Apr 2026 06:26:56 -0700 (PDT)
-Received: from stex1.redhat.corp (host-87-16-204-83.retail.telecomitalia.it.
- [87.16.204.83]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e59f97sm4819635f8f.37.2026.04.17.06.26.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 06:26:55 -0700 (PDT)
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Xie Yongji <xieyongji@bytedance.com>, qemu-stable@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, DARKNAVY <vr@darknavy.com>
-Subject: [PATCH 2/2] libvduse: fix buffer overflow in
- vduse_queue_read_indirect_desc()
-Date: Fri, 17 Apr 2026 15:26:45 +0200
-Message-ID: <20260417132645.121192-3-sgarzare@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260417132645.121192-1-sgarzare@redhat.com>
-References: <20260417132645.121192-1-sgarzare@redhat.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wDjI0-0001WS-Ms
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 09:31:22 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wDjHo-00000000sFj-0HaR; Fri, 17 Apr 2026 15:31:08 +0200
+Message-ID: <6ffa975c-9d13-4569-bd50-59df75c89b9c@maciej.szmigiero.name>
+Date: Fri, 17 Apr 2026 15:31:02 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 25/32] crypto: fix lifecycle handling of gnutls credentials
+ objects
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, Laurent Vivier <lvivier@redhat.com>
+References: <20251103133727.423041-1-berrange@redhat.com>
+ <20251103133727.423041-26-berrange@redhat.com>
+ <9163e2f3-4bb9-4010-964f-20ca66ba964f@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <9163e2f3-4bb9-4010-964f-20ca66ba964f@maciej.szmigiero.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,62 +109,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+On 3.04.2026 20:25, Maciej S. Szmigiero wrote:
+> On 3.11.2025 14:37, Daniel P. Berrangé wrote:
+>> As described in the previous commit, the gnutls credentials need to
+>> be kept alive for as long as the gnutls session object exists. Convert
+>> the QCryptoTLSCreds objects to use QCryptoTLSCredsBox and holding the
+>> gnutls credential objects. When loading the credentials into a gnutls
+>> session, store a reference to the box into the QCryptoTLSSession object.
+>>
+>> This has the useful side effect that the QCryptoTLSSession code no
+>> longer needs to know about all the different credential types, it can
+>> use the generic pointer stored in the box.
+>>
+>> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>> ---
+> (..)
+>> diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
+>> index 5c55b07b2f..0a728ccbf6 100644
+>> --- a/crypto/tlscredsanon.c
+>> +++ b/crypto/tlscredsanon.c
+>> @@ -36,6 +36,7 @@ static int
+>>   qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
+>>                               Error **errp)
+>>   {
+>> +    g_autoptr(QCryptoTLSCredsBox) box = NULL;
+>>       g_autofree char *dhparams = NULL;
+>>       int ret;
+>> @@ -43,6 +44,8 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
+>>               creds->parent_obj.dir ? creds->parent_obj.dir : "<nodir>");
+>>       if (creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER) {
+>> +        box = qcrypto_tls_creds_box_new_server(GNUTLS_CRD_ANON);
+>> +
+>>           if (creds->parent_obj.dir &&
+>>               qcrypto_tls_creds_get_path(&creds->parent_obj,
+>>                                          QCRYPTO_TLS_CREDS_DH_PARAMS,
+>> @@ -50,7 +53,7 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
+>>               return -1;
+>>           }
+>> -        ret = gnutls_anon_allocate_server_credentials(&creds->data.server);
+>> +        ret = gnutls_anon_allocate_server_credentials(&box->data.anonserver);
+>>           if (ret < 0) {
+>>               error_setg(errp, "Cannot allocate credentials: %s",
+>>                          gnutls_strerror(ret));
+>> @@ -58,42 +61,26 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
+>>           }
+>>           if (qcrypto_tls_creds_get_dh_params_file(&creds->parent_obj, dhparams,
+>> -                                                 &creds->parent_obj.dh_params,
+>> -                                                 errp) < 0) {
+>> +                                                 &box->dh_params, errp) < 0) {
+>>               return -1;
+>>           }
+>> -        gnutls_anon_set_server_dh_params(creds->data.server,
+>> -                                         creds->parent_obj.dh_params);
+>> +        gnutls_anon_set_server_dh_params(box->data.anonserver,
+>> +                                         box->dh_params);
+>>       } else {
+>> -        ret = gnutls_anon_allocate_client_credentials(&creds->data.client);
+>> +        ret = gnutls_anon_allocate_client_credentials(&box->data.anonclient);
+> 
+> Pointed question - where's the object pointed to by "box" allocated in this case
+> of an anonymous TLS client being loaded? :)
 
-vduse_queue_read_indirect_desc() copies an indirect descriptor table
-into a buffer in chunks when the table crosses a memory region
-boundary. The destination is a struct vring_desc pointer but is
-advanced by a byte count, so each increment moves the pointer by
-read_len elements instead of read_len bytes, writing beyond the
-buffer.
+To be clear, that was supposed to be a humorous report of a regression introduced
+by the above commit - sorry if it wasn't communicated well.
 
-Use a char pointer for the destination so that the arithmetic
-advances correctly.
+Reproducer:
+> $ qemu-system-x86_64 -object tls-creds-anon,endpoint=client,id=test
+> Segmentation fault
 
-While at it, change the source from a struct vring_desc pointer
-to a void pointer: when the table is split across regions,
-iova_to_va() can return a pointer into the middle of a descriptor,
-so casting it to a struct vring_desc pointer is wrong. The pointer is
-only used as a memcpy() source, so a void pointer is fine.
+The above code branch really needs something like
+"box = qcrypto_tls_creds_box_new_client(GNUTLS_CRD_ANON)".
 
-Fixes: CVE-2026-6425
-Fixes: a6caeee811 ("libvduse: Add VDUSE (vDPA Device in Userspace) library")
-Cc: qemu-stable@nongnu.org
-Reported-by: DARKNAVY <vr@darknavy.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
----
- subprojects/libvduse/libvduse.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+The bug is also present in the stable QEMU 10.2.
 
-diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
-index 21ffbb5b8d..df9ca5e56f 100644
---- a/subprojects/libvduse/libvduse.c
-+++ b/subprojects/libvduse/libvduse.c
-@@ -465,8 +465,9 @@ static int
- vduse_queue_read_indirect_desc(VduseDev *dev, struct vring_desc *desc,
-                                uint64_t addr, size_t len)
- {
--    struct vring_desc *ori_desc;
-+    char *dst_desc = (char *)desc;
-     uint64_t read_len;
-+    void *ori_desc;
- 
-     if (len > (VIRTQUEUE_MAX_SIZE * sizeof(struct vring_desc))) {
-         return -1;
-@@ -483,10 +484,10 @@ vduse_queue_read_indirect_desc(VduseDev *dev, struct vring_desc *desc,
-             return -1;
-         }
- 
--        memcpy(desc, ori_desc, read_len);
-+        memcpy(dst_desc, ori_desc, read_len);
-         len -= read_len;
-         addr += read_len;
--        desc += read_len;
-+        dst_desc += read_len;
-     }
- 
-     return 0;
--- 
-2.53.0
+Thanks,
+Maciej
 
 
