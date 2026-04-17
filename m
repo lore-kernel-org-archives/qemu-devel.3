@@ -4,101 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75ADAF8E4B4
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 07:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7E12F8E4B7
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 07:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDdJr-0005XX-GY; Fri, 17 Apr 2026 03:08:51 -0400
+	id 1wDdgD-0000co-Ts; Fri, 17 Apr 2026 03:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDdJp-0005Wi-CX
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 03:08:49 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDdJn-0006aM-Kv
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 03:08:49 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so4333935e9.2
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 00:08:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wDdg8-0000cW-4Q; Fri, 17 Apr 2026 03:31:53 -0400
+Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wDdg2-0004sW-3D; Fri, 17 Apr 2026 03:31:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776409725; x=1777014525; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PA1+9GsvYtm6Dcf0gcoLvAxSKheiEQ2EDTAci0trYTw=;
- b=SWIcIBM6DEUnufUPaQVm1USYhQrB/hwavnkkSboIiZtLv8ceNdzD45QPEGXLVl02Io
- IN+IoKDxpMkihSg0r3FUM79AHwDaDLRzfQTTePQOxZWjGC2UYHg9l7K/9yOA/gD5qpTF
- piKufcGTBK/b7IBBdrI3uGsRJN+0x0i24RWaV7PGVtcZcv26HPVrPg+J1OIJK53ZbgYa
- cTBRQZLgtj1/FgwECtM8qe1oIedV3sT9BQDHS9zp/qieJ1TEjZd1CT9/6zWX1onSfo7p
- 4DdH+xzUnfy3kjeohkQinp42YnBlBkx301kTC6obs/ylza0tcwhNWkucDN+HN/FgGEb6
- 7r+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776409725; x=1777014525;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PA1+9GsvYtm6Dcf0gcoLvAxSKheiEQ2EDTAci0trYTw=;
- b=EivIYV5iqxDDSBBDOa+WmUwiT4kxXBoGIFG/HagEKGWVMruvwLKepjkdYm0njaSLyf
- dzHaG+8U9hLKdMtfoSQo5w4WIAq1tsItex/+G8gel/2dEc7yI6ZyaHxGiMZgRn1kwwEI
- l4WqsIB0feIU5AeqKDGr/jjFXhteFLQb/EMmTxHMdf/DtYgjTxqsrQOkveq5wR3JYk6v
- dFGHohnea2LWpsVMmJO6gWt/7cSd2u3VA9frOtF47K8lusbeXf0UFlo3vF7OpoXxAytS
- oWLS3OIIjJByAmFJdGT1DVAj4+TJLF2Mc5UkRNHCxXhgoOhYO/gDI8Ny+AGdsLI6r/WT
- IyvA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+hm8GanhMXqtszcbFD6Xr8bDybIrThCm2yV1cQan3Qxx+DQ/905HJlJVG1t2WAZv1b9goHYjpDCwwN@nongnu.org
-X-Gm-Message-State: AOJu0YyLiR23FsIAJydqy82UKT/aPcm4/UDAeedolPPHeHaJYnxLi6Ed
- vpVa0+JoA88Yi1SUvDSvrV6vmbZzvr6U0LVzqJayb/gGOIX3oiRnceh3otC571xrkZY=
-X-Gm-Gg: AeBDietj6AsN0gm4e1Pa4fhQYoeCexFlV/e5roDIehR31YIXcPg2LKWmkJ0xogb1RR1
- 70MBxArwrXWVxQj3lJhMEABOhXqEVGgCfsPb/uh23+F1BNzXZGv90Z3nZuYzVf13dOoCw/Wbmo8
- wBCtYeCsEhAWomqEJk1yqPLHUwTqAdxDMKfSSiF3eWoV9AqT4t3rj0Af9Ld/OyUq88z50wMioMd
- PeK4H6DyeAKhGwb6Ligo4ET4iXW3ULjNayqFvdn44f8DgoldKzNsX9UWylgglHb2EMxZasSsMFU
- i+1YgJV6VuD62BLGxhPjlbd+UC0ZAF8PoxMCOWBdpw5Ac8KKfZCmUIg6IQ+HSsEdTsUFlueW6ou
- xBDctREAcV3mw6ZNR6d6EvalmZ1iMHqexiCHayAxDPFKn2OPMs1/xl4R0rRCgOyde7G5+jp5t7Z
- 7ZfnZ/p26ydVFIwUrMaBDFiUU8zsTZ3JuDa+div5qUbsj4Z5Azp74p/vdpreQgOQqK4I3uITdDh
- 15L
-X-Received: by 2002:a05:600c:458c:b0:488:bf0c:a372 with SMTP id
- 5b1f17b1804b1-488fb79330emr18532575e9.31.1776409724768; 
- Fri, 17 Apr 2026 00:08:44 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc143a0fsm22961465e9.14.2026.04.17.00.08.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Apr 2026 00:08:43 -0700 (PDT)
-Message-ID: <20ee6c39-d0ff-4e07-95e6-5aeb86dc0916@linaro.org>
-Date: Fri, 17 Apr 2026 09:08:42 +0200
+ d=linux.alibaba.com; s=default;
+ t=1776411082; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
+ bh=3B64ZhnIadtVJxtaKMGj5y5qDQqHOH/qy6lYLyeNxQk=;
+ b=O347Tzpsyo8pvYsaz3hnrMHEn0KmpxkBM8h7VOGXLOn/pc+ZWPtSdUNpDHyjHLcq1HTIICXQ7TPvMf3m4jNNiiLDSJjoP8vvMw0QiOmvuGjtzBpDLerp/UUyUFoLnTaGlYynpa/8Kd0oZoh9NDXlEiGLVEOLZsG6a7rF1qiSOwA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
+ TI=SMTPD_---0X1AZC1u_1776411072; 
+Received: from 30.166.65.16(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0X1AZC1u_1776411072 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 17 Apr 2026 15:31:21 +0800
+Content-Type: multipart/alternative;
+ boundary="------------yHLLXI06PJAevglGSQJYvqhI"
+Message-ID: <dfca67c1-9ee9-4797-9b9d-548e2ae3a883@linux.alibaba.com>
+Date: Fri, 17 Apr 2026 15:31:12 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/17] hw/usb/hcd-ehci: Add descriptor address offset
- property
+Subject: Re: [PATCH v5 2/6] target/riscv: Implement core SMMPT lookup logic
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com,
+ palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
+ Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
+ <20260408140635.42546-3-zhiwei_liu@linux.alibaba.com>
+ <CAKmqyKOCRdD5cUvux6W9Z_9fMXiZ0g5s1n6iWp7RkTmZBGvHXw@mail.gmail.com>
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
- <20260416014928.1279360-14-jamin_lin@aspeedtech.com>
- <04a8d8d9-f605-4bd3-8468-0e2840ae8311@kaod.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <04a8d8d9-f605-4bd3-8468-0e2840ae8311@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <CAKmqyKOCRdD5cUvux6W9Z_9fMXiZ0g5s1n6iWp7RkTmZBGvHXw@mail.gmail.com>
+Received-SPF: pass client-ip=115.124.30.98;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-98.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,72 +77,411 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/4/26 08:45, Cédric Le Goater wrote:
-> On 4/16/26 03:49, Jamin Lin wrote:
->> When 64-bit addressing is supported, the Linux EHCI driver programs the
->> segment register to zero. See ehci_run function:
->> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-hcd.c
+This is a multi-part message in MIME format.
+--------------yHLLXI06PJAevglGSQJYvqhI
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+
+On 4/10/26 9:36 AM, Alistair Francis wrote:
+> On Thu, Apr 9, 2026 at 12:07 AM LIU Zhiwei<zhiwei_liu@linux.alibaba.com> wrote:
+>> This patch introduces the core implementation for the Memory Protection Table
+>> (MPT) walk, which is the central mechanism of the SMMPT extension.
 >>
->> The driver comment also notes that descriptor structures allocated from
->> the DMA pool use segment zero semantics.
+>> A new file, `riscv_smmpt.c`, is added to encapsulate the MPT logic. It
+>> implements the `smmpt_lookup()` function, which performs a multi-level
+>> page table-like walk starting from the physical address specified in the
+>> `mptppn` CSR field. This walk determines the access permissions (read,
+>> write, execute) for a given physical address.
 >>
->> Descriptor memory is allocated using the DMA API. The platform driver
->> configures a 64-bit DMA mask so memory can be allocated above 4GB.
->> See ehci_platform_probe function:
->> https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci- 
->> platform.c
+>> The implementation supports various SMMPT modes (SMMPT34, SMMPT43, etc.) and
+>> correctly handles leaf and non-leaf entries, including reserved bit
+>> checks. Helper functions for parsing MPT entries and converting access
+>> permissions are also included in the new `riscv_smmpt.h` header.
 >>
->> On AST2700 platforms, system DRAM is mapped above 4GB at 0x400000000.
->> As a result, descriptor addresses constructed directly from the guest
->> EHCI registers do not match the actual system address used by the
->> controller when fetching queue heads (QH) and queue element transfer
->> descriptors (qTD).
->>
->> Introduce a descriptor-addr-offset property so platforms can provide an
->> address offset applied when constructing descriptor addresses. This
->> allows systems where DRAM resides above 4GB to correctly access EHCI
->> descriptors while keeping the default behavior unchanged for existing
->> machines.
->>
->> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>> Co-authored-by: Huang Tao<eric.huang@linux.alibaba.com>
+>> Co-authored-by: TANG Tiancheng<lyndra@linux.alibaba.com>
+>> Signed-off-by: LIU Zhiwei<zhiwei_liu@linux.alibaba.com>
+>> Reviewed-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
 >> ---
->>   hw/usb/hcd-ehci.h        | 1 +
->>   hw/usb/hcd-ehci-pci.c    | 2 ++
->>   hw/usb/hcd-ehci-sysbus.c | 2 ++
->>   hw/usb/hcd-ehci.c        | 7 ++++++-
->>   4 files changed, 11 insertions(+), 1 deletion(-)
-
-
->> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
->> index e1d5ecbad7..ea9d5846bc 100644
->> --- a/hw/usb/hcd-ehci.c
->> +++ b/hw/usb/hcd-ehci.c
->> @@ -162,7 +162,12 @@ static uint64_t ehci_get_buf_addr(EHCIState *s, 
->> uint32_t hi, uint32_t low,
->>   static uint64_t ehci_get_desc_addr(EHCIState *s, uint32_t low)
->>   {
->> -    return ehci_get_buf_addr(s, s->ctrldssegment, low, UINT32_MAX);
->> +    uint64_t addr;
+>>   target/riscv/cpu_helper.c  |   5 +-
+>>   target/riscv/meson.build   |   1 +
+>>   target/riscv/pmp.h         |   3 +
+>>   target/riscv/riscv_smmpt.c | 274 +++++++++++++++++++++++++++++++++++++
+>>   target/riscv/riscv_smmpt.h |  15 ++
+>>   5 files changed, 295 insertions(+), 3 deletions(-)
+>>   create mode 100644 target/riscv/riscv_smmpt.c
+>>
+>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>> index dd6c861a90..e3361fadae 100644
+>> --- a/target/riscv/cpu_helper.c
+>> +++ b/target/riscv/cpu_helper.c
+>> @@ -1089,9 +1089,8 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
+>>    * @access_type: The type of MMU access
+>>    * @mode: Indicates current privilege level.
+>>    */
+>> -static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+>> -                                    int size, MMUAccessType access_type,
+>> -                                    int mode)
+>> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+>> +                             int size, MMUAccessType access_type, int mode)
+>>   {
+>>       pmp_priv_t pmp_priv;
+>>       bool pmp_has_privs;
+>> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+>> index 3842c7c1a8..bd1c2e8fad 100644
+>> --- a/target/riscv/meson.build
+>> +++ b/target/riscv/meson.build
+>> @@ -34,6 +34,7 @@ riscv_system_ss = ss.source_set()
+>>   riscv_system_ss.add(files(
+>>     'arch_dump.c',
+>>     'pmp.c',
+>> +  'riscv_smmpt.c',
+>>     'debug.c',
+>>     'monitor.c',
+>>     'machine.c',
+>> diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+>> index 467fb6b4b1..1ed574227c 100644
+>> --- a/target/riscv/pmp.h
+>> +++ b/target/riscv/pmp.h
+>> @@ -86,6 +86,9 @@ void pmp_update_rule_nums(CPURISCVState *env);
+>>   uint32_t pmp_get_num_rules(CPURISCVState *env);
+>>   int pmp_priv_to_page_prot(pmp_priv_t pmp_priv);
+>>   void pmp_unlock_entries(CPURISCVState *env);
+>> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+>> +                             int size, MMUAccessType access_type,
+>> +                             int mode);
+>>
+>>   #define MSECCFG_MML_ISSET(env) get_field(env->mseccfg, MSECCFG_MML)
+>>   #define MSECCFG_MMWP_ISSET(env) get_field(env->mseccfg, MSECCFG_MMWP)
+>> diff --git a/target/riscv/riscv_smmpt.c b/target/riscv/riscv_smmpt.c
+>> new file mode 100644
+>> index 0000000000..b7b47c5ae1
+>> --- /dev/null
+>> +++ b/target/riscv/riscv_smmpt.c
+>> @@ -0,0 +1,274 @@
+>> +/*
+>> + * QEMU RISC-V Smmpt (Memory Protection Table)
+>> + *
+>> + * Copyright (c) 2024 Alibaba Group. All rights reserved.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
 >> +
->> +    addr = ehci_get_buf_addr(s, s->ctrldssegment, low, UINT32_MAX);
->> +    addr += s->descriptor_addr_offset;
-> 
-> 
-> Instead, can we force a default value for ctrldssegment when
-> caps_64bit_addr is set ?
-> 
-> I am still trying to digest :
-> 
->    https://lore.kernel.org/qemu-devel/ 
-> TYPPR06MB8206C7461E004C4FF07B8E92FC242@TYPPR06MB8206.apcprd06.prod.outlook.com/
+>> +#include "qemu/osdep.h"
+>> +#include "riscv_smmpt.h"
+>> +#include "pmp.h"
+>> +#include "system/memory.h"
+>> +
+>> +typedef uint64_t load_entry_fn(AddressSpace *, hwaddr,
+>> +                               MemTxAttrs, MemTxResult *);
+>> +
+>> +static uint64_t load_entry_32(AddressSpace *as, hwaddr addr,
+>> +                              MemTxAttrs attrs, MemTxResult *result)
+>> +{
+>> +    return address_space_ldl(as, addr, attrs, result);
+>> +}
+>> +
+>> +static uint64_t load_entry_64(AddressSpace *as, hwaddr addr,
+>> +                              MemTxAttrs attrs, MemTxResult *result)
+>> +{
+>> +    return address_space_ldq(as, addr, attrs, result);
+>> +}
+>> +
+>> +typedef union {
+>> +    uint64_t raw;
+>> +    struct {
+>> +        uint32_t v:1;
+>> +        uint32_t l:1;
+>> +        uint32_t rsv1:5;
+>> +        uint32_t perms:24;
+>> +        uint32_t n:1;
+>> +    } leaf32;
+>> +    struct {
+>> +        uint32_t v:1;
+>> +        uint32_t l:1;
+>> +        uint32_t rsv1:8;
+>> +        uint32_t ppn:22;
+>> +    } nonleaf32;
+>> +    struct {
+>> +        uint64_t v:1;
+>> +        uint64_t l:1;
+>> +        uint64_t rsv1:8;
+>> +        uint64_t perms:48;
+>> +        uint64_t rsv2:5;
+>> +        uint64_t n:1;
+>> +    } leaf64;
+>> +    struct {
+>> +        uint64_t v:1;
+>> +        uint64_t l:1;
+>> +        uint64_t rsv1:8;
+>> +        uint64_t ppn:52;
+>> +        uint64_t rsv2:1;
+>> +        uint64_t n:1;
+>> +    } nonleaf64;
+>> +} mpte_union_t;
+> There is no guarantee in C that these bit fields are packed and laid
+> out like you are expecting
+>
+>> +
+>> +static inline bool mpte_is_leaf(uint64_t mpte)
+>> +{
+>> +   return mpte & 0x2;
+>> +}
+>> +
+>> +static inline bool mpte_is_valid(uint64_t mpte)
+>> +{
+>> +    return mpte & 0x1;
+>> +}
+>> +
+>> +static uint64_t mpte_get_rsv(CPURISCVState *env, uint64_t mpte)
+>> +{
+>> +    RISCVMXL mxl = riscv_cpu_mxl(env);
+>> +    bool leaf = mpte_is_leaf(mpte);
+>> +    mpte_union_t *u = (mpte_union_t *)&mpte;
+> So this cast
+>
+>> +
+>> +    if (mxl == MXL_RV32) {
+>> +        return leaf ? u->leaf32.rsv1 : u->nonleaf32.rsv1;
+> and these accesses are not valid.
+>
+> On some platforms this will work, but on others it won't
+>
+> See the notes here
+> https://en.cppreference.com/w/cpp/language/bit_field.html for more
+> details
 
-Same here, but since it doesn't break and I don't have much more time
-to dedicate to this I ended thinking "good enough for now, could be
-improved later", so no objection on my side.
+Good point, thanks. You're right that using C bit-fields here is not 
+portable and relies on implementation-defined layout. I'll replace the 
+union/bit-field parsing with explicit bit extraction helpers based on 
+extract64(), so the MPTE format is decoded in a host-independent way.
 
-> 
-> We have time let's take a moment to think about the workaround.
+Thanks,
+Zhiwei
 
-Then keep me in the loop!
+>
+> Alistair
+--------------yHLLXI06PJAevglGSQJYvqhI
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 4/10/26 9:36 AM, Alistair Francis
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CAKmqyKOCRdD5cUvux6W9Z_9fMXiZ0g5s1n6iWp7RkTmZBGvHXw@mail.gmail.com">
+      <pre wrap="" class="moz-quote-pre">On Thu, Apr 9, 2026 at 12:07 AM LIU Zhiwei <a class="moz-txt-link-rfc2396E" href="mailto:zhiwei_liu@linux.alibaba.com">&lt;zhiwei_liu@linux.alibaba.com&gt;</a> wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">
+This patch introduces the core implementation for the Memory Protection Table
+(MPT) walk, which is the central mechanism of the SMMPT extension.
+
+A new file, `riscv_smmpt.c`, is added to encapsulate the MPT logic. It
+implements the `smmpt_lookup()` function, which performs a multi-level
+page table-like walk starting from the physical address specified in the
+`mptppn` CSR field. This walk determines the access permissions (read,
+write, execute) for a given physical address.
+
+The implementation supports various SMMPT modes (SMMPT34, SMMPT43, etc.) and
+correctly handles leaf and non-leaf entries, including reserved bit
+checks. Helper functions for parsing MPT entries and converting access
+permissions are also included in the new `riscv_smmpt.h` header.
+
+Co-authored-by: Huang Tao <a class="moz-txt-link-rfc2396E" href="mailto:eric.huang@linux.alibaba.com">&lt;eric.huang@linux.alibaba.com&gt;</a>
+Co-authored-by: TANG Tiancheng <a class="moz-txt-link-rfc2396E" href="mailto:lyndra@linux.alibaba.com">&lt;lyndra@linux.alibaba.com&gt;</a>
+Signed-off-by: LIU Zhiwei <a class="moz-txt-link-rfc2396E" href="mailto:zhiwei_liu@linux.alibaba.com">&lt;zhiwei_liu@linux.alibaba.com&gt;</a>
+Reviewed-by: Daniel Henrique Barboza <a class="moz-txt-link-rfc2396E" href="mailto:dbarboza@ventanamicro.com">&lt;dbarboza@ventanamicro.com&gt;</a>
+---
+ target/riscv/cpu_helper.c  |   5 +-
+ target/riscv/meson.build   |   1 +
+ target/riscv/pmp.h         |   3 +
+ target/riscv/riscv_smmpt.c | 274 +++++++++++++++++++++++++++++++++++++
+ target/riscv/riscv_smmpt.h |  15 ++
+ 5 files changed, 295 insertions(+), 3 deletions(-)
+ create mode 100644 target/riscv/riscv_smmpt.c
+
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index dd6c861a90..e3361fadae 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1089,9 +1089,8 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
+  * @access_type: The type of MMU access
+  * @mode: Indicates current privilege level.
+  */
+-static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+-                                    int size, MMUAccessType access_type,
+-                                    int mode)
++int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
++                             int size, MMUAccessType access_type, int mode)
+ {
+     pmp_priv_t pmp_priv;
+     bool pmp_has_privs;
+diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+index 3842c7c1a8..bd1c2e8fad 100644
+--- a/target/riscv/meson.build
++++ b/target/riscv/meson.build
+@@ -34,6 +34,7 @@ riscv_system_ss = ss.source_set()
+ riscv_system_ss.add(files(
+   'arch_dump.c',
+   'pmp.c',
++  'riscv_smmpt.c',
+   'debug.c',
+   'monitor.c',
+   'machine.c',
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index 467fb6b4b1..1ed574227c 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -86,6 +86,9 @@ void pmp_update_rule_nums(CPURISCVState *env);
+ uint32_t pmp_get_num_rules(CPURISCVState *env);
+ int pmp_priv_to_page_prot(pmp_priv_t pmp_priv);
+ void pmp_unlock_entries(CPURISCVState *env);
++int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
++                             int size, MMUAccessType access_type,
++                             int mode);
+
+ #define MSECCFG_MML_ISSET(env) get_field(env-&gt;mseccfg, MSECCFG_MML)
+ #define MSECCFG_MMWP_ISSET(env) get_field(env-&gt;mseccfg, MSECCFG_MMWP)
+diff --git a/target/riscv/riscv_smmpt.c b/target/riscv/riscv_smmpt.c
+new file mode 100644
+index 0000000000..b7b47c5ae1
+--- /dev/null
++++ b/target/riscv/riscv_smmpt.c
+@@ -0,0 +1,274 @@
++/*
++ * QEMU RISC-V Smmpt (Memory Protection Table)
++ *
++ * Copyright (c) 2024 Alibaba Group. All rights reserved.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "riscv_smmpt.h"
++#include "pmp.h"
++#include "system/memory.h"
++
++typedef uint64_t load_entry_fn(AddressSpace *, hwaddr,
++                               MemTxAttrs, MemTxResult *);
++
++static uint64_t load_entry_32(AddressSpace *as, hwaddr addr,
++                              MemTxAttrs attrs, MemTxResult *result)
++{
++    return address_space_ldl(as, addr, attrs, result);
++}
++
++static uint64_t load_entry_64(AddressSpace *as, hwaddr addr,
++                              MemTxAttrs attrs, MemTxResult *result)
++{
++    return address_space_ldq(as, addr, attrs, result);
++}
++
++typedef union {
++    uint64_t raw;
++    struct {
++        uint32_t v:1;
++        uint32_t l:1;
++        uint32_t rsv1:5;
++        uint32_t perms:24;
++        uint32_t n:1;
++    } leaf32;
++    struct {
++        uint32_t v:1;
++        uint32_t l:1;
++        uint32_t rsv1:8;
++        uint32_t ppn:22;
++    } nonleaf32;
++    struct {
++        uint64_t v:1;
++        uint64_t l:1;
++        uint64_t rsv1:8;
++        uint64_t perms:48;
++        uint64_t rsv2:5;
++        uint64_t n:1;
++    } leaf64;
++    struct {
++        uint64_t v:1;
++        uint64_t l:1;
++        uint64_t rsv1:8;
++        uint64_t ppn:52;
++        uint64_t rsv2:1;
++        uint64_t n:1;
++    } nonleaf64;
++} mpte_union_t;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+There is no guarantee in C that these bit fields are packed and laid
+out like you are expecting
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+
++static inline bool mpte_is_leaf(uint64_t mpte)
++{
++   return mpte &amp; 0x2;
++}
++
++static inline bool mpte_is_valid(uint64_t mpte)
++{
++    return mpte &amp; 0x1;
++}
++
++static uint64_t mpte_get_rsv(CPURISCVState *env, uint64_t mpte)
++{
++    RISCVMXL mxl = riscv_cpu_mxl(env);
++    bool leaf = mpte_is_leaf(mpte);
++    mpte_union_t *u = (mpte_union_t *)&amp;mpte;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+So this cast
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+
++    if (mxl == MXL_RV32) {
++        return leaf ? u-&gt;leaf32.rsv1 : u-&gt;nonleaf32.rsv1;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+and these accesses are not valid.
+
+On some platforms this will work, but on others it won't
+
+See the notes here
+<a class="moz-txt-link-freetext" href="https://en.cppreference.com/w/cpp/language/bit_field.html">https://en.cppreference.com/w/cpp/language/bit_field.html</a> for more
+details</pre>
+    </blockquote>
+    <p><font face="monospace"><span
+        data-spm-anchor-id="idealab.4d3ad9aa.0.i1610.5bb15fb4xWC0dW"
+style="box-sizing: border-box; text-wrap: wrap; word-break: break-word; color: rgb(0, 0, 0); font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; text-align: left; text-indent: 0px; text-transform: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: pre-wrap; background-color: rgb(245, 242, 240); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">Good point, thanks.
+
+You're right that using C bit-fields here is not portable and relies on
+implementation-defined layout. I'll replace the union/bit-field parsing
+with explicit bit extraction helpers based on extract64(), so the MPTE
+format is decoded in a host-independent way.</span></font></p>
+    <p><font face="monospace">Thanks,<br>
+        Zhiwei</font></p>
+    <blockquote type="cite"
+cite="mid:CAKmqyKOCRdD5cUvux6W9Z_9fMXiZ0g5s1n6iWp7RkTmZBGvHXw@mail.gmail.com">
+      <pre wrap="" class="moz-quote-pre">
+
+Alistair
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------yHLLXI06PJAevglGSQJYvqhI--
 
