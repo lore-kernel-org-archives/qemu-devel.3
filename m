@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7E3F436B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 14:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB7F7F436B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 14:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDkVf-0004y2-Lf; Fri, 17 Apr 2026 10:49:31 -0400
+	id 1wDkVX-0004q8-AO; Fri, 17 Apr 2026 10:49:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1wDkVc-0004vZ-VF; Fri, 17 Apr 2026 10:49:29 -0400
-Received: from mail-swedencentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c202::7] helo=GVXPR05CU001.outbound.protection.outlook.com)
+ id 1wDkVV-0004pg-Hg; Fri, 17 Apr 2026 10:49:21 -0400
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1wDkVa-0007DI-1k; Fri, 17 Apr 2026 10:49:28 -0400
+ id 1wDkVT-0007Cr-FR; Fri, 17 Apr 2026 10:49:21 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FB1AiQK2pqE48KwhfoEU268nEevCAcEclNHA93gYUMtulWKStB6RaRkLq0dadyDBqxXd2/7pHfK1sA2Hqc8UjEzdKwus1b5HHDZlG4PyyjukkIb+emMgSHYvnRlnPZoADAWnAL4ElhasndbsCiKjxCo4heafwLq8VkL55043yzUJxFMgIoqkLaDOGNJusnh+v4g+buCWMNkk/iP8nKw6X/QYj1BChT/py4LoIkcGHgqNKd0NlQPaJPAhWd4J2qZJEuj9q04teVRYUSwzolWiQG/mgIWFBge7hEyf0ROeJGHhFrEN35c85d0xabu+FvHcwacgD35uiSquTbx5/kuOPA==
+ b=lzQQEDXmfQLr/nhSt+Nz9ZRAumwzMzSl1mzYPkklujw+LKw3FGKERh5LTOZL2Nxh7T9SiAOfNXoyjI9E2LyMZ6wZ4sUhdrQY4FPEpiGj17KNXWiEYoMd3qmD5g8FOiYrKhvjqGz91l2ZXyFwNx9CN4j9q28vhq297sOdpWd2811u5vXBhh4IPn9ymTjA/ug6H/imyzVvQw9vxffmt/eYLeZeNsuRZ0suHpbtkvclwIaWThAA3nuXqFrGu+TG+qrWeyL7f002pvVk5kkVbtuauSb1ZtVo/HEnTchQh6Qvk+tBAw6wI4J87vEYTIOcHLQw21HXmNbF9idsrsND8oceEA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Oay11mJt144P7M4ouoSi8o0A0Ae8BlhXt3WQoUaRJI4=;
- b=KfMo2qRxla0NXMDT98UkPvjL15H50mSBAaeR0xNzrJ6ez3x7Wj/SfFb5X5oVG5KDU0a2muW9L1EahXenmv/tosBU8ZfEQSEdW6Mjn8GgjFNXZxyzMQz7XXx9b7/wEiZqlgpPTPy2F8CZUeQJY/eJlsSEo/hWi/xHsk5oqXc+S0TFLWY3MUCjau7O04FlqrWi3j40ZO7m9Y6fO4FNTVwnogj3Z6w/lr0WckJ0bbqNn79NU+UmzyD0HbawxqG+v5twv0I0jWK7WYfNFMeAFtX/xmYMy6wXh+Qw8BC4+zB4GZQWPKpBtrjYJobjHXIfu2+8tJ7Gw6Mc1fxdeB8OfuWaQA==
+ bh=yBYaelYJnDEOxuGQ6Xgr1D3xcgv6OmmdjvzXthya7nc=;
+ b=G1ONxqEm/i8OCtf7tBr8JaUnH7gGIybl9SBf7FfK3ErABN1HxPME12p6gEGcqTm3DuMSAGUssNmUlvI4+2xrngHmI/1EoQjIJKIi5q7Crz0E3aXFfpMj35VQdnUTTomzMqcIqqQ1UXSfsl88CS5QZ/kKi6s3ptc59uPxRUeB7DfKEc2p9kqMdBOZ1lW7b9R9wuHp+wvqoJqy0mK72w7xU/U/k2tdYJXNuqc0ERPXx0qnNKVRejnPZq7o7k4QWgMNWpOk4PPfJIiL+XknDjqc26afDXnh1YsdflRbTcXd4ktDtk0XiZ0dbFuQHMzfPyjFoYY3v3QRboZ5nPQ3OBvn5g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=htecgroup.com; dmarc=pass action=none
  header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Oay11mJt144P7M4ouoSi8o0A0Ae8BlhXt3WQoUaRJI4=;
- b=Q9NnBPoncr+Ha1Ydxf+W5O/GiDnlLg9DNTUbgBO2J5OqAFzq10AhXR3wHcWcxM6WSSrC912pcsD+JlLRoCAJi0877YmI+Rm4Wv2xHtHYacrQWxjrH9h5WTCLnEHfP19CRaUaglQGOSQ0Uj4bvHoSM8ZD0OJdUlYcmLzrOAHwvVcyh1pVVQCfTmlJ0wLMjF76ZQ70BGCJoot3TcYMwCzkaBOBEbjCaxNoBKgPwuhs0bZ4U7KiMSZh4WqWq94cuOkEstrq6rvrsFfckzNHezwZ52IpOG3N150tnYUliFPPYCuuU4lEL5KVeuT7kVztylF8xV2HrSJQvixEpljdEBXlsA==
+ bh=yBYaelYJnDEOxuGQ6Xgr1D3xcgv6OmmdjvzXthya7nc=;
+ b=IaDsdenhicKZu9mshvThwjmgYWuMWOAnXyJ4tWQQJ9ev9MPUChTVPPiHpOqrX/BvTDFpzgV+lylB+hOJf4cVHrh7AL5MX4XM7tr67n/EermCTQhtLycQ/9zJlCgeFtOG7FpIWtFoiYOiH86Z/vmqHen/+LS5AxuVognME1YdEU6+jotQ5PhedAfQ4TNGjFLxfF/Jtj2GPWseX+GO/Ms7xHRqzusgG7qBqv2DpAIl1D/OZ2G7IA03kcC4N6gd3Z0BCUNlBdOui4zloDQkS52Gb/qRZBMnP5OLbupqRS71zRAAf5ebS8IWnD2od0rD4BV6eD91h8rnqf17wAepkyDrSw==
 Received: from PA2PR09MB7634.eurprd09.prod.outlook.com (2603:10a6:102:412::6)
  by VI0PR09MB8150.eurprd09.prod.outlook.com (2603:10a6:800:2ad::17)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Fri, 17 Apr
- 2026 14:49:14 +0000
+ 2026 14:49:13 +0000
 Received: from PA2PR09MB7634.eurprd09.prod.outlook.com
  ([fe80::c461:b510:b6b9:f442]) by PA2PR09MB7634.eurprd09.prod.outlook.com
  ([fe80::c461:b510:b6b9:f442%3]) with mapi id 15.20.9818.023; Fri, 17 Apr 2026
@@ -52,13 +52,13 @@ CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
  <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
  "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
  <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH v8 3/7] target/riscv: Implement runtime data endianness via
- MSTATUS bits
-Thread-Topic: [PATCH v8 3/7] target/riscv: Implement runtime data endianness
- via MSTATUS bits
-Thread-Index: AQHcznlbYlebix+Vak2tXUF3GwInCA==
+Subject: [PATCH v8 2/7] target/riscv: Add big-endian CPU configuration field
+ and reset logic
+Thread-Topic: [PATCH v8 2/7] target/riscv: Add big-endian CPU configuration
+ field and reset logic
+Thread-Index: AQHcznlbw/aH1evqiU+h9VFuIPcTdg==
 Date: Fri, 17 Apr 2026 14:49:13 +0000
-Message-ID: <20260417144905.178056-4-djordje.todorovic@htecgroup.com>
+Message-ID: <20260417144905.178056-3-djordje.todorovic@htecgroup.com>
 References: <20260417144905.178056-1-djordje.todorovic@htecgroup.com>
 In-Reply-To: <20260417144905.178056-1-djordje.todorovic@htecgroup.com>
 Accept-Language: en-US
@@ -69,69 +69,70 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=htecgroup.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: PA2PR09MB7634:EE_|VI0PR09MB8150:EE_
-x-ms-office365-filtering-correlation-id: 30327b07-8fa0-491c-9188-08de9c907e2e
+x-ms-office365-filtering-correlation-id: 5e64bc24-db2c-4eab-073c-08de9c907e09
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|376014|1800799024|366016|38070700021|18002099003|56012099003|22082099003;
-x-microsoft-antispam-message-info: Aw/UZ6m9PgPs6/D6/BYZYW5mknKtio9hxxNChz0Gfv16EKU/MhXWUvyA/+qVpKRTea2mo7NAsul39y4Y1NAL5a/OTg0JCvqOd4pZ3d5cBFElOjdMibGr3XID5M0/wMFn6eAU4tDARhQuuB9IaIw8z2P3goxUfNS5CthZwBvlq/oMiyBH4BsZvdEZ5W+jpRvtxe/aUaihmV3ifHwn77z3HzsqOimLBNbkt/Sss+E7uaUvIRm1QCmVuqzUq5ILONRBc5fXCgSoL6MHyl52ZkxvqLQBYULEMedxad2XB3TCu7feLMBEWMCLS8efYR4Ga0ZUCJ0zsHrvkEZ8tSo79+6nvsmHTk+0sNIzcQsL7bntbYRoAIGqV4PHq0zWQeIux6ngSdZzeLBtje2eG9ttoEUrAGkQONX9/DezPQp9tb9m4MBU2mDHRPE/90WtuEmKm4JM4V6iHVCXabOjuD8PNT0pw3qXEpsB/OmI9ZaoP9J7/jWgX0fGVZES54roD8cyu1MyLYEx5hKbrh4VYEd3yaw4LqHnvOPoAx5kjRuyX0gdW60oFAwlicLhkex7MxRPQqQiJRJHJWEuvqQAnnCC31F3XZ8eks0YUz1q1w3Q/bPc4Ih7LJRcqjjEEI1cMpWQKgScrNSRTHgun4uuu8ZD76yGcfnkv1wZUAds4AScGz42oleIQOn7dkfzApG1QX8vWWO1mJROQQrjjasWKlncfKSYktOBcQC9WMFS9NHkUsxu2c7VteMmpq1V1f4Clc0lz41hyAwQ3Xq16CsTafBy8aE4NUYur1GTQeYvTMJDIWjtLl4=
+x-microsoft-antispam-message-info: LhgnDzzCTfGcw0bQJIr2bm9coXCdeT5UgVYZ0Q4KGYTpVZi9+x/PEQZrsUTbHmvgPp/5I0nKmn1RVMXOy5K15kiUk3b7LKQrOmrlct6DCrwiAj7gNhjlMUiMDchW26n3huuqPFO4FGuYx0mHeuDC6XvOjplZ0ZRhB0Hn9HJkxUHO1bBUrlPYO9RGMciYUO7AXoxZy2xH4JGnvioXY3ZIk1ZyZEKyUL6IuB+W/a12weOUr3Lq+dypWl0PX+3a7uJRx8ATm/eMoMHxSZDZu0aL2qh5oQg59y7qwjbnTTF1MqDEJoCiCz1Qw8DHT7yC6qOTrqCh1lPWPFGyBpV0/JYPdcFeboj+HrjABeG1bG72b8Cb+zgJUKrTuDI+50RfuuyWpXxpJ7XHL0GirjEAIk6JT+AXwcyz6upqVtBrAlsADQZU/OzWF779i803rD7isZgdCxts/tMjMJNGxB5/5hmJIJo8dr+ImNep2Vx+zvCB6c4MP7k4kwi1FxcGKfPtJszdIZvH6XyhUszk6XX4lNad4Zec8mms4SX3UsJ5wS9pI8aBkE9z5rEkL09CO26/nS7pBLakY4Y6ByEoitP1Cm24TLQEkK1f9nz5uCEG/g9GngtLFsEORs61sDF+WR5Rg3GQjVcNQtFYjR8K8tzPXtkHcFouSyrsjA3jOAOStJmmWsRDZGqirkGHNos5JmOLSr44/X96r40N2BwO/MPzyf2n+u3g7pDuNXK33krVdR1HZAstjhrZPvy+u4StU8r3FoYGhEfdoGS+73mr9HbciBWtmsFScZs0yq3OxNriGCW8zr4=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PA2PR09MB7634.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(18002099003)(56012099003)(22082099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?p3+6cHd+dlbiHHicXOtc7u2wY3Lxl6HLgnoCcEmF2cafvh0KN4M/Es0nSy?=
- =?iso-8859-1?Q?1WM4pt/rCSsYtzFWjOVfGkGS3xTcHCA1U132mF9PQ6qeS2vw1l4yKzmb+n?=
- =?iso-8859-1?Q?V01TmydqFi6W0Ilrd0SnDAvFMlT/ibYaaDpEy2qwRpOwZPrMMoJqnElse5?=
- =?iso-8859-1?Q?vxwTZrqICNAKAn7f/LoRdrmq6OWnV0FlfT48hUbGR9MBGRcjl2XZOzDv12?=
- =?iso-8859-1?Q?CVsoBWyt+SrpgZASuxddoidj3zbq3f/hb4UjrWwfVpqDbTtu00O/0zDfbM?=
- =?iso-8859-1?Q?5C7a5PwtDnQ4vkDU12mrdABC7UtUPRgTlOVchJdeGf+B94KDZfbHpvzvXE?=
- =?iso-8859-1?Q?1yzbunOJ08mIJ9wPQc+2LptIOr+Jgq4XgFXp5r0/n1GpBwLIRT11NA/Jgx?=
- =?iso-8859-1?Q?4XP8PiLors1F3jNEC/xmTpr/zrbMBW+a5asKfZGzGKEvXJXN6LggmnxjQU?=
- =?iso-8859-1?Q?qS5EOmkY7F6o0Ij5YkK46VAVCz8jr7faqdOEcRyqvKGEeGb3uifL/2aGAJ?=
- =?iso-8859-1?Q?YbemnsIMokn/eW6fTUwiu9r1IGzSCRmT0hshN2AZetgvwKnOvqt3rhlsF4?=
- =?iso-8859-1?Q?gHZdT1bo10vI8rRbrMYQyKNzsgSedF+2DXZEohMM8K6MTY00mllU8wjlOU?=
- =?iso-8859-1?Q?EQqkLkPI+1cdoMPGcg9FScdsGXjeDbG2p5i/IwOjFffrd+CccKxsAPFvCk?=
- =?iso-8859-1?Q?SSkkVrUR01TeKwbktNW7HcdfnEC2P4SX2lu4U/lEqjtFKkhryP1sH8JqNV?=
- =?iso-8859-1?Q?J9XdCd2PU8hJiohjrKj/TKSIvyBm/C2g/bNIG716lJgr/t625KdbiQ+HWu?=
- =?iso-8859-1?Q?yyYiYdlJJmbghhIe4/p/L1nwybkC2OiEwkerraoKJnONgswa5Ba52UedGj?=
- =?iso-8859-1?Q?3Jj+Ky5i7Wkrz5MfpyJR3cYahZdhUySZemI5GD16OC2NOh0Lf2w1UOiK8B?=
- =?iso-8859-1?Q?jQr/9yUfvGKWuS6GrCHzHQcMOF5Ke9vN631Wb2mKIxZcJvEFoZ5KpfVF2U?=
- =?iso-8859-1?Q?ElGU2OmUV+uc7gprGEO1RWbvetXr3l/YzYwyYKxyX9kOCcatjh8CKRwbeZ?=
- =?iso-8859-1?Q?nmEyAITu6E2iV9jAYfdYcmyZMdDRmXg5nMpQQjYP4u19NUSBhn6omO6ZQu?=
- =?iso-8859-1?Q?oB6qKfCnCAF0Q5kZ919snB9yEupp158rcvfCQZDPzAlaENlvrEXQOJ9cTR?=
- =?iso-8859-1?Q?YWOYdH6HVcE+qfF8MzKGiv7k0Vj1935HVeq50ouEFlxN3JEz5MJsbll6HE?=
- =?iso-8859-1?Q?8+7ns/wipuQFQKDDvMlPHmSHFalILVxw+7EAmxhHxUcYSfbd0jJKvMSdQQ?=
- =?iso-8859-1?Q?N19VNL8EX2Aah3zKOH3utIqsL1WC42hnnmGfxNjL1e7wg/JuI4HUEGsZrw?=
- =?iso-8859-1?Q?CF0D2Dkmi51lA639g1wthPfWMIWJ5MD5Vnmimogc1ilZk/22SiYvs+jH3f?=
- =?iso-8859-1?Q?gugqJj6EDaCANIOqyBTXp87rc91Q889srcUZwSgWqdFLxzzypkFabWV64s?=
- =?iso-8859-1?Q?D0nRLipEmyAj+m/XvmFwnMjX3nhlc/N2ijbEYZ4cHTzCNjbTMC5s4P2tm5?=
- =?iso-8859-1?Q?DOtuc+vmsLJdKd768/wBlbErAJPK3nh2wgXUT76lsSMS+2X4G9ScnNRUB1?=
- =?iso-8859-1?Q?x9JBX+4Yuq3vLC7LWPisE1ztviprce5CxiZzikwKOyGIiNVC+YLCHnvH9M?=
- =?iso-8859-1?Q?V+/6mQXRVwckrRAWp3w4DDUuHH3O7c24zokFzxLaUOHMgSaS8iAqQdlKe4?=
- =?iso-8859-1?Q?nhqlRx/KjNQFO4Hs404DCsfQakwpj4+3HoRWjycrAGNUbuZqY0M47lSAq0?=
- =?iso-8859-1?Q?MNYapR60R1UMxs/1aqvYdyH5t2KL8eO0KgTXXXsXSKGrmKbV54A1?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Qf+4Kcr2fpEzsVUQBOFd2zzdz7aqbsInn6APbDRRfJe4tPC/VlkAoYxdBo?=
+ =?iso-8859-1?Q?1l3j+bdnoVGROz4QXNntxYU06JVDWZdIyrWcLIxdFGgXvCOZxlIicOYUjq?=
+ =?iso-8859-1?Q?c+YkUFa4m+phIqg7bGRV12QmOKJhgaxMpNxW6aWCfRVFgTNo9Q1mfi1dcX?=
+ =?iso-8859-1?Q?ym5abecjqy9a3vhwVLp26FR8Xz9vd++YaVgMdJMyp0iMWhgmFQ8a5xL3AK?=
+ =?iso-8859-1?Q?m0gQn+bM9oIArBt3h2Q1H/OmmY5fjUrr0xB/RhSKdxr+exuyl0q8re+HEW?=
+ =?iso-8859-1?Q?k/bM6v2y8HpXUreghBRhT4JNanxdgLq/TPwx9BFayUq/h+2gHil0Fnasur?=
+ =?iso-8859-1?Q?AGat6MWIBbTlCuzIqcyNYndZtUEUJ05NrmpoU04Z2xA100TXqW1b+1x7J+?=
+ =?iso-8859-1?Q?X+UsLVtHE97Cke1DRUIqmCDKh4kkLLjJMFb0NmWo6PQffkLsjPEjau5/56?=
+ =?iso-8859-1?Q?25GbE0iBgSZH7btYhUjyfgQyN0YbMgwcQrR7i+z3i0957+pljLCqorYtJm?=
+ =?iso-8859-1?Q?3+gh9tuF1ldhBEk5vs0Skwg8mOXrFo/c6D8QBkTwxizq8k41T/UjwUuwZX?=
+ =?iso-8859-1?Q?rMlEgV282YR5CwZbOJDloN+/xmOAeXBwaip3TDuKHcRWidix7PTAMuE4oL?=
+ =?iso-8859-1?Q?CG4qjeeC3tRa4e++bztkVb7/q8uU/2YBsImo+MVFYfbqTtDKVkE3rWASoU?=
+ =?iso-8859-1?Q?lM3ZDGIzgFqJ5PwitiT5qF91xTa/zXy4uPtEQC1c8sT32SokOP7vfhgHgl?=
+ =?iso-8859-1?Q?32iIZZ1LvMQgC1vXdyMijpFiAZc3J+JJVYwvB6OvjEqEq3P+DuHWYG1lhD?=
+ =?iso-8859-1?Q?iowi4XKCW325vvpidk6PCKjPcF1oMqrYI8YQCyLIUPvLn/MTXXC2XBk6jp?=
+ =?iso-8859-1?Q?2bzVbjerYxb4nNwjaX5rt1l+mJ1OKdg6B6VbglBdNjvQYD9dljEdW60g4/?=
+ =?iso-8859-1?Q?rOqBi8pOUFGzOGUaJTneRKm7NtkYpFScv00sbqqtGBB6vsbHzwcV66Zcvc?=
+ =?iso-8859-1?Q?rnKj/zGqx0XePBTtNnZl3n5EupCnD1CbfaWxi4DjzzHUmAJQFJSpVy68xP?=
+ =?iso-8859-1?Q?EfY/z7zolThpBH0xp6sizvT3JXJYzxIS1sbVIT7iU6BVlylYul6oqG++C6?=
+ =?iso-8859-1?Q?iiGmJW0SZzZY+z4Zbb9vz4MTQ/3s/jXaAereewVH73iUyLAXx4Q5Ny4x60?=
+ =?iso-8859-1?Q?dMcL+MBHsrSPSoJmPd87kmtKXbftYbdQbtMcM4LJFlAGjKrg+/MEE8jJDW?=
+ =?iso-8859-1?Q?oFCsc9cjWG5PJi0TmqzuS7NUAhFfNzgJfQv28ji9ZC99Cu9px1VL0hg4nl?=
+ =?iso-8859-1?Q?LP6KGBhrtj3zWD5Z+JwbFAlb8AfxEjArNrVGeVIn4Z1P81QlFuX5uGdvpE?=
+ =?iso-8859-1?Q?9uGiOX/pPITMEjRNE4JbJHff3HIQq5aQ30BI2i/o8zb4HarD+JKtO84zPm?=
+ =?iso-8859-1?Q?/NbfONgxxkIC9nr2BNSJb0HCNmDfZhjw4j6BhMzMCiDX+ZzPiBe1hbinOH?=
+ =?iso-8859-1?Q?Ub4VId/jERa9JLLTGJN/zdM+OFgDF/ojZU9JiS13aMzgil1JluzxAziAkn?=
+ =?iso-8859-1?Q?rTEENg2lPHea8AvpFPHNZtg3Nt4JX4ikkrZIsFVom4stPCcgF5kxvvHJ7J?=
+ =?iso-8859-1?Q?pAUwFFjj3QeBrnSlPMDHOQugo4Xd9qKV7BoBqbGRG/+GPnOaPBPbJmFJz2?=
+ =?iso-8859-1?Q?H4mDjdAaO0u0o/M7s0i0JutOj7B14Eu9ydNODgUuQpJDZJz/NbKvLNBtxA?=
+ =?iso-8859-1?Q?HvbWzoU32tjv3aNQEeUTKpj2CYyPsbaYU8zU0oUeuk/tY5hoLlbCnumSdH?=
+ =?iso-8859-1?Q?JNfTIXpiv5ao642nrUyI+6oLvNDeXwwDYreKPWmIpH2+VWSlGEic?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: htecgroup.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PA2PR09MB7634.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 30327b07-8fa0-491c-9188-08de9c907e2e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 14:49:13.5064 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5e64bc24-db2c-4eab-073c-08de9c907e09
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 14:49:13.2220 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XN72386rdKARLYxwTMk5oy31edjwOMac1hb0WftytthxPzGDsrZzWValS0gQwm1qW0x2IT2fND8DLe/xxqckDmbgNWfmt2SlQFHpwmwjdp0=
+X-MS-Exchange-CrossTenant-userprincipalname: aMDusQyeC2T1TyNIepe4zZsx8IWr6z0DIzGvxYZ9cax9sSCTsMkjkErtKJP1FpSgD5jHA/CVWekTcLFmYk5wPPsF3LzRKHpJRxDlYPEWrqI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR09MB8150
-Received-SPF: pass client-ip=2a01:111:f403:c202::7;
+Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
  envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=GVXPR05CU001.outbound.protection.outlook.com
+ helo=PA4PR04CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,619 +149,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make data accesses honour the MSTATUS MBE/SBE/UBE endianness bits
-instead of being hardcoded to little-endian. A new helper,
-riscv_cpu_data_is_big_endian(), picks the bit corresponding to the
-current privilege level (MBE for M, SBE for S, UBE for U). The
-existing mo_endian_env() wrapper in internals.h now returns MO_BE or
-MO_LE based on that helper, so the hypervisor load/store helpers in
-op_helper.c pick up the runtime endianness automatically.
+Add a big_endian field to RISCVCPUConfig and wire it into the CPU
+reset path. When cfg.big_endian is set, riscv_cpu_reset_hold()
+writes 1 into the MSTATUS MBE/SBE/UBE fields using set_field();
+otherwise it writes 0. This makes the reset value deterministic on
+both cold and warm reset.
 
-On the translator side, DisasContext gains a mo_endianness field
-holding MO_BE or MO_LE, which the generated load/store ops OR into
-their MemOp. The trivial mo_endian() wrapper is dropped and call
-sites reference ctx->mo_endianness directly.
+The MBE/SBE/UBE bits are not included in the writable mask of any
+mstatus/mstatush/sstatus CSR write path (unchanged by this series),
+so the value chosen at reset effectively hardwires them per section
+3.1.6.5 of the RISC-V Privileged Specification.
 
-TB_FLAGS has no free bits, so the endianness is carried into the
-translator through bit 32 of cs_base (alongside misa_ext in bits
-0-25). This keys TBs correctly on the current data endianness. The
-cs_base comment in include/exec/translation-block.h is updated to
-document the RISC-V usage.
+The user-facing property and documentation are added in a later
+patch, once the full endianness support is in place.
 
-Instruction fetches remain MO_LE unconditionally; RISC-V instructions
-are always little-endian per the ISA specification.
+Also update the disassembler comment to clarify that BFD_ENDIAN_LITTLE
+is correct because RISC-V instructions are always little-endian per
+the ISA specification.
 
 Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
 ---
- include/exec/translation-block.h              |  3 +-
- target/riscv/cpu.h                            | 28 +++++++++++++++++++
- target/riscv/insn_trans/trans_rva.c.inc       |  4 +--
- target/riscv/insn_trans/trans_rvd.c.inc       |  4 +--
- target/riscv/insn_trans/trans_rvf.c.inc       |  4 +--
- target/riscv/insn_trans/trans_rvi.c.inc       |  8 +++---
- target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 +--
- target/riscv/insn_trans/trans_rvzalasr.c.inc  |  4 +--
- target/riscv/insn_trans/trans_rvzce.c.inc     |  4 +--
- target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +--
- target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +--
- target/riscv/insn_trans/trans_xmips.c.inc     |  8 +++---
- target/riscv/insn_trans/trans_xthead.c.inc    | 16 +++++------
- target/riscv/insn_trans/trans_zilsd.c.inc     |  4 +--
- target/riscv/internals.h                      |  9 +-----
- target/riscv/tcg/tcg-cpu.c                    |  7 ++++-
- target/riscv/translate.c                      | 22 +++++----------
- 17 files changed, 78 insertions(+), 59 deletions(-)
+ target/riscv/cpu.c                | 10 +++++-----
+ target/riscv/cpu_cfg_fields.h.inc |  1 +
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/exec/translation-block.h b/include/exec/translation-bl=
-ock.h
-index 4f83d5bec9..66068c61a3 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -64,7 +64,8 @@ struct TranslationBlock {
-      * x86: the original user, the Code Segment virtual base,
-      * arm: an extension of tb->flags,
-      * s390x: instruction data for EXECUTE,
--     * sparc: the next pc of the instruction queue (for delay slots).
-+     * sparc: the next pc of the instruction queue (for delay slots),
-+     * riscv: misa_ext in bits 0-25, data endianness in bit 32.
-      */
-     uint64_t cs_base;
-=20
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 35d1f6362c..ef870d05b3 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -703,6 +703,12 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
- FIELD(TB_FLAGS, PM_PMM, 29, 2)
- FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
-=20
-+/*
-+ * cs_base carries misa_ext (bits 0-25) plus additional flags.
-+ * Bit 32 is used for data endianness since TB_FLAGS has no free bits.
-+ */
-+#define TB_CSBASE_BIG_ENDIAN  (1ULL << 32)
-+
- #ifdef TARGET_RISCV32
- #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
- #else
-@@ -718,6 +724,28 @@ static inline const RISCVCPUConfig *riscv_cpu_cfg(CPUR=
-ISCVState *env)
-     return &env_archcpu(env)->cfg;
- }
-=20
-+/*
-+ * Return true if data accesses are big-endian for the current privilege
-+ * level, based on the MSTATUS MBE/SBE/UBE bits.
-+ */
-+static inline bool riscv_cpu_data_is_big_endian(CPURISCVState *env)
-+{
-+#if defined(CONFIG_USER_ONLY)
-+    return false;
-+#else
-+    switch (env->priv) {
-+    case PRV_M:
-+        return env->mstatus & MSTATUS_MBE;
-+    case PRV_S:
-+        return env->mstatus & MSTATUS_SBE;
-+    case PRV_U:
-+        return env->mstatus & MSTATUS_UBE;
-+    default:
-+        g_assert_not_reached();
-+    }
-+#endif
-+}
-+
- #if !defined(CONFIG_USER_ONLY)
- static inline int cpu_address_mode(CPURISCVState *env)
- {
-diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_tr=
-ans/trans_rva.c.inc
-index a7a3278d24..6597ae8bb7 100644
---- a/target/riscv/insn_trans/trans_rva.c.inc
-+++ b/target/riscv/insn_trans/trans_rva.c.inc
-@@ -35,7 +35,7 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemO=
-p mop)
-     TCGv src1;
-=20
-     mop |=3D MO_ALIGN;
--    mop |=3D mo_endian(ctx);
-+    mop |=3D ctx->mo_endianness;
-=20
-     decode_save_opc(ctx, 0);
-     src1 =3D get_address(ctx, a->rs1, 0);
-@@ -65,7 +65,7 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemO=
-p mop)
-     TCGLabel *l2 =3D gen_new_label();
-=20
-     mop |=3D MO_ALIGN;
--    mop |=3D mo_endian(ctx);
-+    mop |=3D ctx->mo_endianness;
-=20
-     decode_save_opc(ctx, 0);
-     src1 =3D get_address(ctx, a->rs1, 0);
-diff --git a/target/riscv/insn_trans/trans_rvd.c.inc b/target/riscv/insn_tr=
-ans/trans_rvd.c.inc
-index ffea0c2a1f..3b9a745520 100644
---- a/target/riscv/insn_trans/trans_rvd.c.inc
-+++ b/target/riscv/insn_trans/trans_rvd.c.inc
-@@ -60,7 +60,7 @@ static bool trans_fld(DisasContext *ctx, arg_fld *a)
-     } else {
-         memop |=3D MO_ATOM_IFALIGN;
-     }
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-=20
-     decode_save_opc(ctx, 0);
-     addr =3D get_address(ctx, a->rs1, a->imm);
-@@ -85,7 +85,7 @@ static bool trans_fsd(DisasContext *ctx, arg_fsd *a)
-     } else {
-         memop |=3D MO_ATOM_IFALIGN;
-     }
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-=20
-     decode_save_opc(ctx, 0);
-     addr =3D get_address(ctx, a->rs1, a->imm);
-diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_tr=
-ans/trans_rvf.c.inc
-index 89fb0f604a..e935523c93 100644
---- a/target/riscv/insn_trans/trans_rvf.c.inc
-+++ b/target/riscv/insn_trans/trans_rvf.c.inc
-@@ -48,7 +48,7 @@ static bool trans_flw(DisasContext *ctx, arg_flw *a)
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVF);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     if (ctx->cfg_ptr->ext_zama16b) {
-         memop |=3D MO_ATOM_WITHIN16;
-     }
-@@ -71,7 +71,7 @@ static bool trans_fsw(DisasContext *ctx, arg_fsw *a)
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVF);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     if (ctx->cfg_ptr->ext_zama16b) {
-         memop |=3D MO_ATOM_WITHIN16;
-     }
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_tr=
-ans/trans_rvi.c.inc
-index 2c82ae41a7..2de74fac3a 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -392,7 +392,7 @@ static bool gen_load_i128(DisasContext *ctx, arg_lb *a,=
- MemOp memop)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index e56470a374..a32e4fd6d6 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -716,6 +716,9 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType=
+ type)
+             env->mstatus =3D set_field(env->mstatus, MSTATUS_MDT, 1);
          }
-     } else {
-         tcg_gen_qemu_ld_i128(t16, addrl, ctx->mem_idx, memop);
--        if (mo_endian(ctx) =3D=3D MO_LE) {
-+        if (ctx->mo_endianness =3D=3D MO_LE) {
-             tcg_gen_extr_i128_i64(tl, th, t16);
-         } else {
-             tcg_gen_extr_i128_i64(th, tl, t16);
-@@ -409,7 +409,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemO=
-p memop)
- {
-     bool out;
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     if (ctx->cfg_ptr->ext_zama16b) {
-         memop |=3D MO_ATOM_WITHIN16;
      }
-@@ -508,7 +508,7 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a=
-, MemOp memop)
-         tcg_gen_ext_tl_i64(tl, src2l);
-         tcg_gen_ext_tl_i64(th, src2h);
++    env->mstatus =3D set_field(env->mstatus, MSTATUS_MBE, cpu->cfg.big_end=
+ian);
++    env->mstatus =3D set_field(env->mstatus, MSTATUS_SBE, cpu->cfg.big_end=
+ian);
++    env->mstatus =3D set_field(env->mstatus, MSTATUS_UBE, cpu->cfg.big_end=
+ian);
+     env->mcause =3D 0;
+     env->miclaim =3D MIP_SGEIP;
+     env->pc =3D env->resetvec;
+@@ -803,11 +806,8 @@ static void riscv_cpu_disas_set_info(const CPUState *s=
+, disassemble_info *info)
+     info->target_info =3D &cpu->cfg;
 =20
--        if (mo_endian(ctx) =3D=3D MO_LE) {
-+        if (ctx->mo_endianness =3D=3D MO_LE) {
-             tcg_gen_concat_i64_i128(t16, tl, th);
-         } else {
-             tcg_gen_concat_i64_i128(t16, th, tl);
-@@ -520,7 +520,7 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a=
-, MemOp memop)
-=20
- static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
- {
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     if (ctx->cfg_ptr->ext_zama16b) {
-         memop |=3D MO_ATOM_WITHIN16;
-     }
-diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/ins=
-n_trans/trans_rvzacas.c.inc
-index 8d94b83ce9..79bca1e957 100644
---- a/target/riscv/insn_trans/trans_rvzacas.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
-@@ -76,7 +76,7 @@ static bool gen_cmpxchg64(DisasContext *ctx, arg_atomic *=
-a, MemOp mop)
-     TCGv src1 =3D get_address(ctx, a->rs1, 0);
-     TCGv_i64 src2 =3D get_gpr_pair(ctx, a->rs2);
-=20
--    mop |=3D mo_endian(ctx);
-+    mop |=3D ctx->mo_endianness;
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_atomic_cmpxchg_i64(dest, src1, dest, src2, ctx->mem_idx, mop);
-=20
-@@ -121,7 +121,7 @@ static bool trans_amocas_q(DisasContext *ctx, arg_amoca=
-s_q *a)
-     TCGv_i64 desth =3D get_gpr(ctx, a->rd =3D=3D 0 ? 0 : a->rd + 1, EXT_NO=
-NE);
-     MemOp memop =3D MO_ALIGN | MO_UO;
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_concat_i64_i128(src2, src2l, src2h);
-     tcg_gen_concat_i64_i128(dest, destl, desth);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/in=
-sn_trans/trans_rvzalasr.c.inc
-index 0f307affec..79b0b2c63b 100644
---- a/target/riscv/insn_trans/trans_rvzalasr.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-@@ -29,7 +29,7 @@ static bool gen_load_acquire(DisasContext *ctx, arg_lb_aq=
-rl *a, MemOp memop)
-         return false;
-     }
-=20
--    memop |=3D MO_ALIGN | mo_endian(ctx);
-+    memop |=3D MO_ALIGN | ctx->mo_endianness;
-     memop |=3D (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-=20
-     tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
-@@ -79,7 +79,7 @@ static bool gen_store_release(DisasContext *ctx, arg_sb_a=
-qrl *a, MemOp memop)
-         return false;
-     }
-=20
--    memop |=3D MO_ALIGN | mo_endian(ctx);
-+    memop |=3D MO_ALIGN | ctx->mo_endianness;
-     memop |=3D (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-=20
-     /* Add a memory barrier implied by RL (mandatory) and AQ (optional) */
-diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_=
-trans/trans_rvzce.c.inc
-index 0d3ba40e52..71b4ca5473 100644
---- a/target/riscv/insn_trans/trans_rvzce.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzce.c.inc
-@@ -185,7 +185,7 @@ static bool gen_pop(DisasContext *ctx, arg_cmpp *a, boo=
-l ret, bool ret_val)
-=20
-     tcg_gen_addi_tl(addr, sp, stack_adj - reg_size);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     for (i =3D X_Sn + 11; i >=3D 0; i--) {
-         if (reg_bitmap & (1 << i)) {
-             TCGv dest =3D dest_gpr(ctx, i);
-@@ -239,7 +239,7 @@ static bool trans_cm_push(DisasContext *ctx, arg_cm_pus=
-h *a)
-=20
-     tcg_gen_subi_tl(addr, sp, reg_size);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     for (i =3D X_Sn + 11; i >=3D 0; i--) {
-         if (reg_bitmap & (1 << i)) {
-             TCGv val =3D get_gpr(ctx, i, EXT_NONE);
-diff --git a/target/riscv/insn_trans/trans_rvzfh.c.inc b/target/riscv/insn_=
-trans/trans_rvzfh.c.inc
-index 791ee51f65..f36b46c211 100644
---- a/target/riscv/insn_trans/trans_rvzfh.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzfh.c.inc
-@@ -49,7 +49,7 @@ static bool trans_flh(DisasContext *ctx, arg_flh *a)
-     REQUIRE_FPU;
-     REQUIRE_ZFHMIN_OR_ZFBFMIN(ctx);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     decode_save_opc(ctx, 0);
-     t0 =3D get_gpr(ctx, a->rs1, EXT_NONE);
-     if (a->imm) {
-@@ -74,7 +74,7 @@ static bool trans_fsh(DisasContext *ctx, arg_fsh *a)
-     REQUIRE_FPU;
-     REQUIRE_ZFHMIN_OR_ZFBFMIN(ctx);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     decode_save_opc(ctx, 0);
-     t0 =3D get_gpr(ctx, a->rs1, EXT_NONE);
-     if (a->imm) {
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/i=
-nsn_trans/trans_rvzicfiss.c.inc
-index 0b6ad57965..43f586dce9 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -105,7 +105,7 @@ static bool trans_ssamoswap_w(DisasContext *ctx, arg_am=
-oswap_w *a)
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     src1 =3D get_address(ctx, a->rs1, 0);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx), memop);
-     gen_set_gpr(ctx, a->rd, dest);
-     return true;
-@@ -135,7 +135,7 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_am=
-oswap_w *a)
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     src1 =3D get_address(ctx, a->rs1, 0);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx), memop);
-     gen_set_gpr(ctx, a->rd, dest);
-     return true;
-diff --git a/target/riscv/insn_trans/trans_xmips.c.inc b/target/riscv/insn_=
-trans/trans_xmips.c.inc
-index c1a30156d3..1b9993a9b0 100644
---- a/target/riscv/insn_trans/trans_xmips.c.inc
-+++ b/target/riscv/insn_trans/trans_xmips.c.inc
-@@ -47,7 +47,7 @@ static bool trans_ccmov(DisasContext *ctx, arg_ccmov *a)
- /* Load Doubleword Pair. */
- static bool trans_ldp(DisasContext *ctx, arg_ldp *a)
- {
--    MemOp memop =3D MO_SQ | mo_endian(ctx);
-+    MemOp memop =3D MO_SQ | ctx->mo_endianness;
-=20
-     REQUIRE_XMIPSLSP(ctx);
-     REQUIRE_64_OR_128BIT(ctx);
-@@ -71,7 +71,7 @@ static bool trans_ldp(DisasContext *ctx, arg_ldp *a)
- /* Load Word Pair. */
- static bool trans_lwp(DisasContext *ctx, arg_lwp *a)
- {
--    MemOp memop =3D MO_SL | mo_endian(ctx);
-+    MemOp memop =3D MO_SL | ctx->mo_endianness;
-=20
-     REQUIRE_XMIPSLSP(ctx);
-=20
-@@ -94,7 +94,7 @@ static bool trans_lwp(DisasContext *ctx, arg_lwp *a)
- /* Store Doubleword Pair. */
- static bool trans_sdp(DisasContext *ctx, arg_sdp *a)
- {
--    MemOp memop =3D MO_UQ | mo_endian(ctx);
-+    MemOp memop =3D MO_UQ | ctx->mo_endianness;
-=20
-     REQUIRE_XMIPSLSP(ctx);
-     REQUIRE_64_OR_128BIT(ctx);
-@@ -116,7 +116,7 @@ static bool trans_sdp(DisasContext *ctx, arg_sdp *a)
- /* Store Word Pair. */
- static bool trans_swp(DisasContext *ctx, arg_swp *a)
- {
--    MemOp memop =3D MO_SL | mo_endian(ctx);
-+    MemOp memop =3D MO_SL | ctx->mo_endianness;
-=20
-     REQUIRE_XMIPSLSP(ctx);
-=20
-diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/insn=
-_trans/trans_xthead.c.inc
-index f8b95c6498..f4e3051000 100644
---- a/target/riscv/insn_trans/trans_xthead.c.inc
-+++ b/target/riscv/insn_trans/trans_xthead.c.inc
-@@ -349,7 +349,7 @@ static bool gen_fload_idx(DisasContext *ctx, arg_th_mem=
-idx *a, MemOp memop,
-     TCGv_i64 rd =3D cpu_fpr[a->rd];
-     TCGv addr =3D get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zex=
-t_offs);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_ld_i64(rd, addr, ctx->mem_idx, memop);
-     if ((memop & MO_SIZE) =3D=3D MO_32) {
-         gen_nanbox_s(rd, rd);
-@@ -370,7 +370,7 @@ static bool gen_fstore_idx(DisasContext *ctx, arg_th_me=
-midx *a, MemOp memop,
-     TCGv_i64 rd =3D cpu_fpr[a->rd];
-     TCGv addr =3D get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zex=
-t_offs);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_st_i64(rd, addr, ctx->mem_idx, memop);
-=20
-     return true;
-@@ -570,7 +570,7 @@ static bool gen_load_inc(DisasContext *ctx, arg_th_memi=
-nc *a, MemOp memop,
-     TCGv rd =3D dest_gpr(ctx, a->rd);
-     TCGv rs1 =3D get_gpr(ctx, a->rs1, EXT_NONE);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_ld_tl(rd, addr, ctx->mem_idx, memop);
-     tcg_gen_addi_tl(rs1, rs1, imm);
-     gen_set_gpr(ctx, a->rd, rd);
-@@ -591,7 +591,7 @@ static bool gen_store_inc(DisasContext *ctx, arg_th_mem=
-inc *a, MemOp memop,
-     TCGv data =3D get_gpr(ctx, a->rd, EXT_NONE);
-     TCGv rs1 =3D get_gpr(ctx, a->rs1, EXT_NONE);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
-     tcg_gen_addi_tl(rs1, rs1, imm);
-     gen_set_gpr(ctx, a->rs1, rs1);
-@@ -747,7 +747,7 @@ static bool gen_load_idx(DisasContext *ctx, arg_th_memi=
-dx *a, MemOp memop,
-     TCGv rd =3D dest_gpr(ctx, a->rd);
-     TCGv addr =3D get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zex=
-t_offs);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_ld_tl(rd, addr, ctx->mem_idx, memop);
-     gen_set_gpr(ctx, a->rd, rd);
-=20
-@@ -765,7 +765,7 @@ static bool gen_store_idx(DisasContext *ctx, arg_th_mem=
-idx *a, MemOp memop,
-     TCGv data =3D get_gpr(ctx, a->rd, EXT_NONE);
-     TCGv addr =3D get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zex=
-t_offs);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
-=20
-     return true;
-@@ -926,7 +926,7 @@ static bool gen_loadpair_tl(DisasContext *ctx, arg_th_p=
-air *a, MemOp memop,
-     addr1 =3D get_address(ctx, a->rs, imm);
-     addr2 =3D get_address(ctx, a->rs, memop_size(memop) + imm);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_ld_tl(t1, addr1, ctx->mem_idx, memop);
-     tcg_gen_qemu_ld_tl(t2, addr2, ctx->mem_idx, memop);
-     gen_set_gpr(ctx, a->rd1, t1);
-@@ -965,7 +965,7 @@ static bool gen_storepair_tl(DisasContext *ctx, arg_th_=
-pair *a, MemOp memop,
-     addr1 =3D get_address(ctx, a->rs, imm);
-     addr2 =3D get_address(ctx, a->rs, memop_size(memop) + imm);
-=20
--    memop |=3D mo_endian(ctx);
-+    memop |=3D ctx->mo_endianness;
-     tcg_gen_qemu_st_tl(data1, addr1, ctx->mem_idx, memop);
-     tcg_gen_qemu_st_tl(data2, addr2, ctx->mem_idx, memop);
-     return true;
-diff --git a/target/riscv/insn_trans/trans_zilsd.c.inc b/target/riscv/insn_=
-trans/trans_zilsd.c.inc
-index f50c52f22c..8068cc1aec 100644
---- a/target/riscv/insn_trans/trans_zilsd.c.inc
-+++ b/target/riscv/insn_trans/trans_zilsd.c.inc
-@@ -30,7 +30,7 @@ static bool gen_load_i64(DisasContext *ctx, arg_ld *a)
-     TCGv addr =3D get_address(ctx, a->rs1, a->imm);
-     TCGv_i64 tmp =3D tcg_temp_new_i64();
-=20
--    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_SQ | mo_endian(ctx));
-+    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_SQ | ctx->mo_endiannes=
-s);
-=20
-     if (a->rd =3D=3D 0) {
-         return true;
-@@ -85,7 +85,7 @@ static bool gen_store_i64(DisasContext *ctx, arg_sd *a)
-     } else {
-         tcg_gen_concat_tl_i64(tmp, data_low, data_high);
-     }
--    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_SQ | mo_endian(ctx));
-+    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_SQ | ctx->mo_endiannes=
-s);
-=20
-     return true;
- }
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 460346dd6d..e2f0334da8 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -64,14 +64,7 @@ static inline bool mmuidx_2stage(int mmu_idx)
-=20
- static inline MemOp mo_endian_env(CPURISCVState *env)
- {
--    /*
+     /*
 -     * A couple of bits in MSTATUS set the endianness:
 -     *  - MSTATUS_UBE (User-mode),
 -     *  - MSTATUS_SBE (Supervisor-mode),
 -     *  - MSTATUS_MBE (Machine-mode)
 -     * but we don't implement that yet.
--     */
--    return MO_LE;
-+    return riscv_cpu_data_is_big_endian(env) ? MO_BE : MO_LE;
- }
++     * RISC-V instructions are always little-endian, regardless of the
++     * data endianness configured via MSTATUS UBE/SBE/MBE bits.
+      */
+     info->endian =3D BFD_ENDIAN_LITTLE;
 =20
- /* share data between vector helpers and decode code */
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 3407191c22..d73b749bae 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -189,10 +189,15 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
-*cs)
-     flags =3D FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
-     flags =3D FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_field=
+s.h.inc
+index 70ec650abf..51436daabf 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
+ BOOL_FIELD(ext_xmipscmov)
+ BOOL_FIELD(ext_xmipslsp)
 =20
-+    uint64_t cs_base =3D env->misa_ext;
-+    if (riscv_cpu_data_is_big_endian(env)) {
-+        cs_base |=3D TB_CSBASE_BIG_ENDIAN;
-+    }
-+
-     return (TCGTBCPUState){
-         .pc =3D env->xl =3D=3D MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
-         .flags =3D flags,
--        .cs_base =3D env->misa_ext,
-+        .cs_base =3D cs_base,
-     };
- }
-=20
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 5df5b73849..9f538ba96d 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -119,6 +119,8 @@ typedef struct DisasContext {
-     bool fcfi_lp_expected;
-     /* zicfiss extension, if shadow stack was enabled during TB gen */
-     bool bcfi_enabled;
-+    /* Data endianness from MSTATUS UBE/SBE/MBE */
-+    MemOp mo_endianness;
- } DisasContext;
-=20
- static inline bool has_ext(DisasContext *ctx, uint32_t ext)
-@@ -126,18 +128,6 @@ static inline bool has_ext(DisasContext *ctx, uint32_t=
- ext)
-     return ctx->misa_ext & ext;
- }
-=20
--static inline MemOp mo_endian(DisasContext *ctx)
--{
--    /*
--     * A couple of bits in MSTATUS set the endianness:
--     *  - MSTATUS_UBE (User-mode),
--     *  - MSTATUS_SBE (Supervisor-mode),
--     *  - MSTATUS_MBE (Machine-mode)
--     * but we don't implement that yet.
--     */
--    return MO_LE;
--}
--
- #ifdef TARGET_RISCV32
- #define get_xl(ctx)    MXL_RV32
- #elif defined(CONFIG_USER_ONLY)
-@@ -154,7 +144,7 @@ static inline MemOp mo_endian(DisasContext *ctx)
- #define get_address_xl(ctx)    ((ctx)->address_xl)
- #endif
-=20
--#define mxl_memop(ctx) ((get_xl(ctx) + 1) | mo_endian(ctx))
-+#define mxl_memop(ctx) ((get_xl(ctx) + 1) | (ctx)->mo_endianness)
-=20
- /* The word size for this machine mode. */
- static inline int __attribute__((unused)) get_xlen(DisasContext *ctx)
-@@ -1147,7 +1137,7 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
-     TCGv src1, src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
-     MemOp size =3D mop & MO_SIZE;
-=20
--    mop |=3D mo_endian(ctx);
-+    mop |=3D ctx->mo_endianness;
-     if (ctx->cfg_ptr->ext_zama16b && size >=3D MO_32) {
-         mop |=3D MO_ATOM_WITHIN16;
-     } else {
-@@ -1168,7 +1158,7 @@ static bool gen_cmpxchg(DisasContext *ctx, arg_atomic=
- *a, MemOp mop)
-     TCGv src1 =3D get_address(ctx, a->rs1, 0);
-     TCGv src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
-=20
--    mop |=3D mo_endian(ctx);
-+    mop |=3D ctx->mo_endianness;
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_atomic_cmpxchg_tl(dest, src1, dest, src2, ctx->mem_idx, mop);
-=20
-@@ -1346,6 +1336,8 @@ static void riscv_tr_init_disas_context(DisasContextB=
-ase *dcbase, CPUState *cs)
-     ctx->zero =3D tcg_constant_tl(0);
-     ctx->virt_inst_excp =3D false;
-     ctx->decoders =3D cpu->decoders;
-+    ctx->mo_endianness =3D (ctx->base.tb->cs_base & TB_CSBASE_BIG_ENDIAN)
-+                         ? MO_BE : MO_LE;
- }
-=20
- static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
++BOOL_FIELD(big_endian)
+ BOOL_FIELD(mmu)
+ BOOL_FIELD(pmp)
+ BOOL_FIELD(debug)
 --=20
 2.34.1
 
