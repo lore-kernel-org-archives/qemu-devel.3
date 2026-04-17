@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4883F436B4
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 15:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C900FF436B2
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 15:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDkri-0006RP-9K; Fri, 17 Apr 2026 11:12:18 -0400
+	id 1wDks6-0006Zw-Nu; Fri, 17 Apr 2026 11:12:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDkrg-0006Qx-BZ
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 11:12:16 -0400
-Received: from mail-vs1-xe44.google.com ([2607:f8b0:4864:20::e44])
+ id 1wDks3-0006YE-Fn
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 11:12:39 -0400
+Received: from mail-ua1-x942.google.com ([2607:f8b0:4864:20::942])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDkre-0007eZ-KX
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 11:12:16 -0400
-Received: by mail-vs1-xe44.google.com with SMTP id
- ada2fe7eead31-612d8a59ca0so535550137.1
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 08:12:14 -0700 (PDT)
+ id 1wDks0-0007gq-5x
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 11:12:38 -0400
+Received: by mail-ua1-x942.google.com with SMTP id
+ a1e0cc1a2514c-953a5defbbdso472349241.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 08:12:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776438733; x=1777043533; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Q7zAGXxsg+5cVA6Q3sFJNuuhruZpzrgtVk1o7C5t7Zk=;
- b=lAEzeI3aoDwb7GkI+nZfS7tYSciAXRaMg1c7ALjHKqOvV9YdiPE+OX8+AA99vHFpZo
- nN9fb32Ft4UDOBXXfHwRI0eLrCO+G6+HhSchcF4TFcRluJroIayIShBBTLBi17KocaUR
- UC/aBAVAleXxZwQ7Rtw9WiTo8dd25hQwU81B1JBVhhhb6xQHsNNXuGtZUHffJAEayWuV
- 2wQlPt06TQ9gNpNLEFHHEBhNQm/Jfl9PSTvtH2ett71NKJY3qcSgY4eAzbW6ZF5YkUJS
- C235Ej1TYpANExR5IsyF1Zn7bPCXNUVI1UZ+H0/AIfm0itBGiejHj3zm9Q4DRd2fy/8Z
- 92KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776438733; x=1777043533;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1776438755; x=1777043555; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q7zAGXxsg+5cVA6Q3sFJNuuhruZpzrgtVk1o7C5t7Zk=;
- b=lzzt3uImrVHj2QXpD07AH0pESugQ43pVUqvqUnWKO0BQJuacpP71NFKrYd3gUiLlhA
- TpAhvRMwWYvNHo6RPyFbmAGu8ja7RugWa2/U3zNhxbPI7E8ue/6/dSM9jiSgyAX3QQJj
- 53Vj55DJ7YvoO74mmzwf2/xt8D8KD4TRo9GqElBP4tBjV+8XRucOkkLGN/mg59fBo7Lq
- h3D4rf3kXzo0WdnC3ACp52dAFm+cMgz+VJvzWhuRaMAgAsPWB+sP4CfkXjhxs8oGPvOB
- +Ubz4VlIMfbCHPVue6wgt7wMPu+Fuvz3vwcNg29+nSrmfT4oydPj7ay2jE4qH4xt1BJY
- cGcg==
-X-Gm-Message-State: AOJu0Yxr6egurmzqpTrCK7V6fGgqnqn/48GxhfRRpf9C6gYZY2dnUL1v
- 6RQyV7LSl/Zu7Ttvmk9SnmX6oBdgKHb3X7S9fwVsdgtkEemg0W7WNg0t
-X-Gm-Gg: AeBDiethSvjehVriOHRFVSnLWG3C7c68fMQ+SXt69kJaoKQSA0/vaTF1g4KVv8pvuQp
- EXW2t4LbNzWqQUIdrIRXpFY0uq+Rp/2ypFuNdcW7TwvN4QS3Pn9sw5oDNQSX6ubltiC1DaIk+AI
- YPUfzRlfWLF5C9xu61iO6FYeabuIqs8HKCL48xrlk4vLjTKZW1Mrhjv2yqZNxfSlBRa7GpqEzDk
- zQS1kfJ2elPZJArz7AeUD2mzaFEprQkJK0uzExt1OIGnwYtfD9aOQl2R2w26wJ1sxZ9pr2B66ID
- oRnDhd3Za1iTVMttgIxRHXvhPDceOW712ZtAU5qJh/GMqWpzwq40oupVvhfHPM3OA5BJ1FREOWN
- lOjxuua9pMU6tDbrsyqJysTObS9pU9und7NYZVubGTi1tAz1Q9oRACPAWZ6dTTs/pVc+Th9xC7q
- Hp/3zGAHSt+EZIE5sSftNv+KDLFzL05BPcLFwMOF8JaDwcKUimi92NWVI9lI5y3hGoKBGtuPzLr
- XFDb5o=
-X-Received: by 2002:a05:6102:419f:b0:604:f029:224c with SMTP id
- ada2fe7eead31-616f4d6abf2mr1635676137.8.1776438733120; 
- Fri, 17 Apr 2026 08:12:13 -0700 (PDT)
+ bh=/pH6SDDzzpWJiywlMg9YyR6FarX5pj4mu7yETPPxavU=;
+ b=fE3vbUd+f5zaEr96h7PBo7rfck43I14GZ4Lhmxw0rNA7yhO+n/w3hFHU+agfe87sTY
+ h0QVnP0+cz0SZr0a+g5sXvcko3des2p4MLQjw5CHDyOSCuptZ9FbhVvYhATIt79IDvuc
+ MpyxR2KDAAs9TYZq1eVuQbEsOpZT21AbJtzM7sfyjjDmyl11txEn6R7jqo9u2CBy/ubp
+ DMleRq6eGAZQqsF7ID5Jd7nblwbvud0rDr4Ri/zW/5LLgPu9T99nJ+edTWULOp2hLVtC
+ wxJmyb+E8aJpmoNv4nqYttlKNBRt5QPF8eh5FmLA7LdKHUKA+I1NTEep6fKDQXE856MY
+ sSpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776438755; x=1777043555;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/pH6SDDzzpWJiywlMg9YyR6FarX5pj4mu7yETPPxavU=;
+ b=GGIoq3VJ5H1ZAJOgBsV2F/tDQ+hb5A8HkBOZVL/CQe9De+dFdaT0V9Th1fvng0taiJ
+ FDF99yJQueH75Jn+DrFuqAH2wm6p6ywMpq9vKrM5fNs24v7qDiGoYXiCMeCDw3MKy3vG
+ A5crMAecbHhGSmP5tB+xeRjaKbuko0SwaVTQBbSXh48ZvrnL+ASuaOLVpte6fLRH+6rE
+ kPixQo95GQjxpxQOtRqHaz2dhxojNUD/QWGjoaEj66rzBkzxInvBoQBl1M4p14jAe8hX
+ uD9r5xdg2jlfvOuvjejiuDKZ6jAdtRr7LbywFnwYvz3JlCrwJukovBMl+8rkWDHXOZyc
+ f8Fw==
+X-Gm-Message-State: AOJu0YzWdUNWmIpm/+BcJXdMG7t6GkY86/wllYg4N9xNWCOohhUXrfiG
+ IHf5zNF3FYmCxPuXRTSl58ER9Cv8G5CcHZvBlpXcSrVe1iog5HkObOd+
+X-Gm-Gg: AeBDies2D4+4kYS4QSOIEXpB4s2LLR9mItl7aV3j9zngpuOVppGrtxizipkm3bVF/l/
+ B5EVYLYLo7WedjN6ic3snwUxkoUubTDRxsitGJFxJypzKqGRiFH/uCYPZzSQs//LbKT47UslwGI
+ MWn4Pdn68MQx4LaIliOpPeUUgCtBDlautGXImuEVBEvqlmVXW2xeH2wsnI+Jp4KPw2jxS2xcT/d
+ +yZ0Vn8TT9nDlitnmpupUN4DIZQBo5P5Nxxbbha7igJ0RheJAfM5AATsT2QE3/KisF1HDW9IleU
+ Rt2hm/9/DbhYynE7TTLpMRrog9ywIrAYp0osqQG2kpEAKJ35MiFZP1Emd13vm5H2I0j9EIL8f1d
+ c+WwP6nBGUtB4PxQiWEgs3hOyWFcigSRccotiK+u5w000mPSpoBvxwrLoe/WBzqZ8p+DP2iaCk2
+ dQWu3wKfoTgMyPaVV7apS9AE38yP2QubY5E8URvfliQwf3b3bGjgdkB7xMcUKz6x8/1dlF5ZmN3
+ ZNRz0g=
+X-Received: by 2002:a05:6102:38cf:b0:5ff:e10e:b9fb with SMTP id
+ ada2fe7eead31-616fbea2311mr1061531137.4.1776438754855; 
+ Fri, 17 Apr 2026 08:12:34 -0700 (PDT)
 Received: from ZEVORN-PC.bbrouter ([162.244.208.119])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-61747cb501asm788923137.7.2026.04.17.08.12.06
+ ada2fe7eead31-61747cb501asm788923137.7.2026.04.17.08.12.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 08:12:12 -0700 (PDT)
+ Fri, 17 Apr 2026 08:12:34 -0700 (PDT)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Chao Liu <chao.liu.zevorn@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -75,23 +76,26 @@ To: Chao Liu <chao.liu.zevorn@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Christoph Muellner <christoph.muellner@vrull.eu>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Subject: [PATCH v6 0/5] Add support for K230 board
-Date: Fri, 17 Apr 2026 23:11:24 +0800
-Message-ID: <cover.1776438369.git.chao.liu.zevorn@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Chao Liu <chao.liu@zevorn.cn>, Mig Yang <temashking@foxmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v6 3/5] hw/watchdog: add k230 watchdog initial support
+Date: Fri, 17 Apr 2026 23:11:27 +0800
+Message-ID: <e31a0d39139aa5093a8e50a01bccb10a5e3f3142.1776438369.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1776438369.git.chao.liu.zevorn@gmail.com>
+References: <cover.1776438369.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e44;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-vs1-xe44.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::942;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-ua1-x942.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,86 +111,609 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+From: Chao Liu <chao.liu@zevorn.cn>
 
-This patch series adds support for U-Boot + OpenSBI + standard Linux kernel on
-K230 board. Thanks to Peng Jiang, Mig Yang, Renzao Ren, Yao Zi for their help.
+Add programmable Watchdog Timer (WDT) peripheral for K230 machine.
 
-This v6 series has been rebased on Alistair's riscv-to-apply.next branch [1]
-and is ready for review.
-
-Test command:
-
-```
-$QEMU -M k230 -bios [OpenSBI binary] -m 2G -dtb k230_canmv.dtb -kernel [img]
-```
-
-PATCH v6 changelog:
-- Rebased on the latest Alistair's riscv-to-apply.next branch.
-- Patch 4: Picked up Fabiano's Acked-by.
-
-PATCH v5 changelog:
-- Rebased on Alistair's riscv-to-apply.next branch.
-- Patch 2: Fixed reset vector ROM jump to trap-handler bug.
-  https://lore.kernel.org/qemu-devel/cover.1769757064.git.chao.liu.zevorn@gmail.com/
-
-PATCH v4 changelog:
-- Rebased on the latest master branch.
-- No functional changes from v3.
-
-PATCH v3 changelog:
-- Patch 1: Align T-Head C908 CPU's RISC-V extension with XUANTIE-QEMU.
-- Patch 2: Adjust PLIC and CLINT addresses to match K230 datasheet.
-
-PATCH v2 changelog:
-- Patch 1: Add Svpbmt extension support for the T-Head C908 CPU.
-- Patch 2: Move the k230.rst definition from MAINTAINERS to Patch 5.
-- Patch 5: Apply Daniel's bugfix to build the k230 documentation successfully.
-
-PATCH v1 changelog:
-- Patch1: Add T-Head C908 and C908v CPU support.
-- Patch2: Add K230 board initial support(big core is not supported yet).
-- Patch3: Add Programmable Watchdog Timer (WDT) peripheral support.
-- Patch4: Add QEMU test for K230 watchdog.
-- Patch5: Add documentation for K230 machine.
-
-[1] https://github.com/alistair23/qemu/tree/riscv-to-apply.next
-
-Thanks,
-Chao
-
-Chao Liu (5):
-  target/riscv: add thead-c908 cpu support
-  hw/riscv: add k230 board initial support
-  hw/watchdog: add k230 watchdog initial support
-  tests/qtest: add test for K230 watchdog
-  docs/system/riscv: add documentation for k230 machine
-
- MAINTAINERS                    |  12 +-
- docs/system/riscv/k230.rst     |  48 ++++
- docs/system/target-riscv.rst   |   1 +
- hw/riscv/Kconfig               |  11 +
- hw/riscv/k230.c                | 502 +++++++++++++++++++++++++++++++++
- hw/riscv/meson.build           |   2 +-
+Signed-off-by: Mig Yang <temashking@foxmail.com>
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ MAINTAINERS                    |   2 +
+ hw/riscv/Kconfig               |   1 +
+ hw/riscv/k230.c                |  18 ++
  hw/watchdog/Kconfig            |   4 +
- hw/watchdog/k230_wdt.c         | 307 ++++++++++++++++++++
+ hw/watchdog/k230_wdt.c         | 307 +++++++++++++++++++++++++++++++++
  hw/watchdog/meson.build        |   1 +
  hw/watchdog/trace-events       |   9 +
- include/hw/riscv/k230.h        | 154 ++++++++++
- include/hw/watchdog/k230_wdt.h | 132 +++++++++
- target/riscv/cpu-qom.h         |   2 +
- target/riscv/cpu.c             |  51 ++++
- target/riscv/th_csr.c          | 380 ++++++++++++++++++++++++-
- tests/qtest/k230-wdt-test.c    | 199 +++++++++++++
- tests/qtest/meson.build        |   3 +-
- 17 files changed, 1814 insertions(+), 4 deletions(-)
- create mode 100644 docs/system/riscv/k230.rst
- create mode 100644 hw/riscv/k230.c
+ include/hw/riscv/k230.h        |   4 +
+ include/hw/watchdog/k230_wdt.h | 132 ++++++++++++++
+ 9 files changed, 478 insertions(+)
  create mode 100644 hw/watchdog/k230_wdt.c
- create mode 100644 include/hw/riscv/k230.h
  create mode 100644 include/hw/watchdog/k230_wdt.h
- create mode 100644 tests/qtest/k230-wdt-test.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c429c63961..a2eecca155 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1777,7 +1777,9 @@ K230 Machines
+ M: Chao Liu <chao.liu.zevorn@gmail.com>
+ S: Maintained
+ F: hw/riscv/k230.c
++F: hw/watchdog/k230_wdt.c
+ F: include/hw/riscv/k230.h
++F: include/hw/watchdog/k230_wdt.h
+ 
+ RX Machines
+ -----------
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index b1a7357866..5f8511cb92 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -144,3 +144,4 @@ config K230
+     select RISCV_IMSIC
+     select SERIAL_MM
+     select UNIMP
++    select K230_WDT
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 2537023a05..7df8a3298c 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -113,6 +113,9 @@ static void k230_soc_init(Object *obj)
+     RISCVHartArrayState *cpu0 = &s->c908_cpu;
+ 
+     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
++    object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
++    object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
++
+     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
+     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
+     qdev_prop_set_uint64(DEVICE(cpu0), "resetvec",
+@@ -190,6 +193,21 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+                    qdev_get_gpio_in(DEVICE(s->c908_plic), K230_UART4_IRQ),
+                    399193, serial_hd(4), DEVICE_LITTLE_ENDIAN);
+ 
++    /* Watchdog */
++    for (int i = 0; i < 2; i++) {
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
++            return;
++        }
++    }
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[0]), 0, memmap[K230_DEV_WDT0].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[0]), 0,
++                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT0_IRQ));
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[1]), 0, memmap[K230_DEV_WDT1].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
++                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
++
+     /* unimplemented devices */
+     create_unimplemented_device("kpu.l2-cache",
+                                 memmap[K230_DEV_KPU_L2_CACHE].base,
+diff --git a/hw/watchdog/Kconfig b/hw/watchdog/Kconfig
+index 861fd00334..55f77c5c84 100644
+--- a/hw/watchdog/Kconfig
++++ b/hw/watchdog/Kconfig
+@@ -18,6 +18,10 @@ config WDT_DIAG288
+ config WDT_IMX2
+     bool
+ 
++config K230_WDT
++    bool
++    select PTIMER
++
+ config WDT_SBSA
+     bool
+ 
+diff --git a/hw/watchdog/k230_wdt.c b/hw/watchdog/k230_wdt.c
+new file mode 100644
+index 0000000000..66df0b738b
+--- /dev/null
++++ b/hw/watchdog/k230_wdt.c
+@@ -0,0 +1,307 @@
++/*
++ *  * K230 Watchdog Compatible with kendryte K230 SDK
++ *
++ * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
++ * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Provides a board compatible with the kendryte K230 SDK
++ *
++ * Documentation: K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * For more information, see <https://www.kendryte.com/en/proDetail/230>
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "qemu/module.h"
++#include "system/watchdog.h"
++#include "migration/vmstate.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/watchdog/k230_wdt.h"
++#include "trace.h"
++
++static void k230_wdt_timeout(void *opaque)
++{
++    K230WdtState *s = K230_WDT(opaque);
++
++    trace_k230_wdt_timeout();
++
++    /* Set interrupt status if in interrupt mode */
++    if (s->cr & K230_WDT_CR_RMOD) {
++        s->stat |= K230_WDT_STAT_INT;
++        s->interrupt_pending = true;
++        qemu_set_irq(s->irq, 1);
++        trace_k230_wdt_interrupt();
++    } else {
++        /* Direct reset mode */
++        trace_k230_wdt_reset();
++        watchdog_perform_action();
++    }
++
++    /* Restart counter */
++    s->current_count = s->timeout_value;
++    ptimer_set_count(s->timer, s->current_count);
++    ptimer_run(s->timer, 1);
++}
++
++static void k230_wdt_reset(DeviceState *dev)
++{
++    K230WdtState *s = K230_WDT(dev);
++
++    trace_k230_wdt_reset_device();
++
++    ptimer_transaction_begin(s->timer);
++    ptimer_stop(s->timer);
++    ptimer_transaction_commit(s->timer);
++
++    /* Reset registers to default values */
++    s->cr = 0;
++    s->torr = 0;
++    s->ccvr = 0xFFFFFFFF;
++    s->stat = 0;
++    s->prot_level = 0x2;
++
++    s->interrupt_pending = false;
++    s->enabled = false;
++    s->timeout_value = 0;
++    s->current_count = 0xFFFFFFFF;
++}
++
++static uint64_t k230_wdt_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    K230WdtState *s = K230_WDT(opaque);
++    uint32_t value = 0;
++
++    switch (addr) {
++    case K230_WDT_CR:
++        value = s->cr;
++        break;
++    case K230_WDT_TORR:
++        value = s->torr;
++        break;
++    case K230_WDT_CCVR:
++        if (s->enabled) {
++            value = ptimer_get_count(s->timer);
++        } else {
++            value = s->current_count;
++        }
++        break;
++    case K230_WDT_STAT:
++        value = s->stat;
++        break;
++    case K230_WDT_PROT_LEVEL:
++        value = s->prot_level;
++        break;
++    case K230_WDT_COMP_PARAM_5:
++        value = 0; /* Upper limit of Timeout Period parameters */
++        break;
++    case K230_WDT_COMP_PARAM_4:
++        value = 0; /* Upper limit of Initial Timeout Period parameters */
++        break;
++    case K230_WDT_COMP_PARAM_3:
++        value = 0; /* Derived from WDT_TOP_RST parameter */
++        break;
++    case K230_WDT_COMP_PARAM_2:
++        value = 0xFFFFFFFF; /* Derived from WDT_RST_CNT parameter */
++        break;
++    case K230_WDT_COMP_PARAM_1:
++        /* Component parameters */
++        value = (32 << K230_WDT_CNT_WIDTH_SHIFT) |  /* 32-bit counter */
++                (0 << K230_WDT_DFLT_TOP_INIT_SHIFT) |
++                (0 << K230_WDT_DFLT_TOP_SHIFT) |
++                (K230_WDT_RPL_16_CYCLES << K230_WDT_DFLT_RPL_SHIFT) |
++                (2 << K230_WDT_APB_DATA_WIDTH_SHIFT) | /* 32-bit APB */
++                K230_WDT_USE_FIX_TOP; /* Use fixed timeout values */
++        break;
++    case K230_WDT_COMP_VERSION:
++        value = K230_WDT_COMP_VERSION_VAL;
++        break;
++    case K230_WDT_COMP_TYPE:
++        value = K230_WDT_COMP_TYPE_VAL;
++        break;
++    default:
++        /* Other registers return 0 */
++        break;
++    }
++
++    trace_k230_wdt_read(addr, value);
++    return value;
++}
++
++static void k230_wdt_update_timer(K230WdtState *s)
++{
++    ptimer_transaction_begin(s->timer);
++
++    if (s->enabled && s->timeout_value > 0) {
++        ptimer_set_count(s->timer, s->current_count);
++        ptimer_run(s->timer, 1);
++    } else {
++        ptimer_stop(s->timer);
++    }
++
++    ptimer_transaction_commit(s->timer);
++}
++
++static uint32_t k230_wdt_calculate_timeout(uint32_t top_value)
++{
++    /* Calculate timeout based on TOP value */
++    /* For fixed timeout mode: 2^(16 + top_value) */
++    if (top_value <= 15) {
++        return 1 << (16 + top_value);
++    }
++    return 1 << 31; /* Maximum value for 32-bit counter */
++}
++
++static void k230_wdt_write(void *opaque, hwaddr addr,
++                           uint64_t value, unsigned int size)
++{
++    K230WdtState *s = K230_WDT(opaque);
++
++    trace_k230_wdt_write(addr, value);
++
++    switch (addr) {
++    case K230_WDT_CR:
++        s->cr = value & (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT |
++                         K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
++
++        /* Update enabled state */
++        s->enabled = (s->cr & K230_WDT_CR_WDT_EN) != 0;
++
++        /* Update timer */
++        k230_wdt_update_timer(s);
++        break;
++
++    case K230_WDT_TORR:
++        s->torr = value & K230_WDT_TORR_TOP_MASK;
++
++        /* Calculate new timeout value */
++        s->timeout_value = k230_wdt_calculate_timeout(s->torr);
++        s->current_count = s->timeout_value;
++
++        /* Update timer if enabled */
++        if (s->enabled) {
++            k230_wdt_update_timer(s);
++        }
++        break;
++
++    case K230_WDT_CRR:
++        /* Restart counter with magic value 0x76 */
++        if ((value & 0xFF) == K230_WDT_CRR_RESTART) {
++            trace_k230_wdt_restart();
++            s->current_count = s->timeout_value;
++
++            /* Clear interrupt if pending */
++            if (s->interrupt_pending) {
++                s->stat &= ~K230_WDT_STAT_INT;
++                s->interrupt_pending = false;
++                qemu_set_irq(s->irq, 0);
++            }
++
++            /* Update timer */
++            k230_wdt_update_timer(s);
++        }
++        break;
++
++    case K230_WDT_EOI:
++        /* Clear interrupt */
++        s->stat &= ~K230_WDT_STAT_INT;
++        s->interrupt_pending = false;
++        qemu_set_irq(s->irq, 0);
++        break;
++
++    case K230_WDT_PROT_LEVEL:
++        s->prot_level = value & 0x7;
++        break;
++
++    default:
++        /* Read-only registers, ignore writes */
++        break;
++    }
++}
++
++static const MemoryRegionOps k230_wdt_ops = {
++    .read  = k230_wdt_read,
++    .write = k230_wdt_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++};
++
++static const VMStateDescription vmstate_k230_wdt = {
++    .name = "k230.wdt",
++    .fields = (const VMStateField[]) {
++        VMSTATE_PTIMER(timer, K230WdtState),
++        VMSTATE_UINT32(cr, K230WdtState),
++        VMSTATE_UINT32(torr, K230WdtState),
++        VMSTATE_UINT32(ccvr, K230WdtState),
++        VMSTATE_UINT32(stat, K230WdtState),
++        VMSTATE_UINT32(prot_level, K230WdtState),
++        VMSTATE_BOOL(interrupt_pending, K230WdtState),
++        VMSTATE_BOOL(enabled, K230WdtState),
++        VMSTATE_UINT32(timeout_value, K230WdtState),
++        VMSTATE_UINT32(current_count, K230WdtState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void k230_wdt_realize(DeviceState *dev, Error **errp)
++{
++    K230WdtState *s = K230_WDT(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    memory_region_init_io(&s->mmio, OBJECT(dev),
++                          &k230_wdt_ops, s,
++                          TYPE_K230_WDT,
++                          K230_WDT_MMIO_SIZE);
++    sysbus_init_mmio(sbd, &s->mmio);
++    sysbus_init_irq(sbd, &s->irq);
++
++    s->timer = ptimer_init(k230_wdt_timeout, s,
++                           PTIMER_POLICY_NO_IMMEDIATE_TRIGGER |
++                           PTIMER_POLICY_NO_IMMEDIATE_RELOAD |
++                           PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
++
++    ptimer_transaction_begin(s->timer);
++    ptimer_set_freq(s->timer, K230_WDT_DEFAULT_FREQ);
++    ptimer_transaction_commit(s->timer);
++}
++
++static void k230_wdt_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = k230_wdt_realize;
++    device_class_set_legacy_reset(dc, k230_wdt_reset);
++    dc->vmsd = &vmstate_k230_wdt;
++    dc->desc = "K230 watchdog timer";
++    set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
++}
++
++static const TypeInfo k230_wdt_info = {
++    .name          = TYPE_K230_WDT,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230WdtState),
++    .class_init    = k230_wdt_class_init,
++};
++
++static void k230_wdt_register_type(void)
++{
++    type_register_static(&k230_wdt_info);
++}
++type_init(k230_wdt_register_type)
+diff --git a/hw/watchdog/meson.build b/hw/watchdog/meson.build
+index 15370565bd..5edae65a36 100644
+--- a/hw/watchdog/meson.build
++++ b/hw/watchdog/meson.build
+@@ -6,5 +6,6 @@ system_ss.add(when: 'CONFIG_WDT_IB700', if_true: files('wdt_ib700.c'))
+ system_ss.add(when: 'CONFIG_WDT_DIAG288', if_true: files('wdt_diag288.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('wdt_aspeed.c'))
+ system_ss.add(when: 'CONFIG_WDT_IMX2', if_true: files('wdt_imx2.c'))
++system_ss.add(when: 'CONFIG_K230_WDT', if_true: files('k230_wdt.c'))
+ system_ss.add(when: 'CONFIG_WDT_SBSA', if_true: files('sbsa_gwdt.c'))
+ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_watchdog.c'))
+diff --git a/hw/watchdog/trace-events b/hw/watchdog/trace-events
+index ad3be1e9bd..d85b3ca769 100644
+--- a/hw/watchdog/trace-events
++++ b/hw/watchdog/trace-events
+@@ -33,3 +33,12 @@ spapr_watchdog_expired(uint64_t num, unsigned action) "num=%" PRIu64 " action=%u
+ # watchdog.c
+ watchdog_perform_action(unsigned int action) "action=%u"
+ watchdog_set_action(unsigned int action) "action=%u"
++
++# k230_wdt.c
++k230_wdt_read(uint64_t addr, uint32_t data) "K230 WDT read: [0x%" PRIx64 "] -> 0x%" PRIx32
++k230_wdt_write(uint64_t addr, uint64_t data) "K230 WDT write: [0x%" PRIx64 "] <- 0x%" PRIx64
++k230_wdt_timeout(void) "K230 WDT timeout"
++k230_wdt_interrupt(void) "K230 WDT interrupt"
++k230_wdt_reset(void) "K230 WDT system reset"
++k230_wdt_restart(void) "K230 WDT restart"
++k230_wdt_reset_device(void) "K230 WDT device reset"
+diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+index 830175b756..84bd431bc9 100644
+--- a/include/hw/riscv/k230.h
++++ b/include/hw/riscv/k230.h
+@@ -28,6 +28,7 @@
+ 
+ #include "hw/core/boards.h"
+ #include "hw/riscv/riscv_hart.h"
++#include "hw/watchdog/k230_wdt.h"
+ 
+ #define C908_CPU_HARTID   (0)
+ 
+@@ -42,6 +43,7 @@ typedef struct K230SoCState {
+     /*< public >*/
+     RISCVHartArrayState c908_cpu; /* Small core */
+ 
++    K230WdtState wdt[2];
+     MemoryRegion sram;
+     MemoryRegion bootrom;
+ 
+@@ -132,6 +134,8 @@ enum {
+     K230_UART2_IRQ  = 18,
+     K230_UART3_IRQ  = 19,
+     K230_UART4_IRQ  = 20,
++    K230_WDT0_IRQ   = 32,
++    K230_WDT1_IRQ   = 33,
+ };
+ 
+ /*
+diff --git a/include/hw/watchdog/k230_wdt.h b/include/hw/watchdog/k230_wdt.h
+new file mode 100644
+index 0000000000..ec80567780
+--- /dev/null
++++ b/include/hw/watchdog/k230_wdt.h
+@@ -0,0 +1,132 @@
++/*
++ * K230 Watchdog Timer
++ *
++ * Based on K230 technical documentation
++ *
++ * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
++ * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef K230_WDT_H
++#define K230_WDT_H
++
++#include "qemu/bitops.h"
++#include "hw/core/sysbus.h"
++#include "hw/core/irq.h"
++#include "hw/core/ptimer.h"
++#include "qom/object.h"
++
++#define TYPE_K230_WDT "riscv.k230.wdt"
++OBJECT_DECLARE_SIMPLE_TYPE(K230WdtState, K230_WDT)
++
++#define K230_WDT_DEFAULT_FREQ (32768)
++
++/* K230 Watchdog Register Map */
++enum K230WdtRegisters {
++    K230_WDT_CR      = 0x00,  /* Control Register */
++    K230_WDT_TORR    = 0x04,  /* Timeout Range Register */
++    K230_WDT_CCVR    = 0x08,  /* Current Counter Value Register */
++    K230_WDT_CRR     = 0x0c,  /* Counter Restart Register */
++    K230_WDT_STAT    = 0x10,  /* Interrupt Status Register */
++    K230_WDT_EOI     = 0x14,  /* Interrupt Clear Register */
++    K230_WDT_PROT_LEVEL = 0x1c, /* Protection Level Register */
++    K230_WDT_COMP_PARAM_5 = 0xe4, /* Component Parameters Register 5 */
++    K230_WDT_COMP_PARAM_4 = 0xe8, /* Component Parameters Register 4 */
++    K230_WDT_COMP_PARAM_3 = 0xec, /* Component Parameters Register 3 */
++    K230_WDT_COMP_PARAM_2 = 0xf0, /* Component Parameters Register 2 */
++    K230_WDT_COMP_PARAM_1 = 0xf4, /* Component Parameters Register 1 */
++    K230_WDT_COMP_VERSION = 0xf8, /* Component Version Register */
++    K230_WDT_COMP_TYPE = 0xfc, /* Component Type Register */
++};
++
++#define K230_WDT_MMIO_SIZE 0x100
++
++/* Control Register (WDT_CR) definitions */
++#define K230_WDT_CR_RPL_MASK    0x7        /* Reset Pulse Length */
++#define K230_WDT_CR_RPL_SHIFT   2
++#define K230_WDT_CR_RMOD        BIT(1)     /* Response Mode */
++#define K230_WDT_CR_WDT_EN      BIT(0)     /* Watchdog Enable */
++
++/* Reset Pulse Length values */
++#define K230_WDT_RPL_2_CYCLES   0x0
++#define K230_WDT_RPL_4_CYCLES   0x1
++#define K230_WDT_RPL_8_CYCLES   0x2
++#define K230_WDT_RPL_16_CYCLES  0x3
++#define K230_WDT_RPL_32_CYCLES  0x4
++#define K230_WDT_RPL_64_CYCLES  0x5
++#define K230_WDT_RPL_128_CYCLES 0x6
++#define K230_WDT_RPL_256_CYCLES 0x7
++
++/* Timeout Range Register (WDT_TORR) definitions */
++#define K230_WDT_TORR_TOP_MASK  0xf        /* Timeout Period */
++
++/* Interrupt Status Register (WDT_STAT) definitions */
++#define K230_WDT_STAT_INT       BIT(0)     /* Interrupt Status */
++
++/* Counter Restart Register (WDT_CRR) magic value */
++#define K230_WDT_CRR_RESTART    0x76       /* Restart command */
++
++/* Component Parameters Register 1 (WDT_COMP_PARAM_1) definitions */
++#define K230_WDT_CNT_WIDTH_MASK 0x1f000000 /* Counter Width */
++#define K230_WDT_CNT_WIDTH_SHIFT 24
++#define K230_WDT_DFLT_TOP_INIT_MASK 0xf00000 /* Default Initial Timeout */
++#define K230_WDT_DFLT_TOP_INIT_SHIFT 20
++#define K230_WDT_DFLT_TOP_MASK  0xf0000    /* Default Timeout */
++#define K230_WDT_DFLT_TOP_SHIFT 16
++#define K230_WDT_DFLT_RPL_MASK  0x7        /* Default Reset Pulse Length */
++#define K230_WDT_DFLT_RPL_SHIFT 10
++#define K230_WDT_APB_DATA_WIDTH_MASK 0x3   /* APB Data Width */
++#define K230_WDT_APB_DATA_WIDTH_SHIFT 8
++#define K230_WDT_USE_FIX_TOP    BIT(6)     /* Use Fixed Timeout Values */
++#define K230_WDT_HC_TOP         BIT(5)     /* Hard-coded Timeout */
++#define K230_WDT_HC_RPL         BIT(4)     /* Hard-coded Reset Pulse Length */
++#define K230_WDT_HC_RMOD        BIT(3)     /* Hard-coded Response Mode */
++#define K230_WDT_DUAL_TOP       BIT(2)     /* Dual Timeout Period */
++#define K230_WDT_DFLT_RMOD      BIT(1)     /* Default Response Mode */
++#define K230_WDT_ALWAYS_EN      BIT(0)     /* Always Enabled */
++
++/* Component Type Register value */
++#define K230_WDT_COMP_TYPE_VAL  0x44570120
++
++/* Component Version Register value */
++#define K230_WDT_COMP_VERSION_VAL 0x3131302a  /* "110*" */
++
++struct K230WdtState {
++    /* <private> */
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++    MemoryRegion mmio;
++    qemu_irq irq;
++
++    struct ptimer_state *timer;
++
++    /* Register state */
++    uint32_t cr;           /* Control Register */
++    uint32_t torr;         /* Timeout Range Register */
++    uint32_t ccvr;         /* Current Counter Value Register */
++    uint32_t stat;         /* Interrupt Status Register */
++    uint32_t prot_level;   /* Protection Level Register */
++
++    /* Internal state */
++    bool interrupt_pending;
++    bool enabled;
++    uint32_t timeout_value;
++    uint32_t current_count;
++};
++
++#endif /* K230_WDT_H */
 -- 
 2.53.0
 
