@@ -4,81 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA79F8DFF9
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 17:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EDEF8DFFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 17:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDn35-0007Mc-9j; Fri, 17 Apr 2026 13:32:11 -0400
+	id 1wDnHV-0002kO-4Z; Fri, 17 Apr 2026 13:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDn2X-0006pY-Ff
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 13:31:42 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDn2R-00028A-C6
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 13:31:36 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43d7e23defbso624540f8f.0
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 10:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776447089; x=1777051889; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oFWrqlCi1brlfW31yiVLg0YS3L4+kwC499WIseYpmfU=;
- b=EkhlXqQxl91BNjaPFUB/EqPS9Z+Mxu12h/ijCLv8uf545cW6KH4FpNgfNaR+3e6BS8
- n2VO5PaSdwAHTN8J8FU5TonrFUH/yp3gPRPplxcL7wM1LMUAYse3zlKK77jrSoMBhv6w
- Zp3vSifIWerB7Lw/MGLudoAc8KKmDsfHlzs6lprFO/O+y5hTrDkXMTScxXzh4EQ4/v2l
- cUbqAsfxYYj3eALiGi9HdCcV+VIis10Uz4f38uXxpfviVx8VraqsIp598KlMSiAZ1uiM
- v89DDhmUBPqBOSORuHdNf7iWf3Dbu4tbXCbb2upzPj0IOeNOqBFxWigyFNZ9poOBtsDu
- ahVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776447089; x=1777051889;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=oFWrqlCi1brlfW31yiVLg0YS3L4+kwC499WIseYpmfU=;
- b=G0/Dt9wn3tAMA+YzkwWaeL/Dh6wD88cQ280eCk5VZBgPoKRunvfbEMcd7okVwdiSZY
- fZd4n8ZMOXVejjrOvY2XMFX4K59oAHIIbXlXBQQMcD32sBQ6MstEAGmTdOn5aFb3j6BU
- m9R3OZsXIWJ6JJ6+JI6fHyWN33XY9E4etmO6i4qsTb2GLJ7jo1AHR6Z9sTq6Fr1W05af
- yZazs8IAN1w9AhOcMTEs0toya+TOgnYIc3xdEc4wQXHliINz0Sx9ltawI7W2FQMa0rIR
- guDAcwwzKQhVMjjZJD4qbUJmEwhegQUiN3nax8ZcCoWeFWsgXgAPqpKYufln9hKE5cXq
- TT8A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9g/i5G+51xEef06aNXYzNNF4XmaT/K1JteMBc0SlDDtn+ErKE5PfXJJra71UvE7WmZmXIjMcDEoeas@nongnu.org
-X-Gm-Message-State: AOJu0YwaM7E4xY/DtqAXC/HkhBoQbBbp4McjBVO1hdKrXDuL20+1ffEL
- QrsHdlKHNkZNt8ryckDHMpiaiFpzUEGBP8WNVOEmjAPjK55dLZngG+kO0cV6QaBomRlPhBxqktY
- GPxx+ZRo=
-X-Gm-Gg: AeBDievjmlb1FMvw7efKYbnuSARvMcra8gPDm95fUCKMBqxf41Bzc1qlTdhbSxJWe7S
- +MmAK19xSCJsRLvXR2lNEdjAMyBbEL9EZ3G7hvM2pql2oih84RbctgbXO/319tlb7XV+zP+0iWM
- j8FNTsTqVGNGoF69I7iQncNxEcChgxpBVUpAR9/eojJE5I+vLFIiENYAkflKC5MSex68EDZpw7r
- LDGRvvEbh9JJwSNv+zSSLvoZJGOm5sT3S3E8EX4TM0/G9oaJi+ZpRHJX1m9lIOmpOjD7oj1USil
- tdedRf0sGt3ot1p/Y16GXJLYb21jKeqFHMT9T9awytiSpkOOrfhJVwFz5KD7yxKRzxg5hg1xJw6
- 0vGZvPoy3IPAh6/8RvNUFC4ctaFygHx8hVN6/fR0n4WiVbQJ5+o+T1HN1vT8wksExiQjsw71Suc
- Seupsa4LspJQlYvsNSKMQ5wVOZ7FiMMLLa0jdgxqHdlKt95HXwSKf8ARYlsxsF3tG+ejzARPtZz
- 0VKtN2c+9KNM7BcSunBqtCMArLk/2Cwmn9sTpsNJg==
-X-Received: by 2002:a05:6000:250f:b0:43d:68ad:3b7f with SMTP id
- ffacd0b85a97d-43fe3dd397dmr6094046f8f.21.1776447088991; 
- Fri, 17 Apr 2026 10:31:28 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4ffa8sm5819650f8f.35.2026.04.17.10.31.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 10:31:28 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wDnHD-0002gu-Hf; Fri, 17 Apr 2026 13:46:50 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wDnHA-00059X-WB; Fri, 17 Apr 2026 13:46:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=oxM6wnbVcSyAC9yeVxfQnW+bPrBukYxactIiN0rJ0z0=; b=gU5XOU65gc8ZQDiZ
+ wqyQAoLJPRsXnBGa3fnTCDpTwiptaRD3lUtrNla+VnSHxrhdIqe1nfpslxewD8Zgnmc3XIRET64wf
+ 5HoBwW0TyGk/mu76R2+Hy8eS6CrFjuRqxrv6d8z8iiTfQEq0KQcgu1rk0WVz5DsvGvLnxqWnPhF3q
+ 55CUMSkdduOSLL/ewI4ODWjS3RsqQXhSUJH89Q1KERiL/AejMVs1erMSMBprTOyzYv1AEAGIkuNcd
+ EiW8+AQQNlyWh8sIyA6fLGamHtpEFgEiHy9YflFb59n34JX2/QyB6yYKA4oq8rZjak+nnKtoCT4e/
+ evCFVpW1Y2tP3fUucA==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wDnH1-000000091FN-3RaP;
+ Fri, 17 Apr 2026 17:46:35 +0000
+Date: Fri, 17 Apr 2026 17:46:35 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Peter Xu <peterx@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -93,23 +55,27 @@ Cc: qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  David Hildenbrand <david@kernel.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH 10/17] hw/core: Update docs for get_phys_addr_{attrs_,}debug
-Date: Fri, 17 Apr 2026 18:30:58 +0100
-Message-ID: <20260417173105.1648172-11-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260417173105.1648172-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH 12/17] monitor: hmp_gva2gpa: Don't page-align
+ cpu_get_phys_addr_debug() arg and return
+Message-ID: <aeJx-_s-n46m-zBf@gallifrey>
 References: <20260417173105.1648172-1-peter.maydell@linaro.org>
+ <20260417173105.1648172-13-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260417173105.1648172-13-peter.maydell@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
+X-Uptime: 17:45:25 up 35 days, 18:58,  3 users,  load average: 0.00, 0.03, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,84 +91,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the documentation for the get_phys_addr_{attrs_,}debug methods
-and wrapper functions to state that they can handle non-page aligned
-addresses and will return the corresponding exact physaddr for them.
+* Peter Maydell (peter.maydell@linaro.org) wrote:
+> In hmp_gva2gpa() we currently have a workaround for not all implementations
+> of get_phys_addr_debug handling non-page-aligned addresses: we round the
+> input address from the user down to the target page boundary before the
+> call and then add the page offset back to the returned value.
+> 
+> Now that we guarantee that all implementations will return the correct
+> exact physaddr for a virtual address, we can drop this handling.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  monitor/hmp-cmds.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index e6d8322bcc..f8380bda58 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -720,12 +720,11 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict)
+>          return;
+>      }
+>  
+> -    gpa  = cpu_get_phys_addr_debug(cs, addr & TARGET_PAGE_MASK);
+> +    gpa  = cpu_get_phys_addr_debug(cs, addr);
+>      if (gpa == -1) {
+>          monitor_printf(mon, "Unmapped\n");
+>      } else {
+> -        monitor_printf(mon, "gpa: 0x%" HWADDR_PRIx "\n",
+> -                       gpa + (addr & ~TARGET_PAGE_MASK));
+> +        monitor_printf(mon, "gpa: 0x%" HWADDR_PRIx "\n", gpa);
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/hw/core/cpu.h            | 16 +++++++++++-----
- include/hw/core/sysemu-cpu-ops.h |  4 ++++
- 2 files changed, 15 insertions(+), 5 deletions(-)
+For HMP:
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 6dedad535c..0941757c55 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -746,15 +746,18 @@ void cpu_dump_state(CPUState *cpu, FILE *f, int flags);
- 
- /**
-  * cpu_get_phys_addr_attrs_debug:
-- * @cpu: The CPU to obtain the physical page address for.
-+ * @cpu: The CPU to use for the virtual-to-physical translation
-  * @addr: The virtual address.
-  * @attrs: Updated on return with the memory transaction attributes to use
-  *         for this access.
-  *
-- * Obtains the physical page corresponding to a virtual one, together
-+ * Obtains the physical address corresponding to a virtual one, together
-  * with the corresponding memory transaction attributes to use for the access.
-  * Use it only for debugging because no protection checks are done.
-  *
-+ * The address need not be page-aligned; the returned address will
-+ * be the physical address corresponding to that virtual address.
-+ *
-  * Returns: Corresponding physical page address or -1 if no page found.
-  */
- hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
-@@ -762,13 +765,16 @@ hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
- 
- /**
-  * cpu_get_phys_addr_debug:
-- * @cpu: The CPU to obtain the physical page address for.
-+ * @cpu: The CPU to use for the virtual-to-physical translation
-  * @addr: The virtual address.
-  *
-- * Obtains the physical page corresponding to a virtual one.
-+ * Obtains the physical address corresponding to a virtual one.
-  * Use it only for debugging because no protection checks are done.
-  *
-- * Returns: Corresponding physical page address or -1 if no page found.
-+ * The address need not be page-aligned; the returned address will
-+ * be the physical address corresponding to that virtual address.
-+ *
-+ * Returns: Corresponding physical address, or -1 if no page found.
-  */
- hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
- 
-diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-index a4fc330bea..a87c55d922 100644
---- a/include/hw/core/sysemu-cpu-ops.h
-+++ b/include/hw/core/sysemu-cpu-ops.h
-@@ -31,6 +31,8 @@ typedef struct SysemuCPUOps {
-     bool (*get_paging_enabled)(const CPUState *cpu);
-     /**
-      * @get_phys_addr_debug: Callback for obtaining a physical address.
-+     * This must be able to handle a non-page-aligned address, and will
-+     * return the physical address corresponding to that address.
-      */
-     hwaddr (*get_phys_addr_debug)(CPUState *cpu, vaddr addr);
-     /**
-@@ -39,6 +41,8 @@ typedef struct SysemuCPUOps {
-      *       access.
-      * CPUs which use memory transaction attributes should implement this
-      * instead of get_phys_addr_debug.
-+     * This must be able to handle a non-page-aligned address, and will
-+     * return the physical address corresponding to that address.
-      */
-     hwaddr (*get_phys_addr_attrs_debug)(CPUState *cpu, vaddr addr,
-                                         MemTxAttrs *attrs);
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+>      }
+>  }
+>  
+> -- 
+> 2.43.0
+> 
 -- 
-2.43.0
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
