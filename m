@@ -4,149 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD73DF43682
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 08:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89653F43680
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 08:58:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDeuc-00044d-Cp; Fri, 17 Apr 2026 04:50:54 -0400
+	id 1wDf1f-0005jK-CW; Fri, 17 Apr 2026 04:58:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wDeuW-00043y-N0; Fri, 17 Apr 2026 04:50:49 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wDeuS-0002pp-5N; Fri, 17 Apr 2026 04:50:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AAqitwwaLXooJZx6SYGMBHJ+0rd2WLne91RTu0DqNEGQ2BSG27IAcwLgYuoLqGxKKkngZ+t07Yi1k0HFCcfQX/fy6dRwOtiWUycxYgpsLZNFzFeB37waFtYKpCCaTmtsTEaILRSk5xeS5Oa333eDwnogztA+Jvqtxhn83c7O2VtXHAZv40t35aIEE5aeEzLZtI+4WR/MaUSrxE/6uodedQVNxoH12s6GaM8Z8XQcuVXARK5e2+38Ey6Gu2yh40iy1gpj6krZu3B7zoIPOOX8nJq3gOjrCD7WuM3AOyqHfYCVorGlnv0yjwSO9g+mrZpo32m0R0p6wogIpB9Vnzk4rA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TWG6cAbBplSr1H2koPka0QlHHjtH5s/9uAY7/srk22k=;
- b=A3tUzjHGFOmHPAISFRzLGduNp/RhrypUwiX1oOethY6n8+lhwOTsR7iJkPeiMVmITuZCkDKPkOWPGESuOGfd2a9svbOJ7pmtejJbRuXpILhGghXsNqUDz6vzWV7aXtqhQnsUpIRmwfvjMl/KQ9D4EnYCNP39py0ifbfAQQoTygCpBmaaqXK5Ae8agBDeZkYwU4KRVCFwIsVCcSqJK99kp/smMPzTGQZu9sM3IsIF15PZCVyj6sYEm6LKi7YBNlLOv1P5lUN5Oi1Ggo98S0ziEY83527TbQvdDsQG6EW8+zRhsa1LEpBvDElfSM5HzOUFDmm/i8cHJr/s2QCaUYWEnQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TWG6cAbBplSr1H2koPka0QlHHjtH5s/9uAY7/srk22k=;
- b=jhLYWO4zi9Q9MNIxA91GlTfG7aVVY1bNTC6GQTtx/4TvPjadCnzp/5a3q18BAodv1EkHJDMMXkxa1ZSEx6o0XBOQ+Yxw2lUqBBEg6wR7w4/7+rhxujAVMJgydsO1eoL0Rq/m+rBh84J6dpoFoyfxRcIoOv/KmFd8GJ1AnRFn4+p/1rhxv/PkgLCKxLIiJLTkBVJOtq3sG2hzzym0UzcZqxJOB9n/llgeNXFQMpwnk6TBSxvAqKhUpRV0kz5qVlGr4/mXzlrumdQwLtfQLXV2LcuA85GgOdLiFR24wilTWVhGXArQjKb6fBacHR1nFZdRDFevLIZ4bsxtNKuYWGpyNQ==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by KUXPR06MB8414.apcprd06.prod.outlook.com (2603:1096:d10:82::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.21; Fri, 17 Apr
- 2026 08:50:36 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9818.023; Fri, 17 Apr 2026
- 08:50:36 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-Subject: RE: [PATCH v3 16/17] tests/functional/arm/test_aspeed_ast2600_sdk:
- Add USB EHCI test for AST2600 SDK
-Thread-Topic: [PATCH v3 16/17] tests/functional/arm/test_aspeed_ast2600_sdk:
- Add USB EHCI test for AST2600 SDK
-Thread-Index: AQHczUNXa7m48IJ56E+5bAyC84EEb7Xiy+aAgAATUfCAABL+AIAAALGw
-Date: Fri, 17 Apr 2026 08:50:36 +0000
-Message-ID: <TYPPR06MB8206C1638ED1807954659FFBFC202@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
- <20260416014928.1279360-17-jamin_lin@aspeedtech.com>
- <1738caec-dfa0-4d88-b7dd-5eabc075f5ef@linaro.org>
- <TYPPR06MB82064C14C44392EEA1F98BEBFC202@TYPPR06MB8206.apcprd06.prod.outlook.com>
- <4ee72e0c-2fd5-469d-84c0-ca0bf75f1143@linaro.org>
-In-Reply-To: <4ee72e0c-2fd5-469d-84c0-ca0bf75f1143@linaro.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KUXPR06MB8414:EE_
-x-ms-office365-filtering-correlation-id: 9866de74-3bb6-4596-c8f1-08de9c5e6495
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|22082099003|56012099003|18002099003|38070700021|921020;
-x-microsoft-antispam-message-info: oWaM8NyxA2lVTUE+fKBQgNpXhp1HEiMQ32yxGVm6907DUy+P2UXxlq4mQE+epH1Vng2vswwOJu7j8nLUj5R+R/Ik+DR7EhYl4U9DQFXtwIVJyoPhZ4/S4POuowIRw+7bEKUhPX6BL+Vf+T/1IfjHAozXYhAjwQz9gdW8CsH74ZQaYG18lzq2YoPEdj0DQDVxQixw2guSdpd4rvjrAksVsyk1dEH+l1+y4Yl4/H7JZ3Hc4rvfadY2mRuMFnarDbwonHdQxShui0U9oazj5MpAtMNfOzS7PuCCF3V/yq7CnAsFQJUUUbuTLGWQOfEuHqmES/7CZ1Eh5NOMn0zJn1iEjvQJS42UMIwsx2Fv6/l13Yf1MIgiMs4MwE45uWdHPv+P/c9nArGoesaHeG32+EPYGxi1JIgVm1kOSQNaoX5rXNqYz5H559vYjFvvLlMYmwnr8gi854UhwlTYRR+ebStZcE85VYbiaYsjuPspkmjCB8Vgq/rBGfqKHCXhlRmrTnBIvboXYVbc23IudRzZ3y78Loc+zlAeKptYpasS1geMbsSHvwhDCjm9pXFhbLTBJsRlOtTXZM1K1hZN5u3/Cox/IDpVgr6Y/Mxjpop0Y41gbbMZiVYTBE752NybrXOyEm7VRbPTMlOTOjezTgOkjuUijzJB8R5Il9ZaZSb0G4+lAZIjoz+BKKWS/CX/EmUk12wURMYM/1VN6iUk9Dhskek5P74nU1L8gCG0/wGtBu04J18W6P8KYCiX7ReDouakzfsnet7YqWm8dm3ZwCqilMvdHBMY4mNIpS2p0JaHzTMz/s1EIFF8+Uze+rcsMs3gBNUO
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(22082099003)(56012099003)(18002099003)(38070700021)(921020);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SlRzeng2dDhhMDU1QS9wZTN3QWtyUVdVcVVPc2VSMnVkdEFQOW4rZXdmZUVx?=
- =?utf-8?B?Ky9EQ2xCTVNsUlVuU2haMWx1ZkRpY0Q5YnRkbERodG55RXE2eEVucXBJdXQ5?=
- =?utf-8?B?cDFjQnpDY3l5MVdITE95ME93SmJ0aXI4S29kUVRmZ0hMWXZhbnRuSmZTbi9K?=
- =?utf-8?B?RG5oOWM3bWJKSEFFcG9zN2p3MHlUNXBmM29wenVOSmtsbHhPcnVSek5zamNB?=
- =?utf-8?B?bTR2RFN2Vi9vckVBOGxiV3hzWHM4bEoxcmZVYjA4c0JkbFp6Q2pqZmI0b0pH?=
- =?utf-8?B?bGtLQ1lrNitydHRRNzRZYUNLUGZScUtTZ0Q0QlhZNUhESjJFT2NRQ0dpVC8y?=
- =?utf-8?B?cGF4OWFXTFlpekNWZkZobWNyM2NIMktRWDk0VGdmaHMxVjJOemxQb2d4dTUv?=
- =?utf-8?B?Y3dDTVBsMkwvaytQY3lMb3RjT2E2ODB0UFY0MkYvVVFPbkc5bnJ5ZWVselp3?=
- =?utf-8?B?WVgyTmE3emJDNTdsU0JtK1ZPa2F1dUZTVmgzOWsvMmRlYzJUWlJQeWVnTkt3?=
- =?utf-8?B?Z1VKVGI4Z2R0VmpGRWdxc050aFdJU3FacWZXcWx0SitDRUNXL01RMjdxakFx?=
- =?utf-8?B?YlVJcEg4TmJuWUtHSlN5czQ5bGhYTENSY0VxMTNEMktVY1p5MEFJdUpHa0U5?=
- =?utf-8?B?Z3pkZ1pxNm0veDNQZmVnN0hBcm5JRWs2RG9JaENLUUFMMjR6U2ZBaEJnSUg1?=
- =?utf-8?B?NEdiWlJQdkQxK2paUTdXVVVNMjh1NTBiOHhGaGtsWE1DcmkvSGwzQ0lRZXJR?=
- =?utf-8?B?RldsVGlWcGJWUmNsYlc3TDhOOWxZdWxDVDZzbU9TSDBaVXg3cWVQU3lKcnRI?=
- =?utf-8?B?eFMwd1lidmVEOG53NEVmUHd2NzVGYWJoUjdLMmx4L2NzcXppay9vckJKN2Rj?=
- =?utf-8?B?d2ltMmRVTjBxMmk4MEhqYm0vVVpMRjJTRGpyVUsyVHRaQ2Z5NytWc1Y4SEY5?=
- =?utf-8?B?dkZVeTM4V215ZWF3M1BjVlY4OE4vUGpkN0VOR3N2Q1NGc3VFdGQ4S1U0RFVu?=
- =?utf-8?B?My8wN3FCckpIMGZ6bjhVelVkc0hNN1hBeTQxdVhoalZLbTJTNDhTVFJjTlov?=
- =?utf-8?B?Z0ZpUXNDeC9iMm9vSkxYZUlsSnNNT1IrVTdoWmlnL3FyNmlOazB5YWMvRThN?=
- =?utf-8?B?dXo3eXNFQ2k2VWxSdDFjTzdXU2JiK200a2svOG5lRmx2MUV4YVFIQy92MmJO?=
- =?utf-8?B?TDVlbUk4ZFpyR1YzVWJHVEE0QytSenBubHhYcWw1R285RGN2Uzdtdk5kWEo4?=
- =?utf-8?B?eVZZVHp0WTBOVnpCQVFuSnB5MnVxVzg2WVZ3UVlYZjVRYlRrWmxQWmtremNn?=
- =?utf-8?B?NXNHUjhYb0xhbTRBQURURnZma0haTFhIbmdZWmh6aHg1MTNCT2JpWjM3dVJz?=
- =?utf-8?B?b1hEbDVEdnllbjZhb3V6RTFkcDFneGdtUHBpOW1kNVcvdmNDZnluTmxDaWN3?=
- =?utf-8?B?bjdJNi9DMElIYkVyQjE4NUlsdjdrcnpPRFpza2NuRHkzOUZkYUU0bjhUSStJ?=
- =?utf-8?B?cXZZSnVObzgwWVV2VnpoVGRUNzl6VXAyY0t0Q3Exbk13aGdoS3BKbVVFbVR2?=
- =?utf-8?B?d3NnVTI2N0MydnM3b0VHVWtsem0rbGtvQlAyRzF0WGtBR2V2NHk1ZGk4RCsw?=
- =?utf-8?B?d0RzQmdIZ2lhV01URzhRYUF0UEVoR2twV2c5eWxneHMwZlhTVmxSRWQzbVZh?=
- =?utf-8?B?MnpaS0pzZnRCSUt6MmRSRjZIdmhyenE3UHRkZ1MzK3BwRGtIb1k3WVUwUXZs?=
- =?utf-8?B?cjYxbmhqVitZbnlrV0tJZDJNVWw0N2F1cm9ackladmphb1VkOFNsM3MweWRK?=
- =?utf-8?B?ZzhXdFM5VTlVeVVCNnd3dU44VTZtRVlKaTRjL3VQb1pnMkdMeGh1LzZ4c3NJ?=
- =?utf-8?B?Q1pkc3h0aU1tUGpaVUdnN0EyTkltQ1UySEo4QnJ6TlhKNHFPWndhZ0x4elM5?=
- =?utf-8?B?aTJNYTJKWnpaa2hNdnFBdGE3NjIwMUpYYk9aQ2lDaVR2eHFkKzNHSkRaS1NR?=
- =?utf-8?B?M0tWaUZNdDR1REgrQThYMkVZd1RzUitqWVdGOXlzeXAzZU96YWc5ZUY0UzZn?=
- =?utf-8?B?UEthMmlHQy9jR1NLYnZUUHRnZ0lVU0hzSGY5bFdXSmgxeHpsa2M5Z1RNelBB?=
- =?utf-8?B?ZkthRFUvT0x2eXI5Z2pvRkFzcUlkNnRCSWh6c0FXdXVReHZCZFRxWXRweVla?=
- =?utf-8?B?VG9LdkJ0MmFJSkYyWVU5MGhSRUhIOFpGWWIxdC9TdmpkWUFVMmxuL0oxVUNI?=
- =?utf-8?B?bDZmSUhzdUxDZkpoczBWNzc2dFNSUHh4eWszMXNZdVgxT2NmbHo1R2NIZHBF?=
- =?utf-8?B?M2llUHZUMmtib3BNSmU3VEdpclBVNm5YbGhPN3FiRHFsZmtrQkZpQT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDf1e-0005is-EJ
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 04:58:10 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDf1c-0005K6-Q6
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 04:58:10 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso5314485e9.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 01:58:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776416287; x=1777021087; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bFP3C4Yi06h2nN63khd3cz+ceImWWuencx5nv/LVR+Y=;
+ b=BCAHmTkJouBrIngJgaAOeql0Ahz0w7pxwvZQtY3oHO7xG95wzSh2PkkU8KERxV0VUm
+ 9IYEem790vlZ3Ff48Hosm5YmIqx0kx04GtYy5dMXh2XOQl4d/gvbnMErXGTe4YcZ3sE4
+ 74oS+v7mzjPqLv0/3dyh1DA8Q9tZHlZ4SCrtVHQtd5Yv+HIPZH7weasoJWpeOFF87dMh
+ /gwSZUh75+3ZjnDpugbPXpCIe4aZkkLArvChI8CFEZRNgyrHfGm+hju92rYwGbUcRuUc
+ eE8/n/9sSHjt3h0s1if+yx+MRc9aWUFh8eY9CduzrFg0HGoDzho+nLrNeT/ncTR7eBaX
+ TPmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776416287; x=1777021087;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bFP3C4Yi06h2nN63khd3cz+ceImWWuencx5nv/LVR+Y=;
+ b=Q6zK6hrwzslCfUjOAQzewZaArn/tKml9buRaDR8gb/jVesccMkWXTOEdJYdX9sf/Vq
+ OW/JzZycTjo+wRS5F6VweKLkbJE9MDyJPhxtTb1uRqwmfR0aU5Lc1l2ze1vHYpZtEdEC
+ 5SpMEL/IXM0ixIwmVrgjXUMmz1jv1//cUkga5npnTeFfK/9D3NRdAEb3/nVEyjPIiMil
+ 2hfdVXF1N+nf14reWyCsm2bAx7znB4ZTxY5YmL0sWQ4n1u8I+cShSdHnvFM+Bq6AfXvQ
+ LEpIvedNR8RsDwrVtpUZQ7iaEtLxLaTeOe83qC5ilKUGDd7goqmCgzNzIWHHw5jG+tau
+ z8fQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+e3Iqv+RO8F3YvGNNrjfXMZqO1e0YeDF+X9J9WK1+Qx6AEVpb3OD1NEKDIlGTje8sb8y20SZqmPURI@nongnu.org
+X-Gm-Message-State: AOJu0YwmtJJLNaVDndGvCdSQKzuvywy1n3D3LO+Cdy6c6emRucwIYxc8
+ i7WXX7hIUilsYKBpjqOvINdQuWYptvVSK+5rYN2LWaDanlLplENV7rwojG7PDbH4QUg=
+X-Gm-Gg: AeBDietvusuyl3A8LOUG1HNPDgk+oL4Gub5XX+xWUngAbI9fOzKWk87GIeH8Mwy08DM
+ /xniV0zD2bBh58oDE6NZ5uNgGSGUeomrzDpDpxiYZ8Em4AUjgHqgVJtxxX5Dssw9dwdPhUzyZmj
+ 2f4U/GVMs0gj7H8ijbZbU1qhNsp7sO/9F1g5oCQjAUmR3DjpraJjQRLnzl7CJ/7XLOJ3Oe4upbQ
+ /QPeYx8eAM8X77wNvFbZr77dV5Uw3JYBkZnODxqrdby7sgqc2UnohX7bh0xl1oLcoxVdHWLycjh
+ MLexncdqeliYqRVx0Az88zCwLzqfPwvEW+BZK/0F3zsXrJRdAnu0rbQaXq2fHfPogr0NogpyTE6
+ eiu6DIe2sYQ5/j2qOacDhyxx5/L6GU8szYpm7deluesbHrchFkf9toNhbrEDIhi5p3/3azkuvgg
+ Tq0lM6IAfRIOwd0iyy2kzxjL8OvfJGYStRDkyO6q19xKGKuHzxXWzjCYn9s5y203SkJF4ZBX3yD
+ 2Zk
+X-Received: by 2002:a05:600c:3110:b0:488:8c89:cfaa with SMTP id
+ 5b1f17b1804b1-488fb73841dmr25124515e9.3.1776416286943; 
+ Fri, 17 Apr 2026 01:58:06 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fb7aa593sm12134895e9.24.2026.04.17.01.58.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Apr 2026 01:58:04 -0700 (PDT)
+Message-ID: <a75dcca3-9cab-49e3-818c-4d52c2a1bdd6@linaro.org>
+Date: Fri, 17 Apr 2026 10:58:02 +0200
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: Ye/8YGXgSfISR1qMh3NuALGHu6gs/VxB4Ryz5AHIWOa5OBBqod9wq2maBiTPmLFee0SYVR+Qn9+NiW2TI0BWHFqepxwQ17qZMXPbl5EuT7fLDu3oaSVEdI5IEdV93Yp7frFMS/Uoc//TmRQiNfd2B88PCNGhi4NWDFlwAtR9GUi1E13XrsuCKiPSveD8kiysUfQV+p27PLrn0qPup3DzWL1Dso6AtmhHUmZmGZKAnJCR1NGMZhfWF6oBAF4D7QSznMq9vxGyYJohia9ogqtOyscLLv35g2Cx+oWRaJ/7nU+TpxPMzPf+Q4DVY9inHbDm8sncSwu/6YlU0dk7wVx/Hg==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9866de74-3bb6-4596-c8f1-08de9c5e6495
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2026 08:50:36.0803 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QlnT5C3uewBGFJ0K40MjG0cv+Zf4Q763Tx/BATh02QwvsZtJugB7S9dUwXNAipXgcPFLBo/FLDnfFMZwIiK0fLu/0AHD2OplUvDEW57dBUA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR06MB8414
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/28] MAINTAINERS: Remove Huai-Cheng Kuo
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20260416091654.316158-1-peter.maydell@linaro.org>
+ <20260416091654.316158-11-peter.maydell@linaro.org>
+ <58a32864-6c05-432c-bdc2-5763e32cda99@linaro.org>
+ <02e21af2-d6e8-4418-9cab-af56c81afc27@phytium.com.cn>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <02e21af2-d6e8-4418-9cab-af56c81afc27@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,33 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgUGhpbGlwcGUNCg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYzIDE2LzE3XSB0ZXN0cy9mdW5j
-dGlvbmFsL2FybS90ZXN0X2FzcGVlZF9hc3QyNjAwX3NkazoNCj4gQWRkIFVTQiBFSENJIHRlc3Qg
-Zm9yIEFTVDI2MDAgU0RLDQo+IA0KPiBPbiAxNy80LzI2IDA5OjQwLCBKYW1pbiBMaW4gd3JvdGU6
-DQo+ID4gSGkgUGhpbGlwcGUNCj4gPg0KPiA+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYzIDE2LzE3
-XQ0KPiB0ZXN0cy9mdW5jdGlvbmFsL2FybS90ZXN0X2FzcGVlZF9hc3QyNjAwX3NkazoNCj4gPj4g
-QWRkIFVTQiBFSENJIHRlc3QgZm9yIEFTVDI2MDAgU0RLDQo+ID4+DQo+ID4+IE9uIDE2LzQvMjYg
-MDM6NTAsIEphbWluIExpbiB3cm90ZToNCj4gPj4+IEFkZCBhIGZ1bmN0aW9uYWwgdGVzdCB0byB2
-ZXJpZnkgVVNCIEVIQ0kgc3VwcG9ydCBvbiB0aGUgQVNUMjYwMCBTREsNCj4gPj4+IG1hY2hpbmUg
-YnkgYXR0YWNoaW5nIGEgVVNCIGtleWJvYXJkIGRldmljZSBhbmQgY2hlY2tpbmcgaXRzDQo+ID4+
-PiBlbnVtZXJhdGlvbiB2aWEgbHN1c2IuDQo+ID4+Pg0KPiA+Pj4gVGhpcyBpbnRyb2R1Y2VzIGEg
-aGVscGVyIHJvdXRpbmUgdGhhdCBydW5zIGxzdXNiIGluIHRoZSBndWVzdCBhbmQNCj4gPj4+IHZh
-bGlkYXRlcyB0aGF0IHRoZSBlbXVsYXRlZCAiUUVNVSBVU0IgS2V5Ym9hcmQiIGlzIGRldGVjdGVk
-Lg0KPiA+Pj4NCj4gPj4+IFNpZ25lZC1vZmYtYnk6IEphbWluIExpbiA8amFtaW5fbGluQGFzcGVl
-ZHRlY2guY29tPg0KPiA+Pj4gLS0tDQo+ID4+PiAgICB0ZXN0cy9mdW5jdGlvbmFsL2FybS90ZXN0
-X2FzcGVlZF9hc3QyNjAwX3Nkay5weSB8IDcgKysrKysrKw0KPiA+Pj4gICAgMSBmaWxlIGNoYW5n
-ZWQsIDcgaW5zZXJ0aW9ucygrKQ0KPiA+Pg0KPiA+PiBUaGlzIHNob3VsZCBiZSBwYXRjaCAjMSA6
-KQ0KPiA+Pg0KPiA+DQo+ID4gVGhpcyBwYXRjaCBzZXJpZXMgdXBkYXRlcyB0aGUgVVNCIEVIQ0kg
-bW9kZWwgdG8gc3VwcG9ydCA2NC1iaXQuDQo+ID4NCj4gPiBJIGFkZGVkIGEgZnVuY3Rpb25hbCB0
-ZXN0IChBU1QyNjAwKSB0byBlbnN1cmUgdGhhdCB0aGVzZSBjaGFuZ2VzIGRvIG5vdA0KPiBpbXBh
-Y3QgdGhlIGV4aXN0aW5nIDMyLWJpdCBzdXBwb3J0Lg0KPiANCj4gVGhpcyBpcyBhbHNvIG15IHVu
-ZGVyc3RhbmRpbmcsIGZpcnN0IGFkZCB0aGUgQVNUMjYwMCB0ZXN0IHRvIGVuc3VyZSB3ZSBkbyBu
-b3QNCj4gYnJlYWsgYW55dGhpbmcgd2hpbGUgaW1wbGVtZW50aW5nIDY0LWJpdCBkZXNjIGFkZHJl
-c3NpbmcuDQo+IA0KDQpUaGFua3MgZm9yIHRoZSBzdWdnZXN0aW9uLg0KSSB3aWxsIG1vdmUgdGhp
-cyBwYXRjaCBiZWZvcmUgdGhlIDY0LWJpdCBkZXNjcmlwdG9yIGFkZHJlc3NpbmcgY2hhbmdlcy4N
-Cg0KPiA+IEZvciB0aGlzIHJlYXNvbiwgSSBwbGFjZWQgdGhpcyBwYXRjaCBpbiB0aGUgY3VycmVu
-dCBvcmRlci4NCj4gPiBJZiB5b3Ugc3RpbGwgdGhpbmsgdGhlIHBhdGNoIG9yZGVyIHNob3VsZCBi
-ZSBhZGp1c3RlZCwgcGxlYXNlIGxldCBtZSBrbm93Lg0KPiA+DQo+ID4gVGhhbmtzLA0KPiA+IEph
-bWluDQo+ID4NCj4gPj4gUmV2aWV3ZWQtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGls
-bWRAbGluYXJvLm9yZz4NCg0K
+On 16/4/26 18:07, Tao Tang wrote:
+> 
+> On 2026/4/16 19:28, Philippe Mathieu-Daudé wrote:
+>> On 16/4/26 11:16, Peter Maydell wrote:
+>>> Huai-Cheng Kuo has not posted to qemu-devel in some years and did not
+>>> respond to a query about whether they still wished to be listed in
+>>> our MAINTAINERS file.  Remove them, on the assumption that they are
+>>> no longer active in QEMU.
+>>>
+>>> This makes "PCIE DOE" orphan.
+>>
+>> Cc'ing Tao & Gustavo who are working on Security Protocol and Data Model
+>> (SPDM) which IIUC use DOE.
+> 
+> 
+> Thanks Philippe. DOE is indeed relevant to SPDM and RME-DA work we have 
+> been looking at.
+
+Commit 4f947b10d52 ("hw/nvme: Add SPDM over DOE support"), described as:
+
+     Setup Data Object Exchange (DOE) as an extended capability for
+     the NVME controller and connect SPDM to it (CMA) to it.
+
+introduced the docs/specs/spdm.rst file which isn't maintained:
+
+$ ./scripts/get_maintainer.pl -f docs/specs/spdm.rst
+get_maintainer.pl: No maintainers found, printing recent contributors.
+get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
+
+Would it make sense to move hw/pci/pcie_doe.* to the SPDM section
+instead of orphanize them?
+
+   SPDM
+   M: Alistair Francis <alistair.francis@wdc.com>
+   S: Maintained
+   F: backends/spdm-socket.c
+   F: include/system/spdm-socket.h
+
+Added in Cc contributors who might be interested in being listed
+as co-maintainer or reviewer ;)
+
+> 
+> I will help review changes in this area as they come up.
+> 
+> 
+> Best regards,
+> 
+> Tao
+> 
+> 
+>>
+>>>
+>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>> ---
+>>>   MAINTAINERS | 3 +--
+>>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 0b2adbc247..bc7c9b61da 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -2160,8 +2160,7 @@ F: docs/specs/*pci*
+>>>   F: docs/system/sriov.rst
+>>>     PCIE DOE
+>>> -M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
+>>> -S: Supported
+>>> +S: Orphan
+>>>   F: include/hw/pci/pcie_doe.h
+>>>   F: hw/pci/pcie_doe.c
+> 
+
 
