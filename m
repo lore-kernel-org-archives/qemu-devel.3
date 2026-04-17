@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B14F4368B
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D174F4368A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgjE-00011L-Ps; Fri, 17 Apr 2026 06:47:16 -0400
+	id 1wDgjm-0001P9-A8; Fri, 17 Apr 2026 06:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wDgjB-00010B-8U; Fri, 17 Apr 2026 06:47:14 -0400
+ id 1wDgjk-0001OZ-4O; Fri, 17 Apr 2026 06:47:48 -0400
 Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wDgj8-0007u8-ED; Fri, 17 Apr 2026 06:47:13 -0400
+ id 1wDgjh-000827-W2; Fri, 17 Apr 2026 06:47:47 -0400
 Received: from Huawei.localdomain (unknown [36.110.52.2])
- by APP-01 (Coremail) with SMTP id qwCowAB3H2ulD+JpLDmSDQ--.804S3;
- Fri, 17 Apr 2026 18:47:05 +0800 (CST)
+ by APP-01 (Coremail) with SMTP id qwCowAB3H2ulD+JpLDmSDQ--.804S14;
+ Fri, 17 Apr 2026 18:47:22 +0800 (CST)
 From: Molly Chen <xiaoou@iscas.ac.cn>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
@@ -28,32 +28,32 @@ To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
 Cc: xiaoou@iscas.ac.cn,
 	qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 01/14] target/riscv: rvp: Add option defines and dependency
- check for packed simd extension
-Date: Fri, 17 Apr 2026 18:46:38 +0800
-Message-Id: <20260417104652.17857-2-xiaoou@iscas.ac.cn>
+Subject: [PATCH 12/14] target/riscv: rvp: add load and replicate instructions.
+Date: Fri, 17 Apr 2026 18:46:49 +0800
+Message-Id: <20260417104652.17857-13-xiaoou@iscas.ac.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417104652.17857-1-xiaoou@iscas.ac.cn>
 References: <20260417104652.17857-1-xiaoou@iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAB3H2ulD+JpLDmSDQ--.804S3
-X-Coremail-Antispam: 1UD129KBjvJXoWxGw1UurWrtryrurWkuw4rKrg_yoW5Zr4Upr
- ZxG3yakw4DJayfAa93trykXFn8WrsYgws7Kwsruw4xAFZ5ArWUWrnxtw4j9r43GFWrZF42
- 93Wv9F13ZFWUZFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUBm14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
- x26xkF7I0E14v26r1I6r4UM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
- Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
- ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I2
- 62IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcV
- AFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG
- 0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_Jw0_GFyl42
- xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWU
- GwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI4
- 8JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4U
- MIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I
- 8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUn2-5UUUUU
+X-CM-TRANSID: qwCowAB3H2ulD+JpLDmSDQ--.804S14
+X-Coremail-Antispam: 1UD129KBjvJXoWxXry3Kr4xuF1DXrWDKw18Grg_yoWrAr4fpF
+ 48Gr17GrWkGr13AF93Kr45Jr13Wrs5G34UG3sxW3Z7AF45JFWrA348Kw43tr4FqryDWFWU
+ GF1UAryDuFZ5JwUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUPY14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
+ kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
+ z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
+ 4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
+ 3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7
+ IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4U
+ M4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWUtV
+ W8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v2
+ 6r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2
+ Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_
+ Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
+ 1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUqLvNU
+ UUUU=
 X-Originating-IP: [36.110.52.2]
 X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
 Received-SPF: pass client-ip=159.226.251.21; envelope-from=xiaoou@iscas.ac.cn;
@@ -80,100 +80,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Co-Authored by: Yin Zhang <zhangyin2018@iscas.ac.cn>
-Co-Authored by: Dajun Huang <djhuang_1@std.uestc.edu.cn>
-Co-Authored by: Zhiyuan Yang <zhiyuan.plct@isrc.iscas.ac.cn>
-
 Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
 ---
- target/riscv/cpu.c         |  5 +++--
- target/riscv/cpu.h         |  1 +
- target/riscv/tcg/tcg-cpu.c | 16 ++++++++++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ target/riscv/insn32.decode              | 16 ++++++
+ target/riscv/insn_trans/trans_rvp.c.inc | 67 +++++++++++++++++++++++++
+ target/riscv/translate.c                |  2 +
+ 3 files changed, 85 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 72c6f4f0f1..c630faa892 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -41,7 +41,7 @@
- /* RISC-V CPU definitions */
- static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
- const uint32_t misa_bits[] = {RVI, RVE, RVM, RVA, RVF, RVD, RVV,
--                              RVC, RVS, RVU, RVH, RVG, RVB, 0};
-+                              RVC, RVS, RVU, RVH, RVG, RVB, RVP, 0};
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index ebfbf8c799..b1bde37de4 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -44,6 +44,10 @@
+ %imm_p_ui16 20:4
+ %imm_p_ui32 20:5
+ %imm_p_ui64 20:6
++%imm_p_l1  16:8
++%imm_p_l2  15:s1 16:9
++%imm_p_l3  15:s9 24:1              !function=ex_shift_6
++%imm_p_l4  15:s9 24:1              !function=ex_shift_22
  
- /*
-  * From vector_helper.c
-@@ -1172,7 +1172,8 @@ static const MISAExtInfo misa_ext_info_arr[] = {
-     MISA_EXT_INFO(RVH, "h", "Hypervisor"),
-     MISA_EXT_INFO(RVV, "v", "Vector operations"),
-     MISA_EXT_INFO(RVG, "g", "General purpose (IMAFD_Zicsr_Zifencei)"),
--    MISA_EXT_INFO(RVB, "b", "Bit manipulation (Zba_Zbb_Zbs)")
-+    MISA_EXT_INFO(RVB, "b", "Bit manipulation (Zba_Zbb_Zbs)"),
-+    MISA_EXT_INFO(RVP, "x-p", "Packed-SIMD instructions")
- };
+ # Argument sets:
+ &empty
+@@ -64,6 +68,7 @@
+ &k_aes     shamt rs2 rs1 rd
+ &mop5 imm rd rs1
+ &mop3 imm rd rs1 rs2
++&p_l  imm rd
  
- static void riscv_cpu_validate_misa_mxl(RISCVCPUClass *mcc)
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 4c0676ed53..e08f57d282 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -69,6 +69,7 @@ typedef struct CPUArchState CPURISCVState;
- #define RVH RV('H')
- #define RVG RV('G')
- #define RVB RV('B')
-+#define RVP RV('P')
+ # Formats 32:
+ @r       .......   ..... ..... ... ..... ....... &r                %rs2 %rs1 %rd
+@@ -113,6 +118,10 @@
+ @p_ui16 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui16 %rs1 %rd
+ @p_ui32 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui32 %rs1 %rd
+ @p_ui64 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui64 %rs1 %rd
++@p_l1  ........ ........ .... ..... ....... &p_l      imm=%imm_p_l1         %rd
++@p_l2  ....... .......... ... ..... ....... &p_l      imm=%imm_p_l2         %rd
++@p_l3  ....... .......... ... ..... ....... &p_l      imm=%imm_p_l3         %rd
++@p_l4  ....... .......... ... ..... ....... &p_l      imm=%imm_p_l4         %rd
  
- extern const uint32_t misa_bits[];
- const char *riscv_get_misa_ext_name(uint32_t bit);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index f3f7808895..4545ae721c 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -601,6 +601,11 @@ static void riscv_cpu_validate_b(RISCVCPU *cpu)
-     }
- }
- 
-+static void riscv_cpu_validate_p(RISCVCPU *cpu)
+ # Formats 64:
+ @sh5     .......  ..... .....  ... ..... ....... &shift  shamt=%sh5      %rs1 %rd
+@@ -1596,3 +1605,10 @@ pm4addu_h       10100 11 ..... ..... 101 ..... 0111011 @r
+ pm4adda_h       10001 11 ..... ..... 101 ..... 0111011 @r
+ pm4addasu_h     11101 11 ..... ..... 101 ..... 0111011 @r
+ pm4addau_h      10101 11 ..... ..... 101 ..... 0111011 @r
++
++# Packed SIMD - Load and Replicate instructions
++pli_b    10110100 ........ 0010 ..... 0011011 @p_l1
++pli_h    1011000 .......... 010 ..... 0011011 @p_l2
++plui_h   1111000 .......... 010 ..... 0011011 @p_l3
++pli_w    1011001 ..... ..... 010 ..... 0011011 @p_l2
++plui_w   1111001 ..... ..... 010 ..... 0011011 @p_l4
+diff --git a/target/riscv/insn_trans/trans_rvp.c.inc b/target/riscv/insn_trans/trans_rvp.c.inc
+index 86071d71f7..b82774e00f 100644
+--- a/target/riscv/insn_trans/trans_rvp.c.inc
++++ b/target/riscv/insn_trans/trans_rvp.c.inc
+@@ -906,3 +906,70 @@ GEN_SIMD_TRANS_64(pm4addu_h)
+ GEN_SIMD_TRANS_ACC_64(pm4adda_h)
+ GEN_SIMD_TRANS_ACC_64(pm4addasu_h)
+ GEN_SIMD_TRANS_ACC_64(pm4addau_h)
++
++static bool trans_pli_b(DisasContext *ctx, arg_pli_b * a)
 +{
-+    /* Enable sub-extensions here. Do nothing for now. */
++    REQUIRE_EXT(ctx, RVP);
++    int i = 1;
++    target_long imm = a->imm;
++    while (i < TARGET_LONG_SIZE) {
++        imm = ((imm << 8) + a->imm);
++        i++;
++    }
++    gen_set_gpri(ctx, a->rd, imm);
++    return true;
 +}
 +
- /*
-  * Check consistency between chosen extensions while setting
-  * cpu->cfg accordingly.
-@@ -619,6 +624,10 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         riscv_cpu_validate_b(cpu);
-     }
- 
-+    if (riscv_has_ext(env, RVP)) {
-+        riscv_cpu_validate_p(cpu);
++static bool trans_pli_h(DisasContext *ctx, arg_pli_h * a)
++{
++    REQUIRE_EXT(ctx, RVP);
++    int i = 1;
++    target_long imm = a->imm;
++    while (i < TARGET_LONG_SIZE / 2) {
++        imm = (imm << 16) + (a->imm & 0xFFFF);
++        i++;
 +    }
++    gen_set_gpri(ctx, a->rd, imm);
++    return true;
++}
 +
-     if (riscv_has_ext(env, RVI) && riscv_has_ext(env, RVE)) {
-         error_setg(errp,
-                    "I and E extensions are incompatible");
-@@ -683,6 +692,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
-+    if (riscv_has_ext(env, RVP) &&
-+        !(cpu->cfg.ext_zba && cpu->cfg.ext_zbb && cpu->cfg.ext_zbkb)) {
-+        error_setg(errp, "P extension requires zba, zbb and zbkb extensions");
-+        return;
++static bool trans_plui_h(DisasContext *ctx, arg_plui_h * a)
++{
++    REQUIRE_EXT(ctx, RVP);
++    int i = 1;
++    target_long imm = a->imm;
++    while (i < TARGET_LONG_SIZE / 2) {
++        imm = (imm << 16) + (a->imm & 0xFFFF);
++        i++;
 +    }
++    gen_set_gpri(ctx, a->rd, imm);
++    return true;
++}
 +
-     riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
-     if (local_err != NULL) {
-         error_propagate(errp, local_err);
-@@ -1413,6 +1428,7 @@ static const RISCVCPUMisaExtConfig misa_ext_cfgs[] = {
-     MISA_CFG(RVV, false),
-     MISA_CFG(RVG, false),
-     MISA_CFG(RVB, false),
-+    MISA_CFG(RVP, false),
- };
++static bool trans_pli_w(DisasContext *ctx, arg_pli_w * a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_EXT(ctx, RVP);
++    int i = 1;
++    int64_t imm = a->imm;
++    while (i < TARGET_LONG_SIZE / 4) {
++        imm = (imm << 32) + (a->imm & 0xFFFFFFFF);
++        i++;
++    }
++    gen_set_gpri(ctx, a->rd, imm);
++    return true;
++}
++
++static bool trans_plui_w(DisasContext *ctx, arg_plui_w * a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_EXT(ctx, RVP);
++    int i = 1;
++    int64_t imm = a->imm;
++    while (i < TARGET_LONG_SIZE / 4) {
++        imm = (imm << 32) + (a->imm & 0xFFFFFFFF);
++        i++;
++    }
++    gen_set_gpri(ctx, a->rd, imm);
++    return true;
++}
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index de3ec7a7ec..04efc7aced 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -796,7 +796,9 @@ EX_SH(1)
+ EX_SH(2)
+ EX_SH(3)
+ EX_SH(4)
++EX_SH(6)
+ EX_SH(12)
++EX_SH(22)
  
- /*
+ #define REQUIRE_EXT(ctx, ext) do { \
+     if (!has_ext(ctx, ext)) {      \
 -- 
 2.34.1
 
