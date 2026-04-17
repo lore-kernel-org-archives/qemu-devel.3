@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21510F8E499
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 03:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1AEF8E4A1
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 03:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDaLK-0000E0-9l; Thu, 16 Apr 2026 23:58:10 -0400
+	id 1wDaLm-0000vN-MM; Thu, 16 Apr 2026 23:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDaLI-0000DT-Qd
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 23:58:08 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDaLj-0000il-21
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 23:58:35 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDaLH-0001Fy-F9
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 23:58:08 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488b8bc6bc9so1137385e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 20:58:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wDaLh-0001Jz-FV
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 23:58:34 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48896199cbaso2158825e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 20:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776398285; x=1777003085; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KYn7MiYiIimHUCCwf9g8QaU0c9vwpWnSWkhJsSMHx20=;
- b=rJ1/gILGLn+h6MFLok7Yx+dO0D5EVsViemqhRsLbk3w/OV/uWQhWlCfpNFTvtm8K/b
- zlKgsKMVjwXnGuWcBqvEzIDMw5EI0VWB9zCIObFZ7J1oJcYqf76dLP3uZ9IWEjcuCtvk
- olIfOFWAdEaCgjXiTqxTHLcoxNUVSa6GYo96+8isxz615w4mOx2t7QQnz2ZChAcZ4EcK
- FjKpLt8RijzPMM95u0oL4dyojVRKyU9LAnL0yUPpTFSPR2WtvHrebrGuT4MRVmxqa8cr
- ZWnnLSPDoTW50o1VZmguVNfUTbO/0edmXwSd28J74qkJmiM70GfQaJsmF4gre2+WYuko
- Bjwg==
+ d=linaro.org; s=google; t=1776398312; x=1777003112; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1//i73+3jJSLDhQvS0mxohAJ4AYjIlkbCa6T3BwrqBw=;
+ b=GrDANd2D62my3Y+CIu+Ht5wKTRnp1w3TN1QM+U96CYjbyeZCvQ7yi/8+fc0jdnBI2X
+ qhZpLB4CFIg9kcqhD4sXz/B3zLHKkMkmqzWaY04+nZSbaRPybRv55nNUdQkzWtEgm+DW
+ HWAn3UTqU/esh0R/Cbm519YDNc8hYHrOIAiFyDwyPrNo+Nthad7/oQa0CkQ1mFk/pv85
+ tbOHy+RNAHnujB7Xvxv2IrDdlw7KHeP73vZeSBrJs/81nOD30lKr9gxsgFbEnGXXbFVp
+ YF3x5EiixqpM/Lv2O3gFqlqBU+78MenRHkbO4u58EKShwsZMpLJM1+qkYoyTWOxNbyWh
+ g0nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776398285; x=1777003085;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KYn7MiYiIimHUCCwf9g8QaU0c9vwpWnSWkhJsSMHx20=;
- b=Jff0eXxM5h/HtJdz4g582Rw72XXY8sbn8UUVYnoWx8gYe0opBoO47uOySfIA31r/dV
- iAVQOOXn3m1+4lntmjxIwqVWwL5BkDfRyZ254bMgCCGxDKpV4Fe4zVPxZEIav7pKoJ1E
- 2GqneABBh70vAvo2UpqpArc1U+MbfElsa71r1RPFh5kIgIx/bewkwLTfqYJOLPTUWPCr
- j3C4HamZHAJEGap7bSrvLjjKBn6BHE5uaYzyTlKOTmI9qjWQ//r3XXiFZ8OmB+GJWKNc
- MbGwGxVQz0R7sMVoaNQRNgYxz3tm93OuQ9+Jjjew8VpzsSangGAxnoQVBUk774kDDz7c
- yJ+A==
-X-Gm-Message-State: AOJu0YwJvKLoNAlcCoajC2a8w2FLA21N6DOAUervSjX5U6k/Dc+Ucb1m
- J7nQBLhqhzeFilUSSHEG0n8zjmPxWNCsR+to+VcvqHKI6RBl2eSPpxBHIHxVNn6bjVkvX+5g1Q3
- LRlgWQQI=
-X-Gm-Gg: AeBDieu8jyCS2yVu3w+ywZW1aYVexkeihdtV6ZRElft4BZTB9UeTpJM8NlDIqdeFNiI
- rcim1Mdogg50JThEPHcyhwv/QD81Jv5LEb9/AjMmoogABSTJzLDgNL7OOCYKAIBPaU79+AVy55X
- dO5fnjAqulW5+gV99dj1nHz2xGDv/CdRIJ8icHiQN1YIEP2hiabNqss2JotIU7OlhLaM+2o4s/b
- EZV01D1cC4jBW+e1GxGvYjcUbAXaGMsCqWobDq0lLap9Gsdcrw/QN7e+TEgN0GYWsR+Y5C36FVy
- 87k597iCtea+DPtuZvUuUIUo9QPvy/7Ke0IxVNuvA1vi2zd0ljoifS2d8xCN8SpzhddIOdV49E1
- 1Eb4Cm94szYF/B0yN2xonvXs3Ta556YpH0CJ9Zw1f/Yi1bL6CbGCF+nWsdsTCAZEWS9uPpj0Aao
- VUa96D7VAjACJGNke6m1CrONGYbSLwLP5p/imI252Fw79LCNX+2xwVTBpaJBQmjX5V8s4RDZoXb
- X5Upk0342Q=
-X-Received: by 2002:a05:600c:8183:b0:486:fd5c:2b35 with SMTP id
- 5b1f17b1804b1-488fb750809mr13146045e9.13.1776398285585; 
- Thu, 16 Apr 2026 20:58:05 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1776398312; x=1777003112;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1//i73+3jJSLDhQvS0mxohAJ4AYjIlkbCa6T3BwrqBw=;
+ b=P+3YmuJCwQcy2DML0cKKehsdTW+ARUQVqy96RGFd1Ep1ByobLeS2SaC2JOpvuLaA4h
+ R3yuwwi7BUxVR1PFdEqOELhHDZje/U0WQJQ/OFOVcPM/yqXEZdfqAwX522Nrg9Ll+Umz
+ LOcKgKMWeqL2LGjTRg5lw6Mnjg28/2+CVdnCqXZxiEz9YGwq5HrqahOsHhyBVlEVM3Wf
+ VZ14vo0QyPtaiTE3+uol1PLWsU3JMRmKTw2TmwEArbE4rNtuqE43Od05qnlVHeJjvopA
+ YUlPP9/13t2uRUPDFp5kIxmmNOW2H8yaJ3VjO3ZFp8dpvUKayCCFrASfc0CfvwPMLcC9
+ oldQ==
+X-Gm-Message-State: AOJu0Ywk7tsnh/YvMa5PIiyejwLJG4mwZjIpx3qYJP6FQjEjDc4EsWPo
+ 14nv8aSMLlmnm4EmYxQ9WkjzjKAwcGaT54vNx9vu18rxzwbm7t/4GH/lFR+y+A6qWpegF1YyLDG
+ yfMijUgE=
+X-Gm-Gg: AeBDieu2MDEqMSnu6Ec//wSb8ST9uvEFm76Hue9bDSIEzbekf1UukJJIulB7yhFntge
+ wb4X2iDA63SFei3tSJPv4/HO+d939SGzFGM+018sKYNP3oEvU0hPWJbyrXkcoNQCU+6+pYHAq5n
+ wMIFmraQmLYTwljX30sb4TnxlSZnOq4+RSC1Y4Y4KESD6RbgjV3wxPlYUHBAh/8u7Dsq6Xi/gBz
+ 9qBdMRCsz4VPPWoLCcsUyCQxSBTmGgiY36EwO4GQZ5ZGofqnmRDSi1QKEhxCKQDaw0z3ll6hCuc
+ V5DrJjMex88rsQih1fcNaexVQPOd7zsF9LSqpH9w31VC+DO/CqLBmavpPSBm9MOx4BKxS0ikf4g
+ CxeyaKmsFM4Y8HIGabxv4hSTnj+wCFPrZIt1SwfApC6bryP7qp8ypbvQv/Y1cHgIRk8S2SzJN23
+ GjlHsD4o1sAtNJKeOFU0lnl4TYJwrZrzOMlxR1m+vJZtsG962Mp0ukmkNtFJg/T88+3Be4tWtmd
+ 068
+X-Received: by 2002:a05:600c:4e4f:b0:488:d6eb:e63c with SMTP id
+ 5b1f17b1804b1-488fb778703mr14867895e9.15.1776398311660; 
+ Thu, 16 Apr 2026 20:58:31 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc0f8188sm10761015e9.2.2026.04.16.20.58.04
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Apr 2026 20:58:05 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH v5 4/4] target/mips: Check alignment for microMIPS pre-R6
- LD/ST multiple
-Date: Fri, 17 Apr 2026 05:57:34 +0200
-Message-ID: <20260417035734.32334-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260417035734.32334-1-philmd@linaro.org>
-References: <20260417035734.32334-1-philmd@linaro.org>
+ 5b1f17b1804b1-488fc16f784sm9939205e9.1.2026.04.16.20.58.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Apr 2026 20:58:30 -0700 (PDT)
+Message-ID: <4a4ab25c-aad9-4383-bf39-00a22cd5d287@linaro.org>
+Date: Fri, 17 Apr 2026 05:58:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/9] target/arm: Remove MO_TE to compile MVE/M helpers
+ once
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260414005348.4767-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260414005348.4767-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,33 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pre-REL6 microMIPS requires alignment while REL6 microMIPS does not.
-Use @default_tcg_memop_mask in gen_ldst_multiple(), it is set to
-MO_UNALN for REL6 but MO_ALIGN for pre-REL6.
+On 14/4/26 02:53, Philippe Mathieu-Daudé wrote:
 
-Fixes: 3c824109da0 ("target-mips: microMIPS ASE support")
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Good enough until making it explicit in a decodetree conversion.
----
- target/mips/tcg/micromips_translate.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Philippe Mathieu-Daudé (9):
+>    target/arm: Ignore endianness when setting MTE tags
+>    target/arm: Explode MO_TExx -> MO_TE | MO_xx
+>    target/arm: Hoist MO_TE into mve_advance_vpt()
+>    target/arm: Hoist MO_TE into MVE DO_VSTR() macro
+>    target/arm: Introduce mo_endian() helper
+>    target/arm: Replace MO_TE -> mo_endian() for MVE helpers
+>    target/arm: Compile mve_helper.c once
+>    target/arm: Replace MO_TE -> mo_endian() for Cortex-M helpers
+>    target/arm: Compile m_helper.c once
 
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index fb107eb91fe..da2419792eb 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -693,7 +693,7 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
-                               int base, int16_t offset)
- {
-     TCGv t0, t1;
--    MemOp mop = MO_UNALN;
-+    MemOp mop = ctx->default_tcg_memop_mask;
-     MemOpIdx oi;
- 
-     if (ctx->hflags & MIPS_HFLAG_BMASK) {
--- 
-2.53.0
-
+Series fully reviewed.
 
