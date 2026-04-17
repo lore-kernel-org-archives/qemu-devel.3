@@ -4,116 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D8FF4368D
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2AB3F43691
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 11:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDh5t-0003Iy-Gx; Fri, 17 Apr 2026 07:10:41 -0400
+	id 1wDhH1-0004tH-9T; Fri, 17 Apr 2026 07:22:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDh5r-0003Im-NH
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:10:39 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wDh5q-000596-6W
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:10:39 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64e87a81639so544666d50.0
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 04:10:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776424237; cv=none;
- d=google.com; s=arc-20240605;
- b=V6CPleK5tIFoLydLZ4lKSjrLirJM3cf55g56oI9OKkiiEBg413nZrHhFYy87n5jBjT
- DQTuJTojqFXrTKTEIHeqbNUXAmZA63Z5zJxrUpzcV7yQ8OIknOn0wcAbjkuQLqz6ww8E
- 2hAMQpP9G25ES0tousQy2eQMxXfS0V6zY9xU0V+Ua0XIZpNGXTkmFwBfEKbYQcpaUyVY
- 1zn4Hig2BpOX3v426QphbRW06unR6bYFSEwdK7aN43/lWsalwqG1+nkT9D2s5sqgu+86
- aHB5CW+9GCFaD7Ce1TCiN7pIQkJVcG8A4mQEEVV8+C6jNH0l+5emdpi7BNX9HMQAPArY
- pNAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=cij6y007mDu+PmjEqlZipzmcf7SbTqqcemD0dmQoJaY=;
- fh=we6erNTLm1HCUnqNhKVhSBfAycLgCNsGPlCyTs2iRXU=;
- b=QpLfQnB8gHZwY5vRMIb2EanozxQ8G059rP4OQWKBy/bnLuAy8Jk8NzbV/Q8b7B/cdj
- 3JiBN1usKwpttS3yKWK0gA59LLGieQ9mDvVKcLUXrAwI+Nn3e9PrU6ryCHjyESUdiQQz
- aKbPyJUDmuZ5A7upL0e3oNYYXkifiauGsLzrGnvN27F5x+ut5YOm4sx6wsZC3MDy4OPf
- 13mWnm7tTHnKhj8ej4T73NEndQ9fAxKJAminnVu/WBBsVWopI/C4bVp1aJJ60UR9+xgB
- ninv3qvk5FTMTHvii4uJp31SRFbJE68mIBgkyY5aPqccmYLbXgLrnENwvWWT7Wi08HZ3
- MlxA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776424237; x=1777029037; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cij6y007mDu+PmjEqlZipzmcf7SbTqqcemD0dmQoJaY=;
- b=oXIz26xf4XpyFiOPjmBTLDA1W8VqNCB7DBgZGiauUsq7WDsUF2VSKHVnbQMwvLmy0g
- XTudhvZtGDsJM7fHouaBsCKy90MyzU6HuwPFLC7LkTyuqgrW73tE2HqVJVUC58ILGKJ7
- QTEuWS16c20iERbo5aPShFyWj5MeogTylREK/p0A2r+nJf9nFnWHbMHfGdw1ab3m6ZWh
- qJVdtFz2DeotE2rSFjf8gfgU5SrWuK1qgABFMwtcITtZyfjUsTp4Q8cJNqzmWAwlRhas
- 7D1m7Nnv4pNN501WUJIIV7uA9RwiR7jmhyZLiDNQbJ08aWB4l3FZnoI1JxYMbIt0lM01
- 0Z0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776424237; x=1777029037;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cij6y007mDu+PmjEqlZipzmcf7SbTqqcemD0dmQoJaY=;
- b=sb26Yj0cBNf1shzsJloDW7cfgg/sN2ZX6fb2Gg2tbRKz9fm/dGO4jlQCm6lD5dKbyW
- 2gWGjgYWw648hsn2a3lNo0mTOiynSdvStG3NiW02a/Wdt55RXoRmtRHoxksDL8eJOj/X
- cDzOLzCME3V80PP/hDzKQCjwZl19NiIP/DQvibT256N/5ZyzIAmelSyl36jigCPEONBM
- vpBw7YuPawCKUzLJEFq4b53ev+h6KHw2KIdSWM7SL3W8RsCFB6I9gzlGXZFJQE3q5W2g
- jyvm1RruVTXo9QnF1jY3jAoJxFOz+x/Pp5mms3xPMjs/KC6wJemZf+XmdV8jQFEMVkCG
- h0Fg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/V5Ij2OO/aDV19MS3lpu6oAxfH+rWKDxeJAVHeyGl73PxXAhz8v5cTdfbFw+gau0EnYfdOyvMPzHnC@nongnu.org
-X-Gm-Message-State: AOJu0YxjAnednpOu8uCv5RE7xuv2N+Xz/U2Vew6xKQ8EJDWFrKuMyoyT
- fjodn+O5txJulO1wP/qtNuag2KPQmZCw80xsbHU+85OcE+0OLHbVuqOuNF4LD5Rs8ImizKM/MJm
- 5b2L2LZt4N4AA7n9OKR0WHpsPiEFHaAYZTdinbFau4w==
-X-Gm-Gg: AeBDieupA/eYtSmWalDpGYpQ5jwk6PTphO2fZLi6Mib56JVSpPQnKDATa4IcVBVhkPd
- NxSqQfct/IrTlQe7yivFlN3W8ZIwWPoUm5EcSvWaU4/LG7YFo3BM2wFHI/KBlZso6AN4BnOi0Tj
- UBmbnamuIUeX5LWqwcSsb3xmwBPw/EMftmZn5M86NDnyjH3wB0ahXTmhFxD9FJrez3CDH7ksOlw
- hOfgzTinNFEYDFPfblila8nE1w8xrOXGCb2PfGKODDL/gcNM+D+wtJPowOIaLphTjZJ91L0GYA1
- KexTr0hJMgd6L0ji6agaT8lNZw+cljwsXIZrxfkadgGKn/4DpbBruQRqSjdRt2sqbQmfoDvfp3z
- X+moYco5K02mh
-X-Received: by 2002:a53:ac8a:0:b0:651:d383:3f13 with SMTP id
- 956f58d0204a3-65310a0aa98mr2293164d50.39.1776424237012; Fri, 17 Apr 2026
- 04:10:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDhGz-0004t8-UE
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:22:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wDhGw-0002Yc-SV
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 07:22:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776424925;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ad7wYG7iWlS7oiOYoKXAGe327bvoZnsdkiX2SfP56a4=;
+ b=bGgcEr88+zmXbTlzu0FKVALpUzc0Bdh+oxn9fip//dKAsYQzE/B13KEqF2t2KWFh9Uk6wy
+ DvNr3+AqTxOE4Epy4cfsySM6Kn3VCOw6/jEhnUXpPSImcakJKUzyQdqLj/QwLcXURqiGPC
+ Ed7+VC3pC7nQJdMEHHj3vQ8Xty6FCaA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-YKAOhU17NdiHZC8kdlhESQ-1; Fri,
+ 17 Apr 2026 07:22:01 -0400
+X-MC-Unique: YKAOhU17NdiHZC8kdlhESQ-1
+X-Mimecast-MFC-AGG-ID: YKAOhU17NdiHZC8kdlhESQ_1776424920
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1F4219560AB; Fri, 17 Apr 2026 11:22:00 +0000 (UTC)
+Received: from redhat.com (headnet01.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.101])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73EC330001A4; Fri, 17 Apr 2026 11:21:58 +0000 (UTC)
+Date: Fri, 17 Apr 2026 12:21:55 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Kashyap Chamarthy <kchamart@redhat.com>
+Subject: Re: [PATCH 5/7] MAINTAINERS: Remove PhilMD from firmware sections
+Message-ID: <aeIX04mdLTtRsOWO@redhat.com>
+References: <20260417110550.70068-1-philmd@linaro.org>
+ <20260417110550.70068-6-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20260416091654.316158-1-peter.maydell@linaro.org>
- <20260416091654.316158-11-peter.maydell@linaro.org>
- <58a32864-6c05-432c-bdc2-5763e32cda99@linaro.org>
- <02e21af2-d6e8-4418-9cab-af56c81afc27@phytium.com.cn>
- <a75dcca3-9cab-49e3-818c-4d52c2a1bdd6@linaro.org>
- <CAKmqyKMf+RhUb_jzOfTVCiQV7EW25e5z3C1fjdarcWVS3V3-7g@mail.gmail.com>
-In-Reply-To: <CAKmqyKMf+RhUb_jzOfTVCiQV7EW25e5z3C1fjdarcWVS3V3-7g@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 17 Apr 2026 12:10:25 +0100
-X-Gm-Features: AQROBzDElH1LL0QhQTP9anOTeyhJzsK2A4_eZx7ppOHTfqXXJdA9rB4aefIqeQ8
-Message-ID: <CAFEAcA-P1aw7+pwVCrbCqBtypGUM+KTNoZTErXXLW+cKdKa7vA@mail.gmail.com>
-Subject: Re: [PATCH 10/28] MAINTAINERS: Remove Huai-Cheng Kuo
-To: Alistair Francis <alistair23@gmail.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Tao Tang <tangtao1634@phytium.com.cn>, qemu-devel@nongnu.org, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Klaus Jensen <k.jensen@samsung.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260417110550.70068-6-philmd@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,66 +87,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Apr 2026 at 10:58, Alistair Francis <alistair23@gmail.com> wrote=
-:
->
-> On Fri, Apr 17, 2026 at 6:59=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> <philmd@linaro.org> wrote:
-> >
-> > On 16/4/26 18:07, Tao Tang wrote:
-> > >
-> > > On 2026/4/16 19:28, Philippe Mathieu-Daud=C3=A9 wrote:
-> > >> On 16/4/26 11:16, Peter Maydell wrote:
-> > >>> Huai-Cheng Kuo has not posted to qemu-devel in some years and did n=
-ot
-> > >>> respond to a query about whether they still wished to be listed in
-> > >>> our MAINTAINERS file.  Remove them, on the assumption that they are
-> > >>> no longer active in QEMU.
-> > >>>
-> > >>> This makes "PCIE DOE" orphan.
-> > >>
-> > >> Cc'ing Tao & Gustavo who are working on Security Protocol and Data M=
-odel
-> > >> (SPDM) which IIUC use DOE.
-> > >
-> > >
-> > > Thanks Philippe. DOE is indeed relevant to SPDM and RME-DA work we ha=
-ve
-> > > been looking at.
-> >
-> > Commit 4f947b10d52 ("hw/nvme: Add SPDM over DOE support"), described as=
-:
-> >
-> >      Setup Data Object Exchange (DOE) as an extended capability for
-> >      the NVME controller and connect SPDM to it (CMA) to it.
-> >
-> > introduced the docs/specs/spdm.rst file which isn't maintained:
->
-> Urgh, I can fix that.
->
-> >
-> > $ ./scripts/get_maintainer.pl -f docs/specs/spdm.rst
-> > get_maintainer.pl: No maintainers found, printing recent contributors.
-> > get_maintainer.pl: Do not blindly cc: them on patches!  Use common sens=
-e.
-> >
-> > Would it make sense to move hw/pci/pcie_doe.* to the SPDM section
-> > instead of orphanize them?
->
-> Yeah, I think it would make sense under the SPDM section. DOE can be
-> used for other things, but right now SPDM seems to be the major use
-> case.
->
-> Would you like me to send it Peter? I can apply it after this seris if yo=
-u want
+On Fri, Apr 17, 2026 at 01:05:47PM +0200, Philippe Mathieu-Daudé wrote:
+> I'm not paid to support this code. I haven't followed
+> it neither, so be fair and just remove myself.
+> Demote the status to 'Odd Fixes'.
+> 
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Daniel P. Berrange <berrange@redhat.com>
+> Cc: Kashyap Chamarthy <kchamart@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  MAINTAINERS | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d5e766ca6c9..df8413c79e7 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2837,9 +2837,8 @@ F: hw/usb/vt82c686-uhci-pci.c
+>  F: include/hw/isa/vt82c686.h
+>  
+>  Firmware configuration (fw_cfg)
+> -M: Philippe Mathieu-Daudé <philmd@linaro.org>
+>  R: Gerd Hoffmann <kraxel@redhat.com>
+> -S: Supported
+> +S: Odd Fixes
 
-Thanks; yes, I think my preference with this series is to apply it
-as-is and then let people send in patches on top that take
-ownership / readjust the arrangement of / etc the now-orphaned
-sections.
+Gerd is only "R", so shoudln't this be "Orphaned" ?
 
--- PMM
+>  F: docs/specs/fw_cfg.rst
+>  F: hw/nvram/fw_cfg*.c
+>  F: stubs/fw_cfg.c
+> @@ -3955,14 +3954,12 @@ F: docs/specs/fsi.rst
+>  F: tests/qtest/aspeed_fsi-test.c
+>  
+>  Firmware schema specifications
+> -M: Philippe Mathieu-Daudé <philmd@linaro.org>
+>  R: Daniel P. Berrange <berrange@redhat.com>
+>  R: Kashyap Chamarthy <kchamart@redhat.com>
+>  S: Maintained
+>  F: docs/interop/firmware.json
+
+Likewise only 'R' entries are left, so "Orphaned".
+
+That said, I don't mind being listed as a maintainer
+here if we call it "Odd fixes".
+
+>  
+>  EDK2 Firmware
+> -M: Philippe Mathieu-Daudé <philmd@linaro.org>
+>  M: Gerd Hoffmann <kraxel@redhat.com>
+>  S: Supported
+>  F: hw/i386/*ovmf*
+> -- 
+> 2.53.0
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
