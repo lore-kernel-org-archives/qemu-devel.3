@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E3F9F43687
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982AFF43688
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 09:30:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDfNA-0001c5-4C; Fri, 17 Apr 2026 05:20:24 -0400
+	id 1wDfVk-0002na-7g; Fri, 17 Apr 2026 05:29:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wDfN8-0001bx-6K
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:20:22 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wDfN6-0001SC-3P
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 05:20:21 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so7143505e9.2
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 02:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776417618; x=1777022418; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3U4MAbSiDKDxo1l2wcYzuA5kDZsB+aQOQQmMqvYDQOs=;
- b=OJgp+tp245Ywke1AV/hkGz3M60Enf+Y3RDFys5vlEhYFuFMbp2dD2jLdOKzFmPi+2I
- Zqrft78E2Q7PBLKxoqwV0OO6knnr7e3Z7E73b17aapRYv62xnzhG1OB0Ax4wEhSfc2cD
- XT+Zn2m5OyQgbjHXgD5SYxo52kPknwyrS5Ui6oZDxd4Od7Ob/FMsrGm+4Z6AsM78kwuh
- dOCmFtkwH698BsHqPQL2OsyT3knSZX/aHRJz8c3CqLuS9f5aOA8XhZCMDNKigzIldae3
- REmDHQFJWluKDUvOiIjWherdZzMtq66KObVw7Zv29NzqaNWypECa6rYRjq/yo0tZMpqm
- xYSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776417618; x=1777022418;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3U4MAbSiDKDxo1l2wcYzuA5kDZsB+aQOQQmMqvYDQOs=;
- b=sMagR7vZlH7uMX9C4mnCfHnNHAaIyT7jRWO14G7LIBP9GSMBS3dQQcL0lPpGj4+54P
- E/f69l4uTJcf3ONSUjWYs1wkT2teTMiaoaouNetghNuwbZIxKObGOZnLBniNpg2V7zLQ
- jbEYZPgAtGP4ckTsGGm+Pf9QYMLrVsOswqjUjsnxj+gvrBxDcbDkdB2V+HLKpqq57dVZ
- bVHZpBFlUySQ4dGeCVb4CU4yhm3pIE/OP73sstS9U3oEVFARt+EaYsdlwEmD/iGR+BIe
- QXoEtaZXu9O/6U5v2EFtKb3TN/kg3OM4cnOLGiTIpsRj8V4pEWkvYFHOyOx1/ioJEH/+
- GWNw==
-X-Gm-Message-State: AOJu0Yya2b6XwilWD+iW/QAw9rRenYvur9mkeuYfAR4cM7DzXDRV0MFJ
- tGiVX8fJMNc4yVJJTmhvspLMUJBm1qdpAitB+eKof7zgIdA6COW/WU6qRtGaow==
-X-Gm-Gg: AeBDieuRKk/cInWbV9Le2Mc74iH/LOxRjeBvGZ9n42PRd/t3rb2yVS9K3/TIWRrn+Ja
- R3jz+x9PSnbp/1RD1Q5PrFPZiS20JXMq4Fm8ndY9TeqbkZGGs14zLY9KDtRtY6XfqFqxunwL7+u
- GZ9wYP6HGXxpD9TrEYEjaNR/b0D9oHcQ09Q525NpGweTyBp0UY6uqxmqtxOjM8RkMnJt/vU+RxN
- aExv86LfQCnLCpXoKu0W9ULgG6ReoVt3YhkoegArXEJhHv52zqLJfub8cEZcbUb5YEz5RBXNNWf
- Wc0+rOxNZkwU5rbVJrC5VYiXnW5kn+V87X7AO+UrryVcFQGJIx4II4gzd8/UpYR1m2V7k38dAaF
- eZT9HaPkeckMwQ+TaX0X2aZyRvu0kwZgkoVYIkjmzFQYNhcbElAaNksiq5pSWk/qfYMTPKIbVDt
- jEQDV8QlVlD7dwIUyC1w3eodV5HxSrQ/S2apXIvYEuZ3eY2zLJrqpasRXMcRtudfsr0pF8qHFy6
- lNz0wuKHbCNbVASHDYHuy+Lt/l/cNSN
-X-Received: by 2002:a05:600c:8b38:b0:488:b14f:b8ed with SMTP id
- 5b1f17b1804b1-488fb6e815amr30762155e9.0.1776417617577; 
- Fri, 17 Apr 2026 02:20:17 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf1c6100c87fe1c3d3c00c97.dip0.t-ipconnect.de.
- [2003:fa:af1c:6100:c87f:e1c3:d3c0:c97])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb75ab25sm12738175e9.11.2026.04.17.02.20.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Apr 2026 02:20:17 -0700 (PDT)
-Date: Fri, 17 Apr 2026 09:20:15 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>
-CC: pbonzini@redhat.com, peter.maydell@linaro.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv6_12/15=5D_hw/arm/fsl-imx8mm=3A_A?=
- =?US-ASCII?Q?dding_support_for_General_Purpose_Timers?=
-In-Reply-To: <20260414182313.1691519-13-gaurav.sharma_7@nxp.com>
-References: <20260414182313.1691519-1-gaurav.sharma_7@nxp.com>
- <20260414182313.1691519-13-gaurav.sharma_7@nxp.com>
-Message-ID: <F6937551-6B4D-483B-BCB9-8766E225BBDB@gmail.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wDfVh-0002nI-CH; Fri, 17 Apr 2026 05:29:13 -0400
+Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wDfVe-000379-VG; Fri, 17 Apr 2026 05:29:13 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 75FB714000E2;
+ Fri, 17 Apr 2026 05:29:07 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-01.internal (MEProxy); Fri, 17 Apr 2026 05:29:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1776418147; x=
+ 1776504547; bh=b4jX4ABbMpc4EjQ6DVEqZTqMVunKofDlQkZIIMRWS0I=; b=P
+ gibdKu8yYWRgW2C1lI//Rwr0EyOOdzIJswszkySPxk90QGmbe/TWHVJVhQoB0InU
+ /OWBg8oT6N1ZyNZVIzqaWa//psTMy9Hhzc0Yt4B+zrOisFZIPlhnDIFLwFjuQwdj
+ ztEQR0tLLyJYs6Cn2ZoB1lIShHX3O/sa7M7E4qhJK8N1akQPdeEO4CHA6bkz87Iq
+ 1LiphwRneJi5gC6J5JGJx3RTnFKyzNokoYHN+fwiOaK7IrEmFaGC8MC2y6GF0Vzy
+ QDrt9lsc8T7arKn2U7pdeagoZBjHnCc7HZRDSraclMCUVLE6crKadj2LzVxWPY6O
+ MW2dBo3F1BCJbFeUx4mgw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1776418147; x=1776504547; bh=b4jX4ABbMpc4EjQ6DVEqZTqMVunKofDlQkZ
+ IIMRWS0I=; b=N/SEL9AgZAq7s+zjpaw9b8DsbFWBYW7iCnCrsZOkQyKGDtbu4ba
+ XIWL4WWPqFl9k7Q6V4T/aQF1f0fgIjv59IJEAXouVRTCoH8xjRx1MKqJ3sLJP/Bs
+ 16ZIDCVkrUf4QcrOW42VeH55pQfM9pK5xvAsgycPWHJt6da4mND5rFeBzsWItHG4
+ gJGyAicX8QP+3c6747G3DCq38Vkf0KTvP84iV9UKE3LCf7Qa1fkKRBrgYMfUc9An
+ B7gEYeWAoLdVVeNJufJquVFpZs5JXrOn0/xlAHd66yOZIbgvWSXKt1GuuA4IX9wR
+ RCXs3wG/b3Jx1vtYpvRwjYYVgsT1Sk34HiQ==
+X-ME-Sender: <xms:Yv3haS9wy5lkzxAOCksRdom5hrlYtm4DwmMQl4KN4tZ3LOrTgcVL6w>
+ <xme:Yv3hadoc7f73GmghmS13z5ulflSDBQd2B44C-H5HCkAtLIiMAWPAR7xU3bXawvZjo
+ iZCLn7S4xWIfb8P33fqY6OkzsJ1aHCdgv48mXQh_qM5uGRaHB5GYIU>
+X-ME-Received: <xmr:Yv3haXCb4UX3m2r71dFs4kQePzu67BjzPDsH6tnesuMNBZKYrJhsWSrAcmemYzp6JdYKcF9pgloZykMUHV5wx17WOSnhofs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegleehvdcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtreertd
+ dtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgr
+ nhhtrdgukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehud
+ ekveejvedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+ rghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtg
+ hpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrthhthhhivghu
+ sehmihhnihhordhiohdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurd
+ horhhgpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgt
+ phhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtvghfrg
+ hnhhgrsehrvgguhhgrthdrtghomhdprhgtphhtthhopehmrghtthhhihgvuhesmhhinhdr
+ ihhopdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:Yv3hafzSw9xDzHu_5KaQOfJXjL9pkLAXgRukP3_X4vhLHUfRnJoLRQ>
+ <xmx:Yv3haU0Zg-KaWCeysBUo5QaZvzl1CtHr2_OCbRCVRucOauWLd4BC2A>
+ <xmx:Yv3hafxhOOL3KiEltc-WL8dYGZmd5Z9rYGgDmyIUCqsnKNkrkgT0Ig>
+ <xmx:Yv3habH0Dh5HIljL9ONDwjZ1tBpQCroSMFKCVZbEH9Ap8b0J3cG59A>
+ <xmx:Y_3haUatK0r67KXIIFpUwRadASHMQl5nwNblXV_FQBHvs25rCEBx5KYJ>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Apr 2026 05:29:06 -0400 (EDT)
+Date: Fri, 17 Apr 2026 11:29:04 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: mr-083 <matthieu@minio.io>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kbusch@kernel.org,
+ stefanha@redhat.com, mr-083 <matthieu@min.io>
+Subject: Re: [PATCH v4] hw/nvme: add namespace hotplug support
+Message-ID: <aeH9YOHJjrbt6x5F@AALNPWKJENSEN.aal.scsc.local>
+References: <20260409060155.94704-1-matthieu@min.io>
+ <20260415173852.71135-1-matthieu@min.io>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="hONpm4qRd4O57Z9u"
+Content-Disposition: inline
+In-Reply-To: <20260415173852.71135-1-matthieu@min.io>
+Received-SPF: pass client-ip=103.168.172.156; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,266 +111,266 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--hONpm4qRd4O57Z9u
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Am 14=2E April 2026 18:23:10 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@=
-nxp=2Ecom>:
->It enables emulation of GPT in iMX8MM
->Added GPT IRQ lines
->
->Reviewed-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
->Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->---
-> hw/arm/Kconfig              |  1 +
-> hw/arm/fsl-imx8mm=2Ec         | 56 ++++++++++++++++++++++++++++++++++++-
-> hw/timer/imx_gpt=2Ec          | 26 +++++++++++++++++
-> include/hw/arm/fsl-imx8mm=2Eh | 11 ++++++++
-> include/hw/timer/imx_gpt=2Eh  |  2 ++
-> 5 files changed, 95 insertions(+), 1 deletion(-)
->
->diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
->index 946c9eb693=2E=2E07a3f3273b 100644
->--- a/hw/arm/Kconfig
->+++ b/hw/arm/Kconfig
->@@ -627,6 +627,7 @@ config FSL_IMX8MM
->     select FSL_IMX8MP_CCM
->     select IMX
->     select IMX_I2C
->+    select OR_IRQ
->     select SDHCI
->     select PCI_EXPRESS_DESIGNWARE
->     select PCI_EXPRESS_FSL_IMX8M_PHY
->diff --git a/hw/arm/fsl-imx8mm=2Ec b/hw/arm/fsl-imx8mm=2Ec
->index 34645555d6=2E=2Ee3c618751b 100644
->--- a/hw/arm/fsl-imx8mm=2Ec
->+++ b/hw/arm/fsl-imx8mm=2Ec
->@@ -180,6 +180,13 @@ static void fsl_imx8mm_init(Object *obj)
->         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL)=
-;
->     }
+On Apr 15 19:38, mr-083 wrote:
+> Add hotplug support for nvme-ns devices on the NvmeBus. This enables
+> NVMe namespace-level hot-add and hot-remove via device_add and
+> device_del with proper Asynchronous Event Notification (AEN), so the
+> guest kernel can react to namespace topology changes.
 >=20
->+    for (i =3D 0; i < FSL_IMX8MM_NUM_GPTS; i++) {
->+        g_autofree char *name =3D g_strdup_printf("gpt%d", i + 1);
->+        object_initialize_child(obj, name, &s->gpt[i], TYPE_IMX8MM_GPT);
->+    }
->+    object_initialize_child(obj, "gpt5-gpt6-irq", &s->gpt5_gpt6_irq,
->+                            TYPE_OR_IRQ);
->+
->     for (i =3D 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
->         g_autofree char *name =3D g_strdup_printf("i2c%d", i + 1);
->         object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
->@@ -385,6 +392,52 @@ static void fsl_imx8mm_realize(DeviceState *dev, Err=
+> Mark nvme-ns devices as hotpluggable and register the NvmeBus as a
+> hotplug handler with proper plug and unplug callbacks:
+>=20
+> - plug: attach namespace to all started controllers and send an
+>   Asynchronous Event Notification (AEN) with NS_ATTR_CHANGED so
+>   the guest kernel rescans namespaces and adds the block device
+> - unplug: drain in-flight I/O, detach from all controllers, send
+>   AEN, then unrealize the device. The guest kernel rescans and
+>   removes the block device.
+>=20
+> The plug handler skips controllers that haven't started yet
+> (qs_created =3D=3D false) to avoid interfering with boot-time namespace
+> attachment in nvme_start_ctrl().
+>=20
+> The unplug handler drains in-flight I/O via nvme_ns_drain() before
+> detaching the namespace from controllers, so pending requests can
+> complete normally without touching freed state.
+>=20
+> For symmetry with nvme_ns_realize() which sets subsys->namespaces[nsid],
+> nvme_ns_unrealize() now clears that slot too making the namespace
+> lifecycle complete.
+>=20
+> Both the controller bus and subsystem bus are configured as hotplug
+> handlers via qbus_set_bus_hotplug_handler() since nvme-ns devices
+> may reparent to the subsystem bus during realize.
+>=20
+> Example hot-swap sequence using the NVMe subsystem model:
+>=20
+>   # Boot with: -device nvme-subsys,id=3Dsubsys0
+>   #            -device nvme,id=3Dctrl0,subsys=3Dsubsys0
+>   #            -device nvme-ns,id=3Dns0,drive=3Ddrv0,bus=3Dctrl0,nsid=3D1
+>=20
+>   device_del ns0             # guest receives AEN, removes /dev/nvme0n1
+>   drive_del drv0
+>   drive_add 0 file=3Ddisk.qcow2,format=3Dqcow2,id=3Ddrv0,if=3Dnone
+>   device_add nvme-ns,id=3Dns0,drive=3Ddrv0,bus=3Dctrl0,nsid=3D1
+>                               # guest receives AEN, adds /dev/nvme0n1
+>=20
+> Tested with Linux 6.1 guest (NVMe driver processes AEN and rescans
+> namespace list automatically).
+>=20
+> Signed-off-by: Matthieu <matthieu@min.io>
+> ---
+>  hw/nvme/ctrl.c   | 88 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  hw/nvme/ns.c     |  8 +++++
+>  hw/nvme/subsys.c |  2 ++
+>  3 files changed, 98 insertions(+)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index be6c7028cb..2024b0ff75 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -206,6 +206,7 @@
+>  #include "system/hostmem.h"
+>  #include "hw/pci/msix.h"
+>  #include "hw/pci/pcie_sriov.h"
+> +#include "hw/core/qdev.h"
+>  #include "system/spdm-socket.h"
+>  #include "migration/vmstate.h"
+> =20
+> @@ -9293,6 +9294,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error =
+**errp)
+>      }
+> =20
+>      qbus_init(&n->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id);
+> +    qbus_set_bus_hotplug_handler(BUS(&n->bus));
+> =20
+>      if (nvme_init_subsys(n, errp)) {
+>          return;
+> @@ -9553,10 +9555,96 @@ static const TypeInfo nvme_info =3D {
+>      },
+>  };
+> =20
+> +static void nvme_ns_hot_plug(HotplugHandler *hotplug_dev, DeviceState *d=
+ev,
+> +                              Error **errp)
+> +{
+> +    NvmeNamespace *ns =3D NVME_NS(dev);
+> +    NvmeSubsystem *subsys =3D ns->subsys;
+> +    uint32_t nsid =3D ns->params.nsid;
+> +    int i;
+> +
+> +    /*
+> +     * Attach to all started controllers and notify via AEN.
+> +     * Skip controllers that haven't started yet (boot-time realize) =E2=
+=80=94
+> +     * nvme_start_ctrl() will attach namespaces during controller init.
+> +     */
+> +    for (i =3D 0; i < NVME_MAX_CONTROLLERS; i++) {
+> +        NvmeCtrl *ctrl =3D nvme_subsys_ctrl(subsys, i);
+> +        if (!ctrl || !ctrl->qs_created) {
+> +            continue;
+> +        }
+> +
+> +        if (nvme_csi_supported(ctrl, ns->csi) && !ns->params.detached) {
+> +            nvme_attach_ns(ctrl, ns);
+> +            nvme_update_dsm_limits(ctrl, ns);
+> +
+> +            if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
+> +                nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
+> +                                   NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
+> +                                   NVME_LOG_CHANGED_NSLIST);
+> +            }
+> +        }
+> +    }
+> +}
+> +
+> +static void nvme_ns_hot_unplug(HotplugHandler *hotplug_dev, DeviceState =
+*dev,
+> +                               Error **errp)
+> +{
+> +    NvmeNamespace *ns =3D NVME_NS(dev);
+> +    NvmeSubsystem *subsys =3D ns->subsys;
+> +    uint32_t nsid =3D ns->params.nsid;
+> +    int i;
+> +
+> +    /*
+> +     * Drain in-flight I/O before tearing down the namespace.
+> +     * This must happen while the namespace is still attached to the
+> +     * controllers so any pending requests can complete normally.
+> +     */
+> +    nvme_ns_drain(ns);
+> +
+> +    /*
+> +     * Detach from all controllers and notify the guest via AEN.
+> +     * The guest kernel will rescan namespaces and remove the block devi=
+ce.
+> +     */
+> +    for (i =3D 0; i < NVME_MAX_CONTROLLERS; i++) {
+> +        NvmeCtrl *ctrl =3D nvme_subsys_ctrl(subsys, i);
+> +        if (!ctrl || !nvme_ns(ctrl, nsid)) {
+> +            continue;
+> +        }
+> +
+> +        nvme_detach_ns(ctrl, ns);
+> +        nvme_update_dsm_limits(ctrl, NULL);
+> +
+> +        if (!test_and_set_bit(nsid, ctrl->changed_nsids)) {
+> +            nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
+> +                               NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
+> +                               NVME_LOG_CHANGED_NSLIST);
+> +        }
+> +    }
+> +
+> +    /*
+> +     * Unrealize: removes from subsystem (in nvme_ns_unrealize), flushes,
+> +     * cleans up structures, and removes from QOM.
+> +     */
+> +    qdev_unrealize(dev);
+> +}
+> +
+> +static void nvme_bus_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    HotplugHandlerClass *hc =3D HOTPLUG_HANDLER_CLASS(klass);
+> +    hc->plug =3D nvme_ns_hot_plug;
+> +    hc->unplug =3D nvme_ns_hot_unplug;
+> +}
+> +
+>  static const TypeInfo nvme_bus_info =3D {
+>      .name =3D TYPE_NVME_BUS,
+>      .parent =3D TYPE_BUS,
+>      .instance_size =3D sizeof(NvmeBus),
+> +    .class_init =3D nvme_bus_class_init,
+> +    .interfaces =3D (const InterfaceInfo[]) {
+> +        { TYPE_HOTPLUG_HANDLER },
+> +        { }
+> +    },
+>  };
+> =20
+>  static void nvme_register_types(void)
+> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+> index b0106eaa5c..f4f755c6fc 100644
+> --- a/hw/nvme/ns.c
+> +++ b/hw/nvme/ns.c
+> @@ -719,10 +719,17 @@ void nvme_ns_cleanup(NvmeNamespace *ns)
+>  static void nvme_ns_unrealize(DeviceState *dev)
+>  {
+>      NvmeNamespace *ns =3D NVME_NS(dev);
+> +    NvmeSubsystem *subsys =3D ns->subsys;
+> +    uint32_t nsid =3D ns->params.nsid;
+> =20
+>      nvme_ns_drain(ns);
+>      nvme_ns_shutdown(ns);
+>      nvme_ns_cleanup(ns);
+> +
+> +    /* Symmetric with nvme_ns_realize() which sets subsys->namespaces[ns=
+id]. */
+> +    if (subsys && nsid && subsys->namespaces[nsid] =3D=3D ns) {
+> +        subsys->namespaces[nsid] =3D NULL;
+> +    }
+>  }
+> =20
+>  void nvme_ns_atomic_configure_boundary(bool dn, uint16_t nabsn,
+> @@ -937,6 +944,7 @@ static void nvme_ns_class_init(ObjectClass *oc, const=
+ void *data)
+>      dc->bus_type =3D TYPE_NVME_BUS;
+>      dc->realize =3D nvme_ns_realize;
+>      dc->unrealize =3D nvme_ns_unrealize;
+> +    dc->hotpluggable =3D true;
+>      device_class_set_props(dc, nvme_ns_props);
+>      dc->desc =3D "Virtual NVMe namespace";
+>  }
+> diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
+> index 777e1c620f..fa35055d3c 100644
+> --- a/hw/nvme/subsys.c
+> +++ b/hw/nvme/subsys.c
+> @@ -9,6 +9,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/units.h"
+>  #include "qapi/error.h"
+> +#include "hw/core/qdev.h"
+> =20
+>  #include "nvme.h"
+> =20
+> @@ -205,6 +206,7 @@ static void nvme_subsys_realize(DeviceState *dev, Err=
 or **errp)
->                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM]=2Ead=
-dr,
->                                 &s->ocram);
+>      NvmeSubsystem *subsys =3D NVME_SUBSYS(dev);
+> =20
+>      qbus_init(&subsys->bus, sizeof(NvmeBus), TYPE_NVME_BUS, dev, dev->id=
+);
+> +    qbus_set_bus_hotplug_handler(BUS(&subsys->bus));
+> =20
+>      nvme_subsys_setup(subsys, errp);
+>  }
+> --=20
+> 2.53.0
 >=20
->+    /* GPTs */
->+    object_property_set_int(OBJECT(&s->gpt5_gpt6_irq), "num-lines", 2,
->+                            &error_abort);
->+    if (!qdev_realize(DEVICE(&s->gpt5_gpt6_irq), NULL, errp)) {
->+        return;
->+    }
->+
->+    qdev_connect_gpio_out(DEVICE(&s->gpt5_gpt6_irq), 0,
->+                          qdev_get_gpio_in(gicdev, FSL_IMX8MM_GPT5_GPT6_=
-IRQ));
->+
->+    for (i =3D 0; i < FSL_IMX8MM_NUM_GPTS; i++) {
->+        hwaddr gpt_addrs[FSL_IMX8MM_NUM_GPTS] =3D {
->+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT1]=2Eaddr,
->+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT2]=2Eaddr,
->+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT3]=2Eaddr,
->+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT4]=2Eaddr,
->+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT5]=2Eaddr,
->+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT6]=2Eaddr,
->+        };
->+
->+        s->gpt[i]=2Eccm =3D IMX_CCM(&s->ccm);
->+
->+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
->+            return;
->+        }
->+
->+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt[i]), 0, gpt_addrs[i]);
->+
->+        if (i < FSL_IMX8MM_NUM_GPTS - 2) {
->+            static const unsigned int gpt_irqs[FSL_IMX8MM_NUM_GPTS - 2] =
-=3D {
->+                FSL_IMX8MM_GPT1_IRQ,
->+                FSL_IMX8MM_GPT2_IRQ,
->+                FSL_IMX8MM_GPT3_IRQ,
->+                FSL_IMX8MM_GPT4_IRQ,
->+            };
->+
->+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
->+                               qdev_get_gpio_in(gicdev, gpt_irqs[i]));
->+        } else {
->+            int irq =3D i - FSL_IMX8MM_NUM_GPTS + 2;
->+
->+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
->+                               qdev_get_gpio_in(DEVICE(&s->gpt5_gpt6_irq=
-), irq));
->+        }
->+    }
->+
->     /* I2Cs */
->     for (i =3D 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
->         static const struct {
->@@ -555,7 +608,8 @@ static void fsl_imx8mm_realize(DeviceState *dev, Erro=
-r **errp)
->         case FSL_IMX8MM_GIC_DIST:
->         case FSL_IMX8MM_GIC_REDIST:
->         case FSL_IMX8MM_GPIO1 =2E=2E=2E FSL_IMX8MM_GPIO5:
->-        case FSL_IMX8MM_ECSPI1 =2E=2E=2E FSL_IMX8MM_ECSPI3:
->+        case FSL_IMX8MM_GPT1 =2E=2E=2E FSL_IMX8MM_GPT6:
->+    case FSL_IMX8MM_ECSPI1 =2E=2E=2E FSL_IMX8MM_ECSPI3:
+>=20
 
-Existing case label gets wrong indentation which you fix in the next patch=
- again=2E
+As an out-of-band mechanism to hot-plug namespaces, this looks good.
 
->         case FSL_IMX8MM_I2C1 =2E=2E=2E FSL_IMX8MM_I2C4:
->         case FSL_IMX8MM_PCIE1:
->         case FSL_IMX8MM_PCIE_PHY1:
->diff --git a/hw/timer/imx_gpt=2Ec b/hw/timer/imx_gpt=2Ec
->index 168cadcb3f=2E=2Ecdc0257126 100644
->--- a/hw/timer/imx_gpt=2Ec
->+++ b/hw/timer/imx_gpt=2Ec
->@@ -6,6 +6,7 @@
->  * Originally written by Hans Jiang
->  * Updated by Peter Chubb
->  * Updated by Jean-Christophe Dubois <jcd@tribudubois=2Enet>
->+ * Updated by Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->  *
->  * This code is licensed under GPL version 2 or later=2E  See
->  * the COPYING file in the top-level directory=2E
->@@ -137,6 +138,17 @@ static const IMXClk imx8mp_gpt_clocks[] =3D {
->     CLK_NONE,      /* 111 not defined */
-> };
->=20
->+static const IMXClk imx8mm_gpt_clocks[] =3D {
->+    CLK_NONE,      /* 000 No clock source */
->+    CLK_IPG,       /* 001 ipg_clk, 532MHz */
->+    CLK_IPG_HIGH,  /* 010 ipg_clk_highfreq */
->+    CLK_EXT,       /* 011 External clock */
->+    CLK_32k,       /* 100 ipg_clk_32k */
->+    CLK_HIGH,      /* 101 ipg_clk_16M */
->+    CLK_NONE,      /* 110 not defined */
->+    CLK_NONE,      /* 111 not defined */
->+};
->+
-> /* Must be called from within ptimer_transaction_begin/commit block */
-> static void imx_gpt_set_freq(IMXGPTState *s)
-> {
->@@ -570,6 +582,13 @@ static void imx8mp_gpt_init(Object *obj)
->     s->clocks =3D imx8mp_gpt_clocks;
-> }
->=20
->+static void imx8mm_gpt_init(Object *obj)
->+{
->+    IMXGPTState *s =3D IMX_GPT(obj);
->+
->+    s->clocks =3D imx8mm_gpt_clocks;
->+}
->+
-> static const TypeInfo imx25_gpt_info =3D {
->     =2Ename =3D TYPE_IMX25_GPT,
->     =2Eparent =3D TYPE_SYS_BUS_DEVICE,
->@@ -608,6 +627,12 @@ static const TypeInfo imx8mp_gpt_info =3D {
->     =2Einstance_init =3D imx8mp_gpt_init,
-> };
->=20
->+static const TypeInfo imx8mm_gpt_info =3D {
->+    =2Ename =3D TYPE_IMX8MM_GPT,
->+    =2Eparent =3D TYPE_IMX25_GPT,
->+    =2Einstance_init =3D imx8mm_gpt_init,
->+};
->+
-> static void imx_gpt_register_types(void)
-> {
->     type_register_static(&imx25_gpt_info);
->@@ -616,6 +641,7 @@ static void imx_gpt_register_types(void)
->     type_register_static(&imx6ul_gpt_info);
->     type_register_static(&imx7_gpt_info);
->     type_register_static(&imx8mp_gpt_info);
->+    type_register_static(&imx8mm_gpt_info);
-> }
->=20
-> type_init(imx_gpt_register_types)
->diff --git a/include/hw/arm/fsl-imx8mm=2Eh b/include/hw/arm/fsl-imx8mm=2E=
-h
->index fd62b19a87=2E=2E607ac86666 100644
->--- a/include/hw/arm/fsl-imx8mm=2Eh
->+++ b/include/hw/arm/fsl-imx8mm=2Eh
->@@ -18,10 +18,12 @@
-> #include "hw/misc/imx7_snvs=2Eh"
-> #include "hw/misc/imx8mp_analog=2Eh"
-> #include "hw/misc/imx8mp_ccm=2Eh"
->+#include "hw/or-irq=2Eh"
-> #include "hw/pci-host/designware=2Eh"
-> #include "hw/pci-host/fsl_imx8m_phy=2Eh"
-> #include "hw/sd/sdhci=2Eh"
-> #include "hw/ssi/imx_spi=2Eh"
->+#include "hw/timer/imx_gpt=2Eh"
-> #include "hw/watchdog/wdt_imx2=2Eh"
-> #include "qom/object=2Eh"
-> #include "qemu/units=2Eh"
->@@ -36,6 +38,7 @@ enum FslImx8mmConfiguration {
->     FSL_IMX8MM_NUM_CPUS         =3D 4,
->     FSL_IMX8MM_NUM_ECSPIS       =3D 3,
->     FSL_IMX8MM_NUM_GPIOS        =3D 5,
->+    FSL_IMX8MM_NUM_GPTS         =3D 6,
->     FSL_IMX8MM_NUM_I2CS         =3D 4,
->     FSL_IMX8MM_NUM_IRQS         =3D 128,
->     FSL_IMX8MM_NUM_UARTS        =3D 4,
->@@ -48,6 +51,7 @@ struct FslImx8mmState {
->=20
->     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
->     GICv3State         gic;
->+    IMXGPTState        gpt[FSL_IMX8MM_NUM_GPTS];
->     IMXGPIOState       gpio[FSL_IMX8MM_NUM_GPIOS];
->     IMX8MPCCMState     ccm;
->     IMX8MPAnalogState  analog;
->@@ -60,6 +64,7 @@ struct FslImx8mmState {
->     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
->     DesignwarePCIEHost pcie;
->     FslImx8mPciePhyState   pcie_phy;
->+    OrIRQState         gpt5_gpt6_irq;
-> };
->=20
-> enum FslImx8mmMemoryRegions {
->@@ -192,6 +197,12 @@ enum FslImx8mmIrqs {
->     FSL_IMX8MM_I2C3_IRQ     =3D 37,
->     FSL_IMX8MM_I2C4_IRQ     =3D 38,
->=20
->+    FSL_IMX8MM_GPT1_IRQ      =3D 55,
->+    FSL_IMX8MM_GPT2_IRQ      =3D 54,
->+    FSL_IMX8MM_GPT3_IRQ      =3D 53,
->+    FSL_IMX8MM_GPT4_IRQ      =3D 52,
->+    FSL_IMX8MM_GPT5_GPT6_IRQ =3D 51,
->+
->     FSL_IMX8MM_GPIO1_LOW_IRQ  =3D 64,
->     FSL_IMX8MM_GPIO1_HIGH_IRQ =3D 65,
->     FSL_IMX8MM_GPIO2_LOW_IRQ  =3D 66,
->diff --git a/include/hw/timer/imx_gpt=2Eh b/include/hw/timer/imx_gpt=2Eh
->index 7f0d55b349=2E=2Eb5d73c5e4b 100644
->--- a/include/hw/timer/imx_gpt=2Eh
->+++ b/include/hw/timer/imx_gpt=2Eh
->@@ -6,6 +6,7 @@
->  * Originally written by Hans Jiang
->  * Updated by Peter Chubb
->  * Updated by Jean-Christophe Dubois <jcd@tribudubois=2Enet>
->+ * Updated by Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->  *
->  * Permission is hereby granted, free of charge, to any person obtaining=
- a copy
->  * of this software and associated documentation files (the "Software"),=
- to deal
->@@ -81,6 +82,7 @@
-> #define TYPE_IMX6UL_GPT "imx6ul=2Egpt"
-> #define TYPE_IMX7_GPT "imx7=2Egpt"
-> #define TYPE_IMX8MP_GPT "imx8mp=2Egpt"
->+#define TYPE_IMX8MM_GPT "imx8mm=2Egpt"
->=20
-> #define TYPE_IMX_GPT TYPE_IMX25_GPT
->=20
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+
+I'll pick it up for 11.1. Thanks!
+
+--hONpm4qRd4O57Z9u
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnh/V0ACgkQTeGvMW1P
+DemDuwf/W+m/tZfTZaStSXxxrlFB1xvx3ipA/2yt1Q/ga21eXvTuCL3ZUTGTOjk5
+w4fljUogIAMnZaI4wYS2RvzCOVv87dlh1rfx5enfSf9xfYw2Fg+aIkoC1k8YQ0OS
+Kne4/3oGyr7mrxadYDQJ8+Q57mWNH4gxtkB36rZDOB9m36L5OuhTq2HDKL3B4ER9
+ukHlnOyCjSjRPK35Shf2f3tXro0k73PAW3b7xnwxi/NfMwBC6rkAsS6R23IazJps
+KR5rXFTwogK76Vw4uNe1JX45EEoKL7n9CQE1sOL1UKay3FF2dsj+4U/GYPwZfufh
+OCZDJPBgiNynpaxVgHDg9PXA/fX90g==
+=BidM
+-----END PGP SIGNATURE-----
+
+--hONpm4qRd4O57Z9u--
 
