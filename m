@@ -4,74 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C26F436B7
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 15:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67312F436B7
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 15:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDkzM-0003m8-Kh; Fri, 17 Apr 2026 11:20:12 -0400
+	id 1wDl25-0004Ou-2a; Fri, 17 Apr 2026 11:23:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wDkzK-0003lb-QI
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 11:20:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wDl1x-0004O5-TC; Fri, 17 Apr 2026 11:22:54 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wDkzJ-0001ht-9U
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 11:20:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776439208;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1ghxtZg9CyGT1zbyVJenZXcL3fIwlchkEMil0Wq9SCY=;
- b=AQoM39JgaYxjRyRVjVhKNYXjGqGXQmrgCzhtop4PJhCF3V8VWJj4pkV3aZmRCqBvCcyuma
- EQ58PPLi83aduWKHgO7wxiHb85bUPvwuiX2TfGXwINTbN0Hb1r6OIqT5tT/YcUgPAN9fpD
- hhok5B4Qka4KGus1iE4M1jn9R63sgxU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-Qi-mIfU2P3-zUfg5z9ZZ3w-1; Fri,
- 17 Apr 2026 11:20:04 -0400
-X-MC-Unique: Qi-mIfU2P3-zUfg5z9ZZ3w-1
-X-Mimecast-MFC-AGG-ID: Qi-mIfU2P3-zUfg5z9ZZ3w_1776439203
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFFB818005A8; Fri, 17 Apr 2026 15:20:02 +0000 (UTC)
-Received: from localhost (unknown [10.44.48.66])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0239B1800906; Fri, 17 Apr 2026 15:20:01 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 0/2] hw/loongarch/virt: Add versioned machine type
- support
-In-Reply-To: <20260401015705.3009762-1-maobibo@loongson.cn>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20260401015705.3009762-1-maobibo@loongson.cn>
-User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Fri, 17 Apr 2026 17:19:59 +0200
-Message-ID: <87ldelty00.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wDl1s-00026E-26; Fri, 17 Apr 2026 11:22:52 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63HBWITc1842962; Fri, 17 Apr 2026 15:22:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=jBjby11S4nFcZ9Lo87/gQFL4wW5kCiEyYupLuuLel
+ f8=; b=pXcv3eoeVt+Ct0OzcWEEUx5oOzxQM0spQbenT0pP4yEO1VWClJQFD0qTj
+ eFuZ5At8o7nSivddGEvKZXvhm5SKqUKOby0aofi2qJOd2qBwiXfX7JWbecYwHnKl
+ yuVGpqxMEq/1z0u38i5i+NwCRC6ER7GJrR0r5v+hGzbPwtE7CfiqYwNlv2TYkxJN
+ oYN7FVCqnc7KPFQvOSeDNugPkQlYLFtVHLEFUKWmoAAlUTIVnf1QIeKNPAmF5INn
+ Kk/23ny5R+Xl6d96FcdGD7QmOjvFGQKfuJ+Q/qbZ1Cc0bSmIEaxSfHaqmITWJCy+
+ 9OnqWnKkXJr2znmzMikhfeG+c0vwQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dh89n38b4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Apr 2026 15:22:43 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 63HDTAvk004188;
+ Fri, 17 Apr 2026 15:22:42 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dg24kqn41-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Apr 2026 15:22:42 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63HFMcR253019050
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 17 Apr 2026 15:22:38 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5D96620043;
+ Fri, 17 Apr 2026 15:22:38 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3CB5320040;
+ Fri, 17 Apr 2026 15:22:38 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Fri, 17 Apr 2026 15:22:38 +0000 (GMT)
+Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
+ id 20BB1E05F5; Fri, 17 Apr 2026 17:22:38 +0200 (CEST)
+From: Eric Farman <farman@linux.ibm.com>
+To: Cornelia Huck <cohuck@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH 0/1] MAINTAINERS: Update s390 trees
+Date: Fri, 17 Apr 2026 17:22:35 +0200
+Message-ID: <20260417152236.1305333-1-farman@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDE1NCBTYWx0ZWRfX0ekeGc2beV5v
+ 515lniCM2f8dQqe8huEHYpiKMGgLA6OEVAqEnJjFPeg02DmLLTv78HnoWUEs1gFHMjxDonIYetH
+ 8+6MSGLI/RZ8V/g+iho5M2HVsnza0yao7qD/YcYOjcr8J1phDqjaZEY3YQI49AeDzVCr9bMy/WT
+ OTBWFZIQfmRlOKQlEV7TEKabDEb2Kqmyqwuk1ec3IlJ4ybMYCADsLGRVvIVVuLUK7XE+TnedlXE
+ 8i/1G06aYF1q7DXgNeW5O27Tsv+EJw+2ZhXPBR53HtSzZUSRyJL2TjeT+F0KZ0dFjT5gWLGn6Un
+ 2iJoq3Zx8ygs0gGMTy6mOCi+gMecLypQm97UunNarW3ZvFlKL6tGViTApCYTbrtKxdvhlKSd1DH
+ sMveU+WBkYPnBz1oYBpx1428uw0Fo86HClkJHzk2RhUWp95xaFFZrEdKnTOoGlDkswA/hVgqp0N
+ /q2Gs13gunwElUWip5A==
+X-Authority-Analysis: v=2.4 cv=eJ4jSnp1 c=1 sm=1 tr=0 ts=69e25043 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=PyZucIbN2OmWj6MJiDsA:9
+X-Proofpoint-GUID: 8oMjhYHcuO7GLKBATT6pN_VAZalxtnkm
+X-Proofpoint-ORIG-GUID: 8oMjhYHcuO7GLKBATT6pN_VAZalxtnkm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-17_01,2026-04-17_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
+ clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
+ definitions=main-2604170154
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,29 +120,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 01 2026, Bibo Mao <maobibo@loongson.cn> wrote:
+Hi Conny, Christian,
 
-> Now la464 CPU type feature is basically finished, versioned machine type
-> is added here for compatibility support in future.
->
-> ---
-> v2 ... v3:
->   1. Refresh the patch based on the latest code
->   2. Change version machine from 11.0 to 11.1
->
-> v1 ... v2:
->   1. Change version machine from 10.2 to 11.0
-> ---
-> Bibo Mao (2):
->   hw/loongarch/virt: Define virt machine type with type_init()
->   hw/loongarch/virt: Define versioned virt machine
->
->  hw/loongarch/virt.c | 66 ++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 53 insertions(+), 13 deletions(-)
+With the recent movement of s390 MAINTAINERS, we noticed
+that the state of the s390 git trees is a bit off.
 
-LGTM.
+Wonder if this consolidation makes sense? Thoughts?
 
-(For the new compat machines, you could either pick the patch yourself
-or wait until the s390 changes get merged, I guess.)
+Eric Farman (1):
+  MAINTAINERS: Update s390 trees
+
+ MAINTAINERS | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+--=20
+2.51.0
 
 
