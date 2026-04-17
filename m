@@ -4,77 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EDEF8DFFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 17:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207A1F8DFF9
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 17:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDnHV-0002kO-4Z; Fri, 17 Apr 2026 13:47:05 -0400
+	id 1wDnKT-0003Zd-Sj; Fri, 17 Apr 2026 13:50:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wDnHD-0002gu-Hf; Fri, 17 Apr 2026 13:46:50 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wDnHA-00059X-WB; Fri, 17 Apr 2026 13:46:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=oxM6wnbVcSyAC9yeVxfQnW+bPrBukYxactIiN0rJ0z0=; b=gU5XOU65gc8ZQDiZ
- wqyQAoLJPRsXnBGa3fnTCDpTwiptaRD3lUtrNla+VnSHxrhdIqe1nfpslxewD8Zgnmc3XIRET64wf
- 5HoBwW0TyGk/mu76R2+Hy8eS6CrFjuRqxrv6d8z8iiTfQEq0KQcgu1rk0WVz5DsvGvLnxqWnPhF3q
- 55CUMSkdduOSLL/ewI4ODWjS3RsqQXhSUJH89Q1KERiL/AejMVs1erMSMBprTOyzYv1AEAGIkuNcd
- EiW8+AQQNlyWh8sIyA6fLGamHtpEFgEiHy9YflFb59n34JX2/QyB6yYKA4oq8rZjak+nnKtoCT4e/
- evCFVpW1Y2tP3fUucA==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wDnH1-000000091FN-3RaP;
- Fri, 17 Apr 2026 17:46:35 +0000
-Date: Fri, 17 Apr 2026 17:46:35 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Peter Xu <peterx@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: Re: [PATCH 12/17] monitor: hmp_gva2gpa: Don't page-align
- cpu_get_phys_addr_debug() arg and return
-Message-ID: <aeJx-_s-n46m-zBf@gallifrey>
-References: <20260417173105.1648172-1-peter.maydell@linaro.org>
- <20260417173105.1648172-13-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDnKQ-0003W9-F9
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 13:50:08 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wDnKN-0005N7-Ri
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 13:50:05 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-651bc8f864fso663403d50.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 10:49:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776448197; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iG5vLqZBUu4muSmU0T0F6uKwLb5fZEkTo6i3NFjiDfd4cqtOQy3JUEWaQGjhCWRtxh
+ 68iKljb90I9GQydDsPiHosTmb4X7YSqhsHEgLpRQtlIpNqaxHv4vIIUp65WK0+Xzpe2B
+ rrJ1XWoQXiB5BGVOJEUAEcG5NLC/vE5ED/7u+/J7YmsejH0CeagwbOq4rHOTxRRB0NDd
+ GOnYRXvnzKcqlaMRaJbe9QrTeQIthvlg+j/y+2b5ooA0X4mMM/MaulnFlEEXBTjJ7L/X
+ OY0d6AgRCaKEM555sne7PaqNYhEqXuAB/lmb1C4TGuchKPH6NO2Udl10KJCb/4Vwyfvj
+ C4MA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rVU0YHiHqJ0pbq4wpCrmcbdTCk1MIpflQ9kNGlpo+E8=;
+ fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
+ b=JW14gA12F/USeKR2fbl3cn+mF3bTT+mAwBw97r2EgpeoSklX4fJCilQj9c5xMXmAZ0
+ EaKd2lD00qVJO0X743MfVdIlFVQ2nVtmqh+yYLWpAbTOdHtr8SKVRPaP3jykrHZGerEj
+ +29Y2L7gpj6WLdSvxIgeBGwLijSxpW1QW+3835XNcmaSLkr5zGPoDOQSyVCS9WJyh82T
+ GkSc+zg87IkwrDzT55piiEEl4GTGQbsawfTYFCmAVWPrCl81z2glRn0/iZJ7dnlp0RYL
+ B5QuRkmFx9QUrtI6Zc42NPRChfMu+VP060xHbq1ST8biEtueUu+P/ZyCrEva3zkicH30
+ zdLQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776448196; x=1777052996; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rVU0YHiHqJ0pbq4wpCrmcbdTCk1MIpflQ9kNGlpo+E8=;
+ b=Abg0drImxZBwdnby20xC18FPcPARXq4+PZeu5Me6g0AMVIro+dSoxTakFeHWFIzVwb
+ dFkIDInMB5tAmYohHHUD2AFveRwao6KiTq7oieYsACfEjAl2hujKT1t7FlLBnCNTS9af
+ rIgAL+r0pi60xqwtdYDzBgCIgnaJ6QaMdg1Uc8wqfQ1PDp1mBGUgCb0WWsaoGhc1k7t1
+ HfHO3Ai9cZTMo7ZWoHiX7MzQaRh84oy3o1q9Ok8orryTWCc+eIYRA9TzC3PcjHQTv4AZ
+ I5POPbwFvdmleTqu+I80j78SKtB1iGx7HEsgX2u6Sl0/3Ml2KXhFp+1+8nE+RE7SDShH
+ kTHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776448197; x=1777052997;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rVU0YHiHqJ0pbq4wpCrmcbdTCk1MIpflQ9kNGlpo+E8=;
+ b=Hy3We43QyTJrhTvnJmfpF+tlUB4p+neY/Lp4S21OxaBPadSYpBH6kwyZnnUSjvAs1Q
+ ZovSbksPeT0g7ypOnN6LhhJog2TFeUQJ2L6BprbdxHP0BhpfVt78U94A8hZtM0YZ4fVg
+ gjgrxBzIggySjy8meJ4dhcKgugRC3sFwy2pqL3wU6NZyHXBRzcPqn76ycfGVP8k7WhB8
+ vv44ASKQwYy9pBS4uFbv6dHwtk4g2DBhvJsuP+HNxM+1K6lqVAWJNJ6dI/nr90keiX6e
+ RtARKbDYGrZlmqXdnbj1yUiHbitnV+NRiR6iib37ok3zyO3Pb1PQqGgk7gpUPs720s1W
+ outQ==
+X-Gm-Message-State: AOJu0YxgFQ8MneHBSRAzZ07Dj7mVF7Wi+QmKxf9my3kWRTJmB5+lqu7c
+ Ry6DNOeUQVtH8WjkOsRlXtmvVSLhkwgj6C1HYwh5eP7ks5ySk/PMC01CZQJLQ+CipTryEkl52Ya
+ l4OpjvPsrnRawHtH4bxylZMEnPlkmgCemJ/XcpwuCx5k8zyeQLpgm4dUg0w==
+X-Gm-Gg: AeBDieva75OuRt7exfnZzZ0F6vkHqjDa66Wsi1XOi6WvFmqkKKLje7A5/agHO1zr0Ne
+ FXNUcX231WxFwA3WcZT93TVHYvwcx1vhzeSQErotmjnmsY4BAnDFbCaxgJXJjmThIhhTn9Zpl+Y
+ SbCArk8nr4Z15V5jdb86lcYptnO2BZzCkMg1hVHHydot6w/q5Mp61knBdpxyuqj32/348jBSImE
+ Em0A40KUjnjWd57UTAEJPO/dLG3AhVDus4zT+OBHktcFfikKpz5kaRLCXCoAV8GjrtuHkk2JtJ3
+ j4EipyyP8052a/TWTzdeFv0Ed2lPTxYp2Oma9opABgs6/LJ/IZfZxLOwkwObLNCf0O2ZCaChu1K
+ M9w==
+X-Received: by 2002:a05:690e:585:b0:651:bcb6:888f with SMTP id
+ 956f58d0204a3-653108399a9mr2692291d50.15.1776448196507; Fri, 17 Apr 2026
+ 10:49:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20260417173105.1648172-13-peter.maydell@linaro.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
-X-Uptime: 17:45:25 up 35 days, 18:58,  3 users,  load average: 0.00, 0.03, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+References: <20260414132100.53861-1-philmd@linaro.org>
+ <20260414132100.53861-3-philmd@linaro.org>
+In-Reply-To: <20260414132100.53861-3-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Apr 2026 18:49:45 +0100
+X-Gm-Features: AQROBzDO481f66WmNUB7K8xzl23S8kkG0EHWVo1Cz2qOwU947KgpthQG2OCAmw0
+Message-ID: <CAFEAcA9zveinqwzN5EEahO64RLjOO6ZmVY-tdGRAzjhFzrsb_g@mail.gmail.com>
+Subject: Re: [PULL 2/3] hw: q35: fix VGA text console with SMM disabled
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,50 +117,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Maydell (peter.maydell@linaro.org) wrote:
-> In hmp_gva2gpa() we currently have a workaround for not all implementations
-> of get_phys_addr_debug handling non-page-aligned addresses: we round the
-> input address from the user down to the target page boundary before the
-> call and then add the page offset back to the returned value.
-> 
-> Now that we guarantee that all implementations will return the correct
-> exact physaddr for a virtual address, we can drop this handling.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  monitor/hmp-cmds.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index e6d8322bcc..f8380bda58 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -720,12 +720,11 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict)
->          return;
->      }
->  
-> -    gpa  = cpu_get_phys_addr_debug(cs, addr & TARGET_PAGE_MASK);
-> +    gpa  = cpu_get_phys_addr_debug(cs, addr);
->      if (gpa == -1) {
->          monitor_printf(mon, "Unmapped\n");
->      } else {
-> -        monitor_printf(mon, "gpa: 0x%" HWADDR_PRIx "\n",
-> -                       gpa + (addr & ~TARGET_PAGE_MASK));
-> +        monitor_printf(mon, "gpa: 0x%" HWADDR_PRIx "\n", gpa);
+On Tue, 14 Apr 2026 at 14:21, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> From: Mohamed Mediouni <mohamed@unpredictable.fr>
+>
+> Work around black screen in VGA mode with SMM disabled.
+>
+> Required by NVMM, HVF and WHPX backends.
+>
+> https://gnats.NetBSD.org/59721
+> https://gitlab.com/qemu-project/qemu/-/issues/2608
+> https://gitlab.com/qemu-project/qemu/-/work_items/3085
+>
+> Patch written by Taylor R Campbell <riastradh@NetBSD.org>
+>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Message-ID: <20260413170407.57574-1-mohamed@unpredictable.fr>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-For HMP:
+I was just looking at this change, and I noticed that it still
+has the same structural problem that MJT noted in his original
+version of this patch:
 
-Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+https://lore.kernel.org/qemu-devel/3458e5b7-b53e-4057-baea-03a729452255@tls=
+.msk.ru/
 
->      }
->  }
->  
-> -- 
-> 2.43.0
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+# Overall, adding an early return this way is a recipe for disaster
+# to happen - if not now then later.  Here, and in mch_write_config().
+
+If parts of mch_realize() and other functions are smm-specific
+then it would be less bug-prone to factor them out to functions
+with "smm" in the name, so that realize can do
+   if (mch->has_smm_ranges()) {
+       mch_smm_range_setup(...);
+   }
+
+or similar.
+
+As it is, it would be very easy for somebody to add new code at
+the bottom of the mch_realize function without noticing that it
+would not get run in the "no SMM" case...
+
+thanks
+-- PMM
 
