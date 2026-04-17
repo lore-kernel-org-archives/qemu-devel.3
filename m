@@ -4,115 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB37F43683
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7357EF43683
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgHB-0008Ds-9Q; Fri, 17 Apr 2026 06:18:17 -0400
+	id 1wDgLV-0001AE-SW; Fri, 17 Apr 2026 06:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wDgH9-0008AV-3g
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:18:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wDgH6-0001jk-RD
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:18:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776421091;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Oz8pzmkAWRtvA0sk2nclTVOH5AaK4kArC8OzgvFo0do=;
- b=Di+bLhgcRp3Y/ZpeDlsZ2TEN8DBBuoiewdUC7O1Fl7op2myhAHFCIaMwTVi0BkA+tKMMrs
- 6uDOVdYWa/p3Ek4pi6EzeSjZGahuo9uP6XTRMNBSo2lk9DJC8Md1nmbCjeR3M9yFHkSgOZ
- oIWV32kT4EpxS+VEUGWBy7OGbC4wUNw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-nbHprbRzP5uXGRoDzn1xUg-1; Fri, 17 Apr 2026 06:18:09 -0400
-X-MC-Unique: nbHprbRzP5uXGRoDzn1xUg-1
-X-Mimecast-MFC-AGG-ID: nbHprbRzP5uXGRoDzn1xUg_1776421089
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-488d4ac6ff9so4115325e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 03:18:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rafettaskindev@gmail.com>)
+ id 1wDgLU-0001A4-3V
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:22:44 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rafettaskindev@gmail.com>)
+ id 1wDgLR-0002pk-Aq
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:22:43 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-408778a8ec4so392620fac.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 03:22:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776421360; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EOULLb9BouDFwXtTmXP8VE8NgCenVMQQ3clnU1I3GmkdLKGjDvNLvomE2sHrnZ5Xro
+ 6cafFwh64qMmMhSS3DwuMYxJ5hc9q9RNtW0QEgPnvgB86w3iBxGJQkD9/kHq9ldioDWo
+ aLjikp2HJBTo+MM5Al3CXfwi9EUOoKL04qL6QAeoSBDfBDh3LcgYdJcNSicB88AlITAL
+ t7xxVXvsyxUR9Sek34WdCJGS+/WLSqOOV5LmgaReRl7f73A1L355+Y7QMs+AnA7EgXOF
+ Crn2XyhUuLKOztzj4VD5MZk1DdW6GHAUPaOUiw2AYyNCSGIh8Txa3laL0dimTgI/GZi0
+ ldRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3Qn45T0k+P9EBe9g4rByzcp1WsAiBtsKt7OEEwOyfKw=;
+ fh=hmcxiVGayiYta/WILi0xucvuFOa8fgzSAUgugfqkmgM=;
+ b=U3pRDLoysbAx43CXOoYKeB1Brg65CTSi+ttDLgA1Os8gRbuZtY3xPUQecnhSD7uSHs
+ 8CU+KJcG+12N4sTwjiCZkPyYZFH4yNiZkQK7GdbNvxR2cizLlqBbvIm8yUmNJThfkIj6
+ 9I8Wi+TK5Ng072+cJX4lrAvGzjkvjV/erN9yCXri8Ycx3vQMc/l5ARqc/pnD9ZCMPRuq
+ g3FvO9KRYWBKWsAm8OPosmTpFlM7TBC/iOTQn9EQqBSmIiZ2yInKalvKjUGZGp0QhYg7
+ L06WYCqOvTJNlsy4qUGVmUOC+IEX5DlvAkNMEfq2lFwI8IRZ5SgvAxHNJVEeQZVKsVNN
+ leXg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776421088; x=1777025888; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Oz8pzmkAWRtvA0sk2nclTVOH5AaK4kArC8OzgvFo0do=;
- b=Kf7SVTTQDX/FyMoAAlF8yrcqUi/iL1XGHKKtdG5qwaIlm/hj12vQGG8TFjIkptFMSm
- dcJCHuToWcx5qbvvY+zeChgr6EgYMscPRk7rE509pgNW0XmncnvGpdi7u5/1LD0B9p9l
- UzpSftvb7m2Wl/3hPucCNRvi2eT1ixUreuUrVoKitoi5vbRAbf/XTtLIearhbAXjCMHC
- sHE0Ns3A8Qccu2kWJLVkDvGzkAivzoe+MaKhFGBnJio1ITghOX2MZrZyo0EBnkpXLlqj
- abQGOT6rt1XGz4NQ9DKFwRLK1BIxMS5iaa0cZeTSvgciBcC4lTzJ955Og5TvnvCke6hQ
- 2Q2w==
+ d=gmail.com; s=20251104; t=1776421360; x=1777026160; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Qn45T0k+P9EBe9g4rByzcp1WsAiBtsKt7OEEwOyfKw=;
+ b=gJ3AztOOJ2zntYsuES9aCH8RnUx+bjjOa36fNmBbFQMx5KKEOHUBgMMABRJW+ly9ca
+ 2bRbT43aCllxTREBGGwC3dVNN0AmUoVNNMhWZCAO5708zpmD5fT/XQo/aMXrMq49QhMM
+ 6JGj6Slsp67QxkVUkqF+MlfMzTn6E2RaJp+Ab/7Bhp4tyKqZtISJqyVJs7wkG3OJuYgc
+ L1TM/Ay4WseAdEtCGPszt+BK22RsAvIB9asqeZC9QfHsPiZhfZadlWJkpQzZTba1/Ugb
+ HGsucNEuVCiu9gAZgJC4SYYvSkXOSptv1TaN6g/kWuukYU+1+yUMUUOlWs7hcTt+JAz/
+ OPJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776421088; x=1777025888;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Oz8pzmkAWRtvA0sk2nclTVOH5AaK4kArC8OzgvFo0do=;
- b=UkbH8/sds18F9v/rsyer9dflChuyGZCs7nI6MLUi7RyASZVjtffKXP2mYhRAf9NxVa
- OrgR2aLoFvAAjQM3GS7f5Kjdj2GTJalpISV6Z+tRQGnFsyW/RjtJwFFns8GPQb+MR0LJ
- NLruEzjzzx0Xnddgh6VPIkzrm6HKB50F17g4CQVQTHG3a+syo46/5IfquZz8pM7DEA9k
- O9DGR1ohB1pXY+68v2sFSp4qykLOpA+erccNRAWvgnAoqlhSYspwlFZh/5fo9c6bI1SM
- RMRuL+NaVPlnIpIb/ZuXW68PAJeniiaADxpjNhn05LF8M8pPHwdmf8qJVp2CyhT/uC75
- kNwA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8Y7FiSG+mLg1xcZel5ga854gxbpjBpLvxM3xjxKNXESMQyI/3Q39MG3WE+NixdhNnSriP00vGoIR2l@nongnu.org
-X-Gm-Message-State: AOJu0Yyri8bshJEbwBqArRFWRbLZyYMbS9cANdA6vvS1+vhbbeoa9PM0
- c+YQP4fXA6x+ZFZsXa9hUTZzJ4fnAUcqZVVMseYnkaFjap2Kq6bCDkssxDcAqhsc3JCYOAeyjkP
- qsrOjJLEi9Vp6dwIKEcZPEsg6kdohnIpxf1lwitwHUrNi8Fyhpux3UWtF
-X-Gm-Gg: AeBDietZDvjN5oJi6R7wJG7VNdgcF0ET0ufzVEciS2DFmxrbhyQZI747mLT2kxWr4G2
- Dsr6DDgs8lTH7yK7okjr7m/H0nkP7fKbN5X/lkLJEww954IBk0X7nV9bn++0cv5XjBGTUWt/xEL
- zPeGjBD9ieTffxyPnnEfUGFffv/XTnZwn5TZEF6oLDII7tQy5vPrGu5zXu3SOmCZNRSJkWaHb+S
- oaup78cRInLdlFWSRKhDSlW2jv40yupve6+u0VTrpFgoyYJnSP0yf/xVnK0RwX0/cfAGhDZCmMr
- XZYC/WYJVDd7bIc2rriSWxChGZjBHC8+XAvFyMXqXy8e42+dOXSm0RhxF2/VIZAI3qAtEIgHpVX
- A00EvTByHTqH5
-X-Received: by 2002:a05:600c:4f0e:b0:488:945a:ed63 with SMTP id
- 5b1f17b1804b1-488fb6e8491mr34383645e9.0.1776421088442; 
- Fri, 17 Apr 2026 03:18:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f0e:b0:488:945a:ed63 with SMTP id
- 5b1f17b1804b1-488fb6e8491mr34383175e9.0.1776421087933; 
- Fri, 17 Apr 2026 03:18:07 -0700 (PDT)
-Received: from fedora ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fe29bd0csm7368125e9.2.2026.04.17.03.18.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Apr 2026 03:18:07 -0700 (PDT)
-Date: Fri, 17 Apr 2026 12:18:04 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org, 
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
- Zhiyi Guo <zhguo@redhat.com>, Prasad Pandit <ppandit@redhat.com>, 
- Kirti Wankhede <kwankhede@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>, 
- Markus Armbruster <armbru@redhat.com>, Alex Williamson <alex@shazbot.org>
-Subject: Re: [PATCH 06/14] migration: Introduce stopcopy_bytes in
- save_query_pending()
-Message-ID: <aeH2m6r-m8uz2PcJ@fedora>
-References: <20260408165559.157108-1-peterx@redhat.com>
- <20260408165559.157108-7-peterx@redhat.com>
- <adfhtgEeWtsMxEmv@fedora> <aeEaXLXGokjjODKR@x1.local>
+ d=1e100.net; s=20251104; t=1776421360; x=1777026160;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3Qn45T0k+P9EBe9g4rByzcp1WsAiBtsKt7OEEwOyfKw=;
+ b=Xk2CVdrlOAXz3lLQE9fiIgUaxB42wV+/Ox3nK0U/SbpcmzPB3QQKrMCKoI5xABdMtf
+ icTvYPebXN2Dr9IxYC3MbuyS0mqSL0MdaI4TPsDd4psi5lmKicI4KuCplyiT0dyOgR3q
+ Pgts4xQDE61IKURtCXv8J1NxxHmMLIbl0w5T7t+xByR7bjVBg8R+JoDttAGQhKHbysYg
+ MNJAAXBn8fXYGINXRZvEwU1MTJ1HLR4G6lVVN4foNaoNRkjUGifhviTzQ5L22HyhloEf
+ slKNgezo5+deRH1oDgxGNeirSQRCl+4Jc+g8mR70VCMRiq3hBKGMv+GTm1ps6z32TXeA
+ /0pQ==
+X-Gm-Message-State: AOJu0Yzu4Sv7VX4bEVxRZmIExt2hOjmA1FJM5k2bVCApWXsXxHSBKemQ
+ LDAhOAXG2ahyt3BNhnRG9vXUbkTIwUAiA1H4hsf2sSm2+/0TeNtYUZyk1sVskhOvsMC0fP/+L/h
+ ZRdZ6ZytXakzm04SUKs3jLvRr4xpSZFg=
+X-Gm-Gg: AeBDievZ5xIodAfqzQsCOAhfZAgURguARSQje612K/06HKcfpPguLRlACVAV08q1Qbr
+ pdKYbNm4Ei/EmLbsXLbW/hNnJrJgB5lXWp2e94aazSo1yoEcfyy+4+31qrnMYXgNQGTtcyXY0Rz
+ HcpkXHkjHtsVyY2Yo1T8LcLPdwKEAhHWvPnXQHbCMoLxi1LJHM3PvtWvgP9yCgE9lfpOb0C+Bzu
+ ZBvkVxYJN+7ufGDXdMUBQ4qCxMod4QruIxMbb5PNhjAS1tvelzWH0FFD2YlRZ8dQKf4DAT0gr5i
+ 7wve7U7vgswq8BJ8tM49
+X-Received: by 2002:a05:6871:d216:b0:417:22c9:a311 with SMTP id
+ 586e51a60fabf-42abf220077mr1089589fac.6.1776421359880; Fri, 17 Apr 2026
+ 03:22:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aeEaXLXGokjjODKR@x1.local>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20260416183540.142727-1-rafettaskindev@gmail.com>
+ <aeIED0hn1vC9NpZH@redhat.com>
+In-Reply-To: <aeIED0hn1vC9NpZH@redhat.com>
+From: Rafet T <rafettaskindev@gmail.com>
+Date: Fri, 17 Apr 2026 13:22:28 +0300
+X-Gm-Features: AQROBzAx0M4qc5HPZo3W9OT_vc6DJBdLprCHHpNCQEqbCFhz1ffeV-Uqpzt64iY
+Message-ID: <CA+JCratnMOAzjXPcHAGUco50WWXSrHHCzZPnnQEUkU7k-m2VDw@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/scsi: Add SCSI tape device emulation
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, fam@euphon.net
+Content-Type: multipart/alternative; boundary="000000000000208eb0064fa554ae"
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=rafettaskindev@gmail.com; helo=mail-oa1-x31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,135 +114,596 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-04-16 13:20, Peter Xu wrote:
-> On Thu, Apr 09, 2026 at 07:36:51PM +0200, Juraj Marcin wrote:
-> > Hi Peter,
-> > 
-> > actually, I do have one question, see inline
-> 
-> [...]
-> 
-> > shouldn't also the condition that triggers postcopy migration be updated?
-> > As total_bytes is calculated as sum of all three
-> > (precopy_bytes + stopcopy_bytes + postcopy_bytes), this implies to me
-> > that stopcopy_bytes is not subset of precopy_bytes and would also need
-> > to be migrated during switchover before postcopy.
-> 
-> For now it shouldn't matter when VFIO never works with postcpoy yet, but
-> it's a good point. We'd better make it right from the start.
-> 
-> When looking at this, I also found we may be reporting wrong things in the
-> query results when pmem is available on postcopy bits, it's about when this
-> hits:
-> 
-> static bool ram_has_postcopy(void *opaque)
-> {
->     RAMBlock *rb;
->     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
->         if (ram_block_is_pmem(rb)) {
->             info_report("Block: %s, host: %p is a nvdimm memory, postcopy"
->                          "is not supported now!", rb->idstr, rb->host);
->             return false;
->         }
+--000000000000208eb0064fa554ae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello Daniel,
+
+I would like to continue but Helge said only choosen applicant should work
+on this. (
+https://lore.kernel.org/qemu-devel/aeEicSrfbE2sZo8w@redhat.com/T/#t)
+
+With regards,
+Rafet
+
+
+On Fri, Apr 17, 2026, 12:57 Daniel P. Berrang=C3=A9 <berrange@redhat.com> w=
+rote:
+
+> On Thu, Apr 16, 2026 at 09:35:40PM +0300, rft0 wrote:
+> > Add initial emulation of SCSI tape device supporting basic
+> > INQUIRY operation for now.
+> >
+> > Signed-off-by: rft0 <rafettaskindev@gmail.com>
+> > ---
+> > Second patch:
+> >  - Add kconfig entry
+> >  - Validate vendor, product, version, serial lengths
+> >
+> >  hw/scsi/Kconfig     |   5 +
+> >  hw/scsi/meson.build |   1 +
+> >  hw/scsi/scsi-tape.c | 349 ++++++++++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 355 insertions(+)
+> >  create mode 100644 hw/scsi/scsi-tape.c
+> >
+> > diff --git a/hw/scsi/Kconfig b/hw/scsi/Kconfig
+> > index 5743ee9b4d..06e7cab178 100644
+> > --- a/hw/scsi/Kconfig
+> > +++ b/hw/scsi/Kconfig
+> > @@ -1,6 +1,11 @@
+> >  config SCSI
+> >      bool
+> >
+> > +config SCSI_TAPE
+> > +    bool
+> > +    default y
+> > +    depends on SCSI
+> > +
+> >  config LSI_SCSI_PCI
+> >      bool
+> >      default y if PCI_DEVICES
+> > diff --git a/hw/scsi/meson.build b/hw/scsi/meson.build
+> > index 69fde0cf84..1c62115d8e 100644
+> > --- a/hw/scsi/meson.build
+> > +++ b/hw/scsi/meson.build
+> > @@ -8,6 +8,7 @@ scsi_ss.add(files(
+> >    'scsi-disk.c',
+> >    'scsi-generic.c',
+> >  ))
+> > +scsi_ss.add(when: 'CONFIG_SCSI_TAPE', if_true: files('scsi-tape.c'))
+> >  scsi_ss.add(when: 'CONFIG_ESP', if_true: files('esp.c'))
+> >  scsi_ss.add(when: 'CONFIG_ESP_PCI', if_true: files('esp-pci.c'))
+> >  scsi_ss.add(when: 'CONFIG_LSI_SCSI_PCI', if_true: files('lsi53c895a.c'=
+))
+> > diff --git a/hw/scsi/scsi-tape.c b/hw/scsi/scsi-tape.c
+> > new file mode 100644
+> > index 0000000000..adbae9b4ad
+> > --- /dev/null
+> > +++ b/hw/scsi/scsi-tape.c
+> > @@ -0,0 +1,349 @@
+> > +/*
+> > + * SCSI Tape Device emulation
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + *
+> > + * Written by Rafet Taskin <rafettaskindev@gmail.com>
+> > + *
+> > + * SCSI Tape device emulation.
+> > + *
+> > + */
+> > +
+> > +#include "qemu/hw-version.h"
+> > +#include "qemu/osdep.h"
+> > +#include "qapi/error.h"
+> > +#include "qemu/module.h"
+> > +#include "qemu/memalign.h"
+> > +#include "qemu/cutils.h"
+> > +#include "hw/scsi/scsi.h"
+> > +#include "scsi/constants.h"
+> > +#include "system/block-backend.h"
+> > +#include "hw/block/block.h"
+> > +#include "hw/core/qdev-properties.h"
+> > +#include "hw/core/qdev-properties-system.h"
+> > +#include "qom/object.h"
+> > +
+> > +#define SCSI_MAX_INQUIRY_LEN    256
+> > +
+> > +#define MAX_SERIAL_LEN 36
+>
+> This doesn't appear to be used - the value is just
+> hardcoded at time of use. Can we use that, and also
+> add constants for the max product, vendor and
+> version fields, since those magic constants are
+> used several times over
+>
+>
+> > +static int scsi_disk_emulate_vpd_page(SCSIRequest *req, uint8_t *outbu=
+f)
+> > +{
+> > +    SCSITapeState *s =3D DO_UPCAST(SCSITapeState, qdev, req->dev);
+> > +    uint8_t page_code =3D req->cmd.buf[2];
+> > +
+> > +    outbuf[0] =3D TYPE_TAPE;
+> > +    outbuf[1] =3D page_code;
+> > +    outbuf[2] =3D 0x00;
+> > +    outbuf[3] =3D 0x00;
+> > +
+> > +    switch (page_code) {
+> > +    case 0x00: /* Supported VPD pages */
+> > +        outbuf[4] =3D 0x00;   /* page 0x00 (this page) */
+> > +        if (s->serial) {
+> > +            outbuf[5] =3D 0x80;   /* page 0x80 (serial number) */
+> > +            outbuf[3] =3D 2;      /* page data length */
+> > +            return 6;
+> > +        }
+> > +        outbuf[3] =3D 1;
+> > +        return 5;
+> > +
+> > +    case 0x80: /* Unit Serial Number */
+> > +        if (!s->serial) {
+> > +            return -1;   /* not supported, caller sends INVALID_FIELD =
+*/
+> > +        }
+> > +        {
+> > +            int l =3D strlen(s->serial);
+> > +            outbuf[3] =3D l;
+> > +            memcpy(&outbuf[4], s->serial, l);
+>
+> strpadcpy is probably a better idea, as this leaves the tail of
+> the buffer uninitialized and does not include a NUL terminator.
+> Even if the caller has initialized the buffer with nuls, it is
+> more reassuring to reviewers if we explicitly pad here.
+>
+> Use  MAX_SERIAL_LEN here too with strpadcpy
+>
+> > +            return 4 + l;
+> > +        }
+> > +
+> > +    default:
+> > +        return -1;  /* unsupported VPD page */
+> > +    }
+> > +}
+> > +
+> > +static int scsi_tape_emulate_inquiry(SCSIRequest *req, uint8_t *outbuf=
+)
+> > +{
+> > +    SCSITapeState *s =3D DO_UPCAST(SCSITapeState, qdev, req->dev);
+> > +    int buflen;
+> > +
+> > +    if (req->cmd.buf[1] & 0x1) {
+> > +        return scsi_disk_emulate_vpd_page(req, outbuf);
+> > +    }
+> > +
+> > +    /* Standard INQUIRY, not a VPD request */
+> > +    if (req->cmd.buf[2] !=3D 0) {
+> > +        return -1;
+> > +    }
+> > +
+> > +    /* PAGE_CODE =3D=3D 0 */
+> > +    buflen =3D req->cmd.xfer;
+> > +    if (buflen > SCSI_MAX_INQUIRY_LEN) {
+> > +        buflen =3D SCSI_MAX_INQUIRY_LEN;
+> > +    }
+> > +
+> > +    outbuf[0] =3D TYPE_TAPE;      /* 0x01 =3D Tape */
+> > +    outbuf[1] =3D 0x80;           /* Always removable */
+> > +    outbuf[2] =3D 0x05;           /* SPC-3 */
+> > +    outbuf[3] =3D 0x02 | 0x10;    /* Format 2, HiSup */
+> > +
+> > +    if (buflen > 36) {
+> > +        outbuf[4] =3D buflen - 5;
+> > +    } else {
+> > +        outbuf[4] =3D 36 - 5;
+> > +    }
+> > +
+> > +    outbuf[7] =3D 0x10 | (req->bus->info->tcq ? 0x02 : 0);
+> > +
+> > +    strpadcpy((char *)&outbuf[16], 16, s->product, ' ');
+> > +    strpadcpy((char *)&outbuf[8], 8, s->vendor, ' ');
+>
+> The 2nd arg here can use MAX_VENDOR_LEN / MAX_PRODUCT_LEN
+>
+> > +
+> > +    memset(&outbuf[32], 0, 4);
+> > +    memcpy(&outbuf[32], s->version, MIN(4, strlen(s->version)));
+>
+> Why not use strpadcpy like the two lines above. Also MAX_VERSION_LEN
+> constant would be wise.
+>
+> > +
+> > +    return buflen;
+> > +}
+>
+> > +static void scsi_tape_realize(SCSIDevice *dev, Error **errp)
+> > +{
+> > +    SCSITapeState *s =3D DO_UPCAST(SCSITapeState, qdev, dev);
+> > +
+> > +    dev->type =3D TYPE_TAPE;
+> > +
+> > +    if (!s->qdev.conf.blk) {
+> > +        error_setg(errp, "Drive property not set");
+> > +        return;
+> > +    }
+> > +
+> > +    if (!blk_is_inserted(s->qdev.conf.blk)) {
+> > +        error_setg(errp, "Device needs media, but drive is empty");
+> > +        return;
+> > +    }
+> > +
+> > +    if (!s->vendor) {
+> > +        s->vendor =3D g_strdup("QEMU");
+> > +    } else if (strlen(s->vendor) > 8) {
+> > +        error_setg(errp, "Vendor must be 8 characters at most");
+> > +        return;
+> > +    }
+>
+> Get rid of the "else" here and in the checks below - we want
+> to sanity check that the static constant is not oversized too,
+> especially for QEMU_HW_VERSION. Also use the constants for max
+> length and include the string in the error message . IOW more
+> like this code:
+>
+>     if (!s->vendor) {
+>         s->vendor =3D g_strdup("QEMU");
 >     }
-> 
->     return migrate_postcopy_ram();
-> }
-> 
-> So I think we should also report differently based on whether pmem is
-> present in ramblocks.. IOW, I think the module should make sure its
-> save_query_pending() to match its has_postcopy() when they're both present.
-> Or, maybe we don't even need has_postcopy()..
+>     if (strlen(s->vendor) > MAX_VENDOR_LEN) {
+>         error_setg(errp, "Vendor '%s' must be %d characters at most",
+>                    s->vendor, MAX_VENDOR_LEN);
+>         return;
+>     }
+>
+>
+>
+>
+> > +    if (!s->product) {
+> > +        s->product =3D g_strdup("QEMU TAPE");
+> > +    } else if (strlen(s->product) > 16) {
+> > +        error_setg(errp, "Product must be 16 characters at most");
+> > +        return;
+> > +    }
+> > +
+> > +    if (!s->version) {
+> > +        s->version =3D g_strdup(QEMU_HW_VERSION);
+> > +    } else if (strlen(s->version) > 4) {
+> > +        error_setg(errp, "Version must be 4 characters at most");
+> > +        return;
+> > +    }
+> > +
+> > +    if (s->serial && strlen(s->serial) > 36) {
+> > +        error_setg(errp, "Serial must be 36 characters at most");
+> > +        return;
+> > +    }
+> > +}
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+>
 
-Yeah, it looks like ram_state_pending() should use ram_has_postcopy()
-instead of just migrate_postcopy_ram().
+--000000000000208eb0064fa554ae
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> If it's a problem, it should be an old problem.  Let me address the
-> comments so far on this patch, so a fixup planned to be squashed (I also
-> added the trace parameter Avihai requested), feel free to comment before I
-> repost, thanks.
-> 
-> From 594b85b66b2d1abd9a38fae4051e01ffc73aa8ff Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Thu, 16 Apr 2026 13:09:16 -0400
-> Subject: [PATCH] fixup! migration: Introduce stopcopy_bytes in
->  save_query_pending()
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration.c  | 13 +++++++++++--
->  migration/savevm.c     |  3 ++-
->  migration/trace-events |  2 +-
->  3 files changed, 14 insertions(+), 4 deletions(-)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index c2aa145106..62299ff3c0 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -3276,6 +3276,16 @@ static void migration_iteration_go_next(MigPendingData *pending)
->      }
->  }
->  
-> +static bool postcopy_should_start(MigrationState *s, MigPendingData *pending)
-> +{
-> +    /* If postcopy's switchver will violate user specified downtime, stop */
-> +    if (pending->precopy_bytes + pending->stopcopy_bytes > s->threshold_size) {
-> +        return false;
-> +    }
-> +
-> +    return qatomic_read(&s->start_postcopy);
-> +}
-> +
->  /*
->   * Return true if continue to the next iteration directly, false
->   * otherwise.
-> @@ -3323,8 +3333,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->          }
->  
->          /* Should we switch to postcopy now? */
-> -        if (pending.precopy_bytes <= s->threshold_size &&
-> -            can_switchover && qatomic_read(&s->start_postcopy)) {
-> +        if (can_switchover && postcopy_should_start(s, &pending)) {
->              if (postcopy_start(s, &local_err)) {
->                  migrate_error_propagate(s, error_copy(local_err));
->                  error_report_err(local_err);
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 1d3fce45b9..7f38be0ee1 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1804,7 +1804,8 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
->  
->      trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
->                                      pending->stopcopy_bytes,
-> -                                    pending->postcopy_bytes);
-> +                                    pending->postcopy_bytes,
-> +                                    pending->total_bytes);
->  }
->  
->  void qemu_savevm_state_cleanup(MigrationState *s)
-> diff --git a/migration/trace-events b/migration/trace-events
-> index 2f86ad448e..d2134af862 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
->  qemu_loadvm_state_post_main(int ret) "%d"
->  qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
->  qemu_savevm_send_packaged(void) ""
-> -qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64
-> +qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
->  loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
->  loadvm_state_setup(void) ""
->  loadvm_state_cleanup(void) ""
-> -- 
-> 2.53.0
+<div dir=3D"auto">Hello Daniel,<div dir=3D"auto"><br></div><div dir=3D"auto=
+">I would like to continue but Helge said only choosen applicant should wor=
+k on this. (<a href=3D"https://lore.kernel.org/qemu-devel/aeEicSrfbE2sZo8w@=
+redhat.com/T/#t">https://lore.kernel.org/qemu-devel/aeEicSrfbE2sZo8w@redhat=
+.com/T/#t</a>)</div><div dir=3D"auto"><br></div><div dir=3D"auto">With rega=
+rds,</div><div dir=3D"auto">Rafet</div><br><br><div class=3D"gmail_quote" d=
+ir=3D"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Apr 17, 2026, 12:=
+57 Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">berrange@redhat.com</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1=
+px #ccc solid;padding-left:1ex">On Thu, Apr 16, 2026 at 09:35:40PM +0300, r=
+ft0 wrote:<br>
+&gt; Add initial emulation of SCSI tape device supporting basic<br>
+&gt; INQUIRY operation for now.<br>
+&gt; <br>
+&gt; Signed-off-by: rft0 &lt;<a href=3D"mailto:rafettaskindev@gmail.com" re=
+l=3D"noreferrer noreferrer" target=3D"_blank">rafettaskindev@gmail.com</a>&=
+gt;<br>
+&gt; ---<br>
+&gt; Second patch:<br>
+&gt;=C2=A0 - Add kconfig entry<br>
+&gt;=C2=A0 - Validate vendor, product, version, serial lengths<br>
+&gt; <br>
+&gt;=C2=A0 hw/scsi/Kconfig=C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A05 +<br>
+&gt;=C2=A0 hw/scsi/meson.build |=C2=A0 =C2=A01 +<br>
+&gt;=C2=A0 hw/scsi/scsi-tape.c | 349 ++++++++++++++++++++++++++++++++++++++=
+++++++<br>
+&gt;=C2=A0 3 files changed, 355 insertions(+)<br>
+&gt;=C2=A0 create mode 100644 hw/scsi/scsi-tape.c<br>
+&gt; <br>
+&gt; diff --git a/hw/scsi/Kconfig b/hw/scsi/Kconfig<br>
+&gt; index 5743ee9b4d..06e7cab178 100644<br>
+&gt; --- a/hw/scsi/Kconfig<br>
+&gt; +++ b/hw/scsi/Kconfig<br>
+&gt; @@ -1,6 +1,11 @@<br>
+&gt;=C2=A0 config SCSI<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 bool<br>
+&gt;=C2=A0 <br>
+&gt; +config SCSI_TAPE<br>
+&gt; +=C2=A0 =C2=A0 bool<br>
+&gt; +=C2=A0 =C2=A0 default y<br>
+&gt; +=C2=A0 =C2=A0 depends on SCSI<br>
+&gt; +<br>
+&gt;=C2=A0 config LSI_SCSI_PCI<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 bool<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 default y if PCI_DEVICES<br>
+&gt; diff --git a/hw/scsi/meson.build b/hw/scsi/meson.build<br>
+&gt; index 69fde0cf84..1c62115d8e 100644<br>
+&gt; --- a/hw/scsi/meson.build<br>
+&gt; +++ b/hw/scsi/meson.build<br>
+&gt; @@ -8,6 +8,7 @@ scsi_ss.add(files(<br>
+&gt;=C2=A0 =C2=A0 &#39;scsi-disk.c&#39;,<br>
+&gt;=C2=A0 =C2=A0 &#39;scsi-generic.c&#39;,<br>
+&gt;=C2=A0 ))<br>
+&gt; +scsi_ss.add(when: &#39;CONFIG_SCSI_TAPE&#39;, if_true: files(&#39;scs=
+i-tape.c&#39;))<br>
+&gt;=C2=A0 scsi_ss.add(when: &#39;CONFIG_ESP&#39;, if_true: files(&#39;esp.=
+c&#39;))<br>
+&gt;=C2=A0 scsi_ss.add(when: &#39;CONFIG_ESP_PCI&#39;, if_true: files(&#39;=
+esp-pci.c&#39;))<br>
+&gt;=C2=A0 scsi_ss.add(when: &#39;CONFIG_LSI_SCSI_PCI&#39;, if_true: files(=
+&#39;lsi53c895a.c&#39;))<br>
+&gt; diff --git a/hw/scsi/scsi-tape.c b/hw/scsi/scsi-tape.c<br>
+&gt; new file mode 100644<br>
+&gt; index 0000000000..adbae9b4ad<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/hw/scsi/scsi-tape.c<br>
+&gt; @@ -0,0 +1,349 @@<br>
+&gt; +/*<br>
+&gt; + * SCSI Tape Device emulation<br>
+&gt; + *<br>
+&gt; + * SPDX-License-Identifier: GPL-2.0-or-later<br>
+&gt; + *<br>
+&gt; + * Written by Rafet Taskin &lt;<a href=3D"mailto:rafettaskindev@gmail=
+.com" rel=3D"noreferrer noreferrer" target=3D"_blank">rafettaskindev@gmail.=
+com</a>&gt;<br>
+&gt; + *<br>
+&gt; + * SCSI Tape device emulation.<br>
+&gt; + *<br>
+&gt; + */<br>
+&gt; +<br>
+&gt; +#include &quot;qemu/hw-version.h&quot;<br>
+&gt; +#include &quot;qemu/osdep.h&quot;<br>
+&gt; +#include &quot;qapi/error.h&quot;<br>
+&gt; +#include &quot;qemu/module.h&quot;<br>
+&gt; +#include &quot;qemu/memalign.h&quot;<br>
+&gt; +#include &quot;qemu/cutils.h&quot;<br>
+&gt; +#include &quot;hw/scsi/scsi.h&quot;<br>
+&gt; +#include &quot;scsi/constants.h&quot;<br>
+&gt; +#include &quot;system/block-backend.h&quot;<br>
+&gt; +#include &quot;hw/block/block.h&quot;<br>
+&gt; +#include &quot;hw/core/qdev-properties.h&quot;<br>
+&gt; +#include &quot;hw/core/qdev-properties-system.h&quot;<br>
+&gt; +#include &quot;qom/object.h&quot;<br>
+&gt; +<br>
+&gt; +#define SCSI_MAX_INQUIRY_LEN=C2=A0 =C2=A0 256<br>
+&gt; +<br>
+&gt; +#define MAX_SERIAL_LEN 36<br>
+<br>
+This doesn&#39;t appear to be used - the value is just<br>
+hardcoded at time of use. Can we use that, and also<br>
+add constants for the max product, vendor and<br>
+version fields, since those magic constants are<br>
+used several times over<br>
+<br>
+<br>
+&gt; +static int scsi_disk_emulate_vpd_page(SCSIRequest *req, uint8_t *outb=
+uf)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 SCSITapeState *s =3D DO_UPCAST(SCSITapeState, qdev, req=
+-&gt;dev);<br>
+&gt; +=C2=A0 =C2=A0 uint8_t page_code =3D req-&gt;cmd.buf[2];<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 outbuf[0] =3D TYPE_TAPE;<br>
+&gt; +=C2=A0 =C2=A0 outbuf[1] =3D page_code;<br>
+&gt; +=C2=A0 =C2=A0 outbuf[2] =3D 0x00;<br>
+&gt; +=C2=A0 =C2=A0 outbuf[3] =3D 0x00;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 switch (page_code) {<br>
+&gt; +=C2=A0 =C2=A0 case 0x00: /* Supported VPD pages */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 outbuf[4] =3D 0x00;=C2=A0 =C2=A0/* page 0=
+x00 (this page) */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s-&gt;serial) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 outbuf[5] =3D 0x80;=C2=A0 =
+=C2=A0/* page 0x80 (serial number) */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 outbuf[3] =3D 2;=C2=A0 =C2=
+=A0 =C2=A0 /* page data length */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 6;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 outbuf[3] =3D 1;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 5;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 case 0x80: /* Unit Serial Number */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!s-&gt;serial) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;=C2=A0 =C2=A0/* n=
+ot supported, caller sends INVALID_FIELD */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int l =3D strlen(s-&gt;seri=
+al);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 outbuf[3] =3D l;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memcpy(&amp;outbuf[4], s-&g=
+t;serial, l);<br>
+<br>
+strpadcpy is probably a better idea, as this leaves the tail of<br>
+the buffer uninitialized and does not include a NUL terminator.<br>
+Even if the caller has initialized the buffer with nuls, it is<br>
+more reassuring to reviewers if we explicitly pad here.<br>
+<br>
+Use=C2=A0 MAX_SERIAL_LEN here too with strpadcpy<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 4 + l;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 default:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;=C2=A0 /* unsupported VPD page =
+*/<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int scsi_tape_emulate_inquiry(SCSIRequest *req, uint8_t *outbu=
+f)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 SCSITapeState *s =3D DO_UPCAST(SCSITapeState, qdev, req=
+-&gt;dev);<br>
+&gt; +=C2=A0 =C2=A0 int buflen;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (req-&gt;cmd.buf[1] &amp; 0x1) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return scsi_disk_emulate_vpd_page(req, ou=
+tbuf);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /* Standard INQUIRY, not a VPD request */<br>
+&gt; +=C2=A0 =C2=A0 if (req-&gt;cmd.buf[2] !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /* PAGE_CODE =3D=3D 0 */<br>
+&gt; +=C2=A0 =C2=A0 buflen =3D req-&gt;cmd.xfer;<br>
+&gt; +=C2=A0 =C2=A0 if (buflen &gt; SCSI_MAX_INQUIRY_LEN) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 buflen =3D SCSI_MAX_INQUIRY_LEN;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 outbuf[0] =3D TYPE_TAPE;=C2=A0 =C2=A0 =C2=A0 /* 0x01 =
+=3D Tape */<br>
+&gt; +=C2=A0 =C2=A0 outbuf[1] =3D 0x80;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0/* Always removable */<br>
+&gt; +=C2=A0 =C2=A0 outbuf[2] =3D 0x05;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0/* SPC-3 */<br>
+&gt; +=C2=A0 =C2=A0 outbuf[3] =3D 0x02 | 0x10;=C2=A0 =C2=A0 /* Format 2, Hi=
+Sup */<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (buflen &gt; 36) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 outbuf[4] =3D buflen - 5;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 outbuf[4] =3D 36 - 5;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 outbuf[7] =3D 0x10 | (req-&gt;bus-&gt;info-&gt;tcq ? 0x=
+02 : 0);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 strpadcpy((char *)&amp;outbuf[16], 16, s-&gt;product, &=
+#39; &#39;);<br>
+&gt; +=C2=A0 =C2=A0 strpadcpy((char *)&amp;outbuf[8], 8, s-&gt;vendor, &#39=
+; &#39;);<br>
+<br>
+The 2nd arg here can use MAX_VENDOR_LEN / MAX_PRODUCT_LEN<br>
+<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 memset(&amp;outbuf[32], 0, 4);<br>
+&gt; +=C2=A0 =C2=A0 memcpy(&amp;outbuf[32], s-&gt;version, MIN(4, strlen(s-=
+&gt;version)));<br>
+<br>
+Why not use strpadcpy like the two lines above. Also MAX_VERSION_LEN<br>
+constant would be wise.<br>
+<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return buflen;<br>
+&gt; +}<br>
+<br>
+&gt; +static void scsi_tape_realize(SCSIDevice *dev, Error **errp)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 SCSITapeState *s =3D DO_UPCAST(SCSITapeState, qdev, dev=
+);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 dev-&gt;type =3D TYPE_TAPE;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!s-&gt;qdev.conf.blk) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Drive property not=
+ set&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!blk_is_inserted(s-&gt;qdev.conf.blk)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Device needs media=
+, but drive is empty&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!s-&gt;vendor) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;vendor =3D g_strdup(&quot;QEMU&quot=
+;);<br>
+&gt; +=C2=A0 =C2=A0 } else if (strlen(s-&gt;vendor) &gt; 8) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Vendor must be 8 c=
+haracters at most&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+<br>
+Get rid of the &quot;else&quot; here and in the checks below - we want<br>
+to sanity check that the static constant is not oversized too,<br>
+especially for QEMU_HW_VERSION. Also use the constants for max<br>
+length and include the string in the error message . IOW more<br>
+like this code:<br>
+<br>
+=C2=A0 =C2=A0 if (!s-&gt;vendor) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;vendor =3D g_strdup(&quot;QEMU&quot;);<br=
+>
+=C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 if (strlen(s-&gt;vendor) &gt; MAX_VENDOR_LEN) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Vendor &#39;%s&#39; must=
+ be %d characters at most&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;=
+vendor, MAX_VENDOR_LEN);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+=C2=A0 =C2=A0 }<br>
+<br>
+<br>
+<br>
+<br>
+&gt; +=C2=A0 =C2=A0 if (!s-&gt;product) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;product =3D g_strdup(&quot;QEMU TAP=
+E&quot;);<br>
+&gt; +=C2=A0 =C2=A0 } else if (strlen(s-&gt;product) &gt; 16) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Product must be 16=
+ characters at most&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!s-&gt;version) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;version =3D g_strdup(QEMU_HW_VERSIO=
+N);<br>
+&gt; +=C2=A0 =C2=A0 } else if (strlen(s-&gt;version) &gt; 4) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Version must be 4 =
+characters at most&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (s-&gt;serial &amp;&amp; strlen(s-&gt;serial) &gt; 3=
+6) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Serial must be 36 =
+characters at most&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +}<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer noreferrer=
+" target=3D"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://hachyderm.io/@berrange" rel=
+=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://hachyderm.i=
+o/@berrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer noreferrer"=
+ target=3D"_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 ~~=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.=
+org" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://ent=
+angle-photo.org</a> :|<br>
+|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer noreferrer n=
+oreferrer" target=3D"_blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0=
+~~=C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"noreferrer=
+ noreferrer noreferrer" target=3D"_blank">https://fstop138.berrange.com</a>=
+ :|<br>
+<br>
+</blockquote></div></div>
 
-The fixup looks good, thanks!
-
-> 
-> 
-> -- 
-> Peter Xu
-> 
-
+--000000000000208eb0064fa554ae--
 
