@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A765BF4368F
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E9EF43690
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgsg-0000Qs-As; Fri, 17 Apr 2026 06:57:02 -0400
+	id 1wDgtx-0004Bl-8d; Fri, 17 Apr 2026 06:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgse-0000Om-Pi
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:00 -0400
+ id 1wDgts-0003t2-LW
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:18 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsc-0001YG-Np
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:59 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgtq-0001s6-Vt
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:16 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 156D420B7129;
- Fri, 17 Apr 2026 03:56:54 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 156D420B7129
+ by linux.microsoft.com (Postfix) with ESMTPSA id 5D9B020B700D;
+ Fri, 17 Apr 2026 03:58:01 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5D9B020B700D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423418;
- bh=DLb4Xz56FicxDJh1EcJd2k8Rmdkqnc0+6TN1HYuGNCw=;
+ s=default; t=1776423484;
+ bh=fc1+1UtwU7yENZrAtYj54r8Jq6h7vAl8J9HXQQcnltg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=gCBXmQvVr3L4PFi/hA7EDj5O5SVDdAG6iO8x2ch2HwvQenlAEbQGpydTAeypfFRLV
- ydjK97GH0PCrWzeo7ws8b7c7I18URh7R4C2cAyOjUdqZSfNo83Zn/iw0Z24QLi61Ip
- ZetVWgkXVnjQM2wI3uxxFjDUvQjJpQDvor9Fbs3s=
+ b=MyrIg/5clsB9IB37QoTxF+UUkpHDOXUxXJtm3OypUnqpGZaeYsPA6p7qGhcP6ewVr
+ HmUtjEiBGNr3hRNOMthU2JeOoNiS8SpmwP7RXsASlRxtzq3/lCUlgdKyMBVtAkQ4Qw
+ MhSb5GCT7Q0EHE5ENndb4yaX6F+pERyPPdyFxeCE=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 09/34] accel/mshv: update s->irq_routes in update_msi_route
-Date: Fri, 17 Apr 2026 12:55:53 +0200
-Message-Id: <20260417105618.3621-10-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 27/34] accel/mshv: write synthetic MSRs after migration
+Date: Fri, 17 Apr 2026 12:56:11 +0200
+Message-Id: <20260417105618.3621-28-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,128 +76,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The state's irq_routes field will be updated when an irqchip's gsi
-is requested to be updated with a new dest/vector.
-
-The old set_msi_routing() fn is redundant and can be removed.
+Write partition-wide synthetic MSRs. This ensures the hypercall page and
+SynIC facilities are set up before vCPUs attempt to use it.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/irq.c | 87 +++++++++++++++++++++---------------------------
- 1 file changed, 38 insertions(+), 49 deletions(-)
+ accel/mshv/mshv-all.c          |  7 +++++++
+ include/hw/hyperv/hvgdk_mini.h |  3 +++
+ include/system/mshv_int.h      |  1 +
+ target/i386/mshv/mshv-cpu.c    | 15 +++++++++++++++
+ 4 files changed, 26 insertions(+)
 
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 9d6bdde27a..b5a047b367 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -36,52 +36,6 @@ void mshv_init_msicontrol(void)
-     msi_control->updated = false;
- }
- 
--static int set_msi_routing(uint32_t gsi, uint64_t addr, uint32_t data)
--{
--    struct mshv_user_irq_entry *entry;
--    uint32_t high_addr = addr >> 32;
--    uint32_t low_addr = addr & 0xFFFFFFFF;
--    GHashTable *gsi_routes;
--
--    trace_mshv_set_msi_routing(gsi, addr, data);
--
--    if (gsi >= MSHV_MAX_MSI_ROUTES) {
--        error_report("gsi >= MSHV_MAX_MSI_ROUTES");
--        return -1;
--    }
--
--    assert(msi_control);
--
--    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
--        gsi_routes = msi_control->gsi_routes;
--        entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
--
--        if (entry
--            && entry->address_hi == high_addr
--            && entry->address_lo == low_addr
--            && entry->data == data)
--        {
--            /* nothing to update */
--            return 0;
--        }
--
--        /* free old entry */
--        g_free(entry);
--
--        /* create new entry */
--        entry = g_new0(struct mshv_user_irq_entry, 1);
--        entry->gsi = gsi;
--        entry->address_hi = high_addr;
--        entry->address_lo = low_addr;
--        entry->data = data;
--
--        g_hash_table_insert(gsi_routes, GINT_TO_POINTER(gsi), entry);
--        msi_control->updated = true;
--    }
--
--    return 0;
--}
--
- static int add_msi_routing(uint64_t addr, uint32_t data)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 5f81881c05..e97f480551 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -137,6 +137,13 @@ static int mshv_load_setup(QEMUFile *f, void *opaque, Error **errp)
+ static int mshv_load_cleanup(void *opaque)
  {
-     struct mshv_user_irq_entry *route_entry;
-@@ -370,16 +324,51 @@ void mshv_irqchip_release_virq(int virq)
-     remove_msi_routing(virq);
- }
- 
-+static int update_routing_entry(MshvState *s,
-+                                struct mshv_user_irq_entry *new_entry)
-+{
-+    struct mshv_user_irq_entry *entry;
-+    int n;
+     MshvState *s = opaque;
++    int ret;
 +
-+    for (n = 0; n < s->irq_routes->nr; n++) {
-+        entry = &s->irq_routes->entries[n];
-+        if (entry->gsi != new_entry->gsi) {
-+            continue;
-+        }
-+
-+        if (!memcmp(entry, new_entry, sizeof *entry)) {
-+            return 0;
-+        }
-+
-+        *entry = *new_entry;
-+
-+        return 0;
++    ret = mshv_arch_set_partition_msrs(first_cpu);
++    if (ret < 0) {
++        error_report("Failed to set partition MSRs: %s", strerror(-ret));
++        return -1;
 +    }
-+
-+    return -ESRCH;
-+}
-+
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
- {
-+    uint32_t addr_hi = msg.address >> 32;
-+    uint32_t addr_lo = msg.address & 0xFFFFFFFF;
-+    uint32_t data = le32_to_cpu(msg.data);
-+    struct mshv_user_irq_entry entry = {
-+        .gsi = virq,
-+        .address_hi = addr_hi,
-+        .address_lo = addr_lo,
-+        .data = data,
-+    };
-     int ret;
  
--    ret = set_msi_routing(virq, msg.address, le32_to_cpu(msg.data));
-+    ret = update_routing_entry(mshv_state, &entry);
-     if (ret < 0) {
--        error_report("Failed to set msi routing");
--        return -1;
-+        error_report("Failed to set msi routing for gsi %d", virq);
-+        abort();
-     }
+     resume_vm(s->vm);
  
-+    trace_mshv_set_msi_routing(virq, msg.address, data);
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index 75e953b86c..e987f59bb9 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -23,6 +23,9 @@
+ #define HV_X64_MSR_APIC_FREQUENCY   0x40000023
+ 
+ typedef enum hv_register_name {
++    /* VP Management Registers */
++    HV_REGISTER_INTERNAL_ACTIVITY_STATE = 0x00000004,
 +
+     /* Pending Interruption Register */
+     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
+ 
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 7d685fc647..7052f20a00 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -84,6 +84,7 @@ int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
+                           size_t n_regs);
+ int mshv_arch_store_vcpu_state(const CPUState *cpu);
+ int mshv_arch_load_vcpu_state(CPUState *cpu);
++int mshv_arch_set_partition_msrs(const CPUState *cpu);
+ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 9ce66e9aa1..43dbbd6fbd 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1115,6 +1115,21 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
      return 0;
  }
  
++int mshv_arch_set_partition_msrs(const CPUState *cpu)
++{
++    CPUX86State *env = &X86_CPU(cpu)->env;
++    struct hv_register_assoc assocs[] = {
++        { .name = HV_REGISTER_GUEST_OS_ID,
++          .value.reg64 = env->msr_hv_guest_os_id },
++        { .name = HV_REGISTER_REFERENCE_TSC,
++          .value.reg64 = env->msr_hv_tsc },
++        { .name = HV_X64_REGISTER_HYPERCALL,
++          .value.reg64 = env->msr_hv_hypercall },
++    };
++
++    return mshv_set_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
++}
++
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features)
+ {
 -- 
 2.34.1
 
