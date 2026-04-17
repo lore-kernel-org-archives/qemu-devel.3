@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46031F4368E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A765BF4368F
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDguJ-0006y4-RG; Fri, 17 Apr 2026 06:58:43 -0400
+	id 1wDgsg-0000Qs-As; Fri, 17 Apr 2026 06:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDguI-0006qK-Sv
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:42 -0400
+ id 1wDgse-0000Om-Pi
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:00 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDguG-0001us-RB
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:42 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsc-0001YG-Np
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:56:59 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id B45C020B6F08;
- Fri, 17 Apr 2026 03:58:26 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B45C020B6F08
+ by linux.microsoft.com (Postfix) with ESMTPSA id 156D420B7129;
+ Fri, 17 Apr 2026 03:56:54 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 156D420B7129
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423509;
- bh=kvyTJIDUKe7YqJFl71haRQV2T+y2d3dK1b5PZUwcZ2w=;
+ s=default; t=1776423418;
+ bh=DLb4Xz56FicxDJh1EcJd2k8Rmdkqnc0+6TN1HYuGNCw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=mxWuLjOEjAUxvNIuLYImGpTmtpHsNR/BxLzlKu8IQOA72Xf3/D71fBE+NIq3Xv6v0
- 6mZ/NoXIThzSW8ZkS4JS0q4wtISOnoAOhS2Iv28M69oFJGEBaYpyM9p1AQJGJJGbx5
- ce81SVv33BhYpGdjLCSXj08L3KI78573fswxroM4=
+ b=gCBXmQvVr3L4PFi/hA7EDj5O5SVDdAG6iO8x2ch2HwvQenlAEbQGpydTAeypfFRLV
+ ydjK97GH0PCrWzeo7ws8b7c7I18URh7R4C2cAyOjUdqZSfNo83Zn/iw0Z24QLi61Ip
+ ZetVWgkXVnjQM2wI3uxxFjDUvQjJpQDvor9Fbs3s=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 34/34] accel/mshv: enable dirty page tracking
-Date: Fri, 17 Apr 2026 12:56:18 +0200
-Message-Id: <20260417105618.3621-35-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 09/34] accel/mshv: update s->irq_routes in update_msi_route
+Date: Fri, 17 Apr 2026 12:55:53 +0200
+Message-Id: <20260417105618.3621-10-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,288 +76,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change introduces the functions required to perform dirty page
-tracking to speed up migrations. We are using the sync, global_start,
-and global_stop hooks.
+The state's irq_routes field will be updated when an irqchip's gsi
+is requested to be updated with a new dest/vector.
 
-The sync is implemented in batches.
-
-Before we can disable the dirty page tracking we have to set all dirty bits.
+The old set_msi_routing() fn is redundant and can be removed.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mem.c          | 211 ++++++++++++++++++++++++++++++++++++++
- accel/mshv/mshv-all.c     |   3 +
- include/system/mshv_int.h |   5 +
- 3 files changed, 219 insertions(+)
+ accel/mshv/irq.c | 87 +++++++++++++++++++++---------------------------
+ 1 file changed, 38 insertions(+), 49 deletions(-)
 
-diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
-index e55c38d4db..820f87ef0c 100644
---- a/accel/mshv/mem.c
-+++ b/accel/mshv/mem.c
-@@ -12,10 +12,13 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qapi/error.h"
- #include "linux/mshv.h"
- #include "system/address-spaces.h"
- #include "system/mshv.h"
- #include "system/mshv_int.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "system/physmem.h"
- #include "exec/memattrs.h"
- #include <sys/ioctl.h>
- #include "trace.h"
-@@ -211,3 +214,211 @@ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-         abort();
-     }
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 9d6bdde27a..b5a047b367 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -36,52 +36,6 @@ void mshv_init_msicontrol(void)
+     msi_control->updated = false;
  }
-+
-+static int enable_dirty_page_tracking(int vm_fd)
+ 
+-static int set_msi_routing(uint32_t gsi, uint64_t addr, uint32_t data)
+-{
+-    struct mshv_user_irq_entry *entry;
+-    uint32_t high_addr = addr >> 32;
+-    uint32_t low_addr = addr & 0xFFFFFFFF;
+-    GHashTable *gsi_routes;
+-
+-    trace_mshv_set_msi_routing(gsi, addr, data);
+-
+-    if (gsi >= MSHV_MAX_MSI_ROUTES) {
+-        error_report("gsi >= MSHV_MAX_MSI_ROUTES");
+-        return -1;
+-    }
+-
+-    assert(msi_control);
+-
+-    WITH_QEMU_LOCK_GUARD(&msi_control_mutex) {
+-        gsi_routes = msi_control->gsi_routes;
+-        entry = g_hash_table_lookup(gsi_routes, GINT_TO_POINTER(gsi));
+-
+-        if (entry
+-            && entry->address_hi == high_addr
+-            && entry->address_lo == low_addr
+-            && entry->data == data)
+-        {
+-            /* nothing to update */
+-            return 0;
+-        }
+-
+-        /* free old entry */
+-        g_free(entry);
+-
+-        /* create new entry */
+-        entry = g_new0(struct mshv_user_irq_entry, 1);
+-        entry->gsi = gsi;
+-        entry->address_hi = high_addr;
+-        entry->address_lo = low_addr;
+-        entry->data = data;
+-
+-        g_hash_table_insert(gsi_routes, GINT_TO_POINTER(gsi), entry);
+-        msi_control->updated = true;
+-    }
+-
+-    return 0;
+-}
+-
+ static int add_msi_routing(uint64_t addr, uint32_t data)
+ {
+     struct mshv_user_irq_entry *route_entry;
+@@ -370,16 +324,51 @@ void mshv_irqchip_release_virq(int virq)
+     remove_msi_routing(virq);
+ }
+ 
++static int update_routing_entry(MshvState *s,
++                                struct mshv_user_irq_entry *new_entry)
 +{
-+    int ret;
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
++    struct mshv_user_irq_entry *entry;
++    int n;
 +
-+    in.property_code = HV_PARTITION_PROPERTY_GPA_PAGE_ACCESS_TRACKING;
-+    in.property_value = 1;
-+
-+    args.code = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to enable dirty page tracking: %s",
-+                     strerror(errno));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+/*
-+ * Retrieve dirty page bitmap for a GPA range, clearing the dirty bits
-+ * atomically. Large ranges are handled in batches.
-+ */
-+static int get_dirty_log(int vm_fd, uint64_t base_pfn, uint64_t page_count,
-+                         unsigned long *bitmap, size_t bitmap_size)
-+{
-+    uint64_t batch, bitmap_offset, completed = 0;
-+    struct mshv_gpap_access_bitmap args = {0};
-+    int ret;
-+
-+    QEMU_BUILD_BUG_ON(MSHV_DIRTY_PAGES_BATCH_SIZE % BITS_PER_LONG != 0);
-+    assert(bitmap_size >= ROUND_UP(page_count, BITS_PER_LONG) / 8);
-+
-+    while (completed < page_count) {
-+        batch = MIN(MSHV_DIRTY_PAGES_BATCH_SIZE, page_count - completed);
-+        bitmap_offset = completed / BITS_PER_LONG;
-+
-+        args.access_type = MSHV_GPAP_ACCESS_TYPE_DIRTY;
-+        args.access_op   = MSHV_GPAP_ACCESS_OP_CLEAR;
-+        args.page_count  = batch;
-+        args.gpap_base   = base_pfn + completed;
-+        args.bitmap_ptr  = (uint64_t)(bitmap + bitmap_offset);
-+
-+        ret = ioctl(vm_fd, MSHV_GET_GPAP_ACCESS_BITMAP, &args);
-+        if (ret < 0) {
-+            error_report("Failed to get dirty log (base_pfn=0x%" PRIx64
-+                         " batch=%" PRIu64 "): %s",
-+                         base_pfn + completed, batch, strerror(errno));
-+            return -1;
++    for (n = 0; n < s->irq_routes->nr; n++) {
++        entry = &s->irq_routes->entries[n];
++        if (entry->gsi != new_entry->gsi) {
++            continue;
 +        }
-+        completed += batch;
-+    }
 +
-+    return 0;
-+}
-+
-+bool mshv_log_global_start(MemoryListener *listener, Error **errp)
-+{
-+    int ret;
-+
-+    ret = enable_dirty_page_tracking(mshv_state->vm);
-+    if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to enable dirty page tracking");
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static int disable_dirty_page_tracking(int vm_fd)
-+{
-+    int ret;
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_GPA_PAGE_ACCESS_TRACKING;
-+    in.property_value = 0;
-+
-+    args.code = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to disable dirty page tracking: %s",
-+                     strerror(errno));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int set_dirty_pages(int vm_fd, uint64_t base_pfn, uint64_t page_count)
-+{
-+    uint64_t batch, completed = 0;
-+    unsigned long bitmap[MSHV_DIRTY_PAGES_BATCH_SIZE / BITS_PER_LONG];
-+    struct mshv_gpap_access_bitmap args = {0};
-+    int ret;
-+
-+    while (completed < page_count) {
-+        batch = MIN(MSHV_DIRTY_PAGES_BATCH_SIZE, page_count - completed);
-+
-+        args.access_type = MSHV_GPAP_ACCESS_TYPE_DIRTY;
-+        args.access_op   = MSHV_GPAP_ACCESS_OP_SET;
-+        args.page_count  = batch;
-+        args.gpap_base   = base_pfn + completed;
-+        args.bitmap_ptr  = (uint64_t)bitmap;
-+
-+        ret = ioctl(vm_fd, MSHV_GET_GPAP_ACCESS_BITMAP, &args);
-+        if (ret < 0) {
-+            error_report("Failed to set dirty pages (base_pfn=0x%" PRIx64
-+                         " batch=%" PRIu64 "): %s",
-+                         base_pfn + completed, batch, strerror(errno));
-+            return -1;
++        if (!memcmp(entry, new_entry, sizeof *entry)) {
++            return 0;
 +        }
-+        completed += batch;
++
++        *entry = *new_entry;
++
++        return 0;
 +    }
 +
-+    return 0;
++    return -ESRCH;
 +}
 +
-+static bool set_dirty_bits_cb(Int128 start, Int128 len, const MemoryRegion *mr,
-+                              hwaddr offset_in_region, void *opaque)
-+{
-+    int ret, *errp = opaque;
-+    hwaddr gpa, size;
-+    uint64_t page_count, base_pfn;
-+
-+    gpa = int128_get64(start);
-+    size = int128_get64(len);
-+    page_count = size >> MSHV_PAGE_SHIFT;
-+    base_pfn = gpa >> MSHV_PAGE_SHIFT;
-+
-+    if (!mr->ram || mr->readonly) {
-+        return false;
-+    }
-+
-+    if (page_count == 0) {
-+        return false;
-+    }
-+
-+    ret = set_dirty_pages(mshv_state->vm, base_pfn, page_count);
-+
-+    /* true aborts the iteration, which is what we want if there's an error */
-+    if (ret < 0) {
-+        *errp = ret;
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+void mshv_log_global_stop(MemoryListener *listener)
-+{
-+    int err = 0;
-+    /* MSHV requires all dirty bits to be set before disabling tracking. */
-+    FlatView *fv = address_space_to_flatview(&address_space_memory);
-+    flatview_for_each_range(fv, set_dirty_bits_cb, &err);
-+
-+    if (err < 0) {
-+        error_report("Failed to set dirty bits before disabling tracking");
-+    }
-+
-+    disable_dirty_page_tracking(mshv_state->vm);
-+}
-+
-+void mshv_log_sync(MemoryListener *listener, MemoryRegionSection *section)
-+{
-+    hwaddr size, start_addr, mr_offset;
-+    uint64_t page_count, base_pfn;
-+    size_t bitmap_size;
-+    unsigned long *bitmap;
-+    ram_addr_t ram_addr;
-+    int ret;
-+    MemoryRegion *mr = section->mr;
-+
-+    if (!memory_region_is_ram(mr) || memory_region_is_rom(mr)) {
-+        return;
-+    }
-+
-+    size = align_section(section, &start_addr);
-+    if (!size) {
-+        return;
-+    }
-+
-+    page_count = size >> MSHV_PAGE_SHIFT;
-+    base_pfn = start_addr >> MSHV_PAGE_SHIFT;
-+    bitmap_size = ROUND_UP(page_count, BITS_PER_LONG) / 8;
-+    bitmap = g_malloc0(bitmap_size);
-+
-+    ret = get_dirty_log(mshv_state->vm, base_pfn, page_count, bitmap,
-+                        bitmap_size);
-+    if (ret < 0) {
-+        g_free(bitmap);
-+        return;
-+    }
-+
-+    mr_offset = section->offset_within_region + start_addr -
-+                section->offset_within_address_space;
-+    ram_addr = memory_region_get_ram_addr(mr) + mr_offset;
-+
-+    physical_memory_set_dirty_lebitmap(bitmap, ram_addr, page_count);
-+    g_free(bitmap);
-+}
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index ffe84d6151..94ff9cdb49 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -546,6 +546,9 @@ static MemoryListener mshv_memory_listener = {
-     .region_del = mem_region_del,
-     .eventfd_add = mem_ioeventfd_add,
-     .eventfd_del = mem_ioeventfd_del,
-+    .log_sync = mshv_log_sync,
-+    .log_global_start = mshv_log_global_start,
-+    .log_global_stop = mshv_log_global_stop,
- };
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
+ {
++    uint32_t addr_hi = msg.address >> 32;
++    uint32_t addr_lo = msg.address & 0xFFFFFFFF;
++    uint32_t data = le32_to_cpu(msg.data);
++    struct mshv_user_irq_entry entry = {
++        .gsi = virq,
++        .address_hi = addr_hi,
++        .address_lo = addr_lo,
++        .data = data,
++    };
+     int ret;
  
- static MemoryListener mshv_io_listener = {
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index c24efc8675..ddbdd76076 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -31,6 +31,8 @@ struct mshv_get_set_vp_state;
- #define MSHV_HV_INTERRUPTION_TYPE_PRIV_SW_EXC 5
- #define MSHV_HV_INTERRUPTION_TYPE_SW_EXC      6
+-    ret = set_msi_routing(virq, msg.address, le32_to_cpu(msg.data));
++    ret = update_routing_entry(mshv_state, &entry);
+     if (ret < 0) {
+-        error_report("Failed to set msi routing");
+-        return -1;
++        error_report("Failed to set msi routing for gsi %d", virq);
++        abort();
+     }
  
-+#define MSHV_DIRTY_PAGES_BATCH_SIZE 0x10000
++    trace_mshv_set_msi_routing(virq, msg.address, data);
 +
- typedef struct hyperv_message hv_message;
+     return 0;
+ }
  
- typedef struct MshvHvCallArgs {
-@@ -128,6 +130,9 @@ int mshv_guest_mem_write(uint64_t gpa, const uint8_t *data, uintptr_t size,
-                          bool is_secure_mode);
- void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-                        bool add);
-+void mshv_log_sync(MemoryListener *listener, MemoryRegionSection *section);
-+bool mshv_log_global_start(MemoryListener *listener, Error **errp);
-+void mshv_log_global_stop(MemoryListener *listener);
- 
- /* msr */
- int mshv_init_msrs(const CPUState *cpu);
 -- 
 2.34.1
 
