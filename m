@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31FAF4368A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BB2F4368A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 10:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDgti-00031q-EA; Fri, 17 Apr 2026 06:58:06 -0400
+	id 1wDgst-00017o-Fv; Fri, 17 Apr 2026 06:57:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wDgta-0002iC-8H
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:58:00 -0400
+ id 1wDgss-000141-HA
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:14 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgtY-0001hl-Gk
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:57 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wDgsq-0001aZ-U4
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 06:57:14 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p5086d620.dip0.t-ipconnect.de
  [80.134.214.32])
- by linux.microsoft.com (Postfix) with ESMTPSA id 065BB20B712B;
- Fri, 17 Apr 2026 03:57:42 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 065BB20B712B
+ by linux.microsoft.com (Postfix) with ESMTPSA id 7548220B7128;
+ Fri, 17 Apr 2026 03:57:09 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7548220B7128
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776423465;
- bh=hkvpr9QCwBz+aAxOE4MLQ16OiKG8v7Bh8aJx066T5TY=;
+ s=default; t=1776423432;
+ bh=57Nxf0HUrehtTgIAOHD4gvpLgPO803KCA3BRX10c6L0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Y1uj1HM/fKCyvdDoBgRqm5KPgSqUuCU5IBK7lkT0ODgu807lNDX4HLDygbCnYLJ7U
- LNCehxjd6mjE9oJNou5fw3IscyspowhJVKcM23Hxz2UCQNs2jm59OOOpcg9TTEy8AI
- dzp0uVO9TpyAgcnx/BVb09RJYia4Kaa96VypdLI4=
+ b=pAohccAuvrGyGw1H7N5OtFhjCbUVJyEyhFaxtACBiaFcYfyKDiw3Hj91mPdvBenvz
+ UhHOChFo5jUjhNGfPnsAfdh/SyGY9yBCma+HDDqEin8a/ehTkSAADo+vkYlBxyM3pB
+ 2jL6k6KrKtn7kzYPCzM9eGj5pyXXYfcrbrTqqUpg=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
@@ -44,9 +44,9 @@ Cc: kvm@vger.kernel.org, Magnus Kulke <magnuskulke@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 22/34] target/i386/mshv: migrate Synic SINT MSRs
-Date: Fri, 17 Apr 2026 12:56:06 +0200
-Message-Id: <20260417105618.3621-23-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 13/34] accel/mshv: remove redundant msi controller
+Date: Fri, 17 Apr 2026 12:55:57 +0200
+Message-Id: <20260417105618.3621-14-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
 References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
@@ -76,87 +76,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migrate HyperV SynIC SINT MSRs. We can only read/write those if SCONTROL
-is enabled in the guest, hence we have to split the SINT MSR out and
-make reading/writing them dependent on that MSR.
+The remaining MsiControl infrastructure can be removed now
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/msr.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ accel/mshv/irq.c          | 11 -----------
+ accel/mshv/mshv-all.c     |  2 --
+ include/system/mshv_int.h |  3 ---
+ 3 files changed, 16 deletions(-)
 
-diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
-index b26375e4c2..4881e15f4b 100644
---- a/target/i386/mshv/msr.c
-+++ b/target/i386/mshv/msr.c
-@@ -303,6 +303,8 @@ int mshv_get_msrs(CPUState *cpu)
-     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-     size_t i, j;
-     uint32_t name;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    bool synic_enabled;
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index 52b8ac9479..4828ac51ac 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -25,17 +25,6 @@
+ #define MSHV_IRQFD_RESAMPLE_FLAG (1 << MSHV_IRQFD_BIT_RESAMPLE)
+ #define MSHV_IRQFD_BIT_DEASSIGN_FLAG (1 << MSHV_IRQFD_BIT_DEASSIGN)
  
-     set_hv_name_in_assocs(assocs, n_assocs);
+-static MshvMsiControl *msi_control;
+-static QemuMutex msi_control_mutex;
+-
+-void mshv_init_msicontrol(void)
+-{
+-    qemu_mutex_init(&msi_control_mutex);
+-    msi_control = g_new0(MshvMsiControl, 1);
+-    msi_control->gsi_routes = g_hash_table_new(g_direct_hash, g_direct_equal);
+-    msi_control->updated = false;
+-}
+-
+ /* Pass an eventfd which is to be used for injecting interrupts from userland */
+ static int irqfd(int vm_fd, int fd, int resample_fd, uint32_t gsi,
+                  uint32_t flags)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 08bc26713f..056b19b3b8 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -426,8 +426,6 @@ static int mshv_init(AccelState *as, MachineState *ms)
  
-@@ -329,6 +331,27 @@ int mshv_get_msrs(CPUState *cpu)
+     mshv_init_mmio_emu();
  
-     store_in_env(cpu, assocs, n_assocs);
+-    mshv_init_msicontrol();
+-
+     ret = create_vm(mshv_fd, &vm_fd);
+     if (ret < 0) {
+         close(mshv_fd);
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 9bc56e70cf..7af5bcf022 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -118,7 +118,4 @@ typedef struct MshvMsrEntries {
+ int mshv_configure_msr(const CPUState *cpu, const MshvMsrEntry *msrs,
+                        size_t n_msrs);
  
-+    /* Read SINT MSRs only if SynIC is enabled */
-+    synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
-+    if (synic_enabled) {
-+        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
-+
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            assocs[i].name = HV_REGISTER_SINT0 + i;
-+        }
-+
-+        ret = mshv_get_generic_regs(cpu, assocs, HV_SINT_COUNT);
-+        if (ret < 0) {
-+            error_report("Failed to get SynIC SINT MSRs");
-+            return -errno;
-+        }
-+
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            uint64_t hv_sint_value = assocs[i].value.reg64;
-+            x86cpu->env.msr_hv_synic_sint[i] = hv_sint_value;
-+        }
-+    }
-+
-     return 0;
- }
- 
-@@ -363,6 +386,8 @@ int mshv_set_msrs(const CPUState *cpu)
-     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-     int ret;
-     size_t i, j;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    bool synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
- 
-     load_from_env(cpu, assocs, n_assocs);
- 
-@@ -395,5 +420,21 @@ int mshv_set_msrs(const CPUState *cpu)
-         return -errno;
-     }
- 
-+    /* SINT MSRs can only be written if SCONTROL has been set, so we split */
-+    if (synic_enabled) {
-+        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
-+
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            assocs[i].name        = HV_REGISTER_SINT0 + i;
-+            assocs[i].value.reg64 = x86cpu->env.msr_hv_synic_sint[i];
-+        }
-+
-+        ret = mshv_set_generic_regs(cpu, assocs, HV_SINT_COUNT);
-+        if (ret < 0) {
-+            error_report("Failed to set SynIC SINT MSRs");
-+            return -errno;
-+        }
-+    }
-+
-     return 0;
- }
+-/* interrupt */
+-void mshv_init_msicontrol(void);
+-
+ #endif
 -- 
 2.34.1
 
