@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB794F8E49C
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 01:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB87F8E499
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Apr 2026 02:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDY2W-00075c-B3; Thu, 16 Apr 2026 21:30:36 -0400
+	id 1wDYV2-00016d-SF; Thu, 16 Apr 2026 22:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDY2T-00075E-7M
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 21:30:33 -0400
-Received: from mail-qt1-x844.google.com ([2607:f8b0:4864:20::844])
+ id 1wDYV0-000162-KM
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 22:00:03 -0400
+Received: from mail-qv1-xf44.google.com ([2607:f8b0:4864:20::f44])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wDY2R-0000I1-KP
- for qemu-devel@nongnu.org; Thu, 16 Apr 2026 21:30:32 -0400
-Received: by mail-qt1-x844.google.com with SMTP id
- d75a77b69052e-50d75bfb259so1388051cf.1
- for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 18:30:30 -0700 (PDT)
+ id 1wDYUz-0003Uz-5y
+ for qemu-devel@nongnu.org; Thu, 16 Apr 2026 22:00:02 -0400
+Received: by mail-qv1-xf44.google.com with SMTP id
+ 6a1803df08f44-8a3970f1a0eso1998526d6.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Apr 2026 19:00:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776389430; x=1776994230; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=gY5LfQJVjXb12M6EoWSACsq9veQbVH4z3SuU8JTk5qc=;
- b=nESppAswoYfDIjYBQeGUj/JKTaAplqa8cNSpymoXjMWFUXnPp+XL9xWeirwEZryBvL
- QeTxQ7FrfDDZWpM8fEK68F6ag6u0sHw16vA3dq9PGXMSrkTxC0wuwpMkmPPqe1hkhSrg
- +li3fVPHrFuuujee4inMmrAuB51khm7gwIPfesnz9OOe9iKXL2iOx7kgyJtBESLYl5Un
- ciC7W4/U7OWMUxzKFc2OtJrMfuQ4mo5sL7vxGsDLAQ7uwHly56uEc7go+W/d/R8cV2wY
- 1EQPEZE3OK0l3G0D52DgWf87dQW9rA0O/xkOK3kEwpOzquoVknH9tGWDEPQADrblBSAf
- 4chA==
+ d=gmail.com; s=20251104; t=1776391200; x=1776996000; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=AQWE7MVsaiv2wFwGe/YK7MgNNskxHHG7J2504VXZVBY=;
+ b=I6XeGG0IG6JPqwUnXSE+bzRajCmQNfN+6rSSBMucnyiXcD8kTwmgKvaqLtYNsY41LU
+ 4+tUJ9CWa3vgM60miBrxDN46epNq4xc57Flw7R4LCnaU5FF+UEijLvvmlZw5cvGi4CgF
+ ildYj6C3JGCRsuq4sdpMDLqKfvPAbmc2q2MpRNsN72Dl4D/maJsKAG0TQ0sugcIxeaF2
+ tE1HCseDDoXpoMYHqt3Mf6NxuODJXwAQhc2EzNjlf6SUlf2+PjjqvTmnlnRFP8uMZDlC
+ zlcTWsjIXOkGqxNa7VRf0EPIKs/Sr4Hf0YtpB0geL52whGurMzs2KtIBvUVZj8FyH9W5
+ AL5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776389430; x=1776994230;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gY5LfQJVjXb12M6EoWSACsq9veQbVH4z3SuU8JTk5qc=;
- b=jXVO9t7iHp7uu1gkYgjPb06H9Zs1TO7niE/QR1xNx14QSeUZrv13yewPFPuFbvKLzf
- IGA3eNbXAgVjY15lCc0JMqrgJNTSCXiHrOQxcWNJfEUsgB4gUlW0N7lWy7dNEV57Srag
- CEvgSKokhl1OvFnBIdvveMli1ZyVKr71ejd92UthbvDR9gGvqE5rUQqWJ6b22SrXnMyM
- 0eWWupPe5eClaDMEhrEFeYlZScei6XoLFi9AtyIAxcC6M90OfrhzVfjpUn2skwsOIOV1
- WtLgBYGHKxMklFlzxokGdx40o0Cv1PUQhWAcKy87CAPXVHBbsXrumI6T8fSRhMoCgrG2
- Bq8A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9yknSrqOJ0hmqNki89leflTu5GUCkrRFofY1dXPSWLOBtL+ee31+YgU5DI22Xv+Z/Qrt2+Xg7/oU35@nongnu.org
-X-Gm-Message-State: AOJu0YwJGyesmmoF4KJdApX42wJtrlIBh91mZj1hEvuRvlxVyDpbJv6r
- A3eNp038oJQxGQ1kv4dfZ4Vj+ylQ6XFMLjoeWWUe189z46eaI0C89MhD
-X-Gm-Gg: AeBDiet/VqkBsQ7oQ6EXet8dO09eADoNtd7NCgSZ/72SGaXPwFYCggGf3x581serZP8
- 6c9/6xsDJT3s8wg8COF7mHQam9DSxBbQ+ZggCz/1mqFtB6F4bRbj7M3HRbtOk8GS0p7XMdimIMR
- nM3VI0PvShbIp3C351TTkRE0klUS+ZkTbJVyEwvKtkd2Qy+uYDSYHA6m/q2l3BhxuOYHjI0/LDE
- +pCYtcwdNnOzzXINsMB0f3TtUmop80eW+iMX/+5WfFEpLcNrGePrHwjhixYX/jjLZX30jjC2U1A
- DbvifFbSJY4nMJMDDCRr9aRG1yv22TLXctHb5OmK4pXDngEQlmezPi2jMpVBbI8qCIA/qkZmHhX
- p+62aFMkiPyG+7sM4VpQ/zqP1mbGcEDWzEkdrmCohWFDvDxCN2kydK7udxhAoK+R6kDMqbFYYce
- CdC2b05bRRfgndMbsHuV8DjADdM6G8lIvdojr2w53gZKpPqR3ze3QQdFVcRvmrQ40lGYJh8HBli
- 25t1h/Z+KY=
-X-Received: by 2002:ac8:7d43:0:b0:50d:74f9:894b with SMTP id
- d75a77b69052e-50e36b36677mr12832461cf.23.1776389429972; 
- Thu, 16 Apr 2026 18:30:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776391200; x=1776996000;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AQWE7MVsaiv2wFwGe/YK7MgNNskxHHG7J2504VXZVBY=;
+ b=LZQlDug013+S3jeVsk1xWFDIA1SfXLUmfiuYHa4WdB2u9E5dtdaVXe0rZ0tDjIoBLb
+ mGXS5J9mXFxXBqXPO4uNftKJ6S58EC1UaSzWEM14PKZJmKScpgNyXobiKFnaNMhTm/b6
+ CWqXt1kAkprL4krE3IzVtpCU5JSWseD/Hvb1RqkSWKzUkC4hTrKZIJlIQgAVTxY1AmzI
+ 3oHpBM9Fa26iW2kvl60cXVRXaMkoSmew8CgCdgR51u7S7aF/da1ZAOVQuZ+lsVuqHBg5
+ bpdtDNfvg9Q1vk9AR72RpTDseWJ3OnjDSDQxY03/DyFd4SRodjquzEUuvwe4gA00tClO
+ gMgA==
+X-Gm-Message-State: AOJu0Yy/oWGzilOtGDXBMrT32dtE5lJG5pFj6O9Aa5ZMyx6wmiPs67GD
+ nmH586Vh3dkheY993JvRaoOfLOP5J123h2iNyDH589pCzGP0ZoWKP+15
+X-Gm-Gg: AeBDievpBkIdesEgGWsb9n8yc5+voyZsH4XoLUPJHJ4K9chMb/OX+giX8s5PkFill+d
+ RLdyk9WfXQviIXnLQ/5btvTp2mCihSMYnHzSiU+6tbuWkyv+sdWl849ds4HaoOsIz7InsVy7fih
+ O+tnOsCjTKCMjMgzH/UfMRaanJoxKdy3yl3bfxevrqyZfEIFpSXa9R636jSOzD2sV0Uhlooau7W
+ xX1ZUyad85Lh9hRiYK3OxHLesUiQuVESZE59kiXgoqUQpSBtROmL2oh5fpwGWhjJP6vyLPAjm85
+ UoFet+oysUjGxkk7TKDoucVEKuAjK1cpeoP1YmHZ/gmiXOZEDVyxoYWyQYXgK5cud9cYuVymwOJ
+ i+lV/984A4tIlRrFdBxXny8mXQyDp8XqypjC1ktoE5qv2LAhCKLlT7W9MkeBPK6oVdBzMEw3rXU
+ 0fCT2hq24aqVNkw0SU8vaqhGG+Et3X5X5vQEGFG3kZbtUZHni4I4smwcNylHPvx93VP4Jk4OtxB
+ wlnLnksExs=
+X-Received: by 2002:ad4:5ba8:0:b0:8ac:abc5:8756 with SMTP id
+ 6a1803df08f44-8b0280d0e1emr15903626d6.25.1776391199794; 
+ Thu, 16 Apr 2026 18:59:59 -0700 (PDT)
 Received: from ZEVORN-PC.localdomain ([162.244.208.119])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50e39305285sm576161cf.13.2026.04.16.18.30.25
+ 6a1803df08f44-8b02ae5ec2dsm77226d6.29.2026.04.16.18.59.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2026 18:30:29 -0700 (PDT)
-Date: Fri, 17 Apr 2026 09:30:17 +0800
+ Thu, 16 Apr 2026 18:59:59 -0700 (PDT)
+Date: Fri, 17 Apr 2026 09:59:47 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, tangtao1634@phytium.com.cn
-Subject: Re: [PATCH v1] tests/data/acpi: Update SPCR golden-ref for RISC-V virt
-Message-ID: <aeGNBch02JmQuBCE@ZEVORN-PC.localdomain>
-References: <20260412012501.1808602-1-chao.liu.zevorn@gmail.com>
- <CAKmqyKP9k5ku8hfNbq=4XxPrukAn0Php_QyZuero=MEHVtd0BA@mail.gmail.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v4 12/14] target/riscv: rvv: Add vfext.vf2 instruction
+ for Zvfofp4min extension
+Message-ID: <aeGTU0gaUn8pyOsm@ZEVORN-PC.localdomain>
+References: <20260304134006.2908449-1-max.chou@sifive.com>
+ <20260304134006.2908449-13-max.chou@sifive.com>
+ <aahK0egnN_1lEWnH@ZEVORN-PC.localdomain>
+ <aeCymertMAq3AZd8@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKP9k5ku8hfNbq=4XxPrukAn0Php_QyZuero=MEHVtd0BA@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::844;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qt1-x844.google.com
+In-Reply-To: <aeCymertMAq3AZd8@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f44;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qv1-xf44.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -109,48 +107,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 16, 2026 at 12:35:59PM +1000, Alistair Francis wrote:
-> On Sun, Apr 12, 2026 at 11:25 AM Chao Liu <chao.liu.zevorn@gmail.com> wrote:
-> >
-> > Update the expected SPCR binary to match the corrected field
-> > sequence after the Terminal Type and Language fields were swapped
-> > back to their proper order.
-> >
-> > This fixes the qtest-riscv64/bios-tables-test CI failure:
-> >   https://gitlab.com/TaoTang/qemu/-/jobs/13879552268
-> >
-> > Fixes: 977c6fefcd04 ("hw/acpi: correct field sequence in SPCR table")
-> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> > Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+On Thu, Apr 16, 2026 at 06:28:04PM +0800, Max Chou wrote:
+> On 2026-03-04 23:13, Chao Liu wrote:
+> > > +static bool trans_vfext_vf2(DisasContext *s, arg_rmr *a)
+> > > +{
+> > > +    if (vext_zvfofp4min_check(s, a)) {
+> > Missing REQUIRE_FPU here.
+> > 
+> > All other FP vector instruction translation functions
+> > in this series (trans_vfncvtbf16_sat_f_f_w, trans_vfncvt_f_f_q,
+> > trans_vfncvt_sat_f_f_q, trans_vfwcvtbf16_f_f_v,
+> > trans_vfncvtbf16_f_f_w) have REQUIRE_FPU at the top.
+> > 
+> > Without it, this instruction could execute even when FPU
+> > is disabled.
 > 
-> Thanks for the fix!
+> According to the Zvfofp4min specification,
 > 
-> Do you guys (Heinrich and Chao) mind if I squash this with "hw/acpi:
-> correct field sequence in SPCR table"? They are both in my tree and if
-> I can squash them then it keeps the tree bisectable
+> "The vfext.vf2 instruction does not access the fcsr and is not considered
+>  a floating-point instruction for the purposes of the floating-point
+>  context status (FS) settings."
 > 
-Sounds good to me.
+Thanks for the clarification.
+
+> As a result, the vfext.vf2 instruction will not raise an illegal
+> instruction exception when the mstatus.fs flag is disabled.
+That makes sense, since it doesn't access fcsr, the REQUIRE_FPU guard
+would be incorrect here.
 
 Thanks,
 Chao
 
-> Alistair
 > 
-> > ---
-> >  tests/data/acpi/riscv64/virt/SPCR | Bin 90 -> 90 bytes
-> >  1 file changed, 0 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-> > index 09617f8793a6f7b1f08172f735b58aa748671540..59d2c8f7f215a604612cbd0294c18bc6301e208a 100644
-> > GIT binary patch
-> > delta 10
-> > Rcma!wnqbGo%rMbG3IGpM0&@TW
-> >
-> > delta 10
-> > Rcma!wnqbGoz&z1G3IGpJ0&@TW
-> >
-> > --
-> > 2.53.0
-> >
-> >
+> rnax
 
