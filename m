@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC29F99C63
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 00:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146C9F99C63
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 00:11:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wDtGq-0000s1-EF; Fri, 17 Apr 2026 20:10:48 -0400
+	id 1wDtHf-0001Ic-OK; Fri, 17 Apr 2026 20:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDtGo-0000rM-AP
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 20:10:46 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1wDtHe-0001IF-7l
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 20:11:38 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wDtGm-0006UL-T7
- for qemu-devel@nongnu.org; Fri, 17 Apr 2026 20:10:46 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-35da1af3e10so1299130a91.3
- for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 17:10:44 -0700 (PDT)
+ id 1wDtHc-0006Zz-Oy
+ for qemu-devel@nongnu.org; Fri, 17 Apr 2026 20:11:37 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-358e3cc5e7eso755674a91.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Apr 2026 17:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776471043; x=1777075843; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776471095; x=1777075895; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EVpSqqubsVXSRRzeOpPlJKLYWdiJNnOqvaVFXBoOq4Q=;
- b=ngBEoYTRgJlgiuIHg7Ntal2hmPSQAj9nJqCJA7cq7X5GrULXP67i4e4BYL/NVpTSFp
- t37MLHHElmo3Aexd1DdolMfvdAxUgJMiQvKSZlGTn+Tm/YIlqecCSJFcFlJQmidm/iHx
- haAtAo5BXSqcH2tu3bbB+6ww8mmqgeqr5pBvqQ2Ib+FkQBC6/uRVTOWz1iEfryXAHzhv
- lyXiq4n01Ytd+ITEFxNqb2pOIrV0FxxnnR8rbqWY0hyL4c/arsj13BExmRvih0XYNICq
- wcTHpCSLK4BGzfoyQfiOkwnFz5sXmv0HrBRZVSMcip2sSMlIt6y0Wfcct0FT3fLmblaK
- GRRw==
+ bh=FmytiLro6yCbwNxhPk8tXSejQttcBTkk3ZF22/FW1oA=;
+ b=y2LXAV/9pfb0O0qED3DLoNu1YcqvIQfYwJTS6E+cJv9TNP/wleB5bZ/BWycVv6dKAs
+ PKRYDa7MMNpWAba5UdxKgA76MBbi+hR9xvoysESsJXh8uZ7OV1MAdF7y8F/X10sJMc72
+ 219wf0+7TP4yznJajKUYWdRKTDYT8sUtcfY3X3O2rdNyPVx30J3nt6QnlDA1n5mmxoce
+ +B/M/hTGqM68saXVyZhBzuD9gwrkY4SRi4J1VeUOOwg6UqwyQCm+Pzv6tHWBATGzS6BH
+ 7a+poZU0+e8RjTYqNxY5Kuysp33mnsKGO279HrcZB+MbE23XDxl2vMp+zUDtpwNzQGZ4
+ U4Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776471043; x=1777075843;
+ d=1e100.net; s=20251104; t=1776471095; x=1777075895;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EVpSqqubsVXSRRzeOpPlJKLYWdiJNnOqvaVFXBoOq4Q=;
- b=h1JGeDnrDVKPAtbsiz/d8WXsOTFUP8HqMAuWFa9BkH6mHNbXZ7Ofc0Y5WAcxlViDkV
- J0T2bse6nA6q3YmRvb2FiBIBS9LvM36bsXkEWxGBo671Gb2f934iIMtuL+efpXdSEQnq
- cdsMpdw0r2NQg1RhOHenX485/mQfBCSS4SwbQZepsFo218z/4GPV088MtX/jdSYsJtOh
- DjUd5WuJ0PpmLJM9JnBR2sSHI2v74/g1u+Ofu7fhEDPQHYPc8SgIxm4XeRQmvW0k0rdn
- Fl/3uBJtYtHaAJ/1MA2Pily2OMgyYZGQHSGimYj/tdcN6LoNJjMCpET36xyrz94LB4Yd
- secw==
+ bh=FmytiLro6yCbwNxhPk8tXSejQttcBTkk3ZF22/FW1oA=;
+ b=nsfg1docNXhW6dMr8FdTeKtXt7nWO74itRbMNYXyUtoXaUij+CglNNtTKjDBpPSbf4
+ Hv7ce/vCAnMuS/27g48PtTqb5Ch92Oe5WMQ8gnJIT0RslSgSs0Fx1z/+TXu487VBJn8G
+ vozt2gRHojW4Z4rsYREc1bD2oEmJo0C4QmHFogz5qg3hL0CFdA28f3MnuGAy45fCr/7O
+ BjCQroH6L5BiolTOh9uX5jFXUdzHvx4WDpYWeALskSccPwDXK5pypacMcih1lDLtMdBS
+ mJqGORivEb3n6fZC6hcGRwMIG/eT+nYLUblRq8Xecve3Uxf2uR+wpBLJbJtVrv2wiF+x
+ ueFg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8R7akKjpaOQU2ZQV6CkkSE9CtHUtcSe/a5IZoEj/G4zE16U4jQHuAABwoaTJ8nTrsE7ZlFkGpkbAJQ@nongnu.org
-X-Gm-Message-State: AOJu0Yzf0AjPu2W1qQ955tJB8XQZ3aYGuv7BA+fr9YAMluiFmvyGLIhG
- 9m7m0xORHIOzchPgYYEismpeelR17yAD4QlzEOSso9qSUszrsrB0lYWNRJbxmwcMgsw=
-X-Gm-Gg: AeBDiesnd6w7kEiW5ZHbQTJBpo3fo2nvGiokeoBVWeHO9DG8qD23ZlLxm5q3Gqb7E05
- 3AhevzdHlw/iqQIPzvTwpug/quPHsZVMM5kr8DrUMLCa8Mslt5uyzUG25KDmlk09q7YYOcbIBXR
- 19/zsXgJdiIbvQgdy30UpHwfF/1SSpjyNHNByq4Nw0OxaK4Uzyse5zWIBPzVT1A6wy6M7/ruZ3n
- cd6dzsPfs4lK6YNILziJYzU6mLkgZABfZkgVqVfARkdN971q/J9ZrCyt1Kw4srXVFBql0bzxDwe
- WNQLuatx68EFgd0HMXHwhc9feS4P8MHreWlKYi20iwumaGUNlJLsaPxbE6BtQ6ppSRF5XAwLi8M
- Xub0o51OFzNkILevXYFCNMiPsNjXRI9lHeQsbHqpCqW8L75C0Enm4ILmMgR4t9GoTDVNtX7i/R/
- J2VjqgcIUvpU45Bc6P+GSLvqqq9k/NnauJHilN9Pq9BJVrfQfmpWhDOESy/wogovYrC3PUXJ+R5
- n3srMPp1r08h/0zZK7HJl09D/vdsRMAolNZt/+oD7IFevv6XrRThUFHOcKdRqzZAQ==
-X-Received: by 2002:a17:90b:5203:b0:35f:b9ea:8f9f with SMTP id
- 98e67ed59e1d1-36140464842mr4435573a91.16.1776471042858; 
- Fri, 17 Apr 2026 17:10:42 -0700 (PDT)
+ AFNElJ/Wom9mO31b1X5CgcSOC9glIMmMsrPwk/TFHXjMYqQ+4lVcz6J9eHMmOybY//TUeIhBe38Z0V6a0QDX@nongnu.org
+X-Gm-Message-State: AOJu0YzR5Z9SXL3vP4vSwSsZq4mcaZ42VP7JjPDEwFYpQeYXE4pc8LWt
+ Bh03tExPh3PEb9WRRdVheGZs3z+oD1zqLZf7xR9RM98MA3ilknBwpVzJOcn/9/WmXFg=
+X-Gm-Gg: AeBDiess0PEVMrRWKKc/BqTDrnNMkHZV7ip/RFimeqTQtlarguNIduY5geFn0yFr6gd
+ jH/amHk+k5F/I8bABKlKZWkdvak5SBzE86UlAeDmJ+CVSBvo1mjrDzTNmbtXIf2D/q8eVzpCvgi
+ sHUiifx5g5o+GcO8c6/zbBKHB2qXwMuV9nl8KHb45f3OsLU5OZOZxIwbOYP8RpNAX2aih6b7J+z
+ 4ytFZXKwuESbmLn7RkDpEVHkbN3xLcp3JnHhBVKc94qn0BGWosphi8QyZGhzUPEjD0wrZtmrZgJ
+ nsbFu+MT8y4oHkoGyRuNmMwCJpBUhOOt7eqSOgkwlYTvNxQ7D44nZyvk+S64giMiOw+dycwVBAL
+ xl26BkZl/VcdZ9uiIYRWwD1Aw/amhmcL47h4+bNJ3AptZpNaXgM0Ml+PIKVCFAY4CnuZ/AnpfoM
+ DPVoTcnovXxPgDBwE1RGTsIHIgtiRN8PjuwhGi33UhAmQqnqbi4XBXNY6Sdd+WpnP9N9Y9esmoB
+ pvCYxnd722Yg/wlqOb9WdGXEymiGgGbA6TW6vJF3JlTCyrgULmgGH9TuMtKOMlHiQ==
+X-Received: by 2002:a17:90b:3c0f:b0:359:855f:ff96 with SMTP id
+ 98e67ed59e1d1-3614048b2f5mr4638489a91.17.1776471095026; 
+ Fri, 17 Apr 2026 17:11:35 -0700 (PDT)
 Received: from ?IPV6:2401:d002:dc0f:2100:742f:8dfc:5be0:dc23?
  (bg30dhzyct7sk57q2zln.ip6.superloop.au.
  [2401:d002:dc0f:2100:742f:8dfc:5be0:dc23])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab4cc47sm32729265ad.82.2026.04.17.17.10.40
+ 98e67ed59e1d1-36141868906sm3225291a91.3.2026.04.17.17.11.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Apr 2026 17:10:42 -0700 (PDT)
-Message-ID: <aba8b166-ba1e-4906-b648-34950bd4b674@linaro.org>
-Date: Sat, 18 Apr 2026 10:10:34 +1000
+ Fri, 17 Apr 2026 17:11:34 -0700 (PDT)
+Message-ID: <05c44df1-d26a-4715-8e2a-d3f4f1de12fd@linaro.org>
+Date: Sat, 18 Apr 2026 10:11:26 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/arm/cpu.h: New GPCCR fields
+Subject: Re: [PATCH v2 3/4] target/arm/ptw.c: Add GDI spaces to the granule
+ protection case
 To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
 References: <20260417-jmac-feat_rme_gdi-v2-0-7cf5131aeb60@linaro.org>
- <20260417-jmac-feat_rme_gdi-v2-2-7cf5131aeb60@linaro.org>
+ <20260417-jmac-feat_rme_gdi-v2-3-7cf5131aeb60@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260417-jmac-feat_rme_gdi-v2-2-7cf5131aeb60@linaro.org>
+In-Reply-To: <20260417-jmac-feat_rme_gdi-v2-3-7cf5131aeb60@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,34 +110,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/17/26 21:02, Jim MacArthur wrote:
-> Add SA, NSP, NA6, NA7 for GDI and GPCBW for good measure.
+> System Agent, Non-secure Protected and two other GPI field encodings.
+> 
+> These are explicitly denied access for any processing element when
+> the relevant GPCCR bit is set, and reserved values when the relevant
+> GPCCR bit is zero.
 > 
 > Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 > ---
->   target/arm/cpu.h | 5 +++++
->   1 file changed, 5 insertions(+)
+>   target/arm/ptw.c | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
 > 
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 657ff4ab20..1cfef02dc0 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -2089,6 +2089,11 @@ FIELD(GPCCR, TBGPCD, 18, 1)
->   FIELD(GPCCR, NSO, 19, 1)
->   FIELD(GPCCR, L0GPTSZ, 20, 4)
->   FIELD(GPCCR, APPSAA, 24, 1)
-> +FIELD(GPCCR, SA, 25, 1)
-> +FIELD(GPCCR, NSP, 26, 1)
-> +FIELD(GPCCR, NA6, 27, 1)
-> +FIELD(GPCCR, NA7, 28, 1)
-> +FIELD(GPCCR, GPCBW, 29, 1)
->   
->   FIELD(MFAR, FPA, 12, 40)
->   FIELD(MFAR, NSE, 62, 1)
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 7b993bb5b3..316e201cfe 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -510,6 +510,26 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+>           break;
+>       case 0b1111: /* all access */
+>           return true;
+> +    case 0b0100: /* system agent only */
+> +        if (FIELD_EX64(gpccr, GPCCR, SA) == 0) {
+> +            goto fault_walk;
+> +        }
+> +        break;
+> +    case 0b0101: /* non-secure protected */
+> +        if (FIELD_EX64(gpccr, GPCCR, NSP) == 0) {
+> +            goto fault_walk;
+> +        }
+> +        break;
+> +    case 0b0110: /* reserved if NA6==0, otherwise no access */
+> +        if (FIELD_EX64(gpccr, GPCCR, NA6) == 0) {
+> +            goto fault_walk;
+> +        }
+> +        break;
+> +    case 0b0111: /* reserved if NA7==0, otherwise no access */
+> +        if (FIELD_EX64(gpccr, GPCCR, NA7) == 0) {
+> +            goto fault_walk;
+> +        }
+> +        break;
+>       case 0b1000: /* secure */
+>           if (!config.support_sel2) {
+>               goto fault_walk;
 > 
 
 
