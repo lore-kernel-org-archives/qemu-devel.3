@@ -4,103 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29B2F99C89
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 15:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25BCF99C89
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 17:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wE7N6-0004vU-Rv; Sat, 18 Apr 2026 11:14:12 -0400
+	id 1wE9Oi-0001oe-EY; Sat, 18 Apr 2026 13:24:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wE7N4-0004vI-Qs
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 11:14:10 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wE7N2-0002xC-Qv
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 11:14:10 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-7947cf097c1so14425257b3.2
- for <qemu-devel@nongnu.org>; Sat, 18 Apr 2026 08:14:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776525247; cv=none;
- d=google.com; s=arc-20240605;
- b=PCzWhYua4IBVEDCHGmTWYyF4fC6M7RERlaTN2T6DkRhW8JXi7fM4L8yeJmdM1IAjE/
- 01B1u77QJD6PKZtWPmyfjU0QmM3528kuQNxJcUQvPGq9JaZq7UwIWOHHstp5ma038LbO
- 61X3TJpGrpAdxSnvnT1R6JM9OHq+/f+QrIWKIu7kU+072/HpjYAQwiXKLhp1LLkgc3Hd
- Mq9b70A+9OeUUbk1L3rqGkco91jrWnDwdwKagnYzcD+19CA1TFFv39Cbnw0m/dwpc2Uo
- PQTJI2DG6lGrzdkT05ekpkrBOjtWMP/HioDm/ffhC0YkP5APZaehFps/8dhF2ZF5pdo2
- acJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=JotdqhCLC3RWhzCY0VF8TfDWQpSZiqN1wI5LkIQnkEo=;
- fh=wKVqvMNt0AiJNNYTjWZOveR6Ru3lORxepIdjx1rFDAU=;
- b=NO/s/iIC8bOI/CaWGs60V5tUVkMbassz2J2v5eCKD+iBcwaLeV4WDJ6Ub8yQ1MKrlZ
- MTdK8gST3e5i2Fs0/sRpozxErhFMnxI3jCmPr5lPpq1NWEtcpk0uNbwRGFYNBpWs3OwF
- cZw1lLOVmvaWPdaKE4eRsxZuLzj8KctT70fnGbm++Q3z1ohB20So+6ueYGC9Cc0tf1ES
- id9LDTHjWM5n0Dwtf0wI/xmBg/bkDA7aL5N1Agr+vML01wq3TzX71rrJD0wJktQXth2u
- h+Yjf6zw/R5NNmblN2Qk+4A2SrNiwFe/adlqR1xsE1gihQhHQtLy1i9Le2YXIOOtUWQH
- 949g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776525247; x=1777130047; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JotdqhCLC3RWhzCY0VF8TfDWQpSZiqN1wI5LkIQnkEo=;
- b=w1jISSLYj3+MJnXbb282RB7BLdvEwzt/Cio7POFkejdCU841jgWbcmyQutLhy10Lcn
- Bwdfs+nQGrNV5bJp7mPLPAAvnEqyg+mowNhIxpUCOumK7gJmXU1EWkviUoYKXOUe3LpT
- 8XaAqP9PyIPEZOY3ERfKD2jVkb38HQva2oVd3xKjGBBEHVNp681ppR32J00ypDMLSksh
- LrIt5kuX2rEhvpSZSkgFS0FRY5sZIw0GOgF5DLBjCQkgZTYNXz250+eFYDZlJgqqNfxa
- oFhbmOK5uTmYynvuYqlrEg7RIzYerPheVd6LA6jr/9GX47ipBdeAiy7lJEoReLWZ9+3H
- dNhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776525247; x=1777130047;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JotdqhCLC3RWhzCY0VF8TfDWQpSZiqN1wI5LkIQnkEo=;
- b=TkKW7Xg9dxc55mNyDeB8Mz1PSJwRGpenwEHBMDRSNzp00cW968sl6C96yV6ptLntLi
- HfVfZOP8UU7XK1g7MkrqL7jqvWPVwLpgYbvTYVF50uf+GAqlpqg/WRHjR687tBOqUln3
- sOc+c9+oVWXAZLxlkfw/UAxgRb5hpf5zKozY+MrZ6Sxxq97j8OeBC2djCQgp7j2eQ2QC
- P9ApIf1yzW33cJCh5avmQ1ohklTmZENi5sCnH9YJNQEIWbonb6A/mLGnR520FVas0gd6
- fd33vt6gHxctkJU1r+ydn1xPbIjQGqcaH9hbTHBk4GP6fSWwherUlkI2I4H55xXmDyzs
- 1VtA==
-X-Gm-Message-State: AOJu0YzunNjdOSPaV1uDjGzlKOvFdnumDaVvLT6Ccwpr42ZRmAZ4dXyX
- xasOlnPJwbFzaFQ8X3uRAvWBXxfrv0DJFqLvx+OvL3bSJnHQmY75a1B8sVcMPDPXlbEaMD1LWNf
- wvfRpzWY/NSP/Ikxp02qnjh6l4AZJBCrdi/qz/VeHJQ==
-X-Gm-Gg: AeBDietOhhQxOurhhxW37fVf/2FXgKVYdlBDLiam2YGPx08H5NPQLUPc0lt6FtnRmwz
- 1cPstxGEZy+2yv4ivuobgf30PHkggNCBT4UldU9RuCaoh6i7YpUFBzsnbRdPeJ3aNhl05/9qasJ
- R4sL/0GrVi29ot7+cnUO+GCvsAXGW6hjUdfAwBBHwYPYqfs6ApW8mSmVqLwaTjk3nEUFYBmWRE/
- FPX5B+xeHtTe8hLnFE3VxnQjUw5v9ws9Ily5idBd5LXDMjiyrXlIvxiNCzry9jvvfygQNDErlqF
- UFhjo8BdfszLWuYcTTZpzVpDjt9QhDgZ8UgZwXwoSXeruIaE5JH0g4Wisq2sTnKr+NVjZ/qnYDf
- vPg==
-X-Received: by 2002:a05:690c:93:b0:7b3:9175:30a4 with SMTP id
- 00721157ae682-7b9ecefdb46mr71816327b3.15.1776525247135; Sat, 18 Apr 2026
- 08:14:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wE9Og-0001oS-93
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 13:23:58 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wE9Oe-0002bD-FH
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 13:23:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=3t+fy2EL4xXM00RrefsohQy4j3KLnHQ9yjTAw65Ve0M=; b=dORqS86PvUL2c1df
+ 3xXw0/3E54Lce2zmSsRV0sZke4Q+cycnZQcMloQibgnDYrYczE0yXgQPQhsWIRERjEN/UtQlXEIie
+ UN+RnqRNi5w/nfBNUtWGbsUM9wv79rax1Lcmgobk2CtNCg4j17Cc+k0ZTd6/sdFlqwFIkxM0X0NKf
+ hrtyWrIM2lAXpSroGo/zGVw8FSWRDpx5OaEhcs3Zp+7G20vhmMX3r+35LQnREX/QSJR7v4tgvcyur
+ 5NXyrHEcA9OxNyKFps4O0weSHjMkPtKgI0JcliyJvBHY+zbIcoS9ZIaAnwf7WbsN7K6P1VuhLv39X
+ F4m+ixf5ch0eJas2Fw==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wE9OU-000000099C1-3ZlI;
+ Sat, 18 Apr 2026 17:23:46 +0000
+Date: Sat, 18 Apr 2026 17:23:46 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: AlanoSong@163.com
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Subject: Re: [PATCH] monitor: Add `clear` command
+Message-ID: <aeO-IqKqBwtKfW8P@gallifrey>
+References: <20260418133927.43012-1-AlanoSong@163.com>
 MIME-Version: 1.0
-References: <20260418115230.17809-1-viking4@gmail.com>
-In-Reply-To: <20260418115230.17809-1-viking4@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 18 Apr 2026 16:13:55 +0100
-X-Gm-Features: AQROBzBA5tEJQXveD6CCzDtkzZ5vZDgt3CefrDOu59wWX1VgosRIXMDqdPLq0qs
-Message-ID: <CAFEAcA9yq2RH226fx5vybumH=fjosPVgMSvigauAz=OK8-RWQQ@mail.gmail.com>
-Subject: Re: [PATCH] chardev/msmouse: save and restore device state for
- migration and savevm
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260418133927.43012-1-AlanoSong@163.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
+X-Uptime: 17:23:23 up 36 days, 18:36,  2 users,  load average: 0.17, 0.05, 0.01
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,57 +68,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 18 Apr 2026 at 12:53, Trieu Huynh <vikingtc4@gmail.com> wrote:
->
-> From: Trieu Huynh <vikingtc4@gmail.com>
->
-> MouseChardev holds state that must survive migration and savevm/loadvm:
->
->   tiocm   - serial line control (RTS/DTR).  When zero the mouse is
->             considered powered-off and all input events are silently
->             dropped.  Losing this field after migration leaves the
->             mouse in a dead state: the guest driver must toggle
->             RTS/DTR again to re-detect the mouse, which most drivers
->             (Linux sermouse, DOS ctmouse) only do at initialisation.
->
->   axis[]  - accumulated X/Y movement not yet encoded into a packet.
->
->   btns[]  - current button state.
->
->   btnc[]  - per-button change flags used for middle-button tracking.
->
->   outbuf  - Fifo8 of encoded mouse bytes waiting to be delivered to
->             the serial port receive FIFO.
->
-> Add a VMStateDescription covering all five fields, registering it in
-> msmouse_chr_open and unregistering it in char_msmouse_finalize.  This
-> follows the same pattern used by ui/vdagent.c
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1234
->
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+* AlanoSong@163.com (AlanoSong@163.com) wrote:
+> The monitor screen can be cluttered after executing commands
+> like `info qtree`. It is useful to have a command to clear
+> current screen, just like linux `clear` command do.
+> 
+> This patch has been tested under monitors using stdio, vc,
+> tcp socket, unix socket and serial interfaces.
+> 
+> Signed-off-by: Alano Song <AlanoSong@163.com>
 
-> @@ -263,6 +279,7 @@ static bool msmouse_chr_open(Chardev *chr,
->                                              &msmouse_handler);
->      mouse->tiocm = 0;
->      fifo8_create(&mouse->outbuf, MSMOUSE_BUF_SZ);
-> +    vmstate_register_any(NULL, &vmstate_msmouse, mouse);
+Does typing ctrl-l not do it for you in your terminal?
 
-Adding a new use of vmstate_register_any() is a bit
-unfortunate -- this is supposed to be a legacy function.
+Dave
 
-More generally, it seems odd that the chardev has any state
-that needs to be migrated at all. The chardev should have
-state corresponding to the host's situation, which is all fresh
-for the migration destination. State corresponding to things the
-guest has or has not done ought to be in a device model somewhere,
-surely?
-
-Put another way, why is this msmouse code in chardev/ and a subtype
-of TYPE_CHARDEV, and not a device in hw/input that's a subtype
-of TYPE_DEVICE? I guess that the idea is we want to be able to
-plug it into any UART device, but that seems to have some issues
-when it comes to migration. wctablet is probably in the same boat.
-
--- PMM
+> ---
+>  hmp-commands.hx       | 14 ++++++++++++++
+>  include/monitor/hmp.h |  1 +
+>  monitor/hmp-cmds.c    |  5 +++++
+>  3 files changed, 20 insertions(+)
+> 
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 5cc4788f12..95f9166732 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -20,6 +20,20 @@ SRST
+>    Show the help for all commands or just for command *cmd*.
+>  ERST
+>  
+> +    {
+> +        .name       = "clear",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "clear the monitor screen",
+> +        .cmd        = hmp_clear,
+> +        .flags      = "p",
+> +    },
+> +
+> +SRST
+> +``clear``
+> +  Clear the monitor screen.
+> +ERST
+> +
+>      {
+>          .name       = "commit",
+>          .args_type  = "device:B",
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index e222bea60c..9b66458d21 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -165,6 +165,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict);
+>  void hmp_trace_file(Monitor *mon, const QDict *qdict);
+>  void hmp_info_trace_events(Monitor *mon, const QDict *qdict);
+>  void hmp_help(Monitor *mon, const QDict *qdict);
+> +void hmp_clear(Monitor *mon, const QDict *qdict);
+>  void hmp_info_help(Monitor *mon, const QDict *qdict);
+>  void hmp_info_sync_profile(Monitor *mon, const QDict *qdict);
+>  void hmp_info_history(Monitor *mon, const QDict *qdict);
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index bc26b39d70..3e9485478e 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -218,6 +218,11 @@ void hmp_help(Monitor *mon, const QDict *qdict)
+>      hmp_help_cmd(mon, qdict_get_try_str(qdict, "name"));
+>  }
+>  
+> +void hmp_clear(Monitor *mon, const QDict *qdict)
+> +{
+> +    monitor_printf(mon, "\x1b[3J\x1b[2J\x1b[H");
+> +}
+> +
+>  void hmp_info_help(Monitor *mon, const QDict *qdict)
+>  {
+>      hmp_help_cmd(mon, "info");
+> -- 
+> 2.43.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
