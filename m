@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34D3F99C9B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 22:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B0CF99C9B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 22:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEDxl-00083I-EX; Sat, 18 Apr 2026 18:16:29 -0400
+	id 1wEDxs-0008KR-4c; Sat, 18 Apr 2026 18:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDxS-0007tb-PQ
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:16:16 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDxj-000819-MG
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:16:28 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDxP-00083R-Us
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:16:10 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-488971db0fdso20123615e9.0
- for <qemu-devel@nongnu.org>; Sat, 18 Apr 2026 15:16:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDxi-00085N-4q
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:16:27 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488c2690057so17480105e9.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Apr 2026 15:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776550566; x=1777155366; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776550584; x=1777155384; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fLmLmFSRDAwknWcYloo6OfPzyQDkibFSRyljJRY4yig=;
- b=B9/LPjsqOy1SFxQFhR5bYiz+RIfB7X7E585u5V8RtGwEHSMibgA6RTMIYO8+LYN6Ty
- WItxs4K/eKwDoLrXBwGlJ58JopKah+3blRsV1bMDCf2pDlrBP11U5cXasyrxaRnNgEKm
- A/Ek3KKhlhqY7h28dUm3ZQvN1o98DZpgl0gdU0/3WJnn1M85x787GBqpW1Ztq8xXxrM5
- G0yvAEyB2t6IatDkf/4HHbKVpQDaA/6ZRVboGLTUNUGehEll/CNunZL9FzuK4baU7d5J
- uAVDu12ehf5sqXu47gXP+Ynx+LJ06JdgQGGgF6R3NN3WkpuoacST1JotrM5LZd++JNpT
- gzLQ==
+ bh=ePfa/GMngx5939waiNGcXDE+WF6mNQU/sdgDKua9di8=;
+ b=XRwlP/Bugt3uONGDwJrayVrqDfFSgEgtKICr2bC+uF0HE2ag4ypoptDRVKirEP8yrU
+ 2TuEN6ifvx8z4To3/fnQW0vB7pYP5UMk7uzIofzVhkYP0RJVmDAzZtZM8UzVb6cztcSd
+ ayHQYCknNDJYlTtHgZdKAE4G7WQ2djMJ68uugZ2Z9+Q2UqhutSihIK0A4glhdkwDokvB
+ N1g9SYongoghXwXUjreVImZqORWKfHlxcnKwbhEd3cxUPsqXxmw4OO9t6s0gamoKEGOB
+ U/2ywi/pQWwvr0bAO+0Dtqrty+UhXbJq9tO0S3dlFcisiCOSkLUiShM1bbsJtWZAVZ2k
+ 5zmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776550566; x=1777155366;
+ d=1e100.net; s=20251104; t=1776550584; x=1777155384;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fLmLmFSRDAwknWcYloo6OfPzyQDkibFSRyljJRY4yig=;
- b=o9WnlnneCM63gaLdQmUXoRCZqH2PMvpopBCXuFaIAuGJxM9aZh+fp2W87J/9PB57fw
- E2VrtpzyvANLYiuO/hMh4C+0/CxAR59rEo2lwuRW6mds2aWkapD6neVL+ZnGPHgdvrXz
- u2UR77xksldS8+S1+3TL7QDL1V5di6wJ+3hQyLPQWxlEhTBmohAoE6watKrYVMbVDz8v
- 5b2Mzmw0ZSQuiZ7CKQIhtriG6838p2ZNoI7aHcqmz3v+PTrbb5rtkhEhq+qAEQEMBIpM
- I3dremAD82b/DQ6t3Nmw4yT4bMXoahD+csSa3/AGloQputs2QkMHtbSgv4fABeuzC1T9
- qMJw==
+ bh=ePfa/GMngx5939waiNGcXDE+WF6mNQU/sdgDKua9di8=;
+ b=sDPFoZmivBNN9ityzyyGzbsuXYfrrWrd5ouTGwmQwQfGKWNBCsVz38Zp7Kqp8HEUC1
+ JmgTyoWm6aerjViPPkvU35bkfFD+0H05mgsvg4q9JMzuHmnVXY8d6Exn/G0gx/MooMcU
+ fM1ss+oKPHyNz0vbnThrpnsCHIhtU7tkxw8loDtOHESB9XdtqWw78B52MNr7c7rgbkkk
+ hJiz29w6sR3fBld6vjAv+S/xy8uSIz5YK41QCzTzCngowPPfaXvaga18SkueQYMLhKPl
+ PXXdQPO85BqOw5gpyNYb2kudzIjOkWV49U1yppxDftLVyaRADJXZpl+0BAKKyHvS0F3R
+ 9VMQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8ekYivmCqUWQLf4dbXdquBz1Y3+fXjDrSKLOthfjQFjFw5uvbXHl+ceJDrXk7x7Q5t2z+AYnt5CYEW@nongnu.org
-X-Gm-Message-State: AOJu0Ywt6dVpt9qcuYR62paEtXE0jZdXQoMfmeQLeZZNwiYNw2zCS9fi
- qylCEYID6dhrJ+Nd72EFYov53TRx1E4FDxZ49ZxZJoO1py8d+iKW+eFHeASivBazl9udER2Mene
- LuvdsHJI=
-X-Gm-Gg: AeBDietFSkUQCZow4ll7LIJKEehidPqs2w60b0k7OYXBCzy0shuTraYOSaEOAeUKnoH
- 2lkGQYbdWU02ZR5/S0Gk4LyXvffS/LQEgpoYOEc9Wym2y5CWoIvPY39o9pmFqn26maW52m+6ZPJ
- p3crc5CnsdWI+Egl9F9ip0VN74xk3WXBQIIZFZFBk1Y/7gpc2imm4RoQAuxJFJo6s1q60KPcTe8
- qcFkgInb7vxL4UxCtNVeHdIItS+2zJyxHNmQ9SoTtym48TQurTWGYWMzdDQfaI4MdVEQ2BV+lwr
- gPdJbcEGpzLfz0Ex3GGRbPuTlJjcA5rwo45ch2DvpnAo61JAZRbI3nyyr+tts+BPgJVgi1++z6T
- DZR8+gAufSVqwByC2Fdtq+D6uchwliNZU0m429DyOHX4dqoOLWDTdh4M0CEdfxgL6Rdf9F2ciFs
- 4sWRa33W1gwRGbVXBNJbCSApWWAfcDDQyVBPFEyfrHdPWYg3Lfgo7Q7VFRZTQz7rjtr47sjZdC9
- JdP
-X-Received: by 2002:a05:600c:3150:b0:488:9fb7:376d with SMTP id
- 5b1f17b1804b1-488fb792ce4mr121122025e9.28.1776550566299; 
- Sat, 18 Apr 2026 15:16:06 -0700 (PDT)
+ AFNElJ+AUaWgAt9jSB9RUb/zpRcdci9xuVfWPAlEzN+9W/364unS+8wt4/YmlQ3lJ3uzTEZYfVWNVKSCyNU1@nongnu.org
+X-Gm-Message-State: AOJu0YyrHoNi1zQNt+zHosmpePy+2UarnOchPR59vjJWrMp3DB1lmlBL
+ L4A4gcwrN7xvM3dfoeacH1E/LuRn2cb0J0JvKMDBYjNyWTystGAil9UhI3jEN4sZ2yI=
+X-Gm-Gg: AeBDieuhqUG1T2LH0N9ObZU+rT3bIdubVk/To8vnGHgFLeHM/+0URkcp3e5DakEUuIF
+ 5eeuEa9owov5JlO889emw5zK5FmG7zXzbU3DpJxvLVI1vu+LGTS6BldjUQy8K1pUsZEaiqZPz7o
+ HJlrshsUxwcsJl2Mb848WimxvR3x3d7igJYCqRlOCeb6wcZdqeTdAAZ0YSrN51rBSXZMQYS7OK6
+ z2wz1N+wiTPBpxyznzv81FqqarW1w0S5Y44ltCNayK1QZM/Mvu6EyC4B3FBu2434WSESyJd+PpN
+ YNxmndoPAprMhcX8ooyC5L5lDgWBlJpPTajFnXL9j3yRCmt5AL/li35jPOIjOboUAw/yFGTKlzw
+ NaJ/D4UuxAhavtI2IAxvibzzmOItCVePbcwDYVFNkVdbIaH7vVcwMRm1NKELn3Z0o/Dch3U/RVW
+ SFnqNehIeIZCd6kRS2bA1we8SZHYBbdBEc+hcOzu7hFLk91SXVy0AawiQ/g9HdlD/+ztqg77KEN
+ boS
+X-Received: by 2002:a05:600c:5295:b0:486:fbd1:9dc0 with SMTP id
+ 5b1f17b1804b1-488fb780463mr102683585e9.22.1776550583775; 
+ Sat, 18 Apr 2026 15:16:23 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1c96b4sm259981395e9.13.2026.04.18.15.16.03
+ ffacd0b85a97d-43fe4cb1682sm16978866f8f.1.2026.04.18.15.16.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Apr 2026 15:16:04 -0700 (PDT)
-Message-ID: <4db2d1c3-a5ae-444f-9432-bc0f9b085776@linaro.org>
-Date: Sun, 19 Apr 2026 00:16:03 +0200
+ Sat, 18 Apr 2026 15:16:23 -0700 (PDT)
+Message-ID: <0824f794-c89c-489e-a020-1e75f3b00321@linaro.org>
+Date: Sun, 19 Apr 2026 00:16:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/17] hw/core: Update docs for
- get_phys_addr_{attrs_,}debug
+Subject: Re: [PATCH 11/17] target/arm: Rename arm_cpu_get_phys_page()
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
@@ -98,20 +96,20 @@ Cc: qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20260417173105.1648172-1-peter.maydell@linaro.org>
- <20260417173105.1648172-11-peter.maydell@linaro.org>
+ <20260417173105.1648172-12-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260417173105.1648172-11-peter.maydell@linaro.org>
+In-Reply-To: <20260417173105.1648172-12-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,15 +126,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/4/26 19:30, Peter Maydell wrote:
-> Update the documentation for the get_phys_addr_{attrs_,}debug methods
-> and wrapper functions to state that they can handle non-page aligned
-> addresses and will return the corresponding exact physaddr for them.
+> The internal helper function arm_cpu_get_phys_page() is named that
+> way because of its use in the get_phys_page_attrs_debug method.  Now
+> we've renamed the method, rename the helper to match, since it can
+> handle non-page-aligned addresses.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   include/hw/core/cpu.h            | 16 +++++++++++-----
->   include/hw/core/sysemu-cpu-ops.h |  4 ++++
->   2 files changed, 15 insertions(+), 5 deletions(-)
+>   target/arm/ptw.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
