@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1455CF99C9C
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 22:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A37F99C9B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 22:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEEEM-00062X-GN; Sat, 18 Apr 2026 18:33:38 -0400
+	id 1wEEEg-0006Hj-C3; Sat, 18 Apr 2026 18:33:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEEEK-00060D-Iq
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:36 -0400
-Received: from p-east2-cluster5-host3-snip4-5.eps.apple.com ([57.103.79.48]
+ id 1wEEEa-0006CS-NU
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:52 -0400
+Received: from p-east2-cluster3-host6-snip4-1.eps.apple.com ([57.103.77.202]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEEEI-0004nw-ME
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:36 -0400
+ id 1wEEEY-0004ug-Qc
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:52 -0400
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPS id
- E0A6F180022B; Sat, 18 Apr 2026 22:33:29 +0000 (UTC)
+ 2605418000E2; Sat, 18 Apr 2026 22:33:45 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776551613; x=1779143613;
- bh=zl2db1VwfCW29E4LtwT7zz4buZdQP1VZYTXVu1kcs+o=;
+ s=sig1; t=1776551630; x=1779143630;
+ bh=nQndBaUP3p2GZXyo2M9Kbvf88ZtsTTUcXFr9tOFWW7A=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=LehRpElk+OBfcbbyr3S8dQgmy68VCN4bqOijzJ896SZlaSwF1Im/7yP0Jqh6zokHwJh9LP6jZ9B2PSpE5qi7zjmpGufAEoQZKvoe2EoT8vflYH+fpbF4oOs4BcuoDHEmwFEc7uEsGmcVx08/MO8Vey/ryaGc5QWO2L4KNtFlTgOoiyrhOBOU2GZrOSEqWzrf3AoYYljHmzQTy8EvyqjtLGcJM8R1Xu6BWW01Iq0mG9xXK8gXBqd7eZoH+RbTHEoSfby84317u+GnSaoqvFlsxb2vkpNFauQEO84XPE5+55vyjr9Ca2HOezyy8hZ6U1Pgtw/PEzyF4gbB7x+YnbQBFw==
+ b=boKGwfFsCmtfwzZOtiHefW4S+3kgCyrdGwoswCbWFhifOZMl7hzPz10rks2rbuBAZpgs4emZiLnRtji6ok3XIfaZEvpOBcfGRxGawEXWiWue6+iqcY7tKNmhxvqOPY3MjHsbnBS9JPr7YgSdqfaGjxiCxQW0DhqESQmdD1/dLoPx/FsORx6fbU/v3KhDrVH/5L4yI6bDEDJT6Jxfh7e+E2v7cgL3T4m85sYhQZ79jROletPnJVHeIZKAhiMbyY95y52/LinpX0tGA4m3zdcB3CJPIl9e736tedvB/e4HrsdlY29ti+jB+L3pOBMbhnTMo43hGNuaW0R6AQ3lu0LqEw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPSA id
- 3EE3E1800237; Sat, 18 Apr 2026 22:33:27 +0000 (UTC)
+ 9414B1800222; Sat, 18 Apr 2026 22:33:43 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -42,43 +42,44 @@ Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Wei Liu <wei.liu@kernel.org>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH 02/38] whpx: i386: x2apic emulation
-Date: Sun, 19 Apr 2026 00:32:44 +0200
-Message-ID: <20260418223320.51330-3-mohamed@unpredictable.fr>
+Subject: [PATCH 11/38] whpx: i386: IO port fast path cleanup
+Date: Sun, 19 Apr 2026 00:32:53 +0200
+Message-ID: <20260418223320.51330-12-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260418223320.51330-1-mohamed@unpredictable.fr>
 References: <20260418223320.51330-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=f/NFxeyM c=1 sm=1 tr=0 ts=69e406bb
+X-Authority-Info-Out: v=2.4 cv=Bf3VE7t2 c=1 sm=1 tr=0 ts=69e406cb
  cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
  a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=nj4AhdDZwDx412jv8JQA:9
-X-Proofpoint-GUID: psl1O-HCSDin6bUYttGCsivXnWd9zHYw
-X-Proofpoint-ORIG-GUID: psl1O-HCSDin6bUYttGCsivXnWd9zHYw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE4MDIyOCBTYWx0ZWRfX0ZGQhTZAIME8
- BpZ74ZrTEhZXDn0Na9OewkcYKthMze5hphCLB3GMOBpsHSaXT+x2MNUk7U5rGiy2ZcUDFyn4NG9
- fYd4jkmdDhL8ku8e679uUdTUmzQxKruatGSIU7l40c7jxa4YCZdJnAarhZCbm8pgqCagPQL0RUR
- BwrfqRfmxmnKKNcRvKTGB+3grHMyT3Rhh8o24BsFXscnUItC7RD+1WI5OJ11Z2zeCu7gNtRbc6l
- sOJvxeQ6lXpe4dC2S3AKEiSYL+BsNRorcQ2t9Kn7DLhXbOsZWOVFEKZGk/by+fAErL78DcrcaP0
- 3M8N+QcB49InRPV0ozcmFQqFT6JYxUk3nJFR1rBerGQilpWM3+RxVUw9IMUBYk=
+ a=Vrzv6M8N8vcM0KmfSJEA:9
+X-Proofpoint-ORIG-GUID: xHKOkSL623PWbeDDLlJdz86npNkCflNn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE4MDIyOCBTYWx0ZWRfXx9IoADgprsVH
+ DQbxggkxhe8RvTFScnZO3cRh4p7kcWeBuCfhSIvmmmbIBz9sECs2vYy3uG7CM5oS9VB4AReBRmT
+ 4g3zwEFR36PVqYYn7qEciLrMSoEk+G8OANIDZbU+NDjc6ZON/QXW9/ZxySZBGTRNeHx8AGfYh9+
+ pQqHHzeumU+vnlSpgYVlkBkHpg6PxDNurfOH1nc84cT++7ZGFjj+0i/ZqjfPTzvFB5X9MK3mD6x
+ wJIoWQWNuAtBX5PV91gaBSTtcB2YC7tCncnw1bMswrMeC5DHAyREj1IYDwM2mKVfOlzBFy+N3pG
+ aa9zct39J6kPx9fxGsUho/JU97BYD8ZTvsQ1lvupqldUJNUczlx6yaEGTa9rMQ=
+X-Proofpoint-GUID: xHKOkSL623PWbeDDLlJdz86npNkCflNn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-18_06,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0 phishscore=0
- mlxlogscore=800 mlxscore=0 adultscore=0 malwarescore=0 clxscore=1030
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2604180228
-Received-SPF: pass client-ip=57.103.79.48;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 suspectscore=0 phishscore=0 spamscore=0 clxscore=1030
+ adultscore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=872 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604180228
+Received-SPF: pass client-ip=57.103.77.202;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,214 +95,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add x2apic emulation to WHPX for the kernel-irqchip=off case.
+vmport calls synchronise_state within an I/O port read.
+Support that properly.
 
-Unfortunately, it looks like there isn't a workaround available
-for proper behavior of PIC interrupts when kernel-irqchip=on
-for Windows 10. The OS is out of support outside of extended
-security updates so this will not be addressed.
+What was there before worked because of a side effect of
+whpx_get_reg synchronising context if cpu->vcpu_dirty.
 
-The performance boost is quite visible for multicore guests.
+Remove that whpx_get_reg call in whpx_bump_rip too as it's no longer
+needed now.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 134 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 133 insertions(+), 1 deletion(-)
+ target/i386/whpx/whpx-all.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index e56ae2b343..4127440c0c 100644
+index 4d1a151db5..4deeffbcfc 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -1082,6 +1082,8 @@ HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
-     /* Register for MSR and CPUID exits */
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ExtendedVmExits.X64MsrExit = 1;
-+    prop.ExtendedVmExits.X64CpuidExit = 1;
-+
-     if (exceptions != 0) {
-         prop.ExtendedVmExits.ExceptionExit = 1;
-     }
-@@ -1898,6 +1900,18 @@ int whpx_vcpu_run(CPUState *cpu)
-             WHV_REGISTER_NAME reg_names[3];
-             UINT32 reg_count;
-             bool is_known_msr = 0; 
-+            uint64_t val;
-+
-+            if (vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                val = ((uint32_t)vcpu->exit_ctx.MsrAccess.Rax) |
-+                    ((uint64_t)(vcpu->exit_ctx.MsrAccess.Rdx) << 32);
-+            } else {
-+                /*
-+                 * Workaround for [-Werror=maybe-uninitialized]
-+                 * with GCC. Not needed with Clang.
-+                 */
-+                val = 0;
-+            }
- 
-             reg_names[0] = WHvX64RegisterRip;
-             reg_names[1] = WHvX64RegisterRax;
-@@ -1911,7 +1925,47 @@ int whpx_vcpu_run(CPUState *cpu)
-                 && !vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite
-                 && !whpx_irqchip_in_kernel()) {
-                 is_known_msr = 1;
--                reg_values[1].Reg32 = (uint32_t)X86_CPU(cpu)->env.apic_bus_freq;
-+                val = X86_CPU(cpu)->env.apic_bus_freq;
-+            }
-+
-+            if (!whpx_irqchip_in_kernel() &&
-+                vcpu->exit_ctx.MsrAccess.MsrNumber == MSR_IA32_APICBASE) {
-+                is_known_msr = 1;
-+                if (!vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                    /* Read path unreachable on Hyper-V */
-+                    abort();
-+                } else {
-+                    WHV_REGISTER_VALUE reg = {.Reg64 = val};
-+                    int msr_ret = cpu_set_apic_base(X86_CPU(cpu)->apic_state, val);
-+                    if (msr_ret < 0) {
-+                        x86_emul_raise_exception(&X86_CPU(cpu)->env, EXCP0D_GPF, 0);
-+                    }
-+                    whpx_set_reg(cpu, WHvX64RegisterApicBase, reg);
-+                }
-+            }
-+
-+            if (!whpx_irqchip_in_kernel() &&
-+                vcpu->exit_ctx.MsrAccess.MsrNumber >= MSR_APIC_START &&
-+                vcpu->exit_ctx.MsrAccess.MsrNumber <= MSR_APIC_END) {
-+                int index = vcpu->exit_ctx.MsrAccess.MsrNumber - MSR_APIC_START;
-+                int msr_ret;
-+                is_known_msr = 1;
-+                if (!vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                    bql_lock();
-+                    msr_ret = apic_msr_read(X86_CPU(cpu)->apic_state, index, &val);
-+                    bql_unlock();
-+                    reg_values[1].Reg64 = val;
-+                    if (msr_ret < 0) {
-+                        x86_emul_raise_exception(&X86_CPU(cpu)->env, EXCP0D_GPF, 0);
-+                    }
-+                } else {
-+                    bql_lock();
-+                    msr_ret = apic_msr_write(X86_CPU(cpu)->apic_state, index, val);
-+                    bql_unlock();
-+                    if (msr_ret < 0) {
-+                        x86_emul_raise_exception(&X86_CPU(cpu)->env, EXCP0D_GPF, 0);
-+                    }
-+                }
-             }
-             /*
-              * For all unsupported MSR access we:
-@@ -1921,6 +1975,11 @@ int whpx_vcpu_run(CPUState *cpu)
-             reg_count = vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite ?
-                         1 : 3;
- 
-+            if (!vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite) {
-+                reg_values[1].Reg32 = (uint32_t)val;
-+                reg_values[2].Reg32 = (uint32_t)(val >> 32);
-+            }
-+
-             if (!is_known_msr) {
-                 trace_whpx_unsupported_msr_access(vcpu->exit_ctx.MsrAccess.MsrNumber,
-                     vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
-@@ -1939,6 +1998,47 @@ int whpx_vcpu_run(CPUState *cpu)
-             ret = 0;
-             break;
+@@ -862,7 +862,6 @@ static void handle_io(CPUState *env, uint16_t port, void *buffer,
+ static void whpx_bump_rip(CPUState *cpu, WHV_RUN_VP_EXIT_CONTEXT *exit_ctx)
+ {
+     WHV_REGISTER_VALUE reg;
+-    whpx_get_reg(cpu, WHvX64RegisterRip, &reg);
+     reg.Reg64 = exit_ctx->VpContext.Rip + exit_ctx->VpContext.InstructionLength;
+     whpx_set_reg(cpu, WHvX64RegisterRip, reg);
+ }
+@@ -890,13 +889,23 @@ static int whpx_handle_portio(CPUState *cpu,
+         } else {
+             reg.Reg64 = (uint64_t)val;
          }
-+        case WHvRunVpExitReasonX64Cpuid: {
-+            WHV_REGISTER_VALUE reg_values[5] = {0};
-+            WHV_REGISTER_NAME reg_names[5];
-+            UINT32 reg_count = 5;
-+            X86CPU *x86_cpu = X86_CPU(cpu);
-+            CPUX86State *env = &x86_cpu->env;
-+
-+            reg_names[0] = WHvX64RegisterRip;
-+            reg_names[1] = WHvX64RegisterRax;
-+            reg_names[2] = WHvX64RegisterRcx;
-+            reg_names[3] = WHvX64RegisterRdx;
-+            reg_names[4] = WHvX64RegisterRbx;
-+
-+            reg_values[0].Reg64 =
-+                vcpu->exit_ctx.VpContext.Rip +
-+                vcpu->exit_ctx.VpContext.InstructionLength;
-+
-+            reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-+            reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-+            reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-+            reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-+
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 1) {
-+                if (cpu_has_x2apic_feature(env)) {
-+                    reg_values[2].Reg64 |= CPUID_EXT_X2APIC;
-+                }
-+            }
-+
-+            hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
-+                whpx->partition,
-+                cpu->cpu_index,
-+                reg_names, reg_count,
-+                reg_values);
-+
-+            if (FAILED(hr)) {
-+                error_report("WHPX: Failed to set CpuidAccess state "
-+                             " registers, hr=%08lx", hr);
-+            }
-+            ret = 0;
-+            break;
+-        whpx_bump_rip(cpu, exit_ctx);
+-        whpx_set_reg(cpu, WHvX64RegisterRax, reg);
++        /* vmport calls cpu_synchronize_state on an I/O port read */
++        if (!cpu->vcpu_dirty) {
++            whpx_bump_rip(cpu, exit_ctx);
++            whpx_set_reg(cpu, WHvX64RegisterRax, reg);
++        } else {
++            env->eip = exit_ctx->VpContext.Rip + exit_ctx->VpContext.InstructionLength;
++            env->regs[R_EAX] = reg.Reg64;
 +        }
-         case WHvRunVpExitReasonException:
-             whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
- 
-@@ -2136,6 +2236,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_PROCESSOR_FEATURES_BANKS processor_features;
-     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
-     bool is_legacy_os = false;
-+    UINT32 cpuidExitList[] = {1};
- 
-     whpx = &whpx_global;
- 
-@@ -2354,6 +2455,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     /* Register for MSR and CPUID exits */
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ExtendedVmExits.X64MsrExit = 1;
-+    prop.ExtendedVmExits.X64CpuidExit = 1;
- 
-     hr = whp_dispatch.WHvSetPartitionProperty(
-             whpx->partition,
-@@ -2366,6 +2468,36 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
+         return 0;
+     } else if (!ctx->AccessInfo.StringOp && ctx->AccessInfo.IsWrite) {
+         RAX(env) = ctx->Rax;
+         handle_io(cpu, ctx->PortNumber, &RAX(env), 1, ctx->AccessInfo.AccessSize, 1);
+-        whpx_bump_rip(cpu, exit_ctx);
++        if (!cpu->vcpu_dirty) {
++            whpx_bump_rip(cpu, exit_ctx);
++        } else {
++            env->eip = exit_ctx->VpContext.Rip + exit_ctx->VpContext.InstructionLength;
++        }
+         return 0;
      }
  
-+    memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-+    prop.X64MsrExitBitmap.UnhandledMsrs = 1;
-+    if (!whpx_irqchip_in_kernel()) {
-+        prop.X64MsrExitBitmap.ApicBaseMsrWrite = 1;
-+    }
-+
-+    hr = whp_dispatch.WHvSetPartitionProperty(
-+            whpx->partition,
-+            WHvPartitionPropertyCodeX64MsrExitBitmap,
-+            &prop,
-+            sizeof(WHV_PARTITION_PROPERTY));
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set MSR exit bitmap, hr=%08lx", hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-+    hr = whp_dispatch.WHvSetPartitionProperty(
-+        whpx->partition,
-+        WHvPartitionPropertyCodeCpuidExitList,
-+        cpuidExitList,
-+        RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set partition CpuidExitList hr=%08lx",
-+                     hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-     /*
-      * We do not want to intercept any exceptions from the guest,
-      * until we actually start debugging with gdb.
 -- 
 2.50.1 (Apple Git-155)
 
