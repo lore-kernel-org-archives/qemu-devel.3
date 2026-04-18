@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE995F99C9B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 22:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C041F99C98
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 22:34:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEEEP-00064L-0T; Sat, 18 Apr 2026 18:33:41 -0400
+	id 1wEEEQ-00065Z-G2; Sat, 18 Apr 2026 18:33:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEEEN-00063I-21
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:39 -0400
-Received: from p-east2-cluster5-host5-snip4-5.eps.apple.com ([57.103.79.88]
+ id 1wEEEO-00064K-Fh
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:40 -0400
+Received: from p-east2-cluster5-host7-snip4-2.eps.apple.com ([57.103.79.25]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEEEL-0004ou-He
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:38 -0400
+ id 1wEEEN-0004pK-0b
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:33:40 -0400
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPS id
- 871A31800226; Sat, 18 Apr 2026 22:33:33 +0000 (UTC)
+ 406171800219; Sat, 18 Apr 2026 22:33:35 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776551616; x=1779143616;
- bh=LeCfULzXVq8eMeXoD4HoazACVFGuCL5m06fQgObX99k=;
+ s=sig1; t=1776551618; x=1779143618;
+ bh=dugTy6Mycl0V8PO55M7zjkrIKW6irE2gkRf+Eg5CDxE=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=YecgrCAjwcpFWLshUV7a3YCFOs3Zu2gBxRuS6mxp2GVm/oLA2qWGCFw8Qe9zH+MvczPsvAycKYwIWnLcvErPGjoK2m7eA1UiYNSlq0ls8gST9NwUdoNYMLHywBWW2uFiB+sloyrrm0mBHDmf7XL0G8BNiO5dbhgUk1g/XiaPtJSBXp51uSGctjK4AlJbUatbFol1nU4XFwxfmcj6OOQjdexKDWssVOA79bBlHkcjksv3czssPrgTLYvBnRcS80lsAJnnc/SqicDxtHKlzNO8hBTqRftdEZJuKNjbPZQa0dMDP/AH4RNt/H3+sIwROfkqgj3zm0kAuefaPAtC0KvKZA==
+ b=Ov32bxAUpLzISBo7yWBHfr16OM4Xd/BfWYX2av65YqIbEjew8OKx4opkrseqUkgw/6r6a8YPFUBVuU3JXP3GE3VfXnOojRHqw0gkpZpJpp50anWmK5Ys/lY49JXH+XYvUw73cof22s8uFa+Sci7UoV1hrq/TwzumdT3Eb5wgEtlt0W3WbsL7eq5IRk3FQrcYNLMgyglKJNfZ9993fo2k/TL0H6ql1ga38BrL+NNXZSBqk1QItT9CXpSsG/UF5jcMynIGa2grbTU8/TkMrkrobTsqiPbdJBZzzgMQDxcCiqnIqFA7xou8bCHlDYXUIbFjnCSOQ9NdAmAuPXJH761BBQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPSA id
- E37B818000A8; Sat, 18 Apr 2026 22:33:30 +0000 (UTC)
+ C466218000DE; Sat, 18 Apr 2026 22:33:32 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -42,44 +42,44 @@ Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Wei Liu <wei.liu@kernel.org>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH 04/38] whpx: i386: disable TbFlushHypercalls for emulated LAPIC
-Date: Sun, 19 Apr 2026 00:32:46 +0200
-Message-ID: <20260418223320.51330-5-mohamed@unpredictable.fr>
+Subject: [PATCH 05/38] whpx: i386: enable x2apic by default for user-mode LAPIC
+Date: Sun, 19 Apr 2026 00:32:47 +0200
+Message-ID: <20260418223320.51330-6-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260418223320.51330-1-mohamed@unpredictable.fr>
 References: <20260418223320.51330-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=QIRlhwLL c=1 sm=1 tr=0 ts=69e406bf
+X-Proofpoint-ORIG-GUID: QnGnmFB-uRiUcWJwu5_j8JDS27RZUMr9
+X-Authority-Info-Out: v=2.4 cv=NKzYOk6g c=1 sm=1 tr=0 ts=69e406c0
  cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
  a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Rm0zj2O9plGGl-KjdfMA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE4MDIyOCBTYWx0ZWRfX4Wpczo0CCtF5
- dZCi+5/wJmCDai17CoPMp7QvFWL7lVuxEgQhE1I1VKDx5Bhng2vyGzl9TVffNKiur5Hyth4b8Wn
- Xam6NnvgNw7X+crhNG3sFTP+w+BGLdZ6+ZjP7hAnQ4QQXdZQGwNi7zmcnyfXZx6I8x3CRXHWyKz
- RdyFvwZod9EhE/2JkMkx3zP01MMI/kyv3d7+3bnTbcB4JpRDl1lNTm7L8r47uB6uHC+WArRtzMD
- MG8nQMonvMAFs56dmhyoOH8gxZEq9xpHh0mel37yjvBHxmmbMKarJAPyxCrnJTM/hU2oJygK7X4
- g6iv5yUj5qo0lVYOuKlPPDkSr3X1W1D96zQ1pouSsTpVugYWHP9SCD/nzFqp18=
-X-Proofpoint-ORIG-GUID: Q3CceVXSqfdkQqn1sTKjbfIyOQJBJDLh
-X-Proofpoint-GUID: Q3CceVXSqfdkQqn1sTKjbfIyOQJBJDLh
+ a=uAk9FrDoCeqUxh5yT_MA:9
+X-Proofpoint-GUID: QnGnmFB-uRiUcWJwu5_j8JDS27RZUMr9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE4MDIyOCBTYWx0ZWRfX4T2t42ZDMmSo
+ NNbMsGx5z0mO9sv2ImYT4AH/+YXXoBSv6n2gWQ2MI1S84fzJObe2h6R6z0tp5Vzmgh8MiqhKaur
+ SNQOFbAFeLdQRrN7dE1+nGt2U4I7ohnsvFjwqQSHg5zG+xcE0zLru3Ep1/FigovaTPjtrDHjpF0
+ kK2A0Is6bhRqHo/khNaW6a69Y5E6OiMgRFZwvbyBhy6UmjTvJCWvMdPFZJB2JYO537C1b4Tc+vJ
+ 9vqNNm0wVc5r7tE2xi0ae1RLPZ8ajv9hQXsELseR8cPi62BALChTR/+0g+QfhURBxpl2SkrruRi
+ 0/iBFEy3uvY/oG03Vs3hzwombQok7FUgdhkuWGf39raShxqf9k/TMoC8prBTOQ=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-18_06,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- mlxlogscore=777 spamscore=0 malwarescore=0
- adultscore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1030 phishscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604180228
-Received-SPF: pass client-ip=57.103.79.88;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 mlxlogscore=999 clxscore=1030 spamscore=0 mlxscore=0
+ classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2601150000 definitions=main-2604180228
+Received-SPF: pass client-ip=57.103.79.25;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,44 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AccessHypercallRegs was present twice so clean that up.
-
-Remove TbFlushHypercalls (and its extended Gva range sub-feature)
-from the user-mode LAPIC case as it behaves oddly there.
-
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ target/i386/whpx/whpx-all.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 2d527b90dd..0908dfd134 100644
+index 0908dfd134..66f263558f 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2489,10 +2489,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
-     synthetic_features.Bank0.AccessHypercallRegs = 1;
-     synthetic_features.Bank0.AccessFrequencyRegs = 1;
--    synthetic_features.Bank0.EnableExtendedGvaRangesForFlushVirtualAddressList = 1;
-     synthetic_features.Bank0.AccessVpIndex = 1;
--    synthetic_features.Bank0.AccessHypercallRegs = 1;
--    synthetic_features.Bank0.TbFlushHypercalls = 1;
+@@ -2281,11 +2281,18 @@ error:
+     return ret;
+ }
  
-     if (whpx_irqchip_in_kernel()) {
-         synthetic_features.Bank0.AccessSynicRegs = 1;
-@@ -2500,6 +2497,12 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         synthetic_features.Bank0.AccessIntrCtrlRegs = 1;
-         synthetic_features.Bank0.SyntheticClusterIpi = 1;
-         synthetic_features.Bank0.DirectSyntheticTimers = 1;
-+        /*
-+         * These technically work without the Hyper-V LAPIC
-+         * but behave oddly for multi-core VMs.
-+         */
-+        synthetic_features.Bank0.TbFlushHypercalls = 1;
-+        synthetic_features.Bank0.EnableExtendedGvaRangesForFlushVirtualAddressList = 1;
-     }
++static PropValue whpx_default_props[] = {
++    { "x2apic", "on" },
++    { NULL, NULL },
++};
++
++
+ void whpx_cpu_instance_init(CPUState *cs)
+ {
+     X86CPU *cpu = X86_CPU(cs);
  
-     if (is_modern_os && whpx->hyperv_enlightenments_allowed) {
+     host_cpu_instance_init(cpu);
++    x86_cpu_apply_props(cpu, whpx_default_props);
+ }
+ 
+ /*
 -- 
 2.50.1 (Apple Git-155)
 
