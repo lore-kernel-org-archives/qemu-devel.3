@@ -4,55 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25BCF99C89
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 17:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AFFF99C88
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 17:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wE9Oi-0001oe-EY; Sat, 18 Apr 2026 13:24:00 -0400
+	id 1wE9kn-00057n-Ei; Sat, 18 Apr 2026 13:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wE9Og-0001oS-93
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 13:23:58 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wE9km-00057e-5l
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 13:46:48 -0400
+Received: from p-west2-cluster5-host8-snip4-10.eps.apple.com ([57.103.71.83]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wE9Oe-0002bD-FH
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 13:23:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=3t+fy2EL4xXM00RrefsohQy4j3KLnHQ9yjTAw65Ve0M=; b=dORqS86PvUL2c1df
- 3xXw0/3E54Lce2zmSsRV0sZke4Q+cycnZQcMloQibgnDYrYczE0yXgQPQhsWIRERjEN/UtQlXEIie
- UN+RnqRNi5w/nfBNUtWGbsUM9wv79rax1Lcmgobk2CtNCg4j17Cc+k0ZTd6/sdFlqwFIkxM0X0NKf
- hrtyWrIM2lAXpSroGo/zGVw8FSWRDpx5OaEhcs3Zp+7G20vhmMX3r+35LQnREX/QSJR7v4tgvcyur
- 5NXyrHEcA9OxNyKFps4O0weSHjMkPtKgI0JcliyJvBHY+zbIcoS9ZIaAnwf7WbsN7K6P1VuhLv39X
- F4m+ixf5ch0eJas2Fw==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wE9OU-000000099C1-3ZlI;
- Sat, 18 Apr 2026 17:23:46 +0000
-Date: Sat, 18 Apr 2026 17:23:46 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: AlanoSong@163.com
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
-Subject: Re: [PATCH] monitor: Add `clear` command
-Message-ID: <aeO-IqKqBwtKfW8P@gallifrey>
-References: <20260418133927.43012-1-AlanoSong@163.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20260418133927.43012-1-AlanoSong@163.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
-X-Uptime: 17:23:23 up 36 days, 18:36,  2 users,  load average: 0.17, 0.05, 0.01
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wE9kj-00008n-Rs
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 13:46:47 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-20-percent-0 (Postfix) with ESMTPS id
+ 3178A1800155; Sat, 18 Apr 2026 17:46:39 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776534401; x=1779126401;
+ bh=/s6rV3OPbpGqCO2vJgyxdI+AGTAIfaIifIdj6tNLlBA=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=eVHuX7c1jjLF2I6WStM3BjC8r34b0pDww79PPaOyfT9FcSPjAWiFmw7kYTPkfSLGfwbCWSdQt5uzr+ZAM7vK+2jFp8TQCQy+BsFkzdye7iHQciwjkMHNKdrFr3QZM+bfR+rcQ/0aUzzz70S4Z9wAqCcRCuBqqP6QRenAvp/NBtxutLfQJEziyyv981ek4uVJ9C1a7B6R5+sEtf77WDpnaF6Vv7CxZlZjiTFvJCcrRRsOC8kfiEN/doUeZB68iDSdIbwODZ4W1nRbRIEYAtmKhPXDY0whG1yT4Nf/9Uz3R/NBURM8sS09SPndnHQGO/dd3ZDfrOIUZR3AiMbc0KsGlQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-20-percent-0 (Postfix) with ESMTPSA id
+ 34E1D18000B5; Sat, 18 Apr 2026 17:46:37 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH 30/34] target/i386: add de/compaction to xsave_helper
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260417105618.3621-31-magnuskulke@linux.microsoft.com>
+Date: Sat, 18 Apr 2026 19:46:25 +0200
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <liuwe@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Alex Williamson <alex@shazbot.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <83C168E7-02D5-4CD9-9A27-545A88942171@unpredictable.fr>
+References: <20260417105618.3621-1-magnuskulke@linux.microsoft.com>
+ <20260417105618.3621-31-magnuskulke@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-ORIG-GUID: H3ykXvsMWfb2zIV-QT4XRhlHmDs3jKSP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE4MDE3NyBTYWx0ZWRfXxyvn7KBVLGfq
+ IIPtmNQneJQF3S70UZICiqeiUKCUy3qoz8kEQ/Jn4VLhByyMdLKnrzAi0aJk0Y3W4Vag9/ib5Cj
+ 7TFonesYiS6cmCSEeXTtWrtnnSa5R+Biux4q5EpAP5ZYj2Ei2O6WW0+lU2toso8N8cGHoK/zmGM
+ kAmO/Mbos1WSQsVQVkoQQJ2b7hlJiWUX9iKtvsrSIeYVdent9VToShqLAS8M4zCBtbBtcobe971
+ IzkS5n26oSW5DpJlu334WwCcy6OhAWiBJowYE/5h1PHU9VbU+cvNF9IV5Nuq6se6UUTJTfI1R0I
+ dDaaaKSyNFkLja/rsKxxkg/OhDJf0XVHTGfHF3EK8SoOpi7ZQI5HNFaejVoWrY=
+X-Authority-Info-Out: v=2.4 cv=QPllhwLL c=1 sm=1 tr=0 ts=69e3c380
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=DZ2UKWXZgWu71k7g0sQA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: H3ykXvsMWfb2zIV-QT4XRhlHmDs3jKSP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-18_05,2026-04-17_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0 adultscore=0
+ suspectscore=0 phishscore=0 clxscore=1030 mlxlogscore=999 mlxscore=0
+ classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2601150000 definitions=main-2604180177
+Received-SPF: pass client-ip=57.103.71.83;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,85 +103,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* AlanoSong@163.com (AlanoSong@163.com) wrote:
-> The monitor screen can be cluttered after executing commands
-> like `info qtree`. It is useful to have a command to clear
-> current screen, just like linux `clear` command do.
-> 
-> This patch has been tested under monitors using stdio, vc,
-> tcp socket, unix socket and serial interfaces.
-> 
-> Signed-off-by: Alano Song <AlanoSong@163.com>
 
-Does typing ctrl-l not do it for you in your terminal?
 
-Dave
+> On 17. Apr 2026, at 12:56, Magnus Kulke =
+<magnuskulke@linux.microsoft.com> wrote:
+>=20
+> HyperV use XSAVES which stores extended state in compacted format in
+> which components are packed contiguously, while QEMU's internal XSAVE
+> representation use the standard format in which each component is =
+places
+> at a fixed offset. Hence for this purpose we add two conversion fn's =
+to
+> the xsave helper to roundtrip XSAVE state in a migration.
+>=20
+> - decompact_xsave_area(): converts compacted format to standard.
+>  XSTATE_BV is masked to host XCR0 since IA32_XSS is managed
+>  by the hypervisor.
+>=20
+> - compact_xsave_area(): converts standard format back to compacted
+>  format. XCOMP_BV is set from the host's CPUID 0xD.0 rather than the
+>  guest's XCR0, as this is what the hypervisor expects.
+>=20
+> Both functions use the host's CPUID leaf 0xD subleaves to determine =
+component
+> sizes, offsets, and alignment requirements.
+>=20
+> There are situations when the host advertises features that we want to
+> disable for the guest, e.g. AMX TILE. In this case we cannot rely on =
+the
+> host's xcr0, but instead we use the feature mask that has been =
+generated
+> in as part of the CPU realization process (x86_cpu_expand_features).
+>=20
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-> ---
->  hmp-commands.hx       | 14 ++++++++++++++
->  include/monitor/hmp.h |  1 +
->  monitor/hmp-cmds.c    |  5 +++++
->  3 files changed, 20 insertions(+)
-> 
-> diff --git a/hmp-commands.hx b/hmp-commands.hx
-> index 5cc4788f12..95f9166732 100644
-> --- a/hmp-commands.hx
-> +++ b/hmp-commands.hx
-> @@ -20,6 +20,20 @@ SRST
->    Show the help for all commands or just for command *cmd*.
->  ERST
->  
-> +    {
-> +        .name       = "clear",
-> +        .args_type  = "",
-> +        .params     = "",
-> +        .help       = "clear the monitor screen",
-> +        .cmd        = hmp_clear,
-> +        .flags      = "p",
-> +    },
-> +
-> +SRST
-> +``clear``
-> +  Clear the monitor screen.
-> +ERST
-> +
->      {
->          .name       = "commit",
->          .args_type  = "device:B",
-> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-> index e222bea60c..9b66458d21 100644
-> --- a/include/monitor/hmp.h
-> +++ b/include/monitor/hmp.h
-> @@ -165,6 +165,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict);
->  void hmp_trace_file(Monitor *mon, const QDict *qdict);
->  void hmp_info_trace_events(Monitor *mon, const QDict *qdict);
->  void hmp_help(Monitor *mon, const QDict *qdict);
-> +void hmp_clear(Monitor *mon, const QDict *qdict);
->  void hmp_info_help(Monitor *mon, const QDict *qdict);
->  void hmp_info_sync_profile(Monitor *mon, const QDict *qdict);
->  void hmp_info_history(Monitor *mon, const QDict *qdict);
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index bc26b39d70..3e9485478e 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -218,6 +218,11 @@ void hmp_help(Monitor *mon, const QDict *qdict)
->      hmp_help_cmd(mon, qdict_get_try_str(qdict, "name"));
->  }
->  
-> +void hmp_clear(Monitor *mon, const QDict *qdict)
-> +{
-> +    monitor_printf(mon, "\x1b[3J\x1b[2J\x1b[H");
-> +}
-> +
->  void hmp_info_help(Monitor *mon, const QDict *qdict)
->  {
->      hmp_help_cmd(mon, "info");
-> -- 
-> 2.43.0
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Hi,
+
+This patch has a tiny problem.
+
+#if defined(CONFIG_KVM) || defined(CONFIG_HVF)
+void *xsave_buf;
+uint32_t xsave_buf_len;
+#endif
+
+With the "#if defined(CONFIG_KVM) || defined(CONFIG_HVF)=E2=80=9D =
+removed,
+that fixes a TCG only QEMU build.
+
+Was also able to test that this works as expected on WHPX.
+
 
