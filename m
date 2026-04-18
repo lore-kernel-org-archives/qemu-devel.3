@@ -4,92 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B26AF99C99
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 21:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5AAF99C95
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Apr 2026 22:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEDd9-00057b-Oq; Sat, 18 Apr 2026 17:55:11 -0400
+	id 1wEDwN-0007Hv-U8; Sat, 18 Apr 2026 18:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDd9-00056x-1p
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 17:55:11 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDwK-0007Gc-Oe
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:15:00 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDd7-0002g9-E3
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 17:55:10 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so1188789f8f.0
- for <qemu-devel@nongnu.org>; Sat, 18 Apr 2026 14:55:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEDwH-0007Zd-Kw
+ for qemu-devel@nongnu.org; Sat, 18 Apr 2026 18:15:00 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4852a9c6309so15652125e9.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Apr 2026 15:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776549307; x=1777154107; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776550495; x=1777155295; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CitAt6Yd6ncYPjilQcCdwPizq12scG28s+eo8cocTvY=;
- b=S5yWzYwhTyfk+YhaeZ0ZPcxplGSVkfm1+X0dog4wGQQUqfEw0KC3KKqYVFbl2q3rnO
- rliVMcL1bJnPkDzDTbonUJRBUP/z7KN+FUoFqiUmRZ+9DNEyZj7gTrHg1MYvuGnDPHS9
- YlU0cee7svmovz7W5PeeQDepcpa4EeT5VgZVYczJcbH+OKFQyzWF7RCIba29G3Ji/ngC
- mpH97t9m1UL1yq7yrYHxrDTyEYuPbKARrQ16XLvImIEpOG6ygF9P+vHJT3X5fyE0LHuo
- FA3T7xxXFG9trEscTb/GqHYA88GiZNIKJAFFijNtNN+TduY3BCM6eKM0Bu6q2W4PJOgw
- c7AA==
+ bh=J4HtccAD2MiFIn69rKjBApCAFk1yVNfdQzHBiQJrzDA=;
+ b=Mre8Ws9o/MYtGtw4cXcIBKbxe9QimVHgnHGxKwCM484xdS+Sq28ITLLzgOa5S4l1Lf
+ 7domqiNHwG5pJxUL8gwHlzlIyz4Hb8dtuID1C06YWcs+Y4gCG80RuVrjhoWTUR/KV6iT
+ k6fptm6GR2AVV7r+rj0arweAByZG2OOVOmn0v6tEr50Kcqj/IDAvMNRwJO+Q5S543Hdd
+ 2dxRgVL6dfVLDM+DkwQDFFHzkNRo9w9uPl6cR4e5DShgJeNcgEh0sUtImaHz3Kuflxi1
+ QSfbNnYkq/U9x2kRjrsY1EmtgI3k5y4UnQCdDretW+5zf3uOlrohqr5q+LAoUimPCg9Z
+ sPXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776549307; x=1777154107;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776550495; x=1777155295;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CitAt6Yd6ncYPjilQcCdwPizq12scG28s+eo8cocTvY=;
- b=IciAxC8sQ0e8uDr3W4yyDiSlZrS3YJoVSlfsNOfiW+qUIUxc7QNG0opcqN8WmCZC0V
- 0JO9pmV7H9ScUHpwgjbyInO4RGnDKe8bxon9HZHbYWvEDzaKpPayHxgFB5R1X9lFmeye
- SvocBw6u2dUHrX54NMmk9z4OfDz3+MNpHs7sp74k9Ybb34pr80C1zxMrhfavoSbzMmrw
- Ph5L6ZAKLyesMrrwzqOGM1BFXB+ybDQLBJlbJGg3XycvYWQfYOSSqLOisfAY73thxIZh
- hath5KiVtvInjNGVelOMe5rXbf2q1VrXBAate1rCuul+U8GpqTkP7kM2vW99bOcbwHWq
- Ufsg==
-X-Gm-Message-State: AOJu0YyQp9gq4pXvR64yhSaCKRnSevH7H1QCbr2Ok228iaOovUDI3XoD
- B9EqifdtCp+hv9zrYI6+BKovqANn+XvjCNmM3YUSXaUZLo1uFn83CRD70UpMccWbIXxBOi9xbNg
- Dknk+db0=
-X-Gm-Gg: AeBDieutiL8f7eV9/saIwzC0LWIw7/u1sxcboWuP01JYGgAweB40YsupQogxEO+Vtkq
- o3ophW87A/0wcURexECOHgYJkny2F92bwDdYt+r8j7uZ2+CwPUlsM5AnjrObFx+zEfwxok2R7yN
- Q7Bel8qULTDV0Y4HzLjpE496ubcEdE/V2dDdR3Jl+1MS/sTDPXfvRu2MjdGRhcoB6snjT7C0n+n
- LdIMW3zKCHx/hsFDxBDI8RzaiT4aKOKkRlAGDLY8mlPdgctc3fdNUrZhSl9LC0Ffhv2JpKAZOta
- bQObTn24IX3NFv54BdDFxoBSBfyHmtkOFcUV6+Og3ZHvWIc0WCMJxC/jD815fde2OPqklX0eKM6
- vxx36i28MIfX4EKyShytP/Zq0AL6l4w0fHjNDU0xlSeeaCwGK6q0xyy8BJXbWNqPpklBVifV8/U
- rRW1sgCAR7D3WP8yIOZMei6dKBN8CfvGYLn0QDdIJhvDGjWf18sDTbb2CBIf4nn+yHWk8zqW1bl
- jnJ
-X-Received: by 2002:a05:6000:290c:b0:43d:772d:2b61 with SMTP id
- ffacd0b85a97d-43fe4073831mr11559954f8f.15.1776549306775; 
- Sat, 18 Apr 2026 14:55:06 -0700 (PDT)
+ bh=J4HtccAD2MiFIn69rKjBApCAFk1yVNfdQzHBiQJrzDA=;
+ b=YjXtUC94oA4sKj/JIvHaUpXbX43LZ5M6kJw0ArFqBGfBYYXo/bcPhS7XocpuiytB4z
+ nL3Tt5EahXdneSzgFTqmiIbtBqFujxq5VwZUPEAwczSoo6fOtW2GrBwAxUDu6aaYVg8Y
+ eIIy1Vx2w6ey/6TGPwWkGnMdo3V7ZlrbDyE80GESjU9VJFaerBQDCM6SeZn421SbbqQ/
+ Q+O7aZHTKWXSutUmzo8XCAOAE4N6j1Hc1j3pGUVXHJqoJv95C//MemOuKsmlJ4luwrn4
+ cdhpKGAmRcqLJcGIRbK1RCvXPlGCzK5BpEjTqakMctUQh/oJ5Cfu/AeZSd+gWyeuUZqu
+ B5YQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8iV3g4oiMqkyPUGmJ+ndOYWEw9U0hzPcTXm7UNzpLHpM176Ik1w+uZ13zo/uOv5TnIaDjfQlPKQxGI@nongnu.org
+X-Gm-Message-State: AOJu0YzJKXdap+QfPX6xALIEzzk5i34NOzOOYaYUgZjPJadJCzaEV0qq
+ /Np29sLFeJDuO95DAFrApgLbYL3E1sOOH6g/Gtqqy5zK0GvAHN6u9GA+GEDX7G+xYw0=
+X-Gm-Gg: AeBDievXHNG5PAdtjJrCcY1h1e/3Z9y/2c3yGBLV3Zkr+k7TpTYI1KBHm7704oTNEop
+ nk17AlbjezWrR8XzWL6/g+w5jAct4GaL4WPk8s6lWJr65feSAV/GdxGkRzoSDKHkZwI3SNQw0N8
+ 3xnQ2HpOXfknPEbY/jrcTOGlyj1V2BHgv/iX5LOOAregMlTKontutFqSm6a3HsOvR6HltPods+z
+ i8mgKr9w8Vj9smwSZJVSyAXDF89RLa9P9+M/HmejkW+5PN/YitI+o1c6JwzYOTsSef/JSE5QY0R
+ BK2GXgo+uWz5g74Ga3x4SwKXExzHxCzKxpvmrpeWXHywGr2Kieutne991j6t08Zo4ZWSKUj1Rkn
+ 5m5F2xxJe6hKGlHK1Qw0v5mNfqo5I6VQz7dwaq29bP3daDnHwCQmLr1xPtUjjDbKNoUlkMGoxPY
+ 53pLsCNODmBJw20Nrxqd+1eg4slgjsSrWjrve3MMreRK+sQn/DfK4g1GRRMooFw3qKoHqjITmsH
+ pzm
+X-Received: by 2002:a05:600c:3b97:b0:488:af7f:7707 with SMTP id
+ 5b1f17b1804b1-488fb769dbfmr123970325e9.18.1776550495535; 
+ Sat, 18 Apr 2026 15:14:55 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a341sm17748309f8f.24.2026.04.18.14.55.05
+ 5b1f17b1804b1-488fb7b2716sm51884555e9.30.2026.04.18.15.14.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Apr 2026 14:55:06 -0700 (PDT)
-Message-ID: <15fb97ae-51c7-49ae-97ef-35a387d02c44@linaro.org>
-Date: Sat, 18 Apr 2026 23:55:04 +0200
+ Sat, 18 Apr 2026 15:14:54 -0700 (PDT)
+Message-ID: <00c97328-8011-4ed0-a96f-7dfef8f25295@linaro.org>
+Date: Sun, 19 Apr 2026 00:14:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/4] target/mips: Replace cpu_ld/st_mmuidx_ra() calls
- in LD/ST Multiple
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>, Aurelien Jarno
- <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20260417035734.32334-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 08/17] target: Rename get_phys_page_debug to
+ get_phys_addr_debug
 Content-Language: en-US
-In-Reply-To: <20260417035734.32334-1-philmd@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Peter Xu <peterx@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20260417173105.1648172-1-peter.maydell@linaro.org>
+ <20260417173105.1648172-9-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260417173105.1648172-9-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,13 +126,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/4/26 05:57, Philippe Mathieu-Daudé wrote:
+On 17/4/26 19:30, Peter Maydell wrote:
+> Now that we have ensured that all implementations of the get_phys_page_debug
+> method handle a non-page-aligned input and return the corresponding
+> non-page-aligned output, the name of the method is somewhat misleading.
+> Rename it to get_phys_addr_debug.
+> 
+> This commit was produced with the commands
+> 
+>   sed -i -e 's/_cpu_get_phys_page_debug/_cpu_get_phys_addr_debug/g;s/\<get_phys_page_debug\>/get_phys_addr_debug/g' $(git grep -l get_phys_page_debug)
+>   sed -i -e 's/_cpu_get_phys_page_attrs_debug/_cpu_get_phys_addr_attrs_debug/g;s/\<get_phys_page_attrs_debug\>/get_phys_addr_attrs_debug/g' $(git grep -l get_phys_page_attrs_debug)
+> 
+> which catches all references to the method name itself plus
+> the functions which each target uses as the method implementation,
+> but (deliberately) not the cpu_phys_get_page_debug() and
+> cpu_phys_get_page_attrs_debug() wrapper functions or their callers.
+> (We'll deal with those in the next commit.)
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/core/cpu-system.c             |  6 +++---
+>   include/hw/core/sysemu-cpu-ops.h | 10 +++++-----
+>   target/alpha/cpu.c               |  2 +-
+>   target/alpha/cpu.h               |  2 +-
+>   target/alpha/helper.c            |  2 +-
+>   target/arm/cpu.c                 |  2 +-
+>   target/arm/cpu.h                 |  2 +-
+>   target/arm/ptw.c                 |  2 +-
+>   target/avr/cpu.c                 |  2 +-
+>   target/avr/cpu.h                 |  2 +-
+>   target/avr/helper.c              |  2 +-
+>   target/hppa/cpu.c                |  2 +-
+>   target/hppa/cpu.h                |  2 +-
+>   target/hppa/mem_helper.c         |  2 +-
+>   target/i386/cpu.c                |  2 +-
+>   target/i386/cpu.h                |  2 +-
+>   target/i386/helper.c             |  2 +-
+>   target/i386/whpx/whpx-all.c      |  2 +-
+>   target/loongarch/cpu-mmu.h       |  2 +-
+>   target/loongarch/cpu.c           |  2 +-
+>   target/loongarch/cpu_helper.c    |  2 +-
+>   target/m68k/cpu.c                |  2 +-
+>   target/m68k/cpu.h                |  2 +-
+>   target/m68k/helper.c             |  2 +-
+>   target/microblaze/cpu.c          |  2 +-
+>   target/microblaze/cpu.h          |  2 +-
+>   target/microblaze/helper.c       |  2 +-
+>   target/mips/cpu.c                |  2 +-
+>   target/mips/internal.h           |  2 +-
+>   target/mips/system/physaddr.c    |  2 +-
+>   target/or1k/cpu.c                |  2 +-
+>   target/or1k/cpu.h                |  2 +-
+>   target/or1k/mmu.c                |  2 +-
+>   target/ppc/cpu.h                 |  2 +-
+>   target/ppc/cpu_init.c            |  2 +-
+>   target/ppc/mmu-hash32.c          |  2 +-
+>   target/ppc/mmu_common.c          |  2 +-
+>   target/riscv/cpu.c               |  2 +-
+>   target/riscv/cpu.h               |  2 +-
+>   target/riscv/cpu_helper.c        |  2 +-
+>   target/rx/cpu.c                  |  2 +-
+>   target/rx/cpu.h                  |  2 +-
+>   target/rx/helper.c               |  2 +-
+>   target/s390x/cpu-system.c        |  2 +-
+>   target/sh4/cpu.c                 |  2 +-
+>   target/sh4/cpu.h                 |  2 +-
+>   target/sh4/helper.c              |  2 +-
+>   target/sparc/cpu.c               |  2 +-
+>   target/sparc/cpu.h               |  2 +-
+>   target/sparc/mmu_helper.c        |  2 +-
+>   target/tricore/cpu.c             |  2 +-
+>   target/tricore/cpu.h             |  2 +-
+>   target/tricore/helper.c          |  2 +-
+>   target/xtensa/cpu.c              |  2 +-
+>   target/xtensa/cpu.h              |  2 +-
+>   target/xtensa/mmu_helper.c       |  2 +-
+>   56 files changed, 62 insertions(+), 62 deletions(-)
 
-> Philippe Mathieu-Daudé (4):
->    target/mips: Pass MemOpIdx argument to Load/Store Multiple helpers
->    target/mips: Remove unnecessary target_ulong uses in LD/ST Multiple
->    target/mips: Inline cpu_ld/st_mmuidx_ra() calls in LD/ST Multiple
->    target/mips: Check alignment for microMIPS pre-R6 LD/ST multiple
-
-Series queued, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
