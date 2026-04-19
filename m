@@ -4,107 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C45EA7189
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 08:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10A4EA7195
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 10:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wENkN-0001t5-Ib; Sun, 19 Apr 2026 04:43:19 -0400
+	id 1wEPGP-0008Ua-Le; Sun, 19 Apr 2026 06:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wENkM-0001ss-04
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:43:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wEPGK-0008Tu-Q5
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 06:20:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wENkJ-000653-Qx
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:43:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wEPGH-0002Dm-Rx
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 06:20:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776588192;
+ s=mimecast20190719; t=1776594018;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qESMAqD1fY4qO7RbNG5Yb1Mbj+Ze/k8hXFw0imkmHcg=;
- b=H2zx6f5GFqcJMKaqrrKyrjCp1ycfCyl1bDzaUXWNVJxSmt9SKXktYS3Lpmp6aZwCKLaYXP
- RgNCDBqrEc1FU0LFZy5dFrCCUTbHxGz5Kh8FeKVJPwPJEs1rx8AeIJ22uLE/EYqgIE7AL3
- pJgVkHSnyAZ2PAd7QhEN4ZkNccoNcXs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-Ijxla7aaPj6iLmEV4XQnCQ-1; Sun,
- 19 Apr 2026 04:43:11 -0400
-X-MC-Unique: Ijxla7aaPj6iLmEV4XQnCQ-1
-X-Mimecast-MFC-AGG-ID: Ijxla7aaPj6iLmEV4XQnCQ_1776588190
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE963195608F; Sun, 19 Apr 2026 08:43:09 +0000 (UTC)
-Received: from [10.44.32.46] (unknown [10.44.32.46])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 92DB21801481; Sun, 19 Apr 2026 08:43:08 +0000 (UTC)
-Message-ID: <10f96e1a-dcd9-49f4-aff2-1549f88e50a4@redhat.com>
-Date: Sun, 19 Apr 2026 09:43:05 +0100
+ bh=OGyPyZsFoCydjSUtfHLciMYzVaKtnkh/U8GpIJxVlDU=;
+ b=B87Pys69lAQyHWUvVWbBVicqLzdnGIUgT6J4Fw/faGR3x5NX9OsTBPFzjrNZJoQ19vmQwz
+ T2W5UxSMNmjjZJ2Eadl0Hr9SdZEuyhB8rvRI2DmXoUPAfbO7pK2gOlCUoniiV6Q3iCh6oC
+ uVrd7jEhIZgR9ebW2mBXo2cwcalfqT4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-ZSenAJ-mM-6yZ8hMdddpkA-1; Sun, 19 Apr 2026 06:20:17 -0400
+X-MC-Unique: ZSenAJ-mM-6yZ8hMdddpkA-1
+X-Mimecast-MFC-AGG-ID: ZSenAJ-mM-6yZ8hMdddpkA_1776594016
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-488cc31ea57so16590915e9.3
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 03:20:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776594016; x=1777198816; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=OGyPyZsFoCydjSUtfHLciMYzVaKtnkh/U8GpIJxVlDU=;
+ b=Ilu8sQOwT+b5ZyDIVDtZB+PeVkekzD+H5QlvRG14EqKazBhGXYNnRljCg8gG6Q39J6
+ ysV01lNpJ4X7z7gaSoSVupdxv61hvYxivkw+8mLn/9gN05rHf5/bZ65fNTp6guybT+pd
+ mj7fFf2ViXyfPE7jZwS6fyiiZ5uLVuN8RzhwFvgD5ki6GJ47Gsyx4EOPJWmjYYbTD/Ge
+ aM+WHnZDqfplNm5sQCM+ub+4kudU6RoBgBhe1UWgTbA5nt44YWa1zdeOHjJIFuRIT4An
+ T0Pb9ve3yWUgipJRkEO1Tt6XtINbLIYb8UTZwTkBiZf64UxClqiDEeR/yDv3Ru7u/PFL
+ 5NBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776594016; x=1777198816;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OGyPyZsFoCydjSUtfHLciMYzVaKtnkh/U8GpIJxVlDU=;
+ b=KNQQ6PdVqveuv7jcv34ijWSBd4CRqNk89MEOzdgrRYnwhXwdSz8A8+cIvZY+6gaOxb
+ jL2UHYH0MyYbIAKQoNXf54/NzRsmnY0axHCXJ+H4UplMispE2/U9BQkpr0JBm9dcZVVR
+ Xo27gntJH1Q3Vy7ZnIuucyTBEoNVBVyjpt2sgatvCQl19DOYG0G+hBlzQY2Ay7zOGOjq
+ OdtikL6NP4X/cgf3eupsZ9uE0ocHkpFwwPlE5iiDx0sOUAsfT4HUujT3WNd44sSKEw5f
+ M+kckVWbYfbtQiq9icKVHPxDbd5tX7qdhZ0kFYlI/+0V5ypFoLFgogQF8sweBLDDfivb
+ 8ETA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/dL+Qs0ggULO5AX8QKdFZts5brPdqEhVArdPGK3ukTbHkUl4c15XwzyOBirRsBoTkjWDl5UGM7vyHq@nongnu.org
+X-Gm-Message-State: AOJu0YycDq73nJ+BbwmC4V9kic6SatfodxhVWqjAOg9ydb04xAWvXrrV
+ dGlc2HGWAwLqNiPHvEr55X/fCXLd27OdIwy3kcKLXtvzk04SZkCOe9gvhjges82G2ByDDQS/HhI
+ My/RMWkT2uaa+fcmboAPv3isgmCNxOx5Jf5bkwn4FdHnLfpWQrTkxfSmw
+X-Gm-Gg: AeBDietmpV8dX2mbajcxCcxHHxN08oB3wjiIHmuhQ29BCbvwZhJ1TQSUIZN1HYIWgQo
+ x7JfE1Y23L9bzYPE/JKcJTslzMPcZwhcUyl51UWOhuY/0zzjqZ/kR0d/7RWQLlKgZ9W7xbKaJ/0
+ DzKcE5wevLPoY79JUYt6v9mVcmf4fXpIJMJn9+sVPbGPit5yAURBSuoMzP1ETnqn6dSeeGjcNzF
+ yhFjqoWdRWNsC+RAnmizrBbqsT350VOWee/FsUzweGg/ubUzhTHys+7Vs6k573vQzY+5zcZhnOp
+ mGDBmJaF1PInn4V3WyR3WUky1i5Yv4hW0ZG98N9mlTrqBCO9aiT3Y+gDezP1c4MYs+MjIV9nD+Y
+ yvvpjwxDCbfqGNn47wFI98XlFEkUf
+X-Received: by 2002:a05:600c:5285:b0:485:1878:7b8c with SMTP id
+ 5b1f17b1804b1-488fb77812dmr147933415e9.18.1776594016025; 
+ Sun, 19 Apr 2026 03:20:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:5285:b0:485:1878:7b8c with SMTP id
+ 5b1f17b1804b1-488fb77812dmr147933065e9.18.1776594015589; 
+ Sun, 19 Apr 2026 03:20:15 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.24]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fb78446csm91441425e9.4.2026.04.19.03.20.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 19 Apr 2026 03:20:15 -0700 (PDT)
+Message-ID: <9d84832d-66f7-4f1c-a7df-d15950109044@redhat.com>
+Date: Sun, 19 Apr 2026 12:20:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] monitor: Add `clear` command
-To: "Dr. David Alan Gilbert" <dave@treblig.org>, AlanoSong@163.com
-Cc: qemu-devel@nongnu.org
-References: <20260418133927.43012-1-AlanoSong@163.com>
- <aeO-IqKqBwtKfW8P@gallifrey>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] util: fix use of pthread_get_name_np on OpenBSD
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Brad Smith <brad@comstyle.com>,
+ qemu-stable@nongnu.org
+References: <20260417120531.2215549-1-berrange@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <aeO-IqKqBwtKfW8P@gallifrey>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260417120531.2215549-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,88 +165,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/18/26 19:23, Dr. David Alan Gilbert wrote:
-> * AlanoSong@163.com (AlanoSong@163.com) wrote:
->> The monitor screen can be cluttered after executing commands
->> like `info qtree`. It is useful to have a command to clear
->> current screen, just like linux `clear` command do.
->>
->> This patch has been tested under monitors using stdio, vc,
->> tcp socket, unix socket and serial interfaces.
->>
->> Signed-off-by: Alano Song <AlanoSong@163.com>
+On 17/04/2026 14.05, Daniel P. Berrangé wrote:
+> The pthread_get_name_np function is present on FreeBSD and OpenBSD
+> and has 'void' return not 'int'. We didn't notice this build problem
+> on FreeBSD since it also has pthread_getname_np which does return
+> int like Linux and we use the latter preferentially.
 > 
-> Does typing ctrl-l not do it for you in your terminal?
-
-Yeah, we should add support for Ctrl-L to the non-terminal backends 
-independent of this.  However, backends such as socket do not use 
-readline so they also don't support it right now.
-
-Paolo
-
-> Dave
+> Fixes: 215235d365e49c72a85ea2940751e45419676031
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3399
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
 > 
->> ---
->>   hmp-commands.hx       | 14 ++++++++++++++
->>   include/monitor/hmp.h |  1 +
->>   monitor/hmp-cmds.c    |  5 +++++
->>   3 files changed, 20 insertions(+)
->>
->> diff --git a/hmp-commands.hx b/hmp-commands.hx
->> index 5cc4788f12..95f9166732 100644
->> --- a/hmp-commands.hx
->> +++ b/hmp-commands.hx
->> @@ -20,6 +20,20 @@ SRST
->>     Show the help for all commands or just for command *cmd*.
->>   ERST
->>   
->> +    {
->> +        .name       = "clear",
->> +        .args_type  = "",
->> +        .params     = "",
->> +        .help       = "clear the monitor screen",
->> +        .cmd        = hmp_clear,
->> +        .flags      = "p",
->> +    },
->> +
->> +SRST
->> +``clear``
->> +  Clear the monitor screen.
->> +ERST
->> +
->>       {
->>           .name       = "commit",
->>           .args_type  = "device:B",
->> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
->> index e222bea60c..9b66458d21 100644
->> --- a/include/monitor/hmp.h
->> +++ b/include/monitor/hmp.h
->> @@ -165,6 +165,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict);
->>   void hmp_trace_file(Monitor *mon, const QDict *qdict);
->>   void hmp_info_trace_events(Monitor *mon, const QDict *qdict);
->>   void hmp_help(Monitor *mon, const QDict *qdict);
->> +void hmp_clear(Monitor *mon, const QDict *qdict);
->>   void hmp_info_help(Monitor *mon, const QDict *qdict);
->>   void hmp_info_sync_profile(Monitor *mon, const QDict *qdict);
->>   void hmp_info_history(Monitor *mon, const QDict *qdict);
->> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
->> index bc26b39d70..3e9485478e 100644
->> --- a/monitor/hmp-cmds.c
->> +++ b/monitor/hmp-cmds.c
->> @@ -218,6 +218,11 @@ void hmp_help(Monitor *mon, const QDict *qdict)
->>       hmp_help_cmd(mon, qdict_get_try_str(qdict, "name"));
->>   }
->>   
->> +void hmp_clear(Monitor *mon, const QDict *qdict)
->> +{
->> +    monitor_printf(mon, "\x1b[3J\x1b[2J\x1b[H");
->> +}
->> +
->>   void hmp_info_help(Monitor *mon, const QDict *qdict)
->>   {
->>       hmp_help_cmd(mon, "info");
->> -- 
->> 2.43.0
->>
+> This is a regression in the 11.0 release, but on the assumption it
+> is too late for further fixes, I'm CC'ing qemu-stable so this can
+> go into the future stable-11.0 branch
+> 
+>   util/qemu-thread-posix.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+> index bd1c2ad2a5..089606c93f 100644
+> --- a/util/qemu-thread-posix.c
+> +++ b/util/qemu-thread-posix.c
+> @@ -568,7 +568,8 @@ const char *qemu_thread_get_name(void)
+>   # if defined(CONFIG_PTHREAD_GETNAME_NP)
+>       rv = pthread_getname_np(pthread_self(), namebuf, sizeof(namebuf));
+>   # elif defined(CONFIG_PTHREAD_GET_NAME_NP)
+> -    rv = pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
+> +    pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
+> +    rv = 0;
+>   # else
+>       rv = -1;
+>   # endif
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
