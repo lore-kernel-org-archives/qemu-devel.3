@@ -4,54 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E8BCEA7197
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 19:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD14EA71A1
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 19:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEXvs-0003Qq-R7; Sun, 19 Apr 2026 15:35:52 -0400
+	id 1wEY52-0005Ne-MA; Sun, 19 Apr 2026 15:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sertonix@posteo.net>)
- id 1wEXvr-0003Qg-DZ
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 15:35:51 -0400
-Received: from mout01.posteo.de ([185.67.36.65])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sertonix@posteo.net>)
- id 1wEXvp-0002O4-Hi
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 15:35:51 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id A1ECD240027
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 21:35:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
- t=1776627345; bh=IIIKnT3mHWISsNpkvQiYtjQiXvVqvr2+/Bnd7wluXDk=;
- h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:
- Message-Id:From:To:Subject:From;
- b=rSLrMSOE9uswjqaYWX3RSHkMoWcpCKHZSkzOsqxRwzUClCKxIkpdW1ocFkoSLImpt
- mIXxWl2XSiDnO78FqBt60Z1F2rE+ctDpXPRy7oKU+RdIeq1QZUsxJ7xIDk7YowIfuc
- B7s/FQoATMHAgCNqXaylnO1wibVxjqB5Ys3anIVlghEIiRUeg4HCT+h+Es5VpSQOIk
- Q7TN9dzFZ4HMG+g8pkakEabl2FhW0f4Mp+PwQVAsAa/pigBhobu1RpWM1m3SU9c6kY
- oKYTmcCIG0DI9PITyWRggfacpxKTQeROLne/udtzQZyDUc8YQQnHTVwCcUibgX5ur+
- Y+EgJOgOPPXFA==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4fzJkT15mhz9rxP
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 21:35:45 +0200 (CEST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 19 Apr 2026 19:35:45 +0000
-Message-Id: <DHXDTYTOFYVL.3H531B0BJOQ22@posteo.net>
-From: "Sertonix" <sertonix@posteo.net>
-To: <qemu-devel@nongnu.org>
-Subject: [PATCH] hw/i386: Use qemu_open_old for kernel/initrd
-Received-SPF: pass client-ip=185.67.36.65; envelope-from=sertonix@posteo.net;
- helo=mout01.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1wEY50-0005N5-PB
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 15:45:18 -0400
+Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1wEY4z-0004AN-4M
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 15:45:18 -0400
+Received: by mail-dy1-x1329.google.com with SMTP id
+ 5a478bee46e88-2c15849aa2cso2873331eec.0
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 12:45:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776627915; x=1777232715; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=t9B0AG+zxZtzlL8RLO9c0uKyS0sPfKurOxx2FmTxBZA=;
+ b=KubcDrb7aRYiSA65Jy2uJp4YO2F0O2F85cK2Qvafn2s+xyt4HGNdCNZKQa4aVfmZgs
+ kiu/CxoauCXEvMxbozRg5xERs2nP/Z6QSc+pj8LGe1qa2F9XjWF5glwnsped+XswVDLH
+ VIU8G5E1CwKOKXVX3hcRaltqY5lHiUX5hIymP4Gbi7nhTAm6RNueaZSJdd9VzL5lN1+d
+ YpPn/amPv2ftvCUvAyZ3uhLjc8R4XlPDAKEwQ0rUulHqYO5rlabcCBYjA4aKLyUZdduV
+ kit7ilsnnAp/NlpoarnBtKYTkCRkE8jKS8bxTduuYppwUhv8BC9FSFIGm5C5tCr7q/kQ
+ x3pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776627915; x=1777232715;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t9B0AG+zxZtzlL8RLO9c0uKyS0sPfKurOxx2FmTxBZA=;
+ b=QVs0eqiXF8/e2jJrP3GIJP8nmQzc3tVe5yRvEJWoQ2FXRkMcibnyBcEEWq8fm2agAp
+ uYXThmp0Hdkk7LvXwX8jdDv11w2HO8QVw5OHYlMnVi9TLEGHq/+V9TrPl/Hggm97JlzK
+ umSJgNb6F1NuCCww98T1IgtYOw7gMT0M/rxNjVZ5V9/mtmMG74pJlTk87/YJUfmp4IlH
+ hpF4o26nbrAsH7PQccK8KXqgYhe/ZPbDqASv8e/iqf7dsNitSRJLHN71qxqB2EgNKBf8
+ OLWG+GYMwJhZTUOWwW/XjuvMsWtEXmeFGXwkUy/qEmKYzg7lJtdYvsOG1FT/jrqCJgEa
+ jEyQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+9u4wEJ4rRjC65GQ70MTJuWUoZkMqA5trhrKLpB7TOlpFUtqi03a2VXhkSVrma0VQhwKrL8pYXITAC@nongnu.org
+X-Gm-Message-State: AOJu0YzCTYdfZftJr44QG2aAukgi6vVkBZJq1lvW2pY2qNzp5v64Azs1
+ EplTq0FKaFZYYxY65wQBWVwHyAdPPOyR+O4rx7CcgKgZ7/0/LVvdbWxpiCIcVsvJZTM=
+X-Gm-Gg: AeBDievooP1CynpXMbtPUtTSD8e1lMTbm2pj1Eq7/thkYmbe9sD9JH+ZMU+gRJxDQq3
+ MnO9Lr5utEActI7KLdQkcOfUT83wPYBpLy+DdWdZA7o96kkSGloxh78hFztMdtHwj7/twCwDQxl
+ ei30M0DlJ1IKVPw9Ig5m/wiSNiDFLkZVMGJrrb5BKERb+RwZ48A01X6nVw0dW04GTbaxggPH2UU
+ ohsot8VYxt2KNWXy96M+LgW4kpBzaXLBUl4D3u9DnU59sISeVZqpo7i/YGE1LCFllpDpNkDVtJE
+ f9hvL+Ov9Pf+sWmqynhDYhy//9oYkEM6wUy8y93VeQuk62UpAMCqfeox0sy9Id8++qJF/2FoXV7
+ EAk672Afny9B2iLS9PGbYi2EWQLjdUig423gsIS+/oBVZW/Pdcn9jhVcPvxKa4z+YZs8Ap/VNwR
+ CcKvDkcY9IL8ccEB4ZBpOeKy6mStJs5LUoPlHisxwQ1NiCw9lmnxWgtYyd8V68Qg==
+X-Received: by 2002:a05:7300:a191:b0:2c4:4363:3742 with SMTP id
+ 5a478bee46e88-2e464dac917mr5993042eec.9.1776627914506; 
+ Sun, 19 Apr 2026 12:45:14 -0700 (PDT)
+Received: from ?IPV6:2804:14c:3d88:963e::2000? ([2804:14c:3d88:963e::2000])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2e539fa244csm10797733eec.2.2026.04.19.12.45.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 19 Apr 2026 12:45:14 -0700 (PDT)
+Message-ID: <3f646bd5-b1f0-402f-baa9-0c08f6c3de70@linaro.org>
+Date: Sun, 19 Apr 2026 16:45:09 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] MAINTAINERS: Merge PCIe DOE section within SPDM
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Tao Tang <tangtao1634@phytium.com.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20260417110550.70068-1-philmd@linaro.org>
+ <20260417110550.70068-4-philmd@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20260417110550.70068-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-dy1-x1329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,80 +108,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Phil,
 
-Allows using "-kernel /dev/fdset/0" and "-initrd /dev/fdset/1" (if the
-file descriptors are opened read-only).
+On 4/17/26 08:05, Philippe Mathieu-Daudé wrote:
+> SPDM depends on PCIe DOE, so it makes sense to cover
+> these files there. Cover the spdm.rst document. Add
 
-For the sake of consistency it would be best to do the same change in
-the other hw/* subdirectories as well but I lack the means to test all
-of them.
+Right, that makes sense.
 
----
- hw/i386/x86-common.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index fde05fa7d7..5d8be30f4d 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -651,6 +651,7 @@ void x86_load_linux(X86MachineState *x86ms,
-     uint8_t header[8192], *setup, *kernel;
-     hwaddr real_addr, prot_addr, cmdline_addr, initrd_addr =3D 0;
-     FILE *f;
-+    int fd;
-     const char *vmode;
-     MachineState *machine =3D MACHINE(x86ms);
-     struct setup_data *setup_data;
-@@ -664,8 +665,8 @@ void x86_load_linux(X86MachineState *x86ms,
-     cmdline_size =3D (strlen(kernel_cmdline) + 16) & ~15;
-=20
-     /* load the kernel header */
--    f =3D fopen(kernel_filename, "rb");
--    if (!f) {
-+    fd =3D qemu_open_old(kernel_filename, O_RDONLY);
-+    if (fd < 0 || !(f =3D fdopen(fd, "rb"))) {
-         fprintf(stderr, "qemu: could not open kernel file '%s': %s\n",
-                 kernel_filename, strerror(errno));
-         exit(1);
-@@ -719,12 +720,14 @@ void x86_load_linux(X86MachineState *x86ms,
-=20
-             /* load initrd */
-             if (initrd_filename) {
-+                int mapped_file_fd;
-                 GMappedFile *mapped_file;
-                 gsize initrd_size;
-                 gchar *initrd_data;
-                 GError *gerr =3D NULL;
-=20
--                mapped_file =3D g_mapped_file_new(initrd_filename, false, =
-&gerr);
-+                mapped_file_fd =3D qemu_open_old(initrd_filename, O_RDONLY=
-);
-+                mapped_file =3D g_mapped_file_new_from_fd(mapped_file_fd, =
-false, &gerr);
-                 if (!mapped_file) {
-                     fprintf(stderr, "qemu: error reading initrd %s: %s\n",
-                             initrd_filename, gerr->message);
-@@ -860,6 +863,7 @@ void x86_load_linux(X86MachineState *x86ms,
-=20
-     /* load initrd */
-     if (initrd_filename) {
-+        int mapped_file_fd;
-         GMappedFile *mapped_file;
-         gsize initrd_size;
-         gchar *initrd_data;
-@@ -870,7 +874,8 @@ void x86_load_linux(X86MachineState *x86ms,
-             exit(1);
-         }
-=20
--        mapped_file =3D g_mapped_file_new(initrd_filename, false, &gerr);
-+        mapped_file_fd =3D qemu_open_old(initrd_filename, O_RDONLY);
-+        mapped_file =3D g_mapped_file_new_from_fd(mapped_file_fd, false, &=
-gerr);
-         if (!mapped_file) {
-             fprintf(stderr, "qemu: error reading initrd %s: %s\n",
-                     initrd_filename, gerr->message);
---=20
-2.53.0
+> Tao Tang who volunteered to be designated reviewer:
+> https://lore.kernel.org/qemu-devel/44abaece-6a6f-43c6-b29a-53d6eb08033c@phytium.com.cn/
 
+Thanks, Tao.
+
+
+> Cc: Tao Tang <tangtao1634@phytium.com.cn>
+> Cc: Gustavo Romero <gustavo.romero@linaro.org>
+> Cc: Alistair Francis <alistair.francis@wdc.com>
+> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   MAINTAINERS | 11 +++++------
+>   1 file changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 11bf50a9ecf..eccc0d64331 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2150,11 +2150,6 @@ F: docs/pci*
+>   F: docs/specs/*pci*
+>   F: docs/system/sriov.rst
+>   
+> -PCIE DOE
+> -S: Orphan
+> -F: include/hw/pci/pcie_doe.h
+> -F: hw/pci/pcie_doe.c
+> -
+>   ARM PCI Hotplug
+>   M: Gustavo Romero <gustavo.romero@linaro.org>
+>   L: qemu-arm@nongnu.org
+> @@ -3693,11 +3688,15 @@ F: tests/qtest/*tpm*
+>   F: docs/specs/tpm.rst
+>   T: git https://github.com/stefanberger/qemu-tpm.git tpm-next
+>   
+> -SPDM
+> +SPDM, PCIe DOE
+>   M: Alistair Francis <alistair.francis@wdc.com>
+> +R: Tao Tang <tangtao1634@phytium.com.cn>
+>   S: Maintained
+>   F: backends/spdm-socket.c
+>   F: include/system/spdm-socket.h
+> +F: include/hw/pci/pcie_doe.h
+> +F: hw/pci/pcie_doe.c
+> +F: docs/specs/spdm.rst
+>   
+>   Checkpatch
+>   S: Odd Fixes
+
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+
+
+Cheers,
+Gustavo
 
