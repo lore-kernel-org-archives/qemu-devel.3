@@ -4,81 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49120F99C8D
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 00:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A7E5EA7188
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 08:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEFoK-00089W-32; Sat, 18 Apr 2026 20:14:52 -0400
+	id 1wENbE-0000PI-S4; Sun, 19 Apr 2026 04:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEFoI-00089O-Df
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 20:14:50 -0400
-Received: from p-east2-cluster3-host3-snip4-4.eps.apple.com ([57.103.77.155]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wENbE-0000P4-3F
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:33:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEFoG-0001eW-8u
- for qemu-devel@nongnu.org; Sat, 18 Apr 2026 20:14:50 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPS id
- 009F218000BF; Sun, 19 Apr 2026 00:14:45 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776557686; x=1779149686;
- bh=KpIctzXqg3kXtDhuq4XdOg8zLKPH4SuOnIhqEDtV8Mk=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=CZJ+KV7u1b5SzL28wzLs7RHUpCDa9jA4s8T14TklHsnOskTqSs1+SP9ieFfigfguinitkJh3Dhgl/r23ReWxVLlx1+65jQMm76QCKZrmqI+pgi4AupKhlp8ogkM5xhTiyYixez+Z9inaXz/WcqJB/Iw1W5rc+H8EnWoUcs/98CRFuyzjtQ7TRweH6zyHvmCflVT46Hr9RDlAYXchXlrXj6w6ScqT2f5L76v4ueimCXHZnZHNGHYOBPel5S0GcpF4IYzQ5oMfLH7qBnfaLQLApges3Fr8kZl8yMxNeDbgG50ls0u9f3RNgyZCmiFTH7Hmpw+/SMNx+8DTN3IQtO8Y1w==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPSA id
- A3E451800180; Sun, 19 Apr 2026 00:14:44 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wENbC-0003qo-00
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:33:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776587627;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
+ b=Cyx68gxOlLyTd92Kd4v3f45vlTi8Zl1J3Zbq+vz7B8YPiSdJzOAVztPD/qOoYgcSQMmzAf
+ NoRKBn1QaQu4AIW4i1iGFhHObFedaDdI8QqZofqOUJLo4Wbclx+JuhhH1VS5VhDrNFHiKM
+ u/7+ODxZehxCAQjXSdxa7kV+k1CESxI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-304-zlwA-2OINASdOBBNjLNYqA-1; Sun, 19 Apr 2026 04:33:45 -0400
+X-MC-Unique: zlwA-2OINASdOBBNjLNYqA-1
+X-Mimecast-MFC-AGG-ID: zlwA-2OINASdOBBNjLNYqA_1776587624
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43d789cebcfso1712290f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 01:33:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776587624; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LL/yeZMW3Z2Gvj7v6iAqDBQB0BX1gVmskdDXg+AVVVCw/e1Aql3QNrLMQ673rjHEhA
+ 1KuHS4z7uLahIT08vnWkyl6+QyOAVvty+mSUM184kdlrXm5jtG+2i+aP0bPKPpUvhQK6
+ mA2Md/BphuFw7GaZ6MX+J5npOIRpV38oNfsf1fqjqx4F9TVZfm7pbLFZg6ajI0+G921L
+ fxv8/uQizpqxsxepr4HIX0gzyOgJytO3zdi0/H8J4osrk3leJdaEc2hBqHmEiu9vHfZl
+ T6xfOGmJ9EhTAQIYNs/w8CSaxjNXoMwllUl16oYn0oZApyYoGjfP0ncYDxbdH1d7q0tw
+ RkeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
+ fh=7keYvWMxT8tzyrJUfr1+GGXboUjM6zt5MF6kkJwqLwk=;
+ b=cJYef19RFqdrnGLf/fdpNFCbdFYBSEGIXXbGn6chz8vQMayb5sGlnN+oVqKnR2Whvs
+ fIN+v5eCFb3MW6c3/J96MVPanzriA64cqOsxbPBPPJ+y86MXpIm6/rxxlBfvAgQNeyhV
+ ttdy6sY4l9eobOn6HG8E+jIzZHAsadPyY//hJrC5iOjSXmiPHMS2rULrmrnqbe9itEG1
+ p6VKXrOgd+aR/yt/iBZEEnM+0Puz0uSueMJqLuysLaNBRKZiD1C11m/P55Jmy1FkqF45
+ hzxUfNhVizLx8g3PRn+Ka4W+TlsZcBM+DtrX/Kf36SVKPrsBT2NFdcWU48azQ7MZ8L21
+ U6YA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776587624; x=1777192424; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
+ b=MJhQ/79MxhH3vWGj90BdZyDGoxxgpkA2Qbm9Rp8NCI6hHc9GSLbbqRxkiEeq4FyJxm
+ blklykPbbD3DeRvcxQhoBRMX/2W5MdcWuEtEmq4QRe6bdnTx0r56LA9qoI/jnaz9HjJk
+ detOG65+r6OjPDIJYTkWdV+/OGByAsY2ByprWBgRhuv3V15uDMmHxCej/uYnmDchNrcu
+ /ME8C6ZvRPgjPZVtAJBHKvE9n4Sc1fc/EtVeb5jMk1vkTcb9b2g7RWgdMTFkCl6NCA/z
+ kXZlAm3wcl11BcnH2E5MRo2Yk1gX3bk4QS81OF7dS9cngNC8XjOi3CtWD6J3Q76EfH4L
+ GCOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776587624; x=1777192424;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
+ b=nG077EefkfCl9/8b5A6/J2Ja8qBD2929hHw0awfzPJDgnIabGfPO4Xx3pWwMqRt2qL
+ KYXksznLw68nJggOihJFe/ojrGZJiDx1OWowOZsmn9kden6Xiev06aiVR/04s22q/jFG
+ EIYgCFFT5hOhIkvMfmCvOSAACntEnZ086VLSg91XRcJQZWM68GrCth9FnPTih5YhwnTA
+ xBkbTQfzuA10pVPzLRcPldSrgWOr0bc/EIHcwZQXNULTnDPtUmA1wEp+CXh7Uk5RSd57
+ Kfqi39D258rIroTVQHPDP2GJFlZl60RADflTCLmr2yTbHT36SwFrFg3kI7rSwXCQk/GP
+ rp7A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+CKxYD3d3Ck5Pbej691WxKRT65+5MRuX4TjOUm8helVoDIKHg0w8xjhPy5FeYzhFT/coblisjFKr66@nongnu.org
+X-Gm-Message-State: AOJu0Yxrw1/kPa5b0NVC9urbFeuxYYfhqPrnO4HAjsH2KM6s3RUiEBhB
+ W1L14domsiDsLzx0cwxJC5XQLeJKY3OdGIwpfgV6GC/RIjliVc7dmv5Wl04c/e/aHMiOK91cjK5
+ jb6n9d0JvtLb1gx3mFvSvRDUZXjD/DxSqpQZHGohdRMCWCARMAWM1EpeyAWOpcxxolmiiMk+F/Y
+ knhvPWZ+zbqXiT2Isij2840oSuo3CY3Iw=
+X-Gm-Gg: AeBDiev9eDN7qr8ZQtRpveaK5FfJGC8mPE92+vNIahdsKOW4q/d60TOFAdk0TAkXjeI
+ ekC2tVqbtQS4a1a4m03KgIqmg2QmYTD+doxxrKuzYruBoEfQJRrrMoypq5ry7hICl6U0FPzK3Hw
+ 0SplwJHYv6W00XziEVWvr7Y6hlpZ6v84AweZLFYJlTYW8b9o99+uZitsAwUNMVz/iyu/33foiLa
+ bgJstz7X5Nq596WkVFQteUAA/KCGf7sDgoK5tYIQfdlloRyvPxb8lcOIGwIIY6d+RFauP7IbpKl
+ 1lqg4drJ26ov99k=
+X-Received: by 2002:a05:6000:228a:b0:43d:779e:afa8 with SMTP id
+ ffacd0b85a97d-43fe407a7e5mr14684997f8f.16.1776587623727; 
+ Sun, 19 Apr 2026 01:33:43 -0700 (PDT)
+X-Received: by 2002:a05:6000:228a:b0:43d:779e:afa8 with SMTP id
+ ffacd0b85a97d-43fe407a7e5mr14684964f8f.16.1776587623302; Sun, 19 Apr 2026
+ 01:33:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260418061429.16898-1-rickgcn@gmail.com>
+ <9926A5B0-8660-433D-B074-3B49E830BC9D@unpredictable.fr>
+In-Reply-To: <9926A5B0-8660-433D-B074-3B49E830BC9D@unpredictable.fr>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sun, 19 Apr 2026 10:33:30 +0200
+X-Gm-Features: AQROBzCKAQDmNANV668nkEulDo5HbpBITXsbc5OPJYYMum-yUI3eCLgHj6OTB9g
+Message-ID: <CABgObfbZPDvB6FAEbUY3fNZd+3mNkjnoU47K2RCSDM4zy1fn8Q@mail.gmail.com>
 Subject: Re: [PATCH] hw: i386: vapic: restore IRQ polling for non-kernel
  irqchip backends
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260418061429.16898-1-rickgcn@gmail.com>
-Date: Sun, 19 Apr 2026 02:14:32 +0200
-Cc: qemu-devel@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
- pbonzini@redhat.com, richard.henderson@linaro.org
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: rickgcn <rickgcn@gmail.com>, qemu-devel@nongnu.org, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <9926A5B0-8660-433D-B074-3B49E830BC9D@unpredictable.fr>
-References: <20260418061429.16898-1-rickgcn@gmail.com>
-To: rickgcn <rickgcn@gmail.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Authority-Info-Out: v=2.4 cv=NeTrFmD4 c=1 sm=1 tr=0 ts=69e41e76
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=W4rVtugX6geAamtpO3UA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: V2HNkNOKyCf7KTh1lC-86RiJj6tuTwa9
-X-Proofpoint-ORIG-GUID: V2HNkNOKyCf7KTh1lC-86RiJj6tuTwa9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE5MDAwMSBTYWx0ZWRfX+dmk/8w/OzVe
- sS/95OoRtNkIs+VF+vMMiuI7aP8oZBEHB9DpAACYSU3mgIUxtUfFBAs2t1xRSXy5GGB9PF+cOzp
- x0Z0PPlgRsDlTprxX4362sEHp0vgNFEE6oWo4we91xIkkBd3qO+2EPNLr3PRMDSZbxACZYWv+Wd
- MGuX7stiapHUV7kqYUm79Y4xV6VYT8NojiGP2kBXRP0ygEkqUM7sZ0TgqZZ8OXCmZkyMDwZ53mY
- CpTgSi7Sag5p4SPO2ZVOvkUYJXG9u4v1PrWqzT5aMzR0F/JoDo0moo+4H80ImwwfTjLp/cGLem2
- cfSK0cdolVp6/hwB6LEv8lCbOCafrMHHv83b/20mH5N7e7dUh+VD9xhP4UptFE=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-18_07,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 mlxscore=0
- clxscore=1030 spamscore=0 lowpriorityscore=0 mlxlogscore=883 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604190001
-Received-SPF: pass client-ip=57.103.77.155;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,65 +141,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 18. Apr 2026, at 08:14, rickgcn <rickgcn@gmail.com> wrote:
->=20
-> 69dfc078 extended vAPIC handling for WHPX with user-mode irqchip, but =
-it
-> also changed vapic_write() case 4 in a way that excludes TCG from
-> apic_poll_irq().
->=20
-> Before that change, IRQ polling happened whenever no in-kernel irqchip
-> was active. After the change, it only happened for KVM or WHPX with a
-> user-mode irqchip. Under TCG, both kvm_enabled() and whpx_enabled() =
-are
-> false, so the poll never happens.
->=20
-> This regresses 32-bit Windows XP guests on a Windows host with
-> -machine pc-i440fx-10.0,accel=3Dtcg, causing a STOP 0x0000000A during =
-boot.
->=20
-> Fix it by making the decision depend on whether KVM or WHPX is using =
-an
-> in-kernel irqchip, instead of whether either accelerator is enabled.
->=20
-> Fixes: 69dfc078a6f0 ("hw: i386: vapic: enable on WHPX with user-mode =
-irqchip")
->=20
-> Signed-off-by: rickgcn <rickgcn@gmail.com>
-> ---
-> hw/i386/vapic.c | 3 +--
-> 1 file changed, 1 insertion(+), 2 deletions(-)
->=20
-> diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-> index 41e5ca26df..1acb9f91b2 100644
-> --- a/hw/i386/vapic.c
-> +++ b/hw/i386/vapic.c
-> @@ -716,8 +716,7 @@ static void vapic_write(void *opaque, hwaddr addr, =
+On Sun, Apr 19, 2026 at 1:14=E2=80=AFAM Mohamed Mediouni
+<mohamed@unpredictable.fr> wrote:
+>
+>
+>
+> > On 18. Apr 2026, at 08:14, rickgcn <rickgcn@gmail.com> wrote:
+> >
+> > 69dfc078 extended vAPIC handling for WHPX with user-mode irqchip, but i=
+t
+> > also changed vapic_write() case 4 in a way that excludes TCG from
+> > apic_poll_irq().
+> >
+> > Before that change, IRQ polling happened whenever no in-kernel irqchip
+> > was active. After the change, it only happened for KVM or WHPX with a
+> > user-mode irqchip. Under TCG, both kvm_enabled() and whpx_enabled() are
+> > false, so the poll never happens.
+> >
+> > This regresses 32-bit Windows XP guests on a Windows host with
+> > -machine pc-i440fx-10.0,accel=3Dtcg, causing a STOP 0x0000000A during b=
+oot.
+> >
+> > Fix it by making the decision depend on whether KVM or WHPX is using an
+> > in-kernel irqchip, instead of whether either accelerator is enabled.
+> >
+> > Fixes: 69dfc078a6f0 ("hw: i386: vapic: enable on WHPX with user-mode ir=
+qchip")
+> >
+> > Signed-off-by: rickgcn <rickgcn@gmail.com>
+> > ---
+> > hw/i386/vapic.c | 3 +--
+> > 1 file changed, 1 insertion(+), 2 deletions(-)
+> >
+> > diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+> > index 41e5ca26df..1acb9f91b2 100644
+> > --- a/hw/i386/vapic.c
+> > +++ b/hw/i386/vapic.c
+> > @@ -716,8 +716,7 @@ static void vapic_write(void *opaque, hwaddr addr, =
 uint64_t data,
->         break;
->     default:
->     case 4:
-> -        if ((kvm_enabled() && !kvm_irqchip_in_kernel())
-> -          || (whpx_enabled() && !whpx_irqchip_in_kernel())) {
-> +        if (!kvm_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
+> >         break;
+> >     default:
+> >     case 4:
+> > -        if ((kvm_enabled() && !kvm_irqchip_in_kernel())
+> > -          || (whpx_enabled() && !whpx_irqchip_in_kernel())) {
+> > +        if (!kvm_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
+>
+> Hi,
+>
+> I think we want to keep the kvm_enabled/whpx_enabled checks.
 
-Hi,
+No, it's not needed.  If kvm_enabled() is false either the checks are
+compiled out or the variable is false.
 
-I think we want to keep the kvm_enabled/whpx_enabled checks.
+The check is for "is it using the userspace APIC", so rickgcn's patch
+is correct.
 
-How does this sound?
+Paolo
 
-	if (!(kvm_enabled() && kvm_irqchip_in_kernel())
-	 || !(whpx_enabled() && whpx_irqchip_in_kernel())) {
-
-Or
-
-        if ((kvm_enabled() && !kvm_irqchip_in_kernel())
-          || (whpx_enabled() && !whpx_irqchip_in_kernel())
-	  || tcg_enabled()) {
-
-Thank you,
+> How does this sound?
+>
+>         if (!(kvm_enabled() && kvm_irqchip_in_kernel())
+>          || !(whpx_enabled() && whpx_irqchip_in_kernel())) {
+>
+> Or
+>
+>         if ((kvm_enabled() && !kvm_irqchip_in_kernel())
+>           || (whpx_enabled() && !whpx_irqchip_in_kernel())
+>           || tcg_enabled()) {
+>
+> Thank you,
+>
 
 
