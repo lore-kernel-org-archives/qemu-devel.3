@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB032EA719A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E22DFEA71A3
 	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 16:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEUjv-0006j5-79; Sun, 19 Apr 2026 12:11:19 -0400
+	id 1wEUjw-0006mj-VC; Sun, 19 Apr 2026 12:11:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEUjT-0006iD-GJ
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 12:10:52 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEUjq-0006ja-6s
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 12:11:15 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEUjS-00080U-1N
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 12:10:51 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4891c0620bcso1274365e9.1
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 09:10:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEUjo-0008Ei-4G
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 12:11:13 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43d03db7f87so1355086f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 09:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776615047; x=1777219847; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776615070; x=1777219870; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8HL80pioVPrcP9MAPQXRilyJEi0wxBmY35dvijnyGIE=;
- b=xTzwx1Xit/mUoINfyesIE6Yq0s6YUDCzWHTDW8cSqQ6xT3qPS/ejyadLQf4HWyGJUk
- WOi7sgdDKta7Qb/0n8qt0CuVR38Bv2hPzL+iq5naqH2SxMppx1RzJnBOFNe0QGnb07pS
- tYVd3s77CK3IQvCwsc2paJYNv+Ri1yNla8JIB3r9lsylioZu6WpKMjf8cNlYjg6VL9Qh
- 2pvBeQfn1bte8AmRod46BrFBDwmsU/Wb+ZrbZG30ZIdxHbYpBaPg9q4EujvAWfSZLDWP
- 4vDvxLaxi4gK6YkzJMfmvQed18R9Y1VfqMxdFkCSpXaqToEYDUf63Ctt4wSgu22N/iGp
- DFog==
+ bh=xPkmu94sCymbMXXa0bHCC/HhTEmKswW/grC4BA01Idw=;
+ b=SCvb9RgKUEQpYOQTF1olZDTsav/Ne4TkrieZS715tWfu57nqilJ8HuGFvEwQXcM1l3
+ Uc+LPTmIOq5TCSReNLuk8+vww91mejS80GWTN4+qj76ogtMKmqPRnxQQ3i308/Wk1mdr
+ ImtsDqZZ0qn3WHkmYQROAwbVL1rHOQzQnHONAg2IWqBnyBQDReY+9L6wtLrn+DjnkFPA
+ oQi2iBtQrzF9vizfrF8CwG0zAxhsB+3k6ekIC9qSeVGjmFAbt4jBujZQqX7GiFiBaX/F
+ pMDnljZi+yDNgCKmkeV682L9qXWjuk5he0VP6DvNabfVAiwgcywMjCcK/FPzpaFEQ2Zv
+ AkGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776615047; x=1777219847;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776615070; x=1777219870;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8HL80pioVPrcP9MAPQXRilyJEi0wxBmY35dvijnyGIE=;
- b=YDxFjiwUZOCLZStCGykQPUZIhZsIJBk5BIjZhupjrXQpBs725Nm0wtRSBybR9zrk+W
- 71amm/kE4Ia402P6QWMwa/CHEnDmqbyNe5Edh7dQigZrfdn9JULpsLDv3Lfsz2tcMAba
- DbyLbQnl7TI74a+NmE4JmGAZn39Vw1ZzDfgRdIQwWUj5DLJ/taWXR+tsPpSJh9gXofrD
- xPSM5bTlC+PuuUFmBAZssQYRiZ6KLvaNxCtXMva1q+Q4EBOB6Ip/s1tdjccMHjKW7C3l
- IdyzuomW9Xw88HYEYRPY+k4mh6RgOm0CZYtwbBUFQOz3zuqDQbqT+C/wva6wjAz1lvtA
- Byug==
-X-Gm-Message-State: AOJu0YyEkPpZlmuTIjeMPDHeA6KrVCY1p84Mnp77x3QAG2JHGs9YXcz3
- 5Znv9IIxxPB9/U4NHR+mmXK4wZ7tGwcleu2XdVzOIFmRAaCHLVrQce7rfb/j/zfEYRQ=
-X-Gm-Gg: AeBDietth+6c6OGgMA+JGUKsScy9fljVwrQeO/vH6NrJ68yeVPnbtUGaYvhTz9gLv58
- pW9B8UWKWLoOJiatQxfDDprlazegwxiZF7LW3e+kUTfNgBfUFiLxibGTh74+eJjA6CnMMB3jS+I
- JmMirNb5FCil12AWfDkgpD24zqTR9xi8JaiBO3LcW1v3etDtbzp5SdSSFitzHG5K1lSeBuWWR1I
- tLaPKHC1VYV5/BWyvpFA0yoPPevFcS/jOMrI4lxoa2sGryqMlypAMzITZ2mukwj0fb03e3r23Vo
- 08BlukU56mmmBXdoNxhtQvpLkeXEV2KeYaIt2aI2qkQWx2n48xpYHkloQmBECy28+aPX3TLDh1T
- AL8kD5ZUERb/kBOhwOoCWiLScQSaVxRveYj+A4o9EMfYKrq3k9KAOAfPqGheuw1eXXteO7jT8/7
- e0kf5iIg5H4PNr8SqPaIxymVOC0pHb8NbdZ1dIdAmyWNSnBqc4eLivzD0P6FmX2xLtgqcUnYr6F
- t0t
-X-Received: by 2002:a05:600c:8b38:b0:485:39b2:a47c with SMTP id
- 5b1f17b1804b1-488fb796fa0mr137044735e9.25.1776615047261; 
- Sun, 19 Apr 2026 09:10:47 -0700 (PDT)
+ bh=xPkmu94sCymbMXXa0bHCC/HhTEmKswW/grC4BA01Idw=;
+ b=A0DsCvt86GiaMWh1eQ3O7/Q+fAyxw+3FznKrTXb+OOnYI+E8Qvp2sb42+o/Ud+yGEw
+ 20qLPNXPsoYdN3AFvWI1IPMXNKM7/rHu7tVoeMqrnQQtkiAHO0UgP/TY0dHPv0FOLMHO
+ BHXjzY/n8IoFUgOOV5PAGcdiVOfuyVb0D9b0pd93eTtDQb26SusEiYZOPN6JzET9TNQg
+ zi4c4+FyuAKcyZUqK9LszzTvqQwanGETlfLjoUi7qUPZPgVl/GOjdbV6AvoPlIIavoom
+ gGJb27EhAUYVpXsrlVeiuOsOVp2qxB6vmJ9wsPJGxQRKgRVdLeKMI+tr7q0m3XRtF5mO
+ CzPw==
+X-Gm-Message-State: AOJu0Yx92sHxegvLZ7C/4KoU5faGN0dwxc+K6T29RFTGnsz7icXuUOhN
+ Z8UYVco9tSd/eFZ0C83cwxyvUZcvYL+4dFZchKPhgGDXqyMwfyKRfJU3/ZHYWBlAmESElW5UtU2
+ 6el+Dglw=
+X-Gm-Gg: AeBDiev8IzYCNdjsI/yNigKPmYSR6zig0vzwyGJMXQQA4DgYCUlH+SKK3l+O+6Zu4Rz
+ qzdo/b6RNACEx7zXnDAYW0sm+X+lPVErVFKrl7OR0jXIqNAAkeD3S5sQlnddPf8yYcyY5Jabr/3
+ o2DLt2U9n3YfOQoIzb4aYmJUb8HIg22tzFHQ5TVamcVKlF3XWQjOEXip02tR8ZpDEeqiMC6j6Ag
+ cpMQnp2/FQbdNYfOr1H/S63wSAVheNVIgfE4wYAUEJosQvw9hTWS8Phe7EtBlFziDxbybOY07fc
+ kOcLak8vHSB3j8+AmtOmY+G6pDkO/BsBvFISaza517dDB4egjNMniCN5Z6xlM7/jGviEj9uyv/g
+ 59gSNdJqq7nQawGCB+Yk2wVBnW7ncHAUZdCAW9U/kRHi0nZduvXSqGUktkm1av9w/1roNwp/6YP
+ kJHUYNMkJSqrHIyXJghIPUMA+97WuCfjrWBZDE0NfHN14UCmg1TI5yf7nye+cNK6len6guAFGJp
+ GY4
+X-Received: by 2002:a5d:46ce:0:b0:43f:dd40:bbc8 with SMTP id
+ ffacd0b85a97d-43fe3dfbd25mr10949699f8f.24.1776615069798; 
+ Sun, 19 Apr 2026 09:11:09 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc375dsm19669804f8f.14.2026.04.19.09.10.45
+ ffacd0b85a97d-43fe4e59f97sm24738249f8f.37.2026.04.19.09.11.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 Apr 2026 09:10:46 -0700 (PDT)
-Message-ID: <d64dff93-7129-4c39-bf9f-d2a8cf2ee4fb@linaro.org>
-Date: Sun, 19 Apr 2026 18:10:44 +0200
+ Sun, 19 Apr 2026 09:11:09 -0700 (PDT)
+Message-ID: <edd3754c-c70b-4ad4-adae-c685dd6a9e56@linaro.org>
+Date: Sun, 19 Apr 2026 18:11:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] target/ppc/mmu: Replace legacy ld/st_phys() ->
- address_space_ld/st()
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>
-References: <20260319111936.68041-1-philmd@linaro.org>
- <20260319111936.68041-6-philmd@linaro.org>
- <0749ae60-f6df-3cb8-bc5d-b46f4c20995c@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 0/8] target/ppc: Forbid to use legacy ldst_phys() API
 Content-Language: en-US
-In-Reply-To: <0749ae60-f6df-3cb8-bc5d-b46f4c20995c@eik.bme.hu>
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260319111936.68041-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260319111936.68041-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,25 +108,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/3/26 13:59, BALATON Zoltan wrote:
-> On Thu, 19 Mar 2026, Philippe Mathieu-Daudé wrote:
->> Prefer the address_space_ld/st API over the legacy ld_phys()
->> because it allow checking for bus access fault.
->>
->> This code however doesn't check for fault, so we simply inline
->> the calls (not specifying any memory transaction attribute nor
->> expecting transation result) per the definition in
->> "system/memory_ldst_phys_endian.h.inc":
-> 
-> Recently when trying to remove _nomigrate memory region functions I was 
-> told if some convenience function has more than 1 use it's probably 
-> worth to keep it. This looks like similar case even more so as the 
-> replacement is unnecessarily more complicated. So what's the problem 
-> with ld_phys in the first place and why do you want to replace it with a 
-> less convenient function? If there's a reason maybe say that in the 
-> commit message.
+Ping?
 
-We want to remove the legacy API because it does not "allow checking
-for bus access fault." The cases where we can safely ignore it are
-rare, and often ignoring it led to subtle bugs.
+On 19/3/26 12:19, Philippe Mathieu-Daudé wrote:
+> Replace legacy ld/st_phys() by address_space_ld/st()
+> then lock the target again further legacy API uses.
+> 
+> Philippe Mathieu-Daudé (8):
+>    hw/ppc/spapr: Un-inline rtas_load/store() helpers
+>    target/ppc: Factor common ppc_load_epr() helper out
+>    target/ppc/mmu: Remove unused hash32_store_hpte() helpers
+>    target/ppc/mmu: Restrict hash32_load_hpte() helpers scope
+>    target/ppc/mmu: Replace legacy ld/st_phys() -> address_space_ld/st()
+>    hw/ppc/pegasos: Introduce rtas_ldl() / rtas_stl() helpers
+>    hw/ppc/pegasos: Replace legacy ld/st_phys() -> address_space_ld/st()
+>    configs/targets: Restrict the legacy ldst_phys() API on PPC
+
 
