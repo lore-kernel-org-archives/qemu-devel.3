@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2830FEA7199
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 13:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC752EA719B
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 13:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wERmz-0000xD-8z; Sun, 19 Apr 2026 09:02:19 -0400
+	id 1wERn9-00013O-Lg; Sun, 19 Apr 2026 09:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wERme-0000tm-Uc
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:02:00 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1wERmk-0000u7-Gy
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:02:05 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wERmX-0008IU-RU
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:01:54 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so1419024f8f.0
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 06:01:44 -0700 (PDT)
+ id 1wERme-0008J5-N0
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:01:59 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43d77f60944so1657388f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 06:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1776603703; x=1777208503; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1776603707; x=1777208507; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9OztW63tvsDLU5EHuMGMvPzYUtmXl7GocMNqQvsnffQ=;
- b=Wz5mhKN5kiETJuPc4AHKD8m/D1YkXPnp3OBO1+96VTJ5Kc0zHNSFuZUDMHe6mIKl3T
- fkKd5Dqq0CT4KOWrNzIATEfSinAJNTlaojLcQd0bPkDnM272Y01EemNam0HsIMbA9X5l
- 40bacxg5Yt4H9KmfYAsLdA7gc1nY3BAYQ0/+Y=
+ bh=BN9Hs6B25FCaLyK+WKS27HHbG03I3Ib65GOh38oVQqU=;
+ b=OusyDXJBoFiBTbKFb9EDNMBGTwnzREwHNbsCY7sNJYHoCMHFBgsi2XUCKUKgN1cqb1
+ eW5dXB8+nCFoqryoSX1UvX+mW63WjOxZvv26a06/ESX+w+N4+BXsyVM9EnQTNrIK4o9E
+ ZGEbRUjVOJ1oy+V/UWUl/wOJpOgajRwPajUvs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776603703; x=1777208503;
+ d=1e100.net; s=20251104; t=1776603707; x=1777208507;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9OztW63tvsDLU5EHuMGMvPzYUtmXl7GocMNqQvsnffQ=;
- b=Em7/hcpNh13wFXn4ElSfSqCTvwSuDP7CLacsqXhbYIaTieoxVAeyKKy9yv6/UeBbw0
- 6zog2N1Ak51do4uaadV7hL62fSjJ3kPzCOX3Ik9B0WbFTKXzbXf3gAAyh6ew1iN6Etq5
- bh4RAMeLwsBtZNG7xHpkWXyP1KRgM6PCnM+CoMDHpUv4CY5LGO1B72dl+3m6VX4uZUIv
- 6SOr2Zx23i5j9LvMLEqLjq00XoA21xe2FjXpD0ueMm9gVn2+YWEBrKWIKvsF0z2R1swF
- dgrBWQ550jg0pmlijcMQhQN/GMYt3Qub6L5Krp4ILAgSTlJr9W/2pSvhiICo9abSWeZZ
- 8CZQ==
-X-Gm-Message-State: AOJu0YyaqU7GbGuobZbCEhw8/uITdeObJqMrjF6Z7UNiQtqFOA8C8lsY
- Fc3O2VF4O5CHAoJbO21uSMYYs7J5gxQW9y0dh6SvW85iZUcI41u6+CyRdBA/TICCKJBdiV4cuAU
- DKgsL2Os=
-X-Gm-Gg: AeBDieuP61Bx1wRJv4E/cxi+BBOuBZVkb+2X84FThCTGupxGzjxppHzHzrxq0oTQgIt
- kK3CtwxBOq1XnItqGZliCXonhrL6WJsZxxdvLVD0QNI46D9c+iVgi/Pr6k3vrgr06J9XzViYUom
- bB2rJs68xvUACajWe1FYGxAGDEfFYRHEFdYV/O1t0yXEs0DFTUHydK43Mk7OK8BZKH+K10ExREt
- 6HXS/OhcXK5eOEqz7Pm8B/4KpCulpK9DYpUun35KrRBhuxXMID9+lob1hwmUtiadbs1J6guNun7
- QaGDi+tifYbjBKhlGbYqME8zfkC0IPK8AnumdWH7dhqDUs/h7g/ycW8kqBOCmzky0yHVd/7cXFe
- Jy26st/jz3+mv3d5KQRl/X6TZv2hCE9vpRfjS3hTLLxoeDZjPuPtY3DAFfUzyTIKVmL0kCZ9M6m
- YsMMxmIg3V5Ru6h65m1MQ/K/hjClZpTNPxQUiYM3h6Mtzf0A3SlDFsDtLkMOILsnI533KFvrdM6
- bJuhHQ5SOuDvMPSw51UA2/x952X4FYTSA==
-X-Received: by 2002:a5d:64e5:0:b0:43d:7606:5a47 with SMTP id
- ffacd0b85a97d-43fe3f358a5mr14523615f8f.2.1776603703174; 
- Sun, 19 Apr 2026 06:01:43 -0700 (PDT)
+ bh=BN9Hs6B25FCaLyK+WKS27HHbG03I3Ib65GOh38oVQqU=;
+ b=X1KSknt9XdRA0QS8h2X4zHLcf8DqPdJf7Q28r/0ZrjIYhU/YPHo+C0T2XB9FJrBcFE
+ No1bjYNqSbmGftvACh1cpMQuCwdPLqE1kjPkrn38ACwl2aUVR6LYhrmGH8Vw9fNYLlS+
+ Y2j9PQ7S8mph0vdHvoX4lkxyKxkT6wNCKzI+qIC05Z2PEvJHqqPl5L1twho3vlnk75DU
+ o4qK2NPFc1lArPwJhK+eN2VSos9LS7IDyzuUu0388dHgCqD4ucpWzX9wWwiGDDed5kMU
+ P1LvKtb4KHLHsRgqRSowKkutFeGQr1ZoKbIcDraRgE+x0xhFvSaJ6ueKV5H4x0Ouo1VE
+ H8Qg==
+X-Gm-Message-State: AOJu0YyHUEBEZQwaXeNv6+3Z8JSYc6Vgtn+CG/InGzm+/e/TUpmDn/GB
+ SXcunQG260OuYr7oWsoZPEk8DESMTHMPhotDwwKLDBjV3Mdj1nX4I+vGgpuMT0qeFTj/eclPP5h
+ CU8WBoaY=
+X-Gm-Gg: AeBDievPzUVkbHzHuAjD7dMi6ahROIYkH+7yh7k5TjsXOJ33DIwq1DLA02G3OEnW8d7
+ 52Y1tZnwNEcZvNym9yh2G1zu1iXvGssp5GN7h4srMVRa5NrWyXWn+eskdEpX0ToB+DGr/3cVUKQ
+ rBmTGzbNLkEsfocJ13zgLcnUr7QUxwrG3omcwHJ7RtEzLPtK25TNTllQ+FlkF+wiWSlklnCEHXp
+ r7wdMADYuJX00hoMp3A9DuAzrAVYKQbkCzmShkGLZdU6zGfLyblPqwLEcr63840WwJCyaYd0nFL
+ YGjv4Jp/5SDwhJ3ALTyAW+CXE1ORBfTIHWv/hsj3LnQrdkjZ5VYd8O+jtDWdBqQ7gZcQBJ+FaiO
+ hgB7fP4t0lh2YPzNXidBY5vNHyUdoUKJFwp9joBPsvEZJqCPyzTV3NASJhnrUDGqUrCPYdzCrq2
+ B3iDIAb8bVapOQS386fql8gu4MIzxlgZFKvkNHpch2W1zsPlPik0OA/s3eo7AnK3wegwsPjarJe
+ OfwtyaX/G07rNVi1HtkLNmCG24x6xwJnJJNa/mFnZTs
+X-Received: by 2002:a05:6000:2511:b0:43d:76d8:5798 with SMTP id
+ ffacd0b85a97d-43fe3e0db09mr14977430f8f.27.1776603706568; 
+ Sun, 19 Apr 2026 06:01:46 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c00995e4e0d3496e07b.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:995e:4e0d:3496:e07b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc2cacsm20734304f8f.13.2026.04.19.06.01.41
+ ffacd0b85a97d-43fe4cc2cacsm20734304f8f.13.2026.04.19.06.01.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Apr 2026 06:01:42 -0700 (PDT)
+ Sun, 19 Apr 2026 06:01:46 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
@@ -78,24 +78,23 @@ Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Zhao Liu <zhao1.liu@intel.com>, Keith Busch <kbusch@kernel.org>,
  Peter Xu <peterx@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v6 1/8] tests/functional/migration: add VM launch/configure
- hooks
-Date: Sun, 19 Apr 2026 15:01:32 +0200
-Message-ID: <20260419130139.15554-2-alexander@mihalicyn.com>
+Subject: [PATCH v6 4/8] hw/nvme: set CQE.sq_id earlier in nvme_process_sq
+Date: Sun, 19 Apr 2026 15:01:35 +0200
+Message-ID: <20260419130139.15554-5-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260419130139.15554-1-alexander@mihalicyn.com>
 References: <20260419130139.15554-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,58 +112,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Introduce configure_machine, launch_source_vm and assert_dest_vm
-methods to allow child classes to override some pieces of
-source/dest VMs creation, start and check logic.
+Instead of filling req->cqe.sq_id in nvme_post_cqes, let's set it earlier
+in nvme_process_sq.
+
+This shouldn't cause any issues, because req->cqe.sq_id never changes
+during lifetime of req.
+
+This will help us for migration support.
 
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- tests/functional/migration.py | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 2395119d6c6..9b5b31efe3e 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -40,19 +40,35 @@ def assert_migration(self, src_vm, dst_vm):
-         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 191398e700f..d9bf32bff2c 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1520,7 +1520,6 @@ static void nvme_post_cqes(void *opaque)
  
-+    # Can be overridden by subclasses to configure both source/dest VMs.
-+    def configure_machine(self, vm):
-+        vm.add_args('-nodefaults')
-+
-+    # Can be overridden by subclasses to prepare the source VM before migration,
-+    # e.g. by running some workload inside the source VM to see if it continues
-+    # to run properly after migration.
-+    def launch_source_vm(self, vm):
-+        vm.launch()
-+
-+    # Can be overridden by subclasses to check the destination VM after migration,
-+    # e.g. by checking if the workload is still running after migration.
-+    def assert_dest_vm(self, vm):
-+        pass
-+
-     def migrate_vms(self, dst_uri, src_uri, dst_vm, src_vm):
-         dst_vm.qmp('migrate-incoming', uri=dst_uri)
-         src_vm.qmp('migrate', uri=src_uri)
-         self.assert_migration(src_vm, dst_vm)
-+        self.assert_dest_vm(dst_vm)
+         sq = req->sq;
+         req->cqe.status = cpu_to_le16((req->status << 1) | cq->phase);
+-        req->cqe.sq_id = cpu_to_le16(sq->sqid);
+         req->cqe.sq_head = cpu_to_le16(sq->head);
+         addr = cq->dma_addr + (cq->tail << NVME_CQES);
+         ret = pci_dma_write(PCI_DEVICE(n), addr, (void *)&req->cqe,
+@@ -7848,6 +7847,7 @@ static void nvme_process_sq(void *opaque)
+         QTAILQ_REMOVE(&sq->req_list, req, entry);
+         QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
+         nvme_req_clear(req);
++        req->cqe.sq_id = cpu_to_le16(sq->sqid);
+         req->cqe.cid = cmd.cid;
+         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
  
-     def migrate(self, dst_uri, src_uri=None):
-         dst_vm = self.get_vm('-incoming', 'defer', name="dst-qemu")
--        dst_vm.add_args('-nodefaults')
-+        self.configure_machine(dst_vm)
-         dst_vm.launch()
- 
-         src_vm = self.get_vm(name="src-qemu")
--        src_vm.add_args('-nodefaults')
--        src_vm.launch()
-+        self.configure_machine(src_vm)
-+        self.launch_source_vm(src_vm)
- 
-         if src_uri is None:
-             src_uri = dst_uri
 -- 
 2.47.3
 
