@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F55EA719B
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 13:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB032EA719A
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 16:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wERn7-00011m-ML; Sun, 19 Apr 2026 09:02:25 -0400
+	id 1wEUjv-0006j5-79; Sun, 19 Apr 2026 12:11:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wERml-0000uF-IJ
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:02:05 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEUjT-0006iD-GJ
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 12:10:52 -0400
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wERme-0008K8-NI
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:02:03 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEUjS-00080U-1N
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 12:10:51 -0400
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4887ca8e529so15664995e9.0
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 06:01:51 -0700 (PDT)
+ 5b1f17b1804b1-4891c0620bcso1274365e9.1
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 09:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1776603710; x=1777208510; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sBpcKOoEk+DQ0qOwh5vSLzEuS5T0qQxiJFTEUttDnck=;
- b=YPN9TbsP303pdJpJiA0fJA/xhd75FAhT+fN/FV/EDepmIvcW/j26hlxq1OGg49Njk0
- xNs5kH3iu4KSPrgfaO04ThZiKMwSancvTMVH/k7OV5mbmwQXDKcek/0G80WDj48YBKTa
- ZPtu+bPaVoAUQvu+gJyyN/Afr3lB/1CZ+iBrQ=
+ d=linaro.org; s=google; t=1776615047; x=1777219847; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8HL80pioVPrcP9MAPQXRilyJEi0wxBmY35dvijnyGIE=;
+ b=xTzwx1Xit/mUoINfyesIE6Yq0s6YUDCzWHTDW8cSqQ6xT3qPS/ejyadLQf4HWyGJUk
+ WOi7sgdDKta7Qb/0n8qt0CuVR38Bv2hPzL+iq5naqH2SxMppx1RzJnBOFNe0QGnb07pS
+ tYVd3s77CK3IQvCwsc2paJYNv+Ri1yNla8JIB3r9lsylioZu6WpKMjf8cNlYjg6VL9Qh
+ 2pvBeQfn1bte8AmRod46BrFBDwmsU/Wb+ZrbZG30ZIdxHbYpBaPg9q4EujvAWfSZLDWP
+ 4vDvxLaxi4gK6YkzJMfmvQed18R9Y1VfqMxdFkCSpXaqToEYDUf63Ctt4wSgu22N/iGp
+ DFog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776603710; x=1777208510;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=sBpcKOoEk+DQ0qOwh5vSLzEuS5T0qQxiJFTEUttDnck=;
- b=ZLM6HKvM2BLAjuYukMqRy8m3sYex7wefWMu6XmcQYwawn/NjiBQxapzqAmoK/mpV1I
- VJ4yNmilBMA8HkEfP2OcHSZFhu4QEuSWXRrw0H+mRhxgN05c2ua8fm96xWgOvLHTMl9r
- DVGA8fGdWnCd+dtoymG7BXR+HUOyGFreYBs7Uxq2p0lrkbrBYplVHIu3J77fNzariz68
- nCX6NjrOI5zYMZvWF6X2f5KOXNIKBgWcf/G3cB8KZYintzwdECdd1o9bqgp8hTFts/ll
- 9Ns47TRXnJaFAUwizgQR/0G2j1VRO1MGxpMa9iYEmEDEoNuAoPRr+lzdVCvXN9ZMU+J8
- nT0A==
-X-Gm-Message-State: AOJu0YzA+4wweA/olWZkYZPLBAOWzEuAHYsTtX8CseFoLmDsD//RnlKJ
- 41Gd7ne0xvSqrs5wklYnsumQQyDxraPU+t6rdYMy8uhReSrGufHFNJTn6/faHZQhMu2Z/689xC0
- rTxPnj+o=
-X-Gm-Gg: AeBDiev8RpZB6UyGkJiDUin2WcPeGBdVPRJFWJAhuprK/73h7ywkoQfQfDOKZZ9y77S
- uCDapj/I1JatmSqD+uTpvv+fpoCVV0Z0t5/QJ8awuDmioa2FSlcADn2HxFX0TTwMKuMxlgmcMpk
- FkVoSB9/7PVv9liRUkQqlD/Q4FruWF9bE1VR9ko2Sv4HELSmtVxyeHBydeJWo872vHoK+Mt2qMW
- IvTprq/pSbyYjYaodhlHvD+JoK64o2UH3EAFJdhDDZUZH33UcmTVkh89X0/IEdkFV2w3nO9TeKa
- Zrq0T3NCyUBOGIc6wAHpq2ZydX1DF3tnL+IQvhwxN6Uy2q7tcuw7nhMSX+YnO9aDLK/ghQ9Vbpn
- FXCapYDCfs65HZvA0IUVLpzHnn4YBOtkFSt8l3OeOhX8J1FIFYbb2hYcXNgJ45QVyCIBvPHBdQu
- YcRyA6kYB2aPEReHZrVOcUO60+er7mKPrafFjPnFywiSUgQAel2aXe9mXeShs555ElMjA9E5mYd
- ZQ6Qtjrs12lRJULy2jim5KZpiZrLVk8kg==
-X-Received: by 2002:a05:600c:8a1a:20b0:485:3038:72c2 with SMTP id
- 5b1f17b1804b1-488fb8bcdf6mr98009815e9.17.1776603710387; 
- Sun, 19 Apr 2026 06:01:50 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf57228c00995e4e0d3496e07b.dip0.t-ipconnect.de.
- [2003:cf:5722:8c00:995e:4e0d:3496:e07b])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc2cacsm20734304f8f.13.2026.04.19.06.01.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Apr 2026 06:01:49 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <its@irrelevant.dk>, Fabiano Rosas <farosas@suse.de>,
- Zhao Liu <zhao1.liu@intel.com>, Keith Busch <kbusch@kernel.org>,
- Peter Xu <peterx@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v6 7/8] tests/functional/x86_64: add migration test for NVMe
- device
-Date: Sun, 19 Apr 2026 15:01:38 +0200
-Message-ID: <20260419130139.15554-8-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260419130139.15554-1-alexander@mihalicyn.com>
-References: <20260419130139.15554-1-alexander@mihalicyn.com>
+ d=1e100.net; s=20251104; t=1776615047; x=1777219847;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8HL80pioVPrcP9MAPQXRilyJEi0wxBmY35dvijnyGIE=;
+ b=YDxFjiwUZOCLZStCGykQPUZIhZsIJBk5BIjZhupjrXQpBs725Nm0wtRSBybR9zrk+W
+ 71amm/kE4Ia402P6QWMwa/CHEnDmqbyNe5Edh7dQigZrfdn9JULpsLDv3Lfsz2tcMAba
+ DbyLbQnl7TI74a+NmE4JmGAZn39Vw1ZzDfgRdIQwWUj5DLJ/taWXR+tsPpSJh9gXofrD
+ xPSM5bTlC+PuuUFmBAZssQYRiZ6KLvaNxCtXMva1q+Q4EBOB6Ip/s1tdjccMHjKW7C3l
+ IdyzuomW9Xw88HYEYRPY+k4mh6RgOm0CZYtwbBUFQOz3zuqDQbqT+C/wva6wjAz1lvtA
+ Byug==
+X-Gm-Message-State: AOJu0YyEkPpZlmuTIjeMPDHeA6KrVCY1p84Mnp77x3QAG2JHGs9YXcz3
+ 5Znv9IIxxPB9/U4NHR+mmXK4wZ7tGwcleu2XdVzOIFmRAaCHLVrQce7rfb/j/zfEYRQ=
+X-Gm-Gg: AeBDietth+6c6OGgMA+JGUKsScy9fljVwrQeO/vH6NrJ68yeVPnbtUGaYvhTz9gLv58
+ pW9B8UWKWLoOJiatQxfDDprlazegwxiZF7LW3e+kUTfNgBfUFiLxibGTh74+eJjA6CnMMB3jS+I
+ JmMirNb5FCil12AWfDkgpD24zqTR9xi8JaiBO3LcW1v3etDtbzp5SdSSFitzHG5K1lSeBuWWR1I
+ tLaPKHC1VYV5/BWyvpFA0yoPPevFcS/jOMrI4lxoa2sGryqMlypAMzITZ2mukwj0fb03e3r23Vo
+ 08BlukU56mmmBXdoNxhtQvpLkeXEV2KeYaIt2aI2qkQWx2n48xpYHkloQmBECy28+aPX3TLDh1T
+ AL8kD5ZUERb/kBOhwOoCWiLScQSaVxRveYj+A4o9EMfYKrq3k9KAOAfPqGheuw1eXXteO7jT8/7
+ e0kf5iIg5H4PNr8SqPaIxymVOC0pHb8NbdZ1dIdAmyWNSnBqc4eLivzD0P6FmX2xLtgqcUnYr6F
+ t0t
+X-Received: by 2002:a05:600c:8b38:b0:485:39b2:a47c with SMTP id
+ 5b1f17b1804b1-488fb796fa0mr137044735e9.25.1776615047261; 
+ Sun, 19 Apr 2026 09:10:47 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4cc375dsm19669804f8f.14.2026.04.19.09.10.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 19 Apr 2026 09:10:46 -0700 (PDT)
+Message-ID: <d64dff93-7129-4c39-bf9f-d2a8cf2ee4fb@linaro.org>
+Date: Sun, 19 Apr 2026 18:10:44 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/8] target/ppc/mmu: Replace legacy ld/st_phys() ->
+ address_space_ld/st()
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
+ kvm@vger.kernel.org, qemu-ppc@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20260319111936.68041-1-philmd@linaro.org>
+ <20260319111936.68041-6-philmd@linaro.org>
+ <0749ae60-f6df-3cb8-bc5d-b46f4c20995c@eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <0749ae60-f6df-3cb8-bc5d-b46f4c20995c@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32a.google.com
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,210 +110,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+On 19/3/26 13:59, BALATON Zoltan wrote:
+> On Thu, 19 Mar 2026, Philippe Mathieu-Daudé wrote:
+>> Prefer the address_space_ld/st API over the legacy ld_phys()
+>> because it allow checking for bus access fault.
+>>
+>> This code however doesn't check for fault, so we simply inline
+>> the calls (not specifying any memory transaction attribute nor
+>> expecting transation result) per the definition in
+>> "system/memory_ldst_phys_endian.h.inc":
+> 
+> Recently when trying to remove _nomigrate memory region functions I was 
+> told if some convenience function has more than 1 use it's probably 
+> worth to keep it. This looks like similar case even more so as the 
+> replacement is unnecessarily more complicated. So what's the problem 
+> with ld_phys in the first place and why do you want to replace it with a 
+> less convenient function? If there's a reason maybe say that in the 
+> commit message.
 
-Introduce a very simple test to ensure that NVMe device
-migration works fine.
-
-Test plan is simple:
-1. prepare VM with NVMe device
-2. run workload that produces relatively heavy IO on the device
-3. migrate VM
-4. ensure that workload is alive and finishes without errors
-
-Test can be run as simple as:
-$ meson test 'func-x86_64-nvme_migration' --setup thorough -C build
-
-In the future we can extend this approach, and introduce some
-fio-based tests. And probably, it makes sense to make this test
-to apply not only to NVMe device, but also virtio-{blk,scsi},
-ide, sata and other migratable devices.
-
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
----
- tests/functional/x86_64/meson.build           |   1 +
- .../functional/x86_64/test_nvme_migration.py  | 159 ++++++++++++++++++
- 2 files changed, 160 insertions(+)
- create mode 100755 tests/functional/x86_64/test_nvme_migration.py
-
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 1ed10ad6c29..fd77f19d726 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -37,6 +37,7 @@ tests_x86_64_system_thorough = [
-   'linux_initrd',
-   'multiprocess',
-   'netdev_ethtool',
-+  'nvme_migration',
-   'replay',
-   'reverse_debug',
-   'tuxrun',
-diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
-new file mode 100755
-index 00000000000..3788a8e3473
---- /dev/null
-+++ b/tests/functional/x86_64/test_nvme_migration.py
-@@ -0,0 +1,159 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# x86_64 NVMe migration test
-+
-+from migration import MigrationTest
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command, exec_command_and_wait_for_pattern
-+
-+
-+class X8664NVMeMigrationTest(MigrationTest):
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
-+        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
-+
-+    ASSET_DISKIMAGE = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2'),
-+        'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
-+
-+    DEFAULT_KERNEL_PARAMS = ('root=/dev/nvme0n1p1 console=ttyS0 net.ifnames=0 '
-+                             'rd.rescue quiet')
-+
-+    def wait_for_console_pattern(self, success_message, vm):
-+        wait_for_console_pattern(
-+            self,
-+            success_message,
-+            failure_message="Kernel panic - not syncing",
-+            vm=vm,
-+        )
-+
-+    def exec_command_and_check(self, command, vm):
-+        prompt = '# '
-+        exec_command_and_wait_for_pattern(self,
-+                                        f"{command} && echo OK || echo FAIL",
-+                                        'FAIL', vm=vm)
-+        # Note, that commands we send to the console are echo-ed back, so if we have a word "FAIL"
-+        # in the command itself, we should expect to see it once.
-+        wait_for_console_pattern(self, 'OK', failure_message="FAIL", vm=vm)
-+        self.wait_for_console_pattern(prompt, vm)
-+
-+    def configure_machine(self, vm):
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+        diskimage_path = self.ASSET_DISKIMAGE.fetch()
-+
-+        vm.set_console()
-+        vm.add_args("-cpu", "max")
-+        vm.add_args("-m", "2G")
-+        vm.add_args("-accel", "kvm")
-+
-+        vm.add_args('-drive',
-+                         f'file={diskimage_path},if=none,id=drv0,snapshot=on')
-+        vm.add_args('-device', 'nvme,bus=pcie.0,' +
-+                         'drive=drv0,id=nvme-disk0,serial=nvmemigratetest,bootindex=1')
-+
-+        vm.add_args(
-+            "-kernel",
-+            kernel_path,
-+            "-initrd",
-+            initrd_path,
-+            "-append",
-+            self.DEFAULT_KERNEL_PARAMS
-+        )
-+
-+    def launch_source_vm(self, vm):
-+        vm.launch()
-+
-+        self.wait_for_console_pattern('Entering emergency mode.', vm)
-+        prompt = '# '
-+        self.wait_for_console_pattern(prompt, vm)
-+
-+        # Synchronize on NVMe driver creating the root device
-+        exec_command_and_wait_for_pattern(self,
-+                        "while ! (dmesg -c | grep nvme0n1:) ; do sleep 1 ; done",
-+                        "nvme0n1", vm=vm)
-+        self.wait_for_console_pattern(prompt, vm)
-+
-+        # prepare system
-+        exec_command_and_wait_for_pattern(self, 'mount /dev/nvme0n1p1 /sysroot',
-+                                          prompt, vm=vm)
-+        exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
-+                                          prompt, vm=vm)
-+        exec_command_and_wait_for_pattern(self, 'mount -t proc proc /proc',
-+                                          prompt, vm=vm)
-+        exec_command_and_wait_for_pattern(self, 'mount -t sysfs sysfs /sys',
-+                                          prompt, vm=vm)
-+
-+        # Run workload before migration to check if it continues to run properly after migration
-+        #
-+        # Workload is simple: it continuously calculates checksums of all files in /usr/bin
-+        # to generate some I/O load on the NVMe disk and at the same time it drops caches to
-+        # make sure that we have some read I/O on the disk as well.
-+        # If there are any issues with the migration of the NVMe device, we should see errors
-+        # in dmesg and consequently in the workload log.
-+        exec_command_and_wait_for_pattern(self,
-+                                        "(while [ ! -f /tmp/test_nvme_migration_workload.stop ]; do \
-+                                            rm -f /tmp/test_nvme_migration_workload.iteration_finished; \
-+                                            echo 3 > /proc/sys/vm/drop_caches; \
-+                                            find /usr/bin -type f -exec cksum {} \\;; \
-+                                            touch /tmp/test_nvme_migration_workload.iteration_finished; \
-+                                        done) > /dev/null 2> /tmp/test_nvme_migration_workload.errors &",
-+                                        prompt, vm=vm)
-+        exec_command_and_wait_for_pattern(self, 'echo $! > /tmp/test_nvme_migration_workload.pid',
-+                                          prompt, vm=vm)
-+
-+        # check if process is alive and running
-+        self.exec_command_and_check("kill -0 $(cat /tmp/test_nvme_migration_workload.pid)", vm)
-+
-+    def assert_dest_vm(self, vm):
-+        prompt = '# '
-+
-+        # check if process is alive and running after migration, if not - fail the test
-+        self.exec_command_and_check("kill -0 $(cat /tmp/test_nvme_migration_workload.pid)", vm)
-+
-+        # signal workload to stop
-+        exec_command_and_wait_for_pattern(self, 'touch /tmp/test_nvme_migration_workload.stop',
-+                                          prompt, vm=vm)
-+
-+        # wait workload to finish, because we want to examine log to see if there are any errors
-+        exec_command_and_wait_for_pattern(self,
-+                                        "while [ ! -f /tmp/test_nvme_migration_workload.iteration_finished ]; do sleep 1; done;",
-+                                        prompt, vm=vm)
-+
-+        exec_command_and_wait_for_pattern(self, 'cat /tmp/test_nvme_migration_workload.errors',
-+                                          prompt, vm=vm)
-+
-+        # fail the test if non-empty
-+        self.exec_command_and_check("[ ! -s /tmp/test_nvme_migration_workload.errors ]", vm)
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('q35')
-+        self.require_accelerator("kvm")
-+
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('q35')
-+        self.require_accelerator("kvm")
-+
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('q35')
-+        self.require_accelerator("kvm")
-+
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
--- 
-2.47.3
-
+We want to remove the legacy API because it does not "allow checking
+for bus access fault." The cases where we can safely ignore it are
+rare, and often ignoring it led to subtle bugs.
 
