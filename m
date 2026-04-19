@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B75E9EA719C
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 13:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B010AEA719B
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 13:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wERnD-00013w-MW; Sun, 19 Apr 2026 09:02:32 -0400
+	id 1wERn1-00011D-6o; Sun, 19 Apr 2026 09:02:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wERmk-0000u8-He
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:02:05 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1wERme-0000tj-UI
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:02:00 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wERmc-0008Jr-Cn
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:01:59 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43d64313c39so1680202f8f.3
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 06:01:48 -0700 (PDT)
+ id 1wERmX-0008If-Ss
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 09:01:54 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488b00ed86fso22799655e9.3
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 06:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1776603708; x=1777208508; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1776603704; x=1777208504; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HQw+kuVjtbO6TkwAkF7eczBsBb+4xiQrsikCv0Jap6c=;
- b=idPypAc9pa6wpOoAO+u1Ftp5iX0eqYyNLBzIzCCDYsMqIIwz7891i116pX+4bPmZPs
- ynRbyMsKUorTt8En7GpI8m7tuCn6lXBHdhK9ZPZdeR6omr2eB2Rbq7NFYoMIgV8tw9CE
- 1BBC7NWGVWf838tAPJzd7V0pddXz+1Z7aNjXo=
+ bh=SEO6/lrYdm4dOs+1aF7CdwIzHMn2tXQZYpY2v/1+t2k=;
+ b=M3NbKoxdfi7Uy4BiVTE439mbvHPvGCiRr9H3p/m5Ku2eYtfcAFDkUtubz+f82sGkdD
+ 13R3atZdMCf9wBgVX3SmrSrlutPUdDbyj2ROHL3Zbdi9z6y1qiApJBShq7Hu+NMdpqFt
+ xw8Zdd014efQ4h00RzuZVqb+SlOHSHWFFeDp4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776603708; x=1777208508;
+ d=1e100.net; s=20251104; t=1776603704; x=1777208504;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HQw+kuVjtbO6TkwAkF7eczBsBb+4xiQrsikCv0Jap6c=;
- b=fp/CJ0PSquclpZ2oEsYqoQhCqEhlWoTn+g+0jMlyIVsddVzBS5N59hU5X3ed6vk0OB
- ai/i8JjKcrSZ6JJundeUgteg/nI7NrK5HgIr7WEnfowIkVmCkJvGT9Xh1Vch/mbtlcB4
- 2grMhGSsED11LHHSwQZlVnFEOma/OQEXpESfUNDiSw/hd3DEUJ0HbGfuuRNIL0M5Rduv
- U3OL/FO25R6QpXakwxs/0LPLNB16BjGbTJkrTM1bxFC64HnLrtwMhglvWy8IYhFzThqh
- T4SUfLm5ivpB5P0QszZvqwCgg7zrVdg6BFubq79fXWIhXMIPB+4ffRMGDFOZmh0AJ1dl
- soQQ==
-X-Gm-Message-State: AOJu0YxWo72yA7479kVgQ2EyaosciAsqSdJiPnqN8fixsBIR2CHtOe52
- MX4Izyj+cFuw6J8UpIsQv4u4GN6VJjrjcPJ1LPuwuawK6EYvy7O83wYvLrqu2CFtBXP10aMT4bl
- c0P7YbU0=
-X-Gm-Gg: AeBDiev8FVd6fNeDLtnRuT8JrFHMYdLm9shE7RrxD3L/Coih6Mv9Wy6gzrpgnnCVJWv
- 7EC5kRAWDXEDV77GyI+kRmN/nK/PcauQ/f4/DmGyzyhq7rPMzvBjdWa7V07nVUAoQmtv46Pl4A8
- 1zokkYWRUFVqgCZeGbcEPd3VXrVUZMlmhSCxY/iFbCeXDBTR5J1YMt6iXUMAKkWsjOe6HQyHJaP
- NOasl9c7udezMZySPiihsiPEJsz63Q2g+OazsZMjqeaYVmIF/rnCZgKTqz6kguXCBM8klrWznje
- n2xiuhERWKZMbnw+m4gWlVigtn2d6kFPMXVPiahM18oOaeD5aEoGYDmyP7DYSr/wAMxlcImLMmD
- 1Vemy0tZ0C0VuplEedVL+1RPwfp3Slz8w1eNNNh4FSiKeUVVK5igxdNSbZ55UrrCW8ALHELntQc
- GoPZmb3i4SSVtXEsbL7ISv9SUnOLTi3yweddldEGeWlBv629ci8cY0J0Yy91R3zDhJBMHWgNr0w
- AiaSTTv2EMc1pFhy46hCSCvjg+y6LT95Q==
-X-Received: by 2002:a05:6000:25c4:b0:43b:8f56:1e1d with SMTP id
- ffacd0b85a97d-43fe3dc10demr14095668f8f.13.1776603707596; 
- Sun, 19 Apr 2026 06:01:47 -0700 (PDT)
+ bh=SEO6/lrYdm4dOs+1aF7CdwIzHMn2tXQZYpY2v/1+t2k=;
+ b=JsoYMn1+7A/goQSeT+HbO+qdfS19Pz7jGiZlqLYf59kQA6p8VPUL6BzlJznG6YXd4D
+ QCi20/z7lO2xiZQ2Tx0mI1x2T30M7ZgB1cYocsW5O0tF5tWsecgyRXTfgJbSV00qXVa2
+ n6i6mpeCIN0xVCrr6P458PJUMDNOfUoE8OJzHFJemZkxU17grJ32YtvJ6t73aR9pIxOR
+ JusT0lqCQtyOPlUyDLtCZE+DITTIBwnoQWQiJVbYFnvXS//z3/46GKOUbmkeROTbVcIl
+ CEl63/mkhchg/axSBLC0eRgzRapK+Q7JmHtpRt+7cCA4d/fzKg/yXQSAB+hOtRAR0kmv
+ b4aA==
+X-Gm-Message-State: AOJu0Yw3ZjmPZCYdcqcci1kU78L7rfUqg+pZytuvj1CIZ7ESNNyQ6svB
+ Ahx9g7ZYQNTVEnIeZzrFILPsOYJ95qx7/0layeDrSMqi9yulPGCW0JJQeZjiywLMKIYh38EF1tc
+ WlfliLus=
+X-Gm-Gg: AeBDiesPH7jyRrlrZPhAYTnlrZjg9jGSF53xkp/hSdW2iJjGMj4Efj3xeo8l0XcNv8E
+ +9ZjF+zYdgr/7XoN5KxYlBxqBWLPPXsdjIVRXbHuW2m2aTKIOZ7jL2T4bIQn9rC5y86ntx581Qz
+ m79RPnhPSbXvqGhX/5oEbC66UXhmADR03X8fz24yRCsG2ILol2ZjBG/y2BFpu61g6ALuPyknm18
+ w4dNTgvqT/UIGBeR+LeCdzqh09H3yx0AFLz4mE0I/IV2cBOT6qtfl7foS/PeqipC2z5wKJ5QD3K
+ 3i570YGWaecXaDy37Zw1XtvbChEHlxsaDOE7F3BCg/X2nHiWo4yQlr6XApcorccs96rta+BJ+mS
+ UCGa9XXAO8GyRLOLH+S6oXL3ELfLL7DymneZht4wASxcegad5V2al7dhd83kxZom5BpSrg69eXb
+ Zv6n3IFBS3r+4heFUxTOPMNWtCaBOxN8NH1rBQLXQMZYshnCV2L2/8YQpLNKfz+QO1WWTi/gIoF
+ q62K02Ia9urn9udm99xqVv6USUckrh67w==
+X-Received: by 2002:a05:600c:5295:b0:485:30d4:6b9e with SMTP id
+ 5b1f17b1804b1-488fb77facemr148012285e9.21.1776603704434; 
+ Sun, 19 Apr 2026 06:01:44 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c00995e4e0d3496e07b.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:995e:4e0d:3496:e07b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc2cacsm20734304f8f.13.2026.04.19.06.01.46
+ ffacd0b85a97d-43fe4cc2cacsm20734304f8f.13.2026.04.19.06.01.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Apr 2026 06:01:47 -0700 (PDT)
+ Sun, 19 Apr 2026 06:01:43 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
@@ -78,17 +78,16 @@ Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Zhao Liu <zhao1.liu@intel.com>, Keith Busch <kbusch@kernel.org>,
  Peter Xu <peterx@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v6 5/8] hw/nvme: unmap req->sg earlier in
- nvme_enqueue_req_completion
-Date: Sun, 19 Apr 2026 15:01:36 +0200
-Message-ID: <20260419130139.15554-6-alexander@mihalicyn.com>
+Subject: [PATCH v6 2/8] hw/nvme: add migration blockers for non-supported cases
+Date: Sun, 19 Apr 2026 15:01:33 +0200
+Message-ID: <20260419130139.15554-3-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260419130139.15554-1-alexander@mihalicyn.com>
 References: <20260419130139.15554-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,37 +112,318 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Instead of unmapping req->sg in nvme_post_cqes(), we can do it earlier in
-nvme_enqueue_req_completion(). When req completion is enqueued we don't
-need to access req->sg anymore. We only care about req->sq, req->cqe and
-req->status.
+Let's block migration for cases we don't support:
+- SR-IOV
+- CMB
+- PMR
+- SPDM
+
+No functional changes here, because NVMe migration is
+not supported at all as of this commit.
 
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- hw/nvme/ctrl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/nvme/ctrl.c       | 206 +++++++++++++++++++++++++++++++++++++++++++
+ hw/nvme/nvme.h       |   3 +
+ include/block/nvme.h |  12 +++
+ 3 files changed, 221 insertions(+)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index d9bf32bff2c..1ff91493b60 100644
+index cc4593cd427..9f9c9bcbead 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -1534,7 +1534,6 @@ static void nvme_post_cqes(void *opaque)
-         QTAILQ_REMOVE(&cq->req_list, req, entry);
+@@ -207,6 +207,7 @@
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pcie_sriov.h"
+ #include "system/spdm-socket.h"
++#include "migration/blocker.h"
+ #include "migration/vmstate.h"
  
-         nvme_inc_cq_tail(cq);
--        nvme_sg_unmap(&req->sg);
+ #include "nvme.h"
+@@ -250,6 +251,7 @@ static const bool nvme_feature_support[NVME_FID_MAX] = {
+     [NVME_COMMAND_SET_PROFILE]      = true,
+     [NVME_FDP_MODE]                 = true,
+     [NVME_FDP_EVENTS]               = true,
++    /* if you add something here, please update nvme_set_migration_blockers() */
+ };
  
-         if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
-             qemu_bh_schedule(sq->bh);
-@@ -1564,6 +1563,8 @@ static void nvme_enqueue_req_completion(NvmeCQueue *cq, NvmeRequest *req)
-                                       req->status, req->cmd.opcode);
+ static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
+@@ -4601,6 +4603,7 @@ static uint16_t nvme_io_mgmt_send(NvmeCtrl *n, NvmeRequest *req)
+         return 0;
+     case NVME_IOMS_MO_RUH_UPDATE:
+         return nvme_io_mgmt_send_ruh_update(n, req);
++    /* if you add something here, please update nvme_set_migration_blockers() */
+     default:
+         return NVME_INVALID_FIELD | NVME_DNR;
+     };
+@@ -7518,6 +7521,10 @@ static uint16_t nvme_security_receive(NvmeCtrl *n, NvmeRequest *req)
+ 
+ static uint16_t nvme_directive_send(NvmeCtrl *n, NvmeRequest *req)
+ {
++    /*
++     * When adding a new dtype handling here,
++     * please also update nvme_set_migration_blockers().
++     */
+     return NVME_INVALID_FIELD | NVME_DNR;
+ }
+ 
+@@ -9208,6 +9215,199 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+     }
+ }
+ 
++#define BLOCKER_FEATURES_MAX_LEN 256
++
++static inline void nvme_add_blocker_feature(char *blocker_features, const char *feature)
++{
++    if (strlen(blocker_features) > 0) {
++        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
++    }
++    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
++}
++
++static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
++{
++    uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
++    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
++    bool adm_cmd_security_checked = false;
++    bool cmd_io_mgmt_checked = false;
++    bool cmd_zone_checked = false;
++
++    /*
++     * Idea of this function is simple, we iterate over all Command Sets and
++     * for each supported command we provide a special handling logic to
++     * determine if we should block migration or not.
++     *
++     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is always
++     * available to the guest, but if there is only 1 namespace, then it is
++     * safe to allow migration, but if there are more, then we need to block
++     * migration because we don't handle this in migration code yet.
++     */
++    for (int opcode = 0; opcode < sizeof(n->cse.acs) / sizeof(n->cse.acs[0]); opcode++) {
++        /* Is command supported? */
++        if (!n->cse.acs[opcode]) {
++            continue;
++        }
++
++        switch (opcode) {
++        case NVME_ADM_CMD_DELETE_SQ:
++        case NVME_ADM_CMD_CREATE_SQ:
++        case NVME_ADM_CMD_GET_LOG_PAGE:
++        case NVME_ADM_CMD_DELETE_CQ:
++        case NVME_ADM_CMD_CREATE_CQ:
++        case NVME_ADM_CMD_IDENTIFY:
++        case NVME_ADM_CMD_ABORT:
++        case NVME_ADM_CMD_SET_FEATURES:
++        case NVME_ADM_CMD_GET_FEATURES:
++        case NVME_ADM_CMD_ASYNC_EV_REQ:
++        case NVME_ADM_CMD_DBBUF_CONFIG:
++        case NVME_ADM_CMD_FORMAT_NVM:
++        case NVME_ADM_CMD_DIRECTIVE_SEND:
++        case NVME_ADM_CMD_DIRECTIVE_RECV:
++            break;
++        case NVME_ADM_CMD_NS_ATTACHMENT:
++            int namespaces_num = 0;
++            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
++                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
++                if (!ns) {
++                    continue;
++                }
++
++                namespaces_num++;
++            }
++
++            if (namespaces_num > 1) {
++                nvme_add_blocker_feature(blocker_features, "Namespace Attachment");
++            }
++
++            break;
++        case NVME_ADM_CMD_VIRT_MNGMT:
++            if (n->params.sriov_max_vfs) {
++                nvme_add_blocker_feature(blocker_features, "SR-IOV");
++            }
++
++            break;
++        case NVME_ADM_CMD_SECURITY_SEND:
++        case NVME_ADM_CMD_SECURITY_RECV:
++            if (adm_cmd_security_checked) {
++                break;
++            }
++
++            if (pci_dev->spdm_port) {
++                nvme_add_blocker_feature(blocker_features, "SPDM");
++            }
++
++            adm_cmd_security_checked = true;
++
++            break;
++        default:
++            g_assert_not_reached();
++        }
++    }
++
++    for (int opcode = 0; opcode < sizeof(n->cse.iocs.nvm) / sizeof(n->cse.iocs.nvm[0]); opcode++) {
++        if (!n->cse.iocs.nvm[opcode]) {
++            continue;
++        }
++
++        switch (opcode) {
++        case NVME_CMD_FLUSH:
++        case NVME_CMD_WRITE:
++        case NVME_CMD_READ:
++        case NVME_CMD_COMPARE:
++        case NVME_CMD_WRITE_ZEROES:
++        case NVME_CMD_DSM:
++        case NVME_CMD_VERIFY:
++        case NVME_CMD_COPY:
++            break;
++        case NVME_CMD_IO_MGMT_RECV:
++        case NVME_CMD_IO_MGMT_SEND:
++            if (cmd_io_mgmt_checked) {
++                break;
++            }
++
++            /* check for NVME_IOMS_MO_RUH_UPDATE */
++            if (n->subsys->params.fdp.enabled) {
++                nvme_add_blocker_feature(blocker_features, "FDP");
++            }
++
++            cmd_io_mgmt_checked = true;
++
++            break;
++        default:
++            g_assert_not_reached();
++        }
++    }
++
++    for (int opcode = 0; opcode < sizeof(n->cse.iocs.zoned) / sizeof(n->cse.iocs.zoned[0]); opcode++) {
++        /*
++         * If command isn't supported or we have the same command
++         * in n->cse.iocs.nvm, then we can skip it here.
++         */
++        if (!n->cse.iocs.zoned[opcode] || n->cse.iocs.nvm[opcode]) {
++            continue;
++        }
++
++        switch (opcode) {
++        case NVME_CMD_ZONE_APPEND:
++        case NVME_CMD_ZONE_MGMT_SEND:
++        case NVME_CMD_ZONE_MGMT_RECV:
++            if (cmd_zone_checked) {
++                break;
++            }
++
++            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
++                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
++                if (!ns) {
++                    continue;
++                }
++
++                if (ns->params.zoned) {
++                    nvme_add_blocker_feature(blocker_features, "Zoned Namespace");
++                    break;
++                }
++            }
++
++            cmd_zone_checked = true;
++
++            break;
++        default:
++            g_assert_not_reached();
++        }
++    }
++
++    /*
++     * Try our best to explicitly detect all not supported caps,
++     * to let users know what features cause migration to be blocked,
++     * but in case we miss handling here, everything else will be
++     * covered by unsupported_cap check.
++     */
++    if (NVME_CAP_CMBS(cap)) {
++        nvme_add_blocker_feature(blocker_features, "CMB");
++        cap &= ~((uint64_t)CAP_CMBS_MASK << CAP_CMBS_SHIFT);
++    }
++
++    if (NVME_CAP_PMRS(cap)) {
++        nvme_add_blocker_feature(blocker_features, "PMR");
++        cap &= ~((uint64_t)CAP_PMRS_MASK << CAP_PMRS_SHIFT);
++    }
++
++    unsupported_cap = cap & ~NVME_MIGRATION_SUPPORTED_CAP_BITS;
++    if (unsupported_cap) {
++        nvme_add_blocker_feature(blocker_features, "unknown capability");
++    }
++
++    assert(n->migration_blocker == NULL);
++    if (strlen(blocker_features) > 0) {
++        error_setg(&n->migration_blocker, "Migration is not supported for %s", blocker_features);
++        if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
+ static int nvme_init_subsys(NvmeCtrl *n, Error **errp)
+ {
+     int cntlid;
+@@ -9313,6 +9513,10 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
+ 
+         n->subsys->namespaces[ns->params.nsid] = ns;
+     }
++
++    if (!nvme_set_migration_blockers(n, pci_dev, errp)) {
++        return;
++    }
+ }
+ 
+ static void nvme_exit(PCIDevice *pci_dev)
+@@ -9365,6 +9569,8 @@ static void nvme_exit(PCIDevice *pci_dev)
      }
  
-+    nvme_sg_unmap(&req->sg);
+     memory_region_del_subregion(&n->bar0, &n->iomem);
 +
-     QTAILQ_REMOVE(&req->sq->out_req_list, req, entry);
-     QTAILQ_INSERT_TAIL(&cq->req_list, req, entry);
++    migrate_del_blocker(&n->migration_blocker);
+ }
  
+ static const Property nvme_props[] = {
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index d66f7dc82d5..457b6637249 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -666,6 +666,9 @@ typedef struct NvmeCtrl {
+ 
+     /* Socket mapping to SPDM over NVMe Security In/Out commands */
+     int spdm_socket;
++
++    /* Migration-related stuff */
++    Error *migration_blocker;
+ } NvmeCtrl;
+ 
+ typedef enum NvmeResetType {
+diff --git a/include/block/nvme.h b/include/block/nvme.h
+index 9d7159ed7a7..a7f586fc801 100644
+--- a/include/block/nvme.h
++++ b/include/block/nvme.h
+@@ -141,6 +141,18 @@ enum NvmeCapMask {
+ #define NVME_CAP_SET_CMBS(cap, val)   \
+     ((cap) |= (uint64_t)((val) & CAP_CMBS_MASK)   << CAP_CMBS_SHIFT)
+ 
++#define NVME_MIGRATION_SUPPORTED_CAP_BITS ( \
++      ((uint64_t)CAP_MQES_MASK   << CAP_MQES_SHIFT)   \
++    | ((uint64_t)CAP_CQR_MASK    << CAP_CQR_SHIFT)    \
++    | ((uint64_t)CAP_AMS_MASK    << CAP_AMS_SHIFT)    \
++    | ((uint64_t)CAP_TO_MASK     << CAP_TO_SHIFT)     \
++    | ((uint64_t)CAP_DSTRD_MASK  << CAP_DSTRD_SHIFT)  \
++    | ((uint64_t)CAP_NSSRS_MASK  << CAP_NSSRS_SHIFT)  \
++    | ((uint64_t)CAP_CSS_MASK    << CAP_CSS_SHIFT)    \
++    | ((uint64_t)CAP_MPSMIN_MASK << CAP_MPSMIN_SHIFT) \
++    | ((uint64_t)CAP_MPSMAX_MASK << CAP_MPSMAX_SHIFT) \
++)
++
+ enum NvmeCapCss {
+     NVME_CAP_CSS_NCSS    = 1 << 0,
+     NVME_CAP_CSS_IOCSS   = 1 << 6,
 -- 
 2.47.3
 
