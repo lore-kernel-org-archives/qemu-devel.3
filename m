@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD14EA71A1
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 19:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE41EEA71AA
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 21:11:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEY52-0005Ne-MA; Sun, 19 Apr 2026 15:45:20 -0400
+	id 1wEZPq-0001We-P0; Sun, 19 Apr 2026 17:10:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1wEY50-0005N5-PB
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 15:45:18 -0400
-Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEZPk-0001VR-D0
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 17:10:51 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1wEY4z-0004AN-4M
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 15:45:18 -0400
-Received: by mail-dy1-x1329.google.com with SMTP id
- 5a478bee46e88-2c15849aa2cso2873331eec.0
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 12:45:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEZPi-0008HZ-Cz
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 17:10:48 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488a4bc360bso14121095e9.0
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 14:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776627915; x=1777232715; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776633043; x=1777237843; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=t9B0AG+zxZtzlL8RLO9c0uKyS0sPfKurOxx2FmTxBZA=;
- b=KubcDrb7aRYiSA65Jy2uJp4YO2F0O2F85cK2Qvafn2s+xyt4HGNdCNZKQa4aVfmZgs
- kiu/CxoauCXEvMxbozRg5xERs2nP/Z6QSc+pj8LGe1qa2F9XjWF5glwnsped+XswVDLH
- VIU8G5E1CwKOKXVX3hcRaltqY5lHiUX5hIymP4Gbi7nhTAm6RNueaZSJdd9VzL5lN1+d
- YpPn/amPv2ftvCUvAyZ3uhLjc8R4XlPDAKEwQ0rUulHqYO5rlabcCBYjA4aKLyUZdduV
- kit7ilsnnAp/NlpoarnBtKYTkCRkE8jKS8bxTduuYppwUhv8BC9FSFIGm5C5tCr7q/kQ
- x3pw==
+ bh=qsg8rUeDLQZVLVVnW8TfPXsM/XMptyJ8w4S6dfSGN0c=;
+ b=QIXnzaz3bZi4iOXRBgGf/zPraXDeD249cZS32Cf8GfHFSXSW+NTamVVTHBEftOgGhJ
+ GRB6btX9wwWteFjvD+kkis67VDg/wCc+AauFM8bDd6NkfyaC5DCzTq+3uaj1+mKc2qD6
+ DhavKo6Rixh1I09n0ZyTptq5miAt/XueUNgMijCAXbsPdooAwVwH+yTiXa6BmNzbvIw6
+ SNwyXgsN0HMy/Zn6BQ6TrAc+TBKKJP+vAYyr5xjyahBFggh6U0CaR8hoTalU5ill9qcH
+ cx4qlrma7TcS1x+lEsDAEjBNCA0R/XQcz4/OdTMy6Wi8IKtDegpimI0qY0oLdvNX/HGT
+ szKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776627915; x=1777232715;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776633043; x=1777237843;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=t9B0AG+zxZtzlL8RLO9c0uKyS0sPfKurOxx2FmTxBZA=;
- b=QVs0eqiXF8/e2jJrP3GIJP8nmQzc3tVe5yRvEJWoQ2FXRkMcibnyBcEEWq8fm2agAp
- uYXThmp0Hdkk7LvXwX8jdDv11w2HO8QVw5OHYlMnVi9TLEGHq/+V9TrPl/Hggm97JlzK
- umSJgNb6F1NuCCww98T1IgtYOw7gMT0M/rxNjVZ5V9/mtmMG74pJlTk87/YJUfmp4IlH
- hpF4o26nbrAsH7PQccK8KXqgYhe/ZPbDqASv8e/iqf7dsNitSRJLHN71qxqB2EgNKBf8
- OLWG+GYMwJhZTUOWwW/XjuvMsWtEXmeFGXwkUy/qEmKYzg7lJtdYvsOG1FT/jrqCJgEa
- jEyQ==
+ bh=qsg8rUeDLQZVLVVnW8TfPXsM/XMptyJ8w4S6dfSGN0c=;
+ b=NSlrpXuXKFkX+Ytv094W8TVS5BiyHJ1ShXcZIlMD7PbdGQBaNoNczEj39cS5QHgAXM
+ FOc/R1DhBdiBXnOeUBRSgxomDrc6mE92CkN9ooQJ/skmkvmD9W442sfiPAqMab0yLSV2
+ KZLBnMQjL89j24SL1LLyU9RsKUJK4j2iXleqa75Pbvv41JRgZ9tkVbPLa4MSxvp9VmJM
+ kqMAP4CyEHI7RyZ39sF0f0LMH0GyPdlHBTG7r1RtfwiaeEeXA67BwzAhPi4ocuGzpTyC
+ fRamWPFLJiZKtbtHO8ak+yN9XDQs+sipuoPu4O23HgdyMflhUpcE05K8k6jEQggy2V0n
+ vR5Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+9u4wEJ4rRjC65GQ70MTJuWUoZkMqA5trhrKLpB7TOlpFUtqi03a2VXhkSVrma0VQhwKrL8pYXITAC@nongnu.org
-X-Gm-Message-State: AOJu0YzCTYdfZftJr44QG2aAukgi6vVkBZJq1lvW2pY2qNzp5v64Azs1
- EplTq0FKaFZYYxY65wQBWVwHyAdPPOyR+O4rx7CcgKgZ7/0/LVvdbWxpiCIcVsvJZTM=
-X-Gm-Gg: AeBDievooP1CynpXMbtPUtTSD8e1lMTbm2pj1Eq7/thkYmbe9sD9JH+ZMU+gRJxDQq3
- MnO9Lr5utEActI7KLdQkcOfUT83wPYBpLy+DdWdZA7o96kkSGloxh78hFztMdtHwj7/twCwDQxl
- ei30M0DlJ1IKVPw9Ig5m/wiSNiDFLkZVMGJrrb5BKERb+RwZ48A01X6nVw0dW04GTbaxggPH2UU
- ohsot8VYxt2KNWXy96M+LgW4kpBzaXLBUl4D3u9DnU59sISeVZqpo7i/YGE1LCFllpDpNkDVtJE
- f9hvL+Ov9Pf+sWmqynhDYhy//9oYkEM6wUy8y93VeQuk62UpAMCqfeox0sy9Id8++qJF/2FoXV7
- EAk672Afny9B2iLS9PGbYi2EWQLjdUig423gsIS+/oBVZW/Pdcn9jhVcPvxKa4z+YZs8Ap/VNwR
- CcKvDkcY9IL8ccEB4ZBpOeKy6mStJs5LUoPlHisxwQ1NiCw9lmnxWgtYyd8V68Qg==
-X-Received: by 2002:a05:7300:a191:b0:2c4:4363:3742 with SMTP id
- 5a478bee46e88-2e464dac917mr5993042eec.9.1776627914506; 
- Sun, 19 Apr 2026 12:45:14 -0700 (PDT)
-Received: from ?IPV6:2804:14c:3d88:963e::2000? ([2804:14c:3d88:963e::2000])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2e539fa244csm10797733eec.2.2026.04.19.12.45.11
+ AFNElJ9O8Z3NFPj/b4spc5TtMsC3IV4lViQPZGV8mSmZonG1zSiKYB4pQUQ2SIARHUWN/TABtD9zf4iX6LW1@nongnu.org
+X-Gm-Message-State: AOJu0YyHVn90Z+tZBQpMNlU7DXcDpl9uIG2GOBoyklzjMjAaI+IvH4WN
+ DA+e3DlaARKaaRU4uGAzLHCAKkJ1wTOLbDLA2WKAzX6lDMrutiPQj4xdJxOtMSBSOnQ=
+X-Gm-Gg: AeBDies41P1TRxicc06lESUHghU6Jc7ydYWpDD9ZhuvNFvTzovWaPdiybMaO1YGETB8
+ F5fGfZvlpcINbq7SxEIeMErlXGY9zYhKyMZcpr2L+yqjJAPtxl3DIe2fPmYHSHHEt9UxtIcjfpx
+ heAfvcG+2GZuZQz7HtWO9dQhGvB6OIcX7ikLdRHTQoj6ltS4XRLvRfw4EAHUEgjVqHceGpx6KxY
+ F18cwKVh8Oq93kBCFvxu3zgka36ZrIzko5f5g45nsxi5DXg8EH58UiKL+yteFMB3QTrn5Dn6uBx
+ 3dBqPlZFXpR+ZkuTIFDJOjQ00mxFQJrGrzcj9ENwE2efcYoV0I/TFVuM1Xqpfdc3c2u47LBQnhb
+ x43Yguzrkal+BQsiJ99bd4uTzKLTJWAQ7voazM1C+lLsz6E2IwTutR+CwhSRu9YuxSPq/9vjxHi
+ do+qpkJJniQ82Bxzoxibtz7wn8Dl0syvN+gxiPADvE2zzjjRSWZ29I0VYblJ/08xw7/Ap88owPQ
+ S8E
+X-Received: by 2002:a05:600c:a30b:b0:485:17a7:b9c7 with SMTP id
+ 5b1f17b1804b1-488fb750a2bmr102595625e9.10.1776633043197; 
+ Sun, 19 Apr 2026 14:10:43 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4cb1682sm24603336f8f.1.2026.04.19.14.10.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 Apr 2026 12:45:14 -0700 (PDT)
-Message-ID: <3f646bd5-b1f0-402f-baa9-0c08f6c3de70@linaro.org>
-Date: Sun, 19 Apr 2026 16:45:09 -0300
+ Sun, 19 Apr 2026 14:10:41 -0700 (PDT)
+Message-ID: <e3916acc-98c6-4ace-b990-94084597563f@linaro.org>
+Date: Sun, 19 Apr 2026 23:10:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] MAINTAINERS: Merge PCIe DOE section within SPDM
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Tao Tang <tangtao1634@phytium.com.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-References: <20260417110550.70068-1-philmd@linaro.org>
- <20260417110550.70068-4-philmd@linaro.org>
+Subject: Re: [PATCH-for-11.0? 0/6] qom: Restrict compat properties API to
+ system emulation
 Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20260417110550.70068-4-philmd@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, kvm@vger.kernel.org
+References: <20260325151728.45378-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260325151728.45378-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
- envelope-from=gustavo.romero@linaro.org; helo=mail-dy1-x1329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,67 +108,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+On 25/3/26 16:17, Philippe Mathieu-Daudé wrote:
 
-On 4/17/26 08:05, Philippe Mathieu-Daudé wrote:
-> SPDM depends on PCIe DOE, so it makes sense to cover
-> these files there. Cover the spdm.rst document. Add
+> Philippe Mathieu-Daudé (6):
 
-Right, that makes sense.
+>    hw/core: Move compat_props_add() to 'hw/core/boards.h'
+>    qom: Declare GlobalProperty structure in 'qom/compat-properties.h'
+>    qom: Declare compat properties API in 'qom/compat-properties.h'
+>    qom: Restrict compat properties API to system emulation
 
-
-> Tao Tang who volunteered to be designated reviewer:
-> https://lore.kernel.org/qemu-devel/44abaece-6a6f-43c6-b29a-53d6eb08033c@phytium.com.cn/
-
-Thanks, Tao.
-
-
-> Cc: Tao Tang <tangtao1634@phytium.com.cn>
-> Cc: Gustavo Romero <gustavo.romero@linaro.org>
-> Cc: Alistair Francis <alistair.francis@wdc.com>
-> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   MAINTAINERS | 11 +++++------
->   1 file changed, 5 insertions(+), 6 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 11bf50a9ecf..eccc0d64331 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2150,11 +2150,6 @@ F: docs/pci*
->   F: docs/specs/*pci*
->   F: docs/system/sriov.rst
->   
-> -PCIE DOE
-> -S: Orphan
-> -F: include/hw/pci/pcie_doe.h
-> -F: hw/pci/pcie_doe.c
-> -
->   ARM PCI Hotplug
->   M: Gustavo Romero <gustavo.romero@linaro.org>
->   L: qemu-arm@nongnu.org
-> @@ -3693,11 +3688,15 @@ F: tests/qtest/*tpm*
->   F: docs/specs/tpm.rst
->   T: git https://github.com/stefanberger/qemu-tpm.git tpm-next
->   
-> -SPDM
-> +SPDM, PCIe DOE
->   M: Alistair Francis <alistair.francis@wdc.com>
-> +R: Tao Tang <tangtao1634@phytium.com.cn>
->   S: Maintained
->   F: backends/spdm-socket.c
->   F: include/system/spdm-socket.h
-> +F: include/hw/pci/pcie_doe.h
-> +F: hw/pci/pcie_doe.c
-> +F: docs/specs/spdm.rst
->   
->   Checkpatch
->   S: Odd Fixes
-
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-
-
-Cheers,
-Gustavo
+Patches 1-5 queued, thanks.
 
