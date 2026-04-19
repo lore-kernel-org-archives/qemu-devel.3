@@ -4,118 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A7E5EA7188
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 08:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C45EA7189
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 08:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wENbE-0000PI-S4; Sun, 19 Apr 2026 04:33:52 -0400
+	id 1wENkN-0001t5-Ib; Sun, 19 Apr 2026 04:43:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wENbE-0000P4-3F
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:33:52 -0400
+ id 1wENkM-0001ss-04
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:43:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wENbC-0003qo-00
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:33:51 -0400
+ id 1wENkJ-000653-Qx
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 04:43:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776587627;
+ s=mimecast20190719; t=1776588192;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
- b=Cyx68gxOlLyTd92Kd4v3f45vlTi8Zl1J3Zbq+vz7B8YPiSdJzOAVztPD/qOoYgcSQMmzAf
- NoRKBn1QaQu4AIW4i1iGFhHObFedaDdI8QqZofqOUJLo4Wbclx+JuhhH1VS5VhDrNFHiKM
- u/7+ODxZehxCAQjXSdxa7kV+k1CESxI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-zlwA-2OINASdOBBNjLNYqA-1; Sun, 19 Apr 2026 04:33:45 -0400
-X-MC-Unique: zlwA-2OINASdOBBNjLNYqA-1
-X-Mimecast-MFC-AGG-ID: zlwA-2OINASdOBBNjLNYqA_1776587624
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43d789cebcfso1712290f8f.1
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 01:33:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776587624; cv=none;
- d=google.com; s=arc-20240605;
- b=LL/yeZMW3Z2Gvj7v6iAqDBQB0BX1gVmskdDXg+AVVVCw/e1Aql3QNrLMQ673rjHEhA
- 1KuHS4z7uLahIT08vnWkyl6+QyOAVvty+mSUM184kdlrXm5jtG+2i+aP0bPKPpUvhQK6
- mA2Md/BphuFw7GaZ6MX+J5npOIRpV38oNfsf1fqjqx4F9TVZfm7pbLFZg6ajI0+G921L
- fxv8/uQizpqxsxepr4HIX0gzyOgJytO3zdi0/H8J4osrk3leJdaEc2hBqHmEiu9vHfZl
- T6xfOGmJ9EhTAQIYNs/w8CSaxjNXoMwllUl16oYn0oZApyYoGjfP0ncYDxbdH1d7q0tw
- RkeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
- fh=7keYvWMxT8tzyrJUfr1+GGXboUjM6zt5MF6kkJwqLwk=;
- b=cJYef19RFqdrnGLf/fdpNFCbdFYBSEGIXXbGn6chz8vQMayb5sGlnN+oVqKnR2Whvs
- fIN+v5eCFb3MW6c3/J96MVPanzriA64cqOsxbPBPPJ+y86MXpIm6/rxxlBfvAgQNeyhV
- ttdy6sY4l9eobOn6HG8E+jIzZHAsadPyY//hJrC5iOjSXmiPHMS2rULrmrnqbe9itEG1
- p6VKXrOgd+aR/yt/iBZEEnM+0Puz0uSueMJqLuysLaNBRKZiD1C11m/P55Jmy1FkqF45
- hzxUfNhVizLx8g3PRn+Ka4W+TlsZcBM+DtrX/Kf36SVKPrsBT2NFdcWU48azQ7MZ8L21
- U6YA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776587624; x=1777192424; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
- b=MJhQ/79MxhH3vWGj90BdZyDGoxxgpkA2Qbm9Rp8NCI6hHc9GSLbbqRxkiEeq4FyJxm
- blklykPbbD3DeRvcxQhoBRMX/2W5MdcWuEtEmq4QRe6bdnTx0r56LA9qoI/jnaz9HjJk
- detOG65+r6OjPDIJYTkWdV+/OGByAsY2ByprWBgRhuv3V15uDMmHxCej/uYnmDchNrcu
- /ME8C6ZvRPgjPZVtAJBHKvE9n4Sc1fc/EtVeb5jMk1vkTcb9b2g7RWgdMTFkCl6NCA/z
- kXZlAm3wcl11BcnH2E5MRo2Yk1gX3bk4QS81OF7dS9cngNC8XjOi3CtWD6J3Q76EfH4L
- GCOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776587624; x=1777192424;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rLPwBZAuO7yVoRltIXrZqOLYKO9yfPdcfqrkUUgMAuQ=;
- b=nG077EefkfCl9/8b5A6/J2Ja8qBD2929hHw0awfzPJDgnIabGfPO4Xx3pWwMqRt2qL
- KYXksznLw68nJggOihJFe/ojrGZJiDx1OWowOZsmn9kden6Xiev06aiVR/04s22q/jFG
- EIYgCFFT5hOhIkvMfmCvOSAACntEnZ086VLSg91XRcJQZWM68GrCth9FnPTih5YhwnTA
- xBkbTQfzuA10pVPzLRcPldSrgWOr0bc/EIHcwZQXNULTnDPtUmA1wEp+CXh7Uk5RSd57
- Kfqi39D258rIroTVQHPDP2GJFlZl60RADflTCLmr2yTbHT36SwFrFg3kI7rSwXCQk/GP
- rp7A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+CKxYD3d3Ck5Pbej691WxKRT65+5MRuX4TjOUm8helVoDIKHg0w8xjhPy5FeYzhFT/coblisjFKr66@nongnu.org
-X-Gm-Message-State: AOJu0Yxrw1/kPa5b0NVC9urbFeuxYYfhqPrnO4HAjsH2KM6s3RUiEBhB
- W1L14domsiDsLzx0cwxJC5XQLeJKY3OdGIwpfgV6GC/RIjliVc7dmv5Wl04c/e/aHMiOK91cjK5
- jb6n9d0JvtLb1gx3mFvSvRDUZXjD/DxSqpQZHGohdRMCWCARMAWM1EpeyAWOpcxxolmiiMk+F/Y
- knhvPWZ+zbqXiT2Isij2840oSuo3CY3Iw=
-X-Gm-Gg: AeBDiev9eDN7qr8ZQtRpveaK5FfJGC8mPE92+vNIahdsKOW4q/d60TOFAdk0TAkXjeI
- ekC2tVqbtQS4a1a4m03KgIqmg2QmYTD+doxxrKuzYruBoEfQJRrrMoypq5ry7hICl6U0FPzK3Hw
- 0SplwJHYv6W00XziEVWvr7Y6hlpZ6v84AweZLFYJlTYW8b9o99+uZitsAwUNMVz/iyu/33foiLa
- bgJstz7X5Nq596WkVFQteUAA/KCGf7sDgoK5tYIQfdlloRyvPxb8lcOIGwIIY6d+RFauP7IbpKl
- 1lqg4drJ26ov99k=
-X-Received: by 2002:a05:6000:228a:b0:43d:779e:afa8 with SMTP id
- ffacd0b85a97d-43fe407a7e5mr14684997f8f.16.1776587623727; 
- Sun, 19 Apr 2026 01:33:43 -0700 (PDT)
-X-Received: by 2002:a05:6000:228a:b0:43d:779e:afa8 with SMTP id
- ffacd0b85a97d-43fe407a7e5mr14684964f8f.16.1776587623302; Sun, 19 Apr 2026
- 01:33:43 -0700 (PDT)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qESMAqD1fY4qO7RbNG5Yb1Mbj+Ze/k8hXFw0imkmHcg=;
+ b=H2zx6f5GFqcJMKaqrrKyrjCp1ycfCyl1bDzaUXWNVJxSmt9SKXktYS3Lpmp6aZwCKLaYXP
+ RgNCDBqrEc1FU0LFZy5dFrCCUTbHxGz5Kh8FeKVJPwPJEs1rx8AeIJ22uLE/EYqgIE7AL3
+ pJgVkHSnyAZ2PAd7QhEN4ZkNccoNcXs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-Ijxla7aaPj6iLmEV4XQnCQ-1; Sun,
+ 19 Apr 2026 04:43:11 -0400
+X-MC-Unique: Ijxla7aaPj6iLmEV4XQnCQ-1
+X-Mimecast-MFC-AGG-ID: Ijxla7aaPj6iLmEV4XQnCQ_1776588190
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE963195608F; Sun, 19 Apr 2026 08:43:09 +0000 (UTC)
+Received: from [10.44.32.46] (unknown [10.44.32.46])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 92DB21801481; Sun, 19 Apr 2026 08:43:08 +0000 (UTC)
+Message-ID: <10f96e1a-dcd9-49f4-aff2-1549f88e50a4@redhat.com>
+Date: Sun, 19 Apr 2026 09:43:05 +0100
 MIME-Version: 1.0
-References: <20260418061429.16898-1-rickgcn@gmail.com>
- <9926A5B0-8660-433D-B074-3B49E830BC9D@unpredictable.fr>
-In-Reply-To: <9926A5B0-8660-433D-B074-3B49E830BC9D@unpredictable.fr>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] monitor: Add `clear` command
+To: "Dr. David Alan Gilbert" <dave@treblig.org>, AlanoSong@163.com
+Cc: qemu-devel@nongnu.org
+References: <20260418133927.43012-1-AlanoSong@163.com>
+ <aeO-IqKqBwtKfW8P@gallifrey>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sun, 19 Apr 2026 10:33:30 +0200
-X-Gm-Features: AQROBzCKAQDmNANV668nkEulDo5HbpBITXsbc5OPJYYMum-yUI3eCLgHj6OTB9g
-Message-ID: <CABgObfbZPDvB6FAEbUY3fNZd+3mNkjnoU47K2RCSDM4zy1fn8Q@mail.gmail.com>
-Subject: Re: [PATCH] hw: i386: vapic: restore IRQ polling for non-kernel
- irqchip backends
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: rickgcn <rickgcn@gmail.com>, qemu-devel@nongnu.org, mst@redhat.com, 
- marcel.apfelbaum@gmail.com, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <aeO-IqKqBwtKfW8P@gallifrey>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -141,75 +122,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 19, 2026 at 1:14=E2=80=AFAM Mohamed Mediouni
-<mohamed@unpredictable.fr> wrote:
->
->
->
-> > On 18. Apr 2026, at 08:14, rickgcn <rickgcn@gmail.com> wrote:
-> >
-> > 69dfc078 extended vAPIC handling for WHPX with user-mode irqchip, but i=
-t
-> > also changed vapic_write() case 4 in a way that excludes TCG from
-> > apic_poll_irq().
-> >
-> > Before that change, IRQ polling happened whenever no in-kernel irqchip
-> > was active. After the change, it only happened for KVM or WHPX with a
-> > user-mode irqchip. Under TCG, both kvm_enabled() and whpx_enabled() are
-> > false, so the poll never happens.
-> >
-> > This regresses 32-bit Windows XP guests on a Windows host with
-> > -machine pc-i440fx-10.0,accel=3Dtcg, causing a STOP 0x0000000A during b=
-oot.
-> >
-> > Fix it by making the decision depend on whether KVM or WHPX is using an
-> > in-kernel irqchip, instead of whether either accelerator is enabled.
-> >
-> > Fixes: 69dfc078a6f0 ("hw: i386: vapic: enable on WHPX with user-mode ir=
-qchip")
-> >
-> > Signed-off-by: rickgcn <rickgcn@gmail.com>
-> > ---
-> > hw/i386/vapic.c | 3 +--
-> > 1 file changed, 1 insertion(+), 2 deletions(-)
-> >
-> > diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-> > index 41e5ca26df..1acb9f91b2 100644
-> > --- a/hw/i386/vapic.c
-> > +++ b/hw/i386/vapic.c
-> > @@ -716,8 +716,7 @@ static void vapic_write(void *opaque, hwaddr addr, =
-uint64_t data,
-> >         break;
-> >     default:
-> >     case 4:
-> > -        if ((kvm_enabled() && !kvm_irqchip_in_kernel())
-> > -          || (whpx_enabled() && !whpx_irqchip_in_kernel())) {
-> > +        if (!kvm_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
->
-> Hi,
->
-> I think we want to keep the kvm_enabled/whpx_enabled checks.
+On 4/18/26 19:23, Dr. David Alan Gilbert wrote:
+> * AlanoSong@163.com (AlanoSong@163.com) wrote:
+>> The monitor screen can be cluttered after executing commands
+>> like `info qtree`. It is useful to have a command to clear
+>> current screen, just like linux `clear` command do.
+>>
+>> This patch has been tested under monitors using stdio, vc,
+>> tcp socket, unix socket and serial interfaces.
+>>
+>> Signed-off-by: Alano Song <AlanoSong@163.com>
+> 
+> Does typing ctrl-l not do it for you in your terminal?
 
-No, it's not needed.  If kvm_enabled() is false either the checks are
-compiled out or the variable is false.
-
-The check is for "is it using the userspace APIC", so rickgcn's patch
-is correct.
+Yeah, we should add support for Ctrl-L to the non-terminal backends 
+independent of this.  However, backends such as socket do not use 
+readline so they also don't support it right now.
 
 Paolo
 
-> How does this sound?
->
->         if (!(kvm_enabled() && kvm_irqchip_in_kernel())
->          || !(whpx_enabled() && whpx_irqchip_in_kernel())) {
->
-> Or
->
->         if ((kvm_enabled() && !kvm_irqchip_in_kernel())
->           || (whpx_enabled() && !whpx_irqchip_in_kernel())
->           || tcg_enabled()) {
->
-> Thank you,
->
+> Dave
+> 
+>> ---
+>>   hmp-commands.hx       | 14 ++++++++++++++
+>>   include/monitor/hmp.h |  1 +
+>>   monitor/hmp-cmds.c    |  5 +++++
+>>   3 files changed, 20 insertions(+)
+>>
+>> diff --git a/hmp-commands.hx b/hmp-commands.hx
+>> index 5cc4788f12..95f9166732 100644
+>> --- a/hmp-commands.hx
+>> +++ b/hmp-commands.hx
+>> @@ -20,6 +20,20 @@ SRST
+>>     Show the help for all commands or just for command *cmd*.
+>>   ERST
+>>   
+>> +    {
+>> +        .name       = "clear",
+>> +        .args_type  = "",
+>> +        .params     = "",
+>> +        .help       = "clear the monitor screen",
+>> +        .cmd        = hmp_clear,
+>> +        .flags      = "p",
+>> +    },
+>> +
+>> +SRST
+>> +``clear``
+>> +  Clear the monitor screen.
+>> +ERST
+>> +
+>>       {
+>>           .name       = "commit",
+>>           .args_type  = "device:B",
+>> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+>> index e222bea60c..9b66458d21 100644
+>> --- a/include/monitor/hmp.h
+>> +++ b/include/monitor/hmp.h
+>> @@ -165,6 +165,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict);
+>>   void hmp_trace_file(Monitor *mon, const QDict *qdict);
+>>   void hmp_info_trace_events(Monitor *mon, const QDict *qdict);
+>>   void hmp_help(Monitor *mon, const QDict *qdict);
+>> +void hmp_clear(Monitor *mon, const QDict *qdict);
+>>   void hmp_info_help(Monitor *mon, const QDict *qdict);
+>>   void hmp_info_sync_profile(Monitor *mon, const QDict *qdict);
+>>   void hmp_info_history(Monitor *mon, const QDict *qdict);
+>> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+>> index bc26b39d70..3e9485478e 100644
+>> --- a/monitor/hmp-cmds.c
+>> +++ b/monitor/hmp-cmds.c
+>> @@ -218,6 +218,11 @@ void hmp_help(Monitor *mon, const QDict *qdict)
+>>       hmp_help_cmd(mon, qdict_get_try_str(qdict, "name"));
+>>   }
+>>   
+>> +void hmp_clear(Monitor *mon, const QDict *qdict)
+>> +{
+>> +    monitor_printf(mon, "\x1b[3J\x1b[2J\x1b[H");
+>> +}
+>> +
+>>   void hmp_info_help(Monitor *mon, const QDict *qdict)
+>>   {
+>>       hmp_help_cmd(mon, "info");
+>> -- 
+>> 2.43.0
+>>
 
 
