@@ -4,72 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B366F588DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5A2F588E2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEpH1-00034m-8n; Mon, 20 Apr 2026 10:06:52 -0400
+	id 1wEpvL-0007GG-9Y; Mon, 20 Apr 2026 10:48:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wEpGr-00031m-TM
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:06:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1wEpv4-0007DX-Ts; Mon, 20 Apr 2026 10:48:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wEpGn-0001Qa-27
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:06:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776693992;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fT7aqYcG+mYJXqhu2vC1MHijVy5kS5S7OSHT4/LP03E=;
- b=IR9heNT49mXk/sML0ixByv9P3HhU7rcXpJs4f8uJAyEha6G8x559Vpn8HenGBUnXJcr44N
- UkAxnR2xf9DiOEIIdn9UgYt5MlbdqDxQxTHsfwJgewUOgvq/WD/Zm8ISukTSiGDm9W91Rx
- zDLO2V0KyNLEyc+oucnqmuu1kwdvhlc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-gHgHs0kpOi2hVK3pHtnZVg-1; Mon,
- 20 Apr 2026 10:06:28 -0400
-X-MC-Unique: gHgHs0kpOi2hVK3pHtnZVg-1
-X-Mimecast-MFC-AGG-ID: gHgHs0kpOi2hVK3pHtnZVg_1776693987
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47C4F1800473; Mon, 20 Apr 2026 14:06:27 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.74])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A7C2E180047F; Mon, 20 Apr 2026 14:06:23 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: [PATCH v10 6/7] target/arm/helper: Define cpreg migration tolerance
- for DGBDTR_EL0
-Date: Mon, 20 Apr 2026 16:03:56 +0200
-Message-ID: <20260420140552.104369-7-eric.auger@redhat.com>
-In-Reply-To: <20260420140552.104369-1-eric.auger@redhat.com>
-References: <20260420140552.104369-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1wEpv2-00043c-PP; Mon, 20 Apr 2026 10:48:14 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63JNoiBN3689187; Mon, 20 Apr 2026 14:48:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=ggx50fiGqUmzJjEb461wAkP8w3ZYmH8lu7WYf9RqO
+ 0E=; b=lpo4OnVEt6eZImSxfVj7k9RcFrFLODGEjG0bJMumZiVQ5NdsTKCQ119Cu
+ /aEWK63Idi0niZHIQRQXP7JdtPUykiQAC0kKGOSWNUqRfo23CgVUXPgMY4Tgbiy/
+ 6lFR7Iikv4L805r3vpqvh3VYYMik5mpq8G+fviFKjgPS3QhMUPc40YoQzuvU7c4G
+ MFseIYM04EakEm3vecDq95U4zAyBnqyxHhIMF6NcGnww8eeT8omtlPCLdniUx9Ca
+ GbJXWr1Mi7DYHsUBA6mWToxZbvOE/adV4HQp8VEACCGK3YHHBRKU7xZQUSJqSpbd
+ vIIoAfFj+ZdNhkVWSPolVygSrWKCg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2nf0a1r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Apr 2026 14:48:04 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63KEcdFZ017158;
+ Mon, 20 Apr 2026 14:48:04 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dmm9pwa15-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Apr 2026 14:48:04 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63KEm24B32244436
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 Apr 2026 14:48:03 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DCF115804E;
+ Mon, 20 Apr 2026 14:48:02 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2C955803F;
+ Mon, 20 Apr 2026 14:48:01 +0000 (GMT)
+Received: from IBM-GLTZVH3.atx-us.ibm.com (unknown [9.16.58.46])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 Apr 2026 14:48:01 +0000 (GMT)
+From: Jaehoon Kim <jhkim@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, cohuck@redhat.com,
+ Jaehoon Kim <jhkim@linux.ibm.com>
+Subject: [PATCH v2 0/1] hw/s390x/ccw: Disable legacy mode
+Date: Mon, 20 Apr 2026 09:47:33 -0500
+Message-ID: <20260420144759.2970726-1-jhkim@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: gcNQnf-4cNApVLlKItks8yaBVd_zOqtk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDE0NCBTYWx0ZWRfX5yUWSwzda8ZG
+ t6o0yJnxqEtqFf40B6Z8ZBtuf5dKM7k2ucFzPsR6Inaq+O2EvkdVRdNw5zueQs75jL0Mw8/m3Cz
+ j/sql+XuDPp9iiAyaFVCxwyKF/o5WO/qhli1umuI7hEgODQ1pSUVVN4YMl2jD17UtrhTDbF0goh
+ CeV3j4PAgd9Ubah0d6ZZ6jLoGLrKLRvjT3xaHhUde+r01KJ3LvUQqmE53XPkPopNCFxpYFmewR5
+ IH5zQsJBXwO6w3vvGZ3joXHifWHbX0xArEPCQO/0Toj9cn/OrqjiI47HB/wBh8iVCMUm9OLWeny
+ pKLWgdbd3bn6YCDZCdwRGNf4t0JW7KkpoDkzs2cMrnqtRlLkXy108CiCWM47b3v1nbH9T3ISo9R
+ Npddof22cqIOR0yMHiXr7fMRtpT7OCBS7IGpNYot7wiv0hSzJihSk/MnT+fUzP+SBgwb60kCajp
+ xzmsX0oi1iuiuKpC3YA==
+X-Proofpoint-GUID: gcNQnf-4cNApVLlKItks8yaBVd_zOqtk
+X-Authority-Analysis: v=2.4 cv=B7iJFutM c=1 sm=1 tr=0 ts=69e63ca4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=Tlqw0IQ_KjvEc9IBcG4A:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-20_03,2026-04-17_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 spamscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200144
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,56 +117,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to remove AArch32 DBGDTRTX which was erroneously exposed.
-This was attempted by 655659a74a36b ("target/arm: Correct encoding
-of Debug Communications Channel registers") but it was discovered
-that the removal of this debug register broke forward migration on
-TCG. Now we have the cpreg migration tolerance infrastructure, we
-can declare one for the DBGDTRTX. This allow to revert the reinstate
-patch.
+Hello,
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
+This is v2 of the patch.
 
----
+Changes in v2:
+- Drop RFC tag as the approach has been reviewed and agreed in principle.
+- Improve comments to clarify why legacy virtio-pci is not usable on s390x
+  due to lack of I/O BAR support (IO_SPACE_LIMIT is 0).
 
-v9 -> v10
-- Adding a comment explaining why we want a migratoin tolerance
-  for that cpreg
----
- target/arm/helper.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+No functional changes.
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7389f2988c4..d80899cd096 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6426,9 +6426,24 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             .fgt = FGT_CLIDR_EL1,
-             .resetvalue = GET_IDREG(isar, CLIDR)
-         };
-+        uint64_t dbgtr_el0_kvmidx =
-+            cpreg_to_kvm_id(ENCODE_CP_REG(14, 0, 1, 0, 5, 3, 0));
-+
-         define_one_arm_cp_reg(cpu, &clidr);
-         define_arm_cp_regs(cpu, v7_cp_reginfo);
-         define_debug_regs(cpu);
-+        /**
-+         * AArch32 DBGDTRTX has been introduced with a wrong encoding.
-+         * This was fixed by commit 655659a74a36 ("target/arm: Correct
-+         * encoding of Debug Communications Channel registers") by the
-+         * introduction of correct separate cpreg definitions
-+         * for AA64 and AA32 versions. However the old cpreg definition
-+         * couldn't be removed without breaking the migration. From qemu 11.1
-+         * onwards we can use the migration tolerance infrastructure to
-+         * remove it.
-+         */
-+        arm_register_cpreg_mig_tolerance(cpu, dbgtr_el0_kvmidx,
-+                                         0, 0, ToleranceNotOnBothEnds);
-     } else {
-         define_arm_cp_regs(cpu, not_v7_cp_reginfo);
-     }
+RFC v1:
+https://lore.kernel.org/qemu-devel/20260417154332.849664-1-jhkim@linux.ibm.com/
+
+Thanks,
+Jaehoon Kim.
+
+Jaehoon Kim (1):
+  hw/s390x/ccw: Disable legacy virtio-pci by default (v11.1+)
+
+ hw/s390x/s390-virtio-ccw.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
 -- 
-2.53.0
+2.50.1
 
 
