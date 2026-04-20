@@ -4,123 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AA03F36C51
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 07:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A46D7F557E9
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 09:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEjTE-000134-1W; Mon, 20 Apr 2026 03:55:04 -0400
+	id 1wEkWk-0007rd-LZ; Mon, 20 Apr 2026 05:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wEjTC-00012B-4O
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:55:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wEkWe-0007r4-0G
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:02:41 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wEjT9-00059P-41
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:55:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776671697;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mcoReN1k8WUoCMuVKbWQSrXnDZGQuoXDzziyXrRW5ZA=;
- b=TlznAMgnGkjJ1pcKYle2jV8pOcBtWlZCsrxeqrOe/Of3K0jfQ7MFZWLmSFKifb8gTfO/db
- hGeS0f6NEftSbTo+8RWRx8cB669hLr+oCT7m7VNuf1BpePOyQ2tCBdUSnX2VDazA+RzV2d
- PPh7fu2iHZJzjB+1ITEhaaetL2N4WuA=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-FpsbGm1tNUqdo3bRANqcog-1; Mon, 20 Apr 2026 03:54:55 -0400
-X-MC-Unique: FpsbGm1tNUqdo3bRANqcog-1
-X-Mimecast-MFC-AGG-ID: FpsbGm1tNUqdo3bRANqcog_1776671695
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2b2d0c1ead1so53113995ad.0
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 00:54:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776671694; cv=none;
- d=google.com; s=arc-20240605;
- b=YZiX38b/1uzNk6MstoWdh6Uj8DGHwQ+0FL9eVyO5qlsB1MyXv1fncpNif05wdeyL8m
- aPn53UEWZWEHnmN76W9v/21YJBEPBdt2tI7cDHq/OsJs6vVIgd8wybegUWEspwT8LznM
- zSPHh8DZnBE4kpCKMgBWyTh681tXKt73J0J4esKuwLOwEDqKzPzf6+XM+G4UDJODaCtW
- LcQxeubx8PcE45NSKM3wQ5B/m763O2nA1YLZLsVMX5kuPixx/R+q6nuMXyziVC5i6fnf
- kuZR59GE5JhWDyqKvQ5gTaF407dS/lCzIPfjN0OSE0a4S+gYGeZ5ruS1nARYVUSHC5t0
- Wf1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mcoReN1k8WUoCMuVKbWQSrXnDZGQuoXDzziyXrRW5ZA=;
- fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
- b=QKTlQEZwFyhdQ+4djvLqwtrF73cnM6H71z/6gk6BE7U1DaGQ2MyJJPhjB0n+gK+bpg
- 6rtGZyqNRmeB4KUHB2ZCwP4B7py+nGlY7hhsD1Ub9cGgURVWEo3Q/WH98IY1gUh1hLaw
- LMCvl/krQOUvEO/Ci0y9Fqfnt4jJsGPlCBaVjiLxu1/x/Y1y06TJvsaY1Lf+pCCOmfwN
- PrytnSAJ2eAk6tp/TBSC8zhZni5aDM5PknTSmGB/tAzqsJu3y5VAalCIJPCx6qU7i8wH
- Uvmfv77U/pWTeN0sUl125o0lPkQq5/zJfR26kILFyRroJhr3WqIUKdkQAQK6NTGlLZQb
- 8sqg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776671694; x=1777276494; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mcoReN1k8WUoCMuVKbWQSrXnDZGQuoXDzziyXrRW5ZA=;
- b=a2HUxY+v54ssZKP9Skhce68SOwvz6MRqj5irOdan5CoqnFDxpgV24ye3am2/aSrDq4
- s+l1xjbqZ49RFTsf3kFzOndbOXD2nLZuCCuaMdEcsV2eiM60Wyt5jL6SSwo4xIEyPew4
- XzEqdaSd6RP4IDERTaUm0dn7UB0UzBwe8p8bl3u+Ki4M1nlyNhPsr4SiWye/zGIBtJIC
- bSugLPIIKUle2gP3+WwVOKkt+YBv8FolNa/Xrea4RCWaXEr0eIW2wfw+jZoYz973pYTD
- zmBOu6siKQOyZ+NlfYO0w1HLJyy0amuP0PFPAQr+D7HydWtz4yxtTLxhsBGjLhiXCgVs
- BIMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776671694; x=1777276494;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mcoReN1k8WUoCMuVKbWQSrXnDZGQuoXDzziyXrRW5ZA=;
- b=cxFc/c/5myr8u4pHFN7otzO3SMXie8y6uiOF1bwdAHdRjLC06Ow9piIZ59EGnR8uKR
- +XFLPHP3pu7CLwRzrTugxiJvKXuATMxqCPcjPY0zdrjXqWPz07PecPixU0VMFZtKRZcw
- Q94c8bbtorPN48nU+QIkcgImgNm+onPh5Ru51AILjfCpRVccwfBV0mPQtT2bKGm2LY1n
- HZzTNunjZaYo98v8EIg+6jK3BIdX9znQlxKJbCDn655OjAW5M0P7doeN1jqgzsyWGhZI
- 7geKIuWgaD1yW//hGBg7klnCb9dmopGGr4C3ZHH8SGa0hNBx176vFVYmjD9lmUii3Pra
- QNZQ==
-X-Gm-Message-State: AOJu0YxuY0S0P2uOLeMnuCX0Uty5yMx6brAsR1xjTYFEKfdgVQXjKtow
- izxLBbdUJ0L3CN5jiJh/NGjJbACKUjyqDDrHSrqPY+CwZpdRQiZD9Ph+EimQMR+ywc55H448ApP
- /49MNb2lF9TJEyqHkvHvqH2J2fbQ8//XOpRXQbk3KJXUQNA2p/K+Z7rJCw+sATNT9yfccl2WQrP
- ETQbitXegOpmcZAxx/9/ngLIRaPsC79awWz9xhMOo=
-X-Gm-Gg: AeBDietS5mbxqxS9tzattX/HtVOKpNR1b4iCWJ2M+KY7NcyzCSZ+H4/SSp+8W30W4aa
- f4a+X4pF2uZQG7ZORDjtEkeHB+81tPVzjv+Dmhha6EPSeIuszNTwhwJ72S0qagSCJMRTe4ZgBez
- Ya2jW5FdR4VnMPzWCsg5AOpB2pjF4vpD27Cg6j/Fp0IcD0slhxCFSt5246NFfH/BpjoGConsMom
- MGBgbxeK74EOIV0xf0WaOer49jDjfQbXbr8KjVlfm6e/Ewvf3Q3SzYKY541QkguP002pkqODXXT
- t5G+B/NEV17DCyAkC0cinMyPJ0OIhLW/StQ=
-X-Received: by 2002:a17:903:1b45:b0:2b2:4d36:7aa with SMTP id
- d9443c01a7336-2b5f9fb36ccmr136391255ad.35.1776671693845; 
- Mon, 20 Apr 2026 00:54:53 -0700 (PDT)
-X-Received: by 2002:a17:903:1b45:b0:2b2:4d36:7aa with SMTP id
- d9443c01a7336-2b5f9fb36ccmr136390805ad.35.1776671693151; Mon, 20 Apr 2026
- 00:54:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wEkWZ-0002DP-N0
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:02:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1776675756; x=1808211756;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=0/HFh7EksONO9l1F5lm06dR81poht8axcQuF/OzYr88=;
+ b=LkwaXP7rURWaoKbHvA6LKLZ9bO4z6v/xrb84k+XCXrnRVa9u4KJYsKnE
+ 71KDhdc9mIi4rZQ7QFohl1TtRWPZApH4QIwrWMRyXcTUiDH2cr/iyH9QV
+ gFvpJcOiGJztBoCGRiEjcui8BqvgB99knlbk9KBQ6L7yJp78gCayGd54J
+ SlFQEbkK/VheAnS8+jhK+pAAI28znh/YQEI7rlaNzPRRYCj0jS1eZZVZT
+ XxERgdBUFKrMpciG3GiZi1M4qKhIV0GBwzR83aZbiy2gROa2wBGCjSKy0
+ XaQNN942e4XI2F2ADA4pSVEUvxY4l3p2RjVhTHxTSWbWdGnaHNIVJtCdV Q==;
+X-CSE-ConnectionGUID: 9zco6mcaR6KrWuNYn685ug==
+X-CSE-MsgGUID: UIdU9xv2TreE1ZQfIxmNUQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11762"; a="81457562"
+X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="81457562"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Apr 2026 02:02:31 -0700
+X-CSE-ConnectionGUID: ZcQUMxpYS+uK7HbEclFNEw==
+X-CSE-MsgGUID: KFqBIiwXRfydilCMWAd/Dg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="262049195"
+Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
+ by orviesa002-auth.jf.intel.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2026 02:02:28 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, jasowang@redhat.com,
+ yi.l.liu@intel.com,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
+ marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, farosas@suse.de, lvivier@redhat.com,
+ junjie.cao@intel.com
+Subject: [PATCH 1/2] intel_iommu: Replace assert(size == 4) with guest error
+ in MMIO handlers
+Date: Tue, 21 Apr 2026 01:05:22 +0800
+Message-ID: <20260420170523.17908-1-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
- <20260410-qemu-vnc-v2-9-231416f76dc3@redhat.com> <ad91dIuoiLOdIHHN@redhat.com>
-In-Reply-To: <ad91dIuoiLOdIHHN@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 20 Apr 2026 11:54:40 +0400
-X-Gm-Features: AQROBzCW4h_xJTnzVSmbNF1fTVaeQuYJyzCABHwUqutmIgi7d9CT8ludBDPzA8w
-Message-ID: <CAMxuvaxw3mBdhE24dT+CrBhVtvosQYzMEt3f-gGdtvwj4Ce3qg@mail.gmail.com>
-Subject: Re: [PATCH v2 09/67] ui/console-vc: add UTF-8 input decoding with
- CP437 rendering
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=junjie.cao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,437 +85,321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+vtd_mem_read() and vtd_mem_write() use assert(size == 4) for
+32-bit-only VT-d registers. Since MemoryRegionOps .valid/.impl
+accepts sizes 4 through 8, an 8-byte guest access passes framework
+validation and reaches the handler, where the assertion aborts QEMU.
 
-On Wed, Apr 15, 2026 at 3:24=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Fri, Apr 10, 2026 at 11:18:31PM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > The text console receives bytes that may be UTF-8 encoded (e.g. from
-> > a guest running a modern distro), but currently treats each byte as a
-> > raw character index into the VGA/CP437 font, producing garbled output
-> > for any multi-byte sequence.
->
-> Presumably the key words here are  "may be" .... as in, it
-> also "may NOT be" UTF-8.
->
-> IIUC, the current code is assuming that all data from the guest
-> is in the CP437 encoding (8-bit Extended ASCII), and that encoding
-> has valid characters for all 256 code points.
->
-> By adding UTF-8 decoding for val > 0x80 this is breaking compat
-> with any guest that is outputting data with the full range of
-> CP437.
->
-> IOW, this patch is moving the brokeness from guests which
-> use UTF8, onto guests which use CP437.
->
-> Only guests which strictly limit themselves to 7-bit ASCII
-> are unaffected.
->
-> I accept the UTF8 should probably be considered the common
-> case for modern guests, but this hardcoding a different type
-> of breakage feels undesirable to me.
->
-> Surely we need an explicit config property here to select
-> the between character sets we expect from the guest ?
+Narrowing .impl.max_access_size to 4 is not viable because VT-d has
+64-bit registers (e.g. DMAR_CCMD_REG, DMAR_IQA_REG) that require
+atomic 8-byte access to trigger command execution.
 
-Probably, I don't know if many guest/apps rely on the serial encoding,
-but we should probably be conservative.
+Replace all 22 asserts in vtd_mem_write() and 3 in vtd_mem_read()
+with a size check that logs via qemu_log_mask(LOG_GUEST_ERROR) and
+returns without performing the register access. The asymmetry
+(22 vs 3) is because vtd_mem_read() handles most registers through
+its default branch, so only three explicit cases carried an assert.
 
-Adjusting the decoding at runtime may be possible, but it could be tricky.
+Found by fuzzing with QEMU's generic-fuzz framework; crashes
+reproduced at DMAR_FECTL_REG, DMAR_IECTL_REG, DMAR_IEADDR_REG
+and DMAR_PECTL_REG; all 25 sites share the same root cause.
 
-Instead, we could add a vc chardev option like charset=3Dcp437/utf8.
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ hw/i386/intel_iommu.c | 114 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 89 insertions(+), 25 deletions(-)
 
-What should be the default? For compatibility reasons, use CP437 for
-pc machine <=3D11.0 and default to utf8 for others? wdyt?
-
->
-> >
-> > Add a UTF-8 decoder using Bjoern Hoehrmann's DFA. The DFA inherently
-> > rejects overlong encodings, surrogates, and codepoints above U+10FFFF.
-> > Completed codepoints are then mapped to CP437, unmappable characters ar=
-e
-> > displayed as '?'.
-> >
-> > Note that QEMU has a "buffered" utf8 decoder in util/unicode.c, but
-> > it is not a good fit for byte-per-byte decoding.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  ui/cp437.h      |  13 ++++
-> >  ui/console-vc.c |  61 +++++++++++++++++
-> >  ui/cp437.c      | 205 ++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
-> >  ui/meson.build  |   2 +-
-> >  4 files changed, 280 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/ui/cp437.h b/ui/cp437.h
-> > new file mode 100644
-> > index 00000000000..81ace8317c7
-> > --- /dev/null
-> > +++ b/ui/cp437.h
-> > @@ -0,0 +1,13 @@
-> > +/*
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + *
-> > + * Copyright (c) QEMU contributors
-> > + */
-> > +#ifndef QEMU_CP437_H
-> > +#define QEMU_CP437_H
-> > +
-> > +#include <stdint.h>
-> > +
-> > +int unicode_to_cp437(uint32_t codepoint);
-> > +
-> > +#endif /* QEMU_CP437_H */
-> > diff --git a/ui/console-vc.c b/ui/console-vc.c
-> > index 8dee1f9bd01..d9d6966410a 100644
-> > --- a/ui/console-vc.c
-> > +++ b/ui/console-vc.c
-> > @@ -9,6 +9,7 @@
-> >  #include "qemu/fifo8.h"
-> >  #include "qemu/option.h"
-> >  #include "ui/console.h"
-> > +#include "ui/cp437.h"
-> >
-> >  #include "trace.h"
-> >  #include "console-priv.h"
-> > @@ -89,6 +90,8 @@ struct VCChardev {
-> >      enum TTYState state;
-> >      int esc_params[MAX_ESC_PARAMS];
-> >      int nb_esc_params;
-> > +    uint32_t utf8_state;     /* UTF-8 DFA decoder state */
-> > +    uint32_t utf8_codepoint; /* accumulated UTF-8 code point */
-> >      TextAttributes t_attrib; /* currently active text attributes */
-> >      TextAttributes t_attrib_saved;
-> >      int x_saved, y_saved;
-> > @@ -598,6 +601,46 @@ static void vc_clear_xy(VCChardev *vc, int x, int =
-y)
-> >      vc_update_xy(vc, x, y);
-> >  }
-> >
-> > +/*
-> > + * UTF-8 DFA decoder by Bjoern Hoehrmann.
-> > + * Copyright (c) 2008-2010 Bjoern Hoehrmann <bjoern@hoehrmann.de>
-> > + * See https://github.com/polijan/utf8_decode for details.
-> > + *
-> > + * SPDX-License-Identifier: MIT
-> > + */
-> > +#define BH_UTF8_ACCEPT 0
-> > +#define BH_UTF8_REJECT 12
-> > +
-> > +static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint3=
-2_t byte)
-> > +{
-> > +    static const uint8_t utf8d[] =3D {
-> > +        /* character class lookup */
-> > +        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,=
-0,0,
-> > +        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,=
-0,0,
-> > +        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,=
-0,0,
-> > +        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,=
-0,0,
-> > +        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,  9,9,9,9,9,9,9,9,9,9,9,9,9,9,=
-9,9,
-> > +        7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,  7,7,7,7,7,7,7,7,7,7,7,7,7,7,=
-7,7,
-> > +        8,8,2,2,2,2,2,2,2,2,2,2,2,2,2,2,  2,2,2,2,2,2,2,2,2,2,2,2,2,2,=
-2,2,
-> > +        10,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3, 11,6,6,6,5,8,8,8,8,8,8,8,8,8=
-,8,8,
-> > +
-> > +        /* state transition lookup */
-> > +        0,12,24,36,60,96,84,12,12,12,48,72, 12,12,12,12,12,12,12,12,12=
-,12,12,12,
-> > +        12, 0,12,12,12,12,12, 0,12, 0,12,12, 12,24,12,12,12,12,12,24,1=
-2,24,12,12,
-> > +        12,12,12,12,12,12,12,24,12,12,12,12, 12,24,12,12,12,12,12,12,1=
-2,24,12,12,
-> > +        12,12,12,12,12,12,12,36,12,36,12,12, 12,36,12,12,12,12,12,36,1=
-2,36,12,12,
-> > +        12,36,12,12,12,12,12,12,12,12,12,12,
-> > +    };
-> > +    uint32_t type =3D utf8d[byte];
-> > +
-> > +    *codep =3D (*state !=3D BH_UTF8_ACCEPT) ?
-> > +        (byte & 0x3fu) | (*codep << 6) :
-> > +        (0xffu >> type) & (byte);
-> > +
-> > +    *state =3D utf8d[256 + *state + type];
-> > +    return *state;
-> > +}
-> > +
-> >  static void vc_put_one(VCChardev *vc, int ch)
-> >  {
-> >      QemuTextConsole *s =3D vc->console;
-> > @@ -761,6 +804,24 @@ static void vc_putchar(VCChardev *vc, int ch)
-> >
-> >      switch(vc->state) {
-> >      case TTY_STATE_NORM:
-> > +        /* Feed byte through the UTF-8 DFA decoder */
-> > +        if (ch >=3D 0x80) {
-> > +            switch (bh_utf8_decode(&vc->utf8_state, &vc->utf8_codepoin=
-t, ch)) {
-> > +            case BH_UTF8_ACCEPT:
-> > +                vc_put_one(vc, unicode_to_cp437(vc->utf8_codepoint));
-> > +                break;
-> > +            case BH_UTF8_REJECT:
-> > +                /* Reset state so the decoder can resync */
-> > +                vc->utf8_state =3D BH_UTF8_ACCEPT;
-> > +                break;
-> > +            default:
-> > +                /* Need more bytes */
-> > +                break;
-> > +            }
-> > +            break;
-> > +        }
-> > +        /* ASCII byte: abort any pending UTF-8 sequence */
-> > +        vc->utf8_state =3D BH_UTF8_ACCEPT;
-> >          switch(ch) {
-> >          case '\r':  /* carriage return */
-> >              s->x =3D 0;
-> > diff --git a/ui/cp437.c b/ui/cp437.c
-> > new file mode 100644
-> > index 00000000000..8ec38b73419
-> > --- /dev/null
-> > +++ b/ui/cp437.c
-> > @@ -0,0 +1,205 @@
-> > +/*
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + *
-> > + * Copyright (c) QEMU contributors
-> > + */
-> > +#include "qemu/osdep.h"
-> > +#include "cp437.h"
-> > +
-> > +/*
-> > + * Unicode to CP437 page tables.
-> > + *
-> > + * Borrowed from the Linux kernel (fs/nls/nls_cp437.c, "Dual BSD/GPL")=
-,
-> > + * generated from the Unicode Organization tables (www.unicode.org).
-> > + */
-> > +static const unsigned char uni2cp437_page00[256] =3D {
-> > +    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, /* 0x00-0x07 */
-> > +    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, /* 0x08-0x0f */
-> > +    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, /* 0x10-0x17 */
-> > +    0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, /* 0x18-0x1f */
-> > +    0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, /* 0x20-0x27 */
-> > +    0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, /* 0x28-0x2f */
-> > +    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, /* 0x30-0x37 */
-> > +    0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, /* 0x38-0x3f */
-> > +    0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, /* 0x40-0x47 */
-> > +    0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, /* 0x48-0x4f */
-> > +    0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, /* 0x50-0x57 */
-> > +    0x58, 0x59, 0x5a, 0x5b, 0x5c, 0x5d, 0x5e, 0x5f, /* 0x58-0x5f */
-> > +    0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, /* 0x60-0x67 */
-> > +    0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, /* 0x68-0x6f */
-> > +    0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, /* 0x70-0x77 */
-> > +    0x78, 0x79, 0x7a, 0x7b, 0x7c, 0x7d, 0x7e, 0x7f, /* 0x78-0x7f */
-> > +
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-> > +    0xff, 0xad, 0x9b, 0x9c, 0x00, 0x9d, 0x00, 0x00, /* 0xa0-0xa7 */
-> > +    0x00, 0x00, 0xa6, 0xae, 0xaa, 0x00, 0x00, 0x00, /* 0xa8-0xaf */
-> > +    0xf8, 0xf1, 0xfd, 0x00, 0x00, 0xe6, 0x00, 0xfa, /* 0xb0-0xb7 */
-> > +    0x00, 0x00, 0xa7, 0xaf, 0xac, 0xab, 0x00, 0xa8, /* 0xb8-0xbf */
-> > +    0x00, 0x00, 0x00, 0x00, 0x8e, 0x8f, 0x92, 0x80, /* 0xc0-0xc7 */
-> > +    0x00, 0x90, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xc8-0xcf */
-> > +    0x00, 0xa5, 0x00, 0x00, 0x00, 0x00, 0x99, 0x00, /* 0xd0-0xd7 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x9a, 0x00, 0x00, 0xe1, /* 0xd8-0xdf */
-> > +    0x85, 0xa0, 0x83, 0x00, 0x84, 0x86, 0x91, 0x87, /* 0xe0-0xe7 */
-> > +    0x8a, 0x82, 0x88, 0x89, 0x8d, 0xa1, 0x8c, 0x8b, /* 0xe8-0xef */
-> > +    0x00, 0xa4, 0x95, 0xa2, 0x93, 0x00, 0x94, 0xf6, /* 0xf0-0xf7 */
-> > +    0x00, 0x97, 0xa3, 0x96, 0x81, 0x00, 0x00, 0x98, /* 0xf8-0xff */
-> > +};
-> > +
-> > +static const unsigned char uni2cp437_page01[256] =3D {
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x60-0x67 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x78-0x7f */
-> > +
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-> > +    0x00, 0x00, 0x9f, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-> > +};
-> > +
-> > +static const unsigned char uni2cp437_page03[256] =3D {
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x60-0x67 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x78-0x7f */
-> > +
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-> > +    0x00, 0x00, 0x00, 0xe2, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-> > +    0xe9, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-> > +    0x00, 0x00, 0x00, 0xe4, 0x00, 0x00, 0xe8, 0x00, /* 0xa0-0xa7 */
-> > +    0x00, 0xea, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xa8-0xaf */
-> > +    0x00, 0xe0, 0x00, 0x00, 0xeb, 0xee, 0x00, 0x00, /* 0xb0-0xb7 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xb8-0xbf */
-> > +    0xe3, 0x00, 0x00, 0xe5, 0xe7, 0x00, 0xed, 0x00, /* 0xc0-0xc7 */
-> > +};
-> > +
-> > +static const unsigned char uni2cp437_page20[256] =3D {
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x60-0x67 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, /* 0x78-0x7f */
-> > +
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x9e, /* 0xa0-0xa7 */
-> > +};
-> > +
-> > +static const unsigned char uni2cp437_page22[256] =3D {
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-> > +    0x00, 0xf9, 0xfb, 0x00, 0x00, 0x00, 0xec, 0x00, /* 0x18-0x1f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-> > +    0x00, 0xef, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-> > +    0xf7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x50-0x57 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x58-0x5f */
-> > +    0x00, 0xf0, 0x00, 0x00, 0xf3, 0xf2, 0x00, 0x00, /* 0x60-0x67 */
-> > +};
-> > +
-> > +static const unsigned char uni2cp437_page23[256] =3D {
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-> > +    0xa9, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-> > +    0xf4, 0xf5, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-> > +};
-> > +
-> > +static const unsigned char uni2cp437_page25[256] =3D {
-> > +    0xc4, 0x00, 0xb3, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x00-0x07 */
-> > +    0x00, 0x00, 0x00, 0x00, 0xda, 0x00, 0x00, 0x00, /* 0x08-0x0f */
-> > +    0xbf, 0x00, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x00, /* 0x10-0x17 */
-> > +    0xd9, 0x00, 0x00, 0x00, 0xc3, 0x00, 0x00, 0x00, /* 0x18-0x1f */
-> > +    0x00, 0x00, 0x00, 0x00, 0xb4, 0x00, 0x00, 0x00, /* 0x20-0x27 */
-> > +    0x00, 0x00, 0x00, 0x00, 0xc2, 0x00, 0x00, 0x00, /* 0x28-0x2f */
-> > +    0x00, 0x00, 0x00, 0x00, 0xc1, 0x00, 0x00, 0x00, /* 0x30-0x37 */
-> > +    0x00, 0x00, 0x00, 0x00, 0xc5, 0x00, 0x00, 0x00, /* 0x38-0x3f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40-0x47 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x48-0x4f */
-> > +    0xcd, 0xba, 0xd5, 0xd6, 0xc9, 0xb8, 0xb7, 0xbb, /* 0x50-0x57 */
-> > +    0xd4, 0xd3, 0xc8, 0xbe, 0xbd, 0xbc, 0xc6, 0xc7, /* 0x58-0x5f */
-> > +    0xcc, 0xb5, 0xb6, 0xb9, 0xd1, 0xd2, 0xcb, 0xcf, /* 0x60-0x67 */
-> > +    0xd0, 0xca, 0xd8, 0xd7, 0xce, 0x00, 0x00, 0x00, /* 0x68-0x6f */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x70-0x77 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x78-0x7f */
-> > +
-> > +    0xdf, 0x00, 0x00, 0x00, 0xdc, 0x00, 0x00, 0x00, /* 0x80-0x87 */
-> > +    0xdb, 0x00, 0x00, 0x00, 0xdd, 0x00, 0x00, 0x00, /* 0x88-0x8f */
-> > +    0xde, 0xb0, 0xb1, 0xb2, 0x00, 0x00, 0x00, 0x00, /* 0x90-0x97 */
-> > +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x98-0x9f */
-> > +    0xfe, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xa0-0xa7 */
-> > +};
-> > +
-> > +static const unsigned char *const uni2cp437_page[256] =3D {
-> > +    [0x00] =3D uni2cp437_page00, [0x01] =3D uni2cp437_page01,
-> > +    [0x03] =3D uni2cp437_page03, [0x20] =3D uni2cp437_page20,
-> > +    [0x22] =3D uni2cp437_page22, [0x23] =3D uni2cp437_page23,
-> > +    [0x25] =3D uni2cp437_page25,
-> > +};
-> > +
-> > +/*
-> > + * Convert a Unicode code point to its CP437 equivalent for
-> > + * rendering with the VGA font.
-> > + * Returns '?' for characters that cannot be mapped.
-> > + */
-> > +int unicode_to_cp437(uint32_t codepoint)
-> > +{
-> > +    const unsigned char *page;
-> > +    unsigned char hi =3D (codepoint >> 8) & 0xff;
-> > +    unsigned char lo =3D codepoint & 0xff;
-> > +
-> > +    if (codepoint > 0xffff) {
-> > +        return '?';
-> > +    }
-> > +
-> > +    page =3D uni2cp437_page[hi];
-> > +    if (page && page[lo]) {
-> > +        return page[lo];
-> > +    }
-> > +
-> > +    return '?';
-> > +}
-> > diff --git a/ui/meson.build b/ui/meson.build
-> > index 69404bca71a..d4d9312b98c 100644
-> > --- a/ui/meson.build
-> > +++ b/ui/meson.build
-> > @@ -16,7 +16,7 @@ system_ss.add(files(
-> >    'ui-qmp-cmds.c',
-> >    'util.c',
-> >  ))
-> > -system_ss.add(when: pixman, if_true: files('console-vc.c'), if_false: =
-files('console-vc-stubs.c'))
-> > +system_ss.add(when: pixman, if_true: files('console-vc.c', 'cp437.c'),=
- if_false: files('console-vc-stubs.c'))
-> >  if dbus_display
-> >    system_ss.add(files('dbus-module.c'))
-> >  endif
-> >
-> > --
-> > 2.53.0
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index f395fa248c..1b91055eef 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -21,6 +21,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qapi/error.h"
+ #include "hw/core/sysbus.h"
+@@ -3713,7 +3714,9 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     case DMAR_RTADDR_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         val = vtd_get_quad_raw(s, DMAR_RTADDR_REG) >> 32;
+         break;
+ 
+@@ -3728,12 +3731,16 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     case DMAR_IQA_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         val = s->iq >> 32;
+         break;
+ 
+     case DMAR_PEUADDR_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         val = vtd_get_long_raw(s, DMAR_PEUADDR_REG);
+         break;
+ 
+@@ -3746,6 +3753,12 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+     }
+ 
+     return val;
++
++err_width:
++    qemu_log_mask(LOG_GUEST_ERROR,
++                  "%s: invalid read size %u at offset 0x%" PRIx64 "\n",
++                  __func__, size, addr);
++    return (uint64_t)-1;
+ }
+ 
+ static void vtd_mem_write(void *opaque, hwaddr addr,
+@@ -3779,7 +3792,9 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_CCMD_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_ccmd_write(s);
+         break;
+@@ -3795,13 +3810,17 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IOTLB_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_iotlb_write(s);
+         break;
+ 
+     case DMAR_PEUADDR_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3815,27 +3834,35 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IVA_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Fault Status Register, 32-bit */
+     case DMAR_FSTS_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_fsts_write(s);
+         break;
+ 
+     /* Fault Event Control Register, 32-bit */
+     case DMAR_FECTL_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_fectl_write(s);
+         break;
+ 
+     /* Fault Event Data Register, 32-bit */
+     case DMAR_FEDATA_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3854,13 +3881,17 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+ 
+     /* Fault Event Upper Address Register, 32-bit */
+     case DMAR_FEUADDR_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Protected Memory Enable Register, 32-bit */
+     case DMAR_PMEN_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3874,7 +3905,9 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_RTADDR_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3889,7 +3922,9 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IQT_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         /* 19:63 of IQT_REG is RsvdZ, do nothing here */
+         break;
+@@ -3905,39 +3940,51 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IQA_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Completion Status Register, 32-bit */
+     case DMAR_ICS_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_ics_write(s);
+         break;
+ 
+     /* Invalidation Event Control Register, 32-bit */
+     case DMAR_IECTL_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_iectl_write(s);
+         break;
+ 
+     /* Invalidation Event Data Register, 32-bit */
+     case DMAR_IEDATA_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Event Address Register, 32-bit */
+     case DMAR_IEADDR_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Event Upper Address Register, 32-bit */
+     case DMAR_IEUADDR_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3951,7 +3998,9 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_FRCD_REG_0_1:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3966,7 +4015,9 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_FRCD_REG_0_3:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         /* May clear bit 127 (Fault), update PPF */
+         vtd_update_fsts_ppf(s);
+@@ -3981,18 +4032,24 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IRTA_REG_HI:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     case DMAR_PRS_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_prs_write(s);
+         break;
+ 
+     case DMAR_PECTL_REG:
+-        assert(size == 4);
++        if (size != 4) {
++            goto err_width;
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_pectl_write(s);
+         break;
+@@ -4004,6 +4061,13 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+             vtd_set_quad(s, addr, val);
+         }
+     }
++
++    return;
++
++err_width:
++    qemu_log_mask(LOG_GUEST_ERROR,
++                  "%s: invalid write size %u at offset 0x%" PRIx64 "\n",
++                  __func__, size, addr);
+ }
+ 
+ static void vtd_prepare_identity_entry(hwaddr addr, IOMMUAccessFlags perm,
+-- 
+2.43.0
 
 
