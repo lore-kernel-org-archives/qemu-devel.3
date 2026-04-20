@@ -4,90 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E238F5A8C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 21:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB33F5A8C6
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 21:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEvnm-0000Lh-Nd; Mon, 20 Apr 2026 17:05:06 -0400
+	id 1wEvoF-0000S4-2q; Mon, 20 Apr 2026 17:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wEvng-0000LO-Sa
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 17:05:01 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wEvnf-00038u-GS
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 17:05:00 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2b2429f98d0so19417115ad.2
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 14:04:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776719096; x=1777323896; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ic5XHddauHAa376rmqpwdyzZlEOjFWEkZiiE/zcY2mY=;
- b=QkcLUD0XMJWtlDEEBWA75N6FOLqKhbNCTGdqrWr/KtlaHX5tpqN9BQi4kI5LeNCLKA
- yt2JbKmSVu8HmrbghX9bu09lFMT5BchX6WIKOYi93BMfPlmCR4WuKJKiYYeHGnc5Vjvv
- +CBYv5UxguxH/8GVNi2u8TIFH+NjKzfKogrUNORruUhoPZyGLRLBLH2yDcK3u2M3Zykt
- ij7LVMd7tZUBSqqBqFzKdhKjeZQ4GNJeFVcGjBd9Enk9L7Hsjj/EhDXenMGXh6EKtIUi
- amNEolUSUj0j2A0l0ZbwIYZqZEVCf3kWEa+vVgeM7J5BJsSsphO+Uafck4xh0hs0VMVN
- +NKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776719096; x=1777323896;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ic5XHddauHAa376rmqpwdyzZlEOjFWEkZiiE/zcY2mY=;
- b=FouevM95C6hjTkfLLW2hf59G9sXx75ePh+wBF6uFHyuypyrQLbC5lf1Tv5RNbiBtFQ
- XviPX2TkeLJs5T9EzWXvV7AbySdfl7ajF2xUqxWczZ4vzZILOLqyJj5lcCjBe5F4m2Ww
- ENzIR4aK+UTPDWXuv4NnV+jNPmFAJ72GBjOmoCDSJoIQlPjDAV3UpciFLJKbQ+NAAs7x
- MRyK4TPL39Ecx+Q0dtlvJH3jTilyqS64uH1bBelj9Hsf8o+TqyKLlCvobnssl0FLtg0C
- HutqPdLR1P3K160GvyeV/91SQKew9MpADojSIsZI5aboVWh9MkoNjXquu4LDcefntFlX
- LEkg==
-X-Gm-Message-State: AOJu0Yy8EBA14byFFD8rxS3V6f0aKlRwnEaQfZpCw+dFZsQK2JdvpUDT
- lRixx/6fRwuUGXSch0c8FAlEjsHn2x5xTNi2ic1CzRx+IAW5SoCswWrGWp1Q3NLQUD6ACg5Ozaf
- W6ZHLOEk=
-X-Gm-Gg: AeBDiesKfsjmBAEnjOWHVHIbzA9jop+jifiZpCtsX9Ai8g54bHEDnWR1IfMO+n5Y8+2
- x3T0+SyUCWncsSxDr8fJGRfCJkOtq19zctc06d5HvVoyo43AbBXx7C3F09bYUtjeaWyksAGMzhL
- 4zf31s+nMTJYknHzFglQx/LdxjpNAzf8hVFy1gHU8JUQBJOFuDs7Wb4B5iz1+5MUtUEWyMSGwF0
- yN9oGomaX0Rluz3JOpOfDt/f9MWAukid+L5T63DTWoDzqlczz8brGdO+J6lOubRQfMcs2syZOJ8
- I2qjmtAb/UVN10sF2fjVCAxY4bVPEHfcXjCR/MMNE+7DBXyrypGWp4+5pf32/+/tnJyL4sarp3X
- CFFYP4H6+NC6E83k4lqwFqLtj18wFAnJyGurcOlMs/R9E5JdIr0ZPGm9qlQZgvQmo6iM6+1dVBY
- 1oEh5m/JMD+4bZA9mVWmAeUjGiovWvptFcmsH2LaLZcgdq+BnJowlh
-X-Received: by 2002:a17:903:1ae7:b0:2ae:ba5f:3ac3 with SMTP id
- d9443c01a7336-2b5f9e77afamr150502055ad.2.1776719095492; 
- Mon, 20 Apr 2026 14:04:55 -0700 (PDT)
-Received: from [192.168.10.140] ([180.233.125.15])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5faa16e72sm112955445ad.19.2026.04.20.14.04.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2026 14:04:55 -0700 (PDT)
-Message-ID: <0b737192-2b95-4c74-a3cd-736e6c4b8405@linaro.org>
-Date: Tue, 21 Apr 2026 07:04:50 +1000
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wEvoA-0000QH-2a; Mon, 20 Apr 2026 17:05:30 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wEvo7-0003PW-3A; Mon, 20 Apr 2026 17:05:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C9BC6596961;
+ Mon, 20 Apr 2026 23:05:21 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 2xn6xil5UJJB; Mon, 20 Apr 2026 23:05:19 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id CA6C359695B; Mon, 20 Apr 2026 23:05:19 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C8D8659695F;
+ Mon, 20 Apr 2026 23:05:19 +0200 (CEST)
+Date: Mon, 20 Apr 2026 23:05:19 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Osama Abdelkader <osama.abdelkader@gmail.com>
+cc: "open list:amigaone" <qemu-ppc@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, 
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] hw/ppc: remove duplicate include
+In-Reply-To: <20260420164058.335872-1-osama.abdelkader@gmail.com>
+Message-ID: <0587ebb7-06fc-5b96-bbfd-37d86475d718@eik.bme.hu>
+References: <20260420164058.335872-1-osama.abdelkader@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] target/mips: add Octeon COP2 crypto core support
-To: qemu-devel@nongnu.org
-References: <20260411070637.72421-1-james.hilliard1@gmail.com>
- <20260411070637.72421-4-james.hilliard1@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260411070637.72421-4-james.hilliard1@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,32 +64,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/26 17:06, James Hilliard wrote:
-> +static uint64_t octeon_gfm_mul64x(uint64_t v, uint8_t c)
-> +{
-> +    if (v & 0x8000000000000000ULL) {
-> +        return (v << 1) ^ c;
-> +    }
-> +    return v << 1;
-> +}
-> +
-> +static uint64_t octeon_gfm_mul64(uint64_t v, uint64_t p, uint8_t c)
-> +{
-> +    uint64_t result = 0;
-> +    int i;
-> +
-> +    for (i = 0; i < 64; i++) {
-> +        if ((p >> i) & 1) {
-> +            result ^= v;
-> +        }
-> +        v = octeon_gfm_mul64x(v, c);
-> +    }
-> +
-> +    return result;
-> +}
+On Mon, 20 Apr 2026, Osama Abdelkader wrote:
+> hw/ppc/ppc.h is included twice
+>
+> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-See include/crypto/clmul.h.
+Indeed, once is enough. Also cc'ing qemu-trivial list.
 
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-r~
+> ---
+> hw/ppc/amigaone.c | 1 -
+> 1 file changed, 1 deletion(-)
+>
+> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+> index 8074713fbe..9fba5ca03a 100644
+> --- a/hw/ppc/amigaone.c
+> +++ b/hw/ppc/amigaone.c
+> @@ -20,7 +20,6 @@
+> #include "hw/isa/vt82c686.h"
+> #include "hw/ide/pci.h"
+> #include "hw/i2c/smbus_eeprom.h"
+> -#include "hw/ppc/ppc.h"
+> #include "exec/cpu-common.h"
+> #include "system/block-backend.h"
+> #include "system/qtest.h"
+>
 
