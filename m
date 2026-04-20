@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C862AF588EF
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 16:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CDB3F588F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 16:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wErMD-0005dQ-0H; Mon, 20 Apr 2026 12:20:21 -0400
+	id 1wErM7-0005Xb-KQ; Mon, 20 Apr 2026 12:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wErM9-0005cB-VQ
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 12:20:18 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1wErM5-0005Te-2D
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 12:20:13 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wErM7-0003Gi-Tt
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 12:20:17 -0400
+ id 1wErM2-0003Fg-Vy
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 12:20:12 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 88D998074C;
- Mon, 20 Apr 2026 19:20:13 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 5996B80713;
+ Mon, 20 Apr 2026 19:20:09 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id 0KUTY10KuKo0-9zixV2Xx; Mon, 20 Apr 2026 19:20:12 +0300
+ id 0KUTY10KuKo0-NWSAVitJ; Mon, 20 Apr 2026 19:20:08 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776702012;
- bh=s062yJXwsO6uzOC71AsCs2XtO+NbaWUIILJXwfEhv1o=;
+ s=default; t=1776702008;
+ bh=gVj5LlCLQsogQH5q5Y+3QviJ643p3VLdJYRihaKa5g8=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=jni4K2wzVyo2GHz8Pmw7SQ7vqtCuVnFbpEOPjenxbuHh1A+yGnji4lhe90d2qYCZS
- 5qmZBS6Stf/YWNibjBCVQMW1yp/kwJgs05+E4UhSBgLFGajiACOfeL1trzgrnv3ZzL
- pzqvEC7WT6nCvozuiyDbUpwd/SJs92ILvN5HXk5Y=
+ b=tTUZlP6UDxfrwkVRQpTXYuERHWd/wX4AoYhCoWF7+v0OP/2WHjmeIoqD4lRkc791J
+ QZZJ+e9Vi88cppoMfDOx1yJXAoaNeErqSkWdxqgT8t3AY0V9j4bfcEKPi6EUKthpzC
+ zu9/NftQh9KjZhtJHRhjvGwxz4hvvBiq9SrOIXc4=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,18 +46,16 @@ To: jasowang@redhat.com,
 Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v14 5/8] virtio-net: support local migration of backend
-Date: Mon, 20 Apr 2026 19:19:55 +0300
-Message-ID: <20260420161958.584407-6-vsementsov@yandex-team.ru>
+ yc-core@yandex-team.ru, Eric Blake <eblake@redhat.com>
+Subject: [PATCH v14 3/8] qapi: add local migration parameter
+Date: Mon, 20 Apr 2026 19:19:53 +0300
+Message-ID: <20260420161958.584407-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420161958.584407-1-vsementsov@yandex-team.ru>
 References: <20260420161958.584407-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -78,286 +77,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add virtio-net option local-migration, which is true by default,
-but false for older machine types, which doesn't support the feature.
+We are going to implement local-migration feature: some devices will be
+able to transfer open file descriptors through migration stream (which
+must UNIX domain socket for that purpose).  This allows to transfer the
+whole backend state without reconnecting and restarting the backend
+service. For example, virtio-net will migrate its attached TAP netdev,
+together with its connected file descriptors.
 
-When both global migration parameter "local" and new virtio-net
-parameter "local-migration" are true, virtio-net transfer the whole
-net backend to the destination, including open file descriptors.
-Of-course, its only for local migration and the channel must be
-UNIX domain socket.
-
-This way management tool should not care about creating new TAP, and
-should not handle switching to it. Migration downtime become shorter.
-
-Support for TAP will come in the next commit.
+In this commit we introduce a migration parameter, which enables
+the feature for devices that support it (none at the moment).
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
- hw/core/machine.c              |   1 +
- hw/net/virtio-net.c            | 137 ++++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-net.h |   2 +
- include/net/net.h              |   2 +
- 4 files changed, 141 insertions(+), 1 deletion(-)
+ include/migration/misc.h |  2 ++
+ migration/options.c      | 18 +++++++++++++++++-
+ qapi/migration.json      | 12 ++++++++++--
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index a14ad05b9a6..8b2e666854b 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -40,6 +40,7 @@
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 3159a5e53c3..b14dc70ea3d 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -156,4 +156,6 @@ bool multifd_device_state_save_thread_should_exit(void);
+ void multifd_abort_device_state_save_threads(void);
+ bool multifd_join_device_state_save_threads(void);
  
- GlobalProperty hw_compat_10_2[] = {
-     { "scsi-block", "migrate-pr", "off" },
-+    { TYPE_VIRTIO_NET, "local-migration", "false" },
- };
- const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
++bool migrate_local(void);
++
+ #endif
+diff --git a/migration/options.c b/migration/options.c
+index f33b2979290..d0d73169354 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -13,6 +13,7 @@
  
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2a5d642a647..158b9247a58 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -38,8 +38,10 @@
- #include "qapi/qapi-events-migration.h"
- #include "hw/virtio/virtio-access.h"
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qapi/util.h"
+ #include "exec/target_page.h"
+ #include "qapi/clone-visitor.h"
+ #include "qapi/error.h"
+@@ -24,6 +25,7 @@
+ #include "migration/colo.h"
+ #include "migration/cpr.h"
  #include "migration/misc.h"
 +#include "migration/options.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
-+#include "system/runstate.h"
- #include "system/replay.h"
- #include "trace.h"
- #include "monitor/qdev.h"
-@@ -3060,7 +3062,17 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     n->multiqueue = multiqueue;
-     virtio_net_change_num_queues(n, max * 2 + 1);
- 
--    virtio_net_set_queue_pairs(n);
-+    /*
-+     * virtio_net_set_multiqueue() called from set_features(0) on early
-+     * reset, when peer may wait for incoming (and is not initialized
-+     * yet).
-+     * Don't worry about it: virtio_net_set_queue_pairs() will be called
-+     * later form virtio_net_post_load_device(), and anyway will be
-+     * noop for local incoming migration with live backend passing.
-+     */
-+    if (!n->peers_wait_incoming) {
-+        virtio_net_set_queue_pairs(n);
-+    }
+ #include "migration.h"
+ #include "migration-stats.h"
+ #include "qemu-file.h"
+@@ -336,6 +338,12 @@ bool migrate_mapped_ram(void)
+     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
  }
  
- static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
-@@ -3089,6 +3101,17 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
- 
-     virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
- 
-+    if (n->peers_wait_incoming) {
-+        /*
-+         * Excessive feature set is OK for early initialization when
-+         * we wait for local incoming migration: actual guest-negotiated
-+         * features will come with migration stream anyway. And we are sure
-+         * that we support same host-features as source, because the backend
-+         * is the same (the same TAP device, for example).
-+         */
-+        return;
-+    }
-+
-     if (!peer_has_vnet_hdr(n)) {
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-@@ -3179,6 +3202,18 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-     }
- }
- 
-+static bool virtio_net_update_host_features(VirtIONet *n, Error **errp)
++bool migrate_local(void)
 +{
-+    ERRP_GUARD();
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+
-+    peer_test_vnet_hdr(n);
-+
-+    virtio_net_get_features(vdev, &vdev->host_features, errp);
-+
-+    return !*errp;
++    MigrationState *s = migrate_get_current();
++    return s->parameters.local;
 +}
 +
- static int virtio_net_post_load_device(void *opaque, int version_id)
+ bool migrate_ignore_shared(void)
  {
-     VirtIONet *n = opaque;
-@@ -3300,6 +3335,9 @@ struct VirtIONetMigTmp {
-     uint16_t        curr_queue_pairs_1;
-     uint8_t         has_ufo;
-     uint32_t        has_vnet_hdr;
-+
-+    NetClientState *ncs;
-+    uint32_t max_queue_pairs;
- };
+     MigrationState *s = migrate_get_current();
+@@ -1055,7 +1063,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
+         &p->has_announce_step, &p->has_block_bitmap_mapping,
+         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
+         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
+-        &p->has_cpr_exec_command,
++        &p->has_cpr_exec_command, &p->has_local,
+     };
  
- /* The 2nd and subsequent tx_waiting flags are loaded later than
-@@ -3569,6 +3607,57 @@ static const VMStateDescription vhost_user_net_backend_state = {
+     len = ARRAY_SIZE(has_fields);
+@@ -1394,6 +1402,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
+     if (params->has_cpr_exec_command) {
+         dest->cpr_exec_command = params->cpr_exec_command;
      }
- };
- 
-+static bool virtio_net_migrate_local(void *opaque, int version_id)
-+{
-+    VirtIONet *n = opaque;
 +
-+    return migrate_local() && n->local_migration;
-+}
-+
-+static int virtio_net_nic_pre_save(void *opaque)
-+{
-+    struct VirtIONetMigTmp *tmp = opaque;
-+
-+    tmp->ncs = tmp->parent->nic->ncs;
-+    tmp->max_queue_pairs = tmp->parent->max_queue_pairs;
-+
-+    return 0;
-+}
-+
-+static int virtio_net_nic_pre_load(void *opaque)
-+{
-+    /* Reuse the pointer setup from save */
-+    virtio_net_nic_pre_save(opaque);
-+
-+    return 0;
-+}
-+
-+static int virtio_net_nic_post_load(void *opaque, int version_id)
-+{
-+    struct VirtIONetMigTmp *tmp = opaque;
-+    Error *local_err = NULL;
-+
-+    if (!virtio_net_update_host_features(tmp->parent, &local_err)) {
-+        error_report_err(local_err);
-+        return -EINVAL;
++    if (params->has_local) {
++        dest->local = params->local;
 +    }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_virtio_net_nic = {
-+    .name      = "virtio-net-nic",
-+    .pre_load  = virtio_net_nic_pre_load,
-+    .pre_save  = virtio_net_nic_pre_save,
-+    .post_load  = virtio_net_nic_post_load,
-+    .fields    = (const VMStateField[]) {
-+        VMSTATE_VARRAY_UINT32(ncs, struct VirtIONetMigTmp,
-+                              max_queue_pairs, 0, vmstate_net_peer_backend,
-+                              NetClientState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static const VMStateDescription vmstate_virtio_net_device = {
-     .name = "virtio-net-device",
-     .version_id = VIRTIO_NET_VM_VERSION,
-@@ -3600,6 +3689,9 @@ static const VMStateDescription vmstate_virtio_net_device = {
-          * but based on the uint.
-          */
-         VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
-+        VMSTATE_WITH_TMP_TEST(VirtIONet, virtio_net_migrate_local,
-+                              struct VirtIONetMigTmp,
-+                              vmstate_virtio_net_nic),
-         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
-                          vmstate_virtio_net_has_vnet),
-         VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
-@@ -3864,6 +3956,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     return qatomic_read(&n->failover_primary_hidden);
  }
  
-+static bool virtio_net_check_peers_wait_incoming(VirtIONet *n, bool *waiting,
-+                                                 Error **errp)
-+{
-+    bool has_waiting = false;
-+    bool has_not_waiting = false;
-+
-+    for (int i = 0; i < n->max_queue_pairs; i++) {
-+        NetClientState *peer = n->nic->ncs[i].peer;
-+        if (!peer) {
-+            continue;
-+        }
-+
-+        if (peer->info->is_wait_incoming &&
-+            peer->info->is_wait_incoming(peer)) {
-+            has_waiting = true;
-+        } else {
-+            has_not_waiting = true;
-+        }
-+
-+        if (has_waiting && has_not_waiting) {
-+            error_setg(errp, "Mixed peer states: some peers wait for incoming "
-+                       "migration while others don't");
-+            return false;
-+        }
-+    }
-+
-+    if (has_waiting && !runstate_check(RUN_STATE_INMIGRATE)) {
-+        error_setg(errp, "Peers wait for incoming, but it's not an incoming "
-+                   "migration.");
-+        return false;
-+    }
-+
-+    *waiting = has_waiting;
-+    return true;
-+}
-+
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -4001,6 +4129,12 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         n->nic->ncs[i].do_not_pad = true;
+ static void migrate_params_apply(MigrationParameters *params)
+@@ -1522,6 +1534,10 @@ static void migrate_params_apply(MigrationParameters *params)
+         s->parameters.cpr_exec_command =
+             QAPI_CLONE(strList, params->cpr_exec_command);
      }
- 
-+    if (!virtio_net_check_peers_wait_incoming(n, &n->peers_wait_incoming,
-+                                              errp)) {
-+        virtio_cleanup(vdev);
-+        return;
-+    }
 +
-     peer_test_vnet_hdr(n);
-     if (peer_has_vnet_hdr(n)) {
-         n->host_hdr_len = sizeof(struct virtio_net_hdr);
-@@ -4310,6 +4444,7 @@ static const Property virtio_net_properties[] = {
-                                host_features_ex,
-                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
-                                true),
-+    DEFINE_PROP_BOOL("local-migration", VirtIONet, local_migration, true),
- };
++    if (params->has_local) {
++        s->parameters.local = params->local;
++    }
+ }
  
- static void virtio_net_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 371e3764282..0c14e314409 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -230,6 +230,8 @@ struct VirtIONet {
-     struct EBPFRSSContext ebpf_rss;
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-+    bool peers_wait_incoming;
-+    bool local_migration;
- };
+ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 7134d4ce47e..8c87cfb0b7a 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -831,7 +831,8 @@
+            'mode',
+            'zero-page-detection',
+            'direct-io',
+-           'cpr-exec-command'] }
++           'cpr-exec-command',
++           'local'] }
  
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-diff --git a/include/net/net.h b/include/net/net.h
-index aa34043b1ac..d4cf399d4a8 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -82,6 +82,7 @@ typedef void (SocketReadStateFinalize)(SocketReadState *rs);
- typedef void (NetAnnounce)(NetClientState *);
- typedef bool (SetSteeringEBPF)(NetClientState *, int);
- typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
-+typedef bool (IsWaitIncoming)(NetClientState *);
- typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
+ ##
+ # @migrate-set-parameters:
+@@ -1007,6 +1008,12 @@
+ #     is @cpr-exec.  The first list element is the program's filename,
+ #     the remainder its arguments.  (Since 10.2)
+ #
++# @local: Enable local migration for devices that support it.  Backend
++#     state and its file descriptors can then be passed to the
++#     destination in the migration channel.  The migration channel
++#     must be a Unix domain socket.  Usually needs to be enabled per
++#     device.  (Since 11.1)
++#
+ # Features:
+ #
+ # @unstable: Members @x-checkpoint-delay and
+@@ -1046,7 +1053,8 @@
+             '*mode': 'MigMode',
+             '*zero-page-detection': 'ZeroPageDetection',
+             '*direct-io': 'bool',
+-            '*cpr-exec-command': [ 'str' ]} }
++            '*cpr-exec-command': [ 'str' ],
++            '*local': 'bool' } }
  
- typedef struct NetClientInfo {
-@@ -110,6 +111,7 @@ typedef struct NetClientInfo {
-     NetAnnounce *announce;
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-+    IsWaitIncoming *is_wait_incoming;
-     GetVHostNet *get_vhost_net;
-     const VMStateDescription *backend_vmsd;
- } NetClientInfo;
+ ##
+ # @query-migrate-parameters:
 -- 
 2.52.0
 
