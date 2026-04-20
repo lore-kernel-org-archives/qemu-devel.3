@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB43F99C86
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 05:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F077F99C76
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 05:30:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEhCE-0008H7-R3; Mon, 20 Apr 2026 01:29:22 -0400
+	id 1wEhCE-0008H8-Vk; Mon, 20 Apr 2026 01:29:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wEhC9-0008FF-JR
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wEhC8-0008FD-9R
  for qemu-devel@nongnu.org; Mon, 20 Apr 2026 01:29:19 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wEhC6-000822-Ib
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 01:29:17 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2b461310af5so9659565ad.1
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 22:29:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wEhC1-00081Y-HG
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 01:29:16 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2ab46931cf1so25501385ad.0
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 22:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776662948; x=1777267748; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776662946; x=1777267746; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=s7rduMfdSHBv6Dm+D3nhuA8gVs+ENlu+IzPYpxEzuEI=;
- b=lBQbAOZ6rRELHmy76wyujcvzttFXlWf52u+vQvpkcJ30AN+J6zjiGMck7wuT3PhsAu
- n10DJbpK03BKQvhjJLxfAYB+xohGUtb2bUA3tzDvu3zhvgEYJ5DiKiLvfFW0S6I7Qu4i
- 9sdtnD7Sk/ILCMIINLsYVrJYYhZe+O59u7plaCcH2s6ynEwFGaoRkFKzsLizjS1GOap/
- h90aJptmNXj88GSq0SFy4ipw4cP5TeS7I8sm/+gsd1auHKI2LRCQDiKF5DQv/ZpeWdE0
- eNOu8steUKtC6WPt/2VRx7xSs7C5zzHym8A+U6IIMeMevyIUVcugNVFv92TrL/MHKq9y
- UHKw==
+ :reply-to; bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=jeLH97LyFbduKLDPkKipdbVIdXeU+56SKNeGnHC+zjAfHJOR3/3cIdW3aR5e7y92bR
+ ByS6SWTox9UevU0nxGZQ3nZzs9zXFTVL5u2Gw9qHl6F3Eh3AJF3lZuHKmHr/mcenLZmp
+ J94YTGjH3QLa0R6IsT/uCnD5js5UnjCfUmiLzihHg4YlYiufgk575TGgi6rT++OSLOx7
+ I6rDjIPU65/bG6v6duG8CqaVr0ajJKAnbFpI30wN7LrvtbImsX4pksCLWsHqUehPxP23
+ 2lS4pX1+WRg5j1wGjmQDmd8Tg8aZHGWsd5Ca6apOEVydn3KJoHzMUQLOlg7U8bLpS8sw
+ +eCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776662948; x=1777267748;
+ d=1e100.net; s=20251104; t=1776662946; x=1777267746;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=s7rduMfdSHBv6Dm+D3nhuA8gVs+ENlu+IzPYpxEzuEI=;
- b=BiB2hO8DZhAVF2X3EN5Mvys3E5dM2ThyTUIftB5mzNrwu7q/LmWvW9MuEYE91ATo9h
- 9X+ZVZ5S23HdDehoT2B4KdeoAndhgLkGJaLisZEuyp+RhF85dt20nk9Tg8T8v1gRTsx0
- 2fozK/aj4mJ6Fo9e2Cfrdm3pDOPGbwqbreEHmVOxtOM1gfAXGQTnGrIFXFqfN4pUU+hU
- dJAau2OyQf6CtanacWbfsz/ElW3LPfjJq4X6IHqgkJBXz5zBc0oLAahij00mpn3y/h0K
- ecg6GXCFA90UJNsHb5HBcL9N+Nkv1MxfjF2bLlboOMGMPNApcNdv+6VUBUsiASkCNFEg
- /x0g==
-X-Gm-Message-State: AOJu0YxqVGoIN9MQZyv7g908HHdj0moUVtigBUoJqCa1F/J2oJvLEIuE
- aVQgMWIzySp2EL/XWmzkKk5JERLEcLxwdnA0qRk2bSHMDmJ9xL2cvhKjeCsWhgJkTpc=
-X-Gm-Gg: AeBDietx3jqABv2EEvwpHSzDeqY+purcXNuuw7WKVSmtVF6irRbUCugdPMADjehQ4dE
- Vk2FYtIdlTS3EI0LksCs8kYSIGrWU1ZgACk7udbd1NUJxjpmQQ5jTMr7C2z8sLlTzJEXy3MXfJR
- tts7ragrZnnwetiALeeDKClJsQkHCvtTHuiQI6EPjpaxi4DBH6FOpo2POgmd8P0hG+rGR1d49aR
- 4L4A83VwVSNIiKQ/ymA0fho8d8CVzt3A1kpWV9/I6cV2hpr5/yVhWiw0i+uG7XAtQhog3kc/4ND
- fp1DFc5s0ksPCSrGYILQi6TYtGe75WMXTBCcqW8nDmzL+y5euQHSn6yV2tirzNJbeIsG7K6yFVE
- WPWYvxpU2jWMmGXCpIbX2J8EFMJX2LfpIGua+MYlqp4OwVhOADMfrM4+HdYI6owMA38ifQ3P3iX
- Ns7JBPN4KP4IvFtuXsLnCzcXWbm+4jV8K2Xi4ce3E2
-X-Received: by 2002:a17:902:9002:b0:2b0:91e6:bc18 with SMTP id
- d9443c01a7336-2b5f9e7bb41mr69449905ad.14.1776662948556; 
- Sun, 19 Apr 2026 22:29:08 -0700 (PDT)
+ bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=ldAMnaaNeDKyrJv4qCrChv8Li9rfH0nRaU1gFKCNEJj8iusFCpwFtQ38GZYyyHV8SZ
+ j0P3bd+T1uxpwoH6bt04wxW16ZJS/87a/4wifAxo0R8fwXFcwWOoMXS/klqdKsAAs4se
+ d7C6PvQ46a5Y/te6ffGb1VznZHc1wtOj7T3BnQkm9xu8JWTReoZ7GM4YvudJtqZXNjKF
+ hVh5o5BRs5z2YTT9gEMMShXVHOI/ouFMPEaPMWVJeUSDHfPyljjBRDtjD2kIA+FkKwjM
+ /oVu7miVsuvXn186aPf4nVi87E1uVROVFuctHKy6LIdSikDaCejCjPZFuKvWWIqd0kbS
+ uFoQ==
+X-Gm-Message-State: AOJu0YzKK3y2B75Mmdw0wTI3EicLxv7UYG3msii6Fu+IdZSmIgX/u8vN
+ 1xGV5IhjZRjaIdzAHR85Hb5ibMkCIesVeOuGyok2602TK/M8Vi2FHW/j5bmC1Qlb/hM=
+X-Gm-Gg: AeBDieteAELdMHvgkjL0lzB1UFsnkO7izxzCv3mAGb57QKqp53FjutuFii747suXFnU
+ BHp0cmd0ENpsGlNWyTpgjGDv6bDCwieC0w4hqJEt87rGQ9zDkuP4caeUNvscojaFbe1R1ICGmCg
+ wrFB5FgsvMmbkEv9jMoK5nCjgVLY6j3SjH2t1qkzDQHkfiSFrRHuxvRSJrPfg8x4yzH+c11qoXe
+ FFDjW6XU9KpNXcWPjO8V1bWNMTsuqBSYF20Ng9StNCEh94Xe4ptDnV33lHb4i101ry/bEp/RZrR
+ GHa3Y6tvzVvbpgZd5iD6IuHjEhrOTMCbGkLqyU5lJMztnNN7Pxl9j/Ln9UFZJAYXIcmqouQgcbL
+ pisbOFzbRs8yAILyGNxVHRB6GJUHNDZoLKcjsGJd2xU/reekDP+3+ToU9iI2eHwOgEHQe0x7aua
+ yVQTwI1ttBphM53zPApu3t/4vOgIGzGeCFmtD+Jkeb
+X-Received: by 2002:a17:903:1b2b:b0:2b4:6529:7b9e with SMTP id
+ d9443c01a7336-2b5f9e145a1mr104966805ad.12.1776662946523; 
+ Sun, 19 Apr 2026 22:29:06 -0700 (PDT)
 Received: from [172.17.0.5] ([168.126.243.22])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab3ad18sm93099675ad.71.2026.04.19.22.29.06
+ d9443c01a7336-2b5fab3ad18sm93099675ad.71.2026.04.19.22.29.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Apr 2026 22:29:08 -0700 (PDT)
+ Sun, 19 Apr 2026 22:29:06 -0700 (PDT)
 From: Jaemyung Lee <ldc.jml@gmail.com>
 X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
-Date: Mon, 20 Apr 2026 14:28:51 +0900
-Subject: [PATCH v6 3/5] hw/ufs: Add idle operation
+Date: Mon, 20 Apr 2026 14:28:50 +0900
+Subject: [PATCH v6 2/5] hw/ufs: Modify flag handling operation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260420-write_booster-v6-3-8c49acba03d4@samsung.com>
+Message-Id: <20260420-write_booster-v6-2-8c49acba03d4@samsung.com>
 References: <20260420-write_booster-v6-0-8c49acba03d4@samsung.com>
 In-Reply-To: <20260420-write_booster-v6-0-8c49acba03d4@samsung.com>
 To: qemu-devel@nongnu.org
@@ -78,15 +78,15 @@ Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  Jaemyung Lee <jaemyung.lee@samsung.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1776662940; l=3493;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1776662940; l=6656;
  i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
- bh=U1I7iR9KAXBx24tNL1R8hKu0trzHrSPwvB+dS7OpoRs=;
- b=HXEFZhSf5rng3vs9GzL1pBfJNw1EAHYTMz2xmn2rK6fprhAI3TE+UAwnbHrXkSS0Bp1isTZZ1
- +/iRdmYb/uYB/J1NpvTsMmzKyEW2390WM+euWlVVy1hXpxyeNT8k9v9
+ bh=UwQldvutZu9HqLXksjdiAk3IKzXkRCngBaBlZ026a4E=;
+ b=tuskH5PQ6UR//7Os4QA0q+v5qBzNMJHYk3iAWX6w94e+yKKjRhr6YFfVqRUhHUNtjz+aG3wF1
+ eHE8DhY3fvXDN4/v8EZttpecJcaHGGPojDdF94Au0ENvIlY/N6Th/5B
 X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
  pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=ldc.jml@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=ldc.jml@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,132 +109,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When no I/O occurs, the UFS Device performs various internal operations.
-To emulate this, adds a timer that periodically checks the current I/O
-status of the device and call the ufs_process_idle() function when idle.
+Change internal flag handling operation same as attribute's
+
+In UFS device, some flag queries directly trigger specific device
+behaviour like attribute's, not only changes the internal values.
+So restructure flag query processing functions same as attribute
+processing, to facilitate linking detailed implementations based on
+individual flag value changes.
 
 Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
 ---
- hw/ufs/ufs.c | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- hw/ufs/ufs.h |  2 ++
- 2 files changed, 73 insertions(+)
+ hw/ufs/ufs.c | 152 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 119 insertions(+), 33 deletions(-)
 
 diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 69f82ab462d135fe6cda479891f9d8f26d19be9a..c504a0d7e3fb89eb5558cfd9c410cda9396bc3b4 100644
+index b2b70c8b38ebecd8d49ecce288614d55efd90f2e..69f82ab462d135fe6cda479891f9d8f26d19be9a 100644
 --- a/hw/ufs/ufs.c
 +++ b/hw/ufs/ufs.c
-@@ -1801,6 +1801,71 @@ static void ufs_sendback_req(void *opaque)
-     ufs_irq_check(u);
+@@ -1021,6 +1021,122 @@ static inline QueryRespCode ufs_flag_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
  }
  
-+static void ufs_process_idle(UfsHc *u)
++static uint32_t ufs_read_flag_value(UfsHc *u, uint8_t idn)
 +{
-+    /* Currently do nothing */
-+    return;
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        return u->flags.device_init;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        return u->flags.permanent_wp_en;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        return u->flags.power_on_wp_en;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        return u->flags.background_ops_en;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        return u->flags.device_life_span_mode_en;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        return u->flags.purge_enable;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        return u->flags.refresh_enable;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        return u->flags.phy_resource_removal;
++    case UFS_QUERY_FLAG_IDN_BUSY_RTC:
++        return u->flags.busy_rtc;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        return u->flags.permanently_disable_fw_update;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        return u->flags.wb_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        return u->flags.wb_buffer_flush_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        return u->flags.wb_buffer_flush_during_hibernate;
++    case UFS_QUERY_FLAG_IDN_UNPIN_EN:
++        return u->flags.unpin_en;
++    default:
++        g_assert_not_reached();
++        return 0;
++    }
 +}
 +
-+static inline bool ufs_check_idle(UfsHc *u)
++static QueryRespCode ufs_write_flag_value(UfsHc *u, uint8_t idn, uint8_t value)
 +{
-+    return !u->reg.utrldbr;
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        u->flags.device_init = 0;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        u->flags.permanent_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        u->flags.power_on_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        u->flags.background_ops_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        u->flags.device_life_span_mode_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        u->flags.purge_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        u->flags.refresh_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        u->flags.phy_resource_removal = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        u->flags.permanently_disable_fw_update = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        u->flags.wb_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        u->flags.wb_buffer_flush_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        u->flags.wb_buffer_flush_during_hibernate = value;
++        break;
++    default:
++        return UFS_QUERY_RESULT_INVALID_VALUE;
++    }
++
++    return UFS_QUERY_RESULT_SUCCESS;
 +}
 +
-+static inline bool ufs_mcq_check_idle(UfsHc *u)
++static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
 +{
-+    if (!u->params.mcq) {
-+        return true;
++    UfsHc *u = req->hc;
++    uint8_t idn = req->req_upiu.qr.idn;
++    uint8_t value;
++    QueryRespCode ret;
++
++    ret = ufs_flag_check_idn_valid(idn, op);
++    if (ret) {
++        return ret;
 +    }
 +
-+    for (int qid = 0; qid < ARRAY_SIZE(u->sq); qid++) {
-+        if (!u->sq[qid]) {
-+            continue;
-+        }
-+
-+        if (!ufs_mcq_sq_empty(u, qid)) {
-+            return false;
-+        }
-+
-+        /* internal ongoing MCQ request check */
-+        UfsSq *sq = u->sq[qid];
-+        for (int i = 0; i < sq->size; i++) {
-+            if (sq->req[i].state != UFS_REQUEST_IDLE) {
-+                return false;
-+            }
-+        }
++    if (op == UFS_QUERY_FLAG_READ) {
++        value = ufs_read_flag_value(u, idn);
++        ret = UFS_QUERY_RESULT_SUCCESS;
++    } else if (op == UFS_QUERY_FLAG_SET) {
++        value = 1;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_CLEAR) {
++        value = 0;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
++        value = !(ufs_read_flag_value(u, idn));
++        ret = ufs_write_flag_value(u, idn, value);
++    } else {
++        trace_ufs_err_query_invalid_opcode(op);
++        return UFS_QUERY_RESULT_INVALID_OPCODE;
 +    }
 +
-+    for (int qid = 0; qid < ARRAY_SIZE(u->cq); qid++) {
-+        if (!u->cq[qid]) {
-+            continue;
-+        }
-+
-+        if (!ufs_mcq_cq_empty(u, qid)) {
-+            return false;
-+        }
-+
-+        if (!QTAILQ_EMPTY(&u->cq[qid]->req_list)) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
++    req->rsp_upiu.qr.value = cpu_to_be32(value);
++    return ret;
 +}
 +
-+#define UFS_IDLE_TIMER_TICK 100 /* 0.1s */
-+static void ufs_idle_timer_cb(void *opaque)
-+{
-+    UfsHc *u = opaque;
-+    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT);
-+
-+    if (ufs_check_idle(u) && ufs_mcq_check_idle(u)) {
-+        ufs_process_idle(u);
-+    }
-+
-+    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
-+}
-+
- static bool ufs_check_constraints(UfsHc *u, Error **errp)
- {
-     if (u->params.nutrs > UFS_MAX_NUTRS) {
-@@ -1863,6 +1928,7 @@ static void ufs_init_hc(UfsHc *u)
-     uint32_t cap = 0;
-     uint32_t mcqconfig = 0;
-     uint32_t mcqcap = 0;
-+    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT);
- 
-     u->reg_size = pow2ceil(ufs_reg_size(u));
- 
-@@ -1959,6 +2025,9 @@ static void ufs_init_hc(UfsHc *u)
-      * dynamically
-      */
-     u->temperature = UFS_TEMPERATURE;
-+
-+    timer_init_ms(&u->idle_timer, QEMU_CLOCK_VIRTUAL_RT, ufs_idle_timer_cb, u);
-+    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
+ static const int attr_permission[UFS_QUERY_ATTR_IDN_COUNT] = {
+     /* booting is not supported */
+     [UFS_QUERY_ATTR_IDN_BOOT_LU_EN] = UFS_QUERY_ATTR_READ,
+@@ -1103,39 +1219,6 @@ static inline QueryRespCode ufs_attr_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
  }
  
- static void ufs_realize(PCIDevice *pci_dev, Error **errp)
-@@ -1986,6 +2055,8 @@ static void ufs_exit(PCIDevice *pci_dev)
+-static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
+-{
+-    UfsHc *u = req->hc;
+-    uint8_t idn = req->req_upiu.qr.idn;
+-    uint32_t value;
+-    QueryRespCode ret;
+-
+-    ret = ufs_flag_check_idn_valid(idn, op);
+-    if (ret) {
+-        return ret;
+-    }
+-
+-    if (idn == UFS_QUERY_FLAG_IDN_FDEVICEINIT) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_READ) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-    } else if (op == UFS_QUERY_FLAG_SET) {
+-        value = 1;
+-    } else if (op == UFS_QUERY_FLAG_CLEAR) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-        value = !value;
+-    } else {
+-        trace_ufs_err_query_invalid_opcode(op);
+-        return UFS_QUERY_RESULT_INVALID_OPCODE;
+-    }
+-
+-    *(((uint8_t *)&u->flags) + idn) = value;
+-    req->rsp_upiu.qr.value = cpu_to_be32(value);
+-    return UFS_QUERY_RESULT_SUCCESS;
+-}
+-
+ static inline uint8_t ufs_read_device_temp(UfsHc *u)
  {
-     UfsHc *u = UFS(pci_dev);
- 
-+    timer_del(&u->idle_timer);
-+
-     qemu_free_irq(u->irq);
- 
-     qemu_bh_delete(u->doorbell_bh);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 13d964c5ae5ec430a98b2ef71987cb9279e9a317..b5f040302129f4d02732ddd20ef82eb33c41922a 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -148,6 +148,8 @@ typedef struct UfsHc {
-     UfsCq *cq[UFS_MAX_MCQ_QNUM];
- 
-     uint8_t temperature;
-+
-+    QEMUTimer idle_timer;
- } UfsHc;
- 
- static inline uint32_t ufs_mcq_sq_tail(UfsHc *u, uint32_t qid)
+     uint8_t feat_sup = u->device_desc.ufs_features_support;
+@@ -1300,6 +1383,9 @@ static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
+     case UFS_QUERY_ATTR_IDN_TIMESTAMP:
+         u->attributes.timestamp = cpu_to_be64(value);
+         break;
++    default:
++        g_assert_not_reached();
++        return 0;
+     }
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
 
 -- 
 2.48.1
