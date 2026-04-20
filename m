@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC53DF557FE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 09:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF5EF55803
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 09:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wElIR-0006ky-CA; Mon, 20 Apr 2026 05:52:04 -0400
+	id 1wElPH-0008HW-2R; Mon, 20 Apr 2026 05:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wElIH-0006k5-14
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:51:54 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1wElPA-0008Gx-V5
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:59:01 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wElIE-0005YZ-QN
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:51:52 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-651bc8f864fso1478113d50.1
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 02:51:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776678709; cv=none;
+ id 1wElP9-0007HD-BS
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:59:00 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-797ab169454so38039957b3.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 02:58:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776679138; cv=none;
  d=google.com; s=arc-20240605;
- b=XJdEJufAfz8qISeoqmkAg5DRbbJQ6fPq86yGUyqyx2ihG6pdSYcW2hJCzZk9DSfigt
- Oygv2mjc7nkODJjSaBYj2lzoEt9DjodocZlcwjZc4A3R96+v/JpLFBxsZa/g/Y73NQuv
- 6uEvZik7q2c88wFAO+CuFjUwiVotkXNoiDV/YWT3B19RFlxKv4j/jZgr5+fEiyyVwFCR
- 8fHjOYwT1Cn+jVmFhXO+6Yw/wq/muuk6CiWwKAGIcFJAsUSZdSU8knt5ctIOSVnQmyp0
- Zx0rfLtoPCaay7pASkUd0Ci161AObkXbT8i6GepZcAsq73C9D38kjncV6YBUwe6rjWUI
- 4+Rw==
+ b=PSDILNAZ7+gvNMEBjOkp548BFxm9hVf1iH+7jV43aLYZzptDFZ0a7VlbnQ8sOS/uD/
+ 6VqMu/0j3OJKfCm3NcjhbklCnigwGVzkUKETB5ee0eabTB/0Z1LIYsW3v/bNAmCdYwuy
+ EIoRnzrybYW7csWawIEM89C5BXZKUyS4c213gzM/p99cOKEbCEIUVlkggbV9iz+XwB73
+ 0MUDOQbj8KaNUcQ57s60gykgbBgy6Aof5tWtXnfDRcO/HVCmo/FF2aabXTllvjrSGXD/
+ gVbv6gdM4JcJCr0Qd8Th8S9CfBtSiz7CgZT1veRAN8QjYBAGqDJ6dJss4CzdCGyF01Rx
+ +XyQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=CM248gn6ZX0X3LvYoKmqT1dJlvLJmbmpAU7NIAOnodo=;
- fh=N3dnZwB1bGIoIuwtamz7lHcb5DEaPuY10mwMPlmH8No=;
- b=DNCBKZ/aTxXUFmRVbvgNa6f/wn819Yy0L5jHroI/EXjumh1bK62vqvWrDnjHSeHGFi
- aiPJiKgbMMfA14fwnporXBrQQEFvwSKyRggnO9fKYh6BcQTVcGpn9D/8nzS9Pi+y/bNn
- dZjvu2oZZJrWoEWeljX/GSu7YdoOS75fdGpBBY1ud05HQP/PQw82u4FWAcgco26Aaa8S
- iglv1Mo39eeBxcNAU6HzAvqum4XZ926Isb6EnsVCMTDeL2+L09+89h5LAkNhLhr61C97
- vG4fvMP6+ftS4vFv43EFXB0y/ifXtA2FcOn22/1pfS7dglOS21hUDuA4AdCHV9KpX7eu
- aqKQ==; darn=nongnu.org
+ bh=77v12DvZrsTA5CrcmzcwO4l++DfN0wrY47UPYcaP+bc=;
+ fh=ua/6Ys84y5bjLTbUAUJBq9as/oxSI7ciXG0/MM6qXLM=;
+ b=fdgxrIGLQe9VF/4O0M6fpC6gSVnbw4C/wP/P8c+sFfPEm0FZh2T88JoQKnCULllZ/n
+ ORLy/irO+hdhKQ5SUILI2JsjIspi+1c++uTxy+JykJkXpOlAImHWCWbg8YLp52jc/3+R
+ CYlgu5Iicb03Zb8EN2L7KmOOGp1YgGW1kUa6okCz3vrj0UKC6lk+neVHklHR6d2iX2DQ
+ MR92P1awNnhwl9tIoBI8N2SHIsswCSzGUOTr4NBrdy+WI59a+hTdD84jSJHPNeucvO/E
+ rftQwpEGx6O9zOkPz+zH3Q2hdyHT+r3iG7mk8wXsGvQlujZ30GpzcbvMBerty0+8+vpC
+ 3aUg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776678709; x=1777283509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776679138; x=1777283938; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CM248gn6ZX0X3LvYoKmqT1dJlvLJmbmpAU7NIAOnodo=;
- b=JJjW/yoVVHUiPcOYYiOL7ttJ0qZEU6GVNtXSoi7QIbncD3GJuo8oHbyNnKwHg6atv3
- 6I+XBFJW+ksXdwN9Lmit5FaoR7hYlOPt5cyUUd1uMmr3zK8j2dzZK1sYGaVB5z7FPOcM
- JyKoO8aYxkllBa2uno48cB2xt7su15q1XZ8xHYal5yfnXKp+s4ZP1s5Fuu2PjUyILfdN
- MoW4d7ZByB6voE91TkbUwJrrb0oUmW5BynXvPYVW+bxGBPSjmMSToPGZz4FwplrHwjFC
- cawWp+2PwC2p3G6+FTNkhYhEsBurc/Y07HaBApmTOuAU0kV6jSXNI3d8/JW3B3VLCZz8
- uCjQ==
+ bh=77v12DvZrsTA5CrcmzcwO4l++DfN0wrY47UPYcaP+bc=;
+ b=biGp/TC9krcvBk00nUEt1LUVOUPtkU7I+jWRIMhtEVZniej7YfB60aVKFYWH8GDPvg
+ iNdp7QaDzPL55mj4ldfxhKnS4OklLWZLIa8xN4w5ztNJ1mnrNuXXDNrrSzTBM9Pe28I8
+ 9mV+OYRbJxzksAeul6oy6qYpF12k+WjDHbl+xRE/tIL4LVSMZ36MabjZKv4i6sGSPi5x
+ bgRO+icnZvIuRRP12aLQYTievCwduHB4nIUDyLDf07HcRXCCkmJ2fe2S59Q8nMJhmAHz
+ cgDqFND4Z8BCQjzlgBa7e8Vv0xWEk/exZ26SYywgwahQaIENFi2ufduDqPB64Jdyocaz
+ I/rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776678709; x=1777283509;
+ d=1e100.net; s=20251104; t=1776679138; x=1777283938;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CM248gn6ZX0X3LvYoKmqT1dJlvLJmbmpAU7NIAOnodo=;
- b=DYqBThqr4qDIi5Z4v9lh2N9viOxwodLILmRTK4YB6tkU9ISgFHtAE8soMZorO0Pl9W
- GX1TrUfwTng1mwr+u6AnAgnJ9ZbHfCacHskdR5hUGvpiGRz9BfU+AAkYjTtis+UmB592
- H4kQVd6UiGiFB2U3wkaRZWu1I/ri/MUgO9AFInIfGQBQrTyazjYZVZpz9r4iCVs0Gv89
- 0Vx/7tq8KSbsQxBrB+xI24qFtlN14LF+s/o6V3Q8OlhGYk42KzwTTflXaHlRZ32AcWCd
- uLe+qI9sNVjUzgDMPZMvbLVnFV3CPf0shAw11r6Q8/9iHvtWHXNa7aqzDJWH2HWEFE7s
- rTSg==
+ bh=77v12DvZrsTA5CrcmzcwO4l++DfN0wrY47UPYcaP+bc=;
+ b=LgjhEZfSNa67oK1wXLNf/vODiPZAdhXZvqbuoT0jEFJ71Ns1eUsAn5S08hqGCCu8vt
+ /YtsPRvNjaB4M09l3GzZuLeXRN8p/sDjTmle6KF9xt1Lj9+FumTAWhjSQiVToDC9RBRw
+ PCQk4RjE+xvfTy+kBJYqQipvDWR0+V3NMmZkHjCxDZWQdTb/ux+1yFBlsHGirydnjulu
+ zf39wcfkDOKBNWyvL2Q/z48L7Nxj5p1nBzhmnOkZMK771ZCRszCLEn3w3XZTYmyaJwOx
+ 3f3Cz5pPB/yG/UrTMzj3AWOsmtw+etB7pMqXWsCcq+l+NQwh7apV05a4gRPfN0L8tRnj
+ Rs0A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/ddcR3bw/E33aYjD03o+Imstc4Vt47TS+02B2MZrgtVoZQYPpu7CEuV639K422KCc/8bSzsDLbVaYy@nongnu.org
-X-Gm-Message-State: AOJu0YzNbXRmRDIDGuMSevXofZuOMXhyxqBVtzTQzoh3CCt1Bt7Frhbs
- xUcvMjZxNHmkkjoXxGVq0iuCzBmTtnRyhx13l1ym15WAHzPAMYOgIfErXTUFfuN1qFlx7iSC2rT
- 46rqeHM9OO8VWHxpytoZa1RtvWqFkgvd+HQmwf+0Vbg==
-X-Gm-Gg: AeBDies91hPIaliWnNj/JQ98tOUwQZ36c2W+h6LVmRLKy63kmgBAS1xvchchl1lAPRx
- OnYK83QHSuBjo8JKsBA+06tUpIBrpn5Im+GyRtyhHZEtu/PUPsOk2MGj35LmunFa/b9Y3xddW5u
- ULwwE0E9NJZ9aG8eVJtXArvO4rEFnagmoaoFXNyTU/ZW4yN2F1Bry7TT2mokIwOpirJKDZKmRhg
- aWIOogx6uk3SkeLsnEfDtgxHhzjg4DfSTDMccSznnFBSSn+P3vpPuLnGwEF17FvAuQ6ygLcEsG9
- pxlm/pOZnvzn5wmFDH6986JTJIrGdjwMmOCcRhleJ6aftijkeTz0BKnC89lLMmkE+Wor1hXNI21
- 6Sg==
-X-Received: by 2002:a05:690e:585:b0:651:bcb6:888f with SMTP id
- 956f58d0204a3-653108399a9mr8955591d50.15.1776678708741; Mon, 20 Apr 2026
- 02:51:48 -0700 (PDT)
+ AFNElJ9mKjttUUNU9BB7C+dGgKNyFMLANw1SK049nc4xnMGylK4q5zdGx3EZ10BHfbUYZqc5VM5i4IaPnbI9@nongnu.org
+X-Gm-Message-State: AOJu0YwMHBCmAQIjCJ0ZE/mA47DhNUgUHytGEN2Ld9ycDQdHZHK1EKti
+ oNZ/W4XmqHmlVotn8PSDxyc8yABPBdNqWd8Fln7mmZF3Z8YPnbL7eUQE1TV0/yDUnR8T7PXslDJ
+ BEgsKzsM819ZXnVnDtcx3IJeJb/Yz8x9A57g9dv4LHA==
+X-Gm-Gg: AeBDieuPwoOPKiDQQCGoql0d4zgjzs1kphJhwKxewv8pCTgB6BHhxXa0wYpQxOQDpaK
+ kQfrig3hTO2wtLHKLTHGRVtELja/qC75Uxr0o+ufhkDx6Ehu1fIICHZOEpQ/PeDcEzheRRxjqcJ
+ i6kbm1qutw51OpB1UXAvRKX6B3x86ZwN3nbtmoK12FC0i7m5WiZVTXYWfYIBaexsHK2j4PYHhwC
+ RXHxdDcYP9zMq/msvt2mOsMv4Vmy9sHFdbU2c2lcwYGlPYQPXBSH6fPObLtgXGBmPYSqxb0tmgN
+ 7fTKPrbokisTaTUBQqCMsvc4bXSczywTgER8VMozv+eExBgdWYOL/sVO4Z7qzl3Zrhhqy+LiPgT
+ Y+A==
+X-Received: by 2002:a05:690e:1281:b0:653:11d9:b0c5 with SMTP id
+ 956f58d0204a3-65311d9b991mr11525569d50.46.1776679138236; Mon, 20 Apr 2026
+ 02:58:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260420075159.106615-1-thuth@redhat.com>
-In-Reply-To: <20260420075159.106615-1-thuth@redhat.com>
+References: <20260417152236.1305333-1-farman@linux.ibm.com>
+ <20260417152236.1305333-2-farman@linux.ibm.com> <87a4uyt0ww.fsf@redhat.com>
+In-Reply-To: <87a4uyt0ww.fsf@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Apr 2026 10:51:37 +0100
-X-Gm-Features: AQROBzBKDHz6c2PHgKACOKjC1CN5yOruVHatehWrcjGlNJl2CaW0Bhq2UEPJvbk
-Message-ID: <CAFEAcA9=oLSEv89Y62kaVDjsdHXg00=yTnSt7W42aosm0B092w@mail.gmail.com>
-Subject: Re: [PATCH] system/memory: Don't call MR handlers for bytes beyond
- the MR's size
-To: Thomas Huth <thuth@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 20 Apr 2026 10:58:46 +0100
+X-Gm-Features: AQROBzBWCBRo6FQnsPhdGe5RXAoyejx-2hE-baSSD0JYD9XirUUzN7W4AD51IcM
+Message-ID: <CAFEAcA9xCN6XMUFmZ_QAn617W14FAzi4D_H1mgSER10otTtQMQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] MAINTAINERS: Update s390 trees
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,106 +120,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Apr 2026 at 08:52, Thomas Huth <thuth@redhat.com> wrote:
+On Mon, 20 Apr 2026 at 10:52, Cornelia Huck <cohuck@redhat.com> wrote:
+> I also have the s390-fixes branch, which I've used during freeze, not
+> sure if it is worth mentioning here as well. (Assuming that I'll
+> continue using the same setup as in the past, but it had been working
+> well back then.)
 >
-> From: Thomas Huth <thuth@redhat.com>
->
-> If a guest triggers a multi-byte read/write at the very end of a memory
-> region, the code access_with_adjusted_size() still tries to access
-> all bytes of the transfer, even if the final bytes are already beyond
-> the memory region's size. If the device handler cannot cope with those
-> accesses, bad things can happen, for example:
->
->  $ echo "writew 0x800064 0x4142" | \
->    ./qemu-system-avr -M mega2560 -display none -qtest stdio -accel qtest
->  [I 0.000001] OPENED
->  [R +0.001750] writew 0x800064 0x4142
->  qemu-system-avr: ../../devel/qemu/hw/misc/avr_power.c:58:
->   avr_mask_write: Assertion `offset == 0' failed.
->  Aborted                    (core dumped)
->
-> We really should not call MR handlers for bytes that are beyond the
-> MR's size, so let's add a check to limit the size in such cases.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3393
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> In general, do humans tend to consult the T: lines? Are there tools that
+> do anyting interesting with them?
 
-The MR in question sets .impl.max_access_size to 1 but leaves
-.valid.max_access_size at its default (which we treat as 4),
-and is then registered with an MR size of 1. Perhaps we should
-also assert on MR registration that
-  .valid.max_access_size <= the MR size ?
-Though there might I suppose be cases where the MR window can be
-guest-configured to various sizes so it might in some silly setups
-be smaller than the largest permitted access size on startup.
+I never look at the T: lines. My impression is that this is a
+part of the MAINTAINERS format that we've carried over from
+Linux, where the development workflow is much more that
+subsystems have their own git trees and patches for those
+subsystems should be based on those git trees, because the
+mainline git is only updated during a merge window. For QEMU
+our workflow is that patches for anywhere in the tree should
+be based on the head of upstream git, because that continually
+updates except during release freezes. So there's much less
+need to care about what a subsystem's git tree is, and many
+subsystems don't have a public git tree at all.
 
-We should also set .valid.max_access_size on this specific
-device to 1, though the fix to the core memory system is
-definitely something we should have (and that I was under
-the impression we already enforced...)
-
-> ---
->  system/memory.c | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
->
-> diff --git a/system/memory.c b/system/memory.c
-> index 56f3225b21a..2ff74c42e3f 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -531,6 +531,7 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
->      uint64_t access_mask;
->      unsigned access_size;
->      unsigned i;
-> +    unsigned int checked_size;
->      MemTxResult r = MEMTX_OK;
->      bool reentrancy_guard_applied = false;
->
-> @@ -557,13 +558,21 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
->      /* FIXME: support unaligned access? */
->      access_size = MAX(MIN(size, access_size_max), access_size_min);
->      access_mask = MAKE_64BIT_MASK(0, access_size * 8);
-> +
-> +    if (addr + size > mr->size) {
-
-mr->size is an Int128 -- you can't portably do direct
-arithmetic on it like this. (We still support configs where
-there is no working __int128_t and Int128 is a struct.
-I think --enable-tcg-interpreter is one way to get that.)
-
-There are also I think cases where addr + size might overflow.
-(addr is the within-MR offset, but we permit MR sizes up to
-and including 2^64.)
-
-> +        assert(addr < mr->size);
-> +        checked_size = mr->size - addr;
-> +    } else {
-> +        checked_size = size;
-> +    }
-
-I wonder if this is the right place to enforce this.
-Another option would be to have memory_region_access_valid()
-do the check and return false for accesses off the end.
-The splitting of writes that we do here is only supposed to be
-handling the case of "the implementation allows smaller chunks
-than the device permits", not the "access overlaps between two
-different MRs" case (which would need to be handled much further
-up the callstack before we have identified the specific MR we
-are accessing).
-
-> +
->      if (devend_big_endian(mr->ops->endianness)) {
-> -        for (i = 0; i < size; i += access_size) {
-> +        for (i = 0; i < checked_size; i += access_size) {
->              r |= access_fn(mr, addr + i, value, access_size,
->                          (size - access_size - i) * 8, access_mask, attrs);
->          }
->      } else {
-> -        for (i = 0; i < size; i += access_size) {
-> +        for (i = 0; i < checked_size; i += access_size) {
->              r |= access_fn(mr, addr + i, value, access_size, i * 8,
->                          access_mask, attrs);
->          }
-
-thanks
 -- PMM
 
