@@ -4,88 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2700EF5A8B8
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31225F5A8B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEuzP-0003gH-MX; Mon, 20 Apr 2026 16:13:03 -0400
+	id 1wEv6y-000621-3o; Mon, 20 Apr 2026 16:20:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEuzN-0003g3-3d
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:13:01 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEuzL-0004Bf-Eb
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:13:00 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488ff90d6c7so25780905e9.2
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 13:12:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776715978; x=1777320778; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SYVYGLv+vwoNpHesJVFj33FWrAlNal7SsLu4kzVmOaA=;
- b=qAmfYeFt39dYsUwCB1eL/rReIo9HDsrHswO+otXei2m75ExHTmI1UoqB955jVetosm
- Nol/+hWpVbsfu6MNk3VyvwThGf59NOfYyecTS6b/uZaY5hPR5VmBfNkZ70myYXAubKlS
- rC1B2GW8T+UO2jqHXQfXL14UYrmh+u/+/EavLzHDMXKc0CihW+l+ibM9avcSFo8q5J4F
- twSCGs+7MPU6N2/WIc/Flk/Xvjn6bvqNAZnr0Vj3Pso1kYG+2nOR7dVv7ztb5JZluIND
- uPmkhZkN9AV7IL4L16eN3+Po+6xR0em6Gc5qNivoo9Tq/79G7obtPKSy9kSCuQ1RPtbw
- 0TZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776715978; x=1777320778;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SYVYGLv+vwoNpHesJVFj33FWrAlNal7SsLu4kzVmOaA=;
- b=mRj3q9Utt7D0S6zdgVu5oQ8Edk+c5Dg0sv924x+QSx8VRz5PEAwirCY7FlxDdwEacx
- G/8OPoJzWpOMV4Z0Siry7e5CL9T3Yi4TOATidVwYzhQPsChV7Pbrz95DJk/rZ1h763TK
- y8Gx0ZoT73eXuxCdWbKlWM7pY4F3I+3mPIOErlWu5VUECwNEqFnppt7421T+acuyo0zr
- ZDkHiBH29VqeNCqcI7rvRFGgY4tdpxQDtyr3vY+0SH12F12npVow8Onp50x+Efw7E1wM
- bWpll1RITBexKNw0CjC9F8Ri24BtORj9GBPKuGrCVuHOq0FaUHzacsxwuNvNutLhK2Lo
- ob8w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+hpItrBTYudh0JZ6fVpnGqpZduz8blMGVIndfeRm1Mxkp8aCjBLitQus8VUQ2bBJS+ak8X0xEbDx9F@nongnu.org
-X-Gm-Message-State: AOJu0Yz2EjqNfPGZUWnHRv2JZ5X75HinjUYTWRV3swRmZpeI8BT5bAEa
- vOjAz7sDudnyjSpxh5BliXZlXTJk8W4UN3uzG03qHNMSTAFe4oAY8nR8q4lwVxhF2+Y=
-X-Gm-Gg: AeBDievD6aQT3Ti7lY5Lr3bl2HHCVuwDgEm3Ij5jaRGHyjRL4kKyqmhyTlaZROE5+qY
- CcrsnZdg6d9ssOBAX9i8xOXotBXMjLmiamCpxrtw3U+TIcDgf5fZbVQWJKJA+CRaMRmCK1X5xCg
- Jf2ZnlYj/EtW+DLjH3bMGCEoWZ/VMVam91UsN9HDHxaLZHSEZLtO64ogvZ1U9OnJ0TFKxEI8E3i
- Ozo+haYonAyswWdRkyfXnzNrcZHyRq2ddsRtpwL+FMSrV+B3eFd5uGkfwfgo7t1VpBWVWyxlh9C
- w6ALJB5231ATblQV5F9vrUFpETMOAjEGSMd1d9dr220EXs6Yd1mk3msVZ2kQWuUDkV9YKWcSfBg
- 1iHv2db9moJQMAqiSFIgbhooSjEHG/22sj+Tz+KG4SpQlKH1AqWkZkXAsgxyY0iYZEZmFpMCtnF
- u2qhV+qrHirnrYVpkeUmR/41lPUH2DJaXdWLo+eHeojOgKOMwtqzOVDbHV0UsYkGfT6DGYZ/IYw
- 7UiFlz+5Lly7qE=
-X-Received: by 2002:a05:600c:8a08:b0:488:a82f:bb9b with SMTP id
- 5b1f17b1804b1-488ff369a1cmr140807235e9.30.1776715977582; 
- Mon, 20 Apr 2026 13:12:57 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891bb3d121sm180944575e9.14.2026.04.20.13.12.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2026 13:12:56 -0700 (PDT)
-Message-ID: <f7f7682f-08a5-448b-a936-38301a62f2e2@linaro.org>
-Date: Mon, 20 Apr 2026 22:12:55 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wEv6r-00060f-Sw
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wEv6q-0006OT-0B
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:c00c:0:640:e0de:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A9BC6C01BB;
+ Mon, 20 Apr 2026 23:20:41 +0300 (MSK)
+Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id XKYwe10MOSw0-fKAZa2TE; Mon, 20 Apr 2026 23:20:40 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1776716441;
+ bh=0FTFK55cw3rK/QycYXfqJNoLrOAw3LbH2p8qWtc8CYM=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=G0JUjw7kqvMLw1o3CkAOdS12dnn7vMF+lUP2ln/cNBJ7UAhXA5M5N9AzLwHOPrx/q
+ PKfYEUrkRgp+wEs0FSA2BPmjjcutILQF2IeAZkt+8jtjbpJnUGad8PW8Kqb0oFg96Q
+ MHCjPO0E7zXfqCga2/Zi+4AB+N4lh1N/5vhmEHFY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: mst@redhat.com
+Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
+ d-tatianin@yandex-team.ru
+Subject: [PATCH v2 04/10] vhost: replace .vhost_vq_get_addr() with
+ .vhost_phys_vring_addr()
+Date: Mon, 20 Apr 2026 23:20:25 +0300
+Message-ID: <20260420202032.714884-5-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260420202032.714884-1-vsementsov@yandex-team.ru>
+References: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386: Use qemu_open_old for kernel/initrd
-Content-Language: en-US
-To: Sertonix <sertonix@posteo.net>, qemu-devel@nongnu.org
-References: <DHXDTYTOFYVL.3H531B0BJOQ22@posteo.net>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <DHXDTYTOFYVL.3H531B0BJOQ22@posteo.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,33 +74,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Make a simper handler to consolidate the logic in one place. That
+helps further changes.
 
-On 19/4/26 21:35, Sertonix wrote:
-> 
-> Allows using "-kernel /dev/fdset/0" and "-initrd /dev/fdset/1" (if the
-> file descriptors are opened read-only).
-> 
-> For the sake of consistency it would be best to do the same change in
-> the other hw/* subdirectories as well but I lack the means to test all
-> of them.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ hw/virtio/vhost-vdpa.c            | 13 +++----------
+ hw/virtio/vhost.c                 | 12 ++++++------
+ include/hw/virtio/vhost-backend.h |  6 ++----
+ 3 files changed, 11 insertions(+), 20 deletions(-)
 
-Thanks for this patch. Note however there is a comment before
-the qemu_open_old() declaration in "qemu/osdep.h":
-
-   /*
-    * Don't introduce new usage of this function, prefer the following
-    * qemu_open/qemu_create that take an "Error **errp"
-    */
-
-Do you mind using the latter in your patch?
-
-Thanks,
-
-Phil.
-
-> ---
->   hw/i386/x86-common.c | 13 +++++++++----
->   1 file changed, 9 insertions(+), 4 deletions(-)
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 93474624898..9e1aa4860a8 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -1571,16 +1571,9 @@ static int vhost_vdpa_set_owner(struct vhost_dev *dev)
+     return 0;
+ }
+ 
+-static int vhost_vdpa_vq_get_addr(struct vhost_dev *dev,
+-                    struct vhost_vring_addr *addr, struct vhost_virtqueue *vq)
++static bool vhost_vdpa_phys_vring_addr(struct vhost_dev *dev)
+ {
+-    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_VDPA);
+-    addr->desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
+-    addr->avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
+-    addr->used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
+-    trace_vhost_vdpa_vq_get_addr(dev, vq, addr->desc_user_addr,
+-                                 addr->avail_user_addr, addr->used_user_addr);
+-    return 0;
++    return true;
+ }
+ 
+ static bool  vhost_vdpa_force_iommu(struct vhost_dev *dev)
+@@ -1617,7 +1610,7 @@ const VhostOps vdpa_ops = {
+         .vhost_send_device_iotlb_msg = NULL,
+         .vhost_dev_start = vhost_vdpa_dev_start,
+         .vhost_get_device_id = vhost_vdpa_get_device_id,
+-        .vhost_vq_get_addr = vhost_vdpa_vq_get_addr,
++        .vhost_phys_vring_addr = vhost_vdpa_phys_vring_addr,
+         .vhost_force_iommu = vhost_vdpa_force_iommu,
+         .vhost_set_config_call = vhost_vdpa_set_config_call,
+         .vhost_reset_status = vhost_vdpa_reset_status,
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index ffd7d404cc7..564a5d46982 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1093,16 +1093,16 @@ static int vhost_virtqueue_set_addr(struct vhost_dev *dev,
+                                     struct vhost_virtqueue *vq,
+                                     unsigned idx, bool enable_log)
+ {
++    bool phys = dev->vhost_ops->vhost_phys_vring_addr &&
++        dev->vhost_ops->vhost_phys_vring_addr(dev);
+     struct vhost_vring_addr addr;
+     int r;
+     memset(&addr, 0, sizeof(struct vhost_vring_addr));
+ 
+-    if (dev->vhost_ops->vhost_vq_get_addr) {
+-        r = dev->vhost_ops->vhost_vq_get_addr(dev, &addr, vq);
+-        if (r < 0) {
+-            VHOST_OPS_DEBUG(r, "vhost_vq_get_addr failed");
+-            return r;
+-        }
++    if (phys) {
++        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
++        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
++        addr.used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
+     } else {
+         addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc;
+         addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail;
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index aab6bf3ef7e..7cc3bb54418 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -141,9 +141,7 @@ typedef int (*vhost_set_inflight_fd_op)(struct vhost_dev *dev,
+ 
+ typedef int (*vhost_dev_start_op)(struct vhost_dev *dev, bool started);
+ 
+-typedef int (*vhost_vq_get_addr_op)(struct vhost_dev *dev,
+-                    struct vhost_vring_addr *addr,
+-                    struct vhost_virtqueue *vq);
++typedef bool (*vhost_phys_vring_addr_op)(struct vhost_dev *dev);
+ 
+ typedef int (*vhost_get_device_id_op)(struct vhost_dev *dev, uint32_t *dev_id);
+ 
+@@ -211,7 +209,7 @@ typedef struct VhostOps {
+     vhost_get_inflight_fd_op vhost_get_inflight_fd;
+     vhost_set_inflight_fd_op vhost_set_inflight_fd;
+     vhost_dev_start_op vhost_dev_start;
+-    vhost_vq_get_addr_op  vhost_vq_get_addr;
++    vhost_phys_vring_addr_op vhost_phys_vring_addr;
+     vhost_get_device_id_op vhost_get_device_id;
+     vhost_force_iommu_op vhost_force_iommu;
+     vhost_set_config_call_op vhost_set_config_call;
+-- 
+2.52.0
 
 
