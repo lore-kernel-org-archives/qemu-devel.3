@@ -4,74 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A506DF5A8A6
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 18:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460A6F5A8AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 18:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEtCh-00075D-El; Mon, 20 Apr 2026 14:18:39 -0400
+	id 1wEtHF-0007rZ-FV; Mon, 20 Apr 2026 14:23:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wEtCf-00074m-Eu
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 14:18:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wEtGv-0007p0-3d; Mon, 20 Apr 2026 14:23:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wEtCd-0007al-0j
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 14:18:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776709112;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3Mw3UxDSlWQfIQBESt1iS3hcZaoIuJju3aVW2QdXnhg=;
- b=Dq7UaGBE/fML7lvqJfM0oWcG10gAwn9O3GOoqu2OR8up/IoS/BRkjEvt0q8w7AVS0Ak8jP
- zTzSDRGHdgtSOaonlsFGcEFxJaWnFRPbIkesNMyfgUmeCuMm5q2QORLFbHiqbqZfQENYs5
- 6JwyB99l31/+ktY/QiN4mqWKRrp+r+M=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-GXxPUj2TPYCvxLCFNmlEAw-1; Mon,
- 20 Apr 2026 14:18:28 -0400
-X-MC-Unique: GXxPUj2TPYCvxLCFNmlEAw-1
-X-Mimecast-MFC-AGG-ID: GXxPUj2TPYCvxLCFNmlEAw_1776709107
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A86B18002C6; Mon, 20 Apr 2026 18:18:27 +0000 (UTC)
-Received: from localhost (unknown [10.44.48.35])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 32F1D180047F; Mon, 20 Apr 2026 18:18:25 +0000 (UTC)
-Date: Mon, 20 Apr 2026 14:18:18 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "Jorge E. Moreira" <jemoreira@google.com>, hreitz@redhat.com,
- gmaglione@redhat.com, "Michael S . Tsirkin" <mst@redhat.com>,
- Hanna Czenczek <xanclic@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
- kick FDs
-Message-ID: <20260420181818.GC405461@fedora>
-References: <20260411021205.3592118-1-jemoreira@google.com>
- <aeYvCK2qhZd1W9sA@sgarzare-redhat>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wEtGl-00008q-NL; Mon, 20 Apr 2026 14:22:57 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63KEvZEb3299164; Mon, 20 Apr 2026 18:22:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4bdF9s
+ nEH3PRJfbUERUZPeD9x771ZOWgWV9W4suezIY=; b=CVBGMkuPpVowI+b8G5D2Mf
+ aea87uDO4a6/lX8y0ScAbzv5aiWFIMSN3weFyleyKYOmyOtjfUG11o8N6xFHxR4S
+ w9Cp61L6LznfiQINx3O3mlPGsYBNx9sjEO+pPU36I+XwLArrheCYWh9J3TVpDBoy
+ AfwFoiW0wXUddyvkWUXSdiJDyEvjrqldGXp+mfWUDyAtJ58eWE1vEhsnMAe0NJGu
+ +zUP6aIxG2OF0Byr2U1mVBTocDstirIaSzHn4B0Xf3Dgzr/v4j69ZbrGxQRiaqe2
+ gJtgm+PrHF2TogQg2iKmohqjxUbpiuVjkDaZGu2+czAgobAbquE9OUwZ2IslAlAA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2j6h2tq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Apr 2026 18:22:42 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63KIKMfi010231;
+ Mon, 20 Apr 2026 18:22:41 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dmnsgwru0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Apr 2026 18:22:41 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63KIME4i28115598
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 Apr 2026 18:22:14 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1E47458051;
+ Mon, 20 Apr 2026 18:22:40 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ECC065805A;
+ Mon, 20 Apr 2026 18:22:38 +0000 (GMT)
+Received: from [9.61.35.249] (unknown [9.61.35.249])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 Apr 2026 18:22:38 +0000 (GMT)
+Message-ID: <0099193c-a518-4dfd-89e3-5e4e35c74786@linux.ibm.com>
+Date: Mon, 20 Apr 2026 14:22:38 -0400
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ua8tN7kV5wsX8Nm1"
-Content-Disposition: inline
-In-Reply-To: <aeYvCK2qhZd1W9sA@sgarzare-redhat>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 19/30] pc-bios/s390-ccw: Add signature verification
+ for secure IPL in audit mode
+To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
+ david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ jdaley@linux.ibm.com
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
+ <20260402221453.1602899-20-zycai@linux.ibm.com>
+ <dcc60465-07bc-4a37-8b2a-6dcfc5015142@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <dcc60465-07bc-4a37-8b2a-6dcfc5015142@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDE3NyBTYWx0ZWRfX0p3d518y5Jtl
+ PEnaQpRk3qDo+NZut48bkEwD6fyDGrvkwvQ0yvoozLBlkX4dXMJ1wP2Hpcgu3hYQ4KNuaMUx43c
+ 2p6CEmIlnjGjxTKto9gya+EUEr+ZF/4+haxA4EedzvDsKAUE8LHF5SvyFRiq3M+v3aNYqqLO722
+ D111/fqcDt1cknsue4EoHP1+ASq+3QmMB2MijbsVeEhGsRPyBmo34uAsdQ0UARUxnLFXD0KxdID
+ 1GkKiVakpn0AXF9PyBh8dxkkTCC5+Nmy3FESYKwGe09QzEsn2IkClKSavFtZtHJw4FMbiQvPxde
+ ywKIuVsO98xIwxKT+C0cBawY5KTIXJjVxsSoFQSZMwVptbyI1ppPYdgp0i6uUtvmZtXoHEtIIy9
+ ebhZdeMQzzFt3hzy1xDhj16BMDfn3mbpYIdtO2StgBsvwQwXB/T0LrkgLc/QjcMCh3bbJB0NQ8Z
+ MEI3328XxPRMPH5DKlw==
+X-Proofpoint-GUID: q7TWaZuKDEQTDPn7HRizm6ZQx2pbcpF0
+X-Authority-Analysis: v=2.4 cv=SOJykuvH c=1 sm=1 tr=0 ts=69e66ef2 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=YsY79D3GabN47MKunnQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: q7TWaZuKDEQTDPn7HRizm6ZQx2pbcpF0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-20_03,2026-04-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 phishscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
+ definitions=main-2604200177
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,170 +130,327 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Thanks for the review!
 
---ua8tN7kV5wsX8Nm1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 4/10/26 3:37 PM, Collin Walling wrote:
+> On 4/2/26 18:14, Zhuoying Cai wrote:
+>> Enable secure IPL in audit mode, which performs signature verification,
+>> but any error does not terminate the boot process. Only warnings will be
+>> logged to the console instead.
+>>
+>> Add a comp_len variable to store the length of a segment in
+>> zipl_load_segment. comp_len variable is necessary to store the
+>> calculated segment length and is used during signature verification.
+>> Return the length on success, or a negative return code on failure.
+>>
+>> Secure IPL in audit mode requires at least one certificate provided in
+>> the key store along with necessary facilities (Secure IPL Facility,
+>> Certificate Store Facility and secure IPL extension support).
+>>
+>> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
+>> virtio-blk/virtio-scsi devices.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  docs/system/s390x/secure-ipl.rst |  35 +++
+>>  pc-bios/s390-ccw/Makefile        |   2 +-
+>>  pc-bios/s390-ccw/bootmap.c       |  36 +++-
+>>  pc-bios/s390-ccw/bootmap.h       |  11 +
+>>  pc-bios/s390-ccw/main.c          |   6 +
+>>  pc-bios/s390-ccw/s390-ccw.h      |  27 +++
+>>  pc-bios/s390-ccw/sclp.c          |  37 ++++
+>>  pc-bios/s390-ccw/sclp.h          |   6 +
+>>  pc-bios/s390-ccw/secure-ipl.c    | 359 +++++++++++++++++++++++++++++++
+>>  pc-bios/s390-ccw/secure-ipl.h    | 110 ++++++++++
+>>  10 files changed, 626 insertions(+), 3 deletions(-)
+>>  create mode 100644 pc-bios/s390-ccw/secure-ipl.c
+>>  create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+>>
+>> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+>> index 0a02f171b4..3a19b72085 100644
+>> --- a/docs/system/s390x/secure-ipl.rst
+>> +++ b/docs/system/s390x/secure-ipl.rst
+>> @@ -18,3 +18,38 @@ Note: certificate files must have a .pem extension.
+>>  .. code-block:: shell
+>>  
+>>      qemu-system-s390x -machine s390-ccw-virtio,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
+>> +
+>> +
+>> +IPL Modes
+>> +=========
+>> +Multiple IPL modes are available to differentiate between the various IPL
+>> +configurations. These modes are mutually exclusive and enabled based on the
+>> +``boot-certs`` option on the QEMU command line.
+>> +
+>> +Normal Mode
+>> +-----------
+>> +
+>> +The absence of certificates will attempt to IPL a guest without secure IPL
+>> +operations. No checks are performed, and no warnings/errors are reported.
+>> +This is the default mode.
+>> +
+>> +Configuration:
+>> +
+>> +.. code-block:: shell
+>> +
+>> +    qemu-system-s390x -machine s390-ccw-virtio ...
+>> +
+> 
+> Since this patch needs some rework anyway, it might help to reduce LOC
+> for this patch and make things more readable by inserting a new patch
+> before this one that introduces Normal Mode and does the IPL_checks. In
+> that way, this patch would contain the context only for secure IPL
+> related operations.
+> 
+> The commit message should give a brief introduction to what the boot
+> modes are intended for.
+> 
+>> +Audit Mode
+>> +----------
+>> +
+>> +When the certificate store is populated with at least one certificate
+>> +and no additional secure IPL parameters are provided on the command
+>> +line, then secure IPL will proceed in "audit mode". All secure IPL
+>> +operations will be performed with signature verification errors reported
+>> +as non-disruptive warnings.
+>> +
+>> +Configuration:
+>> +
+>> +.. code-block:: shell
+>> +
+>> +    qemu-system-s390x -machine s390-ccw-virtio,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
+>> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+>> index 3e5dfb64d5..2109d16781 100644
+>> --- a/pc-bios/s390-ccw/Makefile
+>> +++ b/pc-bios/s390-ccw/Makefile
+>> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>>  
+>>  OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+>>  	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+>> -	  virtio-ccw.o clp.o pci.o virtio-pci.o
+>> +	  virtio-ccw.o clp.o pci.o virtio-pci.o secure-ipl.o
+>>  
+>>  SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+>>
 
-On Mon, Apr 20, 2026 at 04:49:04PM +0200, Stefano Garzarella wrote:
-> Thanks for starting the discussion here, let me add also Hanna, German, a=
-nd
-> Stefan in CC that can help us.
->=20
-> On Fri, Apr 10, 2026 at 07:12:05PM -0700, Jorge E. Moreira wrote:
-> > Migration of back-end state happens while the device is suspended (i.e
-> > all vrings are stopped). To resume normal operation on the destination,
-> > the vrings need to be started again with a kick (either a write on the
-> > FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
->=20
-> It's true that in the spec we have:
->   "Each ring is initialized in a stopped and disabled state. The   back-e=
-nd
-> must start a ring upon receiving a kick (that is, detecting   that file
-> descriptor is readable) on the descriptor specified by
-> VHOST_USER_SET_VRING_KICK or receiving the in-band message
-> VHOST_USER_VRING_KICK if negotiated, and stop a ring upon receiving
-> VHOST_USER_GET_VRING_BASE."
->=20
-> But IMO this applies when a driver is not yet loaded.
-> When we are migrating, the driver could be already loaded. So, in the new
-> device running in the destination, IMO we should consider the ring already
-> started or add some messages to tell to the device: "hey, the device was
-> already started, this is a migration and it's completed".
->=20
-> Sending a kick from the frontend, seems more an hack here.
->=20
-> That said, for example, in subprojects/libvhost-user/libvhost-user.c IIUC
-> the virtqueue is started when the SET_VRING_KICK is handled by
-> vu_set_vring_kick_exec(), but not sure how compliant it is.
->=20
-> > these notifications are typically sent by the driver, it has no reason
-> > to send them in the destination if it already sent them in the source as
-> > the driver is unaware that a migration took place. Therefore it should
-> > be the responsibility of the vhost-user front-end to ensure these vrings
-> > are started. This is particularly necessary for queues where data only
-> > flows from device to driver, such as those used by the vsock and input
-> > devices.
->=20
-> Exactly, so IMO we should not use the kick, but maybe add something new or
-> clarify what to do after the migration.
->=20
-> For example in the "Migrating back-end state" we have:
->   "Migrating device state involves transferring the state from one
-> back-end, called the source, to another back-end, called the   destinatio=
-n.
-> After migration, the destination transparently resumes   operation without
-> requiring the driver to re-initialize the device at   the VIRTIO level."
->=20
-> So, IMO we can use the VHOST_USER_SET_DEVICE_STATE_FD channel exactly to
-> inform the new device about the state: "there isn't any state to transfer,
-> but I notify you that the device was already initialized, so the vrings c=
-an
-> be started".
->=20
-> >=20
-> > This behavior is already used by some qemu vhost-user front-ends (e.g
-> > vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm).
->=20
-> I looked at vhost-user-blk frontend, but I don't see it. I mean I see the
-> code around the comment "/* Kick right away to begin processing requests
-> already in vring */" but that one IIUC was introduced more to fix devices
-> violating specs, so not sure it's a good example to follow:
->=20
-> commit 110b9463d5c820120c8311db79f55a64c9d81ebe
-> Author: Yongji Xie <elohimes@gmail.com>
-> Date:   Wed Jun 6 21:24:48 2018 +0800
->=20
->     vhost-user-blk: start vhost when guest kicks
->     Some old guests (before commit 7a11370e5: "virtio_blk: enable VQs ear=
-ly")
->     kick virtqueue before setting VIRTIO_CONFIG_S_DRIVER_OK. This violates
->     the virtio spec. But virtio 1.0 transitional devices support this beh=
-aviour.
->     So we should start vhost when guest kicks in this case.
->     Signed-off-by: Yongji Xie <xieyongji@baidu.com>
->     Signed-off-by: Chai Wen <chaiwen@baidu.com>
->     Signed-off-by: Ni Xun <nixun@baidu.com>
->     Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->     Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
->=20
->=20
-> > Adding it to the vhost-user documentation makes it explicit that this
-> > strategy is permitted and suggest it to vhost-user front-end authors.
-> > Explicitly documenting it is necessary because vring kicks appear
-> > designed to originate in the driver, so having some originate in the
-> > front-end can be counterintuitive and cause developers to waste time
-> > looking for other alternatives or face pushback during code review.
->=20
-> As I pointed out in our discussion in
-> https://github.com/rust-vmm/vhost-device/pull/936
-> IMO we should use some in-band messages and not relaying on kicks that
-> should be used only by the driver to notify the device about new available
-> buffers.
->=20
-> That said, I agree that we need to clarify in the specifications exactly
-> what the backend and frontend should do after a migration to start vrings=
- if
-> there is no need to exchange a state.
->=20
->=20
-> Any other opinion?
+[...]
 
-IMO no protocol changes are needed but the vhost-user spec should be
-tweaked. Hanna worked on device state migration and can confirm/deny
-what I'm about to describe.
+>> +
+>> +static int zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
+> 
+> The _sec suffix doesn't make sense here.  It's mainly used for global
+> variables.
+> 
+>> +{
+>> +    if (zipl_load_segment(entry, sig_sec) < 0) {
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
+>> +        puts("Signature is not in DER format");
+>> +        return -1;
+>> +    }
+> 
+> Swap the order of the if statements since the format is known before
+> loading the segment from the disk.  That way we don't bother doing any
+> uneccessary I/O if the signature is invalid.
+> 
+>> +
+>> +    return entry->compdat.sig_info.sig_len;
+> 
+> Question: are sig_len and the successful rc of zipl_load_segment
+> equivalent?  If so, and with the suggestion above, you could just
+> `return zipl_load_segment(...)`.  In that way, on error the proper -rc
+> is returned.
+> 
 
-QEMU's libvhost-user implementation already starts the ring when
-VHOST_USER_SET_VRING_KICK is received. This makes more sense than
-waiting for the kick fd since a back-end that uses polling (peeking at
-the vring in memory) shouldn't need to monitor the kick fd. See below
-though about races between the kick fd and vhost-user protocol messages.
+No, they are not the same. zipl_load_segment() returns the length of the
+loaded segment, and sig_len is the exact signature size.
 
-All of this boils down to the ring state machine. libvhost-user's
-behavior is:
-1. Virtqueues are started by VHOST_USER_SET_VRING_KICK.
-2. Virtqueues are stopped by VHOST_USER_GET_VRING_BASE.
-3. Virtqueues are enabled/disabled by VHOST_USER_SET_VRING_ENABLE.
+Debug output:
+sig_len returns: 525 bytes (actual signature size)
+zipl_load_segment() returns: 1024 bytes (actual data loaded from disk,
+two 512-byte sectors)
 
-The same sequence of vhost-user protocol messages that is used to
-start/stop a device locally (e.g. pause and resume a VM) is the same
-that can be used during migration. The ring state machine already exists
-and needs to be used when migrating device state.
+>> +}
+>> +
+>> +int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+>> +{
+>> +    IplDeviceComponentList comp_list = { 0 };
+>> +    IplSignatureCertificateList cert_list = { 0 };
+>> +    SecureIplCompEntryInfo comp_entry_info;
+>> +    ComponentEntry *entry = *entry_ptr;
+>> +    uint8_t *cert_addr = NULL;
+>> +    uint64_t *sig = NULL;
+>> +    int cert_entry_idx = 0;
+>> +    int comp_entry_idx = 0;
+>> +    int sig_len = 0;
+>> +    int comp_len;
+>> +    uint64_t comp_addr;
+>> +    uint64_t cert_len;
+>> +    uint8_t cert_table_idx;
+>> +    bool verified;
+>> +    /*
+>> +     * Keep track of which certificate store indices correspond to the
+>> +     * certificate data entries within the IplSignatureCertificateList to
+>> +     * prevent allocating space for the same certificate multiple times.
+>> +     *
+>> +     * The array index corresponds to the certificate's cert-store index.
+>> +     *
+>> +     * The array value corresponds to the certificate's entry within the
+>> +     * IplSignatureCertificateList (with a value of -1 denoting no entry
+>> +     * exists for the certificate).
+>> +     */
+>> +    int cert_list_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1 };
+>> +    int signed_count = 0;
+>> +
+>> +    if (!secure_ipl_supported()) {
+>> +        panic("Unable to boot in secure/audit mode");
+>> +    }
+>> +
+>> +    init_lists(&comp_list, &cert_list);
+>> +    cert_addr = malloc(get_total_certs_length());
+> 
+> This makes more sense as `cert_buf` since it's storing the actual
+> certificate data and not holding an address.
+> 
+>> +    sig = malloc(MAX_SECTOR_SIZE);
+>> +
+>> +    while (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
+>> +        switch (entry->component_type) {
+>> +        case ZIPL_COMP_ENTRY_SIGNATURE:
+>> +            if (sig_len) {
+>> +                goto out;
+>> +            }
+>> +
+>> +            sig_len = zipl_load_signature(entry, (uint64_t)sig);
+>> +            if (sig_len < 0) {
+>> +                goto out;
+>> +            }
+>> +            break;
+> 
+> What about using another SecureIplCompEntryInfo for the signature info?
+> You could use it as a pointer and change some checks to `if (sig)`.
+> During the ENTRY_LOAD case, do `free(sig)` at the end or something like
+> that.
+> 
+> Whether making it a pointer makes sense or not, I think using the struct
+> would still simplify things.
+> 
+>> +        case ZIPL_COMP_ENTRY_LOAD:
+>> +            comp_addr = entry->compdat.load_addr;
+>> +            comp_len = zipl_load_segment(entry, comp_addr);
+> 
+> Why not set the `comp_entry_info` fields here directly?  Then
+> `comp_addr` and `comp_len` go away.
+>
 
-The following changes to the vhost-user spec would make this clearer:
+comp_addr can be set directly here; however, comp_len must be handled
+separately because zipl_load_segment() may return a negative value.
+Assigning it directly to a uint32_t field could result in incorrect
+behavior due to implicit type conversion.
 
-1. Mention that virtqueues are started by VHOST_USER_SET_VRING_KICK.
-   Note that monitoring the kick fd may be used to avoid races between
-   the kick fd and vhost-user protocol messages, so in practice back-end
-   implementors may still want to start the virtqueue when the kick fd
-   becomes readable.
+I also think deferring these assignments improves readability and
+ensures the structure is only initialized when it is actually needed for
+verification.
 
-2. Add a clarification to "Migrating back-end state" that the device
-   must be suspended (see _suspended_device_state) when
-   VHOST_USER_SET_DEVICE_STATE_FD is sent and device state is
-   transferred. This is already implicit in "Device state transfer
-   parameters", but it's not obvious when reading the "Migrating
-   back-end state" section.
+>> +            if (comp_len < 0) {
+>> +                goto out;
+>> +            }
+>> +
+>> +            if (!sig_len) {
+>> +                break;
+>> +            }
+>> +
+>> +            comp_entry_info = (SecureIplCompEntryInfo){ 0 };
+>> +            comp_entry_info.addr = comp_addr;
+>> +            comp_entry_info.len = (uint64_t)comp_len;
+>> +
+>> +            verified = verify_signature(comp_entry_info,
+>> +                                        sig_len, (uint64_t)sig,
+>> +                                        &cert_len, &cert_table_idx);
+> 
+> If the signature uses a SecureIplCompEntryInfo, you can further reduce
+> the param list to this function.
+> 
+>> +
+>> +            /* default flags for unverified component */
+>> +            comp_entry_info.flags |= S390_IPL_DEV_COMP_FLAG_SC;
+> 
+> Move setting this flag to near where the comp addr and len are set.
+> Just do a regular = assign instead of |= since it's the first flag to be
+> set for the variable.
+> 
+>> +
+>> +            if (verified) {
+>> +                if (cert_list_table[cert_table_idx] == -1) {
+>> +                    if (!request_certificate(cert_addr, cert_table_idx)) {
+>> +                        puts("Could not get certificate");
+>> +                        goto out;
+>> +                    }
+>> +
+>> +                    cert_list_table[cert_table_idx] = cert_entry_idx;
+>> +                    cert_list_add(&cert_list, cert_entry_idx, cert_addr, cert_len);
+>> +
+>> +                    /* increment for the next certificate */
+>> +                    cert_entry_idx++;
+>> +                    cert_addr += cert_len;
+>> +                }
+>> +
+>> +                puts("Verified component");
+>> +                comp_entry_info.cert_index = cert_list_table[cert_table_idx];
+>> +                comp_entry_info.flags |= S390_IPL_DEV_COMP_FLAG_CSV;
+>> +            }
+> 
+> Add an `else` here and move the `zipl_secure_handle()` from below.
+> 
+>> +
+>> +            comp_list_add(&comp_list, comp_entry_idx, comp_entry_info);
+>> +
+>> +            if (!verified) {
+>> +                zipl_secure_handle("Could not verify component");
+>> +            }
+>> +
+>> +            comp_entry_idx++;
+>> +            signed_count += 1;
+>> +            /* After a signature is used another new one can be accepted */
+>> +            sig_len = 0;
+>> +            break;
+>> +        default:
+>> +            puts("Unknown component entry type");
+>> +            return -1;
+>> +        }
+>> +
+>> +        entry++;
+>> +
+>> +        if ((uint8_t *)(&entry[1]) > tmp_sec + MAX_SECTOR_SIZE) {
+>> +            puts("Wrong entry value");
+>> +            return -EINVAL;
+>> +        }
+>> +    }
+>> +
+>> +    if (signed_count == 0) {
+>> +        zipl_secure_handle("Secure boot is on, but components are not signed");
+>> +    }
+>> +
+>> +    update_iirb(&comp_list, &cert_list);
+>> +
+>> +    *entry_ptr = entry;
+>> +    free(sig);> +
+>> +    return 0;
+>> +out:
+> 
+> "goto out" should be used to jump to a label for a regular return case.
+> However, this is the error case.  Change the label to `error`.
+> 
+>> +    free(cert_addr);
+>> +    free(sig);
+>> +
+>> +    return -1;
+>> +}
 
-Stefan
+[...]
 
---ua8tN7kV5wsX8Nm1
-Content-Type: application/pgp-signature; name=signature.asc
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnmbeoACgkQnKSrs4Gr
-c8jLvwf9FhXcIL982XFWu76746P13WAlMPmwtWVhVGXZUdMmKnEp9u+HMVy1k8Iy
-tF2xl7TSXvzzaq3RuTxZLN2vLPr/geZDySbSm5hI6yTUn3oJhCUkGZD+5qP+fTiy
-bAjYjjvGKp16m6Czrm02hq0sattFKGO1AbEtepnt+maLJaRByD5UGpYWzBAZPKaM
-MkVzah68IiMTHAtmy2eDq4tdyyiqwfU5Kl60mrHwCMzZYME9Hybl6D1cX64GJM7N
-YeV4z2W4jEObnb7fgFjyMhn0Z+gSo30iSlRxuNC8gjmKXAW8K7Sl2hzh7rQijgU3
-C+WZ2R6oA8GjTafovY7o5mmulVVtuA==
-=b488
------END PGP SIGNATURE-----
-
---ua8tN7kV5wsX8Nm1--
 
 
