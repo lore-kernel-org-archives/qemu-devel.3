@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D63F36C58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACDBF36C5F
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 12:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEnTF-0006be-Iv; Mon, 20 Apr 2026 08:11:22 -0400
+	id 1wEnSd-0006Fi-1f; Mon, 20 Apr 2026 08:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wEnSW-0006HV-UW
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 08:10:41 -0400
+ id 1wEnSR-0006FD-2D
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 08:10:31 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wEnSV-0004Rl-5h
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 08:10:36 -0400
+ id 1wEnSP-0004Rl-EH
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 08:10:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1776687036; x=1808223036;
+ t=1776687030; x=1808223030;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=FRDFZTXk/wsz+JehMsAdHWcXLCvo0ta2YnqKF+zvKDE=;
- b=J6WC+/9QXdkFBTxlopngrVaIb+3Pn2A7b8Fd4T+N31RY8zpZ7Y9ZWNGt
- y2q/hWk1NWxioZe+G7KFc5ugHLkaEw1xM9bwbVoabdCvz9P9fC4joDK1d
- ongSJ29csNFcthZwTZHWE4Gi/BnXZ6tSab4E+0sFZVhr+04EF69ykVFCF
- iXYUs+X/NSHUwuX/R5dFnbwC07Fim5IrSoTxbARn59ZGgSAvcq92a+Tqb
- 1buNECtE5lVQO9NVKmwmuT7R3JcUe+HB0TIdMTeqDhPO65CmA00PdQOjT
- yFuEo2cAttVeEKwDNtDt5sZVnjn48w2x7GSc3kmH5edjrXQUeSYlOX3+u g==;
-X-CSE-ConnectionGUID: Mlu0mJGSQI+qcD8g5BblLA==
-X-CSE-MsgGUID: qN3uVjSBSQeF/4UeCyCVzg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11762"; a="88674256"
-X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="88674256"
+ bh=CUDka3bP53CRZaZv32S7MqGXZ/SM72d8bEpuI1Piopo=;
+ b=ItEY6DrrQqCXTvVGELAfMRomF4dm3hwZyOAzF9qQZUCEiQzHFYXdpmrO
+ 5iyu67jPt7u5m8Ff2fPgditcQ43937kMW4eJ4TfqL8fwGww+Cc+ed8Myg
+ 1Za/kmsmxEbcmrz2cMNE0Ztqn1JTdCmZPdvXa1/2cEXSkxgEm+Wu8ewYd
+ KooYwIHacBTw5ORWv/CTwsFDQ3v0RwZNhhH8VC4Ev//APYI2bWhop1QIG
+ 1+EAw8uAVNtM5SFVu1yiZ7PuENN9wFLtN8kk7MX5Sez+VSnKg/owH7wtm
+ lxL3S3A9RfSmeOUpMAnzVSwncrWAssRjSofdBXIa8+IxXUHgCvsV8dPg2 A==;
+X-CSE-ConnectionGUID: NJ/yu9czScqvlmYg5useOQ==
+X-CSE-MsgGUID: REwC9txnQNePC5zRVwpl4g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11762"; a="88674250"
+X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="88674250"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Apr 2026 05:10:35 -0700
-X-CSE-ConnectionGUID: p0+IrDa3SFCWxpDZ3XGolA==
-X-CSE-MsgGUID: gfrZWsBTTf+5knFCofey6Q==
+ 20 Apr 2026 05:10:29 -0700
+X-CSE-ConnectionGUID: ZAxxBapDSL2tunq1GIsgbg==
+X-CSE-MsgGUID: n/4TiuQ2SO6jNX998X1NEg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="235708280"
+X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="235708274"
 Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
  by ORVIESA003-auth.jf.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2026 05:10:33 -0700
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2026 05:10:27 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de,
 	junjie.cao@intel.com
-Subject: [PATCH 3/3] migration/qemu-file: drop incorrect const from
- qemu_get_buffer_at buf
-Date: Tue, 21 Apr 2026 04:13:17 +0800
-Message-ID: <20260420201317.30199-4-junjie.cao@intel.com>
+Subject: [PATCH 2/3] migration/file: switch file_write_ramblock_iov to
+ pwritev_all
+Date: Tue, 21 Apr 2026 04:13:16 +0800
+Message-ID: <20260420201317.30199-3-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260420201317.30199-1-junjie.cao@intel.com>
 References: <20260420201317.30199-1-junjie.cao@intel.com>
@@ -84,50 +84,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_get_buffer_at() reads data *into* buf -- it should not be const.
-Drop the qualifier and remove the now-unnecessary cast.
+file_write_ramblock_iov() uses single-shot qio_channel_pwritev() and
+only checks for ret < 0.  A short write (0 <= ret < requested) would be
+treated as success.
 
+Switch to qio_channel_pwritev_all() which retries until all bytes are
+written or an error occurs.
+
+Fixes: f427d90b98 ("migration/multifd: Support outgoing mapped-ram stream format")
 Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 ---
- migration/qemu-file.c | 4 ++--
- migration/qemu-file.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ migration/file.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index 9dfb202203..d5a48115bd 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -550,7 +550,7 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+diff --git a/migration/file.c b/migration/file.c
+index 0853188601..3729728dfe 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -200,7 +200,7 @@ void file_connect_incoming(FileMigrationArgs *file_args, Error **errp)
+ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+                             int niov, MultiFDPages_t *pages, Error **errp)
+ {
+-    ssize_t ret = 0;
++    int ret = 0;
+     int i, slice_idx, slice_num;
+     uintptr_t base, next, offset;
+     size_t len;
+@@ -239,8 +239,8 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+             break;
+         }
+ 
+-        ret = qio_channel_pwritev(ioc, &iov[slice_idx], slice_num,
+-                                  block->pages_offset + offset, errp);
++        ret = qio_channel_pwritev_all(ioc, &iov[slice_idx], slice_num,
++                                      block->pages_offset + offset, errp);
+         if (ret < 0) {
+             break;
+         }
+@@ -249,7 +249,7 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+         slice_num = 0;
+     }
+ 
+-    return (ret < 0) ? ret : 0;
++    return ret;
  }
  
- 
--size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
-                           off_t pos)
- {
-     Error *err = NULL;
-@@ -559,7 +559,7 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-         return 0;
-     }
- 
--    if (qio_channel_pread_all(f->ioc, (char *)buf, buflen, pos, &err) < 0) {
-+    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
-         qemu_file_set_error_obj(f, -EIO, err);
-         return 0;
-     }
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index a390554208..8f824c124d 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -76,7 +76,7 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
- off_t qemu_get_offset(QEMUFile *f);
- void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-                         off_t pos);
--size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
-                           off_t pos);
- 
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
+ int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp)
 -- 
 2.43.0
 
