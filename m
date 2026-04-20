@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E351F557FE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A35BF557FE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEm64-0006ts-DB; Mon, 20 Apr 2026 06:43:20 -0400
+	id 1wEm68-0006vJ-2V; Mon, 20 Apr 2026 06:43:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm61-0006tN-I0
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:17 -0400
-Received: from p-west3-cluster5-host2-snip4-10.eps.apple.com ([57.103.72.83]
+ id 1wEm62-0006tu-RW
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:20 -0400
+Received: from p-west3-cluster5-host7-snip4-10.eps.apple.com ([57.103.72.13]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm5z-0000YJ-6B
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:16 -0400
+ id 1wEm61-0000Yd-9h
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:18 -0400
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPS id
- D5373180045B; Mon, 20 Apr 2026 10:43:11 +0000 (UTC)
+ 3E20F18000BF; Mon, 20 Apr 2026 10:43:14 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776681794; x=1779273794;
- bh=rzH0nfvQx4HDQyGiqHq24GYidgrGqENXmeSSBmYWI5k=;
+ s=sig1; t=1776681796; x=1779273796;
+ bh=Dqy8GVOg6Vy5Bj3rQXQsRJvMspD1oQZRo/6wY+UsQGM=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=HdahSLQ1zfFN3gh+ng+3cEn1UkgkUMdxQfeGHE/bhKxDSvYRQocB8nUaeMMhIPt7OB3TezKOIG9NlM/DguZ6ma0rNBf1LITMWMBBEnM/4SrEAeBNfGkDErQ14PaRmncezsjxLHRTGfCJVE2KBo9tURmEVqpoNEOkP3f5pQuhnXYZhqEuz0x49PjJ7Bn4H7FQ+8GhHp/6VLOtQxpxJ6ffFK/C3WYiDeMPt6DA1xQkmL8/QE4pntM6FIE6Cki/7qSdCn8rc/x87DIJyYbehYZLNOt8/Ju3iX753LDmIUtIk3GF6upZXP8OSoc2Lt7pycTfJovGOil5H3TBXh1t+eidoA==
+ b=MTjclywa8EtPxqcnPTCarbM9eQbGRsNC7jwOrYiKcpCXRau/JXMwmg3vQB44+A8iBwYCphvTZtXBrR/ATc3NxyPFpGRKtCx4wFypUnONJDBP8iX9VIKJrvCplBiOdzVyzMg3E8sanHsd2ynbXldDMW4tWK7kUV8MPmrYtB/+NmPylUZVCUcF2yParUpmBFGF6DXE7Y63e60GxV+t+Lx7GTTfZWdkAl90gcLR2Gcp8Qo9AmHR9q2nkHkDSV5i2nWpmgb6FxDRNeW4poNhZIlzSaZXVbkk/RTZw0CVvxz0ejS5BAUgiSBKh9n0+7KaPJDaVjreE5wiyG8FFcFJIamzpQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.154.37])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPSA id
- F344618000BF; Mon, 20 Apr 2026 10:43:08 +0000 (UTC)
+ 74CB1180045A; Mon, 20 Apr 2026 10:43:11 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -43,42 +43,42 @@ Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 07/38] whpx: i386: introduce proper cpuid support
-Date: Mon, 20 Apr 2026 12:42:17 +0200
-Message-ID: <20260420104248.86702-8-mohamed@unpredictable.fr>
+Subject: [PATCH v2 08/38] whpx: i386: kernel-irqchip=off fixes
+Date: Mon, 20 Apr 2026 12:42:18 +0200
+Message-ID: <20260420104248.86702-9-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260420104248.86702-1-mohamed@unpredictable.fr>
 References: <20260420104248.86702-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: vu_J19aCgQGVGpabYkC0JeAqTSqn076t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfX0e7DAY3dG/+c
- gCopN9cDCM8nxw2YexQT1jtv5Io3pj29IYT+wje1Bb4m0WPpM/pFzVo5BUwSUZ/wtcqyYsk9oNr
- dZK3+pPyVpa2r+T5upXEz7rZdtbZ2ZEBOMWhTB3f7+s/11/rJeF/a3/yNCtH8S6YqmoAx0uUzS0
- 6ibA4u131UTq62PMqnMMC4Ba76Prmp47099hoQLU9A53kRvcqGU2jHjYGGjwFpd/ObV2/cgMKta
- qZ9EcVe+lHrmmw/MqzX2SNIBZPJsEho3cV7PxV7d/otADBYZNWK2+RKiR5EBWfrSu5CQwJECNrn
- 6hAHOL9xEByp2od5vJ6JxM9IBQab5Eke9SS4CDOYNe+teoSgiAyOrQE3UcctvA=
-X-Authority-Info-Out: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=69e60341
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfXx9aIsiqqI6lN
+ ADEtxzJT/hu8yMPBS/hZjHW4R2CmsdfPKSy1RDJxxd32DER2u3wyMEDn9OFvhhkOL2mqrbzKYBo
+ nX8y7pcJmDz4sCh4Z2seeMJjK9LBdVkE4Xad/50lM0JxggTMRWnUFuCFdDN/ldcnBcsv3kP7Ciw
+ gtxKXJ/onHCzLXh+7Jt5GOBAua6nsr24jsCDiNjUvDAkFSKF24dZB8RplUVgpRedLwTaXyjKLlb
+ ijhu2A/rfV5bUaOR44/AyrwmgIAjyrsX/OX/7QwZxgRAh/+Xv2TkAyrG+iE8OEWGOEo8+jBmqG1
+ pMZOavYDvxrV5NcVAEfF7ioXS0pXVEhNYTUHwz9gf6TO0lupzkAjSkSTmLkNdU=
+X-Authority-Info-Out: v=2.4 cv=Z+zh3XRA c=1 sm=1 tr=0 ts=69e60343
  cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=n8cRCUxqL_yedgTzvKUA:9
-X-Proofpoint-GUID: vu_J19aCgQGVGpabYkC0JeAqTSqn076t
+ a=VkNPw1HP01LnGYTKEx00:22 a=gP1GEkNOX-MqffGxZ4oA:9
+X-Proofpoint-ORIG-GUID: urpzqvhhtQKdSFRZTyFW5-ZcPxvVL6c_
+X-Proofpoint-GUID: urpzqvhhtQKdSFRZTyFW5-ZcPxvVL6c_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 adultscore=0 spamscore=0 mlxlogscore=999 clxscore=1030
- suspectscore=0 phishscore=0 mlxscore=0 malwarescore=0 bulkscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2604200104
-Received-SPF: pass client-ip=57.103.72.83;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=999 spamscore=0 phishscore=0 clxscore=1030 adultscore=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604200104
+Received-SPF: pass client-ip=57.103.72.13;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,194 +94,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike the implementation in QEMU 10.2, this one works.
-
-It's not optimal though as it doesn't use the Hyper-V support for this.
+This was really... quite broken. After fixing this,
+Windows boots with kernel-irqchip=off.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 123 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 119 insertions(+), 4 deletions(-)
+ include/system/whpx-common.h |  1 +
+ target/i386/whpx/whpx-all.c  | 43 +++++-------------------------------
+ 2 files changed, 7 insertions(+), 37 deletions(-)
 
+diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
+index 04289afd97..3406c20fec 100644
+--- a/include/system/whpx-common.h
++++ b/include/system/whpx-common.h
+@@ -4,6 +4,7 @@
+ 
+ struct AccelCPUState {
+     bool window_registered;
++    int window_priority;
+     bool interruptable;
+     bool ready_for_pic_interrupt;
+     uint64_t tpr;
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index c2a78312f8..53b59a98b9 100644
+index 53b59a98b9..1d99003a4a 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2071,6 +2071,7 @@ int whpx_vcpu_run(CPUState *cpu)
-             WHV_REGISTER_NAME reg_names[5];
-             UINT32 reg_count = 5;
-             X86CPU *x86_cpu = X86_CPU(cpu);
-+            X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
-             CPUX86State *env = &x86_cpu->env;
- 
-             reg_names[0] = WHvX64RegisterRip;
-@@ -2083,7 +2084,15 @@ int whpx_vcpu_run(CPUState *cpu)
-                 vcpu->exit_ctx.VpContext.Rip +
-                 vcpu->exit_ctx.VpContext.InstructionLength;
- 
--            if (whpx_is_legacy_os()) {
-+            /*
-+             * On Windows 10 we can't query features from
-+             * the Hyper-V interface.
-+             *
-+             * On Windows 11, if using xcc->max_features
-+             * just pass through what the hypervisor
-+             * provides without any QEMU filtering.
-+             */
-+            if (whpx_is_legacy_os() || xcc->max_features) {
-                 reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-                 reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-                 reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-@@ -2135,6 +2144,60 @@ int whpx_vcpu_run(CPUState *cpu)
-                     }
-                     break;
-                 }
-+            } else {
-+                switch (vcpu->exit_ctx.CpuidAccess.Rax) {
-+                case 0x40000000:
-+                case 0x40000001:
-+                case 0x40000010:
-+                    reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-+                    reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-+                    reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-+                    reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-+                    break;
-+                }
-+            }
-+
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 0x1) {
-+                if (cpu_has_x2apic_feature(env)) {
-+                    reg_values[2].Reg64 |= CPUID_EXT_X2APIC;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_EXT_X2APIC;
-+                }
-+            }
-+
-+            /* Dynamic depending on XCR0 and XSS, so query DefaultResult */
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 0x07
-+                && vcpu->exit_ctx.CpuidAccess.Rcx == 0) {
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRdx
-+                    & CPUID_7_0_EDX_CET_IBT) {
-+                    reg_values[3].Reg32 |= CPUID_7_0_EDX_CET_IBT;
-+                } else {
-+                    reg_values[3].Reg32 &= ~CPUID_7_0_EDX_CET_IBT;
-+                }
-+
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_7_0_ECX_CET_SHSTK) {
-+                    reg_values[2].Reg32 |= CPUID_7_0_ECX_CET_SHSTK;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_7_0_ECX_CET_SHSTK;
-+                }
-+
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_7_0_ECX_OSPKE) {
-+                    reg_values[2].Reg32 |= CPUID_7_0_ECX_OSPKE;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_7_0_ECX_OSPKE;
-+                }
-+            }
-+
-+            /* OSXSAVE is dynamic. Do this instead of syncing CR4 */
-+            if (vcpu->exit_ctx.CpuidAccess.Rax == 1) {
-+                if (vcpu->exit_ctx.CpuidAccess.DefaultResultRcx
-+                    & CPUID_EXT_OSXSAVE) {
-+                    reg_values[2].Reg32 |= CPUID_EXT_OSXSAVE;
-+                } else {
-+                    reg_values[2].Reg32 &= ~CPUID_EXT_OSXSAVE;
-+                }
-             }
- 
-             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
-@@ -2324,6 +2387,45 @@ error:
-     return ret;
+@@ -22,6 +22,8 @@
+ #include "qemu/main-loop.h"
+ #include "hw/core/boards.h"
+ #include "hw/intc/ioapic.h"
++#include "hw/intc/i8259.h"
++#include "hw/i386/x86.h"
+ #include "hw/i386/apic_internal.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+@@ -371,28 +373,6 @@ static int whpx_set_tsc(CPUState *cpu)
+     return 0;
  }
  
-+static void whpx_cpu_xsave_init(void)
-+{
-+    static bool first = true;
-+    int i;
-+
-+    if (!first) {
-+        return;
-+    }
-+    first = false;
-+
-+    /* x87 and SSE states are in the legacy region of the XSAVE area. */
-+    x86_ext_save_areas[XSTATE_FP_BIT].offset = 0;
-+    x86_ext_save_areas[XSTATE_SSE_BIT].offset = 0;
-+
-+    for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
-+        ExtSaveArea *esa = &x86_ext_save_areas[i];
-+
-+        if (esa->size) {
-+            int sz = whpx_get_supported_cpuid(0xd, i, R_EAX);
-+            if (sz != 0) {
-+                assert(esa->size == sz);
-+                esa->offset = whpx_get_supported_cpuid(0xd, i, R_EBX);
-+            }
-+        }
-+    }
-+}
-+
-+static void whpx_cpu_max_instance_init(X86CPU *cpu)
-+{
-+    CPUX86State *env = &cpu->env;
-+
-+    env->cpuid_min_level =
-+        whpx_get_supported_cpuid(0x0, 0, R_EAX);
-+    env->cpuid_min_xlevel =
-+        whpx_get_supported_cpuid(0x80000000, 0, R_EAX);
-+    env->cpuid_min_xlevel2 =
-+        whpx_get_supported_cpuid(0xC0000000, 0, R_EAX);
-+}
-+
- static PropValue whpx_default_props[] = {
-     { "x2apic", "on" },
-     { NULL, NULL },
-@@ -2333,9 +2435,18 @@ static PropValue whpx_default_props[] = {
- void whpx_cpu_instance_init(CPUState *cs)
+-/*
+- * The CR8 register in the CPU is mapped to the TPR register of the APIC,
+- * however, they use a slightly different encoding. Specifically:
+- *
+- *     APIC.TPR[bits 7:4] = CR8[bits 3:0]
+- *
+- * This mechanism is described in section 10.8.6.1 of Volume 3 of Intel 64
+- * and IA-32 Architectures Software Developer's Manual.
+- *
+- * The functions below translate the value of CR8 to TPR and vice versa.
+- */
+-
+-static uint64_t whpx_apic_tpr_to_cr8(uint64_t tpr)
+-{
+-    return tpr >> 4;
+-}
+-
+-static uint64_t whpx_cr8_to_apic_tpr(uint64_t cr8)
+-{
+-    return cr8 << 4;
+-}
+-
+ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
  {
-     X86CPU *cpu = X86_CPU(cs);
-+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
+     struct whpx_state *whpx = &whpx_global;
+@@ -421,7 +401,7 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+     v86 = (env->eflags & VM_MASK);
+     r86 = !(env->cr[0] & CR0_PE_MASK);
  
-     host_cpu_instance_init(cpu);
-     x86_cpu_apply_props(cpu, whpx_default_props);
-+
-+    if (!whpx_is_legacy_os() && xcc->max_features) {
-+        whpx_cpu_max_instance_init(cpu);
-+    }
-+
-+    if (!whpx_is_legacy_os()) {
-+        whpx_cpu_xsave_init();
-+    }
- }
+-    vcpu->tpr = whpx_apic_tpr_to_cr8(cpu_get_apic_tpr(x86_cpu->apic_state));
++    vcpu->tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
+     vcpu->apic_base = cpu_get_apic_base(x86_cpu->apic_state);
  
- /*
-@@ -2353,8 +2464,12 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_CAPABILITY_FEATURES features = {0};
-     WHV_PROCESSOR_FEATURES_BANKS processor_features;
-     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
--    UINT32 cpuidExitList[] = {1};
--    UINT32 cpuidExitList_nohyperv[] = {1, 0x40000000, 0x40000001, 0x40000010};
-+
-+    UINT32 cpuidExitList[] = {0x0, 0x1, 0x6, 0x7, 0x14, 0x24, 0x29, 0x1E,
-+        0x40000000, 0x40000001, 0x40000010, 0x80000000, 0x80000001,
-+        0x80000002, 0x80000003, 0x80000004, 0x80000007, 0x80000008,
-+        0x8000000A, 0x80000021, 0x80000022, 0xC0000000, 0xC0000001};
-+    UINT32 cpuidExitList_legacy_os[] = {1, 0x40000000, 0x40000001, 0x40000010};
+     idx = 0;
+@@ -692,17 +672,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+                      hr);
+     }
  
-     whpx = &whpx_global;
+-    if (whpx_irqchip_in_kernel()) {
+-        /*
+-         * Fetch the TPR value from the emulated APIC. It may get overwritten
+-         * below with the value from CR8 returned by
+-         * WHvGetVirtualProcessorRegisters().
+-         */
+-        whpx_apic_get(x86_cpu->apic_state);
+-        vcpu->tpr = whpx_apic_tpr_to_cr8(
+-            cpu_get_apic_tpr(x86_cpu->apic_state));
+-    }
+-
+     idx = 0;
  
-@@ -2610,7 +2725,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     hr = whp_dispatch.WHvSetPartitionProperty(
-         whpx->partition,
-         WHvPartitionPropertyCodeCpuidExitList,
--        whpx->hyperv_enlightenments_enabled ? cpuidExitList : cpuidExitList_nohyperv,
-+        !whpx_is_legacy_os() ? cpuidExitList : cpuidExitList_legacy_os,
-         RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
+     /* Indexes for first 16 registers match between HV and QEMU definitions */
+@@ -751,7 +720,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+     tpr = vcxt.values[idx++].Reg64;
+     if (tpr != vcpu->tpr) {
+         vcpu->tpr = tpr;
+-        cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(tpr));
++        cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
+     }
  
-     if (FAILED(hr)) {
+     /* 8 Debug Registers - Skipped */
+@@ -1690,7 +1659,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+      }
+ 
+     /* Sync the TPR to the CR8 if was modified during the intercept */
+-    tpr = whpx_apic_tpr_to_cr8(cpu_get_apic_tpr(x86_cpu->apic_state));
++    tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
+     if (tpr != vcpu->tpr) {
+         vcpu->tpr = tpr;
+         reg_values[reg_count].Reg64 = tpr;
+@@ -1737,7 +1706,7 @@ static void whpx_vcpu_post_run(CPUState *cpu)
+     if (vcpu->tpr != tpr) {
+         vcpu->tpr = tpr;
+         bql_lock();
+-        cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(vcpu->tpr));
++        cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
+         bql_unlock();
+     }
+ 
 -- 
 2.50.1 (Apple Git-155)
 
