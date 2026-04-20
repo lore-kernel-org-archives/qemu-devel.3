@@ -4,109 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B18A9EA71AA
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Apr 2026 23:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF14EA71B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 00:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEbuC-0003uv-Ck; Sun, 19 Apr 2026 19:50:24 -0400
+	id 1wEcWv-0007YO-Gi; Sun, 19 Apr 2026 20:30:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wEbuA-0003u6-77
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 19:50:22 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ id 1wEcWo-0007Tp-VW
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 20:30:19 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wEbu7-0007do-Vf
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 19:50:21 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-65427236e94so323075d50.1
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 16:50:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776642618; cv=none;
+ id 1wEcWn-0006Wv-FY
+ for qemu-devel@nongnu.org; Sun, 19 Apr 2026 20:30:18 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-66b2d49ffb0so3241302a12.3
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 17:30:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776645014; cv=none;
  d=google.com; s=arc-20240605;
- b=TcHSZ/BDQrre83y3Co4BE0Gx227MIr+Gt7nMcpGxBouweOAlYAxjVlRLrcNLA8U4KO
- u/dSYwe12uhyK+m4JTsreePvZoHsFMV3vF5uIFAVOXajkVIC+P25WAOQlJVDbRmCA1ao
- CB44XyhDkefVyumQy1BUtNkQgbdJ2iWPqQtiMUDg1vnZ2QUQRZ+SRUfLz6yuvctiV+o7
- iSf4mhGgfQEpGxfA02oYO+ThyBOAzd+h/V+HRrTyjHAB80qfPmUHQ8JJxjwHYHmZ0YAh
- CqQ2qYNGdwN4S6PLfrgtn6W03feZJjk9//ce0xFjU+zHFatkzDFlOZlmUgsOPMfSDhgD
- svxg==
+ b=IaU8a6ccDJGAtxaGtqzdlXh/6FR4spYIbR2XvpzduqqPa6Pu9lCG/5Hyzh4qgv1Yfc
+ VO0EbS8YfxtA+ONxividbRO6P72Ev+aFgcXkXI+s1MpTr17K8FVqKOpvjUmZva8GYtsR
+ cLJj480GdK1FrPqPDuOskgwVepdghQiL0pTvUYdT4boExTclc3oiuIC/e9RdRCjc0r4y
+ JEatD4dv3QNlW3I7diEAWmith6Ujo0BdDDe7PgZFNDEItu+i/02wAST2MBS9R+V+nION
+ JCg7nFfRWsCPLxcQitKdmPp+FbmD6l5JIHS90cSVOSR3Z1pYl6tnPfLTZEBUV2alesUj
+ TjHQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=dUnekS1zRK/Vn2y1nVVk9tXJ583Or2LvK0InehKKAes=;
- fh=Uf1RRPwUCIbdHoEIwaKY+DMmrpHRpjOV3+12hXt9c3U=;
- b=PJFXX8Yyk1uzVSLMD0xdmeGj8uiGBb7LjkGNqwj9OPYRxwNMLI/4NcowHjuvJkizQg
- m/GItJZJEWPn7rM8tUolqWrX4yCRn9H2a32QqpfsnZXUIAOyapOaSc64fhDff6THc83D
- GSWy+RXsyUfXM2HYrhBpIWJboff2pAzfnI+cmOlI9/O848sIW7c4dl+3zoAfYCEzJ2xm
- EoAQSOsVtFApjSLcYTmlh1xBY5QuO4TJnXMIHfGzdfdaJLjy/zjbphQ7lRUoP6BbdABV
- MDBVmhv8RJnuoD9eENUWbuRtzqZvt9ykrkwoe6FxsFBbZweKJXr9e+xWBx3OUfuWJygV
- bBeQ==; darn=nongnu.org
+ bh=HNI60lry+e395RJ3B1bc7vM81sAG+feoRYphSxNJjLc=;
+ fh=wX0JiGB8tmI92WvDwlBr7AdoTDsWvyjYx1SZFvMyNUw=;
+ b=K97za8xTufm4GLI/Spk+WcWo9gSXqn7peAC/sgz2sSCYgxwy2yloazmOQL1ItGdgRp
+ v2Cf8JQLV34Or1ML44olWVQWZ11mUAk0u0XSjsjDFBrbBK+h+t0KTurzdLYjhsI2jig+
+ XKsE/7fDOO2fa6wmhoB8I4xJCrbDX5EXnxHBJdgy+oTz9WFXJqev4EIcOoWJeEg2QVhS
+ +GAiAHIS2oOB1gSNB2cDBhORyPsWQ+e9V4IX5y48c/TePQVK3Jg+ulIyRW05vnJdF1fr
+ ug2qOkY5fZccBq3+IhnSkpC47GPhkc8z4hqcilA5ova99fdn22klXq29K1p+cdGqAJuh
+ qWMg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776642618; x=1777247418; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776645014; x=1777249814; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dUnekS1zRK/Vn2y1nVVk9tXJ583Or2LvK0InehKKAes=;
- b=hYl30SgaQv9d867OezkNNooCypRTHKu8UIc1O6/Atw7Mh1nl/5dJyvxkd6XrUcjGij
- 7T0N/gFYTJya2o1k4UkpqkYIckKRJ6uxn/870Yjy4FFK3YVs87hNGLB6P2Por2YDf+yj
- tsWJZi08MvceLHvCix7u+aJoitZXccI2BTIShk4akKe04k/Jc85nt2WmDo3kETOVYVI8
- j8xU7HIHuwwoJtibDi8wy1fhZvq+8Np5mhmJdZSgGs3pcjQPHR02rHgiUTRu4WMfMN7/
- Yo6m17RDlp3D83O0xu4yrkqdYvUfq0achs12iQVhNYUODqgLFp9tsmyY3yDNNYGexIzZ
- UCgg==
+ bh=HNI60lry+e395RJ3B1bc7vM81sAG+feoRYphSxNJjLc=;
+ b=bjgk7mN9TxrQLs1xzejazhTtcgXnp1UdB8OsqLxqdZsj9zVSf9CDq8Gme3pnc9ovmJ
+ W/FbzJhty60xZWQMC+VaK7xVmotwZHHV/gVg44w4flBszBIkGl7Kn0yyO7N/ttjvEaJG
+ hPclnmHlQBvlJ8xX4LiwbfncL4QGTYHd1+xV3qZtt04kIhaaCC5fSylqztxBqi0cWsMr
+ o0FtdblshQsQkysCm7c2mV/KFfpbukGRcf8XSQ/ROa9Kuyy80tXJnp8pA9pXb0YRKFiG
+ pYJxf7HgEZuUFhs0nG8xebC2+osyl1qcIUpJkvSeYeAU5iRwrNLs9NJL5gbx20K4GUYs
+ 9tGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776642618; x=1777247418;
+ d=1e100.net; s=20251104; t=1776645014; x=1777249814;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dUnekS1zRK/Vn2y1nVVk9tXJ583Or2LvK0InehKKAes=;
- b=WmxrPs5LsckrqSS4nz8DpU4SH5nmtbQ+6C6Bn/MAq/Ycc1F36bxyGIVCd0CR5YN/mJ
- ju5rpufDaebDgXaTscp1qYmy2IqhkwNL03MlF9eRPMEEEb3sX1n6VyZmXOo/NFcvvXdd
- Jo50XS7uKRx9qHJYgBpLx9VPD8VjUA4jfFnQH5wz9iHveVaJCVr5t878O27ZI65/lbOa
- u6ubQmz/Nz47ZvHuMNYRv55QXjZ3A5PCPJlCtT2HKmNxRmtHh+iGfPX4Min1zd3jcyTo
- AWIOZm76la+zhiRZ3u0IYzvTzYeL69Bj3rxXo53h6hzCqIva4kd2MrhFp7gYeVgUADO4
- uCwg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9qhHVfE3XPoU6vWt5pSDc9U6tun/UjQEIrtGzb4+/jKi06Yd0NFNxDnZ8T8UNuh/UTzLc3T5eL9NVn@nongnu.org
-X-Gm-Message-State: AOJu0YyL09fp3oFPCLWQXJ6CRURG4yxfol27JF7KfTJqkA1kurCQ2BP0
- 7x9GO3ZSfPnhCjHKAz3uTtfX/6kydCwdz8cFwbw15gyepVgjyT3RvoBkYwtoZo5WSR+F1CQaxxs
- ZM68yR+N+l2m/+pAzNqtbOAN0KBpZmJY=
-X-Gm-Gg: AeBDievUDBMvqAS60w9s53vYQY/WFZ/F1eg+DVC7QISjIJepjMhcacYF1RzUjTr8lLd
- WwXUNw/pm0OQjqTPQvxiREXj4hIlV9WPx/xYpxByvLCVhKTer7SWE7WvIB41w01SM7CQGH7hv/P
- ULJ9H3MBOYp8ohZ1gc8aNKKXvydfN/VSMAPEpy70hx2O/T58V8v1mlILkJs8xty+v2r54vZoDqh
- 4aNihAlbe/rVl3c6lQ2Q/kylgVwhavqjFiQ1kGWvSfWV+PzN0UZBkSMOMUC7uM429a0ZEt61MDw
- 8sSL08jL0gk1ToUptB3FVa2TYvMJsqhMV7Yx0eau9CWhcSESwtQreiR5tt8=
-X-Received: by 2002:a05:690e:1685:b0:64a:d74f:2580 with SMTP id
- 956f58d0204a3-653107bd0bfmr11073782d50.1.1776642618385; Sun, 19 Apr 2026
- 16:50:18 -0700 (PDT)
+ bh=HNI60lry+e395RJ3B1bc7vM81sAG+feoRYphSxNJjLc=;
+ b=shfaCbPXL2xOVdxR9dL5nDYmu9lQC1DAK6yIlwHHH1k3c8VAPneOj/FOcvjbPDlWLb
+ nTB4M742dOw/FgNLmY/Xrzej0tnAnPtqV0Aoi4vO25j88mcRxmm4bjDwTTc9uYBkbCAf
+ kzJ6hDjnkcqw2mYC7IBI5+UjS1hd1kHjM2YSjIGX9ZN2qa0UqI8nKBPPN6z+x9L/c3ms
+ WD4zTgXo56RIk+3BFliVB3588p5HkPWR5Y+XEA17wwtEhXQxXUwJ4pO8hGzv/9hpymk+
+ icJfo255zTP51f5bI6w8b12oGNywIudKOELk9BIDlDzHsBRWM2+hcfmxCN8HB6ZCqLJx
+ 0oqA==
+X-Gm-Message-State: AOJu0Ywex3Op3b2+GOnwFRLCgHobfBxbEeol9OPr0k760WlxFeSTKuFd
+ hjFKLLq/i8wgeDuYT2kNoOriSTibPTlvnpsoTIXPxpZ9m+vy9tiQbActQXr1BPD3euZSrV9CQZd
+ MhoGotOxGIU0X8lXv/F3HrfXEcLfl+WY=
+X-Gm-Gg: AeBDiesJ3+ZBCZXKx2n6R+aolX8xANg+2szCKISEKLry3C906D/Wn9UNJZ/PCXNyBpk
+ NlddQHGEh4HXchnFXFFRSKAsOdbKerQxvbrQoOe9yo4TxVUkWoXNvlJ3XRXwyC6TZD5Ck9fb4g0
+ SYujljmP2q/LlMIkhsC+O8k1w7xYnf/kD/fP6Bb+mVkrhFBRbV3IhJkPBp4B/bf+48NuFgr7Qh6
+ aU+rlz+kTIPTIhIMJ2gzk8vaMIrzYaIpmOdB9UQnFD2+B/kQZgFzPbgaIekBaPS7CH1il2hI0XC
+ xr6VlUmndfvztRw61YfY8bxKRNL3WTIWGOqrzGK+qg8xuUToclkbDCG8quk=
+X-Received: by 2002:a17:906:4786:b0:b9d:2fce:308c with SMTP id
+ a640c23a62f3a-ba41a0474d6mr528377166b.30.1776645014018; Sun, 19 Apr 2026
+ 17:30:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1776438369.git.chao.liu.zevorn@gmail.com>
- <e1a977e38c934a7f383530067230a6201b8ccc60.1776438369.git.chao.liu.zevorn@gmail.com>
-In-Reply-To: <e1a977e38c934a7f383530067230a6201b8ccc60.1776438369.git.chao.liu.zevorn@gmail.com>
+References: <20260417110550.70068-1-philmd@linaro.org>
+ <20260417110550.70068-5-philmd@linaro.org>
+In-Reply-To: <20260417110550.70068-5-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 20 Apr 2026 09:49:50 +1000
-X-Gm-Features: AQROBzDd8vT19_O-TGiagIJIimqtXIOjlznc_3e0h6RKAbAbi9Nk29l7N2JAIts
-Message-ID: <CAKmqyKMipoe-YHVo5VGekUGG4uFJ7CEktipsOCSrSx=6b9=REA@mail.gmail.com>
-Subject: Re: [PATCH v6 1/5] target/riscv: add thead-c908 cpu support
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, Chao Liu <chao.liu@zevorn.cn>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Conor Dooley <conor@kernel.org>, Peng Jiang <3160104094@zju.edu.cn>
+Date: Mon, 20 Apr 2026 10:29:47 +1000
+X-Gm-Features: AQROBzCVoY_SUtfnDjFrz8xIp8AUXAlclj-M1rmKY0DRnSRKiwFLoGLJC2p7V8s
+Message-ID: <CAKmqyKOunTTnTDjv0z4Wo1ooQavwausK8RX3t=1WnoMWLco3KQ@mail.gmail.com>
+Subject: Re: [PATCH 4/7] MAINTAINERS: Cover hexloader tests under the Generic
+ Loader section
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=alistair23@gmail.com; helo=mail-yx1-xb12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -130,55 +119,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 18, 2026 at 1:13=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail.com=
-> wrote:
+On Fri, Apr 17, 2026 at 9:07=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> From: Chao Liu <chao.liu@zevorn.cn>
+> Drop the orphan 'Intel Hexadecimal Object File Loader' section
+> but keep the tests covered under the Generic Loader section, since
+> both loader.c and generic-loader.c calls load_targphys_hex_as().
 >
-> The C908 processor is based on the RV64GCB[V] instruction
-> set, compatible to RVA22 Profile and implements the XIE
-> (XuanTie Instruction Extension) technology.
->
-> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Conor Dooley <conor@kernel.org>
+> Cc: Alistair Francis <alistair@alistair23.me>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-As Connor pointed out, he didn't add his Reviewed-by, instead he
-commented about a missing extension [1]. On top of that I don't see
-any instances of `Reviewed-by: Conor Dooley <conor@kernel.org>` in the
-QEMU tree, so I assume there are none on the mailing list as well.
-Which makes a copy and paste error seem less likely.
-
-I do see that Connor's reply was sent from his conor@kernel.org address,
-but manually stitching together a `Reviewed-by` and address seems
-unlikely to happen by accident. Although it does seem like the type of
-thing an LLM would do (see below).
-
-> Reported-by: Peng Jiang <3160104094@zju.edu.cn>
-
-I'm not sure how this can be Reported-by, it's not a bug fix. What was
-reported? It seems like the Reported-by appeared in v3 [2] and wasn't
-in v2 [3], yet I don't see anything reported.
-
-The extra and unexplained `Reviewed-by` (especially using an odd
-address as mentioned above) really points to this being LLM generated.
-Especially considering that your reviews are LLM generated (those are
-fine). Unfortunately that means I will need to decline the commits
-according to the QEMU Code Provenance rules [4]. Note that it isn't
-just the Code Provenance policy, it is also now really difficult to
-trust these patches knowing that stray `Reviewed-by` tags could be
-hallucinated and not caught before being submitted.
-
-1: https://patchew.org/QEMU/cover.1764493931.git.chao.liu@zevorn.cn/c27edc6=
-9ea6642f645d5e194bd5d4cd71e812841.1764493931.git.chao.liu@zevorn.cn/#202512=
-03-squiggle-gentile-f27af704359e@spud
-2: https://patchew.org/QEMU/cover.1765811173.git.chao.liu@zevorn.cn/ac82fb9=
-f22366614c2be80d9fe200f1b5ce161ef.1765811173.git.chao.liu@zevorn.cn/
-3: https://patchew.org/QEMU/cover.1764830405.git.chao.liu@zevorn.cn/fdd2cb5=
-19a91a16c5b6e8931dda8301bf1c23c85.1764830405.git.chao.liu@zevorn.cn/
-4: https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-ge=
-nerated-content
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  MAINTAINERS | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index eccc0d64331..d5e766ca6c9 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2701,6 +2701,8 @@ F: hw/core/generic-loader.c
+>  F: hw/core/uboot_image.h
+>  F: include/hw/core/generic-loader.h
+>  F: docs/system/generic-loader.rst
+> +F: tests/qtest/hexloader-test.c
+> +F: tests/data/hex-loader/test.hex
+>
+>  Guest Loader
+>  M: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> @@ -2709,11 +2711,6 @@ F: hw/core/guest-loader.c
+>  F: docs/system/guest-loader.rst
+>  F: tests/functional/aarch64/test_xen.py
+>
+> -Intel Hexadecimal Object File Loader
+> -S: Orphan
+> -F: tests/qtest/hexloader-test.c
+> -F: tests/data/hex-loader/test.hex
+> -
+>  CHRP NVRAM
+>  M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>  S: Maintained
+> --
+> 2.53.0
+>
+>
 
