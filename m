@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5310EF36C31
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 07:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20166F36C31
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 07:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEipd-0004fa-Es; Mon, 20 Apr 2026 03:14:09 -0400
+	id 1wEivm-0005gq-Fk; Mon, 20 Apr 2026 03:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEipY-0004eM-Gx
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:14:04 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEivU-0005bg-Ar
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:20:19 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEipU-0004Sv-SD
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:14:03 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso22668965e9.3
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 00:13:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEivS-0005lg-HR
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:20:12 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4890d945eb4so6036395e9.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 00:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776669235; x=1777274035; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1776669608; x=1777274408; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=HxxduNautQfvVXpIQKuGMctOqJFOdSUEL3IghfNBNfg=;
- b=LNay7zbu78Bvx7nIiMefsZGf2pzv5v1ywYlmh+LHzzoSLgIOCZket1bK55twre5mhJ
- OY1mND6Ar+6DbrFL4dN5umZKUrjQ63CISie2hOWb1z5+QH0T9v9BQhsCMBK2Vf6Xh3KS
- AqpdagHu61gLm6COwL4jgHTHb1UE7pQmHAWIAOCyHpwcL/niKq3rpLZwumNrjX3sI5Zy
- OHwz17Sp84FuIsOwYFcOtTft2uYaWYrppxVEgkMLYP1v6l2KjVQtalbR22noyd7g1YVO
- dD/d5rl84cEo0MgW4f4CWXyTIR8a7yKgU8XtCZE6e+mQGl/+FiyMCXeYuDBvURFGGN7T
- 7kHA==
+ bh=q2R/4bu4Qx5VLoJElaowuRvfMVbmXN6v1Nl95K+mVBc=;
+ b=eM2vxUesNntwzAHEEbJ520HXYoyyyfcRyMYYnEAoOqNC6mVSfR3K4F36NrObfjqAEj
+ l0MY3c2alNv9thCOP4QkykYtX1tarOfMAGn/bamHPT8puVnGcSwk5DKQNQieAnHnEqbA
+ Zung63AvusvoXzPw2NfRu2iAIxCM0pZ+8NhktOcv9WFQQTB+GlUIO8mkTAp8AOty2/Ns
+ dxDbKzou9aYgZ4s6Hv3538gyCWYTOjOKGY/QdWlP5yPY8fFzkoFV/GB1sLWh5KReZyL5
+ +AU0sOAX915hHJAHEziO69BOfUf01ofwx6wrJqIEfEfKyB28wJO1Gl8/8fbhIELJNO9h
+ vbxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776669235; x=1777274035;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1776669608; x=1777274408;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HxxduNautQfvVXpIQKuGMctOqJFOdSUEL3IghfNBNfg=;
- b=ltiJhoUBICKBrTJi3bUAxDk6f8XBELoBjfVLLtDZ4+q/Tqqek3qYdq5jB93H2xcl7W
- lpXGMG2kAv2no6Crvf6vHfCXNG29otKewZaYjhZ/eZJ5GWBC8UxQWgToWK6x79ddor4Q
- sM8zxXrl6EDsC4XUtgUXQrCFIkJBq0svXabafjPhLm4HUIsq+rUsK88sNhHk8A8sHyc0
- yq3b18mn4jEgeARrVZ4+pCo+hO8RXr3fsGyf0HJ6L80cUmK0GTTfThVVGQEe3n1otvh7
- 8pqSKK/0Cj+CiBtC33ZCN/15OJb3eHzf83UcsJKCgY22o7qQSO0fYaoNiIGQ9H5RinBQ
- 847g==
-X-Gm-Message-State: AOJu0YxVn4BQmnZXTQ5qlqzMuFalayDTRkBa9hJYbjwCtN++q8p6lVRp
- L5em4SLvP/8bkD2hONHNbhTndUjZPtbQuF57cvi1MwTxcyWadzaYWqr8XA9eNJw7j7o=
-X-Gm-Gg: AeBDietYS6HtTqpz+8fgNLTiJ0X2VdXxW4l7sHPj+h+B5QZvf+IWRrvE9Gj1Op/LMqA
- IKpvLIyG/Sroi7nyEN4hg7VC+E+lCyXyRTmgvOxVXeCmP/ZVHyWUYGO4Hzdy75zRREaac2ETH4c
- rmQ0j/4RC4Mszp6oM6jM8gV2yQS6ez+qmarIkFrfNwhvzqrIMWgikQgc3v/0K9JlpKZm/3/d6ko
- uFITSvKweT9MWTNT/HrNoHYF/o6B4Rrd3sc64+CeR2YmRsYtae69LNqqnvu/3ZJX4EmATM7XTI8
- huU52//v8eD4ULDtHFNB9hGZTyQ0JI0Zu11ExMthdsOqWr1bssj0ryMX5MVZyj5COoJ8uS+1/Wf
- vCBR/aUyx3W6bCZlZk6lAjYZvFr8W9uRh+qT0PX8Y8p9gG67+SvVSoSUA8UVXm1REhw0qMXro5Y
- M9/GEvv6fg2zar/NziQ4fmmivcn5ABQfokPyM0MbiXk/oqqIJPBivfADe+70XGHx1/tmm4Cqgax
- kwN
-X-Received: by 2002:a05:600c:1da1:b0:488:79a3:f04c with SMTP id
- 5b1f17b1804b1-488fb7863femr185214705e9.27.1776669235177; 
- Mon, 20 Apr 2026 00:13:55 -0700 (PDT)
+ bh=q2R/4bu4Qx5VLoJElaowuRvfMVbmXN6v1Nl95K+mVBc=;
+ b=fQzyD1/ptrW7eE7mXdCkpMcHFsgYlL/6lgpk/4URjWynK+6uDOvPe7fDbwKk8DwanB
+ o3tRw2VEvbrrnpwaGuA6fWFpmWx1Mk067Gjrw+6GfWMHtMJaJlFI7BeNhl2XGsY9bqkj
+ M5Je3G4h8AoPrMKVelEKX6u14K6s1WOCl2NKuikKdQdudosUg+dEf/inG1Z4t/xaLn/p
+ qkbkmq+rDncj14UZC17XAAekx39OgF3aYQ5gmZugrXLP37pksEB2iK+PiMt7IO8D7JLo
+ ZKrlS7GpmBYPrXuR8enhy20CkUdsfGneRPmZlhf2KmxTEhOd6RVPXjIbT5rkut9y7yO+
+ 4UjQ==
+X-Gm-Message-State: AOJu0Yzsyt0qldrdXDdkE5446ZI0RU0LNPwc39FZQ8Kk8VAEYY7m6oFP
+ NCbvhj/Omwo4q53ONOSR90iEWTIEM8kfxZNeCPmad4u7QmbAvM5Q+9xyNaAh3pbC1cc=
+X-Gm-Gg: AeBDiesP9e+JYKz16OqOfl2ZmCPRFtQq5eKsnJH9JZnpvsX6i5vhl9bQLOdkH1z0Vm5
+ RthQseibJnyZyxYl7/xEKeSl3AuZ7eQC3FmVrNHi43+V+t055MPvWKq9gBuVVH8d/49okcZxK+k
+ sSTTKqP7dW6KEfDbprgVBiB0So+QZKVtwboKiTRRXafnOxLpbqG5Pg26mkL7gbGK+tMLrXdW7k4
+ fKWHlFYL5CRHd9KNiqeAUdcsgEs6CUipN92vc23Ly/CfVtVpcY6eZFuHO50iTYNjMupjSQnstWw
+ wbXKLmKcwBXEemFW7TzciQPW3MOIlczgjnJ77rqmJ+Npam+WgnW2uCjbmlJA8IUTWxO6mncLgOC
+ /vizrRqze6168uY5kxvvOIQB7NxODbZtTZN47J7J4R0jJqZxr83WCJ04lY1n//rLZHeV5lcBAFu
+ 4jKjLqN7TopBdnqF4v+JK570IEXhUmoMZVquYzmjjspsXxG7h2jDESgmeX9CtniGVCqPjYERZ74
+ oJh
+X-Received: by 2002:a05:600c:4e0c:b0:489:1d7a:4537 with SMTP id
+ 5b1f17b1804b1-4891d7a463emr28197065e9.3.1776669607594; 
+ Mon, 20 Apr 2026 00:20:07 -0700 (PDT)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891978ef6bsm33937005e9.4.2026.04.20.00.13.53
+ 5b1f17b1804b1-488fc10777csm306375125e9.8.2026.04.20.00.20.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2026 00:13:54 -0700 (PDT)
-Message-ID: <33852de5-a2a7-469c-9c08-177b2f3f144c@linaro.org>
-Date: Mon, 20 Apr 2026 09:13:52 +0200
+ Mon, 20 Apr 2026 00:20:06 -0700 (PDT)
+Message-ID: <5998180b-55c1-40a7-8426-d21539f99100@linaro.org>
+Date: Mon, 20 Apr 2026 09:20:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: Remove hw_error() for the unimplemented
- CM_LMBUSCNT register
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20260420064933.64765-1-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/2] io: use g_clear_handle_id() for GSource cleanup
 Content-Language: en-US
-In-Reply-To: <20260420064933.64765-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Matthew Penney <matt@matthewpenney.net>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20260408100605.66795-1-philmd@linaro.org>
+ <20260408100605.66795-3-philmd@linaro.org>
+ <_FLwJ4IKFwbr2FlwMah_gLTk8PG-FdvyrrFM2UgmbYPlN7wSwZIslJehtfZV7mb8w1UD69eX6LD5Lt9wGkstMiLrdrkkzU1coVZiuy7CSNE=@matthewpenney.net>
+ <98a3dea5-266e-4326-b224-0a3401e49783@linaro.org>
+In-Reply-To: <98a3dea5-266e-4326-b224-0a3401e49783@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,37 +106,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/4/26 08:49, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 19/4/26 18:46, Philippe Mathieu-Daudé wrote:
+> On 9/4/26 16:20, Matthew Penney wrote:
+>> Hi Philippe,
+>>
+>> Thanks for picking this up and cleaning it up.
+>>
+>> This matches what I was aiming for with my series.
 > 
-> When writing to this register, QEMU currently aborts:
+> Thanks Matt, does that mean I can add your tag to this
+> series?
 > 
->   $ echo "readl 0x10000018" | ./qemu-system-arm -audiodev none,id=snd0 \
->      -M integratorcp,accel=qtest,audiodev=snd0 -display none -qtest stdio
->   [I 0.000000] OPENED
->   [R +0.001907] readl 0x10000018
->   qemu: hardware error: integratorcm_read: CM_LMBUSCNT
->   [...]
->   Aborted                    (core dumped)
-> 
-> This is bad, a guest should ideally never be able to kill QEMU like this.
-> 
-> Now, according to the "Intergrator/CP User Guide" from:
-> 
->   https://developer.arm.com/documentation/dui0159/b/porting-integrator-ap-and-im-pd1/registers
-> 
->   "The Integrator/AP CM_LMBUSCNT has been removed."
-> 
-> That means this register does not seem to be implemented on real CP boards
-> at all, only for older AP boards. Thus it should be fine if we simply
-> ignore this register in QEMU and handle it like all other unimplemented
-> registers in the "default" handler of the case statement.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3407
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/arm/integratorcp.c | 3 ---
->   1 file changed, 3 deletions(-)
+>    Reviewed-by: Matthew Penney <matt@matthewpenney.net>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hmm maybe in this case Co-developed-by: is more appropriate.
+
+But then we need to wait for Marc-André or Daniel for a review.
+
+> 
+>>
+>> Best regards,
+>> Matt
+>>
+>>
+>>
+>> Sent with Proton Mail secure email.
+>>
+>> On Wednesday, 8 April 2026 at 11:06, Philippe Mathieu-Daudé 
+>> <philmd@linaro.org> wrote:
+>>
+>>> Use g_clear_handle_id() instead of g_source_remove() with
+>>> manual ID checking and zeroing.
+>>>
+>>> This simplifies the code and ensures consistent handling of
+>>> GSource IDs, since g_clear_handle_id() checks for a non-zero
+>>> ID before calling the cleanup function and zeros it afterwards.
+>>>
+>>> No functional change intended.
+>>>
+>>> Mechanical change using the following Coccinelle spatch script:
+>>>
+>>>    @@
+>>>    expression TAG;
+>>>    @@
+>>>    -    if (TAG > 0) {
+>>>    +    if (TAG) {
+>>>             g_source_remove(TAG);
+>>>             <... when != TAG
+>>>             TAG = 0;
+>>>             ...>
+>>>         }
+>>>
+>>>    @@
+>>>    expression TAG;
+>>>    @@
+>>>    -    g_source_remove(TAG);
+>>>    -    TAG = 0;
+>>>    +    g_clear_handle_id(&TAG, g_source_remove);
+>>>
+>>>    @@
+>>>    expression TAG;
+>>>    @@
+>>>    -    if (TAG) {
+>>>             g_clear_handle_id(&TAG, g_source_remove);
+>>>    -    }
+>>>
+>>> Inspired-by: Matthew Penney <matt@matthewpenney.net>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   hw/char/cmsdk-apb-uart.c  |  5 +----
+>>>   hw/char/nrf51_uart.c      |  5 +----
+>>>   hw/char/serial.c          |  6 +-----
+>>>   hw/char/stm32l4x5_usart.c |  5 +----
+>>>   hw/char/terminal3270.c    |  5 +----
+>>>   hw/char/virtio-console.c  | 10 ++--------
+>>>   hw/usb/redirect.c         |  5 +----
+>>>   io/channel-websock.c      | 13 +++----------
+>>>   net/passt.c               |  8 ++------
+>>>   net/stream.c              | 15 +++------------
+>>>   net/stream_data.c         |  5 +----
+>>>   net/vhost-user.c          |  8 ++------
+>>>   ui/dbus-clipboard.c       |  6 ++----
+>>>   ui/input-barrier.c        |  6 +-----
+>>>   ui/vnc-auth-vencrypt.c    |  6 +-----
+>>>   ui/vnc-ws.c               | 12 ++----------
+>>>   16 files changed, 25 insertions(+), 95 deletions(-)
+> 
+
 
