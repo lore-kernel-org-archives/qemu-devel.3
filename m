@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E89F557EF
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE4D4F557FE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wElcu-0003Gv-Ur; Mon, 20 Apr 2026 06:13:13 -0400
+	id 1wEm5o-0006nz-5Y; Mon, 20 Apr 2026 06:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wElcq-0003Gh-DR
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:13:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wEm5m-0006n9-0T
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:02 -0400
+Received: from p-west3-cluster3-host5-snip4-9.eps.apple.com ([57.103.72.140]
+ helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wElco-0001pS-Nf
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:13:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776679985;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OnLZiZhUM+LM1Nh8wZFUhOG5Bgf/qG6sBLoqI4+P83o=;
- b=exZAR/DY0yMVBPFsEd1ACTvVFRQRFm8hHeJyAqfgZImlfnOcCbB2AozEqRMUD9RtFB9FJd
- RDT8IEh3LbHRMDsc5V47Z6a1JI81yhF0nEHuKZV9Udx8KWJ7QexK8DyOS7//m2zCQgLvvl
- +LEXIONL0wggFTzhOvYil/fC8+vL/mo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-HZb6Hwl4ONGgEsV5aofKfA-1; Mon,
- 20 Apr 2026 06:13:03 -0400
-X-MC-Unique: HZb6Hwl4ONGgEsV5aofKfA-1
-X-Mimecast-MFC-AGG-ID: HZb6Hwl4ONGgEsV5aofKfA_1776679982
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2B6019560AA; Mon, 20 Apr 2026 10:13:01 +0000 (UTC)
-Received: from localhost (dhcp-192-224.str.redhat.com [10.33.192.224])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD01A180047F; Mon, 20 Apr 2026 10:13:00 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Jaehoon Kim <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, Jaehoon Kim <jhkim@linux.ibm.com>
-Subject: Re: [PATCH RFC v1 1/1] hw/s390x/ccw: Disable legacy virtio-pci by
- default (v11.1+)
-In-Reply-To: <20260417154332.849664-2-jhkim@linux.ibm.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20260417154332.849664-1-jhkim@linux.ibm.com>
- <20260417154332.849664-2-jhkim@linux.ibm.com>
-User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Mon, 20 Apr 2026 12:12:58 +0200
-Message-ID: <877bq2szx1.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wEm5j-0000TR-VW
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:01 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPS id
+ F2FDE1800449; Mon, 20 Apr 2026 10:42:53 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776681775; x=1779273775;
+ bh=r1dcE2R63n4U4IcIZp0oMfqkSSOoCy/Vthv19Y7666o=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=fmvBlflQZNIVFvMgmqPGjkH3szrKh8xGBJuFx38BtTPJEhjQkhoUKc8EWf2VodT8b8pp+IGaCOp/I9bdpQypUPqB+3fuu2Ppoq0+FRvj2G+XvAjm3K/uIeAV5uXJnZSBE+Rhq1DYlzH5y3l6IhPBhF6asUc1QcgxNaI1Unhph3fltuKjmj84Ag6yIrSABk5nRHJu0SKscz9Pky5OzqCYPzSTdd0ytkVeu9lM1s/rnDLIQUK/bcpUxTxWRAkwIj5duhh+sE3Y9XRySFLnNuEeFWpdk/4RMs67wb+hsZBQ/BPDjzl6zXs2A5xRRBcJxIGzKfVl1j5IPwz22vaAxzax7Q==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPSA id
+ 1EF7118000A3; Mon, 20 Apr 2026 10:42:50 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2 00/38] WHPX x86 updates for QEMU 11.1
+Date: Mon, 20 Apr 2026 12:42:10 +0200
+Message-ID: <20260420104248.86702-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfXzEfZH9tQ/PnW
+ Eag7LK30v3R9Ks0wadvASszqHnoRrsvpCd+hb7QjpemGRJpbDiwGUnifFy7ohcSs3lZWbRhAofW
+ ynY3u5vvRjJGxZJR0s+be7IIU15zSVi7fBCqbek5nrQIccNFUP049Wi+rBhadYejOnR+WInrN5B
+ 8QucVSG8iXFvEPxJ6TmvpuGqwcCZpV7C0FOgh1anESkjPwaVsnuf0sLNburaKW/tqIwNEHL5zHg
+ umoeiptUMniyAjet/33QMzEhOe3E0F5aSwYlwShPX+NTMz7N47FKJzix+URtme1uU0R2p8T3ziv
+ IQgpdGDuTBdXoR78eiQbSB63HKkIfzzKSFSVxR79lGSmYEZjUgzgPWvEfjLh70=
+X-Proofpoint-GUID: cYimMu998sC0Mm6dfN62GfWqsa4NaxRk
+X-Authority-Info-Out: v=2.4 cv=FtsIPmrq c=1 sm=1 tr=0 ts=69e6032e
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8
+ a=k3UGef2UMelxMxAvkqcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: cYimMu998sC0Mm6dfN62GfWqsa4NaxRk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ mlxlogscore=577 phishscore=0 adultscore=0 spamscore=0 suspectscore=0
+ mlxscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2604200104
+Received-SPF: pass client-ip=57.103.72.140;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,103 +93,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 17 2026, Jaehoon Kim <jhkim@linux.ibm.com> wrote:
+This rolls over my previous series posted earlier in this mailing list.
+..and adds some more.
 
-> On the s390 Linux kernel, IO_SPACE_LIMIT has been 0 since the initial
-> zPCI implementation (commit cd24834130ac "s390/pci: base support"),
-> making I/O BARs unusable.
->
-> However, when virtio-pci devices operate in transitional mode, QEMU
-> unconditionally exposes the legacy interface via BAR0. This results in
-> firmware warnings during PCI enumeration, such as:
->
->   pci 0005:00:00.0: [Firmware Bug]: BAR 0: invalid; can't size
->
-> even though BAR0 is never usable on the s390 kernel.
->
-> Close this gap by disabling legacy virtio-pci support starting from
-> machine version 11.1. This effectively makes virtio-pci devices
-> non-transitional and prevents the creation of the unusable legacy I/O
-> BAR.
->
-> This introduces s390x-specific global compatibility properties that
-> set disable-legacy=on as the default for virtio-pci devices. Machine
-> versions v11.0 and earlier set disable-legacy=off to maintain their
-> original default behavior (legacy support enabled), ensuring VMs
-> created with those versions continue to work identically.
->
-> Users can override the default on the command line if needed:
->   - On v11.1+: -global virtio-pci.disable-legacy=off (to enable legacy)
->   - On v11.0-: -global virtio-pci.disable-legacy=on (to disable legacy)
+Git tree: https://github.com/mediouni-m/qemu whpx-i386-202604-4
 
-Makes sense to disable legacy virtio-pci devices, if they cannot work
-anyway. I'm wondering if we want to have a generic "no legacy" switch as
-well. I remember a patch from some time ago, but that was concerned with
-endianness IIRC.
+Some highlights:
+1
+- user-mode x2APIC emulation (kernel-irqchip=off) for better
+performance when it has to be used.
+- CPU model emulation on both Windows 10 and 11
+- configurable behavior for unknown MSRs and adding a way
+to trap on GPFs raised by Hyper-V on MSR acccess
+- when -M hyperv=off, report the hypervisor as VMware for
+guests to use either the VMware CPUID leaf or the vmport
+interface to get the TSC and APIC frequencies.
 
-Anyway, we cannot turn off pre-1.0 for virtio-ccw at the moment, because
-the bios still uses legacy virtio. Would be a bit of an effort to change
-that, but still sounds like a good idea to me.
+If the vmware CPUID frequency leaf is disabled, then KVM
+is reported.
+- xsave save/restore support
+- Pause the VM to be able to inspect state on a fatal fault
+instead of just exiting
+- adding emulation of an oddball idle MSR used by Windows
+when kernel-irqchip=off.
+- disable kernel-irqchip and Hyper-V enlightenments for
+isapc
+- for Windows 10, change the default to an emulated x2APIC
+(kernel-irqchip=off). The recommended way to use the Hyper-V
+LAPIC is not to use -M kernel-irqchip=on, but -M pic=off.
 
->
-> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-> ---
->  hw/s390x/s390-virtio-ccw.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
->
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index cc768daeb0..6fbea1e289 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -788,6 +788,18 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
->      g_free(val);
->  }
->  
-> +/*
-> + * S390x-specific global compatibility properties.
-> + *
-> + * Set disable-legacy=on as the default for virtio-pci devices starting
-> + * from v11.1. Machine versions v11.0 and earlier set disable-legacy=off
-> + * to maintain their original default behavior (legacy support enabled).
-> + */
+And as the last commit, a documentation update.
 
-Maybe add here in the comment that legacy virtio-pci does not work anyway?
+Bug reports and patches are welcome.
 
-> +static GlobalProperty hw_compat_s390x[] = {
-> +    { TYPE_VIRTIO_PCI, "disable-legacy", "on", .optional = true},
-> +};
-> +static const size_t hw_compat_s390x_len = G_N_ELEMENTS(hw_compat_s390x);
-> +
->  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->  {
->      MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -878,6 +890,9 @@ static const TypeInfo ccw_machine_info = {
->          const void *data)                                                     \
->      {                                                                         \
->          MachineClass *mc = MACHINE_CLASS(oc);                                 \
-> +        /* Apply global s390x-wide default properties */                      \
-> +        compat_props_add(mc->compat_props, hw_compat_s390x,                   \
-> +                         hw_compat_s390x_len);                                \
->          MACHINE_VER_SYM(class_options, ccw, __VA_ARGS__)(mc);                 \
->          mc->desc = "Virtual s390x machine (version " MACHINE_VER_STR(__VA_ARGS__) ")"; \
->          mc->init = MACHINE_VER_SYM(mach_init, ccw, __VA_ARGS__);              \
-> @@ -923,7 +938,15 @@ static void ccw_machine_11_0_instance_options(MachineState *machine)
->  
->  static void ccw_machine_11_0_class_options(MachineClass *mc)
->  {
-> +    /*
-> +     * Preserve v11.0 and older version behavior:
-> +     * keep legacy virtio-pci enabled.
-> +     */
-> +    static GlobalProperty compat[] = {
-> +        { TYPE_VIRTIO_PCI, "disable-legacy", "off" },
-> +    };
->      ccw_machine_11_1_class_options(mc);
-> +    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->      compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
->  }
->  DEFINE_CCW_MACHINE(11, 0);
-> -- 
-> 2.50.1
+However, due to reasons, I'll probably step aside
+from this all for a bit so don't expect immediate replies.
+
+v1->v2:
+
+- Build fixup for macOS and OpenBSD
+- a bit of cleanup
+
+Magnus Kulke (1):
+  target/i386: add de/compaction to xsave_helper
+
+Mohamed Mediouni (37):
+  target/i386: emulate: include name of unhandled instruction
+  whpx: i386: x2apic emulation
+  whpx: i386: wire up feature probing
+  whpx: i386: disable TbFlushHypercalls for emulated LAPIC
+  whpx: i386: enable x2apic by default for user-mode LAPIC
+  whpx: i386: reintroduce enlightenments for Windows 10
+  whpx: i386: introduce proper cpuid support
+  whpx: i386: kernel-irqchip=off fixes
+  whpx: i386: use WHvX64RegisterCr8 only when kernel-irqchip=off
+  whpx: i386: disable kernel-irqchip on Windows 10 when PIC enabled
+  whpx: i386: IO port fast path cleanup
+  whpx: i386: disable enlightenments and LAPIC for isapc
+  whpx: i386: interrupt priority support
+  hw/intc: apic: disallow APIC reads when disabled
+  whpx: i386: fix CPUID[1:EDX].APIC reporting
+  whpx: i386: set apicbase value only on success
+  whpx: i386: unknown MSR configurability
+  whpx: i386: enable GuestIdleReg enlightenment
+  whpx: i386: tighten APIC base validity check
+  whpx: i386: ignore vpassist when kernel-irqchip=off
+  target: i386: HLT type that ignores EFLAGS.IF
+  whpx: i386: add HV_X64_MSR_GUEST_IDLE when !kernel-irqchip
+  whpx: i386: one more CPUID
+  whpx: i386: some x2APIC awareness
+  whpx: i386: set WHvX64RegisterInitialApicId
+  whpx: i386: Pause VM on fatal exception to be able to inspect state
+  target/i386: emulate: use exception_payload for fault address
+  whpx: i386: CPU features support for Windows 10
+  target/i386: make xsave_buf present unconditionally
+  whpx: xsave support
+  whpx: i386: set APIC ID only when APIC present
+  whpx: i386: update migration blocker message
+  whpx: i386: don't increment eip on MSR access raising GPF
+  target/i386: emulate, hvf: rdmsr/wrmsr GPF handling
+  whpx: i386: add feature to intercept #GP MSR accesses
+  whpx: i386: intercept CPUID 0xD too
+  whpx: i386: documentation update
+
+ accel/whpx/whpx-common.c           |   78 ++
+ docs/system/whpx.rst               |   30 +-
+ hw/intc/apic.c                     |    9 +
+ include/system/whpx-common.h       |    2 +-
+ include/system/whpx-internal.h     |   28 +
+ target/arm/whpx/whpx-all.c         |    1 +
+ target/i386/cpu.c                  |   25 +-
+ target/i386/cpu.h                  |    6 +-
+ target/i386/emulate/x86_emu.c      |   14 +-
+ target/i386/emulate/x86_emu.h      |    4 +-
+ target/i386/emulate/x86_mmu.c      |    3 +-
+ target/i386/hvf/hvf.c              |    9 +-
+ target/i386/whpx/meson.build       |    1 +
+ target/i386/whpx/whpx-all.c        | 1247 ++++++++++++++++++++++------
+ target/i386/whpx/whpx-apic.c       |   83 +-
+ target/i386/whpx/whpx-cpu-legacy.c |  171 ++++
+ target/i386/whpx/whpx-i386.h       |   11 +
+ target/i386/xsave_helper.c         |  256 ++++++
+ 18 files changed, 1696 insertions(+), 282 deletions(-)
+ create mode 100644 target/i386/whpx/whpx-cpu-legacy.c
+ create mode 100644 target/i386/whpx/whpx-i386.h
+
+-- 
+2.50.1 (Apple Git-155)
 
 
