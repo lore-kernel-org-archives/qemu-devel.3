@@ -4,126 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 989D7F588EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 15:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2264FF588EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 16:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEr0Z-0008BL-V9; Mon, 20 Apr 2026 11:58:00 -0400
+	id 1wEr7P-0002aV-2E; Mon, 20 Apr 2026 12:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wEr0Y-0008Ao-Ae
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 11:57:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wEr7F-0002Zs-8a
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 12:04:54 -0400
+Received: from 12.mo534.mail-out.ovh.net ([46.105.38.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wEr0W-0006it-Dk
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 11:57:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776700675;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WmGCgKHQXycY5UDNbKTcb3iZKBJiL/37JanVeePzLbc=;
- b=ivA4MJN751D+lMBCP1J7LfMHPYM+HWS/xVmUtPZPxBP6Q+xDRSZJo10MPTMzb0iRq5hOqL
- EFyHpchjpQ33QxX0P8GucIT0/p/6uBJIX99Mhp/b0Uop38QfbecDF3Hpuk7or+9AAVsOal
- 6rI7NCnpKr2BtPABhIkdZmOIJu2vxDI=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-sALPlQovOGec_D6f7UurBA-1; Mon, 20 Apr 2026 11:57:53 -0400
-X-MC-Unique: sALPlQovOGec_D6f7UurBA-1
-X-Mimecast-MFC-AGG-ID: sALPlQovOGec_D6f7UurBA_1776700673
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2b2ead99f5dso40639395ad.0
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 08:57:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776700673; cv=none;
- d=google.com; s=arc-20240605;
- b=gePFGUFzbdvqgGFN3f4SnQKxvR5a99SA37zOErmPoK0BqTS+R0PavbJ0z6cQ1jwh3O
- IkFV8jY4OjKfi2gtOORQ0Msr+090CWepWOvtouTza1n4PQvaJVm2yJvafyXblBthKbzB
- I/qCRCgLawpFJeUBm056JUbFb2wsMiIwA8fAidN7CfrJ/mIN9aAyTpZhYft7crT+qhAz
- fDpC4v01PTHd7XRbjHf4y+BYRo4jkboNoYui5ow28iyymnnFlbvlqYVOCs60HTkrRtS3
- G9lcOPKiWUsgDYw3JB4JiucFWdcA2Z3HKPsQnTe/B8F6kM02ZaxfQ7oXTC/CznYHjx9d
- gkaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=WmGCgKHQXycY5UDNbKTcb3iZKBJiL/37JanVeePzLbc=;
- fh=n4vUO9h8l8a+OfSP4l5bPmM/Mwrbi/aHlWAd7/sKQlM=;
- b=bEsTGrVo1jfSCrKgNnQIikOmFsUet8TDdypnNWRrpKOp7iLwBgz4urQm4S3+YWMfPw
- XWIVR7NijFDQmNTUGmZz4NOG0vDytOl/g9Pl0hTOVcakO3rL53z73p2EAJ9z5czz26GF
- o1hYRNfB/NHn9F/Ijw6H8vhPszI/AAhPE+J168F+H5fW5yA1W+5BYhVfCjK0gC9gQiDJ
- T8OwWe/iJs8jqJuGD+pey1dkmKQgx5MPZM5/Ej3/cyE1XZ2hykFcUuTN8od4L9HKTlgo
- DFkqhgcy6el7rWz7HF8YFJGSrQxNiCGQ0vjjsWKEG1pJfEft8jAAOysKRkhK7jjw1oXK
- ZD6Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776700673; x=1777305473; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WmGCgKHQXycY5UDNbKTcb3iZKBJiL/37JanVeePzLbc=;
- b=rW+lZ6KDZAY2p4eoqTegJKPxOm93luFmjWMW30FMceroGl9ymQmCGGH6YDUVuVmzlV
- YLVJ0Vq56DUU2Zokq71rLZu/B97OKLiAwr3OxnC3mjw66pswwmB/gOa4iCoTzMsxgpac
- 5LpOkv1nxpk6J7I2dCIKuz5H2UUMEjrd07RJMDza6VygBJ08dTTwQpCYFPX3PgqgKlxa
- JC65iSFeUcFDrT1ZI63gJC8GCNu7of8Bs0wZaC4gk3dRwarfgh358igt1g+8sVQSGca/
- 7NIWStewYD9kIoe7GZDv7c4yvVwYUKpbuegsZXLcUAzPbLUIppBcbK51dd8p2TfXpVQm
- wMQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776700673; x=1777305473;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WmGCgKHQXycY5UDNbKTcb3iZKBJiL/37JanVeePzLbc=;
- b=pOKsRDP4vNRQ92TeDfMaNV940N1+G3fLdxHwTX9emAiCkc9VMAA4FoQ1bdgd31KPli
- GfOlMQ9LX2ebMbRyw8J2NSXpmpT/QPr3VFl/hGGbsPOxtHenqy8T/zqJUMA2Gvtjqdb+
- T0Jxa6gv5idTdBme7ewK6lh6LakaPs8ynWZouHPHM3wrdVRJZAuOUG6a3n1s1fhwNo5D
- r3CQCYRj2vMJGHEVaxPTKH3t1xCeEtOMgQQX6lEOq/WlvIl/E3tORVZj//30OL9DoBOh
- Pv8gHGElDJagV59qcUTCAPrPg850NmoyPsoGEe4s1YlWGVf6bKMXJHPa443cZ6gbz686
- E/LA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9BhwKPRzD6GK5ntMxP/tQuaOdqAhUX3qIBgdanARJ5qbE3ieb/wpmM+p39toYPrfbsSgHAwSKDa8Hv@nongnu.org
-X-Gm-Message-State: AOJu0YwYV7mnh1UUBER13u87e9RN7+aOkRYME0A+PhAKOiSHOJ9a8mVu
- IRvl4Svj+/1IuBwqcsdsKQREj7qdPdkCBRcZIjWD0rX6jEPvOyMijBWzZZok7vXdMOwRw1/OowF
- dyG11cZIbHinxicSjIQOsYXorqsLkchQVnOBJ1B6TwEfV+zHWIUiLbz7Z6xgh2Ael8L74aIKKbS
- qcK2pPnjsvnZYW/YUmJT+tBJ2KOIZpovM=
-X-Gm-Gg: AeBDietOCcDCoyGz4nA5un/xTwLGcuga7MRmOlWygU+PAqLhgAfZ+/1CxlmY6hVNWG1
- iatmjXtxoyHEvMG2h2SrOvkVuztMEEa7qWouU4bxHXU0OMcnQT5/qbdI954pfNQf1kEGS7nVDS1
- a9eFpFn09cfzKNrDOzqEGefzzWV0q+IxkiMMTySEJv96v8P1yUSh45IaGfN3JPZ6IrTYc+3mz/M
- c9pTD6Jia6Dvwo=
-X-Received: by 2002:a17:902:d505:b0:2b2:4fcc:2687 with SMTP id
- d9443c01a7336-2b5f9f50c25mr149481395ad.31.1776700672436; 
- Mon, 20 Apr 2026 08:57:52 -0700 (PDT)
-X-Received: by 2002:a17:902:d505:b0:2b2:4fcc:2687 with SMTP id
- d9443c01a7336-2b5f9f50c25mr149481045ad.31.1776700671845; Mon, 20 Apr 2026
- 08:57:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wEr7B-0008La-Kj
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 12:04:52 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [51.68.94.138])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4fzr0X0XjWz69Df;
+ Mon, 20 Apr 2026 16:04:44 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Mon, 20 Apr 2026 16:04:43 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.110])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4fzr0W2X9Zz7tpv;
+ Mon, 20 Apr 2026 16:04:43 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.2])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ A0BA21923A4E; Mon, 20 Apr 2026 16:04:41 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-106R006c14620b7-62dd-4835-b067-d1c837c195b1,
+ EAA5D49A92D75878AB6B5DB8F91ADF3A5E4E180D) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <0c533df3-b06c-4fc6-a4b9-6e17206525a3@kaod.org>
+Date: Mon, 20 Apr 2026 18:04:41 +0200
 MIME-Version: 1.0
-References: <20260411021205.3592118-1-jemoreira@google.com>
- <aeYvCK2qhZd1W9sA@sgarzare-redhat>
-In-Reply-To: <aeYvCK2qhZd1W9sA@sgarzare-redhat>
-From: Stefano Garzarella <sgarzare@redhat.com>
-Date: Mon, 20 Apr 2026 17:57:40 +0200
-X-Gm-Features: AQROBzCzHah09tr-VP2eFC96aD55WqgWXNZVtnOLAOMfGA8CII_YP-JYHrZB0uQ
-Message-ID: <CAGxU2F7=XQfc4PUEM=k5yc-tytRs-MkrRKFeRXAETVEY5eggZQ@mail.gmail.com>
-Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
- kick FDs
-To: "Jorge E. Moreira" <jemoreira@google.com>, hreitz@redhat.com,
- stefanha@redhat.com, gmaglione@redhat.com
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Hanna Czenczek <xanclic@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/17] hw/usb/hcd-ehci: Change descriptor addresses to
+ 64-bit
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Xu <peterx@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
+ <20260416014928.1279360-7-jamin_lin@aspeedtech.com>
+ <3ee36a34-573e-48aa-91e3-9140244717f0@kaod.org> <aeJNdLTRSZQiEiP_@x1.local>
+ <TYPPR06MB8206C244CD249505E6B543F8FC2F2@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <TYPPR06MB8206C244CD249505E6B543F8FC2F2@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 5664120960398634029
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGvwZSjt39E3HlnwmuEG8hDeh17NAVdT5eVOqgxCxFCkjjPXHU7aSo5ft44RwcFezCW87m3vSkjGIhC2uD+aVm0+0XjD/yrh6evairdT1LDhzjkLrBda8vscQ3+W1L4UTHhrp/WE1LAgk9jTk5WvEbfBv1jXSBCzJB0EldqNJ92ezYtsr1iA2zg4c6SjBWGOt5cooDjWbof9ay/tozsWd+fMlghWmzTbxawBlhOWjam4pzNkJbnZ8lWhiCRTjhs69y4/AmIv5QwflDtpIzgVCcJb5k62CwfIMpP9pKgySAveigw/8ZJzC8/ueQgA+ssT3EM0nBXM3zz104sk1K+lQwrS7aartV24n9CzenXehCLzDaj4vqZREBdY9haGdpeaBdiX3LAHxRPN2ga6wtbgIsaejBLK6Yeofs+3gugnEvQt+nM+YCB3xxOTdk9EceDOApbiGj+1S2/Ct+x1uQm+AuoLMqfjzoljIAff4lcddjRTyhVZAU6kWkoK8q+uPxkiECyuZZMwa0jUZfdSDC3UJgirSfOXthw2DkOyDarNyYfgI2Xg/wuC4ayccawlOHIavixorUL7/y9Oo20bCTs4IcslE9s4eHVWUIxCUD1YLBaQxWgVE7ZeuseE37d7tfNhZVs0N5wjr2l/hwyIOn6ba8eQUA7s/zPoPAhENB2NSOK5Q
+DKIM-Signature: a=rsa-sha256; bh=elFmBHnkOK5JuvbSDcpWtsM1VRPeh5OWZrEiTqAmlgQ=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1776701085; v=1;
+ b=ihts3t80fCUW5CHg8aNkuUGWchzzXsGe8gBOwGp7Zmsnwduj3iaV2gVHrDX3DqDAM1MzfbNp
+ 2A2vweMmIpE6qjnBci0izYu+mhNdxFD79b+w5XKuSTQZH+UOvXSGptxWGHCQ8BJFe4aYs7nv0rq
+ xHjbHTb7xs64SRnV+t88t6HX9p97OhGF7czSg1sLjTNFIRQKcZog5b6uVf5H0vKo3StoVByZyLD
+ H77l8oSSSnDSIbdnFJkUVHO30xygSfRytKZT6LvncZTyuGIaIczzvHy/X+wNczLtqZCbjFHtdzC
+ DHKKQC54xT9molCUM7NCB4zrjgU6Q9952X64XIT7Wjd1Q==
+Received-SPF: pass client-ip=46.105.38.145; envelope-from=clg@kaod.org;
+ helo=12.mo534.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,162 +141,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Apr 2026 at 16:49, Stefano Garzarella <sgarzare@redhat.com> wrot=
-e:
->
-> Thanks for starting the discussion here, let me add also Hanna, German,
-> and Stefan in CC that can help us.
->
-> On Fri, Apr 10, 2026 at 07:12:05PM -0700, Jorge E. Moreira wrote:
-> >Migration of back-end state happens while the device is suspended (i.e
-> >all vrings are stopped). To resume normal operation on the destination,
-> >the vrings need to be started again with a kick (either a write on the
-> >FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
->
-> It's true that in the spec we have:
->    "Each ring is initialized in a stopped and disabled state. The
->    back-end must start a ring upon receiving a kick (that is, detecting
->    that file descriptor is readable) on the descriptor specified by
->    VHOST_USER_SET_VRING_KICK or receiving the in-band message
->    VHOST_USER_VRING_KICK if negotiated, and stop a ring upon receiving
->    VHOST_USER_GET_VRING_BASE."
->
-> But IMO this applies when a driver is not yet loaded.
-> When we are migrating, the driver could be already loaded. So, in the
-> new device running in the destination, IMO we should consider the ring
-> already started or add some messages to tell to the device: "hey, the
-> device was already started, this is a migration and it's completed".
->
-> Sending a kick from the frontend, seems more an hack here.
->
-> That said, for example, in subprojects/libvhost-user/libvhost-user.c
-> IIUC the virtqueue is started when the SET_VRING_KICK is handled by
-> vu_set_vring_kick_exec(), but not sure how compliant it is.
->
-> >these notifications are typically sent by the driver, it has no reason
-> >to send them in the destination if it already sent them in the source as
-> >the driver is unaware that a migration took place. Therefore it should
-> >be the responsibility of the vhost-user front-end to ensure these vrings
-> >are started. This is particularly necessary for queues where data only
-> >flows from device to driver, such as those used by the vsock and input
-> >devices.
->
-> Exactly, so IMO we should not use the kick, but maybe add something new
-> or clarify what to do after the migration.
->
-> For example in the "Migrating back-end state" we have:
->    "Migrating device state involves transferring the state from one
->    back-end, called the source, to another back-end, called the
->    destination. After migration, the destination transparently resumes
->    operation without requiring the driver to re-initialize the device at
->    the VIRTIO level."
->
-> So, IMO we can use the VHOST_USER_SET_DEVICE_STATE_FD channel exactly to
-> inform the new device about the state: "there isn't any state to
-> transfer, but I notify you that the device was already initialized, so
-> the vrings can be started".
->
-> >
-> >This behavior is already used by some qemu vhost-user front-ends (e.g
-> >vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm).
->
-> I looked at vhost-user-blk frontend, but I don't see it. I mean I see
-> the code around the comment "/* Kick right away to begin processing
-> requests already in vring */" but that one IIUC was introduced more to
-> fix devices violating specs, so not sure it's a good example to follow:
->
-> commit 110b9463d5c820120c8311db79f55a64c9d81ebe
-> Author: Yongji Xie <elohimes@gmail.com>
-> Date:   Wed Jun 6 21:24:48 2018 +0800
->
->      vhost-user-blk: start vhost when guest kicks
->
->      Some old guests (before commit 7a11370e5: "virtio_blk: enable VQs ea=
-rly")
->      kick virtqueue before setting VIRTIO_CONFIG_S_DRIVER_OK. This violat=
-es
->      the virtio spec. But virtio 1.0 transitional devices support this be=
-haviour.
->      So we should start vhost when guest kicks in this case.
->
->      Signed-off-by: Yongji Xie <xieyongji@baidu.com>
->      Signed-off-by: Chai Wen <chaiwen@baidu.com>
->      Signed-off-by: Ni Xun <nixun@baidu.com>
->      Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->      Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->      Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
->
->
-> >Adding it to the vhost-user documentation makes it explicit that this
-> >strategy is permitted and suggest it to vhost-user front-end authors.
-> >Explicitly documenting it is necessary because vring kicks appear
-> >designed to originate in the driver, so having some originate in the
-> >front-end can be counterintuitive and cause developers to waste time
-> >looking for other alternatives or face pushback during code review.
->
-> As I pointed out in our discussion in
-> https://github.com/rust-vmm/vhost-device/pull/936
-> IMO we should use some in-band messages and not relaying on kicks that
-> should be used only by the driver to notify the device about new
-> available buffers.
->
-> That said, I agree that we need to clarify in the specifications exactly
-> what the backend and frontend should do after a migration to start
-> vrings if there is no need to exchange a state.
->
->
-> Any other opinion?
->
-> Thanks,
-> Stefano
->
-> >
-> >Signed-off-by: Jorge E. Moreira <jemoreira@google.com>
-> >---
-> > docs/interop/vhost-user.rst | 5 ++++-
-> > 1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> >diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-> >index 137c9f3669..ad5aba3430 100644
-> >--- a/docs/interop/vhost-user.rst
-> >+++ b/docs/interop/vhost-user.rst
-> >@@ -656,7 +656,10 @@ destination, following the usual protocol for estab=
-lishing a connection
-> > to a vhost-user back-end: This includes, for example, setting up memory
-> > mappings and kick and call FDs as necessary, negotiating protocol
-> > features, or setting the initial vring base indices (to the same value
-> >-as on the source side, so that operation can resume).
-> >+as on the source side, so that operation can resume). The vhost-user fr=
-ont-end
-> >+may also write to the kick FDs of vrings containing unused buffers or s=
-end
-> >+``VHOST_USER_VRING_KICK`` if negotiated to start those vrings in the de=
-stination
-> >+since the driver likely already kicked them in the source and won't do =
-it again.
+On 4/20/26 07:56, Jamin Lin wrote:
+> Hi Peter, Philippe, Cédric
+> 
+>> Subject: Re: [PATCH v3 06/17] hw/usb/hcd-ehci: Change descriptor addresses to
+>> 64-bit
+>>
+>> On Fri, Apr 17, 2026 at 09:01:34AM +0200, Cédric Le Goater wrote:
+>>> + Peter, Fabiano,
+>>>
+>>> On 4/16/26 03:49, Jamin Lin wrote:
+>>>> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
+>>>>
+>>>> The following fields are updated:
+>>>> - EHCIPacket::qtdaddr
+>>>> - EHCIQueue::{qhaddr, qtdaddr}
+>>>> - EHCIState::{a_fetch_addr, p_fetch_addr}
+>>>>
+>>>> Update get_dwords() and put_dwords() to take 64-bit addresses and
+>>>> propagate the type change through the descriptor traversal paths.
+>>>>
+>>>> Adjust NLPTR_GET() to operate on 64-bit values:
+>>>>
+>>>>       #define NLPTR_GET(x) ((x) & ~0x1fULL)
+>>>>
+>>>> so that link pointer masking works correctly when descriptor
+>>>> addresses exceed 32-bit space. The previous mask (0xffffffe0)
+>>>> implicitly truncated addresses to 32 bits.
+>>>>
+>>>> This patch does not change the on-wire descriptor layout yet.
+>>>> It only removes the internal 32-bit address limit and prepares for
+>>>> later patches that will add full 64-bit QH/qTD/iTD/siTD support.
+>>>>
+>>>> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD
+>>>> to use uint64_t for the address argument and print it with PRIx64.
+>>>> This ensures full 64-bit addresses are shown in trace output and
+>>>> improves debugging of queue heads and transfer descriptors.
+>>>>
+>>>> Migration compatibility:
+>>>>
+>>>> The fetch address fields in EHCIState are extended from 32-bit to
+>>>> 64-bit, requiring a VMState version bump (v2 -> v3).
+>>>>
+>>>> Backward compatibility is preserved by keeping the legacy 32-bit
+>>>> fields (a_fetch_addr_pre_v3, p_fetch_addr_pre_v3) for pre-v3
+>>>> migration streams via VMSTATE_UINT32_TEST(), and introducing new
+>>>> 64-bit fields for v3+.
+>>>>
+>>>> In post_load, pre-v3 state is promoted to the 64-bit fields.
+>>>
+>>> Since ehci is supported by downstream, I'd prefer that the migration
+>>> maintainers also verify the implementation.
+>>
+>> Thanks, I'll only look at the migration bits.
+>>
+>> [...]
+>>
+>>>> @@ -2441,6 +2445,11 @@ static int usb_ehci_post_load(void *opaque, int
+>> version_id)
+>>>>            }
+>>>>        }
+>>>> +    if (version_id < 3) {
+>>>> +        s->a_fetch_addr = s->a_fetch_addr_pre_v3;
+>>>> +        s->p_fetch_addr = s->p_fetch_addr_pre_v3;
+>>>> +    }
+>>>> +
+>>>>        return 0;
+>>>>    }
+>>>> @@ -2470,9 +2479,14 @@ static void usb_ehci_vm_state_change(void
+>> *opaque, bool running, RunState state)
+>>>>        }
+>>>>    }
+>>>> +static bool ehci_core_is_before_version_3(void *opaque, int
+>>>> +version_id) {
+>>>> +    return version_id < 3;
+>>>> +}
+>>>> +
+>>>>    const VMStateDescription vmstate_ehci = {
+>>>>        .name        = "ehci-core",
+>>>> -    .version_id  = 2,
+>>>> +    .version_id  = 3,
+>>>>        .minimum_version_id  = 1,
+>>>>        .pre_save    = usb_ehci_pre_save,
+>>>>        .post_load   = usb_ehci_post_load,
+>>>> @@ -2501,8 +2515,12 @@ const VMStateDescription vmstate_ehci = {
+>>>>            /* schedule state */
+>>>>            VMSTATE_UINT32(astate, EHCIState),
+>>>>            VMSTATE_UINT32(pstate, EHCIState),
+>>>> -        VMSTATE_UINT32(a_fetch_addr, EHCIState),
+>>>> -        VMSTATE_UINT32(p_fetch_addr, EHCIState),
+>>>> +        VMSTATE_UINT32_TEST(a_fetch_addr_pre_v3, EHCIState,
+>>>> +                            ehci_core_is_before_version_3),
+>>>> +        VMSTATE_UINT32_TEST(p_fetch_addr_pre_v3, EHCIState,
+>>>> +                            ehci_core_is_before_version_3),
+>>>> +        VMSTATE_UINT64_V(a_fetch_addr, EHCIState, 3),
+>>>> +        VMSTATE_UINT64_V(p_fetch_addr, EHCIState, 3),
+>>
+>> TL;DR: I feel like we still need machine type compat properties.
+>>
+> 
+> I don't understand this: Could you please describe it in more detail?
+> 
+>> Details:
+>>
+>> When a v2 stream arrives, two _TEST()s will do the loading, then
+>> post_load() extend it to 64bits, looks fine.
+>>
+>> When a v3 stream arrives, two _TEST()s got skipped then latter two take effect.
+>> post_load() skips.  Looks fine.
+>>
+>> When migrating to another QEMU, due to the fact saving vmstates always take
+>> vmsd's version declared (3), I don't see how it can migrate back to a v2 stream;
+>> it didn't know about v3.
+>>
+>> Jiamin, have you tested migrating from a new QEMU binary back to another
+>> old one?  For upstream and serious devices, we need to guarantee
+>> bi-directional migrations, back and forth.
+>>
+> 
+> Sorry, I am not familiar with the design of QEMU migration, and I don't know how to test it.
+> I added these hook functions based on Philippe's suggestion and review.
+> Could you tell me how to test migration to ensure both version 3 and version 2 are workable?
 
-After discussing this with Hanna, we came to the conclusion that your
-idea of injecting the kick is the least invasive option for now and
-complies with the spec (even though I still don=E2=80=99t think it=E2=80=99=
-s a nice
-thing to do).
 
-So it=E2=80=99s fine to continue in this direction, but I might add these
-words more in the "Migration" section than here, since we=E2=80=99re talkin=
-g
-about an optional state migration here. For example after "No further
-update must be done before rings are restarted."
-Or in the "Ring states" section, where we can clarify how to restart a
-ring after a migration. Or in both :-)
+Migrating a running guest back and forth between QEMU [1] and [2]
+should be possible :
 
-WDYT?
+[1] path/to/qemu-10.2/install/bin/qemu-system-x86_64 -M pc-q35-10.2 \
+     ... \
+     -device usb-ehci \
+     -device usb-kbd
+      
+[2] path/to/myqemu-with-patches/install/bin/qemu-system-x86_64 -M pc-q35-10.2 \
+     ... \
+     -device usb-ehci \
+     -device usb-kbd
 
-Then instead of "may" I'd use "should". And I would refer to the fact
-that migration is transparent to the driver, so the front-end should
-kick all initialized vrings to comply with what we described in the
-"Ring states" section.
+This is required to guarantee forward and backward compatibility of
+QEMU pc-q35-10.2 machine instances.
 
-Thanks,
-Stefano
 
+
+C.
 
