@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A35BF557FE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAFDAF5580D
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEm68-0006vJ-2V; Mon, 20 Apr 2026 06:43:24 -0400
+	id 1wEm6h-0007bm-NJ; Mon, 20 Apr 2026 06:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm62-0006tu-RW
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:20 -0400
-Received: from p-west3-cluster5-host7-snip4-10.eps.apple.com ([57.103.72.13]
+ id 1wEm6d-0007Ll-R2
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:55 -0400
+Received: from p-west3-cluster6-host7-snip4-1.eps.apple.com ([57.103.75.44]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm61-0000Yd-9h
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:18 -0400
+ id 1wEm6c-0000gd-BR
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:55 -0400
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPS id
- 3E20F18000BF; Mon, 20 Apr 2026 10:43:14 +0000 (UTC)
+ 4AC8E1800153; Mon, 20 Apr 2026 10:43:51 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776681796; x=1779273796;
- bh=Dqy8GVOg6Vy5Bj3rQXQsRJvMspD1oQZRo/6wY+UsQGM=;
+ s=sig1; t=1776681833; x=1779273833;
+ bh=Sw+c1/Szq2U+GFUwZJhzpKe2Oxhd+T8qz2/AUdFCjpA=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=MTjclywa8EtPxqcnPTCarbM9eQbGRsNC7jwOrYiKcpCXRau/JXMwmg3vQB44+A8iBwYCphvTZtXBrR/ATc3NxyPFpGRKtCx4wFypUnONJDBP8iX9VIKJrvCplBiOdzVyzMg3E8sanHsd2ynbXldDMW4tWK7kUV8MPmrYtB/+NmPylUZVCUcF2yParUpmBFGF6DXE7Y63e60GxV+t+Lx7GTTfZWdkAl90gcLR2Gcp8Qo9AmHR9q2nkHkDSV5i2nWpmgb6FxDRNeW4poNhZIlzSaZXVbkk/RTZw0CVvxz0ejS5BAUgiSBKh9n0+7KaPJDaVjreE5wiyG8FFcFJIamzpQ==
+ b=B+pp0bXZBdoi9Tun0jHDKvLCzgiRbAviydrZ0/fwZ3GFLunizE0eh8VkQL0GAcsTsJUtEcr/uOC8CfChhDiHHGz05h5qf9k89DzNYqe8PUai3cdxXtF2mLRR5HoiH/ZFhRaETmvVlnYF5NoO/120vb+oZKAEmhqpl9wh29LIMSw0i2Hhgv2OYljhSSPJvc4svrFkA/fQT0GHJDkxXOreLsKkkKNeKjk+H5kmrSrQItGZLg2N5s73fSnImFg3+b15IF8UcP/Wp1Hd2Z1cWkHeqfnsDguVZyjabE5nPw5v8qVMcQlzCOI/fPCHs8qGyrR3BTP3bDrEZ/q9TR+AgESE7A==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.154.37])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPSA id
- 74CB1180045A; Mon, 20 Apr 2026 10:43:11 +0000 (UTC)
+ A2D631800EC1; Mon, 20 Apr 2026 10:43:48 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -43,42 +43,41 @@ Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 08/38] whpx: i386: kernel-irqchip=off fixes
-Date: Mon, 20 Apr 2026 12:42:18 +0200
-Message-ID: <20260420104248.86702-9-mohamed@unpredictable.fr>
+Subject: [PATCH v2 23/38] whpx: i386: one more CPUID
+Date: Mon, 20 Apr 2026 12:42:33 +0200
+Message-ID: <20260420104248.86702-24-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260420104248.86702-1-mohamed@unpredictable.fr>
 References: <20260420104248.86702-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfXx9aIsiqqI6lN
- ADEtxzJT/hu8yMPBS/hZjHW4R2CmsdfPKSy1RDJxxd32DER2u3wyMEDn9OFvhhkOL2mqrbzKYBo
- nX8y7pcJmDz4sCh4Z2seeMJjK9LBdVkE4Xad/50lM0JxggTMRWnUFuCFdDN/ldcnBcsv3kP7Ciw
- gtxKXJ/onHCzLXh+7Jt5GOBAua6nsr24jsCDiNjUvDAkFSKF24dZB8RplUVgpRedLwTaXyjKLlb
- ijhu2A/rfV5bUaOR44/AyrwmgIAjyrsX/OX/7QwZxgRAh/+Xv2TkAyrG+iE8OEWGOEo8+jBmqG1
- pMZOavYDvxrV5NcVAEfF7ioXS0pXVEhNYTUHwz9gf6TO0lupzkAjSkSTmLkNdU=
-X-Authority-Info-Out: v=2.4 cv=Z+zh3XRA c=1 sm=1 tr=0 ts=69e60343
+X-Proofpoint-ORIG-GUID: TB9HfKJq5B6oZnLys3hsxi-hPRL35pjp
+X-Proofpoint-GUID: TB9HfKJq5B6oZnLys3hsxi-hPRL35pjp
+X-Authority-Info-Out: v=2.4 cv=d7D4CBjE c=1 sm=1 tr=0 ts=69e60367
  cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=gP1GEkNOX-MqffGxZ4oA:9
-X-Proofpoint-ORIG-GUID: urpzqvhhtQKdSFRZTyFW5-ZcPxvVL6c_
-X-Proofpoint-GUID: urpzqvhhtQKdSFRZTyFW5-ZcPxvVL6c_
+ a=VkNPw1HP01LnGYTKEx00:22 a=zJD0qBlfmizEQV4F3ZsA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfX+vkFGbyzu0Xz
+ 4yweAC2jiJUJpco9tegdk2kkdrI/AZ/UzzPD7cRPvFtFnlzOYBTyYWa3PsXTfQGyFUIl+AbRRjg
+ Fi4BPxaCp+qGHRfMGzt0sg5wCIOZ1SsK8yq7HlISeaYVUpylzappXHoY8jxFZBxGlA4E97fDej4
+ evnXUwZutDJlzfJw9LIJ6ZRgK/zTy9W9eClUdqF8XvjB9RM8/M1WthTf1nNQnbpGQbYgPivMmcs
+ ft7dskEgXn7pSLBjYboe/Oinq5hfdeX5HlYh8dEQB2LbDW+6rgQgulh64Qwag0QHKwkRzs9hHCN
+ DPwZvbDqg5Uoo6g7mCAMsoZcrhs5MgO7rCJ44DTzL8j5uZBK9JCnhm+s+JUe+Y=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxlogscore=999 spamscore=0 phishscore=0 clxscore=1030 adultscore=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=821
+ adultscore=0 clxscore=1030 suspectscore=0 mlxscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2604200104
-Received-SPF: pass client-ip=57.103.72.13;
+Received-SPF: pass client-ip=57.103.75.44;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,123 +93,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This was really... quite broken. After fixing this,
-Windows boots with kernel-irqchip=off.
+Trap cpuid_0xb as it has x2APIC topology information.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- include/system/whpx-common.h |  1 +
- target/i386/whpx/whpx-all.c  | 43 +++++-------------------------------
- 2 files changed, 7 insertions(+), 37 deletions(-)
+ target/i386/whpx/whpx-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
-index 04289afd97..3406c20fec 100644
---- a/include/system/whpx-common.h
-+++ b/include/system/whpx-common.h
-@@ -4,6 +4,7 @@
- 
- struct AccelCPUState {
-     bool window_registered;
-+    int window_priority;
-     bool interruptable;
-     bool ready_for_pic_interrupt;
-     uint64_t tpr;
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 53b59a98b9..1d99003a4a 100644
+index 4dc4030d87..5c2a9bb8ad 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -22,6 +22,8 @@
- #include "qemu/main-loop.h"
- #include "hw/core/boards.h"
- #include "hw/intc/ioapic.h"
-+#include "hw/intc/i8259.h"
-+#include "hw/i386/x86.h"
- #include "hw/i386/apic_internal.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-@@ -371,28 +373,6 @@ static int whpx_set_tsc(CPUState *cpu)
-     return 0;
- }
+@@ -2527,7 +2527,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     WHV_PROCESSOR_FEATURES_BANKS processor_features;
+     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
  
--/*
-- * The CR8 register in the CPU is mapped to the TPR register of the APIC,
-- * however, they use a slightly different encoding. Specifically:
-- *
-- *     APIC.TPR[bits 7:4] = CR8[bits 3:0]
-- *
-- * This mechanism is described in section 10.8.6.1 of Volume 3 of Intel 64
-- * and IA-32 Architectures Software Developer's Manual.
-- *
-- * The functions below translate the value of CR8 to TPR and vice versa.
-- */
--
--static uint64_t whpx_apic_tpr_to_cr8(uint64_t tpr)
--{
--    return tpr >> 4;
--}
--
--static uint64_t whpx_cr8_to_apic_tpr(uint64_t cr8)
--{
--    return cr8 << 4;
--}
--
- void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     struct whpx_state *whpx = &whpx_global;
-@@ -421,7 +401,7 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-     v86 = (env->eflags & VM_MASK);
-     r86 = !(env->cr[0] & CR0_PE_MASK);
- 
--    vcpu->tpr = whpx_apic_tpr_to_cr8(cpu_get_apic_tpr(x86_cpu->apic_state));
-+    vcpu->tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
-     vcpu->apic_base = cpu_get_apic_base(x86_cpu->apic_state);
- 
-     idx = 0;
-@@ -692,17 +672,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-                      hr);
-     }
- 
--    if (whpx_irqchip_in_kernel()) {
--        /*
--         * Fetch the TPR value from the emulated APIC. It may get overwritten
--         * below with the value from CR8 returned by
--         * WHvGetVirtualProcessorRegisters().
--         */
--        whpx_apic_get(x86_cpu->apic_state);
--        vcpu->tpr = whpx_apic_tpr_to_cr8(
--            cpu_get_apic_tpr(x86_cpu->apic_state));
--    }
--
-     idx = 0;
- 
-     /* Indexes for first 16 registers match between HV and QEMU definitions */
-@@ -751,7 +720,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     tpr = vcxt.values[idx++].Reg64;
-     if (tpr != vcpu->tpr) {
-         vcpu->tpr = tpr;
--        cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(tpr));
-+        cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
-     }
- 
-     /* 8 Debug Registers - Skipped */
-@@ -1690,7 +1659,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
-      }
- 
-     /* Sync the TPR to the CR8 if was modified during the intercept */
--    tpr = whpx_apic_tpr_to_cr8(cpu_get_apic_tpr(x86_cpu->apic_state));
-+    tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
-     if (tpr != vcpu->tpr) {
-         vcpu->tpr = tpr;
-         reg_values[reg_count].Reg64 = tpr;
-@@ -1737,7 +1706,7 @@ static void whpx_vcpu_post_run(CPUState *cpu)
-     if (vcpu->tpr != tpr) {
-         vcpu->tpr = tpr;
-         bql_lock();
--        cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(vcpu->tpr));
-+        cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
-         bql_unlock();
-     }
- 
+-    UINT32 cpuidExitList[] = {0x0, 0x1, 0x6, 0x7, 0x14, 0x24, 0x29, 0x1E,
++    UINT32 cpuidExitList[] = {0x0, 0x1, 0x6, 0x7, 0xb, 0x14, 0x24, 0x29, 0x1E,
+         0x40000000, 0x40000001, 0x40000010, 0x80000000, 0x80000001,
+         0x80000002, 0x80000003, 0x80000004, 0x80000007, 0x80000008,
+         0x8000000A, 0x80000021, 0x80000022, 0xC0000000, 0xC0000001};
 -- 
 2.50.1 (Apple Git-155)
 
