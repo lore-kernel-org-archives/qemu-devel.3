@@ -4,96 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19500F5A8C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 21:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDA4F5A8C7
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 21:34:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEw1p-0003sa-MC; Mon, 20 Apr 2026 17:19:37 -0400
+	id 1wEwFD-0005o7-3g; Mon, 20 Apr 2026 17:33:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wEw1n-0003qD-UZ
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 17:19:35 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wEviH-00080S-5r
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:59:25 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wEw1m-00070H-G7
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 17:19:35 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c76b9efc299so1347594a12.0
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 14:19:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wEviE-0000RY-MY
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:59:24 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5a40d02b58bso3183714e87.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 13:59:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776718757; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MCsLZB2+uAWqO0zbC4SfqJ3p7A9tmWblKsbSP6aLateqAPkiUjhVCUWImVvMDYXILW
+ PH8uisFzHVlDJNsFVDmdp6RsYiFnz6hRJy1ccRmmFhGyWeA0Y8pgZFqXakWvw4LYBPhX
+ M8uEbVt0SG0Vb+0/YcsscoW2GpCMDTJOVEeFTrEEM1JRQcfoSfvZB/cVwPR84xzNZ3SP
+ 1nUXS3sbrQ8LS4GnTJpF2BbejwuawD9bZ/4aIQuWaGMt+jMsDNYDeob28K3hFhyBrmNJ
+ LGLIaqUutOHTzGAFL8/lp8bH3XSbkLeGaJ4zOAdTA6VSeLeL1yDheYUPALluqqGs394H
+ Gx9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3Hbo4lhV8KQv9BBnat4jcnFf+MxiN/zXPKwHWPMPZI4=;
+ fh=MKfvnBSFAo1lRO8aAhRbzRExhIFiMgvzar7P+wAD6SM=;
+ b=XSyO3th6VDsaMnG7GnkTQJAsOE8vmtXOVeG1osI3C/Y5DcR+XPsQ3MLarbKD419qZc
+ pYPW51Z8nAA+P5r/udb7rTnnf28QEPHCyNKTCa57wDvEWpWQneVOxaN9RpaUpgFGUqrV
+ hs+A8Rxy8hpX1A0HMbIYXRgRRGukUGLKbwgNhT7+nSBISYZpjKToONkCeDUClOn8PVbs
+ rJOvbK6aliLBei4ibCAvMsBpLSF08JvbiCubwZWRro802Bus9mCO67wjzpZZOa0EjQAk
+ 8MXduEC51Pt1el68nj97/Lik7EN9RiXQAKOuz4pxsTSpS9wqmbqpC55CEyZREX64U6h9
+ c2ag==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776719973; x=1777324773; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4AwPcikX7nZl4Ety17yDKIrv0ejV11biieEs5qDjQ/w=;
- b=TtqC2io8e/8680eXTCyh7X8iqZUOhmFEpuWbl+unyFQZwhkWhIEWfcSkOFWQzWepfk
- qmu+PgJVszrAcQ9IvofgNO/ivBgXjmCD9Ru1ZO2OrL7Lx+npuKwUaozmQYm3KiJ67mnF
- JWVWrtxDI5AGyq/kKlMkpg5NlsJ4ZXRCcvlv0gJ8IlYS7e+stOBL2BtnpeAJdZuZSROY
- 1YLdOepGqMB9rMMceg2Ibu3mjKPikI1kE6DduTg7Y4O0CnSCvunUS4loJHnjrwO6orIY
- t/AFLi0I7od8OZ8nPiGjkuW2DfwEPhrMeZTDGV2FqYRx8wNnUcYZHk0lzCUxTdo1BzoR
- q9fw==
+ d=gmail.com; s=20251104; t=1776718757; x=1777323557; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3Hbo4lhV8KQv9BBnat4jcnFf+MxiN/zXPKwHWPMPZI4=;
+ b=IVhq5PjmFXFv26r9T/pMZfC4rq5ivohFqr1AkK83Auu3QXGAMbxfsBIYO+1XIoy97P
+ v+dpPnG6gb23b3V4Ai9Cdsa8UxlV7p93Z+H2UvUkGmaBKqGMPbnFAAYa9VLYeEAh9MG9
+ ozbvAIM/eMmyWI1FwZaNdftjAYvH+Aqxyh0VzEcGFIIy9xdcZr5123TghQoYlrLyBfao
+ atvp6TBYrjPtqUA18elQguxF59bs8RlLcbQSYGbLAvF7HITfNovvLZpEtqbKW1tmJGUW
+ qSmKo4ufExwvl1Pvce2X8iC9CokjugSf4pyIVHGu8CyOTr86LQuzrOY1e/U+Sa+q3PBX
+ WBZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776719973; x=1777324773;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4AwPcikX7nZl4Ety17yDKIrv0ejV11biieEs5qDjQ/w=;
- b=eiO7RVLOnT7ojGUJqXkkUxMIoH1Rz51r1197HZmLZaNugVBHQGWEJsOO2wgdvMrYKm
- gEVbuDV6I0aZCVYn221VRP0snZ9VQUrb9uXXL0wQ80lT0FZ1pPoZJ9IPCLWAyCgMmSe/
- C7yWg/8kOW4LLl7nQJqV1nb8n28H2rIP1GJinNihLcjscrL+GxfQI3enLGhOghhT7s35
- yrTZQfQbx7QG31v1f/b5os7haz80k4htaaRJEB8XDw30w4pPxiFHmSZifrmFPuu8WjdT
- tCoN4P5JccoGNB9fePyDjnhmrevsPG0qddB8dZ6iDutRcNAPPzp0W9b7NzAPHqj1XnFL
- lb1Q==
+ d=1e100.net; s=20251104; t=1776718757; x=1777323557;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3Hbo4lhV8KQv9BBnat4jcnFf+MxiN/zXPKwHWPMPZI4=;
+ b=XjPny7FHu2CzCqN3043P3Mud3Q9OwBjUIKhONk+DLvwS+Rt2uC5DGVQN8m1khz9Itb
+ EjJfIGwl1ZIW78CyQYI6orT+ud5gut4D/6cPHMr0XSq5MODAalCFHuaD1J/gDUX2F0DL
+ oyvn1MejfhzAdyJ/tHf628DszptmWqC/zUBrhcX5MC7khKyuDKPKFJ6eoaOpxfAxPp5F
+ AouiDAx8DiukGjowcgR+eLMUR+nds2iNybg/jI03UmTpQ8FOp1Vc71iOkdQMPog3tkfL
+ jKSisbXFuPkjfy16ncMZ+i/MMtyu4ew53AiEW7c4yNljhIcT8nzqUtZdOCHbNjLpOeE5
+ dN7A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+l1ZYbH8b1N5uBTEwoU0l1KxELuLU9XA4CsQzm7CtcKEJ6+rUY3ukIGMT7WVd1V/7lpJSfTyzmoXQu@nongnu.org
-X-Gm-Message-State: AOJu0YwvZ1Cdo5FtpDV/WEtO/8qNE+1tQx7RFrE9btIga1cL4AzW7PhE
- A8uA03RxKtlTVrCFTekUZfySRgAZU7Tok5wrn1e9o7ipQN6Yn6PUVdBnUVEouS0iZ+W0FBbSkkr
- 6jo4dAtA=
-X-Gm-Gg: AeBDievvbuECwNasY0oe8hi14qTUyCdr/dYpARrjQ5E8D5U+r/WrmHrytTf/uWQJE+J
- DV0WeGDFBSt7JzntjaZQ/wp9dPEKWqpu3ZoCEqPL9U6h+zFJ5MFTSwtKSCkQsSlzvDDet6osWvB
- vbO1nYxWcET7UMI7NS9X1XRrHVLmn6rO62coKn8d8pJK1KaKXZlWkFRaHWUe+VW766U/AeOrxqE
- j2zwNcgSgrSGL0121pUSvWpc+rE7/rnybDOJU2DyaCHhjAo5Qzrf7A501T5IGohmKtRJTX3nqHf
- +M+TOf2alJ1PieI5fWQaml6RwdM7ODP4PeGaAI/TQcIZQXD3y69OOcRodaHLQ9mx2ScPbGmxrw6
- 4a/dVBcmpRkffzA1Blr3DuJWNrJbU8blxbwwKnvSmlcsTnokn0xBhx6ikvjUuHPzt+PBBglsk7l
- KRDNn3aUAaUpIXdBdxyxNGKHqFviOYWJ/FegMsND4H8Lx0L3HOL6/g
-X-Received: by 2002:a05:6a21:9995:b0:39f:24a5:3065 with SMTP id
- adf61e73a8af0-3a08d68e9eamr17079431637.7.1776719972997; 
- Mon, 20 Apr 2026 14:19:32 -0700 (PDT)
-Received: from [192.168.10.140] ([180.233.125.15])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c797702faaesm8469799a12.23.2026.04.20.14.19.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2026 14:19:32 -0700 (PDT)
-Message-ID: <7859bec0-5455-443e-8dc3-ae741c04a24b@linaro.org>
-Date: Tue, 21 Apr 2026 07:19:26 +1000
+ AFNElJ9WF2e3E/wf7LaMoea5+3AC2OneNqhizaWySqMji+Q6LbUx0C+w4ym7r7OT4m3ygdsRCBqtIrMBT2fT@nongnu.org
+X-Gm-Message-State: AOJu0YxLbcYYfdNjmCWg4+vicrrZ4PEOf53UKkifRVaZir/lG0lQeuqr
+ nkuc6GNBZOS4LahdiAeG+PVnzWWGGfA2rO4OzyzBCgTm5wMpjDPZGZtZAF0R3LQs1B/DeZcBAxT
+ LfEY1VT4BQkpSr0wCT94fAXIwmTMw4Ck=
+X-Gm-Gg: AeBDiesYUbKXWcoRsBl4e49xBkejhmvmmaj9/IYLkb406Ata+JbamvWwxVzsArsiC6l
+ ucRlbECzY2Tk9jE+3vpEhkipZiuXYa2twTYiXVBtGGLkn5kjtudrW0Vo49tNTiPwtiTY9yfB8EM
+ HYt/RyapiqZ+t6gznpkWtKKALdUZtErppZA0XV15xA3nZmEn82tbxiT8yEC+gYUGB70z+3AtamX
+ FnSl+kB+nFhbNex44Bv93UVhQ3YHKcSm8J744PZW3f/hqkOCUm6Qv7foVc801a3j2ghZ6sUbUbt
+ j509kArGRVTDxns=
+X-Received: by 2002:a05:6512:3095:b0:5a3:d100:3c82 with SMTP id
+ 2adb3069b0e04-5a4172da106mr4943098e87.23.1776718757189; Mon, 20 Apr 2026
+ 13:59:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/4] target/mips: Remove last MO_TE use
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20260417042620.35329-1-philmd@linaro.org>
- <20260417042620.35329-5-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260417042620.35329-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260414025335.2847358-1-mattst88@gmail.com>
+ <20260416182527.3862296-1-mattst88@gmail.com>
+ <CAFEAcA9jbwdo=a5cE7PD=YKiBv9qtCTwA=YaE6pbFf6xww0ZvA@mail.gmail.com>
+In-Reply-To: <CAFEAcA9jbwdo=a5cE7PD=YKiBv9qtCTwA=YaE6pbFf6xww0ZvA@mail.gmail.com>
+From: Matt Turner <mattst88@gmail.com>
+Date: Mon, 20 Apr 2026 16:59:05 -0400
+X-Gm-Features: AQROBzBVIf8SA6i1AvpMp7XG2ZMs3s6VZM9X7hWcZddjleV-u9Hvj_EKWKAIKiI
+Message-ID: <CAEdQ38Feg8HE-1t-tgDWsvM4LqJvdcm2JMB75SGXVwTwPe-5iw@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/ppc: Fix ppc64 rt_sigframe stack offset
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=mattst88@gmail.com; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 20 Apr 2026 17:33:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,32 +122,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/26 14:26, Philippe Mathieu-Daudé wrote:
-> Unfortunately commit 54821ff6e90 ("target/mips: Convert mips16e
-> decr_and_load/store() macros to functions") got rebased on top
-> of commit 2803e24694c ("target/mips: Replace MO_TE by mo_endian")
-> and we missed the replacement. Fix that.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/mips16e_translate.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
-> index beb5b04ea29..e83587971d4 100644
-> --- a/target/mips/tcg/mips16e_translate.c.inc
-> +++ b/target/mips/tcg/mips16e_translate.c.inc
-> @@ -293,7 +293,7 @@ static void decr_and_load(DisasContext *ctx, unsigned regidx, TCGv t0)
->   
->       tcg_gen_movi_tl(t2, -4);
->       gen_op_addr_add(ctx, t0, t0, t2);
-> -    tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_TE | MO_SL |
-> +    tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, mo_endian(ctx) | MO_SL |
->                          ctx->default_tcg_memop_mask);
->       gen_store_gpr(t1, regidx);
->   }
+On Fri, Apr 17, 2026 at 4:41=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Thu, 16 Apr 2026 at 19:25, Matt Turner <mattst88@gmail.com> wrote:
+> >
+> > The kernel's 64-bit signal delivery (signal_64.c) uses:
+> >
+> >     newsp =3D frame - __SIGNAL_FRAMESIZE
+> >
+> > while the 32-bit path (signal_32.c) uses:
+> >
+> >     newsp =3D frame - (__SIGNAL_FRAMESIZE + 16)
+> >
+> > The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
+> > at the same offsets as older kernels (see the comment in signal_32.c).
+> > The 64-bit rt_sigframe starts with ucontext directly and does not need
+> > this adjustment.
+> >
+> > QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
+> > for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
+> > on ppc64. Signal delivery and return still worked because do_rt_sigretu=
+rn
+> > had the matching wrong offset, but the vDSO DWARF unwind info encodes
+> > the correct kernel offset. This caused any DWARF unwinder (libunwind,
+> > libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
+> > register values from the signal frame.
+> >
+> > Define RT_SIGFRAME_ADJUST (0 on ppc64, 16 on ppc32) and use it in both
+> > setup_rt_frame and do_rt_sigreturn to match the kernel.
+> >
+> > This was verified by A/B testing with libunwind's test suite:
+> >
+> >   ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
+> >            and Ltest-sig-context all change from FAIL to PASS.
+> >   ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
+> >            from FAIL to PASS.
+> >
+> > Signed-off-by: Matt Turner <mattst88@gmail.com>
+> > ---
+> >  linux-user/ppc/signal.c | 16 ++++++++++++++--
+> >  1 file changed, 14 insertions(+), 2 deletions(-)
+> >
+>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks!
 
-r~
+I sent this to Laurent Vivier <laurent@vivier.eu> since that's what
+`get_maintainer.pl` said, but I see that he hasn't committed this
+year. Should I wait on him, or can you see that this gets in?
+
+Also, I think this is probably worth including in the stable
+branch(es), so I've cc'd qemu-devel@nongnu.org.
+
+Matt
 
