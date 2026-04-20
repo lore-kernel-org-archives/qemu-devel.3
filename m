@@ -4,62 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88723F5A8B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57480F5A8BB
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEv78-00066o-QC; Mon, 20 Apr 2026 16:21:02 -0400
+	id 1wEv74-00064i-P7; Mon, 20 Apr 2026 16:20:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6w-00062y-VD
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:52 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1wEv6r-000609-AS
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6v-0006Pv-1E
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:50 -0400
+ id 1wEv6n-0006Na-QK
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:c00c:0:640:e0de:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B1048C01A6;
- Mon, 20 Apr 2026 23:20:46 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 3C000805E6;
+ Mon, 20 Apr 2026 23:20:39 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id XKYwe10MOSw0-UmE5yTsu; Mon, 20 Apr 2026 23:20:46 +0300
+ id XKYwe10MOSw0-ogOWU9hW; Mon, 20 Apr 2026 23:20:38 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776716446;
- bh=/0L3rgqe+s3MH2/dJRD+Myije+YjKlYqIVRA1C65utQ=;
+ s=default; t=1776716438;
+ bh=Lzt97Sdzbosd8ah6Nzek9EVLzTq2J3EisHziWG/rcKI=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=eBhZhPcWSfBfmDH3JGg3qfqyy0TCMFxJSrckjfxxglpEWalMn/OgrxeEPLFzBVmJj
- MgJS19jNUR5ctnRr+/W3RZNX++RHYt/abbWfulnrkwrEY2CtRAYb+xhmxUEEIAVLD3
- B9edHPMOr4ddTD38E3hWjdmNMSSHsjaqLxBnw9MU=
+ b=XR+dSqgGpUIrYdsHOhKA3LfQuQZcKSVFH8+ImEDL0EiVXTLY/vuyTyMC/KVrRHyIw
+ dufSZaQOwfQiv7ajQsQp5+o0GSUtR9KsVX8+4ZTBXpgL7HAgaU94iS7z7HsRvNPg/t
+ o3Dt8FL6Wk7tFPsLjyHzRcOsXiq0QW1IfMDVwpJY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
  d-tatianin@yandex-team.ru
-Subject: [PATCH v2 08/10] vhost: rename vring pointer fields to reflect user
- addresses
-Date: Mon, 20 Apr 2026 23:20:29 +0300
-Message-ID: <20260420202032.714884-9-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 02/10] vhost: use consistent naming for backend handlers
+Date: Mon, 20 Apr 2026 23:20:23 +0300
+Message-ID: <20260420202032.714884-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 References: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,133 +73,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename vq->desc/avail/used to vq->desc_user/avail_user/used_user to
-clearly indicate these fields contain user space addresses, not
-physical addresses.
+Most of handlers start from simply .vhost_, except for these
+four, starting from .vhost_backend_. Let's rename them to be
+consistent.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/vhost.c         | 37 +++++++++++++++++++------------------
- include/hw/virtio/vhost.h |  6 +++---
- 2 files changed, 22 insertions(+), 21 deletions(-)
+ hw/virtio/vhost-backend.c         |  6 +++---
+ hw/virtio/vhost-user.c            |  8 ++++----
+ hw/virtio/vhost-vdpa.c            |  6 +++---
+ hw/virtio/vhost.c                 | 14 +++++++-------
+ include/hw/virtio/vhost-backend.h | 17 ++++++++---------
+ 5 files changed, 25 insertions(+), 26 deletions(-)
 
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index fea88afc39a..caeadd069b0 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -358,9 +358,9 @@ static void vhost_kernel_set_iotlb_callback(struct vhost_dev *dev,
+ 
+ const VhostOps kernel_ops = {
+         .backend_type = VHOST_BACKEND_TYPE_KERNEL,
+-        .vhost_backend_init = vhost_kernel_init,
+-        .vhost_backend_cleanup = vhost_kernel_cleanup,
+-        .vhost_backend_memslots_limit = vhost_kernel_memslots_limit,
++        .vhost_init = vhost_kernel_init,
++        .vhost_cleanup = vhost_kernel_cleanup,
++        .vhost_memslots_limit = vhost_kernel_memslots_limit,
+         .vhost_net_set_backend = vhost_kernel_net_set_backend,
+         .vhost_scsi_set_endpoint = vhost_kernel_scsi_set_endpoint,
+         .vhost_scsi_clear_endpoint = vhost_kernel_scsi_clear_endpoint,
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 6978d8ee947..78ffb25d6b1 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -3115,10 +3115,10 @@ void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
+ 
+ const VhostOps user_ops = {
+         .backend_type = VHOST_BACKEND_TYPE_USER,
+-        .vhost_backend_init = vhost_user_backend_init,
+-        .vhost_backend_cleanup = vhost_user_backend_cleanup,
+-        .vhost_backend_memslots_limit = vhost_user_memslots_limit,
+-        .vhost_backend_no_private_memslots = vhost_user_no_private_memslots,
++        .vhost_init = vhost_user_backend_init,
++        .vhost_cleanup = vhost_user_backend_cleanup,
++        .vhost_memslots_limit = vhost_user_memslots_limit,
++        .vhost_no_private_memslots = vhost_user_no_private_memslots,
+         .vhost_set_log_base = vhost_user_set_log_base,
+         .vhost_set_mem_table = vhost_user_set_mem_table,
+         .vhost_set_vring_addr = vhost_user_set_vring_addr,
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 9c7634e2439..93474624898 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -1590,8 +1590,8 @@ static bool  vhost_vdpa_force_iommu(struct vhost_dev *dev)
+ 
+ const VhostOps vdpa_ops = {
+         .backend_type = VHOST_BACKEND_TYPE_VDPA,
+-        .vhost_backend_init = vhost_vdpa_init,
+-        .vhost_backend_cleanup = vhost_vdpa_cleanup,
++        .vhost_init = vhost_vdpa_init,
++        .vhost_cleanup = vhost_vdpa_cleanup,
+         .vhost_set_log_base = vhost_vdpa_set_log_base,
+         .vhost_set_vring_addr = vhost_vdpa_set_vring_addr,
+         .vhost_set_vring_num = vhost_vdpa_set_vring_num,
+@@ -1602,7 +1602,7 @@ const VhostOps vdpa_ops = {
+         .vhost_get_features = vhost_vdpa_get_features,
+         .vhost_set_owner = vhost_vdpa_set_owner,
+         .vhost_set_vring_endian = NULL,
+-        .vhost_backend_memslots_limit = vhost_vdpa_memslots_limit,
++        .vhost_memslots_limit = vhost_vdpa_memslots_limit,
+         .vhost_set_mem_table = vhost_vdpa_set_mem_table,
+         .vhost_set_features = vhost_vdpa_set_features,
+         .vhost_reset_device = vhost_vdpa_reset_device,
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6bb6b07e190..e3d452a7637 100644
+index 4d42f8bda41..ffd7d404cc7 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -489,11 +489,11 @@ static void vhost_vrings_unmap(struct vhost_dev *dev,
-         return;
-     }
+@@ -58,7 +58,7 @@ unsigned int vhost_get_max_memslots(void)
+     struct vhost_dev *hdev;
  
--    vhost_memory_unmap(dev, &vq->used, vq->used_size, touched,
-+    vhost_memory_unmap(dev, &vq->used_user, vq->used_size, touched,
-                        touched ? vq->used_size : 0);
--    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0,
-+    vhost_memory_unmap(dev, &vq->avail_user, vq->avail_size, 0,
-                        touched ? vq->avail_size : 0);
--    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0,
-+    vhost_memory_unmap(dev, &vq->desc_user, vq->desc_size, 0,
-                        touched ? vq->desc_size : 0);
+     QLIST_FOREACH(hdev, &vhost_devices, entry) {
+-        max = MIN(max, hdev->vhost_ops->vhost_backend_memslots_limit(hdev));
++        max = MIN(max, hdev->vhost_ops->vhost_memslots_limit(hdev));
+     }
+     return max;
  }
+@@ -69,7 +69,7 @@ unsigned int vhost_get_free_memslots(void)
+     struct vhost_dev *hdev;
  
-@@ -504,13 +504,13 @@ static int vhost_vrings_map(struct vhost_dev *dev,
- {
-     vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
-     vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
--    vq->desc = NULL;
-+    vq->desc_user = NULL;
-     vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
-     vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
--    vq->avail = NULL;
-+    vq->avail_user = NULL;
-     vq->used_size = virtio_queue_get_used_size(vdev, idx);
-     vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
--    vq->used = NULL;
-+    vq->used_user = NULL;
+     QLIST_FOREACH(hdev, &vhost_devices, entry) {
+-        unsigned int r = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
++        unsigned int r = hdev->vhost_ops->vhost_memslots_limit(hdev);
+         unsigned int cur_free = r - hdev->mem->nregions;
  
-     if (vq->desc_phys == 0) {
-         /* Queue might not be ready for start */
-@@ -521,16 +521,17 @@ static int vhost_vrings_map(struct vhost_dev *dev,
-         return 1;
-     }
+         if (unlikely(r < hdev->mem->nregions)) {
+@@ -664,8 +664,8 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
+          */
+         if ((memory_region_get_fd(section->mr) < 0 ||
+             !qemu_ram_is_shared(section->mr->ram_block)) &&
+-            dev->vhost_ops->vhost_backend_no_private_memslots &&
+-            dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
++            dev->vhost_ops->vhost_no_private_memslots &&
++            dev->vhost_ops->vhost_no_private_memslots(dev)) {
+             trace_vhost_reject_section(mr->name, 2);
+             return false;
+         }
+@@ -1674,7 +1674,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     r = vhost_set_backend_type(hdev, backend_type);
+     assert(r >= 0);
  
--    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
--    if (!vq->desc) {
-+    vq->desc_user = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
-+    if (!vq->desc_user) {
+-    r = hdev->vhost_ops->vhost_backend_init(hdev, opaque, errp);
++    r = hdev->vhost_ops->vhost_init(hdev, opaque, errp);
+     if (r < 0) {
          goto fail;
      }
--    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
--    if (!vq->avail) {
-+    vq->avail_user = vhost_memory_map(dev, vq->avail_phys, vq->avail_size,
-+                                      false);
-+    if (!vq->avail_user) {
-         goto fail;
-     }
--    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
--    if (!vq->used) {
-+    vq->used_user = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
-+    if (!vq->used_user) {
+@@ -1691,7 +1691,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
          goto fail;
      }
  
-@@ -594,7 +595,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j = 0;
-         r = vhost_verify_ring_part_mapping(
--                vq->desc, vq->desc_phys, vq->desc_size,
-+                vq->desc_user, vq->desc_phys, vq->desc_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -602,7 +603,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j++;
-         r = vhost_verify_ring_part_mapping(
--                vq->avail, vq->avail_phys, vq->avail_size,
-+                vq->avail_user, vq->avail_phys, vq->avail_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -610,7 +611,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j++;
-         r = vhost_verify_ring_part_mapping(
--                vq->used, vq->used_phys, vq->used_size,
-+                vq->used_user, vq->used_phys, vq->used_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -1106,9 +1107,9 @@ static int vhost_virtqueue_set_addr(struct vhost_dev *dev,
-         addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
-         addr.used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
-     } else {
--        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc;
--        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail;
--        addr.used_user_addr = (uint64_t)(unsigned long)vq->used;
-+        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc_user;
-+        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_user;
-+        addr.used_user_addr = (uint64_t)(unsigned long)vq->used_user;
+-    limit = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
++    limit = hdev->vhost_ops->vhost_memslots_limit(hdev);
+     if (limit < MEMORY_DEVICES_SAFE_MAX_MEMSLOTS &&
+         memory_devices_memslot_auto_decision_active()) {
+         error_setg(errp, "some memory device (like virtio-mem)"
+@@ -1809,7 +1809,7 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+     g_free(hdev->mem);
+     g_free(hdev->mem_sections);
+     if (hdev->vhost_ops) {
+-        hdev->vhost_ops->vhost_backend_cleanup(hdev);
++        hdev->vhost_ops->vhost_cleanup(hdev);
      }
-     addr.index = idx;
-     addr.log_guest_addr = vq->used_phys;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index b292e9f0fed..684bafcaadd 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -24,9 +24,9 @@ struct vhost_inflight {
- struct vhost_virtqueue {
-     int kick;
-     int call;
--    void *desc;
--    void *avail;
--    void *used;
-+    void *desc_user;
-+    void *avail_user;
-+    void *used_user;
-     int num;
-     unsigned long long desc_phys;
-     unsigned desc_size;
+     assert(!hdev->log);
+ 
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index 57497e197aa..aab6bf3ef7e 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -51,10 +51,9 @@ struct vhost_scsi_target;
+ struct vhost_iotlb_msg;
+ struct vhost_virtqueue;
+ 
+-typedef int (*vhost_backend_init)(struct vhost_dev *dev, void *opaque,
+-                                  Error **errp);
+-typedef int (*vhost_backend_cleanup)(struct vhost_dev *dev);
+-typedef int (*vhost_backend_memslots_limit)(struct vhost_dev *dev);
++typedef int (*vhost_init)(struct vhost_dev *dev, void *opaque, Error **errp);
++typedef int (*vhost_cleanup)(struct vhost_dev *dev);
++typedef int (*vhost_memslots_limit)(struct vhost_dev *dev);
+ 
+ typedef int (*vhost_net_set_backend_op)(struct vhost_dev *dev,
+                                 struct vhost_vring_file *file);
+@@ -131,7 +130,7 @@ typedef int (*vhost_crypto_create_session_op)(struct vhost_dev *dev,
+ typedef int (*vhost_crypto_close_session_op)(struct vhost_dev *dev,
+                                              uint64_t session_id);
+ 
+-typedef bool (*vhost_backend_no_private_memslots_op)(struct vhost_dev *dev);
++typedef bool (*vhost_no_private_memslots_op)(struct vhost_dev *dev);
+ 
+ typedef int (*vhost_get_inflight_fd_op)(struct vhost_dev *dev,
+                                         uint16_t queue_size,
+@@ -166,10 +165,10 @@ typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
+ 
+ typedef struct VhostOps {
+     VhostBackendType backend_type;
+-    vhost_backend_init vhost_backend_init;
+-    vhost_backend_cleanup vhost_backend_cleanup;
+-    vhost_backend_memslots_limit vhost_backend_memslots_limit;
+-    vhost_backend_no_private_memslots_op vhost_backend_no_private_memslots;
++    vhost_init vhost_init;
++    vhost_cleanup vhost_cleanup;
++    vhost_memslots_limit vhost_memslots_limit;
++    vhost_no_private_memslots_op vhost_no_private_memslots;
+     vhost_net_set_backend_op vhost_net_set_backend;
+     vhost_net_set_mtu_op vhost_net_set_mtu;
+     vhost_scsi_set_endpoint_op vhost_scsi_set_endpoint;
 -- 
 2.52.0
 
