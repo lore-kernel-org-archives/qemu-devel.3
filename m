@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE19FA1FD0
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 16:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51E3FA1FC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 16:31:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFaK7-000360-Eu; Wed, 22 Apr 2026 12:21:11 -0400
+	id 1wFaT9-00057v-UX; Wed, 22 Apr 2026 12:30:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFaK6-00035E-9T
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:21:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
+ id 1wFaT5-00057I-Fl
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:30:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFaK4-0000QL-AH
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:21:10 -0400
+ (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
+ id 1wFaT3-0003Kx-Sh
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:30:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776874867;
+ s=mimecast20190719; t=1776875422;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=D3oZ+nvxWZxC+L1bBsE3B1EU3wg6dfaeSq3qR93WOyk=;
- b=YxbpbiYXkHWjsW+ayvba/kht741+yZuqAGb0SywiOvV/GFbVKMNrRx5Dr+Em+ueoiv+pym
- jd2HTlrIurjF7PDDCTSaQ6Zrf3vWIF003B/P/vZYbbF/rItxTVefCpWarI1r/m+mVd6VeS
- mF6dfgx7ioLWzpEGaIGz/HV71UelVt8=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-483-0YbGGXqhPq22ucQQ96TtIg-1; Wed, 22 Apr 2026 12:21:04 -0400
-X-MC-Unique: 0YbGGXqhPq22ucQQ96TtIg-1
-X-Mimecast-MFC-AGG-ID: 0YbGGXqhPq22ucQQ96TtIg_1776874864
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8acadca1ac4so165862176d6.0
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 09:21:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776874864; x=1777479664; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=D3oZ+nvxWZxC+L1bBsE3B1EU3wg6dfaeSq3qR93WOyk=;
- b=KJTQktGRpwTnOeNsueISKJpI9soaamMEWx6EkNBEKJOnZ7ol5fX0neiJ+NS7jGjV+n
- 9iDJ3IfCi8PrFxHR3wsChqI+9mlezEPehgy+K6hyGNCxNidYbIGbsMFv/u2ALyuC17lP
- GhPpxsX3V9jm66htBhIrHYAtDny/V1av7s6LDdsV31Jg55fc6gethgZaBrokMzxHUifW
- J5TCow1G2FPctDODH8KypbHpMXOuNS/ZXDCzuJ4rg4glp3kLfTA93lx8Gg7A5/itWMvY
- 6JfnmM5NeYWYxyMSQXGLwkZujfeRcirRohvBQ4aujavDAqoEwKuvAtxiqGkZR/goSzEX
- TQww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776874864; x=1777479664;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=D3oZ+nvxWZxC+L1bBsE3B1EU3wg6dfaeSq3qR93WOyk=;
- b=BmIv3/FUA80S6r54+L4NueQ8DJzsMKEgSFER36WpPzb7FyxKFnCFvJGwywlBdzoVKV
- SL+zuA1idQ3s5cc6Veizv/lzsRv1ZN4pli0tU+e7U6g0Alwx0DnMAVUO/G9CRDuOfKjE
- 6b5axOUT+fDVeiGGkGAWYgNe/p/+lV/duwRhIa9SPjXKVC+M+eFdoQq2S8XC4kfX1KOJ
- 2M+53JfKZPUzfGw7zM/1y/d0qnMJIg2EbxTiaIirw4Pe6X9+Mxb49yet6bYq5xcCQ4ku
- HAt2We7qeI/0dXNc5CpEveaDN6wHM9D8sZE9tFObwFT4/HFFBMR6P5NjTrWZ2zZazrQp
- C8mA==
-X-Gm-Message-State: AOJu0YwipxfMKMPM4s/tR/bHyAAAVBTBTeeYL9G+nwnkTmE89zwIlywU
- ypv/wwW4x7ttpBOp0cIoy0MsobjH74Da8hlCkKXiZrEjjBSt09NaoGMV2NeJqOGBTuwsAs4uDDd
- IqwXYwdz5U8SQrToN7+k8cpCqGeop75iS1hNI8iWoYGt1p+JMb81vebgO
-X-Gm-Gg: AeBDiesRiVHqYlXf+WA4NtkIaEORAewn/VHpmtmQ1hFngGI1gGbHiLA99RuwzkOeGrr
- E2faiCWNvPTHF3McyVrviqDwUra3WlBJL7XwPervbpAr2f/qfpW5z/r5YLRM4Rluc6PjfxJ6hRI
- +pwA4aqjCEKEdULClvSowxZoFKcfrUQqlP4b+7AzvHAPAOnY9wkuc0ChGcv72U8c6ynJkWVg+OX
- UGm8ybA0UXZrLnspVz2Bb5AzZLt+LVajzNhm8lylqFh3DEJ5cri/f/6TU/kQ0kbn4XrjHgXN+ZR
- S6ObBgJyspjBA7r4o5pdCzv1xQe4kmF4Ga7MtvrAN87FsXg8vqmjzKfdJX57TmckNk3rduYbHpz
- NG8e115VktC+nU9Hzz5mX5IF5x6q/0UqXRW+eRZh9YTr0BQV98rCOQi00cw==
-X-Received: by 2002:a05:6214:226c:b0:8a6:1216:fb6f with SMTP id
- 6a1803df08f44-8b0280ef2ecmr362950966d6.32.1776874863495; 
- Wed, 22 Apr 2026 09:21:03 -0700 (PDT)
-X-Received: by 2002:a05:6214:226c:b0:8a6:1216:fb6f with SMTP id
- 6a1803df08f44-8b0280ef2ecmr362950136d6.32.1776874862822; 
- Wed, 22 Apr 2026 09:21:02 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ac6f670sm161996986d6.14.2026.04.22.09.21.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 09:21:01 -0700 (PDT)
-Date: Wed, 22 Apr 2026 12:21:01 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration/vmstate: replace NULL pointer assert with
- proper error
-Message-ID: <aej1bZlPKPuhT32C@x1.local>
-References: <20260421155219.14506-1-viking4@gmail.com>
+ bh=BjmfO0yef6kA1xNy1Y3HMovxD+y48D5FJPyYtPucIfg=;
+ b=WAESOtahv7B+r3BOxBN/inR3QdT1ZJZ5w2ltmXYbWmMEXSecRCPJsSyv0pxola+nd/fSOH
+ Tc9wPNcLH45v2VaYUTWKeAdEp11tq3VSvB3EHdL5eobF5PdzKhnm3cMT5x9/+8ToZ89rmn
+ /1cq31CTEU44Yat2VxqWeGVa4TMMESw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-qIeuUwPcM7GshO1j2F47Cg-1; Wed,
+ 22 Apr 2026 12:30:19 -0400
+X-MC-Unique: qIeuUwPcM7GshO1j2F47Cg-1
+X-Mimecast-MFC-AGG-ID: qIeuUwPcM7GshO1j2F47Cg_1776875418
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE07319560B3; Wed, 22 Apr 2026 16:30:17 +0000 (UTC)
+Received: from tpad.localdomain (unknown [10.96.133.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 801A9180045E; Wed, 22 Apr 2026 16:30:17 +0000 (UTC)
+Received: by tpad.localdomain (Postfix, from userid 1000)
+ id 35F92400DFC8C; Mon, 20 Apr 2026 12:01:02 -0300 (-03)
+Date: Mon, 20 Apr 2026 12:01:02 -0300
+From: Marcelo Tosatti <mtosatti@redhat.com>
+To: Florian Schmidt <flosch@nutanix.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 2/2] Add HvExtCallGetBootZeroedMemory
+Message-ID: <aeY/rmwBQp5F/wPf@tpad>
+References: <20260112113139.3762156-1-flosch@nutanix.com>
+ <20260112113139.3762156-3-flosch@nutanix.com>
+ <a28bd807-6e98-4393-a354-b7ed1f7a08ae@redhat.com>
+ <aeHKfOmm2b7cY70i@tpad>
+ <80e6ecc4-eac6-40ee-aaf8-da60daaf96d4@nutanix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260421155219.14506-1-viking4@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <80e6ecc4-eac6-40ee-aaf8-da60daaf96d4@nutanix.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mtosatti@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -114,91 +89,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 10:52:19PM +0700, Trieu Huynh wrote:
-> From: Trieu Huynh <vikingtc4@gmail.com>
+On Mon, Apr 20, 2026 at 10:25:43AM +0100, Florian Schmidt wrote:
+> Hi Marcelo,
 > 
-> vmstate_load_state() contains an assert added in commit
-> ("migration/vmstate: split up vmstate_base_addr" [1])
-> to catch NULL pointer dereferences early:
+> On 2026-04-17 06:51, Marcelo Tosatti wrote:
+> > Is this to improve boot time of very large guests ?
 > 
->   assert(first_elem || !n_elems || !size);
+> It depends a bit on how you define "boot time". It won't make a difference
+> if you measure the time it takes to create the VM until you start the vCPUs.
+> It may even make a huge difference if you measure the time until a user can
+> first log in.
 > 
-> However, the assert fires as an unrecoverable crash in a valid user
-> scenario, for instance: loading a snapshot saved with -icount auto
-> into a QEMU started without -icount. The "timer/icount/warp_timer"
-> subsection is present in the stream, but icount_warp_timer is NULL
-> because icount was never initialized. QEMU aborts with:
+> What it will do is reduce the time the guest spends on writing memory,
+> mostly in the background, to zero out all pages it has gotten from the
+> hypervisor. The main advantage (other than saving CPU cycles that are
+> effectively wasted on an unneeded operation) is that if you don't
+> pre-allocate all the VMs memory, then the VM won't touch all pages after
+> boot, keeping the RSS down until the memory is actually used. That's for
+> example useful if you overcommit/oversubscribe VM memory.
 > 
->   qemu-system-x86_64: ../migration/vmstate.c:185:
->   vmstate_load_state: Assertion `first_elem || !n_elems || !size'
->   failed.
-> 
-> Replace the assert with a proper error_setg() and -EINVAL return so
-> QEMU reports a clear diagnostic instead of crashing.
-> 
-> Also remove the error_prepend() in vmstate_subsection_load() that
-> wrapped the error at each subsection level, producing a redundant and
-> noisy error chain. The original error message is now propagated as-is.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20170228124056.5074-4-dgilbert@redhat.com/
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2736
-> 
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> ---
-> Steps to reproduce:
-> * 1. Start src with icount config:
-> ./qemu-system-x86_64 \
->   -icount auto \
->   -<other_options>
-> 
-> * 2. Save snapshot
-> (qemu) savevm snap1
-> 
-> * 3. Start dest without icount config:
-> ./qemu-system-x86_64 \
->   -<other_options>
-> 
-> * 4. Load snapshot
-> * As-is:
-> ~ # QEMU 10.2.94 monitor - type 'help' for more information
-> (qemu) loadvm snap1
-> qemu-system-x86_64: ../migration/vmstate.c:185: vmstate_load_state:
-> Assertion `first_elem || !n_elems || !size' failed.
-> Aborted (core dumped)
-> 
-> * To-be:
-> ** Before removing error_prepend()
-> ~ # QEMU 10.2.94 monitor - type 'help' for more information
-> (qemu) loadvm snap1
-> Error: error while loading state for instance 0x0 of device 'timer':
-> Loading VM subsection 'timer/icount' in 'timer' failed: -22:
-> Loading VM subsection 'timer/icount/warp_timer' in 'timer/icount' failed: -22:
-> VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
-> is a NULL pointer but snapshot contains data for it.
-> 
-> ** After removing error_prepend()
-> ~ # QEMU 10.2.94 monitor - type 'help' for more information
-> (qemu) loadvm snap1
-> Error: error while loading state for instance 0x0 of device 'timer':
-> VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
-> is a NULL pointer but snapshot contains data for it.
+> Cheers,
+> Florian
 
-Thanks again for help looking into QEMU opened issues, Trieu.
+Hi Florian,
 
-I had a feeling the user was requesting for successful migrations with
-modified -icount parameters, rather than a prettier failure.  In that case
-this patch won't be enough.
-
-I've added a comment in the issue to check with reporter.  If we need that
-feature, we may want to check with TCG developers on whether it'll work
-out.
-
-PS: we shouldn't mention "snapshot" in the error message, because it can
-also be a live migration that triggers this path.
-
-Thanks,
-
--- 
-Peter Xu
+That is useful!
 
 
