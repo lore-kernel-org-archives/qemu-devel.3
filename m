@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D40F5A8B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAD5F5A8B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEur0-0001fw-1z; Mon, 20 Apr 2026 16:04:22 -0400
+	id 1wEur2-0001lu-Ke; Mon, 20 Apr 2026 16:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuqv-0001SB-B1
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:18 -0400
+ id 1wEuqo-0001Mi-0I
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:11 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuqt-0001zs-HU
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:17 -0400
+ id 1wEuqj-0001oZ-VD
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:08 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id D761780663;
- Mon, 20 Apr 2026 23:04:13 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3E5CE80795;
+ Mon, 20 Apr 2026 23:04:04 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id f3YMX10K1Sw0-EYOraZle; Mon, 20 Apr 2026 23:04:13 +0300
+ id f3YMX10K1Sw0-IJFHQbSb; Mon, 20 Apr 2026 23:04:03 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776715453;
- bh=8EIeZvm1CKDsTOi9FWm63RbYAd44Mkvf/dqAC7eZxQg=;
+ s=default; t=1776715443;
+ bh=34scPHp2ZdybOm2yZ0WL9aJaMm2nao2xuPbVsUANPc0=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=yCaKZ6tQRATwU7ge4mW4iVgjcIju6xrIUPdK1nvy7GkGPSTpRKaVd10f/F/nK9FSq
- yU+IWzHV8E8bAgmRup4KkDs93pJ917jpI8m9jd4PGVsZxjoQ81AXGJkLxvqNv59UmO
- fnZaXCEHuEAui0zKoQsIAHxS3Bgcci4dcbLNdRM8=
+ b=RgFUKMAwfAaoFaTDJl/pPEutgmAh4vjAg26XhDyCrc3eT+sX8p4hQfMEUaiRH+/6H
+ 3L/oFWlAxcBB35saNHuI8+EsAMm1LZJ+490lT4cyE5wKaYpCf28AAL1OIoqOJhG90k
+ 7SSXuo1Q0aan3PNX1rYdSnyrrjX0ppMA0luaJ7kE=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,9 +45,9 @@ To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Subject: [PATCH v6 15/22] vhost: final refactoring of vhost vrings map/unmap
-Date: Mon, 20 Apr 2026 23:03:30 +0300
-Message-ID: <20260420200339.708640-16-vsementsov@yandex-team.ru>
+Subject: [PATCH v6 10/22] vhost: vhost_virtqueue_start(): fix failure path
+Date: Mon, 20 Apr 2026 23:03:25 +0300
+Message-ID: <20260420200339.708640-11-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
@@ -75,136 +75,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce helper functions vhost_vrings_map() and
-vhost_vrings_unmap() and use them.
+We miss call to unmap in cases when vhost_memory_map() returns
+lenght less than requested (still we consider such cases as an
+error). Let's fix it in vhost_memory_map().
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/virtio/vhost.c | 89 +++++++++++++++++++++++++++++------------------
- 1 file changed, 55 insertions(+), 34 deletions(-)
+ hw/virtio/vhost.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index a3bf7e5a9b8..c71b18cfc8d 100644
+index e39e0676e00..131a2fbf870 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -489,6 +489,56 @@ static void vhost_memory_unmap(struct vhost_dev *dev, void **buffer,
-     *buffer = NULL;
+@@ -454,11 +454,20 @@ static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
  }
  
-+static void vhost_vrings_unmap(struct vhost_dev *dev,
-+                               struct vhost_virtqueue *vq, bool touched)
-+{
-+    vhost_memory_unmap(dev, &vq->used, vq->used_size, touched,
-+                       touched ? vq->used_size : 0);
-+    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0,
-+                       touched ? vq->avail_size : 0);
-+    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0,
-+                       touched ? vq->desc_size : 0);
-+}
-+
-+static int vhost_vrings_map(struct vhost_dev *dev,
-+                            struct VirtIODevice *vdev,
-+                            struct vhost_virtqueue *vq,
-+                            unsigned idx)
-+{
-+    vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
-+    vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
-+    vq->desc = NULL;
-+    vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
-+    vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
-+    vq->avail = NULL;
-+    vq->used_size = virtio_queue_get_used_size(vdev, idx);
-+    vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
-+    vq->used = NULL;
-+
-+    if (vq->desc_phys == 0) {
-+        /* Queue might not be ready for start */
-+        return 0;
-+    }
-+    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
+ static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
+-                              hwaddr *plen, bool is_write)
++                              hwaddr len, bool is_write)
+ {
+     if (!vhost_dev_has_iommu(dev)) {
+-        return address_space_map(dev->vdev->dma_as, addr, plen, is_write,
+-                                 MEMTXATTRS_UNSPECIFIED);
++        hwaddr mapped_len = len;
++        void *res = address_space_map(dev->vdev->dma_as, addr, &mapped_len,
++                                      is_write, MEMTXATTRS_UNSPECIFIED);
++        if (!res) {
++            return NULL;
++        }
++        if (len != mapped_len) {
++            address_space_unmap(dev->vdev->dma_as, res, mapped_len, 0, 0);
++            return NULL;
++        }
++        return res;
+     } else {
+         return (void *)(uintptr_t)addr;
+     }
+@@ -1312,22 +1321,22 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     }
+ 
+     l = vq->desc_size;
+-    vq->desc = vhost_memory_map(dev, vq->desc_phys, &l, false);
+-    if (!vq->desc || l != vq->desc_size) {
++    vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
 +    if (!vq->desc) {
-+        goto fail;
-+    }
-+    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
+         r = -ENOMEM;
+         goto fail_alloc_desc;
+     }
+ 
+     l = vq->avail_size;
+-    vq->avail = vhost_memory_map(dev, vq->avail_phys, &l, false);
+-    if (!vq->avail || l != vq->avail_size) {
++    vq->avail = vhost_memory_map(dev, vq->avail_phys, l, false);
 +    if (!vq->avail) {
-+        goto fail;
-+    }
-+    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
+         r = -ENOMEM;
+         goto fail_alloc_avail;
+     }
+ 
+     l = vq->used_size;
+-    vq->used = vhost_memory_map(dev, vq->used_phys, &l, true);
+-    if (!vq->used || l != vq->used_size) {
++    vq->used = vhost_memory_map(dev, vq->used_phys, l, true);
 +    if (!vq->used) {
-+        goto fail;
-+    }
-+
-+    return 1;
-+
-+fail:
-+    vhost_vrings_unmap(dev, vq, false);
-+    return -ENOMEM;
-+}
-+
- static int vhost_verify_ring_part_mapping(void *ring_hva,
-                                           uint64_t ring_gpa,
-                                           uint64_t ring_size,
-@@ -1287,34 +1337,9 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-     };
-     struct VirtQueue *vvq = virtio_get_queue(vdev, idx);
- 
--    vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
--    vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
--    vq->desc = NULL;
--    vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
--    vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
--    vq->avail = NULL;
--    vq->used_size = virtio_queue_get_used_size(vdev, idx);
--    vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
--    vq->used = NULL;
--
--    if (vq->desc_phys == 0) {
--        /* Queue might not be ready for start */
--        return 0;
--    }
--    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
--    if (!vq->desc) {
--        r = -ENOMEM;
--        goto fail;
--    }
--    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
--    if (!vq->avail) {
--        r = -ENOMEM;
--        goto fail;
--    }
--    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
--    if (!vq->used) {
--        r = -ENOMEM;
--        goto fail;
-+    r = vhost_vrings_map(dev, vdev, vq, idx);
-+    if (r <= 0) {
-+        return r;
+         r = -ENOMEM;
+         goto fail_alloc_used;
      }
- 
-     vq->num = state.num = virtio_queue_get_num(vdev, idx);
-@@ -1375,9 +1400,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-     return 0;
- 
- fail:
--    vhost_memory_unmap(dev, &vq->used, vq->used_size, 0, 0);
--    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, 0);
--    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, 0);
-+    vhost_vrings_unmap(dev, vq, false);
-     return r;
- }
- 
-@@ -1424,9 +1447,7 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
-                                                 vhost_vq_index);
-     }
- 
--    vhost_memory_unmap(dev, &vq->used, vq->used_size, 1, vq->used_size);
--    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, vq->avail_size);
--    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, vq->desc_size);
-+    vhost_vrings_unmap(dev, vq, true);
-     return r;
- }
- 
 -- 
 2.52.0
 
