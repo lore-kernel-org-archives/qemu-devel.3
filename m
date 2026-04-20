@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E65FCF588DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B366F588DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEpGu-00033V-R1; Mon, 20 Apr 2026 10:06:44 -0400
+	id 1wEpH1-00034m-8n; Mon, 20 Apr 2026 10:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wEpGn-00031D-3l
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:06:38 -0400
+ id 1wEpGr-00031m-TM
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:06:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wEpGb-0001Oh-9R
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:06:27 -0400
+ id 1wEpGn-0001Qa-27
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:06:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776693982;
+ s=mimecast20190719; t=1776693992;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0EM1XmILPw6VzQiNknH3uHKB72whXoHpWgRXJ1BwNEY=;
- b=W4p5lg7NuSecCjR+iHS4qobY7ysCJZaLuhei9XNSEMJunOwqcAS6mTgCPYsvz1/d1L1Lnc
- U7mh5/a4cesoYRQZBtctrWkW8/ufhTvcxmHbal1wTdurZg4moHBWBNTjozCywAghrpwCuZ
- xAWdFm/z1WNLGYH5sDCWeOUo4KAbUzY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=fT7aqYcG+mYJXqhu2vC1MHijVy5kS5S7OSHT4/LP03E=;
+ b=IR9heNT49mXk/sML0ixByv9P3HhU7rcXpJs4f8uJAyEha6G8x559Vpn8HenGBUnXJcr44N
+ UkAxnR2xf9DiOEIIdn9UgYt5MlbdqDxQxTHsfwJgewUOgvq/WD/Zm8ISukTSiGDm9W91Rx
+ zDLO2V0KyNLEyc+oucnqmuu1kwdvhlc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-3eLOvclhPVu2KyZ8aRGTYg-1; Mon,
- 20 Apr 2026 10:06:18 -0400
-X-MC-Unique: 3eLOvclhPVu2KyZ8aRGTYg-1
-X-Mimecast-MFC-AGG-ID: 3eLOvclhPVu2KyZ8aRGTYg_1776693973
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-gHgHs0kpOi2hVK3pHtnZVg-1; Mon,
+ 20 Apr 2026 10:06:28 -0400
+X-MC-Unique: gHgHs0kpOi2hVK3pHtnZVg-1
+X-Mimecast-MFC-AGG-ID: gHgHs0kpOi2hVK3pHtnZVg_1776693987
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C14271955DE2; Mon, 20 Apr 2026 14:06:13 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47C4F1800473; Mon, 20 Apr 2026 14:06:27 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.74])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 15F841800349; Mon, 20 Apr 2026 14:06:09 +0000 (UTC)
+ id A7C2E180047F; Mon, 20 Apr 2026 14:06:23 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
  sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH v10 3/7] target/arm/machine: Handle ToleranceOnlySrcTestValue
- migration tolerance
-Date: Mon, 20 Apr 2026 16:03:53 +0200
-Message-ID: <20260420140552.104369-4-eric.auger@redhat.com>
+Subject: [PATCH v10 6/7] target/arm/helper: Define cpreg migration tolerance
+ for DGBDTR_EL0
+Date: Mon, 20 Apr 2026 16:03:56 +0200
+Message-ID: <20260420140552.104369-7-eric.auger@redhat.com>
 In-Reply-To: <20260420140552.104369-1-eric.auger@redhat.com>
 References: <20260420140552.104369-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -85,58 +85,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the value of the incoming register to
-handle_cpreg_only_in_incoming_stream and check whether there is
-a matching ToleranceOnlySrcTestValue tolerance.
+We want to remove AArch32 DBGDTRTX which was erroneously exposed.
+This was attempted by 655659a74a36b ("target/arm: Correct encoding
+of Debug Communications Channel registers") but it was discovered
+that the removal of this debug register broke forward migration on
+TCG. Now we have the cpreg migration tolerance infrastructure, we
+can declare one for the DBGDTRTX. This allow to revert the reinstate
+patch.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- target/arm/machine.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 8a698f601c6..35f1e4327f8 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -1081,12 +1081,15 @@ static void handle_cpreg_missing_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx
-  * no cpreg mig tolerance is matched for this @kvmidx
-  * Return true if the migration should eventually fail
-  */
--static bool handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx)
-+static bool
-+handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx, uint64_t value)
- {
-     g_autofree gchar *name = print_register_name(kvmidx);
- 
-     if (arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
--                                          0, 0, ToleranceNotOnBothEnds)) {
-+                                          0, 0, ToleranceNotOnBothEnds) ||
-+        arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
-+                                          value, 0, ToleranceOnlySrcTestValue)) {
-         trace_tolerate_cpreg_only_in_incoming_stream(name);
-         return false;
+---
+
+v9 -> v10
+- Adding a comment explaining why we want a migratoin tolerance
+  for that cpreg
+---
+ target/arm/helper.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 7389f2988c4..d80899cd096 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6426,9 +6426,24 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             .fgt = FGT_CLIDR_EL1,
+             .resetvalue = GET_IDREG(isar, CLIDR)
+         };
++        uint64_t dbgtr_el0_kvmidx =
++            cpreg_to_kvm_id(ENCODE_CP_REG(14, 0, 1, 0, 5, 3, 0));
++
+         define_one_arm_cp_reg(cpu, &clidr);
+         define_arm_cp_regs(cpu, v7_cp_reginfo);
+         define_debug_regs(cpu);
++        /**
++         * AArch32 DBGDTRTX has been introduced with a wrong encoding.
++         * This was fixed by commit 655659a74a36 ("target/arm: Correct
++         * encoding of Debug Communications Channel registers") by the
++         * introduction of correct separate cpreg definitions
++         * for AA64 and AA32 versions. However the old cpreg definition
++         * couldn't be removed without breaking the migration. From qemu 11.1
++         * onwards we can use the migration tolerance infrastructure to
++         * remove it.
++         */
++        arm_register_cpreg_mig_tolerance(cpu, dbgtr_el0_kvmidx,
++                                         0, 0, ToleranceNotOnBothEnds);
+     } else {
+         define_arm_cp_regs(cpu, not_v7_cp_reginfo);
      }
-@@ -1139,7 +1142,9 @@ static int cpu_post_load(void *opaque, int version_id)
-         }
-         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
-             fail = handle_cpreg_only_in_incoming_stream(cpu,
--                                                        cpu->cpreg_vmstate_indexes[v++]);
-+                                                        cpu->cpreg_vmstate_indexes[v],
-+                                                        cpu->cpreg_vmstate_values[v]);
-+            v++;
-             continue;
-         }
-         /* matching register, copy the value over */
-@@ -1162,7 +1167,8 @@ static int cpu_post_load(void *opaque, int version_id)
-      */
-     for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
-         fail = handle_cpreg_only_in_incoming_stream(cpu,
--                                                    cpu->cpreg_vmstate_indexes[v]);
-+                                                    cpu->cpreg_vmstate_indexes[v],
-+                                                    cpu->cpreg_vmstate_values[v]);
-     }
-     if (fail) {
-         return -1;
 -- 
 2.53.0
 
