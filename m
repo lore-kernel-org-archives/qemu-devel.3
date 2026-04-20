@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36673F55808
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A803AF55808
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEm6p-00089a-Bk; Mon, 20 Apr 2026 06:44:07 -0400
+	id 1wEm6Q-00079X-H8; Mon, 20 Apr 2026 06:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm6n-00082U-Nh
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:44:05 -0400
-Received: from p-west3-cluster6-host2-snip4-1.eps.apple.com ([57.103.75.74]
+ id 1wEm6E-0006xj-QG
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:31 -0400
+Received: from p-west3-cluster5-host11-snip4-5.eps.apple.com ([57.103.72.108]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm6m-0000id-32
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:44:05 -0400
+ id 1wEm6C-0000ao-SF
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:43:30 -0400
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPS id
- 29EA11800449; Mon, 20 Apr 2026 10:44:01 +0000 (UTC)
+ 7177918000BF; Mon, 20 Apr 2026 10:43:26 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776681843; x=1779273843;
- bh=MoioDyw9WNCdgAnpil2qVwmsqi0G9SAnV0FrCmNrGIk=;
+ s=sig1; t=1776681807; x=1779273807;
+ bh=3V2AbGdIbRhzhb8qduzZPT33vmWH+5zkQKA9bxE3tcA=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=CpGxLNp+HrrHZjrXUYKhg5ImOfQCEqfbrtnyeywqfnsgAyCOjtHN3s2y3a6vkft/ugUeldHFLi4yp4kWmgRX3rvJfK8xe/2wJ/oxQwm4XfPoEEy0jWUCZ9hWwAJm4fsnYboCOv+roDFmaMuVexuVVbBAS39t2p9Z4bHz4IEk7+Syb26JmRev8FOfhTNfsJSWqnDsMOBd6T9Xf1dUHIgDeI1c4cJzXksWhegDQDwpvOpqgKwnCDjLa3QAgtZcGdZB6oVQ3yA/RwAk8HuJ/KIwNNtHZBpkJh/y/WOG8S9wtzoGDfZlCa7+XQSgz7dlyfy0gWGEFJfw6q3wR0CnD6YhIw==
+ b=JgWCaSVEugXlN49xCAIBBThh2GbMf0C2o4t3BXF6rIFK64sazePCyhM+yMZQYRsW09f2xUM/ILHbd1LM9UvAE/LThGSvj83cEDL9WuSZikWtgFzAbQHpsUo1CEoewxdtIN5WCHSZZVFkKGPOSI9HjXIhnrpTGCZIW3joZBYUun2BxTUqAV7otF+adMaGE8ZXDFmD88s4kZAxOEEWWkhxdT2P5iMDAwkuvXC5E13TxFiurNScj5Zj/OTDKjUbiKW042WX6hdXVuA/+moUdRIuiQ4brl1O9nvE0zlgWnbjkczvkVWRjmNdY7ZpsJnNpnGP4QYO7SWdnVOGHk80zBCqtQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.154.37])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPSA id
- 9B4C71800444; Mon, 20 Apr 2026 10:43:58 +0000 (UTC)
+ D3B251800453; Mon, 20 Apr 2026 10:43:23 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -43,36 +43,34 @@ Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 27/38] target/i386: emulate: use exception_payload for
- fault address
-Date: Mon, 20 Apr 2026 12:42:37 +0200
-Message-ID: <20260420104248.86702-28-mohamed@unpredictable.fr>
+Subject: [PATCH v2 13/38] whpx: i386: interrupt priority support
+Date: Mon, 20 Apr 2026 12:42:23 +0200
+Message-ID: <20260420104248.86702-14-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260420104248.86702-1-mohamed@unpredictable.fr>
 References: <20260420104248.86702-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: BPMrr2-a9WCluFEdNc9SHbK75xQBDyzG
-X-Proofpoint-GUID: BPMrr2-a9WCluFEdNc9SHbK75xQBDyzG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfXys5FbfJnfK3e
- x9TqOurviAq3YtlJO0AJiVtwlug7JWSBXVwTzO9TkPN2IZtXaBbg2IvkzchOR6nmd7+9wEXbAGN
- SO/43X4GJ9zVu4M7U+2ZHPJryF5Z5fpGVl96/Ho74JdE1Rbk0z+qmDvtSQAL/it7sNbA/5bQce0
- d+bnF+6RFRriibdNQeoFXpwLWrw0Fi/kcA1p886VqY0xdfcIHKugkJTqZpeGMvVH+vVM85Iapxt
- qbyK1AbIzBNuP+VghE8uAUpGn356m+E1hfevUBXhlmyCMKWOtT/SZrijf5T71T2npga5aFG3x2/
- w97Mxx2b1drBGMBQ4jY4cWBFqye3Xhq6RPJonUdH7y1fLZzg1LhCqqdW1PvLtQ=
-X-Authority-Info-Out: v=2.4 cv=d7b4CBjE c=1 sm=1 tr=0 ts=69e60371
+X-Proofpoint-GUID: -SxLM4dJTJev-AiykB4STG2w6MD6DZ2D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfX3XW3xQb9Sawf
+ Tg+P5z5Rk9A7r1oWnc+UMoM6rGN9bQ8azLXr87OKJMuJa1mnJBqOW/euElhCBIHorP77aK9leJ/
+ qf/ubyItpyQfrKpi8sKTF8l0U+3k8Hmdcm83d/PsQIQPVH99rF7XgqOC8rZkva1OMSm7zJ+1Dnl
+ BndrJ6h7QV4ckod3IGuLduBDuNsxjsKMehDrOPCJX0DCTLgrY8N/8cy09/C6fEcbZn2uP0RHI48
+ vDqn2W0yv39OGfq4xKj/Hb3bp83u1GZViNsvCFQTQaYibGGL+vsiaXe2J6AWFRhKqwtcGfyVk1f
+ qyFuhohJ037yOCni4WVpllI13p7QiYkzJcDC8KNIW3ZLK7ODvA0y5xhB0jZenM=
+X-Proofpoint-ORIG-GUID: -SxLM4dJTJev-AiykB4STG2w6MD6DZ2D
+X-Authority-Info-Out: v=2.4 cv=ce7fb3DM c=1 sm=1 tr=0 ts=69e6034f
  cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=YcyI-53RcdBlrF1VUN8A:9
+ a=VkNPw1HP01LnGYTKEx00:22 a=NuKELtICf0aykZwt-QIA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=791
- suspectscore=0 bulkscore=0 phishscore=0
- adultscore=0 spamscore=0
- malwarescore=0 clxscore=1030 lowpriorityscore=0 mlxscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=687 bulkscore=0 adultscore=0
+ mlxscore=0 suspectscore=0 clxscore=1030 phishscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2604200104
-Received-SPF: pass client-ip=57.103.75.74;
+Received-SPF: pass client-ip=57.103.72.108;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,47 +93,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of directly putting it in cr[2], put it in exception_payload.
+Implement APIC IRR interrupt priorities.
+
+Even with kernel-irqchip=off, Hyper-V is aware of interrupt priorities
+and implements CR8/TPR, with the InterruptPriority field being followed.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/emulate/x86_mmu.c | 3 ++-
- target/i386/whpx/whpx-all.c   | 6 +++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ target/i386/whpx/whpx-all.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
-index 007de582de..8d4371467f 100644
---- a/target/i386/emulate/x86_mmu.c
-+++ b/target/i386/emulate/x86_mmu.c
-@@ -277,7 +277,8 @@ static MMUTranslateResult x86_write_mem_ex(CPUState *cpu, void *data, target_ulo
-         translate_res = mmu_gva_to_gpa(cpu, gva, &gpa, translate_flags);
-         if (translate_res) {
-             int error_code = translate_res_to_error_code(translate_res, true, is_user(cpu));
--            env->cr[2] = gva;
-+            env->exception_has_payload = 1;
-+            env->exception_payload = gva;
-             x86_emul_raise_exception(env, EXCP0E_PAGE, error_code);
-             return translate_res;
-         }
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index dee2a203b2..02235d5391 100644
+index d38b83d274..930731e4bf 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -1818,11 +1818,11 @@ static void whpx_inject_exceptions(CPUState* cpu)
-         WHV_REGISTER_VALUE reg = {};
-         reg.ExceptionEvent.EventPending = 1;
-         reg.ExceptionEvent.EventType = WHvX64PendingEventException;
--        reg.ExceptionEvent.DeliverErrorCode = 1;
-+        reg.ExceptionEvent.DeliverErrorCode = env->has_error_code;
-         reg.ExceptionEvent.Vector = env->exception_nr;
-         reg.ExceptionEvent.ErrorCode = env->error_code;
--        if (env->exception_nr == EXCP0E_PAGE) {
--            reg.ExceptionEvent.ExceptionParameter = env->cr[2];
-+        if (env->exception_has_payload) {
-+            reg.ExceptionEvent.ExceptionParameter = env->exception_payload;
+@@ -1588,6 +1588,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+     UINT32 reg_count = 0;
+     WHV_REGISTER_VALUE reg_values[3];
+     WHV_REGISTER_NAME reg_names[3];
++    int irr = apic_get_highest_priority_irr(x86_cpu->apic_state);
+ 
+     memset(&new_int, 0, sizeof(new_int));
+     memset(reg_values, 0, sizeof(reg_values));
+@@ -1623,10 +1624,20 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
          }
-         whpx_set_reg(cpu, WHvRegisterPendingEvent, reg);
      }
+ 
++    if (irr == -1) {
++        if (isa_pic != NULL && pic_get_output(isa_pic)) {
++            /* In case it's a PIC interrupt */
++            irr = 0;
++        } else if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD)) {
++            abort();
++        }
++    }
++
+     /* Get pending hard interruption or replay one that was overwritten */
+     if (!whpx_irqchip_in_kernel()) {
+         if (!vcpu->interruption_pending &&
+-            vcpu->interruptable && (env->eflags & IF_MASK)) {
++            vcpu->interruptable && (env->eflags & IF_MASK)
++            && (vcpu->tpr < irr || irr == 0)) {
+             assert(!new_int.InterruptionPending);
+             if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD)) {
+                 cpu_reset_interrupt(cpu, CPU_INTERRUPT_HARD);
+@@ -1683,13 +1694,17 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+     }
+ 
+     /* Update the state of the interrupt delivery notification */
+-    if (!vcpu->window_registered &&
++    if ((!vcpu->window_registered ||
++        (vcpu->window_priority < irr && vcpu->window_priority != 0) ||
++        (irr == 0 && vcpu->window_priority != 0)) &&
+         cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD)) {
+         reg_values[reg_count].DeliverabilityNotifications =
+             (WHV_X64_DELIVERABILITY_NOTIFICATIONS_REGISTER) {
+-                .InterruptNotification = 1
++                .InterruptNotification = 1,
++                .InterruptPriority = irr >> 4
+             };
+         vcpu->window_registered = 1;
++        vcpu->window_priority = irr;
+         reg_names[reg_count] = WHvX64RegisterDeliverabilityNotifications;
+         reg_count += 1;
+     }
+@@ -1703,7 +1718,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+             reg_names, reg_count, reg_values);
+         if (FAILED(hr)) {
+             error_report("WHPX: Failed to set interrupt state registers,"
+-                         " hr=%08lx", hr);
++                         " hr=%08lx, InterruptPriority=%i", hr, irr >> 4);
+         }
+     }
+ }
+@@ -1919,6 +1934,7 @@ int whpx_vcpu_run(CPUState *cpu)
+         case WHvRunVpExitReasonX64InterruptWindow:
+             vcpu->ready_for_pic_interrupt = 1;
+             vcpu->window_registered = 0;
++            vcpu->window_priority = 0;
+             ret = 0;
+             break;
+ 
 -- 
 2.50.1 (Apple Git-155)
 
