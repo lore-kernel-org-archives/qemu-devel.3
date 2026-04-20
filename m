@@ -4,106 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE11F5A8C7
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 21:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38B7F5A8C9
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 22:32:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEwRt-00087J-Ap; Mon, 20 Apr 2026 17:46:33 -0400
+	id 1wEx9w-0003bh-Ho; Mon, 20 Apr 2026 18:32:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wEwRr-00086t-C0
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 17:46:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wEx9u-0003ay-5m; Mon, 20 Apr 2026 18:32:02 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wEwRp-0003K5-Ed
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 17:46:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776721587;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GBUtvPYvZpVW+Ynfg4Mkrgi1sg4otCsYmknNnSJhk5k=;
- b=L8FdF2sslG2VopnqaHPlQ0VkCmJq8F3QbGUvZoQUgwbIEkcP0FJ7AjnK2fvJ5+iJt9v0HM
- DYm6IPb55D6miTBgj4aSjwXYTpH+u2kz3jGwlCRnuwDVyqHjgIYf+S1Q/3DSEqAAZsuH0A
- lz1TIt3UjJFzY05LFD8ymDheAGjmR8k=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-646-2nngnCePOTC2mRtqTzwxXA-1; Mon, 20 Apr 2026 17:46:25 -0400
-X-MC-Unique: 2nngnCePOTC2mRtqTzwxXA-1
-X-Mimecast-MFC-AGG-ID: 2nngnCePOTC2mRtqTzwxXA_1776721585
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-50e423a05c8so56932801cf.0
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 14:46:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776721585; x=1777326385; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=GBUtvPYvZpVW+Ynfg4Mkrgi1sg4otCsYmknNnSJhk5k=;
- b=LaLS6wy4UNOb58SD2kkBi1ZJ+7CxRqP550oV5g1ZAcY3dfcP1W5cbiouftASq1L5rK
- KT4ZJxvSR54zbpnuwnzLs2okNkM+1+aigVrAZKvI/Cv1SGXBvimwbIc2FkT6TmYm3nHu
- jb8xYUY9x0U28CfgkHN/oS1BEtu2feF3UwK+L83ukQVne7NHDo1rDBIxQ47vzfBXjCqS
- yltfYp/pFQsTZL+JhPkHMrpTV6SkFBB+qU6jjFwz1eLlqe+G+3dF910tR7a2SvxxhHZq
- VKxvk/0/S3k8jb7FHjTy2FIeeSZifvcCLzj6JPVygO/uBJU7huFiG4M9yhREYD6p2259
- 1sMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776721585; x=1777326385;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GBUtvPYvZpVW+Ynfg4Mkrgi1sg4otCsYmknNnSJhk5k=;
- b=WqSxf73j+gviCLtEaYR92YUwbpFahHi52bBU7CY0WC/55UI5otVpoqFH4l1dB9MQWH
- F8GAFrrRoI4ODxsWJvqYvLpXj08AcSWLonZtsqI6zbykz9y8LPqFvHY9S8CV2wk8Z8Ru
- oYF9zOYAyKLKm2seyEIWHJAJon6TO9vlr6FyQUfMY6I84o12OHEdRqOdnLnTB5vO8Kae
- HZWl28jSFQqbFtxAzoyumb/p5NYxscvD4aSfqcadY39QPjTDYN1b4ZJnNpAW+QRwbelH
- Re5JXLOt1zfNi2e0aG5BAFX7ozwBh9jI8kQoKDdZKlfa3uXDxwM/qeOBf8B4otL4/n+f
- N7jw==
-X-Gm-Message-State: AOJu0YwaJQRUg3GGoonSeE4rxnh3dE9ovH9I/VgvF5zFKjUs+SIAVJqR
- frvnI7EOnnZljRid4hsnsIyN632uu/sqlfjAab+FG1QIH9H9qDSO3UHN2nBmjbe4aAjfak1kY8V
- xtY0cSMYDbEPUF4AVR+ylsslzY11KDPHJfBOKG4NGePpha4708ZU68wMx
-X-Gm-Gg: AeBDietgOMT/mXqhmIcAQiQED3kngUkfvw9Lun7PxF5GQ6a0mChkpKMKqwjTwp/Yy9h
- 8bJ8XjoaExJ4fMjyTIkrY+gewuUhz4ciO23ATbpc6/9lMXJaZSN50TK188mrN5YAwKI2cwOmEWq
- 211GvF4N7SxhuTUj1EhGJVRkHvwhXuNXUy451dPS5JsqdqLGocz/CeOEsaLpgmrFyrOvS9Yq2rE
- GUpIDL0FH6znDVRyi/kyiAP3yYaDq10nS6F2U7rqJ2Fndcl4Z94w7Wr83UfM9IRW6QDr0VYEGBB
- AlvhALvGhg1K4j56zaxM9YNl2WN/YsIWbix0vGrcAk0t5YuMM16AVoeXRtKmeSFu+TM4QcwAITd
- 3dsEofDF/6GpdpoBg5gxG78l/uJ86wwAiELvzeTYzfIcDaZq5xnvZvqp9Yg==
-X-Received: by 2002:a05:622a:8356:b0:509:2231:977a with SMTP id
- d75a77b69052e-50e3676f1fbmr139388581cf.30.1776721585232; 
- Mon, 20 Apr 2026 14:46:25 -0700 (PDT)
-X-Received: by 2002:a05:622a:8356:b0:509:2231:977a with SMTP id
- d75a77b69052e-50e3676f1fbmr139388371cf.30.1776721584655; 
- Mon, 20 Apr 2026 14:46:24 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50e392e351esm90131071cf.7.2026.04.20.14.46.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Apr 2026 14:46:24 -0700 (PDT)
-Date: Mon, 20 Apr 2026 17:46:23 -0400
-From: Peter Xu <peterx@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, steven.sistare@oracle.com,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: fix abort when re-migrating after cancel
- during SETUP
-Message-ID: <aeaer6F0Q9XLt8Zt@x1.local>
-References: <20260417184742.293061-1-marcandre.lureau@redhat.com>
- <aeaBKzauFijGRhWr@x1.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wEx9s-0002aD-Es; Mon, 20 Apr 2026 18:32:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XIbRyJTjbP36hsB0QtT3iUEVrTYhyT2Q6nd/yZG59S8Wm4iSU/ZYeweGBgoGbwWjYaTVINBRAjClW4dVngzmgnJKrCi2AJUXFZLw4YnlDLlrbF43mdxnCQdmbDmNiKNGies6TC/OMlbSp2aGuGrhAcGZ6Ucq59ACh+KOQuyjtPQfZDm2EqQnmrUOOFjzS6AddXeCaJp8mIJ0e24HCd2/bjjcVMY5PbnN0JU/6mz+1BTIjcPL3M7V106UW4tGMX/do2ItVwqZU0k4UMqB7sH9/3bdSOFCjm1HjV8QEfAcn7YQur3+1wzV7uM51PBS5VFxnj9+8JdBw9mXrlKezgoucg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EvEhv6HEatNHI4+B4BdBOwENyDAWSqeNWgsv482gv2U=;
+ b=Od2oxOOHNn4ol6VZ/jIPfSpC9E0T1aiDn8Ie/4rWOtFt9UGLx6GzVSgnclhshaFfvns1BlKVI1FaZj5zC3leIHU6zZMIunEnQNK/l3Pd7Utt1/bXG0svEoS1b4kJ72volLs++60x6yl6tSZTZ9tb3FXxfTgdO1qCQjWOhEIfrvx2/UFdMN6iyshWe8U+4b+U8x2nT4QAT0aUvoJpFM69dtjMTnS6CmgLO8iNsWXdCFAXb4U/54nKDA51631EeRDsV9Wh4QWBCt0CWsiAwl+c8/W3Fh3FvYc20d3157EYb24JuCOuJA1Yw3OyODI3vm9aE+P04RA9P4muz+XFUACIzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EvEhv6HEatNHI4+B4BdBOwENyDAWSqeNWgsv482gv2U=;
+ b=a4cV6bUTUnEK+GxPJ1kNO19GNjTDavtuVf1Eu7+3vax6xcC/M7DT7hReTO7vjGCFcAS0n+9uuO+5kLtzyR/JqKi+MYO3JAsuhOMvxS/+5lDqmijmEKZ+Q0gLYl/O/dbQsfqchUC1wZguMSMrQEu2mINZg349qUuv/nSUCdPcfzyBFjXK6WVeVuZR/TwvO68NAU4sr8iEggcd0hftALwJ3yDtyVSrRDHce4gSS3mCbQ0TWnHzVMiY5zXVvggMOrh0dp+2xE8woWGeHFJdD9hN74wjfF1JgnxcMNdyv9FQin/vl511ytpl5+H530rLzOXzGXsdmOJR81aXJN4sS20P5w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com (2603:10b6:8:27c::8) by
+ CH3PR12MB8879.namprd12.prod.outlook.com (2603:10b6:610:171::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.15; Mon, 20 Apr
+ 2026 22:31:48 +0000
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5]) by DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5%3]) with mapi id 15.20.9846.014; Mon, 20 Apr 2026
+ 22:31:48 +0000
+Message-ID: <9ab16130-a589-485d-a3fb-49b3569219d6@nvidia.com>
+Date: Mon, 20 Apr 2026 15:31:45 -0700
+User-Agent: Mozilla Thunderbird
+From: Nathan Chen <nathanc@nvidia.com>
+Subject: Re: [PATCH 09/11] hw/arm/smmuv3-accel: Implement "auto" value for
+ "oas"
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+References: <20260401010231.4166776-1-nathanc@nvidia.com>
+ <20260401010231.4166776-10-nathanc@nvidia.com>
+ <CH3PR12MB754858C236A5322833654F34AB232@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Language: en-US
+In-Reply-To: <CH3PR12MB754858C236A5322833654F34AB232@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aeaBKzauFijGRhWr@x1.local>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-ClientProxiedBy: SJ0PR03CA0390.namprd03.prod.outlook.com
+ (2603:10b6:a03:3a1::35) To DS2PR12MB9567.namprd12.prod.outlook.com
+ (2603:10b6:8:27c::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PR12MB9567:EE_|CH3PR12MB8879:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3ccb0f62-23c1-41ed-d99c-08de9f2c9c09
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: C48qvM6qvbXO1oQ2vxymQQenh92vdPulJVw3DvIrKv8ue30yWSAdymd/9ETPQ43n7LrfBKOPsYopvFZzvbmRm4qQd5RXPLBuwdNjJLAInA6sQpNDNByQKvgGW24kZl0OddZiqQF/b39nSbozbSO+8QaWUGcxHDr4EYch0Euz+GyViqc2mYAgR2SuThVy3gn3sVr4m0IkRcEHlrX+m5sQm+WIa+0oJzDcSDqpeVat5u0UrwMsT9oBwixtnXqJy0yQS/YSrtSeRc4zzicbgf01lk1AUsZy551s/sXNdL4EntI0UmwO4s3YlanJPnAhisswPxgquMilfFveAEaWV+lnXJ++nULkYBUu2S69rnn64a2i8NHmTxUEaRjNcxp8deBnXHaN76JRQgO3tfXnzZjfHMQE5/PUjyoRve7CinkxuohxJCJCm4sZno6g3o9v2b8KQKZQd6g6dc2+8OfP0BP3kHpWX8ovKAIG2DFeKAkCxLcLB8rnOHrSe4hRDpQeud0PClEhBOu4ytsxyWEiTAV4IBQsYLI8X8hKZtT/pJ6gzBbwjg30CD+7HInY2ERAJkDpnmBoMK3EHcdBfrG/Akd73OxU0UeUn4bl2FC7v0lYCLHgNuaTsD/ORq09qQ8lWiy2/l2TZZ/QZDNIj6mtsobqIp4YKViG9h4VltlgEE7U0lgIPHZROfZ/ZKHYDlHxu2Jo8cc4sveZbWqYNjYCrf0N+k0anJxjri462Vi5VrQvAc4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS2PR12MB9567.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?M2g3dytLTHA3QmtFMGdtSzRDWTJwVmc2WEhpKzUvWUhndGw5dkV0dTVORlFJ?=
+ =?utf-8?B?SkcybVdyRmY1MWZDeUNRNkZqSFV0dmhBZk4rNkpTOVJCYW1LUXFUS0dNUXlj?=
+ =?utf-8?B?d2JQeEdET21CQTRaWUE1cjBScWlyL25LYUozem5OOGVMZ0k0WHhsZ3RHeTd3?=
+ =?utf-8?B?RThrMCtld1lpN3ROR24vWFVLdkJadm0rSXFoWnlVTGl0ZExJdXdialZodUNS?=
+ =?utf-8?B?c0NMaUpjK3plT2JDaDlDUmpQWTNKRlRjR2ErVXVPOGQrVlp0bSt3UklvWUdj?=
+ =?utf-8?B?MVNKTHNPNkZZV1N6bFVFUUNTT3BORE4yQU1iU3JjOENrcHYrVExhMGlZbCta?=
+ =?utf-8?B?OVZuOGJGakpFcXpTUG5nci94MUZjNGtQYmljMFRmQTk3dkY5d1ZWV3JnZW1k?=
+ =?utf-8?B?dDVXMzBvaWVua3Q4MDhGbFhQRFU2Q0gxSW5nWno4Smh6UHI0TG50K0JGWVI0?=
+ =?utf-8?B?clQ5elFjODE2OHRncnJ4TVVFU1VRaVVmRnpkZHovUzI3ek1ORUNqMkh0akVi?=
+ =?utf-8?B?a3VhYllMZkl6U3Z3NTY2Y3F3SzUvRkFqK3N4L2EyRFc1cDlvMlpKSWE0MmZ0?=
+ =?utf-8?B?YW9Vb1ExRDhaMm5lMEpUTm9UeFJORWVPVTNTaWQyL1pyUEZBbFNyaGJoZ3lO?=
+ =?utf-8?B?WCsyMTNBSlhWQ084WFhwMGFOVTBXYk9ZK2Y5aURIK2xrVXNocUp6VnZ1cWVP?=
+ =?utf-8?B?REVaWklGTk0yTWRmbVNYck50dVJnMjVNWnBocTU3dEhSL0lMNlRMeHZZSzRJ?=
+ =?utf-8?B?ZXRzK2NRSEFkUEJqS1pXRUhUc2tnTm85NlVBbkhvU1VtZDQrU3g0TXZrUENZ?=
+ =?utf-8?B?ejVWY2JRZ2ZwcEk5R0x3blNmSW9hZnhtTDlrTjRVOG10dVNjcE8xSXF1VWl1?=
+ =?utf-8?B?cUdyTXRTZWI3R3VlTUc2TStGQ3lxdGJPU0h2WVdpZG5RcTI3N3UxWHFZV01R?=
+ =?utf-8?B?TEJqYzAxeWJBYzlSNnd1L2w2eHBXcG5ySTlSRFRvT0V5ZkVHbGNMUDMrSHUr?=
+ =?utf-8?B?N2JmUk5OQzdDZ3FQT0xHUExGd3FTbm1FUm1VamRFbTUzb0RPMVFhVTVYOG9x?=
+ =?utf-8?B?ZWJuYjBQSzFqTmp5Z1duSDBPaXp1aTB3REV4eUJKN1laTWM4WXppTkp2YVM0?=
+ =?utf-8?B?dnIyZGFoVHR4a3lXODQ5OTVRSXhsQ2UvZXlHTzJyWWhGTWVLb3FvMGhZUG5Q?=
+ =?utf-8?B?SzEvcXZIRmJuTjh1WVFHcEJkSkE2MlVNeTVBVzRyNnV0Qm50RTlSdlR4QmRD?=
+ =?utf-8?B?MjlOTXY0aHVJbzFzV21ib3BXVWtuSzQxREhMbm9HT25HeG9iK1B2blNHOVlN?=
+ =?utf-8?B?ajY1d2dHdElTeWFLT2Vvd3FYMEVrYVkwMW5xRHpCMmRvMmFRWitrdHVVNURT?=
+ =?utf-8?B?MkE1cUIvR09RVUxkL0tGK01CWXNRM0xnbUZwWmZPL2pRTm05Wis2MnBkdjJr?=
+ =?utf-8?B?ZDArK0Z0Y0FCa2JZOEZBTkJ0K0F3N0dzczZlQ0I3OWRZWnd1OE9uTk1TQXhU?=
+ =?utf-8?B?bkxEUm9DZDhQcVFzWVRYaGhXUmpKZFpKc0thaS9WQS9zcnVLdVJUazF3Z2RR?=
+ =?utf-8?B?VmJ1TC9LZWhzcGFoVnVzVVpFOGhHNzU0SUZwQXZ0Wm56dTl2Z2IrWGVlWm84?=
+ =?utf-8?B?S1F5V24wM25oempXRTgrN0dNT21Sa2x4czhDNnZRS25KVFRvcExmYVFvQUJo?=
+ =?utf-8?B?cy9oSXk3ZGZxNXo4eUthT0JnN1hXbkJBa1llK3plRHlpWWtDbzcrUCtBc1h4?=
+ =?utf-8?B?OEdINW92ZDY1MitET2JUNzRSTko2ZU1CRHlNV2FadlZ1eUw3U3hGU2FOQ05D?=
+ =?utf-8?B?VDRSNlhhV0Y2cklMTWFGTzdTV3dCTzRHaTRDUi9kSFZYcjhZSVkwVVBIcmNG?=
+ =?utf-8?B?Vk53TnNVWjdUT0g0a081bGJkZWZKbm9hL0c1bThadkdyMERpRmxjdUMvaXlI?=
+ =?utf-8?B?aWhDWTZ3M1NzeEREMWNUQU9rbDdmVFJOS1dacE9yK0JVK1RadXd3TS9LUnc5?=
+ =?utf-8?B?NURkTk5HZzRpcVQ3d1d1dFpadGtGQWV1Z3FKOUR2aDZNV2RtYjcwandjMkEr?=
+ =?utf-8?B?TVVxSFQ4V3JuRHVrSTNBb1pFdnp3UC93TFNTK1JNL0lTbStMRzd3SXlvUytD?=
+ =?utf-8?B?dUJsK081NThlczR1cXV0V0g1b295OVh5TyttcFk5RkF5TmdKV01nZDhIUllk?=
+ =?utf-8?B?NUNpRnRXMFBSaWF5M0srU1BYcFNtbjdjU3FsYTkyQllGZ3JBZlFBTmtmZ1Zo?=
+ =?utf-8?B?Q2JuTko2YUZrZ0RTOGwyemQvQmlPNWlhWkFQQnQrd2xIbDhWNzJYblFYMlp6?=
+ =?utf-8?B?a3hkM3pHalBBWE4yRXROMnpDMC84T3hJc3RNVXFPNlR0TXJHZGFyZz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3ccb0f62-23c1-41ed-d99c-08de9f2c9c09
+X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9567.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Apr 2026 22:31:48.0334 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZZJztjOPwo3EHcRiRUjivFYC9AzoGcYg/mVFNesiVKMcayt71K+pP5iOrS7itvmhWMSOONeisq/tOOKvKy7mzg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8879
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=nathanc@nvidia.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,132 +161,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 20, 2026 at 03:40:27PM -0400, Peter Xu wrote:
-> On Fri, Apr 17, 2026 at 10:47:42PM +0400, marcandre.lureau@redhat.com wrote:
-> > From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > 
-> > When a migration is cancelled during the early SETUP phase (before
-> > migration_connect_outgoing() has set s->to_dst_file), migration_cancel()
-> > takes a fast path that transitions the state from CANCELLING to
-> > Cancelled without calling migration_cleanup(). This leaves the migration
-> > yank instance registered.
-> > 
-> > A subsequent qmp_migrate() call passes the migration_is_running() guard
-> > (since CANCELLED is a terminal state) and then calls
-> > yank_register_instance(MIGRATION_YANK_INSTANCE, &error_abort), which
-> > finds the stale entry and aborts with "duplicate yank instance".
-> > 
-> >   #6  0x000056028b5e17fc in error_setg_internal
-> >       (errp=errp@entry=0x56028cc8cb18 <error_abort>, src=src@entry=0x56028ba87fa5 "../util/yank.c", line=line@entry=87, func=func@entry=0x56028bb77140 <__func__.5> "yank_register_instance", fmt=fmt@entry=0x56028ba87f8d "duplicate yank instance") at ../util/error.c:100
-> >   #7  0x000056028b601b2a in yank_register_instance (instance=instance@entry=0x7ffea0cf36b0, errp=0x56028cc8cb18 <error_abort>) at ../util/yank.c:87
-> >   #8  0x000056028b25221e in migrate_prepare (s=0x5602b0a7db90, resume=<optimized out>, errp=0x7ffea0cf3718) at ../migration/migration.c:2001
-> >   #9  qmp_migrate (uri=<optimized out>, has_channels=<optimized out>, channels=<optimized out>, has_resume=<optimized out>, resume=<optimized out>, errp=errp@entry=0x7ffea0cf3718) at ../migration/migration.c:2039
-> >   #10 0x000056028b5891be in qmp_marshal_migrate (args=<optimized out>, ret=<optimized out>, errp=0x7f63392e0ee0) at qapi/qapi-commands-migration.c:459
-> > 
-> > Add missing yank_unregister_instance. Alternatively, it seems
-> > migration_cleanup() should be safe in this context too.
-> > 
-> > Fixes: 624e6e654e11 ("migration: cpr-transfer mode")
-> > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  migration/migration.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 5c9aaa6e58f..bbdd91ee7ee 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -1477,6 +1477,7 @@ void migration_cancel(void)
-> >                            MIGRATION_STATUS_CANCELLED);
-> >          cpr_state_close();
-> >          cpr_transfer_source_destroy(s);
-> > +        yank_unregister_instance(MIGRATION_YANK_INSTANCE);
-> >      }
-> >  }
-> 
-> Thanks for the report.
-> 
-> I had a feeling that this is not enough.. and I had a feeling that this
-> special casing was something fast merged for cpr-transfer work to be able
-> to cancel the HUP source when waiting, however did it wrong.  IOW, at least
-> this chunk:
-> 
->     if (setup && !s->to_dst_file) {
->         migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
->                           MIGRATION_STATUS_CANCELLED);
->         cpr_state_close();
->         cpr_transfer_source_destroy(s);
->     }
-> 
-> Should only apply to cpr-transfer, not normal migrations..
-> 
-> E.g. consider one qmp_migrate() on top of tcp socket:
-> 
-> - qmp_migrate
->   - migration_connect_outgoing
->     - socket_connect_outgoing
->       - ... waiting for worker to invoke socket_outgoing_migration()
-> - ... some time later
-> - qmp_migrate_cancel
->   - above check hits, update CANCELLING->CANCELLED, unregister yank etc.
-> - ... some time later
-> - socket_outgoing_migration() invoked with an error
->   - migration_connect_error_propagate() should see CANCELLED state, which
->     is illegal.
+Hi Shameer,
 
-So the 1st thing I did here is I tried to reproduce this issue with
-firewall dropping packets over some port:
-
-$ sudo iptables -A OUTPUT -p tcp --dport 44444 -j DROP
-
-Then I can reproduce this by migrating to port 44444, and this patch does
-fix it, but then I verified I can hit the above illegal CANCELLED state
-error:
-
-2026-04-20T21:30:21.669131Z migrate_set_state new state setup
-2026-04-20T21:30:27.281824Z migrate_set_state new state cancelling
-2026-04-20T21:30:27.281862Z migrate_set_state new state cancelled
-...
-2026-04-20T21:32:37.638382Z qemu-system-x86_64: migration_connect_error_propagate: Illegal migration status (cancelled) detected
-
-After that if I retry with a correct connection migration will actually
-succeed.  I believe it's because migration_connect_error_propagate() was
-careful on skipping the extra migration_cleanup() when hitting something
-weird:
-
-        /*
-         * This really shouldn't happen. Just be careful to not crash a VM
-         * just for this.  Instead, dump something.
-         */
-        error_report("%s: Illegal migration status (%s) detected",
-                     __func__, MigrationStatus_str(current));
-        return;
-
-I'll try out the other approach and share the patch if it will pass all
-tests.
-
+On 4/16/2026 7:08 AM, Shameer Kolothum Thodi wrote:
 > 
-> So IMHO for non-cpr cases we should always get ourselves covered with
-> migration_connect_error_propagate(), except CPR where it may have the HUP
-> source registered via migration_connect_error_propagate().
+>> -----Original Message-----
+>> From: Nathan Chen<nathanc@nvidia.com>
+>> Sent: 01 April 2026 02:02
+>> To:qemu-arm@nongnu.org;qemu-devel@nongnu.org
+>> Cc: Yi Liu<yi.l.liu@intel.com>; Eric Auger<eric.auger@redhat.com>;
+>> Zhenzhong Duan<zhenzhong.duan@intel.com>; Peter Maydell
+>> <peter.maydell@linaro.org>; Marcel Apfelbaum
+>> <marcel.apfelbaum@gmail.com>; Philippe Mathieu-Daudé
+>> <philmd@linaro.org>; Yanan Wang<wangyanan55@huawei.com>; Zhao Liu
+>> <zhao1.liu@intel.com>; Alex Williamson<alex@shazbot.org>; Cédric Le Goater
+>> <clg@redhat.com>; Shameer Kolothum Thodi<skolothumtho@nvidia.com>;
+>> Matt Ochs<mochs@nvidia.com>; Nicolin Chen<nicolinc@nvidia.com>;
+>> Nathan Chen<nathanc@nvidia.com>
+>> Subject: [PATCH 09/11] hw/arm/smmuv3-accel: Implement "auto" value for
+>> "oas"
+>>
+>> From: Nathan Chen<nathanc@nvidia.com>
+>>
+>> Allow accelerated SMMUv3 OAS property to be derived from host IOMMU
+>> capabilities. Derive host values using IOMMU_GET_HW_INFO, retrieving
+>> OAS from IDR5.
+>>
+>> This keeps the OAS value advertised by the virtual SMMU compatible with
+>> the capabilities of the host SMMUv3, so that the intermediate physical
+>> addresses (IPA) consumed by host SMMU for stage-2 translation do not
+>> exceed the host's max supported IPA size.
+>>
+>> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
+>> ---
+>>   hw/arm/smmuv3-accel.c | 9 ++++++++-
+>>   hw/arm/smmuv3.c       | 6 +++---
+>>   2 files changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+>> index 03393fd7ba..105f6d26bf 100644
+>> --- a/hw/arm/smmuv3-accel.c
+>> +++ b/hw/arm/smmuv3-accel.c
+>> @@ -63,6 +63,12 @@ static void
+>> smmuv3_accel_auto_finalise(SMMUv3State *s,
+>>                                  FIELD_EX32(info->idr[1], IDR1, SSIDSIZE));
+>>       }
+>>
+>> +    /* Update OAS if auto from info */
+>> +    if (s->oas == OAS_MODE_AUTO) {
+>> +        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS,
+>> +                               FIELD_EX32(info->idr[5], IDR5, OAS));
+>> +    }
+>> +
+>>       accel->auto_finalised = true;
+>>   }
+>>
+>> @@ -962,7 +968,8 @@ void smmuv3_accel_init(SMMUv3State *s)
+>>
+>>       if (s->ats == ON_OFF_AUTO_AUTO ||
+>>           s->ril == ON_OFF_AUTO_AUTO ||
+>> -        s->ssidsize == SSID_SIZE_MODE_AUTO) {
+>> +        s->ssidsize == SSID_SIZE_MODE_AUTO ||
+>> +        s->oas == OAS_MODE_AUTO) {
+>>           s->s_accel->auto_mode = true;
+>>       }
+>>   }
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index cb14a08a66..0ab6d1e762 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -1976,7 +1976,8 @@ static bool
+>> smmu_validate_property(SMMUv3State *s, Error **errp)
+>>       }
+>>   #endif
+>>
+>> -    if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48) {
+>> +    if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48 &&
+>> +        s->oas != OAS_MODE_AUTO) {
+>>           error_setg(errp, "QEMU SMMUv3 model only implements 44 and 48 bit"
+>>                      "OAS; other OasMode values are not supported");
+>>           return false;
+> Do we end up now allowing OAS_MODE_AUTO for non-accel mode?
 > 
-> IIUC, maybe we could change this check to be an explicit one, checking
-> whether cpr_transfer_add_hup_watch() has the source attached but not yet
-> executed (if executed, migration_connect_outgoing_cb() will also properly
-> invoke migration_connect_error_propagate()).
+> I think we may need to adjust as below:
 > 
-> We could check against both "mode==CPR_TRANSFER && s->hup_source", but then
-> we need early release of hup_resource too (currently it is deferred until
-> migration_cleanup(), which is slightly hackish; after all the source
-> returns always with G_SOURCE_REMOVE for migration_connect_outgoing_cb, so
-> it was removed long time ago, rather than until the end of migration).
+>      if (!s->accel) {
+>           if (s->ril == ON_OFF_AUTO_OFF) {
+>                error_setg();
+>                return false;
+>            }
+>            if (s->ats != ON_OFF_AUTO_OFF) {
+>                error_setg();
+>                return false;
+>            }
+>            if (s->oas != OAS_MODE_44) {
+>                error_setg();
+>                return false;
+>            }
+>            if (s->ssidsize != SSID_SIZE_MODE_0) {
+>                error_setg()
+>                return false;
+>            }
+>            return true;
+>        }
 > 
-> Thanks,
-> 
-> -- 
-> Peter Xu
+> Please check.
 
--- 
-Peter Xu
+We do allow passing 'auto' if accel=off, but in that case 
+smmuv3_accel_init() will not get called, so auto_mode = false and 
+smmuv3_accel_auto_finalise() will not change the OAS.
 
+If we adjust the check like above, users will have to manually set 
+ril=on, ats=off, oas=44, ssidsize=0 when accel=off because the default 
+is auto.
+
+Would you prefer we do one of the following?
+1. Add the adjustment above. Users have to manually set ril=on, ats=off, 
+oas=44, ssidsize=0 when accel=off. Prevents setting auto for these 
+properties when accel=off.
+
+2. Add the adjustment above, but if accel=off and auto is set, resolve 
+auto to previous defaults before we reach smmu_validate_property(). No 
+functional change from current implementation.
+
+3. Keep current implementation.
+
+4. Add the adjustment above. Do not change defaults to auto. Users have 
+to manually set auto for accel=on.
+
+Thanks,
+Nathan
 
