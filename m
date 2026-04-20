@@ -4,57 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8750FF5A8B6
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E904FF5A8B8
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEuqw-0001VH-Ut; Mon, 20 Apr 2026 16:04:18 -0400
+	id 1wEuqw-0001Ub-RJ; Mon, 20 Apr 2026 16:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuqi-0001L8-QS
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:06 -0400
+ id 1wEuqo-0001Mh-0G
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:11 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuqe-0001lO-PH
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:03 -0400
+ id 1wEuql-0001rH-06
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:08 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E955D8075E;
- Mon, 20 Apr 2026 23:03:55 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 954B98075E;
+ Mon, 20 Apr 2026 23:04:05 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id f3YMX10K1Sw0-K71ifzMM; Mon, 20 Apr 2026 23:03:55 +0300
+ id f3YMX10K1Sw0-GmkwQ0HG; Mon, 20 Apr 2026 23:04:04 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776715435;
- bh=U+MpPWCzWZd0Q1GJnS+Zgp15vilEZPYK+pK2ksRXVxg=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=kOugIIq5rNtAsHLbXoHFmQ1Sck/L7daLjDIRuR9a2WABRgFBvDaiKA6KLm4NCFbId
- YlvoBJjH/WthgrelTD5s7Ld9T6rF9OB1pUMZKhfhNMh6utcw5tmGZ/ngitAyJ9zS7x
- tKL8bLUDn90YAZtJzhvfinE6OeoiTrnWreWp9uUE=
+ s=default; t=1776715445;
+ bh=uXIHNL9MutPa4LnUI29ZbTfFKnQQj49Z1ngH4e7u84w=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=c+uUBiH907IjVXJw1zl5uBESeVKMUBqxxRWS1cnHC/XwXtxZJ5MEUW/2Lq+7q5NWD
+ hwjYgMJBQhVGf77y0c5+y4Y2RgGtujS5zHlJJL8q32TVCsNVqF7s/T0WEPYdm5PKgj
+ sg6sKhUJ/iOwz4nW3f6LQaTXq5Yeh3wgVolKUxvU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Raphael Norwitz <raphael.s.norwitz@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v6 05/22] vhost-user-gpu: drop code duplication
-Date: Mon, 20 Apr 2026 23:03:20 +0300
-Message-ID: <20260420200339.708640-6-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Subject: [PATCH v6 11/22] vhost: make vhost_memory_unmap() null-safe
+Date: Mon, 20 Apr 2026 23:03:26 +0300
+Message-ID: <20260420200339.708640-12-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -78,31 +74,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Obviously, this duplicated fragment doesn't make any sense.
+This helps to simplify failure paths of vhost_virtqueue_start()
+a lot. We also need to zero-out pointers on unmap, to not try
+to unmap invalid pointers.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/display/vhost-user-gpu.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/virtio/vhost.c | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 3f6fb7a8033..8911b2a72f7 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -644,10 +644,6 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
-         VIRTIO_GPU_F_RESOURCE_UUID)) {
-         g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 131a2fbf870..b9b7a984e33 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -473,14 +473,20 @@ static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
      }
--    if (virtio_has_feature(g->vhost->dev.features,
--        VIRTIO_GPU_F_RESOURCE_UUID)) {
--        g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
--    }
+ }
  
-     if (!virtio_gpu_base_device_realize(qdev, NULL, NULL, errp)) {
-         return;
+-static void vhost_memory_unmap(struct vhost_dev *dev, void *buffer,
++static void vhost_memory_unmap(struct vhost_dev *dev, void **buffer,
+                                hwaddr len, int is_write,
+                                hwaddr access_len)
+ {
++    if (!*buffer) {
++        return;
++    }
++
+     if (!vhost_dev_has_iommu(dev)) {
+-        address_space_unmap(dev->vdev->dma_as, buffer, len, is_write,
++        address_space_unmap(dev->vdev->dma_as, *buffer, len, is_write,
+                             access_len);
+     }
++
++    *buffer = NULL;
+ }
+ 
+ static int vhost_verify_ring_part_mapping(void *ring_hva,
+@@ -1324,33 +1330,33 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
+     if (!vq->desc) {
+         r = -ENOMEM;
+-        goto fail_alloc_desc;
++        goto fail;
+     }
+ 
+     l = vq->avail_size;
+     vq->avail = vhost_memory_map(dev, vq->avail_phys, l, false);
+     if (!vq->avail) {
+         r = -ENOMEM;
+-        goto fail_alloc_avail;
++        goto fail;
+     }
+ 
+     l = vq->used_size;
+     vq->used = vhost_memory_map(dev, vq->used_phys, l, true);
+     if (!vq->used) {
+         r = -ENOMEM;
+-        goto fail_alloc_used;
++        goto fail;
+     }
+ 
+     r = vhost_virtqueue_set_addr(dev, vq, vhost_vq_index, dev->log_enabled);
+     if (r < 0) {
+-        goto fail_alloc;
++        goto fail;
+     }
+ 
+     file.fd = event_notifier_get_fd(virtio_queue_get_host_notifier(vvq));
+     r = dev->vhost_ops->vhost_set_vring_kick(dev, &file);
+     if (r) {
+         VHOST_OPS_DEBUG(r, "vhost_set_vring_kick failed");
+-        goto fail_kick;
++        goto fail;
+     }
+ 
+     /* Clear and discard previous events if any. */
+@@ -1370,24 +1376,19 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         file.fd = -1;
+         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+         if (r) {
+-            goto fail_vector;
++            goto fail;
+         }
+     }
+ 
+     return 0;
+ 
+-fail_vector:
+-fail_kick:
+-fail_alloc:
+-    vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, idx),
++fail:
++    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+                        0, 0);
+-fail_alloc_used:
+-    vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+                        0, 0);
+-fail_alloc_avail:
+-    vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+                        0, 0);
+-fail_alloc_desc:
+     return r;
+ }
+ 
+@@ -1434,11 +1435,11 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+                                                 vhost_vq_index);
+     }
+ 
+-    vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+                        1, virtio_queue_get_used_size(vdev, idx));
+-    vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+                        0, virtio_queue_get_avail_size(vdev, idx));
+-    vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+                        0, virtio_queue_get_desc_size(vdev, idx));
+     return r;
+ }
 -- 
 2.52.0
 
