@@ -4,57 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C61EF5A8B8
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FEFF5A8B8
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:04:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEur9-0001vp-KV; Mon, 20 Apr 2026 16:04:31 -0400
+	id 1wEur4-0001n1-2a; Mon, 20 Apr 2026 16:04:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEur1-0001kH-DY
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:23 -0400
+ id 1wEuqt-0001QR-6P
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:15 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuqz-00021n-St
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:23 -0400
+ id 1wEuqr-0001zo-Od
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:14 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 5C32E80778;
- Mon, 20 Apr 2026 23:04:20 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7D7F580778;
+ Mon, 20 Apr 2026 23:04:12 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id f3YMX10K1Sw0-14GazpNW; Mon, 20 Apr 2026 23:04:19 +0300
+ id f3YMX10K1Sw0-oFxuUmkY; Mon, 20 Apr 2026 23:04:11 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776715459;
- bh=Cy9Kfz7LJW3sOr7QWA68FHIr1PIHJhZFd5ELVkaKPk4=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=DT1/7gb23Gp+wlYc0luFQR7iZqgMraePV85BhDIEZAL+sN9fwy/ZhrI8qsudfpcvz
- JjjpwZmmLgL0vzJPTH/s42CNtZdML0YAoSmQk912bwyucJ4XbM3asghE1yilRs6UJH
- txeyTUGlLmY97cBMrw5vL6KAJ+UYoOLWM8/H5/Ac=
+ s=default; t=1776715451;
+ bh=p7Mm9GudtPAeqe5zCfAh27owVpQGvscwVTdaF2yAkKc=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=I0QT02KASqb47D2QLz53aIRZLVwW1anG1pulBEEU3dvb6VTsSywKzY7QKtwSdLelk
+ yS/id88O6ON6KZfZEBt+PsYbVd/fJSqfWIFr/Kdtn6wFLrfrjW9KN0M/u+ANy9lrD5
+ FxGYHbGEcDFUTN1Co4qKZRj/KXjEN465bl1mE21E=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Subject: [PATCH v6 19/22] hw/virtio/virtio-bus: refactor
- virtio_bus_set_host_notifier()
-Date: Mon, 20 Apr 2026 23:03:34 +0300
-Message-ID: <20260420200339.708640-20-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Subject: [PATCH v6 14/22] vhost: vhost_virtqueue_start(): drop extra local
+ variables
+Date: Mon, 20 Apr 2026 23:03:29 +0300
+Message-ID: <20260420200339.708640-15-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -78,49 +75,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The logic kept as is. Refactor to simplify further changes.
+One letter named variables doesn't really help to read the code,
+and they simply duplicate structure fields.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 ---
- hw/virtio/virtio-bus.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ hw/virtio/vhost.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
-index cef944e0158..9b545acda31 100644
---- a/hw/virtio/virtio-bus.c
-+++ b/hw/virtio/virtio-bus.c
-@@ -298,20 +298,18 @@ int virtio_bus_set_host_notifier(VirtioBusState *bus, int n, bool assign)
-                          __func__, strerror(-r), r);
-             return r;
-         }
--        r = k->ioeventfd_assign(proxy, notifier, n, true);
--        if (r < 0) {
--            error_report("%s: unable to assign ioeventfd: %d", __func__, r);
--            virtio_bus_cleanup_host_notifier(bus, n);
--        }
--    } else {
--        k->ioeventfd_assign(proxy, notifier, n, false);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index d5bafbcc4b3..a3bf7e5a9b8 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1277,7 +1277,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusState *vbus = VIRTIO_BUS(qbus);
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(vbus);
+-    hwaddr l;
+     int r;
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_file file = {
+@@ -1302,23 +1301,17 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         /* Queue might not be ready for start */
+         return 0;
      }
- 
--    if (r == 0) {
--        virtio_queue_set_host_notifier_enabled(vq, assign);
-+    r = k->ioeventfd_assign(proxy, notifier, n, assign);
-+    if (r < 0 && assign) {
-+        error_report("%s: unable to assign ioeventfd: %d", __func__, r);
-+        virtio_bus_cleanup_host_notifier(bus, n);
-+        return r;
+-
+-    l = vq->desc_size;
+-    vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
++    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
+     if (!vq->desc) {
+         r = -ENOMEM;
+         goto fail;
      }
- 
--    return r;
-+    virtio_queue_set_host_notifier_enabled(vq, assign);
-+
-+    return 0;
- }
- 
- void virtio_bus_cleanup_host_notifier(VirtioBusState *bus, int n)
+-
+-    l = vq->avail_size;
+-    vq->avail = vhost_memory_map(dev, vq->avail_phys, l, false);
++    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
+     if (!vq->avail) {
+         r = -ENOMEM;
+         goto fail;
+     }
+-
+-    l = vq->used_size;
+-    vq->used = vhost_memory_map(dev, vq->used_phys, l, true);
++    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
+     if (!vq->used) {
+         r = -ENOMEM;
+         goto fail;
 -- 
 2.52.0
 
