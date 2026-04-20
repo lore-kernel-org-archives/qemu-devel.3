@@ -4,70 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACDBF36C5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 12:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49CFF588C3
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 12:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEnSd-0006Fi-1f; Mon, 20 Apr 2026 08:10:52 -0400
+	id 1wEnl4-0003Fb-SJ; Mon, 20 Apr 2026 08:29:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wEnSR-0006FD-2D
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 08:10:31 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wEnkq-0003F9-7C; Mon, 20 Apr 2026 08:29:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wEnSP-0004Rl-EH
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 08:10:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1776687030; x=1808223030;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=CUDka3bP53CRZaZv32S7MqGXZ/SM72d8bEpuI1Piopo=;
- b=ItEY6DrrQqCXTvVGELAfMRomF4dm3hwZyOAzF9qQZUCEiQzHFYXdpmrO
- 5iyu67jPt7u5m8Ff2fPgditcQ43937kMW4eJ4TfqL8fwGww+Cc+ed8Myg
- 1Za/kmsmxEbcmrz2cMNE0Ztqn1JTdCmZPdvXa1/2cEXSkxgEm+Wu8ewYd
- KooYwIHacBTw5ORWv/CTwsFDQ3v0RwZNhhH8VC4Ev//APYI2bWhop1QIG
- 1+EAw8uAVNtM5SFVu1yiZ7PuENN9wFLtN8kk7MX5Sez+VSnKg/owH7wtm
- lxL3S3A9RfSmeOUpMAnzVSwncrWAssRjSofdBXIa8+IxXUHgCvsV8dPg2 A==;
-X-CSE-ConnectionGUID: NJ/yu9czScqvlmYg5useOQ==
-X-CSE-MsgGUID: REwC9txnQNePC5zRVwpl4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11762"; a="88674250"
-X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="88674250"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Apr 2026 05:10:29 -0700
-X-CSE-ConnectionGUID: ZAxxBapDSL2tunq1GIsgbg==
-X-CSE-MsgGUID: n/4TiuQ2SO6jNX998X1NEg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,189,1770624000"; d="scan'208";a="235708274"
-Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
- by ORVIESA003-auth.jf.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2026 05:10:27 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	farosas@suse.de,
-	junjie.cao@intel.com
-Subject: [PATCH 2/3] migration/file: switch file_write_ramblock_iov to
- pwritev_all
-Date: Tue, 21 Apr 2026 04:13:16 +0800
-Message-ID: <20260420201317.30199-3-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260420201317.30199-1-junjie.cao@intel.com>
-References: <20260420201317.30199-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wEnkn-00019p-L1; Mon, 20 Apr 2026 08:29:31 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63JMEv8S3232467; Mon, 20 Apr 2026 12:29:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=LUDL5e
+ nqbLO0/bkuu8ekse5e56o44kchj1z6qfUHmbc=; b=J89lRnOwpsn2EuL1tdKX8m
+ FJ+pgABr/VLv5EOjMTE4BQ1A2+1fXFDE48j3++X1FUGLiUri9Flo0CeaQ7ufQTRw
+ 1g7TujdsZPIs3drTc/NRnS1KH8EnwghvPEm3FQhmTEZOHb3uUnHN/LzRhRPQK4D0
+ ZA8y0CNtqWGdfzP4e/Fvth2ayrTn1ZYaea4W12QBjUlqtHGW+ts+Ldlq0llbCPpv
+ cxpVP38mneCEgnr0Z+MVvTpAsPsFXW8FjoW3ImAAG62oLgTxJGyWyNadN5xJ4Jhi
+ RIQtRmH3vPyn1of5xDfFydg21A4iMfyJmCEfSS/T3UXB9bLcm42Jw/4UXgYSpsfA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2k4yqes-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Apr 2026 12:29:23 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63KCKNKQ008057;
+ Mon, 20 Apr 2026 12:29:22 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dmmnvmtju-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Apr 2026 12:29:22 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63KCTLKm29426198
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 Apr 2026 12:29:21 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 446EB58056;
+ Mon, 20 Apr 2026 12:29:21 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9185F5803F;
+ Mon, 20 Apr 2026 12:29:20 +0000 (GMT)
+Received: from [9.61.174.150] (unknown [9.61.174.150])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 Apr 2026 12:29:20 +0000 (GMT)
+Message-ID: <530e4dc5-3a3f-4556-bfd6-d6e9e5b5da0e@linux.ibm.com>
+Date: Mon, 20 Apr 2026 08:29:20 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v1 1/1] hw/s390x/ccw: Disable legacy virtio-pci by
+ default (v11.1+)
+To: Cornelia Huck <cohuck@redhat.com>, Jaehoon Kim <jhkim@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com
+References: <20260417154332.849664-1-jhkim@linux.ibm.com>
+ <20260417154332.849664-2-jhkim@linux.ibm.com> <877bq2szx1.fsf@redhat.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <877bq2szx1.fsf@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: EoeWitAEiWyJn6PaDWN3RA5dxIPjlMWq
+X-Proofpoint-ORIG-GUID: EoeWitAEiWyJn6PaDWN3RA5dxIPjlMWq
+X-Authority-Analysis: v=2.4 cv=VP7tWdPX c=1 sm=1 tr=0 ts=69e61c23 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=bPsVJAnUZ_hZJGt3Yn4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEyMSBTYWx0ZWRfX6nbSupiA8NA7
+ AmjLa7GRKZh9rD5QFRhj1V7WKKHflkL6lPrpb0FhYJtkmE3XjcI9okZn2mtCjULzPD2iL211osd
+ gL/kipkI5vsYX4SVd0LmJFcLCx+V/64fW+LUwlPq6l6j/eizJ5yHduWbjgV+tUSFk07Yl3/MNFB
+ XX3V2Q/4ENO6tiwlE+j09FbjH4bzMfNB48nb//8xZyEbrslSY8NRzyiiapanqEFvX71fHHZFFJw
+ mig9HXsT4pocqyE/ukRpsfpynfJs6OXKhrSbkyvFR0N2QP4jOO+vlEfjwGNtR7o2W2NeanONxiq
+ 7z5bcsBLjyrMeTlEMU6vqqWwekuE6Q/NxkTOq8PL7xf+GKrmdv4IbEjCjcDrQ4A9NjjS8YeCRQT
+ HjRC/8J0Xo1SL5LXXTNYbavUjLf7pMIEbwO8Nt/m6ZUWx73TEfWbpUXOMinCch2HZs82jrniQqy
+ WE8+/SVq72wVpMwSbhA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200121
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,53 +123,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-file_write_ramblock_iov() uses single-shot qio_channel_pwritev() and
-only checks for ret < 0.  A short write (0 <= ret < requested) would be
-treated as success.
+On 4/20/26 6:12 AM, Cornelia Huck wrote:
+> On Fri, Apr 17 2026, Jaehoon Kim <jhkim@linux.ibm.com> wrote:
+> 
+>> On the s390 Linux kernel, IO_SPACE_LIMIT has been 0 since the initial
+>> zPCI implementation (commit cd24834130ac "s390/pci: base support"),
+>> making I/O BARs unusable.
+>>
+>> However, when virtio-pci devices operate in transitional mode, QEMU
+>> unconditionally exposes the legacy interface via BAR0. This results in
+>> firmware warnings during PCI enumeration, such as:
+>>
+>>   pci 0005:00:00.0: [Firmware Bug]: BAR 0: invalid; can't size
+>>
+>> even though BAR0 is never usable on the s390 kernel.
+>>
+>> Close this gap by disabling legacy virtio-pci support starting from
+>> machine version 11.1. This effectively makes virtio-pci devices
+>> non-transitional and prevents the creation of the unusable legacy I/O
+>> BAR.
+>>
+>> This introduces s390x-specific global compatibility properties that
+>> set disable-legacy=on as the default for virtio-pci devices. Machine
+>> versions v11.0 and earlier set disable-legacy=off to maintain their
+>> original default behavior (legacy support enabled), ensuring VMs
+>> created with those versions continue to work identically.
+>>
+>> Users can override the default on the command line if needed:
+>>   - On v11.1+: -global virtio-pci.disable-legacy=off (to enable legacy)
+>>   - On v11.0-: -global virtio-pci.disable-legacy=on (to disable legacy)
+> 
+> Makes sense to disable legacy virtio-pci devices, if they cannot work
+> anyway. I'm wondering if we want to have a generic "no legacy" switch as
+> well. I remember a patch from some time ago, but that was concerned with
+> endianness IIRC.
 
-Switch to qio_channel_pwritev_all() which retries until all bytes are
-written or an error occurs.
+Thanks Connie, I was hoping to get your input on this idea.
 
-Fixes: f427d90b98 ("migration/multifd: Support outgoing mapped-ram stream format")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- migration/file.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+By generic, do you mean disabling legacy virtio-pci (and legacy
+virtio-ccw?) across QEMU for all platforms vs only disabling it for s390x?
 
-diff --git a/migration/file.c b/migration/file.c
-index 0853188601..3729728dfe 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -200,7 +200,7 @@ void file_connect_incoming(FileMigrationArgs *file_args, Error **errp)
- int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-                             int niov, MultiFDPages_t *pages, Error **errp)
- {
--    ssize_t ret = 0;
-+    int ret = 0;
-     int i, slice_idx, slice_num;
-     uintptr_t base, next, offset;
-     size_t len;
-@@ -239,8 +239,8 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-             break;
-         }
- 
--        ret = qio_channel_pwritev(ioc, &iov[slice_idx], slice_num,
--                                  block->pages_offset + offset, errp);
-+        ret = qio_channel_pwritev_all(ioc, &iov[slice_idx], slice_num,
-+                                      block->pages_offset + offset, errp);
-         if (ret < 0) {
-             break;
-         }
-@@ -249,7 +249,7 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-         slice_num = 0;
-     }
- 
--    return (ret < 0) ? ret : 0;
-+    return ret;
- }
- 
- int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp)
--- 
-2.43.0
+> 
+> Anyway, we cannot turn off pre-1.0 for virtio-ccw at the moment, because
+> the bios still uses legacy virtio. Would be a bit of an effort to change
+> that, but still sounds like a good idea to me.
+> 
 
+Good point, hadn't thought about that and I guess it would be a pre-req
+if you really wanted to disable legacy virtio everywhere; we can
+certainly put this on our todo list for later, but I'd still like a
+patch like this one to fix the awkward s390x virtio-pci situation now.
+
+Thanks,
+Matt
 
