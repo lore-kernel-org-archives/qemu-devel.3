@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31225F5A8B9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460E6F5A8BB
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEv6y-000621-3o; Mon, 20 Apr 2026 16:20:52 -0400
+	id 1wEv6s-00061K-Uw; Mon, 20 Apr 2026 16:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6r-00060f-Sw
+ id 1wEv6r-000605-6A
  for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6q-0006OT-0B
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
+ id 1wEv6n-0006OB-Pz
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:44 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:c00c:0:640:e0de:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A9BC6C01BB;
- Mon, 20 Apr 2026 23:20:41 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 76E14C01B9;
+ Mon, 20 Apr 2026 23:20:40 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id XKYwe10MOSw0-fKAZa2TE; Mon, 20 Apr 2026 23:20:40 +0300
+ id XKYwe10MOSw0-PLmp6qr4; Mon, 20 Apr 2026 23:20:39 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776716441;
- bh=0FTFK55cw3rK/QycYXfqJNoLrOAw3LbH2p8qWtc8CYM=;
+ s=default; t=1776716439;
+ bh=AdsEQBGwBfFwazXQMva35ewY0KaErdEqggC3bArJp8o=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=G0JUjw7kqvMLw1o3CkAOdS12dnn7vMF+lUP2ln/cNBJ7UAhXA5M5N9AzLwHOPrx/q
- PKfYEUrkRgp+wEs0FSA2BPmjjcutILQF2IeAZkt+8jtjbpJnUGad8PW8Kqb0oFg96Q
- MHCjPO0E7zXfqCga2/Zi+4AB+N4lh1N/5vhmEHFY=
+ b=FwiB+2VcqbqwsvBO23y46V8eCv8rUBrbKp6AXXnOvKpC+Ha5gUJiLL1tqJZkbib6f
+ W/Xuy3p4yJ/h8WuDQ6KUh9+e9pdPFQ/RXs+ZiY5ECja/6SLNrPbJMQQAPFxMzgo1Ro
+ g2DuDpXcvkIoTS1MBUdjMKaC8fxHRYABfEyVs8/M=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
  d-tatianin@yandex-team.ru
-Subject: [PATCH v2 04/10] vhost: replace .vhost_vq_get_addr() with
- .vhost_phys_vring_addr()
-Date: Mon, 20 Apr 2026 23:20:25 +0300
-Message-ID: <20260420202032.714884-5-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 03/10] vhost: rename vhost-backend.c to vhost-kernel.c
+Date: Mon, 20 Apr 2026 23:20:24 +0300
+Message-ID: <20260420202032.714884-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 References: <20260420202032.714884-1-vsementsov@yandex-team.ru>
@@ -74,99 +73,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make a simper handler to consolidate the logic in one place. That
-helps further changes.
+This file is totally about vhost-kernel implementation, not generic
+code. Let's finally give it corresponding name.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/vhost-vdpa.c            | 13 +++----------
- hw/virtio/vhost.c                 | 12 ++++++------
- include/hw/virtio/vhost-backend.h |  6 ++----
- 3 files changed, 11 insertions(+), 20 deletions(-)
+ hw/virtio/meson.build                         | 2 +-
+ hw/virtio/{vhost-backend.c => vhost-kernel.c} | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ rename hw/virtio/{vhost-backend.c => vhost-kernel.c} (99%)
 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 93474624898..9e1aa4860a8 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -1571,16 +1571,9 @@ static int vhost_vdpa_set_owner(struct vhost_dev *dev)
-     return 0;
- }
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index adc3a4f748a..fbc1b1ad121 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -14,7 +14,7 @@ system_virtio_ss.add(files('virtio-qmp.c'))
  
--static int vhost_vdpa_vq_get_addr(struct vhost_dev *dev,
--                    struct vhost_vring_addr *addr, struct vhost_virtqueue *vq)
-+static bool vhost_vdpa_phys_vring_addr(struct vhost_dev *dev)
- {
--    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_VDPA);
--    addr->desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
--    addr->avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
--    addr->used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
--    trace_vhost_vdpa_vq_get_addr(dev, vq, addr->desc_user_addr,
--                                 addr->avail_user_addr, addr->used_user_addr);
--    return 0;
-+    return true;
- }
- 
- static bool  vhost_vdpa_force_iommu(struct vhost_dev *dev)
-@@ -1617,7 +1610,7 @@ const VhostOps vdpa_ops = {
-         .vhost_send_device_iotlb_msg = NULL,
-         .vhost_dev_start = vhost_vdpa_dev_start,
-         .vhost_get_device_id = vhost_vdpa_get_device_id,
--        .vhost_vq_get_addr = vhost_vdpa_vq_get_addr,
-+        .vhost_phys_vring_addr = vhost_vdpa_phys_vring_addr,
-         .vhost_force_iommu = vhost_vdpa_force_iommu,
-         .vhost_set_config_call = vhost_vdpa_set_config_call,
-         .vhost_reset_status = vhost_vdpa_reset_status,
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index ffd7d404cc7..564a5d46982 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1093,16 +1093,16 @@ static int vhost_virtqueue_set_addr(struct vhost_dev *dev,
-                                     struct vhost_virtqueue *vq,
-                                     unsigned idx, bool enable_log)
- {
-+    bool phys = dev->vhost_ops->vhost_phys_vring_addr &&
-+        dev->vhost_ops->vhost_phys_vring_addr(dev);
-     struct vhost_vring_addr addr;
-     int r;
-     memset(&addr, 0, sizeof(struct vhost_vring_addr));
- 
--    if (dev->vhost_ops->vhost_vq_get_addr) {
--        r = dev->vhost_ops->vhost_vq_get_addr(dev, &addr, vq);
--        if (r < 0) {
--            VHOST_OPS_DEBUG(r, "vhost_vq_get_addr failed");
--            return r;
--        }
-+    if (phys) {
-+        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
-+        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
-+        addr.used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
-     } else {
-         addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc;
-         addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail;
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index aab6bf3ef7e..7cc3bb54418 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -141,9 +141,7 @@ typedef int (*vhost_set_inflight_fd_op)(struct vhost_dev *dev,
- 
- typedef int (*vhost_dev_start_op)(struct vhost_dev *dev, bool started);
- 
--typedef int (*vhost_vq_get_addr_op)(struct vhost_dev *dev,
--                    struct vhost_vring_addr *addr,
--                    struct vhost_virtqueue *vq);
-+typedef bool (*vhost_phys_vring_addr_op)(struct vhost_dev *dev);
- 
- typedef int (*vhost_get_device_id_op)(struct vhost_dev *dev, uint32_t *dev_id);
- 
-@@ -211,7 +209,7 @@ typedef struct VhostOps {
-     vhost_get_inflight_fd_op vhost_get_inflight_fd;
-     vhost_set_inflight_fd_op vhost_set_inflight_fd;
-     vhost_dev_start_op vhost_dev_start;
--    vhost_vq_get_addr_op  vhost_vq_get_addr;
-+    vhost_phys_vring_addr_op vhost_phys_vring_addr;
-     vhost_get_device_id_op vhost_get_device_id;
-     vhost_force_iommu_op vhost_force_iommu;
-     vhost_set_config_call_op vhost_set_config_call;
+ if have_vhost
+   system_virtio_ss.add(files('vhost.c'))
+-  system_virtio_ss.add(files('vhost-backend.c', 'vhost-iova-tree.c'))
++  system_virtio_ss.add(files('vhost-kernel.c', 'vhost-iova-tree.c'))
+   if have_vhost_user
+     system_virtio_ss.add(files('vhost-user.c'))
+     system_virtio_ss.add(files('vhost-user-base.c'))
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-kernel.c
+similarity index 99%
+rename from hw/virtio/vhost-backend.c
+rename to hw/virtio/vhost-kernel.c
+index caeadd069b0..3390b48c6f1 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-kernel.c
+@@ -1,5 +1,5 @@
+ /*
+- * vhost-backend
++ * vhost-kernel
+  *
+  * Copyright (c) 2013 Virtual Open Systems Sarl.
+  *
 -- 
 2.52.0
 
