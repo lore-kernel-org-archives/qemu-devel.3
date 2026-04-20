@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F177F5A8AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6D4F5A8B6
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 19:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEuSW-0007aw-IC; Mon, 20 Apr 2026 15:39:04 -0400
+	id 1wEuSi-0007dd-4I; Mon, 20 Apr 2026 15:39:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuSU-0007a0-6K
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:02 -0400
+ id 1wEuSc-0007cc-Ja
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:11 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuSQ-0004SP-59
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:01 -0400
+ id 1wEuSb-0004Tv-4Y
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:10 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id DF9E480799;
- Mon, 20 Apr 2026 22:38:53 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 76BF880638;
+ Mon, 20 Apr 2026 22:39:07 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id mcXJF10KxSw0-YDJ18hm0; Mon, 20 Apr 2026 22:38:53 +0300
+ id mcXJF10KxSw0-p1DWm3Ml; Mon, 20 Apr 2026 22:39:06 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776713933;
- bh=PFuhyYkEyooqO79Vl1qyb3FEMTAfJe+RGQkcyMKm/mo=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=UbR7bjxQ2zlISF1HoNaqwKybIrv5hKRoq9ymTw5aH1l/qOkD71w2/LsCL70lZSfxS
- wPaVK7tDrHho+4zX9tUGk+l2zZD8T452GjmD49qwBcZlwTEUnpD3Nod8h9KmHBB1is
- LxaKNMcHPEzrM09MuKKYv1AQdrzPByZ+SKagOWHI=
+ s=default; t=1776713946;
+ bh=86MQ9xSBn/yGccDFGDq/KIMg3bCdLAUA35MDduZTO6Y=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=Qa5+CZRhHr036725a3VyXEmVVrUU8jC2YttKOTJ7mI8qEpIsiijrLLu4pwA79GWWa
+ bFFXWYXas7Zlh/drABMa4LlwwIE96T0fZlRSTYGmIW2UimelL6MNCZQXjqoA6ngZRN
+ cER/U6GiA3vtmGBIUdPmKObI6IePUsaUUYMKkQHc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,15 +46,18 @@ To: jasowang@redhat.com,
 Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru
-Subject: [PATCH v15 1/8] net/tap: move vhost-net open() calls to
- tap_parse_vhost_fds()
-Date: Mon, 20 Apr 2026 22:38:38 +0300
-Message-ID: <20260420193846.675844-2-vsementsov@yandex-team.ru>
+ yc-core@yandex-team.ru, Thomas Huth <thuth@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v15 7/8] tests/functional: add skipWithoutSudo() decorator
+Date: Mon, 20 Apr 2026 22:38:44 +0300
+Message-ID: <20260420193846.675844-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420193846.675844-1-vsementsov@yandex-team.ru>
 References: <20260420193846.675844-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -78,84 +81,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1. Simplify code path: get vhostfds for all cases in one function.
-
-2. Prepare for further tap-fd-migraton feature, when we'll need to
-postpone vhost initialization up to post-load stage.
+To be used in the next commit: that would be a test for TAP
+networking, and it will need to setup TAP device.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
 ---
- net/tap.c | 39 ++++++++++++++++++++++-----------------
- 1 file changed, 22 insertions(+), 17 deletions(-)
+ tests/functional/qemu_test/decorators.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/tap.c b/net/tap.c
-index 57ffb09885c..d941c67895e 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -736,8 +736,7 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         }
-     }
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index fcf236ecfdf..aa135acc785 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -6,6 +6,7 @@
+ import os
+ import platform
+ import resource
++import subprocess
+ from unittest import skipIf, skipUnless
  
--    if (tap->has_vhost ? tap->vhost :
--        (vhostfd != -1) || (tap->has_vhostforce && tap->vhostforce)) {
-+    if (vhostfd != -1) {
-         VhostNetOptions options;
- 
-         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
-@@ -747,17 +746,6 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         } else {
-             options.busyloop_timeout = 0;
-         }
--
--        if (vhostfd == -1) {
--            vhostfd = open("/dev/vhost-net", O_RDWR);
--            if (vhostfd < 0) {
--                error_setg_file_open(errp, errno, "/dev/vhost-net");
--                goto failed;
--            }
--            if (!qemu_set_blocking(vhostfd, false, errp)) {
--                goto failed;
--            }
--        }
-         options.opaque = (void *)(uintptr_t)vhostfd;
-         options.nvqs = 2;
-         options.feature_bits = kernel_feature_bits;
-@@ -843,14 +831,31 @@ static int tap_parse_fds_and_queues(const NetdevTapOptions *tap, int **fds,
- static bool tap_parse_vhost_fds(const NetdevTapOptions *tap, int **vhost_fds,
-                                 int queues, Error **errp)
- {
--    if (!(tap->vhostfd || tap->vhostfds)) {
-+    bool need_vhost = tap->has_vhost ? tap->vhost :
-+        ((tap->vhostfd || tap->vhostfds) ||
-+         (tap->has_vhostforce && tap->vhostforce));
+ from .cmd import which
+@@ -177,3 +178,18 @@ def skipLockedMemoryTest(locked_memory):
+         ulimit_memory == resource.RLIM_INFINITY or ulimit_memory >= locked_memory * 1024,
+         f'Test required {locked_memory} kB of available locked memory',
+     )
 +
-+    if (!need_vhost) {
-         *vhost_fds = NULL;
-         return true;
-     }
- 
--    if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
--                      vhost_fds, queues, errp) < 0) {
--        return false;
-+    if (tap->vhostfd || tap->vhostfds) {
-+        if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
-+                          vhost_fds, queues, errp) < 0) {
-+            return false;
-+        }
-+    } else {
-+        *vhost_fds = g_new(int, queues);
-+        for (int i = 0; i < queues; i++) {
-+            int vhostfd = open("/dev/vhost-net", O_RDWR);
-+            if (vhostfd < 0) {
-+                error_setg_file_open(errp, errno, "/dev/vhost-net");
-+                net_free_fds(*vhost_fds, i);
-+                return false;
-+            }
-+            (*vhost_fds)[i] = vhostfd;
-+        }
-     }
- 
-     if (!unblock_fds(*vhost_fds, queues, errp)) {
++'''
++Decorator to skip execution of a test if passwordless
++sudo command is not available.
++'''
++def skipWithoutSudo():
++    proc = subprocess.run(["sudo", "-n", "/bin/true"],
++                          stdin=subprocess.PIPE,
++                          stdout=subprocess.PIPE,
++                          stderr=subprocess.STDOUT,
++                          universal_newlines=True,
++                          check=False)
++
++    return skipUnless(proc.returncode == 0,
++                      f'requires password-less sudo access: {proc.stdout}')
 -- 
 2.52.0
 
