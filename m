@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C134F5A8B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D29BF5A8BB
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEv6t-00061R-Pv; Mon, 20 Apr 2026 16:20:48 -0400
+	id 1wEv6t-00061P-0G; Mon, 20 Apr 2026 16:20:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6s-00060j-5j
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:46 -0400
+ id 1wEv6r-00060W-Gg
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6q-0006OZ-88
+ id 1wEv6n-0006NO-LQ
  for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:c00c:0:640:e0de:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id DBB5BC01BD;
- Mon, 20 Apr 2026 23:20:42 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id CD690C01A6;
+ Mon, 20 Apr 2026 23:20:37 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id XKYwe10MOSw0-ya10Q2Iq; Mon, 20 Apr 2026 23:20:42 +0300
+ id XKYwe10MOSw0-y7QnYXff; Mon, 20 Apr 2026 23:20:36 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776716442;
- bh=y2itUKXedtugRUfBxJQ6CsdLWnW9+GVj1qpys57wb6k=;
+ s=default; t=1776716437;
+ bh=AFJKds80zAM8tJhj7L+RUZobVEy2LlbiGfFbnCHLRXw=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Oc+aBoJ63sLLiQUKAjJJdZAcgnb6fR2XC6HLtO96gLmkhjHQnscGeC8ErAFutSs75
- lLlr+m/a4wi74hinEdeisEaHj/VilGix1AblPnxvtK/1P7KOEHNubqejjbBA0jVCCV
- dbDX1GBNb6vOt8zS2FdDgL3QP+KNJ//rrwk5UrKg=
+ b=Ff3wbagOoq9zhEXu6+sWUshFUM+6GIfX1WyMwmnGdWE2xDnD0mXMMR+Z4v+YIQgdc
+ bsM/C5AmdckZWVVO1j2FJWqSuxxDDVCRMQJbxQuXWOu7N8H3VBqTWaun7sFMbHLnXr
+ OXbFSa32XpW37h5VpgYI1mnnw/Q0QbVZyuxHqF2c=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
  d-tatianin@yandex-team.ru
-Subject: [PATCH v2 05/10] vhost: simplify vhost_memory_map() and
- vhost_memory_unmap()
-Date: Mon, 20 Apr 2026 23:20:26 +0300
-Message-ID: <20260420202032.714884-6-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 01/10] vhost: move IOTLB functions from vhost-backend.c to
+ vhost.c
+Date: Mon, 20 Apr 2026 23:20:22 +0300
+Message-ID: <20260420202032.714884-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 References: <20260420202032.714884-1-vsementsov@yandex-team.ru>
@@ -74,90 +74,284 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make these functions simple wrappers around address_space_map() and
-address_space_unmap(). Move IOMMU handling logic one layer up to the
-callers.
+Move and rename vhost_backend_update_device_iotlb(),
+vhost_backend_invalidate_device_iotlb(), and
+vhost_backend_handle_iotlb_msg() from vhost-backend.c to vhost.c.
+vhost-backend.c is actually about vhost-kernel backend. But these
+functions are shared with vhost-user, so let's move them into
+generic place. Moreover, two of three functions becomes static as
+they are used only in vhost.c.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/vhost.c | 43 ++++++++++++++++++++++++-------------------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+ hw/virtio/vhost-backend.c         | 82 +----------------------------
+ hw/virtio/vhost-user.c            |  2 +-
+ hw/virtio/vhost.c                 | 85 +++++++++++++++++++++++++++++--
+ include/hw/virtio/vhost-backend.h | 11 ----
+ include/hw/virtio/vhost.h         |  2 +
+ 5 files changed, 86 insertions(+), 96 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 564a5d46982..cc083572f40 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -456,21 +456,17 @@ static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
- static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
-                               hwaddr len, bool is_write)
- {
--    if (!vhost_dev_has_iommu(dev)) {
--        hwaddr mapped_len = len;
--        void *res = address_space_map(dev->vdev->dma_as, addr, &mapped_len,
--                                      is_write, MEMTXATTRS_UNSPECIFIED);
--        if (!res) {
--            return NULL;
--        }
--        if (len != mapped_len) {
--            address_space_unmap(dev->vdev->dma_as, res, mapped_len, 0, 0);
--            return NULL;
--        }
--        return res;
--    } else {
--        return (void *)(uintptr_t)addr;
-+    hwaddr mapped_len = len;
-+    void *res = address_space_map(dev->vdev->dma_as, addr, &mapped_len,
-+                                  is_write, MEMTXATTRS_UNSPECIFIED);
-+    if (!res) {
-+        return NULL;
-+    }
-+    if (len != mapped_len) {
-+        address_space_unmap(dev->vdev->dma_as, res, mapped_len, 0, 0);
-+        return NULL;
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index 4367db0d951..fea88afc39a 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -298,7 +298,7 @@ static void vhost_kernel_iotlb_read(void *opaque)
+                 break;
+             }
+ 
+-            vhost_backend_handle_iotlb_msg(dev, &msg.iotlb);
++            vhost_handle_iotlb_msg(dev, &msg.iotlb);
+         }
+     } else {
+         struct vhost_msg msg;
+@@ -313,7 +313,7 @@ static void vhost_kernel_iotlb_read(void *opaque)
+                 break;
+             }
+ 
+-            vhost_backend_handle_iotlb_msg(dev, &msg.iotlb);
++            vhost_handle_iotlb_msg(dev, &msg.iotlb);
+         }
      }
-+    return res;
  }
- 
- static void vhost_memory_unmap(struct vhost_dev *dev, void **buffer,
-@@ -481,17 +477,18 @@ static void vhost_memory_unmap(struct vhost_dev *dev, void **buffer,
-         return;
-     }
- 
--    if (!vhost_dev_has_iommu(dev)) {
--        address_space_unmap(dev->vdev->dma_as, *buffer, len, is_write,
--                            access_len);
+@@ -392,81 +392,3 @@ const VhostOps kernel_ops = {
+         .vhost_send_device_iotlb_msg = vhost_kernel_send_device_iotlb_msg,
+ };
+ #endif
+-
+-int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
+-                                             uint64_t iova, uint64_t uaddr,
+-                                             uint64_t len,
+-                                             IOMMUAccessFlags perm)
+-{
+-    struct vhost_iotlb_msg imsg;
+-
+-    imsg.iova =  iova;
+-    imsg.uaddr = uaddr;
+-    imsg.size = len;
+-    imsg.type = VHOST_IOTLB_UPDATE;
+-
+-    switch (perm) {
+-    case IOMMU_RO:
+-        imsg.perm = VHOST_ACCESS_RO;
+-        break;
+-    case IOMMU_WO:
+-        imsg.perm = VHOST_ACCESS_WO;
+-        break;
+-    case IOMMU_RW:
+-        imsg.perm = VHOST_ACCESS_RW;
+-        break;
+-    default:
+-        return -EINVAL;
 -    }
 -
-+    address_space_unmap(dev->vdev->dma_as, *buffer, len, is_write,
-+                        access_len);
-     *buffer = NULL;
+-    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg)
+-        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
+-
+-    return -ENODEV;
+-}
+-
+-int vhost_backend_invalidate_device_iotlb(struct vhost_dev *dev,
+-                                                 uint64_t iova, uint64_t len)
+-{
+-    struct vhost_iotlb_msg imsg;
+-
+-    imsg.iova = iova;
+-    imsg.size = len;
+-    imsg.type = VHOST_IOTLB_INVALIDATE;
+-
+-    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg)
+-        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
+-
+-    return -ENODEV;
+-}
+-
+-int vhost_backend_handle_iotlb_msg(struct vhost_dev *dev,
+-                                          struct vhost_iotlb_msg *imsg)
+-{
+-    int ret = 0;
+-
+-    if (unlikely(!dev->vdev)) {
+-        error_report("Unexpected IOTLB message when virtio device is stopped");
+-        return -EINVAL;
+-    }
+-
+-    switch (imsg->type) {
+-    case VHOST_IOTLB_MISS:
+-        ret = vhost_device_iotlb_miss(dev, imsg->iova,
+-                                      imsg->perm != VHOST_ACCESS_RO);
+-        break;
+-    case VHOST_IOTLB_ACCESS_FAIL:
+-        /* FIXME: report device iotlb error */
+-        error_report("Access failure IOTLB message type not supported");
+-        ret = -ENOTSUP;
+-        break;
+-    case VHOST_IOTLB_UPDATE:
+-    case VHOST_IOTLB_INVALIDATE:
+-    default:
+-        error_report("Unexpected IOTLB message type");
+-        ret = -EINVAL;
+-        break;
+-    }
+-
+-    return ret;
+-}
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 4fb136b7b37..6978d8ee947 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1901,7 +1901,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+ 
+     switch (hdr.request) {
+     case VHOST_USER_BACKEND_IOTLB_MSG:
+-        ret = vhost_backend_handle_iotlb_msg(dev, &payload.iotlb);
++        ret = vhost_handle_iotlb_msg(dev, &payload.iotlb);
+         break;
+     case VHOST_USER_BACKEND_CONFIG_CHANGE_MSG:
+         ret = vhost_user_backend_handle_config_change(dev);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c610007e812..4d42f8bda41 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -916,14 +916,92 @@ static void vhost_region_addnop(MemoryListener *listener,
+     vhost_region_add_section(dev, section);
  }
  
- static void vhost_vrings_unmap(struct vhost_dev *dev,
-                                struct vhost_virtqueue *vq, bool touched)
++static int vhost_update_device_iotlb(struct vhost_dev *dev,
++                                     uint64_t iova, uint64_t uaddr,
++                                     uint64_t len,
++                                     IOMMUAccessFlags perm)
++{
++    struct vhost_iotlb_msg imsg;
++
++    imsg.iova =  iova;
++    imsg.uaddr = uaddr;
++    imsg.size = len;
++    imsg.type = VHOST_IOTLB_UPDATE;
++
++    switch (perm) {
++    case IOMMU_RO:
++        imsg.perm = VHOST_ACCESS_RO;
++        break;
++    case IOMMU_WO:
++        imsg.perm = VHOST_ACCESS_WO;
++        break;
++    case IOMMU_RW:
++        imsg.perm = VHOST_ACCESS_RW;
++        break;
++    default:
++        return -EINVAL;
++    }
++
++    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg) {
++        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
++    }
++
++    return -ENODEV;
++}
++
++static int vhost_invalidate_device_iotlb(struct vhost_dev *dev,
++                                         uint64_t iova, uint64_t len)
++{
++    struct vhost_iotlb_msg imsg;
++
++    imsg.iova = iova;
++    imsg.size = len;
++    imsg.type = VHOST_IOTLB_INVALIDATE;
++
++    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg) {
++        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
++    }
++
++    return -ENODEV;
++}
++
++int vhost_handle_iotlb_msg(struct vhost_dev *dev, struct vhost_iotlb_msg *imsg)
++{
++    int ret = 0;
++
++    if (unlikely(!dev->vdev)) {
++        error_report("Unexpected IOTLB message when virtio device is stopped");
++        return -EINVAL;
++    }
++
++    switch (imsg->type) {
++    case VHOST_IOTLB_MISS:
++        ret = vhost_device_iotlb_miss(dev, imsg->iova,
++                                      imsg->perm != VHOST_ACCESS_RO);
++        break;
++    case VHOST_IOTLB_ACCESS_FAIL:
++        /* FIXME: report device iotlb error */
++        error_report("Access failure IOTLB message type not supported");
++        ret = -ENOTSUP;
++        break;
++    case VHOST_IOTLB_UPDATE:
++    case VHOST_IOTLB_INVALIDATE:
++    default:
++        error_report("Unexpected IOTLB message type");
++        ret = -EINVAL;
++        break;
++    }
++
++    return ret;
++}
++
+ static void vhost_iommu_unmap_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
  {
-+    if (vhost_dev_has_iommu(dev)) {
-+        return;
-+    }
-+
-     vhost_memory_unmap(dev, &vq->used, vq->used_size, touched,
-                        touched ? vq->used_size : 0);
-     vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0,
-@@ -519,6 +516,14 @@ static int vhost_vrings_map(struct vhost_dev *dev,
-         /* Queue might not be ready for start */
-         return 0;
+     struct vhost_iommu *iommu = container_of(n, struct vhost_iommu, n);
+     struct vhost_dev *hdev = iommu->hdev;
+     hwaddr iova = iotlb->iova + iommu->iommu_offset;
+ 
+-    if (vhost_backend_invalidate_device_iotlb(hdev, iova,
+-                                              iotlb->addr_mask + 1)) {
++    if (vhost_invalidate_device_iotlb(hdev, iova, iotlb->addr_mask + 1)) {
+         error_report("Fail to invalidate device iotlb");
      }
+ }
+@@ -1304,8 +1382,7 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write)
+         len = MIN(iotlb.addr_mask + 1, len);
+         iova = iova & ~iotlb.addr_mask;
+ 
+-        ret = vhost_backend_update_device_iotlb(dev, iova, uaddr,
+-                                                len, iotlb.perm);
++        ret = vhost_update_device_iotlb(dev, iova, uaddr, len, iotlb.perm);
+         if (ret) {
+             trace_vhost_iotlb_miss(dev, 4);
+             error_report("Fail to update device iotlb");
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index ff94fa17342..57497e197aa 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -222,17 +222,6 @@ typedef struct VhostOps {
+     vhost_check_device_state_op vhost_check_device_state;
+ } VhostOps;
+ 
+-int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
+-                                             uint64_t iova, uint64_t uaddr,
+-                                             uint64_t len,
+-                                             IOMMUAccessFlags perm);
+-
+-int vhost_backend_invalidate_device_iotlb(struct vhost_dev *dev,
+-                                                 uint64_t iova, uint64_t len);
+-
+-int vhost_backend_handle_iotlb_msg(struct vhost_dev *dev,
+-                                          struct vhost_iotlb_msg *imsg);
+-
+ int vhost_user_gpu_set_socket(struct vhost_dev *dev, int fd);
+ 
+ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 54862f9b445..b292e9f0fed 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -403,6 +403,8 @@ int vhost_dev_set_inflight(struct vhost_dev *dev,
+ int vhost_dev_get_inflight(struct vhost_dev *dev, uint16_t queue_size,
+                            struct vhost_inflight *inflight);
+ bool vhost_dev_has_iommu(struct vhost_dev *dev);
++int vhost_handle_iotlb_msg(struct vhost_dev *dev, struct vhost_iotlb_msg *imsg);
 +
-+    if (vhost_dev_has_iommu(dev)) {
-+        vq->desc = (void *)(uintptr_t)vq->desc_phys;
-+        vq->avail = (void *)(uintptr_t)vq->avail_phys;
-+        vq->used = (void *)(uintptr_t)vq->used_phys;
-+        return 1;
-+    }
-+
-     vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
-     if (!vq->desc) {
-         goto fail;
+ 
+ static inline bool vhost_dev_has_feature(struct vhost_dev *dev,
+                                          uint64_t feature)
 -- 
 2.52.0
 
