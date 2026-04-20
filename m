@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF439F36C24
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 06:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB767F36C2A
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 06:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEiOU-0007Ng-W0; Mon, 20 Apr 2026 02:46:07 -0400
+	id 1wEiPK-0007h7-AZ; Mon, 20 Apr 2026 02:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wEiOP-0007ML-7D; Mon, 20 Apr 2026 02:46:01 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wEiPD-0007bR-61; Mon, 20 Apr 2026 02:46:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wEiON-0007hY-Gs; Mon, 20 Apr 2026 02:46:00 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wEiPB-0007t0-4F; Mon, 20 Apr 2026 02:46:50 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63JMaQGi3550653; Mon, 20 Apr 2026 06:45:44 GMT
+ 63JMxEb13987518; Mon, 20 Apr 2026 06:46:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lOVKSN
- WQAub57EocY0WVyHyNZHIQKlvW4675SlHv+CU=; b=EK00B4DIzm/Ueim4xgjysP
- H3qmR/ujY5TcCs5Eq4i+FQXT8UCLcZ2+RqPIoKbAkZwleNHvXx9JPR3fi5Sneqef
- W1/VtXnmbyCkN2IKIheVwOw3LkxWbR7JEkgJOv2gvkO7ZJ9ehT34R3/mj3H147Zp
- 62X1DFY+j3XvrUkZlBbMQGlkcW0yAgZGPwF0wS+KkJVSUp7KAPZ77SmXOm6hYnVK
- xEHC3sSUT/9LrxK6lkR9wVwJW3cMaFBE15Sos3Zx5T78s5Zaa0dPEi/J9Z2kXqSv
- vY5wwpF11Z3QqmZQoVjxel5vTM1zC1KqOT6oqWeFh1MuxJ42RS3kyekBeigM0isw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Wx3Ub5
+ lvRpcKiudQnvj9T2ITXyP0gYhnoOcJpHR3rwA=; b=qN7fE3YRkZl+CZewlVmmj7
+ /GWZSD2Q6mOY4YWWio59QT+gQtyK2zHI9a35H4P/WItgP9Ngz9bHoIPOcDEGlqGe
+ K2sP0rrbmjn4OUjUcUpZ/48C3dEEXD8VkOX4fvf4BtlnundfuIbqu2xFYcSpRmRK
+ G/+RNlqgUCvdac/udKL2nE8Pa/+GU8dnHPdsv3a+Wt/oNlAp8gWEqSf4zPDISa8f
+ xflIgtfq7966bRIpw4TAB3TP6w0VqfhAr7S4lFbeTQzdonJDdEZbBApqEB5CshYS
+ 7kSmP9NEIXMSgoAkhILyQU8YZmm84W6Y2n4/mn7lhXBVmnFfHfZqQcDi7ZS/N1Vg
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2nexjw0-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2k0nvdq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Apr 2026 06:45:43 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63K6ZFqk003329;
- Mon, 20 Apr 2026 06:45:42 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dmpyxuf50-1
+ Mon, 20 Apr 2026 06:46:39 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63K6ZOR3020695;
+ Mon, 20 Apr 2026 06:46:38 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dmpgg3j1r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Apr 2026 06:45:42 +0000 (GMT)
+ Mon, 20 Apr 2026 06:46:38 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63K6jfiO14942766
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63K6kbBJ29688402
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 Apr 2026 06:45:41 GMT
+ Mon, 20 Apr 2026 06:46:37 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3060258052;
- Mon, 20 Apr 2026 06:45:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4125B58054;
+ Mon, 20 Apr 2026 06:46:37 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A251758045;
- Mon, 20 Apr 2026 06:45:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B425758050;
+ Mon, 20 Apr 2026 06:46:33 +0000 (GMT)
 Received: from [9.123.0.169] (unknown [9.123.0.169])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 20 Apr 2026 06:45:37 +0000 (GMT)
-Message-ID: <ea4afcb6-6603-472e-92ed-7761a15d1ae3@linux.ibm.com>
-Date: Mon, 20 Apr 2026 12:15:36 +0530
+ Mon, 20 Apr 2026 06:46:33 +0000 (GMT)
+Message-ID: <09352eea-3794-42c2-becc-b5c7dbd37732@linux.ibm.com>
+Date: Mon, 20 Apr 2026 12:16:32 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] hw/ppc/spapr: Un-inline rtas_load/store() helpers
+Subject: Re: [PATCH 2/8] target/ppc: Factor common ppc_load_epr() helper out
 Content-Language: en-GB
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -72,39 +72,39 @@ Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chinmay Rath <rathc@linux.ibm.com>
 References: <20260319111936.68041-1-philmd@linaro.org>
- <20260319111936.68041-2-philmd@linaro.org>
+ <20260319111936.68041-3-philmd@linaro.org>
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260319111936.68041-2-philmd@linaro.org>
+In-Reply-To: <20260319111936.68041-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: p-YCUuje672pLu5AB-fTADie0FMqcfZY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDA1OSBTYWx0ZWRfX4L5zRHq9uLsj
- 5YbpnMkJ3VfAhD4IiJFD50oWt053RBz0TGO0eweVSlPZA2imk+xF9NxT/vwUvg4cAtHw8Umfmsr
- f4rJwIUrk6SxIBFhfNhdT9Y4E+hw+UAC3ma59xSqSTJ3c94XoyMABKXUSh8xNv/in8s6EQn37Mv
- JMYtCC/J5VzXHdY5Zw/EiDrf9MUVGNIMgCAEXU2+bneVMUCcwUblc40oQ5Ka0PuwCdnTtlpWWM9
- 5kIBeJmaWwJeivMyqofPy1RtoAT5K3BBjQlMCXuM2SM+HfrEA/86i7KxV2fbfMWrfnovG30Afa2
- tzxo4gDy0AKU5w5q+2kSA9p0hqbIsV20aAxOXyEssGAiFkcE35/LjGz63p0prj4/77ADrF3DsBm
- AsHu6dwgPjNWivwyKB94W/xmNyjpvRj9yOWVkiPdvthk11iay194XpjNjbrGCEIyzIB7AlSB72s
- YVIY92I2jWgFJfdtmcQ==
-X-Proofpoint-GUID: q5K-yI5bxp0JBWfmKuHLTzRVRaCcrX3l
-X-Authority-Analysis: v=2.4 cv=B7iJFutM c=1 sm=1 tr=0 ts=69e5cb98 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-ORIG-GUID: D0aTPj8iCrIVmuZCumGDaI9z7ny-fqPR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDA1OSBTYWx0ZWRfX/xYVP93Nl13O
+ VxcqJrpGJ/eRQGa1zrSmNojt0DwdAnJt3k1WRNTyqulBkAFdJukguvXFWk6tybqlUt831fOgg1Z
+ hMK4ykWZtLsbOsfWbUmHDPQlFSjzqdwxQ40yD52sJEmMwkqdVB1deH26JuOg8VJrNHQmLMOrGtx
+ dtX/dURwuz/i1RbZ58R/smVC4wJvpwEU/btfTBQHo++LtL8Cx3UN7pcR0NL0mqvAts9PPWaxjJb
+ c1iIhrqUZUqUUIziJ4ptU8xm/N73HEJGemYAgDz9/7lATCVJSmWHvLD/TLNMPMjxIQkY8oSFU6Q
+ Epoi06ouGv90rPir1+QYfws2sdBvXls0ClwsghHnaG+I3qxIRBGO3keI/Di9Lq5jBYELR2NZP5l
+ Ww3oUBAogjtdkEaS1yst3w0H8w0HPoeX0LqBV2uSpd129aedYG0pK7ZxsnQ1oIJhLnqOpIQAIDm
+ Oj1baEg7PPRzJieEfYA==
+X-Authority-Analysis: v=2.4 cv=PtujqQM3 c=1 sm=1 tr=0 ts=69e5cbcf cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=ALTUr-PPrISsu7shrVwA:9 a=3ZKOabzyN94A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=LBd1l7Yb-2XZM44x8U0A:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: sBzfiEJnuLe6gGEQbkRdi8wRpRlLWOeA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-20_01,2026-04-17_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 spamscore=0 impostorscore=0 adultscore=0
- bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1011
+ malwarescore=0 suspectscore=0 clxscore=1015 spamscore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200059
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -130,76 +130,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 19/03/26 4:49 pm, Philippe Mathieu-Daudé wrote:
-> The 32-bit binary doesn't use these helpers, so don't need to
-> compile them. Rather than using 64-bit target #ifdef'ry in a
-> global header, un-inline the calls since the helpers are called
-> from I/O (cold) path.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/ppc/cpu.h         | 2 ++
+>   target/ppc/cpu.c         | 8 ++++++++
+>   target/ppc/excp_helper.c | 3 +--
+>   target/ppc/kvm.c         | 2 +-
+>   4 files changed, 12 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index d637a50798f..e3e4bce91b7 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -2822,6 +2822,8 @@ enum {
+>   target_ulong cpu_read_xer(const CPUPPCState *env);
+>   void cpu_write_xer(CPUPPCState *env, target_ulong xer);
+>   
+> +uint64_t ppc_load_epr(CPUPPCState *env);
+> +
 
-Thanks for this cleanup.
+This declaration is added unconditionally, although its implementation 
+in target/ppc/cpu.c is placed inside #if !defined(CONFIG_USER_ONLY).
+Should we guard the declaration also?
+
+Otherwise, LTGM.
 
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-> ---
->   include/hw/ppc/spapr.h | 18 +++---------------
->   hw/ppc/spapr_rtas.c    | 15 +++++++++++++++
->   2 files changed, 18 insertions(+), 15 deletions(-)
-> 
-> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index b022f8dd25d..9acda15d4f6 100644
-> --- a/include/hw/ppc/spapr.h
-> +++ b/include/hw/ppc/spapr.h
-> @@ -796,21 +796,9 @@ static inline uint64_t ppc64_phys_to_real(uint64_t addr)
->       return addr & ~0xF000000000000000ULL;
+>   /*
+>    * All 64-bit server processors compliant with arch 2.x, ie. 970 and newer,
+>    * have PPC_SEGMENT_64B.
+> diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
+> index 4d8faaddee2..f24801a9731 100644
+> --- a/target/ppc/cpu.c
+> +++ b/target/ppc/cpu.c
+> @@ -26,6 +26,7 @@
+>   #include "fpu/softfloat-helpers.h"
+>   #include "mmu-hash64.h"
+>   #include "helper_regs.h"
+> +#include "system/memory.h"
+>   #include "system/tcg.h"
+>   
+>   target_ulong cpu_read_xer(const CPUPPCState *env)
+> @@ -105,6 +106,13 @@ void ppc_store_lpcr(PowerPCCPU *cpu, target_ulong val)
+>       ppc_maybe_interrupt(env);
 >   }
 >   
-> -static inline uint32_t rtas_ld(target_ulong phys, int n)
-> -{
-> -    return ldl_be_phys(&address_space_memory,
-> -                       ppc64_phys_to_real(phys + 4 * n));
-> -}
-> -
-> -static inline uint64_t rtas_ldq(target_ulong phys, int n)
-> -{
-> -    return (uint64_t)rtas_ld(phys, n) << 32 | rtas_ld(phys, n + 1);
-> -}
-> -
-> -static inline void rtas_st(target_ulong phys, int n, uint32_t val)
-> -{
-> -    stl_be_phys(&address_space_memory, ppc64_phys_to_real(phys + 4 * n), val);
-> -}
-> +uint32_t rtas_ld(target_ulong phys, int n);
-> +uint64_t rtas_ldq(target_ulong phys, int n);
-> +void rtas_st(target_ulong phys, int n, uint32_t val);
->   
->   typedef void (*spapr_rtas_fn)(PowerPCCPU *cpu, SpaprMachineState *sm,
->                                 uint32_t token,
-> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-> index cb79ad34053..0871425237e 100644
-> --- a/hw/ppc/spapr_rtas.c
-> +++ b/hw/ppc/spapr_rtas.c
-> @@ -52,6 +52,21 @@
->   #include "migration/blocker.h"
->   #include "helper_regs.h"
->   
-> +uint32_t rtas_ld(target_ulong phys, int n)
+> +uint64_t ppc_load_epr(CPUPPCState *env)
 > +{
-> +    return ldl_be_phys(&address_space_memory, ppc64_phys_to_real(phys + 4 * n));
+> +    CPUState *cs = env_cpu(env);
+> +
+> +    return ldl_phys(cs->as, env->mpic_iack);
 > +}
 > +
-> +uint64_t rtas_ldq(target_ulong phys, int n)
-> +{
-> +    return (uint64_t)rtas_ld(phys, n) << 32 | rtas_ld(phys, n + 1);
-> +}
-> +
-> +void rtas_st(target_ulong phys, int n, uint32_t val)
-> +{
-> +    stl_be_phys(&address_space_memory, ppc64_phys_to_real(phys + 4 * n), val);
-> +}
-> +
->   static void rtas_display_character(PowerPCCPU *cpu, SpaprMachineState *spapr,
->                                      uint32_t token, uint32_t nargs,
->                                      target_ulong args,
+>   #if defined(TARGET_PPC64)
+>   void ppc_update_ciabr(CPUPPCState *env)
+>   {
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 6d05b865058..3b476c145ab 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -1166,9 +1166,8 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
+>           break;
+>       case POWERPC_EXCP_EXTERNAL:  /* External input                           */
+>           if (env->mpic_proxy) {
+> -            CPUState *cs = env_cpu(env);
+>               /* IACK the IRQ on delivery */
+> -            env->spr[SPR_BOOKE_EPR] = ldl_phys(cs->as, env->mpic_iack);
+> +            env->spr[SPR_BOOKE_EPR] = ppc_load_epr(env);
+>           }
+>           break;
+>       case POWERPC_EXCP_ALIGN:     /* Alignment exception                      */
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index 41bd03ec2a2..3bff75b7f54 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -1692,7 +1692,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+>   #endif
+>       case KVM_EXIT_EPR:
+>           trace_kvm_handle_epr();
+> -        run->epr.epr = ldl_phys(cs->as, env->mpic_iack);
+> +        run->epr.epr = ppc_load_epr(env);
+>           ret = 0;
+>           break;
+>       case KVM_EXIT_WATCHDOG:
 
 
