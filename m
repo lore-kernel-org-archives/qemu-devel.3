@@ -4,106 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15B7F588E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D552BF588DF
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEpvM-0007HM-N6; Mon, 20 Apr 2026 10:48:32 -0400
+	id 1wEpwK-00089c-UG; Mon, 20 Apr 2026 10:49:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1wEpv4-0007DW-Ti; Mon, 20 Apr 2026 10:48:18 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wEpwI-00083E-Ru
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:49:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1wEpv2-00043s-HO; Mon, 20 Apr 2026 10:48:14 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63JMxEEO3987518; Mon, 20 Apr 2026 14:48:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=bbee+mJ4QD1RQq4eM
- GJeyWU3Gcfnd+tOzJ9Ywx3bZh8=; b=exEaRoRfTGlOaSPxZ9H7DnNoD/4AqAe2i
- bVGZBdCqkZN0PAnMFA/gbbSsh7Ksmk+Mt2UluzgkXK7+ZzJDp5o7vnwM541QsdB9
- NS20TpWY0CrhWrcCY1rTF8kyz09PSjsla9KTWIdSsKQOq4rp6HFDuNvn/HXhgbGN
- QbHMp9l80QZN9G6AWZi5PXPT6ZmkNONLUiSvc3e0C7SEo6Xg0FxbECJHspuL4o/d
- K4QiSeEfKzBahq2O9ntEOq5yVs5yKvK0lwp7Xky0tZxVKvqvgqIYgCUxHk+sEf8K
- ePRyqAFZGSC6BJU19faQDSfdtEJ1yGJut55c8E44t3nweY+6OLuvQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2k0qk8c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Apr 2026 14:48:08 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63KEcdCG010575;
- Mon, 20 Apr 2026 14:48:07 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dmpgg50de-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Apr 2026 14:48:07 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63KEm5i77537360
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 Apr 2026 14:48:06 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9AE855803F;
- Mon, 20 Apr 2026 14:48:05 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F1ECD58054;
- Mon, 20 Apr 2026 14:48:04 +0000 (GMT)
-Received: from IBM-GLTZVH3.atx-us.ibm.com (unknown [9.16.58.46])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 20 Apr 2026 14:48:04 +0000 (GMT)
-From: Jaehoon Kim <jhkim@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, cohuck@redhat.com,
- Jaehoon Kim <jhkim@linux.ibm.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v2 1/1] hw/s390x/ccw: Disable legacy virtio-pci by default
- (v11.1+)
-Date: Mon, 20 Apr 2026 09:47:34 -0500
-Message-ID: <20260420144759.2970726-2-jhkim@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260420144759.2970726-1-jhkim@linux.ibm.com>
-References: <20260420144759.2970726-1-jhkim@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wEpwG-0004Re-Od
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:49:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776696567;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=b3Gk9l+Pk6Ig52UanUSXecOqK80gAfkFr/AOS4SGp6s=;
+ b=PVG962xu99bA9CyTzTudPzaQ+pbR+gXSk75zjaxL/NBjn/v25pOpn42jq+aPenLqktarTk
+ 6FAiXA7GviQJCmWLEDPX28pFNsBbxRnmelPZU8XIRiJ2OaaN2/zPV5C9r86TCX8lhAWnKg
+ LicNnvLLy0ZmpgBt5h4z2NFyIWW+qUU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-ng9hq071MpGDaYzigIrWgA-1; Mon, 20 Apr 2026 10:49:24 -0400
+X-MC-Unique: ng9hq071MpGDaYzigIrWgA-1
+X-Mimecast-MFC-AGG-ID: ng9hq071MpGDaYzigIrWgA_1776696563
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-488e3fd89e5so39848705e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 07:49:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776696563; x=1777301363; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=b3Gk9l+Pk6Ig52UanUSXecOqK80gAfkFr/AOS4SGp6s=;
+ b=Iqgoju76Mc3i5dzpKwRP0lo1HnXp6j5t0yRQ52Mr6WyMESKlWWdbuPlWPtHQoFaEwN
+ 5kKqkeWxBVgS3WzdJU/MZbdeBdLXoZCjIWO15/EU6xuBpi6RtI19WQMGrvXkt0GHDMwn
+ 25+Zeul1sD8k7oq+tT7TMPD9Frme6oioxkSBVbHIIhTIfF1RSnPYuC8q3zXLt8v9qBqt
+ eVL2FGXF74OJvzuDYDGUonWDY1gkkDcjknxK0hBnfCkWZd4W7xj478WWU5kA4r67tQVB
+ s8XmVNv/eeyAxKvxIjJFqEX9fozDrjtApVO5zOLpM6DlfvhSWXLsOCAwtzWPHWjhRDFd
+ JaZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776696563; x=1777301363;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b3Gk9l+Pk6Ig52UanUSXecOqK80gAfkFr/AOS4SGp6s=;
+ b=VpKC2R8icPILmQTlhnVKrTT/7sb/oTlUv0di0hUDbWaTUKjuckA9x4ZIZp/Bmp4Juz
+ CYbDtMYKpntiMilNrDNdKY8BmFHYwcI5xi4Mel7RVUUSL0jPCBBQopomcAoBeWbAYiYj
+ Hwp2W7y5h5Um5dXBaoYkdFLee15XryWnXUbm4TRvYkpyzJ+IaYWOaTuqoO/yAujq1Smr
+ IbUsgyupOZusXbver5lxdouByk60D/N5yANUDq2WnwbWaLfPPLFkKdB1Q1+Th9B2zc8N
+ L7dfSrWn09YGUzW1K314zEGS09GQYX48Z9qPEwP8BEKPKfvu9pzDuA3Y1J6j9rdDKwcS
+ 909w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/zDxQiZ3UFH/+c7hhpMwqcE9GbnvDD+GsY2+S0XBCitjmDzolLZ7qMq+9bi6q1hdwtnvMrCubKKHGK@nongnu.org
+X-Gm-Message-State: AOJu0YyOYqrg5fAeWkOsmHL0vMAh61QKJTBnzKS7M61+qmhA2gpOumiH
+ ITqf+xFPRDGV2BKUklEUANIblzUfpFJLHIxmxktTPr/v5cmykIlBCjbBjDIr0BYe2/OJCuYAiZ5
+ 7Zlr71NHr9HU7eWNgP0ql86cqlUMue0AFP/RIgRhAx9vrNYXqL+VXMk/B
+X-Gm-Gg: AeBDietQRhU5O3zTkwUPhuGexNkcFHXwj2Ay0aj0pCI3b3TM+zFIn20FJ6wUhsbLdWy
+ ERELvCLO4yKJgngATtIk/C007h6WrmBDMLX+7InemESaeMaNjE1bhdayIZauCl6Jld9GWpVkO7j
+ YR7FzDsH2e24ZUeIYeOh2hV7napwaiM8Zmz4VJ197xxMGQ3Pj5FYtsN6Ul5CnrBLX2yRhnnHtU1
+ fFjXsDdrjoKa7TFgzWdDMTd9hpJXmSgp7ht3BrwCU898TF0iEeUWgRZuSLksKhINJYYJAuW9SX1
+ dfC7Vb4oNoN9IB3v9xNbfSwpy1r1wdIvXArPafUs9G9Mu84DVxBpRam4lA685ZVguYlHjC8t+7v
+ 99VcbVHpV7CWpSbLrVgoG7P7QHm2r8QIPP8mXNbGh69MpCHL18I6CgiL5MuHqGahEYfU5r2NLqo
+ 7V1G9H9g==
+X-Received: by 2002:a05:600d:9:b0:488:9c3b:ff40 with SMTP id
+ 5b1f17b1804b1-488fb8bdfa8mr144640895e9.15.1776696563100; 
+ Mon, 20 Apr 2026 07:49:23 -0700 (PDT)
+X-Received: by 2002:a05:600d:9:b0:488:9c3b:ff40 with SMTP id
+ 5b1f17b1804b1-488fb8bdfa8mr144640575e9.15.1776696562543; 
+ Mon, 20 Apr 2026 07:49:22 -0700 (PDT)
+Received: from sgarzare-redhat (host-87-16-204-83.retail.telecomitalia.it.
+ [87.16.204.83]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4891bb3d121sm150362025e9.14.2026.04.20.07.49.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Apr 2026 07:49:21 -0700 (PDT)
+Date: Mon, 20 Apr 2026 16:49:04 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: "Jorge E. Moreira" <jemoreira@google.com>, hreitz@redhat.com, 
+ stefanha@redhat.com, gmaglione@redhat.com
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, 
+ Hanna Czenczek <xanclic@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
+ kick FDs
+Message-ID: <aeYvCK2qhZd1W9sA@sgarzare-redhat>
+References: <20260411021205.3592118-1-jemoreira@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: BiXcPx_nXbwyAQWg-y7hCn5cVr4WVXdr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEzOSBTYWx0ZWRfX/ihP8h4NPRmc
- Ltl+rpDxKQ3SyJzeCSim2NP9cuDcH9TiqsWOwmjZYCsP7jjB47cL/f0KnzARLPtYE1mnoEWgMyX
- 4k/3HmpN5xTmdwljFNzxzyhHmLf2Z/psLTU2ptNDw2zNCs0pttSQKH0nIeyeFgvSOH/U5d1mlrX
- vTYroQKyWqLsix4dOhHhhorOaIKxI8UsgiPiJC4oCyRTmm7RAiDmYIKoLfzrLDY18IwI4rC92eS
- xsj9ZV2IRMYCLt9sBvGOREM4dDqOQN5Fp929uPz++BwvWNxJp5D0LmHDjlFnXj6SeU6GGmYvrid
- hNnDxdN3PkQNYsZldVv1tYAthFFblo2+OjGTSneWx79pEmO3O6l05o+dNZQGEGteRk4mmonlm8Q
- HRsgPvO4afEoxIag5uQ44Y6e2DKejj/ry/n1FKHb3W4FiwjJ+mAuIo/Br7fh0l37XgU3gNWZO1r
- QcMMc3SL6vSVwpG5sEQ==
-X-Authority-Analysis: v=2.4 cv=PtujqQM3 c=1 sm=1 tr=0 ts=69e63ca8 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=my5jLqFW4fTaoRaGlZgA:9
-X-Proofpoint-GUID: BiXcPx_nXbwyAQWg-y7hCn5cVr4WVXdr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-20_03,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 clxscore=1015 spamscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200139
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260411021205.3592118-1-jemoreira@google.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,92 +123,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On the s390 Linux kernel, IO_SPACE_LIMIT has been 0 since the initial
-zPCI implementation (commit cd24834130ac "s390/pci: base support"),
-making I/O BARs unusable.
+Thanks for starting the discussion here, let me add also Hanna, German, 
+and Stefan in CC that can help us.
 
-However, when virtio-pci devices operate in transitional mode, QEMU
-unconditionally exposes the legacy interface via BAR0. This results in
-firmware warnings during PCI enumeration, such as:
+On Fri, Apr 10, 2026 at 07:12:05PM -0700, Jorge E. Moreira wrote:
+>Migration of back-end state happens while the device is suspended (i.e
+>all vrings are stopped). To resume normal operation on the destination,
+>the vrings need to be started again with a kick (either a write on the
+>FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
 
-  pci 0005:00:00.0: [Firmware Bug]: BAR 0: invalid; can't size
+It's true that in the spec we have:
+   "Each ring is initialized in a stopped and disabled state. The 
+   back-end must start a ring upon receiving a kick (that is, detecting 
+   that file descriptor is readable) on the descriptor specified by 
+   VHOST_USER_SET_VRING_KICK or receiving the in-band message 
+   VHOST_USER_VRING_KICK if negotiated, and stop a ring upon receiving 
+   VHOST_USER_GET_VRING_BASE."
 
-even though BAR0 is never usable on the s390 kernel.
+But IMO this applies when a driver is not yet loaded.
+When we are migrating, the driver could be already loaded. So, in the 
+new device running in the destination, IMO we should consider the ring 
+already started or add some messages to tell to the device: "hey, the 
+device was already started, this is a migration and it's completed".
 
-Close this gap by disabling legacy virtio-pci support starting from
-machine version 11.1. This effectively makes virtio-pci devices
-non-transitional and prevents the creation of the unusable legacy I/O
-BAR.
+Sending a kick from the frontend, seems more an hack here.
 
-This introduces s390x-specific global compatibility properties that
-set disable-legacy=on as the default for virtio-pci devices. Machine
-versions v11.0 and earlier set disable-legacy=off to maintain their
-original default behavior (legacy support enabled), ensuring VMs
-created with those versions continue to work identically.
+That said, for example, in subprojects/libvhost-user/libvhost-user.c 
+IIUC the virtqueue is started when the SET_VRING_KICK is handled by 
+vu_set_vring_kick_exec(), but not sure how compliant it is.
 
-Users can override the default on the command line if needed:
-  - On v11.1+: -global virtio-pci.disable-legacy=off (to enable legacy)
-  - On v11.0-: -global virtio-pci.disable-legacy=on (to disable legacy)
+>these notifications are typically sent by the driver, it has no reason
+>to send them in the destination if it already sent them in the source as
+>the driver is unaware that a migration took place. Therefore it should
+>be the responsibility of the vhost-user front-end to ensure these vrings
+>are started. This is particularly necessary for queues where data only
+>flows from device to driver, such as those used by the vsock and input
+>devices.
 
-Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- hw/s390x/s390-virtio-ccw.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+Exactly, so IMO we should not use the kick, but maybe add something new 
+or clarify what to do after the migration.
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index cc768daeb0..4d35f9b10b 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -788,6 +788,21 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
-     g_free(val);
- }
- 
-+ /*
-+  * S390x-specific global compatibility properties.
-+  *
-+  * On the s390 kernel, legacy virtio-pci is not usable because I/O BARs
-+  * are not supported (IO_SPACE_LIMIT is 0), and would only result in
-+  * unusable BARs and firmware warnings.
-+  *
-+  * Therefore, starting from v11.1, disable legacy virtio-pci by default,
-+  * while older machine types keep legacy behavior for compatibility.
-+  */
-+static GlobalProperty hw_compat_s390x[] = {
-+    { TYPE_VIRTIO_PCI, "disable-legacy", "on", .optional = true},
-+};
-+static const size_t hw_compat_s390x_len = G_N_ELEMENTS(hw_compat_s390x);
-+
- static void ccw_machine_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -878,6 +893,9 @@ static const TypeInfo ccw_machine_info = {
-         const void *data)                                                     \
-     {                                                                         \
-         MachineClass *mc = MACHINE_CLASS(oc);                                 \
-+        /* Apply global s390x-wide default properties */                      \
-+        compat_props_add(mc->compat_props, hw_compat_s390x,                   \
-+                         hw_compat_s390x_len);                                \
-         MACHINE_VER_SYM(class_options, ccw, __VA_ARGS__)(mc);                 \
-         mc->desc = "Virtual s390x machine (version " MACHINE_VER_STR(__VA_ARGS__) ")"; \
-         mc->init = MACHINE_VER_SYM(mach_init, ccw, __VA_ARGS__);              \
-@@ -923,7 +941,15 @@ static void ccw_machine_11_0_instance_options(MachineState *machine)
- 
- static void ccw_machine_11_0_class_options(MachineClass *mc)
- {
-+    /*
-+     * Preserve v11.0 and older version behavior:
-+     * keep legacy virtio-pci enabled.
-+     */
-+    static GlobalProperty compat[] = {
-+        { TYPE_VIRTIO_PCI, "disable-legacy", "off" },
-+    };
-     ccw_machine_11_1_class_options(mc);
-+    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
-     compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
- }
- DEFINE_CCW_MACHINE(11, 0);
--- 
-2.50.1
+For example in the "Migrating back-end state" we have:
+   "Migrating device state involves transferring the state from one 
+   back-end, called the source, to another back-end, called the 
+   destination. After migration, the destination transparently resumes 
+   operation without requiring the driver to re-initialize the device at 
+   the VIRTIO level."
+
+So, IMO we can use the VHOST_USER_SET_DEVICE_STATE_FD channel exactly to 
+inform the new device about the state: "there isn't any state to 
+transfer, but I notify you that the device was already initialized, so 
+the vrings can be started".
+
+>
+>This behavior is already used by some qemu vhost-user front-ends (e.g
+>vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm).
+
+I looked at vhost-user-blk frontend, but I don't see it. I mean I see 
+the code around the comment "/* Kick right away to begin processing 
+requests already in vring */" but that one IIUC was introduced more to 
+fix devices violating specs, so not sure it's a good example to follow:
+
+commit 110b9463d5c820120c8311db79f55a64c9d81ebe
+Author: Yongji Xie <elohimes@gmail.com>
+Date:   Wed Jun 6 21:24:48 2018 +0800
+
+     vhost-user-blk: start vhost when guest kicks
+     
+     Some old guests (before commit 7a11370e5: "virtio_blk: enable VQs early")
+     kick virtqueue before setting VIRTIO_CONFIG_S_DRIVER_OK. This violates
+     the virtio spec. But virtio 1.0 transitional devices support this behaviour.
+     So we should start vhost when guest kicks in this case.
+     
+     Signed-off-by: Yongji Xie <xieyongji@baidu.com>
+     Signed-off-by: Chai Wen <chaiwen@baidu.com>
+     Signed-off-by: Ni Xun <nixun@baidu.com>
+     Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+     Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+
+>Adding it to the vhost-user documentation makes it explicit that this
+>strategy is permitted and suggest it to vhost-user front-end authors.
+>Explicitly documenting it is necessary because vring kicks appear
+>designed to originate in the driver, so having some originate in the
+>front-end can be counterintuitive and cause developers to waste time
+>looking for other alternatives or face pushback during code review.
+
+As I pointed out in our discussion in 
+https://github.com/rust-vmm/vhost-device/pull/936
+IMO we should use some in-band messages and not relaying on kicks that 
+should be used only by the driver to notify the device about new 
+available buffers.
+
+That said, I agree that we need to clarify in the specifications exactly 
+what the backend and frontend should do after a migration to start 
+vrings if there is no need to exchange a state.
+
+
+Any other opinion?
+
+Thanks,
+Stefano
+
+>
+>Signed-off-by: Jorge E. Moreira <jemoreira@google.com>
+>---
+> docs/interop/vhost-user.rst | 5 ++++-
+> 1 file changed, 4 insertions(+), 1 deletion(-)
+>
+>diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>index 137c9f3669..ad5aba3430 100644
+>--- a/docs/interop/vhost-user.rst
+>+++ b/docs/interop/vhost-user.rst
+>@@ -656,7 +656,10 @@ destination, following the usual protocol for establishing a connection
+> to a vhost-user back-end: This includes, for example, setting up memory
+> mappings and kick and call FDs as necessary, negotiating protocol
+> features, or setting the initial vring base indices (to the same value
+>-as on the source side, so that operation can resume).
+>+as on the source side, so that operation can resume). The vhost-user front-end
+>+may also write to the kick FDs of vrings containing unused buffers or send
+>+``VHOST_USER_VRING_KICK`` if negotiated to start those vrings in the destination
+>+since the driver likely already kicked them in the source and won't do it again.
+>
+> Both on the source and on the destination side, after the respective
+> front-end has seen all data transferred (when the transfer FD has been
+>-- 
+>2.53.0.1213.gd9a14994de-goog
+>
 
 
