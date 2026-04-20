@@ -4,109 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D552BF588DF
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F39FF588DF
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 14:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEpwK-00089c-UG; Mon, 20 Apr 2026 10:49:33 -0400
+	id 1wEq2S-0001vy-ME; Mon, 20 Apr 2026 10:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wEpwI-00083E-Ru
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:49:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wEq2M-0001uB-Fg
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:55:46 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wEpwG-0004Re-Od
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:49:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776696567;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=b3Gk9l+Pk6Ig52UanUSXecOqK80gAfkFr/AOS4SGp6s=;
- b=PVG962xu99bA9CyTzTudPzaQ+pbR+gXSk75zjaxL/NBjn/v25pOpn42jq+aPenLqktarTk
- 6FAiXA7GviQJCmWLEDPX28pFNsBbxRnmelPZU8XIRiJ2OaaN2/zPV5C9r86TCX8lhAWnKg
- LicNnvLLy0ZmpgBt5h4z2NFyIWW+qUU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-86-ng9hq071MpGDaYzigIrWgA-1; Mon, 20 Apr 2026 10:49:24 -0400
-X-MC-Unique: ng9hq071MpGDaYzigIrWgA-1
-X-Mimecast-MFC-AGG-ID: ng9hq071MpGDaYzigIrWgA_1776696563
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-488e3fd89e5so39848705e9.1
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 07:49:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wEq2I-0006dR-US
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 10:55:46 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63K9mWuJ3925734
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 14:55:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=3JeLdlwhjC5
+ 4DxCiFm7fx3vjy7wODhTTKXC3lfwFwiQ=; b=HLaQiydqj6Jlh3DNeHC13H3dK9p
+ ex4iQ5FIAg/4Ym/bnEV96tVg7sOfpCzC8iEp3iEgvpgRiNW4m64Hr92UwzoyJv/e
+ KtOcnaG1/seQmi46HMHNCIoUsSUWrII1QEYqkkxU6VMBZn+DG0sbKqNgmSVmi5E9
+ RGqsoI+honBIR+nRySCMqDUmgiDqjbQ3rcW828/DhiLuVnx7Xwwt61rhMHIvvBBP
+ r5l+/8ooPw+uFrkV1An0+X66PX7GgEwh3IO+fWuNWg1yiqcyaF0WYNTZuq2PCDmk
+ bHRbRURmeqall6heF4VIAICOm3xEky5wXEyXhIZHGLAJiZBTXHOA7B7dIJA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dnhu9s28m-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 14:55:40 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2b81ff82e3cso2487682eec.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 07:55:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776696563; x=1777301363; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=b3Gk9l+Pk6Ig52UanUSXecOqK80gAfkFr/AOS4SGp6s=;
- b=Iqgoju76Mc3i5dzpKwRP0lo1HnXp6j5t0yRQ52Mr6WyMESKlWWdbuPlWPtHQoFaEwN
- 5kKqkeWxBVgS3WzdJU/MZbdeBdLXoZCjIWO15/EU6xuBpi6RtI19WQMGrvXkt0GHDMwn
- 25+Zeul1sD8k7oq+tT7TMPD9Frme6oioxkSBVbHIIhTIfF1RSnPYuC8q3zXLt8v9qBqt
- eVL2FGXF74OJvzuDYDGUonWDY1gkkDcjknxK0hBnfCkWZd4W7xj478WWU5kA4r67tQVB
- s8XmVNv/eeyAxKvxIjJFqEX9fozDrjtApVO5zOLpM6DlfvhSWXLsOCAwtzWPHWjhRDFd
- JaZg==
+ d=oss.qualcomm.com; s=google; t=1776696940; x=1777301740; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3JeLdlwhjC54DxCiFm7fx3vjy7wODhTTKXC3lfwFwiQ=;
+ b=hd8vTXzVNMC6ja/dI44yQEG3spvHHXTsUMAB7mWx4QGPIHb74qWaUzCcxFz/BzWu0J
+ SuXzP6skrjNnJ60Jy7O4S04m2IrWImDd+uPhDN4CCmL664N5heJ+u9Ohke0JD8QV6lqG
+ HFOAjqUV/VPp4hnymx+zsW0PAzTl3s9HzZWFIkGGZ96YVcYRXa0vpdbQCBvkkNFOTsAv
+ P1dbNJHArs5HiDoTNUC8vTOAqHNPa2NHSyVSremxxyBV3NLBd8snef9ddGlOqkKxbpQi
+ iCn8OHc+J9Jh7LIDGiuCjXLB+dYRC4j7i8TVOi2w3QLwL9gGWvKi1jn3iEB1kUqfiR1x
+ S/Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776696563; x=1777301363;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=b3Gk9l+Pk6Ig52UanUSXecOqK80gAfkFr/AOS4SGp6s=;
- b=VpKC2R8icPILmQTlhnVKrTT/7sb/oTlUv0di0hUDbWaTUKjuckA9x4ZIZp/Bmp4Juz
- CYbDtMYKpntiMilNrDNdKY8BmFHYwcI5xi4Mel7RVUUSL0jPCBBQopomcAoBeWbAYiYj
- Hwp2W7y5h5Um5dXBaoYkdFLee15XryWnXUbm4TRvYkpyzJ+IaYWOaTuqoO/yAujq1Smr
- IbUsgyupOZusXbver5lxdouByk60D/N5yANUDq2WnwbWaLfPPLFkKdB1Q1+Th9B2zc8N
- L7dfSrWn09YGUzW1K314zEGS09GQYX48Z9qPEwP8BEKPKfvu9pzDuA3Y1J6j9rdDKwcS
- 909w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/zDxQiZ3UFH/+c7hhpMwqcE9GbnvDD+GsY2+S0XBCitjmDzolLZ7qMq+9bi6q1hdwtnvMrCubKKHGK@nongnu.org
-X-Gm-Message-State: AOJu0YyOYqrg5fAeWkOsmHL0vMAh61QKJTBnzKS7M61+qmhA2gpOumiH
- ITqf+xFPRDGV2BKUklEUANIblzUfpFJLHIxmxktTPr/v5cmykIlBCjbBjDIr0BYe2/OJCuYAiZ5
- 7Zlr71NHr9HU7eWNgP0ql86cqlUMue0AFP/RIgRhAx9vrNYXqL+VXMk/B
-X-Gm-Gg: AeBDietQRhU5O3zTkwUPhuGexNkcFHXwj2Ay0aj0pCI3b3TM+zFIn20FJ6wUhsbLdWy
- ERELvCLO4yKJgngATtIk/C007h6WrmBDMLX+7InemESaeMaNjE1bhdayIZauCl6Jld9GWpVkO7j
- YR7FzDsH2e24ZUeIYeOh2hV7napwaiM8Zmz4VJ197xxMGQ3Pj5FYtsN6Ul5CnrBLX2yRhnnHtU1
- fFjXsDdrjoKa7TFgzWdDMTd9hpJXmSgp7ht3BrwCU898TF0iEeUWgRZuSLksKhINJYYJAuW9SX1
- dfC7Vb4oNoN9IB3v9xNbfSwpy1r1wdIvXArPafUs9G9Mu84DVxBpRam4lA685ZVguYlHjC8t+7v
- 99VcbVHpV7CWpSbLrVgoG7P7QHm2r8QIPP8mXNbGh69MpCHL18I6CgiL5MuHqGahEYfU5r2NLqo
- 7V1G9H9g==
-X-Received: by 2002:a05:600d:9:b0:488:9c3b:ff40 with SMTP id
- 5b1f17b1804b1-488fb8bdfa8mr144640895e9.15.1776696563100; 
- Mon, 20 Apr 2026 07:49:23 -0700 (PDT)
-X-Received: by 2002:a05:600d:9:b0:488:9c3b:ff40 with SMTP id
- 5b1f17b1804b1-488fb8bdfa8mr144640575e9.15.1776696562543; 
- Mon, 20 Apr 2026 07:49:22 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-16-204-83.retail.telecomitalia.it.
- [87.16.204.83]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891bb3d121sm150362025e9.14.2026.04.20.07.49.21
+ d=1e100.net; s=20251104; t=1776696940; x=1777301740;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3JeLdlwhjC54DxCiFm7fx3vjy7wODhTTKXC3lfwFwiQ=;
+ b=dL4GGSYyhySYhyvaEFfce6//VvD7fZ3As0xIyW+80SoRmLwqostjP6msQ6PCJp4ujw
+ qYLf3kyzJT6dJ8+bdEcXxrERYKeYI1vfjROP4vMIZ4SrB1Rt/bCC2StT0klQO4I8kpoD
+ H36z8zawv+m9fAF1W2DHda0WAKUKse3yOcHY3yI0GqSSNvZKdXXpx6dW0qEzPYuzGjrS
+ WWDkbq8x5n+XP8+Q9Tb32UjEkQzfSZoryP512T5vjBD7lKseX6TfL1xkUeEkmCjDAITZ
+ mAU7fFOFpbL/yFg2QvipMtp/wYJAnZtDoua7CkNoaiVMp1NL3JNwxo/UxxEGOUGZ0gft
+ F/kg==
+X-Gm-Message-State: AOJu0YyGGnSWtQCjkSVmb2icISi37Ix1X92SZZtv949iZ9ojVh5Hd8pz
+ 93X0VZ9BFFEmI7lv9akkB8N2R07uvSLBD0Xh41FndaLADMkBmjpuxK4HENFn75uC9GSZ3+d7XWq
+ 3u30aRRb9aNq9pHj9XylwpMmeNf4d63bcE0q/NKpM8S8MeIeGHRfIFmkPww==
+X-Gm-Gg: AeBDieuadbDTmfDtkdhaug6MM//wrbq33Exg+FlleUCaviVjH2O/PjU74qWR/l6I4Yu
+ 68X3UuQULXpEhxEDHqvmnOpKDtck8EJ2Xh0xCzqfveFO7GP6whXUbvy2ldwsBJOo+zpZAIMMH9D
+ t0Iqk/ztsJr3zzY1gyVd8yQFTplizexNl9cIJtr0ksoemoRGp5HD6b7lBBFRGXTOIeFojKEa54Y
+ woUsJgNlQUsEV67d5wZ+WZHBV4NphO2AoDR9DRR5ddvgwXpNQn5zIA459BTqWHAchLTmaGZ9R1w
+ OkruXMwhJ7mK5lhWiSEsIDwHGSPmLrc/rjgF20HKzyiLIqjuMX83RxYEHZhZ0qPc7qPW8S5Miix
+ UXh1c/3WUdVREChWEzt7M4216sA+fywaL+hJ3ufS9jcIjfhxfTNLWVFfefA3gsuxZC3Km2xeQyJ
+ +dwWnG2Vd6jTo04kw/P9o=
+X-Received: by 2002:a05:7022:48f:b0:11b:2a5:3b9b with SMTP id
+ a92af1059eb24-12c73afd10bmr6121963c88.8.1776696939597; 
+ Mon, 20 Apr 2026 07:55:39 -0700 (PDT)
+X-Received: by 2002:a05:7022:48f:b0:11b:2a5:3b9b with SMTP id
+ a92af1059eb24-12c73afd10bmr6121934c88.8.1776696939021; 
+ Mon, 20 Apr 2026 07:55:39 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c837f7feasm12104230c88.0.2026.04.20.07.55.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Apr 2026 07:49:21 -0700 (PDT)
-Date: Mon, 20 Apr 2026 16:49:04 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: "Jorge E. Moreira" <jemoreira@google.com>, hreitz@redhat.com, 
- stefanha@redhat.com, gmaglione@redhat.com
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, 
- Hanna Czenczek <xanclic@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
- kick FDs
-Message-ID: <aeYvCK2qhZd1W9sA@sgarzare-redhat>
-References: <20260411021205.3592118-1-jemoreira@google.com>
+ Mon, 20 Apr 2026 07:55:38 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: brian.cain@oss.qualcomm.com
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, ltaylorsimpson@gmail.com,
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, pierrick.bouvier@oss.qualcomm.com, bcain@quicinc.com,
+ pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v5 8/9] hw/hexagon: Define hexagon "virt" machine
+Date: Mon, 20 Apr 2026 07:55:36 -0700
+Message-Id: <20260420145536.1198387-1-matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20260416210305.2255579-9-brian.cain@oss.qualcomm.com>
+References: <20260416210305.2255579-9-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260411021205.3592118-1-jemoreira@google.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDE0NCBTYWx0ZWRfX6fbJ79+UusPQ
+ YlhwqxbY7Fazjvb4B/5hsZkJ21Taz5Gnuv88doP6lxVaMsoZSps8d8Dizc2dw9/qd6Ip32zwBkf
+ 37Xc86er9E2uoz7SBrWJG3rxPmd7xQvEmjV1G9wp5t4wGhonKbnJlv4RNTN/XItfYSmAkGqPQ0w
+ wBqdxD67hZ89R9T1pMI05G8mJA/d8zLE0uDKH9ToVSZhUkeOLkR0vySK/UlLJodqV0/iHTvwyI6
+ is8lANZ/o9B5LQfYUK45Nvjqwvi7s3t071p+M5eO6izfppPQZbENqM8b5bTtuRzJwyQfndzxP8R
+ 3KvckltO7KwLwuaFMWrHvW09MFnFutnwUkbN/0y3mMt+SAAHcqWVdygyrSGO7rNJH6M2nluQsBG
+ 5oWWqe7M5hdjBFoDSkLhYQ9DsXdew2K8LJrLS/kyxpS/FNgi6E/2Y+k7q4n5ruksfmRaaZXeBNE
+ K45k7BJ32WC4fYdkb6w==
+X-Authority-Analysis: v=2.4 cv=IIoyzAvG c=1 sm=1 tr=0 ts=69e63e6c cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
+ a=4QKhv830yg8YpbWl3Z8A:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: TKyOlQRXbD1q7AmQNKHs4tX0f8JQlGRC
+X-Proofpoint-ORIG-GUID: TKyOlQRXbD1q7AmQNKHs4tX0f8JQlGRC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-20_03,2026-04-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
+ definitions=main-2604200144
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,133 +151,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for starting the discussion here, let me add also Hanna, German, 
-and Stefan in CC that can help us.
-
-On Fri, Apr 10, 2026 at 07:12:05PM -0700, Jorge E. Moreira wrote:
->Migration of back-end state happens while the device is suspended (i.e
->all vrings are stopped). To resume normal operation on the destination,
->the vrings need to be started again with a kick (either a write on the
->FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
-
-It's true that in the spec we have:
-   "Each ring is initialized in a stopped and disabled state. The 
-   back-end must start a ring upon receiving a kick (that is, detecting 
-   that file descriptor is readable) on the descriptor specified by 
-   VHOST_USER_SET_VRING_KICK or receiving the in-band message 
-   VHOST_USER_VRING_KICK if negotiated, and stop a ring upon receiving 
-   VHOST_USER_GET_VRING_BASE."
-
-But IMO this applies when a driver is not yet loaded.
-When we are migrating, the driver could be already loaded. So, in the 
-new device running in the destination, IMO we should consider the ring 
-already started or add some messages to tell to the device: "hey, the 
-device was already started, this is a migration and it's completed".
-
-Sending a kick from the frontend, seems more an hack here.
-
-That said, for example, in subprojects/libvhost-user/libvhost-user.c 
-IIUC the virtqueue is started when the SET_VRING_KICK is handled by 
-vu_set_vring_kick_exec(), but not sure how compliant it is.
-
->these notifications are typically sent by the driver, it has no reason
->to send them in the destination if it already sent them in the source as
->the driver is unaware that a migration took place. Therefore it should
->be the responsibility of the vhost-user front-end to ensure these vrings
->are started. This is particularly necessary for queues where data only
->flows from device to driver, such as those used by the vsock and input
->devices.
-
-Exactly, so IMO we should not use the kick, but maybe add something new 
-or clarify what to do after the migration.
-
-For example in the "Migrating back-end state" we have:
-   "Migrating device state involves transferring the state from one 
-   back-end, called the source, to another back-end, called the 
-   destination. After migration, the destination transparently resumes 
-   operation without requiring the driver to re-initialize the device at 
-   the VIRTIO level."
-
-So, IMO we can use the VHOST_USER_SET_DEVICE_STATE_FD channel exactly to 
-inform the new device about the state: "there isn't any state to 
-transfer, but I notify you that the device was already initialized, so 
-the vrings can be started".
-
+On Thu, 16 Apr 2026 14:03:04 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
 >
->This behavior is already used by some qemu vhost-user front-ends (e.g
->vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm).
+> diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
+> new file mode 100644
+> index 00000000000..ff93b5221ba
+> --- /dev/null
+> +++ b/hw/hexagon/virt.c
+> @@ -0,0 +1,456 @@
+> +/*
+> + * Hexagon virt emulation
+> + *
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/hexagon/virt.h"
+> +#include "elf.h"
+> +#include "hw/char/pl011.h"
+> +#include "hw/core/clock.h"
+> +#include "hw/core/sysbus-fdt.h"
+> +#include "hw/hexagon/hexagon.h"
+> +#include "hw/hexagon/hexagon_globalreg.h"
+> +#include "hw/hexagon/hexagon_tlb.h"
+> +#include "hw/core/loader.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "hw/core/qdev-clock.h"
+> +#include "hw/core/register.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/guest-random.h"
+> +#include "qemu/units.h"
+> +#include "elf.h"
 
-I looked at vhost-user-blk frontend, but I don't see it. I mean I see 
-the code around the comment "/* Kick right away to begin processing 
-requests already in vring */" but that one IIUC was introduced more to 
-fix devices violating specs, so not sure it's a good example to follow:
+nit: elf.h was already included above
 
-commit 110b9463d5c820120c8311db79f55a64c9d81ebe
-Author: Yongji Xie <elohimes@gmail.com>
-Date:   Wed Jun 6 21:24:48 2018 +0800
+> +#include "machine_cfg_v68n_1024.h.inc"
+> +#include "system/address-spaces.h"
+> +#include "system/device_tree.h"
+> +#include "system/reset.h"
+> +#include "system/system.h"
+> +#include <libfdt.h>
+> +
+[...]
+> +static void fdt_add_hvx(HexagonVirtMachineState *vms,
+> +                        const struct hexagon_machine_config *m_cfg,
+> +                        Error **errp)
+> +{
+> +    const MachineState *ms = MACHINE(vms);
+> +    uint32_t vtcm_size_bytes = m_cfg->cfgtable.vtcm_size_kb * 1024;
+> +    if (vtcm_size_bytes > 0) {
+> +        memory_region_init_ram(&vms->vtcm, NULL, "vtcm.ram", vtcm_size_bytes,
+> +                               errp);
 
-     vhost-user-blk: start vhost when guest kicks
-     
-     Some old guests (before commit 7a11370e5: "virtio_blk: enable VQs early")
-     kick virtqueue before setting VIRTIO_CONFIG_S_DRIVER_OK. This violates
-     the virtio spec. But virtio 1.0 transitional devices support this behaviour.
-     So we should start vhost when guest kicks in this case.
-     
-     Signed-off-by: Yongji Xie <xieyongji@baidu.com>
-     Signed-off-by: Chai Wen <chaiwen@baidu.com>
-     Signed-off-by: Ni Xun <nixun@baidu.com>
-     Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-     Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+I was going to ask whether we should handle errp here and abort earlier, but
+fdt_add_hvx is always called with error_fatal, so that's fine. (I wonder, though,
+should we remove "Error **errp" from the function signature and use error_abort
+here directly, for clarity and future-proof?)
 
-
->Adding it to the vhost-user documentation makes it explicit that this
->strategy is permitted and suggest it to vhost-user front-end authors.
->Explicitly documenting it is necessary because vring kicks appear
->designed to originate in the driver, so having some originate in the
->front-end can be counterintuitive and cause developers to waste time
->looking for other alternatives or face pushback during code review.
-
-As I pointed out in our discussion in 
-https://github.com/rust-vmm/vhost-device/pull/936
-IMO we should use some in-band messages and not relaying on kicks that 
-should be used only by the driver to notify the device about new 
-available buffers.
-
-That said, I agree that we need to clarify in the specifications exactly 
-what the backend and frontend should do after a migration to start 
-vrings if there is no need to exchange a state.
-
-
-Any other opinion?
-
-Thanks,
-Stefano
-
->
->Signed-off-by: Jorge E. Moreira <jemoreira@google.com>
->---
-> docs/interop/vhost-user.rst | 5 ++++-
-> 1 file changed, 4 insertions(+), 1 deletion(-)
->
->diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
->index 137c9f3669..ad5aba3430 100644
->--- a/docs/interop/vhost-user.rst
->+++ b/docs/interop/vhost-user.rst
->@@ -656,7 +656,10 @@ destination, following the usual protocol for establishing a connection
-> to a vhost-user back-end: This includes, for example, setting up memory
-> mappings and kick and call FDs as necessary, negotiating protocol
-> features, or setting the initial vring base indices (to the same value
->-as on the source side, so that operation can resume).
->+as on the source side, so that operation can resume). The vhost-user front-end
->+may also write to the kick FDs of vrings containing unused buffers or send
->+``VHOST_USER_VRING_KICK`` if negotiated to start those vrings in the destination
->+since the driver likely already kicked them in the source and won't do it again.
->
-> Both on the source and on the destination side, after the respective
-> front-end has seen all data transferred (when the transfer FD has been
->-- 
->2.53.0.1213.gd9a14994de-goog
->
-
+> +        memory_region_add_subregion(vms->sys, m_cfg->cfgtable.vtcm_base << 16,
+> +                                    &vms->vtcm);
+> +
+> +        qemu_fdt_add_subnode(ms->fdt, "/soc/vtcm");
+> +        qemu_fdt_setprop_string(ms->fdt, "/soc/vtcm", "compatible",
+> +                                "qcom,hexagon_vtcm");
+> +
+> +        assert(sizeof(m_cfg->cfgtable.vtcm_base) == sizeof(uint32_t));
+> +        qemu_fdt_setprop_cells(ms->fdt, "/soc/vtcm", "reg", 0,
+> +                               m_cfg->cfgtable.vtcm_base << 16,
+> +                               vtcm_size_bytes);
+> +    }
+> +
+> +    if (m_cfg->cfgtable.ext_contexts > 0) {
+> +        qemu_fdt_add_subnode(ms->fdt, "/soc/hvx");
+> +        qemu_fdt_setprop_string(ms->fdt, "/soc/hvx", "compatible",
+> +                                "qcom,hexagon-hvx");
+> +        qemu_fdt_setprop_cells(ms->fdt, "/soc/hvx", "qcom,hvx-max-ctxts",
+> +                               m_cfg->cfgtable.ext_contexts);
+> +        qemu_fdt_setprop_cells(ms->fdt, "/soc/hvx", "qcom,hvx-vlength",
+> +                               m_cfg->cfgtable.hvx_vec_log_length);
+> +    }
+> +}
 
