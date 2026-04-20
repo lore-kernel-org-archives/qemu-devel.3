@@ -4,107 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF5EF55803
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 09:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C6A5F55805
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wElPH-0008HW-2R; Mon, 20 Apr 2026 05:59:08 -0400
+	id 1wElXR-0001iA-Gj; Mon, 20 Apr 2026 06:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wElPA-0008Gx-V5
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:59:01 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wElP9-0007HD-BS
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:59:00 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-797ab169454so38039957b3.3
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 02:58:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776679138; cv=none;
- d=google.com; s=arc-20240605;
- b=PSDILNAZ7+gvNMEBjOkp548BFxm9hVf1iH+7jV43aLYZzptDFZ0a7VlbnQ8sOS/uD/
- 6VqMu/0j3OJKfCm3NcjhbklCnigwGVzkUKETB5ee0eabTB/0Z1LIYsW3v/bNAmCdYwuy
- EIoRnzrybYW7csWawIEM89C5BXZKUyS4c213gzM/p99cOKEbCEIUVlkggbV9iz+XwB73
- 0MUDOQbj8KaNUcQ57s60gykgbBgy6Aof5tWtXnfDRcO/HVCmo/FF2aabXTllvjrSGXD/
- gVbv6gdM4JcJCr0Qd8Th8S9CfBtSiz7CgZT1veRAN8QjYBAGqDJ6dJss4CzdCGyF01Rx
- +XyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=77v12DvZrsTA5CrcmzcwO4l++DfN0wrY47UPYcaP+bc=;
- fh=ua/6Ys84y5bjLTbUAUJBq9as/oxSI7ciXG0/MM6qXLM=;
- b=fdgxrIGLQe9VF/4O0M6fpC6gSVnbw4C/wP/P8c+sFfPEm0FZh2T88JoQKnCULllZ/n
- ORLy/irO+hdhKQ5SUILI2JsjIspi+1c++uTxy+JykJkXpOlAImHWCWbg8YLp52jc/3+R
- CYlgu5Iicb03Zb8EN2L7KmOOGp1YgGW1kUa6okCz3vrj0UKC6lk+neVHklHR6d2iX2DQ
- MR92P1awNnhwl9tIoBI8N2SHIsswCSzGUOTr4NBrdy+WI59a+hTdD84jSJHPNeucvO/E
- rftQwpEGx6O9zOkPz+zH3Q2hdyHT+r3iG7mk8wXsGvQlujZ30GpzcbvMBerty0+8+vpC
- 3aUg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776679138; x=1777283938; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=77v12DvZrsTA5CrcmzcwO4l++DfN0wrY47UPYcaP+bc=;
- b=biGp/TC9krcvBk00nUEt1LUVOUPtkU7I+jWRIMhtEVZniej7YfB60aVKFYWH8GDPvg
- iNdp7QaDzPL55mj4ldfxhKnS4OklLWZLIa8xN4w5ztNJ1mnrNuXXDNrrSzTBM9Pe28I8
- 9mV+OYRbJxzksAeul6oy6qYpF12k+WjDHbl+xRE/tIL4LVSMZ36MabjZKv4i6sGSPi5x
- bgRO+icnZvIuRRP12aLQYTievCwduHB4nIUDyLDf07HcRXCCkmJ2fe2S59Q8nMJhmAHz
- cgDqFND4Z8BCQjzlgBa7e8Vv0xWEk/exZ26SYywgwahQaIENFi2ufduDqPB64Jdyocaz
- I/rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776679138; x=1777283938;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=77v12DvZrsTA5CrcmzcwO4l++DfN0wrY47UPYcaP+bc=;
- b=LgjhEZfSNa67oK1wXLNf/vODiPZAdhXZvqbuoT0jEFJ71Ns1eUsAn5S08hqGCCu8vt
- /YtsPRvNjaB4M09l3GzZuLeXRN8p/sDjTmle6KF9xt1Lj9+FumTAWhjSQiVToDC9RBRw
- PCQk4RjE+xvfTy+kBJYqQipvDWR0+V3NMmZkHjCxDZWQdTb/ux+1yFBlsHGirydnjulu
- zf39wcfkDOKBNWyvL2Q/z48L7Nxj5p1nBzhmnOkZMK771ZCRszCLEn3w3XZTYmyaJwOx
- 3f3Cz5pPB/yG/UrTMzj3AWOsmtw+etB7pMqXWsCcq+l+NQwh7apV05a4gRPfN0L8tRnj
- Rs0A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9mKjttUUNU9BB7C+dGgKNyFMLANw1SK049nc4xnMGylK4q5zdGx3EZ10BHfbUYZqc5VM5i4IaPnbI9@nongnu.org
-X-Gm-Message-State: AOJu0YwMHBCmAQIjCJ0ZE/mA47DhNUgUHytGEN2Ld9ycDQdHZHK1EKti
- oNZ/W4XmqHmlVotn8PSDxyc8yABPBdNqWd8Fln7mmZF3Z8YPnbL7eUQE1TV0/yDUnR8T7PXslDJ
- BEgsKzsM819ZXnVnDtcx3IJeJb/Yz8x9A57g9dv4LHA==
-X-Gm-Gg: AeBDieuPwoOPKiDQQCGoql0d4zgjzs1kphJhwKxewv8pCTgB6BHhxXa0wYpQxOQDpaK
- kQfrig3hTO2wtLHKLTHGRVtELja/qC75Uxr0o+ufhkDx6Ehu1fIICHZOEpQ/PeDcEzheRRxjqcJ
- i6kbm1qutw51OpB1UXAvRKX6B3x86ZwN3nbtmoK12FC0i7m5WiZVTXYWfYIBaexsHK2j4PYHhwC
- RXHxdDcYP9zMq/msvt2mOsMv4Vmy9sHFdbU2c2lcwYGlPYQPXBSH6fPObLtgXGBmPYSqxb0tmgN
- 7fTKPrbokisTaTUBQqCMsvc4bXSczywTgER8VMozv+eExBgdWYOL/sVO4Z7qzl3Zrhhqy+LiPgT
- Y+A==
-X-Received: by 2002:a05:690e:1281:b0:653:11d9:b0c5 with SMTP id
- 956f58d0204a3-65311d9b991mr11525569d50.46.1776679138236; Mon, 20 Apr 2026
- 02:58:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1wElWy-0001g4-2N; Mon, 20 Apr 2026 06:07:05 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1wElWu-0000j2-QH; Mon, 20 Apr 2026 06:07:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=6O2UHfGRuvNhWUJoGzsFLzbU32nwuB6gpukG2dUoRm4=; b=Rb0UMCQYqo8v
+ gqiMVcT2wSNCXi7pWVDM4s/eUSyghqTBj4x8vJj/I/6MWpSIpYGdfK+lF7eGfW8/NujnrCInyTjPD
+ /m/83lYsjxa2a49lzLBvBP0Kv3DHnc1rZTxICn6WHaiZujl9XogqaTcj43thV57WBX/lg4nlAN0XV
+ c394gsla2CpQGHwp5qtrQ73V/csD2xi1UVo9SoDtMtFPgLW1SDso0OZhigj8WqQbJLglX3Y3M2E3l
+ 0/+g3Y1x/B6Ot2HkmZQ0X+ZSlpFUJlQg3eRN/HzqztTEynbHFl3u4b1mjm4j1lOeFlZkjfvVFi7fp
+ BGZpdi6qaOPCphK8SXZeUA==;
+Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=iris.sw.ru)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <den@openvz.org>) id 1wElUE-007lFH-1U;
+ Mon, 20 Apr 2026 12:06:47 +0200
+To: qemu-devel@nongnu.org,
+	qemu-block@nongnu.org,
+	qemu-stable@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com,
+ pbonzini@redhat.com, "Denis V. Lunev" <den@openvz.org>
+Subject: [PATCH 1/1] block/linux-aio: bound ioq_submit() recursion depth
+ #VSTOR-129345
+Date: Mon, 20 Apr 2026 12:06:54 +0200
+Message-ID: <20260420100655.3318452-2-den@openvz.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260420100655.3318452-1-den@openvz.org>
+References: <20260420100655.3318452-1-den@openvz.org>
 MIME-Version: 1.0
-References: <20260417152236.1305333-1-farman@linux.ibm.com>
- <20260417152236.1305333-2-farman@linux.ibm.com> <87a4uyt0ww.fsf@redhat.com>
-In-Reply-To: <87a4uyt0ww.fsf@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Apr 2026 10:58:46 +0100
-X-Gm-Features: AQROBzBWCBRo6FQnsPhdGe5RXAoyejx-2hE-baSSD0JYD9XirUUzN7W4AD51IcM
-Message-ID: <CAFEAcA9xCN6XMUFmZ_QAn617W14FAzi4D_H1mgSER10otTtQMQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] MAINTAINERS: Update s390 trees
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
+ helo=relay.virtuozzo.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_SOFTFAIL=0.665 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,29 +64,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Denis V. Lunev" <den@openvz.org>
+From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Apr 2026 at 10:52, Cornelia Huck <cohuck@redhat.com> wrote:
-> I also have the s390-fixes branch, which I've used during freeze, not
-> sure if it is worth mentioning here as well. (Assuming that I'll
-> continue using the same setup as in the past, but it had been working
-> well back then.)
->
-> In general, do humans tend to consult the T: lines? Are there tools that
-> do anyting interesting with them?
+qemu_laio_process_completions() wraps its body in defer_call_begin /
+defer_call_end. Inside the section, completion callbacks wake coroutines
+that queue new aiocbs; laio_do_submit() defers laio_deferred_fn. At the
+bottom of qemu_laio_process_completions() the defer_call_end() fires
+laio_deferred_fn, which calls ioq_submit(), closing the cycle:
 
-I never look at the T: lines. My impression is that this is a
-part of the MAINTAINERS format that we've carried over from
-Linux, where the development workflow is much more that
-subsystems have their own git trees and patches for those
-subsystems should be based on those git trees, because the
-mainline git is only updated during a merge window. For QEMU
-our workflow is that patches for anywhere in the tree should
-be based on the head of upstream git, because that continually
-updates except during release freezes. So there's much less
-need to care about what a subsystem's git tree is, and many
-subsystems don't have a public git tree at all.
+  ioq_submit
+    -> io_submit(2)                           // some sync completions
+    -> qemu_laio_process_completions          // defer_call_begin
+         -> aio_co_wake                       // resumes coroutine
+              -> laio_do_submit
+                   -> defer_call(laio_deferred_fn, s)   // enqueued
+         -> defer_call_end                    // nesting drops to 0
+              -> laio_deferred_fn
+                   -> ioq_submit              // +1 stack frame, loop
 
--- PMM
+When io_submit(2) returns asynchronously (O_DIRECT) the cycle
+terminates in one extra frame: the fresh aiocb is still in flight, no
+completion is drained, no coroutine wakes, no new submission queues.
+When submissions complete synchronously (non-O_DIRECT, or per-descriptor
+drivers such as vmdk) each level enqueues more work for the next
+defer_call_end() to drain, so recursion grows without bound and QEMU
+crashes with SIGSEGV on the thread guard page.
+
+The cycle was closed by two performance commits, each correct in
+isolation:
+
+  076682885d ("block/linux-aio: convert to blk_io_plug_call() API")
+    -- introduced laio_deferred_fn and wired
+       laio_do_submit -> defer_call(laio_deferred_fn, s).
+
+  84d61e5f36 ("virtio: use defer_call() in virtio_irqfd_notify()")
+    -- added defer_call_begin/end around qemu_laio_process_completions
+       so virtio-irqfd notifications batch across a completion pass.
+
+The supported aio=native + cache=none pairing keeps submissions
+asynchronous, so the cycle stays bounded; nothing in the code enforces
+that contract. Observed in production as a SIGSEGV during a backup job
+configured with --cached + aio=native; reproducible on upstream with
+qemu-io against vmdk.
+
+Cap ioq_submit() recursion with a per-thread counter. On overflow,
+return without submitting. The pending work is drained by
+s->completion_bh, which qemu_laio_process_completions() has already
+scheduled on entry -- no work is lost; one event-loop round-trip of
+latency is paid only when the bound is hit, which cannot happen on a
+supported configuration.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+---
+ block/linux-aio.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index 0a7424fbb3..f98bb6e766 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -36,6 +36,19 @@
+ /* Maximum number of requests in a batch. (default value) */
+ #define DEFAULT_MAX_BATCH 32
+ 
++/*
++ * Bound on how deep ioq_submit() may recurse on a single thread via the
++ * ioq_submit -> qemu_laio_process_completions -> defer_call_end ->
++ * laio_deferred_fn -> ioq_submit cycle. The cycle terminates naturally
++ * when io_submit(2) returns asynchronously (O_DIRECT), but can grow
++ * without bound when submissions complete synchronously. On overflow
++ * the caller returns without submitting; the outermost
++ * qemu_laio_process_completions() has already scheduled s->completion_bh
++ * (via qemu_bh_schedule() at the top of that function), which resumes
++ * submission from the next event-loop dispatch.
++ */
++#define IOQ_SUBMIT_MAX_DEPTH 8
++
+ struct qemu_laiocb {
+     Coroutine *co;
+     LinuxAioState *ctx;
+@@ -80,6 +93,9 @@ struct LinuxAioState {
+ static void ioq_submit(LinuxAioState *s);
+ static int laio_do_submit(struct qemu_laiocb *laiocb);
+ 
++/* Per-thread recursion counter for ioq_submit(). See IOQ_SUBMIT_MAX_DEPTH. */
++static __thread unsigned ioq_submit_depth;
++
+ static inline ssize_t io_event_ret(struct io_event *ev)
+ {
+     return (ssize_t)(((uint64_t)ev->res2 << 32) | ev->res);
+@@ -340,6 +356,11 @@ static void ioq_submit(LinuxAioState *s)
+     QEMU_UNINITIALIZED struct iocb *iocbs[MAX_EVENTS];
+     QSIMPLEQ_HEAD(, qemu_laiocb) completed;
+ 
++    if (ioq_submit_depth >= IOQ_SUBMIT_MAX_DEPTH) {
++        return;
++    }
++    ioq_submit_depth++;
++
+     do {
+         if (s->io_q.in_flight >= MAX_EVENTS) {
+             break;
+@@ -385,6 +406,8 @@ static void ioq_submit(LinuxAioState *s)
+          * pended requests will be submitted from there.
+          */
+     }
++
++    ioq_submit_depth--;
+ }
+ 
+ static uint64_t laio_max_batch(LinuxAioState *s, uint64_t dev_max_batch)
+-- 
+2.51.0
+
 
