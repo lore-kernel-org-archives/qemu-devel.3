@@ -4,68 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE6AF557E2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 09:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E2EF557EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 09:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEkhA-0001Gq-Ta; Mon, 20 Apr 2026 05:13:32 -0400
+	id 1wEkk0-0001sj-9B; Mon, 20 Apr 2026 05:16:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wEkh8-0001GS-EO
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:13:30 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wEkh5-0004cg-A8
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:13:30 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axweos7uVpbQwCAA--.7954S3;
- Mon, 20 Apr 2026 17:13:17 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCx_8Ip7uVpJzVxAA--.18660S3;
- Mon, 20 Apr 2026 17:13:15 +0800 (CST)
-Subject: Re: [PATCH v3] target/loongarch: Add support for dbar hint variants
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org,
- lixianglai@loongson.cn, yijun@loongson.cn, chenhuacai@loongson.cn
-References: <20260416114715.3309072-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <03c15a36-0502-3344-e941-6b239d04ce22@loongson.cn>
-Date: Mon, 20 Apr 2026 17:10:23 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wEkjl-0001sL-04
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:16:14 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wEkji-0005MJ-SY
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 05:16:12 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4891b0786beso7262555e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 02:16:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776676561; x=1777281361; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7Nb7VfJlQCS2VPYr2RKbo0dKViqUgICWijeSIk9nu7g=;
+ b=ECvtbXnN35C0ne9FIf3o/TkaeiSADPBSgmlWpMJqtzfxRQklk690/isiVtZ7u0YEyI
+ 884YraTCJNWWyakHNOBiNNH9YdzdDV8/MllKw4DT6Fa4i/CxNSjOZkbldwDX2rBUxn2q
+ f449Sv+JDdgttkGztz4o87D/mPVcO1tPa9IMai66hz53iaU2zcBdIQSNN6FhCgU+F06+
+ a0uPXbVQESiJZU87S5TCZWRfQWq9lGEaliAYf8DHEdqVtu6ze27JpFHQ6o/9wtQ/N1Ds
+ e/r4+zMabZ2HGvQs62l02l2B3X7Gviemdz+OSOPlPbq5bRL3p3d2dQYW84I6yPpq1QsZ
+ 6hvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776676561; x=1777281361;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Nb7VfJlQCS2VPYr2RKbo0dKViqUgICWijeSIk9nu7g=;
+ b=UdNGSOakn/G1pyq+/lxFcCl4Rpdec0pw5BqoRguwlhI1L+E+T/mj0V07o/8eS7KUHx
+ 8WFPZfenECV0NgRNB9ONr/eJ+hc+b6szA9HvLfsrACcW+Gq7ikefY2gbXnwC9j6qWQ/v
+ AGmjhogDyP9/f6/hJ4K+XsrCtfLxOIqPqjZjUIb1378sVE62ZW/4mQPWea0uRKOZZwvt
+ akz5lpoYmJ3MvRwBNIlS0CF7KPBBq2oHWK4AZCD+I113qCAxWxLqRtlet82STWJTXazD
+ VMuDZLREUPPwr7tEJ1mPApq/ChXccnY3th/CJUu+89t6vSGtbn8KAvHXVZ5XqCf7FOXV
+ dwhA==
+X-Gm-Message-State: AOJu0Yy65byYnjbcyr/HdAWtlmmGzi4avEtRwy1xPaJLF1301kCEsP7K
+ ln97Uos5ZQmOWpSkMZJSde1C1LkiwsX3Qng+2QB45hTbm7VMl347+Z3i+glQiW/bP4M=
+X-Gm-Gg: AeBDieuxmrWcLyC+NB3CzATPc+YkXOSnLMFYyYONnhsfXrg+cu04p4VFlywZfnje8Nt
+ I0uW1T7ueMjxWH4T4MNBGNQHhB73eQUnxSI1PJY92gQjZz0xHAxJmoh8SqLtfsbiRLOZwmq9MP6
+ ffhPKmCm8uNWk3J7nPvOJWHnjiJsgOb1mIe8tDWu5D5Kpk9aBo0PKcG53roZVS8UZFx1sU9hWmR
+ OPHkKDYqB2T9+fZgFIc7zFnndfAFUlb0sD0aQRC9UImsxgMBQjyiitw678whjtU8ecX++i11kYN
+ 9W/vGMnlJRG2vaVtxRzhQ/wPnjplD4DrPhOoU+wNWbcMjxj2IiiJewmHEeCV6HrPiCy8BBPFMFD
+ b6p1g1WhzOGCH0sprJtK0rs9UAOn3omJpyvxPYqBFRse1UNfkVZBswzqpNXnYea/hMYfc3ZIfnB
+ BQXyFckhgnHff1WxJgqmS+xMzpjOisqAEk3A==
+X-Received: by 2002:a05:600c:8183:b0:488:b187:3c with SMTP id
+ 5b1f17b1804b1-488fb765ab5mr201757445e9.14.1776676561292; 
+ Mon, 20 Apr 2026 02:16:01 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc177dafsm336865275e9.4.2026.04.20.02.16.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Apr 2026 02:16:00 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 61D415F88E;
+ Mon, 20 Apr 2026 10:15:59 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,  Mitsuya Ikuya (=?utf-8?B?5LiJ44OE5bGLIOmDgQ==?=
+ =?utf-8?B?5ZOJ?=)
+ <mitsuya.ikuya@jp.panasonic.com>,  KUZU KAZUKI (=?utf-8?B?6JGb55SfIA==?=
+ =?utf-8?B?5LiA5qi5?=)
+ <kuzu.kazuki@jp.panasonic.com>,  Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v2] virtio: Add vhost-user-rtc and vhost-user-rtc-pci
+In-Reply-To: <20260416-vhost-user-rtc-v2-1-100a53bfc6ce@linaro.org> (Manos
+ Pitsidianakis's message of "Thu, 16 Apr 2026 11:00:34 +0300")
+References: <20260416-vhost-user-rtc-v2-1-100a53bfc6ce@linaro.org>
+User-Agent: mu4e 1.14.1-pre3; emacs 30.1
+Date: Mon, 20 Apr 2026 10:15:59 +0100
+Message-ID: <87jyu26lgw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20260416114715.3309072-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx_8Ip7uVpJzVxAA--.18660S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3JrWDKrWDuFy3WrWkWrW8Zrc_yoW7KFW3pF
- 4xCFnFkFWUtF9rZa1kXayYvrn8ZF4xKw12va43trWfursxGr1kZF1kK3y5KF4xCw4qqF10
- vF4vyw47Wa9IqacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtx
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.478,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,171 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+nobody writes:
 
-
-On 2026/4/16 下午7:47, Song Gao wrote:
-> LoongArch architecture (since LA664) introduces fine-grained dbar
-> hints that allow controlling which memory accesses are ordered by
-> the barrier. Previously, all dbar instructions were treated as a
-> full barrier (TCG_MO_ALL | TCG_BAR_SC).
-> 
-> This patch adds support for decoding dbar hints and emitting the
-> appropriate TCG memory barrier flags. For CPUs that do not advertise
-> the DBAR_HINTS feature (cpucfg3.DBAR_HINTS = 0), all dbar hints
-> fall back to a full barrier, preserving compatibility.
-> 
-> The hint encoding follows the LoongArch v1.10 specification:
-> The hint is a 5-bit field (bits 4-0). Bit4 is reserved and currently
-> ignored/discarded. Only bits 3-0 are used for ordering control.
->   * Bit3: barrier for previous read (0: true, 1: false)
->   * Bit2: barrier for previous write (0: true, 1: false)
->   * Bit1: barrier for succeeding read (0: true, 1: false)
->   * Bit0: barrier for succeeding write (0: true, 1: false)
-> 
-> The mapping to TCG memory order flags is as follows:
->    TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_LD_ST;
->    TCG_BAR_SC |TCG_MO_ST_LD | TCG_MO_ST_ST;
->    TCG_BAR_SC |TCG_MO_LD_LD | TCG_MO_ST_LD;
->    TCG_BAR_SC |TCG_MO_ST_ST | TCG_MO_LD_ST;
-> 
-> Special hint handling:
-> - hint 0x700: LL/SC loop barrier, treated as a full barrier as recommended.
-> - hint 0xf and 0x1f: reserved/no-op, treated as no operation
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Authored solely by me for Panasonic Automotive Systems Co., Ltd., but
+> based on existing vhost-user devices I wrote in 2025, so the copyright
+> is mixed.
+>
 > ---
->   target/loongarch/cpu.c                        |  4 ++
->   .../tcg/insn_trans/trans_memory.c.inc         | 63 ++++++++++++++++++-
->   target/loongarch/tcg/translate.c              |  1 +
->   target/loongarch/translate.h                  |  3 +
->   4 files changed, 69 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index e22568c84a..d8d106b07e 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -455,6 +455,10 @@ static void loongarch_max_initfn(Object *obj)
->           data = FIELD_DP32(data, CPUCFG2, LLACQ_SCREL, 1);
->           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
->           cpu->env.cpucfg[2] = data;
-> +
-> +        data = cpu->env.cpucfg[3];
-> +        data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
-> +        cpu->env.cpucfg[3] = data;
->       }
->   }
->   
-> diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> index e287d46363..dcecf02e54 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> @@ -137,11 +137,70 @@ static bool trans_preldx(DisasContext *ctx, arg_preldx * a)
->       return true;
->   }
->   
+> Changes in v2:
+> - Explain "unusual" authorship situation
+> ---
+>  include/hw/virtio/vhost-user-rtc.h        | 22 ++++++++++
+>  MAINTAINERS                               |  6 +++
+>  docs/system/devices/virtio/vhost-user.rst |  3 ++
+>  hw/virtio/Kconfig                         |  5 +++
+>  hw/virtio/meson.build                     |  3 ++
+>  hw/virtio/vhost-user-rtc-pci.c            | 70 +++++++++++++++++++++++++=
+++++++
+>  hw/virtio/vhost-user-rtc.c                | 64 +++++++++++++++++++++++++=
++++
+>  7 files changed, 173 insertions(+)
+>
+> diff --git a/include/hw/virtio/vhost-user-rtc.h b/include/hw/virtio/vhost=
+-user-rtc.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..6b7b53c28f93032886d826871=
+99585aba0edd917
+> --- /dev/null
+> +++ b/include/hw/virtio/vhost-user-rtc.h
+> @@ -0,0 +1,22 @@
 > +/*
-> + * Decode dbar hint and emit appropriate TCG memory barrier.
+> + * Vhost-user RTC virtio device
 > + *
-> + * The hint is a 5-bit field (0-31) encoded in the instruction.
-> + * For hint 0x700 (special LL/SC loop barrier), treat as full barrier.
+> + * Copyright 2026 Panasonic Automotive Systems Co., Ltd.
 > + *
-> + * See LoongArch Reference Manual v1.10, Section 4.2.2 for details.
-> + */
->   static bool trans_dbar(DisasContext *ctx, arg_dbar * a)
->   {
-> -    tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
-> +    int hint = a->imm;
-> +    TCGBar bar_flags = 0;
-> +
-> +    /* Reserved/no-op hints: 0xf and 0x1f */
-> +    if (hint == 0xf || hint == 0x1f) {
-> +        return true;
-> +    }
-> +
-> +    /* If the CPU does not support fine-grained hints,or for the special LL/SC
-> +     * loop barrier (0x700), emit a full barrier.
-> +     */
-> +    if (!avail_DBAR_HINT(ctx) || hint == 0x700) {
-> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * Fine-grained hint decoding:
-> +     * The hint is a 5-bit field (bits 4-0). Bit4 is reserved and currently
-> +     * ignored/discarded. Only bits 3-0 are used for ordering control.
-> +     * Bit3: barrier for previous read (0: true, 1: false)
-> +     * Bit2: barrier for previous write (0: true, 1: false)
-> +     * Bit1: barrier for succeeding read (0: true, 1: false)
-> +     * Bit0: barrier for succeeding write (0: true, 1: false)
-> +     *
-> +     * For each combination, we set the corresponding TCG_MO_* flag if both
-> +     * sides of the barrier require ordering.
-> +     */
-> +
-> +    bool prev_rd = !(hint & 0x08); /* bit3 */
-> +    bool prev_wr = !(hint & 0x04); /* bit2 */
-> +    bool succ_rd = !(hint & 0x02); /* bit1 */
-> +    bool succ_wr = !(hint & 0x01); /* bit0 */
-> +
-> +    if (prev_rd) {
-> +        bar_flags |= TCG_MO_LD_LD | TCG_MO_LD_ST;
-> +    }
-> +    if (prev_wr) {
-> +        bar_flags |= TCG_MO_ST_LD | TCG_MO_ST_ST;
-> +    }
-> +    if (succ_rd) {
-> +        bar_flags |= TCG_MO_LD_LD | TCG_MO_ST_LD;
-> +    }
-> +    if (succ_wr) {
-> +        bar_flags |= TCG_MO_ST_ST | TCG_MO_LD_ST;
-> +    }
-> +
-> +    if (bar_flags == 0) {
-> +        bar_flags = TCG_MO_ALL;
-> +    }
-> +
-> +    tcg_gen_mb(bar_flags | TCG_BAR_SC);
->       return true;
-> -}
-> + }
->   
->   static bool trans_ibar(DisasContext *ctx, arg_ibar *a)
->   {
-> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-> index b9ed13d19c..49280b1dd3 100644
-> --- a/target/loongarch/tcg/translate.c
-> +++ b/target/loongarch/tcg/translate.c
-> @@ -149,6 +149,7 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->   
->       ctx->cpucfg1 = env->cpucfg[1];
->       ctx->cpucfg2 = env->cpucfg[2];
-> +    ctx->cpucfg3 = env->cpucfg[3];
->   }
->   
->   static void loongarch_tr_tb_start(DisasContextBase *dcbase, CPUState *cs)
-> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-> index ba1c89e57b..8aa8325dc6 100644
-> --- a/target/loongarch/translate.h
-> +++ b/target/loongarch/translate.h
-> @@ -43,6 +43,8 @@
->   #define avail_LLACQ_SCREL(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LLACQ_SCREL))
->   #define avail_LLACQ_SCREL_64(C) (avail_64(C) && avail_LLACQ_SCREL(C))
->   
-> +#define avail_DBAR_HINT(C) (FIELD_EX32((C)->cpucfg3, CPUCFG3, DBAR_HINTS))
-> +
->   /*
->    * If an operation is being performed on less than TARGET_LONG_BITS,
->    * it may require the inputs to be sign- or zero-extended; which will
-> @@ -66,6 +68,7 @@ typedef struct DisasContext {
->       bool va32; /* 32-bit virtual address */
->       uint32_t cpucfg1;
->       uint32_t cpucfg2;
-> +    uint32_t cpucfg3;
->   } DisasContext;
->   
->   void generate_exception(DisasContext *ctx, int excp);
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
+Hmm not sure why my mail client kills your copyright line, but minor nit
+be consistent with using (or not) (c) for both lines.
+
+Otherwise:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
