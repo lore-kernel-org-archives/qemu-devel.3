@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC2AF5A8BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F2ACF5A8B6
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEv79-000677-6S; Mon, 20 Apr 2026 16:21:03 -0400
+	id 1wEv6r-000603-AD; Mon, 20 Apr 2026 16:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6x-00062z-2X
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:52 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1wEv6p-0005yg-K8
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:43 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6v-0006Q1-6T
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:50 -0400
+ id 1wEv6n-0006NC-Hh
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:43 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:c00c:0:640:e0de:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id E76ED8077E;
- Mon, 20 Apr 2026 23:20:47 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 439198073F;
+ Mon, 20 Apr 2026 23:20:36 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id XKYwe10MOSw0-NWPniVVL; Mon, 20 Apr 2026 23:20:47 +0300
+ id XKYwe10MOSw0-j9KdZazJ; Mon, 20 Apr 2026 23:20:35 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776716447;
- bh=+5Ir8ta7fWrDRTJr8RmvUcBm5Hy7vJgrEXmOl04iJcw=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=wYgb7lTbQMlJGhPPBEUDaCsNtVz3EQ35yUx4YNaIwqst7ePNhLabhqMubXQcReOX8
- zevmt00+J7kfLqAiIqreiSNTgj6md0HqHCqYdOy4s3CgH7CXTIiH99W8ToVk4afTfu
- R5woBc2y6zg333ADJNPmJkDPkAL44FAeEJV7Z2ww=
+ s=default; t=1776716435;
+ bh=36p9DhVcG8Bu3z7+pNPP20zkBGLuGbuFjRQ+OjShiWQ=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=qiZsHWBDr/qTJ5qWwqmYa/2EQ9CxOQhqrtNNiRKiG+VyBzMv4K6lYqha3RUR6cO30
+ pjpp4rNty+sHmpHx7lvhErlaZxovJdT5fX6lUSjcDMtgMRHzpqwSgt3md371FMPkR4
+ WxBF1qt2V6bQhuWc9oK6oZZlTzBP8PiwcmRzQ+vQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
  d-tatianin@yandex-team.ru
-Subject: [PATCH v2 09/10] vhost: add .vhost_phys_iotlb_msg() handler
-Date: Mon, 20 Apr 2026 23:20:30 +0300
-Message-ID: <20260420202032.714884-10-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 00/10] vhost-user: VHOST_USER_PROTOCOL_F_GPA_ADDRESSES
+Date: Mon, 20 Apr 2026 23:20:21 +0300
+Message-ID: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260420202032.714884-1-vsementsov@yandex-team.ru>
-References: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -73,71 +72,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow backends to chose, which addr to put into vhost_iotlb_msg:
-user or physical. To be used in further commit.
+Hi all!
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- hw/virtio/vhost.c                 | 11 ++++++++---
- include/hw/virtio/vhost-backend.h |  3 +++
- 2 files changed, 11 insertions(+), 3 deletions(-)
+Here is a new feature to pass GPA addresses instead of UVA
+to vhost-user server from QEMU. The details are in last patch
+10/10 the others are preparation and refactoring.
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index e3d452a7637..af41841b529 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -920,14 +920,18 @@ static void vhost_region_addnop(MemoryListener *listener,
- }
- 
- static int vhost_update_device_iotlb(struct vhost_dev *dev,
--                                     uint64_t iova, uint64_t uaddr,
-+                                     uint64_t iova,
-+                                     uint64_t paddr,
-+                                     uint64_t uaddr,
-                                      uint64_t len,
-                                      IOMMUAccessFlags perm)
- {
-+    bool phys = dev->vhost_ops->vhost_phys_iotlb_msg &&
-+        dev->vhost_ops->vhost_phys_iotlb_msg(dev);
-     struct vhost_iotlb_msg imsg;
- 
-     imsg.iova =  iova;
--    imsg.uaddr = uaddr;
-+    imsg.uaddr = phys ? paddr : uaddr;
-     imsg.size = len;
-     imsg.type = VHOST_IOTLB_UPDATE;
- 
-@@ -1385,7 +1389,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write)
-         len = MIN(iotlb.addr_mask + 1, len);
-         iova = iova & ~iotlb.addr_mask;
- 
--        ret = vhost_update_device_iotlb(dev, iova, uaddr, len, iotlb.perm);
-+        ret = vhost_update_device_iotlb(dev, iova, iotlb.translated_addr, uaddr,
-+                                        len, iotlb.perm);
-         if (ret) {
-             trace_vhost_iotlb_miss(dev, 4);
-             error_report("Fail to update device iotlb");
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index 7cc3bb54418..00881a0bd44 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -143,6 +143,8 @@ typedef int (*vhost_dev_start_op)(struct vhost_dev *dev, bool started);
- 
- typedef bool (*vhost_phys_vring_addr_op)(struct vhost_dev *dev);
- 
-+typedef bool (*vhost_phys_iotlb_msg_op)(struct vhost_dev *dev);
-+
- typedef int (*vhost_get_device_id_op)(struct vhost_dev *dev, uint32_t *dev_id);
- 
- typedef bool (*vhost_force_iommu_op)(struct vhost_dev *dev);
-@@ -210,6 +212,7 @@ typedef struct VhostOps {
-     vhost_set_inflight_fd_op vhost_set_inflight_fd;
-     vhost_dev_start_op vhost_dev_start;
-     vhost_phys_vring_addr_op vhost_phys_vring_addr;
-+    vhost_phys_iotlb_msg_op vhost_phys_iotlb_msg;
-     vhost_get_device_id_op vhost_get_device_id;
-     vhost_force_iommu_op vhost_force_iommu;
-     vhost_set_config_call_op vhost_set_config_call;
+v2:
+06: reword commit message
+
+Based-on: <20260420200339.708640-1-vsementsov@yandex-team.ru>
+   "[PATCH v6 00/22] vhost refactoring and fixes"
+
+Vladimir Sementsov-Ogievskiy (10):
+  vhost: move IOTLB functions from vhost-backend.c to vhost.c
+  vhost: use consistent naming for backend handlers
+  vhost: rename vhost-backend.c to vhost-kernel.c
+  vhost: replace .vhost_vq_get_addr() with .vhost_phys_vring_addr()
+  vhost: simplify vhost_memory_map() and vhost_memory_unmap()
+  qapi: remove user addresses from x-query-virtio-vhost-queue-status
+  vhost: stop reusing vq->desc (and friends) to store physical address
+  vhost: rename vring pointer fields to reflect user addresses
+  vhost: add .vhost_phys_iotlb_msg() handler
+  vhost-user: add VHOST_USER_PROTOCOL_F_GPA_ADDRESSES
+
+ docs/interop/vhost-user.rst                   |  21 +-
+ hw/virtio/meson.build                         |   2 +-
+ hw/virtio/{vhost-backend.c => vhost-kernel.c} |  90 +-------
+ hw/virtio/vhost-user.c                        |  32 ++-
+ hw/virtio/vhost-vdpa.c                        |  19 +-
+ hw/virtio/vhost.c                             | 193 +++++++++++++-----
+ hw/virtio/virtio-hmp-cmds.c                   |   3 -
+ hw/virtio/virtio-qmp.c                        |   3 -
+ include/hw/virtio/vhost-backend.h             |  37 ++--
+ include/hw/virtio/vhost-user.h                |   1 +
+ include/hw/virtio/vhost.h                     |   8 +-
+ qapi/virtio.json                              |  15 --
+ 12 files changed, 210 insertions(+), 214 deletions(-)
+ rename hw/virtio/{vhost-backend.c => vhost-kernel.c} (83%)
+
 -- 
 2.52.0
 
