@@ -4,102 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6047EA71B7
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 03:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A78EA71B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 03:47:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEfSk-0004kK-C5; Sun, 19 Apr 2026 23:38:18 -0400
+	id 1wEfap-0005wc-Vp; Sun, 19 Apr 2026 23:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wEfSi-0004jz-5O
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 23:38:16 -0400
-Received: from mail-vk1-xa43.google.com ([2607:f8b0:4864:20::a43])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wEfSg-00011e-2Z
- for qemu-devel@nongnu.org; Sun, 19 Apr 2026 23:38:15 -0400
-Received: by mail-vk1-xa43.google.com with SMTP id
- 71dfb90a1353d-5673804da95so787000e0c.0
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 20:38:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776656291; x=1777261091; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ZfDbgLhksNgC/0I18k8S+mBITVy5KnLmOj5gnzgQ6XE=;
- b=ssOp3rup8OpxwIQ/h6rRiU6ChTKH7WDfzr6KnuC/U/FIVe7g4Rz+TZhuoHDKe3B2G8
- StDmkC8Z83RR6nJiGghP0MqD/bTSS77R5F8YYVzdui0RuTbJje6wX+yBaCf20vAb98xy
- kT36foZZN60UHeycLcPSkVN3Fm15JiO0Dmd+VHP0mMsHaAeHa/A32DNt7/8CEkgAoMIb
- tHuxLSyWBoUVqrY1guImwJ9kARXHiprhbv+VEiiNMliW8XSvWAfEKY7+Kq75ZXnnINKG
- h+4izKQAuWHnqod2ZdhH5v49tQ8NnDQBHMU/mT5lUszyKcetqTGNrZ/Bwn4gSZnKcSxA
- SHkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776656291; x=1777261091;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZfDbgLhksNgC/0I18k8S+mBITVy5KnLmOj5gnzgQ6XE=;
- b=fOMkWMtmDHg3gT4Ktmlot71E9Hk9RPWr+l7bwb7GjjBMcZ6m38Aw183S6SDxmy44Xx
- Q75snRUQlLxoVYh55MVCBReKfSUU7BhDMSqDGKbUDUIA/j5/gFJh0M1b0eU1poF0hUIO
- PlsILxWyKfw+8Eflee/3H4nZUx+msnY303fYEQq69b4MGvGkz0ogym0dmsTOhoVtocCu
- Z3B/WZB0JpVvCNQlOjCvM3XQ+boNS6ohiUchOxCbPn1uPKgGR/eWPp4OnELESKflR9w0
- 4u8YoplMs6VSm01ME6GNZ/d3QO4RPGd6H+26cG1Kc+ckVfJ5tYbae51ieZ7e9A9aly+d
- MTjg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9RaNxkdUNjZCCKg3STe4Qlzk7Lwn44LIjgtatjTr1lcXBay3MKRAXmvQvHhkVaC8Usj2JLnZ9ukQeg@nongnu.org
-X-Gm-Message-State: AOJu0Yw6J3bxg0vcIZ9vZ4im4shLDTghEbYH8u1+WTwDS94iqo8SN03M
- IgogzDmLtd3ACmR2c28yuGR3S539P0d4RLxBbfS/nOYReq77SMyAtZr4
-X-Gm-Gg: AeBDieuk0STEoL0gAoRYbx/xj/5uxkfvIPsqybAuDa+YzK+6ZeAE69WBYahAl1rVcY2
- EcNAnGeJtr0ZO4pmtK8jEkxQTYFvGKk8yhmmJSK2wUlJQBexm2Ufhb15wOaDxLe9/EY2B3Rafu5
- y1FK7mF3wtr8SqB1vEQ7oh7yE8L49VD+i2BwNUN5bHdDBarKDks4KMZFm/1ih9wG3xzEspung4p
- Nu/hOQYVfEH24d43+oXfU/6zTh/wi3bMZF2t3wKTkxbejHGMPxsGJoGjHJ04M14/cVg+y/M1qdB
- VSuYu1mQrQu6TSV7tPjQjDYNENlgcPts+ltkhCblnHVywmyN0J+hWZ2++lEnKKzb42vdm9A4dQ/
- wjQbeIfxVuMQ565DAu6HX9vuOTI91UzEn903opFmaHKhSKjH1bGQd9t8taecdKEb0nmtHBNgwHj
- oyj3OOTdkVmqgmi9eUIuIL13cme1R2yPn1zurpaYt6EN3Vsnd1bX5GVBzY7C5uCFwbUqUnqUZF6
- BQqNmwqOXA=
-X-Received: by 2002:a05:6122:e191:b0:56d:b639:5c0d with SMTP id
- 71dfb90a1353d-56fa5a4666emr4791721e0c.13.1776656291001; 
- Sun, 19 Apr 2026 20:38:11 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
- by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-56fa92f22a4sm5594584e0c.12.2026.04.19.20.38.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Apr 2026 20:38:09 -0700 (PDT)
-Date: Mon, 20 Apr 2026 11:37:52 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Chao Liu <chao.liu@zevorn.cn>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Conor Dooley <conor@kernel.org>, Peng Jiang <3160104094@zju.edu.cn>
-Subject: Re: [PATCH v6 1/5] target/riscv: add thead-c908 cpu support
-Message-ID: <aeWJKa4edHt6Djv3@ZEVORN-PC.localdomain>
-References: <cover.1776438369.git.chao.liu.zevorn@gmail.com>
- <e1a977e38c934a7f383530067230a6201b8ccc60.1776438369.git.chao.liu.zevorn@gmail.com>
- <CAKmqyKMipoe-YHVo5VGekUGG4uFJ7CEktipsOCSrSx=6b9=REA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wEfah-0005vx-EO; Sun, 19 Apr 2026 23:46:32 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wEfaf-0002Bl-90; Sun, 19 Apr 2026 23:46:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cF8MsbkvaIakp87eL7AdzGxigk6nl4jn8dMgDRJjmMKW82Wil92nsfOgPT2eVeR46YKEKpHD6sXg5AFf0Q250ResGGayIBSIlzz9zkjspZgsWVzfc21A0wPhql6niDs8UMvBpp0pUm9JqBis6CLwgzXmGTKrPc+X7uP4266wHmKJvuDRhkfuqbJ+LWWwdqy3LRWyA9DFrswStA3d8EuVTkFNVTJrwcCf0u9XDVzwWsNbzbaOCon+aiwnYoWfxiLthFfuiBlWLPWXC6/e/PTh/d6oWiUJK0ErxjNfGYNJNAHYytA25jNGewsiJR4ix0Ai22x+g3OnA8zKwsmWNk44DQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LWZw+YdUnonxfkq6uEmXY72LLG0nxoV8NSogM7hgWPE=;
+ b=ih9t1st/72hNO5BwlqnYsD2rf5vJUsAbNnC7VQIHuE47egMeLD1p9LwKGAU6UunBJaCG4xDPcY8CKA3H1AaUHcNR7fo4RuXu2eV/oUuHydSiiXSlz9H2mMvPrLZdsaC1epRRy8RlRLZV3OLRm/SEfsFhdWLAL7FgyVeKrWmJRt3aFyaWhVa0hCPecsx3GsBNIm6gLtIhDNvQbl3ofEGkinuwuHLrTbwuvloKiEZPUuYVUId6qTTSA3LJMVMTCeAzt4AYWNbGXoZrw0YxZ4iubOMv35uXC82kgVz4pnYxtxuVT4gEDGKtv4S23MmXPtLuvRuiYFRT7mKpZtii0io2+w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LWZw+YdUnonxfkq6uEmXY72LLG0nxoV8NSogM7hgWPE=;
+ b=MwXmIPVDSAklyYBQBWC2fY6q9d3sqASmkrbCCsijdgPjlO8wKAC2ikGwCg7XKag+J+rcxIIYeucuozHW/euR1hR19Gwe++DyCmJJpzvx76IYMSUrxYCSFSatL/o9/UfxDsOQalg6d8P/rNi+ZlUd3JOCb7PtwvA0bOCSeSRqk3gR1x+bPPf+yDOGRepjfWzEmwD3i8rhKF4kyEnLTQ+WRryFNifyjV8rknuEKjQVYFXkDv12K/neVXXV4h5EpHbSS7BmgwjMuNsUiukcBWzFjk3RwU3hIwc+AlPOlX661exmsTcmWAime5reoKfDZPKPeO1Vj6YTiVCXBoNattGucQ==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by TYPPR06MB7972.apcprd06.prod.outlook.com (2603:1096:405:2c0::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.32; Mon, 20 Apr
+ 2026 03:46:16 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9818.032; Mon, 20 Apr 2026
+ 03:46:16 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: "philmd@linaro.org" <philmd@linaro.org>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, Troy Lee <troy_lee@aspeedtech.com>,
+ "flwu@google.com" <flwu@google.com>, "nabihestefan@google.com"
+ <nabihestefan@google.com>
+Subject: RE: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn
+ structure and dead code
+Thread-Topic: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn
+ structure and dead code
+Thread-Index: AQHczUNFhK5MCMsaPESXZcYoH3r+fLXhmSoAgADa5RCAABGycIAAfiQAgARRziA=
+Date: Mon, 20 Apr 2026 03:46:16 +0000
+Message-ID: <TYPPR06MB8206FD23CEB6362F35A42B65FC2F2@TYPPR06MB8206.apcprd06.prod.outlook.com>
+References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
+ <20260416014928.1279360-2-jamin_lin@aspeedtech.com>
+ <d7e9d943-fd8d-dd48-5a86-e54613c466dd@eik.bme.hu>
+ <TYPPR06MB820623725F12A9326E19B44FFC202@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <TYPPR06MB8206FFD9BA069A555C54A137FC202@TYPPR06MB8206.apcprd06.prod.outlook.com>
+ <efadd094-380a-41e4-0346-7ba296781968@eik.bme.hu>
+In-Reply-To: <efadd094-380a-41e4-0346-7ba296781968@eik.bme.hu>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TYPPR06MB7972:EE_
+x-ms-office365-filtering-correlation-id: 62c34e2d-6bfe-47a0-ac2d-08de9e8f6002
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|38070700021|56012099003|18002099003|22082099003;
+x-microsoft-antispam-message-info: rRBcy4P3L+K2GfjoeZIJdZ6TZLjEYvYjLR/TOMwdLK0gqzTbDNk6eKew3VseOM7/63TtVlLD7rovzZNV/iVH57PO7O+Bt3Ddu5qyEurvc2zGu1lVBSpziKu8xfZmR4/ukVURrDbbQvF1pjYxGxaw+sLD1yvavlCRTZnd0z35BKouCmtHAyNXvbV549HAUpZiaPg1zqsbXxXArhI79l1gD4Y3Kb0A0vGgbCKEIc53D3U8BZu0TvuYKvjtVDnh0Fb6Z027zQhCE6BrlYADSRBQJFZXjHj4/MiYs/tuglLu5qXtg9dBOCgfoxQs4LtINPWmDxXu1OgjSQcnG8QbN8kQayXmVgBiXoHjPl7xpLowWp5sKYYEBcOws+/S4Qd8VHICFUYoXk8poZ7HQ5wDFQvJRz5aqHh0xkCmkSX2oRizI9cZWoh9Z/Rr1E+hwjzZLkucnwrDOUcWVZBOktbaLmkrzqD0CFT+9gd/u1b6aaYd5TCiYfBz4/mwaiG7DaMqrZ4aNNQ/N6hfrHjG9NiouAz3DA5FecKaru4OXAi+/gOBIvzWqRLaOz7aum5tPcO139CkZyzwIVSL7rvmzAytXBn1zLnvaN+Y9LFcTf5i/D37BWOYysYGerBGkqz6+uXyPEp04dvqo+UqoWavpWYFYwgC87yQCOxqHEuk5+vWF0eV/sLcYVgokeCo9gWZ4J8BqbZTqnc6zZTqWuXHaiWD6by5+b8983Htvxj74DkHMns4QhXs3FYfsTNBuLP/Mx720je3n4sTV/VkmqefPrjLa4Oi0kKvo5E3vQIzdDfr7Ai20KU=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700021)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?5Do81KxJxMn57iEGr+2kZPvNgl2VI+bT/se42IzIFskx6P+7nmDsBDredr?=
+ =?iso-8859-1?Q?PrYBDDFrUa3Tlonq1FJlfglP/47oLteMhxQhZkte/1anVZYfLIQrbGBBpy?=
+ =?iso-8859-1?Q?gwWvq3e6tYuyzI2alFYPSSfxira3u2sayP7LYqmtc1ivJhVJNVOQjH1JB2?=
+ =?iso-8859-1?Q?I3f8F9WROudR/gWmQqv3CxcAWOFleT9uafha05MhFi5qOmvXInr5cxaP6e?=
+ =?iso-8859-1?Q?enCtfmAGrkxVxHUYpvcqY4rUtTdty44Nvi+PagS2uADcBmhfsX47UTr5o+?=
+ =?iso-8859-1?Q?jtJsZR3oGJYCT/BAnpFRVbg4M1GCFwQmRJZF/JXCWGGKrvV2HAqAHMBMkK?=
+ =?iso-8859-1?Q?z6zsA0eATblELZ2Ua5RQYv4FOPkU3BrLlG6woVZWfSaAOlg0Ju3vksLJIr?=
+ =?iso-8859-1?Q?R/E/lufOcspc6axNY5kCC2sOLOY3GvZ2BKwEj3rBEU85+IdEpeUoD+u5xb?=
+ =?iso-8859-1?Q?6qZEvY4sfH1s0U8s6jXnHL/TYlyVGODxzGdQfpww1L7MUrVmHigqeLAGU2?=
+ =?iso-8859-1?Q?/k0zcPHHlaal3oa3IWEs2fo8lJUg4oE8fki5msvfBS2Rx9PlzKhDrjvUJR?=
+ =?iso-8859-1?Q?SIIShlVeYBQL8fi+cf4Chn429UkdgU3kC3dU3F1sm/xDP4JEqfn6BYoORQ?=
+ =?iso-8859-1?Q?CR6L5bBq/r+5rZHQTykuMOBDaLHKxeOG69m+ahi5wygojXGMya8Fw21aED?=
+ =?iso-8859-1?Q?jHPTxOc3V5BW9TMF/MZuSOjEmkU5OVRxKdXQ+6KohWWu6N1MXiEJqZuwVA?=
+ =?iso-8859-1?Q?LCYWfRoNKT+FlzXiQhWDL3ZrhUfXdZq1igyhgs0+i3PssR4NF0b81ZoO0s?=
+ =?iso-8859-1?Q?yXta3c/zxC2N+HOscs/FJ4C32E6NkBqF+ivwGKZ+sAJAnrUaDdK3JcwiPa?=
+ =?iso-8859-1?Q?BvW4ESAJCIuAYolYo/A8aYujuYyyOCwIFA6/lmnPLcgp1qTWypgLTkOKXM?=
+ =?iso-8859-1?Q?hugq3R136gRuyXU3UQbBjiZCFlFYROBO48aJs7Ch61SxC7dw9F3gKxWGZJ?=
+ =?iso-8859-1?Q?94qYCtEYJbL71krAqwOoBr2vH/QjLsMZecB8zWPCXinklFkmdOgHaZXFIp?=
+ =?iso-8859-1?Q?exDoTFOUepYdM/yByyT4BhHv0FHWuUHoktg9ynDyurR/Udf80IDRsnkz9D?=
+ =?iso-8859-1?Q?0KiokZVjYk1IpqBSnORx/BjguZgvBeXW14fXhzCzFd/RskOsntRC5kSDr2?=
+ =?iso-8859-1?Q?1d3WGvn2QJkudwO2t+Op3dYtFJw1n+Hwqq+uGgvxBLv6AwRIPlP+e7dzOh?=
+ =?iso-8859-1?Q?mzbYUXp8XdGSjTHfHb+sfIoiV+V/S4xRF4H9+CoewJuOMJkTLH3JDAE9QA?=
+ =?iso-8859-1?Q?0afQCBzyoniG42N4JtNBxji6w46nLbKb/xaBxWgTWenyNbo6ihvxIRnoRm?=
+ =?iso-8859-1?Q?kePgp4oNyEFCN47w76EBIF/fnwsQQkK6qaAmdPkfU4oTGd4Vlds9yvkXLV?=
+ =?iso-8859-1?Q?55YbX5BWJ7rYkXB83UCldBcSeMOnzQorroVqu7aMJ00JZYrWBp58mxdJUx?=
+ =?iso-8859-1?Q?m/oXdEDvchoRnbQekf38leCaLUtDb8OIi8GcCNUCxnB7lm0yOwZuf8ZdtQ?=
+ =?iso-8859-1?Q?nM/H98eQ2nWhRaqhY4CSkZZEyh4NW6QyzDqApOYA/9Du0G2n/3eeOh0EGr?=
+ =?iso-8859-1?Q?mdhbEhtsKFXtegKO4Gm5MhPwgXjdTrz4GFVTMR1uY1IirGvjmX7tg1qevM?=
+ =?iso-8859-1?Q?3KYeC5jWknkuEw+GpLnK4vznvdTdTgGqQYRmvRltw90Di7kXe7srOqaHwP?=
+ =?iso-8859-1?Q?u9Uc7frB/vSkMz5o3nGR/Iid63v/QJmigk+LZMGC7iH17+p62nJ+x81dVk?=
+ =?iso-8859-1?Q?7STrF0T8yA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKMipoe-YHVo5VGekUGG4uFJ7CEktipsOCSrSx=6b9=REA@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a43;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-vk1-xa43.google.com
+X-Exchange-RoutingPolicyChecked: ustCPxoUMypyIWSq4ibKNB3FlHrgCRBNxWMfpMaGqzGTAminPIIP/0oX+AGqXb4HlztiqRwhmtll6tK+sNS/8aOCWPspf6S3NPFo1kogEB4fE+/TKxTMktcjbhpIeqIPGMmb2ImQSQrRqzYG5K7Gy3TvxOm6kMydi6ps5oJ24/QmA+6NFL4871wLLkvbaDawysw194IX4016x2yhg3OEsJwiI0ofnV31LyYokNcnY8QUO8+L/pStvnznj1YD/RlswzQb4jvmRBlXaBMejiglKMinVcPTde75FKRXHjNMNat8L804uqnCV4gAmFiGQZucLgDbgLCIuBsTmTLW6Hu2xg==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62c34e2d-6bfe-47a0-ac2d-08de9e8f6002
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2026 03:46:16.1100 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: GGlnX1dk2yOb8FQ+9SkJW1xO8VTKDWsafXWI6sTlSsaHaRmIWJaFlbSGQWIwErEb+chddU+hM1iHMyBEenYfINSqSoNNz1V5KYWus9lS/Tc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR06MB7972
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,103 +157,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 20, 2026 at 09:49:50AM +1000, Alistair Francis wrote:
-> On Sat, Apr 18, 2026 at 1:13 AM Chao Liu <chao.liu.zevorn@gmail.com> wrote:
+Hi BALATON
+
+>
+> Subject: RE: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn
+> structure and dead code
+>=20
+> On Fri, 17 Apr 2026, Jamin Lin wrote:
+> > Hi all,
 > >
-> > From: Chao Liu <chao.liu@zevorn.cn>
+> >> Subject: RE: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused EHCIfstn
+> >> structure and dead code
+> >>
+> >> Hi all,
+> >>
+> >>> Subject: Re: [PATCH v3 01/17] hw/usb/hcd-ehci: Remove unused
+> >>> EHCIfstn structure and dead code
+> >>>
+> >>> On Thu, 16 Apr 2026, Jamin Lin wrote:
+> >>>> The EHCIfstn structure, defined according to EHCI spec section 3.7,
+> >>>> is currently unused in the EHCI implementation. Remove it to reduce
+> >>>> unused code and improve maintainability.
+> >>>>
+> >>>> Additionally, drop a block of disabled (#if 0) code in
+> >>>> ehci_state_advqueue() that was never implemented. This code path is
+> >>>> incomplete and has no functional impact.
+> >>>>
+> >>>> No functional change.
+> >>>>
+> >>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> >>>> ---
+> >>>> hw/usb/hcd-ehci.h |  7 -------
+> >>>> hw/usb/hcd-ehci.c | 11 -----------
+> >>>> 2 files changed, 18 deletions(-)
+> >>>>
+> >>>> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h index
+> >>>> 0ae8c06331..3aec0e047c 100644
+> >>>> --- a/hw/usb/hcd-ehci.h
+> >>>> +++ b/hw/usb/hcd-ehci.h
+> >>>> @@ -202,13 +202,6 @@ typedef struct EHCIqh {
+> >>>> #define BUFPTR_SBYTES_SH              5
+> >>>> } EHCIqh;
+> >>>>
+> >>>> -/*  EHCI spec version 1.0 Section 3.7
+> >>>> - */
+> >>>> -typedef struct EHCIfstn {
+> >>>> -    uint32_t next;                    /* Standard next link pointer
+> >> */
+> >>>> -    uint32_t backptr;                 /* Standard next link pointer
+> */
+> >>>> -} EHCIfstn;
+> >>>> -
+> >>>> enum async_state {
+> >>>>     EHCI_ASYNC_NONE =3D 0,
+> >>>>     EHCI_ASYNC_INITIALIZED,
+> >>>> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c index
+> >>>> 57f930b099..5ea8461f70 100644
+> >>>> --- a/hw/usb/hcd-ehci.c
+> >>>> +++ b/hw/usb/hcd-ehci.c
+> >>>> @@ -1756,17 +1756,6 @@ static int ehci_state_fetchsitd(EHCIState
+> >>>> *ehci, int async)
+> >>>> /* Section 4.10.2 - paragraph 3 */
+> >>>> static int ehci_state_advqueue(EHCIQueue *q) { -#if 0
+> >>>> -    /* TO-DO: 4.10.2 - paragraph 2
+> >>>> -     * if I-bit is set to 1 and QH is not active
+> >>>> -     * go to horizontal QH
+> >>>> -     */
+> >>>
+> >>> Is it worth to keep the comment in case it's still valid to remind
+> >>> we have something missing here?
+> >>>
+> >>> Regards,
+> >>> BALATON Zoltan
+> >>>
+> >>
+> >> If we decide to keep these comments as reminders for unimplemented
+> >> parts, please let me know. I will resend the patch series and drop thi=
+s patch.
+> >>
+> >> Thanks,
+> >> Jamin
+> >>
 > >
-> > The C908 processor is based on the RV64GCB[V] instruction
-> > set, compatible to RVA22 Profile and implements the XIE
-> > (XuanTie Instruction Extension) technology.
+> > Another approach:
+> > We can remove the #if 0 dead code and keep only the comments as a
+> reminder that this part is not yet implemented.
 > >
-> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> > Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > Reviewed-by: Conor Dooley <conor@kernel.org>
-> 
-> As Connor pointed out, he didn't add his Reviewed-by, instead he
-> commented about a missing extension [1]. On top of that I don't see
-> any instances of `Reviewed-by: Conor Dooley <conor@kernel.org>` in the
-> QEMU tree, so I assume there are none on the mailing list as well.
-> Which makes a copy and paste error seem less likely.
-> 
-> I do see that Connor's reply was sent from his conor@kernel.org address,
-> but manually stitching together a `Reviewed-by` and address seems
-> unlikely to happen by accident. Although it does seem like the type of
-> thing an LLM would do (see below).
-> 
-Sorry, when I first started contributing to QEMU, I wasn't familiar with
-mailing list conventions. I had been under the impression that whenever a
-reviewer left comments, it was appropriate to carry a Reviewed-by tag into
-the next revision. No one pointed this out at the time, but that was
-clearly my oversight. My apologies to Alistair and Conor for the trouble
-caused.
-
-I made the same mistake on earlier patches as well:
-
-https://lore.kernel.org/qemu-devel/8b29b86a9af84edba54cc53aec017224478312bf.1745894489.git.lc00631@tecorigin.com/
-https://lore.kernel.org/qemu-devel/501e578a4ef28515ccdefcbc82defc04363855ca.1746001489.git.lc00631@tecorigin.com/
-
-There is also a slightly different case where I added a Reviewed-by tag:
-
-https://lore.kernel.org/qemu-devel/07a97219e3f7e342c668d6772acc4c0a8eb4d4f3.1744709888.git.lc00631@tecorigin.com/
-
-There the R-b came from an internal colleague who reviewed the patch on
-our side before it was sent upstream.
-
-Is that also against community convention?
-
-> > Reported-by: Peng Jiang <3160104094@zju.edu.cn>
-> 
-> I'm not sure how this can be Reported-by, it's not a bug fix. What was
-> reported? It seems like the Reported-by appeared in v3 [2] and wasn't
-> in v2 [3], yet I don't see anything reported.
-> 
-This patchset is the project-phase output of a non-profit QEMU open-source
-training camp we run in China; so far the camp has trained about 2000
-participants. Peng Jiang is one of the members, and his task was bringing
-up OpenSBI/RustSBI + Linux on the QEMU k230 board. For the specific
-details, see:
-
-https://github.com/rustsbi/rustsbi/issues/160
-
-The Reported-by in v3 was added as a form of encouragement, since he
-found several bugs during that bring-up work.
-
-Given this situation, should I also drop Peng Jiang's Reported-by tag?
-
-After the camp concluded, I asked him to report any further issues to the
-upstream list directly himself — for example in v4:
-
-https://lore.kernel.org/qemu-devel/651b1d38.63ab7.19be50b4721.Coremail.3160104094@zju.edu.cn/
-
-> The extra and unexplained `Reviewed-by` (especially using an odd
-> address as mentioned above) really points to this being LLM generated.
-> Especially considering that your reviews are LLM generated (those are
-> fine). Unfortunately that means I will need to decline the commits
-> according to the QEMU Code Provenance rules [4]. Note that it isn't
-> just the Code Provenance policy, it is also now really difficult to
-> trust these patches knowing that stray `Reviewed-by` tags could be
-> hallucinated and not caught before being submitted.
-> 
-That said, I should clarify that no LLM assistance was used in developing
-this patchset.
-
-Finally, thanks to Alistair for the patient review. I'll be more careful
-about these details in future contributions to avoid adding review burden
-on maintainers/reviewers.
-
-Reference:
-1. learning-QEMU-Camp-2025: https://opencamp.cn/gevico/camp/2025/stage/5
-2. QEMU K230 modeling task assignments: https://github.com/gevico/qemu/issues/7
-
-Thanks,
-Chao
-
-> 1: https://patchew.org/QEMU/cover.1764493931.git.chao.liu@zevorn.cn/c27edc69ea6642f645d5e194bd5d4cd71e812841.1764493931.git.chao.liu@zevorn.cn/#20251203-squiggle-gentile-f27af704359e@spud
-> 2: https://patchew.org/QEMU/cover.1765811173.git.chao.liu@zevorn.cn/ac82fb9f22366614c2be80d9fe200f1b5ce161ef.1765811173.git.chao.liu@zevorn.cn/
-> 3: https://patchew.org/QEMU/cover.1764830405.git.chao.liu@zevorn.cn/fdd2cb519a91a16c5b6e8931dda8301bf1c23c85.1764830405.git.chao.liu@zevorn.cn/
-> 4: https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-generated-content
-> 
-> Alistair
+> > Ex:
+> > --- a/hw/usb/hcd-ehci.c
+> > +++ b/hw/usb/hcd-ehci.c
+> > @@ -1756,16 +1756,10 @@ static int ehci_state_fetchsitd(EHCIState
+> > *ehci, int async)
+> > /* Section 4.10.2 - paragraph 3 */
+> > static int ehci_state_advqueue(EHCIQueue *q) { -#if 0
+> >     /* TO-DO: 4.10.2 - paragraph 2
+> >      * if I-bit is set to 1 and QH is not active
+> >      * go to horizontal QH
+> >      */
+> > -    if (I-bit set) {
+> > -        ehci_set_state(ehci, async, EST_HORIZONTALQH);
+> > -        goto out;
+> > -    }
+> >
+> > Thanks,
+> > Jamin
+>=20
+> That's what I meant to leave the comment but OK the remove ineffective co=
+de.
+Thanks for the suggestion.
+Will do.
+Jamin
+>=20
+> Regards,
+> BALATON Zoltan
 
