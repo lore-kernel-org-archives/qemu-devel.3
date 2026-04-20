@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25CCDF5A8B8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F177F5A8AA
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 19:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEuSV-0007Zz-90; Mon, 20 Apr 2026 15:39:03 -0400
+	id 1wEuSW-0007aw-IC; Mon, 20 Apr 2026 15:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuSS-0007ZH-RT
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:00 -0400
+ id 1wEuSU-0007a0-6K
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:02 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuSQ-0004SH-EI
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:00 -0400
+ id 1wEuSQ-0004SP-59
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:01 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 47DF380622;
- Mon, 20 Apr 2026 22:38:52 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id DF9E480799;
+ Mon, 20 Apr 2026 22:38:53 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id mcXJF10KxSw0-KhG92qiW; Mon, 20 Apr 2026 22:38:51 +0300
+ id mcXJF10KxSw0-YDJ18hm0; Mon, 20 Apr 2026 22:38:53 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776713931;
- bh=BVW7W5ay8Vt0Om158SrtuuKZqKxY4jrfYD4TteEGYfw=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=n7958LU8Tp7TUnPrUpEghX9PLODqdzPTdHJV97lbKyk6ftWO1D9ey3vGGWHFuJU7j
- 9M9b21O1Kt/hS6lcCjHr9TjeRHSLlUQNymktPtLoAF6lSv3Z3L35h84zC1yY1KGS/h
- Pr/CIRpF5q64dt/GUssB+5hsBkVB2rdsbYS3Gwfo=
+ s=default; t=1776713933;
+ bh=PFuhyYkEyooqO79Vl1qyb3FEMTAfJe+RGQkcyMKm/mo=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=UbR7bjxQ2zlISF1HoNaqwKybIrv5hKRoq9ymTw5aH1l/qOkD71w2/LsCL70lZSfxS
+ wPaVK7tDrHho+4zX9tUGk+l2zZD8T452GjmD49qwBcZlwTEUnpD3Nod8h9KmHBB1is
+ LxaKNMcHPEzrM09MuKKYv1AQdrzPByZ+SKagOWHI=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,12 +47,14 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru
-Subject: [PATCH v15 0/8] virtio-net: live-TAP local migration
-Date: Mon, 20 Apr 2026 22:38:37 +0300
-Message-ID: <20260420193846.675844-1-vsementsov@yandex-team.ru>
+Subject: [PATCH v15 1/8] net/tap: move vhost-net open() calls to
+ tap_parse_vhost_fds()
+Date: Mon, 20 Apr 2026 22:38:38 +0300
+Message-ID: <20260420193846.675844-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260420193846.675844-1-vsementsov@yandex-team.ru>
+References: <20260420193846.675844-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -76,58 +78,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
+1. Simplify code path: get vhostfds for all cases in one function.
 
-Here is a new migration parameter "local", which allows to
-enable local migration of TAP virtio-net backend (and maybe other
-devices and backends in future), including its properties and open
-fds.
+2. Prepare for further tap-fd-migraton feature, when we'll need to
+postpone vhost initialization up to post-load stage.
 
-With this new option, management software doesn't need to initialize
-new TAP and do a switch to it. Nothing should be done around
-virtio-net in local migration: it just migrates and continues to use
-same TAP device. So we avoid extra logic in management software, extra
-allocations in kernel (for new TAP), and corresponding extra delay in
-migration downtime.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ net/tap.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
-v15:
-03: add a-b by Peter
-05: rebase on master, fix compat property to be part of 11.0
-
-v15 pushed as branch up-tap-fd-migration-with-bk-opt
-    at https://gitlab.com/vsementsov/qemu.git
-
-Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
-   "[PATCH v4 00/13] net: refactoring and fixes"
-
-Vladimir Sementsov-Ogievskiy (8):
-  net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
-  net/tap: move vhost initialization to tap_setup_vhost()
-  qapi: add local migration parameter
-  net: introduce vmstate_net_peer_backend
-  virtio-net: support local migration of backend
-  net/tap: support local migration with virtio-net
-  tests/functional: add skipWithoutSudo() decorator
-  tests/functional: add test_tap_migration
-
- hw/core/machine.c                             |   5 +
- hw/i386/pc_q35.c                              |   1 +
- hw/net/virtio-net.c                           | 137 +++++-
- include/hw/core/boards.h                      |   3 +
- include/hw/virtio/virtio-net.h                |   2 +
- include/migration/misc.h                      |   2 +
- include/net/net.h                             |   6 +
- migration/options.c                           |  18 +-
- net/net.c                                     |  47 ++
- net/tap.c                                     | 246 ++++++++--
- qapi/migration.json                           |  12 +-
- qapi/net.json                                 |  10 +-
- tests/functional/qemu_test/decorators.py      |  16 +
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_tap_migration.py | 456 ++++++++++++++++++
- 15 files changed, 911 insertions(+), 51 deletions(-)
- create mode 100755 tests/functional/x86_64/test_tap_migration.py
-
+diff --git a/net/tap.c b/net/tap.c
+index 57ffb09885c..d941c67895e 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -736,8 +736,7 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
+     }
+ 
+-    if (tap->has_vhost ? tap->vhost :
+-        (vhostfd != -1) || (tap->has_vhostforce && tap->vhostforce)) {
++    if (vhostfd != -1) {
+         VhostNetOptions options;
+ 
+         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+@@ -747,17 +746,6 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         } else {
+             options.busyloop_timeout = 0;
+         }
+-
+-        if (vhostfd == -1) {
+-            vhostfd = open("/dev/vhost-net", O_RDWR);
+-            if (vhostfd < 0) {
+-                error_setg_file_open(errp, errno, "/dev/vhost-net");
+-                goto failed;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                goto failed;
+-            }
+-        }
+         options.opaque = (void *)(uintptr_t)vhostfd;
+         options.nvqs = 2;
+         options.feature_bits = kernel_feature_bits;
+@@ -843,14 +831,31 @@ static int tap_parse_fds_and_queues(const NetdevTapOptions *tap, int **fds,
+ static bool tap_parse_vhost_fds(const NetdevTapOptions *tap, int **vhost_fds,
+                                 int queues, Error **errp)
+ {
+-    if (!(tap->vhostfd || tap->vhostfds)) {
++    bool need_vhost = tap->has_vhost ? tap->vhost :
++        ((tap->vhostfd || tap->vhostfds) ||
++         (tap->has_vhostforce && tap->vhostforce));
++
++    if (!need_vhost) {
+         *vhost_fds = NULL;
+         return true;
+     }
+ 
+-    if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
+-                      vhost_fds, queues, errp) < 0) {
+-        return false;
++    if (tap->vhostfd || tap->vhostfds) {
++        if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
++                          vhost_fds, queues, errp) < 0) {
++            return false;
++        }
++    } else {
++        *vhost_fds = g_new(int, queues);
++        for (int i = 0; i < queues; i++) {
++            int vhostfd = open("/dev/vhost-net", O_RDWR);
++            if (vhostfd < 0) {
++                error_setg_file_open(errp, errno, "/dev/vhost-net");
++                net_free_fds(*vhost_fds, i);
++                return false;
++            }
++            (*vhost_fds)[i] = vhostfd;
++        }
+     }
+ 
+     if (!unblock_fds(*vhost_fds, queues, errp)) {
 -- 
 2.52.0
 
