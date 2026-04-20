@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680A2EA71B0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0554F3ED70
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 05:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEgqw-0004rc-7K; Mon, 20 Apr 2026 01:07:22 -0400
+	id 1wEgqx-0004sA-Ow; Mon, 20 Apr 2026 01:07:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wEgqu-0004qV-8l
+ id 1wEgqu-0004qW-9q
  for qemu-devel@nongnu.org; Mon, 20 Apr 2026 01:07:20 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wEgqr-0002av-Eg
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 01:07:19 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43d77f6092eso1706840f8f.2
- for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 22:07:13 -0700 (PDT)
+ id 1wEgqr-0002al-EU
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 01:07:20 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488b150559bso19468725e9.1
+ for <qemu-devel@nongnu.org>; Sun, 19 Apr 2026 22:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776661632; x=1777266432; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=L4L7y6C8teQb1pIcSjZXj7EqDslM7XaqTZ3gXfLwQzU=;
- b=M4Ns0dU9X1TbftFbZamnsLWv6UFZWGXKk+TcxiGkYGcKEJ4Oh5elq9ouqP+E3caGDy
- 4kWWZHaz/fl00h1ahFPb5bmgdHowsaIEolMRoimWmNkbUB1wtW8RdHmNqSToVRa+Q3N4
- MvktqHUoe4SB9qRax2VP7WK1JT2A4DSD7qBHmlUoOTBMWWD+g0CLhgjhdkIEs+Z1JRyV
- XeUb3rUbCLblZAq10SOco5IWqpHwmuNoraWXB/IoiZw9gzKizmYCmJtnPhKLocbFMag4
- kxPL9UX2lPts2T6TO247NW31cXRAcAfr4EvY7e++CuiqJXf7ypIRqVD001kNr9G1d+CP
- 9/2Q==
+ d=linaro.org; s=google; t=1776661630; x=1777266430; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GR4Lk1zgM0nXzz+9kqUk+Mn9YNgYC/ffkrV5rZ22LWU=;
+ b=VhQ4oz6mh82hjbCo1VYVIQDn2EdHSp4Q/1T+mjtL3rm3YGTNsnPLxhe7XuQHIiZboj
+ bqFlE6PW8+pEGMYLnGM7VEFEWz0jDufME73Tf6cr4Bxv5Pp9Gqvg/qVO9z5Cj1svs6Kk
+ stDmnyeFWVfgNHdXnl0MWNHBjjBXwTa1/CsDAkxiDqo14T14NoV7GmZh3JK+N1VzbbiG
+ j3b7NktGVepjtbBbncJm80gCjyyMeMeaHiy5sSLLEduqCbDN8E2XsshDvo0AY1hrTXiy
+ 4m2PZlhdYMA7nd7673r1jPEM+mZ52dvTF2YUIPIsnURFvgYeVZHwSv5qcGB5RxkfLKxi
+ X19A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776661632; x=1777266432;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=L4L7y6C8teQb1pIcSjZXj7EqDslM7XaqTZ3gXfLwQzU=;
- b=AAEwQN1DBFaYSLZmo/NtT8XD2R//ggkRzg69d9LBdDrfZqcPlfq+6W/GKaEPrk68oy
- qqQmeE9rWHu6dSDVFgdQUT9iX65NPqO9CzliTvyksSj/1vZ6WP6gcMqc10rqoteoRPkK
- wFWdz39Etl8wEi1mrKpQl97wHLno2YHNHtO4drSqewMjJItHyaViCR2X4EZgzghnPNZF
- 3944ydbhOMTikPW9vKO0UwkE6UgeyX+SKHqs1q+fjcrGCzNR6e4s8uQu9GJ4/qekTjLM
- GUl6SwrkPcRKBAGwSb6hihSdpkBaIqx0HCci6hgUzK57F1qIns627+1SKkgZF6LMsRLJ
- C3DA==
-X-Gm-Message-State: AOJu0Yxs5iQhyahX4S8I++b2o42pIMD79gl/W77q4gntMnN6rTIRvTln
- d7jvRqEUE9uACRXXfCURR5yxCf9VIupeJcJ2hxnE+WYkivY6upbOWjd8/Iow53UIKhh8po9w3CV
- Ac+EOwfQ=
-X-Gm-Gg: AeBDievyd1gudUw8+NUP67S8L/GlSKJ215gkvn3asEk7Iub26ktiqTKSJgs2MrneVDK
- XdQ5eHRTBuvLyYAd5bl/f9OJPQ1kqFo0/VxREQdBL+SlOxoILKTBJoENoMDB0kF1uy0xKqmlzzo
- Hv38LIKymi+ZZn/2SGvGFkm/i0ReAR84U+tMMrbOhmNV/xCi2ivtzfs6tEYHuI7MUWTvrTM7yr3
- Va/XTFBh1btVir+wljfYcGmpCYGa3gIkwwz62MiVL+yENs10M/SwZj46P+wrrlpKScG9k/RwV4j
- wokIpEFxQpOBlh+ZXHC1Znmm6AgB3zS0BysyUYfx//juy0RqigfxqkJ+hQy+tvsX43VkC6irbsi
- QsK3z6o6jtIp3lOHjn719ORXjiZPHBYnomtiXrluwLp7ipEcGBBTi8iON0+nyfs+6UgGF8ZSGwq
- W+C9KjBr8PvC8RKJCHZh+viwsgg/4YG+eM/7U/iOEbyaOkg3OALSdrYIOdmmfgesKLE47nYkB+1
- XxUFSSS4QpEiHHYqC1yLNLOMaG1j0zP2O5+HcqSuC1GiBbKUIs=
-X-Received: by 2002:a05:6000:2307:b0:43b:3e40:2223 with SMTP id
- ffacd0b85a97d-43fe3dcc52cmr18293730f8f.19.1776661630925; 
- Sun, 19 Apr 2026 22:07:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776661630; x=1777266430;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GR4Lk1zgM0nXzz+9kqUk+Mn9YNgYC/ffkrV5rZ22LWU=;
+ b=e6ABtz7awG4UpT/ctYe+ADjnow9/8w5MKU/7XGqKhCNGcdB3uHxZEmAwfpwWcC+xZr
+ EQfQ0D/zNyA94CQ7qkwYHhSeWXSuHqCOq/HR+go0pQgeJ8dgLaGz87KPqvwkApm9EW5d
+ VUX7HXLMCyCJsARSHEkCH86sP/CvVdJjuoF/1YPoftmPQP3eCjc/j9ykZORsAqD3dKFF
+ eEpnJJ2x1HGSUZZS6mO+OMqtu/KLl1WXHCqKvN63RpaQs0L35/NPg8vmwgbrOrpbXh5S
+ y0w4ppRl65TIF11+6P7yDBIf4Knydn8VolKxWu7z9DqtlIuuJhhlVCV5qIiyIMAHw8sh
+ Bq1A==
+X-Gm-Message-State: AOJu0YzTLcV1/vK9e7MW18SJJi+e5b0n0ODSWacUmcpOE9Uwhxs86WiM
+ WcODaOz4nrAveoHtJ2AJAN5MfFy90GMF+usaU0wOdCJ8zNswk0alfjqxbWb/aZcyFkoKWXKGX1f
+ IplMpP+w=
+X-Gm-Gg: AeBDieuuP1TWpaPQi+ZLI7LRabLTtEAcnllW/lxeU1/gppxhHq4Dp0aYvnTxD8Ojovp
+ Byy0ZkzhUnfZsN6EPHranxSyCyAiVMV+0EXdBXS6AinQEDzy4SW6RwUaJswleaGn5ZiRbZvoJsE
+ W/SwNDh8v57E5KSack85FUFYuNtD6GAzh+PgTeNrVSTe8+b38fheRycbH+VBayw+olmEqVlHCr2
+ 682irDdSm9AojBmJMuCWEoeEYf7OrnE2UdLAXV/RXQxLdnsO8ABir8ZJxLJDaOYP53YPffD+M+j
+ ankzd/T98KrIPLQeXvx7maOys3YTyX0Ozt1wf3ZNen5JhFxkY/w2bHDOkVRIHs5/Epvs0hdkETv
+ 59zmcxq6SZsK9NWt3UUfuWmu59Ast2k9nfjbgiKSFVU0CTdBBPu12hRZYZXqASTRxYewBJx+iy4
+ zGeXhH4BTHW1Aoc5OCgd5XBA2VIUf/E4iTsZvySW7ZS3vIgje1B7rMhkgud/glANg8fpSkZPSm+
+ n+XGQAN92yAzVIYcIDCexPOEl/pxXmJ1FoPQsIUu+D+I6SJ4lY=
+X-Received: by 2002:a05:600c:888b:b0:480:1d0b:2d32 with SMTP id
+ 5b1f17b1804b1-488fb74bccbmr139301245e9.12.1776661629966; 
+ Sun, 19 Apr 2026 22:07:09 -0700 (PDT)
 Received: from [127.0.1.1] (athedsl-4440559.home.otenet.gr. [79.129.177.223])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a341sm28886954f8f.24.2026.04.19.22.07.10
+ ffacd0b85a97d-43fe4e3a341sm28886954f8f.24.2026.04.19.22.07.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Apr 2026 22:07:10 -0700 (PDT)
+ Sun, 19 Apr 2026 22:07:09 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 20 Apr 2026 08:07:05 +0300
-Subject: [PATCH v3 1/2] virtio-snd: check rx buffer descriptor size
+Subject: [PATCH v3 0/2] More virtio-snd fortifications/coverity fixes
+Date: Mon, 20 Apr 2026 08:07:04 +0300
+Message-Id: <20260420-virtio-fixups-v3-0-07aef1eff9d2@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260420-virtio-fixups-v3-1-07aef1eff9d2@linaro.org>
-References: <20260420-virtio-fixups-v3-0-07aef1eff9d2@linaro.org>
-In-Reply-To: <20260420-virtio-fixups-v3-0-07aef1eff9d2@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAHi05WkC/12MwQrCMBAFf6XkbCTZpGnx5H+Ih5is7YI0JalBK
+ f1304KgPc57zMwsYSRM7FTNLGKmRGEooA4Vc70dOuTkCzMQYISWNc8UJwr8Tq/nmLi6OWWllc5
+ Dw4ozRizP1rtcC/eUphDfWz7Ldf2WzK6UJRccndQIHkVbw/lBg43hGGLH1lSGX73Z61B0bYVvj
+ TLWQPunL8vyAc2JpCvqAAAA
+X-Change-ID: 20260415-virtio-fixups-3bc3a1a1cd27
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,37 +84,37 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1448;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=861;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=0XTx6kbq4YY1BBPqSAfMX1GSupccz3LwWPrnsQLDA7E=;
+ bh=G9o7n535xER1FQmI3uvCYQFosFW66ejXKs0xw3gcpB4=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQnA1YlI4TU83V0ZtRzZFaTlpMzBhQTBESjA4RW8yCnNpcGQxcHpzenA5dDgwVnhE
- ckdKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYWVXMGZBQUt
- DUkIzS2Nkd2YzNEowSkZwRC8wYzJxM2xkTlY4Q3J1VVpYWUhNd3dwNjNtREdKckdheitVdm1BUw
- pXRDZoYmpnWGtaV2FEb1RoaUZIMWpGRitFUHRlK2xJOUg2MU1WeC9OblYxaERCQzVEbko4WElrK
- zYzZ2FwQXFPCkFyVlZDbm9MbDZxTVZRbVB5dHJweHRXSk4zalNXZVh5ZjdyWjNKZFNHYVV5MU1R
- MzFBSnBvQUZyUmdleXlQMXAKMVdZZk9sVFZMMnZ0ek5xeWZkWEVOMHRQd0ppVC9GK1ZHK1lHTWR
- PZTl1NHd3VHdFbnlaVVpoT1B6OVlRZmNGSgpXcVJwanBWSk0vZlRicVRNQzBEeUZWVnhTNHBFa2
- xVRTFzM3JobDdmZGVYT2g5cWV4VVlSOCtpNys3MnhVTG9CCmY3VS9XdTgxUmVJZ0VJMzhLYnpvW
- DNadzhrQ2paRTVsTHBTczJoQjR2T3R1ZFBnQ2JDc0ZvV1VXb1FpZTRHOVYKTFN3dmZhai9Sc3NJ
- M2c1L1BtTUN5SGRaaE1rYlJ0TW02WUxOdElHNUJ1VDE1MDNwUGtGRFNKdUQwenhIUTdqSwpwNW9
- MZmtRZXVucUM0UlcybHAyMFpuVlYwZ3EyanYvUllld1dSNVAvdndBTWtRZnU0OHRYNWZoY0F4RX
- hyZ2wvClRUZklRYm0zMzJSZ0JwVWRsN2VpT0srSXdGazM3T21tRk1meXgxR3NEMzFnNkJrTk42M
- 2NSQ1pGUmNocU9vNkEKaUV1clhEMVFzeTVFVHpiUGJ5WG5RQVNHSVQ1NmIvdUkyNnFxS0J6eHNH
- ZXlUdTZUdFl6Z1JmejdmbVlJOXl4KwpqRDJQWGMwUkRadzQwbkRxQlZZNWRacXl3RXFyRXB6UWI
- 2aEI4eG9ONldvcG94aDh3UEFaZEErTHBweVc5NTFOCm5lVVFnQT09Cj1odmtMCi0tLS0tRU5EIF
+ 25RQWNzbVlnQnA1YlI4cEpsZVN3RG5YSjdQcEoyRXFoOWkzbnlYCmZqOUpPVGV6ODhXNlpzdDFp
+ bitKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYWVXMGZBQUt
+ DUkIzS2Nkd2YzNEowQnFBRC80bWpuZi85TDUwUG8zZmtFU3N1RUpuZkRKNEs1K1NYbjNkZ2MvRQ
+ piT0p1L3BKQVZwSEVlRmZya3lSR1JTTTJKK01tYXVES0gyUHpzUThhZTF2a1FZbVo0SDJaaDBpT
+ FV2NGNpenAzCjBDZXZ3QStEMGZUSElzdVpnV25aZUVLcDd2S1NWR1NHaWJqYkltOGUyY0g3OFZJ
+ US9lQVBvSTNCSnBNNjlyY1UKTjN4cHFKYU1SWkduemllTEFPM0NDdHVtUFZ6TG55ZW95d29scXF
+ yd0EvNHZOdklmM3VqSG1aSzZDZlJTTE5ZOAo3Yk5WMHhwTTY3R0lFY1IvaW1lOHJhYTJwdnFHVm
+ NlZWJQbzhRUldXNWdHNVpuVTdZRnllbUgybjJEb2hsQ2NWCkJIQ3BPNWxSUFE2S1J6N1dyZGVIe
+ HZWV1pMdlZCaHYxQ01xU0xQVjkzb3Z6SzZ0WVZ6TEZUZzl3Sjc2Q3pwbXMKaVJrZllEOG50V2Za
+ cHRBSHpVZXJYSXYyQTVWRFpXR24wclJGbGtsVDErdm95NC9jZEdhZllJUTNQNi9XOGp5SQo4UTF
+ PS1F1dkUycTFHWGJjSjlBUWpreUloY3h2clRlaUFOOXY3b3pBYy9STzFHU2ZIRlpTVmpzKzJVZV
+ BqOWtnCjJZZWx2ejNkc2NoYWJ5eTlBZVRJTkNjS3JxYWtuRFFHT0t6bmhJcFRud1p3UFJtTXZvd
+ S9uRUNzK3VpRURzeUMKa2N6ZVBwM2JyL2cwK3c5Y3NnYVQ5bWlsVVFKajZxb2hvZ2RyMEN1eEJZ
+ Z3dUTkNJdXVCSjN0d2VqdU0zbFZmRwpiajRtSlpGTVV4dEx3RDh2V3l3T3VDcTNKcWJWRzRkVDY
+ 5djRkYkZhcmUwYkdZMUFIS0xseWpSSWtzL2ZWbW1UClpWUG9ZUT09Cj1sbDlUCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,41 +130,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It must be at least sizeof(virtio_snd_pcm_status).
+Added checks for stuff coverity pointed out (CID 1547527).
 
-I haven't verified if it's possible to get an underflow, but coverity
-points it out in CID 1547527 so add a check.
-
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- hw/audio/virtio-snd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Changes in v3:
+- Added Coverity CID in patch message (thanks Alex)
+- Link to v2: https://lore.kernel.org/qemu-devel/20260417-virtio-fixups-v2-0-4a0d8636a628@linaro.org
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index fb5cff386606d03e5cfce88f79e404e510bbcde7..93fbcfb43f7fdcfd5c164b496015da743822f5eb 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -970,12 +970,14 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-         }
- 
-         stream = vsnd->pcm.streams[stream_id];
--        if (stream == NULL || stream->info.direction != VIRTIO_SND_D_INPUT) {
-+        size = iov_size(elem->in_sg, elem->in_num);
-+        if (stream == NULL
-+            || stream->info.direction != VIRTIO_SND_D_INPUT
-+            || size < sizeof(virtio_snd_pcm_status)) {
-             goto rx_err;
-         }
-+        size -= sizeof(virtio_snd_pcm_status);
-         WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            size = iov_size(elem->in_sg, elem->in_num) -
--                sizeof(virtio_snd_pcm_status);
-             buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-             buffer->elem = elem;
-             buffer->vq = vq;
+Changes in v2:
+- Use g_size_checked_add (thanks rth)
+- Link to v1: https://lore.kernel.org/qemu-devel/20260416-virtio-fixups-v1-0-ec14e2de0852@linaro.org
 
--- 
-2.47.3
+---
+Manos Pitsidianakis (2):
+      virtio-snd: check rx buffer descriptor size
+      virtio-snd: check for overflow before g_malloc0
+
+ hw/audio/virtio-snd.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+---
+base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
+change-id: 20260415-virtio-fixups-3bc3a1a1cd27
+
+--
+γαῖα πυρί μιχθήτω
 
 
