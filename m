@@ -4,93 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20166F36C31
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 07:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEA5F36C49
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 07:48:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEivm-0005gq-Fk; Mon, 20 Apr 2026 03:20:30 -0400
+	id 1wEjLt-0008GS-PC; Mon, 20 Apr 2026 03:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEivU-0005bg-Ar
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:20:19 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEivS-0005lg-HR
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:20:12 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4890d945eb4so6036395e9.0
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 00:20:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776669608; x=1777274408; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=q2R/4bu4Qx5VLoJElaowuRvfMVbmXN6v1Nl95K+mVBc=;
- b=eM2vxUesNntwzAHEEbJ520HXYoyyyfcRyMYYnEAoOqNC6mVSfR3K4F36NrObfjqAEj
- l0MY3c2alNv9thCOP4QkykYtX1tarOfMAGn/bamHPT8puVnGcSwk5DKQNQieAnHnEqbA
- Zung63AvusvoXzPw2NfRu2iAIxCM0pZ+8NhktOcv9WFQQTB+GlUIO8mkTAp8AOty2/Ns
- dxDbKzou9aYgZ4s6Hv3538gyCWYTOjOKGY/QdWlP5yPY8fFzkoFV/GB1sLWh5KReZyL5
- +AU0sOAX915hHJAHEziO69BOfUf01ofwx6wrJqIEfEfKyB28wJO1Gl8/8fbhIELJNO9h
- vbxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776669608; x=1777274408;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=q2R/4bu4Qx5VLoJElaowuRvfMVbmXN6v1Nl95K+mVBc=;
- b=fQzyD1/ptrW7eE7mXdCkpMcHFsgYlL/6lgpk/4URjWynK+6uDOvPe7fDbwKk8DwanB
- o3tRw2VEvbrrnpwaGuA6fWFpmWx1Mk067Gjrw+6GfWMHtMJaJlFI7BeNhl2XGsY9bqkj
- M5Je3G4h8AoPrMKVelEKX6u14K6s1WOCl2NKuikKdQdudosUg+dEf/inG1Z4t/xaLn/p
- qkbkmq+rDncj14UZC17XAAekx39OgF3aYQ5gmZugrXLP37pksEB2iK+PiMt7IO8D7JLo
- ZKrlS7GpmBYPrXuR8enhy20CkUdsfGneRPmZlhf2KmxTEhOd6RVPXjIbT5rkut9y7yO+
- 4UjQ==
-X-Gm-Message-State: AOJu0Yzsyt0qldrdXDdkE5446ZI0RU0LNPwc39FZQ8Kk8VAEYY7m6oFP
- NCbvhj/Omwo4q53ONOSR90iEWTIEM8kfxZNeCPmad4u7QmbAvM5Q+9xyNaAh3pbC1cc=
-X-Gm-Gg: AeBDiesP9e+JYKz16OqOfl2ZmCPRFtQq5eKsnJH9JZnpvsX6i5vhl9bQLOdkH1z0Vm5
- RthQseibJnyZyxYl7/xEKeSl3AuZ7eQC3FmVrNHi43+V+t055MPvWKq9gBuVVH8d/49okcZxK+k
- sSTTKqP7dW6KEfDbprgVBiB0So+QZKVtwboKiTRRXafnOxLpbqG5Pg26mkL7gbGK+tMLrXdW7k4
- fKWHlFYL5CRHd9KNiqeAUdcsgEs6CUipN92vc23Ly/CfVtVpcY6eZFuHO50iTYNjMupjSQnstWw
- wbXKLmKcwBXEemFW7TzciQPW3MOIlczgjnJ77rqmJ+Npam+WgnW2uCjbmlJA8IUTWxO6mncLgOC
- /vizrRqze6168uY5kxvvOIQB7NxODbZtTZN47J7J4R0jJqZxr83WCJ04lY1n//rLZHeV5lcBAFu
- 4jKjLqN7TopBdnqF4v+JK570IEXhUmoMZVquYzmjjspsXxG7h2jDESgmeX9CtniGVCqPjYERZ74
- oJh
-X-Received: by 2002:a05:600c:4e0c:b0:489:1d7a:4537 with SMTP id
- 5b1f17b1804b1-4891d7a463emr28197065e9.3.1776669607594; 
- Mon, 20 Apr 2026 00:20:07 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc10777csm306375125e9.8.2026.04.20.00.20.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2026 00:20:06 -0700 (PDT)
-Message-ID: <5998180b-55c1-40a7-8426-d21539f99100@linaro.org>
-Date: Mon, 20 Apr 2026 09:20:05 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wEjLp-0008G3-Ne
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:47:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wEjLl-0003YN-O1
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 03:47:24 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxJen02eVp+wUCAA--.1904S3;
+ Mon, 20 Apr 2026 15:47:01 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxSeDy2eVpICpxAA--.18578S3;
+ Mon, 20 Apr 2026 15:46:59 +0800 (CST)
+Subject: Re: [PATCH v3 0/2] hw/loongarch/virt: Add versioned machine type
+ support
+To: Cornelia Huck <cohuck@redhat.com>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20260401015705.3009762-1-maobibo@loongson.cn>
+ <87ldelty00.fsf@redhat.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <2f5a66f7-490b-2681-a365-1a7337de3e5a@loongson.cn>
+Date: Mon, 20 Apr 2026 15:44:09 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] io: use g_clear_handle_id() for GSource cleanup
+In-Reply-To: <87ldelty00.fsf@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Matthew Penney <matt@matthewpenney.net>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20260408100605.66795-1-philmd@linaro.org>
- <20260408100605.66795-3-philmd@linaro.org>
- <_FLwJ4IKFwbr2FlwMah_gLTk8PG-FdvyrrFM2UgmbYPlN7wSwZIslJehtfZV7mb8w1UD69eX6LD5Lt9wGkstMiLrdrkkzU1coVZiuy7CSNE=@matthewpenney.net>
- <98a3dea5-266e-4326-b224-0a3401e49783@linaro.org>
-In-Reply-To: <98a3dea5-266e-4326-b224-0a3401e49783@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJBxSeDy2eVpICpxAA--.18578S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoWrtw1fZr1rXr4kuFW7tr1UArc_yoWftFcEgw
+ nrA39xZr45JFWIka4Dtr1Fvry7GF4qvFs8Aa98WrZ7C34rJr93JrW7JrZakw1jqF4UCrs8
+ J3yjvryfCr1UWosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbxAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UNvtZU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.478,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,91 +82,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/4/26 18:46, Philippe Mathieu-Daudé wrote:
-> On 9/4/26 16:20, Matthew Penney wrote:
->> Hi Philippe,
->>
->> Thanks for picking this up and cleaning it up.
->>
->> This matches what I was aiming for with my series.
-> 
-> Thanks Matt, does that mean I can add your tag to this
-> series?
-> 
->    Reviewed-by: Matthew Penney <matt@matthewpenney.net>
 
-Hmm maybe in this case Co-developed-by: is more appropriate.
 
-But then we need to wait for Marc-André or Daniel for a review.
+On 2026/4/17 下午11:19, Cornelia Huck wrote:
+> On Wed, Apr 01 2026, Bibo Mao <maobibo@loongson.cn> wrote:
+> 
+>> Now la464 CPU type feature is basically finished, versioned machine type
+>> is added here for compatibility support in future.
+>>
+>> ---
+>> v2 ... v3:
+>>    1. Refresh the patch based on the latest code
+>>    2. Change version machine from 11.0 to 11.1
+>>
+>> v1 ... v2:
+>>    1. Change version machine from 10.2 to 11.0
+>> ---
+>> Bibo Mao (2):
+>>    hw/loongarch/virt: Define virt machine type with type_init()
+>>    hw/loongarch/virt: Define versioned virt machine
+>>
+>>   hw/loongarch/virt.c | 66 ++++++++++++++++++++++++++++++++++++---------
+>>   1 file changed, 53 insertions(+), 13 deletions(-)
+> 
+> LGTM.
+> 
+> (For the new compat machines, you could either pick the patch yourself
+> or wait until the s390 changes get merged, I guess.)
+Hi Cornelia,
 
-> 
->>
->> Best regards,
->> Matt
->>
->>
->>
->> Sent with Proton Mail secure email.
->>
->> On Wednesday, 8 April 2026 at 11:06, Philippe Mathieu-Daudé 
->> <philmd@linaro.org> wrote:
->>
->>> Use g_clear_handle_id() instead of g_source_remove() with
->>> manual ID checking and zeroing.
->>>
->>> This simplifies the code and ensures consistent handling of
->>> GSource IDs, since g_clear_handle_id() checks for a non-zero
->>> ID before calling the cleanup function and zeros it afterwards.
->>>
->>> No functional change intended.
->>>
->>> Mechanical change using the following Coccinelle spatch script:
->>>
->>>    @@
->>>    expression TAG;
->>>    @@
->>>    -    if (TAG > 0) {
->>>    +    if (TAG) {
->>>             g_source_remove(TAG);
->>>             <... when != TAG
->>>             TAG = 0;
->>>             ...>
->>>         }
->>>
->>>    @@
->>>    expression TAG;
->>>    @@
->>>    -    g_source_remove(TAG);
->>>    -    TAG = 0;
->>>    +    g_clear_handle_id(&TAG, g_source_remove);
->>>
->>>    @@
->>>    expression TAG;
->>>    @@
->>>    -    if (TAG) {
->>>             g_clear_handle_id(&TAG, g_source_remove);
->>>    -    }
->>>
->>> Inspired-by: Matthew Penney <matt@matthewpenney.net>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/char/cmsdk-apb-uart.c  |  5 +----
->>>   hw/char/nrf51_uart.c      |  5 +----
->>>   hw/char/serial.c          |  6 +-----
->>>   hw/char/stm32l4x5_usart.c |  5 +----
->>>   hw/char/terminal3270.c    |  5 +----
->>>   hw/char/virtio-console.c  | 10 ++--------
->>>   hw/usb/redirect.c         |  5 +----
->>>   io/channel-websock.c      | 13 +++----------
->>>   net/passt.c               |  8 ++------
->>>   net/stream.c              | 15 +++------------
->>>   net/stream_data.c         |  5 +----
->>>   net/vhost-user.c          |  8 ++------
->>>   ui/dbus-clipboard.c       |  6 ++----
->>>   ui/input-barrier.c        |  6 +-----
->>>   ui/vnc-auth-vencrypt.c    |  6 +-----
->>>   ui/vnc-ws.c               | 12 ++----------
->>>   16 files changed, 25 insertions(+), 95 deletions(-)
-> 
+Thanks for your reminder, I will wait until s390 changes get merged.
+
+Regards
+Bibo Mao
 
 
