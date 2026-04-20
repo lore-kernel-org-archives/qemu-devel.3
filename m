@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED6E7F5A8B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C134F5A8B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEv74-00064D-1W; Mon, 20 Apr 2026 16:20:58 -0400
+	id 1wEv6t-00061R-Pv; Mon, 20 Apr 2026 16:20:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6u-00061q-DA
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:48 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1wEv6s-00060j-5j
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:46 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEv6s-0006PC-M6
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:48 -0400
+ id 1wEv6q-0006OZ-88
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:20:45 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:c00c:0:640:e0de:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 506098065E;
- Mon, 20 Apr 2026 23:20:44 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id DBB5BC01BD;
+ Mon, 20 Apr 2026 23:20:42 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id XKYwe10MOSw0-5C25wX48; Mon, 20 Apr 2026 23:20:43 +0300
+ id XKYwe10MOSw0-ya10Q2Iq; Mon, 20 Apr 2026 23:20:42 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776716443;
- bh=lPTm4lB1KMVIObdOQC42DUGkZOA7pP1fBuHvzYw7yJ8=;
+ s=default; t=1776716442;
+ bh=y2itUKXedtugRUfBxJQ6CsdLWnW9+GVj1qpys57wb6k=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ZHKU8b3MH1jNXp3ZXrAr4+jEjHK1A3nlyzK8ihyzGZEull7QfnjMwwnm5MSagvABZ
- 8ZB3khvjBsXK+kvNaQPTEX9eMM/oQ+lYC71ql7+/RPyOIyljrGFxL9e+UUchCcqj6Q
- Kum86iGkIlN0Xv+MXZKFbXG3Gs5Z0TTi9/hvYmds=
+ b=Oc+aBoJ63sLLiQUKAjJJdZAcgnb6fR2XC6HLtO96gLmkhjHQnscGeC8ErAFutSs75
+ lLlr+m/a4wi74hinEdeisEaHj/VilGix1AblPnxvtK/1P7KOEHNubqejjbBA0jVCCV
+ dbDX1GBNb6vOt8zS2FdDgL3QP+KNJ//rrwk5UrKg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- d-tatianin@yandex-team.ru, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 06/10] qapi: remove user addresses from
- x-query-virtio-vhost-queue-status
-Date: Mon, 20 Apr 2026 23:20:27 +0300
-Message-ID: <20260420202032.714884-7-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru
+Subject: [PATCH v2 05/10] vhost: simplify vhost_memory_map() and
+ vhost_memory_unmap()
+Date: Mon, 20 Apr 2026 23:20:26 +0300
+Message-ID: <20260420202032.714884-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 References: <20260420202032.714884-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,107 +74,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Semantics of these (actually, internal) fields is not simple, they may
-contain either virtual or physical addresses. We are going to change
-this to simplify the logic. Keeping this logic only for unstable
-info command seems too much. Changing semantics of info fields doesn't
-seem to make real sense too. So, let's just drop them. We can dot it,
-as command is experimental.
+Make these functions simple wrappers around address_space_map() and
+address_space_unmap(). Move IOMMU handling logic one layer up to the
+callers.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio-hmp-cmds.c |  3 ---
- hw/virtio/virtio-qmp.c      |  3 ---
- qapi/virtio.json            | 15 ---------------
- 3 files changed, 21 deletions(-)
+ hw/virtio/vhost.c | 43 ++++++++++++++++++++++++-------------------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index 4bf9a3109d4..a91bb7dbeda 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -203,15 +203,12 @@ void hmp_vhost_queue_status(Monitor *mon, const QDict *qdict)
-     monitor_printf(mon, "  call:                 %"PRId64"\n", s->call);
-     monitor_printf(mon, "  VRing:\n");
-     monitor_printf(mon, "    num:         %"PRId64"\n", s->num);
--    monitor_printf(mon, "    desc:        0x%016"PRIx64"\n", s->desc);
-     monitor_printf(mon, "    desc_phys:   0x%016"PRIx64"\n",
-                    s->desc_phys);
-     monitor_printf(mon, "    desc_size:   %"PRId32"\n", s->desc_size);
--    monitor_printf(mon, "    avail:       0x%016"PRIx64"\n", s->avail);
-     monitor_printf(mon, "    avail_phys:  0x%016"PRIx64"\n",
-                    s->avail_phys);
-     monitor_printf(mon, "    avail_size:  %"PRId32"\n", s->avail_size);
--    monitor_printf(mon, "    used:        0x%016"PRIx64"\n", s->used);
-     monitor_printf(mon, "    used_phys:   0x%016"PRIx64"\n",
-                    s->used_phys);
-     monitor_printf(mon, "    used_size:   %"PRId32"\n", s->used_size);
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 51e3a42c4c4..ae9be0a00f4 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -794,9 +794,6 @@ VirtVhostQueueStatus *qmp_x_query_virtio_vhost_queue_status(const char *path,
-     status->name = g_strdup(vdev->name);
-     status->kick = hdev->vqs[queue].kick;
-     status->call = hdev->vqs[queue].call;
--    status->desc = (uintptr_t)hdev->vqs[queue].desc;
--    status->avail = (uintptr_t)hdev->vqs[queue].avail;
--    status->used = (uintptr_t)hdev->vqs[queue].used;
-     status->num = hdev->vqs[queue].num;
-     status->desc_phys = hdev->vqs[queue].desc_phys;
-     status->desc_size = hdev->vqs[queue].desc_size;
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 671f1ad793c..1fc4e38a44d 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -650,12 +650,6 @@
- #
- # @call: vhost_virtqueue call
- #
--# @desc: vhost_virtqueue desc
--#
--# @avail: vhost_virtqueue avail
--#
--# @used: vhost_virtqueue used
--#
- # @num: vhost_virtqueue num
- #
- # @desc-phys: vhost_virtqueue desc_phys (descriptor area physical
-@@ -678,9 +672,6 @@
-   'data': { 'name': 'str',
-             'kick': 'int',
-             'call': 'int',
--            'desc': 'uint64',
--            'avail': 'uint64',
--            'used': 'uint64',
-             'num': 'int',
-             'desc-phys': 'uint64',
-             'desc-size': 'uint32',
-@@ -720,12 +711,9 @@
- #              "avail-size": 2054,
- #              "desc-size": 16384,
- #              "used-size": 8198,
--#              "desc": 140141447430144,
- #              "num": 1024,
- #              "call": 0,
--#              "avail": 140141447446528,
- #              "desc-phys": 5216108544,
--#              "used": 140141447448640,
- #              "kick": 0
- #          }
- #        }
-@@ -744,12 +732,9 @@
- #              "avail-size": 262,
- #              "desc-size": 2048,
- #              "used-size": 1030,
--#              "desc": 140141413580800,
- #              "num": 128,
- #              "call": 0,
--#              "avail": 140141413582848,
- #              "desc-phys": 5182259200,
--#              "used": 140141413583168,
- #              "kick": 0
- #          }
- #        }
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 564a5d46982..cc083572f40 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -456,21 +456,17 @@ static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
+ static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
+                               hwaddr len, bool is_write)
+ {
+-    if (!vhost_dev_has_iommu(dev)) {
+-        hwaddr mapped_len = len;
+-        void *res = address_space_map(dev->vdev->dma_as, addr, &mapped_len,
+-                                      is_write, MEMTXATTRS_UNSPECIFIED);
+-        if (!res) {
+-            return NULL;
+-        }
+-        if (len != mapped_len) {
+-            address_space_unmap(dev->vdev->dma_as, res, mapped_len, 0, 0);
+-            return NULL;
+-        }
+-        return res;
+-    } else {
+-        return (void *)(uintptr_t)addr;
++    hwaddr mapped_len = len;
++    void *res = address_space_map(dev->vdev->dma_as, addr, &mapped_len,
++                                  is_write, MEMTXATTRS_UNSPECIFIED);
++    if (!res) {
++        return NULL;
++    }
++    if (len != mapped_len) {
++        address_space_unmap(dev->vdev->dma_as, res, mapped_len, 0, 0);
++        return NULL;
+     }
++    return res;
+ }
+ 
+ static void vhost_memory_unmap(struct vhost_dev *dev, void **buffer,
+@@ -481,17 +477,18 @@ static void vhost_memory_unmap(struct vhost_dev *dev, void **buffer,
+         return;
+     }
+ 
+-    if (!vhost_dev_has_iommu(dev)) {
+-        address_space_unmap(dev->vdev->dma_as, *buffer, len, is_write,
+-                            access_len);
+-    }
+-
++    address_space_unmap(dev->vdev->dma_as, *buffer, len, is_write,
++                        access_len);
+     *buffer = NULL;
+ }
+ 
+ static void vhost_vrings_unmap(struct vhost_dev *dev,
+                                struct vhost_virtqueue *vq, bool touched)
+ {
++    if (vhost_dev_has_iommu(dev)) {
++        return;
++    }
++
+     vhost_memory_unmap(dev, &vq->used, vq->used_size, touched,
+                        touched ? vq->used_size : 0);
+     vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0,
+@@ -519,6 +516,14 @@ static int vhost_vrings_map(struct vhost_dev *dev,
+         /* Queue might not be ready for start */
+         return 0;
+     }
++
++    if (vhost_dev_has_iommu(dev)) {
++        vq->desc = (void *)(uintptr_t)vq->desc_phys;
++        vq->avail = (void *)(uintptr_t)vq->avail_phys;
++        vq->used = (void *)(uintptr_t)vq->used_phys;
++        return 1;
++    }
++
+     vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
+     if (!vq->desc) {
+         goto fail;
 -- 
 2.52.0
 
