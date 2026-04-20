@@ -4,81 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477FAF5580F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8CDF5580E
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 10:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEm6t-0008Dv-PI; Mon, 20 Apr 2026 06:44:11 -0400
+	id 1wEmEw-0006ww-4K; Mon, 20 Apr 2026 06:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm6s-0008DT-Dz
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:44:10 -0400
-Received: from p-west3-cluster4-host7-snip4-10.eps.apple.com ([57.103.74.141]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
+ id 1wEmEm-0006wN-UV
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:52:21 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wEm6p-0000jn-Q6
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:44:10 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPS id
- E81E01800097; Mon, 20 Apr 2026 10:44:03 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776681846; x=1779273846;
- bh=FjknWeXX453ZkdimgET5qsOfRjRd950mgDj8NKv+vI4=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=WjxOkqnT6BYcEYghIml7QL5elXP1nICipH6tp0q11gTIZ5N2uiUU/1iip5tlAVK6nkK9yQaZ0r0aeDNYbadzeTki5PGUQRz0umBgz9DxQBMGirqKymceiQNLoHVgdu9TBD2gLIS2bNob5rO6gSu+oAqCyHMLPKxbFZAYPrxH7Ztln3wQFHUH36m0wGmDdLLolhypKTbjSM3on9y2axrbEw2WSGbhmh2DuhnHQxpRkvX4+v+qtIDLh86b+bSIANg4i9wMtF6F8vjhsd9EzRnaB/SulX01Ak1MG0p8+TwyhjLUDGtyNQTZiKpIeXUCQOK7Bg3CYesjqTeCS9ZGAs2SUw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-1 (Postfix) with ESMTPSA id
- 117B918000BF; Mon, 20 Apr 2026 10:44:00 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 28/38] whpx: i386: CPU features support for Windows 10
-Date: Mon, 20 Apr 2026 12:42:38 +0200
-Message-ID: <20260420104248.86702-29-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260420104248.86702-1-mohamed@unpredictable.fr>
-References: <20260420104248.86702-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
+ id 1wEmEl-0002sz-31
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 06:52:20 -0400
+Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63KAg3631074774; Mon, 20 Apr 2026 03:52:16 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=ZRaQFpCNMbtKxVLr4Ze3UYFAT6Iwj/Q9jFcpBD8v2
+ 0M=; b=bMqCzXrcdTvXwBgumeffqpP+Hv8GMCN3FjCcvlGq24h/z/uWYyU8PTD+2
+ C0rytOXhAIETs25/tIoMhxZYQIUXLB2XHTF3b27DEpVeSEIoslt8GijtSmPfeX2/
+ mKsIl21tgaduQOqmpjuW0PfDj4YxM7O+PAZUM7LIT5uYosCrn6EowB939Rjlocn7
+ WOq7ZhvvZoacXgbxFaXguq3buiewPZAP+YfTfwRv/GdRMHwLQOgcvkoNt/1RM6Qb
+ Jq5ntYWf4dGbQPGttRTFK/jgUN5KjmjE1bmQ1Kl0vsG8HEoxAEKf2tz1O85eC4IU
+ kwg/i3Qny5l5j2q1fFRbivERij9zA==
+Received: from co1pr03cu002.outbound.protection.outlook.com
+ (mail-westus2azon11020089.outbound.protection.outlook.com [52.101.46.89])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4dm5v2u0gg-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 20 Apr 2026 03:52:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CShCW7AZwXuarKrNC4DIzSEnW2pcf3qWepxi5YhS8HBWnUdhqptwj+vZtJlUNSj3ygnL9pcg+wVGD6JxPpziGmhzYe0tTo5uRqjpzb1DEmm+4yHc48GjxJ/XpPusnzrXqiRuBrAlIJjsGZ8ZGmrDMT/KtrDcmePCFOf+Q7UcyOZFyDa/4I1zq+WzSx6rAmSkuEoaDHrZxkN9du6ELBwJ81BHFMMEUcTCnAHsuYD+3kzb/vZjcJ7jT9niJDUuR9gqs5bzoVZYsEH88g+YKHqbZCe4H6okaXZ7oMXAAnE434eG0ggl8XF6SFUhAtXizxh6a7tqmDi0PUTif/AtnGgf/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZRaQFpCNMbtKxVLr4Ze3UYFAT6Iwj/Q9jFcpBD8v20M=;
+ b=pkhtXlqyCbHaDT6zF+Eo8agFoldEnmiF58RERoamT+tq8WIUDNcfkS+smk5IFDWLdWA+lM5hdNtiPIswTOtTmpeBqZbdLUrQctg7YuFmkQwNiJmbMqLXwvPz3eJBPIz6QXJnm5sqFgqulZtDQ35DFzDhfmkMB4WrZHbvYp+n/SksiGWSIQ1XMyVqNH2127eaFYeiYGB8KhDQZiBAjWsr6hEMO7sOp0oKb97xumtSCqpWzzrOCpm/P+TBik2ljj284I0P19vK15vIJ2KiqE6XUWjAlbWfojzF0NOnzrh0nmHc3I8PUaLQK13YPQTflmy21SSvck8c3MgxzwbHimX+3g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZRaQFpCNMbtKxVLr4Ze3UYFAT6Iwj/Q9jFcpBD8v20M=;
+ b=n90+53ygnY5HvZZ5pvyvTaf+tq3nsA8/xQWn+Gzbme1lO7VrBeeM6OAj0SD0+VsrwYXf0NHSCY+cEwmqu56GqI61cLc7PgukAjc4uosbDyIFajB/sPXIRNKPmNNVVCs3OuekwtWGJlLtrmdYP2LgViW5B+TuH7hRdW3QvYIl75Ja+HVbxiMQn2WZbxe1GMKUCqmMaCEHDWl0ldOssDUsSE+zXAh6/CcCdH1rwknUMn+UIdQzluZWWgSkWoHD6I2bpIACfj30X4WJKGiXogYGLGxE4H4b8IGrnd0gVaUC3pX6Oy1lWiNTM7CubiNXgS1Tcj9zZdalTnoBqcG1Gk6eiw==
+Received: from CH2PR02MB6197.namprd02.prod.outlook.com (2603:10b6:610:4::25)
+ by DM6PR02MB6493.namprd02.prod.outlook.com (2603:10b6:5:20e::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.32; Mon, 20 Apr
+ 2026 10:52:14 +0000
+Received: from CH2PR02MB6197.namprd02.prod.outlook.com
+ ([fe80::90e9:29cb:631d:9ab]) by CH2PR02MB6197.namprd02.prod.outlook.com
+ ([fe80::90e9:29cb:631d:9ab%6]) with mapi id 15.20.9818.033; Mon, 20 Apr 2026
+ 10:52:02 +0000
+Message-ID: <0ec397c4-5ec9-46c5-a081-a6b380320755@nutanix.com>
+Date: Mon, 20 Apr 2026 11:51:42 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/2] Add HvExtCallGetBootZeroedMemory
+Content-Language: en-GB
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <20260112113139.3762156-1-flosch@nutanix.com>
+ <20260112113139.3762156-3-flosch@nutanix.com>
+ <a28bd807-6e98-4393-a354-b7ed1f7a08ae@redhat.com>
+ <f878fd12-17bc-4249-beca-cd134bb93d2c@nutanix.com>
+ <CABgObfYYt0CuLzj4kdD13J3+bUqAxNpmKTc4g=LtbojvKAatyQ@mail.gmail.com>
+From: Florian Schmidt <flosch@nutanix.com>
+In-Reply-To: <CABgObfYYt0CuLzj4kdD13J3+bUqAxNpmKTc4g=LtbojvKAatyQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AS4P189CA0049.EURP189.PROD.OUTLOOK.COM
+ (2603:10a6:20b:659::27) To BY5PR02MB6196.namprd02.prod.outlook.com
+ (2603:10b6:a03:1fc::20)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=MK9tWcZl c=1 sm=1 tr=0 ts=69e60375
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=mDV3o1hIAAAA:8 a=_S2v2Z1saO19s7bx6VoA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNCBTYWx0ZWRfXwrsj3Z7EXcXk
- I9fsIzwlp0yO5cN5k2aYwiF19k+LSRfIwaxClZrkiSmwvX64gBiro/9Twh5UODQCLa9Sv10MzZH
- HU1H6Sg850six0E/KI+s288qCVw1oYmY/hCKLYfbREGK8DcqSvBCt9menXrXIiiT7reIRg86NFI
- U7DakHPEdvfw9puku6/xojJHoHfgtzWXF7uVXXeN06qk9yFWZXI54YBVJryYg6R9ttjvCov2ADt
- xuGbSHyR6aXLDaViYjIV85d3IgvTN1RuKNFPN1eV4nJNFYvAODboMSJeqr0i5nHMEWWWgHAsd4y
- Vn2IzjZWf+NnUiGSz+YP5cd0Uj5IplTijbpPAaRI5KrL2+0s2ojxRB5FePrdVM=
-X-Proofpoint-ORIG-GUID: UtvCed5Z_R3D996j83iiKzD5vQsDHJkw
-X-Proofpoint-GUID: UtvCed5Z_R3D996j83iiKzD5vQsDHJkw
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6197:EE_|DM6PR02MB6493:EE_
+X-MS-Office365-Filtering-Correlation-Id: 084a83e3-daab-4720-6963-08de9ecad350
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|56012099003|18002099003|22082099003; 
+X-Microsoft-Antispam-Message-Info: +gGMssAdKfrWGNNhIfk8DL+Kd421uPZO/WZPaZdQ26t2/Iryh1pWH88A22tatsagq+n6ggysY9sCn+NHVcbf6dky7jrb4QzsbYl478agyzFddMSOB8TtHlwfDiuF+BMgDtBb+Apaks5iYTiIboVJITtrHpUtr6O4CfOdRrCeYIy4Sd9dC+bFo4I3EVDtl29MDksf+69nt4vD9kSpFthjBkITJAG8OemsjOdg71fouL10VsirPyNZd3S5G/o7MTbm96/oZhYHrbI9EHKJvUHd+6clDo65Fgn4IQY5MBPHzzrMgZBug1qVA5JguJS4q2zP3NZzZ043aqioJ2ObNqUkyP+GUvGl17xGZ/zLNZBtVAvGGdLta3bIVKvdEiNDE2fJnl1ZT0NdewMaE4ZR7XEzrMZd6QMC8lnVjiYq5sk4eeuIuwoqjBkbkYDm7JhLnUYcHkDUa6LzoKQpXYdPlFeDxbKIwcoL4fLXMoxcoXPYdTGc/X1mGm5mX7/0ApxPJf/GqVnH8VKv4YaK5RtRHdVgLgNaLYVlSr//nnA0b4AEaVeCsLObClpnZulQynNi+NIh+bXYlSeAUF10qIxR+Xvgz6swg71MtR1G2/TsuRlchAHiyfQdTYTD61O98KU1OdYP0PvTWHErd+FhhoVJdZ7NpPDdZs1n0t2pn8Utd4Ad9nQV2O/46Z/ZiWEMSiw6orQ+KVKarznssCw+HEOXlKJ+q2kgFfBp3GeMtW5TvIGRxBY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6197.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ek10NnB4ZEdOcXg5ZlpIQkg1dTZpeGFRd0l0cCsyd0MrS0tSMDRnajlUdFFQ?=
+ =?utf-8?B?MmdVSDNQSjRCVUhzZVZVK2I5czJ2WXo4WEwzYjZwV3BQYWhQTVh6Q3NZUmpj?=
+ =?utf-8?B?NkdqNEUzOTVoR2p3WlRJVkErZlJkaklyUE9zYS9DTDBxUmhCNFc3UjRPU2Fs?=
+ =?utf-8?B?aFJJd3RYZk5OTWFhdktnRkNQMVFGdGdDRHJrQzNIQTBlQnUwWVBmdHR6MDdV?=
+ =?utf-8?B?eHlsdEhndndJbTdITjZiSmhLYlRuaGF1dGlLNEVMTU4rVFBTMzNrYWtZTnQx?=
+ =?utf-8?B?UmM4VzhXdlBoRDYwM1NEQXBKZDBkbjlsTmVLbUpwTVdubTJNd3RMRVltK1FO?=
+ =?utf-8?B?Yi9ORCtrai9QRk9OMVE4VDhpQ2xsdnUzSHU1K25ldHRRdzIwcHNEMTdza25W?=
+ =?utf-8?B?U3BlTUFvN0dHaUgzY2JDdG9rSHg1NU5SdDh2WHRXbnNETyt2RXBWSk1YS08x?=
+ =?utf-8?B?bUE1cEVMYkFHdG5RRUs3aDQ0U3h2UmM1eFRUblJNL2NIeFFqVkV2UkRmOVNH?=
+ =?utf-8?B?TFFPT1YrY2UxTVl5bEZZK3lZdWIyTThpVXkzL1A4bFYwc3htRzIyZHRJRWcz?=
+ =?utf-8?B?S1owMDBJYk9UZVBEQU9tUUtFdEJ1Rml4M3h2bFpiNE9FdGVJREpLOW1rRjdl?=
+ =?utf-8?B?Snc5WGE1dWxCOXFsTDE2b1o1UmdlYXlrY1RGYStLOVY0ZURld2lZcXB5S2N5?=
+ =?utf-8?B?MjVCdTM1S3ViYStDd2dQcERqSUZRa1JMK2JaZUVxUE4rZ1FSVHZOajRJZHJY?=
+ =?utf-8?B?aEMrTnh4ZHFBNTBxeW8zajRtc3NDcHl3ckVvY0JKUkpwZ3h1eHBsODI3Z3dz?=
+ =?utf-8?B?anVCSXhMZEpJZGhncGo0OFRUWS9QakRONFh0RU91cEtYeUlUajUvQ1ZCY09V?=
+ =?utf-8?B?Tm1CL0VwcFQ5MUtQME9CODYxcGhlbHRQaUFmZU1RYkhvM2xzVWlRYUdDU1ph?=
+ =?utf-8?B?NUd2UDZsU003S1hFRThoYk9weTFORDFjM0s5VklZR3JMMHN6a2NYU0VUVTRv?=
+ =?utf-8?B?MEJqbVBNa0wvS3Axd0h6MnhWaXNaZSt5YjY4VzJZSW55bXIvRXBPRHREMTho?=
+ =?utf-8?B?NFBQaXBuUVdRcTRvYldDYkZJWTk3VGNXOGxaTFBZMENCclBhRnd4cGxmRFFH?=
+ =?utf-8?B?Y1ROU2NSUXJ6Z1AvM3ZoV2ZDTWNDUEloeWUxYUVHQk9BSFJlMXY1L1kvY2ZI?=
+ =?utf-8?B?WldGcHhHTXQvazRIRXZKQXdxcWUydVpTakFTNUlOb05HQjNra0VoeTViMEx3?=
+ =?utf-8?B?MEV1SmJVM2xDS0k0bUNPWnE5NWZJeEwyL2NwQW80MzBOWDYvUk1nS09OU2Yz?=
+ =?utf-8?B?OC93VzRhTzVtZmRDaGhpcmZOREYyNDFQWDNweW9kdkUxMlo2dWczMDNoTUZQ?=
+ =?utf-8?B?ZmRQTUNHekMwYm9wbVB2Tk5HR2NyM1RNL2tjRUFjL3lMSmdEb0ZXeXNvdyto?=
+ =?utf-8?B?TlIyaHdmTTdqNGhIajl5MlVqNXlEQm0rTzFaQnI0TjRtYjRaTHJLUzZOWUhO?=
+ =?utf-8?B?a3A3RktjS1VuS1FmOS9sSW5iZU91NXJqbjhUMEF4ZkFBNkt3MGZCYzNFRDJq?=
+ =?utf-8?B?M3hYTFYyQktsV05UY2orTnhYaXJTZFl6YWlqYkp2Ti8vd1dtUmRTQnJ1eU5m?=
+ =?utf-8?B?dm82WWROT09iM1dtY1pubWp5QlVHUDU2YUV6aXpVaW81M3doZ0NUc0JQUFVa?=
+ =?utf-8?B?TjZPRHcyejZsTHVmdmJlaGgySVVZdzR5WkhOQUpITUcxM2MxU21GeUNTbC9W?=
+ =?utf-8?B?TG9CZmIzNjBqU2p3K3lxSi9uUDJyK2V2Z2U1OE9JVjdyRkpZd3lzdEhlOXpO?=
+ =?utf-8?B?T21zYTlYZTNpS1lKVXF1Z3ErZXJtOE9PY1E4bFZ2Um91eGpYM21KK29WL2ZL?=
+ =?utf-8?B?Y1B6WCt3K0pnbjRJT1YvY0JoTWYzeXRhdUNxbExiWnJIL3pkTVFPVVAvdmVs?=
+ =?utf-8?B?Mjc1VlZodnp0a1VSQ3AyS1JPMzhwQTRjWktjS0wvWU5yWFpTQUJSMXp5a1ZZ?=
+ =?utf-8?B?UEFYY0t4aXJXbzNJS04yR3gyVzZuSVF3bUlxeE5ZMThIK21RcmNuUEdkRm1T?=
+ =?utf-8?B?U2xDeEE4VkdXZ2NLTVg4SW15V0dtMzlQeUJqbUNiSUtRWWdhY1JQcndPTnp0?=
+ =?utf-8?B?R0dmN3ZiWHl0RVoyYlFVOGJaeU9uNnplYkIvWk1nb0ZhcUNQUmJienRrUUo0?=
+ =?utf-8?B?Ni92djN3UU05cE5wbVNveGttSlFIVkRyTXhEeWsrYW1EVGdmYklDZXdMZEhm?=
+ =?utf-8?B?YTkrSThadlRPU0RmRThCZmF1b0l1eUo1TVRiSTB5YXROMDNMc0tkUlVydkth?=
+ =?utf-8?B?c2ZQZHUvQUMyVlZsY0ZvRzZzSTdCckNqOUFTbmVXS3dvOHZwOFhFRXJFTEl3?=
+ =?utf-8?Q?DBINyHorKjxIUR5w=3D?=
+X-Exchange-RoutingPolicyChecked: Cz1PqwLLWP81D294SgyhcuMTs8UtMLNrdww6QBpOeGhR+tqmCwLrsqGfluo3N8Bq8zMjdoW6j69M4A6WP/42cgPtjB36mP+T+fGWTNSpIlqn9kg1zMflh1RBLb+Q6A0BO4E0jwmWkYrW8M5ULNByrWDXFRDBdoFviGqU0ClZErT7isdNfY9kiNBlc9ylNT4tddzP3vHWCcf1tiaf3xMBxSV8QnIWhuYhx3Tq6eXtFA9mDeY7ue1t2QXPz9GSahxPwYIChtQEusiX97QhBOc3d7UA1r+joeT/btbhMW9cZFBA8HST2gIbtrvzDFg0tr4836QUA7eaQnpHD3CBr74T8w==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 084a83e3-daab-4720-6963-08de9ecad350
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6196.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Apr 2026 10:51:52.9354 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IDHdoAbcIv8bC+Qmq2+lnkYfBu3aK5EEcV6f+XGJYlfkKbH+9ljvBchl6mcz2AEAoc7JgfDcoC6F26U6zNeJS8HPGzP3rQFTFS2k/386suI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6493
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEwNiBTYWx0ZWRfXyOyX9dLg17DR
+ w32iyZYJILsDjdPchq/Sho/yUj6I8I2+yL94ZINQ87SVqUfSVn32aIR/F1uapMxoIE1BL6iTPDr
+ rGagSdcEdVBiUc+x3hQQmQ+dSKogJGBEvY8iMITh0x51Aqt8Du6zJ8IZmYOZsOd1CVNkx7yBUS7
+ x5gx7H0x4vt5KY72EjYxTfE1Ir6J2+xc1hNHJw3a4elbH3Hqqh90ajfxoqJ4wR26xZSi6hAKNmw
+ VGiDMEKBVNegyl3miiG4SA2CVhuhqdt5BqpNLejNMYftVcsTnY8qEUwkEv3k0kAgqEcYpEwxVok
+ dEebY9WwI+p74ceoi6yRq9R1aDYDLELnRM7OZqAWHKffpDgzkz8OaUE8DIA6EcbXjpkDg3UxHOv
+ L4KejGtxradiK++GuWSt3ph3PuzBpaByxp0FooSCE/n4LrtVMWITdOqRnRi/fzlMhebP6VAx2PH
+ Vopf6g9LPGkb89yj2hA==
+X-Proofpoint-ORIG-GUID: nCaB_OI2wr6D0uKxu_5Dak4KM49H47no
+X-Proofpoint-GUID: nCaB_OI2wr6D0uKxu_5Dak4KM49H47no
+X-Authority-Analysis: v=2.4 cv=MbtcfZ/f c=1 sm=1 tr=0 ts=69e6055f cx=c_pps
+ a=IMEwmUWWSCLuwm+xmU4zLA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=Ap8k9tRZuQ82DLYWQqG7:22
+ a=UAhI5BJm3avRXxMP5v8A:9 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- mlxscore=0 clxscore=1030 mlxlogscore=999 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604200104
-Received-SPF: pass client-ip=57.103.74.141;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68; envelope-from=flosch@nutanix.com;
+ helo=mx0a-002c1b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,353 +192,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/cpu.c                  |  18 +--
- target/i386/whpx/meson.build       |   1 +
- target/i386/whpx/whpx-all.c        |  38 ++++++-
- target/i386/whpx/whpx-cpu-legacy.c | 171 +++++++++++++++++++++++++++++
- target/i386/whpx/whpx-i386.h       |   7 ++
- 5 files changed, 215 insertions(+), 20 deletions(-)
- create mode 100644 target/i386/whpx/whpx-cpu-legacy.c
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index b18e40666e..8f090782bd 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8092,9 +8092,6 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
-     } else if (whpx_enabled()) {
-         if (wi->type != CPUID_FEATURE_WORD) {
-             return 0;
--        }
--        if (whpx_is_legacy_os()) {
--            r = wi->tcg_features;
-         } else {
-             r = whpx_get_supported_cpuid(wi->cpuid.eax,
-                                         wi->cpuid.ecx,
-@@ -8182,17 +8179,10 @@ static void x86_cpu_get_supported_cpuid(uint32_t func, uint32_t index,
-         *ecx = hvf_get_supported_cpuid(func, index, R_ECX);
-         *edx = hvf_get_supported_cpuid(func, index, R_EDX);
-     } else if (whpx_enabled()) {
--        if (whpx_is_legacy_os()) {
--            *eax = 0;
--            *ebx = 0;
--            *ecx = 0;
--            *edx = 0;
--        } else {
--            *eax = whpx_get_supported_cpuid(func, index, R_EAX);
--            *ebx = whpx_get_supported_cpuid(func, index, R_EBX);
--            *ecx = whpx_get_supported_cpuid(func, index, R_ECX);
--            *edx = whpx_get_supported_cpuid(func, index, R_EDX);
--        }
-+        *eax = whpx_get_supported_cpuid(func, index, R_EAX);
-+        *ebx = whpx_get_supported_cpuid(func, index, R_EBX);
-+        *ecx = whpx_get_supported_cpuid(func, index, R_ECX);
-+        *edx = whpx_get_supported_cpuid(func, index, R_EDX);
-     } else {
-         *eax = 0;
-         *ebx = 0;
-diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
-index c3aaaff9fd..1c6a4ce377 100644
---- a/target/i386/whpx/meson.build
-+++ b/target/i386/whpx/meson.build
-@@ -1,4 +1,5 @@
- i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
-   'whpx-all.c',
-   'whpx-apic.c',
-+  'whpx-cpu-legacy.c'
- ))
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 02235d5391..045dbdfdc8 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -270,11 +270,30 @@ typedef enum WhpxStepMode {
- static uint32_t max_vcpu_index;
- static WHV_PROCESSOR_XSAVE_FEATURES whpx_xsave_cap;
- 
--static bool whpx_has_xsave(void)
-+bool whpx_has_xsave(void)
- {
-     return whpx_xsave_cap.XsaveSupport;
- }
- 
-+bool whpx_has_xsaves(void)
-+{
-+    return whpx_xsave_cap.XsaveSupervisorSupport;
-+}
-+
-+static bool whpx_rdtsc_cap;
-+
-+bool whpx_has_rdtscp(void)
-+{
-+    return whpx_rdtsc_cap;
-+}
-+
-+static bool whpx_invpcid_cap;
-+
-+bool whpx_has_invpcid(void)
-+{
-+    return whpx_invpcid_cap;
-+}
-+
- static WHV_X64_SEGMENT_REGISTER whpx_seg_q2h(const SegmentCache *qs, int v86,
-                                              int r86)
- {
-@@ -1057,6 +1076,11 @@ uint32_t whpx_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-     bool temp_cpu = true;
-     HRESULT hr;
- 
-+    /* Legacy OSes don't have WHvGetVirtualProcessorCpuidOutput */
-+    if (whpx_is_legacy_os()) {
-+        return whpx_get_supported_cpuid_legacy(func, idx, reg);
-+    }
-+
-     hr = whp_dispatch.WHvCreateVirtualProcessor(
-         whpx_global.partition, cpu_index, 0);
- 
-@@ -2147,7 +2171,7 @@ int whpx_vcpu_run(CPUState *cpu)
-              * just pass through what the hypervisor
-              * provides without any QEMU filtering.
-              */
--            if (whpx_is_legacy_os() || xcc->max_features) {
-+            if (xcc->max_features) {
-                 reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-                 reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-                 reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-@@ -2507,11 +2531,11 @@ void whpx_cpu_instance_init(CPUState *cs)
-     host_cpu_instance_init(cpu);
-     x86_cpu_apply_props(cpu, whpx_default_props);
- 
--    if (!whpx_is_legacy_os() && xcc->max_features) {
-+    if (xcc->max_features) {
-         whpx_cpu_max_instance_init(cpu);
-     }
- 
--    if (!whpx_is_legacy_os()) {
-+    if (whpx_has_xsave()) {
-         whpx_cpu_xsave_init();
-     }
- }
-@@ -2536,7 +2560,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         0x40000000, 0x40000001, 0x40000010, 0x80000000, 0x80000001,
-         0x80000002, 0x80000003, 0x80000004, 0x80000007, 0x80000008,
-         0x8000000A, 0x80000021, 0x80000022, 0xC0000000, 0xC0000001};
--    UINT32 cpuidExitList_legacy_os[] = {1, 0x40000000, 0x40000001, 0x40000010};
- 
-     X86MachineState *x86ms = X86_MACHINE(ms);
-     bool pic_enabled = false;
-@@ -2700,6 +2723,9 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
- 
-+    whpx_rdtsc_cap = processor_features.Bank0.RdtscpSupport;
-+    whpx_invpcid_cap = processor_features.Bank0.InvpcidSupport;
-+
-     if (whpx_irqchip_in_kernel() && processor_features.Bank1.NestedVirtSupport) {
-         memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-         prop.NestedVirtualization = 1;
-@@ -2808,7 +2834,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     hr = whp_dispatch.WHvSetPartitionProperty(
-         whpx->partition,
-         WHvPartitionPropertyCodeCpuidExitList,
--        !whpx_is_legacy_os() ? cpuidExitList : cpuidExitList_legacy_os,
-+        cpuidExitList,
-         RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
- 
-     if (FAILED(hr)) {
-diff --git a/target/i386/whpx/whpx-cpu-legacy.c b/target/i386/whpx/whpx-cpu-legacy.c
-new file mode 100644
-index 0000000000..477429b460
---- /dev/null
-+++ b/target/i386/whpx/whpx-cpu-legacy.c
-@@ -0,0 +1,171 @@
-+/*
-+ *  i386 CPUID helper functions
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *  Copyright (c) 2017 Google Inc.
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ * cpuid
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/cpuid.h"
-+#include "host/cpuinfo.h"
-+#include "cpu.h"
-+#include "emulate/x86.h"
-+#include "whpx-i386.h"
-+
-+static bool cached_xcr0;
-+static uint64_t supported_xcr0;
-+
-+static void cache_host_xcr0(void)
-+{
-+    if (cached_xcr0) {
-+        return;
-+    }
-+
-+    if (whpx_has_xsave()) {
-+        uint64_t host_xcr0 = xgetbv_low(0);
-+
-+        /* Only show xcr0 bits corresponding to usable features.  */
-+        supported_xcr0 = host_xcr0 & (XSTATE_FP_MASK |
-+                                      XSTATE_SSE_MASK | XSTATE_YMM_MASK |
-+                                      XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK |
-+                                      XSTATE_Hi16_ZMM_MASK);
-+        if ((supported_xcr0 & (XSTATE_FP_MASK | XSTATE_SSE_MASK)) !=
-+            (XSTATE_FP_MASK | XSTATE_SSE_MASK)) {
-+            supported_xcr0 = 0;
-+        }
-+    }
-+
-+    cached_xcr0 = true;
-+}
-+
-+uint32_t whpx_get_supported_cpuid_legacy(uint32_t func, uint32_t idx,
-+                                 int reg)
-+{
-+    uint32_t eax, ebx, ecx, edx;
-+
-+    cache_host_xcr0();
-+    host_cpuid(func, idx, &eax, &ebx, &ecx, &edx);
-+
-+    switch (func) {
-+    case 0:
-+        eax = eax < (uint32_t)0xd ? eax : (uint32_t)0xd;
-+        break;
-+    case 1:
-+        edx &= CPUID_FP87 | CPUID_VME | CPUID_DE | CPUID_PSE | CPUID_TSC |
-+             CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC |
-+             CPUID_SEP | CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV |
-+             CPUID_PAT | CPUID_PSE36 | CPUID_CLFLUSH | CPUID_MMX |
-+             CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_HT;
-+        ecx &= CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSSE3 |
-+             CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID |
-+             CPUID_EXT_SSE41 | CPUID_EXT_SSE42 | CPUID_EXT_MOVBE |
-+             CPUID_EXT_POPCNT | CPUID_EXT_AES |
-+             (supported_xcr0 ? CPUID_EXT_XSAVE : 0) |
-+             CPUID_EXT_AVX | CPUID_EXT_F16C | CPUID_EXT_RDRAND;
-+        ecx |= CPUID_EXT_HYPERVISOR;
-+        ecx |= CPUID_EXT_X2APIC;
-+        edx |= CPUID_HT;
-+        break;
-+    case 6:
-+        eax = CPUID_6_EAX_ARAT;
-+        ebx = 0;
-+        ecx = 0;
-+        edx = 0;
-+        break;
-+    case 7:
-+        if (idx == 0) {
-+            ebx &= CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_BMI1 |
-+                    CPUID_7_0_EBX_HLE | CPUID_7_0_EBX_AVX2 |
-+                    CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_BMI2 |
-+                    CPUID_7_0_EBX_ERMS | CPUID_7_0_EBX_RTM |
-+                    CPUID_7_0_EBX_RDSEED | CPUID_7_0_EBX_ADX |
-+                    CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_AVX512IFMA |
-+                    CPUID_7_0_EBX_AVX512F | CPUID_7_0_EBX_AVX512PF |
-+                    CPUID_7_0_EBX_AVX512ER | CPUID_7_0_EBX_AVX512CD |
-+                    CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
-+                    CPUID_7_0_EBX_AVX512DQ | CPUID_7_0_EBX_SHA_NI |
-+                    CPUID_7_0_EBX_AVX512BW | CPUID_7_0_EBX_AVX512VL |
-+                    CPUID_7_0_EBX_INVPCID;
-+
-+            if (!whpx_has_invpcid()) {
-+                ebx &= ~CPUID_7_0_EBX_INVPCID;
-+            }
-+
-+            ecx &= CPUID_7_0_ECX_AVX512_VBMI | CPUID_7_0_ECX_AVX512_VPOPCNTDQ |
-+                   CPUID_7_0_ECX_RDPID;
-+            edx &= CPUID_7_0_EDX_AVX512_4VNNIW | CPUID_7_0_EDX_AVX512_4FMAPS;
-+        } else {
-+            ebx = 0;
-+            ecx = 0;
-+            edx = 0;
-+        }
-+        eax = 0;
-+        break;
-+    case 0xD:
-+        if (!supported_xcr0 || idx >= 63 ||
-+            (idx > 1 && !(supported_xcr0 & (UINT64_C(1) << idx)))) {
-+            eax = ebx = ecx = edx = 0;
-+            break;
-+        }
-+
-+        if (idx == 0) {
-+            eax = supported_xcr0;
-+        } else if (idx == 1) {
-+            eax &= CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XGETBV1;
-+            if (!whpx_has_xsaves()) {
-+                eax &= ~CPUID_XSAVE_XSAVES;
-+            }
-+        }
-+        break;
-+    case 0x80000001:
-+        /* LM only if HVF in 64-bit mode */
-+        edx &= CPUID_FP87 | CPUID_VME | CPUID_DE | CPUID_PSE | CPUID_TSC |
-+                CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC |
-+                CPUID_EXT2_SYSCALL | CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV |
-+                CPUID_PAT | CPUID_PSE36 | CPUID_EXT2_MMXEXT | CPUID_MMX |
-+                CPUID_FXSR | CPUID_EXT2_FXSR | CPUID_EXT2_PDPE1GB | CPUID_EXT2_3DNOWEXT |
-+                CPUID_EXT2_3DNOW | CPUID_EXT2_LM | CPUID_EXT2_RDTSCP | CPUID_EXT2_NX;
-+        if (!(whpx_has_rdtscp())) {
-+            edx &= ~CPUID_EXT2_RDTSCP;
-+        }
-+        ecx &= CPUID_EXT3_LAHF_LM | CPUID_EXT3_CMP_LEG | CPUID_EXT3_CR8LEG |
-+                CPUID_EXT3_ABM | CPUID_EXT3_SSE4A | CPUID_EXT3_MISALIGNSSE |
-+                CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_OSVW | CPUID_EXT3_XOP |
-+                CPUID_EXT3_FMA4 | CPUID_EXT3_TBM;
-+        break;
-+    case 0x80000007:
-+        edx &= CPUID_APM_INVTSC;
-+        eax = ebx = ecx = 0;
-+        break;
-+    default:
-+        return 0;
-+    }
-+
-+    switch (reg) {
-+    case R_EAX:
-+        return eax;
-+    case R_EBX:
-+        return ebx;
-+    case R_ECX:
-+        return ecx;
-+    case R_EDX:
-+        return edx;
-+    default:
-+        return 0;
-+    }
-+}
-diff --git a/target/i386/whpx/whpx-i386.h b/target/i386/whpx/whpx-i386.h
-index 6db9a75d39..9dc6837574 100644
---- a/target/i386/whpx/whpx-i386.h
-+++ b/target/i386/whpx/whpx-i386.h
-@@ -2,3 +2,10 @@
- 
- uint32_t whpx_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
- bool whpx_is_legacy_os(void);
-+
-+uint32_t whpx_get_supported_cpuid_legacy(uint32_t func, uint32_t idx,
-+                                 int reg);
-+bool whpx_has_xsave(void);
-+bool whpx_has_xsaves(void);
-+bool whpx_has_rdtscp(void);
-+bool whpx_has_invpcid(void);
--- 
-2.50.1 (Apple Git-155)
+
+On 2026-04-16 17:04, Paolo Bonzini wrote:
+> Yes and no respectively. For example if you use preallocation mincore 
+> will return always no, and if you swap it will return yes incorrectly.
+
+Ah yes, of course, forgot about that property of mincore. So the new KVM 
+ioctl sounds neat for this. The one thing I'm slighty worried about is 
+the time it might take to get that in shape and merged. I guess if 
+you're in favour of such an interface, that would go a long way to 
+getting it accepted into the kernel at all?
+
+Here's another option, though I'm not sure you'll like it: We can get 
+the same information from /proc/<pid>/pagemap, right? We just have to 
+check whether bits 62 and 63 are both 0 or not for every page. It's less 
+efficient, because we have to read 8 bytes per page, but qemu knows the 
+host-virtual addresses of the VM memory, so it can look it up there. I 
+feel it beats using dirty page tracking if we can't be sure when Windows 
+issues the hypercall. One option would be to have this as a fallback if 
+the KVM ioctl does't exist? The other option would be for us to use this 
+only internally to get some more experience and measurements in while we 
+work on the KVM ioctl.
+
+Going forward, I think what I care about most for now is getting the 
+interfaces right. In this case, I guess that just means the names of the 
+command-line interfaces, and the question of whether we should have a 
+separate one for HvExtCallQueryCapabilities() and then implement 
+dependencies between them. Then, I can experiment with the backend 
+implementation and we can settle on a proper clean implementation for 
+getting this into QEMU, while experimenting with this internally as we 
+work on it.
+
+Cheers,
+Florian
+
 
 
