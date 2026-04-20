@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4CCF5A8B6
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 19:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38F7F5A8AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 19:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEuSV-0007aV-Tn; Mon, 20 Apr 2026 15:39:04 -0400
+	id 1wEuSU-0007ZZ-1E; Mon, 20 Apr 2026 15:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuSU-0007a1-7M
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:02 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1wEuSS-0007ZE-N6
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:00 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuSS-0004Sh-DB
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:01 -0400
+ id 1wEuSQ-0004SZ-Ob
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:39:00 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0E2ED8079C;
- Mon, 20 Apr 2026 22:38:58 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id F042580638;
+ Mon, 20 Apr 2026 22:38:55 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id mcXJF10KxSw0-5pwEYaHH; Mon, 20 Apr 2026 22:38:57 +0300
+ id mcXJF10KxSw0-Z5wGogOM; Mon, 20 Apr 2026 22:38:55 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776713937;
- bh=gFtGz7L3wZWo9DXLLXnqIabEpoZPOEa4XkV8mzZ9+6U=;
+ s=default; t=1776713935;
+ bh=uM4ZSd5P6FlqCb5Aknd1WBF30LZiWvbe5vaL6RixKhA=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=KusVBM5ymHA2fIiidXFeDwf0hJMvA/jBFJBRFacvcsDJiQJ1vMs5r6Sf6WCeBIJ9G
- erb2iJFzcaSSBmaDZ/9b54v+ClEnQZ/TpN2BvfXYUs2sAenTm6j97qIqi/F/IWmm6S
- /ASNckirpDhlaJUXmhY+QAru+NaI67E8AXzSX+1M=
+ b=Bu2aZi9SNH0uWqRvyC+hyZeo7dz8ZDxg2ZSd7+IBiQ7PgiSy1086mzjQCcLDEQvdJ
+ D+Qc4yFq7MmDMaUimBdAai91geQhWdLa5PqyrJRjX0FKiSzVgU+3wVrbRvjOcXOeEu
+ V1ZAojr7ErNSq9AyEbUQ5I+J5ws9HL6crPo2rAdM=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,16 +46,17 @@ To: jasowang@redhat.com,
 Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, Eric Blake <eblake@redhat.com>
-Subject: [PATCH v15 3/8] qapi: add local migration parameter
-Date: Mon, 20 Apr 2026 22:38:40 +0300
-Message-ID: <20260420193846.675844-4-vsementsov@yandex-team.ru>
+ yc-core@yandex-team.ru
+Subject: [PATCH v15 2/8] net/tap: move vhost initialization to
+ tap_setup_vhost()
+Date: Mon, 20 Apr 2026 22:38:39 +0300
+Message-ID: <20260420193846.675844-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420193846.675844-1-vsementsov@yandex-team.ru>
 References: <20260420193846.675844-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -76,137 +78,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to implement local-migration feature: some devices will be
-able to transfer open file descriptors through migration stream (which
-must UNIX domain socket for that purpose).  This allows to transfer the
-whole backend state without reconnecting and restarting the backend
-service. For example, virtio-net will migrate its attached TAP netdev,
-together with its connected file descriptors.
-
-In this commit we introduce a migration parameter, which enables
-the feature for devices that support it (none at the moment).
+Make a new helper function in a way it can be reused later for
+TAP fd-migration feature: we'll need to initialize vhost in a later
+point when we doesn't have access to QAPI parameters.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/misc.h |  2 ++
- migration/options.c      | 18 +++++++++++++++++-
- qapi/migration.json      | 12 ++++++++++--
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ net/tap.c | 62 ++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 38 insertions(+), 24 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 3159a5e53c3..b14dc70ea3d 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -156,4 +156,6 @@ bool multifd_device_state_save_thread_should_exit(void);
- void multifd_abort_device_state_save_threads(void);
- bool multifd_join_device_state_save_threads(void);
- 
-+bool migrate_local(void);
-+
- #endif
-diff --git a/migration/options.c b/migration/options.c
-index 7556fbc06b7..bbf29019313 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qapi/util.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
-@@ -24,6 +25,7 @@
- #include "migration/colo.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
-+#include "migration/options.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "qemu-file.h"
-@@ -343,6 +345,12 @@ bool migrate_mapped_ram(void)
-     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
+diff --git a/net/tap.c b/net/tap.c
+index d941c67895e..9d6213fc3e5 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -71,6 +71,8 @@ static const int kernel_feature_bits[] = {
+ typedef struct TAPState {
+     NetClientState nc;
+     int fd;
++    int vhostfd;
++    uint32_t vhost_busyloop_timeout;
+     char down_script[1024];
+     char down_script_arg[128];
+     uint8_t buf[NET_BUFSIZE];
+@@ -702,6 +704,38 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
+     return fd;
  }
  
-+bool migrate_local(void)
++static bool tap_setup_vhost(TAPState *s, Error **errp)
 +{
-+    MigrationState *s = migrate_get_current();
-+    return s->parameters.local;
++    VhostNetOptions options;
++
++    if (s->vhostfd == -1) {
++        return true;
++    }
++
++    options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
++    options.net_backend = &s->nc;
++    options.busyloop_timeout = s->vhost_busyloop_timeout;
++    options.opaque = (void *)(uintptr_t)s->vhostfd;
++    options.nvqs = 2;
++    options.feature_bits = kernel_feature_bits;
++    options.get_acked_features = NULL;
++    options.save_acked_features = NULL;
++    options.max_tx_queue_size = 0;
++    options.is_vhost_user = false;
++
++    s->vhost_net = vhost_net_init(&options);
++    if (!s->vhost_net) {
++        error_setg(errp,
++                   "vhost-net requested but could not be initialized");
++        return false;
++    }
++
++    /* vhostfd ownership is passed to s->vhost_net */
++    s->vhostfd = -1;
++
++    return true;
 +}
 +
- bool migrate_ignore_shared(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1062,7 +1070,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_announce_step, &p->has_block_bitmap_mapping,
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
--        &p->has_cpr_exec_command,
-+        &p->has_cpr_exec_command, &p->has_local,
-     };
- 
-     len = ARRAY_SIZE(has_fields);
-@@ -1401,6 +1409,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     if (params->has_cpr_exec_command) {
-         dest->cpr_exec_command = params->cpr_exec_command;
+ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              const char *name,
+                              const char *ifname, const char *script,
+@@ -736,30 +770,10 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
      }
-+
-+    if (params->has_local) {
-+        dest->local = params->local;
-+    }
- }
  
- static void migrate_params_apply(MigrationParameters *params)
-@@ -1529,6 +1541,10 @@ static void migrate_params_apply(MigrationParameters *params)
-         s->parameters.cpr_exec_command =
-             QAPI_CLONE(strList, params->cpr_exec_command);
+-    if (vhostfd != -1) {
+-        VhostNetOptions options;
+-
+-        options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+-        options.net_backend = &s->nc;
+-        if (tap->has_poll_us) {
+-            options.busyloop_timeout = tap->poll_us;
+-        } else {
+-            options.busyloop_timeout = 0;
+-        }
+-        options.opaque = (void *)(uintptr_t)vhostfd;
+-        options.nvqs = 2;
+-        options.feature_bits = kernel_feature_bits;
+-        options.get_acked_features = NULL;
+-        options.save_acked_features = NULL;
+-        options.max_tx_queue_size = 0;
+-        options.is_vhost_user = false;
+-
+-        s->vhost_net = vhost_net_init(&options);
+-        if (!s->vhost_net) {
+-            error_setg(errp,
+-                       "vhost-net requested but could not be initialized");
+-            goto failed;
+-        }
++    s->vhostfd = vhostfd;
++    s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++    if (!tap_setup_vhost(s, errp)) {
++        return false;
      }
-+
-+    if (params->has_local) {
-+        s->parameters.local = params->local;
-+    }
- }
  
- void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 7134d4ce47e..8c87cfb0b7a 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -831,7 +831,8 @@
-            'mode',
-            'zero-page-detection',
-            'direct-io',
--           'cpr-exec-command'] }
-+           'cpr-exec-command',
-+           'local'] }
- 
- ##
- # @migrate-set-parameters:
-@@ -1007,6 +1008,12 @@
- #     is @cpr-exec.  The first list element is the program's filename,
- #     the remainder its arguments.  (Since 10.2)
- #
-+# @local: Enable local migration for devices that support it.  Backend
-+#     state and its file descriptors can then be passed to the
-+#     destination in the migration channel.  The migration channel
-+#     must be a Unix domain socket.  Usually needs to be enabled per
-+#     device.  (Since 11.1)
-+#
- # Features:
- #
- # @unstable: Members @x-checkpoint-delay and
-@@ -1046,7 +1053,8 @@
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
-             '*direct-io': 'bool',
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*local': 'bool' } }
- 
- ##
- # @query-migrate-parameters:
+     return true;
 -- 
 2.52.0
 
