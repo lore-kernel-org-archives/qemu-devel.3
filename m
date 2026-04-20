@@ -4,100 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C91F5A8B6
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 19:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2C2FF5A8B8
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEukw-00075Z-4v; Mon, 20 Apr 2026 15:58:06 -0400
+	id 1wEupU-0000Md-Vt; Mon, 20 Apr 2026 16:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wEukt-00075R-IB
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:58:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wEuks-0000F7-81
- for qemu-devel@nongnu.org; Mon, 20 Apr 2026 15:58:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776715080;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6LEuJrRCyRLrRNrDolQSQM9HgiZhjIAZ2005yhE8W/8=;
- b=NQivlnReopQEncPB2k5tzqTI/Xw4/QkKy3Tb1GCUkzmWprqSRvcvXcP2yxq/FKaJRO1vCY
- Nt9PfAB41mNVK9UewJwLa8DlUZ86/SRbleZPVJj/VcGcAW7I7ZV3JA7oCA2iQ1tp34orzb
- 1MzoFaJTpt/7Ejs17oKcBmG5GcreglE=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-e4VS1E4nOBGUArdHMXXdlA-1; Mon, 20 Apr 2026 15:57:59 -0400
-X-MC-Unique: e4VS1E4nOBGUArdHMXXdlA-1
-X-Mimecast-MFC-AGG-ID: e4VS1E4nOBGUArdHMXXdlA_1776715078
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8ead5ab474bso258340885a.1
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 12:57:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEupR-0000Lq-Jn
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:02:45 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wEupP-0001bK-Bi
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:02:45 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4891c0620bcso11339865e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 13:02:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776715078; x=1777319878; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=6LEuJrRCyRLrRNrDolQSQM9HgiZhjIAZ2005yhE8W/8=;
- b=b2+XJkZDNwyl+0Z7qpFaJ+Podx6OcFWpCBfA1zYS5VxTqxvAe9WkrJoNU43h5g9J+8
- O81M8eMQmNalGu5fJCwCgX8rx9p1OHenwwTe0qVSByig09InyDtuuu7NEmZEdGL4Rivq
- ebHfRSyRYnltQjzEGQ2/GU+oStU/Y0jbjng+boodwgANxYAhl0kVA64Vvz1YxJSdq/pq
- 5uzsvBZPDHHoxLKNknmXT+MQa6pcYEwu1Ow/5vyJjUeOSl3Efzn3XBjrSpKGPzbpjrOX
- a38GEOPHAHXX5dkA7vEDVgICtgdQ5CQTBTRG6y9Si2mmswk5eHW4dF/Sf+e5uysJaIYs
- nkBA==
+ d=linaro.org; s=google; t=1776715361; x=1777320161; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AfaFD6F6Rp/HZWpniKlNjLA/JaI+wIG49hsw68bHy9Q=;
+ b=lXZWQwQqYvtUd4HosXzXzCV3vobVd/p1JbBdSDuxi6bq1l7CEYT3AqeYJzUP/kQjgP
+ 3DMSsDvsmv7arAmEGx+QvGiPXx5e3uXBk5Wd1ZFSVNTLoZ7sTwISry9ziY56D2oQk7Xv
+ Mz51PnmWWVPxoBEO/pyTBPSch4lPSF66XO+mcVcrq9xUSrcw3CoPTpBwGiljNET6DnIS
+ rPkfYSbiMwI4KrAv5f1ilPiUCFufwAivRMkVB0hPPaai8QT7vekyAoqnL4bb2UjSCJM+
+ vTsZyhFl2+ayKUSM557DQs+GSGjrOOKLZnlDeY7v3mMQU32HRIZVnowpaRoQy3GPK9Ta
+ bZQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776715078; x=1777319878;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6LEuJrRCyRLrRNrDolQSQM9HgiZhjIAZ2005yhE8W/8=;
- b=DGefTR3oe70tpaqaiN12KW2W0iOIRtSuGtvNhCmYWy52MwhzciP+pXIIQu4FhQhY60
- CYrQfaRUsb/UbmOF74jEUXtx6iFMzm0F5j9qU6A9Gg1NsXgNVynzjRWtbUdxzo/PbBRI
- DVTrZJNYSxbBsuk8wqBSylXqfz6AiySO16JBhwWSMsK2s8pRI0DA/dI/n3LXToI2USJx
- iyJXUtApUWMmdfazmYjALndPL8zrT032yWQSlBVqbb+wsXkGmjhRugunsSYo6zMGyKja
- Ec0nGDpGgRQ0exvrUjXgY/mOs8Bp2XUizBhfNyBBSvhryxW5VZ5gOH5DF86YncgZjDrW
- KWiw==
-X-Gm-Message-State: AOJu0YyDqVX9RraiisGETXwlPIEs9RE/SiwwLTwkmOqMPiR5Fa1+Cjl1
- e5/NtcWZoEZ1JSc20bzREKyZu0f5spco0gLsTZxep0HVie8SjieKFFEAchI36W/izlNGpu2D8A9
- WnML+BqVGuD/NBejNh3lSbR7REtqNaqbt/3KBnTUemxENAqLLHy9DnqsJ
-X-Gm-Gg: AeBDietYjHLFkvxrDdARnWyMHhoRd8Co1F+9fsoLzp7co9ZSzcRG31XduQ9/KHHCXst
- e6mSbOxpGthuEYrv7TujH6LzVxd39pxwBFOjHO3ITdhNuuBmbO8eDvByTmPqtYwLbY/0fyMAuMn
- CVDMsCXG4eUeNDnyX7SDRVe/OezfTzPcwrGInL5zbLGFstlZOujob4J/wbr5oqDMeYmzTmUxDCp
- zEqFSgpH4txpDpIHuWWskIiGWvrX8/NynvuCJo8Rnw3npwdVZe/USTpLbvqO0tdnzHZ1rEtLng6
- p8Sag6jmhFy7sSwQUkREtsc1+1aCSoFHArrGy7Kl0sHt9ENgA5Qto2Kr6v03hKIc/95EQLO3Ryr
- NFN32/vFB0//7TiBqTnsCnngXsdRt15vZZAEFhUYDh7Kui+AuuwoAFuReKQ==
-X-Received: by 2002:a05:620a:4502:b0:8cd:8785:eff4 with SMTP id
- af79cd13be357-8e78fe208c1mr2358026285a.15.1776715078445; 
- Mon, 20 Apr 2026 12:57:58 -0700 (PDT)
-X-Received: by 2002:a05:620a:4502:b0:8cd:8785:eff4 with SMTP id
- af79cd13be357-8e78fe208c1mr2358019685a.15.1776715077639; 
- Mon, 20 Apr 2026 12:57:57 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8e7d64caf37sm865965185a.11.2026.04.20.12.57.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Apr 2026 12:57:57 -0700 (PDT)
-Date: Mon, 20 Apr 2026 15:57:56 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] tests/qtest/migration: fix fd leak in ufd_version_check
-Message-ID: <aeaFRFbJ3uInmVKE@x1.local>
-References: <20260419110304.8661-1-viking4@gmail.com>
+ d=1e100.net; s=20251104; t=1776715361; x=1777320161;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AfaFD6F6Rp/HZWpniKlNjLA/JaI+wIG49hsw68bHy9Q=;
+ b=dTasGdZ3gHOPAwv/CGIyFEbiFJ7VV1POC0tSsJSXmcepOgfQfmET7NjXIvJ3yBOQWM
+ rymzXUrbyh/ZE3F4PSL0/vCA+OWxaaLKcvmopVwZrRUXcVl+o/wc8AcJ0TQ3rWXa0jie
+ ik0M82SJWzPSJaLXXz1E0Wt6H2LgVjPTj/LDaUiubTu1xO/ZavBLDX8NOx6rriz2vhoa
+ 7b5gX5h1KVqfsxeGvRopf6EEKQC7OwCSmNdoR9qn/XaNdsDJ3g7IkLemq2IgDi4AzjBH
+ frli+8yVaPYo3kEKfY4ef0EPWUYhSJYmqUey1Gncdp4s3RVF8UetCHjVD0WaAfts5Hr3
+ WcSw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9zeMozoeU8/ymNHpMd+6/uMbb866V7rXTvyT2iOFf7Pj9z5upFXoZ3mytvtidf3gZkZXqmlmQjqGeC@nongnu.org
+X-Gm-Message-State: AOJu0Yz+axkaPoefduZhFVWe48rUpsCwsOfEYUbItaZqwLV0VD9mjSn1
+ NOpeRHVYtGM3NN60MG3R0ykXgJejrHkSSqO8K40eaUx9/P74WccB44coZuiJZ5LDIpc=
+X-Gm-Gg: AeBDiesO00h1D7O6fmMsMEdiTxmN21OURbjGJRR1GyiJLkLYKxDvFwI3y1lmhCyDGIz
+ OrIqxuLqW+h8/DXAtu796Kj1OHs+fFhl3te6Dyc9k5jwri0dKOveKJOGJ+gMWKYcdUKmtMMPMvv
+ 7zJF61sXDs8wjDCti58xPe9umpUTcYdDJOy65/nm7N46W+gJsvBceQ4S/rXGpZnJpvuV2cZ6ICK
+ tlbX81HTlTQ1PN/mNUgWwtp/3ynz/PhidJNA965c0QWU7gWOy4zDUAwubM91CoPEcnz3U/qnudO
+ T87S4PVIbVjlyWCy5yG5g0rlNpXwIYtdeQvBcOg958IwcmWKKpPzXrGow68DRa0/YOElxY/0kZa
+ 7wJoGB2+hHNEPqnOYbgmCJv2hw7HkSdTv9uusi5wIYw/K8D4VhdaydbM6JJRxGrtHUHxswfKGMM
+ 5VinudE0a4gJJIhDVjDEQsVZsLwYFFbR/dTaPPkSY7u57ElZwrAI8bwmdSVq5C8l084DQvodQSY
+ zc6
+X-Received: by 2002:a05:6000:24c8:b0:43d:70b3:7edf with SMTP id
+ ffacd0b85a97d-43fe3dc5386mr24052833f8f.12.1776715361193; 
+ Mon, 20 Apr 2026 13:02:41 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4e3a174sm35708842f8f.18.2026.04.20.13.02.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Apr 2026 13:02:40 -0700 (PDT)
+Message-ID: <f8ac63c5-dbf3-4916-9483-cef72e0e4480@linaro.org>
+Date: Mon, 20 Apr 2026 22:02:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260419110304.8661-1-viking4@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/hyperv/vmbus: remove duplicate include
+Content-Language: en-US
+To: Osama Abdelkader <osama.abdelkader@gmail.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20260420163844.332663-1-osama.abdelkader@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260420163844.332663-1-osama.abdelkader@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,25 +104,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 19, 2026 at 06:03:04PM +0700, Trieu Huynh wrote:
-> From: Trieu Huynh <vikingtc4@gmail.com>
+On 20/4/26 18:38, Osama Abdelkader wrote:
+> exec/target_page.h is included twice
 > 
-> ufd_version_check() opens a userfaultfd via uffd_open() but never closes
-> it on any path where the open succeeded: the UFFDIO_API failure path,
-> the missing-ioctls path, and the success path all returned without
-> calling close(ufd).
-> 
-> Convert to a goto-out pattern consistent with uffd_open() used in
-> util/userfaultfd.c and migration/postcopy-ram.c, ensuring the fd is
-> always closed before returning.
-> 
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+> ---
+>   hw/hyperv/vmbus.c | 1 -
+>   1 file changed, 1 deletion(-)
 
-Thanks,
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
