@@ -4,73 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAE9F99C86
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 06:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247C1F36C26
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 06:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEhqu-0000JV-QD; Mon, 20 Apr 2026 02:11:25 -0400
+	id 1wEiI7-00069E-6z; Mon, 20 Apr 2026 02:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1wEhqj-0000IZ-23; Mon, 20 Apr 2026 02:11:14 -0400
-Received: from mail.avm.de ([212.42.244.120])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1wEhqe-00013O-Ve; Mon, 20 Apr 2026 02:11:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
- t=1776665461; bh=4Fal2xIRmMlpUVYVNP3GCV943FUFHigfFD9v3c84+go=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=JQB7NKQYuKWS5DTmV1SQhXBTzF4dg30KDxZXGqoxqiOVnQDbUCT3/KKdK1U1ZdFQJ
- F1zu/CVCJo1I5SnzG9zhFwDuRiBS6hYkJTXdBcNh1QOLF0smIHaX2OCvO9nqje9X+1
- CpmjPxeMA5y1OTedzGUq7evzbIYsD+i7Y5kPkuGE=
-Received: from [172.16.0.1] (helo=mail.avm.de)
- by mail.avm.de with ESMTP (eXpurgate 4.55.2)
- (envelope-from <c.speich@avm.de>)
- id 69e5c375-04a0-7f0000032729-7f000001c46c-1
- for <multiple-recipients>; Mon, 20 Apr 2026 08:11:01 +0200
-Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
- by mail.avm.de (Postfix) with ESMTP;
- Mon, 20 Apr 2026 08:11:01 +0200 (CEST)
-Received: from l-cspeich ([172.17.89.139])
- by mail-notes.avm.de (HCL Domino Release 14.0FP4)
- with ESMTP id 2026042008110178-397 ; Mon, 20 Apr 2026 08:11:01 +0200 
-Date: Mon, 20 Apr 2026 08:11:00 +0200
-From: Christian Speich <c.speich@avm.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v4 5/7] hw/sd/sdcard: Add erase-blocks-as-zero option.
-Message-ID: <lzsepp6tyxsfivi5zjqk4m3m2otbqwhyqfpkk6b26u4ecm7ab6@x2enoxyynbq6>
-References: <20260417-sdcard-performance-b4-v4-0-119e66be10c2@avm.de>
- <20260417-sdcard-performance-b4-v4-5-119e66be10c2@avm.de>
- <2bdfa874-468b-4f59-b0c8-a7f51fc9d5d9@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wEiI3-000695-4p
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 02:39:27 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wEiI1-00067x-AV
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 02:39:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1776667081; bh=Tkeb8m8xMpjx3nraFQLdnABeP8uR9YlIxgYL4xzD+/c=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=L8hflhJ7KPZIJ0nAhKVEE/wVW8KdMAOsIQnMaE5Ocp3aR/bht+vL1u5+FBVQaO1GE
+ XvoboDs8Tf1/EsAaqj61Q5GW1ixzod86vS8BtmK3k8GkqEdWtffJOTEsjFvPEiVf9f
+ U8cw1PPKlskgAe3keaEqRrUubQR8GPdIksysnuSi5ppHCOJJAaDMGZMrQkzplUcf0M
+ JZxcs8IGkQVqWvBEHgqtrIMX2b0t3s/Ua4WoaodcoJE9gHUXlsUzzWEyt4mypOAkZy
+ T/nt0SlyDfCvR83dWEotd6+FUyJkY2Rz92m7h+SIaLjFH6AIxQO8WCfO88fbty/8oq
+ mM9mEfjYM4Bpg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id C8FFD1A1024;
+ Mon, 20 Apr 2026 09:38:01 +0300 (MSK)
+Message-ID: <6405a885-3513-4ce6-a541-c83b9fad30ee@tls.msk.ru>
+Date: Mon, 20 Apr 2026 09:39:11 +0300
 MIME-Version: 1.0
-In-Reply-To: <2bdfa874-468b-4f59-b0c8-a7f51fc9d5d9@linaro.org>
-X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
- 2025) at 20.04.2026 08:11:01,
- Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
- 20.04.2026 08:11:01, Serialize complete at 20.04.2026 08:11:01
-X-TNEFEvaluated: 1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0? 0/6] qom: Restrict compat properties API to
+ system emulation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, kvm@vger.kernel.org
+References: <20260325151728.45378-1-philmd@linaro.org>
+ <e3916acc-98c6-4ace-b990-94084597563f@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <e3916acc-98c6-4ace-b990-94084597563f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-X-purgate-ID: 149429::1776665461-2CFDF98C-25D65AE6/0/0
-X-purgate-type: clean
-X-purgate-size: 2658
-X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
-X-purgate: This mail is considered clean (visit https://www.eleven.de for
- further information)
-X-purgate: clean
-Received-SPF: pass client-ip=212.42.244.120; envelope-from=c.speich@avm.de;
- helo=mail.avm.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,72 +116,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 17, 2026 at 02:06:50PM +0200, Philippe Mathieu-Daud� wrote:
-> On 17/4/26 11:51, Christian Speich wrote:
-> > Currently, erased blocks are filled with 0xFF. However SCR Bit 55
-> > (DATA_STAT_AFTER_ERASE) indicates that an erase produces zeros. One of
-> > them is wrong.
-> > 
-> > This patch does two things.
-> > 
-> > First it fixes the reporting of DATA_STAT_AFTER_ERASE in SCR to
-> > correctly reflect the content of erased blocks. We also increase the
-> > Product Revision (REV in CID) to indicate to the guest that
-> > DATA_STAT_AFTER_ERASE is now reliable.
-> > 
-> > Secondly, we introduce a erase-blocks-as-zero option, which allows the
-> > user to choose if erased blocks should contain 0xFF or 0x00. The default
-> > is still 0xFF to remain compatible with current users.
+On 20.04.2026 00:10, Philippe Mathieu-Daudé wrote:
+> On 25/3/26 16:17, Philippe Mathieu-Daudé wrote:
 > 
-> I'll update as:
+>> Philippe Mathieu-Daudé (6):
 > 
->   Secondly, we introduce a erase-blocks-as-zero option, which allows the
->   user to choose if erased blocks should contain 0xFF or 0x00. While
->   previous QEMU versions keep using the 'erase as 0xFF' pattern, the new
->   default becomes the more efficient 'erase as 0x00'.
+>>    hw/core: Move compat_props_add() to 'hw/core/boards.h'
+>>    qom: Declare GlobalProperty structure in 'qom/compat-properties.h'
+>>    qom: Declare compat properties API in 'qom/compat-properties.h'
+>>    qom: Restrict compat properties API to system emulation
 > 
-> Does it look OK to you?
+> Patches 1-5 queued, thanks.
 
-Yes, looks good, thanks.
+Thank you Philippe!  I didn't push this definitely good stuff to 11.0
+because at the time, that late in the release cycle, I wanted just the
+bare minimum to go.
 
-Kind Regards,
-Christian
-
-> 
-> > Signed-off-by: Christian Speich <c.speich@avm.de>
-> > ---
-> >   hw/core/machine.c |  5 +++++
-> >   hw/sd/sd.c        | 15 +++++++++++++--
-> >   2 files changed, 18 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > index 0aa77a57e956693208d77fea6af5853ed4904234..54e4c05c96e3cf35ab2e702ee81fba36457cadd7 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -38,6 +38,11 @@
-> >   #include "hw/acpi/generic_event_device.h"
-> >   #include "qemu/audio.h"
-> > +GlobalProperty hw_compat_11_0[] = {
-> > +    { "sdmmc-common", "erase-blocks-as-zero", "false" },
-> > +};
-> > +const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
-> > +
-> >   GlobalProperty hw_compat_10_2[] = {
-> >       { "scsi-block", "migrate-pr", "off" },
-> >       { "isa-cirrus-vga", "global-vmstate", "true" },
-> > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> > index b27fed2e563e5971dd32787498eb8abed9ffe9be..0f997ed8cc80e38645101cb8f47c86f1c30d5a25 100644
-> > --- a/hw/sd/sd.c
-> > +++ b/hw/sd/sd.c
-> 
-> > @@ -3287,6 +3296,8 @@ static void emmc_realize(DeviceState *dev, Error **errp)
-> >   static const Property sdmmc_common_properties[] = {
-> >       DEFINE_PROP_DRIVE("drive", SDState, blk),
-> > +    DEFINE_PROP_BOOL("erase-blocks-as-zero", SDState, erase_blocks_as_zero,
-> > +                     true),
-> >   };
-> 
-> Reviewed-by: Philippe Mathieu-Daud� <philmd@linaro.org>
-> 
-> 
+/mjt
 
