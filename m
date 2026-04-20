@@ -4,61 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53D7F5A8B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FACDF5A8B8
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Apr 2026 20:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wEuqy-0001bj-Bt; Mon, 20 Apr 2026 16:04:20 -0400
+	id 1wEur7-0001tX-3g; Mon, 20 Apr 2026 16:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuqo-0001Mj-0F; Mon, 20 Apr 2026 16:04:11 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1wEur2-0001lw-RX
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:24 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wEuqi-0001mn-Uc; Mon, 20 Apr 2026 16:04:08 -0400
+ id 1wEur1-00023L-6V
+ for qemu-devel@nongnu.org; Mon, 20 Apr 2026 16:04:24 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3EE258075D;
- Mon, 20 Apr 2026 23:04:00 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E24CD806F6;
+ Mon, 20 Apr 2026 23:04:21 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:54b::1:34])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id f3YMX10K1Sw0-9ePIJgih; Mon, 20 Apr 2026 23:03:59 +0300
+ id f3YMX10K1Sw0-hIC6kkAs; Mon, 20 Apr 2026 23:04:21 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1776715439;
- bh=BuHCkvPCUH8ek8ltWnzcAd7N450RrqnWYvfnQTDG1rQ=;
+ s=default; t=1776715461;
+ bh=dU9wUhXlCE3BAJRpC9u2OYkNwoLoZDEIRrhVKwfUBGc=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ZFxxCl8oDm+/nXDeUhZTdW8teIsxEJcKRtNwnFBH21SggVPZ8HHb4pl7MvjK3QowU
- NmBiYAel/WBJh9WneX0hc3KpASfMVMIOcYm0+w+U0HcE/Q4dUawUOLGV9Eac0htjuW
- YL/K1M67crZFF2lmbRIUuzcbaRlLLWJM5KyNzWOE=
+ b=F/2EAcEehHuM3UKIc/ynEg+1WVUaWF1xG1NlenS/le+oS2XAk0xdstnjjs/P3kdyx
+ Pv/6rnx+WdZX5MmhFfOXb5NzszOiwNVGNYWxSgrviPZIrEjWrOkTOBJ2XPRZV81lwh
+ koNmv8NVYZzzyQdNcjRxmjC4sdHg97FxIIgJlzsY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, Eric Farman <farman@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:virtio-ccw)
-Subject: [PATCH v6 07/22] virtio: move common part of _set_guest_notifier to
- generic code
-Date: Mon, 20 Apr 2026 23:03:22 +0300
-Message-ID: <20260420200339.708640-8-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Subject: [PATCH v6 20/22] vhost-user: make trace events more readable
+Date: Mon, 20 Apr 2026 23:03:35 +0300
+Message-ID: <20260420200339.708640-21-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,320 +74,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio-pci, virtio-mmio and virtio-ccw handle config notifier equally
-but with different code (mmio adds a separate function, when pci use
-common function). Let's chose the more compact way (pci) and reuse it
-for mmio.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/s390x/virtio-ccw.c          | 35 ++++++++++++-------------
- hw/virtio/virtio-mmio.c        | 41 +++++------------------------
- hw/virtio/virtio-pci.c         | 34 +++---------------------
- hw/virtio/virtio.c             | 47 +++++++++++++++++++++++++++++++---
- include/hw/virtio/virtio-pci.h |  3 ---
- include/hw/virtio/virtio.h     | 15 ++++++++---
- 6 files changed, 82 insertions(+), 93 deletions(-)
+ hw/virtio/trace-events |  4 +--
+ hw/virtio/vhost-user.c | 63 ++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 63 insertions(+), 4 deletions(-)
 
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index ba55bf4fe97..cdad862ec23 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -1025,20 +1025,27 @@ static int virtio_ccw_set_guest_notifier(VirtioCcwDevice *dev, int n,
-     VirtQueue *vq = virtio_get_queue(vdev, n);
-     EventNotifier *notifier = virtio_queue_get_guest_notifier(vq);
-     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
-+    int r;
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 658cc365e70..aa1ffa5e949 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -25,8 +25,8 @@ vhost_user_set_mem_table_withfd(int index, const char *name, uint64_t memory_siz
+ vhost_user_postcopy_waker(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
+ vhost_user_postcopy_waker_found(uint64_t client_addr) "0x%"PRIx64
+ vhost_user_postcopy_waker_nomatch(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
+-vhost_user_read(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
+-vhost_user_write(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
++vhost_user_read(uint32_t req, const char *req_name, uint32_t flags) "req:%d (%s) flags:0x%"PRIx32""
++vhost_user_write(uint32_t req, const char *req_name, uint32_t flags) "req:%d (%s) flags:0x%"PRIx32""
+ vhost_user_create_notifier(int idx, void *n) "idx:%d n:%p"
  
--    if (assign) {
--        int r = event_notifier_init(notifier, 0);
--
--        if (r < 0) {
--            return r;
-+    if (!assign) {
-+        if (k->guest_notifier_mask && vdev->use_guest_notifier_mask) {
-+            k->guest_notifier_mask(vdev, n, true);
-         }
--        virtio_queue_set_guest_notifier_fd_handler(vq, true, with_irqfd);
-+        if (with_irqfd) {
-+            virtio_ccw_remove_irqfd(dev, n);
-+        }
-+    }
+ # vhost-vdpa.c
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 31eaf65430e..4fb136b7b37 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -114,6 +114,63 @@ typedef enum VhostUserBackendRequest {
+     VHOST_USER_BACKEND_MAX
+ }  VhostUserBackendRequest;
+ 
++#define VHOST_USER_CASE(name) \
++    case VHOST_USER_##name: \
++        return #name;
 +
-+    r = virtio_set_guest_notifier(vdev, n, assign, with_irqfd);
-+    if (r < 0) {
-+        return r;
-+    }
-+
-+    if (assign) {
-         if (with_irqfd) {
-             r = virtio_ccw_add_irqfd(dev, n);
-             if (r) {
--                virtio_queue_set_guest_notifier_fd_handler(vq, false,
--                                                           with_irqfd);
--                event_notifier_cleanup(notifier);
-+                virtio_set_guest_notifier(vdev, n, false, with_irqfd);
-                 return r;
-             }
-         }
-@@ -1054,16 +1061,8 @@ static int virtio_ccw_set_guest_notifier(VirtioCcwDevice *dev, int n,
-             k->guest_notifier_pending(vdev, n)) {
-             event_notifier_set(notifier);
-         }
--    } else {
--        if (k->guest_notifier_mask && vdev->use_guest_notifier_mask) {
--            k->guest_notifier_mask(vdev, n, true);
--        }
--        if (with_irqfd) {
--            virtio_ccw_remove_irqfd(dev, n);
--        }
--        virtio_queue_set_guest_notifier_fd_handler(vq, false, with_irqfd);
--        event_notifier_cleanup(notifier);
-     }
-+
-     return 0;
- }
- 
-diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
-index 742ca3d3e4d..58c6d46aab4 100644
---- a/hw/virtio/virtio-mmio.c
-+++ b/hw/virtio/virtio-mmio.c
-@@ -670,18 +670,11 @@ static int virtio_mmio_set_guest_notifier(DeviceState *d, int n, bool assign,
-     VirtIOMMIOProxy *proxy = VIRTIO_MMIO(d);
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
--    VirtQueue *vq = virtio_get_queue(vdev, n);
--    EventNotifier *notifier = virtio_queue_get_guest_notifier(vq);
-+    int r;
- 
--    if (assign) {
--        int r = event_notifier_init(notifier, 0);
--        if (r < 0) {
--            return r;
--        }
--        virtio_queue_set_guest_notifier_fd_handler(vq, true, with_irqfd);
--    } else {
--        virtio_queue_set_guest_notifier_fd_handler(vq, false, with_irqfd);
--        event_notifier_cleanup(notifier);
-+    r = virtio_set_guest_notifier(vdev, n, assign, with_irqfd);
-+    if (r < 0) {
-+        return r;
-     }
- 
-     if (vdc->guest_notifier_mask && vdev->use_guest_notifier_mask) {
-@@ -690,30 +683,7 @@ static int virtio_mmio_set_guest_notifier(DeviceState *d, int n, bool assign,
- 
-     return 0;
- }
--static int virtio_mmio_set_config_guest_notifier(DeviceState *d, bool assign,
--                                                 bool with_irqfd)
--{
--    VirtIOMMIOProxy *proxy = VIRTIO_MMIO(d);
--    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
--    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
--    EventNotifier *notifier = virtio_config_get_guest_notifier(vdev);
--    int r = 0;
- 
--    if (assign) {
--        r = event_notifier_init(notifier, 0);
--        if (r < 0) {
--            return r;
--        }
--        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
--    } else {
--        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
--        event_notifier_cleanup(notifier);
--    }
--    if (vdc->guest_notifier_mask && vdev->use_guest_notifier_mask) {
--        vdc->guest_notifier_mask(vdev, VIRTIO_CONFIG_IRQ_IDX, !assign);
--    }
--    return r;
--}
- static int virtio_mmio_set_guest_notifiers(DeviceState *d, int nvqs,
-                                            bool assign)
- {
-@@ -735,7 +705,8 @@ static int virtio_mmio_set_guest_notifiers(DeviceState *d, int nvqs,
-             goto assign_error;
-         }
-     }
--    r = virtio_mmio_set_config_guest_notifier(d, assign, with_irqfd);
-+    r = virtio_mmio_set_guest_notifier(d, VIRTIO_CONFIG_IRQ_IDX, assign,
-+                                       with_irqfd);
-     if (r < 0) {
-         goto assign_error;
-     }
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index bcab2d18b80..fd9719547f9 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1208,43 +1208,17 @@ static void virtio_pci_vector_poll(PCIDevice *dev,
-     }
- }
- 
--void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev, VirtQueue *vq,
--                                              int n, bool assign,
--                                              bool with_irqfd)
--{
--    if (n == VIRTIO_CONFIG_IRQ_IDX) {
--        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
--    } else {
--        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
--    }
--}
--
- static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
-                                          bool with_irqfd)
- {
-     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
--    VirtQueue *vq = NULL;
--    EventNotifier *notifier = NULL;
-+    int r;
- 
--    if (n == VIRTIO_CONFIG_IRQ_IDX) {
--        notifier = virtio_config_get_guest_notifier(vdev);
--    } else {
--        vq = virtio_get_queue(vdev, n);
--        notifier = virtio_queue_get_guest_notifier(vq);
--    }
--
--    if (assign) {
--        int r = event_notifier_init(notifier, 0);
--        if (r < 0) {
--            return r;
--        }
--        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
--    } else {
--        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, false,
--                                                 with_irqfd);
--        event_notifier_cleanup(notifier);
-+    r = virtio_set_guest_notifier(vdev, n, assign, with_irqfd);
-+    if (r < 0) {
-+        return r;
-     }
- 
-     if (!msix_enabled(&proxy->pci_dev) &&
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 8fcf6cfd0b4..4941b0c2861 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3835,8 +3835,10 @@ static void virtio_config_guest_notifier_read(EventNotifier *n)
-         virtio_notify_config(vdev);
-     }
- }
--void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq, bool assign,
--                                                bool with_irqfd)
-+
-+static void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq,
-+                                                       bool assign,
-+                                                       bool with_irqfd)
- {
-     if (assign && !with_irqfd) {
-         event_notifier_set_handler(&vq->guest_notifier,
-@@ -3851,7 +3853,7 @@ void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq, bool assign,
-     }
- }
- 
--void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
-+static void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
-                                                  bool assign, bool with_irqfd)
- {
-     EventNotifier *n;
-@@ -3868,6 +3870,45 @@ void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
-     }
- }
- 
-+static void virtio_set_guest_notifier_fd_handler(VirtIODevice *vdev,
-+                                                 VirtQueue *vq,
-+                                                 int n, bool assign,
-+                                                 bool with_irqfd)
++static const char *vhost_req_name(VhostUserRequest req)
 +{
-+    if (n == VIRTIO_CONFIG_IRQ_IDX) {
-+        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
-+    } else {
-+        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
++    switch (req) {
++    VHOST_USER_CASE(NONE)
++    VHOST_USER_CASE(GET_FEATURES)
++    VHOST_USER_CASE(SET_FEATURES)
++    VHOST_USER_CASE(SET_OWNER)
++    VHOST_USER_CASE(RESET_OWNER)
++    VHOST_USER_CASE(SET_MEM_TABLE)
++    VHOST_USER_CASE(SET_LOG_BASE)
++    VHOST_USER_CASE(SET_LOG_FD)
++    VHOST_USER_CASE(SET_VRING_NUM)
++    VHOST_USER_CASE(SET_VRING_ADDR)
++    VHOST_USER_CASE(SET_VRING_BASE)
++    VHOST_USER_CASE(GET_VRING_BASE)
++    VHOST_USER_CASE(SET_VRING_KICK)
++    VHOST_USER_CASE(SET_VRING_CALL)
++    VHOST_USER_CASE(SET_VRING_ERR)
++    VHOST_USER_CASE(GET_PROTOCOL_FEATURES)
++    VHOST_USER_CASE(SET_PROTOCOL_FEATURES)
++    VHOST_USER_CASE(GET_QUEUE_NUM)
++    VHOST_USER_CASE(SET_VRING_ENABLE)
++    VHOST_USER_CASE(SEND_RARP)
++    VHOST_USER_CASE(NET_SET_MTU)
++    VHOST_USER_CASE(SET_BACKEND_REQ_FD)
++    VHOST_USER_CASE(IOTLB_MSG)
++    VHOST_USER_CASE(SET_VRING_ENDIAN)
++    VHOST_USER_CASE(GET_CONFIG)
++    VHOST_USER_CASE(SET_CONFIG)
++    VHOST_USER_CASE(CREATE_CRYPTO_SESSION)
++    VHOST_USER_CASE(CLOSE_CRYPTO_SESSION)
++    VHOST_USER_CASE(POSTCOPY_ADVISE)
++    VHOST_USER_CASE(POSTCOPY_LISTEN)
++    VHOST_USER_CASE(POSTCOPY_END)
++    VHOST_USER_CASE(GET_INFLIGHT_FD)
++    VHOST_USER_CASE(SET_INFLIGHT_FD)
++    VHOST_USER_CASE(GPU_SET_SOCKET)
++    VHOST_USER_CASE(RESET_DEVICE)
++    VHOST_USER_CASE(GET_MAX_MEM_SLOTS)
++    VHOST_USER_CASE(ADD_MEM_REG)
++    VHOST_USER_CASE(REM_MEM_REG)
++    VHOST_USER_CASE(SET_STATUS)
++    VHOST_USER_CASE(GET_STATUS)
++    VHOST_USER_CASE(GET_SHARED_OBJECT)
++    VHOST_USER_CASE(SET_DEVICE_STATE_FD)
++    VHOST_USER_CASE(CHECK_DEVICE_STATE)
++    default:
++        return "<unknown>";
 +    }
 +}
 +
-+int virtio_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
-+                              bool with_irqfd)
-+{
-+    VirtQueue *vq = NULL;
-+    EventNotifier *notifier = NULL;
++#undef VHOST_USER_CASE
 +
-+    if (n == VIRTIO_CONFIG_IRQ_IDX) {
-+        notifier = virtio_config_get_guest_notifier(vdev);
-+    } else {
-+        vq = virtio_get_queue(vdev, n);
-+        notifier = virtio_queue_get_guest_notifier(vq);
-+    }
-+
-+    if (assign) {
-+        int r = event_notifier_init(notifier, 0);
-+        if (r < 0) {
-+            return r;
-+        }
-+        virtio_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
-+    } else {
-+        virtio_set_guest_notifier_fd_handler(vdev, vq, n, false, with_irqfd);
-+        event_notifier_cleanup(notifier);
-+    }
-+
-+    return 0;
-+}
-+
- EventNotifier *virtio_queue_get_guest_notifier(VirtQueue *vq)
- {
-     return &vq->guest_notifier;
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index 5cb20b73f62..ee50fb0d551 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -250,9 +250,6 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t);
-  * @fixed_queues.
-  */
- unsigned virtio_pci_optimal_num_queues(unsigned fixed_queues);
--void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev, VirtQueue *vq,
--                                              int n, bool assign,
--                                              bool with_irqfd);
+ typedef struct VhostUserMemoryRegion {
+     uint64_t guest_phys_addr;
+     uint64_t memory_size;
+@@ -308,7 +365,8 @@ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+         return -EPROTO;
+     }
  
- int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy, uint8_t bar, uint64_t offset,
-                            uint64_t length, uint8_t id);
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 6344bd7b689..d9fde425581 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -420,8 +420,6 @@ void virtio_queue_update_used_idx(VirtIODevice *vdev, int n);
- VirtQueue *virtio_get_queue(VirtIODevice *vdev, int n);
- uint16_t virtio_get_queue_index(VirtQueue *vq);
- EventNotifier *virtio_queue_get_guest_notifier(VirtQueue *vq);
--void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq, bool assign,
--                                                bool with_irqfd);
- int virtio_device_start_ioeventfd(VirtIODevice *vdev);
- int virtio_device_grab_ioeventfd(VirtIODevice *vdev);
- void virtio_device_release_ioeventfd(VirtIODevice *vdev);
-@@ -435,8 +433,17 @@ void virtio_queue_aio_detach_host_notifier(VirtQueue *vq, AioContext *ctx);
- VirtQueue *virtio_vector_first_queue(VirtIODevice *vdev, uint16_t vector);
- VirtQueue *virtio_vector_next_queue(VirtQueue *vq);
- EventNotifier *virtio_config_get_guest_notifier(VirtIODevice *vdev);
--void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
--                                                 bool assign, bool with_irqfd);
-+
-+/**
-+ * virtio_set_guest_notifier - set/unset queue or config guest notifier
-+ *
-+ * @vdev: the VirtIO device
-+ * @n: queue number, or VIRTIO_CONFIG_IRQ_IDX to set config notifer
-+ * @assign: true to set notifier, false to unset
-+ * @with_irqfd: irqfd enabled
-+ */
-+int virtio_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
-+                              bool with_irqfd);
+-    trace_vhost_user_read(msg->hdr.request, msg->hdr.flags);
++    trace_vhost_user_read(msg->hdr.request,
++                          vhost_req_name(msg->hdr.request), msg->hdr.flags);
  
- static inline void virtio_add_feature(uint64_t *features, unsigned int fbit)
- {
+     return 0;
+ }
+@@ -428,7 +486,8 @@ static int vhost_user_write(struct vhost_dev *dev, VhostUserMsg *msg,
+         return ret < 0 ? -saved_errno : -EIO;
+     }
+ 
+-    trace_vhost_user_write(msg->hdr.request, msg->hdr.flags);
++    trace_vhost_user_write(msg->hdr.request, vhost_req_name(msg->hdr.request),
++                           msg->hdr.flags);
+ 
+     return 0;
+ }
 -- 
 2.52.0
 
