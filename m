@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32B5F327B3
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2512F327AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF4yc-0004C9-Qt; Tue, 21 Apr 2026 02:52:54 -0400
+	id 1wF4yS-0003nZ-Sn; Tue, 21 Apr 2026 02:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yb-00049Q-Bh
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:53 -0400
-Received: from inva020.nxp.com ([92.121.34.13])
+ id 1wF4yL-0003j5-Gk
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:37 -0400
+Received: from inva021.nxp.com ([92.121.34.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yX-00008I-Tt
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:53 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 099C51A1CD0;
- Tue, 21 Apr 2026 08:52:36 +0200 (CEST)
+ id 1wF4yI-00006h-7j
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:37 -0400
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id ECEE7201B0A;
+ Tue, 21 Apr 2026 08:52:30 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id C425C1A1CF6;
- Tue, 21 Apr 2026 08:52:35 +0200 (CEST)
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id B3A31201AFD;
+ Tue, 21 Apr 2026 08:52:30 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 4084818002A8;
- Tue, 21 Apr 2026 14:52:35 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id C0FC01800086;
+ Tue, 21 Apr 2026 14:52:29 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv7 13/15] hw/arm/fsl-imx8mm: Adding support for ENET ethernet
- controller
-Date: Tue, 21 Apr 2026 12:22:24 +0530
-Message-Id: <20260421065226.3907745-14-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK board
+Date: Tue, 21 Apr 2026 12:22:11 +0530
+Message-Id: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
-References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.13;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
+Received-SPF: pass client-ip=92.121.34.21;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -67,143 +65,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It enables emulation of ENET ethernet controller in iMX8MM
-Enables testing and debugging of network dependent drivers
-Added ENET MAC IRQ lines
+Changes in v7:
+- Fixed an incorrect indentation in patch 0012
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
----
- hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx8mm.c         | 24 ++++++++++++++++++++++++
- hw/arm/imx8mm-evk.c         |  1 +
- include/hw/arm/fsl-imx8mm.h | 10 +++++++++-
- 4 files changed, 35 insertions(+), 1 deletion(-)
+Changes in v6:
+- Fixed checkpatch errors
+- Moved maintainer entry of test_imx8mm_evk.py to the patch 0015
+- Renamed imx8mp-evk.rst document name to imx8m.rst
+- Fixed warnings that are generated while building documentation
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 07a3f3273b..45d10e34dc 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -626,6 +626,7 @@ config FSL_IMX8MM
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select IMX
-+    select IMX_FEC
-     select IMX_I2C
-     select OR_IRQ
-     select SDHCI
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 3736191257..f1c173dbec 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -212,6 +212,8 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
-     }
- 
-+    object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
-+
-     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
-     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
-                             TYPE_FSL_IMX8M_PCIE_PHY);
-@@ -547,6 +549,21 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, spi_table[i].irq));
-     }
- 
-+    /* ENET1 */
-+    object_property_set_uint(OBJECT(&s->enet), "phy-num", s->phy_num,
-+                             &error_abort);
-+    object_property_set_uint(OBJECT(&s->enet), "tx-ring-num", 3, &error_abort);
-+    qemu_configure_nic_device(DEVICE(&s->enet), true, NULL);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->enet), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->enet), 0,
-+                    fsl_imx8mm_memmap[FSL_IMX8MM_ENET1].addr);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
-+
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-         return;
-@@ -610,6 +627,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
-         case FSL_IMX8MM_GPT1 ... FSL_IMX8MM_GPT6:
-         case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
-+        case FSL_IMX8MM_ENET1:
-         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
-         case FSL_IMX8MM_PCIE1:
-         case FSL_IMX8MM_PCIE_PHY1:
-@@ -631,10 +649,16 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
-+static const Property fsl_imx8mm_properties[] = {
-+    DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mmState, phy_num, 0),
-+    DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mmState, phy_connected, true),
-+};
-+
- static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(oc);
- 
-+    device_class_set_props(dc, fsl_imx8mm_properties);
-     dc->realize = fsl_imx8mm_realize;
- 
-     dc->desc = "i.MX 8MM SoC";
-diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
-index dfdf3cd4f8..6b7774d3e2 100644
---- a/hw/arm/imx8mm-evk.c
-+++ b/hw/arm/imx8mm-evk.c
-@@ -79,6 +79,7 @@ static void imx8mm_evk_init(MachineState *machine)
- 
-     s = FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machine),
-                                          "soc", &error_fatal, NULL));
-+    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
- 
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MM_RAM_START,
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 607ac86666..bc5a0922ad 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -18,7 +18,8 @@
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
--#include "hw/or-irq.h"
-+#include "hw/net/imx_fec.h"
-+#include "hw/core/or-irq.h"
- #include "hw/pci-host/designware.h"
- #include "hw/pci-host/fsl_imx8m_phy.h"
- #include "hw/sd/sdhci.h"
-@@ -60,11 +61,15 @@ struct FslImx8mmState {
-     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
-     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     MemoryRegion ocram;
-+    IMXFECState        enet;
-     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
-     OrIRQState         gpt5_gpt6_irq;
-+
-+    uint32_t           phy_num;
-+    bool               phy_connected;
- };
- 
- enum FslImx8mmMemoryRegions {
-@@ -218,6 +223,9 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_WDOG2_IRQ    = 79,
-     FSL_IMX8MM_WDOG3_IRQ    = 10,
- 
-+    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
-+    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
-+
-     FSL_IMX8MM_PCI_INTA_IRQ = 122,
-     FSL_IMX8MM_PCI_INTB_IRQ = 123,
-     FSL_IMX8MM_PCI_INTC_IRQ = 124,
+Changes in v5:
+- Fixed SoC object reference counting by using object_new_with_props()
+  instead of object_new() + object_property_add_child()
+- Merged imx8mm-evk.rst documentation into imx8mp-evk.rst to avoid
+  duplication and updated the title accordingly
+- Added on-chip RAM (OCRAM) support to match iMX8MP dev
+
+Changes in v4:
+- Update Maintainers file
+- Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
+  specific property
+- Split up the patch that enabled CCM and Analog in the previous
+  revision. Now we have 3 patches to enable CCM and Analog in iMX8MM
+- Updated copyrights
+- Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
+
+Changes in v3:
+- Minor documentation change - Added KVM Acceleration section in docs/system/arm/imx8mm-evk.rst
+
+Changes in v2:
+- Fixed the DTB offset in functional testing script test_imx8mm_evk.py
+  and preserved alphabetical order of machine names in tests/functional/aarch64/meson.build
+- Fixed a typo and updated the documentation
+- Modified structures type to static const in fsl-imx8mm.c wherever
+  applicable.
+- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk.c. This
+  is needed because the default DTB in the iMX LF BSP images have CSI
+  and DSI enabled. Developers/Hobbyists using these BSP images will
+  observe CSI and DSI crash logs on the console since these are unimplemented.
+  With this change, both debian and iMX LF images will boot up without any issues.
+
+Changes in v1:
+
+This patch series adds support for the NXP i.MX8MM EVK (Evaluation Kit)
+board to QEMU, enabling emulation of this ARM Cortex-A53 based development
+platform.
+
+The series includes:
+
+1. Core peripheral support (CCM clock controller, Analog module)
+2. GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
+3. GPIO,I2C,SPI,USDHC and USB Emulation support
+4. PCIe and ENET Controller Emulation support
+5. Documentation and functional test included
+
+Key features ported:
+- Basic boot support with Linux
+- UART console for serial communication
+- Interrupt handling
+- Clock and power management infrastructure
+
+Testing:
+- Linux kernel boots to console
+
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com> 
+
+Gaurav Sharma (15):
+  hw/arm: Add the i.MX 8MM EVK(Evaluation Kit) board
+  hw/misc/imx8mp_analog: Add property to analog device
+  hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
+  hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
+  hw/arm/fsl-imx8mm: Implemented support for SNVS
+  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
+  hw/arm/fsl-imx8mm: Add PCIe support
+  hw/arm/fsl-imx8mm: Add GPIO controllers
+  hw/arm/fsl-imx8mm: Adding support for I2C emulation
+  hw/arm/fsl-imx8mm: Adding support for SPI controller
+  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
+  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
+  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
+  hw/arm/fsl-imx8mm: Adding support for USB controller
+  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
+
+ MAINTAINERS                                   |  12 +-
+ docs/system/arm/{imx8mp-evk.rst => imx8m.rst} |  35 +-
+ docs/system/target-arm.rst                    |   2 +-
+ hw/arm/Kconfig                                |  24 +
+ hw/arm/fsl-imx8mm.c                           | 704 ++++++++++++++++++
+ hw/arm/imx8mm-evk.c                           | 130 ++++
+ hw/arm/meson.build                            |   2 +
+ hw/misc/imx8mp_analog.c                       |  12 +-
+ hw/timer/imx_gpt.c                            |  26 +
+ include/hw/arm/fsl-imx8mm.h                   | 242 ++++++
+ include/hw/misc/imx8mp_analog.h               |   3 +
+ include/hw/timer/imx_gpt.h                    |   2 +
+ tests/functional/aarch64/meson.build          |   2 +
+ tests/functional/aarch64/test_imx8mm_evk.py   |  67 ++
+ 14 files changed, 1253 insertions(+), 10 deletions(-)
+ rename docs/system/arm/{imx8mp-evk.rst => imx8m.rst} (68%)
+ create mode 100644 hw/arm/fsl-imx8mm.c
+ create mode 100644 hw/arm/imx8mm-evk.c
+ create mode 100644 include/hw/arm/fsl-imx8mm.h
+ create mode 100755 tests/functional/aarch64/test_imx8mm_evk.py
+
 -- 
 2.34.1
 
