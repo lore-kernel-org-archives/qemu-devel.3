@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA6CF94CB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 21:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108DAF94CB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 21:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFIb7-0001O9-Ch; Tue, 21 Apr 2026 17:25:33 -0400
+	id 1wFIrn-0003Sb-Om; Tue, 21 Apr 2026 17:42:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFIb2-0001Ni-Me
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 17:25:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFIaw-0001yf-R9
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 17:25:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776806721;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3TF7SmzuNr0uCh2qnzcJvYPOs35SdTe4cdaC5L6bTTU=;
- b=iMcJJ7aXXFCzGPYtS/MQSfozIMAwbQLEhUsgeyONmPKYmAmKRny2A2SOaPPbbU5xUruEgs
- YiBRdwVLtMn4BwranFQTQMZMnWx3MT1esJQ2EFzeQ9enm514DVLqPs3joHnF3tJWRy36j6
- bXRmc9l3N4mPkZn2etReNUx7uTKes4U=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-133-MXuLj414OkSCScJ9AAFJDw-1; Tue, 21 Apr 2026 17:25:19 -0400
-X-MC-Unique: MXuLj414OkSCScJ9AAFJDw-1
-X-Mimecast-MFC-AGG-ID: MXuLj414OkSCScJ9AAFJDw_1776806719
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8eabf08affaso777794985a.1
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 14:25:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFIrl-0003S0-NX
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 17:42:45 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFIrj-0005jC-PF
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 17:42:45 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so63700305e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 14:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776806719; x=1777411519; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=3TF7SmzuNr0uCh2qnzcJvYPOs35SdTe4cdaC5L6bTTU=;
- b=HVhxdpil9n62mA0Jv7FgPhUSCq47qkspqahdLFMqeHB/sbcLylfUEbCD7CZCYju4bB
- VMDR8j+j8TjFxAofr8xXZNlJLWr85WyGjgDN1NigrE4Cz91RoixMbvGoZV1SZvdATBfZ
- ssAqgiJMXOJzU1Dut3K5JwDmJtPkXUFe1Tu5qAxmFuXCKzhpccYVXyJVB/C2p7Ec3rYB
- 3VhWy4coL+YR+/Soqremp5ahsj0FTkyhrkvWpXHnUsdxsZwvnHkmyJ9+NvU7CG4MUIqP
- Jj1q78xGv4UIK3DNpOrMmX9MIccH6mRcRZtKRfEpAyUbySP5CmnnkIth24lnxiTwbSvm
- 7ZdA==
+ d=linaro.org; s=google; t=1776807762; x=1777412562; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=C6TUEyny4IJuhtMm7N5t43FrA1i9fO+v93mBZP7/xIc=;
+ b=pwyhb1hIvkK3ijd8AhfN5L2a53++ltLjwzU9gADD/ivf4qXnpkjy2cg/KSJVMWrDN5
+ X5PnfLbnetq+nBO7BEYd4Fwlo4QCdpTkKL63ghRF/B2sBsfWnlj7DyMvXYFim9gbKMhw
+ dP9l/i08tGNYcpl3vWfHR0ofDkWq5jJ9aF2rFk7jlxQ8zPMyPSTOSMNoU+cI+HTU15L0
+ ZpNgsHpb4inZ/dmwOTqjJu5CuJ/aPUHTuSRRWItd58UFBGvZaVHWnRvnEv9uckzULFLU
+ Ijvt3AOSTix7HXW9yTJbnG8HLkymx8WEme1wkkRThWuAlehE+icIqO0yB/6UhSZksqks
+ yZ+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776806719; x=1777411519;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3TF7SmzuNr0uCh2qnzcJvYPOs35SdTe4cdaC5L6bTTU=;
- b=gzp2bmYIJ8i0zCclAIfMUTSsq+MsqszeQ6ofOWZTWGCqgeu7roAQLrA6ODmhOj9S0m
- 5AClVuRleqP2pCnZAW2F9kZAvPUaQbXOWmDUa7gf3fxqzStKFMh0qDoGpcfaKkl9JAjL
- HW1At3VMJX2eWd9cdTMzsURok4w+xnO3RCoRgwHFEypGgCm7h7RUyrnkolPl2MkN9J0n
- lU8N4fLLIsKMghHKUp03Qxr581dRz5z92WnY7iTuA5ArCZc4V3KF1dtA5boAck3Z70dH
- M9xXhdNmudfY3+HU8Xvg/lefIZMW08Fy05KS17jlLjo2+FVGPKeBRSqiKRo+86ONUaP4
- ZqOw==
-X-Gm-Message-State: AOJu0YyFt/tSvM6PbpW3CvlZkeDd7KGVQ6cPp7Za0VERdWOYGNVOT8ET
- EN/xs2KBwF1L8yqJFQl18Sb5L8IgD/3TS3U5Dpb3reMoM93OZu6ehSSKmWSCs/hE3AtlcJoS1Ou
- ol5nxzu0pXOqMq1RQvddQt1fXX8xJmraYgBV+tDeNFxZG7Wz/PaL3L39Y
-X-Gm-Gg: AeBDietWapvjJfgCsC6KNYeMOdrAvUwdtI333zHVFsBHVsrgDQ3mwekP5m4T9dLSpbC
- 8UAw2Bk3X1f16BcaWuYTNrEtVHtcdetV4JRq7rWAqVymC+LVh0+D7q0aRj3Igk4Yzyue7EJBTlV
- 6VtnUPUC12j9SOoRotLiYyJ0+FCUGtybhsZiI8gSIqdeJ6CbFP6RVopsH0f4/qvm51AXw9MMVW3
- iHSl0wXC09tLVf+yRva00f653Eb4O7bEGSiR48q6kL+SJXH4lB6l/v9P/ocPdaQX6aALMgOQMQK
- GD8gSQhkgttcs7T9h2uLB5lsEpMV0Rei2qHcpYqlMXM2JUCRexqcLpAtdsHh+HqocDeNytCCent
- 1BMtuWQpRhTr3zrPct8KYVWIaCn7XKdwEbfymMOeCxtCfflA8FSdM2/Vdig==
-X-Received: by 2002:a05:620a:2953:b0:8df:6628:3cd1 with SMTP id
- af79cd13be357-8e7913c28fdmr2626927085a.40.1776806718837; 
- Tue, 21 Apr 2026 14:25:18 -0700 (PDT)
-X-Received: by 2002:a05:620a:2953:b0:8df:6628:3cd1 with SMTP id
- af79cd13be357-8e7913c28fdmr2626920785a.40.1776806718158; 
- Tue, 21 Apr 2026 14:25:18 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8eb61bc0d3dsm582502185a.26.2026.04.21.14.25.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 14:25:17 -0700 (PDT)
-Date: Tue, 21 Apr 2026 17:25:16 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Pranav Tyagi <prtyagi@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH] migration: Fix blocking in POSTCOPY_DEVICE during
- package load
-Message-ID: <aefrPBN7k94Jj2dh@x1.local>
-References: <20260421052227.8278-1-prtyagi@redhat.com>
+ d=1e100.net; s=20251104; t=1776807762; x=1777412562;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=C6TUEyny4IJuhtMm7N5t43FrA1i9fO+v93mBZP7/xIc=;
+ b=ry96KUlagkZ2UMQ2gRyu58yXYIPPKRrzhKg325CK/Bc1HjhFyJq1mGmE9gQlmn6n2N
+ VBjPnVZjGlqurcs/va+/c8t3bzAFWYer4IhVL8rqIqvrKd9Xb7fVxfI9+Eh8xxDm3YiK
+ Xdit+2TvOd8sNJkfpqvGWyETTqZPagyb6NiupdcAl0HgL5sbKON3Riec3MXO/2qxYCeu
+ 4DhlXK0iDWkY4BdMKUN6SQTj02FtAPRF3TuRBb6qk2aB2oXP3C8sV0PKA5IaWJ78eV7m
+ J4SncuTaj0D/dTWZF1zBz8caZ5/tlhWQiL3jGWcFdYgfUjQY0sSEZNYlZCWrr32tgk9E
+ f7CA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8/jhSuTLN5gihyvJrOH+EfqNGngXicfLsfO8qIVUYN5pCnqvzNQyWjqcMfmMZgHxIU0aQDisf6V/Yw@nongnu.org
+X-Gm-Message-State: AOJu0Yy7BT1KbSlbvr78GI+lqQn7faC0dVeeZow/79BF8+kY4cUZ7vb1
+ j14cqx6mmlvi99gmHtNZeAhe3NmCkR1YLFqXlBxpU9HUUk1/OxkdCh+tidVLvtv58yw=
+X-Gm-Gg: AeBDiesygiX4apEMj08ILgGMKCRQK26tyRCoL8cCiJnV3comAxWMrxqfb/gHj15nGf0
+ OdXeLUjh7R91LRnH2dgMIQeRTgvFOK33fKD9YWm5BvYnxPtCOA1MkgRE6f5D/nmXdikBcVFDiT8
+ 5nXAwIRZ4dCveVqNiPSB8b0c8q97qSfS3DaW0P6ORH8T3cz9wxLQn6CsLTWB9FmwOdfViL4V/Rj
+ vBjoAOeDRpqn5hQSaB8U6Z+D1R9CFOdzISTXh++MjVi1Ae0mZJAhd2lxMFmNlGKEpUw3OjxZEO+
+ 1POehKspVLZCPwGfVxMW8mr34SJFuSRM4Mas99OtQiM3E3+UZhxgp6QN9ViJSrXDDV9hX4LNlA+
+ TP/lCVGA42dR8Eapn/Crufw3Ma+OlAdP0Y6mlbjIxIwZCZOCjFIcMrfEL/FWDIt8ZFlhDHmPg0/
+ Zxhxn/ohIg4Xdf0v8+z95n2g3DT2dCGO4o/er+F+TXkoDoCwRPeJbijaZzFZNyDOCIntM1js765
+ fP0
+X-Received: by 2002:a05:600c:c04a:b0:485:3cf3:1010 with SMTP id
+ 5b1f17b1804b1-488fb73ddefmr200321635e9.2.1776807761690; 
+ Tue, 21 Apr 2026 14:42:41 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a575ad67asm50796675e9.2.2026.04.21.14.42.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Apr 2026 14:42:40 -0700 (PDT)
+Message-ID: <1c3088c0-4388-4915-8bb3-c1f11675c093@linaro.org>
+Date: Tue, 21 Apr 2026 23:42:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260421052227.8278-1-prtyagi@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/9] hw/hexagon: Add machine configs for sysemu
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ pierrick.bouvier@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>,
+ Markus Armbruster <armbru@redhat.com>, Mike Lambert <mlambert@quicinc.com>,
+ Sid Manning <sidneym@quicinc.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260416210305.2255579-1-brian.cain@oss.qualcomm.com>
+ <20260416210305.2255579-4-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260416210305.2255579-4-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,123 +110,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 10:52:27AM +0530, Pranav Tyagi wrote:
-> The package_loaded event is not set in case MIG_RP_MSG_PONG does not
-> arrive on the source from the destination in the return path thread. The
-> migration thread would then be blocked waiting for package_loaded event
-> indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition the
-> source VM can safely resume as the destination has not yet started. The
-> pong message can get lost in case of a network failure or destination
-> crash before sending the pong.
+On 16/4/26 23:02, Brian Cain wrote:
+> From: Brian Cain <bcain@quicinc.com>
 > 
-> This patch uses the error detected in case of network failure or
-> destination crash to set the package_loaded event in the out path of the
-> return path thread. This will kick the migration thread out from
-> a condition of indefinitely waiting for the package_loaded event. The
-> migration thread then fails early and breaks from the migration loop to
-> resume the VM on the source side.
+> Some header includes are modified here: these are uniquely required for
+> basic system emulation functionality and had not been required for linux-user.
 > 
-> Fixes: 7b842fe354c6 ("migration: Introduce POSTCOPY_DEVICE state")
-> Signed-off-by: Pranav Tyagi <prtyagi@redhat.com>
-
-Ah I see.. thanks for figuring this out.
-
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Co-authored-by: Mike Lambert <mlambert@quicinc.com>
+> Co-authored-by: Sid Manning <sidneym@quicinc.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  migration/migration.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+>   MAINTAINERS                            |   2 +
+>   include/hw/hexagon/hexagon.h           | 150 +++++++++++++++++++++++
+>   hw/hexagon/machine_cfg_v66g_1024.h.inc |  64 ++++++++++
+>   hw/hexagon/hexagon_dsp.c               | 161 +++++++++++++++++++++++++
+>   system/qdev-monitor.c                  |   2 +-
+>   target/hexagon/translate.c             |   1 +
+>   hw/Kconfig                             |   1 +
+>   hw/hexagon/Kconfig                     |   4 +
+>   hw/hexagon/meson.build                 |   6 +
+>   hw/meson.build                         |   1 +
+>   10 files changed, 391 insertions(+), 1 deletion(-)
+>   create mode 100644 include/hw/hexagon/hexagon.h
+>   create mode 100644 hw/hexagon/machine_cfg_v66g_1024.h.inc
+>   create mode 100644 hw/hexagon/hexagon_dsp.c
+>   create mode 100644 hw/hexagon/Kconfig
+>   create mode 100644 hw/hexagon/meson.build
 > 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 5c9aaa6e58..1656c1203c 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2386,6 +2386,15 @@ out:
->      if (err) {
->          migrate_error_propagate(ms, err);
->          trace_source_return_path_thread_bad_end();
-> +        if (ms->state == MIGRATION_STATUS_POSTCOPY_DEVICE) {
-> +            /*
-> +             * Kick the migration thread if it gets stuck in
-> +             * POSTCOPY_DEVICE state waiting for
-> +             * postcopy_package_loaded_event. The event will never be
-> +             * set as MIG_RP_MSG_PONG from the destination is lost.
-> +             */
-> +            qemu_event_set(&ms->postcopy_package_loaded_event);
-> +        }
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4055fbe3c21..b9a7c553dfa 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -246,6 +246,8 @@ Hexagon TCG CPUs
+>   M: Brian Cain <brian.cain@oss.qualcomm.com>
+>   S: Supported
+>   F: target/hexagon/
+> +F: hw/hexagon/
+> +F: include/hw/hexagon/
 
-This makes sense.  Said that, we have another similar case right below for
-the postcopy recover path:
+IMHO long-term it is better to split architectural code from
+hardware modelling in distinct MAINTAINERS sections (and distinct
+set of reviewers / maintainers / lists).
 
-    if (ms->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
-        /*
-         * this will be extremely unlikely: that we got yet another network
-         * issue during recovering of the 1st network failure.. during this
-         * period the main migration thread can be waiting on rp_sem for
-         * this thread to sync with the other side.
-         *
-         * When this happens, explicitly kick the migration thread out of
-         * RECOVER stage and back to PAUSED, so the admin can try
-         * everything again.
-         */
-        migration_rp_kick(ms);
-    }
+>   X: target/hexagon/idef-parser/
+>   X: target/hexagon/gen_idef_parser_funcs.py
+>   F: linux-user/hexagon/
 
-It achieves some similar goal, where the migration thread is waiting for
-some event from return path thread, and when the channel is broken we want
-to kick it out.
 
-I'm thinking if we can reuse that, instead of kicking multiple events.
+> +static void hexagon_common_init(MachineState *machine, Rev_t rev,
+> +                                const struct hexagon_machine_config *m_cfg)
+> +{
+> +    MemoryRegion *address_space;
+> +    MemoryRegion *sram;
+> +    DeviceState *glob_regs_dev;
+> +
+> +    memset(&hexagon_binfo, 0, sizeof(hexagon_binfo));
+> +    if (machine->kernel_filename) {
+> +        hexagon_binfo.ram_size = machine->ram_size;
+> +        hexagon_binfo.kernel_filename = machine->kernel_filename;
+> +    }
+> +
+> +    machine->enable_graphics = 0;
+> +
+> +    address_space = get_system_memory();
+> +
+> +    sram = g_new(MemoryRegion, 1);
+> +    memory_region_init_ram(sram, NULL, "ddr.ram",
 
-Say, we can do migration_rp_kick() for both POSTCOPY_RECOVER and
-POSTCOPY_DEVICE states in the rp thread.  Meanwhile at below..
+DDRAM or SRAM?
 
->      }
->  
->      if (ms->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
-> @@ -3232,6 +3241,17 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->               * package before actually completing.
->               */
->              qemu_event_wait(&s->postcopy_package_loaded_event);
-> +            /*
-> +             * Check for errors in case the migration thread was stuck in
-> +             * POSTCOPY_DEVICE state waiting for the
-> +             * postcopy_package_loaded_event which was never set.
-> +             * If so, fail now and break out of the iteration.
-> +             */
-> +            if (migrate_has_error(s)) {
-> +                migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-> +                                  MIGRATION_STATUS_FAILING);
-> +                return MIG_ITERATE_BREAK;
+> +        machine->ram_size, &error_fatal);
+> +    memory_region_add_subregion(address_space, 0x0, sram);
+> +
+> +    glob_regs_dev = qdev_new(TYPE_HEXAGON_GLOBALREG);
+> +    qdev_prop_set_uint64(glob_regs_dev, "config-table-addr", m_cfg->cfgbase);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(glob_regs_dev), &error_fatal);
+> +
+> +    for (int i = 0; i < machine->smp.cpus; i++) {
+> +        HexagonCPU *cpu = HEXAGON_CPU(object_new(machine->cpu_type));
+> +        qemu_register_reset(do_cpu_reset, cpu);
+> +
+> +        /*
+> +         * CPU #0 is the only CPU running at boot, others must be
+> +         * explicitly enabled via start instruction.
+> +         */
+> +        qdev_prop_set_bit(DEVICE(cpu), "start-powered-off", (i != 0));
+> +        if (i == 0) {
+> +            hexagon_init_bootstrap(machine, cpu);
+> +            if (!qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal)) {
+> +                return;
 > +            }
+> +        } else if (!qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal)) {
+> +            return;
+> +        }
+> +
+> +    }
+> +}
+> +
+> +static void init_mc(MachineClass *mc)
+> +{
+> +    mc->block_default_type = IF_SD;
 
-... instead of waiting on postcopy_package_loaded_event, we can do:
+Is "By default try to boot on SD Card first" what you want?
 
-    while (!s->postcopy_package_loaded) {
-        if (migration_rp_wait(s)) {
-            /* Error happened */
-            migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-                              MIGRATION_STATUS_FAILING);
-            return MIG_ITERATE_BREAK;
-        }
-    }
-    /* Acknowledgement received from dest */
-    migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> +    mc->default_ram_size = 4 * GiB;
+> +    mc->no_parallel = 1;
+> +    mc->no_floppy = 1;
+> +    mc->no_cdrom = 1;
+> +    mc->no_serial = 1;
+> +    mc->is_default = false;
+> +    mc->max_cpus = 8;
+> +}
 
-PS: I think event also works in this case, so likely either one shared sem
-or event should work; it's just that it was a sem before, and rp_sem has a
-name that is generic enough to apply directly to the
-postcopy_package_loaded_event use case.
 
-Thanks,
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index 1ac6d9a8575..72abc9182a9 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -69,7 +69,7 @@ typedef struct QDevAlias
+>                                 QEMU_ARCH_SPARC | \
+>                                 QEMU_ARCH_XTENSA)
+>   #define QEMU_ARCH_VIRTIO_CCW (QEMU_ARCH_S390X)
+> -#define QEMU_ARCH_VIRTIO_MMIO (QEMU_ARCH_M68K)
+> +#define QEMU_ARCH_VIRTIO_MMIO (QEMU_ARCH_M68K | QEMU_ARCH_HEXAGON)
+>   
+>   /* Please keep this table sorted by typename. */
+>   static const QDevAlias qdev_alias_table[] = {
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index ae980c087f0..15258a203b3 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -32,6 +32,7 @@
+>   #include "translate.h"
+>   #include "genptr.h"
+>   #include "printinsn.h"
+> +#include "exec/target_page.h"
 
->              migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
->                                MIGRATION_STATUS_POSTCOPY_ACTIVE);
->          }
-> -- 
-> 2.53.0
-> 
+Rebase left-over?
 
--- 
-Peter Xu
+>   
+>   #define HELPER_H "helper.h"
+>   #include "exec/helper-info.c.inc"
+
+
+> diff --git a/hw/hexagon/meson.build b/hw/hexagon/meson.build
+> new file mode 100644
+> index 00000000000..f528d2bc4ab
+> --- /dev/null
+> +++ b/hw/hexagon/meson.build
+> @@ -0,0 +1,6 @@
+> +hexagon_ss = ss.source_set()
+> +hexagon_ss.add(files('hexagon_tlb.c'))
+> +hexagon_ss.add(files('hexagon_globalreg.c'))
+> +hexagon_ss.add(when: 'CONFIG_HEX_DSP', if_true: files('hexagon_dsp.c'))
+> +
+> +hw_arch += {'hexagon': hexagon_ss}
+
+Better would be:
+
+   hw_common_arch += {'hexagon': hexagon_common_ss}
+
+Pierrick can help here!
 
 
