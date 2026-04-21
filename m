@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91559F8FA9A
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13A7F8FA9B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFDi3-0001P4-IK; Tue, 21 Apr 2026 12:12:23 -0400
+	id 1wFDiW-0001c0-Dr; Tue, 21 Apr 2026 12:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wFDi0-0001LL-3a
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:12:20 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wFDi5-0001QN-26
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:12:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wFDhu-0000FF-Va
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:12:19 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wFDi2-0000KQ-Cc
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:12:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776787933;
+ s=mimecast20190719; t=1776787941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HaurCmmcFcdQqODCgdgVOtbs7i0XHZRM1ttP+Dd/wVI=;
- b=LPzFuJe4NvC0sYrkIkICyd48gBASD4agI+aYSpbtfcMDtJRnZ7HLn9CbFRbJjh3oSRkxV6
- H/8vzVWLy6gQBC8X5AMvh/pZr3gGT+b/NwM4te3FhrqN4mAF2n4kAncxApQiLhwDpros9p
- d5yfSQVGearvBt6uyj6Gn6YWRpCPZR0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=dKypboLdCRAggBQbHJnEX0z4rr1+fj30DugdG4Qnd/w=;
+ b=AD2FbuEghgNWvMTEjgcd+6gBc5sFSKYktNzhwKh/+yXiRzsBPb4dZon+Kf4eIQnhEO0WIi
+ yfP7F4YSlu0gwxNKX5VHW9ADlL7SwS4scil/z+XkaH6D6yijottxCo+di//+S8CaHXzLQk
+ 9OfTHL6WOYk4KJRp58YtMoZkz6sllEA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-pWNiQMyoNfeU1BPgLa0LSA-1; Tue,
- 21 Apr 2026 12:12:07 -0400
-X-MC-Unique: pWNiQMyoNfeU1BPgLa0LSA-1
-X-Mimecast-MFC-AGG-ID: pWNiQMyoNfeU1BPgLa0LSA_1776787926
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-SQ7jkUo9PACq2rGa0FJTqg-1; Tue,
+ 21 Apr 2026 12:12:18 -0400
+X-MC-Unique: SQ7jkUo9PACq2rGa0FJTqg-1
+X-Mimecast-MFC-AGG-ID: SQ7jkUo9PACq2rGa0FJTqg_1776787937
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DF961955F0B; Tue, 21 Apr 2026 16:12:06 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4152C1800605; Tue, 21 Apr 2026 16:12:17 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.49.173])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 59AAC180045E; Tue, 21 Apr 2026 16:12:04 +0000 (UTC)
+ id 743561800351; Tue, 21 Apr 2026 16:12:15 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, jsnow@redhat.com,
  qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: [PATCH 2/7] block: Add blk_co_start/end_request() and
- BDRV_REQ_NO_QUEUE
-Date: Tue, 21 Apr 2026 18:11:27 +0200
-Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
+Subject: [PATCH 7/7] ide-test: Test reset during TRIM
+Date: Tue, 21 Apr 2026 18:11:32 +0200
+Message-ID: <20260421161132.99878-8-kwolf@redhat.com>
 In-Reply-To: <20260421161132.99878-1-kwolf@redhat.com>
 References: <20260421161132.99878-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -82,188 +81,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a device uses blk_inc/dec_in_flight() in order to build macro
-operations that involve multiple requests for the block layer and that
-need to be completed as a unit before the BlockBackend can be considered
-drained, it sets the stage for a deadlock: When a drain is requested,
-the inner request at the BlockBackend level will be queued in
-blk_wait_while_drained() and wait until the drained section ends, but at
-the same time, drain_begin can only return if the whole macro operation
-at the device level has completed.
-
-Introduce a new interface to allow implementing the logic correctly:
-Instead of queueing individual requests, blk_co_start_request() calls
-blk_wait_while_drained() once at the beginning. The individual requests
-must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
-the deadlock; being wrapped in blk_co_start/end_request() makes sure
-that drain_begin waits for them and they don't sneak in when the
-BlockBackend is supposed to already be quiescent.
+This is a regression test for the bug fixed in the previous commits, a
+deadlock between the drain issued by an IDE reset and the TRIM state
+machine.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/block-common.h      | 11 ++++++++-
- include/system/block-backend-io.h |  2 ++
- block/block-backend.c             | 38 +++++++++++++++++++++++--------
- 3 files changed, 41 insertions(+), 10 deletions(-)
+ tests/qtest/ide-test.c | 95 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 87 insertions(+), 8 deletions(-)
 
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index c8c626daeaa..895ea175413 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -215,8 +215,17 @@ typedef enum {
-      */
-     BDRV_REQ_NO_WAIT = 0x400,
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index c6dcb2c0745..721e78170bc 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -41,8 +41,11 @@
+ #define IDE_PCI_FUNC    1
  
-+    /*
-+     * Used between blk_co_start_request() and blk_end_request() to avoid
-+     * that the request waits in a drained BlockBackend until the drained
-+     * section ends. Waiting would cause a deadlock because drain waits for
-+     * blk_end_request() to be called, but the request never completes
-+     * because it waits for the drain to end.
-+     */
-+    BDRV_REQ_NO_QUEUE = 0x800,
+ #define IDE_BASE 0x1f0
++#define IDE_BASE2 0x3f6
+ #define IDE_PRIMARY_IRQ 14
+ 
++#define IDE_CTRL_RESET 0x04
 +
-     /* Mask of valid flags */
--    BDRV_REQ_MASK               = 0x7ff,
-+    BDRV_REQ_MASK               = 0xfff,
- } BdrvRequestFlags;
+ #define ATAPI_BLOCK_SIZE 2048
  
- #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index 6d5ac476fc0..0248c1c36e2 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+ /* How many bytes to receive via ATAPI PIO at one time.
+@@ -99,6 +102,7 @@ enum {
  
- void blk_inc_in_flight(BlockBackend *blk);
- void blk_dec_in_flight(BlockBackend *blk);
-+void coroutine_fn blk_co_start_request(BlockBackend *blk);
-+void blk_end_request(BlockBackend *blk);
+     CMDF_ABORT      = 0x100,
+     CMDF_NO_BM      = 0x200,
++    CMDF_NO_WAIT    = 0x400,
+ };
  
- bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
- bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 99446571201..ee00440e28d 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -82,6 +82,7 @@ struct BlockBackend {
-     QemuMutex queued_requests_lock; /* protects queued_requests */
-     CoQueue queued_requests;
-     bool disable_request_queuing; /* atomic */
-+    int start_request_count; /* atomic */
- 
-     VMChangeStateEntry *vmsh;
-     bool force_allow_inactivate;
-@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
+ enum {
+@@ -228,21 +232,21 @@ static uint8_t wait_dma_completion(QTestState *qts, QPCIDevice *dev,
+     return status;
  }
  
- /* To be called between exactly one pair of blk_inc/dec_in_flight() */
--static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
-+static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
-+                                                BdrvRequestFlags flags)
+-static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
+-                            int nb_sectors, PrdtEntry *prdt, int prdt_entries,
+-                            void(*post_exec)(QPCIDevice *dev, QPCIBar ide_bar,
+-                                             uint64_t sector, int nb_sectors))
++static int send_dma_request_dev(QTestState *qts, QPCIDevice *dev,
++                                QPCIBar bmdma_bar, QPCIBar ide_bar, int cmd,
++                                uint64_t sector, int nb_sectors,
++                                PrdtEntry *prdt, int prdt_entries,
++                                void(*post_exec)(QPCIDevice *dev,
++                                                 QPCIBar ide_bar,
++                                                 uint64_t sector,
++                                                 int nb_sectors))
  {
-     assert(blk->in_flight > 0);
+-    QPCIDevice *dev;
+-    QPCIBar bmdma_bar, ide_bar;
+     uintptr_t guest_prdt;
+     size_t len;
+     bool from_dev;
+     uint8_t status;
+     int flags;
  
-+    if (flags & BDRV_REQ_NO_QUEUE) {
-+        assert(qatomic_read(&blk->start_request_count));
-+        return;
+-    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+-
+     flags = cmd & ~0xff;
+     cmd &= 0xff;
+ 
+@@ -308,8 +312,28 @@ static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
+         qpci_io_writeb(dev, bmdma_bar, bmreg_cmd, 0);
+     }
+ 
++    if (flags & CMDF_NO_WAIT) {
++        return 0;
 +    }
 +
-     if (qatomic_read(&blk->quiesce_counter) &&
-         !qatomic_read(&blk->disable_request_queuing)) {
-         /*
-@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
+     status = wait_dma_completion(qts, dev, bmdma_bar, ide_bar);
  
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
++    return status;
++}
++
++static int send_dma_request(QTestState *qts, int cmd, uint64_t sector,
++                            int nb_sectors, PrdtEntry *prdt, int prdt_entries,
++                            void(*post_exec)(QPCIDevice *dev, QPCIBar ide_bar,
++                                             uint64_t sector, int nb_sectors))
++{
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar;
++    uint8_t status;
++
++    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
++    status = send_dma_request_dev(qts, dev, bmdma_bar, ide_bar,
++                                  cmd, sector, nb_sectors, prdt, prdt_entries,
++                                  post_exec);
+     free_pci_device(dev);
  
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
-     aio_wait_kick();
+     return status;
+@@ -457,6 +481,60 @@ static void test_bmdma_trim(void)
+     test_bmdma_teardown(qts);
  }
  
-+void coroutine_fn blk_co_start_request(BlockBackend *blk)
++static void test_bmdma_trim_reset(void)
 +{
-+    blk_inc_in_flight(blk);
-+    blk_wait_while_drained(blk, 0);
-+    qatomic_inc(&blk->start_request_count);
++    QTestState *qts;
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar, ide_bar2;
++    uint8_t status;
++    const uint64_t trim_range[] = {
++        trim_range_le(0, 2),
++        trim_range_le(6, 8),
++    };
++    size_t len = 512;
++    uint8_t *buf;
++    uintptr_t guest_buf;
++    PrdtEntry prdt[1];
++
++    qts = ide_test_start(
++        "-blockdev file,filename=%s,node-name=img "
++        "-blockdev blkdebug,image=img,node-name=dbg,discard=unmap,"
++        "inject-error.0.event=none,inject-error.0.iotype=discard,"
++        "inject-error.0.errno=0,inject-error.0.delay-ns=1000000 "
++        "-device ide-hd,drive=dbg,bus=ide.0",
++        tmp_path[0]);
++    qtest_irq_intercept_in(qts, "ioapic");
++
++    guest_buf = guest_alloc(&guest_malloc, len);
++    prdt[0].addr = cpu_to_le32(guest_buf),
++    prdt[0].size = cpu_to_le32(len | PRDT_EOT),
++
++    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
++    ide_bar2 = qpci_legacy_iomap(dev, IDE_BASE2);
++
++    buf = g_malloc(len);
++
++    /* TRIM request with two segments */
++    *((uint64_t *)buf) = trim_range[0];
++    *((uint64_t *)buf + 1) = trim_range[1];
++
++    qtest_memwrite(qts, guest_buf, buf, 2 * sizeof(uint64_t));
++
++    send_dma_request_dev(qts, dev, bmdma_bar, ide_bar, CMD_DSM | CMDF_NO_WAIT, 0, 1, prdt,
++                     ARRAY_SIZE(prdt), NULL);
++
++    /* Reset the device while the first segment is in flight */
++    qpci_io_writeb(dev, ide_bar2, 0, IDE_CTRL_RESET);
++
++    status = wait_dma_completion(qts, dev, bmdma_bar, ide_bar);
++    g_assert_cmphex(status, ==, BM_STS_INTR);
++    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), DF | ERR);
++
++    free_pci_device(dev);
++    g_free(buf);
++    test_bmdma_teardown(qts);
 +}
 +
-+void blk_end_request(BlockBackend *blk)
-+{
-+    qatomic_dec(&blk->start_request_count);
-+    blk_dec_in_flight(blk);
-+}
-+
- static void error_callback_bh(void *opaque)
- {
-     struct BlockBackendAIOCB *acb = opaque;
-@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
- {
-     IO_CODE();
+ /*
+  * This test is developed according to the Programming Interface for
+  * Bus Master IDE Controller (Revision 1.0 5/16/94)
+@@ -1138,6 +1216,7 @@ int main(int argc, char **argv)
  
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
+     qtest_add_func("/ide/bmdma/simple_rw", test_bmdma_simple_rw);
+     qtest_add_func("/ide/bmdma/trim", test_bmdma_trim);
++    qtest_add_func("/ide/bmdma/trim_reset", test_bmdma_trim_reset);
+     qtest_add_func("/ide/bmdma/various_prdts", test_bmdma_various_prdts);
+     qtest_add_func("/ide/bmdma/no_busmaster", test_bmdma_no_busmaster);
  
-     if (!blk_co_is_available(blk)) {
-@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
-     int ret;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     ret = blk_check_byte_request(blk, offset, bytes);
-@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
- static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
- {
-     IO_CODE();
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     if (!blk_co_is_available(blk)) {
-@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
-     IO_CODE();
- 
-     blk_inc_in_flight(blk); /* increase before waiting */
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
-@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
-     IO_CODE();
- 
-     blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     ret = blk_check_byte_request(blk, offset, len);
-@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
-     IO_CODE();
- 
-     blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
 -- 
 2.53.0
 
