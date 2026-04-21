@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C41F94CB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 22:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5433BF94CB4
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 22:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFJIg-0001pu-OW; Tue, 21 Apr 2026 18:10:34 -0400
+	id 1wFJKF-0002Io-A5; Tue, 21 Apr 2026 18:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJIe-0001pd-Uj
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:10:32 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJKE-0002Ia-70
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:12:10 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJId-0004o5-3P
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:10:32 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so3259519f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 15:10:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJKC-00056V-Br
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:12:09 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so77535595e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 15:12:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776809429; x=1777414229; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776809526; x=1777414326; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hBfp111kzpsEJBN7X1qv7RTDfkwE+yPkYWE/nlf8OXs=;
- b=TEXpB1mSHcxFghajkC3v/YXA6OOskzOGtgWkET76AXYpqSxBCQ+2SNzYveK/iLQCDR
- Fi6SbpIEi4+mvgIM/5UI4+SOpPU2njcIvAxSlLkPTyEtY0xfAhdL+Caj0IhoM5DeJueP
- CS1a4TgTW9e4EZgXvkG8pW/CNrkTUskYxD3bfyl0kC2mLtYlSU9etghik8hFaYKYOlI3
- 97o2Fy1ZWlqDl+4OL19mm4cV88VUz0UDjyKxSFuLVNEZ27X/AFvoUQUk/7/lXPO0UFTo
- sr9+Zk2xkTzujYkaIZ0JvRSk30lyPmYfwiImxXkXpD3PQSyEJUv3fKn8GTLLg6dny7FS
- qJmg==
+ bh=e+4wOKRADY0YHcqmaeXM8QcLpvgEPE95aCb0ZiNm554=;
+ b=RUt76ZKi0UDDxOY046l0qZjFjNXPkzff+rUdexg3UYKNshyR1XIdzOKLWC4sfep2Z/
+ PichzqKwV09CQUvYtLNPXGRtBUFWW3aepGhJ7PeM692xrdOCtcT/67S5yAstsNXVP5l+
+ Ymy/zSOIW+dpkosjxIvpiXM7NDUQ8FeWIIEsMhGdxbMv8IaT1F9C5uUgvVJhKrU5hoPJ
+ bQdR8hbTlqbKh/w76T37aSvDSne41NrnjYkkKxVvm4gm6wQB2Ey4uH7GTGs64WNE5qYD
+ elm4U4QSojJ5/45aI6pKwyZyT5UKqFfGhuE36H15gnp6VswJ5WhUnF55ujwj/Vi1w9ob
+ h/Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776809429; x=1777414229;
+ d=1e100.net; s=20251104; t=1776809526; x=1777414326;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hBfp111kzpsEJBN7X1qv7RTDfkwE+yPkYWE/nlf8OXs=;
- b=smQFHf5jeDp4zCQMxDbaUeuMkjd8uxfp2oSePqO3C1nKrNz+5DVbj/xaefjpxjwV6F
- EmiVxM4wnubAt7qJfOJp8uVsybmKaRNKPHbZ7HlPDARhYTJilawAow67/ULbZIyRBQqB
- HzdzF8Xy2Zz/FHq8XsN4tFnCLd1HPTeY1BsOlngzD9Qf55dm/ZguTs+XDPy9UsNQU+DB
- lutNtNyj0AfOJuceSGDzu4zo4hqxb7vRqBgLI69MmkZy2I6bFLbpAO0BzQAf0NfA7viP
- hBGJjgY2TkFaKl5wj9tIEI0JrW6LDBr9xez6dBLYB4S98tIjNdk6QnEFTv4JRI/+9c4T
- AncQ==
+ bh=e+4wOKRADY0YHcqmaeXM8QcLpvgEPE95aCb0ZiNm554=;
+ b=W+n1sBzueB5hAZnK3f0Rbg7gzyVpoMdvzpzKu3bQhUAdDZHq1s9x/bTHE71mN+G9wH
+ hqA3hJTwOjmFG7OceInRR4428Y7WXU3HobFHSggH1Da7G/Qj8YYscs3RvKizI1lRd50N
+ FeWBOiR6fWo3obhCEckrp9Badcoe7z44k86Q2vmvRy1IxNXTxQ1IuN9kj5o03zdYVgNA
+ YsXgJ5TvF057/m5+Gurla14O9Rn7c7LPS6OJNExwjArytMLY8dXKra9mPbCnryCFAbLo
+ PfeyVhErH/Nh56lDkbRh3im5M8qk0AmFuXGEqZNEEgtPGuZyToATVxHf27IGZvJy3XRe
+ eiHw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+MXDmNv1GpzKHUS79rbO9imjPCqO1Ps+FodZAQW6h04tOSO2Xi0W9va9QXjHrqwyalyYSL0qNLOeQA@nongnu.org
-X-Gm-Message-State: AOJu0YyQTqqcYHu0LxIWJ7j+A9WHGhWNMSCeKeBGhj63C70OqL2MQNGL
- xIze4HwHRR9FJeJvg3sIU9z5e9m3lTsk/p0p1MMJzxdD35G7wDPnDhNYi3EALR26W4M=
-X-Gm-Gg: AeBDiesdkLtrLxFb2QRwJDJdDJVRbLAProvP4PU7LK6U5538nAEJyPyJZ7ZH057idR3
- s/Ith7v8mIJKOOtOqcdR8c61gcqCkqEmkjAeOQSzXkPyrI09YPqPmUKh4bQ6vjpI30elYZBZmI8
- TJoBwBzjbX9d2CNeM5fCym8tdK2YYlZlc9LOiGMJAmtefgjuFEJD2yUSKEX85bbfaNEJOxOOjJ/
- fmrG32/NSyTqMO+KRaoB7DQDuWsPsw1X+HIPhA5Rsyc0eY6ULXgD7N/0nLjmuss0ZyEQx5Oua9h
- wS/2CUmyeh+SHTZfJWjo9cti2b6ecepPpT9MnNmYtBpIxkEH1xlpC2xrZvQXtt5tPNDoieuV6Z9
- wHbWU6Lm7KLRgsXg0zALAoVKBMuw8eCZiFBjuz/pF6qT7Ca+3lvKwmzd5Ojg/SwB6ft0Z8ufIXv
- fnIHh98Hspuul5BpEWbfLl2h0oIse0212emjILE6ALUlgX3wwiBvmvh3hjIaC9l4Pyw+sht9bTM
- P1Z
-X-Received: by 2002:a05:6000:2883:b0:441:23d2:5aa9 with SMTP id
- ffacd0b85a97d-44123d25b20mr2174169f8f.8.1776809429303; 
- Tue, 21 Apr 2026 15:10:29 -0700 (PDT)
+ AFNElJ9W+KjaVR1g5emALtrmF7tyTUZLJU/kYEI6v5Z4c8pJzBhMK1jD9XP/LYdZGFFnoFkW5ynEOkOSWD8R@nongnu.org
+X-Gm-Message-State: AOJu0YyuwI5WJPDXjrSFmuM/tLA3eOmiVBBHyx6zZtbUFs6Zp0HU+Duh
+ jxY0KpwE8tKJfDhqo1NUNBs+iFtm+yXoQs2GC7sB4YXTBvHBi5rQV9Tj+z+u5VPMLo8=
+X-Gm-Gg: AeBDietSxHmugqTkZa8vBU8eApP4VTZEas7gKwJofxwLIQx40+zfYm60TYAQ/17d1pw
+ BgjJNFA4OrHiKi3XdQuP4QmhkqbnK4epLs0Um/cbzaHLe8ynA+Hq9KfzgM7uaivrzCMMvunisZe
+ dQysWJus3Eyh730R9mBVD0GRDr4Wcp6td2IbV+qrbJWirfVjzAojVD4XllSfXOad0N0YITWsLDt
+ vx/xWYE0JhAdbqw6Y2vEqVZ91zEjsdDkuMuOX7z93nbKy6ChuAdQcGKVV63xQjlS0+C/ZGQDuev
+ 4+4NXyzdXbfVIl5aIwS3t+jgluJExSqWpPZ/yMvzHvj+tHmNv2j8PMrtNd2eipHmg/mLfGlq9id
+ 05BC/coWeL/q0q7RIgzB3nsoS/WgcGsYhTzbXqww0ACCw8xQwrtzHSqkCaK1tYdQJ2FnKOOSNYa
+ IMby5CqbRllqkHyiN1Usbiodrkb0hSJnXYDgVAu3ooW6TWVhJNHGbr31tKq764NJRszGhld4R7g
+ e3W
+X-Received: by 2002:a05:600c:2e42:b0:489:1fa4:50c6 with SMTP id
+ 5b1f17b1804b1-4891fa451bamr69584445e9.20.1776809526316; 
+ Tue, 21 Apr 2026 15:12:06 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4411c9f4f03sm11321010f8f.1.2026.04.21.15.10.28
+ 5b1f17b1804b1-488fc0b4c85sm383721295e9.0.2026.04.21.15.12.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Apr 2026 15:10:28 -0700 (PDT)
-Message-ID: <62ff0065-b504-4f2c-93ef-745d00326e52@linaro.org>
-Date: Wed, 22 Apr 2026 00:10:27 +0200
+ Tue, 21 Apr 2026 15:12:05 -0700 (PDT)
+Message-ID: <135474b6-36da-4ee8-af75-6312805e4ac4@linaro.org>
+Date: Wed, 22 Apr 2026 00:12:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/9] hw/hexagon: Define hexagon "virt" machine
+Subject: Re: [PATCH v5 7/9] target/hexagon: add build config for softmmu
 Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
- pierrick.bouvier@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>
+ Paolo Bonzini <pbonzini@redhat.com>
 References: <20260416210305.2255579-1-brian.cain@oss.qualcomm.com>
- <20260416210305.2255579-9-brian.cain@oss.qualcomm.com>
+ <20260416210305.2255579-8-brian.cain@oss.qualcomm.com>
+ <c2c0386f-7141-4845-9d95-adb3927d5054@linaro.org>
+ <beefeef5-96ba-4645-a01a-7ca96055d93a@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260416210305.2255579-9-brian.cain@oss.qualcomm.com>
+In-Reply-To: <beefeef5-96ba-4645-a01a-7ca96055d93a@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,96 +110,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/26 23:03, Brian Cain wrote:
-> From: Brian Cain <bcain@quicinc.com>
+On 22/4/26 00:08, Pierrick Bouvier wrote:
+> On 4/21/2026 3:02 PM, Philippe Mathieu-Daudé wrote:
+>> On 16/4/26 23:03, Brian Cain wrote:
+>>> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>> ---
+>>>   MAINTAINERS                                 |  1 +
+>>>   configs/devices/hexagon-softmmu/default.mak |  7 +++++++
+>>>   configs/targets/hexagon-softmmu.mak         |  7 +++++++
+>>>   target/hexagon/cpu.h                        |  7 +------
+>>>   target/hexagon/cpu.c                        |  3 +--
+>>>   target/Kconfig                              |  1 +
+>>>   target/hexagon/Kconfig                      |  2 ++
+>>>   target/hexagon/meson.build                  | 13 ++++++++++++-
+>>>   8 files changed, 32 insertions(+), 9 deletions(-)
+>>>   create mode 100644 configs/devices/hexagon-softmmu/default.mak
+>>>   create mode 100644 configs/targets/hexagon-softmmu.mak
+>>>   create mode 100644 target/hexagon/Kconfig
+
+
+>>> diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+>>> index 528beca3cd0..bc7a292e47b 100644
+>>> --- a/target/hexagon/meson.build
+>>> +++ b/target/hexagon/meson.build
+>>
+>>> +hexagon_softmmu_ss.add(files(
+>>> +    'cpu_helper.c',
+>>> +    'hex_mmu.c',
+>>> +    'hex_interrupts.c',
+>>> +    'hexswi.c',
+>>> +    'machine.c',
+>>> +))
+>>> +
+>>>   #
+>>>   # Step 4.5
+>>>   # We use flex/bison based idef-parser to generate TCG code for a lot
+>>> @@ -262,7 +271,8 @@ hexagon_ss.add(files(
+>>>   #     idef-generated-enabled-instructions
+>>>   #
+>>>   idef_parser_enabled = get_option('hexagon_idef_parser')
+>>> -if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+>>> +if idef_parser_enabled and ('hexagon-linux-user' in target_dirs or
+>>> +                            'hexagon-softmmu' in target_dirs)
+>>>       idef_parser_input_generated = custom_target(
+>>>           'idef_parser_input.h.inc',
+>>>           output: 'idef_parser_input.h.inc',
+>>> @@ -390,3 +400,4 @@ analyze_funcs_generated = custom_target(
+>>>   hexagon_ss.add(analyze_funcs_generated)
+>>>   target_arch += {'hexagon': hexagon_ss}
+>>> +target_system_arch += {'hexagon': hexagon_softmmu_ss}
+>>
+>> Pierrick: is target_common_system_arch[] still relevant for a target
+>> which use fixed endianness / wordsize?
+>>
 > 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   configs/devices/hexagon-softmmu/default.mak |   1 +
->   configs/targets/hexagon-softmmu.mak         |   1 +
->   include/hw/hexagon/virt.h                   |  43 ++
->   hw/hexagon/virt.c                           | 456 ++++++++++++++++++++
->   target/hexagon/cpu.c                        |   2 +
->   hw/hexagon/Kconfig                          |  10 +
->   hw/hexagon/meson.build                      |   2 +
->   tests/qemu-iotests/testenv.py               |   1 +
->   8 files changed, 516 insertions(+)
->   create mode 100644 include/hw/hexagon/virt.h
->   create mode 100644 hw/hexagon/virt.c
+> It guarantees code doesn't use any target specific identifier, like 
+> accelerators related for instance. Common really means "Does not depend 
+> on any build generated target header".
+> 
+> Of course, if target comes in only one variant, it does not really 
+> matter, since files will be compiled once anyway. But I think it's more 
+> future proof to consider further variations could be added.
+> As well, it forces from the start to do things without relying on 
+> compile time defines, which IMHO, is a big win.
 
+Thanks for confirming my understanding.
 
-> diff --git a/include/hw/hexagon/virt.h b/include/hw/hexagon/virt.h
-> new file mode 100644
-> index 00000000000..a54eac5cf00
-> --- /dev/null
-> +++ b/include/hw/hexagon/virt.h
-> @@ -0,0 +1,43 @@
-> +/*
-> + * Definitions for hexagon virt board.
-> + *
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_HEXAGONVIRT_H
-> +#define HW_HEXAGONVIRT_H
-> +
-> +#include "hw/core/boards.h"
-> +#include "target/hexagon/cpu.h"
-> +
-> +struct HexagonVirtMachineState {
-> +    /*< private >*/
-> +    MachineState parent_obj;
-> +
-> +    int fdt_size;
-> +    MemoryRegion *sys;
-> +    MemoryRegion cfgtable;
-> +    MemoryRegion ram;
-> +    MemoryRegion tcm;
-> +    MemoryRegion vtcm;
-> +    MemoryRegion bios;
-> +    DeviceState *l2vic;
-> +    Clock *apb_clk;
-> +};
-
-
-> +#define TYPE_HEXAGON_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
-> +OBJECT_DECLARE_SIMPLE_TYPE(HexagonVirtMachineState, HEXAGON_VIRT_MACHINE)
-> +
-> +#endif /* HW_HEXAGONVIRT_H */
-> diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
-> new file mode 100644
-> index 00000000000..ff93b5221ba
-> --- /dev/null
-> +++ b/hw/hexagon/virt.c
-
-
-> +static int32_t irq_hvm_ic_phandle = -1;
-
-Why not store in HexagonVirtMachineState?
-
-> +static void fdt_add_hvm_pic_node(HexagonVirtMachineState *vms,
-> +                                 const struct hexagon_machine_config *m_cfg)
-> +{
-> +    MachineState *ms = MACHINE(vms);
-> +    irq_hvm_ic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
-> +
-> +    qemu_fdt_setprop_cell(ms->fdt, "/soc", "interrupt-parent",
-> +                          irq_hvm_ic_phandle);
-> +
-> +    qemu_fdt_add_subnode(ms->fdt, "/soc/interrupt-controller");
-> +    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller",
-> +                          "#address-cells", 2);
-> +    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller",
-> +                          "#interrupt-cells", 2);
-> +    qemu_fdt_setprop_string(ms->fdt, "/soc/interrupt-controller", "compatible",
-> +                            "qcom,h2-pic,hvm-pic");
-> +    qemu_fdt_setprop(ms->fdt, "/soc/interrupt-controller",
-> +                     "interrupt-controller", NULL, 0);
-> +    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller", "phandle",
-> +                          irq_hvm_ic_phandle);
-> +
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(vms->l2vic), 1,
-> +                    m_cfg->cfgtable.fastl2vic_base << 16);
-> +}
 
