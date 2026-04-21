@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E405F8FA90
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B946CF8FA90
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFE4e-0004nu-TK; Tue, 21 Apr 2026 12:35:46 -0400
+	id 1wFE51-0004w0-LK; Tue, 21 Apr 2026 12:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wFE40-0004aI-OS
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:35:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wFE4X-0004nx-8f
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:35:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wFE3t-0007NJ-LI
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:35:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wFE4L-0007SW-Bf
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:35:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776789296;
+ s=mimecast20190719; t=1776789315;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DIr7OAH7jPAt9Ijrp8ig0Z4yyQ3WYxYoNGA5UcPZCys=;
- b=c6bV1Daa7qVe58VW2QYE6r6lK//xNxe7C3uWbdTdEfMY3ZSEgmzMHlUi7wYfni9umO6EzN
- 3QITOyJTC9siFbiez1AmZRIJ5iTLHH/M/TuGY4r8V5s301nspf7KGpZqVL1hKf3K1fSxvQ
- /mFku3Vg0Qx0/EcPFej3EIQUCScm90k=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Ag3As0f4fL9HtrGb1OP7FYrdzOBSvJ9BHuESWcySACw=;
+ b=huGWL8eV1u4suTY2X7OPusHMPqvfY/MVcOnJOgUpih/W6oTKhMdtYAkSbavUe8t7D91seK
+ mY8onPHpzXvaUqEr8pF23BEccpEuYkAD6+83DjH8o/CqRvz7tEbba8T3yx4h5Q0+Wgm7KK
+ jsc2jY9o6B2UPaplDt0Up125Bs3RF+A=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-aUIqYgI-N2ervx99N1yH0g-1; Tue,
- 21 Apr 2026 12:34:54 -0400
-X-MC-Unique: aUIqYgI-N2ervx99N1yH0g-1
-X-Mimecast-MFC-AGG-ID: aUIqYgI-N2ervx99N1yH0g_1776789293
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-dqXlcsoAMZqSUc9-63DYTw-1; Tue,
+ 21 Apr 2026 12:35:12 -0400
+X-MC-Unique: dqXlcsoAMZqSUc9-63DYTw-1
+X-Mimecast-MFC-AGG-ID: dqXlcsoAMZqSUc9-63DYTw_1776789311
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 773E81955F29; Tue, 21 Apr 2026 16:34:53 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 230EB19560B3; Tue, 21 Apr 2026 16:35:11 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.70])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C125D1956056; Tue, 21 Apr 2026 16:34:51 +0000 (UTC)
+ id 538A51956095; Tue, 21 Apr 2026 16:35:09 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Alex Williamson <alex@shazbot.org>, John Levon <john.levon@nutanix.com>,
+ Patrick Mooney <patrick@matx.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 05/14] hw/vfio/pci.c: eradicate CONFIG_KVM
-Date: Tue, 21 Apr 2026 18:34:29 +0200
-Message-ID: <20260421163438.3447280-6-clg@redhat.com>
+Subject: [PULL 13/14] vfio-user: correct protocol for DMA reads/writes
+Date: Tue, 21 Apr 2026 18:34:37 +0200
+Message-ID: <20260421163438.3447280-14-clg@redhat.com>
 In-Reply-To: <20260421163438.3447280-1-clg@redhat.com>
 References: <20260421163438.3447280-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,141 +83,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: John Levon <john.levon@nutanix.com>
 
-We just need to add kvm_enabled() guard when calling concerned
-functions, but no need to extract those kvm functions since they are not
-using any kvm specific types that would not be visible at compilation
-time.
+The "count" parameter in the DMA write reply should be 8 bytes in size.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reported-by: Patrick Mooney <patrick@matx.com>
+Signed-off-by: John Levon <john.levon@nutanix.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260318174733.1717643-6-pierrick.bouvier@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260410085716.877185-3-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 28 ++++++++++------------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+ docs/interop/vfio-user.rst | 2 +-
+ hw/vfio-user/protocol.h    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 1f1f3aaad9a901a087ecad1b5c46e8756b3a6339..b2a07f6bb4217bcacead194ce75b359b1896ef3a 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -152,7 +152,6 @@ void vfio_pci_intx_eoi(VFIODevice *vbasedev)
+diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
+index 303fc13d6ec4c32c32bd95604c75239342d85062..d4766487ea6d0ee021316890d443814957cf6284 100644
+--- a/docs/interop/vfio-user.rst
++++ b/docs/interop/vfio-user.rst
+@@ -1463,7 +1463,7 @@ Reply
+ +=========+========+==========+
+ | address | 0      | 8        |
+ +---------+--------+----------+
+-| count   | 8      | 4        |
++| count   | 8      | 8        |
+ +---------+--------+----------+
  
- static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
- {
--#ifdef CONFIG_KVM
-     PCIDevice *pdev = PCI_DEVICE(vdev);
-     int irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
+ * *address* is the client DMA memory address being accessed.
+diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
+index 2a0c31e7c57f8ed86681ebd96b20df3e32792dec..c478d1353f9d618ef8c202cd28cd638aeed3bd57 100644
+--- a/hw/vfio-user/protocol.h
++++ b/hw/vfio-user/protocol.h
+@@ -210,7 +210,7 @@ typedef struct {
+ typedef struct {
+     VFIOUserHdr hdr;
+     uint64_t offset;
+-    uint32_t count;
++    uint64_t count;
+     char data[];
+ } VFIOUserDMARW;
  
-@@ -206,14 +205,10 @@ fail:
-     qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
-     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
-     return false;
--#else
--    return true;
--#endif
- }
- 
- static bool vfio_cpr_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
- {
--#ifdef CONFIG_KVM
-     if (vdev->no_kvm_intx || !kvm_irqfds_enabled() ||
-         vdev->intx.route.mode != PCI_INTX_ENABLED ||
-         !kvm_resamplefds_enabled()) {
-@@ -236,14 +231,10 @@ static bool vfio_cpr_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     vdev->intx.kvm_accel = true;
-     trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
-     return true;
--#else
--    return true;
--#endif
- }
- 
- static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
- {
--#ifdef CONFIG_KVM
-     PCIDevice *pdev = PCI_DEVICE(vdev);
- 
-     if (!vdev->intx.kvm_accel) {
-@@ -277,7 +268,6 @@ static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
-     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
- 
-     trace_vfio_intx_disable_kvm(vdev->vbasedev.name);
--#endif
- }
- 
- static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
-@@ -287,7 +277,9 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
-     trace_vfio_intx_update(vdev->vbasedev.name,
-                            vdev->intx.route.irq, route->irq);
- 
--    vfio_intx_disable_kvm(vdev);
-+    if (kvm_enabled()) {
-+        vfio_intx_disable_kvm(vdev);
-+    }
- 
-     vdev->intx.route = *route;
- 
-@@ -295,7 +287,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
-         return;
-     }
- 
--    if (!vfio_intx_enable_kvm(vdev, &err)) {
-+    if (kvm_enabled() && !vfio_intx_enable_kvm(vdev, &err)) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
- 
-@@ -350,16 +342,14 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
-     pci_config_set_interrupt_pin(pdev->config, pin);
- 
--#ifdef CONFIG_KVM
-     /*
-      * Only conditional to avoid generating error messages on platforms
-      * where we won't actually use the result anyway.
-      */
--    if (kvm_irqfds_enabled() && kvm_resamplefds_enabled()) {
-+    if (kvm_enabled() && kvm_irqfds_enabled() && kvm_resamplefds_enabled()) {
-         vdev->intx.route = pci_device_route_intx_to_irq(pdev,
-                                                         vdev->intx.pin);
-     }
--#endif
- 
-     if (!vfio_notifier_init(vdev, &vdev->intx.interrupt, "intx-interrupt", 0,
-                             errp)) {
-@@ -370,7 +360,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
- 
- 
-     if (cpr_is_incoming()) {
--        if (!vfio_cpr_intx_enable_kvm(vdev, &err)) {
-+        if (kvm_enabled() && !vfio_cpr_intx_enable_kvm(vdev, &err)) {
-             warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-         }
-         goto skip_signaling;
-@@ -383,7 +373,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-         return false;
-     }
- 
--    if (!vfio_intx_enable_kvm(vdev, &err)) {
-+    if (kvm_enabled() && !vfio_intx_enable_kvm(vdev, &err)) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
- 
-@@ -400,7 +390,9 @@ static void vfio_intx_disable(VFIOPCIDevice *vdev)
-     int fd;
- 
-     timer_del(vdev->intx.mmap_timer);
--    vfio_intx_disable_kvm(vdev);
-+    if (kvm_enabled()) {
-+        vfio_intx_disable_kvm(vdev);
-+    }
-     vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
-     vdev->intx.pending = false;
-     pci_irq_deassert(pdev);
 -- 
 2.53.0
 
