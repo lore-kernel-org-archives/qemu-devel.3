@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E6CEF327D4
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 17:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E160EF327D4
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 17:29:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFEtQ-00041x-S0; Tue, 21 Apr 2026 13:28:12 -0400
+	id 1wFEtP-00040V-MC; Tue, 21 Apr 2026 13:28:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wFEt5-0003mD-H5
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:27:53 -0400
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
+ id 1wFEtB-0003nb-Vt
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:28:01 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wFEsw-0006h0-Me
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:27:44 -0400
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-415e568a7ecso1911196fac.0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 10:27:42 -0700 (PDT)
+ id 1wFEt6-0006i4-Gv
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:27:56 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-4042905015cso2777194fac.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 10:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776792461; x=1777397261; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776792468; x=1777397268; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Gu2YLJ24XV2eW3iG8BpKQlGIGVRYDVb1RgP8oSGX5xg=;
- b=BGOc3Edi6E5jfO0NLq6/pSZ/ajRljuiF3REC0u5SCga9jRdAoBwxChQ+d7upH13C9T
- hdkN5nNS9oI+hgGeIMgIcV5KoYq72HHs5LcWUjwWDzWsw6+ihPrk8DEagPa1Y/zFjWXz
- hYlgACWFuCOGYeJAd3GoTtMjAMxUXx+jvYF4X1LTpoHSIs4wjhdGJFkSwM0Pi7QDNMg2
- c7RsP59DzOuZ2p2Pv9nfjlGIt/IraabifIsKmbNcnBsaA25sm5FWu8b4soH4PL0TiYgp
- cGT9q/XC8VH0jRKOO/lu9l/UjQmwu48fwrZmr5c/oAFivApU+iwYrt1u3E4DJB30MHJa
- hk7A==
+ :reply-to; bh=qysWhW4sZ2k4fvCSAIQwvHK+YYsE649PPxBVUHi+4QU=;
+ b=UbxClxG44gRSTWTFqqFK8jBPaLlNuMLdDDXimOHIjPhWM6FoA7ct8dC1CtbAqImx9r
+ gnCR4KUSBGXx9ejyKImVfEMsRuOp7aqIUU8um7fhoCET/A/b2AJcTZq39XpmHU2sRwq7
+ H9q3S45HPcxCOzuQqIUHmYnG+yvQOeefaF3GKP1d9/85LzPxg9/Vtqb8s4fxJDU+BNM7
+ WnCMIx1IINpSYUnTt9ASDGdyhFDQ4DDpvQ8eKrGsXYxUWHi42TkvxZq6CosLimfIrZPm
+ vzgMq3XIn8wb6bMgz2g3g8EKsN7i33I5sCOtI/mvmWOYUXCHONDsJSniCHNnReXh1O7l
+ BBQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776792461; x=1777397261;
+ d=1e100.net; s=20251104; t=1776792468; x=1777397268;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Gu2YLJ24XV2eW3iG8BpKQlGIGVRYDVb1RgP8oSGX5xg=;
- b=iTYoJiklclVfIdsVxvgkqsoue2HUtRlV/bCG6TdGC7qbxC2FxX9eAj8ODMacO4WZDU
- u/rq5d7zXaorWoVRfnDAt3YBgfKSLxolPbQEUVDqma82D90LAQtzu9M8+u4ebq4d0rN+
- 4O1pD9XvRa12XUrrkCbUGCx+6j5JurMkZ2NCX/mTCR0wwf60pZCqvbPiV6UiQ/kcJLSd
- TAnvXeMVMFOhpUNZWBXjkRyprnfoeGE1neeey4PVirobMgnGOVl+tOL2Hc97B7GrE3CM
- UFojQ6/iT58B4TnQ65aE2ssrgCZ51BKRELC75ILspvKnsSO7RBWZQr0zwTER7Uute30j
- Wjcw==
-X-Gm-Message-State: AOJu0YzUQFXYh8HWRQrCtDzC85ozfCEvA8fD4wi6c2RZ1UWXkN5dT8B7
- +lyxquitcQ376B6+8mpn/qQMqf6SJ5U25Iu/gIzTxlLzszScu5b02PhL
-X-Gm-Gg: AeBDieu1WsDpLJ4lHXDB2lTxAwtXgyd/3sUAjidyDiw0WvseWps4p6e8lmemumL3qYF
- y/QF2XW20lnmdhvSYfiUtfHsaT6EaFdHRan/gYWM4Vw6brbnH88xwPkKjHI/MBRSA+gFPyl8Iss
- 9PTeu7728cxNJedmOOWS0q//Kg1surJnuI4iiPG4NNHOmRuFiRh4Lb0iz9gEFkBLGWYwrx6EqlG
- ZArmeJ+9eu0dbFofOgXXBKMw3x74qdMIEUIBu6rQ6o/xcSaWa8aeo55BSqUQg75Hg2eJ5ydigW4
- CGsQnqaXT0I++O0YnkP6+kG9t20bAK9iu4o8/DwqfVpOXgkkBxG/IrF6z2zzAVQRQRyZQoWhsUe
- KJNdAvT236V+Fj+DVVlpeGimkCqKpGPiviB3h2OO5QHTssydkQ+Xzm+cAh8G3q7sOgEWkEmTnCz
- CArpltNvzoYQk+YeMXOk/A9kCl8wfgrXv29mPrKjNt2J2VHxym63/Bym1owHhYrVuhzkR6djdC4
- mMkWyZqrXMPrU//ziiIl1gQ3ke1fh4mRUfD0iuVJsrzrBSjY2hNssze5Bb0wJxOdCe29UyESr5Z
- MUD484BY15/pF2lO
-X-Received: by 2002:a05:6871:384e:b0:42c:2464:4ec3 with SMTP id
- 586e51a60fabf-42c2466f612mr2412690fac.38.1776792461139; 
- Tue, 21 Apr 2026 10:27:41 -0700 (PDT)
+ bh=qysWhW4sZ2k4fvCSAIQwvHK+YYsE649PPxBVUHi+4QU=;
+ b=ZakpLLy2dZC1ddyPIeIYXC0Z/0xyCcSFRDMaDlaIYht0aJtKql4H0qGQ9KLeliJzLn
+ 4l9aA665gaR20YCrG0Zn/xxRSwAURg3dy/KRl6sSgYuunMC2uoz2hyicdAVWSv/i5AtV
+ DnHEsI8EabT2f7vQxVyrtvOonfkh2bRAS5LY6hfTWOjbxM8yzwPEULUmDQcUhyq/2+P8
+ t+7loQqWeL1SR0skhYkRE63lxOEP0UyTfsda/XsIDrfECL2Cohu+6xEu9FB2EIW5jnou
+ OWlqWEvpti61kDMg9saNh3jFrQEUYQ8yYzWntBS5vRrn6UcYyhbGoMsSFNCgRLl99Uoh
+ nwjQ==
+X-Gm-Message-State: AOJu0Yyn+Qdp9MQjuu+09KgBNr5+BypsQ+ewBU/2a8sc3xK1Onq8mMmg
+ /4KddW/h/nzdiaMmeqilZQFksBI5qUUZtDswDqaj+VnmS5xShLolMn8kFQex5A==
+X-Gm-Gg: AeBDieutWJbVcYG2beoqMintEWzNzubYVxFEFiwE9VIyFQQoaF+m4wzX/apOSylkJZH
+ cwHDNAzQbkbn3deeXTI+L0qnJYfEJqaSI4qM2upS+95KMIUv1y04Mrh8n3r+aIWmwyOzR24L++R
+ 7sN5BGFOsBv2wh+8OToJNeiPjgcNYaycKu7m7+KY6K5Ak1S7zzgJ3O1PzuaxFihZQ18OwVLPWiV
+ umfnICB1GurNh5hs+52yPKzU2EgxHErFz2z2qgISzn5eO0fMjV61WCpWVkH4s/p0drTVdOoKXhd
+ IXfGo5Y8urJgl5dZ0NRg5uSGfx/BOoS7zuASPU4eGLF0d2nQ715zn3j0witqDl+C/TdkrbE7uNd
+ nQ5C0yVxdawLGNGkrmwXjsrPaEgyQN98PtHq8n/LLj+ASW8SnlMeLbFOGL0qtoJaCDPNSWjDtqQ
+ IVO9jyTeCWPykYxFr592QwVeI286smM+mUBlIfAJLKofcxMMu5UCUw4Am29F3K6Np/328wJEZzI
+ i7VSjRiHLBOZAd8Doqm95OCcH9D1Mf8TdoNsrt055xL9+qAlNwET7tvb5k/8Oyc7/m+m2U3P3E1
+ oSIQTg==
+X-Received: by 2002:a05:6870:968d:b0:409:81eb:cf56 with SMTP id
+ 586e51a60fabf-42aded2a4e3mr11684930fac.27.1776792467541; 
+ Tue, 21 Apr 2026 10:27:47 -0700 (PDT)
 Received: from mac.localdomain (97-118-149-104.hlrn.qwest.net.
  [97.118.149.104]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-42b8fe2c52bsm12209290fac.0.2026.04.21.10.27.40
+ 586e51a60fabf-42b8fe2c52bsm12209290fac.0.2026.04.21.10.27.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 10:27:40 -0700 (PDT)
+ Tue, 21 Apr 2026 10:27:47 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 21 Apr 2026 11:27:29 -0600
-Subject: [PATCH v2 02/13] target/mips: fix Octeon arithmetic destination
- handling
+Date: Tue, 21 Apr 2026 11:27:36 -0600
+Subject: [PATCH v2 09/13] target/mips: add Octeon SHA3 crypto support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260421-mips-octeon-missing-insns-v2-v2-2-a0791df188c9@gmail.com>
+Message-Id: <20260421-mips-octeon-missing-insns-v2-v2-9-a0791df188c9@gmail.com>
 References: <20260421-mips-octeon-missing-insns-v2-v2-0-a0791df188c9@gmail.com>
 In-Reply-To: <20260421-mips-octeon-missing-insns-v2-v2-0-a0791df188c9@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +83,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x2b.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,63 +108,384 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BADDU and DMUL write their results to rd, not rt. Avoid treating rt ==
-$zero as a nop, and route writes through gen_store_gpr() so rd == $zero
-is handled consistently.
+Add the Octeon SHA3 register window and STARTOP selector.
+
+Keep the shared HSH/SHA3/SHA512 write path coherent, then model the
+dedicated 25-lane Keccak state and the Keccak-f[1600] permutation so the
+COP2 SHA3 interface follows the hardware behaviour.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v1 -> v2:
-  - Split the BADDU/DMUL destination handling fix out of the Octeon
-    arithmetic instruction patch.  (suggested by Philippe Mathieu-Daudé)
+  - Use switch ranges and g_assert_not_reached() for SHA3 selector
+    position decoding.  (suggested by Philippe Mathieu-Daudé)
+  - Add selector dispatch updates in octeon_translate.c after moving
+    COP2 decode out of translate.c.  (suggested by Philippe
+    Mathieu-Daudé)
 ---
- target/mips/tcg/octeon_translate.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ target/mips/cpu.h                  |  22 +++++
+ target/mips/system/machine.c       |   1 +
+ target/mips/tcg/octeon_crypto.c    | 171 +++++++++++++++++++++++++++++++++++++
+ target/mips/tcg/octeon_translate.c |  22 +++++
+ 4 files changed, 216 insertions(+)
 
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 887aeff12d..34fe7e1285 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -533,6 +533,7 @@ typedef enum MIPSOcteonSharedMode {
+     OCTEON_SHARED_MODE_NONE = 0,
+     OCTEON_SHARED_MODE_SHA512,
+     OCTEON_SHARED_MODE_SNOW3G,
++    OCTEON_SHARED_MODE_SHA3,
+ } MIPSOcteonSharedMode;
+ 
+ typedef enum MIPSOcteonCop2Sel {
+@@ -637,6 +638,7 @@ typedef enum MIPSOcteonCop2Sel {
+     OCTEON_COP2_SEL_HSH_DATW13,
+     OCTEON_COP2_SEL_HSH_DATW14,
+     OCTEON_COP2_SEL_HSH_DATW15,
++    OCTEON_COP2_SEL_SHA3_DAT15_READ = 0x024f,
+     OCTEON_COP2_SEL_HSH_IVW0 = 0x0250,
+     OCTEON_COP2_SEL_HSH_IVW1,
+     OCTEON_COP2_SEL_HSH_IVW2,
+@@ -663,6 +665,24 @@ typedef enum MIPSOcteonCop2Sel {
+     OCTEON_COP2_SEL_GFM_RESINP1,
+     OCTEON_COP2_SEL_GFM_XOR0,
+     OCTEON_COP2_SEL_GFM_POLY = 0x025e,
++    OCTEON_COP2_SEL_SHA3_XORDAT0 = 0x02c0,
++    OCTEON_COP2_SEL_SHA3_XORDAT1,
++    OCTEON_COP2_SEL_SHA3_XORDAT2,
++    OCTEON_COP2_SEL_SHA3_XORDAT3,
++    OCTEON_COP2_SEL_SHA3_XORDAT4,
++    OCTEON_COP2_SEL_SHA3_XORDAT5,
++    OCTEON_COP2_SEL_SHA3_XORDAT6,
++    OCTEON_COP2_SEL_SHA3_XORDAT7,
++    OCTEON_COP2_SEL_SHA3_XORDAT8,
++    OCTEON_COP2_SEL_SHA3_XORDAT9,
++    OCTEON_COP2_SEL_SHA3_XORDAT10,
++    OCTEON_COP2_SEL_SHA3_XORDAT11,
++    OCTEON_COP2_SEL_SHA3_XORDAT12,
++    OCTEON_COP2_SEL_SHA3_XORDAT13,
++    OCTEON_COP2_SEL_SHA3_XORDAT14,
++    OCTEON_COP2_SEL_SHA3_XORDAT15,
++    OCTEON_COP2_SEL_SHA3_XORDAT16,
++    OCTEON_COP2_SEL_SHA3_XORDAT17,
+     OCTEON_COP2_SEL_AES_ENC_CBC1 = 0x3109,
+     OCTEON_COP2_SEL_AES_ENC1 = 0x310b,
+     OCTEON_COP2_SEL_AES_DEC_CBC1 = 0x310d,
+@@ -675,6 +695,7 @@ typedef enum MIPSOcteonCop2Sel {
+     OCTEON_COP2_SEL_SNOW3G_START = 0x404d,
+     OCTEON_COP2_SEL_SNOW3G_MORE = 0x404e,
+     OCTEON_COP2_SEL_HSH_STARTSHA256 = 0x404f,
++    OCTEON_COP2_SEL_SHA3_STARTOP = 0x4052,
+     OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT = 0x405d,
+     OCTEON_COP2_SEL_HSH_STARTSHA1 = 0x4057,
+     OCTEON_COP2_SEL_HSH_STARTSHA512 = 0x424f,
+@@ -689,6 +710,7 @@ typedef struct MIPSOcteonCryptoState {
+     uint64_t hash_block[8];
+     uint64_t sha512_state[8];
+     uint64_t sha512_block[16];
++    uint64_t sha3_state[25];
+     uint64_t aes_iv[2];
+     uint64_t aes_key[4];
+     uint64_t aes_result[2];
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index d5452a3157..c646e8b836 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -282,6 +282,7 @@ static const VMStateDescription mips_vmstate_octeon_crypto = {
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.hash_block, MIPSCPU, 8),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.sha512_state, MIPSCPU, 8),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.sha512_block, MIPSCPU, 16),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.sha3_state, MIPSCPU, 25),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_iv, MIPSCPU, 2),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_key, MIPSCPU, 4),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_result, MIPSCPU, 2),
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+index 177d112483..d9e66f3dc8 100644
+--- a/target/mips/tcg/octeon_crypto.c
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -487,21 +487,150 @@ static void octeon_sha512_transform(MIPSOcteonCryptoState *crypto)
+     crypto->sha512_state[7] += h;
+ }
+ 
++static const uint64_t octeon_sha3_round_constants[24] = {
++    0x0000000000000001ULL, 0x0000000000008082ULL,
++    0x800000000000808aULL, 0x8000000080008000ULL,
++    0x000000000000808bULL, 0x0000000080000001ULL,
++    0x8000000080008081ULL, 0x8000000000008009ULL,
++    0x000000000000008aULL, 0x0000000000000088ULL,
++    0x0000000080008009ULL, 0x000000008000000aULL,
++    0x000000008000808bULL, 0x800000000000008bULL,
++    0x8000000000008089ULL, 0x8000000000008003ULL,
++    0x8000000000008002ULL, 0x8000000000000080ULL,
++    0x000000000000800aULL, 0x800000008000000aULL,
++    0x8000000080008081ULL, 0x8000000000008080ULL,
++    0x0000000080000001ULL, 0x8000000080008008ULL,
++};
++
++static const uint8_t octeon_sha3_rotation_constants[24] = {
++     1,  3,  6, 10, 15, 21, 28, 36, 45, 55,  2, 14,
++    27, 41, 56,  8, 25, 43, 62, 18, 39, 61, 20, 44,
++};
++
++static const uint8_t octeon_sha3_pi_lanes[24] = {
++    10,  7, 11, 17, 18,  3,  5, 16,  8, 21, 24,  4,
++    15, 23, 19, 13, 12,  2, 20, 14, 22,  9,  6,  1,
++};
++
++static void octeon_sha3_permute(MIPSOcteonCryptoState *crypto)
++{
++    uint64_t *state = crypto->sha3_state;
++
++    for (int round = 0; round < 24; round++) {
++        uint64_t bc[5];
++        uint64_t temp;
++
++        for (int x = 0; x < 5; x++) {
++            bc[x] = state[x] ^ state[5 + x] ^ state[10 + x] ^
++                    state[15 + x] ^ state[20 + x];
++        }
++        for (int x = 0; x < 5; x++) {
++            temp = bc[(x + 4) % 5] ^ rol64(bc[(x + 1) % 5], 1);
++            for (int y = 0; y < 25; y += 5) {
++                state[y + x] ^= temp;
++            }
++        }
++
++        temp = state[1];
++        for (int i = 0; i < 24; i++) {
++            uint64_t next = state[octeon_sha3_pi_lanes[i]];
++
++            state[octeon_sha3_pi_lanes[i]] =
++                rol64(temp, octeon_sha3_rotation_constants[i]);
++            temp = next;
++        }
++
++        for (int y = 0; y < 25; y += 5) {
++            for (int x = 0; x < 5; x++) {
++                bc[x] = state[y + x];
++            }
++            for (int x = 0; x < 5; x++) {
++                state[y + x] = bc[x] ^ ((~bc[(x + 1) % 5]) & bc[(x + 2) % 5]);
++            }
++        }
++
++        state[0] ^= octeon_sha3_round_constants[round];
++    }
++}
++
++static bool octeon_sha3_is_dat_sel(uint32_t sel)
++{
++    switch (sel) {
++    case OCTEON_COP2_SEL_HSH_DATW0 ... OCTEON_COP2_SEL_HSH_DATW15:
++    case OCTEON_COP2_SEL_HSH_IVW0 ... OCTEON_COP2_SEL_HSH_IVW7:
++    case OCTEON_COP2_SEL_SHA3_DAT15_WRITE:
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        return true;
++    default:
++        return false;
++    }
++}
++
++static int octeon_sha3_dat_pos_from_sel(uint32_t sel)
++{
++    switch (sel) {
++    case OCTEON_COP2_SEL_HSH_DATW0 ... OCTEON_COP2_SEL_HSH_DATW14:
++        return sel - OCTEON_COP2_SEL_HSH_DATW0;
++    case OCTEON_COP2_SEL_HSH_IVW0 ... OCTEON_COP2_SEL_HSH_IVW7:
++        return 16 + (sel - OCTEON_COP2_SEL_HSH_IVW0);
++    case OCTEON_COP2_SEL_HSH_DATW15:
++    case OCTEON_COP2_SEL_SHA3_DAT15_WRITE:
++        return 15;
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        return 24;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint64_t octeon_sha3_reg_to_lane(uint64_t value)
++{
++    /*
++     * The COP2 register interface is consumed by big-endian MIPS code as
++     * 64-bit register values, while Keccak lanes are byte-little-endian.
++     */
++    return bswap64(value);
++}
++
++static uint64_t octeon_sha3_lane_to_reg(uint64_t value)
++{
++    return bswap64(value);
++}
++
+ static void octeon_store_shared_hash_dat(MIPSOcteonCryptoState *crypto,
+                                          uint32_t sel, uint64_t value)
+ {
+     switch (sel) {
+     case OCTEON_COP2_SEL_HSH_DATW0 ... OCTEON_COP2_SEL_HSH_DATW14:
+         crypto->sha512_block[sel - OCTEON_COP2_SEL_HSH_DATW0] = value;
++        crypto->sha3_state[sel - OCTEON_COP2_SEL_HSH_DATW0] =
++            octeon_sha3_reg_to_lane(value);
+         break;
+     case OCTEON_COP2_SEL_HSH_IVW0 ... OCTEON_COP2_SEL_HSH_IVW7:
+         crypto->sha512_state[sel - OCTEON_COP2_SEL_HSH_IVW0] = value;
++        crypto->sha3_state[16 + (sel - OCTEON_COP2_SEL_HSH_IVW0)] =
++            octeon_sha3_reg_to_lane(value);
++        break;
++    case OCTEON_COP2_SEL_SHA3_DAT15_WRITE:
++        crypto->sha3_state[15] = octeon_sha3_reg_to_lane(value);
++        break;
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        crypto->sha3_state[24] = octeon_sha3_reg_to_lane(value);
+         break;
+     default:
+         g_assert_not_reached();
+     }
+ }
+ 
++static int octeon_sha3_xordat_pos_from_sel(uint32_t sel)
++{
++    if (sel >= OCTEON_COP2_SEL_SHA3_XORDAT0 &&
++        sel <= OCTEON_COP2_SEL_SHA3_XORDAT17) {
++        return sel - OCTEON_COP2_SEL_SHA3_XORDAT0;
++    }
++    return -1;
++}
++
+ static const uint8_t octeon_snow3g_sr[256] = {
+     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
+     0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+@@ -1396,6 +1525,7 @@ static void octeon_gfm_mul(const uint64_t x[2], const uint64_t y[2],
+ uint64_t helper_octeon_cop2_dmfc2(CPUMIPSState *env, uint32_t sel)
+ {
+     MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++    int sha3_pos;
+ 
+     if (crypto->shared_mode == OCTEON_SHARED_MODE_SNOW3G) {
+         if (sel >= OCTEON_COP2_SEL_SNOW3G_LFSR0 &&
+@@ -1417,6 +1547,12 @@ uint64_t helper_octeon_cop2_dmfc2(CPUMIPSState *env, uint32_t sel)
+         }
+     }
+ 
++    if (crypto->shared_mode == OCTEON_SHARED_MODE_SHA3 &&
++        octeon_sha3_is_dat_sel(sel)) {
++        sha3_pos = octeon_sha3_dat_pos_from_sel(sel);
++        return octeon_sha3_lane_to_reg(crypto->sha3_state[sha3_pos]);
++    }
++
+     switch (sel) {
+     case OCTEON_COP2_SEL_3DES_KEY0:
+     case OCTEON_COP2_SEL_3DES_KEY1:
+@@ -1507,6 +1643,7 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, uint64_t value,
+ {
+     MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
+     uint64_t q = (uint64_t)value;
++    int sha3_pos;
+ 
+     switch (sel) {
+     case OCTEON_COP2_SEL_3DES_KEY0:
+@@ -1628,6 +1765,14 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, uint64_t value,
+         octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA512);
+         octeon_sha512_transform(crypto);
+         break;
++    case OCTEON_COP2_SEL_SHA3_DAT15_WRITE:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        octeon_store_shared_hash_dat(crypto, sel, q);
++        break;
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        octeon_store_shared_hash_dat(crypto, sel, q);
++        break;
+     case OCTEON_COP2_SEL_HSH_IVW0:
+     case OCTEON_COP2_SEL_HSH_IVW1:
+     case OCTEON_COP2_SEL_HSH_IVW2:
+@@ -1688,6 +1833,32 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, uint64_t value,
+         crypto->hash_block[7] = q;
+         octeon_sha1_transform(crypto);
+         break;
++    case OCTEON_COP2_SEL_SHA3_XORDAT0:
++    case OCTEON_COP2_SEL_SHA3_XORDAT1:
++    case OCTEON_COP2_SEL_SHA3_XORDAT2:
++    case OCTEON_COP2_SEL_SHA3_XORDAT3:
++    case OCTEON_COP2_SEL_SHA3_XORDAT4:
++    case OCTEON_COP2_SEL_SHA3_XORDAT5:
++    case OCTEON_COP2_SEL_SHA3_XORDAT6:
++    case OCTEON_COP2_SEL_SHA3_XORDAT7:
++    case OCTEON_COP2_SEL_SHA3_XORDAT8:
++    case OCTEON_COP2_SEL_SHA3_XORDAT9:
++    case OCTEON_COP2_SEL_SHA3_XORDAT10:
++    case OCTEON_COP2_SEL_SHA3_XORDAT11:
++    case OCTEON_COP2_SEL_SHA3_XORDAT12:
++    case OCTEON_COP2_SEL_SHA3_XORDAT13:
++    case OCTEON_COP2_SEL_SHA3_XORDAT14:
++    case OCTEON_COP2_SEL_SHA3_XORDAT15:
++    case OCTEON_COP2_SEL_SHA3_XORDAT16:
++    case OCTEON_COP2_SEL_SHA3_XORDAT17:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        sha3_pos = octeon_sha3_xordat_pos_from_sel(sel);
++        crypto->sha3_state[sha3_pos] ^= octeon_sha3_reg_to_lane(q);
++        break;
++    case OCTEON_COP2_SEL_SHA3_STARTOP:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        octeon_sha3_permute(crypto);
++        break;
+     case OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT:
+         octeon_gfm_mul_reflect(crypto, q);
+         break;
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index b2eca29e06..41e0d770f5 100644
+index 84fe3b38d0..3f8c17678a 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -45,7 +45,7 @@ static bool trans_BADDU(DisasContext *ctx, arg_BADDU *a)
- {
-     TCGv t0, t1;
- 
--    if (a->rt == 0) {
-+    if (a->rd == 0) {
-         /* nop */
-         return true;
-     }
-@@ -55,8 +55,9 @@ static bool trans_BADDU(DisasContext *ctx, arg_BADDU *a)
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
- 
--    tcg_gen_add_tl(t0, t0, t1);
--    tcg_gen_andi_i64(cpu_gpr[a->rd], t0, 0xff);
-+    tcg_gen_add_i64(t0, t0, t1);
-+    tcg_gen_andi_i64(t0, t0, 0xff);
-+    gen_store_gpr(t0, a->rd);
-     return true;
- }
- 
-@@ -64,7 +65,7 @@ static bool trans_DMUL(DisasContext *ctx, arg_DMUL *a)
- {
-     TCGv t0, t1;
- 
--    if (a->rt == 0) {
-+    if (a->rd == 0) {
-         /* nop */
-         return true;
-     }
-@@ -74,7 +75,8 @@ static bool trans_DMUL(DisasContext *ctx, arg_DMUL *a)
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
- 
--    tcg_gen_mul_i64(cpu_gpr[a->rd], t0, t1);
-+    tcg_gen_mul_i64(t0, t0, t1);
-+    gen_store_gpr(t0, a->rd);
-     return true;
- }
- 
+@@ -72,6 +72,7 @@ static bool octeon_cop2_is_supported_dmfc2(uint16_t sel)
+     case OCTEON_COP2_SEL_HSH_IVW6:
+     case OCTEON_COP2_SEL_HSH_IVW7:
+     case OCTEON_COP2_SEL_AES_DAT0:
++    case OCTEON_COP2_SEL_SHA3_DAT24:
+     case OCTEON_COP2_SEL_GFM_MUL_REFLECT0:
+     case OCTEON_COP2_SEL_GFM_MUL_REFLECT1:
+     case OCTEON_COP2_SEL_GFM_RESINP_REFLECT0:
+@@ -156,6 +157,8 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
+     case OCTEON_COP2_SEL_HSH_DATW13:
+     case OCTEON_COP2_SEL_HSH_DATW14:
+     case OCTEON_COP2_SEL_HSH_DATW15:
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++    case OCTEON_COP2_SEL_SHA3_DAT15_WRITE:
+     case OCTEON_COP2_SEL_HSH_IVW0:
+     case OCTEON_COP2_SEL_HSH_IVW1:
+     case OCTEON_COP2_SEL_HSH_IVW2:
+@@ -173,11 +176,30 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
+     case OCTEON_COP2_SEL_GFM_RESINP1:
+     case OCTEON_COP2_SEL_GFM_XOR0:
+     case OCTEON_COP2_SEL_GFM_POLY:
++    case OCTEON_COP2_SEL_SHA3_XORDAT0:
++    case OCTEON_COP2_SEL_SHA3_XORDAT1:
++    case OCTEON_COP2_SEL_SHA3_XORDAT2:
++    case OCTEON_COP2_SEL_SHA3_XORDAT3:
++    case OCTEON_COP2_SEL_SHA3_XORDAT4:
++    case OCTEON_COP2_SEL_SHA3_XORDAT5:
++    case OCTEON_COP2_SEL_SHA3_XORDAT6:
++    case OCTEON_COP2_SEL_SHA3_XORDAT7:
++    case OCTEON_COP2_SEL_SHA3_XORDAT8:
++    case OCTEON_COP2_SEL_SHA3_XORDAT9:
++    case OCTEON_COP2_SEL_SHA3_XORDAT10:
++    case OCTEON_COP2_SEL_SHA3_XORDAT11:
++    case OCTEON_COP2_SEL_SHA3_XORDAT12:
++    case OCTEON_COP2_SEL_SHA3_XORDAT13:
++    case OCTEON_COP2_SEL_SHA3_XORDAT14:
++    case OCTEON_COP2_SEL_SHA3_XORDAT15:
++    case OCTEON_COP2_SEL_SHA3_XORDAT16:
++    case OCTEON_COP2_SEL_SHA3_XORDAT17:
+     case OCTEON_COP2_SEL_HSH_STARTSHA1_COMPAT:
+     case OCTEON_COP2_SEL_HSH_STARTMD5:
+     case OCTEON_COP2_SEL_SNOW3G_START:
+     case OCTEON_COP2_SEL_SNOW3G_MORE:
+     case OCTEON_COP2_SEL_HSH_STARTSHA256:
++    case OCTEON_COP2_SEL_SHA3_STARTOP:
+     case OCTEON_COP2_SEL_HSH_STARTSHA1:
+     case OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT:
+     case OCTEON_COP2_SEL_HSH_STARTSHA512:
 
 -- 
 2.53.0
