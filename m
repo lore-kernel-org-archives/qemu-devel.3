@@ -4,97 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2218FF8FA71
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 13:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B73EF8FA7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 14:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFAhl-00061Y-7e; Tue, 21 Apr 2026 08:59:53 -0400
+	id 1wFBlk-0002hw-Oz; Tue, 21 Apr 2026 10:08:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFAhh-0005zk-BG
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 08:59:49 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFAhf-000094-KD
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 08:59:49 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so42909705e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 05:59:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776776386; x=1777381186; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FHsE+jZfljutcFeH25QlbrNIggxAWepn5LTEgZuBN04=;
- b=eWLQISzac1ps5K9NQq+KZbumGL6psgRht/3Fz0vFxIi5oGRczeWBOG1OD08oYXxj2k
- rhBCbF9Yx6vGSbkX554jWaiE/5Grz0e3EtRRD3sAkXhIfuu2xYlIbcqrnN3cX1kazshX
- r2J9XZsKPr6VUHERAxjlWCC1x4r7diRzgdGofQO6orzOJf22wMFUxnhx3GbiwsIxRVgW
- 9oEBmdhKtoZpUGvPPVDPpa1PbjTKSs/tDE4q+FqOQ7E17DDt6sJHPO5h9VcHjdCNIYaU
- N1uze9SrvkuC5ExoYzpNZ0nhDdEApOycP8PAXMcqOH2PMtnJ3w0XWRS7mWaFqzjHZf2P
- dpHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776776386; x=1777381186;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FHsE+jZfljutcFeH25QlbrNIggxAWepn5LTEgZuBN04=;
- b=g2Dmhy5BpG5duXO3FSXz9qfaLyFSEmJz3hYyMxwgJEZc4q0t1pmGgCg9eNSNoymA93
- XHEV2zIToIg/coEHU3SatWeYYuCjBc56h5CERMvDsGAUUQg3hs+6ZFUvIywVYxyzo1zV
- sfoU1ENvqq8Uh8ow3bTl6Cs+c6MNSqaXG8TA9PZw2x3/PDJ9JVrU4O0RXUkhISzia+CT
- TFNb9JQBjCp7TyrIJzPNB4wSsWraasifc27ySIMHp1pyixilPK5ygqG9wqsT9BSmcarq
- bf4MdLYSRbVB+wIAhhQHtx5bKQI8RcT1u6rMyZhJfujEsVs+4ph2M9DRc1Bdf3rUS7iB
- 6IUQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+BdyPR4EVvTweQes5C/uSQ7TVhYrgUiO4D4pA2Czm0eTvI9QMp+emb9VVD9QXRKFNFoYOt1BOiwInI@nongnu.org
-X-Gm-Message-State: AOJu0YxjEWFWpOmxf4BaS8UtTmsIs1/JkxnNHBa26wnOMei5B4VCdJea
- jaoxc0rXtBHrLsRfefr0qu5vC5WaN+hmHKLgWEXDwh81oCmTTrxrCLCSPmjHH2B4bFQ=
-X-Gm-Gg: AeBDieuYaMJU9DpuOnRYJwWzBncLmZI0BjshC4UgfrecM0dmfUybtzi2QXgaKanScWa
- xZZo50TCc2TdCffiEQ3t+e6+DjnQNZj7RukEn2fQ4aRsJMC3CyjHB/8m73c2OeMoB8r5K6HN4S+
- 2LXqzuddDVGvZeIubBXjbV0VSeJfSph/dCAYV9DROeXjxpqMVhLAM8OyLPZ+x1EvbH5SWAFVsBi
- czveQo4oPY8SzyJ1VjBpK3IWbWloGD5WsuLBVfGsaDz2RvaW1nqKI5l/crfd/m5OeKc8hpqX/KX
- gIqyJwEI3qsDKMcxYko7UAxlNoZZRzjmDBla239JCTF06ClqQISFGszJxcC/1Sez2O4If9SHf3T
- DLfR+FEX8iQofwhHhKhBioL+ArwhQ5H/JJkHXZvxsl5AM7dUu08PBL58jGLobODcGoQcGhXMNmB
- FdO8Yw+lzQbAI2FAU1kWUucyQiuC7bIuAg+UACLFJg7y5gWTh0PNqwP5nLMWYAh5537iK6hOgdF
- d1zPL7pZu28
-X-Received: by 2002:a05:600d:b:b0:48a:56de:d63c with SMTP id
- 5b1f17b1804b1-48a56dedadfmr20938815e9.27.1776776385747; 
- Tue, 21 Apr 2026 05:59:45 -0700 (PDT)
-Received: from [10.193.39.66] (140.170.88.92.rev.sfr.net. [92.88.170.140])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e59f97sm41904726f8f.37.2026.04.21.05.59.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Apr 2026 05:59:45 -0700 (PDT)
-Message-ID: <20ba60c7-4929-418a-8596-c531243fec99@linaro.org>
-Date: Tue, 21 Apr 2026 14:59:43 +0200
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFBlj-0002hU-5A
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:08:03 -0400
+Received: from p-west3-cluster4-host7-snip4-10.eps.apple.com ([57.103.74.141]
+ helo=outbound.ms.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFBlh-0002eN-B5
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:08:02 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-10 (Postfix) with ESMTPS id
+ CB2BD180012B; Tue, 21 Apr 2026 14:07:55 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAtIAVsHXwBBCEwDWgJbHEIMSQRVGlofHVYQUgBSD3IFVwhBCFMCUQRYGl8IGQ1AThkMSh1SVlEFSgxcAGgPXR1YEV0=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776780476; x=1779372476;
+ bh=vnSSeCmJZe/BZsQhSbYkbvZgWtTe4iR3ULS++b3UMl4=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=WiAKoWylnL2Dgjqah6DRZwl7lqeSXuiE2rbvdEwTTjwfAiC6ZXg9vihurdBFp4BzPL8sRLE329R8XrQr8wCQkhH2cJPCinjL8iezxBlqYXeHvvI3IDpvNE3GwgOyCx4iqZU877nIF/BtFQ8WpMG19BDp3L8QRSZOpL/ZnMwkGloybYM8+Mq4KpvJwABa4axro/F4X9i3EOsl7zNE7kCekE90tf2eufln1w0MAg6r8y6/PcV3T9zjK5fCfNLEsI8Vbq5WyqARfxFMYyJmSnP5h1RbR4zAt9NRaEROHGzS1yEMJAEA8CcOaAxZ18y2Wjk6jxmjjYK/dQ/hv1PME1iiyg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-10 (Postfix) with ESMTPSA id
+ 62E201800122; Tue, 21 Apr 2026 14:07:53 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] whpx: i386, arm: do partition reset on boot CPU reset
+Date: Tue, 21 Apr 2026 16:07:50 +0200
+Message-ID: <20260421140750.25178-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/13] hw/riscv/atlantis: Add PCIe controller
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260421053140.752059-1-joel@jms.id.au>
- <20260421053140.752059-11-joel@jms.id.au>
- <d133505a-8a81-458d-a0f0-8b17ff5c0eab@linaro.org>
- <aeceurHJHEa_HgvZ@lima-default>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aeceurHJHEa_HgvZ@lima-default>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Info-Out: v=2.4 cv=daqNHHXe c=1 sm=1 tr=0 ts=69e784bc
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KtJ61neEzk59qg8Kb1kA:9 a=O8hF6Hzn-FEA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIxMDE0MSBTYWx0ZWRfX8PNcvIySkHU1
+ I/p7uAOdl+l7UnFDd/hLmw7eTyi2mWM2CtZ8+/8UfUeILVd9RBJtV4pp5Y9p/A35zOPX99FZBDK
+ NFHbJJ2KvF67sriupDUHeh/l7+dIdlSw392tYhtWQlnyJS2M3VX/LD2QRGcDnIBTXgPoTtxoJ5G
+ YB7gueJi5GgED79s/+durT1/NzaMCmSGfa3p365tWLJAHDb8CjAWVLrOPEJ98b0tzj5yU0s57/I
+ yW0zimeZ2uPGAKmt2Z8VjM6zOqzh4oJwBunMygIkgHesI2OYZKdbQW4BvOKcE6/DpcDYl4Dlzlo
+ DKg+Z+VL+IGSVqGzVhOSt4jy4/KdduuX2E9I3qYr12IxDVZGT7Lbd/nENnUDuY=
+X-Proofpoint-ORIG-GUID: QtaHeZRS7HrZh7wfn4_5BdcaatSAOgxD
+X-Proofpoint-GUID: QtaHeZRS7HrZh7wfn4_5BdcaatSAOgxD
+Received-SPF: pass client-ip=57.103.74.141;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,64 +83,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/4/26 11:10, Nicholas Piggin wrote:
-> On Tue, Apr 21, 2026 at 07:59:32AM +0200, Philippe Mathieu-Daudé wrote:
->> On 21/4/26 07:31, Joel Stanley wrote:
->>> From: Nicholas Piggin <npiggin@gmail.com>
->>>
->>> tt-atlantis is likely to use a generic ECAM compatible PCIe memory map,
->>> so gpex is not far off the OS programming model
->>>
->>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->>> Signed-off-by: Joel Stanley <joel@jms.id.au>
->>> ---
->>> v3: Avoid leaks in the dt string allocation
->>> ---
->>>    include/hw/riscv/tt_atlantis.h |   2 +
->>>    hw/riscv/tt_atlantis.c         | 225 ++++++++++++++++++++++++++++++++-
->>>    hw/riscv/Kconfig               |   2 +
->>>    3 files changed, 228 insertions(+), 1 deletion(-)
->>
->>
->>> +static void create_fdt_pcie(void *fdt,
->>> +                            const MemMapEntry *mem_ecam,
->>> +                            const MemMapEntry *mem_pio,
->>> +                            const MemMapEntry *mem_mmio32,
->>> +                            const MemMapEntry *mem_mmio64,
->>> +                            int legacy_irq,
->>> +                            uint32_t aplic_s_phandle,
->>> +                            uint32_t imsic_s_phandle)
->>> +{
->>> +    g_autofree char *name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
->>> +                                            mem_ecam->base);
->>> +
->>> +    qemu_fdt_setprop_cell(fdt, name, "#address-cells", FDT_PCI_ADDR_CELLS);
->>> +    qemu_fdt_setprop_cell(fdt, name, "#interrupt-cells", FDT_PCI_INT_CELLS);
->>> +    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0x2);
->>> +    qemu_fdt_setprop_string(fdt, name, "compatible", "pci-host-ecam-generic");
->>> +    qemu_fdt_setprop_string(fdt, name, "device_type", "pci");
->>> +    qemu_fdt_setprop_cells(fdt, name, "bus-range", 0,
->>> +                           mem_ecam->size / PCIE_MMCFG_SIZE_MIN - 1);
->>> +    qemu_fdt_setprop(fdt, name, "dma-coherent", NULL, 0);
->>> +    qemu_fdt_setprop_cell(fdt, name, "msi-parent", imsic_s_phandle);
->>> +
->>> +    qemu_fdt_setprop_sized_cells(fdt, name, "reg",
->>> +                                 2, mem_ecam->base,
->>> +                                 2, mem_ecam->size);
->>> +    if (!(mem_mmio32->base & 0xffffffffUL)) {
->>> +        /* XXX: this is a silly hack because it would collide with PIO */
->>
->> Could you explain a bit more?
-> 
-> Ah this is a bit incomplete sorry I didn't catch it earlier. Before the
-> mapping was finalised I just added this hacky way to determining PCIe IO
-> address based on the physical address.
-> 
-> This should just go away and the IO addresses come from a different table.
+WHvResetPartition resets partition state, and is not supported on Windows 10.
 
-Ah good, thanks for the explanation.
+On Arm, it's supposed to be used for reboots.
 
-Regards,
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ accel/whpx/whpx-accel-ops.c     |  1 +
+ accel/whpx/whpx-common.c        | 12 ++++++++++++
+ include/accel/accel-cpu-ops.h   |  7 +++++++
+ include/system/cpus.h           |  3 +++
+ include/system/whpx-accel-ops.h |  2 ++
+ system/cpus.c                   |  7 +++++++
+ system/runstate.c               |  3 +++
+ target/arm/whpx/whpx-all.c      |  2 --
+ 8 files changed, 35 insertions(+), 2 deletions(-)
 
-Phil.
+diff --git a/accel/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
+index b8f41544cb..ddeef79e53 100644
+--- a/accel/whpx/whpx-accel-ops.c
++++ b/accel/whpx/whpx-accel-ops.c
+@@ -98,6 +98,7 @@ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
+     ops->handle_interrupt = generic_handle_interrupt;
+     ops->supports_guest_debug = whpx_supports_guest_debug;
+ 
++    ops->vm_reset = whpx_partition_reset;
+     ops->synchronize_post_reset = whpx_cpu_synchronize_post_reset;
+     ops->synchronize_post_init = whpx_cpu_synchronize_post_init;
+     ops->synchronize_state = whpx_cpu_synchronize_state;
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 6fe44d5910..daf59207c6 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -205,6 +205,18 @@ static void do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
+     cpu->vcpu_dirty = true;
+ }
+ 
++/*
++ * Partition support
++ */
++
++void whpx_partition_reset(void)
++{
++    struct whpx_state *whpx = &whpx_global;
++    if (whp_dispatch.WHvResetPartition) {
++        whp_dispatch.WHvResetPartition(whpx->partition);
++    }
++}
++
+ /*
+  * CPU support.
+  */
+diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
+index 9c07a903ea..32348d3470 100644
+--- a/include/accel/accel-cpu-ops.h
++++ b/include/accel/accel-cpu-ops.h
+@@ -42,6 +42,13 @@ struct AccelOpsClass {
+     void (*kick_vcpu_thread)(CPUState *cpu);
+     bool (*cpu_thread_is_idle)(CPUState *cpu);
+ 
++    /**
++     * vm_reset
++     *
++     * Request to reset the VM to the hardware accelerator.
++     */
++    void (*vm_reset)(void);
++
+     /**
+      * synchronize_post_reset:
+      * synchronize_post_init:
+diff --git a/include/system/cpus.h b/include/system/cpus.h
+index 508444ccf1..5dcd7fff07 100644
+--- a/include/system/cpus.h
++++ b/include/system/cpus.h
+@@ -40,4 +40,7 @@ void cpu_synchronize_all_post_reset(void);
+ void cpu_synchronize_all_post_init(void);
+ void cpu_synchronize_all_pre_loadvm(void);
+ 
++/* VM wide reset */
++void accel_vm_reset(void);
++
+ #endif
+diff --git a/include/system/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
+index 4b2a732654..c809250485 100644
+--- a/include/system/whpx-accel-ops.h
++++ b/include/system/whpx-accel-ops.h
+@@ -12,6 +12,8 @@
+ 
+ #include "system/cpus.h"
+ 
++void whpx_partition_reset(void);
++
+ int whpx_init_vcpu(CPUState *cpu);
+ int whpx_vcpu_exec(CPUState *cpu);
+ void whpx_destroy_vcpu(CPUState *cpu);
+diff --git a/system/cpus.c b/system/cpus.c
+index bded87feb1..6a321873f5 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -203,6 +203,13 @@ bool cpus_are_resettable(void)
+     return true;
+ }
+ 
++void accel_vm_reset(void)
++{
++    if (cpus_accel->vm_reset) {
++        cpus_accel->vm_reset();
++    }
++}
++
+ void cpu_exec_reset_hold(CPUState *cpu)
+ {
+     if (cpus_accel->cpu_reset_hold) {
+diff --git a/system/runstate.c b/system/runstate.c
+index 2d4e95a216..135e2decba 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -564,6 +564,9 @@ void qemu_system_reset(ShutdownCause reason)
+         qapi_event_send_reset(shutdown_caused_by_guest(reason), reason);
+     }
+ 
++    /* Tell the accelerator that the VM is being reset. */
++    accel_vm_reset();
++
+     /*
+      * Some boards use the machine reset callback to point CPUs to the firmware
+      * entry point.  Assume that this is not the case for boards that support
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 4019a513aa..f345fea4fe 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -472,8 +472,6 @@ int whpx_vcpu_run(CPUState *cpu)
+             if (arm_cpu->power_state != PSCI_OFF) {
+                 whpx_psci_cpu_off(arm_cpu);
+             }
+-            /* Partition-wide reset, to reset state for reboots to succeed. */
+-            whp_dispatch.WHvResetPartition(whpx->partition);
+             bql_unlock();
+             break;
+         case WHvRunVpExitReasonNone:
+-- 
+2.50.1 (Apple Git-155)
+
 
