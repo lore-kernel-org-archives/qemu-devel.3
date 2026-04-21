@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E9BF94CB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 22:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F5BF94CB0
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 22:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFJNg-0002vq-DJ; Tue, 21 Apr 2026 18:15:44 -0400
+	id 1wFJTI-0003jI-KM; Tue, 21 Apr 2026 18:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJNb-0002vJ-Oo
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:15:42 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJTG-0003io-EX
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:21:30 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJNY-0005sR-Ci
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:15:39 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso63716815e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 15:15:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJTE-0007D3-Qz
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:21:30 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43d73422431so4072843f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 15:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776809734; x=1777414534; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776810087; x=1777414887; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XEcT6Z9zHm5gjm4x1LoMjlZxu8dV3x4OWoRZ2dZxU4s=;
- b=SxXJAx6Z1VAQaGMD4euJuPrrj5XQOTLV7BZzALYB9/bQgxKyjCvT9nYik3CZidkbAV
- FgWPqdcyaM4CIoCIhxdTZ1EzXe56O2ToGdvLDQVNC84nUgFXX/zlv6eN4VxEgXC4YRFA
- DGOcoMdskjyMMhaNCvMjZnl34hZrGzDYctBqBl0EVt9xzmnnB6EOzhrACupIPGiFIvNs
- v0ENeth6KJbcKrmbTL/6Zc97lURm6imTdVBjInsKGD+KvtqkDl/BAzn1a74Jvq75Q3ff
- dTegI6BJZfX8nmKVHhTJIzG54gu7yEsTRvLKYjNzqzM95i+s/xN5fK4t8Qkf1Hn3CjTe
- yMfQ==
+ bh=y4Y6Lcj2ggS5YQ23OA00RNvSohTrGdYqOgwx8e0bNMc=;
+ b=kLGDWnkt2y/rUQgGtP4P9f6nwv3kOV3S0iJjmrrVItDiWZ5BVrVIS+Aj3x/u6P2JPf
+ FkSHGbsxogV8p+wMz4qQcl9aQiYG7jHwHMgskdn5rknqaAc1+WLfchvoi8/CerWTi99p
+ VjGyUtSaY9qtbDkN2XhQoLbpxbzrQpG7N9qTHP95KZqUHyR3XxewKKhGoyPb8LYLgRLC
+ P8jo2qW0JjrsHxIWNyOb2TNzkx2ileJ4jr+qFWrqhRsXqTAyaFpK4EknrxwaBAKj65JP
+ BSch0gW6DOoEiHE3VKR/0VfokeM7lpaQkdj1BHz7+szTPqwok78WQTqzfB/c3hXuil98
+ QjPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776809734; x=1777414534;
+ d=1e100.net; s=20251104; t=1776810087; x=1777414887;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XEcT6Z9zHm5gjm4x1LoMjlZxu8dV3x4OWoRZ2dZxU4s=;
- b=Bj85SeUYBaPqvzly5HBAqUWnAsdJCC0CCTIS0RbpUMw7/qPuIxrW2Mcl0M1T+/Q7E4
- Jq1vIALmmsghUBK56t7G08ovU5NRFEYEiAugi6iyE6YxO4zXz34dVzPfSo3+o7+z2OQA
- J+b25eG/mfGYbd0C4Sq+Xfs5bsC5OfLPNJwPtMZKWv5xDL1XXusoWss2n18myhWTGCBv
- jwlOipHnnpzWBkpE34C9zyZvr7T1Z40rX0nvFMfpG9EUJbD6LZSvwuqM+Xhzj7sRiK22
- PwWdWvYT4ePYRHdZKzKMqJFX41OVqS9GBUFbvoheCf0Jlz5kYA0kr3N+EAXzYLItohh/
- 4G0g==
+ bh=y4Y6Lcj2ggS5YQ23OA00RNvSohTrGdYqOgwx8e0bNMc=;
+ b=n/AMh/rme6zAs3CRDB7DyvoLt+jdTH2nMOlYVuBd6XjpPzEmTMzC6Uu/e/F6A2QemB
+ 0ppnIxFZZiMMBAphhp8PRFAPrFD3UM/j4tTDJJXwYW1402qQtmURYonBWM0ZWVlp5XFn
+ NLjKGEEXebGo0zCsOkGFgFQ3+pKPLY8gOk6XECHNt3K0v81W+NK5oVFOvkx8FV9+hzZo
+ RPXIGE1JGJhXb7qbWRHuSNd/Xh0rKu1pweEMihXRlwzw/QBOqoqES+x3odf8hetT+9ME
+ lA2v5MrH6WbmXltwiPdFNmH0stX0nn3CQlrNqdwUK5lDtHSZ2v0ryqvnBtaOFSYTrRmC
+ rwLw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8PCoCLOifhNGfcoE7nK4QTaB61gIaAHWTxyUC2ssr1QIf4jrqDsIi8NQcAe63BURiAC/z7mtU8vItH@nongnu.org
-X-Gm-Message-State: AOJu0YzTKGmyaXoqO9cQ4EmJNNiiG2AySZcK5PyzEg7PsdlZLrtRJb3A
- 2oEzK9vnUo+CkkrmMs5rfM/b5Shg2Rw3CYMtvYUL+2lDcH4xKVK5YTMb8DuCS18/+PA=
-X-Gm-Gg: AeBDiesHqhKa6bLcoCDEY8R+gaehlqIHRCXRVazZT6MCNLpRA/IhxOIbm/4kgGpB6bi
- BdUzupqbiDaBJEgZvHqbk4yT5loL6S5pfHyd252nN3V50XPe5brMGNKAk+EsF7P/ksOaVfr9cnm
- R84h3JTTRqZkGfWqSneZbTY3J0Eb5vEqZAE6oaHYTOPYguYEyJTWZNsasLT6f67pznCWFrzTxGY
- y5+wuRA95BOaluz+yHhpx4X87gAy2AwRQIaYmsV2qPVIpoc8lfVNynAFA0y3G6D5aNqiwvzsc/9
- MQFAjy/TaazuxtEgiDweBKNAfAt0WAgZkclthZuvmKhDZdh6NNqDMpw+5UYO4jg4U5ayKATDZwh
- RK7vHPZC96CJcnsTzDv0PMiCFlmNlDwxj6Ro59F3oGVb50lwkartdazPfIMj3Ft0ZNid98embeu
- UcTn9qOZ9rbvwt/br9liVUhnWvzrdkDq9K44gLOlcpJ902n9wur/qT054lTZ/f4SfE6N3y25FUj
- IsR
-X-Received: by 2002:a05:600c:444a:b0:487:1520:d107 with SMTP id
- 5b1f17b1804b1-488fb793580mr261690935e9.31.1776809734007; 
- Tue, 21 Apr 2026 15:15:34 -0700 (PDT)
+ AFNElJ/K6RlYs19ZnJNVMDBn1QN4Qr6ML4MZ8m5FutdAn+4Kmk6mGbKK/Zem/4sbX1xZPNKbLeN7ek1K48Yw@nongnu.org
+X-Gm-Message-State: AOJu0YxM+a3rsiKnXo76x1oRWfP/sQ/2GP9d/itPzkkwj6u6XCDEU6Ma
+ q4I9IjqztcN6U8eKoer5z5brVHlmpAvFjQdXRT1H3kjJy9ICas2eM7i4CgH6mtA7ubA=
+X-Gm-Gg: AeBDietqn6gEeV8tUuHF6m1fxmIM8I3rOV/oQOOK1GcNHUqhXiy8GS/8Yq2VEJkPzwk
+ o5XDsWO7PFO/LM+ySc3J3WdmpF7fim4qdgCeT1NymcNsqY6eHvO2PAuDmMtC9FlP0R81Gzz6Ch9
+ 9UJTukaDAULMM0aPwvfYL/L+jKu1N8HV8blTWxh1PAuoTN9yfbmbacqAGOzZDruaW999i52Xk4h
+ TvcQRMwk23ZARk9DkGlgFlxbAWjbJb58XobFAfNUhXpyQgnOUzO2gVQ+3xFizQnNV5ihnrl0/nj
+ lg7fNwkBFvT8x+bUSvRWAJ2bYSgSBgeQshn2wZ6Jl7RqAK/pqNx8byo8RjwMMjAoanFPHd14xp2
+ vgN/X47wP8YHfq+ffPrnGBE0O/Cr2AODQt9jn4N8de2+G0MMcvvciuaO7RWGBm/lP58VOlgHSiG
+ 37+9kUPzSymBh071aFRhezPY2bJVtQUCGoOBh9ANJvO8dv5e60SsqwbX2wwBeX+B0/OM90KMnCb
+ /Kc
+X-Received: by 2002:a05:6000:24c7:b0:43c:fe0e:5bb9 with SMTP id
+ ffacd0b85a97d-43fe3dd4ca7mr31401671f8f.12.1776810086977; 
+ Tue, 21 Apr 2026 15:21:26 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e591cesm54373124f8f.36.2026.04.21.15.15.32
+ ffacd0b85a97d-43fe4e4ffa8sm41286302f8f.35.2026.04.21.15.21.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Apr 2026 15:15:33 -0700 (PDT)
-Message-ID: <5519481d-371e-4b6a-b281-06baf5d1d429@linaro.org>
-Date: Wed, 22 Apr 2026 00:15:31 +0200
+ Tue, 21 Apr 2026 15:21:26 -0700 (PDT)
+Message-ID: <1c4b67db-447f-408e-a6b4-c477894f1a59@linaro.org>
+Date: Wed, 22 Apr 2026 00:21:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] hw/tpm: Remove instance @ppi_enabled field
+Subject: Re: [PATCH 1/2] intel_iommu: Replace assert(size == 4) with guest
+ error in MMIO handlers
 Content-Language: en-US
-To: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260317120241.16320-1-philmd@linaro.org>
- <70bd2f29-9f33-43e0-897f-52f0b2af111f@linaro.org>
- <ece64b0e-7f05-43de-b326-38788a9abe8b@linux.ibm.com>
- <2c06e37f-477a-49d6-a65b-fd826fcdc5b2@linux.ibm.com>
- <184a1a43-d41b-4b23-bc53-768a12631884@linux.ibm.com>
- <01eb4b4a-b77f-421c-8ff8-bbd061482c8d@linaro.org>
- <082b5146-23ca-422f-854b-807ceab50427@linaro.org>
- <0dccc934-78f3-4423-8a75-214243f6f855@linux.ibm.com>
+To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, jasowang@redhat.com,
+ yi.l.liu@intel.com, =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?=
+ <clement.mathieu--drif@bull.com>, marcel.apfelbaum@gmail.com,
+ pbonzini@redhat.com, richard.henderson@linaro.org, farosas@suse.de,
+ lvivier@redhat.com
+References: <20260420170523.17908-1-junjie.cao@intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0dccc934-78f3-4423-8a75-214243f6f855@linux.ibm.com>
+In-Reply-To: <20260420170523.17908-1-junjie.cao@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,69 +108,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/4/26 23:44, Stefan Berger wrote:
+On 20/4/26 19:05, Junjie Cao wrote:
+> vtd_mem_read() and vtd_mem_write() use assert(size == 4) for
+> 32-bit-only VT-d registers. Since MemoryRegionOps .valid/.impl
+> accepts sizes 4 through 8, an 8-byte guest access passes framework
+> validation and reaches the handler, where the assertion aborts QEMU.
 > 
-> 
-> On 4/20/26 4:31 PM, Philippe Mathieu-Daudé wrote:
->> Hi Stefan,
->>
->> On 28/3/26 00:37, Philippe Mathieu-Daudé wrote:
->>> On 27/3/26 19:17, Stefan Berger wrote:
->>>>
->>>>
->>>> On 3/27/26 11:21 AM, Stefan Berger wrote:
->>>>>
->>>>>
->>>>> On 3/27/26 11:18 AM, Stefan Berger wrote:
->>>>>>
->>>>>>
->>>>>> On 3/23/26 5:56 AM, Philippe Mathieu-Daudé wrote:
->>>>>>> On 17/3/26 13:02, Philippe Mathieu-Daudé wrote:
->>>>>>>
->>>>>>>> Philippe Mathieu-Daudé (5):
->>>>>>>>    hw/tpm: Factor tpm_ppi_enabled() out
->>>>>>>>    hw/tpm: Add TPMIfClass::ppi_enabled field
->>>>>>>>    hw/tpm: Remove CRBState::ppi_enabled field
->>>>>>>>    hw/tpm: Propagate @ppi_enabled to tpm_tis_reset() and remove in
->>>>>>>>      TPMState
->>>>>>>>    hw/tpm: Simplify tpm_ppi_enabled()
->>>>>>>
->>>>>>> Series queued for 11.1 (typo fixed), thanks.
->>>>>>>
->>>>>>
->>>>>> Here's another TPM PPI related series. It would make sense to 
->>>>>> upstream them together. Do you want to queue that one as well?
->>>>>>
->>>>>> https://lore.kernel.org/qemu-devel/20260327-tpm-tis-sysbus-ppi- 
->>>>>> v2-0- d8ec84d25dbc@redhat.com/T/#t
->>>>>>
->>>>>
->>>>> Actually, they will have to rebase on this series first...
->>>>>>
->>>>>
->>>>
->>>> v3 is good now:
->>>>
->>>> https://lore.kernel.org/qemu-devel/20260327173209.148180-1- 
->>>> mbawa@redhat.com/T/#t
->>>>
->>>> If you want to take it let me know, otherwise I will have to wait 
->>>> for your series.
->>
->> I'm not seeing your R-b tag on v3 on the mailing list, did you
->> sent it? (asking because the list had some issue the last weeks).
->>
->>>
->>> Thanks for the head up, I'll queue it along and send the pull
->>> request after 11.0 is released.
-> 
-> https://lore.kernel.org/qemu-devel/20260327173209.148180-1- 
-> mbawa@redhat.com/T/#m42a888b82b87432799e53c0426e65f95e9a27708
-> 
-> All 3 patches have my R-b as far as I can see...
+> Narrowing .impl.max_access_size to 4 is not viable because VT-d has
+> 64-bit registers (e.g. DMAR_CCMD_REG, DMAR_IQA_REG) that require
+> atomic 8-byte access to trigger command execution.
 
-Indeed, even in the pull request I prepared... I suppose I was
-looking at a previous version 🤷‍♂️ Sorry for the noise!
+So what about going the other way around, having a pure 64-bit
+implementation, so 64-bit accesses are atomic, and 32-bit ones
+are handled as 64-bit discarding one half:
 
-Waiting the git tree to open before posting that PR 🤞🏻
+-- >8 --
+@@ -3916,13 +3916,13 @@ static const VMStateDescription vtd_vmstate = {
+  static const MemoryRegionOps vtd_mem_ops = {
+      .read = vtd_mem_read,
+      .write = vtd_mem_write,
+      .endianness = DEVICE_LITTLE_ENDIAN,
+      .impl = {
+-        .min_access_size = 4,
++        .min_access_size = 8,
+          .max_access_size = 8,
+      },
+      .valid = {
+          .min_access_size = 4,
+          .max_access_size = 8,
+      },
+  };
+---
+
+> 
+> Replace all 22 asserts in vtd_mem_write() and 3 in vtd_mem_read()
+> with a size check that logs via qemu_log_mask(LOG_GUEST_ERROR) and
+> returns without performing the register access. The asymmetry
+> (22 vs 3) is because vtd_mem_read() handles most registers through
+> its default branch, so only three explicit cases carried an assert.
+> 
+> Found by fuzzing with QEMU's generic-fuzz framework; crashes
+> reproduced at DMAR_FECTL_REG, DMAR_IECTL_REG, DMAR_IEADDR_REG
+> and DMAR_PECTL_REG; all 25 sites share the same root cause.
+> 
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> ---
+>   hw/i386/intel_iommu.c | 114 +++++++++++++++++++++++++++++++++---------
+>   1 file changed, 89 insertions(+), 25 deletions(-)
+
 
