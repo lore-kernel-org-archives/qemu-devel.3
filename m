@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E5A7F5A8D2
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A976AF327A6
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF3kR-0001FO-DO; Tue, 21 Apr 2026 01:34:11 -0400
+	id 1wF3xl-0008CG-1d; Tue, 21 Apr 2026 01:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wF3kN-0000nJ-6S
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:34:08 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wF3xh-0008BS-F2
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:47:53 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wF3kK-0004bB-3r
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:34:06 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-362bb3260f1so200740a91.2
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 22:34:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wF3xf-0001CJ-No
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:47:53 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43cf7683a28so2547502f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 22:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776749642; x=1777354442; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Cb167ruVDMxU0ClBbxjLtNhRudkBM0dnTEahrKy7ou8=;
- b=msoyVbd2IU9CpF0OzFWAuI73wXxOPwuxCHpeR4ONk/qE0HIJ1QKJbncEwQR6r0qwkJ
- rV1vsZV0Csrzo+tZhtyNok7kAjLjBifeXjk1k5LDg8J/Zq3o8rKEpSfh1MIo3gawqcXg
- Ra3NlHwFiDTZLs8y4qXQu68j7J1nn6BuSlPyW3TaVcKuTCJfVO/e8a5ljjEr3NwYFlJF
- IYOW6nMN1iysO92yS+ySVT6Jh6vytszKmqx0a44ihsiJMO0jBeI6LdSg9xoCfAPe5Mjd
- rlj/d0ntD46tTHHPJ16kCNwAOODnKyL6QIPl47dnk5G5/czzrlsUMDduAPF/5kQHgjfZ
- f+PQ==
+ d=linaro.org; s=google; t=1776750469; x=1777355269; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R8OedVllihglM+y9ap3EYInstQNG4ta9jLhH5XuJjGw=;
+ b=SLCCKum/JadZ51IBvMBQMiuKH2y0E8y2NxfZwACpUzjhJ/PX08i8xhxSBfSXitY0tI
+ +Nh0d6yGDLM5IezCuX7H+w5+LGS0FG1kxmdiRSbpeODIAXzbJCDkcrPD+OCRUPBtt/Pg
+ GZhtD/9lT787QChv/Vjqd2CulDho1lZY4uGvCikrqeCPz4UBO4grAr6PtMcnPZdVzskV
+ HVTdCmf2nTulPJq7JGp8b0w3PTERO/Tq64xJt8wkGXzo8zCpEY4t8DEmbAtIdzFdSnMP
+ S++E/+aSGwJ3G3IffYonBD8xLPtW1swDCKHMJVOPRR1u6+Cg1GcHcPw7IfGGnKcrJFev
+ bqXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776749642; x=1777354442;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Cb167ruVDMxU0ClBbxjLtNhRudkBM0dnTEahrKy7ou8=;
- b=kRTLqqvBu1Z3o7gMcyNUYoxAImV4JDa+ElRdeOzby41PqGt7xgk62RTlC2k2aRxWJG
- D0hQN5sa6rqxNrLMzV5vedtt0wv/SoA8xIpGHIOuJwJU4FUDfNypVjvJXvGiP6KdA1vT
- 08EKfA2yjFsVWQP2/RkneyhTgA9v2zE3ak8l1RAKjc/Empgo1GqOJ+O/c8ub1g5M4saY
- Viemf2xlNlTsLqDiDJeHlgwyGNxpwku1Rle3YPMJJsLpg+cxjOm3UoYi+ZgVhc7iE4rC
- 0YeiDu5zlldmIfyfNMLrdkX6oNW/7FBsFkqBAzU3/vaI2CpEtd8qsuRxPsBv52XdX0FA
- rdqA==
+ d=1e100.net; s=20251104; t=1776750469; x=1777355269;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=R8OedVllihglM+y9ap3EYInstQNG4ta9jLhH5XuJjGw=;
+ b=HUgMBv/34OEkZtaH8jxnvRtLDQBLWScmeP2L0L6bIBzcswA80K61fXxhVOcleZdMpc
+ qcrQmN4EomUjFZ6CjYYqi/3OXK9dRCDSdW0Kcb/qP3sK5SE7KYH7nIBhlWlVWGY+hSvB
+ /3D7eqC5NdwzEuAabID/6ekbXtUOKSPKaicVdY4EntC84W33LtYAu2TJagqPbR5MflBx
+ kTT7ixZSE5HNRrENaWVadoytkX0fqpVMXM9T0WHF5Ziinhmsmyd6NyvXU9JLKFDrFCil
+ /vOTK9mfGSLr7UkaNO0TiSccmyFC+wcxx4U7QGnblymd9DuN2lbxDMgRNSKnjSubyl7T
+ gd7w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+clepY5nYCoNdWvA/GSqTgXkMdwhQtFK54m3j52iiVbfoXFd2rGtQAXWsuOMnXEaf3IzryChpBRmz5@nongnu.org
-X-Gm-Message-State: AOJu0Yx8gRby+wCNjKMf+bwjAKi+z5JRx3EWasrdlS18jwsRkgIserPh
- RNQO+/mWwYnkUNF2iJ357JQWsSSx6lN3dNBDGkNuCnJVcBHz6pWeXhMW
-X-Gm-Gg: AeBDieskP8UFcayhrmRAm+Ta1deMVV4gBy8hxydU9lEXxXvdbnqwK0a9vsadDLLSoM4
- 7lQRVqxruZsgTL6bBJZyOGoNJk+daqM+f0sWzrJHI9c7oMh5NiVRxt/mAIW8WkO+pJu/w95b2H5
- 4mgByJ6zj5NOajBAgT3vSzKqu3vWwHMQRWi/CqxMWC9SwpPFdLEgUkaG5oUsXInKJx3nOrkg6Lu
- 75E4A2NnVKd0ZjODMkU1CrIztbOLCgane8htuhPf/QxaSCb9NbN5VCAoze+OBhACeHYuy7xqawH
- pOtLKzOfuWnXZ7Ld8S3Km3H4OKybqwdVW1U8YvZRNd6zLL7JJjOH81KGEzhthsyuJBDSOX+9Inr
- BeTnZAufkxpmEOZM0bMDiSgIW8MYvJfuhY044aMpRb9Z12LgbpNCseXFT/jStr0AmeMuXmWXiq/
- 1mtU98C3IatbKRN7jMYUu4y9anOpH9ewVGh/w8Jop0O5RxXwk2hNI2ze1/RiCnXITHtpL3omnNZ
- a+rJtSocZlSUk3HQMvBb3YSrhe2erPOlQfJjw==
-X-Received: by 2002:a17:90b:4fcc:b0:35d:8fdb:4f26 with SMTP id
- 98e67ed59e1d1-361403b7d66mr17266421a91.1.1776749641998; 
- Mon, 20 Apr 2026 22:34:01 -0700 (PDT)
-Received: from donnager-debian.. ([203.221.103.1])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36141898ebasm12472308a91.7.2026.04.20.22.33.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Apr 2026 22:34:01 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Michael Ellerman <mpe@kernel.org>, Nicholas Piggin <npiggin@gmail.com>,
- Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v3 13/13] hw/riscv/atlantis: Add some i2c peripherals
-Date: Tue, 21 Apr 2026 15:31:38 +1000
-Message-ID: <20260421053140.752059-14-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260421053140.752059-1-joel@jms.id.au>
-References: <20260421053140.752059-1-joel@jms.id.au>
+ AFNElJ+Mlu6mh+w1aiIjkuNymVAMsQQMRYPj/KYAPQkdyzGOH6+puJPgy6Vdh/xqj20ZSzRhR/HuLsJ7dfMj@nongnu.org
+X-Gm-Message-State: AOJu0YyV8lP8cJISXBqhlTz/EOsJEcnT07af+mDCoDRv13SwkKw8W0XV
+ vTfM2me0o8fqHL8ZoL80eoqLt7rp1A7zjzh2PR/XTuNRqYCJitvFYTJeoljTfqAZIRk=
+X-Gm-Gg: AeBDiesTrKu9zJrMwKb4Ea6OxF//inOS4MOa448xjZBXwMrPCWbGI4DwnQZ1aFJScdy
+ e5Sq+5Eb08eaGP2lsXwZZl/+LMq5wgeZSsssB+8IoycSBJcc+E77v+72LUUoXr5BP46PmIpvsXk
+ rrE33Glnv6Q3+d29NmWqM3e6cOpZfZKVu1seyQMXsiRxg6IdTdIdacvOgyqrzz3/uN3LkIxnniU
+ 5jI1YGtouHPAUu9/wWNjYAIeUG0BVXN70pQ8/FB2+uD6xc+m4IYduU4gl/xWV712IaM3IrhT7h6
+ NCzzZYikFIIWbSwOiw4kjpJSboRXT7nCK44dwo4nFuVQcuj7cfKrs3OKDnJhNGeUtrvvgy4yYeZ
+ LJteBjTfdO1EGVkiYumyexqHC7dGMMXEQ01HMmQaQuiPEaHrFooN5quUu19KuF9iBzOVH1dZMaC
+ SyFFCQF0WFYSHWnIeDdzt95VfbJArjxAB1c/mETLr//pPABNLwsW6m2I4yJbU1I6265m6q8+l7k
+ gw1
+X-Received: by 2002:a05:6000:178a:b0:43d:a58:b076 with SMTP id
+ ffacd0b85a97d-43fe3e1e252mr26382243f8f.44.1776750468492; 
+ Mon, 20 Apr 2026 22:47:48 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4cb11b4sm35518745f8f.2.2026.04.20.22.47.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Apr 2026 22:47:47 -0700 (PDT)
+Message-ID: <9dde1635-ea18-4abd-8ce5-24ac73f21198@linaro.org>
+Date: Tue, 21 Apr 2026 07:47:46 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/13] hw/riscv/boot: Account for discontiguous memory
+ when loading firmware
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@kernel.org>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260421053140.752059-1-joel@jms.id.au>
+ <20260421053140.752059-4-joel@jms.id.au>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260421053140.752059-4-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,74 +109,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an I2C RTC device and a temperature sensor. These are not present
-on the board but help for testing.
+On 21/4/26 07:31, Joel Stanley wrote:
+> From: Nicholas Piggin <npiggin@gmail.com>
+> 
+> This loads firmware into the first (low) memory range,
+> accounting for machines having discontiguous memory regions.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+> v3: Call riscv_boot_info_init before riscv_find_and_load_firmware in
+>      sifive_u
+> ---
+>   include/hw/riscv/boot.h    |  5 ++++-
+>   hw/riscv/boot.c            | 18 ++++++++++++------
+>   hw/riscv/microchip_pfsoc.c |  6 ++++--
+>   hw/riscv/opentitan.c       |  6 ++++--
+>   hw/riscv/shakti_c.c        |  6 +++++-
+>   hw/riscv/sifive_u.c        |  6 ++++--
+>   hw/riscv/spike.c           |  6 ++++--
+>   hw/riscv/virt.c            |  7 ++++---
+>   hw/riscv/xiangshan_kmh.c   |  6 +++++-
+>   9 files changed, 46 insertions(+), 20 deletions(-)
+> 
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index 115e3222174f..fb90bf12399e 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -53,13 +53,16 @@ void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
+>   vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+>                                      hwaddr firmware_end_addr);
+>   hwaddr riscv_find_and_load_firmware(MachineState *machine,
+> +                                    RISCVBootInfo *info,
+>                                       const char *default_machine_firmware,
+>                                       hwaddr *firmware_load_addr,
+>                                       symbol_fn_t sym_cb);
+>   const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
+>   char *riscv_find_firmware(const char *firmware_filename,
+>                             const char *default_machine_firmware);
+> -hwaddr riscv_load_firmware(const char *firmware_filename,
+> +hwaddr riscv_load_firmware(MachineState *machine,
+> +                           RISCVBootInfo *info,
+> +                           const char *firmware_filename,
+>                              hwaddr *firmware_load_addr,
+>                              symbol_fn_t sym_cb);
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
-v3: Use HWADDR_PRIX in i2c device string consistent
----
- hw/riscv/tt_atlantis.c | 18 ++++++++++++++++++
- hw/riscv/Kconfig       |  2 ++
- 2 files changed, 20 insertions(+)
-
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index bf08b7ed320e..5a6149064f1a 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -505,6 +505,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
-     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
- }
- 
-+static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
-+                                  const char *compat, int addr)
-+{
-+    void *fdt = MACHINE(s)->fdt;
-+    hwaddr base = s->memmap[TT_ATL_I2C0 + bus].base;
-+    g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/sensor@%x",
-+                            base, addr);
-+
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
-+    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
-+}
-+
- static void finalize_fdt(TTAtlantisState *s)
- {
-     uint32_t aplic_s_phandle = next_phandle();
-@@ -542,6 +555,9 @@ static void finalize_fdt(TTAtlantisState *s)
-                        TT_ATL_I2C0_IRQ + i,
-                        aplic_s_phandle, periph_clk_phandle);
-     }
-+
-+    create_fdt_i2c_device(s, 0, "national,lm75", 0x48);
-+    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
- }
- 
- static void create_fdt(TTAtlantisState *s)
-@@ -870,6 +886,8 @@ static void tt_atlantis_machine_init(MachineState *machine)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
-                            qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
-     }
-+    i2c_slave_create_simple(s->i2c[0].bus, "ds1338", 0x6f);
-+    i2c_slave_create_simple(s->i2c[0].bus, "tmp105", 0x48);
- 
-     /* Load or create device tree */
-     if (machine->dtb) {
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 4c2cf01995e7..a4427ba79807 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -137,6 +137,8 @@ config TENSTORRENT
-     select RISCV_IMSIC
-     select FW_CFG_DMA
-     select DESIGNWARE_I2C
-+    select DS1338
-+    select TMP105
- 
- config XIANGSHAN_KUNMINGHU
-     bool
--- 
-2.47.3
-
+Except in _init(), this structure should be const, so preferably
+'const RISCVBootInfo *info'. Can be done on a cleanup patch of
+course.
 
