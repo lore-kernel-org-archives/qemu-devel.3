@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED17BF94CB8
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 23:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8753CF94CB7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 23:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFKxC-0008UE-N9; Tue, 21 Apr 2026 19:56:30 -0400
+	id 1wFKyN-0000ZX-EC; Tue, 21 Apr 2026 19:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wFKxA-0008Tq-SH
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 19:56:28 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1wFKyL-0000Wx-Ox
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 19:57:41 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wFKx9-0001BI-7S
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 19:56:28 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b9e00649769so679496766b.3
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 16:56:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776815785; cv=none;
+ id 1wFKyK-0001RL-3G
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 19:57:41 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-65c0891f4e9so8054886a12.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 16:57:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776815858; cv=none;
  d=google.com; s=arc-20240605;
- b=Jjwes//+dZi0pDLLjN9Q8s5sGb1MA5CuS5+8qEaCRkF0URclYqmrKyf9UuE5g1wvRv
- w5fc5BTW79UV6nqiBaTKQSFvG4/7qwPNsSeBurdGpltSt6LIVv3mz2KSJVSuSMBpbPH5
- Le8ro0LahiM0RUtV7ewIq7/Pix3NQbvHh1CPDKxj7PSL/TdInbM1T2HhPaxX0K5WrJFz
- RIcASUXDCCuLAdVxvLrckO83MH/IU/S95VrU4zWrKFAN3ySDOzYkR37XInPunPHGHJqa
- LK3KHutvQZ2qxgLa4XdhCKbuV05IXf63QjrtphRij+NLmCSmELtyxtRUg0F9lt+nvxnr
- /TdQ==
+ b=Ev4UK+sp4KIeQHajnZJj6f4Hj2f3MV1+H1Gzv2Zl4C7mFK3zEJbe7nx9w5qMEOSZ1t
+ QJQyIEqx/ib0WpUJ6G/MjOc4L+XUnGHa1yI37KC8DAOvdAC2lEkdGM4rO/8UlzxzVAYH
+ NHxAcY6FMyJjZl5l4iPu2uTyURRyfKG5IQHSwGabLSPy11SnV8xXbtBy5S7q00FNZezV
+ UX5H4dr+hu56JVWIiHz8xsSMM7GN2nR3VSrGRJkk44HHhO8x3iHy8c55PxWXQmc1g2iY
+ +RgR49Vdfotmz6lUdmvvX9ENWKguISJV227bCF1nuLjXO/o3FsE3vHtcbM5OGkDpX8vO
+ hO+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=MB2fW1rCVypTALinFvQ+9bLmI+qyoaUiQbMKvRMVzfs=;
- fh=X79f7cC6joFjXa/GVENRWCGALOpkuesxoGuQ2U82tIg=;
- b=GkYcjnv/aKAWvqdCxGCFWMhmzko+05b4angwvMgymTyBZNJXYUwS2BLdnux+MXe3yf
- Sp2iR+C4HI4joZwEDZd92YVnpItzHe39QU4Z4duAG9yp5rD++Y1ja3Jhph3IjNI3whVJ
- y0gY5iNZOZaZ7ClDEOA4Y56iXQeoeml8XhtqAGR8G2XbML/2nO5DZfga2kT0xTyWFCk+
- W32wIqK4kN0fH+QnGpRY++Mrge2jqcF/v5GBzvqz8+8tizRrhe1KaYBBYBDdlKRbvqAh
- saYBCnVEjtVqIiQA1Y0IYTA2h40uog8ja1t2HMb1w3depY3HZcv4pG0n9DzssvktT6IV
- VQzw==; darn=nongnu.org
+ bh=I9w/6NvHBWVwk0rPZmeWxQn7vrzQdM3PVh9A3yMtdro=;
+ fh=fx/r/twi0lR0VsLAVqPkirIE7VN6h63K7UWTunhhuts=;
+ b=LgML5/xTDnQeVDeunFAMe2+BLPukUFhG0UIJmDqrXny/fmc5SnECcU3x2h+1f7HE0w
+ pdPCEq/YQcd6RGAuxAlhea/rRTSM6mdOm8eZl3AB7S5hQzzCjUFbG5c9fS+pmdwavIxC
+ P8ZkHEgT4tJX0IK3P3Mh66gQDRoBsctOMiIyVKq4lzhDK8grBkV6u0g0ymNV1KPOD+XI
+ q91zIWDAFAxdyKUAxrv2OiHt8R1lIaCYaS3OyXVY2XP4hXLXb2jyzpGXHqF+OYk1TR0G
+ 8aXnqqGgJ/iS1x6DZj4BW8vxGfuv+PHXy2K7R5FCmG0Ujavcz0tSO1W7OyVYbJl2j4O6
+ hFFQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776815785; x=1777420585; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776815858; x=1777420658; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MB2fW1rCVypTALinFvQ+9bLmI+qyoaUiQbMKvRMVzfs=;
- b=p6jt9vbqAaMHU2rFaAGc4PpZLgMMwFMF8Fl9gzJ3ad2Wlid2Ca40O2hfKaYV++Am3j
- TqLo8Zv8/9/Oi+hbGzF2b8VvONFGa0nT0hAWSm9sh8MqWd+Ca9WUcP5zYtUlqN2SZEyg
- WJKv9IXO+CJp35FG57q856V4NDO4+5SqSY5Qr993HtqQE5FR8ZO80/TrGeHoSpgxS9FC
- uG0W3vaLt06D4zTWr8gpb5JIIOTGW5o7s/OBCBbqPKDVW3JRR+TRyKh6tISzjjWPoEjj
- L/QaRzTsd1nuqmJJQEnCMU0XegtV7oHbkbf8tyF8Nn1amQi2NvkQWoeJRRTar65hXMhZ
- o1WA==
+ bh=I9w/6NvHBWVwk0rPZmeWxQn7vrzQdM3PVh9A3yMtdro=;
+ b=FC4iLYUBk1u0TBmob7RxM4reuYNwNnHKCyFpXIxRVtMPm2gZoG/bDu5OJR8KEwiQZe
+ OF4VZR5eLughS6vHWySjq0W1O0FesCiLQ7IdmODAi25eTyYQfC69yle3K5Kytje5uQLA
+ 2tAFf9Q3sQiDtUVdpnFyvL2RXyjuS/2F9mN8mjGfD+FJp6lXAq07VsFItubR3otBh63A
+ IlaPF5pa+pminblgmQZTkofKZc8x7L/+ulG/bTM4jfhT7K2ZFzdNGIQhxpd9XasAMjtB
+ T2d6FVs/XOqHnen9NpvScGK4WgAkPNQ82K0wqsA7Jri4mPulZ4c62p9GMYT5GOTeNwg8
+ OoVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776815785; x=1777420585;
+ d=1e100.net; s=20251104; t=1776815858; x=1777420658;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MB2fW1rCVypTALinFvQ+9bLmI+qyoaUiQbMKvRMVzfs=;
- b=q1mHJ8sxcUnUTOI6g9rsFCtrl20OHXmpssm/r4EvhW1vlNF3NhyWBlySP7ckWdeiho
- wbzyNOSEAlKTnXBXrBp1e+JjedDtgQB7h/RikpHeXzzYvGMId1OWq7D8faQ1/PQMJ8kZ
- 8G4eGrKhylhEjJcls0vaB6+a32+zcDR4eWjccRFr6PGtjJtaLy8VPInJjZ3GOt7VJLRm
- OLlcTbRxQa7755kwEpMjfjaXuduKPYRHl9RyyDzp8PiJk9dnuziCsGkxHSdM36sqkKNg
- 5FT5csm5y1eXqL3sx7n704BZw351MFaaGYmusiMWlu3yRDq8u66msSOCSBO1r8My8Oga
- 5usg==
-X-Gm-Message-State: AOJu0YyjaLeQ4iMBvE11i+l9oeyvucP9tB+D4T6d04hv2uAFu53kvOqz
- oIACcjhjB+K4z+R8FpY6LeiCxP88Fm6CmZhOcNcBmPQrkbrxUR1SI/B3+m2OPHPf5qpEE6ozWeR
- VFFI1mzAqaAwchjTwtz1a8hfFFuN6ukU=
-X-Gm-Gg: AeBDies0z/f+/pLhAE0BJSglspdcYPzKh/C3TpCgq2X+OJw2zrr53FKZxIL/BAxm6gO
- MTPmaWf6OJTd4lycvkgH9K5MWb0Dl6MG3dDJnHvqeLcBI1kxufMrzb4GW2VE/MMG7+CbRtNcb3P
- 81lDKClLCDv4JA4H4B8blNyfoc5YsRRb3TQCR1qqHlJh0TZMEXtEz+LLmIhAuEd9OxshxEEu1wf
- xlYD6XVoMjy/3YzhpefHIR7ynJTrI2oZ3LvPk3bN5NoJYIBgHfHIzJxC1ZYzCpjwefhB/To4mMb
- asXmEa9EBv1Bbl1VjHG2HRU9qEFG8Hat3RnqOVM841ARrsABHuI1Jq6VUvQ=
-X-Received: by 2002:a17:907:e0d8:b0:ba8:a21f:9c4e with SMTP id
- a640c23a62f3a-ba8a22ee915mr287367966b.11.1776815785074; Tue, 21 Apr 2026
- 16:56:25 -0700 (PDT)
+ bh=I9w/6NvHBWVwk0rPZmeWxQn7vrzQdM3PVh9A3yMtdro=;
+ b=PVA2dcabxFR28CDIp9a/U1vjy/vU+rGRZHiSVPkt4M7ZOdCQqDKuP+zMRLAE1iBChk
+ TQH0iQyfaRojKKA2Bsqyn9rl3NAISTVifk/dWP7ffWjfhXLWDcqJ3W6O7iSZWQ1xzg8z
+ oIhgecRHn8jaf+9zpFSO8o+jEI6q6rZX/ayJMp5Y94QXf84C5aepSv5eQJK0ICHVs5Kt
+ fSTFTiVYDsVfDjxUCLon7cHzRXmHW1T/xg6uYpqEv6MHnkkB9OK8VR+G7gH9qBMaIzan
+ dB7YDt/NRtkGOIT0Xjbm3wYjYyAOWolLWACio0FXqrXXs+n/zjIs+0rp6Xd6ShAg49yn
+ gjvw==
+X-Gm-Message-State: AOJu0YyE+2Fh6QHVx4smi9k5HtCF8wteTF4E09wfM9Dk90Vff3f86BlO
+ 4TT/S2QrlKzZvcTtwyuSoWK65FRVR0R9vzQSlMPAgSlkaFaMpq0xfD093sfZnzNspNPrPMP8/lX
+ 4iz1P97gAVvH4ZgMSMu1W1AdnzFCWBI0=
+X-Gm-Gg: AeBDietdQJI+qZyjv5iVDQpRbfwgcrrZNoY72OZXmHJKBj9Qf1izHEQ+Bja0EtMExVr
+ cJZwWM4VjcxX1t4ujE7Ts4ntwUNYmL2FaT96N4zLiNOyuGzvL8WcJz+XpX+aii8HuGOdu1rqo2v
+ /qeIIVhMiIJ5fmLlsW6cYKyGchkh4hz99S5D/KA7jsxMgNHUOlUmKIrC2OYIL9zQY7kYhNVOKx+
+ gKIKhCJ6o4G0zLcu9bPQC4YB/8ZSDdR7CimjvcsiXmsxfGYmsubSuH7HlcgstC5wl7rLxGLIlJc
+ D80aCl/BbReSSkX3oEVabSly7gwIqgcKQWeLbFRwKWPlaC3M
+X-Received: by 2002:a17:907:96a1:b0:ba9:2137:7165 with SMTP id
+ a640c23a62f3a-ba92146ccc2mr372284966b.1.1776815858294; Tue, 21 Apr 2026
+ 16:57:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260421071107.2848439-1-frank.chang@sifive.com>
-In-Reply-To: <20260421071107.2848439-1-frank.chang@sifive.com>
+References: <20260421074940.2916287-1-frank.chang@sifive.com>
+In-Reply-To: <20260421074940.2916287-1-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 22 Apr 2026 09:55:58 +1000
-X-Gm-Features: AQROBzDnVRwnbiL6MfbIoplg9MHUpMZbpWqmQOy_j4GtrmPEXNx0VVWKsM_gpwE
-Message-ID: <CAKmqyKOEc0xzWXn+m9Hv3NBBu1_t7y3hWcA3m2JAd0LhzRyFGA@mail.gmail.com>
-Subject: Re: [PATCH v3] target/riscv: Initialize riscv_excp_names[] and
- riscv_intr_names[] using designated initializer
+Date: Wed, 22 Apr 2026 09:57:10 +1000
+X-Gm-Features: AQROBzBHs5KgDJc1ZLdsdOp1k94OSWHIEnhy9m26XKLAAPNsm5Ajgc9LMnO55iE
+Message-ID: <CAKmqyKN0oaRYxDV8cbDDDowY_GJUMpYtny0neTNZwnyRxwYy6A@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv: Mask xepc[0] only when Zc* extension is
+ enabled
 To: frank.chang@sifive.com
 Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
- Max Chou <max.chou@sifive.com>, Nutty Liu <nutty.liu@hotmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -124,145 +122,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 5:13=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Tue, Apr 21, 2026 at 5:50=E2=80=AFPM <frank.chang@sifive.com> wrote:
 >
 > From: Frank Chang <frank.chang@sifive.com>
 >
-> Use designated initializers to initialize riscv_excp_names[] and
-> riscv_intr_names[] so that we don't have to explicitly add "reserved"
-> items. Also, add the missing trap names: sw_check, hw_error,
-> virt_illegal_instruction, semihost, s_guest_external, and
-> counter_overflow.
+> IALIGN is 16 when the CPU supports the Zc* extension. Only xepc[0]
+> should be masked when the Zc* extension is enabled.
 >
 > Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Max Chou <max.chou@sifive.com>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.c | 89 +++++++++++++++++++++++-----------------------
->  1 file changed, 45 insertions(+), 44 deletions(-)
+>  target/riscv/internals.h | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 72c6f4f0f14..ce15a17c37d 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -328,60 +328,61 @@ const char * const riscv_rvv_regnames[] =3D {
->  };
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index b001cbc080a..ab8dea45c90 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -173,9 +173,15 @@ static inline float16 check_nanbox_bf16(CPURISCVStat=
+e *env, uint64_t f)
 >
->  static const char * const riscv_excp_names[] =3D {
-> -    "misaligned_fetch",
-> -    "fault_fetch",
-> -    "illegal_instruction",
-> -    "breakpoint",
-> -    "misaligned_load",
-> -    "fault_load",
-> -    "misaligned_store",
-> -    "fault_store",
-> -    "user_ecall",
-> -    "supervisor_ecall",
-> -    "hypervisor_ecall",
-> -    "machine_ecall",
-> -    "exec_page_fault",
-> -    "load_page_fault",
-> -    "reserved",
-> -    "store_page_fault",
-> -    "double_trap",
-> -    "reserved",
-> -    "reserved",
-> -    "reserved",
-> -    "guest_exec_page_fault",
-> -    "guest_load_page_fault",
-> -    "reserved",
-> -    "guest_store_page_fault",
-> +    [RISCV_EXCP_INST_ADDR_MIS] =3D "misaligned_fetch",
-> +    [RISCV_EXCP_INST_ACCESS_FAULT] =3D "fault_fetch",
-> +    [RISCV_EXCP_ILLEGAL_INST] =3D "illegal_instruction",
-> +    [RISCV_EXCP_BREAKPOINT] =3D "breakpoint",
-> +    [RISCV_EXCP_LOAD_ADDR_MIS] =3D "misaligned_load",
-> +    [RISCV_EXCP_LOAD_ACCESS_FAULT] =3D "fault_load",
-> +    [RISCV_EXCP_STORE_AMO_ADDR_MIS] =3D "misaligned_store",
-> +    [RISCV_EXCP_STORE_AMO_ACCESS_FAULT] =3D "fault_store",
-> +    [RISCV_EXCP_U_ECALL] =3D "user_ecall",
-> +    [RISCV_EXCP_S_ECALL] =3D "supervisor_ecall",
-> +    [RISCV_EXCP_VS_ECALL] =3D "hypervisor_ecall",
-> +    [RISCV_EXCP_M_ECALL] =3D "machine_ecall",
-> +    [RISCV_EXCP_INST_PAGE_FAULT] =3D "exec_page_fault",
-> +    [RISCV_EXCP_LOAD_PAGE_FAULT] =3D "load_page_fault",
-> +    [RISCV_EXCP_STORE_PAGE_FAULT] =3D "store_page_fault",
-> +    [RISCV_EXCP_DOUBLE_TRAP] =3D "double_trap",
-> +    [RISCV_EXCP_SW_CHECK] =3D "sw_check",
-> +    [RISCV_EXCP_HW_ERR] =3D "hw_error",
-> +    [RISCV_EXCP_INST_GUEST_PAGE_FAULT] =3D "guest_exec_page_fault",
-> +    [RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT] =3D "guest_load_page_fault",
-> +    [RISCV_EXCP_VIRT_INSTRUCTION_FAULT] =3D "virt_illegal_instruction",
-> +    [RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT] =3D "guest_store_page_faul=
-t",
-> +    [RISCV_EXCP_SEMIHOST] =3D "semihost",
->  };
->
->  static const char * const riscv_intr_names[] =3D {
-> -    "u_software",
-> -    "s_software",
-> -    "vs_software",
-> -    "m_software",
-> -    "u_timer",
-> -    "s_timer",
-> -    "vs_timer",
-> -    "m_timer",
-> -    "u_external",
-> -    "s_external",
-> -    "vs_external",
-> -    "m_external",
-> -    "reserved",
-> -    "reserved",
-> -    "reserved",
-> -    "reserved"
-> +    [IRQ_U_SOFT] =3D "u_software",
-> +    [IRQ_S_SOFT] =3D "s_software",
-> +    [IRQ_VS_SOFT] =3D "vs_software",
-> +    [IRQ_M_SOFT] =3D "m_software",
-> +    [IRQ_U_TIMER] =3D "u_timer",
-> +    [IRQ_S_TIMER] =3D "s_timer",
-> +    [IRQ_VS_TIMER] =3D "vs_timer",
-> +    [IRQ_M_TIMER] =3D "m_timer",
-> +    [IRQ_U_EXT] =3D "u_external",
-> +    [IRQ_S_EXT] =3D "s_external",
-> +    [IRQ_VS_EXT] =3D "vs_external",
-> +    [IRQ_M_EXT] =3D "m_external",
-> +    [IRQ_S_GEXT] =3D "s_guest_external",
-> +    [IRQ_PMU_OVF] =3D "counter_overflow",
->  };
->
->  const char *riscv_cpu_get_trap_name(target_ulong cause, bool async)
+>  static inline target_ulong get_xepc_mask(CPURISCVState *env)
 >  {
->      if (async) {
-> -        return (cause < ARRAY_SIZE(riscv_intr_names)) ?
-> -               riscv_intr_names[cause] : "(unknown)";
-> +        if ((cause < ARRAY_SIZE(riscv_intr_names)) && riscv_intr_names[c=
-ause]) {
-> +            return riscv_intr_names[cause];
-> +        }
->      } else {
-> -        return (cause < ARRAY_SIZE(riscv_excp_names)) ?
-> -               riscv_excp_names[cause] : "(unknown)";
-> +        if ((cause < ARRAY_SIZE(riscv_excp_names)) && riscv_excp_names[c=
-ause]) {
-> +            return riscv_excp_names[cause];
-> +        }
->      }
+> -    /* When IALIGN=3D32, both low bits must be zero.
+> -     * When IALIGN=3D16 (has C extension), only bit 0 must be zero. */
+> -    if (riscv_has_ext(env, RVC)) {
+> +    RISCVCPU *cpu =3D env_archcpu(env);
 > +
-> +    return "(unknown)";
->  }
->
->  void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext)
+> +    /*
+> +     * When IALIGN=3D32, both low bits must be zero.
+> +     * When IALIGN=3D16 (has C or Zc* extensions), only bit 0 must be ze=
+ro.
+> +     */
+> +    if (riscv_has_ext(env, RVC) || cpu->cfg.ext_zca ||
+> +        cpu->cfg.ext_zcb || cpu->cfg.ext_zcd || cpu->cfg.ext_zce ||
+> +        cpu->cfg.ext_zcf || cpu->cfg.ext_zcmp || cpu->cfg.ext_zcmt) {
+>          return ~(target_ulong)1;
+>      } else {
+>          return ~(target_ulong)3;
 > --
 > 2.43.0
 >
