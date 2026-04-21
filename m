@@ -4,111 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 975A8F94CA3
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 18:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EFF9F94CA8
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 19:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFFPo-0006Je-Pv; Tue, 21 Apr 2026 14:01:40 -0400
+	id 1wFGsi-0006uR-2c; Tue, 21 Apr 2026 15:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wFFPM-0006I0-At; Tue, 21 Apr 2026 14:01:13 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFGsg-0006u2-EA
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 15:35:34 -0400
+Received: from qs-2006h-snip4-11.eps.apple.com ([57.103.85.211]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wFFPK-00009O-5Q; Tue, 21 Apr 2026 14:01:11 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63LHoArS529198; Tue, 21 Apr 2026 18:01:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UsgVcS
- WBd3KZf3iE5NhxANDaZ6bADAFSUbwJfVam5rs=; b=DvXnY19ODe5xX8kWXfoUAz
- 75ci5Fs1K5PFU4HgrfEukujfgBboedDi/ekLgKTMKQeBljGARPX0ighe1wEITmTh
- asb0BHK7ja3IsmjQCtQz1n09RKS5/V3jL97NN3KlW5xMF7DdvHLt2vNQ7wCtejwM
- o5xmUTYcx2DOw5eDQeGGB7YbqelTeebtgq/YbcZ7LFEckw6v93/2q9cDOrglt0CI
- N/PpG0K3Y/0HF5aSx3zr+XIK5qrw6zwhG6I/rwcOJZptReGVIFSaQlQ5f1+5hbJp
- rpQkmn4ePlh5eMWGQlDp+muNVsBshZmkVzYYw6tzLGH5pryBFtUPNASwS7j+E4Qg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2j6nn4b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Apr 2026 18:01:03 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63LHZOCr009878;
- Tue, 21 Apr 2026 18:01:02 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dmn9k1s2f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Apr 2026 18:01:02 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63LI0Zki11600542
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Apr 2026 18:00:35 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 520435805A;
- Tue, 21 Apr 2026 18:01:01 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A2EC58052;
- Tue, 21 Apr 2026 18:01:00 +0000 (GMT)
-Received: from [9.61.174.150] (unknown [9.61.174.150])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 21 Apr 2026 18:01:00 +0000 (GMT)
-Message-ID: <01fcaa3c-97f8-4572-98df-10669e835f19@linux.ibm.com>
-Date: Tue, 21 Apr 2026 14:01:00 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] hw/s390x/ccw: Disable legacy virtio-pci by default
- (v11.1+)
-To: Jaehoon Kim <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- cohuck@redhat.com, Mohamed Mediouni <mohamed@unpredictable.fr>
-References: <20260420144759.2970726-1-jhkim@linux.ibm.com>
- <20260420144759.2970726-2-jhkim@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260420144759.2970726-2-jhkim@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIxMDE3NyBTYWx0ZWRfX0Un3tiXPlN79
- h/saE+aV9oj7OvSoyZBZwiZG1lBObVuBchoqKd8rbIwSHMlt9glyPDNf3gj7BOnHLr9Ea4JipMX
- Dd0QghAFAxmUNegXszCQP2MkHs9RkrH7iyEZCskCqShSb5ffIUxzUdvGlLy5zO+yPLepjZal4u0
- rxeJqd5VWF5o8b22GUHHzZYXQCoWEpuTaMRFoVMZfiuCdTE38bCefhuHrF1c5/k8H360EKrTho7
- z1ECw0uT7aWAhKQi66toXXZ/z2FFP7EZ5YmZG5ghMCGwSTXQAPDIzFFoxB8IcvSR0Dv2we8XfGU
- kQqlhMa5Kzx01WYLExddGMYUkMzUp76HTGR7c4DqYhP8EvMFH9u3XGsoAY7k5Z/Z8D86CjZ1Huf
- XRB3AHhsNOsILKq/vIN6+nqOmY0H+9hIGR4AWln7aiUuljpyIDd592jtouJb33TIjtbJV5LKP1l
- 00fpH8snpetpXHtGwVA==
-X-Proofpoint-GUID: kPPHuEr8rjj5y0NI6AeolhxcXEyb9h18
-X-Authority-Analysis: v=2.4 cv=SOJykuvH c=1 sm=1 tr=0 ts=69e7bb60 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=09yA2x9RGatdvKftA9EA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: kPPHuEr8rjj5y0NI6AeolhxcXEyb9h18
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-21_03,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1011 phishscore=0 suspectscore=0 adultscore=0 impostorscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604210177
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFGse-0006W2-WB
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 15:35:34 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-4 (Postfix) with ESMTPS id
+ C4AA1180011D; Tue, 21 Apr 2026 19:35:27 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRPEwVSB11NVg1HD1geXBQXCUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTHxPByx0WXc2FEkBLgBGBjEPOx5VdS1xXQ85BlgFUgMyfE5wXHceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776800130; x=1779392130;
+ bh=hmVQvqMmygaos5w9mlBVhCZSAEfye9lLHB8QlMy62a8=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=QRKDF+rHBs0JMG7cmbR2W9T8dpjhKvsv4CdYTk0uolA13u5uEVvimaKfOrHQEfnFc8gxfufUs2PBuakHaoxd33YIhWms0CxMvJsE0h6vgB6yw0ur27N5B7gQC49HJauiztCIAtHe6FyJBtOU9vGE42bdqhd6hwa4NyT4ulVe5Kv6XiqLnwS4fOJ3sznWeJWSwJL8p4ITg+9XGIlDjQyUMFMDwDhtALrEWVtYAsJrtUuN07bCEI0vPJKRwEwjycwxkIXbGlyZXeNvb646YXppMJB2Lfqh/szwuc18HBPCRPb+5eRXS35MCUjCi2UYH/9w6BG3NN62/nx7E5Zu1ksyXw==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-4 (Postfix) with ESMTPSA id
+ C4B3F1800126; Tue, 21 Apr 2026 19:35:25 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] hw: i386: vapic: restore IRQ polling for non-kernel
+ irqchip backends
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260418061429.16898-1-rickgcn@gmail.com>
+Date: Tue, 21 Apr 2026 21:35:13 +0200
+Cc: qemu-devel@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ pbonzini@redhat.com, richard.henderson@linaro.org, qemu-stable@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E74AC2EF-12C7-4A6C-8BFC-6A55291BE6C1@unpredictable.fr>
+References: <20260418061429.16898-1-rickgcn@gmail.com>
+To: rickgcn <rickgcn@gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-ORIG-GUID: vSjQLkWZfUKCkTeympmLSmEjnbkcgLbS
+X-Proofpoint-GUID: vSjQLkWZfUKCkTeympmLSmEjnbkcgLbS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIxMDE5NSBTYWx0ZWRfX7AFMgHgXbn7P
+ 5ivSixyY/q1HPz9QzjmlFTfM7RDaauDnQzN6GUJW6UWeGYAdySQtMiExNrIIyZNl3+lxlGiUrp3
+ v4JA4baelhqK7LL3JQ6ejzOX4GlW4FjTtq1H92Uk7V/dAN4r4eltf7zQ9A15+cf0VX7Zl5/DcZu
+ fRQcHGiJNWIpTKF3F+WUatuTpDQnfc5pmv46HzxTcCqXlWA2kt0EuJRIRcVojUpPZxdIYKAxBqK
+ B5eENUB+XZUqAOSeeH9eB/JNNxO0eILcTRhjzzjDcQ3h/7BFYU1hV6kfhpxhCVAE9eqby2fhQYa
+ NTi1Ntml8/ZCbNZUWiMx7AouQLKl0P/++6WNnuvxruSmU1h4hxuuUIUbZ2rvEk=
+X-Authority-Info-Out: v=2.4 cv=I8Nohdgg c=1 sm=1 tr=0 ts=69e7d180
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=W4rVtugX6geAamtpO3UA:9
+ a=lqcHg5cX4UMA:10 a=CjuIK1q_8ugA:10
+Received-SPF: pass client-ip=57.103.85.211;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,104 +86,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/20/26 10:47 AM, Jaehoon Kim wrote:
-> On the s390 Linux kernel, IO_SPACE_LIMIT has been 0 since the initial
-> zPCI implementation (commit cd24834130ac "s390/pci: base support"),
-> making I/O BARs unusable.
-> 
-> However, when virtio-pci devices operate in transitional mode, QEMU
-> unconditionally exposes the legacy interface via BAR0. This results in
-> firmware warnings during PCI enumeration, such as:
-> 
->   pci 0005:00:00.0: [Firmware Bug]: BAR 0: invalid; can't size
-> 
-> even though BAR0 is never usable on the s390 kernel.
-> 
-> Close this gap by disabling legacy virtio-pci support starting from
-> machine version 11.1. This effectively makes virtio-pci devices
-> non-transitional and prevents the creation of the unusable legacy I/O
-> BAR.
-> 
-> This introduces s390x-specific global compatibility properties that
-> set disable-legacy=on as the default for virtio-pci devices. Machine
-> versions v11.0 and earlier set disable-legacy=off to maintain their
-> original default behavior (legacy support enabled), ensuring VMs
-> created with those versions continue to work identically.
-> 
-> Users can override the default on the command line if needed:
->   - On v11.1+: -global virtio-pci.disable-legacy=off (to enable legacy)
->   - On v11.0-: -global virtio-pci.disable-legacy=on (to disable legacy)
-> 
-> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Code looks good to me:
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> On 18. Apr 2026, at 08:14, rickgcn <rickgcn@gmail.com> wrote:
+>=20
+> 69dfc078 extended vAPIC handling for WHPX with user-mode irqchip, but =
+it
+> also changed vapic_write() case 4 in a way that excludes TCG from
+> apic_poll_irq().
+>=20
+> Before that change, IRQ polling happened whenever no in-kernel irqchip
+> was active. After the change, it only happened for KVM or WHPX with a
+> user-mode irqchip. Under TCG, both kvm_enabled() and whpx_enabled() =
+are
+> false, so the poll never happens.
+>=20
+> This regresses 32-bit Windows XP guests on a Windows host with
+> -machine pc-i440fx-10.0,accel=3Dtcg, causing a STOP 0x0000000A during =
+boot.
+>=20
+> Fix it by making the decision depend on whether KVM or WHPX is using =
+an
+> in-kernel irqchip, instead of whether either accelerator is enabled.
+>=20
+> Fixes: 69dfc078a6f0 ("hw: i386: vapic: enable on WHPX with user-mode =
+irqchip")
+>=20
+> Signed-off-by: rickgcn <rickgcn@gmail.com>
 
-I also took the patch (along with 11.1 compat machine update) and did a
-general regression of various virtio-pci devices with kvm-accelerated
-s390x guests using s390-ccw-virtio-11.1.
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr =
+<mailto:mohamed@unpredictable.fr>>
 
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Also a good candidate for backporting for QEMU 11.0(.1)
 
-Thanks Jaehoon!
-
+cc qemu-stable
 > ---
->  hw/s390x/s390-virtio-ccw.c | 26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
-> 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index cc768daeb0..4d35f9b10b 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -788,6 +788,21 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
->      g_free(val);
->  }
->  
-> + /*
-> +  * S390x-specific global compatibility properties.
-> +  *
-> +  * On the s390 kernel, legacy virtio-pci is not usable because I/O BARs
-> +  * are not supported (IO_SPACE_LIMIT is 0), and would only result in
-> +  * unusable BARs and firmware warnings.
-> +  *
-> +  * Therefore, starting from v11.1, disable legacy virtio-pci by default,
-> +  * while older machine types keep legacy behavior for compatibility.
-> +  */
-> +static GlobalProperty hw_compat_s390x[] = {
-> +    { TYPE_VIRTIO_PCI, "disable-legacy", "on", .optional = true},
-> +};
-> +static const size_t hw_compat_s390x_len = G_N_ELEMENTS(hw_compat_s390x);
-> +
->  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->  {
->      MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -878,6 +893,9 @@ static const TypeInfo ccw_machine_info = {
->          const void *data)                                                     \
->      {                                                                         \
->          MachineClass *mc = MACHINE_CLASS(oc);                                 \
-> +        /* Apply global s390x-wide default properties */                      \
-> +        compat_props_add(mc->compat_props, hw_compat_s390x,                   \
-> +                         hw_compat_s390x_len);                                \
->          MACHINE_VER_SYM(class_options, ccw, __VA_ARGS__)(mc);                 \
->          mc->desc = "Virtual s390x machine (version " MACHINE_VER_STR(__VA_ARGS__) ")"; \
->          mc->init = MACHINE_VER_SYM(mach_init, ccw, __VA_ARGS__);              \
-> @@ -923,7 +941,15 @@ static void ccw_machine_11_0_instance_options(MachineState *machine)
->  
->  static void ccw_machine_11_0_class_options(MachineClass *mc)
->  {
-> +    /*
-> +     * Preserve v11.0 and older version behavior:
-> +     * keep legacy virtio-pci enabled.
-> +     */
-> +    static GlobalProperty compat[] = {
-> +        { TYPE_VIRTIO_PCI, "disable-legacy", "off" },
-> +    };
->      ccw_machine_11_1_class_options(mc);
-> +    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->      compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
->  }
->  DEFINE_CCW_MACHINE(11, 0);
+> hw/i386/vapic.c | 3 +--
+> 1 file changed, 1 insertion(+), 2 deletions(-)
+>=20
+> diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+> index 41e5ca26df..1acb9f91b2 100644
+> --- a/hw/i386/vapic.c
+> +++ b/hw/i386/vapic.c
+> @@ -716,8 +716,7 @@ static void vapic_write(void *opaque, hwaddr addr, =
+uint64_t data,
+>         break;
+>     default:
+>     case 4:
+> -        if ((kvm_enabled() && !kvm_irqchip_in_kernel())
+> -          || (whpx_enabled() && !whpx_irqchip_in_kernel())) {
+> +        if (!kvm_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
+>             apic_poll_irq(cpu->apic_state);
+>         }
+>         break;
+> --=20
+> 2.53.0
+>=20
+>=20
 
 
