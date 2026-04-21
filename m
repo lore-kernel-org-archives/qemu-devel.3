@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A483F327CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 09:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0900EF89248
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 10:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF7fn-00048D-7m; Tue, 21 Apr 2026 05:45:39 -0400
+	id 1wF877-0008Ru-H3; Tue, 21 Apr 2026 06:13:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wF7fl-00047A-Ah
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 05:45:37 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wF7fj-0001ja-Gn
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 05:45:37 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-c70fb6aa323so1360231a12.3
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 02:45:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776764734; x=1777369534; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=1jVL1LNffz2XuEwtsS228+wq1RvyVcmr3CNu77pcIF4=;
- b=XSySg0RmkkG2nCy6iKPIlqCqUHFxYnji6f1x4IiH3vBP5Hitih9IjUuCch7/3W+q9r
- 9QGTphV0l1ZxFeaCtVb93KLhTT15z6v4fGYvY+GfI6CzTSo0Vj2xBxgCeLB0WOIjmmMl
- YQTQCqKboLLO6QjqrOmafpJSC8uMImsKaqSCfmHJpioFFUhm57zoTXk3wvIe7nCM6hbz
- oi58VC/EURBGv8h7uC/FwEwn9Uc7RQJ4hCyTg+1DmRl0YPE/o46iXNrghibQQkgfJGVW
- Ko9jmwDk7kdqTezwuDvmfbedEPH9FT+GvmLv0Mr3MWkTS3Qs8VnO7LVanogVnaTrTIsL
- wWpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776764734; x=1777369534;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1jVL1LNffz2XuEwtsS228+wq1RvyVcmr3CNu77pcIF4=;
- b=Loal1bvKhLA9jlgUFjLmOchU4PKWaDWpZb+MpUTJ8gAJQahSQ5Mr6eZ8C9jMlMyod8
- DzvzxyZNtyvilXJzaRxamI4yX2tCefuAjsqSYiBXxEe2uiBWaUFgpeAfgVzWXV3hpbGT
- MclpRoSjZ3A4sM6gBvCSofF0hXZUQi9r+3KN94Hwf46NU0XKyLpzy939bpIQml5LnoLx
- j5msFCKMm5YvePvkOczxZbr6uio4DesoREDYpAOWCjfrj+shoC1FpGRsNr/Lt01voEZ/
- utPLKotAvaXgbmWq8btT2M9wX7GztWv73I9/iVEtd46QWY5hLR+XPTAZ6TMGS0Ghm6gF
- CP8g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/3+NWjX6qYxrRs/cBat8e2AaNGdJgnnvczrTq+71bANHPI8FVrR/LzgA7zAhY7BWQEwcIVntMa9I8h@nongnu.org
-X-Gm-Message-State: AOJu0YyUTIVlymWkUxJlQUkkcAAX/Ahc1hA5cJ6cRZC0z3JtAIc2D/K8
- oRevSGL2n6uCzLThFshUwkpnVDbgoSnMT5IlWDd/lYkgfAuktU/0cob+
-X-Gm-Gg: AeBDieuRgckpExwJIkzPw/nak57YDeO8FoHcmczA+sl5ErZWEanFAE+r6OrcqZXSxOw
- 7TwcE4OESIIncp651Rjv5eeitzLcnKOs/8A5cTDeYykYrMj0IxG5jdXw6WWL5abW7UVLyYFPkU3
- Pp9qU5OiVNNRyhU6I4R/CqKzSWEqxkJwOYGPZn7ZFgVG/bRRBlEIcqKyWBd+OCydNwdLwvJJmfq
- eyaIuO2SP+whxLv27Bidl+j7Yc7NFkKnYJq8QRnx9XXXlCW9jbHCfT4asD19E5rjtTlrVRCbx96
- rUaHLI/wVyhW/8mCJHVQcKRabXgSjZ5xQrpiJn/a04pFDHJ6bvs3Q6QCTgS3EnDZZzmtqwt10bc
- BB8DtobFVqwX/d4YcbAZOQ1ghKqeibQ4EzudShBwDi9IRh/z8Um5xNr3lsSyex9SB5ZI1X8Zo6n
- 7N6Wxo89zup+KbFjCwlnUY5unwI6BBVRosGAtBvbWMQdE2dVs4aZy8ASITvgE/u59jDZ6dqfCUI
- g==
-X-Received: by 2002:aa7:8892:0:b0:82a:190b:2225 with SMTP id
- d2e1a72fcca58-82f8c8bb677mr18417373b3a.31.1776764733824; 
- Tue, 21 Apr 2026 02:45:33 -0700 (PDT)
-Received: from localhost (203-214-45-63.dyn.iinet.net.au. [203.214.45.63])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f8e981a0asm13845521b3a.3.2026.04.21.02.45.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 02:45:33 -0700 (PDT)
-Date: Tue, 21 Apr 2026 19:45:30 +1000
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Joel Stanley <joel@jms.id.au>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v3 11/13] tests/functional/riscv64: Add tt-atlantis tests
-Message-ID: <aedEGxGq1qKhGI5d@lima-default>
-References: <20260421053140.752059-1-joel@jms.id.au>
- <20260421053140.752059-12-joel@jms.id.au>
- <87ba28f4-aeab-4015-8f9c-9d3a53c0cb7a@linaro.org>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wF875-0008Rj-VX
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 06:13:51 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wF874-0001Dx-9Q
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 06:13:51 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wF86z-00000001Ghy-3qEA; Tue, 21 Apr 2026 12:13:45 +0200
+Message-ID: <61f5e4e6-27ea-40f2-a40e-c2f4f593fa42@maciej.szmigiero.name>
+Date: Tue, 21 Apr 2026 12:13:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/hyperv/vmbus: remove duplicate include
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Osama Abdelkader <osama.abdelkader@gmail.com>
+References: <20260420163844.332663-1-osama.abdelkader@gmail.com>
+ <bfc966b0-b8a3-4a58-a40a-6221d27262dc@linaro.org>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Cc: "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <bfc966b0-b8a3-4a58-a40a-6221d27262dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ba28f4-aeab-4015-8f9c-9d3a53c0cb7a@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,134 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 08:05:48AM +0200, Philippe Mathieu-Daudé wrote:
-> On 21/4/26 07:31, Joel Stanley wrote:
-> > From: Nicholas Piggin <npiggin@gmail.com>
-> > 
-> > Add OpenSBI and Linux boot tests for the tt-atlantis machine. Based on
-> > tests/functional/riscv64/test_sifive_u.py.
-> > 
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> > ---
-> > v3:
-> >   - Fix path to test files
-> >   - Dedupe command line root argument
-> >   - Remove unused import
-> > ---
-> >   MAINTAINERS                                  |  1 +
-> >   tests/functional/riscv64/meson.build         |  1 +
-> >   tests/functional/riscv64/test_opensbi.py     |  4 ++
-> >   tests/functional/riscv64/test_tt_atlantis.py | 63 ++++++++++++++++++++
-> >   4 files changed, 69 insertions(+)
-> >   create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
+On 21.04.2026 10:07, Philippe Mathieu-DaudÃ© wrote:
+> On 20/4/26 18:38, Osama Abdelkader wrote:
+>> exec/target_page.h is included twice
+>>
+>> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+>> ---
+>> Â  hw/hyperv/vmbus.c | 1 -
+>> Â  1 file changed, 1 deletion(-)
 > 
-> 
-> > diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functional/riscv64/test_tt_atlantis.py
-> > new file mode 100755
-> > index 000000000000..f6f4b7ceec34
-> > --- /dev/null
-> > +++ b/tests/functional/riscv64/test_tt_atlantis.py
-> > @@ -0,0 +1,63 @@
-> > +#!/usr/bin/env python3
-> > +#
-> > +# Functional test that boots a Linux kernel on a Tenstorrent Atlantis machine
-> > +# and checks the console
-> > +#
-> > +# Copyright (c) Linaro Ltd.
-> > +# Copyright 2026 Tenstorrent
-> > +#
-> > +# SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +import os
-> > +
-> > +from qemu_test import Asset, LinuxKernelTest
-> > +
-> > +
-> > +class TTAtlantis(LinuxKernelTest):
-> > +
-> > +    ASSET_KERNEL = Asset(
-> > +        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
-> > +        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
-> > +    ASSET_ROOTFS = Asset(
-> > +        ('https://github.com/groeck/linux-build-test/raw/'
-> > +         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
-> > +         'rootfs.ext2.gz'),
-> > +        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
-> > +
-> > +    def do_test_riscv64_tt_atlantis(self, connect_disk):
-> > +        self.set_machine('tt-atlantis')
-> > +        kernel_path = self.ASSET_KERNEL.fetch()
-> > +        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
-> > +
-> > +        self.vm.set_console()
-> > +        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'earlycon=sbi '
-> > +
-> > +        if connect_disk:
-> > +            kernel_command_line += 'root=/dev/vda panic=-1 noreboot rootwait '
-> > +            self.vm.add_args('-device',
-> > +                             'virtio-blk,drive=drive0,serial=0x1234,bus=pcie.0')
-> > +            self.vm.add_args('-drive',
-> > +                             f'file={rootfs_path},if=none,id=drive0,format=raw')
-> > +            pattern = 'Boot successful.'
-> 
-> Should we run a full shutdown to test up to the halting payload
-> (patch #4)?
+> Patch queued (squashed with other hyperv one), thanks.
 
-Halting payload is only used when there is no kernel given, not sure if
-it's good cost/benefit to test that, it's just in case user screw up
-they don't get blank screen apparent hang.
+Thanks Philippe.
 
-A shutdown test all the way to machine halt would be good, although I
-don't know if we model that properly in the atlantis machine yet. Maybe
-something to expand on later.
+Maciej
 
-> 
-> > +        else:
-> > +            kernel_command_line += 'panic=0 noreboot '
-> > +            pattern = 'Cannot open root device'
-> > +
-> > +        self.vm.add_args('-kernel', kernel_path,
-> > +                         '-append', kernel_command_line,
-> > +                         '-no-reboot')
-> > +
-> > +        self.vm.launch()
-> > +        self.wait_for_console_pattern(pattern)
-> > +
-> > +        os.remove(rootfs_path)
-> 
-> Since you call uncompress() with implicit @target=None argument,
-> scratch_file() is used:
-> 
->         Construct a path for accessing/creating a scratch file
->         located relative to a temporary directory dedicated to
->         this test case. The directory and its contents will be
->         purged upon completion of the test.
-> 
-> So IIUC no need to remove manually. Do you have an issue with it
-> to remove it manually?
-
-No, I just copied it from tests/functional/riscv64/test_sifive_u.py :)
-and looks like same pattern exists in a couple of other tests as well.
-
-> 
-> Otherwise,
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Thanks,
-Nick
-
-> 
-> > +
-> > +    def test_riscv64_tt_atlantis(self):
-> > +        self.do_test_riscv64_tt_atlantis(False)
-> > +
-> > +    def test_riscv64_tt_atlantis_disk(self):
-> > +        self.do_test_riscv64_tt_atlantis(True)
-> > +
-> > +
-> > +if __name__ == '__main__':
-> > +    LinuxKernelTest.main()
-> 
-> 
 
