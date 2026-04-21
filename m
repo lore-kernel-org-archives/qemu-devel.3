@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FFCF8FA90
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E971F8FA99
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 15:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFDSo-0002fQ-60; Tue, 21 Apr 2026 11:56:38 -0400
+	id 1wFDSo-0002ft-HC; Tue, 21 Apr 2026 11:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wFDSl-0002ej-GV; Tue, 21 Apr 2026 11:56:35 -0400
+ id 1wFDSl-0002ei-GP; Tue, 21 Apr 2026 11:56:35 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wFDSj-0003JB-GB; Tue, 21 Apr 2026 11:56:35 -0400
+ id 1wFDSj-0003JA-Fl; Tue, 21 Apr 2026 11:56:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=tux/oh3wBPkdouV7SFgL9r8W8VUWDFSoRd15nfBxmrk=; b=A9T/9Lrr5SfM
- bJhieSxqX3VcBQnUNyJDfbYehWF7F76ucUnXVNyFxPeVWRaLcO82k+SI5w9ZE1yvna1P53wcuRu9R
- l+dN/eZ2WWqorNJTdvQ3xORssEgQj7y67LMDqCpNXfps7SaVXN/CmlpXacRjfQxpIEGu39Ek+a3I+
- HIb31CiWPIwtz+7wBUyHYNcJWebKwB8jpxhOYnN62HmMqcpjZNvJzpt0ImV6UMhFxmVQc3wfSk1UC
- TZxTRrlNY1mSM3wg95uw259YN9dO9gh7aJ0VovS33GlYFIqnVQu1lbaOCJya1pMg4XB5Gt8GvhQtj
- xlX1TRqYMCZSsawN1M567w==;
+ Content-Type; bh=5oZ5ryl95dTV+hIbE37CXIJ9NkwjnJnZE/utqtG/ovM=; b=x0O+XMH38Aiy
+ Y0ODmDeTiif5+9CCJfkkbSqDHaHQVPszRK4ydyzJEgplNtg2U0w4jWklEcWCJv8L5lP9iW/slclhz
+ X0T0rlRRSFxXo35cI9Elwaz2pUZbKPFNZxIQVMtJuiBC4QpzBuw2Oka3u1+Q98zveCqa+ixLpIw0a
+ Voewzd+eBwL0UHOxAHbVl7ahBjMgYMsK6sgCqRdKF2RpRoH/xW69bIg7xTzDw5UORI74CGrmsnLEK
+ GHhiAioX9CFEhEdsyGZEN+LRt8bDmd0ZOyCdKjnppYwQ8Xbmg5FwG+vlXJ7uTvnMrDq5+jvzqNBFF
+ Sf+WuSvdHXweXDi6/Zs7eQ==;
 Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=iris.sw.ru)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1wFDQ2-001k3k-24;
- Tue, 21 Apr 2026 17:56:19 +0200
+ (envelope-from <den@openvz.org>) id 1wFDQ2-001k3k-35;
+ Tue, 21 Apr 2026 17:56:20 +0200
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org,
 	qemu-stable@nongnu.org
 Cc: den@openvz.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 1/2] block/io: serialise discard and write-zeroes against
- in-flight writes
-Date: Tue, 21 Apr 2026 17:56:27 +0200
-Message-ID: <20260421155628.3600671-2-den@openvz.org>
+Subject: [PATCH 2/2] iotests: regression test for discard/write-zeroes vs
+ in-flight write race
+Date: Tue, 21 Apr 2026 17:56:28 +0200
+Message-ID: <20260421155628.3600671-3-den@openvz.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260421155628.3600671-1-den@openvz.org>
 References: <20260421155628.3600671-1-den@openvz.org>
@@ -69,98 +69,144 @@ From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qcow2's write path drops s->lock around the data I/O of an allocating
-write. A concurrent discard (or MAY_UNMAP write-zeroes) on the same
-guest offset lands the cluster-free operation in that window. The
-original writer then reacquires the lock and unconditionally writes
-L2[G] = alloc_offset | OFLAG_COPIED on its now-stale l2meta, binding
-the L2 entry to a freed cluster:
+Add tests/qemu-iotests/tests/discard-write-serialisation, a deterministic
+regression test for the race fixed in the previous commit.
 
-  WRITE coroutine                       DISCARD coroutine
-  ---------------                       -----------------
-  qcow2_co_pwritev_part:
-    lock(s->lock)
-    qcow2_alloc_host_offset:
-      handle_copied reads L2[G] = C | OFLAG_COPIED
-      builds l2meta { alloc=C, keep_old_clusters=true }
-    unlock(s->lock)                 -->
-    bdrv_co_pwritev_part (data I/O)    lock(s->lock)
-                                       qcow2_co_pdiscard on G:
-                                         discard_in_l2_slice
-                                           set_l2_entry(G, 0)
-                                           free_any_cluster(C):
-                                             rc(C) 1 -> 0
-                                       unlock(s->lock)
-    lock(s->lock)
-    qcow2_handle_l2meta(link_l2=true):
-      qcow2_alloc_cluster_link_l2:
-        set_l2_entry(G, C | OFLAG_COPIED)  <- stale alloc onto
-                                              freed cluster
+Drive a single qemu-io process with a fixed-seed interleaved sequence of
+async aio_write and aio_write -z -u commands at random cluster-aligned
+offsets in a small contention region, then run qemu-img check and assert
+zero corruptions.  On an unpatched tree the same workload reproduces the
+refcount-aliasing fingerprint deterministically; on the fixed tree the
+image comes back clean.
 
-The next allocator pass re-hands C out on rc=0, so we end up with two
-L2 entries aliasing one host cluster. On disk this shows up in
-qemu-img check as refcount=0 with a live OFLAG_COPIED reference or as
-refcount < reference; at runtime the next discard on either alias
-prints "qcow2_free_clusters failed: Invalid argument" on stderr with
-no guest-visible error.
-
-Mark both discards and all write-zeroes (with or without MAY_UNMAP)
-as BDRV_REQ_SERIALISING in the generic block layer. Their
-tracked_request then waits for overlapping in-flight writes,
-including non-serialising ones, to finish their format-driver commit
-before any L2/refcount mutation happens.
+The test is scoped to qcow2 because qcow2 is the format whose qemu-img
+check validates refcount/reference consistency and therefore actually
+detects the fingerprint.  The underlying race is in the generic block
+layer and not format-specific, but a test that asserts "qemu-img check
+returns zero corruptions" only has signal on formats that run such a
+check.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Kevin Wolf <kwolf@redhat.com>
 Cc: Hanna Reitz <hreitz@redhat.com>
 ---
- block/io.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ .../tests/discard-write-serialisation         | 97 +++++++++++++++++++
+ .../tests/discard-write-serialisation.out     |  1 +
+ 2 files changed, 98 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/discard-write-serialisation
+ create mode 100644 tests/qemu-iotests/tests/discard-write-serialisation.out
 
-diff --git a/block/io.c b/block/io.c
-index dd5f13c694..9f23029b95 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -2097,6 +2097,16 @@ bdrv_aligned_pwritev(BdrvChild *child, BdrvTrackedRequest *req,
-     max_transfer = QEMU_ALIGN_DOWN(MIN_NON_ZERO(bs->bl.max_transfer, INT_MAX),
-                                    align);
- 
-+    /*
-+     * Zero-writes (with or without MAY_UNMAP) mutate L2 entries / refcounts
-+     * in the format driver and therefore race with concurrent in-flight
-+     * regular writes that have dropped their internal mutex for the data
-+     * I/O.  See the comment in bdrv_co_pdiscard(). Serialise them.
-+     */
-+    if (flags & BDRV_REQ_ZERO_WRITE) {
-+        flags |= BDRV_REQ_SERIALISING;
-+    }
+diff --git a/tests/qemu-iotests/tests/discard-write-serialisation b/tests/qemu-iotests/tests/discard-write-serialisation
+new file mode 100755
+index 0000000000..45a3f7f043
+--- /dev/null
++++ b/tests/qemu-iotests/tests/discard-write-serialisation
+@@ -0,0 +1,97 @@
++#!/usr/bin/env python3
++# group: rw quick auto
++#
++# Regression test for the block-layer race fixed in
++# block/io: serialise discard and write-zeroes against in-flight writes.
++#
++# A format driver's write path may drop its internal mutex around the
++# data I/O of an allocating write (qcow2 does so between
++# qcow2_alloc_host_offset and qcow2_alloc_cluster_link_l2).  A
++# concurrent discard or MAY_UNMAP write-zeroes on the same guest range,
++# running in that window, can clear the L2 entry and drop the cluster's
++# refcount to zero; the writer's subsequent link then binds the L2
++# entry to a freed cluster.  qemu-img check reports this as refcount=0
++# with a live OFLAG_COPIED reference, or refcount < reference when the
++# allocator re-hands the cluster out.
++#
++# The bug is in the generic block layer, not format-specific; qcow2 is
++# the detection vehicle because its refcount validation in qemu-img
++# check catches the fingerprint.  The test drives a single qemu-io
++# process with interleaved async aio_write and aio_write -z -u commands
++# at random cluster-aligned offsets in a small contention region, then
++# runs qemu-img check and asserts zero corruptions.  On an unpatched
++# tree the same workload reproduces the fingerprint deterministically
++# (seed is fixed).
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-     ret = bdrv_co_write_req_prepare(child, offset, bytes, req, flags);
- 
-     if (!ret && bs->detect_zeroes != BLOCKDEV_DETECT_ZEROES_OPTIONS_OFF &&
-@@ -3192,7 +3202,20 @@ int coroutine_fn bdrv_co_pdiscard(BdrvChild *child, int64_t offset,
-     bdrv_inc_in_flight(bs);
-     tracked_request_begin(&req, bs, offset, bytes, BDRV_TRACKED_DISCARD);
- 
--    ret = bdrv_co_write_req_prepare(child, offset, bytes, &req, 0);
-+    /*
-+     * Discards must serialise against overlapping in-flight writes.
-+     * A format driver's write path may drop its internal mutex around
-+     * the data I/O while still holding a pending cluster-allocation
-+     * commit (see qcow2's handle_copied / qcow2_alloc_cluster_link_l2
-+     * sequence).  A concurrent discard that clears L2 and drops the
-+     * refcount during that window leaves the writer pointing at a
-+     * freed cluster - the root of the refcount/reference aliasing
-+     * corruption family.  Marking the discard serialising makes it wait
-+     * for the in-flight write's tracked_request to complete before any
-+     * L2/refcount mutation happens.
-+     */
-+    ret = bdrv_co_write_req_prepare(child, offset, bytes, &req,
-+                                    BDRV_REQ_SERIALISING);
-     if (ret < 0) {
-         goto out;
-     }
++import random
++import subprocess
++
++import iotests
++from iotests import qemu_img_create, qemu_img_check, qemu_io_wrap_args
++
++
++iotests.script_initialize(supported_fmts=['qcow2'],
++                          supported_platforms=['linux'])
++
++IMG_SIZE = 256 * 1024 * 1024          # 256 MiB
++REGION = 64 * 1024 * 1024             # contention region: 64 MiB
++CLUSTER = 1024 * 1024                 # 1 MiB
++SUBCLUSTER = 32 * 1024                # 32 KiB
++OPS = 5000
++SEED = 7
++
++def build_commands() -> bytes:
++    rng = random.Random(SEED)
++    max_cluster = REGION // CLUSTER - 1
++    lines = []
++    for _ in range(OPS):
++        cl = rng.randint(0, max_cluster)
++        off = cl * CLUSTER
++        if rng.random() < 0.5:
++            # Small sub-cluster write at an unaligned position inside
++            # the cluster -- exercises the handle_copied path and the
++            # s->lock drop around the data I/O.
++            sub = rng.randrange(0, CLUSTER, SUBCLUSTER)
++            lines.append(f'aio_write -q {off + sub} 32k')
++        else:
++            # MAY_UNMAP write-zeroes aligned to the cluster -- frees
++            # clusters at the format driver level and is the concurrent
++            # cluster-free source that races with the in-flight writes.
++            lines.append(f'aio_write -q -z -u {off} 1M')
++    lines.append('aio_flush')
++    return ('\n'.join(lines) + '\n').encode()
++
++
++def main() -> None:
++    with iotests.FilePath('disk.img') as img:
++        qemu_img_create('-f', 'qcow2',
++                        '-o', 'cluster_size=1M,extended_l2=on,'
++                              'lazy_refcounts=on,refcount_bits=16',
++                        img, str(IMG_SIZE))
++
++        # Run qemu-io with async AIO.  --cache=none and --aio=native ensure
++        # the writer coroutine actually yields around its data I/O (which
++        # is what opens the race window).  Swallow stdout/stderr: the
++        # result we care about is the on-disk state, checked below.
++        args = qemu_io_wrap_args(['-f', 'qcow2', '-n',
++                                  '--cache=none', '--aio=native', img])
++        subprocess.run(args, input=build_commands(),
++                       stdout=subprocess.DEVNULL,
++                       stderr=subprocess.DEVNULL,
++                       check=True)
++
++        result = qemu_img_check(img)
++        corruptions = result.get('corruptions', 0)
++        check_errors = result.get('check-errors', 0)
++        if corruptions or check_errors:
++            iotests.log(f'FAIL: qemu-img check reports '
++                        f'corruptions={corruptions} '
++                        f'check-errors={check_errors}')
++        else:
++            iotests.log('OK')
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/tests/qemu-iotests/tests/discard-write-serialisation.out b/tests/qemu-iotests/tests/discard-write-serialisation.out
+new file mode 100644
+index 0000000000..d86bac9de5
+--- /dev/null
++++ b/tests/qemu-iotests/tests/discard-write-serialisation.out
+@@ -0,0 +1 @@
++OK
 -- 
 2.51.0
 
