@@ -4,71 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7430DF327A8
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D2DF327A9
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF4Cr-0007CR-4w; Tue, 21 Apr 2026 02:03:33 -0400
+	id 1wF4FB-0008E9-U8; Tue, 21 Apr 2026 02:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wF4Cp-0007CF-NS
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:03:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wF4Co-0006S7-6Q
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:03:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776751409;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QjzrciRq/TcwKBPqJXuJKSmOrzYtTKk7Kb4SvLreyuk=;
- b=Qralrnm6a7e03B8ZDe36anUwHn19oC0ZMNVHwurC+YPk0VkEVwd031x4bQ8yDgAXN+FD+3
- EdlbiZzV4Oin1vTuNXCVInOr1YnzMfaR69Xycxuklz/kA0dlbD8jgb1DKuoG+/e45JPT9t
- MXJGkuOf/sy83h9NcAr4fJeka0P6uZY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-STgpznYzPyS2jx5CUYt4Dg-1; Tue,
- 21 Apr 2026 02:03:27 -0400
-X-MC-Unique: STgpznYzPyS2jx5CUYt4Dg-1
-X-Mimecast-MFC-AGG-ID: STgpznYzPyS2jx5CUYt4Dg_1776751406
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85D0719560BB; Tue, 21 Apr 2026 06:03:26 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.22])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43E18180047F; Tue, 21 Apr 2026 06:03:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B482821E6A28; Tue, 21 Apr 2026 08:03:23 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH v1] checkpatch: Allow spaces after all coroutine
- annotations
-In-Reply-To: <20260420191356.4439-1-farosas@suse.de> (Fabiano Rosas's message
- of "Mon, 20 Apr 2026 16:13:56 -0300")
-References: <20260420191356.4439-1-farosas@suse.de>
-Date: Tue, 21 Apr 2026 08:03:23 +0200
-Message-ID: <87340oalzo.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wF4F9-00088i-G6
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:05:55 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wF4F6-0007GF-57
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:05:54 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so60286375e9.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 23:05:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776751550; x=1777356350; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OtKY0PIm2HMVW6Fw0IHLRhBr7oEOdI6Y19waM5q9yes=;
+ b=vXhFJ/JHPWIK9OtSJWljglTOmAiCUMaWRBahV8gVyZQPEkGdj63Hv0aOLbkyqdMpHE
+ Mk/oM7ASUQx+FeQhxPsGtgv3tgZrvAohFu6UuTIuuhWAyIDalxZ2CHC9ZgKbMAQoxBez
+ l63v8PwNhrRpfvhXYoXckKy2SkTpgF3aY2HYnkWGFRarr4epzWEqJHMrKw2GQHpc0eQm
+ HS/d3uodZGtgbNaR92ODQo9iHPXHpMXBvycijz1+J/GoAuXJaSpTUat01AR+RZ+/hd9e
+ 5yqRGuaFgFAwEWgx7gxBi3zNUa3tf1njr/p0/LoBllzAQGIqF/HUH/ILcOIJliXWeh3g
+ 5IBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776751550; x=1777356350;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OtKY0PIm2HMVW6Fw0IHLRhBr7oEOdI6Y19waM5q9yes=;
+ b=b6AlQY83klLCoIEvL8RKkCl081jJYQ4OEdEEIumEjNqwIQUXrYaMxWNEKkzjP/ef3n
+ Vi2jST+9tF7OjEbnfWhr3oxlGhupIgT2Jnekmo8faJM+oFX2ZtgHg1ZdzxfUAHI5xgsi
+ Xf5Rxz1kikBr30TkrFGGIRMx4vNrb2Mqo+JlVfv8oMK+6ee0akUJSQ9iICLq8yb13rDp
+ 3KkLRew7gk4r4Nkb6hkK3DsoS0CGpyR/HEP+9WkB+vnDXMG+RPoTS1tlpJ1Zhi/YMfve
+ vdSnsbzhyJFgI/5t69h27PNHTdXRDqZ+rWFPmwNuHvL+j6k/kLHbXxxQEiXVqNANm1IF
+ R26w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9VFZ6Cmr8pXpOHagvqD1FXzbSP5IcK0mIldAX6wV3fB+UqzGveiZOWS9VQab3dNZc8DQ9vwvzC3mz/@nongnu.org
+X-Gm-Message-State: AOJu0YyhSXskes/HjeYDwII1LXvgNVv7zqtZCQR0+yBhezFKd5uNPt6+
+ EtM99DowZ4xGmTKf5k31vd7sPOKmBFEFD+qtS4xHveJyArxD7SYrS61qc9FAS1HDSD0=
+X-Gm-Gg: AeBDieutdGRbTCQcjnkEwuKINmhhlUSXP6hhi770qlMNlPeX2miSmB/aINxRVIfXWrS
+ TVigUBYM5blMzUGHisjn6yMoFJf5RmxDesanc0UU/Kyz34p8CdlI8flEhL42+XXMP9DYi8KLq92
+ TpkU5JnZbNKw/Hc6V7OMZSU5lUHaFOa+EXc+sQ/nBJCmBhY6TVVLZWF1cmYNF1pMbptFb/jK3zu
+ +nQOL+YjH8DSKlpovweDy/lBFjIl+W43sCbzOnHLCTV1qzZLqiPQkd/8qFbimGjSYYFiaO/jhxI
+ 1iZbzTpBBxe1sJEe8mcLoHNhCXAjGrpEMbDTVNr+Cvx7C7VMZ4AuLIri5iu/e9mdumhVG66ImDA
+ cTpuwA18cl3tNpfYApydE0bdPjeuh6rHiVNnboD8gCQkHmfEey0c55QCJi7FKDWGCqN2TP7bPeT
+ htXVtB0H2FPjlr+5ooKz3/g/r95qGQg8EGkyfMtPKteeG/m0REj6LAcIHhHFOE+kIRHeupTGq/Q
+ EhQ
+X-Received: by 2002:a05:600c:2e42:b0:489:1fa4:50c6 with SMTP id
+ 5b1f17b1804b1-4891fa451bamr41848125e9.20.1776751550085; 
+ Mon, 20 Apr 2026 23:05:50 -0700 (PDT)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc17f642sm314040795e9.5.2026.04.20.23.05.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Apr 2026 23:05:49 -0700 (PDT)
+Message-ID: <87ba28f4-aeab-4015-8f9c-9d3a53c0cb7a@linaro.org>
+Date: Tue, 21 Apr 2026 08:05:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/13] tests/functional/riscv64: Add tt-atlantis tests
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@kernel.org>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+References: <20260421053140.752059-1-joel@jms.id.au>
+ <20260421053140.752059-12-joel@jms.id.au>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260421053140.752059-12-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,38 +108,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
-
-> The coroutine annotations may be used in the declaration of function
-> pointers, which triggers checkpatch due to the space before the
-> parentheses. E.g:
->
->   int coroutine_fn (*run)(Job *job, Error **errp);
->                   ^
-> The coroutine_fn annotation is already included in the list of terms
-> where spaces are allowed. Add the other coroutine annotations:
-> coroutine_mixed_fn and no_coroutine_fn.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On 21/4/26 07:31, Joel Stanley wrote:
+> From: Nicholas Piggin <npiggin@gmail.com>
+> 
+> Add OpenSBI and Linux boot tests for the tt-atlantis machine. Based on
+> tests/functional/riscv64/test_sifive_u.py.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 > ---
-> the next migration PR will trigger this
+> v3:
+>   - Fix path to test files
+>   - Dedupe command line root argument
+>   - Remove unused import
 > ---
->  scripts/checkpatch.pl | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index b77bd69328..e1cf2ff23b 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -2441,6 +2441,7 @@ sub process {
->  			if ($name =~ /^(?:
->  				if|for|while|switch|return|case|
->  				volatile|__volatile__|coroutine_fn|
-> +				coroutine_mixed_fn|no_coroutine_fn|
->  				__attribute__|format|__extension__|
->  				asm|__asm__)$/x)
->  			{
+>   MAINTAINERS                                  |  1 +
+>   tests/functional/riscv64/meson.build         |  1 +
+>   tests/functional/riscv64/test_opensbi.py     |  4 ++
+>   tests/functional/riscv64/test_tt_atlantis.py | 63 ++++++++++++++++++++
+>   4 files changed, 69 insertions(+)
+>   create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
+> diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functional/riscv64/test_tt_atlantis.py
+> new file mode 100755
+> index 000000000000..f6f4b7ceec34
+> --- /dev/null
+> +++ b/tests/functional/riscv64/test_tt_atlantis.py
+> @@ -0,0 +1,63 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots a Linux kernel on a Tenstorrent Atlantis machine
+> +# and checks the console
+> +#
+> +# Copyright (c) Linaro Ltd.
+> +# Copyright 2026 Tenstorrent
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import os
+> +
+> +from qemu_test import Asset, LinuxKernelTest
+> +
+> +
+> +class TTAtlantis(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL = Asset(
+> +        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
+> +        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
+> +    ASSET_ROOTFS = Asset(
+> +        ('https://github.com/groeck/linux-build-test/raw/'
+> +         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
+> +         'rootfs.ext2.gz'),
+> +        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
+> +
+> +    def do_test_riscv64_tt_atlantis(self, connect_disk):
+> +        self.set_machine('tt-atlantis')
+> +        kernel_path = self.ASSET_KERNEL.fetch()
+> +        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
+> +
+> +        self.vm.set_console()
+> +        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'earlycon=sbi '
+> +
+> +        if connect_disk:
+> +            kernel_command_line += 'root=/dev/vda panic=-1 noreboot rootwait '
+> +            self.vm.add_args('-device',
+> +                             'virtio-blk,drive=drive0,serial=0x1234,bus=pcie.0')
+> +            self.vm.add_args('-drive',
+> +                             f'file={rootfs_path},if=none,id=drive0,format=raw')
+> +            pattern = 'Boot successful.'
+
+Should we run a full shutdown to test up to the halting payload
+(patch #4)?
+
+> +        else:
+> +            kernel_command_line += 'panic=0 noreboot '
+> +            pattern = 'Cannot open root device'
+> +
+> +        self.vm.add_args('-kernel', kernel_path,
+> +                         '-append', kernel_command_line,
+> +                         '-no-reboot')
+> +
+> +        self.vm.launch()
+> +        self.wait_for_console_pattern(pattern)
+> +
+> +        os.remove(rootfs_path)
+
+Since you call uncompress() with implicit @target=None argument,
+scratch_file() is used:
+
+         Construct a path for accessing/creating a scratch file
+         located relative to a temporary directory dedicated to
+         this test case. The directory and its contents will be
+         purged upon completion of the test.
+
+So IIUC no need to remove manually. Do you have an issue with it
+to remove it manually?
+
+Otherwise,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +
+> +    def test_riscv64_tt_atlantis(self):
+> +        self.do_test_riscv64_tt_atlantis(False)
+> +
+> +    def test_riscv64_tt_atlantis_disk(self):
+> +        self.do_test_riscv64_tt_atlantis(True)
+> +
+> +
+> +if __name__ == '__main__':
+> +    LinuxKernelTest.main()
 
 
