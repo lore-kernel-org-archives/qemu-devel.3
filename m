@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0ADCF94CAC
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2C3F94CAB
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFHbJ-000112-MM; Tue, 21 Apr 2026 16:21:41 -0400
+	id 1wFHbE-0000yq-F6; Tue, 21 Apr 2026 16:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHbH-00010q-LB
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHb8-0000xM-Sp
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHbF-0008Sv-St
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:39 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHb6-0008Qt-DX
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776802897;
+ s=mimecast20190719; t=1776802887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Af9JljxWi70ez3woHKeuds1zCU/ND/L9uxolesYJp+k=;
- b=XDXX8K8WY4l2YW45wcL2weFVrtwGBM9bXI+Mm85ZJRebOtmf4PQwqE20gi/oBbpSj2mHho
- xjGi4+Rlb+PDOphK5ITpwrZHS+1DK9HhOqOw3Il3xYqwwk7OBz8fLUEq+GinGZEeQz1MoF
- QAnqz35EQ/zFdzqd1ap+XukdbNujym4=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=08GGg3JxwpdseV0NCpC++cfwyRjqfD6+A5Dnd/iqc6Y=;
+ b=YhStOHSQlN9vY7UL0GH8CPDPkd7GeCKRlT6VV73x7dUIr2xxlNqcMCz7GzTFozCBC+eAxL
+ eglNitEP30JUD8SIYQ7KzWjLI9E5KUUQ0leYHIj1vPHvv6CMnFJPDasrKJIeXfG7joaIlH
+ /Bb0SZDO2+CkWhXNROynPN8rjJlLhWM=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-uvcKwInBO4OJaqQGzsai3A-1; Tue, 21 Apr 2026 16:21:35 -0400
-X-MC-Unique: uvcKwInBO4OJaqQGzsai3A-1
-X-Mimecast-MFC-AGG-ID: uvcKwInBO4OJaqQGzsai3A_1776802895
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8acdd800537so96006106d6.1
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 13:21:35 -0700 (PDT)
+ us-mta-340-GYCqj8JLMpiQdSr7yrD_Og-1; Tue, 21 Apr 2026 16:21:26 -0400
+X-MC-Unique: GYCqj8JLMpiQdSr7yrD_Og-1
+X-Mimecast-MFC-AGG-ID: GYCqj8JLMpiQdSr7yrD_Og_1776802886
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8ae752c5273so86571906d6.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 13:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776802895; x=1777407695; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776802885; x=1777407685; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Af9JljxWi70ez3woHKeuds1zCU/ND/L9uxolesYJp+k=;
- b=Mbl90EQbQ00AU1rBmNPUn0xB2phP3VT1xj3CYHPpzUsUwK9q4teBzeCbd/ayjMgfqv
- ToWETRo8ozQL8z5Z1MKKXDrTozz54iqp3c0JeuRAEOI2/Yw8Tk4lberFcD3+I02tnWN3
- E8CXn5s7bhBSCu4T2+5sTMDdut5Ren5CvUKEGRKK7q5K1LMXTS/9ifL/uYwbCxuX1Qn9
- 9J6NwLZTm3U/1VLdZdRQaA5nUdt/8erUCAky+RUVazglmJYwNa4Ezg114BrpA4KPOWYX
- 5WIadpnz13CarzJZuIeuFLfS1YNaCcwFid6piNbJslP0iZ/OKzMNbTp7y+5+z4TwhXJR
- jimg==
+ bh=08GGg3JxwpdseV0NCpC++cfwyRjqfD6+A5Dnd/iqc6Y=;
+ b=Mq9cjpQ4jqZpIUFvb/dn8E/L6eskXKKmvqIXYU9RvW1GkSU+LZRR7XrUkLBvpMuvAR
+ 3YCz0aUiPveWPLrzYtzS5sHTgcNRVMmcTwPWtdfNvgygU1B2+TxMbGIPZdTdVpM0H5th
+ rih7FaGENpOzK5ZL1gzxsi+kTXU12BtB8E6r+JVt6PidQu4xS05I9fW5uld2DmYKf7Yq
+ sqrbiu4pxP6PPJiJAaRGEacE3suOZLaoIu/VL6mnZUVXkdfdLmTLV8i8e/TgRJRHv4tL
+ NX1wwbQziRbTV2FvpKinZf4iFkRQA9G5mpj28Vb3dNSpGbAuQjdcXlQOwc2V8JSQYMN3
+ /vqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776802895; x=1777407695;
+ d=1e100.net; s=20251104; t=1776802885; x=1777407685;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Af9JljxWi70ez3woHKeuds1zCU/ND/L9uxolesYJp+k=;
- b=EeVQINiu36gVZbvvG9jKjd2UuLgxDc8wLKOC1RnznmiUfCobLX1tAZD3i/hGHKCBFj
- h8bYMjnlzXFcDEXm43QU+9RRH6V4wlH/oa4gG9+X2BgozXlPKp7rI9+J109HleiHWJNr
- qAHau9a0K0xfh7MGk/VQsMXGyF+gqfo4NDPbb5ewehdlcfbJ6UIDB5kvvwQfFTCUP01I
- jp1xzUtD1hQQ7iA/xwDet2DCrmrpMWvcQBI+OlfXnnI5myq+DItkK4FCb2pKOUTNgda+
- +600TWLnzAg7qhUbo9fiCcHF8oHMz+PzffSVPGWjzSW/2Cuxmr/hsD4mVgG1hbdj5UMT
- U6sw==
-X-Gm-Message-State: AOJu0YwKdhjSN0iP9MzNhZBW6mh1voGwxN0tgnu1+q9mi5KtcCNVF2WB
- GC2UOAhy0RlAJLT2RFQMtyvbHGKq8lCdqBM6Y6DRYe+7zOw+IX2dXopN32QrIjiSz/rG6ZdEXIn
- XsHpDDMbsMJlkrIHutwx9QLiWPLNEpoZQ2ExUOA9UDlMmbjsDDcLJKt0PjeV/XXccyDi2FLpgrt
- 2VpcMeKctKWerJPneiNkXTgf0HIoum1snLPobP4A==
-X-Gm-Gg: AeBDieuF0Kgz+DLeoMkfcMOBSJ7o9qYfDSWfwZIRLWhlucZeFhgj2tJ+Hl5XOuWHIF5
- p5OGTQZ3q2GUyMY+1oDjhjCuVutl71nrX7U3Vz+p7GoOO+arqSnCOx6TxostDY4EJ/j+wuUMXKe
- p7CkKllTsiaNoWPLgQFj/WdIiX7SCFhcabcuhDfZR0iUn49T7c9k4N+zjxc2zI8TaEimx3eR0Sl
- NmqpgJSvzClcTLiq+bDpiZk039u9onv76OClfa1e23LYmF6FwuRBt1Tyqf5e9DRiEjtxM0+FzpO
- EzXx/A2HgMW1Rew/eD+DPgbSYgkg1+WaMjYvQtIbkg/vEMvCygNZ86L9fOQ02itW+IzNkxnynv7
- VwJBT/y9zCV7y9wu0wAvOhSUdSM4j99hbiutJvqTtLHxOqp23l593dTP5WA==
-X-Received: by 2002:a05:6214:21e6:b0:8a1:88f7:d292 with SMTP id
- 6a1803df08f44-8b0280135dbmr332386396d6.13.1776802894725; 
- Tue, 21 Apr 2026 13:21:34 -0700 (PDT)
-X-Received: by 2002:a05:6214:21e6:b0:8a1:88f7:d292 with SMTP id
- 6a1803df08f44-8b0280135dbmr332385816d6.13.1776802894193; 
- Tue, 21 Apr 2026 13:21:34 -0700 (PDT)
+ bh=08GGg3JxwpdseV0NCpC++cfwyRjqfD6+A5Dnd/iqc6Y=;
+ b=VX1ObUbum5CzWcG8oThw6IJ8QbQAspiJcBzr68dvbkr55eXLwzfv20iGfSJuM23g2C
+ 2P5z74IGL0S9ZohgjsJfFHZHUCD6LPrpAXGydhFP/xUlOR8u49KJ6O4jvJ7BCXpVppbp
+ gtAygfJ/0DCCN3O1Grfp/eE8kb94wPaEc6KUY84ITq9B1qGwIMWQDtKZ0kVZMHSMT2C4
+ MCvm/2TmByZIV2D9mRDJAkQqVYf1VPgaKcJwK6CrNq+3ZeLd35RoHgGt9SvxhW/SDGCM
+ pbk2n/6ZJhPAOE1ROBMVChBY9oC41n6aGh3z66MI+/AoQZncOvpGwZXzI+lNC68F7pYf
+ 4l6A==
+X-Gm-Message-State: AOJu0YyKiCkjvMxLZ3V0PE4kWpOppHjOtub9D1ZOMWt52h5c0ja2APPj
+ C6kAS5ZPQ1fcnYBdxBdcJm498WJA+l8yyt7LQcek0wBPE/AEgtSJeHbfBRHUbW/B6ssHDqi+Jp2
+ vt61mvlqW/notrhuyYAIylRh6i18nHK9s+Mbvc/YHotHkEndDBJwWAnTjd4nnEdkoh92kMsBWcS
+ 54MShdbi1iVkISzh3fMQ9ennyIUAYfIYpkj4eFDA==
+X-Gm-Gg: AeBDietBpZ9hz5EtCyFHFfLtsOxPfG9fEkrUPNPY6j6m3pcle3tfKTOMayzHUaMNssd
+ 0/FBkqVHR8bZ4juWLN47gjtE76HHmCJ36mqsg6kphBMgaWQGFzAw59GTFy4teeBLJtmop/tjat0
+ xSQzRU6/6m16jyuEvC3oTZ7MGP7zEO91F18aNdnopaFDOvi5vD1S8HVeMpuaoMx2M9Q6UFliTHT
+ RL60IuncJw3tCM1gu5PnSt2ftmoYx4+Ihhdy7JYjF4SRNJIpVikLr7x+wHV8xtqszlqYnOtMc+F
+ MfdMaxMqUGQo0FENFWvvH2ncDbzYMKLPgXH09rXw6lI5MYAfdXNhmoiF0Wb4xcENwfZplAGTDng
+ 1Dq9+NT3vhNQPhTZjGW0yJOO8Uj0PQfkQZLU/FXcyqPlrHKzp23rsVDD6RA==
+X-Received: by 2002:a05:6214:4e08:b0:89c:d886:c022 with SMTP id
+ 6a1803df08f44-8b027ff9304mr273283706d6.1.1776802885368; 
+ Tue, 21 Apr 2026 13:21:25 -0700 (PDT)
+X-Received: by 2002:a05:6214:4e08:b0:89c:d886:c022 with SMTP id
+ 6a1803df08f44-8b027ff9304mr273283066d6.1.1776802884724; 
+ Tue, 21 Apr 2026 13:21:24 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ae5c26csm114343556d6.31.2026.04.21.13.21.32
+ 6a1803df08f44-8b02ae5c26csm114343556d6.31.2026.04.21.13.21.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 13:21:33 -0700 (PDT)
+ Tue, 21 Apr 2026 13:21:23 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Joao Martins <joao.m.martins@oracle.com>,
@@ -93,23 +93,24 @@ Cc: Joao Martins <joao.m.martins@oracle.com>,
  Zhiyi Guo <zhguo@redhat.com>, Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 13/16] migration: Remember total dirty bytes in mig_stats
-Date: Tue, 21 Apr 2026 16:21:07 -0400
-Message-ID: <20260421202110.306051-14-peterx@redhat.com>
+Subject: [PATCH v2 07/16] migration: Introduce stopcopy_bytes in
+ save_query_pending()
+Date: Tue, 21 Apr 2026 16:21:01 -0400
+Message-ID: <20260421202110.306051-8-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260421202110.306051-1-peterx@redhat.com>
 References: <20260421202110.306051-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,70 +126,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce this new counter to remember the total dirty bytes for the whole
-system.  It will be used for query-migrate command to fetch system-wise
-remaining data.
+Allow modules to report data that can only be migrated after VM is stopped.
 
-A prior attempt was made to not use this counter but query directly from
-all the modules in a QMP handler, but it exposed some complexity not only
-on migration state machine race conditions (where the query may be invoked
-anytime of the state machine), or on locking implications (where some of
-the query hooks may take BQL, which is illegal at least in a QMP handler).
-For more information, see:
+When this concept is introduced, we will need to account stopcopy size to
+be part of pending_size as before.
 
-https://lore.kernel.org/r/aeZMtxqrKWAMKzdN@x1.local
+However, when there're data only can be migrated in stopcopy phase, it
+means the old "pending_size" may not always be able to reach low enough to
+kickoff an slow version of query sync.
 
-This oneliner will resolve everything, except that it is not as accurate.
-The hope is it is a worthwhile trade-off solution, after knowing above
-challenges.
+It used to be almost guaranteed to happen as all prior iterative modules
+doesn't have stopcopy only data.  VFIO may change that fact by having some
+data that must be copied during stop phase.
 
-Now, there is one more reason we should make each invocation of
-save_live_iterate() to be lightweight, because this counter will only get
-updated once for each loop over all save_live_iterate() hooks when present.
-But that's always the goal.
+So we need to make sure QEMU will kickoff a synchronized version of query
+pending when all precopy data is migrated.  This might be important to VFIO
+to keep making progress even if the downtime cannot yet be satisfied.
+
+So far, this patch should introduce no functional change, as no module yet
+report stopcopy size.
+
+This paves way for VFIO to properly report its pending data sizes, which
+will start to include stop-only data.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration-stats.h | 7 +++++++
- migration/savevm.c          | 7 +++++++
- 2 files changed, 14 insertions(+)
+ include/migration/register.h |  7 ++++
+ migration/migration.c        | 65 ++++++++++++++++++++++++++++++------
+ migration/savevm.c           | 10 ++++--
+ migration/trace-events       |  2 +-
+ 4 files changed, 70 insertions(+), 14 deletions(-)
 
-diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-index 1775b916df..9f9a8eb9eb 100644
---- a/migration/migration-stats.h
-+++ b/migration/migration-stats.h
-@@ -36,6 +36,13 @@ typedef struct {
-      * best-effort estimation on expected downtime.
-      */
-     uint64_t dirty_bytes_last_sync;
+diff --git a/include/migration/register.h b/include/migration/register.h
+index e2117e8dd4..5e5e0ee432 100644
+--- a/include/migration/register.h
++++ b/include/migration/register.h
+@@ -21,6 +21,13 @@ typedef struct MigPendingData {
+     uint64_t precopy_bytes;
+     /* Amount of pending bytes can be transferred in postcopy */
+     uint64_t postcopy_bytes;
++    /* Amount of pending bytes can be transferred only in stopcopy */
++    uint64_t stopcopy_bytes;
 +    /*
-+     * Number of bytes that were reported dirty now.  This is an estimate
-+     * value and will be updated every time migration thread queries from
-+     * modules in an iteration loop.  It is used to provide best-effort
-+     * estimation on total remaining data.
++     * Total pending data, modules do not need to update this field, it
++     * will be automatically calculated by migration core API.
 +     */
-+    uint64_t dirty_bytes_total;
-     /*
-      * Number of pages dirtied per second.
-      */
++    uint64_t total_bytes;
+ } MigPendingData;
+ 
+ /**
+diff --git a/migration/migration.c b/migration/migration.c
+index 68cfe2d3bf..4b54fda4d7 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3198,6 +3198,54 @@ typedef enum {
+     MIG_ITERATE_BREAK,          /* Break the loop */
+ } MigIterateState;
+ 
++/* Are we ready to move to the next iteration phase? */
++static bool migration_iteration_next_ready(MigrationState *s,
++                                           MigPendingData *pending)
++{
++    /*
++     * If the estimated values already suggest us to switchover, mark this
++     * iteration finished, time to do a slow sync.
++     */
++    if (pending->total_bytes <= s->threshold_size) {
++        return true;
++    }
++
++    /*
++     * Since we may have modules reporting stop-only data, we also want to
++     * re-query with slow mode if all precopy data is moved over.  This
++     * will also mark the current iteration done.
++     *
++     * This could happen when e.g. a module (like, VFIO) reports stopcopy
++     * size too large so it will never yet satisfy the downtime with the
++     * current setup (above check).  Here, slow version of re-query helps
++     * because we keep trying the best to move whatever we have.
++     */
++    if (pending->precopy_bytes == 0) {
++        return true;
++    }
++
++    return false;
++}
++
++static void migration_iteration_go_next(MigPendingData *pending)
++{
++    /*
++     * Do a slow sync will achieve this.  TODO: move RAM iteration code
++     * into the core layer.
++     */
++    qemu_savevm_query_pending(pending, true);
++}
++
++static bool postcopy_should_start(MigrationState *s, MigPendingData *pending)
++{
++    /* If postcopy's switchver will violate user specified downtime, stop */
++    if (pending->precopy_bytes + pending->stopcopy_bytes > s->threshold_size) {
++        return false;
++    }
++
++    return qatomic_read(&s->start_postcopy);
++}
++
+ /*
+  * Return true if continue to the next iteration directly, false
+  * otherwise.
+@@ -3209,12 +3257,10 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+                         s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+     bool can_switchover = migration_can_switchover(s);
+     MigPendingData pending = { };
+-    uint64_t pending_size;
+     bool complete_ready;
+ 
+     /* Fast path - get the estimated amount of pending data */
+     qemu_savevm_query_pending(&pending, false);
+-    pending_size = pending.precopy_bytes + pending.postcopy_bytes;
+ 
+     if (in_postcopy) {
+         /*
+@@ -3222,7 +3268,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+          * postcopy completion doesn't rely on can_switchover, because when
+          * POSTCOPY_ACTIVE it means switchover already happened.
+          */
+-        complete_ready = !pending_size;
++        complete_ready = !pending.total_bytes;
+         if (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE &&
+             (s->postcopy_package_loaded || complete_ready)) {
+             /*
+@@ -3242,14 +3288,12 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+          * postcopy started, so ESTIMATE should always match with EXACT
+          * during postcopy phase.
+          */
+-        if (pending_size <= s->threshold_size) {
+-            qemu_savevm_query_pending(&pending, true);
+-            pending_size = pending.precopy_bytes + pending.postcopy_bytes;
++        if (migration_iteration_next_ready(s, &pending)) {
++            migration_iteration_go_next(&pending);
+         }
+ 
+         /* Should we switch to postcopy now? */
+-        if (pending.precopy_bytes <= s->threshold_size &&
+-            can_switchover && qatomic_read(&s->start_postcopy)) {
++        if (can_switchover && postcopy_should_start(s, &pending)) {
+             if (postcopy_start(s, &local_err)) {
+                 migrate_error_propagate(s, error_copy(local_err));
+                 error_report_err(local_err);
+@@ -3264,11 +3308,12 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+          * (2) Pending size is no more than the threshold specified
+          *     (which was calculated from expected downtime)
+          */
+-        complete_ready = can_switchover && (pending_size <= s->threshold_size);
++        complete_ready = can_switchover &&
++            (pending.total_bytes <= s->threshold_size);
+     }
+ 
+     if (complete_ready) {
+-        trace_migration_thread_low_pending(pending_size);
++        trace_migration_thread_low_pending(pending.total_bytes);
+         migration_completion(s);
+         return MIG_ITERATE_BREAK;
+     }
 diff --git a/migration/savevm.c b/migration/savevm.c
-index d221e2961b..b49a80f574 100644
+index 397f602257..d221e2961b 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
-@@ -1781,6 +1781,13 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
-     pending->total_bytes = pending->precopy_bytes +
-         pending->stopcopy_bytes + pending->postcopy_bytes;
+@@ -1766,8 +1766,7 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+ {
+     SaveStateEntry *se;
  
-+    /*
-+     * Update system remaining dirty bytes whenever QEMU queries.  It will
-+     * make the value to be not as accurate, but should still be pretty
-+     * close to reality when this got invoked frequently while iterating.
-+     */
-+    mig_stats.dirty_bytes_total = pending->total_bytes;
+-    pending->precopy_bytes = 0;
+-    pending->postcopy_bytes = 0;
++    memset(pending, 0, sizeof(*pending));
+ 
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+         if (!se->ops || !se->ops->save_query_pending) {
+@@ -1779,8 +1778,13 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+         se->ops->save_query_pending(se->opaque, pending, exact);
+     }
+ 
++    pending->total_bytes = pending->precopy_bytes +
++        pending->stopcopy_bytes + pending->postcopy_bytes;
 +
      trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
-                                     pending->stopcopy_bytes,
-                                     pending->postcopy_bytes,
+-                                    pending->postcopy_bytes);
++                                    pending->stopcopy_bytes,
++                                    pending->postcopy_bytes,
++                                    pending->total_bytes);
+ }
+ 
+ void qemu_savevm_state_cleanup(void)
+diff --git a/migration/trace-events b/migration/trace-events
+index f8995b8d0d..d2134af862 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
+ qemu_loadvm_state_post_main(int ret) "%d"
+ qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
+ qemu_savevm_send_packaged(void) ""
+-qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t postcopy) "exact=%d, precopy=%"PRIu64", postcopy=%"PRIu64
++qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
+ loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
+ loadvm_state_setup(void) ""
+ loadvm_state_cleanup(void) ""
 -- 
 2.53.0
 
