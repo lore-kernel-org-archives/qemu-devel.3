@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1FE6F8FA9A
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB4A9F8FA9A
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFDXp-00057D-O5; Tue, 21 Apr 2026 12:01:50 -0400
+	id 1wFDbk-0007LO-AD; Tue, 21 Apr 2026 12:05:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wFDXX-00050a-Kf
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:01:37 -0400
+ id 1wFDbV-0007Ie-VE
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:05:46 -0400
 Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wFDXU-00055Z-ME
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:01:31 -0400
+ id 1wFDbQ-0006PZ-MT
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:05:37 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 61BCC42A30
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 16:01:26 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 5CC3642ABA
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 16:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1776787286;
- bh=8D1HwZwdre33RmvVkPE7V4XrUzNt2eDrZ6Aep8CMBYg=;
+ s=20210803; t=1776787526;
+ bh=Gz2azgupzA563YC4+toZsvcBFlTg7ptc5dNA5P0jMGM=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=lyuTyQYhBhq+nV4X+wqN/4kergru8ZCcJP0eq4Vxiwb0jv12TXmcePtzlvmoPgei3
- BvbBwFkB3Yvq58gbLbIiml57/3mapuSBrw7fVxiA4zknOwTRKFbKW5xMHaUoAAbXLM
- QGqynbb63in4bK94GcZwCBMQCA5wObq2fjPx5Y1u7sLdY5OBv+0F8bsyI6H/MvEYCB
- cFnsuvqRRqTVPsD0o5AM8MATcNfhpkbloCREBE7AvSQF/NaMU0JZMSVTlswyzCC2KC
- ACLxcnJtwQDDi2n+n9OL8+KjL4a76gzSwYCx8tCvY1CSuwjkYcRBJJfn8TrOTcYvXN
- kPT0AgwzPqqAA==
+ b=FLnx3xlx8snuJKpVrva2C9oUu68igEqKCXWow3Bca7+l4CoRHEa5FlPCFAYQIO8aF
+ 5ebeq4z+m5S6AMLOej93aIMSo2WiB3Z+E2yBydmKNzRzTD97ppGMUjVug/78WmXnG9
+ KWAzmOHThPBjY0NALoDPr72ZekgplxNj4D84HGT6iz6FaQU63EPzMIfjgyVBlo/2nL
+ D8e3QbNlKOAuJ4QSsitgrXmRSqlbHhs6BLhFWho+cljTgmIYV3euS9119DBTjyLAH9
+ 23jCB35QU5FWFb3ztt6YjCcJx7DoXNv+iCSYt/45Wd0iMuPXRPobbnChPf3MMNcdC+
+ WbJURV15Voo8A==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 4AE5C7F33B
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 16:01:26 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 4EABE7F3B0
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 16:05:26 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Apr 2026 15:52:50 -0000
+Date: Tue, 21 Apr 2026 15:59:29 -0000
 From: Launchpad Bug Tracker <2133804@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -75,7 +75,7 @@ X-Launchpad-Bug-Commenters: hectorcao janitor mjt+launchpad-tls paelzer
 X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
 X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
 References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177678677114.3867700.16967183350593181687.launchpad@scripts-bzrsyncd.lp.internal>
+Message-Id: <177678717018.3867700.14300090745690145397.launchpad@scripts-bzrsyncd.lp.internal>
 Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
 X-Launchpad-Message-For: qemu-devel-ml
@@ -83,7 +83,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="866d07beecca8ac2e3326342adf6c1740cd3e7b3";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 6df32b516705f024aad1413c0d2a263d703559a3
+X-Launchpad-Hash: 3fa08fb5e7d540f277f44ee59ee968c89627cdd6
 Received-SPF: pass client-ip=185.125.188.250;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
@@ -109,11 +109,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ** Merge proposal linked:
    https://code.launchpad.net/~hectorcao/ubuntu/+source/qemu/+git/qemu/+mer=
-ge/504065
-
-** Merge proposal linked:
-   https://code.launchpad.net/~hectorcao/ubuntu/+source/qemu/+git/qemu/+mer=
-ge/504066
+ge/504068
 
 --=20
 You received this bug notification because you are a member of qemu-
