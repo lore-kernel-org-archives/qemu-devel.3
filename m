@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B17BF94CB0
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 21:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE7DF94CB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 22:03:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFJ4R-00060y-Ff; Tue, 21 Apr 2026 17:55:51 -0400
+	id 1wFJAz-0007aD-IF; Tue, 21 Apr 2026 18:02:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJ4Q-00060f-4Q
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 17:55:50 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJAy-0007a1-7X
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:02:36 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJ4O-0000gf-H7
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 17:55:49 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43d6fbd0954so3833964f8f.1
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 14:55:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFJAw-0002P6-FQ
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 18:02:35 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43cfce3a195so2825443f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 15:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776808547; x=1777413347; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776808953; x=1777413753; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XZwLyPJplmTWtTj2UT4jH1YdF/y/oearIvzj8Hc1hyQ=;
- b=SsbDLiGVAulqAl6FopL7m44185pK+JIG0gIR6leqM+vXN9zZnqdDzSTjk+KsVvRDWr
- 6py1W8loOXlh2ieFe3xl9auJO2ySIW5SJNXxIl/cDd+bfUmSHBEN4bovRXdZclWX755M
- iKWG5B3O+uws+o6bV5UXEKuu4VdymOLZTSPpJwH+y2KacneTHDYjzRY5/mDmwNKvZQXM
- /ugcRGIUIqSbiLE3DeKI0/bIJKwlDrG81ecU4NEorsK2+gJxcH3bKifsS13SjVwAUGyN
- Tw6xs1sVub46BPyQXb6mGDksevATTpyn/sg8E+tBFZmfWiXUMPJlJZhDat9+b5nFBDMd
- zz7w==
+ bh=x3q3TXqWy2Bvx5GmRjj4JwHBHJOLk+sXFPKvFAVAEVA=;
+ b=mg5ZNCovlFPXoZzd8OMrbdboo4nPC2Jy5tsEblEYP2S2Si/8JTCwkTx8XRMsdlc6Pl
+ ZkIPfN+cUy+rEZST8f8i3fhMvTtXpEgdkMC0tMP64N5wMF8PyNvRruqHQaiRjcNXv4uE
+ zvKoC2HweEHTtPeS2BR0hPXlKD6PWZQ2pLq+ZpfD6YMD+F59MDr3skvTmT4GZp/varSz
+ s2WpliPGmAGY8Ri/IDrXEA892VchXe0ZfFryNYFcsX65zYjfGHN2RfJGwnY52c7FEhPB
+ F42gDBBaMtmx0RrkGJ58gUyd5Aliinobqzp1YYBq7p/Zs04wPNEUKSoB9q42pnA6mbNH
+ PdFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776808547; x=1777413347;
+ d=1e100.net; s=20251104; t=1776808953; x=1777413753;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XZwLyPJplmTWtTj2UT4jH1YdF/y/oearIvzj8Hc1hyQ=;
- b=VF6CGSAqb7z6x4Y2rg6xzJk0puBQHK32+vbfS86TO8u+GpFuC9nqljQ/4lVfd6xQHR
- ZXFOEjgnfROyY2W/AAcc0o2ddwjrwWAsJPhWFpyfVXAt2bb8t45ah58KbfD/zfON3J/w
- mTu4eqTJRqpLNMBiKFlpyDF/s/qkQaUMooKTxZaqcTWnhKT/7yIqENc45vEaumMEAIeT
- JDXLWZDX4zJs98MjFtiEakx3EnHRZXYLNGdQ3Ter0DNqpI8jsTkk3NImvWQP+TBRMwFh
- rz0Z9qb9LIuDF2SiVU7lkRlp+itay9/dropaSNQG6TAt4bg52FEt1/PXXxqOt91ZxDFP
- Zf6g==
-X-Gm-Message-State: AOJu0YxTq6oEZRtD6gpgEiiTUPuOKmsHF+ThhADRM9gD/PRzzCfvYCpK
- bYAGc2UWmURY6gx2LCiRMS5Arha/Capu0FWuWk4VcqNhmdZ6444Yx3OBxLq9dsg+9c4=
-X-Gm-Gg: AeBDietltVVAGkxCL9WdgLACA7CR3J6jgX3llHaD+sLdk8S9TwU3jexbQwyGqPQhVlU
- dioAlSVPxCXtR+8v8Hk8OA2zfcF1Yl8SuXKbugr/Lw8mjr19uxvbGCWQxewHfPD6w55QF+pHy4l
- gkOe0ALoLVR8CfwGocaeO9Vy2kTHe/sL648oW8QOijDHUWZBCfdLWA+2dXCxJZ1tp6WzizdLdHk
- p2K0POq8Gvn9iw2/ACOolj90PjjGXbmy5NZqcCxr0MchttIqdcBq4sBVZ5ngUoLa5vl8n7wLLwH
- 94pK6nK3UZ53l+39GWwHeF2/XsWQd6B59LxLcC8m1pYo2hOrXqeVO4FKo/gfkZEwgXBOsfRCOc1
- FTaAujqrkzRx39FHsCQgJ2MsNx9Y2blgMwl7MQpSyvH3i9bw2PTzkxwQXBrnkKpbcDPEDmlMt3J
- A2UsYATOYKUQSOaxQrlxxupqElNO/UVWLzEXeYtmUgw2YphTf5FASOLWOmdEGpvzDyvaqk9UrBV
- yvD
-X-Received: by 2002:adf:fc4c:0:b0:43f:e413:e5ad with SMTP id
- ffacd0b85a97d-43fe413e60bmr21642476f8f.0.1776808546862; 
- Tue, 21 Apr 2026 14:55:46 -0700 (PDT)
+ bh=x3q3TXqWy2Bvx5GmRjj4JwHBHJOLk+sXFPKvFAVAEVA=;
+ b=YB4ybVbvEjqVFKP1mI07cHl8Oa4W0ruISbvsqHZ3jThF008hLeD5akngd/iGDXHS/7
+ kFE7zovhqCgJ4NqzKzlbSWkqvi53uUbBwvLF1E8CD5iFkxZZNIiLTY7/cCF3Q5qeF9vc
+ om77rX2R/3B1u8HDXK26HL2G8lAyxkeXiKjmLNoWCU6Gc+QeBlK+/Uw1jBpckJgsPMSD
+ RvdmnhlfhhVsLCAdYEWGZodfLiHxNeEHYptC6DYxAq/oNYVqQw/2HYXAMpocXe1R/enn
+ EU6COPb722P373XZbHFNBxk5JoGOv6n4n5NREc5oTu/DMA57N2vVrl5XCQY4lBx7EsDL
+ /MRw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9cyi+kie56pcBiQ9eVGDkKiY/nAGIMKjdHwpJmKDSXvXBhcRWxAXVfieqITODUJFRGAQklL+RTECNT@nongnu.org
+X-Gm-Message-State: AOJu0Yw0gZR+WIq2H0vpFfZe2nWb8k6tRH7K4Zfenp8N14lv3FDj/fQC
+ Oyfq1OA3rDbebjzjUy628YJooKJX5ab88BZWXzYjAOuzS5oVQJzFfZRRtKBqQIxMYpE=
+X-Gm-Gg: AeBDievwolKN0Fiuks6Qk8H/UcNqsjUDffKHaPxi8qQujlbnxKOfaDbH2W6VgQsWRn5
+ pN09jf8WG7qMQdQzcHAaXR5YT+dv7oHIAYMjdAKSzf0X67qW6Zu+kW2a3x3ldvH3qVf+805Vjrq
+ WAwUkGZY66u/1gnMQZywbO0zNHPatdPhlJnlgdxVZ0D46+zHaqbbJklgkmoJt+H3JDdpP+rFKXh
+ UUfM6I1nhgWiohvI/F0ex6Pej5l/GDGOgeLJUUxxkXs6o3QhVb+z1gb9r6JJ+o2AWwRxHzcazLA
+ VgbpqFLPBCMuPu1If/ia0NdIeaOKdLQh0RAFZrHHlpwlfLhzhG9zvUCpiRCgg3w5F9ork3pjCIW
+ GyvuHv7Pv9Et1JDwTKM+GcvThCX0p0fhZgvX4qtMVBZhEAPyiiiUGOH2Fsy+XNmHscpsCUj4y04
+ JeMKpgoKTcBHgnFKDOaDmGTs3An1JDRS4aY6T43Aja8qBzHyXIsUlNUp5syPlPd8TCOctLsgyle
+ BFkorndkvhsqs8=
+X-Received: by 2002:a05:6000:d81:b0:43f:e413:43ae with SMTP id
+ ffacd0b85a97d-43fe41343cbmr19773287f8f.0.1776808952525; 
+ Tue, 21 Apr 2026 15:02:32 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a79esm42662097f8f.17.2026.04.21.14.55.45
+ ffacd0b85a97d-43fe4cc0f31sm40820962f8f.12.2026.04.21.15.02.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Apr 2026 14:55:46 -0700 (PDT)
-Message-ID: <9867b017-88d7-4acb-b855-9e0293b26be3@linaro.org>
-Date: Tue, 21 Apr 2026 23:55:45 +0200
+ Tue, 21 Apr 2026 15:02:31 -0700 (PDT)
+Message-ID: <c2c0386f-7141-4845-9d95-adb3927d5054@linaro.org>
+Date: Wed, 22 Apr 2026 00:02:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 7/9] target/hexagon: add build config for softmmu
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, ltaylorsimpson@gmail.com,
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, Paolo Bonzini <pbonzini@redhat.com>
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ pierrick.bouvier@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>
 References: <20260416210305.2255579-1-brian.cain@oss.qualcomm.com>
  <20260416210305.2255579-8-brian.cain@oss.qualcomm.com>
- <46a10ac4-a267-458e-973e-a784173460a3@linaro.org>
- <CAEqNhNbOJfne+0OTazYfYzzxbReNDng9pm=iNmsyFiEhasXoKA@mail.gmail.com>
- <5ee12c29-5d61-4c3d-a8b9-bb049585ea56@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5ee12c29-5d61-4c3d-a8b9-bb049585ea56@oss.qualcomm.com>
+In-Reply-To: <20260416210305.2255579-8-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,55 +107,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/4/26 18:50, Pierrick Bouvier wrote:
-> On 4/16/2026 8:12 PM, Brian Cain wrote:
->> On Thu, Apr 16, 2026 at 4:19 PM Philippe Mathieu-Daudé
->> <philmd@linaro.org> wrote:
->>>
->>> On 16/4/26 23:03, Brian Cain wrote:
->>>> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
->>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>>> ---
->>>>    MAINTAINERS                                 |  1 +
->>>>    configs/devices/hexagon-softmmu/default.mak |  7 +++++++
->>>>    configs/targets/hexagon-softmmu.mak         |  7 +++++++
->>>>    target/hexagon/cpu.h                        |  7 +------
->>>>    target/hexagon/cpu.c                        |  3 +--
->>>>    target/Kconfig                              |  1 +
->>>>    target/hexagon/Kconfig                      |  2 ++
->>>>    target/hexagon/meson.build                  | 13 ++++++++++++-
->>>>    8 files changed, 32 insertions(+), 9 deletions(-)
->>>>    create mode 100644 configs/devices/hexagon-softmmu/default.mak
->>>>    create mode 100644 configs/targets/hexagon-softmmu.mak
->>>>    create mode 100644 target/hexagon/Kconfig
->>>
->>>
->>>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
->>>> index 9883c4d1681..355abb4fd24 100644
->>>> --- a/target/hexagon/cpu.c
->>>> +++ b/target/hexagon/cpu.c
->>>> @@ -713,9 +713,8 @@ static vaddr hexagon_pointer_wrap(CPUState *cs, 
->>>> int mmu_idx,
->>>>    #endif
->>>>
->>>>    static const TCGCPUOps hexagon_tcg_ops = {
->>>> -    /* MTTCG not yet supported: require strict ordering */
->>>>        .guest_default_memory_order = TCG_MO_ALL,
->>>> -    .mttcg_supported = false,
->>>> +    .mttcg_supported = true,
->>>>        .initialize = hexagon_translate_init,
->>>>        .translate_code = hexagon_translate_code,
->>>>        .get_tb_cpu_state = hexagon_get_tb_cpu_state,
->>>
->>> Please commit this change as a separate patch, explaining why
->>> we can do that in the description.
->>
->> I think I'll drop it for now, and revisit after this series.
+On 16/4/26 23:03, Brian Cain wrote:
+> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   MAINTAINERS                                 |  1 +
+>   configs/devices/hexagon-softmmu/default.mak |  7 +++++++
+>   configs/targets/hexagon-softmmu.mak         |  7 +++++++
+>   target/hexagon/cpu.h                        |  7 +------
+>   target/hexagon/cpu.c                        |  3 +--
+>   target/Kconfig                              |  1 +
+>   target/hexagon/Kconfig                      |  2 ++
+>   target/hexagon/meson.build                  | 13 ++++++++++++-
+>   8 files changed, 32 insertions(+), 9 deletions(-)
+>   create mode 100644 configs/devices/hexagon-softmmu/default.mak
+>   create mode 100644 configs/targets/hexagon-softmmu.mak
+>   create mode 100644 target/hexagon/Kconfig
 > 
-> It basically means supporting atomic instructions and memory barriers 
-> correctly. From what I saw, memory barriers are nop at the moment.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b9a7c553dfa..ed661c9f12e 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -254,6 +254,7 @@ F: linux-user/hexagon/
+>   F: tests/tcg/hexagon/
+>   F: disas/hexagon.c
+>   F: configs/targets/hexagon-linux-user/default.mak
+> +F: configs/devices/hexagon-softmmu/default.mak
+>   F: docker/dockerfiles/debian-hexagon-cross.docker
+>   F: gdbstub/gdb-xml/hexagon*.xml
+>   F: docs/system/target-hexagon.rst
 
-Sure. When I meant is such change also affecting user emulation should
-not be buried in a commit only mentioning softmmu changes.
+You really want to have multiple sections here. Easier to
+discriminate who is responsable for what.
+
+Suggestion:
+
+- Hexagon TCG CPUs
+   (and implicit linux-user)
+- Hexagon Machines
+   (and implicit softmmu hardware)
+
+
+> diff --git a/configs/targets/hexagon-softmmu.mak b/configs/targets/hexagon-softmmu.mak
+> new file mode 100644
+> index 00000000000..fdfa29b4f39
+> --- /dev/null
+> +++ b/configs/targets/hexagon-softmmu.mak
+> @@ -0,0 +1,7 @@
+> +# Default configuration for hexagon-softmmu
+> +
+> +TARGET_ARCH=hexagon
+> +TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml
+> +TARGET_LONG_BITS=32
+> +TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+
+\o/
+
+> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+> index 09d5cac4fe5..18dcfdb0b0a 100644
+> --- a/target/hexagon/cpu.h
+> +++ b/target/hexagon/cpu.h
+> @@ -37,12 +37,7 @@ typedef struct HexagonGlobalRegState HexagonGlobalRegState;
+>   #include "mmvec/mmvec.h"
+>   #include "hw/core/registerfields.h"
+>   
+> -#ifndef CONFIG_USER_ONLY
+> -#error "Hexagon does not support system emulation"
+> -#endif
+> -
+> -#ifndef CONFIG_USER_ONLY
+> -#endif
+> +#include "reg_fields.h"
+
+Please use full "target/hexagon/reg_fields.h" path.
+
+>   
+>   #define NUM_PREGS 4
+>   #define TOTAL_PER_THREAD_REGS 64
+
+
+> diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+> index 528beca3cd0..bc7a292e47b 100644
+> --- a/target/hexagon/meson.build
+> +++ b/target/hexagon/meson.build
+
+> +hexagon_softmmu_ss.add(files(
+> +    'cpu_helper.c',
+> +    'hex_mmu.c',
+> +    'hex_interrupts.c',
+> +    'hexswi.c',
+> +    'machine.c',
+> +))
+> +
+>   #
+>   # Step 4.5
+>   # We use flex/bison based idef-parser to generate TCG code for a lot
+> @@ -262,7 +271,8 @@ hexagon_ss.add(files(
+>   #     idef-generated-enabled-instructions
+>   #
+>   idef_parser_enabled = get_option('hexagon_idef_parser')
+> -if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+> +if idef_parser_enabled and ('hexagon-linux-user' in target_dirs or
+> +                            'hexagon-softmmu' in target_dirs)
+>       idef_parser_input_generated = custom_target(
+>           'idef_parser_input.h.inc',
+>           output: 'idef_parser_input.h.inc',
+> @@ -390,3 +400,4 @@ analyze_funcs_generated = custom_target(
+>   hexagon_ss.add(analyze_funcs_generated)
+>   
+>   target_arch += {'hexagon': hexagon_ss}
+> +target_system_arch += {'hexagon': hexagon_softmmu_ss}
+
+Pierrick: is target_common_system_arch[] still relevant for a target
+which use fixed endianness / wordsize?
 
 
