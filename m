@@ -4,57 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CABDCF94CA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 17:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1215F94CA0
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 17:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFFHn-0004o2-8K; Tue, 21 Apr 2026 13:53:23 -0400
+	id 1wFFMq-0005iM-Rn; Tue, 21 Apr 2026 13:58:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wFFHZ-0004kv-0O
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:53:09 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFFMk-0005i5-Lo
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:58:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wFFHU-0005t0-CM
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:53:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=TW5jHW/KOJebUl7hjW49Ydia9tEBvWCgVMPDUCI1vCg=; b=phGVos0owXA3ZD7S
- 6kOAtJ5rSoEQHE5OBZND2nxNeEfUm/X8PZwnz9WqtE381iZxuJk8QYxJeaOXPwu7z1SGxX+Gzociq
- hSKqZvSmh/6ghHNpx1eFzBAzm9bgCvUH8peLQbmAhs8M1fmr273A6lN37yNjHALNSr3AJVlZyoK0B
- 4mRJq5DwCS8lrXmDNEUqgceCmrZORYECLdf+FWuIHl1V00IvnCJZwfambqjpOttxccIBrbTFSfG1S
- C5ALfz9DqyAKQZuaXnrRJ4DDbrOZrpQXEbl/HnwtCKU+jiVHJ445ioS4TMgGctIYSMECiOgT8yJwV
- vWOrT0oD5AaE2KltRw==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wFFHK-00000009mM7-1ivs;
- Tue, 21 Apr 2026 17:52:54 +0000
-Date: Tue, 21 Apr 2026 17:52:54 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Alano Song <alanosong@163.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
-Subject: Re: [PATCH] monitor: Add `clear` command
-Message-ID: <aee5drWmWZ3Mnw3A@gallifrey>
-References: <20260418133927.43012-1-AlanoSong@163.com>
- <aeO-IqKqBwtKfW8P@gallifrey>
- <142c6c8b.11e3.19da4b172c4.Coremail.alanosong@163.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFFMh-0007mB-LP
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:58:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776794306;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=G1eiFvw6KQZKCI4K+duPivHjMWHsUAyn2BHrPqH8pHc=;
+ b=WFqyWKsFLJ2s9aWKAsFGxINQYayflQLlglPeuZr0maixKPvyeRZhbFaz8XzPrscN5oaxa4
+ EdTPGoTbCWaXjwWK0zssGplnJXTQXXZ7CdzD3ru8QKKR4JDU/TQbohJ3WItDZB2wM1Wukq
+ P86EtSeEwnKyPGGPC1qBb62Np3Ng8I4=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-235-7ZgfbgvbOeCsE6OrnjrFtw-1; Tue, 21 Apr 2026 13:58:23 -0400
+X-MC-Unique: 7ZgfbgvbOeCsE6OrnjrFtw-1
+X-Mimecast-MFC-AGG-ID: 7ZgfbgvbOeCsE6OrnjrFtw_1776794303
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-50faf1ecd1dso26363251cf.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 10:58:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776794303; x=1777399103; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=G1eiFvw6KQZKCI4K+duPivHjMWHsUAyn2BHrPqH8pHc=;
+ b=mwRPAKn/5Qp6s+5BIzsUd+elpV1SZDtC/p75CsPmWwrz271SsTKlzz/L0uhuFmxeQm
+ K+nEpWPLs8UeR/waQ/Of35j4SNJvI5m3kDQvGgGiZMK/EJEzaW7pXm40rQN4iUE9MlHS
+ BbLmUMvHnF6LYRCaAHMNelhnRiiCIswwWVOQTbY1nI6PGRwpe0IqiRE08TZI+hBiIl+h
+ YHa14FcoOs5WuUvoulqVWMEVclGoPpZcKeXhEmUTn2z1Y3JTVtr6FTeJP6sr+hXk0p/X
+ dAYjALOcV4xZfPJudyEk5Q4vPcqAGY2xuvsw7yjDQllmjVUErFG8DpGT5XaKLn7tgqsa
+ wfTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776794303; x=1777399103;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=G1eiFvw6KQZKCI4K+duPivHjMWHsUAyn2BHrPqH8pHc=;
+ b=KTrRt0X0C8kGkNc60AGS/paNlGfF3z8CsvU92b6uVR3ClSCqYPzLCbOkYEhJa/gNGc
+ RA0KlqjdO8W7r7HyWQru5JeBopxcUT3DWR7pVaHtph7u5Q03vowMsOAcZnp6hv9uP8FE
+ K81tGcb8iBKKloTB3zTaP113KsnZqXHQ0gTH6tgEEMYi55FwFpSW/splcRroo7NAVDWq
+ q7qB1rQfZmLCjimkw/yAOvYrWok5NPuobRZXt4xxNiGOaKNLu5cmsjQvaidsvyZF7BH5
+ s/7E8kB861RxPUU0lN+XrjP1DiPvL9UpQBUjNuog4Xm2ymjHZK+i51L4wjeW7mGbWCt0
+ 8JjQ==
+X-Gm-Message-State: AOJu0YzYty/o1bw65ohjuvCM5s7/ydcuZTrr4tBPTnANucjdGzI5t0CE
+ 41cen2CnFFv2dHC40/BhF9OePP6hvhvxRKuN2oINL1qartT6VNr4KyWVe69/COiL+c2PM0sqSJg
+ HnaA8E49I6p57KKv9HTmj1JZQX2EsrdccA4FR50zJ4zkkfxl5/Pef+gOLmI3OenigZ8oZx+hufq
+ E0bOsykfj0l4dvdxZ9BEYMrOsbR06Bknwzv5BOMQ==
+X-Gm-Gg: AeBDies5oTxlttRtJ81MMYxwqbX2M2MeZUIsw+D3+e02PLITH+7+wGP7ylBRGUm+xAF
+ ++EeH3/WaWJzp3E4e9DCkKk+d711f7i1qB3rqPwaWCNzue+yARFaK2QSUqkx3wExjtdiZb9QIhn
+ FgCydYE5TSdxE7A45GfGyJHbHpRCxwji+QodeGYOuJ9V0V2ofveWeFcHlab50523ZGLO/qSQhua
+ 9WUyLkDcwZXOj6oltOvK6ZrWl53TfmH2drzwAC+KD1Icuu27ZNDc93Wqd20Jr30XYPOYnlnKp2T
+ SHTY1mq672lp9a5kQs0iZ0U7M4Umo1ta/2Ug7oTqmPpYKOkij2fbp0WojCTyMHuQxDJw46SRkp6
+ 3lKGu490yCbwmq59Gd30/m9AD/FBBg7LWO3Cna1Ke+TOE4fJ++g/3cOtXxg==
+X-Received: by 2002:a05:622a:2606:b0:50d:81c4:4c79 with SMTP id
+ d75a77b69052e-50e36c143bbmr290048261cf.35.1776794302714; 
+ Tue, 21 Apr 2026 10:58:22 -0700 (PDT)
+X-Received: by 2002:a05:622a:2606:b0:50d:81c4:4c79 with SMTP id
+ d75a77b69052e-50e36c143bbmr290047691cf.35.1776794302080; 
+ Tue, 21 Apr 2026 10:58:22 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50e393ff941sm115011041cf.19.2026.04.21.10.58.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Apr 2026 10:58:21 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ Pranav Tyagi <prtyagi@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] migration: Fix crash on second migration when cancel early
+Date: Tue, 21 Apr 2026 13:58:20 -0400
+Message-ID: <20260421175820.302795-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <142c6c8b.11e3.19da4b172c4.Coremail.alanosong@163.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
-X-Uptime: 17:37:01 up 39 days, 18:50,  3 users,  load average: 0.09, 0.03, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,91 +117,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Alano Song (alanosong@163.com) wrote:
-> At 2026-04-19 01:23:46, "Dr. David Alan Gilbert" <dave@treblig.org> wrote:
-> >* AlanoSong@163.com (AlanoSong@163.com) wrote:
-> >> The monitor screen can be cluttered after executing commands
-> >> like `info qtree`. It is useful to have a command to clear
-> >> current screen, just like linux `clear` command do.
-> >> 
-> >> This patch has been tested under monitors using stdio, vc,
-> >> tcp socket, unix socket and serial interfaces.
-> >> 
-> >> Signed-off-by: Alano Song <AlanoSong@163.com>
-> >
-> >Does typing ctrl-l not do it for you in your terminal?
-> >
-> >Dave
-> >
+Marc-André reported an issue on QEMU crash when retrying a cancelled
+migration during early setup phase, see "Link:" for more information, and
+also easy way to reproduce.
 
-Hi Alano,
+This patch is a replacement of the prior fix proposed by not only switching
+to migration_cleanup(), but also fixing it from CPR side, so that we track
+hup_source properly to know if src QEMU is waiting or the HUP signal.
 
-> Yes, you are correct that ctrl-l provides basic screen clear,
-> but the new `clear` command clears both visible screen and
-> scrollback buffer, just like `clear` command does on my Ubuntu terminal.
+To put it simple: this chunk of special casing in migration_cancel() should
+not affect normal migration, but only cpr-transfer migration to cover the
+small window when the src QEMU is waiting for a HUP signal on cpr
+channel (so that src QEMU can continue the migration on the main channel).
 
-> I still believe that this patch is useful:
-> 1) Many linux users like me instinctively type `clear`
-> when we want to tidy up the terminal.
-> 2) Not everyone is aware of or remembers the ctrl-l shortcut.
->    A typed command is more discoverable, especially for new users
->    or those who don't use terminal shortcuts regularly.
+To achieve that, we'll also need to remember to detach the hup_source
+whenenver invoked: after that point, we should always be able to cleanup
+the migration.
 
-OK, mainly because of the difference with the scrollback buffer which I
-see is different. (Ctrl-l is a great one to know, it works in almost
-everything, not just qemu, it's a basic ASCII control code going
-back about 60 years)
+It's not a generic operation to explicitly detach a gsource from its
+context while in its dispatch() function.  But it should be safe, because
+gsource disptch() will only happen with a boosted refcount for the
+dispatcher so that the gsource will not be freed until the callback
+completes. It's also safe to return G_SOURCE_REMOVE after the gsource is
+detached, as glib will simply ignore the G_SOURCE_REMOVE.
 
-Now to get to the magic line:
+One can refer to latest 2.86.5 glib code in g_main_dispatch() for that:
 
-> >> +void hmp_clear(Monitor *mon, const QDict *qdict)
-> >> +{
-> >> +    monitor_printf(mon, "\x1b[3J\x1b[2J\x1b[H");
+https://github.com/GNOME/glib/blob/2.86.5/glib/gmain.c#L3592
 
-Firstly it would be great to comment this; as I read it,
-this is:
-   clear scrollback
-   clear screen
-   cursor back to top-left
+When at this, add a bunch of assertions to make sure nothing surprises us.
 
-But, this has a problem - for me on both mate-terminal and
-terminator (but not konsole), this doesn't completely clear
-the scrollback; it clears most of the scrollback, but leaves
-about one page; my guess is what happens here is you clear
-the scrollback, but then the current screen goes into it
-after/when you clear it.
+After this patch applied, the 2nd migration will not crash QEMU, instead
+it'll be in CANCELLING until the socket connection times out (it will take
+~2min on my Fedora default kernel).  During this process no 2nd migration
+will be allowed, and after it timed out migration can be restarted.
 
-Looking at the output of the ncurses 'clear' command:
+It's because so far we don't have control over socket_connect_outgoing(),
+or anything yet managed by a task executed in qio_task_run_in_thread().
+Speeding up the cancellation to be left for future.
 
-dg@dalek:~$ clear|xxd -g 1
-00000000: 1b 5b 48 1b 5b 32 4a 1b 5b 33 4a                 .[H.[2J.[3J
+I also tested cpr-transfer by only providing cpr channel not the main
+channel (with -incoming defer), kickoff migration on source, then cancel it
+on source directly without providing the main channel.  It keeps working.
 
-it's got them in the opposite order, cursor, clear screen, clear scrollback
-and that's fine in both mate-terminal/terminator & konsole.
-(This is Fedora 44 with vte291-0.84.0-1.fc44.x86_64 being used by mate-terminal).
-[I can't tell you if that's a bug in one or both of the terminals]
+I wanted to add an unit test for that but it'll need to refactor current
+cpr-transfer tests first; let's leave it for later.
 
-So please, flip the output around, and add a comment.
+Link: https://lore.kernel.org/r/20260417184742.293061-1-marcandre.lureau@redhat.com
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ include/migration/cpr.h  |  1 +
+ migration/migration.h    |  5 +++++
+ migration/cpr-transfer.c | 10 ++++++++++
+ migration/migration.c    | 31 +++++++++++++++++++++++--------
+ 4 files changed, 39 insertions(+), 8 deletions(-)
 
-Thanks,
-
-Dave
-> >> +}
-> >> +
-> >>  void hmp_info_help(Monitor *mon, const QDict *qdict)
-> >>  {
-> >>      hmp_help_cmd(mon, "info");
-> >> -- 
-> >> 2.43.0
-> >> 
-> >-- 
-> > -----Open up your eyes, open up your mind, open up your code -------   
-> >/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-> >\        dave @ treblig.org |                               | In Hex /
-> > \ _________________________|_____ http://www.treblig.org   |_______/
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 5850fd1788..ebf09a2f0a 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -57,6 +57,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+                                 void *opaque);
+ void cpr_transfer_source_destroy(MigrationState *s);
++bool cpr_transfer_source_active(MigrationState *s);
+ 
+ void cpr_exec_init(void);
+ QEMUFile *cpr_exec_output(Error **errp);
+diff --git a/migration/migration.h b/migration/migration.h
+index b6888daced..2bc2787480 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -514,6 +514,11 @@ struct MigrationState {
+     bool postcopy_package_loaded;
+     QemuEvent postcopy_package_loaded_event;
+ 
++    /*
++     * When set, it means cpr-transfer is waiting for the HUP signal from
++     * destination to continue the 2nd step of migration via the main
++     * channel.
++     */
+     GSource *hup_source;
+ 
+     /*
+diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
+index 61d5c9dce2..9defe7bad7 100644
+--- a/migration/cpr-transfer.c
++++ b/migration/cpr-transfer.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/main-loop.h"
+ #include "qapi/clone-visitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-visit-migration.h"
+@@ -79,6 +80,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
+ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+                                 void *opaque)
+ {
++    assert(bql_locked());
+     s->hup_source = qio_channel_create_watch(cpr_state_ioc(), G_IO_HUP);
+     g_source_set_callback(s->hup_source,
+                           (GSourceFunc)func,
+@@ -89,9 +91,17 @@ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+ 
+ void cpr_transfer_source_destroy(MigrationState *s)
+ {
++    assert(bql_locked());
+     if (s->hup_source) {
+         g_source_destroy(s->hup_source);
+         g_source_unref(s->hup_source);
+         s->hup_source = NULL;
+     }
+ }
++
++bool cpr_transfer_source_active(MigrationState *s)
++{
++    /* Whenever the HUP gsource is available, it's active. */
++    assert(bql_locked());
++    return s->hup_source;
++}
+diff --git a/migration/migration.c b/migration/migration.c
+index 5c9aaa6e58..58c1e56766 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1469,14 +1469,19 @@ void migration_cancel(void)
+     }
+ 
+     /*
+-     * If migration_connect_outgoing has not been called, then there
+-     * is no path that will complete the cancellation. Do it now.
+-     */
+-    if (setup && !s->to_dst_file) {
+-        migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
+-                          MIGRATION_STATUS_CANCELLED);
+-        cpr_state_close();
+-        cpr_transfer_source_destroy(s);
++     * This is cpr-transfer specific processing.
++     *
++     * If this is true, it means cpr-transfer migration is waiting for the
++     * destination to send HUP event on CPR channel to continue the next
++     * phase.  If so, do the cleanup proactively to avoid get stuck in
++     * CANCELLING state.
++     */
++    if (cpr_transfer_source_active(s)) {
++        assert(migrate_mode() == MIG_MODE_CPR_TRANSFER);
++        assert(setup && !s->to_dst_file);
++        migration_cleanup(s);
++        /* Now all things should have been released */
++        assert(!cpr_transfer_source_active(s));
+     }
+ }
+ 
+@@ -2009,12 +2014,22 @@ static gboolean migration_connect_outgoing_cb(QIOChannel *channel,
+     MigrationState *s = migrate_get_current();
+     Error *local_err = NULL;
+ 
++    /*
++     * Detach and release the GSource right after use.  We rely on this to
++     * detect this small cpr-transfer window of "waiting for HUP event".
++     */
++    cpr_transfer_source_destroy(s);
++
+     migration_connect_outgoing(s, opaque, &local_err);
+ 
+     if (local_err) {
+         migration_connect_error_propagate(s, local_err);
+     }
+ 
++    /*
++     * This is redundant as we do cpr_transfer_source_destroy() at the
++     * entry, but it's benign; glib will just skip the detach.
++     */
+     return G_SOURCE_REMOVE;
+ }
+ 
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.53.0
+
 
