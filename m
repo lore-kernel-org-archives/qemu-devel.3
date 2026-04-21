@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0ACAF8FA78
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 14:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649B6F8FA78
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 14:23:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFBxy-0005Wl-IJ; Tue, 21 Apr 2026 10:20:43 -0400
+	id 1wFBzz-0006DT-Jf; Tue, 21 Apr 2026 10:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFBxs-0005TK-Nv
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:20:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFBxq-0006mi-JZ
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:20:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776781231;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BJ2ToIKdvbBCYgT9pPnKdxV3OJLuZOOmsWL1WoKhy88=;
- b=MR+XqnnRKCbdEx9lfKDv+Jbc6sXoQxUdKmQMDlbbioDVyniKNPV3Ns20nOk8tVy7hJ+mIq
- zC9Hx7gtHKcYbQNb2DlMhyHQmCpxv1o5otsFphjnAsDoc1+v7NUD8Y4F2FO1D9jDE62ecN
- UQfEsgR099+veWWHLKhjJyNbjiu4kvk=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-m_X7YhvRNpmm-zOAo_8Dcw-1; Tue, 21 Apr 2026 10:20:26 -0400
-X-MC-Unique: m_X7YhvRNpmm-zOAo_8Dcw-1
-X-Mimecast-MFC-AGG-ID: m_X7YhvRNpmm-zOAo_8Dcw_1776781225
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-50e2592ea3bso47904301cf.2
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 07:20:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wFBzx-0006CX-NW
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:22:45 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wFBzu-0007Oy-EF
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:22:45 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488ab2db91aso58111025e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 07:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776781225; x=1777386025; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=BJ2ToIKdvbBCYgT9pPnKdxV3OJLuZOOmsWL1WoKhy88=;
- b=YSNFjnzXCVxde3/B17HzxtfBwtm1WTIKrvk2FCfzTgIa8agcIaajiUAQZsuxw75P3+
- xO2enUJgraeHmSmUNIOglRL8y50lDEpOrNU8mJSaqUXYwaDrMVYdU1L6hSvnVmROjcPF
- dVwKvCZk0kXcQsyqOYy3XTP/GF8rnm26p9/Q0Zpor+92rzPK2ibjgd3iwEA7DSunYILF
- 2bIgd/iedbRhgqpFXzBMuiHkkJc6ATIMqs98fssQYDUmHBMacRVzkFo8SAZRKQh9vHU0
- yevaHiHUlcg3LTFO/HbcY1FEOpVzmQ5aPzc0fSA+aCigVpNI6cQB9lAHX5em9497ruA/
- L+2w==
+ d=linaro.org; s=google; t=1776781360; x=1777386160; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=XBTtSCI18DkWDQHBLKzhfLHt3mYdWEkzO4NSBhCDchs=;
+ b=T2/Y1riSrZier7qOAMDNfq7XI26hR4tE/6dPJHZxLF9l8g9D1/1R0sjz+aH+63hGp5
+ QpwxPkjmkk1tLSv3/NFNJctJGWYeL6yILk21jwGJkcboURwE20sjbVQ5NQzNm7RyMF+3
+ ZYpWeWA4PIMCXVb6uUgXcq9m1wtaLU+szzjyjeL3+RVheqlHJ1/2uZm1zjpqEYntI1mQ
+ P4vnZLgCTjhDm90GEm7xADXFR1Slu4oWdvyOodr2/OitDsybq0DuwiTnjWGBomUh5Vc2
+ mhk1RYyWvpeU9pQ3xyb5LpoKZir5kZe6z8+8506fbBKcL7inNTrBYT4FQ4Ze9cSng/t3
+ B3Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776781225; x=1777386025;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BJ2ToIKdvbBCYgT9pPnKdxV3OJLuZOOmsWL1WoKhy88=;
- b=QoPJMvMaZWG8ry0OVUPNU7LJlEKhrrXusGXPBE+LBCNlySMFKuYIssc5Fwe5xYSRNT
- uiM9azxjRlgN0rOFgN4MA0vMOr0vA6z6gY0aW5gqwIa99yoIgztUSFwG4lI0PNo8WJTD
- nN1SOe226YvamSKA+7rcnZTwxjpM6IuODfEYDwJyipZEdN6/GHqPD0YG1BE0yXEkTKX3
- eWPLteQ02f0gmD1y3eVJR/+LilQnjfbH5QC7a7uTrVlYOhovwAwLciqHjnS6WiTaWA5b
- 9hRtE3NQnU3naKJrxbQmAKr7gUWHYYX7HI9w/aKq/IOfNzYzuu2iORX9p6xkfrOPPmB8
- jdSQ==
-X-Gm-Message-State: AOJu0Yz+Q5bAn/KhaCnGwTsJ1UD3GajIGTI8CyBCfWTGiKIDDyewDz14
- NORJmXjjgsEcDwLmwliM/w8DSCmOPe0Goz6iLbNNk0+lIJQZKBAlRrcuV9LV9Nj080j95/+n1os
- 1Fhnw5JMlleh2D9GC/p2OU2wNEFIUBaiqa+/LG4LkyZn3G/G/TOkpHj1s
-X-Gm-Gg: AeBDietjSlNUhipAQwFpexqToncGgzwCK8nqRm2dxrtW+KhWgnEBYHet8PMXm1bEuam
- titI0C7tWovjS0HG/vHMbG1X0k86bG6WcGSlX+eHVkoqbL0/NSti85DRmFduDPQglEbhTdtRD7K
- CdxXTgjQOa6QXKtxaU+f5q0b/BzGCAdZmbjQDfkyIWvmgl6rozwcl9Gr0X6uLfmnx1fa+D7IAC6
- 4zKJAX4Z+Fy+Zbt8B+U/5BdXWg43wYkR/qxJN3pik9wxgQFZwBKE1mbfw3okIlioCFwfdUvNKiy
- KH8YoaO7ROPW7Nbf29UJGRyDpT53YjeS4MTP863eXQrwEeafybbYHp27VpcGgwtD51N9m1IcUkz
- 3efZmNfmvExaEMzCYMlcLdq5RWoKfHvrKd43KgOxKI/u1Nxd1Ah7sNl6/3g==
-X-Received: by 2002:a05:622a:550a:b0:50d:a8f5:1c02 with SMTP id
- d75a77b69052e-50e36c15ee8mr267535891cf.41.1776781225267; 
- Tue, 21 Apr 2026 07:20:25 -0700 (PDT)
-X-Received: by 2002:a05:622a:550a:b0:50d:a8f5:1c02 with SMTP id
- d75a77b69052e-50e36c15ee8mr267535161cf.41.1776781224640; 
- Tue, 21 Apr 2026 07:20:24 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50e392e4dcasm115367361cf.9.2026.04.21.07.20.23
+ d=1e100.net; s=20251104; t=1776781360; x=1777386160;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=XBTtSCI18DkWDQHBLKzhfLHt3mYdWEkzO4NSBhCDchs=;
+ b=eWPq7h0biC+maHIPOf6jsyBp0nFZnSfaJh7hKu+661UpWAJOujieSsLL5r5xKgql9A
+ O66lOnLeoF4GPHC/qUqnRwm6dMPCbClR84ndT/rGlgWcZEvouH/RuR2JJeIYT3HsJeKP
+ fsXZUvhqOkFqj6k89dkg7qwbjESKeqOiIoZ8ahVL9v189ICMtjK9/9QAWXEbvtIgk2QQ
+ YGMMfdutifngVfoSLTXH4wTqr3LVCsBetSjMIf+HvzgyU5J6VdQf5zomAVZ0yp7xZ/rq
+ f483Crryt8HbVufv3DM6WY5lEdnwesI6ufFCLsAT91I9DGUnCb1roOu1ZmReoQZOgoGc
+ EY7w==
+X-Gm-Message-State: AOJu0YxH5IcBdkccRp0DBD6kVQPW75BHkFGcZbvwX79xB5v1KFryCAKt
+ I82XGJ2gtfZxeSKtWIs/YHvHE07LREu40t2HozsRGvUwN1f6RWpHpMaljDtpHb6Q6VEdhAXVVd/
+ PwDqg
+X-Gm-Gg: AeBDieu6OxaixZmoh9jG0bsdIcMgL/qCshtHnI7RtmgnmguIWP/s8mpZqS3LyQwHOOC
+ 1JKUMO2kIg0vJupNKBa9Gd/vffI+RyHOezvcEXb4CR7QkKarlo8t14Jgt+Z4b6M1NnUUMRjBf5o
+ pPZqLPdV+nWoP01wSJcs5NaQhKiqwtBmkbBt0Kw0XSqJFE56/i1J1XFjhu24dm6DfS+tRQ352AE
+ aWvS/2N4a1XK6ZpNhVclQuhtW1ThHb37rK7iPdmuHoRhUiDtCkKNAY+tA5lOb975zRrcvVpR/pZ
+ 08ASEYH+0S4ShUoJcg4zBj+Iq+JJd35nyril7RuGzil51+X+K/5LEZeMNtvQ8QbonW3N5tKkwah
+ pzMpQpM6dshi5VrahHKns4TUZxa+irnNJS/fHp24rZKp0AD6aklficsZjtZW00TzEufrmyVdqMh
+ kY87GGksK6ZlK8xd959hBP8XLOTAuEdeOZUG2tYw==
+X-Received: by 2002:a05:600c:3596:b0:48a:563c:c8c5 with SMTP id
+ 5b1f17b1804b1-48a563cd1b2mr41046955e9.8.1776781360394; 
+ Tue, 21 Apr 2026 07:22:40 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:5364:f814:f749:9bf5])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4891cca5743sm164250465e9.9.2026.04.21.07.22.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 07:20:24 -0700 (PDT)
-Date: Tue, 21 Apr 2026 10:20:23 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH 0/3] migration: switch remaining positioned I/O to _all
- helpers
-Message-ID: <aeeHp8QAXfqrWUBH@x1.local>
-References: <20260420201317.30199-1-junjie.cao@intel.com>
+ Tue, 21 Apr 2026 07:22:40 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Tue, 21 Apr 2026 15:22:37 +0100
+Subject: [PATCH v3 4/4] tests/tcg/aarch64/system/rme_gdi.c: Very basic test
+ of GDI
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260420201317.30199-1-junjie.cao@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260421-jmac-feat_rme_gdi-v3-4-ecd20c77eae1@linaro.org>
+References: <20260421-jmac-feat_rme_gdi-v3-0-ecd20c77eae1@linaro.org>
+In-Reply-To: <20260421-jmac-feat_rme_gdi-v3-0-ecd20c77eae1@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,37 +103,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 04:13:14AM +0800, Junjie Cao wrote:
-> Follow-up to the pread/pwrite_all API series [1].
-> 
-> qemu_put_buffer_at(), qemu_get_buffer_at(), and file_write_ramblock_iov()
-> all use single-shot positioned I/O without retry.  They share the same
-> pattern as the bug fixed in multifd_file_recv_data() where a short
-> transfer would be mishandled.
-> 
-> Convert them to the _all helpers and clean up a pre-existing
-> const-correctness issue in qemu_get_buffer_at() along the way.
-> 
-> After this series no positioned I/O call site in migration/ uses raw
-> single-shot channel operations.
-> 
-> Depends-on: <20260413214549.926435-1-junjie.cao@intel.com>
-> ("io/channel: complete pread/pwrite_all API and fix
-> multifd_file_recv_data")
-> 
-> [1] https://lore.kernel.org/qemu-devel/20260413214549.926435-1-junjie.cao@intel.com/
-> 
-> Junjie Cao (3):
->   migration/qemu-file: switch buffer_at functions to positioned I/O _all
->     helpers
->   migration/file: switch file_write_ramblock_iov to pwritev_all
->   migration/qemu-file: drop incorrect const from qemu_get_buffer_at buf
+Simply tests GDI's prerequisites; that if GDI is enabled then
+so are FEAT_RME and FEAT_RME_GPC2.
 
-Thanks a lot, Junjie.  All look sane.
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ tests/tcg/aarch64/system/rme_gdi.c | 46 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+diff --git a/tests/tcg/aarch64/system/rme_gdi.c b/tests/tcg/aarch64/system/rme_gdi.c
+new file mode 100644
+index 0000000000..e869943a13
+--- /dev/null
++++ b/tests/tcg/aarch64/system/rme_gdi.c
+@@ -0,0 +1,46 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ * FEAT_RME_GDI Feature presence and enabled bits test
++ *
++ * Copyright (c) 2026 Linaro Ltd
++ *
++ */
++
++#include <stdint.h>
++#include <minilib.h>
++
++#define ID_AA64PFR0_EL1 "S3_0_C0_C4_0"
++#define ID_AA64MMFR4_EL1 "S3_0_C0_C7_4"
++
++int main()
++{
++    uint64_t mmfr4;
++    uint64_t pfr0;
++    int rme_status;
++    int rmegdi_status;
++
++    asm("mrs %[pfr0], " ID_AA64PFR0_EL1 "\n\t"
++        : [pfr0] "=r" (pfr0));
++
++    /* rme_status is 1 for RME, 2 for RME + GPC2, 3 for RME+GPC3 */
++    rme_status = (pfr0 >> 52) & 0xF;
++
++    asm("mrs %[mmfr4], " ID_AA64MMFR4_EL1 "\n\t"
++        : [mmfr4] "=r" (mmfr4));
++
++    rmegdi_status = ((mmfr4 >> 28) & 0xF);
++
++    if (rmegdi_status < 1) {
++        ml_printf("SKIP: GDI not implemented\n");
++        return 0;
++    }
++
++    /* Check FEAT_RME and FEAT_RME_GPC2 also present */
++    if (rme_status < 2) {
++        ml_printf("FAIL: GDI is %d, but RME is %d; RME should be >= 2\n",
++                  rmegdi_status, rme_status);
++        return 1;
++    }
++    return 0;
++}
 
 -- 
-Peter Xu
+2.43.0
 
 
