@@ -4,91 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0900EF89248
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 10:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 865D7F8924C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 10:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF877-0008Ru-H3; Tue, 21 Apr 2026 06:13:53 -0400
+	id 1wF8FI-0001M6-8D; Tue, 21 Apr 2026 06:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wF875-0008Rj-VX
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 06:13:51 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <sertonix@posteo.net>)
+ id 1wF8FG-0001Lj-Mo
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 06:22:18 -0400
+Received: from mout02.posteo.de ([185.67.36.66])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wF874-0001Dx-9Q
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 06:13:51 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wF86z-00000001Ghy-3qEA; Tue, 21 Apr 2026 12:13:45 +0200
-Message-ID: <61f5e4e6-27ea-40f2-a40e-c2f4f593fa42@maciej.szmigiero.name>
-Date: Tue, 21 Apr 2026 12:13:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/hyperv/vmbus: remove duplicate include
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Osama Abdelkader <osama.abdelkader@gmail.com>
-References: <20260420163844.332663-1-osama.abdelkader@gmail.com>
- <bfc966b0-b8a3-4a58-a40a-6221d27262dc@linaro.org>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Cc: "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <bfc966b0-b8a3-4a58-a40a-6221d27262dc@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <sertonix@posteo.net>)
+ id 1wF8FE-0004WA-0H
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 06:22:18 -0400
+Received: from submission (posteo.de [185.67.36.169]) 
+ by mout02.posteo.de (Postfix) with ESMTPS id 593DA240101
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 12:22:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
+ t=1776766931; bh=9JGwgImOBy5qZgg5s9M+ocvXeG26ocJn4YKw3MHyvbw=;
+ h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:
+ Message-Id:Subject:From:To:From;
+ b=goAAW7sG2yHcgel59d1mtSlYcvC3U+JF4ICbk4OjxMwBmEFOPzieLtjAKQhIkpWCF
+ GwtOaqRjCpSj+66ckyooyPQkpPf6FwDq+aA8sb6qfgC0JLVnorv95rMnV6NrMWgzj2
+ Jr9LybIF6iZ5G9t9hRmstLWw608oU/aVCwzMf6KAKjEXYQD5tPIAhVlAFGhtrj/gAX
+ pgdSIykRArHBeGWZemLukjVhjmLGmLyG9naWuje3mHBdSq+T/mA01BFzvAWlPlGIjX
+ a3ANw93Ma/X4BmphSk1BO87k1D3I3jPLEK0pE/SK5wXGEp+44sBl3eho3m6LSAA/W2
+ 4BeMmLKLNqaGA==
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 4g0JLq0kfFz9rxM
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 12:22:10 +0200 (CEST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 21 Apr 2026 10:22:11 +0000
+Message-Id: <DHYRB7QIPFB3.3VG2UUUIXCBZP@posteo.net>
+Subject: [PATCH v2] hw/i386: Use qemu_open for kernel/initrd
+From: "Sertonix" <sertonix@posteo.net>
+To: <qemu-devel@nongnu.org>
+Received-SPF: pass client-ip=185.67.36.66; envelope-from=sertonix@posteo.net;
+ helo=mout02.posteo.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,19 +68,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.04.2026 10:07, Philippe Mathieu-Daudé wrote:
-> On 20/4/26 18:38, Osama Abdelkader wrote:
->> exec/target_page.h is included twice
->>
->> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
->> ---
->>   hw/hyperv/vmbus.c | 1 -
->>   1 file changed, 1 deletion(-)
-> 
-> Patch queued (squashed with other hyperv one), thanks.
 
-Thanks Philippe.
+Allows using "-kernel /dev/fdset/0" and "-initrd /dev/fdset/1" (if the
+file descriptors are opened read-only).
 
-Maciej
+For the sake of consistency it would be best to do the same change in
+the other hw/* subdirectories as well but I lack the means to test all
+of them.
+---
+v2: Use qemu_open instead of qemu_open_old
+
+ hw/i386/x86-common.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
+
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index fde05fa7d7..2e4fee3e87 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -650,7 +650,9 @@ void x86_load_linux(X86MachineState *x86ms,
+     uint32_t initrd_max;
+     uint8_t header[8192], *setup, *kernel;
+     hwaddr real_addr, prot_addr, cmdline_addr, initrd_addr =3D 0;
++    Error *err =3D NULL;
+     FILE *f;
++    int fd;
+     const char *vmode;
+     MachineState *machine =3D MACHINE(x86ms);
+     struct setup_data *setup_data;
+@@ -664,8 +666,13 @@ void x86_load_linux(X86MachineState *x86ms,
+     cmdline_size =3D (strlen(kernel_cmdline) + 16) & ~15;
+=20
+     /* load the kernel header */
+-    f =3D fopen(kernel_filename, "rb");
+-    if (!f) {
++    fd =3D qemu_open(kernel_filename, O_RDONLY, &err);
++    if (fd < 0) {
++        error_report_err(err);
++        exit(1);
++    }
++    f =3D fdopen(fd, "rb");
++    if (f) {
+         fprintf(stderr, "qemu: could not open kernel file '%s': %s\n",
+                 kernel_filename, strerror(errno));
+         exit(1);
+@@ -719,12 +726,18 @@ void x86_load_linux(X86MachineState *x86ms,
+=20
+             /* load initrd */
+             if (initrd_filename) {
++                int mapped_file_fd;
+                 GMappedFile *mapped_file;
+                 gsize initrd_size;
+                 gchar *initrd_data;
+                 GError *gerr =3D NULL;
+=20
+-                mapped_file =3D g_mapped_file_new(initrd_filename, false, =
+&gerr);
++                mapped_file_fd =3D qemu_open(initrd_filename, O_RDONLY, &e=
+rr);
++                if (fd < 0) {
++                    error_report_err(err);
++                    exit(1);
++                }
++                mapped_file =3D g_mapped_file_new_from_fd(mapped_file_fd, =
+false, &gerr);
+                 if (!mapped_file) {
+                     fprintf(stderr, "qemu: error reading initrd %s: %s\n",
+                             initrd_filename, gerr->message);
+@@ -860,6 +873,7 @@ void x86_load_linux(X86MachineState *x86ms,
+=20
+     /* load initrd */
+     if (initrd_filename) {
++        int mapped_file_fd;
+         GMappedFile *mapped_file;
+         gsize initrd_size;
+         gchar *initrd_data;
+@@ -870,7 +884,12 @@ void x86_load_linux(X86MachineState *x86ms,
+             exit(1);
+         }
+=20
+-        mapped_file =3D g_mapped_file_new(initrd_filename, false, &gerr);
++        mapped_file_fd =3D qemu_open(initrd_filename, O_RDONLY, &err);
++        if (mapped_file_fd < 0) {
++            error_report_err(err);
++            exit(1);
++        }
++        mapped_file =3D g_mapped_file_new_from_fd(mapped_file_fd, false, &=
+gerr);
+         if (!mapped_file) {
+             fprintf(stderr, "qemu: error reading initrd %s: %s\n",
+                     initrd_filename, gerr->message);
+--=20
+2.53.0
 
 
