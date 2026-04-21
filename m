@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83940F327AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBAEF327AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF4yL-0003jC-U2; Tue, 21 Apr 2026 02:52:37 -0400
+	id 1wF4yR-0003nA-Pp; Tue, 21 Apr 2026 02:52:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yK-0003iv-0J
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:36 -0400
+ id 1wF4yN-0003jn-22
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:39 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yI-00006l-87
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:35 -0400
+ id 1wF4yI-000078-If
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:38 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id D8B001A1C69;
- Tue, 21 Apr 2026 08:52:31 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 8217F1A1C9C;
+ Tue, 21 Apr 2026 08:52:33 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id A2BCC1A1C5B;
- Tue, 21 Apr 2026 08:52:31 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 564841A1C47;
+ Tue, 21 Apr 2026 08:52:33 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id ABC321800097;
- Tue, 21 Apr 2026 14:52:30 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id BBA5A18000BD;
+ Tue, 21 Apr 2026 14:52:32 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCHv7 02/15] hw/misc/imx8mp_analog: Add property to analog device
-Date: Tue, 21 Apr 2026 12:22:13 +0530
-Message-Id: <20260421065226.3907745-3-gaurav.sharma_7@nxp.com>
+ Philippe Mathieu-Daude <philmd@linaro.org>
+Subject: [PATCHv7 07/15] hw/arm/fsl-imx8mm: Add PCIe support
+Date: Tue, 21 Apr 2026 12:22:18 +0530
+Message-Id: <20260421065226.3907745-8-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
 References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
@@ -67,80 +67,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add configurable properties for register reset values that differ
-between i.MX 8M variants (Plus, Mini, etc.). This allows the same
-device implementation to be shared across multiple SoCs.
+This enables support for Designware PCI Express Controller emulation
+It provides a controlled environment to debug the linux pci subsystem
 
-Properties added:
-- arm-pll-fdiv-ctl0-reset: ARM PLL divider control reset value
-
-Default value is set to match i.MX 8MP reset value (0x000FA031).
-This can be overridden in the variant like iMX8MM with its own
-reset value.
-
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- hw/misc/imx8mp_analog.c         | 12 +++++++++++-
- include/hw/misc/imx8mp_analog.h |  3 +++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ hw/arm/Kconfig              |  3 +++
+ hw/arm/fsl-imx8mm.c         | 30 ++++++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h | 10 ++++++++++
+ 3 files changed, 43 insertions(+)
 
-diff --git a/hw/misc/imx8mp_analog.c b/hw/misc/imx8mp_analog.c
-index 23ffae84f8..592512071c 100644
---- a/hw/misc/imx8mp_analog.c
-+++ b/hw/misc/imx8mp_analog.c
-@@ -12,6 +12,7 @@
- #include "qemu/log.h"
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index ba37ab2808..4636551d66 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -620,11 +620,14 @@ config FSL_IMX8MP_EVK
  
- #include "hw/misc/imx8mp_analog.h"
-+#include "hw/core/qdev-properties.h"
- #include "migration/vmstate.h"
+ config FSL_IMX8MM
+     bool
++    imply PCI_DEVICES
+     select ARM_GIC
+     select FSL_IMX8MP_ANALOG
+     select FSL_IMX8MP_CCM
+     select IMX
+     select SDHCI
++    select PCI_EXPRESS_DESIGNWARE
++    select PCI_EXPRESS_FSL_IMX8M_PHY
  
- #define ANALOG_PLL_LOCK BIT(31)
-@@ -51,7 +52,10 @@ static void imx8mp_analog_reset(DeviceState *dev)
-     s->analog[ANALOG_VPU_PLL_LOCKD_CTRL] = 0x0010003f;
-     s->analog[ANALOG_VPU_PLL_MNIT_CTRL] = 0x00280081;
-     s->analog[ANALOG_ARM_PLL_GEN_CTRL] = 0x00000810;
--    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = 0x000fa031;
+ config FSL_IMX8MM_EVK
+     bool
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 2a4d4d5e6d..633b121630 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -184,6 +184,10 @@ static void fsl_imx8mm_init(Object *obj)
+         g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+     }
 +
-+    /* Use property value instead of hardcoded */
-+    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = s->arm_pll_fdiv_ctl0_reset;
-+
-     s->analog[ANALOG_ARM_PLL_LOCKD_CTRL] = 0x0010003f;
-     s->analog[ANALOG_ARM_PLL_MNIT_CTRL] = 0x00280081;
-     s->analog[ANALOG_SYS_PLL1_GEN_CTRL] = 0x0aaaa810;
-@@ -138,11 +142,17 @@ static const VMStateDescription imx8mp_analog_vmstate = {
-     },
- };
- 
-+static const Property imx8mp_analog_properties[] = {
-+    DEFINE_PROP_UINT32("arm-pll-fdiv-ctl0-reset", IMX8MPAnalogState,
-+                       arm_pll_fdiv_ctl0_reset, 0x000fa031), /* imx8mp default */
-+};
-+
- static void imx8mp_analog_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     device_class_set_legacy_reset(dc, imx8mp_analog_reset);
-+    device_class_set_props(dc, imx8mp_analog_properties);
-     dc->vmsd  = &imx8mp_analog_vmstate;
-     dc->desc  = "i.MX 8M Plus Analog Module";
++    object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
++    object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
++                            TYPE_FSL_IMX8M_PCIE_PHY);
  }
-diff --git a/include/hw/misc/imx8mp_analog.h b/include/hw/misc/imx8mp_analog.h
-index 6996e53771..0765e607b9 100644
---- a/include/hw/misc/imx8mp_analog.h
-+++ b/include/hw/misc/imx8mp_analog.h
-@@ -76,6 +76,9 @@ struct IMX8MPAnalogState {
-     } mmio;
  
-     uint32_t analog[ANALOG_MAX];
+ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+@@ -388,6 +392,30 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
+                     fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
+ 
++    /* PCIe */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_PCIE1].addr);
 +
-+    /* Property for variant-specific reset values */
-+    uint32_t arm_pll_fdiv_ctl0_reset;
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 0,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTA_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 1,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTB_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 2,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTC_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 3,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_INTD_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 4,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_PCI_MSI_IRQ));
++
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie_phy), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie_phy), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_PCIE_PHY1].addr);
++
+     /* Unimplemented devices */
+     for (i = 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
+         switch (i) {
+@@ -395,6 +423,8 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_CCM:
+         case FSL_IMX8MM_GIC_DIST:
+         case FSL_IMX8MM_GIC_REDIST:
++        case FSL_IMX8MM_PCIE1:
++        case FSL_IMX8MM_PCIE_PHY1:
+         case FSL_IMX8MM_RAM:
+         case FSL_IMX8MM_OCRAM:
+         case FSL_IMX8MM_SNVS_HP:
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index 93a30a2f55..3181c02574 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -16,6 +16,8 @@
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+ #include "hw/misc/imx8mp_ccm.h"
++#include "hw/pci-host/designware.h"
++#include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
+@@ -44,6 +46,8 @@ struct FslImx8mmState {
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+     MemoryRegion ocram;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
++    DesignwarePCIEHost pcie;
++    FslImx8mPciePhyState   pcie_phy;
  };
  
- #endif /* IMX8MP_ANALOG_H */
+ enum FslImx8mmMemoryRegions {
+@@ -166,6 +170,12 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_UART2_IRQ    = 27,
+     FSL_IMX8MM_UART3_IRQ    = 28,
+     FSL_IMX8MM_UART4_IRQ    = 29,
++
++    FSL_IMX8MM_PCI_INTA_IRQ = 122,
++    FSL_IMX8MM_PCI_INTB_IRQ = 123,
++    FSL_IMX8MM_PCI_INTC_IRQ = 124,
++    FSL_IMX8MM_PCI_INTD_IRQ = 125,
++    FSL_IMX8MM_PCI_MSI_IRQ  = 127,
+ };
+ 
+ #endif /* FSL_IMX8MM_H */
 -- 
 2.34.1
 
