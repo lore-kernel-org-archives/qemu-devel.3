@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECFFF55805
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46459F5A8D2
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF3kO-0000lr-EN; Tue, 21 Apr 2026 01:34:08 -0400
+	id 1wF3kQ-00015C-BO; Tue, 21 Apr 2026 01:34:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wF3k8-0000az-QR
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:33:55 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1wF3kF-0000fv-C9
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:34:03 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wF3k6-0004VA-Kh
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:33:52 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3567e2b4159so2538939a91.0
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 22:33:50 -0700 (PDT)
+ id 1wF3kA-0004ZW-PB
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:33:56 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-35da2d35eccso2714258a91.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 22:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776749629; x=1777354429; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776749633; x=1777354433; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SkQdP30uKyUlHIFKW9Uy40Our+7o3vknC9ZwGR+fDis=;
- b=J3Xox+EpVnJAYsQESEiJFdZcf6EZjUP3QXnpypTQI+l27pMR0/36D+ZhWIEpZMgck0
- TWfsTsYHIzCxwdV8ZnWCZ9cnGcLyOcSocpTUysvPJkzJgqrTdcdBPwKjM2UENrSHGhnY
- ARgsP1QkgEhhERjVUIvDybs1bHqjKfOmMidnf5ab/ugJAdeYGJfet9tN1EgqlyjVnvKV
- kVhQk/xvEPxMECoSH97irGIbXzwNR/2iyk4jfYmPZC1eUh3E4pBLJPRtstedXC5nr2x3
- 3vvXDxag2l7r9LJvlBLODSVgWACKTKAx4rS+0zWjXnPbeVNjSxHHiMp/uNs0RikQqhCh
- Oktg==
+ bh=tY/qxLv+6MgU0IiIphGv/gCJH4XtLm4qBwv2FYa1ikg=;
+ b=KC9B504NeP7bQ+fPiKMlGkbxnz6hOc9rcyAHg5d8f1VM+8/ikBUt1oDiugBCQtvZwu
+ nV1jWjCowd3/FStva8VbNPB9Vna6kd7oBtykNYcAqaLja7dyTjn6LUUv/1cHTyEvePhF
+ z6lA5Szu6Y+Ecvw7cic9IsDIlcFf3G7VLRb+zIbf1sLdLmoed4VxW5B5sK0Q3AAKnUNF
+ em/+zXNgIk4tiiFYkTTg0ml8mVE6L474u4gf77qSTz7piuA3vEZ9KiCOIlxqLoZiyU4k
+ xbgX+CeOByHkobbpgZeffgMDrw6AbDrMinQeHCZRjClqrwlndwHB5d5Jmyb05yHQ1ocg
+ S9Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776749629; x=1777354429;
+ d=1e100.net; s=20251104; t=1776749633; x=1777354433;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SkQdP30uKyUlHIFKW9Uy40Our+7o3vknC9ZwGR+fDis=;
- b=Ttki634iCRRIq/xeX1g0Wjf6YViQnUxUfRqFymgg9HJu+ccZdFH3Ywq5aS3pind0YV
- UzN99kBJAVjl8BPpfkTxTks2g93FnXagU1QBvThLdl75NA86GapVQVX0nSbAOKgkZAPV
- VOJQ+ckLvQXZyPFOedUJgYamr+JAqwqDAO1+uRvdTyg4pqmyTtNDm02Vef1DB4Bz+UK8
- g9EivVwrgRbpIopWZIrJUvJhi1Y4pNwJP5OyFhuuLtmQYQAzd7OJFGcAlUF8AIIGIvAt
- 7Zt/F5oIBB14m276k183b0CSLwycuwvrojptsGHRAUGdUPa4feK4s1HKVXfATfB3y8ee
- nB9g==
+ bh=tY/qxLv+6MgU0IiIphGv/gCJH4XtLm4qBwv2FYa1ikg=;
+ b=FlaeGbZ/1Wg81hVzpoLAMh8++YO7vRLFoAhc4a7qChE7b8jmARN/NAv29mQ81ttRay
+ M3Jl+EGwB1IbEp3+T/agKFpmUcAXggjqe7wDMsMEgfsMrgqGxjxhaIBtFJffG7CcY+wv
+ 3lTYzqCGBKyqUGLOmtI8MGhB0zbzn0bXFFkuxCYCRN7/hNbcn98IhvaAn9R4rm1fdH4M
+ HnktSn2LZa9WbzBJbWfyBMmxL9s9ljRW1JwR5EVnVwdOG+t53Lhx5LrKrf5OxW1b4hLB
+ vJOpR5a2jYz6BYQi4L6ngSAnmM9gVZLozK2BBrkDi24UKPB+q/Z2C6MU4yNPsKEM9J0O
+ yarw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+LDE3mkKwauJa0Qr9JnBXr69b83J8WUXwRENXN8PlAHIwO18+CfL7PnsO5S1IqcRH2aR4ceNp5Mu0Y@nongnu.org
-X-Gm-Message-State: AOJu0YyscfJaelG82nhwbZXGfeUo8BDV4DkfygGKWkbEruluSlgcjJ80
- NZAKE0v78/obz8xqauD/toRjuxc8aLAmSedX6PmOfIjuio8issCS2U5q
-X-Gm-Gg: AeBDietgbNNBkjUY1uCj3bql6l88kMDgiEp08R13wzidNO1yOPlo/D7JHRhJY/Brch1
- JM0bNFAwRZAcO9vs3GjjjpH6Fd1FqXbr/8QhvS/hH9HzfC+y5C8lffd+AI1rwmR6+SLBD7NKcAP
- H+r6dByA2nAORiSAM+2Kuo41amUP4gW060WLl1E5vcmla443U+aebz/J5Dso7vYhzX7YoWVV9UG
- 0UcUK8FaDwlsxLNRnNUpxV4anDqR8yQ7krvQ2DKR85hZx7uftkOytdVVhmqguiD/5H3MD3AF2Vq
- 0lTI40q3q6tbEMWbScOktiSQXO4fsRjW0tHWLZSJEWZ+LenEEh/CKAk+kjgg2C1ofb+/JjH6NG4
- bFKY07HwqhfYgE1ELn9BA4ejlEysBawVr8/IFKIf0vu5GKb7ZQT/WLk9W9xZ2VKn+ZOu0geWuBW
- RyntetYUKNEp0jDMjjd/QsdLK3NbBY0anXHz+PIpbRUKn6imcCFCGNTy+xLZCNnmieR71OH13f1
- LLeiTgM7LS64obL53ra9Y/jKZ4lvt8xdc3jzhAoK+c8KeKH
-X-Received: by 2002:a17:90a:da8c:b0:35e:3afb:a3ff with SMTP id
- 98e67ed59e1d1-361403cbd7cmr16548218a91.3.1776749629184; 
- Mon, 20 Apr 2026 22:33:49 -0700 (PDT)
+ AFNElJ+lhFL/W4PQiQwhgU3RvcalqoncCuBWtRY69YHk+dVMNHzzPNi81GulRfHeRFF6XFEhgesDcnUog8K4@nongnu.org
+X-Gm-Message-State: AOJu0Yz9gPNv7oYkPvkW2CBLbF4ss/R+bVlYwHfGxBauegiTaTfiEyyZ
+ gY1y2vHXE7tTDALSurin/92X5O3ZDdfzM6wvwdtn/bAnfiabn2HPAu25
+X-Gm-Gg: AeBDietWQf6b0zLQmN0tiY2/X1v4RFK8S/UH6v7QQGEFOZQxIo35GDoPhGZU8CqT6EC
+ 9OMgv12tMgLdeq9hmsD/6d6d75XsUvv8koDMe8KD8Rh8e/lDx900vwERLo2D0zN8Eg7IKOKWt8s
+ 3plkWZGmjwTmbJJdNU+igH53FfuhIXUDmYXNg2SfpYEBe03AM6jgJQO/ZUWYFkU2g3n6A8AR7FJ
+ aOuURuPXAYkxqgt5YubaYKKdWGdshU+64LITnfSFu1LvWd99Q8xqRLzEsPERTZOBzSdj57j5pNR
+ w1WJOSkQ6IEEDjKvisBP/qnLBk0YosKil/qskJ1ii9I1ZLx7vAqFsm3m4mAZLtiYLhbCcI1CQ5a
+ cGSNQK83nd/Eguu4BroT/7/9hIrb9JaGtlKfhjZ62xzGfIY+ZUxb3ydm+jkEV1i8JIrmeCMyMN4
+ 4+UKKHrv1Jp9aMcMtKTSjqsYn+2D0WDdhDN/KGbogo4M98fKTmCMeJyK8sa4v+tuGnLf+sTMfSQ
+ tb5JSmWozfDRCzY72NYr+J1VjMF3I0oFUY3mQ==
+X-Received: by 2002:a17:90a:f16:b0:361:4521:d311 with SMTP id
+ 98e67ed59e1d1-36145221bbfmr10637957a91.18.1776749633493; 
+ Mon, 20 Apr 2026 22:33:53 -0700 (PDT)
 Received: from donnager-debian.. ([203.221.103.1])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36141898ebasm12472308a91.7.2026.04.20.22.33.45
+ 98e67ed59e1d1-36141898ebasm12472308a91.7.2026.04.20.22.33.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Apr 2026 22:33:48 -0700 (PDT)
+ Mon, 20 Apr 2026 22:33:52 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
@@ -74,16 +74,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@kernel.org>,
  Joel Stanley <jms@oss.tenstorrent.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v3 10/13] hw/riscv/atlantis: Add PCIe controller
-Date: Tue, 21 Apr 2026 15:31:35 +1000
-Message-ID: <20260421053140.752059-11-joel@jms.id.au>
+Subject: [PATCH v3 11/13] tests/functional/riscv64: Add tt-atlantis tests
+Date: Tue, 21 Apr 2026 15:31:36 +1000
+Message-ID: <20260421053140.752059-12-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260421053140.752059-1-joel@jms.id.au>
 References: <20260421053140.752059-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=joel.stan@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -109,351 +109,131 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nicholas Piggin <npiggin@gmail.com>
 
-tt-atlantis is likely to use a generic ECAM compatible PCIe memory map,
-so gpex is not far off the OS programming model
+Add OpenSBI and Linux boot tests for the tt-atlantis machine. Based on
+tests/functional/riscv64/test_sifive_u.py.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
-v3: Avoid leaks in the dt string allocation
+v3:
+ - Fix path to test files
+ - Dedupe command line root argument
+ - Remove unused import
 ---
- include/hw/riscv/tt_atlantis.h |   2 +
- hw/riscv/tt_atlantis.c         | 225 ++++++++++++++++++++++++++++++++-
- hw/riscv/Kconfig               |   2 +
- 3 files changed, 228 insertions(+), 1 deletion(-)
+ MAINTAINERS                                  |  1 +
+ tests/functional/riscv64/meson.build         |  1 +
+ tests/functional/riscv64/test_opensbi.py     |  4 ++
+ tests/functional/riscv64/test_tt_atlantis.py | 63 ++++++++++++++++++++
+ 4 files changed, 69 insertions(+)
+ create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
 
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index f7f79e9f2c53..c0a0827a5167 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -28,6 +28,7 @@ struct TTAtlantisState {
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 635a380945fd..9622ffc9edb2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1770,6 +1770,7 @@ F: docs/system/riscv/tt_*.rst
+ F: hw/riscv/tt_*.c
+ F: hw/riscv/aia.[ch]
+ F: include/hw/riscv/tt_*.h
++F: tests/functional/riscv64/test_tt_*.py
  
-     RISCVHartArrayState soc;
-     DeviceState *irqchip;
-+    GPEXHost gpex_host;
+ AMD Microblaze-V Generic Board
+ M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+index b996c89d7df9..c4456fabd757 100644
+--- a/tests/functional/riscv64/meson.build
++++ b/tests/functional/riscv64/meson.build
+@@ -13,5 +13,6 @@ tests_riscv64_system_quick = [
+ tests_riscv64_system_thorough = [
+   'boston',
+   'sifive_u',
++  'tt_atlantis',
+   'tuxrun',
+ ]
+diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
+index d077e40f4278..0f8beb7e7a8c 100755
+--- a/tests/functional/riscv64/test_opensbi.py
++++ b/tests/functional/riscv64/test_opensbi.py
+@@ -28,6 +28,10 @@ def test_riscv_sifive_u(self):
+         self.set_machine('sifive_u')
+         self.boot_opensbi()
  
-     int fdt_size;
- };
-@@ -39,6 +40,7 @@ enum {
-     TT_ATL_UART2_IRQ = 40,
-     TT_ATL_UART3_IRQ = 41,
-     TT_ATL_UART4_IRQ = 42,
-+    TT_ATL_PCIE0_INTA_IRQ = 96,
- };
- 
- enum {
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index a556ff79c8c8..e1753d3c1f18 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -27,6 +27,7 @@
- #include "hw/intc/riscv_aclint.h"
- #include "hw/intc/riscv_aplic.h"
- #include "hw/misc/pvpanic.h"
-+#include "hw/pci-host/gpex.h"
- 
- #include "system/system.h"
- #include "system/device_tree.h"
-@@ -70,6 +71,9 @@ static const MemMapEntry tt_atlantis_memmap[] = {
-     [TT_ATL_PCIE_ECAM1] =    { 0x01120000000,    0x10000000 },
-     [TT_ATL_PCIE_ECAM2] =    { 0x01130000000,    0x10000000 },
-     [TT_ATL_PCIE_MMIO0] =    { 0x10000000000, 0x10000000000 },
-+    [TT_ATL_PCIE_PIO0]  =    { 0x10000000000,       0x10000 }, /* qemu only */
-+    [TT_ATL_PCIE_MMIO0_32] = { 0x10004000000,     0x4000000 }, /* qemu only */
-+    [TT_ATL_PCIE_MMIO0_64] = { 0x10010000000, 0x0fff0000000 }, /* qemu only */
-     [TT_ATL_PCIE_MMIO1] =    { 0x20000000000, 0x10000000000 },
-     [TT_ATL_PCIE_MMIO2] =    { 0x30000000000, 0x10000000000 },
- };
-@@ -80,6 +84,59 @@ static uint32_t next_phandle(void)
-     return phandle++;
- }
- 
-+static void create_pcie_irq_map(void *fdt, char *nodename, int legacy_irq,
-+                                uint32_t irqchip_phandle)
-+{
-+    int pin, dev;
-+    uint32_t irq_map_stride = 0;
-+    uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS *
-+                          FDT_MAX_INT_MAP_WIDTH] = {};
-+    uint32_t *irq_map = full_irq_map;
++    def test_riscv_tt_atlantis(self):
++        self.set_machine('tt-atlantis')
++        self.boot_opensbi()
 +
-+    /*
-+     * This code creates a standard swizzle of interrupts such that
-+     * each device's first interrupt is based on it's PCI_SLOT number.
-+     * (See pci_swizzle_map_irq_fn())
-+     *
-+     * We only need one entry per interrupt in the table (not one per
-+     * possible slot) seeing the interrupt-map-mask will allow the table
-+     * to wrap to any number of devices.
-+     */
-+    for (dev = 0; dev < PCI_NUM_PINS; dev++) {
-+        int devfn = dev * 0x8;
+     def test_riscv_virt(self):
+         self.set_machine('virt')
+         self.boot_opensbi()
+diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functional/riscv64/test_tt_atlantis.py
+new file mode 100755
+index 000000000000..f6f4b7ceec34
+--- /dev/null
++++ b/tests/functional/riscv64/test_tt_atlantis.py
+@@ -0,0 +1,63 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel on a Tenstorrent Atlantis machine
++# and checks the console
++#
++# Copyright (c) Linaro Ltd.
++# Copyright 2026 Tenstorrent
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+        for (pin = 0; pin < PCI_NUM_PINS; pin++) {
-+            int irq_nr = legacy_irq + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-+            int i = 0;
++import os
 +
-+            /* Fill PCI address cells */
-+            irq_map[i] = cpu_to_be32(devfn << 8);
-+            i += FDT_PCI_ADDR_CELLS;
++from qemu_test import Asset, LinuxKernelTest
 +
-+            /* Fill PCI Interrupt cells */
-+            irq_map[i] = cpu_to_be32(pin + 1);
-+            i += FDT_PCI_INT_CELLS;
 +
-+            /* Fill interrupt controller phandle and cells */
-+            irq_map[i++] = cpu_to_be32(irqchip_phandle);
-+            irq_map[i++] = cpu_to_be32(irq_nr);
-+            irq_map[i++] = cpu_to_be32(0x4);
++class TTAtlantis(LinuxKernelTest):
 +
-+            if (!irq_map_stride) {
-+                irq_map_stride = i;
-+            }
-+            irq_map += irq_map_stride;
-+        }
-+    }
++    ASSET_KERNEL = Asset(
++        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
++        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
++    ASSET_ROOTFS = Asset(
++        ('https://github.com/groeck/linux-build-test/raw/'
++         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
++         'rootfs.ext2.gz'),
++        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
 +
-+    qemu_fdt_setprop(fdt, nodename, "interrupt-map", full_irq_map,
-+                     PCI_NUM_PINS * PCI_NUM_PINS *
-+                     irq_map_stride * sizeof(uint32_t));
++    def do_test_riscv64_tt_atlantis(self, connect_disk):
++        self.set_machine('tt-atlantis')
++        kernel_path = self.ASSET_KERNEL.fetch()
++        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
 +
-+    qemu_fdt_setprop_cells(fdt, nodename, "interrupt-map-mask",
-+                           0x1800, 0, 0, 0x7);
-+}
++        self.vm.set_console()
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'earlycon=sbi '
 +
- static void create_fdt_cpus(TTAtlantisState *s, uint32_t *intc_phandles)
- {
-     uint32_t cpu_phandle;
-@@ -320,6 +377,54 @@ static void create_fdt_cpu(TTAtlantisState *s, const MemMapEntry *memmap,
-                          IRQ_S_EXT, s->soc.num_harts);
- }
- 
-+static void create_fdt_pcie(void *fdt,
-+                            const MemMapEntry *mem_ecam,
-+                            const MemMapEntry *mem_pio,
-+                            const MemMapEntry *mem_mmio32,
-+                            const MemMapEntry *mem_mmio64,
-+                            int legacy_irq,
-+                            uint32_t aplic_s_phandle,
-+                            uint32_t imsic_s_phandle)
-+{
-+    g_autofree char *name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                                            mem_ecam->base);
++        if connect_disk:
++            kernel_command_line += 'root=/dev/vda panic=-1 noreboot rootwait '
++            self.vm.add_args('-device',
++                             'virtio-blk,drive=drive0,serial=0x1234,bus=pcie.0')
++            self.vm.add_args('-drive',
++                             f'file={rootfs_path},if=none,id=drive0,format=raw')
++            pattern = 'Boot successful.'
++        else:
++            kernel_command_line += 'panic=0 noreboot '
++            pattern = 'Cannot open root device'
 +
-+    qemu_fdt_setprop_cell(fdt, name, "#address-cells", FDT_PCI_ADDR_CELLS);
-+    qemu_fdt_setprop_cell(fdt, name, "#interrupt-cells", FDT_PCI_INT_CELLS);
-+    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0x2);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "pci-host-ecam-generic");
-+    qemu_fdt_setprop_string(fdt, name, "device_type", "pci");
-+    qemu_fdt_setprop_cells(fdt, name, "bus-range", 0,
-+                           mem_ecam->size / PCIE_MMCFG_SIZE_MIN - 1);
-+    qemu_fdt_setprop(fdt, name, "dma-coherent", NULL, 0);
-+    qemu_fdt_setprop_cell(fdt, name, "msi-parent", imsic_s_phandle);
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_command_line,
++                         '-no-reboot')
 +
-+    qemu_fdt_setprop_sized_cells(fdt, name, "reg",
-+                                 2, mem_ecam->base,
-+                                 2, mem_ecam->size);
-+    if (!(mem_mmio32->base & 0xffffffffUL)) {
-+        /* XXX: this is a silly hack because it would collide with PIO */
-+        error_report("mmio32 base must not be 0 mod 2^32");
-+        exit(1);
-+    }
-+    uint32_t flags = FDT_PCI_RANGE_MMIO_64BIT | FDT_PCI_RANGE_PREFETCHABLE;
-+    qemu_fdt_setprop_sized_cells(fdt, name, "ranges",
-+                                 1, FDT_PCI_RANGE_IOPORT,
-+                                 2, 0x0,
-+                                 2, mem_pio->base,
-+                                 2, mem_pio->size,
-+                                 1, FDT_PCI_RANGE_MMIO,
-+                                 2, (mem_mmio32->base & 0xffffffffUL),
-+                                 2, mem_mmio32->base,
-+                                 2, mem_mmio32->size,
-+                                 1, flags,
-+                                 2, mem_mmio64->base,
-+                                 2, mem_mmio64->base,
-+                                 2, mem_mmio64->size);
++        self.vm.launch()
++        self.wait_for_console_pattern(pattern)
 +
-+    create_pcie_irq_map(fdt, name, legacy_irq, aplic_s_phandle);
-+}
++        os.remove(rootfs_path)
 +
- static void create_fdt_reset(void *fdt, const MemMapEntry *mem)
- {
-     uint32_t syscon_phandle = next_phandle();
-@@ -385,6 +490,14 @@ static void finalize_fdt(TTAtlantisState *s)
-      *                       aplic_s_phandle);
-      */
- 
-+    create_fdt_pcie(fdt,
-+                    &s->memmap[TT_ATL_PCIE_ECAM0],
-+                    &s->memmap[TT_ATL_PCIE_PIO0],
-+                    &s->memmap[TT_ATL_PCIE_MMIO0_32],
-+                    &s->memmap[TT_ATL_PCIE_MMIO0_64],
-+                    TT_ATL_PCIE0_INTA_IRQ,
-+                    aplic_s_phandle, imsic_s_phandle);
++    def test_riscv64_tt_atlantis(self):
++        self.do_test_riscv64_tt_atlantis(False)
 +
-     create_fdt_reset(fdt, &s->memmap[TT_ATL_SYSCON]);
- 
-     create_fdt_uart(fdt, &s->memmap[TT_ATL_UART0], TT_ATL_UART0_IRQ,
-@@ -395,7 +508,7 @@ static void create_fdt(TTAtlantisState *s)
- {
-     MachineState *ms = MACHINE(s);
-     uint8_t rng_seed[32];
--    g_autofree char *name = NULL;
-+    char *name;
-     void *fdt;
- 
-     fdt = create_device_tree(&s->fdt_size);
-@@ -417,6 +530,25 @@ static void create_fdt(TTAtlantisState *s)
-     qemu_fdt_setprop_cell(fdt, "/soc", "#size-cells", 0x2);
-     qemu_fdt_setprop_cell(fdt, "/soc", "#address-cells", 0x2);
- 
-+    /*
-+     * The "/soc/pci@..." node is needed for PCIE hotplugs
-+     * that might happen before finalize_fdt().
-+     */
-+    name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                           s->memmap[TT_ATL_PCIE_ECAM0].base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    g_free(name);
++    def test_riscv64_tt_atlantis_disk(self):
++        self.do_test_riscv64_tt_atlantis(True)
 +
-+    name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                           s->memmap[TT_ATL_PCIE_ECAM1].base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    g_free(name);
 +
-+    name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                           s->memmap[TT_ATL_PCIE_ECAM2].base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    g_free(name);
-+
-     qemu_fdt_add_subnode(fdt, "/chosen");
- 
-     /* Pass seed to RNG */
-@@ -429,6 +561,93 @@ static void create_fdt(TTAtlantisState *s)
-     create_fdt_pmu(s);
- }
- 
-+static void gpex_pcie_init_one(TTAtlantisState *s, GPEXHost *gpex_host,
-+                               MemoryRegion *mr,
-+                               const MemMapEntry *mem_ecam,
-+                               const MemMapEntry *mem_pio,
-+                               const MemMapEntry *mem_mmio32,
-+                               const MemMapEntry *mem_mmio64,
-+                               int legacy_irq)
-+{
-+    DeviceState *dev;
-+    Object *obj;
-+    MemoryRegion *ecam_alias, *ecam_reg;
-+    MemoryRegion *mmio32_alias, *mmio64_alias, *mmio_reg;
-+    hwaddr ecam_base = mem_ecam->base;
-+    hwaddr ecam_size = mem_ecam->size;
-+    hwaddr pio_base = mem_pio->base;
-+    hwaddr pio_size = mem_pio->size;
-+    hwaddr mmio32_base = mem_mmio32->base;
-+    hwaddr mmio32_size = mem_mmio32->size;
-+    hwaddr mmio64_base = mem_mmio64->base;
-+    hwaddr mmio64_size = mem_mmio64->size;
-+    qemu_irq irq;
-+    char name[16];
-+    int i;
-+
-+    snprintf(name, sizeof(name), "pcie");
-+    object_initialize_child(OBJECT(s), name, gpex_host, TYPE_GPEX_HOST);
-+    dev = DEVICE(gpex_host);
-+    obj = OBJECT(dev);
-+
-+    object_property_set_uint(obj, PCI_HOST_ECAM_BASE, ecam_base, &error_abort);
-+    object_property_set_int(obj, PCI_HOST_ECAM_SIZE, ecam_size, &error_abort);
-+    object_property_set_uint(obj, PCI_HOST_BELOW_4G_MMIO_BASE, mmio32_base,
-+                             &error_abort);
-+    object_property_set_int(obj, PCI_HOST_BELOW_4G_MMIO_SIZE, mmio32_size,
-+                            &error_abort);
-+    object_property_set_uint(obj, PCI_HOST_ABOVE_4G_MMIO_BASE, mmio64_base,
-+                             &error_abort);
-+    object_property_set_int(obj, PCI_HOST_ABOVE_4G_MMIO_SIZE, mmio64_size,
-+                            &error_abort);
-+    object_property_set_uint(obj, PCI_HOST_PIO_BASE, pio_base, &error_abort);
-+    object_property_set_int(obj, PCI_HOST_PIO_SIZE, pio_size, &error_abort);
-+
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+
-+    ecam_alias = g_new0(MemoryRegion, 1);
-+    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-+    snprintf(name, sizeof(name), "pcie.ecam");
-+    memory_region_init_alias(ecam_alias, obj, name,
-+                             ecam_reg, 0, ecam_size);
-+    memory_region_add_subregion(mr, ecam_base, ecam_alias);
-+
-+    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
-+
-+    mmio32_alias = g_new0(MemoryRegion, 1);
-+    snprintf(name, sizeof(name), "pcie.mmio32");
-+    memory_region_init_alias(mmio32_alias, obj, name,
-+                             mmio_reg, mmio32_base & 0xffffffffUL, mmio32_size);
-+    memory_region_add_subregion(mr, mmio32_base, mmio32_alias);
-+
-+    mmio64_alias = g_new0(MemoryRegion, 1);
-+    snprintf(name, sizeof(name), "pcie.mmio64");
-+    memory_region_init_alias(mmio64_alias, obj, name,
-+                             mmio_reg, mmio64_base, mmio64_size);
-+    memory_region_add_subregion(mr, mmio64_base, mmio64_alias);
-+
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 2, pio_base);
-+
-+    for (i = 0; i < PCI_NUM_PINS; i++) {
-+        irq = qdev_get_gpio_in(s->irqchip, legacy_irq + i);
-+
-+        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
-+        gpex_set_irq_num(GPEX_HOST(dev), i, legacy_irq + i);
-+    }
-+
-+    gpex_host->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
-+}
-+
-+static void gpex_pcie_init(TTAtlantisState *s, MemoryRegion *mr)
-+{
-+    gpex_pcie_init_one(s, &s->gpex_host, mr,
-+                       &s->memmap[TT_ATL_PCIE_ECAM0],
-+                       &s->memmap[TT_ATL_PCIE_PIO0],
-+                       &s->memmap[TT_ATL_PCIE_MMIO0_32],
-+                       &s->memmap[TT_ATL_PCIE_MMIO0_64],
-+                       TT_ATL_PCIE0_INTA_IRQ);
-+}
-+
- static DeviceState *create_reboot_device(const MemMapEntry *mem)
- {
-     DeviceState *dev = qdev_new(TYPE_PVPANIC_MMIO_DEVICE);
-@@ -588,6 +807,9 @@ static void tt_atlantis_machine_init(MachineState *machine)
-     s->fw_cfg = create_fw_cfg(&s->memmap[TT_ATL_FW_CFG], machine->smp.cpus);
-     rom_set_fw(s->fw_cfg);
- 
-+    /* PCIe */
-+    gpex_pcie_init(s, system_memory);
-+
-     /* Reboot and exit */
-     create_reboot_device(&s->memmap[TT_ATL_SYSCON]);
- 
-@@ -623,6 +845,7 @@ static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
-     mc->default_cpu_type = TYPE_RISCV_CPU_TT_ASCALON;
-     mc->block_default_type = IF_VIRTIO;
-     mc->no_cdrom = 1;
-+    mc->pci_allow_0_address = true;
-     mc->default_ram_id = "tt_atlantis.ram";
- }
- 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 0601ae1a7494..2ddee591eb90 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -129,6 +129,8 @@ config TENSTORRENT
-     select DEVICE_TREE
-     select RISCV_NUMA
-     select PVPANIC_MMIO
-+    select PCI
-+    select PCI_EXPRESS_GENERIC_BRIDGE
-     select SERIAL_MM
-     select RISCV_ACLINT
-     select RISCV_APLIC
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.47.3
 
