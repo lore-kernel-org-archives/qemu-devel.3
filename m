@@ -4,54 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7C4F327B1
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08BFAF327B3
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 07:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF4yT-0003qa-Ab; Tue, 21 Apr 2026 02:52:45 -0400
+	id 1wF5GV-0003dt-RK; Tue, 21 Apr 2026 03:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yO-0003kP-8I
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:40 -0400
-Received: from inva020.nxp.com ([92.121.34.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yK-00007R-Oy
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:39 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id E577D1A1CB8;
- Tue, 21 Apr 2026 08:52:33 +0200 (CEST)
-Received: from aprdc01srsp001v.ap-rdc01.nxp.com
- (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id B9E0E1A1C47;
- Tue, 21 Apr 2026 08:52:33 +0200 (CEST)
-Received: from lsv031015.swis.in-blr01.nxp.com
- (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 2BDA31800097;
- Tue, 21 Apr 2026 14:52:33 +0800 (+08)
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wF5GS-0003dR-9W
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 03:11:20 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wF5GP-00044B-Sy
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 03:11:20 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-362bb3260f1so260005a91.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 00:11:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1776755475; x=1777360275; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1ffO50MMxG2IDWSSIbiX+9kzNZ5vhwSUgSE0rk877XE=;
+ b=gg8LFrYR9ZI3LCETgkkhUQcq0TzF9NaZvmB3Wx7pTCiBQyqosb1FWQwHEkrNIn6CyD
+ O+LnGGsXmj5DIhxL/ZKmcPl6r03qjltwdNr042Z5iHh79gZ0eHmBhJinuaPgF8c7LAVt
+ Mna6M4nrPMd4lJLBNnGObf09BtQ4ap8XzwtlJFPEgr5wbYlEG7eEYoTLYvGdbtSMz+q0
+ usA3zNa9OruL7gJgEMlywP2zVHGVcT+wRUBuuTz/U6K5MwBuX4cUCdCowFYf4jq3PzZH
+ rWd5wAqi0NhwcoeC3yZFMVOOCDaY+o7EmHWJYc5HjnXO5S9X0xnPP+td9LjCkLKjwF4+
+ eg+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776755475; x=1777360275;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1ffO50MMxG2IDWSSIbiX+9kzNZ5vhwSUgSE0rk877XE=;
+ b=GFYz39PfawyEpJei/oE2SAevFuxy2cQqw2wmwO0LuxrlQmjtLe5q/zXVdSf1VX0z2Q
+ Y12ovGxIPbmq6F17+qWXvukT5uMy1wolr23KOxh/TV6GHntw4RJK0/eyFdtqlvI0C9zc
+ Q0MEkdn5JeXfRQxd0K4ZueAxQKSxQkldhbV/wswYYzS9yk5K3GsWGuH8CMqWsNicak1V
+ GpaEusndqNn/lfMLcvlc+7Amt1LQPPzfl8dS8SrYEpKkEHvBUjqzTQBORiyiSA0dOKUc
+ H1pOrn6EgfDAcHDP4h1Thwc0DFBg5QDkWFu0q8U9RH7tFi2Y+D/t8wS2y3dMM4c/m0sb
+ pwrQ==
+X-Gm-Message-State: AOJu0YykvvcJDxbab7+JEZ0czxzu8ooG4JTq6G+xAWi8WLl0jo+77GJm
+ QPYfqN58AqOjqzJLjJL40e+CmJhAZIcmecW4T7nkW63/UlAW70JoBI7h5VxLmCaWqZcrQqBbnsp
+ OP1qs4FyYlE9pVOwK9pyDAI+Uv0yzTnLxnJ8ZPTMl/InzTdXy2p/mbkbtOd2eVmdwlXj46iPOPo
+ ZSuB5FSlkEZ7obGCyVzVIRKa61PQN/4zbMtwQPXFZQ19UqfVW8
+X-Gm-Gg: AeBDievWrtpF/2su4Da0ic7VBh6Ah8pgMjRQdPm4gVrWCHRYmlbilEDXJ7gdEi2xFSB
+ Jf4DrBN4fLFfbxhZQGHezpqZ8w7tQFdmwUHjQr2OuYHdAX94T04qZXkmfNHxkJMG9UzQ5+SMPJR
+ XL+vB5hYi7sbEx4KdbgSdmz+PWkWdPhAcj+XcTwJHnOdoD+eeXZ74eNGx9Z59FbkmPJ3h5mZkG7
+ 1IufW/dkw/a4sB4Jb3WEMwrXG5uY4gCM8L5+uhkBr58FBNKzTnBANIpbsMjh32RbKqCMfH7tlHF
+ iZsJVF4Bbn3s1oBbXCfJrQEO2LhWotqy9zplSWoHFiFezxiHdgOMfm08R3CKT0f8HgEoDfqm24N
+ eW0BVjoDH67vAJ0VQIw/1wZBCGew/NTSTJn2iNpaDUJqQBPiUz+1lMbXFST3ko7yz1uXp4wXq4t
+ PZC7mwKopoja+h+fmGZ+OIApXcGjnCvuod5+r68O44HwtWD7U7cmUzTSx+SqVE
+X-Received: by 2002:a17:90b:3950:b0:35f:b714:e516 with SMTP id
+ 98e67ed59e1d1-361404659e2mr16246064a91.16.1776755474983; 
+ Tue, 21 Apr 2026 00:11:14 -0700 (PDT)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c7976f9cacasm10674709a12.8.2026.04.21.00.11.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Apr 2026 00:11:14 -0700 (PDT)
+From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv7 08/15] hw/arm/fsl-imx8mm: Add GPIO controllers
-Date: Tue, 21 Apr 2026 12:22:19 +0530
-Message-Id: <20260421065226.3907745-9-gaurav.sharma_7@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
-References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3] target/riscv: Initialize riscv_excp_names[] and
+ riscv_intr_names[] using designated initializer
+Date: Tue, 21 Apr 2026 15:11:07 +0800
+Message-ID: <20260421071107.2848439-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.13;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=frank.chang@sifive.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,143 +109,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enabled GPIO controller emulation
-Also updated the GPIO IRQ lines of iMX8MM
+From: Frank Chang <frank.chang@sifive.com>
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Use designated initializers to initialize riscv_excp_names[] and
+riscv_intr_names[] so that we don't have to explicitly add "reserved"
+items. Also, add the missing trap names: sw_check, hw_error,
+virt_illegal_instruction, semihost, s_guest_external, and
+counter_overflow.
+
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/fsl-imx8mm.c         | 54 +++++++++++++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h | 14 ++++++++++
- 2 files changed, 68 insertions(+)
+ target/riscv/cpu.c | 89 +++++++++++++++++++++++-----------------------
+ 1 file changed, 45 insertions(+), 44 deletions(-)
 
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 633b121630..85bce5a788 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -180,6 +180,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-     }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 72c6f4f0f14..ce15a17c37d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -328,60 +328,61 @@ const char * const riscv_rvv_regnames[] = {
+ };
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-+        g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
-+        object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
-+    }
-+
-     for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
-         g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
-         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-@@ -365,6 +370,54 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].addr,
-                                 &s->ocram);
+ static const char * const riscv_excp_names[] = {
+-    "misaligned_fetch",
+-    "fault_fetch",
+-    "illegal_instruction",
+-    "breakpoint",
+-    "misaligned_load",
+-    "fault_load",
+-    "misaligned_store",
+-    "fault_store",
+-    "user_ecall",
+-    "supervisor_ecall",
+-    "hypervisor_ecall",
+-    "machine_ecall",
+-    "exec_page_fault",
+-    "load_page_fault",
+-    "reserved",
+-    "store_page_fault",
+-    "double_trap",
+-    "reserved",
+-    "reserved",
+-    "reserved",
+-    "guest_exec_page_fault",
+-    "guest_load_page_fault",
+-    "reserved",
+-    "guest_store_page_fault",
++    [RISCV_EXCP_INST_ADDR_MIS] = "misaligned_fetch",
++    [RISCV_EXCP_INST_ACCESS_FAULT] = "fault_fetch",
++    [RISCV_EXCP_ILLEGAL_INST] = "illegal_instruction",
++    [RISCV_EXCP_BREAKPOINT] = "breakpoint",
++    [RISCV_EXCP_LOAD_ADDR_MIS] = "misaligned_load",
++    [RISCV_EXCP_LOAD_ACCESS_FAULT] = "fault_load",
++    [RISCV_EXCP_STORE_AMO_ADDR_MIS] = "misaligned_store",
++    [RISCV_EXCP_STORE_AMO_ACCESS_FAULT] = "fault_store",
++    [RISCV_EXCP_U_ECALL] = "user_ecall",
++    [RISCV_EXCP_S_ECALL] = "supervisor_ecall",
++    [RISCV_EXCP_VS_ECALL] = "hypervisor_ecall",
++    [RISCV_EXCP_M_ECALL] = "machine_ecall",
++    [RISCV_EXCP_INST_PAGE_FAULT] = "exec_page_fault",
++    [RISCV_EXCP_LOAD_PAGE_FAULT] = "load_page_fault",
++    [RISCV_EXCP_STORE_PAGE_FAULT] = "store_page_fault",
++    [RISCV_EXCP_DOUBLE_TRAP] = "double_trap",
++    [RISCV_EXCP_SW_CHECK] = "sw_check",
++    [RISCV_EXCP_HW_ERR] = "hw_error",
++    [RISCV_EXCP_INST_GUEST_PAGE_FAULT] = "guest_exec_page_fault",
++    [RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT] = "guest_load_page_fault",
++    [RISCV_EXCP_VIRT_INSTRUCTION_FAULT] = "virt_illegal_instruction",
++    [RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT] = "guest_store_page_fault",
++    [RISCV_EXCP_SEMIHOST] = "semihost",
+ };
  
-+    /* GPIOs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq_low;
-+            unsigned int irq_high;
-+        } gpio_table[FSL_IMX8MM_NUM_GPIOS] = {
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO1].addr,
-+                FSL_IMX8MM_GPIO1_LOW_IRQ,
-+                FSL_IMX8MM_GPIO1_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO2].addr,
-+                FSL_IMX8MM_GPIO2_LOW_IRQ,
-+                FSL_IMX8MM_GPIO2_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO3].addr,
-+                FSL_IMX8MM_GPIO3_LOW_IRQ,
-+                FSL_IMX8MM_GPIO3_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO4].addr,
-+                FSL_IMX8MM_GPIO4_LOW_IRQ,
-+                FSL_IMX8MM_GPIO4_HIGH_IRQ
-+            },
-+            {
-+                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO5].addr,
-+                FSL_IMX8MM_GPIO5_LOW_IRQ,
-+                FSL_IMX8MM_GPIO5_HIGH_IRQ
-+            },
-+        };
-+        object_property_set_bool(OBJECT(&s->gpio[i]), "has-edge-sel", true,
-+                                 &error_abort);
-+        object_property_set_bool(OBJECT(&s->gpio[i]), "has-upper-pin-irq",
-+                                 true, &error_abort);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio[i]), errp)) {
-+            return;
+ static const char * const riscv_intr_names[] = {
+-    "u_software",
+-    "s_software",
+-    "vs_software",
+-    "m_software",
+-    "u_timer",
+-    "s_timer",
+-    "vs_timer",
+-    "m_timer",
+-    "u_external",
+-    "s_external",
+-    "vs_external",
+-    "m_external",
+-    "reserved",
+-    "reserved",
+-    "reserved",
+-    "reserved"
++    [IRQ_U_SOFT] = "u_software",
++    [IRQ_S_SOFT] = "s_software",
++    [IRQ_VS_SOFT] = "vs_software",
++    [IRQ_M_SOFT] = "m_software",
++    [IRQ_U_TIMER] = "u_timer",
++    [IRQ_S_TIMER] = "s_timer",
++    [IRQ_VS_TIMER] = "vs_timer",
++    [IRQ_M_TIMER] = "m_timer",
++    [IRQ_U_EXT] = "u_external",
++    [IRQ_S_EXT] = "s_external",
++    [IRQ_VS_EXT] = "vs_external",
++    [IRQ_M_EXT] = "m_external",
++    [IRQ_S_GEXT] = "s_guest_external",
++    [IRQ_PMU_OVF] = "counter_overflow",
+ };
+ 
+ const char *riscv_cpu_get_trap_name(target_ulong cause, bool async)
+ {
+     if (async) {
+-        return (cause < ARRAY_SIZE(riscv_intr_names)) ?
+-               riscv_intr_names[cause] : "(unknown)";
++        if ((cause < ARRAY_SIZE(riscv_intr_names)) && riscv_intr_names[cause]) {
++            return riscv_intr_names[cause];
 +        }
+     } else {
+-        return (cause < ARRAY_SIZE(riscv_excp_names)) ?
+-               riscv_excp_names[cause] : "(unknown)";
++        if ((cause < ARRAY_SIZE(riscv_excp_names)) && riscv_excp_names[cause]) {
++            return riscv_excp_names[cause];
++        }
+     }
 +
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
-+                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_low));
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 1,
-+                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_high));
-+    }
-+
-     /* USDHCs */
-     for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
-         static const struct {
-@@ -423,6 +476,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_CCM:
-         case FSL_IMX8MM_GIC_DIST:
-         case FSL_IMX8MM_GIC_REDIST:
-+        case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
-         case FSL_IMX8MM_PCIE1:
-         case FSL_IMX8MM_PCIE_PHY1:
-         case FSL_IMX8MM_RAM:
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 3181c02574..4fe27b9575 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -12,6 +12,7 @@
++    return "(unknown)";
+ }
  
- #include "cpu.h"
- #include "hw/char/imx_serial.h"
-+#include "hw/gpio/imx_gpio.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
-@@ -30,6 +31,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
- 
- enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_CPUS         = 4,
-+    FSL_IMX8MM_NUM_GPIOS        = 5,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-@@ -40,6 +42,7 @@ struct FslImx8mmState {
- 
-     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
-     GICv3State         gic;
-+    IMXGPIOState       gpio[FSL_IMX8MM_NUM_GPIOS];
-     IMX8MPCCMState     ccm;
-     IMX8MPAnalogState  analog;
-     IMX7SNVSState      snvs;
-@@ -171,6 +174,17 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_UART3_IRQ    = 28,
-     FSL_IMX8MM_UART4_IRQ    = 29,
- 
-+    FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
-+    FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
-+    FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
-+    FSL_IMX8MM_GPIO2_HIGH_IRQ = 67,
-+    FSL_IMX8MM_GPIO3_LOW_IRQ  = 68,
-+    FSL_IMX8MM_GPIO3_HIGH_IRQ = 69,
-+    FSL_IMX8MM_GPIO4_LOW_IRQ  = 70,
-+    FSL_IMX8MM_GPIO4_HIGH_IRQ = 71,
-+    FSL_IMX8MM_GPIO5_LOW_IRQ  = 72,
-+    FSL_IMX8MM_GPIO5_HIGH_IRQ = 73,
-+
-     FSL_IMX8MM_PCI_INTA_IRQ = 122,
-     FSL_IMX8MM_PCI_INTB_IRQ = 123,
-     FSL_IMX8MM_PCI_INTC_IRQ = 124,
+ void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext)
 -- 
-2.34.1
+2.43.0
 
 
