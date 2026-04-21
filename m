@@ -4,75 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D79DF94CB0
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F0BCF94CB0
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFI4t-0004Jm-UQ; Tue, 21 Apr 2026 16:52:15 -0400
+	id 1wFIAU-0005RM-LZ; Tue, 21 Apr 2026 16:58:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wFI4q-0004GR-TM
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:52:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFIAS-0005Qq-Bh
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:58:00 -0400
+Received: from ci-2006b-snip4-2.eps.apple.com ([57.103.90.143]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wFI4m-0002lv-Mm
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:52:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776804725;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ea3zwc2wn3K95K/QjGVXD/jUPwnnNZC074GbjF9/bH0=;
- b=XVULFGWetAvBkVNclxzCwixyqUqJO8//vWVOltFhFUAaukCa5KYEzr5n7zYqNCjoGBukUk
- fTrpuue5KUEiyUPtC3nINZFVvF9vXxQziXQNEY41YheJXuBdTQyTueweeLnSgSJMNr2OXL
- iXWs38j/w0WgC8xpymciA6CYtQQOS48=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-hjgoLUJqMcSxwvF_8xCkkA-1; Tue,
- 21 Apr 2026 16:52:01 -0400
-X-MC-Unique: hjgoLUJqMcSxwvF_8xCkkA-1
-X-Mimecast-MFC-AGG-ID: hjgoLUJqMcSxwvF_8xCkkA_1776804720
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B558195605E; Tue, 21 Apr 2026 20:52:00 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.90])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F0B491800446; Tue, 21 Apr 2026 20:51:58 +0000 (UTC)
-Date: Tue, 21 Apr 2026 16:51:56 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "Jorge E. Moreira" <jemoreira@google.com>, hreitz@redhat.com,
- gmaglione@redhat.com, "Michael S . Tsirkin" <mst@redhat.com>,
- Hanna Czenczek <xanclic@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
- kick FDs
-Message-ID: <20260421205156.GB466778@fedora>
-References: <20260411021205.3592118-1-jemoreira@google.com>
- <aeYvCK2qhZd1W9sA@sgarzare-redhat>
- <CAGxU2F7=XQfc4PUEM=k5yc-tytRs-MkrRKFeRXAETVEY5eggZQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFIAQ-0004KA-CD
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:58:00 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-1 (Postfix) with ESMTPS id
+ 75F6B1804007; Tue, 21 Apr 2026 20:57:54 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXG1pDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAtIAVsHXwBBC0gGWgNSHEUMSAVdGlofHVYQUgBSD3IFVwhBCFMCUQRYGl8IGQ1AThkMSh1SVlEFSgxcAGgPXR1YEV0=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776805077; x=1779397077;
+ bh=AA2GyBDfQU9JiPZHjI7BgDdjKn1yOhmHMSXqZ30JiyU=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=bd0Gv01MnA+mBVjyZPqLi2pzfoqY37xR2k1AW/Q8ImbgO0XxPxD0xkRlbzq42PLKvbDb6eubgk6zCCbXyMRuA+wLyl3dwbYGplJI76L0F1TvQ0GC+RG5SKhmRbwRw1+4w6A1eBQA4WHutVJArrFLtgrG94PGS/mR2JQivWovJ8ICYXJ2rV6KTV19UnKH/sm6fCjnDN4Y0j40Cu+DTIBwFfO94lptWC29u00t7mzyyN3tlsxBuX1GUXZFLL+lRy430zQxpG7bwQGfaDbyza4bDAMqjQcKv5Ls2xzmAEa1QoimKYn3Pb5a1toCaXmU81NcHUhC1uJXJPlyXXPqoLMiMw==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-1 (Postfix) with ESMTPSA id
+ 7F0501802247; Tue, 21 Apr 2026 20:57:52 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] whpx: i386, arm: do partition reset on boot CPU reset
+Date: Tue, 21 Apr 2026 22:57:49 +0200
+Message-ID: <20260421205749.55060-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="x+H2wE6hLyK1WtYW"
-Content-Disposition: inline
-In-Reply-To: <CAGxU2F7=XQfc4PUEM=k5yc-tytRs-MkrRKFeRXAETVEY5eggZQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 7rGu11PmTAcn8WgmtzLL17amlyXhdUIa
+X-Authority-Info-Out: v=2.4 cv=e7MLiKp/ c=1 sm=1 tr=0 ts=69e7e4d3
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KtJ61neEzk59qg8Kb1kA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIxMDIwOCBTYWx0ZWRfX8qfa+kPDyCtz
+ tFjPIQLWlQTaBkL7bFxNKSfIwzGt0vmcQZsJBs6bIriGLplldrluF5FO086rIqxt8oNA+16iyK+
+ SynUlDJMS3mQrLySyKg6yddmgQWGaSwDtmAwKa2353+Tt1lqnvvXLoX9FWj/w7diHRrMP6Bmf+k
+ yG7ZNVeTs6dpBYqGwG2ky/OMrdqRzVbz2CxnyC8OyV4wMS02zjhSrtnP0IUWWZyqEUPK2ywab+Y
+ HdYAjfoJWXycwXBTok4+179ZdkjCojt5m4PX8N6DN9pkt9o3tx1du6/USgQc+025t1W4mEDPB9i
+ vAVu+DtGxCLJQzzM3PZdBLX8HqialoyV7ClS7BhiXJk0vIXgI6opLA4EiR17Y0=
+X-Proofpoint-ORIG-GUID: 7rGu11PmTAcn8WgmtzLL17amlyXhdUIa
+Received-SPF: pass client-ip=57.103.90.143;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,214 +83,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+WHvResetPartition resets partition state, and is not supported on Windows 10.
 
---x+H2wE6hLyK1WtYW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Arm, it's supposed to be used for reboots. The prior location of the
+WHvResetPartition call wasn't right, as other vCPUs might still have
+been running, causing the call to fail.
 
-On Mon, Apr 20, 2026 at 05:57:40PM +0200, Stefano Garzarella wrote:
-> On Mon, 20 Apr 2026 at 16:49, Stefano Garzarella <sgarzare@redhat.com> wr=
-ote:
-> >
-> > Thanks for starting the discussion here, let me add also Hanna, German,
-> > and Stefan in CC that can help us.
-> >
-> > On Fri, Apr 10, 2026 at 07:12:05PM -0700, Jorge E. Moreira wrote:
-> > >Migration of back-end state happens while the device is suspended (i.e
-> > >all vrings are stopped). To resume normal operation on the destination,
-> > >the vrings need to be started again with a kick (either a write on the
-> > >FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
-> >
-> > It's true that in the spec we have:
-> >    "Each ring is initialized in a stopped and disabled state. The
-> >    back-end must start a ring upon receiving a kick (that is, detecting
-> >    that file descriptor is readable) on the descriptor specified by
-> >    VHOST_USER_SET_VRING_KICK or receiving the in-band message
-> >    VHOST_USER_VRING_KICK if negotiated, and stop a ring upon receiving
-> >    VHOST_USER_GET_VRING_BASE."
-> >
-> > But IMO this applies when a driver is not yet loaded.
-> > When we are migrating, the driver could be already loaded. So, in the
-> > new device running in the destination, IMO we should consider the ring
-> > already started or add some messages to tell to the device: "hey, the
-> > device was already started, this is a migration and it's completed".
-> >
-> > Sending a kick from the frontend, seems more an hack here.
-> >
-> > That said, for example, in subprojects/libvhost-user/libvhost-user.c
-> > IIUC the virtqueue is started when the SET_VRING_KICK is handled by
-> > vu_set_vring_kick_exec(), but not sure how compliant it is.
-> >
-> > >these notifications are typically sent by the driver, it has no reason
-> > >to send them in the destination if it already sent them in the source =
-as
-> > >the driver is unaware that a migration took place. Therefore it should
-> > >be the responsibility of the vhost-user front-end to ensure these vrin=
-gs
-> > >are started. This is particularly necessary for queues where data only
-> > >flows from device to driver, such as those used by the vsock and input
-> > >devices.
-> >
-> > Exactly, so IMO we should not use the kick, but maybe add something new
-> > or clarify what to do after the migration.
-> >
-> > For example in the "Migrating back-end state" we have:
-> >    "Migrating device state involves transferring the state from one
-> >    back-end, called the source, to another back-end, called the
-> >    destination. After migration, the destination transparently resumes
-> >    operation without requiring the driver to re-initialize the device at
-> >    the VIRTIO level."
-> >
-> > So, IMO we can use the VHOST_USER_SET_DEVICE_STATE_FD channel exactly to
-> > inform the new device about the state: "there isn't any state to
-> > transfer, but I notify you that the device was already initialized, so
-> > the vrings can be started".
-> >
-> > >
-> > >This behavior is already used by some qemu vhost-user front-ends (e.g
-> > >vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm=
-).
-> >
-> > I looked at vhost-user-blk frontend, but I don't see it. I mean I see
-> > the code around the comment "/* Kick right away to begin processing
-> > requests already in vring */" but that one IIUC was introduced more to
-> > fix devices violating specs, so not sure it's a good example to follow:
-> >
-> > commit 110b9463d5c820120c8311db79f55a64c9d81ebe
-> > Author: Yongji Xie <elohimes@gmail.com>
-> > Date:   Wed Jun 6 21:24:48 2018 +0800
-> >
-> >      vhost-user-blk: start vhost when guest kicks
-> >
-> >      Some old guests (before commit 7a11370e5: "virtio_blk: enable VQs =
-early")
-> >      kick virtqueue before setting VIRTIO_CONFIG_S_DRIVER_OK. This viol=
-ates
-> >      the virtio spec. But virtio 1.0 transitional devices support this =
-behaviour.
-> >      So we should start vhost when guest kicks in this case.
-> >
-> >      Signed-off-by: Yongji Xie <xieyongji@baidu.com>
-> >      Signed-off-by: Chai Wen <chaiwen@baidu.com>
-> >      Signed-off-by: Ni Xun <nixun@baidu.com>
-> >      Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> >      Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> >      Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> >
-> >
-> > >Adding it to the vhost-user documentation makes it explicit that this
-> > >strategy is permitted and suggest it to vhost-user front-end authors.
-> > >Explicitly documenting it is necessary because vring kicks appear
-> > >designed to originate in the driver, so having some originate in the
-> > >front-end can be counterintuitive and cause developers to waste time
-> > >looking for other alternatives or face pushback during code review.
-> >
-> > As I pointed out in our discussion in
-> > https://github.com/rust-vmm/vhost-device/pull/936
-> > IMO we should use some in-band messages and not relaying on kicks that
-> > should be used only by the driver to notify the device about new
-> > available buffers.
-> >
-> > That said, I agree that we need to clarify in the specifications exactly
-> > what the backend and frontend should do after a migration to start
-> > vrings if there is no need to exchange a state.
-> >
-> >
-> > Any other opinion?
-> >
-> > Thanks,
-> > Stefano
-> >
-> > >
-> > >Signed-off-by: Jorge E. Moreira <jemoreira@google.com>
-> > >---
-> > > docs/interop/vhost-user.rst | 5 ++++-
-> > > 1 file changed, 4 insertions(+), 1 deletion(-)
-> > >
-> > >diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-> > >index 137c9f3669..ad5aba3430 100644
-> > >--- a/docs/interop/vhost-user.rst
-> > >+++ b/docs/interop/vhost-user.rst
-> > >@@ -656,7 +656,10 @@ destination, following the usual protocol for est=
-ablishing a connection
-> > > to a vhost-user back-end: This includes, for example, setting up memo=
-ry
-> > > mappings and kick and call FDs as necessary, negotiating protocol
-> > > features, or setting the initial vring base indices (to the same value
-> > >-as on the source side, so that operation can resume).
-> > >+as on the source side, so that operation can resume). The vhost-user =
-front-end
-> > >+may also write to the kick FDs of vrings containing unused buffers or=
- send
-> > >+``VHOST_USER_VRING_KICK`` if negotiated to start those vrings in the =
-destination
-> > >+since the driver likely already kicked them in the source and won't d=
-o it again.
->=20
-> After discussing this with Hanna, we came to the conclusion that your
-> idea of injecting the kick is the least invasive option for now and
-> complies with the spec (even though I still don=E2=80=99t think it=E2=80=
-=99s a nice
-> thing to do).
->=20
-> So it=E2=80=99s fine to continue in this direction, but I might add these
-> words more in the "Migration" section than here, since we=E2=80=99re talk=
-ing
-> about an optional state migration here. For example after "No further
-> update must be done before rings are restarted."
-> Or in the "Ring states" section, where we can clarify how to restart a
-> ring after a migration. Or in both :-)
->=20
-> WDYT?
->=20
-> Then instead of "may" I'd use "should". And I would refer to the fact
-> that migration is transparent to the driver, so the front-end should
-> kick all initialized vrings to comply with what we described in the
-> "Ring states" section.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ accel/accel-system.c       |  9 +++++++++
+ accel/whpx/whpx-common.c   | 13 +++++++++++++
+ include/accel/accel-ops.h  |  1 +
+ include/qemu/accel.h       |  3 +++
+ system/runstate.c          |  5 +++++
+ target/arm/whpx/whpx-all.c |  2 --
+ 6 files changed, 31 insertions(+), 2 deletions(-)
 
-I don't agree. Here is my thinking about how to solve this:
-
-Device state migration uses the ring state machine to suspend the device
-on the source host and start rings on the destination host after loading
-state.
-
-Starting rings is not specific to migration, it is covered by the ring
-state machine that's also used when pausing and resuming a VM locally,
-for example. We need to fix the ring state machine section in the spec
-rather than making changes to the migration or device state fd sections.
-
-Given that there are vhost-user back-ends like DPDK that do not rely on
-the kick fd (they do not use it when running in poll mode), injecting a
-kick cannot be necessary. Adding anything to the spec that requires the
-kick fd is at best a no-op and at worst could break those back-ends.
-
-The spec must be updated to say that rings are started by
-VHOST_USER_SET_KICK, which is what implementations already do today.
-
-If you want to add a note that front-ends may send a kick after
-VHOST_USER_SET_KICK completes to ensure that rings are started according
-to the old spec wording, then that is fine, but it should be clear that
-kicks are not the primary mechanism for starting rings since it would be
-dangerous to rely on that (it breaks poll-mode back-ends).
-
-Stefan
-
---x+H2wE6hLyK1WtYW
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnn42wACgkQnKSrs4Gr
-c8jkrwf/cob9xsroEpQ0UddOzBiA+00v3ChYaIuQ7LOF/u5pa+IP+c7eesBaHhGo
-+EOXkldnWs9PTPu7JHCTe+FjbFFACgNMG6nQrn6TuJUToyYYei/2JCBwvE3h8sgx
-D4ScwbnAttcTVyVvxKO8h0To98aZM4ED/V6lz4oVhjNbc1SoqH4ev2zeBqm+VBIb
-ejQKOGkKPGNPTzamA15uT6yQjqlZo4aeOUlCPFelt7FuLseGDTOkwMppWRo3zOJb
-tRWfqWdqdLRIkz4c9AWk9ybFyS/rVnHBpw/FyibHog/Xzdmi8EfUtcibGTbskdkB
-g2Zd5qQYXYYWB5EZEeEZjxefHxovoQ==
-=DPvm
------END PGP SIGNATURE-----
-
---x+H2wE6hLyK1WtYW--
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 150af05bf5..5352ccd937 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -75,6 +75,15 @@ void accel_pre_resume(MachineState *ms, bool step_pending)
+     }
+ }
+ 
++void accel_reset(MachineState *ms)
++{
++    AccelState *accel = ms->accelerator;
++    AccelClass *acc = ACCEL_GET_CLASS(accel);
++    if (acc->reset_vm) {
++        acc->reset_vm(accel);
++    }
++}
++
+ /* initialize the arch-independent accel operation interfaces */
+ void accel_init_ops_interfaces(AccelClass *ac)
+ {
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 6fe44d5910..1f7b7d764d 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -205,6 +205,18 @@ static void do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
+     cpu->vcpu_dirty = true;
+ }
+ 
++/*
++ * Partition support
++ */
++
++static void whpx_partition_reset(AccelState* as)
++{
++    struct whpx_state *whpx = &whpx_global;
++    if (whp_dispatch.WHvResetPartition) {
++        whp_dispatch.WHvResetPartition(whpx->partition);
++    }
++}
++
+ /*
+  * CPU support.
+  */
+@@ -622,6 +634,7 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+     ac->name = "WHPX";
+     ac->init_machine = whpx_accel_init;
+     ac->pre_resume_vm = whpx_pre_resume_vm;
++    ac->reset_vm = whpx_partition_reset;
+     ac->allowed = &whpx_allowed;
+ 
+     object_class_property_add(oc, "kernel-irqchip", "on|off|split",
+diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
+index f46492e3fe..a1c9f3ae7b 100644
+--- a/include/accel/accel-ops.h
++++ b/include/accel/accel-ops.h
+@@ -33,6 +33,7 @@ struct AccelClass {
+     /* system related hooks */
+     void (*setup_post)(AccelState *as);
+     void (*pre_resume_vm)(AccelState *as, bool step_pending);
++    void (*reset_vm)(AccelState *as);
+     bool (*has_memory)(AccelState *accel, AddressSpace *as,
+                        hwaddr start_addr, hwaddr size);
+ 
+diff --git a/include/qemu/accel.h b/include/qemu/accel.h
+index d3638c7bfd..0e12aea7db 100644
+--- a/include/qemu/accel.h
++++ b/include/qemu/accel.h
+@@ -54,6 +54,9 @@ void accel_setup_post(MachineState *ms);
+ 
+ void accel_pre_resume(MachineState *ms, bool step_pending);
+ 
++/* Reset accelerator state. */
++void accel_reset(MachineState *ms);
++
+ /**
+  * accel_cpu_instance_init:
+  * @cpu: The CPU that needs to do accel-specific object initializations.
+diff --git a/system/runstate.c b/system/runstate.c
+index 2d4e95a216..734e3c037c 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -564,6 +564,11 @@ void qemu_system_reset(ShutdownCause reason)
+         qapi_event_send_reset(shutdown_caused_by_guest(reason), reason);
+     }
+ 
++    if (current_machine) {
++        /* Tell the accelerator that the VM is being reset. */
++        accel_reset(current_machine);
++    }
++
+     /*
+      * Some boards use the machine reset callback to point CPUs to the firmware
+      * entry point.  Assume that this is not the case for boards that support
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 4019a513aa..f345fea4fe 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -472,8 +472,6 @@ int whpx_vcpu_run(CPUState *cpu)
+             if (arm_cpu->power_state != PSCI_OFF) {
+                 whpx_psci_cpu_off(arm_cpu);
+             }
+-            /* Partition-wide reset, to reset state for reboots to succeed. */
+-            whp_dispatch.WHvResetPartition(whpx->partition);
+             bql_unlock();
+             break;
+         case WHvRunVpExitReasonNone:
+-- 
+2.50.1 (Apple Git-155)
 
 
