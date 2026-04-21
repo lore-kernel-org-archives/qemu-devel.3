@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A61A9F94CA7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74736F94CAC
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFHbI-00010z-Uh; Tue, 21 Apr 2026 16:21:40 -0400
+	id 1wFHbI-00010y-N4; Tue, 21 Apr 2026 16:21:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHb7-0000x8-2U
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHbB-0000xt-6h
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHb5-0008Qg-5M
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:28 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHb9-0008Rb-DR
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776802886;
+ s=mimecast20190719; t=1776802890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aXWd2xheC1/z+v9Law34/KvsAvj1ejFluJIlYRzmNs4=;
- b=Slh5Exd59MHcJXu6QD3NqbJTHhbrsITtF6zcVd9M2CxeSv9elrUZTfHdgjaQsERc1xc4Ng
- BUAGbOL64rHn/V+tHuRmbF/onTYBb1Kqobtw8y+1Zyzva5kcUG+0k9R1LuqC88Ad+n8uw2
- sZsRjgu1nYku93fqrq41wCQTumUnz2s=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zyCQ0G6YIo2w22cNA+aGKrtBN8bxCdOvHJsgQDrXsUI=;
+ b=KQ8DF3R/IEKf8XwXg+0n8Rm0QdN0nHfSb2VYnVOwBsn694pISZuSNYEcFeGd3N/rtZnRvB
+ 9eL2FG29ZnHBlHU+onF1fzdTRDr2K+H8CfVje7PHnX+i7UmD0f0bn/TJ4m9mF5p0lBh1Sx
+ aaRAPHkfFhURr5MaIQEj0BRstp2LVyk=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-247-z636bWEuPiegWh0oc0GkHA-1; Tue, 21 Apr 2026 16:21:24 -0400
-X-MC-Unique: z636bWEuPiegWh0oc0GkHA-1
-X-Mimecast-MFC-AGG-ID: z636bWEuPiegWh0oc0GkHA_1776802884
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8aca154e2b5so18598166d6.2
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 13:21:24 -0700 (PDT)
+ us-mta-544-jexQ8lLwPkuCz7eSybJSuA-1; Tue, 21 Apr 2026 16:21:29 -0400
+X-MC-Unique: jexQ8lLwPkuCz7eSybJSuA-1
+X-Mimecast-MFC-AGG-ID: jexQ8lLwPkuCz7eSybJSuA_1776802889
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8aca6f796d5so78637766d6.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 13:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776802883; x=1777407683; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776802888; x=1777407688; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aXWd2xheC1/z+v9Law34/KvsAvj1ejFluJIlYRzmNs4=;
- b=DMK/LoR5qNDm5T3yDxBTHsvTCQzl3FZVHmn1zAs8M7KzJOpQiht11EPXdHPJVMhBO6
- FO5WmDq3jVdaUhz0L7gOeQw6qRuWT/J+K5OoBdTXnElmj4+Va8Is+B56TdXYB4AfPgIm
- eyLftYcZwRUp4FQBvWF7ZUQTHHQTlBb7nbg5RRtbzNlpgZjI0xUy9UuWOrpzSR5GCH9z
- 2OClUMQcn/JrPfopOaCojauQwIAjA93HPr7gh2CW/QIXwUeF7mhtNWo6IzmRMqNjSBsB
- 9/qE9KVMwcu5aWwitdyp+j/V7PY+z98PHRTN34ngGzde6dTaJ+MAjkmLycdwmACg8Crz
- lZJw==
+ bh=zyCQ0G6YIo2w22cNA+aGKrtBN8bxCdOvHJsgQDrXsUI=;
+ b=nYLQ90EBhYSbSvUkcfq/KLtwRF8jBhalbwe8xgMXWPTIL66mwJ8HGehKIPWwJ8NkKE
+ JxsvpSTOsp/b3esGCVDL60+gHOIJAnNytknNEaLREs0U7PeHxU3SVJb6CK3ur8Aovfp4
+ eWDIQJ/PxoJ40HAoio9CgyzMIMhwuuSRX5mX/apIkUGlD+E4KIUQhX6pjfz+j/JEMdbm
+ rJxATpKcqkTnUXbgQ0gXII3yqp/CJagLYTYHiSwkgCme0m3TXyHQlq7zztDOqG/C5ub1
+ 1bSS/KjXrfUodIPSuXFytOHPpBPn9vbI1Je0EuD5kK1N6fvi8RvqGN3hskJmTA5j0nnD
+ /UyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776802883; x=1777407683;
+ d=1e100.net; s=20251104; t=1776802888; x=1777407688;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=aXWd2xheC1/z+v9Law34/KvsAvj1ejFluJIlYRzmNs4=;
- b=tPJc78gO+JbWFSBV6UBAp/tsI4DYmzIb4Ouii24e+/Elc8AHv9+bRKJxtd4T7MSZ2P
- 4WYquCrpZ736tw8saPOsn2ct7OE/gYrLb7z+p7yOwqEhVM9Ebk5OXPaTz6ISpnMgUkTR
- 2EvUW7W3sKt8jy6hJfMzH6R7jDWQGfaocj5f9yRHeNBRBDfSpLch26ZU+i+JBRE85kJS
- n1GgSCpD1DcD40zM/vz/tihuJypZSOYaB6fYyVwbNzN94aXH9gSsNQfO3vp0w8RQm8GQ
- kMkBULLpWe1KeHpJ+3hu10HeOYDqg4tF/tbftbCAoyEgCsu3P9W/anchFW69VC3l7e2E
- 8XVg==
-X-Gm-Message-State: AOJu0Yzt7tgFwFCSUft8v5C/220GtymJ5JRXgGF/lDU+02gcj2gXbrc4
- YG2LL41o7F5cTKpOo8WZ66+boJ6MO+U20gcWznzU5Q6J5hebuxa9zltQFJeQxPB0qFPt2k+QfVI
- IoFJkqftGdgVuj36D7lu68+Q63mha7CdD8Twhpzf4hTiIFssdF04s1C1LScqMFgLU1oqSLbm0bZ
- L/AnE2ZHK9qG7LkDXwY5QGiF050LfIrjtMZST0LQ==
-X-Gm-Gg: AeBDiev4Qx6N2f8KVpwgAmwmuLKx9d1hOpy/wLnLTCR838MvrylQ7tYvRe4sr2UYjG3
- dCyI7hVe94Y9EUQzwMjph/K7T4gYf4aSFFfhSc5cHdMFxH5mCph7S59LnZewEW/5ut0zbPa6+LL
- m+6phDfTFG4Y6CxbpaRMDRfUYJWV5A1IwcAafcQPNE9hIL4zx7DfPhZS8Dtg/WtR0+GJZX2h2+N
- H8txGmJlBZp0hPk7lSkRytSuDtJOl2VU9iWZlEZz17v7vljTtgm7ZC5qJvtnH1Zmh4dTCf5YpMy
- 3E7Tge7gviplaxEKtNbOAYG+PIQ7M2apifAey9b0kUbloW5COsD02diaH/uDyzT2a2vS/0loCb3
- 5lipbBWt/eTeovrZbx/jrsWwbxa1qIqTKj/o9gmHdn/B8XFhbLGURYVXjFA==
-X-Received: by 2002:a05:6214:598c:b0:8ac:b6d7:e60e with SMTP id
- 6a1803df08f44-8b027fd9d4amr316352556d6.7.1776802883390; 
- Tue, 21 Apr 2026 13:21:23 -0700 (PDT)
-X-Received: by 2002:a05:6214:598c:b0:8ac:b6d7:e60e with SMTP id
- 6a1803df08f44-8b027fd9d4amr316351876d6.7.1776802882837; 
- Tue, 21 Apr 2026 13:21:22 -0700 (PDT)
+ bh=zyCQ0G6YIo2w22cNA+aGKrtBN8bxCdOvHJsgQDrXsUI=;
+ b=MVN1wICCpsHlbaCEodk5B506m2DlZe4Yk23XXTGNtedIpl5dyKZxrZUdtzvNlCwi2f
+ iSVh7cNvzveaB11zQbIbLSMcUfYbPFRwZao9Pe5LhbkSuDN2ncK2MKW3mm9H1w42XLFq
+ KmakjSn9BjHJL4PNJ7bEX9pHqUbTPFGnyzQpWZW8c9u7eqnHpMAtOewHBSvdhPNUr3qX
+ H0WaTRi0wHjo0xvW4f4SfNPD6w0moBo8w4VztE1p54PXmRhdhURV8xVAFypEJnhKUd0G
+ RAqndTeQNZtd4slzOc40z5JztT4cSylI/t0cw+Go33/9KHFSfKOYuO/5bjfw3KOJHPBa
+ EDUw==
+X-Gm-Message-State: AOJu0YwY9liU+dA9wvtcIHPKLzaPdYsJ/+ZDjlxbcJN+eTDWGQr7C/JP
+ LYcmEzgUOgTjbT0U1BAox3EYizHHkBAGFA3pnRBE6C0etPxTEbHDB9Ry3RU4dve0AdofmbJDqCA
+ pBZ6Qc+2KhL1i7PK/ASZtXDeZq0m6Jlh+7tiJc5paVAStFoknNmtg51A06LAVVS6xA2H6q/QdFV
+ yIatpFZH6biAlHFcfoY6eBvPRM9AmH4oR/X2gKQw==
+X-Gm-Gg: AeBDiesksd/3oaoYPsHorLRU7SMcSdGPd6qjB12VPiLp8udBgoBw4iT+LK9WtjKAkpc
+ MiwB2jmFOyFFU2pWo0ZPC4i2kvoyJU0qufhiqEn1SFs+m3sr1A9ScTMGWwfavfQUuAj7FJcbOvN
+ B8uwo1nSwW9fHjbhDuBEzXQ6/EvxNZFNeqRijNhDxphXct9y7BAGoncDIR5n+62MbXZDszYKGgm
+ W1Yc5J+GzyBBoauouHB4loaWfgnnODVCujc6FaQMDmWaef0a9cSvrZXa11Vz6r6WgAqv1e6zhNt
+ YFFCV8bE/ZxhC+TxuUYxeQjvLiO5nYLbu8SH6bY7gNMwBESvCY+p585IrZgCHM/pGQKfC1dqycT
+ quYosyFU/OXGxlRT9PVmO855ximiF84gBRECFg+e2rqR/vAr0DRS7/OkM3w==
+X-Received: by 2002:a05:6214:d47:b0:89c:8a0f:55a0 with SMTP id
+ 6a1803df08f44-8b0280923demr315154236d6.16.1776802888418; 
+ Tue, 21 Apr 2026 13:21:28 -0700 (PDT)
+X-Received: by 2002:a05:6214:d47:b0:89c:8a0f:55a0 with SMTP id
+ 6a1803df08f44-8b0280923demr315153596d6.16.1776802887829; 
+ Tue, 21 Apr 2026 13:21:27 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ae5c26csm114343556d6.31.2026.04.21.13.21.21
+ 6a1803df08f44-8b02ae5c26csm114343556d6.31.2026.04.21.13.21.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 13:21:22 -0700 (PDT)
+ Tue, 21 Apr 2026 13:21:27 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Joao Martins <joao.m.martins@oracle.com>,
@@ -92,25 +92,25 @@ Cc: Joao Martins <joao.m.martins@oracle.com>,
  Alex Williamson <alex@shazbot.org>, Kirti Wankhede <kwankhede@nvidia.com>,
  Zhiyi Guo <zhguo@redhat.com>, Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 06/16] migration: Use the new save_query_pending() API
- directly
-Date: Tue, 21 Apr 2026 16:21:00 -0400
-Message-ID: <20260421202110.306051-7-peterx@redhat.com>
+ Juraj Marcin <jmarcin@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v2 09/16] migration: Move iteration counter out of RAM
+Date: Tue, 21 Apr 2026 16:21:03 -0400
+Message-ID: <20260421202110.306051-10-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260421202110.306051-1-peterx@redhat.com>
 References: <20260421202110.306051-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,139 +126,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's easier to use the new API directly in the migration iterations.  This
-also paves way for follow up patches to add new data to report directly to
-the iterator function.
+It used to hide in RAM dirty sync path.  Now with more modules being able
+to slow sync on dirty information, keeping it there may not be good anymore
+because it's not RAM's own concept for iterations: all modules should
+follow.
 
-When at it, merge the tracepoints too into one.
+More importantly, mgmt may try to query dirty info (to make policy
+decisions like adjusting downtime) by listening to iteration count changes
+via QMP events.  So we must make sure the boost of iterations only happens
+_after_ the dirty sync operations with whatever form (RAM's dirty bitmap
+sync, or VFIO's different ioctls to fetch latest dirty info from kernel).
 
-No functional change intended.
+Move this to core migration path to manage, together with the event
+generation, so that it can be well ordered with the sync operations for all
+modules.
 
+This brings a good side effect that we should have an old issue regarding
+to cpu_throttle_dirty_sync_timer_tick() which can randomly boost iteration
+counts (because it invokes sync ops).  Now it won't, which is actually the
+right behavior.
+
+Said that, we have code (not only QEMU, but likely mgmt too) assuming the
+1st iteration will always shows dirty count to 1.  Make it initialized with
+1 this time, because we'll miss the dirty sync for setup() on boosting this
+counter now.
+
+Reviewed-by: Hyman Huang <yong.huang@smartx.com>
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/savevm.h     |  4 ----
- migration/migration.c  | 16 +++++++---------
- migration/savevm.c     | 23 ++---------------------
- migration/trace-events |  3 +--
- 4 files changed, 10 insertions(+), 36 deletions(-)
+ migration/migration-stats.h |  3 ++-
+ migration/migration.c       | 29 ++++++++++++++++++++++++++---
+ migration/ram.c             |  6 ------
+ 3 files changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/migration/savevm.h b/migration/savevm.h
-index e4efd243f3..96fdf96d4e 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -46,10 +46,6 @@ void qemu_savevm_state_cleanup(void);
- void qemu_savevm_state_complete_postcopy(QEMUFile *f);
- int qemu_savevm_state_complete_precopy(MigrationState *s);
- void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
--void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
--                                     uint64_t *can_postcopy);
--void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
--                                        uint64_t *can_postcopy);
- int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
- bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
- void qemu_savevm_state_end(QEMUFile *f);
+diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+index 1153520f7a..326ddb0088 100644
+--- a/migration/migration-stats.h
++++ b/migration/migration-stats.h
+@@ -43,7 +43,8 @@ typedef struct {
+      */
+     uint64_t dirty_pages_rate;
+     /*
+-     * Number of times we have synchronized guest bitmaps.
++     * Number of times we have synchronized guest bitmaps.  This always
++     * starts from 1 for the 1st iteration.
+      */
+     uint64_t dirty_sync_count;
+     /*
 diff --git a/migration/migration.c b/migration/migration.c
-index dfc60372cf..68cfe2d3bf 100644
+index 4b54fda4d7..e3f82baaac 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -3204,17 +3204,17 @@ typedef enum {
-  */
- static MigIterateState migration_iteration_run(MigrationState *s)
+@@ -1654,10 +1654,15 @@ int migrate_init(MigrationState *s, Error **errp)
+     s->threshold_size = 0;
+     s->switchover_acked = false;
+     s->rdma_migration = false;
++
+     /*
+-     * set mig_stats memory to zero for a new migration
++     * set mig_stats memory to zero for a new migration.. except the
++     * iteration counter, which we want to make sure it returns 1 for the
++     * first iteration.
+      */
+     memset(&mig_stats, 0, sizeof(mig_stats));
++    mig_stats.dirty_sync_count = 1;
++
+     migration_reset_vfio_bytes_transferred();
+ 
+     s->postcopy_package_loaded = false;
+@@ -3230,10 +3235,28 @@ static bool migration_iteration_next_ready(MigrationState *s,
+ static void migration_iteration_go_next(MigPendingData *pending)
  {
--    uint64_t must_precopy, can_postcopy, pending_size;
-     Error *local_err = NULL;
-     bool in_postcopy = (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
-                         s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
-     bool can_switchover = migration_can_switchover(s);
-+    MigPendingData pending = { };
-+    uint64_t pending_size;
-     bool complete_ready;
- 
-     /* Fast path - get the estimated amount of pending data */
--    qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
--    pending_size = must_precopy + can_postcopy;
--    trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
-+    qemu_savevm_query_pending(&pending, false);
-+    pending_size = pending.precopy_bytes + pending.postcopy_bytes;
- 
-     if (in_postcopy) {
-         /*
-@@ -3243,14 +3243,12 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-          * during postcopy phase.
-          */
-         if (pending_size <= s->threshold_size) {
--            qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
--            pending_size = must_precopy + can_postcopy;
--            trace_migrate_pending_exact(pending_size, must_precopy,
--                                        can_postcopy);
-+            qemu_savevm_query_pending(&pending, true);
-+            pending_size = pending.precopy_bytes + pending.postcopy_bytes;
-         }
- 
-         /* Should we switch to postcopy now? */
--        if (must_precopy <= s->threshold_size &&
-+        if (pending.precopy_bytes <= s->threshold_size &&
-             can_switchover && qatomic_read(&s->start_postcopy)) {
-             if (postcopy_start(s, &local_err)) {
-                 migrate_error_propagate(s, error_copy(local_err));
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 392d840955..397f602257 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1778,28 +1778,9 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
-         }
-         se->ops->save_query_pending(se->opaque, pending, exact);
-     }
--}
--
--void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
--                                        uint64_t *can_postcopy)
--{
--    MigPendingData pending;
--
--    qemu_savevm_query_pending(&pending, false);
--
--    *must_precopy = pending.precopy_bytes;
--    *can_postcopy = pending.postcopy_bytes;
--}
--
--void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
--                                     uint64_t *can_postcopy)
--{
--    MigPendingData pending;
--
--    qemu_savevm_query_pending(&pending, true);
- 
--    *must_precopy = pending.precopy_bytes;
--    *can_postcopy = pending.postcopy_bytes;
-+    trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
-+                                    pending->postcopy_bytes);
+     /*
+-     * Do a slow sync will achieve this.  TODO: move RAM iteration code
+-     * into the core layer.
++     * Do a slow sync first before boosting the iteration count.
+      */
+     qemu_savevm_query_pending(pending, true);
++
++    /*
++     * Boost dirty sync count to reflect we finished one iteration.
++     *
++     * NOTE: we need to make sure when this happens (together with the
++     * event sent below) all modules have slow-synced the pending data
++     * above.  That means a write mem barrier, but qatomic_add() should be
++     * enough.
++     *
++     * It's because a mgmt could wait on the iteration event to query again
++     * on pending data for policy changes (e.g. downtime adjustments).  The
++     * ordering will make sure the query will fetch the latest results from
++     * all the modules.
++     */
++    qatomic_add(&mig_stats.dirty_sync_count, 1);
++
++    if (migrate_events()) {
++        qapi_event_send_migration_pass(mig_stats.dirty_sync_count);
++    }
  }
  
- void qemu_savevm_state_cleanup(void)
-diff --git a/migration/trace-events b/migration/trace-events
-index 60e5087e38..f8995b8d0d 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -7,6 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
- qemu_loadvm_state_post_main(int ret) "%d"
- qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
- qemu_savevm_send_packaged(void) ""
-+qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t postcopy) "exact=%d, precopy=%"PRIu64", postcopy=%"PRIu64
- loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
- loadvm_state_setup(void) ""
- loadvm_state_cleanup(void) ""
-@@ -159,8 +160,6 @@ migration_cleanup(void) ""
- migrate_error(const char *error_desc) "error=%s"
- migration_cancel(void) ""
- migrate_handle_rp_req_pages(const char *rbname, size_t start, size_t len) "in %s at 0x%zx len 0x%zx"
--migrate_pending_exact(uint64_t size, uint64_t pre, uint64_t post) "exact pending size %" PRIu64 " (pre = %" PRIu64 " post=%" PRIu64 ")"
--migrate_pending_estimate(uint64_t size, uint64_t pre, uint64_t post) "estimate pending size %" PRIu64 " (pre = %" PRIu64 " post=%" PRIu64 ")"
- migrate_send_rp_message(int msg_type, uint16_t len) "%d: len %d"
- migrate_send_rp_recv_bitmap(char *name, int64_t size) "block '%s' size 0x%"PRIi64
- migration_completion_file_err(void) ""
+ static bool postcopy_should_start(MigrationState *s, MigPendingData *pending)
+diff --git a/migration/ram.c b/migration/ram.c
+index e5b7217bf5..686162643d 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1136,8 +1136,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+     RAMBlock *block;
+     int64_t end_time;
+ 
+-    qatomic_add(&mig_stats.dirty_sync_count, 1);
+-
+     if (!rs->time_last_bitmap_sync) {
+         rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+     }
+@@ -1172,10 +1170,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+         rs->num_dirty_pages_period = 0;
+         rs->bytes_xfer_prev = migration_transferred_bytes();
+     }
+-    if (migrate_events()) {
+-        uint64_t generation = qatomic_read(&mig_stats.dirty_sync_count);
+-        qapi_event_send_migration_pass(generation);
+-    }
+ }
+ 
+ void migration_bitmap_sync_precopy(bool last_stage)
 -- 
 2.53.0
 
