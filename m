@@ -4,110 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4811CF8FA9E
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 17:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA2CF8FA9E
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 17:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFEWI-00076B-KC; Tue, 21 Apr 2026 13:04:19 -0400
+	id 1wFEtK-0003pm-1r; Tue, 21 Apr 2026 13:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wFEW9-00075O-1d; Tue, 21 Apr 2026 13:04:09 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wFEW6-0008Ch-4X; Tue, 21 Apr 2026 13:04:08 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63LC6kB61685005; Tue, 21 Apr 2026 17:04:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=uH2evu
- zEgFTDw9yUuGAR/4doWBysVHrK09HuDXPmpRg=; b=ZHqkcmwl5MTWu5+BaPEQfU
- /pNiRQZqhuJAXnrHbI8cQb3oB4JEO7X9u/hJE8nVFhdT5UbaN7C6wHmnhYI6u3uP
- gYfSGUam3/kFAc0wyq9gICpIMZt3jcmmzL85kC2RDXdXLK2xoWDpB1fg3h7zvh4V
- zGJPzr6ZekyUw0eqIvcYq51Z+pPfBj450MFScWwqCPoBzzB75b6L5L/CsfNm4gMX
- qoHTaRBchk10YCNsjg2DXwlvauKLOC4FvznZpZHNM3g7oPGc0YipZlpVFcnYvK/g
- E4aNkvCxONTWB9SHXx1+qjqvX2KsI6LulGy4wxl4Pn5Y74n+DKsSyx26PhVhIonQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2j6ndr1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Apr 2026 17:04:01 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63LGoEPe019025;
- Tue, 21 Apr 2026 17:04:00 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dmm9q1r82-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Apr 2026 17:04:00 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63LH3x5N30474806
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Apr 2026 17:03:59 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 53E7C58062;
- Tue, 21 Apr 2026 17:03:59 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A44AB58052;
- Tue, 21 Apr 2026 17:03:58 +0000 (GMT)
-Received: from [9.61.174.150] (unknown [9.61.174.150])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 21 Apr 2026 17:03:58 +0000 (GMT)
-Message-ID: <98ef16d1-2446-40cd-9d14-6793caba7dc4@linux.ibm.com>
-Date: Tue, 21 Apr 2026 13:03:58 -0400
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wFEsw-0003lL-NC
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:27:51 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wFEsv-0006ge-2D
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 13:27:42 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-4670464029eso2406273b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 10:27:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776792459; x=1777397259; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2eIWcEVbGT2Bkdbdk0f71Ip+HemYRMLHjbbivqGNFTc=;
+ b=Ff2kxor5bi9jt0ZOS4tIc56xm5uwZbOYW+4p2tqHd7vRZyvK7ZET+oC/fsDCIOyW4p
+ uqC6CUiB/c4q+ZlZZRPUhHOmE8Dd5pFvznYhkb/x2HfM1flV8XMspg2IOIzhIKUkuYhq
+ gm0/eSQpuGIlBcogs08/98dyDY1FvxdzUcTYrGE/M00NKWke6Ueu+ODwXaYlhWYgmjPr
+ xRwwTvrRclwhy995TqLDWOy3jPl7r6cS8aCgUom5mFZXYbHDOwBp7bd8eFUG3aOKNhR9
+ 2HbbwqxasHFfggx399V02Slxc20jzRrZbb6hVKcQiaFaY+i7e1bZznPn/ccOWXlgzsWE
+ ygSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776792459; x=1777397259;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2eIWcEVbGT2Bkdbdk0f71Ip+HemYRMLHjbbivqGNFTc=;
+ b=KCcVkSvKbn1h067z/pvVgT4fPCDdFiwfWHWOYWQ0gqijaabWtlkURADy71IQ6pzyZm
+ OQd+sKsYZbBE8/ilhC+Du85lGlIGnxIvhhMB20rsE/gmc15b8ynPTcEx6LwUBTIC5W/h
+ oM8EpGYmr4upnpYMUiFJSAS0ej6QSJ/pZ8vk4ch3EajXRQ2ypJ19nfGSCAISxfDwSl8W
+ iaaPqo9EujEYv/9duHc5AzO9Y0PTt8kbJfY5JFV6dc02CX2cfmrppX4jbt8odSB21WzE
+ 9S/fSjdImqrtMrXCIsGyZ2tc6F6A7H73Gd9CrYTJXOGWN5+ofFpoAEeXzFQsnwi6hywU
+ 9kxw==
+X-Gm-Message-State: AOJu0Yxjho9+boCjCRZi8tNsRaAlq1JEvLxdfodLb+540ymZRZZnKmw7
+ FrcKdy90Ws7YsHykX/4TYxD4NgvjYwy2QPzxbZ1u7AeEdvW78wCIHRNV
+X-Gm-Gg: AeBDievDOV4uEm9MZjxWkCFILyrXhCYh+vCScm3ihOpAr6MWVJi916VQopMEbw7af3o
+ 4Xrt6ut4iIbvcOQ1ZbEDnCMqQKQE0Ahr3xo/jemy3hkMSH9zkiClxSwYVVF2iGkS5QUju+bw9KN
+ v7bUvB6Sx5NND1WoVz5MyAgBfNuqpTQHbg90bQjKyyC7cR2x4lSGulOcoo7iGi9yATeoMPPzaPn
+ syNjJKZ6hj0M5MW+Czww6IJECi4xF1aDfQTjP0nuWnQJsC8XbDfYiuooDS2L5rdoxfrKOTI5vFr
+ mnky/3HNOtoJYjndnylRm5vv2nHlJR3LZSGZDm8AiIhoFbL2S0FGGMpcxB1VdG6o61WDz1KUWnW
+ ehGQX8vPhzDGAtoAbwxHSrkA8suG+iVxzN5sn+6GhQoUnQsyxIIDP+7HHBW2tuFGYS2CKo+zyNg
+ IxyYIPYNauyzbgJmOepgBEpDu5J6thMrwbmDh3WUkOE8c++GWm658WxKfaW4/MyCXi4bEDUsrp/
+ fjNql6KbsdWOH+JX3rxDnu0i6j6yqSi3AO4UWmEVc2Mk8AKz9Xkpz6onoqjzSlz2I0VA7AhyXFq
+ n26tPw==
+X-Received: by 2002:a05:6808:10cc:b0:479:eb19:6e69 with SMTP id
+ 5614622812f47-479eb19b035mr2700022b6e.6.1776792459356; 
+ Tue, 21 Apr 2026 10:27:39 -0700 (PDT)
+Received: from mac.localdomain (97-118-149-104.hlrn.qwest.net.
+ [97.118.149.104]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-42b8fe2c52bsm12209290fac.0.2026.04.21.10.27.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Apr 2026 10:27:38 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Subject: [PATCH v2 00/13] target/mips: add missing Octeon user-mode support
+Date: Tue, 21 Apr 2026 11:27:27 -0600
+Message-Id: <20260421-mips-octeon-missing-insns-v2-v2-0-a0791df188c9@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/15] s390x/pci: Create function to contain
- translation status check
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260411022618.2136588-1-kshk@linux.ibm.com>
- <20260411022618.2136588-3-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260411022618.2136588-3-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIxMDE2NyBTYWx0ZWRfXwgQjVYugwKBh
- MWAdElX4pt23KS31j0wDyDiUCSCAmD7mH2k13ylFkGTY1wrSFwLYbr2scq0hKi6hxHazuuLtqq2
- QCYiZTJTh20H7/nxU2ZzT+JdvPD90TyR/BQwx61TrT/uSMpsTeRahKqeGzG/P7T+Ge8qx4gEClM
- HzQ74Wd5x4BbtVK5kqfY6Wb4nkWgxoLfAc/sRetc/263Z868QSru1/D46pH8LgbeRs78g8JNinB
- fEFGJlLF9hyPvX1xkdh2a/r9TkDBSt3s276ESxdsr5OAtCNmKAY565qsdHvFm//byk1qhaX8TTF
- MbDCmP2PcmeAFrubyKZltbCk+Mcl9LwMIJ8X3dFwWDdsUeMvlnxgFNs9F7kItEoU65l1j1c61Kt
- bnDVrDqO7TTvC2nmBSanI6X1/AE/xrA8uJpeN5XsDh/maNoW7jSDdn8JjaGgbQx5NQp0urQIfKy
- MpLfjog+WDWQgloT8QA==
-X-Proofpoint-GUID: h6j3zeY_x2CHUURpt5Ca3EqTZDz6jKP3
-X-Authority-Analysis: v=2.4 cv=SOJykuvH c=1 sm=1 tr=0 ts=69e7ae01 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=hku6z8kztkKjzKdHO3YA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: h6j3zeY_x2CHUURpt5Ca3EqTZDz6jKP3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-21_03,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 phishscore=0 suspectscore=0 adultscore=0 impostorscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604210167
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrCQAxG4auUrA0MUVv0KuJCY1ojmCnz1yKU3
+ t1Rd+/bvIVgxQ10bBYqNjs8R4VsGtL7JQZjv1WTJGnTThI/fQRnnSxHbcBjYA8EeBbeW3vYdl3
+ SXpTqYizW+/u3P53/xuv6MJ2+T1rXD2CyRfiAAAAA
+X-Change-ID: 20260420-mips-octeon-missing-insns-v2-5e693770cf2c
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
+ James Hilliard <james.hilliard1@gmail.com>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x230.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,23 +110,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/10/26 10:26 PM, Konstantin Shkolnyy wrote:
-> Make it more clear what the bit means, and the new function will be called
-> from yet another place in the future.
-> 
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+This series updates MIPS linux-user unaligned-access behavior and fills
+in missing Octeon user-mode instruction support used by existing Octeon
+binaries.
 
-Christian gave you a review comment + a reviewed-by tag for this patch
-last version.
+The first patch models the Linux/MIPS MIPS_FIXADE policy so user-mode
+unaligned scalar accesses default to software fixups and
+sysmips(MIPS_FIXADE) can toggle SIGBUS/BUS_ADRALN behavior.
 
-You should check if you can apply his suggestion (or if you can't, reply
-to his comment and explain why).
+The Octeon patches add integer, indexed memory, atomic, multiplier, COP2
+crypto, CHORD, and LLM support. The series also adds a small
+mips64/mips64el TCG guest test covering representative Octeon integer,
+multiplier, and COP2 selector paths. The final patch corrects the
+Octeon68XX CP1 feature bits and FCR defaults.
 
-Also, please include his review tag on v3.
+Changes since v1:
+- Split BADDU/DMUL destination fixes into a preliminary patch.
+- Split the SEQ/SNE decode refactoring into a preliminary patch.
+- Moved Octeon multiplier state to uint64_t arrays and updated VMState.
+- Switched Octeon helper ABIs to i64/uint64_t where applicable.
+- Moved COP2 selector decode/support logic into octeon_translate.c.
+- Converted Octeon translator TCG ops to explicit i64 forms.
+- Added in-tree TCG tests for mips64 and mips64el linux-user.
+- Used switch ranges and g_assert_not_reached() for SHA3/ZUC shared
+  selector handling.
+- Dropped Octeon prefixes from generic Camellia helper routines.
+- Replaced the reflected GFM 64-bit carryless multiply loop with
+  crypto/clmul.h.
+- Moved the Octeon68XX CP1 CPU-model correction to the end of the
+  series.
+- Added migration coverage for Octeon COP2 crypto and LLM sparse state.
 
-As-is or with Christian's suggestion incorporated:
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+James Hilliard (13):
+      linux-user/mips, target/mips: honor MIPS_FIXADE for unaligned accesses
+      target/mips: fix Octeon arithmetic destination handling
+      target/mips: split Octeon SEQ/SNE decode
+      target/mips: use explicit i64 TCG ops for Octeon translation
+      target/mips: add Octeon arithmetic and memory instructions
+      target/mips: add Octeon LA* atomic instructions
+      target/mips: add Octeon COP2 crypto core support
+      target/mips: add Octeon SMS4 crypto support
+      target/mips: add Octeon SHA3 crypto support
+      target/mips: add Octeon ZUC crypto support
+      target/mips: add Octeon Camellia crypto support
+      target/mips: add Octeon CHORD and LLM COP2 support
+      target/mips: expose Octeon68XX floating-point support
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+ MAINTAINERS                                   |    2 +
+ linux-user/mips/cpu_loop.c                    |    5 +
+ linux-user/mips/target_syscall.h              |    3 +
+ linux-user/mips64/target_syscall.h            |    3 +
+ linux-user/syscall.c                          |   60 +
+ target/mips/cpu-defs.c.inc                    |   10 +-
+ target/mips/cpu.c                             |   75 +-
+ target/mips/cpu.h                             |  249 +++
+ target/mips/helper.h                          |    6 +
+ target/mips/internal.h                        |    3 +
+ target/mips/system/machine.c                  |  142 ++
+ target/mips/tcg/meson.build                   |    1 +
+ target/mips/tcg/octeon.decode                 |   47 +-
+ target/mips/tcg/octeon_crypto.c               | 2479 +++++++++++++++++++++++++
+ target/mips/tcg/octeon_translate.c            |  704 ++++++-
+ target/mips/tcg/op_helper.c                   |  105 ++
+ target/mips/tcg/translate.c                   |   23 +-
+ target/mips/tcg/translate.h                   |    1 +
+ tests/tcg/mips/Makefile.target                |   11 +
+ tests/tcg/mips/user/isa/octeon/octeon-insns.c |  216 +++
+ tests/tcg/mips64/Makefile.target              |   20 +
+ tests/tcg/mips64el/Makefile.target            |    8 +
+ 22 files changed, 4129 insertions(+), 44 deletions(-)
+---
+base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
+change-id: 20260420-mips-octeon-missing-insns-v2-5e693770cf2c
 
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
 
 
