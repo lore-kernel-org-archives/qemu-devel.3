@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F28E2F327BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 07:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A89F327BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 08:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF5xm-00045j-1V; Tue, 21 Apr 2026 03:56:06 -0400
+	id 1wF60s-0005GS-8I; Tue, 21 Apr 2026 03:59:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wF5xk-00045Q-Dw
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 03:56:04 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wF60q-0005Fm-TP
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 03:59:16 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wF5xi-0007NW-RH
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 03:56:04 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso52508775e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 00:56:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wF60p-0007vO-EF
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 03:59:16 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2ad9a9be502so24647135ad.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 00:59:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776758160; x=1777362960; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hfeCQxXzUb7/1vGj3jsoC38KlTMcQWEr8IVJJz9CAm4=;
- b=I6GXhumj9hZyWEYqhnJpuVbJmxx/JbR78UaRWMzoHYmDJOi8ScLsewuAIBtmHtziT9
- 7ljgxFpBdsVklWmyz3+CLQdoREhryxOf5NDxl1lu5DaiV4ZKHX7vpH37f0gdVn215Pdx
- MAzrEnRLGF+sZ+IasoFrdhPyBcck+mOQClybiYRsPGZVg3RhivYu7LFtxsVYsTcoRdUP
- 2nivr5FUmjscLHO5dW85CNpgSu6TfAqmmbdlX0Z9gBWLVzY8j6ER5OwLYDTC1wSicPT3
- NwUT1gqCu0Hq6YrfnnzsdkUFVjODeB+8agnvCnRmv5xwHpubQ6CT8t/kaiCPUV/YjBxj
- vPgQ==
+ d=sifive.com; s=google; t=1776758353; x=1777363153; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DqMH4Xv2/m4RHc+5iMKPfGbCupIP9EBYR06TzgMYx0k=;
+ b=fmKj/8hpf7OgEWYCqToE8VckCc3iXjjnyv0cUBtZd17lens5gxx4o2KUZRvJQ3uWwz
+ KUiY38k+/9kau4TSVmzwhBAVUOz5ug3nxdXvAHW2+bjjZwyM7VzY1HJKo1PYPiEyhIQV
+ QgnC7NJ51tPkZhe555Yidf9Q84BGutzYYS+1qw6Af8pQPKbsX2h5LQZ0H7FT3QTf7jys
+ NsLqEInYxUOyPrnRdyy91aOlZtpc0KXqF1+Iu295LlvY0cFKycY2A9gDpMkH9avybZIU
+ i/HWayNiP/hUjwJcF6+m3uSKeiiZ7mu9o0H3Vclq+Z7HBzU3yVQD83kGqyuabXgcyKfa
+ ys3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776758160; x=1777362960;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hfeCQxXzUb7/1vGj3jsoC38KlTMcQWEr8IVJJz9CAm4=;
- b=D7U2G0M8LbaRJFGGwNwur8DbnXrheIv7QgKUp0/L5JkqMUKMdwti8i+nTvsEb/SIwT
- 1wETJnho8fB/vjIWqLV7zQHULzAneCJzaFUF38Z6GfFpBk3rB5KDviG8JSR/Mw7aq86r
- 4PuhkbhTRumgg6DT2Vhrdy6l4f9xnlY6wI6lGzznPCwghkaFx617M9dayyvHPicZE0EQ
- Fj3e+l128Zyy9NX3yPdhqxz9grGTIJcwCS0wIxQ3oc8+c1h9l60tQhklD+r2r3sAbIH2
- arzIecZt1udieWlsovSE6v5eUoNjDlnK3iQAt4chXa3VurEoq6oGb+IcpNvacPoO22Mr
- sdiQ==
-X-Gm-Message-State: AOJu0Yx+YZK+elwHcrl1RZ3CnuCXtf6csTGyAdUhqSesGYpDqHCMfYk9
- jGVeW6F7T1F8ovjGTJN1P44+EmHFlaCoW4PdoTFqivk0ME+Uuozofbk6ipDnpFElWxaG8IW/6BH
- 91a1aWjI=
-X-Gm-Gg: AeBDieus8GrRLhsSdgLADOiuj29mH6aFwJV1KSKkq2cgCkX7cCi6g0Ib6qnx6dUYBRj
- D4bbVl+MkYYTWv0rZpmv5punxeuhuHBSpE1+F8wpTXnN1NoDUxVF17dN89rJDqVt1+Rybq3sUoH
- O9OWjhU+8ByT4eOjaBZTmmA2m/0d1gesnaekYr1v4TWJR2zQ+5Np4Kbpzq3ik5u5fNh4WpU9Ov+
- B6pGnqHxpktAi6eKk8eBD0jtC6dTYpiqpn934y45nv4KzTmMXt5c+mZrt/LwJqCxKpP2keBfMRm
- isu9BV3TAY8Z7eSkGgiTUdydNQSHTtr7v+I1bI4s7yFZv+HF9BMu9MHu4pNkoFrh/FxmLRSWv32
- 8Zv+p2z24n3a2BRP0Gyvr77LlOa2Dle5tUmz6e4vTT13nZwCkhuI6ZkqLkUlV4T0+FZFhYb4GQF
- eM8jQ7ojbsNTn5p3uN6qvg4+9wgo5eb8eGglx/zRiJUbaFIHwQirNDwSRt/pziadnl9sjLPKatj
- aZt
-X-Received: by 2002:a05:600c:a30b:b0:487:4eb:d125 with SMTP id
- 5b1f17b1804b1-488fb74dff1mr166560315e9.9.1776758160052; 
- Tue, 21 Apr 2026 00:56:00 -0700 (PDT)
-Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb7c0eacsm110423895e9.35.2026.04.21.00.55.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Apr 2026 00:55:59 -0700 (PDT)
-Message-ID: <9cc562a2-7c0f-4a00-b5cb-81441f8a54cb@linaro.org>
-Date: Tue, 21 Apr 2026 09:55:58 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/4] target/mips: Use probe_access_full() in Atomic
- Load/Store helpers
-Content-Language: en-US
+ d=1e100.net; s=20251104; t=1776758353; x=1777363153;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DqMH4Xv2/m4RHc+5iMKPfGbCupIP9EBYR06TzgMYx0k=;
+ b=KPnQBSkWRion+nHBw3taaCJPkV+fY5W3iMFW2Td6+7Bg4tNTDLujxnF9E+QKoAI2gJ
+ 9j/2CSgvrBpbWETndHaKFI35WM2aRK7Fs22jU9wD4qZbF4GGN/VVAFb1N3rBOnrPSd6G
+ qCDSfBoocE1/2MtzIGV2rhbLLnOKySWxQzrLnGVFphsW9vGEGXYtBalf1hl3cfyov1HH
+ wxQmH+4fyTufwMJ57nO0wngnosfwDgOimO9Hp9+ISsxgMKE4i6X0xUQV3ji65HwWo84p
+ jSej+1Ql2kOALO72CTMwEWlx/4Zlh6yvsjm6YycqwIDSCqEwyZj8Oab3Sd6xxorWw6xb
+ XF4A==
+X-Gm-Message-State: AOJu0YwQjNw90Dr1q790ybDPoxfLO313M36gY0XyrTTIo1YwINaqJkp/
+ SGvm5X8IUtXw2mr18UH9rWnBQRin9h8EM35N3co/W7Ma3Rbf2q6wmYAHtCvcvao5ULKP0amUhuG
+ mavNBG8hco/fgfn1TqIKv8I9KHD15wvHL07v0CP0oeqp7MKRi7dndIv+X49XqDEEWeqimh+Jy7U
+ wRrAYVeah7Kud2x8hg3wOc3hrEPu4bvohJVXU3C9vFzbBduWCB
+X-Gm-Gg: AeBDiesG16nUKnC8MSv/D2WURwwrLxTUnmm5/l2YSV9l3koFXTgRnnfO+DlUCi1UaeT
+ ybOIgWbSOuOJkQ7Ji8fUn9q+l7EXVTYtp9Cef7lbgbNyHQAApws5t5Kmh5Ym7vxlSdUsmJUBdp+
+ EnmHC2EDzMFIziSGDcmc7Nukn5MpX+Mez5l7UrsfkpJfVLdWK2qrO/ags8yC2TGyL+01wa40lAm
+ l1SaIhFaSwtIy3eVEvwMUj/TlKXUMtzATmk8ji7aF50W5VqFOKmyNGF7skSxvxOTS/lREAgWC0p
+ qzXDwYhbCAOM6wj5DL2WdjH6bBRkrMxyBKZaVuGbvPXjeDx+lwOqBSPd5oWJVM9/DI04/U2EjHv
+ PqHypQEw6TZvDmZU8aZQWvp4HwSqhCbykpDDQjC7zRiA/OrrleOnugjOxMewMCL0elCkdowhnC7
+ SsWsVEOZYBUYDBVyw6lqnaeh5uVXwABwomDeyppXQOCDmUxYbrtAes31se1/W4
+X-Received: by 2002:a17:903:2c0f:b0:2b4:678c:5f25 with SMTP id
+ d9443c01a7336-2b5f9d671bcmr164739625ad.0.1776758352704; 
+ Tue, 21 Apr 2026 00:59:12 -0700 (PDT)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b5fa9ff729sm155605695ad.15.2026.04.21.00.59.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Apr 2026 00:59:12 -0700 (PDT)
+From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Aurelien Jarno
- <aurelien@aurel32.net>, Richard Henderson <richard.henderson@linaro.org>
-References: <20260417042620.35329-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260417042620.35329-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v3 0/2] Set MISA.[C|X] based on the selected extensions
+Date: Tue, 21 Apr 2026 15:59:04 +0800
+Message-ID: <20260421075906.2928317-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=frank.chang@sifive.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,14 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/4/26 06:26, Philippe Mathieu-Daudé wrote:
+From: Frank Chang <frank.chang@sifive.com>
 
-> Philippe Mathieu-Daudé (4):
->    target/mips: Pass MemOpIdx argument to Linked Load/Store helpers
->    target/mips: Inline cpu_ld/st_mmuidx_ra() calls in Atomic LD/ST
->      helpers
->    target/mips: Inline translator_ld[uw,l,q]() calls
->    target/mips: Remove last MO_TE use
+MISA.C and MISA.X should be set when the following extensions are
+selected:
 
-Series queued, thanks.
+MISA.C:
+  * Zca and not F.
+  * Zca, Zcf and F (but not D) is specified (RV32 only).
+  * Zca, Zcf and Zcd if D is specified (RV32 only).
+  * Zca, Zcd if D is specified (RV64 only)
+
+MISA.X:
+  * When there are any non-standard extensions enabled.
+
+This patchset sets MISA.[C|X] bits based on the selected extensions.
+
+Changelog:
+  * v3: Rebase to the latest to-apply.next branch.
+  * v2: Fix the missing parentheses bug.
+
+Frank Chang (2):
+  target/riscv: Update MISA.C for Zc* extensions
+  target/riscv: Update MISA.X for non-standard extensions
+
+ target/riscv/cpu.h         |  1 +
+ target/riscv/tcg/tcg-cpu.c | 47 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
+
+--
+2.43.0
+
 
