@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD4EF327AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE52BF327B1
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF4yN-0003kM-VV; Tue, 21 Apr 2026 02:52:39 -0400
+	id 1wF4yb-00049O-Ar; Tue, 21 Apr 2026 02:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yL-0003j6-Hr
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:37 -0400
+ id 1wF4yZ-00048i-KI
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:51 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yI-000075-Bo
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:37 -0400
+ id 1wF4yX-00008P-Sd
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:51 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 1DB3C1A1C91;
- Tue, 21 Apr 2026 08:52:33 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 753BA1A1CDD;
+ Tue, 21 Apr 2026 08:52:36 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id E62B51A1C5B;
- Tue, 21 Apr 2026 08:52:32 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 4066D1A1CDB;
+ Tue, 21 Apr 2026 08:52:36 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 5B5351800086;
- Tue, 21 Apr 2026 14:52:32 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 9B6231800097;
+ Tue, 21 Apr 2026 14:52:35 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>,
  Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv7 06/15] hw/arm/fsl-imx8mm: Adding support for USDHC storage
- controllers
-Date: Tue, 21 Apr 2026 12:22:17 +0530
-Message-Id: <20260421065226.3907745-7-gaurav.sharma_7@nxp.com>
+Subject: [PATCHv7 14/15] hw/arm/fsl-imx8mm: Adding support for USB controller
+Date: Tue, 21 Apr 2026 12:22:25 +0530
+Message-Id: <20260421065226.3907745-15-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
 References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
@@ -68,151 +67,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It enables emulation of SD/MMC cards through a virtual SDHCI interface
-The emulated SDHCI controller allows guest OS to use emulated storage as
-a standard block device.
-This will allow running the images such as those generated
-by Buildroot.
+It enables emulation of USB on iMX8MM
+Enables testing and debugging of USB drivers
 
 Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
  hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx8mm.c         | 25 +++++++++++++++++++++++++
- hw/arm/imx8mm-evk.c         | 17 +++++++++++++++++
- include/hw/arm/fsl-imx8mm.h |  7 +++++++
- 4 files changed, 50 insertions(+)
+ hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h |  6 ++++++
+ 3 files changed, 34 insertions(+)
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index c785f3f3a3..ba37ab2808 100644
+index 45d10e34dc..1b26bd3431 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -624,6 +624,7 @@ config FSL_IMX8MM
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select IMX
-+    select SDHCI
+@@ -632,6 +632,7 @@ config FSL_IMX8MM
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
++    select USB_DWC3
+     select WDT_IMX2
  
  config FSL_IMX8MM_EVK
-     bool
 diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 8999bc701e..2a4d4d5e6d 100644
+index f1c173dbec..97c3f8542c 100644
 --- a/hw/arm/fsl-imx8mm.c
 +++ b/hw/arm/fsl-imx8mm.c
-@@ -180,6 +180,10 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+@@ -202,6 +202,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
      }
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
-+        g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
-+        object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
++        g_autofree char *name = g_strdup_printf("usb%d", i);
++        object_initialize_child(obj, name, &s->usb[i], TYPE_USB_DWC3);
 +    }
- }
++
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         g_autofree char *name = g_strdup_printf("spi%d", i + 1);
+         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
+@@ -529,6 +534,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
+     }
  
- static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-@@ -357,6 +361,26 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].addr,
-                                 &s->ocram);
- 
-+    /* USDHCs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
++    /* USBs */
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
 +        static const struct {
 +            hwaddr addr;
 +            unsigned int irq;
-+        } usdhc_table[FSL_IMX8MM_NUM_USDHCS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_USDHC1].addr, FSL_IMX8MM_USDHC1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_USDHC2].addr, FSL_IMX8MM_USDHC2_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_USDHC3].addr, FSL_IMX8MM_USDHC3_IRQ },
++        } usb_table[FSL_IMX8MM_NUM_USBS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB1].addr, FSL_IMX8MM_USB1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB2].addr, FSL_IMX8MM_USB2_IRQ },
 +        };
 +
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), errp)) {
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p2", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p3", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usb[i]), errp)) {
 +            return;
 +        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0, usdhc_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-+                           qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
++                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
 +    }
 +
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-         return;
-@@ -375,6 +399,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     /* ECSPIs */
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         static const struct {
+@@ -635,6 +661,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
          case FSL_IMX8MM_OCRAM:
          case FSL_IMX8MM_SNVS_HP:
          case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
-+        case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
++        case FSL_IMX8MM_USB1 ... FSL_IMX8MM_USB2:
+         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
+         case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
              /* device implemented and treated above */
-             break;
- 
-diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
-index 0a8cce8866..dfdf3cd4f8 100644
---- a/hw/arm/imx8mm-evk.c
-+++ b/hw/arm/imx8mm-evk.c
-@@ -84,6 +84,23 @@ static void imx8mm_evk_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MM_RAM_START,
-                                 machine->ram);
- 
-+    for (int i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
-+        BusState *bus;
-+        DeviceState *carddev;
-+        BlockBackend *blk;
-+        DriveInfo *di = drive_get(IF_SD, i, 0);
-+
-+        if (!di) {
-+            continue;
-+        }
-+
-+        blk = blk_by_legacy_dinfo(di);
-+        bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
-+        carddev = qdev_new(TYPE_SD_CARD);
-+        qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
-+        qdev_realize_and_unref(carddev, bus, &error_fatal);
-+    }
-+
-     if (!qtest_enabled()) {
-         arm_load_kernel(&s->cpu[0], machine, &boot_info);
-     }
 diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 8a172b89e0..93a30a2f55 100644
+index bc5a0922ad..60d79a6e3c 100644
 --- a/include/hw/arm/fsl-imx8mm.h
 +++ b/include/hw/arm/fsl-imx8mm.h
-@@ -16,6 +16,7 @@
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/sd/sdhci.h"
+@@ -25,6 +25,7 @@
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
+ #include "hw/timer/imx_gpt.h"
++#include "hw/usb/hcd-dwc3.h"
+ #include "hw/watchdog/wdt_imx2.h"
  #include "qom/object.h"
  #include "qemu/units.h"
- 
-@@ -29,6 +30,7 @@ enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_CPUS         = 4,
+@@ -43,6 +44,7 @@ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_I2CS         = 4,
      FSL_IMX8MM_NUM_IRQS         = 128,
      FSL_IMX8MM_NUM_UARTS        = 4,
-+    FSL_IMX8MM_NUM_USDHCS       = 3,
++    FSL_IMX8MM_NUM_USBS         = 2,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
+     FSL_IMX8MM_NUM_WDTS         = 3,
  };
+@@ -64,6 +66,7 @@ struct FslImx8mmState {
+     IMXFECState        enet;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
++    USBDWC3            usb[FSL_IMX8MM_NUM_USBS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+     OrIRQState         gpt5_gpt6_irq;
+@@ -202,6 +205,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_I2C3_IRQ     = 37,
+     FSL_IMX8MM_I2C4_IRQ     = 38,
  
- struct FslImx8mmState {
-@@ -41,6 +43,7 @@ struct FslImx8mmState {
-     IMX7SNVSState      snvs;
-     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     MemoryRegion ocram;
-+    SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
- };
- 
- enum FslImx8mmMemoryRegions {
-@@ -155,6 +158,10 @@ enum FslImx8mmMemoryRegions {
- };
- 
- enum FslImx8mmIrqs {
-+    FSL_IMX8MM_USDHC1_IRQ   = 22,
-+    FSL_IMX8MM_USDHC2_IRQ   = 23,
-+    FSL_IMX8MM_USDHC3_IRQ   = 24,
++    FSL_IMX8MM_USB1_IRQ     = 40,
++    FSL_IMX8MM_USB2_IRQ     = 41,
 +
-     FSL_IMX8MM_UART1_IRQ    = 26,
-     FSL_IMX8MM_UART2_IRQ    = 27,
-     FSL_IMX8MM_UART3_IRQ    = 28,
+     FSL_IMX8MM_GPT1_IRQ      = 55,
+     FSL_IMX8MM_GPT2_IRQ      = 54,
+     FSL_IMX8MM_GPT3_IRQ      = 53,
 -- 
 2.34.1
 
