@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BACAF327CD
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 09:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCAF5F327CD
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 09:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF7Vr-0007yT-06; Tue, 21 Apr 2026 05:35:23 -0400
+	id 1wF7Xu-0008WO-Ag; Tue, 21 Apr 2026 05:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wF7Vo-0007xv-DD
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 05:35:20 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wF7Xq-0008VQ-9A
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 05:37:26 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wF7Vm-0007eC-T7
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 05:35:20 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso30954145e9.0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 02:35:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wF7Xo-0007qF-KH
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 05:37:26 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-827270d50d4so3758201b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 02:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776764116; x=1777368916; darn=nongnu.org;
+ d=sifive.com; s=google; t=1776764242; x=1777369042; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=B8wmPdxsTtoVIQiSn8NhB4SnGv17V2Z6hlvm58P36Ro=;
- b=GbERfvUHDFaCQmA9iW3LJjml9RmEM/GOViS+w20xMlLFojiOeXsnIK3vOMStFIFHQT
- /zSAPROkfs/F4nf2hrRHtlaLxb8RGKzXHXeVPSHyBRJbgHKW03irBI+goN9jM/2T319n
- P52nTfZlm6ISpv2REkKaHkrXVDc+ta1cnLrJufZ/fbjPY4wd8q43DX1aKfhcd0sX2NY2
- 99yCzYQP1Bz5JFIKk4ToSy+rSDyGUC/48Yj/0onKzcaU9SV8Qby3SBtIIxy2DG8dhsAd
- ATWOh3H3UxPwWrC+dtnaAFWb6DLUWS3hkhCLK5x9D1nF2juPQgjj1742F6KOc67rEd2t
- pfpA==
+ bh=+2Z9FaiCk46VlVG9ywRB+kf8xp8oDbDRE+mOXIB+O20=;
+ b=XVZ/RDs5K/56ZeeJjGkSDd2PgQe9xOG8BxcrXKHOv68YTFZ4w4Mseo4X/Aa/F4sO7A
+ 3ceJFL7V2Kx0fgOcudhn93YuysByMxW/i7asvRHtnhbIasIhI06oAEmwOdIuvoKCfW3c
+ k31OhMZAHg/nDSn8gPhLO7joUBWCrTFmW67OuIzA7d7Jm4lDXv2n6zuJ5eO4bshsaUR+
+ xuibnA75Fv+SecmVziTuPVPB45N3haoTRM/eYKgn73rkkLS27S1xgvbaLgSnkdsYNwfb
+ CTqRxsBUEHncjS3drGZrtMbuU7nklw2U7i5ZhOlLS1i3f4UH3HnGSU/nxlrmHX07HCwz
+ wG3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776764116; x=1777368916;
+ d=1e100.net; s=20251104; t=1776764242; x=1777369042;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B8wmPdxsTtoVIQiSn8NhB4SnGv17V2Z6hlvm58P36Ro=;
- b=AwN0rUE+UBh3ZQ42DIqEIieaJyEDeFLdfKgorxpRrWK50UFwyuapgpThvdQkDdrvCr
- CQ7C06kW0kTW6JGqa91anQTMz8aUJTrtVXmLl+rVUqM9qoy2NCIOP5u4sJF5ijFkx1t1
- 57srM7FUlBSocFQlw6xEVqeLmi1tyIQNZrrkul4jDoWVjdxFR6gr5a1Qc/TWl9pAR1YJ
- n5HwBAARC/JAeRaUU5BVcHkpNn3cHJ/AE1JbhGXGBXxckkwuiD5gkWqdDuM0iUC8n+8T
- hrrKtDZzcfwXLIOewNBemVmJWMfY2Big7aLgA38pNXSCH0GOdZ1KINlUVm0ZPdVnmJLC
- +Flw==
-X-Gm-Message-State: AOJu0Yx7XMmRPSAFRhTPsgW3Gs8SjgPGEtS1MfRYmo0z53mPFJ+zsho9
- KjrUiUmgyKcfeqnHy6JIyOWqneB5Vk6VCD3pt9Sd3xbl4d/n/cpsYZEMZpiXgwpK344=
-X-Gm-Gg: AeBDiesKJ7P3xe1x1oKb88hGoH0yC6lJHHTzA+lXB03QXNqV/3ny9YZcWgp8LOWQc99
- oObupathssDqT8a1pdoqaoY1HeBesybzXMYy7nctBZ+sjULqMn8kd+ifPTRecPtFi4YEh5YT4by
- wNYWrijVR9LVOENjLimwJAbNV6RQiHFxDJA7kDMcjAan9FHALxl9IGoCeBEEkUFLlPpee4DI3tQ
- Qin8vWKE6QXQ2/EllYhLPp4lRwnLH7hbAzq3pGTFWaQ+MnrL30UyJxr0i8CyUDzLS26W64BrNnW
- kzK0ghnFI2aHZ8+NFmitpFpC5w3x+rHknp1ZACcMetPGyqS+JijSqwLzXAiMwI3qT4A4YPe9DKj
- xsdjLcFp0IH8nrGhCiG7tPfy0T+tGQOw4FCKOmMzOkUelXAEVFMlaFMqC8lCq5iKrmddw5RrEVA
- SsiqbFEy02aYxtp4rf+c6vQZdBSsDnjw8JYcr2l37wCm1M
-X-Received: by 2002:a05:600c:c0d3:b0:488:a916:14a8 with SMTP id
- 5b1f17b1804b1-488fb74fe74mr195927695e9.10.1776764116368; 
- Tue, 21 Apr 2026 02:35:16 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a55dc9f58sm81256495e9.6.2026.04.21.02.35.15
+ bh=+2Z9FaiCk46VlVG9ywRB+kf8xp8oDbDRE+mOXIB+O20=;
+ b=UpeBQq8lCKT9hJnIeO4rajMeCO8zUDlQ/17hORxMKhAeFduzp9KC7MoaDaHLqO7slH
+ 9vN4SnVy73P/ywJqWQSxMBkBHeLBvR9uyiZ9v1qj/61Kft6aIcYpTxfpzwY3VpqmbNdQ
+ 6JrkTgfNSM7t90AU7ZW/ZTTOBIau+iejLvq3E+BLbX2fd32+scL51HINXR+dBK/ig1JM
+ sNUeYvLiSNiEcnBolZFIhAqSOUwqKFbqJDW0IbtiVlyFUefCQNJ16IHo/cMgjc9TFd2c
+ 9Cuw2uYiV/rsT8hnsDvAsfLZELIY5xNXRwSE5UVyVig4sOfCnpBUC+OrWBMPOPoGTHPn
+ C/Tw==
+X-Gm-Message-State: AOJu0Yw2TTRbRx98cRjFz9UlfPg6VwpkUjm8atcN5mDzTflLEu7rB0zv
+ ab3DVPQL+wBpUm6oOK+F+JGCwVG52aOOC1v4p2KLbPBFqklToNKhJFUn8ysuTy4n6Y+n4A9q3q7
+ vfBFpdMhHdoLrVtY+fikl2ocqxFg4X9ky1NMxkSyEEfU8OWFExqD+v+GCqGTaaN6arKSWPWTyUk
+ G1R3wZmPx0FoLmXW4OKbtWEA/677KeHnvSQKlj24C/8Msz+8Aj
+X-Gm-Gg: AeBDietJk86pirlgB5enJ/7U9is5q6PulkhC7dF+/j4fU0dMyJNd5WPhv/PqGstXzuy
+ mJb0ep8+QHNA48U1KLX9+NNYo0LDinzd1W/EOV++oQTyZ5aEN0jjozfL73hYF4DxuyRPB3G1WXE
+ dN7AF7lDp6M1ix7xkI+TFsKillhDqE8gfyVhQ1n+ApFcijXjEDgeNc4yoADtZVmNBKUj97jc6As
+ hmMEsg/yyeA4vyjQgXOIlcsqZ1gxmXC/Kx8n9Edfg1Vo2zGDkbgLm7tOlKTgNTfmbOPraLPrOgy
+ C9lI+Nlshe/i7bIvAH6cHJDyw96Y5U4cmsRh/8+d5M4RKioaSsUUTxhjFcKiNvInE86inVZ8p6m
+ R5XCbWkBoizGOWNPLxoIMkJD7l3PYU71f0SKwEIkFPSSSe25WWjcdYlnYufxGCUeyN8eIrwrxqM
+ 6kD4sLaOLdHD2bkm9CGo8M4QJAm1QfgtQUc/Z+zp5mqCUCxh7xR+TKnDEYCltU
+X-Received: by 2002:a05:6a00:3028:b0:82a:6461:6d15 with SMTP id
+ d2e1a72fcca58-82f8c94c5fbmr18841416b3a.46.1776764242088; 
+ Tue, 21 Apr 2026 02:37:22 -0700 (PDT)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82f8e981be6sm15904589b3a.9.2026.04.21.02.37.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 02:35:15 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7C4E85F7FE;
- Tue, 21 Apr 2026 10:35:14 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Tue, 21 Apr 2026 02:37:21 -0700 (PDT)
+From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH] docs/system: add FEAT_AA32 and FEAT_AA64 to emulation list
-Date: Tue, 21 Apr 2026 10:35:06 +0100
-Message-ID: <20260421093506.616307-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v4 0/6] Fix Zjpm implementation
+Date: Tue, 21 Apr 2026 17:37:09 +0800
+Message-ID: <20260421093715.2995067-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=frank.chang@sifive.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +106,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is just a documentation tweak as we already support both.
-FEAT_AA32 implies FEAT_AA32EL0. FEAT_AA64 implies FEAT_AA64EL[0123].
+From: Frank Chang <frank.chang@sifive.com>
 
-This is however useful if you are using emulation.rst as a source of
-truth of what QEMU emulates and when cross checking with
-Features.json from Arm.
+The current Zjpm implementation has the following issues:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/system/arm/emulation.rst | 2 ++
- 1 file changed, 2 insertions(+)
+1. The address is shifted before obtaining the correct PMLEN value.
+2. riscv_pm_get_pmm() does not handle effective privilege mode correctly.
+3. mstatus.MPRV does not affect virtual-machine load/store instructions.
+4. Sign extension for virtual-machine load/store instructions (HLV.* and
+   HSV.*) must be performed when vsatp.MODE != Bare.
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 7787691853e..8cd7fe7b00d 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -7,6 +7,7 @@ QEMU's TCG emulation includes support for the Armv5, Armv6, Armv7,
- Armv8 and Armv9 versions of the A-profile architecture. It also has support for
- the following architecture extensions:
- 
-+- FEAT_AA32 (PE Support for AArch32)
- - FEAT_AA32BF16 (AArch32 BFloat16 instructions)
- - FEAT_AA32EL0 (Support for AArch32 at EL0)
- - FEAT_AA32EL1 (Support for AArch32 at EL1)
-@@ -14,6 +15,7 @@ the following architecture extensions:
- - FEAT_AA32EL3 (Support for AArch32 at EL3)
- - FEAT_AA32HPD (AArch32 hierarchical permission disables)
- - FEAT_AA32I8MM (AArch32 Int8 matrix multiplication instructions)
-+- FEAT_AA64 (PE uses AArch64 after last reboot)
- - FEAT_AA64EL0 (Support for AArch64 at EL0)
- - FEAT_AA64EL1 (Support for AArch64 at EL1)
- - FEAT_AA64EL2 (Support for AArch64 at EL2)
--- 
-2.47.3
+This patchset fixes the above issues and also renames
+riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm(), as the helper
+is only used when checking the PMM configuration for virtual-machine
+load/store instructions, rather than for VS/VU modes.
+
+Changelog:
+
+v4:
+  * Rebase to the latest to-apply.next branch.
+
+v3:
+  * Move riscv_cpu_eff_priv() to the header file and declare it as a
+    static inline function.
+  * Fix the MXR check bugs pointed out by Radim Krčmář.
+
+v2:
+  * Check effective privilege mode in riscv_pm_get_pmm().
+  * Fix pointer masking for virtual-machine load/store instructions
+    (HLV.* and HSV.*).
+  * Rename riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm().
+
+Frank Chang (5):
+  target/riscv: Add a helper to return the current effective priv mode
+  target/riscv: Fix pointer masking PMM field selection logic
+  target/riscv: Fix pointer masking for virtual-machine load/store insns
+  target/riscv: Rename riscv_pm_get_virt_pmm() to
+    riscv_pm_get_vm_ldst_pmm()
+  target/riscv: Fix pointer masking translation mode check bug
+
+Yong-Xuan Wang (1):
+  target/riscv: fix address masking
+
+ target/riscv/cpu.h         |  41 +++++++++++++-
+ target/riscv/cpu_helper.c  | 110 +++++++++++++++++++++++++++----------
+ target/riscv/internals.h   |   8 +--
+ target/riscv/tcg/tcg-cpu.c |   4 +-
+ 4 files changed, 124 insertions(+), 39 deletions(-)
+
+--
+2.43.0
 
 
