@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6AA5F8FA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 12:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B982F8FA71
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 12:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFAdm-0004SQ-3t; Tue, 21 Apr 2026 08:55:46 -0400
+	id 1wFAfv-0005Tz-PD; Tue, 21 Apr 2026 08:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFAdi-0004QM-KI
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 08:55:44 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFAft-0005TT-I2
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 08:57:58 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFAdh-0007ZL-14
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 08:55:42 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so38877685e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 05:55:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFAfs-00086y-0o
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 08:57:57 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso42632915e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 05:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776776139; x=1777380939; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776776274; x=1777381074; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LdOYyljqs+0qqKByZ2HK5DZmkxXYxzWDn5moLcQb/5s=;
- b=iPwmiPgqg9fmiTmUNFyqXbZehFHuL6nnWobP+dySKnPSKjm+SHxiABX7dmLuUBqAJh
- 4c9rX7rv3s0JdrW/CXp4BiWo+n2P6jVzUwNtqRuWv6H3DDOIgyh59M6wei5WN3VLkbkx
- o/fAwyIvuRzdVo3QAjKukFsfXR3uudwUT/noCEzENNYoJjcVit6Ms6nDqdtRawy9NpbZ
- 4PsWHajseRMfRIke2JnVSYegG4Q/ApF3wCQ0F68HqqjxEHlzrx8PPs6kgI6Ytg1yq/cp
- Kea8UWy69O63FJuQUrKcer07uQcogxHMvp33dDBhdcWVnYlaLh4uwZhhUHtfPJ70Dm1E
- 5h4Q==
+ bh=uKYE9cTzKeCDq31ckTpF96seOfS4DsreiNy1HtAudMU=;
+ b=U76YEDXrjCWR2cM1Ouzakg6t8GwMK024J5TPY7OKn/j/4Hwct5MKOQxhW5ZKqPu/XG
+ eq8zIBu4+oNmiiF2SzA1DNZvBPiJyU8VvE0KRdRRzqnBAQ8+taa5xOtoIbWsZntlQ3Rl
+ Ci2hMiwyu2j7HlnI4nDgB4+VF5VrSeTEzKP9J3Ns9h/BZh+1zu3fgY3X2w51g1/kk3MT
+ 2giDTIc07/xzIhbm+AprfjGTuUfXCjfu1UfKVJlIwK/Qy8OQkyg+HixDUcryQQIaYJ6+
+ NomuBMg08zUFuIjJe/eZ4kLTM/X1SEEqFAgWwART424k0YbvHuFkGP778ZE4daVQSbAC
+ lK6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776776139; x=1777380939;
+ d=1e100.net; s=20251104; t=1776776274; x=1777381074;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LdOYyljqs+0qqKByZ2HK5DZmkxXYxzWDn5moLcQb/5s=;
- b=PMIlPW/qKLQ7aPwu/1omGV3rJWLcUUfNSaTfi7tm5KF8WIMouQtc8lDHUsgYfjxame
- 5DfuB5VYmzRIth0py2KXEpR3cTVeNPENo5ftyoFEuBf/Tw20FKkE/D8paBYn+Z/fkJ5L
- dfHJ0gKYjc8A2/1dzcsYgsuRQ1xuoWroNPG8xbSFHfJ/mUcd3KZvk93O7MAbdcl/0zHJ
- hP52JlaF20nYL612Q86CKqynOqt/kNbFY9NW+Jnx8Sxrbk/U0nFGdazZhAPJJqpzI1Jj
- j1AZ1XVgIirS8bOwvOOvjjwAQvQR9u8jG74XheY45poZNfqM5Jaw/6umxs55HhpR5Xxl
- g7GA==
+ bh=uKYE9cTzKeCDq31ckTpF96seOfS4DsreiNy1HtAudMU=;
+ b=E3McqP7qfdw9O60g0jvqxq4VUitnwlhP8tHYYROY1oPQvJd6d+eBFN7K8jPvM28WUC
+ sbvu7APhBTM98Q/DLLwJS9kFU9T2TzOFxKyS+KE6IT2Zw6D+Cd2jhhH7wBPstD2ShPsL
+ 5HyA1FVrNTsfvzoLB3KABYqkmgT8mSYvftoRgES87Qdl8R3JVW8l8egsb4BIeCxIbLvr
+ Y8XGvSTJKzgv9mUtBJYkoGN7M87lgH/c7pgBplIU5IjcUeiGu32nVlc75++kYVflrZcq
+ cRAd3yNPu1w3IN9aWwPxmrHoryiE1H0jHI4ttWHAgZYv64vOJmlQa4TVePDaRc3WvLXF
+ 75XA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/3PTBUPiOAqosHKEmZCg3WK0bQwHd5Q5VCqO0JiBi8RsTUVu8iKNLgocmZ49pV+0pfZIOrwFnxkKAk@nongnu.org
-X-Gm-Message-State: AOJu0YzNNP1OAn61AQcSsyU/DU5W0X2abKkwdu6QCRoasLJGOrWXRr5X
- 3qi5N0vr77ek46AmUUjOKhewxq/QySexTVZeLEbcHFhWKqZx5v0bXgZZHoe4+P5F8WI=
-X-Gm-Gg: AeBDieu5sJQkKnsS5ExFFhQGDfhtJ93tzJem/m0xqYKDQtQsmw+P1HrVqcHkuxgHdnh
- Fzzh3Jivx9Pyus6tbazJeBaUe7/gk017vwjrtPCp+dCEtgijzFn2k7Ux4HK8bNDzn9jF7TC2/9N
- m7K4UgeTgbnV7GfXl8lIdM3rb7o/fJD4dxegtypuKOikzliDf6uR31474ddxNR/+ivZhxZkuFev
- iF6GsoDwdDjMyn+lxXhD6GAXfo59EMZqQRn7zxGRaR3gIQuUYTjh0b+md3zZgN8FWtnyZDRc03e
- hLPDwru7WCQ1qWZ4H++PdVDR/viR2Xc34bkCt6S6Q9FRA56ahFJWkQ2cM2YsgKR6vBVj2X7mySq
- dJTkOwuTzMnW/mrWY14ZDXdg1PqVrk3UibW+d19rxLYpBRzLuuG9bp1rw085Z2jgi6WBZPlFsrM
- +deoMqzrQIBmmVEiFD7QuSRO/PPutFUzYbQDP/qNR1QS0y9n7Wi3A7ygjU7bll286JzuDp6fehB
- w==
-X-Received: by 2002:a05:600c:b90:b0:488:b99b:4177 with SMTP id
- 5b1f17b1804b1-488fb78ee4emr246458685e9.25.1776776139137; 
- Tue, 21 Apr 2026 05:55:39 -0700 (PDT)
+ AFNElJ92DQ0GjbEFaUj4GU0vZRMLJ3hZYKmR3jSBXSHDJOL35PaOPDeyHMsQjZxmvZ84IpoBQYq95EY07EgF@nongnu.org
+X-Gm-Message-State: AOJu0YzHTLobPXksKtl6FgOeBpbs8xrZll67a6JBwEdK3jeQ8sustEJg
+ 5WGcNpvCBs4qPhMDpqXj8lYjV5YS4AiChV/6gdTpKoF1Nnxe66hry8Dv1P3F1YRnYAMFpt0MGup
+ BJMQkf/E=
+X-Gm-Gg: AeBDiessW5jsdzDAvnMV5Lk0MTxXohqHW/PHvvKNFEGT7uYE9Z3UysUug7XcAWDdKJQ
+ uDuNXPOXLfFpJSNRBem/jgg4zOaNCD6hVgbQf0Q3gemGWhXy+ZDxWzeUx9y4e1azjI9PwwNRTmj
+ hsOH8bgxsJ3GUm+V4gsKTKDfUdxZqlDjaolVDEt/rexILzEG/VjAjUT9S3glo25i9+lTnToWMa6
+ 4aq8mSoVO79nQ0DRoh7xgxudjHVey6kiETB2rrfSbdUD588cJnpZ2UmvSDkKbb3CM7pSQgJ/ptI
+ H/S4ACFECBNIjUpoJ0irj6TWY1t0Eb9Flk370U3Lv/7uAx3OKdWsnkQalCkMCxnQgDygkcyPYJT
+ 4Qf5IM5bDPC6DbAxfPzPC3LBJN5pb18HG+Fq6F0v03izmEX7uLMfmOfYI6NGqloZX+IeU9cvTo5
+ PKIGCUrAIWrxLsFk4at3ig9mTWNVo2scVXQzy9T8Wg026qmRdVZf2Ph4fFmPQugnUevilVRHU7N
+ Q==
+X-Received: by 2002:a05:600c:1e09:b0:489:1f6b:6276 with SMTP id
+ 5b1f17b1804b1-4891f6b6464mr101396835e9.15.1776776274029; 
+ Tue, 21 Apr 2026 05:57:54 -0700 (PDT)
 Received: from [10.193.39.66] (140.170.88.92.rev.sfr.net. [92.88.170.140])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb7bf7besm128756345e9.34.2026.04.21.05.55.37
+ ffacd0b85a97d-43fe4cc09b1sm37767318f8f.9.2026.04.21.05.57.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Apr 2026 05:55:38 -0700 (PDT)
-Message-ID: <85722c50-873f-4452-ab48-d426a5d81089@linaro.org>
-Date: Tue, 21 Apr 2026 14:55:36 +0200
+ Tue, 21 Apr 2026 05:57:53 -0700 (PDT)
+Message-ID: <cda93b76-dc00-4e53-8ccc-625cdcba3ec2@linaro.org>
+Date: Tue, 21 Apr 2026 14:57:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ppc: remove duplicate include
+Subject: Re: [PATCH 11/28] MAINTAINERS: Remove Bastian Koppelmann
 Content-Language: en-US
-To: Osama Abdelkader <osama.abdelkader@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, "open list:amigaone"
- <qemu-ppc@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-References: <20260420164058.335872-1-osama.abdelkader@gmail.com>
+To: Christoph.Seitz@infineon.com, qemu-devel@nongnu.org
+References: <4b5c41ec7fa24117a88384bde27594c7@infineon.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260420164058.335872-1-osama.abdelkader@gmail.com>
+In-Reply-To: <4b5c41ec7fa24117a88384bde27594c7@infineon.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,13 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/4/26 18:40, Osama Abdelkader wrote:
-> hw/ppc/ppc.h is included twice
-> 
-> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-> ---
->   hw/ppc/amigaone.c | 1 -
->   1 file changed, 1 deletion(-)
+Hi Christoph,
 
-Patch queued, thanks.
+On 20/4/26 23:43, Christoph.Seitz@infineon.com wrote:
+> On 4/16/26 1:35 PM, Philippe Mathieu-Daudé wrote:
+>> On 16/4/26 11:16, Peter Maydell wrote:
+>>> Bastian Koppelmann has not posted to qemu-devel in some years and did not
+>>> respond to a query about whether they still wished to be listed in
+>>> our MAINTAINERS file.  Remove them, on the assumption that they are
+>>> no longer active in QEMU.
+>>>
+>>> This makes the Tricore TCG CPUs orphan.
+>>
+>> Cc'ing TriCore users.
+> 
+> Dear Peter, Philippe,
+> 
+> I would join Parthiban in this effort, as I contributed some of the code to fork. I'm working regularly with TriCore devices.
+
+Great, please post a new patch once Peter merge this one.
+
+Regards,
+
+Phil.
+
+> 
+> Best regards,
+> Christoph Seitz
+
 
