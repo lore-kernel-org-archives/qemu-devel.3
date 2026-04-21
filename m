@@ -4,110 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718F8F8FA94
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91559F8FA9A
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 16:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFDfo-0008Qa-5j; Tue, 21 Apr 2026 12:10:06 -0400
+	id 1wFDi3-0001P4-IK; Tue, 21 Apr 2026 12:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wFDf4-0008It-Rc; Tue, 21 Apr 2026 12:09:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wFDi0-0001LL-3a
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:12:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wFDez-0007NF-1a; Tue, 21 Apr 2026 12:09:15 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63LD6UcJ1536364; Tue, 21 Apr 2026 16:09:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ESacX6
- yflW6c4pMIefr+Ys/Nu9plGgVta10gtDCFf8w=; b=YEqtPNM4keQhzt6veEMrFe
- SwVlfQfFwSUry3ORs80kVuuLNzb5OkeJEdXeXZ8dLFOhO2bAs6sIxQjU/fC+dr7U
- Cn3he7bEqcSj5r/U6LbDidoUbH8NO3l+w+eQpiBNI04fq7kVGZfpzUEzrogxd6tl
- piuSEMs3Bci/l/gHd7OxdJgL4tNl9fxbyvlEJ6cy2cdBiAA3GQuwYKiaZp4gZwgQ
- DzADfcQW3eGtJc9c7tSYQGK46mNSlAGTbKLTLTxuzegeTWh6melBQxyMG1/C7U0x
- XectJmsJMy7GWPPCnEewEqzZZLPRI5/GnkZsWuxrojDkyNLuib5rNgqSG1Wci8lg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dm2k6me3f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Apr 2026 16:09:04 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63LG5MS9003242;
- Tue, 21 Apr 2026 16:09:04 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dmm9q1hp2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Apr 2026 16:09:04 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63LG92fR8258226
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Apr 2026 16:09:02 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C8D358062;
- Tue, 21 Apr 2026 16:09:02 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A944B58052;
- Tue, 21 Apr 2026 16:09:01 +0000 (GMT)
-Received: from [9.61.174.150] (unknown [9.61.174.150])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 21 Apr 2026 16:09:01 +0000 (GMT)
-Message-ID: <01548ef2-864a-4121-afd6-cf7add6fa3d8@linux.ibm.com>
-Date: Tue, 21 Apr 2026 12:09:01 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wFDhu-0000FF-Va
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 12:12:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776787933;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HaurCmmcFcdQqODCgdgVOtbs7i0XHZRM1ttP+Dd/wVI=;
+ b=LPzFuJe4NvC0sYrkIkICyd48gBASD4agI+aYSpbtfcMDtJRnZ7HLn9CbFRbJjh3oSRkxV6
+ H/8vzVWLy6gQBC8X5AMvh/pZr3gGT+b/NwM4te3FhrqN4mAF2n4kAncxApQiLhwDpros9p
+ d5yfSQVGearvBt6uyj6Gn6YWRpCPZR0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-pWNiQMyoNfeU1BPgLa0LSA-1; Tue,
+ 21 Apr 2026 12:12:07 -0400
+X-MC-Unique: pWNiQMyoNfeU1BPgLa0LSA-1
+X-Mimecast-MFC-AGG-ID: pWNiQMyoNfeU1BPgLa0LSA_1776787926
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2DF961955F0B; Tue, 21 Apr 2026 16:12:06 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.44.49.173])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 59AAC180045E; Tue, 21 Apr 2026 16:12:04 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, jsnow@redhat.com,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: [PATCH 2/7] block: Add blk_co_start/end_request() and
+ BDRV_REQ_NO_QUEUE
+Date: Tue, 21 Apr 2026 18:11:27 +0200
+Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
+In-Reply-To: <20260421161132.99878-1-kwolf@redhat.com>
+References: <20260421161132.99878-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/15] s390x/pci: Implement migration for emulated
- devices
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260411022618.2136588-1-kshk@linux.ibm.com>
- <20260411022618.2136588-15-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260411022618.2136588-15-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=L78theT8 c=1 sm=1 tr=0 ts=69e7a120 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=x-B4hQBy79GTlnKUhDoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIxMDE1NyBTYWx0ZWRfX/5D+p0Kk/MtZ
- 0veki3IppYg3NQ2hN2ac5De1HHDT0wflvhTMfGXBBDE+rRHkXksH+yfcKQFjXAhBzC43waJCxln
- bqHkuFaGcKnnju+X3qBWGmrxvmZCoSbu+UFno0QScjOS0Vm+EQ6Q4XWVseiZklr5oFAw65KGv+0
- mw+IVep1nmCCYPCw5IsKPKbH+ZgTHyuTBDPeP/TrwNHZ0qYV4SAfj9+CStGKHu8srQBk9LQU9Qd
- Yh8EROUWiScq3YXtox2iYTVHZXfHJWahzBSLQ2IhLfuN4G1RTJmNKExr+sBW3Xf1w2IdSW/olQk
- 4e+umBBxFlHXVmL6A8AEn8SDuThuq3Q8RLvNkXe52uD5lUe7SMvpbjb6Xo8xlynOZpAhjRzZkcW
- ud3qTm9lbDdsdaIvkoEHeMfOUVl4tnvgwEDEuXzmHzIJ0RTusgM+7KhecIkbI7L8FsmL8jum7p1
- 2IYK2JG9sPKuy/IKN4Q==
-X-Proofpoint-GUID: 5ecpk8mwcHEqdAUfAJMPUEYOwTcsdCzf
-X-Proofpoint-ORIG-GUID: 5ecpk8mwcHEqdAUfAJMPUEYOwTcsdCzf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-21_03,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604210157
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,32 +82,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/10/26 10:26 PM, Konstantin Shkolnyy wrote:
-> Implement zPCI device state migration, consequently enabling migration
-> of VMs that have emulated PCI devices, whether virtio or not.
-> Migration is allowed for devices whose function handle has the
-> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
-> state of its zPCI emulator.
+If a device uses blk_inc/dec_in_flight() in order to build macro
+operations that involve multiple requests for the block layer and that
+need to be completed as a unit before the BlockBackend can be considered
+drained, it sets the stage for a deadlock: When a drain is requested,
+the inner request at the BlockBackend level will be queued in
+blk_wait_while_drained() and wait until the drained section ends, but at
+the same time, drain_begin can only return if the whole macro operation
+at the device level has completed.
 
-Commit message should reference that this will enable emulated PCI
-migration starting with s390-ccw-virtio-11.1
+Introduce a new interface to allow implementing the logic correctly:
+Instead of queueing individual requests, blk_co_start_request() calls
+blk_wait_while_drained() once at the beginning. The individual requests
+must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
+the deadlock; being wrapped in blk_co_start/end_request() makes sure
+that drain_begin waits for them and they don't sneak in when the
+BlockBackend is supposed to already be quiescent.
 
-> 
-> Passthrough devices will continue to block migration.
-> 
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ include/block/block-common.h      | 11 ++++++++-
+ include/system/block-backend-io.h |  2 ++
+ block/block-backend.c             | 38 +++++++++++++++++++++++--------
+ 3 files changed, 41 insertions(+), 10 deletions(-)
 
-[...]
-
-> +static void s390_clear_emul_dev_migration_blocker(S390pciState *s)
-> +{
-> +    if (s->migr_blocker) {
-> +        migrate_del_blocker(&s->migr_blocker);
-> +        error_free(s->migr_blocker);
-> +        s->migr_blocker = NULL;
-
-It looks like migrate_del_blocker() already called error_free() and set
-the value to NULL so you don't need these 2 lines.
-
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index c8c626daeaa..895ea175413 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -215,8 +215,17 @@ typedef enum {
+      */
+     BDRV_REQ_NO_WAIT = 0x400,
+ 
++    /*
++     * Used between blk_co_start_request() and blk_end_request() to avoid
++     * that the request waits in a drained BlockBackend until the drained
++     * section ends. Waiting would cause a deadlock because drain waits for
++     * blk_end_request() to be called, but the request never completes
++     * because it waits for the drain to end.
++     */
++    BDRV_REQ_NO_QUEUE = 0x800,
++
+     /* Mask of valid flags */
+-    BDRV_REQ_MASK               = 0x7ff,
++    BDRV_REQ_MASK               = 0xfff,
+ } BdrvRequestFlags;
+ 
+ #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
+diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
+index 6d5ac476fc0..0248c1c36e2 100644
+--- a/include/system/block-backend-io.h
++++ b/include/system/block-backend-io.h
+@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+ 
+ void blk_inc_in_flight(BlockBackend *blk);
+ void blk_dec_in_flight(BlockBackend *blk);
++void coroutine_fn blk_co_start_request(BlockBackend *blk);
++void blk_end_request(BlockBackend *blk);
+ 
+ bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
+ bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 99446571201..ee00440e28d 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -82,6 +82,7 @@ struct BlockBackend {
+     QemuMutex queued_requests_lock; /* protects queued_requests */
+     CoQueue queued_requests;
+     bool disable_request_queuing; /* atomic */
++    int start_request_count; /* atomic */
+ 
+     VMChangeStateEntry *vmsh;
+     bool force_allow_inactivate;
+@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
+ }
+ 
+ /* To be called between exactly one pair of blk_inc/dec_in_flight() */
+-static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
++static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
++                                                BdrvRequestFlags flags)
+ {
+     assert(blk->in_flight > 0);
+ 
++    if (flags & BDRV_REQ_NO_QUEUE) {
++        assert(qatomic_read(&blk->start_request_count));
++        return;
++    }
++
+     if (qatomic_read(&blk->quiesce_counter) &&
+         !qatomic_read(&blk->disable_request_queuing)) {
+         /*
+@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
+     aio_wait_kick();
+ }
+ 
++void coroutine_fn blk_co_start_request(BlockBackend *blk)
++{
++    blk_inc_in_flight(blk);
++    blk_wait_while_drained(blk, 0);
++    qatomic_inc(&blk->start_request_count);
++}
++
++void blk_end_request(BlockBackend *blk)
++{
++    qatomic_dec(&blk->start_request_count);
++    blk_dec_in_flight(blk);
++}
++
+ static void error_callback_bh(void *opaque)
+ {
+     struct BlockBackendAIOCB *acb = opaque;
+@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
+ {
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
+     int ret;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, bytes);
+@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
+ static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
+ {
+     IO_CODE();
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk); /* increase before waiting */
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, len);
+@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+-- 
+2.53.0
 
 
