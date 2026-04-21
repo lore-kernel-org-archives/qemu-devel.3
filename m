@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 587CCF327B1
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F12EF327B1
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 06:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF4yc-0004C2-N8; Tue, 21 Apr 2026 02:52:54 -0400
+	id 1wF4yR-0003nK-Vu; Tue, 21 Apr 2026 02:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yb-00049L-7v
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:53 -0400
+ id 1wF4yP-0003lL-Ky
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:41 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wF4yX-00008O-Tu
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:52 -0400
+ id 1wF4yN-000088-KT
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 02:52:41 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id CF9A61A1CAB;
- Tue, 21 Apr 2026 08:52:36 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 9FEB71A1CD8;
+ Tue, 21 Apr 2026 08:52:35 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 9A6BD1A1CCC;
- Tue, 21 Apr 2026 08:52:36 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6B6501A1CBF;
+ Tue, 21 Apr 2026 08:52:35 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 16BF81800086;
- Tue, 21 Apr 2026 14:52:36 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id DA7A11800086;
+ Tue, 21 Apr 2026 14:52:34 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv7 15/15] hw/arm/fsl-imx8mm: Adding functional testing of
- iMX8MM emulation
-Date: Tue, 21 Apr 2026 12:22:26 +0530
-Message-Id: <20260421065226.3907745-16-gaurav.sharma_7@nxp.com>
+Subject: [PATCHv7 12/15] hw/arm/fsl-imx8mm: Adding support for General Purpose
+ Timers
+Date: Tue, 21 Apr 2026 12:22:23 +0530
+Message-Id: <20260421065226.3907745-13-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
 References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
@@ -67,124 +67,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added script that would validate the iMX8MM emulation by checking the
-linux console log. If it succeeds, it will return:-
+It enables emulation of GPT in iMX8MM
+Added GPT IRQ lines
 
-ok 1 test_imx8mm_evk.Imx8mmEvkMachine.test_aarch64_imx8mm_evk_usdhc
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- MAINTAINERS                                 |  1 +
- tests/functional/aarch64/meson.build        |  2 +
- tests/functional/aarch64/test_imx8mm_evk.py | 67 +++++++++++++++++++++
- 3 files changed, 70 insertions(+)
- create mode 100755 tests/functional/aarch64/test_imx8mm_evk.py
+ hw/arm/Kconfig              |  1 +
+ hw/arm/fsl-imx8mm.c         | 54 +++++++++++++++++++++++++++++++++++++
+ hw/timer/imx_gpt.c          | 26 ++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h | 11 ++++++++
+ include/hw/timer/imx_gpt.h  |  2 ++
+ 5 files changed, 94 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e254e34882..beb118f0a0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -924,6 +924,7 @@ F: hw/arm/fsl-imx8mm.c
- F: hw/arm/imx8mm-evk.c
- F: include/hw/arm/fsl-imx8mm.h
- F: docs/system/arm/imx8m.rst
-+F: tests/functional/aarch64/test_imx8mm_evk.py
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 946c9eb693..07a3f3273b 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -627,6 +627,7 @@ config FSL_IMX8MM
+     select FSL_IMX8MP_CCM
+     select IMX
+     select IMX_I2C
++    select OR_IRQ
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 34645555d6..3736191257 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -180,6 +180,13 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+     }
  
- MCIMX8MP-EVK / i.MX8MP
- M: Bernhard Beschow <shentey@gmail.com>
-diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-index 7ea8c22b04..1067f181f2 100644
---- a/tests/functional/aarch64/meson.build
-+++ b/tests/functional/aarch64/meson.build
-@@ -5,6 +5,7 @@ test_aarch64_timeouts = {
-   'aspeed_ast2700a2' : 600,
-   'aspeed_ast2700fc' : 600,
-   'device_passthrough' : 720,
-+  'imx8mm_evk' : 240,
-   'imx8mp_evk' : 240,
-   'raspi4' : 480,
-   'reverse_debug' : 180,
-@@ -29,6 +30,7 @@ tests_aarch64_system_thorough = [
-   'aspeed_ast2700fc',
-   'device_passthrough',
-   'hotplug_pci',
-+  'imx8mm_evk',
-   'imx8mp_evk',
-   'kvm',
-   'multiprocess',
-diff --git a/tests/functional/aarch64/test_imx8mm_evk.py b/tests/functional/aarch64/test_imx8mm_evk.py
-new file mode 100755
-index 0000000000..224fe4669e
---- /dev/null
-+++ b/tests/functional/aarch64/test_imx8mm_evk.py
-@@ -0,0 +1,67 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++    for (i = 0; i < FSL_IMX8MM_NUM_GPTS; i++) {
++        g_autofree char *name = g_strdup_printf("gpt%d", i + 1);
++        object_initialize_child(obj, name, &s->gpt[i], TYPE_IMX8MM_GPT);
++    }
++    object_initialize_child(obj, "gpt5-gpt6-irq", &s->gpt5_gpt6_irq,
++                            TYPE_OR_IRQ);
 +
-+from qemu_test import LinuxKernelTest, Asset
+     for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
+         g_autofree char *name = g_strdup_printf("i2c%d", i + 1);
+         object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
+@@ -385,6 +392,52 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].addr,
+                                 &s->ocram);
+ 
++    /* GPTs */
++    object_property_set_int(OBJECT(&s->gpt5_gpt6_irq), "num-lines", 2,
++                            &error_abort);
++    if (!qdev_realize(DEVICE(&s->gpt5_gpt6_irq), NULL, errp)) {
++        return;
++    }
 +
-+class Imx8mmEvkMachine(LinuxKernelTest):
++    qdev_connect_gpio_out(DEVICE(&s->gpt5_gpt6_irq), 0,
++                          qdev_get_gpio_in(gicdev, FSL_IMX8MM_GPT5_GPT6_IRQ));
 +
-+    ASSET_IMAGE = Asset(
-+        ('https://cloud.debian.org/images/cloud/bookworm/20231210-1590/'
-+         'debian-12-generic-arm64-20231210-1590.tar.xz'),
-+        '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b359')
++    for (i = 0; i < FSL_IMX8MM_NUM_GPTS; i++) {
++        hwaddr gpt_addrs[FSL_IMX8MM_NUM_GPTS] = {
++            fsl_imx8mm_memmap[FSL_IMX8MM_GPT1].addr,
++            fsl_imx8mm_memmap[FSL_IMX8MM_GPT2].addr,
++            fsl_imx8mm_memmap[FSL_IMX8MM_GPT3].addr,
++            fsl_imx8mm_memmap[FSL_IMX8MM_GPT4].addr,
++            fsl_imx8mm_memmap[FSL_IMX8MM_GPT5].addr,
++            fsl_imx8mm_memmap[FSL_IMX8MM_GPT6].addr,
++        };
 +
-+    KERNEL_OFFSET = 0x51000000
-+    KERNEL_SIZE = 32622528
-+    INITRD_OFFSET = 0x76000000
-+    INITRD_SIZE = 30987766
-+    DTB_OFFSET = 0x64DB5000
-+    DTB_SIZE = 36812
++        s->gpt[i].ccm = IMX_CCM(&s->ccm);
 +
-+    def extract(self, in_path, out_path, offset, size):
-+        try:
-+            with open(in_path, "rb") as source:
-+                source.seek(offset)
-+                data = source.read(size)
-+            with open(out_path, "wb") as target:
-+                target.write(data)
-+        except (IOError, ValueError) as e:
-+            self.log.error(f"Failed to extract {out_path}: {e}")
-+            raise
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
++            return;
++        }
 +
-+    def setUp(self):
-+        super().setUp()
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt[i]), 0, gpt_addrs[i]);
 +
-+        self.image_path = self.scratch_file("disk.raw")
-+        self.kernel_path = self.scratch_file("linux")
-+        self.initrd_path = self.scratch_file("initrd.zstd")
-+        self.dtb_path = self.scratch_file("imx8mm-evk.dtb")
++        if (i < FSL_IMX8MM_NUM_GPTS - 2) {
++            static const unsigned int gpt_irqs[FSL_IMX8MM_NUM_GPTS - 2] = {
++                FSL_IMX8MM_GPT1_IRQ,
++                FSL_IMX8MM_GPT2_IRQ,
++                FSL_IMX8MM_GPT3_IRQ,
++                FSL_IMX8MM_GPT4_IRQ,
++            };
 +
-+        self.archive_extract(self.ASSET_IMAGE)
-+        self.extract(self.image_path, self.kernel_path,
-+                     self.KERNEL_OFFSET, self.KERNEL_SIZE)
-+        self.extract(self.image_path, self.initrd_path,
-+                     self.INITRD_OFFSET, self.INITRD_SIZE)
-+        self.extract(self.image_path, self.dtb_path,
-+                     self.DTB_OFFSET, self.DTB_SIZE)
++            sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
++                               qdev_get_gpio_in(gicdev, gpt_irqs[i]));
++        } else {
++            int irq = i - FSL_IMX8MM_NUM_GPTS + 2;
 +
-+    def test_aarch64_imx8mm_evk_usdhc(self):
-+        self.require_accelerator("tcg")
-+        self.set_machine('imx8mm-evk')
-+        self.vm.set_console(console_index=1)
-+        self.vm.add_args('-m', '2G',
-+                         '-smp', '4',
-+                         '-kernel', self.kernel_path,
-+                         '-initrd', self.initrd_path,
-+                         '-dtb', self.dtb_path,
-+                         '-append', 'root=/dev/mmcblk2p1',
-+                         '-drive', f'file={self.image_path},if=sd,bus=2,'
-+                                    'format=raw,id=mmcblk2,snapshot=on')
++            sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
++                               qdev_get_gpio_in(DEVICE(&s->gpt5_gpt6_irq), irq));
++        }
++    }
 +
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Welcome to ')
+     /* I2Cs */
+     for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
+         static const struct {
+@@ -555,6 +608,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_GIC_DIST:
+         case FSL_IMX8MM_GIC_REDIST:
+         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
++        case FSL_IMX8MM_GPT1 ... FSL_IMX8MM_GPT6:
+         case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
+         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
+         case FSL_IMX8MM_PCIE1:
+diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
+index 168cadcb3f..cdc0257126 100644
+--- a/hw/timer/imx_gpt.c
++++ b/hw/timer/imx_gpt.c
+@@ -6,6 +6,7 @@
+  * Originally written by Hans Jiang
+  * Updated by Peter Chubb
+  * Updated by Jean-Christophe Dubois <jcd@tribudubois.net>
++ * Updated by Gaurav Sharma <gaurav.sharma_7@nxp.com>
+  *
+  * This code is licensed under GPL version 2 or later.  See
+  * the COPYING file in the top-level directory.
+@@ -137,6 +138,17 @@ static const IMXClk imx8mp_gpt_clocks[] = {
+     CLK_NONE,      /* 111 not defined */
+ };
+ 
++static const IMXClk imx8mm_gpt_clocks[] = {
++    CLK_NONE,      /* 000 No clock source */
++    CLK_IPG,       /* 001 ipg_clk, 532MHz */
++    CLK_IPG_HIGH,  /* 010 ipg_clk_highfreq */
++    CLK_EXT,       /* 011 External clock */
++    CLK_32k,       /* 100 ipg_clk_32k */
++    CLK_HIGH,      /* 101 ipg_clk_16M */
++    CLK_NONE,      /* 110 not defined */
++    CLK_NONE,      /* 111 not defined */
++};
 +
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+ /* Must be called from within ptimer_transaction_begin/commit block */
+ static void imx_gpt_set_freq(IMXGPTState *s)
+ {
+@@ -570,6 +582,13 @@ static void imx8mp_gpt_init(Object *obj)
+     s->clocks = imx8mp_gpt_clocks;
+ }
+ 
++static void imx8mm_gpt_init(Object *obj)
++{
++    IMXGPTState *s = IMX_GPT(obj);
++
++    s->clocks = imx8mm_gpt_clocks;
++}
++
+ static const TypeInfo imx25_gpt_info = {
+     .name = TYPE_IMX25_GPT,
+     .parent = TYPE_SYS_BUS_DEVICE,
+@@ -608,6 +627,12 @@ static const TypeInfo imx8mp_gpt_info = {
+     .instance_init = imx8mp_gpt_init,
+ };
+ 
++static const TypeInfo imx8mm_gpt_info = {
++    .name = TYPE_IMX8MM_GPT,
++    .parent = TYPE_IMX25_GPT,
++    .instance_init = imx8mm_gpt_init,
++};
++
+ static void imx_gpt_register_types(void)
+ {
+     type_register_static(&imx25_gpt_info);
+@@ -616,6 +641,7 @@ static void imx_gpt_register_types(void)
+     type_register_static(&imx6ul_gpt_info);
+     type_register_static(&imx7_gpt_info);
+     type_register_static(&imx8mp_gpt_info);
++    type_register_static(&imx8mm_gpt_info);
+ }
+ 
+ type_init(imx_gpt_register_types)
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index fd62b19a87..607ac86666 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -18,10 +18,12 @@
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+ #include "hw/misc/imx8mp_ccm.h"
++#include "hw/or-irq.h"
+ #include "hw/pci-host/designware.h"
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
++#include "hw/timer/imx_gpt.h"
+ #include "hw/watchdog/wdt_imx2.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
+@@ -36,6 +38,7 @@ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_CPUS         = 4,
+     FSL_IMX8MM_NUM_ECSPIS       = 3,
+     FSL_IMX8MM_NUM_GPIOS        = 5,
++    FSL_IMX8MM_NUM_GPTS         = 6,
+     FSL_IMX8MM_NUM_I2CS         = 4,
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
+@@ -48,6 +51,7 @@ struct FslImx8mmState {
+ 
+     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
+     GICv3State         gic;
++    IMXGPTState        gpt[FSL_IMX8MM_NUM_GPTS];
+     IMXGPIOState       gpio[FSL_IMX8MM_NUM_GPIOS];
+     IMX8MPCCMState     ccm;
+     IMX8MPAnalogState  analog;
+@@ -60,6 +64,7 @@ struct FslImx8mmState {
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
++    OrIRQState         gpt5_gpt6_irq;
+ };
+ 
+ enum FslImx8mmMemoryRegions {
+@@ -192,6 +197,12 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_I2C3_IRQ     = 37,
+     FSL_IMX8MM_I2C4_IRQ     = 38,
+ 
++    FSL_IMX8MM_GPT1_IRQ      = 55,
++    FSL_IMX8MM_GPT2_IRQ      = 54,
++    FSL_IMX8MM_GPT3_IRQ      = 53,
++    FSL_IMX8MM_GPT4_IRQ      = 52,
++    FSL_IMX8MM_GPT5_GPT6_IRQ = 51,
++
+     FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
+     FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
+     FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
+diff --git a/include/hw/timer/imx_gpt.h b/include/hw/timer/imx_gpt.h
+index 7f0d55b349..b5d73c5e4b 100644
+--- a/include/hw/timer/imx_gpt.h
++++ b/include/hw/timer/imx_gpt.h
+@@ -6,6 +6,7 @@
+  * Originally written by Hans Jiang
+  * Updated by Peter Chubb
+  * Updated by Jean-Christophe Dubois <jcd@tribudubois.net>
++ * Updated by Gaurav Sharma <gaurav.sharma_7@nxp.com>
+  *
+  * Permission is hereby granted, free of charge, to any person obtaining a copy
+  * of this software and associated documentation files (the "Software"), to deal
+@@ -81,6 +82,7 @@
+ #define TYPE_IMX6UL_GPT "imx6ul.gpt"
+ #define TYPE_IMX7_GPT "imx7.gpt"
+ #define TYPE_IMX8MP_GPT "imx8mp.gpt"
++#define TYPE_IMX8MM_GPT "imx8mm.gpt"
+ 
+ #define TYPE_IMX_GPT TYPE_IMX25_GPT
+ 
 -- 
 2.34.1
 
