@@ -4,87 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27523F8FA98
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 15:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FFCF8FA90
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 15:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFDOr-0001pp-Kq; Tue, 21 Apr 2026 11:52:33 -0400
+	id 1wFDSo-0002fQ-60; Tue, 21 Apr 2026 11:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wFDOp-0001pb-Ms
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 11:52:31 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wFDOn-000258-QT
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 11:52:31 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-82d0b68837aso2872031b3a.2
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 08:52:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776786748; x=1777391548; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3xAss2Zrtrg0dH9Eea4Ig0ZJK+cZEfXpf8g8d6E127s=;
- b=RzvqIZGf82Vm3aWGrHxg5iFogZdpjYHNBA5oJBDlNRAXcw0IHB31VpV4u32Ew39hLb
- A1ILIgKn0c20P9Udkt0XG54yauL9aLpbl1xUiAEsd1mJfEbMjtXoIz+wt06gDL5buDSY
- HWgdlx7lyf1iTK+P5HIyRg81IsDahroQqDLPr5IHc+eQW3yqRYJ/jnSFMGD5Iim4YpbV
- c9P9CRSSmLn18u1J4vlM2ZFUU1HaJYubAmPiAf1zgHkEplEmuY3Rmq8c7Z1J6lvr+buX
- yieEDjfY0FBpTLqKuqVDnbT6yaMIkcP7/nn2s3L2DS15ImaKQWIFa1yPGMSxDjFFURcP
- zT7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776786748; x=1777391548;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3xAss2Zrtrg0dH9Eea4Ig0ZJK+cZEfXpf8g8d6E127s=;
- b=c51YMrW7zP21wDxyPUayvWklhn8h7VmFbTeQ4FC296+qdeyZfmebhxzKOgQFKJN2UT
- h6ivW7xr2lW26fxvW30JNIb3RfTLn0S9v3GtvfwpF1huy+0Md21apNqaWDCzCuzZN/ys
- w8duDkTCLllDSe9XhyG7qcsh3X/wzDcKsRFD221cpF2sowrtS8eQ0PJ9fH1t8tdF/1Tz
- CCjc0Z9irggJ6MtEJEmJSGRAyE1CU4LD/pw4/HrGIM8vf+wbI/5VpKlS/vIZoY4JrE3T
- xmkAk0j8dFJ28vLGKB9trpKsjj+J76uJhIYW80oWLeZG2FgLpClv1OG67T9+XHE87YGI
- Z7gA==
-X-Gm-Message-State: AOJu0Yw//5LIhr3YydI2VJQrXAWuW3fjCnQ9GX2gPQu2WHL8AmRqnPio
- WDAj/VdHbMzgGANdluObtvt6naVAv0zKNMQI+Ukz1RZAFAZ1SpYVO0bI5sBvAGT1
-X-Gm-Gg: AeBDieswKTais8l0yk9z24Qi7chcpfTqnm4EJkxpD6ZYA0sm4iup7ciTcCAJ/L68yz7
- IiZnqMhTWiuqVsp8n64Mi+3IcpDF6alsMIpj7/1LFLeMHQ2/inMAqB/zXjk69NOb1zNK+8kai31
- 20bQktFbKz1FlRh4N2aRPM7uiSgTfm+Jb5pTbwuUswWca8z6tCp2YtPHdjtlRUaZbUDs+G8C0C1
- GmtghPuw9UBnhgMnurSeiwPH//oCX+irqEbpt9wTX9OHhNrFbFpuxvN2aYyIO00rvCRUa1oRMF/
- I3TFNoZu1uNuyfIBbcWc/SvnGF3LTfXYjV8HfcLKnIjlPU25R4Tr01Ra6W4ZChCPv6o8JHS4wIz
- yWHm9snYhlskpqSEUvcBvtUd3eVjca1CZUQW90SVhUxZyhfrVl8gJDicGlFPb57OZTKHWClitb3
- Vp8oas7HpuE6clZMuOcgQFMYhu+FBJM/thmK7tGdxsGG4Nr2HYqGxhbODAzQ==
-X-Received: by 2002:a05:6a00:908a:b0:81f:9b4c:81c0 with SMTP id
- d2e1a72fcca58-82f8c90c380mr21266848b3a.41.1776786747592; 
- Tue, 21 Apr 2026 08:52:27 -0700 (PDT)
-Received: from localhost.localdomain ([42.114.219.141])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f8e981a0asm14848193b3a.3.2026.04.21.08.52.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 08:52:27 -0700 (PDT)
-From: Trieu Huynh <vikingtc4@gmail.com>
-X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH] migration/vmstate: replace NULL pointer assert with proper
- error
-Date: Tue, 21 Apr 2026 22:52:19 +0700
-Message-ID: <20260421155219.14506-1-viking4@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1wFDSl-0002ej-GV; Tue, 21 Apr 2026 11:56:35 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1wFDSj-0003JB-GB; Tue, 21 Apr 2026 11:56:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=tux/oh3wBPkdouV7SFgL9r8W8VUWDFSoRd15nfBxmrk=; b=A9T/9Lrr5SfM
+ bJhieSxqX3VcBQnUNyJDfbYehWF7F76ucUnXVNyFxPeVWRaLcO82k+SI5w9ZE1yvna1P53wcuRu9R
+ l+dN/eZ2WWqorNJTdvQ3xORssEgQj7y67LMDqCpNXfps7SaVXN/CmlpXacRjfQxpIEGu39Ek+a3I+
+ HIb31CiWPIwtz+7wBUyHYNcJWebKwB8jpxhOYnN62HmMqcpjZNvJzpt0ImV6UMhFxmVQc3wfSk1UC
+ TZxTRrlNY1mSM3wg95uw259YN9dO9gh7aJ0VovS33GlYFIqnVQu1lbaOCJya1pMg4XB5Gt8GvhQtj
+ xlX1TRqYMCZSsawN1M567w==;
+Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=iris.sw.ru)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <den@openvz.org>) id 1wFDQ2-001k3k-24;
+ Tue, 21 Apr 2026 17:56:19 +0200
+To: qemu-devel@nongnu.org,
+	qemu-block@nongnu.org,
+	qemu-stable@nongnu.org
+Cc: den@openvz.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 1/2] block/io: serialise discard and write-zeroes against
+ in-flight writes
+Date: Tue, 21 Apr 2026 17:56:27 +0200
+Message-ID: <20260421155628.3600671-2-den@openvz.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260421155628.3600671-1-den@openvz.org>
+References: <20260421155628.3600671-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
+ helo=relay.virtuozzo.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_SOFTFAIL=0.665 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,110 +64,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Denis V. Lunev" <den@openvz.org>
+From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Trieu Huynh <vikingtc4@gmail.com>
+qcow2's write path drops s->lock around the data I/O of an allocating
+write. A concurrent discard (or MAY_UNMAP write-zeroes) on the same
+guest offset lands the cluster-free operation in that window. The
+original writer then reacquires the lock and unconditionally writes
+L2[G] = alloc_offset | OFLAG_COPIED on its now-stale l2meta, binding
+the L2 entry to a freed cluster:
 
-vmstate_load_state() contains an assert added in commit
-("migration/vmstate: split up vmstate_base_addr" [1])
-to catch NULL pointer dereferences early:
+  WRITE coroutine                       DISCARD coroutine
+  ---------------                       -----------------
+  qcow2_co_pwritev_part:
+    lock(s->lock)
+    qcow2_alloc_host_offset:
+      handle_copied reads L2[G] = C | OFLAG_COPIED
+      builds l2meta { alloc=C, keep_old_clusters=true }
+    unlock(s->lock)                 -->
+    bdrv_co_pwritev_part (data I/O)    lock(s->lock)
+                                       qcow2_co_pdiscard on G:
+                                         discard_in_l2_slice
+                                           set_l2_entry(G, 0)
+                                           free_any_cluster(C):
+                                             rc(C) 1 -> 0
+                                       unlock(s->lock)
+    lock(s->lock)
+    qcow2_handle_l2meta(link_l2=true):
+      qcow2_alloc_cluster_link_l2:
+        set_l2_entry(G, C | OFLAG_COPIED)  <- stale alloc onto
+                                              freed cluster
 
-  assert(first_elem || !n_elems || !size);
+The next allocator pass re-hands C out on rc=0, so we end up with two
+L2 entries aliasing one host cluster. On disk this shows up in
+qemu-img check as refcount=0 with a live OFLAG_COPIED reference or as
+refcount < reference; at runtime the next discard on either alias
+prints "qcow2_free_clusters failed: Invalid argument" on stderr with
+no guest-visible error.
 
-However, the assert fires as an unrecoverable crash in a valid user
-scenario, for instance: loading a snapshot saved with -icount auto
-into a QEMU started without -icount. The "timer/icount/warp_timer"
-subsection is present in the stream, but icount_warp_timer is NULL
-because icount was never initialized. QEMU aborts with:
+Mark both discards and all write-zeroes (with or without MAY_UNMAP)
+as BDRV_REQ_SERIALISING in the generic block layer. Their
+tracked_request then waits for overlapping in-flight writes,
+including non-serialising ones, to finish their format-driver commit
+before any L2/refcount mutation happens.
 
-  qemu-system-x86_64: ../migration/vmstate.c:185:
-  vmstate_load_state: Assertion `first_elem || !n_elems || !size'
-  failed.
-
-Replace the assert with a proper error_setg() and -EINVAL return so
-QEMU reports a clear diagnostic instead of crashing.
-
-Also remove the error_prepend() in vmstate_subsection_load() that
-wrapped the error at each subsection level, producing a redundant and
-noisy error chain. The original error message is now propagated as-is.
-
-[1] https://lore.kernel.org/qemu-devel/20170228124056.5074-4-dgilbert@redhat.com/
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2736
-
-Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
 ---
-Steps to reproduce:
-* 1. Start src with icount config:
-./qemu-system-x86_64 \
-  -icount auto \
-  -<other_options>
+ block/io.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-* 2. Save snapshot
-(qemu) savevm snap1
-
-* 3. Start dest without icount config:
-./qemu-system-x86_64 \
-  -<other_options>
-
-* 4. Load snapshot
-* As-is:
-~ # QEMU 10.2.94 monitor - type 'help' for more information
-(qemu) loadvm snap1
-qemu-system-x86_64: ../migration/vmstate.c:185: vmstate_load_state:
-Assertion `first_elem || !n_elems || !size' failed.
-Aborted (core dumped)
-
-* To-be:
-** Before removing error_prepend()
-~ # QEMU 10.2.94 monitor - type 'help' for more information
-(qemu) loadvm snap1
-Error: error while loading state for instance 0x0 of device 'timer':
-Loading VM subsection 'timer/icount' in 'timer' failed: -22:
-Loading VM subsection 'timer/icount/warp_timer' in 'timer/icount' failed: -22:
-VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
-is a NULL pointer but snapshot contains data for it.
-
-** After removing error_prepend()
-~ # QEMU 10.2.94 monitor - type 'help' for more information
-(qemu) loadvm snap1
-Error: error while loading state for instance 0x0 of device 'timer':
-VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
-is a NULL pointer but snapshot contains data for it.
-
- migration/vmstate.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 4d28364f7b..32ecc8ed35 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -182,7 +182,13 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-             vmstate_handle_alloc(first_elem, field, opaque);
-             if (field->flags & VMS_POINTER) {
-                 first_elem = *(void **)first_elem;
--                assert(first_elem || !n_elems || !size);
-+                if (!first_elem && n_elems && size) {
-+                    error_setg(errp,
-+                               "VM load of device '%s': field '%s' is a NULL "
-+                               "pointer but snapshot contains data for it.",
-+                               vmsd->name, field->name);
-+                    return -EINVAL;
-+                }
-             }
-             for (i = 0; i < n_elems; i++) {
-                 void *curr_elem = first_elem + size * i;
-@@ -651,9 +657,6 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-         ret = vmstate_load_state(f, sub_vmsd, opaque, version_id, errp);
-         if (ret) {
-             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(child)");
--            error_prepend(errp,
--                          "Loading VM subsection '%s' in '%s' failed: %d: ",
--                          idstr, vmsd->name, ret);
-             return ret;
-         }
+diff --git a/block/io.c b/block/io.c
+index dd5f13c694..9f23029b95 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -2097,6 +2097,16 @@ bdrv_aligned_pwritev(BdrvChild *child, BdrvTrackedRequest *req,
+     max_transfer = QEMU_ALIGN_DOWN(MIN_NON_ZERO(bs->bl.max_transfer, INT_MAX),
+                                    align);
+ 
++    /*
++     * Zero-writes (with or without MAY_UNMAP) mutate L2 entries / refcounts
++     * in the format driver and therefore race with concurrent in-flight
++     * regular writes that have dropped their internal mutex for the data
++     * I/O.  See the comment in bdrv_co_pdiscard(). Serialise them.
++     */
++    if (flags & BDRV_REQ_ZERO_WRITE) {
++        flags |= BDRV_REQ_SERIALISING;
++    }
++
+     ret = bdrv_co_write_req_prepare(child, offset, bytes, req, flags);
+ 
+     if (!ret && bs->detect_zeroes != BLOCKDEV_DETECT_ZEROES_OPTIONS_OFF &&
+@@ -3192,7 +3202,20 @@ int coroutine_fn bdrv_co_pdiscard(BdrvChild *child, int64_t offset,
+     bdrv_inc_in_flight(bs);
+     tracked_request_begin(&req, bs, offset, bytes, BDRV_TRACKED_DISCARD);
+ 
+-    ret = bdrv_co_write_req_prepare(child, offset, bytes, &req, 0);
++    /*
++     * Discards must serialise against overlapping in-flight writes.
++     * A format driver's write path may drop its internal mutex around
++     * the data I/O while still holding a pending cluster-allocation
++     * commit (see qcow2's handle_copied / qcow2_alloc_cluster_link_l2
++     * sequence).  A concurrent discard that clears L2 and drops the
++     * refcount during that window leaves the writer pointing at a
++     * freed cluster - the root of the refcount/reference aliasing
++     * corruption family.  Marking the discard serialising makes it wait
++     * for the in-flight write's tracked_request to complete before any
++     * L2/refcount mutation happens.
++     */
++    ret = bdrv_co_write_req_prepare(child, offset, bytes, &req,
++                                    BDRV_REQ_SERIALISING);
+     if (ret < 0) {
+         goto out;
      }
 -- 
-2.43.0
+2.51.0
 
 
