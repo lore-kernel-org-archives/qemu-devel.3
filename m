@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD171F55805
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54943F55805
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF3Zu-00085t-OF; Tue, 21 Apr 2026 01:23:18 -0400
+	id 1wF3Zz-0008Sf-5V; Tue, 21 Apr 2026 01:23:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wF3Ye-0007ZM-Qg; Tue, 21 Apr 2026 01:22:01 -0400
+ id 1wF3Yg-0007ZY-KX; Tue, 21 Apr 2026 01:22:02 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wF3Ya-0000fc-SZ; Tue, 21 Apr 2026 01:21:59 -0400
+ id 1wF3Ye-0000jU-Gv; Tue, 21 Apr 2026 01:22:02 -0400
 Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9ACB820B6F15;
- Mon, 20 Apr 2026 22:21:55 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9ACB820B6F15
+ by linux.microsoft.com (Postfix) with ESMTPSA id 617F220B6F1F;
+ Mon, 20 Apr 2026 22:21:57 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 617F220B6F1F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776748915;
- bh=aq6peFJqXAk4Wdw5L6TgML9sHcjISQM3jb5y79oWVCw=;
+ s=default; t=1776748917;
+ bh=TMVtmh/ACGMIWBY0kUMfU5jbSQ2Sl8D1oMQaMBRtJhw=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=JeOXtF85II8AVIwZZ2MrMVDkWd+BzX24GDOQJiri4l3lGCaULNwB3mksg7Il00CKD
- O0S8xhghW4KmPJ2ff2foaFDR0HsxeAkBzLlnrgweAr+QtAIm/awaBJr8UL2dvTOH1I
- LlT3UR+L0VSVciy5TmVjjXhZeoTaB+XSc2qu/Fp8=
+ b=B4NFK2f12ADmWzWQJNDa+8wDK4X9MQVlYRWIweewxKncAOUWOF1MAHFZRyG9c7zdy
+ 9xGF+hb9zSXa4AgEQhcO7u7bkOwCBZAs6drtsLKVcUmZKV9efbYhz5xTecMFlDqRSj
+ NyoTLqV8huVeNHDGXecjfR6aAehT3txJoawbKfjU=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Tue, 21 Apr 2026 05:21:49 +0000
-Subject: [PATCH v3 04/14] target/arm/mshv: implement vcpu state operations
- for ARM64
+Date: Tue, 21 Apr 2026 05:21:51 +0000
+Subject: [PATCH v3 06/14] accel/mshv: add arch-specific accelerator init hook
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260421-mshv_accel_arm64_supp-v3-4-469f544778ba@linux.microsoft.com>
+Message-Id: <20260421-mshv_accel_arm64_supp-v3-6-469f544778ba@linux.microsoft.com>
 References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
 In-Reply-To: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -75,249 +74,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for reading and writing ARM64 CPU registers in the MSHV
-accelerator. This includes functions to set and get registers,
-initialize and destroy VCPU state, and manage register state
-synchronization between QEMU and hypervisor.
+From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
 
-Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+Introduce mshv_arch_accel_init() as an arch-specific hook called early
+in mshv_init(), before VM creation. This allows each architecture to
+perform platform-specific initialization at accelerator init time.
+
+For arm64, the hook queries the hypervisor for the supported IPA bit
+size and validates it against the guest memory map via the machine's
+get_physical_address_range callback, following the same pattern used by
+HVF and WHPX. This also populates the memory map which comes in handy
+later when retreiving the vGIC layout.
+
+For x86, the hook calls mshv_init_mmio_emu() which was previously called
+directly from the common init path. Also move set_unimplemented_msr_action()
+and mshv_arch_post_init_vm() from mshv-cpu.c to the new mshv-all.c, as
+they are not vCPU-specific.
+
+Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- include/hw/hyperv/hvgdk_mini.h |  42 +++++++++++++
- target/arm/mshv/mshv-all.c     | 138 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 180 insertions(+)
+ accel/mshv/mshv-all.c        |  5 ++-
+ include/system/mshv_int.h    |  1 +
+ target/arm/mshv/mshv-all.c   | 25 ++++++++++----
+ target/i386/mshv/meson.build |  1 +
+ target/i386/mshv/mshv-all.c  | 80 ++++++++++++++++++++++++++++++++++++++++++++
+ target/i386/mshv/mshv-cpu.c  | 40 ----------------------
+ 6 files changed, 105 insertions(+), 47 deletions(-)
 
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index cb52cc9de2..dfe94050f4 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -13,6 +13,46 @@ typedef enum hv_register_name {
-     /* Pending Interruption Register */
-     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 44f35a1463..6940ad9989 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -434,7 +434,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
+         return -1;
+     }
  
-+#if defined(__aarch64__)
-+    HV_ARM64_REGISTER_XZR   = 0x0002FFFE,
-+    HV_ARM64_REGISTER_X0    = 0x00020000,
-+    HV_ARM64_REGISTER_X1    = 0x00020001,
-+    HV_ARM64_REGISTER_X2    = 0x00020002,
-+    HV_ARM64_REGISTER_X3    = 0x00020003,
-+    HV_ARM64_REGISTER_X4    = 0x00020004,
-+    HV_ARM64_REGISTER_X5    = 0x00020005,
-+    HV_ARM64_REGISTER_X6    = 0x00020006,
-+    HV_ARM64_REGISTER_X7    = 0x00020007,
-+    HV_ARM64_REGISTER_X8    = 0x00020008,
-+    HV_ARM64_REGISTER_X9    = 0x00020009,
-+    HV_ARM64_REGISTER_X10   = 0x0002000A,
-+    HV_ARM64_REGISTER_X11   = 0x0002000B,
-+    HV_ARM64_REGISTER_X12   = 0x0002000C,
-+    HV_ARM64_REGISTER_X13   = 0x0002000D,
-+    HV_ARM64_REGISTER_X14   = 0x0002000E,
-+    HV_ARM64_REGISTER_X15   = 0x0002000F,
-+    HV_ARM64_REGISTER_X16   = 0x00020010,
-+    HV_ARM64_REGISTER_X17   = 0x00020011,
-+    HV_ARM64_REGISTER_X18   = 0x00020012,
-+    HV_ARM64_REGISTER_X19   = 0x00020013,
-+    HV_ARM64_REGISTER_X20   = 0x00020014,
-+    HV_ARM64_REGISTER_X21   = 0x00020015,
-+    HV_ARM64_REGISTER_X22   = 0x00020016,
-+    HV_ARM64_REGISTER_X23   = 0x00020017,
-+    HV_ARM64_REGISTER_X24   = 0x00020018,
-+    HV_ARM64_REGISTER_X25   = 0x00020019,
-+    HV_ARM64_REGISTER_X26   = 0x0002001A,
-+    HV_ARM64_REGISTER_X27   = 0x0002001B,
-+    HV_ARM64_REGISTER_X28   = 0x0002001C,
-+    HV_ARM64_REGISTER_FP    = 0x0002001D,
-+    HV_ARM64_REGISTER_LR    = 0x0002001E,
-+    HV_ARM64_REGISTER_PC    = 0x00020022,
-+
-+    /* AArch64 System Register Descriptions: General system control registers */
-+    HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
-+    HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
-+
-+#elif defined(__x86_64__)
-     /* X64 User-Mode Registers */
-     HV_X64_REGISTER_RAX     = 0x00020000,
-     HV_X64_REGISTER_RCX     = 0x00020001,
-@@ -157,6 +197,8 @@ typedef enum hv_register_name {
-     /* Other MSRs */
-     HV_X64_REGISTER_MSR_IA32_MISC_ENABLE = 0x000800A0,
+-    mshv_init_mmio_emu();
++    ret = mshv_arch_accel_init(as, ms, mshv_fd);
++    if (ret < 0) {
++        return -1;
++    }
  
-+#endif
-+
-     /* Misc */
-     HV_REGISTER_GUEST_OS_ID         = 0x00090002,
-     HV_REGISTER_REFERENCE_TSC       = 0x00090017,
+     mshv_init_msicontrol();
+ 
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index ff3ab957b5..c72c91cd23 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -96,6 +96,7 @@ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
+ int mshv_arch_post_init_vm(int vm_fd);
+ void mshv_setup_hvcall_args(AccelCPUState *state);
+ 
 diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-index 1c82e2c593..ad9cb267a8 100644
+index db1174b444..8d16971c0d 100644
 --- a/target/arm/mshv/mshv-all.c
 +++ b/target/arm/mshv/mshv-all.c
-@@ -9,16 +9,146 @@
+@@ -9,12 +9,13 @@
   * SPDX-License-Identifier: GPL-2.0-or-later
   */
  
+-
+ #include "qemu/osdep.h"
+ #include <sys/ioctl.h>
+ 
+ #include "qemu/error-report.h"
+ #include "qemu/memalign.h"
++#include "hw/arm/bsa.h"
++#include "hw/arm/virt.h"
+ 
+ #include "system/cpus.h"
+ #include "target/arm/cpu.h"
+@@ -188,11 +189,6 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     state->hvcall_args = (MshvHvCallArgs){0};
+ }
+ 
+-void mshv_init_mmio_emu(void)
+-{
+-
+-}
+-
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features)
+ {
+@@ -394,3 +390,20 @@ void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu)
+     cpu->midr = arm_host_cpu_features.midr;
+     cpu->reset_sctlr = arm_host_cpu_features.reset_sctlr;
+ }
++
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
++{
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    int pa_range;
++    uint32_t ipa_size;
++
++    if (mc->get_physical_address_range) {
++        ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
++        pa_range = mc->get_physical_address_range(ms, ipa_size, ipa_size);
++        if (pa_range < 0) {
++            return -EINVAL;
++        }
++    }
++
++    return 0;
++}
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index 6091c21887..ce54e134cb 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -1,6 +1,7 @@
+ i386_mshv_ss = ss.source_set()
+ 
+ i386_mshv_ss.add(files(
++  'mshv-all.c',
+   'mshv-cpu.c',
+   'msr.c',
+ ))
+diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+new file mode 100644
+index 0000000000..f0b43aa86f
+--- /dev/null
++++ b/target/i386/mshv/mshv-all.c
+@@ -0,0 +1,80 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
++ *          Magnus Kulke  <magnuskulke@microsoft.com>
++ *          Jinank Jain   <jinankjain@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
 +#include "qemu/osdep.h"
-+#include <sys/ioctl.h>
-+
 +#include "qemu/error-report.h"
 +#include "qemu/memalign.h"
 +
-+#include "system/cpus.h"
-+#include "target/arm/cpu.h"
-+
- #include "system/mshv.h"
- #include "system/mshv_int.h"
++#include "system/mshv.h"
++#include "system/mshv_int.h"
++#include "system/address-spaces.h"
++#include "linux/mshv.h"
++#include "hw/hyperv/hvgdk.h"
 +#include "hw/hyperv/hvgdk_mini.h"
++#include "hw/hyperv/hvhdk_mini.h"
++#include "hw/i386/apic_internal.h"
 +
-+static enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
-+    HV_ARM64_REGISTER_X0,
-+    HV_ARM64_REGISTER_X1,
-+    HV_ARM64_REGISTER_X2,
-+    HV_ARM64_REGISTER_X3,
-+    HV_ARM64_REGISTER_X4,
-+    HV_ARM64_REGISTER_X5,
-+    HV_ARM64_REGISTER_X6,
-+    HV_ARM64_REGISTER_X7,
-+    HV_ARM64_REGISTER_X8,
-+    HV_ARM64_REGISTER_X9,
-+    HV_ARM64_REGISTER_X10,
-+    HV_ARM64_REGISTER_X11,
-+    HV_ARM64_REGISTER_X12,
-+    HV_ARM64_REGISTER_X13,
-+    HV_ARM64_REGISTER_X14,
-+    HV_ARM64_REGISTER_X15,
-+    HV_ARM64_REGISTER_X16,
-+    HV_ARM64_REGISTER_X17,
-+    HV_ARM64_REGISTER_X18,
-+    HV_ARM64_REGISTER_X19,
-+    HV_ARM64_REGISTER_X20,
-+    HV_ARM64_REGISTER_X21,
-+    HV_ARM64_REGISTER_X22,
-+    HV_ARM64_REGISTER_X23,
-+    HV_ARM64_REGISTER_X24,
-+    HV_ARM64_REGISTER_X25,
-+    HV_ARM64_REGISTER_X26,
-+    HV_ARM64_REGISTER_X27,
-+    HV_ARM64_REGISTER_X28,
-+    HV_ARM64_REGISTER_FP,
-+    HV_ARM64_REGISTER_LR,
-+    HV_ARM64_REGISTER_PC,
-+};
++#include "cpu.h"
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
++#include "emulate/x86_flags.h"
 +
-+static int set_standard_regs(const CPUState *cpu)
++#include "trace-accel_mshv.h"
++#include "trace.h"
++
++#include <sys/ioctl.h>
++
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
 +{
-+    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-+    struct hv_register_assoc *assocs;
-+    int ret;
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+
-+    assocs = g_new0(hv_register_assoc, n_regs);
-+
-+    for (size_t i = 0; i < n_regs - 1; i++) {
-+        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-+        assocs[i].value.reg64 = env->xregs[i];
-+    }
-+
-+    /* Last register is the program counter */
-+    assocs[n_regs - 1].name = STANDARD_REGISTER_NAMES[n_regs - 1];
-+    assocs[n_regs - 1].value.reg64 = env->pc;
-+
-+    ret = mshv_set_generic_regs(cpu, assocs, n_regs);
-+    if (ret < 0) {
-+        error_report("failed to set standard registers");
-+        g_free(assocs);
-+        return -1;
-+    }
-+
-+    g_free(assocs);
-+
++    mshv_init_mmio_emu();
 +    return 0;
 +}
 +
-+static void populate_standard_regs(const hv_register_assoc *assocs,
-+                                   CPUARMState *env)
++/*
++ * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
++ * fault to the guest if it tries to access it. It is possible to override
++ * this behavior with a more suitable option i.e., ignore writes from the guest
++ * and return zero in attempt to read unimplemented.
++ */
++static int set_unimplemented_msr_action(int vm_fd)
 +{
-+    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
++    struct hv_input_set_partition_property in = {0};
++    struct mshv_root_hvcall args = {0};
 +
-+    for (size_t i = 0; i < n_regs - 1; i++) {
-+        env->xregs[i] = assocs[i].value.reg64;
-+    }
++    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
++    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
 +
-+    /* Last register is the program counter */
-+    env->pc = assocs[n_regs - 1].value.reg64;
-+}
- 
- int mshv_load_regs(CPUState *cpu)
- {
-+    int ret;
++    args.code   = HVCALL_SET_PARTITION_PROPERTY;
++    args.in_sz  = sizeof(in);
++    args.in_ptr = (uint64_t)&in;
 +
-+    ret = mshv_get_standard_regs(cpu);
++    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
++
++    int ret = mshv_hvcall(vm_fd, &args);
 +    if (ret < 0) {
-+        error_report("Failed to load standard registers");
++        error_report("Failed to set unimplemented MSR action");
 +        return -1;
 +    }
-+
 +    return 0;
 +}
 +
-+int mshv_get_standard_regs(CPUState *cpu)
++int mshv_arch_post_init_vm(int vm_fd)
 +{
-+    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-+    struct hv_register_assoc *assocs;
-+    int ret;
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+
-+    assocs = g_new0(hv_register_assoc, n_regs);
-+    for (size_t i = 0; i < n_regs; i++) {
-+        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-+    }
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-+    if (ret < 0) {
-+        error_report("failed to get standard registers");
-+        g_free(assocs);
-+        return -1;
-+    }
-+
-+    populate_standard_regs(assocs, env);
-+
-+    g_free(assocs);
-     return 0;
- }
- 
- int mshv_arch_put_registers(const CPUState *cpu)
- {
 +    int ret;
 +
-+    ret = set_standard_regs(cpu);
++    ret = set_unimplemented_msr_action(vm_fd);
 +    if (ret < 0) {
-+        return ret;
++        error_report("Failed to set unimplemented MSR action");
 +    }
 +
-     return 0;
++    return ret;
++}
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 9a80dc34d0..8325ac74a3 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1482,43 +1482,3 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     state->hvcall_args = (MshvHvCallArgs){0};
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
  }
- 
-@@ -29,12 +159,20 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- 
- void mshv_arch_init_vcpu(CPUState *cpu)
- {
-+    AccelCPUState *state = cpu->accel;
- 
-+    mshv_setup_hvcall_args(state);
- }
- 
- void mshv_arch_destroy_vcpu(CPUState *cpu)
- {
-+    AccelCPUState *state = cpu->accel;
-+
-+    if (state->hvcall_args.base) {
-+        qemu_vfree(state->hvcall_args.base);
-+    }
- 
-+    state->hvcall_args = (MshvHvCallArgs){0};
- }
- 
- void mshv_init_mmio_emu(void)
+-
+-/*
+- * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+- * fault to the guest if it tries to access it. It is possible to override
+- * this behavior with a more suitable option i.e., ignore writes from the guest
+- * and return zero in attempt to read unimplemented.
+- */
+-static int set_unimplemented_msr_action(int vm_fd)
+-{
+-    struct hv_input_set_partition_property in = {0};
+-    struct mshv_root_hvcall args = {0};
+-
+-    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
+-    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
+-
+-    args.code   = HVCALL_SET_PARTITION_PROPERTY;
+-    args.in_sz  = sizeof(in);
+-    args.in_ptr = (uint64_t)&in;
+-
+-    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
+-
+-    int ret = mshv_hvcall(vm_fd, &args);
+-    if (ret < 0) {
+-        error_report("Failed to set unimplemented MSR action");
+-        return -1;
+-    }
+-    return 0;
+-}
+-
+-int mshv_arch_post_init_vm(int vm_fd)
+-{
+-    int ret;
+-
+-    ret = set_unimplemented_msr_action(vm_fd);
+-    if (ret < 0) {
+-        error_report("Failed to set unimplemented MSR action");
+-    }
+-
+-    return ret;
+-}
 
 -- 
 2.45.4
