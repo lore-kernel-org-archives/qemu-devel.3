@@ -4,62 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ED10EA71A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 246EAF55805
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF3a5-0000gv-UE; Tue, 21 Apr 2026 01:23:29 -0400
+	id 1wF3c0-0004yr-Oq; Tue, 21 Apr 2026 01:25:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wF3Z8-0007jY-N0; Tue, 21 Apr 2026 01:22:32 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wF3Z0-0000lM-Ts; Tue, 21 Apr 2026 01:22:26 -0400
-Received: from localhost (unknown [131.107.147.136])
- by linux.microsoft.com (Postfix) with ESMTPSA id E3D0020B6F26;
- Mon, 20 Apr 2026 22:22:01 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E3D0020B6F26
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1776748921;
- bh=6q4UfRU/uNzF6gX/u55VyAfKGDcltvG8skg+piojXoU=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=XknfDaSM71tHJ1+JTiMSy6rJRTy0bGtIKoDskCHJD00dHIrL+HW/USAQcoWWKW6Lg
- Druhq9uojX/zFUz6TSKAY+vuLV2NFJxLInLabDtvnUrChwy/2QsRG3zn5dzvRMjtLQ
- lHUVp1IU/8TISWqjoYh6zN0rFFXAhE8U98yTX4oc=
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Tue, 21 Apr 2026 05:21:57 +0000
-Subject: [PATCH v3 12/14] include/hw/hyperv: adjust hv_interrupt_control
- structure for arm64
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260421-mshv_accel_arm64_supp-v3-12-469f544778ba@linux.microsoft.com>
-References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
-In-Reply-To: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <prtyagi@redhat.com>)
+ id 1wF3bd-0004cY-OU
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:25:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prtyagi@redhat.com>)
+ id 1wF3bb-0001S6-Hh
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:25:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776749102;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=8KBW0A8lledewlQBJoGaV29wjsscUDIJq9deU9jVCUQ=;
+ b=Gj1o1qO/KaPZ0ftx2BZLu1OHZAb4T9JNc4k8im26OoB319gt21swF88ebOFlkmdNLHMDNO
+ 0t/2LWs406Z1TM8RXLwzzZdOZZJ1+RVTWZy6pTdf+/GL7sXMgGJfjRx6f45ZHXmNl8Nkoo
+ m/CqltFGR2umkr0WYg/QPsx3grBwdbA=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-fcDwTH9uOWS-LuioV2wD1w-1; Tue, 21 Apr 2026 01:23:40 -0400
+X-MC-Unique: fcDwTH9uOWS-LuioV2wD1w-1
+X-Mimecast-MFC-AGG-ID: fcDwTH9uOWS-LuioV2wD1w_1776749019
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-35842aa350fso7945979a91.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 22:23:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776749018; x=1777353818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8KBW0A8lledewlQBJoGaV29wjsscUDIJq9deU9jVCUQ=;
+ b=IXgiEvhtGCJZFGCglH/YgX57OoHjkBlAD8E8161GyRc/WP+vNMi2gxj7ZSfmwW8g9P
+ c4N7yCMYu5+mJwyKkXXvfBeBwIvW/+7jcsVCqgga1HdCzyElBho87uQBOUWPvjZCbC2z
+ DOJexd8wytqkG0njqO1U6DbjOJRAqYz574FG9HPTgh9HC9aFeRoaGDiAEPKSnfHfrZje
+ h4Zf8jRVVbLWIrBf5QVgcl5Zm9P+jdOwt4E/wq0+sN95KgYE4ClQYS4pwNmW+aVD0rDk
+ kBWOsyOspS/A0fqh80jk+slpoWrN4do3qWfzO/gzQzsfyr6HfvosGUmYd9s/P3IK1TVE
+ 3EdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776749018; x=1777353818;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8KBW0A8lledewlQBJoGaV29wjsscUDIJq9deU9jVCUQ=;
+ b=eUqYzwWDBQ2+0etJCR2SLMBgVaHOuhQMxVCUTjIfV9isa/EEjuMuKfR4D8MliqQjwd
+ wZ3YGcyuc9IGMbHnILTN2el/MDeqHiMC6I3Iry9HOsJUjfTDqpxylpYVIj6RIbS2TlcP
+ PCYE6s7P7armY6kdxOlBXovD9oPCLWlZR6Pf/bTLW7vgxllY07mmJMnIW2LiCDjw7jpt
+ a1fHBW/l9oXCN52cnf7AXl3+ezQ3PAr6MrmivK0dWTUDuCblhpHR+Qf0pw1dPKsdVpQS
+ pRty+z+TRmqyeyVW6Lb/sOVMAMgkVp/4eM4qmKyd2oIupxf6T5VsBsdr6PYKrsUXmFcJ
+ Fqvw==
+X-Gm-Message-State: AOJu0Yw+FjCtzKOV5RKC4LjxFke4iM84kMV2VjmFIueGyaufvkoukbLv
+ X1I/bGsHBuNs/LttkV5VGzdIOtmoUlFuO1Q0sVhgVJs1lruO+QPPA79g7bkg1Y5pQiKx2VqsLPa
+ Um5cNKBp1Hl0fVfl5hGOOaqkhQoWMvs8E28rvohyLhhgMBcn+WN7sSEPMZ8kosZfps1p4U/Caes
+ Ae1nhIR7Sk8jI72SbZGfqgjz4AuJW09Ri1rED4PJ0+Mw==
+X-Gm-Gg: AeBDieuwTpvK4KF7NmNpS0jE9XVCpXU/anSUSXBqeo2Ps6JUYO0+ovoZ9ZZyPJ2LBup
+ NZWUS6OC3ihCvo3ZcmP3xLTUn/95ApGPF9LC45QXCdl9ZIvm8U9sqkbMtE7EcX0+6QSIILLbfsx
+ gqFERb8iQcPdS3i3J4Jb8vzmoETJHQdrENFigb5ETyEkQONsfxjl43A+73OF0k6mflEF90yYqXq
+ JXVtzjAq7okYLg8G0yuUaICi41BBoYKChvBn0BLRPprkHwVSltV/yKKG0wES4eQ+PIu/EqUuv3j
+ Egsy2R95Rp23qLuPEBCV8a0S5ReQgk5bRkQZWatzCOvk23rbaf0Xo2sxmpJPdF85j/SqlX0nqn4
+ lM8lt0iQdLUIOND29F1I5s9KHzbfm1QK/zfL1HX7KQaeHI3vQuvvX/2RE7tWJI9PgWNtY
+X-Received: by 2002:a17:90b:3504:b0:35f:b6a1:8d27 with SMTP id
+ 98e67ed59e1d1-3614046f76amr18163109a91.18.1776749018423; 
+ Mon, 20 Apr 2026 22:23:38 -0700 (PDT)
+X-Received: by 2002:a17:90b:3504:b0:35f:b6a1:8d27 with SMTP id
+ 98e67ed59e1d1-3614046f76amr18163080a91.18.1776749017851; 
+ Mon, 20 Apr 2026 22:23:37 -0700 (PDT)
+Received: from prtyagi-thinkpadt14sgen2i.bengluru.csb ([115.110.236.142])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36140fc593bsm15460364a91.1.2026.04.20.22.23.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Apr 2026 22:23:37 -0700 (PDT)
+From: Pranav Tyagi <prtyagi@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>, 
- Magnus Kulke <magnus.kulke@linux.microsoft.com>, qemu-arm@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: b4 0.15.1
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ Pranav Tyagi <prtyagi@redhat.com>
+Subject: [PATCH] migration: Fix blocking in POSTCOPY_DEVICE during package load
+Date: Tue, 21 Apr 2026 10:52:27 +0530
+Message-ID: <20260421052227.8278-1-prtyagi@redhat.com>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=prtyagi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,101 +117,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+The package_loaded event is not set in case MIG_RP_MSG_PONG does not
+arrive on the source from the destination in the return path thread. The
+migration thread would then be blocked waiting for package_loaded event
+indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition the
+source VM can safely resume as the destination has not yet started. The
+pong message can get lost in case of a network failure or destination
+crash before sending the pong.
 
-Add the arm64 specific fields to the hv_interrupt_control struct and
-adjust the existing usage accordingly. mshv_request_interrupt is only
-needed only for x86 so compile it out entirely for arm64.
+This patch uses the error detected in case of network failure or
+destination crash to set the package_loaded event in the out path of the
+return path thread. This will kick the migration thread out from
+a condition of indefinitely waiting for the package_loaded event. The
+migration thread then fails early and breaks from the migration loop to
+resume the VM on the source side.
 
-Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Fixes: 7b842fe354c6 ("migration: Introduce POSTCOPY_DEVICE state")
+Signed-off-by: Pranav Tyagi <prtyagi@redhat.com>
 ---
- accel/mshv/irq.c               |  2 ++
- include/hw/hyperv/hvgdk_mini.h | 25 +++++++++++++++++++++++++
- include/system/mshv.h          |  2 ++
- 3 files changed, 29 insertions(+)
+ migration/migration.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 3c238c33c3..a391d7db86 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -310,6 +310,7 @@ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
-     return 0;
- }
- 
-+#if defined(__x86_64__)
- int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
-                            uint32_t vp_index, bool logical_dest_mode,
-                            bool level_triggered)
-@@ -346,6 +347,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+diff --git a/migration/migration.c b/migration/migration.c
+index 5c9aaa6e58..1656c1203c 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2386,6 +2386,15 @@ out:
+     if (err) {
+         migrate_error_propagate(ms, err);
+         trace_source_return_path_thread_bad_end();
++        if (ms->state == MIGRATION_STATUS_POSTCOPY_DEVICE) {
++            /*
++             * Kick the migration thread if it gets stuck in
++             * POSTCOPY_DEVICE state waiting for
++             * postcopy_package_loaded_event. The event will never be
++             * set as MIG_RP_MSG_PONG from the destination is lost.
++             */
++            qemu_event_set(&ms->postcopy_package_loaded_event);
++        }
      }
-     return 0;
- }
-+#endif
  
- void mshv_irqchip_commit_routes(void)
- {
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index 84b3c6af5f..eb766734d6 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -506,13 +506,38 @@ typedef struct hv_input_set_vp_registers {
-     struct hv_register_assoc elements[];
- } hv_input_set_vp_registers;
- 
-+enum hv_interrupt_type {
-+#if defined(__x86_64__)
-+    HV_X64_INTERRUPT_TYPE_FIXED             = 0x0000,
-+    HV_X64_INTERRUPT_TYPE_LOWESTPRIORITY    = 0x0001,
-+    HV_X64_INTERRUPT_TYPE_SMI               = 0x0002,
-+    HV_X64_INTERRUPT_TYPE_REMOTEREAD        = 0x0003,
-+    HV_X64_INTERRUPT_TYPE_NMI               = 0x0004,
-+    HV_X64_INTERRUPT_TYPE_INIT              = 0x0005,
-+    HV_X64_INTERRUPT_TYPE_SIPI              = 0x0006,
-+    HV_X64_INTERRUPT_TYPE_EXTINT            = 0x0007,
-+    HV_X64_INTERRUPT_TYPE_LOCALINT0         = 0x0008,
-+    HV_X64_INTERRUPT_TYPE_LOCALINT1         = 0x0009,
-+    HV_X64_INTERRUPT_TYPE_MAXIMUM           = 0x000A,
-+#elif defined(__aarch64__)
-+    HV_ARM64_INTERRUPT_TYPE_FIXED           = 0x0000,
-+    HV_ARM64_INTERRUPT_TYPE_MAXIMUM         = 0x0008,
-+#endif
-+};
-+
- union hv_interrupt_control {
-     uint64_t as_uint64;
-     struct {
-         uint32_t interrupt_type; /* enum hv_interrupt type */
-+#if defined(__x86_64__)
-         uint32_t level_triggered:1;
-         uint32_t logical_dest_mode:1;
-         uint32_t rsvd:30;
-+#elif defined(__aarch64__)
-+        uint32_t rsvd1:2;
-+        uint32_t asserted:1;
-+        uint32_t rsvd2:29;
-+#endif
-     };
- };
- 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 75286baf16..0db18fcee9 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -47,10 +47,12 @@ extern bool mshv_allowed;
- typedef struct MshvState MshvState;
- extern MshvState *mshv_state;
- 
-+#if defined(__x86_64__)
- /* interrupt */
- int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
-                            uint32_t vp_index, bool logical_destination_mode,
-                            bool level_triggered);
-+#endif
- 
- int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
-
+     if (ms->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
+@@ -3232,6 +3241,17 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+              * package before actually completing.
+              */
+             qemu_event_wait(&s->postcopy_package_loaded_event);
++            /*
++             * Check for errors in case the migration thread was stuck in
++             * POSTCOPY_DEVICE state waiting for the
++             * postcopy_package_loaded_event which was never set.
++             * If so, fail now and break out of the iteration.
++             */
++            if (migrate_has_error(s)) {
++                migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
++                                  MIGRATION_STATUS_FAILING);
++                return MIG_ITERATE_BREAK;
++            }
+             migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
+                               MIGRATION_STATUS_POSTCOPY_ACTIVE);
+         }
 -- 
-2.45.4
+2.53.0
 
 
