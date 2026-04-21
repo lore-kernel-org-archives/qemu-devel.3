@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24633F8FA78
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 14:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28DEF8FA78
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 14:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFBzz-0006DL-2c; Tue, 21 Apr 2026 10:22:47 -0400
+	id 1wFBzx-0006CO-KG; Tue, 21 Apr 2026 10:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wFBzv-0006Al-V9
+ id 1wFBzv-0006Ah-Ur
  for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:22:43 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wFBzt-0007Om-Fq
+ id 1wFBzs-0007OS-J9
  for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:22:43 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso44407185e9.1
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso58646525e9.3
  for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 07:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776781360; x=1777386160; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776781358; x=1777386158; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dQM2HEP97233tEtaNH4+9B/jRgcZaPr8e0DRwAenRrQ=;
- b=dmP1FJQp+l4xcx5/Edhm1gXzc6PeAzeP+Atg8b1MyHkSz1CcF569HSoL+4ip/qzfMw
- e7PcmE5/ZgPAqHGtHHBvttaDC5SnjOxCf2ZwyZHhhcKda39T9eyu/uqyl0ppD+1Ak1iw
- A5ELt2gfXWK6zRaRNrcF4KYXyLXtpHwRW/ZRUzWAVj9B1uvwdosE0c0RvbkTjOmqAWuo
- mU0GFqSxBjcUKR8/GTRmO6fZUDqi/cUizR2NEu8OyCPzOvDBFeQD7h6PwcQGwosRLdee
- jXErvJu2C+PsN7Pfhex46ngvJYPA+8uXdxec5NxJXO1tEoWmTjwMyhv9YLGYjr5H+DmJ
- ZwZA==
+ :reply-to; bh=o3zvbU/P1VBtqICRahxjL8iOuK5j880AJkIh1dca91A=;
+ b=MamdK0juNjfTpqH+eqfFH36cVlWWd9DKEjGrdPptTLKX5XF4W+zkSRE0nK0mpPATdS
+ bcmYhKA1IsN3t0aTkPoo18VKwT8hN0qVGOm6WswfQUhraK22wNF3p9PC717toGN0DE4t
+ 9sLKr4tvTJPqeKuvlX4iehXoCJcZH/AAW4ICIlipTPp64UtpLVHcRa+42o6tlCqfRg9o
+ Pyd5K/efuMt98jwTE/MHTtc/FEPItqkS1Qpsg7fPfP4l6EKm6/CajU3e/M7cnY6chaTp
+ 8uSLidSqE+h50MDyVB8znsDAJ9igYh4vBcjNMQ1BTHZriB8FB02pUukl6FwWlTfkN9Zg
+ Kpow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776781360; x=1777386160;
+ d=1e100.net; s=20251104; t=1776781358; x=1777386158;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=dQM2HEP97233tEtaNH4+9B/jRgcZaPr8e0DRwAenRrQ=;
- b=eN2bs4fXLElVA9UqWq7zyG2X9rV6z505ok41kw2z6JCGFZ7E7KMG0XWe9tj032XehP
- PiMO9Ys6PyRXyAn9nbtDCIdn0o40zzgzsDIm+1+CCd/st8l98SgvxcO16mtDq/ivB37h
- DAMljsSwFsJzi9jK8Ibw7vPlrRdHifMM6YQovXmtX0f7dOeNljexfFJm/qOGZ0NEA1in
- 8bOzD6sZeGDTFhtdfpUGchrtlloe/bXpYr0n7LgDZSSnUv07d+1SotWKo/iatuXN+isd
- Xb+4KDgw36gPxl1rJpaDtsT8jINsY4Ix81dalRNsUW2bfYl6kRpgDc1vS+bxuNVfj6ba
- zAeA==
-X-Gm-Message-State: AOJu0YxImDCaUnf3fptDEHn3zJTg+oVegDWNp8hNAAWtnLH9lIyb1/cW
- VGiqwt5MNwiKrWWU6PuF3YyrQACi0wYWBtNB6FWCPcy2HQjCNgIlSBiVYGYDArsZvXzZmySTJAI
- FkW4V
-X-Gm-Gg: AeBDiev7iYLZ21wIcFnrweG6qzlAmIl0CKxAehjGbOp47TCwzXfAcimvjTrTxrBKmMH
- afKpiLw8qD+MeN+AeBYaEC/cZwSIJQRH7xMa38QzZUPLFZm2iuHN6RARE2pM1w9A0NHu+y45Vi9
- qcTY1f89PlGMQVfrF+Z1ebDlU5qQeFEo97EepV056vFK6g6SVHodYCL6vlgnmIDjdd51IXdD06p
- WX+9StawGmOFHwtIq07Q53HVqqIgqJ91yE1SFUk3UeXSGuZPC3I5cqjY/8pb8DNp9a68R6KUxLG
- eOvIXvFOpBReDQ+RYx+4xJgWyoQsW+CFEND6YiDkoY8jdRTdfnaIqYP/nPyndvXZbspwNia+oc6
- DF3VeJyzAmTUJ18syZYGHqFnFnJmhUkScA7BfgRM5LtFkMFlmzyn2+5Mmyefuqspm+THxsPTKpP
- /o+p8XS0m/4mFctyh4SXxg8ZBaYcdps6zbs0hhtg==
-X-Received: by 2002:a05:600c:c090:b0:488:9e54:94c0 with SMTP id
- 5b1f17b1804b1-488fb74e130mr189084085e9.8.1776781359688; 
- Tue, 21 Apr 2026 07:22:39 -0700 (PDT)
+ bh=o3zvbU/P1VBtqICRahxjL8iOuK5j880AJkIh1dca91A=;
+ b=ibMImZBR5zX+Ne1IOAVMRZ5G9oML7kPemTCiRhSBqcQ0Ggi/t/kdfZ7N6IkAYpckKw
+ ah7PpxSrtTZgVjZvM2FHJVWBYqHBZeoePJN9b2tOHwRxXd/19or+bfNweAWb4qpNzanE
+ P4bL6PVuXc0cFxAu7+s1iQaOPrNu2DBVsb+T8jIywwKoqOpBDAcbTP8h0u+3JeOJ3CA7
+ 6C8u7jKhJ/OPIJ1jgTrKtNFNjPGWw7zZ3QpRrW3NNPs6MAMo+SkYVmwUe05IoZvin2G6
+ GU1i8ZE+JzsZo0HH//Ym3IZEzmof5RVEmmkUBKnx9zZrzfl7QToriJM610kxwepXvaXk
+ /OWw==
+X-Gm-Message-State: AOJu0YwdkO4ou+oCjmGiDlrxBeayY/DqgeUtbd8l/cfvBmbNd6ZOqG4C
+ 8fF8kcLLTc01/gstOnuXtVqBq9O0Oas8utrM6GW6EAQc3iKhN07kX3rB5wwWUR4e/9w=
+X-Gm-Gg: AeBDievZd36SSE2wKGpnAYRgxBqU6mbmw50MWVh5zeZcIZX/DfnFi4hzxujWq77TuwY
+ MUr3p7yU/nPNIGu0cJLXKimc4UTNqQhXAU8/t0UT9yfhJdJU9hUPSUXuxkuro678URO72TbYIpT
+ q+qRqURaQAtfViQNXSWl5Vr79NYSpIwz+oaR5MZqdoQpCTl9+XK5ipJAFiH/VTjNYT6VVfv8708
+ aRxyXoZQKThdRFkAnMnE5m8in3XXhcrEqmKs2bGoKEUX4Mu+XQVnwflGeS5SbQYCoUom+0lsuyX
+ CWTgnpI/qa6QpaSnZJW45gOspRR1jAqqsGq+NUww28B8pxtD/Z+L+GyZCYE9/Z6X/ADYFHaGMmP
+ tFpbqizmeuVumoSNQK42NqJYdX4faL6pfXb7I7IsfY9SDy9EPMbVPVP7BS/NvgDENEfhrn7Froq
+ q48nYv6T3sGVzc8TCem83J4n67fsZdmyIV8SWJSQ==
+X-Received: by 2002:a05:600c:3110:b0:487:2439:b7be with SMTP id
+ 5b1f17b1804b1-488fb7389dfmr280872495e9.6.1776781358387; 
+ Tue, 21 Apr 2026 07:22:38 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:5364:f814:f749:9bf5])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891cca5743sm164250465e9.9.2026.04.21.07.22.39
+ 5b1f17b1804b1-4891cca5743sm164250465e9.9.2026.04.21.07.22.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 07:22:39 -0700 (PDT)
+ Tue, 21 Apr 2026 07:22:37 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Tue, 21 Apr 2026 15:22:36 +0100
-Subject: [PATCH v3 3/4] target/arm/ptw.c: Add GDI spaces to the granule
- protection case
+Date: Tue, 21 Apr 2026 15:22:34 +0100
+Subject: [PATCH v3 1/4] target/arm/cpu-features.c: New fields in AA64MMFR4
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260421-jmac-feat_rme_gdi-v3-3-ecd20c77eae1@linaro.org>
+Message-Id: <20260421-jmac-feat_rme_gdi-v3-1-ecd20c77eae1@linaro.org>
 References: <20260421-jmac-feat_rme_gdi-v3-0-ecd20c77eae1@linaro.org>
 In-Reply-To: <20260421-jmac-feat_rme_gdi-v3-0-ecd20c77eae1@linaro.org>
 To: qemu-devel@nongnu.org
@@ -79,8 +77,8 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
  Jim MacArthur <jim.macarthur@linaro.org>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,49 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-System Agent, Non-secure Protected and two other GPI field encodings.
-
-These are explicitly denied access for any processing element when
-the relevant GPCCR bit is set, and reserved values when the relevant
-GPCCR bit is zero.
+Added RMEGDI for FEAT_RME_GDI and other new fields.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- target/arm/ptw.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ target/arm/cpu-features.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 7b993bb5b3..316e201cfe 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -510,6 +510,26 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-         break;
-     case 0b1111: /* all access */
-         return true;
-+    case 0b0100: /* system agent only */
-+        if (FIELD_EX64(gpccr, GPCCR, SA) == 0) {
-+            goto fault_walk;
-+        }
-+        break;
-+    case 0b0101: /* non-secure protected */
-+        if (FIELD_EX64(gpccr, GPCCR, NSP) == 0) {
-+            goto fault_walk;
-+        }
-+        break;
-+    case 0b0110: /* reserved if NA6==0, otherwise no access */
-+        if (FIELD_EX64(gpccr, GPCCR, NA6) == 0) {
-+            goto fault_walk;
-+        }
-+        break;
-+    case 0b0111: /* reserved if NA7==0, otherwise no access */
-+        if (FIELD_EX64(gpccr, GPCCR, NA7) == 0) {
-+            goto fault_walk;
-+        }
-+        break;
-     case 0b1000: /* secure */
-         if (!config.support_sel2) {
-             goto fault_walk;
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index b683c9551a..2d1a3196b7 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -346,8 +346,16 @@ FIELD(ID_AA64MMFR3, SDERR, 52, 4)
+ FIELD(ID_AA64MMFR3, ADERR, 56, 4)
+ FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
+ 
++FIELD(ID_AA64MMFR4, POPS, 0, 4)
++FIELD(ID_AA64MMFR4, EIESB, 4, 4)
+ FIELD(ID_AA64MMFR4, ASID2, 8, 4)
++FIELD(ID_AA64MMFR4, HACDBS, 12, 4)
++FIELD(ID_AA64MMFR4, FGWTE3, 16, 4)
++FIELD(ID_AA64MMFR4, NV_FRAC, 20, 4)
+ FIELD(ID_AA64MMFR4, E2H0, 24, 4)
++FIELD(ID_AA64MMFR4, RMEGDI, 28, 4)
++FIELD(ID_AA64MMFR4, E3DSE, 36, 4)
++FIELD(ID_AA64MMFR4, SRMASK, 44, 4)
+ 
+ FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
+ FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
 
 -- 
 2.43.0
