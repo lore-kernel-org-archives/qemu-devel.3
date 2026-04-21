@@ -4,66 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B00F8FA78
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 14:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0ACAF8FA78
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 14:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFBtD-0004dv-0C; Tue, 21 Apr 2026 10:15:47 -0400
+	id 1wFBxy-0005Wl-IJ; Tue, 21 Apr 2026 10:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFBt9-0004dl-3u
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:15:43 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFBxs-0005TK-Nv
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:20:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFBt7-0005Tp-4M
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:15:42 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFBxq-0006mi-JZ
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 10:20:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776780937;
+ s=mimecast20190719; t=1776781231;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=bJMRXv0dcMT1KtICRVzHj4Y/ZZV1U8fIxXi3a79kyvY=;
- b=ZSaZH/sZ6k1RLX4j41u+ve/PYZ2uPT+MKRbUQvmh349DDBc3JtLt/dBGrD1N39BmCDniiR
- 3cZ6x4AIBayAGWgO4hRmRMcUm9HjglP+i3LzKBQekI+wn3Wr0pMxmp6v+PSynRjy0r44Rk
- iSaMyI9WJvnNznaBD8sU0Kdr8MCqL0s=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-60-iNyL1On4OOuhbE1Lzokgmw-1; Tue,
- 21 Apr 2026 10:15:34 -0400
-X-MC-Unique: iNyL1On4OOuhbE1Lzokgmw-1
-X-Mimecast-MFC-AGG-ID: iNyL1On4OOuhbE1Lzokgmw_1776780933
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B382195608F; Tue, 21 Apr 2026 14:15:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.22])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 531073000C15; Tue, 21 Apr 2026 14:15:32 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E51A121E6A28; Tue, 21 Apr 2026 16:15:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH V6 02/14] iothread: introduce iothread_ref/unref to
- track attached devices
-In-Reply-To: <20260410150457.85190-3-zhangckid@gmail.com> (Zhang Chen's
- message of "Fri, 10 Apr 2026 23:04:45 +0800")
-References: <20260410150457.85190-1-zhangckid@gmail.com>
- <20260410150457.85190-3-zhangckid@gmail.com>
-Date: Tue, 21 Apr 2026 16:15:29 +0200
-Message-ID: <87bjfc4cxq.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=BJ2ToIKdvbBCYgT9pPnKdxV3OJLuZOOmsWL1WoKhy88=;
+ b=MR+XqnnRKCbdEx9lfKDv+Jbc6sXoQxUdKmQMDlbbioDVyniKNPV3Ns20nOk8tVy7hJ+mIq
+ zC9Hx7gtHKcYbQNb2DlMhyHQmCpxv1o5otsFphjnAsDoc1+v7NUD8Y4F2FO1D9jDE62ecN
+ UQfEsgR099+veWWHLKhjJyNbjiu4kvk=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-568-m_X7YhvRNpmm-zOAo_8Dcw-1; Tue, 21 Apr 2026 10:20:26 -0400
+X-MC-Unique: m_X7YhvRNpmm-zOAo_8Dcw-1
+X-Mimecast-MFC-AGG-ID: m_X7YhvRNpmm-zOAo_8Dcw_1776781225
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-50e2592ea3bso47904301cf.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 07:20:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776781225; x=1777386025; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=BJ2ToIKdvbBCYgT9pPnKdxV3OJLuZOOmsWL1WoKhy88=;
+ b=YSNFjnzXCVxde3/B17HzxtfBwtm1WTIKrvk2FCfzTgIa8agcIaajiUAQZsuxw75P3+
+ xO2enUJgraeHmSmUNIOglRL8y50lDEpOrNU8mJSaqUXYwaDrMVYdU1L6hSvnVmROjcPF
+ dVwKvCZk0kXcQsyqOYy3XTP/GF8rnm26p9/Q0Zpor+92rzPK2ibjgd3iwEA7DSunYILF
+ 2bIgd/iedbRhgqpFXzBMuiHkkJc6ATIMqs98fssQYDUmHBMacRVzkFo8SAZRKQh9vHU0
+ yevaHiHUlcg3LTFO/HbcY1FEOpVzmQ5aPzc0fSA+aCigVpNI6cQB9lAHX5em9497ruA/
+ L+2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776781225; x=1777386025;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BJ2ToIKdvbBCYgT9pPnKdxV3OJLuZOOmsWL1WoKhy88=;
+ b=QoPJMvMaZWG8ry0OVUPNU7LJlEKhrrXusGXPBE+LBCNlySMFKuYIssc5Fwe5xYSRNT
+ uiM9azxjRlgN0rOFgN4MA0vMOr0vA6z6gY0aW5gqwIa99yoIgztUSFwG4lI0PNo8WJTD
+ nN1SOe226YvamSKA+7rcnZTwxjpM6IuODfEYDwJyipZEdN6/GHqPD0YG1BE0yXEkTKX3
+ eWPLteQ02f0gmD1y3eVJR/+LilQnjfbH5QC7a7uTrVlYOhovwAwLciqHjnS6WiTaWA5b
+ 9hRtE3NQnU3naKJrxbQmAKr7gUWHYYX7HI9w/aKq/IOfNzYzuu2iORX9p6xkfrOPPmB8
+ jdSQ==
+X-Gm-Message-State: AOJu0Yz+Q5bAn/KhaCnGwTsJ1UD3GajIGTI8CyBCfWTGiKIDDyewDz14
+ NORJmXjjgsEcDwLmwliM/w8DSCmOPe0Goz6iLbNNk0+lIJQZKBAlRrcuV9LV9Nj080j95/+n1os
+ 1Fhnw5JMlleh2D9GC/p2OU2wNEFIUBaiqa+/LG4LkyZn3G/G/TOkpHj1s
+X-Gm-Gg: AeBDietjSlNUhipAQwFpexqToncGgzwCK8nqRm2dxrtW+KhWgnEBYHet8PMXm1bEuam
+ titI0C7tWovjS0HG/vHMbG1X0k86bG6WcGSlX+eHVkoqbL0/NSti85DRmFduDPQglEbhTdtRD7K
+ CdxXTgjQOa6QXKtxaU+f5q0b/BzGCAdZmbjQDfkyIWvmgl6rozwcl9Gr0X6uLfmnx1fa+D7IAC6
+ 4zKJAX4Z+Fy+Zbt8B+U/5BdXWg43wYkR/qxJN3pik9wxgQFZwBKE1mbfw3okIlioCFwfdUvNKiy
+ KH8YoaO7ROPW7Nbf29UJGRyDpT53YjeS4MTP863eXQrwEeafybbYHp27VpcGgwtD51N9m1IcUkz
+ 3efZmNfmvExaEMzCYMlcLdq5RWoKfHvrKd43KgOxKI/u1Nxd1Ah7sNl6/3g==
+X-Received: by 2002:a05:622a:550a:b0:50d:a8f5:1c02 with SMTP id
+ d75a77b69052e-50e36c15ee8mr267535891cf.41.1776781225267; 
+ Tue, 21 Apr 2026 07:20:25 -0700 (PDT)
+X-Received: by 2002:a05:622a:550a:b0:50d:a8f5:1c02 with SMTP id
+ d75a77b69052e-50e36c15ee8mr267535161cf.41.1776781224640; 
+ Tue, 21 Apr 2026 07:20:24 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50e392e4dcasm115367361cf.9.2026.04.21.07.20.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Apr 2026 07:20:24 -0700 (PDT)
+Date: Tue, 21 Apr 2026 10:20:23 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Junjie Cao <junjie.cao@intel.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH 0/3] migration: switch remaining positioned I/O to _all
+ helpers
+Message-ID: <aeeHp8QAXfqrWUBH@x1.local>
+References: <20260420201317.30199-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260420201317.30199-1-junjie.cao@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,249 +114,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+On Tue, Apr 21, 2026 at 04:13:14AM +0800, Junjie Cao wrote:
+> Follow-up to the pread/pwrite_all API series [1].
+> 
+> qemu_put_buffer_at(), qemu_get_buffer_at(), and file_write_ramblock_iov()
+> all use single-shot positioned I/O without retry.  They share the same
+> pattern as the bug fixed in multifd_file_recv_data() where a short
+> transfer would be mishandled.
+> 
+> Convert them to the _all helpers and clean up a pre-existing
+> const-correctness issue in qemu_get_buffer_at() along the way.
+> 
+> After this series no positioned I/O call site in migration/ uses raw
+> single-shot channel operations.
+> 
+> Depends-on: <20260413214549.926435-1-junjie.cao@intel.com>
+> ("io/channel: complete pread/pwrite_all API and fix
+> multifd_file_recv_data")
+> 
+> [1] https://lore.kernel.org/qemu-devel/20260413214549.926435-1-junjie.cao@intel.com/
+> 
+> Junjie Cao (3):
+>   migration/qemu-file: switch buffer_at functions to positioned I/O _all
+>     helpers
+>   migration/file: switch file_write_ramblock_iov to pwritev_all
+>   migration/qemu-file: drop incorrect const from qemu_get_buffer_at buf
 
-> Currently, IOThreads do not maintain a record of which devices are
-> associated with them. This makes it difficult to monitor the
-> workload distribution of IOThreads, especially in complex
-> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
->
-> This patch introduces a reference counting and tracking mechanism
-> within the IOThread object:
->
-> - iothread_ref(): Prepends the device's QOM path to a list.
-> - iothread_unref(): Searches for the device path using a custom
->   string comparison (g_strcmp0), releases the associated memory
->   upon a successful match.
-> - holders: A GList storing the QOM paths of attached devices
->   for runtime introspection.
->
-> This infrastructure allows management tools and QMP commands to
-> query the attachment status of IOThreads.
+Thanks a lot, Junjie.  All look sane.
 
-Suggest something like
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-  A later commit will add QMP commands to let management applications
-  query the attachment status of IOThreads.
-  
->
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  include/system/iothread.h |  1 +
->  iothread.c                | 56 +++++++++++++++++++++++++++++++++++++++
->  qapi/misc.json            | 48 +++++++++++++++++++++++++++++++++
->  3 files changed, 105 insertions(+)
->
-> diff --git a/include/system/iothread.h b/include/system/iothread.h
-> index e26d13c6c7..21a76bd70d 100644
-> --- a/include/system/iothread.h
-> +++ b/include/system/iothread.h
-> @@ -33,6 +33,7 @@ struct IOThread {
->      bool stopping;              /* has iothread_stop() been called? */
->      bool running;               /* should iothread_run() continue? */
->      int thread_id;
-> +    GList *holders;             /* an array of QOM paths for attached devices */
-
-The comment is mostly wrong.  A GList is not an array.  The list
-elements are of type IoThreadHolder, which can represent either a QOM
-path or a block node name.  Suggest
-
-       GList *holders;             /* list of IoThreadHolder */
-
->  
->      /* AioContext poll parameters */
->      int64_t poll_max_ns;
-> diff --git a/iothread.c b/iothread.c
-> index caf68e0764..c43266b191 100644
-> --- a/iothread.c
-> +++ b/iothread.c
-> @@ -36,6 +36,55 @@
->  #define IOTHREAD_POLL_MAX_NS_DEFAULT 0ULL
->  #endif
->  
-> +/*
-> + * Add holder device path to the list.
-
-Please explain semantics of parameter @holder here, it's not obvious
-that @holder is a QOM path if it starts with '/', else a block node
-name.
-
-Restriction: only absolute QOM paths work.  Relative ones get
-misinterpreted as block node names.
-
-> + */
-> +static void iothread_ref(IOThread *iothread, const char *holder)
-> +{
-> +    IoThreadHolder *h = g_new0(IoThreadHolder, 1);
-> +
-> +    if (holder && holder[0] == '/') {
-> +        h->type = IO_THREAD_HOLDER_KIND_QOM_OBJECT;
-> +        h->u.qom_object.data = g_strdup(holder);
-> +    } else {
-> +        h->type = IO_THREAD_HOLDER_KIND_BLOCK_NODE;
-> +        h->u.block_node.data = g_strdup(holder ? holder : "unknown");
-
-No.  Nothing stops a user from naming a block node "unknown".
-
-How can !holder happen?  If it's not supposed to happen, assert() it
-doesn't!
-
-> +    }
-> +
-> +    iothread->holders = g_list_prepend(iothread->holders, h);
-> +}
-> +
-> +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
-> +{
-> +    const IoThreadHolder *holder_node = a;
-> +    const char *target_name = b;
-> +    const char *current_name = NULL;
-
-Superfluous initializer.
-
-> +
-> +    if (holder_node->type == IO_THREAD_HOLDER_KIND_QOM_OBJECT) {
-> +        current_name = holder_node->u.qom_object.data;
-> +    } else if (holder_node->type == IO_THREAD_HOLDER_KIND_BLOCK_NODE) {
-> +        current_name = holder_node->u.block_node.data;
-> +    }
-> +
-> +    return g_strcmp0(current_name, target_name);
-
-Why g_strcmp0()?  How can any of the arguments be null?
-
-> +}
-> +
-> +/*
-> + * Delete holder device path from the list.
-
-Please explain semantics of @holder as for iothread_ref(), and state
-that a it must be one of @io_thread's holders.
-
-> + */
-> +static void iothread_unref(IOThread *iothread, const char *holder)
-> +{
-> +    GList *link = g_list_find_custom(iothread->holders, holder,
-> +                                     (GCompareFunc)iothread_holder_compare);
-> +
-> +    /* We don't support unref without a link */
-
-I doubt this comment is useful.
-
-> +    assert(link);
-> +
-> +    IoThreadHolder *h = (IoThreadHolder *)link->data;
-> +    qapi_free_IoThreadHolder(h);
-> +    iothread->holders = g_list_delete_link(iothread->holders, link);
-> +}
-> +
->  static void *iothread_run(void *opaque)
->  {
->      IOThread *iothread = opaque;
-> @@ -115,6 +164,9 @@ static void iothread_instance_finalize(Object *obj)
->  
->      iothread_stop(iothread);
->  
-> +    /* We don't support finalize without holders */
-
-Why?
-
-> +    assert(iothread->holders == NULL);
-> +
->      /*
->       * Before glib2 2.33.10, there is a glib2 bug that GSource context
->       * pointer may not be cleared even if the context has already been
-> @@ -336,6 +388,10 @@ char *iothread_get_id(IOThread *iothread)
->  
->  AioContext *iothread_get_aio_context(IOThread *iothread)
->  {
-> +    /* Remove in next patch for build */
-> +    iothread_ref(iothread, "tmp");
-> +    iothread_unref(iothread, "tmp");
-> +
->      return iothread->ctx;
->  }
->  
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index 1f5062df2a..d65d8012b2 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -67,6 +67,54 @@
->  ##
->  { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': true }
->  
-> +
-> +##
-> +# @IoThreadHolderBlockNode:
-> +#
-> +# @data: Block node name.
-
-These are commonly named @node-name.
-
-> +#
-> +# Since: 11.0
-> +#
-> +##
-> +{ 'struct': 'IoThreadHolderBlockNode',
-> +  'data': { 'data': 'str' } }
-> +
-> +##
-> +# @IoThreadHolderQomObject:
-> +#
-> +# @data: QOM path.
-
-These are commonly named @qom-path.
-
-Should we use "Absolute QOM path" here?  Relative ones don't actually
-work.
-
-> +#
-> +# Since: 11.0
-> +#
-> +##
-> +{ 'struct': 'IoThreadHolderQomObject',
-> +  'data': { 'data': 'str' } }
-> +
-> +##
-> +# @IoThreadHolderKind:
-> +#
-> +# @block-node: Block node name.
-
-The block node name is not the holder, the block node is.
-
-> +# @qom-object: Standard QOM path.
-
-What do you mean by "standard"?
-
-> +#
-> +# Since: 11.0
-> +##
-> +{ 'enum': 'IoThreadHolderKind',
-> +  'data': [ 'block-node', 'qom-object' ] }
-> +
-> +##
-> +# @IoThreadHolder:
-> +#
-> +# @type: Current IoThread holder type support QOM path and Block node.
-
-Awkward English :)
-
-   # @type: the kind of I/O thread holder
-
-isn't exactly great, either.  But I'm out of time for today.
-
-> +#
-> +# Since: 11.0
-> +##
-> +{ 'union': 'IoThreadHolder',
-> +  'base': { 'type': 'IoThreadHolderKind' },
-> +  'discriminator': 'type',
-> +  'data': {
-> +    'block-node': 'IoThreadHolderBlockNode',
-> +    'qom-object': 'IoThreadHolderQomObject' } }
-> +
->  ##
->  # @IOThreadInfo:
->  #
+-- 
+Peter Xu
 
 
