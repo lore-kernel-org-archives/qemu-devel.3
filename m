@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB55F94CAB
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1BFF94CAC
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFHbJ-000111-Ci; Tue, 21 Apr 2026 16:21:41 -0400
+	id 1wFHbJ-000110-8g; Tue, 21 Apr 2026 16:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHbG-0000zi-0I
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:38 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHbD-0000ye-FZ
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHbE-0008Sh-0G
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHbB-0008SG-VV
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776802895;
+ s=mimecast20190719; t=1776802893;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+iUFIFI91U4R0IIvcJAwRQAFhDDvnp8eZiPU+UOGonU=;
- b=f/E3Kv3dIiJJPHS/ZzcaTJ3mi/7bo8Ua+gTe5KU+HmJhs1ntNqcoKQj5SBQ8jxOqJz6VlU
- WinctXOthyF4jB3zp5+aqmWs3kxnBzalBz+ot/O2IEOqiAPzSQqJmE9eiRfo8IR30b2YP9
- vsAOHFcPJqXHSNh5MHHGyZ1LSkswsYo=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0sY03HVswRoPMa35yJ23Zli6bfmgoUXGAl+akL2zYOk=;
+ b=TRYleeQBxzLnxCWByB3ggMkdrrmeh+8DCnP7pKZ08tDIpEhqcAkOw4bOAtqEX8Xdi6p+mX
+ NC6j7ewr30EIsFY9OjowMF9wqzXbkHo/q8+2BA0x+f8b1wfHIBSIP5iIt4r/4d2JIE+mDK
+ 4h4VJE5azOFLkOZLT301/xdkFlSFkI0=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-fBzbHEnEOW6g4QxErzBJww-1; Tue, 21 Apr 2026 16:21:34 -0400
-X-MC-Unique: fBzbHEnEOW6g4QxErzBJww-1
-X-Mimecast-MFC-AGG-ID: fBzbHEnEOW6g4QxErzBJww_1776802893
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8ac04b2fc4eso112819216d6.0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 13:21:34 -0700 (PDT)
+ us-mta-562-yV2umeW8PXSyO-bnNpiLtA-1; Tue, 21 Apr 2026 16:21:32 -0400
+X-MC-Unique: yV2umeW8PXSyO-bnNpiLtA-1
+X-Mimecast-MFC-AGG-ID: yV2umeW8PXSyO-bnNpiLtA_1776802892
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8acaea1ffe7so122340746d6.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 13:21:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776802893; x=1777407693; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776802891; x=1777407691; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+iUFIFI91U4R0IIvcJAwRQAFhDDvnp8eZiPU+UOGonU=;
- b=KctlUYtGW4Ed9ldJbsLvfP3MBYss83hNRN8Isk4A7b9AQXhGz2vnTb0W8gZHVTlvEF
- 4AeNlMTUMgSdd72HyOyNSNa8VbVllJjr6Y3Inmzi3BC+XnRtISw5G7ijKADecfw0QpDx
- bfy/TWpTVD9lmz5r+nCh7/LH18jg7htxoeDRLnr6NgmEpb98jr5JKpDumjiLmipqVI/a
- oL43BHnjRkBTuDbZYRSd9EqUheam8Wf8scO/pwbBtmabs88ILyr5xd69TSJXm5h2Z+HJ
- XVheXUuDCKLMWjSZpCUhrZAkAQjXbaHF02v/d/DNxszzF4tVoMdsECT1kwVXrc0e+JM8
- FpVw==
+ bh=0sY03HVswRoPMa35yJ23Zli6bfmgoUXGAl+akL2zYOk=;
+ b=eF9oV35ck3/9uFmrp4vUro3sD06Ba1kwQLf4t6WKS3HTug4QKc27inCKC6c8sPBW0h
+ kWJZMBAXAUW+tG/1apBMR01hADeNbbCgURCup38Ra4tjpS9ip3LmBI7zE5eEflLPFDFi
+ JJ0OGw3BT+cDSUub6Qk+rIDXiEpVeW3kkcki18yfB2auYex+QmjjoxIA1EApO4vn2pVX
+ R/e0Tsf7uKeBIszUmxj0LITf38VE+SMVehSic4TLigApcpUPtXU4bjR+vdUsng1fE4sv
+ c9M3JHVaeUZT34ILBbzzryRHsnSzswvlgwkTCstAEGyY/BSv80UX863678x+pluDBlHL
+ W+Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776802893; x=1777407693;
+ d=1e100.net; s=20251104; t=1776802891; x=1777407691;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+iUFIFI91U4R0IIvcJAwRQAFhDDvnp8eZiPU+UOGonU=;
- b=kP4TvJP0x+e7bZY+DSKfNslS2mIMSeSkGPmgNmjQeetw3SQWYLd7+EHypJpI48F5j7
- gDyhiFiuXnCFh9uiXRDZLyuRlKdGONhGvSyh2UL92O3fNUoxBjD3IMu1lpoyRRvaMmfb
- ZMu2VLEdiaHGzqJ5bKSDyRnZY1L5KdGWnzfVBbmmt9OTZ4DH84F6Jgr4WJsT6QPC9Ebe
- sVM2ygckkRmwpv+cxNckuzLjCuGxhg+Z+ED4GbRCiJywRd9M/7RZsi+zq8yHRQgtt2hd
- V+P9H9O5Vrf2ZUou53p6OXIPse+CrE4Ui5E1naiWdg+ab6iwuKWfJWxBwJ3Dr76Dh1h6
- N5dQ==
-X-Gm-Message-State: AOJu0YxWuOi1g25WmhwGFOlLjDh8Hdl4XwDH2GnCSsxb8BNBqEFF8ZF4
- LUlt1LB3sr9fU8pTARwSGICWs+dCwCle+rTKOZc6BsL5yJYSOb2D22YVLnpQI6Gd/Wu0umMQEdH
- mA2CKPh7hBP3uN89sCchboNV13CDj+pzHMUpu4g3wOqX4KW35aJiJ42Il4Ki7AN8p8T06SPo7V9
- JkCtyZkCwTXViodyjKaQgmsKOuM3KeqNBkRx02Bw==
-X-Gm-Gg: AeBDieuhM255/n/Oth78spUBjXRjnQnymBhBQq+dNVUZvalRONRJGhSFgvr9KY7NUfq
- NDmSnRbuc6508z8WYJnktE1FfqzAaXcyMGxq4Ee0OlmM9HvjV26HXKN2SLRTOGE+gdAIi0RbYdE
- A2GDaJ+uGJbLtZsxURmg8sy7v3d6y8YqI+YWceNfuwZyPNJ+o9FH+jy2SNHQlYKD4uX+pwg8p1l
- 5vxAIm7zaUOtoagd5M0y2esQ55UZXGWw7KkBEnP25vuq7jIpC05Iesy9ImDI7P6kUpYz1kT+nNT
- RQU+c8HO78IPJ780l6lgIjdnHdrLSn9TKQY/YyCnR9lLkxKAA4lfoQF05q2NFMrFQu5cKwW0yV0
- LzOj1rusv3/Ck6nHr44m9B0UILHqp/o6WIImqDaSOjsylose4NBPqyHXT9Q==
-X-Received: by 2002:a05:6214:260f:b0:89c:5e33:2cc5 with SMTP id
- 6a1803df08f44-8b02812918cmr327405566d6.20.1776802893125; 
- Tue, 21 Apr 2026 13:21:33 -0700 (PDT)
-X-Received: by 2002:a05:6214:260f:b0:89c:5e33:2cc5 with SMTP id
- 6a1803df08f44-8b02812918cmr327404866d6.20.1776802892443; 
- Tue, 21 Apr 2026 13:21:32 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ae5c26csm114343556d6.31.2026.04.21.13.21.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=0sY03HVswRoPMa35yJ23Zli6bfmgoUXGAl+akL2zYOk=;
+ b=KDsPKIH4mMsk8KG1IBFhzejILt1G3Cy/P3fCheBfKyFxXkj6bBNinojKFzb7/NSgi6
+ zPtN7f3MaLqKqli8GAliS8n/DljUOLRraJPd0S7jZT+7KFF7MS3URMp3Bp3o4tjS2M6G
+ 7nV3W2ddXYMWIFK04mVDmNFClLzAuKRCoqBzbgDESSsfcGi3ejrKvA4r4iJ2ZtjnJjd9
+ ufh2AQQRs5iRJyAuR2w+V5WwGpNWQeSpAHy0BRrUC+n+Mg/rIRUc5uVdfh5/SPbfCVVa
+ d0cqET7upJCz+85gylNtONbOtBE1++2DOnPreCpUc+BINRaRaZIlftWktK26wMzRYUaR
+ 5yfw==
+X-Gm-Message-State: AOJu0Yw+SVrcFEHB5a+l9gA8W7e0/ajmJ+qDAkK2w/5MT+km5M+3juwY
+ c73EU98509exDvTI74usQD3TANkngRwloCOdHUwdRvjvK8i8S+ofIBXAiqPcKKyO8Z+c9iQ8xiL
+ kvFhjUiIUsqJZvddP6epy0FGjD812R/M0ASNzAK3afx5kll5udmxvQv3rVW/fjWdf+rgJUJ++ua
+ jvIYEMCpKGvwRDWFCP5Bc4rQyg64pYKb1aoamq2g==
+X-Gm-Gg: AeBDieuJUrK4XjEACP3AYMGa6H7nf+c3T2BWaOdu4Yjw26navDs/n3guu2wIlbBu1v/
+ zIPIiZ3fpZPo1cJEG22qiOTvfexT0Fzj/pWflliLWqfW84l8TpSigZ14bjETF49cAIi6h3P+LcO
+ JsWO9L9FIQnXVn5Qa/sjQLZ/XDIha4Tc54d+Ozc41K4fSvDsIkxkCe90V0z8XF+1NFv2Wmp/EQe
+ dyLEnMtpVSQP/mxrCwIxgB9l18kA4w3UBYzrykMGP+8mBcz3HCDnhWCIF2j0mMZYGJCdfj3z24a
+ xZXQ9JXcBcgZwrILehFll9+bzdfSHFPWM0yhbPbY5sDU0kArkGzB9fLv6jKcWR27wB35Px4sSj6
+ AZn5IEn9zsFringNN/fIOK5dhn6c18VE/t49Y1NUNkq93jP/WFN6k+TTmvA==
+X-Received: by 2002:a05:6214:451a:b0:8aa:a025:78e3 with SMTP id
+ 6a1803df08f44-8b027fd1cc8mr339146546d6.6.1776802891291; 
  Tue, 21 Apr 2026 13:21:31 -0700 (PDT)
+X-Received: by 2002:a05:6214:451a:b0:8aa:a025:78e3 with SMTP id
+ 6a1803df08f44-8b027fd1cc8mr339145756d6.6.1776802890789; 
+ Tue, 21 Apr 2026 13:21:30 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8b02ae5c26csm114343556d6.31.2026.04.21.13.21.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Apr 2026 13:21:30 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Joao Martins <joao.m.martins@oracle.com>,
@@ -93,15 +93,13 @@ Cc: Joao Martins <joao.m.martins@oracle.com>,
  Zhiyi Guo <zhguo@redhat.com>, Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 12/16] migration: Fix calculation of expected_downtime to
- take VFIO info
-Date: Tue, 21 Apr 2026 16:21:06 -0400
-Message-ID: <20260421202110.306051-13-peterx@redhat.com>
+Subject: [PATCH v2 11/16] migration: Calculate expected downtime on demand
+Date: Tue, 21 Apr 2026 16:21:05 -0400
+Message-ID: <20260421202110.306051-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260421202110.306051-1-peterx@redhat.com>
 References: <20260421202110.306051-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -127,95 +125,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU will provide an expected downtime for the whole system during
-migration, by remembering the total dirty RAM that we synced the last time,
-divides the estimated switchover bandwidth.
+This value does not need to be calculated as frequent.  Only calculate it
+on demand when query-migrate happened.  With that we can remove the
+variable in MigrationState.
 
-That was flawed when VFIO is taking into account: consider there is a VFIO
-GPU device that contains GBs of data to migrate during stop phase.  Those
-will not be accounted in this math.
+This paves way for fixing this value to include all modules (not only RAM
+but others too).
 
-Fix it by updating dirty_bytes_last_sync properly only when we go to the
-next iteration, rather than hide this update in the RAM code.  Meanwhile,
-fetch the total (rather than RAM-only) portion of dirty bytes, so as to
-include GPU device states too.
-
-Update the comment of the field to reflect its new meaning.
-
-Now after this change, the expected-downtime to be read from query-migrate
-should be very accurate even with VFIO devices involved.
-
-Tested-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration-stats.h |  8 +++-----
- migration/migration.c       | 11 ++++++++---
- migration/ram.c             |  1 -
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ migration/migration.h |  2 +-
+ migration/migration.c | 25 ++++++++++++-------------
+ 2 files changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-index 326ddb0088..1775b916df 100644
---- a/migration/migration-stats.h
-+++ b/migration/migration-stats.h
-@@ -31,11 +31,9 @@
-  */
- typedef struct {
-     /*
--     * Number of bytes that were dirty last time that we synced with
--     * the guest memory.  We use that to calculate the downtime.  As
--     * the remaining dirty amounts to what we know that is still dirty
--     * since last iteration, not counting what the guest has dirtied
--     * since we synchronized bitmaps.
-+     * Number of bytes that were reported dirty after the latest
-+     * system-wise synchronization of dirty information.  It is used to do
-+     * best-effort estimation on expected downtime.
-      */
-     uint64_t dirty_bytes_last_sync;
-     /*
+diff --git a/migration/migration.h b/migration/migration.h
+index b6888daced..ba0f9e0f9c 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -359,7 +359,6 @@ struct MigrationState {
+     /* Timestamp when VM is down (ms) to migrate the last stuff */
+     int64_t downtime_start;
+     int64_t downtime;
+-    int64_t expected_downtime;
+     bool capabilities[MIGRATION_CAPABILITY__MAX];
+     int64_t setup_time;
+ 
+@@ -586,6 +585,7 @@ void migration_cancel(void);
+ void migration_populate_vfio_info(MigrationInfo *info);
+ void migration_reset_vfio_bytes_transferred(void);
+ void postcopy_temp_page_reset(PostcopyTmpPage *tmp_page);
++int64_t migration_downtime_calc_expected(MigrationState *s);
+ 
+ /*
+  * Migration thread waiting for return path thread.  Return non-zero if an
 diff --git a/migration/migration.c b/migration/migration.c
-index d4d3534cf1..5d68591215 100644
+index caa1d13130..d4d3534cf1 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -3240,18 +3240,23 @@ static void migration_iteration_go_next(MigPendingData *pending)
-      */
-     qemu_savevm_query_pending(pending, true);
+@@ -1041,6 +1041,17 @@ static bool migrate_show_downtime(MigrationState *s)
+     return (s->state == MIGRATION_STATUS_COMPLETED) || migration_in_postcopy();
+ }
  
-+    /*
-+     * Update the dirty information for the whole system for this
-+     * iteration.  This value is used to calculate expected downtime.
-+     */
-+    qatomic_set(&mig_stats.dirty_bytes_last_sync, pending->total_bytes);
++/* Return expected downtime (unit: milliseconds) */
++int64_t migration_downtime_calc_expected(MigrationState *s)
++{
++    if (mig_stats.dirty_sync_count <= 1) {
++        return migrate_downtime_limit();
++    }
 +
-     /*
-      * Boost dirty sync count to reflect we finished one iteration.
-      *
-      * NOTE: we need to make sure when this happens (together with the
-      * event sent below) all modules have slow-synced the pending data
--     * above.  That means a write mem barrier, but qatomic_add() should be
--     * enough.
-+     * above and updated corresponding fields (e.g. dirty_bytes_last_sync).
-      *
-      * It's because a mgmt could wait on the iteration event to query again
-      * on pending data for policy changes (e.g. downtime adjustments).  The
-      * ordering will make sure the query will fetch the latest results from
--     * all the modules.
-+     * all the modules on everything.
-      */
-     qatomic_add(&mig_stats.dirty_sync_count, 1);
- 
-diff --git a/migration/ram.c b/migration/ram.c
-index 686162643d..d927ad7508 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1148,7 +1148,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-             RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-                 ramblock_sync_dirty_bitmap(rs, block);
-             }
--            qatomic_set(&mig_stats.dirty_bytes_last_sync, ram_bytes_remaining());
-         }
++    return mig_stats.dirty_bytes_last_sync /
++        migration_get_switchover_bw(s) * 1000;
++}
++
+ static void populate_time_info(MigrationInfo *info, MigrationState *s)
+ {
+     info->has_status = true;
+@@ -1061,7 +1072,7 @@ static void populate_time_info(MigrationInfo *info, MigrationState *s)
+         info->downtime = s->downtime;
+     } else {
+         info->has_expected_downtime = true;
+-        info->expected_downtime = s->expected_downtime;
++        info->expected_downtime = migration_downtime_calc_expected(s);
      }
+ }
  
+@@ -1649,7 +1660,6 @@ int migrate_init(MigrationState *s, Error **errp)
+     s->mbps = 0.0;
+     s->pages_per_second = 0.0;
+     s->downtime = 0;
+-    s->expected_downtime = 0;
+     s->setup_time = 0;
+     s->start_postcopy = false;
+     s->migration_thread_running = false;
+@@ -3162,15 +3172,6 @@ static void migration_update_counters(MigrationState *s,
+     s->pages_per_second = (double) transferred_pages /
+                              (((double) time_spent / 1000.0));
+ 
+-    /*
+-     * if we haven't sent anything, we don't want to
+-     * recalculate. 10000 is a small enough number for our purposes
+-     */
+-    if (mig_stats.dirty_pages_rate && transferred > 10000) {
+-        s->expected_downtime =
+-            mig_stats.dirty_bytes_last_sync / switchover_bw_per_ms;
+-    }
+-
+     migration_rate_reset();
+ 
+     update_iteration_initial_status(s);
+@@ -3825,8 +3826,6 @@ void migration_start_outgoing(MigrationState *s)
+     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+     int ret;
+ 
+-    s->expected_downtime = migrate_downtime_limit();
+-
+     if (resume) {
+         /* This is a resumed migration */
+         rate_limit = migrate_max_postcopy_bandwidth();
 -- 
 2.53.0
 
