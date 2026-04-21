@@ -4,105 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78128F94CAB
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D79DF94CB0
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 20:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFHbD-0000yk-Nt; Tue, 21 Apr 2026 16:21:35 -0400
+	id 1wFI4t-0004Jm-UQ; Tue, 21 Apr 2026 16:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHb9-0000xr-Kd
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:33 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wFI4q-0004GR-TM
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:52:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFHb7-0008R9-PR
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:21:31 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wFI4m-0002lv-Mm
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 16:52:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776802889;
+ s=mimecast20190719; t=1776804725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JxOej4+K9+12DVShlen6zBubWxbQhJb/dp07j+yzJwU=;
- b=cYBTGFVd/JA7IdrN4APu8XKu3V4b5UTwzTFpT7SzVSV09vgiAJPk7Yp2Kd61sZtu0jMriG
- B3QrHGTrwCcJEIAR5JjcMPzxLD9/VswL/6zCYIbzkaSMGl2NI9iFR359GWWBlsi8nFyL4L
- ZQODVC6cmdHxlJ+0qers3wez8S8I7Xw=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-170-_SuEQvpmOZemoCx2UR7ZLQ-1; Tue, 21 Apr 2026 16:21:27 -0400
-X-MC-Unique: _SuEQvpmOZemoCx2UR7ZLQ-1
-X-Mimecast-MFC-AGG-ID: _SuEQvpmOZemoCx2UR7ZLQ_1776802887
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8a275472d89so69877266d6.1
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 13:21:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776802887; x=1777407687; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JxOej4+K9+12DVShlen6zBubWxbQhJb/dp07j+yzJwU=;
- b=CDgyMvHGmbr49Za/wCmF9F201qEfau+WHSFueiRFF0K/8t53VQmSa4Vi7SxsGpIl2X
- KnsaNHaEnKuJX/2iKsBNSrm8Pr0WrK9Y5HBbTTpsI8FVtcroe1OIezY6rsDyP2ORNvif
- 6e5bfBcu0FYfXt4Q0UraMK30SMUya/4k+0H/Qr/fwlNGbOcSqDs+UdtJ8D/MpgBy0HvA
- aCAUe6ty8dM9PvT2e6vBYqJrzHeHVDtx9vetQ70vhqLA8N+PBfsxI6AHHloQLRmYJuuA
- 0a/y1rfsOuwCB1Lt07vtFRx0Amf9LRC1np42akgFQ59XSGAwft9+o4pCWnkT9k8mUpfD
- GWUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776802887; x=1777407687;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JxOej4+K9+12DVShlen6zBubWxbQhJb/dp07j+yzJwU=;
- b=gu2orQ4LuAyk5ykNkfiV9/UBL0EcLGLbcl4rh91ZF37cgF+CnrEeHuA+IJX0NtA/74
- JUYmCj4xFINneHThYuMppvM6isVipJ+BT0gg43zATIZubhE4tV5PdDR8prG/OB0KNb47
- mKu+hyFLPcaLRxEqtcv7ckZMRZGvjleni8FJgd4MTITa+mW8JtavV4dsRPNcV9G79bCH
- aMSfsg4f3rdR/QUlduGLaFVYNqRzGFIkhpX4IORyxePZ3NoGEbwBNrLw8F+zsXTFyf8c
- IuKMTEgNwqnxEiQpVs8IKiTW7Giw5PEymBdG2Wgrv2Q4VNjiCFixIA8Bhq3OqAJY0hcq
- vQbw==
-X-Gm-Message-State: AOJu0YwT/zouZI0hCGfwu+jw+V5J5nwoW4UaiWLx2xgoAs60yQkrM3Xh
- aVgXoGHVOgbUD9Fg/U5LTp+dFJ5r86qkrxEhdmbMGtiIrdYXYxZ8Zmu+qwC3ZLRL5sW+ikPfLPE
- ziMbh0+501727xQNCx7i/D2EVTSDoRE9kBCGgmQCCayQ10b18YYB0LYiBfbt+NzxAYGa7B7bgdM
- KDWakel6PbNywPHEKF7co1EAgZv/tUN+TNUmNoJQ==
-X-Gm-Gg: AeBDievtd3DMdhfE00939w5W2otk05jSwp/t9f/q0BTbbtQZpN0oUwybMFeABvVQHsb
- Pwy1wToe/cYUV9i70YhvsWTErJZGmKMiMHLbUvDGSOUUV+Pt2QTlcnC5fGhmR++FZai6cnhrh8F
- vXxsvHMVL0MepROlsPpzdT07JPhXsltwD1oSi4xR96daKz27jzb4YSZp+ipy9saF0ZBzv0JKqGp
- SEKVzbcj8Tc/O4RBMuLm1vaD7X+UEo7AEsAjmxEvGD8mKBWK+2gG40oM2F19jUIlARVSX+wHIIF
- Gih62G+tnOU6N7FGWan+TAcZ8KWRmO7dvwz8ySRN577g3aZnn2lM6FN1z52H4zY6JS7LWPQZBdj
- fhDXUS+fLV4Yy9qis/zHVNToFcWq/yqUK3ikBvDyPt0Xg9/hGnRhMupN6DQ==
-X-Received: by 2002:a05:6214:2521:b0:8ac:b6d7:e60b with SMTP id
- 6a1803df08f44-8b028013c49mr316275196d6.1.1776802886735; 
- Tue, 21 Apr 2026 13:21:26 -0700 (PDT)
-X-Received: by 2002:a05:6214:2521:b0:8ac:b6d7:e60b with SMTP id
- 6a1803df08f44-8b028013c49mr316274406d6.1.1776802886015; 
- Tue, 21 Apr 2026 13:21:26 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ae5c26csm114343556d6.31.2026.04.21.13.21.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Apr 2026 13:21:25 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Kirti Wankhede <kwankhede@nvidia.com>,
- Zhiyi Guo <zhguo@redhat.com>, Peter Xu <peterx@redhat.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 08/16] vfio/migration: Fix incorrect reporting for VFIO
- pending data
-Date: Tue, 21 Apr 2026 16:21:02 -0400
-Message-ID: <20260421202110.306051-9-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260421202110.306051-1-peterx@redhat.com>
-References: <20260421202110.306051-1-peterx@redhat.com>
+ bh=ea3zwc2wn3K95K/QjGVXD/jUPwnnNZC074GbjF9/bH0=;
+ b=XVULFGWetAvBkVNclxzCwixyqUqJO8//vWVOltFhFUAaukCa5KYEzr5n7zYqNCjoGBukUk
+ fTrpuue5KUEiyUPtC3nINZFVvF9vXxQziXQNEY41YheJXuBdTQyTueweeLnSgSJMNr2OXL
+ iXWs38j/w0WgC8xpymciA6CYtQQOS48=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-hjgoLUJqMcSxwvF_8xCkkA-1; Tue,
+ 21 Apr 2026 16:52:01 -0400
+X-MC-Unique: hjgoLUJqMcSxwvF_8xCkkA-1
+X-Mimecast-MFC-AGG-ID: hjgoLUJqMcSxwvF_8xCkkA_1776804720
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B558195605E; Tue, 21 Apr 2026 20:52:00 +0000 (UTC)
+Received: from localhost (unknown [10.44.32.90])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F0B491800446; Tue, 21 Apr 2026 20:51:58 +0000 (UTC)
+Date: Tue, 21 Apr 2026 16:51:56 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: "Jorge E. Moreira" <jemoreira@google.com>, hreitz@redhat.com,
+ gmaglione@redhat.com, "Michael S . Tsirkin" <mst@redhat.com>,
+ Hanna Czenczek <xanclic@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
+ kick FDs
+Message-ID: <20260421205156.GB466778@fedora>
+References: <20260411021205.3592118-1-jemoreira@google.com>
+ <aeYvCK2qhZd1W9sA@sgarzare-redhat>
+ <CAGxU2F7=XQfc4PUEM=k5yc-tytRs-MkrRKFeRXAETVEY5eggZQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="x+H2wE6hLyK1WtYW"
+Content-Disposition: inline
+In-Reply-To: <CAGxU2F7=XQfc4PUEM=k5yc-tytRs-MkrRKFeRXAETVEY5eggZQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -126,65 +89,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIO reports different things in its fast/slow version of query pending
-results.  It was because it wants to make sure precopy data can reach 0,
-which is needed to make sure sync queries will happen periodically over
-time.
 
-Now with stopcopy size reporting facility it doesn't need this hack
-anymore.  Fix this by reporting the same values in fast/slow versions of
-query pending request, except that the slow version will do a slow sync
-with the hardwares.
+--x+H2wE6hLyK1WtYW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When at it, removing the special casing for vfio_device_state_is_precopy()
-which may reporting nothing in a fast query.  Then ther reporting will be
-consistent to VFIO devices that do not support precopy phase.
+On Mon, Apr 20, 2026 at 05:57:40PM +0200, Stefano Garzarella wrote:
+> On Mon, 20 Apr 2026 at 16:49, Stefano Garzarella <sgarzare@redhat.com> wr=
+ote:
+> >
+> > Thanks for starting the discussion here, let me add also Hanna, German,
+> > and Stefan in CC that can help us.
+> >
+> > On Fri, Apr 10, 2026 at 07:12:05PM -0700, Jorge E. Moreira wrote:
+> > >Migration of back-end state happens while the device is suspended (i.e
+> > >all vrings are stopped). To resume normal operation on the destination,
+> > >the vrings need to be started again with a kick (either a write on the
+> > >FD or the VHOST_USER_VRING_KICK in-band message if negotiated). While
+> >
+> > It's true that in the spec we have:
+> >    "Each ring is initialized in a stopped and disabled state. The
+> >    back-end must start a ring upon receiving a kick (that is, detecting
+> >    that file descriptor is readable) on the descriptor specified by
+> >    VHOST_USER_SET_VRING_KICK or receiving the in-band message
+> >    VHOST_USER_VRING_KICK if negotiated, and stop a ring upon receiving
+> >    VHOST_USER_GET_VRING_BASE."
+> >
+> > But IMO this applies when a driver is not yet loaded.
+> > When we are migrating, the driver could be already loaded. So, in the
+> > new device running in the destination, IMO we should consider the ring
+> > already started or add some messages to tell to the device: "hey, the
+> > device was already started, this is a migration and it's completed".
+> >
+> > Sending a kick from the frontend, seems more an hack here.
+> >
+> > That said, for example, in subprojects/libvhost-user/libvhost-user.c
+> > IIUC the virtqueue is started when the SET_VRING_KICK is handled by
+> > vu_set_vring_kick_exec(), but not sure how compliant it is.
+> >
+> > >these notifications are typically sent by the driver, it has no reason
+> > >to send them in the destination if it already sent them in the source =
+as
+> > >the driver is unaware that a migration took place. Therefore it should
+> > >be the responsibility of the vhost-user front-end to ensure these vrin=
+gs
+> > >are started. This is particularly necessary for queues where data only
+> > >flows from device to driver, such as those used by the vsock and input
+> > >devices.
+> >
+> > Exactly, so IMO we should not use the kick, but maybe add something new
+> > or clarify what to do after the migration.
+> >
+> > For example in the "Migrating back-end state" we have:
+> >    "Migrating device state involves transferring the state from one
+> >    back-end, called the source, to another back-end, called the
+> >    destination. After migration, the destination transparently resumes
+> >    operation without requiring the driver to re-initialize the device at
+> >    the VIRTIO level."
+> >
+> > So, IMO we can use the VHOST_USER_SET_DEVICE_STATE_FD channel exactly to
+> > inform the new device about the state: "there isn't any state to
+> > transfer, but I notify you that the device was already initialized, so
+> > the vrings can be started".
+> >
+> > >
+> > >This behavior is already used by some qemu vhost-user front-ends (e.g
+> > >vhost-user-blk) and by front-ends implemented on other VMMs(e.g CrosVm=
+).
+> >
+> > I looked at vhost-user-blk frontend, but I don't see it. I mean I see
+> > the code around the comment "/* Kick right away to begin processing
+> > requests already in vring */" but that one IIUC was introduced more to
+> > fix devices violating specs, so not sure it's a good example to follow:
+> >
+> > commit 110b9463d5c820120c8311db79f55a64c9d81ebe
+> > Author: Yongji Xie <elohimes@gmail.com>
+> > Date:   Wed Jun 6 21:24:48 2018 +0800
+> >
+> >      vhost-user-blk: start vhost when guest kicks
+> >
+> >      Some old guests (before commit 7a11370e5: "virtio_blk: enable VQs =
+early")
+> >      kick virtqueue before setting VIRTIO_CONFIG_S_DRIVER_OK. This viol=
+ates
+> >      the virtio spec. But virtio 1.0 transitional devices support this =
+behaviour.
+> >      So we should start vhost when guest kicks in this case.
+> >
+> >      Signed-off-by: Yongji Xie <xieyongji@baidu.com>
+> >      Signed-off-by: Chai Wen <chaiwen@baidu.com>
+> >      Signed-off-by: Ni Xun <nixun@baidu.com>
+> >      Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> >      Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> >      Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> >
+> >
+> > >Adding it to the vhost-user documentation makes it explicit that this
+> > >strategy is permitted and suggest it to vhost-user front-end authors.
+> > >Explicitly documenting it is necessary because vring kicks appear
+> > >designed to originate in the driver, so having some originate in the
+> > >front-end can be counterintuitive and cause developers to waste time
+> > >looking for other alternatives or face pushback during code review.
+> >
+> > As I pointed out in our discussion in
+> > https://github.com/rust-vmm/vhost-device/pull/936
+> > IMO we should use some in-band messages and not relaying on kicks that
+> > should be used only by the driver to notify the device about new
+> > available buffers.
+> >
+> > That said, I agree that we need to clarify in the specifications exactly
+> > what the backend and frontend should do after a migration to start
+> > vrings if there is no need to exchange a state.
+> >
+> >
+> > Any other opinion?
+> >
+> > Thanks,
+> > Stefano
+> >
+> > >
+> > >Signed-off-by: Jorge E. Moreira <jemoreira@google.com>
+> > >---
+> > > docs/interop/vhost-user.rst | 5 ++++-
+> > > 1 file changed, 4 insertions(+), 1 deletion(-)
+> > >
+> > >diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> > >index 137c9f3669..ad5aba3430 100644
+> > >--- a/docs/interop/vhost-user.rst
+> > >+++ b/docs/interop/vhost-user.rst
+> > >@@ -656,7 +656,10 @@ destination, following the usual protocol for est=
+ablishing a connection
+> > > to a vhost-user back-end: This includes, for example, setting up memo=
+ry
+> > > mappings and kick and call FDs as necessary, negotiating protocol
+> > > features, or setting the initial vring base indices (to the same value
+> > >-as on the source side, so that operation can resume).
+> > >+as on the source side, so that operation can resume). The vhost-user =
+front-end
+> > >+may also write to the kick FDs of vrings containing unused buffers or=
+ send
+> > >+``VHOST_USER_VRING_KICK`` if negotiated to start those vrings in the =
+destination
+> > >+since the driver likely already kicked them in the source and won't d=
+o it again.
+>=20
+> After discussing this with Hanna, we came to the conclusion that your
+> idea of injecting the kick is the least invasive option for now and
+> complies with the spec (even though I still don=E2=80=99t think it=E2=80=
+=99s a nice
+> thing to do).
+>=20
+> So it=E2=80=99s fine to continue in this direction, but I might add these
+> words more in the "Migration" section than here, since we=E2=80=99re talk=
+ing
+> about an optional state migration here. For example after "No further
+> update must be done before rings are restarted."
+> Or in the "Ring states" section, where we can clarify how to restart a
+> ring after a migration. Or in both :-)
+>=20
+> WDYT?
+>=20
+> Then instead of "may" I'd use "should". And I would refer to the fact
+> that migration is transparent to the driver, so the front-end should
+> kick all initialized vrings to comply with what we described in the
+> "Ring states" section.
 
-Copy stable might be too much; just skip it and skip the Fixes.
+I don't agree. Here is my thinking about how to solve this:
 
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-Tested-by: Avihai Horon <avihaih@nvidia.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- hw/vfio/migration.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+Device state migration uses the ring state machine to suspend the device
+on the source host and start rings on the destination host after loading
+state.
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index e965ba51fb..e6e6a0d53d 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -587,19 +587,23 @@ static void vfio_state_pending(void *opaque, MigPendingData *pending,
- {
-     VFIODevice *vbasedev = opaque;
-     VFIOMigration *migration = vbasedev->migration;
--    uint64_t remain;
-+    uint64_t precopy_size, stopcopy_size;
- 
-     if (exact) {
-         vfio_state_pending_sync(vbasedev);
--        remain = migration->stopcopy_size;
-+    }
-+
-+    precopy_size =
-+        migration->precopy_init_size + migration->precopy_dirty_size;
-+
-+    if (migration->stopcopy_size > precopy_size) {
-+        stopcopy_size = migration->stopcopy_size - precopy_size;
-     } else {
--        if (!vfio_device_state_is_precopy(vbasedev)) {
--            return;
--        }
--        remain = migration->precopy_init_size + migration->precopy_dirty_size;
-+        stopcopy_size = 0;
-     }
- 
--    pending->precopy_bytes += remain;
-+    pending->precopy_bytes += precopy_size;
-+    pending->stopcopy_bytes += stopcopy_size;
- 
-     trace_vfio_state_pending(vbasedev->name, migration->stopcopy_size,
-                              migration->precopy_init_size,
--- 
-2.53.0
+Starting rings is not specific to migration, it is covered by the ring
+state machine that's also used when pausing and resuming a VM locally,
+for example. We need to fix the ring state machine section in the spec
+rather than making changes to the migration or device state fd sections.
+
+Given that there are vhost-user back-ends like DPDK that do not rely on
+the kick fd (they do not use it when running in poll mode), injecting a
+kick cannot be necessary. Adding anything to the spec that requires the
+kick fd is at best a no-op and at worst could break those back-ends.
+
+The spec must be updated to say that rings are started by
+VHOST_USER_SET_KICK, which is what implementations already do today.
+
+If you want to add a note that front-ends may send a kick after
+VHOST_USER_SET_KICK completes to ensure that rings are started according
+to the old spec wording, then that is fine, but it should be clear that
+kicks are not the primary mechanism for starting rings since it would be
+dangerous to rely on that (it breaks poll-mode back-ends).
+
+Stefan
+
+--x+H2wE6hLyK1WtYW
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnn42wACgkQnKSrs4Gr
+c8jkrwf/cob9xsroEpQ0UddOzBiA+00v3ChYaIuQ7LOF/u5pa+IP+c7eesBaHhGo
++EOXkldnWs9PTPu7JHCTe+FjbFFACgNMG6nQrn6TuJUToyYYei/2JCBwvE3h8sgx
+D4ScwbnAttcTVyVvxKO8h0To98aZM4ED/V6lz4oVhjNbc1SoqH4ev2zeBqm+VBIb
+ejQKOGkKPGNPTzamA15uT6yQjqlZo4aeOUlCPFelt7FuLseGDTOkwMppWRo3zOJb
+tRWfqWdqdLRIkz4c9AWk9ybFyS/rVnHBpw/FyibHog/Xzdmi8EfUtcibGTbskdkB
+g2Zd5qQYXYYWB5EZEeEZjxefHxovoQ==
+=DPvm
+-----END PGP SIGNATURE-----
+
+--x+H2wE6hLyK1WtYW--
 
 
