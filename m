@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC05F8FA90
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 15:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27523F8FA98
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 15:52:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFDNh-0000gZ-AA; Tue, 21 Apr 2026 11:51:22 -0400
+	id 1wFDOr-0001pp-Kq; Tue, 21 Apr 2026 11:52:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wFDNS-0000Xy-B7
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 11:51:08 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wFDNN-0001jk-M2
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 11:51:04 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 87348415A0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 15:50:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1776786659;
- bh=bsazMGsNlPMbekppmNv7Y0DhpYhWQ+4ymX5ap7SHNr4=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=VJwstgv5CoSr9wkqbmbYWWDWemMwqThZp40Sgcmm9m4D4KYst6sYpuzHw4TA5CdeB
- VF2JSQlYSS9Tcbo0mb5R22rCyU+BXR/nYwR50CFrDWmCjIszxCcAv+TWKh18dB3p/4
- 23QS17LqDZm/P2wTVRF4Myl6NAJpiKhrYhXkyUy/UCTfLKSvkI9TaXjH0o9+FcP5z6
- 3s+STPlrN72HBTCo5BJbIpNBgK9q6wx/8f337qPVzu80pObxo2HDR0PPkpBiV018nU
- bh2pWKLb2BOsFtJYMpPgJQ6wAqMwgkh0EmfMkJ6DNdJCN9loekzhXtEEabl8wrtNt9
- w2H7i7J+i4rhw==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 7E3A67F33B
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 15:50:59 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Apr 2026 15:42:42 -0000
-From: Hector CAO <2133804@bugs.launchpad.net>
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1wFDOp-0001pb-Ms
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 11:52:31 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1wFDOn-000258-QT
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 11:52:31 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-82d0b68837aso2872031b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 08:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776786748; x=1777391548; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3xAss2Zrtrg0dH9Eea4Ig0ZJK+cZEfXpf8g8d6E127s=;
+ b=RzvqIZGf82Vm3aWGrHxg5iFogZdpjYHNBA5oJBDlNRAXcw0IHB31VpV4u32Ew39hLb
+ A1ILIgKn0c20P9Udkt0XG54yauL9aLpbl1xUiAEsd1mJfEbMjtXoIz+wt06gDL5buDSY
+ HWgdlx7lyf1iTK+P5HIyRg81IsDahroQqDLPr5IHc+eQW3yqRYJ/jnSFMGD5Iim4YpbV
+ c9P9CRSSmLn18u1J4vlM2ZFUU1HaJYubAmPiAf1zgHkEplEmuY3Rmq8c7Z1J6lvr+buX
+ yieEDjfY0FBpTLqKuqVDnbT6yaMIkcP7/nn2s3L2DS15ImaKQWIFa1yPGMSxDjFFURcP
+ zT7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776786748; x=1777391548;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3xAss2Zrtrg0dH9Eea4Ig0ZJK+cZEfXpf8g8d6E127s=;
+ b=c51YMrW7zP21wDxyPUayvWklhn8h7VmFbTeQ4FC296+qdeyZfmebhxzKOgQFKJN2UT
+ h6ivW7xr2lW26fxvW30JNIb3RfTLn0S9v3GtvfwpF1huy+0Md21apNqaWDCzCuzZN/ys
+ w8duDkTCLllDSe9XhyG7qcsh3X/wzDcKsRFD221cpF2sowrtS8eQ0PJ9fH1t8tdF/1Tz
+ CCjc0Z9irggJ6MtEJEmJSGRAyE1CU4LD/pw4/HrGIM8vf+wbI/5VpKlS/vIZoY4JrE3T
+ xmkAk0j8dFJ28vLGKB9trpKsjj+J76uJhIYW80oWLeZG2FgLpClv1OG67T9+XHE87YGI
+ Z7gA==
+X-Gm-Message-State: AOJu0Yw//5LIhr3YydI2VJQrXAWuW3fjCnQ9GX2gPQu2WHL8AmRqnPio
+ WDAj/VdHbMzgGANdluObtvt6naVAv0zKNMQI+Ukz1RZAFAZ1SpYVO0bI5sBvAGT1
+X-Gm-Gg: AeBDieswKTais8l0yk9z24Qi7chcpfTqnm4EJkxpD6ZYA0sm4iup7ciTcCAJ/L68yz7
+ IiZnqMhTWiuqVsp8n64Mi+3IcpDF6alsMIpj7/1LFLeMHQ2/inMAqB/zXjk69NOb1zNK+8kai31
+ 20bQktFbKz1FlRh4N2aRPM7uiSgTfm+Jb5pTbwuUswWca8z6tCp2YtPHdjtlRUaZbUDs+G8C0C1
+ GmtghPuw9UBnhgMnurSeiwPH//oCX+irqEbpt9wTX9OHhNrFbFpuxvN2aYyIO00rvCRUa1oRMF/
+ I3TFNoZu1uNuyfIBbcWc/SvnGF3LTfXYjV8HfcLKnIjlPU25R4Tr01Ra6W4ZChCPv6o8JHS4wIz
+ yWHm9snYhlskpqSEUvcBvtUd3eVjca1CZUQW90SVhUxZyhfrVl8gJDicGlFPb57OZTKHWClitb3
+ Vp8oas7HpuE6clZMuOcgQFMYhu+FBJM/thmK7tGdxsGG4Nr2HYqGxhbODAzQ==
+X-Received: by 2002:a05:6a00:908a:b0:81f:9b4c:81c0 with SMTP id
+ d2e1a72fcca58-82f8c90c380mr21266848b3a.41.1776786747592; 
+ Tue, 21 Apr 2026 08:52:27 -0700 (PDT)
+Received: from localhost.localdomain ([42.114.219.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82f8e981a0asm14848193b3a.3.2026.04.21.08.52.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Apr 2026 08:52:27 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
 To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: hectorcao janitor mjt+launchpad-tls paelzer
- utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Hector CAO (hectorcao)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177678616259.2776721.4953884117511739991.malone@juju-98d295-prod-launchpad-55>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="866d07beecca8ac2e3326342adf6c1740cd3e7b3";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: ade1863caece4c0d224d9e960d86acc9689c2c0e
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Trieu Huynh <vikingtc4@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] migration/vmstate: replace NULL pointer assert with proper
+ error
+Date: Tue, 21 Apr 2026 22:52:19 +0700
+Message-ID: <20260421155219.14506-1-viking4@gmail.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,75 +97,110 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Debian patch to backport to Questing and Noble:
+From: Trieu Huynh <vikingtc4@gmail.com>
 
-https://salsa.debian.org/qemu-
-team/qemu/-/commit/5380228f7fbdc094f8ff7ad002b796ed4f131546
+vmstate_load_state() contains an assert added in commit
+("migration/vmstate: split up vmstate_base_addr" [1])
+to catch NULL pointer dereferences early:
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
+  assert(first_elem || !n_elems || !size);
 
-Title:
-  QEMU does not emulate IOCTL TCGETS2
+However, the assert fires as an unrecoverable crash in a valid user
+scenario, for instance: loading a snapshot saved with -icount auto
+into a QEMU started without -icount. The "timer/icount/warp_timer"
+subsection is present in the stream, but icount_warp_timer is NULL
+because icount was never initialized. QEMU aborts with:
 
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Confirmed
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Confirmed
-Status in qemu source package in Resolute:
-  Fix Released
+  qemu-system-x86_64: ../migration/vmstate.c:185:
+  vmstate_load_state: Assertion `first_elem || !n_elems || !size'
+  failed.
 
-Bug description:
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
+Replace the assert with a proper error_setg() and -EINVAL return so
+QEMU reports a clear diagnostic instead of crashing.
 
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.=20
-  A detailed analysis is contained in LP #2133188.
+Also remove the error_prepend() in vmstate_subsection_load() that
+wrapped the error at each subsection level, producing a redundant and
+noisy error chain. The original error message is now propagated as-is.
 
-  A proper implementation of the missing IOCTLs will include:
+[1] https://lore.kernel.org/qemu-devel/20170228124056.5074-4-dgilbert@redhat.com/
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2736
 
-  Functions:
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+---
+Steps to reproduce:
+* 1. Start src with icount config:
+./qemu-system-x86_64 \
+  -icount auto \
+  -<other_options>
 
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
+* 2. Save snapshot
+(qemu) savevm snap1
 
-  Definitions:
+* 3. Start dest without icount config:
+./qemu-system-x86_64 \
+  -<other_options>
 
-  in linux-user/syscall.c
-  #define termios2 host_termios2
+* 4. Load snapshot
+* As-is:
+~ # QEMU 10.2.94 monitor - type 'help' for more information
+(qemu) loadvm snap1
+qemu-system-x86_64: ../migration/vmstate.c:185: vmstate_load_state:
+Assertion `first_elem || !n_elems || !size' failed.
+Aborted (core dumped)
 
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
+* To-be:
+** Before removing error_prepend()
+~ # QEMU 10.2.94 monitor - type 'help' for more information
+(qemu) loadvm snap1
+Error: error while loading state for instance 0x0 of device 'timer':
+Loading VM subsection 'timer/icount' in 'timer' failed: -22:
+Loading VM subsection 'timer/icount/warp_timer' in 'timer/icount' failed: -22:
+VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
+is a NULL pointer but snapshot contains data for it.
 
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+** After removing error_prepend()
+~ # QEMU 10.2.94 monitor - type 'help' for more information
+(qemu) loadvm snap1
+Error: error while loading state for instance 0x0 of device 'timer':
+VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
+is a NULL pointer but snapshot contains data for it.
 
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
+ migration/vmstate.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 4d28364f7b..32ecc8ed35 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -182,7 +182,13 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+             vmstate_handle_alloc(first_elem, field, opaque);
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
+-                assert(first_elem || !n_elems || !size);
++                if (!first_elem && n_elems && size) {
++                    error_setg(errp,
++                               "VM load of device '%s': field '%s' is a NULL "
++                               "pointer but snapshot contains data for it.",
++                               vmsd->name, field->name);
++                    return -EINVAL;
++                }
+             }
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
+@@ -651,9 +657,6 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+         ret = vmstate_load_state(f, sub_vmsd, opaque, version_id, errp);
+         if (ret) {
+             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(child)");
+-            error_prepend(errp,
+-                          "Loading VM subsection '%s' in '%s' failed: %d: ",
+-                          idstr, vmsd->name, ret);
+             return ret;
+         }
+     }
+-- 
+2.43.0
 
 
