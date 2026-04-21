@@ -4,86 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B3FEA71A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F8FF55805
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Apr 2026 05:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wF3Sc-0000Wm-Og; Tue, 21 Apr 2026 01:15:46 -0400
+	id 1wF3Yp-0007bq-Ky; Tue, 21 Apr 2026 01:22:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wF3S8-0008Vd-Qh
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:15:17 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wF3S6-0006vI-Ns
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 01:15:16 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2ab39b111b9so15584985ad.1
- for <qemu-devel@nongnu.org>; Mon, 20 Apr 2026 22:15:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776748513; x=1777353313; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WADg8Bv+oZ53s3C00yS+/mTr8WhaGyfIt8vkJcIP8Zg=;
- b=AoYY1mAPoknKGzeNIGDJePkIUQDtZsSbsdpxV4bCXXD0WQDY9CizxdSqzdmmUwZYP+
- 5TlnxBWAFIFqzjgLbszkCnKTaJ4nmMKblIK3IQqzcVzzceDKIXOC7p999VvJ73a6Ueb5
- 65gCtPuFz/qnCIsqOl8sjCvMz0aVAjc9aqtk3dTvsNoGfNRGFfMtlPmqH3Du0jJ/L/+X
- lCr1SNOtf3k6/Rd+yhocu2HQR0winsUDtK1D4N2m22XqoiSYmQOMhJAkkcFdpNbEPluA
- q+u8TJIWi6gwXFr+KXpkKl4yDIx6z0cyGQ8DuQXfyNBu3xZtONsP3necYYtM18ubH7hx
- IVng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776748513; x=1777353313;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WADg8Bv+oZ53s3C00yS+/mTr8WhaGyfIt8vkJcIP8Zg=;
- b=btbIuGYe/5YUh9SUDvz2Ko1Mr9XpoSVy3qyWJySZB9M8JRtqBRA6I/+llfWGLULcR6
- 2PNa7mdWxqA/IXczAwTYBb9WhlRULZeLtoAzmsq6fYZ188TzicVPQiMYWDfasuAXZXOw
- YErqBjmV0S6pDb118BlBt8/NUU25cLJuP7m4BC06K6d6qIrKZMD7bcylNVEPLuYE3OSj
- faHxS9T4Wdo+Y/DauWiDOXgOYY9YrmiIvWCwtQRvIambA2aG8MhICOF05mfoCjFLuvu2
- lCXZUyLcUHFSxMK+xvFdxCqojEmrVYoQVioqEbJ+WPU1O8HetB4me7bJE96AqYdIjFQx
- wW4w==
-X-Gm-Message-State: AOJu0Yyv5PHJcWLMhHh0JLzqDRttOwkzNjLW2f0dniqyaeswT3eWe+w3
- OJXNPv8m1MAR65pnOK7FXqAhVt5z77HoOXr7EDStUQNVFF/uc33Pg8X4fz5fPufOUuJc/e5/bls
- WJPD+cbA=
-X-Gm-Gg: AeBDieuB+zRy/4qLYLhTPLYST+FvcR7qv8SwNXkhJVrRsTCFoQvrzSzfb5o7onpAzv+
- 5UuV9onZKACZBuZfgeyx2bL4Fjgq+2jRove540QIFILmeCqdMXM9Sp5QsMpB+lXaybELFhPDAPe
- n3Lu45DDA6+SCox+CoqYAAMSNUbaMmF9Xk2I91HWBSUMIwq4o7urqZ8rjDNHYeoY3MsM4rcQlGD
- JSvoCM8gR6OwPtW+F7a8EabjHFCCG/4JTJyukUY2tL1X3GUm5u1UUpQnaQACY+keJFcmBgHtj0g
- h0Rx7y2rAFLq412TL+ECIbLDBSEpeaYc9snU1kcV7fVl5+UdmH1Qi9wHROv2i5EaxqH5RUZ2yx8
- zs0OzeS7pxGTiYFTvbN/PAdCIUpQ61yxRufAeyZ+aCCLnhv1RCPZfnKaEWRjr+8yBpemj6Bm0ax
- hgqxcHYwBVYrqLSNw2stB8/lz5ckQOVIH8qE4mZtOA
-X-Received: by 2002:a17:903:1a45:b0:2b2:65db:8c5f with SMTP id
- d9443c01a7336-2b5f9f4f562mr175894935ad.27.1776748512724; 
- Mon, 20 Apr 2026 22:15:12 -0700 (PDT)
-Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab0cddfsm174631715ad.49.2026.04.20.22.15.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Apr 2026 22:15:12 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 34/37] target/arm: Implement FCVTNB, FCVTNT for SVE
-Date: Tue, 21 Apr 2026 15:13:43 +1000
-Message-ID: <20260421051346.41106-35-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260421051346.41106-1-richard.henderson@linaro.org>
-References: <20260421051346.41106-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1wF3Yc-0007Yi-GE; Tue, 21 Apr 2026 01:21:58 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1wF3YZ-0000cz-Fy; Tue, 21 Apr 2026 01:21:58 -0400
+Received: from localhost (unknown [131.107.147.136])
+ by linux.microsoft.com (Postfix) with ESMTPSA id B44FE20B6F0C;
+ Mon, 20 Apr 2026 22:21:53 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B44FE20B6F0C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1776748913;
+ bh=HJT/I+bbATbzpZa7IFBQev2FeK1wmUQopVue49jowBM=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=CErUKexh/93KSwXgOUuwCvl6Yi/820xcVBxUwIMSlEQKnMtmnc0mp0NLk+NPOgNtO
+ DzNc0ufBAovQLC+EemPNFVdxwR9k2jTTkTZhZM/uZko/nRbcXsWw+CXYiY+qLLDPxl
+ 9zS1JuRuef0bsDiDc0agSaNgzgXEsH4xJPb2coyo=
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
+Date: Tue, 21 Apr 2026 05:21:47 +0000
+Subject: [PATCH v3 02/14] accel/mshv: extract common CPU register helpers
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260421-mshv_accel_arm64_supp-v3-2-469f544778ba@linux.microsoft.com>
+References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
+In-Reply-To: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, 
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>, qemu-arm@nongnu.org, 
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,153 +74,388 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/helper-fp8-defs.h |  2 +
- target/arm/tcg/fp8_helper.c      | 85 +++++++++++++++++++++++++++++++-
- target/arm/tcg/translate-sve.c   |  4 ++
- target/arm/tcg/sve.decode        |  2 +
- 4 files changed, 92 insertions(+), 1 deletion(-)
+Move arch-independent MSHV CPU register handling functions into
+accel/mshv/mshv-cpu-common.c. Update x86 MSHV backends to use these
+shared helpers.
 
-diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
-index e67fb191c2..5863a6dbb8 100644
---- a/target/arm/tcg/helper-fp8-defs.h
-+++ b/target/arm/tcg/helper-fp8-defs.h
-@@ -19,3 +19,5 @@ DEF_HELPER_FLAGS_5(gvec_fcvt_bh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_4(sve2_fcvtn_bh, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
+Prefix get_generic_regs() with mshv_ for proper namespacing since it
+is now public.
+
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+---
+ accel/mshv/meson.build       |   3 +-
+ accel/mshv/mshv-cpu-common.c | 151 +++++++++++++++++++++++++++++++++++++++++++
+ include/system/mshv_int.h    |   3 +
+ target/i386/mshv/mshv-cpu.c  | 130 +------------------------------------
+ 4 files changed, 159 insertions(+), 128 deletions(-)
+
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+index e433187cde..ebe32921b3 100644
+--- a/accel/mshv/meson.build
++++ b/accel/mshv/meson.build
+@@ -1,5 +1,6 @@
+ system_ss.add(when: 'CONFIG_MSHV', if_true: files(
+   'irq.c',
+   'mem.c',
+-  'mshv-all.c'
++  'mshv-all.c',
++  'mshv-cpu-common.c'
+ ))
+diff --git a/accel/mshv/mshv-cpu-common.c b/accel/mshv/mshv-cpu-common.c
+new file mode 100644
+index 0000000000..b104720161
+--- /dev/null
++++ b/accel/mshv/mshv-cpu-common.c
+@@ -0,0 +1,151 @@
++/*
++ * QEMU MSHV common CPU register helpers
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
++ *          Magnus Kulke  <magnuskulke@microsoft.com>
++ *          Jinank Jain   <jinankjain@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qemu/memalign.h"
++
++#include "system/mshv.h"
++#include "system/mshv_int.h"
++
++#include "hw/core/cpu.h"
++#include "linux/mshv.h"
++
++#include <sys/ioctl.h>
++
++int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
++                          size_t n_regs)
++{
++    int cpu_fd = mshv_vcpufd(cpu);
++    int vp_index = cpu->cpu_index;
++    size_t in_sz, assocs_sz;
++    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
++    struct mshv_root_hvcall args = {0};
++    int ret;
++
++    /* find out the size of the struct w/ a flexible array at the tail */
++    assocs_sz = n_regs * sizeof(hv_register_assoc);
++    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
++
++    /* fill the input struct */
++    memset(in, 0, sizeof(hv_input_set_vp_registers));
++    in->vp_index = vp_index;
++    memcpy(in->elements, assocs, assocs_sz);
++
++    /* create the hvcall envelope */
++    args.code = HVCALL_SET_VP_REGISTERS;
++    args.in_sz = in_sz;
++    args.in_ptr = (uint64_t) in;
++    args.reps = (uint16_t) n_regs;
++
++    /* perform the call */
++    ret = mshv_hvcall(cpu_fd, &args);
++    if (ret < 0) {
++        error_report("Failed to set registers");
++        return -1;
++    }
++
++    /* assert we set all registers */
++    if (args.reps != n_regs) {
++        error_report("Failed to set registers: expected %zu elements"
++                     ", got %u", n_regs, args.reps);
++        return -1;
++    }
++
++    return 0;
++}
++
++int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
++                            size_t n_regs)
++{
++    int cpu_fd = mshv_vcpufd(cpu);
++    int vp_index = cpu->cpu_index;
++    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
++    hv_register_value *values = cpu->accel->hvcall_args.output_page;
++    size_t in_sz, names_sz, values_sz;
++    int i, ret;
++    struct mshv_root_hvcall args = {0};
++
++    /* find out the size of the struct w/ a flexible array at the tail */
++    names_sz = n_regs * sizeof(hv_register_name);
++    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
++
++    /* fill the input struct */
++    memset(in, 0, sizeof(hv_input_get_vp_registers));
++    in->vp_index = vp_index;
++    for (i = 0; i < n_regs; i++) {
++        in->names[i] = assocs[i].name;
++    }
++
++    /* determine size of value output buffer */
++    values_sz = n_regs * sizeof(union hv_register_value);
++
++    /* create the hvcall envelope */
++    args.code = HVCALL_GET_VP_REGISTERS;
++    args.in_sz = in_sz;
++    args.in_ptr = (uint64_t) in;
++    args.out_sz = values_sz;
++    args.out_ptr = (uint64_t) values;
++    args.reps = (uint16_t) n_regs;
++
++    /* perform the call */
++    ret = mshv_hvcall(cpu_fd, &args);
++    if (ret < 0) {
++        error_report("Failed to retrieve registers");
++        return -1;
++    }
++
++    /* assert we got all registers */
++    if (args.reps != n_regs) {
++        error_report("Failed to retrieve registers: expected %zu elements"
++                     ", got %u", n_regs, args.reps);
++        return -1;
++    }
++
++    /* copy values into assoc */
++    for (i = 0; i < n_regs; i++) {
++        assocs[i].value = values[i];
++    }
++
++    return 0;
++}
++
++int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
++{
++    int ret;
++    struct mshv_create_vp vp_arg = {
++        .vp_index = vp_index,
++    };
++
++    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
++    if (ret < 0) {
++        error_report("failed to create mshv vcpu: %s", strerror(errno));
++        return -1;
++    }
++
++    *cpu_fd = ret;
++
++    return 0;
++}
++
++void mshv_remove_vcpu(int vm_fd, int cpu_fd)
++{
++    close(cpu_fd);
++}
++
++void mshv_setup_hvcall_args(AccelCPUState *state)
++{
++    void *mem = qemu_memalign(HV_HYP_PAGE_SIZE, 2 * HV_HYP_PAGE_SIZE);
++
++    state->hvcall_args.base = mem;
++    state->hvcall_args.input_page = mem;
++    state->hvcall_args.output_page = (uint8_t *)mem + HV_HYP_PAGE_SIZE;
++}
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 35386c422f..ff3ab957b5 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -89,12 +89,15 @@ int mshv_load_regs(CPUState *cpu);
+ int mshv_store_regs(CPUState *cpu);
+ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
+                           size_t n_regs);
++int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
++                        size_t n_regs);
+ int mshv_arch_put_registers(const CPUState *cpu);
+ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
+ int mshv_arch_post_init_vm(int vm_fd);
++void mshv_setup_hvcall_args(AccelCPUState *state);
  
- DEF_HELPER_FLAGS_5(advsimd_fcvt_bs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sve2_fcvtnb_bs, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sve2_fcvtnt_bs, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
-index 9bc1349950..ebd448b466 100644
---- a/target/arm/tcg/fp8_helper.c
-+++ b/target/arm/tcg/fp8_helper.c
-@@ -520,7 +520,6 @@ void HELPER(sve2_fcvtn_bh)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
-     fp8_finish(env, &ctx);
+ typedef struct mshv_root_hvcall mshv_root_hvcall;
+ int mshv_hvcall(int fd, const mshv_root_hvcall *args);
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 2bc978deb2..9a80dc34d0 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -148,103 +148,6 @@ static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
+     return 0;
  }
  
+-int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
+-                          size_t n_regs)
+-{
+-    int cpu_fd = mshv_vcpufd(cpu);
+-    int vp_index = cpu->cpu_index;
+-    size_t in_sz, assocs_sz;
+-    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
+-    struct mshv_root_hvcall args = {0};
+-    int ret;
 -
- void HELPER(advsimd_fcvt_bs)(void *vd, void *vn, void *vm,
-                              CPUARMState *env, uint32_t desc)
+-    /* find out the size of the struct w/ a flexible array at the tail */
+-    assocs_sz = n_regs * sizeof(hv_register_assoc);
+-    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
+-
+-    /* fill the input struct */
+-    memset(in, 0, sizeof(hv_input_set_vp_registers));
+-    in->vp_index = vp_index;
+-    memcpy(in->elements, assocs, assocs_sz);
+-
+-    /* create the hvcall envelope */
+-    args.code = HVCALL_SET_VP_REGISTERS;
+-    args.in_sz = in_sz;
+-    args.in_ptr = (uint64_t) in;
+-    args.reps = (uint16_t) n_regs;
+-
+-    /* perform the call */
+-    ret = mshv_hvcall(cpu_fd, &args);
+-    if (ret < 0) {
+-        error_report("Failed to set registers");
+-        return -1;
+-    }
+-
+-    /* assert we set all registers */
+-    if (args.reps != n_regs) {
+-        error_report("Failed to set registers: expected %zu elements"
+-                     ", got %u", n_regs, args.reps);
+-        return -1;
+-    }
+-
+-    return 0;
+-}
+-
+-static int get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
+-                            size_t n_regs)
+-{
+-    int cpu_fd = mshv_vcpufd(cpu);
+-    int vp_index = cpu->cpu_index;
+-    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
+-    hv_register_value *values = cpu->accel->hvcall_args.output_page;
+-    size_t in_sz, names_sz, values_sz;
+-    int i, ret;
+-    struct mshv_root_hvcall args = {0};
+-
+-    /* find out the size of the struct w/ a flexible array at the tail */
+-    names_sz = n_regs * sizeof(hv_register_name);
+-    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
+-
+-    /* fill the input struct */
+-    memset(in, 0, sizeof(hv_input_get_vp_registers));
+-    in->vp_index = vp_index;
+-    for (i = 0; i < n_regs; i++) {
+-        in->names[i] = assocs[i].name;
+-    }
+-
+-    /* determine size of value output buffer */
+-    values_sz = n_regs * sizeof(union hv_register_value);
+-
+-    /* create the hvcall envelope */
+-    args.code = HVCALL_GET_VP_REGISTERS;
+-    args.in_sz = in_sz;
+-    args.in_ptr = (uint64_t) in;
+-    args.out_sz = values_sz;
+-    args.out_ptr = (uint64_t) values;
+-    args.reps = (uint16_t) n_regs;
+-
+-    /* perform the call */
+-    ret = mshv_hvcall(cpu_fd, &args);
+-    if (ret < 0) {
+-        error_report("Failed to retrieve registers");
+-        return -1;
+-    }
+-
+-    /* assert we got all registers */
+-    if (args.reps != n_regs) {
+-        error_report("Failed to retrieve registers: expected %zu elements"
+-                     ", got %u", n_regs, args.reps);
+-        return -1;
+-    }
+-
+-    /* copy values into assoc */
+-    for (i = 0; i < n_regs; i++) {
+-        assocs[i].value = values[i];
+-    }
+-
+-    return 0;
+-}
+-
+ static int set_standard_regs(const CPUState *cpu)
  {
-@@ -562,3 +561,87 @@ void HELPER(advsimd_fcvt_bs)(void *vd, void *vn, void *vm,
-     fp8_finish(env, &ctx);
-     clear_tail(vd, ctx.high ? 16 : 8, simd_maxsz(desc));
+     X86CPU *x86cpu = X86_CPU(cpu);
+@@ -334,7 +237,7 @@ int mshv_get_standard_regs(CPUState *cpu)
+     for (size_t i = 0; i < n_regs; i++) {
+         assocs[i].name = STANDARD_REGISTER_NAMES[i];
+     }
+-    ret = get_generic_regs(cpu, assocs, n_regs);
++    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+     if (ret < 0) {
+         error_report("failed to get standard registers");
+         return -1;
+@@ -412,7 +315,7 @@ int mshv_get_special_regs(CPUState *cpu)
+     for (size_t i = 0; i < n_regs; i++) {
+         assocs[i].name = SPECIAL_REGISTER_NAMES[i];
+     }
+-    ret = get_generic_regs(cpu, assocs, n_regs);
++    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+     if (ret < 0) {
+         error_report("failed to get special registers");
+         return -errno;
+@@ -1525,29 +1428,6 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+     return 0;
  }
-+
-+void HELPER(sve2_fcvtnb_bs)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
-+{
-+    FP8Context ctx = fp8_dst_start(env, desc);
-+    uint32_t *n0 = vn;
-+    uint32_t *n1 = vn + sizeof(ARMVectorReg);
-+    uint16_t *d = vd;
-+    bool osc = FIELD_EX64(env->vfp.fpmr, FPMR, OSC);
-+    size_t oprsz = simd_oprsz(desc);
-+    size_t nelem = oprsz / 4;
-+
-+    switch (ctx.f8fmt) {
-+    case OFP8_E5M2:
-+        for (size_t i = 0; i < nelem; ++i) {
-+            float32 e0 = n0[H2(i)];
-+            float32 e1 = n1[H2(i)];
-+            d[H2(2 * i + 0)] =
-+                float32_to_float8_e5m2(e0, ctx.scale, osc, &ctx.stat);
-+            d[H2(2 * i + 1)] =
-+                float32_to_float8_e5m2(e1, ctx.scale, osc, &ctx.stat);
-+        }
-+        break;
-+    case OFP8_E4M3:
-+        for (size_t i = 0; i < nelem; ++i) {
-+            float32 e0 = n0[H2(i)];
-+            float32 e1 = n1[H2(i)];
-+            d[H2(2 * i + 0)] =
-+                float32_to_float8_e4m3(e0, ctx.scale, osc, &ctx.stat);
-+            d[H2(2 * i + 1)] =
-+                float32_to_float8_e4m3(e1, ctx.scale, osc, &ctx.stat);
-+        }
-+        break;
-+    default:
-+        for (size_t i = 0; i < oprsz; i += 8) {
-+            *(uint64_t *)(vd + i) = 0x00ff00ff00ff00ffull;
-+        }
-+        float_raise(float_flag_invalid, &ctx.stat);
-+        break;
-+    }
-+
-+    fp8_finish(env, &ctx);
-+}
-+
-+void HELPER(sve2_fcvtnt_bs)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
-+{
-+    FP8Context ctx = fp8_dst_start(env, desc);
-+    uint32_t *n0 = vn;
-+    uint32_t *n1 = vn + sizeof(ARMVectorReg);
-+    uint8_t *d = vd;
-+    bool osc = FIELD_EX64(env->vfp.fpmr, FPMR, OSC);
-+    size_t oprsz = simd_oprsz(desc);
-+    size_t nelem = oprsz / 4;
-+
-+    switch (ctx.f8fmt) {
-+    case OFP8_E5M2:
-+        for (size_t i = 0; i < nelem; ++i) {
-+            float32 e0 = n0[H2(i)];
-+            float32 e1 = n1[H2(i)];
-+            uint8_t d0 = float32_to_float8_e5m2(e0, ctx.scale, osc, &ctx.stat);
-+            uint8_t d1 = float32_to_float8_e5m2(e1, ctx.scale, osc, &ctx.stat);
-+            d[H1(4 * i + 1)] = d0;
-+            d[H1(4 * i + 3)] = d1;
-+        }
-+        break;
-+    case OFP8_E4M3:
-+        for (size_t i = 0; i < nelem; ++i) {
-+            float32 e0 = n0[H2(i)];
-+            float32 e1 = n1[H2(i)];
-+            uint8_t d0 = float32_to_float8_e4m3(e0, ctx.scale, osc, &ctx.stat);
-+            uint8_t d1 = float32_to_float8_e4m3(e1, ctx.scale, osc, &ctx.stat);
-+            d[H1(4 * i + 1)] = d0;
-+            d[H1(4 * i + 3)] = d1;
-+        }
-+        break;
-+    default:
-+        for (size_t i = 0; i < oprsz; i += 8) {
-+            *(uint64_t *)(vd + i) |= 0xff00ff00ff00ff00ull;
-+        }
-+        float_raise(float_flag_invalid, &ctx.stat);
-+        break;
-+    }
-+
-+    fp8_finish(env, &ctx);
-+}
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 319a28e94a..eff3e71ade 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4102,6 +4102,10 @@ TRANS_FEAT(FCVTN, aa64_sme2_or_sve2_f8cvt, do_f8cvt,
-            a, gen_helper_sve2_fcvtn_bh, false, false)
- TRANS_FEAT(BFCVTN, aa64_sme2_or_sve2_f8cvt, do_f8cvt,
-            a, gen_helper_sve2_bfcvtn_bh, false, false)
-+TRANS_FEAT(FCVTNB, aa64_sme2_or_sve2_f8cvt, do_f8cvt,
-+           a, gen_helper_sve2_fcvtnb_bs, false, false)
-+TRANS_FEAT(FCVTNT, aa64_sme2_or_sve2_f8cvt, do_f8cvt,
-+           a, gen_helper_sve2_fcvtnt_bs, false, false)
  
- /*
-  *** SVE Floating Point Compare with Zero Group
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 806953bc35..7fce189b36 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1103,6 +1103,8 @@ BF2CVTLT        01100101 00 001 001 001111 ..... .....          @rd_rn_e0
+-void mshv_remove_vcpu(int vm_fd, int cpu_fd)
+-{
+-    close(cpu_fd);
+-}
+-
+-
+-int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
+-{
+-    int ret;
+-    struct mshv_create_vp vp_arg = {
+-        .vp_index = vp_index,
+-    };
+-    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
+-    if (ret < 0) {
+-        error_report("failed to create mshv vcpu: %s", strerror(errno));
+-        return -1;
+-    }
+-
+-    *cpu_fd = ret;
+-
+-    return 0;
+-}
+-
+ static void read_segment_descriptor(CPUState *cpu,
+                                     struct x86_segment_descriptor *desc,
+                                     enum X86Seg seg_idx)
+@@ -1580,8 +1460,6 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+-    size_t page = HV_HYP_PAGE_SIZE;
+-    void *mem = qemu_memalign(page, 2 * page);
  
- FCVTN           01100101 00 001 010 001100 ....0 .....          @rd_rnx2 esz=1
- BFCVTN          01100101 00 001 010 001110 ....0 .....          @rd_rnx2 esz=1
-+FCVTNB          01100101 00 001 010 001101 ....0 .....          @rd_rnx2 esz=1
-+FCVTNT          01100101 00 001 010 001111 ....0 .....          @rd_rnx2 esz=1
+     /* sanity check, to make sure we don't overflow the page */
+     QEMU_BUILD_BUG_ON((MAX_REGISTER_COUNT
+@@ -1589,9 +1467,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+                       + sizeof(hv_input_get_vp_registers)
+                       > HV_HYP_PAGE_SIZE));
  
- ### SVE FP Compare with Zero Group
+-    state->hvcall_args.base = mem;
+-    state->hvcall_args.input_page = mem;
+-    state->hvcall_args.output_page = (uint8_t *)mem + page;
++    mshv_setup_hvcall_args(state);
  
+     env->emu_mmio_buf = g_new(char, 4096);
+ }
+
 -- 
-2.43.0
+2.45.4
 
 
