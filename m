@@ -4,74 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59618F9B60B
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1EF5F9B61A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV4Q-0001w8-DS; Wed, 22 Apr 2026 06:44:38 -0400
+	id 1wFVG6-0003PF-Gz; Wed, 22 Apr 2026 06:56:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFV3y-0000Tz-S7
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:18 -0400
-Received: from p-east2-cluster5-host1-snip4-8.eps.apple.com ([57.103.79.11]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFVG4-0003Oo-Aa
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:56:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFV3v-0003Da-Ow
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:10 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-4 (Postfix) with ESMTPS id
- 6CC6B1800417; Wed, 22 Apr 2026 10:44:05 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXC0dDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTHpABi4EKXM1FE8HWA9GBjR4SB4vBCkAXXpJAlpyWHFDDjt2VXceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776854646; x=1779446646;
- bh=UYGshsVpXsiTJgLMvkXMm2iq6dV3ukV2xgw2p6SYvPY=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=LcEs1D3V4L12SzzS6rr/YdXs/sXwHchcZ9aSZpd9u5gaY+5955olQ4K1cegS4aPjSoGy/JhoExKRN9ghVyuk7Uxcpb5ChbEgUZgo63Eea/TZJ0cjX8mmVg5xta5MlXzwpSVi1I9UbsIWJHTqjkVN7pNDn6HhjCGQGQz0zZggekLMAOmHrpiWT+Fkq27ujC+TbgPsr4cRP0S4iLaMyAYjdkp+z+t3iKGZ/jbEfWdNMn+z4lF4AfOIxGr44fD6aeehaDRmrsu5DCYG2URF+GPaPjxLiiirQwuyBAiV30i8JrhCf0RPlogaChl+ql0uqgRml5chr5pcQ+sUABxc/mA97A==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-4 (Postfix) with ESMTPSA id
- 88CF71800097; Wed, 22 Apr 2026 10:44:01 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v2] whpx: i386, arm: do partition reset on boot CPU reset
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260421205749.55060-1-mohamed@unpredictable.fr>
-Date: Wed, 22 Apr 2026 12:43:49 +0200
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C85C3BAE-7458-4DA0-B3B2-C117E3C37CE8@unpredictable.fr>
-References: <20260421205749.55060-1-mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Authority-Info-Out: v=2.4 cv=KoZAGGWN c=1 sm=1 tr=0 ts=69e8a676
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=A3C6YRHjnLZ7LpmBN_kA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: JHnvgY1GcBfyXxfaVNhnI9TpW9_MBqsj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDEwMiBTYWx0ZWRfXwdnAShNmmHzN
- Qj4dZ3bdjFe4uSCWH4jPKppEIV3UEVQasKC0kxg/w9oWy1Q4OwD0WsomaVU1TKLEQ0RgRG5PfrY
- mL/v2LtwGE67d8Xdu/FkzCLn3jX21hW8ATZr7xljCs8j/txue+IMTysB4ANWkmQy9+2Kahk5JJT
- S9fcJdSO9W3kDHXLZ6J6g34q8Ze2pHHnb/E9w2rz74gFeO4q2FtFjIwbVvspZkQl1Q62QZygdlT
- d4mJnJZFGxA/c90gtMvaNBLXV0dDN+fGEpv+ANh4Up8el5Db9r/eiLoAvIY19v+G2+dWmtyBKMJ
- +/qXtatGXG/7bcVwW5xuORmC48ONHOu6ZeMii5Jo09HWr5/8SvzMpSNsOdu6xM=
-X-Proofpoint-ORIG-GUID: JHnvgY1GcBfyXxfaVNhnI9TpW9_MBqsj
-Received-SPF: pass client-ip=57.103.79.11;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFVG1-0007Bf-HB
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:56:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776855396;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MpRRRI/7Q+3Jy7LH1bV8jknOmEeoebCV+6XCk0I0G+I=;
+ b=Zvyoz2PwDCkV3vPh9QokHZb7umonIR2+eCnmtnQT1ptJ7iT0mcJQScypTCA8cU+5JSb992
+ 6JXOYpGVlQK23RSWNBH5kxc+sAXcG6l2/7XAD03M+nZQ8G4DdEpn+mlfZSoGgxJS/sSOu5
+ JtDiKDS2bMtacXh+s2Q2I97MP4RdF9Q=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-151-SMlbkNH7M5e9rhuhe2eCrw-1; Wed, 22 Apr 2026 06:56:35 -0400
+X-MC-Unique: SMlbkNH7M5e9rhuhe2eCrw-1
+X-Mimecast-MFC-AGG-ID: SMlbkNH7M5e9rhuhe2eCrw_1776855394
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-5a1154f41fdso2857188e87.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:56:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776855393; x=1777460193; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=MpRRRI/7Q+3Jy7LH1bV8jknOmEeoebCV+6XCk0I0G+I=;
+ b=mvGgAAZrlg5vS7BW3v4d28/mxKyB8whG6TJ+VwDYEuFWna42lAz3zcWe8EgwBQOxYu
+ 2blZ3RqGQu2dRn0wofocgnGbbKorJja2h1Pme17mr4uXKovlq29U9qDB3GF3ZEl3/tjA
+ 8ZeILRYLNmTIzV9Y5TlZp8k7J4Q65EhCSi4vC1vwsUINdcAOtmAdEZIyzvcojP81O75o
+ OVlFC+xldM7Jq3zwc0Y1HhNZyHKDXiiHzEZihghtKpwsUel5iXwvdYlVgbJouF397VBF
+ d+Q9cWHVpDYL2I/s3L2p1pl+Jnz8i3ozpGxM7bLVy9jYNo+m74xXW+MMf7khXaQOy4LD
+ faZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776855393; x=1777460193;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MpRRRI/7Q+3Jy7LH1bV8jknOmEeoebCV+6XCk0I0G+I=;
+ b=K4vs/pkdXQQRn8hSndp8c3hb9R7KsYjzP87m5Epj3rFqwpP6x7K0IQi/ZPe1WJXwIC
+ a4UkLEOcwi78a0haNUdJJescau60UbmTw11s7PlSo4VyF35G1Gd1HPaTQUqdLxdYLR7S
+ srvdFCn6RTA/NdnAgNjktma9R8OlfLPNpy/xmTaP7aTVIQaTzgEGGBnX4NqtlhvyKf5O
+ ZXnYd1msixaEj4Xv1e+NEcEdbN7jp2+s982+ceRcAWVudFcMd+X02qFiL4rYT/eNeU57
+ QtCDzy8FwdayAruSsO7aM9keuMQuVe2lHGNbptIrR7m3cA+zp0vagCxvBJVCLMEz0699
+ qgMw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/SDElTdWSdGunUOWU8cJsTHT14BhOBEz/HztMG5CVGbcgkXQhGGb//l3O4ut6nZ+rcLrP1L//WEljE@nongnu.org
+X-Gm-Message-State: AOJu0YxosrVrLMPaztqLtJv1k7HdN3T0WHaEnsh0OI9XiMwhfJwwBW4R
+ r/86/sTfHnuYG7Zk2LwPZUTKhUUk9S0zd7gbDfuibB9UL8Lq7RQA6C5qh3T6ZXupVi7aGQ//WTL
+ 54P4riy+M2ghx99VPdTzNSlbV1VJD7Tp7ra5svyNY4E0Z+s8p4qiOYgl2
+X-Gm-Gg: AeBDiesACAzuQ8t9Ki2Dv9roI34c70GyXuyo/SuAJjPyVxk5WSqcLrdiB3ja3c3FuMV
+ lXkQ1ieU7NKKoURKJ1wQprzuesVEUhQRtd8W47nl1fVVBvgstKbbNjmPRYN2BmzVDmf+8nKjw9/
+ 1sTYBj0ZvpHrU2NBwH3zZd+xzra7rFBpwi+lZTwhJVIBR9DtrJtVHbYK81Ud+864vr953zen87o
+ yZRTa8LY9QWT5J8ax+a3jcuPbtb4h2qXA1MF2t5VqiyXVzaoEhC9Ypm0rCWg/Mfh3GuE/sDEukM
+ y+qdM3nD+u42p5o+/GGI/GVvUlkKXB042h+Z+V3Kl2Z/N3naiVgbejcZJO73MobK2+6YezumsLX
+ zEoim+KRz1+j06BnTiEywFeWBQt6GaA==
+X-Received: by 2002:a05:6512:b89:b0:5a2:7b74:3c60 with SMTP id
+ 2adb3069b0e04-5a4172ddc33mr7754958e87.33.1776855393384; 
+ Wed, 22 Apr 2026 03:56:33 -0700 (PDT)
+X-Received: by 2002:a05:6512:b89:b0:5a2:7b74:3c60 with SMTP id
+ 2adb3069b0e04-5a4172ddc33mr7754945e87.33.1776855392809; 
+ Wed, 22 Apr 2026 03:56:32 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.147])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5a4185ad11fsm4293552e87.14.2026.04.22.03.56.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Apr 2026 03:56:32 -0700 (PDT)
+Message-ID: <86c40a92-76d0-4121-9347-929cfcd32f2a@redhat.com>
+Date: Wed, 22 Apr 2026 12:56:29 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/6] hw/core/register: add the REGISTER_ARRAY type
+To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20251017161809.235740-1-luc.michel@amd.com>
+ <20251017161809.235740-3-luc.michel@amd.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251017161809.235740-3-luc.michel@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,149 +169,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 21. Apr 2026, at 22:57, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
->=20
-> WHvResetPartition resets partition state, and is not supported on =
-Windows 10.
->=20
-> On Arm, it's supposed to be used for reboots. The prior location of =
-the
-> WHvResetPartition call wasn't right, as other vCPUs might still have
-> been running, causing the call to fail.
->=20
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-cc qemu-stable@
-
-I believe this one is a good candidate for qemu-stable too
-
+On 17/10/2025 18.18, Luc Michel wrote:
+> Introduce the REGISTER_ARRAY QOM type. This type reuses the existing
+> RegisterInfoArray struct. When `register_init_block' is called, it creates
+> a REGISTER_ARRAY object and parents it to the calling device. This way
+> it gets finalized when the device is. The memory region is parented to
+> the REGISTER_ARRAY object to ensure correct finalizing order.
+> 
+> The finalize function of the REGISTER_ARRAY type performs the necessary
+> cleaning that used to be done by `register_finalize_block'. The latter
+> is left empty and will be removed when all the register API users have
+> been refactored.
+> 
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+> Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
 > ---
-> accel/accel-system.c       |  9 +++++++++
-> accel/whpx/whpx-common.c   | 13 +++++++++++++
-> include/accel/accel-ops.h  |  1 +
-> include/qemu/accel.h       |  3 +++
-> system/runstate.c          |  5 +++++
-> target/arm/whpx/whpx-all.c |  2 --
-> 6 files changed, 31 insertions(+), 2 deletions(-)
->=20
-> diff --git a/accel/accel-system.c b/accel/accel-system.c
-> index 150af05bf5..5352ccd937 100644
-> --- a/accel/accel-system.c
-> +++ b/accel/accel-system.c
-> @@ -75,6 +75,15 @@ void accel_pre_resume(MachineState *ms, bool =
-step_pending)
->     }
-> }
->=20
-> +void accel_reset(MachineState *ms)
-> +{
-> +    AccelState *accel =3D ms->accelerator;
-> +    AccelClass *acc =3D ACCEL_GET_CLASS(accel);
-> +    if (acc->reset_vm) {
-> +        acc->reset_vm(accel);
-> +    }
-> +}
+>   include/hw/register.h |  4 ++++
+>   hw/core/register.c    | 26 ++++++++++++++++++++++----
+>   2 files changed, 26 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/hw/register.h b/include/hw/register.h
+> index 4d13ea183c7..65c82600e06 100644
+> --- a/include/hw/register.h
+> +++ b/include/hw/register.h
+> @@ -81,10 +81,12 @@ struct RegisterInfo {
+>       const RegisterAccessInfo *access;
+>   
+>       void *opaque;
+>   };
+>   
+> +#define TYPE_REGISTER_ARRAY "qemu-register-array"
+> +OBJECT_DECLARE_SIMPLE_TYPE(RegisterInfoArray, REGISTER_ARRAY)
+>   
+>   /**
+>    * This structure is used to group all of the individual registers which are
+>    * modeled using the RegisterInfo structure.
+>    *
+> @@ -94,10 +96,12 @@ struct RegisterInfo {
+>    *
+>    * @mem: optional Memory region for the register
+>    */
+>   
+>   struct RegisterInfoArray {
+> +    Object parent_obj;
 > +
-> /* initialize the arch-independent accel operation interfaces */
-> void accel_init_ops_interfaces(AccelClass *ac)
-> {
-> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-> index 6fe44d5910..1f7b7d764d 100644
-> --- a/accel/whpx/whpx-common.c
-> +++ b/accel/whpx/whpx-common.c
-> @@ -205,6 +205,18 @@ static void =
-do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
->     cpu->vcpu_dirty =3D true;
-> }
->=20
-> +/*
-> + * Partition support
-> + */
+>       MemoryRegion mem;
+>   
+>       int num_elements;
+>       RegisterInfo **r;
+>   
+> diff --git a/hw/core/register.c b/hw/core/register.c
+> index 2553cb15aba..1612ad174f9 100644
+> --- a/hw/core/register.c
+> +++ b/hw/core/register.c
+> @@ -243,14 +243,20 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
+>                                                 bool debug_enabled,
+>                                                 uint64_t memory_size,
+>                                                 size_t data_size_bits)
+>   {
+>       const char *device_prefix = object_get_typename(OBJECT(owner));
+> -    RegisterInfoArray *r_array = g_new0(RegisterInfoArray, 1);
+> +    Object *obj;
+> +    RegisterInfoArray *r_array;
+>       int data_size = data_size_bits >> 3;
+>       int i;
+>   
+> +    obj = object_new(TYPE_REGISTER_ARRAY);
+> +    object_property_add_child(OBJECT(owner), "reg-array[*]", obj);
+> +    object_unref(obj);
 > +
-> +static void whpx_partition_reset(AccelState* as)
-> +{
-> +    struct whpx_state *whpx =3D &whpx_global;
-> +    if (whp_dispatch.WHvResetPartition) {
-> +        whp_dispatch.WHvResetPartition(whpx->partition);
-> +    }
-> +}
-> +
-> /*
->  * CPU support.
->  */
-> @@ -622,6 +634,7 @@ static void whpx_accel_class_init(ObjectClass *oc, =
-const void *data)
->     ac->name =3D "WHPX";
->     ac->init_machine =3D whpx_accel_init;
->     ac->pre_resume_vm =3D whpx_pre_resume_vm;
-> +    ac->reset_vm =3D whpx_partition_reset;
->     ac->allowed =3D &whpx_allowed;
->=20
->     object_class_property_add(oc, "kernel-irqchip", "on|off|split",
-> diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
-> index f46492e3fe..a1c9f3ae7b 100644
-> --- a/include/accel/accel-ops.h
-> +++ b/include/accel/accel-ops.h
-> @@ -33,6 +33,7 @@ struct AccelClass {
->     /* system related hooks */
->     void (*setup_post)(AccelState *as);
->     void (*pre_resume_vm)(AccelState *as, bool step_pending);
-> +    void (*reset_vm)(AccelState *as);
->     bool (*has_memory)(AccelState *accel, AddressSpace *as,
->                        hwaddr start_addr, hwaddr size);
->=20
-> diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-> index d3638c7bfd..0e12aea7db 100644
-> --- a/include/qemu/accel.h
-> +++ b/include/qemu/accel.h
-> @@ -54,6 +54,9 @@ void accel_setup_post(MachineState *ms);
->=20
-> void accel_pre_resume(MachineState *ms, bool step_pending);
->=20
-> +/* Reset accelerator state. */
-> +void accel_reset(MachineState *ms);
-> +
-> /**
->  * accel_cpu_instance_init:
->  * @cpu: The CPU that needs to do accel-specific object =
-initializations.
-> diff --git a/system/runstate.c b/system/runstate.c
-> index 2d4e95a216..734e3c037c 100644
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -564,6 +564,11 @@ void qemu_system_reset(ShutdownCause reason)
->         qapi_event_send_reset(shutdown_caused_by_guest(reason), =
-reason);
->     }
->=20
-> +    if (current_machine) {
-> +        /* Tell the accelerator that the VM is being reset. */
-> +        accel_reset(current_machine);
-> +    }
-> +
->     /*
->      * Some boards use the machine reset callback to point CPUs to the =
-firmware
->      * entry point.  Assume that this is not the case for boards that =
-support
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index 4019a513aa..f345fea4fe 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -472,8 +472,6 @@ int whpx_vcpu_run(CPUState *cpu)
->             if (arm_cpu->power_state !=3D PSCI_OFF) {
->                 whpx_psci_cpu_off(arm_cpu);
->             }
-> -            /* Partition-wide reset, to reset state for reboots to =
-succeed. */
-> -            whp_dispatch.WHvResetPartition(whpx->partition);
->             bql_unlock();
->             break;
->         case WHvRunVpExitReasonNone:
-> --=20
-> 2.50.1 (Apple Git-155)
->=20
+> +    r_array = REGISTER_ARRAY(obj);
+>       r_array->r = g_new0(RegisterInfo *, num);
+>       r_array->num_elements = num;
+>       r_array->debug = debug_enabled;
+>       r_array->prefix = device_prefix;
+>   
+> @@ -265,11 +271,11 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
+>           r->opaque = owner;
+>   
+>           r_array->r[i] = r;
+>       }
+>   
+> -    memory_region_init_io(&r_array->mem, OBJECT(owner), ops, r_array,
+> +    memory_region_init_io(&r_array->mem, OBJECT(r_array), ops, r_array,
+>                             device_prefix, memory_size);
+
+  Hi,
+
+this likely broke the xlnx-versal-ospi device, see:
+
+  https://gitlab.com/qemu-project/qemu/-/work_items/3422
+
+Could you please have a look?
+
+  Thanks,
+   Thomas
 
 
