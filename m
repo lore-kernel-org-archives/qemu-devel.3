@@ -4,97 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01524F55811
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36AF8F5A8DB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFSr6-0006T3-43; Wed, 22 Apr 2026 04:22:44 -0400
+	id 1wFSr4-0006Qf-07; Wed, 22 Apr 2026 04:22:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wFSqq-0006N6-Lq
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:22:30 -0400
+ id 1wFSqu-0006NN-Hs
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:22:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wFSqo-0006aY-F3
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:22:27 -0400
+ id 1wFSqs-0006bK-5V
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:22:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776846143;
+ s=mimecast20190719; t=1776846149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=v7mXcb0rV5YXLutrX/Be/AdZB7kg6iLn9t0pfFDYmrU=;
- b=U3KL70NXftYXoG/iw6b53G0ZKOwCCWtC5q7LvWIBn0jsBkt8IG8q98WYtY0W5xahmcSbdd
- N/AGDhIqryPq4NHlU71M3CZ3AeZRiZOtRo3edN0jzgyCaR6tXQP+68u9+Kpx49/seWX3Wc
- VizqwlAwEhvO1a5VyWo1bWTtXxXRv0k=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LGW6d9MttlD6p2S8pWbgXC+RAAlUoZve1q7FzTGw8jA=;
+ b=Met57qBAdzwS1SkoopqTLc+qruefMDP6rNJvgjed1uZmY5XIwJhGI/nYVvt1zjNGKOZPux
+ A5EHTuI3jZxHKIvDs9P0bVTDfxHgZawdT0jTVDBd6aAHjbhfUGTYT0lfPGfGBZgQkt7zNq
+ /v45XCLRqTXK+8pwwCi4t6udo8v8AnU=
 Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
  [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-Ej0-f1chO4-kQFX36aPKvw-1; Wed, 22 Apr 2026 04:22:22 -0400
-X-MC-Unique: Ej0-f1chO4-kQFX36aPKvw-1
-X-Mimecast-MFC-AGG-ID: Ej0-f1chO4-kQFX36aPKvw_1776846141
+ us-mta-421-8mVpl7kRMCOAdd1UbmSdNw-1; Wed, 22 Apr 2026 04:22:27 -0400
+X-MC-Unique: 8mVpl7kRMCOAdd1UbmSdNw-1
+X-Mimecast-MFC-AGG-ID: 8mVpl7kRMCOAdd1UbmSdNw_1776846147
 Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-35d9278587bso6090204a91.2
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:22:22 -0700 (PDT)
+ 98e67ed59e1d1-35da1c703d1so6380603a91.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776846141; x=1777450941; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=v7mXcb0rV5YXLutrX/Be/AdZB7kg6iLn9t0pfFDYmrU=;
- b=cH0ZTWdnC+Aa6+bYyi7Qdxlg6h76Ycgp7KMOgXoUfBKhjF6GJYNt98H7pk9RWH/gHy
- cuLFD58d5y5RIag5ZstMSCMlUprXTo99gNl4ZzgoVLP/gBP/66HBpc5dLZN39ELpQBz+
- aKola9Qm1eHB8RYgnKw1tTYh3VGxrFzPpCKiy5cbozi5Fe53AfZlGZZQPjaizxNRw7+b
- HReRuCrK5cl6s3An6xlbeljROUI343EWtRtl/VCQWmmgtAIca6EDQidzacweh+fIi1pk
- odd/q4URM73mcifSRNfwB8DyO0DYHgLNnOQSM5Y0vbwQyGFi6VBBdRT98XKrRq0NL6Ba
- megQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776846141; x=1777450941;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1776846146; x=1777450946; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v7mXcb0rV5YXLutrX/Be/AdZB7kg6iLn9t0pfFDYmrU=;
- b=IziDA9QpIiPYKxNjG8opnOs51sKS9jwTodNLKIkDhQobdOAFyH0JtXy5zfrQpjRNN6
- pQTjJgKJigl3ynQObpy9c1hHSXhB0tbfZQwzc5DS7aOAqqyAbouwVkabD8S3jvHfs3d8
- yPOTRngzpuMKt6Vv3EQ/1jSHgzckrRPe/8r60bMwpA6jp+NjrZD9oknLRBPoerucOlpL
- 8ho5Q+2mME7uVdC7FZdoa47Kq5Cvmw9TstCBJfW6zhEOtOSmUY7TCMBah4WHYQ7gu2J8
- OwsV52GsjxQWgERwFO2BD6hH3ZFa+an4OMdgFBsVW7UxTbRyR4dw/IwLuGYJM195gWO3
- 33aA==
-X-Gm-Message-State: AOJu0YzcCSkBQ0N4mXeDwmfe2KnYMiOYM8h2zPuU/TNt9kXBslif+igK
- fS+hvdHVUreisRb54ZN8jOO4eNJzMowtk5UT3zLeUviNgqGNbqSg1RNp7FBsPUQ3LEhUnUCD5vY
- d+HEwwyWoej8yU+hdzTt9B9L7234ZanVW4HlU8rPsVskmYHdaFvjQ2Q8bB91u5L2jXwLSBoh8od
- 1uV740IBe+gF5WKb1fqXvIwmUIYcO7RvNVHkHDy7U=
-X-Gm-Gg: AeBDieu5WVyZPdcEk8XB0dAB6sS/ag+cUFxbAgqQB0+iigZneZ202WXB447v9gENdyt
- Jrc8yJIterGAVcYWkesL5BwxYplnA48XzF6QwvzOliuXEtc+ojXpAx4RwwZr6DNeTsvQZVgdQjF
- 4FuuorIFq5lp535JhTnNmZBUmTiiQakNX9i8MclVXy9Ce8/6JvHfpWexwQy/LGlr+YQtTE5q3JO
- sKBzGzMp1nKtAa+YvWqfuEZsUYeT/iUBe/YKPeNOdZdKvelJ3FD9pRK0W/rbVy97lLvzD1U2/XH
- SpaHD1musWDpXyydNM1LqI6pW4ZRBO3LZ1zCnAsiLTxurcV11EgqJZbkFTSCSdzxajfoyGYaMmk
- x/mRIdvHOC/WB+ZFX7Y7gEb/Te8/Oq9AJxgi7CspJsKv1id2wFrsQAm4uhxwf/QXy51JOYhTgWQ
+ bh=LGW6d9MttlD6p2S8pWbgXC+RAAlUoZve1q7FzTGw8jA=;
+ b=HonL48KzdTGZCHkQ5j5aXNfcpn4jGfipPi92OEmPZ4DWQo2tfbn8mXjK6a2yqgUwjM
+ 3N6FnT/GwudpMuf410Asl4rjjXK0r9zPFGaj+7KYrKhb9FWlYIPfQP+4ywTNT7rIT3Ad
+ YuDXhMmHxLVrHmp1GyebjLZk5LjLCkGcCvaduXrVyU5WHtzY4vFUUPvQ+t2Kr7vNx/DL
+ 1hjIgqjh9HVYpzFeNs00gtbb6+JMPIZLQU/aXV2w48YjmakEiCUZ+LrKJoJber+ZMHCX
+ P0cEPusKxzBLTlAPCGaSbkPISpXLXPTYnvAayQJUxUHNdIrkCsFyK/MqDnEjlyMxZYEL
+ LRbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776846146; x=1777450946;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LGW6d9MttlD6p2S8pWbgXC+RAAlUoZve1q7FzTGw8jA=;
+ b=XvxNOHN1tXIjfsE1r79z53DDb+68OY7Itgn1UyCsIAhQKNACy4re6ggxKQcr3XO2Ka
+ +bKWJAxoVafuEftXfsEkQPqMJ2VD4++ZaCki1wz98cMoomJYZPOW9hgZkyaxGIIefEV7
+ cyUd3lrxPr4SfLLPoFYlYzvIdFILHaTAvfhWQcZoc4C5fidu5I9SD4yYQMovfnupI7LU
+ u9m3RW8EQHtpOZtTDe2qBose++RxmS8Duk6FnaWhHYljkmezpvPe6evwfpGQXwMBskYX
+ o2goPBzoDSGbd26FqdvTsMlC3CF7O5lODlhQ4hdXjmyVn1klAt+pm5Eey2qYmhSw98HZ
+ 1guw==
+X-Gm-Message-State: AOJu0Yy3yGrI+HFDCO14LqSlwRn8rXbozYoocy7AYB/v3qE1Vb8CbiKr
+ hk33SrzjN7dCu9v0muZTjCpzWOe/0bEXUFrCev39ab2p/5V9QKTuIdu9pmpvWt64iondQC7VytH
+ zxm9UJAYncQ2gfd46UcnQ/LTm0KcV9XVhCn1IWYjnsjxxN0qfrdPWHhWSuK+j8wyHV126eE5skE
+ 32ovtJgw+8OuvTq1hWMRzouKHEBcU+3bqV02O/sXM=
+X-Gm-Gg: AeBDies0YFXtoVmzwSRqWlMba2U8oGUbpUvk8Nl26mQ3yvaqKyLJ86YbY+5hqu7Sp4l
+ a6XXHDFzJqO/LsRhQWPyGYZvrMGkFPwBldb+2lk2XWJfxFDTX5bnv8uK6ShesnqxaRgvVCvjKaC
+ lVyfynjvdaOBuW4dxFh4PE22P2ZNHCfPvEH0aBXLd6qAwDT6M9MvkrfxsF8C9NLuK3h4eybKMG7
+ KUTv/qpTh7mNN7nhkAsWki+mteds3YEsnyu61sP4CMP+sb0kMzGgmYRL8eVXgcrLG3ejoyfETLv
+ LuRMEvATzP48LVkgE47SA+F9W7e92pm9kiJuEXCtFCij9QnAMgpgcbStgUivGUbQVeZct8gUdAa
+ 0Gh270JtWp6gNsuI21H00ubbt5vlZtBRM+kMUSuDk1f4LCMaYtilPn9f8ebDEndsyqgfoJe1pQQ
  ==
-X-Received: by 2002:a17:90b:4c8c:b0:35f:c1cc:fef0 with SMTP id
- 98e67ed59e1d1-36140473e42mr22550687a91.13.1776846140830; 
- Wed, 22 Apr 2026 01:22:20 -0700 (PDT)
-X-Received: by 2002:a17:90b:4c8c:b0:35f:c1cc:fef0 with SMTP id
- 98e67ed59e1d1-36140473e42mr22550625a91.13.1776846140099; 
- Wed, 22 Apr 2026 01:22:20 -0700 (PDT)
+X-Received: by 2002:a17:90b:5865:b0:35b:929f:7e8d with SMTP id
+ 98e67ed59e1d1-3614046cdb7mr22915034a91.14.1776846146519; 
+ Wed, 22 Apr 2026 01:22:26 -0700 (PDT)
+X-Received: by 2002:a17:90b:5865:b0:35b:929f:7e8d with SMTP id
+ 98e67ed59e1d1-3614046cdb7mr22915002a91.14.1776846145877; 
+ Wed, 22 Apr 2026 01:22:25 -0700 (PDT)
 Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.110.202])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3613fabeccesm5991459a91.6.2026.04.22.01.22.17
+ 98e67ed59e1d1-3613fabeccesm5991459a91.6.2026.04.22.01.22.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 01:22:19 -0700 (PDT)
+ Wed, 22 Apr 2026 01:22:25 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Arun Menon <armenon@redhat.com>
-Subject: [PATCH v3 0/2] migration/vmstate: Add VMState support to safely
- migrate GByteArray
-Date: Wed, 22 Apr 2026 13:52:12 +0530
-Message-ID: <20260422082214.10390-1-armenon@redhat.com>
+Subject: [PATCH v3 2/2] ui/vdagent: Use VMSTATE_GBYTEARRAY to safely migrate
+ outbuf
+Date: Wed, 22 Apr 2026 13:52:14 +0530
+Message-ID: <20260422082214.10390-3-armenon@redhat.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260422082214.10390-1-armenon@redhat.com>
+References: <20260422082214.10390-1-armenon@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,47 +124,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In GLib, GByteArray is an object managed by the library. Currently,
-migrating a GByteArray requires treating it as a raw C struct and using
-VMSTATE_VBUFFER_ALLOC_UINT32. For example, see vmstate_vdba in
-ui/vdagent.c
+From: Arun Menon <armenon@redhat.com>
 
-QEMU cannot pretend that GByteArray is a C struct and simply use
-VMS_ALLOC to g_malloc() the buffer. This is because, VMS_ALLOC blindly
-overwrites the data pointer with a newly allocated buffer, thereby
-leaking the previous memory. Besides, GLib tracks the array's capacity
-in a hidden alloc field. Bypassing GLib APIs leave this capacity out of
-sync with the newly allocated buffer, potentially leading to heap buffer
-overflows during subsequent g_byte_array_append() calls.
+Migrating a GLib GByteArray is now possible directly using the newly
+introduced VMSTATE_GBYTEARRAY. It uses the standard GLib API calls to
+create the array, or resize it.
 
-This series adds a new VMState called VMSTATE_GBYTEARRAY, which will
-directly use GLib library API calls to create, or resize the object.
-This is then used in ui/vdaagent.c replacing the use of
-VMSTATE_VBUFFER_ALLOC_UINT32.
+This is safer than implementing a C struct and manually updating the
+data and len fields. This commit uses the VMSTATE_GBYTEARRAY in vdagent
+to store the outbuf variable.
 
-Changes in v3:
-- Add assert() checks to get and put functions to prevent NULL pointer
-  dereferences, as suggested by Peter Xu.
+Signed-off-by: Arun Menon <armenon@redhat.com>
+Fix-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ ui/vdagent.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-Changes in v2:
-- Marc-André pointed out the problem of not updating the device state
-  itself. To do that we should essentially pass a pointer to the
-  GByteArray pointer. Remove VMS_POINTER from VMSTATE_GBYTEARRAY. This
-  changes 'pv' to be the address of the pointer field (GByteArray **)
-  instead of the pointer's value.
-- Update get_g_byte_array and put_g_byte_array to handle this additional
-  level of indirection, allowing safe allocation and updating device state.
-- Link to v1: https://lore.kernel.org/all/20260406115247.4879-1-armenon@redhat.com/
-
-Arun Menon (2):
-  migration/vmstate: Add VMState support for GByteArray
-  ui/vdagent: Use VMSTATE_GBYTEARRAY to safely migrate outbuf
-
- include/migration/vmstate.h | 10 ++++++++++
- migration/vmstate-types.c   | 37 +++++++++++++++++++++++++++++++++++++
- ui/vdagent.c                | 13 +------------
- 3 files changed, 48 insertions(+), 12 deletions(-)
-
+diff --git a/ui/vdagent.c b/ui/vdagent.c
+index bb0c4aa14c..9206e47000 100644
+--- a/ui/vdagent.c
++++ b/ui/vdagent.c
+@@ -967,17 +967,6 @@ static const VMStateDescription vmstate_chunk = {
+     }
+ };
+ 
+-static const VMStateDescription vmstate_vdba = {
+-    .name = "vdagent/bytearray",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(len, GByteArray),
+-        VMSTATE_VBUFFER_ALLOC_UINT32(data, GByteArray, 0, 0, len),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+ struct CBInfoArray {
+     uint32_t n;
+     QemuClipboardInfo cbinfo[QEMU_CLIPBOARD_SELECTION__COUNT];
+@@ -1067,7 +1056,7 @@ static const VMStateDescription vmstate_vdagent = {
+         VMSTATE_UINT32(xsize, VDAgentChardev),
+         VMSTATE_UINT32(xoff, VDAgentChardev),
+         VMSTATE_VBUFFER_ALLOC_UINT32(xbuf, VDAgentChardev, 0, 0, xsize),
+-        VMSTATE_STRUCT_POINTER(outbuf, VDAgentChardev, vmstate_vdba, GByteArray),
++        VMSTATE_GBYTEARRAY(outbuf, VDAgentChardev, 0),
+         VMSTATE_UINT32(mouse_x, VDAgentChardev),
+         VMSTATE_UINT32(mouse_y, VDAgentChardev),
+         VMSTATE_UINT32(mouse_btn, VDAgentChardev),
 -- 
 2.53.0
 
