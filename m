@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03DAAF94CD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 07:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D276F94CD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 07:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFSPK-0003T5-0Y; Wed, 22 Apr 2026 03:54:02 -0400
+	id 1wFSQ0-0003rX-7n; Wed, 22 Apr 2026 03:54:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wFSPC-0003Sc-Gp
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:53:55 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSPy-0003qO-1H
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:54:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wFSP8-0006Z2-DZ
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:53:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1776844431; x=1808380431;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=r2pZ45WaoLdd62U4o1lqu1UiwYsdm9zBkrbUIa1Vv80=;
- b=jA71ygZrM3YcsyX9LEmiAiRFhRhc+nBnZ3z+5deI5d0lPvXWTzEKUTxb
- P6JEXNW9VTgFt5PxmFKwRO/D+2h3A9E7A5p3r1Tn+SGJe0omI4brJfiJg
- 4ACuX4lKPVm5qEqaY2eIifu32m67l4evRWbQWohtXqdillpP6dwzgPN8G
- Esj7w7EyDnD2LMmzswcvBh8X0pBfSe4CflkqudK/78fS60fXJmIDylCqD
- 0S51bXqQuVrvQnlnJvrNw/Me04W/r3Vt9DclXGZeHfSYH65WJljvAu0qv
- tT62Z7EJneGT3E8HA1Jj+Oc5RyxSg++a5rYMQHj1BxmaiUSog9PXbGc1r A==;
-X-CSE-ConnectionGUID: DJb8/sqNS7WZnaBqPM/1pA==
-X-CSE-MsgGUID: 1VFQYNFPRP6b5BqkmkGdGg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11763"; a="77494789"
-X-IronPort-AV: E=Sophos;i="6.23,192,1770624000"; d="scan'208";a="77494789"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2026 00:53:47 -0700
-X-CSE-ConnectionGUID: qDdjn8KCSN29ReDAN20Xqw==
-X-CSE-MsgGUID: cpN69CZ8RoKOyENbweVGiw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,192,1770624000"; d="scan'208";a="236649745"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 22 Apr 2026 00:53:43 -0700
-Date: Wed, 22 Apr 2026 16:21:09 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Zide Chen <zide.chen@intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Sandipan Das <sandipan.das@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH V3 11/13] target/i386: Add pebs-fmt CPU option
-Message-ID: <aeiE9ZZ5AE+uMgmN@intel.com>
-References: <20260304180713.360471-1-zide.chen@intel.com>
- <20260304180713.360471-12-zide.chen@intel.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSPw-0006gl-Be
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:54:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776844479;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=fQ/Gm5mXI5uP0dB7l1HO9HAOWfvVCU1YytbxxGf+WmM=;
+ b=RbSPCsmHT+a2UOPolCMiwJaMEk9DMfkzPL3+wh4eKwKPso2d0+uykW8aVmBlfoJaMAvP/p
+ wNaGh8bWNSbQd4AvJfqJDBbR+SJpbS9Bp1VPSs2jbPuPzWDk/rCUJVtDjymQ80/6OnGyT3
+ a8tWFtKZupqibXQ2jy30/faIUBNRXAY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-qG8JdtsqP1ylpwKsf6gZEw-1; Wed,
+ 22 Apr 2026 03:54:35 -0400
+X-MC-Unique: qG8JdtsqP1ylpwKsf6gZEw-1
+X-Mimecast-MFC-AGG-ID: qG8JdtsqP1ylpwKsf6gZEw_1776844474
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3A9971800454; Wed, 22 Apr 2026 07:54:34 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.49.99])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7863F19560B7; Wed, 22 Apr 2026 07:54:31 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Yoshinori Sato <yoshinori.sato@nifty.com>
+Cc: qemu-trivial@nongnu.org,
+	Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH] hw/sh4/sh7750: Remove forgotten abort() in the MM_ITLB_DATA
+ handler
+Date: Wed, 22 Apr 2026 09:54:29 +0200
+Message-ID: <20260422075429.341409-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260304180713.360471-12-zide.chen@intel.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,76 +80,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zide,
+From: Thomas Huth <thuth@redhat.com>
 
-On Wed, Mar 04, 2026 at 10:07:10AM -0800, Zide Chen wrote:
-> Date: Wed, 4 Mar 2026 10:07:10 -0800
-> From: Zide Chen <zide.chen@intel.com>
-> Subject: [PATCH V3 11/13] target/i386: Add pebs-fmt CPU option
-> X-Mailer: git-send-email 2.53.0
-> 
-> Similar to lbr-fmt, target/i386 does not support multi-bit CPU
-> properties, so the PEBS record format cannot be exposed as a
-> user-visible CPU feature.
-> 
-> Add a pebs-fmt option to allow users to specify the PEBS format via the
-> command line.  Since the PEBS state is part of the vmstate, this option
-> is considered migratable.
-> 
-> We do not support PEBS record format 0.  Although it is a valid format
-> on some very old CPUs, it is unlikely to be used in practice.  This
-> allows pebs-fmt=0 to be used to explicitly disable PEBS in the case of
-> migratable=off.
-> 
-> If PEBS is not enabled, mark it as unavailable in IA32_MISC_ENABLE and
-> clear the PEBS-related bits in IA32_PERF_CAPABILITIES.
-> 
-> If migratable=on on PEBS capable host and pmu is enabled:
-> - PEBS is disabled if pebs-fmt is not specified or pebs-fmt=0.
-> - PEBS is enabled if pebs-fmt is set to the same value as the host.
-> 
-> When migratable=off, the behavior is similar, except that omitting
-> the pebs-fmt option does not disable PEBS.
-> 
-> Signed-off-by: Zide Chen <zide.chen@intel.com>
+QEMU currently aborts when the guest writes to the MM_ITLB_DATA register:
 
-...
+ echo "writel 0xf3000000 0x11223344" | \
+  ./qemu-system-sh4 -M r2d -display none -accel qtest -qtest stdio
+ [I 0.000000] OPENED
+ [R +0.004476] writel 0xf3000000 0x11223344
+ Aborted                    (core dumped)
 
->      if (user_req != -1) {
-> +        if (!is_lbr_fmt && !(env->features[FEAT_1_EDX] & CPUID_DTS)) {
-> +            error_setg(errp, "vPMU: %s is unsupported without Debug Store", name);
-> +            return false;
-> +        }
-> +
+Looking at the history of the code, the abort() here has likely just
+been forgotten when the register handler had been implemented (it used
+to be a reminder about unimplemented functionality initially):
 
-This is a general code path to check user_req != -1... but
+ https://gitlab.com/qemu-project/qemu/-/commit/9f97309a70f12df5f9104f1f
 
-> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-> index 1d0047d037c7..60bf3899852a 100644
-> --- a/target/i386/kvm/kvm-cpu.c
-> +++ b/target/i386/kvm/kvm-cpu.c
-> @@ -231,6 +231,7 @@ static void kvm_cpu_instance_init(CPUState *cs)
->      }
->  
->      cpu->lbr_fmt = -1;
-> +    cpu->pebs_fmt = -1;
+Thus simply remove the abort() now to get rid of the problem.
 
--1 is only set for KVM, so other accelerators have lbr_fmt=0 by default.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3420
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/sh4/sh7750.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-This will cause make check fail:
-
-stderr:
-qemu-system-x86_64: vPMU: pebs is unsupported without Debug Store
-Broken pipe
-../tests/qtest/libqtest.c:201: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
-
-(test program exited with status code -6)
-
-So I think the initialization should be placed in the general code path
-as well (x86_cpu_initfn()) - and move lbr_fmt initialization back to
-general x86 codes.
-
-Thanks,
-Zhao
+diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
+index 3ae71f99fe5..6aa7f637734 100644
+--- a/hw/sh4/sh7750.c
++++ b/hw/sh4/sh7750.c
+@@ -687,7 +687,6 @@ static void sh7750_mmct_write(void *opaque, hwaddr addr,
+         break;
+     case MM_ITLB_DATA:
+         cpu_sh4_write_mmaped_itlb_data(&s->cpu->env, addr, mem_value);
+-        abort();
+         break;
+     case MM_OCACHE_ADDR:
+     case MM_OCACHE_DATA:
+-- 
+2.53.0
 
 
