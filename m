@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD0EFA1FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51A7FFA1FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdkY-0007BC-TK; Wed, 22 Apr 2026 16:00:43 -0400
+	id 1wFdls-0004C3-As; Wed, 22 Apr 2026 16:02:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkP-0006gM-Ro
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:36 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlW-0003uq-7n
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:44 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkM-0001vN-GB
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:32 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so75000065e9.0
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:00:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlU-0002qh-Cp
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:41 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso61243385e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888023; x=1777492823; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888098; x=1777492898; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JH1RhoT67ixQCInyH6yG0/xCY2TR3evf5THZqvNeLuI=;
- b=WGUlIyNkGUPMzAgGA8R33oZWiNtH+4IoTjF3FBt2PqkVeplx/bWQ8X53R1zO1yf6wI
- 1VY3aiQjhudGFbZ9P8h+u8eD9qX0mDOFFv3eloT7NXklREIGyGCOgbF6RqFoGxLdXvDC
- Xg9O+gqo8MtPAvpVJfDxfQh5CzrmXV3tx1+M2YqP+2826pC7pNtANMhd+1jxEBp/2R45
- xmMdP4Ca6Pd8fCC99JhGadp56qgzBZKiimY5JQegJYo1iuNixe6iWB+fI8XE/sdkgm4y
- x5BCLYCR68znj9aaujsX0q+/ZnqerHRpZJnsJetFaco1hXfB5f2b6UrxtlN6f3FYMQbD
- rzLA==
+ :reply-to; bh=GIiUeR+b26DEeePibWG8P7/XRvyLYZ4UqKevgTJTWwM=;
+ b=BqMc0Rvie8Hr268Y6/5/UtiSC3+00ke2UUAMG8iJcojIQ5Zfpz+mYYNWt94sJnOv8H
+ kY8VZLhk8eluJQ2vlCAcUgwdjYhlf3Am5QAzUoEIqZ90JtLgNIqhMVTR4PW5uw40/EzE
+ rw1ndnqmHIGmBkAsaZ7AqU0E2jTF4jfGSJO80EXWKy3neWsVDi/VjRb/BRHTZYyqQXby
+ FYfdkawrW5vv/XGr46s+7xwIKB7w57qk4vIOAM0e7X0eJ9r0/BZ1fuQ4dibCj7B/ql0F
+ tt7D75J/9Dcbni5rYQ1qy73Rq6v5CQzirBAhOHfRLsRlPHqTTwDtpH8RWWhMw9AUd2Hs
+ OpQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888023; x=1777492823;
+ d=1e100.net; s=20251104; t=1776888098; x=1777492898;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=JH1RhoT67ixQCInyH6yG0/xCY2TR3evf5THZqvNeLuI=;
- b=iJaszDscwOBbSOFfDKSKLasOsAwfebNF2Kb/6Luu7jZALHgwO+LdSvIc+Gq7Uc6pGD
- WuIwDiaKUidi7FDeqFLhpZlzjs13jOz4NZ9untdnhsG0U9JsTmgprtwrbtUotTvDTth1
- sgnh6fQJM//bPOUzC+dARAO2+2apvuH9uN0EVPS9FMArvSw63NJkBBJDIDdrTTTA3tA9
- 04pQE5rAg4gXPRfnTDYA62u7UcfKbvW8OSwDbp63IOEjyZj/mLi78PQj8PCotlqzQV5/
- o73GKAni43B+Ft8kFHyMBZKvjovVgvLjCmbpuSaszCTF+a1W8VewcTKLMjqBE+uLK832
- fAtA==
-X-Gm-Message-State: AOJu0YzfKm+nSKH1pcKolqJiKN45Uw+G7jMPdTKkFSY81Kl0KXYpLmjM
- F/4vgEW5cuVKcNJrWNPhMtEYslMHYd5lBUztmAzLeBTUeLknn01WZ09yoTR4dwuO/brwXgH7PIX
- WuVpa/mw=
-X-Gm-Gg: AeBDiesN9PI3Tp/4ZfrkNg767w8Y/999SROkfF21KIYY+PL+2yeDkL/CROFMkp34UPb
- h166rVD6IofdeGyj2EzzHBoYLLz8VYcayLOOFp+EzQH117IUIc3vukkYJqCJsIUI0kS1GiS00gE
- /oP5EVfQro7DNedmcZ+MCEh9tKlsFPc1Aip/QKCKPCHhgDiu6ALsOezRDom87k8njpTbVYQYpoJ
- 1j43Ceyt/8OQKLGEwyrodLyIftL/MypvQN2PwcN9MYj5ni3ldoYzVE1VN0HPvJUx+30/6Yy2Wjt
- 7CtkCcKoa8cSAM+Rnue8v17qynC5Qgo7FMvQpoo2xtPC+jmibiOT+mQOhY4/cJG2zdV+fiFzIVy
- T14+Mi38nuedMOItzfHMUw8vKAEj3ki1IrgU7I9tTWvkPPmxEpBnz0RVjmSkshX0Np6ZMTvJlbZ
- uPzje3HNPOX038hzru0gRNzybFzBlRSE9krTB00aVZT0FIKlkgnPmIY2+nsH3UXCE6C7dfiyx65
- f7J2OvnZ5g=
-X-Received: by 2002:a05:600c:468c:b0:48a:56d5:16f2 with SMTP id
- 5b1f17b1804b1-48a56d5179amr116684295e9.7.1776888023054; 
- Wed, 22 Apr 2026 13:00:23 -0700 (PDT)
+ bh=GIiUeR+b26DEeePibWG8P7/XRvyLYZ4UqKevgTJTWwM=;
+ b=HuBoVwiughS+R4Fm42k58nqFQ49suszsY14qxvMEaIJ258wYVxA9STqO5tUqnfzAZZ
+ i8a5zLNt16un+f+vXMvGUHVnPBOqiZarWEagKmXEO9pbQ8vTqi/y7pmcF5goO4WldvU8
+ DdZ3cbjZH1LvtFanKUb/ecK2ruzhi3rjUX4yFGmigucXwZ3xxCZJfMsGQQa1ITJ6qcqk
+ RuTGhRNWkBWqd0XjWBvWWHJ8emaCbLAz7ZQYhMaNqZm9xj6IQlH18Inq0nE6iJQ+OVnq
+ A2I6NR7YUCebVR8MoT9kpx60nWYwweuLyoVlixK/jVMgqlFLEWJBP/+dyQWmcfK4vp83
+ pfSQ==
+X-Gm-Message-State: AOJu0YyNITjx3HLezjdssBZ2X9E01L4WL6cJCm7fBBOpc6AO9AXc/Hn+
+ X/VfgP7RnPsz849zpquzb9nzRdcqRQIFJ9I062+FtZZ09WQ/IjeN2NqKj3YkgCdIW0UqDE8ergY
+ 2tyXWazk=
+X-Gm-Gg: AeBDieuc7I1azv/+etlKkri5CZCFGBKAG7mH9tzh4F5guNezGFTH4WH5Sz7fMBx6LDJ
+ Cramgy1G++F3DLMa+35gYS+xcGRjo5liyXeWo+jsozwA06m8M5NMYMsYrH0FPKec5vMg9P2MRxh
+ u2jwKw1CXPs1wdsf+Zq3skg22QP0ki1c6Z8HcSAWVoDbGb1Saz60ZZTcRa1PUuFr3V0kVe3t/UQ
+ 0uxsI2fGpUCKeco5vIi2MCqvb6k6pl+rkabCzPM3c+A+DynRqgjpl0MDvUxBqjdrsN0RI3rLL3u
+ 4KNUcTqg31OYamNxXrFeCahe5vDmKKXlP8cl6bEa+kYx/C+OlsAou1nWDdx/iNv5w2e31YeHZe0
+ ey3QR9MzqoI2tLbAfWt4K+FNCRa8S/l3hIDK+9VqWf9imz8A2Vq/+Ag+hcGjgl3zd77iBvN10pV
+ hu6zjui+OOL+h2yyvXIgynklc0PXImctos4b0d0IKbPzIlJYwcNGL+yB0Lzdtn1pIKND6I0KGRy
+ 0BrPspNNak=
+X-Received: by 2002:a05:600c:a410:b0:48a:5821:6006 with SMTP id
+ 5b1f17b1804b1-48a5821692dmr89541745e9.4.1776888097930; 
+ Wed, 22 Apr 2026 13:01:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc18bccfsm425786435e9.8.2026.04.22.13.00.21
+ 5b1f17b1804b1-489fec8f7cbsm199243925e9.11.2026.04.22.13.01.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:00:21 -0700 (PDT)
+ Wed, 22 Apr 2026 13:01:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/48] hw/tpm: Propagate @ppi_enabled to tpm_tis_reset() and
- remove in TPMState
-Date: Wed, 22 Apr 2026 21:57:20 +0200
-Message-ID: <20260422195746.88865-23-philmd@linaro.org>
+Subject: [PULL 32/48] hw/acpi/tpm: parameterize PPI base address in
+ tpm_build_ppi_acpi
+Date: Wed, 22 Apr 2026 21:57:30 +0200
+Message-ID: <20260422195746.88865-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,134 +100,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Of the TPM devices using FIFO mode, only the ISA variant has
-PPI, and calls tpm_ppi_init() to initialize the PPI state.
-Propagate @ppi_enabled to tpm_tis_reset() so it only resets
-the PPI part when requested (ISA case) otherwise the PPI is in
-uninitialized state. Remove the now unused TPMState::ppi_enabled
-field. Set the generic TPMIfClass::ppi_enabled so ACPI subsystem
-can keep checking its availability.
+From: Mohammadfaiz Bawa <mbawa@redhat.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add a ppi_base parameter to tpm_build_ppi_acpi() instead of
+hardcoding TPM_PPI_ADDR_BASE. This prepares for ARM64 support where
+PPI memory is dynamically allocated by the platform bus and the
+address is not known at compile time.
+
+Update the x86 callers (ISA TIS and CRB) to pass TPM_PPI_ADDR_BASE
+explicitly. No behavioral change.
+
 Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Message-Id: <20260317120241.16320-5-philmd@linaro.org>
+Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260327173209.148180-3-mbawa@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/tpm/tpm_tis.h        |  3 +--
- hw/tpm/tpm_tis_common.c |  4 ++--
- hw/tpm/tpm_tis_i2c.c    |  2 +-
- hw/tpm/tpm_tis_isa.c    | 10 ++++------
- hw/tpm/tpm_tis_sysbus.c |  2 +-
- 5 files changed, 9 insertions(+), 12 deletions(-)
+ include/hw/acpi/tpm.h | 3 ++-
+ hw/acpi/tpm.c         | 8 ++++----
+ hw/i386/acpi-build.c  | 2 +-
+ hw/tpm/tpm_tis_isa.c  | 2 +-
+ 4 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
-index 184632ff66b..1531620bf9d 100644
---- a/hw/tpm/tpm_tis.h
-+++ b/hw/tpm/tpm_tis.h
-@@ -75,7 +75,6 @@ typedef struct TPMState {
+diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
+index d2bf6637c54..2ab186a7455 100644
+--- a/include/hw/acpi/tpm.h
++++ b/include/hw/acpi/tpm.h
+@@ -20,6 +20,7 @@
+ #include "hw/core/registerfields.h"
+ #include "hw/acpi/aml-build.h"
+ #include "system/tpm.h"
++#include "exec/hwaddr.h"
  
-     size_t be_buffer_size;
+ #ifdef CONFIG_TPM
  
--    bool ppi_enabled;
-     TPMPPI ppi;
- } TPMState;
- 
-@@ -83,7 +82,7 @@ extern const VMStateDescription vmstate_locty;
- extern const MemoryRegionOps tpm_tis_memory_ops;
- 
- int tpm_tis_pre_save(TPMState *s);
--void tpm_tis_reset(TPMState *s);
-+void tpm_tis_reset(TPMState *s, bool ppi_enabled);
- enum TPMVersion tpm_tis_get_tpm_version(TPMState *s);
- void tpm_tis_request_completed(TPMState *s, int ret);
- uint32_t tpm_tis_read_data(TPMState *s, hwaddr addr, unsigned size);
-diff --git a/hw/tpm/tpm_tis_common.c b/hw/tpm/tpm_tis_common.c
-index f594b15b8ab..a134d5c2059 100644
---- a/hw/tpm/tpm_tis_common.c
-+++ b/hw/tpm/tpm_tis_common.c
-@@ -813,7 +813,7 @@ enum TPMVersion tpm_tis_get_tpm_version(TPMState *s)
-  * This function is called when the machine starts, resets or due to
-  * S3 resume.
+@@ -250,7 +251,7 @@ REG32(CRB_DATA_BUFFER, 0x80)
   */
--void tpm_tis_reset(TPMState *s)
-+void tpm_tis_reset(TPMState *s, bool ppi_enabled)
+ #define TPM_I2C_INT_ENABLE_MASK   0x0
+ 
+-void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev);
++void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base);
+ 
+ #endif /* CONFIG_TPM */
+ 
+diff --git a/hw/acpi/tpm.c b/hw/acpi/tpm.c
+index 5fe95f2e3f1..e703775984a 100644
+--- a/hw/acpi/tpm.c
++++ b/hw/acpi/tpm.c
+@@ -20,7 +20,7 @@
+ #include "qapi/error.h"
+ #include "hw/acpi/tpm.h"
+ 
+-void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
++void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev, hwaddr ppi_base)
  {
-     int c;
+     Aml *method, *field, *ifctx, *ifctx2, *ifctx3, *func_mask,
+         *not_implemented, *pak, *tpm2, *tpm3, *pprm, *pprq, *zero, *one;
+@@ -40,7 +40,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
+      */
+     aml_append(dev,
+                aml_operation_region("TPP2", AML_SYSTEM_MEMORY,
+-                                    aml_int(TPM_PPI_ADDR_BASE + 0x100),
++                                    aml_int(ppi_base + 0x100),
+                                     0x5A));
+     field = aml_field("TPP2", AML_ANY_ACC, AML_NOLOCK, AML_PRESERVE);
+     aml_append(field, aml_named_field("PPIN", 8));
+@@ -56,7 +56,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
+     aml_append(dev,
+                aml_operation_region(
+                    "TPP3", AML_SYSTEM_MEMORY,
+-                   aml_int(TPM_PPI_ADDR_BASE +
++                   aml_int(ppi_base +
+                            0x15a /* movv, docs/specs/tpm.rst */),
+                            0x1));
+     field = aml_field("TPP3", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
+@@ -78,7 +78,7 @@ void tpm_build_ppi_acpi(TPMIf *tpm, Aml *dev)
  
-@@ -821,7 +821,7 @@ void tpm_tis_reset(TPMState *s)
-     s->be_buffer_size = MIN(tpm_backend_get_buffer_size(s->be_driver),
-                             TPM_TIS_BUFFER_MAX);
+         aml_append(method,
+             aml_operation_region("TPP1", AML_SYSTEM_MEMORY,
+-                aml_add(aml_int(TPM_PPI_ADDR_BASE), op, NULL), 0x1));
++                aml_add(aml_int(ppi_base), op, NULL), 0x1));
+         field = aml_field("TPP1", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
+         aml_append(field, aml_named_field("TPPF", 8));
+         aml_append(method, field);
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 4f01e2c476e..0d7c83d5e96 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1219,7 +1219,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dev, aml_name_decl("_STA", aml_int(0xf)));
+         aml_append(dev, aml_name_decl("_UID", aml_int(1)));
  
--    if (s->ppi_enabled) {
-+    if (ppi_enabled) {
-         tpm_ppi_reset(&s->ppi);
+-        tpm_build_ppi_acpi(tpm, dev);
++        tpm_build_ppi_acpi(tpm, dev, TPM_PPI_ADDR_BASE);
+ 
+         aml_append(sb_scope, dev);
      }
-     tpm_backend_reset(s->be_driver);
-diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
-index 9f13e0ec120..b4f258c7bcb 100644
---- a/hw/tpm/tpm_tis_i2c.c
-+++ b/hw/tpm/tpm_tis_i2c.c
-@@ -523,7 +523,7 @@ static void tpm_tis_i2c_reset(DeviceState *dev)
-     i2cst->csum_enable = 0;
-     i2cst->loc_sel = 0x00;
- 
--    return tpm_tis_reset(s);
-+    return tpm_tis_reset(s, false);
- }
- 
- static void tpm_tis_i2c_class_init(ObjectClass *klass, const void *data)
 diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
-index 61e95434f5b..1ca403241de 100644
+index 1ca403241de..2b1267133ac 100644
 --- a/hw/tpm/tpm_tis_isa.c
 +++ b/hw/tpm/tpm_tis_isa.c
-@@ -88,13 +88,12 @@ static void tpm_tis_isa_reset(DeviceState *dev)
-     TPMStateISA *isadev = TPM_TIS_ISA(dev);
-     TPMState *s = &isadev->state;
- 
--    return tpm_tis_reset(s);
-+    return tpm_tis_reset(s, true);
+@@ -159,7 +159,7 @@ static void build_tpm_tis_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
+      */
+     /* aml_append(crs, aml_irq_no_flags(isadev->state.irq_num)); */
+     aml_append(dev, aml_name_decl("_CRS", crs));
+-    tpm_build_ppi_acpi(ti, dev);
++    tpm_build_ppi_acpi(ti, dev, TPM_PPI_ADDR_BASE);
+     aml_append(scope, dev);
  }
  
- static const Property tpm_tis_isa_properties[] = {
-     DEFINE_PROP_UINT32("irq", TPMStateISA, state.irq_num, TPM_TIS_IRQ),
-     DEFINE_PROP_TPMBE("tpmdev", TPMStateISA, state.be_driver),
--    DEFINE_PROP_BOOL("ppi", TPMStateISA, state.ppi_enabled, true),
- };
- 
- static void tpm_tis_isa_initfn(Object *obj)
-@@ -132,10 +131,8 @@ static void tpm_tis_isa_realizefn(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(isa_address_space(ISA_DEVICE(dev)),
-                                 TPM_TIS_ADDR_BASE, &s->mmio);
- 
--    if (s->ppi_enabled) {
--        tpm_ppi_init(&s->ppi, isa_address_space(ISA_DEVICE(dev)),
--                     TPM_PPI_ADDR_BASE, OBJECT(dev));
--    }
-+    tpm_ppi_init(&s->ppi, isa_address_space(ISA_DEVICE(dev)),
-+                 TPM_PPI_ADDR_BASE, OBJECT(dev));
- }
- 
- static void build_tpm_tis_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
-@@ -175,6 +172,7 @@ static void tpm_tis_isa_class_init(ObjectClass *klass, const void *data)
-     device_class_set_props(dc, tpm_tis_isa_properties);
-     dc->vmsd  = &vmstate_tpm_tis_isa;
-     tc->model = TPM_MODEL_TPM_TIS;
-+    tc->ppi_enabled = true;
-     dc->realize = tpm_tis_isa_realizefn;
-     device_class_set_legacy_reset(dc, tpm_tis_isa_reset);
-     tc->request_completed = tpm_tis_isa_request_completed;
-diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-index e9372e73163..dd30344d5ac 100644
---- a/hw/tpm/tpm_tis_sysbus.c
-+++ b/hw/tpm/tpm_tis_sysbus.c
-@@ -87,7 +87,7 @@ static void tpm_tis_sysbus_reset(DeviceState *dev)
-     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(dev);
-     TPMState *s = &sbdev->state;
- 
--    return tpm_tis_reset(s);
-+    return tpm_tis_reset(s, false);
- }
- 
- static const Property tpm_tis_sysbus_properties[] = {
 -- 
 2.53.0
 
