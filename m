@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3CCFA1FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA60FA1FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdj7-0005IW-4d; Wed, 22 Apr 2026 15:59:13 -0400
+	id 1wFdkX-00070T-JI; Wed, 22 Apr 2026 16:00:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdi2-00059i-Lg
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:58:09 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkS-0006hF-5c
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:36 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdi1-0008UG-5c
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:58:06 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso51085335e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:58:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkP-0001zO-If
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:34 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48984d29fe3so52312185e9.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776887883; x=1777492683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888030; x=1777492830; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wIJZsquIktrzIZSBPQY4Zli4+8g1iiXBsn/sLB3fVbU=;
- b=PBY/NbqsGLloyda7Unfo29cVry1gphZkxGfU46LchqYG08UaD3lrRe9wI7wiV6TZTu
- NJY1Q6ORdt0wdh9C2GlrB2yL6+EOrDmGuLDg0/qMlTtsY2vZrdo7KVtiDRDBE7qrK2x1
- D8r2N7xIaEE4/y/mFSLiBnbca8EGlMRqiF2OZiE2qqciKhISFf9c6LMYHeVBZrEiuYEH
- pdZpC7J69WP7n/Nrka8mgnl8cO4VclgIpN95/5V5oHn9BaShn9USSoJJgCbrMku8WuzD
- /PM2BeyctPlHbBRMyIR1SV0YwtRR+vUkpODADl61XJX3RLBUwqbBfwPQBOV8GIkvKJUB
- SW0g==
+ :reply-to; bh=tKKgOnY7W4pfIUOPQqfOdsFHNmAXFxNShvdnDNL3w0M=;
+ b=vMR9r3gIyqhX0JhKm1f+oBDF52470E1wgPk0Ou2urIGvsZm5T44AuOFAE7RJYhAfc1
+ iRv+z6AyfZ7clB63QUCeIOq7DDUJ3+tfNgbLODMp1EmRtIthZCgpx7EBw88FF7KuoU8Y
+ CCozYzlF7XLCiznBud+S5cZUjNIv14q3KTNcsDfHO9rWsWvEIRWumpyfCCPDsHiPbXQK
+ Q74biSoPBDEBlPF2cWW6MgyTsb47ZrZTVL0m7wU+doYbOYUWto7ynj+AeXTLsPcSIYiG
+ kOD4MNwA7LPPlEgAx9To4TEx9CzWwXdUxj6qQn3unE5GScSo22HKcrsXxp1aK2O7Jdm5
+ tXDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776887883; x=1777492683;
+ d=1e100.net; s=20251104; t=1776888030; x=1777492830;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wIJZsquIktrzIZSBPQY4Zli4+8g1iiXBsn/sLB3fVbU=;
- b=BoPijWHfm3QILMVDF4n8DTfhUUhFw5ZWZvPrYXcRI5munFzwx6VJGAbL+101QyQb4k
- mdXe3D7vNL8ODrJ/Ij5qcoiQuNhCoUX8tjz6aeXrUIFMjosavhFc9qs5K/kXbxxf/npy
- uonpCgcHQnrQe4z1xNSoQS+3L0tznFKs/sCnNo7N9x/5QiX3by1vBLAMZyNiZs0fTgJa
- +XX7Xm1UKch+WyBSRNZyDKqyrFVC/X/b2+1jP2DohaVMuxLKQftDkUSC+6i9ZUjh1Gyc
- hhUwIAPogRMDtpTHHI8c0EDAl4Vo2N6uTLFh6gt0EflNLAf4OquLGvA+WFvl8sJbvtu9
- sjew==
-X-Gm-Message-State: AOJu0YxMg1cHFJDqOEE6N+7zcLUWULdp58XDFTP8weSDrkvBFUpQJqsh
- FxFAHBPArQlZP7RhNV9UbCZPUgsmzdKVFo/k2g35gOUW5W7eOBbJAeefodv6c4zxJ5cEAZ6I4TP
- ueG+In2s=
-X-Gm-Gg: AeBDiesn0whDp8UJvXNBt8dPULtSLZdJs7e9ui3Z4PimsAg3I5vBqp7L+Gy01YWFUSg
- QY8hI45EpVkYJTaMWeQd3R5kZixv3JknCRz2aUL8L+LweDZdhrjWhhaApGlWPrnemiPPluRIU+k
- YYKGUH3rLh6wY6kg5RYKFHjxR4foHjmPgO2D8e0rQR75MjVZeAw16k6n7aSqaGLzWUYVP9xBtZz
- ULnZ1IVO5Yv2BKRtlHivhANbn0V5f4WU335TygYgH+F1kdEhrl6SydrXfyiIWUO436LbgVjQe+0
- MSpDh6ieKedAUt3JwOxk6scPfDLWzn4FFYL1U2QDQcXuRwBlS/t41He7KHxluOxT2FMlQSkuW/b
- s+OwKHcS1dMCgvm3ZQlZRbv2u3nZGV5Onmlpz9zjm6wv9DDXo6NI5CJ0BUAV23P4VaQ9qsKXSfM
- fnAFngYJozaA3m/KxZYig8ZxAnBZlqR8HLplAADDpLIInfgooO5C8BL2yzxPBeFwXyY/iQywXN3
- oRXPbmfDrw=
-X-Received: by 2002:a05:600c:c10e:b0:488:8185:e672 with SMTP id
- 5b1f17b1804b1-488fb792e84mr262263555e9.30.1776887882970; 
- Wed, 22 Apr 2026 12:58:02 -0700 (PDT)
+ bh=tKKgOnY7W4pfIUOPQqfOdsFHNmAXFxNShvdnDNL3w0M=;
+ b=Bv8MhM1tCh771kvR0nuU9RYXsNfm5mRwJOblnQuhdC4t4P7f8GrwJFhaKRSQo5kPdh
+ thJmhaPEZufhYysusRoyjQfGNb/45AjgrNRpfbrS05kSbJUMoHRT4k6jvUDtrRhYLr4j
+ iS7VDUzx/XrGm/BieiyYSGG129y3t7N7ZjcvRyS15SzZnLBBihO3C3fHve0Lu5HOrJ/7
+ bGwkoybJz+OjiS4Q2IOJ79Ht1Kij2GT9+wNMwx04RM4VJXl8C53pXA5tSyeOdpzHFkGj
+ NKDWno+qsE8eFwRddnHuclrzcDOVo+wDYGS4hffTPGDgEC1ZA7Q6xo/B74wjyFxVN6rd
+ Czgw==
+X-Gm-Message-State: AOJu0Yw43+8dXl7VXF5VHjdMqQGkpu306c1pN+7BQ443LmwnO7PC1liB
+ ++mkeCvUH4thIoBeeYVH2kHC3PXaZ0gjifjyGuw4mRUwNzInIiJQHRoVlQlGiHBtGuvpT+Rb7Ws
+ swXBQzKI=
+X-Gm-Gg: AeBDiet4g3mvMr2tmRCMM/OAHMj99KdpKQ/sOrDD9LpcZXN2tn0gGHYnYaLOTQACiYF
+ I5UERnkTLUbvqxO/fPPNJW0lzUXrXKgFBlVwT0vWAIKQkTM7mEn+RiOtCql8r4er4v/RhcChHZ9
+ fwEkQklpxx9ISaizYGd1/wchhXOWRG6cYYoMTTxuZFgwIXVrnkEW5JWL6U9HT/dmz6KJwpaPzsK
+ rYropbbp8I4oGFtEA8T2855LDwsCCTCpjZkPp1LzMKJBjHx1s/bLV+7+8xD3wSi2w6EYMcO0Zsp
+ gvXbhKUJxQd94acJ4wWaKwBy2Q1xyG9ZhpqCnGtS3T0L5YQ4RCfNtak4oyLQOXsKHnoXdP67kqs
+ 9y6AmF7KkwgtLJU75w/VmkvuTR9mDybDTBV7bbLa96A5M75eAri4hDKljbbIpuAFMvEGYFzdj1T
+ F12OD7e/xNippSit+WPaPHLc1YBWlK6Ry9xtNluuvIZQfEbtGn/HB7ws3wcBqnJGeMbS+fgCydd
+ P88eZ0x4uw=
+X-Received: by 2002:a05:600c:c108:b0:488:a82f:bbb6 with SMTP id
+ 5b1f17b1804b1-488fb78e576mr236453525e9.27.1776888030496; 
+ Wed, 22 Apr 2026 13:00:30 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891b46cffasm285619915e9.13.2026.04.22.12.58.01
+ 5b1f17b1804b1-4891df9e50asm210103615e9.0.2026.04.22.13.00.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 12:58:02 -0700 (PDT)
+ Wed, 22 Apr 2026 13:00:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/48] hw/misc/cpc: Include missing 'hw/core/cpu.h' header
-Date: Wed, 22 Apr 2026 21:57:00 +0200
-Message-ID: <20260422195746.88865-3-philmd@linaro.org>
+Subject: [PULL 23/48] hw/tpm: Simplify tpm_ppi_enabled()
+Date: Wed, 22 Apr 2026 21:57:21 +0200
+Message-ID: <20260422195746.88865-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,55 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "hw/core/cpu.h" header is indirectly included. Include it
-explicitly otherwise we get when refactoring unrelated headers:
-
-  ../hw/misc/mips_cpc.c:36:53: error: unknown type name 'run_on_cpu_data'
-     36 | static void mips_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
-        |                                                     ^
-  ../hw/misc/mips_cpc.c:40:5: error: call to undeclared function 'cpu_reset'
-       40 |     cpu_reset(cs);
-          |     ^
-  ../hw/misc/riscv_cpc.c:34:54: error: unknown type name 'run_on_cpu_data'
-     34 | static void riscv_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
-        |                                                      ^
-  ../hw/misc/riscv_cpc.c:39:5: error: call to undeclared function 'cpu_reset'
-     39 |     cpu_reset(cs);
-        |     ^
+TPM instances don't expose any "ppi" property anymore,
+remove that dead code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260313062055.2188-17-philmd@linaro.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Message-Id: <20260317120241.16320-6-philmd@linaro.org>
 ---
- hw/misc/mips_cpc.c  | 1 +
- hw/misc/riscv_cpc.c | 1 +
- 2 files changed, 2 insertions(+)
+ include/system/tpm.h | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/hw/misc/mips_cpc.c b/hw/misc/mips_cpc.c
-index 924de855ee2..d092f76f44d 100644
---- a/hw/misc/mips_cpc.c
-+++ b/hw/misc/mips_cpc.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-+#include "hw/core/cpu.h"
- #include "hw/core/sysbus.h"
- #include "migration/vmstate.h"
+diff --git a/include/system/tpm.h b/include/system/tpm.h
+index 9458ad6668a..874068d19a9 100644
+--- a/include/system/tpm.h
++++ b/include/system/tpm.h
+@@ -13,7 +13,6 @@
+ #define QEMU_TPM_H
  
-diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
-index 4bf2fd8db16..e04ccdf54fa 100644
---- a/hw/misc/riscv_cpc.c
-+++ b/hw/misc/riscv_cpc.c
-@@ -18,6 +18,7 @@
- #include "qemu/module.h"
- #include "qemu/timer.h"
- #include "qemu/bitops.h"
-+#include "hw/core/cpu.h"
- #include "hw/core/sysbus.h"
- #include "migration/vmstate.h"
+ #include "qapi/qapi-types-tpm.h"
+-#include "qapi/error.h"
+ #include "qom/object.h"
  
+ #ifdef CONFIG_TPM
+@@ -85,10 +84,7 @@ static inline bool tpm_ppi_enabled(TPMIf *ti)
+     if (!ti) {
+         return false;
+     }
+-    if (TPM_IF_GET_CLASS(ti)->ppi_enabled) {
+-        return true;
+-    }
+-    return object_property_get_bool(OBJECT(ti), "ppi", &error_abort);
++    return TPM_IF_GET_CLASS(ti)->ppi_enabled;
+ }
+ 
+ #else /* CONFIG_TPM */
 -- 
 2.53.0
 
