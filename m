@@ -4,114 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D233CFA1FE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 19:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4009BFA1FE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 19:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFd8G-0002xZ-TQ; Wed, 22 Apr 2026 15:21:08 -0400
+	id 1wFdAW-0003UH-HV; Wed, 22 Apr 2026 15:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
- id 1wFd8F-0002wy-1n
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:21:07 -0400
-Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1wFdAR-0003Tm-F3
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:23:23 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
- id 1wFd8D-0006B8-CD
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:21:06 -0400
-Received: by mail-qt1-x82c.google.com with SMTP id
- d75a77b69052e-50d6b393d60so3235411cf.0
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:21:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776885664; cv=none;
- d=google.com; s=arc-20240605;
- b=KTUDler2vSY6QE7bHGl8r8wIRcPFI97ANqJgkLjrg8fonZBh6x9w6yuvEUZKefjO50
- VXfm9k71mBetnVMTEhSMHKX+77LiN4m1HM/fegt3hCpusLAOHEg0txLbMyN8JdMBWDVK
- vnNDqhOr5EY+6GwMGfxXCFhLTPDw7UyyqsbHA7h0aYLOkEr6+6jfuyS29wSgnora87bl
- hN3iVxibU1HDyLTGnldzNRnXkbtknimDleZu6Bt3zAeWdaHBCYFmdo2EdyluqBtoOwL0
- /2I/1tIBd4QyyLw2Vc8QHCUEglowCCWmrRHrQGCjgJxhdB9kVSg/VVZWs4c/n82pQR8z
- DibQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=lTmzBrjr7Z+9LG3YOTWzEcHyH0AEGS90m8YNAo038JI=;
- fh=MLap5cF7G5v9oTY/S2snS0yne1QlZyDQWJlAycJrsJo=;
- b=G7yx3HVPN+8ILNEFdmxpRHc1JOa97N6H/NHuMz1TArsR1jO8NRTpLeWVsYu0NYZBIK
- qqmO0II1oqnheUoB12GupMZsjDyMHB2p4/J7w/4PL1MBGjuqjVK620q4CE1D8oRabmQU
- yiQdKsS3fdFZ793cIBJGUty4T7gRb87DLxos62LGbC1mRnWWLOad4WHcf7hxODVUjGiw
- Y9eTfaw2mxSI659+w/+cpkaFjX04jc3NNImmH66avvthdn55evVwJxxOm70N0lheTdIk
- mo70fkwZrG/Ytgxf7UAhDMOIPhFjO22JiJvn5aCIwBEnrZtNzZUlSzwABU0tkgx22Uip
- y0eg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1wFdAP-0007Gy-Bg
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:23:23 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2b2589c26e3so52905305ad.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1776885664; x=1777490464; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lTmzBrjr7Z+9LG3YOTWzEcHyH0AEGS90m8YNAo038JI=;
- b=DrP89Vi2zQPBJ4/VreGITEj+jm2A7sy/yUYUe9bEaYqZU11hNxtEzsrvskOSDMLuZe
- GhxLZ17JBJHCIq/OXf3q4jeaDMQT5Fw9L/I7DyHz57YZhyhzeBG1xn3KOvboLiZRsGsc
- whvEp+tGbaizsvyS2km8h0638bzo4qDoy97pxMYlxzAq3ppEnBn0QCA86tIkT6MBqAPr
- mUMO2Zb1qXQ9FLm5EABwhuKpbxInmSkHWLlItI+pEp10Zb7rFNDUv7Isq/k2ejIw8MOM
- A7DCW73Ds1EjfLbLMSLtLqXmMWcPLgYgdVYdtkLmXFo7M070WFStldAduk59ESxRG4vS
- 2rnA==
+ d=gmail.com; s=20251104; t=1776885800; x=1777490600; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=SuwjZ5Y3pQdTT7osz6mAAFkp5K7vr2u8osvSou81iI4=;
+ b=gS5CpyYUPVq6WlOkJWAUz/qbx4xusrAlMIs+PqusIW0kVcAqJBI/wvFH0rt5bijNqQ
+ p2yBVKrzNjnpFwUIukTO15M5DZFF5CmxuHL+yaZuAfircr1w8MZGQaH/jozd5qTq+5gm
+ iujSIdoVPfLsuI4hbLH6k6lEWMLQYSKOVl/uu5Gfnjkz74Hb8ncCQA9vO9uKgDP8yBJk
+ UCUUg2x8e+f2OeVdtNd+nfce2SfTOx5KQLKWq8+1imy7T93p0H7TQVx9cwJshwkcSgxc
+ r9GNpIKV30IRejGqe4se6xASnwyd/5TbytU6DdL2EuVbsyZbPR1JRMHwFZCOMdhRAb96
+ AmMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776885664; x=1777490464;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lTmzBrjr7Z+9LG3YOTWzEcHyH0AEGS90m8YNAo038JI=;
- b=MJ8GzqvY3wO3DktsSEU0oRGHmXcwMZqhr5j35i9cnPFNFnbLL215m1Fc3vDMOOleM9
- FemAXg1UzMD8GkAmwdbdZ4FDGnwqwbzsh9J9Y6SDruGZRNAFLMEqXGF2+NexBoXtViYG
- oqiFrH8JF4Csm1IhUtWF8izIeQunPq+j5+8qYwKtnFn4sPf3JK7JKzyJpFud8nqS5D/w
- l1h1dZOiB57rrNOiPv+m2Ua7qYf3wHHAB3zzRJ8fD4vbYfKVtdOiDjyxVp48qBWmSB4s
- LUhZJW+kTEEKACU8VuoJTuOojKWoAxVD7CVXNe8ozD0ISdEAzY/BrkNIdFOZOjT8RghA
- v9Dg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/563VDxN4BBaj8rD5CBMNMtPBjMjPzSTVWH6PsPnkXyTpOUeKAprNtiyTe/Dn5ZcLuXWWgYGK/ImYb@nongnu.org
-X-Gm-Message-State: AOJu0YzFixlCQST7LqlVsho9kLaznbN7C+Huvo/WG0WDVJCScgnmWSSi
- MTuyowSGpyp7aR7xyilGTAz4wncfxhFGKsoWFk2Bwog45kulmK0s93tleiSlF3WMYMcSi3zE2Nq
- ANWVQiPwKR0mOivuudu1mnkehy+pFXVhxFOYo6l/g
-X-Gm-Gg: AeBDievn45TPvuBU4BrOyyu+0IeOd05zYfDVjK31X8BDuFvt47YFDuVmsl9HIEatUFv
- usc9Bli3vFuPwPXTB6WazRVl8HhpqbWsRxLr2c9WAF9QM9yXAIBBoA26iVwSUpzcpihClEI4uz8
- RP1IvTAnl++BrNggX/LPf8qZTlr4dMvK0hz0mswqxo/AZjipxdD9IG/xleXRjMHz7cuKgTof445
- XPZ1h7hLsYgnVTnGS7ath4eQwVsOZM7CW9ChBHePR5flx5nxBRdRGUzHLNg8JMW9sAvDUZSE9Jr
- rBCSvDnGRB9k0Mn8guIyxhhQGWroGARSDhy4pwDVea94W6lpEy7pgoAvP8E=
-X-Received: by 2002:ac8:5c84:0:b0:4ff:cb75:2a22 with SMTP id
- d75a77b69052e-50e440d269dmr46307001cf.3.1776885663618; Wed, 22 Apr 2026
- 12:21:03 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776885800; x=1777490600;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SuwjZ5Y3pQdTT7osz6mAAFkp5K7vr2u8osvSou81iI4=;
+ b=q5W+wDc7rStSH/d9iNx11b3DhdEVO9c3cGUm/Ou+Y6viIhf2yVYEy86GZ3OHnkXdWl
+ NGpKykzwLAJR8gdJeoKmf1VlRRD1HXCK3pavDl5WwjPxnpW/iI1+sa4ZhGBOnXZauhFT
+ tL3+BdkzO+vogpCNpSdr9QygoYn05Kpk1q09IbHwGbqkUf6K2bzV4XhHiLC9nizQyvEf
+ p0ZGMeKuWa/F2bwg8xPwREojbRhi4ihmaOu+xDFuJhCmqS+Qdo9nBp09WauTs1xrVzsu
+ +M4L9c4z0O97AdEoOQVTKndF98nYDzV4h6jldAmAQHf1gJN7d/YXKfcDvOGALL2jQSCE
+ vUDw==
+X-Gm-Message-State: AOJu0YwFpBBCbilov44pjPss2VjF0NbXk0OEWikIh9vzT/g7SYHtuGsP
+ 8VbVeQNp4CSdOo9RRxiu9txUqZU8aUn1hxRyPhZ33rLKHL+bZxkOI2rS
+X-Gm-Gg: AeBDietkTAjqio3+CcLE2B6GJMAQ1Jbfe4YTOnJUtqHgeEdA7hj3ukDE0CTz7eFocZi
+ CwxFCj1xvYY7f1qrAGqwaxr70Yo6oViCuf5Raa/MCANXuT7Zm5K40jFRU2W/eLSK7R4jDEB201P
+ D/bVj4U0TraTNbi+WdfQ3+5IBD3WqYPas5tBEtMveUIbLs5am1XCEOkFS/sbUiQDNnyU4jDA2bm
+ y1Av/QUUFc2gIc0uE8mzE99stYSZUZ0vuAFt62awtpfBuoWIklHvGFhmQdv30Vvph7YmV6v0cAQ
+ R+JKP5IUGcuLW00whmujc9IWfTJ3lKVbsb06HWcOzd8VyjGdx2urNz/2iK6MLkOxnNGFkfSR/Pj
+ FwfCqzXD7kIYZWdOPGOTBGi+xjiMSn5KHm2P+wdBgMjmP/SNB0sP+TeAidBDMcLQ5Etr6Qi6z5A
+ uBBrSgKv5qjFbTxOGJmfWQaKtOjuTp0QK0NnyR4t1DSlFp
+X-Received: by 2002:a17:902:7c0f:b0:2b2:b117:1e16 with SMTP id
+ d9443c01a7336-2b5f9f7e95fmr180844305ad.20.1776885799648; 
+ Wed, 22 Apr 2026 12:23:19 -0700 (PDT)
+Received: from localhost ([42.114.219.141]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b5faa32ad8sm178851765ad.31.2026.04.22.12.23.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Apr 2026 12:23:18 -0700 (PDT)
+Date: Thu, 23 Apr 2026 02:23:13 +0700
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] chardev/msmouse: save and restore device state for
+ migration and savevm
+Message-ID: <izunxfckxpm3tcsb5zzbxpwjzfz6goldhtgsofoedfpfngc5fh@eqa4ojekufcl>
+References: <20260418115230.17809-1-viking4@gmail.com>
+ <CAFEAcA9yq2RH226fx5vybumH=fjosPVgMSvigauAz=OK8-RWQQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260411021205.3592118-1-jemoreira@google.com>
- <aeYvCK2qhZd1W9sA@sgarzare-redhat> <20260420181818.GC405461@fedora>
- <CAJi--PPzd_fqcsBU-aA11624apoKTtEW6GTKE3_OyZ4SJ90DzA@mail.gmail.com>
- <20260421211237.GC466778@fedora>
- <CAJi--PP6gsR5E7RtQ_RwV8fG9Xivk0fXTfNxWuZ6cX+uWBPV=A@mail.gmail.com>
- <CAGxU2F7UJhbikjFKMgMcFenFx35vmic-hj4pFm7vM0-gk-nCyg@mail.gmail.com>
-In-Reply-To: <CAGxU2F7UJhbikjFKMgMcFenFx35vmic-hj4pFm7vM0-gk-nCyg@mail.gmail.com>
-From: Jorge Moreira <jemoreira@google.com>
-Date: Wed, 22 Apr 2026 12:20:52 -0700
-X-Gm-Features: AQROBzBMONdFrbBlWXUd1zJQopaR7EyCF4WM346kgBeKuDcT1wsEGfv4VIcetAQ
-Message-ID: <CAJi--PNoJmei-076Y5geaft98w-nB3OFK2e093EWkN+ZTaQK1Q@mail.gmail.com>
-Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
- kick FDs
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, hreitz@redhat.com,
- gmaglione@redhat.com, 
- "Michael S . Tsirkin" <mst@redhat.com>, Hanna Czenczek <xanclic@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
- envelope-from=jemoreira@google.com; helo=mail-qt1-x82c.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9yq2RH226fx5vybumH=fjosPVgMSvigauAz=OK8-RWQQ@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,55 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 22, 2026 at 1:32=E2=80=AFAM Stefano Garzarella <sgarzare@redhat=
-.com> wrote:
->
-> On Wed, 22 Apr 2026 at 03:16, Jorge Moreira <jemoreira@google.com> wrote:
+On Sat, Apr 18, 2026 at 04:13:55PM +0100, Peter Maydell wrote:
+> On Sat, 18 Apr 2026 at 12:53, Trieu Huynh <vikingtc4@gmail.com> wrote:
 > >
-> > On Tue, Apr 21, 2026 at 2:12=E2=80=AFPM Stefan Hajnoczi <stefanha@redha=
-t.com> wrote:
-> > >
-> > > On Mon, Apr 20, 2026 at 05:48:13PM -0700, Jorge Moreira wrote:
-> > > > While starting the vrings on SET_VRING_KICK could solve the state
-> > > > machine issue, it still won't notify the back-end that buffers are
-> > > > ready (the driver won't do this). Non-polling back-ends depend on t=
-his
-> > > > kick, especially for queues where data flows only from the driver t=
-o
-> > > > the back-end. Most implementations likely attempt to read from the
-> > > > queue only after receiving the kick.
-> > >
-> > > This is an interesting question to clarify in the spec.
->
-> Yep, which is in part related to what I wrote in the other reply:
-> "I think the main issue to clarify is what the device should do
-> when the vrings are configured, but the driver has already been
-> initialized (which is usually the case after migration)."
->
-> > >
-> > > Stefan
+> > From: Trieu Huynh <vikingtc4@gmail.com>
 > >
-> > This is the question that interests me most, to be honest. I'd rather
-> > have the discussion about when to activate the vrings in a different
-> > thread and keep this one focused on whether the front-end should send
-> > the kick or if the back-end is expected to check if there are "new"
-> > buffers in the vring after restore.
+> > MouseChardev holds state that must survive migration and savevm/loadvm:
 > >
->
-> IMO we don't need anything from the VMM. When the device receives
-> SET_VRING_KICK, it can check if the vring already contains buffers
-> (and this is the part we might need to clarify) and wake-up the other
-> threads (or always wake-ups them, as crosvm does IIUC, and let them
-> perform this check).
-> After sending the SET_VRING_KICK message to the device, the VMM has
-> the exact same knowledge of the vring state as the device, therefore,
-> it's still unclear to me why we need to inject that kick.
->
-> Stefano
->
+> >   tiocm   - serial line control (RTS/DTR).  When zero the mouse is
+> >             considered powered-off and all input events are silently
+> >             dropped.  Losing this field after migration leaves the
+> >             mouse in a dead state: the guest driver must toggle
+> >             RTS/DTR again to re-detect the mouse, which most drivers
+> >             (Linux sermouse, DOS ctmouse) only do at initialisation.
+> >
+> >   axis[]  - accumulated X/Y movement not yet encoded into a packet.
+> >
+> >   btns[]  - current button state.
+> >
+> >   btnc[]  - per-button change flags used for middle-button tracking.
+> >
+> >   outbuf  - Fifo8 of encoded mouse bytes waiting to be delivered to
+> >             the serial port receive FIFO.
+> >
+> > Add a VMStateDescription covering all five fields, registering it in
+> > msmouse_chr_open and unregistering it in char_msmouse_finalize.  This
+> > follows the same pattern used by ui/vdagent.c
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1234
+> >
+> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> 
+> > @@ -263,6 +279,7 @@ static bool msmouse_chr_open(Chardev *chr,
+> >                                              &msmouse_handler);
+> >      mouse->tiocm = 0;
+> >      fifo8_create(&mouse->outbuf, MSMOUSE_BUF_SZ);
+> > +    vmstate_register_any(NULL, &vmstate_msmouse, mouse);
+> 
+Hello Peter,
+Thanks for the detail feedbacks. I've spent time to check your
+concerns.
+> Adding a new use of vmstate_register_any() is a bit
+> unfortunate -- this is supposed to be a legacy function.
+Agreed. Thanks for the point.
+> 
+> More generally, it seems odd that the chardev has any state
+> that needs to be migrated at all. The chardev should have
+> state corresponding to the host's situation, which is all fresh
+> for the migration destination. State corresponding to things the
+> guest has or has not done ought to be in a device model somewhere,
+> surely?
+> 
+> Put another way, why is this msmouse code in chardev/ and a subtype
+> of TYPE_CHARDEV, and not a device in hw/input that's a subtype
+> of TYPE_DEVICE? I guess that the idea is we want to be able to
+> plug it into any UART device, but that seems to have some issues
+> when it comes to migration. wctablet is probably in the same boat.
+You're right to concern.
+When at this point, IMHO we can either
+- add TYPE_VMSTATE_IF to TYPE_CHARDEV as a preparatory patch, then
+use vmstate_register() here and in wctablet.
+- or follow your suggestion more fully: move MouseChardev into
+hw/input/ as a TYPE_DEVICE subtype, attach it to the serial port via
+the existing interface, and use dc->vmsd for migration. wctablet could
+follow the same pattern.
+The later is architecturally cleaner but is a bigger refactor. OTOH,
+the former is minimal but still adds vmstate to a chardev, which
+you've flagged as conceptually wrong.
 
-Is it possible to activate a vring after it has been deactivated with
-VHOST_USER_GET_VRING_BASE? If yes, does the front-end need to send the
-kick file descriptor again with VHOST_USER_SET_VRING_KICK to
-reactivate it?
+Which direction would you prefer? Happy to go either way.
+> 
+> -- PMM
+BRs,
+Trieu Huynh
 
