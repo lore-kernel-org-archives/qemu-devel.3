@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DEA5F9B615
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59618F9B60B
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV4S-0002Fj-CI; Wed, 22 Apr 2026 06:44:40 -0400
+	id 1wFV4Q-0001w8-DS; Wed, 22 Apr 2026 06:44:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV37-0007xY-J6
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:43:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFV3y-0000Tz-S7
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:18 -0400
+Received: from p-east2-cluster5-host1-snip4-8.eps.apple.com ([57.103.79.11]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV35-00035C-Tv
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:43:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854595;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vBZDCxWeEWsopOwHYHH/b9wk35a3vQpMNOc6V6JsecE=;
- b=KkieSX1ih9KLA8/wK5VapObPvPkytwDEPEScYmC29NVlphNaCpT4clDCj351mpRiDrTOit
- u88K/7FT4O+uELD33VmzWorveLxNwE/mYLNM58S2D5ZxC3WKJFR+uNZDXDQQk9hOIMAFkL
- SIwyav0ogp4JlzhCxlSZEivnSz9z2tg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-OZ_21210Oi-BKLIxDeRlUA-1; Wed,
- 22 Apr 2026 06:43:10 -0400
-X-MC-Unique: OZ_21210Oi-BKLIxDeRlUA-1
-X-Mimecast-MFC-AGG-ID: OZ_21210Oi-BKLIxDeRlUA_1776854590
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0617318004AD; Wed, 22 Apr 2026 10:43:10 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.21])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0138919560AB; Wed, 22 Apr 2026 10:43:08 +0000 (UTC)
-From: marcandre.lureau@redhat.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFV3v-0003Da-Ow
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:10 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-4 (Postfix) with ESMTPS id
+ 6CC6B1800417; Wed, 22 Apr 2026 10:44:05 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXC0dDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTHpABi4EKXM1FE8HWA9GBjR4SB4vBCkAXXpJAlpyWHFDDjt2VXceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776854646; x=1779446646;
+ bh=UYGshsVpXsiTJgLMvkXMm2iq6dV3ukV2xgw2p6SYvPY=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=LcEs1D3V4L12SzzS6rr/YdXs/sXwHchcZ9aSZpd9u5gaY+5955olQ4K1cegS4aPjSoGy/JhoExKRN9ghVyuk7Uxcpb5ChbEgUZgo63Eea/TZJ0cjX8mmVg5xta5MlXzwpSVi1I9UbsIWJHTqjkVN7pNDn6HhjCGQGQz0zZggekLMAOmHrpiWT+Fkq27ujC+TbgPsr4cRP0S4iLaMyAYjdkp+z+t3iKGZ/jbEfWdNMn+z4lF4AfOIxGr44fD6aeehaDRmrsu5DCYG2URF+GPaPjxLiiirQwuyBAiV30i8JrhCf0RPlogaChl+ql0uqgRml5chr5pcQ+sUABxc/mA97A==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-4 (Postfix) with ESMTPSA id
+ 88CF71800097; Wed, 22 Apr 2026 10:44:01 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v2] whpx: i386, arm: do partition reset on boot CPU reset
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260421205749.55060-1-mohamed@unpredictable.fr>
+Date: Wed, 22 Apr 2026 12:43:49 +0200
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <C85C3BAE-7458-4DA0-B3B2-C117E3C37CE8@unpredictable.fr>
+References: <20260421205749.55060-1-mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 23/40] ui/console-vc: move cursor blinking logic into VT100
- layer
-Date: Wed, 22 Apr 2026 14:40:24 +0400
-Message-ID: <20260422104042.3936506-24-marcandre.lureau@redhat.com>
-In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
-References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Authority-Info-Out: v=2.4 cv=KoZAGGWN c=1 sm=1 tr=0 ts=69e8a676
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=A3C6YRHjnLZ7LpmBN_kA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: JHnvgY1GcBfyXxfaVNhnI9TpW9_MBqsj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDEwMiBTYWx0ZWRfXwdnAShNmmHzN
+ Qj4dZ3bdjFe4uSCWH4jPKppEIV3UEVQasKC0kxg/w9oWy1Q4OwD0WsomaVU1TKLEQ0RgRG5PfrY
+ mL/v2LtwGE67d8Xdu/FkzCLn3jX21hW8ATZr7xljCs8j/txue+IMTysB4ANWkmQy9+2Kahk5JJT
+ S9fcJdSO9W3kDHXLZ6J6g34q8Ze2pHHnb/E9w2rz74gFeO4q2FtFjIwbVvspZkQl1Q62QZygdlT
+ d4mJnJZFGxA/c90gtMvaNBLXV0dDN+fGEpv+ANh4Up8el5Db9r/eiLoAvIY19v+G2+dWmtyBKMJ
+ +/qXtatGXG/7bcVwW5xuORmC48ONHOu6ZeMii5Jo09HWr5/8SvzMpSNsOdu6xM=
+X-Proofpoint-ORIG-GUID: JHnvgY1GcBfyXxfaVNhnI9TpW9_MBqsj
+Received-SPF: pass client-ip=57.103.79.11;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,180 +87,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Maintain a list of QemuVT100 instances so the cursor timer can directly
-iterate over them and call vt100_refresh(), instead of going through
-qemu_invalidate_text_consoles() which iterated over all consoles
-(including graphic ones) and called back into the generic display layer.
 
-This removes the qemu_invalidate_text_consoles() function from
-console.c, further decoupling VT100 text rendering from the console
-core.
+> On 21. Apr 2026, at 22:57, Mohamed Mediouni <mohamed@unpredictable.fr> =
+wrote:
+>=20
+> WHvResetPartition resets partition state, and is not supported on =
+Windows 10.
+>=20
+> On Arm, it's supposed to be used for reboots. The prior location of =
+the
+> WHvResetPartition call wasn't right, as other vCPUs might still have
+> been running, causing the call to fail.
+>=20
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+cc qemu-stable@
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- include/ui/console.h  |  1 -
- ui/console-priv.h     |  2 +-
- ui/console-vc-stubs.c |  2 +-
- ui/console-vc.c       | 28 +++++++++++++++++++++++-----
- ui/console.c          | 19 +------------------
- 5 files changed, 26 insertions(+), 26 deletions(-)
+I believe this one is a good candidate for qemu-stable too
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 788ff103ada..e2e5ff76ec1 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -416,7 +416,6 @@ void qemu_console_set_window_id(QemuConsole *con, int window_id);
- void qemu_console_resize(QemuConsole *con, int width, int height);
- DisplaySurface *qemu_console_surface(QemuConsole *con);
- void coroutine_fn qemu_console_co_wait_update(QemuConsole *con);
--int qemu_invalidate_text_consoles(void);
- 
- /* console-gl.c */
- #ifdef CONFIG_OPENGL
-diff --git a/ui/console-priv.h b/ui/console-priv.h
-index 2c2cfd99570..8bcdb79d914 100644
---- a/ui/console-priv.h
-+++ b/ui/console-priv.h
-@@ -36,7 +36,7 @@ struct QemuConsole {
- };
- 
- void qemu_text_console_update_size(QemuTextConsole *c);
--void qemu_text_console_update_cursor(void);
-+void vt100_update_cursor(void);
- void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym);
- 
- #endif
-diff --git a/ui/console-vc-stubs.c b/ui/console-vc-stubs.c
-index 8a7f19c1f44..d911a82f263 100644
---- a/ui/console-vc-stubs.c
-+++ b/ui/console-vc-stubs.c
-@@ -14,7 +14,7 @@ void qemu_text_console_update_size(QemuTextConsole *c)
- {
- }
- 
--void qemu_text_console_update_cursor(void)
-+void vt100_update_cursor(void)
- {
- }
- 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index fca04fe57df..931693a7b0c 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -8,6 +8,7 @@
- #include "qapi/error.h"
- #include "qemu/fifo8.h"
- #include "qemu/option.h"
-+#include "qemu/queue.h"
- #include "ui/console.h"
- 
- #include "trace.h"
-@@ -68,8 +69,13 @@ struct QemuVT100 {
-     int update_y0;
-     int update_x1;
-     int update_y1;
-+
-+    QTAILQ_ENTRY(QemuVT100) list;
- };
- 
-+static QTAILQ_HEAD(QemuVT100Head, QemuVT100) vt100s =
-+    QTAILQ_HEAD_INITIALIZER(vt100s);
-+
- typedef struct QemuTextConsole {
-     QemuConsole parent;
- 
-@@ -1042,20 +1048,28 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
-     return len;
- }
- 
--void qemu_text_console_update_cursor(void)
-+void vt100_update_cursor(void)
- {
-+    QemuVT100 *vt;
-+
-     cursor_visible_phase = !cursor_visible_phase;
- 
--    if (qemu_invalidate_text_consoles()) {
--        timer_mod(cursor_timer,
--                  qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
-+    if (QTAILQ_EMPTY(&vt100s)) {
-+        return;
-+    }
-+
-+    QTAILQ_FOREACH(vt, &vt100s, list) {
-+        vt100_refresh(vt);
-     }
-+
-+    timer_mod(cursor_timer,
-+        qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
- }
- 
- static void
- cursor_timer_cb(void *opaque)
- {
--    qemu_text_console_update_cursor();
-+    vt100_update_cursor();
- }
- 
- static void text_console_invalidate(void *opaque)
-@@ -1071,6 +1085,9 @@ static void text_console_invalidate(void *opaque)
- static void
- qemu_text_console_finalize(Object *obj)
- {
-+    QemuTextConsole *s = QEMU_TEXT_CONSOLE(obj);
-+
-+    QTAILQ_REMOVE(&vt100s, &s->vt, list);
- }
- 
- static void
-@@ -1095,6 +1112,7 @@ qemu_text_console_init(Object *obj)
- {
-     QemuTextConsole *c = QEMU_TEXT_CONSOLE(obj);
- 
-+    QTAILQ_INSERT_HEAD(&vt100s, &c->vt, list);
-     fifo8_create(&c->out_fifo, 16);
-     c->vt.total_height = DEFAULT_BACKSCROLL;
-     QEMU_CONSOLE(c)->hw_ops = &text_console_ops;
-diff --git a/ui/console.c b/ui/console.c
-index beaef4ad8b8..a7bd22515b9 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -752,7 +752,7 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
-     } else if (QEMU_IS_TEXT_CONSOLE(dcl->con)) {
-         qemu_text_console_update_size(QEMU_TEXT_CONSOLE(dcl->con));
-     }
--    qemu_text_console_update_cursor();
-+    vt100_update_cursor();
- }
- 
- void update_displaychangelistener(DisplayChangeListener *dcl,
-@@ -1457,23 +1457,6 @@ int qemu_console_get_height(QemuConsole *con, int fallback)
-     }
- }
- 
--int qemu_invalidate_text_consoles(void)
--{
--    QemuConsole *s;
--    int count = 0;
--
--    QTAILQ_FOREACH(s, &consoles, next) {
--        if (qemu_console_is_graphic(s) ||
--            !qemu_console_is_visible(s)) {
--            continue;
--        }
--        count++;
--        graphic_hw_invalidate(s);
--    }
--
--    return count;
--}
--
- void qemu_console_resize(QemuConsole *s, int width, int height)
- {
-     DisplaySurface *surface = qemu_console_surface(s);
--- 
-2.53.0
+> ---
+> accel/accel-system.c       |  9 +++++++++
+> accel/whpx/whpx-common.c   | 13 +++++++++++++
+> include/accel/accel-ops.h  |  1 +
+> include/qemu/accel.h       |  3 +++
+> system/runstate.c          |  5 +++++
+> target/arm/whpx/whpx-all.c |  2 --
+> 6 files changed, 31 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/accel/accel-system.c b/accel/accel-system.c
+> index 150af05bf5..5352ccd937 100644
+> --- a/accel/accel-system.c
+> +++ b/accel/accel-system.c
+> @@ -75,6 +75,15 @@ void accel_pre_resume(MachineState *ms, bool =
+step_pending)
+>     }
+> }
+>=20
+> +void accel_reset(MachineState *ms)
+> +{
+> +    AccelState *accel =3D ms->accelerator;
+> +    AccelClass *acc =3D ACCEL_GET_CLASS(accel);
+> +    if (acc->reset_vm) {
+> +        acc->reset_vm(accel);
+> +    }
+> +}
+> +
+> /* initialize the arch-independent accel operation interfaces */
+> void accel_init_ops_interfaces(AccelClass *ac)
+> {
+> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+> index 6fe44d5910..1f7b7d764d 100644
+> --- a/accel/whpx/whpx-common.c
+> +++ b/accel/whpx/whpx-common.c
+> @@ -205,6 +205,18 @@ static void =
+do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
+>     cpu->vcpu_dirty =3D true;
+> }
+>=20
+> +/*
+> + * Partition support
+> + */
+> +
+> +static void whpx_partition_reset(AccelState* as)
+> +{
+> +    struct whpx_state *whpx =3D &whpx_global;
+> +    if (whp_dispatch.WHvResetPartition) {
+> +        whp_dispatch.WHvResetPartition(whpx->partition);
+> +    }
+> +}
+> +
+> /*
+>  * CPU support.
+>  */
+> @@ -622,6 +634,7 @@ static void whpx_accel_class_init(ObjectClass *oc, =
+const void *data)
+>     ac->name =3D "WHPX";
+>     ac->init_machine =3D whpx_accel_init;
+>     ac->pre_resume_vm =3D whpx_pre_resume_vm;
+> +    ac->reset_vm =3D whpx_partition_reset;
+>     ac->allowed =3D &whpx_allowed;
+>=20
+>     object_class_property_add(oc, "kernel-irqchip", "on|off|split",
+> diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
+> index f46492e3fe..a1c9f3ae7b 100644
+> --- a/include/accel/accel-ops.h
+> +++ b/include/accel/accel-ops.h
+> @@ -33,6 +33,7 @@ struct AccelClass {
+>     /* system related hooks */
+>     void (*setup_post)(AccelState *as);
+>     void (*pre_resume_vm)(AccelState *as, bool step_pending);
+> +    void (*reset_vm)(AccelState *as);
+>     bool (*has_memory)(AccelState *accel, AddressSpace *as,
+>                        hwaddr start_addr, hwaddr size);
+>=20
+> diff --git a/include/qemu/accel.h b/include/qemu/accel.h
+> index d3638c7bfd..0e12aea7db 100644
+> --- a/include/qemu/accel.h
+> +++ b/include/qemu/accel.h
+> @@ -54,6 +54,9 @@ void accel_setup_post(MachineState *ms);
+>=20
+> void accel_pre_resume(MachineState *ms, bool step_pending);
+>=20
+> +/* Reset accelerator state. */
+> +void accel_reset(MachineState *ms);
+> +
+> /**
+>  * accel_cpu_instance_init:
+>  * @cpu: The CPU that needs to do accel-specific object =
+initializations.
+> diff --git a/system/runstate.c b/system/runstate.c
+> index 2d4e95a216..734e3c037c 100644
+> --- a/system/runstate.c
+> +++ b/system/runstate.c
+> @@ -564,6 +564,11 @@ void qemu_system_reset(ShutdownCause reason)
+>         qapi_event_send_reset(shutdown_caused_by_guest(reason), =
+reason);
+>     }
+>=20
+> +    if (current_machine) {
+> +        /* Tell the accelerator that the VM is being reset. */
+> +        accel_reset(current_machine);
+> +    }
+> +
+>     /*
+>      * Some boards use the machine reset callback to point CPUs to the =
+firmware
+>      * entry point.  Assume that this is not the case for boards that =
+support
+> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+> index 4019a513aa..f345fea4fe 100644
+> --- a/target/arm/whpx/whpx-all.c
+> +++ b/target/arm/whpx/whpx-all.c
+> @@ -472,8 +472,6 @@ int whpx_vcpu_run(CPUState *cpu)
+>             if (arm_cpu->power_state !=3D PSCI_OFF) {
+>                 whpx_psci_cpu_off(arm_cpu);
+>             }
+> -            /* Partition-wide reset, to reset state for reboots to =
+succeed. */
+> -            whp_dispatch.WHvResetPartition(whpx->partition);
+>             bql_unlock();
+>             break;
+>         case WHvRunVpExitReasonNone:
+> --=20
+> 2.50.1 (Apple Git-155)
+>=20
 
 
