@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66735FA1FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6736CFA1FEC
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdlO-0003Ia-LN; Wed, 22 Apr 2026 16:01:34 -0400
+	id 1wFdjY-0005ZY-RG; Wed, 22 Apr 2026 15:59:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlH-0002y7-TJ
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:30 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdih-0005FC-K9
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:58:50 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlE-0002Im-8v
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:27 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4893940bb5eso23573455e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:01:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdig-0000Jm-1r
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:58:47 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43fea39e066so4755682f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888082; x=1777492882; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776887924; x=1777492724; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=i16+K88dP2srwGegwWADZWAYdsg4ufcKlfz38gndrG8=;
- b=tMR99FMwgHH9589XlNaNxuocf9KN+itj7rgJUsBOqqkvtz5KFbQr7tlNhP0Er5SeLo
- hhUsSWUnGib/QXGZmA0S/ZNmWouYqFXVbq7vVfuJ+CexSk1pGIBuCyGjmeWS4FURIvQI
- kqhLsvhhXtdvURyOGaESQWgfY9s2sgRIQo4vz8hha1OOA/yh1h1h/UJE1S1Z0xIfEb2r
- ZDp8oI9ecsKHKU9znnHxtA41vSkkKvVZ7G0F5fP+kqDMptPySaAzwY0cCBgVp49o4FOv
- TWYZrpnusIJfD5d49RRI7V8jo33NYYLLtXh1uDX+BTQ/1JGxWNYIMUPRzzKBbhj3GMmh
- n1Lg==
+ :reply-to; bh=KPL9mAoAtYsT0he0lYtVqoN6j9yoWpEy+6N/BBY9Ams=;
+ b=GkFEizMmeAk/83EQO9PA6+MH3fcM0+Chox0i1ISZTLWgRrWS1O/OXjuZWOt7DPEJi8
+ bs63wJ/1h2gXhNNmxwQJdJ05Vykv/rWEdYS6QNiI0MHHA24mxY+brwcSWllwwwZaYgh1
+ njsT1TRtz8YwUl1UaMK5EZHJq1N0y7zy9xVuf1V8K/NLSOSjjykvJYO2IWQhJILrBOrN
+ komWhWeAuP8A6HFTpg0wjrexcIC5bCQsmhbiaKwP1PawZmOpNFvyW2I7Y9SP0kMOgoHs
+ givHO0QOT1TtjzT93n+fBEukrPxq3VLVq0Gy4UfJRcIcScmBw02qQ1tgBUkpdLbe1WwC
+ 53OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888082; x=1777492882;
+ d=1e100.net; s=20251104; t=1776887924; x=1777492724;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=i16+K88dP2srwGegwWADZWAYdsg4ufcKlfz38gndrG8=;
- b=GiDaq6G9I2q5hRSgVP07b9ApuFcl75Gg1ETUdd4ZfBqgCGyqaryZ1UTPfgPFDRYvIw
- 8OThp0mPq6vdejODsj4/pOXAW8N+IrvrQhV7pFsLla9veZdES3bblpbrYBj4C/Ryj+U1
- DQsBKfjshsatiFdLEOMh1QdGVS8eXv5/V1EG2gu9QcnYi7OZb8CtfoWxamE19fyW1eDb
- OqgvzuNgvFD1FGgcwI6R9uiz4bowNYjgHmooKzqz4jp8eiiClht3D7gxvTlI+grPf5Rp
- 9fWU8um49wq3zILqZOwFlkbLiNNWcqCsbfhLLtFbNDA2OlGnZzUlaxZElJ+RqI5AS+R0
- YTDg==
-X-Gm-Message-State: AOJu0YwZCK3pQOhDx2maM3sAUZNzw4Md6XVhDK8yRb7PLu3LNyBhr3xY
- NgXcGRc+S3gIA6msSfNHwhy5/CvalhtR6ATmyd9PfakvvdPE/ezLg5lgGF437cnyiCLI5AzwGWX
- ArxxB7FI=
-X-Gm-Gg: AeBDiet36nMuk5+ez4QGMBVleHopbK04rSiEQxaAK/3RA/HWUVLDGQFLgrDPLtoEZBl
- Len9kcKT0fJo6ducYqbKWteR9veG/JHAbpxii1Z/k2WOzDcnhQ089wyNub5x66Ei4PP/krfSJ6W
- jX84hBJzUAAszPffZUCEJm2Y2g4Wk+ffawPwTaBPzHa5SGGT1n3QwFV8oAvDim6NFhAcgX+KlDh
- nTE/7gPSXIcBYL0MMowt8csaSqbsx4VCmbCkH3UeKHeCw9WVKWozss9sSdARwFZO+2SfdZEDLBb
- VjI+5eqnCf3e8EmZyJBcsHep4zpEawBYVM9ZEtP8HtXk7sdQU5oCgX85kB8g5JgTLdiuaEliOeI
- KEMK8aJvKTR/oaF4Kvg3KynJezJ80IPCYcgV4jmv5XdVcEZTcDyvvejy6KycmvVBwMS16cTCYTt
- bn9cF5p5BpfFpZHcQg48hs1uRNItTEe141l4m04eJMYuGjpxsLnsAN6x7IRzdqYzzd/Xy4rJCKO
- 0ExFhW3d8M=
-X-Received: by 2002:a05:600c:1587:b0:489:1c02:773a with SMTP id
- 5b1f17b1804b1-4891c0277bfmr118768185e9.31.1776888082186; 
- Wed, 22 Apr 2026 13:01:22 -0700 (PDT)
+ bh=KPL9mAoAtYsT0he0lYtVqoN6j9yoWpEy+6N/BBY9Ams=;
+ b=QDD61QEXcqiO/JQwW68E4icFVPzPEaiXrx04gI4Gq+RNUxbB2rl8SFrqsB7mW1dMql
+ 54R+wdgc5MrAOm+KHCROxgIWeQqZRje+TfP5WyRYGqh3WQTXM1KNG/9oG0QGPf3ZFPfP
+ sL3HeSkehXkSq47WTJpkCZ22HdvNyktkybO9o0LITQvzYC6UxFQJ0Q8ShQ3nx4dy+vZd
+ x7tgS3WgBD4hJlJZy8PPQVZFxW3hFGLJWXhydrwKUz0QIwt6VwPc8fZEdTh1B1+ZrXVz
+ gotb6E4TZeWukrKiR3kB+OZN8WRjRCxeD1lFmGKfgKrFzp98gVxMXLyqBPXJfsc8oRP/
+ lZIg==
+X-Gm-Message-State: AOJu0YwEU21Vx1TMFSFUsZTGzcTDyZsfhTZDuL+cZbPOpkMmxrfQV1Ub
+ hl42wfavRwqDdbqAswlkXAOs9ut7Cy3tRPCXwi3bffIhPn1fIM7WWne25/SvgbVA88u+Xcr/L8i
+ I/LWnWtU=
+X-Gm-Gg: AeBDievMSMsoya7OG2p7XcJcoDdD0hTmtZe5RAC2dXDK4X5t48CsAxseE+TX4wrrE5L
+ 6A6BxY1rp1/u0ugSzkodm6YAkpHxZTV903O+yuDP2CuYG5EOpWQrdYlqjEFC0fHRgTNGuG/tlFL
+ TukWeZ0LqPHCgi37bTu3p2roCNQ+vC/3BZ3Cj2ioZXs7zzqYDBvydtNEJ/fxgkL1xtVaE7+p0LI
+ clYbEbHf2UT5Xa6yjTSoVS6WCtND866VO/Pi1JNJI9Jw9cJUQ9IBBKirgkRK7+UG1h4+kVGuLQo
+ t4PJDG377XNRJCrdpEsq/01g31sYh+9nnhz/GPiz8253+hErSmrEL90r42eYzvGVPgM9H21D8ir
+ mVZj4PCmi4bNspXIFlr/mfzHcpZQuyWKZLeaTETqKerFC4xFfoXhH+wFRfddw+6Mcl9sKAssvjL
+ yAtCTxJEhjHpSrRaZjRhm0W+AAY2xbpBZPGRC0RscfyFE6xOPa5TvVpareEaD7hfiIJjzxjhKuh
+ 32R3tdh0/0=
+X-Received: by 2002:a05:6000:22ca:b0:43d:50c:6f33 with SMTP id
+ ffacd0b85a97d-43fe3e0bde7mr37515966f8f.26.1776887924168; 
+ Wed, 22 Apr 2026 12:58:44 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb7ac6aasm147966785e9.25.2026.04.22.13.01.20
+ ffacd0b85a97d-43fe4e4d525sm45605486f8f.31.2026.04.22.12.58.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:01:21 -0700 (PDT)
+ Wed, 22 Apr 2026 12:58:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/48] qom: Restrict compat properties API to system emulation
-Date: Wed, 22 Apr 2026 21:57:28 +0200
-Message-ID: <20260422195746.88865-31-philmd@linaro.org>
+Subject: [PULL 08/48] hw/m68k: Include full path to target 'cpu.h' header
+Date: Wed, 22 Apr 2026 21:57:06 +0200
+Message-ID: <20260422195746.88865-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,321 +99,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move compat properties API definitions to their own file
-unit, compile it only when system emulation is configured.
-Add a pair of stubs for user emulation.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-Id: <20260325151728.45378-6-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20260313062055.2188-26-philmd@linaro.org>
 ---
- MAINTAINERS                   |   1 +
- qom/compat-properties.c       | 116 ++++++++++++++++++++++++++++++++++
- qom/object.c                  | 100 -----------------------------
- stubs/qom-compat-properties.c |  20 ++++++
- qom/meson.build               |   3 +
- stubs/meson.build             |   1 +
- 6 files changed, 141 insertions(+), 100 deletions(-)
- create mode 100644 qom/compat-properties.c
- create mode 100644 stubs/qom-compat-properties.c
+ hw/intc/m68k_irqc.c | 2 +-
+ hw/m68k/an5206.c    | 2 +-
+ hw/m68k/mcf5206.c   | 2 +-
+ hw/m68k/mcf5208.c   | 2 +-
+ hw/m68k/mcf_intc.c  | 2 +-
+ hw/m68k/q800-glue.c | 2 +-
+ hw/m68k/q800.c      | 2 +-
+ hw/m68k/virt.c      | 2 +-
+ 8 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ad215eced84..54e15c04e59 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3551,6 +3551,7 @@ F: qapi/qom.json
- F: scripts/coccinelle/qom-parent-type.cocci
- F: scripts/qom-cast-macro-clean-cocci-gen.py
- F: qom/
-+F: stubs/qom-compat-properties.c
- F: tests/unit/check-qom-interface.c
- F: tests/unit/check-qom-proplist.c
- F: tests/qtest/qom-test.c
-diff --git a/qom/compat-properties.c b/qom/compat-properties.c
-new file mode 100644
-index 00000000000..f8d9b0036ae
---- /dev/null
-+++ b/qom/compat-properties.c
-@@ -0,0 +1,116 @@
-+/*
-+ * QEMU Object Model
-+ *
-+ * Copyright IBM, Corp. 2011
-+ *
-+ * Authors:
-+ *  Anthony Liguori   <aliguori@us.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qom/compat-properties.h"
-+#include "qom/qom-qobject.h"
-+#include "hw/core/qdev.h"
-+
-+bool object_apply_global_props(Object *obj, const GPtrArray *props,
-+                               Error **errp)
-+{
-+    int i;
-+
-+    if (!props) {
-+        return true;
-+    }
-+
-+    for (i = 0; i < props->len; i++) {
-+        GlobalProperty *p = g_ptr_array_index(props, i);
-+        Error *err = NULL;
-+
-+        if (object_dynamic_cast(obj, p->driver) == NULL) {
-+            continue;
-+        }
-+        if (p->optional && !object_property_find(obj, p->property)) {
-+            continue;
-+        }
-+        p->used = true;
-+        if (!object_property_parse(obj, p->property, p->value, &err)) {
-+            error_prepend(&err, "can't apply global %s.%s=%s: ",
-+                          p->driver, p->property, p->value);
-+            /*
-+             * If errp != NULL, propagate error and return.
-+             * If errp == NULL, report a warning, but keep going
-+             * with the remaining globals.
-+             */
-+            if (errp) {
-+                error_propagate(errp, err);
-+                return false;
-+            } else {
-+                warn_report_err(err);
-+            }
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+/*
-+ * Global property defaults
-+ * Slot 0: accelerator's global property defaults
-+ * Slot 1: machine's global property defaults
-+ * Slot 2: global properties from legacy command line option
-+ * Each is a GPtrArray of GlobalProperty.
-+ * Applied in order, later entries override earlier ones.
-+ */
-+static GPtrArray *object_compat_props[3];
-+
-+/*
-+ * Retrieve @GPtrArray for global property defined with options
-+ * other than "-global".  These are generally used for syntactic
-+ * sugar and legacy command line options.
-+ */
-+void object_register_sugar_prop(const char *driver, const char *prop,
-+                                const char *value, bool optional)
-+{
-+    GlobalProperty *g;
-+    if (!object_compat_props[2]) {
-+        object_compat_props[2] = g_ptr_array_new();
-+    }
-+    g = g_new0(GlobalProperty, 1);
-+    g->driver = g_strdup(driver);
-+    g->property = g_strdup(prop);
-+    g->value = g_strdup(value);
-+    g->optional = optional;
-+    g_ptr_array_add(object_compat_props[2], g);
-+}
-+
-+/*
-+ * Set machine's global property defaults to @compat_props.
-+ * May be called at most once.
-+ */
-+void object_set_machine_compat_props(GPtrArray *compat_props)
-+{
-+    assert(!object_compat_props[1]);
-+    object_compat_props[1] = compat_props;
-+}
-+
-+/*
-+ * Set accelerator's global property defaults to @compat_props.
-+ * May be called at most once.
-+ */
-+void object_set_accelerator_compat_props(GPtrArray *compat_props)
-+{
-+    assert(!object_compat_props[0]);
-+    object_compat_props[0] = compat_props;
-+}
-+
-+void object_apply_compat_props(Object *obj)
-+{
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(object_compat_props); i++) {
-+        object_apply_global_props(obj, object_compat_props[i],
-+                                  i == 2 ? &error_fatal : &error_abort);
-+    }
-+}
-diff --git a/qom/object.c b/qom/object.c
-index 838b1d2b225..f00d659ef0f 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -440,106 +440,6 @@ static void object_post_init_with_type(Object *obj, TypeImpl *ti)
-     }
- }
+diff --git a/hw/intc/m68k_irqc.c b/hw/intc/m68k_irqc.c
+index c652bf143f0..68ddb5351be 100644
+--- a/hw/intc/m68k_irqc.c
++++ b/hw/intc/m68k_irqc.c
+@@ -8,7 +8,7 @@
+  */
  
--bool object_apply_global_props(Object *obj, const GPtrArray *props,
--                               Error **errp)
--{
--    int i;
--
--    if (!props) {
--        return true;
--    }
--
--    for (i = 0; i < props->len; i++) {
--        GlobalProperty *p = g_ptr_array_index(props, i);
--        Error *err = NULL;
--
--        if (object_dynamic_cast(obj, p->driver) == NULL) {
--            continue;
--        }
--        if (p->optional && !object_property_find(obj, p->property)) {
--            continue;
--        }
--        p->used = true;
--        if (!object_property_parse(obj, p->property, p->value, &err)) {
--            error_prepend(&err, "can't apply global %s.%s=%s: ",
--                          p->driver, p->property, p->value);
--            /*
--             * If errp != NULL, propagate error and return.
--             * If errp == NULL, report a warning, but keep going
--             * with the remaining globals.
--             */
--            if (errp) {
--                error_propagate(errp, err);
--                return false;
--            } else {
--                warn_report_err(err);
--            }
--        }
--    }
--
--    return true;
--}
--
--/*
-- * Global property defaults
-- * Slot 0: accelerator's global property defaults
-- * Slot 1: machine's global property defaults
-- * Slot 2: global properties from legacy command line option
-- * Each is a GPtrArray of GlobalProperty.
-- * Applied in order, later entries override earlier ones.
-- */
--static GPtrArray *object_compat_props[3];
--
--/*
-- * Retrieve @GPtrArray for global property defined with options
-- * other than "-global".  These are generally used for syntactic
-- * sugar and legacy command line options.
-- */
--void object_register_sugar_prop(const char *driver, const char *prop,
--                                const char *value, bool optional)
--{
--    GlobalProperty *g;
--    if (!object_compat_props[2]) {
--        object_compat_props[2] = g_ptr_array_new();
--    }
--    g = g_new0(GlobalProperty, 1);
--    g->driver = g_strdup(driver);
--    g->property = g_strdup(prop);
--    g->value = g_strdup(value);
--    g->optional = optional;
--    g_ptr_array_add(object_compat_props[2], g);
--}
--
--/*
-- * Set machine's global property defaults to @compat_props.
-- * May be called at most once.
-- */
--void object_set_machine_compat_props(GPtrArray *compat_props)
--{
--    assert(!object_compat_props[1]);
--    object_compat_props[1] = compat_props;
--}
--
--/*
-- * Set accelerator's global property defaults to @compat_props.
-- * May be called at most once.
-- */
--void object_set_accelerator_compat_props(GPtrArray *compat_props)
--{
--    assert(!object_compat_props[0]);
--    object_compat_props[0] = compat_props;
--}
--
--void object_apply_compat_props(Object *obj)
--{
--    int i;
--
--    for (i = 0; i < ARRAY_SIZE(object_compat_props); i++) {
--        object_apply_global_props(obj, object_compat_props[i],
--                                  i == 2 ? &error_fatal : &error_abort);
--    }
--}
--
- static void object_class_property_init_all(Object *obj)
- {
-     ObjectPropertyIterator iter;
-diff --git a/stubs/qom-compat-properties.c b/stubs/qom-compat-properties.c
-new file mode 100644
-index 00000000000..f9282aeed27
---- /dev/null
-+++ b/stubs/qom-compat-properties.c
-@@ -0,0 +1,20 @@
-+/*
-+ * QEMU Object Model (compat properties stubs for user emulation)
-+ *
-+ * Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qom/compat-properties.h"
-+
-+void object_apply_compat_props(Object *obj)
-+{
-+}
-+
-+bool object_apply_global_props(Object *obj, const GPtrArray *props,
-+                               Error **errp)
-+{
-+    return true;
-+}
-diff --git a/qom/meson.build b/qom/meson.build
-index 81922434309..bd6f4aadd78 100644
---- a/qom/meson.build
-+++ b/qom/meson.build
-@@ -5,6 +5,9 @@ qom_ss.add(files(
-   'object_interfaces.c',
-   'qom-qobject.c',
- ))
-+if have_system
-+  qom_ss.add(files('compat-properties.c'))
-+endif
+ #include "qemu/osdep.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/nmi.h"
+diff --git a/hw/m68k/an5206.c b/hw/m68k/an5206.c
+index f92a5d6a339..1acd2fbdfb3 100644
+--- a/hw/m68k/an5206.c
++++ b/hw/m68k/an5206.c
+@@ -8,7 +8,7 @@
  
- qmp_ss.add(files('qom-qmp-cmds.c'))
- system_ss.add(files('qom-hmp-cmds.c'))
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 7189ff63ed5..f33b1d2a089 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -54,6 +54,7 @@ if have_user
-   # Symbols that are used by hw/core.
-   stub_ss.add(files('cpu-synchronize-state.c'))
-   stub_ss.add(files('cpu-destroy-address-spaces.c'))
-+  stub_ss.add(files('qom-compat-properties.c'))
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "hw/m68k/mcf.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/loader.h"
+diff --git a/hw/m68k/mcf5206.c b/hw/m68k/mcf5206.c
+index c5befa02eb5..9f373b99b12 100644
+--- a/hw/m68k/mcf5206.c
++++ b/hw/m68k/mcf5206.c
+@@ -9,7 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/irq.h"
+diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
+index 0e07aa45e9d..a8068c91f24 100644
+--- a/hw/m68k/mcf5208.c
++++ b/hw/m68k/mcf5208.c
+@@ -20,7 +20,7 @@
+ #include "qemu/log.h"
+ #include "qapi/error.h"
+ #include "qemu/datadir.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "hw/core/irq.h"
+ #include "hw/m68k/mcf.h"
+ #include "hw/m68k/mcf_fec.h"
+diff --git a/hw/m68k/mcf_intc.c b/hw/m68k/mcf_intc.c
+index 1014fe6fa57..e8d3bd937de 100644
+--- a/hw/m68k/mcf_intc.c
++++ b/hw/m68k/mcf_intc.c
+@@ -10,7 +10,7 @@
+ #include "qapi/error.h"
+ #include "qemu/module.h"
+ #include "qemu/log.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/m68k/mcf.h"
+diff --git a/hw/m68k/q800-glue.c b/hw/m68k/q800-glue.c
+index 24fccab9666..ac9062c6488 100644
+--- a/hw/m68k/q800-glue.c
++++ b/hw/m68k/q800-glue.c
+@@ -21,7 +21,7 @@
+  */
  
-   # Stubs for QAPI events.  Those can always be included in the build, but
-   # they are not built at all for --disable-system builds.
+ #include "qemu/osdep.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "hw/m68k/q800-glue.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/irq.h"
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index c0d78eb7d71..ab64250c47c 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -26,7 +26,7 @@
+ #include "qemu/guest-random.h"
+ #include "exec/target_page.h"
+ #include "system/system.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/or-irq.h"
+ #include "elf.h"
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index ffe6e234155..cf8ebd65e30 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -12,7 +12,7 @@
+ #include "qemu/guest-random.h"
+ #include "exec/target_page.h"
+ #include "system/system.h"
+-#include "cpu.h"
++#include "target/m68k/cpu.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/qdev-properties.h"
+ #include "elf.h"
 -- 
 2.53.0
 
