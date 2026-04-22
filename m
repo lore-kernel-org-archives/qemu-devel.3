@@ -4,121 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE410F9B5E1
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86ED4F9B5E0
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFTE4-0004FG-Rs; Wed, 22 Apr 2026 04:46:28 -0400
+	id 1wFTHQ-00053o-2z; Wed, 22 Apr 2026 04:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wFTDv-0004EK-0G
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:46:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <prtyagi@redhat.com>)
+ id 1wFTHL-00053M-Pn
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:49:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wFTDs-0004SP-GE
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:46:18 -0400
+ (Exim 4.90_1) (envelope-from <prtyagi@redhat.com>)
+ id 1wFTHJ-0005OV-T9
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:49:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776847574;
+ s=mimecast20190719; t=1776847788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wrQwsl89XzUazpGeyAMI3WHV90bg0/b0U9leX7R/mIg=;
- b=c8fioNDUyJBtGYxNEuPv++llFWuqAjPbpkYZ7ksNc1IGfJ4VkmfwhMRyJvumlYJrcgeoCZ
- 9KyXxOb4y24pAijhhuqzJdnIgeOdLlNRsitRiwQxRP9xyzJFdn4nhZ0+RlFd6PrTUsT39z
- wYR5QQe++BXITiu5WyKnlSMdPfJpy4g=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tNkAcbWXWEw9ZDgYlv0BbsLbeoubW3bqnY7/+McjXGU=;
+ b=D8lSFq8M0WFn91KQEVn9K+LFFQunOoLFmwvslnuR/O3V4gQtucnhwHTiYVsv8CKVrdkai3
+ 7arNSKqYp4coKP2NYt9CDi5D46tJTHWUy6e3K49KzCVWvLtbMO4YdfTNsUbfVQCjAnFDLd
+ yn0gtqTbjKHFaBrLGa/Mjh+h9G+Wc0Y=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-fLrTpveqNzW19a5XTl0jFg-1; Wed, 22 Apr 2026 04:46:13 -0400
-X-MC-Unique: fLrTpveqNzW19a5XTl0jFg-1
-X-Mimecast-MFC-AGG-ID: fLrTpveqNzW19a5XTl0jFg_1776847572
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4411a529bc0so2230741f8f.0
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:46:12 -0700 (PDT)
+ us-mta-390-wL1T8wpUMVGMwqyKZPHSUw-1; Wed, 22 Apr 2026 04:49:47 -0400
+X-MC-Unique: wL1T8wpUMVGMwqyKZPHSUw-1
+X-Mimecast-MFC-AGG-ID: wL1T8wpUMVGMwqyKZPHSUw_1776847786
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-671bcc1e533so4959460a12.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:49:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776847786; cv=none;
+ d=google.com; s=arc-20240605;
+ b=PgAlOZfJHKJElUkBCHz6Orm7DajevAOIvokqloy0UHm2X3NprltZFOAx7B2Ky42s2H
+ 75XidaCZSi4ZAklBa2hbUrFleekzQL1t990mJD+n4cU9D2lHQA5sT3LDC0pVg30R9p1l
+ 1ammwLOeXs6+OL+2rqG4SsAzhzi0+jK61LY59Z4hR6K/uLttY5Wo2AAOBKl8T9UIaFm7
+ 1pKXwaNT74AJvtpSwNkwFJnyeq+cFqxJSLp/IgpTUNODqBaJcp0sHE01qJ5sZfcNbzRN
+ oV0XtAa5MGOkkEY/mwQEGbpt5wFiK/EuN+/jyMGhSu8Eb3Ex2WU2NBYI4cK7ajbkwqCe
+ Gixg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=tNkAcbWXWEw9ZDgYlv0BbsLbeoubW3bqnY7/+McjXGU=;
+ fh=tqeddvYnnfVFRES8/MufanmBVJwlsV6HFTbK+mWQ8lQ=;
+ b=AD6D9Mi5cqTylcyEr0UWk+wYQMQhl2dKVd//Tvh8t+tctQVavxUGNaI99x0/3aaWBV
+ yBeb2g00inQZkvJ5VVaSXIH4k2EsjkiNFvvJhrcTFY1lX+YDJ6MdfrQTLyKTeDLBE3og
+ 8cVWdx2QSzyh5Plo3zUwMk9sUWGxBFZoKyW8C3Qjtl4J5q4Xkl6QIhx4qmYaGzik7fKF
+ 7yWRxTEj+KtZ7qjzNde/RlAKrslCzocczncUBU+X8/mYA71LDlUcQMvkj17uJ10fwQZ7
+ +ftIdQgyuH34Nm1j6t4r11SfjsnkbWlHSI21cTe7tnzwPfnV/Ol/y4KV0QJRNq2/j3S8
+ 9+Jg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776847572; x=1777452372; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=wrQwsl89XzUazpGeyAMI3WHV90bg0/b0U9leX7R/mIg=;
- b=dKVU/nIWBMxLVqG/OrSDoHU5JIpO55uSDcyE2iSApH9c0cPQAuGMCGElpjSRKQwkst
- pOUL+LUwnd/FxNoHKJIFEs3WgAcIggH611gaQVIU5RGz+o3xQ8suV3teOrwDMbd0Rq7M
- fZ9RMmcqpRWGdZruX9s5EE9pNtz1o+l1ZBELqnj7qm0VN+sIzsLckdFDe2+NNEL5ns7q
- ZE194ucil0u1BYV3edhugJ1CxUMHHUPA0j5MApPUTkyxZD9uwW0WHJaQww/gopTYs6YC
- WUJAoRHCvQVhzmS5iMxK/vI7ZV+aJCil5QDBfUe9SRmU6T+iW2X4VE4yn2GwaZCwtcjv
- AZpw==
+ d=redhat.com; s=google; t=1776847786; x=1777452586; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tNkAcbWXWEw9ZDgYlv0BbsLbeoubW3bqnY7/+McjXGU=;
+ b=j1wLTSotaoejHus4GNqPYXhAo/jJMhgDFJshRT4sseaorlD9sj/Uzoqvy6QxB6IvAx
+ 0+aW5DRe5p9Gmk9LX4aTiRnM3fbsXZkj8ZBMB2ag0+vd84HomnJuF3dsAGfO/nwsg6or
+ imB60zO48OroZ0JgKDJ3XCJvcISOVRcEhtjBNWiO5ZNaMAOPfF5LbZjHgOetcnC3F79r
+ DsH9J4OSgJ5+UR/ms9/mV4LmWrrn5BTy8CRcTmwziEgfoCzl/0mw0s4LDdjvRE4aPqx4
+ yFsfpld8SUWFGhzqZ2/iPndrxt7iLro31Y7KqSe8UPzR7w2/+jJ/34QZGQeu+g8Miwzg
+ 4ePA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776847572; x=1777452372;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wrQwsl89XzUazpGeyAMI3WHV90bg0/b0U9leX7R/mIg=;
- b=nc0Cr0w2pYcgSYEP64cmGWXcoTGkC+MaJFx9TbhcxU8n6JIU6HwvXGMp5Hp3atucTj
- tXkTn/IYq5I4+EmeV8Wlp/5M7DHZ1Zw0Rl6GprKgndlCJa9rhCdltQzen5V82h3Ghl3V
- sB/m1Q3zAkMGl1lP1ro2GYAp/08YrZYrTnIen0DHrvRWjWjWFME/QRO1dtkJJv4O0taP
- htdMfYBRt1dyRs9Q5Bsv2jP5jTVipsACRws2Dv6vh8rQHPIKYMNUp9pMzIoQxPLoJ00h
- Wt2rFg61OppeWo3VtHhs/UNeRcMZ+ZbKA4UQDXq+Bd9LmS21ruF/UwfRuj0TLu7Aplje
- F/YA==
-X-Gm-Message-State: AOJu0YyokorENUKzft+v7PDLoKPiDxLOpF7FKvnYL8xknaLz5TYUxZM+
- 7yHn2onsaZCsVFgqXDnEFO0kk5K3CE5mXQjbv41JxO9syJCnKJgmDyWTM6CIdceD6oE1zfiP40O
- APZ7L2Z9uRnuck24HcDgNaY6EercoagQSG5zl/iCoPc3Yde6o7lX+aNs9
-X-Gm-Gg: AeBDieuoMRp4bwHYBzqk9PXVIa/hOezif1Pi+gVOGNd7Wc5LhfahySjWuEQyCNAQpIr
- I0R4vkEKYU2HiWcp2nL6Jr+E9KxxgPHBEdGXwFcMA63YZDxPmhuZ4U7eT8z6ukUnYiszWTpMh+x
- YDmSn2QocalNsufZsyV6DtDRKmqTdM17bZSWwMn/vlIQOAoc7V1A4aqb3P95oSFBefcGrTGYOEb
- Sss7QFjpug5tPHaSQksZPxAoTzODplrOteC41hgYms5KbcH1gG/bHGxHcP9pNPOPFFuyt6ejPvW
- yEoo/83HWogNCTmX2McJRp+zpM8k6d0CcOIv64boPi1oqsQVHi8ZdNKEj1cKxBMubqbVg9GW1ZW
- LrfhM+fLdiLkTTxKd3o7xt7fIpg3WTLpGbew8Ho1xGuXX1dTXur7Fbg==
-X-Received: by 2002:a5d:5f92:0:b0:43b:9c73:2933 with SMTP id
- ffacd0b85a97d-43fe3dc1795mr32896689f8f.15.1776847571324; 
- Wed, 22 Apr 2026 01:46:11 -0700 (PDT)
-X-Received: by 2002:a5d:5f92:0:b0:43b:9c73:2933 with SMTP id
- ffacd0b85a97d-43fe3dc1795mr32896617f8f.15.1776847570637; 
- Wed, 22 Apr 2026 01:46:10 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-25-21.inter.net.il. [80.230.25.21])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4d5b1sm47962589f8f.30.2026.04.22.01.46.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 01:46:10 -0700 (PDT)
-Date: Wed, 22 Apr 2026 04:46:06 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Bin Meng <bmeng.cn@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Aurelien Jarno <aurelien@aurel32.net>, Huacai Chen <chenhuacai@kernel.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?iso-8859-1?Q?Herv=E9?= Poussineau <hpoussin@reactos.org>,
- Alexander Bulekov <alxndr@bu.edu>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Darren Kenny <darren.kenny@oracle.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 02/10] MAINTAINERS: Remove my disfunctional emails
-Message-ID: <20260422044555-mutt-send-email-mst@kernel.org>
-References: <20260422080406.62638-1-philmd@linaro.org>
- <20260422080406.62638-3-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1776847786; x=1777452586;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tNkAcbWXWEw9ZDgYlv0BbsLbeoubW3bqnY7/+McjXGU=;
+ b=hZ7Y2tStRmXHthuwypAuqYfNFr67tBhtet0j82Sb6iUvU8nuyXz2SlvEm5MC8ioOJZ
+ Hbfz3McNxalMWr9nLnEcsnnH/cCsujRib+tW/J5l/dS/ugLIjuDtunIDZAghVAJ/a/+9
+ aCO/wwdYl6xqkY9wQyL6Altz4CVg/B8NCYu4MyRNUHWL8haAwY7ue1F9oSUMX3lKmDZf
+ EQfkn4pdTjLrLEFeUYCI6UZ9b+0hk7zFKVl21qeTmQV5vRqtUm5ANDtmJGntOtX8xvIc
+ 7vDx5fhvmLHdvEcPmR+bGAwNDmmW2X+pk2Ybzrq74pBjyB6gisLwb2J3G9VEgpt51Bnf
+ Zuww==
+X-Gm-Message-State: AOJu0YxU8opgQKt2yaUMu6+uVnklbzW+8uIz3QHs9kgqKOgKba0mVRkz
+ jv7MnCq/JWarn1OVQbjS0VdDwBefUV9CG4hvvXxwdDAp61+v0G0sDC0oe1HydtcLPP/W4WDlsrE
+ fVAG54ungVlTbGiAjbEcy80qoPGg0aewnShjv2TrWNnse5osrxS6MnkkfWMjrDzDWols0mhCVuW
+ 3yUyiRpSy2GpgbHiLZL2YtxefBdiKMpv4=
+X-Gm-Gg: AeBDiesG/YFU7sAsfOB3YvapmPCzHafTzO4dt0MFl+kL7hsjhJUbYz5Sh8Cb8RgnjsP
+ dNAlTtbchSzfC/NuiUGOZmw+urc8MkedIawemW8FTXnrClF4Ol7a8oU74vs8MAMDl9gvTYJ516I
+ ZeHS0j7ExbGPqj+XbofbZfTET8jSsakQHbnkIyWMR449d2OGGa/hfZW2DMPw3gwzStErcKeaMKM
+ fGZ+UwosSUS/vjL5l4=
+X-Received: by 2002:a05:6402:13cf:b0:66b:e8e5:4628 with SMTP id
+ 4fb4d7f45d1cf-672bfdd8b9emr10166081a12.20.1776847785795; 
+ Wed, 22 Apr 2026 01:49:45 -0700 (PDT)
+X-Received: by 2002:a05:6402:13cf:b0:66b:e8e5:4628 with SMTP id
+ 4fb4d7f45d1cf-672bfdd8b9emr10166066a12.20.1776847785293; Wed, 22 Apr 2026
+ 01:49:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260422080406.62638-3-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+References: <20260421052227.8278-1-prtyagi@redhat.com>
+ <aefrPBN7k94Jj2dh@x1.local>
+In-Reply-To: <aefrPBN7k94Jj2dh@x1.local>
+From: Pranav Tyagi <prtyagi@redhat.com>
+Date: Wed, 22 Apr 2026 14:19:33 +0530
+X-Gm-Features: AQROBzDRDrTLFK11eXc1T2T-D5zqW0fUBP5819oE1Eeh6vsBBahCRJEnTQABbjc
+Message-ID: <CALY4kkSJRqTpcBwe2UAJHJQBQGU7Tt1oWnX3nUECUKZPA=g3eA@mail.gmail.com>
+Subject: Re: [PATCH] migration: Fix blocking in POSTCOPY_DEVICE during package
+ load
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000001018910650089d32"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=prtyagi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,468 +134,335 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 22, 2026 at 10:03:57AM +0200, Philippe Mathieu-Daudé wrote:
-> With retrospective, mentioning email in authorship wasn't
-> really useful, more now than these addresses are dead:
->  - f4bug@amsat.org
->  - philmd@redhat.com
-> Simply remove them.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+--0000000000001018910650089d32
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+On Wed, Apr 22, 2026 at 2:55=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
 
-> ---
->  hw/sd/sdmmc-internal.h                      | 2 +-
->  include/crypto/tls-cipher-suites.h          | 2 +-
->  include/hw/i2c/arm_sbcon_i2c.h              | 2 +-
->  include/hw/misc/bcm2835_thermal.h           | 2 +-
->  include/hw/misc/led.h                       | 2 +-
->  include/hw/timer/bcm2835_systmr.h           | 2 +-
->  include/qemu/units.h                        | 2 +-
->  crypto/tls-cipher-suites.c                  | 2 +-
->  hw/i386/fw_cfg.c                            | 2 +-
->  hw/i386/pc_sysfw_ovmf-stubs.c               | 2 +-
->  hw/misc/bcm2835_thermal.c                   | 2 +-
->  hw/misc/led.c                               | 2 +-
->  hw/ppc/fw_cfg.c                             | 2 +-
->  hw/sd/sd.c                                  | 2 +-
->  hw/timer/bcm2835_systmr.c                   | 2 +-
->  hw/usb/bus-stub.c                           | 2 +-
->  stubs/fw_cfg.c                              | 2 +-
->  stubs/hotplug-stubs.c                       | 2 +-
->  stubs/qdev.c                                | 2 +-
->  tests/qtest/fuzz-sb16-test.c                | 2 +-
->  tests/qtest/fuzz-sdcard-test.c              | 2 +-
->  tests/qtest/sdhci-test.c                    | 2 +-
->  tests/functional/aarch64/test_raspi3.py     | 2 +-
->  tests/functional/arm/test_bflt.py           | 2 +-
->  tests/functional/arm/test_raspi2.py         | 2 +-
->  tests/functional/m68k/test_nextcube.py      | 2 +-
->  tests/functional/mips/test_malta.py         | 2 +-
->  tests/functional/mips64el/test_fuloong2e.py | 2 +-
->  tests/functional/mips64el/test_malta.py     | 2 +-
->  tests/functional/mipsel/test_malta.py       | 2 +-
->  tests/functional/ppc/test_40p.py            | 2 +-
->  tests/functional/qemu_test/tesseract.py     | 2 +-
->  32 files changed, 32 insertions(+), 32 deletions(-)
-> 
-> diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
-> index c115f472efe..f9282a9712d 100644
-> --- a/hw/sd/sdmmc-internal.h
-> +++ b/hw/sd/sdmmc-internal.h
-> @@ -1,7 +1,7 @@
->  /*
->   * SD/MMC cards common
->   *
-> - * Copyright (c) 2018  Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (c) 2018  Philippe Mathieu-Daudé
->   *
->   * This work is licensed under the terms of the GNU GPL, version 2 or later.
->   * See the COPYING file in the top-level directory.
-> diff --git a/include/crypto/tls-cipher-suites.h b/include/crypto/tls-cipher-suites.h
-> index 3bd2003f32d..31697a7d6de 100644
-> --- a/include/crypto/tls-cipher-suites.h
-> +++ b/include/crypto/tls-cipher-suites.h
-> @@ -3,7 +3,7 @@
->   *
->   * Copyright (c) 2018-2020 Red Hat, Inc.
->   *
-> - * Author: Philippe Mathieu-Daudé <philmd@redhat.com>
-> + * Author: Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/include/hw/i2c/arm_sbcon_i2c.h b/include/hw/i2c/arm_sbcon_i2c.h
-> index 39b99f57bfb..537de428e1f 100644
-> --- a/include/hw/i2c/arm_sbcon_i2c.h
-> +++ b/include/hw/i2c/arm_sbcon_i2c.h
-> @@ -5,7 +5,7 @@
->   *
->   * Copyright (c) 2006-2007 CodeSourcery.
->   * Copyright (c) 2012 Oskar Andero <oskar.andero@gmail.com>
-> - * Copyright (C) 2020 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2020 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/include/hw/misc/bcm2835_thermal.h b/include/hw/misc/bcm2835_thermal.h
-> index 13ffc61c1a7..04eda5cb83f 100644
-> --- a/include/hw/misc/bcm2835_thermal.h
-> +++ b/include/hw/misc/bcm2835_thermal.h
-> @@ -1,7 +1,7 @@
->  /*
->   * BCM2835 dummy thermal sensor
->   *
-> - * Copyright (C) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2019 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/include/hw/misc/led.h b/include/hw/misc/led.h
-> index 4d077a7c43e..89ccbad4660 100644
-> --- a/include/hw/misc/led.h
-> +++ b/include/hw/misc/led.h
-> @@ -1,7 +1,7 @@
->  /*
->   * QEMU single LED device
->   *
-> - * Copyright (C) 2020 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2020 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/include/hw/timer/bcm2835_systmr.h b/include/hw/timer/bcm2835_systmr.h
-> index 0674a18f12d..770e464937b 100644
-> --- a/include/hw/timer/bcm2835_systmr.h
-> +++ b/include/hw/timer/bcm2835_systmr.h
-> @@ -1,7 +1,7 @@
->  /*
->   * BCM2835 SYS timer emulation
->   *
-> - * Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (c) 2019 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/include/qemu/units.h b/include/qemu/units.h
-> index 692db3fbb26..4764e301e5b 100644
-> --- a/include/qemu/units.h
-> +++ b/include/qemu/units.h
-> @@ -2,7 +2,7 @@
->   * IEC binary prefixes definitions
->   *
->   * Copyright (C) 2015 Nikunj A Dadhania, IBM Corporation
-> - * Copyright (C) 2018 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2018 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/crypto/tls-cipher-suites.c b/crypto/tls-cipher-suites.c
-> index d9b61d0c08a..a6566f13c9b 100644
-> --- a/crypto/tls-cipher-suites.c
-> +++ b/crypto/tls-cipher-suites.c
-> @@ -3,7 +3,7 @@
->   *
->   * Copyright (c) 2018-2020 Red Hat, Inc.
->   *
-> - * Author: Philippe Mathieu-Daudé <philmd@redhat.com>
-> + * Author: Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-> index 5670e8553ea..858e6ca9c53 100644
-> --- a/hw/i386/fw_cfg.c
-> +++ b/hw/i386/fw_cfg.c
-> @@ -4,7 +4,7 @@
->   * Copyright (c) 2019 Red Hat, Inc.
->   *
->   * Author:
-> - *   Philippe Mathieu-Daudé <philmd@redhat.com>
-> + *   Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   *
-> diff --git a/hw/i386/pc_sysfw_ovmf-stubs.c b/hw/i386/pc_sysfw_ovmf-stubs.c
-> index b53906a0521..42e300ddec4 100644
-> --- a/hw/i386/pc_sysfw_ovmf-stubs.c
-> +++ b/hw/i386/pc_sysfw_ovmf-stubs.c
-> @@ -4,7 +4,7 @@
->   * Copyright (c) 2021 Red Hat, Inc.
->   *
->   * Author:
-> - *   Philippe Mathieu-Daudé <philmd@redhat.com>
-> + *   Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   *
-> diff --git a/hw/misc/bcm2835_thermal.c b/hw/misc/bcm2835_thermal.c
-> index 0dc1be15b4a..413c4179fed 100644
-> --- a/hw/misc/bcm2835_thermal.c
-> +++ b/hw/misc/bcm2835_thermal.c
-> @@ -1,7 +1,7 @@
->  /*
->   * BCM2835 dummy thermal sensor
->   *
-> - * Copyright (C) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2019 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/hw/misc/led.c b/hw/misc/led.c
-> index d9256aaaf56..8b758c1b76d 100644
-> --- a/hw/misc/led.c
-> +++ b/hw/misc/led.c
-> @@ -1,7 +1,7 @@
->  /*
->   * QEMU single LED device
->   *
-> - * Copyright (C) 2020 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2020 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/hw/ppc/fw_cfg.c b/hw/ppc/fw_cfg.c
-> index a88b5c4bde2..071cf855c23 100644
-> --- a/hw/ppc/fw_cfg.c
-> +++ b/hw/ppc/fw_cfg.c
-> @@ -4,7 +4,7 @@
->   * Copyright (c) 2019 Red Hat, Inc.
->   *
->   * Author:
-> - *   Philippe Mathieu-Daudé <philmd@redhat.com>
-> + *   Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   *
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 13ea54df380..ebe6e35b15e 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -6,7 +6,7 @@
->   *
->   * Copyright (c) 2006 Andrzej Zaborowski  <balrog@zabor.org>
->   * Copyright (c) 2007 CodeSourcery
-> - * Copyright (c) 2018 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (c) 2018 Philippe Mathieu-Daudé
->   *
->   * Redistribution and use in source and binary forms, with or without
->   * modification, are permitted provided that the following conditions
-> diff --git a/hw/timer/bcm2835_systmr.c b/hw/timer/bcm2835_systmr.c
-> index 00bcfcd05c6..06a919b1f8b 100644
-> --- a/hw/timer/bcm2835_systmr.c
-> +++ b/hw/timer/bcm2835_systmr.c
-> @@ -1,7 +1,7 @@
->  /*
->   * BCM2835 SYS timer emulation
->   *
-> - * Copyright (C) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2019 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   *
-> diff --git a/hw/usb/bus-stub.c b/hw/usb/bus-stub.c
-> index a7c3909e967..7cf1b494117 100644
-> --- a/hw/usb/bus-stub.c
-> +++ b/hw/usb/bus-stub.c
-> @@ -1,7 +1,7 @@
->  /*
->   * QEMU USB device emulation stubs
->   *
-> - * Copyright (C) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (C) 2021 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/stubs/fw_cfg.c b/stubs/fw_cfg.c
-> index bb1e3c8aa95..e7a9f714f35 100644
-> --- a/stubs/fw_cfg.c
-> +++ b/stubs/fw_cfg.c
-> @@ -4,7 +4,7 @@
->   * Copyright (c) 2019 Red Hat, Inc.
->   *
->   * Author:
-> - *   Philippe Mathieu-Daudé <philmd@redhat.com>
-> + *   Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   *
-> diff --git a/stubs/hotplug-stubs.c b/stubs/hotplug-stubs.c
-> index 23a1678dbbc..0f592ee1391 100644
-> --- a/stubs/hotplug-stubs.c
-> +++ b/stubs/hotplug-stubs.c
-> @@ -4,7 +4,7 @@
->   * Copyright (c) Red Hat
->   *
->   * Authors:
-> - *  Philippe Mathieu-Daudé <philmd@redhat.com>,
-> + *  Philippe Mathieu-Daudé,
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   *
-> diff --git a/stubs/qdev.c b/stubs/qdev.c
-> index 7e957b3e524..61596de5f87 100644
-> --- a/stubs/qdev.c
-> +++ b/stubs/qdev.c
-> @@ -4,7 +4,7 @@
->   * Copyright (c) 2021 Red Hat, Inc.
->   *
->   * Author:
-> - *   Philippe Mathieu-Daudé <philmd@redhat.com>
-> + *   Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   *
-> diff --git a/tests/qtest/fuzz-sb16-test.c b/tests/qtest/fuzz-sb16-test.c
-> index fc445b18710..9995ad88685 100644
-> --- a/tests/qtest/fuzz-sb16-test.c
-> +++ b/tests/qtest/fuzz-sb16-test.c
-> @@ -1,7 +1,7 @@
->  /*
->   * QTest fuzzer-generated testcase for sb16 audio device
->   *
-> - * Copyright (c) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (c) 2021 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/tests/qtest/fuzz-sdcard-test.c b/tests/qtest/fuzz-sdcard-test.c
-> index cd134cdf556..6d8be9d1195 100644
-> --- a/tests/qtest/fuzz-sdcard-test.c
-> +++ b/tests/qtest/fuzz-sdcard-test.c
-> @@ -1,7 +1,7 @@
->  /*
->   * QTest fuzzer-generated testcase for sdcard device
->   *
-> - * Copyright (c) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Copyright (c) 2021 Philippe Mathieu-Daudé
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> diff --git a/tests/qtest/sdhci-test.c b/tests/qtest/sdhci-test.c
-> index 7b32711c8f8..cde132228eb 100644
-> --- a/tests/qtest/sdhci-test.c
-> +++ b/tests/qtest/sdhci-test.c
-> @@ -1,7 +1,7 @@
->  /*
->   * QTest testcase for SDHCI controllers
->   *
-> - * Written by Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + * Written by Philippe Mathieu-Daudé
->   *
->   * This work is licensed under the terms of the GNU GPL, version 2 or later.
->   * See the COPYING file in the top-level directory.
-> diff --git a/tests/functional/aarch64/test_raspi3.py b/tests/functional/aarch64/test_raspi3.py
-> index 74f6630ed26..ae9eed3589f 100755
-> --- a/tests/functional/aarch64/test_raspi3.py
-> +++ b/tests/functional/aarch64/test_raspi3.py
-> @@ -3,7 +3,7 @@
->  # Functional test that boots a Linux kernel on a Raspberry Pi machine
->  # and checks the console
->  #
-> -# Copyright (c) 2020 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) 2020 Philippe Mathieu-Daudé
->  #
->  # SPDX-License-Identifier: GPL-2.0-or-later
->  
-> diff --git a/tests/functional/arm/test_bflt.py b/tests/functional/arm/test_bflt.py
-> index f273fc83546..835a3354a03 100755
-> --- a/tests/functional/arm/test_bflt.py
-> +++ b/tests/functional/arm/test_bflt.py
-> @@ -2,7 +2,7 @@
->  #
->  # Test the bFLT loader format
->  #
-> -# Copyright (C) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (C) 2019 Philippe Mathieu-Daudé
->  #
->  # SPDX-License-Identifier: GPL-2.0-or-later
->  
-> diff --git a/tests/functional/arm/test_raspi2.py b/tests/functional/arm/test_raspi2.py
-> index d3c7aaa39b0..fe644f04cf4 100755
-> --- a/tests/functional/arm/test_raspi2.py
-> +++ b/tests/functional/arm/test_raspi2.py
-> @@ -3,7 +3,7 @@
->  # Functional test that boots a Linux kernel on a Raspberry Pi machine
->  # and checks the console
->  #
-> -# Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) 2019 Philippe Mathieu-Daudé
->  #
->  # SPDX-License-Identifier: GPL-2.0-or-later
->  
-> diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
-> index 71c160d0262..d917cf5424f 100755
-> --- a/tests/functional/m68k/test_nextcube.py
-> +++ b/tests/functional/m68k/test_nextcube.py
-> @@ -2,7 +2,7 @@
->  #
->  # Functional test that boots a VM and run OCR on the framebuffer
->  #
-> -# Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) 2019 Philippe Mathieu-Daudé
->  #
->  # This work is licensed under the terms of the GNU GPL, version 2 or
->  # later.  See the COPYING file in the top-level directory.
-> diff --git a/tests/functional/mips/test_malta.py b/tests/functional/mips/test_malta.py
-> index e8f49f130be..7048d91a9fd 100755
-> --- a/tests/functional/mips/test_malta.py
-> +++ b/tests/functional/mips/test_malta.py
-> @@ -2,7 +2,7 @@
->  #
->  # Functional tests for the big-endian 32-bit MIPS Malta board
->  #
-> -# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) Philippe Mathieu-Daudé
->  #
->  # SPDX-License-Identifier: GPL-2.0-or-later
->  
-> diff --git a/tests/functional/mips64el/test_fuloong2e.py b/tests/functional/mips64el/test_fuloong2e.py
-> index 35e500b0221..d449e3c39a7 100755
-> --- a/tests/functional/mips64el/test_fuloong2e.py
-> +++ b/tests/functional/mips64el/test_fuloong2e.py
-> @@ -2,7 +2,7 @@
->  #
->  # Functional tests for the Lemote Fuloong-2E machine.
->  #
-> -# Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) 2019 Philippe Mathieu-Daudé
->  #
->  # This work is licensed under the terms of the GNU GPL, version 2 or later.
->  # See the COPYING file in the top-level directory.
-> diff --git a/tests/functional/mips64el/test_malta.py b/tests/functional/mips64el/test_malta.py
-> index bc750cb7ad6..163bbaf5ca3 100755
-> --- a/tests/functional/mips64el/test_malta.py
-> +++ b/tests/functional/mips64el/test_malta.py
-> @@ -2,7 +2,7 @@
->  #
->  # Functional tests for the little-endian 64-bit MIPS Malta board
->  #
-> -# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) Philippe Mathieu-Daudé
->  #
->  # This work is licensed under the terms of the GNU GPL, version 2 or later.
->  # See the COPYING file in the top-level directory.
-> diff --git a/tests/functional/mipsel/test_malta.py b/tests/functional/mipsel/test_malta.py
-> index 59ab4a60585..25bcb33c945 100755
-> --- a/tests/functional/mipsel/test_malta.py
-> +++ b/tests/functional/mipsel/test_malta.py
-> @@ -2,7 +2,7 @@
->  #
->  # Functional tests for the little-endian 32-bit MIPS Malta board
->  #
-> -# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) Philippe Mathieu-Daudé
->  #
->  # This work is licensed under the terms of the GNU GPL, version 2 or later.
->  # See the COPYING file in the top-level directory.
-> diff --git a/tests/functional/ppc/test_40p.py b/tests/functional/ppc/test_40p.py
-> index ed272147f6e..4c1c9bad6ec 100755
-> --- a/tests/functional/ppc/test_40p.py
-> +++ b/tests/functional/ppc/test_40p.py
-> @@ -2,7 +2,7 @@
->  #
->  # Functional test that boots a PReP/40p machine and checks its serial console.
->  #
-> -# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) Philippe Mathieu-Daudé
->  #
->  # This work is licensed under the terms of the GNU GPL, version 2 or
->  # later. See the COPYING file in the top-level directory.
-> diff --git a/tests/functional/qemu_test/tesseract.py b/tests/functional/qemu_test/tesseract.py
-> index ede6c6501e2..862faec2d2e 100644
-> --- a/tests/functional/qemu_test/tesseract.py
-> +++ b/tests/functional/qemu_test/tesseract.py
-> @@ -1,6 +1,6 @@
->  # ...
->  #
-> -# Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> +# Copyright (c) 2019 Philippe Mathieu-Daudé
->  #
->  # This work is licensed under the terms of the GNU GPL, version 2 or
->  # later. See the COPYING file in the top-level directory.
-> -- 
-> 2.53.0
+> On Tue, Apr 21, 2026 at 10:52:27AM +0530, Pranav Tyagi wrote:
+> > The package_loaded event is not set in case MIG_RP_MSG_PONG does not
+> > arrive on the source from the destination in the return path thread. Th=
+e
+> > migration thread would then be blocked waiting for package_loaded event
+> > indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition th=
+e
+> > source VM can safely resume as the destination has not yet started. The
+> > pong message can get lost in case of a network failure or destination
+> > crash before sending the pong.
+> >
+> > This patch uses the error detected in case of network failure or
+> > destination crash to set the package_loaded event in the out path of th=
+e
+> > return path thread. This will kick the migration thread out from
+> > a condition of indefinitely waiting for the package_loaded event. The
+> > migration thread then fails early and breaks from the migration loop to
+> > resume the VM on the source side.
+> >
+> > Fixes: 7b842fe354c6 ("migration: Introduce POSTCOPY_DEVICE state")
+> > Signed-off-by: Pranav Tyagi <prtyagi@redhat.com>
+>
+> Ah I see.. thanks for figuring this out.
+>
+> > ---
+> >  migration/migration.c | 20 ++++++++++++++++++++
+> >  1 file changed, 20 insertions(+)
+> >
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 5c9aaa6e58..1656c1203c 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -2386,6 +2386,15 @@ out:
+> >      if (err) {
+> >          migrate_error_propagate(ms, err);
+> >          trace_source_return_path_thread_bad_end();
+> > +        if (ms->state =3D=3D MIGRATION_STATUS_POSTCOPY_DEVICE) {
+> > +            /*
+> > +             * Kick the migration thread if it gets stuck in
+> > +             * POSTCOPY_DEVICE state waiting for
+> > +             * postcopy_package_loaded_event. The event will never be
+> > +             * set as MIG_RP_MSG_PONG from the destination is lost.
+> > +             */
+> > +            qemu_event_set(&ms->postcopy_package_loaded_event);
+> > +        }
+>
+> This makes sense.  Said that, we have another similar case right below fo=
+r
+> the postcopy recover path:
+>
+>     if (ms->state =3D=3D MIGRATION_STATUS_POSTCOPY_RECOVER) {
+>         /*
+>          * this will be extremely unlikely: that we got yet another netwo=
+rk
+>          * issue during recovering of the 1st network failure.. during th=
+is
+>          * period the main migration thread can be waiting on rp_sem for
+>          * this thread to sync with the other side.
+>          *
+>          * When this happens, explicitly kick the migration thread out of
+>          * RECOVER stage and back to PAUSED, so the admin can try
+>          * everything again.
+>          */
+>         migration_rp_kick(ms);
+>     }
+>
+> It achieves some similar goal, where the migration thread is waiting for
+> some event from return path thread, and when the channel is broken we wan=
+t
+> to kick it out.
+>
+> I'm thinking if we can reuse that, instead of kicking multiple events.
+>
+> Say, we can do migration_rp_kick() for both POSTCOPY_RECOVER and
+> POSTCOPY_DEVICE states in the rp thread.  Meanwhile at below..
+>
+> >      }
+> >
+> >      if (ms->state =3D=3D MIGRATION_STATUS_POSTCOPY_RECOVER) {
+> > @@ -3232,6 +3241,17 @@ static MigIterateState
+> migration_iteration_run(MigrationState *s)
+> >               * package before actually completing.
+> >               */
+> >              qemu_event_wait(&s->postcopy_package_loaded_event);
+> > +            /*
+> > +             * Check for errors in case the migration thread was stuck
+> in
+> > +             * POSTCOPY_DEVICE state waiting for the
+> > +             * postcopy_package_loaded_event which was never set.
+> > +             * If so, fail now and break out of the iteration.
+> > +             */
+> > +            if (migrate_has_error(s)) {
+> > +                migrate_set_state(&s->state,
+> MIGRATION_STATUS_POSTCOPY_DEVICE,
+> > +                                  MIGRATION_STATUS_FAILING);
+> > +                return MIG_ITERATE_BREAK;
+> > +            }
+>
+> ... instead of waiting on postcopy_package_loaded_event, we can do:
+>
+>     while (!s->postcopy_package_loaded) {
+>         if (migration_rp_wait(s)) {
+>             /* Error happened */
+>             migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE=
+,
+>                               MIGRATION_STATUS_FAILING);
+>             return MIG_ITERATE_BREAK;
+>         }
+>     }
+>     /* Acknowledgement received from dest */
+>     migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
+>                       MIGRATION_STATUS_POSTCOPY_ACTIVE);
+>
+> PS: I think event also works in this case, so likely either one shared se=
+m
+> or event should work; it's just that it was a sem before, and rp_sem has =
+a
+> name that is generic enough to apply directly to the
+> postcopy_package_loaded_event use case.
+>
+> Thanks,
+>
+> >              migrate_set_state(&s->state,
+> MIGRATION_STATUS_POSTCOPY_DEVICE,
+> >                                MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> >          }
+> > --
+> > 2.53.0
+> >
+>
+> --
+> Peter Xu
+>
+>
+Thanks for the feedback Peter. I will update the patch accordingly and
+send it again.
+
+Regards
+Pranav Tyagi
+
+--0000000000001018910650089d32
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Apr 22,=
+ 2026 at 2:55=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">=
+peterx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">On Tue, Apr 21, 2026 at 10:52:27AM +0530, Pranav Tyagi wro=
+te:<br>
+&gt; The package_loaded event is not set in case MIG_RP_MSG_PONG does not<b=
+r>
+&gt; arrive on the source from the destination in the return path thread. T=
+he<br>
+&gt; migration thread would then be blocked waiting for package_loaded even=
+t<br>
+&gt; indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition t=
+he<br>
+&gt; source VM can safely resume as the destination has not yet started. Th=
+e<br>
+&gt; pong message can get lost in case of a network failure or destination<=
+br>
+&gt; crash before sending the pong.<br>
+&gt; <br>
+&gt; This patch uses the error detected in case of network failure or<br>
+&gt; destination crash to set the package_loaded event in the out path of t=
+he<br>
+&gt; return path thread. This will kick the migration thread out from<br>
+&gt; a condition of indefinitely waiting for the package_loaded event. The<=
+br>
+&gt; migration thread then fails early and breaks from the migration loop t=
+o<br>
+&gt; resume the VM on the source side.<br>
+&gt; <br>
+&gt; Fixes: 7b842fe354c6 (&quot;migration: Introduce POSTCOPY_DEVICE state&=
+quot;)<br>
+&gt; Signed-off-by: Pranav Tyagi &lt;<a href=3D"mailto:prtyagi@redhat.com" =
+target=3D"_blank">prtyagi@redhat.com</a>&gt;<br>
+<br>
+Ah I see.. thanks for figuring this out.<br>
+<br>
+&gt; ---<br>
+&gt;=C2=A0 migration/migration.c | 20 ++++++++++++++++++++<br>
+&gt;=C2=A0 1 file changed, 20 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/migration/migration.c b/migration/migration.c<br>
+&gt; index 5c9aaa6e58..1656c1203c 100644<br>
+&gt; --- a/migration/migration.c<br>
+&gt; +++ b/migration/migration.c<br>
+&gt; @@ -2386,6 +2386,15 @@ out:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (err) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migrate_error_propagate(ms, err);<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_source_return_path_thread_bad_=
+end();<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ms-&gt;state =3D=3D MIGRATION_STATUS_=
+POSTCOPY_DEVICE) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Kick the migration =
+thread if it gets stuck in<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* POSTCOPY_DEVICE sta=
+te waiting for<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* postcopy_package_lo=
+aded_event. The event will never be<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* set as MIG_RP_MSG_P=
+ONG from the destination is lost.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_event_set(&amp;ms-&gt;=
+postcopy_package_loaded_event);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+This makes sense.=C2=A0 Said that, we have another similar case right below=
+ for<br>
+the postcopy recover path:<br>
+<br>
+=C2=A0 =C2=A0 if (ms-&gt;state =3D=3D MIGRATION_STATUS_POSTCOPY_RECOVER) {<=
+br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* this will be extremely unlikely: that w=
+e got yet another network<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* issue during recovering of the 1st netw=
+ork failure.. during this<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* period the main migration thread can be=
+ waiting on rp_sem for<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* this thread to sync with the other side=
+.<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* When this happens, explicitly kick the =
+migration thread out of<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* RECOVER stage and back to PAUSED, so th=
+e admin can try<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* everything again.<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_rp_kick(ms);<br>
+=C2=A0 =C2=A0 }<br>
+<br>
+It achieves some similar goal, where the migration thread is waiting for<br=
+>
+some event from return path thread, and when the channel is broken we want<=
+br>
+to kick it out.<br>
+<br>
+I&#39;m thinking if we can reuse that, instead of kicking multiple events.<=
+br>
+<br>
+Say, we can do migration_rp_kick() for both POSTCOPY_RECOVER and<br>
+POSTCOPY_DEVICE states in the rp thread.=C2=A0 Meanwhile at below..<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (ms-&gt;state =3D=3D MIGRATION_STATUS_POSTCOPY_=
+RECOVER) {<br>
+&gt; @@ -3232,6 +3241,17 @@ static MigIterateState migration_iteration_run(=
+MigrationState *s)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* package before=
+ actually completing.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_event_wait(&amp;s=
+-&gt;postcopy_package_loaded_event);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Check for errors in=
+ case the migration thread was stuck in<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* POSTCOPY_DEVICE sta=
+te waiting for the<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* postcopy_package_lo=
+aded_event which was never set.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* If so, fail now and=
+ break out of the iteration.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (migrate_has_error(s)) {=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migrate_set_s=
+tate(&amp;s-&gt;state, MIGRATION_STATUS_POSTCOPY_DEVICE,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MIGRATION_STATUS_FAILING)=
+;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MIG_IT=
+ERATE_BREAK;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+... instead of waiting on postcopy_package_loaded_event, we can do:<br>
+<br>
+=C2=A0 =C2=A0 while (!s-&gt;postcopy_package_loaded) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (migration_rp_wait(s)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Error happened */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migrate_set_state(&amp;s-&gt;stat=
+e, MIGRATION_STATUS_POSTCOPY_DEVICE,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MIGRATION_STATUS_FAILING);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MIG_ITERATE_BREAK;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 /* Acknowledgement received from dest */<br>
+=C2=A0 =C2=A0 migrate_set_state(&amp;s-&gt;state, MIGRATION_STATUS_POSTCOPY=
+_DEVICE,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 MIGRATION_STATUS_POSTCOPY_ACTIVE);<br>
+<br>
+PS: I think event also works in this case, so likely either one shared sem<=
+br>
+or event should work; it&#39;s just that it was a sem before, and rp_sem ha=
+s a<br>
+name that is generic enough to apply directly to the<br>
+postcopy_package_loaded_event use case.<br>
+<br>
+Thanks,<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migrate_set_state(&amp=
+;s-&gt;state, MIGRATION_STATUS_POSTCOPY_DEVICE,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MIGRATION_STATUS_POSTCOPY_ACTIVE)=
+;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; -- <br>
+&gt; 2.53.0<br>
+&gt; <br>
+<br>
+-- <br>
+Peter Xu<br><br></blockquote><div><br></div><div>Thanks for the feedback Pe=
+ter. I will update the patch accordingly and<br></div><div>send it again.<b=
+r><br></div><div>Regards<br></div><div>Pranav Tyagi</div></div></div>
+
+--0000000000001018910650089d32--
 
 
