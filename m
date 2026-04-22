@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF63F94CDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7249F94CDF
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:06:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFSa8-0005W0-I4; Wed, 22 Apr 2026 04:05:12 -0400
+	id 1wFSa1-0005Rp-JC; Wed, 22 Apr 2026 04:05:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSa7-0005VG-1d
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:05:11 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSa0-0005RU-5X
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:05:04 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSa5-0001Tp-Lv
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:05:10 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43d03db7f87so3454325f8f.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:05:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSZy-0001HO-Jj
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:05:03 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4890d945eb4so21377725e9.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776845108; x=1777449908; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776845101; x=1777449901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jOgtzLw5d1r26Q0NFjivd0ZMxXlVly0h5YldDZ43mBk=;
- b=sPApzvG7CHqHOFGyC+PI1hl/2swx2/BlfflZF+ZdVfDMcEEBU0QuCLL8ubXqn0uACT
- Vq1Gh98MAO7QtuDPHCtmRFbLWOGJKxK3F5b0qPVP5dnjJYEJzDnUnFoRJ0wtUxxA3K3h
- w9wDEFd9a1tmOuJ49GbdHeeyav6rfbrKMN2n6FFRDt0ChrWscpMqpYfI3zjMjPe8mdb4
- OivxLG6+TwqN+et44Vt4VyY+RMwBotyRrWuNnsoWQlZhMW+o9psN0kTRYJn4XAfhko7a
- zYzsCO+5bG0l6OhbOTwU3tJzZW1S/Vq2WptsKlyXmldJ0m4ljNAqX/UvAF6ZtrdoHOGg
- zhhw==
+ bh=cyKGdw2zspavug7DDv7we9RbVYA/l2a6yq0Q0ZNP7lo=;
+ b=nsU8bsA3SD13om9uWcjrVN1bPdHpauB1sRSz45+9z4LBfOa13JyJkusl9XbtXL7Xt6
+ 8ZUu/ad4J4LuhuhEkuQ9VqwvD5kLhgM5OJ7gwyGfSKL/fCaN5mNLy3EdbdIlzx8rFzla
+ W/Gf+ta4e0jLKicy3GiluzyMsbJdznkAeV84VjXLNYPt0KspWEKVI6YmH9u1KasAWOO8
+ 4pr3DH3H4bGcgXmT0a28LwScbZTM6o6HqJFtARc+NFnok2hHZzPYVjMzMAZWNB/ksbR5
+ ESi3FyTLa/qbvOnNzOrMDAoYrJG7a4MqbdDAjSChoJYnryQqnsB0all6BeQNJG/Rklao
+ ujRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776845108; x=1777449908;
+ d=1e100.net; s=20251104; t=1776845101; x=1777449901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jOgtzLw5d1r26Q0NFjivd0ZMxXlVly0h5YldDZ43mBk=;
- b=lN+/OTmf+7NoE0rL4geowTpgJhZGmTCIOTbecaEp/vBMquDzRQkgqQcC1cyGGYtQ1c
- 7Jb6SDINtOvC+h0U2HTZ6t4ZiOxJvh5UcD+Tp0VI7sUK+l3bJc6HyAnlPJnTNOCMRXZd
- 4BS3CSwalxQiMxrXi0Ddux3vJBs89zgh5vu10xmde1XqU5uvg9uC+R0YTAq1yZyEeZC0
- DH6yWrppZar94ROHFNG1Xz/TayIGNLZuttNhNnh1hI+Bc5YnTSYg87UjjuWh0B41Jqn3
- RvRYaKXDfl6/10qZtyvJeyuO+22y4gjCWeiFFeGUrYSdIalj/vgXKfVboh7r2nc3//bX
- Hgog==
-X-Gm-Message-State: AOJu0Ywj29OyJGaS9xoFCsTCbflKeJgv816Lm2kYJ3EeaFbvClslHRfB
- Yi0XxmhXLK9/apwOex8skQ+XE9n8SRWwMVOdxoAwP11/ulrmy7OBaTRfTnJTy4CRHfj8hACmJWm
- OZTSOd9I=
-X-Gm-Gg: AeBDievHxrfoU1+jGG19mJWOM8k2enBgrHhRt1umRUPtWuNrToQtJJiJaAAduhBUctl
- Q5H/134lLnnLxx/RssDaKe8Rz6CLn1vZQEkljQ7c5S0fyKg+bE51fDTziSvYAQbii/oEs3u82GN
- wmTNsyjKc7r6L/yAZEQurSZAzGMuLHYOB0IIHIDkc2yKeg2+7Gnqziy0Kdyo19jeSMlv5w+ilC+
- X3aZZ5hX7AOiOmBG3RjRM6u9avD3Km2CKh9fy3yVLB5q0MLOTt1DOdxOKZb7WdMfK7wbUnjxc+G
- faybaGvzkh9NqCLblI4DPmiKuYF4xEUQ3ytt8BhFpqEUnegAx0eZN680uy8UbYQENatGSHJSRYy
- 2VGoibAaDrG71fk8cd0WelT1U37GdBHTWqR7gT0EpQmrbEWam+vCOrduvxKbU+iL0jEAWQO8fN9
- M3Z2/WmaONaYXYY5IN+xrVh907ap+bGufssVPP+u5u3yPUMCsrS2mrFvT/5fDIaiEQwvIyxU1/i
- Iv7AvYc+To=
-X-Received: by 2002:a05:600c:2e56:b0:488:d243:8da9 with SMTP id
- 5b1f17b1804b1-488fb73b2d3mr185133325e9.1.1776845107711; 
- Wed, 22 Apr 2026 01:05:07 -0700 (PDT)
+ bh=cyKGdw2zspavug7DDv7we9RbVYA/l2a6yq0Q0ZNP7lo=;
+ b=lV/hInWE293jeqb9Z03vPQccuPWhSqE8MsBk8w8Z5go6dLiVcNMKTJDyV9ch62SNGW
+ i4EiqEWeIwMFDgYd6dIMB3aMJPmUvm5HhU+p4Jy/UvyB+TX1KdT7tiQHiSI6et31lrN/
+ j4aYOlJssvnWwsH0tywLaH+vLtejFy3wz1Q/UIERyg7lfScjgkWxz/HhsnHYSTM/pHAN
+ /c3jLp8fn+7MZpmcW+Zkwo4ygOO8P64VTGoZM0hiLA0EibEMrcHiaH8Gi0ZvKrocLCP+
+ xZIs1TRIfZXjL9gtWMErYvOT98MMCB4ICi5IEieKZHjXa5/lbmC3LSCu+5Wqr6V3hULL
+ CuXw==
+X-Gm-Message-State: AOJu0YwXcHIu/wUnjWLfsqnwsvXI8VkXDGBn9RZaVuKELzcw+0FtHWeO
+ olH1yFjfFHtzPelkvZhMluUoEdZ1hBdbRZRHhN+3Q+TFtS23VJbN9h7BgErCwihCdS0p8/ioAdR
+ ojBP23ps=
+X-Gm-Gg: AeBDievdagk6QiG3ZeODWYuWESrpefqjNk1PPeimzw4fwwuZy//KkNi2M4pGlfhX6UH
+ QEDbvovmfGR6YRFyoIc5kXz16ye6IRmi/KTZfFBe+BvVXtioPw2rw4T0xd/sUcOYVeQtEBzDEIG
+ 2XgZaJWoMSR/4I96kOZx2V01U6lL4i9xACOptRW/WQJPKzyDfFTiYMAz6oSQxLqtGxZMD4FK9Ch
+ aEhxX6hMay5Sqs309PnQ3S1UG6tcdQHTL/FcxmzKHdVl9RCF7tdWCqVAOxAT6oHQPJuwy+Dou0y
+ yGKzExvAb6gcVsFsnnUEitiOE6XBcQwYIux1bsSkYdjFW6D+YwRkbnxa15poxsSRnlN22/kMDWr
+ mLAiPv3ORRR6elUigvsDCylessqiIUWAjVODVUa6eNTtJ9xDbvTFkNe6IarLxPu8IB/m/tVW0w4
+ SdULRJk7BKJW3zDLjccRur3xg7GVdXgcDxJ2Twm8khZrv6Yu1faiRaXR84OewK5fVr+APAqYIzD
+ rsSbex6Xuw=
+X-Received: by 2002:a05:600c:3ba0:b0:486:faa8:9e4 with SMTP id
+ 5b1f17b1804b1-488fb8b91a7mr275215525e9.12.1776845100449; 
+ Wed, 22 Apr 2026 01:05:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-489e124f6c7sm55798845e9.29.2026.04.22.01.05.06
+ 5b1f17b1804b1-489201cde98sm189411765e9.7.2026.04.22.01.04.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 01:05:06 -0700 (PDT)
+ Wed, 22 Apr 2026 01:04:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Daniel P. Berrange" <berrange@redhat.com>
-Subject: [PATCH v2 08/10] MAINTAINERS: Transfer FW schema specs section to
- Daniel
-Date: Wed, 22 Apr 2026 10:04:03 +0200
-Message-ID: <20260422080406.62638-9-philmd@linaro.org>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v2 07/10] MAINTAINERS: Remove PhilMD from NVMe Block Driver
+Date: Wed, 22 Apr 2026 10:04:02 +0200
+Message-ID: <20260422080406.62638-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422080406.62638-1-philmd@linaro.org>
 References: <20260422080406.62638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,32 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the torch to Daniel, but demote the 'Firmware schema
-specifications' section from 'Maintained' to 'Odd fixes'.
+I'm not following this code anymore, no need
+to be listed as reviewer.
 
-Suggested-by: Daniel P. Berrange <berrange@redhat.com>
+My gratitude to Stefan for everything he taught me while
+supervising this topic. I truly appreciate the time he spent
+helping me in many occasions. Thank you very much Stefan!
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- MAINTAINERS | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index e651d18879a..5aceda193c2 100644
+index 7e3bf662561..e651d18879a 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3963,10 +3963,9 @@ F: docs/specs/fsi.rst
- F: tests/qtest/aspeed_fsi-test.c
- 
- Firmware schema specifications
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
--R: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrange <berrange@redhat.com>
- R: Kashyap Chamarthy <kchamart@redhat.com>
--S: Maintained
-+S: Odd fixes
- F: docs/interop/firmware.json
- 
- EDK2 Firmware
+@@ -4234,7 +4234,6 @@ F: block/null.c
+ NVMe Block Driver
+ M: Stefan Hajnoczi <stefanha@redhat.com>
+ R: Fam Zheng <fam@euphon.net>
+-R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: block/nvme*
 -- 
 2.53.0
 
