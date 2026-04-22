@@ -4,85 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7161AFA1FCE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 16:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988CFFA1FD3
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 16:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFaBd-0000Pz-LU; Wed, 22 Apr 2026 12:12:25 -0400
+	id 1wFaJx-00032x-Bs; Wed, 22 Apr 2026 12:21:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wFaBZ-0000PG-RP
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:12:22 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1wFaBX-0005P1-3b
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:12:20 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-82f8b60e54dso3743296b3a.2
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 09:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776874335; x=1777479135; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XkwnlAaIhmzRWKnpfKUMWyjcWDJ6wWPYevSxB2grds0=;
- b=cPkWmns+ER0PU3gWQU4st5iCvQouQtBk8Pb1K7E6hXOcYNhlB482Cy8cKuBL5q9NQt
- pwmARcGBy5WVk8bbqNTKpywOEc5OIoxm/6pw/P51SjogkmOndV87pY8cb0zQtbsWptFF
- g8gN2cE9rLdz+6td5fnS2lcHt8EndrfjiGWdgX4CPjGWFvgb85aqqzAyzVlclEC+dnWX
- fiZCc8gUXbvjZ5gAhFDVQmjjV3pMreUA3ha3Sy/t8Y0ec5QoD0qZmsC2ZxXBTLiDttXc
- S6keIpYqj5Mt0G0vu/sd7KkqT7ZjC+m04Rx7YUwfT41J2e/Z+AMaYgNFDCeXE4gGLgYk
- raOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776874335; x=1777479135;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XkwnlAaIhmzRWKnpfKUMWyjcWDJ6wWPYevSxB2grds0=;
- b=L2oWLIdQhc6qHu8C4N+ZkOQ6bqZeXk+n/U2WEtOubuBwUQGokr7iHjXE6UjhJhTc5F
- 93Om+fLIsWf7BZTKjKbyEyXMza0OWrB9jpiYw+nl3D76kmc88BqkXpVJ6YxViVaS2Qj0
- eP+rq7dGfy2hfdMLbdj+6ULhSe/jJmgZfiH8TU0+QeSJPGs62aw5WpyD28jGhmOW6tEJ
- rXdFxUj8Cgq9zXgXMuRAINj5mlEHB1HAKEVKqYefxEs0YKRd5O1IYDOjgNdMWzr7S5qu
- oAGYQi60M/PnA5VU1HmfpdW5DouQ67P3CqIG+dRbBUSv4QFtg7d15lGDAo9+Q9MNXrtb
- 1Q4w==
-X-Gm-Message-State: AOJu0YztzxbyEdqgqLBibzNQuiiCgIC/km3TKe2dHoUQEn7NZE37h1DB
- ylpLJHf5en/YSe85YASauD88TN8dCLhMLOi9UWV/QV5rwwOakfZzXz14c5DLxw==
-X-Gm-Gg: AeBDiesqWeMwsBu4cyY85BmTHEL30KGKECMCQvbL47Ix8Ucbu/57asVP0SznDZn6Fol
- C7potUqadeS3g62IftxN01txibtK1qMmCJQ9KSmxe0FI30JKVXoR8hAvp/TOnjL/V9ik73c8Jlx
- KoKrJl/mJJ615mhHQWOKAv64qROfpmut4iK7MwAXuqRkiTM2dYAyVsh4k8zG0TwKYCdqK/kKsLE
- J5K4ahvipbGb1DNlCyW+WIzhcGWiee0mYcsI73TcLDJj/oA1QECPGIdIl1y77tQpKFkdebI6WXs
- 8djQNXfGfsf87ARCfPrBZHmbQmhojaWCDezfwYnq2B76+tV8V7UpSi7CbfmohNJREcUt5kb5bMq
- WsUtqG2X1UOeB4QmuKXFAh4OecZlT0U//zSQSyu3yNCBQTX4elS3ZDtL3WoKrcK68tILiaWnXAz
- COQj78gDahuPyXH7HmJTTBsdsnQfwWaibuexPr06+CDiQk4FdtExSO3vgwiA==
-X-Received: by 2002:a05:6a00:2da2:b0:829:8942:2c85 with SMTP id
- d2e1a72fcca58-82f8c86b594mr23653843b3a.17.1776874334657; 
- Wed, 22 Apr 2026 09:12:14 -0700 (PDT)
-Received: from localhost.localdomain ([42.114.219.141])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f8e9cbb28sm16558138b3a.13.2026.04.22.09.12.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 09:12:13 -0700 (PDT)
-From: Trieu Huynh <vikingtc4@gmail.com>
-X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>
-Subject: [PATCH 0/1] migration/multifd: fix channel count TOCTOU race on
- cancel and retry
-Date: Wed, 22 Apr 2026 23:12:01 +0700
-Message-ID: <20260422161202.34150-1-viking4@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wFaJv-00032b-70
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:20:59 -0400
+Received: from mail-eastus2azon11011010.outbound.protection.outlook.com
+ ([52.101.57.10] helo=BN8PR05CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wFaJt-0000LA-BG
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:20:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IMHig6uSU6RJfBpgl24vGbK4e1KYXsm8Y31K169gjR6Xk/1aFw8hIVYZLLoCr1YhpkAWqcbNo4CvmGXdPV2Ot3p3k7Vaw08JYfmPKydMpmHsY/SbdXpC41CZOm+qrxJi9nafJBCdplSCactIuqbamzfj9AylyheuZPMwVbkC/7ScHo2XzFZMDGa4ZYbZcEYoAOnGvWxQJmV7So1rJahVyhiUf4IgwfsrBbAF1oz2DpzjxF1wlUEXSJTFac2bCH+xIiRAzmmsgHteZOfvOKIeOMUocLvj2TGlC4Y4B8QOkjj4WL8J12XJFcQ/PsgXN8hRJ/KlnfSJLKeJFXvacSDYSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UfjJeucrtflYRYwqM+XIcMJRTFhTNKhCUyZ8yjyam/w=;
+ b=Ef4Wy1yPASbjLvZxkuL/qWORKL53mt/zp0pHmuQt6DPFeMqg4Pbw8L4Ur+hk1G+Tytt9nvklr08IVeG2ZpJzIDvjEvWq7WT7Brm97V6qSN0j/Ro6W7IFcwzFD6m4KCHIquZjzE9ZzJm+F3TPuBw/0rEkBqtyCghvbDyM2OU7XFg9LRbWC2RsIielmeAPAN36m8gRdDq6bApugoHm1xMeAJPWRXvDu+K5/HkDB+TzE+ml93OzplqnbacnUB/bQsFXrfO3CTBDb63suPupiaD2e57AnULRTzpPWeIC9O51ONhdpTHJQogCMGPCPIcxdiVJw5dTwVk1M1ayZERsMOtbyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UfjJeucrtflYRYwqM+XIcMJRTFhTNKhCUyZ8yjyam/w=;
+ b=JqOjn6hfx4agRmN+jyNU1Lg+yM+1PQZce3l7mrk+eD/YVD1bxs3r7KitsS8HA4o3wbdmWlUul50F26MXyyiBQS/NsJCQ9Wb1Hg6wDyV42eQ/WnRVihnm0D6zDZVa320lHJvyaPLPPqE5DGykdcOXZiHKxV/QMM3YIAJ30BXpMiE=
+Received: from SJ0PR03CA0226.namprd03.prod.outlook.com (2603:10b6:a03:39f::21)
+ by SJ0PR12MB6942.namprd12.prod.outlook.com (2603:10b6:a03:449::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.20; Wed, 22 Apr
+ 2026 16:15:49 +0000
+Received: from MWH0EPF000C6185.namprd02.prod.outlook.com
+ (2603:10b6:a03:39f:cafe::24) by SJ0PR03CA0226.outlook.office365.com
+ (2603:10b6:a03:39f::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9791.48 via Frontend Transport; Wed,
+ 22 Apr 2026 16:15:49 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ MWH0EPF000C6185.mail.protection.outlook.com (10.167.249.117) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9846.18 via Frontend Transport; Wed, 22 Apr 2026 16:15:48 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 22 Apr
+ 2026 11:15:47 -0500
+Date: Wed, 22 Apr 2026 11:03:55 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <peter.maydell@linaro.org>
+Subject: [ANNOUNCE] QEMU 11.0.0 is now available
+Message-ID: <lfvqs3kqiaqltw6xlolu224gz32sp4ziggbfbtyldhf6ydre7m@efqv6sb5riff>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000C6185:EE_|SJ0PR12MB6942:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7c44beb-55e6-43ae-5508-08dea08a6a80
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|1800799024|376014|82310400026|13003099007|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info: w1lp6LRFCDbb8E5YpShUA6iXpnt2MWCbO+q/S9doMDW/Oc9koM/oDEwlVN4Kyfm1EoNsJdgTGErn8d71TC9YFwXnWe5/hKEXobzwrx0e2buBGF4HTMMQ1PtEHk60lrw19tcJDeGkdcqgUyU6wJc6oRQOwCbNxgzxY4lxL/a6HwPQI6/51jT2587Ta7c6kk5H7hFKUxoaLGIa6wjlxVok5Jz60BbytINYl3jTN30kpHCqHStYvDMTKs6Y2hCaChL5SOJrWoIggzvBpn7DZcM95Vd9308fvt+Z0cgJdwNaYArdvPGVznuCpbhAXmqr4HIIZxX5XBSQnRk9d4A7Fm0Ut9irMQqEy9XJjjUdLDBOrp0q9Av4lPtEomjytUiHw2dloU9zdonZMFztizXKCSoDZn/m4RioYqcPBmcrTXXKYxZ7XG3KocTnrc+yv/EOwtV1sEyQszerS7VBKuPEqA6z85B1hm+nxXo3Q05yFW4NZN5O6G75laMQpw7g6sGMt+p20UzcFGOvf3wyO2vDdbiy91H/fvg+Ldysbyl7+9pMSmRyUjrJO+2m+PSnPzj5dR6PXzCNt7Sohpmav1G7rfSFPPqXzLg6EGatYXvmlMUWhJTSHZs41+mDsMRrkFWbLhfvmF8Awl7wl21/JisSeNsAJUNkaGWCa2Sc2Hqtqmy3niAP5bWw7vqc5dkvQECC3ib8kUGOM8HAUVB02aeunKNWy6g8iSiDsoOfmuMXarAEyT8=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(1800799024)(376014)(82310400026)(13003099007)(56012099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 7qT7+tj3iHr7rH8PhN9g1jSlsz0HGDzawbxYK79IAui5264X0qRNzqjm2ziI0n8fcs18EGTi94FC6TXR6KeMSDS7x7vG9MVKbghyaESBOxd9o0YVoYLATTvGm3bHdPaNDqzbpm1LJs57cy+1IEn52fFiyn5WU8ZyF6Aciq9QiTEJ85yYOcyaA1imMZ3yR2yXxJwZyYZgi065aW7RAHaVQufi0BDx3hWwkUMPPGoySelsBJ5VNO92OiqM2RrV59SpVuL9cfAqwyB9Idgbh5tQ144C8JDLbQPPbYZqU3YtV+4qyXLBr1v6fkKav/u0evb5TsVJ7h8OxjkW4gh9e8ew14sBmvzTu0wOV4MAkEStXLDCtLFKJDw/sV437MIm2InsyCuQxPIn4nZL0QfpTp9qUIBu3/hC64v0rnR6UijYb+HmdcGI7ZiaJsCBDJ1gesZk
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 16:15:48.4582 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7c44beb-55e6-43ae-5508-08dea08a6a80
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000C6185.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6942
+Received-SPF: permerror client-ip=52.101.57.10;
+ envelope-from=Michael.Roth@amd.com;
+ helo=BN8PR05CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,69 +122,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Trieu Huynh <vikingtc4@gmail.com>
+Hello,
 
-QEMU aborts on src during multifd migration when multifd-channels is
-changed after migrate_cancel:
+On behalf of the QEMU Team, I'd like to announce the availability of
+the QEMU 11.0.0 release. This release contains 2500+ commits from 237
+authors.
 
-~ # qemu-system-x86_64: ../util/yank.c:107: yank_unregister_instance:
-Assertion `QLIST_EMPTY(&entry->yankfns)' failed.
-Aborted (core dumped)
+You can grab the tarball from our download page here:
 
-Below is the backtrace:
-#7  yank_unregister_instance (instance=0x7fffffffd870) at ../util/yank.c:107
-#8  migration_cleanup (s=0x555557649d10) at ../migration/migration.c:1338
-#9  migration_cleanup_bh (opaque=0x555557649d10) at ../migration/migration.c:1345
-#10 migration_bh_dispatch_bh (opaque=0x7ffe500051d0) at ../migration/migration.c:350
-#11 aio_bh_call (bh=0x7ffe5006d670) at ../util/async.c:173
-#12 aio_bh_poll (ctx=0x555557649210) at ../util/async.c:220
-#13 aio_dispatch (ctx=0x555557649210) at ../util/aio-posix.c:390
-#14 aio_ctx_dispatch (source=0x555557649210) at ../util/async.c:365
-...
+  https://www.qemu.org/download/#source
 
-Steps to reproduce:
+The full list of changes are available at:
 
-* 1. Start VM on src
-./qemu-system-x86_64 \
-  -<other_options>
+  https://wiki.qemu.org/ChangeLog/11.0
 
-* 2. Start dest with -incoming defer
-./qemu-system-x86_64 \
-  -incoming defer \
-  -<other_options>
+Highlights include:
 
-* 3. Enable multifd with 4 channels on both src and dest
-{ "execute": "qmp_capabilities" }
-{ "execute": "migrate-set-capabilities",
-  "arguments": {"capabilities": [{"capability": "multifd",
-                                  "state": true}]} }
-{ "execute": "migrate-set-parameters",
-  "arguments": {"multifd-channels": 4} }
-{ "execute": "migrate-incoming",
-  "arguments": {"uri": "tcp:0:4444"} }
+ * New "nitro" accelerator to run AWS Nitro Enclaves natively, and improved
+   support for MSHV and WHPX accelerators.
+ * KVM: Support for CET virtualization.
+ * KVM: Reset support for SEV-SNP and TDX confidential VMs.
+ * virtio-gpu support for native context drivers and specifying a unique
+   resolution for each output.
+ * TCG: in-tree support for C++ plugins.
+ * NFS block driver support for libnfs v6 and various improvements to
+   curl/FUSE block drivers.
 
-* 4. Trigger migration
-** dest:
-{ "execute": "migrate-incoming", "arguments": {"uri": "tcp:0:4444"} }
-** src:
-{ "execute": "migrate", "arguments": {"uri": "tcp:127.0.0.1:4444"} }
+ * ARM: support for CPU features FEAT_ASID2 and FEAT_E2H0.
+ * ARM: TCG emulation support for SME (Scalable Matrix Extension), and HVF
+   accelation of SME2 on macos (if the host CPU supports it).
+ * HPPA: SeaBIOS-hppa v24 now implements the Astro PCI initializaiton
+   (allowing for PCI VGA on 64-bit systems), improves upcoming HP-UX
+   64-bit support, and has initial support for multicell machines.
+   Prior versions also have fixes and updates for 64-bit/PAT support and
+   other areas as well.
+ * HPPA: Emulation support for 64-bit CPUs with 40 and 44 bit address
+   spaces, and 64-bit GDB support.
+ * LoongArch: KVM PMU migration support.
+ * LoongArch: TCG emulation support for LA v1.1, sc.q, llacq/screl/ and
+   estimated reciprocal instructions.
+ * PowerPC: snapshot support for several ppc devices.
+ * RISC-V: ISA extensions support for Zilsd, Zclsd, ZALASR, and Smpmpmt.
+ * RISV-V: CPU support for MIPS P8700 CPUs, better reporting of CSR
+   registers in 'info registers', and other fixes and improvements.
+ * s390: emulation support for "DIVIDE TO INTEGER" instruction.
+ * s390: support for booting from virtio-blk-pci devices.
+ * x86: CPU support for Diamond Rapids
+ * x86: support for a new "nitro" accelerator and machine type to run
+   Nitro Enclaves natively under QEMU.
 
-* 5. Cancel migration on src while status is active
-{ "execute": "migrate_cancel" }
+ * and lots more...
 
-* 6. Immediately change multifd-channels to 2 on src
-{ "execute": "migrate-set-parameters",
-  "arguments": {"multifd-channels": 2} }
-
-QEMU aborts as shown above
-
-Trieu Huynh (1):
-  migration/multifd: fix channel count TOCTOU race on cancel and retry
-
- migration/multifd.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
--- 
-2.43.0
-
+Thank you to everyone involved!
 
