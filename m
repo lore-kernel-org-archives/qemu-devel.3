@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED6FF9B613
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A726F9B60B
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV4T-0002RB-TV; Wed, 22 Apr 2026 06:44:41 -0400
+	id 1wFV4V-0002fv-5H; Wed, 22 Apr 2026 06:44:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV3u-0000TC-4B
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:15 -0400
+ id 1wFV4J-0000q7-No
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV3s-0003DB-GI
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:05 -0400
+ id 1wFV4G-0003J6-DE
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:44:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854643;
+ s=mimecast20190719; t=1776854667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZHj9Sbj1dYXiqfZB1jDDsaqHs+0UWohr8/uzhHza88A=;
- b=d0j5zORwqGu7sdx/5OVKNNSl0x5lyg7kRaoB5hJtAcA+91SorY0DZ/dASxcm47NDK3VNJY
- xrgk9x62yYqKZ34GRKbMfu7NtqMkGOx+d4Q2HZTxvutdjQc9JXjNJSDAp2ivr65D4A5B3D
- WMld4Y17QyGI+qTe+uRiowOpOUnXDHs=
+ bh=r944Zh3o2C3dWrI8AujmdLr3ymk2rvx5/gP9TZ3t87g=;
+ b=HcKTnB7mLNPQf8uPvdcCLHKx5n8sdJn6qLIXvrbI/osaYRdzB72fLt0uONMR8p3Jo5bagA
+ rnQgPMl2s8H48oiOPGlXGW4a3T7+zvfxolYVHqn3hlLqZBLtXdr4JZ1rFsGTGeb40BquwQ
+ mra5k/ThPbFfqE4VW1QEj5RQM9/nLyc=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-ddYYuNeqMyKnh7dicWVdIw-1; Wed,
- 22 Apr 2026 06:44:02 -0400
-X-MC-Unique: ddYYuNeqMyKnh7dicWVdIw-1
-X-Mimecast-MFC-AGG-ID: ddYYuNeqMyKnh7dicWVdIw_1776854641
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-BHgU2XTXMPWbFgiafmZ1uA-1; Wed,
+ 22 Apr 2026 06:44:26 -0400
+X-MC-Unique: BHgU2XTXMPWbFgiafmZ1uA-1
+X-Mimecast-MFC-AGG-ID: BHgU2XTXMPWbFgiafmZ1uA_1776854664
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 573881800282; Wed, 22 Apr 2026 10:44:01 +0000 (UTC)
+ id 46DBE1800652; Wed, 22 Apr 2026 10:44:24 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.21])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 03D32180047F; Wed, 22 Apr 2026 10:43:59 +0000 (UTC)
+ id D526B180047F; Wed, 22 Apr 2026 10:44:22 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 31/40] system: make qemu_del_vm_change_state_handler accept NULL
-Date: Wed, 22 Apr 2026 14:40:32 +0400
-Message-ID: <20260422104042.3936506-32-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 35/40] ui/keymaps: introduce kbd_layout_free()
+Date: Wed, 22 Apr 2026 14:40:36 +0400
+Message-ID: <20260422104042.3936506-36-marcandre.lureau@redhat.com>
 In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -88,28 +87,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-For convenience.
+Enable callers to properly tear down keyboard layouts.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- system/runstate.c | 3 +++
- 1 file changed, 3 insertions(+)
+ ui/keymaps.h |  1 +
+ ui/keymaps.c | 13 ++++++++++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/system/runstate.c b/system/runstate.c
-index 2d4e95a2166..770253b467b 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -349,6 +349,9 @@ VMChangeStateEntry *qemu_add_vm_change_state_handler(VMChangeStateHandler *cb,
+diff --git a/ui/keymaps.h b/ui/keymaps.h
+index 3d52c0882a1..e8917e56404 100644
+--- a/ui/keymaps.h
++++ b/ui/keymaps.h
+@@ -54,6 +54,7 @@ typedef struct kbd_layout_t kbd_layout_t;
  
- void qemu_del_vm_change_state_handler(VMChangeStateEntry *e)
- {
-+    if (!e) {
+ kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
+                                    const char *language, Error **errp);
++void kbd_layout_free(kbd_layout_t *k);
+ int keysym2scancode(kbd_layout_t *k, int keysym,
+                     QKbdState *kbd, bool down);
+ int keycode_is_keypad(kbd_layout_t *k, int keycode);
+diff --git a/ui/keymaps.c b/ui/keymaps.c
+index 2359dbfe7e6..d1b3f43dc8a 100644
+--- a/ui/keymaps.c
++++ b/ui/keymaps.c
+@@ -178,6 +178,14 @@ out:
+     return ret;
+ }
+ 
++void kbd_layout_free(kbd_layout_t *k)
++{
++    if (!k) {
 +        return;
 +    }
-     QTAILQ_REMOVE(&vm_change_state_head, e, entries);
-     g_free(e);
- }
++    g_hash_table_unref(k->hash);
++    g_free(k);
++}
+ 
+ kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
+                                    const char *language, Error **errp)
+@@ -185,10 +193,9 @@ kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
+     kbd_layout_t *k;
+ 
+     k = g_new0(kbd_layout_t, 1);
+-    k->hash = g_hash_table_new(NULL, NULL);
++    k->hash = g_hash_table_new_full(NULL, NULL, NULL, g_free);
+     if (parse_keyboard_layout(k, table, language, errp) < 0) {
+-        g_hash_table_unref(k->hash);
+-        g_free(k);
++        kbd_layout_free(k);
+         return NULL;
+     }
+     return k;
 -- 
 2.53.0
 
