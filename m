@@ -4,94 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB923F9B60B
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A110EF9B605
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFUen-0007DH-CN; Wed, 22 Apr 2026 06:18:09 -0400
+	id 1wFUrD-0006hi-1b; Wed, 22 Apr 2026 06:30:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeM-0006yw-7v
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:43 -0400
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeD-0002MU-QL
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:39 -0400
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so52369385e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:17:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wFUqz-0006fm-Ij
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:30:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wFUqv-0006qQ-4r
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:30:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776853838;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T8P1JQ/3nfAUVN6IA3Ayq6ubLufw+hR8iRx/Hjum7dM=;
+ b=THHlDPGwDDq5YWpA2rtzyeCR8yHUa4xsjNyzUcVm5HSB4eXKdItr4l4dHFI2gDYsfWliAK
+ zyUWu+ahJbmrshImGPEe2Ve9fY3EuBK1wdSVl3/C9Katif51UxHT1D/i7HUcJiRn2L08Hg
+ klFvdVFewGO0xpzBt7+itQEhl+CSQ4s=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-509-zdVWMz0NMQC6MHvtF84RMA-1; Wed, 22 Apr 2026 06:30:36 -0400
+X-MC-Unique: zdVWMz0NMQC6MHvtF84RMA-1
+X-Mimecast-MFC-AGG-ID: zdVWMz0NMQC6MHvtF84RMA_1776853836
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-c797efdaa9cso2413499a12.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:30:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776853045; x=1777457845; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776853835; x=1777458635; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v9TGxTsXQ4q7KQiokEaw8AGBMMJRUq1ldJ+z5GAXPms=;
- b=TzAuik/PUnqDFYwFHFKKGIETYkLHGw1i072RRMtsvIBNcZLzdJ1gG6Tn/nQl1OR7o0
- 1K6jebO9egLjsQBpq0Iu4pV7XnVyEPqOoQ/S4tYzC9V9iH/bIe+ajeXhEMbuLY8BL/FL
- G87EQgK6Q0TKC6X8MpMC4FNlaWaA+OAJW9ewMQOAn6k1piIP5sYLjjsu9yg8saQc5FvE
- J8VgStHzfS9MvYnhQJydMsXzY5UM4fD/OM/hjNqHwuyed4JACPOnoPHb/OPi8M92vAz/
- NxnCdstKjdsgiWPxE+byHsR0VHy1ept2IarBYteygDE7HLe7iRjsxi6TeIXet1rzEz+W
- PHtA==
+ bh=T8P1JQ/3nfAUVN6IA3Ayq6ubLufw+hR8iRx/Hjum7dM=;
+ b=HlJsAUvxHWNNQTS6fcb6jb56tsI4U1Pdv98r5641B6zPxDbPdPxYA5bWnan3dbP86z
+ 8ZvBcO7T/rBPgMW+mSqEqgcsQWhfqNwPTagBUnNrqfUBlkix5Ei32FSURu6XgQUPe5pa
+ Vu+O4ppkyq05tlM5WLoG50l7e8YpyvHTQs25gI/4m/9F3GOSa16AufJaKGHHyj9Mr2al
+ HwOQBLTxsTkpPY2ISM2VhhZ3vWMxBE/o7z53lrPtvu7sT/hAZpoRdsArgFRH10RA7LLw
+ fYHkZQW9vXmRn9x84EeI80mYypc6VmMIauL/taLyGKCP9FcaQd0kaUia0KLAJLFpaTp+
+ z0mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776853045; x=1777457845;
+ d=1e100.net; s=20251104; t=1776853835; x=1777458635;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=v9TGxTsXQ4q7KQiokEaw8AGBMMJRUq1ldJ+z5GAXPms=;
- b=SPZB+UYVYVzP7CVByEzQgKHi6kdzjepnYDnBI2ni5ctcl1iUMxwHGYPJed8Bgp/nq+
- GRortpeZT8K2h30uyU1JK+fvq7p4oW55LxWKJxd6n9Yx5PvJjxOgx+ILQDH9LUvkJU/e
- oe3rpwF7u/AgyWzB1wNobOjAHe76knZ3zKtKnSlUSh0An3MDm/Jnd8mIcRKSrPYWrMZ+
- eW7Lz07Pa79WoSb48dcG5MLiz3+oiuyXa9SdORcw8A5+CBUxOSZ7/nIpUpfQd1+rkLhH
- f/8PMpGcz2AHD8bRUZ1aeiBFeIST+VM+jYT/3Qo3Fi6+gRvxOP6MFJw98U5yhaCVV2IU
- sfSA==
-X-Gm-Message-State: AOJu0YwH8FNZjcgQ3UWrDd4x4vDrZsOnHQTWbse+5+pA1qarzdDEh08e
- f+GQDOZnJY3tSuYTS4ohFwfcYgbxVNzksgK6B3ktQqm+v7pyUjXJgIE0JAXEyOhQglU=
-X-Gm-Gg: AeBDiety6dvOWpQblshqwjyntNiYZ7gAbXdJ+oSDgeubXSZMBBAmwg6HIoOe+UI6Cfg
- 5YGIOlfW0o41v6znmdbhJUGmv100EBDyLsT4BYT3l9ZORdsE+48HNFJs0HvgNs9oaAMi8kCnVHp
- FoCLfPotR6Hz50auU+SWoHCaCH5dFWjNdPHr7iGyYPFJ5GOaTxb3GVDsTZI49Jc3ng3y4SeDw4J
- Wrh2K00rcNeLFJhIL87XFK5CJjM9/OKf7NbfS+dfOY6Q6cugwNTeUsF4lUPrDF30NR2ZqJD9jXq
- 1BJeq7PkJz8OQ/bAkZf+phmWxPhmnqBI38j3RUDW5xjxYNoaWNcI89//LB7z2Frk9mE2iFUXmwI
- sFyPsn3+rfscuY7KMKZsOr0rCw3EwgTIzyvyEqABl8oaqL8WkCmoiN1LcHCw7DJtfVL1i2ljBc9
- C8UxnOT+Rd/SYKyuoHJjleW2ul7J55fkLBCw==
-X-Received: by 2002:a05:600c:a31a:b0:488:b239:77ec with SMTP id
- 5b1f17b1804b1-488fb778db4mr234699655e9.17.1776853045332; 
- Wed, 22 Apr 2026 03:17:25 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a55dc9f58sm266229045e9.6.2026.04.22.03.17.24
+ bh=T8P1JQ/3nfAUVN6IA3Ayq6ubLufw+hR8iRx/Hjum7dM=;
+ b=dUz5hxXPV2U4BnF/170wR4YbWzucoNiiwTNTvPLHAqtpHHO7xqRbRVZMAtHqfz4P0x
+ rKeArVB7zfZobNdJSTQ+IvHfoV3RYNBuUHaa9Jhw7vACfLzcXsilg9YmRNU6RYoCG3sa
+ /41RkV6sGwwCJAax3R9hpYb2Z7cXGXg2f+q3zWMtYpJaaR+5SU7NHs5oCTP4LWSA7II/
+ pdUhhf45sjM+HdsVBm/mjffodZc6TFbLm09uKuRPt6f6Ol2RGnilsnAN0Hp7kgQiwhI+
+ HbaQnwiYqf4I8gCALYj1u8PfLomrJzt9EVAu4KILfaw23u0RJsekJkU5IqiwtOQUDyNK
+ WQmA==
+X-Gm-Message-State: AOJu0YwTLWk/P5eCtCfgg5hcJbePuoTdNEM0y95bnfjsIu8R5GCvWQT4
+ DMyVXvEDLcuwCw1qMDeldcEc1K4AzoK4Lioj0d+u+iznZjRxpdPGlCaj5yPBOevnIyJcJFxKGtK
+ 3Nx5tp9ncaHQohJRY9p+CUZqMTH/y5q6b0J4Dhey/IOrcmLrDsbYgd+DHbUH1BKzMEge+9aVZ+/
+ ULuh47LkqrwPWFggJR6aoPrtrCxzYJrG7sqLYIYbk=
+X-Gm-Gg: AeBDietc/1vUsdhjDGThhkoaNREQCvIgaOxuGBINUmtLyINVEdklBzsuffV16OqCn6F
+ mTL6zoBcqTVASW2AshGY6J/xHH7g6YDoENAegGYJf7oYY2fOtOpapaNZK8zoG9QD9SRNtQXby4y
+ l+Eg/FkmybqnXWyoXPu12WyimURqIOQJiZJ7zPgkOVPFdhs4asARByOy3oWTGw2rNg9sHd/tjmu
+ EWn+RtU4+Yroqfzua4Pj1Mh+sElATxMfkTGPUHYTRYtw9x76Bwnmhf4y8uv1Fm0siHujepflcl/
+ DZSQmjm4bf5GDMNHZLAlnA82d43N7AAlW5xPfWmZZm0TP0Ymt+E0R94FD11AQFbFNF1Xx4wWoeZ
+ OOkTs+Zk5652FB+ymeqS1NEPmzIEljGH3AbTZRwgIjg4Pm53nw3yg1ec1Wy5S5rMhHMrz4rHmeg
+ ==
+X-Received: by 2002:a05:6a21:6d85:b0:3a2:7ef4:81e0 with SMTP id
+ adf61e73a8af0-3a27ef48641mr13983792637.55.1776853835147; 
+ Wed, 22 Apr 2026 03:30:35 -0700 (PDT)
+X-Received: by 2002:a05:6a21:6d85:b0:3a2:7ef4:81e0 with SMTP id
+ adf61e73a8af0-3a27ef48641mr13983718637.55.1776853834480; 
+ Wed, 22 Apr 2026 03:30:34 -0700 (PDT)
+Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.110.202])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c7976f920e1sm12589666a12.2.2026.04.22.03.30.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 03:17:24 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 06F3C617D8;
- Wed, 22 Apr 2026 11:10:46 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Wed, 22 Apr 2026 03:30:34 -0700 (PDT)
+From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 31/31] target/arm: implement WFET
-Date: Wed, 22 Apr 2026 11:10:42 +0100
-Message-ID: <20260422101043.1234229-32-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260422101043.1234229-1-alex.bennee@linaro.org>
-References: <20260422101043.1234229-1-alex.bennee@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Igor Mammedov <imammedo@redhat.com>,
+ marcandre.lureau@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Ani Sinha <anisinha@redhat.com>, Arun Menon <armenon@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v5 01/10] hw/tpm: Add TPM CRB chunking fields
+Date: Wed, 22 Apr 2026 16:00:09 +0530
+Message-ID: <20260422103018.123608-2-armenon@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260422103018.123608-1-armenon@redhat.com>
+References: <20260422103018.123608-1-armenon@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x341.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,152 +129,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have the event stream and SEV/SEVL implemented we can finally
-enable WFET for Aarch64.
+From: Arun Menon <armenon@redhat.com>
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+- Add new fields to the CRB Interface Identifier and the CRB
+  Control Start registers.
+- CRB_CTRL_START now has 2 new settings, that can be toggled using the
+  nextChunk and crbRspRetry bits.
+- CapCRBChunk bit (10) was Reserved1 previously. The field is reused in
+  this revision of the specification. Refer to section 6.4.2.2 of [1]
+- Add hw_compat global property called cap-chunk because the chunking
+  feature is only supported for machine type 11.1 and higher.
 
+[1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p07_Pub.pdf
+
+Signed-off-by: Arun Menon <armenon@redhat.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-v2
-  - fix exception syndrome by using enum value
-  - use env->halt_reason
----
- target/arm/tcg/helper-defs.h   |  1 +
- target/arm/tcg/op_helper.c     | 80 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-a64.c | 15 ++++---
- 3 files changed, 89 insertions(+), 7 deletions(-)
+ hw/core/machine.c     | 4 +++-
+ hw/tpm/tpm_crb.c      | 6 ++++++
+ include/hw/acpi/tpm.h | 5 ++++-
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
-index a05f2258f29..31ffcbc6448 100644
---- a/target/arm/tcg/helper-defs.h
-+++ b/target/arm/tcg/helper-defs.h
-@@ -56,6 +56,7 @@ DEF_HELPER_1(setend, void, env)
- DEF_HELPER_2(wfi, void, env, i32)
- DEF_HELPER_1(wfe, void, env)
- DEF_HELPER_2(wfit, void, env, i32)
-+DEF_HELPER_2(wfet, void, env, i32)
- DEF_HELPER_1(yield, void, env)
- DEF_HELPER_1(pre_hvc, void, env)
- DEF_HELPER_2(pre_smc, void, env, i32)
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 030209360e8..0c7f069a369 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -607,6 +607,86 @@ void HELPER(wfe)(CPUARMState *env)
- #endif
- }
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 1abc8ae737..6d27cf69a2 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,7 +38,9 @@
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
  
-+void HELPER(wfet)(CPUARMState *env, uint32_t rd)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    /*
-+     * As for WFIT make it NOP here, because trying to raise EXCP_HLT
-+     * would trigger an abort.
-+     */
-+    return;
-+#else
-+    ARMCPU *cpu = env_archcpu(env);
-+    CPUState *cs = env_cpu(env);
-+    uint32_t excp;
-+    int target_el = check_wfx_trap(env, false, &excp);
-+    /* The WFET should time out when CNTVCT_EL0 >= the specified value. */
-+    uint64_t cntval = gt_get_countervalue(env);
-+    uint64_t timeout = env->xregs[rd];
-+    /*
-+     * We want the value that we would get if we read CNTVCT_EL0 from
-+     * the current exception level, so the direct_access offset, not
-+     * the indirect_access one. Compare the pseudocode LocalTimeoutEvent(),
-+     * which calls VirtualCounterTimer().
-+     */
-+    uint64_t offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
-+    uint64_t cntvct = cntval - offset;
-+    uint64_t nexttick;
-+    int64_t next_event;
-+
-+    /*
-+     * As for WFE if the event register is already set we can consume
-+     * the event and return immediately.
-+     */
-+    if (env->event_register) {
-+        env->event_register = false;
-+        return;
-+    }
-+
-+
-+    if (cpu_has_work(cs) || cntvct >= timeout) {
-+        /*
-+         * Don't bother to go into our "low power state" if
-+         * we would just wake up immediately.
-+         */
-+        return;
-+    }
-+
-+    /* We might sleep, so now we check to see if we should trap */
-+    if (target_el) {
-+        env->pc -= 4;
-+        raise_exception(env, excp, syn_wfx(1, 0xe, rd, true, WFET, false), target_el);
-+    }
-+
-+    /*
-+     * Finally work out if the timeout or event stream will kick in
-+     * earlier.
-+     */
-+    if (uadd64_overflow(timeout, offset, &nexttick)) {
-+        nexttick = UINT64_MAX;
-+    }
-+    if (nexttick > INT64_MAX / gt_cntfrq_period_ns(cpu)) {
-+        nexttick = INT64_MAX;
-+    }
-+
-+    next_event = gt_calc_next_event_stream(env);
-+    if (next_event > 0 && next_event < nexttick) {
-+        timer_mod(cpu->wfxt_timer, next_event);
-+    } else {
-+        if (nexttick == INT64_MAX) {
-+            timer_mod_ns(cpu->wfxt_timer, INT64_MAX);
-+        } else {
-+            timer_mod(cpu->wfxt_timer, nexttick);
-+        }
-+    }
-+
-+    env->halt_reason = HALT_WFE;
-+    cs->exception_index = EXCP_HLT;
-+    cs->halted = 1;
-+    cpu_loop_exit(cs);
-+#endif
-+}
-+
- void HELPER(yield)(CPUARMState *env)
- {
-     CPUState *cs = env_cpu(env);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index a1b0cc9508e..19e00573979 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2093,14 +2093,15 @@ static bool trans_WFET(DisasContext *s, arg_WFET *a)
-         return false;
-     }
+-GlobalProperty hw_compat_11_0[] = {};
++GlobalProperty hw_compat_11_0[] = {
++    { "tpm-crb", "cap-chunk", "off"},
++};
+ const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
  
--    /*
--     * We rely here on our WFE implementation being a NOP, so we
--     * don't need to do anything different to handle the WFET timeout
--     * from what trans_WFE does.
--     */
--    if (!(tb_cflags(s->base.tb) & CF_PARALLEL)) {
--        s->base.is_jmp = DISAS_WFE;
-+    if (s->ss_active) {
-+        /* Act like a NOP under architectural singlestep */
-+        return true;
-     }
-+
-+    gen_a64_update_pc(s, 4);
-+    gen_helper_wfet(tcg_env, tcg_constant_i32(a->rd));
-+    /* Go back to the main loop to check for interrupts */
-+    s->base.is_jmp = DISAS_EXIT;
-     return true;
- }
+ GlobalProperty hw_compat_10_2[] = {
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index 8723536f93..9555b2c62d 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -45,6 +45,8 @@ struct CRBState {
  
+     bool ppi_enabled;
+     TPMPPI ppi;
++
++    bool cap_chunk;
+ };
+ typedef struct CRBState CRBState;
+ 
+@@ -59,6 +61,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
+ #define CRB_INTF_CAP_FIFO_NOT_SUPPORTED 0b0
+ #define CRB_INTF_CAP_CRB_SUPPORTED 0b1
+ #define CRB_INTF_IF_SELECTOR_CRB 0b1
++#define CRB_INTF_CAP_CRB_CHUNK 0b1
+ 
+ #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
+ 
+@@ -229,6 +232,7 @@ static const VMStateDescription vmstate_tpm_crb = {
+ static const Property tpm_crb_properties[] = {
+     DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
+     DEFINE_PROP_BOOL("ppi", CRBState, ppi_enabled, true),
++    DEFINE_PROP_BOOL("cap-chunk", CRBState, cap_chunk, true),
+ };
+ 
+ static void tpm_crb_reset(void *dev)
+@@ -262,6 +266,8 @@ static void tpm_crb_reset(void *dev)
+                      CapCRB, CRB_INTF_CAP_CRB_SUPPORTED);
+     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+                      InterfaceSelector, CRB_INTF_IF_SELECTOR_CRB);
++    ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
++                     CapCRBChunk, s->cap_chunk ? CRB_INTF_CAP_CRB_CHUNK : 0);
+     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
+                      RID, 0b0000);
+     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID2,
+diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
+index d2bf6637c5..6eece21397 100644
+--- a/include/hw/acpi/tpm.h
++++ b/include/hw/acpi/tpm.h
+@@ -149,7 +149,7 @@ REG32(CRB_INTF_ID, 0x30)
+   FIELD(CRB_INTF_ID, InterfaceVersion, 4, 4)
+   FIELD(CRB_INTF_ID, CapLocality, 8, 1)
+   FIELD(CRB_INTF_ID, CapCRBIdleBypass, 9, 1)
+-  FIELD(CRB_INTF_ID, Reserved1, 10, 1)
++  FIELD(CRB_INTF_ID, CapCRBChunk, 10, 1)
+   FIELD(CRB_INTF_ID, CapDataXferSizeSupport, 11, 2)
+   FIELD(CRB_INTF_ID, CapFIFO, 13, 1)
+   FIELD(CRB_INTF_ID, CapCRB, 14, 1)
+@@ -168,6 +168,9 @@ REG32(CRB_CTRL_STS, 0x44)
+   FIELD(CRB_CTRL_STS, tpmIdle, 1, 1)
+ REG32(CRB_CTRL_CANCEL, 0x48)
+ REG32(CRB_CTRL_START, 0x4C)
++  FIELD(CRB_CTRL_START, Start, 0, 1)
++  FIELD(CRB_CTRL_START, crbRspRetry, 1, 1)
++  FIELD(CRB_CTRL_START, nextChunk, 2, 1)
+ REG32(CRB_INT_ENABLED, 0x50)
+ REG32(CRB_INT_STS, 0x54)
+ REG32(CRB_CTRL_CMD_SIZE, 0x58)
 -- 
-2.47.3
+2.53.0
 
 
