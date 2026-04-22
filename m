@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DEFF9B607
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5593F9B60A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFUeq-0007If-75; Wed, 22 Apr 2026 06:18:12 -0400
+	id 1wFUey-0007W8-Vm; Wed, 22 Apr 2026 06:18:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeM-0006yp-6G
+ id 1wFUeM-0006yv-7w
  for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:43 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeD-0002Nk-Nf
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:38 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43d572f7437so3490190f8f.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:17:32 -0700 (PDT)
+ id 1wFUeD-0002Ne-LZ
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:36 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4891d7164ddso20264915e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1776853051; x=1777457851; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ChBMLZB7W3RWggGvPxQhi9T29Aee3H3wmNETcHJ/8uM=;
- b=mtqyEhjHSjE1wVWOnX40jX5ur3YCGsNHdrEYRM/0bqMJys5p5i7q/3KFHkl3mExxsc
- DjoIP6gZt8NrL2pwrqSMgNzDCo/fN4pPKNpRvF7xWILVCWasEK5vNNbBVGfmsKjfcUZu
- CrSv88B3G3cS7JumbBnwYqXsm+224xgvECN4X2i8x2aA9aITaVgaWs/FySstvfbQ0+bJ
- nJJ80V3bv/udDCgCgo7ROPCc7rA+7+UfAtYQr3X0u36BMdlPqDmYE0O5xvrcwHL6581W
- u6lJcSRr7TPGEGdChXdVVosdTEGcEozZjjppyf8OTyt8axD20XVTHTak9xE6SsUAt3KO
- DQ+A==
+ bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
+ b=fArmz0PbBkq28AMLdMgSbpAv/cUpBHGo4I/DAj22+KywMjndnEotuLki9TrydBg3wx
+ 6oQbjZ0Q1bNxDT/Ip8XE0wPNABBNb8cd1mjKOTnq/nAxGI6rI+yOUqU7fpXlEEJfZ5Ll
+ kV/iHmo6R22URvemdRe9EJSKI18NdXhj3wpQLmOqnvYNfGKNvqF2hg/59iGnEnOl8kUP
+ 9oivF8WWIJginRd3SuRU/GkP5dy0RCXWceDhBKB2bXCCoOJ7JBIlW7q0O7ZltCYGMv23
+ JSw6fqpUvlgYvXctAALT5pnE4S4EyhA8aFsEgx2TG1qyZQZsR9M1pksaz1rQD7FUTjsq
+ BvFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1776853051; x=1777457851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ChBMLZB7W3RWggGvPxQhi9T29Aee3H3wmNETcHJ/8uM=;
- b=jmeSKjHNxUbmx95AsdwCJw1TcE8NnbW1pPx77vJRGffjjd1TdssCwMSWoq4hgEUNAb
- oSFsIDALBZf9rpO5ztWmeWpFCY4O6TF9AQWI5i2hQJh9XHoTXR7xDzB2BFdMAvh8dsbv
- r0oRnpdm+OXgMRVjbOI79kXMTymFUJwMTPUBvHmCG4oMIEDd3UxRmfrKFNrH/uUrjQp4
- p9KdeY6OTO38JLVTUdIhFOW0m8s4PiVmbvoLRIyRFyOiYdL0eGbsUoVAZqjns03Lg1r4
- rMgJ84Ujtx6W0bHGIhx7cK8NVCt2vyEKAoHZRhxHwrMbXwhrzUUPEeLUFxaxiSOvrGQE
- XHTA==
-X-Gm-Message-State: AOJu0Yzws4/yBwKCl61I/etz7n3oSlLB+tVVJTLTOXolYKQU1oxuDTmd
- adjG4IldKcgXx+nvHAgq7XTbdqgKw2LYmUi/zAsCGXZj0qXpGjoeTEOC8HfZA8IqHLc=
-X-Gm-Gg: AeBDievV9o6ORsdP2fIImraZViv2xHSkIijJlHNx3Tu/EzAFh1EUC89IYHWWWlmty/9
- 1dbjQKWcOqvd2b4WJ7MRQOy/k/5kTcRjeqCY+QHIBFJc5KqemrFlbHKd4JXeo0p0T5Z3nVZr+ux
- Q3WXYxZB+kEEljnw6j/OwYpBIXqHPLQE5ZoBPJKC/B8SBW7UcXj6UTcqhmHu942bcgNeml6FxyA
- Po+Jrg6W3LygRgP73RlIhZMRCu5Lg46I8LQK+A68t3lNY0htBJzz6d7s3DoRx0PFfUeoWlFR8n9
- wmIxkOvDcUa1gf4yfK6Ar9DiHFq8+791cuADbZ4IaBVVOXoiE8J9D5s635WiP9HUHReKogxiQ1v
- gUfqW9XLELo7CW7yEMhzQpwC6WxqzyV4iAT6l1KAox4m+cPBGelE3nxjyfjYkkyrFOdVm57nQnb
- 6uXmbq/x3ZsIt7JR2XABohA3SxBW2TuXbP6A==
-X-Received: by 2002:a05:6000:1a8e:b0:43d:3004:5fef with SMTP id
- ffacd0b85a97d-43fe3dbeaf2mr32935858f8f.7.1776853051221; 
- Wed, 22 Apr 2026 03:17:31 -0700 (PDT)
+ bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
+ b=qsZDOd1OiJAW4/s6F0H/Oa7dvXFzsLYmw+xGzOiWz4kNIJ+bcb6+f2zpFIjdiLP1ct
+ eM5u1bQ6G/ZAwR6+LiFLPFljCT96aOBQMJhYjpmYJVcYG7huzEtQA5laTpfNbB8kwePu
+ GawANUlaTee4nCh7NTqdjOR4/IAm4IKos11DmfEZrm0bU81emHe8vGwiTvL/w7t+5J0B
+ K4f4RIt6EwTZ9IjwfVntPKYR2z84jLETl9WP+jRBya0FBJt0RwWkLxwYPhgLR2usmGA7
+ WmAiW+/8tg7gF6bxxcfhSjgtvztP7Ul4T+xFsVBxfSGqNd3XVIpeD8x0TceDMx4HoMea
+ 6VkA==
+X-Gm-Message-State: AOJu0Ywai4dw4KxvoFbNnMlQqgpfJgY+ykOIexhu1QeuV8ypto4A+LO+
+ FEhuNrF3rriz1MITrCmKi9M9Bi+fkggE0eBcGwfYOO8AaFh78XUnuMAv+QcaksonLmw=
+X-Gm-Gg: AeBDiesoqjK3YFs2ZyJhuDG7EIBaElJ3GpgR2qG8g9RBUqbGBu1NK8GlMuQ2nX3hFhD
+ xEtvhfUniX5T2DFaHh0exB6opiq7A60rbTxDgNAHSdwG/rIm8ZsunY9iIf1yGhiVC7wEBL0v53X
+ kfz7QEH9R8knzGwbge8vOhe9q51WWvrre6NIWB8RXfV2Ai9RrS+X9oJ/x2A0zTlxfOSWEWxUnUX
+ 8Np3gmH7eqq4pPI2Og/ERLOK5rRS6iBvldb342UCMTyhykkP5B7FmmRw0x95F1MI0AMzl4d03zL
+ YxmNNbpKqJCu2HonjtpT6BHoidYLwI1R/08osEcN03Nuda8HY4JPyZLJXF6uxd5V3uchtZgSC5Z
+ 4yu5iFLqcSPbNJuFOGzg/AyPI/SGfW5BhdbjUdnjqf1IwFl/27FS72tZbHV7lM4zCqWW1pJa3XR
+ eYSUGurpVLIHV3wte9KkkpxsgLZzSN9JGSjg==
+X-Received: by 2002:a05:600c:3e1a:b0:489:1ca2:eafd with SMTP id
+ 5b1f17b1804b1-4891ca2ee65mr169059005e9.11.1776853050447; 
+ Wed, 22 Apr 2026 03:17:30 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e46898sm46561003f8f.27.2026.04.22.03.17.26
+ ffacd0b85a97d-43fe4e4d5b1sm48556196f8f.30.2026.04.22.03.17.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 22 Apr 2026 03:17:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E594E617C4;
+ by draig.lan (Postfix) with ESMTP id CF1A4616F5;
  Wed, 22 Apr 2026 11:10:45 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,24 +74,24 @@ Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 30/31] target/arm: enable event stream on WFE instructions
-Date: Wed, 22 Apr 2026 11:10:41 +0100
-Message-ID: <20260422101043.1234229-31-alex.bennee@linaro.org>
+Subject: [PATCH v2 29/31] target/arm: implement global monitor events
+Date: Wed, 22 Apr 2026 11:10:40 +0100
+Message-ID: <20260422101043.1234229-30-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260422101043.1234229-1-alex.bennee@linaro.org>
 References: <20260422101043.1234229-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,206 +107,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two generic timers (K and H) are capable of generating timer event
-stream events. Provide a helper to calculate when the nearest one will
-happen.
+Moving from Exclusive to Open Access should generate event stream
+events. Technically a non-exclusive store to any address range covered
+by the global monitor should also trigger such an event but we can
+only detect that after the event by seeing if memory doesn't match
+cpu_exclusive_val when processing the eventual store exclusive.
 
-Now we can calculate when the next event stream event is we can re-use
-the wfxt_timer and configure it to fire as we enter a WFE that is
-going to sleep. Reverse the M-profile logic so we can enter a sleep
-state in both profiles.
+The CLREX instruction has the same effect as do other operations
+clearing the exclusive state (such as eret).
+
+We special case STLR/STL (Store Release) instructions to generate
+events because their use is a suggested pattern for clearing locks
+that might be sleeping. We only trigger the event if we detect an
+exclusive instruction is running.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 ---
 v2
-  - merged target/arm: add gt_calc_next_event_stream
-  - update to use halt_reason
-  - made arm_wfxt_timer_cb atomically consume halt_reason
+  - add gen_global_event_reg() and use that
+  - add handling for STL/STLR
 ---
- target/arm/cpu.c           |  13 ++++
- target/arm/tcg/op_helper.c | 129 +++++++++++++++++++++++++++++++------
- 2 files changed, 122 insertions(+), 20 deletions(-)
+ target/arm/internals.h         |  1 +
+ target/arm/tcg/translate.h     | 14 ++++++++++++++
+ target/arm/tcg/translate-a64.c | 23 +++++++++++++++++++++++
+ target/arm/tcg/translate.c     | 20 ++++++++++++++++++++
+ 4 files changed, 58 insertions(+)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 124be8c401e..7a6ad45ae08 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -799,10 +799,23 @@ bool arm_cpu_exec_halt(CPUState *cs)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 089f679ac0a..7045b4a56bd 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -709,6 +709,7 @@ static inline void arm_broadcast_event(void)
+ static inline void arm_clear_exclusive(CPUARMState *env)
+ {
+     env->exclusive_addr = -1;
++    arm_broadcast_event();
  }
+ 
+ /**
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 9bf2701a56b..01053060af4 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -882,6 +882,20 @@ static inline void gen_event_reg(void)
  #endif
+ }
  
 +/*
-+ * Unlike almost everything else that messes with the halt_reason and
-+ * event_register details the timer callbacks are not in the vCPU
-+ * context.
-+ *
-+ * To prevent races we atomically consume a HALT_WFE and set the event
-+ * register. Either way we trigger the an exit event.
++ * Some events affect all PEs in the same shareability domain. In
++ * practice as we currently model SMP systems as single SoC devices so
++ * we signal them all.
 + */
- static void arm_wfxt_timer_cb(void *opaque)
- {
-     ARMCPU *cpu = opaque;
-     CPUState *cs = CPU(cpu);
-+    CPUARMState *env = &cpu->env;
-+
-+    if (qatomic_cmpxchg(&env->halt_reason, HALT_WFE, NOT_HALTED)) {
-+        qatomic_set(&env->event_register, true);
-+    }
- 
-     /*
-      * We expect the CPU to be halted; this will cause arm_cpu_is_work()
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 6a2be85fcaa..030209360e8 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -477,6 +477,97 @@ void HELPER(sev)(CPUARMState *env)
-     arm_broadcast_event();
- }
- 
++static inline void gen_global_event_reg(void)
++{
 +#ifndef CONFIG_USER_ONLY
-+/*
-+ * Event Stream events don't do anything apart from wake up sleeping
-+ * cores. These helpers calculate the next event stream event time so
-+ * the WFE helper can decide when its next wake up tick will be.
-+ */
-+static int64_t gt_recalc_one_evt(CPUARMState *env, uint32_t control, uint64_t offset)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+    bool evnten = FIELD_EX32(control, CNTxCTL, EVNTEN);
-+
-+    if (evnten) {
-+        int evnti = FIELD_EX32(control, CNTxCTL, EVNTI);
-+        bool evntis = FIELD_EX32(control, CNTxCTL, EVNTIS);
-+        bool evntdir = FIELD_EX32(control, CNTxCTL, EVNTDIR);
-+        /*
-+         * To figure out when the next event timer should fire we need
-+         * to calculate which bit of the counter we want to flip and
-+         * which transition counts.
-+         *
-+         * So we calculate 1 << bit - current lower bits and then add
-+         * 1 << bit if the bit needs to flip twice to meet evntdir
-+         */
-+        int bit = evntis ? evnti + 8 : evnti;
-+        uint64_t count = gt_get_countervalue(env) - offset;
-+        uint64_t target_bit = BIT_ULL(bit);
-+        uint64_t lower_bits = MAKE_64BIT_MASK(0, bit - 1);
-+        uint64_t next_tick = target_bit - (count & lower_bits);
-+        uint64_t abstick;
-+
-+        /* do we need to bit flip twice? */
-+        if (((count & target_bit) != 0) ^ evntdir) {
-+            next_tick += target_bit;
-+        }
-+
-+        /*
-+         * Note that the desired next expiry time might be beyond the
-+         * signed-64-bit range of a QEMUTimer -- in this case we just
-+         * set the timer for as far in the future as possible. When the
-+         * timer expires we will reset the timer for any remaining period.
-+         */
-+        if (uadd64_overflow(next_tick, offset, &abstick)) {
-+            abstick = UINT64_MAX;
-+        }
-+        if (abstick > INT64_MAX / gt_cntfrq_period_ns(cpu)) {
-+            return INT64_MAX;
-+        } else {
-+            return abstick;
-+        }
-+    }
-+
-+    return -1;
-+}
-+
-+/*
-+ * Calculate the next event stream time and return it. Returns -1 if
-+ * no event streams are enabled. It is up to the WFE helpers to decide
-+ * on the next time.
-+ */
-+static int64_t gt_calc_next_event_stream(CPUARMState *env)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+    uint64_t hcr = arm_hcr_el2_eff(env);
-+    int64_t next_time = -1;
-+    uint64_t offset;
-+
-+    /* Unless we are missing EL2 this can generate events */
-+    if (arm_feature(env, ARM_FEATURE_EL2)) {
-+        offset = gt_direct_access_timer_offset(env, GTIMER_PHYS);
-+        next_time = gt_recalc_one_evt(env, env->cp15.cnthctl_el2, offset);
-+    }
-+
-+    /* Event stream events from virtual counter enabled? */
-+    if (!cpu_isar_feature(aa64_vh, cpu) ||
-+        !((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE))) {
-+        int64_t next_virt_time;
-+        offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
-+        next_virt_time = gt_recalc_one_evt(env, env->cp15.c14_cntkctl, offset);
-+
-+        /* is this earlier than the next physical event? */
-+        if (next_virt_time > 0) {
-+            if (next_time < 0 || next_virt_time < next_time) {
-+                next_time = next_virt_time;
-+            }
-+        }
-+    }
-+
-+    return next_time;
-+}
++    /* re-use the SEV helper */
++    gen_helper_sev(tcg_env);
 +#endif
++}
 +
- void HELPER(wfe)(CPUARMState *env)
++
+ /*
+  * Helpers for implementing sets of trans_* functions.
+  * Defer the implementation of NAME to FUNC, with optional extra arguments.
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index f30df5dbfed..a1b0cc9508e 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2253,6 +2253,7 @@ static bool trans_CHKFEAT(DisasContext *s, arg_CHKFEAT *a)
+ static bool trans_CLREX(DisasContext *s, arg_CLREX *a)
  {
- #ifdef CONFIG_USER_ONLY
-@@ -489,32 +580,30 @@ void HELPER(wfe)(CPUARMState *env)
- #else
-     /*
-      * WFE (Wait For Event) is a hint instruction.
--     * For Cortex-M (M-profile), we implement the strict architectural behavior:
-+     *
-      * 1. Check the Event Register (set by SEV or SEVONPEND).
-      * 2. If set, clear it and continue (consume the event).
-      */
--    if (arm_feature(env, ARM_FEATURE_M)) {
--        CPUState *cs = env_cpu(env);
-+    CPUState *cs = env_cpu(env);
-+    ARMCPU *cpu = ARM_CPU(cs);
+     tcg_gen_movi_i64(cpu_exclusive_addr, -1);
++    gen_global_event_reg();
+     return true;
+ }
  
--        if (env->event_register) {
--            env->event_register = false;
--            return;
--        }
-+    if (env->event_register) {
-+        env->event_register = false;
-+        return;
-+    }
- 
--        env->halt_reason = HALT_WFE;
--        cs->exception_index = EXCP_HLT;
--        cs->halted = 1;
--        cpu_loop_exit(cs);
--    } else {
--        /*
--         * For A-profile and others, we rely on the existing "yield" behavior.
--         * Don't actually halt the CPU, just yield back to top
--         * level loop. This is not going into a "low power state"
--         * (ie halting until some event occurs), so we never take
--         * a configurable trap to a different exception level
--         */
--        HELPER(yield)(env);
-+    /* For A-profile we also can be woken by the event stream */
-+    if (arm_feature(env, ARM_FEATURE_AARCH64) && cpu->wfxt_timer) {
-+        int64_t next_event = gt_calc_next_event_stream(env);
-+        if (next_event > 0) {
-+            timer_mod(cpu->wfxt_timer, next_event);
-+        }
+@@ -3407,6 +3408,14 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
+         tcg_gen_setcond_i64(TCG_COND_NE, tmp, tmp, cpu_exclusive_val);
      }
+     tcg_gen_mov_i64(cpu_reg(s, rd), tmp);
 +
-+    env->halt_reason = HALT_WFE;
-+    cs->exception_index = EXCP_HLT;
-+    cs->halted = 1;
-+    cpu_loop_exit(cs);
- #endif
++    /*
++     * On a successful StoreExcl the global monitor transitions from
++     * Exclusive to Open Access and at that point generate an Event
++     * for PEs in the same memory sharing domain.
++     */
++    gen_global_event_reg();
++
+     tcg_gen_br(done_label);
+ 
+     gen_set_label(fail_label);
+@@ -3544,6 +3553,7 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+     TCGv_i64 clean_addr;
+     MemOp memop;
+     bool iss_sf = ldst_iss_sf(a->sz, false, false);
++    TCGLabel *skip_monitor_event = gen_new_label();
+ 
+     /*
+      * StoreLORelease is the same as Store-Release for QEMU, but
+@@ -3562,6 +3572,19 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+                                 true, a->rn != 31, memop);
+     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
+               iss_sf, a->lasr);
++
++    /*
++     * We don't fully model the global monitor as it would be very
++     * expensive for every memory access. However in the Arm ARM "Use
++     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
++     * give the example of using STLR to clear a lock. So if a lock is
++     * active trigger the global event register so we don't deadlock
++     * while sleeping.
++     */
++    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
++    gen_global_event_reg();
++    gen_set_label(skip_monitor_event);
++
+     return true;
+ }
+ 
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 59925151fc3..18d64620e40 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -2116,6 +2116,12 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
+         tcg_gen_setcond_i32(TCG_COND_NE, t0, t0, t2);
+     }
+     tcg_gen_mov_i32(cpu_R[rd], t0);
++    /*
++     * On a successful StoreExcl the global monitor transitions from
++     * Exclusive to Open Access and at that point generate an Event
++     * for PEs in the same memory sharing domain.
++     */
++    gen_global_event_reg();
+     tcg_gen_br(done_label);
+ 
+     gen_set_label(fail_label);
+@@ -4218,6 +4224,7 @@ static bool trans_STLEXH(DisasContext *s, arg_STREX *a)
+ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
+ {
+     TCGv_i32 addr, tmp;
++    TCGLabel *skip_monitor_event;
+ 
+     if (!ENABLE_ARCH_8) {
+         return false;
+@@ -4230,10 +4237,23 @@ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
+ 
+     addr = load_reg(s, a->rn);
+     tmp = load_reg(s, a->rt);
++    skip_monitor_event = gen_new_label();
+     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+     gen_aa32_st_i32(s, tmp, addr, get_mem_index(s), mop | MO_ALIGN);
+     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel | ISSIsWrite);
+ 
++    /*
++     * We don't fully model the global monitor as it would be very
++     * expensive for every memory access. However in the Arm ARM "Use
++     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
++     * give the example of using STL to clear a lock. So if a lock is
++     * active trigger the global event register so we don't deadlock
++     * while sleeping.
++     */
++    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
++    gen_global_event_reg();
++    gen_set_label(skip_monitor_event);
++
+     return true;
  }
  
 -- 
