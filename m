@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F99CF55811
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B0EDF55811
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFSsA-0007oD-TN; Wed, 22 Apr 2026 04:23:51 -0400
+	id 1wFStC-0008Ky-Vs; Wed, 22 Apr 2026 04:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSs8-0007mG-AL
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:23:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFStB-0008KW-0v
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:24:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSs6-0006qZ-Jl
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:23:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSt9-0007Gt-Io
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:24:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776846225;
+ s=mimecast20190719; t=1776846290;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8NEPEdeDqv6cBxVai8+eNO3k8v0+/dffPW4ZrIwp1BU=;
- b=FP02ktdElANnzFpaX1XAPAUxyYyyI0PmMpO+1B8YEUXVZoaTo8KQrR3L//ou+s0joy4Quk
- tMu7ew9a3vxwdbd1hIuNyc8i6UKWkV77B34dwpc+JY/o5oo4lTadk1a7OVeVz5KzilAHz7
- QOxShowxhcwtdV2Dh3tMY9OD8hiWK38=
+ bh=7NjCe4tR+DC7c2S34tKn8zgQiJ80QtNMjsdUYG4FrKE=;
+ b=BO+HntUWYG8rWJT9PM82mJIgbu/qymgUkBAhewVc581AihJrvGO2eckcymIBu3mTIWn6tc
+ DqB6alYG86DHwofyTyXwvgV+Yd2gaLxi7IT3rCj687FjlnAIhnJitm1/K1m7E/k53orgGT
+ 9fApPZP3PdnhTiDhxHXOgRjYP/8A4Lc=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-RhAfUJp3NGWqurMdfvglAA-1; Wed, 22 Apr 2026 04:23:44 -0400
-X-MC-Unique: RhAfUJp3NGWqurMdfvglAA-1
-X-Mimecast-MFC-AGG-ID: RhAfUJp3NGWqurMdfvglAA_1776846223
+ us-mta-478-HiA0pmNKMJ6Pzh_B_jcZZg-1; Wed, 22 Apr 2026 04:24:49 -0400
+X-MC-Unique: HiA0pmNKMJ6Pzh_B_jcZZg-1
+X-Mimecast-MFC-AGG-ID: HiA0pmNKMJ6Pzh_B_jcZZg_1776846288
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-488d8deb75fso42108975e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:23:44 -0700 (PDT)
+ 5b1f17b1804b1-4837b6f6b93so59204765e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776846223; x=1777451023; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776846288; x=1777451088; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=8NEPEdeDqv6cBxVai8+eNO3k8v0+/dffPW4ZrIwp1BU=;
- b=JW4MJ8eU/bFO2zZxmSJB/tpjd5Wx68UIWAJCro+hSFtwVge6zx5M2fI5u+Zyibgh1X
- gqUFNWjKBnHELsxRmFRCINsNZEkn239iUGZ+LuTb/kjxMkecATOfbqFmeWcj6hDakOt/
- 1xgFtTbvm+Hgcl3yN+L1slJ27GL2K27aQ86Xyt5psPA4KP5p6mHwqcXxcq866oZ8DD4B
- YKJIZbpIl4NyBryTgZ4J4AlpTWpTfm0ywFite5hfVnxlZzaCi2KbZGAWh2LHSkunoQQO
- QmTh+4b4qgKPrrQpm0kXQ2K88l69thl/2xpTX8Ft61/EZOEn+53UW5a4fzLayLFas9TF
- gYZw==
+ bh=7NjCe4tR+DC7c2S34tKn8zgQiJ80QtNMjsdUYG4FrKE=;
+ b=c+NuZXBC+1nayBMu7MT/aTeyHZ6h/NFAug4qdRLA/qdWVfEZjQqE+tRSLeoAiyl4d3
+ TByoi4G5SbnLIRv4zLl3pHGE6lS7sJcFgsjTTFTkD4Ol4nonZI4WP2zyNkpk5ySNKJsv
+ OEkDndVqA2djXgooNL9oPIGNKxlEPvi0FawRubDtB9j4Anwim0g+tLZXp4QW3kjFfdoK
+ Bujf3G2aM8zhPp+iY0xQzVjSFk3MH/sXyRacjHYQXzncvjRT2aoBJt349WpGMB9zz63c
+ OSZL9IdM5/0MmeNq1EsUq1ViaB2uHngRvj966FjzjJOFPHB0oUP9cAVxD2Lj5rbw/bQe
+ krXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776846223; x=1777451023;
+ d=1e100.net; s=20251104; t=1776846288; x=1777451088;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8NEPEdeDqv6cBxVai8+eNO3k8v0+/dffPW4ZrIwp1BU=;
- b=QgMtd5Fho/bzT6yUfiwmn8Lqw0E0KRx9+RRJE790Yjgn14ro9Si7CKGWpu9V7zYiZS
- UoReV3FMpOG7+N00wrRQL87k7+QOHX81ZFejUzIGckMCm2WOhG3/sMrWBQscE+IdzJzt
- Gs4acUiZpDWAF/vkJtUMtmzg2to2C3qNgJHeHCWBJIPFHUuhO1ZqSbMUtait4+ICB5R0
- /6MVfhPP2bP9Q14uM1rKDTfk5LwvwwnLDW5keJjENri3pqUf0I56Au1EtWjv0visoyfa
- KzfSLl+m3X5Lyyv1Ih8hhwsb8OQVP+v4Ej1JHYRP18S26dVuDiTec4ttFH3nupNew/4E
- IIew==
+ bh=7NjCe4tR+DC7c2S34tKn8zgQiJ80QtNMjsdUYG4FrKE=;
+ b=W+2EMQ2gbPGjVcr9RpdIjtJHYbRsIdpqfC7oPNQ29WI9zIqvjvYq4N0ww0nngrz+eo
+ H88oo68+tBSsdwqrliStU7+ZJaIXPUIYp7tc3LPYUPu1ggVT7dsPMqGyyHb0Ow4Dp9H/
+ jW/IXYIFwSRSo/Z5Q2eQ5qifsPdpODNDTbE9edwpsiaEpGg3VtxlOw+lsU88kxGNijtj
+ IDR8SF3ilRUIrSeczDcHg20RK0RECg6Xh5JV4wzXagBAwQrqhC1jgAtioUgOE4StNoKF
+ 7+p04vbHlwWf7fmavzam1jzZ+WeKCnNK1Fj7DDhFta+5HW3XpsvDUyb67g0Iu/eQvW0k
+ BE7A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+W1Q/o+zxyXubDKeOIQTc++FDNzdNyAlByYlpLGO5eENWBUxKaneBgR54qSEfRoRx2j4Lbotcbv1Rr@nongnu.org
-X-Gm-Message-State: AOJu0Yw5sCWAHbq4CQyh+kSwyE/V96XLmkZ8z04ek4hLJG9ywrYRRjsx
- fuNnYRGVYZceVkjG5HpTIR9xEaEFnMEqnDRy0W+MUi8Cam9sBnsv8IXNOSmFzpjwFgj/qriLyeS
- LsqOrplyzbD3bdKsembuFD57C8YpPp8+Mcg53t9aACGoP5kDcxelhAY8i
-X-Gm-Gg: AeBDievsWKe0Eno2lyeKinU7gPBbfWOQzprm0Ctva9mOSt03BYQ0h6YAw/C3Rk/6jKr
- WmOkf8HTwBvpWX8AjzmC8kmhzvKPwcJWGGt2m/7j1BnE6JffFwPba8DeN13QrhQtrM517Epe5g1
- 3QgYMBsZyk3wTbi4X3UoC/w1fGfOAg399rkw4Tzp92RCIhpi8tRIR0V523A2hsITsYNaBoCfPOJ
- 57Ed7/59orM28BtrCPzT4aw6vxen1+dapgSjL/n8Bd8iM55xCHMYdsIJUBsuurnPRz/RBznGeDt
- hB3DBNahm0HRiV/M6T0QNG2zvmwATf6+6Ze1MLz3Lvr0hBNIdMaKcQzQXF78mIBs8R1GEBdVbFO
- 59UVLBFVgpR/7Okpbhsvb/MMakH+oTA==
-X-Received: by 2002:a05:600c:8b55:b0:48a:57e1:d8cc with SMTP id
- 5b1f17b1804b1-48a57e1d8d4mr69970215e9.9.1776846223178; 
- Wed, 22 Apr 2026 01:23:43 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b55:b0:48a:57e1:d8cc with SMTP id
- 5b1f17b1804b1-48a57e1d8d4mr69969635e9.9.1776846222679; 
- Wed, 22 Apr 2026 01:23:42 -0700 (PDT)
+ AFNElJ9oInNK2dypZ9E6rNiL5xPzWcamGHotuu+8lu3LWTYhAqHUu1tudXcgxAj1Q3RpJbrSuhBeKh5xEZ8H@nongnu.org
+X-Gm-Message-State: AOJu0YyFdnAmAdJzTfKoNViZuEEthEbaxBLAiDBZ40KQALQ+kkkJMCMm
+ wmkamJshXdENf0DweAR1hVCQ/5MK3ehYU8TSwC42HWMd3vIpoMRPAmW9JL+/TbJk6ySXAs4GQEz
+ OISt+jg7pA8j3yS8SKDxbjV3YHycNdAcACtTa4wvZW2fFQ+JyeCGcz4qxBppMrkCP
+X-Gm-Gg: AeBDiet9sMCN+zdevqdzyrou5hOjUi4bD5JLF1V+WepkhdKv56YswOYzOY9tpSonobU
+ LNLvIZv/VBsvNqXAYxV7u6XvBVvlVeqfeD8QQwwJt2VZ7hDCa2aELyJOwSY9oNjAs/zHq8Cla7e
+ tjahjV0sRcJSQvV4BrppQj7PHnJ4+6OdeXb6VNuijO4BdyghMGESn1uVIE8ZQ297qX8NpUNvOlr
+ 4XlOFvdfZj0yelcunWwZAfifp6F5KqMSUFveUwBM9hZthWtM6U+ew8ABamKgHoCTsDdcdwotVnB
+ I47Ru5PF5L3+64suqDyTbQRpkOyQVIHS1RS3M196BuQ8HfRihHMVezGU+Nn9ST7dEPv3KUk5q/P
+ 9t6y8q85pxXHDV/GYTeZ51gUWenR2hw==
+X-Received: by 2002:a05:600c:858c:b0:48a:55d8:7882 with SMTP id
+ 5b1f17b1804b1-48a55d87a58mr73248145e9.9.1776846287964; 
+ Wed, 22 Apr 2026 01:24:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:858c:b0:48a:55d8:7882 with SMTP id
+ 5b1f17b1804b1-48a55d87a58mr73247565e9.9.1776846287493; 
+ Wed, 22 Apr 2026 01:24:47 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.114.147])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc0f82bbsm722666775e9.3.2026.04.22.01.23.41
+ 5b1f17b1804b1-48a55dc9f58sm251467105e9.6.2026.04.22.01.24.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 01:23:42 -0700 (PDT)
-Message-ID: <6470532f-6b1e-4f64-ba67-7775795d6919@redhat.com>
-Date: Wed, 22 Apr 2026 10:23:41 +0200
+ Wed, 22 Apr 2026 01:24:47 -0700 (PDT)
+Message-ID: <540b9ab2-e2de-43f1-94a4-17ff09ae685a@redhat.com>
+Date: Wed, 22 Apr 2026 10:24:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/10] MAINTAINERS: Remove PhilMD from firmware sections
+Subject: Re: [PATCH v2 10/10] MAINTAINERS: Transfer CI maintenance to Pierrick
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 References: <20260422080406.62638-1-philmd@linaro.org>
- <20260422080406.62638-10-philmd@linaro.org>
+ <20260422080406.62638-11-philmd@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -140,18 +139,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260422080406.62638-10-philmd@linaro.org>
+In-Reply-To: <20260422080406.62638-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,41 +167,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/04/2026 10.04, Philippe Mathieu-Daudé wrote:
-> I'm not paid to support this code. I haven't followed
-> it neither, so be fair and just remove myself.
-> Demote the status to 'Orphaned'.
+> Pass the torch to Pierrick who does much better and useful
+> work in this area: https://github.com/p-b-o/qemu-ci
 > 
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Daniel P. Berrange <berrange@redhat.com>
-> Cc: Kashyap Chamarthy <kchamart@redhat.com>
+> Remove me from custom runner files since I don't have
+> contact with OSUOSL or IBM.
+> 
+> Cc: Alex Bennée <alex.bennee@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
->   MAINTAINERS | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+>   MAINTAINERS | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 > 
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index 5aceda193c2..242546498bc 100644
+> index 242546498bc..39f20892d7e 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -2846,9 +2846,8 @@ F: hw/usb/vt82c686-uhci-pci.c
->   F: include/hw/isa/vt82c686.h
->   
->   Firmware configuration (fw_cfg)
+> @@ -4452,7 +4452,7 @@ Build and test automation
+>   Build and test automation, general continuous integration
+>   M: Alex Bennée <alex.bennee@linaro.org>
+>   T: git https://gitlab.com/stsquad/qemu testing/next
 > -M: Philippe Mathieu-Daudé <philmd@linaro.org>
->   R: Gerd Hoffmann <kraxel@redhat.com>
-> -S: Supported
-> +S: Orphaned
->   F: docs/specs/fw_cfg.rst
->   F: hw/nvram/fw_cfg*.c
->   F: stubs/fw_cfg.c
-> @@ -3969,7 +3968,6 @@ S: Odd fixes
->   F: docs/interop/firmware.json
+> +M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>   S: Maintained
+>   F: .github/workflows/lockdown.yml
+>   F: .gitlab-ci.yml
+> @@ -4497,13 +4497,11 @@ F: .gitlab-ci.d/windows.yml
 >   
->   EDK2 Firmware
+>   Guest Test Compilation Support
+>   M: Alex Bennée <alex.bennee@linaro.org>
+> -R: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   S: Maintained
+>   F: tests/tcg/Makefile.target
+>   
+>   GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
+>   M: Alex Bennée <alex.bennee@linaro.org>
 > -M: Philippe Mathieu-Daudé <philmd@linaro.org>
->   M: Gerd Hoffmann <kraxel@redhat.com>
->   S: Supported
->   F: hw/i386/*ovmf*
+>   S: Maintained
+>   F: .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+>   F: .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+> @@ -4538,6 +4536,7 @@ M: Paolo Bonzini <pbonzini@redhat.com>
+>   R: Marc-André Lureau <marcandre.lureau@redhat.com>
+>   R: Daniel P. Berrange <berrange@redhat.com>
+>   R: Philippe Mathieu-Daudé <philmd@linaro.org>
+> +R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>   S: Maintained
+>   F: meson.build
+>   F: meson_options.txt
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
