@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC4CFA1FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07526FA1FEF
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdmj-00061u-US; Wed, 22 Apr 2026 16:02:57 -0400
+	id 1wFdjZ-0005Zf-50; Wed, 22 Apr 2026 15:59:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdmV-0004q7-Nr
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:44 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdj3-0005JB-50
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:59:11 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdmU-0003cM-9P
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:43 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488af9fdaa7so35770305e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:02:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdit-0000Kt-Nf
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:59:02 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43cfd832155so4275106f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888160; x=1777492960; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776887931; x=1777492731; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=syv59dGc7uaXA2qNUSVza02efIGQ1JTml0069Q16s2Q=;
- b=evUPoRv6kpsSl2Bkqra8wo/SA1YLu8KpYDRoYqOBH7+kV2Q1HWsEG42PPOKYmAYy/6
- fcMxVug+qcnwukJ3nrVeFurH8fDv2SqLTZYj+B/L9NXmeyHTGUNI7gPb2Drh51ea2SO/
- iulcUv8RozCJPnlp7BUGAhfb3hBARe5YsHUcy0um+AdvKWJBQJM1JOmhv6lzw9ca0OMc
- pH2H0KzCUnoD22Tf35OmURsBz9fdekki/0Z8nODUPumtdUeiAscUsQJtYYpDy0nMCAPi
- bGLdOI6/O9V2KBBlxZaXTB5OYbL1PVD7pXgC7Q+JbeqG7Ns2T289VgBs/Z14y1BG2tTM
- ZEXQ==
+ :reply-to; bh=EabXV5bbbt9IOKKRaZXmzK/DuHJza8oKP7g2gWuQKNE=;
+ b=udcDq54GOGXu4qb0UwBrQBZPdMuYwrlWM1VaoDFYnmimZtU3JFN7WgNeliAdoVLCXf
+ vkJYov6oNh6Mfcj4C7jvjFyXcPKvDQpjtfHqOpguJ0K5q8szFqCNIg5tJ+jz5/5iWhS6
+ NYuu79MFue5ewJnFmX/Z1S/MLY5Mt1q9Q0MoOMLefaKxfCcnq1fKVgaliFHCvFHwBWNX
+ 8Cad1jmamsxrQx5n5N9hR4fd0JQf8N5x47If+pPSQbXXxIrNrZUFlJ7BBjDUTRDsXRzD
+ NlXoqpjnuprKsMRimmmTj/+xHtF1jFX7qwYwlgYmKONpkuFrhg2scy43hFnUdTyvtGqR
+ bZHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888160; x=1777492960;
+ d=1e100.net; s=20251104; t=1776887931; x=1777492731;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=syv59dGc7uaXA2qNUSVza02efIGQ1JTml0069Q16s2Q=;
- b=REaXtCGSjVPVprlXW3gFNCx1WT5Nzr5yyL648GqAwxVaLGCfWQQr7eE61LuY4kZ/AV
- eCuJegt6H/3nZaBV/1JWyLRbDT+JNahXOmiRXF3yoDHAm1AWNPStqov3Szm42fpooe2d
- 3/pDuv2EhlmmTktZuE1w7FusaFbCaqzU09YBro52toXisqSKCbvenipY0R/avEBbjOZB
- 5AdmKjC2KQFqeN3rieXPRlzEh5P+nexC1WDL6Rw6XP7DQBTjkaQyN0BBe98DHv/EAFSR
- 4VVUwWRUkvr45dX6/QkU5LvKcFUasLei29ZKir8YEbFObBwIoWOk61U3iO5784tAX2TJ
- qEQg==
-X-Gm-Message-State: AOJu0YzbKymZj2yrS5eX7ibqt2Xrx0zRB+1AtpG43EtEnFLWOV9eFU1O
- /DUwVoi6Dqe3ewAbeeGPIG6wg0XBrZNyqTzihjW4T6cJcXy3+NzFUYXbCZAbRBKYCW/rW0hJOsN
- 1Q97A/vg=
-X-Gm-Gg: AeBDieuI/GEEO7oFSkAW0D76qMwJpJ8fCVozSWSQBwLnFA2S3cLVdYBPYbwDtHL2kxH
- rSxkos/P4JnhcIcxnmDJLSU/YXydkK5IkPT6/yrsqubqba/XsrOtlBKfuDYkCkimHn+wvfFb9KH
- JMlyjxgYw4tfKZydwuUEtFt03x12zNZpBeubCjg3Ie1JTqjyZBvxf8YFWJg/ZcdKIALYWUjjTet
- 5F6DMuwaDgk8gpVftyHRKsiEf5CsiRCtWMyT+qdb1J7CnKV7awKOFgqVC5JkKc59e3tJIrEIX0I
- zybjAxGwOr4XJ4/wJUzk6kEZfgURpQlZ+5CdGve20g/a9GMxvfuWu5WuKRnQTgfv8K9uS/db/m+
- oPmzH1eJQIELlggzlM08M46/fsBkPRgz0jCVotHQdZOjNxy6rqVPumJzwST5fL2Vwj9Kjg2d+jm
- C+A+TNBjqyrha0CW+/NTr/RLaErkC5FghiGUo3D/i9l0ZRws5ERrfIVaKhiyfNbKQlZSHXae5SU
- mUlZtLYUSE=
-X-Received: by 2002:a05:600c:5297:b0:485:9a50:3370 with SMTP id
- 5b1f17b1804b1-488fb74a431mr389259195e9.8.1776888160295; 
- Wed, 22 Apr 2026 13:02:40 -0700 (PDT)
+ bh=EabXV5bbbt9IOKKRaZXmzK/DuHJza8oKP7g2gWuQKNE=;
+ b=RDY2z8JtaPArr7vJX+uBE/zoloLznNyXfmI2ORAVi5a5MkkdcWp4IYCjDn9kXpBvxd
+ rY1BqFaiEBvNHHvxCCJQx8Jjg00DZBVzs/vC+Xr1KI9clZ5hrqyMPnWIWQ+uuxAf51WF
+ Fi3CwUc0V/or4mRofLSi5ziWwZR2pNbqLynHRlOBvvf9vi3kSAyiJuTicGCArOM2VBMo
+ N/fxHb3B0+7Wj+/sUcd8A33ZcEK9W/MaSU0iQe0PTNPlrWoIPa1q6Tg8QVYPzSREeC4b
+ OXBSPOj12CloY+0uUgijtBWmGBBDRZm8SIBU0Dmh/gQPv+NCBVOLnjdbcMSU6llHcDXu
+ HcMw==
+X-Gm-Message-State: AOJu0Ywtyc98uC4rBGONEDwFdaIocQ89+9kelHhGy62dYHt7BDmzXzTJ
+ X1Fk5qrXQsUWeH1ecEzf0+/lx4tfs1SIFTRX+kWDyYKX7ai9kwH+7zFlD6xbsZ0/1rujTWcAHi8
+ XM+A0pKg=
+X-Gm-Gg: AeBDievA+0Ib4mVhYQWg5I8FrNgoyd2GsfI1PP54fCj652WCsLgdJX1KqQ9fqbFfpwE
+ psv6OmrcpriH+3SGg11PxkkGVaoEDPKLTC9K0qrSGIPsghGZ/B3IxxTQyd7QGdhpO3cLyie4bdR
+ M1sNj84e7xKhi6JedF3KVVbhzFkYIwxEvA9x7Su/mJIiAWb5afSn0V2DBcjpAGp+ZzyX3U7XIcw
+ fkk991YDXdy6qqXptfDmfHpv67tUXpuU3Zzg9Q+uIgtMwVzBsdQvX9sSmQR22m4d4mOEH2rnB89
+ M24Xzgj2OSey8H4Jfkfjmnx18kPkWNfATpN/ICookiNEXcBH4rcJneQ1+lOY26kF7/RPAA9Texk
+ L+BP6R7ODTQkAQI/O0Z2xP92UaSX6S14PfbnEFwKksC2Vkrv8Tg/D9zLsMxFbZk7Bo0tAcoUAHg
+ gAgfeFBHEtdGqDCkfMjnBZKTTZMTwWeRqIKCvHt+Vz8zlLwHW4zbTwVxEYCr7zhk5qkTXZrn7xg
+ nmcdJ2mK1U=
+X-Received: by 2002:adf:f148:0:b0:43f:e413:f6fe with SMTP id
+ ffacd0b85a97d-43fe413f7b5mr25156496f8f.0.1776887931313; 
+ Wed, 22 Apr 2026 12:58:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc177dafsm572576755e9.4.2026.04.22.13.02.39
+ ffacd0b85a97d-43fe4e4633bsm47246188f8f.26.2026.04.22.12.58.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:02:39 -0700 (PDT)
+ Wed, 22 Apr 2026 12:58:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 41/48] hw/hyperv: remove duplicate include
-Date: Wed, 22 Apr 2026 21:57:39 +0200
-Message-ID: <20260422195746.88865-42-philmd@linaro.org>
+Subject: [PULL 09/48] hw/microblaze: Include full path to target 'cpu.h' header
+Date: Wed, 22 Apr 2026 21:57:07 +0200
+Message-ID: <20260422195746.88865-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,46 +99,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
-
-exec/target_page.h is included twice
-
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260420163452.327350-2-osama.abdelkader@gmail.com>
-Reviewed-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260420163844.332663-1-osama.abdelkader@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20260313062055.2188-27-philmd@linaro.org>
 ---
- hw/hyperv/hyperv.c | 1 -
- hw/hyperv/vmbus.c  | 1 -
- 2 files changed, 2 deletions(-)
+ hw/microblaze/boot.c                     | 2 +-
+ hw/microblaze/petalogix_ml605_mmu.c      | 2 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
+ hw/microblaze/xlnx-zynqmp-pmu.c          | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index a19f330e192..a854a4927a0 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -26,7 +26,6 @@
- #include "hw/hyperv/hyperv.h"
- #include "qom/object.h"
- #include "target/i386/kvm/hyperv-proto.h"
--#include "exec/target_page.h"
+diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
+index 4ad5ffd34bd..a93b68e1e48 100644
+--- a/hw/microblaze/boot.c
++++ b/hw/microblaze/boot.c
+@@ -26,7 +26,7 @@
  
- struct SynICState {
-     DeviceState parent_obj;
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index 5388f4277f3..dcfce700052 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -21,7 +21,6 @@
+ #include "qemu/osdep.h"
+ #include "qemu/datadir.h"
+-#include "cpu.h"
++#include "target/microblaze/cpu.h"
+ #include "qemu/option.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index b3bdc4d65f2..8f9f54ff1e2 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -28,7 +28,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+-#include "cpu.h"
++#include "target/microblaze/cpu.h"
  #include "hw/core/sysbus.h"
- #include "exec/cpu-common.h"
- #include "system/kvm.h"
--#include "exec/target_page.h"
- #include "trace.h"
+ #include "net/net.h"
+ #include "hw/block/flash.h"
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 0c9a6bf2529..c5f64319009 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -27,7 +27,7 @@
+ #include "qemu/target-info.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+-#include "cpu.h"
++#include "target/microblaze/cpu.h"
+ #include "hw/core/sysbus.h"
+ #include "net/net.h"
+ #include "hw/block/flash.h"
+diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+index f4c55589b7f..00154236bf8 100644
+--- a/hw/microblaze/xlnx-zynqmp-pmu.c
++++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+@@ -19,7 +19,7 @@
+ #include "qapi/error.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/boards.h"
+-#include "cpu.h"
++#include "target/microblaze/cpu.h"
+ #include "boot.h"
  
- enum {
+ #include "hw/intc/xlnx-zynqmp-ipi.h"
 -- 
 2.53.0
 
