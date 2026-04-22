@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B1FF9B612
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F579F9B613
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV3P-0008Nm-IE; Wed, 22 Apr 2026 06:43:43 -0400
+	id 1wFV3T-0008Nn-Ap; Wed, 22 Apr 2026 06:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV2s-0007qZ-TB
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:43:06 -0400
+ id 1wFV2n-0007hs-UO
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV2r-0002sL-1X
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:43:02 -0400
+ id 1wFV2l-0002r6-CT
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854580;
+ s=mimecast20190719; t=1776854574;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dAPEZqPVlqI/Ix+UbD+z6qbYzx34VN3hlz27RXGb1r4=;
- b=TYB5nqoWK71fnkddXacz5nGlBxrsIPM/gTHGDLwRFsxto7dhaummPoK2qM/xIyjhjbAxA+
- vaHI4KOM4ZgKAV6nw5tswVbfIvYuuf7EozGjPvZhXOyr+NLcBLuSwg5cDVbjJrhVVt7yZL
- bsni/4+EMU2zZXoCb6NB0UiFHthVWSI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=uhPhytE3lWDcWixEkyVZWAGAeNYkIorN1jvF2AFhexw=;
+ b=KFo/Kq/vfp2G9YlIlyFbq0dtLDF051Zn7Toh1rKWgwN4OyY/+Xj+npXGZRGtlI4mSJsNw0
+ 9nmHCPIZez7V5cdMiF8l81JN56EpJ1YYh+1HJed5w4cQXKPCoxSCEXiZrDwCqt6ZWVbd3P
+ 01Gf4YuxbiqSQPgbKD/ZJCH9bx4q0Rw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-J4wsfUteMMG_Ce6c7WFEfg-1; Wed,
- 22 Apr 2026 06:42:58 -0400
-X-MC-Unique: J4wsfUteMMG_Ce6c7WFEfg-1
-X-Mimecast-MFC-AGG-ID: J4wsfUteMMG_Ce6c7WFEfg_1776854577
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-AnyA1LDYNrWLQbOB9LPmCw-1; Wed,
+ 22 Apr 2026 06:42:53 -0400
+X-MC-Unique: AnyA1LDYNrWLQbOB9LPmCw-1
+X-Mimecast-MFC-AGG-ID: AnyA1LDYNrWLQbOB9LPmCw_1776854572
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B863A18002C6; Wed, 22 Apr 2026 10:42:57 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C2641800473; Wed, 22 Apr 2026 10:42:52 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.21])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9805E1800446; Wed, 22 Apr 2026 10:42:55 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1B9261956095; Wed, 22 Apr 2026 10:42:50 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 21/40] ui/console-vc: decouple VT100 display updates via
- function pointer
-Date: Wed, 22 Apr 2026 14:40:22 +0400
-Message-ID: <20260422104042.3936506-22-marcandre.lureau@redhat.com>
+Subject: [PULL 20/40] ui/console-vc: make show_cursor() take vt100
+Date: Wed, 22 Apr 2026 14:40:21 +0400
+Message-ID: <20260422104042.3936506-21-marcandre.lureau@redhat.com>
 In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,103 +87,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Replace direct dpy_gfx_update() calls from the VT100 emulation code
-with an indirect call through a new image_update function pointer in
-QemuVT100. This decouples the VT100 terminal emulation from the
-QEMU display layer, allowing different backends to provide their own
-image update implementation.
-
-The QemuVT100 typedef is changed to a forward-declared struct so the
-function pointer signature can reference QemuVT100 itself.
+Decouples glyph rendering from the console object,
+continuing the QemuVT100 abstraction introduced in the previous commits.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ ui/console-vc.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index fb1c8866a03..bc8462f979e 100644
+index 34d9101679a..fb1c8866a03 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -47,8 +47,11 @@ enum TTYState {
-     TTY_STATE_OSC,
- };
- 
--typedef struct QemuVT100 {
-+typedef struct QemuVT100 QemuVT100;
-+
-+struct QemuVT100 {
-     pixman_image_t *image;
-+    void (*image_update)(QemuVT100 *vt, int x, int y, int width, int height);
- 
-     int width;
-     int height;
-@@ -65,7 +68,7 @@ typedef struct QemuVT100 {
-     int update_y0;
-     int update_x1;
-     int update_y1;
--} QemuVT100;
-+};
- 
- typedef struct QemuTextConsole {
-     QemuConsole parent;
-@@ -221,6 +224,11 @@ static void vt100_show_cursor(QemuVT100 *vt, int show)
+@@ -192,9 +192,8 @@ static void vt100_invalidate_xy(QemuVT100 *vt, int x, int y)
      }
  }
  
-+static void vt100_image_update(QemuVT100 *vt, int x, int y, int width, int height)
-+{
-+    vt->image_update(vt, x, y, width, height);
-+}
-+
- static void console_refresh(QemuTextConsole *s)
+-static void console_show_cursor(QemuTextConsole *s, int show)
++static void vt100_show_cursor(QemuVT100 *vt, int show)
  {
-     QemuVT100 *vt = &s->vt;
-@@ -250,7 +258,7 @@ static void console_refresh(QemuTextConsole *s)
+-    QemuVT100 *vt = &s->vt;
+     TextCell *c;
+     int y, y1;
+     int x = vt->x;
+@@ -214,11 +213,11 @@ static void console_show_cursor(QemuTextConsole *s, int show)
+         if (show && cursor_visible_phase) {
+             TextAttributes t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+             t_attrib.invers = !(t_attrib.invers); /* invert fg and bg */
+-            vt100_putcharxy(&s->vt, x, y, c->ch, &t_attrib);
++            vt100_putcharxy(vt, x, y, c->ch, &t_attrib);
+         } else {
+-            vt100_putcharxy(&s->vt, x, y, c->ch, &(c->t_attrib));
++            vt100_putcharxy(vt, x, y, c->ch, &(c->t_attrib));
+         }
+-        vt100_invalidate_xy(&s->vt, x, y);
++        vt100_invalidate_xy(vt, x, y);
+     }
+ }
+ 
+@@ -250,7 +249,7 @@ static void console_refresh(QemuTextConsole *s)
+             y1 = 0;
          }
      }
-     vt100_show_cursor(&s->vt, 1);
--    dpy_gfx_update(QEMU_CONSOLE(s), 0, 0, w, h);
-+    vt100_image_update(&s->vt, 0, 0, w, h);
+-    console_show_cursor(s, 1);
++    vt100_show_cursor(&s->vt, 1);
+     dpy_gfx_update(QEMU_CONSOLE(s), 0, 0, w, h);
  }
  
- static void console_scroll(QemuTextConsole *s, int ydelta)
-@@ -1028,9 +1036,9 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
+@@ -1023,11 +1022,11 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
+     vt->update_y0 = vt->height * FONT_HEIGHT;
+     vt->update_x1 = 0;
+     vt->update_y1 = 0;
+-    console_show_cursor(s, 0);
++    vt100_show_cursor(vt, 0);
+     for(i = 0; i < len; i++) {
+         vc_putchar(drv, buf[i]);
      }
-     vt100_show_cursor(vt, 1);
+-    console_show_cursor(s, 1);
++    vt100_show_cursor(vt, 1);
      if (vt->update_x0 < vt->update_x1) {
--        dpy_gfx_update(QEMU_CONSOLE(s), vt->update_x0, vt->update_y0,
--                       vt->update_x1 - vt->update_x0,
--                       vt->update_y1 - vt->update_y0);
-+        vt100_image_update(vt, vt->update_x0, vt->update_y0,
-+                           vt->update_x1 - vt->update_x0,
-+                           vt->update_y1 - vt->update_y0);
-     }
-     return len;
- }
-@@ -1128,6 +1136,13 @@ void qemu_text_console_update_size(QemuTextConsole *c)
-     dpy_text_resize(QEMU_CONSOLE(c), c->vt.width, c->vt.height);
- }
- 
-+static void text_console_image_update(QemuVT100 *vt, int x, int y, int width, int height)
-+{
-+    QemuTextConsole *console = container_of(vt, QemuTextConsole, vt);
-+
-+    dpy_gfx_update(QEMU_CONSOLE(console), x, y, width, height);
-+}
-+
- static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevVC *vc = backend->u.vc.data;
-@@ -1158,6 +1173,7 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     }
- 
-     dpy_gfx_replace_surface(QEMU_CONSOLE(s), qemu_create_displaysurface(width, height));
-+    s->vt.image_update = text_console_image_update;
- 
-     s->chr = chr;
-     drv->console = s;
+         dpy_gfx_update(QEMU_CONSOLE(s), vt->update_x0, vt->update_y0,
+                        vt->update_x1 - vt->update_x0,
 -- 
 2.53.0
 
