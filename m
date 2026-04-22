@@ -4,76 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51E3FA1FC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 16:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E66FA1FD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 16:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFaT9-00057v-UX; Wed, 22 Apr 2026 12:30:31 -0400
+	id 1wFaql-0000cJ-3S; Wed, 22 Apr 2026 12:54:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1wFaT5-00057I-Fl
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:30:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1wFaT3-0003Kx-Sh
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:30:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776875422;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BjmfO0yef6kA1xNy1Y3HMovxD+y48D5FJPyYtPucIfg=;
- b=WAESOtahv7B+r3BOxBN/inR3QdT1ZJZ5w2ltmXYbWmMEXSecRCPJsSyv0pxola+nd/fSOH
- Tc9wPNcLH45v2VaYUTWKeAdEp11tq3VSvB3EHdL5eobF5PdzKhnm3cMT5x9/+8ToZ89rmn
- /1cq31CTEU44Yat2VxqWeGVa4TMMESw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-qIeuUwPcM7GshO1j2F47Cg-1; Wed,
- 22 Apr 2026 12:30:19 -0400
-X-MC-Unique: qIeuUwPcM7GshO1j2F47Cg-1
-X-Mimecast-MFC-AGG-ID: qIeuUwPcM7GshO1j2F47Cg_1776875418
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE07319560B3; Wed, 22 Apr 2026 16:30:17 +0000 (UTC)
-Received: from tpad.localdomain (unknown [10.96.133.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 801A9180045E; Wed, 22 Apr 2026 16:30:17 +0000 (UTC)
-Received: by tpad.localdomain (Postfix, from userid 1000)
- id 35F92400DFC8C; Mon, 20 Apr 2026 12:01:02 -0300 (-03)
-Date: Mon, 20 Apr 2026 12:01:02 -0300
-From: Marcelo Tosatti <mtosatti@redhat.com>
-To: Florian Schmidt <flosch@nutanix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 2/2] Add HvExtCallGetBootZeroedMemory
-Message-ID: <aeY/rmwBQp5F/wPf@tpad>
-References: <20260112113139.3762156-1-flosch@nutanix.com>
- <20260112113139.3762156-3-flosch@nutanix.com>
- <a28bd807-6e98-4393-a354-b7ed1f7a08ae@redhat.com>
- <aeHKfOmm2b7cY70i@tpad>
- <80e6ecc4-eac6-40ee-aaf8-da60daaf96d4@nutanix.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFaqj-0000ZL-K8
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:54:53 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFaqf-0001Ry-JO
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:54:52 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488ab2db91aso74389975e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 09:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776876885; x=1777481685; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dyX6iB+ghmF0Liu8wzTVBQQmwfbY34crzFr77oC5wv0=;
+ b=x0ZAh4yIKWMg7DDADun/MF5G4vci11WYesvGFLHtQrXeBDjTmUh9slrWNgV7npBR8D
+ 79gWd3hWcX9YPS2b/vNyphbieOXE5lL7KyNdN8x+zuA26ktVkcScxeOBecL3fCJnpY2r
+ KgTbYMydlAJArfrgtCySEAEQG1oPC2G9YQJ2crTz8TmrkEjMQ1eOkE/0Hh0KCFi1FBtU
+ Dx+Z33XzS40uGP/cZhX6s8gyBwofLktiftgitgi145PcW7uBMo2yiM6LcBBUXt6ovEmL
+ Zs57uLAfNQ2WPERkgs6zwC8AfNYuyQhoAkzMAssizq6sXgCDGD+kTQzquh14HJgbblOT
+ Gpaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776876885; x=1777481685;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dyX6iB+ghmF0Liu8wzTVBQQmwfbY34crzFr77oC5wv0=;
+ b=jmN7GNq7/t8PcHP0j8tZILBtbDqPlx/QceOVpEOLvNAu5I6hwV09SMIp7UfOdPRj9E
+ kB1SkhxQlg3fTw5LKX2hvHU7M/LeCu5H2v7k14r4dkradQl4lI+nU335j8zv+9fVbei5
+ lKoQNafoFMQPtbmKPjQo2ku+GS/XpYg8RG026MSIgvdQy9wVcLu75zZo/bqEm0hk2Jde
+ Uj5YI+IS1e2qWi5GvMKUaOUNCsc7HmyHiWebTgega61FzuzA+rKgmIrpmomF1cycsOhw
+ GbRYT1E8Wqjev8tGM0Tx5KNOYeH/khcDqcntjxCPAQX3mDYBO00FuDNbwq1nqTSt2R0S
+ 4W3w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9clI7drd2Wguot+7fLUTJ0KTYXyMHWG0qdli6Sd6Vfjc7HAPSE8S0no+OkAXqoVSSzuw9hXuVmGmXh@nongnu.org
+X-Gm-Message-State: AOJu0YyzOznEmCa1O2Q24x+ez+9pMfT2HFKb9FGq2FU0y2MNotkdjDoY
+ hoHzUb3Fjj3El8WLhgYApphtG4EZ5Bg2xJbtpZztZmn9lTszSRKlyvmKKB6jFVxruaM=
+X-Gm-Gg: AeBDieskZ2IfMb8lMXkLsSEBgZ/yIw1aTqO5FR2AmOv7bZUtG+SD//F1Mzb3D2EYvd9
+ aqPNhUwds4bVBRMKRKFNpF3nlzKxsDH2jqP8AuQ3rU994GZEd0yIUD0G+7r5I9qrmcwF+qYTJOo
+ vqQZJEfVedBQgEW2E5Sdthkuq9PVtq0WpVX0SIkE9delgfbRdIfFDx7ggXVDcBSid9Rx2o2v7uY
+ +3QnOffGQ4uvc+u90hAv9VzxD6fW3p0f4w30gV8f3jcum96yTvfYh7HnUR4RRnf5LIOUQmbUxaW
+ H33ZIr5K/yNIHFomVI7MaPbWrBevOCj6jW6EguLztLk4lRBMO+Yt++enylpjN/Zq56yAFRRmTnv
+ 4hCx9eQ7zmIrS8HTTTM8B+hMY4zhBY61HzhnaLbXwMDiHUEVh/GW3nCLBY9FMJ3IjGSrAP4a4pa
+ zwrf3qrBihgKWhWyclHzB3FnRmZPwJXzYG8YEdjl6P/MxcSVAyVVgZGhG4yoswfJ3LOI9NNxy1e
+ kDK
+X-Received: by 2002:a05:600c:3483:b0:486:fba7:b150 with SMTP id
+ 5b1f17b1804b1-488fb7787d7mr309014715e9.15.1776876885245; 
+ Wed, 22 Apr 2026 09:54:45 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4891941e05bsm90327535e9.36.2026.04.22.09.54.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Apr 2026 09:54:44 -0700 (PDT)
+Message-ID: <080d3c06-a90a-421e-8254-0b834c146784@linaro.org>
+Date: Wed, 22 Apr 2026 18:54:43 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <80e6ecc4-eac6-40ee-aaf8-da60daaf96d4@nutanix.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mtosatti@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 19/32] target/arm: make hvf use syndrome helpers for
+ decode
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>, 
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260422125250.1303100-1-alex.bennee@linaro.org>
+ <20260422125250.1303100-20-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260422125250.1303100-20-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,30 +110,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 20, 2026 at 10:25:43AM +0100, Florian Schmidt wrote:
-> Hi Marcelo,
+On 22/4/26 14:52, Alex Bennée wrote:
+> Rather than open coding a bunch of shifts and masks we can use the
+> syndrome definitions.
 > 
-> On 2026-04-17 06:51, Marcelo Tosatti wrote:
-> > Is this to improve boot time of very large guests ?
-> 
-> It depends a bit on how you define "boot time". It won't make a difference
-> if you measure the time it takes to create the VM until you start the vCPUs.
-> It may even make a huge difference if you measure the time until a user can
-> first log in.
-> 
-> What it will do is reduce the time the guest spends on writing memory,
-> mostly in the background, to zero out all pages it has gotten from the
-> hypervisor. The main advantage (other than saving CPU cycles that are
-> effectively wasted on an unneeded operation) is that if you don't
-> pre-allocate all the VMs memory, then the VM won't touch all pages after
-> boot, keeping the RSS down until the memory is actually used. That's for
-> example useful if you overcommit/oversubscribe VM memory.
-> 
-> Cheers,
-> Florian
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   target/arm/hvf/hvf.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 
-Hi Florian,
-
-That is useful!
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
