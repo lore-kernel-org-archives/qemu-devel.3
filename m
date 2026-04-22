@@ -4,150 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE9CF94CD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 06:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6550F94CDB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 07:12:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFRXx-0001Qn-R9; Wed, 22 Apr 2026 02:58:53 -0400
+	id 1wFRkc-0002y3-A3; Wed, 22 Apr 2026 03:11:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wFRXf-0001Nm-PW; Wed, 22 Apr 2026 02:58:36 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFRka-0002xv-RX
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:11:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wFRXd-0001xV-6t; Wed, 22 Apr 2026 02:58:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UbfE+VCxUHsJdEU24/buEQ/RZn9Jq46yi5jTncWLYNcjwl4Skr3L5+UPrSlNS1oEtJxqfcvxKKL3U2Ik0Y9TIGhojFK6JdkX6BAauhABqvNQRpeFX7KhvAsDlBD+VkvTUifvO3y89n04YKeKqVHBiqsnAS6e4vMlocJwO1mXkl2ZM8O4LXubmbWLjcFJU8d3zJPg9Ny1JD6m5U5uUeHOwBw++H0p/uoQOt+lLc7rtzXbwXFr/Cc11YIv0OUfahUbnWLF2uRgT0i/AhowZBm6VJWjMO9To6xTF9XOefNui4uVmPVJf/7uhStcnfWaXDxUh0ZBXtAG/IKoNwO+rC9x/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Fj3xfCAJPRbVBZNufv2loGtb1eu11qWRBdbJUdTEKHA=;
- b=rSN1P5/oNzmBxyJUaHgjdJCUT8LWOd7Z39qNZ5XhH6lzugF++GichDp46P4t+PQoy1F3bhmTtF8bZNbNRoPdbkJPbJjTScHLd0l2SqKytb3ne9Z5LUIxa/Bc1aSpvtmsUAmcxIK+up+Aac3McHNbmcpLNLERpNHkk1Xg1OcOxyVMnccuxeBxXufdg4TpzTUkwLwI3pIGddJDWoIHiKhXs6rFYyfhvFd8ymi4YKRzwTeQIUEV77/OC33Yhk+52CwFOorPVkcBvepTeLmpzIuiDsBJ6Qq0nBYG5EkVK3u3aGEB/QcMxjXKe6RNSqiIj8msxbgu+xgvsCR86Ez0NEaptg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Fj3xfCAJPRbVBZNufv2loGtb1eu11qWRBdbJUdTEKHA=;
- b=A2sZkPNsOqRrBUhN8gbZD7bl+epY8E4uuiImAowawx1jY7xnM+VeZkR7zzd4hcZT/QmFSPqxved8PFLB3awSiiA8ALR4y7SKLhFyJT0PCdX8Ixs9Po/7k4PWMCtPxtkHtL19vL377lmnCfnqoayHmoZQc2AlFTSweryLfv0WmgI93vDEWlUfrZJ9QvF81aAvMVlBSnVDHKBFAfzG0KbE/tdkpiDMdw5exn1M5imbjfpJ4LGIVGprH3Tee8vYfTwAfIXCsr3oFxK6MZUvay9StHgU6Bqa9/5OJphRs+SxKztD0P1RXkJ/mYevD+x32XVkdn9ZPB5S3/zPcCRNPqG5tw==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by TY0PR06MB6853.apcprd06.prod.outlook.com (2603:1096:405:11::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.33; Wed, 22 Apr
- 2026 06:58:23 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9846.017; Wed, 22 Apr 2026
- 06:58:23 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>,
- =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Peter
- Maydell <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
- Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-Subject: RE: [PATCH v3 13/17] hw/usb/hcd-ehci: Add descriptor address offset
- property
-Thread-Topic: [PATCH v3 13/17] hw/usb/hcd-ehci: Add descriptor address offset
- property
-Thread-Index: AQHczUNUCGCAr2wNUUqlxwuOt/36CrXi0Q2AgAAGdwCABJoRoIAAHPGAgAMgrZA=
-Date: Wed, 22 Apr 2026 06:58:23 +0000
-Message-ID: <TYPPR06MB8206AD232DDC788EF2F1D707FC2D2@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20260416014928.1279360-1-jamin_lin@aspeedtech.com>
- <20260416014928.1279360-14-jamin_lin@aspeedtech.com>
- <04a8d8d9-f605-4bd3-8468-0e2840ae8311@kaod.org>
- <20ee6c39-d0ff-4e07-95e6-5aeb86dc0916@linaro.org>
- <TYPPR06MB8206A19AD70BA0FAD7F68B15FC2F2@TYPPR06MB8206.apcprd06.prod.outlook.com>
- <8ae66243-d55d-4d7b-bcab-dbdcd680aaf7@kaod.org>
-In-Reply-To: <8ae66243-d55d-4d7b-bcab-dbdcd680aaf7@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TY0PR06MB6853:EE_
-x-ms-office365-filtering-correlation-id: bd68eda8-c93f-4d21-2b13-08dea03c8bb0
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|38070700021|921020|18002099003|56012099003|22082099003;
-x-microsoft-antispam-message-info: gg224SVlXJ7g7psA6htSk3B+QYIcekVJmTkjPWkQsNqUwBj/pKM+4I4e8RQQ4eudENBn1ALA3LBkoLwZDgv59qgIZCQavU4s5wwVJg/9uoKTqdGUD+wvMKZVDqhF7I0L446BnwXoOcToNBgOsTSYDkxbqaRa3QQabdIZ+FGUX6ATzm8QlCzQ5BfzJStiQEMZ3Sr4qjbxh80S3lVpi38p0emvvAkuBh0bmzIdo0T7PepTVG3k+TpOxSwWljWQSqTKDMU9vN0RwjtGSb5dqLIOV1iBZHoD2Sj9xfLnAiu/oPUdICMFv4n1Vd3l4OKKYQVyVsvmstG5sV+YYRsxgGJWLRpBXV9BDyhAz1kId6++OkEkPsGljMgu5157yU0ujGBPnviYJ/2qFhGaEQ0Fm7qx0isJoR+wF90izAI+2JTCPMGsKB73hAJR1o3g72rcRz4efcfjb9jG8xuBV2wvNtjy53LmBWPlMiHenCOP3qtDGyKIp28fSzK6+LFwKTglPE2JRmXb614GV9EkIEG9H1DcbVTRcEcQUiXh6E/AycznV+xPCdjMSLVEF4toHPgKdiPQ4eOXvzixhs6GeEegzNpB7fVIK6tgWxb+/SSz1uA0Z8hs3AGg+rjUPktmRnhiFMRyCYebDkE8B0oSS3lBe/2sKx1mh+DkwK7QH+Wh/3ocPVxyrw0kJ+I0xIiD8UCO1WtSh5fAZbBvemm5teaDzVraTblX6JO5Dcx+YO3uckWkQgeGj0k+lHJh84AhET1rWul0XOMaw6QvoIsB/k/neYqACL8adY1T3hyvOMvtLiCuN9sR4z8+0wVspgDTDYuejF/K
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700021)(921020)(18002099003)(56012099003)(22082099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WlJza3loQmh5MEpLWkZvQjBDMFZ6Vk9SMENmdGZYMTZ5RXRnL29XY0g4bkk1?=
- =?utf-8?B?V0V3eTRPNjlNdWRTYW5tdmNVS0tCcXEvVUY3NmtTamRaUGxvN1ZLWEN6SHQr?=
- =?utf-8?B?eHRtbUxkSnJLWkV0b04vbGMvcWlJcFJ1bWNNUFlkb1BsZ0hjOTlEUUlNSVVG?=
- =?utf-8?B?QmNleGJkMDliVGlvWlNtMnVqbmRxSDBDN3BiTkxSZlNrTUJ6a3Bhc1pheStV?=
- =?utf-8?B?WXZkMUxNc3YvTldrbm9JUWFqeW93emxhUzZqbjUyTWpsNW85N0lqR3YxODJB?=
- =?utf-8?B?UnJFVlRkT2RwTHhLQk55SG56ZWY2anc5TVlYYnZUa3pVT0c4aW5IaVZrL01X?=
- =?utf-8?B?YytURTBJWkFLVytBSy9Mb1J2bFpJRTMrdUZueVJMdjBNMVIvM3ZRZFpBbDVT?=
- =?utf-8?B?WmZ0Wk1jVzdDL2IybzFKMmp4c0pDcWZlZmozZ1J3Ymlvdld6UlNDa1Z1UGRB?=
- =?utf-8?B?bEZTWHBYWk54aGQ5cCtaNVdqbTdyaE9rSURyNWI1TmNLZ0c4ZjJKRVVsTlZF?=
- =?utf-8?B?amVkeXlKdG5pY0hTUDZWTmdmd0xmLzJmYnl2aVFFWGw3K1dhTlVaQTlIMHhs?=
- =?utf-8?B?UHI0NXlPSnRsUEZKU2V2RG5hekJubXBJa0NXMndNZnJKbHAzWnd2Zkx4QUxV?=
- =?utf-8?B?YUJjNHRsVVM2MUZKZlRzU3hYdVdlVGpsTjRBcytnR1hIY1JKNjBUS0ZRL3RY?=
- =?utf-8?B?N2tseDd4R0dtZlI5TUdaQnVlTm1VVElWNDZiRm9uWmJRSnJHRWtBY0pKU0d4?=
- =?utf-8?B?ZkI3YXBRZldvcDhZUS9lM0RSaDZFUURPNXQrY0F6Uko2SW93djNCWUFCU2ZQ?=
- =?utf-8?B?cG9zVEI5eDJxS2lvYU40UzNnOXpaMGJWeWI3ZnVrcitSYUV2clJOTmpZcENl?=
- =?utf-8?B?RGhNWnBLZWxRVE0rVkxCUlc0eFM2Ny9ESlM2QTV3RDFnMFdManNGSGtBVUNN?=
- =?utf-8?B?c0xHVEFCQk1hRlpNNEM3bUF2WDdoMWxWclZtME54SW1qZ3ZJeTl0MWpjTHpO?=
- =?utf-8?B?d1VSQnhaNkRWRzVnN3dvUmszbXhmbzJFZEFzL3R0WVNDWThVK08zaXRPc21o?=
- =?utf-8?B?K2I0T2pHOUZzY3B0NEhNZThkaWpQTmVqRW9JZVZxTGxRZEYvekFlV3lRQzc3?=
- =?utf-8?B?VWkzRlcwTlZsVDZBR1NmRitVNGp6enZOOFpGWWtBRFcrdk8yZXRIaVMwV3N6?=
- =?utf-8?B?djBmNlBDd085Qlp2UFBPOXk4ZGZZNUpBMEJ4ajlTdzZXZGFtaWxaS3hBUWh1?=
- =?utf-8?B?NktFZHAzK3RGRTEycFpla25vWVlWRDNqTkhya3dpc1VWSmNwQ3V6L2FLSWZ2?=
- =?utf-8?B?Z2xqajRJNGNtUDlLaGRLY3REa09FWEQ5UjB1eGdkbnFjQzNWYTVOM3hSdXdz?=
- =?utf-8?B?ZmU4TmxrbjNTSytBVkJCYm10dG9xWjNKa2t6T3ZLSUh3V2ZzMGRBZlE3ekV0?=
- =?utf-8?B?NlRlMXhYWXIvbk9qZXpLZjZNY0FHdGs1aXpwSDNLSHZFTTBiRXh4dnpHR3Mr?=
- =?utf-8?B?WHpDM3JLanBjSWFTUHBJUU4yK3VmQlVBdUszVnlJNTBjOW1lZEQzZHlMK2pO?=
- =?utf-8?B?eERxM2xYREl1Kzdyb2czMUhKNWo2b0dYVHdsdEJwblVVcFpVRkZjOVlWRGhW?=
- =?utf-8?B?RVZnU1ZzVkVrN0RKOTFTZ1orejVDVDVMNXRSM21IamVyMnlrdWFMWFdZTEpQ?=
- =?utf-8?B?dGg2SVdzZG04Y05XelJpSjAxM1huSXRGZU8xVjF4K3V3RTdDc2dmQXAzN1ZZ?=
- =?utf-8?B?RkwySUtyQ1pOcmFOdE1GT2VlK0l6cUMreXFjK2tSMTBEVGV4eWI3aHVqckNm?=
- =?utf-8?B?Nm5ia1ZEdW1icXhjU3NpK1A5NXBZU2pJTVM5RS9qNVRpZ0J5SlJRS3ViVHVF?=
- =?utf-8?B?UXRZQ3htSWd6L1VDQlIwQ25BMHlvWWdJQnZnazNPOFpUTnBzSFY5N2VHUlAv?=
- =?utf-8?B?azQ0ZmtRM2FSdzRaQXU4anpjVmxRWmZYSmJkcTVZaHFCVEYyenBBYTdtRWUx?=
- =?utf-8?B?Y3F4NUFxYW5vb3dJN0xWcmswRVdOWkRQcVVOdFJKK2k3YWFEVHFCKzg3cGxJ?=
- =?utf-8?B?czZLV2RIYW5jNUIyMzRvTGkrY21nMndDbFBxL0hVNUlqTkFOY1ZyMDZibEkr?=
- =?utf-8?B?NnlsMHRjclBmOTFxNElxdHJFNkVvK3J2ZXlKcWI3alVGUFdTait4Q24rekZN?=
- =?utf-8?B?blBnRnVSZnZsU0ZVV1FBdEthdTVXblNaSDQ3ak1PdWFKbUhDY2JPb2p6YVg0?=
- =?utf-8?B?Nk5mem16MXZrbkExVVlUeVpublJyMmk4dzJ2L1FUYmtDRXN3OU5WYUR3ZEJF?=
- =?utf-8?B?UytZdVZZb0lnbjFKSCtIUmR6RzlZL2lHTUY0MllyNGZuUmlveCtzdz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFRkZ-00057t-4N
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:11:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776841913;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=eaQlHeS2B66KtbBSpxPnHICsU0t6joucprHWFKyGHjg=;
+ b=H508fXlJDjuUV0bVDDF1yIlEQgvw/To1ScgeV5IRn6NQhMiC2MB8wfSUKltEPfsfAkASKZ
+ Pe3AY/+QOdAl/3fDR6aFORohqcst+LA/5YgcFTAyfnk3z/mqkFQNBe4YsTZufXGO2EiooS
+ xGFkf3yait2LhtO/5w3/qY/YNli7vr4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-4xHnqB1bMSei_E1DCU-t6A-1; Wed,
+ 22 Apr 2026 03:11:49 -0400
+X-MC-Unique: 4xHnqB1bMSei_E1DCU-t6A-1
+X-Mimecast-MFC-AGG-ID: 4xHnqB1bMSei_E1DCU-t6A_1776841908
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F9891800358; Wed, 22 Apr 2026 07:11:48 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.49.99])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 25397180047F; Wed, 22 Apr 2026 07:11:46 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] tests/functional/qemu_test: Silence warnings from pylint
+ in tesseract.py
+Date: Wed, 22 Apr 2026 09:11:44 +0200
+Message-ID: <20260422071145.244820-1-thuth@redhat.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: PNYhT1d+b4Y7o0N7mAt5wYK2ORDt+THfLayrEciDtHKVuy3xwpDW63lvUdkxYXMw5ZS5keV6ZBGR8e7B23+gu20RG/f0alnXF6ae4xYDAB+MJnpJT1CGbL+2qO/CCyL087RZqzmR5IwKmv7VD1yA4Qtv58/s6Hf5/Y3o/ew31rM6GIDoGUZYmf1RQg2ywUXMYC3uAbUmhLLJTHLkCGsXd6vEev+9m99zRG34+/WuJ4xsv1rgtBWqCY5jiilDZKi8Peawfos5cTIRBWMBmhaEeTF+f1IqtwL+rTjzxPqEVAKVy989Cd+kmysb8E5ZrYDju6GGShIDnxoGuovhigA0VQ==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd68eda8-c93f-4d21-2b13-08dea03c8bb0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Apr 2026 06:58:23.4633 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: D6cMACMSz3U4OR/lwICfPNUdrEYvO/E2GJ3NmsAqkLu88Ei2KvShJkHeZ5iSfdpo95awgJCmMRy1N4WRaC9W2sI989iLgGZZTPowic3Cs18=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB6853
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,29 +80,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywgDQoNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MyAxMy8xN10gaHcvdXNiL2hj
-ZC1laGNpOiBBZGQgZGVzY3JpcHRvciBhZGRyZXNzIG9mZnNldA0KPiBwcm9wZXJ0eQ0KPiA+DQo+
-ID4gSSB0cmllZCB0byBhZGRyZXNzIHRoaXMgYnkgaW50cm9kdWNpbmcgYSBuZXcgcHJvcGVydHk6
-DQo+ID4gYXNwZWVkLWFzdDI3MDAtd29ya2Fyb3VuZC4NCj4gDQo+IFRoaXMgaXMgbm90IHNwZWNp
-ZmljIHRvIEFTVDI3MDAuDQo+IA0KPiBJIHRoaW5rIGEgZm9yY2VkIGRlZmF1bHQgdmFsdWUgZm9y
-IENUUkxEU1NFR01FTlQgd291bGQgYmUgbW9yZSBhcHByb3ByaWF0ZS4NCj4gUGVyaGFwcyAiY3Ry
-bGRzc2VnbWVudC1kZWZhdWx0IiwgYXMgYSB1aW50MzJfdCwgd2hpY2ggZGVmYXVsdHMgdG8gMHgw
-IGFuZA0KPiB3aGVuIHRoZSBhc3QyNzAwIFNvQyBpcyByZWFsaXplZCwgc2V0IHRvIEJJVCgyKS4N
-Cj4gDQpUaGFua3MgZm9yIHRoZSBzdWdnZXN0aW9uIGFuZCByZXZpZXcuDQpXaWxsIGRvDQo+IA0K
-PiA+DQo+ID4gKyAgICAgICAgaWYgKHMtPmFzcGVlZF9hc3QyNzAwX3dvcmthcm91bmQpIHsNCj4g
-PiArICAgICAgICAgICAgdmFsIHw9IEJJVCgyKTsNCj4gPiArICAgICAgICB9DQo+IA0KPiBXaXRo
-IHRoZSBwcm9wb3NhbCBhYm92ZSwgdGhpcyB3b3VsZCBiZSBjaGFuZ2VkIHRvIDoNCj4gDQo+IAl2
-YWwgfD0gcy0+Y3RybGRzc2VnbWVudF9kZWZhdWx0Ow0KPiANCldpbGwgZG8NCj4gPiAgICAgICAg
-ICAgYnJlYWs7DQo+ID4gICAgICAgY2FzZSBBU1lOQ0xJU1RBRERSOg0KPiA+ICAgICAgICAgICBp
-ZiAoZWhjaV9hc3luY19lbmFibGVkKHMpKSB7IEBAIC0yNTgyLDYgKzI1ODUsOSBAQCB2b2lkDQo+
-ID4gdXNiX2VoY2lfcmVhbGl6ZShFSENJU3RhdGUgKnMsIERldmljZVN0YXRlICpkZXYsIEVycm9y
-ICoqZXJycCkNCj4gPiAgICAgICB9DQo+ID4gICAgICAgaWYgKHMtPmNhcHNfNjRiaXRfYWRkcikg
-ew0KPiA+ICAgICAgICAgICBzLT5jYXBzWzB4MDhdIHw9IEJJVCgwKTsNCj4gPiArICAgICAgICBp
-ZiAocy0+YXNwZWVkX2FzdDI3MDBfd29ya2Fyb3VuZCkgew0KPiA+ICsgICAgICAgICAgICBzLT5j
-dHJsZHNzZWdtZW50IHw9IEJJVCgyKTsNCj4gDQo+IFNob3VsZG4ndCB0aGVzZSBhc3NpZ25tZW50
-cyBiZSBpbiB0aGUgcmVzZXQgaGFuZGxlcnMgPw0KPiANCg0KWWVzLCB3aXRoIGFib3ZlIHNvbHV0
-aW9uLCB3ZSBkbyBub3QgbmVlZCBpdCBpbiB0aGUgcmVzZXQgaGFuZGxlcnMuDQpXaWxsIHJlbW92
-ZSBpdC4NCkFwcHJlY2lhdGUgeW91ciBraW5kbHkgc3VwcG9ydCBhbmQgaGVscC4NCg0KSmFtaW4N
-Cj4gVGhhbmtzLA0KPiANCj4gQy4NCj4gDQo+IA0KPiA+ICsgICAgICAgIH0NCj4gPiAgICAgICB9
-DQoNCg==
+From: Thomas Huth <thuth@redhat.com>
+
+Pylint complains:
+
+ tesseract.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ tesseract.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+ tesseract.py:15:11: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
+ tesseract.py:12:30: W0613: Unused argument 'tesseract_args' (unused-argument)
+
+Thus add the missing bits and remove the unused tesseract_args argument.
+While we're at it, also add a SPDX identifier instead of the weird three
+dots at the beginning of the file, and drop the license boilerplate text.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v2: Drop the license boilerplate text as suggested by Philippe.
+
+ tests/functional/qemu_test/tesseract.py | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/tests/functional/qemu_test/tesseract.py b/tests/functional/qemu_test/tesseract.py
+index ede6c6501e2..2e84c1975c2 100644
+--- a/tests/functional/qemu_test/tesseract.py
++++ b/tests/functional/qemu_test/tesseract.py
+@@ -1,19 +1,21 @@
+-# ...
++# SPDX-License-Identifier: GPL-2.0-or-later
+ #
+ # Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later. See the COPYING file in the top-level directory.
++'''
++Tesseract is an program for doing Optical Character Recognition (OCR),
++which can be used in the tests to extract text from screenshots.
++'''
+ 
+ import logging
+ from subprocess import run
+ 
+ 
+-def tesseract_ocr(image_path, tesseract_args=''):
++def tesseract_ocr(image_path):
++    ''' Run the tesseract OCR to extract text from a screenshot '''
+     console_logger = logging.getLogger('console')
+     console_logger.debug(image_path)
+     proc = run(['tesseract', image_path, 'stdout'],
+-               capture_output=True, encoding='utf8')
++               capture_output=True, encoding='utf8', check=False)
+     if proc.returncode:
+         return None
+     lines = []
+-- 
+2.53.0
+
 
