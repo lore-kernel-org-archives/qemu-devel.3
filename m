@@ -4,111 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010AFF9EDD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 14:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7445BF9EDD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 14:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFYLo-0000Pm-KX; Wed, 22 Apr 2026 10:14:49 -0400
+	id 1wFYO4-00019a-GD; Wed, 22 Apr 2026 10:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFYLZ-0000Mk-IJ
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 10:14:34 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFYLX-0005nx-5Z
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 10:14:33 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFYNu-00012A-Cp
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 10:17:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFYNq-0006cM-3T
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 10:16:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776867401;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=FcYwuI6RUcft5wl++8jvcpjhm2bXdFgsmhz2obnAAQU=;
+ b=YSn9DzwZN6SYe8o81ZRctj1tMwCzbYVUBdg9XvQDOqa6LKRRCRjvTurTS2Q258TDndQCvp
+ 6M/a20UJOBo1mFuy3Ri4fv2bzye3zS41ZKqz79LHYwTjeup6GJRNewAUj/XmzyVHeEhq4u
+ nbNMwJYFZEt783XT2ryK52wNg0p3Q4g=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-dovvXEJLMPugGUN_ZXRBGA-1; Wed,
+ 22 Apr 2026 10:16:38 -0400
+X-MC-Unique: dovvXEJLMPugGUN_ZXRBGA-1
+X-Mimecast-MFC-AGG-ID: dovvXEJLMPugGUN_ZXRBGA_1776867397
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id BC8DA6A867;
- Wed, 22 Apr 2026 14:14:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776867264; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eqIi/8jAYlWi7ulS+8v7FNHOxMMTw7izcQd2wChIVMs=;
- b=BKm/6Xb+1F02QVnqRck+x0E5qnSkF/D98q5Rk0Ig+rkdTZK9MWT1B2+kyHsFnR3IbUq/BT
- //ZYfKbbuMjSd2c+jgJ0UTch1+yGHCWnT2h4f9fQsAyfC4qy0lTOpesxf28mpQVC4P3TFy
- MZzliL5LlBOm/gzfn8YxtVn9HRGQJgU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776867264;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eqIi/8jAYlWi7ulS+8v7FNHOxMMTw7izcQd2wChIVMs=;
- b=LqlBLSy2gyiEZEXU+XmO7iYKWcUCMqW/nCFaWL4Xvus7w1q62z3+vBD5GWDVLEUbCd87Rk
- /J5azShvJF2rSnDg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776867264; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eqIi/8jAYlWi7ulS+8v7FNHOxMMTw7izcQd2wChIVMs=;
- b=BKm/6Xb+1F02QVnqRck+x0E5qnSkF/D98q5Rk0Ig+rkdTZK9MWT1B2+kyHsFnR3IbUq/BT
- //ZYfKbbuMjSd2c+jgJ0UTch1+yGHCWnT2h4f9fQsAyfC4qy0lTOpesxf28mpQVC4P3TFy
- MZzliL5LlBOm/gzfn8YxtVn9HRGQJgU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776867264;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eqIi/8jAYlWi7ulS+8v7FNHOxMMTw7izcQd2wChIVMs=;
- b=LqlBLSy2gyiEZEXU+XmO7iYKWcUCMqW/nCFaWL4Xvus7w1q62z3+vBD5GWDVLEUbCd87Rk
- /J5azShvJF2rSnDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5B6B6593AF;
- Wed, 22 Apr 2026 14:14:24 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id RMBXC8DX6GmnVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 22 Apr 2026 14:14:24 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>, Ben
- Chaney <bchaney@akamai.com>, Juraj Marcin <jmarcin@redhat.com>, Mark Kanda
- <mark.kanda@oracle.com>, Pranav Tyagi <prtyagi@redhat.com>, =?utf-8?Q?Mar?=
- =?utf-8?Q?c-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH] migration: Fix crash on second migration when cancel early
-In-Reply-To: <87wlxzdsv9.fsf@suse.de>
-References: <20260421175820.302795-1-peterx@redhat.com>
- <87wlxzdsv9.fsf@suse.de>
-Date: Wed, 22 Apr 2026 11:14:18 -0300
-Message-ID: <87tst3dqv9.fsf@suse.de>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E429B19540E3; Wed, 22 Apr 2026 14:16:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A19A180047F; Wed, 22 Apr 2026 14:16:34 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EA89F21E6A28; Wed, 22 Apr 2026 16:16:01 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: zhangckid@gmail.com, lizhijian@fujitsu.com, jasowang@redhat.com,
+ arei.gonglei@huawei.com, zhenwei.pi@linux.dev, pbonzini@redhat.com,
+ peterx@redhat.com, philmd@linaro.org, marcandre.lureau@redhat.com,
+ berrange@redhat.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com
+Subject: Several QOM objects crash on introspection
+Date: Wed, 22 Apr 2026 16:16:01 +0200
+Message-ID: <87a4uvw066.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,140 +82,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+QMP command qom-list-properties crashes for the following object types:
 
-> Peter Xu <peterx@redhat.com> writes:
->
->> Marc-Andr=C3=A9 reported an issue on QEMU crash when retrying a cancelled
->> migration during early setup phase, see "Link:" for more information, and
->> also easy way to reproduce.
->>
->> This patch is a replacement of the prior fix proposed by not only switch=
-ing
->> to migration_cleanup(), but also fixing it from CPR side, so that we tra=
-ck
->> hup_source properly to know if src QEMU is waiting or the HUP signal.
->>
->> To put it simple: this chunk of special casing in migration_cancel() sho=
-uld
->> not affect normal migration, but only cpr-transfer migration to cover the
->> small window when the src QEMU is waiting for a HUP signal on cpr
->> channel (so that src QEMU can continue the migration on the main channel=
-).
->>
->> To achieve that, we'll also need to remember to detach the hup_source
->> whenenver invoked: after that point, we should always be able to cleanup
->> the migration.
->>
->> It's not a generic operation to explicitly detach a gsource from its
->> context while in its dispatch() function.  But it should be safe, because
->> gsource disptch() will only happen with a boosted refcount for the
->> dispatcher so that the gsource will not be freed until the callback
->> completes. It's also safe to return G_SOURCE_REMOVE after the gsource is
->> detached, as glib will simply ignore the G_SOURCE_REMOVE.
->>
->> One can refer to latest 2.86.5 glib code in g_main_dispatch() for that:
->>
->> https://github.com/GNOME/glib/blob/2.86.5/glib/gmain.c#L3592
->>
->> When at this, add a bunch of assertions to make sure nothing surprises u=
-s.
->>
->> After this patch applied, the 2nd migration will not crash QEMU, instead
->> it'll be in CANCELLING until the socket connection times out (it will ta=
-ke
->> ~2min on my Fedora default kernel).  During this process no 2nd migration
->> will be allowed, and after it timed out migration can be restarted.
->>
->> It's because so far we don't have control over socket_connect_outgoing(),
->> or anything yet managed by a task executed in qio_task_run_in_thread().
->> Speeding up the cancellation to be left for future.
->>
->> I also tested cpr-transfer by only providing cpr channel not the main
->> channel (with -incoming defer), kickoff migration on source, then cancel=
- it
->> on source directly without providing the main channel.  It keeps working.
->>
->> I wanted to add an unit test for that but it'll need to refactor current
->> cpr-transfer tests first; let's leave it for later.
->>
->> Link: https://lore.kernel.org/r/20260417184742.293061-1-marcandre.lureau=
-@redhat.com
->> Reported-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> Signed-off-by: Peter Xu <peterx@redhat.com>
->> ---
->>  include/migration/cpr.h  |  1 +
->>  migration/migration.h    |  5 +++++
->>  migration/cpr-transfer.c | 10 ++++++++++
->>  migration/migration.c    | 31 +++++++++++++++++++++++--------
->>  4 files changed, 39 insertions(+), 8 deletions(-)
->>
->> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
->> index 5850fd1788..ebf09a2f0a 100644
->> --- a/include/migration/cpr.h
->> +++ b/include/migration/cpr.h
->> @@ -57,6 +57,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel=
-, Error **errp);
->>  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
->>                                  void *opaque);
->>  void cpr_transfer_source_destroy(MigrationState *s);
->> +bool cpr_transfer_source_active(MigrationState *s);
->>=20=20
->>  void cpr_exec_init(void);
->>  QEMUFile *cpr_exec_output(Error **errp);
->> diff --git a/migration/migration.h b/migration/migration.h
->> index b6888daced..2bc2787480 100644
->> --- a/migration/migration.h
->> +++ b/migration/migration.h
->> @@ -514,6 +514,11 @@ struct MigrationState {
->>      bool postcopy_package_loaded;
->>      QemuEvent postcopy_package_loaded_event;
->>=20=20
->> +    /*
->> +     * When set, it means cpr-transfer is waiting for the HUP signal fr=
-om
->> +     * destination to continue the 2nd step of migration via the main
->> +     * channel.
->> +     */
->>      GSource *hup_source;
->>=20=20
->>      /*
->> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
->> index 61d5c9dce2..9defe7bad7 100644
->> --- a/migration/cpr-transfer.c
->> +++ b/migration/cpr-transfer.c
->> @@ -6,6 +6,7 @@
->>   */
->>=20=20
->>  #include "qemu/osdep.h"
->> +#include "qemu/main-loop.h"
->>  #include "qapi/clone-visitor.h"
->>  #include "qapi/error.h"
->>  #include "qapi/qapi-visit-migration.h"
->> @@ -79,6 +80,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel=
-, Error **errp)
->>  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
->>                                  void *opaque)
->>  {
->> +    assert(bql_locked());
->>      s->hup_source =3D qio_channel_create_watch(cpr_state_ioc(), G_IO_HU=
-P);
->
-> Before I review the patch in detail, let me just make a high level
-> comment here:
->
-> I wonder if we should have a "register" in the iochannel layer for the
-> several watches we create. So we could at migration_cancel time call
-> g_clear_handle/g_source_destroy on all at the same time. The management
-> of these source ids is getting too particular.
->
-> I'm seeing that exec, fd and file migration all ignore the id returned
-> by channel-watch.c. In the case of exec this is causing
-> qio_channel_command_finalize() to be skipped, leaving the exec'ed
-> command process behind! So what I did as an experiment was to register
-> watches like this:
->
->   static inline void migration_watch_data(void) {};
+    colo-compare
+    cryptodev-backend-lkcf
+    memory-region-portio-list
+    qemu-fixed-text-console
+    qemu-graphic-console
+    qio-net-listener
+    x-remote-object
 
-Oops, not inline.
+Testing gap: tests/qtest/device-introspect-test.c guards against such
+bugs in devices, but not non-device objects.
+
+Example crash:
+
+(gdb) r
+Starting program: /home/armbru/bin/qemu-system-x86_64 -S -display none -qmp stdio
+[...]
+{"QMP": {"version": {"qemu": {"micro": 94, "minor": 2, "major": 10}, "package": "v11.0.0-rc4-14-gcb2bd9a2e6-dirty"}, "capabilities": ["oob"]}}
+[New Thread 0x7fff6b61d6c0 (LWP 2882851)]
+{"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
+{"return": {}}
+{"execute": "qom-list-properties", "arguments": {"typename": "colo-compare"}}
+upstream-qemu: ../util/qemu-thread-posix.c:96: qemu_mutex_destroy: Assertion `mutex->initialized' failed.
+
+Thread 1 "upstream-qemu" received signal SIGABRT, Aborted.
+0x00007ffff49c33cc in __pthread_kill_implementation () from /lib64/libc.so.6
+[...]
+(gdb) bt
+#0  0x00007ffff49c33cc in __pthread_kill_implementation () at /lib64/libc.so.6
+#1  0x00007ffff496915e in raise () at /lib64/libc.so.6
+#2  0x00007ffff49506d0 in abort () at /lib64/libc.so.6
+#3  0x00007ffff4950639 in __assert_fail_base.cold () at /lib64/libc.so.6
+#4  0x0000555555ee3187 in qemu_mutex_destroy (mutex=0x55555761d4a0 <event_mtx>)
+    at ../util/qemu-thread-posix.c:96
+#5  0x0000555555a18c65 in colo_compare_finalize (obj=0x55555887e4f0)
+    at ../net/colo-compare.c:1423
+#6  0x0000555555c8bb31 in object_deinit
+    (obj=0x55555887e4f0, type=0x555558053a90) at ../qom/object.c:715
+#7  0x0000555555c8bbab in object_finalize (data=0x55555887e4f0)
+    at ../qom/object.c:729
+#8  0x0000555555c8ce2c in object_unref (objptr=0x55555887e4f0)
+    at ../qom/object.c:1232
+#9  0x0000555555de8d38 in qmp_qom_list_properties
+    (typename=0x5555581ef450 "colo-compare", errp=0x7fffffffd8a8)
+    at ../qom/qom-qmp-cmds.c:282
+#10 0x0000555555e90311 in qmp_marshal_qom_list_properties
+    (args=0x7fff64003150, ret=0x7fffeccccda8, errp=0x7fffeccccda0)
+    at qapi/qapi-commands-qom.c:326
+#11 0x0000555555ecdd9e in do_qmp_dispatch_bh (opaque=0x7fffecccce40)
+    at ../qapi/qmp-dispatch.c:128
+#12 0x0000555555eff09b in aio_bh_call (bh=0x555558bee700)
+--Type <RET> for more, q to quit, c to continue without paging--
+    at ../util/async.c:173
+#13 0x0000555555eff1e3 in aio_bh_poll (ctx=0x55555807f180)
+    at ../util/async.c:220
+#14 0x0000555555ede0d0 in aio_dispatch (ctx=0x55555807f180)
+    at ../util/aio-posix.c:390
+#15 0x0000555555eff6f4 in aio_ctx_dispatch
+    (source=0x55555807f180, callback=0x0, user_data=0x0) at ../util/async.c:365
+#16 0x00007ffff6deb323 in g_main_context_dispatch_unlocked.lto_priv ()
+    at /lib64/libglib-2.0.so.0
+#17 0x00007ffff6deb5b5 in g_main_context_dispatch () at /lib64/libglib-2.0.so.0
+#18 0x0000555555f01202 in glib_pollfds_poll () at ../util/main-loop.c:290
+#19 0x0000555555f01290 in os_host_main_loop_wait (timeout=0)
+    at ../util/main-loop.c:313
+#20 0x0000555555f013c1 in main_loop_wait (nonblocking=0)
+    at ../util/main-loop.c:592
+#21 0x0000555555993773 in qemu_main_loop () at ../system/runstate.c:945
+#22 0x0000555555e0d468 in qemu_default_main (opaque=0x0) at ../system/main.c:50
+#23 0x0000555555e0d522 in main (argc=6, argv=0x7fffffffdd58)
+    at ../system/main.c:93
+
 
