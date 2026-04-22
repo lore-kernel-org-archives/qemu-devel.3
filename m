@@ -4,112 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F77DF94CA2
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 00:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CAF8F94CB7
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 01:17:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFL5T-0002nl-Vc; Tue, 21 Apr 2026 20:05:04 -0400
+	id 1wFMCg-0001vg-21; Tue, 21 Apr 2026 21:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wFL5S-0002nM-Mn
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 20:05:02 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
+ id 1wFMCe-0001vX-PO
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 21:16:32 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wFL5R-00047V-2i
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 20:05:02 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-676d8582a13so1330396a12.0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 17:05:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776816300; cv=none;
+ (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
+ id 1wFMCd-0006IM-Ar
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 21:16:32 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-50d836552daso2636731cf.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 18:16:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776820589; cv=none;
  d=google.com; s=arc-20240605;
- b=KMdr4xKnRDQ93KGANb4yjZwWJtBa86RU/k+BPklq4zsC6VcLo9KcA3lrkuKUo9xNmG
- sVgqJ/jNgvkP4p7QHT5hrTuNiL0ZEzX9p4hHvU08zVEl1/aS4JyTxG4UciyjQL7lshAO
- 7Xe6lUmXsb66Z2A37adAHgucW/WUQTFuXJn0P26hO4r8F7TswCttwFIHRQxX+wCjTriy
- BgKQXSyG1Qxq1LJ5NtznZQWO6mcnZcp0/I+Gj8ikJvp/tqqbzLsLSy+fTZPW3JU+5MFS
- +6DjWnoRgs6dBDcY3KNPrRGxE9WwP5mlltOQZUbhaCxPkLr+rRBHgkcszoesrUTpoibA
- 9ixQ==
+ b=PmLh2jJMEGYH3X6x9waLUM0NdrQZhMiJTA4VUnyRFv87Z0/KkD692+lXh2n3QI6gvY
+ 7xRdsRwgDkpRkohtS0f7SNHqS9zfuTtIY10NKxwoP9cIu0jdzuGaYnw+9CcfneIjfKBB
+ Epj1TwmCAdD8xcptONVaht4Yd9y8DRKI1gjXfAAxk4f9AmLQ0LIhToiU4OerP4F1sGf6
+ vxF04QZyMvs639dE3nmibd5UcAhT7HgN8ohP569xbLUZ1ImVke32XIzQ0JeLRDHAxhW3
+ /D9mS3qBc12kmInAELGEIcT7HTHhunuIXZjPrjUhDhQzT0L19kxHEmK6IgqB+5brG50o
+ w1Jw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Hco5VyA1XfLEoQKJ1X+h5zZL1yg79y5fKn5DjcvX3Ks=;
- fh=Jqgq6Ia09t6Vodf6R7BTfp0X7UM9vMN1R3KFAlISu6k=;
- b=dYuKLHvjG2hNJ7WyNsaUXf25dtgqYnWDM131X1RmIwVRy3YDN2En12QAS9XVfsmpQU
- LxwoGiMzK0ehLNx2F83pOcfUZh8vOip/uBOuICpa1pr61hCSfSi2e/DHXJLZGObtA6bV
- nZ+i40L5y1i8c1+wAB0gNsTB4gQhM1dY5rxa2WZGi/+To29CbxSVjMXXfLJLqu1nfkWC
- UF7HGKKTtZ9ib6eyAQZGnoc1RGi7fHCVA7iTwtQ+n5Xk8pw1xYkj6pylJGF12L7znjzM
- XTRbA/xrIdFk3p8OVBQllNfXHQvNaFaIjVxmlHS9wtfQN4b+/Wukr1CHAmiHXzjwxvA2
- H0GA==; darn=nongnu.org
+ bh=RuRCotfbGw39y//NM7F4PPlo6I0sd9XN2Rdo9CWnbNs=;
+ fh=/AP7bia0iHDeR8c04cPaf+iCaHk1zqhUreJXpq5QEd0=;
+ b=bQGATUV8SPBFBv6o08E6y+VXNOM6CkMuRGJIKmsxItZEqZyobrtYSVvxUJK7NEmsC3
+ ZQ9mUSEecTZLNlyN1VxLLkcaFXOeyP5XvbhPsgTG0dHA7PQ4Hl68cVt9bIrqGEWqsKhV
+ 3N7qnX6k8+2yHPpCftu2NkpILVuT2hibdFjSt6HLfobwaNPxXvh+TlwNnwPL9OVjbL2o
+ GgnN1Zr+0dHT1F8SgZ5YjpFlEtf9vU7YLUfzcx8A3Fi/3XBCXIM64XW72uR4pspH+IB0
+ uhXT6PGUjTm92C+n69QnShObinavQXTD5omcCOxcAicBiTOsygJfMLqRelS0jeU36meQ
+ VfgA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776816300; x=1777421100; darn=nongnu.org;
+ d=google.com; s=20251104; t=1776820589; x=1777425389; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hco5VyA1XfLEoQKJ1X+h5zZL1yg79y5fKn5DjcvX3Ks=;
- b=W28M92ga2dCADzbDTUG0LwGO8yoJtXXTzVmoUBAi1ENf+PVuUrpvSNm+cGLh/WS64e
- Kbob929sbfDftOc9uds1/HR7od1JnzYYm3/M/2kJy9yfWJLjvIn/LhVIyR7P8SVO+OLp
- t9X3p/QhjbVhOoOh/59MbbaqeJv5SM5h3Z0U68pvM31BnRoVpp5tYC4ZOEu+AaHUiVC0
- AGdb5Y8S9LEBVFehBQqdNvBarQXVDVqJUfD1CrJZh94c4sXgSLhHoKv08LnhpczPt+Lk
- Ex9hmLobWKVHxV5MlYR99dgQ7A6VoYvSvvGPzjhJGnmGXU86hhqeyX+U1p23gzSI7TIs
- cc6g==
+ bh=RuRCotfbGw39y//NM7F4PPlo6I0sd9XN2Rdo9CWnbNs=;
+ b=osqUlu9mhCpK6XWTS3C9eiyv36u034nlYxcZxIOrR4JM+Zb+m1diCWiQhya9wlUXNa
+ P9lodX3yVbATCP1TR/3inB0NZ0Tf0l9VCnKkaCQsEysQsHc/WCO82oJmFgoYXqeQZxQx
+ LEYexptXRCxvOPaIzBrpd6WjShezY5dobQssMaRsAxFHMmB/uwywRfxFOgABq0wBKTKQ
+ qQqyvETN2E1trj1sUpjBuoZpUqw6sDlrRm1Tx/AatuPsnkv365NwsALlnqwVc7D0Vi7O
+ v10VOKUXn4BUkeNCH1wPDxqgrOa3QjBQwzD9BhgIoDGXthsLIPsHE9TIrPp69ZHqkvEr
+ 3GRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776816300; x=1777421100;
+ d=1e100.net; s=20251104; t=1776820589; x=1777425389;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Hco5VyA1XfLEoQKJ1X+h5zZL1yg79y5fKn5DjcvX3Ks=;
- b=mcRRCKqZM91ErRwG5xvwj3QHMcQzDtsHj3hBU8FgxmvQq9giV56s5QvtvO/h0Ajp5q
- DWLhupP3SHJdaRYbnuBoRPSDAWj1t+UzS5QtS8QysRgsYnooxCkNKCtjdeNuaYP0EZKC
- JVMLwpkHkSTv8nlc0QvPjfQPWvlEhvnldopJNti/B/FWYc9t08kunGo1Zi+l1U4v0Yhb
- MqOGnFVJtafbBSmLZIQlbndz2r6xcNSdkNKRe6ujmB/TPyDY+PYIsqUXBqvmMGAP2d9H
- Y9pdPMietgHs2sSrHJMm39jwZ0rHeLThFebD2ERLV3ilOIqBbzwJSmac4kCaQvukPqG7
- e5aA==
+ bh=RuRCotfbGw39y//NM7F4PPlo6I0sd9XN2Rdo9CWnbNs=;
+ b=WoMk/t7IOCXD6dPwwlTVrDOf+mCETeWhCZHiz/ihRGkJKsHxXyX+1GePh1djoVRSMD
+ wLXhXfbbaR6syxDDmoiHHmmBfls3oWnPEk9jwxxMM1cnDNXGGkKL3EESW6PqRbRK1/m+
+ ZH5Kh0BeBS4wiILosFVzseCPZc3/0plgCCHnpGQplxq/XXx5ts/7ITJ/WORRwZBZLKm7
+ /9/ZvRXjHBPSMqqLU6MyryWNkZlrwR1JwhB7uM/3rUJcO4zKhN/U0iDdskgn+FS2JqE7
+ v+VQxINH2QHzw9FHXbDxYQLa8MT8TBc3qrQ+cUrA2wJlz3S2br/uvgywPO6hg9HJUyFF
+ CCFw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9H9Xlq7DyNg4iDVTAF4vDkM0t4vaS1C7nLPRllZikPO8ZatF7ONFfnk40hc5xTzKFJbMwRAY8uPVuC@nongnu.org
-X-Gm-Message-State: AOJu0YycjbKsVqw8Gi/U8kKA+qG8l2LW+uZKWuW1Xv3Lqs++D2cvt3H/
- hqYyXzAzFMnnqfhhBiwFyzfIMIgh6tGIx1yW++GTomOoidsnF32Hy7r7uuxnivouIVPrgYkXhoH
- O9KI76/65lfe99Y4m6LnVDfX/EQ9xJXqQXzEY
-X-Gm-Gg: AeBDievTPXrQKvqabE+i5IGvVuByrXCGa7cmMC/1GopdQfL5pqVAMkIBYifnZZbQJZ0
- lAyXKA7DcoIbKfGiYm98K3ho7gIRTSCMMYddRJSItwG8TdIXr3YrjQ3o9UZQMc+y60xX3saljQw
- MNIODtY4CrMoFjt7UD/vbLwA10W1/g4JpRgFdjFAWsoptpAvdnSM81PI6MUqGe1g9LljCvwGtzA
- DS9IvwuEWhooFgcxA2QebPtd0A3Bv+5hhVZQC9arF/wTzAPrSy7/uBGSplIZ4Z/c8IILZKeg1PL
- HgDhp6jf+G5h5B7DXI+79o8j7C1juhhaRBoXNNeKLFDGRq14
-X-Received: by 2002:a17:907:8707:b0:b9c:69df:4d8e with SMTP id
- a640c23a62f3a-ba41aa160d8mr675196866b.25.1776816299561; Tue, 21 Apr 2026
- 17:04:59 -0700 (PDT)
+ AFNElJ8azk9fCmUHAKzQuL/kiL64EEU/8prNW/a+fvSu3NdJm61/KiNe2SxtLh8TkdBZFcTcH2V/WcDBKwrU@nongnu.org
+X-Gm-Message-State: AOJu0YzW4fYRKAG5u2m91Sf4kVP7T3Ug/N/y72mNlaVhWdtK9u828fSU
+ ALJX6rNYp6UzS7srufP4NoQK4dFSUENUPH6E8y+lljuPJKPxq5s/rumgj/HvV0dvzoWYsR2hh9c
+ 0h6m8ZGuRmXw9Cnc9NWagDihs1F91PndkA1BA8KnP
+X-Gm-Gg: AeBDieu7yJ8P6alk6gFO2gdjtoGKvxY5Txlw4/5ZWVaz/3kab75hTb6qEw14NofU7Hn
+ VRXmjU9mTS/Yrufo8kYzbBp3eyE/npxz7EJ6o4PCYKf+ljatH0J3CzH2Hd8RWY8KPh7hjPZvZdz
+ Z8OoJwAIVcRcvbrW9VDNUflj59DMd+vupdsMQlrLMCK+JG21fZMJFgxAGSBrw2mcAgywNKXjztG
+ fQqlhsq3/P6h4GAK77EhlwuDozsT1LCEoqbCZHXnc171Hd/eIssqNemWdJvjOqUWqvOiTHazKXm
+ 5t8X+3RKuq/WYXls3reVT+/ET6ZYWWsgVAOY3oC/hNME5935IKWJ4laogfc=
+X-Received: by 2002:ac8:5d50:0:b0:50e:6189:cd29 with SMTP id
+ d75a77b69052e-50e6189d107mr11376631cf.11.1776820588673; Tue, 21 Apr 2026
+ 18:16:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260421053140.752059-1-joel@jms.id.au>
- <20260421053140.752059-3-joel@jms.id.au>
-In-Reply-To: <20260421053140.752059-3-joel@jms.id.au>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 22 Apr 2026 10:04:33 +1000
-X-Gm-Features: AQROBzBaNA93jVv_UmWzTfVJMeOxE76v2LE3ElNgYNkBRNwbiMhH8QeZJhb7-Fk
-Message-ID: <CAKmqyKMvPoDHD_A+zLfAAcNad4RpmBP0SuNX5RTFZV33kmnZpQ@mail.gmail.com>
-Subject: Re: [PATCH v3 02/13] hw/riscv/boot: Describe discontiguous memory in
- boot_info
-To: Joel Stanley <joel@jms.id.au>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>, 
- Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
- qemu-devel@nongnu.org
+References: <20260411021205.3592118-1-jemoreira@google.com>
+ <aeYvCK2qhZd1W9sA@sgarzare-redhat> <20260420181818.GC405461@fedora>
+ <CAJi--PPzd_fqcsBU-aA11624apoKTtEW6GTKE3_OyZ4SJ90DzA@mail.gmail.com>
+ <20260421211237.GC466778@fedora>
+In-Reply-To: <20260421211237.GC466778@fedora>
+From: Jorge Moreira <jemoreira@google.com>
+Date: Tue, 21 Apr 2026 18:16:17 -0700
+X-Gm-Features: AQROBzBGgxGRfTGLft0xcSVfcCkF83NDmMQkxUXr1G5_odfRVrtMSCkpEpRIsBk
+Message-ID: <CAJi--PP6gsR5E7RtQ_RwV8fG9Xivk0fXTfNxWuZ6cX+uWBPV=A@mail.gmail.com>
+Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
+ kick FDs
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, hreitz@redhat.com,
+ gmaglione@redhat.com, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Hanna Czenczek <xanclic@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=jemoreira@google.com; helo=mail-qt1-x82f.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,86 +125,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 3:34=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
-:
+On Tue, Apr 21, 2026 at 2:12=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
 >
-> From: Nicholas Piggin <npiggin@gmail.com>
+> On Mon, Apr 20, 2026 at 05:48:13PM -0700, Jorge Moreira wrote:
+> > While starting the vrings on SET_VRING_KICK could solve the state
+> > machine issue, it still won't notify the back-end that buffers are
+> > ready (the driver won't do this). Non-polling back-ends depend on this
+> > kick, especially for queues where data flows only from the driver to
+> > the back-end. Most implementations likely attempt to read from the
+> > queue only after receiving the kick.
 >
-> Machines that have discontiguous memory may need to adjust where
-> firmware and images are loaded at boot. Provide an interface for
-> machines to describe a discontiguous low/high RAM scheme for this
-> purpose.
+> This is an interesting question to clarify in the spec.
 >
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Stefan
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
->  include/hw/riscv/boot.h |  7 +++++++
->  hw/riscv/boot.c         | 11 +++++++++++
->  2 files changed, 18 insertions(+)
->
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index f00b3ca12245..115e3222174f 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -28,6 +28,10 @@
->  #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
->
->  typedef struct RISCVBootInfo {
-> +    /* First contiguous RAM region. If size is zero then assume entire R=
-AM */
-> +    hwaddr ram_low_start;
-> +    hwaddr ram_low_size;
-> +
->      ssize_t kernel_size;
->      hwaddr image_low_addr;
->      hwaddr image_high_addr;
-> @@ -43,6 +47,9 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
->  char *riscv_plic_hart_config_string(int hart_count);
->
->  void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *hart=
-s);
-> +void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-> +                                        RISCVHartArrayState *harts,
-> +                                        hwaddr start, hwaddr size);
->  vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
->                                     hwaddr firmware_end_addr);
->  hwaddr riscv_find_and_load_firmware(MachineState *machine,
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 9086793b7a7b..5c9547429a36 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -69,11 +69,22 @@ char *riscv_plic_hart_config_string(int hart_count)
->
->  void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *hart=
-s)
->  {
-> +    info->ram_low_start =3D 0;
-> +    info->ram_low_size =3D 0;
->      info->kernel_size =3D 0;
->      info->initrd_size =3D 0;
->      info->is_32bit =3D riscv_is_32bit(harts);
->  }
->
-> +void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-> +                                        RISCVHartArrayState *harts,
-> +                                        hwaddr start, hwaddr size)
-> +{
-> +    riscv_boot_info_init(info, harts);
-> +    info->ram_low_start =3D start;
-> +    info->ram_low_size =3D size;
-> +}
-> +
->  vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
->                                     hwaddr firmware_end_addr) {
->      if (info->is_32bit) {
-> --
-> 2.47.3
->
->
+This is the question that interests me most, to be honest. I'd rather
+have the discussion about when to activate the vrings in a different
+thread and keep this one focused on whether the front-end should send
+the kick or if the back-end is expected to check if there are "new"
+buffers in the vring after restore.
 
