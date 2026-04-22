@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC2CDF9B609
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2064F9B607
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFUeq-0007Jg-Ht; Wed, 22 Apr 2026 06:18:12 -0400
+	id 1wFUen-0007Dc-EN; Wed, 22 Apr 2026 06:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeM-0006yl-5V
+ id 1wFUeM-0006yn-5q
  for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:43 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeD-0002NN-Lb
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:36 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488b8bc6bc9so37141405e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:17:30 -0700 (PDT)
+ id 1wFUeD-0002N0-OT
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:39 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488af96f6b2so67561485e9.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776853050; x=1777457850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776853048; x=1777457848; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V9WNiVc32x9uwc9Kvl3F3IabOVkUVJfyhaJuWqhRbgs=;
- b=lpf5FT+fG4RvwdNrOLYAt5rVTc6OTeMRM5if5IFQX7ZTpGzjeeiMpcSF48dL4T8rf6
- nS9Nv/aIibuPHhOhSJLdfM2t8Kdee+dh6GERxsODMgEdshIReJiHHiBNKq+Iv0LqEy4M
- muMJeRKelFwE33Tz8vWkYVMiP/yfC0Qmbt8um8EBKKlspnsMs23Y2tXmijUThWLuxwF8
- y9VNWZWvLBdAOvGhV655rYNyBmODBjpc6OyB39dhRWItB1pTmENriOOw2f9OZnLqkbXg
- TO6QKmzA0Je7z1sQe5BbJCuQ/OarnSwCRMnPOqfBsdB0eY2IFVKRaap9jLbTo4M78yGb
- X4og==
+ bh=LHt/fkh4CQTgDK0U2IQzNp32v6ZUUxM/zBvWXPy5kqQ=;
+ b=rMkYgyCVxR0x/IGkZoHlqbDBuMiCo41H5fBGAj7wNhFryHQNV+J+Mhdwb654IDqYjX
+ 5RiKIg/trrCSAnqxp62aAe5LcSZPCLBL6nbfYdnOX4Wz09cIDXzzECO/2xt8PTquUmbv
+ fAzyMfZ53jhrmSesK7S4x89cFUbaqpNKOJuCEldlIQINtsi419E3GxqYz52b0uXvHh/6
+ Cj2bBctBXdIdnCSs4U+4fLS2blJEGMq7CvvFdhue+AHdDtRIMICJIdrSUPubVofn5mNk
+ rZ3Y3y1l6UMoQuXGVJzNCdcPMrGBCRVKCt6wNzZUecw2aJImU1QbMsw3tZCDhiVTRkkk
+ hZpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776853050; x=1777457850;
+ d=1e100.net; s=20251104; t=1776853048; x=1777457848;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=V9WNiVc32x9uwc9Kvl3F3IabOVkUVJfyhaJuWqhRbgs=;
- b=bd2/rY6dwqf/K7HiqDpSlvswWP8X9/9GB7vpixxjrM1EhtIwjA1e2MTTqgccU6VH+H
- ocFx7mCsJeSxl2N4uZVmnWE3Axrsa4xr6m9vLLKsSP+7YCnDqVgrF7Diqx176aPMBIZP
- zR/lnv8hLilLSS3doo7g0aKZswLOyBjoGIIQ7JJjSWMThBekKXCqUEzDlEeC4rkZ5ePk
- s5ro/GHHCfHTzJGwgydroyLKuWC5xM/46JOF+WWoNOaEC5TGY1wwM1IW8lwESXU2+RtF
- cDS0cGVuGWhJ4TulvWqzuhm3k+ZqnTFtkPC1vJby1VXYbJg5mj5ilIfTWMqNRe69pAs5
- 9ibQ==
-X-Gm-Message-State: AOJu0Yy6hUFfNdJ6Vje0DS1L6Bjq+yt5FJ545ejwe91N6JupPqWVYvRx
- AeJgoI518tWw/aGg0gLUPzqGvrr6IrotChj8Lp/BmBXUW0ju7LonsllREWTEZEf3g24=
-X-Gm-Gg: AeBDietd6O0Mfc07MW4OHfd1IJlWdywpeU+dz9XSH2lR8jSbDJ2+/LXsyLiqWZMn366
- 44O4iV+TdNB9OsG0vYJ1pRX2vLfEBQztyIpNkkLE9CzV9fT+N7ploRie/MRk40eIKVaSmWBVI2D
- 8OJrx6XBBUnj04mwyzxSj3jAMqDPv2m9n0LBbXezr3V/A0aon46dQI9ayibGuHwYBygYwpttANX
- yEZ+IstirfdLOXBwjpCHC+cApj8KRNQVNIBgYTsnSxDqmOl5tgOH0IjDez/Y5BD/Rj4BYpTbxLm
- uLAvqD672Vqp4ceZDdbLRzvGA0tKcXUJzlHPYszT9odzmCdsF6AEJkOpi6ULQaQWwZ1tyxLTemg
- 3KlOyxDV6UJCs4KumWtkvnM3hax+/5w2kv30KqD9bYPZMDQy+OKUkLpUqFKi8ZgboIlNCvqGNrS
- z9mSy/VxJzNogBtZl3a0Bs8pvXj87txlUCtw==
-X-Received: by 2002:a05:600c:5254:b0:488:8bdd:cfcc with SMTP id
- 5b1f17b1804b1-488fb6e62a8mr333377305e9.0.1776853049667; 
- Wed, 22 Apr 2026 03:17:29 -0700 (PDT)
+ bh=LHt/fkh4CQTgDK0U2IQzNp32v6ZUUxM/zBvWXPy5kqQ=;
+ b=cx3Gyhf392LlPaU71u37iWzNbL0YBvszmFvZouvFW2fEqtd9Zo7rGrClyRZURLYA5o
+ 9ufB6wgpAPWXZnB1g0SaWXgZedMzEwga+F5HUDte2lbF22nGEHOclzCN5uS+6OZ49gpB
+ tkb1c2X4RhHJZsj0GpJG2sKp/POBlO4yUDoV6Z/7tz0VVf4MxKoRk7yQFsaFMgbnxhu6
+ TVtZO39dTv2bbs9foAqE4XmJGO5P/8WMYGgmwqFJqcAeV8lQ9ykSGsqNxvULlB2JyFcN
+ ejJaVtr4iNupCCq4tcyYkXgXkxyD09YAPbDYEbRoe3IwTUeCL4P0jR+3z1wvkYPON8cL
+ O1Aw==
+X-Gm-Message-State: AOJu0YwIp6d8gkDeag5z1YbHsJnwUeCd9dSzyEpdajYNN11T8ou+ba1B
+ c5Cwz2oKbf/X+lxal1KX6/i5685Gc2XKqzKhVRMvtuw91dQW248pjomyLL71cAW19mI=
+X-Gm-Gg: AeBDiesaFUszbeV8YnXYXrkvD0wuXGV871yL7QadBwl9TnZC+fF49CGUGsCP3hrMoun
+ 6/29zge67bHZ4RAlZEwIa+ZCwonr/C0FYbF7bsnuN8FNJGDCmtZGV9JXZlok/Ced2BI7ILdXlpa
+ 0D9vV+o5a5S341ML2Vo9DicwBxCun0KLb+3LLdrAmT1Fvb2UOPAQEjQh0k6yFscShkTLAvqZWVG
+ Rm+uiiUoxtLQJR9ldnQKJjTBxBraroD1ayvhxurZMpVezgp5Y10kW8H6HZC/ElAR2qiSvDjNYKL
+ tYUekxnjuktOYljtWw2BrwELmDIFEn224N2AFZIG9Qs3LWHOnPs+HSNxlgSAZWAy8Jp+9dL3YJB
+ 4jOylLPzIRZD+M0LTCTz2A91uNBH+VIJsien52rIGeuFRso3PzKE9JN/5esOarpfHAuiKGJBhDx
+ anmBIFe3okOk8eJtGy3i+1qNp2lPbDp+hMiA==
+X-Received: by 2002:a05:600c:3216:b0:489:1ff1:74d3 with SMTP id
+ 5b1f17b1804b1-4891ff17521mr88617735e9.20.1776853047996; 
+ Wed, 22 Apr 2026 03:17:27 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891c08faffsm420040875e9.1.2026.04.22.03.17.25
+ 5b1f17b1804b1-4891cdfcd50sm84551615e9.9.2026.04.22.03.17.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 03:17:28 -0700 (PDT)
+ Wed, 22 Apr 2026 03:17:24 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 72EA26153F;
+ by draig.lan (Postfix) with ESMTP id 863CD61667;
  Wed, 22 Apr 2026 11:10:45 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,24 +75,24 @@ Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 25/31] target/arm: redefine event stream fields
-Date: Wed, 22 Apr 2026 11:10:36 +0100
-Message-ID: <20260422101043.1234229-26-alex.bennee@linaro.org>
+Subject: [PATCH v2 26/31] target/arm: ensure aarch64 DISAS_WFE will exit
+Date: Wed, 22 Apr 2026 11:10:37 +0100
+Message-ID: <20260422101043.1234229-27-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260422101043.1234229-1-alex.bennee@linaro.org>
 References: <20260422101043.1234229-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,80 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The event stream control bits are the same for both CNTHCTL and
-CNTKCTL so rather than duplicating the definitions rename them to be
-useful in both cases.
+This mirrors the logic for DISAS_WFE in 32 bit world.
 
-We will need these in a later commit when we start implementing event
-streams.
-
+Fixes: 252ec405768 (target-arm: implement WFE/YIELD as a yield for AArch64)
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/internals.h | 11 +++++++----
- target/arm/helper.c    |  8 ++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ target/arm/tcg/translate-a64.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 85980f0e69a..dc593f1fec8 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -263,14 +263,17 @@ FIELD(VSTCR, SA, 30, 1)
-  * have different bit definitions, and EL1PCTEN might be
-  * bit 0 or bit 10. We use _E2H1 and _E2H0 suffixes to
-  * disambiguate if necessary.
-+ *
-+ * The event stream bits (EVN*) are in the same position for
-+ * CNTKCTL_EL1/CTNKCTL.
-  */
- FIELD(CNTHCTL, EL0PCTEN_E2H1, 0, 1)
- FIELD(CNTHCTL, EL0VCTEN_E2H1, 1, 1)
- FIELD(CNTHCTL, EL1PCTEN_E2H0, 0, 1)
- FIELD(CNTHCTL, EL1PCEN_E2H0, 1, 1)
--FIELD(CNTHCTL, EVNTEN, 2, 1)
--FIELD(CNTHCTL, EVNTDIR, 3, 1)
--FIELD(CNTHCTL, EVNTI, 4, 4)
-+FIELD(CNTxCTL, EVNTEN, 2, 1)
-+FIELD(CNTxCTL, EVNTDIR, 3, 1)
-+FIELD(CNTxCTL, EVNTI, 4, 4)
- FIELD(CNTHCTL, EL0VTEN, 8, 1)
- FIELD(CNTHCTL, EL0PTEN, 9, 1)
- FIELD(CNTHCTL, EL1PCTEN_E2H1, 10, 1)
-@@ -280,7 +283,7 @@ FIELD(CNTHCTL, EL1TVT, 13, 1)
- FIELD(CNTHCTL, EL1TVCT, 14, 1)
- FIELD(CNTHCTL, EL1NVPCT, 15, 1)
- FIELD(CNTHCTL, EL1NVVCT, 16, 1)
--FIELD(CNTHCTL, EVNTIS, 17, 1)
-+FIELD(CNTxCTL, EVNTIS, 17, 1)
- FIELD(CNTHCTL, CNTVMASK, 18, 1)
- FIELD(CNTHCTL, CNTPMASK, 19, 1)
- 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 40dd070d2c1..81a07ca42d0 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -1746,9 +1746,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     uint32_t valid_mask =
-         R_CNTHCTL_EL0PCTEN_E2H1_MASK |
-         R_CNTHCTL_EL0VCTEN_E2H1_MASK |
--        R_CNTHCTL_EVNTEN_MASK |
--        R_CNTHCTL_EVNTDIR_MASK |
--        R_CNTHCTL_EVNTI_MASK |
-+        R_CNTxCTL_EVNTEN_MASK |
-+        R_CNTxCTL_EVNTDIR_MASK |
-+        R_CNTxCTL_EVNTI_MASK |
-         R_CNTHCTL_EL0VTEN_MASK |
-         R_CNTHCTL_EL0PTEN_MASK |
-         R_CNTHCTL_EL1PCTEN_E2H1_MASK |
-@@ -1763,7 +1763,7 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-             R_CNTHCTL_EL1TVCT_MASK |
-             R_CNTHCTL_EL1NVPCT_MASK |
-             R_CNTHCTL_EL1NVVCT_MASK |
--            R_CNTHCTL_EVNTIS_MASK;
-+            R_CNTxCTL_EVNTIS_MASK;
-     }
-     if (cpu_isar_feature(aa64_ecv, cpu)) {
-         valid_mask |= R_CNTHCTL_ECV_MASK;
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 073454b9195..d79c8ab431b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10917,6 +10917,7 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+         case DISAS_WFE:
+             gen_a64_update_pc(dc, 4);
+             gen_helper_wfe(tcg_env);
++            tcg_gen_exit_tb(NULL, 0);
+             break;
+         case DISAS_YIELD:
+             gen_a64_update_pc(dc, 4);
 -- 
 2.47.3
 
