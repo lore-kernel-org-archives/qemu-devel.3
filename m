@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B5CF9B609
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A2C0F9B605
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFUXs-0006uK-Dj; Wed, 22 Apr 2026 06:11:00 -0400
+	id 1wFUXo-0006qw-KY; Wed, 22 Apr 2026 06:10:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUXj-0006oh-9u
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:10:51 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1wFUXh-0006oL-SO
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:10:50 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUXh-0000iI-98
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:10:50 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-4411e1eba51so1925930f8f.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:10:48 -0700 (PDT)
+ id 1wFUXf-0000ha-NF
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:10:49 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6729c6f0ca7so6257853a12.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776852648; x=1777457448; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K6n23oz7LRRQlFUUM3gTQS/rrKewMUhskSZOvSJMe4M=;
- b=BWrMjJ72/kZoUl/0EVsS3S1mC1e3fB1a8afDzJPlXvymWoZbgekfmCet2zp6f1t53V
- hzDT7brJ/RZVfh9LrhjLBT8HwNWnRJTjffBHcoV0MSTwrMoMwTcDVt8TxueAc79a3jLV
- VnwXZWUVZ9EpjLbegxWg+pwHBUoIBmimWiHjV7nFHSfhGkN4TPhQoYwPuA2Ilumo55YB
- JV7Krl8gbGxRWVWSgPg0VWDs1duL62lIyZ/miSs5VGGZEtQPfEB3fRfAJsBijP8j+nav
- OckTmxomkEMQVadoSbAekeXXeloVebPFQvbRQ4i/jPs1kUd1SIprZKuI54qFIL95EUDE
- BWYw==
+ d=linaro.org; s=google; t=1776852645; x=1777457445; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qTC5LhoRkf6ve0e8Svdu6+rIAu2GnxjtZscQzak026I=;
+ b=XqUj04bAnhjcO8+MXlFEkJMAV7wzztyuSKnraatj/yl/wykiXlKmwQr5lap0jlW2Bz
+ nm/6KVbVrT1Kh/ddz8jDKt4H6Z0sJfSJ+TLxLUn5LWK125VfJ+wyC7MRezZyT5mOCqTG
+ FmGLNJorhnsUa2z8kAftdkMndXjhVip1oWFXr74uKrbf7WgZwPFsUjjhIOdZbyC7tuBc
+ 2Vp6L5xl+M7UCi11q9tOyDlnsS+SJS7VHMpJVAbuaAUHD7JiTzEgnIlklzrOeaTUBKEM
+ 6QX9ZGIZ/4W6EVqOvBxG1bbAy4XDHTFuacd/pP5rnJT9CQADOLIQMsEJ9H0kMxi7pjLq
+ VZ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776852648; x=1777457448;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=K6n23oz7LRRQlFUUM3gTQS/rrKewMUhskSZOvSJMe4M=;
- b=WrKSxL2DL1gMjJst2B6YZxCTce+eJh7MSLTPoGRix5eUxxuhjDO1Kls0yM6G7QcjvF
- SvcWkDnLGXu4W+huUDvGSEDGeTRsPgNv+wjKdnh8kRF4zrRm8AV9B90a4UGN1Slj8ydK
- kCMqwnxhKyN6aGAHZAlnsBkutQREFHVAHhu1pWVcZvnzEZRep6l44ga2M1ON6e0LT78t
- gapVdaosEAQzLMZvjaScZqT2vrYtX3vQ1qQZnN1v5j0zl9/GXD/El6EKN5ubZepZ3HFT
- aGad/BbMSJyhbe6PPUG9TARmhMexfw68ulrxSaJFNNU4yM3xQ/nxjKCoQfmZEN09dKZP
- e9LQ==
-X-Gm-Message-State: AOJu0YyFbvgLB6VqpnuzNFy8bem0GEfmXLgUXYOW7JS/I4wILL8sf5z3
- sXzxQb8Cn3L1uisORMYOq5upa4E+31k1F+uUEAJzpUkWGfp/EFTAqBcy2ZIpPgJFgD8=
-X-Gm-Gg: AeBDieuyqgy4Xx84mm8afhmr6KsF1RPQ0eqLG43jqCyA/BqyoLrrFnifKbP25uluGjh
- s1J8Bwoi7a8mmTxWFkFEhEq1/AWZjtA9Gf30Naj6OMCfY+ZOSHdUbpRoyn1dOLjj9Dsi+9z2EAa
- Wv+06iZHm0cfMG27n7NPe8Pi5U7kULRwTuqEq+s2IsJEG8PUie71gZEULRUT7ZYY8f8iJo5hv8C
- NtIqfBvWeB2SW+6ypoMw1d7G9J/GwYiCdYrlfFeZe+KLlIjduoG/0PXgNeGms+QWHyXt4KAZk8H
- yYbRazusRd8wuRP2xxJrcv5NAkYXZVl2ScF5s59BYjIQB8bcOJtoeCLmRIjOQc1iLz1pIRGmDRr
- IAlGCXjRnDEynpUxuTQpWwfa6PiinA5nPSNnhnmzstLwmnxqb3H1P4csx+L97wdQKcNLkLhCKQR
- JZW8AOQKxdcDUeVnYq95tBi6pIZ08rLsl0+Q==
-X-Received: by 2002:a05:6000:26ca:b0:43d:7883:87b9 with SMTP id
- ffacd0b85a97d-43fe3dc7b56mr33421360f8f.16.1776852647586; 
- Wed, 22 Apr 2026 03:10:47 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776852645; x=1777457445;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qTC5LhoRkf6ve0e8Svdu6+rIAu2GnxjtZscQzak026I=;
+ b=clX2DFFGOcyCGydzo0nHkhN9S/VAo57mRkCWsoy8ZyEg6JYSx6cMEBtJ5r9TqvPMEC
+ 2X4TC10BZl2OC9SRTcgqEPXBtXzyAD/YWf8GdRD61zQtwQDdBqMZdgYFk3CVFHs0lSTq
+ i3QFIPP3VP0RWEOTj3NwtMUV0LFNuHNmKQ54jH/4mKaq50by0bDlyJbB3LkbhLCBrXkN
+ sKocXANXIIJmCgoYgVUYyHAKMZNUBwdCrh94+Lcq/Qeg2LfTSMikoMwrHriIST2ZKRnV
+ VcG9tlX35DK/BGRx+5L5t0P8Wm9CSlNoyYMmsSRdEtdXMJvwYsqjHykZkL6HliJTWfao
+ D9xw==
+X-Gm-Message-State: AOJu0YxoGnW4ZGPfdEz0I3OSanQMPlzi2w4+j2wp1Gcoti3tApA3csUy
+ XEv3F7EUdCkjiE5seSMt90voCCZeJFlr2z/IGxtwU0JxZiLqSp7+ntvPYT/UIvgS2v4=
+X-Gm-Gg: AeBDietQLHotwCn+VgGgLf4f9LtzOqA6NEul00UCpTchSm+wqCgI3JQ31w04ynPteVh
+ ZwI/eC11Qo0FD5CFiBM+IPwM8aWqFgGnCD1Hu5KV/34Lnc2xbCLZy6HhWpTyQmGGgnExyfZ/UJ1
+ enNJJHJVjK0tz8VmLiS79gBsxBKZIFofgFWxflsG9CInvq2wL12rzHZBdTmK5jq1uKRQry3EYlz
+ xot6NSaEMVv6BaLuIJeMJLQCQ5+bRlEUHjVwtfOJuXwcBe+bxn6v7RY+SUJo5uNr70TnNcnWVFE
+ IWzhC11MUNDPWN2/M/AbQpNsepeTjDve05g0FFIDUCScnnvkCdvA9hK9eNH6P5QH5SyjgBHMY9x
+ oizUOKKUV2v0xb1b0YeVjGOpF55qRhB1fYv1cd9ViHvWGT5bL+51SugJrq+BCQwtSiT/ptZ1s72
+ Vf49jH50Zm5sZ4pguqW5yRUzHKtzHbrXdwzw==
+X-Received: by 2002:a17:907:da7:b0:ba7:62f:9fa4 with SMTP id
+ a640c23a62f3a-ba7062fa21cmr624513366b.6.1776852645250; 
+ Wed, 22 Apr 2026 03:10:45 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a341sm48291163f8f.24.2026.04.22.03.10.44
+ ffacd0b85a97d-43fe4cb135asm48912309f8f.6.2026.04.22.03.10.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 22 Apr 2026 03:10:44 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A99A55FC04;
+ by draig.lan (Postfix) with ESMTP id 6E5A55F93F;
  Wed, 22 Apr 2026 11:10:43 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,20 +72,17 @@ Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
  Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 03/31] target/arm: migrate FP/SIMD trap syndromes to
- registerfields
-Date: Wed, 22 Apr 2026 11:10:14 +0100
-Message-ID: <20260422101043.1234229-4-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 00/31] target/arm: fully model WFxT instructions for
+ A-profile
+Date: Wed, 22 Apr 2026 11:10:11 +0100
+Message-ID: <20260422101043.1234229-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260422101043.1234229-1-alex.bennee@linaro.org>
-References: <20260422101043.1234229-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,60 +105,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The syn_simd_access trap was never used so remove it. We should only
-see the COPROC encoding on v7 architectures.
+This series fully models the behaviour of WFxT instructions. We
+already had support for WFE for M-profile but we left off A-profile as
+it has more potential sources of wake-ups. The main one is the event
+stream which includes events from significant bits of the timer
+ticking over.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+The series starts with some refactoring of the syndrome register
+helpers to use registerfields. We then expand the WFIT trap handling
+to report the register used. We then implement the event stream events
+for SEV, global monitor and the timer related ones before enabling WFE
+for A-profile and then finally WFET.
 
----
+Note on AI usage. As an experiment I previously posted an RFC series
+with the help of Gemini. This series however is a ground up
+re-implementation which takes some different approaches on modelling
+the event stream. In particular rather than running multiple timers we
+use the same wxft timer and just compute if the timeout or timer event
+will come first.
+
 v2
-  - use !is16_bit directly
----
- target/arm/syndrome.h | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+  - I've kept the tests separate, see:
 
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 29462aa103c..72051443d59 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -337,21 +337,26 @@ static inline uint32_t syn_cp15_rrt_trap(int cv, int cond, int opc1, int crm,
-     return res;
- }
- 
-+/*
-+ * ISS encoding for an exception from an access to a register of
-+ * instruction resulting from the FPEN or TFP traps.
-+ */
-+FIELD(FP_ISS, COPROC, 0, 4) /* ARMv7 only */
-+FIELD(FP_ISS, COND, 20, 4)
-+FIELD(FP_ISS, CV, 24, 1)
-+
- static inline uint32_t syn_fp_access_trap(int cv, int cond, bool is_16bit,
-                                           int coproc)
- {
-     /* AArch32 FP trap or any AArch64 FP/SIMD trap: TA == 0 */
--    return (EC_ADVSIMDFPACCESSTRAP << ARM_EL_EC_SHIFT)
--        | (is_16bit ? 0 : ARM_EL_IL)
--        | (cv << 24) | (cond << 20) | coproc;
--}
-+    uint32_t res = syn_set_ec(0, EC_ADVSIMDFPACCESSTRAP);
-+    res = FIELD_DP32(res, SYNDROME, IL, !is_16bit);
- 
--static inline uint32_t syn_simd_access_trap(int cv, int cond, bool is_16bit)
--{
--    /* AArch32 SIMD trap: TA == 1 coproc == 0 */
--    return (EC_ADVSIMDFPACCESSTRAP << ARM_EL_EC_SHIFT)
--        | (is_16bit ? 0 : ARM_EL_IL)
--        | (cv << 24) | (cond << 20) | (1 << 5);
-+    res = FIELD_DP32(res, FP_ISS, CV, cv);
-+    res = FIELD_DP32(res, FP_ISS, COND, cond);
-+    res = FIELD_DP32(res, FP_ISS, COPROC, coproc);
-+
-+    return res;
- }
- 
- static inline uint32_t syn_sve_access_trap(void)
+    Message-ID: <20260417164328.1009132-1-alex.bennee@linaro.org>
+    Date: Fri, 17 Apr 2026 17:43:20 +0100
+    Subject: [PATCH 0/7] tests/tcg: more capabilities for aarch64-softmmu tests
+    From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+
+  - tweaks to global monitor behaviour
+  - STLR/STL will also trigger events to avoid deadlocks
+  - see under the --- in the patches for details
+
+Alex.
+
+Alex Bennée (31):
+  target/arm: migrate basic syndrome helpers to registerfields
+  target/arm: migrate system/cp trap syndromes to registerfields
+  target/arm: migrate FP/SIMD trap syndromes to registerfields
+  target/arm: migrate eret trap syndromes to registerfields
+  target/arm: migrate SME trap syndromes to registerfields
+  target/arm: migrate PAC trap syndromes to registerfields
+  target/arm: migrate BTI trap syndromes to registerfields
+  target/arm: migrate BXJ trap syndromes to registerfields
+  target/arm: migrate Granule Protection traps to registerfields
+  target/arm: migrate fault syndromes to registerfields
+  target/arm: migrate debug syndromes to registerfields
+  target/arm: migrate wfx syndromes to registerfields
+  target/arm: migrate gcs syndromes to registerfields
+  target/arm: migrate memory op syndromes to registerfields
+  target/arm: migrate check_hcr_el2_trap to use syndrome helper
+  target/arm: use syndrome helpers in arm_cpu_do_interrupt_aarch32_hyp
+  target/arm: use syndrome helpers to set SAME_EL EC bit
+  target/arm: make whpx use syndrome helpers for decode
+  target/arm: make hvf use syndrome helpers for decode
+  target/arm: use syndrome helpers in merge_syn_data_abort
+  target/arm: use syndrome helpers to query VNCR bit
+  target/arm: remove old syndrome defines
+  target/arm: report register in WFIT syndromes
+  target/arm: teach arm_cpu_has_work about halting reasons
+  target/arm: redefine event stream fields
+  target/arm: ensure aarch64 DISAS_WFE will exit
+  target/arm: implements SEV/SEVL for all modes
+  target/arm: hoist event broadcast code into a helper
+  target/arm: implement global monitor events
+  target/arm: enable event stream on WFE instructions
+  target/arm: implement WFET
+
+ target/arm/cpu.h               |  27 ++
+ target/arm/internals.h         |  31 +-
+ target/arm/syndrome.h          | 595 +++++++++++++++++++++++++++------
+ target/arm/tcg/helper-defs.h   |   3 +-
+ target/arm/tcg/translate.h     |  32 ++
+ target/arm/tcg/a32.decode      |   5 +-
+ target/arm/tcg/a64.decode      |   5 +-
+ target/arm/tcg/t16.decode      |   4 +-
+ target/arm/tcg/t32.decode      |   4 +-
+ target/arm/arm-powerctl.c      |   4 +-
+ target/arm/cpu.c               |  53 ++-
+ target/arm/helper.c            |  12 +-
+ target/arm/hvf/hvf.c           |  14 +-
+ target/arm/kvm.c               |   5 +-
+ target/arm/machine.c           |   2 +-
+ target/arm/tcg/debug.c         |   2 +-
+ target/arm/tcg/op_helper.c     | 216 ++++++++++--
+ target/arm/tcg/tlb_helper.c    |   6 +-
+ target/arm/tcg/translate-a64.c |  58 +++-
+ target/arm/tcg/translate.c     |  33 +-
+ target/arm/tcg/vfp_helper.c    |   5 +-
+ target/arm/whpx/whpx-all.c     |  13 +-
+ 22 files changed, 929 insertions(+), 200 deletions(-)
+
 -- 
 2.47.3
 
