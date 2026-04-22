@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0C4F9EDC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 12:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BE7F9EDC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 12:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFX5n-0007Js-B7; Wed, 22 Apr 2026 08:54:11 -0400
+	id 1wFX4d-0005vM-73; Wed, 22 Apr 2026 08:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFX4r-000660-45
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:53:13 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wFX4b-0005uI-QD
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:52:57 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFX4m-0005XT-Vy
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:53:11 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4891b0786beso30438975e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 05:53:08 -0700 (PDT)
+ id 1wFX4Z-0005Rb-D5
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:52:57 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso74083175e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 05:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776862387; x=1777467187; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776862374; x=1777467174; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7kLDDoOYtEyqQijc0QmTmJ1dX5SOzFgUIzyhmwCFraY=;
- b=l76bWmdp3ixKUCLuHZSeUhOubhhjmfImA6u4cAV/UzYzsKqwKPmrbYNJfMMVZA+E2O
- rMbVlBTQFzcu2QgsnLTnk1b7ElPmlD8vxVQGe/F+XSh7UHvCOWG65oGSUwLiZ7MGgXmi
- B5tEMNsMthNz/ChaV+3AQBgE64xm5BxXJ0yUXMJKXPnLmjf7V5CnQNYMnNPK102GLIVn
- /TbbJX7/rQ1G70CXMT5nbh+RtoHpVAPXxL24gUcZv37IZgFC+WaIvZ577XQlwrWqnQ7X
- Td9ov3u8okwP/4iJFCGrrHTH18WOGDSQXHIlJOk0qvGyXwwtNMFafMfyO+sqFdqfRzmg
- 0jPA==
+ bh=SFHYYol3fQLtpVQaYQnNjnL8iJcFReh9WH604Hh8s60=;
+ b=o4fZh02U3zjneAJDQgLVKFQ59W7HJuxelQWY7bSkZ4l3K3TbS1/HG2/E0Ui/vNiNG6
+ uxhXxOCltdpWBXVs3oHmD+qbvkNV+PxUHGSL2u2D8gY9/SyEbs0aHr1UlYS929HRvR/E
+ VwdvyUmdTKEMuW/LHUZcZhqRjod7r4NE3jshc803SyFhIzNZkkPjH3JCz/k6GzZ074Se
+ S7S7CCWC0357HtV9pFOGXBqHCcoMM2RWsXKBy64VvfiExMDHpKiEx6VsspwIkctocWwg
+ 2CHU+Hf0jvi7H0clG9LB6gyOPG87UDCKJTMc812IpvY6om3JzwSWdqZXufUnXKq4hIH3
+ +YrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776862387; x=1777467187;
+ d=1e100.net; s=20251104; t=1776862374; x=1777467174;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7kLDDoOYtEyqQijc0QmTmJ1dX5SOzFgUIzyhmwCFraY=;
- b=T2eFNRtJS9AH1G5IEphP97DnXKxt0Pqzz+LpS0vyUCON4BPQdNPu5zi5azvOi8nMII
- 54WjGat29MFiu7yqGaxsXpdfZrtC7o+qtabjTmWpeZCC/q/qTDJGgJOHxXyOgCoP90Tx
- tW5JDlxUKnraQLOPWVrJTJH35Ib7+XlMmSurFDgeMk2uIP+4rjC0SbYcMMNcQXVf4x6l
- dYPijph5uLxez7zXLOuzGO3VnCOXuOj0OLp46XTj3SSdn7vlf7emY8FY4KSg44prK1an
- UVzhYxHLOQpddLTfEwIoFmP4zpeNZk2v/3Nkqhjd7pGQiF8MY44XVroM6hOXk3ifQ/U5
- Dnfg==
-X-Gm-Message-State: AOJu0YzsYrxsVuGEAj8/pdmteG/rXZSmIW0A+7Bf0rxSayd/FlczepKs
- 5W+xHLvkUnKThkZQuNUqo16GekBTWqP1aHSYrSIQG+v1iQgTwTHEc3aSo9yEX1Xlo30=
-X-Gm-Gg: AeBDieucgy0AZQPoYrdxJNcj3sU5ibtopYstj2EDphoKKh32TYnXTEXZaR8yDgVuUXZ
- Tx2R4HRohacnEJ2BxeQFhn9U/JS7IMXUiMJlDxCy1v1hfQJOw0ZQ4kLEmL//JJh7MynncuCAhL1
- YASf04GP0xnayR7fnd1m3wj/16nlRe1aReBcLNHN+TMDPkJ+EZd8BhM37MK8CnMY4k1fFFeFkqN
- mRibc7yQcJYrNMhXq7nvr8BXE5TZ63HrSQCLgvDUZ9CbKZ4CLUGJfrHB2xWkCjMOXlXbp3sPZtl
- ewhb1HpmUA9HdfJzf9o3S7/vG1M91vFof2oci3hS18swJN2qRcOsewJUbSOR0Dm0g5/cyM0p8Jp
- sWiCWFpNHksweS0cWuz0JA3w9rtt6Gi7CAUb0p7wqyB8h/gn76Mz1UlDfGHorYu0pJMSQ/f+Lky
- fGdAttSvV2O+cs89pB8FD48MDCp35Mn2InJQ==
-X-Received: by 2002:a05:600c:c4a1:b0:488:c014:34da with SMTP id
- 5b1f17b1804b1-488fb77ed1bmr305546735e9.26.1776862387494; 
- Wed, 22 Apr 2026 05:53:07 -0700 (PDT)
+ bh=SFHYYol3fQLtpVQaYQnNjnL8iJcFReh9WH604Hh8s60=;
+ b=cDJWhj+TFEPhs9/lU1g0Q6NZUuqJXtRegKwLwisvoMzvDhtWlzv21zpZ5o44Xil1jJ
+ uFB9UOryg4SHLR6gjDcorOBe6bm8ZNzDAmhCHxaezEdAj31KQKk8mJBvBG2XNivaYLEv
+ klhAPvhWiLZdpcfmvCoKVwg4rdKPTAPUyDAkw3BW8q9tcPo3++U7j4nRIvQrE2YDQLMJ
+ q5Y/bSmvyNjOZ0oZhqD12DrfnUilkwd7zbk2a2FutqtFjqj5m1xXmBOIT8XUhVBe2Ovg
+ BRJgPi3pTNzlCTOrkSTQFnsGea9xdxVeWAopyRyV/uEGBkcovaQYnIN0zlXi2lThdzx6
+ GAmA==
+X-Gm-Message-State: AOJu0YyjbolfZWmqW6dD0dukAyoiGAmyPGG0W0Etx3qgvWNH/Y7vQdPU
+ vLGGMPEvoXfDownCnE9wwONSZRv5FnIg7P1nKpoqNWhgzMBuPvHuqwFBtilKwqiNF+o=
+X-Gm-Gg: AeBDievVhStAKyoPFpT2lVYi56blPfp2yIzRt4ci984lM+rtKcfxyymxNBYAKR3d3JY
+ NTLX5Utzn9zMaCyID3h6AvqfV0alf5lnpjCxa7IOoPFtXFFednnEZuK+Qt0XBVNCk85rsjIax25
+ NLeDuIWnBgi52LAvHypNt5fD42VCFghNECf4aDlaiI2ui0gULsNfvl+WHo7hRJiIm7y8EcfEQAN
+ IgLf3S/VUnxC2BRXU2I/AP3tWGDQtpeAwjN1eKr75qrL985OcAznN77HSFdzVpBZ86HqAvcHqaE
+ 1CROdMNL9I5CaiQYBzSkrSd59T0lfPVh8qKcA/sGNZncK0UVHTzbrnwHYIFw+51LRspocJU8D00
+ Ueztz1s+9Kmm/kbD+1yaK94mJ0AJZJGhyOu1z+k2FVCveasYm6CyUVRNK0jeSZ5ZpGPUsZ7dTG9
+ YkzeaQaztiLoZU80ZZGzLQFYVS61QNrcZ0YA==
+X-Received: by 2002:a05:600c:a107:b0:489:d1c:d468 with SMTP id
+ 5b1f17b1804b1-4890d1cdaedmr163029735e9.31.1776862373605; 
+ Wed, 22 Apr 2026 05:52:53 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb79ecb9sm186670245e9.8.2026.04.22.05.52.59
+ ffacd0b85a97d-43fe4e4ffa8sm46533031f8f.35.2026.04.22.05.52.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 05:53:02 -0700 (PDT)
+ Wed, 22 Apr 2026 05:52:51 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8C3B0617D8;
- Wed, 22 Apr 2026 13:52:53 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0D4535F941;
+ Wed, 22 Apr 2026 13:52:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
@@ -73,25 +73,27 @@ Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
  qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 31/32] target/arm: handle the WFE trap case
-Date: Wed, 22 Apr 2026 13:52:48 +0100
-Message-ID: <20260422125250.1303100-32-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v3 01/32] target/arm: migrate basic syndrome helpers to
+ registerfields
+Date: Wed, 22 Apr 2026 13:52:18 +0100
+Message-ID: <20260422125250.1303100-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260422125250.1303100-1-alex.bennee@linaro.org>
 References: <20260422125250.1303100-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,96 +109,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now WFE can actually suspend on A-profile we also need to handle when
-its trapped. To do this we need to pass the instruction size so we can
-deal with the is_16bit syndrome encoding.
+We have a registerfields interface which we can use for defining
+fields alongside helpers to access them. Define the basic syndrome
+layout and convert the helpers that take the imm16 data directly.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/tcg/helper-defs.h   |  2 +-
- target/arm/tcg/op_helper.c     | 15 ++++++++++++++-
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  2 +-
- 4 files changed, 17 insertions(+), 4 deletions(-)
+ target/arm/syndrome.h | 75 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 57 insertions(+), 18 deletions(-)
 
-diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
-index a05f2258f29..ebdf09be38a 100644
---- a/target/arm/tcg/helper-defs.h
-+++ b/target/arm/tcg/helper-defs.h
-@@ -54,7 +54,7 @@ DEF_HELPER_2(exception_swstep, noreturn, env, i32)
- DEF_HELPER_2(exception_pc_alignment, noreturn, env, vaddr)
- DEF_HELPER_1(setend, void, env)
- DEF_HELPER_2(wfi, void, env, i32)
--DEF_HELPER_1(wfe, void, env)
-+DEF_HELPER_2(wfe, void, env, i32)
- DEF_HELPER_2(wfit, void, env, i32)
- DEF_HELPER_1(yield, void, env)
- DEF_HELPER_1(pre_hvc, void, env)
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 030209360e8..fe34c94e890 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -568,7 +568,7 @@ static int64_t gt_calc_next_event_stream(CPUARMState *env)
- }
- #endif
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index bff61f052cc..517fb2368bc 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -25,7 +25,7 @@
+ #ifndef TARGET_ARM_SYNDROME_H
+ #define TARGET_ARM_SYNDROME_H
  
--void HELPER(wfe)(CPUARMState *env)
-+void HELPER(wfe)(CPUARMState *env, uint32_t insn_len)
- {
- #ifdef CONFIG_USER_ONLY
-     /*
-@@ -586,12 +586,25 @@ void HELPER(wfe)(CPUARMState *env)
-      */
-     CPUState *cs = env_cpu(env);
-     ARMCPU *cpu = ARM_CPU(cs);
-+    uint32_t excp;
-+    int target_el = check_wfx_trap(env, true, &excp);
+-#include "qemu/bitops.h"
++#include "hw/core/registerfields.h"
  
-     if (env->event_register) {
-         env->event_register = false;
-         return;
-     }
+ /* Valid Syndrome Register EC field values */
+ enum arm_exception_class {
+@@ -76,6 +76,11 @@ enum arm_exception_class {
+     EC_AA64_BKPT              = 0x3c,
+ };
  
-+    /* We might sleep, so now we check to see if we should trap */
-+    if (target_el) {
-+        if (env->aarch64) {
-+            env->pc -= insn_len;
-+        } else {
-+            env->regs[15] -= insn_len;
-+        }
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false, WFE, insn_len == 2),
-+                        target_el);
-+    }
++/* Generic syndrome encoding layout for HSR and lower 32 bits of ESR_EL2 */
++FIELD(SYNDROME, EC, 26, 6)
++FIELD(SYNDROME, IL, 25, 1)
++FIELD(SYNDROME, ISS, 0, 25)
 +
-     /* For A-profile we also can be woken by the event stream */
-     if (arm_feature(env, ARM_FEATURE_AARCH64) && cpu->wfxt_timer) {
-         int64_t next_event = gt_calc_next_event_stream(env);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index a1b0cc9508e..83b2a6e848f 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -10956,7 +10956,7 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             break;
-         case DISAS_WFE:
-             gen_a64_update_pc(dc, 4);
--            gen_helper_wfe(tcg_env);
-+            gen_helper_wfe(tcg_env, tcg_constant_i32(4));
-             tcg_gen_exit_tb(NULL, 0);
-             break;
-         case DISAS_YIELD:
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 18d64620e40..c30ea2261da 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6845,7 +6845,7 @@ static void arm_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             tcg_gen_exit_tb(NULL, 0);
-             break;
-         case DISAS_WFE:
--            gen_helper_wfe(tcg_env);
-+            gen_helper_wfe(tcg_env, tcg_constant_i32(curr_insn_len(dc)));
-             /*
-              * The helper can return if the event register is set, so we
-              * must go back to the main loop to check for events.
+ typedef enum {
+     SME_ET_AccessTrap,
+     SME_ET_Streaming,
+@@ -113,12 +118,12 @@ typedef enum {
+ 
+ static inline uint32_t syn_get_ec(uint32_t syn)
+ {
+-    return syn >> ARM_EL_EC_SHIFT;
++    return FIELD_EX32(syn, SYNDROME, EC);
+ }
+ 
+ static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
+ {
+-    return deposit32(syn, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH, ec);
++    return FIELD_DP32(syn, SYNDROME, EC, ec);
+ }
+ 
+ /*
+@@ -133,49 +138,74 @@ static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
+  */
+ static inline uint32_t syn_uncategorized(void)
+ {
+-    return (EC_UNCATEGORIZED << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_UNCATEGORIZED);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
++FIELD(ISS_IMM16, IMM16, 0, 16)
++
+ static inline uint32_t syn_aa64_svc(uint32_t imm16)
+ {
+-    return (EC_AA64_SVC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_SVC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_hvc(uint32_t imm16)
+ {
+-    return (EC_AA64_HVC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_HVC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_smc(uint32_t imm16)
+ {
+-    return (EC_AA64_SMC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_SMC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_svc(uint32_t imm16, bool is_16bit)
+ {
+-    return (EC_AA32_SVC << ARM_EL_EC_SHIFT) | (imm16 & 0xffff)
+-        | (is_16bit ? 0 : ARM_EL_IL);
++    uint32_t res = syn_set_ec(0, EC_AA32_SVC);
++    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_hvc(uint32_t imm16)
+ {
+-    return (EC_AA32_HVC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA32_HVC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_smc(void)
+ {
+-    return (EC_AA32_SMC << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_AA32_SMC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_bkpt(uint32_t imm16)
+ {
+-    return (EC_AA64_BKPT << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_BKPT);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_bkpt(uint32_t imm16, bool is_16bit)
+ {
+-    return (EC_AA32_BKPT << ARM_EL_EC_SHIFT) | (imm16 & 0xffff)
+-        | (is_16bit ? 0 : ARM_EL_IL);
++    uint32_t res = syn_set_ec(0, EC_AA32_BKPT);
++    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_sysregtrap(int op0, int op1, int op2,
+@@ -246,7 +276,9 @@ static inline uint32_t syn_simd_access_trap(int cv, int cond, bool is_16bit)
+ 
+ static inline uint32_t syn_sve_access_trap(void)
+ {
+-    return (EC_SVEACCESSTRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_SVEACCESSTRAP);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ /*
+@@ -361,12 +393,16 @@ static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
+ 
+ static inline uint32_t syn_illegalstate(void)
+ {
+-    return (EC_ILLEGALSTATE << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_ILLEGALSTATE);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ static inline uint32_t syn_pcalignment(void)
+ {
+-    return (EC_PCALIGNMENT << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_PCALIGNMENT);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ static inline uint32_t syn_gcs_data_check(GCSInstructionType it, int rn)
+@@ -388,7 +424,10 @@ static inline uint32_t syn_gcs_gcsstr(int ra, int rn)
+ 
+ static inline uint32_t syn_serror(uint32_t extra)
+ {
+-    return (EC_SERROR << ARM_EL_EC_SHIFT) | ARM_EL_IL | extra;
++    uint32_t res = syn_set_ec(0, EC_SERROR);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, SYNDROME, ISS, extra);
++    return res;
+ }
+ 
+ static inline uint32_t syn_mop(bool is_set, bool is_setg, int options,
 -- 
 2.47.3
 
