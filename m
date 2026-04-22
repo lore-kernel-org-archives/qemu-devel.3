@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5593F9B60A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC2CDF9B609
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFUey-0007W8-Vm; Wed, 22 Apr 2026 06:18:21 -0400
+	id 1wFUeq-0007Jg-Ht; Wed, 22 Apr 2026 06:18:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeM-0006yv-7w
+ id 1wFUeM-0006yl-5V
  for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:43 -0400
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFUeD-0002Ne-LZ
+ id 1wFUeD-0002NN-Lb
  for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:17:36 -0400
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4891d7164ddso20264915e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:17:31 -0700 (PDT)
+ 5b1f17b1804b1-488b8bc6bc9so37141405e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 03:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776853051; x=1777457851; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776853050; x=1777457850; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
- b=fArmz0PbBkq28AMLdMgSbpAv/cUpBHGo4I/DAj22+KywMjndnEotuLki9TrydBg3wx
- 6oQbjZ0Q1bNxDT/Ip8XE0wPNABBNb8cd1mjKOTnq/nAxGI6rI+yOUqU7fpXlEEJfZ5Ll
- kV/iHmo6R22URvemdRe9EJSKI18NdXhj3wpQLmOqnvYNfGKNvqF2hg/59iGnEnOl8kUP
- 9oivF8WWIJginRd3SuRU/GkP5dy0RCXWceDhBKB2bXCCoOJ7JBIlW7q0O7ZltCYGMv23
- JSw6fqpUvlgYvXctAALT5pnE4S4EyhA8aFsEgx2TG1qyZQZsR9M1pksaz1rQD7FUTjsq
- BvFg==
+ bh=V9WNiVc32x9uwc9Kvl3F3IabOVkUVJfyhaJuWqhRbgs=;
+ b=lpf5FT+fG4RvwdNrOLYAt5rVTc6OTeMRM5if5IFQX7ZTpGzjeeiMpcSF48dL4T8rf6
+ nS9Nv/aIibuPHhOhSJLdfM2t8Kdee+dh6GERxsODMgEdshIReJiHHiBNKq+Iv0LqEy4M
+ muMJeRKelFwE33Tz8vWkYVMiP/yfC0Qmbt8um8EBKKlspnsMs23Y2tXmijUThWLuxwF8
+ y9VNWZWvLBdAOvGhV655rYNyBmODBjpc6OyB39dhRWItB1pTmENriOOw2f9OZnLqkbXg
+ TO6QKmzA0Je7z1sQe5BbJCuQ/OarnSwCRMnPOqfBsdB0eY2IFVKRaap9jLbTo4M78yGb
+ X4og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776853051; x=1777457851;
+ d=1e100.net; s=20251104; t=1776853050; x=1777457850;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
- b=qsZDOd1OiJAW4/s6F0H/Oa7dvXFzsLYmw+xGzOiWz4kNIJ+bcb6+f2zpFIjdiLP1ct
- eM5u1bQ6G/ZAwR6+LiFLPFljCT96aOBQMJhYjpmYJVcYG7huzEtQA5laTpfNbB8kwePu
- GawANUlaTee4nCh7NTqdjOR4/IAm4IKos11DmfEZrm0bU81emHe8vGwiTvL/w7t+5J0B
- K4f4RIt6EwTZ9IjwfVntPKYR2z84jLETl9WP+jRBya0FBJt0RwWkLxwYPhgLR2usmGA7
- WmAiW+/8tg7gF6bxxcfhSjgtvztP7Ul4T+xFsVBxfSGqNd3XVIpeD8x0TceDMx4HoMea
- 6VkA==
-X-Gm-Message-State: AOJu0Ywai4dw4KxvoFbNnMlQqgpfJgY+ykOIexhu1QeuV8ypto4A+LO+
- FEhuNrF3rriz1MITrCmKi9M9Bi+fkggE0eBcGwfYOO8AaFh78XUnuMAv+QcaksonLmw=
-X-Gm-Gg: AeBDiesoqjK3YFs2ZyJhuDG7EIBaElJ3GpgR2qG8g9RBUqbGBu1NK8GlMuQ2nX3hFhD
- xEtvhfUniX5T2DFaHh0exB6opiq7A60rbTxDgNAHSdwG/rIm8ZsunY9iIf1yGhiVC7wEBL0v53X
- kfz7QEH9R8knzGwbge8vOhe9q51WWvrre6NIWB8RXfV2Ai9RrS+X9oJ/x2A0zTlxfOSWEWxUnUX
- 8Np3gmH7eqq4pPI2Og/ERLOK5rRS6iBvldb342UCMTyhykkP5B7FmmRw0x95F1MI0AMzl4d03zL
- YxmNNbpKqJCu2HonjtpT6BHoidYLwI1R/08osEcN03Nuda8HY4JPyZLJXF6uxd5V3uchtZgSC5Z
- 4yu5iFLqcSPbNJuFOGzg/AyPI/SGfW5BhdbjUdnjqf1IwFl/27FS72tZbHV7lM4zCqWW1pJa3XR
- eYSUGurpVLIHV3wte9KkkpxsgLZzSN9JGSjg==
-X-Received: by 2002:a05:600c:3e1a:b0:489:1ca2:eafd with SMTP id
- 5b1f17b1804b1-4891ca2ee65mr169059005e9.11.1776853050447; 
- Wed, 22 Apr 2026 03:17:30 -0700 (PDT)
+ bh=V9WNiVc32x9uwc9Kvl3F3IabOVkUVJfyhaJuWqhRbgs=;
+ b=bd2/rY6dwqf/K7HiqDpSlvswWP8X9/9GB7vpixxjrM1EhtIwjA1e2MTTqgccU6VH+H
+ ocFx7mCsJeSxl2N4uZVmnWE3Axrsa4xr6m9vLLKsSP+7YCnDqVgrF7Diqx176aPMBIZP
+ zR/lnv8hLilLSS3doo7g0aKZswLOyBjoGIIQ7JJjSWMThBekKXCqUEzDlEeC4rkZ5ePk
+ s5ro/GHHCfHTzJGwgydroyLKuWC5xM/46JOF+WWoNOaEC5TGY1wwM1IW8lwESXU2+RtF
+ cDS0cGVuGWhJ4TulvWqzuhm3k+ZqnTFtkPC1vJby1VXYbJg5mj5ilIfTWMqNRe69pAs5
+ 9ibQ==
+X-Gm-Message-State: AOJu0Yy6hUFfNdJ6Vje0DS1L6Bjq+yt5FJ545ejwe91N6JupPqWVYvRx
+ AeJgoI518tWw/aGg0gLUPzqGvrr6IrotChj8Lp/BmBXUW0ju7LonsllREWTEZEf3g24=
+X-Gm-Gg: AeBDietd6O0Mfc07MW4OHfd1IJlWdywpeU+dz9XSH2lR8jSbDJ2+/LXsyLiqWZMn366
+ 44O4iV+TdNB9OsG0vYJ1pRX2vLfEBQztyIpNkkLE9CzV9fT+N7ploRie/MRk40eIKVaSmWBVI2D
+ 8OJrx6XBBUnj04mwyzxSj3jAMqDPv2m9n0LBbXezr3V/A0aon46dQI9ayibGuHwYBygYwpttANX
+ yEZ+IstirfdLOXBwjpCHC+cApj8KRNQVNIBgYTsnSxDqmOl5tgOH0IjDez/Y5BD/Rj4BYpTbxLm
+ uLAvqD672Vqp4ceZDdbLRzvGA0tKcXUJzlHPYszT9odzmCdsF6AEJkOpi6ULQaQWwZ1tyxLTemg
+ 3KlOyxDV6UJCs4KumWtkvnM3hax+/5w2kv30KqD9bYPZMDQy+OKUkLpUqFKi8ZgboIlNCvqGNrS
+ z9mSy/VxJzNogBtZl3a0Bs8pvXj87txlUCtw==
+X-Received: by 2002:a05:600c:5254:b0:488:8bdd:cfcc with SMTP id
+ 5b1f17b1804b1-488fb6e62a8mr333377305e9.0.1776853049667; 
+ Wed, 22 Apr 2026 03:17:29 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4d5b1sm48556196f8f.30.2026.04.22.03.17.25
+ 5b1f17b1804b1-4891c08faffsm420040875e9.1.2026.04.22.03.17.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 22 Apr 2026 03:17:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CF1A4616F5;
+ by draig.lan (Postfix) with ESMTP id 72EA26153F;
  Wed, 22 Apr 2026 11:10:45 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,10 +73,11 @@ Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
  Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 29/31] target/arm: implement global monitor events
-Date: Wed, 22 Apr 2026 11:10:40 +0100
-Message-ID: <20260422101043.1234229-30-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2 25/31] target/arm: redefine event stream fields
+Date: Wed, 22 Apr 2026 11:10:36 +0100
+Message-ID: <20260422101043.1234229-26-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260422101043.1234229-1-alex.bennee@linaro.org>
 References: <20260422101043.1234229-1-alex.bennee@linaro.org>
@@ -107,174 +108,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moving from Exclusive to Open Access should generate event stream
-events. Technically a non-exclusive store to any address range covered
-by the global monitor should also trigger such an event but we can
-only detect that after the event by seeing if memory doesn't match
-cpu_exclusive_val when processing the eventual store exclusive.
+The event stream control bits are the same for both CNTHCTL and
+CNTKCTL so rather than duplicating the definitions rename them to be
+useful in both cases.
 
-The CLREX instruction has the same effect as do other operations
-clearing the exclusive state (such as eret).
+We will need these in a later commit when we start implementing event
+streams.
 
-We special case STLR/STL (Store Release) instructions to generate
-events because their use is a suggested pattern for clearing locks
-that might be sleeping. We only trigger the event if we detect an
-exclusive instruction is running.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - add gen_global_event_reg() and use that
-  - add handling for STL/STLR
----
- target/arm/internals.h         |  1 +
- target/arm/tcg/translate.h     | 14 ++++++++++++++
- target/arm/tcg/translate-a64.c | 23 +++++++++++++++++++++++
- target/arm/tcg/translate.c     | 20 ++++++++++++++++++++
- 4 files changed, 58 insertions(+)
+ target/arm/internals.h | 11 +++++++----
+ target/arm/helper.c    |  8 ++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 089f679ac0a..7045b4a56bd 100644
+index 85980f0e69a..dc593f1fec8 100644
 --- a/target/arm/internals.h
 +++ b/target/arm/internals.h
-@@ -709,6 +709,7 @@ static inline void arm_broadcast_event(void)
- static inline void arm_clear_exclusive(CPUARMState *env)
- {
-     env->exclusive_addr = -1;
-+    arm_broadcast_event();
- }
+@@ -263,14 +263,17 @@ FIELD(VSTCR, SA, 30, 1)
+  * have different bit definitions, and EL1PCTEN might be
+  * bit 0 or bit 10. We use _E2H1 and _E2H0 suffixes to
+  * disambiguate if necessary.
++ *
++ * The event stream bits (EVN*) are in the same position for
++ * CNTKCTL_EL1/CTNKCTL.
+  */
+ FIELD(CNTHCTL, EL0PCTEN_E2H1, 0, 1)
+ FIELD(CNTHCTL, EL0VCTEN_E2H1, 1, 1)
+ FIELD(CNTHCTL, EL1PCTEN_E2H0, 0, 1)
+ FIELD(CNTHCTL, EL1PCEN_E2H0, 1, 1)
+-FIELD(CNTHCTL, EVNTEN, 2, 1)
+-FIELD(CNTHCTL, EVNTDIR, 3, 1)
+-FIELD(CNTHCTL, EVNTI, 4, 4)
++FIELD(CNTxCTL, EVNTEN, 2, 1)
++FIELD(CNTxCTL, EVNTDIR, 3, 1)
++FIELD(CNTxCTL, EVNTI, 4, 4)
+ FIELD(CNTHCTL, EL0VTEN, 8, 1)
+ FIELD(CNTHCTL, EL0PTEN, 9, 1)
+ FIELD(CNTHCTL, EL1PCTEN_E2H1, 10, 1)
+@@ -280,7 +283,7 @@ FIELD(CNTHCTL, EL1TVT, 13, 1)
+ FIELD(CNTHCTL, EL1TVCT, 14, 1)
+ FIELD(CNTHCTL, EL1NVPCT, 15, 1)
+ FIELD(CNTHCTL, EL1NVVCT, 16, 1)
+-FIELD(CNTHCTL, EVNTIS, 17, 1)
++FIELD(CNTxCTL, EVNTIS, 17, 1)
+ FIELD(CNTHCTL, CNTVMASK, 18, 1)
+ FIELD(CNTHCTL, CNTPMASK, 19, 1)
  
- /**
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 9bf2701a56b..01053060af4 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -882,6 +882,20 @@ static inline void gen_event_reg(void)
- #endif
- }
- 
-+/*
-+ * Some events affect all PEs in the same shareability domain. In
-+ * practice as we currently model SMP systems as single SoC devices so
-+ * we signal them all.
-+ */
-+static inline void gen_global_event_reg(void)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    /* re-use the SEV helper */
-+    gen_helper_sev(tcg_env);
-+#endif
-+}
-+
-+
- /*
-  * Helpers for implementing sets of trans_* functions.
-  * Defer the implementation of NAME to FUNC, with optional extra arguments.
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index f30df5dbfed..a1b0cc9508e 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2253,6 +2253,7 @@ static bool trans_CHKFEAT(DisasContext *s, arg_CHKFEAT *a)
- static bool trans_CLREX(DisasContext *s, arg_CLREX *a)
- {
-     tcg_gen_movi_i64(cpu_exclusive_addr, -1);
-+    gen_global_event_reg();
-     return true;
- }
- 
-@@ -3407,6 +3408,14 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
-         tcg_gen_setcond_i64(TCG_COND_NE, tmp, tmp, cpu_exclusive_val);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 40dd070d2c1..81a07ca42d0 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1746,9 +1746,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     uint32_t valid_mask =
+         R_CNTHCTL_EL0PCTEN_E2H1_MASK |
+         R_CNTHCTL_EL0VCTEN_E2H1_MASK |
+-        R_CNTHCTL_EVNTEN_MASK |
+-        R_CNTHCTL_EVNTDIR_MASK |
+-        R_CNTHCTL_EVNTI_MASK |
++        R_CNTxCTL_EVNTEN_MASK |
++        R_CNTxCTL_EVNTDIR_MASK |
++        R_CNTxCTL_EVNTI_MASK |
+         R_CNTHCTL_EL0VTEN_MASK |
+         R_CNTHCTL_EL0PTEN_MASK |
+         R_CNTHCTL_EL1PCTEN_E2H1_MASK |
+@@ -1763,7 +1763,7 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+             R_CNTHCTL_EL1TVCT_MASK |
+             R_CNTHCTL_EL1NVPCT_MASK |
+             R_CNTHCTL_EL1NVVCT_MASK |
+-            R_CNTHCTL_EVNTIS_MASK;
++            R_CNTxCTL_EVNTIS_MASK;
      }
-     tcg_gen_mov_i64(cpu_reg(s, rd), tmp);
-+
-+    /*
-+     * On a successful StoreExcl the global monitor transitions from
-+     * Exclusive to Open Access and at that point generate an Event
-+     * for PEs in the same memory sharing domain.
-+     */
-+    gen_global_event_reg();
-+
-     tcg_gen_br(done_label);
- 
-     gen_set_label(fail_label);
-@@ -3544,6 +3553,7 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
-     TCGv_i64 clean_addr;
-     MemOp memop;
-     bool iss_sf = ldst_iss_sf(a->sz, false, false);
-+    TCGLabel *skip_monitor_event = gen_new_label();
- 
-     /*
-      * StoreLORelease is the same as Store-Release for QEMU, but
-@@ -3562,6 +3572,19 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
-                                 true, a->rn != 31, memop);
-     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
-               iss_sf, a->lasr);
-+
-+    /*
-+     * We don't fully model the global monitor as it would be very
-+     * expensive for every memory access. However in the Arm ARM "Use
-+     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
-+     * give the example of using STLR to clear a lock. So if a lock is
-+     * active trigger the global event register so we don't deadlock
-+     * while sleeping.
-+     */
-+    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
-+    gen_global_event_reg();
-+    gen_set_label(skip_monitor_event);
-+
-     return true;
- }
- 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 59925151fc3..18d64620e40 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -2116,6 +2116,12 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
-         tcg_gen_setcond_i32(TCG_COND_NE, t0, t0, t2);
-     }
-     tcg_gen_mov_i32(cpu_R[rd], t0);
-+    /*
-+     * On a successful StoreExcl the global monitor transitions from
-+     * Exclusive to Open Access and at that point generate an Event
-+     * for PEs in the same memory sharing domain.
-+     */
-+    gen_global_event_reg();
-     tcg_gen_br(done_label);
- 
-     gen_set_label(fail_label);
-@@ -4218,6 +4224,7 @@ static bool trans_STLEXH(DisasContext *s, arg_STREX *a)
- static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
- {
-     TCGv_i32 addr, tmp;
-+    TCGLabel *skip_monitor_event;
- 
-     if (!ENABLE_ARCH_8) {
-         return false;
-@@ -4230,10 +4237,23 @@ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
- 
-     addr = load_reg(s, a->rn);
-     tmp = load_reg(s, a->rt);
-+    skip_monitor_event = gen_new_label();
-     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
-     gen_aa32_st_i32(s, tmp, addr, get_mem_index(s), mop | MO_ALIGN);
-     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel | ISSIsWrite);
- 
-+    /*
-+     * We don't fully model the global monitor as it would be very
-+     * expensive for every memory access. However in the Arm ARM "Use
-+     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
-+     * give the example of using STL to clear a lock. So if a lock is
-+     * active trigger the global event register so we don't deadlock
-+     * while sleeping.
-+     */
-+    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
-+    gen_global_event_reg();
-+    gen_set_label(skip_monitor_event);
-+
-     return true;
- }
- 
+     if (cpu_isar_feature(aa64_ecv, cpu)) {
+         valid_mask |= R_CNTHCTL_ECV_MASK;
 -- 
 2.47.3
 
