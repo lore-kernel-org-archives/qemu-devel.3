@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FA6F9EDC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 13:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E7FF9EDCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 13:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFXJk-0001Wf-KY; Wed, 22 Apr 2026 09:08:36 -0400
+	id 1wFXK2-0001bn-Ox; Wed, 22 Apr 2026 09:08:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFXJi-0001Tc-II
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:08:34 -0400
-Received: from p-west2-cluster3-host8-snip4-1.eps.apple.com ([57.103.69.54]
- helo=outbound.mr.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFXJf-0003L3-Cy
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:08:34 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-11 (Postfix) with ESMTPS id
- E7D191800217; Wed, 22 Apr 2026 13:08:28 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXFUFDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTABMcFt2KnMxFDp1XwdGBkIJSh5UDl0HXQlAAlwOWXNDAEpyX3ceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776863309; x=1779455309;
- bh=pjFEJ1eB1ud6FWWEeyw9vMEU4zhXWmqigPJjqKRWMKM=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=K9mMOfHP7555gC0gJvbr/3a8FQ79A58F6OPNoMlM+s6PhkfD7yqGfRouReG/kxlmqKiG6EFEVKEUzlsQOWlp0J/MGzllTJtU+OP8sBKvt8YUcPB/ip3JR68gxmUMUqdd7MOSWj5lAEk3ziC0IB8DqWAhz/IcM0er3g7tK3apgSJVy00cMQhMXvMWDVcjHox+8PYA69A834GtIJc1NWTeBA3oP+WEL6TfZNr75UxjQw2vNGzu4CkIKybWql9hfi9SgMrgJTTK0wBcMtmobYjBZIzH+FFRt6BR1oWpmE096hCFSxOYuRwfNKQxVIvFWq2vZrkHur0Q9CH/6CSwmK302w==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-11 (Postfix) with ESMTPSA id
- 05D0018000AA; Wed, 22 Apr 2026 13:08:26 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v2] whpx: i386, arm: do partition reset on boot CPU reset
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <a8cb94f0-9970-40b8-912b-3ab81a5907f4@linaro.org>
-Date: Wed, 22 Apr 2026 15:08:14 +0200
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <94C6AAAA-BF20-4202-9965-081192A392A2@unpredictable.fr>
-References: <20260421205749.55060-1-mohamed@unpredictable.fr>
- <a8cb94f0-9970-40b8-912b-3ab81a5907f4@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-ORIG-GUID: uC-xzI9OiKuQxiX_7nUvM98VUwu4dGTi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDEyNyBTYWx0ZWRfX804div8TrNVJ
- V5IMrh8BRrk4MUmkNWP0mSKShQPOV31lUQ37nj+FiWAvaFZIm5W4bU+qUrVBjt0FNatAmPWQlvn
- EQ1CYLx7REzyqLx+8OWno1hRZIUOVhYNBpzTNXivStkAWDo1JDWsqCcfLHdJD0YnTm3BVpdkiXI
- CFgZOZ+gEKRsMCKxCqu/65LizoMxKOHWqiiuNUpua4JYudK4iVsxs5t6U+MkKLmw4EkeHIIfwEm
- 7fEhHhLg+iNv0CxYn33j9K+zz4PTvOO6acdPf1LPgQch0aaSxB34FyMLeooex7Nkh88hXWH0NGu
- 2z+ftNEJ4N7tFIuhL9q5Jcg/iOx1csvUnkQcW4AVxD1YLXNbz9AluUUsjo/wgY=
-X-Authority-Info-Out: v=2.4 cv=aNv9aL9m c=1 sm=1 tr=0 ts=69e8c84d
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=_JJPVulPvL2OzXI3qN8A:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: uC-xzI9OiKuQxiX_7nUvM98VUwu4dGTi
-Received-SPF: pass client-ip=57.103.69.54;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wFXJy-0001ax-5S
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:08:50 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wFXJv-0003MY-Ty
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:08:49 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-38a01c80c34so51208881fa.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 06:08:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776863326; x=1777468126; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
+ b=HtVBWNOO96q+xrM2xah91EcqK+k2B328tiMKgHjSnWagHDg9t44KG9bptzcsQIYiWY
+ +L3QhgFK9NQbGFUSm5XZw2U2doIQYpegO929qntrNwoHQSNQhMLOJGMT6D28eiJsxQRp
+ 18q4WcvksRcItIVGD0fPrAjyhKirNaSefQhbG70svvcxxU7hkuOoFg3pMMu0VdIs+gzY
+ Jl91j4712owMRPkUoyaOglQ4jMlaVMKRy9jXBeN7vWoLwV1BITHjeYdae3iDVsN9GHrk
+ 1sG+84pq3rZlUxNbQRQ+zGph4bo5QIuZxBHVj0OvTfYdZ4kRA1gGwdaoQ8PeU5Fgw94e
+ NOaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776863326; x=1777468126;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
+ b=Rup7oTYGqLgWnrS7YmHOsuoLfM7FCYLOU8scCOMdKsoH+38x1itwblQyG2GcDfwG/Z
+ q1uzbZ8a77NUZUiZWWv9XMuCYvQ9TpPA2EBWIPAEqZZ9FMj/VSN1X/l3EWzxmPJVkydJ
+ EUzhiNB57tqeqpfZx/lK6hHKeW4YCBPVxMqF5o+Piy1myuk3Gw7vwzUObLoG31M2wcgm
+ X0VpHt93WSqVRUqYdL6qa6EwH5MQZ+IN48gSmZkKxAZACIvF+xGq7tEXdcCPQQLQ5Tav
+ IOqJryj+YcyFWyy7zY8JRWEaGVhrb2YMBEV6Sn5lEbrwnCHaFnOkVZNk8JvH3SY90CJ8
+ XX/g==
+X-Gm-Message-State: AOJu0YxH8oZK05PjOf+Mcvq130lsHxF3DGK+0dOXd87BDjOEPu2L3Dz4
+ Y1U7uPPtRam+RdLKpf1Ul1QcuJK9qjVxBdbdP4GoyUH1HFP0iHEpGeYVBskXt7k43gHOGwnOuoJ
+ GoP/tS3A=
+X-Gm-Gg: AeBDiet+Lua4AHyvdQRgRNL1DxMSYOX5RllsMt92roKp4lbcujmPzIF3SEXN4J7Xn1B
+ oVB2whk+SCJYv1u+ChrD6MWL8yK0oTaY1YHQe6QiqpJjqfbbq0xXKGwWx/APQ00j+FB2WxNAh9N
+ /y+QMT1oVk8bVmKjz0dlLhczPmLOL3BeJBlOcElPXD2b+T53POXolG4cSj6tRNqaHLAAdSuuHEA
+ SP1muJNViFtLBi0oCoftSgy8qpBVfLrFXGe4t/MxEppWkRKz2lv/M5yVPtDNCTTt4eaaUF0XYil
+ KtqEnv9ZphtXPkrBDEmzSeKDo4KyXHRh3xDErkUuu85iWuWmCmZuAEIivaKRrvKoUrVguHWExgM
+ 7RPGDIXCCUac+LD+aa8szxfvKxsrVd3qvz+HWjQXd/27O5ytidJI/L9ZJUEpnmffGXQUcjJiE6y
+ i5SVEreONLm/wGnHpmaDGWefrvdGmg394pMerdIMFap9qs
+X-Received: by 2002:a17:907:25cd:b0:ba9:559:10c8 with SMTP id
+ a640c23a62f3a-ba905591bf7mr529933866b.41.1776862953878; 
+ Wed, 22 Apr 2026 06:02:33 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4e46898sm47674480f8f.27.2026.04.22.06.02.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Apr 2026 06:02:30 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6134E616F5;
+ Wed, 22 Apr 2026 13:52:53 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
+ qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v3 29/32] target/arm: implement global monitor events
+Date: Wed, 22 Apr 2026 13:52:46 +0100
+Message-ID: <20260422125250.1303100-30-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260422125250.1303100-1-alex.bennee@linaro.org>
+References: <20260422125250.1303100-1-alex.bennee@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,152 +108,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Moving from Exclusive to Open Access should generate event stream
+events. Technically a non-exclusive store to any address range covered
+by the global monitor should also trigger such an event but we can
+only detect that after the event by seeing if memory doesn't match
+cpu_exclusive_val when processing the eventual store exclusive.
 
+The CLREX instruction has the same effect as do other operations
+clearing the exclusive state (such as eret).
 
-> On 22. Apr 2026, at 14:46, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> +Ani
->=20
-> On 21/4/26 22:57, Mohamed Mediouni wrote:
->> WHvResetPartition resets partition state, and is not supported on =
-Windows 10.
->> On Arm, it's supposed to be used for reboots. The prior location of =
-the
->> WHvResetPartition call wasn't right, as other vCPUs might still have
->> been running, causing the call to fail.
->=20
-> Is it very different from the conceptual step introduced in commit
-> 4003e5e65fe ("hw/accel: add a per-accelerator callback to change
-> VM accelerator handle")?
+We special case STLR/STL (Store Release) instructions to generate
+events because their use is a suggested pattern for clearing locks
+that might be sleeping. We only trigger the event if we detect an
+exclusive instruction is running.
 
-Hello,
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-The difference is that we reset the partition state but don=E2=80=99t =
-have to=20
-re-do any of the memory mappings in the Hyper-V case (or otherwise tear
-down the context).
+---
+v2
+  - add gen_global_event_reg() and use that
+  - add handling for STL/STLR
+---
+ target/arm/internals.h         |  1 +
+ target/arm/tcg/translate.h     | 14 ++++++++++++++
+ target/arm/tcg/translate-a64.c | 23 +++++++++++++++++++++++
+ target/arm/tcg/translate.c     | 20 ++++++++++++++++++++
+ 4 files changed, 58 insertions(+)
 
-We could fallback outright into the CoCo case which would work too.
->=20
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> ---
->>  accel/accel-system.c       |  9 +++++++++
->>  accel/whpx/whpx-common.c   | 13 +++++++++++++
->>  include/accel/accel-ops.h  |  1 +
->>  include/qemu/accel.h       |  3 +++
->>  system/runstate.c          |  5 +++++
->>  target/arm/whpx/whpx-all.c |  2 --
->>  6 files changed, 31 insertions(+), 2 deletions(-)
->> diff --git a/accel/accel-system.c b/accel/accel-system.c
->> index 150af05bf5..5352ccd937 100644
->> --- a/accel/accel-system.c
->> +++ b/accel/accel-system.c
->> @@ -75,6 +75,15 @@ void accel_pre_resume(MachineState *ms, bool =
-step_pending)
->>      }
->>  }
->>  +void accel_reset(MachineState *ms)
->> +{
->> +    AccelState *accel =3D ms->accelerator;
->> +    AccelClass *acc =3D ACCEL_GET_CLASS(accel);
->> +    if (acc->reset_vm) {
->> +        acc->reset_vm(accel);
->> +    }
->> +}
->> +
->>  /* initialize the arch-independent accel operation interfaces */
->>  void accel_init_ops_interfaces(AccelClass *ac)
->>  {
->> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
->> index 6fe44d5910..1f7b7d764d 100644
->> --- a/accel/whpx/whpx-common.c
->> +++ b/accel/whpx/whpx-common.c
->> @@ -205,6 +205,18 @@ static void =
-do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
->>      cpu->vcpu_dirty =3D true;
->>  }
->>  +/*
->> + * Partition support
->> + */
->> +
->> +static void whpx_partition_reset(AccelState* as)
->> +{
->> +    struct whpx_state *whpx =3D &whpx_global;
->> +    if (whp_dispatch.WHvResetPartition) {
->> +        whp_dispatch.WHvResetPartition(whpx->partition);
->> +    }
->> +}
->> +
->>  /*
->>   * CPU support.
->>   */
->> @@ -622,6 +634,7 @@ static void whpx_accel_class_init(ObjectClass =
-*oc, const void *data)
->>      ac->name =3D "WHPX";
->>      ac->init_machine =3D whpx_accel_init;
->>      ac->pre_resume_vm =3D whpx_pre_resume_vm;
->> +    ac->reset_vm =3D whpx_partition_reset;
->>      ac->allowed =3D &whpx_allowed;
->>        object_class_property_add(oc, "kernel-irqchip", =
-"on|off|split",
->> diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
->> index f46492e3fe..a1c9f3ae7b 100644
->> --- a/include/accel/accel-ops.h
->> +++ b/include/accel/accel-ops.h
->> @@ -33,6 +33,7 @@ struct AccelClass {
->>      /* system related hooks */
->>      void (*setup_post)(AccelState *as);
->>      void (*pre_resume_vm)(AccelState *as, bool step_pending);
->> +    void (*reset_vm)(AccelState *as);
->>      bool (*has_memory)(AccelState *accel, AddressSpace *as,
->>                         hwaddr start_addr, hwaddr size);
->>  diff --git a/include/qemu/accel.h b/include/qemu/accel.h
->> index d3638c7bfd..0e12aea7db 100644
->> --- a/include/qemu/accel.h
->> +++ b/include/qemu/accel.h
->> @@ -54,6 +54,9 @@ void accel_setup_post(MachineState *ms);
->>    void accel_pre_resume(MachineState *ms, bool step_pending);
->>  +/* Reset accelerator state. */
->> +void accel_reset(MachineState *ms);
->> +
->>  /**
->>   * accel_cpu_instance_init:
->>   * @cpu: The CPU that needs to do accel-specific object =
-initializations.
->> diff --git a/system/runstate.c b/system/runstate.c
->> index 2d4e95a216..734e3c037c 100644
->> --- a/system/runstate.c
->> +++ b/system/runstate.c
->> @@ -564,6 +564,11 @@ void qemu_system_reset(ShutdownCause reason)
->>          qapi_event_send_reset(shutdown_caused_by_guest(reason), =
-reason);
->>      }
->>  +    if (current_machine) {
->> +        /* Tell the accelerator that the VM is being reset. */
->> +        accel_reset(current_machine);
->> +    }
->> +
->>      /*
->>       * Some boards use the machine reset callback to point CPUs to =
-the firmware
->>       * entry point.  Assume that this is not the case for boards =
-that support
->> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
->> index 4019a513aa..f345fea4fe 100644
->> --- a/target/arm/whpx/whpx-all.c
->> +++ b/target/arm/whpx/whpx-all.c
->> @@ -472,8 +472,6 @@ int whpx_vcpu_run(CPUState *cpu)
->>              if (arm_cpu->power_state !=3D PSCI_OFF) {
->>                  whpx_psci_cpu_off(arm_cpu);
->>              }
->> -            /* Partition-wide reset, to reset state for reboots to =
-succeed. */
->> -            whp_dispatch.WHvResetPartition(whpx->partition);
->>              bql_unlock();
->>              break;
->>          case WHvRunVpExitReasonNone:
->=20
->=20
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 089f679ac0a..7045b4a56bd 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -709,6 +709,7 @@ static inline void arm_broadcast_event(void)
+ static inline void arm_clear_exclusive(CPUARMState *env)
+ {
+     env->exclusive_addr = -1;
++    arm_broadcast_event();
+ }
+ 
+ /**
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 9bf2701a56b..01053060af4 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -882,6 +882,20 @@ static inline void gen_event_reg(void)
+ #endif
+ }
+ 
++/*
++ * Some events affect all PEs in the same shareability domain. In
++ * practice as we currently model SMP systems as single SoC devices so
++ * we signal them all.
++ */
++static inline void gen_global_event_reg(void)
++{
++#ifndef CONFIG_USER_ONLY
++    /* re-use the SEV helper */
++    gen_helper_sev(tcg_env);
++#endif
++}
++
++
+ /*
+  * Helpers for implementing sets of trans_* functions.
+  * Defer the implementation of NAME to FUNC, with optional extra arguments.
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index f30df5dbfed..a1b0cc9508e 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2253,6 +2253,7 @@ static bool trans_CHKFEAT(DisasContext *s, arg_CHKFEAT *a)
+ static bool trans_CLREX(DisasContext *s, arg_CLREX *a)
+ {
+     tcg_gen_movi_i64(cpu_exclusive_addr, -1);
++    gen_global_event_reg();
+     return true;
+ }
+ 
+@@ -3407,6 +3408,14 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
+         tcg_gen_setcond_i64(TCG_COND_NE, tmp, tmp, cpu_exclusive_val);
+     }
+     tcg_gen_mov_i64(cpu_reg(s, rd), tmp);
++
++    /*
++     * On a successful StoreExcl the global monitor transitions from
++     * Exclusive to Open Access and at that point generate an Event
++     * for PEs in the same memory sharing domain.
++     */
++    gen_global_event_reg();
++
+     tcg_gen_br(done_label);
+ 
+     gen_set_label(fail_label);
+@@ -3544,6 +3553,7 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+     TCGv_i64 clean_addr;
+     MemOp memop;
+     bool iss_sf = ldst_iss_sf(a->sz, false, false);
++    TCGLabel *skip_monitor_event = gen_new_label();
+ 
+     /*
+      * StoreLORelease is the same as Store-Release for QEMU, but
+@@ -3562,6 +3572,19 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+                                 true, a->rn != 31, memop);
+     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
+               iss_sf, a->lasr);
++
++    /*
++     * We don't fully model the global monitor as it would be very
++     * expensive for every memory access. However in the Arm ARM "Use
++     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
++     * give the example of using STLR to clear a lock. So if a lock is
++     * active trigger the global event register so we don't deadlock
++     * while sleeping.
++     */
++    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
++    gen_global_event_reg();
++    gen_set_label(skip_monitor_event);
++
+     return true;
+ }
+ 
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 59925151fc3..18d64620e40 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -2116,6 +2116,12 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
+         tcg_gen_setcond_i32(TCG_COND_NE, t0, t0, t2);
+     }
+     tcg_gen_mov_i32(cpu_R[rd], t0);
++    /*
++     * On a successful StoreExcl the global monitor transitions from
++     * Exclusive to Open Access and at that point generate an Event
++     * for PEs in the same memory sharing domain.
++     */
++    gen_global_event_reg();
+     tcg_gen_br(done_label);
+ 
+     gen_set_label(fail_label);
+@@ -4218,6 +4224,7 @@ static bool trans_STLEXH(DisasContext *s, arg_STREX *a)
+ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
+ {
+     TCGv_i32 addr, tmp;
++    TCGLabel *skip_monitor_event;
+ 
+     if (!ENABLE_ARCH_8) {
+         return false;
+@@ -4230,10 +4237,23 @@ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
+ 
+     addr = load_reg(s, a->rn);
+     tmp = load_reg(s, a->rt);
++    skip_monitor_event = gen_new_label();
+     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+     gen_aa32_st_i32(s, tmp, addr, get_mem_index(s), mop | MO_ALIGN);
+     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel | ISSIsWrite);
+ 
++    /*
++     * We don't fully model the global monitor as it would be very
++     * expensive for every memory access. However in the Arm ARM "Use
++     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
++     * give the example of using STL to clear a lock. So if a lock is
++     * active trigger the global event register so we don't deadlock
++     * while sleeping.
++     */
++    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
++    gen_global_event_reg();
++    gen_set_label(skip_monitor_event);
++
+     return true;
+ }
+ 
+-- 
+2.47.3
 
 
