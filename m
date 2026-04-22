@@ -4,92 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953D9F94CDF
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF849F94CDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFScX-0001aN-DO; Wed, 22 Apr 2026 04:07:41 -0400
+	id 1wFSe1-0002BZ-To; Wed, 22 Apr 2026 04:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFScV-0001Zs-Vl
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:07:39 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFScU-0002Li-CE
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:07:39 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891cd41959so32118085e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776845257; x=1777450057; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zSbmgQ4mUKO3noT9uImqlbfaB1HH+PFpn68SkuRwax0=;
- b=hA+lkWMN6d8SmiUbYSX5AluH0DIIeJPWmwckbrnhyqJqcTYXo029/mmH7Cqahj5DlJ
- RIqZJ1akdp1X3/DSBS3WN70UI4A5gLkTa0BiXIjdGuyyVrkpvDF4PS5ndY2e+ccyIUIK
- lEWXMZQ0gilmYXEc7yJKFcmuz7Tgt4pTbpXKbh9S2pFiKB050q9gBQIOmUv5hOscIi8j
- Nc6XrUE3zkZ0J4/7ChQGdUqdsWQuyxE6pXLKgE0/3spls26/OwaYZkIzZkXQKQWZ5i9E
- gUIzT7lOLZ7wSeIMR23CMwxBprS+4RtKDqMfYxEwjyD7tl3v9axXc4WIgP/AofyulHCS
- cfig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776845257; x=1777450057;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zSbmgQ4mUKO3noT9uImqlbfaB1HH+PFpn68SkuRwax0=;
- b=MXxbqz0pyG5oPLJJkcQSjZ7G3C3NVgX7jwf9M+Ism6EYeyVl/orqkMmnYgY5VaDYmb
- lhd7GyhA4ER0E/hHS49nOwKc5x/k1io/I6GRDgUw5hWZVMKqvpMKcdsHklmgfkGhqvBJ
- 9xLtzOs4L1EYwkfajcldB+B+xSEsdDPuI0ELgsoQilMOp3suhWH9YpQEoEZDfaY2eonG
- tTKBXy/1Ougi6V54zi0gTp2qXzDwz8WUa1faeoNEJdslWg6xUFYx9nXChBV2tq86Mi5w
- ShYL4TqvknLqgqVdmQRQALGrQMm7/N9LoXL3P6sjaxTuTkELEoKckR/GA2mStRpycOrk
- 59PQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9CmZ7ZagPVJOGbdIYDYTQm1Ewoq0XQgHhiSe7WlXieU677pXKnlFkAr1NUmRn6mYsfKdSuTr75n0tu@nongnu.org
-X-Gm-Message-State: AOJu0YwHWvhmAUz+nuDaqvrTwDlaNYM3wGQCd5Lpu3hX/dSgjAAsw6rX
- mGCysdfhHFW8yjBo8qn+9Z2F+4si5l89ZfD11aYIMgP6hgt+wHdO6OoVUn1OUetfyDE=
-X-Gm-Gg: AeBDiet+b+R8q6+EhZTcDzGYerCRMQGMwtV4eB/2X4mwrKUnoMmp71Hhc9Lk/TvjBTI
- ZGT49rEOYDs7NQkn7kNQ4vHdEVhgHt7KrV+EU76FeSGNHwtafzSjJ2mHo1pmszOcAbnyEH2LFVk
- kwZa8IG5vGBH9gh1paZ+W8vaaDOTQkWpRqw0TZAfJqOAIdEXmwjXNmtlFziOLOvSuOAOnN4+Mlr
- UXkhTWQopuTO2NjySIiGu9njDSlnpOCLS+7DzKb6ME4SeqPXaAeLtDy42FtDR6j4/wS43SIp/nO
- txACvWZrN/LVGPZDJ3X81vzzvfnpV6SuDcu8a859rZDhkJeJ3hWUtyR3QYt0AfiSxxkV2k7E/eI
- Mr9aRN8oqzeXM2TVBkY+XnxVTFi4H8maxNo05b9yvtnB8Ze2/VHVgyYYyRUr9Y0QNxOwmpNlv8r
- Vt56evY1ktp2gQ6+LluNVI5PF58pzgC2Yybh2cEb2zA13mUM2WcfmDsdn1crQustqT9z4BgtoSp
- vCR
-X-Received: by 2002:a05:600c:3f0c:b0:48a:563c:c8e0 with SMTP id
- 5b1f17b1804b1-48a563cd16bmr75304245e9.1.1776845256395; 
- Wed, 22 Apr 2026 01:07:36 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4d6casm39675477f8f.32.2026.04.22.01.07.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 01:07:35 -0700 (PDT)
-Message-ID: <1012727b-f164-4543-b23b-bb68e4ddcd1d@linaro.org>
-Date: Wed, 22 Apr 2026 10:07:34 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wFSdw-0002Ao-Of
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:09:10 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wFSdq-0002iU-Ru
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:09:05 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 06C3580783;
+ Wed, 22 Apr 2026 11:08:56 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:781::1:26] (unknown
+ [2a02:6bf:8080:781::1:26])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id s8OapR0KiSw0-1LLO122M; Wed, 22 Apr 2026 11:08:55 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1776845335;
+ bh=b/ZZ3Qr92c8xr+BJeqjULLMJUqyOBclVuWdy5doZVOU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=ykf69ZDTE9mCP9LaX/LsrOKnbbnCNk4u4TXyFH77m1sDk7wvN+WgbCEW53tlsUzsw
+ ky+BtAZUqXYs2gi2D/7AmNjha2ERFuBxKF6MJKOg5NpNnPwCGGJxn2WmCittYDGoYd
+ zo+c8HJDOtvUMCV5kV1Ual4a0OkNgGxn/oFDcBhc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <19b36c4b-1aed-43c0-9eca-4fbd3688d877@yandex-team.ru>
+Date: Wed, 22 Apr 2026 11:08:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sh4/sh7750: Remove forgotten abort() in the
- MM_ITLB_DATA handler
+Subject: Re: [PATCH v2 01/16] qemu-iotests: Add query-migrate test for
+ dirty-bitmap
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, Kirti Wankhede <kwankhede@nvidia.com>,
+ Zhiyi Guo <zhguo@redhat.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Juraj Marcin <jmarcin@redhat.com>, Eric Blake <eblake@redhat.com>
+References: <20260421202110.306051-1-peterx@redhat.com>
+ <20260421202110.306051-2-peterx@redhat.com>
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Yoshinori Sato <yoshinori.sato@nifty.com>
-Cc: qemu-trivial@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>
-References: <20260422075429.341409-1-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260422075429.341409-1-thuth@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260421202110.306051-2-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,30 +85,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/26 09:54, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 21.04.26 23:20, Peter Xu wrote:
+> This helps me to identify a hang issue with some recent change in
+> migration.  Add this into the test suite.
 > 
-> QEMU currently aborts when the guest writes to the MM_ITLB_DATA register:
-> 
->   echo "writel 0xf3000000 0x11223344" | \
->    ./qemu-system-sh4 -M r2d -display none -accel qtest -qtest stdio
->   [I 0.000000] OPENED
->   [R +0.004476] writel 0xf3000000 0x11223344
->   Aborted                    (core dumped)
-> 
-> Looking at the history of the code, the abort() here has likely just
-> been forgotten when the register handler had been implemented (it used
-> to be a reminder about unimplemented functionality initially):
-> 
->   https://gitlab.com/qemu-project/qemu/-/commit/9f97309a70f12df5f9104f1f
-> 
-> Thus simply remove the abort() now to get rid of the problem.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3420
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/sh4/sh7750.c | 1 -
->   1 file changed, 1 deletion(-)
+> Cc: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+> Cc: Eric Blake<eblake@redhat.com>
+> Signed-off-by: Peter Xu<peterx@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+-- 
+Best regards,
+Vladimir
 
