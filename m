@@ -4,86 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37260FA1FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EDBFA1FEC
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdkZ-0007Dt-DM; Wed, 22 Apr 2026 16:00:43 -0400
+	id 1wFdjb-0005c7-Oe; Wed, 22 Apr 2026 15:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkM-0006cF-Qt
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:35 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkA-0001oQ-Aj
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:26 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-43d7badbd7dso2916428f8f.2
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:00:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFdjO-0005Mo-An
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:59:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFdjL-0000t9-Dc
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:59:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776887963;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dNVs4KwZGxfBYtbtkIlgL20Gm/TzeiKisi1HuPyvt7c=;
+ b=AX63ERloRzQzPKZ9b4Fuq/mcavzLowpTz+M1qiX9g2OUJmndODr5NJ3K/58+3562Gc2Umz
+ 665LloA6juCIml8WeIYuM2UXi+7XJ6I9h7/+I4zWLsy+uZOagMoQF5Uy3fCTivOo/hhQ5N
+ al9lZb463wNz2JkfEaLTdiuHRtWunyc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-617-dsZ1dmZJPiio_bYlUNhh9g-1; Wed, 22 Apr 2026 15:59:21 -0400
+X-MC-Unique: dsZ1dmZJPiio_bYlUNhh9g-1
+X-Mimecast-MFC-AGG-ID: dsZ1dmZJPiio_bYlUNhh9g_1776887960
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-50d812c898cso159329611cf.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:59:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888015; x=1777492815; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tuztnUlSfQwod8ju5RlZjEzCQ50es7B6MliV5SRpEGk=;
- b=D/ph68DWIk0mu3pqOLptWGshCIi77ckQJ+AuL1fcyJkMhmcn3KmwyKjA22j1IUa0Wk
- SvAysXIcwvYJnc/L4CDkwFsBdMiZUeVOCPIAihz6GqUDM1H8i+WGQ+sAsmuy8bgDaj63
- yl5QAF+tqjG2J6itnbL1IrfvMYVaODoS1Gbz2sJejDUICzKXokWDt2Ub9DfUmCXlLCje
- bj7RsPnnam/aCv4t3IJXCGS3r3agOZUdz9ekRnfza3XUtx287Jt5ZKAaeJE+KWIwDEy0
- qarO4U0gEx7QuVIpvbCteSE1o9Y1+SndEa2N/cL+eIwY9JXkMcEFMSOJtf2tQmNy2KYm
- 5UPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888015; x=1777492815;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ d=redhat.com; s=google; t=1776887960; x=1777492760; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=tuztnUlSfQwod8ju5RlZjEzCQ50es7B6MliV5SRpEGk=;
- b=EYoqNXRC+WlGs/4CjSwvw9lE7rvV/vvIBkDaGRpAXDerEyejz++fCqHyqnyxa2hpIG
- NTAvQgBK46sMuJsVsThkeZ4zvbM3vdVIl47gIBzuD1tjTUmEnAFp1OU48OD9GnilNTYH
- ae48LFUZKhj/nwPXQifOWoPc9ms3/wL6rZluhTZmDQ3QcXhWizue9cET5qQ1dlhFkcED
- 8pHMpGZMwIAucDZzsc3kWy0/4qfZ3+K0VQ8b/Xno4au94ERz2ZR5TvBty9dQZMWxlVer
- gNg9YclhRW42WUkC5ektRw9/EkyfiKrDyEoGeRjalP4dYmZ1smrTVFhFmOQ2EYaJeRtv
- 1Syw==
-X-Gm-Message-State: AOJu0Yy/2Q600btoiIzJPimL0FYmf3NlTjnGYpWRViOfZwOz3FDtHjOx
- tjA9zdZJ066oEzjgSnMaVQ0FD2sgaM2tYiwcUY/GhvBvBg0foVMJqmbpAYLos3ZdIUEhhY7xo86
- QVyGmO7c=
-X-Gm-Gg: AeBDieuHtdsewR7iOWouy01YkPugtskjkin7B/Vq62LhNJdGvVWFAMKU4Pygwcz+2lm
- Nm+i9BObva0b81Q4TOPN5ratUjJGGWnP6Eg+k66qqTLK/Xyq3KVAhuhY4tFHs+L5oMkVGnIhz6l
- w6Arl7N3BGGfZfxY8BBMNN+vGIc+yu/4f5MrYJyWzdhrdQNrMIqJwqGtQ+3U0MdEm2cAXAIBUAQ
- kKTJPFS7zfNbp+TDvsVpqwreF6R7rfFR1gbJzR2DAHIz/SX3TOugFpeeVuKZmC8PFPtZ1UY1SWT
- JDSY0VVdYPH5OQcgbD/KSzoTZ7qgVwG1Z7bXD2EV3mdEC/RAYPUOnXVkNeJwNJ0K8tFkhenEt9f
- dwP+ruerragsxqH11tKSJdVDk8ZTFRKbkCdCqppw82n0utHiLcZfmYJCkDDXY2csFZzD2Bt8xIk
- ON1wiKyESh/5VU5eB0wU4sKmM3H7L6jEXs+j8DpIUuXs+c5+fTzBG0uYDL2834okYUKmSMTvDPH
- Pg6s66xP3FjqItRGC2kcQ==
-X-Received: by 2002:a05:6000:1ac7:b0:43c:ff58:35c2 with SMTP id
- ffacd0b85a97d-43fe3dc5eaemr38074018f8f.20.1776888015335; 
- Wed, 22 Apr 2026 13:00:15 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a174sm52513910f8f.18.2026.04.22.13.00.14
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:00:14 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 21/48] hw/tpm: Remove CRBState::ppi_enabled field
-Date: Wed, 22 Apr 2026 21:57:19 +0200
-Message-ID: <20260422195746.88865-22-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
-References: <20260422195746.88865-1-philmd@linaro.org>
+ bh=dNVs4KwZGxfBYtbtkIlgL20Gm/TzeiKisi1HuPyvt7c=;
+ b=U0LLcZ4JS6Ijzf3DSqZYXBPtbCF6BwRgtJT/J9GieG32gizreegGho4lzXXMg2fZqd
+ gGxBlJeJVY13gMOcuakFuQNkOXLfZELME1blYadslhkBasaNrMHF3cS4XWEWRFunHFgo
+ AKj6GtTvHJG+af1TsoK5VHTx8wR8oI3fQOSkZePw7fbPhc/CPZEYWbi0Xn9/vcbJeCUB
+ fFewyc762ZiOVb2/b0jO64DH6wqh67Frwc35kuh2q4OdwbMYI0tvHHrcw/PYuj+ifErz
+ IbKdEvYMIgfGOjkqCHITIudo+Q4ezmN1Jt4o8Dm9a4w4mZu+ENVxzJ9NUzVvZKm6++RU
+ 19nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776887960; x=1777492760;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dNVs4KwZGxfBYtbtkIlgL20Gm/TzeiKisi1HuPyvt7c=;
+ b=g7y3FoYuofCau5FV5r7/29UornDzAk4WvNHDPdGzx1YGwC0LOOEgr5EgaFa/I1gDM2
+ qZLNbB921HqaQV+mlBd4TAqwVjrn836YbKVRtLH/4MnxQw4I04BxjmPuUjXhjeHemeqM
+ PzT3s72FadideT678mJStPjoeke6qttyuVhhgUbPDPuOrWKWzk1i/JxcLTmnPbXaSjlh
+ MicJ1uVQNvUmLWOnfLX6lNc6jm5DnXoiDvRPqwhdUi78+oDJUvPN8Jh6IQ6Cxv+XhWVr
+ PwdMwTuM+Tnfsomg/YLMi5pTHtNL2ii/sF+kG3W/ffvlG03Qd5BMIanqnbbixm6p1Kbu
+ IAfw==
+X-Gm-Message-State: AOJu0YzOeM6FvMbfB7Nt6DtTyV+O4J27AB4RCb6Xuzh1a5rwpv25IKgY
+ zIrP9Ez59E86Bl7DLL3aBAjpYrMTPK5HDcTmlaz1/h7RkhrpPmAz1rvySN64X8wys6paGyPIz7C
+ bF9WK7PTf8i5RXq5j4u+oQyO6IVnX7OaIwN9ffWpSQqnirlcIsgRvK6Qt
+X-Gm-Gg: AeBDietEK5ic3XLsFubohV5roDCmrUkVJjJ1oRmSS4Ud1nm1m4OQbr5+vJz6t2qcZkv
+ HaYfpxZ+Z8Z4uSCwguHSz2hgkciCaWrxJFMI2G4DgHbKyKyZ8iOZlVmlhCqhjj+000K+0s1yVne
+ xlJSa9HH65JVZS6ULuN1TVWS+kOA9ilrmaD+wdifIPJisLyROBcWK+fsbiHTidOMQn61vLiaqFq
+ MENxAeDoxZCgpD+rAXUgb+DOPBxLtVtasjovmVTiWv5oTnqWjx2j1OHFoq+TxuT/nEaMS+yG+kh
+ OnSARrUP5HICHMyKcZvSmVxJ2bXGeeVDEBK/xyTXhnY6rbwq3BQwTwF+ewe8Ve4sbW3GWKaAeSL
+ IA4mEDwdsLG9XMwz1itdf5JOCLMe/5Z5SOoNE36eqsgrm6CPBARw6yx2ZTg==
+X-Received: by 2002:a05:622a:8a06:b0:50e:6182:b3d with SMTP id
+ d75a77b69052e-50e6182154bmr130470611cf.21.1776887960180; 
+ Wed, 22 Apr 2026 12:59:20 -0700 (PDT)
+X-Received: by 2002:a05:622a:8a06:b0:50e:6182:b3d with SMTP id
+ d75a77b69052e-50e6182154bmr130470271cf.21.1776887959673; 
+ Wed, 22 Apr 2026 12:59:19 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50e392e4db4sm140403131cf.11.2026.04.22.12.59.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Apr 2026 12:59:19 -0700 (PDT)
+Date: Wed, 22 Apr 2026 15:59:18 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v3 2/2] ui/vdagent: Use VMSTATE_GBYTEARRAY to safely
+ migrate outbuf
+Message-ID: <aekollHNEWxQBln_@x1.local>
+References: <20260422082214.10390-1-armenon@redhat.com>
+ <20260422082214.10390-3-armenon@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+In-Reply-To: <20260422082214.10390-3-armenon@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,75 +119,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CRBState::ppi_enabled boolean was only set in the
-hw_compat_3_1[] array, via the 'ppi=false' property.
-We removed all machines using that array, and the array
-itself in commit a861ffef237 ("hw/core/machine: Remove
-the hw_compat_3_1[] array"). We can safely remove the
-now unused property. Since CRB devices always use PPI,
-simplify removing the CRBState::ppi_enabled field.
-Set the generic TPMIfClass::ppi_enabled so ACPI subsystem
-can keep checking its availability.
+On Wed, Apr 22, 2026 at 01:52:14PM +0530, Arun Menon wrote:
+> From: Arun Menon <armenon@redhat.com>
+> 
+> Migrating a GLib GByteArray is now possible directly using the newly
+> introduced VMSTATE_GBYTEARRAY. It uses the standard GLib API calls to
+> create the array, or resize it.
+> 
+> This is safer than implementing a C struct and manually updating the
+> data and len fields. This commit uses the VMSTATE_GBYTEARRAY in vdagent
+> to store the outbuf variable.
+> 
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> Fix-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Message-Id: <20260317120241.16320-4-philmd@linaro.org>
----
- hw/tpm/tpm_crb.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+Same here.
 
-diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 8723536f931..02701ab9480 100644
---- a/hw/tpm/tpm_crb.c
-+++ b/hw/tpm/tpm_crb.c
-@@ -43,7 +43,6 @@ struct CRBState {
- 
-     size_t be_buffer_size;
- 
--    bool ppi_enabled;
-     TPMPPI ppi;
- };
- typedef struct CRBState CRBState;
-@@ -228,16 +227,13 @@ static const VMStateDescription vmstate_tpm_crb = {
- 
- static const Property tpm_crb_properties[] = {
-     DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
--    DEFINE_PROP_BOOL("ppi", CRBState, ppi_enabled, true),
- };
- 
- static void tpm_crb_reset(void *dev)
- {
-     CRBState *s = CRB(dev);
- 
--    if (s->ppi_enabled) {
--        tpm_ppi_reset(&s->ppi);
--    }
-+    tpm_ppi_reset(&s->ppi);
-     tpm_backend_reset(s->tpmbe);
- 
-     memset(s->regs, 0, sizeof(s->regs));
-@@ -303,10 +299,8 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(get_system_memory(),
-         TPM_CRB_ADDR_BASE + sizeof(s->regs), &s->cmdmem);
- 
--    if (s->ppi_enabled) {
--        tpm_ppi_init(&s->ppi, get_system_memory(),
--                     TPM_PPI_ADDR_BASE, OBJECT(s));
--    }
-+    tpm_ppi_init(&s->ppi, get_system_memory(),
-+                 TPM_PPI_ADDR_BASE, OBJECT(s));
- 
-     if (xen_enabled()) {
-         tpm_crb_reset(dev);
-@@ -325,6 +319,7 @@ static void tpm_crb_class_init(ObjectClass *klass, const void *data)
-     dc->vmsd  = &vmstate_tpm_crb;
-     dc->user_creatable = true;
-     tc->model = TPM_MODEL_TPM_CRB;
-+    tc->ppi_enabled = true;
-     tc->get_version = tpm_crb_get_version;
-     tc->request_completed = tpm_crb_request_completed;
- 
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
 -- 
-2.53.0
+Peter Xu
 
 
