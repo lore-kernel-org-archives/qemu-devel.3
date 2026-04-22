@@ -4,108 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13219F94CDF
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6E2F94CDE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFSkN-0003s8-Bc; Wed, 22 Apr 2026 04:15:47 -0400
+	id 1wFSob-0004e5-Op; Wed, 22 Apr 2026 04:20:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSkM-0003rT-1w
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:15:46 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSoY-0004dZ-WD
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:20:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSkJ-0004rJ-7M
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:15:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSoX-0005z1-Jk
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:20:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776845741;
+ s=mimecast20190719; t=1776846004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eQdyfY1jQxG4gLiI7uG4o49bJPwhFevJ5PdPg/0p38w=;
- b=hPkWHSzg2bPksGMehdmDGysKDdwBemrMQCEn7vJi8ZSLVaqk6awVrfrBX8Npf5o/Wu04oy
- ukq7gd457maLSYRFwprx9UiqXJaaTnd+Paw+xRynIZkWb0V5pjUbbSRS2HO4m3DHJcgGN8
- LCfrNkZNsZoT4yeA8n29IMa/pYdYrfM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YGPCrHKArfZq7Ottr5hLXk25N08wYFUUdEmdkUQMlts=;
+ b=dbtpqhnF5WOeWA6HNt40Eo55Y2wfZo0mmkx/+2hEB1Nk/42LWP+/eEfP53rljHhy4gNIqr
+ mEbSWgJj7cvr8k4xcWIyeGDXWsDfFtBhJboHlCfkF14F7myJR0iuITau8JwwRnLW4DW0np
+ H7SLZTPB3rL5H3J2ywKpyHd0Vvdvegc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-6gp9WUYKP3qVNvZPDgsZqg-1; Wed, 22 Apr 2026 04:15:40 -0400
-X-MC-Unique: 6gp9WUYKP3qVNvZPDgsZqg-1
-X-Mimecast-MFC-AGG-ID: 6gp9WUYKP3qVNvZPDgsZqg_1776845739
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48906aa28cbso25857595e9.0
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:15:40 -0700 (PDT)
+ us-mta-256-yV0fbZ4RPkGKZivYtoJvhQ-1; Wed, 22 Apr 2026 04:20:02 -0400
+X-MC-Unique: yV0fbZ4RPkGKZivYtoJvhQ-1
+X-Mimecast-MFC-AGG-ID: yV0fbZ4RPkGKZivYtoJvhQ_1776846002
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4837b6f6b93so59158805e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776845739; x=1777450539; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776846001; x=1777450801; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=eQdyfY1jQxG4gLiI7uG4o49bJPwhFevJ5PdPg/0p38w=;
- b=IjzLuDjozO0nkAXH5Bo3ok74iVkElNzw1ma0GG+cLf3nU58PstOKSAOTsqCRN5OctZ
- 0NS4VqrbfuPyrhrNppjlIhgRKEWw8AYRjKXcO5mLx2Ev07SstWVD8oW3M5IaVdtlKs41
- W8z/oVo6ZJ7TMYVrTYkFJ9yhBDouO6awkKEojFOkhsgkwIHBtGC1nNe4o4sL/xZmWjSG
- Kzw7L0YAfndeLD+0mn6yn4ZyYh/zYL0fn9wZQ8Yg74+RWSkFJbnw/eG7XjIqBKkS5t5y
- gQls4izTR+u6pYpRsPlmQcylZTKtVgD4kLHtVLrab1n+SBvuuBijR090BrZvhGthORXy
- FRTQ==
+ bh=YGPCrHKArfZq7Ottr5hLXk25N08wYFUUdEmdkUQMlts=;
+ b=AmjNKU/AYemL1Dtl1m2f7faONhJbvGx/0aBKsP25Altbz9rTr9nKQ5JTOfDD9QTbWK
+ XxHsC98EaKE8olH8i1hH4Lptl4VV+uM/WktIQxW+WPF3K9GZTeAnEvyAuRgDh73ucnXa
+ 4JcUWbRYUhET6AYQ6AH4Cje2K5VXd3Ci671fW+ZK4TIvWs8Wkab4TyYCHoeSumvO4UxK
+ 9uwsqPo2qZZnlCAFU0A0N4sYWE7MS7xu7gefpHd39Zbr1lw5R6HRRKJGjv/4B6VEGjcV
+ Hmumd597fcKbxiGj1lmctE+vCGC8nswbNCsgiEsV0QnmmAdAaTofdBf9cE0sTvjb5uO+
+ EtxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776845739; x=1777450539;
+ d=1e100.net; s=20251104; t=1776846001; x=1777450801;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eQdyfY1jQxG4gLiI7uG4o49bJPwhFevJ5PdPg/0p38w=;
- b=V0TZ12+EXzTPrlvWGalKUe/MJy3IEXCPaMXu24BA4kXMLm20YH098m1GTj8D+7kcpk
- OhRLFaA8h6BhvZ9sMcmiv7F9+nTeTOtLGyVE2HphTWINrHpYeNd+zBNSUhym0xmeoVWH
- Pf+joP3XP5ro2cxntuKckJtiw7T+AKITzI/onl+Dsj5w5RoWY8R0fbvRXA3Nxxhe8Z3r
- swxic13C9W2rFMPv0ybf5MVmEczJDKp4ks5k1IKUkwIuE03wwc/MY1ASGbhScdux9n5Q
- tHNXqW5LS3z6Al9UYqZAbhNJHegE1cNAyjKbuHAOWCK4klKYnTP/9FjK80Q2gZSf0ZOe
- /7bA==
+ bh=YGPCrHKArfZq7Ottr5hLXk25N08wYFUUdEmdkUQMlts=;
+ b=NMtWmJ0Dyty4lL9CM+O133XRBD+yF59wXcMTA9nd4+CQdnnSPRxpJMLA+W159l6+Oq
+ IABWAuI9Ja4fuOio+uyTazyp/39HovSAuaVCsdiDRmtIBbCpCYK3NXhZh1eSAYS/W/M9
+ Uc0kVkikS67PYgo12JVJPPZRxLMoNH80NZIQxr8UG56COxtUW6nffYbQcAydbZFZ1GoS
+ 2nt1qZnKW9urKUAl3gB8YptGvTzKqeoozB0imk54VCKbd4HdbHvrsiJCt4YYMLnr6zwA
+ JjdDMkyyenbi6360Km7gFM94Kw7NnZC47A8f7R2WZt5UECueJlBJHFux66PIcN+w012E
+ gaqQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8pfSxJVci7uFKJbcXhN4/iikY348yhBC/iMWmjG+0w+vbHxpVpf+LMt1Fvro9s+MfOC4GWLSlhQ9Cy@nongnu.org
-X-Gm-Message-State: AOJu0YyiZt0rIDstfkGM7rbd9nDjSdTI6Nw5E4i4s0/YFgchfxwwGwYs
- iWTLV4hyLZDNZcSpQjKLiVSaAy48SlBzyvdwUbH6Zh7yeIXb4n24cVRbeNRH2xGZFEyCV2XJYad
- xlK1XcnbdNkDzMraaJaZUKQnst4YSaOaWbKU2tMiwopJPh034vgi4hUtn
-X-Gm-Gg: AeBDietsV0aYTo9i30UdqBAy27Le+wk0WF+ISySRTmcZVdn5OVpvz1T1KzZnnOEdw57
- Rc4VpKPkxVP9cTkAEfOzD9gyb9upWpL1k73OdX34yuYnoFS55QtEUYx2J7uIE2Pr0X/pBRWg6ak
- oRHXYzjSwWGUf1bsN6kZU2m1+v6VRWzX7zOde24G4KXAMLlu1o9S0BIYAJ6fIdyl12ApHq9IF1E
- DeKvtNg0Xo2OPA+u+ovVqDGZTOYIviv+AG1vMzAyjlS0zdtfZbw0oOK/ux7UBiK4zllPQchftI2
- kKFsIoVaRAH36u0I5Sl8JYPWiyE0hFSOhGpDniD8z6B7SHom9txxyIwPZuMQ/dYBO5wSF3PZ6c+
- KCgYiaTW+iMVxLNOe/oE39ySVlQvCog==
-X-Received: by 2002:a05:600c:6c8:b0:48a:5236:7f38 with SMTP id
- 5b1f17b1804b1-48a52368058mr82988605e9.14.1776845738976; 
- Wed, 22 Apr 2026 01:15:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:6c8:b0:48a:5236:7f38 with SMTP id
- 5b1f17b1804b1-48a52368058mr82988185e9.14.1776845738481; 
- Wed, 22 Apr 2026 01:15:38 -0700 (PDT)
+ AFNElJ+ALcH7iDcmkE3xwJiRVDl4vIW7zRxTishNUyLrtrTfPKLIoMuQcsjhSdZ3Vrfx1IzigLOkvY0YFtQO@nongnu.org
+X-Gm-Message-State: AOJu0Yzof13S6064T86bFaoeATHYCNoWInR2l1H+1JLoyyRjgUrpX3hT
+ duZenEeJcAjXFC10LCw33B0ioreBepOtPG/487mLXK0x8hzUzVNYGKM0RhqThtZvNLkII9ZhGy/
+ aJMs5iBhRs7qT96x85JBQzaXebX/uJ6ZSK64MqsnFh+xBiIbpqRXVwYE7
+X-Gm-Gg: AeBDietzWD2moDRPSnCmOyextrOND5141N59nLrzfksoFQPvxApM+8M68CcQ+cTk6LR
+ QRbxgPcJJxkcBpYOvUya3tePQCx6lbdPZDi5AEwLFnRiEac8r86+8y4oRzsrCTfHysF8Uv9+YUW
+ 5pExRBgtX2sQV9/Lhd0JWRE9ZmmWZt6kZiWQXF1+FaB5cHc04/fCHLRb8qdUG5Q5h66Pt0CY1kN
+ bXulw+TlquzSlEcs9cDhXV1hbDQ87QArIWR2cgnlSZcuNEkr1/8E+qpEGAKjJVZz3nl5pAiZnaL
+ ribcZfN9PEqIrxJxxxDMYGkLP0M9TdNeW75NzPHetPAOCn43PJ5cJzpwI2mSaSfjDJR/s4huLQ8
+ fuLVN8xAcg17DCrVAH7Vh6ueee0/1Aw==
+X-Received: by 2002:a05:600c:5297:b0:485:9a50:3370 with SMTP id
+ 5b1f17b1804b1-488fb74a431mr348746515e9.8.1776846001550; 
+ Wed, 22 Apr 2026 01:20:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:5297:b0:485:9a50:3370 with SMTP id
+ 5b1f17b1804b1-488fb74a431mr348745855e9.8.1776846001019; 
+ Wed, 22 Apr 2026 01:20:01 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.114.147])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4d6casm39718245f8f.32.2026.04.22.01.15.36
+ 5b1f17b1804b1-489201cde98sm190257515e9.7.2026.04.22.01.19.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 01:15:37 -0700 (PDT)
-Message-ID: <6d0bca64-52f6-4e49-a065-d5e0a2c22853@redhat.com>
-Date: Wed, 22 Apr 2026 10:15:36 +0200
+ Wed, 22 Apr 2026 01:20:00 -0700 (PDT)
+Message-ID: <a993bcf5-1f15-470d-bf6c-a9a6f391d3da@redhat.com>
+Date: Wed, 22 Apr 2026 10:19:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/10] MAINTAINERS: Remove my disfunctional emails
+Subject: Re: [PATCH v2 03/10] MAINTAINERS: Maintain MIPS Boston
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Bin Meng <bmeng.cn@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Alexander Bulekov <alxndr@bu.edu>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
 References: <20260422080406.62638-1-philmd@linaro.org>
- <20260422080406.62638-3-philmd@linaro.org>
+ <20260422080406.62638-4-philmd@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -150,7 +138,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260422080406.62638-3-philmd@linaro.org>
+In-Reply-To: <20260422080406.62638-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -161,7 +149,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,47 +166,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/04/2026 10.03, Philippe Mathieu-Daudé wrote:
-> With retrospective, mentioning email in authorship wasn't
-> really useful, more now than these addresses are dead:
->   - f4bug@amsat.org
->   - philmd@redhat.com
-> Simply remove them.
+> Maintain the Boston board as just another MIPS board.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/sd/sdmmc-internal.h                      | 2 +-
->   include/crypto/tls-cipher-suites.h          | 2 +-
->   include/hw/i2c/arm_sbcon_i2c.h              | 2 +-
->   include/hw/misc/bcm2835_thermal.h           | 2 +-
->   include/hw/misc/led.h                       | 2 +-
->   include/hw/timer/bcm2835_systmr.h           | 2 +-
->   include/qemu/units.h                        | 2 +-
->   crypto/tls-cipher-suites.c                  | 2 +-
->   hw/i386/fw_cfg.c                            | 2 +-
->   hw/i386/pc_sysfw_ovmf-stubs.c               | 2 +-
->   hw/misc/bcm2835_thermal.c                   | 2 +-
->   hw/misc/led.c                               | 2 +-
->   hw/ppc/fw_cfg.c                             | 2 +-
->   hw/sd/sd.c                                  | 2 +-
->   hw/timer/bcm2835_systmr.c                   | 2 +-
->   hw/usb/bus-stub.c                           | 2 +-
->   stubs/fw_cfg.c                              | 2 +-
->   stubs/hotplug-stubs.c                       | 2 +-
->   stubs/qdev.c                                | 2 +-
->   tests/qtest/fuzz-sb16-test.c                | 2 +-
->   tests/qtest/fuzz-sdcard-test.c              | 2 +-
->   tests/qtest/sdhci-test.c                    | 2 +-
->   tests/functional/aarch64/test_raspi3.py     | 2 +-
->   tests/functional/arm/test_bflt.py           | 2 +-
->   tests/functional/arm/test_raspi2.py         | 2 +-
->   tests/functional/m68k/test_nextcube.py      | 2 +-
->   tests/functional/mips/test_malta.py         | 2 +-
->   tests/functional/mips64el/test_fuloong2e.py | 2 +-
->   tests/functional/mips64el/test_malta.py     | 2 +-
->   tests/functional/mipsel/test_malta.py       | 2 +-
->   tests/functional/ppc/test_40p.py            | 2 +-
->   tests/functional/qemu_test/tesseract.py     | 2 +-
->   32 files changed, 32 insertions(+), 32 deletions(-)
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index ecd236f818d..520b92826a2 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1495,6 +1495,7 @@ F: include/hw/intc/loongson_liointc.h
+>   F: tests/functional/mips64el/test_loongson3v.py
+>   
+>   Boston
+> +M: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   R: Aleksandar Rikalo <arikalo@gmail.com>
+>   S: Odd Fixes
+>   F: hw/core/loader-fit.c
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
