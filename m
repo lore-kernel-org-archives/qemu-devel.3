@@ -4,112 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CAF8F94CB7
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 01:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17337F94CBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 01:31:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFMCg-0001vg-21; Tue, 21 Apr 2026 21:16:34 -0400
+	id 1wFMQQ-0003ZF-SK; Tue, 21 Apr 2026 21:30:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
- id 1wFMCe-0001vX-PO
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 21:16:32 -0400
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wFMQP-0003Z7-Ew
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 21:30:45 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
- id 1wFMCd-0006IM-Ar
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 21:16:32 -0400
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-50d836552daso2636731cf.0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 18:16:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776820589; cv=none;
- d=google.com; s=arc-20240605;
- b=PmLh2jJMEGYH3X6x9waLUM0NdrQZhMiJTA4VUnyRFv87Z0/KkD692+lXh2n3QI6gvY
- 7xRdsRwgDkpRkohtS0f7SNHqS9zfuTtIY10NKxwoP9cIu0jdzuGaYnw+9CcfneIjfKBB
- Epj1TwmCAdD8xcptONVaht4Yd9y8DRKI1gjXfAAxk4f9AmLQ0LIhToiU4OerP4F1sGf6
- vxF04QZyMvs639dE3nmibd5UcAhT7HgN8ohP569xbLUZ1ImVke32XIzQ0JeLRDHAxhW3
- /D9mS3qBc12kmInAELGEIcT7HTHhunuIXZjPrjUhDhQzT0L19kxHEmK6IgqB+5brG50o
- w1Jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=RuRCotfbGw39y//NM7F4PPlo6I0sd9XN2Rdo9CWnbNs=;
- fh=/AP7bia0iHDeR8c04cPaf+iCaHk1zqhUreJXpq5QEd0=;
- b=bQGATUV8SPBFBv6o08E6y+VXNOM6CkMuRGJIKmsxItZEqZyobrtYSVvxUJK7NEmsC3
- ZQ9mUSEecTZLNlyN1VxLLkcaFXOeyP5XvbhPsgTG0dHA7PQ4Hl68cVt9bIrqGEWqsKhV
- 3N7qnX6k8+2yHPpCftu2NkpILVuT2hibdFjSt6HLfobwaNPxXvh+TlwNnwPL9OVjbL2o
- GgnN1Zr+0dHT1F8SgZ5YjpFlEtf9vU7YLUfzcx8A3Fi/3XBCXIM64XW72uR4pspH+IB0
- uhXT6PGUjTm92C+n69QnShObinavQXTD5omcCOxcAicBiTOsygJfMLqRelS0jeU36meQ
- VfgA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wFMQM-0001H7-3i
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 21:30:45 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-4779b2497b4so2885735b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 18:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1776820589; x=1777425389; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RuRCotfbGw39y//NM7F4PPlo6I0sd9XN2Rdo9CWnbNs=;
- b=osqUlu9mhCpK6XWTS3C9eiyv36u034nlYxcZxIOrR4JM+Zb+m1diCWiQhya9wlUXNa
- P9lodX3yVbATCP1TR/3inB0NZ0Tf0l9VCnKkaCQsEysQsHc/WCO82oJmFgoYXqeQZxQx
- LEYexptXRCxvOPaIzBrpd6WjShezY5dobQssMaRsAxFHMmB/uwywRfxFOgABq0wBKTKQ
- qQqyvETN2E1trj1sUpjBuoZpUqw6sDlrRm1Tx/AatuPsnkv365NwsALlnqwVc7D0Vi7O
- v10VOKUXn4BUkeNCH1wPDxqgrOa3QjBQwzD9BhgIoDGXthsLIPsHE9TIrPp69ZHqkvEr
- 3GRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776820589; x=1777425389;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1776821439; x=1777426239; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RuRCotfbGw39y//NM7F4PPlo6I0sd9XN2Rdo9CWnbNs=;
- b=WoMk/t7IOCXD6dPwwlTVrDOf+mCETeWhCZHiz/ihRGkJKsHxXyX+1GePh1djoVRSMD
- wLXhXfbbaR6syxDDmoiHHmmBfls3oWnPEk9jwxxMM1cnDNXGGkKL3EESW6PqRbRK1/m+
- ZH5Kh0BeBS4wiILosFVzseCPZc3/0plgCCHnpGQplxq/XXx5ts/7ITJ/WORRwZBZLKm7
- /9/ZvRXjHBPSMqqLU6MyryWNkZlrwR1JwhB7uM/3rUJcO4zKhN/U0iDdskgn+FS2JqE7
- v+VQxINH2QHzw9FHXbDxYQLa8MT8TBc3qrQ+cUrA2wJlz3S2br/uvgywPO6hg9HJUyFF
- CCFw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8azk9fCmUHAKzQuL/kiL64EEU/8prNW/a+fvSu3NdJm61/KiNe2SxtLh8TkdBZFcTcH2V/WcDBKwrU@nongnu.org
-X-Gm-Message-State: AOJu0YzW4fYRKAG5u2m91Sf4kVP7T3Ug/N/y72mNlaVhWdtK9u828fSU
- ALJX6rNYp6UzS7srufP4NoQK4dFSUENUPH6E8y+lljuPJKPxq5s/rumgj/HvV0dvzoWYsR2hh9c
- 0h6m8ZGuRmXw9Cnc9NWagDihs1F91PndkA1BA8KnP
-X-Gm-Gg: AeBDieu7yJ8P6alk6gFO2gdjtoGKvxY5Txlw4/5ZWVaz/3kab75hTb6qEw14NofU7Hn
- VRXmjU9mTS/Yrufo8kYzbBp3eyE/npxz7EJ6o4PCYKf+ljatH0J3CzH2Hd8RWY8KPh7hjPZvZdz
- Z8OoJwAIVcRcvbrW9VDNUflj59DMd+vupdsMQlrLMCK+JG21fZMJFgxAGSBrw2mcAgywNKXjztG
- fQqlhsq3/P6h4GAK77EhlwuDozsT1LCEoqbCZHXnc171Hd/eIssqNemWdJvjOqUWqvOiTHazKXm
- 5t8X+3RKuq/WYXls3reVT+/ET6ZYWWsgVAOY3oC/hNME5935IKWJ4laogfc=
-X-Received: by 2002:ac8:5d50:0:b0:50e:6189:cd29 with SMTP id
- d75a77b69052e-50e6189d107mr11376631cf.11.1776820588673; Tue, 21 Apr 2026
- 18:16:28 -0700 (PDT)
+ bh=AY4DsEvHkoRyrMih1ndeDcANuFXV8hcGvLhaszfMLKk=;
+ b=nJDna/+ZwqGmp5WhKH1X+vMxUo7sYaKi/t19TUff6n2HUQEO+VhVUYvizr3tSMFzK7
+ CkxRmjtpIWOOtIEymxD7QSprQaTZ/lKUkrUpICVJA6oB+/AbI1RN5OzDP2IbvP/H3kQy
+ 2JjyQNoHMBjeDnm3Vb9X4p8oV+5Th+O62BKW1bhVeubnwLFjDtOnxpvLS0OAIRlLu0So
+ mdsC3MVEBX5e8KLC7EVaUkG55sfFVgewZ4nW+6VCG8hI0PsEK9wFXU69NAL5JNx+nBEP
+ B7HCYqwSPpzxoapKdCBuu1dbKlwMPEuD5T2wQCgk5kQ794TdeO85IdKodtNCbMltTOAY
+ 5maA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776821439; x=1777426239;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AY4DsEvHkoRyrMih1ndeDcANuFXV8hcGvLhaszfMLKk=;
+ b=f0bS2SOtX77HV1oF/VOJnhQ/97+Ug4ty+HNqqWRDpz0NHfAfgN/wfwGM/TWKL590Xk
+ btAHa00twBqcEvkloVcS8s0ANh0rpwVQVfcpnWF/KLF5279gCX3Vq/2LDsl2YR2gOoXc
+ FmsFKNhNlTc9FUd3cP0SdvU53zHb8pnCw3u7a3wEcDzuQjkaBqHHMeHdoOgEeUuvz2qq
+ bbPv8AlGwJImfxl9UlAA2c/c0d3C7bFlmsUhCF3S8jHsJpwtdRme14NVXXRn915sMTte
+ xbD27B49K7MyiiBHTejMz53xbgOmUz3a2bkPbf2fopTosTzm8b7ZnA5yx79iIgXIvdPW
+ GHLw==
+X-Gm-Message-State: AOJu0YwAms5plijTUgbQsKAyHUdgXtmKWZoBwc5RIan5TqhLawbWJ/e3
+ 2E/daBrUtEabDoHflYSL6hJkmacVwrlK6NyFkONCOp9EHUNapjhOVhZdHvgZ3IaD/WSP3DehZ+H
+ wZaQLWR4=
+X-Gm-Gg: AeBDies5UCIvu4VMdiuRqlyCWnLdNsOWaBqcAHsOZ1fthkcY+WQaQHyy7ND+flCgIgE
+ NGdv5oAov2ioL/NitxidQEWp+Oh0+xKqLUhCrO3KJjNE3JC7qOxIjpPhRzJUx3M0MTegXoGJUkv
+ vXKUPhEKLan+o7e0crXWXbB1zZgyQuLzNgGApwUL2BDdh1Vwq/UtnenCUBbNASh9lTMOqp7Daqq
+ FwvAmHaLyv8Xntu0NQB5H1y3wv4W/cabncieIxpFEHCV9KtOsB74X78IwlsQn8272r2ZKIorho5
+ 8YWwrsrccDU3sBPaQqqVLwBuXblpw878PxT3wvnRijsYlCMpsd+VGY+6j6pSIo/FpV3AQRwUImk
+ JJEDGxKsJbYbiv/nuwZHUmPYT39Z3y9+t2ztOzm+r82nexed3YcUw4bTp/5bVdCSMRHGQf9rguY
+ y+iEpONpum1OfkOJjoTtGaVbm3Tnp1Mqq2oRAXXaYsaQnUjd73je/c4w+9mXT/LAEuxDM6Ac8A2
+ TJT06r0eE1zDdlWIB8VKsM7j5LA5zwJ+F2jjzQ=
+X-Received: by 2002:a05:6808:4f0a:b0:45e:e07d:85af with SMTP id
+ 5614622812f47-4799c872810mr10795017b6e.2.1776821439487; 
+ Tue, 21 Apr 2026 18:30:39 -0700 (PDT)
+Received: from [10.72.56.227] ([172.59.197.244])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7dcd5408b5asm3736106a34.11.2026.04.21.18.30.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Apr 2026 18:30:38 -0700 (PDT)
+Message-ID: <a6e16057-cfab-4d5b-a4fe-028203947e86@linaro.org>
+Date: Wed, 22 Apr 2026 11:30:32 +1000
 MIME-Version: 1.0
-References: <20260411021205.3592118-1-jemoreira@google.com>
- <aeYvCK2qhZd1W9sA@sgarzare-redhat> <20260420181818.GC405461@fedora>
- <CAJi--PPzd_fqcsBU-aA11624apoKTtEW6GTKE3_OyZ4SJ90DzA@mail.gmail.com>
- <20260421211237.GC466778@fedora>
-In-Reply-To: <20260421211237.GC466778@fedora>
-From: Jorge Moreira <jemoreira@google.com>
-Date: Tue, 21 Apr 2026 18:16:17 -0700
-X-Gm-Features: AQROBzBGgxGRfTGLft0xcSVfcCkF83NDmMQkxUXr1G5_odfRVrtMSCkpEpRIsBk
-Message-ID: <CAJi--PP6gsR5E7RtQ_RwV8fG9Xivk0fXTfNxWuZ6cX+uWBPV=A@mail.gmail.com>
-Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
- kick FDs
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>, hreitz@redhat.com,
- gmaglione@redhat.com, 
- "Michael S . Tsirkin" <mst@redhat.com>, Hanna Czenczek <xanclic@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=jemoreira@google.com; helo=mail-qt1-x82f.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/13] linux-user/mips, target/mips: honor MIPS_FIXADE
+ for unaligned accesses
+To: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20260421-mips-octeon-missing-insns-v2-v2-0-a0791df188c9@gmail.com>
+ <20260421-mips-octeon-missing-insns-v2-v2-1-a0791df188c9@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260421-mips-octeon-missing-insns-v2-v2-1-a0791df188c9@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,24 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 2:12=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Mon, Apr 20, 2026 at 05:48:13PM -0700, Jorge Moreira wrote:
-> > While starting the vrings on SET_VRING_KICK could solve the state
-> > machine issue, it still won't notify the back-end that buffers are
-> > ready (the driver won't do this). Non-polling back-ends depend on this
-> > kick, especially for queues where data flows only from the driver to
-> > the back-end. Most implementations likely attempt to read from the
-> > queue only after receiving the kick.
->
-> This is an interesting question to clarify in the spec.
->
-> Stefan
+On 4/22/26 03:27, James Hilliard wrote:
+> Linux/MIPS enables software fixups for user-mode unaligned scalar
+> accesses by default through MIPS_FIXADE/TIF_FIXADE. QEMU linux-user did
+> not model that ABI, so MIPS guests took fatal AdEL/AdES exceptions
+> unless translation was forced to use unaligned host accesses.
+> 
+> Replace the target-specific workaround with a generic MIPS linux-user
+> implementation:
+> 
+> - key MIPS translation blocks on the linux-user unaligned policy,
+> - implement sysmips(MIPS_FIXADE) to toggle that policy,
+> - raise SIGBUS/BUS_ADRALN when fixups are disabled, and
+> - handle the existing sysmips(MIPS_ATOMIC_SET) and MIPS_FLUSH_CACHE
+>    commands in the new target-side sysmips dispatcher.
+> 
+> This makes the default behaviour match native Linux/MIPS more closely
+> and keeps the signal semantics consistent with the kernel ABI without
+> regressing other user-mode sysmips commands.
+> 
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 
-This is the question that interests me most, to be honest. I'd rather
-have the discussion about when to activate the vrings in a different
-thread and keep this one focused on whether the front-end should send
-the kick or if the back-end is expected to check if there are "new"
-buffers in the vring after restore.
+This patch does multiple things.
+
+(1) sysmips flush_cache.
+(2) sysmips atomic_set.
+(3) As stated, unaligned access controls.
+
+I suggest breaking it into 3 patches, in the order above.
+That will add a bare-bones do_sysmips function in the first patch.
+
+
+> +#ifdef TARGET_NR_sysmips
+> +static abi_long do_sysmips_atomic_set(CPUArchState *env, abi_ulong addr,
+> +                                      abi_long value)
+> +{
+> +    uint32_t *ptr;
+> +    abi_long old;
+> +
+> +    if (addr & 3) {
+> +        return -TARGET_EINVAL;
+> +    }
+> +
+> +    ptr = lock_user(VERIFY_WRITE, addr, sizeof(*ptr), true);
+> +    if (!ptr) {
+> +        return -TARGET_EINVAL;
+> +    }
+> +
+> +    old = tswap32(qatomic_xchg(ptr, tswap32((uint32_t)value)));
+> +    unlock_user(ptr, addr, sizeof(*ptr));
+> +
+> +    /*
+> +     * MIPS uses a separate error flag, but the common linux-user syscall
+> +     * path infers that flag from the return value.  Successful atomic_set
+> +     * results can overlap the target errno range, so write the result
+> +     * registers here and ask the CPU loop to leave them alone.
+> +     */
+> +    if ((abi_ulong)old >= (abi_ulong)-TARGET_EDQUOT) {
+> +        env->active_tc.gpr[2] = old;
+> +        env->active_tc.gpr[7] = 0;
+> +        return -QEMU_ESIGRETURN;
+> +    }
+> +
+> +    return old;
+
+The comment is good, but the IF is unnecessary: always use the ESIGRETURN path.
+
+
+r~
 
