@@ -4,95 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E7FF9EDCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 13:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527D8F9EDC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 13:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFXK2-0001bn-Ox; Wed, 22 Apr 2026 09:08:54 -0400
+	id 1wFXRZ-0003BF-UU; Wed, 22 Apr 2026 09:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFXJy-0001ax-5S
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:08:50 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFXJv-0003MY-Ty
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:08:49 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-38a01c80c34so51208881fa.0
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 06:08:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wFXRY-0003Av-BB
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:16:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wFXRW-0005GL-RJ
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:16:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776863797;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=860R9eWIOYXneAY2sPdd0exnaOMOCGXpnx4bC411+sc=;
+ b=W9s1AxkQjRexaiB0s9XP61oCGPQ8Jmqtrt4/BmNF3BZozTT7dwWTlCJsoIFXIMqXgoykQc
+ RXpOqy4lWWlC0xSv7NZdIeJoE6gs+/rlkki4pe4FpqvYr1+/LbFP4H6jpc0n4D8lwqQ1l+
+ iebrDbNkszBT89WlCx2z17bSiS8+6V4=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-364-TmfVoUTSO7Kq71TNYHDAfw-1; Wed, 22 Apr 2026 09:16:35 -0400
+X-MC-Unique: TmfVoUTSO7Kq71TNYHDAfw-1
+X-Mimecast-MFC-AGG-ID: TmfVoUTSO7Kq71TNYHDAfw_1776863794
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2b24a00d12cso55421165ad.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 06:16:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776863326; x=1777468126; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
- b=HtVBWNOO96q+xrM2xah91EcqK+k2B328tiMKgHjSnWagHDg9t44KG9bptzcsQIYiWY
- +L3QhgFK9NQbGFUSm5XZw2U2doIQYpegO929qntrNwoHQSNQhMLOJGMT6D28eiJsxQRp
- 18q4WcvksRcItIVGD0fPrAjyhKirNaSefQhbG70svvcxxU7hkuOoFg3pMMu0VdIs+gzY
- Jl91j4712owMRPkUoyaOglQ4jMlaVMKRy9jXBeN7vWoLwV1BITHjeYdae3iDVsN9GHrk
- 1sG+84pq3rZlUxNbQRQ+zGph4bo5QIuZxBHVj0OvTfYdZ4kRA1gGwdaoQ8PeU5Fgw94e
- NOaw==
+ d=redhat.com; s=google; t=1776863794; x=1777468594; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=860R9eWIOYXneAY2sPdd0exnaOMOCGXpnx4bC411+sc=;
+ b=TuBuAEJBoFOFVr9rypMkI6zcLeiBrWPQ6zb4TFCdoHz6riCfr+XucWQ2SJDizwdeKM
+ GdXtE6qvU9iaAkh6JjHuKqctuVzanYPYxDLrPeClGSP4SmXVuQCxiNsktPFgu55l9mNh
+ uOWwuJ6zAXCsfbvzeOOsMIJm7tjNl2zqgYVw5JXzA+Q5LsjjH7DxTkpYXm23OATJcjg5
+ oHHavrVepLYU8vb+v+J+XWw3CHWlHdA+JnqDmLB5zOJ3qR+EOscrs4hJDrUWi4G81zOQ
+ XI6EMpQ5Tywzr+iDLvVcxKDKobHoOb6wMBW+FrgBFk7N8M2spVsQtdJqIauhzwdwS8ls
+ Yfww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776863326; x=1777468126;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gSYzG4w2krdb3nT01JqHA9xtpgh1UWf3StMYQUTc4bg=;
- b=Rup7oTYGqLgWnrS7YmHOsuoLfM7FCYLOU8scCOMdKsoH+38x1itwblQyG2GcDfwG/Z
- q1uzbZ8a77NUZUiZWWv9XMuCYvQ9TpPA2EBWIPAEqZZ9FMj/VSN1X/l3EWzxmPJVkydJ
- EUzhiNB57tqeqpfZx/lK6hHKeW4YCBPVxMqF5o+Piy1myuk3Gw7vwzUObLoG31M2wcgm
- X0VpHt93WSqVRUqYdL6qa6EwH5MQZ+IN48gSmZkKxAZACIvF+xGq7tEXdcCPQQLQ5Tav
- IOqJryj+YcyFWyy7zY8JRWEaGVhrb2YMBEV6Sn5lEbrwnCHaFnOkVZNk8JvH3SY90CJ8
- XX/g==
-X-Gm-Message-State: AOJu0YxH8oZK05PjOf+Mcvq130lsHxF3DGK+0dOXd87BDjOEPu2L3Dz4
- Y1U7uPPtRam+RdLKpf1Ul1QcuJK9qjVxBdbdP4GoyUH1HFP0iHEpGeYVBskXt7k43gHOGwnOuoJ
- GoP/tS3A=
-X-Gm-Gg: AeBDiet+Lua4AHyvdQRgRNL1DxMSYOX5RllsMt92roKp4lbcujmPzIF3SEXN4J7Xn1B
- oVB2whk+SCJYv1u+ChrD6MWL8yK0oTaY1YHQe6QiqpJjqfbbq0xXKGwWx/APQ00j+FB2WxNAh9N
- /y+QMT1oVk8bVmKjz0dlLhczPmLOL3BeJBlOcElPXD2b+T53POXolG4cSj6tRNqaHLAAdSuuHEA
- SP1muJNViFtLBi0oCoftSgy8qpBVfLrFXGe4t/MxEppWkRKz2lv/M5yVPtDNCTTt4eaaUF0XYil
- KtqEnv9ZphtXPkrBDEmzSeKDo4KyXHRh3xDErkUuu85iWuWmCmZuAEIivaKRrvKoUrVguHWExgM
- 7RPGDIXCCUac+LD+aa8szxfvKxsrVd3qvz+HWjQXd/27O5ytidJI/L9ZJUEpnmffGXQUcjJiE6y
- i5SVEreONLm/wGnHpmaDGWefrvdGmg394pMerdIMFap9qs
-X-Received: by 2002:a17:907:25cd:b0:ba9:559:10c8 with SMTP id
- a640c23a62f3a-ba905591bf7mr529933866b.41.1776862953878; 
- Wed, 22 Apr 2026 06:02:33 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e46898sm47674480f8f.27.2026.04.22.06.02.29
+ d=1e100.net; s=20251104; t=1776863794; x=1777468594;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=860R9eWIOYXneAY2sPdd0exnaOMOCGXpnx4bC411+sc=;
+ b=BshY5so0CB8M2K6ULNXyKkp9d1mkG3fDyLJf9hABXOezJhOGjStXKj2lkrt20aTrIT
+ PLz/lZyCQELCUuVZn0Io2zEqHFAx5oZEeqJDFRcjkSYGJVWf+tuX/q4ygK+FWmOi53+H
+ Tp/BFKOlQ8iIviQXu3oU0bqxzFhanRv0oePUnhEXVzl10rGlaNecGonfVemSY7dX6C8j
+ sFCoQDCZ6w+lKb2lQXSS5xdATgB/InCglQDpWkiGJ9UARwx9gqYa15SEKhCUtjFHlot4
+ lOxqomQFKB18s29ZGMO6zoJFihHTSHY8Q32NAHGm1er01oUREwW9bjMRae2HSdB0Ja+w
+ O/Qg==
+X-Gm-Message-State: AOJu0YwUs3KJqwm8tgW0IPMQIOGICe9M+8sgbtMhnbL7XqBcv1Nlt5Bn
+ JPaao1cqpK9jC9jC4wurfX0qi9hrpwxiUriqD9pP0M3K7ZFldiKeEDUcJROIzX2GliQWitUVZEe
+ m4Fx+f5HnbL9lEwr/i2eVSWgbKT0NfwjrilKdegIJ/deSSXIau2Kf1Z90
+X-Gm-Gg: AeBDiesXc96lmNldaM3VsWMOydEWjO8ycifIRiH/exx484ETOR6uaLYlynC3Ie/xEKv
+ msUadt+sZ6F+owqx1qYPd4ipCPEE8ol9HfLFOhocf93It8OqSkmyZ+r0m0xO1KbjHOMBrL4JXdf
+ b2CsoQyaon6T3MbYbcooCcbHFxjL5GfxRY6x2Z6RoCZoqHTo/yRK4M04lpAAccxq1hBd2phi5dy
+ DnLoVhXMWoSJVJs5vpbZpCun2Mc9JWdZOzSDEb1M6M6T1Sl3AdKH65HbL9LlZmo5iR4YsX2OkKt
+ +5zsSiK5QDPlJWQ0G5KSbHFfM4S7bjuKgZk656jsvDqL/xc8d3NNfXMQ4LWxHkIdWV6Vy+Oqgcb
+ 4u5fgRluRuLXKa7VJvs1FVkVO4+6wvmyTHg974FxrSLbn3B04/SIq3+qk
+X-Received: by 2002:a17:902:8d98:b0:2b4:5fae:cbd8 with SMTP id
+ d9443c01a7336-2b5f9f83117mr166360535ad.37.1776863793555; 
+ Wed, 22 Apr 2026 06:16:33 -0700 (PDT)
+X-Received: by 2002:a17:902:8d98:b0:2b4:5fae:cbd8 with SMTP id
+ d9443c01a7336-2b5f9f83117mr166359005ad.37.1776863791434; 
+ Wed, 22 Apr 2026 06:16:31 -0700 (PDT)
+Received: from fedora (193-179-61-20.customers.tmcz.cz. [193.179.61.20])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b5fab28e35sm165036365ad.64.2026.04.22.06.16.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 06:02:30 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6134E616F5;
- Wed, 22 Apr 2026 13:52:53 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 29/32] target/arm: implement global monitor events
-Date: Wed, 22 Apr 2026 13:52:46 +0100
-Message-ID: <20260422125250.1303100-30-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260422125250.1303100-1-alex.bennee@linaro.org>
-References: <20260422125250.1303100-1-alex.bennee@linaro.org>
+ Wed, 22 Apr 2026 06:16:30 -0700 (PDT)
+Date: Wed, 22 Apr 2026 15:16:16 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Joao Martins <joao.m.martins@oracle.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, 
+ Avihai Horon <avihaih@nvidia.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>, 
+ Alex Williamson <alex@shazbot.org>, Kirti Wankhede <kwankhede@nvidia.com>, 
+ Zhiyi Guo <zhguo@redhat.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v2 07/16] migration: Introduce stopcopy_bytes in
+ save_query_pending()
+Message-ID: <aejKAjyhKJMew7f-@fedora>
+References: <20260421202110.306051-1-peterx@redhat.com>
+ <20260421202110.306051-8-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22d.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260421202110.306051-8-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,175 +126,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moving from Exclusive to Open Access should generate event stream
-events. Technically a non-exclusive store to any address range covered
-by the global monitor should also trigger such an event but we can
-only detect that after the event by seeing if memory doesn't match
-cpu_exclusive_val when processing the eventual store exclusive.
+On 2026-04-21 16:21, Peter Xu wrote:
+> Allow modules to report data that can only be migrated after VM is stopped.
+> 
+> When this concept is introduced, we will need to account stopcopy size to
+> be part of pending_size as before.
+> 
+> However, when there're data only can be migrated in stopcopy phase, it
+> means the old "pending_size" may not always be able to reach low enough to
+> kickoff an slow version of query sync.
+> 
+> It used to be almost guaranteed to happen as all prior iterative modules
+> doesn't have stopcopy only data.  VFIO may change that fact by having some
+> data that must be copied during stop phase.
+> 
+> So we need to make sure QEMU will kickoff a synchronized version of query
+> pending when all precopy data is migrated.  This might be important to VFIO
+> to keep making progress even if the downtime cannot yet be satisfied.
+> 
+> So far, this patch should introduce no functional change, as no module yet
+> report stopcopy size.
+> 
+> This paves way for VFIO to properly report its pending data sizes, which
+> will start to include stop-only data.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/migration/register.h |  7 ++++
+>  migration/migration.c        | 65 ++++++++++++++++++++++++++++++------
+>  migration/savevm.c           | 10 ++++--
+>  migration/trace-events       |  2 +-
+>  4 files changed, 70 insertions(+), 14 deletions(-)
 
-The CLREX instruction has the same effect as do other operations
-clearing the exclusive state (such as eret).
-
-We special case STLR/STL (Store Release) instructions to generate
-events because their use is a suggested pattern for clearing locks
-that might be sleeping. We only trigger the event if we detect an
-exclusive instruction is running.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
----
-v2
-  - add gen_global_event_reg() and use that
-  - add handling for STL/STLR
----
- target/arm/internals.h         |  1 +
- target/arm/tcg/translate.h     | 14 ++++++++++++++
- target/arm/tcg/translate-a64.c | 23 +++++++++++++++++++++++
- target/arm/tcg/translate.c     | 20 ++++++++++++++++++++
- 4 files changed, 58 insertions(+)
-
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 089f679ac0a..7045b4a56bd 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -709,6 +709,7 @@ static inline void arm_broadcast_event(void)
- static inline void arm_clear_exclusive(CPUARMState *env)
- {
-     env->exclusive_addr = -1;
-+    arm_broadcast_event();
- }
- 
- /**
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 9bf2701a56b..01053060af4 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -882,6 +882,20 @@ static inline void gen_event_reg(void)
- #endif
- }
- 
-+/*
-+ * Some events affect all PEs in the same shareability domain. In
-+ * practice as we currently model SMP systems as single SoC devices so
-+ * we signal them all.
-+ */
-+static inline void gen_global_event_reg(void)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    /* re-use the SEV helper */
-+    gen_helper_sev(tcg_env);
-+#endif
-+}
-+
-+
- /*
-  * Helpers for implementing sets of trans_* functions.
-  * Defer the implementation of NAME to FUNC, with optional extra arguments.
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index f30df5dbfed..a1b0cc9508e 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2253,6 +2253,7 @@ static bool trans_CHKFEAT(DisasContext *s, arg_CHKFEAT *a)
- static bool trans_CLREX(DisasContext *s, arg_CLREX *a)
- {
-     tcg_gen_movi_i64(cpu_exclusive_addr, -1);
-+    gen_global_event_reg();
-     return true;
- }
- 
-@@ -3407,6 +3408,14 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
-         tcg_gen_setcond_i64(TCG_COND_NE, tmp, tmp, cpu_exclusive_val);
-     }
-     tcg_gen_mov_i64(cpu_reg(s, rd), tmp);
-+
-+    /*
-+     * On a successful StoreExcl the global monitor transitions from
-+     * Exclusive to Open Access and at that point generate an Event
-+     * for PEs in the same memory sharing domain.
-+     */
-+    gen_global_event_reg();
-+
-     tcg_gen_br(done_label);
- 
-     gen_set_label(fail_label);
-@@ -3544,6 +3553,7 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
-     TCGv_i64 clean_addr;
-     MemOp memop;
-     bool iss_sf = ldst_iss_sf(a->sz, false, false);
-+    TCGLabel *skip_monitor_event = gen_new_label();
- 
-     /*
-      * StoreLORelease is the same as Store-Release for QEMU, but
-@@ -3562,6 +3572,19 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
-                                 true, a->rn != 31, memop);
-     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
-               iss_sf, a->lasr);
-+
-+    /*
-+     * We don't fully model the global monitor as it would be very
-+     * expensive for every memory access. However in the Arm ARM "Use
-+     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
-+     * give the example of using STLR to clear a lock. So if a lock is
-+     * active trigger the global event register so we don't deadlock
-+     * while sleeping.
-+     */
-+    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
-+    gen_global_event_reg();
-+    gen_set_label(skip_monitor_event);
-+
-     return true;
- }
- 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 59925151fc3..18d64620e40 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -2116,6 +2116,12 @@ static void gen_store_exclusive(DisasContext *s, int rd, int rt, int rt2,
-         tcg_gen_setcond_i32(TCG_COND_NE, t0, t0, t2);
-     }
-     tcg_gen_mov_i32(cpu_R[rd], t0);
-+    /*
-+     * On a successful StoreExcl the global monitor transitions from
-+     * Exclusive to Open Access and at that point generate an Event
-+     * for PEs in the same memory sharing domain.
-+     */
-+    gen_global_event_reg();
-     tcg_gen_br(done_label);
- 
-     gen_set_label(fail_label);
-@@ -4218,6 +4224,7 @@ static bool trans_STLEXH(DisasContext *s, arg_STREX *a)
- static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
- {
-     TCGv_i32 addr, tmp;
-+    TCGLabel *skip_monitor_event;
- 
-     if (!ENABLE_ARCH_8) {
-         return false;
-@@ -4230,10 +4237,23 @@ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
- 
-     addr = load_reg(s, a->rn);
-     tmp = load_reg(s, a->rt);
-+    skip_monitor_event = gen_new_label();
-     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
-     gen_aa32_st_i32(s, tmp, addr, get_mem_index(s), mop | MO_ALIGN);
-     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel | ISSIsWrite);
- 
-+    /*
-+     * We don't fully model the global monitor as it would be very
-+     * expensive for every memory access. However in the Arm ARM "Use
-+     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
-+     * give the example of using STL to clear a lock. So if a lock is
-+     * active trigger the global event register so we don't deadlock
-+     * while sleeping.
-+     */
-+    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
-+    gen_global_event_reg();
-+    gen_set_label(skip_monitor_event);
-+
-     return true;
- }
- 
--- 
-2.47.3
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
 
