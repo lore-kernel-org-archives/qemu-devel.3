@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8747CFA1FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B56DBFA1FEC
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdmW-0004jZ-HE; Wed, 22 Apr 2026 16:02:46 -0400
+	id 1wFdoS-0000fZ-2Y; Wed, 22 Apr 2026 16:04:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdle-00043E-MC
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:51 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdnL-00006P-Gm
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:03:39 -0400
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlc-0002sX-Fc
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:50 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdnJ-0003qq-K5
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:03:35 -0400
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so58223355e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:01:47 -0700 (PDT)
+ 5b1f17b1804b1-488ab2db91aso77001635e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:03:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888105; x=1777492905; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888209; x=1777493009; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XeUpuJAQM3HlSzusR90k2uWMnZf/9A9CoIWyson6H5w=;
- b=S5aRNVlD/Lm5Yl8ZY6eMj1aa+YCzf/bOse/SHftMyrmMtnkShC/+S9EN6IKwIHemxa
- PA15JmlhAvNyr6xoOTJ2wCqh5EhnpcDtLjaM5V2VumBf9Fl4scdr1bwFYysrCap1zBqz
- HM9x3HGG807DaY3PeF0mH5izwPPalHPeM4G4ZKzH2NiCpFEvKIvyY5uAMltopXdOWEJr
- QdeodnejOEa4eWtfMBK2XpiwCjuCMsxV8+1nyD8dnOsvEsqH7L7HDcQatJAPfiZXPbBx
- RxHwiQ39f9jnSMAWq+EJQzgOxPqTaiaPOguENSoJUHtoLylbLxS6ylIQmWfT5mL6IaUJ
- ea3g==
+ :reply-to; bh=qiqyPlTfny9lPo0ZX1rwVyHVuc4xQoU/gcm3Q9eKk2I=;
+ b=FZxX0yNuz3X/alFe7ACvjAJSNxNWyluw7O7PJ+lpWun5MfH4iRmvDouDG1RVD9YVzR
+ TdAxwT0llCpK4Z8TA3FIFN6+L2/4fvPCl21wWKg2yp8x5K+xHwG7OXV+R/Zizbqofxos
+ erk/DG3sQ/xNn3eldXTUg9rhNs6YGisy+IBPXlZWb27PPSTqIYFI0KzNa2CuWIXCoWDj
+ bhCcam53ixseHzFm/3qPPacm2S/U9r3rmhmDunU9PZWklA6/0YSusOSIi84IZ3EWnhSE
+ Kag6Zm9fdKA1TLMyMFRa8I4JyPMYc/vOX8tHk3si0T2GfEoOgdl8UIIFcbllWeDmlrLT
+ KitQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888105; x=1777492905;
+ d=1e100.net; s=20251104; t=1776888209; x=1777493009;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XeUpuJAQM3HlSzusR90k2uWMnZf/9A9CoIWyson6H5w=;
- b=s+4ikJ3iOVcAGi73+A/SBAst0VixkwqBV43DQo3YsnHwtxJBSBGIkvG1rKtY1ZFNa7
- AyDRki+VBONaotvKxlMLJYxeoE+Fqri2LMuybUoJyfR1QzcXzApJeQfr9FVTdHEXQfr1
- Vv0ia9DbvXpWCgltCayygBFH36LD4wnnTjFqohYSRWqdQvQ8QDXvW2+3BYOn6VFT371u
- Vc8P+Uifhy1kv5krHXHQIO0ih22WO0fiwqNpjBum9fV7fAySirpMG0MMPaEzDNQFAgoV
- j7VtnpQfw+vtGQaZV6wTPMPJJWtx64fpDJZDgEPjivBFb5t6mW8U/Fq1AFw+iY619g5G
- ABBA==
-X-Gm-Message-State: AOJu0Yxb7mhTvnxm9J0mSefickQd6QV9nZ71hh83tjUdyiRzy/pJPKTd
- H3Xv7Fr+jZRIXr38LVUR20OHiPXdixhhOqp1Vtgeso90CTIauel3sCauHz0M6KtaDArJZ9qAH4K
- TaUdc+kk=
-X-Gm-Gg: AeBDievlT3wrA+TV8thLtpVokGDSweTMJiIX3yX8BZM4HkBqp6WDHLEFupHnfPV9X9t
- lTgBOavktUQV7rjKav37XDiSc7nHq1mS9Hkygd/qkDYGfB5HVqxIpNJxoA5LKbytTmFHURdqDDi
- 0GyyOofsI1Hqs5/dVEFqMEUFjonynlfxu0StLft/EWXKSihaFHYalH099GhiF1rEIMQsl8RxNqn
- cwYGI37cWhY7ZOlriSooZSwD0sO803AdKMLzG3yDkLLHdyoBjRmwbydJKGR77DGkbXOMEhdhR1x
- N6Sotfswx2ccS65U9cnH4SvUx9Uphk1+3bUlAsayqyN2EOQvQc9nqhnSkOeU46SJIY7o28Zl3DO
- zlckhlJaWVOOtznjWBKvU98i6xiviRy2ZNZZzWO9m4IrrH7xt+J6b6Hrl74h3iXU3t7uSeE0O7x
- 1xYgAjsPN5+0YmRfNBznW7+rZn0k7c+wXoF4WmDF6Y0BE7NWYQiwKZn655lj6lUVGvWzJ6F+VKm
- PDUmWlg4Zw=
-X-Received: by 2002:a05:600c:4f8c:b0:48a:58ae:993b with SMTP id
- 5b1f17b1804b1-48a58ae9faemr109182805e9.16.1776888104803; 
- Wed, 22 Apr 2026 13:01:44 -0700 (PDT)
+ bh=qiqyPlTfny9lPo0ZX1rwVyHVuc4xQoU/gcm3Q9eKk2I=;
+ b=B4OgHyYDVn/BnN4L49ybM6bicLjLWgiif/EmxHMAxTmTtyUk2elbwqJqDxj2O2vmSY
+ nIozOnmTpftaLWngHbet8SCv/VAMZPBkQbxF2OnP2hTR2r7v+qC92gSRHhdGNPFn7A9Z
+ yw1Mdw8ZMohli7jDO/5/dDKGFwUNg5zUhmnhrjAg2rYu0pnhjH1070ZY/GQ/Mz7seotV
+ W/edX1a69OJx1fYMUX8jFhvZ0577hfgYrYomHLEscVvS6gDDrgLv4zwUN8sfxCLiRfim
+ s2ZDLKCWE1tB5ji27VlOOCvrwn0bUINy0F2F7rnQkcPnH0oD81YWH1UEUERBI0qbQYee
+ b6vw==
+X-Gm-Message-State: AOJu0YxfDRrYDb5nBMdNjWg+2zTf+rYFiFmAAQN/nbokXazW64r0R3sW
+ cp517shaUu/tW5CU9tIWlti+grzufgee6n0ai3LuzX49dzJOukK9i6YkQIUG/snBSwUHVNe1Egk
+ 7eSBt6uQ=
+X-Gm-Gg: AeBDieuTqSYRaMGs14Q8GZToAAneYGb6ly9paZ/wcik5f4DpQ8bJqdVV0m377hCA7XJ
+ pduvnmoah4TGmSYIIs2DpMwPeLg84Ii2YG7RSuVzBf44eIIU4yfqvXR3b6/UpxTCiFQAR6cx0qf
+ MBfQyGZ2BXhxlr2uhejBld8NqljeAjd1dbrJghOEZPpXiNWE48J1djp2nj6qOR5vUYFf37ZLfRo
+ ng5yv754unIOPCCqvXdaGD0OnkJwk3qLTNNC6z+NFeOh04+PfMjYvg5+rm3Fx8ndltTF+utFKlZ
+ /zLUolj2zoDys7spwyZTMiAmrs82NAHLG/8RweaTqfH1tIF7xBhW6A7egbBq0Byx9PniIm/u89D
+ prWBINy2R6zoYbaBRwdtf5j56bX7jozNRiTvF+AT/NBSi8RMiesFI8/ED41F0NhkLK4ZX63EXog
+ ohMs6NVBMxgkROL6abevgcxWAlULVTXj7AQEgp/2N5RDzfUPEretK40sSf+pzPoxGNpqF8s+BFq
+ K4CFhC9KSo=
+X-Received: by 2002:a05:600c:2d09:b0:489:c57:7836 with SMTP id
+ 5b1f17b1804b1-4890c5778ffmr136824405e9.27.1776888209054; 
+ Wed, 22 Apr 2026 13:03:29 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1c01cfsm487687685e9.10.2026.04.22.13.01.43
+ 5b1f17b1804b1-488fb75ab25sm144842655e9.11.2026.04.22.13.03.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:01:44 -0700 (PDT)
+ Wed, 22 Apr 2026 13:03:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/48] hw/tpm: add PPI support to tpm-tis-device for ARM64 virt
-Date: Wed, 22 Apr 2026 21:57:31 +0200
-Message-ID: <20260422195746.88865-34-philmd@linaro.org>
+Subject: [PULL 48/48] MAINTAINERS: Transfer CI maintenance to Pierrick
+Date: Wed, 22 Apr 2026 21:57:46 +0200
+Message-ID: <20260422195746.88865-49-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
@@ -99,99 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohammadfaiz Bawa <mbawa@redhat.com>
+Pass the torch to Pierrick who does much better and useful
+work in this area: https://github.com/p-b-o/qemu-ci
 
-Add PPI memory region and ACPI _STA, _DSM to tpm-tis-sysbus so
-Windows 11 ARM64 guests no longer log Event ID 15 errors from
-tpm.sys on every boot.
+Remove me from custom runner files since I don't have
+contact with OSUOSL or IBM.
 
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260327173209.148180-4-mbawa@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20260422080406.62638-11-philmd@linaro.org>
 ---
- hw/arm/virt-acpi-build.c |  9 ++++++++-
- hw/tpm/tpm_tis_sysbus.c  | 11 +++++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ MAINTAINERS | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 591cfc993c6..5b5ac551f8c 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -240,7 +240,8 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
-     Aml *dev = aml_device("TPM0");
-     aml_append(dev, aml_name_decl("_HID", aml_string("MSFT0101")));
-     aml_append(dev, aml_name_decl("_STR", aml_string("TPM 2.0 Device")));
--    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
-+    aml_append(dev, aml_name_decl("_STA", aml_int(0xF)));
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 05bcb5fc7fb..145011fd142 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4478,7 +4478,7 @@ Build and test automation
+ Build and test automation, general continuous integration
+ M: Alex Bennée <alex.bennee@linaro.org>
+ T: git https://gitlab.com/stsquad/qemu testing/next
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
++M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ S: Maintained
+ F: .github/workflows/lockdown.yml
+ F: .gitlab-ci.yml
+@@ -4524,13 +4524,11 @@ F: .gitlab-ci.d/windows.yml
  
-     Aml *crs = aml_resource_template();
-     aml_append(crs,
-@@ -248,6 +249,12 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
-                                   (uint32_t)memory_region_size(sbdev_mr),
-                                   AML_READ_WRITE));
-     aml_append(dev, aml_name_decl("_CRS", crs));
-+
-+    hwaddr ppi_base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
-+    if (ppi_base != -1) {
-+        ppi_base += pbus_base;
-+        tpm_build_ppi_acpi(TPM_IF(sbdev), dev, ppi_base);
-+    }
-     aml_append(scope, dev);
- }
- #endif
-diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-index dd30344d5ac..6bec30c36fc 100644
---- a/hw/tpm/tpm_tis_sysbus.c
-+++ b/hw/tpm/tpm_tis_sysbus.c
-@@ -30,6 +30,7 @@
- #include "hw/core/sysbus.h"
- #include "tpm_tis.h"
- #include "qom/object.h"
-+#include "qemu/memalign.h"
+ Guest Test Compilation Support
+ M: Alex Bennée <alex.bennee@linaro.org>
+-R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: tests/tcg/Makefile.target
  
- struct TPMStateSysBus {
-     /*< private >*/
-@@ -99,6 +100,7 @@ static void tpm_tis_sysbus_initfn(Object *obj)
- {
-     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(obj);
-     TPMState *s = &sbdev->state;
-+    size_t host_page_size = qemu_real_host_page_size();
- 
-     memory_region_init_io(&s->mmio, obj, &tpm_tis_memory_ops,
-                           s, "tpm-tis-mmio",
-@@ -106,6 +108,12 @@ static void tpm_tis_sysbus_initfn(Object *obj)
- 
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
-+
-+    s->ppi.buf = qemu_memalign(host_page_size,
-+                                ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
-+    memory_region_init_ram_device_ptr(&s->ppi.ram, obj, "tpm-ppi",
-+                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->ppi.ram);
- }
- 
- static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
-@@ -122,6 +130,8 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
-         error_setg(errp, "'tpmdev' property is required");
-         return;
-     }
-+
-+    vmstate_register_ram(&s->ppi.ram, dev);
- }
- 
- static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
-@@ -132,6 +142,7 @@ static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
-     device_class_set_props(dc, tpm_tis_sysbus_properties);
-     dc->vmsd  = &vmstate_tpm_tis_sysbus;
-     tc->model = TPM_MODEL_TPM_TIS;
-+    tc->ppi_enabled = true;
-     dc->realize = tpm_tis_sysbus_realizefn;
-     device_class_set_legacy_reset(dc, tpm_tis_sysbus_reset);
-     tc->request_completed = tpm_tis_sysbus_request_completed;
+ GitLab custom runners (HW sponsored by Linaro, OSUOSL and IBM)
+ M: Alex Bennée <alex.bennee@linaro.org>
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+ F: .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+@@ -4565,6 +4563,7 @@ M: Paolo Bonzini <pbonzini@redhat.com>
+ R: Marc-André Lureau <marcandre.lureau@redhat.com>
+ R: Daniel P. Berrange <berrange@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
++R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ S: Maintained
+ F: meson.build
+ F: meson_options.txt
 -- 
 2.53.0
 
