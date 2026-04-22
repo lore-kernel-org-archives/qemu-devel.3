@@ -4,155 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E99F94CDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8737FF55811
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFSpM-0005BP-V6; Wed, 22 Apr 2026 04:20:57 -0400
+	id 1wFSq1-0005LG-8e; Wed, 22 Apr 2026 04:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSpL-0005B0-AM
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:20:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wFSpJ-0006BX-Rm
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:20:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776846051;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rwAeUnPXPs7tbfquhFrFhHTviUFr1oZS18IkfKlLjkU=;
- b=aum+k7swcMK066hMK5wvWDqdGqlpav00zDL3smBCb49ov++jmFEHm83kETok7hMXbJagai
- vwQaDSmPhPr+t1+OFhcV8nbrzv+VLIwL7rE4a4wpKnfz7Jswkav1HjTX7BAnOYduUxYZLF
- WV2biekf2ahq/Pcs9GxC2ju8L3f20BY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-508-EZzXIlO3Nd6LB5AqVmsb7Q-1; Wed, 22 Apr 2026 04:20:49 -0400
-X-MC-Unique: EZzXIlO3Nd6LB5AqVmsb7Q-1
-X-Mimecast-MFC-AGG-ID: EZzXIlO3Nd6LB5AqVmsb7Q_1776846049
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48a5952c635so7011825e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:20:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSpt-0005HE-7H
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:21:29 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSpq-0006NK-Ht
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:21:28 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43d77f60944so4135581f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776846048; x=1777450848; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=rwAeUnPXPs7tbfquhFrFhHTviUFr1oZS18IkfKlLjkU=;
- b=aTgzJnY+cVFjzJMeNWKiF4KsBUmQ1IFSO5XnvImlle9rR7gzMjMEAWGB8u7ZErorVE
- utAaAHEk6IIxFWjA1yzF743yAC0PCKkR5K3Y06Wr8JH85Q7CW8+mNeNN7xdwDv8foaDH
- V1vq45r3pIZk+IoqCHzO0JFuK6YBUOqSalWyAjHcsfmVfX5dCBMmsNzG5y+vCU2eAbIP
- bU3DqKj8Q8ruy+FDdpjRNbXoCVE4IZ9T6ECpyofGFRQ+i7ssjJqLCcDsRIVTJgYhw1XG
- RG3199S2o6Vvl5cN45VN++fP4O9k6XiMCrK0yW3NMlYvvSRKOfUNN8KVsSoR3vVlh/iR
- G0HA==
+ d=linaro.org; s=google; t=1776846084; x=1777450884; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jU8rQIWbGq1V7J5yFzv6iHTchMAHIKmP2PMMHfQZHYQ=;
+ b=kdSTy8l9BefknMWLYYY8HTJ6Q84Ymfyz+1w0qA7qmDzCrNNBVlTF9s7k3Y0d8j2S1y
+ KmhpQHC+3H/6HglsyvzTcGwepUBGF9osSvIY1HurGrCL5J4CExnlv184CHMJVkJbBfbg
+ xQFN7qcnPfQWW1p/Z5vTRA3TY3i/X9nLD6SO7UlhP6wt2BaK4hOj4NyQc7usI/4F7hAv
+ anT8JkCkK7grGyNhlOgJWvq1GgXOTsa8SflC4VYfocDq7i87Q6NwNuwZbQkLFMkW6AXc
+ aYE8zFGOfJLZQ5FJ8CqAPiYomFbxW6syEmnnw7uq22aVtVwVJY7YByDIxB7BRl3OPVnz
+ Farw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776846048; x=1777450848;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rwAeUnPXPs7tbfquhFrFhHTviUFr1oZS18IkfKlLjkU=;
- b=ciwhDyajnQPfBNJ7AD67F8vM4BN5Q/Q/E+jEximKqJUc8u6KNVOEndx0CtoIXMw7nm
- cccfuNkcrHAVkgdwRIQxuxbjwnFs22g36MiZqxHikebuj/L74FGJ7ofeYAVcKuU4Cjzq
- gVr4qBXeXAo8DYB1ntL84kt5oq7d3nxMH9eJnoYBomXI6z+1FePtJAgXyJcn4s7lwX1l
- e5JZnR0UGEg2mqfbfl1gTaCNUOiGlek7nuReeWJI2Q1qpTGFEHrEjtSFVPWiER2HlJVj
- YPpkQme8Xi5JLRGxWeI7vMjyZ6ULVDxxkpCgneazQNQiPemsUC+P8fjuwMQFMchsyXvc
- PwHg==
+ d=1e100.net; s=20251104; t=1776846084; x=1777450884;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jU8rQIWbGq1V7J5yFzv6iHTchMAHIKmP2PMMHfQZHYQ=;
+ b=FS9pqt7aliLYMgIzhXZtIqN0ARYZ9fWZmxKOxAb3eOQUkLGwAWb7wWm4dd8lr6n7dl
+ OYhdNAQ/qSZVpmWH0gR0e8QB/gpd8cjPwXDsPI9UdKYK03XBXFwVnAOUCZwdk5LpPfH4
+ qq/dYqJHiSebhCedrvigkyVbr7+1b0eVUlLZ6hVUC8yxb/ZN7pN+qVi4iBD37+3bbCET
+ zh7SFWQjNvSeyZbKoOZ0K1cCelQkBD9QrVpAZsbIegBJxm+39n4guSl2MHmQqmuZGVFM
+ Vkv4G4hESS5LhnJxBSaZeVsyBbVvwgPBmjjTxyQ75aaOjeQDmHigSJ4PlaJU8HzNpElW
+ KHaw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/NX62XxQtfwrcw+5UzsBZO6h+6qKsMUFg0UBsGjz16Ug7ameZwEp5KKxG05YMWUGJaD/sy2/ARPDgH@nongnu.org
-X-Gm-Message-State: AOJu0YwNIW9m5/MNWOnKpAQzDZhAsKUxRp7hVyVXXxz3z7uHtPOAF6vn
- ivsjEz+fgEBd12yskNAglIJvT7im03O2Fo5Z4MwhogVJCcYVxl/HhSlFIdhIiWu44wOmjNJNfGW
- v5WWhRZPCq1gfTB3sJIkleVnXehY2MRmqVmsAqT9dKGL/prvsigco1nLJ
-X-Gm-Gg: AeBDievBvmTCQCoLMv4xv8MQCc0MvfZmFzML0m8VHwbeDuKA8yU1S4erBx+5zALXygM
- unom1iFr1bbCIZO4q9EO1u3tf2lmY2GwO+rzNGSU5sZXhRRKDK6nSYrdMOPHIHbzRk8/6YH/DbU
- oYr8RVOXYWcJ4vOIDdAStlI7EBAZ46XGIcx2opy2im8E2YmvkOVb7n67FSLy3jkxpLf4TzY7YVI
- Z6WcqqGR4HdjNtALbDy7BWCs7uLE+a1UrsNAokJJG5vrRpjPVYLg+5jZomonnieA2W46kwws2fA
- 5J7XcYCuPUn37neKBiNKWgi6So8e3U8XUTEnriX+R8OENP7jmv1xA54ZmHpdL6h2eZcjQ79XDwF
- uGCwC7KXa7qcLVHPYsY3NiArm8/o96Q==
-X-Received: by 2002:a05:600c:628c:b0:48a:52d4:888c with SMTP id
- 5b1f17b1804b1-48a52d48985mr130800265e9.3.1776846048470; 
- Wed, 22 Apr 2026 01:20:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:628c:b0:48a:52d4:888c with SMTP id
- 5b1f17b1804b1-48a52d48985mr130799745e9.3.1776846047989; 
- Wed, 22 Apr 2026 01:20:47 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.147])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb77b001sm199755425e9.3.2026.04.22.01.20.45
+ AFNElJ+gE1eWFhrUeUhJCt4yBRME6a6hNboBA1KmgXyzQJjVWNIKKqX+Gk0ab9wAEf11pd0y5yYxnqqGqI4x@nongnu.org
+X-Gm-Message-State: AOJu0YzcRRN8jQ3tNW3EjcUvXV4JYh+ML6VtV//AOmheRM/FkGONSlIo
+ P+dBlK5ic6lmZW+Z9fU4PclsQ36P4320kju9HSVVbQ2CqZeGVpB59jR2MzzZcNT3uTU=
+X-Gm-Gg: AeBDiet28myk3hwUACgwYVqEiNvS8mxs0heETlxqrr2amkrfBd2GsUE2aOsWsXZgFJC
+ fNttXvU+ckjyBiMmEreh2YFqpw81Udy/Da4+fApJDK2/xj/oELVWEm78PMbji6LhRekKCi+Jfjd
+ t7xnwCryNBW+lWVU2XaLpborffsNzESW+c8iTxTXZITopuiLFDXRcgW6R1za9Be2r1maeZKwqIn
+ NUpp0LZdybv/Zu7DcRTsqBo4woVNUdI9T316zAqkSqHJJjZwml9cULNe32aGpi8pRCj+m47O3wM
+ S51F0aHwGBnXO075ztXSV4+zK8WPaR+D6LV2JCZJVaohgGbt7tA3ituzMf1QzDdIbJ2qORgYuMJ
+ D9OmMmlQ/yLTqTcHD9unA4Xb8/5FevOvSaG8olVieGjZkwk0/MF3gOSFBT98UB6jseEKUo3D/aO
+ GU/oof6RfA9rXxDgYCSYl9pVSmDoPIR2g1K47Um8vIW2VdhSfI5CfHU4y5xtfBUKh7dhu5zl5wI
+ 7Qu
+X-Received: by 2002:a05:6000:178b:b0:43e:aefa:db84 with SMTP id
+ ffacd0b85a97d-43fe3e1601amr33257392f8f.34.1776846084492; 
+ Wed, 22 Apr 2026 01:21:24 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4e46471sm42769771f8f.28.2026.04.22.01.21.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 01:20:47 -0700 (PDT)
-Message-ID: <2f90163c-7437-4939-9c03-a5f7bcdc68b0@redhat.com>
-Date: Wed, 22 Apr 2026 10:20:45 +0200
+ Wed, 22 Apr 2026 01:21:23 -0700 (PDT)
+Message-ID: <23006638-7d07-4e8f-b910-ef06c2dc13cc@linaro.org>
+Date: Wed, 22 Apr 2026 10:21:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/10] MAINTAINERS: Step up to maintain core machine
- code
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260422080406.62638-1-philmd@linaro.org>
- <20260422080406.62638-5-philmd@linaro.org>
+Subject: Re: [PATCH] target/riscv: Make number of debug triggers configurable
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260422080406.62638-5-philmd@linaro.org>
+To: Alvin Chang <alvinga@andestech.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
+Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ vivahavey@gmail.com, Yu-Ming Chang <yumin686@andestech.com>
+References: <20251201080524.186697-1-alvinga@andestech.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251201080524.186697-1-alvinga@andestech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,38 +106,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/04/2026 10.03, Philippe Mathieu-Daudé wrote:
-> The 'Machine core' section is orphan. Being acquainted
-> with the code, step up to maintain it.
+On 1/12/25 09:05, Alvin Chang via wrote:
+> In current implementation, the number of debug triggers was hardcoded as
+> RV_MAX_TRIGGERS macro. This commit replaces the fixed value with a new
+> "num_triggers" configuration, allowing platforms to configure the number
+> of debug triggers they want.
 > 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Igor Mammedov <imammedo@redhat.com>
-> Cc: Yanan Wang <wangyanan55@huawei.com>
-> Cc: Eduardo Habkost <eduardo@habkost.net>
-> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> If no specific option is provided, the default number of debug triggers
+> remains 2 as before.
+> 
+> A new CPU property "num-triggers" is added to let users configure the
+> number of debug triggers from the command line. For example:
+> 
+>    -cpu max,num-triggers=8
+> 
+> Signed-off-by: Alvin Chang <alvinga@andestech.com>
+> Reviewed-by: Yu-Ming Chang <yumin686@andestech.com>
 > ---
->   MAINTAINERS | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 520b92826a2..d4dac985b5c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2016,9 +2016,9 @@ F: include/hw/i386/nitro_enclave.h
->   F: docs/system/i386/nitro-enclave.rst
->   
->   Machine core
-> -R: Philippe Mathieu-Daudé <philmd@linaro.org>
-> +M: Philippe Mathieu-Daudé <philmd@linaro.org>
->   R: Zhao Liu <zhao1.liu@intel.com>
-> -S: Supported
-> +S: Maintained
->   F: hw/core/cpu-common.c
->   F: hw/core/cpu-system.c
->   F: hw/core/machine-qmp-cmds.c
+>   target/riscv/cpu.c                | 34 +++++++++++++++++++++++++++++++
+>   target/riscv/cpu.h                | 12 +++++------
+>   target/riscv/cpu_cfg_fields.h.inc |  1 +
+>   target/riscv/csr.c                |  3 ++-
+>   target/riscv/debug.c              | 23 +++++++++++++--------
+>   target/riscv/debug.h              |  2 --
+>   target/riscv/machine.c            | 16 ++++++++++-----
+>   7 files changed, 69 insertions(+), 22 deletions(-)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 36e7f10..b32ed78 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -450,13 +450,13 @@ struct CPUArchState {
+>   
+>       /* trigger module */
+>       target_ulong trigger_cur;
+> -    target_ulong tdata1[RV_MAX_TRIGGERS];
+> -    target_ulong tdata2[RV_MAX_TRIGGERS];
+> -    target_ulong tdata3[RV_MAX_TRIGGERS];
+> +    target_ulong *tdata1;
+> +    target_ulong *tdata2;
+> +    target_ulong *tdata3;
+>       target_ulong mcontext;
+> -    struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
+> -    struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
+> -    QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
+> +    struct CPUBreakpoint **cpu_breakpoint;
+> +    struct CPUWatchpoint **cpu_watchpoint;
+> +    QEMUTimer **itrigger_timer;
+>       int64_t last_icount;
+>       bool itrigger_enabled;
+
+
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 18d790a..c7244b7 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -239,15 +239,21 @@ static int debug_post_load(void *opaque, int version_id)
+>   
+>   static const VMStateDescription vmstate_debug = {
+>       .name = "cpu/debug",
+> -    .version_id = 2,
+> -    .minimum_version_id = 2,
+> +    .version_id = 3,
+> +    .minimum_version_id = 3,
+>       .needed = debug_needed,
+>       .post_load = debug_post_load,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
+> +        VMSTATE_VARRAY_UINT32(env.tdata1, RISCVCPU,
+> +                              cfg.num_triggers, 0,
+> +                              vmstate_info_uinttl, target_ulong),
+> +        VMSTATE_VARRAY_UINT32(env.tdata2, RISCVCPU,
+> +                              cfg.num_triggers, 0,
+> +                              vmstate_info_uinttl, target_ulong),
+> +        VMSTATE_VARRAY_UINT32(env.tdata3, RISCVCPU,
+> +                              cfg.num_triggers, 0,
+> +                              vmstate_info_uinttl, target_ulong),
+
+Breaking migration is a good opportunity to convert the underlying
+type to uint64_t. Although can be also done later.
+Anton, Alistair, WDYT?
+
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
 
 
