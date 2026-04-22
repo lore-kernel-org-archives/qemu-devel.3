@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0DADFA1FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9B11FA1FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdj7-0005Kj-Sw; Wed, 22 Apr 2026 15:59:15 -0400
+	id 1wFdmh-0005eH-5R; Wed, 22 Apr 2026 16:02:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdiP-0005Dn-0F
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:58:40 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlk-0004C1-MM
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:58 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdiJ-00006z-Hc
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:58:27 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso61274915e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:58:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlh-00030G-RD
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:55 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso61245335e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776887897; x=1777492697; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888112; x=1777492912; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Ve74Rl3/4sEoFhoxNUOiwE83jUTM3vJjwpNSz44ndVU=;
- b=NhhEvYJNx15GAl4iYl64X36PTJxoiJ67jC1qpDc9rWHstTodnfmRH6Qd+SOFTjNe2C
- wXUzfTEv22GsnHvJZKCpaklXywqU0NWH7G8tMYHdWJW6Ut+J4ta2x972S3Q5XdCswJJb
- nV7EECope/Ucd/xYA1WAKZjA0RC7DEzvfii9KZXmrTAzOHNjsmY8h7LtCi9ukxEFTcvj
- niU1L0tv/a/cJkhGhVq68Kmir+B0qTzaHquuxkddAueNMaHtUDg8YlOK1dREt0EmhzX9
- UlWdyfK+am+BtstuWGFS7eh2H9VsyHFNkH/MlCGVZJP1zLGN7JvEcBMrohy2jFeVZjbh
- jviQ==
+ :reply-to; bh=XxTSWpAH8tY0MN9ilU96vSF7le76N/8yRt/4jboOEtI=;
+ b=NbJiySVcpHHcDdapHKdEpVtf3KJ37AHphERUi7v1q6ttzBJ40hcF5iRP52t4llqo72
+ YqSIcbBrubtxG8j35TcN2IX65y1HYGTS0ZQEjkKfSsbyJzlqVf8mVHJI+LyOY+wAUbTf
+ 1cDC7olwpNFG3L4t8N0r9LIXhMNnNqZcVaGdhI1950cl7hCf3MBHViqhDRLvVsSovzHa
+ sEeEW4wrm2M2OOM1szFNvAXW5doLFFaYF+P4XSs4Uo1zszuwM35pd4z2atYP689Gk31H
+ +qSqOiml+qT4EI+iSlh3vY8gbZsAngafgL2xwgKFNknZpLiEekRFCRO7/OemeEzjtdo5
+ gCjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776887897; x=1777492697;
+ d=1e100.net; s=20251104; t=1776888112; x=1777492912;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Ve74Rl3/4sEoFhoxNUOiwE83jUTM3vJjwpNSz44ndVU=;
- b=Fztxg4V5udTHynJVPL+uJOsI1ch5+4NbFoqbeHEq7v4ISex+4vJDtSrPxKZ3C8lghJ
- Y3yacTXowjOShuqb4BSn4kMrP0XM5cPJeUq1QAFmHEYXgskJ31FzjPCiTCwsf5Yl2LEc
- BJSp0KiujP4ZLysU7qgCeIm8BmAwmVJaOIa3Tg+s2BKIym54xx0NL/90a2jlSZRYHlSL
- 53NzM+Re9cSvyFOFLoD+XTdw8NOuUxBCpiLh0ZFQSFZZ2Dbr9R01GiT6SdevNRryjfg9
- F9HMF7X33CqnhFhMd7ApezN6bghZ15HD3WvEXT396K1rxHBhtw/7d6kbef02ZTGCa6wp
- 3SXA==
-X-Gm-Message-State: AOJu0YxAxHBNfU38Th0TcMvRY6QESWNwN/jVkzBfhO4DPgoAJ8qf7Kw6
- 8Y6NXMRHB8Z+fIjLev+UQa53luv/zr3d3pGv/gn3f4ryU+dOuNlmbWYuQxLzxIskdzAHAjanEGJ
- vmgCLT1c=
-X-Gm-Gg: AeBDietghynuUsZgnuiS+ZScPCphmsY4BkFJLPD0S2pbqaYr3bqfPysVpJ3E+0nOhk0
- UVyPJGOcn3N1x62G99VSphA19URuL7Xv8BhyGyIt0OhOlAgWcqQ8ij3lxufnFkf/aOSHB9ZsqI8
- bQtCLwokvl31DGnAaSZ5kBf07Alg7+FVKjZXsK26TnWpWXsID4h5Y/pAvcp3d3n+4Mb0WvNf3z8
- TcXuM6WQdqqd8FZv8XkwcHCZEAy8ixFWhX8dxkqIHSb/1mboZ8NHPYAbNSEAzReKV/QPdeWjHs8
- m/Z+Smc/msxopqKBXR7mHHd/hTk1GK548vVWRijFxJ3XmRSp7hj6EPeDygw4KmJvwdknHVbrdgT
- /bsoW3qO3+FTxUM9KBSYQpJDphNfYUCxwFaT24IDFGnc5m5ocZ2n2yjQefrXhHX3yzgloXu9++i
- fDybGDuRjW8Y7TC43KeTaw/JdClK1av+QShS9kg2Tpm6AMBj+2NtHWigQYa2qFWgWzh3YjdYSf6
- pvvMKf5Huc=
-X-Received: by 2002:a05:600c:5295:b0:486:f634:ef1 with SMTP id
- 5b1f17b1804b1-488fb77d0fdmr336901515e9.17.1776887896816; 
- Wed, 22 Apr 2026 12:58:16 -0700 (PDT)
+ bh=XxTSWpAH8tY0MN9ilU96vSF7le76N/8yRt/4jboOEtI=;
+ b=UGPOCwPRmxR3sfXl+2A86a+W3iKBLUmAzE44pTGwa17m2A3S4hSIZmYv9hN74XB2RW
+ WpeJv8CbwPvHpwXss0+JHmsCcLaanT/uoNhKRBZV8FaqEvnIfRE7RCP72d3gQQUBF5Nm
+ kmBkNlOlQiWXcS3FpVepYmVIDdPHxYVX2Yx/bslnWs2ao3STmGLAFEw4g48BLNzrOZAK
+ ReKVjgjw0mK36i0lVOT3Ji9wlebWwhis3X6K8wGdbyOEHzFvxKIE1o+HBNwWkm2KxDxK
+ gyMKDMUDcHL3K+LmPEU9w8+yYBQyGm3SskQze9mbPDyTLIDt5siFeZpn6wkgSrvlTDch
+ nXrA==
+X-Gm-Message-State: AOJu0YwNKJ1WCQd6A6k95LfdepAyDhcME1Flcc2jgVTsc9BNSiZMqk2v
+ 2haA1o1UUjn2/1gdqIm86KJvxyHTMKNVoaygwJEWdsiZknNxs5hoBfEdNEiOXTzhGXx22eioLnw
+ 3dVCdwho=
+X-Gm-Gg: AeBDievKL/zMcCgng8kV3KTup7Lx5BjGGYc5FGqlPvDjt1VbSX57xVDYezE/OLdyRQX
+ on3hLVKgLwlU4LQVSGNIl3xSZtqCZC+D/GyTRoh94N7BK+GH58n9rYtNlk3VpKcyQj8XgvFQ3BK
+ QDSOn/UYk9vzPChU9QBiFYdwAGNIzyos8JaPJPJvWoQMJLZOvwqf0u8nGv/YJYgnHclFgmrB/XC
+ y04cekKqTdp0GGozEnttdBzO4UNPETbH9TSUaW/LFkUdt1o5KDuFF8AKqcQgoeARV9LhyriaP4c
+ x/6fLlTr1Os8lTeKuXhPkXT22H/t24cCtCeTumYveL5cAFgaocC5OqwQKHHS7UmyzGHOJbFFftc
+ z8e55PsTdkNdOnoIGNWnNXAoaOV4R622bA42qApY76dB1O6rJ+PAK1byxUtqAdxsPr4zjhpt2UL
+ aFIThUxeI0OaTvPITP2+s4KzYOIDa3EEemd+nD88i8hJCUx4znwpUhgblgqLEfuFC+Q4Wjx8+IU
+ aCHwzyokw4=
+X-Received: by 2002:a05:600c:c112:b0:486:fe83:861c with SMTP id
+ 5b1f17b1804b1-488fb896910mr276046575e9.7.1776888112032; 
+ Wed, 22 Apr 2026 13:01:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891c318636sm267001395e9.7.2026.04.22.12.58.15
+ 5b1f17b1804b1-488fc1393f5sm437734615e9.9.2026.04.22.13.01.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 12:58:16 -0700 (PDT)
+ Wed, 22 Apr 2026 13:01:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/48] hw/arm: Include full path to target 'cpu.h' header
-Date: Wed, 22 Apr 2026 21:57:02 +0200
-Message-ID: <20260422195746.88865-5-philmd@linaro.org>
+Subject: [PULL 34/48] physmem: Simplify dirty memory type checks with loop
+Date: Wed, 22 Apr 2026 21:57:32 +0200
+Message-ID: <20260422195746.88865-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,194 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260313062055.2188-22-philmd@linaro.org>
----
- include/hw/arm/digic.h           | 2 +-
- include/hw/arm/fsl-imx6.h        | 2 +-
- include/hw/arm/fsl-imx6ul.h      | 2 +-
- include/hw/arm/fsl-imx7.h        | 2 +-
- include/hw/arm/fsl-imx8mp.h      | 2 +-
- hw/arm/boot.c                    | 2 +-
- hw/arm/exynos4210.c              | 2 +-
- hw/arm/mps3r.c                   | 2 +-
- hw/arm/omap1.c                   | 2 +-
- hw/arm/realview.c                | 2 +-
- hw/arm/smmuv3.c                  | 2 +-
- hw/intc/arm_gicv3_cpuif.c        | 2 +-
- hw/intc/arm_gicv3_cpuif_common.c | 2 +-
- 13 files changed, 13 insertions(+), 13 deletions(-)
+From: Bin Guo <guobin@linux.alibaba.com>
 
-diff --git a/include/hw/arm/digic.h b/include/hw/arm/digic.h
-index 8f2735c284f..646802806e0 100644
---- a/include/hw/arm/digic.h
-+++ b/include/hw/arm/digic.h
-@@ -18,7 +18,7 @@
- #ifndef HW_ARM_DIGIC_H
- #define HW_ARM_DIGIC_H
- 
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "hw/timer/digic-timer.h"
- #include "hw/char/digic-uart.h"
- #include "qom/object.h"
-diff --git a/include/hw/arm/fsl-imx6.h b/include/hw/arm/fsl-imx6.h
-index bb866994dff..cddd100dd6e 100644
---- a/include/hw/arm/fsl-imx6.h
-+++ b/include/hw/arm/fsl-imx6.h
-@@ -35,7 +35,7 @@
- #include "hw/pci-host/designware.h"
- #include "hw/core/or-irq.h"
- #include "system/memory.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "qom/object.h"
- 
- #define TYPE_FSL_IMX6 "fsl-imx6"
-diff --git a/include/hw/arm/fsl-imx6ul.h b/include/hw/arm/fsl-imx6ul.h
-index 4e3209b25b2..f8f9c249a23 100644
---- a/include/hw/arm/fsl-imx6ul.h
-+++ b/include/hw/arm/fsl-imx6ul.h
-@@ -34,7 +34,7 @@
- #include "hw/usb/chipidea.h"
- #include "hw/usb/imx-usb-phy.h"
- #include "system/memory.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "qom/object.h"
- #include "qemu/units.h"
- 
-diff --git a/include/hw/arm/fsl-imx7.h b/include/hw/arm/fsl-imx7.h
-index 710831c8bf5..a573e0dd4f8 100644
---- a/include/hw/arm/fsl-imx7.h
-+++ b/include/hw/arm/fsl-imx7.h
-@@ -37,7 +37,7 @@
- #include "hw/pci-host/designware.h"
- #include "hw/usb/chipidea.h"
- #include "hw/core/or-irq.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "qom/object.h"
- #include "qemu/units.h"
- 
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 4b367b754c6..3b6183ed1d6 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -9,7 +9,7 @@
- #ifndef FSL_IMX8MP_H
- #define FSL_IMX8MP_H
- 
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "hw/char/imx_serial.h"
- #include "hw/gpio/imx_gpio.h"
- #include "hw/i2c/imx_i2c.h"
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index c97d4c4e118..780b6be6371 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -14,7 +14,7 @@
- #include <libfdt.h>
- #include "hw/arm/boot.h"
- #include "hw/arm/linux-boot-if.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "exec/tswap.h"
- #include "exec/target_page.h"
- #include "system/kvm.h"
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index 25c385ba1f5..5efe95030c0 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -24,7 +24,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "exec/tswap.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "hw/cpu/a9mpcore.h"
- #include "hw/core/irq.h"
- #include "system/blockdev.h"
-diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
-index 2d64a198c42..caad820d3bc 100644
---- a/hw/arm/mps3r.c
-+++ b/hw/arm/mps3r.c
-@@ -29,7 +29,7 @@
- #include "qapi/error.h"
- #include "qobject/qlist.h"
- #include "system/address-spaces.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "system/system.h"
- #include "hw/core/boards.h"
- #include "hw/core/or-irq.h"
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index 47d0f0d7362..980959166d3 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -22,7 +22,7 @@
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
- #include "qapi/error.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "system/address-spaces.h"
- #include "exec/cpu-common.h"
- #include "hw/core/hw-error.h"
-diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index c9558be4d45..7e8acd34acd 100644
---- a/hw/arm/realview.c
-+++ b/hw/arm/realview.c
-@@ -9,7 +9,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "hw/core/sysbus.h"
- #include "hw/arm/boot.h"
- #include "hw/arm/primecell.h"
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 7fead1c3cff..5570a13c8a6 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -26,7 +26,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev.h"
- #include "hw/pci/pci.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "exec/target_page.h"
- #include "trace.h"
- #include "qemu/log.h"
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index eaf1e512ede..fcb3922fa0f 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -19,7 +19,7 @@
- #include "trace.h"
- #include "gicv3_internal.h"
- #include "hw/core/irq.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- #include "target/arm/cpregs.h"
- #include "target/arm/cpu-features.h"
- #include "target/arm/internals.h"
-diff --git a/hw/intc/arm_gicv3_cpuif_common.c b/hw/intc/arm_gicv3_cpuif_common.c
-index ff1239f65db..e03085592e4 100644
---- a/hw/intc/arm_gicv3_cpuif_common.c
-+++ b/hw/intc/arm_gicv3_cpuif_common.c
-@@ -11,7 +11,7 @@
- 
- #include "qemu/osdep.h"
- #include "gicv3_internal.h"
--#include "cpu.h"
-+#include "target/arm/cpu.h"
- 
- void gicv3_set_gicv3state(CPUState *cpu, GICv3CPUState *s)
+In physical_memory_range_includes_clean(), we have three nearly identical
+if-statements checking different DIRTY_MEMORY types (VGA, CODE, MIGRATION).
+This code duplication makes maintenance harder and increases the risk of
+inconsistencies when adding new dirty memory types.
+
+Replace the repetitive checks with a simple loop that iterates through
+all DIRTY_MEMORY_NUM types, checking only those specified in the mask.
+This reduces code size and makes it easier to add new dirty memory types
+in the future.
+
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260401100005.20651-1-guobin@linux.alibaba.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ system/physmem.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 4e26f1a1d42..c58d940e807 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -981,17 +981,11 @@ uint8_t physical_memory_range_includes_clean(ram_addr_t start,
  {
+     uint8_t ret = 0;
+ 
+-    if (mask & (1 << DIRTY_MEMORY_VGA) &&
+-        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_VGA)) {
+-        ret |= (1 << DIRTY_MEMORY_VGA);
+-    }
+-    if (mask & (1 << DIRTY_MEMORY_CODE) &&
+-        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_CODE)) {
+-        ret |= (1 << DIRTY_MEMORY_CODE);
+-    }
+-    if (mask & (1 << DIRTY_MEMORY_MIGRATION) &&
+-        !physical_memory_all_dirty(start, length, DIRTY_MEMORY_MIGRATION)) {
+-        ret |= (1 << DIRTY_MEMORY_MIGRATION);
++    for (int i = 0; i < DIRTY_MEMORY_NUM; i++) {
++        if ((mask & (1 << i)) &&
++            !physical_memory_all_dirty(start, length, i)) {
++            ret |= (1 << i);
++        }
+     }
+     return ret;
+ }
 -- 
 2.53.0
 
