@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8E1F9B612
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15EB2F9B614
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV2U-0006fo-9O; Wed, 22 Apr 2026 06:42:38 -0400
+	id 1wFV2Q-0006H0-Nr; Wed, 22 Apr 2026 06:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV2N-000676-2W
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wFV25-0005j4-Sj
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV2J-0002bi-8T
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:30 -0400
+ id 1wFV24-0002Ut-9r
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854546;
+ s=mimecast20190719; t=1776854531;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pdPo0VF+rmFefq/Qp3UuNmLrEm9l8ULREvMW1s7C/OA=;
- b=K7ciPqBQSdXMU62nubXAI0FxHH+Sa5+xkMKwYVOh9A2VYw4J2R30Wk/DQB5TqXAGln324C
- r0yz2XnYFbmHkvNQJ5wYzZ2ECZnIVmH82gsesaT3SvBrWEsG//BKOLpnVBoUmQXlpJ++zM
- oPsELxWNJO0DM9oKUMLBtDJWTNSJT7c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=twgYeKSfk/9iFKYxAn07J2tfYB24YSO2tHaeQMNeFm8=;
+ b=S7Gygel2nRYJQB7/qgh/Y7jwPm+/V9IXk8UBVz7rWdfMiEMlrTz542T2LfEOXIFRElE8ov
+ kVGZ0XXWXTPsSUoR+pAqb/DKmSgYM3VD8y22/bP4DW3TqrXzXBSuD+QycGYrLvzqhq0+XM
+ IjTQ+1WqGJbwgUcOMEFJRjkHa1H5eM8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-Sj7Vx2BCMfiB3pFDpd-V2w-1; Wed,
- 22 Apr 2026 06:42:22 -0400
-X-MC-Unique: Sj7Vx2BCMfiB3pFDpd-V2w-1
-X-Mimecast-MFC-AGG-ID: Sj7Vx2BCMfiB3pFDpd-V2w_1776854541
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-b6YB3bYhNHWHIEd2YJwDhA-1; Wed,
+ 22 Apr 2026 06:42:10 -0400
+X-MC-Unique: b6YB3bYhNHWHIEd2YJwDhA-1
+X-Mimecast-MFC-AGG-ID: b6YB3bYhNHWHIEd2YJwDhA_1776854529
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C89261956095; Wed, 22 Apr 2026 10:42:21 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4402518001FB; Wed, 22 Apr 2026 10:42:09 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.21])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5FAA919560AB; Wed, 22 Apr 2026 10:42:19 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A5B983000C15; Wed, 22 Apr 2026 10:42:07 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 15/40] ui/console: dispatch get_label() through QOM virtual
- method
-Date: Wed, 22 Apr 2026 14:40:16 +0400
-Message-ID: <20260422104042.3936506-16-marcandre.lureau@redhat.com>
+Subject: [PULL 13/40] ui/console-vc: ignore string-type escape sequences
+Date: Wed, 22 Apr 2026 14:40:14 +0400
+Message-ID: <20260422104042.3936506-14-marcandre.lureau@redhat.com>
 In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -69,8 +68,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,230 +87,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Replace the type-checking chain in qemu_console_get_label() (using
-QEMU_IS_GRAPHIC_CONSOLE/QEMU_IS_TEXT_CONSOLE) with a QemuConsoleClass
-virtual method, allowing each console subclass to provide its own
-get_label implementation.
+Modern terminals and applications emit OSC (Operating System Command),
+DCS, SOS, PM, and APC escape sequences (e.g. for setting window
+titles).  The text console currently does not recognise these
+string-type introducers, so each byte of the payload is interpreted as
+a normal character or a new escape, producing garbage on screen.
+
+Add a TTY_STATE_OSC state that silently consumes all bytes until the
+sequence is terminated by BEL or ST (ESC \).
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h  |   2 +
- ui/console-priv.h     |   1 -
- ui/console-vc-stubs.c |   6 ---
- ui/console-vc.c       |  12 +++--
- ui/console.c          | 101 ++++++++++++++++++++++--------------------
- 5 files changed, 65 insertions(+), 57 deletions(-)
+ ui/console-vc.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 08082389f71..788ff103ada 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -129,6 +129,8 @@ void console_handle_touch_event(QemuConsole *con,
- 
- struct QemuConsoleClass {
-     ObjectClass parent_class;
-+
-+    char * (*get_label)(const QemuConsole *con);
- };
- 
- typedef struct ScanoutTexture {
-diff --git a/ui/console-priv.h b/ui/console-priv.h
-index 43ceb8122f1..2c2cfd99570 100644
---- a/ui/console-priv.h
-+++ b/ui/console-priv.h
-@@ -36,7 +36,6 @@ struct QemuConsole {
- };
- 
- void qemu_text_console_update_size(QemuTextConsole *c);
--const char * qemu_text_console_get_label(QemuTextConsole *c);
- void qemu_text_console_update_cursor(void);
- void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym);
- 
-diff --git a/ui/console-vc-stubs.c b/ui/console-vc-stubs.c
-index b63e2fb2345..8a7f19c1f44 100644
---- a/ui/console-vc-stubs.c
-+++ b/ui/console-vc-stubs.c
-@@ -14,12 +14,6 @@ void qemu_text_console_update_size(QemuTextConsole *c)
- {
- }
- 
--const char *
--qemu_text_console_get_label(QemuTextConsole *c)
--{
--    return NULL;
--}
--
- void qemu_text_console_update_cursor(void)
- {
- }
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 0881a2148c1..ce35abaf402 100644
+index 8dee1f9bd01..62114d89ddd 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -122,10 +122,12 @@ static const pixman_color_t color_table_rgb[2][8] = {
- static bool cursor_visible_phase;
- static QEMUTimer *cursor_timer;
+@@ -44,6 +44,7 @@ enum TTYState {
+     TTY_STATE_CSI,
+     TTY_STATE_G0,
+     TTY_STATE_G1,
++    TTY_STATE_OSC,
+ };
  
--const char *
--qemu_text_console_get_label(QemuTextConsole *c)
-+static char *
-+qemu_text_console_get_label(const QemuConsole *c)
- {
--    return c->chr ? c->chr->label : NULL;
-+    QemuTextConsole *tc = QEMU_TEXT_CONSOLE(c);
-+
-+    return tc->chr ? g_strdup(tc->chr->label) : NULL;
- }
- 
- static void qemu_console_fill_rect(QemuConsole *con, int posx, int posy,
-@@ -1053,9 +1055,13 @@ qemu_text_console_finalize(Object *obj)
- static void
- qemu_text_console_class_init(ObjectClass *oc, const void *data)
- {
-+    QemuConsoleClass *cc = QEMU_CONSOLE_CLASS(oc);
-+
-     if (!cursor_timer) {
-         cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
-     }
-+
-+    cc->get_label = qemu_text_console_get_label;
- }
- 
- static const GraphicHwOps text_console_ops = {
-diff --git a/ui/console.c b/ui/console.c
-index f445db11389..beaef4ad8b8 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -436,9 +436,58 @@ qemu_graphic_console_prop_get_head(Object *obj, Visitor *v, const char *name,
-     visit_type_uint32(v, name, &c->head, errp);
- }
- 
-+static bool
-+qemu_graphic_console_is_multihead(QemuGraphicConsole *c)
-+{
-+    QemuConsole *con;
-+
-+    QTAILQ_FOREACH(con, &consoles, next) {
-+        QemuGraphicConsole *candidate;
-+
-+        if (!QEMU_IS_GRAPHIC_CONSOLE(con)) {
-+            continue;
+ typedef struct QemuTextConsole {
+@@ -807,6 +808,10 @@ static void vc_putchar(VCChardev *vc, int ch)
+             vc->state = TTY_STATE_G0;
+         } else if (ch == ')') {
+             vc->state = TTY_STATE_G1;
++        } else if (ch == ']' || ch == 'P' || ch == 'X'
++                   || ch == '^' || ch == '_') {
++            /* String sequences: OSC, DCS, SOS, PM, APC */
++            vc->state = TTY_STATE_OSC;
+         } else if (ch == '7') {
+             vc_save_cursor(vc);
+             vc->state = TTY_STATE_NORM;
+@@ -965,6 +970,16 @@ static void vc_putchar(VCChardev *vc, int ch)
+             break;
+         }
+         break;
++    case TTY_STATE_OSC: /* Operating System Command: ESC ] ... BEL/ST */
++        if (ch == '\a') {
++            /* BEL terminates OSC */
++            vc->state = TTY_STATE_NORM;
++        } else if (ch == 27) {
++            /* ESC might start ST (ESC \) */
++            vc->state = TTY_STATE_ESC;
 +        }
-+
-+        candidate = QEMU_GRAPHIC_CONSOLE(con);
-+        if (candidate->device != c->device) {
-+            continue;
-+        }
-+
-+        if (candidate->head != c->head) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+static char *
-+qemu_graphic_console_get_label(const QemuConsole *con)
-+{
-+    QemuGraphicConsole *c = QEMU_GRAPHIC_CONSOLE(con);
-+
-+    if (c->device) {
-+        DeviceState *dev;
-+        bool multihead;
-+
-+        dev = DEVICE(c->device);
-+        multihead = qemu_graphic_console_is_multihead(c);
-+        if (multihead) {
-+            return g_strdup_printf("%s.%d", dev->id ?
-+                                   dev->id :
-+                                   object_get_typename(c->device),
-+                                   c->head);
-+        } else {
-+            return g_strdup(dev->id ? : object_get_typename(c->device));
-+        }
-+    }
-+    return g_strdup("VGA");
-+}
-+
- static void
- qemu_graphic_console_class_init(ObjectClass *oc, const void *data)
- {
-+    QemuConsoleClass *cc = QEMU_CONSOLE_CLASS(oc);
-+
-     object_class_property_add_link(oc, "device", TYPE_DEVICE,
-                                    offsetof(QemuGraphicConsole, device),
-                                    object_property_allow_set_link,
-@@ -446,6 +495,8 @@ qemu_graphic_console_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add(oc, "head", "uint32",
-                               qemu_graphic_console_prop_get_head,
-                               NULL, NULL, NULL);
-+
-+    cc->get_label = qemu_graphic_console_get_label;
- }
- 
- static void
-@@ -1347,56 +1398,12 @@ bool qemu_console_is_gl_blocked(QemuConsole *con)
-     return con->gl_block;
- }
- 
--static bool qemu_graphic_console_is_multihead(QemuGraphicConsole *c)
--{
--    QemuConsole *con;
--
--    QTAILQ_FOREACH(con, &consoles, next) {
--        QemuGraphicConsole *candidate;
--
--        if (!QEMU_IS_GRAPHIC_CONSOLE(con)) {
--            continue;
--        }
--
--        candidate = QEMU_GRAPHIC_CONSOLE(con);
--        if (candidate->device != c->device) {
--            continue;
--        }
--
--        if (candidate->head != c->head) {
--            return true;
--        }
--    }
--    return false;
--}
--
- char *qemu_console_get_label(QemuConsole *con)
- {
--    if (QEMU_IS_GRAPHIC_CONSOLE(con)) {
--        QemuGraphicConsole *c = QEMU_GRAPHIC_CONSOLE(con);
--        if (c->device) {
--            DeviceState *dev;
--            bool multihead;
--
--            dev = DEVICE(c->device);
--            multihead = qemu_graphic_console_is_multihead(c);
--            if (multihead) {
--                return g_strdup_printf("%s.%d", dev->id ?
--                                       dev->id :
--                                       object_get_typename(c->device),
--                                       c->head);
--            } else {
--                return g_strdup(dev->id ? : object_get_typename(c->device));
--            }
--        }
--        return g_strdup("VGA");
--    } else if (QEMU_IS_TEXT_CONSOLE(con)) {
--        const char *label = qemu_text_console_get_label(QEMU_TEXT_CONSOLE(con));
--        if (label) {
--            return g_strdup(label);
--        }
-+    char *label = QEMU_CONSOLE_GET_CLASS(con)->get_label(con);
-+    if (label) {
-+        return label;
-     }
--
-     return g_strdup_printf("vc%d", con->index);
- }
- 
++        /* All other bytes are silently consumed */
++        break;
+     case TTY_STATE_G0: /* set character sets */
+     case TTY_STATE_G1: /* set character sets */
+         switch (ch) {
 -- 
 2.53.0
 
