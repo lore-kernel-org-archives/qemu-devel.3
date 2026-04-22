@@ -4,106 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8690F9EDF9
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 23:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FF99F9EDF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 23:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFgYJ-0002ZG-2w; Wed, 22 Apr 2026 19:00:15 -0400
+	id 1wFgYW-0002ai-FN; Wed, 22 Apr 2026 19:00:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFgYH-0002Z7-JI
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 19:00:13 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wFgYU-0002aK-LX
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 19:00:26 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFgYF-0007AK-HV
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 19:00:13 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D352C5BD03;
- Wed, 22 Apr 2026 23:00:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776898808; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JzmxQQC5GVa6X+kkOjQwY5WdWP21XiDXgTtvxUVgEso=;
- b=tcaWw+MUyN7lHQ9LPn05KdPfIoPc4hq7PNxJz0JhFejc+isWsVlDz98UR0JvbiolgJbhG5
- oMGsbRlbj54pXaaBJ4vxQuqCZNOrNIaXSgT2v9YR/r6hq7uz0Z7t/qymiZJh+pr6CsDkcG
- eqIenp6oIj/eJj4wdwkvWLVsAQaI6TM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776898808;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JzmxQQC5GVa6X+kkOjQwY5WdWP21XiDXgTtvxUVgEso=;
- b=owvkYzTHjrB2hHdtt7zaSRd1Kbo8+2tRSvmBxcB0S0aIpAhSovlLkWIbAY17OZzVshKp69
- n9X8SDF8jyY0lZAw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tcaWw+MU;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=owvkYzTH
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776898808; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JzmxQQC5GVa6X+kkOjQwY5WdWP21XiDXgTtvxUVgEso=;
- b=tcaWw+MUyN7lHQ9LPn05KdPfIoPc4hq7PNxJz0JhFejc+isWsVlDz98UR0JvbiolgJbhG5
- oMGsbRlbj54pXaaBJ4vxQuqCZNOrNIaXSgT2v9YR/r6hq7uz0Z7t/qymiZJh+pr6CsDkcG
- eqIenp6oIj/eJj4wdwkvWLVsAQaI6TM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776898808;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JzmxQQC5GVa6X+kkOjQwY5WdWP21XiDXgTtvxUVgEso=;
- b=owvkYzTHjrB2hHdtt7zaSRd1Kbo8+2tRSvmBxcB0S0aIpAhSovlLkWIbAY17OZzVshKp69
- n9X8SDF8jyY0lZAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E11C5593AF;
- Wed, 22 Apr 2026 23:00:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gIHjK/dS6WmXUQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 22 Apr 2026 23:00:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v1] tests/functional: Make socat wait longer in migration exec
- test
-Date: Wed, 22 Apr 2026 20:00:01 -0300
-Message-ID: <20260422230001.3168-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wFgYS-0007XP-HU
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 19:00:26 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-82735a41920so2451612b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 16:00:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776898822; x=1777503622; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MKI+3ncngUQuOf/A2a3/pnSbJtCw8Fu0fkPbMWKLwSc=;
+ b=A7yd1vRkX8H3Yl10CdVOlk2S3CJFNNxWD2UYzGUWmPHhVcP9z1HOGR+9urZdxnvseC
+ 5+X7DmA27owmEGQJblzmp7DUPRYm8NPXebe9ykRg+1zar4PRlBM5MhniTpkGwJSHl/1Q
+ S9lGgNbFpuE9IWdYMY45pHEysM2BTK532JobOPWyLBu+SICshv8MNXZeivZxPVpDefUg
+ 3CxzwzABgPcME8FLw5zDMMoN18J09kvfknV5Do4ANr9kYd0CcmVVSmFlhHSfGETFo61d
+ 0tfISRYviNkoifQkCDgF2UYuPYH5y0SGdkKjPLjbAU4m209bQxbR6Rs9mF5LrMTOAGnO
+ VKfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776898822; x=1777503622;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MKI+3ncngUQuOf/A2a3/pnSbJtCw8Fu0fkPbMWKLwSc=;
+ b=eZknWuYmptfaEMoxskN1iQ/w5Dtm+rcAvvwTnytQe3SSVcoBCvGJfXtEZG43Z23U8q
+ r+pjkeovuOmUgZ5tJMwHwZMopGTDJ47siDH/nLShLsylmNRlCgvrRU/Kv25qwDueZ3CY
+ fHvslCvRUi5KHj7HPspBLNZtrRO6HdiU/I8Brx9YY5ssreuv8KiwWUx3A3EfOQ4+y1zc
+ ZFIWYJedx+54kgBFLLREUiR4wzjMel2hqJ8YpDhWzWGNjk3xgJEnsd/0sldtn3r1cqfL
+ Y98ZO8Cm3Ts+R0kQa/9QKtkinSDTi5v9YslcDets0pSfwvZO5bhHKlFjRCQSKvyzTy7d
+ eMxg==
+X-Gm-Message-State: AOJu0Yw8VEWA8+dXySaXdyK/p+pzzg2I6UwquSnPaFfU14HvMLQ1Mtrj
+ vfzPR5X8PCkP6tyMf0BbTF6U+i8/yYj1qDLgTKndL7LmO1L07U63/K6R4ssHM2DmOff2kiSO/Ai
+ BgjAnDqE=
+X-Gm-Gg: AeBDieunmatVQSg4kbXUyBLwGJ4+rfkydGIjQIlGRgTNcANU4wqn7pItpQ67c1Vz92k
+ hTX9Ilst3HvQH7TJrPx5TTnnePAm4SCDDUcXUwM5wzejvXGaWUcHuHJuLtbtsyX41J1mrsV4yXr
+ 2xQRecoi6pD1vBmxkMEAEXJH0nb8hUw6htsdqLCZeEiWFCyMQnl31/41k3GVz3hjT+4zSK5s0+O
+ AFlQBAvBNPazUILti0Ke5VKX8986asZv/soar5ygd7J6+A7UlRG4wmkod1gvW1RQ3MLuPiqHDf0
+ 7Nz89EgdO0JOMXJM4OCeIduUM6E1H+Ha4qX/sdTSd2nvY2k8HS/40FPR5tkXVpkOG7buMGAmwwI
+ z+OYTZFEDGhTXmvaIeKZmHgTo5k5b3B0UiZs1YVBU1jKgi7Rl3oNTecwasGEyI87h1vyNW94cw4
+ gQii8InKQW3oGMYCPOMq4zJvh6FKLtvgnr0E9WHMp8HUT5GqbioA==
+X-Received: by 2002:a05:6a00:27a1:b0:82c:d7c4:4c5c with SMTP id
+ d2e1a72fcca58-82f8c82e219mr25728197b3a.20.1776898820823; 
+ Wed, 22 Apr 2026 16:00:20 -0700 (PDT)
+Received: from [192.168.1.134] ([110.239.0.232])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82f94204ac8sm17187649b3a.0.2026.04.22.16.00.18
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Apr 2026 16:00:20 -0700 (PDT)
+Message-ID: <ede428ce-a99e-4630-a000-7d8356f08ac7@linaro.org>
+Date: Thu, 23 Apr 2026 09:00:15 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 29/32] target/arm: implement global monitor events
+To: qemu-devel@nongnu.org
+References: <20260422125250.1303100-1-alex.bennee@linaro.org>
+ <20260422125250.1303100-30-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260422125250.1303100-30-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[3];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
-X-Rspamd-Queue-Id: D352C5BD03
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,37 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migration_with_exec test is failing sporadically for all
-architectures due to a race when the destination socat process takes
-too long to start listening while the source process is already
-issuing connect().
+On 4/22/26 22:52, Alex Bennée wrote:
+> Moving from Exclusive to Open Access should generate event stream
+> events. Technically a non-exclusive store to any address range covered
+> by the global monitor should also trigger such an event but we can
+> only detect that after the event by seeing if memory doesn't match
+> cpu_exclusive_val when processing the eventual store exclusive.
+> 
+> The CLREX instruction has the same effect as do other operations
+> clearing the exclusive state (such as eret).
+> 
+> We special case STLR/STL (Store Release) instructions to generate
+> events because their use is a suggested pattern for clearing locks
+> that might be sleeping. We only trigger the event if we detect an
+> exclusive instruction is running.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> ---
+> v2
+>    - add gen_global_event_reg() and use that
+>    - add handling for STL/STLR
+> ---
+>   target/arm/internals.h         |  1 +
+>   target/arm/tcg/translate.h     | 14 ++++++++++++++
+>   target/arm/tcg/translate-a64.c | 23 +++++++++++++++++++++++
+>   target/arm/tcg/translate.c     | 20 ++++++++++++++++++++
+>   4 files changed, 58 insertions(+)
+> 
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index 089f679ac0a..7045b4a56bd 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -709,6 +709,7 @@ static inline void arm_broadcast_event(void)
+>   static inline void arm_clear_exclusive(CPUARMState *env)
+>   {
+>       env->exclusive_addr = -1;
+> +    arm_broadcast_event();
+>   }
 
-The race is inherent because the exec: migration spawns the
-to-be-exec'ed command asynchronously and returns from the
-migrate-incoming command. The localhost-only testcase is not
-representative of the majority of migrations. In a real scenario
-between two different hosts that race wouldn't happen.
+An out-of-line arm_broadcast_event suggests an out of line arm_clear_exclusive too.
 
-Fix the testcase by configuring the source socat command to wait
-indefinitely while trying to connect.
+> @@ -3544,6 +3553,7 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+>       TCGv_i64 clean_addr;
+>       MemOp memop;
+>       bool iss_sf = ldst_iss_sf(a->sz, false, false);
+> +    TCGLabel *skip_monitor_event = gen_new_label();
+>   
+>       /*
+>        * StoreLORelease is the same as Store-Release for QEMU, but
+> @@ -3562,6 +3572,19 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+>                                   true, a->rn != 31, memop);
+>       do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
+>                 iss_sf, a->lasr);
+> +
+> +    /*
+> +     * We don't fully model the global monitor as it would be very
+> +     * expensive for every memory access. However in the Arm ARM "Use
+> +     * of Wait for Event (WFE) and Send Event (SEV) with lock" it does
+> +     * give the example of using STLR to clear a lock. So if a lock is
+> +     * active trigger the global event register so we don't deadlock
+> +     * while sleeping.
+> +     */
+> +    tcg_gen_brcondi_i64(TCG_COND_EQ, cpu_exclusive_addr, -1, skip_monitor_event);
+> +    gen_global_event_reg();
+> +    gen_set_label(skip_monitor_event);
+> +
+>       return true;
+>   }
+>   
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/functional/migration.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Um, no.  Just because STLR is used in the example, *any* change to the memory region must 
+raise the event.  There's nothing special about STLR vs STL vs STB etc.
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 144f091ba8..3b7674af3b 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -85,5 +85,5 @@ def migration_with_exec(self):
-         with Ports() as ports:
-             free_port = self._get_free_port(ports)
-             dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
--            src_uri = 'exec:socat - TCP:localhost:%u' % free_port
-+            src_uri = 'exec:socat - TCP:localhost:%u,forever' % free_port
-             self.migrate(dst_uri, src_uri)
--- 
-2.51.0
+The only thing I can think that would handle this is to set up a watchpoint in WFE before 
+going to sleep, then wake on the watchpoint trigger.  Disabling the watchpoint on any 
+other wakeup could be annoying.
 
+
+r~
 
