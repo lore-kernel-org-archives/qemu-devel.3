@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF731FA1FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B50F9FA1FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdja-0005b6-41; Wed, 22 Apr 2026 15:59:42 -0400
+	id 1wFdkS-0006Ua-KO; Wed, 22 Apr 2026 16:00:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdjI-0005M0-Gr
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:59:29 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdk6-0006Db-5R
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:14 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdjF-0000oh-Hj
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 15:59:22 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso58684535e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 12:59:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdk2-0001c2-Ft
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:12 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4852a9c6309so54513085e9.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776887960; x=1777492760; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888008; x=1777492808; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GhzRugtz7r81qjaHQWY+OM3VnH4PSBAPCVBp6m/BNPA=;
- b=tngnNYJ+C0GbdecNyzJcOOHnW1pSfMlib93dmfROIJd+aX5NhjgUH8Azu9sJYfBUEO
- mtgsZKGGN2gAOgsdb1yg5gcy2z9rHEDjdY569jLxFdw7DJUKmZDu7x6BSFQQ5mYQ7g1o
- GHGcn6LzlpDChmuuyMCV7wZXTSc8QBvr1Op+tLSw+/lE6114HcOl0IIsbvf/hvzgyvEl
- o2NUuObnZrGvneYKQ55twDftuL4PCqAqs4Y0Gx2nlNv1u9Ih1ZdmIEELCGRz/zlHFTg6
- ArqfEctccpt8GlP1wuy5MGfJ2je44sGpTCFum9XBvapToGPLPpyafAH8R6Ig4h3BIr8o
- 0wdw==
+ :reply-to; bh=ybutfhAkPVOtWuNrtaRdGB1IFne9rrgt1gMWcuzTPkA=;
+ b=PsdYsU6tDmBGTwjB/A5PAMXDrT71m+UzziuwNXXM91RCw055I7V+/HflhA+iIgsr4X
+ 3xtX4wnKAxZ8B2EsJSmyM3LZiaMon5YTWINpaSfblBWoL3VTP4xCrXM19X88y6+p4+xN
+ qW94bHt6RUGDK1tCdjsE05G/iJAHeduyBYCwf9GLlyOWiiHFC5rzgz4H8fCV7/qHVzgm
+ fdK4XFbJj/SNxP5Hkvvfw0Y1RrDRDzq70tcomCHiyynF1XSy4/xjduRr7VK7lbCAnAob
+ KRBMfJJ3YsREkuwNZ+iuhvZ7QjLAGXK3002BEe0NQ0FOFk9BkXJiPIbWX9InoJO5gKj5
+ N+dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776887960; x=1777492760;
+ d=1e100.net; s=20251104; t=1776888008; x=1777492808;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=GhzRugtz7r81qjaHQWY+OM3VnH4PSBAPCVBp6m/BNPA=;
- b=F4Pk6jnwSio/6r94II988V0UMjbm+7buuhAQbFDMeNl66DWQne0FaX0zGqYOTPID7/
- QXzZo6DNMsVW+TwrYYmFO91JKgqE5iEI4ByKTqPW5K1AkzeuyE5zXybuTyVCn8+Biuue
- tXYe2AMt98oR2nhMqRlaOE1tVB3GkVGtK0/kE1rMO11xr6DrL+LxIw2VC77LipFaYXZ5
- whVerzqJorTasydblpKUNvzuPC9DLGBEET2P6/GzqM9zarwON3M/T0H8v9f1k8xoCFbO
- /yFVeW6+QERhY7LbFkD3yYXGi1kZ6RVwi9munGu9hm/bDUO614ubdp++p6ZRXpGzZ22C
- u7Qg==
-X-Gm-Message-State: AOJu0YyjsSUwLfhumSSpXYeTc0zUKuUOp+yMW4GONhnfXSCa5z/wdv3Z
- BaM1n/kZfMroBGVgShbbP3m09ciaARJqOVQIB7n1kArPwpacYBHMEN4L84EsfaSl5Ot9rduOSzd
- GSdyn0UE=
-X-Gm-Gg: AeBDieuFHlaibG87RCiCesDsWgc5SnoTZ5R40MOCBfuarWBA+1PfzJne37xQudYn7hy
- F8YqEJSyLh8Kc0woxrIIe3XqLAYa7dJD7nfOkk8rbbuFbTf6pXniUpKQh5bLTX4Zir6jHYfGAsX
- giZaH/So1MkGEH/zhQ2b77moMvMeTbw0OIcmofdwTrgt3jgePtV/HPI1YtILFsEOSFvpJXdWeGf
- 9SW0jEk4C4K6XSb723fJ6kHganUSsZXipZveLE9+ahgFXRRAexjqsezwJZGwiz0QzD8kg8QFdBZ
- Iy13bxYKBS0NG+xPgEZxQSmczrsoHKHzD7HXd6bcOuukhqflyYTn22Fj3Ulk63NCDIN6oAJevrn
- bSzYnVIu7FEo7HFmLXVkIkmOWtmu707b3EH9Iku2XU60XXyvb138OrVvvwiqs/s9FAYTPNkXYhc
- G43KTxnNC2oSCretn3ar4FYtH4cpCOZoSn4/v2ZdHMj6NuKGST8of/pgaMGTK5YTtfAAzcaGUBY
- HYfM2MckZo=
-X-Received: by 2002:a05:600c:8b2e:b0:488:b749:8482 with SMTP id
- 5b1f17b1804b1-488fb7469b3mr364810015e9.4.1776887959755; 
- Wed, 22 Apr 2026 12:59:19 -0700 (PDT)
+ bh=ybutfhAkPVOtWuNrtaRdGB1IFne9rrgt1gMWcuzTPkA=;
+ b=Gby5EOJ/dlDhzxkpfhaKuIN0ez+sXcBsKmLkRZ+e9gYlP1vWmhN+sq8avPKHK20HcI
+ rigVlS6B5ipbrVp1/xDW40boKqzfVewPMVDAn3WuebXYTZXEMEtNMLxIIo6/RcnrndzK
+ RoFJyOMFPpyCpm09R4U58XOLr/J+AS/rMcVXGJpO4ckMnym5jcdTkIXeur4hjlYcEAPh
+ COitcRzCBX45uA1lWeO6aFpmgonHAxNCA8DbzcUtDs9BjXQn5diFdS1PiR/Y0WwwewAQ
+ Tr70fAjuvJ6zJFvEoC/nWDlaNZMcCRtHf2aBOC3yYm9c+1l3a9dQYGMfhg3bAcLw7HtR
+ vu0Q==
+X-Gm-Message-State: AOJu0Yz9zEKI8W9NTX6+n0QXCsf9a4lCkvVkg/yzdX7a2l3opHM9Wsr4
+ ZsQgg7+R6P1SH1FApQbH6q5pr48PlTyzTMj19ZaRY3DOj0p+KYhj3zgd/XBpYw7ml5kCu3uTS/2
+ JGxfgh28=
+X-Gm-Gg: AeBDiesoxcevrQbVsT0ZiMCUUMlkfmno0BOtSO1o9Ocu0OEk5ci1xQZvj2VxHZu0LPy
+ rVYnJRl9D9hdy8YB/UuZlnCtOzbf6SnexcPEGWmrFlACA4BKYeUHmJQgc4TekMzmxsuePDePW8/
+ 0gRWcWbhxuo2OjkWdaRHV3SFsq+TxwVyhIueGolki1qoc7G47xBWCxzivyye4+0q4CeLsyYNWnA
+ CMy5L4WhaQ0sKsBbr13MBt+nBH8HjUTeXaFhCjfjPTH98plvFH68JFcicHLQqJuTW38Z3YBKnOE
+ nytEdAaYchAGbzPbgvFKbyIn7k90I6lSdE/A7VygWHq7SaTUFc+s/0+mjedxEe0nPwRdU3tVPTN
+ d1X6DW1Cn4Wp/mHCk4lp1+Jdjx3WO039e9Wfyydcz7rNkniRESQTmgNvYWvpcPl+bXWZqnoiewY
+ MRtrGBXfg+6i6P4GNT26NC+oECpYTaqot6eMgF7+D4gP3awI7VGMUx5gj3dse7ILZ+vX7sLEBHb
+ hSHhH7xOa4=
+X-Received: by 2002:a05:600c:c085:b0:488:c530:48a0 with SMTP id
+ 5b1f17b1804b1-488fb784843mr263573585e9.24.1776888008437; 
+ Wed, 22 Apr 2026 13:00:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1c01cfsm487553605e9.10.2026.04.22.12.59.18
+ 5b1f17b1804b1-48a52583fe7sm179913945e9.13.2026.04.22.13.00.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 12:59:19 -0700 (PDT)
+ Wed, 22 Apr 2026 13:00:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/48] hw/riscv: Include full path to target 'cpu.h' header
-Date: Wed, 22 Apr 2026 21:57:11 +0200
-Message-ID: <20260422195746.88865-14-philmd@linaro.org>
+Subject: [PULL 20/48] hw/tpm: Add TPMIfClass::ppi_enabled field
+Date: Wed, 22 Apr 2026 21:57:18 +0200
+Message-ID: <20260422195746.88865-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260313062055.2188-31-philmd@linaro.org>
----
- hw/misc/riscv_cmgcr.c           | 2 +-
- hw/misc/riscv_cpc.c             | 2 +-
- hw/riscv/microblaze-v-generic.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Each TPM derived device has a @ppi_enabled field, itself
+exposed as a QOM property. External layers (like the ACPI
+subsystem) wanting to know whether a device implements PPI
+has to check for the QOM property available. This can be
+simplified by declaring a single field in the TPM interface.
 
-diff --git a/hw/misc/riscv_cmgcr.c b/hw/misc/riscv_cmgcr.c
-index b0294e76635..ab9b6c7d878 100644
---- a/hw/misc/riscv_cmgcr.c
-+++ b/hw/misc/riscv_cmgcr.c
-@@ -20,7 +20,7 @@
- #include "hw/misc/riscv_cmgcr.h"
- #include "hw/core/qdev-properties.h"
+Here we add such field to TPMIfClass, before converting each
+TPM devices to use it in the following commits.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Message-Id: <20260317120241.16320-3-philmd@linaro.org>
+---
+ include/system/tpm.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/include/system/tpm.h b/include/system/tpm.h
+index b90dd4e8cb0..9458ad6668a 100644
+--- a/include/system/tpm.h
++++ b/include/system/tpm.h
+@@ -43,6 +43,7 @@ struct TPMIfClass {
+     enum TpmModel model;
+     void (*request_completed)(TPMIf *obj, int ret);
+     enum TPMVersion (*get_version)(TPMIf *obj);
++    bool ppi_enabled;
+ };
  
--#include "cpu.h"
-+#include "target/riscv/cpu.h"
+ #define TYPE_TPM_TIS_ISA            "tpm-tis"
+@@ -84,6 +85,9 @@ static inline bool tpm_ppi_enabled(TPMIf *ti)
+     if (!ti) {
+         return false;
+     }
++    if (TPM_IF_GET_CLASS(ti)->ppi_enabled) {
++        return true;
++    }
+     return object_property_get_bool(OBJECT(ti), "ppi", &error_abort);
+ }
  
- #define CM_RESET_VEC 0x1FC00000
- #define GCR_ADDRSPACE_SZ        0x8000
-diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
-index e04ccdf54fa..37fdd0b39ba 100644
---- a/hw/misc/riscv_cpc.c
-+++ b/hw/misc/riscv_cpc.c
-@@ -13,7 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "cpu.h"
-+#include "target/riscv/cpu.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/timer.h"
-diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
-index d56b64792d7..b0494b1ac50 100644
---- a/hw/riscv/microblaze-v-generic.c
-+++ b/hw/riscv/microblaze-v-generic.c
-@@ -16,7 +16,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
--#include "cpu.h"
-+#include "target/riscv/cpu.h"
- #include "hw/core/sysbus.h"
- #include "system/system.h"
- #include "net/net.h"
 -- 
 2.53.0
 
