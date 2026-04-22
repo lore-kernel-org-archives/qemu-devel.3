@@ -4,91 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B98AF94CD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 07:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94261F94CD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 07:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFRpE-000476-DV; Wed, 22 Apr 2026 03:16:44 -0400
+	id 1wFSMk-0002fF-BH; Wed, 22 Apr 2026 03:51:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFRpA-00046X-Lc
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:16:41 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFRp6-0006oA-Ih
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:16:38 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso51843105e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 00:16:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wFSMi-0002f1-UR
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:51:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wFSMh-0005xt-6u
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 03:51:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776844277;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Hpuf+M4UmIbCe/RfxqV7TXZA+yAkP158DxqJdHpPHCk=;
+ b=dp6GUs+ETVlWKtTDo4gevRMB8B7J0tDy4g8ryIQXOt8dFknE+xLX9rIW1zRfaCtRwWfAg/
+ FS7zRbVJG87YaexacjFK8K3Q8X8X4d9/KupqU8J+Pymdv7fDbgP05nC5ADBTmHmvx6Zgy5
+ m+3M9S5aGh+pcYjoSjSx5jgNwzjROjY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-539-JRwK8gwbPMmCV2wtgaqL4w-1; Wed, 22 Apr 2026 03:51:15 -0400
+X-MC-Unique: JRwK8gwbPMmCV2wtgaqL4w-1
+X-Mimecast-MFC-AGG-ID: JRwK8gwbPMmCV2wtgaqL4w_1776844274
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48a55ecc249so10810345e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 00:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776842194; x=1777446994; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=e8ItIwgGxG2rVJHhnoj98FR/niIshbCas4mgi/qittE=;
- b=Xnf0Fk7ar8QXD8qRPoEZBMw7OqoPjyqtdZuqXoybj2A6WkrO1qa0ULqZNRreXTKtmm
- k6iWwCQ8mYXHAk/LG9oyiwfHFM13I00xe6+xRV9edU6cy81Rkhe7982ocTN0YkyJ39St
- O6FBfPF/0AuWkoTilgTskvbRPozKjhHoIj41etVmRE6JFogqPrtnvv17AiG0ZElZ4N6V
- 6Lg7p6nFVLyfYu0K2lrEs1bsHhRc5w+JAbH1x863M4/gRZQPpy0XxjPlAg7SdW5BxGA3
- mYGCg1+U/9rKnl2UBdF2/POAoNFGXkbBwEOsR6tw3avCCXDJl8aJr9KesHyXzaSp6Z0i
- ub1A==
+ d=redhat.com; s=google; t=1776844274; x=1777449074; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=Hpuf+M4UmIbCe/RfxqV7TXZA+yAkP158DxqJdHpPHCk=;
+ b=nKgMNT+GttBUT7TDk4O4sRCa+/7dVXvKz2ISquapzOhXB1fBgX0hgnuRHMjnl1TVzC
+ 4R9m+OVS8+uxodanEtbMKXukdjmp+vzBEzw+IQTyEflokTNYcI9nCiLjqr3G3KttgjAJ
+ mssdPlMjsohdxSidSUhVH1om5UY6KkICqwBiaXePLgpmMVZW6r7Q7doK45yyp/ATVibP
+ RuRynjzbF9smyPBFD1ASVzGKafSiTPdkgayfNNRrCXrMclgwMXwOMGZ3CbunZl04d2JA
+ t6mW4AroF5B/FVkn0309ww6B/W8EAB9CFX6yWdHcNyTrgWy7BZ7oK4bWm6dBGuGnNOXu
+ HZDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776842194; x=1777446994;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=e8ItIwgGxG2rVJHhnoj98FR/niIshbCas4mgi/qittE=;
- b=M/yQ/NwPIu3Sm9zzcc+zHTNYHsIrU19yLcnUldwX3GQOIANLbwWED70XUgqs3GEYcY
- n2g5PGKX6bky0ol+jcm3PE13/O/AQTtbszwGmoKmvKdZB9OqGoSfn+35epfV+sl6j5Pi
- hQbz3i2K9aYx1g09R/TWHQt+CUHWBM1aOV9VQOaSPZw69zoByZohJnin879DaxjarPHF
- tVHvkONHbRsj5nBvQgGnMzaK5yKlN49TZkKfPpD1tT/47a9LBU+o15eyMk3vjwu70KVf
- zzdNnE7Uc4PoSljXxVJL0o4Fs6tZclUSelYbZC8v4tuFOHO1hrOiilUHkIHP0FbZGF49
- CVNw==
+ d=1e100.net; s=20251104; t=1776844274; x=1777449074;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hpuf+M4UmIbCe/RfxqV7TXZA+yAkP158DxqJdHpPHCk=;
+ b=gNTLyWJz1yhH65s4YMFrW63WQ7funyIs87xDV26GL4BNtA3o7DaNMnFjV5DsStYLUm
+ LZglt0Bi00ZUI15Ef93SOr80wf/qdQlBb3RxonG0Uf1JVezGJ6NOyQ6wO2YKy3uJK/3+
+ w9YwKL+s1NbRYvE72ONfIATtc/MKT4UuDqN+0j7xQrtsTHhQLO2Wx6FcDeMhB8XApUIP
+ VqOA8ty0dWdU+iEUsqsuDqwAZqmlkzA6wDW5EIo0WfSxyNbaBA2IpCTjMAxOL01Jrq32
+ HFnnB31VgjJWZoywhUv/BaZCK/8urRH316xqKnIQBQkPMetXLQmDW3WNODo8WwSGJzZ8
+ OXhw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+bbcnrFF054e9ZT5CYI8/CSSNJw/kFd6aJ29ZR1tEtQnFBtk3RKX+b+mpyXrIpCMlx+MwzlNi6zLj6@nongnu.org
-X-Gm-Message-State: AOJu0Yx8sJA5SblqUXX2VdD+tgaWZlhJhUemtzCWbFtGmyr8F5U72TQ1
- OtLYPVjWquIpJthFHdl/hYNkplHRmVYUPMTCaFDX3tzFBE+sX6JZOYxeSMh7XFMOngM=
-X-Gm-Gg: AeBDietWjweiY+Fw3u9220ZdNeBetN2kNk0nNJx2nRb1dZLniwbBWJzoYsD7gKHGQV/
- TwbKpxLnaoIWaRuobVchrMD3vrTXWPWO5vLlmRylGnUN1OoAe1kvTWtHD2dfuqyiZsRDATWZJ6s
- Y9KO0lb3XL+RRgO/dGaSVeSHQ0SkODJk/uLu9ShdZQRddLGdPNqxLuVIbjGsN4/Z1ve+OPyMklH
- OkBllRtiw6dWJdhjB+/yNo9CJ/L10cmlD933a3zJEBNRBRIQVtLmc1gsu4SGFv6gkvg8Jg2sqzR
- kf7SiqN+iM0IPNYK4XB6Tb1LI4FjCsBnlh6EqiWe3JP9rytvHbsKuG1/jy/zj+h2xJTUqVNIzxN
- nC+DMgq4fbLCHCGNOScUqFNlTXOrLbs23XEQXgAMhfkfW3rl2TaVpLW9gFwkNtF9ondAU8H72dW
- +cgYMfIJ4mL+gP94PMFW6X6XSvP/VOipxe76afngzvNc+WKEN5NNz+938A8N0uTD7g1k8NTmFFx
- BH9
-X-Received: by 2002:a05:600c:4f0c:b0:489:1c1f:35e6 with SMTP id
- 5b1f17b1804b1-4891c1f38c8mr184034595e9.6.1776842194170; 
- Wed, 22 Apr 2026 00:16:34 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-489393ddd69sm57362565e9.10.2026.04.22.00.16.30
+ AFNElJ/EskFZ3FQMgCbGX4r2sN3LrvfaiHEyhzsD13Q7Q4NoPlayibuz5BRZykgywQ2mGMD//B4oJNS6Ackn@nongnu.org
+X-Gm-Message-State: AOJu0YwDdU+wSL/7iib8N56BQxkBHplXUoVxbHL02BS3qfmWhwrYji5J
+ +26GFGTWbm65hxSmjcQ7jCV1RJYO5fOPvszMlRI0+b5nDwJYgjRN/6vy+zu9SWqBhmIasZ+Jm4X
+ f3nQyUNKXNDYkrett6ioLNpNQv4IxYi6/S10lhiUQPVaELyigNWi1T4ws
+X-Gm-Gg: AeBDievCQJ4tUi5SUKSxuE9sOjODLnsS8T1p//e1qcy+aFNiRomo+JNHRUDTUHqwjNk
+ 2E/9FOA3oIEtu2/QIO439pgyDTR/b8yBKRO+WmK7FaI9GDjjqJeG3uEvL0BiJ9cVvMcwXFaaTDn
+ Jz4nmJxBrW6Cd4imv/e+UWsDwfiilxQPkBc8lPeAboRICBw/BZtuvGzkpQWo6uXJTemmi17yDjs
+ I2UoVnMuvY31HQ044njo18sQk2t7bQIcwEfrpaqI7WhpgEonDLphOOOFbmTAd9S+RAUyuTBNz0r
+ 5ARCsPYalMWj+WdOYjduUZQFiYIPn2q+dWdJb7mDmsUa6GuSwRpYT/JrIsKiPy8g5cIV/3S/LUR
+ yjkIi/jTIHkQa8d/lTb69idBkPLps6IgXqYP2n8rlXHdJRSZqPiSkgOhnnjvSmuSRh+BDav0=
+X-Received: by 2002:a05:600c:3150:b0:480:3ad0:93bf with SMTP id
+ 5b1f17b1804b1-488fb7930famr312657135e9.24.1776844274316; 
+ Wed, 22 Apr 2026 00:51:14 -0700 (PDT)
+X-Received: by 2002:a05:600c:3150:b0:480:3ad0:93bf with SMTP id
+ 5b1f17b1804b1-488fb7930famr312656555e9.24.1776844273772; 
+ Wed, 22 Apr 2026 00:51:13 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a55dc9f58sm247407695e9.6.2026.04.22.00.51.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 00:16:32 -0700 (PDT)
-Message-ID: <d369bcbc-48cf-49bc-b8bd-fcbb33bc74e9@linaro.org>
-Date: Wed, 22 Apr 2026 09:16:29 +0200
+ Wed, 22 Apr 2026 00:51:13 -0700 (PDT)
+Message-ID: <cf98d37e-e5bd-4dc9-9a6f-aec404a8d3b9@redhat.com>
+Date: Wed, 22 Apr 2026 09:51:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional/qemu_test: Silence warnings from
- pylint in tesseract.py
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260422071145.244820-1-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260422071145.244820-1-thuth@redhat.com>
+Subject: Re: [PATCH v2 16/16] vfio/migration: Add tracepoints for
+ precopy/stopcopy query ioctls
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, Kirti Wankhede <kwankhede@nvidia.com>,
+ Zhiyi Guo <zhguo@redhat.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Juraj Marcin <jmarcin@redhat.com>
+References: <20260421202110.306051-1-peterx@redhat.com>
+ <20260421202110.306051-17-peterx@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260421202110.306051-17-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,26 +174,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/26 09:11, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 4/21/26 22:21, Peter Xu wrote:
+> Add two tracepoints for both precopy and stopcopy query ioctls.  When at
+> it, add one warn_report_once() for each of them when it fails.
 > 
-> Pylint complains:
-> 
->   tesseract.py:1:0: C0114: Missing module docstring (missing-module-docstring)
->   tesseract.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
->   tesseract.py:15:11: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
->   tesseract.py:12:30: W0613: Unused argument 'tesseract_args' (unused-argument)
-> 
-> Thus add the missing bits and remove the unused tesseract_args argument.
-> While we're at it, also add a SPDX identifier instead of the weird three
-> dots at the beginning of the file, and drop the license boilerplate text.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   v2: Drop the license boilerplate text as suggested by Philippe.
-> 
->   tests/functional/qemu_test/tesseract.py | 14 ++++++++------
->   1 file changed, 8 insertions(+), 6 deletions(-)
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/vfio/migration.c  | 33 +++++++++++++++++++++++----------
+>   hw/vfio/trace-events |  2 ++
+>   2 files changed, 25 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index e6e6a0d53d..04d9f94edb 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -329,6 +329,7 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
+>       struct vfio_device_feature_mig_data_size *mig_data_size =
+>           (struct vfio_device_feature_mig_data_size *)feature->data;
+>       VFIOMigration *migration = vbasedev->migration;
+> +    int ret;
+>   
+>       feature->argsz = sizeof(buf);
+>       feature->flags =
+> @@ -340,12 +341,18 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
+>            * is reported so downtime limit won't be violated.
+>            */
+>           migration->stopcopy_size = VFIO_MIG_STOP_COPY_SIZE;
+> -        return -errno;
+> +        ret = -errno;
+> +        warn_report_once("VFIO device %s ioctl(VFIO_DEVICE_FEATURE) on "
+> +                         "VFIO_DEVICE_FEATURE_MIG_DATA_SIZE failed (%d)",
+> +                         vbasedev->name, ret);
+> +    } else {
+> +        migration->stopcopy_size = mig_data_size->stop_copy_length;
+> +        ret = 0;
+>       }
+>   
+> -    migration->stopcopy_size = mig_data_size->stop_copy_length;
+> +    trace_vfio_query_stop_copy_size(migration->stopcopy_size, ret);
+>   
+> -    return 0;
+> +    return ret;
+>   }
+>   
+>   static int vfio_query_precopy_size(VFIOMigration *migration)
+> @@ -353,18 +360,24 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
+>       struct vfio_precopy_info precopy = {
+>           .argsz = sizeof(precopy),
+>       };
+> -
+> -    migration->precopy_init_size = 0;
+> -    migration->precopy_dirty_size = 0;
+> +    int ret;
+>   
+>       if (ioctl(migration->data_fd, VFIO_MIG_GET_PRECOPY_INFO, &precopy)) {
+> -        return -errno;
+> +        migration->precopy_init_size = 0;
+> +        migration->precopy_dirty_size = 0;
+> +        ret = -errno;
+> +        warn_report_once("VFIO device %s ioctl(VFIO_MIG_GET_PRECOPY_INFO) "
+> +                         "failed (%d)", migration->vbasedev->name, ret);
+> +    } else {
+> +        migration->precopy_init_size = precopy.initial_bytes;
+> +        migration->precopy_dirty_size = precopy.dirty_bytes;
+> +        ret = 0;
+>       }
+>   
+> -    migration->precopy_init_size = precopy.initial_bytes;
+> -    migration->precopy_dirty_size = precopy.dirty_bytes;
+> +    trace_vfio_query_precopy_size(migration->precopy_init_size,
+> +                                  migration->precopy_dirty_size, ret);
+>   
+> -    return 0;
+> +    return ret;
+>   }
+>   
+>   /* Returns the size of saved data on success and -errno on error */
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 287df0b8cb..854a7e4b19 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -176,6 +176,8 @@ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer
+>   vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64 " exact %d"
+>   vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>   vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+> +vfio_query_stop_copy_size(uint64_t size, int ret) "stopcopy size %"PRIu64" ret %d"
+> +vfio_query_precopy_size(uint64_t init_size, uint64_t dirty_size, int ret) "init %"PRIu64" dirty %"PRIu64" ret %d"
+>   
+>   #iommufd.c
+>   
+
 
