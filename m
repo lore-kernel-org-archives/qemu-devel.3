@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F29F9B60B
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DEA5F9B615
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV4x-0004xN-Cg; Wed, 22 Apr 2026 06:45:11 -0400
+	id 1wFV4S-0002Fj-CI; Wed, 22 Apr 2026 06:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV4r-0004Zh-T7
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:45:06 -0400
+ id 1wFV37-0007xY-J6
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:43:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV4o-0003So-Cu
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:45:04 -0400
+ id 1wFV35-00035C-Tv
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:43:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854699;
+ s=mimecast20190719; t=1776854595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RQIV+l6oUCImVbVOovuuOiDC9MikgWB8E7YlfW/B3fc=;
- b=CIK1jQcf+xZ59YLjupyRMgwfEe/IJVEFlfwL2kE/ot/phJRFoOAb6dUq+E7n4rV6V3wQqI
- xMgThg9JUxyzQoHBBlPhxHsbyHAx+lzE7aKUyUZqDgvxVPP9SO7be52n0oE9A4NODnwfdo
- UyahP77Z7HovRYmaDMTbJ/8QDqJpBWA=
+ bh=vBZDCxWeEWsopOwHYHH/b9wk35a3vQpMNOc6V6JsecE=;
+ b=KkieSX1ih9KLA8/wK5VapObPvPkytwDEPEScYmC29NVlphNaCpT4clDCj351mpRiDrTOit
+ u88K/7FT4O+uELD33VmzWorveLxNwE/mYLNM58S2D5ZxC3WKJFR+uNZDXDQQk9hOIMAFkL
+ SIwyav0ogp4JlzhCxlSZEivnSz9z2tg=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-6hLD3opBO7m76o9m6nQQOQ-1; Wed,
- 22 Apr 2026 06:44:56 -0400
-X-MC-Unique: 6hLD3opBO7m76o9m6nQQOQ-1
-X-Mimecast-MFC-AGG-ID: 6hLD3opBO7m76o9m6nQQOQ_1776854695
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-OZ_21210Oi-BKLIxDeRlUA-1; Wed,
+ 22 Apr 2026 06:43:10 -0400
+X-MC-Unique: OZ_21210Oi-BKLIxDeRlUA-1
+X-Mimecast-MFC-AGG-ID: OZ_21210Oi-BKLIxDeRlUA_1776854590
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA28A18002C6; Wed, 22 Apr 2026 10:44:55 +0000 (UTC)
+ id 0617318004AD; Wed, 22 Apr 2026 10:43:10 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.21])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C1DE19560AB; Wed, 22 Apr 2026 10:44:53 +0000 (UTC)
+ id 0138919560AB; Wed, 22 Apr 2026 10:43:08 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 40/40] tests: rename the dbus-daemon helper script
-Date: Wed, 22 Apr 2026 14:40:41 +0400
-Message-ID: <20260422104042.3936506-41-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 23/40] ui/console-vc: move cursor blinking logic into VT100
+ layer
+Date: Wed, 22 Apr 2026 14:40:24 +0400
+Message-ID: <20260422104042.3936506-24-marcandre.lureau@redhat.com>
 In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -89,34 +88,177 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The following patches are going to use it for qemu-vnc.
+Maintain a list of QemuVT100 instances so the cursor timer can directly
+iterate over them and call vt100_refresh(), instead of going through
+qemu_invalidate_text_consoles() which iterated over all consoles
+(including graphic ones) and called back into the generic display layer.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This removes the qemu_invalidate_text_consoles() function from
+console.c, further decoupling VT100 text rendering from the console
+core.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/{dbus-vmstate-daemon.sh => dbus-daemon.sh} | 0
- tests/qtest/meson.build                          | 2 +-
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename tests/{dbus-vmstate-daemon.sh => dbus-daemon.sh} (100%)
+ include/ui/console.h  |  1 -
+ ui/console-priv.h     |  2 +-
+ ui/console-vc-stubs.c |  2 +-
+ ui/console-vc.c       | 28 +++++++++++++++++++++++-----
+ ui/console.c          | 19 +------------------
+ 5 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/tests/dbus-vmstate-daemon.sh b/tests/dbus-daemon.sh
-similarity index 100%
-rename from tests/dbus-vmstate-daemon.sh
-rename to tests/dbus-daemon.sh
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index be4fa627b5f..b735f55fc40 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -435,7 +435,7 @@ foreach dir : target_dirs
-     qtest_env.set('QTEST_QEMU_IMG', './qemu-img')
-     test_deps += [qemu_img]
-   endif
--  qtest_env.set('G_TEST_DBUS_DAEMON', meson.project_source_root() / 'tests/dbus-vmstate-daemon.sh')
-+  qtest_env.set('G_TEST_DBUS_DAEMON', meson.project_source_root() / 'tests/dbus-daemon.sh')
-   qtest_env.set('QTEST_QEMU_BINARY', './qemu-system-' + target_base)
-   if have_tools and have_vhost_user_blk_server
-     qtest_env.set('QTEST_QEMU_STORAGE_DAEMON_BINARY', './storage-daemon/qemu-storage-daemon')
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 788ff103ada..e2e5ff76ec1 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -416,7 +416,6 @@ void qemu_console_set_window_id(QemuConsole *con, int window_id);
+ void qemu_console_resize(QemuConsole *con, int width, int height);
+ DisplaySurface *qemu_console_surface(QemuConsole *con);
+ void coroutine_fn qemu_console_co_wait_update(QemuConsole *con);
+-int qemu_invalidate_text_consoles(void);
+ 
+ /* console-gl.c */
+ #ifdef CONFIG_OPENGL
+diff --git a/ui/console-priv.h b/ui/console-priv.h
+index 2c2cfd99570..8bcdb79d914 100644
+--- a/ui/console-priv.h
++++ b/ui/console-priv.h
+@@ -36,7 +36,7 @@ struct QemuConsole {
+ };
+ 
+ void qemu_text_console_update_size(QemuTextConsole *c);
+-void qemu_text_console_update_cursor(void);
++void vt100_update_cursor(void);
+ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym);
+ 
+ #endif
+diff --git a/ui/console-vc-stubs.c b/ui/console-vc-stubs.c
+index 8a7f19c1f44..d911a82f263 100644
+--- a/ui/console-vc-stubs.c
++++ b/ui/console-vc-stubs.c
+@@ -14,7 +14,7 @@ void qemu_text_console_update_size(QemuTextConsole *c)
+ {
+ }
+ 
+-void qemu_text_console_update_cursor(void)
++void vt100_update_cursor(void)
+ {
+ }
+ 
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index fca04fe57df..931693a7b0c 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -8,6 +8,7 @@
+ #include "qapi/error.h"
+ #include "qemu/fifo8.h"
+ #include "qemu/option.h"
++#include "qemu/queue.h"
+ #include "ui/console.h"
+ 
+ #include "trace.h"
+@@ -68,8 +69,13 @@ struct QemuVT100 {
+     int update_y0;
+     int update_x1;
+     int update_y1;
++
++    QTAILQ_ENTRY(QemuVT100) list;
+ };
+ 
++static QTAILQ_HEAD(QemuVT100Head, QemuVT100) vt100s =
++    QTAILQ_HEAD_INITIALIZER(vt100s);
++
+ typedef struct QemuTextConsole {
+     QemuConsole parent;
+ 
+@@ -1042,20 +1048,28 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
+     return len;
+ }
+ 
+-void qemu_text_console_update_cursor(void)
++void vt100_update_cursor(void)
+ {
++    QemuVT100 *vt;
++
+     cursor_visible_phase = !cursor_visible_phase;
+ 
+-    if (qemu_invalidate_text_consoles()) {
+-        timer_mod(cursor_timer,
+-                  qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
++    if (QTAILQ_EMPTY(&vt100s)) {
++        return;
++    }
++
++    QTAILQ_FOREACH(vt, &vt100s, list) {
++        vt100_refresh(vt);
+     }
++
++    timer_mod(cursor_timer,
++        qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
+ }
+ 
+ static void
+ cursor_timer_cb(void *opaque)
+ {
+-    qemu_text_console_update_cursor();
++    vt100_update_cursor();
+ }
+ 
+ static void text_console_invalidate(void *opaque)
+@@ -1071,6 +1085,9 @@ static void text_console_invalidate(void *opaque)
+ static void
+ qemu_text_console_finalize(Object *obj)
+ {
++    QemuTextConsole *s = QEMU_TEXT_CONSOLE(obj);
++
++    QTAILQ_REMOVE(&vt100s, &s->vt, list);
+ }
+ 
+ static void
+@@ -1095,6 +1112,7 @@ qemu_text_console_init(Object *obj)
+ {
+     QemuTextConsole *c = QEMU_TEXT_CONSOLE(obj);
+ 
++    QTAILQ_INSERT_HEAD(&vt100s, &c->vt, list);
+     fifo8_create(&c->out_fifo, 16);
+     c->vt.total_height = DEFAULT_BACKSCROLL;
+     QEMU_CONSOLE(c)->hw_ops = &text_console_ops;
+diff --git a/ui/console.c b/ui/console.c
+index beaef4ad8b8..a7bd22515b9 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -752,7 +752,7 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
+     } else if (QEMU_IS_TEXT_CONSOLE(dcl->con)) {
+         qemu_text_console_update_size(QEMU_TEXT_CONSOLE(dcl->con));
+     }
+-    qemu_text_console_update_cursor();
++    vt100_update_cursor();
+ }
+ 
+ void update_displaychangelistener(DisplayChangeListener *dcl,
+@@ -1457,23 +1457,6 @@ int qemu_console_get_height(QemuConsole *con, int fallback)
+     }
+ }
+ 
+-int qemu_invalidate_text_consoles(void)
+-{
+-    QemuConsole *s;
+-    int count = 0;
+-
+-    QTAILQ_FOREACH(s, &consoles, next) {
+-        if (qemu_console_is_graphic(s) ||
+-            !qemu_console_is_visible(s)) {
+-            continue;
+-        }
+-        count++;
+-        graphic_hw_invalidate(s);
+-    }
+-
+-    return count;
+-}
+-
+ void qemu_console_resize(QemuConsole *s, int width, int height)
+ {
+     DisplaySurface *surface = qemu_console_surface(s);
 -- 
 2.53.0
 
