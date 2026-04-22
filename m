@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D88F9B612
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11A7CF9B610
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV1U-00046E-4b; Wed, 22 Apr 2026 06:41:36 -0400
+	id 1wFV1K-00040O-OY; Wed, 22 Apr 2026 06:41:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV1P-00044S-MU
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:31 -0400
+ id 1wFV16-0003uL-Ee
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV1O-0002Fp-47
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:31 -0400
+ id 1wFV10-0002AU-Vv
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854489;
+ s=mimecast20190719; t=1776854465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sTd2Ekr+XluWk1nJp1NBPmtWaX9aqM8Fly/x7d8Kr6Q=;
- b=ewwZ/Rb29JOaeDw+exOZjcpEfI5GuLGNovUrk8K6L1CK0si8KmyLN5hXbUFhoEGbIj9V+T
- TLMUIXk1gfNDm4k18DONNAD/KCqR9wl5JXQSZ/1qS+OyAv/eH3lCxMwEPyLKiZnHCFytLW
- i8P0YuJIE7x/zMEJLQKW3XbrizXMnbY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=4hqN1Kugycd4KH9Wqc6KEj3jfYJJzyW5nlCl72WtZig=;
+ b=ROjedMx3Jb6Lis8OJXBw6zvHBG3BbtJIUK49rpqOt70D3UWXE2CpfrVbrwcszuI7xeO3ci
+ DvUp8y4yr4XuG3DYkXepA1oYvarL5fjfxIx2ssjdicMkhT7dSHJ2MtCbuevoVXO9z3GDC/
+ mQv85voS5YjD4voA+9bC5eKCeiWgUAM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-x5kwd2v5NCCNVXI1kmkKiQ-1; Wed,
- 22 Apr 2026 06:41:26 -0400
-X-MC-Unique: x5kwd2v5NCCNVXI1kmkKiQ-1
-X-Mimecast-MFC-AGG-ID: x5kwd2v5NCCNVXI1kmkKiQ_1776854485
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643--6OBsdM7MSmQECLObJJVMA-1; Wed,
+ 22 Apr 2026 06:41:01 -0400
+X-MC-Unique: -6OBsdM7MSmQECLObJJVMA-1
+X-Mimecast-MFC-AGG-ID: -6OBsdM7MSmQECLObJJVMA_1776854460
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A3CC19560B2; Wed, 22 Apr 2026 10:41:25 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 719C4180034D; Wed, 22 Apr 2026 10:41:00 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.21])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C9D083000C21; Wed, 22 Apr 2026 10:41:23 +0000 (UTC)
+ id C72B33000C15; Wed, 22 Apr 2026 10:40:58 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
+Cc: peter.maydell@linaro.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 06/40] ui/vnc: clarify intent using buffer_empty() function
-Date: Wed, 22 Apr 2026 14:40:07 +0400
-Message-ID: <20260422104042.3936506-7-marcandre.lureau@redhat.com>
+Subject: [PULL 02/40] ui/spice-app: detect runtime directory creation failures
+Date: Wed, 22 Apr 2026 14:40:03 +0400
+Message-ID: <20260422104042.3936506-3-marcandre.lureau@redhat.com>
 In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -85,41 +85,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+spice_app_display_early_init() creates the per-VM runtime directory
+with g_mkdir_with_parents() before setting up the Spice socket. The
+code checks for "< -1", but g_mkdir_with_parents() returns -1 on
+failure, so the error path is never taken.
+
+This lets spice-app continue after a directory creation failure and
+defers the problem to later setup steps.
+
+Check for "< 0" instead so the failure is reported immediately and
+spice-app exits before using an invalid runtime directory.
+
+Fixes: d8aec9d9f129 ("display: add -display spice-app launching a Spice client")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260408031725.641417-1-zhaoguohan@kylinos.cn>
 ---
- ui/vnc-jobs.c | 2 +-
- ui/vnc.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ ui/spice-app.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index a6ab733faa1..4dd7ccad969 100644
---- a/ui/vnc-jobs.c
-+++ b/ui/vnc-jobs.c
-@@ -160,7 +160,7 @@ void vnc_jobs_consume_buffer(VncState *vs)
-     bool flush;
- 
-     vnc_lock_output(vs);
--    if (vs->jobs_buffer.offset) {
-+    if (!buffer_empty(&vs->jobs_buffer)) {
-         if (vs->ioc != NULL && buffer_empty(&vs->output)) {
-             g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-             if (vs->disconnecting == FALSE) {
-diff --git a/ui/vnc.c b/ui/vnc.c
-index ccc73bd7aa4..4aa446a48d7 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -1718,7 +1718,7 @@ void vnc_write_u8(VncState *vs, uint8_t value)
- void vnc_flush(VncState *vs)
- {
-     vnc_lock_output(vs);
--    if (vs->ioc != NULL && vs->output.offset) {
-+    if (vs->ioc != NULL && !buffer_empty(&vs->output)) {
-         vnc_client_write_locked(vs);
-     }
-     if (vs->disconnecting) {
+diff --git a/ui/spice-app.c b/ui/spice-app.c
+index 9e55f273715..0df7325e679 100644
+--- a/ui/spice-app.c
++++ b/ui/spice-app.c
+@@ -151,7 +151,7 @@ static void spice_app_display_early_init(DisplayOptions *opts)
+     if (qemu_name) {
+         app_dir = g_build_filename(g_get_user_runtime_dir(),
+                                    "qemu", qemu_name, NULL);
+-        if (g_mkdir_with_parents(app_dir, S_IRWXU) < -1) {
++        if (g_mkdir_with_parents(app_dir, S_IRWXU) < 0) {
+             error_report("Failed to create directory %s: %s",
+                          app_dir, strerror(errno));
+             exit(1);
 -- 
 2.53.0
 
