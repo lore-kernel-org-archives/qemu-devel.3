@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B2CF9B610
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D88F9B612
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV1L-00040U-Ec; Wed, 22 Apr 2026 06:41:28 -0400
+	id 1wFV1U-00046E-4b; Wed, 22 Apr 2026 06:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV1A-0003ut-Vl
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:18 -0400
+ id 1wFV1P-00044S-MU
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV16-0002CC-6o
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:14 -0400
+ id 1wFV1O-0002Fp-47
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854471;
+ s=mimecast20190719; t=1776854489;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+fYaGsZ6mPfpuUJHsETFdqLxFxcDnCiwytGXSq+fP8E=;
- b=IMG7f7GVoxegGcJE1v5RxF11XHMBDUi8a/erV4uFwlecnt+6CKsfAKbo/sj8yUKhU3MFKV
- HfVzBnMUpMGpoZ0ZVzH7WHv2nW6vqKxHO5pSUrrpXDHAlcmyyqneTR1hA42VIcQHdooI2i
- z5l98sIJQrcZupK2iYeQu9tarsbgg3k=
+ bh=sTd2Ekr+XluWk1nJp1NBPmtWaX9aqM8Fly/x7d8Kr6Q=;
+ b=ewwZ/Rb29JOaeDw+exOZjcpEfI5GuLGNovUrk8K6L1CK0si8KmyLN5hXbUFhoEGbIj9V+T
+ TLMUIXk1gfNDm4k18DONNAD/KCqR9wl5JXQSZ/1qS+OyAv/eH3lCxMwEPyLKiZnHCFytLW
+ i8P0YuJIE7x/zMEJLQKW3XbrizXMnbY=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-YFXQgU9MP5SBbtEOuSKBOw-1; Wed,
- 22 Apr 2026 06:41:08 -0400
-X-MC-Unique: YFXQgU9MP5SBbtEOuSKBOw-1
-X-Mimecast-MFC-AGG-ID: YFXQgU9MP5SBbtEOuSKBOw_1776854467
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-x5kwd2v5NCCNVXI1kmkKiQ-1; Wed,
+ 22 Apr 2026 06:41:26 -0400
+X-MC-Unique: x5kwd2v5NCCNVXI1kmkKiQ-1
+X-Mimecast-MFC-AGG-ID: x5kwd2v5NCCNVXI1kmkKiQ_1776854485
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22E0B19560B4; Wed, 22 Apr 2026 10:41:07 +0000 (UTC)
+ id 2A3CC19560B2; Wed, 22 Apr 2026 10:41:25 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.21])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A68CF1956095; Wed, 22 Apr 2026 10:41:05 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C9D083000C21; Wed, 22 Apr 2026 10:41:23 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Werner de Carne <werner@carne.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 03/40] serial COM: windows serial COM PollingFunc don't sleep
-Date: Wed, 22 Apr 2026 14:40:04 +0400
-Message-ID: <20260422104042.3936506-4-marcandre.lureau@redhat.com>
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 06/40] ui/vnc: clarify intent using buffer_empty() function
+Date: Wed, 22 Apr 2026 14:40:07 +0400
+Message-ID: <20260422104042.3936506-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -86,72 +85,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Werner de Carne <werner@carne.de>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1802
-Signed-off-by: Werner de Carne <werner@carne.de>
-[ Marc-André - indentation fixes ]
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20230807201443.2668-1-werner@carne.de>
 ---
- chardev/char-win.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ ui/vnc-jobs.c | 2 +-
+ ui/vnc.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/chardev/char-win.c b/chardev/char-win.c
-index fef45e83aad..e194242c9f9 100644
---- a/chardev/char-win.c
-+++ b/chardev/char-win.c
-@@ -28,7 +28,7 @@
- #include "qapi/error.h"
- #include "chardev/char-win.h"
+diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
+index a6ab733faa1..4dd7ccad969 100644
+--- a/ui/vnc-jobs.c
++++ b/ui/vnc-jobs.c
+@@ -160,7 +160,7 @@ void vnc_jobs_consume_buffer(VncState *vs)
+     bool flush;
  
--static void win_chr_read(Chardev *chr, DWORD len)
-+static int win_chr_read(Chardev *chr, DWORD len)
+     vnc_lock_output(vs);
+-    if (vs->jobs_buffer.offset) {
++    if (!buffer_empty(&vs->jobs_buffer)) {
+         if (vs->ioc != NULL && buffer_empty(&vs->output)) {
+             g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+             if (vs->disconnecting == FALSE) {
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ccc73bd7aa4..4aa446a48d7 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -1718,7 +1718,7 @@ void vnc_write_u8(VncState *vs, uint8_t value)
+ void vnc_flush(VncState *vs)
  {
-     WinChardev *s = WIN_CHARDEV(chr);
-     int max_size = qemu_chr_be_can_write(chr);
-@@ -40,7 +40,7 @@ static void win_chr_read(Chardev *chr, DWORD len)
-         len = max_size;
+     vnc_lock_output(vs);
+-    if (vs->ioc != NULL && vs->output.offset) {
++    if (vs->ioc != NULL && !buffer_empty(&vs->output)) {
+         vnc_client_write_locked(vs);
      }
-     if (len == 0) {
--        return;
-+        return 0;
-     }
- 
-     ZeroMemory(&s->orecv, sizeof(s->orecv));
-@@ -56,6 +56,8 @@ static void win_chr_read(Chardev *chr, DWORD len)
-     if (size > 0) {
-         qemu_chr_be_write(chr, buf, size);
-     }
-+
-+    return size > 0 ? 1 : 0;
- }
- 
- static int win_chr_serial_poll(void *opaque)
-@@ -67,8 +69,9 @@ static int win_chr_serial_poll(void *opaque)
- 
-     ClearCommError(s->file, &comerr, &status);
-     if (status.cbInQue > 0) {
--        win_chr_read(chr, status.cbInQue);
--        return 1;
-+        if (win_chr_read(chr, status.cbInQue)) {
-+            return 1;
-+        }
-     }
-     return 0;
- }
-@@ -147,8 +150,9 @@ int win_chr_pipe_poll(void *opaque)
- 
-     PeekNamedPipe(s->file, NULL, 0, NULL, &size, NULL);
-     if (size > 0) {
--        win_chr_read(chr, size);
--        return 1;
-+        if (win_chr_read(chr, size)) {
-+            return 1;
-+        }
-     }
-     return 0;
- }
+     if (vs->disconnecting) {
 -- 
 2.53.0
 
