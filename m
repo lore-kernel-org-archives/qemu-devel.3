@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2796F9B5F3
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 21:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E85F94CC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 21:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFfMO-0000YA-P0; Wed, 22 Apr 2026 17:43:52 -0400
+	id 1wFfLO-0007ww-GY; Wed, 22 Apr 2026 17:42:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFfMI-0000Ds-DI
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:43:47 -0400
-Received: from p-east2-cluster5-host9-snip4-3.eps.apple.com ([57.103.79.106]
+ id 1wFfLM-0007va-QQ
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:42:48 -0400
+Received: from p-east2-cluster1-host5-snip4-8.eps.apple.com ([57.103.76.91]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFfMG-0007qX-As
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:43:46 -0400
+ id 1wFfLK-0006z8-WD
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:42:48 -0400
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPS id
- AD5A61800230; Wed, 22 Apr 2026 21:43:39 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJAU1fDl4fBBdGGVUERx5dVkAZGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCC0oCWQVZB14LSgdfGlgKXVQXWwxaDlYwTBZDH1IPWxNNGVEBUkVUAgdYRxRHDg8TTAtHAlo0Vh9UGVoD
+ 1B131180097E; Wed, 22 Apr 2026 21:42:41 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJAU1fDl4fBBdGGVUERx5dVkAZGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCC0oCWQVZB14LSgdfGlwfHVYQUgBSD3IFVwhBCFMCUQRYGl8IGQ1AThkMSh1SVlEFSgxcAGgPXR1YEV0=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776894223; x=1779486223;
- bh=v+52HVYpW3INL47PWIYPp5HJAsIPBwIJXcoInsCco2s=;
+ s=sig1; t=1776894166; x=1779486166;
+ bh=hkQG6hOmkKoQQ4VfPKcZK5YN5+VU0E/MubeBjGkQBBQ=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=XOEMsno30+UadhseLMaCSNHJN6nm+lMKkFKF5wJgRE8e7PLB6HRWyWQye/Pw/YhdQf3hop4on2TIYn4WpN0Khb/IyTWklTIxMMbfpDHewDO2K3V8eHCpGlywwd6XlyjOLfpgh7t+cUJpZOc9Y7HrwVqVnZCQmy7TLD12JhQiJKHzlva07K9p8vWJIi23rEXd/eyKqKPDY6hIfBfELTQXOlFJWJCV4NGX87JQOFkiCX3evS1nlc+4SmnALDdFfHbzdhftgajqUeeLop1vJt8p8L1Vc/LVcFT89fqxCpGj/ewEouwGL1F3ukCRxiPXAot77oT3TdrPKcj8KAA5+W1mIw==
+ b=HV9zMv3So4Y0mJwBIOC7ZlYdnjGoCAdOyTv9t7dpf3LuIvvPGpP6VTuyL7n4F8ex55BDHFZtlHJJoyNl+fQ97znFqLlyvUVedPc/sNCujmek+LqYx2o6so9DuWnFd+eWPIjSeOinVZgYdiDrQiN4M4PfKXnuzN602s8L1A5s9Jd4BzzhPnv4Dl0wfGyfaJ+6QsUdjjCcj2jm+p6j2lGaHev5qNG6+NB2eq/uRWqpFSbVaZy6RuUEZIYCzlDPx1lrBrqeLfezG7imjWhrHEITZaKGp8DxGnt8Wnf2BuO+e/+5XtayprEDJOQCHf0bMTJbtVodlg4Gqupky8zbo8Ruqw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPSA id
- 0752D18000C7; Wed, 22 Apr 2026 21:43:36 +0000 (UTC)
+ 6E5F018000C7; Wed, 22 Apr 2026 21:42:39 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
@@ -44,27 +44,27 @@ Cc: Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 37/37] whpx: i386: documentation update
-Date: Wed, 22 Apr 2026 23:42:25 +0200
-Message-ID: <20260422214225.2242-38-mohamed@unpredictable.fr>
+Subject: [PATCH v3 06/37] whpx: i386: reintroduce enlightenments for Windows 10
+Date: Wed, 22 Apr 2026 23:41:54 +0200
+Message-ID: <20260422214225.2242-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260422214225.2242-1-mohamed@unpredictable.fr>
 References: <20260422214225.2242-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=c92mgB9l c=1 sm=1 tr=0 ts=69e9410d
+X-Proofpoint-GUID: pHMhze96HKbChHZ4pNipe3sOb9aB1OHK
+X-Authority-Info-Out: v=2.4 cv=TtLrRTXh c=1 sm=1 tr=0 ts=69e940d3
  cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
  a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=ktjdnHLW_yDM15NnqX0A:9
-X-Proofpoint-GUID: h1_NzvU4zbmdvpYXRrvfGPpUCTNM7nO9
-X-Proofpoint-ORIG-GUID: h1_NzvU4zbmdvpYXRrvfGPpUCTNM7nO9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDIxMiBTYWx0ZWRfXzz5wZ0F/EjOv
- R5iV3DeWWu5n3MbRQm3DxOmPWBc0uqDnohJejrLnkcPQkvykSThIR5kbY0/HH09pbsNDeoEx1yv
- 7dnl5DuicAvtXF1qbxNwbT0DtC/bL/CyDpR7Y2cCMsqZNn6kTNh7nefJ0nwz3EQGYJ7d2X+FjJh
- jlu8dwAZXmh/hIrAyhQdsXmWAukJFRhqVnvca8ZK6/UQp8+OYKDooo7F2eADJPIWk4tlAU3u5j3
- TyYnx3WE/egoZzlKU6423mn6OPGR4R/Zez94EJV+tK7tIqbLNg90P3uAuREpUYbWa9U25Rhh2Qw
- iZUBu6pIks97PncjwCbs00ChuUfcTITYgk3NB3cCCc4qJCcRqdTWsSQiTfTCMk=
-Received-SPF: pass client-ip=57.103.79.106;
+ a=hfWBbujXMTx1PmRkPVYA:9
+X-Proofpoint-ORIG-GUID: pHMhze96HKbChHZ4pNipe3sOb9aB1OHK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDIxMSBTYWx0ZWRfX4Y10kmJax19L
+ NeAdQfEOjJhNwWwSLmU5PnJAPs1nUtZAhQw8Q+JQryNxdbQ0xP9g+s9H+bLeVVUabKxd80Pmbob
+ hvi4FGiiy5wzz0h2Oo0ECrD58sPUtEnLsbByBi0SoPmAI7lwSphV8xAw4Bu+BuuH67Bx1TYB/F1
+ wn6xv+focXtqLFUHajmVKeicojN/mwci1JHZB+97GjSaDubZ8YFrNY83e42DOyeJB8We7F1cmAg
+ 2y/jYbTB9Ji0TCi/KdrxisZds15GgKGVjneEK+jp0u7YUrWp6drvwxv94ksHc4lDvj1djDoZDAl
+ nYusF5vK/xKSobhmq/W+2GBszIdmm9Amotr2AXCqOWXpUSa/VtzUUUZw8ynKEY=
+Received-SPF: pass client-ip=57.103.76.91;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,87 +87,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Was removed in 2c08624 but it's still useful for
+Windows 10 so reintroduce it there.
+
+And this time, actually make it work by reporting
+the hypervisor bit in CPUID.
+
+Pretend to be vmware to be able to use vmport's functionality.
+
+If the vmware frequency leaf is disabled, pretend to be
+KVM, with the only capability reported being X2APIC support.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- docs/system/whpx.rst | 40 +++++++++++-----------------------------
- 1 file changed, 11 insertions(+), 29 deletions(-)
+ accel/whpx/whpx-common.c       |  2 ++
+ include/system/whpx-internal.h |  1 +
+ target/arm/whpx/whpx-all.c     |  1 +
+ target/i386/whpx/whpx-all.c    | 63 +++++++++++++++++++++++++++++-----
+ 4 files changed, 58 insertions(+), 9 deletions(-)
 
-diff --git a/docs/system/whpx.rst b/docs/system/whpx.rst
-index 3e1979028c..9909e86831 100644
---- a/docs/system/whpx.rst
-+++ b/docs/system/whpx.rst
-@@ -63,7 +63,7 @@ additional functionality compared to ``-device ramfb``, but is
- incompatible with Windows's UEFI GOP implementation, which
- expects a linear framebuffer to be available.
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index b813a5d9d2..59be996aef 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -550,6 +550,8 @@ static void whpx_accel_instance_init(Object *obj)
  
--Some tracing options
-+Accelerator options
- --------------------
+     whpx->hyperv_enlightenments_allowed = true;
+     whpx->hyperv_enlightenments_required = false;
++    /* Value determined at whpx_accel_init */
++    whpx->hyperv_enlightenments_enabled = false;
+ }
  
- x86_64
-@@ -75,6 +75,11 @@ to undocumented MSRs.
- ``-d invalid_mem`` allows to trace accesses to unmapped
- GPAs.
+ static const TypeInfo whpx_accel_type = {
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index 5902124b63..cf782cf5f8 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -45,6 +45,7 @@ struct whpx_state {
  
-+``-accel whpx,ssd=off`` disables the separate security domain feature,
-+as in a BTB flush when entering/exiting the guest. This results in a
-+significant MMIO performance increase at the detriment of security
-+mitigations.
+     bool hyperv_enlightenments_allowed;
+     bool hyperv_enlightenments_required;
++    bool hyperv_enlightenments_enabled;
+ 
+ };
+ 
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index bbf0f6be96..4019a513aa 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -968,6 +968,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+      * as they're not needed for performance.
+      */
+     if (whpx->hyperv_enlightenments_required) {
++        whpx->hyperv_enlightenments_enabled = true;
+         hr = whp_dispatch.WHvSetPartitionProperty(
+                 whpx->partition,
+                 WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 4954e0557a..f9f330c038 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2168,14 +2168,57 @@ int whpx_vcpu_run(CPUState *cpu)
+                 vcpu->exit_ctx.VpContext.Rip +
+                 vcpu->exit_ctx.VpContext.InstructionLength;
+ 
+-            reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
+-            reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
+-            reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
+-            reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
+-
+-            if (vcpu->exit_ctx.CpuidAccess.Rax == 1) {
+-                if (cpu_has_x2apic_feature(env)) {
+-                    reg_values[2].Reg64 |= CPUID_EXT_X2APIC;
++            if (whpx_is_legacy_os()) {
++                reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
++                reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
++                reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
++                reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
++            } else {
++                cpu_x86_cpuid(env, vcpu->exit_ctx.CpuidAccess.Rax,
++                    vcpu->exit_ctx.CpuidAccess.Rcx,
++                    (UINT32 *)&reg_values[1].Reg32,
++                    (UINT32 *)&reg_values[4].Reg32, (UINT32 *)&reg_values[2].Reg32,
++                    (UINT32 *)&reg_values[3].Reg32);
++            }
 +
- Known issues on x86_64
- ----------------------
++            if (!whpx->hyperv_enlightenments_enabled) {
++                switch (vcpu->exit_ctx.CpuidAccess.Rax) {
++                case 1:
++                    reg_values[2].Reg64 |= CPUID_EXT_HYPERVISOR;
++                    break;
++                case 0x40000000:
++                    /*
++                     * Use vmware_cpuid_freq as a proxy to report VMware.
++                     * This is to get the TSC/APIC frequency query functionality
++                     * provided through vmport, as Linux doesn't use leaf
++                     * 0x40000010 for getting those frequencies.
++                     */
++                    if (x86_cpu->vmware_cpuid_freq) {
++                        reg_values[1].Reg64 = 0x40000010;
++                        reg_values[4].Reg64 = 0x61774d56;
++                        reg_values[2].Reg64 = 0x4d566572;
++                        reg_values[3].Reg64 = 0x65726177;
++                    } else {
++                        /* report KVM otherwise if that's disabled */
++                        reg_values[1].Reg64 = 0x40000001;
++                        reg_values[4].Reg64 = 0x4b4d564b;
++                        reg_values[2].Reg64 = 0x564b4d56;
++                        reg_values[3].Reg64 = 0x4d;
++                    }
++                    break;
++                case 0x40000001:
++                    if (!x86_cpu->vmware_cpuid_freq) {
++                        /* KVM reporting of X2APIC support */
++                        reg_values[1].Reg64 = reg_values[4].Reg64 =
++                            reg_values[2].Reg64 = 1 << 15;
++                    }
++                    break;
++                case 0x40000010:
++                    if (x86_cpu->vmware_cpuid_freq) {
++                        reg_values[1].Reg64 = env->tsc_khz;
++                        reg_values[4].Reg64 = env->apic_bus_freq / 1000; /* Hz to KHz */
++                    }
++                    break;
+                 }
+             }
  
-@@ -96,45 +101,22 @@ MMX, SSE or AVX instructions for access to MMIO memory ranges.
- Attempts to run such guests will result in an ``Unimplemented handler``
- warning for MMX and a failure to decode for newer instructions.
+@@ -2396,6 +2439,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     WHV_PROCESSOR_FEATURES_BANKS processor_features;
+     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
+     UINT32 cpuidExitList[] = {1};
++    UINT32 cpuidExitList_nohyperv[] = {1, 0x40000000, 0x40000001, 0x40000010};
  
--``-M isapc``
--^^^^^^^^^^^^
--
--``-M isapc`` doesn't disable the Hyper-V LAPIC on its own yet. To
--be able to use that machine, use ``-accel whpx,hyperv=off,kernel-irqchip=off``.
--
--However, in QEMU 11.0, the guest will still be a 64-bit x86
--ISA machine with all the corresponding CPUID leaves exposed.
--
--gdbstub
--^^^^^^^
--
--As save/restore of xsave state is not currently present, state
--exposed through GDB will be incomplete.
--
--The same also applies to ``info registers``.
--
--``-cpu type`` ignored
--^^^^^^^^^^^^^^^^^^^^^
--
--In this release, -cpu is an ignored argument. 
--
- PIC interrupts on Windows 10
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     whpx = &whpx_global;
  
- On Windows 10, a legacy PIC interrupt injected does not wake the guest
- from an HLT when using the Hyper-V provided interrupt controller.
+@@ -2601,6 +2645,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     }
  
--This has been addressed in QEMU 11.0 on Windows 11 platforms but
--functionality to make it available on Windows 10 isn't present.
-+As such, on Windows 10, using the Hyper-V interrupt controller is
-+disabled by default. You can enable it via ``-M q35,pic=off`` which
-+disables the PIC. In that configuration, using a UEFI is recommended.
+     if (is_modern_os && whpx->hyperv_enlightenments_allowed) {
++        whpx->hyperv_enlightenments_enabled = true;
+         hr = whp_dispatch.WHvSetPartitionProperty(
+                 whpx->partition,
+                 WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
+@@ -2653,7 +2698,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     hr = whp_dispatch.WHvSetPartitionProperty(
+         whpx->partition,
+         WHvPartitionPropertyCodeCpuidExitList,
+-        cpuidExitList,
++        whpx->hyperv_enlightenments_enabled ? cpuidExitList : cpuidExitList_nohyperv,
+         RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
  
--Workaround: for affected use cases, use ``-M kernel-irqchip=off``.
-+On this release, ``-M kernel-irqchip=`` is not expected to be manually
-+set during normal operation. It remains as a debugging option.
- 
- Known issues on Windows 11
- ^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--Nested virtualisation-specific Hyper-V enlightenments are not
--currently exposed.
--
- arm64
- -----
- 
+     if (FAILED(hr)) {
 -- 
 2.50.1 (Apple Git-155)
 
