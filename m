@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527D8F9EDC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 13:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90CDAF9EDC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 13:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFXRZ-0003BF-UU; Wed, 22 Apr 2026 09:16:42 -0400
+	id 1wFXTb-0004JL-KV; Wed, 22 Apr 2026 09:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wFXRY-0003Av-BB
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:16:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wFXTa-0004J1-Kn
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:18:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wFXRW-0005GL-RJ
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:16:40 -0400
+ id 1wFXTZ-0005ub-1r
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 09:18:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776863797;
+ s=mimecast20190719; t=1776863924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=860R9eWIOYXneAY2sPdd0exnaOMOCGXpnx4bC411+sc=;
- b=W9s1AxkQjRexaiB0s9XP61oCGPQ8Jmqtrt4/BmNF3BZozTT7dwWTlCJsoIFXIMqXgoykQc
- RXpOqy4lWWlC0xSv7NZdIeJoE6gs+/rlkki4pe4FpqvYr1+/LbFP4H6jpc0n4D8lwqQ1l+
- iebrDbNkszBT89WlCx2z17bSiS8+6V4=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZNyFqTHx4UXjE/XDN2rjkEy4wsvy1WU2NWc+wQB2ffo=;
+ b=TSAI7HODchQnNMDi3RJY9Md3DOH8CltX8ui0vK9uIEfKzc4drX+HQKnte8sHIMdeeQF8w5
+ ti5NqPGa+2dEshlg5oB1bOgzFb69jenhdWfwu9v/SLZo58v/RHgU1Vog5jAbUIl9gBfHcE
+ U93t3nvJaxuJDgTOqVjNGcdWyDF0yDU=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-TmfVoUTSO7Kq71TNYHDAfw-1; Wed, 22 Apr 2026 09:16:35 -0400
-X-MC-Unique: TmfVoUTSO7Kq71TNYHDAfw-1
-X-Mimecast-MFC-AGG-ID: TmfVoUTSO7Kq71TNYHDAfw_1776863794
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2b24a00d12cso55421165ad.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 06:16:34 -0700 (PDT)
+ us-mta-635-AF10AIt-Nn64lDSHR-UmEQ-1; Wed, 22 Apr 2026 09:18:42 -0400
+X-MC-Unique: AF10AIt-Nn64lDSHR-UmEQ-1
+X-Mimecast-MFC-AGG-ID: AF10AIt-Nn64lDSHR-UmEQ_1776863921
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c79907d4c57so1256719a12.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 06:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776863794; x=1777468594; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776863921; x=1777468721; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=860R9eWIOYXneAY2sPdd0exnaOMOCGXpnx4bC411+sc=;
- b=TuBuAEJBoFOFVr9rypMkI6zcLeiBrWPQ6zb4TFCdoHz6riCfr+XucWQ2SJDizwdeKM
- GdXtE6qvU9iaAkh6JjHuKqctuVzanYPYxDLrPeClGSP4SmXVuQCxiNsktPFgu55l9mNh
- uOWwuJ6zAXCsfbvzeOOsMIJm7tjNl2zqgYVw5JXzA+Q5LsjjH7DxTkpYXm23OATJcjg5
- oHHavrVepLYU8vb+v+J+XWw3CHWlHdA+JnqDmLB5zOJ3qR+EOscrs4hJDrUWi4G81zOQ
- XI6EMpQ5Tywzr+iDLvVcxKDKobHoOb6wMBW+FrgBFk7N8M2spVsQtdJqIauhzwdwS8ls
- Yfww==
+ bh=ZNyFqTHx4UXjE/XDN2rjkEy4wsvy1WU2NWc+wQB2ffo=;
+ b=ZYEp+QGwD2NIYbY7ojTVMeqZN/kfG3M+Ze1Uc8dav25AuHH9rI/sX9vEjYf/dHegM3
+ Cy+a8ohd+efCB0H9x0T8xKidz6fpWJZ/A1Ib/63pnTEkUySK6LWjxEz4h1Lf+ydYtESd
+ +qtfWIrWNZivsCh1LkuI4rjDhkZ/v+rAPETyQJwpLDmRoY/iHsB4N2lx+UEDm92NCoHX
+ w5jDtcvuuIMnf0eKeeViiVfRvUJk7ALOH2asxwjD+EURGuGpxwy5euBPqpckJBtXw1u+
+ //TRBXlt7Gw0IGhZ0VWREyXVisOfWhps1wLZZ9Jc0S04SFDiUBKV2gMUhKqKFbFWud1T
+ IZ/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776863794; x=1777468594;
+ d=1e100.net; s=20251104; t=1776863921; x=1777468721;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=860R9eWIOYXneAY2sPdd0exnaOMOCGXpnx4bC411+sc=;
- b=BshY5so0CB8M2K6ULNXyKkp9d1mkG3fDyLJf9hABXOezJhOGjStXKj2lkrt20aTrIT
- PLz/lZyCQELCUuVZn0Io2zEqHFAx5oZEeqJDFRcjkSYGJVWf+tuX/q4ygK+FWmOi53+H
- Tp/BFKOlQ8iIviQXu3oU0bqxzFhanRv0oePUnhEXVzl10rGlaNecGonfVemSY7dX6C8j
- sFCoQDCZ6w+lKb2lQXSS5xdATgB/InCglQDpWkiGJ9UARwx9gqYa15SEKhCUtjFHlot4
- lOxqomQFKB18s29ZGMO6zoJFihHTSHY8Q32NAHGm1er01oUREwW9bjMRae2HSdB0Ja+w
- O/Qg==
-X-Gm-Message-State: AOJu0YwUs3KJqwm8tgW0IPMQIOGICe9M+8sgbtMhnbL7XqBcv1Nlt5Bn
- JPaao1cqpK9jC9jC4wurfX0qi9hrpwxiUriqD9pP0M3K7ZFldiKeEDUcJROIzX2GliQWitUVZEe
- m4Fx+f5HnbL9lEwr/i2eVSWgbKT0NfwjrilKdegIJ/deSSXIau2Kf1Z90
-X-Gm-Gg: AeBDiesXc96lmNldaM3VsWMOydEWjO8ycifIRiH/exx484ETOR6uaLYlynC3Ie/xEKv
- msUadt+sZ6F+owqx1qYPd4ipCPEE8ol9HfLFOhocf93It8OqSkmyZ+r0m0xO1KbjHOMBrL4JXdf
- b2CsoQyaon6T3MbYbcooCcbHFxjL5GfxRY6x2Z6RoCZoqHTo/yRK4M04lpAAccxq1hBd2phi5dy
- DnLoVhXMWoSJVJs5vpbZpCun2Mc9JWdZOzSDEb1M6M6T1Sl3AdKH65HbL9LlZmo5iR4YsX2OkKt
- +5zsSiK5QDPlJWQ0G5KSbHFfM4S7bjuKgZk656jsvDqL/xc8d3NNfXMQ4LWxHkIdWV6Vy+Oqgcb
- 4u5fgRluRuLXKa7VJvs1FVkVO4+6wvmyTHg974FxrSLbn3B04/SIq3+qk
-X-Received: by 2002:a17:902:8d98:b0:2b4:5fae:cbd8 with SMTP id
- d9443c01a7336-2b5f9f83117mr166360535ad.37.1776863793555; 
- Wed, 22 Apr 2026 06:16:33 -0700 (PDT)
-X-Received: by 2002:a17:902:8d98:b0:2b4:5fae:cbd8 with SMTP id
- d9443c01a7336-2b5f9f83117mr166359005ad.37.1776863791434; 
- Wed, 22 Apr 2026 06:16:31 -0700 (PDT)
+ bh=ZNyFqTHx4UXjE/XDN2rjkEy4wsvy1WU2NWc+wQB2ffo=;
+ b=sn4UdX4VjPIHM6fL/nyWnF0zraBSe8iw9IcFfa2YwMy9tlOehToHCnW4Sh6X9hoyL+
+ 6TUJI2gAbM+ZinQOzYfzdZBiQae06vF4SFy+IFzClmjgXR+CXqXVX98w18x0/MTflmaf
+ P9Qt0iuGxiUs+vlaeEdEWV+e/4PBuUsz6PNmJRibeSS7mjRW1FCTFfX+8oxLy6Iv9euJ
+ Tq2XI48l4W+pllltyRJyulLz6F7XzAfmPuxRiCtdyeCE9HNMboyOo4NQgpkITBSVIC+h
+ GoeDHQib4ppvhr/PE5GfHJy5IRKy5xAWDdgAmWE1Xia/D92P91TuAahbIAUveR1FN3gP
+ fRSA==
+X-Gm-Message-State: AOJu0YzDc6zURXjI/PanVDt2VpAg7fOwDsitnmS8uyqf36jv1eTWctu/
+ MG5lMe3BTbXNScYDs7bYKGGbIs5c2SVDvbbvjJBn1Keq7UgIZF+ECPPEnOJJDsc4usnH9yCrsVR
+ Zg11rURpr3cIwaQeedO7zeWt5xWKhfWajb5PNVd/xxvqy9REMmrCcIO0j
+X-Gm-Gg: AeBDievtkS/BtOLELGSfcQ1MhrUqRL/BaF5sSdZVUlzNBQ3v/yJMeDBLJR+JpTDcSsM
+ T7fiU/R4S3MajItapJbTEgr2JktWHTI2/N7yPgIl0RVm4pcRPGqkAussL18vSiN+d47tVx50DWv
+ K2lEJrv2cXNa12pdd0HwVA9QlDHQwJo2ozl30CNammkvHrIH3OMc0FrvwZjZZa8LJnSHcJ5MjFP
+ j1mTvWTCjNka8hKNJrWWqrM/YUP2bn7PMw/Vko++EAcvuIhjUexyWZMm1fdfQy7xuyjKnvVRRIW
+ UnQwIASnC1s5xbSkVEaokGjqR0flUVHRzQXWduyHG3nSHOHI2bKPUxEieN86GqnrjErfhta1u7C
+ R2zZcbMgzwU+q1iF/g6GBQUHczzTSvDUl+fYLFuICE7BH5NNTjTkufn8f
+X-Received: by 2002:a05:6a00:1715:b0:82f:95d8:6c79 with SMTP id
+ d2e1a72fcca58-82f95d873a9mr15544619b3a.43.1776863920909; 
+ Wed, 22 Apr 2026 06:18:40 -0700 (PDT)
+X-Received: by 2002:a05:6a00:1715:b0:82f:95d8:6c79 with SMTP id
+ d2e1a72fcca58-82f95d873a9mr15544589b3a.43.1776863920291; 
+ Wed, 22 Apr 2026 06:18:40 -0700 (PDT)
 Received: from fedora (193-179-61-20.customers.tmcz.cz. [193.179.61.20])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab28e35sm165036365ad.64.2026.04.22.06.16.22
+ d2e1a72fcca58-82f8ebe40e5sm15978742b3a.42.2026.04.22.06.18.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 06:16:30 -0700 (PDT)
-Date: Wed, 22 Apr 2026 15:16:16 +0200
+ Wed, 22 Apr 2026 06:18:39 -0700 (PDT)
+Date: Wed, 22 Apr 2026 15:18:26 +0200
 From: Juraj Marcin <jmarcin@redhat.com>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Joao Martins <joao.m.martins@oracle.com>, 
@@ -93,24 +93,24 @@ Cc: qemu-devel@nongnu.org, Joao Martins <joao.m.martins@oracle.com>,
  Alex Williamson <alex@shazbot.org>, Kirti Wankhede <kwankhede@nvidia.com>, 
  Zhiyi Guo <zhguo@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v2 07/16] migration: Introduce stopcopy_bytes in
- save_query_pending()
-Message-ID: <aejKAjyhKJMew7f-@fedora>
+Subject: Re: [PATCH v2 13/16] migration: Remember total dirty bytes in
+ mig_stats
+Message-ID: <aejKcOtHWJwzHDt1@fedora>
 References: <20260421202110.306051-1-peterx@redhat.com>
- <20260421202110.306051-8-peterx@redhat.com>
+ <20260421202110.306051-14-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260421202110.306051-8-peterx@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+In-Reply-To: <20260421202110.306051-14-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,36 +127,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-04-21 16:21, Peter Xu wrote:
-> Allow modules to report data that can only be migrated after VM is stopped.
+> Introduce this new counter to remember the total dirty bytes for the whole
+> system.  It will be used for query-migrate command to fetch system-wise
+> remaining data.
 > 
-> When this concept is introduced, we will need to account stopcopy size to
-> be part of pending_size as before.
+> A prior attempt was made to not use this counter but query directly from
+> all the modules in a QMP handler, but it exposed some complexity not only
+> on migration state machine race conditions (where the query may be invoked
+> anytime of the state machine), or on locking implications (where some of
+> the query hooks may take BQL, which is illegal at least in a QMP handler).
+> For more information, see:
 > 
-> However, when there're data only can be migrated in stopcopy phase, it
-> means the old "pending_size" may not always be able to reach low enough to
-> kickoff an slow version of query sync.
+> https://lore.kernel.org/r/aeZMtxqrKWAMKzdN@x1.local
 > 
-> It used to be almost guaranteed to happen as all prior iterative modules
-> doesn't have stopcopy only data.  VFIO may change that fact by having some
-> data that must be copied during stop phase.
+> This oneliner will resolve everything, except that it is not as accurate.
+> The hope is it is a worthwhile trade-off solution, after knowing above
+> challenges.
 > 
-> So we need to make sure QEMU will kickoff a synchronized version of query
-> pending when all precopy data is migrated.  This might be important to VFIO
-> to keep making progress even if the downtime cannot yet be satisfied.
-> 
-> So far, this patch should introduce no functional change, as no module yet
-> report stopcopy size.
-> 
-> This paves way for VFIO to properly report its pending data sizes, which
-> will start to include stop-only data.
+> Now, there is one more reason we should make each invocation of
+> save_live_iterate() to be lightweight, because this counter will only get
+> updated once for each loop over all save_live_iterate() hooks when present.
+> But that's always the goal.
 > 
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  include/migration/register.h |  7 ++++
->  migration/migration.c        | 65 ++++++++++++++++++++++++++++++------
->  migration/savevm.c           | 10 ++++--
->  migration/trace-events       |  2 +-
->  4 files changed, 70 insertions(+), 14 deletions(-)
+>  migration/migration-stats.h | 7 +++++++
+>  migration/savevm.c          | 7 +++++++
+>  2 files changed, 14 insertions(+)
 
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
