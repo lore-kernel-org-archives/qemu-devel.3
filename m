@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E8BAF94CBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 21:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 455A5FA1FFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 21:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFfLS-000808-7W; Wed, 22 Apr 2026 17:42:54 -0400
+	id 1wFfLU-00080z-Cq; Wed, 22 Apr 2026 17:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFfLP-0007xX-Dz
+ id 1wFfLP-0007xh-MM
  for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:42:51 -0400
-Received: from p-east2-cluster1-host5-snip4-10.eps.apple.com ([57.103.76.93]
+Received: from p-east2-cluster1-host3-snip4-4.eps.apple.com ([57.103.76.7]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFfLN-00073l-H9
+ id 1wFfLN-00073Z-JK
  for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:42:51 -0400
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPS id
- 8467F180021C; Wed, 22 Apr 2026 21:42:48 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJAU1fDl4fBBdGGVUERx5dVkAZGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCC0oCWQVZB14LSgdfGloDXVQXWwxaDlYwTBZDH1IPWxNNGVEBUkVUAgdYRxRHDg8TTAtHAlo0Vh9UGVoD
+ 3BA5018006EB; Wed, 22 Apr 2026 21:42:47 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJAU1fDl4fBBdGGVUERx5dVkAZGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCC0oCWQVZB14LSgdfGloCXVQXWwxaDlYwTBZDH1IPWxNNGVEBUkVUAgdYRxRHDg8TTAtHAlo0Vh9UGVoD
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
  s=sig1; t=1776894168; x=1779486168;
- bh=9mILSLYmqc5xAiH5ZnQxEwcrk4EQka2pJwYrbsNFZ5I=;
+ bh=xC+Bs3uetls1lV4cbRHxGlDX60WBtwmt4XZ2tgs35W4=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Uo7oqjr0aQv697V23aBykjkY5/gNxakz1AhQIFFZu1svI3age8jxuYNVu+S3xOpCdb3CT45LwraPYQkLaZxN9ftCYxayFQNNh9+gdnAMkNYs6s/5k5fcX4Jj1C3Nng0Nwu/bxM2NwjtghsVL30dYIxWoCraQUtCsJhEIgdOulaaTzDdDedYGEYsO43O3hcxrw+DwVgNsaVlrN7CzSgQem49NLfPxAtyzz3IiB8PJew/p2hir19SRO7UlUNSSRDHyJ57wpIywS9DV7X4aVbGs+k/XFHNE9KRzvxHA1z/xpM+y3O86THBjInLMNgDieiZo8Ub32mR7CGed2XFo2zV5Yg==
+ b=FX8zhnx9un9lq+vPVZR/6suJow+FoEhwvsex4G9QGjBpFeRiLskhaGCAUdw/ZwvXWif0AnE7u93dv/0rywtMCnLuFyC1XC/sZmPPVx3kNFpW9n35aEBY2pHXxOXiNdqmhgsnHJy19layazFBqA2f4f4cgr9bNwvktKl/tW8j8BLLaPpVSqAq+aexhR392mc+8SrevRzly5d8/+EhWzgtf9BtmAMraaJx3u8x1SbH+0E8mhBwOnJM6RICwIKm0Ffykgu9mrkhH36tOnE7NKsi/SV7YnZjWUBBiKn5yXYgf93Bd/DEakHQfBT1O0U2r0CLBmahd+zdz+ewhr3+s7uALg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPSA id
- D2CA91800227; Wed, 22 Apr 2026 21:42:46 +0000 (UTC)
+ F33FD18006EF; Wed, 22 Apr 2026 21:42:44 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
@@ -44,36 +44,35 @@ Cc: Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 10/37] whpx: i386: disable kernel-irqchip on Windows 10
- when PIC enabled
-Date: Wed, 22 Apr 2026 23:41:58 +0200
-Message-ID: <20260422214225.2242-11-mohamed@unpredictable.fr>
+Subject: [PATCH v3 09/37] whpx: i386: use WHvX64RegisterCr8 only when
+ kernel-irqchip=off
+Date: Wed, 22 Apr 2026 23:41:57 +0200
+Message-ID: <20260422214225.2242-10-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260422214225.2242-1-mohamed@unpredictable.fr>
 References: <20260422214225.2242-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDIxMSBTYWx0ZWRfXxx17pSEF/3/3
- GNw0NNrEqWUNGkT/TX5lB1yIDmet4YGeVRBCa9w58cwH22pj8jPOMZYmnDvrkNx3sVX6/v8vMFa
- I51sz4nZJIy9cWFgvXEqbpKk4kEa6+ehKv1c2RUl5EWW4wFkwLeMhOTRzCi6Aq0Pomw51asGF8h
- lCVAkFGgx1y6HxGeAo4yxMuu6I6+R7wVIs+i0dcp0xuNgCJSyK1hqVsOrj9Nrs5wSyajmINK1fR
- +SodBfOT0Qj068NhD+Wt2NCk6BZkz8XfkUUw8qUbGugq0sFMUQ0S7HK1LwOVQOisWFIOdalbVmA
- o/mxu3zZwy8JXbQprITwwtMba0KEWvGdgdAWHes/75uETNQzuL1Rj4DaJzQuHE=
-X-Authority-Info-Out: v=2.4 cv=f6tFxeyM c=1 sm=1 tr=0 ts=69e940d8
+X-Proofpoint-ORIG-GUID: Z5xbyGaJV_Pcac9j1vRLLqbhhM1-6Ptm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDIxMSBTYWx0ZWRfX1cBEdaCOIBYI
+ eFHc9mYgGClgsMvCEs8kl8TlAmJrihicnPiqjpEf82VCBYRNEqWAcmjVfFcLpStA8Udm0kF6wvW
+ WeRznUely+ou/1QLaeUabqA4T9t9aGYx0eZ7b7LY27WOsip/gZSM/9+x3Zns0eDs2eWljTXvwOB
+ nfKpXOyqBvQBjNntsBjt7ObET6JRi8pjjt0az3d6fuo3p11eOr/pGFJu31yjIdXFcC3P7JtfJDS
+ vu/ZV+eVp+FdWmno+Y2WITWiuWUgfpehT5w16BrvE/fPUPF9nBV3BuizdPMQ7bDH6ERoC9qsq+H
+ +flNOQVWZk7CRG8w6ePvq6EpJrPEn+Zp2TaLoT8t+KCShfjkeKxVYlgSoCE3z0=
+X-Authority-Info-Out: v=2.4 cv=Kf/fcAYD c=1 sm=1 tr=0 ts=69e940d8
  cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
  a=YrL12D//S6tul8v/L+6tKg==:17 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=nUl_a9z44qMLw6SsMv4A:9
-X-Proofpoint-ORIG-GUID: dEDTRDJ00G0ti5xVmv08yGFfIq_aEtIG
-X-Proofpoint-GUID: dEDTRDJ00G0ti5xVmv08yGFfIq_aEtIG
-Received-SPF: pass client-ip=57.103.76.93;
+ a=CtoYo02lv3ougeLbNZoA:9
+X-Proofpoint-GUID: Z5xbyGaJV_Pcac9j1vRLLqbhhM1-6Ptm
+Received-SPF: pass client-ip=57.103.76.7;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,118 +88,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move WHvCapabilityCodeProcessorPerfmonFeatures queries
-as that's how we distinguish if on a legacy OS.
+When kernel-irqchip=on, manage TPR as part of the APIC state instead entirely.
 
-Now that Windows guests are booting, disable kernel-irqchip=on
-by default for Windows 10 when the PIC is enabled.
+This fixes some failure to set state errors.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 69 +++++++++++++++++++++----------------
- 1 file changed, 39 insertions(+), 30 deletions(-)
+ target/i386/whpx/whpx-all.c | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 03c146dfb8..ab8e97787f 100644
+index d470c5b9d3..03c146dfb8 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2523,6 +2523,13 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         0x80000002, 0x80000003, 0x80000004, 0x80000007, 0x80000008,
-         0x8000000A, 0x80000021, 0x80000022, 0xC0000000, 0xC0000001};
+@@ -95,7 +95,6 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
+     WHvX64RegisterCr2,
+     WHvX64RegisterCr3,
+     WHvX64RegisterCr4,
+-    WHvX64RegisterCr8,
  
-+    X86MachineState *x86ms = X86_MACHINE(ms);
-+    bool pic_enabled = false;
-+
-+    if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
-+        pic_enabled = true;
-+    }
-+
-     whpx = &whpx_global;
- 
-     if (!init_whp_dispatch()) {
-@@ -2594,6 +2601,35 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
- 
-+    /* Enable supported performance monitoring capabilities */
-+    hr = whp_dispatch.WHvGetCapability(
-+        WHvCapabilityCodeProcessorPerfmonFeatures, &perfmon_features,
-+        sizeof(WHV_PROCESSOR_PERFMON_FEATURES), &whpx_cap_size);
-+    /*
-+     * Relying on this is a crutch to maintain Windows 10 support.
-+     *
-+     * WHvCapabilityCodeProcessorPerfmonFeatures and
-+     * WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks
-+     * are implemented starting from Windows Server 2022 (build 20348).
-+     */
-+    if (FAILED(hr)) {
-+        warn_report("WHPX: Failed to get performance "
-+                    "monitoring features, hr=%08lx", hr);
-+        is_modern_os = false;
-+    } else {
-+        hr = whp_dispatch.WHvSetPartitionProperty(
-+                whpx->partition,
-+                WHvPartitionPropertyCodeProcessorPerfmonFeatures,
-+                &perfmon_features,
-+                sizeof(WHV_PROCESSOR_PERFMON_FEATURES));
-+        if (FAILED(hr)) {
-+            error_report("WHPX: Failed to set performance "
-+                         "monitoring features, hr=%08lx", hr);
-+            ret = -EINVAL;
-+            goto error;
-+        }
-+    }
-+
+     /* X64 Debug Registers */
      /*
-      * Error out if WHP doesn't support apic emulation and user is requiring
-      * it.
-@@ -2606,8 +2642,9 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
+@@ -478,8 +477,11 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+         vcxt.values[idx++].Reg64 = env->cr[3];
+         assert(whpx_register_names[idx] == WHvX64RegisterCr4);
+         vcxt.values[idx++].Reg64 = env->cr[4];
+-        assert(whpx_register_names[idx] == WHvX64RegisterCr8);
+-        vcxt.values[idx++].Reg64 = vcpu->tpr;
++        /* For kernel-irqchip=on, TPR is managed as part of APIC state */
++        if (!whpx_irqchip_in_kernel()) {
++            WHV_REGISTER_VALUE cr8 = {.Reg64 = vcpu->tpr};
++            whpx_set_reg(cpu, WHvX64RegisterCr8, cr8);
++        }
+ 
+         /* 8 Debug Registers - Skipped */
+ 
+@@ -735,11 +737,14 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+     env->cr[3] = vcxt.values[idx++].Reg64;
+     assert(whpx_register_names[idx] == WHvX64RegisterCr4);
+     env->cr[4] = vcxt.values[idx++].Reg64;
+-    assert(whpx_register_names[idx] == WHvX64RegisterCr8);
+-    tpr = vcxt.values[idx++].Reg64;
+-    if (tpr != vcpu->tpr) {
+-        vcpu->tpr = tpr;
+-        cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
++
++    /* For kernel-irqchip=on, TPR is managed as part of APIC state */
++    if (!whpx_irqchip_in_kernel()) {
++        tpr = vcpu->exit_ctx.VpContext.Cr8;
++        if (tpr != vcpu->tpr) {
++            vcpu->tpr = tpr;
++            cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
++        }
      }
  
--    if (whpx->kernel_irqchip_allowed && features.LocalApicEmulation &&
--        whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2) {
-+    if (whpx->kernel_irqchip_allowed && !(whpx_is_legacy_os() && pic_enabled
-+        && !whpx->kernel_irqchip_required) && features.LocalApicEmulation
-+        && whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2) {
-         WHV_X64_LOCAL_APIC_EMULATION_MODE mode =
-             WHvX64LocalApicEmulationModeX2Apic;
-         hr = whp_dispatch.WHvSetPartitionProperty(
-@@ -2669,34 +2706,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
+     /* 8 Debug Registers - Skipped */
+@@ -1745,7 +1750,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+ 
+     /* Sync the TPR to the CR8 if was modified during the intercept */
+     tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
+-    if (tpr != vcpu->tpr) {
++    if (!whpx_irqchip_in_kernel() && tpr != vcpu->tpr) {
+         vcpu->tpr = tpr;
+         reg_values[reg_count].Reg64 = tpr;
+         qatomic_set(&cpu->exit_request, true);
+@@ -1787,12 +1792,14 @@ static void whpx_vcpu_post_run(CPUState *cpu)
+ 
+     env->eflags = vcpu->exit_ctx.VpContext.Rflags;
+ 
+-    uint64_t tpr = vcpu->exit_ctx.VpContext.Cr8;
+-    if (vcpu->tpr != tpr) {
+-        vcpu->tpr = tpr;
+-        bql_lock();
+-        cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
+-        bql_unlock();
++    if (!whpx_irqchip_in_kernel()) {
++        uint64_t tpr = vcpu->exit_ctx.VpContext.Cr8;
++        if (vcpu->tpr != tpr) {
++            vcpu->tpr = tpr;
++            bql_lock();
++            cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
++            bql_unlock();
++        }
      }
  
--    /* Enable supported performance monitoring capabilities */
--    hr = whp_dispatch.WHvGetCapability(
--        WHvCapabilityCodeProcessorPerfmonFeatures, &perfmon_features,
--        sizeof(WHV_PROCESSOR_PERFMON_FEATURES), &whpx_cap_size);
--    /*
--     * Relying on this is a crutch to maintain Windows 10 support.
--     *
--     * WHvCapabilityCodeProcessorPerfmonFeatures and
--     * WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks
--     * are implemented starting from Windows Server 2022 (build 20348).
--     */
--    if (FAILED(hr)) {
--        warn_report("WHPX: Failed to get performance "
--                    "monitoring features, hr=%08lx", hr);
--        is_modern_os = false;
--    } else {
--        hr = whp_dispatch.WHvSetPartitionProperty(
--                whpx->partition,
--                WHvPartitionPropertyCodeProcessorPerfmonFeatures,
--                &perfmon_features,
--                sizeof(WHV_PROCESSOR_PERFMON_FEATURES));
--        if (FAILED(hr)) {
--            error_report("WHPX: Failed to set performance "
--                         "monitoring features, hr=%08lx", hr);
--            ret = -EINVAL;
--            goto error;
--        }
--    }
- 
-     /* Enable synthetic processor features */
-     WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS synthetic_features;
+     vcpu->interruption_pending =
 -- 
 2.50.1 (Apple Git-155)
 
