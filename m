@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE78F9EDC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 12:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A506F9EDC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 12:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFX4i-0005yk-88; Wed, 22 Apr 2026 08:53:04 -0400
+	id 1wFX5n-0007Kg-Le; Wed, 22 Apr 2026 08:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFX4d-0005vF-29
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:52:59 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1wFX5i-0006wc-11
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:54:06 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFX4b-0005SN-CC
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:52:58 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43fe62837baso3302194f8f.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 05:52:56 -0700 (PDT)
+ id 1wFX5g-0006Co-EC
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 08:54:05 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso56164305e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 05:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776862376; x=1777467176; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1776862443; x=1777467243; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XRTiu65oEEP/NVXKQGmyzqv/GBntii32+7VLEeXU9Tc=;
- b=gyHW7rG8C8QZflsWVCFeA3+wYVi8bdRtLVlwYvpaVSNM9QxnjT0YtLfGS90U4EftSm
- cWpCVQTQzjLqNDK9b3oME4iVnUXy+J6AwbFLR4OfS5Zvs38L3XkDUXt+MY2leN91334t
- iVNsCGO5E5nH3f2KaMEBXzDeoPRr++BonY0ZFpsMC9i9017rkJQFPiExljNf9cQhDjer
- t+JQ4C99uFatvSLR4rMYfuPbiA8z0tEbRf92PWDSf4/MjBCkEhKVoKy0YwkS3RLFG5Bc
- Oef939WYPJAuHZmuo8nqAq4J1vHnEvRk28hATIlc86U6MzOIrjMzOTbOsf7KomH2Paq9
- iPNQ==
+ bh=00AJ7UrUeXPy7ZqKcucMiGTlG4wrum92TpmohAq+VBM=;
+ b=yPBUgZsIdLaQU/x6QlxIdhfwtYEn6sLvFOuNq4DyLMJ1jhpxuT5xi7FxulTcbF4eeO
+ Fl8qDfl3IyqJBVoT8DPhDVf43RZyuhWkzmvHkWfRcDLm/i3k864ihv0fVrjVy14IMekt
+ 5so1hp6yUOUs3/3Fy0ZrUKx8D9F4BhsHIDk+tUYxNFLF4jfEd8zzbudAQTKHekl6OVAq
+ shoVYkY83D3RAWnZiQMAdrkU9USjXGiVv/av2VFAVfRN+zPE8tYY1Tcfc6Hsrs9eDspc
+ /fm+LmDsUXMOdvUJqE+9I/WmDF6TON9f88zzBY1VH3X6FsJoDomR3wCq5Y5h/uYoH8we
+ kjoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776862376; x=1777467176;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XRTiu65oEEP/NVXKQGmyzqv/GBntii32+7VLEeXU9Tc=;
- b=Al+NreeoQxRelI1TfOh/giR/hUZHMurxDfKH3U/k6+LAQWUfpAaF6CeAgi2HufcUXL
- JH/RaITnEafj0pw5sZeVNcZSuxTM8m+D5jv9EHHpWpvobVqjyc8cnmRgush5H6iFiNHN
- dwAIILanms6EImJKLJ8XX9ft+VOxemexS0FKZbEAjN9jAhm4ei9INqgZPDjRl7dJvEed
- QvEql0UiOlcViZ6TxL0hjQfOSqVk37H62m6UhIuhXXTnoBaCRTsfvLrxukQM+JFrE/YD
- fwndhWI/PULY9kMOFsmo/KPOhg2OLV6oHjk8imMVPLlv8swKhyo/XjOdxCpldtsiFacP
- QptA==
-X-Gm-Message-State: AOJu0YxW1G8p4aSolIC6GOwjhNliSGcJT0xh0sATYIItff7RQq4DtSRi
- vRUXjQGA0Pto6y52U6qJyefMDVMi889nqSqw2xL4DRQe9mxOPVHxyORFYXcrXgPzI9Q=
-X-Gm-Gg: AeBDieu/RP1z3aLbLPD7uc8DBGKEJa81c/tIX08o6mV0LaD+nSYgIw4pAspwb4bGMyS
- 34cjFlyLqpfW1GH5oJlad5UzBVPxrwt1c/qmL4I48HWwh57CCWMTKw8PxE2AGd9LTs4NUADcdfY
- 56Vu4ov4MbayBaMDC3XY0sEeoMfauewwP9/oe7t7D5+vhhlQJXFOFtq8kGzxxwSMXeooN/5+HA1
- F0nkWl0lDkm3crdxo8jAV0ZAX7eKkk+A/TUTu4bhWrxHJDDfutkx7GSAEV5ipRDQ6gmfbbXdfpd
- nVGjglE/T6p+f6f3UFNNbkGaWX/IYIArN86jzB1jI0Q8o9pGQT2ACNfZJ3ZhtH1dzQWLF4joDXo
- zQOcuH5ff3nJOnyQG7VT6DzypkzhEPcIrh/NZV3y5O3/Apkpy873Cyu94CVx/IQrqrnEooufAWY
- RyMclPLEy9ep/ov33H09j6bF/Zarj+NbQxgw==
-X-Received: by 2002:a05:6000:2207:b0:43d:6a02:b7ad with SMTP id
- ffacd0b85a97d-43fe3da668bmr32520165f8f.4.1776862375765; 
- Wed, 22 Apr 2026 05:52:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776862443; x=1777467243;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=00AJ7UrUeXPy7ZqKcucMiGTlG4wrum92TpmohAq+VBM=;
+ b=WpH6gV9Cut3t/xAnqJNcd72QMrv1E8HEsGekFRI/p1hSMHbyPWixFgruhHzGC/fM1W
+ S6qovBpfQAr3vqIHSQP85m2WdTZhzL7WIFf3eZxLXYT+Bm4KN+mHVGv01lk18TMuCGal
+ 8HNvjVJIaGRZj3R7VVzn3Ey9gkeuFkDhZscra4kowR/wWVFm0QGafjpNTNkz4giTJqc8
+ W5KxiE45m3flpDFfOTQDFBb5zZXQL4VpldUxExJ4Fneli/9YJFpyo8iC+zuxukn7Qobk
+ y3+6W7dZZPyJpsE1xlJuVQsEPC9otawE+JLzQ7vo5rWZNlEOrUe+23urzOucigW2m3c1
+ /lJw==
+X-Gm-Message-State: AOJu0Yz2Bq9ouhq3yDmHY6b8YrhJG4kIGiThhg1z3kBnpPl1m37eY7bk
+ vCG/hy0+oP2UL0PK1rnnmgbWTaG/+cH8ds25I9qaj+5o5j4eFhxQ+XKw7wKmDcOq6pc=
+X-Gm-Gg: AeBDieupgPlHzKlIFvCU2B47tNB7+McDRPboCPsr/Xo6/sfGMesdUf+ZCtfJm7+XDFj
+ M6mc09Bv/74S4NJnc0Dk5ifkISYdhVg+9Q6wUaB0pjSXKHq6SwgJ5jYHuwWMStuf+pM643XjQlx
+ hnLLYbOiFKJWzBKB/FjJvtyIFGtPqlUuV5TfjDeEkQEtBxZjKKwU9hO81N5isxihORcR/3hSKxH
+ mFHDoQRkllAvombL7fly+qlZhQdfoTzfqDSZw9aYSsLst1rxShFe869fw8L/T7T/AEPOOdnuwKV
+ ethxmmvo1aE+TITpNqws6LrZDBB+5NMrI+QKPY4yOcBkPQzixfvIDWOpf0fdoJp7d+Nn9rFE8Sj
+ Vbh7fGoA3tTKiLcHxigdm1PuVYIcjJb40fSocElGC7SpKA3FWdCDyz6y4UFdoDeVYiQusYVzdW4
+ WqCsiDzfpCB7ob4F+lcNk9+fk/tUpv9xm5UAtZYSkKjEah
+X-Received: by 2002:a05:600c:4f0c:b0:489:1c1f:35e6 with SMTP id
+ 5b1f17b1804b1-4891c1f38c8mr201641885e9.6.1776862442605; 
+ Wed, 22 Apr 2026 05:54:02 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cb1365sm48295853f8f.7.2026.04.22.05.52.51
+ 5b1f17b1804b1-488fc0f82bbsm753110215e9.3.2026.04.22.05.54.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Apr 2026 05:52:52 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 46D9A60338;
- Wed, 22 Apr 2026 13:52:51 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Wed, 22 Apr 2026 05:54:02 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 38A1C60342;
+ Wed, 22 Apr 2026 13:54:01 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Alexander Graf <agraf@csgraf.de>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 04/32] target/arm: migrate eret trap syndromes to
- registerfields
-Date: Wed, 22 Apr 2026 13:52:21 +0100
-Message-ID: <20260422125250.1303100-5-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260422125250.1303100-1-alex.bennee@linaro.org>
-References: <20260422125250.1303100-1-alex.bennee@linaro.org>
+Cc: Alexander Graf <agraf@csgraf.de>,  qemu-arm@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Mohamed
+ Mediouni <mohamed@unpredictable.fr>,  kvm@vger.kernel.org,  Pedro Barbuda
+ <pbarbuda@microsoft.com>
+Subject: Re: [PATCH v2 00/31] target/arm: fully model WFxT instructions for
+ A-profile
+In-Reply-To: <20260422101043.1234229-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 22 Apr 2026 11:10:11 +0100")
+References: <20260422101043.1234229-1-alex.bennee@linaro.org>
+User-Agent: mu4e 1.14.1-pre3; emacs 30.1
+Date: Wed, 22 Apr 2026 13:54:01 +0100
+Message-ID: <877bpzxija.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,43 +107,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For simplicity keep the OP as a two bit field rather than the two
-interlinked fields in the docs (ERET/ERETA).
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/syndrome.h | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+> This series fully models the behaviour of WFxT instructions. We
+> already had support for WFE for M-profile but we left off A-profile as
+> it has more potential sources of wake-ups. The main one is the event
+> stream which includes events from significant bits of the timer
+> ticking over.
+>
+<snip>
+>   target/arm: enable event stream on WFE instructions
+>   target/arm: implement WFET
+<snip>
 
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 72051443d59..63c8e66ea91 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -367,12 +367,21 @@ static inline uint32_t syn_sve_access_trap(void)
- }
- 
- /*
-+ * ISS encoding for an exception from an ERET, ERETAA or ERETAB
-+ * instructions.
-+ *
-  * eret_op is bits [1:0] of the ERET instruction, so:
-  * 0 for ERET, 2 for ERETAA, 3 for ERETAB.
-  */
-+FIELD(ERET_ISS, OP, 0, 2)
-+
- static inline uint32_t syn_erettrap(int eret_op)
- {
--    return (EC_ERETTRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL | eret_op;
-+    uint32_t res = syn_set_ec(0, EC_ERETTRAP);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
-+    res = FIELD_DP32(res, ERET_ISS, OP, eret_op);
-+
-+    return res;
- }
- 
- static inline uint32_t syn_smetrap(SMEExceptionType etype, bool is_16bit)
--- 
-2.47.3
+I've posted v3 to handle the missing WFE exception and fix a minor
+syndrome bug on the WFET exception.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
