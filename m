@@ -4,102 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988CFFA1FD3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE19FA1FD0
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 16:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFaJx-00032x-Bs; Wed, 22 Apr 2026 12:21:01 -0400
+	id 1wFaK7-000360-Eu; Wed, 22 Apr 2026 12:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wFaJv-00032b-70
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:20:59 -0400
-Received: from mail-eastus2azon11011010.outbound.protection.outlook.com
- ([52.101.57.10] helo=BN8PR05CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFaK6-00035E-9T
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:21:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wFaJt-0000LA-BG
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:20:58 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IMHig6uSU6RJfBpgl24vGbK4e1KYXsm8Y31K169gjR6Xk/1aFw8hIVYZLLoCr1YhpkAWqcbNo4CvmGXdPV2Ot3p3k7Vaw08JYfmPKydMpmHsY/SbdXpC41CZOm+qrxJi9nafJBCdplSCactIuqbamzfj9AylyheuZPMwVbkC/7ScHo2XzFZMDGa4ZYbZcEYoAOnGvWxQJmV7So1rJahVyhiUf4IgwfsrBbAF1oz2DpzjxF1wlUEXSJTFac2bCH+xIiRAzmmsgHteZOfvOKIeOMUocLvj2TGlC4Y4B8QOkjj4WL8J12XJFcQ/PsgXN8hRJ/KlnfSJLKeJFXvacSDYSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UfjJeucrtflYRYwqM+XIcMJRTFhTNKhCUyZ8yjyam/w=;
- b=Ef4Wy1yPASbjLvZxkuL/qWORKL53mt/zp0pHmuQt6DPFeMqg4Pbw8L4Ur+hk1G+Tytt9nvklr08IVeG2ZpJzIDvjEvWq7WT7Brm97V6qSN0j/Ro6W7IFcwzFD6m4KCHIquZjzE9ZzJm+F3TPuBw/0rEkBqtyCghvbDyM2OU7XFg9LRbWC2RsIielmeAPAN36m8gRdDq6bApugoHm1xMeAJPWRXvDu+K5/HkDB+TzE+ml93OzplqnbacnUB/bQsFXrfO3CTBDb63suPupiaD2e57AnULRTzpPWeIC9O51ONhdpTHJQogCMGPCPIcxdiVJw5dTwVk1M1ayZERsMOtbyg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UfjJeucrtflYRYwqM+XIcMJRTFhTNKhCUyZ8yjyam/w=;
- b=JqOjn6hfx4agRmN+jyNU1Lg+yM+1PQZce3l7mrk+eD/YVD1bxs3r7KitsS8HA4o3wbdmWlUul50F26MXyyiBQS/NsJCQ9Wb1Hg6wDyV42eQ/WnRVihnm0D6zDZVa320lHJvyaPLPPqE5DGykdcOXZiHKxV/QMM3YIAJ30BXpMiE=
-Received: from SJ0PR03CA0226.namprd03.prod.outlook.com (2603:10b6:a03:39f::21)
- by SJ0PR12MB6942.namprd12.prod.outlook.com (2603:10b6:a03:449::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.20; Wed, 22 Apr
- 2026 16:15:49 +0000
-Received: from MWH0EPF000C6185.namprd02.prod.outlook.com
- (2603:10b6:a03:39f:cafe::24) by SJ0PR03CA0226.outlook.office365.com
- (2603:10b6:a03:39f::21) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9791.48 via Frontend Transport; Wed,
- 22 Apr 2026 16:15:49 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000C6185.mail.protection.outlook.com (10.167.249.117) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9846.18 via Frontend Transport; Wed, 22 Apr 2026 16:15:48 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 22 Apr
- 2026 11:15:47 -0500
-Date: Wed, 22 Apr 2026 11:03:55 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <peter.maydell@linaro.org>
-Subject: [ANNOUNCE] QEMU 11.0.0 is now available
-Message-ID: <lfvqs3kqiaqltw6xlolu224gz32sp4ziggbfbtyldhf6ydre7m@efqv6sb5riff>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFaK4-0000QL-AH
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 12:21:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776874867;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=D3oZ+nvxWZxC+L1bBsE3B1EU3wg6dfaeSq3qR93WOyk=;
+ b=YxbpbiYXkHWjsW+ayvba/kht741+yZuqAGb0SywiOvV/GFbVKMNrRx5Dr+Em+ueoiv+pym
+ jd2HTlrIurjF7PDDCTSaQ6Zrf3vWIF003B/P/vZYbbF/rItxTVefCpWarI1r/m+mVd6VeS
+ mF6dfgx7ioLWzpEGaIGz/HV71UelVt8=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-483-0YbGGXqhPq22ucQQ96TtIg-1; Wed, 22 Apr 2026 12:21:04 -0400
+X-MC-Unique: 0YbGGXqhPq22ucQQ96TtIg-1
+X-Mimecast-MFC-AGG-ID: 0YbGGXqhPq22ucQQ96TtIg_1776874864
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8acadca1ac4so165862176d6.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 09:21:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776874864; x=1777479664; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=D3oZ+nvxWZxC+L1bBsE3B1EU3wg6dfaeSq3qR93WOyk=;
+ b=KJTQktGRpwTnOeNsueISKJpI9soaamMEWx6EkNBEKJOnZ7ol5fX0neiJ+NS7jGjV+n
+ 9iDJ3IfCi8PrFxHR3wsChqI+9mlezEPehgy+K6hyGNCxNidYbIGbsMFv/u2ALyuC17lP
+ GhPpxsX3V9jm66htBhIrHYAtDny/V1av7s6LDdsV31Jg55fc6gethgZaBrokMzxHUifW
+ J5TCow1G2FPctDODH8KypbHpMXOuNS/ZXDCzuJ4rg4glp3kLfTA93lx8Gg7A5/itWMvY
+ 6JfnmM5NeYWYxyMSQXGLwkZujfeRcirRohvBQ4aujavDAqoEwKuvAtxiqGkZR/goSzEX
+ TQww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776874864; x=1777479664;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=D3oZ+nvxWZxC+L1bBsE3B1EU3wg6dfaeSq3qR93WOyk=;
+ b=BmIv3/FUA80S6r54+L4NueQ8DJzsMKEgSFER36WpPzb7FyxKFnCFvJGwywlBdzoVKV
+ SL+zuA1idQ3s5cc6Veizv/lzsRv1ZN4pli0tU+e7U6g0Alwx0DnMAVUO/G9CRDuOfKjE
+ 6b5axOUT+fDVeiGGkGAWYgNe/p/+lV/duwRhIa9SPjXKVC+M+eFdoQq2S8XC4kfX1KOJ
+ 2M+53JfKZPUzfGw7zM/1y/d0qnMJIg2EbxTiaIirw4Pe6X9+Mxb49yet6bYq5xcCQ4ku
+ HAt2We7qeI/0dXNc5CpEveaDN6wHM9D8sZE9tFObwFT4/HFFBMR6P5NjTrWZ2zZazrQp
+ C8mA==
+X-Gm-Message-State: AOJu0YwipxfMKMPM4s/tR/bHyAAAVBTBTeeYL9G+nwnkTmE89zwIlywU
+ ypv/wwW4x7ttpBOp0cIoy0MsobjH74Da8hlCkKXiZrEjjBSt09NaoGMV2NeJqOGBTuwsAs4uDDd
+ IqwXYwdz5U8SQrToN7+k8cpCqGeop75iS1hNI8iWoYGt1p+JMb81vebgO
+X-Gm-Gg: AeBDiesRiVHqYlXf+WA4NtkIaEORAewn/VHpmtmQ1hFngGI1gGbHiLA99RuwzkOeGrr
+ E2faiCWNvPTHF3McyVrviqDwUra3WlBJL7XwPervbpAr2f/qfpW5z/r5YLRM4Rluc6PjfxJ6hRI
+ +pwA4aqjCEKEdULClvSowxZoFKcfrUQqlP4b+7AzvHAPAOnY9wkuc0ChGcv72U8c6ynJkWVg+OX
+ UGm8ybA0UXZrLnspVz2Bb5AzZLt+LVajzNhm8lylqFh3DEJ5cri/f/6TU/kQ0kbn4XrjHgXN+ZR
+ S6ObBgJyspjBA7r4o5pdCzv1xQe4kmF4Ga7MtvrAN87FsXg8vqmjzKfdJX57TmckNk3rduYbHpz
+ NG8e115VktC+nU9Hzz5mX5IF5x6q/0UqXRW+eRZh9YTr0BQV98rCOQi00cw==
+X-Received: by 2002:a05:6214:226c:b0:8a6:1216:fb6f with SMTP id
+ 6a1803df08f44-8b0280ef2ecmr362950966d6.32.1776874863495; 
+ Wed, 22 Apr 2026 09:21:03 -0700 (PDT)
+X-Received: by 2002:a05:6214:226c:b0:8a6:1216:fb6f with SMTP id
+ 6a1803df08f44-8b0280ef2ecmr362950136d6.32.1776874862822; 
+ Wed, 22 Apr 2026 09:21:02 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8b02ac6f670sm161996986d6.14.2026.04.22.09.21.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Apr 2026 09:21:01 -0700 (PDT)
+Date: Wed, 22 Apr 2026 12:21:01 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration/vmstate: replace NULL pointer assert with
+ proper error
+Message-ID: <aej1bZlPKPuhT32C@x1.local>
+References: <20260421155219.14506-1-viking4@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000C6185:EE_|SJ0PR12MB6942:EE_
-X-MS-Office365-Filtering-Correlation-Id: a7c44beb-55e6-43ae-5508-08dea08a6a80
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|1800799024|376014|82310400026|13003099007|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: w1lp6LRFCDbb8E5YpShUA6iXpnt2MWCbO+q/S9doMDW/Oc9koM/oDEwlVN4Kyfm1EoNsJdgTGErn8d71TC9YFwXnWe5/hKEXobzwrx0e2buBGF4HTMMQ1PtEHk60lrw19tcJDeGkdcqgUyU6wJc6oRQOwCbNxgzxY4lxL/a6HwPQI6/51jT2587Ta7c6kk5H7hFKUxoaLGIa6wjlxVok5Jz60BbytINYl3jTN30kpHCqHStYvDMTKs6Y2hCaChL5SOJrWoIggzvBpn7DZcM95Vd9308fvt+Z0cgJdwNaYArdvPGVznuCpbhAXmqr4HIIZxX5XBSQnRk9d4A7Fm0Ut9irMQqEy9XJjjUdLDBOrp0q9Av4lPtEomjytUiHw2dloU9zdonZMFztizXKCSoDZn/m4RioYqcPBmcrTXXKYxZ7XG3KocTnrc+yv/EOwtV1sEyQszerS7VBKuPEqA6z85B1hm+nxXo3Q05yFW4NZN5O6G75laMQpw7g6sGMt+p20UzcFGOvf3wyO2vDdbiy91H/fvg+Ldysbyl7+9pMSmRyUjrJO+2m+PSnPzj5dR6PXzCNt7Sohpmav1G7rfSFPPqXzLg6EGatYXvmlMUWhJTSHZs41+mDsMRrkFWbLhfvmF8Awl7wl21/JisSeNsAJUNkaGWCa2Sc2Hqtqmy3niAP5bWw7vqc5dkvQECC3ib8kUGOM8HAUVB02aeunKNWy6g8iSiDsoOfmuMXarAEyT8=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(1800799024)(376014)(82310400026)(13003099007)(56012099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 7qT7+tj3iHr7rH8PhN9g1jSlsz0HGDzawbxYK79IAui5264X0qRNzqjm2ziI0n8fcs18EGTi94FC6TXR6KeMSDS7x7vG9MVKbghyaESBOxd9o0YVoYLATTvGm3bHdPaNDqzbpm1LJs57cy+1IEn52fFiyn5WU8ZyF6Aciq9QiTEJ85yYOcyaA1imMZ3yR2yXxJwZyYZgi065aW7RAHaVQufi0BDx3hWwkUMPPGoySelsBJ5VNO92OiqM2RrV59SpVuL9cfAqwyB9Idgbh5tQ144C8JDLbQPPbYZqU3YtV+4qyXLBr1v6fkKav/u0evb5TsVJ7h8OxjkW4gh9e8ew14sBmvzTu0wOV4MAkEStXLDCtLFKJDw/sV437MIm2InsyCuQxPIn4nZL0QfpTp9qUIBu3/hC64v0rnR6UijYb+HmdcGI7ZiaJsCBDJ1gesZk
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 16:15:48.4582 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a7c44beb-55e6-43ae-5508-08dea08a6a80
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000C6185.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6942
-Received-SPF: permerror client-ip=52.101.57.10;
- envelope-from=Michael.Roth@amd.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
+In-Reply-To: <20260421155219.14506-1-viking4@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,56 +114,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Tue, Apr 21, 2026 at 10:52:19PM +0700, Trieu Huynh wrote:
+> From: Trieu Huynh <vikingtc4@gmail.com>
+> 
+> vmstate_load_state() contains an assert added in commit
+> ("migration/vmstate: split up vmstate_base_addr" [1])
+> to catch NULL pointer dereferences early:
+> 
+>   assert(first_elem || !n_elems || !size);
+> 
+> However, the assert fires as an unrecoverable crash in a valid user
+> scenario, for instance: loading a snapshot saved with -icount auto
+> into a QEMU started without -icount. The "timer/icount/warp_timer"
+> subsection is present in the stream, but icount_warp_timer is NULL
+> because icount was never initialized. QEMU aborts with:
+> 
+>   qemu-system-x86_64: ../migration/vmstate.c:185:
+>   vmstate_load_state: Assertion `first_elem || !n_elems || !size'
+>   failed.
+> 
+> Replace the assert with a proper error_setg() and -EINVAL return so
+> QEMU reports a clear diagnostic instead of crashing.
+> 
+> Also remove the error_prepend() in vmstate_subsection_load() that
+> wrapped the error at each subsection level, producing a redundant and
+> noisy error chain. The original error message is now propagated as-is.
+> 
+> [1] https://lore.kernel.org/qemu-devel/20170228124056.5074-4-dgilbert@redhat.com/
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2736
+> 
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> ---
+> Steps to reproduce:
+> * 1. Start src with icount config:
+> ./qemu-system-x86_64 \
+>   -icount auto \
+>   -<other_options>
+> 
+> * 2. Save snapshot
+> (qemu) savevm snap1
+> 
+> * 3. Start dest without icount config:
+> ./qemu-system-x86_64 \
+>   -<other_options>
+> 
+> * 4. Load snapshot
+> * As-is:
+> ~ # QEMU 10.2.94 monitor - type 'help' for more information
+> (qemu) loadvm snap1
+> qemu-system-x86_64: ../migration/vmstate.c:185: vmstate_load_state:
+> Assertion `first_elem || !n_elems || !size' failed.
+> Aborted (core dumped)
+> 
+> * To-be:
+> ** Before removing error_prepend()
+> ~ # QEMU 10.2.94 monitor - type 'help' for more information
+> (qemu) loadvm snap1
+> Error: error while loading state for instance 0x0 of device 'timer':
+> Loading VM subsection 'timer/icount' in 'timer' failed: -22:
+> Loading VM subsection 'timer/icount/warp_timer' in 'timer/icount' failed: -22:
+> VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
+> is a NULL pointer but snapshot contains data for it.
+> 
+> ** After removing error_prepend()
+> ~ # QEMU 10.2.94 monitor - type 'help' for more information
+> (qemu) loadvm snap1
+> Error: error while loading state for instance 0x0 of device 'timer':
+> VM load of device 'timer/icount/warp_timer': field 'icount_warp_timer'
+> is a NULL pointer but snapshot contains data for it.
 
-On behalf of the QEMU Team, I'd like to announce the availability of
-the QEMU 11.0.0 release. This release contains 2500+ commits from 237
-authors.
+Thanks again for help looking into QEMU opened issues, Trieu.
 
-You can grab the tarball from our download page here:
+I had a feeling the user was requesting for successful migrations with
+modified -icount parameters, rather than a prettier failure.  In that case
+this patch won't be enough.
 
-  https://www.qemu.org/download/#source
+I've added a comment in the issue to check with reporter.  If we need that
+feature, we may want to check with TCG developers on whether it'll work
+out.
 
-The full list of changes are available at:
+PS: we shouldn't mention "snapshot" in the error message, because it can
+also be a live migration that triggers this path.
 
-  https://wiki.qemu.org/ChangeLog/11.0
+Thanks,
 
-Highlights include:
+-- 
+Peter Xu
 
- * New "nitro" accelerator to run AWS Nitro Enclaves natively, and improved
-   support for MSHV and WHPX accelerators.
- * KVM: Support for CET virtualization.
- * KVM: Reset support for SEV-SNP and TDX confidential VMs.
- * virtio-gpu support for native context drivers and specifying a unique
-   resolution for each output.
- * TCG: in-tree support for C++ plugins.
- * NFS block driver support for libnfs v6 and various improvements to
-   curl/FUSE block drivers.
-
- * ARM: support for CPU features FEAT_ASID2 and FEAT_E2H0.
- * ARM: TCG emulation support for SME (Scalable Matrix Extension), and HVF
-   accelation of SME2 on macos (if the host CPU supports it).
- * HPPA: SeaBIOS-hppa v24 now implements the Astro PCI initializaiton
-   (allowing for PCI VGA on 64-bit systems), improves upcoming HP-UX
-   64-bit support, and has initial support for multicell machines.
-   Prior versions also have fixes and updates for 64-bit/PAT support and
-   other areas as well.
- * HPPA: Emulation support for 64-bit CPUs with 40 and 44 bit address
-   spaces, and 64-bit GDB support.
- * LoongArch: KVM PMU migration support.
- * LoongArch: TCG emulation support for LA v1.1, sc.q, llacq/screl/ and
-   estimated reciprocal instructions.
- * PowerPC: snapshot support for several ppc devices.
- * RISC-V: ISA extensions support for Zilsd, Zclsd, ZALASR, and Smpmpmt.
- * RISV-V: CPU support for MIPS P8700 CPUs, better reporting of CSR
-   registers in 'info registers', and other fixes and improvements.
- * s390: emulation support for "DIVIDE TO INTEGER" instruction.
- * s390: support for booting from virtio-blk-pci devices.
- * x86: CPU support for Diamond Rapids
- * x86: support for a new "nitro" accelerator and machine type to run
-   Nitro Enclaves natively under QEMU.
-
- * and lots more...
-
-Thank you to everyone involved!
 
