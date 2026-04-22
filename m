@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF109FA1FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C40BAFA1FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdme-0005HN-VV; Wed, 22 Apr 2026 16:02:53 -0400
+	id 1wFdmi-0005sG-MV; Wed, 22 Apr 2026 16:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlr-0004Jl-2w
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:07 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdmO-0004jd-UU
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:42 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdlp-00039N-DO
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:02 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso61296605e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:02:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdmK-0003SH-DM
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:35 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488d2079582so69044835e9.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888119; x=1777492919; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888146; x=1777492946; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FGWUqnekPtGd8GYqKaTYj2Uvkrw/01LXnqQh3k67lwg=;
- b=Cfr+p2cS/vZSzv6Swp5wFyMyxeJfTq3/S3A8YzD/CXcRthpgj8S9P6eqTC5aREM0v4
- HmaiGH5E5d8yDp7p3uPZuwmtbaE1GrgSdniu3/7SoetDw5eKvTDkM6m2/do0O2dJStsl
- YmdxO1gkcPSknHPh/lRLCX2fGYKOBXw/6SuIpZQL3UuSXPVrKpe9fSWiQJ+7quK1xa3V
- neL4rpXc3ipB8vWmu0kLM6pAW9F9FMNT8egm2GP/ARQ7WtVA8cBzbEyexGXYAXbClOpp
- Aq1Ay0zMYdCv2htxsqgMmMVYP8ye2zyTpae4ChNyIPBT2MYkiDUdekzN58oPeFVGOJzh
- TUHA==
+ :reply-to; bh=pGnenDifjZmzk41jK6DgouChFTKo2hRmu0GnXG1NcYs=;
+ b=WD27lh2HevIww0OEyLa5om0jGcXZ64Va9czvRSW3veUzB4CpxRm9mr7kT/eoqxYpjA
+ SA6P97xxh8Arcy8p0c5/mytjRFi96zGICAvzYKGPuVH33yv8LyKXNv/Jb+gt85L08izA
+ yn5WHds3ZqDOlQYy2IiT+4Q+yMuwmEiaxFtRhnVnAu7ubly89esVRudwW8NQhHIIhGds
+ TmCvcZ2fLHDIEQuwqN4nNVYw07TUf9ueH9YRYFPxckIDcIYdAfzxdqrsc7wsgTf1orMY
+ tP/SMrRJXdOA1AvbnUo5ePM4NOvpeXRsRGX/gq4RjUYUZV++lqc8wgRDv2KVrVYqhWFk
+ pvog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888119; x=1777492919;
+ d=1e100.net; s=20251104; t=1776888146; x=1777492946;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=FGWUqnekPtGd8GYqKaTYj2Uvkrw/01LXnqQh3k67lwg=;
- b=pp8IGR8W/kwsTRCI/ITQwm7U19kygI3ohqHZupFd5dl81e39l4BJDnJzTCuRzYqNjG
- V9Iv+l72X3cDcgP9OA4nrzF81x9Aigr4nMMaPzLDcnEyuHGWpKMCEeKCPz3qIpTXjIdd
- KAs4edIiE1N7iW2JwEe3awHQdEEBJoVeElnqEnu9lzY8YJG9qHwyHo5MDmQHYtz4W5kH
- 0zsXhiJyMaHwxhYud6LXl717f3n2QzRReAFWsjPiWzxBue+MBRKIHGV639cIk8JCLj4M
- wFi0dh4/OsH2QzLV0yqnlL2U9R5YclF6qT9zrfwiUYkH5Q73CxjjlMo2KHrC2woWTmBr
- l1pg==
-X-Gm-Message-State: AOJu0YwcEdx4KGgHSsreEj05bMBcSKD4qOSUD6iZqw4xTa0mxEwd04P7
- WYLfuxD7kZyhmUEukt+gE3sNUtsOsSy9DqAc54HGKgJbFDIvXU8CZdOb6o8l6eL8LWq/+Uvo7F8
- oG4pmTms=
-X-Gm-Gg: AeBDievG2CiD3bCeUwsHMuV0uo0eh5GeeDDRyyRKVH0jCsz5buXMmQfeVe1HcUt6Rfp
- Ce/vofIkDsF0GZW3dPr76vxfhXKsuc2UYZWEajUJ95XXGJQY0vZXecAIIp+tz830fXu/H6BzrkO
- 6aRao1xzqNBgUAUnWEqNgO5EnBZOEZ3Nw8s3u1ldyWq+xE8VPpT8CUhV86Z6B/XQ6uNhAkMwiGj
- jQ4LQDCjPjFUpmdi3qqQovjKrJH5nYLLUYQ0ipuE5z2k3N+ygafZo+dxiGarvpBcJoal1cIf1LP
- m8icpsuDuiltYAatF0AFs5IkW/Cz0TAlTOIY36GhiGzoSaA156Cp5ULzQ1RxagNIMKnBdoGNsYt
- rduGW1r8B0yWcM/xK4TPajhC1eBESfhU9SRXjywtTNi5hVZAdSEBlnsVJLbYd/nE3Y4kZTc1gBJ
- OPjo+OhcsbcaeOmfOSi4JCfeepOr9s4aJm2qbxFUkWeGbI/vSzDJGcL9Kad4J+VmdNB2ANE4Mfe
- +wK2/ZfXTc=
-X-Received: by 2002:a05:600c:4f0c:b0:489:1c1f:35e6 with SMTP id
- 5b1f17b1804b1-4891c1f38c8mr225565695e9.6.1776888118871; 
- Wed, 22 Apr 2026 13:01:58 -0700 (PDT)
+ bh=pGnenDifjZmzk41jK6DgouChFTKo2hRmu0GnXG1NcYs=;
+ b=rSiCqe8s6saV02/bkVVBxeFgJUguKA4s8GCjTsVI/E6KHhon21/EdC4E0HOEap2rt7
+ ynO395T5GaHCxiJJ6S2yyCmsJ9oOlSJsGgKqJ6J3FOyCIC5ZBpVBXG5VzSpYw2SAPj3z
+ 3hFABC7oeZahjp9lploU1LRPfxYjA238WzSOIC68qKcRk8rp44lkXpIPjIxLpdTVxCbu
+ 2a/haELl1IPUfZGgeugqEYr5NCztsRKVgC3EeniYagIAwfB09x7opVW1MX/ZxnbakDfI
+ wgq4WZ9Qb43aB/B3mZ+zZS7ntwwjOWaS/+OSN1KVYt3LRRCQUoPxxm4cNKvgpIEZa/5O
+ yogw==
+X-Gm-Message-State: AOJu0YwtvHt+cSpI/GuBY8ej3fv6l9Djm76UFszIE70lJ6i7Z8wSRwGw
+ mbdueT7zS8QNrDJh/xAArcSgYoGbnehBnEFk7ywx52XKIwZdZgyNO5eTcpSoBPakEMmTYQ27XFU
+ 4d04+dq4=
+X-Gm-Gg: AeBDiet3TaTJv0Uyf6QiS0E827ZogUKNQdKTkgIpAJXLD2MpJSAjSyEjIXKPUkHlNML
+ Hw3a9DJ+GkTtNSnBntOeGbep7RkOUQzlOVUvoRbQHz4cYqIq9Q0DiPJ4yI0Oo5r+sTcCMGF48I7
+ WMPcHS/NEgsafzS2lse1AIBq2DU+9zz4DHwog0Y/smkjqXQP0On5haX/w8yRMCe3oWxsnfOH8jW
+ rChOxhjsyv5VKodbIDxcLk7X19/I+XORx6R/xx0MOt5QXcVK4gP+OnrnlgIzMcjL/B71l4YZt/p
+ /uJgrLsIL9gl5pVF1FdAHPOKc7VcGvQs/Hk33tU6NgBOBt9vXrALSbz65xEkeyk3iikYKqeYLcz
+ aXXVSF+NAJM+2jMOOb9EKgUHwZS3sF6II/00DhUp3l2KAiUWFLuVgLQ/eI+5Q9NIX6VkEB/9L+6
+ la/dtPF0ZZiSRQUAhtsh3I+bMIDi0FsD7YQVQv5mSAOFprB6rFF2d3b9R4Ils6xWJ31ayUzCcSR
+ jh1r2pEybM=
+X-Received: by 2002:a05:600c:1993:b0:489:e696:836f with SMTP id
+ 5b1f17b1804b1-489e69686a7mr183865625e9.10.1776888146326; 
+ Wed, 22 Apr 2026 13:02:26 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1c0354sm439039655e9.11.2026.04.22.13.01.57
+ 5b1f17b1804b1-4891c318636sm267252785e9.7.2026.04.22.13.02.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:01:58 -0700 (PDT)
+ Wed, 22 Apr 2026 13:02:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/48] hw/arm/smmuv3: Have smmuv3_accel_init() take an Error*
- parameter
-Date: Wed, 22 Apr 2026 21:57:33 +0200
-Message-ID: <20260422195746.88865-36-philmd@linaro.org>
+Subject: [PULL 39/48] ati-vga: mask out lock bit from CUR_OFFSET in cursor
+ offset calculation
+Date: Wed, 22 Apr 2026 21:57:37 +0200
+Message-ID: <20260422195746.88865-40-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,94 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By giving smmuv3_accel_init() the ability to populate an error,
-we can fail early in smmu_realize() when CONFIG_ARM_SMMUV3_ACCEL
-is not available, simplifying smmu_validate_property().
+From: Junjie Cao <junjie.cao@intel.com>
 
-Suggested-by: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Co-developed-by: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+Bit 31 of CUR_OFFSET is the cursor lock bit, not part of the actual
+cursor address (bits 26:4).  Although the callers already check for the
+lock bit and return early, mask it out with 0x07fffff0 when computing
+the cursor source offset so the calculation only uses the address bits.
+
+Suggested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-ID: <20260414213523.1125859-2-junjie.cao@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-Id: <20260410200031.18572-2-philmd@linaro.org>
 ---
- hw/arm/smmuv3-accel.h |  7 +++++--
- hw/arm/smmuv3-accel.c |  3 ++-
- hw/arm/smmuv3.c       | 11 +++--------
- 3 files changed, 10 insertions(+), 11 deletions(-)
+ hw/display/ati.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-index dba6c71de52..1ca2c80a933 100644
---- a/hw/arm/smmuv3-accel.h
-+++ b/hw/arm/smmuv3-accel.h
-@@ -42,7 +42,7 @@ typedef struct SMMUv3AccelDevice {
- } SMMUv3AccelDevice;
- 
- #ifdef CONFIG_ARM_SMMUV3_ACCEL
--void smmuv3_accel_init(SMMUv3State *s);
-+bool smmuv3_accel_init(SMMUv3State *s, Error **errp);
- bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-                               Error **errp);
- bool smmuv3_accel_install_ste_range(SMMUv3State *s, SMMUSIDRange *range,
-@@ -54,8 +54,11 @@ void smmuv3_accel_idr_override(SMMUv3State *s);
- bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp);
- void smmuv3_accel_reset(SMMUv3State *s);
- #else
--static inline void smmuv3_accel_init(SMMUv3State *s)
-+#include "qapi/error.h"
-+static inline bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
- {
-+    error_setg(errp, "accel=on support not compiled in");
-+    return false;
- }
- static inline bool
- smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 65c2f44880a..ae031f1eccf 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -917,11 +917,12 @@ static void smmuv3_accel_as_init(SMMUv3State *s)
-     address_space_init(shared_as_sysmem, &root, "smmuv3-accel-as-sysmem");
- }
- 
--void smmuv3_accel_init(SMMUv3State *s)
-+bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
- {
-     SMMUState *bs = ARM_SMMU(s);
- 
-     s->s_accel = g_new0(SMMUv3AccelState, 1);
-     bs->iommu_ops = &smmuv3_accel_ops;
-     smmuv3_accel_as_init(s);
-+    return true;
- }
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 5570a13c8a6..5c2855c3770 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1965,13 +1965,6 @@ static void smmu_reset_exit(Object *obj, ResetType type)
- 
- static bool smmu_validate_property(SMMUv3State *s, Error **errp)
- {
--#ifndef CONFIG_ARM_SMMUV3_ACCEL
--    if (s->accel) {
--        error_setg(errp, "accel=on support not compiled in");
--        return false;
--    }
--#endif
--
-     if (s->ats == ON_OFF_AUTO_AUTO) {
-         error_setg(errp, "ats auto mode is not supported");
-         return false;
-@@ -2033,7 +2026,9 @@ static void smmu_realize(DeviceState *d, Error **errp)
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 0489995d00b..3a7d45a8820 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -147,7 +147,7 @@ static void ati_cursor_define(ATIVGAState *s)
+         return; /* Do not update cursor if locked or rendered by guest */
      }
- 
-     if (s->accel) {
--        smmuv3_accel_init(s);
-+        if (!smmuv3_accel_init(s, errp)) {
-+            return;
-+        }
-         error_setg(&s->migration_blocker, "Migration not supported with SMMUv3 "
-                    "accelerator mode enabled");
-         if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
+     /* FIXME handle cur_hv_offs correctly */
+-    srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
++    srcoff = (s->regs.cur_offset & 0x07fffff0) - (s->regs.cur_hv_offs >> 16) -
+              (s->regs.cur_hv_offs & 0xffff) * 16;
+     if (srcoff > s->vga.vram_size - 64 * 16) {
+         return;
+@@ -176,13 +176,15 @@ static void ati_cursor_invalidate(VGACommonState *vga)
+     if (s->cursor_size != size ||
+         vga->hw_cursor_x != s->regs.cur_hv_pos >> 16 ||
+         vga->hw_cursor_y != (s->regs.cur_hv_pos & 0xffff) ||
+-        s->cursor_offset != s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
++        s->cursor_offset != (s->regs.cur_offset & 0x07fffff0) -
++        (s->regs.cur_hv_offs >> 16) -
+         (s->regs.cur_hv_offs & 0xffff) * 16) {
+         /* Remove old cursor then update and show new one if needed */
+         vga_invalidate_scanlines(vga, vga->hw_cursor_y, vga->hw_cursor_y + 63);
+         vga->hw_cursor_x = s->regs.cur_hv_pos >> 16;
+         vga->hw_cursor_y = s->regs.cur_hv_pos & 0xffff;
+-        s->cursor_offset = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
++        s->cursor_offset = (s->regs.cur_offset & 0x07fffff0) -
++                           (s->regs.cur_hv_offs >> 16) -
+                            (s->regs.cur_hv_offs & 0xffff) * 16;
+         s->cursor_size = size;
+         if (size) {
 -- 
 2.53.0
 
