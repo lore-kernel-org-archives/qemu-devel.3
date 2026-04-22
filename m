@@ -4,90 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A809DF94CBB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 03:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 432C0F94CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 03:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFNuB-0005A6-QO; Tue, 21 Apr 2026 23:05:35 -0400
+	id 1wFNwj-0005nD-U5; Tue, 21 Apr 2026 23:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFNu7-00056K-IC
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 23:05:31 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFNu4-00055B-SU
- for qemu-devel@nongnu.org; Tue, 21 Apr 2026 23:05:30 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c70f91776fcso1902298a12.0
- for <qemu-devel@nongnu.org>; Tue, 21 Apr 2026 20:05:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776827127; x=1777431927; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XztD/aKPvxLXRvd7ZY4iLYCNEe5scz0ePJP8mjOwk6M=;
- b=EOUTXzm339gf4kZo+S10XUiiSA01JVYhbleijhSuWE91WBY+cF+Blw2fD2pUdjv/sf
- GQSmyIVJejMI2tUnHk/BFJhnGWrGXY+vkxpRAg+WC4o+OxvA/aWX957qP0rVKIrJHqxQ
- DqNqzFzbg5WYpjvePl8AW/KzYEJVc/oFPfiptZtSc4mvvqWe8oKvzZ9yJxnk0yxQjAD+
- AN009Cr/qyYviqtCMGL2V58F4HBkcq3/b4ZRMbV6+swq88/wIeXQQKHrzz+UDWTQU0zv
- 2NRBQ2N37YKWIjJCeLvxrswdZvY30Q6PHnE5Lz/tR8ylT2JRO//3ONiRDTBHlQ+K8HSn
- FdoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776827127; x=1777431927;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XztD/aKPvxLXRvd7ZY4iLYCNEe5scz0ePJP8mjOwk6M=;
- b=dPyKm7Sr/emDewEAcsYyyV2nOjdUZ3NNmz4RLCRSnnqvvKDBOEVEZJKUeIH75Ni+lk
- FGBdj7NxB55fxwTIZcOSXTO8GwsH3oMvZM3586o2A7RS8c8be+42tNdZ3vf2bCUTbcwJ
- VsOJ/3rlv57OLLIb2XtYiAKu7+jadvyEiGMKF4jNPkOKWZliHJ4CcSS9Brzrju3sUnBH
- YnHJ/WZAkCPioz2saG9s1Jdqf8Ty350c01yZeoqX1u6uCXw54J6GT7c4T7VtfCQyOzu1
- 6/xX//z28ZVvH3NmyZKtLvx7q+MhjNsMRiHdQSfBwxxVa6ofb0knpWqppEJQRV+yyT/D
- HFQg==
-X-Gm-Message-State: AOJu0Ywxgwx4SXyK+miryLKQsduWBuTjJF7uOLn5VdBp1Y9f9GwlggXv
- 8rzP2ZA7mwaXwqMQpT9bzXE3GUO6+9HAYk+ces8zrU0hSfgGaSeMmZkYJsgd82DkqybhHmR35Ii
- Yd3PBNN8=
-X-Gm-Gg: AeBDietTVTN2YKOltIen/HtUKsOltCFRaCCcw646+5D3oSw4uymyM8hAbEyEXmhgdkl
- Vstz4W5Dd1qDgf5FivFMlPtpmiysOIeW40YQwrsPBaL4eGPb1PaO+Kxb30KHROQBznbu23UcpEo
- UILVaa/EYce8t/jxACz7bwhpXX3FG7oFGeRoq4KCdqdoxN4tcgO6lE6kqqb3TSSM/PO4ne/+9bQ
- kL0Y0ADaJ24IKv/nJZ8VA9NL4XK89+e8X4PefMvzpYvGst5OYowxhcL4pYdrcZJowceL/zjn6Le
- z+8V4piED/Z/weTTXwt/6LBUrIpKR1+3+boK/rT5eyqTwlLrupEh5SWjhQ7msoZWq4zSxPVE1K1
- Gmoy7JS6a3uZibAmRLadjJybacA8VXsedrotm8Ly0oaMMofWq21zu/hPIoQ5v0wV83Jb3MSl5JJ
- inFASZs/e3as9DX0LO1ljazx8xcY86q4SoKSsLGMAvkm2Ll68VOW9VjqChVRq5kg==
-X-Received: by 2002:a05:6a20:7fa2:b0:398:9662:10ff with SMTP id
- adf61e73a8af0-3a08d687750mr23863443637.4.1776827126683; 
- Tue, 21 Apr 2026 20:05:26 -0700 (PDT)
-Received: from [10.72.56.227] ([144.130.157.129])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c797701d9bfsm11188261a12.16.2026.04.21.20.05.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Apr 2026 20:05:26 -0700 (PDT)
-Message-ID: <cb53282a-238a-41e2-9024-92deaa493110@linaro.org>
-Date: Wed, 22 Apr 2026 13:04:45 +1000
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1wFNwh-0005mw-7E
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 23:08:11 -0400
+Received: from canpmsgout10.his.huawei.com ([113.46.200.225])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1wFNwe-0005Wr-B8
+ for qemu-devel@nongnu.org; Tue, 21 Apr 2026 23:08:10 -0400
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=e5T38cmle/cKzcgGdgI7uWHLt+iqlatgW7MoWMv6PlA=;
+ b=erZ9pZDm68qpzPByHxT6sgOdg/CqJB9GERVvB5KPR5Q+gyUENSYLr7GP0HLYwx8sfc6ZnqIqM
+ WoqS361UZEhL+Pz86ABxvNu0Io3tFZ31+YQmuO1RJbDYW27FeH4ObJb3eV1mp+RuBkxeM5eVLCK
+ U7RkHpzuMtSv4LY2YMLTmrI=
+Received: from mail.maildlp.com (unknown [172.19.163.163])
+ by canpmsgout10.his.huawei.com (SkyGuard) with ESMTPS id 4g0kWy1TW8z1K99C;
+ Wed, 22 Apr 2026 11:01:34 +0800 (CST)
+Received: from dggpemf500011.china.huawei.com (unknown [7.185.36.131])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6CB6A4056E;
+ Wed, 22 Apr 2026 11:07:54 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ dggpemf500011.china.huawei.com (7.185.36.131) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 22 Apr 2026 11:07:53 +0800
+Message-ID: <62ee8716-5aff-4164-b1d7-dee89f955822@huawei.com>
+Date: Wed, 22 Apr 2026 11:07:51 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/13] target/mips: split Octeon SEQ/SNE decode
-To: qemu-devel@nongnu.org
-References: <20260421-mips-octeon-missing-insns-v2-v2-0-a0791df188c9@gmail.com>
- <20260421-mips-octeon-missing-insns-v2-v2-3-a0791df188c9@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260421-mips-octeon-missing-insns-v2-v2-3-a0791df188c9@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Subject: Re: [PATCH v2] hw/rtc/mc146818rtc: Fix get_guest_rtc_ns() overflow bug
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+To: <peter.maydell@linaro.org>, <mst@redhat.com>, <pbonzini@redhat.com>,
+ <qemu-devel@nongnu.org>
+References: <20260114013257.3500578-1-ruanjinjie@huawei.com>
+ <8a9bb7a8-a45b-ecb1-4a16-b48bb6b9f856@huawei.com>
+In-Reply-To: <8a9bb7a8-a45b-ecb1-4a16-b48bb6b9f856@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.109.254]
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ dggpemf500011.china.huawei.com (7.185.36.131)
+Received-SPF: pass client-ip=113.46.200.225;
+ envelope-from=ruanjinjie@huawei.com; helo=canpmsgout10.his.huawei.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,74 +75,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/26 03:27, James Hilliard wrote:
-> Decode the equality and inequality forms as explicit SEQ/SNE and
-> SEQI/SNEI instructions rather than using shared generated SEQNE/SEQNEI
-> entries.
+
+
+On 3/18/2026 3:03 PM, Jinjie Ruan wrote:
+> Gentle ping.
 > 
-> The explicit decoder names match the architectural mnemonics, which
-> makes the translator entry points and trace/debug output easier to
-> correlate with the instruction set.
-> 
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> ---
-> Changes v1 -> v2:
->    - Split the SEQ/SNE decode cleanup out of the Octeon arithmetic
->      instruction patch.  (suggested by Philippe Mathieu-Daudé)
-> ---
->   target/mips/tcg/octeon.decode      |  8 ++++++--
->   target/mips/tcg/octeon_translate.c | 26 +++++++++++++++++++++++---
->   2 files changed, 29 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-> index 102a05860d..8a262feb1d 100644
-> --- a/target/mips/tcg/octeon.decode
-> +++ b/target/mips/tcg/octeon.decode
-> @@ -30,6 +30,8 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
->   # SNEI rt, rs, immediate
->   
->   @r3          ...... rs:5 rt:5 rd:5 ..... ......
-> +&cmp3        rs rt rd ne
-> +&cmpi        rs rt imm ne
->   %bitfield_p  0:1 6:5
->   @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
->   
-> @@ -38,8 +40,10 @@ DMUL         011100 ..... ..... ..... 00000 000011 @r3
->   EXTS         011100 ..... ..... ..... ..... 11101 . @bitfield
->   CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
->   POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
-> -SEQNE        011100 rs:5 rt:5 rd:5 00000 10101 ne:1
-> -SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
-> +SEQ          011100 rs:5 rt:5 rd:5 00000 101010 &cmp3 ne=0
-> +SNE          011100 rs:5 rt:5 rd:5 00000 101011 &cmp3 ne=1
-> +SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi ne=0
-> +SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi ne=1
+> On 2026/1/14 9:32, Jinjie Ruan wrote:
+>> In get_guest_rtc_ns(), "s->base_rtc" is uint64_t, which multiplied by
+>> "NANOSECONDS_PER_SECOND" may overflow the uint64_t type, which will
+>> cause the QEMU Linux Virtual Machine's RTC time to jump and in turn
+>> triggers a kernel Soft Lockup and ultimately leads to a crash.
+>>
+>> Fix it by avoiding adding s->base_rtc in get_guest_rtc_ns_offset(),
+>> because get_guest_rtc_ns() is used either take the remainder of
+>> NANOSECONDS_PER_SECOND or take the quotient of NANOSECONDS_PER_SECOND.
+>>
+>> Fixes: 56038ef6234e ("RTC: Update the RTC clock only when reading it")
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>> ---
+>> v2:
+>> - Add comment for get_guest_rtc_ns().
+>> - Update the commit message.
 
-By splitting the insns, you no longer need the NE field.
-You can also then use @r3 to avoid repeating the arguments.
+Hi, peter, do you have any further suggestions for this version, or is
+it ready to be merged? Thanks!
 
-> -static bool trans_SEQNE(DisasContext *ctx, arg_SEQNE *a)
-> +static bool trans_seqne(DisasContext *ctx, const arg_cmp3 *a)
+>> ---
+>>  hw/rtc/mc146818rtc.c | 15 +++++++--------
+>>  1 file changed, 7 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+>> index 8631386b9f..36de30649c 100644
+>> --- a/hw/rtc/mc146818rtc.c
+>> +++ b/hw/rtc/mc146818rtc.c
+>> @@ -77,12 +77,13 @@ static inline bool rtc_running(MC146818RtcState *s)
+>>              (s->cmos_data[RTC_REG_A] & 0x70) <= 0x20);
+>>  }
+>>  
+>> +/*
+>> + * Note: get_guest_rtc_ns() does not include the "base_rtc" seconds value,
+>> + * so the caller "must" handle it themselves!!!
+>> + */
+>>  static uint64_t get_guest_rtc_ns(MC146818RtcState *s)
+>>  {
+>> -    uint64_t guest_clock = qemu_clock_get_ns(rtc_clock);
+>> -
+>> -    return s->base_rtc * NANOSECONDS_PER_SECOND +
+>> -        guest_clock - s->last_update + s->offset;
+>> +    return qemu_clock_get_ns(rtc_clock) - s->last_update + s->offset;
+>>  }
+>>  
+>>  static void rtc_coalesced_timer_update(MC146818RtcState *s)
+>> @@ -623,10 +624,8 @@ static void rtc_update_time(MC146818RtcState *s)
+>>  {
+>>      struct tm ret;
+>>      time_t guest_sec;
+>> -    int64_t guest_nsec;
+>>  
+>> -    guest_nsec = get_guest_rtc_ns(s);
+>> -    guest_sec = guest_nsec / NANOSECONDS_PER_SECOND;
+>> +    guest_sec = s->base_rtc + get_guest_rtc_ns(s) / NANOSECONDS_PER_SECOND;
+>>      gmtime_r(&guest_sec, &ret);
+>>  
+>>      /* Is SET flag of Register B disabled? */
+>> @@ -637,7 +636,7 @@ static void rtc_update_time(MC146818RtcState *s)
+>>  
+>>  static int update_in_progress(MC146818RtcState *s)
+>>  {
+>> -    int64_t guest_nsec;
+>> +    uint64_t guest_nsec;
+>>  
+>>      if (!rtc_running(s)) {
+>>          return 0;
 
-This would become
-
-static bool do_seqne(DisasContext *ctx, arg_r3 *a, TCGCond cond)
-{
-     TCGv t0 = tcg_temp_new();
-     TCGv t1 = tcg_temp_new();
-
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
-     tcg_gen_setcond_tl(cond, t0, t0, t1);
-     gen_store_gpr(t0, a->rd);
-}
-
-static bool trans_SEQ(DisasContext *ctx, arg_r3 *a)
-{
-     return do_seqne(ctx, a, TCG_COND_EQ);
-}
-
-etc.
-
-r~
 
