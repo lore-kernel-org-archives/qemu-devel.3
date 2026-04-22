@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7DBFA1FEF
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37260FA1FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdkz-0001jt-DW; Wed, 22 Apr 2026 16:01:09 -0400
+	id 1wFdkZ-0007Dt-DM; Wed, 22 Apr 2026 16:00:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkv-0001MO-Bo
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:05 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkM-0006cF-Qt
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:35 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdks-00029e-FZ
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:01:05 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488b8bc6bc9so41841735e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:01:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdkA-0001oQ-Aj
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:00:26 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43d7badbd7dso2916428f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888060; x=1777492860; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888015; x=1777492815; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oIITiL8QOdJdZl114SSAVmYjhy61R96Y1Hwwr6ats1o=;
- b=oWc5Vwoh+nxpB2kyIrPFe1Vnq7R93EGufua3Mku7p21JpIFRkmKjWuPcBg5GIPPEpF
- o1o5lvHv3c87ll4UfmYxoDjEdAlpSmDnkt7FbTivjqa9A9A3x9lEfw7MijzXx+7ixc/l
- 95Hen6UJBoGwvQumehcFdYbzP+Kwo5leqAV7J0F7qGn6v52SMwngA9zxVct+NbbvrTd3
- EvoQR+6rSyqAxYGGAHLcj174OeSs2YW0b9Gs9qcE85ZREtB1df+DKh/FkK+Ckr1OqNcT
- EnQCJbHXRLxJPRMDAyKvhwIhbEpW56vgX2sA9blVHNJFPp/+QzZuBgp4J4KbJAeOed6f
- ufFA==
+ :reply-to; bh=tuztnUlSfQwod8ju5RlZjEzCQ50es7B6MliV5SRpEGk=;
+ b=D/ph68DWIk0mu3pqOLptWGshCIi77ckQJ+AuL1fcyJkMhmcn3KmwyKjA22j1IUa0Wk
+ SvAysXIcwvYJnc/L4CDkwFsBdMiZUeVOCPIAihz6GqUDM1H8i+WGQ+sAsmuy8bgDaj63
+ yl5QAF+tqjG2J6itnbL1IrfvMYVaODoS1Gbz2sJejDUICzKXokWDt2Ub9DfUmCXlLCje
+ bj7RsPnnam/aCv4t3IJXCGS3r3agOZUdz9ekRnfza3XUtx287Jt5ZKAaeJE+KWIwDEy0
+ qarO4U0gEx7QuVIpvbCteSE1o9Y1+SndEa2N/cL+eIwY9JXkMcEFMSOJtf2tQmNy2KYm
+ 5UPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888060; x=1777492860;
+ d=1e100.net; s=20251104; t=1776888015; x=1777492815;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=oIITiL8QOdJdZl114SSAVmYjhy61R96Y1Hwwr6ats1o=;
- b=TtQth1r/EWkmMVW/mIoaErl5iDdtW6Ow7PBM1tXZcKX3OJOQEYMyhjiXgkVZ1JULVf
- Fc7HrAivleeT8O3rTYmaa4sMw9cHXKW7rirdrFlifHexSCnfsCB0fL9AGcjOAiauRFUT
- 6wjEHn/z76ShZXb6xo/t49+BHpLt6rpP98vxweOO0jr6pPgh9nCXefoCJBG6nLfzbEG2
- mwxfHxjoVP180JI5+6WB/Qo0Tu/2GpVY17s+e9ZJy/o4pYNeMRD0O7B+6NMmWaKsHBhJ
- iUsHYhLgNlSiCIBgzFccRltWYTSMjVfgwe64ApU6aTgWk6z1Ht/Cia75jTQMngS3uZch
- WOjg==
-X-Gm-Message-State: AOJu0YzD3L80wq9zFgpdwRpmvQYXtcnHjYBmc0iYnnASkgvw6emctXyR
- wtWWNWK2nwaAfTqcLxd9fbMOw0RNTwI6XENOVWnmidBOwqd0J5OqmtOUxi4vDlkfJkcKaLraLLz
- HN8D6C24=
-X-Gm-Gg: AeBDieuonxSWh/UL/bhv922DpkEuTAAD4vN/h10NYNdy8ONbpnWxr0rW2MruiG5pvyu
- i1R0O6Khb0lJjyZqWbsXyXFoBohviuXBqW1Ek51+OFEdAAKs1TdJJgYnnmijYuV1RXPvBgsOJTw
- NyR4sAAb8i8v7UhhuJMBLn+Y/3Scn4d+sjmz7oRkHJMd0XL7OdqoKhj6sYiNWwIv6HpBFLI1ETd
- VAXQODjDkOYfQQ0SQ/xmn07gplnL3seK4JtgqgEpQpA9VPgnacItESSTgn2/bbYnxEHjhfBumpm
- SSk7b0SdnTPTHTnaMK8v/U3F6x5HHSFzPLNDQk8kcm/Q/hmoC4auxWvZAVMy5ypPF7xTIHAqT1i
- RHbE62ZaQ0xp4uZy2VdgpH/Q8XNe4c0X5FeTxy1oHlPAzqvrC7Nplv57OwypjPHTg1yYvoL/X+i
- hCBV7rzhzPfzc/sA+uF8RXIahPdldk6tfW6eP9LCA5Lifj8xa6hM4jHd/Squr8U5a8hXx6Y7YGM
- a1w81Z2gS0=
-X-Received: by 2002:a05:600c:3546:b0:48a:5546:61a1 with SMTP id
- 5b1f17b1804b1-48a554663d4mr131850755e9.15.1776888060185; 
- Wed, 22 Apr 2026 13:01:00 -0700 (PDT)
+ bh=tuztnUlSfQwod8ju5RlZjEzCQ50es7B6MliV5SRpEGk=;
+ b=EYoqNXRC+WlGs/4CjSwvw9lE7rvV/vvIBkDaGRpAXDerEyejz++fCqHyqnyxa2hpIG
+ NTAvQgBK46sMuJsVsThkeZ4zvbM3vdVIl47gIBzuD1tjTUmEnAFp1OU48OD9GnilNTYH
+ ae48LFUZKhj/nwPXQifOWoPc9ms3/wL6rZluhTZmDQ3QcXhWizue9cET5qQ1dlhFkcED
+ 8pHMpGZMwIAucDZzsc3kWy0/4qfZ3+K0VQ8b/Xno4au94ERz2ZR5TvBty9dQZMWxlVer
+ gNg9YclhRW42WUkC5ektRw9/EkyfiKrDyEoGeRjalP4dYmZ1smrTVFhFmOQ2EYaJeRtv
+ 1Syw==
+X-Gm-Message-State: AOJu0Yy/2Q600btoiIzJPimL0FYmf3NlTjnGYpWRViOfZwOz3FDtHjOx
+ tjA9zdZJ066oEzjgSnMaVQ0FD2sgaM2tYiwcUY/GhvBvBg0foVMJqmbpAYLos3ZdIUEhhY7xo86
+ QVyGmO7c=
+X-Gm-Gg: AeBDieuHtdsewR7iOWouy01YkPugtskjkin7B/Vq62LhNJdGvVWFAMKU4Pygwcz+2lm
+ Nm+i9BObva0b81Q4TOPN5ratUjJGGWnP6Eg+k66qqTLK/Xyq3KVAhuhY4tFHs+L5oMkVGnIhz6l
+ w6Arl7N3BGGfZfxY8BBMNN+vGIc+yu/4f5MrYJyWzdhrdQNrMIqJwqGtQ+3U0MdEm2cAXAIBUAQ
+ kKTJPFS7zfNbp+TDvsVpqwreF6R7rfFR1gbJzR2DAHIz/SX3TOugFpeeVuKZmC8PFPtZ1UY1SWT
+ JDSY0VVdYPH5OQcgbD/KSzoTZ7qgVwG1Z7bXD2EV3mdEC/RAYPUOnXVkNeJwNJ0K8tFkhenEt9f
+ dwP+ruerragsxqH11tKSJdVDk8ZTFRKbkCdCqppw82n0utHiLcZfmYJCkDDXY2csFZzD2Bt8xIk
+ ON1wiKyESh/5VU5eB0wU4sKmM3H7L6jEXs+j8DpIUuXs+c5+fTzBG0uYDL2834okYUKmSMTvDPH
+ Pg6s66xP3FjqItRGC2kcQ==
+X-Received: by 2002:a05:6000:1ac7:b0:43c:ff58:35c2 with SMTP id
+ ffacd0b85a97d-43fe3dc5eaemr38074018f8f.20.1776888015335; 
+ Wed, 22 Apr 2026 13:00:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a5499b0edsm157019155e9.14.2026.04.22.13.00.59
+ ffacd0b85a97d-43fe4e3a174sm52513910f8f.18.2026.04.22.13.00.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:00:59 -0700 (PDT)
+ Wed, 22 Apr 2026 13:00:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/48] hw/core: Move compat_props_add() to 'hw/core/boards.h'
-Date: Wed, 22 Apr 2026 21:57:25 +0200
-Message-ID: <20260422195746.88865-28-philmd@linaro.org>
+Subject: [PULL 21/48] hw/tpm: Remove CRBState::ppi_enabled field
+Date: Wed, 22 Apr 2026 21:57:19 +0200
+Message-ID: <20260422195746.88865-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,60 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-compat_props_add() is only used by board models, no need
-to expose it to any device model. Restrict by defining it
-only in "hw/core/boards.h".
+The CRBState::ppi_enabled boolean was only set in the
+hw_compat_3_1[] array, via the 'ppi=false' property.
+We removed all machines using that array, and the array
+itself in commit a861ffef237 ("hw/core/machine: Remove
+the hw_compat_3_1[] array"). We can safely remove the
+now unused property. Since CRB devices always use PPI,
+simplify removing the CRBState::ppi_enabled field.
+Set the generic TPMIfClass::ppi_enabled so ACPI subsystem
+can keep checking its availability.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-Id: <20260325151728.45378-3-philmd@linaro.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Message-Id: <20260317120241.16320-4-philmd@linaro.org>
 ---
- include/hw/core/boards.h | 10 ++++++++++
- include/hw/core/qdev.h   | 10 ----------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ hw/tpm/tpm_crb.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index b8dad0a1074..0ac7e17ef7a 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -798,6 +798,16 @@ struct MachineState {
-         } \
-     } while (0)
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index 8723536f931..02701ab9480 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -43,7 +43,6 @@ struct CRBState {
  
-+static inline void
-+compat_props_add(GPtrArray *arr,
-+                 GlobalProperty props[], size_t nelem)
-+{
-+    int i;
-+    for (i = 0; i < nelem; i++) {
-+        g_ptr_array_add(arr, (void *)&props[i]);
-+    }
-+}
-+
- extern GlobalProperty hw_compat_10_2[];
- extern const size_t hw_compat_10_2_len;
+     size_t be_buffer_size;
  
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index f99a8979ccb..778617787c7 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -421,16 +421,6 @@ typedef struct GlobalProperty {
-     bool optional;
- } GlobalProperty;
+-    bool ppi_enabled;
+     TPMPPI ppi;
+ };
+ typedef struct CRBState CRBState;
+@@ -228,16 +227,13 @@ static const VMStateDescription vmstate_tpm_crb = {
  
--static inline void
--compat_props_add(GPtrArray *arr,
--                 GlobalProperty props[], size_t nelem)
--{
--    int i;
--    for (i = 0; i < nelem; i++) {
--        g_ptr_array_add(arr, (void *)&props[i]);
+ static const Property tpm_crb_properties[] = {
+     DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
+-    DEFINE_PROP_BOOL("ppi", CRBState, ppi_enabled, true),
+ };
+ 
+ static void tpm_crb_reset(void *dev)
+ {
+     CRBState *s = CRB(dev);
+ 
+-    if (s->ppi_enabled) {
+-        tpm_ppi_reset(&s->ppi);
 -    }
--}
--
- /*** Board API.  This should go away once we have a machine config file.  ***/
++    tpm_ppi_reset(&s->ppi);
+     tpm_backend_reset(s->tpmbe);
  
- /**
+     memset(s->regs, 0, sizeof(s->regs));
+@@ -303,10 +299,8 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(get_system_memory(),
+         TPM_CRB_ADDR_BASE + sizeof(s->regs), &s->cmdmem);
+ 
+-    if (s->ppi_enabled) {
+-        tpm_ppi_init(&s->ppi, get_system_memory(),
+-                     TPM_PPI_ADDR_BASE, OBJECT(s));
+-    }
++    tpm_ppi_init(&s->ppi, get_system_memory(),
++                 TPM_PPI_ADDR_BASE, OBJECT(s));
+ 
+     if (xen_enabled()) {
+         tpm_crb_reset(dev);
+@@ -325,6 +319,7 @@ static void tpm_crb_class_init(ObjectClass *klass, const void *data)
+     dc->vmsd  = &vmstate_tpm_crb;
+     dc->user_creatable = true;
+     tc->model = TPM_MODEL_TPM_CRB;
++    tc->ppi_enabled = true;
+     tc->get_version = tpm_crb_get_version;
+     tc->request_completed = tpm_crb_request_completed;
+ 
 -- 
 2.53.0
 
