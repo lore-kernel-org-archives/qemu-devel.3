@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D5FAFA1FEF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B5BFA1FED
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 20:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFdmk-00065s-6x; Wed, 22 Apr 2026 16:02:58 -0400
+	id 1wFdmu-0007Jh-Ob; Wed, 22 Apr 2026 16:03:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdm4-0004aQ-Cw
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:22 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdmr-000780-Ba
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:03:05 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdm2-0003LX-KX
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:02:16 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4891f625344so42777695e9.0
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:02:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFdmp-0003jW-Ez
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 16:03:05 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so76761085e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 13:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776888133; x=1777492933; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776888181; x=1777492981; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qE0L4zwELTPdWddMD5jvlbfZqCIdrmv6K9R8Vmm5VjI=;
- b=OrrAVqtu+ST3yMDvL1GNX8dvPPxR0U0Uy6YqroaGwi+YWVXloNxq9ZmjBfY/CbmIyR
- m5CMGR2x89J7xRBVFg6nXJonZ6yZ7IsCvo0RLvONQ1eW1wzAX/W6au+PFBIVfvXcY5Rc
- f+of4HPA59O++REjzsVF2MmcDZVZL4WwgFUJKf/oEbPdh0+omXmN3LVYMveO3orXlV5C
- nbUqx1jDKrYh7IVyHgIaJjGybFFjympkSQPAHGCiCMy4GUbjY59iCF8RyUUXry2lPHWf
- 6NyKt4N2So+iOnmPO/0Y/Ks10vEfTrnA6nCqPlpU9ptcpGcCbWeWokSfBg49iYRJNvAU
- Wy+g==
+ :reply-to; bh=W7JnsWSD583NwCfXBcMoII3DZMxZeD/F0vRaJaEdiuA=;
+ b=TI87HMMwjrK05zmj/Zp2mEw8z0ys+0YWmcEHjeLAfp5Ni0OMBi8ZTSty3uk8dR4M/a
+ zD1byw/BjB396KZ9ihd9zCTWJCQ++8gRoXZtzYD1yhMeQ1HwWyAPGPl/Yzo6sJDmcFiu
+ Bt8cIOq9e3u0WDumg6skNnnzbZ0sWpR9F82Pll25MGvhbgAZcEZFZ7N9FihX7xwTE5BP
+ k904NBjqqzEj9HskW2Pp2lcw6Py7Xl5zeqTg2Pg78P/JhLnUkVWIl8OZBys1BqTVCX/h
+ MbY32PPdxR0G8KywnVbLowQgzluabvE+Rh7PVW90+bfqVp9/jEHbMq1a7iM9F7ZF8qhf
+ ifqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776888133; x=1777492933;
+ d=1e100.net; s=20251104; t=1776888181; x=1777492981;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qE0L4zwELTPdWddMD5jvlbfZqCIdrmv6K9R8Vmm5VjI=;
- b=eqUCI3SRaFyU5UTLkhYC6uEquBrStc+134cwLsQv6ebBQijaMLi+vCV9A0gYlhtA2D
- gyXJFnuizP3eqwwUqoK7GXYnp65843EPK4PqMrdm1om6MTF+mBRqcVkRbsr610NCRI8q
- mrbLneuMB9JYWMHu/tNjbOB0iOeWjenaOpq1CSgXyFJ+O7/WIez9M3g4U3RFWZj3suvw
- KZgzUWBfLGu1IpXDrhLay6G0R+5xiI+2OtAQzTYOZEgoq6hpnlt8T1SidiziPukhdWyS
- a1elfin4Vy6Jq//1MzrnPlF7eCR89UwdCIWRGr3ISMzYimGXRbOTKjF3iG9z1hAPRR0j
- 8XWQ==
-X-Gm-Message-State: AOJu0Yzw/3GoWTcSL+Y1VbuAJwICTBpFySgdSHlH/S54jC8UweOHPUtp
- owvPdphZWVFh6phdvvMgvxkzRS4MRB8kvW7I8nHx6uRCOaHu+gWLv+U8CI/QhJ5M/NQZ7ngIVrP
- RfYYYIAo=
-X-Gm-Gg: AeBDiesY0pqu770DxlepVeV6vgrW69E/ejl/An6qM1fmnrUTTUsY5Qbqj93xiR34aw4
- r9s9Sc92VyyoiBT7lFtBAcy/6nv9KJQ6PNoRuaxL3oHzPzesbLdoMF5OF/MnmCOfts22IVaEt0j
- xKLTCSXF4DoGEgkPGdz5mbRRLRLXJkwuPwpiHkn9KQUra9dad2YyXUHpc0mMYYph70w7HAmxIxR
- 4nGgS7CcNh/40DqXE2lHG6kryqB35spiCq8TV3qo+j1hiXD5NAR/MJ35fEAcQ4N3d4i+LkRS7o7
- uNiYRx4HrwCUijXlf/QxybV6is0lfrS7ns5rI/gwQ8AcfmDoyAdhbu+m80JY9vW31TGOCEwWzUz
- qYSP+N3Ee1xmoPOQZwJSctlgT4UR21LAwTcdoPiwaGNjiA5HsI+pMOUCFWJInyXvefRDscXjyb8
- InYoX+YIelyDbYdSSKtFyREbAN1gV/DThEXVLlSf6AbAexiXTr93uaTcd8uSGroV7db8dh28pBK
- 500FJY/JYY=
-X-Received: by 2002:a05:600c:4e0c:b0:489:1d7a:4537 with SMTP id
- 5b1f17b1804b1-4891d7a463emr192281365e9.3.1776888132685; 
- Wed, 22 Apr 2026 13:02:12 -0700 (PDT)
+ bh=W7JnsWSD583NwCfXBcMoII3DZMxZeD/F0vRaJaEdiuA=;
+ b=Jl1IX75/20ZUp7QgvXnt2wZ5AikuHRB13WZfTXx3djujGRjZnrTpZhWY+OHyRX4a0Z
+ YVnZYqbM5kTBJ72+TwjhvkQBeJnN2S3yilaaZ/529VcO2hpdGURkXxoEDmAj252Xunmh
+ e723F6SDyzJdQdsRz1BMxT93PVWAOQuZRYRm6gr0wCnhhmCnqk5DZacRioKWIJLLldJU
+ zXIHjnqstp2en+C8u38+/ptnB0O+++37x+f3LKwXYzYJ570WS9sjfFrO0gUOI28GMcJQ
+ NP6HMxPo8K4LI6eqPKy2uv6eK3ex9vQBsAnjfu7YRpSAhncvdLjYH6Sh7k9PmkA44J8B
+ HFTg==
+X-Gm-Message-State: AOJu0YxsDcv8zZiEWAA585vBl7ewBPd5FA13sDKy1ueuMRDqcSUkx/7d
+ 1KxEYZ1bA4ELzFIxRgJE4yUZJqq+ulS7TtxoO/1HWeuQMkCeZyaiZEdzKFKI6dN0YYYhdkPWsuV
+ 2EbPPsjU=
+X-Gm-Gg: AeBDievdCXumqKVXSK7L8CkF+V4nU9nIcIMPI5Vaks9HVVhHHqN4KIzmRQ+kUXgha6C
+ 0cbr5VxzLPypzuBxYRm3Yxk46jraPUaPuYppHVQlQPZSz64WLzfzpssV3lQzC97XNG2Y0rG9XI7
+ s7HhDhAuHVsOzoFSBVfDg2OjGDiz0pyuKaM1hycT3/KaYOoV3lVYiy77yBIV1fgt764AbpZ1MiC
+ m1WUqYzEsqHVyL46Z4FXxtfM1kMFKnxvFX48AX21Q1xadPqXiK+b6YJEHPd88prAtst0q4/Pqvd
+ Gt9b9FzA+tHzCapdrDKqSEBCDxfVi5QkpxXMM1wHiJFj6iucSRwtansfYKqFMZNEarWGD9mTjzW
+ Cr3l8w+huXDZPfv9OLGl+npOiK/ECyXHnMDVGXJs+IT/1Z2AToFCZryvCEcHjujdjUjhhOVgcNu
+ mZYcGvr6k6Iv3ADxzXC5jOZGGulkKVwPUsFRkZSzy1qm6HWAc7+QNM7IqJqYVWbw1xGdijEpKZu
+ lyA66y/lRg=
+X-Received: by 2002:a05:6000:2f83:b0:43c:fd7e:72eb with SMTP id
+ ffacd0b85a97d-43fe3e144b5mr38594562f8f.41.1776888181339; 
+ Wed, 22 Apr 2026 13:03:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891cc7b2efsm148838215e9.0.2026.04.22.13.02.11
+ ffacd0b85a97d-43fe4e4d112sm52195067f8f.29.2026.04.22.13.03.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 13:02:12 -0700 (PDT)
+ Wed, 22 Apr 2026 13:03:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 37/48] hw/ppc/e500: fix bus-frequency property hardcoded to
- zero in CPU FDT node
-Date: Wed, 22 Apr 2026 21:57:35 +0200
-Message-ID: <20260422195746.88865-38-philmd@linaro.org>
+Subject: [PULL 44/48] hw/sh4/sh7750: Remove forgotten abort() in the
+ MM_ITLB_DATA handler
+Date: Wed, 22 Apr 2026 21:57:42 +0200
+Message-ID: <20260422195746.88865-45-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422195746.88865-1-philmd@linaro.org>
 References: <20260422195746.88865-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,81 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vivien LEGER <vivien.leger@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The bus-frequency property in the CPU FDT node was hardcoded to 0.
-This is incorrect - it should reflect the actual platform bus clock
-frequency, as firmware and RTOSes use it to derive peripheral clock
-rates.
+QEMU currently aborts when the guest writes to the MM_ITLB_DATA register:
 
-Notably, the RTEMS QorIQ BSP uses bus-frequency to program the MPIC
-global timer interval. With bus-frequency=0, the timer interval
-overflows to ~85 seconds, preventing any clock interrupts from firing.
+ echo "writel 0xf3000000 0x11223344" | \
+  ./qemu-system-sh4 -M r2d -display none -accel qtest -qtest stdio
+ [I 0.000000] OPENED
+ [R +0.004476] writel 0xf3000000 0x11223344
+ Aborted                    (core dumped)
 
-Fix by adding a bus_freq field to PPCE500MachineClass and using it in
-the FDT generator. Set bus_freq = PLATFORM_CLK_FREQ_HZ (400MHz) for
-existing machines, matching the existing clock_freq value.
+Looking at the history of the code, the abort() here has likely just
+been forgotten when the register handler had been implemented (it used
+to be a reminder about unimplemented functionality initially):
 
-Signed-off-by: Vivien LEGER <vivien.leger@gmail.com>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20260411154535.1451361-1-vivien.leger@gmail.com>
+ https://gitlab.com/qemu-project/qemu/-/commit/9f97309a70f12df5f9104f1f
+
+Thus simply remove the abort() now to get rid of the problem.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3420
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260422075429.341409-1-thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/e500.h      | 1 +
- hw/ppc/e500.c      | 2 +-
- hw/ppc/e500plat.c  | 1 +
- hw/ppc/mpc8544ds.c | 1 +
- 4 files changed, 4 insertions(+), 1 deletion(-)
+ hw/sh4/sh7750.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
-index 11f8ae53177..6d56c7b4cb2 100644
---- a/hw/ppc/e500.h
-+++ b/hw/ppc/e500.h
-@@ -40,6 +40,7 @@ struct PPCE500MachineClass {
-     hwaddr pci_mmio_bus_base;
-     hwaddr spin_base;
-     uint32_t clock_freq;
-+    uint32_t bus_freq;
-     uint32_t tb_freq;
- };
- 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index d6ca2e8563a..5be2f2095f6 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -518,7 +518,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
-                               env->icache_line_size);
-         qemu_fdt_setprop_cell(fdt, cpu_name, "d-cache-size", 0x8000);
-         qemu_fdt_setprop_cell(fdt, cpu_name, "i-cache-size", 0x8000);
--        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", 0);
-+        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", pmc->bus_freq);
-         if (cpu->cpu_index) {
-             qemu_fdt_setprop_string(fdt, cpu_name, "status", "disabled");
-             qemu_fdt_setprop_string(fdt, cpu_name, "enable-method",
-diff --git a/hw/ppc/e500plat.c b/hw/ppc/e500plat.c
-index ca5647284d0..85cec810d9a 100644
---- a/hw/ppc/e500plat.c
-+++ b/hw/ppc/e500plat.c
-@@ -94,6 +94,7 @@ static void e500plat_machine_class_init(ObjectClass *oc, const void *data)
-     pmc->pci_mmio_bus_base = 0xE0000000ULL;
-     pmc->spin_base = 0xFEF000000ULL;
-     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
-+    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
-     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
- 
-     mc->desc = "generic paravirt e500 platform";
-diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
-index 6a5d3edc490..a5717a9cde4 100644
---- a/hw/ppc/mpc8544ds.c
-+++ b/hw/ppc/mpc8544ds.c
-@@ -56,6 +56,7 @@ static void mpc8544ds_machine_class_init(ObjectClass *oc, const void *data)
-     pmc->pci_pio_base = 0xE1000000ULL;
-     pmc->spin_base = 0xEF000000ULL;
-     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
-+    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
-     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
- 
-     mc->desc = "mpc8544ds";
+diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
+index 3ae71f99fe5..6aa7f637734 100644
+--- a/hw/sh4/sh7750.c
++++ b/hw/sh4/sh7750.c
+@@ -687,7 +687,6 @@ static void sh7750_mmct_write(void *opaque, hwaddr addr,
+         break;
+     case MM_ITLB_DATA:
+         cpu_sh4_write_mmaped_itlb_data(&s->cpu->env, addr, mem_value);
+-        abort();
+         break;
+     case MM_OCACHE_ADDR:
+     case MM_OCACHE_DATA:
 -- 
 2.53.0
 
