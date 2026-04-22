@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658C2F9B613
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37251F9B613
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 10:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFV1z-00052R-Iy; Wed, 22 Apr 2026 06:42:07 -0400
+	id 1wFV1S-00045v-2y; Wed, 22 Apr 2026 06:41:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV1u-0004s1-Vl
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:03 -0400
+ id 1wFV1J-00040J-JM
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wFV1t-0002Lb-KS
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:42:02 -0400
+ id 1wFV1I-0002Ep-2r
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 06:41:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776854520;
+ s=mimecast20190719; t=1776854483;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Kw7/lF1t350YPnKdcUOcTpqxRmuXiX+7kU4c3H06Ank=;
- b=i3gQnKQvB21Lm8xko5y4sAblEoVo0xFIXbD879PWLrNEFLl8mO5lvuiFVbIGLWxM0x1vkQ
- Je3jN5GYyOPdXh6LfXH3ukAS3Vz6PiCKDwW7pJZ3Q9stXEbOX0SzMfTnChRaXUEijOoOPg
- dHcobzAaIqMZtjU5G+/pWb198JGj/Z8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=44JxFHzPUGQaprGiQf2nZJTkIELjqzf153PUCOdMtU4=;
+ b=RcP+jaI452IsAqQJ9U60q5VU1YLi/Gb4++56E6iKsuo0ChVNcUvOl/IXeF04r1FxT/YYI/
+ Kw6vnARiyvf8gs0hv8pfEVSGkNOsgtRnhVoHgD/j0AvWRjUX2yJjPEocnMzNilc8AHUET0
+ nfjlFpVY7yF3OalNuFvqedOet6aLYQ0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-ErImMwB2NC-5JIOBY_X67g-1; Wed,
- 22 Apr 2026 06:41:57 -0400
-X-MC-Unique: ErImMwB2NC-5JIOBY_X67g-1
-X-Mimecast-MFC-AGG-ID: ErImMwB2NC-5JIOBY_X67g_1776854516
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-tvgGV1PfOnO6KjQubxCqFQ-1; Wed,
+ 22 Apr 2026 06:41:19 -0400
+X-MC-Unique: tvgGV1PfOnO6KjQubxCqFQ-1
+X-Mimecast-MFC-AGG-ID: tvgGV1PfOnO6KjQubxCqFQ_1776854479
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82250195608F; Wed, 22 Apr 2026 10:41:56 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E86F918002CA; Wed, 22 Apr 2026 10:41:18 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.21])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 378F719560AB; Wed, 22 Apr 2026 10:41:54 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D819F1956095; Wed, 22 Apr 2026 10:41:17 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 11/40] ui/vnc-jobs: drop redundant (and needless)
- qemu_thread_get_self()
-Date: Wed, 22 Apr 2026 14:40:12 +0400
-Message-ID: <20260422104042.3936506-12-marcandre.lureau@redhat.com>
+Subject: [PULL 05/40] ui/vnc-jobs: remove needless buffer_reset() before end
+Date: Wed, 22 Apr 2026 14:40:06 +0400
+Message-ID: <20260422104042.3936506-6-marcandre.lureau@redhat.com>
 In-Reply-To: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 References: <20260422104042.3936506-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,29 +87,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The call is unnecessary, since "thread" is already set at creation time.
-Furthermore, the "thread" field is mostly useless as the thread is
-created DETACHED and isn't used for anything but perhaps debugging.
+vnc_async_encoding_end() does buffer_free() next.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc-jobs.c | 2 --
- 1 file changed, 2 deletions(-)
+ ui/vnc-jobs.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index 9c17d684c9e..5b17ef54091 100644
+index ec90ae6d5fc..a6ab733faa1 100644
 --- a/ui/vnc-jobs.c
 +++ b/ui/vnc-jobs.c
-@@ -354,8 +354,6 @@ static void *vnc_worker_thread(void *arg)
- {
-     VncJobQueue *queue = arg;
+@@ -326,7 +326,6 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
  
--    qemu_thread_get_self(&queue->thread);
--
-     while (!vnc_worker_thread_loop(queue)) ;
-     g_assert_not_reached();
-     return NULL;
+         qemu_bh_schedule(job->vs->bh);
+     }  else {
+-        buffer_reset(&vs.output);
+         /* Copy persistent encoding data */
+         vnc_async_encoding_end(job->vs, &vs);
+     }
 -- 
 2.53.0
 
