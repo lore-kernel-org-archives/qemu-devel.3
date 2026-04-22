@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C702DFA1FFB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 21:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644E0F94CC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 21:43:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFejO-0007x4-Mp; Wed, 22 Apr 2026 17:03:34 -0400
+	id 1wFfLH-0007sU-Fn; Wed, 22 Apr 2026 17:42:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1wFejM-0007vq-3k
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:03:32 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFfLF-0007qz-Jh
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:42:41 -0400
+Received: from p-east2-cluster1-host2-snip4-7.eps.apple.com ([57.103.76.40]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1wFejK-0006yA-59
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:03:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1776891810; x=1808427810;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=CjXMm9O9HgEbazVGNENiF7rUYZhQt66j+C1SKcZ9yJc=;
- b=QiP2QhRQ7KixKnLg9Xs1v60cVlmbB6ER6cG05YGZb8D01GnueJ0IMqF/
- GDLvmFs6/9CCNLfqXKgzRsH+306OagC+kvLil1WTO8S56XvagRRdIdPrW
- ZErtihH+yPEMWdgYRxVsGq57VUlf/dcx8V4jsN7+aDfRm3RofQeFDP+Yx
- 3ELj/khhtNAbPJk+frqp/JM7CDMFtJ6YCC+mrGoOkjmiG7Bo0SMaHg12D
- w2uqAsA+6MCVyuBbBti5vYRDHDmPw41cSKpodVU6ktu2oiskwwWKdsCnS
- fjM4F5xyr2UG1+HNcfkov7Q9MkzvwkPIPeLA5WyIClbKzLC88QgBFTTU8 A==;
-X-CSE-ConnectionGUID: iRwHB2AYQ06ISQKARqL63w==
-X-CSE-MsgGUID: 9EAAhmJJTAWuovuAyj2hyw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11764"; a="77917717"
-X-IronPort-AV: E=Sophos;i="6.23,193,1770624000"; d="scan'208";a="77917717"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2026 14:03:27 -0700
-X-CSE-ConnectionGUID: JFHHzxPrScKv5+EVEyoQHg==
-X-CSE-MsgGUID: Yl6Xr6X/SAOmXBMsJdwUmQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,193,1770624000"; d="scan'208";a="228120888"
-Received: from unknown (HELO [10.241.241.111]) ([10.241.241.111])
- by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2026 14:03:26 -0700
-Message-ID: <be9cf7a9-4793-4bd4-b91e-cc9e0b6696a4@intel.com>
-Date: Wed, 22 Apr 2026 14:03:25 -0700
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wFfLC-0006vM-Uj
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 17:42:41 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPS id
+ 06D1218006E9; Wed, 22 Apr 2026 21:42:30 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJAU1fDl4fBBdGGVUERx5dVkAZGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCC0oCWQVZB14LSgdfGlofHVYQUgBSD3IFVwhBCFMCUQRYGl8IGQ1AThkMSh1SVlEFSgxcAGgPXR1YEV0=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1776894154; x=1779486154;
+ bh=wEThq2dfzqTlfZKnGhPwgL+9iHFZpwM3gQfdJLwsJ0M=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=djIUge33BiTJ7cNlHcSWJPuhgBSlV+ih9wAg64c8CafPkV5otElCNHd7jr7JZcWHQeS42tPSI4nKtFeTrQarkY0VGSxTYfEfMEhW2xFY3CUk+O19xn+wNG7gdoVFlkquZS1qK4uD7Jf0OIdfJAzQ7Q9AlrkDajXokZIdmASdPUPjyHjf7jv0TgDCUCyPG5m59ccU5GcB/zKaUMG+9p5Vux9G4x/j5sjJaH44APeYAo9JuHltIoG5ijxg/hp0iH2Ja6FP60FOik+dp+8CeS0wSM6ZZTKaryHX1L+h4unX8u5n2o498L4QnEzW+mN3r89BX+c+lFG7XNZoS/Mx6dYD7Q==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPSA id
+ 2D6E91800216; Wed, 22 Apr 2026 21:42:28 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 00/37] WHPX x86 updates for QEMU 11.1
+Date: Wed, 22 Apr 2026 23:41:48 +0200
+Message-ID: <20260422214225.2242-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 11/13] target/i386: Add pebs-fmt CPU option
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Sandipan Das <sandipan.das@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>
-References: <20260304180713.360471-1-zide.chen@intel.com>
- <20260304180713.360471-12-zide.chen@intel.com> <aeiE9ZZ5AE+uMgmN@intel.com>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <aeiE9ZZ5AE+uMgmN@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zide.chen@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDIxMSBTYWx0ZWRfX7rHVWG32ymTg
+ 9OIR7WW2xoAV7jeRar3RAC3M6Q87NymVyc7mLTRcv9KEA4+UlUp/YCFqNY7n0RGdrsKk/SMiZ1e
+ +cDKgrtaB0eUPI/8xN/ri7OI3+yMQYasQ84AQDuofHdyHfsBWopuPCzqfoGGGzx7nHTkJnjMyjr
+ 75ApCFnovTf5c0rcNrQp70AyPpkY4svbfWcOzkiAI1+tRAEW/OKRpaMyDUxyQua1L2UYWxwR/IH
+ bn1ZblgGx7pRTowQQIpwqC0n/fNL+w3oPwOCcyNPHj5BHtX0d9WMtq/U4VUuzOANzZ+3oSB2Y54
+ o9XWSuo8YYkRGpAbk4L2M7TUOyYLz6dX3RLjPpOtfX0FY0+/JQIvxuBeqPZo28=
+X-Proofpoint-GUID: by-g_CXpbxjrp2KOMlP7sy9SLb1HqVJJ
+X-Proofpoint-ORIG-GUID: by-g_CXpbxjrp2KOMlP7sy9SLb1HqVJJ
+X-Authority-Info-Out: v=2.4 cv=C4DkCAP+ c=1 sm=1 tr=0 ts=69e940c8
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=bnQU8WpU6WbG6yeDcMYA:9
+ a=QEXdDO2ut3YA:10
+Received-SPF: pass client-ip=57.103.76.40;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,83 +87,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This rolls over my previous series posted earlier in this mailing list.
+..and adds some more.
 
+Git tree: https://github.com/mediouni-m/qemu whpx-i386-202604-4
 
-On 4/22/2026 1:21 AM, Zhao Liu wrote:
-> Hi Zide,
-> 
-> On Wed, Mar 04, 2026 at 10:07:10AM -0800, Zide Chen wrote:
->> Date: Wed, 4 Mar 2026 10:07:10 -0800
->> From: Zide Chen <zide.chen@intel.com>
->> Subject: [PATCH V3 11/13] target/i386: Add pebs-fmt CPU option
->> X-Mailer: git-send-email 2.53.0
->>
->> Similar to lbr-fmt, target/i386 does not support multi-bit CPU
->> properties, so the PEBS record format cannot be exposed as a
->> user-visible CPU feature.
->>
->> Add a pebs-fmt option to allow users to specify the PEBS format via the
->> command line.  Since the PEBS state is part of the vmstate, this option
->> is considered migratable.
->>
->> We do not support PEBS record format 0.  Although it is a valid format
->> on some very old CPUs, it is unlikely to be used in practice.  This
->> allows pebs-fmt=0 to be used to explicitly disable PEBS in the case of
->> migratable=off.
->>
->> If PEBS is not enabled, mark it as unavailable in IA32_MISC_ENABLE and
->> clear the PEBS-related bits in IA32_PERF_CAPABILITIES.
->>
->> If migratable=on on PEBS capable host and pmu is enabled:
->> - PEBS is disabled if pebs-fmt is not specified or pebs-fmt=0.
->> - PEBS is enabled if pebs-fmt is set to the same value as the host.
->>
->> When migratable=off, the behavior is similar, except that omitting
->> the pebs-fmt option does not disable PEBS.
->>
->> Signed-off-by: Zide Chen <zide.chen@intel.com>
-> 
-> ...
-> 
->>      if (user_req != -1) {
->> +        if (!is_lbr_fmt && !(env->features[FEAT_1_EDX] & CPUID_DTS)) {
->> +            error_setg(errp, "vPMU: %s is unsupported without Debug Store", name);
->> +            return false;
->> +        }
->> +
-> 
-> This is a general code path to check user_req != -1... but
-> 
->> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
->> index 1d0047d037c7..60bf3899852a 100644
->> --- a/target/i386/kvm/kvm-cpu.c
->> +++ b/target/i386/kvm/kvm-cpu.c
->> @@ -231,6 +231,7 @@ static void kvm_cpu_instance_init(CPUState *cs)
->>      }
->>  
->>      cpu->lbr_fmt = -1;
->> +    cpu->pebs_fmt = -1;
-> 
-> -1 is only set for KVM, so other accelerators have lbr_fmt=0 by default.
-> 
-> This will cause make check fail:
-> 
-> stderr:
-> qemu-system-x86_64: vPMU: pebs is unsupported without Debug Store
-> Broken pipe
-> ../tests/qtest/libqtest.c:201: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
-> 
-> (test program exited with status code -6)
-> 
-> So I think the initialization should be placed in the general code path
-> as well (x86_cpu_initfn()) - and move lbr_fmt initialization back to
-> general x86 codes.
+Some highlights:
+1
+- user-mode x2APIC emulation (kernel-irqchip=off) for better
+performance when it has to be used.
+- CPU model emulation on both Windows 10 and 11
+- configurable behavior for unknown MSRs and adding a way
+to trap on GPFs raised by Hyper-V on MSR acccess
+- when -M hyperv=off, report the hypervisor as VMware for
+guests to use either the VMware CPUID leaf or the vmport
+interface to get the TSC and APIC frequencies.
 
-Yes, the related changes in patch 9/13 should be reverted.
+If the vmware CPUID frequency leaf is disabled, then KVM
+is reported.
+- xsave save/restore support
+- Pause the VM to be able to inspect state on a fatal fault
+instead of just exiting
+- adding emulation of an oddball idle MSR used by Windows
+when kernel-irqchip=off.
+- disable kernel-irqchip and Hyper-V enlightenments for
+isapc
+- for Windows 10, change the default to an emulated x2APIC
+(kernel-irqchip=off). The recommended way to use the Hyper-V
+LAPIC is not to use -M kernel-irqchip=on, but -M pic=off.
 
-> 
-> Thanks,
-> Zhao
-> 
+And as the last commit, a documentation update.
+
+Bug reports and patches are welcome.
+
+However, due to reasons, I'll probably step aside
+from this all for a bit so don't expect immediate replies.
+
+v1->v2:
+
+- Build fixup for macOS and OpenBSD
+- a bit of cleanup
+
+v2->v3:
+
+Unfortunately this rev has quite a bit of changes...
+
+- Some fixes here and there.
+- Merging in Windows 10 support into something less separate.
+- Move new x86-specific (at least for now) properties into a new
+whpx_arch_accel_class_init method.
+- Add nested virt settings and separate security domain accelerator
+properties.
+
+Magnus Kulke (1):
+  target/i386: add de/compaction to xsave_helper
+
+Mohamed Mediouni (36):
+  target/i386: emulate: include name of unhandled instruction
+  whpx: i386: x2apic emulation
+  whpx: i386: wire up feature probing
+  whpx: i386: disable TbFlushHypercalls for emulated LAPIC
+  whpx: i386: enable x2apic by default for user-mode LAPIC
+  whpx: i386: reintroduce enlightenments for Windows 10
+  whpx: i386: introduce proper cpuid support
+  whpx: i386: kernel-irqchip=off fixes
+  whpx: i386: use WHvX64RegisterCr8 only when kernel-irqchip=off
+  whpx: i386: disable kernel-irqchip on Windows 10 when PIC enabled
+  whpx: i386: IO port fast path cleanup
+  whpx: i386: disable enlightenments and LAPIC for isapc
+  whpx: i386: interrupt priority support
+  hw/intc: apic: disallow APIC reads when disabled
+  whpx: i386: fix CPUID[1:EDX].APIC reporting
+  whpx: i386: set apicbase value only on success
+  whpx: i386: unknown MSR configurability
+  whpx: i386: enable GuestIdleReg enlightenment
+  whpx: i386: tighten APIC base validity check
+  whpx: i386: ignore vpassist when kernel-irqchip=off
+  target: i386: HLT type that ignores EFLAGS.IF
+  whpx: i386: add HV_X64_MSR_GUEST_IDLE when !kernel-irqchip
+  whpx: i386: some x2APIC awareness
+  whpx: i386: set WHvX64RegisterInitialApicId
+  whpx: i386: Pause VM on fatal exception to be able to inspect state
+  target/i386: emulate: use exception_payload for fault address
+  target/i386: make xsave_buf present unconditionally
+  whpx: xsave support
+  whpx: i386: set APIC ID only when APIC present
+  whpx: i386: update migration blocker message
+  whpx: i386: don't increment eip on MSR access raising GPF
+  target/i386: emulate, hvf: rdmsr/wrmsr GPF handling
+  whpx: i386: add feature to intercept #GP MSR accesses
+  whpx: i386: nested virt settings
+  whpx: i386: add SeparateSecurityDomain flag and make default
+  whpx: i386: documentation update
+
+ accel/whpx/whpx-common.c           |    8 +
+ docs/system/whpx.rst               |   40 +-
+ hw/intc/apic.c                     |    9 +
+ include/system/whpx-all.h          |    1 +
+ include/system/whpx-common.h       |    2 +-
+ include/system/whpx-internal.h     |   31 +
+ target/arm/whpx/whpx-all.c         |    5 +
+ target/i386/cpu.c                  |   27 +-
+ target/i386/cpu.h                  |    6 +-
+ target/i386/emulate/x86_emu.c      |   14 +-
+ target/i386/emulate/x86_emu.h      |    4 +-
+ target/i386/emulate/x86_mmu.c      |    3 +-
+ target/i386/hvf/hvf-i386.h         |    4 +-
+ target/i386/hvf/hvf.c              |    9 +-
+ target/i386/whpx/meson.build       |    1 +
+ target/i386/whpx/whpx-all.c        | 1489 +++++++++++++++++++++++-----
+ target/i386/whpx/whpx-apic.c       |   83 +-
+ target/i386/whpx/whpx-cpu-legacy.c |  158 +++
+ target/i386/whpx/whpx-i386.h       |   12 +
+ target/i386/xsave_helper.c         |  256 +++++
+ 20 files changed, 1875 insertions(+), 287 deletions(-)
+ create mode 100644 target/i386/whpx/whpx-cpu-legacy.c
+ create mode 100644 target/i386/whpx/whpx-i386.h
+
+-- 
+2.50.1 (Apple Git-155)
 
 
