@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1674CF94CDF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C01F327CB
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Apr 2026 08:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFSaG-0005hq-31; Wed, 22 Apr 2026 04:05:20 -0400
+	id 1wFSZi-0005F8-GL; Wed, 22 Apr 2026 04:04:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSaE-0005eq-9U
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:05:18 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSZf-0005EP-B9
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:04:43 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSaC-0001UW-N9
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:05:18 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b886fc047d5so930201566b.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:05:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFSZd-0001Bh-Ua
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 04:04:43 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43d6fbd0954so4089608f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 01:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776845115; x=1777449915; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776845080; x=1777449880; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zzrl0HPc82N/AwcdZcB8bmuFYVznIFsxHkpdek35u2s=;
- b=sc12JJ0mO4WpwRwaN5ay2Kf/igoeV+Fbj9g0NRuJmm5rNVdw/qad7NMalF9ooEDu1R
- rA5o4OpG2hiJ+147w3frtxO3dIcVpxQrw4ADw0KgJBdcH/LXvQoNVttoX3kDHGiWf71D
- jRMKc2uT7b7fUZil0oZrEoh1FpwDy2FsJHWp+Wr2vls1zavIZmCrd5VJ1HO+J2RVt3ng
- s3vefI5IE8fSrctVNdjpiePg0jKZuwnDWTVMx+I9sudhy/4ovu188tw1FXdXfPNNSNEG
- LIcU7bigG0sykvB2SclWwDUOsBRzbme8uEAq21rRultrgkZciT2+YC1WmfLGhV9gn2lk
- MpLQ==
+ bh=KPz0HXS2jfx7mdnonDT4NSN5t6aFfr7KGsJhvT91t+Y=;
+ b=vqU3qHEzU05/ZMrWJro5tvZACMq4xdHQPUyWKtuldXMk7OTEQ9YoIrFOFx5ywG8yZH
+ p+BBUR6F6EZGuxpBQyuR/MMy20B/kvfy0w2Wbe27vDpRST+FDnV1xdUzMRefEJyopKiQ
+ JB0p7+3mfTNUrl6c++ytop281rtYOoGmnEQJ2bukQ0l6eqLHNrsEBtjeSTRQqZOm6fAr
+ A4KPiCnoivVraBeQhs93BCyHLicb7PKWviydztLsCAkDtQ120Bbf1kEFYezkdH/1FwRz
+ PAMxhP7JY5kYcklVzi9ApqcICYf64g2GEQHdLbCKkCNWJ9SocBL0e9wFE+zK3KGlAWZi
+ HPWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776845115; x=1777449915;
+ d=1e100.net; s=20251104; t=1776845080; x=1777449880;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Zzrl0HPc82N/AwcdZcB8bmuFYVznIFsxHkpdek35u2s=;
- b=AuSPhQd6Lpki4ixizkmM9kZARSxEUgdoyYOPiyxZQvefoNHUd16NzNvXNbWGTRRSqM
- OLG3nMGAqylnv1LtXUPLBEtO55rgTaZA2W+TgDebtErUsX/GB9jhlRqSFbJ+65MbAViD
- n+fp09lN8eYnzbPCvU8dH3n3iwLWlt8rywhQLbSWZ9JBZyvml8vaIoFXpbBJtyju1umW
- IRMkwz5AqbTxJMnuK0dvlauRscV/LHiDi0lsqnnil7fZWLLa3Mkdc/lzA4lBnhbmGE2H
- 205SEyYiHJAJKW4m0LGXw79pBO3lEQneL4zRAkJA+YlnMje2FEnXh/E1TUoGZAH9OynE
- GGnw==
-X-Gm-Message-State: AOJu0YzJevGxespuQQNfrIvF8ma8v+oGe7cfXWwOz0a2OUjKHCk/Zdu1
- rl7tdGWHwWe7qBXFAe7HV3Cf6dWYO7WPW8pFV78GcX6i/9VSLocr0PIBp7Nkz3nTqDLd25jCVdU
- xISAxwHw=
-X-Gm-Gg: AeBDiesCO7I8XT4TGsEIvKDVNwL/0CrMZc1XnBUFviURfUYFR4Ra6F9nzLihByvhaqe
- VTtansSkXhh9kgItXb7u8b4OV9qnXCp9p/zJtPo6SqzW23v19cSjkh6blVjXPU2oTRlUL/He5sg
- 8gepLoil2MSqrTv5qd2TMzFA1mSz0qwcJrHNAqp6bYPxMQS/aw6vZ791n1Q/YTAHcjAKBvpEUMk
- g4H7xcTW8qlPXv2vWZZIbOs2AwqdSl5bjzJSVSE/pNVhW3HVyyG2XeyezaoeqjtF0YXINMWtyWV
- FiDk2i0wLXaP63Sqt4CYfc4uP5vBwbtQVLlyYqoXEWjP2edET3p5pT2WgXJxglLdr6rGjma03WL
- GvChkhqXb0LiSl1GDdfZzsuGrNEnZZGQiJO8weonap3+g0Ct/AobDxwczaLCmOmGh6kJkydOlbA
- RLhUGnAilqDsAvErR4y/RhsIOKQv88GEJhwvyiJSaZNwtZX4L9AgxpYTNy4QRYbfo7azc5BrUgz
- MZVTyBh4jQ=
-X-Received: by 2002:a17:906:c142:b0:ba8:7211:58c with SMTP id
- a640c23a62f3a-ba8721111d5mr568053766b.18.1776845114703; 
- Wed, 22 Apr 2026 01:05:14 -0700 (PDT)
+ bh=KPz0HXS2jfx7mdnonDT4NSN5t6aFfr7KGsJhvT91t+Y=;
+ b=p24bGDnMwyavwyNDRKIdiHln0MCZDE1t3uzV9L2upoL7ttPER9C3aHY81/MOf7pS2H
+ YIroSQmKKI/VX+tpTuLO/mzxwEz6wPsgvPc4I4oV+Ed33jHqvIN2phYOqjqGTncJ4sE/
+ r79uDceiJgWOP1c6wDAlMqLemWESL5iMv2RhGOH/iwWMBD1rw6CPAY3Slth2NXBvOOG9
+ ZE/XOmoLjDhCroLnW7hCtSQo6+aWQXdBWbIe+ZRelKwHB3HQqgnTtyLCqBKXMXVUyc7P
+ CuYmCjz5+kvOq+YGsp/3ri+fvztQBOZ1XBa3ab4OwYvE0tIJny63y/KzF4b5lbTAbCDU
+ 8Jfg==
+X-Gm-Message-State: AOJu0YyUXUuiZcWTguNo9F1NK8i5sSkx6JBEYg41OmtVJDireVtMAZEY
+ klKdbvzNSbl8Nz1hBaG92R7kDSHsa2K0XvgwiKa46d7RFmj25BntfZRnQ+kdP7I+vazwFeKqUx1
+ wkgFUNFI=
+X-Gm-Gg: AeBDievjBlgFKWUSAyv+DdYdZOHU/ns3zbOrFdq5kh6mGhZ8+zTY32vR8z6nNaOgfh3
+ oU4rml0wp0JmwnBDAtjQpSXIzuv4LEphoOU4UYOFccfp/j5qjIejdRCenZSOcI0qqBmkO/IJ7nx
+ Wwcta6Uld3kPW3nxUOXGkO/MvgWUjRbZUKIZaumbV7xzNBpypR+ECHibhnQxQSWBMTb87ffMBl9
+ pmuRpSyHGWQTnRFV8USxgKn57GjgMrY70YbOJj6kEMWQ/wsmlsiHC6ZuXMDv5tT+ZpO7k8Wnbn0
+ ja8w0c3w4NTABcAgsBDLsl19VVvW11stV1J6ipEvMt5EkJW0WOtg33Cskbixa0bU/UlGNgngMzN
+ Xx/qBL0v30T//7k/P1094jNEhGl844fDfC+yzsmnicsIKw5U7O7kGiqEjRs8g1FdqXW4gHG+Vg4
+ khozRCbVbuEY02joPzXGUCnyhn2ToAcxDl+1nf/wqfcy8nTI8uzkAR5P4h7hZbDdZkR+RrjNs6F
+ vOSBS34YDH73kDzE/H/5A==
+X-Received: by 2002:a5d:5d05:0:b0:43f:e7c4:a36e with SMTP id
+ ffacd0b85a97d-43fe7c4a3damr28391720f8f.16.1776845079642; 
+ Wed, 22 Apr 2026 01:04:39 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4412150a092sm9413482f8f.23.2026.04.22.01.05.13
+ ffacd0b85a97d-43fe4cc09b1sm44241846f8f.9.2026.04.22.01.04.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Apr 2026 01:05:14 -0700 (PDT)
+ Wed, 22 Apr 2026 01:04:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>
-Subject: [PATCH v2 09/10] MAINTAINERS: Remove PhilMD from firmware sections
-Date: Wed, 22 Apr 2026 10:04:04 +0200
-Message-ID: <20260422080406.62638-10-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 04/10] MAINTAINERS: Step up to maintain core machine code
+Date: Wed, 22 Apr 2026 10:03:59 +0200
+Message-ID: <20260422080406.62638-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260422080406.62638-1-philmd@linaro.org>
 References: <20260422080406.62638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,41 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm not paid to support this code. I haven't followed
-it neither, so be fair and just remove myself.
-Demote the status to 'Orphaned'.
+The 'Machine core' section is orphan. Being acquainted
+with the code, step up to maintain it.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Daniel P. Berrange <berrange@redhat.com>
-Cc: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>
+Cc: Yanan Wang <wangyanan55@huawei.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- MAINTAINERS | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 5aceda193c2..242546498bc 100644
+index 520b92826a2..d4dac985b5c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2846,9 +2846,8 @@ F: hw/usb/vt82c686-uhci-pci.c
- F: include/hw/isa/vt82c686.h
+@@ -2016,9 +2016,9 @@ F: include/hw/i386/nitro_enclave.h
+ F: docs/system/i386/nitro-enclave.rst
  
- Firmware configuration (fw_cfg)
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Gerd Hoffmann <kraxel@redhat.com>
+ Machine core
+-R: Philippe Mathieu-Daudé <philmd@linaro.org>
++M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Zhao Liu <zhao1.liu@intel.com>
 -S: Supported
-+S: Orphaned
- F: docs/specs/fw_cfg.rst
- F: hw/nvram/fw_cfg*.c
- F: stubs/fw_cfg.c
-@@ -3969,7 +3968,6 @@ S: Odd fixes
- F: docs/interop/firmware.json
- 
- EDK2 Firmware
--M: Philippe Mathieu-Daudé <philmd@linaro.org>
- M: Gerd Hoffmann <kraxel@redhat.com>
- S: Supported
- F: hw/i386/*ovmf*
++S: Maintained
+ F: hw/core/cpu-common.c
+ F: hw/core/cpu-system.c
+ F: hw/core/machine-qmp-cmds.c
 -- 
 2.53.0
 
