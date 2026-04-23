@@ -4,103 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9463AFDEE45
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A2CFDEE45
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFzaw-0001no-Cv; Thu, 23 Apr 2026 15:20:14 -0400
+	id 1wFzbS-0001sM-Fp; Thu, 23 Apr 2026 15:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzav-0001nX-3v
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:13 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzbJ-0001rp-VY
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:38 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzat-0001kE-Fe
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:12 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzbH-0001ol-OL
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:37 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E52C86A891;
- Thu, 23 Apr 2026 19:20:05 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 7CCB45BD62;
+ Thu, 23 Apr 2026 19:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972006; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1776972027; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DHMkoFlbmXpq2TNGiMoLXIsWzV+/cYEgIonbGv81rKQ=;
- b=0rLmIfPbRt1+SkkH5mdKz8D1rLyTk4Z6K9EwiieRmgn7XX/8NB78sEH+z35GaEP4PA78/F
- 4MAbxs8xMRYKufSKeEm12y0zKieUCVn/e8injGCxia6pUULyghG/Q2HQTynQ9cbv36immX
- Goq9GnbJ9lQVqYjhOOeLULj79CtCPiU=
+ bh=Yxq0LxrbCY14GhKOCjKifdrJXwZdHE2lOdV7GNZfWs4=;
+ b=BN71xsWwAQ8pN3eHB7sY+LKBlJ+F55ln1ldFXop2XMh9PB8KKwHROdkqv5zmc8WF+bNsxr
+ bn/NJPwjcYN5I+j6rmO9q8DrAWksmBdP/dfAq8jYmGiIBsAN2fggqJpBDddJaJkIW8E/WX
+ srUjdmTtfqVEzI8KT5ufJ96NyCpATeE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972006;
+ s=susede2_ed25519; t=1776972027;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DHMkoFlbmXpq2TNGiMoLXIsWzV+/cYEgIonbGv81rKQ=;
- b=kFBN9Vym1uyoSUYV+kDZkjc46NtJqtSzVGdrA40Lh1SSOjWm8WRWET479HosmVmmQ5ZPtU
- Fxm/0PwMZsxjYdAg==
-Authentication-Results: smtp-out1.suse.de;
+ bh=Yxq0LxrbCY14GhKOCjKifdrJXwZdHE2lOdV7GNZfWs4=;
+ b=bjcJ9gfGxKkT9LddZlItAnGUSTEnB04IqfJUgKkTe2VLi+uMHB5hJtIAVuGCAaazz/3oZ1
+ rGSOvr5RSJdVYwAw==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972005; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1776972027; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DHMkoFlbmXpq2TNGiMoLXIsWzV+/cYEgIonbGv81rKQ=;
- b=hpwJBZbA4EOKQ5ZRy3e3MBjOtZPiGtFtM6v9EgZQXW62FZa3ujH5HEnxiRvcom/C49wPAK
- IUAIIYmg+acRc2mGA+rE976jmXM+UdqwbfAZUNfppcRT1OE7QbeNImuP78SSSWfX/qrmrt
- oAkjBGR6mnAshGS3+8b6597pzyfmC7E=
+ bh=Yxq0LxrbCY14GhKOCjKifdrJXwZdHE2lOdV7GNZfWs4=;
+ b=BN71xsWwAQ8pN3eHB7sY+LKBlJ+F55ln1ldFXop2XMh9PB8KKwHROdkqv5zmc8WF+bNsxr
+ bn/NJPwjcYN5I+j6rmO9q8DrAWksmBdP/dfAq8jYmGiIBsAN2fggqJpBDddJaJkIW8E/WX
+ srUjdmTtfqVEzI8KT5ufJ96NyCpATeE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972005;
+ s=susede2_ed25519; t=1776972027;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DHMkoFlbmXpq2TNGiMoLXIsWzV+/cYEgIonbGv81rKQ=;
- b=3NjLmc3t9/QRe8bMmIWpbxbBa4i6KIE2Pw6bDNDOB2bLKVLJJUuXD8enRTuXmhvjt0/dTR
- jL9OP9t7WQ1+kADg==
+ bh=Yxq0LxrbCY14GhKOCjKifdrJXwZdHE2lOdV7GNZfWs4=;
+ b=bjcJ9gfGxKkT9LddZlItAnGUSTEnB04IqfJUgKkTe2VLi+uMHB5hJtIAVuGCAaazz/3oZ1
+ rGSOvr5RSJdVYwAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DF2B5593B0;
- Thu, 23 Apr 2026 19:20:04 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4666A593A3;
+ Thu, 23 Apr 2026 19:20:26 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iL+IKuRw6mlJCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:04 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id sElHBfpw6mlJCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:26 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 03/43] migration: vmstate_save_state_v: fix double error_setg
-Date: Thu, 23 Apr 2026 16:19:17 -0300
-Message-ID: <20260423191958.1440-4-farosas@suse.de>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 18/43] hw/s390x/css: drop use of .err_hint for vmstate
+Date: Thu, 23 Apr 2026 16:19:32 -0300
+Message-ID: <20260423191958.1440-19-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260423191958.1440-1-farosas@suse.de>
 References: <20260423191958.1440-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
  MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,45 +121,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-We may call error_setg twice on same errp if inner
-vmstate_save_state_v() or vmstate_save_state() call fails. Next we will
-crash on assertion in error_setv().
+That's the only usage through the whole base. Doesn't
+worth keeping the whole complexity. And 2.7 machines were
+long ago.
 
-Fixes: 848a0503422d043 "migration: Update error description outside migration.c"
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260304212303.667141-2-vsementsov@yandex-team.ru
+Link: https://lore.kernel.org/qemu-devel/20260304212303.667141-17-vsementsov@yandex-team.ru
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/vmstate.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ hw/s390x/css.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 4d28364f7b..fccd030dfd 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -539,6 +539,9 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 } else {
-                     ret = inner_field->info->put(f, curr_elem, size,
-                                                  inner_field, vmdesc_loop);
-+                    if (ret < 0) {
-+                        error_setg(errp, "put failed");
-+                    }
-                 }
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 04ce3178a0..df5f0bc27f 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -192,10 +192,6 @@ static const VMStateDescription vmstate_schdev_orb = {
+ static int subch_dev_post_load(void *opaque, int version_id);
+ static int subch_dev_pre_save(void *opaque);
  
-                 written_bytes = qemu_file_transferred(f) - old_offset;
-@@ -551,8 +554,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
- 
-                 if (ret) {
--                    error_setg(errp, "Save of field %s/%s failed",
--                                vmsd->name, field->name);
-+                    error_prepend(errp, "Save of field %s/%s failed: ",
-+                                  vmsd->name, field->name);
-                     if (vmsd->post_save) {
-                         vmsd->post_save(opaque);
-                     }
+-const char err_hint_devno[] = "Devno mismatch, tried to load wrong section!"
+-    " Likely reason: some sequences of plug and unplug  can break"
+-    " migration for machine versions prior to  2.7 (known design flaw).";
+-
+ const VMStateDescription vmstate_subch_dev = {
+     .name = "s390_subch_dev",
+     .version_id = 1,
+@@ -203,10 +199,15 @@ const VMStateDescription vmstate_subch_dev = {
+     .post_load = subch_dev_post_load,
+     .pre_save = subch_dev_pre_save,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT8_EQUAL(cssid, SubchDev, "Bug!"),
+-        VMSTATE_UINT8_EQUAL(ssid, SubchDev, "Bug!"),
++        VMSTATE_UINT8_EQUAL(cssid, SubchDev, NULL),
++        VMSTATE_UINT8_EQUAL(ssid, SubchDev, NULL),
+         VMSTATE_UINT16(migrated_schid, SubchDev),
+-        VMSTATE_UINT16_EQUAL(devno, SubchDev, err_hint_devno),
++        /*
++         * If devno mismatch on target, it may be due to some
++         * sequences of plug and unplug breaks migration for
++         * machine versions prior to 2.7 (known design flaw).
++         */
++        VMSTATE_UINT16_EQUAL(devno, SubchDev, NULL),
+         VMSTATE_BOOL(thinint_active, SubchDev),
+         VMSTATE_STRUCT(curr_status, SubchDev, 0, vmstate_schib, SCHIB),
+         VMSTATE_UINT8_ARRAY(sense_data, SubchDev, 32),
 -- 
 2.51.0
 
