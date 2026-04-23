@@ -4,115 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C334FC0342
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24759FC0340
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFvnT-0004lw-L2; Thu, 23 Apr 2026 11:16:55 -0400
+	id 1wFvqP-0005Us-NH; Thu, 23 Apr 2026 11:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wFvnR-0004lP-K3; Thu, 23 Apr 2026 11:16:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wFvnN-0007W8-BG; Thu, 23 Apr 2026 11:16:53 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63N7GX0M3515313; Thu, 23 Apr 2026 15:16:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kDdWvi
- exPc8JfNpwMYGEQHN4+gl7jHjB10bbT/w+4w4=; b=mYl6OJFFgJI8Jl9xnu6eG4
- 0x18WQqVO1+ObZBSdau3etUTRFh0x8QPJm7W6xVNtiPVX7kmwH/Myxg+E1hs7+Bu
- yzs0G28zAKJ4iz9HFlRbpQ1eBh75RjyBmYyigeiAM2t1YTNpd3yY/jZv12QlkuaX
- NNkDI9Au4voaXJ0vJ/Qt+hl+0e5p8rcA2NFD9IcTyk8RFEksj9ZvOUq6/MvpfMOa
- gOkMLnRjZgTTUMmy1oyNh280V/ROJFS3bVFDur6fPI27K+MWkFX2aHDleT8TsU4R
- mHCnYviE78p3l4dFbhKWIaH1Sv7N3+DZc1c7nAbLs71X17DeU0SJVop2Tnr4o1yQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu29cdd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Apr 2026 15:16:45 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63NF5SKS017178;
- Thu, 23 Apr 2026 15:16:44 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dpjky74ex-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Apr 2026 15:16:44 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63NFGe0e30540454
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Apr 2026 15:16:40 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7D28220043;
- Thu, 23 Apr 2026 15:16:40 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01FE320040;
- Thu, 23 Apr 2026 15:16:40 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.71.73])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Apr 2026 15:16:39 +0000 (GMT)
-Message-ID: <f9313fda-3374-4b51-8594-3dbce3c1d1b7@linux.ibm.com>
-Date: Thu, 23 Apr 2026 17:16:39 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wFvqO-0005UF-2g
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:56 -0400
+Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wFvqI-0002CR-VT
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:53 -0400
+Received: by mail-wr1-x443.google.com with SMTP id
+ ffacd0b85a97d-43cfde3c3f3so6970493f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:19:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776957588; x=1777562388; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PnhfxpyOrEFHhYfrElCJxn7WSl22OKT9MC8JbiCDHig=;
+ b=A3KSQtM9SyWTTFRzzpwta8E30ynbZJlpZOQpNq/AZyTqIS8MTELFyoPEi4xGKOO1a8
+ +p7n/qDtu3sfNzF+DZ/bf2vXTt8qxuucxmK7oQEBbBmoOXWqpMymS5ED32KbHaBSnkBN
+ 1WXUTzCVLFa+g1LFUf4W2YG0b/UEBeG8csV4g41NQTzrPBDDme76sCXlxxPTXtSCJALo
+ l9Do+rH0fy7gH6TijBK0FxMFXlxcHMovcKXEKFetlA2lc1rpiflk1DNh4+XRUXRf1NsS
+ cEjewhQVMbKntYUoNdVmq1AQo1HUtyfS3YWf7Y7IJKHkZqseU3sp8dv8H+cvzkRvdqRz
+ 4sRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776957588; x=1777562388;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PnhfxpyOrEFHhYfrElCJxn7WSl22OKT9MC8JbiCDHig=;
+ b=ke7UmYmoxOb3sRD//p9U5gFgQcA4CNNjMVuaeNq2H8zMvqQg96UYf9rVa59IAymW9v
+ aj2pO1VCbpjwyFPWbGuU5tLwl0pDn/D62Bx5dC4xa2dhPni8DbXHjX4wxxZRqDu+1Znd
+ C+MEBuXYe8hrzrpMcPqeHOlvtUUOF9k17dqXTSbT7YWTaEex10UufKhBl/0CRgN7L8tO
+ Rw5GvI6Uy7eNjKPBV/QlbsEfcu4Ctop2RRVVUsWUO5jCHDZUKzeKYDtjNhSGTsw14C8F
+ z/hpmMc2oI4+Pvkj/eGk3qARLp1w+SIHGPugZkD5tU6LuMYLkZ3XpQYzBREl6Ea7HLs6
+ 68Qg==
+X-Gm-Message-State: AOJu0YxRcrTH2RV+ldvRH/BR2CvVOUSC+YcXwU0RDwB5Jaz/NeWMdNqn
+ /HDu3GAiPZM8BzkJhr65J+QeD5wvAaEP5IwNb5rqN7ka0ApUIhzRQAF/kiKG93uG2yAUszdsnE0
+ MSlouo2YkNg==
+X-Gm-Gg: AeBDieufuJy2w5c19Jk0Mer60qS1okU1xh87to89B/2H9sigxryeI3Jjju1zzseYx4L
+ EnwheLtQFwRxnWIqRvRLFTu6WovuduVSs4CMWcMHZZsJl3GivvnLlzklxNiV+sijF9kQDL19S4t
+ GotMMgAMjMHZI4F2ib/jj2Y6tNsuPf3onQa6Ie1NY2vqWcH65KFL9cmKusVeMJ7kkmhimZdJoKz
+ s8NdedzA8WtKMCGIPnFFhF5kQYx4cvmiGzecdjjQwFToKyiyigPIVphNmh+aEkGNvLalKGp2WIp
+ KFho1UH8lCO018+H+ujCnQM1jTGPMj9qvp47Tvueuh94lt4uyRkFo0mOfZFm0/7OtCw9pzSRR7H
+ RY5xC/+FHiE4bBoARyKTDDl1BxXVbEQCEjlAy8NNhTaRhsHDqjqugd3BWILupNX5vwaGHZXjCj1
+ kpTc8UbJ5J8B1zvTuo336QkrVpajrsuTiuyg==
+X-Received: by 2002:a5d:40cc:0:b0:43f:e721:76bf with SMTP id
+ ffacd0b85a97d-43fe721784amr29083852f8f.41.1776957588435; 
+ Thu, 23 Apr 2026 08:19:48 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4e46898sm57142024f8f.27.2026.04.23.08.19.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Apr 2026 08:19:47 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9D9755F7F9;
+ Thu, 23 Apr 2026 16:19:46 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 0/2] virtio-gpu hotfixes
+Date: Thu, 23 Apr 2026 16:19:44 +0100
+Message-ID: <20260423151946.1853943-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] target/s390x: Compile translate.c as common unit
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Anton Johansson <anjo@rev.ng>
-References: <20260423135035.50126-1-philmd@linaro.org>
- <20260423135035.50126-6-philmd@linaro.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260423135035.50126-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE0OCBTYWx0ZWRfX4yZIGhl6gEAj
- KRkSLXVe5byvFM9ofQ5aqkmjbivlAzC8eRf9BrftgsztCmzgS/xUJoxdP4Qr0KgOGCjZpGvzF6g
- PIZjx3WHthtomK52WNEFLKvyEDByVjRnP+RZKbYDAntglORTdnbQPe53TCI+nDPRbtd2THDr/Su
- 8X5KKhW032MylZJfmtkkzaOHD482XZh0hV3K3nWyfQGEuqo4modY90zJoci2h7iF0cZhKh55IUy
- 9D+eZvJQilrnLmw3/Y5FXw49ah/e3NOTOIqLFdgCaa0as4ER5/qGapIlXE1xB9ZI1ki2ZFcGRMc
- AZJGpm+J9R/Oane/G8NVz/PnZY5zQbtX0SdBpi7IIwy65V4BfBOW1/IzPfg9Fstfxo9RY7r+jX7
- yh14dcAwL78zTWNtCWJBcYcSnRKrVpsgxklTPRMSflP25YkRuPhIw7izd701WH0iLvuxs9Rxq0d
- 2FTrVKR85jUyUVtP7VA==
-X-Proofpoint-ORIG-GUID: xY4tVvwFHHF9AnVhIBpTX4XoUHAUpYV6
-X-Proofpoint-GUID: xY4tVvwFHHF9AnVhIBpTX4XoUHAUpYV6
-X-Authority-Analysis: v=2.4 cv=XMUAjwhE c=1 sm=1 tr=0 ts=69ea37dd cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=KKAkSRfTAAAA:8
- a=VnNF1IyMAAAA:8 a=hGxi2LaFjyUuuG466sAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604230148
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::443;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x443.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,24 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/26 14:50, Philippe Mathieu-Daudé wrote:
-> In order do build translate.c as a common unit we need to
-> replace:
->
->    #include "tcg/tcg-op.h" -> #include "tcg/tcg-op-common.h"
->                            -> #include "tcg/tcg-op-mem.h"
->
-> and:
->
->    "accel/tcg/tcg-op-gvec.h" -> "accel/tcg/tcg-op-gvec-common.h"
->
-> taking care to define TCG_ADDRESS_BITS, which is fixed
-> for this 64-bit target.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/s390x/tcg/translate.c | 6 ++++--
->   target/s390x/tcg/meson.build | 2 +-
->   2 files changed, 5 insertions(+), 3 deletions(-)
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+The following changes since commit 98b060da3a4f92b2a994ead5b16a87e783baf77c:
+
+  Update version for v11.0.0 release (2026-04-21 16:28:47 +0100)
+
+are available in the Git repository at:
+
+  https://gitlab.com/stsquad/qemu.git tags/pull-11.1-virtio-gpu-hotfixes-230426-1
+
+for you to fetch changes up to 30fad722ce68316d22b926ba0e6017f0440465df:
+
+  hw/display: don't accidentally autofree existing virgl resources (2026-04-23 16:13:53 +0100)
+
+----------------------------------------------------------------
+virtio-gpu fixes:
+
+  - fix build on Windows due to EGL assumption
+  - fix use-after-free on virgl resource
+
+----------------------------------------------------------------
+Alex Bennée (1):
+      hw/display: don't accidentally autofree existing virgl resources
+
+Anthony Roberts (1):
+      ui/sdl2: Fix assumption of EGL presence at runtime
+
+ hw/display/virtio-gpu-virgl.c | 6 +++---
+ ui/sdl2.c                     | 8 ++++----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+-- 
+2.47.3
+
 
