@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D064DF99367
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73C6F99366
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqu6-0006Ui-B6; Thu, 23 Apr 2026 06:03:34 -0400
+	id 1wFquc-0007hb-Ru; Thu, 23 Apr 2026 06:03:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqti-0006Sl-9r
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:02 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1wFqu6-0006ZG-WB
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:34 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtg-00027A-OD
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:02 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43d77f60944so5190573f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:00 -0700 (PDT)
+ id 1wFqu4-0002NO-C3
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:26 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43d74086e5bso6307607f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938579; x=1777543379; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938602; x=1777543402; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VXoj8K/1FLMjguol00rR4xSVo1FA7fFJ10qYf85eI6k=;
- b=UYs9zrx0rl+bqwZ0/qHeDcGqZ6xS14Y0RFnt/TxW4ihMcMdQHJOgDxqD1i6A4Vc256
- xMGGoRGagdnsrVxs2Wp1SlExJnW7ymVyR2hLXS74GGMyQkAtwYl5dhBUor4EWl3gpYo5
- 8QsQj2+/1oe6aNnxbS+y8KDS6PuSFc6f8jbDGJgdfCxZc443VeS8QokfKicyd/E3yWPe
- FPps+S2I369chcfcTc6HRRJaWKNhxcS7r6lmpel2Sfq0phXZnWGfhUH61g3D7E4hXNW7
- PT0BY9sF5kLjGdSnJ9y1uAvFlCiwlQaQgJN+HUQkSEb/5RHrFB4o4dUdsYX2P7hhcBGe
- 84vA==
+ :reply-to; bh=smRHFbZ3lUkLYKVcrIk8sD3R9MJPz7ZFklbF7kQOzmU=;
+ b=ghN74jGwdpJcn2q4xZT4qaE12Y6GSQyBiJ9TBqReb4qXngFmw/q5/5FraKzBXU+9m4
+ tzFqnTMeQZOYxl9dUe5/EQ1l31xvKostwbqcp54w0V8Jfj4DYmvMwWRjsXkFP/f5cFgJ
+ EfABQXtElPnmvdwQ6X3NpbBA20cesPOWKHMRpuyjtSkSCHD+BeZTnnwJMm5dR66yI7oi
+ ABXJKVSyAL0WjztLu1kDuZ8KhpldfrnqwqhN2J7wf1pQy7A7p0iNoPrqrYbgPbLMcJvw
+ VyV+7SbhgCk9MFSxX3qVe2I8TYRNpwAmuJHT34r2vaDN4eyUo6tyDiqGnFIJk8+358mn
+ ccOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938579; x=1777543379;
+ d=1e100.net; s=20251104; t=1776938602; x=1777543402;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=VXoj8K/1FLMjguol00rR4xSVo1FA7fFJ10qYf85eI6k=;
- b=SEdht5HHA9X16YaRSXcT2UtvkyvD7vckIFv2GEdaOE7UXehXLHi8L8lXVxqOKxiFSc
- RhWP3V6DwaEFFKW6xHBLxVxxgB+RgIKOGvpwIjKo8UVjkjNPRtLMyp7t/PG1dRnNldYZ
- gjcidiF8IVnDxdU2VoxlpGmaxYyB8DYyNOT7TiJ4Iz9ei6NpyQBykSYLoHot49LURBi8
- ybpxgpTFubK0aFP6RnFDxyaVfzxDnXemB1Pg8l5jyTGtt+zybDC3ZaIlAiPDWYOun4Mg
- dInDTsyVxjiF426Y/glIjO/K8B9F4G4tcAbwxtfv+/w4C3zchN6Yk07yHmzFGLXpXgV8
- nd3w==
-X-Gm-Message-State: AOJu0YywASQ7/HeaMr2tHAoSGtuErGPBTKVLOGlz5Wy6jRSPineeQdJj
- Q05rbjpSAaHR3OX5qdWIZyUwK67YROrIaqgTRaBIE7Kd3SfYqlgSrPDI/kB6cvRjh02ZqXQqQep
- /rejk
-X-Gm-Gg: AeBDievAbv/9YnnETAdGW+bunMoGL7dfy6j6ruQUzebHkPlXVTMFVVtM7BTzQodjao5
- RILOxtbDDjsA8f8Qs0Y9nQOd6Ifs3h+jfBG1RXIwRGl0hqgxWZWreEpDpO9tda+HSn2GaRNF2oL
- BJh34M7Bp8QA2/SYccjPudVxyedA6Jxpe/TtcFHeGAdwfoHd4Uo3riFw914Unt9qgkKxPLX7Os8
- 4lVmEQ+sEPtJgU2z5DVPkIVTxU+U6AsmlHiwuK5pJG8VSm93ExGSgzq1rV8xv+GE0jxvYSK/KjS
- nPvqduv9BOXx9lKYmC8EMKFiqIqhQ2KgFqmXP23ppp3Kxa/mAMg4ejwxIHB7mEu5gpNOqgQ4zUQ
- Waf23wtmNcKdHKGpuqJO4AshF7x1VZcUmRBDSkqBgPfDHqkCd0gTnAn/3UlYlKIJUFTXA7pdcT9
- BMFulbPj2vBx14IUAWWpS3P5fo3tyarDiyqxAWIdUmQAg4CGaWlfP/VgA/ANs4cWoqMT+eFxYCC
- 4olvxKXz+0iBhF7++LJBzCiZLLBwvrK+OJOmN+45w==
-X-Received: by 2002:a5d:584d:0:b0:43f:e263:c02 with SMTP id
- ffacd0b85a97d-43fe3dc8824mr39520135f8f.1.1776938578911; 
- Thu, 23 Apr 2026 03:02:58 -0700 (PDT)
+ bh=smRHFbZ3lUkLYKVcrIk8sD3R9MJPz7ZFklbF7kQOzmU=;
+ b=pWFwC8Lxz2Ar8jO1oguISSn5McjKRLk/ePJV+1DSNB36QQ0nXZT99nq7vRFoDmBPhn
+ QCSPA5IulHrCF4fSyDIesDN7YNhRJWkmZgpXzRn6lfYhY1yHGFZ+e5IEblkext4hwFz3
+ odG/Zzu0fB8yZCWADjz7ChUin/xJDIz4S9jhm6eflsWTiK6YHjX+TOhnJn0qDnxfcqnQ
+ yK76NHalKhq0/EOl9uRWRU+0ZlQKX3DzmDVA7eRbZO4hmOgJzHGrtj+0XMiuBrImAP6u
+ 7JCViVEP+GleIWyOmWuOgJwAZHQ13TfrubAybT399SG4C7PfYMhcIUX8wYyZfNJBUdKs
+ s9XQ==
+X-Gm-Message-State: AOJu0Yw0KCYQi//V3OXaSyTsToSEN0D8IGGbB/845qJd2ntrBpAxOwU0
+ odKKZV/JAQBe+MHUXWGE2nUGyG9Gr5iQDmkQ81adxIRieAAiGrz1HjAMYxxV6uHxyt49pKb8SRB
+ j6EjF
+X-Gm-Gg: AeBDietUD4vj1CxKfFrAGj12rv5xNH13w2uAIcQenNZZ2l3JvjwZVC/Lz6Xy8ue/5+G
+ 0hFP+nSDSG8EJiur3gbDCijMUw2Wh3nMDS7GPZX1ZztEUeGF7g2iuhjV4dyHjjjG9FT+gHruaZR
+ 6hVS+ME0HmZPvu1W/+baVQOk/67er9y34BYsNjxXBftgv1fSfyo5hMetJ6a6vVxGLzl9FBzY/zy
+ mO0mLn16QCDYYuYj4+of0feE8iW8D/5uOioQSbzTDw2yzW6DfwFc5JVcBKxCFomE3+IahBgQQ7V
+ OsgYVJi0MAOX14snMaONIayow7DfgR59EgShg0ZM9kjbKrnxsH83wcjw2EeEpKROn1jotqwTBfR
+ X7SyyjVpGLBUwwN1rgT9rBAk3dZQu0Ha0FdWSfGL0SA26U+8YX0K2sASyUdGgo6V+Kbm8xOkt/1
+ cwMuHS6DNqrYl/sO9XVqsICynpyB+tb1PsZIBPcsgHYAMzMyeKg2jr1oYkLkFwPosgKbUZB6Gjh
+ 51pYvK3jpOVus/ywbSq43GJVUyEI6sUyiMhf2H5FA==
+X-Received: by 2002:a05:6000:2211:b0:43f:e938:1e67 with SMTP id
+ ffacd0b85a97d-43fe9381e75mr38017299f8f.38.1776938602288; 
+ Thu, 23 Apr 2026 03:03:22 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.57
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:02:58 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/59] target/arm/tcg/translate-a64.c: use translator_ldl_end
- instead of arm_ldl_code
-Date: Thu, 23 Apr 2026 11:01:55 +0100
-Message-ID: <20260423100229.2941820-26-peter.maydell@linaro.org>
+Subject: [PULL 47/59] MAINTAINERS: Remove Paul Burton
+Date: Thu, 23 Apr 2026 11:02:17 +0100
+Message-ID: <20260423100229.2941820-48-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,51 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Paul Burton has not posted to qemu-devel in some years and did not
+respond to a query about whether they still wished to be listed in
+our MAINTAINERS file.  Remove them, on the assumption that they are
+no longer active in QEMU.
 
-Allows to reduce scope of target/arm/tcg/arm_ldst.h to aarch32 only.
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20260407222208.271838-17-pierrick.bouvier@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260416091654.316158-17-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate-a64.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index df2cbd66b3..48b5c57255 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -26,7 +26,6 @@
- #include "translate-a64.h"
- #include "tcg/tcg-op.h"
- #include "qemu/log.h"
--#include "arm_ldst.h"
- #include "semihosting/semihost.h"
- #include "cpregs.h"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 75cc6704f4..07a08b1a65 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1487,7 +1487,6 @@ F: include/hw/intc/loongson_liointc.h
+ F: tests/functional/mips64el/test_loongson3v.py
  
-@@ -10801,7 +10800,7 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     if (pc & 3) {
-         /*
-          * PC alignment fault.  This has priority over the instruction abort
--         * that we would receive from a translation fault via arm_ldl_code.
-+         * that we would receive from a translation fault via translator_ldl_end.
-          * This should only be possible after an indirect branch, at the
-          * start of the TB.
-          */
-@@ -10813,7 +10812,8 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     }
- 
-     s->pc_curr = pc;
--    insn = arm_ldl_code(env, &s->base, pc, s->sctlr_b);
-+    /* Code is always little-endian on Aarch64 */
-+    insn = translator_ldl_end(env, &s->base, pc, MO_LE);
-     s->insn = insn;
-     s->base.pc_next = pc + 4;
- 
+ Boston
+-M: Paul Burton <paulburton@kernel.org>
+ R: Aleksandar Rikalo <arikalo@gmail.com>
+ S: Odd Fixes
+ F: hw/core/loader-fit.c
 -- 
 2.43.0
 
