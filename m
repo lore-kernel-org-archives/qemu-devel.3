@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F96F9936A
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E3CAF99368
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:10:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqyJ-00075S-Oz; Thu, 23 Apr 2026 06:07:54 -0400
+	id 1wFqta-0006OW-KM; Thu, 23 Apr 2026 06:02:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFqxw-0006w7-9O
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:07:27 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wFqtZ-0006N4-04
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:53 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFqxr-0004Cz-SZ
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:07:24 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488ff90d6c7so52260335e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:07:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wFqtX-00023P-Ak
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:52 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43d75312379so4751242f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:02:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938838; x=1777543638; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938570; x=1777543370; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pAUwrUFoNwCxotOSaRCj0lyhRhgtkP0+vfDbYmh5aNM=;
- b=osBPhgJ0jG3p6e1JDfL8P0oOziYLdt/z3qwpC+hWiccKt9c9fDBNcB5C2zIWEAWi/+
- kDKehO74LEM34v1dB52U0TeKqdax0xg9HNqWKd7L7/xDZ7y/AslU2/V3rwbC5PI8qX6U
- 4A4laXJup5UkX92ezWjrvsG+MUZg9tkeqUaFh7Fk0mlkQ/TFz1LIx1ED/wunrliE6qZQ
- tIsTJuHw7+DRXrFCyoIRWlQJJOC8Yq9NqIu+S7+jg7VyfpCI6+I42GMnMrWh3wtfE6Jf
- IBmumqXWnvOYGtyJ3rRwNGb/ZjInPEeyYl6dp+vcQDhXxHieylPKvzhbLHPildzmQzNO
- RfSw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=g9YvA1O3UTs0XbhIrlFOBKfilX2+X6JufRIf4Y5Kogc=;
+ b=EI8m0lKEnwcr8DO0G4o5Tlp6CGacPixeZjc9QGmXCFH2cGcwwSB8s2ACx/J9vV8kT0
+ zoiPoutYRI0xk1V7dT6XBtjU5Cenxmnxt+esPOD8l9p01hXXVFY6VcP8+5OqRdBmAJLy
+ dLjeYVKN9pXHjDNyh6SX5WZkZSj3Ctq8/S+LTLpdpgE0+1Gys5wwH4A8iTkeErd9mfgS
+ t07aeuiKd58mtjTVTjPeWa4lamEYzYPtmASvEEeFyz6hZ1NWm69aGEa853iKsoj2/aHk
+ tozI/sgWkI1yd6pb70gZCiXXGG26tFbM9SKjXDaF6J+pkPcXdR5sv9wWdzaBy9RhB5d1
+ FZLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938838; x=1777543638;
+ d=1e100.net; s=20251104; t=1776938570; x=1777543370;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pAUwrUFoNwCxotOSaRCj0lyhRhgtkP0+vfDbYmh5aNM=;
- b=FhBWYlhyPMC9l04MFe49jH77zu75EpyJX8yq92m/J/fGtDQu5nAmQDs2e54RWAfjKN
- RRUv6bjgMb2rdcAXZN+VlBosd6D+gdXrjUe7jr0IIEGoReAz6PibCtGyQEYKmIC7iYw6
- jb+YhXa5Nut+xLbhZ+UtRpVueExe7JbiUOKY4vjkDLP6HIEnntvKhE6c/hamMKUN6EIw
- Sh1yecjqYxvhsGdt4OiqaD9xa6nDzeIe66ckyHwFIsAkNXnaGjDY2sX/3ni32XPIQncl
- 35CdA8oIc6dEvF5YhEuk6XpjfsF8Zxj3kKlqUtYAucnjzgtPd7m1PjRFG7ywC784y++j
- xfjw==
-X-Gm-Message-State: AOJu0YwxDC+N/BYDw3DF0CF2kNIzOWIWkaj1t7rlPEtK/IraREN/8Ksy
- f5WvUDdrrBHxlIRe8h6rHCkOWzADxQeBMyXoJ/q4X4rTwYDcx3EuWrmo41lo2IHs0WQE+UeagDT
- MPhpR1Sk=
-X-Gm-Gg: AeBDiesBtVIZ+EBM5hMxVb5V6ZDtbT4au7yClOSepUIMwwcIHs/ms/PY3b39Mp8COxG
- kgY25OvuvRmZq2w+wB0HXFl9NZAun9qiZpnAh0yQJtJAhtkdO5ErELdemWT/dNUJMu3yMMIcy4J
- TTZRhXBWHCl53WXEQ+/FuoUd0xgPl12b2AAEH8S9A7mb1ElTFnBIvb5iVHW/UvS49dFoAjGRIky
- Ws+bPYfxkPuQ+yDciu3DpHSbojQUh0EbSf4i6V7E58dGgkDpqzqINXDvFYl39880+mZmmg/ozzX
- nojmcGFoECh4FTjH0Z7l3m7RP2gsGN1AyAx75bhqdOrsF9rI/G7gf+8BX/QvSJFxGGpILs1uESB
- 3B+BFwBSbizVfymJklxBxjGyagTP1CaXBaxYDNBJxWLK59GglKFkZZe9UNxukx0CVKspeCA/ZZO
- MuxYK+6nnmMrW2JmqS+V5i1GvA+S6o9Lq+YTeZlE6Z1GS8ElARt4qtK3QTPB0cod3XYqB3SnUK5
- CKZlz7j7nA=
-X-Received: by 2002:a05:600c:3483:b0:488:af7f:775f with SMTP id
- 5b1f17b1804b1-488fb77d343mr354888205e9.18.1776938837685; 
- Thu, 23 Apr 2026 03:07:17 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a18csm59413914f8f.20.2026.04.23.03.07.16
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 03:07:17 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=g9YvA1O3UTs0XbhIrlFOBKfilX2+X6JufRIf4Y5Kogc=;
+ b=XP5VRab5859riG0+ObOE7oKDXkZQl18SPc/KF6sa8ayUdOwZOJLwkRyo1jEV2DOU6B
+ xefGcqutPuxHY+UIYfspgRk8i9pVbBg2wupuy+osE5wt4WSnd3D4n+7ItoXcBunZceMx
+ VnnVGZiB01aCF+i/RuDL0OhRcl55vrRN4remhT5Ufh17N3VwSFMPDAOo7ur3ppsz1HGm
+ s/pRlY3QObcjtVO6gSjzmOwvtWTOnpc+WEbsS5idW8vud1R8yxmRI8616vPwXuZjfD5M
+ rZCWhjn7CQw6BQEz/gDK1V2T+cAf3WlHzKnu0Ljvj9HYG5zSC5OCyZCwuWw/wrMaRmnY
+ FWTA==
+X-Gm-Message-State: AOJu0Yy6JA0EtOQzdSWs/RPdO8Y2qYNqvpwadWmrwVIuX2XJ3D61grKg
+ Bi8VfrG4jFMZ+SCcpQhcmODCBTG2A73fl2f3/V9ehnUTofU6ARIm+NVX5cb4w6uTOVkB2ZXB7zp
+ wWABN
+X-Gm-Gg: AeBDieuZE+3TSZGHsfpbmy2WAxm2ZHEZbkNuXpRixkSqXLYonyUBH84TLjSJWc0IRPV
+ X+gSowzFIkTDnXH20zr+dUaF/lz+zwlp6kkpxiEIOvYZxIiY0GMbtTBuRU4U+6pLX5YU3/MUCIx
+ sEQmKvks0HbfBxpMmGxcvXihpiGexpO5VmvaRgCP99DwBh1AniIK4fjw/n6sNo9DMoEdYb9HCA8
+ mIrOqIBTF4A9qQFeXqL5bg1MhVW3Pd404NZXhRL8ZR7/hfldDRo9llvNI7i7U5iWsEvigJIUWqJ
+ 0Qhd/u7Qt4yk2nDukWdZsVLh169POyWmfT5RzgCygc7M88hDtdKMSHr8TV83SZYXRB7E5tZybLE
+ r0yqq285OyOUYHD7s9sQ0KsFwnzL/szEVGilYiVje+HKaD3JtvUDooXoEbbF7g/X7t63C6ItBih
+ dwnsOIVkLkKS22LZnopxEs8auUoBnNhfKSQ2bWpyIh9ZMkZ7r75dKiTsZuGIsLUEBp53n8bAq7y
+ RdKZVESx1hO24ZLJhhJNOSKrwNesHFEGctHgugE5Q==
+X-Received: by 2002:a05:6000:1ac5:b0:43d:73d4:b1a with SMTP id
+ ffacd0b85a97d-43fe407c0d8mr41820384f8f.19.1776938569595; 
+ Thu, 23 Apr 2026 03:02:49 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.48
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Apr 2026 03:02:48 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 9/9] target/microblaze: Compile translate.c as common unit
-Date: Thu, 23 Apr 2026 12:06:12 +0200
-Message-ID: <20260423100612.27278-10-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260423100612.27278-1-philmd@linaro.org>
-References: <20260423100612.27278-1-philmd@linaro.org>
+Subject: [PULL 17/59] target/arm/tcg/translate-m-nocp.c: make compilation unit
+ common
+Date: Thu, 23 Apr 2026 11:01:47 +0100
+Message-ID: <20260423100229.2941820-18-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
+References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,76 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order do build translate.c as a common unit we need to
-replace:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-  "accel/tcg/cpu-ldst.h" -> "accel/tcg/cpu-ldst-common.h"
-
-and:
-
-  #include "tcg/tcg-op.h" -> #include "tcg/tcg-op-common.h"
-                          -> #include "tcg/tcg-op-mem.h"
-
-taking care to define TCG_ADDRESS_BITS, which is fixed
-for these 32-bit targets.
-
-Remove the now empty microblaze_ss[] source set.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20260407222208.271838-9-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/microblaze/translate.c | 6 ++++--
- target/microblaze/meson.build | 7 +------
- 2 files changed, 5 insertions(+), 8 deletions(-)
+ target/arm/tcg/meson.build | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 6321b739ab4..f973c392aa2 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -20,9 +20,11 @@
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 89c3b47682..70beec7a6c 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -18,8 +18,9 @@ neon_d = [
  
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
--#include "tcg/tcg-op.h"
-+#define TCG_ADDRESS_BITS 32
-+#include "tcg/tcg-op-common.h"
-+#include "tcg/tcg-op-mem.h"
- #include "exec/helper-proto.h"
- #include "exec/helper-gen.h"
- #include "exec/translator.h"
-diff --git a/target/microblaze/meson.build b/target/microblaze/meson.build
-index 2ce50f35397..9c1ecd1cf1c 100644
---- a/target/microblaze/meson.build
-+++ b/target/microblaze/meson.build
-@@ -1,16 +1,12 @@
- gen = decodetree.process('insns.decode')
+ mve_d = decodetree.process('mve.decode', extra_args: '--decode=disas_mve')
  
- microblaze_common_ss = ss.source_set()
-+microblaze_common_ss.add(gen)
- microblaze_common_ss.add(files(
-   'cpu.c',
-   'gdbstub.c',
-   'helper.c',
-   'op_helper.c',
--))
--
--microblaze_ss = ss.source_set()
--microblaze_ss.add(gen)
--microblaze_ss.add(files(
++m_nocp_d = decodetree.process('m-nocp.decode', extra_args: '--decode=disas_m_nocp')
++
+ gen_a32 = [
+-  decodetree.process('m-nocp.decode', extra_args: '--decode=disas_m_nocp'),
+   decodetree.process('a32.decode', extra_args: '--static-decode=disas_a32'),
+   decodetree.process('a32-uncond.decode', extra_args: '--static-decode=disas_a32_uncond'),
+   decodetree.process('t32.decode', extra_args: '--static-decode=disas_t32'),
+@@ -34,7 +35,6 @@ arm_ss.add(files(
+   'cpu32.c',
+   'gengvec.c',
    'translate.c',
+-  'translate-m-nocp.c',
+   'm_helper.c',
+   'mve_helper.c',
+   'op_helper.c',
+@@ -65,6 +65,7 @@ arm_common_ss.add(files(
  ))
  
-@@ -26,7 +22,6 @@ microblaze_system_ss.add(files(
-   'machine.c',
+ arm_common_system_ss.add(
++  m_nocp_d,
+   mve_d,
+   neon_d,
+   vfp_d,
+@@ -76,6 +77,7 @@ arm_common_system_ss.add(
+   'psci.c',
+   'tlb_helper.c',
+   'tlb-insns.c',
++  'translate-m-nocp.c',
+   'translate-mve.c',
+   'translate-neon.c',
+   'translate-vfp.c',
+@@ -83,6 +85,7 @@ arm_common_system_ss.add(
+   'vfp_helper.c',
  ))
- 
--target_arch += {'microblaze': microblaze_ss}
- target_user_arch += {'microblaze': microblaze_user_ss}
- target_system_arch += {'microblaze': microblaze_system_ss}
- target_common_system_arch += {'microblaze': microblaze_common_system_ss}
+ arm_user_ss.add(
++  m_nocp_d,
+   mve_d,
+   neon_d,
+   vfp_d,
+@@ -91,6 +94,7 @@ arm_user_ss.add(
+   'hflags.c',
+   'neon_helper.c',
+   'tlb_helper.c',
++  'translate-m-nocp.c',
+   'translate-mve.c',
+   'translate-neon.c',
+   'translate-vfp.c',
 -- 
-2.53.0
+2.43.0
 
 
