@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F03F99368
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A7FF99362
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:20:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFr22-0005qP-5D; Thu, 23 Apr 2026 06:11:38 -0400
+	id 1wFr9N-0007Cc-6R; Thu, 23 Apr 2026 06:19:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFr1c-0005lM-93
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:11:15 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFr9K-0007CG-P9
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:19:10 -0400
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFr1a-00060v-Ij
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:11:12 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFr9J-0000Kb-09
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:19:10 -0400
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488ff90d6c7so52287895e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:11:09 -0700 (PDT)
+ 5b1f17b1804b1-488e1a8ac40so80093035e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776939068; x=1777543868; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9JB6XyoZ11qMXnbaAOLlXhXHCzkkYFk33rxmp3yvr9g=;
- b=KVEpAL8Ax1D7qEpNFAo6x+0ZvurIhFR3XmUbVRhg+HqC+owttHcHXSETLCNuYTjlqH
- 9bwcJmX7GCiOKICmjKl3sYQ6LAw0qbQBnGfdgBDf2YWIK5lZDZY+3WzqbRsVUbuKV+OC
- YwrJl/qpSXU/IOYB6aJTqH5UkCze2AyoXWtANViaNgNGhYfKbKycahL+Zd3SRTX8ak/m
- a834vGRiJ1OfBaq0/nIMt3LNXj76b709hxcjA9NspZZEIuBM8IROIQZNfIH5BCl6I12P
- JDDtLS5pl8CJTE2f14BLgNU99yQLABbJ7MutYyb65aVL2ORItT7TadIhxsPJai78QzHI
- cKcg==
+ d=linaro.org; s=google; t=1776939547; x=1777544347; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NqZwIhNcYPFJ01x/Xep8E5pGxu2NM8phfGxkRyM4Nm0=;
+ b=zOCmj2YZmAdflU8obAOy6wHEB0oS9PsFXADj6SeJeOimbOGc1dcQd8nqqle5mD9+XS
+ Plg2LHaHdJdB/XQES9ACUsG+yvTNi4F444BpeLVx2CN2uj84hmOgVHkM/KZbYHNZRFoQ
+ hdJRWASShSJ/JNSH7R0b/6180HwA3lECVBBM0HgZRwTkzpzadqpAGqDxRz5SbCdiJWor
+ /Op0qGcWU7tOlWkaLzdjq7j2w6qoZhKovFUUmPbbTw+n2PQBVPGPU0W0Wk/iGzg9JJyY
+ plzHsKlsfPyWWUqA8wFbZsS/DGTiGR/MvBAqy/hGdlwimiCWVC847JmCakeebp9jyMnZ
+ RxGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776939068; x=1777543868;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9JB6XyoZ11qMXnbaAOLlXhXHCzkkYFk33rxmp3yvr9g=;
- b=iK/KnJstka/M3kOT8sY8TYmGGNuE0t9aJhFIw8LJkPVloPen/XWRItUtCmZxWxEnAa
- 9wsNXrxoGAQbvf7DzI/m0g+WCRobcJbV887fFiE0vqUkmzZmEJ3chXzThsRWsaIgbeqU
- o6PiBOIDsErbTglUVdjk4fdoDC1IW065VqOKoihhL9ZVXxfrtGMXyXMIaqN6gTPfXOSL
- 8gQSTGR3EmGmlUek4Hm0MGLy0Vgyjfy9Z+FjY6AiD0PhQxGrd6JVD3cvjstScNGOtOyc
- +k7q6g3CEEjGmLO1Jok4kqe3ytz2k4LZxktcqgvtdvBDCblHgG0I7RjfjYNQltBVoUvE
- mPxg==
-X-Gm-Message-State: AOJu0YzVIc2lit3fdBEb0UcFrGYFnawpu5U99IsehWro6mpO2s3b9vb9
- JB5hWYnfN8Lg442eiwyg4e8UOLI5q9NTxj1bw9hrib+40HUp9MdAc0Zs2Fe+k6PCkJnRLKmKrw+
- 7DVdIQkM=
-X-Gm-Gg: AeBDievG3UmmTLUN8neUBhr+A+aQtbyUgK4OuYMC9WbMTdTp1MTm3WHuhIieRpu99KU
- ftgxd+65PYiWgi8C6/qksL5jgWrnlSSaIHEcdpqAmMGliwnrOG144/RJ0mrO7mgyFuJQIqT8P10
- NluOAh6gH7wM4ysaqBXaHZU6kT5PC/KEr4gt8gIb/MITwIfGigmGosxv9aqV8hCh26zU5ZHHdM3
- 6Ol6hlLhNXAMDZEOXdJdza1y8IIFSBBLpBWCexYytuz7RgV1LRZQT11tMhjzqbnt6dj8XLQYb8V
- 7OIOb+c7b5cnKoc2X13bkGNBeQmTr6jyqOMAwdDqj0ifFWdD+9LQx+qnAnH857k66HT9vdPVtIX
- MPcsztVtlFmoCt1rB0tMlFQ4/qRTEAIlefTiPijvAGPDSsKI2ag6F6vos9SieLEOdJhm7WISj2V
- 9lya3XRiZWpWy2HruEef3e/2LQEf4B0DCL18lcQcinYc492K7jAkzpvTufNSLSfAoVE6X05R+3z
- gP6F5WswbxwOCw=
-X-Received: by 2002:a05:600c:c0c8:b0:471:700:f281 with SMTP id
- 5b1f17b1804b1-488fb78b8c5mr281292965e9.25.1776939067883; 
- Thu, 23 Apr 2026 03:11:07 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1776939547; x=1777544347;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NqZwIhNcYPFJ01x/Xep8E5pGxu2NM8phfGxkRyM4Nm0=;
+ b=Y0MLtBpIUPlXKCNdNOZtI0LrEwTMaR2Goh5hDhbU+ook1Wrli3bL+fyDuizqg9S3IZ
+ /DgfKEPaIkVOMbkCVsnII5HtjjKTR9/wzt3xQEqoJncxZ3oPpZ2dxVKBSWFT98T9BuXJ
+ Pq1+tM7FS3Dq9HXBvNmT0BgVpL7Jdl5g7/oxEIx3W/hhh6Uf/dw+J9TmKcoYnURW6P+T
+ Y9Ugw1dXiHsfE9UGJYFh0JgH8gSaiyy6Cj0j3Utws4qBigWO7OWRan6o/rGXD0DtHuFq
+ gMk04MljdGBYj1MEqvq/jf9rL/77yhzXB2ESNn/7HxAswDPLddQRkRA4C/TewET/Oud4
+ 7pjw==
+X-Gm-Message-State: AOJu0YxceFrIBDZah8ZkTghj6oJzVqZcrGOfG73sCl9LICxR5PyfuRGm
+ eHIsgiJutoXrQd9ytiNKearcSx2yq6NAJtqtX48nTbgVCMkq1BrvD4PawYsI46mr4bH449k8cHG
+ TP7rqg/o=
+X-Gm-Gg: AeBDietZqq/62MmVNl+Luj5iio1XXkpSFIMFO0FEBwF76U0iEGhI/3ONovdz3eWClV1
+ wOc2hjxYHrPr0tAzWiR4X+9yFf7PkUXCB7M7KuDDw5fW4v6aP2czapFcUDjjpOAi1TjNvo/+Ngi
+ cbTL/HeISz2MDVgJJ1JT/iJRLcbczT7bbvuBsdvj6UnGYysZ8S9dignE9ENIGnmz7tTI3LXKT+F
+ dQzDYmJLRplFPjMOGKSNtXW/uf5r1keudWyYZlZMdXED/q0jMRB/ys3AL+U9sar6HTzSfSRKQCz
+ Z8r30zujVoMKOSl+toZfhCD8HHDmfO+lqkuUSQT3JRdWgvql2PA0Kot0+qZrAKapb9XA5O/7R/R
+ mHjuHABT1gDA7Tj8d1DQIYMmAoazeyuBlysJzPipi2qnIGPBd962bvBPD/5MDnapz3srmbLJ3IU
+ mFl1yrwOSEVmR5kNt5WoZbPfwUq8v+OixWWcdhEfc9CmAsJJjdISA9p2UyH66eL6w8XPSfVT2HE
+ jMQ7w3rWQc=
+X-Received: by 2002:a05:600c:3e0d:b0:489:6c28:dbc6 with SMTP id
+ 5b1f17b1804b1-4896c28dd4emr218183075e9.31.1776939546945; 
+ Thu, 23 Apr 2026 03:19:06 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1c0354sm477902545e9.11.2026.04.23.03.11.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 03:11:07 -0700 (PDT)
-Message-ID: <5c0ed009-dc77-4807-8981-f66bdd8c3f62@linaro.org>
-Date: Thu, 23 Apr 2026 12:11:06 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] target/microblaze: Replace translator_ldl_swap() ->
- translator_ldl_end()
-Content-Language: en-US
+ 5b1f17b1804b1-4891b46cffasm332925055e9.13.2026.04.23.03.19.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 23 Apr 2026 03:19:06 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260423100612.27278-1-philmd@linaro.org>
- <20260423100612.27278-4-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260423100612.27278-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org
+Subject: [PATCH] tcg: Remove unused tcg_gen_vec_*_tl() API
+Date: Thu, 23 Apr 2026 12:19:04 +0200
+Message-ID: <20260423101904.36131-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::329;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
@@ -107,52 +106,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/26 12:06, Philippe Mathieu-Daudé wrote:
-> In preparation of removing the translator_ld[uw,l,q]() methods,
-> inline them for the microblaze targets, using mo_endian(ctx) --
-> which we introduced in commit 2c9e8ddd7699 -- instead of MO_TE.
+No code uses the tcg_gen_vec_*_tl() API. Better to
+remove it now, since to compile as translation unit
+files once we need to avoid target_ulong uses.
 
-"Remove mb_cpu_is_big_endian() which is now unused."
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Now this file only defines tcg_gen_gvec_dup_tl(), which
+is used only once in target/riscv/insn_trans/trans_rvv.c.inc:
 
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/microblaze/cpu.h       | 7 -------
->   target/microblaze/translate.c | 4 ++--
->   2 files changed, 2 insertions(+), 9 deletions(-)
-> 
-> diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-> index 5765786e6dc..ad5a4a8e7bf 100644
-> --- a/target/microblaze/cpu.h
-> +++ b/target/microblaze/cpu.h
-> @@ -412,13 +412,6 @@ void mb_translate_code(CPUState *cs, TranslationBlock *tb,
->   /* Ensure there is no overlap between the two masks. */
->   QEMU_BUILD_BUG_ON(MSR_TB_MASK & IFLAGS_TB_MASK);
->   
-> -static inline bool mb_cpu_is_big_endian(CPUState *cs)
-> -{
-> -    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-> -
-> -    return !cpu->cfg.endi;
-> -}
-> -
->   #if !defined(CONFIG_USER_ONLY)
->   bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->                        MMUAccessType access_type, int mmu_idx,
-> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-> index 5e8bb4ed77b..af6a30b7760 100644
-> --- a/target/microblaze/translate.c
-> +++ b/target/microblaze/translate.c
-> @@ -1646,8 +1646,8 @@ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
->   
->       dc->tb_flags_to_set = 0;
->   
-> -    ir = translator_ldl_swap(cpu_env(cs), &dc->base, dc->base.pc_next,
-> -                             mb_cpu_is_big_endian(cs) != TARGET_BIG_ENDIAN);
-> +    ir = translator_lduw_end(cpu_env(cs), &dc->base, dc->base.pc_next,
-> +                             mo_endian(dc));
->       if (!decode(dc, ir)) {
->           trap_illegal(dc, true);
->       }
+2156 static bool trans_vmv_v_x(DisasContext *s, arg_vmv_v_x *a)
+2157 {
+2158     if (require_rvv(s) &&
+2159         vext_check_isa_ill(s) &&
+2160         /* vmv.v.x has rs2 = 0 and vm = 1 */
+2161         vext_check_ss(s, a->rd, 0, 1)) {
+2162         TCGv s1;
+2163
+2164         s1 = get_gpr(s, a->rs1, EXT_SIGN);
+2165
+2166         if (s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
+2167             if (get_xl(s) == MXL_RV32 && s->sew == MO_64) {
+2168                 TCGv_i64 s1_i64 = tcg_temp_new_i64();
+2169                 tcg_gen_ext_tl_i64(s1_i64, s1);
+2170                 tcg_gen_gvec_dup_i64(s->sew, vreg_ofs(s, a->rd),
+2171                                      MAXSZ(s), MAXSZ(s), s1_i64);
+2172             } else {
+2173                 tcg_gen_gvec_dup_tl(s->sew, vreg_ofs(s, a->rd),
+                     ^^^^^^^^^^^^^^^^^^^
+2174                                     MAXSZ(s), MAXSZ(s), s1);
+2175             }
+2176         } else {
+
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: Weiwei Li <liwei1518@gmail.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: qemu-riscv@nongnu.org
+---
+ include/tcg/tcg-op-gvec.h | 24 ------------------------
+ 1 file changed, 24 deletions(-)
+
+diff --git a/include/tcg/tcg-op-gvec.h b/include/tcg/tcg-op-gvec.h
+index b0a81ad4bf4..d82ba6dfaac 100644
+--- a/include/tcg/tcg-op-gvec.h
++++ b/include/tcg/tcg-op-gvec.h
+@@ -16,32 +16,8 @@
+ 
+ #if TARGET_LONG_BITS == 64
+ #define tcg_gen_gvec_dup_tl  tcg_gen_gvec_dup_i64
+-#define tcg_gen_vec_add8_tl  tcg_gen_vec_add8_i64
+-#define tcg_gen_vec_sub8_tl  tcg_gen_vec_sub8_i64
+-#define tcg_gen_vec_add16_tl tcg_gen_vec_add16_i64
+-#define tcg_gen_vec_sub16_tl tcg_gen_vec_sub16_i64
+-#define tcg_gen_vec_add32_tl tcg_gen_vec_add32_i64
+-#define tcg_gen_vec_sub32_tl tcg_gen_vec_sub32_i64
+-#define tcg_gen_vec_shl8i_tl tcg_gen_vec_shl8i_i64
+-#define tcg_gen_vec_shr8i_tl tcg_gen_vec_shr8i_i64
+-#define tcg_gen_vec_sar8i_tl tcg_gen_vec_sar8i_i64
+-#define tcg_gen_vec_shl16i_tl tcg_gen_vec_shl16i_i64
+-#define tcg_gen_vec_shr16i_tl tcg_gen_vec_shr16i_i64
+-#define tcg_gen_vec_sar16i_tl tcg_gen_vec_sar16i_i64
+ #elif TARGET_LONG_BITS == 32
+ #define tcg_gen_gvec_dup_tl  tcg_gen_gvec_dup_i32
+-#define tcg_gen_vec_add8_tl  tcg_gen_vec_add8_i32
+-#define tcg_gen_vec_sub8_tl  tcg_gen_vec_sub8_i32
+-#define tcg_gen_vec_add16_tl tcg_gen_vec_add16_i32
+-#define tcg_gen_vec_sub16_tl tcg_gen_vec_sub16_i32
+-#define tcg_gen_vec_add32_tl tcg_gen_add_i32
+-#define tcg_gen_vec_sub32_tl tcg_gen_sub_i32
+-#define tcg_gen_vec_shl8i_tl tcg_gen_vec_shl8i_i32
+-#define tcg_gen_vec_shr8i_tl tcg_gen_vec_shr8i_i32
+-#define tcg_gen_vec_sar8i_tl tcg_gen_vec_sar8i_i32
+-#define tcg_gen_vec_shl16i_tl tcg_gen_vec_shl16i_i32
+-#define tcg_gen_vec_shr16i_tl tcg_gen_vec_shr16i_i32
+-#define tcg_gen_vec_sar16i_tl tcg_gen_vec_sar16i_i32
+ #else
+ # error
+ #endif
+-- 
+2.53.0
 
 
