@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69551FC0342
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BE3FC0343
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFvh6-00026O-Qc; Thu, 23 Apr 2026 11:10:21 -0400
+	id 1wFvhr-0002L5-IX; Thu, 23 Apr 2026 11:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFvh5-00026C-BB
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:10:19 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFvhp-0002HS-As
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:11:05 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFvgv-0002HK-JQ
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:10:16 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so66797505e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:10:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFvhi-0003Cy-R2
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:11:05 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4896c22fcbaso40616395e9.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776957007; x=1777561807; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776957057; x=1777561857; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=k/pJpG76VkUSN3CQatMLRrcrXzgH7z1W2IvgXoyPd7E=;
- b=GoB9qnHWCEBb+BXIqcVaSIqPFAEOLdABod4UFoHbgj06j7P1FNYEDHDhpSEKHlxEY1
- VZxTF+iP6L79DZlCJjfhsMHn3yJne9z7yYXz8nVcLMAe8sHfytL3oCyjWcYihVvXrXd7
- jEu8brV8i6czudKomFCqob6StPWwLMiIZPB0pk/v87rmif8qAcrFJEsTKBD8Y1duSLY9
- lpSQitx+uWkCka7qo5+Qd78Z08kySeztgBvdurPZKY31/UA2tdTdxLaGJGTmAhz3xJqv
- s3eRjXjfEnNSb7dAIKmgDwWOPxvuJzEWQI4ZrooFjTJcCrz+5/PgG83ZZnpi4jP+1JBc
- rjFQ==
+ bh=7MXuouXOA8kDKohqnK5hN7b5AAFdV4GRUS+arKN3Z5M=;
+ b=x738ktS8hmKW8o2Y7l112B8GDKM+PQ4rsh5qravptGjUc0mNghjOYq0krETqJ88OX1
+ fKFGD+FL3Ghal7paNuvHTUOwJVXPbMw8Z3NJ7C9O3iMoLUuASPXXFfX44NaOaAcVIMTd
+ 8ZXEr4T+2nXvfPQO7OceJGRXK67/aJSZfReFU1SFzP/XplAl4si7ygchNBjmy40Jdzqd
+ aARGo5e94XsV034AEx0jcLw2DjHvssLIdl1sckGeMwh6RV5C4WYJUhDRl+NX/Bh18VM6
+ SklhLuYtY0cWTB8603n2AwbiKrv/89m/fM/P0m279Wxi26/EYoYAA1iX/F2xn+7K8elA
+ leXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776957007; x=1777561807;
+ d=1e100.net; s=20251104; t=1776957057; x=1777561857;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=k/pJpG76VkUSN3CQatMLRrcrXzgH7z1W2IvgXoyPd7E=;
- b=UOCPsIUN/tWsu/lbbhWg20wi7s72laNKv+IquOnQV4XVEGQoNellh/oB2eMJfjv9AK
- 1QwEnBpZgVP8Cf//9g52SMSLAObE0sIxLeSZtRzLeUUCWEJJV09T528i51CWw8dZ4IhB
- er2wqKBo6GOcFpVjLphWUTebVYosBKoTga/r4eLLGD7P2Vhj1BIHvBo5S5IJoQgAc8pP
- cXa1jyJFLTi4KdvA47E5kId2iUiOOaRos4EpgnS+PJJHPeun3uuO8m+rEc7o96xl1RMj
- xJn1zOXkAJlCnelPTzqwRZ/YO1E4adEzunqqJd7qTQDJJs26tGcJM0oprgQ6jSHVhEdJ
- EheA==
+ bh=7MXuouXOA8kDKohqnK5hN7b5AAFdV4GRUS+arKN3Z5M=;
+ b=QJTQ496woxmI60RR0XgidKxwWOzAD0Ywfrw57v3wIqbtLaLllLLHKNUR0Sbwt33o8q
+ e6Wdx+YWzaBZeyCMBubF0f79Vk2atkSlmWTHVPK22QIXxtKwaCHI/jEtcjE7XgRmN/iv
+ K2pJRHqjknPM904orOkDQN7fcgTmR+uzxDzVUAPsk2N7m4TDmZwDAWIutEXraM2qjt6t
+ volNWcj8vELWS28FjpVR4SM8yRM4zOIrhOGemF8OSAHEIkboTLo7XlChLGsCQ7RbXNJO
+ CZj+DpRNwfFrxO/EOinGi00l/vLMeTbuUNpC4a4NF2787ibFKlZ22sAHOnzkm23n7/kO
+ dZ0g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/Se2cE5esn+oJIw5acPl0fcUgGJLott/eA+rXuSOVjiTVteMWx9Ee/9K1Umt9tvSOc+uwGMp169BOr@nongnu.org
-X-Gm-Message-State: AOJu0Yw03TCIWorqUJtUXFuIpnxl4pxIX2jE3iYTza0zPQc9h6MEIwk8
- ec3yq/CUrLK+b5/4W/mKSQN6cnDy+C3SLFerdbmPvyFzp1BFRw/xDyM+jp8orCp3+rc=
-X-Gm-Gg: AeBDievkEZNbU0jq0kHI9XRHWqKR+1N/Xpsp7mB9mN+Y5Q2upR6LapQ4SEcL0kNczdj
- 24+vy5qUSqw9wdOChSh2E6Th5sP0UUmNCkqPH9A5Q9kBhgDkDKBCrXO6j/2QBUCaVMHpnX86tOM
- sSvOEpRBDYzB+4RdHYvLkM8GkU6f3EbQACUzbcp0IfDeI0azihZKUzWKzQksvjKl1kbC636jaJf
- 27caP74VrDCXcV7U1BYnCDv2c4TK7cpYRYKFfnUXB0jt9HUapPRSHqyfGYxOyas19COdDOAaIvy
- 2mYlqpas6cb5ABfi1ytPZV659NbamwHqfRAMHhQ3un723igcY/JjML261NynfaAIbckTkN9hJ0+
- aljbk2j6QL/qWpFgFhw8funxzSU2r00soIDiF9LiQBzw2meLbT72r762m9mgr+yq4CVgEFTh88x
- WfVZO4l3rroPfWGFrcmDCGiL1TLv/N+LvuKaswMVSDaKeCSme/p8Jhh3dXZipGPIhtPjfiWPQ2D
- P+q
-X-Received: by 2002:a05:600c:8883:b0:48a:5821:5ff2 with SMTP id
- 5b1f17b1804b1-48a582167c7mr130117975e9.8.1776957007085; 
- Thu, 23 Apr 2026 08:10:07 -0700 (PDT)
+ AFNElJ9nNNZnm0QaMXIGBU43yFwd8zYlgIXSNnaCtyIfbLJIM9DhAf6ECKXMI+k7BzIyLudJguSlvLZTZiV5@nongnu.org
+X-Gm-Message-State: AOJu0Yz+0vT5AFxfjb9ChZRkRnHkR1uNwOx27M0InChahZ03xohlYF4w
+ gv7x9l65PK8Ix7fnRTecP7Qec+gBS6650BvmNJbWTdAVdVYM8DcKhtOn84k9gExJHesYALEPTxz
+ JJN5Eq/w=
+X-Gm-Gg: AeBDies4ZfCmD+y58oELt5iuc88JPEgVT5kd7D0DxSzrHP6HMRszA7MzaEgTcdVJHLQ
+ 7YfeG4R8g3cGWg0yM/ObucpdgX4SWVI46vm6SD4DpklcxeN3gHHQoynYby4oeJn/JJhs9Y+FEW7
+ DelwHkjGXKZi3nq6R2f/r5XQMA0haNRyOUQWBxkzDxMqj8eyAO9qkE/XRhkH3WUakSrGuPe0zxt
+ tDkI0uABNcUyZGNcyRSlxnV8BrMqwvKW+GMp/BXF3HW0uLcO40kMGs8LoLzhbxMazaOaqfY8OBN
+ LZmYsVix6qdD+/7O249yyUi0kMGKOz0YWc/BbhyRvl1P+H875Qr5qQsQiSgysrZ3DQqZXJiSm4q
+ X3MO5MabJz+y9NzIj28mLqiyTf4OczfWe+HwLILdS+mQIYWdxDYhGZXre/mtaRcG8hyU2h9aL97
+ Jjk2cqegToiVfocZ9rPLgSJVVcpSvP9PcZIXpy75nVH+HehIVfgyU16UZCWud30WlunJ466Guuh
+ k+M
+X-Received: by 2002:a05:600c:4e8f:b0:489:1fa5:997f with SMTP id
+ 5b1f17b1804b1-4891fa59adfmr243435475e9.9.1776957057123; 
+ Thu, 23 Apr 2026 08:10:57 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb74c68asm165585585e9.3.2026.04.23.08.10.05
+ 5b1f17b1804b1-4899dc95920sm87175815e9.6.2026.04.23.08.10.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 08:10:06 -0700 (PDT)
-Message-ID: <f634c125-5b93-4c60-b14e-3fba3cd5bd69@linaro.org>
-Date: Thu, 23 Apr 2026 17:10:04 +0200
+ Thu, 23 Apr 2026 08:10:56 -0700 (PDT)
+Message-ID: <b3fb2811-b87a-4815-b2b1-e5d4cd4211e5@linaro.org>
+Date: Thu, 23 Apr 2026 17:10:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] tests/functional: Make socat wait longer in migration
- exec test
+Subject: Re: [PATCH 0/9] target/s390x/tcg: Compile various files once
 Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-References: <20260422230001.3168-1-farosas@suse.de>
- <624cf04d-6188-458d-bca6-dd5ffec877ab@redhat.com> <aeo0gHfFFDKC6KPR@x1.local>
+To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20260423135035.50126-1-philmd@linaro.org>
+ <38d862ea-a10f-434b-bbe3-0101f5d6ce53@linux.ibm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aeo0gHfFFDKC6KPR@x1.local>
+In-Reply-To: <38d862ea-a10f-434b-bbe3-0101f5d6ce53@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,51 +112,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/26 17:02, Peter Xu wrote:
-> On Thu, Apr 23, 2026 at 06:52:19AM +0200, Thomas Huth wrote:
->> On 23/04/2026 01.00, Fabiano Rosas wrote:
->>> The migration_with_exec test is failing sporadically for all
->>> architectures due to a race when the destination socat process takes
->>> too long to start listening while the source process is already
->>> issuing connect().
->>>
->>> The race is inherent because the exec: migration spawns the
->>> to-be-exec'ed command asynchronously and returns from the
->>> migrate-incoming command. The localhost-only testcase is not
->>> representative of the majority of migrations. In a real scenario
->>> between two different hosts that race wouldn't happen.
->>>
->>> Fix the testcase by configuring the source socat command to wait
->>> indefinitely while trying to connect.
->>>
->>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>> ---
->>>    tests/functional/migration.py | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/tests/functional/migration.py b/tests/functional/migration.py
->>> index 144f091ba8..3b7674af3b 100644
->>> --- a/tests/functional/migration.py
->>> +++ b/tests/functional/migration.py
->>> @@ -85,5 +85,5 @@ def migration_with_exec(self):
->>>            with Ports() as ports:
->>>                free_port = self._get_free_port(ports)
->>>                dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
->>> -            src_uri = 'exec:socat - TCP:localhost:%u' % free_port
->>> +            src_uri = 'exec:socat - TCP:localhost:%u,forever' % free_port
+On 23/4/26 16:51, Ilya Leoshkevich wrote:
+> On 4/23/26 14:50, Philippe Mathieu-Daudé wrote:
+>> When a file doesn't use any target-specific knowledge, it can
+>> be compiled once as common object. By moving the file to a
+>> meson 'common' source set, we ensure no target-specific API
+>> will be ever used [*]. This series move early few s390x TCG
+>> files to common because in the current state it is cheap
+>> enough to do so, no need to procrastinate.
 >>
->> Maybe use "retry=90" instead? OTOH, we have the high level timeout from the
->> meson runner, so we should not hang here forever by accident anyway.
-> 
-> Yes, IMHO it'll be good to stick with one timeout mechanism rather than
-> adding more magical timeouts.
-> 
+>> [*] https://lore.kernel.org/qemu-devel/beefeef5-96ba-4645- 
+>> a01a-7ca96055d93a@oss.qualcomm.com/
 >>
->> Thus:
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
+>> Philippe Mathieu-Daudé (9):
+>>    tcg: Include missing 'tcg/tcg-op-common.h' header in 'tcg-op-mem.h'
+>>    target/s390x: Do not compile KVM stubs for linux-user binary
+>>    target/s390x: Introduce common system/user meson source set
+>>    target/s390x: Compile few files as common unit
+>>    target/s390x: Compile translate.c as common unit
+>>    target/s390x: Compile vec_helper.c as common unit
+>>    target/s390x: Have MSA helper pass a mmu_idx argument
+>>    target/s390x: Compile crypto_helper.c as common unit
+>>    target/s390x: Replace cpu_stb_data_ra -> cpu_stb_mmu in STFLE opcode
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> I assume this series is Based-on: <20260423100229.2941820-1- 
+> peter.maydell@linaro.org>?
+
+Oops yes, sorry!
 
 
