@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97170F99369
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F03F99368
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqta-0006OV-Hp; Thu, 23 Apr 2026 06:02:54 -0400
+	id 1wFr22-0005qP-5D; Thu, 23 Apr 2026 06:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtW-0006LW-QB
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:51 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFr1c-0005lM-93
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:11:15 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtU-00022B-5S
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:50 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43d7645adbdso3509332f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:02:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFr1a-00060v-Ij
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:11:12 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488ff90d6c7so52287895e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:11:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938566; x=1777543366; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GP7zINidX0alauIbPBcoImfXTpXjnaXesFDiZ3dF3Ls=;
- b=rtFoemHuTP7JvymushbG1a47OFtdr3spNAKgQa7LArzv/buAT3YOvEezjMKfMSe3sp
- XqnDZ57XUUsBYJBsDLf7qrDXRZ0wF5/POYAfHMUUDmBl5893XFCWBICEZCELafpOgMe+
- mqyksmsEBPIZEcr6/y+BMEpKrGV4mmBcwnc5L0gu01tVezM87Cx27fQPvyQFUD2cYGR4
- 0YO9vw6d1KQvpBp3XZO+YwfZGc1spnNbvewTpieuYnG2LPJnE04XtOtze0HcxTzktsFC
- t157UBBz7Jxr+FpyHmJOsxvlodBPc8Xo5CY5UDQeGDRWCL/ziLffhWXhzCrA2qFYjbnu
- vJEg==
+ d=linaro.org; s=google; t=1776939068; x=1777543868; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9JB6XyoZ11qMXnbaAOLlXhXHCzkkYFk33rxmp3yvr9g=;
+ b=KVEpAL8Ax1D7qEpNFAo6x+0ZvurIhFR3XmUbVRhg+HqC+owttHcHXSETLCNuYTjlqH
+ 9bwcJmX7GCiOKICmjKl3sYQ6LAw0qbQBnGfdgBDf2YWIK5lZDZY+3WzqbRsVUbuKV+OC
+ YwrJl/qpSXU/IOYB6aJTqH5UkCze2AyoXWtANViaNgNGhYfKbKycahL+Zd3SRTX8ak/m
+ a834vGRiJ1OfBaq0/nIMt3LNXj76b709hxcjA9NspZZEIuBM8IROIQZNfIH5BCl6I12P
+ JDDtLS5pl8CJTE2f14BLgNU99yQLABbJ7MutYyb65aVL2ORItT7TadIhxsPJai78QzHI
+ cKcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938566; x=1777543366;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=GP7zINidX0alauIbPBcoImfXTpXjnaXesFDiZ3dF3Ls=;
- b=qBrDyQtwBNPaHDn1asZsVpmeK8+KAmmcTCJjLYbueKpxi5w9e9UY6Nk9S4TFocl+sh
- RJ0bS7KjTdeFaYhVwjUK3bbC42qWu6GXYkh8oH9XFIPQpbZx6VUbSNr2rbo5YrQ/jl7o
- Ldvz0EZiMX9MIcLb3tyN7Nm5QYWzpc6sEcTELVr2djUr1Y9s+Cm7ZMIlZNykM7B7xNvi
- iCkyUwc+kUEtzpaAjZbgQEZ0SbELOMQ5HPXnbhpGpFRRqqt/oYOGzD/zn5+JdTMOdMS2
- DvgDP75JUvHvUehC3V6FrGckZbhmuOunigEP6eT9GWe49/WQX6ew1y+vElfiOIUuD/JP
- 7HqQ==
-X-Gm-Message-State: AOJu0YxSAKXYO7fzITFRI+oHUBFO0ay2ZlmlRwCqHS4DqWezy+pQO7W2
- ta4eQUmUH31vpgY4clGi4auYBus4LeGKVRqcjS21Fu3oHtF43JE3pt0kjlsaL10q/u+uiBS3Tcc
- /qjbp
-X-Gm-Gg: AeBDiet0zHwferDY8LOKaq6Ln9X1NURCXDFSmZXB5KCExzJ3Wu+Gj9xh/8D1OWyE5AZ
- dWVQdKQ7bAYerL8AlypeR7qW0snvNThSID8xztz84qPSwpSWfW50LgEidkBO/EsdD+1jlzSo1JD
- PX36cXa2mljFGeEvEtvxQs4TDx7ZKdELjQjiSpXjTiq6JQuDtLYN3HXiiNI7npgLE8V65ZaIiT0
- 1Egbiv39k0Z+VPEnSQHMPgAWY5t6AuzmE1QF6HabzLMyeSAkjSnactwMdHe1UwP8t2L3cScYU+j
- RwceDemUDvWira+j3JLFx1pflDo25C5Taa1hKfyvMYGaYRMtmOfjDHSdT2SASuKyOvTr/VROQr4
- ykzyct+2d/KZYHcijRiTvyoSBJ4LyKpDauxQWGIsupQv0cx8PjGFn3Vp0kHEon/aGRuH81vskLH
- zL3icdb4y+n+HosbLZlNnkIDZ/fGznv6wdzLrX2CZsxHamqR69vnwS2aarwgjRYcBbaB4dfyc/r
- wNET1ZyofEeMRGqUdnKWwEyRTL3FHWltg0lw+7FzA==
-X-Received: by 2002:a05:6000:24ca:b0:43d:4a43:53db with SMTP id
- ffacd0b85a97d-43fe3df2552mr40118994f8f.26.1776938566244; 
- Thu, 23 Apr 2026 03:02:46 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.45
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:02:45 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 14/59] target/arm/tcg/translate-vfp.c: make compilation unit
- common
-Date: Thu, 23 Apr 2026 11:01:44 +0100
-Message-ID: <20260423100229.2941820-15-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
-References: <20260423100229.2941820-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1776939068; x=1777543868;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9JB6XyoZ11qMXnbaAOLlXhXHCzkkYFk33rxmp3yvr9g=;
+ b=iK/KnJstka/M3kOT8sY8TYmGGNuE0t9aJhFIw8LJkPVloPen/XWRItUtCmZxWxEnAa
+ 9wsNXrxoGAQbvf7DzI/m0g+WCRobcJbV887fFiE0vqUkmzZmEJ3chXzThsRWsaIgbeqU
+ o6PiBOIDsErbTglUVdjk4fdoDC1IW065VqOKoihhL9ZVXxfrtGMXyXMIaqN6gTPfXOSL
+ 8gQSTGR3EmGmlUek4Hm0MGLy0Vgyjfy9Z+FjY6AiD0PhQxGrd6JVD3cvjstScNGOtOyc
+ +k7q6g3CEEjGmLO1Jok4kqe3ytz2k4LZxktcqgvtdvBDCblHgG0I7RjfjYNQltBVoUvE
+ mPxg==
+X-Gm-Message-State: AOJu0YzVIc2lit3fdBEb0UcFrGYFnawpu5U99IsehWro6mpO2s3b9vb9
+ JB5hWYnfN8Lg442eiwyg4e8UOLI5q9NTxj1bw9hrib+40HUp9MdAc0Zs2Fe+k6PCkJnRLKmKrw+
+ 7DVdIQkM=
+X-Gm-Gg: AeBDievG3UmmTLUN8neUBhr+A+aQtbyUgK4OuYMC9WbMTdTp1MTm3WHuhIieRpu99KU
+ ftgxd+65PYiWgi8C6/qksL5jgWrnlSSaIHEcdpqAmMGliwnrOG144/RJ0mrO7mgyFuJQIqT8P10
+ NluOAh6gH7wM4ysaqBXaHZU6kT5PC/KEr4gt8gIb/MITwIfGigmGosxv9aqV8hCh26zU5ZHHdM3
+ 6Ol6hlLhNXAMDZEOXdJdza1y8IIFSBBLpBWCexYytuz7RgV1LRZQT11tMhjzqbnt6dj8XLQYb8V
+ 7OIOb+c7b5cnKoc2X13bkGNBeQmTr6jyqOMAwdDqj0ifFWdD+9LQx+qnAnH857k66HT9vdPVtIX
+ MPcsztVtlFmoCt1rB0tMlFQ4/qRTEAIlefTiPijvAGPDSsKI2ag6F6vos9SieLEOdJhm7WISj2V
+ 9lya3XRiZWpWy2HruEef3e/2LQEf4B0DCL18lcQcinYc492K7jAkzpvTufNSLSfAoVE6X05R+3z
+ gP6F5WswbxwOCw=
+X-Received: by 2002:a05:600c:c0c8:b0:471:700:f281 with SMTP id
+ 5b1f17b1804b1-488fb78b8c5mr281292965e9.25.1776939067883; 
+ Thu, 23 Apr 2026 03:11:07 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc1c0354sm477902545e9.11.2026.04.23.03.11.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Apr 2026 03:11:07 -0700 (PDT)
+Message-ID: <5c0ed009-dc77-4807-8981-f66bdd8c3f62@linaro.org>
+Date: Thu, 23 Apr 2026 12:11:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/9] target/microblaze: Replace translator_ldl_swap() ->
+ translator_ldl_end()
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260423100612.27278-1-philmd@linaro.org>
+ <20260423100612.27278-4-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260423100612.27278-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,90 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 23/4/26 12:06, Philippe Mathieu-Daudé wrote:
+> In preparation of removing the translator_ld[uw,l,q]() methods,
+> inline them for the microblaze targets, using mo_endian(ctx) --
+> which we introduced in commit 2c9e8ddd7699 -- instead of MO_TE.
 
-Generated decode files must be duplicated between user and system, as
-they are generated in private folders per libs, and can't be included
-otherwise, as meson does not give control on output folder.
-Indeed, meson generator is a different approach than custom_target, and
-this is a limitation by design.
+"Remove mb_cpu_is_big_endian() which is now unused."
 
-They were already duplicated between arch variants anyway, so nothing
-new here. They will now be compiled once for system binaries, and still
-per target for user binaries.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20260407222208.271838-6-pierrick.bouvier@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/meson.build | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
-
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 3e96c77df7..5f33ecd76e 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -5,12 +5,15 @@ gen_a64 = [
-   decodetree.process('sme-fa64.decode', extra_args: '--static-decode=disas_sme_fa64'),
- ]
- 
-+vfp_d = [
-+  decodetree.process('vfp.decode', extra_args: '--decode=disas_vfp'),
-+  decodetree.process('vfp-uncond.decode', extra_args: '--decode=disas_vfp_uncond'),
-+]
-+
- gen_a32 = [
-   decodetree.process('neon-shared.decode', extra_args: '--decode=disas_neon_shared'),
-   decodetree.process('neon-dp.decode', extra_args: '--decode=disas_neon_dp'),
-   decodetree.process('neon-ls.decode', extra_args: '--decode=disas_neon_ls'),
--  decodetree.process('vfp.decode', extra_args: '--decode=disas_vfp'),
--  decodetree.process('vfp-uncond.decode', extra_args: '--decode=disas_vfp_uncond'),
-   decodetree.process('m-nocp.decode', extra_args: '--decode=disas_m_nocp'),
-   decodetree.process('mve.decode', extra_args: '--decode=disas_mve'),
-   decodetree.process('a32.decode', extra_args: '--static-decode=disas_a32'),
-@@ -30,7 +33,6 @@ arm_ss.add(files(
-   'translate-m-nocp.c',
-   'translate-mve.c',
-   'translate-neon.c',
--  'translate-vfp.c',
-   'm_helper.c',
-   'mve_helper.c',
-   'op_helper.c',
-@@ -60,7 +62,9 @@ arm_common_ss.add(files(
-   'crypto_helper.c',
- ))
- 
--arm_common_system_ss.add(files(
-+arm_common_system_ss.add(
-+  vfp_d,
-+  files(
-   'cpregs-at.c',
-   'debug.c',
-   'hflags.c',
-@@ -68,14 +72,18 @@ arm_common_system_ss.add(files(
-   'psci.c',
-   'tlb_helper.c',
-   'tlb-insns.c',
-+  'translate-vfp.c',
-   'vec_helper.c',
-   'vfp_helper.c',
- ))
--arm_user_ss.add(files(
-+arm_user_ss.add(
-+  vfp_d,
-+  files(
-   'debug.c',
-   'hflags.c',
-   'neon_helper.c',
-   'tlb_helper.c',
-+  'translate-vfp.c',
-   'vec_helper.c',
-   'vfp_helper.c',
- ))
--- 
-2.43.0
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/microblaze/cpu.h       | 7 -------
+>   target/microblaze/translate.c | 4 ++--
+>   2 files changed, 2 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+> index 5765786e6dc..ad5a4a8e7bf 100644
+> --- a/target/microblaze/cpu.h
+> +++ b/target/microblaze/cpu.h
+> @@ -412,13 +412,6 @@ void mb_translate_code(CPUState *cs, TranslationBlock *tb,
+>   /* Ensure there is no overlap between the two masks. */
+>   QEMU_BUILD_BUG_ON(MSR_TB_MASK & IFLAGS_TB_MASK);
+>   
+> -static inline bool mb_cpu_is_big_endian(CPUState *cs)
+> -{
+> -    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+> -
+> -    return !cpu->cfg.endi;
+> -}
+> -
+>   #if !defined(CONFIG_USER_ONLY)
+>   bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                        MMUAccessType access_type, int mmu_idx,
+> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+> index 5e8bb4ed77b..af6a30b7760 100644
+> --- a/target/microblaze/translate.c
+> +++ b/target/microblaze/translate.c
+> @@ -1646,8 +1646,8 @@ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+>   
+>       dc->tb_flags_to_set = 0;
+>   
+> -    ir = translator_ldl_swap(cpu_env(cs), &dc->base, dc->base.pc_next,
+> -                             mb_cpu_is_big_endian(cs) != TARGET_BIG_ENDIAN);
+> +    ir = translator_lduw_end(cpu_env(cs), &dc->base, dc->base.pc_next,
+> +                             mo_endian(dc));
+>       if (!decode(dc, ir)) {
+>           trap_illegal(dc, true);
+>       }
 
 
