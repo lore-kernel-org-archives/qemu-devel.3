@@ -4,72 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A33F589DA
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 14:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10635F589D9
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 14:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFunP-0001T6-BD; Thu, 23 Apr 2026 10:12:47 -0400
+	id 1wFuop-0002Gc-9F; Thu, 23 Apr 2026 10:14:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wFunH-0001Rk-8N
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 10:12:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wFunF-0004Cl-FL
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 10:12:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776953556;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6C/0B8cU/0IwcODdLMB0bDBMYQXNPT63q6maXaMZI3k=;
- b=aw3rK+MgbM3B8Uwfn+FjLh3tbPsqouQHPYdbt04OVPBoYaiyvuYMpBYCMXj8SshgAhiS/+
- /spTTpOq+q+PXx8WuxKNPUQlee/Ah6cWxond05+araFboacLzzaVsx0a7DWM1QkmU9/ClW
- D3k76rRTa5SHobo8znxdjg7jdjOYefk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-buvphrE8NaaAl2bqhxZFKw-1; Thu,
- 23 Apr 2026 10:12:34 -0400
-X-MC-Unique: buvphrE8NaaAl2bqhxZFKw-1
-X-Mimecast-MFC-AGG-ID: buvphrE8NaaAl2bqhxZFKw_1776953553
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44AFC195609F; Thu, 23 Apr 2026 14:12:33 +0000 (UTC)
-Received: from localhost (unknown [10.44.34.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E9A41800357; Thu, 23 Apr 2026 14:12:32 +0000 (UTC)
-Date: Wed, 22 Apr 2026 21:03:33 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com,
- stefanha@redhat.com, pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PULL 0/2] Update email address
-Message-ID: <20260423010333.GA517410@fedora>
-References: <20260416231824.349872-1-pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuoG-00025u-EI
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 10:13:45 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuoE-0004hH-OF
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 10:13:40 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so109745565e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 07:13:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1776953617; x=1777558417; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TvH65QbAvp8B/9Rqo95l65ztoKih/x1ELMtq4S1ebzU=;
+ b=CF1KJ+e31CDp+2ui6XgXehC7egZ6xezB5Q4oigTYfsB4Qj6wUvzoxq4HfEjri+lzQP
+ R+zdSRC/2jxF+GFlUFENK8CeeRKCNysH6mMOafcqp0xGmPexVsizFZ5+T7scig4+ic23
+ AZr5ol++CuRgcvb/C2ctZ/5KbNeVjlv9BP+dLRZiRDff+ywa7XFWz91LzIcUiv+7hRqD
+ 7sF1fr14BLQe3eKBzZZZzJwiX1XNFlF+at6gUwfABxQGHGawmNE/AWWNMQa4PbWMmNNR
+ jo35C4VR5lGxrb0ElFm/4j6iyWqgvocS4NUMExkFUwvWl7QQpgO/qMOQBMW4eefhzjPF
+ Twzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776953617; x=1777558417;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TvH65QbAvp8B/9Rqo95l65ztoKih/x1ELMtq4S1ebzU=;
+ b=svo6qn5abO8zJ36VHrDjKJOp73bvu1JWQ3jFSI3zMQIhz6OIQHNbMKwnJ0+dQeUPcm
+ ErmRk++AcTcM/8zzCpSJVZ0KRyU1Qr+b+zzxe4lYh3QQe6UXZ+b79sAFa8WxoVv3GVyk
+ RpHfjkYj0xjuzSER9ADjAyADEs6P5dQaF79rImiNgFqvmZZ9q8lw/eIGpN4Sfbawmx8Z
+ tSnP0F7mYP7d0aiOioNl4Ekxq97+5h58br4fZVHu1e3BYD9YLRzCtZ919z3642oYmUzH
+ UoIoWb4vo5Pbi/RUqiY1Ahfr0j9SQsfrlxbYsuuLFAf1ruoMjKCc5Iqv9UUaNaXFBxRC
+ 6M9w==
+X-Gm-Message-State: AOJu0YynShYB+eK/j10B97Rg6sZ/r7bTndFwWBOC16dDCxCw/84A9REI
+ K4Hl0MhUBhACdfW9ShvneZaQkt5rBdgyzqvyMh9p1O2pw7QV6k7ENgVEbSonitlyJlfsuyEJRHo
+ wdutka8Y=
+X-Gm-Gg: AeBDieuIKkBFE1LyMGk8yj6zqWWvTcMdhpRuomIQZiakPwKad6oQ3JC1ij23+4jpvCs
+ 2m9/HOSdNbOMGBFfB/DayjEQMO/7q8+Utz93qVEDTx9R+eGRYbjGfsZhDN0q4U8ZozaCORxWfhx
+ UPAVpnnN47budNDElcR4ZCZBPj4BcRjw4qbLlYGGNIH/FyWXDfXnxIx7WEFrrIQudYxzfP23y5X
+ ULjhQL1BN+0j0AP8ZhGZQIYaOD9tHSx6SsJirra6u76XmYSKRH1JbUZ8Rz6DwOkxKLCDZjqp5nO
+ 10fS3CBMJRPQO8+37OZ2nXyQ5ow42mlm1DcgvxV3fMlejIU5a3K3mFSnNv7vvSNKssqj04pBrF3
+ /TdHs89cqvILeSwnvXJhm7flC6cReSTfT1BzK1ehRmZfIKWidqQQhpA1ELS6TYM9t+zt5zR5bI+
+ aqPmOuqG72XMyyHVFzdUbVPaVhzKAXgslrwhZEWJm3ruZuYCTPZUnbg4LqH5PblvA+TUdcPCp1f
+ tHR
+X-Received: by 2002:a05:600c:1da1:b0:488:f453:b976 with SMTP id
+ 5b1f17b1804b1-488fb7844c5mr430918455e9.27.1776953616647; 
+ Thu, 23 Apr 2026 07:13:36 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-44123d23e0bsm14438127f8f.15.2026.04.23.07.13.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Apr 2026 07:13:35 -0700 (PDT)
+Message-ID: <0a99894e-48d3-413b-84ef-48bc754345b9@linaro.org>
+Date: Thu, 23 Apr 2026 16:13:33 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="HtOlEauWNjXWgKfZ"
-Content-Disposition: inline
-In-Reply-To: <20260416231824.349872-1-pierrick.bouvier@oss.qualcomm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 23
-X-Spam_score: 2.3
-X-Spam_bar: ++
-X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/9] target/s390x: Compile vec_helper.c as common unit
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>, David Hildenbrand
+ <david@kernel.org>, Richard Henderson <richard.henderson@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20260423135035.50126-1-philmd@linaro.org>
+ <20260423135035.50126-7-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260423135035.50126-7-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,28 +110,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 23/4/26 15:50, Philippe Mathieu-Daudé wrote:
+> In order do build vec_helper.c as a common unit we need to
+> replace:
+> 
+>    "accel/tcg/cpu-ldst.h" -> "accel/tcg/cpu-ldst-common.h"
+> 
+> and update the cpu_ld/st_be_data_ra() API by cpu_ld/st_mmu() one.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Unrelated but could VLL / VSTL leverage the Int128 type?
 
---HtOlEauWNjXWgKfZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Self-answered:
+https://lore.kernel.org/qemu-devel/20260423141245.51344-1-philmd@linaro.org/
 
-Applied, thanks.
-
---HtOlEauWNjXWgKfZ
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnpb+UACgkQnKSrs4Gr
-c8gBrQgAohn99/muA7PR+pw5qqKI/u30evBXvxKjO3rAzLI8fRELCnElslaKjuZr
-zQY5tjpzvrDGe5rjLLP6q6MuOk/FxgqZERGwDnFjAHacmrBEXhGnjrUOv4VBbEPM
-uQB3OFrNls/zwJYnMwIEZCZ/VEaRl/kwmKcEEPS+RV5Db6txpgxjCd9osaGuvbys
-tVzLTM9Drg7Aj5osZRnNBkA7OUfzkU7QtmTeOkem4ues5lUxplxCFtJf9f03Qs1F
-NPAqnEJvBok7ZjUKrlhpZfLtmcHndBsADxj5pq+MicPYbVq/l16rn6V2lnRaxS19
-TCzBZsIciYGUm8rIoAc4CMQFvxsBWw==
-=N07C
------END PGP SIGNATURE-----
-
---HtOlEauWNjXWgKfZ--
-
+> ---
+>   target/s390x/tcg/vec_helper.c | 34 +++++++++++++++++++++++-----------
+>   target/s390x/tcg/meson.build  |  2 +-
+>   2 files changed, 24 insertions(+), 12 deletions(-)
 
