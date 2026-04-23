@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB33F99367
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7657F99367
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqul-00005h-5a; Thu, 23 Apr 2026 06:04:07 -0400
+	id 1wFquW-0007A2-D4; Thu, 23 Apr 2026 06:03:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFquH-0006eI-KH
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:38 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1wFqto-0006TS-DA
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:08 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFquF-0002T8-76
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:36 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b79f8f7ea43so888632466b.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:34 -0700 (PDT)
+ id 1wFqtk-0002Ad-TW
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:08 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43d7645adbdso3509562f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938613; x=1777543413; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938583; x=1777543383; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=k71EiA698awn8baW17i5bs+rUZgHTCfmiS8BNMUGwMs=;
- b=EzUeFvniqkXI16p3YDaPH3j4KbSKnBmZoE1ZbeDQWdehg01jWlPQrsNib1apX2xsKx
- boQfzWXQorBNbcxVWSnMBnlzEfEZCmVNslsxy4F9O2BG/p1GT4655WSQW6n9jTd833Tg
- 5BDeiasPUEBhW6M48RUedwzkIuW36OXawnH2c+CQTD3f6jYQh1+0grMB56uRV9My1WNf
- obIRSt9CYQezS5i602ZKkl7/dzbbmH494uh2v4b1UtG39u7v4UvV+gJByBeafW19jpvI
- EFKEptnkAlb14gbf8ene/YHC4douY5sFhl1Lf5OSQPqOOaaEuPQeRszjKvN60vnPHgTU
- c4zA==
+ :reply-to; bh=7zZNkeHRQ8Kr3iPcUhyDO0K+W7wnqOd8n/AUj5CFYko=;
+ b=L1RYBGXXykLtuGu0lQgZ+/sbQ4Emh6mfsaeKyfyrpdOhJGqDuaxyW+y/prnpTcsgiW
+ jUdoEuSRKxOrf63H7kAj4G6PBgOC76/CsRksf/p7l1uHOeHfN5IKr3niwBAEVQhOmz4h
+ dyiqTfx1RaY9qfiKO6P4DztWizDbtwFdVr/yu212K/JW5/vDbu8FiIU2GFAk/OO1cguL
+ h8hSQcxSnb3Fzo5a8BzDJYiqffIvCWxA+Du2fyLeidGE8DOaTsA+Z8nHrV5ddoydhRgE
+ QwyIz+JlnQBTAzcKZHAbGkkkUczgOr9t7mxoCAAh7gVNKAvcBBisY4am8x5yFN0ImEcM
+ WB9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938613; x=1777543413;
+ d=1e100.net; s=20251104; t=1776938583; x=1777543383;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=k71EiA698awn8baW17i5bs+rUZgHTCfmiS8BNMUGwMs=;
- b=L8BlaGqxYBT/jp2BeOGMDK45yg9Tw9IhRMY4xG+KTMbXjkL+gBSIPS7LvJgpopnVcR
- vlf5PYvNDh+8rj2YGvBYjmSuliVfqL5ITBUzSzu6JRfxf9Em3tsgFufR7iPatJvPf4oU
- i92a5zLLY/SbmsvBRLNn2DoQ9mKdBBYzKnO8K5vAvp5pPcK7ZwijrM7PJNrsdnnN7L3R
- FpANBl6wKwFVLv4FrecFxdXWnirQjr2MxVVt7MwYoje/qpD6KHuvrCwJvFBCldJtODqh
- kaBjX0Vyr0jHCCy9oWvdq3kbej07IOcI2MpM747lHvGx4yC3Qcbpl/pl24BY3RFNdHoP
- QEew==
-X-Gm-Message-State: AOJu0YwqR7MCE3A/A3y2l6+tue1/atjG7bAobNsaafkYsNHpBaOpBDNK
- aTZmNUeUotbVUAvayBKmVq13oxvfi5EozPa9MLqGGdSkZkiA4ueY8YEU6BKigi+RoCjgxYRpDLQ
- 2OOiE
-X-Gm-Gg: AeBDiesl6wzkxPD3pFEUdnkHwbB+wQM1/3O5qtuNg/UvI+OWSquIWAqATVGw01SYRcd
- agmihtxVTE6uCTAhZhNLgEfVl9NyvQzyUyNLhrOOdiQ+GcgbC7U5GaJA2VecKmgsQ1bFrw/sR5M
- fQwC0y93rp8obzztfMFfvszzPhaOP5ymRiRyToCGFN4ScVOMB1U+6UCtSsZmX44SHVmB6tYjQ+R
- pTkMHXN6iTOSF/alFUqaUDUTI8XRGtcXLd4Sc4LrIhAJ8MglKIYPUwNNMtxB4XZXcHzcjbz+jMQ
- qZhNFneT8O6jqxzWdjzZhojzRXmuzTPWeeNG8ReY43YFZuhhlHf8RzwaWk/rUrUDzMh105jhG5g
- vga0oelm1bg1Yjrm9a2wWA3JCdlJlhtdMeGFD0kzdL+KoErPDW4rUPmaxJw1pjR6mwDzLtdwYaO
- HyuOK/EBqQSjNdJRgmwwmA9/TeMiqJAxSXa+/8ya1PmFFt7ovN9YNGZ5zHe+qFTfkFqMFrolLO4
- Ml5tWHMZX+gNnyz6UnSFBO4GBrHIL8ngoEX6h1UMPFx1W19a8YV
-X-Received: by 2002:a17:907:9618:b0:bab:d8e9:53a7 with SMTP id
- a640c23a62f3a-babd8e955d1mr216483266b.29.1776938612349; 
- Thu, 23 Apr 2026 03:03:32 -0700 (PDT)
+ bh=7zZNkeHRQ8Kr3iPcUhyDO0K+W7wnqOd8n/AUj5CFYko=;
+ b=mFgiZ27nEjaZTXBAFGLoJNp1vovYtXnhov2vlAEnHGIAQ67VVvE8KDiyFl7T+Ke4A+
+ aaK+v49LWuWQ8pCZj8OHmUw4G3uflQluKiDN7iP8jpKFdAwAsXdTtZdlaB3tic51hBan
+ CFZK3kNq48CVodNZpLqOtm9j0MEZsbx7Cn96vrykW233iApA4adWwl+eaXTHkTPqtBaU
+ FpMmeydt+EbOuZ6M9OadgCtHMlEHSZjsmq4GPD4C3RcMTFRvTCgPFK4YJNaBeUqSIBAi
+ Gzkz3+bNqC8d3LdxBY49TRSKDyLB0KPxcBReF80GChr0vPrPgyfQfNbQataDhnRwHNJN
+ T9YQ==
+X-Gm-Message-State: AOJu0Ywa2ULFyrKlDy4Z53dw8GGaFPVs21t7xWl8kt9QHLboV8twapNt
+ Zuz5e55YMQtFs6okdwLf8oCHINzPqgNxDLoZntSln6LUnacOiLXNcwCU/JC+JpMG/mD/FuAhBr1
+ Lcy7Y
+X-Gm-Gg: AeBDieuWEwaVqIIFs2QCcazrtQsYYZs6yiL/VPPBen2t8RVRtFYdUvxT+BsV4sDtebC
+ 6mkMwuS/tLOLhQ0Px9ryomRDgnf0w9lQkD/Ez1tZbOYEuXs4xzbczgda9cnKaww8dANX0qAaS0F
+ RlyXluRNpXiPS50KsaxbNULi6HYjWTYn9A8zCaqGrMP69iPcN4PfoJ9KfDJSzbI3gi9ZxIinMBz
+ 3o9nGtePNB0sPIdnw4L1sRG53L0EvVcchra9tlkC/DT2OtKl3gV9q4CpiO5nzMrJVYUwphSlMQO
+ KF3xOO/xalGageuYuqjw3fS14s4amXNNgULka8OsoqmYzFXArW2WiTyaO/cGRHdt3KqO9I45PRz
+ SGhVvEinMI4kim1wH5xJBXSlEL2YEjjsAZURkyYbPFkxIYANVm1r71B3LeHACLSTX4lsnH+buw6
+ ll8TJjVgh7Jj2BvCyPw8EUeqk9bTcglXjUs4q+fIqpJU9Y/g951xc49ltCCFkGEOcZ+SL2xQWtD
+ mjaMoAtGmCJGDaF/pKKllQNtKU3BWcu3OwQqqv0BEUmExZBKrYm
+X-Received: by 2002:a05:6000:2013:b0:43c:d665:3830 with SMTP id
+ ffacd0b85a97d-43fe3dfd327mr38281837f8f.32.1776938583102; 
+ Thu, 23 Apr 2026 03:03:03 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.31
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:31 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 55/59] MAINTAINERS: Remove Vijai Kumar K
-Date: Thu, 23 Apr 2026 11:02:25 +0100
-Message-ID: <20260423100229.2941820-56-peter.maydell@linaro.org>
+Subject: [PULL 29/59] target/arm/tcg/translate.c: remove target_ulong
+Date: Thu, 23 Apr 2026 11:01:59 +0100
+Message-ID: <20260423100229.2941820-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vijai Kumar K has not posted to qemu-devel in some years and did not
-respond to a query about whether they still wished to be listed in
-our MAINTAINERS file.  Remove them, on the assumption that they are
-no longer active in QEMU.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-This makes the Shakti C class RISC-V SoC orphan.
+We can replace it with uint32_t, because we know it's limited to 32-bit
+target.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20260407222208.271838-21-pierrick.bouvier@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260416091654.316158-25-peter.maydell@linaro.org
 ---
- MAINTAINERS | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ target/arm/tcg/translate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 02696f46f2..f1577e6c5c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1733,9 +1733,8 @@ F: include/hw/misc/mchp_pfsoc_ioscb.h
- F: include/hw/misc/mchp_pfsoc_sysreg.h
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index c432de2a26..ce427c5a3c 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -6282,7 +6282,7 @@ static void disas_thumb_insn(DisasContext *s, uint32_t insn)
  
- Shakti C class SoC
--M: Vijai Kumar K <vijai@behindbytes.com>
- L: qemu-riscv@nongnu.org
--S: Supported
-+S: Orphan
- F: docs/system/riscv/shakti-c.rst
- F: hw/riscv/shakti_c.c
- F: hw/char/shakti_uart.c
+ /* Ditto, for a halfword (Thumb) instruction */
+ static uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
+-                              target_ulong addr, bool sctlr_b)
++                              uint32_t addr, bool sctlr_b)
+ {
+     MemOp end = MO_LE;
+     if (sctlr_b) {
+@@ -6529,7 +6529,7 @@ static void arm_post_translate_insn(DisasContext *dc)
+ 
+ /* Load an instruction and return it in the standard little-endian order */
+ static uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
+-                             target_ulong addr, bool sctlr_b)
++                             uint32_t addr, bool sctlr_b)
+ {
+     return translator_ldl_end(env, s, addr, sctlr_b ? MO_BE : MO_LE);
+ }
 -- 
 2.43.0
 
