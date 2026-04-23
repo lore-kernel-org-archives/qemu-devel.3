@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132CFF99369
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B7EF99367
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqub-0007ZC-95; Thu, 23 Apr 2026 06:03:57 -0400
+	id 1wFqub-0007ch-Kt; Thu, 23 Apr 2026 06:03:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFquF-0006dt-Ji
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:37 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1wFqu4-0006Yp-IO
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:30 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFquC-0002Sc-UY
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:34 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43eada6d900so6320828f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:32 -0700 (PDT)
+ id 1wFqu0-0002JK-Fn
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:21 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43d7badbd7dso3191567f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938611; x=1777543411; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938596; x=1777543396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JVz10CrCDOI9L4NieaArKqFLucBpvthbzdziOn4I7dU=;
- b=jqRL+hm43w9pfNJB5pU73eZqi3TrZvgSFE0oXB9Q5+3+17IV6LilUiigkDMrM6F1XZ
- UCG5o3EgX/L4i9GDZ0PFDdznxyp+vuTMdW/xagdopCaBr1PKhEli1sGFfaW5MOIPo9lh
- ZufnhoF68ol2OhcXl40IQw6eCeOW9zCj/bmjLTPRANhlws0ZnyU4cJ60+9Zp9x1lsNl2
- 05TFT5M3Mlk4IOJWQZ+Peep1R6kP2cId0rgwjEDCyYXJP+IdL1JnfxEbSzgu5IoaFPxI
- zcan4VAcegT9QCn3kXOHkUIRU5CHY4q01qOXfwR9n7WOoSi2g7rUjnacAyGf3Yb+AMWA
- MZOw==
+ :reply-to; bh=fEUFHfMcLq9jFYBA6iiHhH3ilA9zZne4OSj0U6OqLbQ=;
+ b=nGmog8qEhMfifNYBu75RWnPbUI27hAnA8W1EF/+EkhfCWrmidLjYqaiMsLuDW6iFzT
+ GJdYC2nxkleXS7vcUrvbu63hZE/Lx/A9CaOJ6QbBcbeArhwk0EyokmK/kJd8Lfyr6xud
+ aR/2uypajJOsNeuuESPkMBPvLkPemAnoNIRV49FEcwsJpok3uJDJ8LrvLW9SRxfCcEFP
+ o8bouR6oRI81iunoJ5d7b2CRVpMPuXsynW1vDQeKDyFewgfaHTqgogP/+9aIRQTE6LC6
+ NP9kUp+XIlhV+mad+lPQg7AQf/08RIgCWAgDkj4KdFJ8qk+omkGxmCDDWx9f5DKi2J7S
+ +JMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938611; x=1777543411;
+ d=1e100.net; s=20251104; t=1776938596; x=1777543396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=JVz10CrCDOI9L4NieaArKqFLucBpvthbzdziOn4I7dU=;
- b=ZnDgwGj0WejoqZJX+BLZvcHS3mR/0J75HrqAQfvFL9R0pfnRGICWyHeEpDIdkAwbHk
- v4VjlKypHYExpkqN6uiTVzvzj7M7V7yMjXBFlT6pVzKC9qeDn3CwhEGiruQ6OstzZDv1
- aKs+NtHM0ZIMiy0umL9q57G6KPrU70kESm+MR1mYXVA+VutDQUW5HqDAjSQcTis36VJU
- Bh9b8DsHp6IiEDRP9zw4HknNzQmL2z3xsOiyYJj2DnGAItL0DPi1Gc+bTb9I1YnoTMS8
- 8DI4K862TYCpxjKg+3idoLBB44tkLXZdT9P9HzsJ1IAbQWpMaqpF2u2U4EyKri/UtaDO
- XJNg==
-X-Gm-Message-State: AOJu0YzaJEHS3wVf96Z1Otyg5CIl7kK8zN0BftQD7JW9pzpFE+dvz0EL
- lh5ZP3OAwf4PrhBW6QtN3quO2ux0QodeW4C8z6FNGA5InRtvFApSvHF1Jr5dUvfNf2d+qFZa2y8
- oHMtm
-X-Gm-Gg: AeBDiet6jNoEHttupaAjc6BbscbAtxMxvJ0oAEZ1XnyNwnHa9fsLYWUj6oFCVM6g7Ft
- dbAj/0MDzlcZ8J9SY6tqulGKvg1M5iE407qakSJAcxHycrb8d1M7/pjhOU+CduHM1rhhj6DUJTX
- AFzk++5d5qckBLtLc1zzak/AiLOqYnI9QT33cKqPrTWSrBvIvNeJ2py3RC7zj+5w7pV3S73Hhl+
- XCMVRnFD3zUf6cTul24/45PeFSTFxnb9b8IUsvRlpiN6cGCnLDAK6wozI+c1AbL65EEgmQLQ0fj
- uEDzXl+PAXRNO6q16YiPD8caaJoYwJFj5SVplQAzhjpfXl47OqGPH3sJcLZKHSYnOb81yDTVk+9
- kMQnlM0tHcQFNeuyriIeUZcd6GjUvdPNRw7jj0moWr+dJ/7b4v3UP62akeeVRFqYnPI9D5bPQqc
- Io08hHf/vnu9HO8cTfNqEHBoGd/xcCuMfA8+prukLszo1yt2OS7MgtjAbznd/Vl8AcLfF2CMYg2
- y5oTF2M7KeV2C8mjwl0dftLaaXeZsX9BzT52gE3BA==
-X-Received: by 2002:a05:6000:2309:b0:43f:e211:6e6 with SMTP id
- ffacd0b85a97d-43fe3db9b6fmr41352844f8f.1.1776938611232; 
- Thu, 23 Apr 2026 03:03:31 -0700 (PDT)
+ bh=fEUFHfMcLq9jFYBA6iiHhH3ilA9zZne4OSj0U6OqLbQ=;
+ b=KNKMF2yr5Ft+Qsn1+u/e9kqh0xIaf3h1lRs368mn27dJABDrG1iyZGE3f2W5cY+fvm
+ 6CEGXFgm+vY7XamwgWZRjvRHB8apicesT9V4rdZORJfdcko/4zNNTdkMHRh/04gmxajp
+ 2QEiosTNWL68crDAHR52NJkpQGZFCugHl+gYpF3qrIGJVhz2IsZFNBk6z84JyHDrNrJE
+ Ymd61UhgKXQ71Lk6zXrNtMaMEZu1WZ8thT+UjPEl861/z0+DKUXgOMymWGPxavWM9ox3
+ oUobhwoMagqiEVYhM8y41AvqIsUAGPn4421noaNgbnIKIU2FMTg5KyfX2G/4HxRiaWUT
+ SV5g==
+X-Gm-Message-State: AOJu0Ywpctq9axhjw6Y7hg0bH6BOejOQHcQpQrQxq8SGHvHc7tvqYEm8
+ Nhoos1UgNjtbD8y17i6ozSn/b2lvWPGxrnwSt08lDB5TluS3vdhHJAfZq2l7H5JBXojEpW38x5R
+ fsT1R
+X-Gm-Gg: AeBDieuVkr6ouNPZYWZ0A9L6Iz3isr5y/qLDTS3Zaml/pvcaA0ecuClOOSUDI2EZynN
+ NwtNKqao+5JvrLP6/DqxAoq3SRK2+lQ1eC0hvzRhO58X4UUSPJgVnG+PuQr8YabFwUaXFgJ78Ak
+ 1r9Naff1q2waqEbo0gLeeQ3Uo9BZsuYOMLFDOk7QHkvxPvAkdPMcOgB3k6j27IJ87ENE8Q1RnqR
+ GZt7ZwyoDZQydagB6SxBD/SUxh+GxFvsp8lXBvZZ5ufXNfs+hYcC4Ol313aLjy2hR1JYqAU+t2t
+ 6yr+hRddG/qmd8tFmJR9jt9nh0lYoNLW7wcGmaYzVfzPULmtaWJItM9g+dzCLk/gQ+7A2PEeFwg
+ PF07CALoxyofoDL+uX2kva0bawgSxk4FCR5RHf1oJGyIeDuBIsVY0+0v2Ub4JgsnF90DXPJ/j+v
+ BfbKjAb5KKUVOweaPn2Iljb8TVtp+fIT7dTxrYjXQdvlMY/Eyoowu91IbvTzare6Y/jLyjsQZl2
+ K8+++yMjqIhk8nJ9hBLQyF6W8rZ/RoUbdelZK26Xg==
+X-Received: by 2002:a05:6000:1ac7:b0:43c:ff58:35c2 with SMTP id
+ ffacd0b85a97d-43fe3dc5eaemr41742212f8f.20.1776938595797; 
+ Thu, 23 Apr 2026 03:03:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.30
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:30 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 54/59] MAINTAINERS: Remove Su Hang
-Date: Thu, 23 Apr 2026 11:02:24 +0100
-Message-ID: <20260423100229.2941820-55-peter.maydell@linaro.org>
+Subject: [PULL 41/59] MAINTAINERS: Remove Huai-Cheng Kuo
+Date: Thu, 23 Apr 2026 11:02:11 +0100
+Message-ID: <20260423100229.2941820-42-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,32 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Su Hang has not posted to qemu-devel in some years and did not
+Huai-Cheng Kuo has not posted to qemu-devel in some years and did not
 respond to a query about whether they still wished to be listed in
 our MAINTAINERS file.  Remove them, on the assumption that they are
 no longer active in QEMU.
 
-This makes the Intel Hexadecimal Object File Loader orphan.
+This makes "PCIE DOE" orphan.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260416091654.316158-24-peter.maydell@linaro.org
+Message-id: 20260416091654.316158-11-peter.maydell@linaro.org
 ---
  MAINTAINERS | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index b5d5f74099..02696f46f2 100644
+index db29b267ee..38958254be 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2717,8 +2717,7 @@ F: docs/system/guest-loader.rst
- F: tests/functional/aarch64/test_xen.py
+@@ -2161,8 +2161,7 @@ F: docs/specs/*pci*
+ F: docs/system/sriov.rst
  
- Intel Hexadecimal Object File Loader
--M: Su Hang <suhang16@mails.ucas.ac.cn>
--S: Maintained
+ PCIE DOE
+-M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
+-S: Supported
 +S: Orphan
- F: tests/qtest/hexloader-test.c
- F: tests/data/hex-loader/test.hex
+ F: include/hw/pci/pcie_doe.h
+ F: hw/pci/pcie_doe.c
  
 -- 
 2.43.0
