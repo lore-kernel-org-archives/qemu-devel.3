@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA65FAD40D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 05:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E21FAD40E
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 05:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFmSy-0007hS-9E; Thu, 23 Apr 2026 01:19:08 -0400
+	id 1wFmT2-00083g-9I; Thu, 23 Apr 2026 01:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wFmSj-0007e1-TL; Thu, 23 Apr 2026 01:18:53 -0400
+ id 1wFmSm-0007en-LG; Thu, 23 Apr 2026 01:18:57 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wFmSh-0003DU-Fe; Thu, 23 Apr 2026 01:18:53 -0400
+ id 1wFmSk-0003DU-R3; Thu, 23 Apr 2026 01:18:56 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KFFSOiUKNSqSk2teQocu2fxpJCkKkd5wcehtPJFqDZWEG19l71VKw30puRkgKGeSNpl791D8F/H+POQczf4Rh3TabzYJBZmnm4G9orKVd5fgKfzRvWGBlRMuBmjqIq4cr8H3zM6J3CNmjSyz0uozEp+JNumW3ns/2bn1QVg+VjXkkUVQdCBEYEUi8UB3LWJ2n6N2f22e/db/PgSZY/tRF8aqWiaOEOLlLS/b+FFt6LtM0zhRxOBJaBWVSfJZvPjOx72d8GDrd/0QleufpPpm1UN6ZyKdeY0Iu90ndu0/pVUbzD5wglk/ngUkjCCkU6YPZr2udJ4o8C+Y14UYES06ow==
+ b=uyTAxQ7JC9r0w0U3Ng90Gr9FLz8QvZSYoEw2wURBGpZ1t0AdMjbLb5XqVHZoSlucJzfzVzddzWURS6sXYymIgQJ3y60og/Tzx9kJanckGtHOK/G23DhuiIViG0UzGpvsWUyoX6fjrc4nRNQjl+AmwvqFQ4YRNhTyBFuQiaUSwwGFBPWu/Lo5QYWXlgMhgHgpXuMLdSSqQbdRWQYVz8/Hcl5QzwQ/gz+BroL2zsIN9gE6NygMT7TwCRD3n7sZ4ZdIvwrVjMseTiiwNlG3lDyKmo9Vamr8Qn6cZ2YfBkAjFOyZCmh1Kx2dMiDAlmOt43ggjSEegWJmRZOM4JBatICUkg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=84a6H1AYkCG3PlZqCD6Dcg7C2Qm8Mm+r6Pi+HNsJuUc=;
- b=b2wj3TbyhAU+S6TJtgcMZ1HblZvNVhxZkb/fyPlJpOTdohu8eoVuw9nGn86/rfX8KvAyG94UPKkJ9hViX/o6oVt7raeJSnlSUbAGH19WWCIGfuKtgBYaAAyc+x/3fNHjrdnTkN3BujmSaS4oNfDVQKgTT8LfXOCiwS+Pqh6mXNBW3a1ORVZiPwvhDy/l2lunkHSKqlOrt4jP+CvP+Qcx2Wur82ira9M2zUwSex8y/2K4ZBlw/iLGmNiyIXRGu4Mv707ORs1nnheeSXfpztVWPTbxS2TU3IOpUluoV/yrFZqE1GAuv8J67uj+mqzF7YrvmowOp/1ACh9Grto6xSaYYw==
+ bh=xdCqqwgGyyJ6ZpatzPh1q47FdstaGy6eGso1RaGeAJ8=;
+ b=zF4TJyXULiIQ5jLk1iaxaSdUI3cbPRfMlpoP/N95HeQdIUuHSXPAGpgTa4P6fyFkbuF3PCDw2P1q0qFv7vqrRViYENqdpsUo7mUMYB7/iDSziBVwATmEaYEsjrsoRkHnw/nuClAve8oLOrxxLb8GKjmYTuSGVR7N6N/GjD0lgRpqaVnTku30teo9qak0P3TFhwtTpHTT30+gt2SuOsD+NoyVR5y+K8ORyo1eUecMKH6kzoE0D1z1lLs3G8NjgI+u2L0RA+sv0EHhICgL13/O3h2OH6rEYGGKueEfs+wM1tJ/soFhunqWHrHGBOF1xTlvhrIKlVZ1RGhMvgbJPOCBfw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=84a6H1AYkCG3PlZqCD6Dcg7C2Qm8Mm+r6Pi+HNsJuUc=;
- b=r3ub6lDLR7aSZUHI+hcKAViUcp6fyJvMqHm7fznBGCWJaYz+Yxmi1s/WKDI5K7n6QZruO9EW0/69pMuD/W3v/iqHQ6iPTMwnSqxxzAg67UE1Qb0hboHZb66sEfklFgDUaaQkHbnnlJqzlfrxgchXQgelxfNrA2bbNKYpagWB8JBm+YA+g89CA43L6G7M5IyBpOE0dF+GGefJKU6i3GjH2oKMoi8HMu2G7xdKovM6pP+kjw5D7vYAZDGsA6ajCxCJWBavJfhs1zoOUC6h4lLx66fWrC8xZordfKp8XjEWKkf12942uR4RWXcGDvznFatSg5sCSGH/N9+1nojsliAaFg==
+ bh=xdCqqwgGyyJ6ZpatzPh1q47FdstaGy6eGso1RaGeAJ8=;
+ b=nu7UYrSmPdhhaXBC7ZqBKQVHsGbCGmG9RMMavBPMdrV03OzBrMxPlEAHxAai460nT6ElfTE2VqPubyJNtuoNriHMV4927tH8qYsS7/8nH5SnOSm0yw/uG52JSooKGpKio9ljWwD7tZ15dMM8CBiCcQ12FgIwkiZKC0mLa+cYrCn/RMQ+fQt9A6Pt6AkfxxdNKvR/3Qk5GhzcJuFJv2l7eG/jEJ4BGqF8+IlYvbE72X/hJUcf5ijO/Biw3UuIMscefSMj6YZ/0efzLDCXPjdl90dUOo5jaX0OAt9QqSqGdKHJjbazddHEhVDQzaBFjngLz9zafrdsrFgedaIkBq+7Kw==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by KUXPR06MB8534.apcprd06.prod.outlook.com (2603:1096:d10:9d::22)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.16; Thu, 23 Apr
- 2026 05:18:18 +0000
+ 2026 05:18:20 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9846.021; Thu, 23 Apr 2026
- 05:18:17 +0000
+ 05:18:20 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "philmd@linaro.org" <philmd@linaro.org>, "peterx@redhat.com"
  <peterx@redhat.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
@@ -56,13 +56,13 @@ To: "philmd@linaro.org" <philmd@linaro.org>, "peterx@redhat.com"
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  "flwu@google.com" <flwu@google.com>, "nabihestefan@google.com"
  <nabihestefan@google.com>, "farosas@suse.de" <farosas@suse.de>
-Subject: [PATCH v4 10/17] hw/usb/hcd-ehci: Implement 64-bit QH descriptor
+Subject: [PATCH v4 12/17] hw/usb/hcd-ehci: Implement 64-bit iTD descriptor
  addressing
-Thread-Topic: [PATCH v4 10/17] hw/usb/hcd-ehci: Implement 64-bit QH descriptor
- addressing
-Thread-Index: AQHc0uCYw6djoa5ZSk+U7a+LeVecxQ==
-Date: Thu, 23 Apr 2026 05:18:17 +0000
-Message-ID: <20260423051804.362095-11-jamin_lin@aspeedtech.com>
+Thread-Topic: [PATCH v4 12/17] hw/usb/hcd-ehci: Implement 64-bit iTD
+ descriptor addressing
+Thread-Index: AQHc0uCZpFMCSv8lKEK9Jloeph3lDw==
+Date: Thu, 23 Apr 2026 05:18:20 +0000
+Message-ID: <20260423051804.362095-13-jamin_lin@aspeedtech.com>
 References: <20260423051804.362095-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260423051804.362095-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -73,61 +73,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KUXPR06MB8534:EE_
-x-ms-office365-filtering-correlation-id: ff8c536d-7762-44eb-7de8-08dea0f7ba7e
+x-ms-office365-filtering-correlation-id: 415e18fe-2f68-4841-55e9-08dea0f7bbd7
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|376014|7416014|1800799024|366016|38070700021|921020|18002099003|22082099003|56012099003;
-x-microsoft-antispam-message-info: kDattUptkqUu1gbKkT3h2J6l5p0WPFXF7JPgYKdcYjlJXkRtnOZJMJSM29cmR8DllZYFMMaHk6HAUbp5F2YZfCrn4LbALR9urEZWdnVYQOag5ayr5KIZAKPU/B7pY3osKNqST0VmZpQo6+hRfmrmQZ00qgjG7+KJKatwMoyGcei8/Xh7P4BWZzQiwheM2zlPdu7UW+6vea7oITRpQlFdUhq0PPBrY0TDueHvWKTbTbwZnkeePV+/IK3wpfz4rnLzRKfBWMkc1vPtIV+yavRl6pUqH0EUIzu9FOzKzBgCdrusJpAtBjzLoPUNfKQwzlAnGMtOtoSGqW8UFUfbp6E8lhNodW/UWxvrQYbBLL0lpfcyF2dj48g2/Yy+ji+z6C/HpTll6S3NkYEEuMb0kWyz3ImAGjAHzsEPv70ayRuzCK9uHCuBN7zDrSWcjmz0oKk6r5Tv5lr1HeZa1LA/rR6CBdPJNpNlVNWxsPvhUfBwrFvUoFcwBXeDdOUbUW8B+eTw/QNr9U+ZlYXLEmzO0IEgQX2+IEOSghEKqsFB6uSbZWP3PBtQAGGE1TSO0IxkO0aBqoFqhxpiXAx0OvTpLv+SikU1vNb+J03Z2w9GHOKfZtaioL4G/01Z0WT4SCuBzW65h9TovRcwGj28AAS7KPL/28StzFePB7MfU3GeASRSFehU4hOmNPzeotNN6wOVL7wwmDUv7WKylIGb4TCU2/WCAY/ryO9+NnZUJsvbrPLVuGYRdc62MosTty6KI2Da2EGbyXhsfSjjkUX4l+9XuZ6V2FgDuVdIVbzJbNWxNgXzB3aPIi5oqram+Z0DIhjWtXdg
+x-microsoft-antispam-message-info: AqUCLWxGfExwhVsArDecuej9kRloLAVNV95U1G4S1XnBxe+LudoQ49OEnZjFkezH+NwQeamwNIsWpyX7rr+sKUN3Ay7b1SDmGd4A/israBD89/zwGG2PveKAZbOYh+T9UvREbpX6JTADMkkKjPifoo27cuBJkY12i6bKPPhByR062yP4uB0ozQvLplKBjHyJsnTyuaGAqcD++LlrZj9+HgG0Rwy87+qxxV4WCwED3PQQPztzF+NfHEuT7SHonCMDOfzsKCbRhOOsJMUlVZTO6LtPuuhOxJzlFDwBPKI44S652bLrrbg+LBbUOt1+zsQgZJpk6xYpMWeiKWEsghHYZtB1PdT0K0H+j4ZqOWv4k09ZK7YMfONuHwaKHRNUtKmU038yLSFc55eXAkwZ9EIYBp9JHAXEYBgrq6I0+34k+jSbO6OcRRH+rwUIcU/fvljejkmE2GpGm76PJmtciNndI+gLfl9YkHanIzRLFOGX157c6vErYUsI+0IPqozfSiUa6IGtxN06XFqIVJF4ie4fYBNSpHWVcehsB41s7ObC28sLqsljkPk+ZR5dlJmovLRs2YWVgLQxLbpkB+6sbfgZjNkjht6MkpieKaqefdJ1Q3L7cL/P1dYCLsIL59a3X7JX4FAPWMJYCtkbPRJj92y7MFV2Nuf/ZsSmWb0aFfH12DGGttGP2Ue76F5LfxD2VAicSIe40sFdy0A32mAAobgRR2qwHd3aXIy/fI2VAmL5X27GpCYwAkF28xVptDj9vAJ5sIQipveuxFEpdK5IEpiuYsi2ljzA9b2/zpCKAWZL9EB/lNyq5BXgtG8eM/NzLeYi
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021)(921020)(18002099003)(22082099003)(56012099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?tTrb22JRh8VqmglPUJJWAAmXR6xiqZkSJO8EgXI1+XJOvTJibVYfcCTFkM?=
- =?iso-8859-1?Q?MJgqydrXHCPHyFhz2WuTb32zQrUqQvjxML3gYgxUNd9kYeMoGk84rxoHPN?=
- =?iso-8859-1?Q?ULR65GNeY9eD/IfpfIAmW5yr9NvkPCQI0X3ZtP0d+u1xonAeU1NDBO7quI?=
- =?iso-8859-1?Q?C4zWzhnyX4GbYiPENNOktjpS/37i4aOUlcsKR4MnX1KrSH93ED/uHmCScD?=
- =?iso-8859-1?Q?0PucjbEWwDipS/WJzj2X/3ReRtvY+yAUzkpnREBqlkQiVBdyC2fWqujpjL?=
- =?iso-8859-1?Q?KpKLYNsuIlXC+UteigsuHuIic5rgBrv3oxRkQtpE8/tfVFaCVh98JiQbWq?=
- =?iso-8859-1?Q?ztbaDGTZ9LyCAr5/Z+tw+aRY/E6Qj6xH0rSkP9bkWvbFTADECJkYJaLNxR?=
- =?iso-8859-1?Q?rlkYdhwpZ6s2BYq9YAyjGyc30h/GcwPUeiFYsFp+IdlxGp22Cp6WtE6tbA?=
- =?iso-8859-1?Q?NGiye2TccfOZjKvM5513gjEouXiMl6as2Ev4HmXk6d8tD5OvsDhtKmgFft?=
- =?iso-8859-1?Q?bafW5hX1QrfwzVW1U15UmDcHNTPJiWFDEnd7gtiDHStVjS6YMI/a1Dfe6n?=
- =?iso-8859-1?Q?NkkYLE68GPuYPapMRAqLZsBUFY8phR4h5z7h+Sob0kdv7dvf+URNGxz9ur?=
- =?iso-8859-1?Q?RmgBtu3WQ+c4wv59PNU0AJXIvtqZw44ED1VdBPC+MqhZK+VHU7w5HqsbXi?=
- =?iso-8859-1?Q?SUqLJyPWk0hIFdRtROr5E9OurZrIuQgz4YdQnjqos8h4XRb7RSYZgDBYae?=
- =?iso-8859-1?Q?Wck7SY4VtQ0WXzfDo0nVqLxzIjCueHhXvBwPnInqSGP888d+14SWRRKfzi?=
- =?iso-8859-1?Q?Ic3XY8EO+EMD8/KvckSb/hYPudS/LeDPringxAHdIxld/wGcqI/j2ybC/e?=
- =?iso-8859-1?Q?x+shWKVmYnlHCyQzZx28i439iy5U9iUYeTod+h17tAdSl3zaVZFY/evc88?=
- =?iso-8859-1?Q?PiiR0UOSQknKs1sL6xp2uyKN66yIqgNfizMlmMWl9mp15QePOpWi8SFl9j?=
- =?iso-8859-1?Q?nZeV9KJtwXFhjA0+tC5C0wPyjtJQh97aJfZRprZm/DCLHWtPvl1Vq/DIEw?=
- =?iso-8859-1?Q?GavJrBtnz3N0QoLy4jUpcnnRrOP4E6V4tNqHm/EsBt1hiPjbsRdaOOCfEK?=
- =?iso-8859-1?Q?j3ZInhUO9pl95kigtvCcH8ywksqpmOsYYJwsCUt8/F+Mt47WBmwXwcQQ9W?=
- =?iso-8859-1?Q?u6pZufA5ZjRQD1YO93gCXaB0awjsEQrtKrFK4J/FBcKG+qMUY/m2iqpwhl?=
- =?iso-8859-1?Q?5X8RKg+Xt7h07bHceJoGFe3kJhmYCwbBpZ4Uvp8oTxgJwCI23cioYbADrU?=
- =?iso-8859-1?Q?ACrkhTXPYQg73wWlag9jzItq/E0z6OX2aNsd0ndJa7X9gzGObL4BJigEb1?=
- =?iso-8859-1?Q?Ji89kFroxJkH8rTMRNJeF0fy3QTLbNeBmE+O1dbjdP3PFXqmbRjoBJrNrS?=
- =?iso-8859-1?Q?mlGk6n66uHDsWq7FczBFSs/D8Or8mJFMMFZEA/dv7ikAPWjsjN7B2FMHP8?=
- =?iso-8859-1?Q?Fci79tJNv6dlNV+nKy9iEAf0LE9D4OO+JxQ0r8p17VP/HWzy0eMmLucUqa?=
- =?iso-8859-1?Q?Snk5GPXQF25P5oFLOZ2mQQgj/9oEwd3CZf2lkNjOjJC7GUx2Dooep3vC22?=
- =?iso-8859-1?Q?VzKQSgSEg3m3Ti12PLomfc4PeVQRnc0kKy9KuGnTKE0iIYAZqOft2cB/K7?=
- =?iso-8859-1?Q?qCHLzkszicDQso/XJpdkfEi9QAJvJMYVHN9LAHiOCOgRf9P8aHNj0Cy/jk?=
- =?iso-8859-1?Q?nPNjzqy6FghqRqIH+IzXu7xtQ+2IK8nH540uCg0fyMoYXlRUKbJ6ehaIIv?=
- =?iso-8859-1?Q?kcJFFEgrRw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?9q+37vBtogbxD22fLkS9JBi+z1enZIxHwj5zLhkIFMGcXLjceySujW1ehq?=
+ =?iso-8859-1?Q?2XTSTBmSmNXf0kR31EGn2F28enKzSbLBTdhepe5zPmDSjstkPtf5GfKEG7?=
+ =?iso-8859-1?Q?B8dJIVQNB+ZGMJlImnBXJdKuFJggmJWdCqqin8+HTxZQ5W3504boWp6juh?=
+ =?iso-8859-1?Q?VBtsIuSFu1CoOqCn2PaqZhP/vTOba1C5w+A3VjEzdjAxkdL+fS5jawN9fj?=
+ =?iso-8859-1?Q?jthJoiyg7hZ6+Z+SlH5y09Zpa5ZChs/+Cvkj+vCh1tVLAL19sAbR0DBrEH?=
+ =?iso-8859-1?Q?O4ONOhqk5hecA7GgCOdU8FXcrLBOXiRPxNN4n7sZblxKQ+JClgc8kJzg3x?=
+ =?iso-8859-1?Q?tVe421F0zaTV5bT2Sv19DtEYKUNG/Ji2+HuPkByEuFEnrpnZkM0sqhhnZV?=
+ =?iso-8859-1?Q?YWpJResamg4odCgaawcszpMu4xvhkOjH8mrIIouv7G9rwJG33/uGX+49Qx?=
+ =?iso-8859-1?Q?JIM69yRqHoxPs/bWyJ/3YctnxPzTu29DMmqfl7lHKimlkK2QTuQO/DbN7b?=
+ =?iso-8859-1?Q?TtBc7rtq0/m4oXSsCCGTOKq8Gew2UN0M226dRltNDKXFLk6sSsrAcTi2ry?=
+ =?iso-8859-1?Q?F2vDkGDQIAhR2zpba2y/nTFXdycJR+mdW5zRNYuOr3s5tOdjIx4PujL/ke?=
+ =?iso-8859-1?Q?8yKiX/WuypHYI89W+hM7GTJ6sKw9133x3y52fcDDdA2yW8OlC5N8TSDedC?=
+ =?iso-8859-1?Q?Qp72QSBrLyFPV6zHX8Duk42AzuhIvAzYDBE5Sa0KwgDeeYlvfHpGjHbJo7?=
+ =?iso-8859-1?Q?jDpMBUPl131OWcsj2zBEBEe774kDfhOHjNKC8sEYbyB1x1Von8GfhI44K0?=
+ =?iso-8859-1?Q?pRzBedj4/qaqVbZ7HOMPircrL/dxYrESDge1f89/pxomhRuA5kCvVcyHIJ?=
+ =?iso-8859-1?Q?KAd+QsMGghTVpga/ZTjKWVz10Int/UkHkpfOYCYHNskEHM6NfXjH19fRe+?=
+ =?iso-8859-1?Q?L3eMCL433RSJFHgAD2/dCfWcmHxP7D1eab6IvHmJSSvxsdB9qRk+AkwxuN?=
+ =?iso-8859-1?Q?1RUGlfo8qKJWAa88YU0e3X58/naLWo85AyxhaTUf8SypwZo1EtSZeRBFgt?=
+ =?iso-8859-1?Q?tQ1Y6cH5Rwwv1BIesLMnpdu5lqEShBBHNmhxtEOdL0j38sL7adsP34d3SW?=
+ =?iso-8859-1?Q?y2fTx8ji6DR7EcygyGErO/DG34CCYs9HVg7NKGp/QCIZjsbXWYPsA2LKYp?=
+ =?iso-8859-1?Q?PBlJUpg3M/DYbdogunCRLOCXuYmkecRZpQ8orWbM2uAfjPIODa5iUq+IpR?=
+ =?iso-8859-1?Q?NEMWluqyWOdbKGzaf1ybc3ddviYPX8ny5qcASijlomAMuZeZVT78Nk1f6o?=
+ =?iso-8859-1?Q?KoynJgi8iM2aN9YogdM69I+OTuDP8jZYJQtW0hblW2j38O2seHm51UspD5?=
+ =?iso-8859-1?Q?P7ly6qxeqSIcH4EZxttpCCA6Qg1U670POC7W05sjrRJ9hJfxhfMnxlkpvz?=
+ =?iso-8859-1?Q?iu5t6NTmcIRSAimXXDNVeLCf7r5BdunMJ7IEWvSaYfiz/2Y4rJZU3TIgW4?=
+ =?iso-8859-1?Q?bR8NDVbwU8Xrhz9/ceqYWjiGJhk77fA/FECqF3d6h06BAtSaf4Vrg0uuT8?=
+ =?iso-8859-1?Q?Zysrhzpr0hoWD2FsVcD6QK/sCaaycsj+/z1nRvGQ4WdThoUpWrckMpHoKS?=
+ =?iso-8859-1?Q?mRBqTopeSPGXBbv0ks+EACL8q78mKhYr+Om7FpjlPsN34Bw99S638chCh4?=
+ =?iso-8859-1?Q?oK5ujzQPn25liRJbVKk8theB4g+r3aHMGzu2k/E9sVR5orUlTE9I7HlZ+3?=
+ =?iso-8859-1?Q?BYaz45469Tuf4pif48VB8O/+F5Ksm59HyUVTB6lewQUcH8OnVP3GFR8PWK?=
+ =?iso-8859-1?Q?2b2geUhgbw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: PXMlSGTA105XQ4TtbKIb5WeWNW6g0/0Z1mDOM82EsOEfl4D9uDN9rOC4wAR+XcO/HKFlYDRHUBD8LT8B9JwHtlZqG62jqhO1luhX6ARUVTH5Q+59xVbFkXm4wrhj0P3l3uZAAVAKDr2D4u8m0CNFcWwGpwRiR8+u7otQs9Kw9jJzc/Qk8nOB8BgdBdJmzP/wOEtOQl4oiodfQR1+PdFfHTPY2hPpix4eAThwD6z9P3K4MtXuaDamdodJNTPyai81HEwpyzPT7BcFxQ2LK+abpf+SqxoLWjIy2GJz9nlBumqBEASlo8LilEQPvci6PTpQtSbjjjvnApcq/8NaclpxJA==
+X-Exchange-RoutingPolicyChecked: dmRwj0Rr7Y0TfE5CrmGvuz0hoF5f6RkwPkLBKM7WdQzsJJDJwHqxU9ZK24ZoKDl2dttqM+FhJosFNW8UEY2cHIwYO5FG3iSXBABkbqgpEbJ8o4VZC6IFzUR6/zeyTnjOt5g8+dqPNB+0916MXMHGbNzPdbufZ5pedrJKnJc3safFpTaLzdj1+fGJhfqVoap/EA+/4/sWC3Nww7cM5ndMY6j3dDK+tBllnlqZT7t700F47j2DYL50X+89dMWvXiu3DG9WS0WX+gnpZN+HznoJxaJ238mqBXHBUIW9vHxUzKdwATkiAh13i1f/dwODdZebUR0gt8OMXszW6EjTAvqECQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff8c536d-7762-44eb-7de8-08dea0f7ba7e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2026 05:18:17.9354 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 415e18fe-2f68-4841-55e9-08dea0f7bbd7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2026 05:18:20.1939 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: lMcyRpZakzu+d6IHL461dOk8O26sRO84UuTlK3VrMK5hGHdUIvmIX/DlacPvZAvouZg5rhXDDz7hcuat3QDriYaLhx9ogNFouh2F/tpW0v0=
+X-MS-Exchange-CrossTenant-userprincipalname: 4VaQaQ05hOlWID1u2/E13Jxd8kGLkWmSKcPa8ki0OECR7KMHyMTcGUaSStUmHiea50nujzR1X5LUbhv62CRbtZDaPQnwA+fxISF6tFfqvlA=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR06MB8534
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -155,209 +155,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 EHCI supports 64-bit control data structure addressing when the=0A=
 64-bit Addressing Capability bit in HCCPARAMS is set. In that mode,=0A=
-the CTRLDSSEGMENT register supplies the upper 32 bits which are=0A=
-concatenated with 32-bit link pointer fields to form full 64-bit=0A=
+the CTRLDSSEGMENT register provides the upper 32 bits that are=0A=
+concatenated with 32-bit link pointer values to form full 64-bit=0A=
 descriptor addresses (EHCI 1.0, section 2.3.5 and Appendix B).=0A=
 =0A=
-The current implementation assumes 32-bit QH descriptor addresses=0A=
-and directly uses link pointer values without applying the=0A=
-CTRLDSSEGMENT upper dword.=0A=
+iTD link pointers are stored as 32-bit values and must be expanded=0A=
+to full 64-bit descriptor addresses when 64-bit mode is enabled.=0A=
+Update the iTD traversal path to use ehci_get_desc_addr() when=0A=
+following link pointers.=0A=
 =0A=
-Introduce a helper, ehci_get_desc_addr(), to construct full 64-bit=0A=
-descriptor addresses when 64-bit capability is enabled. Update QH=0A=
-traversal paths (async list walk, horizontal QH link, and periodic=0A=
-schedule entry handling) to use the translated 64-bit addresses.=0A=
+Appendix B also defines high dword fields for iTD buffer pointers.=0A=
+Add bufptr_hi[7] to EHCIitd and use ehci_get_buf_addr() to construct=0A=
+full 64-bit buffer addresses from bufptr[] and bufptr_hi[] fields=0A=
+when processing isochronous transfers. This allows buffers above=0A=
+4GB to be handled correctly.=0A=
 =0A=
-EHCI 64-bit buffer pointer fields are defined in Appendix B as=0A=
-split 32-bit low/high parts located at separate offsets, rather=0A=
-than a single contiguous 64-bit field. Therefore, the buffer=0A=
-pointers cannot be represented as uint64_t bufptr[5] without=0A=
-violating the descriptor layout defined by the specification.=0A=
-=0A=
-Introduce ehci_get_buf_addr() to construct full 64-bit buffer=0A=
-addresses from bufptr[] and bufptr_hi[] fields. Use this helper=0A=
-when calculating transfer buffer addresses so that data buffers=0A=
-above 4GB are correctly handled.=0A=
-=0A=
-Also add bufptr_hi[5] to EHCIqh to support 64-bit buffer pointer=0A=
-fields as defined in Appendix B.=0A=
-=0A=
-When 64-bit capability is disabled, descriptor addresses remain=0A=
-32-bit and existing behaviour is unchanged.=0A=
-=0A=
-Note: Similar split 64-bit buffer pointer handling is required for=0A=
-qTD, iTD and siTD descriptors, which will be addressed in follow-up=0A=
-changes.=0A=
+When 64-bit capability is disabled, descriptor and buffer addresses=0A=
+remain 32-bit and existing behaviour is unchanged.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>=0A=
 ---=0A=
- hw/usb/hcd-ehci.h   |  4 ++++=0A=
- hw/usb/hcd-ehci.c   | 47 ++++++++++++++++++++++++++++++++++-----------=0A=
- hw/usb/trace-events |  2 +-=0A=
- 3 files changed, 41 insertions(+), 12 deletions(-)=0A=
+ hw/usb/hcd-ehci.h | 1 +=0A=
+ hw/usb/hcd-ehci.c | 9 ++++++---=0A=
+ 2 files changed, 7 insertions(+), 3 deletions(-)=0A=
 =0A=
 diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h=0A=
-index f1f2fde578..3428839ec6 100644=0A=
+index fc66aacd9f..8e6a8cdfb0 100644=0A=
 --- a/hw/usb/hcd-ehci.h=0A=
 +++ b/hw/usb/hcd-ehci.h=0A=
-@@ -141,6 +141,9 @@ typedef struct EHCIqtd {=0A=
- #define QTD_BUFPTR_SH                 12=0A=
- } EHCIqtd;=0A=
+@@ -63,6 +63,7 @@ typedef struct EHCIitd {=0A=
+ #define ITD_BUFPTR_MAXPKT_SH     0=0A=
+ #define ITD_BUFPTR_MULT_MASK     0x00000003=0A=
+ #define ITD_BUFPTR_MULT_SH       0=0A=
++    uint32_t bufptr_hi[7];=0A=
+ } EHCIitd;=0A=
  =0A=
-+/* QH overlay: altnext_qtd, token, bufptr[5], bufptr_hi[5] */=0A=
-+#define EHCI_QH_OVERLAY_COUNT 12=0A=
-+=0A=
  /*=0A=
-  * EHCI spec version 1.0 Section 3.6=0A=
-  */=0A=
-@@ -194,6 +197,7 @@ typedef struct EHCIqh {=0A=
- #define BUFPTR_FRAMETAG_MASK          0x0000001f=0A=
- #define BUFPTR_SBYTES_MASK            0x00000fe0=0A=
- #define BUFPTR_SBYTES_SH              5=0A=
-+    uint32_t bufptr_hi[5];=0A=
- } EHCIqh;=0A=
- =0A=
- enum async_state {=0A=
 diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
-index b23ff92e12..5ffd4c9885 100644=0A=
+index e82e0f625c..43a01a796f 100644=0A=
 --- a/hw/usb/hcd-ehci.c=0A=
 +++ b/hw/usb/hcd-ehci.c=0A=
-@@ -147,6 +147,23 @@ static const char *addr2str(hwaddr addr)=0A=
-     return nr2str(ehci_mmio_names, ARRAY_SIZE(ehci_mmio_names), addr);=0A=
- }=0A=
+@@ -1464,7 +1464,8 @@ static int ehci_process_itd(EHCIState *ehci,=0A=
+                 return -1;=0A=
+             }=0A=
  =0A=
-+static uint64_t ehci_get_buf_addr(const EHCIState *s, uint32_t hi,=0A=
-+                                  uint32_t lo, uint32_t lo_mask)=0A=
-+{=0A=
-+    uint64_t addr =3D lo & lo_mask;=0A=
-+=0A=
-+    if (s->caps_64bit_addr) {=0A=
-+        addr =3D deposit64(addr, 32, 32, hi);=0A=
-+    }=0A=
-+=0A=
-+    return addr;=0A=
-+}=0A=
-+=0A=
-+static uint64_t ehci_get_desc_addr(const EHCIState *s, uint32_t lo)=0A=
-+{=0A=
-+    return ehci_get_buf_addr(s, s->ctrldssegment, lo, UINT32_MAX);=0A=
-+}=0A=
-+=0A=
- static void ehci_trace_usbsts(uint32_t mask, int state)=0A=
- {=0A=
-     /* interrupts */=0A=
-@@ -440,7 +457,7 @@ static bool ehci_verify_qh(EHCIQueue *q, EHCIqh *qh)=0A=
-         (qh->current_qtd !=3D q->qh.current_qtd) ||=0A=
-         (q->async && qh->next_qtd !=3D q->qh.next_qtd) ||=0A=
-         (memcmp(&qh->altnext_qtd, &q->qh.altnext_qtd,=0A=
--                                 7 * sizeof(uint32_t)) !=3D 0) ||=0A=
-+                EHCI_QH_OVERLAY_COUNT * sizeof(uint32_t)) !=3D 0) ||=0A=
-         (q->dev !=3D NULL && q->dev->addr !=3D devaddr)) {=0A=
-         return false;=0A=
-     } else {=0A=
-@@ -1538,7 +1555,9 @@ static int ehci_state_waitlisthead(EHCIState *ehci,  =
-int async)=0A=
-     EHCIqh qh;=0A=
-     int i =3D 0;=0A=
-     int again =3D 0;=0A=
--    uint64_t entry =3D ehci->asynclistaddr;=0A=
-+    uint64_t entry =3D 0;=0A=
-+=0A=
-+    entry =3D ehci_get_desc_addr(ehci, ehci->asynclistaddr);=0A=
- =0A=
-     /* set reclamation flag at start event (4.8.6) */=0A=
-     if (async) {=0A=
-@@ -1566,8 +1585,8 @@ static int ehci_state_waitlisthead(EHCIState *ehci,  =
-int async)=0A=
-             goto out;=0A=
-         }=0A=
- =0A=
--        entry =3D qh.next;=0A=
--        if (entry =3D=3D ehci->asynclistaddr) {=0A=
-+        entry =3D ehci_get_desc_addr(ehci, qh.next);=0A=
-+        if (entry =3D=3D ehci_get_desc_addr(ehci, ehci->asynclistaddr)) {=
+-            ptr1 =3D (itd->bufptr[pg] & ITD_BUFPTR_MASK);=0A=
++            ptr1 =3D ehci_get_buf_addr(ehci, itd->bufptr_hi[pg],=0A=
++                                     itd->bufptr[pg], ITD_BUFPTR_MASK);=0A=
+             qemu_sglist_init(&ehci->isgl, ehci->device, 2, ehci->as);=0A=
+             if (off + len > 4096) {=0A=
+                 /* transfer crosses page border */=0A=
+@@ -1472,7 +1473,9 @@ static int ehci_process_itd(EHCIState *ehci,=0A=
+                     qemu_sglist_destroy(&ehci->isgl);=0A=
+                     return -1;  /* avoid page pg + 1 */=0A=
+                 }=0A=
+-                ptr2 =3D (itd->bufptr[pg + 1] & ITD_BUFPTR_MASK);=0A=
++                ptr2 =3D ehci_get_buf_addr(ehci, itd->bufptr_hi[pg + 1],=
 =0A=
-             break;=0A=
-         }=0A=
-     }=0A=
-@@ -1693,7 +1712,7 @@ static EHCIQueue *ehci_state_fetchqh(EHCIState *ehci,=
- int async)=0A=
-     }=0A=
++                                         itd->bufptr[pg + 1],=0A=
++                                         ITD_BUFPTR_MASK);=0A=
+                 uint32_t len2 =3D off + len - 4096;=0A=
+                 uint32_t len1 =3D len - len2;=0A=
+                 qemu_sglist_add(&ehci->isgl, ptr1 + off, len1);=0A=
+@@ -1762,7 +1765,7 @@ static int ehci_state_fetchitd(EHCIState *ehci, int a=
+sync)=0A=
  =0A=
-     if (trace_event_get_state_backends(TRACE_USB_EHCI_FETCHQH_DBG)) {=0A=
--        if (q->qhaddr !=3D q->qh.next) {=0A=
-+        if (q->qhaddr !=3D ehci_get_desc_addr(ehci, q->qh.next)) {=0A=
-             trace_usb_ehci_fetchqh_dbg(q->qhaddr,=0A=
-                                        q->qh.epchar & QH_EPCHAR_H,=0A=
-                                        q->qh.token & QTD_TOKEN_HALT,=0A=
-@@ -1876,10 +1895,12 @@ static int ehci_state_fetchqtd(EHCIQueue *q)=0A=
+     put_dwords(ehci, NLPTR_GET(entry), (uint32_t *) &itd,=0A=
+                sizeof(EHCIitd) >> 2);=0A=
+-    ehci_set_fetch_addr(ehci, async, itd.next);=0A=
++    ehci_set_fetch_addr(ehci, async, ehci_get_desc_addr(ehci, itd.next));=
+=0A=
+     ehci_set_state(ehci, async, EST_FETCHENTRY);=0A=
  =0A=
- static int ehci_state_horizqh(EHCIQueue *q)=0A=
- {=0A=
-+    uint64_t addr;=0A=
-     int again =3D 0;=0A=
- =0A=
--    if (ehci_get_fetch_addr(q->ehci, q->async) !=3D q->qh.next) {=0A=
--        ehci_set_fetch_addr(q->ehci, q->async, q->qh.next);=0A=
-+    addr =3D ehci_get_desc_addr(q->ehci, q->qh.next);=0A=
-+    if (ehci_get_fetch_addr(q->ehci, q->async) !=3D addr) {=0A=
-+        ehci_set_fetch_addr(q->ehci, q->async, addr);=0A=
-         ehci_set_state(q->ehci, q->async, EST_FETCHENTRY);=0A=
-         again =3D 1;=0A=
-     } else {=0A=
-@@ -2205,6 +2226,8 @@ static void ehci_advance_periodic_state(EHCIState *eh=
-ci)=0A=
-     uint32_t entry;=0A=
-     uint32_t list;=0A=
-     const int async =3D 0;=0A=
-+    uint64_t entry64;=0A=
-+    uint64_t list64;=0A=
- =0A=
-     /* 4.6 */=0A=
- =0A=
-@@ -2229,12 +2252,14 @@ static void ehci_advance_periodic_state(EHCIState *=
-ehci)=0A=
-             break;=0A=
-         }=0A=
-         list |=3D ((ehci->frindex & 0x1ff8) >> 1);=0A=
--=0A=
--        if (get_dwords(ehci, list, &entry, 1) < 0) {=0A=
-+        list64 =3D ehci_get_desc_addr(ehci, list);=0A=
-+        if (get_dwords(ehci, list64, &entry, 1) < 0) {=0A=
-             break;=0A=
-         }=0A=
--        trace_usb_ehci_periodic_state_advance(ehci->frindex / 8, list, ent=
-ry);=0A=
--        ehci_set_fetch_addr(ehci, async, entry);=0A=
-+        entry64 =3D ehci_get_desc_addr(ehci, entry);=0A=
-+        trace_usb_ehci_periodic_state_advance(ehci->frindex / 8,=0A=
-+                                              list64, entry64);=0A=
-+        ehci_set_fetch_addr(ehci, async, entry64);=0A=
-         ehci_set_state(ehci, async, EST_FETCHENTRY);=0A=
-         ehci_advance_state(ehci, async);=0A=
-         ehci_queues_rip_unused(ehci, async);=0A=
-diff --git a/hw/usb/trace-events b/hw/usb/trace-events=0A=
-index 8c90688bb3..67249d69c2 100644=0A=
---- a/hw/usb/trace-events=0A=
-+++ b/hw/usb/trace-events=0A=
-@@ -113,7 +113,7 @@ usb_ehci_dma_error(void) ""=0A=
- usb_ehci_execute_complete(uint64_t qhaddr, uint32_t next, uint64_t qtdaddr=
-, int status, int actual_length) "qhaddr=3D0x%" PRIx64 ", next=3D0x%x, qtda=
-ddr=3D0x%" PRIx64 ", status=3D%d, actual_length=3D%d"=0A=
- usb_ehci_fetchqh_reclaim_done(uint64_t qhaddr) "QH 0x%" PRIx64 " H-bit set=
-, reclamation status reset - done processing"=0A=
- usb_ehci_fetchqh_dbg(uint64_t qhaddr, uint32_t h, uint32_t halt, uint32_t =
-active, uint32_t next) "QH 0x%" PRIx64 " (h 0x%x halt 0x%x active 0x%x) nex=
-t 0x%08x"=0A=
--usb_ehci_periodic_state_advance(uint32_t frame, uint32_t list, uint32_t en=
-try) "frame=3D%d, list=3D0x%x, entry=3D0x%x"=0A=
-+usb_ehci_periodic_state_advance(uint32_t frame, uint64_t list, uint64_t en=
-try) "frame=3D%d, list=3D0x%" PRIx64 ", entry=3D0x%" PRIx64=0A=
- usb_ehci_skipped_uframes(uint64_t skipped_uframes) "skipped %" PRIu64 " uf=
-rames"=0A=
- usb_ehci_log(const char *msg) "%s"=0A=
- =0A=
+     return 1;=0A=
 -- =0A=
 2.43.0=0A=
 
