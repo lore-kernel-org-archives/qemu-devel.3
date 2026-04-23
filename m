@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC16F9936D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F01B9F99368
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:32:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFrKl-00012H-K8; Thu, 23 Apr 2026 06:30:59 -0400
+	id 1wFrKn-00013Z-L8; Thu, 23 Apr 2026 06:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrJo-0000ZK-RN
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wFrKF-0000nP-0C
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrJm-0005OB-Dv
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:00 -0400
+ id 1wFrKC-0005nX-M1
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776940197;
+ s=mimecast20190719; t=1776940222;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mvlY+/LRKuKta0O23HLcvzCcFpZOHfGgT1RnwB29Db0=;
- b=IT2TciSvweJsP9h5y7cRP0S5Y88wb4dUjGrC/JLuNhoqPy25+UoQ1ImEz6guU5u59fgiDH
- Bogu861GQh93t2xt4rW2YqryL0P/nWr9XR/3sS7kwIfN55LiiePVHaM4jHHnT0A59R60Cl
- rYdX6KIPycNn3ukomq0k4I3qb8tZ36A=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IvSIdII6V+yTFOn7yhXDIrp7CakQLXmMya/y/bCpBPA=;
+ b=RPHpqyswnn4UzW0BgLBsuz8gE1ljalVShvvBakZge6pJIhCp3w6uRjc6nfARtHhrUWxaeg
+ dV3+8IWrb/9bhJ5oFjGrIndWnIvAE53Z5yGJr9+SP/foxwSG6k3+RjepaO4k+dfpbdeojQ
+ J258qpP9YDhgXUpXqZLKNYY8qg2cjr4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-294-YsPCU3-gMaGhBYkuzFcYrA-1; Thu, 23 Apr 2026 06:29:56 -0400
-X-MC-Unique: YsPCU3-gMaGhBYkuzFcYrA-1
-X-Mimecast-MFC-AGG-ID: YsPCU3-gMaGhBYkuzFcYrA_1776940196
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48a5775d647so25606155e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:29:56 -0700 (PDT)
+ us-mta-347-AuHGB3TKNlquNde91OmEbA-1; Thu, 23 Apr 2026 06:30:21 -0400
+X-MC-Unique: AuHGB3TKNlquNde91OmEbA-1
+X-Mimecast-MFC-AGG-ID: AuHGB3TKNlquNde91OmEbA_1776940220
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4411a215f17so3386346f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776940194; x=1777544994; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776940220; x=1777545020; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mvlY+/LRKuKta0O23HLcvzCcFpZOHfGgT1RnwB29Db0=;
- b=bUoBNzKJC1g5u/cuSQakEISvayEhXxRA10CkoFOPnodB75dKCrFhecOZcRcefNxsDy
- uAaUX0D/IE3j2OQY1Pj3u7JsyIDnbdzxuW5fzdBrvLB8bNuPY0v5TOWb5Xy8UW27Wsik
- Ff27jY4lb1Je/zs8EzaFadftlCplIxJM4cMf8A9zRvIlVmEoqcBxfdtDAkyTUaqBFSU1
- P3qS+GmPNlns+XqTmWdDKKhcjCCuezbcQ2tiT45WfPAI5Jhw+8Zn6b6B9O8U0Jhbf3Je
- shh6tYhhU2dyqSTvbj2NdeHFy89gpEjIGEsirTdDTPLf6tr0E5P6NHXHWNOQdj3bJQzD
- LV4Q==
+ bh=IvSIdII6V+yTFOn7yhXDIrp7CakQLXmMya/y/bCpBPA=;
+ b=UbZigWtJ7vqCDISiMJfwnKrkeaSnbQJUyPkbHkmsQUaqIMctXzL7CA5GpEouV5gHxH
+ amZV6YTlaHut97iwaz55cq3BKA1RlH0m8Pb3wg+t0TSmB8FY5m4Zjl4NzdXrda2/y7tH
+ 9r4AT/t3v/sR3w6JZFi4j3WRYvUjA8kzMYC5VDiayBERCpEPNHn3iYsE80x8WP8tnFDt
+ 41LvxtmYbyiAAUIW9b6z4clPevcVE5hEG0VQg6detT++7jHuu5dC3IIXqCHAHQy9sNkd
+ /o83Ajbv2MXSiBhlv6MCNDx/dHHjjWolwver2wkn3SbzZD2P0VzZKliXYVzG/21H+YOc
+ hgmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776940194; x=1777544994;
+ d=1e100.net; s=20251104; t=1776940220; x=1777545020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mvlY+/LRKuKta0O23HLcvzCcFpZOHfGgT1RnwB29Db0=;
- b=KViiNj4T+dmEEobNKG9For/3DKKeZjqpDReYJPR8ygCeUzItH8jdYpXc1FvoPgTgFt
- wevl8mrMiISXxCZ5D7ZY6lNJvbm5JUGgHbOC3jg0fGTCUAMSJfCjSgs/cFeIOr3ymlFS
- VSUXc1t1uBOSyytS0G8SUbFqcRybhJKWykU/lahviBVxx4HcPqQw2b+8ga8/PY7JsfJn
- FGIFtXZIIy9yuMNFoh2nBoAEb/8HJutAdtjjVHdgelITkUeBqSD5TIH/wANywDXYfoen
- lqEMzlxZ44XcgEU6ba/OVQbNaHEBuDQtJmo0QPq9bl5zuFZ+urB5gcuOJHj6dsSKFxRI
- 4aIw==
-X-Gm-Message-State: AOJu0YxWU7G7wee4H0ZDp442IFGb4JMOhbLnsA2IV81OiAXiLka7cpuS
- daI+9QM5VC39KAo0gK/+RJAzYxby5A6dvxXTaCUukreIeaTYIXksh8SieZcWvLBkOpTVJZxkmAM
- PZnqwsIdyRu1W66brIb1u4z8EFLjMhTMOzIwWdCYxcXTN6gEU3kYM39DSa1QIHelBpqZJc3sr7m
- yc/7l3RM+Judr5jq/zXn1Q2vVsWYNIrngFXKUUyamv
-X-Gm-Gg: AeBDieuwPAEY8+qQnd4XQ5WlXc5bQRQBJi0kmie0dxSTBO7UuEp2kcLkAx89D3IptR5
- JHoY8VOHv3FK8BvmBCG3Oyje84OEVzek+WLLF8SesAuiSxAGlcBYJ2l6I/sONsJmEX1LEOIwoeG
- 7UQZMoxWnrV2FaQfx6MKP57oUSi5X+Nf+e0ulNtysjCV5/JdPPMbUz1cUAAx932j0UHxGfPVxgF
- WyIYtp5nqtRUmUTptVLYzGbqugOxL6MQY0GXFaF6ePleeK4COeW/gE25uj2cl8PS+ug2HwVLeOu
- SGpjU2wEz3Or2pFZzAzKKXH/O9K/nZhu636J+hiRhT5D/dmPtbyG3SpwggLeUMP3OZeG+Xx8++L
- NXTwwQnNOsieySQnz9rSBShSKQtxsfz7ON0MRLxAjXsnyJTpJs/n8AJWkC2CBrUcv7q5rLSXy7q
- 3h/V4Tyd2byx9QU/B4Xy79QeGvIyFsjIJ6j8c=
-X-Received: by 2002:a05:600c:4ec6:b0:489:1f98:71e3 with SMTP id
- 5b1f17b1804b1-4891f987487mr225663325e9.28.1776940194589; 
- Thu, 23 Apr 2026 03:29:54 -0700 (PDT)
-X-Received: by 2002:a05:600c:4ec6:b0:489:1f98:71e3 with SMTP id
- 5b1f17b1804b1-4891f987487mr225662835e9.28.1776940194097; 
- Thu, 23 Apr 2026 03:29:54 -0700 (PDT)
+ bh=IvSIdII6V+yTFOn7yhXDIrp7CakQLXmMya/y/bCpBPA=;
+ b=sli11mhDneP6XD6/GWpqYmG0Gc/dku2PW5qBQuVZnXrlpGClR3EwfzgczXiZ4KPqkv
+ cdp0JUrdwK3r/4cOg8cSpVGcccyX3IuRYGJ9znTGcmzQs2G1fruqKckSgq8noGRL6Y6L
+ AwIiD2yojzYi1EJs7YmXULp8Af46O32Z5xRCThVg2Mvq+0HAKvTbzl0VTtby4bLb9xUR
+ f3tHmxaZPFt9IlkpjfjgIs2MlPQvj7fV3yfujPc5zalu9Tge4/BL1SHvvttXjJLqoZnb
+ qEdF+m3QvFXy/ciUO+8W7gBxvfFAa1NdJ5+Pq3VxrYAL7qewelZqI5SgpDiVhHb/cMUh
+ oNsw==
+X-Gm-Message-State: AOJu0Yyj0oZ/wHWF+Q17sk3x1tq1mZp4DAsu2wbV3vYDh42A3DOe05MB
+ 9mlCswDIhePup0bg4iJVIwIcKvya5nkjweuvqqa+59zrLc661LcK53r71L311e626rUmKd7+JnE
+ rKki9R3V7rpGYsjz3pVWSCFGIEfw8NSukNsjqJt9VputBBqa9+c3vBCfAi6pTnl2kxR6bNYTqHp
+ 6AbFLNv0tluwp6E5l+cuam1Sdt3cKTzv4Rk4ktB5Oi
+X-Gm-Gg: AeBDieulUsj/U34TatS88Cx4Mp78j2YrN35WyPflArZ+IonV6a9LChuSSvH14/p5PEf
+ r1DAQaw6VK9tLH+MsmovQaEaVkOy+ksTYUvl3rA3+Wzqjyp6yR6zPrxp34G0XUMG4bg55pLfE3b
+ GCuJvZvbstlVHg0V1lw7/NlVY8YXRmvwYO8XlXKnVMgd0AN+QIBtnfhmOJDz3zC+jasSy0zttbr
+ yLmSE1uqoGxNxi7CZjqzDUCt+RFWOIMqxAZunBZ4GXT8ZuSUAyLnRL8ASG92nAmX/MSAJZEe+PH
+ /Kj6MdBfLYY+NMllCKcUb62qMjNW4Sn0x8RrIm2dIpbdTtKA9TAnhD8GHTYuwjbkygZHN0YEKsn
+ Fty92h9INT7RMb2z9T7iX7kHeDlfJUmEEMaJhMy/LTx/hn9BUCd3WQW090fL8qD9uRNpBT9WIdj
+ QCIEF4dUyQIoQ3Jq5WE5vy3StfobF56msSLF4=
+X-Received: by 2002:a05:6000:1889:b0:43d:7b7b:ab76 with SMTP id
+ ffacd0b85a97d-43fe3dc54ddmr40751332f8f.10.1776940219651; 
+ Thu, 23 Apr 2026 03:30:19 -0700 (PDT)
+X-Received: by 2002:a05:6000:1889:b0:43d:7b7b:ab76 with SMTP id
+ ffacd0b85a97d-43fe3dc54ddmr40751259f8f.10.1776940219051; 
+ Thu, 23 Apr 2026 03:30:19 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb74c789sm152488885e9.5.2026.04.23.03.29.51
+ ffacd0b85a97d-43fe4e4d112sm56741935f8f.29.2026.04.23.03.30.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:29:52 -0700 (PDT)
+ Thu, 23 Apr 2026 03:30:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 11/25] target/xtensa: Use glib2 instead of
- strcasecmp/strncasecmp
-Date: Thu, 23 Apr 2026 12:29:08 +0200
-Message-ID: <20260423102922.443639-12-pbonzini@redhat.com>
+Cc: Aastha Rawat <aastharawat@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PULL 20/25] accel/mshv: return correct errno value from ioeventfd
+ failure
+Date: Thu, 23 Apr 2026 12:29:17 +0200
+Message-ID: <20260423102922.443639-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423102922.443639-1-pbonzini@redhat.com>
 References: <20260423102922.443639-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,43 +122,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
 
-This is a change in semantics. g_ascii_strcasecmp() doesn't honour
-locale but strcasecmp() does. But this is OK for at least one reason:
- (1) QEMU always runs with the C locale so there's not an actual
-     behaviour change here
+Returning the raw ioctl return value results in misleading error
+message. Ensure that actual failure reason is propagated by returning
+-errno for ioeventfd failure.
 
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/20260327134401.270186-10-kkostiuk@redhat.com
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20260409-fix_ioevent-v1-2-053b810ae6fb@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/xtensa/xtensa-isa.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ accel/mshv/mshv-all.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/target/xtensa/xtensa-isa.c b/target/xtensa/xtensa-isa.c
-index 630b4f9da1b..c564af340fa 100644
---- a/target/xtensa/xtensa-isa.c
-+++ b/target/xtensa/xtensa-isa.c
-@@ -370,7 +370,7 @@ int xtensa_isa_name_compare(const void *v1, const void *v2)
-     xtensa_lookup_entry *e1 = (xtensa_lookup_entry *)v1;
-     xtensa_lookup_entry *e2 = (xtensa_lookup_entry *)v2;
- 
--    return strcasecmp(e1->key, e2->key);
-+    return g_ascii_strcasecmp(e1->key, e2->key);
- }
- 
- 
-@@ -513,7 +513,7 @@ xtensa_format xtensa_format_lookup(xtensa_isa isa, const char *fmtname)
-     }
- 
-     for (fmt = 0; fmt < intisa->num_formats; fmt++) {
--        if (strcasecmp(fmtname, intisa->formats[fmt].name) == 0) {
-+        if (g_ascii_strcasecmp(fmtname, intisa->formats[fmt].name) == 0) {
-             return fmt;
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index e1a8d62f8d2..58af674bd99 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -275,7 +275,12 @@ static int ioeventfd(int vm_fd, int event_fd, uint64_t addr, Datamatch dm,
          }
      }
+ 
+-    return ioctl(vm_fd, MSHV_IOEVENTFD, &args);
++    int ret = ioctl(vm_fd, MSHV_IOEVENTFD, &args);
++    if (ret < 0) {
++        return -errno;
++    }
++
++    return ret;
+ }
+ 
+ static int unregister_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr,
 -- 
 2.53.0
 
