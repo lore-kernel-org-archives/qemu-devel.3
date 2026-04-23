@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCA8F99367
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FFCF99366
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFquX-0007Jc-VE; Thu, 23 Apr 2026 06:03:54 -0400
+	id 1wFqui-0008H9-Cn; Thu, 23 Apr 2026 06:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtl-0006TM-3p
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:08 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wFqtu-0006V1-Dn
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:18 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqti-0002A4-O6
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:04 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4891d7164ddso27207945e9.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:02 -0700 (PDT)
+ id 1wFqtt-0002FF-2K
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:14 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-43cf8d550bdso5663937f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938581; x=1777543381; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938591; x=1777543391; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=w3VRC35u2ZWmI/ezGiXA6Xy2yCIZZPWUICWMZvJnfBw=;
- b=sI0FHZsJT732pd6goc/N39LdyMr8Oy6ka+nutgna2ATd2IKH3anjw+T93ild72T6hx
- 2ex1+/Dnsu/RoE1gnFM3lCDfzKTN9A6yrbndj6P/yRnm6ryHvuiYw4q18CBYiSXMpZ0l
- Hmu3BzWD/XfYnLyOkenzTi3NmdsgB/7/WMO6UhbM11wjDEq58R4TX5HUjih1uJwGdA1T
- xEow9r4GtBHc8im5qFhHJiVNOS5XSk3kcVEg43zPxi79rKATel2L1fSj2xUx45KBPqRK
- tVfpicmFiMdcuZrC5MT1/sOzdwqIQ6rUn3ijac1nvYlp1BnQ08GaXB46XjaydycThx8d
- 4o3A==
+ :reply-to; bh=JZCnIRERVfWjIo+EO1aPIaYb12SPwec3CBaDb5Mb7x4=;
+ b=ldlETwzSCC1zw/8g0ADjM0OlafCx884xSIAK+te0ko3WyMUGPPCeSjJbKFg+nWrTEQ
+ fntd/1tbm30XcVjgwu4nFC9TO2PAk7Qpt4zuNRD4tJOfycp4Hlf9Yxzh/4uy8C5q3rrp
+ 6/lug5ZXDjlvnECVRWnD3A/j6BwUWq/z4U2r9bUvdqkzRteHLXhawbPURCSvA/jIRluN
+ 78aAjI8OuUBsdTY006KWBCNZV0NOQrd66G9Ba/blkjJxl4jrwTvMaDE+rzKWk4aZBPgg
+ +5BMaTzPRCj2pfcDm+7fQA/+IYO4UWyD+c56OqILOpEOu0eYyLu3eE/ab2J1HT89O+kc
+ aMHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938581; x=1777543381;
+ d=1e100.net; s=20251104; t=1776938591; x=1777543391;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=w3VRC35u2ZWmI/ezGiXA6Xy2yCIZZPWUICWMZvJnfBw=;
- b=I/OdvmBozs2CvTPL2iduefn6xlKLHaM4PGmWpzdLIM+O+59v0gjvfpg/LO90mrP3qS
- jBMLWDcOYq1C9xySE1+0P+hC9UR/ITXkEMAlXmtvya0ZtApAfLBKIAuPmZFVDcpG8Ucv
- wFhV6IIytuz6G1TvOciEB9RwCS6wlHNwZbngpy5Ko7DuroHAw//zyFdPqr8PrvBg8ljv
- Ve95apGNFuMerJ37TycyJLJJJ8WRRSWXXIyHvMWQVtIZGgyRoYGRlaAdkroFh+4TimY9
- JQz4T20Sscm6Qfq/e2a7OW3n8rtRDrGkyyUz1oZfaXunUimeem9lfkNlqJ3axNW4EVt3
- hUKA==
-X-Gm-Message-State: AOJu0YxXBveDlGz9gO1mQCMYUN2UmcCkDqbvp/kG3zgL4x2M2p8D5Kfe
- 3S+UoUMq3zNvNeGmL5RFiB4UkHqRwTLCFxSVSGjTcKlCpSkBE4SUx/h/MVyHDmQ59hJqBZhJOPM
- yTccp
-X-Gm-Gg: AeBDievO33ckv4ZUkFti30g5v6HZazcB20sIKknGBlYFf4GQG9mNApd3zt7gz/HV/bC
- tQZH2X5n9xNG+HmOVhEr+G7MTxX6JemQ0JdRNgi0WdSvxhon8MD4dwpvrH//onh9ChkHDzIgitk
- n8eeiGjezXVvJo19GEmSsEt1mGthcvntUMj0W85IoClUGE+cZWIP/uO3nb7i0kYAr7BIlWY31nL
- BJPAY4YJs2qcErDPiI5XrhPTN4fnDHLAg0OkFCbM9biJjplKkDi2HGnpimwxtpEStIfva6XWj0c
- 9e5j1mZByicFo6q6QQZVyrR64vsdcuqQy3nJbWDdK/JBwNAU7vVAG3GKNYroLah+PJ76MWmgbdo
- RqjIYsc6OFQshmZ0D4gg0AGiQ76zQuKBVHWq2wRe0faT84LbtgAyuAFTTZ95d1Xo7ycmgQGhlu5
- 6lU158GlxNRoDkNiQxvQOMifeqnGV735Lwp8RztA56av4e0omrN2kzA7DJ16Qe12DOS4yoQdyrE
- Wjo3tWipiFidHUKg36+IdqZ1y0bYBg+ZccGd/uzNg==
-X-Received: by 2002:a05:600c:4714:b0:48a:5574:3a5d with SMTP id
- 5b1f17b1804b1-48a55743e96mr162414795e9.7.1776938581049; 
- Thu, 23 Apr 2026 03:03:01 -0700 (PDT)
+ bh=JZCnIRERVfWjIo+EO1aPIaYb12SPwec3CBaDb5Mb7x4=;
+ b=hbgxHGpTRySMKxdwzr0hr5AzK9AGIFCJqx3654sxk/FVvnXqYJj2Z4XRJULH0GXOzY
+ 1pN5Mcm2X6AjswTFphv8Jpu2abC1NuIxohLz653pxQIPDyB28pbgdYdmRplS7n9j2xLp
+ P7x0bczG3KtBlIR64UctmUlGajNSaPlhO913u3YFthz+oxjc1XaDgpES0WmyJYjJG6N2
+ FQmdGOVnLxysNW85J4maglx5C/IVUTxFUrKK9iVaKdHC32Lz+Kg0HHBfMDuM7l8YIOi4
+ C2D+Uen87NURx/ODi2+GNCuAlL6UwEUgcihRVLk19c3snzhkWNsW06x2Vc4NoM6JE7ix
+ 4Faw==
+X-Gm-Message-State: AOJu0YwCksbNenmeE+dPz3jlhDpkF7N5EDnFRcpC03jR9KYfA8y+4jn5
+ mQacuZUrVK8n7j6aM9nwoe2JTe2/Ay1Sch5vf4+HMZI3D2Npzupm6/hlG9j7F4d8xK+P64rq5Ji
+ fr9ms
+X-Gm-Gg: AeBDieuSzDtGEzyEdv4POSRu/vG2DoXPkXxNypM5RMCdIILYl+Pivtg6pa9QiOnsdv0
+ jSw1iBhA79E3F8rr1QsYom6V7rAIlVfJwM4QPTdp35Sr03aucvYm1n42AkzmPV8hTdJjrgr0t1w
+ wdXdVaweM5og09bRX6q7uoit0TN7eeFsG5W6SoMH29cPiaaDYkQTYI8yFvIe1ndnmbky3TmHtII
+ 1Lpkq6De3je5Y2p6huotBVJyFL85Ot6JMhuD2iFQV/XjunPOXsbGbDp1ST6elRkeZqdnDrb8IdH
+ XuBusmNZw7s+Ju5CUBwLgPxfCbb2vbaf1LGVQRtgrT5UEkoJ/al4Ddcvr0QDn5C9+mduHHxQLdM
+ FeeV5+YOY0rTM1Oc9MFePIXq/c63aMTPnOtY4344TOLUdvd5erpGsSoNmjBLRl40gKA7P1yLGJc
+ u77epfMNNUQfuQ4GkmVe8b4mHrKY0Q/kJv0PAj9Ny05tUNt355O8T2+9YF2BccLQQi+e8hb8jl0
+ HH+rPijPUQOuIiRuPMDQj3ywjZgkPqDrZaIDBIrAg==
+X-Received: by 2002:a5d:4d06:0:b0:43f:e934:50ac with SMTP id
+ ffacd0b85a97d-43fe93450b2mr24011161f8f.7.1776938590803; 
+ Thu, 23 Apr 2026 03:03:10 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.59
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:00 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/59] target/arm/tcg/translate.c: replace translator_ldl_swap
- with translator_ldl_end
-Date: Thu, 23 Apr 2026 11:01:57 +0100
-Message-ID: <20260423100229.2941820-28-peter.maydell@linaro.org>
+Subject: [PULL 36/59] MAINTAINERS: Remove Jeff Cody
+Date: Thu, 23 Apr 2026 11:02:06 +0100
+Message-ID: <20260423100229.2941820-37-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,51 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Jeff Cody has not posted to qemu-devel in some years and did not
+respond to a query about whether they still wished to be listed in
+our MAINTAINERS file.  Remove them, on the assumption that they are
+no longer active in QEMU.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260407222208.271838-19-pierrick.bouvier@linaro.org
+This makes the "VHDX" block driver orphan.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260416091654.316158-5-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index b6abaff490..c432de2a26 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6284,16 +6284,13 @@ static void disas_thumb_insn(DisasContext *s, uint32_t insn)
- static uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
-                               target_ulong addr, bool sctlr_b)
- {
--#ifndef CONFIG_USER_ONLY
--    /*
--     * In big-endian (BE32) mode, adjacent Thumb instructions have been swapped
--     * within each word. Undo that now.
--     */
-+    MemOp end = MO_LE;
-     if (sctlr_b) {
-+        /* In BE32 mode, adjacent Thumb instructions are swapped. */
-         addr ^= 2;
-+        end = MO_BE;
-     }
--#endif
--    return translator_lduw_swap(env, s, addr, bswap_code(sctlr_b));
-+    return translator_lduw_end(env, s, addr, end);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 567b918a70..d86d7536e6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4179,9 +4179,8 @@ S: Supported
+ F: block/rbd.c
  
- static bool insn_crosses_page(CPUARMState *env, DisasContext *s)
-@@ -6534,7 +6531,7 @@ static void arm_post_translate_insn(DisasContext *dc)
- static uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
-                              target_ulong addr, bool sctlr_b)
- {
--    return translator_ldl_swap(env, s, addr, bswap_code(sctlr_b));
-+    return translator_ldl_end(env, s, addr, sctlr_b ? MO_BE : MO_LE);
- }
+ VHDX
+-M: Jeff Cody <codyprime@gmail.com>
+ L: qemu-block@nongnu.org
+-S: Odd Fixes
++S: Orphan
+ F: block/vhdx*
  
- static void arm_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+ VDI
 -- 
 2.43.0
 
