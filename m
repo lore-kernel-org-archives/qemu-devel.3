@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE83FDEE39
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A89FDEE39
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG4ct-0004TK-El; Thu, 23 Apr 2026 20:42:35 -0400
+	id 1wG4cv-0004Tw-Vg; Thu, 23 Apr 2026 20:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wG1jl-0002Zb-O6
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:29 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <neotheuser@ymail.com>)
+ id 1wG1sL-0004Oe-O7
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:46:21 -0400
+Received: from sonic302-3.consmr.mail.bf2.yahoo.com ([74.6.135.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wG1jj-00017U-6d
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:29 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4891c569cb1so7275175e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 14:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776980246; x=1777585046; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uA+3oshFCqGtJFNZ2+y4Ee11ofsxVMEKZKGagbGyBPI=;
- b=h7QPoEsFz+c550CVT9mFvjMSK8viWS6jD1E+VaX17WgYxwJJTYPx5H/f9xOWKSrEi3
- 0Fv5tEekXtRaCww8G8vOVSSjYyjzMc2u7Nep2DC+SIE5QX2crpZYJwjYtzicz4rJng+N
- ZywE+1Q6C3oPAjl4h2imZGQ9YJlMHG2C8skR33vKSvnULC5EMnUp56neqDxCMUeybm0d
- jiydv3g3HBhR9b5fLqTKEG+yDvXZKKf0X/MR/+e6escq4NtjPECiaqXpEjxCSMC6C1Ps
- 614iz5KsoKXx6SoNjfkSncz+4hF/RFrfulS6P9ybpJoyQQXCkAZlw6XE7+lOZduCrd5x
- rOXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776980246; x=1777585046;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=uA+3oshFCqGtJFNZ2+y4Ee11ofsxVMEKZKGagbGyBPI=;
- b=eIDby3b9Na6o+8djwW4sLDEtK/N9CKSnURdL9lpfiViydOe0vGeJ7WiEGceeLVQmit
- dOxjHXE+ybvfJPRlGUiaAWyjcWfq6HGpOY3hO85Bh7TQDTtWLHb5hfYRX3sKzI0Pc4t8
- 5PQQK3n9vW0iiFIy906SYoXL6zypQeZE4pNOJ1uldc+zDsgGjSUb6L63rLo0HCu1wdpB
- hTuehaqjmSNvXn5jjOsjLnMCiFXXFaeL3iepDM2vrPKTIdte2KYSiC0Y9CncktZrzQrM
- gz/nsC68AzE1MM4/2SE1CEvb7Fll9qcAgm22uIG4JC3KZ0VMXHQvakn1FiRLi7+1q3hW
- gRJQ==
-X-Gm-Message-State: AOJu0YwGhrEsnA/uktpQ4R1iJ2mzlU3C+j1IkTezkFK73f1LIiPFN/N1
- gVGxw9zlIrg/DfuvB2jdszi1b0S2moHvkzx/m/hk+X6oxPukEiuJG3ZCDKZBZGMD
-X-Gm-Gg: AeBDievndWLorc8/6XhkmY5xxa8lVO8VER13NXi4rej92CLB546xc6xkbgTkWKn3gXw
- VQnqeY8wYZmVOmPuKs6NkyX4RpXY3QDZXR7n0Tp0jfAzNrNJpZdMN/8Ruq8JNrcGc00R2Ope5K0
- gDCL6qCqIxy8S7QGgvmWpx0gVwsE0KloCxCt/bpkERkLxtjsaQenx2sMO7cI8W1JtD+7dDgYwHD
- eyT3fEOIsmmYiPi7yIoSmtivXe+KPzOI9BmA6MN2DjsZBLS1OIYnI1N6dk5GsEuKaeS9IiMWUVy
- /+ZPFA6YMaUIv/IWWx6pisyptCW3qBWADLAXuJuqDDs4AmAh09Mm/We67X3xRH5e5loN2ynKcRU
- po6bwOzzWYjBPz2l3JEeG79jMdpkRXOy8GunOqzUCIQj6GhPZXWNNa2bdcBP0ezTBW0g4c1RBTk
- saYagmwfhiS/yvAoBsx8KfGa4hzg2oXg/V1GLLlfGmUQ==
-X-Received: by 2002:a05:600c:1f82:b0:48a:5546:619e with SMTP id
- 5b1f17b1804b1-48a55466251mr92148725e9.4.1776980245251; 
- Thu, 23 Apr 2026 14:37:25 -0700 (PDT)
-Received: from [10.94.10.196] ([223.123.19.204])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48919f54572sm138755225e9.26.2026.04.23.14.37.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 14:37:24 -0700 (PDT)
-From: Ali Raza <elirazamumtaz@gmail.com>
-Date: Fri, 24 Apr 2026 02:36:38 +0500
-Subject: [PATCH v2 1/3] linux-user: Filter /proc/*/task/ to hide
- QEMU-internal threads
+ (Exim 4.90_1) (envelope-from <neotheuser@ymail.com>)
+ id 1wG1sI-0005fk-Bn
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:46:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ymail.com; s=s2048;
+ t=1776980773; bh=p7LbBei25EyTgYguVkdRiAaODdHuFPggdNi2ulFPuxg=;
+ h=Date:From:To:Subject:References:From:Subject:Reply-To;
+ b=O0qiagcAMc80K3iVLaf4vRWf6QS6NSQS0qywRcD+38kgNaMjDnwoHYvAYp0UkaAdvVefuegnp8s67dYgw0ydMZuxmJ3NET7H2ko66lwMVqTS6pRreXuQpbov5eEcBZbohW9v5rNkCAdRXfTm81Sd7oG3fcsNQuiTqmIlrWeBdyMip5l+U8Qf++4jSTHKiyOhMC4uy1bF7+JnBHlZGBDDGQslXHu+hzc+gfXmwFj54l2UuKN9HrMw4hroOkcjCGkVrOv2Ca1UfVy+v0anqL0Pnlk+rGCMHNdz2Kl9GOmQbBR6Pfo4Cs+vwDyAxh/qC7gYBG1FUdOhjJc4u0gtJdXtOg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1776980773; bh=wTo30pfIvHMPAeW+jzUjmtNs+GztZWCYhfdMzZ99IfJ=;
+ h=X-Sonic-MF:Date:From:To:Subject:From:Subject;
+ b=TEHe9o6GoSbdhqYhX4hWZxdWAJFzL6rpudE4wejUmBk4LVkn31Z8RFX0VMrGOfZGj+EehMr7JBMLZKW6yeO4Fkaa0ZkhSdgJAN/3jIEtp5qclqnPIesBf++6uCn6Tc9VKVmY7/a51R1KIDexexKl7Q071t9xTkln2sTq1+CdcJ7zLGmp5wVvASIuK24QNlKGOEV9Oety0UBIabWrJcPecNfIrpD0+41p4bqGoPTRasF7PmalfUAeP9vx3KN+h4PjyjcQFbxEL9e0wHwdODUsdsIvvL+NLmIZZxF+zZMORXy2s2senovbxnjxR9wAyDWGmAlxJZ4eihLX+qh5qcVfJw==
+X-YMail-OSG: TQTvqiIVM1lubi86qVmXp0WFpEHzppuRnzhG7mQ6uDbMYfxXIZKLcIWyr41eJ7l
+ k483SYhuCU_Dv.t_kT8OhKq3cJxugH0PbyxJNBGDTrvjaxLQpeb1t4l_OuyOgKMDhj5bJxFns6_7
+ 9YDJUx5ZS1RcRz1.yyDpkgBZHDNIFalGETmPWmwX5D9fHVnOseJdkk.xhOul_.xUaXbAKv0l982O
+ pYRKtsrxiccztQmaLX0gRlRGOcKwU2RhGDXvq.B1zqOqMcc_VXx2sId7c_H5_DKcogudbqFW0uqo
+ XX9cddaQsgXJIeCwUbg6eFtiUwrDvrG6OjGzQrVQtK_M.buk6QqFH9gjXhX_BoO.UMe131kaLSYq
+ YG4QkJOkyfrPafvDiWMKp47fcyz0a7IYX6tRFR2eHuOWpEVLo0Q97Q1qWPJZZAn6nDAs72Dlt5eI
+ Y5WWfi6Uw24F4y0iMI4OyhKCaZqKRuCCYKYoKeOpwAcejgPsic6m0vB8O_YzeDE_V3l7yu4EzR1I
+ 4PwSh94x9WxhAPR.mFYe2El.bl.HcwwvE5nEGbDbC7YAok8axzRNc1W6ZuKv7cXAbJrqD69xlpoH
+ 5CZzDOsC21fptEvMHhjeTHRKmdk.uXzSJtUmHZ_CD5UikFVhEbdoySMS5yVYHnnbQgt_.4ikfG3X
+ DlSZ0J4XopYQFRr6OA42eKrujh2GTNf6djM9P1CSG0lAUhSrnqOrQjYEPtX_No7KPdrCIo4GJq0B
+ FmlFEO.eJfmsgKFs_.Ypp3zmjOVq4zznDCQzoCOm3bh3cogmjUW0sNK_QfP74xwHoi0KZyLWpBnL
+ EjvGrmbgGrpMmYf2.2oJQsTtWQxQxdS_V0kFjAmp4AG2YpRo9yIErHAjdCQvE.NWA0B7JvUzmEKc
+ Wq11mkaIaGnlRM0OtebYAODG4X.DT8AxAFUHriJsORkemYv_7YPSAFhlLQ108SU4_ozQEEsXO85S
+ oBpOREeVz2Tnx3HucLqHw9TSNK_XA6o0T54PIIXqUK1W.FQej8TMpsGlqCElu57xqciiBeCA4a48
+ zPJPiwD8dcKf7ro0bRPJ_epuc0kEd2TpTlq0Tm1.paepF99HciFpyU_gUlN7H9gtr2wuqTergFhr
+ EK.KruGpCDO.ZVpS8WFlvgnwTu.sPlqjlz7pmW18k0DlK7jK2k6SWVmWFuZ6KoUNLtnmh.o..VNI
+ 1yTVWnju6ylG7HYQC6wIuPSHKISlPEDaUEQDryeoIyHi8SqoF5MCHnd2E6hG7GlfCU6Dinz1hvSz
+ b4czZa7CypW8p5GFMxvlZBM5.j1Oa7uNGyCjwyptpbp0pMTo3tKr0KDUjwOQ0bIPF6lGC_cVuHDR
+ 6ZAlDcNVRucYILuWtmYl45UZJ.zCKmg1.VUaVBWp.Yy7rmngsHyMM6XfC.vrDmYmmEGW4b7OX2D0
+ Yw7umQd8DBIJnu1PyqGt4Iltu68LjQ9AWPMVp2PItihup07hkzPW_jzqcSVO9e7uSnGzidDvZKPo
+ U8.O6nF82bMCXuRUKQ3paPbMPUiCLbALPTqcLzsRIqAI580uBrTST3h.XkJ8ff53ffz1Jsqfrl9C
+ n2EEffDCKOcaWgjNSmJOt2XVTTKiSGtl.rRljqa3RCYOgt1gKaXkmSbaf8gKQklsiapqDw1DaB2R
+ d7BjRZCrqHDybnJ7gqeiSDtqbjDIypHhbZLrKLkp0a2mQpVItgPcoDt2OlWBVK8fdCD8SX1z7.XK
+ AFkSkoDdZYlE9TTBxNEQMEFiEkti5A4LLBmIXkmRQx0t7Zw7PZUQSi8piE7QkvVARNWplkmsgUc9
+ TR811H5yTTkNB1ojzD7iysvu8rSkWPxwMrA4dIOOWbPP._w8kGZ76p1D0t4ehNOXk0xFXk.erBYG
+ UDrKsD7T9iCaQuRd6CiZ5XBfsdJ07RcE8xL5jPEzF8o55zBQXwJG9Lw1Tlj9Vz8onsSbxLOylkPf
+ bsRA5BcV0p_KZUkQIBA_E70LCGywBl7pWVJCE_erghmv8YqZWPs8DmDV1WXdcOlIwiKEWzODWCP8
+ egFOygTUhjibsOd4WJu.Mer7nsukIeAyUKNqJXmEWsbz7_oY6nXBBnRR9816AbPsmGpBfiqjCLDx
+ tpCQTwlEWXMsgmMeikGqN7Pnu4Prdyyjoq2_i7kQ5j15ofHh9BAJ7YxQqcmSw6WbCk6Cr7h75gZN
+ nDQ28fMwj6CJS0oZJ8DCE_eigv9T0Kh.aadaaWtjcC3DIDirmeD1izTAQ9vtrSdBbI_ghtiLNJYB
+ 653GSEhm5vgc2Vtk1j1OYGxvVAlTU6Z8B
+X-Sonic-MF: <neotheuser@ymail.com>
+X-Sonic-ID: 9194a338-5b23-4e87-950f-ca31bdc63f1a
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic302.consmr.mail.bf2.yahoo.com with HTTP; Thu, 23 Apr 2026 21:46:13 +0000
+Date: Thu, 23 Apr 2026 21:45:33 +0000 (UTC)
+From: Alec Ari <neotheuser@ymail.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Message-ID: <1107055211.1670477.1776980733834@mail.yahoo.com>
+Subject: [PATCH] raspi4b: Disable L2 cache
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260424-master-v2-1-8b50b5c063ed@gmail.com>
-References: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
-In-Reply-To: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Ali Raza <elirazamumtaz@gmail.com>, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, deller@gmx.de
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=elirazamumtaz@gmail.com; helo=mail-wm1-x330.google.com
+References: <1107055211.1670477.1776980733834.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.25559 YMailNovation
+Received-SPF: pass client-ip=74.6.135.42; envelope-from=neotheuser@ymail.com;
+ helo=sonic302-3.consmr.mail.bf2.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 23 Apr 2026 20:42:33 -0400
@@ -103,475 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a guest process reads /proc/<pid>/task/ via getdents/getdents64,
-the host kernel returns directory entries for all host threads in the
-process, including QEMU-internal threads (RCU, TCG workers) that have
-no guest CPUState.  This causes problems for guest libraries like
-libcap's PSX that enumerate threads via /proc/self/task/ and send
-signals to each one -- signals sent to QEMU-internal threads are never
-handled, leading to deadlocks.
+From 8d72a46d3653a46422360e2f6c19b6747ca05abb Mon Sep 17 00:00:00 2001
+From: Alec Ari <neotheuser@ymail.com>
+Date: Thu, 23 Apr 2026 16:42:06 -0500
+Subject: raspi4b: Disable L2 cache
 
-Add filtering to do_getdents() and do_getdents64() that detects when
-the fd refers to a /proc/<pid>/task/ directory and skips entries whose
-TID does not belong to a guest thread.  Guest thread TIDs are
-identified by iterating the CPU list via CPU_FOREACH(), matching the
-existing pattern used for /proc/self/stat num_threads.
 
-This fixes the psx_test hang reported in containers using QEMU
-user-mode emulation for cross-architecture builds.
-
-Resolves: https://github.com/AndrewGMorgan/libcap_mirror/issues/6
-Signed-off-by: Ali Raza (@locus-x64)
-
+Signed-off-by: Alec Ari <neotheuser@ymail.com>
 ---
-Changes in v2:
-- Use pid_t instead of long for the parsed tid in do_getdents() and
-  do_getdents64() (suggested by Helge Deller).
-- Replace the ad-hoc readlink-at-getdents check with fd_trans-based
-  tagging at open time, eliminating a TOCTOU race and a broad-prefix
-  match that also matched /proc/<pid>/task/<tid>/fd.
-- Retry sys_getdents when an entire host batch is filtered out, so
-  the guest does not see a false EOF.
-- Parse the dirent TID with qemu_strtoi() instead of strtol() so
-  out-of-range values cannot wrap silently into pid_t.
----
- linux-user/fd-trans.c |   6 +
- linux-user/fd-trans.h |  18 +++
- linux-user/syscall.c  | 298 +++++++++++++++++++++++++++++++++++++-------------
- 3 files changed, 244 insertions(+), 78 deletions(-)
+hw/arm/raspi4b.c | 1 +
+1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-index 64dd0745d2..6bad892b78 100644
---- a/linux-user/fd-trans.c
-+++ b/linux-user/fd-trans.c
-@@ -1881,3 +1881,9 @@ static abi_long host_to_target_data_inotify(void *buf, size_t len)
- TargetFdTrans target_inotify_trans = {
-     .host_to_target_data = host_to_target_data_inotify,
- };
-+
-+/*
-+ * No callbacks: this trans entry is purely a marker to identify fds
-+ * that refer to our own /proc/<pid>/task directory.  See getdents().
-+ */
-+TargetFdTrans target_proc_pid_task_trans;
-diff --git a/linux-user/fd-trans.h b/linux-user/fd-trans.h
-index 3bbc15fa1f..76b8c35374 100644
---- a/linux-user/fd-trans.h
-+++ b/linux-user/fd-trans.h
-@@ -142,4 +142,22 @@ extern TargetFdTrans target_signalfd_trans;
- extern TargetFdTrans target_eventfd_trans;
- extern TargetFdTrans target_timerfd_trans;
- extern TargetFdTrans target_inotify_trans;
-+
-+/*
-+ * Marker (no callbacks) used to tag fds that refer to /proc/<pid>/task
-+ * for our own process.  Used by getdents to filter out QEMU-internal
-+ * host threads (RCU, TCG workers) that have no guest CPUState.
-+ */
-+extern TargetFdTrans target_proc_pid_task_trans;
-+
-+static inline bool fd_trans_is_proc_pid_task(int fd)
-+{
-+    if (fd < 0) {
-+        return false;
-+    }
-+
-+    QEMU_LOCK_GUARD(&target_fd_trans_lock);
-+    return fd < target_fd_max
-+           && target_fd_trans[fd] == &target_proc_pid_task_trans;
-+}
- #endif
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index f4b74ad350..44f2cd851f 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8870,6 +8870,7 @@ static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
-     }
- 
-     fd_trans_unregister(ret);
-+    maybe_tag_proc_pid_task(ret);
-     unlock_user(pathname, guest_pathname, 0);
-     return ret;
- }
-@@ -9108,6 +9109,58 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
-     return 0;
- }
- 
-+/*
-+ * If the freshly-opened host fd refers to our own /proc/<pid>/task
-+ * directory, register a marker on it via fd_trans so getdents() can
-+ * later filter out QEMU-internal host threads (RCU, TCG workers) that
-+ * have no guest CPUState.  Tagging at open time (rather than at
-+ * getdents time) avoids TOCTOU on the fd's resolved path and lets us
-+ * piggy-back on the existing fd_trans infrastructure for dup/close.
-+ */
-+static void maybe_tag_proc_pid_task(int fd)
-+{
-+    char link_path[64];
-+    char link_target[PATH_MAX];
-+    char expected[64];
-+    ssize_t len;
-+    int expected_len;
-+
-+    if (fd < 0) {
-+        return;
-+    }
-+
-+    snprintf(link_path, sizeof(link_path), "/proc/self/fd/%d", fd);
-+    len = readlink(link_path, link_target, sizeof(link_target) - 1);
-+    if (len < 0) {
-+        return;
-+    }
-+    link_target[len] = '\0';
-+
-+    expected_len = snprintf(expected, sizeof(expected),
-+                            "/proc/%d/task", getpid());
-+    if (expected_len > 0 && (ssize_t)expected_len == len
-+        && memcmp(link_target, expected, expected_len) == 0) {
-+        fd_trans_register(fd, &target_proc_pid_task_trans);
-+    }
-+}
-+
-+/*
-+ * Check if a given host TID belongs to a guest thread by looking it up
-+ * in the CPU list.  Must be called under RCU read lock.
-+ */
-+static bool is_guest_tid(pid_t tid)
-+{
-+    CPUState *cpu;
-+
-+    CPU_FOREACH(cpu) {
-+        TaskState *ts = get_task_state(cpu);
-+        if (ts->ts_tid == tid) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
- #ifdef TARGET_NR_getdents
- static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
- {
-@@ -9116,78 +9169,123 @@ static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
-     int hlen, hoff, toff;
-     int hreclen, treclen;
-     off_t prev_diroff = 0;
-+    bool filter_task = fd_trans_is_proc_pid_task(dirfd);
-+    bool stop = false;
- 
-     hdirp = g_try_malloc(count);
-     if (!hdirp) {
-         return -TARGET_ENOMEM;
-     }
- 
--#ifdef EMULATE_GETDENTS_WITH_GETDENTS
--    hlen = sys_getdents(dirfd, hdirp, count);
--#else
--    hlen = sys_getdents64(dirfd, hdirp, count);
--#endif
--
--    hlen = get_errno(hlen);
--    if (is_error(hlen)) {
--        return hlen;
--    }
--
-     tdirp = lock_user(VERIFY_WRITE, arg2, count, 0);
-     if (!tdirp) {
-         return -TARGET_EFAULT;
-     }
- 
--    for (hoff = toff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
-+    toff = 0;
-+    /*
-+     * Loop until we either produce a visible target entry, hit a
-+     * real EOF (host returns 0), or hit an error.  Without this
-+     * retry, a host batch consisting entirely of filtered entries
-+     * would be reported to the guest as EOF.
-+     */
-+    while (!stop) {
- #ifdef EMULATE_GETDENTS_WITH_GETDENTS
--        struct linux_dirent *hde = hdirp + hoff;
-+        hlen = sys_getdents(dirfd, hdirp, count);
- #else
--        struct linux_dirent64 *hde = hdirp + hoff;
-+        hlen = sys_getdents64(dirfd, hdirp, count);
- #endif
--        struct target_dirent *tde = tdirp + toff;
--        int namelen;
--        uint8_t type;
-+        hlen = get_errno(hlen);
-+        if (is_error(hlen)) {
-+            unlock_user(tdirp, arg2, 0);
-+            return hlen;
-+        }
-+        if (hlen == 0) {
-+            break; /* real EOF */
-+        }
- 
--        namelen = strlen(hde->d_name);
--        hreclen = hde->d_reclen;
--        treclen = offsetof(struct target_dirent, d_name) + namelen + 2;
--        treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent));
-+        for (hoff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
-+#ifdef EMULATE_GETDENTS_WITH_GETDENTS
-+            struct linux_dirent *hde = hdirp + hoff;
-+#else
-+            struct linux_dirent64 *hde = hdirp + hoff;
-+#endif
-+            struct target_dirent *tde = tdirp + toff;
-+            int namelen;
-+            uint8_t type;
-+
-+            namelen = strlen(hde->d_name);
-+            hreclen = hde->d_reclen;
- 
--        if (toff + treclen > count) {
-             /*
--             * If the host struct is smaller than the target struct, or
--             * requires less alignment and thus packs into less space,
--             * then the host can return more entries than we can pass
--             * on to the guest.
-+             * Filter /proc/<pid>/task/ listings to hide QEMU-internal
-+             * host threads (RCU, TCG) that have no guest CPUState.
-              */
--            if (toff == 0) {
--                toff = -TARGET_EINVAL; /* result buffer is too small */
-+            if (filter_task) {
-+                int tid_int;
-+                if (qemu_strtoi(hde->d_name, NULL, 10, &tid_int) == 0
-+                    && tid_int > 0) {
-+                    pid_t tid = (pid_t)tid_int;
-+                    bool drop;
-+
-+                    WITH_RCU_READ_LOCK_GUARD() {
-+                        drop = !is_guest_tid(tid);
-+                    }
-+                    if (drop) {
-+                        treclen = 0;
-+                        continue;
-+                    }
-+                }
-+            }
-+            treclen = offsetof(struct target_dirent, d_name) + namelen + 2;
-+            treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent));
-+
-+            if (toff + treclen > count) {
-+                /*
-+                 * If the host struct is smaller than the target struct, or
-+                 * requires less alignment and thus packs into less space,
-+                 * then the host can return more entries than we can pass
-+                 * on to the guest.
-+                 */
-+                if (toff == 0) {
-+                    toff = -TARGET_EINVAL; /* result buffer is too small */
-+                    stop = true;
-+                    break;
-+                }
-+                /*
-+                 * Return what we have, resetting the file pointer to the
-+                 * location of the first record not returned.
-+                 */
-+                lseek(dirfd, prev_diroff, SEEK_SET);
-+                stop = true;
-                 break;
-             }
-+
-+            prev_diroff = hde->d_off;
-+            tde->d_ino = tswapal(hde->d_ino);
-+            tde->d_off = tswapal(hde->d_off);
-+            tde->d_reclen = tswap16(treclen);
-+            memcpy(tde->d_name, hde->d_name, namelen + 1);
-+
-             /*
--             * Return what we have, resetting the file pointer to the
--             * location of the first record not returned.
-+             * The getdents type is in what was formerly a padding byte at the
-+             * end of the structure.
-              */
--            lseek(dirfd, prev_diroff, SEEK_SET);
--            break;
-+#ifdef EMULATE_GETDENTS_WITH_GETDENTS
-+            type = *((uint8_t *)hde + hreclen - 1);
-+#else
-+            type = hde->d_type;
-+#endif
-+            *((uint8_t *)tde + treclen - 1) = type;
-         }
- 
--        prev_diroff = hde->d_off;
--        tde->d_ino = tswapal(hde->d_ino);
--        tde->d_off = tswapal(hde->d_off);
--        tde->d_reclen = tswap16(treclen);
--        memcpy(tde->d_name, hde->d_name, namelen + 1);
--
-         /*
--         * The getdents type is in what was formerly a padding byte at the
--         * end of the structure.
-+         * If we produced any visible target entry, return; otherwise
-+         * loop again to fetch more host entries (avoid false EOF).
-          */
--#ifdef EMULATE_GETDENTS_WITH_GETDENTS
--        type = *((uint8_t *)hde + hreclen - 1);
--#else
--        type = hde->d_type;
--#endif
--        *((uint8_t *)tde + treclen - 1) = type;
-+        if (toff != 0) {
-+            break;
-+        }
-     }
- 
-     unlock_user(tdirp, arg2, toff);
-@@ -9203,57 +9301,99 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
-     int hlen, hoff, toff;
-     int hreclen, treclen;
-     off_t prev_diroff = 0;
-+    bool filter_task = fd_trans_is_proc_pid_task(dirfd);
-+    bool stop = false;
- 
-     hdirp = g_try_malloc(count);
-     if (!hdirp) {
-         return -TARGET_ENOMEM;
-     }
- 
--    hlen = get_errno(sys_getdents64(dirfd, hdirp, count));
--    if (is_error(hlen)) {
--        return hlen;
--    }
--
-     tdirp = lock_user(VERIFY_WRITE, arg2, count, 0);
-     if (!tdirp) {
-         return -TARGET_EFAULT;
-     }
- 
--    for (hoff = toff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
--        struct linux_dirent64 *hde = hdirp + hoff;
--        struct target_dirent64 *tde = tdirp + toff;
--        int namelen;
-+    toff = 0;
-+    /*
-+     * Loop until we either produce a visible target entry, hit a
-+     * real EOF (host returns 0), or hit an error.  Without this
-+     * retry, a host batch consisting entirely of filtered entries
-+     * would be reported to the guest as EOF.
-+     */
-+    while (!stop) {
-+        hlen = get_errno(sys_getdents64(dirfd, hdirp, count));
-+        if (is_error(hlen)) {
-+            unlock_user(tdirp, arg2, 0);
-+            return hlen;
-+        }
-+        if (hlen == 0) {
-+            break; /* real EOF */
-+        }
-+
-+        for (hoff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
-+            struct linux_dirent64 *hde = hdirp + hoff;
-+            struct target_dirent64 *tde = tdirp + toff;
-+            int namelen;
- 
--        namelen = strlen(hde->d_name) + 1;
--        hreclen = hde->d_reclen;
--        treclen = offsetof(struct target_dirent64, d_name) + namelen;
--        treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent64));
-+            namelen = strlen(hde->d_name) + 1;
-+            hreclen = hde->d_reclen;
- 
--        if (toff + treclen > count) {
-             /*
--             * If the host struct is smaller than the target struct, or
--             * requires less alignment and thus packs into less space,
--             * then the host can return more entries than we can pass
--             * on to the guest.
-+             * Filter /proc/<pid>/task/ listings to hide QEMU-internal
-+             * host threads (RCU, TCG) that have no guest CPUState.
-              */
--            if (toff == 0) {
--                toff = -TARGET_EINVAL; /* result buffer is too small */
-+            if (filter_task) {
-+                int tid_int;
-+                if (qemu_strtoi(hde->d_name, NULL, 10, &tid_int) == 0
-+                    && tid_int > 0) {
-+                    pid_t tid = (pid_t)tid_int;
-+                    bool drop;
-+
-+                    WITH_RCU_READ_LOCK_GUARD() {
-+                        drop = !is_guest_tid(tid);
-+                    }
-+                    if (drop) {
-+                        treclen = 0;
-+                        continue;
-+                    }
-+                }
-+            }
-+            treclen = offsetof(struct target_dirent64, d_name) + namelen;
-+            treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent64));
-+
-+            if (toff + treclen > count) {
-+                /*
-+                 * If the host struct is smaller than the target struct, or
-+                 * requires less alignment and thus packs into less space,
-+                 * then the host can return more entries than we can pass
-+                 * on to the guest.
-+                 */
-+                if (toff == 0) {
-+                    toff = -TARGET_EINVAL; /* result buffer is too small */
-+                    stop = true;
-+                    break;
-+                }
-+                /*
-+                 * Return what we have, resetting the file pointer to the
-+                 * location of the first record not returned.
-+                 */
-+                lseek(dirfd, prev_diroff, SEEK_SET);
-+                stop = true;
-                 break;
-             }
--            /*
--             * Return what we have, resetting the file pointer to the
--             * location of the first record not returned.
--             */
--            lseek(dirfd, prev_diroff, SEEK_SET);
--            break;
-+
-+            prev_diroff = hde->d_off;
-+            tde->d_ino = tswap64(hde->d_ino);
-+            tde->d_off = tswap64(hde->d_off);
-+            tde->d_reclen = tswap16(treclen);
-+            tde->d_type = hde->d_type;
-+            memcpy(tde->d_name, hde->d_name, namelen);
-         }
- 
--        prev_diroff = hde->d_off;
--        tde->d_ino = tswap64(hde->d_ino);
--        tde->d_off = tswap64(hde->d_off);
--        tde->d_reclen = tswap16(treclen);
--        tde->d_type = hde->d_type;
--        memcpy(tde->d_name, hde->d_name, namelen);
-+        if (toff != 0) {
-+            break;
-+        }
-     }
- 
-     unlock_user(tdirp, arg2, toff);
-@@ -9732,6 +9872,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                                   target_to_host_bitmask(arg2, fcntl_flags_tbl),
-                                   arg3, true));
-         fd_trans_unregister(ret);
-+        maybe_tag_proc_pid_task(ret);
-         unlock_user(p, arg1, 0);
-         return ret;
- #endif
-@@ -9742,6 +9883,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                                   target_to_host_bitmask(arg3, fcntl_flags_tbl),
-                                   arg4, true));
-         fd_trans_unregister(ret);
-+        maybe_tag_proc_pid_task(ret);
-         unlock_user(p, arg2, 0);
-         return ret;
-     case TARGET_NR_openat2:
 
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index 3eeb8f4..9580711 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -68,6 +68,7 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
+"brcm,bcm2711-rng200",
+"brcm,bcm2711-thermal",
+"brcm,bcm2711-genet-v5",
++ "brcm,bcm2711-l2-intc",
+};
+
+for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
 -- 
-2.43.0
+2.53.0
 
 
