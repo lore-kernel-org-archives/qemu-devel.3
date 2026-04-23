@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E68FDEE3F
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78948FDEE45
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFzbK-0001rr-FA; Thu, 23 Apr 2026 15:20:38 -0400
+	id 1wFzdB-0005Nf-Rd; Thu, 23 Apr 2026 15:22:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzbI-0001rh-1s
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:36 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcX-00041k-FQ
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:53 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzbG-0001oY-D0
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:35 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcV-0002AG-Kj
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:53 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 30BF76A891;
- Thu, 23 Apr 2026 19:20:13 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6E0195BD73;
+ Thu, 23 Apr 2026 19:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972013; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1776972058; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DdvgjJWId/ztQjLwsbKadX2Wrh8lXPgRZKBKsMat1oU=;
- b=QVaSCSCarNJMYdgTrDl6gebxG74ZzWGywcRFQBTsZxbneQLZIScIpylP02Q1nm40a2Dh6s
- YAkR7UU2eSiW4Yvt3gIa/dDtfGc7MqJt4YATuIN9JDbDgHHv+2251j02bHPSgOe2iYGbrR
- U99BcGEjvOshNPuc1pyPZTEQVypPb+8=
+ bh=GmWBn+PWgun7VfH09Qi3uCBSo1bZ1EKgN6Mqu3svIfM=;
+ b=aBbgE4Jhbsi6YZCrr8QAsh6x2yMG1B66DSugVDU+Z/26Ck6XVMBoEdskh6LsPtj+UuvltE
+ SQfQkJqDpjzNo9jQgT4jZQbwTwfTTFQZO7HYDZBlqDGD2PecjwwhqkMD68GGpwQo0T64Z+
+ P3YcnJILHCJzIwZOba2vYpPVvQto9YI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972013;
+ s=susede2_ed25519; t=1776972058;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DdvgjJWId/ztQjLwsbKadX2Wrh8lXPgRZKBKsMat1oU=;
- b=jVYeFenIA5L+xT/OmTrW8TJV8V/q03tbVY6HBFyLeZO93nrRv5XpLLyicT2FrfLCY5btBs
- 3rGsDyBka8pYlIDA==
-Authentication-Results: smtp-out1.suse.de;
+ bh=GmWBn+PWgun7VfH09Qi3uCBSo1bZ1EKgN6Mqu3svIfM=;
+ b=HljIdD+8BWd9YXy5rQoBDFyMrP6dxncEfy4HvO2KnW3yz9ZMCRvI74fpOzTdayxHPGsUSQ
+ 9gpApERDUz6h4sCA==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972013; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1776972058; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DdvgjJWId/ztQjLwsbKadX2Wrh8lXPgRZKBKsMat1oU=;
- b=QVaSCSCarNJMYdgTrDl6gebxG74ZzWGywcRFQBTsZxbneQLZIScIpylP02Q1nm40a2Dh6s
- YAkR7UU2eSiW4Yvt3gIa/dDtfGc7MqJt4YATuIN9JDbDgHHv+2251j02bHPSgOe2iYGbrR
- U99BcGEjvOshNPuc1pyPZTEQVypPb+8=
+ bh=GmWBn+PWgun7VfH09Qi3uCBSo1bZ1EKgN6Mqu3svIfM=;
+ b=aBbgE4Jhbsi6YZCrr8QAsh6x2yMG1B66DSugVDU+Z/26Ck6XVMBoEdskh6LsPtj+UuvltE
+ SQfQkJqDpjzNo9jQgT4jZQbwTwfTTFQZO7HYDZBlqDGD2PecjwwhqkMD68GGpwQo0T64Z+
+ P3YcnJILHCJzIwZOba2vYpPVvQto9YI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972013;
+ s=susede2_ed25519; t=1776972058;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DdvgjJWId/ztQjLwsbKadX2Wrh8lXPgRZKBKsMat1oU=;
- b=jVYeFenIA5L+xT/OmTrW8TJV8V/q03tbVY6HBFyLeZO93nrRv5XpLLyicT2FrfLCY5btBs
- 3rGsDyBka8pYlIDA==
+ bh=GmWBn+PWgun7VfH09Qi3uCBSo1bZ1EKgN6Mqu3svIfM=;
+ b=HljIdD+8BWd9YXy5rQoBDFyMrP6dxncEfy4HvO2KnW3yz9ZMCRvI74fpOzTdayxHPGsUSQ
+ 9gpApERDUz6h4sCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 290B9593B0;
- Thu, 23 Apr 2026 19:20:11 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 62023593A3;
+ Thu, 23 Apr 2026 19:20:57 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mByjOetw6mlJCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:11 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AHikCxlx6mlJCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:57 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 08/43] migration: factor out vmstate_pre_save() from
- vmstate_save_state()
-Date: Thu, 23 Apr 2026 16:19:22 -0300
-Message-ID: <20260423191958.1440-9-farosas@suse.de>
+	Junjie Cao <junjie.cao@intel.com>
+Subject: [PULL 37/43] io/channel: introduce qio_channel_pwrite{v,}_all()
+Date: Thu, 23 Apr 2026 16:19:51 -0300
+Message-ID: <20260423191958.1440-38-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260423191958.1440-1-farosas@suse.de>
 References: <20260423191958.1440-1-farosas@suse.de>
@@ -90,18 +89,19 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,intel.com:email,suse.de:mid,suse.de:email];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,80 +118,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Simplify vmstate_save_state() which is rather big, and simplify further
-refactoring.
+Add positioned write helpers that retry on short writes, matching
+the pread_all family from the previous patch.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260304212303.667141-7-vsementsov@yandex-team.ru
+  qio_channel_pwritev_all()  -- retry loop; returns 0 on success,
+                                 -1 on error.
+  qio_channel_pwrite_all()   -- single-buffer convenience wrapper.
+
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/qemu-devel/20260413214549.926435-3-junjie.cao@intel.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/vmstate.c | 39 ++++++++++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 15 deletions(-)
+ include/io/channel.h | 41 +++++++++++++++++++++++++++++++++++++
+ io/channel.c         | 48 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 89 insertions(+)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 87e1f04959..605b5c59c7 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -435,32 +435,41 @@ bool vmstate_section_needed(const VMStateDescription *vmsd, void *opaque)
-     return true;
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 47af409ede..287d10cd6f 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -598,6 +598,47 @@ ssize_t qio_channel_pwritev(QIOChannel *ioc, const struct iovec *iov,
+ ssize_t qio_channel_pwrite(QIOChannel *ioc, void *buf, size_t buflen,
+                            off_t offset, Error **errp);
+ 
++/**
++ * qio_channel_pwritev_all:
++ * @ioc: the channel object
++ * @iov: the array of memory regions to write data from
++ * @niov: the length of the @iov array
++ * @offset: the starting offset in the channel to write to
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Writes @iov, possibly blocking or (if the channel is non-blocking)
++ * yielding from the current coroutine multiple times until the entire
++ * content is written.  Otherwise behaves as qio_channel_pwritev().
++ *
++ * Returns: 0 if all bytes were written, or -1 on error
++ */
++int coroutine_mixed_fn qio_channel_pwritev_all(QIOChannel *ioc,
++                                               const struct iovec *iov,
++                                               size_t niov,
++                                               off_t offset,
++                                               Error **errp);
++
++/**
++ * qio_channel_pwrite_all:
++ * @ioc: the channel object
++ * @buf: the memory region to write data from
++ * @buflen: the number of bytes to write from @buf
++ * @offset: the starting offset in the channel to write to
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Writes @buflen bytes from @buf, possibly blocking or (if the
++ * channel is non-blocking) yielding from the current coroutine
++ * multiple times until the entire content is written.  Otherwise
++ * behaves as qio_channel_pwrite().
++ *
++ * Returns: 0 if all bytes were written, or -1 on error
++ */
++int coroutine_mixed_fn qio_channel_pwrite_all(QIOChannel *ioc,
++                                              const void *buf,
++                                              size_t buflen,
++                                              off_t offset,
++                                              Error **errp);
++
+ /**
+  * qio_channel_preadv
+  * @ioc: the channel object
+diff --git a/io/channel.c b/io/channel.c
+index 52c1abfcbc..2853dadb68 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -478,6 +478,54 @@ ssize_t qio_channel_pwrite(QIOChannel *ioc, void *buf, size_t buflen,
+     return qio_channel_pwritev(ioc, &iov, 1, offset, errp);
  }
  
--static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
--                                void *opaque, JSONWriter *vmdesc,
--                                int version_id, Error **errp)
-+static bool vmstate_pre_save(const VMStateDescription *vmsd, void *opaque,
-+                             Error **errp)
- {
-     ERRP_GUARD();
--    int ret = 0;
--    const VMStateField *field = vmsd->fields;
--
--    trace_vmstate_save_state_top(vmsd->name);
- 
-     if (vmsd->pre_save_errp) {
--        ret = vmsd->pre_save_errp(opaque, errp) ? 0 : -EINVAL;
--        if (ret < 0) {
-+        if (!vmsd->pre_save_errp(opaque, errp)) {
-             error_prepend(errp, "pre-save for %s failed: ", vmsd->name);
--            trace_vmstate_save_state_pre_save_fail(vmsd->name);
--            return ret;
-+            return false;
-         }
-     } else if (vmsd->pre_save) {
--        ret = vmsd->pre_save(opaque);
--        if (ret) {
-+        if (vmsd->pre_save(opaque) < 0) {
-             error_setg(errp, "pre-save failed: %s", vmsd->name);
--            trace_vmstate_save_state_pre_save_fail(vmsd->name);
--            return ret;
-+            return false;
-         }
-     }
- 
-+    return true;
-+}
-+
-+static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-+                                void *opaque, JSONWriter *vmdesc,
-+                                int version_id, Error **errp)
++int coroutine_mixed_fn qio_channel_pwritev_all(QIOChannel *ioc,
++                                               const struct iovec *iov,
++                                               size_t niov,
++                                               off_t offset,
++                                               Error **errp)
 +{
-+    ERRP_GUARD();
-+    int ret = 0;
-+    const VMStateField *field = vmsd->fields;
++    int ret = -1;
++    struct iovec *local_iov = g_new(struct iovec, niov);
++    struct iovec *local_iov_head = local_iov;
++    unsigned int nlocal_iov = niov;
 +
-+    trace_vmstate_save_state_top(vmsd->name);
++    nlocal_iov = iov_copy(local_iov, nlocal_iov,
++                          iov, niov,
++                          0, iov_size(iov, niov));
 +
-+    if (!vmstate_pre_save(vmsd, opaque, errp)) {
-+        trace_vmstate_save_state_pre_save_fail(vmsd->name);
-+        return -EINVAL;
++    while (nlocal_iov > 0) {
++        ssize_t len;
++
++        len = qio_channel_pwritev(ioc, local_iov, nlocal_iov, offset, errp);
++
++        if (len == QIO_CHANNEL_ERR_BLOCK) {
++            qio_channel_wait_cond(ioc, G_IO_OUT);
++            continue;
++        }
++        if (len < 0) {
++            goto cleanup;
++        }
++
++        offset += len;
++        iov_discard_front(&local_iov, &nlocal_iov, len);
 +    }
 +
-     trace_vmstate_save_state_pre_save_success(vmsd->name);
- 
-     if (vmdesc) {
++    ret = 0;
++ cleanup:
++    g_free(local_iov_head);
++    return ret;
++}
++
++int coroutine_mixed_fn qio_channel_pwrite_all(QIOChannel *ioc,
++                                              const void *buf,
++                                              size_t buflen,
++                                              off_t offset,
++                                              Error **errp)
++{
++    struct iovec iov = { .iov_base = (char *)buf, .iov_len = buflen };
++    return qio_channel_pwritev_all(ioc, &iov, 1, offset, errp);
++}
++
+ ssize_t qio_channel_preadv(QIOChannel *ioc, const struct iovec *iov,
+                            size_t niov, off_t offset, Error **errp)
+ {
 -- 
 2.51.0
 
