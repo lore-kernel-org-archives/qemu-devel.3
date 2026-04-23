@@ -4,77 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B06FAD3EE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 02:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C84FAD3F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 02:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFjdG-0000uX-UK; Wed, 22 Apr 2026 22:17:34 -0400
+	id 1wFjjZ-0001ot-OB; Wed, 22 Apr 2026 22:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1wFjdD-0000tt-Ip
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:17:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1wFjdB-0006pF-ME
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:17:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776910647;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oeCY+dpSXnU7MGuuRqfWNuZy5fNAS+mdzgx/PM08of8=;
- b=FtPK2Y4D4XX0mr3rjJufCC/zn+VSAAipXlsGGjeiNIvT2G05ck5qshD/g9EwTBtS4Swi/E
- RJigFkvtAtGfbwCB1Ku+4PEF+We0kyk0vG5yMtZmN182VL8fr5e7X1ZZx/pjwuBYRKsG98
- ikUt+5ot7P71jc206qjz3OKtiuwK+SY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-LTmCNRAFMnadNZq0jb3A1g-1; Wed,
- 22 Apr 2026 22:17:23 -0400
-X-MC-Unique: LTmCNRAFMnadNZq0jb3A1g-1
-X-Mimecast-MFC-AGG-ID: LTmCNRAFMnadNZq0jb3A1g_1776910642
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DD061800473; Thu, 23 Apr 2026 02:17:22 +0000 (UTC)
-Received: from tpad.localdomain (unknown [10.96.133.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A41AA180047F; Thu, 23 Apr 2026 02:17:21 +0000 (UTC)
-Received: by tpad.localdomain (Postfix, from userid 1000)
- id 53AE340135049; Wed, 22 Apr 2026 23:16:59 -0300 (-03)
-Date: Wed, 22 Apr 2026 23:16:59 -0300
-From: Marcelo Tosatti <mtosatti@redhat.com>
-To: Florian Schmidt <flosch@nutanix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 2/2] Add HvExtCallGetBootZeroedMemory
-Message-ID: <aemBG7BJemipU/8I@tpad>
-References: <20260112113139.3762156-1-flosch@nutanix.com>
- <20260112113139.3762156-3-flosch@nutanix.com>
- <a28bd807-6e98-4393-a354-b7ed1f7a08ae@redhat.com>
- <f878fd12-17bc-4249-beca-cd134bb93d2c@nutanix.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wFjjR-0001oT-QN
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:23:59 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wFjjP-0000ur-AU
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:23:57 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-79885f4a8ffso65446987b3.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 19:23:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776911033; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fwhvACtcNj9SYJzdCEB97J1wskJuFrsnreDNl1+xp6E/iK2DkaU5HqB0q3E5MI9Fy5
+ 5RvB0RlfZAWLx0FKTMtyuvQ4tzXeIHrqFnUE7Mj452TiLKCUazIJkotV/+Nk6OxqMZ3P
+ +MmG9l5J3F/Qf6KR5IJy2e9Lhjtc7mpOkD8Im6CR/f2QfJNkzMb/awl2lLbrxVUkPTOs
+ IfeSa/ImnDHRm2EElO4KogJUXQs0zxO4N+0DogpLC3DpSd6f9QhIPQYX5QOaPtO0Lrdl
+ rd99GrQilnzIoXdQJf/CD0dmSQ42qikaMoRC5A3iyBTY5myNZGGORgj6KkzVHrS517O8
+ zBJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=a7CuCakoGxzeAIS8gozKH2+RGkp8kPxcBVq3hh+6O90=;
+ fh=Oi7/q8LTYXnhar7Jxtpphz6tzu2ZEVH8OxycppvdTcw=;
+ b=bgywRsUVuu4C7Pp2qzangAsXNKTyxLL9O2Dv3ZUvGO4TsvGJsJOLWfbZxvAuwiHnZ0
+ h9cYkEDDYm0VUaeUGLr/62njVdoDUmrPl27O9a+n4aqLffirxpuqVhEb+9xxW6h+5h8J
+ w1PMuONanPD2GAk1tNW5cpRRSw9N3xMPBPw83v2zaTPl3VTMDoeRPFqv31yJ7Zhqa/MA
+ fwWwmMA3o1O/EJDSJv3vzUlYQft3XEbnWkr/E9nYapOa2qC3GKkKzB06mSQFEu3U5SVL
+ NUEiO4FmFf5NbosKWhQYnR/dqDqeo1Y9Cxfw+FdFH60bkwURCbsF23kuiDm4YiP6565U
+ Cn8Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1776911033; x=1777515833; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a7CuCakoGxzeAIS8gozKH2+RGkp8kPxcBVq3hh+6O90=;
+ b=kbYWbYjkXCh29EpmCJ0s8+oLxCKEFU5M+nVzCiiBBBp2Ztw8oxzntKXzbLkqkUkbjw
+ i/AwarNPv3H4FJoBZaBnQeJZC8HX5vWQKILZOCUyH4m6RxKsuJRWaxABb4oABoAk19qW
+ d7Rk1TzxqOjtSTVtxOd8oOVnmOWPAfg57dlmc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776911033; x=1777515833;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=a7CuCakoGxzeAIS8gozKH2+RGkp8kPxcBVq3hh+6O90=;
+ b=ZuFHYRwVOaG+qIcDd24S71NKcmtiHg3WgCGm5DEP/G5v3V7noAd/lxzJ1GG7cmec/R
+ Hq3ishmTl1THEQAtYgNw0zpt6oZP24xJdety3o+wiCZwJiqAMHe9A85ev6dhFSg61EOb
+ LdRaIJ9pcACafB5OPwerlOD6k0VliYlqf8p0FgaYKttoVCw75C2BUeGxqFD+eaZVPKzs
+ 1X3hl8I416u30lYTMl1CpzpDALrMfNqjBWh9kpi+8YqGlDA3Rp4SkEz+haDkIWEAP5kE
+ r9SD/KSdbZgsVsZjAoMcMN9QpAGKoFgfgXw4PScL2pyX1ehRLzxgPO3Hnsld4sTEs2d6
+ 61qw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ80aXPg+rgrIQhOJN32VQmC5vTNbLs7m9/265vAtolemjgB0H3wJ15suXwEFJe7ed2K8sZc/AUQWRr9@nongnu.org
+X-Gm-Message-State: AOJu0YwXl1cxpbGpNvA0Pwf6J1BYUGNuXUa/hlTdC62tm+oOvE/9lU3V
+ nCpvj1FDbZCpr2grt4LRuHFeZSbYGpGEaJO0WctXc469O0k2lw+07GyUE2vdAxBehnhCX8qdNmo
+ sf0BVVVQ19rB4M6TlnjitAZUWQmSouSs=
+X-Gm-Gg: AeBDiesKc10IQBaUA/8PpVIxoS7cTklzTQXAiBhF9BmELFctNVepXHAFPclx2mhy+T6
+ GvOI//UJVOoxJ3bgwPsKriFRkQwwSEsDULy3CkrLrAmyqMa1MUcL6uWctZlP0STI7NLAtTkH3SU
+ XCZMfvKrcpEzCFl15+of7vpx0fbx90/7hAvJjYOFKbAcBfGjVH59rbcHvT2clCaVy4gmTqVLh5Z
+ 5xZDaXCcMEksxiDzTynO0Welr0TJBiMttTag2axQhymE3lZ9GmHmqdYIRWctK4vQx3WgsoHfLhg
+ odNpsxJ+TkL6Jm5iMMWD0HJAcVBHJpDNYETMqfdnNj/M5nQlRq6eeSNEUzkMYyMwhjzmvjfSfkT
+ Bk4BMg6EO0hs=
+X-Received: by 2002:a05:690c:e3c5:b0:79a:4419:71bb with SMTP id
+ 00721157ae682-7b9ecef09e3mr267698817b3.21.1776911033458; Wed, 22 Apr 2026
+ 19:23:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f878fd12-17bc-4249-beca-cd134bb93d2c@nutanix.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mtosatti@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260421053140.752059-1-joel@jms.id.au>
+ <20260421053140.752059-14-joel@jms.id.au>
+ <42263811-2d99-4d2a-aba7-a19dda3b5047@linaro.org>
+In-Reply-To: <42263811-2d99-4d2a-aba7-a19dda3b5047@linaro.org>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 23 Apr 2026 12:23:41 +1000
+X-Gm-Features: AQROBzDr3C1c1P1c-g3yc_v4eM9yf41F6oJRcoRn8Z37FU1Ez4tGL0G5rhSzXMs
+Message-ID: <CACPK8Xcnac2nWu6_KqU4oEtxwNhVzrndF1baj9PbtoFeZMiUKw@mail.gmail.com>
+Subject: Re: [PATCH v3 13/13] hw/riscv/atlantis: Add some i2c peripherals
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Michael Ellerman <mpe@kernel.org>, 
+ Nicholas Piggin <npiggin@gmail.com>, Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=joel.stan@gmail.com; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,129 +123,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 16, 2026 at 04:33:20PM +0100, Florian Schmidt wrote:
-> Hi Paolo, thank you for your reply!
-> 
-> On 2026-04-16 13:47, Paolo Bonzini wrote:
-> > As discussed on IRC, there are multiple sources of writes and each of
-> > them needs to be tracked, and we can say that any write potentially
-> > makes the page nonzero.
-> > 
-> > But as far as QEMU is concerned you could indeed add a fourth dirty
-> > memory bitmap, DIRTY_MEMORY_NONZERO, and turn it off after the first
-> > call to the hypercall (hopefully Windows only calls it once)?
-> 
-> I'm not sure we can rely on that. I'd have to double-check. Crucially, I'm
-> pretty sure some Windows versions may call this more than once, and which of
-> those results it then uses is the big question: if it's always the first
-> one, we could stop there, return "nothing" as answer for further ones, and
-> be good. If it's not the first one... that's a problem, because I don't
-> think we want to do this kind of tracking for the whole lifetime of the
-> guest?
-> 
-> 
-> > As an alternative to tracking dirty pages in KVM, it would be possible
-> > to ask KVM to build a bitmap of pages that were mapped, even at high
-> > granularity (e.g. with 32MB you'd fit the bitmap for 1TB of memory in a
-> > single page!).  QEMU could use dirty page tracking, and build a
-> > combination (NOR) of the bitmap from KVM and QEMU's dirty page bitmap.
-> > 
-> > QEMU could also do the same high-granularity tracking, but that leaves
-> > out other sources of writes like VFIO or vhost, both of which probably
-> > matter to Nutanix :) and which would be stuck with 4k-granularity dirty
-> > page tracking.
-> 
-> Are you thinking of creating a new KVM ioctl that would do that for us?
-> That's possible, but... isn't good old mincore enough in this case, since
-> qemu knows the host-virtual addresses of the guest memory? At the cost of 8
-> times as much memory for the (temporary) data structure, since it's a byte
-> per page.
-> 
-> One thing I was wondering about was races. Unless we pause the guest while
-> we're scanning the tables, the guest could touch pages as we scan. But: at
-> the point the hypercall is invoked by the guest, the guest OS is up by
-> definition. So at this point, the guest OS must be aware of any memory that
-> is put to use, correct? Even including vfio/vhost stuff, since the buffers
-> used to write data into the guest would have been set aside for that purpose
-> by the guest. So even if we overestimate and announce some pages as
-> pre-zeroed, that shouldn't matter if the guest OS already handed them out
-> for some usage (and pre-zeroed them in the meantime). What we really care
-> about is not announcing any pages as pre-zeroed that are in fact dirty,
-> *and* that the guest OS does not realise were ever dirtied.
-> 
-> ... Famous last words and I'm not 100% sure, I appreciate any thoughts on
-> this.
-> 
-> Cheers,
-> Florian
-> 
+On Tue, 21 Apr 2026 at 16:09, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 21/4/26 07:31, Joel Stanley wrote:
+> > Add an I2C RTC device and a temperature sensor. These are not present
+> > on the board but help for testing.
+> >
+> > Signed-off-by: Joel Stanley <joel@jms.id.au>
+> > ---
+> > v3: Use HWADDR_PRIX in i2c device string consistent
+> > ---
+> >   hw/riscv/tt_atlantis.c | 18 ++++++++++++++++++
+> >   hw/riscv/Kconfig       |  2 ++
+> >   2 files changed, 20 insertions(+)
+>
+>
+> > @@ -542,6 +555,9 @@ static void finalize_fdt(TTAtlantisState *s)
+> >                          TT_ATL_I2C0_IRQ + i,
+> >                          aplic_s_phandle, periph_clk_phandle);
+> >       }
+> > +
+>
+> Worth mentioning /* QEMU specific */ ?
+>
+> > +    create_fdt_i2c_device(s, 0, "national,lm75", 0x48);
+> > +    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
+>
+> Maybe use another bus to extend coverage, like #4.
 
-Two definitions. The first one:
-
-9.4.7 (TLFS PDF):
-
-****************************************************************************************************
-Hyper-V allocates zero-filled pages to a VM at creation time. The HvExtCallGetBootZeroedMemory
-hypercall can be used to query which GPA pages were zeroed by Hyper-V during creation. 
-****************************************************************************************************
-
-This can
-prevent the guest memory manager from having to redundantly zero GPA pages, which can reduce
-utilization and increase performance.
-This is an extended hypercall; its availability must be queried using HvExtCallQueryCapabilities.
-Wrapper Interface
-HV_STATUS
-HvExtCallGetBootZeroedMemory(
-__out UINT64 StartGpa,
-__out UINT64 PageCount
-);
-Native Interface
-HvExtCallGetBootZeroedMemory
-Call Code = 0x8002
- Output Parameters
-0 StartGpa (8 bytes)
-8 PageCount (8 bytes)
-Input Parameters
-None.
-Output Parameters
-StartGpa – the GPA address where the zeroed memory region begins.
-PageCount – the number of pages included in the zeroed memory region.
-
-Second definition (the web):
-
-https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/hypercalls/hvextcallgetbootzeroedmemory
-
-The hypercall returns ranges that are known to be zeroed at the time the hypercall is made. Cacheable reads from reported ranges must return all zeroes.
-
-Querying zeroed ranges may allow the virtual machine to avoid zeroing memory that was already zeroed by the hypervisor.
-
-Ranges can include memory that don’t exist and can overlap. The hypervisor should attempt to report "best" / biggest zeroed ranges earlier in the list for optimal performance
-
-====
-
-If qemu uses mmap(MAP_ANONYMOUS), can you return pages which have not
-yet been mmaped?
-                                                                                              
-You can inspect /proc/<pid>/pagemap to find which virtual pages within the mmap region have no physical page backing (i.e., never been written to, still zero-fill-on-demand).                
-                                                                                                                                                                                                
-Alternatively, /proc/<pid>/smaps gives a per-VMA summary — but for fine-grained per-page resolution within a single large VMA, pagemap is the tool:                                           
-                                                                                                                                                                                                
-  // For each page in the region, read the 8-byte pagemap entry:                                                                                                                                
-  int fd = open("/proc/<pid>/pagemap", O_RDONLY);                                                                                                                                               
-  uint64_t entry;                                                                                                                                                                               
-  for (addr = start; addr < end; addr += PAGE_SIZE) {                                                                                                                                           
-      pread(fd, &entry, 8, (addr / PAGE_SIZE) * 8);                                                                                                                                             
-      bool present = entry & (1ULL << 63);  // bit 63 = page present                                                                                                                            
-      bool swapped = entry & (1ULL << 62);  // bit 62 = swapped                                                                                                                                 
-      if (!present && !swapped) {                                                                                                                                                               
-          // Page never faulted in — still unallocated (zero-fill-on-demand)                                                                                                                    
-      }                                                                                                                                                                                         
-  }                                                
-
-I suppose the OS is responsible for handling races ?
-
-Or rather, Windows assumes nothing has visibility to such memory regions
-other than CPUs (which it controls).
-
-
+Both good ideas, thanks.
 
