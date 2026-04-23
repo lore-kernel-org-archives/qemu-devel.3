@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87EFBFDEE2B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3648FDEE2C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFxSD-0000Wa-AD; Thu, 23 Apr 2026 13:03:05 -0400
+	id 1wFxSn-00013T-C6; Thu, 23 Apr 2026 13:03:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxS4-0000Ns-I5
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:03:00 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxSV-0000pU-4o
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:03:24 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxRy-0004ia-DU
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:02:55 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4896c22fcbaso41675465e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:02:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxSR-0005OO-VW
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:03:22 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43cff5dafc3so5585309f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776963768; x=1777568568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776963798; x=1777568598; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4Ah6Ua2r56zNx19wd7NL4st28ziivhlE6PqFpaPuGyE=;
- b=PmMdJqafWYYqrBTauMwJXaO3PQl0pk+8R2RQeGFzrCOX+dkq7wbazok2ZLukWGyumc
- +3gYKsxj+Yfffyw9Idz1idPUsq3C9pUT4t58Sb8OCQu5oQQEbuQTtGro5idlk+h3DuOD
- 38+NpTk/FhZ48mh3mJ5QMliB+0GmMNSVOX24BDyhhLwwUsfUdw+pMQJBaop2SaL5UsTf
- qtgtHvBIhjx+8ENS4jzERtrt/Eor9imgN/Kb5BWMXIOX7Kb4uKgEdJdio8nMLSU4oi/p
- ek4WS1qdtad8H1ttOhdjsCegwUR5VHafqKS0+YP7vPD3W2NpbTERskej5PBK7jNDhpYF
- PU+g==
+ bh=TO1pyTnO3mNIJGKSVSSCAJig7b0z6dQMkq6ZqngmlbM=;
+ b=KTbvI8z2INyBy56nkEKkhQt8hCJrJYsdcsQCz0BwT0C7NHt6z60FLw5LiJbzuPGE0Y
+ ChJbkSWGg1K5YTSshpC9akpMjjZqHAsrqyphDGIEopN+mxHN/CBfh3qLCTBmzefx0KTi
+ nixIkULlii1BC3rT/rkND6nxw7tTB8dhn+Jln+i9fV9HPxY+7X7gQIrEq41d7hwwvI3M
+ K/hyRirYXnl0vfgS/CqTjdfYa/Mtgny0gV6nUaV/ZbW/aqWYswkpda9gDZProL7gIRjW
+ stwuA881d+K0wQOiOO3JAjhZ+6GX5m7P32WjS97tqTOXCwd+X0hIxFndeduse8tkVGwY
+ apww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776963768; x=1777568568;
+ d=1e100.net; s=20251104; t=1776963798; x=1777568598;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4Ah6Ua2r56zNx19wd7NL4st28ziivhlE6PqFpaPuGyE=;
- b=N7QF5NObsSeEPqTt+2LbCdsNlBdr9NbN5P5SRhCHPbkwf90cdnu+uPA4EZKCYSQHkI
- IlowcNG16OTVGw8S8zLjXdkqJsErasSPe/Ql9lRmzkc1oyrzKzbipu3iBftS2X7f8e8p
- IMKA9K6dm6uPH52WEvzt1uF1zZ4i6FqP6Dai+u/C+wJ8aVOeVW5QvHMLS9iLE2jMKmGg
- 8H9PjQjQ8t+Hn9bbLuO6iKCdawzaYN6wgkbFFDqisuIRxWVkPQ7aHpB02Xz3yGfdFRuA
- f54KuGjChfr0pL81DRC+xaPusHv6NcJcQn0/3ZAiBHT4VyUceEzTu9pZmnspxwaW4aBP
- 4K8A==
-X-Gm-Message-State: AOJu0Yw+Qq3wccU6G/6qKYdPmqC69z738qmPk9Z/lkiHG1m8qOQ1gZiA
- XEhic1PpiETXYyXeFbbLUXS5waRFHRt824OKMHleiWaiC4hdq4y0Pxi2DMz1C3+KLncXA67S0U0
- nvQYzhCU=
-X-Gm-Gg: AeBDietqfFGscefnjNYSZ6yh9AE6rLikLLUkMd0V0bQB37kFysjTL4nvqOVmpz1Okci
- MpnyJ2sq9aWZVbGbi9EdJh+42T0mCM7YMTWg9YFgZu9jMv//Ilo+2VnxfQL2KmW6cuM73xBZU/g
- +IVN1GtIFwnfYVAdQVVLPSqlcNryFypn5xdrq8mloHu/4+dTnehyi1w+/ABWhTmxTbFl1hBo0dz
- MTX04KO6ASVF9n2pHlnX8ADyVPHMCi3cZrpILCS6pa+qefj4Yg1GI/HYjMTymfJ76R03cgmgP+c
- hRpn3s+fKVTacrc8SAyqYdP7iZjYZr8nn+SqanYYvAlKh/OE9FM4IVnRDy2VgFlrtOpELnz9Uhx
- O7uv++o8cHv+GC1IjzUisNlLoJLN/E2+Hc5BYone44NXhegIEOlg+jiM9vrUuDD0A6UNLljyFSq
- 6rGN1Emx5DCMbtPUiV60HgLdQrvYFKml4EvpEE4e0FK1PSLWYsqf4eFYxPeiX2fGA5xjlvoN6y2
- VbM49XVBXSYU2NRMBXY7w==
-X-Received: by 2002:a05:600c:c106:b0:489:1ba8:5be9 with SMTP id
- 5b1f17b1804b1-4891ba85d07mr187900845e9.29.1776963768440; 
- Thu, 23 Apr 2026 10:02:48 -0700 (PDT)
+ bh=TO1pyTnO3mNIJGKSVSSCAJig7b0z6dQMkq6ZqngmlbM=;
+ b=SAaXUK/t3BH3bZRo/owWiLoS04P/NAubWF76rBtl2bQ6uaCt2iWt1gMj8SgpU7QGQE
+ SDsKIeU6epbwYWmUlwtQV1cgnQ6BNLOABDYbzGH7OWSPx/QueNIsnIB6lK1bClTKbr22
+ dO4bMwBrbaij3r6mjyQA4fHz+S8wDOu/IzUCTQV4QK/WAbo/QQJAe2JU3ZoZrSkqXiOd
+ 7h/VYaW/GIl0BpQGkvqQBd6HlZajgWiEGeMTq7jgq5x3DcYxDna5ZOxgaPrRtdsWPAdb
+ WSH3chfLVAKMbfJwd7HyIR2vR4dX+EzP0sihEKYI9ORr1hVfcq0tFoq6oJMCSMKj1Pe6
+ gBGQ==
+X-Gm-Message-State: AOJu0YyHOEX4k0Pug5jnwO7v8RxDJJNhvaTatOiIn94As2XFYuB72uY0
+ 1yM+4/u8xmBRVDQtrCk2YTIqjhXyowpKshs+TI2mFZ+PR3P1EV0qXkgg1/ewihPEccqfXJt6fPI
+ coNzneiI=
+X-Gm-Gg: AeBDiesCpUB2WF8Oe29acHvJY3uVRbdoWcmo4hcGS/Rpl/kh+nlO4XUL74bLJDqdMIA
+ TCTA89NL3fvc8NWW8r5FknoDp5TNg1RsFGAcU1gdUk5Y0ZShX5RKNdWH5e+KllgT/YLYbv1LGf4
+ T6d95OWF85MmQ+ODs6Pvb32/BOYWpzyKqJk7B6WPiP+cQqPmsYq6BRyZtD68SsQMOq/MC0QbPBq
+ TZrJ5DHQxqoD01SSKE8UIchNqSMBaBqv/zCpdHbRFxGodP2vQD8b4pV5gpGIDVo4ZupV96oBx5X
+ sZ1JlaMyC2dk135rzLUOEtiKg4tAlHTYj7iI3RbKr7vTq411OBiVOuiSG9KyKvL7hur399c82SN
+ mS3YVxXIDPeFpkgq7BGmced+oBySTRidiUjTi2hNNJgqbE0mzzxX4nRDc8JAHCCa8Twf1VXtgv9
+ jW8ZUD13yYe2Bpo6kQnOqFMm0h/aF+taNYuK/WR0DByb/2NuqgM5knc4JwNNIro/r2GO6/N9jpR
+ KZcpXJEjs2j7q9Yan7vvA==
+X-Received: by 2002:a5d:5f89:0:b0:441:1c95:17e7 with SMTP id
+ ffacd0b85a97d-4411c951810mr24411525f8f.15.1776963797790; 
+ Thu, 23 Apr 2026 10:03:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a5a579bd3sm161809585e9.6.2026.04.23.10.02.46
+ ffacd0b85a97d-43fe4dc24cfsm53790415f8f.16.2026.04.23.10.03.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 10:02:47 -0700 (PDT)
+ Thu, 23 Apr 2026 10:03:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Roman Bolshakov <rbolshakov@ddn.com>,
@@ -74,25 +74,26 @@ Cc: Roman Bolshakov <rbolshakov@ddn.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH 02/16] hw/cxl: Define cxl_fmws_get_all_sorted() stub
-Date: Thu, 23 Apr 2026 19:02:14 +0200
-Message-ID: <20260423170229.64655-3-philmd@linaro.org>
+ Peter Xu <peterx@redhat.com>
+Subject: [PATCH 06/16] system/cpu: Defer memory layout changes until vCPUs are
+ realized
+Date: Thu, 23 Apr 2026 19:02:18 +0200
+Message-ID: <20260423170229.64655-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423170229.64655-1-philmd@linaro.org>
 References: <20260423170229.64655-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,33 +109,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a stub for cxl_fmws_get_all_sorted() to fix building
-a QEMU configured with the '--without-default-devices' option:
-
-  Undefined symbols for architecture arm64:
-    "_cxl_fmws_get_all_sorted", referenced from:
-        _cxl_build_cedt in hw_acpi_cxl.c.o
-
-Note, the CXL <-> ACPI Kconfig relationship is a bit convoluted.
+vCPUs are not really usable until fully realized. Do not attempt
+to commit memory changes in the middle of vCPU realization. Defer
+until realization is completed and vCPU fully operational.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/cxl/cxl-host-stubs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ system/physmem.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
-index c015baac813..9b515913ea4 100644
---- a/hw/cxl/cxl-host-stubs.c
-+++ b/hw/cxl/cxl-host-stubs.c
-@@ -18,3 +18,8 @@ hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
- void cxl_fmws_update_mmio(void) {};
+diff --git a/system/physmem.c b/system/physmem.c
+index 4e26f1a1d42..091a1da3458 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3089,6 +3089,14 @@ static void tcg_commit(MemoryListener *listener)
+     cpuas = container_of(listener, CPUAddressSpace, tcg_as_listener);
+     cpu = cpuas->cpu;
  
- const MemoryRegionOps cfmws_ops;
++    if (!qdev_is_realized(DEVICE(cpu))) {
++        /*
++         * The listener is also called during realize, before
++         * all of the tcg machinery for run-on is initialized.
++         */
++        return;
++    }
 +
-+GSList *cxl_fmws_get_all_sorted(void)
-+{
-+    g_assert_not_reached();
-+}
+     /*
+      * Queueing the work function will kick the cpu back to
+      * the main loop, which will end the RCU critical section and reclaim
 -- 
 2.53.0
 
