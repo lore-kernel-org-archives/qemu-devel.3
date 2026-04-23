@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5C9F99367
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8901AF99368
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqug-0007zi-JP; Thu, 23 Apr 2026 06:04:02 -0400
+	id 1wFqui-0008HP-G1; Thu, 23 Apr 2026 06:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtv-0006V5-JK
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:20 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1wFqu5-0006Yv-NC
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:33 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtt-0002Fq-Fm
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:15 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43fe62837baso3901451f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:13 -0700 (PDT)
+ id 1wFqu1-0002KC-2V
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:24 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso59728085e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938592; x=1777543392; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938599; x=1777543399; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Rz2RDGAOR8MawEux5rl7pLypGNvjkcRoo2JRrLQsJXs=;
- b=vjEGV2hVhmt8C/+KY96INaCIRAx3KF50Ob40fRFd7+/2aiD8tP3mcQ/ytnJ4n9+cf9
- fdjnoecnEmmZBHeqKhs4tqgYxcwc1Iq6D7wrjOXAc3sKvIzNoyXVkcjoEe9CtvzgkTr/
- TwLoRgsKZFdVJNaYvpwL4mgObxCpvj2mZrTv5Zn+Qg2Q3D1uBAriwVtX843QFYDArWEq
- 8BeDJsGNhSAcy2HpdrJ4ZcZtzNpIXZSWIpBAJiCHh+VVaU0SGbim1in0xOQ+P5TbUVs8
- X5nWi/+8aHNghEn1nAKahxeIly/HZLQDou+qZdo3pK450l9NrxPgAkw66UBRcE99U2CP
- B4sQ==
+ :reply-to; bh=5O50KkeZH/Cg0Cjwa49v6zuMPRfWLVp99KJcSLVDpMw=;
+ b=ijLwUuZKhfcQLoEYPEjCTOVQvt/uiWxqO7iNHmm7Fg75LpPs+hp+HiTKyfFo/BwRvc
+ Xwt3i9GU1sIdV0KYvbHuzhbYHkY5pduF8W5vB8p5pwBnCFpf6s1d+JBrLMb9bRyNxxHV
+ OqrO6DjGc7unJAdOmnE8TNngGIr49JMD2HYMgmeXq341VdoytEJFnRBVwnsM8baUkQOd
+ yVKpud5D7/H1h8d6fqlE9nq7wn2DyH8vuKxZAD1ngxBMH3KUSbnum8XdPOJc6DU4l3z4
+ 9MYvlpd4Td7wHfoX5gz7I8SKKAz0gtNNZfmLdQcxbcpX2XXQNEzOTarPUMmAXZOrWNvo
+ rikQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938592; x=1777543392;
+ d=1e100.net; s=20251104; t=1776938599; x=1777543399;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Rz2RDGAOR8MawEux5rl7pLypGNvjkcRoo2JRrLQsJXs=;
- b=b6Mw5mcCVjnLSeJRIK72P6hKy2peTAqRhBgbiEss2g/narYLzIaAeqge3RB76qkbLf
- I/cCESzGKzepOrACs/Qh9PchJsRPe/iZ00UJn8jmQ6Yg3DoJGvYMGVZHMVDr81VBQhbz
- eL0sDPg8AXrr9O4j34wyMh4nNABBErYCWYI5v0jpOgXiYsprDwuaexerj1QbvKZkQM3F
- zWYtbh/P7HjcWEQByv84QuLuZbOmP2i7MiVHoemzb8nk28FHWB7L+6QPaE4DvCK576kT
- HwNmgm2kHkqpES6qhCJ/fLLUIY4xiT0FKviPDZkv5uZyy5Soi5iZrWCE2o/aQRZe9KS/
- 7pRA==
-X-Gm-Message-State: AOJu0Yz4YU3Hpl9pkmVbtGM/0w1VXial+PqmdrAAOzmiIzJal6vGXdEm
- xSB1oq/kmRr419XJF/3tw0MYAE8MJegeVnt0gyKVjgDuG7LBIO81E37ZVgYTKMog+BkIBfDMi3q
- DMPRp
-X-Gm-Gg: AeBDiestMuRmlaokdVsJ1Cw3/w4VWQbiUZEbmHZ87FFumdJdnceLEzAcO+QIXVmCzSI
- aLpYTgfiVbawJaDapNhrdEsOwurelyfGRgG7BgieR7zVgyECm/EJDKVDbaMw5zo5GN+OgwTzCQr
- l1Q8F/mPapoYwqkVluyA4ueOlp2wgk+XE6v5AciB3fUknseESpoeLouRR32KQ9j+P5B9p+kHQvW
- BoUiOZIEMtLRWqjEkcigwvovogCWiPUZLbuMp2zLUqSCYPdw6ssSofS+20t33AjEr//QvQSCLwU
- o65w8/y69jPmQsObp84WEb0G1Gnq9pp+nELotbXyoltcMlfQ/7CKkTOhf5fzTBGATX6FGF8zmrN
- FZ4AzWzEZ1MMeHxebLiqyC+X27xYYISEgRaXP6+9Qifc8wUCkC6aTkX3XjASqrrq0QokJ1bNToG
- V5QZ5bVF9992IFlf+UJjJq3OriYd9CUOWmdEEr48hD+OG04fCyrsD0vrI1mkJ625nlBareebXDO
- /V59Q+g6trqaawW10yvoSDr/3F6CL2UhbVZwkVNVw==
-X-Received: by 2002:a05:6000:26c6:b0:43c:f66e:f31 with SMTP id
- ffacd0b85a97d-43fe3df24f7mr39499525f8f.27.1776938591958; 
- Thu, 23 Apr 2026 03:03:11 -0700 (PDT)
+ bh=5O50KkeZH/Cg0Cjwa49v6zuMPRfWLVp99KJcSLVDpMw=;
+ b=elVXqZZOxT44fb+6MxTzSRGZinOIl/pVmiPGpNGZ0OMLp36rgkoXTrdnFLIvkOqZqr
+ Zii0NM0Z8bKoNkw2JdDB8vm+rccb0gqFSQ/YJJuSwXIDkjm4mRrODQUMDQot+w38S4Hg
+ VYvTmtr02uz05Uvm6yPUw0g4yUdifNXNQB5bBwC4hfoDONI+2rJPkvnUKUzlwFr0xOa+
+ I/WB6lh19Gz0hrfan/26DWig37N2/85UecEAt7wjE8zQ3ABZ10JmTXm3H1Mkb5a6fb0x
+ xEG03v1NQpZ/5HNliSjPqbIWBgr4w3PeuI6Sv5gJRXCdNfxof3nP+LaPBY4zwGth4oFC
+ e8xw==
+X-Gm-Message-State: AOJu0Yzx6NqJCQ8hXhdknHw5yYfkv8Sifwj+Xc4gSWtPstGcypajLGdu
+ fvzxnLz4oHqJxbMYmra3vDjhiDNIr9s8387Od8LcKkrcXtGQNaC+XXD4iEMzlBUR/WnLJLiVEXM
+ jvylp
+X-Gm-Gg: AeBDiet5D2IjDQFEBMU19ukY30sIrj/wIdqIW6trfMJKDAgPBfFtXd2YLwPxNzarVbJ
+ rnnqnpvjJPz/fe4Fg318uLaYs72b4EeWIlBai6Mg+VstF2l7o5+PNvadx5BK/RWEsRRGRwQabFY
+ GThoVB8+PEnLkzb7TjUJVf3WCXpDBSLT9R5cg+Ra9m4qnio70MsjHOlANEUl9JNFVJhXSiCTQtW
+ szmr9nEMubU+ZIinqxb6oyKX49uytUCzgWPEgEvy4XLgegWhCiesTvvAwJ9xr8Lf7KsdZi9bu3t
+ 2+39ZNNI4ifL5pz7hXNG6kYiaH7eaJG1W0QAd2oU2OX4vSnTHaRiQjGJHSr5se4PXXkon9TeXpJ
+ FylTMiNUASTnSaRsDe39mUBK/Jda1M6YpaR5E5vSJOk7J0SMFV1d+8DC/a6cES4Ygq4zkbOwd+O
+ KeYg7f8aZ26IW3VPqyuUYR58RXT+CtL/d+Yk+mLoWSRM9mh+rfPMN89/Vw6FKrUa3Rufx8NbH1H
+ l2MzI1eNehneQV0A5ekQgtPOFq4WOWkyx4c9G297aqu931AeK1W
+X-Received: by 2002:a05:600c:1d86:b0:48a:53ea:1405 with SMTP id
+ 5b1f17b1804b1-48a53ea14f5mr176698895e9.12.1776938598794; 
+ Thu, 23 Apr 2026 03:03:18 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.10
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:11 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 37/59] MAINTAINERS: Remove Coiby Xu
-Date: Thu, 23 Apr 2026 11:02:07 +0100
-Message-ID: <20260423100229.2941820-38-peter.maydell@linaro.org>
+Subject: [PULL 44/59] MAINTAINERS: Remove Magnus Damm
+Date: Thu, 23 Apr 2026 11:02:14 +0100
+Message-ID: <20260423100229.2941820-45-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,33 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coiby Xu has not posted to qemu-devel in some years and did not
+Magnus Damm has not posted to qemu-devel in some years and did not
 respond to a query about whether they still wished to be listed in
 our MAINTAINERS file.  Remove them, on the assumption that they are
 no longer active in QEMU.
 
-This makes the "Vhost-user block device backend server" orphan.
-
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260416091654.316158-6-peter.maydell@linaro.org
+Message-id: 20260416091654.316158-14-peter.maydell@linaro.org
 ---
- MAINTAINERS | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ MAINTAINERS | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d86d7536e6..db894223ca 100644
+index 206ff228d3..065a18986c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4381,8 +4381,7 @@ S: Supported
- F: tests/image-fuzzer/
+@@ -1781,7 +1781,6 @@ SH4 Machines
+ ------------
+ R2D
+ R: Yoshinori Sato <yoshinori.sato@nifty.com>
+-R: Magnus Damm <magnus.damm@gmail.com>
+ S: Odd Fixes
+ F: hw/char/sh_serial.c
+ F: hw/sh4/r2d.c
+@@ -2880,7 +2879,6 @@ F: docs/*/*xive*
  
- Vhost-user block device backend server
--M: Coiby Xu <Coiby.Xu@gmail.com>
--S: Maintained
-+S: Orphan
- F: block/export/vhost-user-blk-server.c
- F: block/export/vhost-user-blk-server.h
- F: block/export/virtio-blk-handler.c
+ Renesas peripherals
+ R: Yoshinori Sato <yoshinori.sato@nifty.com>
+-R: Magnus Damm <magnus.damm@gmail.com>
+ S: Odd Fixes
+ F: hw/char/renesas_sci.c
+ F: hw/char/sh_serial.c
 -- 
 2.43.0
 
