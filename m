@@ -4,92 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D86FAD3EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 01:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A877EFAD3EE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 01:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFjII-00046Y-H7; Wed, 22 Apr 2026 21:55:54 -0400
+	id 1wFjKw-0004eG-MD; Wed, 22 Apr 2026 21:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFjIG-00045v-SR
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 21:55:52 -0400
-Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wFjKt-0004d8-Gj
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 21:58:36 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFjIF-0006vB-C6
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 21:55:52 -0400
-Received: by mail-qv1-xf2f.google.com with SMTP id
- 6a1803df08f44-8acb550db18so65262246d6.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 18:55:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wFjKr-0007fD-FO
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 21:58:35 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-651bc8f864fso3486982d50.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 18:58:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776909512; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SRW2Heq0nj+OtJNuMM2RnwW4z/Kzw91U0UkChNCWWqIWwCsB/uitOJ1hGUMolOHhCd
+ AdDMA4vqv/4cq7uitWOknO5e49gMB/roCYZvw33CAlLBv5PTFTV+qX6xF3qg5PJMRmHi
+ ESt34pb0cdpwokSVKb6EUZSbGT8Zk4/xk4rEeZ46NVhx3alz/Kw2/02+9C46FLokQck3
+ oDUtJlBsV9FKsC/8BWab+1WFLjIFMiH8EU7Sl8E/Q03zWr7gKnv4zD8jSmL9NY450oZL
+ oP53uDQGhhQZs5XUIaqnvK8X0P+LPC83bBm1XzHc8FeIbP7BGzuHg7H/prF3QRmiyKVg
+ w8FA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=4FzGvuQkv7aoV9mw0vtOGf/8CED12S3/SxbmpRr3BsA=;
+ fh=IeuJXmQOw1NbL14JLaDd/LlJP4XoqBMxzDfvdW8hIf4=;
+ b=BwLPQWn3pjTZSgS29u85t7QBMsK2JmOXz5HJsI1eDKgbA1gGy4PpjYdZ9RbLtHiI3+
+ ZiACyO0uskfP8b1hJgXmU//01QqgKJkazzLEn6VeJrupkBCO8X2usrsRBsVYqEWzftEC
+ 0hYWnhZFR9X3RIkYYZ1SvhLvtHn0DWgglaDhWhIdisoy1Ntas29NqYerUftMN4cy8Vt1
+ cH4NQpK6+seYupFe4ghgGf2MHX0UzAwPjPox3OV8e2KaKhmArcKghdyvCbJt1U9uRxLI
+ ixOy37Btq3tsvotJXfaxMD03q9mIwCWtD7seivJ2uH8Os/T3W5awrdfIjf4SX1PRZGIp
+ ZRqg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776909350; x=1777514150; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HCtz7K1W/kT5KEr6GYbvd/GBKUuFwf0Z3nD2u//Qx8g=;
- b=mO55csKOQ+B6MlensBU1StL8yemo/YP7cl/SoNix9051cehT9hNSupykQIZ5TOz7OH
- xk0tUXgPOprBDlkdGlZJSXhpTCykzA/bWhNoQxEYH92h9Wo0Ikwdw6EgHKNjwpwTQvZq
- RmX6KzELYYwpu23wggDh432Q2WiShl4fuE/MpFdQmMrzh1ycYyrLjzNCgOmsCi+zBX+p
- knxMPsDeanhVVkHjUxbwg4T4WdMGW+M81xTr7TGVEYoVE6iWVGKNJqyTaBb51ukgqtP1
- 5ZovW5wnTw7TGBF6BjhKQp8/Gz20bHdWXf93CBH24rQCT6X95WWXSFM10ZK1D+ORPyZ4
- sk7w==
+ d=jms.id.au; s=google; t=1776909512; x=1777514312; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4FzGvuQkv7aoV9mw0vtOGf/8CED12S3/SxbmpRr3BsA=;
+ b=ItCyFO5I+ZMmCcsBSI4MXtWw9jI2V1r4J1J0ZhciJxPzDH9ezzPEi1kd1l6jrqyCZT
+ GO1JzA/X5X8YD1FOgHnGW3yOQraRal31QEoAu12gfw4L1qCCgmf7CvfBTTDPMJo7/RHZ
+ iICW19Wjy9ST617MdDl2QWPtO3argL8CD6HjA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776909350; x=1777514150;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HCtz7K1W/kT5KEr6GYbvd/GBKUuFwf0Z3nD2u//Qx8g=;
- b=LRw0sOKn9iHdipXjiGp5oovCNWv3msoi8wTB7CwJcHHkoDuxluhmizvyEVoIE5cHbk
- cv18TFtPRdQvVIzKSanmg2u1XYT3GpQ9gJL/YJDvlVB+2KzCpOaTshTi9mjJed7IEDFg
- g6S9IuISMI3ooJ++F7vqlF/yHdTD5lb2HH0bZ9mcLdz/xAXGdCnHUr5+xEBDH41dWRUt
- bQai1nZV+PYZycfwRw8ah0MB1Z9eLPDV/uGg15Q66hguI0xkI5KtysL4+4jH98WlqQjQ
- imbzW6cGiH/DdsfXUL8fEbAtn97EsJNYkrQZESGQbj/2Fvr0NONTD3iE9bGjeRvdzLMd
- 42ag==
-X-Gm-Message-State: AOJu0YzU1KsUcz8YRwoRIs37JAmLlO28sVcb0Z6OpCeGYxkvTLI6rE3J
- /EM44SIh8tia5fbXqCFgs3TB1sKgi2nbT8hQPoN2RlqPzT+IHoAFZHhK9kjokzqJhNp1EpSDFbU
- WMWEY3/s=
-X-Gm-Gg: AeBDiesH91HC7TF731kZ4XoyfgfHyOXwL1uFkd0AbdGY3A5Uf9NZReRtMUWSbo1QTqt
- W1vn7xdLf4HjsrAr5mO9SCpYylkED8pnMsehZ45D2IABKnbxiFTCj6P2lOs5RED1H2mSBBNBdtV
- h0ampDq/kkenZd5PGc4vkbi2clfb3pXdcGlA+YgkULwwo3C3zndMqwCba25CdO0l/jsgtcBl7/K
- PR7MnL3L/N7qPmxpXvRBbjzeFbXXVMvuiNYPrLliQTs3tXETrYVqMNMSy+y6So3YfBFkYYfoxtS
- cj+fm/0rRYrNOAwwlx4rZC5a/hc76vfcffB4+TQpzhMHa6ZtG2T4jZuVr3VkIrWvZhDyozyqM0n
- POyjEn8BQtS2fd9nJ2XCFDkiuoppsBzytWnaTdfowT2a/hUpSyfwG5DW9BAFn9bY+JajGJ1onUx
- jAnKZ5BMO/BWYuo69dZfiX5aPXFsmnHYCCCpPOkwK7iygGGgLHOy8mqAsGk+E7CZyQKOfiaGVD/
- WF9XMpsBLB/38QLkGTcsrVA0G5o
-X-Received: by 2002:ad4:4eef:0:b0:8ac:a689:34ce with SMTP id
- 6a1803df08f44-8b02818e4bcmr426648776d6.45.1776909350172; 
- Wed, 22 Apr 2026 18:55:50 -0700 (PDT)
-Received: from [10.72.56.227] ([172.59.184.224])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ae61332sm139201976d6.24.2026.04.22.18.55.48
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 18:55:49 -0700 (PDT)
-Message-ID: <66ebbc64-7509-47bc-b7cf-27c0b5fd0eee@linaro.org>
-Date: Thu, 23 Apr 2026 11:55:43 +1000
+ d=1e100.net; s=20251104; t=1776909512; x=1777514312;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4FzGvuQkv7aoV9mw0vtOGf/8CED12S3/SxbmpRr3BsA=;
+ b=TpDStMns2hW3bviSYtPfDk8pMxnfbbCChYZJm2bttxZdP23MqijVB13flRbcuN7Y2d
+ sf+GcB4n4OZBPyh0f6ut5s4anp9F7dMlOGsYMpIsc08mJ8o/VvWp6ocQZob/rQ6jr6X2
+ q1dww1b9cXPghJ31qjWkAt9RBhxITDqD2lI4FMjTPOqdbOqXhqW+wuVw6wF6StJdZirK
+ PkdBuHf976vDrkx5kt7DSGHTrZtXdKWW+45gwfmNGy9Y+EQkZOVNn9Cz3f6HrhfNeEe7
+ gDYuK7ibgCIsGbdboQ9Jjd4STigJYguTmgOd4PNAEFyhWnKY6f2RhllACKNEVqThJw25
+ SGwQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8uP9BvYgirJmg6kLdgJV1Q2MEbmgPCCxbCoXlkfdmJP7L6duV0sEKHdTSZzRM0D0h9U0ieP5hYVk8C@nongnu.org
+X-Gm-Message-State: AOJu0YwtSrJjnTro42nynCXFwIeIy8HAN4x4qyWliPG9cSkttv05364H
+ gNPtssyWKdk6bGNdTwRlMHsAJVwTQI+ffvZL6yvhEvSE6o6ICcUhTgAWjGYjIrcpzy5vq0nl4BF
+ A3ajsme5XUGjkgRhlE9/2Taca4dOvVuM=
+X-Gm-Gg: AeBDieuNjDdjZtbXN1zghsIotVCZMyEz/O7xeRD1WabU286gjNbfqViRD1uV03jgeSU
+ BvsSCEPjytFyvnSAG/vAIB9CtJrO8je412nT6SK95hRTRHNf3eozagzS3rNQU0425c6FvM/3xaE
+ KMkO2orGB6Uqmk3LB5Dxq8eJNYu8KLUfAy8ywFS02C+r0BQ3vRxSEvmz0GcukziIEWJCgCbx5Vn
+ dRkHz0UYc0n06A+3JvlaonTFlv57OLV3+11Dg25Iq/7sVc/z6pIZGmAXv6xbQQLKWMRdf90D80R
+ A5Wa49eUNmMPqRG2QgkaVQQz3tnaSuVnAxCSgNejByGxzR/1TfRdHbCLw3RK6op4lmJYucqwQ42
+ LyahuFJZ+Gao=
+X-Received: by 2002:a53:ac91:0:b0:654:acd4:9c1a with SMTP id
+ 956f58d0204a3-654acd4abbemr111841d50.13.1776909512065; Wed, 22 Apr 2026
+ 18:58:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/14] accel/mshv: implement cpu_thread_is_idle() hook
-To: qemu-devel@nongnu.org
-References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
- <20260421-mshv_accel_arm64_supp-v3-9-469f544778ba@linux.microsoft.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260421-mshv_accel_arm64_supp-v3-9-469f544778ba@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20260421053140.752059-1-joel@jms.id.au>
+ <20260421053140.752059-4-joel@jms.id.au>
+ <9dde1635-ea18-4abd-8ce5-24ac73f21198@linaro.org>
+In-Reply-To: <9dde1635-ea18-4abd-8ce5-24ac73f21198@linaro.org>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 23 Apr 2026 11:58:20 +1000
+X-Gm-Features: AQROBzBKVXabbNvZagiiWyO6vIyGYjYdwt_jQeEHHH3f36qlIM1jwtpbgjcCV9U
+Message-ID: <CACPK8Xd-nFZi2_MYQMv+vrNyQdU=bhE4Wri10OohE-Fm3TWM+A@mail.gmail.com>
+Subject: Re: [PATCH v3 03/13] hw/riscv/boot: Account for discontiguous memory
+ when loading firmware
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +124,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/21/26 15:21, Aastha Rawat wrote:
-> From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> 
-> In MSHV the hypervisor APIC is always used, so we to implement this hook
-> to make sure the AP's vcpu thread is not blocked waiting for an INIT SIPI
-> by the BSP. Without this change soft reboots with -smp cpus>=2 will
-> hang.
-> 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/mshv/mshv-all.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index 5ce76e86db..6c0ddbf3ca 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -704,11 +704,23 @@ static const TypeInfo mshv_accel_type = {
->       .instance_size = sizeof(MshvState),
->   };
->   
-> +/*
-> + * MSHV manages the LAPIC in the hypervisor. SIPI for APs are handled
-> + * internally. Halted vCPUs must still enter mshv_cpu_exec() so that
-> + * MSHV_RUN_VP is called and the hypervisor will deliver SIPI to wake APs.
-> + */
-> +
-> +static bool mshv_vcpu_thread_is_idle(CPUState *cpu)
-> +{
-> +    return false;
-> +}
+On Tue, 21 Apr 2026 at 15:48, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 21/4/26 07:31, Joel Stanley wrote:
+> > From: Nicholas Piggin <npiggin@gmail.com>
+> >
+> > This loads firmware into the first (low) memory range,
+> > accounting for machines having discontiguous memory regions.
+> >
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> > Signed-off-by: Joel Stanley <joel@jms.id.au>
+> > ---
+> > v3: Call riscv_boot_info_init before riscv_find_and_load_firmware in
+> >      sifive_u
+> > ---
+> >   include/hw/riscv/boot.h    |  5 ++++-
+> >   hw/riscv/boot.c            | 18 ++++++++++++------
+> >   hw/riscv/microchip_pfsoc.c |  6 ++++--
+> >   hw/riscv/opentitan.c       |  6 ++++--
+> >   hw/riscv/shakti_c.c        |  6 +++++-
+> >   hw/riscv/sifive_u.c        |  6 ++++--
+> >   hw/riscv/spike.c           |  6 ++++--
+> >   hw/riscv/virt.c            |  7 ++++---
+> >   hw/riscv/xiangshan_kmh.c   |  6 +++++-
+> >   9 files changed, 46 insertions(+), 20 deletions(-)
+> >
+> > diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> > index 115e3222174f..fb90bf12399e 100644
+> > --- a/include/hw/riscv/boot.h
+> > +++ b/include/hw/riscv/boot.h
+> > @@ -53,13 +53,16 @@ void riscv_boot_info_init_discontig_mem(RISCVBootIn=
+fo *info,
+> >   vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+> >                                      hwaddr firmware_end_addr);
+> >   hwaddr riscv_find_and_load_firmware(MachineState *machine,
+> > +                                    RISCVBootInfo *info,
+> >                                       const char *default_machine_firmw=
+are,
+> >                                       hwaddr *firmware_load_addr,
+> >                                       symbol_fn_t sym_cb);
+> >   const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
+> >   char *riscv_find_firmware(const char *firmware_filename,
+> >                             const char *default_machine_firmware);
+> > -hwaddr riscv_load_firmware(const char *firmware_filename,
+> > +hwaddr riscv_load_firmware(MachineState *machine,
+> > +                           RISCVBootInfo *info,
+> > +                           const char *firmware_filename,
+> >                              hwaddr *firmware_load_addr,
+> >                              symbol_fn_t sym_cb);
+>
+> Except in _init(), this structure should be const, so preferably
+> 'const RISCVBootInfo *info'. Can be done on a cleanup patch of
+> course.
 
-The comment, at least, is x86 specific.
+This was easy enough to fold in.
 
-
-r~
-
-> +
->   static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
->   {
->       AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
->   
->       ops->create_vcpu_thread = mshv_start_vcpu_thread;
-> +    ops->cpu_thread_is_idle = mshv_vcpu_thread_is_idle;
->       ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
->       ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
->       ops->synchronize_state = mshv_cpu_synchronize;
-> 
-
+A future cleanup could make all of the riscv_load_ functions take a const *=
+.
 
