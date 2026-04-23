@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C84FAD3F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 02:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93093FAD3EF
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 02:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFjjZ-0001ot-OB; Wed, 22 Apr 2026 22:24:05 -0400
+	id 1wFjk8-0001wr-Ue; Wed, 22 Apr 2026 22:24:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wFjjR-0001oT-QN
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:23:59 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wFjk7-0001wN-10
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:24:39 -0400
+Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wFjjP-0000ur-AU
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:23:57 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-79885f4a8ffso65446987b3.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 19:23:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776911033; cv=none;
- d=google.com; s=arc-20240605;
- b=fwhvACtcNj9SYJzdCEB97J1wskJuFrsnreDNl1+xp6E/iK2DkaU5HqB0q3E5MI9Fy5
- 5RvB0RlfZAWLx0FKTMtyuvQ4tzXeIHrqFnUE7Mj452TiLKCUazIJkotV/+Nk6OxqMZ3P
- +MmG9l5J3F/Qf6KR5IJy2e9Lhjtc7mpOkD8Im6CR/f2QfJNkzMb/awl2lLbrxVUkPTOs
- IfeSa/ImnDHRm2EElO4KogJUXQs0zxO4N+0DogpLC3DpSd6f9QhIPQYX5QOaPtO0Lrdl
- rd99GrQilnzIoXdQJf/CD0dmSQ42qikaMoRC5A3iyBTY5myNZGGORgj6KkzVHrS517O8
- zBJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=a7CuCakoGxzeAIS8gozKH2+RGkp8kPxcBVq3hh+6O90=;
- fh=Oi7/q8LTYXnhar7Jxtpphz6tzu2ZEVH8OxycppvdTcw=;
- b=bgywRsUVuu4C7Pp2qzangAsXNKTyxLL9O2Dv3ZUvGO4TsvGJsJOLWfbZxvAuwiHnZ0
- h9cYkEDDYm0VUaeUGLr/62njVdoDUmrPl27O9a+n4aqLffirxpuqVhEb+9xxW6h+5h8J
- w1PMuONanPD2GAk1tNW5cpRRSw9N3xMPBPw83v2zaTPl3VTMDoeRPFqv31yJ7Zhqa/MA
- fwWwmMA3o1O/EJDSJv3vzUlYQft3XEbnWkr/E9nYapOa2qC3GKkKzB06mSQFEu3U5SVL
- NUEiO4FmFf5NbosKWhQYnR/dqDqeo1Y9Cxfw+FdFH60bkwURCbsF23kuiDm4YiP6565U
- Cn8Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wFjk5-00018m-Ho
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:24:38 -0400
+Received: by mail-qv1-xf2c.google.com with SMTP id
+ 6a1803df08f44-8a15ebb3abbso86811046d6.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 19:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1776911033; x=1777515833; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a7CuCakoGxzeAIS8gozKH2+RGkp8kPxcBVq3hh+6O90=;
- b=kbYWbYjkXCh29EpmCJ0s8+oLxCKEFU5M+nVzCiiBBBp2Ztw8oxzntKXzbLkqkUkbjw
- i/AwarNPv3H4FJoBZaBnQeJZC8HX5vWQKILZOCUyH4m6RxKsuJRWaxABb4oABoAk19qW
- d7Rk1TzxqOjtSTVtxOd8oOVnmOWPAfg57dlmc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776911033; x=1777515833;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1776911076; x=1777515876; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=a7CuCakoGxzeAIS8gozKH2+RGkp8kPxcBVq3hh+6O90=;
- b=ZuFHYRwVOaG+qIcDd24S71NKcmtiHg3WgCGm5DEP/G5v3V7noAd/lxzJ1GG7cmec/R
- Hq3ishmTl1THEQAtYgNw0zpt6oZP24xJdety3o+wiCZwJiqAMHe9A85ev6dhFSg61EOb
- LdRaIJ9pcACafB5OPwerlOD6k0VliYlqf8p0FgaYKttoVCw75C2BUeGxqFD+eaZVPKzs
- 1X3hl8I416u30lYTMl1CpzpDALrMfNqjBWh9kpi+8YqGlDA3Rp4SkEz+haDkIWEAP5kE
- r9SD/KSdbZgsVsZjAoMcMN9QpAGKoFgfgXw4PScL2pyX1ehRLzxgPO3Hnsld4sTEs2d6
- 61qw==
+ bh=87k6iRM0cq1AqOpbg5l+FkvPIn8YNQEGfN3gaSKDurc=;
+ b=E/gBvdb4QeJf76dJYrTvcFcpoij4A93dZhNm6xmWittpJ7JwQrco9oadTJOtxe6j0+
+ s71BZwBLpv040so+neMYXBARDQiAfhWl8MdYo72l2ottKnf2zkkSpn+j1i0+O/orYYUx
+ YPlgDMLHHzWn4iNLca6SKRA7P+BW87qEKQRLrU8PF0Dv3OzCb5rOq39KsbeVM7fAR0/J
+ EMWgnghBUWqa7yAwWTamvrOcRlbjKBQGJZGuK1bZuMy+0n0czOVQ6ysJSq3G4Szo8Aa5
+ fHLSnndjp793RUkB9SqWhU2RpW68wmGgGpFzyWmttEbaupsPGUyASvJw0mUzHICixtcE
+ Squg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776911076; x=1777515876;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=87k6iRM0cq1AqOpbg5l+FkvPIn8YNQEGfN3gaSKDurc=;
+ b=E1tk9LNYGY1MVWeoepF27kQ7U79icxDUPV99lImfxULPc7CdU0U9iLuPqDvRcNRoW7
+ 1BPkmkxTRdvLNGvl3tSylMUngNTSi3KqfT2fZo/y7UxuFz2ZIas4ObJ1RBRL5AwHL15Z
+ NquGrxf08/wFSSqo5fUhvEN3VdEIApKH5MD+AArG6CpwHoVCwJ1b/UT4g38fTuMN5XOE
+ hIMDsVSIE+6/tZJz364Zf1997YT9p+4EJVc0LssaZMz2MU7FKFnLf7tIWSH5HCtX0Rqw
+ 4f1cCfoWrWVJydcXYBgyNPWT59ixHB2KYppQfmSBeBN0dpZ1w/UTgj3osLGZskeOEGTf
+ tx+w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ80aXPg+rgrIQhOJN32VQmC5vTNbLs7m9/265vAtolemjgB0H3wJ15suXwEFJe7ed2K8sZc/AUQWRr9@nongnu.org
-X-Gm-Message-State: AOJu0YwXl1cxpbGpNvA0Pwf6J1BYUGNuXUa/hlTdC62tm+oOvE/9lU3V
- nCpvj1FDbZCpr2grt4LRuHFeZSbYGpGEaJO0WctXc469O0k2lw+07GyUE2vdAxBehnhCX8qdNmo
- sf0BVVVQ19rB4M6TlnjitAZUWQmSouSs=
-X-Gm-Gg: AeBDiesKc10IQBaUA/8PpVIxoS7cTklzTQXAiBhF9BmELFctNVepXHAFPclx2mhy+T6
- GvOI//UJVOoxJ3bgwPsKriFRkQwwSEsDULy3CkrLrAmyqMa1MUcL6uWctZlP0STI7NLAtTkH3SU
- XCZMfvKrcpEzCFl15+of7vpx0fbx90/7hAvJjYOFKbAcBfGjVH59rbcHvT2clCaVy4gmTqVLh5Z
- 5xZDaXCcMEksxiDzTynO0Welr0TJBiMttTag2axQhymE3lZ9GmHmqdYIRWctK4vQx3WgsoHfLhg
- odNpsxJ+TkL6Jm5iMMWD0HJAcVBHJpDNYETMqfdnNj/M5nQlRq6eeSNEUzkMYyMwhjzmvjfSfkT
- Bk4BMg6EO0hs=
-X-Received: by 2002:a05:690c:e3c5:b0:79a:4419:71bb with SMTP id
- 00721157ae682-7b9ecef09e3mr267698817b3.21.1776911033458; Wed, 22 Apr 2026
- 19:23:53 -0700 (PDT)
+ AFNElJ/cwWotueheyRpsYEF4QAtk6Xt/qCoqM0MM7rcWmxf1Sh3hpifkjgpO22BvT1h/1oLx3QCpUJVXoknn@nongnu.org
+X-Gm-Message-State: AOJu0YybHWpDilnS8kijLODaqETPgCudj5YkzUdu6hkRCErPi1JQpQ+p
+ hH1xIK2oSUPgukGs7MIeE/E3X1VbSaclHd7mky7qYkEV3pydFLhAxAvDElQoeRNZ+vQ=
+X-Gm-Gg: AeBDieuo5yVgJuuWioIG1YeeljISv2L/3xo4U98Caa6Fqw+072Lxd/T75BRBe8aSeDP
+ fPDr6EZuPYpx0+7POww/NhHIQaCuDk8hPCcrNoruXoACKy75RCODAel3+Umgc15aAkWRfGc8cUT
+ mHHASs7E/l3bwPZODAGRu4nJUcgcJDXjng5SCi9NiDx/4VCuUDNhCVakGZKpQlAA1yC1O4OUWrr
+ bZUsajgISspWfpU1P6CDSmMl+H6nBNHG2J/GktyS3rtzXd420LfV/81V2ztm2M6jCJ2qCsDrleH
+ 6bdzWWlGgm8o0Tl1RfjiWx4UwRiFQS4S9ht96F4LM8+YIJAyPGtzPaoXUknGKeIEjlHD1NsknjO
+ F2SvUrBYw23HHvRyz6cvMgza6a6Jbeg7UXIfM4xv6jCsm2GXnUynzFDjDAmsPtSz7RollJYL+n1
+ 31LBHz0A2aR0fLs7yLN9jfyZqijNwCGjKl/Li2xp77ZyR7EfB5dC1Xulrwcb/vyu0q3OYBI5C/h
+ XWEVwUz2b23ySgNhNFhMa50wWcD
+X-Received: by 2002:a05:6214:29e9:b0:89e:cb8b:a77d with SMTP id
+ 6a1803df08f44-8b028159107mr390823046d6.50.1776911076351; 
+ Wed, 22 Apr 2026 19:24:36 -0700 (PDT)
+Received: from [10.72.56.227] ([172.59.184.224])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8b02ae6133dsm141599606d6.25.2026.04.22.19.24.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Apr 2026 19:24:36 -0700 (PDT)
+Message-ID: <175487b3-cc23-4771-9ccd-0c033a13dcda@linaro.org>
+Date: Thu, 23 Apr 2026 12:24:28 +1000
 MIME-Version: 1.0
-References: <20260421053140.752059-1-joel@jms.id.au>
- <20260421053140.752059-14-joel@jms.id.au>
- <42263811-2d99-4d2a-aba7-a19dda3b5047@linaro.org>
-In-Reply-To: <42263811-2d99-4d2a-aba7-a19dda3b5047@linaro.org>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 23 Apr 2026 12:23:41 +1000
-X-Gm-Features: AQROBzDr3C1c1P1c-g3yc_v4eM9yf41F6oJRcoRn8Z37FU1Ez4tGL0G5rhSzXMs
-Message-ID: <CACPK8Xcnac2nWu6_KqU4oEtxwNhVzrndF1baj9PbtoFeZMiUKw@mail.gmail.com>
-Subject: Re: [PATCH v3 13/13] hw/riscv/atlantis: Add some i2c peripherals
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Michael Ellerman <mpe@kernel.org>, 
- Nicholas Piggin <npiggin@gmail.com>, Joel Stanley <jms@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/17] target/microblaze: Make get_phys_page_attrs_debug
+ handle non-page-aligned addrs
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=joel.stan@gmail.com; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+References: <20260417173105.1648172-1-peter.maydell@linaro.org>
+ <20260417173105.1648172-4-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260417173105.1648172-4-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,34 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 Apr 2026 at 16:09, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 21/4/26 07:31, Joel Stanley wrote:
-> > Add an I2C RTC device and a temperature sensor. These are not present
-> > on the board but help for testing.
-> >
-> > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> > ---
-> > v3: Use HWADDR_PRIX in i2c device string consistent
-> > ---
-> >   hw/riscv/tt_atlantis.c | 18 ++++++++++++++++++
-> >   hw/riscv/Kconfig       |  2 ++
-> >   2 files changed, 20 insertions(+)
->
->
-> > @@ -542,6 +555,9 @@ static void finalize_fdt(TTAtlantisState *s)
-> >                          TT_ATL_I2C0_IRQ + i,
-> >                          aplic_s_phandle, periph_clk_phandle);
-> >       }
-> > +
->
-> Worth mentioning /* QEMU specific */ ?
->
-> > +    create_fdt_i2c_device(s, 0, "national,lm75", 0x48);
-> > +    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
->
-> Maybe use another bus to extend coverage, like #4.
+On 4/18/26 03:30, Peter Maydell wrote:
+> Currently our implementations ofSysemuCPUOps::get_phys_page_debug
+> andSysemuCPUOps::get_phys_page_attrs_debug are a mix of "accepts a
+> non-page-aligned virtual address and returns the corresponding
+> non-page-aligned physical address" and "only returns a page-aligned
+> physical address".  This is awkward for callsites, which in practice
+> all want the physical address for an arbitrary virtual address and
+> have to work around the possibility of getting a page-aligned
+> address, and it doesn't account for protection being possibly on a
+> sub-page-sized granularity.  We want to standardize on the
+> implementation having to handle non-page-aligned addresses.
+> 
+> For microblaze, we just need to remove the explicit rounding down to
+> the page boundary that we were doing in
+> mb_cpu_get_phys_page_attrs_debug() when calculating the output
+> physaddr from the results of the MMU lookup.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/microblaze/helper.c | 9 ++++-----
+>   1 file changed, 4 insertions(+), 5 deletions(-)
 
-Both good ideas, thanks.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
