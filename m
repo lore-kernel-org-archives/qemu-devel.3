@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD70AF589DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D160DF589DC
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 13:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFuT9-0000xj-Jn; Thu, 23 Apr 2026 09:51:51 -0400
+	id 1wFuSf-0000ik-3W; Thu, 23 Apr 2026 09:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuT6-0000x8-C9
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:51:48 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuSU-0000g9-N0
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:51:10 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuT4-0006HY-FJ
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:51:48 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so87460165e9.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 06:51:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuSQ-0005oc-7w
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:51:07 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4891cd41959so48160905e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 06:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776952304; x=1777557104; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776952264; x=1777557064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=USyA8v7aEKp3s5luzNdxwloj99EpgracOTgDV5g1QHE=;
- b=nQB3k2TlA8LEyq/rndt3HYz0xLkamWGaeKtf+crgNmv5nGg8s6eDP8Gv6aLSLpn2Y5
- RN9X4CD+ZQc6GniVaCS98sDt0NndvApHEdV5M2NDJkEP5hcF9yPRdV58T5HcNl0ijAAB
- DpEuJ/HFGBsZ2E+Z8uOGu5AorSFL67iJj7LFc/gm2WOiBrzHA7Sods+TSCQuEldFDUue
- Xv2grj4OvSeZ6pdzYc61sN2XHRPChTEOkGA7+R757gXA5jdHhPiMe4r2/yZyb7w8sOBu
- GHdkPhu8l1k3WwFpXzto5A7DF+uK7CecEt20jeNtwguwm4qmkrG9UvmxCMHinM26h5jv
- Bp5w==
+ bh=Xo9+PVRtt+5NON2Kj6mTrN4MMNYuwyQS7G6lhP4uHOk=;
+ b=S5nHT4aK/mv7tkCRm8bLgtjzNk/LNyPdQMM0AWgP0x68Q2/m1yx7Cvgx4UlCyOguD6
+ KYvaeIhWo0tmmOVV7qqEfzMkAS3XpRxDvBfL/TECcEBUYfX2JR6Kpo2jhqBQcvXwTuHl
+ 0r96MMGvFWtyvpscbQjF4oLVMQ9OFSVafjy8uQRrlb3Jz8R7k4pqBWFSD9dwnj6giawd
+ V36zH9ZkOoF5Y/TTPkzJojuwMXJhe7j7pGBQzEqo+XiAHhvaxyvqc4ztSBJ3Oz2X7Hh3
+ URBfbUXRHS16FrK0iHwDg3YbhfaXx0RYku8avv3Mzqn/x9Dyu7k+aV5VqjN6LNXL/A56
+ Fcjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776952304; x=1777557104;
+ d=1e100.net; s=20251104; t=1776952264; x=1777557064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=USyA8v7aEKp3s5luzNdxwloj99EpgracOTgDV5g1QHE=;
- b=QuwubOt5dgE+YOEbDeaOZqHRT9d7ypAuUkDEs8g3yU6P1SFjCTxUrBwBPk3InI8Zdz
- cRrRj1+2imPPaxS/MeE+fDATPEUH50iPtgkDyhb816F6rrEsHJ7QYZ2yLewZIpFHzecj
- 3NVx5RyYrPt3QLS47Np2lS7YZ3zZ6cN2QEdIcDHDxjNfGkfUOuxZwHuA/7z1IYFuDkKf
- LptuPA+qRaMh8hdTRxPkjXMB1kTG07scUrQwWFnkZqnlltDXm2ASB15Mi1c55VlVBP+w
- 3vbDPlDAwYzFUUcjyh3HLFMcFeRvUEjR9lgKzReSAFQJumj5UBesltkAWZqaR9ijX61f
- nHAA==
-X-Gm-Message-State: AOJu0Yyg1FVOW5LaYi+8DaS+WD3JXVAU6yfzRf7lIFXcCw+WpSzDOeZH
- 0D3tnqPw7jUn8asjUeVMa4XhZyBPxNUhiOmc6b1HtIbbc5dVxasPiEej5497dl/FJ3gYaOpLpoh
- UjQfgx4g=
-X-Gm-Gg: AeBDiesixrh4Z06dp4TiVk42GsLumInSW0ety+Saktd4owElDnMJ4ADuag6kMqpLn4A
- FTCmXv3xmimwyGXj6GCsP0OvJL2lxh3SFWLJgsF1g8T6HGPaFC0PIJtLSQ4fXYvGD1jbwljuU2o
- 0TUo1fsY0/POtwCSQQ3x1QubfHsJjieUThq1Aspo4tBWY57xvx/OoaMOs9Jc1F8uA+c+/d2Pr/O
- i3HmoJpaRT18o19+36YXM8/ps6hb2yn+2dmK7JZwph6jslKKtoyP25JbBkKytdb9SPG+Vl5FbBc
- Uu1+SSYbZZbwMRFJFAz4xLM6MYbjMcmVqgOgGyj0fbSgPkkSMedyTD0MX51njEU8t6w0FW8yXjy
- s+5XPKdxXGxf7+epyaf7QPC56somX8s5fPWhQAa0rWrGkOX1S83Q7bLBJSFoVsvIV+2xlp7y/T1
- J4KpjOhT2jG75M1nNO0ITd9sqOwwWfN3NepvwKuwNN/bu6TNymcPB9yZDceYaCJAWYLzv2FGT+r
- 86uLXhETj8=
-X-Received: by 2002:a05:600c:1390:b0:483:709e:f238 with SMTP id
- 5b1f17b1804b1-488fb78ea6fmr391933805e9.29.1776952304388; 
- Thu, 23 Apr 2026 06:51:44 -0700 (PDT)
+ bh=Xo9+PVRtt+5NON2Kj6mTrN4MMNYuwyQS7G6lhP4uHOk=;
+ b=XlAwvFybfmsE+i8Z/j4X45Y3PGIHWp5YfImAz+K0uS9UDLKg6j0N46jy3yWjOBd8VS
+ rRX4oQf2lAForr32npQ36jJXnQdCg5rfU0Aij4mStQJO2qZWjonaZ6SA1u+YXSLoKC33
+ oGKsyoX/1r7SgwrWwoni5IK7TR5W7eN7l07+R4iG8mOwdCsv+dmTtt58rdfXlgpyBR7R
+ JjgYvz51luVkhtAxjedkb6F7ofMRCCD7gGrlUDtp1x5E8I2P2xg6YTUOdB9RVXCkMw3+
+ IllTSiAho+Ptqi+I3s5TlRykKTWF8pzJKeZHhqQtVQt1iBsKquCuiVmnbF+MrqYDKgpF
+ bJjw==
+X-Gm-Message-State: AOJu0YxOxlZj2uW2h32GfXAmljkG/QB/L7FdwrCI3bUo6RDOqYyQztMY
+ HfT9aIFIlrheMpinLGOWyJ0COtwUvccTsqE8axwmTZY0uAHzV2FqERik0M7bTL3Jvb3Vw6bV8um
+ /ZekoX3Y=
+X-Gm-Gg: AeBDieuWWUOZS8Yh/gTs+59+dsUge02MtJElIDydbFDNrj2yGjDPDJCH6JwHoIQnN/p
+ A7lc2yY5oZmbDuPRkmmd0ynOCP4qy5GqSB+algo2XkKmnr9V2xZmAFvvvCDzbK2BZn47Me6PErT
+ C28663O7f+RxRNHmMTfej668MhlpTzL1nMWE5jI8cqGyujHfEoUzyp28VrwtpfrTMCGz94ZOlM0
+ O//UJHu7N1oXvE9nuxkmfkCM186/mfPeHfGQnc7KJgNMlra+DbhzOsWLkdaIyld75OQ9crHxQZi
+ GKq0eyxNUsR0rVRxDXP9UEgzlX/lckULNAv/7fKp9x6GXJ/fJjue89fh8zqDvT6ZyR5POAgCuR4
+ yiwZBqt+kMOakb1vXaQiKyoMFPJmuT8vyelH9PjLFFcMrKtzSUqCj5CDaiyG2m3aRCu5iReEFq/
+ aOyo+XFUy7rffhhZn8X1CKFb8Q27LZUjyrmDy48FxeNhBi67Iuz5SrPC5C5DjIErxSHGQRI6VGF
+ 6Fo1kptfM+X4vZw0+IurQ==
+X-Received: by 2002:a05:600c:1e09:b0:48a:592c:e655 with SMTP id
+ 5b1f17b1804b1-48a592ce7c2mr129588645e9.17.1776952264460; 
+ Thu, 23 Apr 2026 06:51:04 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb7b2634sm164816635e9.28.2026.04.23.06.51.41
+ 5b1f17b1804b1-4891c08faffsm565231035e9.1.2026.04.23.06.51.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 06:51:42 -0700 (PDT)
+ Thu, 23 Apr 2026 06:51:03 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -76,17 +76,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 8/9] target/s390x: Compile crypto_helper.c as common unit
-Date: Thu, 23 Apr 2026 15:50:34 +0200
-Message-ID: <20260423135035.50126-9-philmd@linaro.org>
+Subject: [PATCH 3/9] target/s390x: Introduce common system/user meson source
+ set
+Date: Thu, 23 Apr 2026 15:50:29 +0200
+Message-ID: <20260423135035.50126-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423135035.50126-1-philmd@linaro.org>
 References: <20260423135035.50126-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,161 +110,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order do build crypto_helper.c as a common unit we need to
-replace:
-
-  "accel/tcg/cpu-ldst.h" -> "accel/tcg/cpu-ldst-common.h"
-
-and update the cpu_ld/st_be_data_ra() API by cpu_ld/st_mmu() one.
+Introduce a source set common to system / user. Start it
+with the files built in both sets: 'cpu_models_user.c'
+and 'gdbstub.c' No logical change intended.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/tcg/crypto_helper.c | 39 +++++++++++++++++---------------
- target/s390x/tcg/meson.build     |  2 +-
- 2 files changed, 22 insertions(+), 19 deletions(-)
+ target/s390x/meson.build | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 074d745eb3f..ae392bce0e7 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -17,7 +17,7 @@
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
- #include "exec/helper-proto.h"
--#include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
+diff --git a/target/s390x/meson.build b/target/s390x/meson.build
+index 6f98ce34d73..44f58ac2919 100644
+--- a/target/s390x/meson.build
++++ b/target/s390x/meson.build
+@@ -1,4 +1,9 @@
+ s390x_ss = ss.source_set()
++s390x_common_ss = ss.source_set()
++s390x_common_system_ss = ss.source_set()
++s390x_system_ss = ss.source_set()
++s390x_user_ss = ss.source_set()
++
+ s390x_ss.add(files(
+   'cpu.c',
+   'cpu_features.c',
+@@ -15,15 +20,16 @@ gen_features_h = custom_target('gen-features.h',
+                                capture: true,
+                                command: gen_features)
  
- static uint64_t R(uint64_t x, int c)
-@@ -123,44 +123,44 @@ static void sha512_bda_be64(uint64_t a[8], uint64_t w[16])
- static void sha512_read_icv(CPUS390XState *env, const int mmu_idx,
-                             uint64_t addr, uint64_t a[8], uintptr_t ra)
- {
--    int i;
-+    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+-s390x_ss.add(gen_features_h)
++s390x_common_ss.add(gen_features_h)
++s390x_common_ss.add(files(
++  'cpu_models_user.c',
++  'gdbstub.c',
++))
  
--    for (i = 0; i < 8; i++, addr += 8) {
-+    for (int i = 0; i < 8; i++, addr += 8) {
-         addr = wrap_address(env, addr);
--        a[i] = cpu_ldq_be_data_ra(env, addr, ra);
-+        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
-     }
- }
- 
- static void sha512_write_ocv(CPUS390XState *env, const int mmu_idx,
-                              uint64_t addr, uint64_t a[8], uintptr_t ra)
- {
--    int i;
-+    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
- 
--    for (i = 0; i < 8; i++, addr += 8) {
-+    for (int i = 0; i < 8; i++, addr += 8) {
-         addr = wrap_address(env, addr);
--        cpu_stq_be_data_ra(env, addr, a[i], ra);
-+        cpu_stq_mmu(env, addr, a[i], oi, ra);
-     }
- }
- 
- static void sha512_read_block(CPUS390XState *env, const int mmu_idx,
-                               uint64_t addr, uint64_t a[16], uintptr_t ra)
- {
--    int i;
-+    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
- 
--    for (i = 0; i < 16; i++, addr += 8) {
-+    for (int i = 0; i < 16; i++, addr += 8) {
-         addr = wrap_address(env, addr);
--        a[i] = cpu_ldq_be_data_ra(env, addr, ra);
-+        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
-     }
- }
- 
- static void sha512_read_mbl_be64(CPUS390XState *env, const int mmu_idx,
-                                  uint64_t addr, uint8_t a[16], uintptr_t ra)
- {
--    int i;
-+    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
- 
--    for (i = 0; i < 16; i++, addr += 1) {
-+    for (int i = 0; i < 16; i++, addr += 1) {
-         addr = wrap_address(env, addr);
--        a[i] = cpu_ldub_data_ra(env, addr, ra);
-+        a[i] = cpu_ldb_mmu(env, addr, oi, ra);
-     }
- }
- 
-@@ -200,13 +200,14 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- 
-     /* KLMD: Process partial/empty block last. */
-     if (type == S390_FEAT_TYPE_KLMD && len < 128) {
-+        const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
-         uint8_t x[128];
- 
-         /* Read the remainder of the message byte-per-byte. */
-         for (i = 0; i < len; i++) {
-             uint64_t addr = wrap_address(env, *message_reg + processed + i);
- 
--            x[i] = cpu_ldub_data_ra(env, addr, ra);
-+            x[i] = cpu_ldb_mmu(env, addr, oi, ra);
-         }
-         /* Pad the remainder with zero and set the top bit. */
-         memset(x + len, 0, 128 - len);
-@@ -248,6 +249,7 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                             uint64_t *buf_reg, uint64_t *len_reg)
- {
-+    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
-     uint8_t tmp[256];
-     uint64_t len = *len_reg;
-     int buf_reg_len = 64;
-@@ -262,7 +264,7 @@ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- 
-         qemu_guest_getrandom_nofail(tmp, block);
-         for (size_t i = 0; i < block; ++i) {
--            cpu_stb_data_ra(env, wrap_address(env, *buf_reg), tmp[i], ra);
-+            cpu_stb_mmu(env, wrap_address(env, *buf_reg), tmp[i], oi, ra);
-             *buf_reg = deposit64(*buf_reg, 0, buf_reg_len, *buf_reg + 1);
-             --*len_reg;
-         }
-@@ -279,7 +281,7 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     const uint8_t fc = env->regs[0] & 0x7fULL;
-     uint8_t subfunc[16] = { 0 };
-     uint64_t param_addr;
--    int i;
-+    MemOpIdx oi;
- 
-     switch (type) {
-     case S390_FEAT_TYPE_KMAC:
-@@ -300,9 +302,10 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
- 
-     switch (fc) {
-     case 0: /* query subfunction */
--        for (i = 0; i < 16; i++) {
-+        oi = make_memop_idx(MO_8, mmu_idx);
-+        for (int i = 0; i < 16; i++) {
-             param_addr = wrap_address(env, env->regs[1] + i);
--            cpu_stb_data_ra(env, param_addr, subfunc[i], ra);
-+            cpu_stb_mmu(env, param_addr, subfunc[i], oi, ra);
-         }
-         break;
-     case 3: /* CPACF_*_SHA_512 */
-diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
-index ed6441f6f44..36cb0e079ed 100644
---- a/target/s390x/tcg/meson.build
-+++ b/target/s390x/tcg/meson.build
-@@ -1,11 +1,11 @@
- s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
--  'crypto_helper.c',
-   'int_helper.c',
-   'mem_helper.c',
-   'misc_helper.c',
+-s390x_system_ss = ss.source_set()
+ s390x_system_ss.add(files(
+   'ioinst.c',
  ))
- s390x_common_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'cc_helper.c',
-+  'crypto_helper.c',
-   'excp_helper.c',
-   'fpu_helper.c',
-   'translate.c',
+ 
+-s390x_common_system_ss = ss.source_set()
+-s390x_common_system_ss.add(gen_features_h)
+ s390x_common_system_ss.add(files(
+   'helper.c',
+   'arch_dump.c',
+@@ -32,19 +38,14 @@ s390x_common_system_ss.add(files(
+   'mmu_helper.c',
+   'sigp.c',
+   'cpu-system.c',
+-  'cpu_models_system.c',
+-  'gdbstub.c',
+-))
+-
+-s390x_user_ss = ss.source_set()
+-s390x_user_ss.add(files(
+-  'cpu_models_user.c',
+-  'gdbstub.c',
+ ))
+ 
+ subdir('tcg')
+ subdir('kvm')
+ 
++s390x_common_system_ss.add_all(s390x_common_ss)
++s390x_user_ss.add_all(s390x_common_ss)
++
+ target_arch += {'s390x': s390x_ss}
+ target_system_arch += {'s390x': s390x_system_ss}
+ target_common_system_arch += {'s390x': s390x_common_system_ss}
 -- 
 2.53.0
 
