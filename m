@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 342D9F589DB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C206F589DA
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 13:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFuY3-0005eR-Ui; Thu, 23 Apr 2026 09:56:55 -0400
+	id 1wFuXr-0005bO-9A; Thu, 23 Apr 2026 09:56:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wFuX6-0005Wg-G3
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:56:06 -0400
+ id 1wFuX4-0005Wb-Kz
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:56:02 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wFuWu-0000cB-IQ
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:55:49 -0400
+ id 1wFuWt-0000cF-AI
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:55:48 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63NDtV0L080520
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63NDtV0O080520
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Thu, 23 Apr 2026 22:55:32 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=IXLPhMVbP01PLG2+dRp/eAaFEn9u1APxip+wQX8V2lE=; 
+DKIM-Signature: a=rsa-sha256; bh=LUD9ZuzLWd1LWP0Ys4/Osg9bdyCbmhuDYF4cvOBc8QE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1776952532; v=1;
- b=c+XAhzexG0VY45iQOL9rIj0nnrU60dHLW9EpezDRIWC78onY2WUPhzr+NJTEikLJ
- u8QbO4JRjlstXAuF9U3lnzxG4OUgwpTfzXvfmcBsNz0eP2S6Leje7GTVUCcuc2oS
- 3S45/HEcAHjwF39HAm/9AGtexzh+qq24fLpsJunjtcHJj5SrTR/vxkDeFazwfgnv
- H8u3QroCI/7J3mMAFonKUr0eo7YJpyxm5GN6P5T+GPzHrtfpl8VoopQ/fST9/WWh
- C2s2G51AxFomWNWWRnKDM7cJV+S/CfoKsrAF+mX0bcpLI2AI2NUsnMsbD0dqPYpR
- KfXz4GIwL4IOczqcukAa+A==
+ b=pq+a8bAK82rf1L8dNOlY+konlInhbzmOmh9OIngw9P8/A/NGl8jKANTryNWNlrXv
+ i7VRHyxujS+MCkoukwzfs7DAkG8+cBFLDIpSR7QsL09mAzXC0OQiDVpIzi9BOp0i
+ srIeE8mAVMLyQJHVw0zkk/CNGk/cTAH1RTfM5w8/48Zr+niJnKxlAePOVaCtWGpS
+ RyPQGb35vymwCF9rYyONtLaTxNeqJwktVDdRL1/0gdr486oWDmABsj2zXmtfLVmK
+ zunU8ue1HXum5JX9XxK4aB9UQ2iftObrlY2i+RJfoczAC5hYPILeCUL4KgyaFoqX
+ LgWIYwcykpyJyWFZost5cA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 0/3] audio: Fix unsigned PCM conversion edge cases
-Date: Thu, 23 Apr 2026 22:55:20 +0900
-Message-Id: <20260423-audio-v1-0-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 23 Apr 2026 22:55:23 +0900
+Subject: [PATCH 3/3] audio: Use unsigned PCM bias
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBSE4as0b61JW42Eq4hFMXgWSKsiEXdXL
- L/kn7kowDMCVeIij4MDr0uCzgR1k1tGSO6TyShTKGty6WLPq7SFhUapcmVBqd08Bj6/n7r5HWI
- 7o9vfMd33A+6g6wRpAAAA
-X-Change-ID: 20260423-audio-464e1e90304e
+Message-Id: <20260423-audio-v1-3-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260423-audio-v1-0-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260423-audio-v1-0-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -75,40 +73,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Building QEMU with recent Clang from Xcode reports warnings in the
-unsigned 32-bit PCM clipping helper. The warning points at a real
-conversion issue: the current code mixes unsigned arithmetic,
-floating-point rounding, and the wrong midpoint for unsigned PCM
-samples.
+Clang warns for the uint32_t clip_ instantiations because HALF cannot be
+represented with mixeng_real:
 
-Unsigned PCM uses a bias at the upper middle value of the sample range,
-such as 0x80, 0x8000, or 0x80000000. The existing HALF value names the
-lower middle value instead. Around that boundary, the conversion code
-can also wrap before promotion, and the uint32_t clipping helper can
-compute a value one past the representable range.
+[1115/2559] Compiling C object libqemuaudio.a.p/audio_mixeng.c.o
+In file included from ../../qemu/audio/mixeng.c:147:
+../../qemu/audio/mixeng_template.h:68:70: warning: implicit conversion from 'unsigned int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
+   68 |     return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
+      |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../../qemu/audio/mixeng_template.h:31:22: note: expanded from macro 'HALF'
+   31 | #define HALF (IN_MAX >> 1)
+      |                      ^
+../../qemu/audio/mixeng.c:146:28: note: expanded from macro 'ENDIAN_CONVERT'
+  146 | #define ENDIAN_CONVERT(v) (v)
+      |                            ^
+In file included from ../../qemu/audio/mixeng.c:152:
+../../qemu/audio/mixeng_template.h:68:70: warning: implicit conversion from 'unsigned int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
+   68 |     return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
+      |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../../qemu/audio/mixeng_template.h:31:22: note: expanded from macro 'HALF'
+   31 | #define HALF (IN_MAX >> 1)
+      |                      ^
+../../qemu/audio/mixeng.c:151:36: note: expanded from macro 'ENDIAN_CONVERT'
+  151 | #define ENDIAN_CONVERT(v) bswap32 (v)
+      |                           ~~~~~~~~~^~
+/Users/person/v/qemu/include/qemu/bswap.h:10:39: note: expanded from macro 'bswap32'
+   10 | #define bswap32(_x) __builtin_bswap32(_x)
+      |                                       ^~
+2 warnings generated.
 
-Fix the unsigned conversion paths by:
+HALF is not the right value here anyway. IN_MAX is odd, so the integer
+sample range has two middle codes. Unsigned PCM normally uses the upper
+middle code as the "bias": 0x80, 0x8000, or 0x80000000. HALF is instead
+defined as the lower middle code: 0x7f, 0x7fff, or 0x7fffffff.
 
-- converting before subtracting the bias, so samples below the midpoint
-  do not wrap;
-- clamping the floating-point clipping result to the integer endpoint;
-- replacing HALF with an explicit BIAS value matching unsigned PCM.
+Replace HALF with BIAS, defined as the upper middle code. This fixes the
+warnings, since the value can be exactly represented with mixeng_real.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-Akihiko Odaki (3):
-      audio: Avoid unsigned sample wraparound
-      audio: Clamp unsigned sample conversion
-      audio: Use unsigned PCM bias
+ audio/mixeng_template.h | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
- audio/mixeng_template.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
----
-base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
-change-id: 20260423-audio-464e1e90304e
+diff --git a/audio/mixeng_template.h b/audio/mixeng_template.h
+index 5b0014bdd9af..6db742188eda 100644
+--- a/audio/mixeng_template.h
++++ b/audio/mixeng_template.h
+@@ -28,7 +28,7 @@
+  */
+ 
+ #ifndef SIGNED
+-#define HALF (IN_MAX >> 1)
++#define BIAS ((IN_T)1 << (SHIFT - 1))
+ #endif
+ 
+ #define ET glue (ENDIAN_CONVERSION, glue (glue (glue (_, ITYPE), BSIZE), _t))
+@@ -43,13 +43,13 @@ static inline mixeng_real glue (conv_, ET) (IN_T v)
+ #ifdef SIGNED
+     return nv * (2.f / ((mixeng_real)IN_MAX - IN_MIN));
+ #else
+-    return ((mixeng_real)nv - HALF) * (2.f / (mixeng_real)IN_MAX);
++    return ((mixeng_real)nv - BIAS) * (1.f / BIAS);
+ #endif
+ #else  /* !RECIPROCAL */
+ #ifdef SIGNED
+     return nv / (((mixeng_real)IN_MAX - IN_MIN) / 2.f);
+ #else
+-    return ((mixeng_real)nv - HALF) / ((mixeng_real)IN_MAX / 2.f);
++    return ((mixeng_real)nv - BIAS) / BIAS;
+ #endif
+ #endif
+ }
+@@ -65,9 +65,7 @@ static inline IN_T glue (clip_, ET) (mixeng_real v)
+ #ifdef SIGNED
+     return ENDIAN_CONVERT((IN_T)(v * (((mixeng_real)IN_MAX - IN_MIN) / 2.f)));
+ #else
+-    return ENDIAN_CONVERT(MIN((int64_t)((v * ((mixeng_real)IN_MAX / 2.f)) +
+-                                        HALF),
+-                              IN_MAX));
++    return ENDIAN_CONVERT(MIN((int64_t)(v * BIAS) + BIAS, IN_MAX));
+ #endif
+ }
+ 
+@@ -79,7 +77,7 @@ static inline int64_t glue (conv_, ET) (IN_T v)
+ #ifdef SIGNED
+     return ((int64_t) nv) << (32 - SHIFT);
+ #else
+-    return ((int64_t) nv - HALF) << (32 - SHIFT);
++    return ((int64_t) nv - BIAS) << (32 - SHIFT);
+ #endif
+ }
+ 
+@@ -94,7 +92,7 @@ static inline IN_T glue (clip_, ET) (int64_t v)
+ #ifdef SIGNED
+     return ENDIAN_CONVERT ((IN_T) (v >> (32 - SHIFT)));
+ #else
+-    return ENDIAN_CONVERT ((IN_T) ((v >> (32 - SHIFT)) + HALF));
++    return ENDIAN_CONVERT((IN_T)((v >> (32 - SHIFT)) + BIAS));
+ #endif
+ }
+ #endif
+@@ -150,5 +148,5 @@ static void glue (glue (clip_, ET), _from_mono)
+ }
+ 
+ #undef ET
+-#undef HALF
++#undef BIAS
+ #undef IN_T
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.53.0
 
 
