@@ -4,104 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB83FC0343
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0770BFC0342
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFvZp-0000H1-3H; Thu, 23 Apr 2026 11:02:49 -0400
+	id 1wFvai-0000iJ-VW; Thu, 23 Apr 2026 11:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFvZm-0000FC-PH
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:02:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wFvad-0000gv-M3; Thu, 23 Apr 2026 11:03:41 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFvZg-0005sF-Rx
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:02:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776956552;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VlqxFzLd9mqHQa0AVwC1cwgWvpMpWN+zdB1R6mN7Meo=;
- b=T66plSQuiQow11gOvlWj0F1aJNBM/GdOGXxrYYY76riBGhbtaQcni8A9Zz3M0gCfRMbtPN
- vyfKHH90C6sJVvWgmN9SoNAVdvQjpVBNFmHObB9nzmTYQc2Qic4gXvb1VEZYutGJDZSjRp
- Gre/v7VhvXwwL5QzneEpyzMpQMInTiY=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532-voICOCLFNdWqj2p36NKkAA-1; Thu, 23 Apr 2026 11:02:29 -0400
-X-MC-Unique: voICOCLFNdWqj2p36NKkAA-1
-X-Mimecast-MFC-AGG-ID: voICOCLFNdWqj2p36NKkAA_1776956549
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8a5f6110c1cso162185136d6.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:02:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776956549; x=1777561349; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=VlqxFzLd9mqHQa0AVwC1cwgWvpMpWN+zdB1R6mN7Meo=;
- b=LX7++ek5b0Q0b+Ojkx8i0N9tguZLX3bLjyimpUMpcMrSlmTGMmrFQfXPk4IH79TbtV
- r3rkbDxycbL+1WLwJL5kYSBLwX95c1UAHV3Wous3lqDTH8pbtY7a3NKUc1NvFlz/SKdY
- rJBgb0fSdkRBNnPmPE/2FWyURVAscvMQrzU7QmtBAxyfy3BOTFD3W/ZmVpesLANK5Rtf
- z/5eNF1/qAxDJBCRusdm72k+AuAgmU0pAohbvsxImRTYToQ8j01ieTqEqmv/rhJcdZmc
- QmUvVPtNxErwg4SHv4sFHtBUvjANOvmajjcyYmx9OjW4bgk7lRuRNkXtaKt/bfeOHCtt
- 0PFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776956549; x=1777561349;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VlqxFzLd9mqHQa0AVwC1cwgWvpMpWN+zdB1R6mN7Meo=;
- b=CMroFcmTIr2LJ/9iPDnA+QrQEnNpKPlnyfbqUnjjB7Yo3SdYCrJ95bKa0DJ8CmdnNz
- vdv29YfrTPB1IfWii1dWo+Qte0ER16edeUDq7KidEtRvWk9/ZFUyKNAoDA8dLaMrEuUR
- /cUy6zxfclsvuDAVuBs0bo3HG6iD16Toa757hoyGyqhEX/PuDwKvsenbSm/eMkqKmCBO
- aQwP1rj5pDOycV3oV2hyKDkpYDDAaOKNQnYbfmq4Byj9LK2Zx9QnE6W11kvJlcv/2NR5
- sYuAssP7kzqJx4f/AIZvFTWvAyyER7wdxXX/73Kp97AMBxAP3bcgUC5JuTriIkpz5VPm
- SLfA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+uTMUw0zTelyfyc8FLpU6cJpJFbPjqD4XSCu9nn/0taUF1IsqesexBCI/bSqgBb/HXF3hSAbUHpcCG@nongnu.org
-X-Gm-Message-State: AOJu0Yw7Mo0+BYI5bdHpaEea4rWY8XY414i71CfaQpFpmujK1kkBly4g
- FmjGakDdmwqPBMZmFjm3JvaYOfM8/EH5G1u+vSXGoQZgNe1xQG+u4t+0Klb/UX4gJvKy8Tfuae+
- 2eK1EVRkmaqOb8C/p8fJ1I/7ezm/VTRcYokngIcKvgGTmmaLqR88ooexL
-X-Gm-Gg: AeBDiesK8veomfDgwnp/X2SgwYdlnl5+Y0wozu09dwsDm3MbbmnuVMRVfXJFZABcgIw
- TksZmVHjiEgxWQhq0iqCPDO63bxj75l+edrVIxt58FM4chQUku1/NRmnI+YtETg0vhRnpc0XX7Y
- JZoDjUYXNLRIht9ttBZ+KfzZDj/p6cEYfuAvi/5PXc4mG/uPphLADSaINSzbRPfDMhEFGcfDSVC
- xBIaRkAJw9hNzd0abxXNbG55bvF1CE4yrlfqF5Q5v5rlxyAz2LvbJ6bCO9DJ0a/LoVshh+aJf9r
- tHAslJ2EkiJxehnVymqJs4K4v2G8Onjg/zkrI7eo6SpcAe1rd4u3muNOt2DYl4paYFdrNSPZr7s
- z35dBrXDCecCQRVqSEMMK9uPrUVlZlSrgsYosqYpVpMlwmVkm1knkx0xM2Q==
-X-Received: by 2002:a05:6214:451a:b0:8aa:a025:78e3 with SMTP id
- 6a1803df08f44-8b027fd1cc8mr471955976d6.6.1776956547934; 
- Thu, 23 Apr 2026 08:02:27 -0700 (PDT)
-X-Received: by 2002:a05:6214:451a:b0:8aa:a025:78e3 with SMTP id
- 6a1803df08f44-8b027fd1cc8mr471955126d6.6.1776956547336; 
- Thu, 23 Apr 2026 08:02:27 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ae97d89sm162365926d6.42.2026.04.23.08.02.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 08:02:26 -0700 (PDT)
-Date: Thu, 23 Apr 2026 11:02:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1] tests/functional: Make socat wait longer in migration
- exec test
-Message-ID: <aeo0gHfFFDKC6KPR@x1.local>
-References: <20260422230001.3168-1-farosas@suse.de>
- <624cf04d-6188-458d-bca6-dd5ffec877ab@redhat.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wFvaY-0006Ja-4o; Thu, 23 Apr 2026 11:03:38 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63N8GbWa3229166; Thu, 23 Apr 2026 15:03:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=80Kn0K
+ ErTUrlAreU7AMkMwEkByJFOm/qxq+yH6f5TcM=; b=LGjTNNled3pzmkT9O2kVrZ
+ yDCIKU56y0yFROxfSmelh7PW3nFCyGw7sMnzmI/g3YDLuQwhXNsrLzrzgiylNH5o
+ mN9WqbetNKSLeG1veJnqyOd5riQqYbLlWsl0djRy78B2HVHfWZNDaAY1QU3rXjM5
+ eCKDe0B8mwx2ekzkDJbFxgbg86BTJ+mJY/UQ7I8aiJ2PMl+cEc5BDBs7dR8Laj9x
+ szHBRbCFHUFo20E+OLtrV29OU+25QxHLmbUVhBxq6ueWnf6slCtp6EcFr5nZPSAy
+ XpP+h0Rr5pOFJ3PiHZvUmudLOVx9jVtm+IWgAQiZxfElQTWH+u1b2TA253U5q7fQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu299p9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Apr 2026 15:03:28 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63NEoRdt017976;
+ Thu, 23 Apr 2026 15:03:27 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dpjkxy3fk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Apr 2026 15:03:27 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63NF3O7635848666
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Apr 2026 15:03:24 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1AFEC2004B;
+ Thu, 23 Apr 2026 15:03:24 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8FFBB20043;
+ Thu, 23 Apr 2026 15:03:23 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.71.73])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Apr 2026 15:03:23 +0000 (GMT)
+Message-ID: <891f1cc7-8b5b-41e8-9b11-695a737dfde5@linux.ibm.com>
+Date: Thu, 23 Apr 2026 17:03:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <624cf04d-6188-458d-bca6-dd5ffec877ab@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/9] target/s390x: Introduce common system/user meson
+ source set
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20260423135035.50126-1-philmd@linaro.org>
+ <20260423135035.50126-4-philmd@linaro.org>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260423135035.50126-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: xu6-7wZuCagdlvKRe75P0b_OgVJy6OC2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE0OCBTYWx0ZWRfX77Rv8dLLIUn/
+ zLmdIAwT07ypVLLIr7pTrnkyQKPKaNSLEGxzvPJHaFwGfY+scK3aj/4P1SNHoQs0y1dFz4rY66H
+ DEC8TOl2SkdsI0FSrB4T/IubeXVSApfFbM0xHARzSjGBtiRsl/nPUIuGksCleCj4oWaClgu2TpG
+ A4Ja7LuHSfPFUPJAOhe8sjF35r0/p+N9ZeUrx0ANYoPAQfmAG7WXmuLjVrETECPz1jvxfXwGw85
+ lTARBO6prvQSJz4KJb+81nmh1raxTiiYlTQxa9yvIAv7XbAPcXVNiV6jWA2nbV+9+MO8A9YxyVb
+ T0aZvTdxTtZ6lyDjkCS3hTmQVl768H4NeZRJVjGe838VAFV2RNRQHGw1CKed4HgWHUkTEABQNjB
+ Lp6wTS2VQ4bj7mVcyJLWJzX+ZMZH0YVaFuAuavJTe1KKv/zU4q449Ln8LHeEu0l7kNtrtaC3SXR
+ JLj38tZfhoUVWku4s7A==
+X-Authority-Analysis: v=2.4 cv=C8LZDwP+ c=1 sm=1 tr=0 ts=69ea34c0 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=T1P1OpTRLjKXgjHeOEMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: xu6-7wZuCagdlvKRe75P0b_OgVJy6OC2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 impostorscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604230148
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,51 +130,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 06:52:19AM +0200, Thomas Huth wrote:
-> On 23/04/2026 01.00, Fabiano Rosas wrote:
-> > The migration_with_exec test is failing sporadically for all
-> > architectures due to a race when the destination socat process takes
-> > too long to start listening while the source process is already
-> > issuing connect().
-> > 
-> > The race is inherent because the exec: migration spawns the
-> > to-be-exec'ed command asynchronously and returns from the
-> > migrate-incoming command. The localhost-only testcase is not
-> > representative of the majority of migrations. In a real scenario
-> > between two different hosts that race wouldn't happen.
-> > 
-> > Fix the testcase by configuring the source socat command to wait
-> > indefinitely while trying to connect.
-> > 
-> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > ---
-> >   tests/functional/migration.py | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-> > index 144f091ba8..3b7674af3b 100644
-> > --- a/tests/functional/migration.py
-> > +++ b/tests/functional/migration.py
-> > @@ -85,5 +85,5 @@ def migration_with_exec(self):
-> >           with Ports() as ports:
-> >               free_port = self._get_free_port(ports)
-> >               dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
-> > -            src_uri = 'exec:socat - TCP:localhost:%u' % free_port
-> > +            src_uri = 'exec:socat - TCP:localhost:%u,forever' % free_port
-> 
-> Maybe use "retry=90" instead? OTOH, we have the high level timeout from the
-> meson runner, so we should not hang here forever by accident anyway.
-
-Yes, IMHO it'll be good to stick with one timeout mechanism rather than
-adding more magical timeouts.
-
-> 
-> Thus:
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
-
+On 4/23/26 14:50, Philippe Mathieu-Daudé wrote:
+> Introduce a source set common to system / user. Start it
+> with the files built in both sets: 'cpu_models_user.c'
+> and 'gdbstub.c' No logical change intended.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/meson.build | 25 +++++++++++++------------
+>   1 file changed, 13 insertions(+), 12 deletions(-)
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
