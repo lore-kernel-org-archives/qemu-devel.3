@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73C6F99366
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECA0F99367
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFquc-0007hb-Ru; Thu, 23 Apr 2026 06:03:58 -0400
+	id 1wFque-0007ra-E7; Thu, 23 Apr 2026 06:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqu6-0006ZG-WB
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:34 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1wFquH-0006eH-KK
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:39 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqu4-0002NO-C3
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:26 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43d74086e5bso6307607f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:23 -0700 (PDT)
+ id 1wFquF-0002TK-EJ
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:36 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43cfbd17589so5144103f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938602; x=1777543402; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938614; x=1777543414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=smRHFbZ3lUkLYKVcrIk8sD3R9MJPz7ZFklbF7kQOzmU=;
- b=ghN74jGwdpJcn2q4xZT4qaE12Y6GSQyBiJ9TBqReb4qXngFmw/q5/5FraKzBXU+9m4
- tzFqnTMeQZOYxl9dUe5/EQ1l31xvKostwbqcp54w0V8Jfj4DYmvMwWRjsXkFP/f5cFgJ
- EfABQXtElPnmvdwQ6X3NpbBA20cesPOWKHMRpuyjtSkSCHD+BeZTnnwJMm5dR66yI7oi
- ABXJKVSyAL0WjztLu1kDuZ8KhpldfrnqwqhN2J7wf1pQy7A7p0iNoPrqrYbgPbLMcJvw
- VyV+7SbhgCk9MFSxX3qVe2I8TYRNpwAmuJHT34r2vaDN4eyUo6tyDiqGnFIJk8+358mn
- ccOQ==
+ :reply-to; bh=L+c0h+CLPgBfTzUuGx7+tZ9wXi9zIucBCy1ZZEJuP5o=;
+ b=rSS+eIxC7cteMJ4jA91L4onu+mfXOJZi7ZLAXSHOAZDeK68M7Pe+TxhYfZEWyrLsUj
+ EfnTl9U9/dUVr2LrJoXQy+7vWqgb88nEZ+s/xrCdPpe+ruNyq1nDcoY2nJDk0bDoquvi
+ zYYijT3JnSxC3LtBvzWimpaJnd/AfaihX3AHigqZ5SCjHsr+7T0u/qxsNROfh6aqy3h3
+ 8Rl6LLu5OEgUAk98chrGN2QQv2Qu1WtvL/8BVBQfbqxkoNHX/eyhZtcX5b/Hy6bjSC2W
+ h0XJAnasJNo2hjMQezNMJu1VFY5Y+xGD5bT5Bih9nF8cKN608JwGdjaotlzqtZMny3Cm
+ w7vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938602; x=1777543402;
+ d=1e100.net; s=20251104; t=1776938614; x=1777543414;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=smRHFbZ3lUkLYKVcrIk8sD3R9MJPz7ZFklbF7kQOzmU=;
- b=pWFwC8Lxz2Ar8jO1oguISSn5McjKRLk/ePJV+1DSNB36QQ0nXZT99nq7vRFoDmBPhn
- QCSPA5IulHrCF4fSyDIesDN7YNhRJWkmZgpXzRn6lfYhY1yHGFZ+e5IEblkext4hwFz3
- odG/Zzu0fB8yZCWADjz7ChUin/xJDIz4S9jhm6eflsWTiK6YHjX+TOhnJn0qDnxfcqnQ
- yK76NHalKhq0/EOl9uRWRU+0ZlQKX3DzmDVA7eRbZO4hmOgJzHGrtj+0XMiuBrImAP6u
- 7JCViVEP+GleIWyOmWuOgJwAZHQ13TfrubAybT399SG4C7PfYMhcIUX8wYyZfNJBUdKs
- s9XQ==
-X-Gm-Message-State: AOJu0Yw0KCYQi//V3OXaSyTsToSEN0D8IGGbB/845qJd2ntrBpAxOwU0
- odKKZV/JAQBe+MHUXWGE2nUGyG9Gr5iQDmkQ81adxIRieAAiGrz1HjAMYxxV6uHxyt49pKb8SRB
- j6EjF
-X-Gm-Gg: AeBDietUD4vj1CxKfFrAGj12rv5xNH13w2uAIcQenNZZ2l3JvjwZVC/Lz6Xy8ue/5+G
- 0hFP+nSDSG8EJiur3gbDCijMUw2Wh3nMDS7GPZX1ZztEUeGF7g2iuhjV4dyHjjjG9FT+gHruaZR
- 6hVS+ME0HmZPvu1W/+baVQOk/67er9y34BYsNjxXBftgv1fSfyo5hMetJ6a6vVxGLzl9FBzY/zy
- mO0mLn16QCDYYuYj4+of0feE8iW8D/5uOioQSbzTDw2yzW6DfwFc5JVcBKxCFomE3+IahBgQQ7V
- OsgYVJi0MAOX14snMaONIayow7DfgR59EgShg0ZM9kjbKrnxsH83wcjw2EeEpKROn1jotqwTBfR
- X7SyyjVpGLBUwwN1rgT9rBAk3dZQu0Ha0FdWSfGL0SA26U+8YX0K2sASyUdGgo6V+Kbm8xOkt/1
- cwMuHS6DNqrYl/sO9XVqsICynpyB+tb1PsZIBPcsgHYAMzMyeKg2jr1oYkLkFwPosgKbUZB6Gjh
- 51pYvK3jpOVus/ywbSq43GJVUyEI6sUyiMhf2H5FA==
-X-Received: by 2002:a05:6000:2211:b0:43f:e938:1e67 with SMTP id
- ffacd0b85a97d-43fe9381e75mr38017299f8f.38.1776938602288; 
- Thu, 23 Apr 2026 03:03:22 -0700 (PDT)
+ bh=L+c0h+CLPgBfTzUuGx7+tZ9wXi9zIucBCy1ZZEJuP5o=;
+ b=o5iq3pkYHDhY4eDsIKrCJ7ToVUBgfcvekctrn4gEkJdKXkk1vUuFwE5nlR85DWz0oL
+ QIJC+LHg+E97UUDsR+o8B5FQhGfsX1aQM5L6wDZfKByrZD5ifKmrbuhapNjBkukx9n3p
+ hxadABzQO2FvYG8dtRg8lUV7AJRAlKWCgG35NWUVMXR7mq8NPx4t4FWkazlvMuVd6pLI
+ MBNWXR+RX8e4efReqoQujVtwNQEsBhZ3BPU36088TPbHIwJ8Ne2i/EQk2nTEyFU1e6qN
+ sFmu+echy//Hg/ttgZZsIrGo48fPHsIgz8hamyDLf5lBuYCsU34f/iFFNa7K73TzMD3h
+ gOtQ==
+X-Gm-Message-State: AOJu0YxJZN+ez6Rr+dbtahu9bSgGs1EKCZraN07a2nmazODu/RMuT5SD
+ qsc3eTlKDTt0URwJ64uz0l53aJ6WB2H35R5DS8zSPQboZdpXEZFYsvainWDNSJK/1f9hk7koNhW
+ wScQ3
+X-Gm-Gg: AeBDiettTyM76nCgM+mHIHJZA7/bt9O5gfZkHsTkhRDmQvCEDNmhHnAPL7EHx/QLE2g
+ Mz7jYc8kt/S2VbtCYDDvkUzEYxlYk7j7h1cUKEKsLMxeQmMCKJmeqOdWajJsSOSlorUmEXOXqLr
+ TbEdPQ/clZNFVZ5jvwByDpT9SHkOcrFA84WC7v4uM/cQpaFsyyXFX1PQRWgjoARqv2YO2FBGLyb
+ ymc0QLme40DPyBv8wySxrrpBsFwiAbnO1KH75pXULbRgpdoWa7X8hMDc9aEfcFjUvi6jl1giHZX
+ eYL3xzK8cvQCDqD0AL1640JXRNtcIYtoQJ1WmsaMu9xSApxXsm5qcgt3nfPTq5jQ+xhD8CbxXNv
+ BRa5WB93uhXTjAGu9eSwezTRGHga/sf3BdW2Op810yPZ75JkrDTzMtOLGKnEY12fwwSsO7YQW0W
+ nCriIvHp4W3noK0va23EZIOrRXZ5YmEaRsgPlxNn5Hzj6+f3jALcjR1YwbnjaW9gOPhZDRJZu5y
+ yE7SWqs2Mfar6JTF+irbwi1HhAT7IiPzh4sElV2J6+cW9cPB+yZ
+X-Received: by 2002:a5d:5cc4:0:b0:43f:e430:e6df with SMTP id
+ ffacd0b85a97d-43fe430fc09mr28864983f8f.1.1776938613579; 
+ Thu, 23 Apr 2026 03:03:33 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.21
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:21 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/59] MAINTAINERS: Remove Paul Burton
-Date: Thu, 23 Apr 2026 11:02:17 +0100
-Message-ID: <20260423100229.2941820-48-peter.maydell@linaro.org>
+Subject: [PULL 56/59] MAINTAINERS: Remove Yanan Wang
+Date: Thu, 23 Apr 2026 11:02:26 +0100
+Message-ID: <20260423100229.2941820-57-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,29 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paul Burton has not posted to qemu-devel in some years and did not
+Yanan Wang has not posted to qemu-devel in some years and did not
 respond to a query about whether they still wished to be listed in
 our MAINTAINERS file.  Remove them, on the assumption that they are
 no longer active in QEMU.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260416091654.316158-17-peter.maydell@linaro.org
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20260416091654.316158-26-peter.maydell@linaro.org
 ---
  MAINTAINERS | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 75cc6704f4..07a08b1a65 100644
+index f1577e6c5c..9b3da13653 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1487,7 +1487,6 @@ F: include/hw/intc/loongson_liointc.h
- F: tests/functional/mips64el/test_loongson3v.py
+@@ -2007,7 +2007,6 @@ F: docs/system/i386/nitro-enclave.rst
  
- Boston
--M: Paul Burton <paulburton@kernel.org>
- R: Aleksandar Rikalo <arikalo@gmail.com>
- S: Odd Fixes
- F: hw/core/loader-fit.c
+ Machine core
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+-R: Yanan Wang <wangyanan55@huawei.com>
+ R: Zhao Liu <zhao1.liu@intel.com>
+ S: Supported
+ F: hw/core/cpu-common.c
 -- 
 2.43.0
 
