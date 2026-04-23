@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47CDEF99370
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 11:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB61F9937B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 11:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFsKo-0001pp-7N; Thu, 23 Apr 2026 07:35:06 -0400
+	id 1wFsQz-0003p8-4j; Thu, 23 Apr 2026 07:41:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFsKm-0001pA-Nt
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:35:04 -0400
+ id 1wFsQu-0003oi-Ea
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:41:25 -0400
 Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFsKl-0007Ng-0V
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:35:04 -0400
+ id 1wFsQs-0003af-NR
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:41:24 -0400
 Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2adff872068so32325535ad.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 04:35:02 -0700 (PDT)
+ d9443c01a7336-2b24fede2acso42418595ad.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 04:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776944101; x=1777548901; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776944481; x=1777549281; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZKlWNHWN6OImKUHp8U8h7SrcgaDpYAguDthFSxzveFo=;
- b=fHVSEAmSlRBq669L6dtgtEfdDYk35moMXE1kSu0uNpd1h6c6s1veMLbIURDky+orpV
- nP3Umyyb9uI414O88astagHteYsy8ztDKy0ZhQTjFOBYiaIXX6D5aWB+QZ0HCWvuORDz
- NulMWskrkJaMfx+/6jEdaqiLPWuG7hUZxqnKVeYZWlib7ADkwoPdLf1HGyxVqd7tusCG
- KldBeMvx3QrBQxUWUu8pJg3YTQOTvSuHHl3La+bgJCnrEgLDwdsKAJ2Ug8m3TTJLG9Su
- Xpi//3BYJ6xLggJ/Ax8Im/YDkWRWo6+zx5dl77C+l7cIYV56oLhvBddVe32K7XUurcGG
- slwA==
+ bh=21DY5Fy7XvfIF3Ys9J8NGPXpgRm3LUjiZSova9ugCAg=;
+ b=LzdRolLcREA6c50fuzZa7oEQ2rqh+rS2fksyzMlb9mAkMqO0q6+NDXaKDQMmEDAdYl
+ Kq76BxtLAzTIF3JWDPO5AXW1HpB2yE8qhqjEJLiAMuP47JcOWrvg41p1aLFyB7XNAEkk
+ H4g4DIMjgR09EDwsRQLOm2KIJ3e6PyUPOc6e850LZvZjpfYlJU8MPT8v7b+IzZcFUX9X
+ +CvPwGcZO59IpVjnoWD9IXDMo3RtwWvUdlpbOfd17DPE2bh7VfD8VSjqfXhjaRORWgkG
+ COSeT7newfE6KU7wi5MSzBOY0luYkp/YYAAs6Xz2Zc/0TtbyrDjb3bPJZ3sfJssJ2gGN
+ fQ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776944101; x=1777548901;
+ d=1e100.net; s=20251104; t=1776944481; x=1777549281;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZKlWNHWN6OImKUHp8U8h7SrcgaDpYAguDthFSxzveFo=;
- b=ISjnXcgR/U9qqfcIqiu4E6h+C0SUpapVQNYW3SJ8bm8KFU5Qm9CbXj6ykRqJ8fnQUi
- +RvmgMK786Ixov6Bkbsbo/O/1XebpKDa4erMkSENiTVd4pUGE1IqLr1QNfiWCDHMkPnP
- gWXyIzsh0q7+532ZbdiAYSFCWnRo23y8cXkrDLRQ6e4+17bH261cL+5B5RPO8YNWc61j
- sEDcpym6Np4Q7LCr+bzps+f08L/ahjr1rzmS+d/aAM2pXaYS04ocXZV0+Tu7xMoUASYX
- 0gLt6w0znKv90GE3sAOzEWkbfmdtr8X7VT5TBb7RRl641pMw18PZ+mg0OrU/6AP38MXO
- QSlg==
+ bh=21DY5Fy7XvfIF3Ys9J8NGPXpgRm3LUjiZSova9ugCAg=;
+ b=J3YelPrsxiBpdpInnaQh/e+ipvToT0cKq+G57zDK4kvqtTTCLHLTGkQZVtbJBxSBnG
+ MM3OxrvN8UppX3cUauaPbF6WdKgLVsa70029d65QZvSuwxnqseMX1Xe+na3XCrRLnQcy
+ vQcD0SImP04LOmFsxixqhFrA5iFvTGCxHuL4EdjiFmrIxwnQnDNCebsPCfCmoC3zNATu
+ 0ISvOLAj+oMHW+JBmi0fOsj6yilymYmYSymAQs0VAiHCxgAhkj4BUCaKFoOt/6yNLWLK
+ OmAc6FcVKU6przP31X0/IDYZlj/PL/kjGU+oZWcnn6cTdtwHwUhRX++4uG4QVUCjF6No
+ i2/g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9QFK+bw9CESQannthn5ll4xAlz444mWorYo+i9wYLjvrvCqJE7y0Mqs6uulrg1inifZcAisvfOZjwW@nongnu.org
-X-Gm-Message-State: AOJu0YxtxVVwc/arMAJX24mH6db8tCQ7vTZFKqvXAA4SON/mGXM8TMhV
- sl2KZi2TMOR94Hrl8ed350xqY7csfTd7jClHydBEWfwd695/Vdo0YMNytgg0ULA7u9w=
-X-Gm-Gg: AeBDiev1go+3og4qUTmyhAKy41YOlfFgpcgbwlnWEUlU3NIbrz+m9YlMGzF/l6hLYbJ
- FZ9LJ3qo80XEW17u/AcmP1U0F321Mmx7BC6V9GH9YumPJM0ok4VP1bbA9m+BObpsheHLTgPlbUD
- rT/AY588s8jxvnVUuPyLpSPFchYa0RsQ1GmYpVdWIYAEHvVPo7t9Uego4ypnxyZOvwd6i8dIXlb
- vmRl90gOmUDXPTtRqiLF7/z5Jgddziw31CGXBAsyZgYaQa1Tw/1jB2KHDQ3y/dQ38XSzWYcwtCH
- lqi7rPoIZVIzwpKY0j5UhJFXlydS3w0T6E/h8OR31jrVzBbkRJ+Owt3+kCHSY5KqLO60oBjsB6R
- 2dSLynOp1SCAaCFC8Z6kYvlOdaP51HhAsMiF7Altj3EEnzxUTvmziOzu02/qXHbz7c/hZXhnjTu
- CNNnt7gNbKQWJXrfIenB+Jh44N9yqyI5HyO+XQ3bRRdkfdfwTteg==
-X-Received: by 2002:a17:902:74c2:b0:2b0:6d33:e7c0 with SMTP id
- d9443c01a7336-2b5f9ecaea6mr214576545ad.1.1776944101146; 
- Thu, 23 Apr 2026 04:35:01 -0700 (PDT)
+ AFNElJ83OTZ5UFiJ6Jf8ADHnT11+cfc3AQLAKHU8kgNF+gz9Tac/WzVPBDxgo9nz+n7CfxuHPy4jyM8Yg1xS@nongnu.org
+X-Gm-Message-State: AOJu0YyXJT56ro2aIudnNEk7fL8z+HNIJ1wmtEfPJUQAoXuhfX/tiB7U
+ HC588MRptPvwIipffeBtabe+2YLXesSZhbp9hBierLl2WrlZ7kl8spsZ21/bNcU4H+M=
+X-Gm-Gg: AeBDietC6bQIU5+AHxoax0+fV6l/LLPBpBqzo+N0aA2kWJvbC8eMYJsV47rVOSCzrne
+ xGmJc8UA08deftLGO8CZ+h/H7GkZNzrsY8dpMxjeV6ZMgk1prV5ZuKWtn/o/97N0QRz5nvPz3Af
+ SPMEXNlv9DdcsSEc/nOTRw2UvhtVZB3ujuxEBixubPjzNKntpWWfbAc+PJZCEeIn8etllGzzL5r
+ pK0ZykH9S1HSrqbyfcH9R/LwRqPOUSV65EhLzXyf6C8a6dUHSBA1R2vdFYGGnhdiUlzPTXiY/4l
+ YkN8H5atO0R5VMCKkmTI+e4sctm0HDHUz9aRsTF4O9u4QzMH3OUgL/EDSy1/QjONCPpRP/Rgfem
+ AWZZggIQZQxLUnKeORvJUIFo0fYYQT6dL8g2eJLmemeoSaQLeecSOr69JwSqOi0IqmXMtD/hsJr
+ YBCpWYx8BtHT05ZhGc50cJvMGA/hVxGYTio/B99GbPt+6LF5Py4w==
+X-Received: by 2002:a17:903:3c24:b0:2b0:445a:8c7b with SMTP id
+ d9443c01a7336-2b5f9edf973mr289251725ad.15.1776944480970; 
+ Thu, 23 Apr 2026 04:41:20 -0700 (PDT)
 Received: from [192.168.1.134] ([110.239.0.232])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab0cb92sm184731975ad.50.2026.04.23.04.34.50
+ d9443c01a7336-2b5fab20695sm191328935ad.56.2026.04.23.04.41.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 04:35:00 -0700 (PDT)
-Message-ID: <6b4559d6-cc75-4e73-b0e4-0311c1a37c98@linaro.org>
-Date: Thu, 23 Apr 2026 21:34:40 +1000
+ Thu, 23 Apr 2026 04:41:20 -0700 (PDT)
+Message-ID: <6fc61e19-dca0-4d76-8b8e-f8a81c1515bf@linaro.org>
+Date: Thu, 23 Apr 2026 21:41:01 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg: Remove unused tcg_gen_vec_*_tl() API
+Subject: Re: [PATCH 1/9] tcg: Include missing 'tcg/tcg-op-common.h' header in
+ 'tcg-op-mem.h'
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org
-References: <20260423101904.36131-1-philmd@linaro.org>
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-stable@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260423100612.27278-1-philmd@linaro.org>
+ <20260423100612.27278-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260423101904.36131-1-philmd@linaro.org>
+In-Reply-To: <20260423100612.27278-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
@@ -112,51 +110,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/26 20:19, Philippe Mathieu-Daudé wrote:
-> No code uses the tcg_gen_vec_*_tl() API. Better to
-> remove it now, since to compile as translation unit
-> files once we need to avoid target_ulong uses.
+On 4/23/26 20:06, Philippe Mathieu-Daudé wrote:
+> "tcg-op-mem.h" uses methods declared in "tcg/tcg-op-common.h".
+> Include the latter to avoid when including the former:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
-> Now this file only defines tcg_gen_gvec_dup_tl(), which
-> is used only once in target/riscv/insn_trans/trans_rvv.c.inc:
+>    include/tcg/tcg-op-mem.h:34:5: error: call to undeclared function 'tcg_gen_qemu_ld_i32_chk'
+>     34 |     tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
+>        |     ^
 > 
-> 2156 static bool trans_vmv_v_x(DisasContext *s, arg_vmv_v_x *a)
-> 2157 {
-> 2158     if (require_rvv(s) &&
-> 2159         vext_check_isa_ill(s) &&
-> 2160         /* vmv.v.x has rs2 = 0 and vm = 1 */
-> 2161         vext_check_ss(s, a->rd, 0, 1)) {
-> 2162         TCGv s1;
-> 2163
-> 2164         s1 = get_gpr(s, a->rs1, EXT_SIGN);
-> 2165
-> 2166         if (s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
-> 2167             if (get_xl(s) == MXL_RV32 && s->sew == MO_64) {
-> 2168                 TCGv_i64 s1_i64 = tcg_temp_new_i64();
-> 2169                 tcg_gen_ext_tl_i64(s1_i64, s1);
-> 2170                 tcg_gen_gvec_dup_i64(s->sew, vreg_ofs(s, a->rd),
-> 2171                                      MAXSZ(s), MAXSZ(s), s1_i64);
-> 2172             } else {
-> 2173                 tcg_gen_gvec_dup_tl(s->sew, vreg_ofs(s, a->rd),
->                       ^^^^^^^^^^^^^^^^^^^
-> 2174                                     MAXSZ(s), MAXSZ(s), s1);
-> 2175             }
-> 2176         } else {
+>    $ git grep -w tcg_gen_qemu_ld_i32_chk
+>    include/tcg/tcg-op-common.h:328:void tcg_gen_qemu_ld_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
+>    include/tcg/tcg-op-mem.h:35:    tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
+>    tcg/tcg-op-ldst.c:286:void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
 > 
-> Cc: Palmer Dabbelt<palmer@dabbelt.com>
-> Cc: Alistair Francis<alistair.francis@wdc.com>
-> Cc: Weiwei Li<liwei1518@gmail.com>
-> Cc: Daniel Henrique Barboza<daniel.barboza@oss.qualcomm.com>
-> Cc: Liu Zhiwei<zhiwei_liu@linux.alibaba.com>
-> Cc: Chao Liu<chao.liu.zevorn@gmail.com>
-> Cc:qemu-riscv@nongnu.org
-> ---
->   include/tcg/tcg-op-gvec.h | 24 ------------------------
->   1 file changed, 24 deletions(-)
+> Cc: qemu-stable@nongnu.org
+> Fixes: 69cdc5babf9 ("include/tcg/tcg-op: extract memory operations to tcg-op-mem.h")
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Pardon?  This isn't in master.
+
+I recall this is one of Pierrick's patches, but we should fix it before committing.
+
 
 r~
 
