@@ -4,102 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C121AFDEE46
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC60FDEE47
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFzU5-0000eR-Dx; Thu, 23 Apr 2026 15:13:09 -0400
+	id 1wFzaq-0001ky-QD; Thu, 23 Apr 2026 15:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFzU0-0000dX-Ew
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:13:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFzTy-0007V2-8S
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:13:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776971579;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzao-0001hE-Px
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:06 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzam-0001Xo-P5
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:20:06 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E0A335BD43;
+ Thu, 23 Apr 2026 19:20:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776972002; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zSPMVIsETMCCRcRnLlbQIG+Fw+GAkSsMNcI9CpUPrxc=;
- b=PhZ6hGxtQgvnwrMsAQJ+wZ798MgretG+jeHaN8ll6aF5GGCeZlIbInceQ4ZpSh3Kd7bBRc
- TFMPl5J7Wrz0GHXOUvuSNLz78rsE7ztEs6zZSYnf44XcVGUrnZlIU/Kbryew9BRFAQ2Gw5
- 0jjZ+QbPYKmV25HSb0cwK/CWU2ramag=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-yfLV5qSXPQGeG98njBRNlA-1; Thu, 23 Apr 2026 15:12:58 -0400
-X-MC-Unique: yfLV5qSXPQGeG98njBRNlA-1
-X-Mimecast-MFC-AGG-ID: yfLV5qSXPQGeG98njBRNlA_1776971578
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50da529ff48so165899931cf.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 12:12:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776971578; x=1777576378; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=zSPMVIsETMCCRcRnLlbQIG+Fw+GAkSsMNcI9CpUPrxc=;
- b=evO1caVkwBBt9UycwRScZbr1dyWZmCbzoRQhdu9+WPljvw1JEnMfB1h7titVFURi0v
- iTjEIbgsSGoNANwm/EW4KXklZRTXe8N0g5aClwlk1blTnBhPiFf1dHYF/+Dy3YogI1RE
- QxjmgY3r53p6P8uf5oBE8M5cvfT8d2HToyPuU1TDjAvCSztMJ7/zdPOsLgEv9yi5dHds
- 2/ixcwjQdT7hmW5zjN2S0XwO7dsAEZyZPctpAu9I7Rzof5iGkQZYTBjQ4bmZHfQ59mMb
- M0I+210aZH9An/Iq3rzcES6DtnH9XzHGhkCM/DXKSbRfY6WeNHXPb25HdMWrBkGUFbku
- wl1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776971578; x=1777576378;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zSPMVIsETMCCRcRnLlbQIG+Fw+GAkSsMNcI9CpUPrxc=;
- b=UMpPvqW6Y3xavxLJO0JAbbs4lSJkf9dxk3a7hiUoKK9PRkFytDs9zrceIse7zuLRII
- qN1534UXV8B28FO3FOmIt5C1RkxZ6XvFeBkuH5iIQwK6i8E/aiX8yrIYAlqWRxJRB4v9
- FzQD/IGT+3GK0mrudsOXR/D0rOyzrEozlHxR0b6ktBgMudTXEuu9zPEPKgMmFsYAxdw7
- SWDyIGnxZr2Hwar5Aca5vactsuAvvAibdqKAZg/ieyMHeWa1Ij4GXmJ6Bx9ytShsecGQ
- +Hz8pyLC8lhLskoyGXMLRwAmqlxdozIu6JoKaPkN3dWSx+eP99FV1kwhtcTtpFfPY2q/
- C0yg==
-X-Gm-Message-State: AOJu0YzIpDQIQfNBh1BRz+VCF/qACQFbljncCfIcSppEayTHdCYzb6Ll
- zTskt0hqgZbbddWi1YrXeWNSw0WAnY6TU7SMywJA0FIG0avbccwbcfcYc/rWTkfKgfCkHCsQLgH
- QuqQate+rIw3AnVlVsiGuLZiV3tFfTgOBmcsC0OGpoJ22IdQIno5ZOwrM
-X-Gm-Gg: AeBDiet+lsCWusx+Wc/39BsQClp+gS3LS6/WWpJ5JhSpJdEL49Sz8ZVnNkXuMp8V828
- IKeMMBApC3WfV8LKBcp8Ba72uittB0GgFPK5LbdkYupA1v0FDfEM2p7g56mi0ib1pWWSStxJKm4
- D3KmfdIRHLhJ3HXVa/WF5Lj1/wC2mfZvZWb8YuTgG/sgoT/cpFAAVyn8X8r21MHQ6DkaBu/8WtU
- 48SuvZHbqKBVTooIDXXr18/8wDH8AXjOCpYAMq2+blIgEW7X6oLVxb25fBFGyDQKcFYNPRvZ0hD
- IlCkVYmy4ce5lONWQpb0lj/AxYqXB0HQHEfQAAHnYQQzTA0e2IWyBBfkhY9CrWsqj39Uq+JIFwe
- 5E0kuztIjHXI0LRNdHUjNvnBKG4JBbfqVC1UdlH0YmFnmXfiiOkFHX8gqBA==
-X-Received: by 2002:ac8:5a02:0:b0:50d:a6a0:8f04 with SMTP id
- d75a77b69052e-50e36c4189dmr418057951cf.42.1776971577668; 
- Thu, 23 Apr 2026 12:12:57 -0700 (PDT)
-X-Received: by 2002:ac8:5a02:0:b0:50d:a6a0:8f04 with SMTP id
- d75a77b69052e-50e36c4189dmr418057461cf.42.1776971577150; 
- Thu, 23 Apr 2026 12:12:57 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50e40aab60dsm157183021cf.18.2026.04.23.12.12.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 12:12:56 -0700 (PDT)
-Date: Thu, 23 Apr 2026 15:12:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Pranav Tyagi <prtyagi@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH v2] migration: Fix blocking in POSTCOPY_DEVICE during
- package load
-Message-ID: <aepvNu6ko5KfFY3a@x1.local>
-References: <20260423094438.43556-1-prtyagi@redhat.com>
+ bh=peXunn/MN+tBFALwrP477y2MzLSfJFHU+HL5cvVNS1M=;
+ b=mFDNRtuGrREx1/0t9uOVA9/KgqWI6m6cOfupfewhsNIcm9yPXSGi2h+xsFVDwHfhbhsuph
+ XN8Fgzx8ZO3aF9UOA9hcj7aphNBqImvPBkULn3G7sl99hlhTkz3B8RYpWM503aB0WZfsDJ
+ FhTRkF9fw7j/DNAXFJ1ahGEQ9dkw9mk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776972002;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=peXunn/MN+tBFALwrP477y2MzLSfJFHU+HL5cvVNS1M=;
+ b=Qtnr5nxaEGJrI/ih5IV3LjBRPRsuTtH0XkOHgijfcQyd5Dqqmyd/Jn4GH04LjNiscd3JFq
+ rYl0NtZxe0npbJDA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=mFDNRtuG;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Qtnr5nxa
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1776972002; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=peXunn/MN+tBFALwrP477y2MzLSfJFHU+HL5cvVNS1M=;
+ b=mFDNRtuGrREx1/0t9uOVA9/KgqWI6m6cOfupfewhsNIcm9yPXSGi2h+xsFVDwHfhbhsuph
+ XN8Fgzx8ZO3aF9UOA9hcj7aphNBqImvPBkULn3G7sl99hlhTkz3B8RYpWM503aB0WZfsDJ
+ FhTRkF9fw7j/DNAXFJ1ahGEQ9dkw9mk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1776972002;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=peXunn/MN+tBFALwrP477y2MzLSfJFHU+HL5cvVNS1M=;
+ b=Qtnr5nxaEGJrI/ih5IV3LjBRPRsuTtH0XkOHgijfcQyd5Dqqmyd/Jn4GH04LjNiscd3JFq
+ rYl0NtZxe0npbJDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A9267593A3;
+ Thu, 23 Apr 2026 19:20:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SAVeHeFw6mlJCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:01 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PULL 01/43] checkpatch: Allow spaces after all coroutine annotations
+Date: Thu, 23 Apr 2026 16:19:15 -0300
+Message-ID: <20260423191958.1440-2-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260423191958.1440-1-farosas@suse.de>
+References: <20260423191958.1440-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260423094438.43556-1-prtyagi@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid,suse.de:email];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: E0A335BD43
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,36 +126,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 03:14:38PM +0530, Pranav Tyagi wrote:
-> The package_loaded event is not set in case MIG_RP_MSG_PONG does not
-> arrive on the source from the destination in the return path thread. The
-> migration thread would then be blocked waiting for package_loaded event
-> indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition the
-> source VM can safely resume as the destination has not yet started. The
-> pong message can get lost in case of a network failure or destination
-> crash before sending the pong.
-> 
-> This patch removes the package_loaded event and uses rp_sem, instead of
-> kicking multiple events. The error is detected in case of network
-> failure or destination crash and rp_sem is set in the out path of the
-> return path thread. This will kick the migration thread out from a
-> condition of indefinitely waiting for rp_sem. The migration thread then
-> fails early and breaks from the migration loop to resume the vm on the
-> source side.
-> 
-> Fixes: 7b842fe354c6 ("migration: Introduce POSTCOPY_DEVICE state")
-> Signed-off-by: Pranav Tyagi <prtyagi@redhat.com>
+The coroutine annotations may be used in the declaration of function
+pointers, which triggers checkpatch due to the space before the
+parentheses. E.g:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+  int coroutine_fn (*run)(Job *job, Error **errp);
+                  ^
+The coroutine_fn annotation is already included in the list of terms
+where spaces are allowed. Add the other coroutine annotations:
+coroutine_mixed_fn and no_coroutine_fn.
 
-I assume Juraj has looked at this already internally, in that case you can
-always attach his R-b directly when post / repost.
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260420191356.4439-1-farosas@suse.de
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ scripts/checkpatch.pl | 1 +
+ 1 file changed, 1 insertion(+)
 
-If not, then it becomes a sincere request.. :-D
-
-Thanks!
-
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index b77bd69328..e1cf2ff23b 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -2441,6 +2441,7 @@ sub process {
+ 			if ($name =~ /^(?:
+ 				if|for|while|switch|return|case|
+ 				volatile|__volatile__|coroutine_fn|
++				coroutine_mixed_fn|no_coroutine_fn|
+ 				__attribute__|format|__extension__|
+ 				asm|__asm__)$/x)
+ 			{
 -- 
-Peter Xu
+2.51.0
 
 
