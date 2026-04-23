@@ -4,116 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D359FAD41B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 06:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2588BF94CDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 06:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFnYQ-00058N-T0; Thu, 23 Apr 2026 02:28:50 -0400
+	id 1wFnyo-0000lC-8e; Thu, 23 Apr 2026 02:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wFnXt-00057H-Ab
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 02:28:17 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFnym-0000kz-JZ
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 02:56:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wFnXr-0003N0-QK
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 02:28:17 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFnyk-0003fM-9K
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 02:56:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776925694;
+ s=mimecast20190719; t=1776927360;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HZimMnG90xxxn7hT5xJhfeGfTBvNX2U6GixC/DPhQ8U=;
- b=PR59tfd/bedTX27XrFEgrHt7eA6zY+u+7qmAs9R9nQXvQ1sOD0u6Yh3j5GmQTYjvBEwKGk
- yBoss8U3i9+nBEK/nQ3WTlTGp5SsiWQq2Lhy6GPEfkSfpf7j5+TVM/jt11CDvNVIaJ5Ex8
- HUmCNiBOdjq/POVXEyhGJx1XYd780T4=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-VHrvyhrIN8-gnf7W08e8Aw-1; Thu, 23 Apr 2026 02:28:13 -0400
-X-MC-Unique: VHrvyhrIN8-gnf7W08e8Aw-1
-X-Mimecast-MFC-AGG-ID: VHrvyhrIN8-gnf7W08e8Aw_1776925692
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3614272b00cso7733959a91.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 23:28:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776925692; cv=none;
- d=google.com; s=arc-20240605;
- b=HBdGNW3LeIxguyBy8pGyLEQB5zo50u/8jp+yqizRTt4t1cu2142fKADmu7WQmzP/j0
- qdSRHUvUEsy/EmcTC+zSFlAGQX8S+rPJseLUAP/STnvTEtgeqbHHIbW/wxmcLfZ+CJU6
- X2a7RzzMwiMOekm3iO/IZb5QRYFcU/h3fZdO2/Ga/d6PZUnohX2KDMFV2bJqr7bbUrNS
- 0N8NHvGXK1CXYO4RRkiX5g3zdw/ddbwLj7yCoitakrIywF4bLVyJcYp2+6BnrgeZDGKx
- ACd410QrAVoRR7DHTBgeFYp4EEDEqBt6yy4ppqywVviHOVCqIBXjDfJkqGdlTRieJ0pa
- K43g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=HZimMnG90xxxn7hT5xJhfeGfTBvNX2U6GixC/DPhQ8U=;
- fh=8aBEJY+feA7d7ThUvpzyIH9FOGeOtT6IdrliqPJEqPM=;
- b=AQYi7edrDL8z/DFW4kgRgSxb0vsWeD+vMlSCl+Oy9Xq4E9AB3fxFMnUflNy12zKpJA
- EInOrTxn8QXvTGjmR/NQM1kW06uGwez8q+Wec7EdbWRWUcmbiOA9L5igmqCx1+VOndOj
- SYm6zS6D50usKf6NhIAbfIDRNNdMhbRoB+3UuQcfZM2IC5+/7fXREjOSUQIo89X7LjRK
- 9lL0MKLoZLuXkW4YG5D7VWJFY6pQznf07EPJ8FUBnFUSScTFOfifeIw1j00slEB4kt+2
- CPAW1rCdrohM/eOelKFm37X9riXcbDjwsD5LWXcuv/DJk0Fg7gfrRvELsil3vSofRHOM
- KdZA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776925692; x=1777530492; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HZimMnG90xxxn7hT5xJhfeGfTBvNX2U6GixC/DPhQ8U=;
- b=Q0qS8Mk70oktw5HdybmiUXENzvT3PStrHcu6QTZqD4QzilS+vrB5344cOVoAHJKYz+
- q68zWRYCRj/W0kI/jy+WBAc0pAu10Rjd7WBPE/IuBIXljochM/AFw0msHgCF2fB99E+K
- iDfE0OJR2Mg7jPCxpwnBGTfM80C1oV+IDDmqo5ZAt7zPEqxwI3GrJNDW+zIcChpkxLlw
- SPv8peQn59W+QD1C2jEIOG8SFMFRy7xF4EoRTY3Jri5OP7uKT64q146Gp6jKpKXOI5Ix
- nBnlu4zRP/+B41rvPminOpVVG99TkoDUIhRASIThVi5eSYwGuurKoSQiF1c0z+isET3s
- r64w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776925692; x=1777530492;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HZimMnG90xxxn7hT5xJhfeGfTBvNX2U6GixC/DPhQ8U=;
- b=MCtEYMwjtvio/6OxJwhbq5cILj2vDYH7CyZYiLwOn6j2l4cNvkqoJ/QKb2sVoUrYrg
- JCSfmeFDtuQHCDfE2lgD8owiyEMe6iZcwNYoWqtgdfVDF8zm1O7GvKgZ2lQGqKUXTJZg
- FOgVLue/i45cwNiCD1rpaRhdzR+8sJiTrHfpPyhq6BjnoTUrtdLXsgt1G0sFz6crbB0j
- si280OIOvVbTa+nEM1Oh5Yn6xsl1VpWO+FzB+5b5ADNkeg4QumRitoJPWfcXUAFxF2RG
- ra+1NZcRPcDt7kXvU4ksPNPHBslQNlnM1SGfwNtCuKQui6o/S6moy8PxN3tcadx+zebs
- kEQw==
-X-Gm-Message-State: AOJu0YwpUHyWM7Qym601IRCt2TfqC1cv9RL3JsrkEI1BHZ7eMWT0k4h8
- GDNzGLtkaOPH3n0wVltkdxUkUcVkFhxBBE3yaRXI6W6QFjIcCXi6e7tW4vraylTEgnfm4D1YyIM
- U66scgBxfgtxlnIotMeDy7hkS/8u46iHJCu+Y8akHe4CF4CwTgmfVIasSD7y89VVw+2kWXNaUbl
- AFSiX0iY8upRtlSnkD/WIX3XukF/0ghZU=
-X-Gm-Gg: AeBDieucAdrrq0Dq40RcC1bEmfWuxegjvRfTPXF8yyMs4rTU6xJODyAvFrs3+pvN1if
- Z0Y2ad75owg3kpXzEi/CcEpkBJPPBbcKXfu/yFb9yiMex4B4+Bjz5/dd97OPqbvGQPG7lcRBZUp
- OKUCUVjzKLHlSHwlji4V/N8nLyPrS+SG8xKsvwaNdxrJB2WKPPpMtHTrpOBIJeZ38Ysm/SEoo/w
- tF/UIAhdm4qYZ+ZmgcdwKtxb4drk3caj1Pc/YoDhBcqGenEvVrvz3s9iTn1QrbDExeK3YUmYf0h
- K3i2foCSlyoS7MqOg2O8qEl6Njjun9BDeSk=
-X-Received: by 2002:a17:90b:2fc8:b0:35d:a542:2dc4 with SMTP id
- 98e67ed59e1d1-3614047a7b8mr28157580a91.21.1776925691930; 
- Wed, 22 Apr 2026 23:28:11 -0700 (PDT)
-X-Received: by 2002:a17:90b:2fc8:b0:35d:a542:2dc4 with SMTP id
- 98e67ed59e1d1-3614047a7b8mr28157564a91.21.1776925691467; Wed, 22 Apr 2026
- 23:28:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260422202646.272081-1-marcandre.lureau@redhat.com>
- <87v7dis20c.fsf@pond.sub.org>
-In-Reply-To: <87v7dis20c.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 23 Apr 2026 10:28:00 +0400
-X-Gm-Features: AQROBzDAKViMcQkg7g_gKb0W1kjaEWHAjpQGlgd-ivMhYMdNNttNjuLUxH5Mc8Y
-Message-ID: <CAMxuvaxCkJ7PeMxOXqDXPvWRdTst93ufwEOA8hqd40XKVCWGJA@mail.gmail.com>
-Subject: Re: [PATCH] ui/console: remove console from global list on
- finalization
-To: Markus Armbruster <armbru@redhat.com>
+ bh=xjfK9MWZ6hcJYzK0aeUz9apSFrIA6E+q/8kML5lWrjU=;
+ b=NXpBce5zi83S1+waDbMbc2D5yKgaTsXYzJAmd66O+BbgPKtJ3Pgbk1lPL1a2Q9R2I74eDM
+ VgFWZg+4Xxg3z4QB9CknGB3e2ZgIBxNIsJ3mNYvGLSi16V2cvT//dCrJnCBADoD9LWdCBG
+ 5J8l8KVvyhJjxrdCsIu+YQw4H4rXO4c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-wFxkU2AHOe243UWAHz3SGQ-1; Thu,
+ 23 Apr 2026 02:55:58 -0400
+X-MC-Unique: wFxkU2AHOe243UWAHz3SGQ-1
+X-Mimecast-MFC-AGG-ID: wFxkU2AHOe243UWAHz3SGQ_1776927357
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D4F618003FC
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 06:55:57 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F01B619560AB
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 06:55:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 92BA921E6A28; Thu, 23 Apr 2026 08:55:54 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Subject: Re: [PATCH] tests: add test for json-streamer.c error recovery
+In-Reply-To: <20260331095950.512326-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Tue, 31 Mar 2026 11:59:50 +0200")
+References: <20260331095950.512326-1-pbonzini@redhat.com>
+Date: Thu, 23 Apr 2026 08:55:54 +0200
+Message-ID: <87cxzqrwqt.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -137,59 +85,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+One more thing...
 
-On Thu, Apr 23, 2026 at 9:02=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> marcandre.lureau@redhat.com writes:
->
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > This commit removes the QemuConsole from the global "consoles" list whe=
-n
-> > it is finalized.
-> >
-> > Previously, there was a TODO comment indicating this path needed
-> > checking. The assertions added ensure that `dcls`, `gl_block`, and the
-> > `dump_queue` are empty before removal, confirming the console is in a
-> > clean state.
-> >
-> > Fix potential use-after-free crashes when a display console is removed.
-> >
-> > Reported-by: Markus Armbruster <armbru@redhat.com>
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  ui/console.c | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/ui/console.c b/ui/console.c
-> > index f445db11389..b64e2122f34 100644
-> > --- a/ui/console.c
-> > +++ b/ui/console.c
-> > @@ -394,10 +394,13 @@ qemu_console_finalize(Object *obj)
-> >  {
-> >      QemuConsole *c =3D QEMU_CONSOLE(obj);
-> >
-> > -    /* TODO: check this code path, and unregister from consoles */
-> > +    assert(c->dcls =3D=3D 0);
-> > +    assert(c->gl_block =3D=3D 0);
-> > +    assert(qemu_co_queue_empty(&c->dump_queue));
->
-> Help me out: what ensures this?
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-- No display change listener left
-- No GL lock left
-- No pending screendump
-
+> Before rewriting the error recovery code to work in a push parsing
+> setup, make sure that we have tests for it.
 >
-> >      g_clear_pointer(&c->surface, qemu_free_displaysurface);
-> >      g_clear_pointer(&c->gl_unblock_timer, timer_free);
-> >      g_clear_pointer(&c->ui_timer, timer_free);
-> > +    QTAILQ_REMOVE(&consoles, c, next);
+> Cover various cases of invalid JSON, to check that structural
+> recovery based on balanced brackets and braces works; and
+> lexer-based recovery which documents "\f" as a sure fire
+> way to reset the lexer.
 >
-> Is @consoles only accessed from the main thread?
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  tests/unit/check-json-parser.c | 145 +++++++++++++++++++++++++++++++++
+>  tests/unit/meson.build         |   1 +
+>  2 files changed, 146 insertions(+)
+>  create mode 100644 tests/unit/check-json-parser.c
+>
+> diff --git a/tests/unit/check-json-parser.c b/tests/unit/check-json-parser.c
+> new file mode 100644
+> index 00000000000..ca2d5f41097
+> --- /dev/null
+> +++ b/tests/unit/check-json-parser.c
+> @@ -0,0 +1,145 @@
+> +/*
+> + * Unit tests for JSON Parser error recovery
+> + *
+> + * Copyright 2026 Red Hat
+> + * Author: Paolo Bonzini <pbonzini@redhat.com>
+> + *
+> + * This work is licensed under the terms of the GNU LGPL, version 2.1 or later.
+> + * See the COPYING.LIB file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "qapi/error.h"
+> +#include "qobject/qbool.h"
+> +#include "qobject/json-parser.h"
+> +
+> +typedef struct ParseResult {
+> +    int errors;
+> +    QObject *result;
+> +} ParseResult;
+> +
+> +static void parse_emit(void *opaque, QObject *json, Error *err)
+> +{
+> +    ParseResult *r = opaque;
+> +
+> +    if (err) {
+> +        r->errors++;
+> +        error_free(err);
+> +    } else {
+> +        qobject_unref(r->result);
 
-Yes, the UI code is main thread only.
+Unexpected calls to parse_emit() won't be detected as long as the last
+one yields the expected expression.  Worth detecting?  I'm not quite
+sure.  As far as I can tell, this is not reached at the moment.
+
+The stupidest way to detect is to assert r->result is still null.
+
+Can't do that if we want to cover parsing multiple JSON expressions in
+sequence.  Collect all the results in an array?
+
+Leave for later, with a short comment?
+
+Up to you.
+
+> +        r->result = json;
+> +    }
+> +}
+
+[...]
 
 
