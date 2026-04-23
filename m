@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 197A0FAD3EF
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 02:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8717AFAD3EF
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 02:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFjp3-0004Wq-NV; Wed, 22 Apr 2026 22:29:45 -0400
+	id 1wFjqG-0005E6-W4; Wed, 22 Apr 2026 22:31:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFjox-0004VS-TC
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:29:43 -0400
-Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
+ id 1wFjq7-0005CQ-Ba
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:30:53 -0400
+Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFjow-0002RF-0w
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:29:39 -0400
-Received: by mail-qk1-x72b.google.com with SMTP id
- af79cd13be357-8d65f4073bfso830744885a.3
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 19:29:37 -0700 (PDT)
+ id 1wFjq5-0002u9-Ph
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 22:30:51 -0400
+Received: by mail-qk1-x729.google.com with SMTP id
+ af79cd13be357-8ee62a19730so234130585a.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 19:30:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776911376; x=1777516176; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776911449; x=1777516249; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WJl5uIGeubjw5eMBBcZrVzTYzOteaPmJsuft1HJPUic=;
- b=Af/z59aYRbWXLTO+nhnR5/vzs3GK4Cd2ZchnJtlI8UHOIdSkVLKDoez5HmDbDhnuSI
- jjlF2mKVe78SpOzWSyWfDZoYUpppM/x0HHs02i9xUh1K50WLQms8jh/+M8FCFTJLBsLw
- p25iBmn1AkWgasn6vUbFXBXSIlI52Kc7Ag3gTEgJ9yA53dFVFt7UD7ZNLYCWYB0ph0ie
- 5fvv2s8jTpTbrHgUORDPGKF2ouv8e2SlRig0UbXCpsmUFrsQj/K+Bou1z2xDGI7JgL++
- /xS6UTi1GsePGBwgrBROHVs1RPaGbc2RjCghBWzW881AV4kGKZwBNty2IJ/tVEcN0TFn
- ppcw==
+ bh=zYDYEXizfW6rvTyRVJFbPKbXP1tHt3hmW5DfTtI+Wqo=;
+ b=R1QBeXQmwwFVyCZfWXhGt5WzJPTjlKTtexDiVmvGwd0az3PsRjCkIUxhvADT8xnjTj
+ wIUNZEHV5fDFTwObE6EteMzkUfowF6lV7u0bg6It9dCshUUcMqjTeQgNOh77RFHMEOty
+ 0x4XlRdgYGAaD1N7+HbA2tjXuw5DBuru7MPYudby0jpLYb5E66Zb57JpBDEfIcYCmFiy
+ UBdMHL/3Z0hA/+e8cfTGTOgOFPPd70DMo9o2KgNJDvTDvwXZzmX9B1Pcln41QBzFqLTZ
+ CePmlWoiHbfKRUy8zOH6iw1t1GwnT+lTAM/irW1BT55vagSgCMZujzbboW1s4QZkqyya
+ tccw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776911376; x=1777516176;
+ d=1e100.net; s=20251104; t=1776911449; x=1777516249;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WJl5uIGeubjw5eMBBcZrVzTYzOteaPmJsuft1HJPUic=;
- b=b0Jls1VgsYDZLLIg464JpsDWZ1JdzawVuwNWBmofReEeTSmw806uWQ6uDws2HSOF/f
- Y23zvZhLAnRSgbpwx4SiYWNX/rSrMzyCVdexfWfVDLa392HdvjYCuNocTFeJTc4P6FWX
- 9KzkPadI4jmUDzxldPQRnZzrSRlx1xH7r6FjLOC3FE76TZVLiLdtGPVHVNcHkZ8n32vz
- cROzNG/ztRS2IaXM3qnJLK3LsykI1C+AHnImgUOH1nVEnmjAngL4HoAYMVswa186dIgS
- nP8EasWUVqXEb5p2/D1DljEsXciGDhAacYTbv3fQ7tC0pvLarVLQXZMMu7RkZr32RbfF
- +hyw==
+ bh=zYDYEXizfW6rvTyRVJFbPKbXP1tHt3hmW5DfTtI+Wqo=;
+ b=N4Y5Sb9Zj9JQJ8w4Y2iw4wmZelpU0PkA7HDRWnPt1sfkatDw3mDJTgfVEh1fHxJKZ0
+ s6enwn5TGDiEcc99S7TW6IbEgy7pqS90VpMGlF5tthtSKHU3YDYuPwM3O4JEZJV8HCZL
+ PkUYwwdMvP08eNsaTf/JSIMKqT/nYy/RpKPc+Iisf0Rk+jiZS0zdeVBSo+UirpqJo8M4
+ jbh/E7lSb2mIWAGPHyguB9iWBqHpDQ62ZtjVpkngQVWmFocDLD9QpivGFvjU4N/5PlW5
+ LkKslnY3YmS4RK4kiEvKtxbfUuIcBszu2e4hmDAQf7en4JOYsn40zAXLl4AP0s4yoPzv
+ QxhQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9Tas8F8NHJ0Nd+hX7p6Ed88vIn8BORgylB8OCeOG55CsXOz6MmBy142LqOg7bI+IjSjBpnbE/9tzum@nongnu.org
-X-Gm-Message-State: AOJu0Yywndm2206+VCNpe3BI7jZEn4gnNOEnsox3yObhUc6k4P5Pm5og
- epgKby8PYjEHw82rLdCyxsG6WEYMLJhZXcZtfjaVlcQWEUERgv0sxoBMiGw9e/ftd4E=
-X-Gm-Gg: AeBDieuVyXvqSiyQK+GlOj3SbZ5uuHA1pjf2KlKIZh+OVfBFzQv+yMWB0/GknD0ZiLm
- fijJ1sRWhVocW6teQbmMR2KgAVTxXGmhNKkLydc76DXUzezi4HuVqoPaMz9P1UNcEEmunuFUsjo
- PTHtdIl8UZ+PQzQOhXfNtICZIeSlLpKRGLP0ClhNd3LlAlm97OzjQg5ojPZ223/br2mu8waKuNs
- I+4J7YzyiX3F8s9j1WU9UkRjAlSYJrDWMVVDG5lM8Kh2j1+GiGCzXpWIv/pVbNeIyDJz6rBbhK6
- l21po7QrCmkPb1jwHgET8q2yZ7dJlsQshbIY9CH5bHj94EsMY3ddYaLsSyGVxmkKnYCG5wGD0yd
- npryh/ckcc9SQcMlSRDgmzbf1M6bnEG1Yr988Epu/H7f7AVZpHgN6nj/Swfsbgwl4MQExlidGvI
- oyNzEB20sGCa5uxkbFJ7V4XFNI61Y7DYMBSdZ8xs504OQN1KeKJiEP1FrYTPVfRBiYFJPXjZ38s
- TYB7dSm+Gcyzj2+irRJoYp0JzfT8JJDACoVxro=
-X-Received: by 2002:a05:620a:2a08:b0:8ee:54a3:ba2b with SMTP id
- af79cd13be357-8ee54a3c105mr1438776285a.47.1776911376398; 
- Wed, 22 Apr 2026 19:29:36 -0700 (PDT)
+ AFNElJ9xuOAZWuhEbo40j7BK7MKWkyUaJJJd58mfo4WUwHgQJappFeLHOVWtS0LFq649yvvDuiQ6E6jLt8kw@nongnu.org
+X-Gm-Message-State: AOJu0YxBqdYicIBjHiWWFjBHtdz6I0fnI2Pm3lcoRYON9QhffwXH7RdP
+ 4yLYI05X633E4vY7zwBg2AMIw+JW54MhNYUYIgVIzVW8URnqA485V2deVxXkpMNScqg=
+X-Gm-Gg: AeBDieuVACdgtYd5O226VXfEf32bEwTDU8YhGbkQxRqGbKfAvwhjLNUU/ESpNC0p1cI
+ 064k4TdD74MY6EVL4mTaZ/Gj3J78FAdO/b456jEz+HKNnjWJpddoyGBNpAEuINGXmXAX9dvaVo4
+ t2dGDtP1Q0m24UQJQ3sCCHs4ngCjvDRLHLAIBf/9yw+UlPcMzGTiSiKmIo6loQl04TL0a2BaGVZ
+ 4WL3FMny75/FsQwDcZkyJ+z1K3eNSO91O9IRlhJ3FZ21H5oCxp2oUAsLXDMimV5+NsvzZgsEGca
+ WKo1gWAyjPyBQ8bFRcz6ZRxMH8NSYR9FZrCfUvWBCI7JE1FFfkosnDJRHvKV0t53Hakoa836WvJ
+ GKkzFcMwbYKC++EGqoFQGHy+8gGgg42Y/WckjtVOaHfhj43TfvaVYNNW8FBJZrz7p+z7QoXrPZj
+ Z9WGwIdBGuI+LJrcWk7z8hsMdnDWikggKP/ZzoFNsZNxNqNrXngI3ZnOtT7l2pqLQHbCNuWgIqS
+ n+2AYhcAN8dQ+UsYvEpBiP6f1VM
+X-Received: by 2002:a05:620a:178a:b0:8d7:f950:ea68 with SMTP id
+ af79cd13be357-8e78f24ddfdmr3724454485a.13.1776911448665; 
+ Wed, 22 Apr 2026 19:30:48 -0700 (PDT)
 Received: from [10.72.56.227] ([172.59.184.224])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8ee585e9fcdsm622228085a.16.2026.04.22.19.29.33
+ af79cd13be357-8eb19632130sm1112106685a.41.2026.04.22.19.30.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 19:29:36 -0700 (PDT)
-Message-ID: <a518ef56-b11b-494e-a6ac-39acafc3d331@linaro.org>
-Date: Thu, 23 Apr 2026 12:29:29 +1000
+ Wed, 22 Apr 2026 19:30:48 -0700 (PDT)
+Message-ID: <c780ccb4-1490-4c04-bf15-43822c0b5266@linaro.org>
+Date: Thu, 23 Apr 2026 12:30:41 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/17] target/s390x: Make get_phys_page_debug handle
+Subject: Re: [PATCH 07/17] target/ppc: Make get_phys_page_debug handle
  non-page-aligned addrs
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260417173105.1648172-1-peter.maydell@linaro.org>
- <20260417173105.1648172-7-peter.maydell@linaro.org>
+ <20260417173105.1648172-8-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260417173105.1648172-7-peter.maydell@linaro.org>
+In-Reply-To: <20260417173105.1648172-8-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x72b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x729.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,8 +108,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/18/26 03:30, Peter Maydell wrote:
-> Currently our implementations ofSysemuCPUOps::get_phys_page_debug
-> andSysemuCPUOps::get_phys_page_attrs_debug are a mix of "accepts a
+> Currently our implementations of SysemuCPUOps::get_phys_page_debug
+> and SysemuCPUOps::get_phys_page_attrs_debug are a mix of "accepts a
 > non-page-aligned virtual address and returns the corresponding
 > non-page-aligned physical address" and "only returns a page-aligned
 > physical address".  This is awkward for callsites, which in practice
@@ -119,24 +119,31 @@ On 4/18/26 03:30, Peter Maydell wrote:
 > sub-page-sized granularity.  We want to standardize on the
 > implementation having to handle non-page-aligned addresses.
 > 
-> s390x already has an implementation of "give me the actual physical
-> address, not rounded down", in s390_get_phys_addr_debug(), so we can
-> use this for theSysemuCPUOps::get_phys_page_debug method, and merge
-> the s390_cpu_get_phys_page_debug() function into
-> s390_get_phys_addr_debug() which is now its only caller.
+> The ppc_xlate() function can accept a non-page-aligned input but may
+> return a page-aligned output; we take the simple approach of ORing
+> the page offset back into the result address after calling it.
 > 
-> This leaves the function implementing the method with a name
-> that doesn't match the method name, but we will fix that shortly
-> by renaming the method to *_addr_* for all targets.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/s390x/cpu-system.c     |  2 +-
->   target/s390x/helper.c         | 20 +++++---------------
->   target/s390x/s390x-internal.h |  1 -
->   3 files changed, 6 insertions(+), 17 deletions(-)
+>   target/ppc/mmu_common.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+> 
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index 52d48615ac..a1345df716 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -863,7 +863,7 @@ hwaddr ppc_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+>                     ppc_env_mmu_index(&cpu->env, false), false) ||
+>           ppc_xlate(cpu, addr, MMU_INST_FETCH, &raddr, &s, &p,
+>                     ppc_env_mmu_index(&cpu->env, true), false)) {
+> -        return raddr & TARGET_PAGE_MASK;
+> +        return raddr | (addr & ~TARGET_PAGE_MASK);
+>       }
+>       return -1;
+>   }
+
 
