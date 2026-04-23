@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F17ECF99367
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4DF7F99366
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqtY-0006MJ-Dv; Thu, 23 Apr 2026 06:02:52 -0400
+	id 1wFqun-0000Ru-L5; Thu, 23 Apr 2026 06:04:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtQ-0006Jq-Mg
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:45 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wFquK-0006ra-C1
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:40 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtO-000201-Gg
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:44 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso59717235e9.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:02:42 -0700 (PDT)
+ id 1wFquI-0002Uv-F7
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:40 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4411e1eba51so3072738f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938561; x=1777543361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938617; x=1777543417; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GE5heDTE24qeg7bs1UHIGmavXNoRi4sL8/ptSkR7ee0=;
- b=RZV/iMPR9TFjwRPnAfIFwe50fHcNM7UafybEXBQZtQDXa+TfoggmV4opUKzTAMPSje
- UeFtUOtsNc1IOW784sIsSsrch4MHXpM49hZIBrry9rrmCvSp5mbXmgFexqs6V53tpYqz
- J6rC6417uhokEQHSYqnEkDJaBHFhTcC7CIihJqHHoO4zWUXoPN4rmaCxx4ZDfxMsNDIp
- 638mtY2cANPBzA0eP6SCtkBvvOi/nSla6F3w8H73mGgvEuFaPK70RAODeiQQtTeudVLe
- ytgtSdTqoGcqy6vdoRJv8lIOQlIfn9eQ6vpcp/M3tD3OcrwGAd+zpXr9xo5qNlXLydao
- E6cw==
+ :reply-to; bh=/XP138kta01scYB1bF3t+1hO+RwaAXtXBB09kK0OFo8=;
+ b=ToGVwjIv4j9BOBJup9EJW7aRcaEKDmtJA/J6VlVxp/Lf9pcmYtoEba3ALXFTwjYKqr
+ AhJ5m81FtJz0kMla6FRQEhZ6zXwzroo7RPuHdoGJgm77uEP+BIKDhWR6wmC/Zle6R1YL
+ 1rw71JHU7CodR2iK4/Z1pJLzxpUG13/rhNHvmrUvoEozGOfMizsiYF0dAISatSt/2z08
+ elu3Skqk9xYCSyLfNLvBudruYjVE5XJUixu0LnSqm2bJHNTc8+e6I9l0/uzTxjF0euIS
+ 6Qa0FKGGVNd1kzRMtzj8SHIyMWCsoi5cxUG7nsJb6ItQTF0tOwyZOTasI+y43uXlMa57
+ R8gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938561; x=1777543361;
+ d=1e100.net; s=20251104; t=1776938617; x=1777543417;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=GE5heDTE24qeg7bs1UHIGmavXNoRi4sL8/ptSkR7ee0=;
- b=GJTMnwQ5AG4SHQ4N8s4kER6qjPiS52aNxruuCplAL6TEB0CJ8DinaCXdP8TCLwOPpE
- IYhqqCfJoIwcROIC5xFki5Dq1yndYwKkMu7S+Jf5VujG5wt9VQExI+3/1noWyq/6Bz8m
- J29WUtZuntJY/WTmyZ4CK8lN6QVQHfGJJmXQl2UT6Eb9IFdTEGqvPCwYpduDlQniSgP1
- oJGyNM/j+gcjSq50evP3WWjU+e8waiH7Idi8X14Jv57nCx9ss3EMtCdrHXg/NVTlonsE
- 3ngp3ACUR7pjycr9/aFLwnc15ATxPSrsvpq+xZ5BiGDip8/8Grk5JZPKnA4ibYGHSyRL
- z2iA==
-X-Gm-Message-State: AOJu0YzMwjsD+bxTarNeRvZfLRay2vlyLy/wvj9yW4U96OD44s1rNfMQ
- H/KwoJ+6WCVdR2wQSBXu1VQCbs3bkg5JDOW/5eqW6PsY8PEtv9sgh6aHh6SwKlxmZCQtTIVMW5S
- o+6jo
-X-Gm-Gg: AeBDiesZ5gyogi9naR95c2OJbQdBsYuwMXeFOYx9JSV5Lnq/qRrqn9CczhBIP9uJl8A
- LGP7YWi0BVqYouGKyj2dYmYMO4E9ol2EufwGVCrLA9PXYJlHhyQ3UXbO9Zw6L/iHDm5JOa1MmB6
- wSQrLeR8En01YmR1erxQCkYa0611AurdmJqOZVeYTfZkaFkdF0dEhVJV824wZZeajBpPmROOco4
- JoQ6N2U3GirtoFTr4RdI/QDUF/aLAUJo1K0wJTtGVe5UfeYfCQSCLC6CDHtQrLUm/F7eINvH3jV
- 049d0DGxcf5P8dwJJ4XrLPZ6vC2OjE1e0i/0RDbp54yAQDGBhfFWCI4THgQqXmHrSNlB3rf1Zyo
- 1RFJilnp671Bzgt1tUWE+E5tLddIAoqrzF2PJKdfdL6aaYSoyWQC+rITVYVlMdsbuINWRHsfWrN
- 8L2FhU7HbYO3euZegmtY7ClHvILoHkQJYguOQ9b0EATF02LCZvvz2uSn5NJjeDnUwKtmQj+uZr3
- SB148x/tIWk6nkfz++m6DyzHmbRFnW/afgOlqlH4eNHfk1F0zRS
-X-Received: by 2002:a05:6000:2909:b0:43f:e22d:e624 with SMTP id
- ffacd0b85a97d-43fe3db3cb2mr38391922f8f.1.1776938560794; 
- Thu, 23 Apr 2026 03:02:40 -0700 (PDT)
+ bh=/XP138kta01scYB1bF3t+1hO+RwaAXtXBB09kK0OFo8=;
+ b=XVSWA01tnZZ6CmiJxhyfBmvrCxLnRBbiBW5CrFOs2SKG74dic08i1bt+wCnrK+RP5U
+ bJV4hVBqjaTtZdhoOd35WkA4wzkeeisRtVIFBIYxZv0sdj2lMTUF7mRsh3gIVrjqu8y0
+ qYh4cVE42kWMxqLhKXZ352f+WgwOl3Dv9///o7zMw7+PyAkrOXKqdULS5sH9GPlXnmvQ
+ i3lmwgEQLNkkYJkBLZQf8FzI64wKjWtszYPXCqvjAyaDf1hROn47KH5Y2aLOAwenT/a1
+ RLycX2aSBmEEtwxXEbtqFTR0phTEQs9FXsZ1/dkQHyyzEJ1u0A6s49pNmD5Bi+3h6Yub
+ VzlA==
+X-Gm-Message-State: AOJu0YzkpmPfE/hP+5+OsBIUt030ZwJOphOd5yq4XJq31hR/vmVBSIuP
+ NntaGB2rHR79nYGgyAjpvV5T51Qyqk6+xPLBSM0GaR1mCWlLXPIYdGkcOs5m7pN5ZbV3KntfTKE
+ B7BwZ
+X-Gm-Gg: AeBDieuJ53dxeUmZ8Ea9bENJaU6OX2xRH7nx5TIjLddDit137FCB53ostst1HvYKNXf
+ 0BEgzee7CCt4PYKpS1PtyJl4lEbus5OKmoCHjCneJHUMIJx3oV5OG2gaJCGq1R9tiqugAi55pKd
+ C88Fw2HBv+BoxC9esJptEGRIjYgXjb5phcQ1NWbh2bQFX+TbiRkvZ72mM+zgX/HTEwHvNnK/9xB
+ O4kl2QOm5IW2mz+16qrrCYC1OpDZsMCjCXxbvdHetceCqgal5MD5/TPXT1rwkd8eIodbUCzALAE
+ 466yHjdijwreIhO5h7LBaK2X4YMx7xf6YVGdXGJKDJtQLhFmPICFKAQE3F6XYFOhMdf8+sRukBm
+ V2JhQYadT92ADHVv42zm+VHGtX0bHjgiMmU4tLwZszJoBZmK3F6ysroymubUsewv7E8e7dXDE2Y
+ oilGWOPn2+TIS7Qp/vBubtOuboFn5i/UVHq6ZGFprnibN1jj1n3ObjmoMshzuNG3sAZvXpM6thH
+ 9HZXpyHnRnUpyO12ZzzXGgQihdNLKQg28DN2JeW6w==
+X-Received: by 2002:a05:6000:40dc:b0:43d:1bf6:927 with SMTP id
+ ffacd0b85a97d-43fe3dc7558mr41960104f8f.14.1776938616734; 
+ Thu, 23 Apr 2026 03:03:36 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.39
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:02:40 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:35 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/59] target/arm: Move OMAP CP15 register definitions to
- cpregs-omap.c
-Date: Thu, 23 Apr 2026 11:01:39 +0100
-Message-ID: <20260423100229.2941820-10-peter.maydell@linaro.org>
+Subject: [PULL 59/59] MAINTAINERS: Remove Xie Changlong
+Date: Thu, 23 Apr 2026 11:02:29 +0100
+Message-ID: <20260423100229.2941820-60-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,269 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alessandro Ratti <alessandro@0x65c.net>
+Xie Changlong has not posted to qemu-devel in some years and did not
+respond to a query about whether they still wished to be listed in
+our MAINTAINERS file.  Remove them, on the assumption that they are
+no longer active in QEMU.
 
-The OMAP CP15 registers are only relevant to system-mode emulation
-of OMAP SoCs. Move them out of the monolithic helper.c into a
-dedicated file, following the pattern of cpregs-pmu.c and
-cpregs-gcs.c. This reduces the size of helper.c and compiles
-the OMAP-specific code out of CONFIG_USER_ONLY builds.
+This makes the "Replication" block filter orphan.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
-Message-id: 20260405180826.729652-1-alessandro@0x65c.net
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Lukas Straub <lukasstraub2@web.de>
+Message-id: 20260416091654.316158-29-peter.maydell@linaro.org
 ---
- target/arm/cpregs-omap-stub.c | 10 ++++
- target/arm/cpregs-omap.c      | 88 +++++++++++++++++++++++++++++++++++
- target/arm/helper.c           | 79 +------------------------------
- target/arm/internals.h        |  2 +
- target/arm/meson.build        |  2 +
- 5 files changed, 103 insertions(+), 78 deletions(-)
- create mode 100644 target/arm/cpregs-omap-stub.c
- create mode 100644 target/arm/cpregs-omap.c
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/target/arm/cpregs-omap-stub.c b/target/arm/cpregs-omap-stub.c
-new file mode 100644
-index 0000000000..39c511205c
---- /dev/null
-+++ b/target/arm/cpregs-omap-stub.c
-@@ -0,0 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "target/arm/cpu-qom.h"
-+#include "internals.h"
-+
-+void define_omap_cp_regs(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/arm/cpregs-omap.c b/target/arm/cpregs-omap.c
-new file mode 100644
-index 0000000000..ac855baada
---- /dev/null
-+++ b/target/arm/cpregs-omap.c
-@@ -0,0 +1,88 @@
-+/*
-+ * QEMU ARM OMAP CP15 register definitions
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "target/arm/cpu.h"
-+#include "target/arm/cpregs.h"
-+#include "target/arm/internals.h"
-+
-+static void omap_ticonfig_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                uint64_t value)
-+{
-+    env->cp15.c15_ticonfig = value & 0xe7;
-+    /* The OS_TYPE bit in this register changes the reported CPUID! */
-+    env->cp15.c0_cpuid = (value & (1 << 5)) ?
-+        ARM_CPUID_TI915T : ARM_CPUID_TI925T;
-+}
-+
-+static void omap_threadid_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                uint64_t value)
-+{
-+    env->cp15.c15_threadid = value & 0xffff;
-+}
-+
-+static void omap_wfi_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                           uint64_t value)
-+{
-+    /* Wait-for-interrupt (deprecated) */
-+    cpu_interrupt(env_cpu(env), CPU_INTERRUPT_HALT);
-+}
-+
-+static void omap_cachemaint_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
-+{
-+    /*
-+     * On OMAP there are registers indicating the max/min index of dcache lines
-+     * containing a dirty line; cache flush operations have to reset these.
-+     */
-+    env->cp15.c15_i_max = 0x000;
-+    env->cp15.c15_i_min = 0xff0;
-+}
-+
-+static const ARMCPRegInfo omap_cp_reginfo[] = {
-+    { .name = "DFSR", .cp = 15, .crn = 5, .crm = CP_ANY,
-+      .opc1 = CP_ANY, .opc2 = CP_ANY, .access = PL1_RW, .type = ARM_CP_OVERRIDE,
-+      .fieldoffset = offsetoflow32(CPUARMState, cp15.esr_el[1]),
-+      .resetvalue = 0, },
-+    { .name = "", .cp = 15, .crn = 15, .crm = 0, .opc1 = 0, .opc2 = 0,
-+      .access = PL1_RW, .type = ARM_CP_NOP },
-+    { .name = "TICONFIG", .cp = 15, .crn = 15, .crm = 1, .opc1 = 0, .opc2 = 0,
-+      .access = PL1_RW,
-+      .fieldoffset = offsetof(CPUARMState, cp15.c15_ticonfig), .resetvalue = 0,
-+      .writefn = omap_ticonfig_write },
-+    { .name = "IMAX", .cp = 15, .crn = 15, .crm = 2, .opc1 = 0, .opc2 = 0,
-+      .access = PL1_RW,
-+      .fieldoffset = offsetof(CPUARMState, cp15.c15_i_max), .resetvalue = 0, },
-+    { .name = "IMIN", .cp = 15, .crn = 15, .crm = 3, .opc1 = 0, .opc2 = 0,
-+      .access = PL1_RW, .resetvalue = 0xff0,
-+      .fieldoffset = offsetof(CPUARMState, cp15.c15_i_min) },
-+    { .name = "THREADID", .cp = 15, .crn = 15, .crm = 4, .opc1 = 0, .opc2 = 0,
-+      .access = PL1_RW,
-+      .fieldoffset = offsetof(CPUARMState, cp15.c15_threadid), .resetvalue = 0,
-+      .writefn = omap_threadid_write },
-+    { .name = "TI925T_STATUS", .cp = 15, .crn = 15,
-+      .crm = 8, .opc1 = 0, .opc2 = 0, .access = PL1_RW,
-+      .type = ARM_CP_NO_RAW,
-+      .readfn = arm_cp_read_zero, .writefn = omap_wfi_write, },
-+    /*
-+     * TODO: Peripheral port remap register:
-+     * On OMAP2 mcr p15, 0, rn, c15, c2, 4 sets up the interrupt controller
-+     * base address at $rn & ~0xfff and map size of 0x200 << ($rn & 0xfff),
-+     * when MMU is off.
-+     */
-+    { .name = "OMAP_CACHEMAINT", .cp = 15, .crn = 7, .crm = CP_ANY,
-+      .opc1 = 0, .opc2 = CP_ANY, .access = PL1_W,
-+      .type = ARM_CP_OVERRIDE | ARM_CP_NO_RAW,
-+      .writefn = omap_cachemaint_write },
-+    { .name = "C9", .cp = 15, .crn = 9,
-+      .crm = CP_ANY, .opc1 = CP_ANY, .opc2 = CP_ANY, .access = PL1_RW,
-+      .type = ARM_CP_CONST | ARM_CP_OVERRIDE, .resetvalue = 0 },
-+};
-+
-+void define_omap_cp_regs(ARMCPU *cpu)
-+{
-+    define_arm_cp_regs(cpu, omap_cp_reginfo);
-+}
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7389f2988c..3ac88078aa 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2900,83 +2900,6 @@ static const ARMCPRegInfo ttbcr2_reginfo = {
-     },
- };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ed77b28c2a..facc4b499a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4384,8 +4384,7 @@ F: block/export/vduse-blk.c
+ F: block/export/vduse-blk.h
  
--static void omap_ticonfig_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                uint64_t value)
--{
--    env->cp15.c15_ticonfig = value & 0xe7;
--    /* The OS_TYPE bit in this register changes the reported CPUID! */
--    env->cp15.c0_cpuid = (value & (1 << 5)) ?
--        ARM_CPUID_TI915T : ARM_CPUID_TI925T;
--}
--
--static void omap_threadid_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                uint64_t value)
--{
--    env->cp15.c15_threadid = value & 0xffff;
--}
--
--static void omap_wfi_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                           uint64_t value)
--{
--#ifdef CONFIG_USER_ONLY
--    g_assert_not_reached();
--#else
--    /* Wait-for-interrupt (deprecated) */
--    cpu_interrupt(env_cpu(env), CPU_INTERRUPT_HALT);
--#endif
--}
--
--static void omap_cachemaint_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                  uint64_t value)
--{
--    /*
--     * On OMAP there are registers indicating the max/min index of dcache lines
--     * containing a dirty line; cache flush operations have to reset these.
--     */
--    env->cp15.c15_i_max = 0x000;
--    env->cp15.c15_i_min = 0xff0;
--}
--
--static const ARMCPRegInfo omap_cp_reginfo[] = {
--    { .name = "DFSR", .cp = 15, .crn = 5, .crm = CP_ANY,
--      .opc1 = CP_ANY, .opc2 = CP_ANY, .access = PL1_RW, .type = ARM_CP_OVERRIDE,
--      .fieldoffset = offsetoflow32(CPUARMState, cp15.esr_el[1]),
--      .resetvalue = 0, },
--    { .name = "", .cp = 15, .crn = 15, .crm = 0, .opc1 = 0, .opc2 = 0,
--      .access = PL1_RW, .type = ARM_CP_NOP },
--    { .name = "TICONFIG", .cp = 15, .crn = 15, .crm = 1, .opc1 = 0, .opc2 = 0,
--      .access = PL1_RW,
--      .fieldoffset = offsetof(CPUARMState, cp15.c15_ticonfig), .resetvalue = 0,
--      .writefn = omap_ticonfig_write },
--    { .name = "IMAX", .cp = 15, .crn = 15, .crm = 2, .opc1 = 0, .opc2 = 0,
--      .access = PL1_RW,
--      .fieldoffset = offsetof(CPUARMState, cp15.c15_i_max), .resetvalue = 0, },
--    { .name = "IMIN", .cp = 15, .crn = 15, .crm = 3, .opc1 = 0, .opc2 = 0,
--      .access = PL1_RW, .resetvalue = 0xff0,
--      .fieldoffset = offsetof(CPUARMState, cp15.c15_i_min) },
--    { .name = "THREADID", .cp = 15, .crn = 15, .crm = 4, .opc1 = 0, .opc2 = 0,
--      .access = PL1_RW,
--      .fieldoffset = offsetof(CPUARMState, cp15.c15_threadid), .resetvalue = 0,
--      .writefn = omap_threadid_write },
--    { .name = "TI925T_STATUS", .cp = 15, .crn = 15,
--      .crm = 8, .opc1 = 0, .opc2 = 0, .access = PL1_RW,
--      .type = ARM_CP_NO_RAW,
--      .readfn = arm_cp_read_zero, .writefn = omap_wfi_write, },
--    /*
--     * TODO: Peripheral port remap register:
--     * On OMAP2 mcr p15, 0, rn, c15, c2, 4 sets up the interrupt controller
--     * base address at $rn & ~0xfff and map size of 0x200 << ($rn & 0xfff),
--     * when MMU is off.
--     */
--    { .name = "OMAP_CACHEMAINT", .cp = 15, .crn = 7, .crm = CP_ANY,
--      .opc1 = 0, .opc2 = CP_ANY, .access = PL1_W,
--      .type = ARM_CP_OVERRIDE | ARM_CP_NO_RAW,
--      .writefn = omap_cachemaint_write },
--    { .name = "C9", .cp = 15, .crn = 9,
--      .crm = CP_ANY, .opc1 = CP_ANY, .opc2 = CP_ANY, .access = PL1_RW,
--      .type = ARM_CP_CONST | ARM_CP_OVERRIDE, .resetvalue = 0 },
--};
--
- static const ARMCPRegInfo dummy_c15_cp_reginfo[] = {
-     /*
-      * RAZ/WI the whole crn=15 space, when we don't have a more specific
-@@ -7043,7 +6966,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_arm_cp_regs(cpu, cache_block_ops_cp_reginfo);
-     }
-     if (arm_feature(env, ARM_FEATURE_OMAPCP)) {
--        define_arm_cp_regs(cpu, omap_cp_reginfo);
-+        define_omap_cp_regs(cpu);
-     }
-     if (arm_feature(env, ARM_FEATURE_STRONGARM)) {
-         define_arm_cp_regs(cpu, strongarm_cp_reginfo);
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 85980f0e69..6b16f1a560 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1799,6 +1799,8 @@ void define_at_insn_regs(ARMCPU *cpu);
- void define_pm_cpregs(ARMCPU *cpu);
- /* Add the cpreg definitions for GCS cpregs */
- void define_gcs_cpregs(ARMCPU *cpu);
-+/* Add the cpreg definitions for OMAP CP15 regs */
-+void define_omap_cp_regs(ARMCPU *cpu);
- 
- /* Effective value of MDCR_EL2 */
- static inline uint64_t arm_mdcr_el2_eff(CPUARMState *env)
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 6e0e504a40..192ac7c31e 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -33,6 +33,7 @@ arm_user_ss.add(files(
-   'helper.c',
-   'vfp_fpscr.c',
-   'el2-stubs.c',
-+  'cpregs-omap-stub.c',
- ))
- arm_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- 		        if_true: files('common-semi-target.c'))
-@@ -48,6 +49,7 @@ arm_common_system_ss.add(files(
-   'arm-powerctl.c',
-   'cortex-regs.c',
-   'cpregs-gcs.c',
-+  'cpregs-omap.c',
-   'cpregs-pmu.c',
-   'cpu-irq.c',
-   'debug_helper.c',
+ Replication
+-M: Xie Changlong <xiechanglong.d@gmail.com>
+-S: Supported
++S: Orphan
+ F: replication*
+ F: block/replication.c
+ F: tests/unit/test-replication.c
 -- 
 2.43.0
 
