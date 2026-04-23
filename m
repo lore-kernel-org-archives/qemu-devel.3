@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BECFDEE51
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 22:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B0E1FDEE52
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 22:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG26m-0005mM-3i; Thu, 23 Apr 2026 18:01:16 -0400
+	id 1wG26X-0005jN-CK; Thu, 23 Apr 2026 18:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wG26j-0005lc-BX
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:01:14 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wG26U-0005if-OD
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wG26h-0005vg-Eb
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:01:13 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wG26S-0005oL-Q1
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776981670;
+ s=mimecast20190719; t=1776981656;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XiN9lkMfA+GHJWcM7MksfC6FyoKtwwBmXVuhnOqfuSM=;
- b=cGYg66uQOST4JslUE9TmStyGj5VzOfkY7XR4+DuVe50B23U7VtNV1YCgousj+shgBKDFVS
- bpGOB2Om43mSGvyusEXmk7lLjXi+V02ocRwvj9fzP1rxu2XWrL2I5puUOWc6cNFm7ifo5s
- sKZL1zAJcrdWqUcc/3q4r7pvN4PmbkY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=GJwsAHqVNyKJNf+9t90voerKf684uX/eo0z3dIcCjdA=;
+ b=dR83mil9PjrH4NVqQS9GpPB0Gg6HFBzRKWOaZhECPK26IPLIx0JN6jAOHA6nRErIsQ7/b/
+ 6tR3RmSc55X21qwqw/iusOEecNTFfGdeIX5/rztAeLB7ytRPovdRKHb9WI/cSZ31NWu9Q3
+ APfx3/O//bkaOtn0tuUtekrGMSl5RO8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-kcMI3IPTPbW_TvEUsLbb4A-1; Thu,
- 23 Apr 2026 18:01:08 -0400
-X-MC-Unique: kcMI3IPTPbW_TvEUsLbb4A-1
-X-Mimecast-MFC-AGG-ID: kcMI3IPTPbW_TvEUsLbb4A_1776981666
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-187-YgNc6UtWOX6AobcM3Y2MVQ-1; Thu,
+ 23 Apr 2026 18:00:52 -0400
+X-MC-Unique: YgNc6UtWOX6AobcM3Y2MVQ-1
+X-Mimecast-MFC-AGG-ID: YgNc6UtWOX6AobcM3Y2MVQ_1776981651
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C02EF19560B4; Thu, 23 Apr 2026 22:01:06 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E78E18004AD; Thu, 23 Apr 2026 22:00:51 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.143])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45BED3007572; Thu, 23 Apr 2026 22:01:04 +0000 (UTC)
+ id 10D393007572; Thu, 23 Apr 2026 22:00:47 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>,
@@ -58,9 +58,9 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 12/12] qapi: convert intro sections for audio.json
-Date: Thu, 23 Apr 2026 18:00:21 -0400
-Message-ID: <20260423220022.2180059-13-jsnow@redhat.com>
+Subject: [PATCH 07/12] qapi/docs: add "Intro" section parsing
+Date: Thu, 23 Apr 2026 18:00:16 -0400
+Message-ID: <20260423220022.2180059-8-jsnow@redhat.com>
 In-Reply-To: <20260423220022.2180059-1-jsnow@redhat.com>
 References: <20260423220022.2180059-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -68,14 +68,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,308 +90,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add parsing for explicit Intro section syntax.
+
+A side effect of this patch is that we will always create an empty Intro
+section, similar to how we used to have an empty Plain section. The
+tests are adjusted accordingly, rendered document output does not change
+at all.
+
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/audio.json | 112 ++++++++++++++----------------------------------
- .editorconfig   |   1 +
- 2 files changed, 33 insertions(+), 80 deletions(-)
+ docs/devel/qapi-code-gen.rst            | 17 +++++----
+ scripts/qapi/parser.py                  | 47 ++++++++++++++++++-------
+ tests/qapi-schema/doc-good.out          | 18 ++++++++++
+ tests/qapi-schema/doc-missing-colon.err |  2 +-
+ 4 files changed, 64 insertions(+), 20 deletions(-)
 
-diff --git a/qapi/audio.json b/qapi/audio.json
-index 2df87b97101..62d64eabf1c 100644
---- a/qapi/audio.json
-+++ b/qapi/audio.json
-@@ -13,10 +13,8 @@
- ##
+diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+index 3a632b4a648..a8175934d52 100644
+--- a/docs/devel/qapi-code-gen.rst
++++ b/docs/devel/qapi-code-gen.rst
+@@ -862,7 +862,7 @@ documentation comment.
+ If the documentation comment starts like ::
  
- ##
--# @AudiodevPerDirectionOptions:
--#
--# General audio backend options that are used for both playback and
--# recording.
-+# @AudiodevPerDirectionOptions: General audio backend options that are
-+#     used for both playback and recording.
- #
- # @mixing-engine: use QEMU's mixing engine to mix all streams inside
- #     QEMU and convert audio formats when not supported by the
-@@ -52,9 +50,7 @@
-     '*buffer-length':  'uint32' } }
+     ##
+-    # @SYMBOL:
++    # @SYMBOL: [...]
  
- ##
--# @AudiodevGenericOptions:
--#
--# Generic driver-specific options.
-+# @AudiodevGenericOptions: Generic driver-specific options.
- #
- # @in: options of the capture stream
- #
-@@ -68,9 +64,7 @@
-     '*out': 'AudiodevPerDirectionOptions' } }
+ it documents the definition of SYMBOL, else it's free-form
+ documentation.
+@@ -984,11 +984,11 @@ definition it documents.
+ When documentation is required (see pragma_ 'doc-required'), every
+ definition must have documentation.
  
- ##
--# @AudiodevDBusOptions:
--#
--# Options of the D-Bus audio backend.
-+# @AudiodevDBusOptions: Options of the D-Bus audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -88,10 +82,8 @@
-     '*nsamples': 'uint32'} }
+-Definition documentation starts with a line naming the definition,
+-followed by an optional overview, a description of each argument (for
+-commands and events), member (for structs and unions), branch (for
+-alternates), or value (for enums), a description of each feature (if
+-any), and finally optional tagged sections.
++Definition documentation starts with a description naming the definition
++with an optional overview, a description of each argument (for commands
++and events), member (for structs and unions), branch (for alternates),
++or value (for enums), a description of each feature (if any), and
++finally optional tagged sections.
  
- ##
--# @AudiodevAlsaPerDirectionOptions:
--#
--# Options of the ALSA backend that are used for both playback and
--# recording.
-+# @AudiodevAlsaPerDirectionOptions: Options of the ALSA backend that
-+#     are used for both playback and recording.
- #
- # @dev: the name of the ALSA device to use (default 'default')
- #
-@@ -110,9 +102,7 @@
-     '*try-poll':      'bool' } }
+ Descriptions start with '\@name:'.  The description text must be
+ indented like this::
+@@ -996,6 +996,11 @@ indented like this::
+  # @name: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+  #     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
  
- ##
--# @AudiodevAlsaOptions:
--#
--# Options of the ALSA audio backend.
-+# @AudiodevAlsaOptions: Options of the ALSA audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -129,9 +119,7 @@
-     '*threshold': 'uint32' } }
++Definition descriptions are special: the optional introductory overview
++describing the definition will not be inlined when referenced by other
++definitions (such as when using 'base' to include members from another
++definition), while other descriptions and tagged sections will be.
++
+ .. FIXME The parser accepts these things in almost any order.
  
- ##
--# @AudiodevSndioOptions:
--#
--# Options of the sndio audio backend.
-+# @AudiodevSndioOptions: Options of the sndio audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -151,10 +139,8 @@
-     '*latency':   'uint32'} }
+ .. FIXME union branches should be described, too.
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 6612f471bb8..c23fd26aaa7 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -24,6 +24,7 @@
+     Match,
+     Optional,
+     Set,
++    Tuple,
+     Union,
+ )
  
- ##
--# @AudiodevCoreaudioPerDirectionOptions:
--#
--# Options of the Core Audio backend that are used for both playback
--# and recording.
-+# @AudiodevCoreaudioPerDirectionOptions: Options of the Core Audio
-+#     backend that are used for both playback and recording.
- #
- # @buffer-count: number of buffers
- #
-@@ -166,9 +152,7 @@
-     '*buffer-count': 'uint32' } }
+@@ -524,6 +525,30 @@ def get_doc_paragraph(self, doc: 'QAPIDoc') -> Optional[str]:
+                 return line
+             doc.append_line(line)
  
- ##
--# @AudiodevCoreaudioOptions:
--#
--# Options of the coreaudio audio backend.
-+# @AudiodevCoreaudioOptions: Options of the coreaudio audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -182,9 +166,7 @@
-     '*out': 'AudiodevCoreaudioPerDirectionOptions' } }
++    def _get_doc_intro(
++        self,
++        line: str,
++        info: QAPISourceInfo
++    ) -> Tuple['QAPIDoc', Optional[str]]:
++        match = self._match_at_name_colon(line)
++        if not match:
++            raise QAPIParseError(self, "@name must end with ':'")
++
++        # Invalid names are not checked here, but the name
++        # provided *must* match the following definition,
++        # which *is* validated in expr.py.
++        symbol = match.group(1)
++        if not symbol:
++            raise QAPIParseError(self, "name required after '@'")
++        doc = QAPIDoc(info, symbol)
++
++        doc.ensure_untagged_section(info, QAPIDoc.Kind.INTRO)
++        text = line[match.end():]
++        if text:
++            doc.append_line(text)
++
++        return doc, self.get_doc_indented(doc)
++
+     def get_doc(self) -> 'QAPIDoc':
+         if self.val != '##':
+             raise QAPIParseError(
+@@ -532,18 +557,9 @@ def get_doc(self) -> 'QAPIDoc':
+         self.accept(False)
+         line = self.get_doc_line()
+         if line is not None and line.startswith('@'):
++
+             # Definition documentation
+-            if not line.endswith(':'):
+-                raise QAPIParseError(self, "line should end with ':'")
+-            # Invalid names are not checked here, but the name
+-            # provided *must* match the following definition,
+-            # which *is* validated in expr.py.
+-            symbol = line[1:-1]
+-            if not symbol:
+-                raise QAPIParseError(self, "name required after '@'")
+-            doc = QAPIDoc(info, symbol)
+-            self.accept(False)
+-            line = self.get_doc_line()
++            doc, line = self._get_doc_intro(line, info)
+             no_more_args = False
  
- ##
--# @AudiodevDsoundOptions:
--#
--# Options of the DirectSound audio backend.
-+# @AudiodevDsoundOptions: Options of the DirectSound audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -202,10 +184,8 @@
-     '*latency': 'uint32' } }
+             while line is not None:
+@@ -751,8 +767,13 @@ def end(self) -> None:
+                 raise QAPISemError(
+                     section.info, "text required after '%s:'" % section.kind)
  
- ##
--# @AudiodevJackPerDirectionOptions:
--#
--# Options of the JACK backend that are used for both playback and
--# recording.
-+# @AudiodevJackPerDirectionOptions: Options of the JACK backend that
-+#     are used for both playback and recording.
- #
- # @server-name: select from among several possible concurrent server
- #     instances (default: environment variable $JACK_DEFAULT_SERVER if
-@@ -236,9 +216,7 @@
-     '*exact-name':    'bool' } }
+-    def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+-        kind = QAPIDoc.Kind.PLAIN
++    def ensure_untagged_section(
++        self,
++        info: QAPISourceInfo,
++        kind: Optional['QAPIDoc.Kind'] = None,
++    ) -> None:
++        if kind is None:
++            kind = QAPIDoc.Kind.PLAIN
  
- ##
--# @AudiodevJackOptions:
--#
--# Options of the JACK audio backend.
-+# @AudiodevJackOptions: Options of the JACK audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -252,10 +230,8 @@
-     '*out': 'AudiodevJackPerDirectionOptions' } }
+         if self.all_sections and self.all_sections[-1].kind == kind:
+             # extend current section
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
+index 6fcc8175cfe..bc89853765f 100644
+--- a/tests/qapi-schema/doc-good.out
++++ b/tests/qapi-schema/doc-good.out
+@@ -106,6 +106,8 @@ Examples:
+ - *verbatim*
+ - {braces}
+ doc symbol=Enum
++    section=Intro
++
+     arg=one
+ The _one_ {and only}, description on the same line
+     arg=two
+@@ -117,10 +119,14 @@ a member feature
+     section=Plain
+ @two is undocumented
+ doc symbol=Base
++    section=Intro
++
+     arg=base1
+  description starts on a new line,
+  minimally indented
+ doc symbol=Variant1
++    section=Intro
++
+     section=Plain
+ A paragraph
  
- ##
--# @AudiodevOssPerDirectionOptions:
--#
--# Options of the OSS backend that are used for both playback and
--# recording.
-+# @AudiodevOssPerDirectionOptions: Options of the OSS backend that are
-+#     used for both playback and recording.
- #
- # @dev: file name of the OSS device (default '/dev/dsp')
- #
-@@ -274,9 +250,7 @@
-     '*try-poll':     'bool' } }
+@@ -134,10 +140,16 @@ a feature
+     feature=member-feat
+ a member feature
+ doc symbol=Variant2
++    section=Intro
++
+ doc symbol=Object
++    section=Intro
++
+     feature=union-feat1
+ a feature
+ doc symbol=Alternate
++    section=Intro
++
+     arg=i
+ description starts on the same line
+     remainder indented the same
+@@ -151,6 +163,8 @@ doc freeform
+ Another subsection
+ ==================
+ doc symbol=cmd
++    section=Intro
++
+     arg=arg1
+     description starts on a new line,
+     indented
+@@ -198,6 +212,8 @@ Note::
+     section=Since
+ 2.10
+ doc symbol=cmd-boxed
++    section=Intro
++
+     section=Plain
+ If you're bored enough to read this, go see a video of boxed cats
+     feature=cmd-feat1
+@@ -211,5 +227,7 @@ another feature
  
- ##
--# @AudiodevOssOptions:
--#
--# Options of the OSS audio backend.
-+# @AudiodevOssOptions: Options of the OSS audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -304,10 +278,8 @@
-     '*dsp-policy': 'uint32' } }
- 
- ##
--# @AudiodevPaPerDirectionOptions:
--#
--# Options of the Pulseaudio backend that are used for both playback
--# and recording.
-+# @AudiodevPaPerDirectionOptions: Options of the Pulseaudio backend
-+#     that are used for both playback and recording.
- #
- # @name: name of the sink/source to use
- #
-@@ -329,9 +301,7 @@
-     '*latency': 'uint32' } }
- 
- ##
--# @AudiodevPaOptions:
--#
--# Options of the PulseAudio audio backend.
-+# @AudiodevPaOptions: Options of the PulseAudio audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -348,10 +318,8 @@
-     '*server': 'str' } }
- 
- ##
--# @AudiodevPipewirePerDirectionOptions:
--#
--# Options of the PipeWire backend that are used for both playback and
--# recording.
-+# @AudiodevPipewirePerDirectionOptions: Options of the PipeWire
-+#     backend that are used for both playback and recording.
- #
- # @name: name of the sink/source to use
- #
-@@ -373,9 +341,7 @@
-     '*latency': 'uint32' } }
- 
- ##
--# @AudiodevPipewireOptions:
--#
--# Options of the PipeWire audio backend.
-+# @AudiodevPipewireOptions: Options of the PipeWire audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -389,10 +355,8 @@
-     '*out':    'AudiodevPipewirePerDirectionOptions' } }
- 
- ##
--# @AudiodevSdlPerDirectionOptions:
--#
--# Options of the SDL audio backend that are used for both playback and
--# recording.
-+# @AudiodevSdlPerDirectionOptions: Options of the SDL audio backend
-+#     that are used for both playback and recording.
- #
- # @buffer-count: number of buffers (default 4)
- #
-@@ -404,9 +368,7 @@
-     '*buffer-count': 'uint32' } }
- 
- ##
--# @AudiodevSdlOptions:
--#
--# Options of the SDL audio backend.
-+# @AudiodevSdlOptions: Options of the SDL audio backend.
- #
- # @in: options of the recording stream
- #
-@@ -420,9 +382,7 @@
-     '*out': 'AudiodevSdlPerDirectionOptions' } }
- 
- ##
--# @AudiodevWavOptions:
--#
--# Options of the wav audio backend.
-+# @AudiodevWavOptions: Options of the wav audio backend.
- #
- # @in: options of the capture stream
- #
-@@ -439,9 +399,7 @@
-     '*path': 'str' } }
- 
- ##
--# @AudioFormat:
--#
--# An enumeration of possible audio formats.
-+# @AudioFormat: An enumeration of possible audio formats.
- #
- # @u8: unsigned 8 bit integer
- #
-@@ -463,9 +421,7 @@
-   'data': [ 'u8', 's8', 'u16', 's16', 'u32', 's32', 'f32' ] }
- 
- ##
--# @AudiodevDriver:
--#
--# An enumeration of possible audio backend drivers.
-+# @AudiodevDriver: An enumeration of possible audio backend drivers.
- #
- # @jack: JACK audio backend (since 5.1)
- #
-@@ -487,9 +443,7 @@
-             'wav' ] }
- 
- ##
--# @Audiodev:
--#
--# Options of an audio backend.
-+# @Audiodev: Options of an audio backend.
- #
- # @id: identifier of the backend
- #
-@@ -533,9 +487,7 @@
-     'wav':       'AudiodevWavOptions' } }
- 
- ##
--# @query-audiodevs:
--#
--# Return information about audiodev configuration
-+# @query-audiodevs: Return information about audiodev configuration
- #
- # Since: 8.0
- ##
-diff --git a/.editorconfig b/.editorconfig
-index 258d41ab485..dcf8f6ded6d 100644
---- a/.editorconfig
-+++ b/.editorconfig
-@@ -47,6 +47,7 @@ emacs_mode = glsl
- [*.json]
- indent_style = space
- emacs_mode = python
-+max_line_length = 70
- 
- # by default follow QEMU's style
- [*.pl]
+    <- ... has no title ...
+ doc symbol=EVT_BOXED
++    section=Intro
++
+     feature=feat3
+ a feature
+diff --git a/tests/qapi-schema/doc-missing-colon.err b/tests/qapi-schema/doc-missing-colon.err
+index cbcea007153..bd5862b30f3 100644
+--- a/tests/qapi-schema/doc-missing-colon.err
++++ b/tests/qapi-schema/doc-missing-colon.err
+@@ -1 +1 @@
+-doc-missing-colon.json:4:1: line should end with ':'
++doc-missing-colon.json:4:1: @name must end with ':'
 -- 
 2.53.0
 
