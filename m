@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C435F99378
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 11:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D40BF99378
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 11:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFsWY-0000NR-10; Thu, 23 Apr 2026 07:47:14 -0400
+	id 1wFsXC-0001n8-Rp; Thu, 23 Apr 2026 07:47:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFsWV-00008K-8P
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:47:11 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1wFsX6-0001mf-6c
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:47:49 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFsWT-0007wC-4z
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:47:10 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2b2429f98d0so38415275ad.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 04:47:08 -0700 (PDT)
+ id 1wFsX4-0008I9-KA
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:47:47 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-358e3cc5e7eso3881226a91.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 04:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776944827; x=1777549627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776944865; x=1777549665; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/seBp/n19dVrQgsXs0kuSBPEGUNE0FnEiWfhOM2X2Ow=;
- b=uN4u9OcXMgqbppjZDN4LecteTBGBqV/0u80P7oaW9nMB0UoR/v6m1nJoB9T6CnsF20
- jolKbrT3fBYng/UP1hMDiWZF17wglyq4Wl9mvY/9rw/K37afZuktBkLKnJPFx5oC8EOF
- GEKuY/W6G3TdfIpuGr0PZBTmIBlFNSpQnKZ1BUWTP/eBFSJvt+bMYbtH+k6A6KoUtOVo
- T/+zw+E/ScBldsYk2VpqW9QSmIx7rpMnrJQEI2jVPE0xRy7O4IxZQsY5J5volhQMd2uG
- wkrX3THSa+e39FfKyHcNvmw0D9B3Zpv0R3DvWmZbb8h7Ku0lAFFeHstfdCJRmVpc/+AP
- AgYg==
+ bh=0/zWCrt558ynO94m+x1zNXqKcIOG8BvNVfHJCnRLoH4=;
+ b=Dugws9K1rSkF3Dfbt6toZbe0vKooIT1DJKhwKI92gFBcwUqHsK9p/MpnTL8nN0saht
+ V3PTs6iFyYbzJ28OTqv47o9D6nAPITxz458R6WbvJdZPlWH2fl7mt6l/8WDI12dueFVg
+ mfJ0TdxIn9uAi0kNR464VQ1OFCLka1u6p15+WbVC9R7qM7LHVgAlmZd75lJmZDsj17DH
+ bcZWsLEhqdglwVRp66H9mYiNi6IzwnkFbspJ3UPaVHRLFryJxlRW19JKOqCuCCylXz0I
+ ehsioWeHJW2CKiLQ9Gn0/WTZ1B33pPNSqWD3nbHekaXPUOqDNmNHMcF87XVp5CsvdnzA
+ sOQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776944827; x=1777549627;
+ d=1e100.net; s=20251104; t=1776944865; x=1777549665;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/seBp/n19dVrQgsXs0kuSBPEGUNE0FnEiWfhOM2X2Ow=;
- b=MCJhr0haj60cLQXlAVSEKd5gtPNvvIV4YzOllhMG3tnZfbj/Q1rHgUGZPSDTuHUDFT
- kvc+7lTAxGgILTXezPLY7f0oOaZxN18pANvMWgje0tof8GnYZIodNiDC8iDUYbXxGOSB
- obNrg5Etfm3Y4hE9ykFSkeN44EPjZ/T030cGD9nYOYZDRq/p9ZQgjW4nLMeHjovdGnNV
- Z52Bj22+7Iie2yIUbIllhZ9IJZnZ7KZ28zW1YH3DVx4wZWW9yiGx/OIOR3bafezbPvT7
- T8A/ZibZetbIP4IxSwArBYQzWFAkv4/gzCUsn9L3jdDYik0dvPUa7dFreuKQfnAegJL6
- roPw==
+ bh=0/zWCrt558ynO94m+x1zNXqKcIOG8BvNVfHJCnRLoH4=;
+ b=FrOWEYkvrDzQkJbvB+YnEU0EuY4XL1oWpHFowCgjTImlQ8Ekkf+1aKmdkIDzo911q6
+ 53obFMHDpJbRrF3X6bCFSY7e6wmhEaa1w71kCvwsasy4GXUwg7Qd6L3ydrLfa4Kpo5g0
+ 1TZRx5FewnMubxPuwKHH571TzQq1ggvQFum8G/YSzEoxIm91/3xw4yqFHYT9sa5FWFVW
+ Z05cWuBl5dyM52JuO1DcY/JJShbtLIAqNoN63KvymqCjOmO7rpeB9Cgi9tsYaHTgyccX
+ 0TEnnClOo3MMvgjiavoctrhxz96Xanlvl8RcyrRoz2kO/UOAJBWbRNuQkWzTJqeeMZNv
+ yvLA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/ETTsV9nByb686tLRe2g/xrwjk2I3b94DnFI77Ny5bVDqxb0Ej/t+G5s4fpV2mil45/rNe2dkIPt+k@nongnu.org
-X-Gm-Message-State: AOJu0YyAj6YF4LjP7Q5TW5Z1+yXalxGInqNawMFuochf/WKlqq3pBogW
- KgUvTDQbBVi9WmIgHoLqfL76ATokCpgFNTfsGjZ9iRWW+CxLNe/sPRtP39cEbRjXqEs=
-X-Gm-Gg: AeBDietDc9CyKdKZaKg0+pPgvpa4k1Wog9PHR8brYymb4llJ82fbQueYBynLAWvxRHX
- pVugy5Lxp1bW+yGWmK7NUr+znXy4YXzGBkd8XPxJxXNYoU/aFT84YfyRE56b8LjLq0dzk9GklMw
- tYB/shpBCu21PBwBVQYzByaSlcSjR9nr7z5u3OBlhIKL8dG0aYqqCD2TLVAe+kJgHsWYe9h6KVB
- tKVRx92iTF4teXuFebslnei09JSGrg9lw3xWv2kuZeqQAfppKZulsQfmwhw+AZZwvaazgjXLXjO
- 9jVpwZ5wyqN0hk4IxLSTPU23sTSefNl7FAGXjHc654fBfVEGZ2V9bjKGikrPGudgRqWS3np54QG
- EhNqAo1ycjaOaugdK38ziD2u/YgLdug4cKpD7cfo7HgABWAVrW08NxrYXTiZWFlxg+0bWLc/QC8
- vdquKH5nfgoR60bK1066ULMB1B0F3/zq3ebGC5wqW39CX6I9gLaA==
-X-Received: by 2002:a17:902:c9c4:b0:2b2:712c:61be with SMTP id
- d9443c01a7336-2b5f9ed0b48mr191005175ad.18.1776944826902; 
- Thu, 23 Apr 2026 04:47:06 -0700 (PDT)
+ AFNElJ96bkGhfs4PRxEvP3n7afcoxN9Hd37I4N/ZUX5TlvLAOdnxdUvddeT4bPjLNCJ3wQsPsXxNr9kLWAsO@nongnu.org
+X-Gm-Message-State: AOJu0Yz4IcNgdP7bfHUOxr4fXaQt+LGGV9vcszLKrmSLJ+b0/75pUlP+
+ u9L7NbwP33OEEZdTfrAs5tPMerfMys/EhH288mtOhk4sMB+hxiwqN/VzdJIkwSJwXN4=
+X-Gm-Gg: AeBDievtH8G+eh+192RC5bJRiNoCo5a63BRD83BPROFBbPYzTXFNpzOxeQ6ui7ud1sl
+ kwrkKIBl15sYB7zAxbLd/GhH0xGUfK2AwqQDKYiGAj4FjXbH5vvZ7qgYYsVQUN7lCoJq3Wsn4WB
+ FrhvdsytDTTinaAyXi7gBJXUg7AGvfKuvllH39yUFu8YG9IIbjphp43QEYsztP1Dopgq8BUmcJp
+ o0sMphXNUB43xanrNbrOBOJSJXezBXTSrlAmUGkw+lByOrFMwnI2ij9OkudEomniCZWG6ePdR2B
+ Yo9ogK1+zm+BlMAw5TCnpNoLGs6Ts7oR1qZvcN/cq6miGxermbI5hKZQkcBHqGVeo3C9OsRfhxn
+ xsyHn93ev0xqmnLICjkgl5hi0qzUByXD2ai7ZXjwenUGZS3USKbK+ReymsvIDd5Y5EQ9JyCrfuv
+ tunKM+B0kZiRn+u8e9JjNPVop2wb4X3E0dmyQkP8+WQxRkPdUR0z6SlTlKTwTf
+X-Received: by 2002:a17:90b:2244:b0:35d:9c32:6219 with SMTP id
+ 98e67ed59e1d1-3614040e440mr27719847a91.9.1776944864945; 
+ Thu, 23 Apr 2026 04:47:44 -0700 (PDT)
 Received: from [192.168.1.134] ([110.239.0.232])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab0caa9sm191041895ad.40.2026.04.23.04.47.01
+ 98e67ed59e1d1-361410a7ab7sm25595449a91.10.2026.04.23.04.47.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 04:47:06 -0700 (PDT)
-Message-ID: <43331955-d55d-41b6-8460-930067596503@linaro.org>
-Date: Thu, 23 Apr 2026 21:46:57 +1000
+ Thu, 23 Apr 2026 04:47:43 -0700 (PDT)
+Message-ID: <819bf32b-a6cd-46c2-b4ab-c3366eeb691a@linaro.org>
+Date: Thu, 23 Apr 2026 21:47:34 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] target/microblaze: Compile helper.c as common unit
+Subject: Re: [PATCH 6/9] target/microblaze: Compile op_helper.c as common unit
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>
 References: <20260423100612.27278-1-philmd@linaro.org>
- <20260423100612.27278-6-philmd@linaro.org>
+ <20260423100612.27278-7-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260423100612.27278-6-philmd@linaro.org>
+In-Reply-To: <20260423100612.27278-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,12 +109,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/23/26 20:06, Philippe Mathieu-Daudé wrote:
-> Nothing in helper.c prevents it to be built as common unit.
+> In order do build op_helper.c as a common unit we simply
+> need to use the common version of "accel/tcg/cpu-ldst.h".
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
+>   target/microblaze/op_helper.c | 2 +-
 >   target/microblaze/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
