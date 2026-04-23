@@ -4,109 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB079FC035D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B01FC035F
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFw8l-0003hb-UZ; Thu, 23 Apr 2026 11:38:55 -0400
+	id 1wFwBR-0004RP-U9; Thu, 23 Apr 2026 11:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wFw8d-0003eA-Qg; Thu, 23 Apr 2026 11:38:49 -0400
+ id 1wFwBH-0004Qj-Fk; Thu, 23 Apr 2026 11:41:31 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wFw8c-0002VT-9h; Thu, 23 Apr 2026 11:38:47 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wFwBF-0004bd-Fv; Thu, 23 Apr 2026 11:41:31 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63N85u8C3229003; Thu, 23 Apr 2026 15:38:42 GMT
+ 63N6UOda3514977; Thu, 23 Apr 2026 15:41:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=tdZ7cF
- tzGix5RDUyoMKF/Gk+ENS9egF0Pqt+8RGdsQY=; b=fiO7fuvnYIt1gcCIq1a9rp
- QSuNtWffyadK4JWfVws9FOovsBVzJkYasToSB/8PXM2qhCa7kcF/lMQzz1pIp5xW
- fMNi4LxKLj8sO1mugwEiN0zRkzDvRnZA24vP50vyPUUcj3ViGmRNewE0onkGlDSW
- L0MZ8IVkeERxTL1Ux7/8y6VVbawg0G+no6WniXptikyAMg0MRDbOmv/EV0vjWzzG
- PkPBubHfMRVfuaIrE4e8GbW6VZ0qvMnH7LFJEaA9fUTQCt6lUO6OJ2FePb9RkpOx
- t2GlfC1teO9yNidnPWEkxecuz+hlLr3TStOTfHSJaTGvoQAeSNA/9JYlgq5FS4Og
+ :message-id:mime-version:references:subject:to; s=pp1; bh=z8XXMi
+ t4NNbD+5Sh1l3oirBzG+cZBXiYSSAnflZfxZo=; b=hfEtPCkKTtcdhmn0Kn5vxJ
+ ocKs1BLZAs7EL1ke8+BYWOmvfLYdO+ypSgTiXlT4tYTfwpIL4hY1eUkpmWsh8kzR
+ +xjp+BlJk/ySYreaLm/0a75FORNxEqhhrhuG4AGGvlYJiOwPQbArtgiVwxmq2TA4
+ yXZI4N1yNmJ/EjYO+EFvs5yna1dBiX4QkPTfwFc/p0pN3RgEp0mjqGTJmsTqipqo
+ eD9qxL7Eq9bX+xRbxQ2HEQsZAkn7n5CUG+bN+hOB8vLmkogevGSG2aZvNLpcyTep
+ g0Lod8GYuiQaAl2/eQUT8gHWP7iSYaG4H54ykfjlAUHSH4/qWroVmo5uUW/N8EAA
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu29ebt-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu29fgr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Apr 2026 15:38:42 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63NFZRox015204;
- Thu, 23 Apr 2026 15:38:41 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dpjky7680-1
+ Thu, 23 Apr 2026 15:41:25 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63NFZSqX031959;
+ Thu, 23 Apr 2026 15:41:24 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkyf6ux-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Apr 2026 15:38:41 +0000 (GMT)
+ Thu, 23 Apr 2026 15:41:23 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63NFcbjM58851662
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63NFfKkV25100652
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Apr 2026 15:38:38 GMT
+ Thu, 23 Apr 2026 15:41:20 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CDF892004B;
- Thu, 23 Apr 2026 15:38:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 31F712004D;
+ Thu, 23 Apr 2026 15:41:20 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E22E20043;
- Thu, 23 Apr 2026 15:38:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CCDED20043;
+ Thu, 23 Apr 2026 15:41:19 +0000 (GMT)
 Received: from [0.0.0.0] (unknown [9.111.71.73])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Apr 2026 15:38:37 +0000 (GMT)
-Message-ID: <ddb30308-44f2-4118-a188-6e66dce31b7e@linux.ibm.com>
-Date: Thu, 23 Apr 2026 17:38:37 +0200
+ Thu, 23 Apr 2026 15:41:19 +0000 (GMT)
+Message-ID: <986c02ec-4e43-41c9-b520-7c5a41ca4109@linux.ibm.com>
+Date: Thu, 23 Apr 2026 17:41:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] target/s390x: Replace cpu_stb_data_ra -> cpu_stb_mmu
- in STFLE opcode
+Subject: Re: [PATCH v2] target/s390x: Leverage 128-bit vector type in VLL /
+ VSTL opcodes
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+Cc: Matthew Rosato <mjrosato@linux.ibm.com>,
  David Hildenbrand <david@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Anton Johansson <anjo@rev.ng>
-References: <20260423135035.50126-1-philmd@linaro.org>
- <20260423135035.50126-10-philmd@linaro.org>
+ Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org
+References: <20260423141538.51583-1-philmd@linaro.org>
 Content-Language: en-US
 From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260423135035.50126-10-philmd@linaro.org>
+In-Reply-To: <20260423141538.51583-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: WrHKxOFTeDEn_nR8o5AEiRFAgKYXoj9-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE1MyBTYWx0ZWRfXxaICgD2lDIyr
- qu+hyyjuDwuVFevVDse3DPe8RfDXXJehmMktpoyCdckY4+gbnL3lhDZlWv/nG/0sLKd+6SJ3ume
- Hf91GTIV/BpjoeZpav3wPcE+LySdnNAPtKfAisEFnRshGxdW9DY9xlYEdluEkLQxn6fdbWtUCLN
- g4vrOzNFEQSgY9W5at19UAGS9p/MzVRUudE0RagR9s1mJCo118V4G4F6W67rS0wLQEwgoK1V1KM
- oMzZIAt1jMYt1pkyWTRnZEqNpWqkiBeV2VbO/buri/OBjgFvr+vuCMnVBvCJLcVsrz4jpKjKPxf
- DYXl5nGWbtdjgHdmkX1zrMEOHHCcs8nAp+CVnSFFNyFcgVS/w4xURoinHWlhiFXfZZLgXCy9a10
- Mvtgoprhrv4s6Pa/uEAjOxjuG9lVy0LJU5ov5XeBwTCDXUQaFSS0QwPFihGVJoz0Fwvo2s9zxbE
- gtkAI914W0oz3vYB9DQ==
-X-Authority-Analysis: v=2.4 cv=C8LZDwP+ c=1 sm=1 tr=0 ts=69ea3d02 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE1MyBTYWx0ZWRfX+kyfrB/jsv/S
+ ZwtoQLXz/sDTfG+NHxG8QkcB7YPnXLT/6sVb7ZlHjrzi+VMUXel9/TaKIA3QauZIlt8YnUJoHgg
+ 5F3WN2Tba8DD/9P6tiM/bR2kroHiYe+HdyijY8sk3ixWjRa1YteCzo0V2qTa+DSiE10BEXFBAP4
+ BiYkEaOpyV/y3P4o79ajfgCW277IoGDtkmrm0DhZ1VG3cnlbO3eIG2iZDAufaJVLXO2IY++A134
+ sfg/5n61pLgU7S5jjAh8dDwzzMpeNIB5V8SJ1uW0wmAH/L0CmhSpJbKYm7CkFGcHiORzF1P+Gbw
+ rxAgl1ORp7lQAO9G55aF7h+nVWlRiPV7ERozxTtYqjeFw82jg8v2sgTi2TIiuCUKegPvSD5ks7F
+ /Thswvsfc5WMPUdIlyC/z95pvgc4H1zI/XxAj3I7Pe8I8rD/2xzfqX/jO0eykLSihTKswl4iBhq
+ d8F/PyK1f4iUpUuERtg==
+X-Proofpoint-ORIG-GUID: E2ICGwY0wyS8sPlYn5krDIolSMgnlJ-u
+X-Proofpoint-GUID: E2ICGwY0wyS8sPlYn5krDIolSMgnlJ-u
+X-Authority-Analysis: v=2.4 cv=XMUAjwhE c=1 sm=1 tr=0 ts=69ea3da5 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=KKAkSRfTAAAA:8
- a=VnNF1IyMAAAA:8 a=_VyUCC-8DgYtCY3JjGUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=ZXulRonScM0A:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: WrHKxOFTeDEn_nR8o5AEiRFAgKYXoj9-
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=KKAkSRfTAAAA:8
+ a=aKWiiJWHmIpsBlU-QCkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2604230153
+ malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604230153
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -131,17 +125,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/26 14:50, Philippe Mathieu-Daudé wrote:
-> In preparation of building misc_helper.c as a common unit, update
-> the cpu_ld/st_be_data_ra() API by cpu_ld/st_mmu() one and replace
-> "accel/tcg/cpu-ldst.h" by "accel/tcg/cpu-ldst-common.h".
->
-> For now we are blocked by the CONFIG_DEVICES use so keep the file
-> in s390x_ss[].
+
+On 4/23/26 15:15, Philippe Mathieu-Daudé wrote:
+> The access is unaligned, we can easily replace the 2
+> consecutive 64-bit calls by a single 128-bit one.
 >
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/tcg/misc_helper.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Based-on: <20260423135035.50126-1-philmd@linaro.org>
+> ---
+>   target/s390x/tcg/vec.h        | 12 ++++++++++++
+>   target/s390x/tcg/vec_helper.c | 19 ++++++++-----------
+>   2 files changed, 20 insertions(+), 11 deletions(-)
+>
+> diff --git a/target/s390x/tcg/vec.h b/target/s390x/tcg/vec.h
+> index 8d095efcfc6..34413f7e029 100644
+> --- a/target/s390x/tcg/vec.h
+> +++ b/target/s390x/tcg/vec.h
+> @@ -13,8 +13,10 @@
+>   #define S390X_VEC_H
+>   
+>   #include "tcg/tcg.h"
+> +#include "qemu/int128.h"
+>   
+>   typedef union S390Vector {
+> +    Int128 quadword;
+>       uint64_t doubleword[2];
+>       uint32_t word[4];
+>       uint16_t halfword[8];
+> @@ -72,6 +74,11 @@ static inline uint64_t s390_vec_read_element64(const S390Vector *v, uint8_t enr)
+>       return v->doubleword[enr];
+>   }
+>   
+> +static inline Int128 s390_vec_read_element128(const S390Vector *v)
+> +{
+> +    return v->quadword;
+> +}
+> +
+>   static inline uint64_t s390_vec_read_element(const S390Vector *v, uint8_t enr,
+>                                                uint8_t es)
+>   {
+> @@ -117,6 +124,11 @@ static inline void s390_vec_write_element64(S390Vector *v, uint8_t enr,
+>       v->doubleword[enr] = data;
+>   }
+>   
+> +static inline void s390_vec_write_element128(S390Vector *v, Int128 data)
+> +{
+> +    v->quadword = data;
+> +}
+> +
+>   static inline void s390_vec_write_element(S390Vector *v, uint8_t enr,
+>                                             uint8_t es, uint64_t data)
+>   {
+> diff --git a/target/s390x/tcg/vec_helper.c b/target/s390x/tcg/vec_helper.c
+> index 98eecd9fde6..feb99f51c78 100644
+> --- a/target/s390x/tcg/vec_helper.c
+> +++ b/target/s390x/tcg/vec_helper.c
+> @@ -48,14 +48,12 @@ void HELPER(vll)(CPUS390XState *env, void *v1, uint64_t addr, uint64_t bytes)
+>       MemOpIdx oi;
+>   
+>       if (likely(bytes >= 16)) {
+> -        uint64_t t0, t1;
+> +        Int128 t;
+>   
+> -        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+> -        t0 = cpu_ldq_mmu(env, addr, oi, ra);
+> -        addr = wrap_address(env, addr + 8);
+> -        t1 = cpu_ldq_mmu(env, addr, oi, ra);
+> -        s390_vec_write_element64(v1, 0, t0);
+> -        s390_vec_write_element64(v1, 1, t1);
+> +        oi = make_memop_idx(MO_BE | MO_128 | MO_UNALN, mmu_idx);
+> +        addr = wrap_address(env, addr + 16);
+
+I don't think we need to increment the address before loading from it.
+
+We used to have +8, because it's the offset of the 2nd half.
+
+> +        t = cpu_ld16_mmu(env, addr, oi, ra);
+> +        s390_vec_write_element128(v1, t);
+>       } else {
+>           S390Vector tmp = {};
+>   
+> @@ -206,10 +204,9 @@ void HELPER(vstl)(CPUS390XState *env, const void *v1, uint64_t addr,
+>       probe_write_access(env, addr, MIN(bytes, 16), GETPC());
+>   
+>       if (likely(bytes >= 16)) {
+> -        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+> -        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 0), oi, ra);
+> -        addr = wrap_address(env, addr + 8);
+> -        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 1), oi, ra);
+> +        oi = make_memop_idx(MO_BE | MO_128 | MO_UNALN, mmu_idx);
+> +        addr = wrap_address(env, addr + 16);
+
+Same.
+
+> +        cpu_st16_mmu(env, addr, s390_vec_read_element128(v1), oi, ra);
+>       } else {
+>           oi = make_memop_idx(MO_8, mmu_idx);
+>   
 
