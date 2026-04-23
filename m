@@ -4,63 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E50FAD3E7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 04:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C89FAD40B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 05:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFm60-0001oC-2D; Thu, 23 Apr 2026 00:55:24 -0400
+	id 1wFmD0-00036f-Ei; Thu, 23 Apr 2026 01:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFm5z-0001mf-1R
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 00:55:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFmCi-00035s-Mp
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 01:02:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFm5x-0005eD-KE
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 00:55:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFmCh-0007OK-0I
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 01:02:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776920120;
+ s=mimecast20190719; t=1776920536;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AQbxjHmfeurSvK6t688het1w6Wj7jeSY99CRJ7M0B8w=;
- b=gBhU/jv+ImTfN3lEJwu536NVhKiKQK21b2G0BPN2UlrHl3f3Kj8oYpnt0HM9bYNrUOL3y0
- x1vNpPJsokw8Pe7goEc74ymMuxiUfLjzftCsTi4ILpiQoavBWFDArAFJfv847OpDFXXyxY
- v3mggm2gYiiB235r6CYuXyzmPQD5FPk=
+ bh=1yFCd+gBtlVaNXTSSuckob3QlPY5VzhH/HBlQlwUbNA=;
+ b=TLtiwzSrRct4k48xsekbadax+IN7DcxHplBZ0A6e3M8A9HTBGLblURGBJp/wpye9maRu/n
+ EmwrW/c8VgJHQ6Ds5SfGK9QeK7xHDB8QOtezLhyKPS3lkbIKkJnv+7cJGmXLJWor+2j05w
+ RLQ9h+G3y7gn/i+ZqhoOUOeW/0Gad9M=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-463-ALoLtLfpNgmGxhzNgUwMjQ-1; Thu,
- 23 Apr 2026 00:55:16 -0400
-X-MC-Unique: ALoLtLfpNgmGxhzNgUwMjQ-1
-X-Mimecast-MFC-AGG-ID: ALoLtLfpNgmGxhzNgUwMjQ_1776920115
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-GRUEQKxTOvid9SPFEGabHw-1; Thu,
+ 23 Apr 2026 01:02:15 -0400
+X-MC-Unique: GRUEQKxTOvid9SPFEGabHw-1
+X-Mimecast-MFC-AGG-ID: GRUEQKxTOvid9SPFEGabHw_1776920534
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69DCA19560B2; Thu, 23 Apr 2026 04:55:14 +0000 (UTC)
+ id 4A40F195605F
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 05:02:14 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81C7F180047F; Thu, 23 Apr 2026 04:55:13 +0000 (UTC)
+ id 032AA180045E
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 05:02:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0200121E6A28; Thu, 23 Apr 2026 06:55:10 +0200 (CEST)
+ id 49F7221E6A28; Thu, 23 Apr 2026 07:02:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  zhangckid@gmail.com,  lizhijian@fujitsu.com,
- jasowang@redhat.com,  arei.gonglei@huawei.com,  zhenwei.pi@linux.dev,
- pbonzini@redhat.com,  peterx@redhat.com,  philmd@linaro.org,
- berrange@redhat.com,  elena.ufimtseva@oracle.com,  jag.raman@oracle.com
-Subject: Re: Several QOM objects crash on introspection
-In-Reply-To: <CAMxuvaxzwfYoguEijwHs4N5_iF8s8FLs853vse+mMaQA0ckQAQ@mail.gmail.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Thu, 23 Apr 2026
- 00:24:03 +0400")
-References: <87a4uvw066.fsf@pond.sub.org>
- <CAMxuvaxzwfYoguEijwHs4N5_iF8s8FLs853vse+mMaQA0ckQAQ@mail.gmail.com>
-Date: Thu, 23 Apr 2026 06:55:10 +0200
-Message-ID: <87zf2us2c1.fsf@pond.sub.org>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] ui/console: remove console from global list on
+ finalization
+In-Reply-To: <20260422202646.272081-1-marcandre.lureau@redhat.com> (marcandre
+ lureau's message of "Thu, 23 Apr 2026 00:26:46 +0400")
+References: <20260422202646.272081-1-marcandre.lureau@redhat.com>
+Date: Thu, 23 Apr 2026 07:02:11 +0200
+Message-ID: <87v7dis20c.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -91,37 +89,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+marcandre.lureau@redhat.com writes:
 
-> Hi
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
-> On Wed, Apr 22, 2026 at 6:16=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> QMP command qom-list-properties crashes for the following object types:
->>
->>     colo-compare
->>     cryptodev-backend-lkcf
->>     memory-region-portio-list
->>     qemu-fixed-text-console
->>     qemu-graphic-console
->>     qio-net-listener
->>     x-remote-object
->>
->> Testing gap: tests/qtest/device-introspect-test.c guards against such
->> bugs in devices, but not non-device objects.
+> This commit removes the QemuConsole from the global "consoles" list when
+> it is finalized.
 >
-> Good catch, are you going to send a test for it?
+> Previously, there was a TODO comment indicating this path needed
+> checking. The assertions added ensure that `dcls`, `gl_block`, and the
+> `dump_queue` are empty before removal, confirming the console is in a
+> clean state.
+>
+> Fix potential use-after-free crashes when a display console is removed.
+>
+> Reported-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  ui/console.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/ui/console.c b/ui/console.c
+> index f445db11389..b64e2122f34 100644
+> --- a/ui/console.c
+> +++ b/ui/console.c
+> @@ -394,10 +394,13 @@ qemu_console_finalize(Object *obj)
+>  {
+>      QemuConsole *c =3D QEMU_CONSOLE(obj);
+>=20=20
+> -    /* TODO: check this code path, and unregister from consoles */
+> +    assert(c->dcls =3D=3D 0);
+> +    assert(c->gl_block =3D=3D 0);
+> +    assert(qemu_co_queue_empty(&c->dump_queue));
 
-I should; I wrote device-introspect-test.c.  I'll see what I can do.
+Help me out: what ensures this?
 
-> fwiw, I found also a critical in "filter-rewriter": (export
-> G_DEBUG=3Dfatal_criticals)
+>      g_clear_pointer(&c->surface, qemu_free_displaysurface);
+>      g_clear_pointer(&c->gl_unblock_timer, timer_free);
+>      g_clear_pointer(&c->ui_timer, timer_free);
+> +    QTAILQ_REMOVE(&consoles, c, next);
 
-Reproduced.  Seems to be the only one.
+Is @consoles only accessed from the main thread?
 
-Thanks!
-
-[...]
+>  }
+>=20=20
+>  static void
 
 
