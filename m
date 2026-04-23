@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01DEEFAD3E7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 03:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E22FAD3E7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 03:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFkOF-0003pD-CY; Wed, 22 Apr 2026 23:06:07 -0400
+	id 1wFkR8-0004Xt-HF; Wed, 22 Apr 2026 23:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFkOC-0003oR-Ve
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:06:04 -0400
-Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
+ id 1wFkR6-0004Wx-Nq
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:09:04 -0400
+Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFkOA-0005hL-KV
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:06:04 -0400
-Received: by mail-qk1-x735.google.com with SMTP id
- af79cd13be357-8e8c0c2d2bcso49825485a.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 20:06:01 -0700 (PDT)
+ id 1wFkR5-0006L1-4I
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:09:04 -0400
+Received: by mail-qt1-x834.google.com with SMTP id
+ d75a77b69052e-50d7c12e48eso62316041cf.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 20:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776913561; x=1777518361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776913742; x=1777518542; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KkzDB76SM335oBGZ8vED/OKx/xQFvkM/vpw9G5grgPc=;
- b=AgKYqbU2UBSRr5hcAtvGGkCx7MvgxteLRvWMp+jt5Oj1x5KmECF4r5htu35zr9tDcl
- fO8B9GMSpesIofyvp/tr3XoNne+KPUvvDqJYqWEBRpIRQU4GsgatK7IlvyLcW70ClNSO
- kZ5FXqhbdQ9663aE/kcvTNagPt1X32qpi7+HVUYRCvgvH2wMes0J4Aa7pSJGooZ7cc00
- 2tlcgbExBKyvKQ5LDK8Dj+v5fbby/16ZKUrOLnJ54NIzJvgUhTZuq/VdT72mV5UB6oR6
- y88Gmr0tXKLaNi0/IkigL53k21G6G6LAhTOQzvETcXWGZWx/JQR9AhferrCVOQ4igIQF
- qBlg==
+ bh=i6n4iVpFte6TXMP8Rvu7ivOJJf16+qCMCZcrAAIiBpo=;
+ b=ALWtHAmv3kFmHIFHQAqWpC18zHOanVb0InqkiXRFUSnhtFHcY3eQHCsnr9xMSWBXqR
+ GWCRgGzsQgsL0son7P6swbRK7kc4TlAUCLhFczfkQNaP54DylNlINdGmRRH2q3z77hcn
+ 2xI23o6hzaSCF4XOKNyet0KhIQ6ugPTV7ctpNWEFf2Ml7VY0Vb0naHGqcElTu3OQcMNP
+ pf5S6eStYu2exyvZAWV0JaPh4pkCW31SM8pbZCiJHdJ+HCtFHz/YSmkI55jclWEFjJSc
+ eEGfMs3HnLkGyvb0Lo/U3PqfUYnZqJVJiGfKrjVS8+AD9MWo8byagNNW7nfGIsiFo5+K
+ D+Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776913561; x=1777518361;
+ d=1e100.net; s=20251104; t=1776913742; x=1777518542;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KkzDB76SM335oBGZ8vED/OKx/xQFvkM/vpw9G5grgPc=;
- b=JP81OBmrg5RksTwZs0FAl5J0600ARH8MJ6tvLmN9RQp6vpvof82pfBcs1jgyUlGq/p
- Z+/lS1YOULyR42zGAM5D9K/v0MSKchVYw2G6S2htWm4KP/lYhwmc49SvraJvPeLPQTCw
- pwgeT5rCbWwPFTO5dXr1ejk6sx77VjkeqQ5Leakv2/HU5IRk+LN/tIUy+k31w353JKe2
- gt8G7XNNdSd5BCjr+EM7mQ6VkrgEIN6JEiJLYj/aTL1GeTCcHR5ZeP+d4H+cyNwBCu7f
- Fa1psGXlb83l7emzR/dAiSCi3F4UUyhGlJGyoVzP7KvvKXOJmYaaQxeSnqsyh+AUnN4b
- jgHA==
+ bh=i6n4iVpFte6TXMP8Rvu7ivOJJf16+qCMCZcrAAIiBpo=;
+ b=CQpIjahWh8HbPj2V7SQ4/KTjnICWFULvC9ifUhPcZEtyrIh6zhaVqvxqcGijErmA+Y
+ Ky5YUw5iXQ7bTieA1rPL+cVeM9yzh+KKR3s+sXFrPedbBTVRTTCKkeOfyia2QeuCIQyb
+ i6AnqUvJ5DPPhmojwahNJVhjaNU3K7Nj2u5J2GJLB0jK6m6LIzWUN1ekXdHpxLVjJYCA
+ YID31qAqb1HBc8z4oZbUpsi+vIKqg/DFb6doVkuv7GscKhxG5gkV6JgwbtXUNd8R7ZvH
+ r/abmde4P6Z0K3nubQ830YwR6QjEJJE5iYq01x4U76XRuM9KiAEXg5KcvUjYJyVGdPZs
+ SQXg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/UGq/gztdlSV9dCTyd++ZtPqhI6hzM5/MgVDt5616OfIsik7tqwGo1DwQb61logAK2aWjCq2ko9P9E@nongnu.org
-X-Gm-Message-State: AOJu0Yyv72t3LpWh4lzFyC2D2ev6HACCSiaSR7+srLgtd2AEowzaUJW8
- 26vZiQ6lAM3GWh/KhmsWya4+z8Pfv733gvkCXWz5bL64m6ReBeqeVQ07RhF0Dj4xlgY=
-X-Gm-Gg: AeBDieuybX62g2DCRvvD4gZTF41sjs5Zr6cqFSGnq76eRnv3IISFJwqcuq0uCP2YETL
- QcjQ2r4iuVTvnxXSWz193e3lxeTRUjpS9oVBJezmVCifBFcRRrInRS2ekxyKniCDj7IanMvZHhH
- KK7P84oqsbFWhqbr7r1MeTzksnR0SqNDHmT3+KmyrSB50TX/f/q+XyNba9SYVkGBFoXCLtXHtWD
- m84EpdcibTu3LKKue33Owg0cUn5yglwRF6Fl2esEhNg5A3aW+ua5F+ok7yNWkdsZfrCXPMoCz1j
- oCFBQi9wcW/TvfV3YyaPFKtOGgsO2SWuMapAJzkYAa/S/yBHwiwPsppYKgBG38FUk5uyAgv6ffC
- guAmNWjLuCRtJivJf3xTrNkNR1tyZYkdDch+vWhZu5ND0eh8ihNQt/pvzaVpL/Khl/+ohc7m59/
- ZbGTBF3SWLePWryL3z1T3UXKdFRASr22F41tOqHoSLgfxUoSo7BCUxS1eHWQvMEl5B0rQXfUkf7
- pFRBr+sjUZ2Q0dnLQ0aKsHazQ7a5SGzBNSqoM8=
-X-Received: by 2002:a05:620a:4612:b0:8e0:f680:4b34 with SMTP id
- af79cd13be357-8e78f253bb2mr3385584285a.1.1776913560741; 
- Wed, 22 Apr 2026 20:06:00 -0700 (PDT)
+ AFNElJ+7NqUcSGJGLgz7XO0l/x5Bgt+ilYLmL51bQZKnEkumltaZFdYGU979xjshLDDiWq4kdM8hJ5syXDPq@nongnu.org
+X-Gm-Message-State: AOJu0YzaUN2yA5ZXt6OinNKPgrUO0VCEJMeBjg2ylAz/A3vlwn0c4Pz8
+ b2Sf/NOaOdkZIFiVjiB+38TGXIMcwDTv5JRZl0d9/qClHGoKbeiePn5jchxp9vfebrI=
+X-Gm-Gg: AeBDietUN5Cm19QW9G5qgXy6No9NzWcZNo9SL5RohmQsrXqMR7mmE2ZrkTvK5IAnhnM
+ TU0jF2dcmODFL4jgyuqC4YasUqBXscrEA6WPRF3Kxl/ow93IZg/ZtRGYiGFworkYDJxA8FHsGpL
+ hr1wX1A7A8naMrHFplrNsBxdF8BxmfqdaX/g+3pXK9jigZd+RVln2G8+kybxjmD28DEuwRV/DPm
+ xx/5ENb4jEr0u3uu/B1VNYPnjsF02HNWUSTb7g1IhVXfMTx2PJ/y4/z5szI7OgJ7Rnkr2Qj63vn
+ 3BeXJ2i0NNGJTQrQGTFD18X82IsIp/IGn7ftA7p9a3o1rQ4qHWknal7EMlgzgqQRGM0rZb1kXRq
+ Hrz/TMI/79JMjUXbejYkndzqFRacBncbM4vNNAwgvQaTL5mM8NapBGiNpv6powSfCIaMVCYG3oJ
+ Ap00r0z2opM5mWw+1VAl4/aVd3EmidR9jztyZxQL9kMXfWntdu6RcKGI80R3vU8pYQ4ae3Nc4Zp
+ K2xbIze0rhaHh/UvnaeDa41OxB1
+X-Received: by 2002:a05:622a:22a3:b0:509:11bd:9d3 with SMTP id
+ d75a77b69052e-50e365f7250mr301916681cf.1.1776913741799; 
+ Wed, 22 Apr 2026 20:09:01 -0700 (PDT)
 Received: from [10.72.56.227] ([172.59.184.224])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8e7d92ce037sm1448408685a.32.2026.04.22.20.05.57
+ d75a77b69052e-50fb11f9986sm66028541cf.22.2026.04.22.20.08.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 20:06:00 -0700 (PDT)
-Message-ID: <09da5690-5b9a-4930-8fd5-cecf1e3b8eb2@linaro.org>
-Date: Thu, 23 Apr 2026 13:05:51 +1000
+ Wed, 22 Apr 2026 20:09:01 -0700 (PDT)
+Message-ID: <fdbef0ff-453f-4e3b-b7bd-a164cc38b341@linaro.org>
+Date: Thu, 23 Apr 2026 13:08:54 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/17] hw/core: Implement new cpu_translate_for_debug()
+Subject: Re: [PATCH 15/17] hw/core: Implement cpu_get_phys_addr_attrs_debug()
+ with cpu_translate_for_debug()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260417173105.1648172-1-peter.maydell@linaro.org>
- <20260417173105.1648172-15-peter.maydell@linaro.org>
+ <20260417173105.1648172-16-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260417173105.1648172-15-peter.maydell@linaro.org>
+In-Reply-To: <20260417173105.1648172-16-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x735.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x834.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,62 +108,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/18/26 03:31, Peter Maydell wrote:
-> In cpu_memory_rw_debug() we need to do a virtual-to-physical address
-> translation for debug access.  Currently we assume that the
-> translation is valid for an entire guest page, but this may not be
-> true if the target implements some protection regions that have
-> sub-page granularity. (Currently the only such target is the Arm
-> CPUs when using an MPU, as in R-profile and M-profile.)
+> Implement cpu_get_phys_addr_attrs_debug() with
+> cpu_translate_for_debug(), so that CPUs can implement only the
+> translate_for_debug method and have all of the wrapper functions
+> cpu_translate_for_debug(), cpu_get_phys_addr_attrs_debug() and
+> cpu_get_phys_addr_debug() work.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/core/cpu-system.c | 17 ++++++-----------
+>   1 file changed, 6 insertions(+), 11 deletions(-)
+> 
+> diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+> index cab65d549a..be5cb48126 100644
+> --- a/hw/core/cpu-system.c
+> +++ b/hw/core/cpu-system.c
+> @@ -90,19 +90,14 @@ bool cpu_translate_for_debug(CPUState *cpu, vaddr addr,
+>   hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
+>                                        MemTxAttrs *attrs)
+>   {
+> -    hwaddr paddr;
+> +    TranslateForDebugResult result;
+>   
+> -    if (cpu->cc->sysemu_ops->get_phys_addr_attrs_debug) {
+> -        paddr = cpu->cc->sysemu_ops->get_phys_addr_attrs_debug(cpu, addr,
+> -                                                               attrs);
+> -    } else {
+> -        /* Fallback for CPUs which don't implement the _attrs_ hook */
+> -        *attrs = MEMTXATTRS_UNSPECIFIED;
+> -        paddr = cpu->cc->sysemu_ops->get_phys_addr_debug(cpu, addr);
+> +    if (!cpu_translate_for_debug(cpu, addr, &result)) {
+> +        return -1;
+>       }
+> -    /* Indicate that this is a debug access. */
+> -    attrs->debug = 1;
+> -    return paddr;
+> +
+> +    *attrs = result.attrs;
+> +    return result.physaddr;
+>   }
+>   
+>   hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr)
 
-RISC-V has sub-page granularity via Physical Memory Protection (target/riscv/pmp.c).
+As far as it goes,
 
-> +bool cpu_translate_for_debug(CPUState *cpu, vaddr addr,
-> +                             TranslateForDebugResult *result)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Whee!  Thanks for the new API to address my comment vs patch 10.
-
-> +{
-> +    if (cpu->cc->sysemu_ops->translate_for_debug) {
-> +        return cpu->cc->sysemu_ops->translate_for_debug(cpu, addr, result);
-> +    } else {
-> +        /* Fallbacks for CPUs which don't implement translate_for_debug */
-> +        if (cpu->cc->sysemu_ops->get_phys_addr_attrs_debug) {
-> +            result->physaddr =
-> +                cpu->cc->sysemu_ops->get_phys_addr_attrs_debug(cpu, addr,
-> +                                                               &result->attrs);
-> +        } else {
-> +            result->physaddr
-> +                = cpu->cc->sysemu_ops->get_phys_addr_debug(cpu, addr);
-> +            result->attrs = MEMTXATTRS_UNSPECIFIED;
-> +        }
-
-We should really make a point of getting rid of the fallbacks.
-
-Would it be less churn to drop the get_phys_page_debug to get_phys_addr_debug rename, and 
-OR in the page offset here?  That plugs the -1 ambiguity in the short term.
-
-I realize that microblaze must be converted to the new hook, because of its tlb oddity.
-
-With arm and microblaze converted, only x86 still has get_phys_page_attrs_debug, so that's 
-an easy hook to eliminate.  We can be slower about converting the others if you prefer.
-
-
-> +        if (result->physaddr == -1) {
-> +            return false;
-> +        }
-> +        /* Indicate that this is a debug access. */
-> +        result->attrs.debug = 1;
-
-Does MEMTXATTRS_UNSPECIFIED.debug make sense?
-
-> +        /*
-> +         * Assume memory access permissions are valid for the whole page.
-> +         * Targets where this isn't true should implement the
-> +         * translate_for_debug method.
-> +         */
-> +        result->lg_page_size = TARGET_PAGE_SIZE;
-
-TARGET_PAGE_BITS.
+But I'll note there's exactly one user in system/physmem.c, so it'd be better to drop this 
+function entirely.
 
 
 r~
