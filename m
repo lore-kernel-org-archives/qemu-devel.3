@@ -4,118 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06DAFDEE4E
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 21:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BD6FDEE4E
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 21:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG1l8-0002fO-O0; Thu, 23 Apr 2026 17:38:54 -0400
+	id 1wG1l7-0002fL-JX; Thu, 23 Apr 2026 17:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wG1l7-0002em-4t
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:38:53 -0400
+ id 1wG1l5-0002eV-MO
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:38:51 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wG1l5-00023b-NV
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:38:52 -0400
+ id 1wG1l4-00022m-6d
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:38:51 -0400
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63NFPgcW179253
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 21:38:50 GMT
+ 63NFoSNF180406
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 21:38:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=yAmoLgrjwHG
- btjIeEuDe7ayCtPhXidq++dY8RvNYCWU=; b=oJwg4PWc0MeRLXGEY4Ujn5M667H
- BAx9QL+AQwD537+N96k1QhnObFhW50D7JhUzzlcEYyO7a7lKxSyRxmOjxJL614F4
- A2/6bOKwajvt8xGwDNBpJBll7CvDHPndBWq202uT7momjiP2KjBvJXTd51DCmWeJ
- 0zmgx8PyRvO/T8ZiR2CFLJZT5NScaRkLk+7G6a0sq1pu85UXhw62FULrBvrzaKTs
- MmlDCTaJ+y+7yrkuiwLPW3yeYDV3fLQ0zaV83+taGuWdvT4pIEAoYsI48aBzw4hI
- 49swKcS21N/9jH7mgzU3hz752Nh+jyHFGdpYYclDBo5HhpM2rFigpABbjYg==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=WOSms69dlEV
+ u0F65izi2psIjj1p357XYspxgkpokApM=; b=XrBZm9I4kURizBPv9DMTz+p6uVv
+ nKXoYdWjX03TCP2xbdCzHfigjgU15lv1j+r8nSuEaj1jD9iHN6FthTOtce0A+U0h
+ 1yv5yzM7Bz62H6RYfaNXomLfAJiw5tqxB0mLdd3oSEqtSAnyfBO0Pv4nzTqD7LhA
+ 2+8ydaZG880GcBYmdk44VA1ZD2Ylsbj8oWGadIe9FVziRfJja6eFjlZecDWt00Py
+ zudhY/Q3UFtKKCykpO3ftmA9FviuhVaDcQ2mfD8N+yRUU8/p5FmNpUu+ps42YT1A
+ EN88rIeFyBQkCOKP1RfZL+5+KXL8wBt5r3iyNjBQBum1gbhR8JgEMSidbeg==
 Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
  [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dqe62ks3n-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dqe62ks3h-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 21:38:50 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 21:38:48 +0000 (GMT)
 Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2bda35eab74so6412540eec.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 14:38:50 -0700 (PDT)
+ 5a478bee46e88-2ba8013a9e3so7862447eec.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 14:38:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1776980329; x=1777585129; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1776980328; x=1777585128; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yAmoLgrjwHGbtjIeEuDe7ayCtPhXidq++dY8RvNYCWU=;
- b=YKmhartth4cAdEwrUc5/cREp7LRcyzRfKsZll3mhnvWPmBctdYulcUkV0COLylj7Xx
- cYwkPmuieRwM9Z8xDqo1BRtRkmV5cu5e3WbVbCm2ggKQHoD5Fd3lFO7H327dv38m/tTY
- p54O01sCZVc/6SvmPDvwQA5HVREsX8iIAKMiyKuA/ohJJTgqkdT8JX1KtXBQJ81cJsdI
- BdTxURmuDx3QPlnQmg93Pdx/aIzMWUtOPduXqDSI/gW6mPrC03oRY7MW3xRpuTJlaO4N
- sRi/Mxj2YrYThlsk8w5VVJRSHJXPGW6TT5/AOtJdxugKLyQ8GYQo9SWLQctXcCaEoPL/
- LqPw==
+ bh=WOSms69dlEVu0F65izi2psIjj1p357XYspxgkpokApM=;
+ b=fmvWfU92nbWfR7xkXs15PGLHTn8124nWtwKIc2jd3MwAdDlV3V1ws6phxTiVI1zNE9
+ 7+LJLVEbYpqLT2wfuBiiRSTvdZX7QPM/YXa+ubasJmgFe91nf2KLDvCU3IQmBXtwNyVD
+ byrJZ8MrB+h+4MKa5bUV57g1/VhGquuZrTENY0XqU05JDEWZzgrZOp53BeGDl90i93Xl
+ T6w4x1h0w7YgT2pW22ioFCKxk/EN12GcL+21OSvlCQW3tdA0m1AHg/BRhc69GjebSr/v
+ 1bq6nih7844acVQjrxY4Hdt4oI/BkKlkSpXFFo6YQGwqiv5xDq5cAaRUCkVVYArGncec
+ YvFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776980329; x=1777585129;
+ d=1e100.net; s=20251104; t=1776980328; x=1777585128;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yAmoLgrjwHGbtjIeEuDe7ayCtPhXidq++dY8RvNYCWU=;
- b=H25ZGS5YEhXYQMT/EznS8KXw2Yat5+AsW3hL6YDHXSZGcEurIl/qkFDGcq1EpjHff6
- Fp0SuetxK9cBL2HQ81MwhbkGuHdA5B+fYf/1qM3SC/h/1vOnNp3OPkFQEKgkraJYN+Sv
- /Pz877cVvNvEYR0XxsxNCxD4XRv6E1kLuPZIKOvzWR+NsBLPoF1z0BsaXig3nMJDMIQ+
- 4PCfR/dj4HFie7zZaAL0td6p3cl3JcoIMvLNT3a6nOZKBqScC37yEChSQgiwiqGTo3qY
- 4Fti2p598X96ya3jl+3jnKWoRd0FELyv3JyaytJroVP/Fx/vQnVqmv1cMZclcUbrOIaz
- 29Gw==
-X-Gm-Message-State: AOJu0Ywa7i2Qhs6a72WG3AwxfAHA4/rWLjYWHSQeK/PLsrTC36ERul1L
- MCKkFBfkyVEhSgPN9ow7YSGlydm9KuzXsquayZ0+a2TAeLii1zTn4mF3xymxKVvon47wImc7H3X
- FmLxKrABBdv+hfho89iaMWXjvVTzDSoZ4o6Y+0ESEU/id56Lqmn/Jh3GrkGpq2fBxVg==
-X-Gm-Gg: AeBDievCdQ6BOPwNoKwG6BGm093/I8kFYZEg1+mN6N1jhlZWOtIYzP6Kv0u1ANx71++
- q5rnpHmUOhfpL6ToB2fohJYGPnFznVRI0RlnvUG87tF8CYWNTM31KnPep5DGSM5k/vPj/CQXRPc
- xXUwPE0MvJmjWbUYyvfxzJjfsUYSKk6Yp7tBKd6OCdSI4+1bRie5tgPBfzpsoI3yhS6UUuhP4pk
- Duxx+V7cDuo6Zl6y7JvrQa/QCC4h2Tq6gFC14j2FXDcCu29hbT6mDhD5r8sKHnG7CGPWFMFCEKh
- nMcXCl5Gyk5VRyWq/24satjpItpvvQqj7OceGvQMti6WG1k1sJLXbewA8Nq+P/eKPydeS/XY4Pg
- 2l5YtwtU4U0Qd5b5peMocLbtqdT4FR5Hv4kfPhcn4C2uoN9dPcF5dXyRf07uOkmUCT2ID6CRT/8
- MCdnJjJhn7VmISqexdr3bURwpFetE=
-X-Received: by 2002:a05:7300:2382:b0:2be:88f2:3c98 with SMTP id
- 5a478bee46e88-2e42c253239mr13803947eec.1.1776980328964; 
+ bh=WOSms69dlEVu0F65izi2psIjj1p357XYspxgkpokApM=;
+ b=rEwyPDUzinlGkFLYHMneVAC1WHBksAlkA0pqP57sdsOoNI4l6LwSWQOmQdX1JKTXmk
+ rKOeQZrtx08HXBXhIYDMYSjEdNjj2h6ypb4ddFxQk3Vj8bqJ8XDyvx9x6NYQCJhPYQQ6
+ JgFBefkmD1s4daZYFrH/EKYTK1cls+s2jXE7kKojrkojWUbTA/Ds9Tt4qYkD+8xTzv3I
+ ypYlAQO1S4LR3dxDO8c36ISrHowYwlSLfupascMSuzur2FHSGd8H/WSxYaLDvK0tMLWb
+ XhvY306u4dmSkBU2OtnEzgbkRg23jE+PPDZWQihjuWPGucniKHDdo7FRYQjH+k4hmUwL
+ pgIg==
+X-Gm-Message-State: AOJu0Yxkmx/3co7g9fTHO4Scsmp+CA5R4HcdPacE1u4v3khZywbTKA2D
+ PX+nrKBVTKXiMx+G04cfk6rUUCYAn5D/9ojUFYZ/y1EFrwg+D6lLEd1yh9rn1mkilxDOJ/vHiWb
+ ftaUMy3Prxq81k9MPy7JyjaZA5LzmC0taUvfoNEU0YZ8NTQtpwB3KmS10F95RdKrEBQ==
+X-Gm-Gg: AeBDiesZWWz1BalGMMZ3cZRfgkPUxTub+QQgpKnOe80/AbyBXlSK/d1MmVlQ86Lr+TO
+ YW5FqSPNP/1TfxYfgg/k6Do/q1oc7kC1po6MUAucVuBrjhuC8FzYWv7ytLPO45EmBxFHIoiOwyA
+ wucenUlHOVetXCKvzpTxuiOcJGkjkhmVu8Z+z/Ftjx013l3hGa3hOskVG6lCaYJ8aM9/9DAWzb0
+ +rMJrK2KQ5jAb8t1WJlIxoMr8oFpnyeBJuxyDBjBIadDq2QYdqdsUTHiBuuvr0BMSIFGZRGXmnm
+ Ka2w9cVSqSwA/5RBe7pkT/RbY6C7a4xuTabLK/p1suLPB8tIFg+1MlY8BYl4GIjQwtD5CvpeGSh
+ PNbusgMXLx9qvb8x35gCM5N8nuFB8h1Vg/j/LrIgeIEv7lTNUF7h43wmJ8URQRl8XvDUzd8lA5W
+ mfk7Tnbx4bztmcHOho8DhcJWMzKLM=
+X-Received: by 2002:a05:7300:818c:b0:2d8:b2e1:20cf with SMTP id
+ 5a478bee46e88-2e46538ca36mr16884535eec.10.1776980328048; 
  Thu, 23 Apr 2026 14:38:48 -0700 (PDT)
-X-Received: by 2002:a05:7300:2382:b0:2be:88f2:3c98 with SMTP id
- 5a478bee46e88-2e42c253239mr13803920eec.1.1776980328448; 
- Thu, 23 Apr 2026 14:38:48 -0700 (PDT)
+X-Received: by 2002:a05:7300:818c:b0:2d8:b2e1:20cf with SMTP id
+ 5a478bee46e88-2e46538ca36mr16884523eec.10.1776980327528; 
+ Thu, 23 Apr 2026 14:38:47 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2e79c2954f6sm30840209eec.30.2026.04.23.14.38.47
+ 5a478bee46e88-2e79c2954f6sm30840209eec.30.2026.04.23.14.38.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 14:38:48 -0700 (PDT)
+ Thu, 23 Apr 2026 14:38:47 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Subject: [PATCH 2/2] contrib/plugins/uftrace_symbols.py: handle missing source
- line from addr2line
-Date: Thu, 23 Apr 2026 14:38:38 -0700
-Message-ID: <20260423213838.780814-3-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 1/2] contrib/plugins/uftrace_symbols.py: fix symbols reading
+Date: Thu, 23 Apr 2026 14:38:37 -0700
+Message-ID: <20260423213838.780814-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260423213838.780814-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260423213838.780814-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: UBSkjQEUw5HZBYFzfldeY-4-9Ca97ip_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDIxMCBTYWx0ZWRfX/vpoP1c1lEdb
- AnJigW/EFPgRuU9R3ROd8WNDMskjHelYzq8RVgTi6KMhZhgE56WmGTo+nW4aZUVo8VWTcALwMqc
- egROG1KfygIAbMoQn9/l+tjcI7fjefBkYKzz1a7Qr0g/8mfrOSwIh0ik9KpzZVlAWo6+WP0CeNZ
- Lu3xxYOXemNaSBlf3GPM5S6Cg33vK5GDZTkzOMkvOiuAJeBp9vk4347vlRXSd9N8WL3PUcaOm7Y
- SfxmSrfWx2HNb4Kaz0DQfWfapNGBttGED0T1oYsE6QOosZ1iG7+urCTcYUamhBAdmf+q6NyYczb
- ncpwyPF05JcWMOyTHfehPamfVMFnkHrZrtEh1Oa4axfcmiJWwo5bDUwhk6kKk/HbgUdMs5XU5vH
- XNj1Zp0ivGOU1D8q2uHPgknigfgKTaoDfd2a9BkLgKT1A96xJKRIcT5Uaz2zd85anST6/sKzTwa
- 5YSE8ne8S6sLGSDRhng==
-X-Proofpoint-ORIG-GUID: UBSkjQEUw5HZBYFzfldeY-4-9Ca97ip_
-X-Authority-Analysis: v=2.4 cv=Nv7htcdJ c=1 sm=1 tr=0 ts=69ea916a cx=c_pps
+X-Proofpoint-GUID: gHrDpUdV0n1YKVq4wijJuax6-rm13i_X
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDIxMCBTYWx0ZWRfXzZ44k0QSl5TT
+ gQ93pV6UoWf/JGcCtbZvcnp6eykQcHd25Q56quKPjY5TKGy1X1mfXewF3NNB7fmTUaeHKGin76h
+ T+Re2pldTLe5konIEZ4NmZwLJezLQE6OZ1oeQk65c2M57QWJIulGrQaiF7bvBcW4J/bibmxum/o
+ ByrBqkEzml3a0dE/s62uZbMPcOg4U8GTMXZrcwCG73wJ3zOc2PHfUwhyZBWq7+wD9kvtG2mWGGt
+ sxx4M4laOI7JGJjFrGlB8H+oIn9ZqSxNr33/LSqsocnqcT38Ty41Q18kmybuR5vlxkBKBNa+Kz5
+ +QIBeFQHcTcRVPJQtdPTCi9MkpiZCaok2zzJBVS6FAP2v+o5j2if/+9pHjW1mR7ljXnwn4zqkWK
+ kPUK/pbHEV8dT/fJgJE533ET9pbPQeZUnOlAe5QUNYKLD3+iA1DkbQiUX0ngwUHaROLUPyPJSl4
+ Jz6dAaLbjJUpb4Jq+kQ==
+X-Proofpoint-ORIG-GUID: gHrDpUdV0n1YKVq4wijJuax6-rm13i_X
+X-Authority-Analysis: v=2.4 cv=Nv7htcdJ c=1 sm=1 tr=0 ts=69ea9168 cx=c_pps
  a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=hHQBpZYMLWUj37UEPHYA:9 a=PxkB5W3o20Ba91AHUih5:22
+ a=ZKpvnbfxhZuoKkEclzUA:9 a=PxkB5W3o20Ba91AHUih5:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
@@ -149,31 +148,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some symbols have only a file information, and no line information. In
-this case, addr2line reports '?'. Replace with 0 to guarantee consistent
-data for consumers.
+When running this on hexagon binary, we observe some undefined symbols
+without any address or size.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- contrib/plugins/uftrace_symbols.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ contrib/plugins/uftrace_symbols.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-index 895fa1a6b7a..a71865805c5 100755
+index 02d1221228c..895fa1a6b7a 100755
 --- a/contrib/plugins/uftrace_symbols.py
 +++ b/contrib/plugins/uftrace_symbols.py
-@@ -70,7 +70,10 @@ def find_symbols_locations(elf_file, symbols):
-         file, line = out[i].split(':')
-         # addr2line may return 'line (discriminator [0-9]+)' sometimes,
-         # remove this to keep only line number.
--        line = line.split(' ')[0]
-+        if line == '?':
-+            line = 0
-+        else:
-+            line = int(line.split(' ')[0])
-         s.set_loc(file, line)
- 
- class BinaryFile:
+@@ -36,8 +36,8 @@ def get_symbols(elf_file):
+     out = out.strip().split('\n')
+     for line in out:
+         info = line.split(' ')
+-        if len(info) == 3:
+-            # missing size information
++        if len(info) < 4:
++            # missing size/address information
+             continue
+         addr, size, type, name = info
+         # add only symbols from .text section
 -- 
 2.47.3
 
