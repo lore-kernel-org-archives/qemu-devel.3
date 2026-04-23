@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19AB4F99368
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE72FF9936B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFrKn-00013E-Ad; Thu, 23 Apr 2026 06:31:01 -0400
+	id 1wFrKm-00012x-PL; Thu, 23 Apr 2026 06:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrJs-0000bg-O4
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:05 -0400
+ id 1wFrKF-0000nQ-Vd
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrJp-0005Vg-Pi
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:03 -0400
+ id 1wFrKE-0005oG-Ak
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776940201;
+ s=mimecast20190719; t=1776940225;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=O/bgzj+cBYzib+ZwvZuAeH+b8dmvXBVQIfVS5BqtNx8=;
- b=ipXaEupIMA4otQsdm6y50Z+OG9yTBXuIIeO0KeyQabDlqi+y+OOeWBwTMz4+NRgMM3Loxp
- HFVaBD7IbZCkRgvqav8f1fWwSnoZyGmPaIvHz1/S1rry4AINGL+m4TFoEPA0tsX/vfOfOk
- XskFKt/aWl8e3r3249NwZWSPQpigcV8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rof6tYmA3yNSs60ICHlduhezXCmfZD19VtF8nxPlTLg=;
+ b=E2xPyUv7YaTbTB1rFKl7yssTxlDJCFXN7Ye1rTuIAc5aTfvatHfhh/yKwaXV0+1zILxqOg
+ 6vi1oqr0XocRFE21e6mlNuIv1nh3ylbPteaadurQ9L7RX/LXirBMHZHI297YWFKgYqmS2J
+ LUSLlSL1DZMWex03E4a34LBBjw5thD4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-3T8SnFItPgOMS_JBTPQM-A-1; Thu, 23 Apr 2026 06:30:00 -0400
-X-MC-Unique: 3T8SnFItPgOMS_JBTPQM-A-1
-X-Mimecast-MFC-AGG-ID: 3T8SnFItPgOMS_JBTPQM-A_1776940199
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43d7757463eso4263767f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:29:59 -0700 (PDT)
+ us-mta-519-vqH1qa2_OweYdi6H6atJ_Q-1; Thu, 23 Apr 2026 06:30:24 -0400
+X-MC-Unique: vqH1qa2_OweYdi6H6atJ_Q-1
+X-Mimecast-MFC-AGG-ID: vqH1qa2_OweYdi6H6atJ_Q_1776940223
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4362197d1easo5041791f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:30:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776940198; x=1777544998; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776940222; x=1777545022; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O/bgzj+cBYzib+ZwvZuAeH+b8dmvXBVQIfVS5BqtNx8=;
- b=WK+ORbR8Mge7X5nhIDXcob8WYorZB44VvSxO69Bvmy9EGQVXbBcTKVAffhdQH1VArC
- tZ0kAj7hR8ArsFTaPAyLhsUVaWjQ1L4glhAjUEwRiss4oUAARXeWimDvQzUKMWNpriPt
- FWdyv62AbKcjgRlAQ6N+z3F6H/r98KTSOKLL0CssY3rmSqPz6OnMMOo4DPh7ttnvxiTm
- PkUoBkXAHBnFuVIjdF8s3dSgBnxLlgOgaVg+0zz4LVMTViNIEFly/l822rjlUnj4zY8b
- N4M1CTK1cImGJut/UoAUr8xsmLqdFKnoRBFX0hNem4+6Zmzjcs3g29UPacHac+Ip64Va
- 9a3w==
+ bh=rof6tYmA3yNSs60ICHlduhezXCmfZD19VtF8nxPlTLg=;
+ b=I+zEV4OWOj7OBKqhkEWpT8ZKqzEBa7MEQ0a1KAD/CE0jO9of8diJyfY+qCckjHjTQs
+ g456YiJblAw4CWNK16eGDpocFRGfSY6litDNpgJBBe3DPpWnV/qHhiEZoK7Y/3ND9Ume
+ mGNFj/Njuu/u48JdLk9dyAtafQmU9VPlYNu66DPhFydNnPKxHOKzaxZV6uhtYcPvihDt
+ mhhzgcGrWvUpD7STdt7eTivgNdWcStGvlh7mu3bQB8yfyM0Pqp89NDcAtA2qwS8JC3+X
+ 26SJ8UFU4DnS46mSabZRfM2lwcENbuoyzQwY+K+jqFQPtP0fJEcSh+6H94F8nrvbUswy
+ /EOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776940198; x=1777544998;
+ d=1e100.net; s=20251104; t=1776940222; x=1777545022;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=O/bgzj+cBYzib+ZwvZuAeH+b8dmvXBVQIfVS5BqtNx8=;
- b=XdswzJxz8fLtEgVQMTm+BX8OCAzJLzajRu4QgWFraY2qmnSxMjf506y10yi0uVj4m4
- pXZdwnRYjPuSr1A/JdUrH4uutnAcjwIT784ppbAvzvdbQ06R1Dwh/R498hQpWMpJO5n1
- X0OkipkVgCKt7S/nfyxPj/FP5xxYtMhWAxfXdOzEyXWZ/qfJz0b6UF8b1lUzjwOSScO0
- GKR9SyXH7tjdiUIn8qR7BLWxa5arXKJomJXCQJnEY1jpEFZMOxKd5SKynfuNuXPPvLrG
- pp1cqvuhFe5X0iU+WS2qRUR6VgbmZRTEgOXzTW/mcKIP9PDiDxyL8kBwlGHAGDiBDnFk
- yZSA==
-X-Gm-Message-State: AOJu0YyVx//5b8IbVbOqNmELTH+vgzhd3I//Bma1hRx9E1aJwEyiFYyf
- D2S1Fdtffj6LZI41+MX87RFVaGRI5iHUCrib7ukLiMb5LTYzgwpuvC8MxWafnp3sxnUPANF95Az
- jInZHyHMIK2The6MrC6LJEQo60hb7dnASaNfXw7rr0dV6Hh4RHUaSPOx61R8pUJwzhghwdhyobf
- em86QYAAAUYqtMKRSggzYsx19HRyfPPaPx3pCLEUhy
-X-Gm-Gg: AeBDiesP6ZGblTor1ZrKbvoygWuJvCLwza4foHE0qii6WCLo4/hZqGTNFO2M84bq0lA
- jZ0IGkNl7fmkv4nglOX5dcu1EvsiI108rjmZtmdUklcO/gsJIqevMEsbDTD4YLpmWoY632yAMAs
- uXgZp8uF8xTrvG07nc0S84uQkJgTFtSAkDL3cGJVlsd/waxIUr0q+T/GRm88EwY3CLueyYpmvtx
- Bhk1C77vsR47c+IzBpB/V4kaxlKSV7qTRO0KPy48eas4939FFP8ejHTQCkW0lGmoQ7PX4PcnZTi
- 23dGnr2Y1u0++9408eMenE9JGtYFJWvnsEWgK4Zn9ObquQnPG1sFNfOX/tMm0V1xLWcdpUSrQwq
- ZAwIFEmBJJebzhTf0yEDc3vPBds/JS2hcdxylCiZbu49rXZ5m+91E43vlFUc8LrMDSzPvEWKdNh
- G04lWD2KVAu/Y0oMXUkFENUm5bQaaT4Aevusw=
-X-Received: by 2002:a05:600c:a305:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-48a53cb8949mr138056665e9.14.1776940197839; 
- Thu, 23 Apr 2026 03:29:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:a305:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-48a53cb8949mr138056365e9.14.1776940197330; 
- Thu, 23 Apr 2026 03:29:57 -0700 (PDT)
+ bh=rof6tYmA3yNSs60ICHlduhezXCmfZD19VtF8nxPlTLg=;
+ b=RnLkzZsE5LuE3jtCfB9N/HMK+lQO6+q6OiK9IGruleeZSZHsXiM51tvurUHBsghJqQ
+ aJhrRyKT8gQ0Nb23oBlWu6WCkl4rpXJKp4bQf++F8loHNYUxqVKiScIx7fp+WDHJpH0i
+ 2WsuJE6aNfl3lbftIyds4xQkYvbiq8vPXDKzsP25rVq8DTjfFX94viiI0E5s1oCjPeAo
+ TfFWupHuvss2bZzvGg0pQQ2cJEKYVSU2nZZH50B+wUhTEQtikt2+D3NLhV9c1hqAR6NZ
+ ZSA93aMqC/zkuY3+j9PMI5vtn/79B22O7C1wPXK+LFXtTdNuVVKxb004AMyR98N95Omi
+ 1Dgw==
+X-Gm-Message-State: AOJu0Yxxef8xFTWPnBL5esNTaCleyAjYzk82hPvHTReSfNuTKco41Oz3
+ mQ8ZlaPLGagJKqhp7P0dqo2MpnP/LYOhbmAncDegaLMm3O3OP0p1ndDO4KSzEsXUAEyop0TtJnt
+ 2ds7XwiFlgrE1ZwXLbFbJqhTq9Id+eH9vwyqMf+9Qil5sRG1C2Hf5RVDHNz1qBSB2xRyyxftvL3
+ BVojRr6tUNsz2efPMpYfqTqBwVOOCdGROgkLMM57PA
+X-Gm-Gg: AeBDieupXuf0maasowoNZUrBk2JB8+ZzTCHJAchtHVFBcuF7FH3h2B4Y+wmqwiRvO3l
+ +jdT4gtFZx2VXSGDDbVnFXPkdVJH7/AJLoEwWOMdrFw3EA8BN6jeP8SFWOLxhPUuhjixk/g4UOQ
+ ww/g04YWnXi8ep5TYeUF7XuINRRuhO2N2U4KFtIu07fIKPweKBpRPHtk8egvZD/XgFvhzIE1xxr
+ 2jBnrOsyUhjTyM6x9RDhevTwatYnguPMcPylZj9xnqRxsK21se5cpYvjgkEpdJJuctfvsF8+/Zt
+ mIqqA1Nl/hjNA5RHSxtHC/ZRfyYiverhI8MUdEcwapgsOxbm64xApwIfZWvNncwhgkdThxiFC5F
+ K2vIOoAAwhr4GJhM9SPesWl6D4oBLVeqWj7HGy7jmtt0ypmLDNiDaklwpv2hfmbrN6dW5KksJKp
+ FcyGPeCCqbema2IP9zHh86278CVAj6okrxRDo=
+X-Received: by 2002:a05:6000:310d:b0:441:202e:3d2d with SMTP id
+ ffacd0b85a97d-441202e3f4bmr17381114f8f.19.1776940222099; 
+ Thu, 23 Apr 2026 03:30:22 -0700 (PDT)
+X-Received: by 2002:a05:6000:310d:b0:441:202e:3d2d with SMTP id
+ ffacd0b85a97d-441202e3f4bmr17381045f8f.19.1776940221494; 
+ Thu, 23 Apr 2026 03:30:21 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc177dafsm625788495e9.4.2026.04.23.03.29.55
+ ffacd0b85a97d-43fe4e3a174sm57683843f8f.18.2026.04.23.03.30.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:29:55 -0700 (PDT)
+ Thu, 23 Apr 2026 03:30:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 12/25] hw/ppc: Use glib2 instead of strcasecmp/strncasecmp
-Date: Thu, 23 Apr 2026 12:29:09 +0200
-Message-ID: <20260423102922.443639-13-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 21/25] target/i386/tcg: fix decoding of MOVBE and CRC32 in
+ 16-bit mode
+Date: Thu, 23 Apr 2026 12:29:18 +0200
+Message-ID: <20260423102922.443639-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423102922.443639-1-pbonzini@redhat.com>
 References: <20260423102922.443639-1-pbonzini@redhat.com>
@@ -121,34 +122,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Table A-4 of the SDM shows
 
-This is a change in semantics. g_ascii_strcasecmp() doesn't honour
-locale but strcasecmp() does. But this is OK for at least one reason:
- (1) QEMU always runs with the C locale so there's not an actual
-     behaviour change here
+                    F0                     F1
+--------------------------------------------------------
+     NP           MOVBE Gy,My           MOVBE My,Gy
+     66           MOVBE Gw,Mw           MOVBW Mw,Gw
+     F2           CRC32 Gd,Eb           CRC32 Gd,Ey
+  66+F2           CRC32 Gd,Eb           CRC32 Gd,Ew
 
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/20260327134401.270186-11-kkostiuk@redhat.com
+However, this is incorrect.  Both MOVBE and (for 0xF1) CRC32
+take Gv, Ev or Mv operands.  In 16-bit mode therefore the
+operand is of 16-bit size without prefix and 32-bit mode
+with 0x66 (the data size override).
+
+For example, with NASM you get:
+
+                                 bits 16
+   67 0F 38 F0 02                movbe ax, [edx]
+   66 67 0F 38 F0 02             movbe eax, [edx]
+
+   67 F2 0F 38 F1 02             crc32 ax, word [edx]
+   66 67 F2 0F 38 F1 02          crc32 eax, dword [edx]
+
+versus
+
+                                 bits 32
+   66 0F 38 F0 02                movbe ax, [edx]
+   0F 38 F0 02                   movbe eax, [edx]
+
+   66 F2 0F 38 F1 02             crc32 eax, word [edx]
+   F2 0F 38 F1 02                crc32 eax, dword [edx]
+
+The instruction is listed correctly in the APX documentation
+as "SCALABLE" (which means it has v-size operands).
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/ppc/spapr_caps.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/tcg/decode-new.c.inc | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-index 170795ad6ad..f4a26a85b50 100644
---- a/hw/ppc/spapr_caps.c
-+++ b/hw/ppc/spapr_caps.c
-@@ -129,7 +129,7 @@ static void spapr_cap_set_string(Object *obj, Visitor *v, const char *name,
-         return;
-     }
-     for (i = 0; i < cap->possible->num; i++) {
--        if (!strcasecmp(val, cap->possible->vals[i])) {
-+        if (!g_ascii_strcasecmp(val, cap->possible->vals[i])) {
-             spapr->cmd_line_caps[cap->index] = true;
-             spapr->eff.caps[cap->index] = i;
-             return;
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index bc105aab9ea..c8b5bd6ad26 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -875,19 +875,23 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
+ 
+ /* five rows for no prefix, 66, F3, F2, 66+F2  */
+ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
++    /*
++     * MOVBE and CRC32 are incorrectly listed as always doing 32-bit operation
++     * without prefix and 16-bit operation with 0x66.
++     */
+     [0] = {
+-        X86_OP_ENTRYwr(MOVBE, G,y, M,y, cpuid(MOVBE)),
+-        X86_OP_ENTRYwr(MOVBE, G,w, M,w, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
+         {},
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+     },
+     [1] = {
+-        X86_OP_ENTRYwr(MOVBE, M,y, G,y, cpuid(MOVBE)),
+-        X86_OP_ENTRYwr(MOVBE, M,w, G,w, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
+         {},
+-        X86_OP_ENTRY2(CRC32, G,d, E,y, cpuid(SSE42)),
+-        X86_OP_ENTRY2(CRC32, G,d, E,w, cpuid(SSE42)),
++        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
++        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
+     },
+     [2] = {
+         X86_OP_ENTRY3(ANDN, G,y, B,y, E,y, vex13 cpuid(BMI1)),
 -- 
 2.53.0
 
