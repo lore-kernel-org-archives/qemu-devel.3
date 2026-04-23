@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F87FDEE53
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 22:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACBBFDEE51
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 22:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG27p-0000zU-MF; Thu, 23 Apr 2026 18:02:21 -0400
+	id 1wG26I-0005hD-2l; Thu, 23 Apr 2026 18:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG27n-0000s1-OB
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:02:19 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG27l-0006F5-1u
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:02:19 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c6dd5b01e14so2540905a12.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 15:02:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776981735; x=1777586535; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BqtxL4TOybwWRAnA99BEzo0X+Tv+xS+/pi2vmrE8n9E=;
- b=fxKeK2vzbQUb95QHYQ2JHzS1L/VK38SGaWR0Ga487DWFEZqTKLX3xhfEgC+RIj3Bgl
- IT0xiQw2aiCOrcdJJ4w9F+ZfibPXKbcQqzxmwMAG7+e/kFSm4tb87PbW6Fwt9R9Aktpe
- piWuMyxjC/A7OwntBBv4mz3TeLFx2bOe+r9e2FENBtoRpISbAMf0s/oEOS0KtCMd7hPD
- 0pinKlcQHUheIGPEPoYRtOA1ihZ2UoNUwsfTl26fhp1ausvb12wvgekInfH0Fe4PXQJm
- hdzpxlqmZeiJnjGaSqZhVh/ugQy45S79syBTDSzTxqZQjtg77anNQIzk3VfH9ow3PtX4
- r1lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776981735; x=1777586535;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BqtxL4TOybwWRAnA99BEzo0X+Tv+xS+/pi2vmrE8n9E=;
- b=EyHRl4D/1WqK8b1RXFzzdYAxY2B/f7Qpm3WoOvWQxmOdrn/jwuaMuvbzSXjt3t6YAe
- xm4mvU/bCZxfWCCubmPwbOPj7XSZhGCnzb0xRm9muI9o5VaU4wvuH/EENb6hw4Gt0P+B
- 1e6ReHEhZrytRjsebH4eF9wDmIOJAbZzqNwY4RAh5DJ6b9+yt1QIFmbAsauCzKzP4++0
- 4hbjfQomC6Fi4PA/qnaLfhbQJfOVKA3cOBrHD7cLtBIG2b6gqJf9r/7rP+aDJudzUeVu
- KCceZ/L7zhHtd7CbBah3bGPC0dkLDInAxri5FFcrtqWbYiRYE/XQRmL9CE5EJ+ovl9yI
- 6SCg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+iWkLsUWwP+9npSrAnx1dS4ZRKiG8TSKOCGBT5Xw/Kh6bniN8NH0uLrTYFQAIXg1ozOqSOqI6wDl8u@nongnu.org
-X-Gm-Message-State: AOJu0Yzvr7mKdAVZEpqJNkKWRYiqPskH2kIrIALwIz7L4RcNkzrSj8IP
- GHadG8RtL0wc+n0g+vwza+dmXCrici+OMrzZtfDIj2VWyCo97kDyF+tGN5dmvpM3NOs=
-X-Gm-Gg: AeBDiet8nPf2jtgT79UYj7qhnmt9fPEaBSpcmerWyZz1JpsZlI94/E9GkCdvG6Ceh5l
- RLsZX9rFqqQStNYdkJKC08x7rhdQSpu/Rn04gO/m/HrbGk1QJtc3f6iCr5/Hx/3+5+T5iWCQT/F
- ce31hQu09KmosJDYkvFnpWq4nFpnhvQuRwGMXyI5hgP25rvpdRI9aJXe5JkdRE9NmFbGPYPh1dr
- VCkaBT7emdpiria2TTe7nWVZNV/P3vBpGmPW9M6CDdjFptVwSDmNeUyNp+JnutNTCq31SeRHlSn
- cbdQj2fqdhIISNl06rw8ZAikPcGlqEpg+aBnUfvC1sJNz80Maf6YXjrA+RrtLZx+kcCIXWf1G22
- yJaEt1SzwKsF9l6XsPq63C06NeMCLVcqJ4PFcrqANO3NjfqBk8FyLAx7aQXvi3gpsXyfdrzwOaQ
- v3Gyo2hy3kz4YxV1yUQxYoltBIwTMTjgp7YEc5mC5mZu60xCg+dSUhvgz0K9eI
-X-Received: by 2002:a17:903:110c:b0:2b4:5e7e:34ce with SMTP id
- d9443c01a7336-2b5f9fb90efmr295564255ad.39.1776981735294; 
- Thu, 23 Apr 2026 15:02:15 -0700 (PDT)
-Received: from [192.168.1.134] ([110.239.0.232])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fa9fedf0sm246666345ad.6.2026.04.23.15.02.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 15:02:14 -0700 (PDT)
-Message-ID: <0deb5c1b-deff-48ba-9836-d3d1c11786f8@linaro.org>
-Date: Fri, 24 Apr 2026 08:02:07 +1000
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wG26G-0005gb-Fg
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wG26E-0005n7-Oh
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776981641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4U5mLgPq13tmE2cbCVg+v4MMqU//WVhAAqdpEanptww=;
+ b=OrQcYOEpSLTknxOeFMmfKOsSLpsn1WPTVSa72oDKDawI24OtI0fb8MN3Kf6mRc+7qpi955
+ 1Zfd5zEVDhksWHBFve67B742wVJQYyiWOm/3U4BrPRp/ihn4e5zQQ44T6NozbGJU/DYJzV
+ REEtpQmrDsDle0QYdeGwM1U1hGgxRQ8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-pIl8z927PF20ALKDevGW7Q-1; Thu,
+ 23 Apr 2026 18:00:38 -0400
+X-MC-Unique: pIl8z927PF20ALKDevGW7Q-1
+X-Mimecast-MFC-AGG-ID: pIl8z927PF20ALKDevGW7Q_1776981636
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2D4119560B4; Thu, 23 Apr 2026 22:00:36 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.143])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D55693007572; Thu, 23 Apr 2026 22:00:33 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Markus Armbruster <armbru@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+Subject: [PATCH 03/12] qapi/docs: make remaining subsection members "private"
+Date: Thu, 23 Apr 2026 18:00:12 -0400
+Message-ID: <20260423220022.2180059-4-jsnow@redhat.com>
+In-Reply-To: <20260423220022.2180059-1-jsnow@redhat.com>
+References: <20260423220022.2180059-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: Leverage 128-bit vector type in VLL / VSTL
- opcodes
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org
-References: <20260423141245.51344-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260423141245.51344-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,40 +91,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/26 00:12, Philippe Mathieu-Daudé wrote:
-> @@ -43,19 +43,17 @@ void HELPER(gvec_vbperm)(void *v1, const void *v2, const void *v3,
->   
->   void HELPER(vll)(CPUS390XState *env, void *v1, uint64_t addr, uint64_t bytes)
->   {
-> -    const int mmu_idx = cpu_mmu_index(env_cpu(env), false);
-> +    int mmu_idx = cpu_mmu_index(env_cpu(env), false);
->       const uintptr_t ra = GETPC();
->       MemOpIdx oi;
->   
->       if (likely(bytes >= 16)) {
-> -        uint64_t t0, t1;
-> +        Int128 t;
->   
-> -        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
-> -        t0 = cpu_ldq_mmu(env, addr, oi, ra);
-> -        addr = wrap_address(env, addr + 8);
-> -        t1 = cpu_ldq_mmu(env, addr, oi, ra);
-> -        s390_vec_write_element64(v1, 0, t0);
-> -        s390_vec_write_element64(v1, 1, t1);
-> +        oi = make_memop_idx(MO_BE | MO_128 | MO_UNALN, mmu_idx);
-> +        addr = wrap_address(env, addr + 16);
-> +        t = cpu_ld16_mmu(env, addr, oi, ra);
-> +        s390_vec_write_element128(v1, t);
+These fields are used to provide error checking and internal logistics
+and should not be used by a user of the library to directly access
+documentation sections, so make them private.
 
-The most important thing to consider when converting to 128-bit access is the atomicity, 
-otherwise you can find yourself slowing down emulation when the host does not support 
-atomic 128-bit access.
+The "since" field alone is left public, as the qapidoc generator does
+use this field to pull that section out of the regular flow of the
+document.
 
-In this case, VLL (Vector Load with Length) loads n bytes, as can be seen with the 
-fallback code just below.  So MO_ATOM_NONE is appropriate.  Similarly VSTL (Vector STore 
-with Length).
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ scripts/qapi/parser.py | 54 +++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index b33edbba74f..da4756a7424 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -555,7 +555,7 @@ def get_doc(self) -> 'QAPIDoc':
+                     break
+                 # Non-blank line, first of a section
+                 if line == 'Features:':
+-                    if doc.features:
++                    if doc.has_features:
+                         raise QAPIParseError(
+                             self, "duplicated 'Features:' line")
+                     self.accept(False)
+@@ -570,7 +570,7 @@ def get_doc(self) -> 'QAPIDoc':
+                         if text:
+                             doc.append_line(text)
+                         line = self.get_doc_indented(doc)
+-                    if not doc.features:
++                    if not doc.has_features:
+                         raise QAPIParseError(
+                             self, 'feature descriptions expected')
+                     no_more_args = True
+@@ -733,14 +733,18 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+             QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
+         ]
+         # dicts mapping parameter/feature names to their description
+-        self.args: Dict[str, QAPIDoc.ArgSection] = {}
+-        self.features: Dict[str, QAPIDoc.ArgSection] = {}
++        self._args: Dict[str, QAPIDoc.ArgSection] = {}
++        self._features: Dict[str, QAPIDoc.ArgSection] = {}
+         # a command's "Returns" and "Errors" section
+-        self.returns: Optional[QAPIDoc.Section] = None
+-        self.errors: Optional[QAPIDoc.Section] = None
++        self._returns: Optional[QAPIDoc.Section] = None
++        self._errors: Optional[QAPIDoc.Section] = None
+         # "Since" section
+         self.since: Optional[QAPIDoc.Section] = None
+ 
++    @property
++    def has_features(self) -> bool:
++        return bool(self._features)
++
+     def end(self) -> None:
+         for section in self.all_sections:
+             section.text = section.text.strip('\n')
+@@ -771,15 +775,15 @@ def new_tagged_section(
+     ) -> None:
+         section = self.Section(info, kind)
+         if kind == QAPIDoc.Kind.RETURNS:
+-            if self.returns:
++            if self._returns:
+                 raise QAPISemError(
+                     info, "duplicated '%s' section" % kind)
+-            self.returns = section
++            self._returns = section
+         elif kind == QAPIDoc.Kind.ERRORS:
+-            if self.errors:
++            if self._errors:
+                 raise QAPISemError(
+                     info, "duplicated '%s' section" % kind)
+-            self.errors = section
++            self._errors = section
+         elif kind == QAPIDoc.Kind.SINCE:
+             if self.since:
+                 raise QAPISemError(
+@@ -803,16 +807,16 @@ def _new_description(
+         desc[name] = section
+ 
+     def new_argument(self, info: QAPISourceInfo, name: str) -> None:
+-        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self.args)
++        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self._args)
+ 
+     def new_feature(self, info: QAPISourceInfo, name: str) -> None:
+-        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self.features)
++        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self._features)
+ 
+     def append_line(self, line: str) -> None:
+         self.all_sections[-1].append_line(line)
+ 
+     def connect_member(self, member: 'QAPISchemaMember') -> None:
+-        if member.name not in self.args:
++        if member.name not in self._args:
+             assert member.info
+             if self.symbol not in member.info.pragma.documentation_exceptions:
+                 raise QAPISemError(member.info,
+@@ -823,7 +827,7 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
+ 
+             section = QAPIDoc.ArgSection(
+                 self.info, QAPIDoc.Kind.MEMBER, member.name)
+-            self.args[member.name] = section
++            self._args[member.name] = section
+ 
+             # Determine where to insert stub doc - it should go at the
+             # end of the members section(s), if any. Note that index 0
+@@ -835,14 +839,14 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
+                     index += 1
+             self.all_sections.insert(index, section)
+ 
+-        self.args[member.name].connect(member)
++        self._args[member.name].connect(member)
+ 
+     def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
+-        if feature.name not in self.features:
++        if feature.name not in self._features:
+             raise QAPISemError(feature.info,
+                                "feature '%s' lacks documentation"
+                                % feature.name)
+-        self.features[feature.name].connect(feature)
++        self._features[feature.name].connect(feature)
+ 
+     def ensure_returns(self, info: QAPISourceInfo) -> None:
+ 
+@@ -883,18 +887,18 @@ def _insert_near_kind(
+ 
+     def check_expr(self, expr: QAPIExpression) -> None:
+         if 'command' in expr:
+-            if self.returns and 'returns' not in expr:
++            if self._returns and 'returns' not in expr:
+                 raise QAPISemError(
+-                    self.returns.info,
++                    self._returns.info,
+                     "'Returns' section, but command doesn't return anything")
+         else:
+-            if self.returns:
++            if self._returns:
+                 raise QAPISemError(
+-                    self.returns.info,
++                    self._returns.info,
+                     "'Returns' section is only valid for commands")
+-            if self.errors:
++            if self._errors:
+                 raise QAPISemError(
+-                    self.errors.info,
++                    self._errors.info,
+                     "'Errors' section is only valid for commands")
+ 
+     def check(self) -> None:
+@@ -914,5 +918,5 @@ def check_args_section(
+                         "do" if len(bogus) > 1 else "does"
+                     ))
+ 
+-        check_args_section(self.args, 'member')
+-        check_args_section(self.features, 'feature')
++        check_args_section(self._args, 'member')
++        check_args_section(self._features, 'feature')
+-- 
+2.53.0
 
-
-r~
 
