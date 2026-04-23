@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB61F9937B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 11:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF68F9937C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 11:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFsQz-0003p8-4j; Thu, 23 Apr 2026 07:41:29 -0400
+	id 1wFsS9-0004En-SB; Thu, 23 Apr 2026 07:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFsQu-0003oi-Ea
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:41:25 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1wFsS5-0004Dg-40
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:42:37 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFsQs-0003af-NR
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:41:24 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2b24fede2acso42418595ad.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 04:41:22 -0700 (PDT)
+ id 1wFsS2-0004G0-O7
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 07:42:35 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c7961d7bc09so2468306a12.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 04:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776944481; x=1777549281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776944553; x=1777549353; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=21DY5Fy7XvfIF3Ys9J8NGPXpgRm3LUjiZSova9ugCAg=;
- b=LzdRolLcREA6c50fuzZa7oEQ2rqh+rS2fksyzMlb9mAkMqO0q6+NDXaKDQMmEDAdYl
- Kq76BxtLAzTIF3JWDPO5AXW1HpB2yE8qhqjEJLiAMuP47JcOWrvg41p1aLFyB7XNAEkk
- H4g4DIMjgR09EDwsRQLOm2KIJ3e6PyUPOc6e850LZvZjpfYlJU8MPT8v7b+IzZcFUX9X
- +CvPwGcZO59IpVjnoWD9IXDMo3RtwWvUdlpbOfd17DPE2bh7VfD8VSjqfXhjaRORWgkG
- COSeT7newfE6KU7wi5MSzBOY0luYkp/YYAAs6Xz2Zc/0TtbyrDjb3bPJZ3sfJssJ2gGN
- fQ0Q==
+ bh=IgJt+GYeQJmyLhpLEvINdIx/oi2SxTXXacSjZwEWqQk=;
+ b=IG1JURErNHigqTinWwJsM8a5ZCNQwjeHvcT/knvagTUO+Neu5vL+Ak1diu6z8mOsZy
+ EKSg5ea1BfUs0x4dbYDzJo8MX1KMrFpXbsPSVJbH9ovoJW2AgB+WXbnnm/XmV29SkBRw
+ 0sjuHZvsDieyPkDdsHIHSCxGNmm5oE5oWE9ap4f1f2TXBDtTzqyQSIaZS1YYv38IERy1
+ tlxTVgPwH91EjTlEP6Z8x6M+Y9Ed/qq8ynf5XqvkdhaQU0r+ojosS2jLRiJhO0ZAHjYt
+ qYnW0Z6TPZIPYLQhWKvX5hi9cc/iomMTO7y60ZzasfK6wXzLR7+i0YPCY1YLUifqohSD
+ AplQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776944481; x=1777549281;
+ d=1e100.net; s=20251104; t=1776944553; x=1777549353;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=21DY5Fy7XvfIF3Ys9J8NGPXpgRm3LUjiZSova9ugCAg=;
- b=J3YelPrsxiBpdpInnaQh/e+ipvToT0cKq+G57zDK4kvqtTTCLHLTGkQZVtbJBxSBnG
- MM3OxrvN8UppX3cUauaPbF6WdKgLVsa70029d65QZvSuwxnqseMX1Xe+na3XCrRLnQcy
- vQcD0SImP04LOmFsxixqhFrA5iFvTGCxHuL4EdjiFmrIxwnQnDNCebsPCfCmoC3zNATu
- 0ISvOLAj+oMHW+JBmi0fOsj6yilymYmYSymAQs0VAiHCxgAhkj4BUCaKFoOt/6yNLWLK
- OmAc6FcVKU6przP31X0/IDYZlj/PL/kjGU+oZWcnn6cTdtwHwUhRX++4uG4QVUCjF6No
- i2/g==
+ bh=IgJt+GYeQJmyLhpLEvINdIx/oi2SxTXXacSjZwEWqQk=;
+ b=O4BNELgaHbik0y9z5yjNfehB7HNcezM5LqzN8h3ezj6N82d2TBx6k/7Umu3Mg7UmzD
+ ab+xIyE6Bfodkoehx+ASCZkHew+uKnaL1GCJw3lanOXBM3htU92dmmD+vX+iQBxSQ7sp
+ xAb8P79f5s2kyU5OF0hS9KkfPPs5jWLrH3IBVJJTW52xWzFt7ejsk2bm3kV8Xrn738xo
+ xxBDUcYUBJ0DaoRDk07poijsgkkhMCIgxzhMdbMTsTUbGews/AtMJVKxIHtnnox1ZuRf
+ vY6EzVe6eotcsTZK2bk+IOfSj2OsNWe3WZV9rzyGgILpeOTaXsZgksjnLmMEUkT+RslG
+ e/fA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ83OTZ5UFiJ6Jf8ADHnT11+cfc3AQLAKHU8kgNF+gz9Tac/WzVPBDxgo9nz+n7CfxuHPy4jyM8Yg1xS@nongnu.org
-X-Gm-Message-State: AOJu0YyXJT56ro2aIudnNEk7fL8z+HNIJ1wmtEfPJUQAoXuhfX/tiB7U
- HC588MRptPvwIipffeBtabe+2YLXesSZhbp9hBierLl2WrlZ7kl8spsZ21/bNcU4H+M=
-X-Gm-Gg: AeBDietC6bQIU5+AHxoax0+fV6l/LLPBpBqzo+N0aA2kWJvbC8eMYJsV47rVOSCzrne
- xGmJc8UA08deftLGO8CZ+h/H7GkZNzrsY8dpMxjeV6ZMgk1prV5ZuKWtn/o/97N0QRz5nvPz3Af
- SPMEXNlv9DdcsSEc/nOTRw2UvhtVZB3ujuxEBixubPjzNKntpWWfbAc+PJZCEeIn8etllGzzL5r
- pK0ZykH9S1HSrqbyfcH9R/LwRqPOUSV65EhLzXyf6C8a6dUHSBA1R2vdFYGGnhdiUlzPTXiY/4l
- YkN8H5atO0R5VMCKkmTI+e4sctm0HDHUz9aRsTF4O9u4QzMH3OUgL/EDSy1/QjONCPpRP/Rgfem
- AWZZggIQZQxLUnKeORvJUIFo0fYYQT6dL8g2eJLmemeoSaQLeecSOr69JwSqOi0IqmXMtD/hsJr
- YBCpWYx8BtHT05ZhGc50cJvMGA/hVxGYTio/B99GbPt+6LF5Py4w==
-X-Received: by 2002:a17:903:3c24:b0:2b0:445a:8c7b with SMTP id
- d9443c01a7336-2b5f9edf973mr289251725ad.15.1776944480970; 
- Thu, 23 Apr 2026 04:41:20 -0700 (PDT)
+ AFNElJ91a7hopiKLI4p79Qs+raHu+Q0BHEkI3Lh8RZGzzxJJZuoFgH47I7kBT/jsRxxmkS+7QKlNnb2Y+4rB@nongnu.org
+X-Gm-Message-State: AOJu0YypteRSg4lQ0JMImEFgTDQ2C3hq+p49VauMQ+/PzCWyH7ov69Sw
+ D2lCFtZxqARqdLKKW5zCuOaCCRuIqHhU7EsKGncaMNJ+Bj0tthGAMOfUqiTSBodtHWc=
+X-Gm-Gg: AeBDiesP8rxgGffCJgUagpD4eseKN9rJQtRCgWUD38DMsBfSwXuQsD1TsWM3LljvfgG
+ +5ZaC1asbupcQk5Hi/n8nnFHX9WFWZOhIznsLpMtiDGXv7RqYwYbdirTTHZ+GBUUx5ZJOoVD4IY
+ oTd/BWTl+8CVqv+yQz7gnM4KbxXtGn1DW/9MOowwlq5tVdfrUuLw1puD0e8FbBVrSONyM2Efh73
+ PB4cLNK+MEBzPVFL9VkCec1+i/ak1dZUVmsOyX5OJI9/rGs7pDSFIk3VzRHhaT94zk28WG07xGa
+ BjOI/bN0TVhDOB6XyIQuyV6yVNVg7ChLyPXK9obexRezb3EmQ8x4VCTbOjGoVqX1L9vIDfV7GML
+ M8z4Y9iBHn05oJhlN6TWLL/Uc+FOomdTIF9oielmuGEUaRqSLFQa6RkRiz/9oX7+dveDnfgyqIu
+ PRplqXASLxiPTY7yyU8Zr8ZTnXUexzu71SorigQcsDyKZN5dJpcg==
+X-Received: by 2002:a05:6a20:a12b:b0:3a2:dafd:3c02 with SMTP id
+ adf61e73a8af0-3a2dafd4cd8mr18768175637.19.1776944553034; 
+ Thu, 23 Apr 2026 04:42:33 -0700 (PDT)
 Received: from [192.168.1.134] ([110.239.0.232])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab20695sm191328935ad.56.2026.04.23.04.41.12
+ 41be03b00d2f7-c797701b1a3sm15181239a12.19.2026.04.23.04.42.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 04:41:20 -0700 (PDT)
-Message-ID: <6fc61e19-dca0-4d76-8b8e-f8a81c1515bf@linaro.org>
-Date: Thu, 23 Apr 2026 21:41:01 +1000
+ Thu, 23 Apr 2026 04:42:32 -0700 (PDT)
+Message-ID: <be16cec9-6a28-41bc-ac76-8329bea784b6@linaro.org>
+Date: Thu, 23 Apr 2026 21:42:25 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] tcg: Include missing 'tcg/tcg-op-common.h' header in
- 'tcg-op-mem.h'
+Subject: Re: [PATCH 2/9] target/microblaze: Fix endianness used to disassemble
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>, qemu-stable@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
+ Anton Johansson <anjo@rev.ng>, qemu-stable@nongnu.org
 References: <20260423100612.27278-1-philmd@linaro.org>
- <20260423100612.27278-2-philmd@linaro.org>
+ <20260423100612.27278-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260423100612.27278-2-philmd@linaro.org>
+In-Reply-To: <20260423100612.27278-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,25 +109,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/23/26 20:06, Philippe Mathieu-Daudé wrote:
-> "tcg-op-mem.h" uses methods declared in "tcg/tcg-op-common.h".
-> Include the latter to avoid when including the former:
+> MicroBlaze CPU model has a "little-endian" property, pointing to
+> the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
+> Explicit CPU endianness") took care of having all MicroBlaze
+> boards with an explicit default endianness (similarly with
+> commit 91fc6d8101d for linux-user binaries), so later commit
+> 415aae543ed ("target/microblaze: Consider endianness while
+> translating code") could infer the endianness at runtime from
+> the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
+> definition. Doing so, we forgot to propagate that runtime change
+> to the disassemble_info structure. Do it now to display the
+> opcodes in correct endianness order.
 > 
->    include/tcg/tcg-op-mem.h:34:5: error: call to undeclared function 'tcg_gen_qemu_ld_i32_chk'
->     34 |     tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
->        |     ^
-> 
->    $ git grep -w tcg_gen_qemu_ld_i32_chk
->    include/tcg/tcg-op-common.h:328:void tcg_gen_qemu_ld_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
->    include/tcg/tcg-op-mem.h:35:    tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
->    tcg/tcg-op-ldst.c:286:void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 69cdc5babf9 ("include/tcg/tcg-op: extract memory operations to tcg-op-mem.h")
+> Cc:qemu-stable@nongnu.org
+> Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/microblaze/cpu.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Pardon?  This isn't in master.
-
-I recall this is one of Pierrick's patches, but we should fix it before committing.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
