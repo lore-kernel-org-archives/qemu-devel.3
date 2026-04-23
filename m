@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0719FDEE2D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED253FDEE2B
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFxTy-0003Ff-6m; Thu, 23 Apr 2026 13:04:54 -0400
+	id 1wFxTt-0002h0-Rh; Thu, 23 Apr 2026 13:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxTY-0001qR-Cv
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:32 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxTG-0001dF-7V
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:15 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxTW-0005op-J0
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:27 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso45133025e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:04:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxTA-0005kM-LQ
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:09 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43d75312379so5076075f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:04:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776963865; x=1777568665; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776963843; x=1777568643; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2+dlrVOsNPHtgWGTf3x2VGDZydKVga1ZwBAM/XkoOYY=;
- b=sCnDhuB3ZAyT2wrOAo5H16zUQIj3rgvLp8qunMc6UatUz98hHGMzb4/JsRFIyn51Jr
- p1674Ud4gVZtGgOAlcpmeeXxRvCN5M9vZ83TFRBvjQ5kqFr9RYiF0oYSeKvsQ0oTE5Bf
- CRPVIF6rifzq7nSuZb/TxL23OBWQVqhmgpXn1+e4tpEM5VZw5LS/yF1dL1aWvIgxjtrj
- mtEBTQexiyDyWBHY7oytUzlSjLQv7K/nkEFvlxGZYjmG00qFcMfEfQlojfRNGjrzdehv
- fZzeK2RmbSW/cn4G6FHC70Kgr4ug68q+CaATPi5tFVOKI0okDyJKuNwRVi6+m/4GESNu
- 7FDg==
+ bh=+igmwACxKAAriU8rkOxPQALcbbgJ0c+NUQHQmbA0Oqs=;
+ b=ZZ1vcM/DKMfjIYSbz6C3eQXOE8LBX/M9ZKEqsHfphitZgcPIf+YBKQyIAgkvycPL+B
+ Uj411BXVUL/Elfh1EBoUwGsgYZ7+HmNo35hRkC1cqL/dcuqD0oU28FxXZAQBf1RvfrT0
+ 4sbRYJJCJQKBb9sUPSpkdoamo1+Q+DHYZzx+QgffIV3ZeP0fKo+xNedD12z1qvaakelq
+ YCFCXp44Wu1KkfjicB6Z6Ag7sPumz/BlAv5bqF8TSSzV91YaCVmMV5aBVaRnjzMIgNr9
+ r79mztr0X9HSZg9GrnGLS5eziFhJF/VulCImlHuzHrm7UegCpUiGIh8PAjHLO8SnrpA5
+ KC/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776963865; x=1777568665;
+ d=1e100.net; s=20251104; t=1776963843; x=1777568643;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2+dlrVOsNPHtgWGTf3x2VGDZydKVga1ZwBAM/XkoOYY=;
- b=epMWcFVggMae+gWd+L7+Sxh5TJcz/FBUffMTfPALSuTwzi/lN7/UT6WBBZy92CaHPr
- 6/6oqF7JjwVpXDGnTay6UjgbFPcyw76kAErZmYJ5fYBSsrZ0Cf2x08XTRENy66VRo/PE
- OgySpigG8U6LEhZOmuZns47MBGXcjVAD7ASjKd1vuDLcAmdp3SobN2pMj9FzVb8dmKIx
- 9mCjc0JGL/K7v/3rB+4MCEboGWdtjP5aBwCP2vZBFkkKwPaYL9rOcNKylRkpc+pvlbxc
- tmt8I8KwM4pfOwyiqbq4kUYj/WjBHj7Kjg4lnB8iJrV+Jiwj4z1nwPu2BH4ODjrHKemL
- WO3Q==
-X-Gm-Message-State: AOJu0Yx0YMfba3qMr9UgnmaJnQYXtayQpT8j1j9X10RpRthgRQLKNuX8
- ycAwYltSO/nRB+Mwn9EAI1skR30sBPr02qlTgIzjYFMeLbP/0/3nCaFQKi5CwZvGX31S/EpbIig
- F8I9zeZY=
-X-Gm-Gg: AeBDiesSROZ6kIr+osY8y+6Gj0m+Sg8PoIq1evy9shIsXm6o9RAyueDphFfXDEib690
- r4ZQag1P32IeXQgXu6EZAdypsao837IW3LmK1qFVU0NBtOHhhPo0zLG0MUtL3aEjavUSRak09ye
- 9Ol1hm3sJMhN9j4+zevgpkwcEngl5gx5wAo7MFH0cM5XApgWW1bBe6Pb7aPiXTsDAipRT2MSiZk
- VkqwZrx7WxJAh0FCAZYnf/QhCa9/mDg0xDSkmnhq3cKzm3/ts5H6gyAnsqyu0tqsqVVEFGDwA/2
- 4Jk+D7a+OtzYCjaoXLVjZooE1vFwPiu/0Ac44dCZRminOEitHIuYA9KyvhubLjrtxiyOVj64Mi1
- GBsFQeKo5JAXXlcaAJmzlkBCA6tiUVMsFuFDcIACPmSZJdgPH3jlMW/XJqqtCs485U9wS1HuKE5
- nNtjrIi3HxVUHXoEpFR7i8Qn4LJwCDA24UnLIOwAMcn3NZ5fN9gooBWqJUITfagCGmcMRB9koAS
- atCUocZuYs=
-X-Received: by 2002:a05:600c:46cb:b0:488:a723:ea53 with SMTP id
- 5b1f17b1804b1-488fb744fbemr398891365e9.7.1776963864601; 
- Thu, 23 Apr 2026 10:04:24 -0700 (PDT)
+ bh=+igmwACxKAAriU8rkOxPQALcbbgJ0c+NUQHQmbA0Oqs=;
+ b=enR8W0W7JM4kYhSGauFyU9kN8yHTFyP7RcOc1B6SGAazur539tJIBMdbU6RtUw8p0V
+ ZCYhqntJa9Cmy4FEoeJ6bAzfrgit3s0fl+109cntU59U0uCI58hLv6aq/3DGj45j9URs
+ ZM/etl+o79zgwDSLTjsIkiMCLV5gaU9/7AsnN3LRVHLsvz7Bawi2pCvVncjEPXspH9mO
+ sDYUTd6vXnm4o8KgM7Ihl8dKGk3ElCuF1ucDGMLHVfW0Cz//UaDP0uYtUvhTZtvmSkU+
+ hkSFrkZAiva/pEjKPk6AqIohhx2F2TO7UxJd9xtiOJXh1F7JwzgxNRwg4NIQYKUNba8l
+ yPtw==
+X-Gm-Message-State: AOJu0YwJ2UrNgjdK+Ht+SLoT54qdAXhQl7NtozhDH8W+jf27G3O85bEZ
+ Mr129ejDpaiLSKaiQF10c2Fo5vOAu0Oc1W7fPCcZDl9z89zoLoJuAVp8KsLf8edAgNv56od/ByH
+ SjB9kM0g=
+X-Gm-Gg: AeBDievdoy+QRrdWbY82QoTD0X35FTBQGA1fKryevqJ/+inJ9jP+aIKFq54tRXV+xtg
+ v2g/R13iqDaK8kuBibYzGmh4Y0jJY4r5+0CoY6ypw4atd7ZjutMYskpsoVzBC//0CYa88s8AVWi
+ 1IJWROGV1BSCFW6Q0THcWKF/Gc5D2D9VCNQjEHX+kDgDJIFWu3XiSmfrMAmadgPndsqgs+YX+Cd
+ YhQQxJbrcvebGemc/5W9yAoRYiSVCOK8wvgpcSjyxYILLOP0kkxSBA2a1a7AliKMAUZ4u9W/gxd
+ uCMSppjivHiyupv1yU7Nj4yEfTo8Nht7OXj5HQG/AE8ZoDQQab/KWfGiJ/xKuNKMI7tDtS0m9v6
+ xrwB2yFfm4ES2jPBP5Vjq12ErrGgSkLom4/VhH+J+0iJWV0gJxzrS44rp/W9ixP2Om9PRnsj7CA
+ gz2bq0E2Ddic2BH0iF1VjyrjyTE87mW8+v8Z6WyNnP80b7yMKnFkQ+cf+MZKiiZkdpUCeLd7xpo
+ wZAEAoWWXI=
+X-Received: by 2002:a5d:64e5:0:b0:43d:7606:5a47 with SMTP id
+ ffacd0b85a97d-43fe3f358a5mr43126165f8f.2.1776963842597; 
+ Thu, 23 Apr 2026 10:04:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1c0354sm497194745e9.11.2026.04.23.10.04.23
+ ffacd0b85a97d-4412150a092sm19901683f8f.23.2026.04.23.10.04.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 10:04:23 -0700 (PDT)
+ Thu, 23 Apr 2026 10:04:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Roman Bolshakov <rbolshakov@ddn.com>,
@@ -73,28 +73,27 @@ Cc: Roman Bolshakov <rbolshakov@ddn.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 15/16] accel/hvf: fix double hv_vcpu_destroy() causing
- teardown error on ARM
-Date: Thu, 23 Apr 2026 19:02:27 +0200
-Message-ID: <20260423170229.64655-16-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 12/16] target/arm: Remove vcpu_dirty=true assigments in
+ hvf_handle_exception()
+Date: Thu, 23 Apr 2026 19:02:24 +0200
+Message-ID: <20260423170229.64655-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423170229.64655-1-philmd@linaro.org>
 References: <20260423170229.64655-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,51 +109,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Commit  2a425aae0b5 ("target/arm: ensure PSCI register updates
+are flushed") manually sets %vcpu_dirty in hvf_handle_exception(),
+but these calls follow calls to cpu_synchronize_state() which
+itself sets %vcpu_dirty. Better have the generic CPU API handle
+this, but add a pair of assertions when serializing the accelerator
+state to be safe.
 
-The following callstack causes hv_vcpu_destroy() to be called twice,
-producing HV_BAD_ARGUMENT on the already-destroyed handler:
-
-hvf_vcpu_destroy
- |
- |_ hv_vcpu_destroy
- |
- |_ hvf_arch_vcpu_destroy
-     |
-     |_ hv_vcpu_destroy
-
-The first hv_vcpu_destroy call covers both x86 and arm. Let's remove the
-second one, as it is redundant.
-
-This reverts commit feee55d36a1c5d494ee73812d279b439bb05137c.
-
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <ee6f642af1dab29aaf99f86ac9254ddd25765bf8.1776172276.git.matheus.bernardino@oss.qualcomm.com>
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 5 -----
- 1 file changed, 5 deletions(-)
+ target/arm/hvf/hvf.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 33595bac72c..a905d9bc370 100644
+index 2fb768048b8..f2c5bde5983 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -1219,13 +1219,8 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu)
+@@ -737,6 +737,8 @@ int hvf_arch_get_registers(CPUState *cpu)
+     hv_simd_fp_uchar16_t fpval;
+     int i, n;
  
- void hvf_arch_vcpu_destroy(CPUState *cpu)
- {
--    hv_return_t ret;
--
-     timer_free(cpu->accel->wfi_timer);
-     cpu->accel->wfi_timer = NULL;
--
--    ret = hv_vcpu_destroy(cpu->accel->fd);
--    assert_hvf_ok(ret);
- }
++    assert(!cpu->vcpu_dirty);
++
+     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+         ret = hv_vcpu_get_reg(cpu->accel->fd, hvf_reg_match[i].reg, &val);
+         *(uint64_t *)((void *)env + hvf_reg_match[i].offset) = val;
+@@ -888,6 +890,8 @@ int hvf_arch_put_registers(CPUState *cpu)
+     hv_simd_fp_uchar16_t fpval;
+     int i, n;
  
- hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
++    assert(cpu->vcpu_dirty);
++
+     /*
+      * Set SVCR first because changing it will zero out Z/P (including NEON)
+      * regs
+@@ -2239,7 +2243,6 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
+                 env->xregs[0] = -1;
+             }
+-            cpu->vcpu_dirty = true;
+         } else {
+             trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
+             hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
+@@ -2256,7 +2259,6 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
+                 env->xregs[0] = -1;
+             }
+-            cpu->vcpu_dirty = true;
+         } else {
+             trace_hvf_unknown_smc(env->xregs[0]);
+             hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
 -- 
 2.53.0
 
