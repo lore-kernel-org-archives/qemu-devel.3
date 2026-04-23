@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8723FDEE3F
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC261FDEE3F
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:25:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFzcN-0003OI-TC; Thu, 23 Apr 2026 15:21:45 -0400
+	id 1wFzdN-0006gQ-3K; Thu, 23 Apr 2026 15:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcF-0002X5-DG
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:37 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzdK-0006Om-5M
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:22:42 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcD-00026E-IK
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:35 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzdI-0002Vw-4h
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:22:41 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3882F5BD87;
- Thu, 23 Apr 2026 19:20:42 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 182176A8A0;
+ Thu, 23 Apr 2026 19:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972042; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1776972060; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LL30Z+MBwjm49fC4Nr5CADY5IMbB82ISYMgKmmKxuMY=;
- b=z4liShONaU6QQ6hciT+8ERNq93Xu7+xGmlVIbTytXoU11tOEPzp3cuxYlDZU/SgWrI+i1X
- zoSB2eEJ4q0ku9Rrh48VnsRdJy9DLBhR7YKPtqrfalRJjYKpl/SJyjs+jBZZX7NNHwi0zo
- uWxwdPaewXJMWLp4uzD2xX8lJ6CahxY=
+ bh=/FKBYTvXSGjAZfvLVAh1z1tx4IgLgeuK7f7Tnrh6f+4=;
+ b=pcUfbC2a+AG2sgMrsWDueQc4p513eGgT8sZPE1139usEC/F/BzhC/YRMKlXS94xbY9Dc6z
+ T1GGBLSVfKUpYj0+v7wvKrsSTbA52BAuRejeD+jFWGS0i29/VeS7WNkIVn+sZ1jOpSegRD
+ LU2efdJ/AWS3GCeRjX56L8+EOHQjdAk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972042;
+ s=susede2_ed25519; t=1776972060;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LL30Z+MBwjm49fC4Nr5CADY5IMbB82ISYMgKmmKxuMY=;
- b=H0pUESxtM0xeU3IIWdCoRSvHvUN+fNenE/EoU3PFGoYB7wcaxTwvhms97uhw0IKjLuKan1
- fpxBWd7ZftJMY/CA==
-Authentication-Results: smtp-out2.suse.de;
+ bh=/FKBYTvXSGjAZfvLVAh1z1tx4IgLgeuK7f7Tnrh6f+4=;
+ b=3jwYFQsDTiJa9Bk0MGRYLr8wAKu+lie4+KdfvRtE8mZCKVw8dLT8xINbp29Y5ECnoKAUwN
+ yFrJ8PR0kJXGUlDA==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972042; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1776972060; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LL30Z+MBwjm49fC4Nr5CADY5IMbB82ISYMgKmmKxuMY=;
- b=z4liShONaU6QQ6hciT+8ERNq93Xu7+xGmlVIbTytXoU11tOEPzp3cuxYlDZU/SgWrI+i1X
- zoSB2eEJ4q0ku9Rrh48VnsRdJy9DLBhR7YKPtqrfalRJjYKpl/SJyjs+jBZZX7NNHwi0zo
- uWxwdPaewXJMWLp4uzD2xX8lJ6CahxY=
+ bh=/FKBYTvXSGjAZfvLVAh1z1tx4IgLgeuK7f7Tnrh6f+4=;
+ b=pcUfbC2a+AG2sgMrsWDueQc4p513eGgT8sZPE1139usEC/F/BzhC/YRMKlXS94xbY9Dc6z
+ T1GGBLSVfKUpYj0+v7wvKrsSTbA52BAuRejeD+jFWGS0i29/VeS7WNkIVn+sZ1jOpSegRD
+ LU2efdJ/AWS3GCeRjX56L8+EOHQjdAk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972042;
+ s=susede2_ed25519; t=1776972060;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LL30Z+MBwjm49fC4Nr5CADY5IMbB82ISYMgKmmKxuMY=;
- b=H0pUESxtM0xeU3IIWdCoRSvHvUN+fNenE/EoU3PFGoYB7wcaxTwvhms97uhw0IKjLuKan1
- fpxBWd7ZftJMY/CA==
+ bh=/FKBYTvXSGjAZfvLVAh1z1tx4IgLgeuK7f7Tnrh6f+4=;
+ b=3jwYFQsDTiJa9Bk0MGRYLr8wAKu+lie4+KdfvRtE8mZCKVw8dLT8xINbp29Y5ECnoKAUwN
+ yFrJ8PR0kJXGUlDA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 01EA4593A3;
- Thu, 23 Apr 2026 19:20:40 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CEDC7593A3;
+ Thu, 23 Apr 2026 19:20:58 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wB8OMAhx6mlJCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:40 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iDU6Jhpx6mlJCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:58 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 27/43] vmstate: Update max_elems early and check field
- compressable once
-Date: Thu, 23 Apr 2026 16:19:41 -0300
-Message-ID: <20260423191958.1440-28-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 38/43] migration/file: fix type mismatch and NULL deref in
+ multifd_file_recv_data
+Date: Thu, 23 Apr 2026 16:19:52 -0300
+Message-ID: <20260423191958.1440-39-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260423191958.1440-1-farosas@suse.de>
 References: <20260423191958.1440-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email, intel.com:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,68 +121,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-QEMU has a trick in vmstate_save_vmsd_v(), where it will try to compress
-multiple JSON entries into one with a count to avoid duplicated entries.
+multifd_file_recv_data() stores the return value of qio_channel_pread()
+(ssize_t) in a size_t variable.  On I/O error the -1 return value wraps
+to SIZE_MAX, producing a nonsensical read size in the error message.
 
-That only applies to the cases where vmsd_can_compress() should return
-true.  For example, vmsd_desc_field_start() later (who will take the
-updated max_elems as the last parameter) will ignore the value passed in
-when vmsd_can_compress() returns false.
+More critically, a short read (0 <= ret < data->size) is possible when
+the migration file is truncated.  In that case qio_channel_pread()
+returns a non-negative value without setting *errp.  The function then
+calls error_prepend(errp, ...) which dereferences *errp -- a NULL
+pointer -- crashing QEMU.
 
-Do that check once at the start of loop, and use it to update max_elems, so
-that max_elems keeps 1 for uncompressable VMSD fields, which is more
-straightforward.
+Fix both issues by switching to qio_channel_pread_all() introduced in
+a previous patch, which retries on short reads and treats end-of-file
+as an error, so the caller no longer needs to check the byte count
+manually.  Add ERRP_GUARD() so that error_prepend() works correctly
+even when errp is &error_fatal or NULL.
 
-This also paves way to make this counter work for ptr marker VMSD fields
-too.
-
-No functional change intended in this patch alone.
-
+Fixes: a49d15a38d3d ("migration/multifd: Support incoming mapped-ram stream format")
+Suggested-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260401202844.673494-5-peterx@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20260413214549.926435-4-junjie.cao@intel.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/vmstate.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ migration/file.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index e29a8c3f49..05badef42f 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -556,7 +556,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 void *curr_elem = first_elem + size * i;
-                 const VMStateField *inner_field;
-                 bool is_null;
--                int max_elems = n_elems - i;
-+                /* maximum number of elements to compress in the JSON blob */
-+                int max_elems = vmsd_can_compress(field) ? (n_elems - i) : 1;
+diff --git a/migration/file.c b/migration/file.c
+index 962b4b3a1b..4e2524e548 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -256,15 +256,16 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
  
-                 old_offset = qemu_file_transferred(f);
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
-@@ -587,7 +588,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                  * vs. nullptr). Search ahead for the next null/non-null element
-                  * and start a new compressed array if found.
-                  */
--                if (vmdesc && (field->flags & VMS_ARRAY_OF_POINTER) &&
-+                if (vmdesc && max_elems > 1 &&
-+                    (field->flags & VMS_ARRAY_OF_POINTER) &&
-                     is_null != is_prev_null) {
+ int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp)
+ {
++    ERRP_GUARD();
+     MultiFDRecvData *data = p->data;
+-    size_t ret;
++    int ret;
  
-                     is_prev_null = is_null;
-@@ -626,7 +628,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
+-    ret = qio_channel_pread(p->c, (char *) data->opaque,
+-                            data->size, data->file_offset, errp);
+-    if (ret != data->size) {
++    ret = qio_channel_pread_all(p->c, (char *) data->opaque,
++                                data->size, data->file_offset, errp);
++    if (ret != 0) {
+         error_prepend(errp,
+-                      "multifd recv (%u): read 0x%zx, expected 0x%zx",
+-                      p->id, ret, data->size);
++                      "multifd recv (%u): ",
++                      p->id);
+         return -1;
+     }
  
-                 /* Compressed arrays only care about the first element */
--                if (vmdesc_loop && vmsd_can_compress(field)) {
-+                if (vmdesc_loop && max_elems > 1) {
-                     vmdesc_loop = NULL;
-                 }
-             }
 -- 
 2.51.0
 
