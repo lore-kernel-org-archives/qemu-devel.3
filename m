@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE19F99368
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F548F99368
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqxC-0003dK-TG; Thu, 23 Apr 2026 06:06:39 -0400
+	id 1wFqxL-0004VW-Hk; Thu, 23 Apr 2026 06:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFqwz-0003Pi-M7
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:06:27 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFqxH-00047C-4y
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:06:43 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFqwx-0003od-Kb
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:06:25 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-43d70b3e159so3276283f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:06:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFqxB-0003zL-U0
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:06:42 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4891f625344so49228855e9.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938782; x=1777543582; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938796; x=1777543596; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HZkYQx3viFK4Zwt+Z+/jMviqVF5Tb2F+0CaOgixxDFM=;
- b=Dbr+iDBRSKsrXqvuN1r7pa9oAHfpaVTfU0IcpEapMZK8Nbc2FdnGnru4TMhfMAI5NZ
- C4Jg8ZIBXLJm6twcEh9+cgdV12JiOI7K5gdNQU4gPCxg0ssOOSRJsPaXJ8/L54pHonT9
- ATUBhsg1hLd7e9bgnCOitLmN3pBs855BlOBL2MkB6362LqwookqPtHJF2RtjGd1kKs8+
- Jj6BFs6MwQpU1pyBePeFA4qJeM9glI0WsJiJ8HXUmurDfaqixTMOvn9EBXxzgvtvrSWb
- zIQ6p6PNFuM96ziEpbNCSEFpJ+YbataCjSU1irwtH7XT+bQtM7l1EzqmF3qam71Pzb9q
- vjTg==
+ bh=7UoOF+gsk2QgBCVNoHyjKQDd0TRiUYFAye9erOTBjMs=;
+ b=UYO7C0JMtsgPT5MsWGX68Znlf/Qx02xV/HbLqDnXrZUhbkszo9DzIom5KVDm/4PbuQ
+ OEQOQTr16qUYpl78DGq5RhUpqAZ0izTRz3RPdvWm7MqRtXKx8sr/ySt4upNSbh6G5CGQ
+ cBqyg5i5tbUq6eXuD29Db2R+bCjgVtSrklor9lK4+wooQZRkx5YsqLENPXbePpug4DQX
+ jK6e+/20q9YeOk33SklyMbKQrqa1zqQqAQU3sfQzCpDY7/mNHuMvIafQDhKhI6pioujV
+ NEwg5opUoTbbBQsuZMg71toikshxJV7tAI/I1IG5o9BsqeT9ZUCDnZG3/UELQHcnNwUm
+ EmFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938782; x=1777543582;
+ d=1e100.net; s=20251104; t=1776938796; x=1777543596;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HZkYQx3viFK4Zwt+Z+/jMviqVF5Tb2F+0CaOgixxDFM=;
- b=Mqudm9yKQRIPzG7DuzmypWE7UVYGnZMgORvsDgDwR5R7Cu6MJlxgreFdNBmQgXjvyH
- mDOLAJATzx7gMn/cLtbk8satEjLP9U4ufGoJ97jR6sXpLBdJSND7yMWycbKQ+C/ZyFgS
- FsWf8hVVtKMjHn01aEUDlU20pqr7DHGJBZHtzIySbC4EejtdzH8OecqQtF/eVEjHWoMn
- CBkUIqFZWyYk3/IscSt1vL2zqWgem62UbeBxq9wOzpeQCAC3U7AOUGKbfqbZckYOvRlo
- Fa8KPe6wp3JrCCaxjPI4Sf3fkfU0QFbJ/ged0nzg2Rs3230M+ZA0TsiKD6+OLJ1RzQFa
- x6TQ==
-X-Gm-Message-State: AOJu0YydsrAylh40yXaH6CeeTpjhLRWlWuyx2Yl4pfFbPgf7HhxR5+C9
- z+fOgAkX767wEpdE8z7Nk+6zl7OrYtjCBUz2ji7CEhG5vSTBvMAS2+7BdLKKJ0ducx881L+fn1E
- QPIKaMn8=
-X-Gm-Gg: AeBDievWPShqYBjB58FXQ4BHwW9OHOvZihNAE1hOQQJamzOA2FWj7eGCAhp6R3Ca78V
- 4z1ypeKouMx3dlh6J0pezWtWJ0K7LJ1vxGybzQN513scV7o2Rop3e34CnjMxJzMPrPms00oxXvV
- lfdZywPEqZUHTAKFPK2NDfgaEGkqPIrmpNwff6I41NmIYkRXDLnY3Zc8lMRtD2O9hYUnCD+uIe3
- EtQb3z/R5Q1+8OAqLYGzh9wbXvupefeWcaI9xRuSVM7ydI0hWVoNMkRNphiaNVxgeEyLNNRO1la
- 4bd+2u4zudkPWzlOyKt0/DepHPVG6OwFKxjnQn1HUBU6fG2BEz5IEZ7PI5VJq8D+hluoya0DJ9R
- vr9WrEnT9YtA2O2jk2QQqZtL5eCZobhVwuSzY0fAt/86kiAkN+J41U6D3AobSQZSAypYU/SHI5K
- M+JgZ8bbKsfpj/PolhtrtH0QZpKW/ECKg+wj5HVYLQyjmer9NV0L5q1VEireJOoKxC/OV8Js53e
- mgOxidJVv761//zn1z0WQ==
-X-Received: by 2002:a5d:46ce:0:b0:43f:dd40:bbc8 with SMTP id
- ffacd0b85a97d-43fe3dfbd25mr28647202f8f.24.1776938781667; 
- Thu, 23 Apr 2026 03:06:21 -0700 (PDT)
+ bh=7UoOF+gsk2QgBCVNoHyjKQDd0TRiUYFAye9erOTBjMs=;
+ b=P42QPnOBatfblpBOYOpArvAa7U+J0cvSUGpqKcuCaagi55D4UpFHTY2w8gdnP57qJK
+ QIhSA+tL0Pod3AQZdfmA3A0U05Jsq1GBsAzoJU3OUQ27u1k4JQ+RRHhDmGfM/oLG4Pqd
+ HOe746YvTeQHtIIEA7jyyELq+QdnDLP5Qzyzyh1VzQZBx6sWHTqTRNtxld4L2LX7sUb1
+ 9zGn61mFhXOSQVuNj3DCYewPfXuee2NNFacoLtxcN0anWIO4s2s0ZvaHVKWgjVoBRzGC
+ nhYVveb6bjTm6aX5TVmuGSLYBKbohg71PsyeZVfeQI1OJ34hPPoy44/jczn8EbIGEh0I
+ lAFg==
+X-Gm-Message-State: AOJu0Yxnqvy8q4t/pVHI7ClOPNri0nFHPXPmar3429io85U/6Dd74ug6
+ eU3ewNJarw9aMtngjWZNHj4dnAWVGuJZ1bHn64SK65z+Vaq9BTI4Na7HkZA1YujX20W7LQAxhZK
+ yfs1Wh50=
+X-Gm-Gg: AeBDiesN+mHR75TQ0/ZWNHPS5mj5Jv0kM5psL1janeSdF2/sCfibetMrcazW/5pOaCo
+ hkLEj/zi4es3kqDDKcHAokqP7cWignk/1cLf++fXszeEIL3AB25BRahuLvnTvQXYandPyOMbP06
+ vZwJ3rd7PR8j2B4a30uFKLyDei9l2WpqWaQ0Oc0WA9apXFOEgsLocQRYuNQuIBd+stVW6sj8YpH
+ jy8GQ72AanFDhMuBnqVzX1vexDZFbcMV0uo9Bbkz21X6UUAtdw/agn2Frryw2ZD4alSlzvKBxge
+ 9gmOPrAA4lcdNKCSJvxCqd8clJgacpZiksC7iY9ZGwBYRNjZLj36kDdTdkUWekgN1WYcMtd557A
+ Phsl7rEZQRzhysd7eCATzFvnSRh3Rx+THkrAKlQgohF6JL6BI8P9XCsdB0Fva2MQVabl5I/XHfb
+ VrMFmGW8MFsyM5iBqmgLeDB/t/7NQGPAjp90f03jyg6axAWjP5S98Tbd2qO4V7+IwVuTTIE7nDw
+ XV8tFUpwj0=
+X-Received: by 2002:a05:600c:19d3:b0:48a:55ec:c007 with SMTP id
+ 5b1f17b1804b1-48a55ecc113mr138275795e9.15.1776938795795; 
+ Thu, 23 Apr 2026 03:06:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc375dsm47162106f8f.14.2026.04.23.03.06.20
+ 5b1f17b1804b1-48a52583fe7sm217129115e9.13.2026.04.23.03.06.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 03:06:20 -0700 (PDT)
+ Thu, 23 Apr 2026 03:06:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 1/9] tcg: Include missing 'tcg/tcg-op-common.h' header in
- 'tcg-op-mem.h'
-Date: Thu, 23 Apr 2026 12:06:04 +0200
-Message-ID: <20260423100612.27278-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 3/9] target/microblaze: Replace translator_ldl_swap() ->
+ translator_ldl_end()
+Date: Thu, 23 Apr 2026 12:06:06 +0200
+Message-ID: <20260423100612.27278-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423100612.27278-1-philmd@linaro.org>
 References: <20260423100612.27278-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,38 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"tcg-op-mem.h" uses methods declared in "tcg/tcg-op-common.h".
-Include the latter to avoid when including the former:
+In preparation of removing the translator_ld[uw,l,q]() methods,
+inline them for the microblaze targets, using mo_endian(ctx) --
+which we introduced in commit 2c9e8ddd7699 -- instead of MO_TE.
 
-  include/tcg/tcg-op-mem.h:34:5: error: call to undeclared function 'tcg_gen_qemu_ld_i32_chk'
-   34 |     tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
-      |     ^
-
-  $ git grep -w tcg_gen_qemu_ld_i32_chk
-  include/tcg/tcg-op-common.h:328:void tcg_gen_qemu_ld_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
-  include/tcg/tcg-op-mem.h:35:    tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
-  tcg/tcg-op-ldst.c:286:void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
-
-Cc: qemu-stable@nongnu.org
-Fixes: 69cdc5babf9 ("include/tcg/tcg-op: extract memory operations to tcg-op-mem.h")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/tcg/tcg-op-mem.h | 2 ++
- 1 file changed, 2 insertions(+)
+ target/microblaze/cpu.h       | 7 -------
+ target/microblaze/translate.c | 4 ++--
+ 2 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/include/tcg/tcg-op-mem.h b/include/tcg/tcg-op-mem.h
-index 36931d1dd57..ea35a02fb40 100644
---- a/include/tcg/tcg-op-mem.h
-+++ b/include/tcg/tcg-op-mem.h
-@@ -12,6 +12,8 @@
- #error TCG_ADDRESS_BITS must be defined
- #endif
+diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+index 5765786e6dc..ad5a4a8e7bf 100644
+--- a/target/microblaze/cpu.h
++++ b/target/microblaze/cpu.h
+@@ -412,13 +412,6 @@ void mb_translate_code(CPUState *cs, TranslationBlock *tb,
+ /* Ensure there is no overlap between the two masks. */
+ QEMU_BUILD_BUG_ON(MSR_TB_MASK & IFLAGS_TB_MASK);
  
-+#include "tcg/tcg-op-common.h"
-+
- #if TCG_ADDRESS_BITS == 32
- typedef TCGv_i32 TCGv_va;
- #define TCG_TYPE_VA TCG_TYPE_I32
+-static inline bool mb_cpu_is_big_endian(CPUState *cs)
+-{
+-    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+-
+-    return !cpu->cfg.endi;
+-}
+-
+ #if !defined(CONFIG_USER_ONLY)
+ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                      MMUAccessType access_type, int mmu_idx,
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 5e8bb4ed77b..af6a30b7760 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -1646,8 +1646,8 @@ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+ 
+     dc->tb_flags_to_set = 0;
+ 
+-    ir = translator_ldl_swap(cpu_env(cs), &dc->base, dc->base.pc_next,
+-                             mb_cpu_is_big_endian(cs) != TARGET_BIG_ENDIAN);
++    ir = translator_lduw_end(cpu_env(cs), &dc->base, dc->base.pc_next,
++                             mo_endian(dc));
+     if (!decode(dc, ir)) {
+         trap_illegal(dc, true);
+     }
 -- 
 2.53.0
 
