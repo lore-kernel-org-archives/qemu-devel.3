@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CB3FAD3F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 03:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5E9FAD3E7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 03:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFkUp-0005cB-ID; Wed, 22 Apr 2026 23:12:55 -0400
+	id 1wFkZ9-0006bB-Ko; Wed, 22 Apr 2026 23:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFkUo-0005bm-2y
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:12:54 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ id 1wFkZ8-0006al-3H
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:17:22 -0400
+Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wFkUm-0008TR-JC
- for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:12:53 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-50fb4a7d704so21693301cf.1
- for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 20:12:52 -0700 (PDT)
+ id 1wFkZ6-0001p1-Ao
+ for qemu-devel@nongnu.org; Wed, 22 Apr 2026 23:17:21 -0400
+Received: by mail-qt1-x82d.google.com with SMTP id
+ d75a77b69052e-50fc496c8baso13578181cf.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 20:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776913971; x=1777518771; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776914239; x=1777519039; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=A7rftyhxoXaZarufYHH/mlZY2wop184s51SIlAQ4vRM=;
- b=ndE0VzJD60refkAH6yBOVZ2p+Evi6TAJ7I6ByDkKKk7KWP0jZ3kd9qf3Zsec3teIJ+
- zYIFzvqi2R+0FB3ncBK9h+Rno7bL3k+bJp/sTny58ZVDE0RSpQupvITGgrl8yHUaUuUz
- 0XzE66KaaMdm+Fq9MMZdjwWgzR1ptXvSEbCIFaeqOkwywusUWbi9THTBNScXZ6G3amzH
- RyT1eE40bRvC/R4GaJvyhjgC1cYU53B34P6wF9Oot/zWl1ZqmD/OoJltqPQtY2e5O6Nl
- VVx+wSguLalPSOZTxLzzg4JdsZRn/4oveCnyb4wt7kgOINbPEAksGQ2/KvtdAZtcePL1
- kO/Q==
+ bh=q1iSZbPp4Noft/fcyHpWLwm2XYIFxyNCDUFwG0r5dQE=;
+ b=OIeEd9nY5VRhA8sia5QrPTK7bN8eTDK04fGWWDptgEH2dkDMECSheQUc2LQQAih3KX
+ Nr6tQv6Aj2GFNw0pLHRU3yyLHLFzzUfguk30Uzf+2RJzNVmDaeURs4AI8PahxD8ykxAX
+ ZktKS3dhoTPCd38nzCS66v5I53S4IRCUkS4naj/IQGcdmZcyZquPw97oqNiX5RF96HxH
+ pIrYem2oayev05ApJ2ZDP8eLx6LqYHhxHeIFpdLLvbHKaiELWhodQIIoMnjhiKVtP5V9
+ lzqxaC969B4uPIVtxERSyvCuyU9BA0MLxGWlplW2UnQ5inAnDFIp/1Ly8jfaiyO6+vqi
+ hkSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776913971; x=1777518771;
+ d=1e100.net; s=20251104; t=1776914239; x=1777519039;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=A7rftyhxoXaZarufYHH/mlZY2wop184s51SIlAQ4vRM=;
- b=C+dlu23xkJDbTZ1txmyDKyenSG5+v5BTn5C0JimyZ4W+c+FpJ43Z42U5ahYN1VDIRL
- snkLrwPfEym0Zsy/jXGLbn91gAALVBPTEMWV18n0TZdLuXeoxdNC2kPQhbeuSzBbdcQy
- jo5wNMu9iKdxTLMy0uf2FsJeViVIoswsKj3uQOecn0VRnbL4JYRtKa1OHmwYNX5okm7U
- teBDfchH5+mWDo3AxcI4XVmE3DhGCesowXrDdZii2uBASQI7IjTekKClXSlncNBSGlbY
- HvqbZKMhOrsejaMrPKZ1M02/usfwLI7g/i3mcZlYFNjy7oRsLRCb0kzHlcflivfUFzAl
- tKIQ==
+ bh=q1iSZbPp4Noft/fcyHpWLwm2XYIFxyNCDUFwG0r5dQE=;
+ b=Z0Zw9WZnsmiCpUpuUK6yWF1BMznovzRQw9Wvu2MdL5eUBRYHe6hCUf7M2piKhbuOtC
+ pvQpOX4yKe399Bb3ikzO3PShJ9BtMvPriNdKWOkiY2HICZEQoxCgopHJsuCZZMWnu35q
+ cinPosuRszha3rKyX74FFB9erdOF4AweWKhPfdWoOwGfMBWEFHvegtJMISa8ZMVvZyhi
+ we5GSEt7D50AQ7Wn2Qfh8KY16msqjjITH5WyVVQ/eXLRMMDa6fwjYAAPjIRkJ1ER3tRX
+ rKSFSFTleoWegm1vGzc8dEf/OffyNrl3JNDRI6h5bdgj3rgrIhkHKmguXveu5LxJfH0V
+ BbSA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+an0F6WzNSpn1q4I88IjA4NTvfpMXtCBj9LuW10z2tjtkUgRqSmakhcXpRv6YGePAJybDwfKpsdHK9@nongnu.org
-X-Gm-Message-State: AOJu0YwfzNAsWDgX3K2wTuDr6ZrRAZDZwnceweH4XqODa8Zf96T2Vlmg
- kymKIgo2MICS8cRuoXgxnnlgvOl5O7UtK4NVwUS3YpHG1OWZOd2LUD6kx/d9vmYAycY=
-X-Gm-Gg: AeBDiev+wFQNCt3LpfJvUbnUobP58XMk4xcuARB2ygoGB30IiigxaxxPZAiUPgP9dBX
- stx1j1qxS33UgGXhPuPW7qW8oBYGDyAsPy6B4V5MHS8l0Ky8/T/Kx4a7oSVg1KZ2bRBuftYHyoZ
- FRPNNc60cCDfAjGWb+vN48s6jTyb/LQpRLqbPCFrtOasCUab6ZKBhWKXNH7qdno14cz4bX5VFM+
- TvuffASIblo6BpV1om6M4H625GL8K06l0QqWsgIfXfHWI2Rv9LpQLyYSFyP3a+Nhm9Wb6xB76To
- BPrWcacrI8BCXCnXkJNrT7yi7GyqLzdrm3qcDcZZQFilzsgZfMHdoHGiSBomKlh79ksfGiA6OvF
- /b57SnDnJKLysmPEKJ5xJHJrTGu+yqRdbJNPHjzADVXn/R9stuQ2UwAsYh2ju7+QgsmUW5uTgey
- vyciVcxB3wmLXA7JLSR0+5v/WehxcA6TB5LAyFLu3tu2KsbTr93iJWU0pd3Z8nNo2qR7nKhj9qD
- fc+wnvzvj0CJM2aMi7ytSpzUFyu
-X-Received: by 2002:a05:622a:258d:b0:50f:bb54:d3d2 with SMTP id
- d75a77b69052e-50fbb54daefmr128285041cf.51.1776913971316; 
- Wed, 22 Apr 2026 20:12:51 -0700 (PDT)
+ AFNElJ+y6UHcF8F4demei8Mcx1PPRHBRpp5+R2bkYvMd7ASWNsjBjEPYdxdULXzuqYZ8C4CJWimLh5rw1xka@nongnu.org
+X-Gm-Message-State: AOJu0YyIcanOVxIRZSLROEaZ5sXKIDey9ChCzBergjB2Lg/L5HlwC61K
+ 5hL3lRTmYD0Dh1FpDLuHJPp44yIKktB/3M/6S1rSFNzC5mjPMnre3Bdb7aziIxXePcKYUy4sV54
+ YJL+fNuQ=
+X-Gm-Gg: AeBDietAYp8/SRjZfVX7rmeP/zcIqFafMvOU58mj4alcfKBLZ+O54xXx/m2bwAV4EWo
+ V9KoVJsCOlFFBH5u9YNTIfn6OOPW0bAreEVT1ZyM1c5HgLbnXIFTzmfFkJtil7VINyAINJSogAW
+ 1OxMShVT3R5/FGFN+KXAGS6gVs0WrNaRvGWkWta2AyGvZm5/Z0McxJnEYzGEPUy80WIkCOJI37I
+ RfVWJpEsNW54NRSny5lV+n+yjsM3+DB8Fp6AxIBvYbf+r6fTJUtuz6yeTi9hVTbVvqe778AdPci
+ H94zoxvkncAv1Dy3V+SRqqJCjVqBZEirwZVxGnN5Df+hGwoRyZvtLR52DC1cMN6MgW5xTZYgtUV
+ 93x1Nd3xwY39MxitC/WOhvVwhGu3jIxziHs94XaYYnTvyeHm4sa+s6VWbIBEYzOsisAorrY2qHq
+ JPg4ma1BqyI87+ZrtIp1q4aZcBZpp97voopPuzQjZjnzzjRSfsCDFfywGTmdO+oAJREmF9iS59X
+ ui17uYX0T8wnkcrd40aeYoJ40gq
+X-Received: by 2002:a05:622a:1dcb:b0:50d:9b2e:7ee3 with SMTP id
+ d75a77b69052e-50e36c18fe5mr382643711cf.38.1776914238669; 
+ Wed, 22 Apr 2026 20:17:18 -0700 (PDT)
 Received: from [10.72.56.227] ([172.59.184.224])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50fbe22130fsm45155541cf.15.2026.04.22.20.12.48
+ 6a1803df08f44-8b02ae797eesm144908676d6.34.2026.04.22.20.17.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2026 20:12:50 -0700 (PDT)
-Message-ID: <44df274b-6179-4e63-aee4-1e29ad5f4b23@linaro.org>
-Date: Thu, 23 Apr 2026 13:12:43 +1000
+ Wed, 22 Apr 2026 20:17:18 -0700 (PDT)
+Message-ID: <aa013ba2-31ef-46d3-a97e-b272d43a8824@linaro.org>
+Date: Thu, 23 Apr 2026 13:17:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/17] target/arm: Implement translate_for_debug
+Subject: Re: [PATCH 17/17] system/physmem: Use translate_for_debug() in
+ cpu_memory_rw_debug()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260417173105.1648172-1-peter.maydell@linaro.org>
- <20260417173105.1648172-17-peter.maydell@linaro.org>
+ <20260417173105.1648172-18-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260417173105.1648172-17-peter.maydell@linaro.org>
+In-Reply-To: <20260417173105.1648172-18-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,26 +109,87 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/18/26 03:31, Peter Maydell wrote:
-> @@ -3935,25 +3936,30 @@ static hwaddr arm_cpu_get_phys_addr(CPUARMState *env, vaddr addr,
->       GetPhysAddrResult res = {};
->       ARMMMUFaultInfo fi = {};
->       bool ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
-> -    *attrs = res.f.attrs;
+> Currently cpu_memory_rw_debug() assumes page-granularity for translations,
+> and it works in a loop where each iteration translates for the vaddr
+> rounded down to a page boundary and then copies up to the end of the
+> page boundary.
+> 
+> Rewrite it to use the new cpu_translate_for_debug(): we no longer want
+> to round down the input address, and the boundary we copy up to is now
+> determined by the lg_page_size it returns rather than being assumed
+> to be page-sized.
+> 
+> This, together with the implementation of translate_for_debug for
+> Arm targets, fixes the bug where semihosting would incorrectly
+> fail to access parameter blocks that were in memory where the
+> start of the 4K region they were in was inaccessible due to MPU
+> region settings, even if the parameter block itself was readable.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3292
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   system/physmem.c | 38 ++++++++++++++++++++++++--------------
+>   1 file changed, 24 insertions(+), 14 deletions(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index f2d9a4ff8f..45c3a926cf 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -4036,28 +4036,38 @@ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+>   int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>                           void *ptr, size_t len, bool is_write)
+>   {
+> -    hwaddr phys_addr;
+> -    vaddr l, page;
+>       uint8_t *buf = ptr;
 >   
-> -    if (ret) {
-> -        return -1;
-> +    if (!ret) {
-> +        /* translation succeeded */
-> +        result->physaddr = res.f.phys_addr;
-> +        result->attrs = res.f.attrs;
-> +        result->lg_page_size = res.f.lg_page_size;
->       }
-> -    return res.f.phys_addr;
-> +    return ret;
->   }
+>       cpu_synchronize_state(cpu);
+>       while (len > 0) {
+>           int asidx;
+> -        MemTxAttrs attrs;
+> +        TranslateForDebugResult tres;
+>           MemTxResult res;
+> +        hwaddr blk_base, blk_size, l;
+>   
+> -        page = addr & TARGET_PAGE_MASK;
+> -        phys_addr = cpu_get_phys_addr_attrs_debug(cpu, page, &attrs);
+> -        asidx = cpu_asidx_from_attrs(cpu, attrs);
+> -        /* if no physical page mapped, return an error */
+> -        if (phys_addr == -1)
+> +        if (!cpu_translate_for_debug(cpu, addr, &tres)) {
+> +            /* Return error if no physical page mapped */
+>               return -1;
+> -        l = (page + TARGET_PAGE_SIZE) - addr;
+> -        if (l > len)
+> -            l = len;
+> -        phys_addr += (addr & ~TARGET_PAGE_MASK);
+> -        res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs, buf,
+> -                               l, is_write);
+> +        }
+> +        asidx = cpu_asidx_from_attrs(cpu, tres.attrs);
+> +        /*
+> +         * Clamp the amount we read to not go beyond a page even if
+> +         * the CPU returned a larger lg_page_size, in case this access
+> +         * is to a memory-mapped IO region.
+> +         */
+> +        tres.lg_page_size = MIN(tres.lg_page_size, TARGET_PAGE_BITS);
+> +        /*
+> +         * Find the length in bytes from tres.physaddr to the end of the
+> +         * block whose size is 1 << tres.lg_page_size; we will access
+> +         * that much in one go.
+> +         */
+> +        blk_size = 1ULL << tres.lg_page_size;
+> +        blk_base = ROUND_DOWN(tres.physaddr, blk_size);
+> +        l = blk_base + blk_size - tres.physaddr;
+> +        l = MIN(l, len);
+> +
+> +        res = address_space_rw(cpu->cpu_ases[asidx].as, tres.physaddr,
+> +                               tres.attrs, buf, l, is_write);
 
-Inverted return value.
-This would be obvious with s/ret/fault/.
+Doesn't address_space_rw handle both MMIO and RAM?
+
+Seems to me the only thing you should be worried about here are the virtual address 
+translation boundary.  So there should be no need to clamp lg_page_size to TARGET_PAGE_BITS.
 
 
 r~
