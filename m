@@ -4,94 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC0BAFC0342
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E68CFC0342
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFvqQ-0005Ux-QZ; Thu, 23 Apr 2026 11:19:58 -0400
+	id 1wFvwL-0007rf-8u; Thu, 23 Apr 2026 11:26:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFvqP-0005Uf-BC
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:57 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wFvqN-0002GZ-Qc
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:57 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43cf7683a28so4643203f8f.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:19:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFvvv-0007pr-R3
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:25:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFvvs-0008IL-72
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:25:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776957934;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gvefTJu7dGp8xIrMloC+CQc+wFQkZXv7PVTkOxSx0DQ=;
+ b=ZvRh/V8LOP9pX0g0j3yj28NFf7EccD3IfOWQgBftaMX9eWk80R1YvpU+Qxqj214FpQ2uuA
+ DJwrswzuZQMwZZ1sPUqRxokgeeE2uYr896rcmztAKD/Ye/JQbaIjnw4/79IDnj55lL6t5i
+ Pdxpu8R5Vmk8iakmik3dmz+9+gqpMe0=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-193-ZP09SJO3MGGGYMtNhC_7_g-1; Thu, 23 Apr 2026 11:25:32 -0400
+X-MC-Unique: ZP09SJO3MGGGYMtNhC_7_g-1
+X-Mimecast-MFC-AGG-ID: ZP09SJO3MGGGYMtNhC_7_g_1776957932
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8abd6e281c0so187196356d6.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776957592; x=1777562392; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=228cf+S0c2e/rGab2mnaiBCrE3sra0xAuasuA/jsx9E=;
- b=jB9b40NMRABq2FHd2IJ5iW4QbywGYjsx7jrYPgM76rvzMLHNaP1rfo1jPRpsv7amVt
- KhiI3UBB13geVps2LdhiT2onsq+DvDD0dSnCccsAbGYHEMvBrAo4v7AcUag4+GFXYcwI
- N0yCVhD5cZz/1dFy4CuChC1xdDFi9ycMQuetlvDY6xObVDI+vALtoX8tMEKeprwfLuiY
- sbnyzjzwx0fxco/PwUXGwoXkiq9xjwszJBjcDUtWTIVAcUmhPC1M5pF6q67V7GL+4hUk
- Mz2q3OUmeFZ2N1NcBgYiXdNGE9ypW1SthNUc7J7IdlO1DJMRLARz9CGTRa5atQUEwYdP
- v69Q==
+ d=redhat.com; s=google; t=1776957932; x=1777562732; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=gvefTJu7dGp8xIrMloC+CQc+wFQkZXv7PVTkOxSx0DQ=;
+ b=AeXNT/O1HY76idFtCHNQ13meku/302bvQyE9YQJur6c4DIGrrSbS8qGfhyjV3WZ/jd
+ QmNA2b7sqA0K/3YMXzXqbv9pgus4i92TXAOQHR6M7VPDN5OrS7aDsxbMIEwnScSRFdew
+ g9tvwTZpQeu0AC+hApApxrxhtmw3Sfboq3zwPudnQkUKc4rKEFGZRTwgSFExixINrset
+ rUmbFA0BK38qQI4yrcW7z4D7MAOlWvUmlzY9d+pg/anMsb2nuSYXVcEvLLGRmUmqoIOT
+ zQcUKm2HrLnG5REAaopC1CbnMOsc8+KkdHWe5ARSnaCxh9EIX0Qt0FEuktk3kF6zilTU
+ cm3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776957592; x=1777562392;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=228cf+S0c2e/rGab2mnaiBCrE3sra0xAuasuA/jsx9E=;
- b=NJYoq7cbz+sTFpIzhA9DxL6TNPM3/nuTNiX8pdmu83ycgWqt68tifEO9iNsjnbUl5D
- rMDwQhmlePRycqEf9/xU/FlinNBFe5YxY+xK34HZ53KHNBchKJIGhg0KKbljIIbFWyp2
- taTq4KoZ0bf0DBbdx67oB9wvqSXV8JLOdnD9KPkrkoriYtbChoky5gu3ZGAzdZxM1aOD
- T2NNEWjuUa/nFo4MneGSW25CZ0dwiYk+oKJrhJJ8K3TCjD8VntggkfFV3il4OcA8RGai
- az0BajcvfGFUtfjcMRMBjPhxaDE/4CSgyO9HYIGeVf8WbQTJ3CNO0y2/VOgX/Ij48DI4
- UlHw==
-X-Gm-Message-State: AOJu0YwP8ZS0KxdxMQqcTSPydRbvKBMshsqU7Uv6wrESyoWvyMeq1n6Y
- TYt2GaqSt6V785LXAdbT2ep4wIOVm5pxZfIwGkbRXu8sSB1oGMcp6iWRK21MHa4yI7s=
-X-Gm-Gg: AeBDievrqtBcRiDYKiRXZB/nftk1gAmfvRhrE5qur+sRfNaapngydRPIhyV5IqFUi2w
- Fulc7N3XXDQ4+W4jnyan3wlr4XvOnrXc6hOIOQDiSRLz6OizufGqd3Ez3tVnqkcGipflb/nauQV
- 4B2BAg7bMzaF7S7CrvaGwYRzTeslk84cv6t1zAtXods7wX0THhcYRQnzt8O6yyz8h0jXG06o+/V
- CkFINWMiFaxV9Qctg7befj1d2ldwUz+kE9RMbJlOGpPymgLdkOnmOdZ36USPn/ob2hm9uBsn0Iq
- ivybzTPnj1axgtnVJ/sTV2UmL5aBULXprPdbWC9nseMU/hhDJE9J8uK0eiizjODFgsGy5Vh+fWL
- 3szpvcCjtMYpG2vGXu7GUfd6F9FUndgjJQhQD7z0rtFdO6955aAG6POoDUyN8EEn+4E/FHyvXEV
- cfjE70BoXWOTBUK3YcryEAsOFiDJDtLeckAQ==
-X-Received: by 2002:a5d:64c4:0:b0:43d:708f:a63e with SMTP id
- ffacd0b85a97d-43fe3dbddbbmr41774378f8f.10.1776957592440; 
- Thu, 23 Apr 2026 08:19:52 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cb1249sm50417720f8f.5.2026.04.23.08.19.47
+ d=1e100.net; s=20251104; t=1776957932; x=1777562732;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gvefTJu7dGp8xIrMloC+CQc+wFQkZXv7PVTkOxSx0DQ=;
+ b=LA2/A+uAmJbiqan7/2/d5i+OBb/SrELAiiIdUmDw/sF2bmKCI9L0YFkAeuhVsofTyf
+ K7N809C6TgEHmxWwQDtygecbF2GetLD0wuw+GJZGlOHVXkkAIdBsZxgcg5iVE56Vn/TT
+ jFxolin/8lOOblXFRGBsJc0F8Csv1gZ5rzS9oDSMrjbr2qnmz9nNOgypD4rFM220Am1I
+ UTpx4Nbn45NC0lnf8+azb4gVP0XPcFV58PDnF8//AQ70al7hZNG1u8pdomryknz3Pu8h
+ w5NhrNh/jv5Siii3qOSAwSsN8srXuQPhq5GhAoGL1JDEbAbKMa8aFv4M5nOTtCIF/ueZ
+ 3S9g==
+X-Gm-Message-State: AOJu0Yx3FAe6vBNMBBc17xP1bdmrtUGcO6mgDFlK90UMbMdsKIGncWTD
+ PXDK3W5iRNg2+eqNmciP5e7yTEe2S3jbDUkeTrFc5eHEyTxGraud+lrN8/Ql+NF7N4AQ0zfWTq3
+ QIlWYUXICqMBdIJhrbaSPj2d+cS5bKxKDRIkpYNQyiDsNP3MsK6QNc6zs
+X-Gm-Gg: AeBDiesQheRGqASELgr4pXsEPSmpXj9/ynFJ6LqrziZGZJSvjaKClx1c/GCgHjIVX7j
+ sYnlC9tymAMCATVisPIMIulXAvNsy+CcjZ+k+qJpGCwxwCI5lZD9t4W3j503r3/wqrqi6RhTwu8
+ iIKwTsATDAB7+aEbmwmlnIJRXSgSVvCHKYxmImgErdTC2Wg5xe983WhVNHhPd4o6Rv9u1IOmAhX
+ j88hDXmk0eLSr/6JNsQXuSoyRmbOEMUY03fnRFuFdrqTOxWCHlpQ5x5DHNGdijWed6T+giVr4Ku
+ exnEgF9nmXSfja6iMHAVx40En8CLmLjtrhPsWita3nNUKpY/WzpTXAe3l9yHg45sIWNcj1biLm5
+ n7S4VGZ0k3BhxINA0q/lmMrv+PiOTZxO/AkSoqsazjBCYc1gT/z1khmg6OQ==
+X-Received: by 2002:ac8:5fd1:0:b0:50d:6b06:a453 with SMTP id
+ d75a77b69052e-50e36a3f60bmr421425951cf.18.1776957931753; 
+ Thu, 23 Apr 2026 08:25:31 -0700 (PDT)
+X-Received: by 2002:ac8:5fd1:0:b0:50d:6b06:a453 with SMTP id
+ d75a77b69052e-50e36a3f60bmr421425131cf.18.1776957930984; 
+ Thu, 23 Apr 2026 08:25:30 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50fc42c7fabsm41308371cf.9.2026.04.23.08.25.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 08:19:47 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CA1F35F943;
- Thu, 23 Apr 2026 16:19:46 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 2/2] hw/display: don't accidentally autofree existing virgl
- resources
-Date: Thu, 23 Apr 2026 16:19:46 +0100
-Message-ID: <20260423151946.1853943-3-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260423151946.1853943-1-alex.bennee@linaro.org>
-References: <20260423151946.1853943-1-alex.bennee@linaro.org>
+ Thu, 23 Apr 2026 08:25:30 -0700 (PDT)
+Date: Thu, 23 Apr 2026 11:25:28 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
+ Ben Chaney <bchaney@akamai.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Pranav Tyagi <prtyagi@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH] migration: Fix crash on second migration when cancel early
+Message-ID: <aeo56NITJuRd1FN5@x1.local>
+References: <20260421175820.302795-1-peterx@redhat.com>
+ <87wlxzdsv9.fsf@suse.de> <aejqGMhhrfQENE1X@x1.local>
+ <87qzo6ek7d.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87qzo6ek7d.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,52 +119,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While sanity checking a create blob operation the use of the auto
-freed res variable could lead to inadvertently freeing an existing
-blob.
+On Wed, Apr 22, 2026 at 06:52:54PM -0300, Fabiano Rosas wrote:
+> > We're on the same page at least on that the gsources are not yet managed.
+> > But I am not sure they're leaked.
+> >
+> > exec_connect_incoming() does qio_channel_add_watch_full(), within itself it
+> > will release the refcount of the IO watch gsource.  It means it'll be a
+> > dangling gsource on the main context.  So after the spawn of the new
+> > process, it will still be finalized properly?
+> >
+> 
+> When the migration_with_exec functional test fails [0], the test issues
+> qmp-quit to both src and dst. The dst will exit before ever having
+> dispatched the gsource and exec_accept_incoming_migration() is not
+> executed at all. In that case the gsource and the ioc are never freed
+> and the spawned process is left behind.
+> 
+> This oneliner triggers it for me:
+> 
+> for i in $(seq 1 1000); do \
+> echo "$i ============="; \
+> make -j$(nproc) check-func-quick || break; done; ps aux | grep socat
+> 
+> [0] - due to the startup race as the AI overlords told us. Patch coming
+> soon!
 
-Avoid this by in-lining the virtio_gpu_virgl_find_resource() check as
-the value is not needed anyway.
+Ohhhh, so it's about some failure path, ok.
 
-While at it add a comment to the end and use g_steal_pointer to make
-it clearer the object lifetime exceeds the function bounds if we pass
-all the checks.
+> 
+> >> watches like this:
+> >> 
+> >>   static inline void migration_watch_data(void) {};
+> >>   
+> >>   qio_channel_add_watch_full(ioc, G_IO_IN, exec_accept_incoming_migration,
+> >>                              migration_watch_data, NULL,
+> >>                              g_main_context_get_thread_default());
+> >> 
+> >> and at migrate_cancel():
+> >> 
+> >>   while(g_source_remove_by_user_data(migration_watch_data));
+> >> 
+> >> It feels to me that a wrapper around this, or even a hashtable of "func
+> >> ptr->GSource" or "str->GSource id" would allow us to call a (say)
+> >> qio_channel_clear_watches() and avoid having to do the management in
+> >> each of the clients.
+> >
+> > In general, this whole idea sounds reasonable.  I just want to check with
+> > you on which side of QEMU we're talking about.
+> >
+> > To me, dest QEMU is less of a concern when it can easily be killed.  But
+> > still it's good to be able to manage those.  Src QEMU is more important
+> > from that perspective.
+> >
+> 
+> It applies to both src and dst. Whenever we have to add a watch. The
+> non-uniformity of having the source removed maybe after it dispatches if
+> we return G_SOURCE_REMOVE or maybe it doesn't dispatch and then it needs
+> to be explicitly removed is error prone I think.
+> 
+> Looking at callers of qio_channel_add_watch[_full], all of them just
+> store the gsource "tag" and later remove it. Having the callers each
+> implement their own way of keeping track of the GSource pointer/id just
+> to be able to free them later on seems unnecessary to me.
 
-Fixes: CVE-2026-6502
-Fixes: 7c092f17cce (virtio-gpu: Handle resource blob commands)
-Message-ID: 20260417094443.785462-1-alex.bennee@linaro.org
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-stable@nongnu.org
-Message-ID: <20260417122703.845442-1-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Yes, and we also need to keep in mind that the ID can be reused by glib
+context right after removal of the gsource from the context, afaik.
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index b7a2d160ddd..add85bd4e61 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -830,8 +830,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
- 
--    res = virtio_gpu_virgl_find_resource(g, cblob.resource_id);
--    if (res) {
-+    if (virtio_gpu_virgl_find_resource(g, cblob.resource_id)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
-                       __func__, cblob.resource_id);
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-@@ -884,8 +883,9 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
- 
-     res->base.dmabuf_fd = info.fd;
- 
-+    /* Now live, cleaned up in virtio_gpu_virgl_resource_unref */
-     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
--    res = NULL;
-+    g_steal_pointer(&res);
- }
- 
- static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+Example I randomly picked: qio_channel_websock_handshake_io(), it remembers
+the ID into hs_io_tag but it also needs to be very careful in its callback
+function so that whenever qio_channel_websock_handshake_send() would return
+FALSE (which should really be G_SOURCE_REMOVE..) it must reset hs_io_tag.
+
+> 
+> The caller could still decide when to destroy the source, but it could
+> have semantics more like: "I'm done with all the sources".
+> 
+> Or just make it part of the iochannel finalize routine. A small list of
+> source ids per channel seems reasonable.
+
+Sounds good in general.
+
+But one thing to mention is, IIUC even with this it won't fix the problem
+you hit above with leftover spawned process and IOC.. because IOC's
+finalize() won't get called..
+
 -- 
-2.47.3
+Peter Xu
 
 
