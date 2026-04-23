@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E141F99367
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D064DF99367
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFquh-00087W-Nv; Thu, 23 Apr 2026 06:04:03 -0400
+	id 1wFqu6-0006Ui-B6; Thu, 23 Apr 2026 06:03:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqu0-0006VZ-Un
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:28 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wFqti-0006Sl-9r
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:02 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtw-0002Is-Br
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:17 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43d03db7f87so4401447f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:15 -0700 (PDT)
+ id 1wFqtg-00027A-OD
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:02 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-43d77f60944so5190573f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938595; x=1777543395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938579; x=1777543379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YOyaac/ldGKuN+XC25ESAWOFzoZJtPFbNO1EUt1ltGA=;
- b=fm2ztJqGLqwy6/oAFBomwODyz3QwmKc0g/MNDiz80FMkbvdr0X3fonRnzXkUcr6BxI
- z9mXT6HdFIbwY8QWHhkdBcLjuMFpkOYx/L9bQQqQ/ZHoH790c1wUXkD1aEB4Ks9opVRo
- yrWFJ5gT+Lo8b1/7fpAEKcTfmdb9/tuTuFiAjJu8j2QjwvIcpXjlVrN8roWHYJ0xSx7I
- 1rpbmHPtZpQpX+37mJSTmVOcH2P0yFeXLDUkCNuZ2We4GEvwsDyVdxfSGOHden1thcEN
- Iqee4AH81I7HrXUNI/Gqmo8F/WMs2GBblgCMXuvT+m2h1sJACg1uGh3gGraAgoPc1S1S
- oGgA==
+ :reply-to; bh=VXoj8K/1FLMjguol00rR4xSVo1FA7fFJ10qYf85eI6k=;
+ b=UYs9zrx0rl+bqwZ0/qHeDcGqZ6xS14Y0RFnt/TxW4ihMcMdQHJOgDxqD1i6A4Vc256
+ xMGGoRGagdnsrVxs2Wp1SlExJnW7ymVyR2hLXS74GGMyQkAtwYl5dhBUor4EWl3gpYo5
+ 8QsQj2+/1oe6aNnxbS+y8KDS6PuSFc6f8jbDGJgdfCxZc443VeS8QokfKicyd/E3yWPe
+ FPps+S2I369chcfcTc6HRRJaWKNhxcS7r6lmpel2Sfq0phXZnWGfhUH61g3D7E4hXNW7
+ PT0BY9sF5kLjGdSnJ9y1uAvFlCiwlQaQgJN+HUQkSEb/5RHrFB4o4dUdsYX2P7hhcBGe
+ 84vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938595; x=1777543395;
+ d=1e100.net; s=20251104; t=1776938579; x=1777543379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=YOyaac/ldGKuN+XC25ESAWOFzoZJtPFbNO1EUt1ltGA=;
- b=DWDQ/ODz7JPrcFXrxr2DZLEvPSHnS+ktvOyl+mhAHseRkKjVEBEQaAqYNbsAbqD38z
- LorE868w4LgCembNr6DMqQ8+Qmxd4qiAnxZW40NALeo+woinMJUHybQga2vpFj4/H9+K
- AUNMp8GpuE2rB8rFezHquXOIgp32TqQJEC1ZALtmq4ekPa2t99GIsN+Pjm//Q29vU/qd
- QuzWsn7lWQmnO0/4GnbP0eBNO9MaSf+/wBOvcXj8XVycr78l8Z1gOWQKE1a3P/gPqqHE
- PCZwNErSi1HjtLQ7NZs7f1a5YovIUSlJ2eKaySjt5N/DToUEUn+wBV+6CEIXRcBzJeHr
- m1QA==
-X-Gm-Message-State: AOJu0YyNwaA6kqTuY0Z6tR9/cfF+gUK9Vn6jpdxBJA5/SQ5LxCc2/FA6
- biTV2u47N3YCwW48iF6x+Wff8nIcLib9Ys2TgFbBLoSW5F2Yy9gjRkOtaaHduVFiadQPPnsBiwu
- 6+fuA
-X-Gm-Gg: AeBDietnshNUfvgkaN0cCHKL2FSbfic+lSaFhoh2blWl8bmtx/em5I5WG8uqS7+Wo5c
- 4hu9Yr8rq9Zm9lHsLvohieMeBXJ76ScJUtEfTFK9QArnHH/FHG09PZYZyQwN2xdbxhZSVrvI13c
- 4xEOXVtD7pxxjmA289yXgkN6ATIvZzrnOSZ6dh9RpfMy72muRfPIWCyEAX9If+72EVIunGkvM/F
- 6J3TmhhF4ZhmIs4hU3u4uqBLTP67m29FfMPvdf1q7W6t8Fa93Lr1gnXnqdg30v44+0n2cutYO9X
- nNfdTgw+kiXAgxBb0tKdkJlTpEsmfy4xjSpY1xMrd91FeR+QOU9jYMvL6VQnREE4ho62efTNJmm
- 7fQT4N0v886CoNcc84udiRmjTnxp/RP6BKDCciRzUz/5/H2aoekHMwdYxpQ5dWtWyjB2OL1oVdz
- 4Wr6DC0v8bbL8OE8aehVX03qEwSPSuH9UG0Z8acQnM6Cw7KaYsZfwH9Cfw3SRnfiGBCvNL8WtqH
- Q82t1b9WWh7JuI5OE8Ha1KIjYYxNvzRf1xWcN4NuQ==
-X-Received: by 2002:a05:6000:4283:b0:43f:e211:1090 with SMTP id
- ffacd0b85a97d-43fe3db3c62mr39345262f8f.1.1776938594861; 
- Thu, 23 Apr 2026 03:03:14 -0700 (PDT)
+ bh=VXoj8K/1FLMjguol00rR4xSVo1FA7fFJ10qYf85eI6k=;
+ b=SEdht5HHA9X16YaRSXcT2UtvkyvD7vckIFv2GEdaOE7UXehXLHi8L8lXVxqOKxiFSc
+ RhWP3V6DwaEFFKW6xHBLxVxxgB+RgIKOGvpwIjKo8UVjkjNPRtLMyp7t/PG1dRnNldYZ
+ gjcidiF8IVnDxdU2VoxlpGmaxYyB8DYyNOT7TiJ4Iz9ei6NpyQBykSYLoHot49LURBi8
+ ybpxgpTFubK0aFP6RnFDxyaVfzxDnXemB1Pg8l5jyTGtt+zybDC3ZaIlAiPDWYOun4Mg
+ dInDTsyVxjiF426Y/glIjO/K8B9F4G4tcAbwxtfv+/w4C3zchN6Yk07yHmzFGLXpXgV8
+ nd3w==
+X-Gm-Message-State: AOJu0YywASQ7/HeaMr2tHAoSGtuErGPBTKVLOGlz5Wy6jRSPineeQdJj
+ Q05rbjpSAaHR3OX5qdWIZyUwK67YROrIaqgTRaBIE7Kd3SfYqlgSrPDI/kB6cvRjh02ZqXQqQep
+ /rejk
+X-Gm-Gg: AeBDievAbv/9YnnETAdGW+bunMoGL7dfy6j6ruQUzebHkPlXVTMFVVtM7BTzQodjao5
+ RILOxtbDDjsA8f8Qs0Y9nQOd6Ifs3h+jfBG1RXIwRGl0hqgxWZWreEpDpO9tda+HSn2GaRNF2oL
+ BJh34M7Bp8QA2/SYccjPudVxyedA6Jxpe/TtcFHeGAdwfoHd4Uo3riFw914Unt9qgkKxPLX7Os8
+ 4lVmEQ+sEPtJgU2z5DVPkIVTxU+U6AsmlHiwuK5pJG8VSm93ExGSgzq1rV8xv+GE0jxvYSK/KjS
+ nPvqduv9BOXx9lKYmC8EMKFiqIqhQ2KgFqmXP23ppp3Kxa/mAMg4ejwxIHB7mEu5gpNOqgQ4zUQ
+ Waf23wtmNcKdHKGpuqJO4AshF7x1VZcUmRBDSkqBgPfDHqkCd0gTnAn/3UlYlKIJUFTXA7pdcT9
+ BMFulbPj2vBx14IUAWWpS3P5fo3tyarDiyqxAWIdUmQAg4CGaWlfP/VgA/ANs4cWoqMT+eFxYCC
+ 4olvxKXz+0iBhF7++LJBzCiZLLBwvrK+OJOmN+45w==
+X-Received: by 2002:a5d:584d:0:b0:43f:e263:c02 with SMTP id
+ ffacd0b85a97d-43fe3dc8824mr39520135f8f.1.1776938578911; 
+ Thu, 23 Apr 2026 03:02:58 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.13
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:14 -0700 (PDT)
+ Thu, 23 Apr 2026 03:02:58 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/59] MAINTAINERS: Remove Dongjiu Geng
-Date: Thu, 23 Apr 2026 11:02:10 +0100
-Message-ID: <20260423100229.2941820-41-peter.maydell@linaro.org>
+Subject: [PULL 25/59] target/arm/tcg/translate-a64.c: use translator_ldl_end
+ instead of arm_ldl_code
+Date: Thu, 23 Apr 2026 11:01:55 +0100
+Message-ID: <20260423100229.2941820-26-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dongjiu Geng has not posted to qemu-devel in some years and did not
-respond to a query about whether they still wished to be listed in
-our MAINTAINERS file.  Remove them, on the assumption that they are
-no longer active in QEMU.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-This makes the "ACPI/HEST/GHES" section orphan.
+Allows to reduce scope of target/arm/tcg/arm_ldst.h to aarch32 only.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20260407222208.271838-17-pierrick.bouvier@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260416091654.316158-9-peter.maydell@linaro.org
 ---
- MAINTAINERS | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ target/arm/tcg/translate-a64.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 34944c3948..db29b267ee 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2220,9 +2220,8 @@ F: tests/functional/x86_64/test_acpi_bits.py
- F: docs/devel/testing/acpi-bits.rst
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index df2cbd66b3..48b5c57255 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -26,7 +26,6 @@
+ #include "translate-a64.h"
+ #include "tcg/tcg-op.h"
+ #include "qemu/log.h"
+-#include "arm_ldst.h"
+ #include "semihosting/semihost.h"
+ #include "cpregs.h"
  
- ACPI/HEST/GHES
--R: Dongjiu Geng <gengdongjiu1@gmail.com>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Orphan
- F: hw/acpi/ghes.c
- F: include/hw/acpi/ghes.h
- F: docs/specs/acpi_hest_ghes.rst
+@@ -10801,7 +10800,7 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     if (pc & 3) {
+         /*
+          * PC alignment fault.  This has priority over the instruction abort
+-         * that we would receive from a translation fault via arm_ldl_code.
++         * that we would receive from a translation fault via translator_ldl_end.
+          * This should only be possible after an indirect branch, at the
+          * start of the TB.
+          */
+@@ -10813,7 +10812,8 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     }
+ 
+     s->pc_curr = pc;
+-    insn = arm_ldl_code(env, &s->base, pc, s->sctlr_b);
++    /* Code is always little-endian on Aarch64 */
++    insn = translator_ldl_end(env, &s->base, pc, MO_LE);
+     s->insn = insn;
+     s->base.pc_next = pc + 4;
+ 
 -- 
 2.43.0
 
