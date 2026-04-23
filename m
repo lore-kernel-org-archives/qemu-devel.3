@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5922BFDEE39
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE83FDEE39
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG4ct-0004Te-Sg; Thu, 23 Apr 2026 20:42:35 -0400
+	id 1wG4ct-0004TK-El; Thu, 23 Apr 2026 20:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wG1jr-0002a8-JO
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:35 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1wG1jl-0002Zb-O6
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:29 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wG1jp-0001FU-Qw
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:35 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-43d7b879691so949517f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 14:37:33 -0700 (PDT)
+ id 1wG1jj-00017U-6d
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:29 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4891c569cb1so7275175e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 14:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776980252; x=1777585052; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776980246; x=1777585046; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=r/MkEQmRXLYmx51oofgr61oVs//gZmrORdrLItZ2SQM=;
- b=UF1RupDWimT764MGZXSzRFg0eWEz1sWBLNiR0OKTF/C+ZCqeDX/w9avZBuvUG4eSf1
- ldeKboIFwHWQW40vjzfGw2vZzROr4UZLNRkarSoc5yCbq0PQG2ME4J1r8dtcNoszl7bl
- wqhhq8cZsOhIDDyn8QwfHsAHKhN1dVDIUmZCXT5D77LwtXi2in+fEv3Z2H/aXraLCH8h
- efEUjaZMKqbnKau/0aeFl1Ujhks6lGoXhv0GcRAvRWci3JByYGRf+SWwYYJ4NhW68DfF
- gF53VwLiFb57VzOsWqvFfjXai0iynHM1ekaAA/2v/gZtV6UXKuiZtKqk9WIj/xSEN16P
- F+wg==
+ :reply-to; bh=uA+3oshFCqGtJFNZ2+y4Ee11ofsxVMEKZKGagbGyBPI=;
+ b=h7QPoEsFz+c550CVT9mFvjMSK8viWS6jD1E+VaX17WgYxwJJTYPx5H/f9xOWKSrEi3
+ 0Fv5tEekXtRaCww8G8vOVSSjYyjzMc2u7Nep2DC+SIE5QX2crpZYJwjYtzicz4rJng+N
+ ZywE+1Q6C3oPAjl4h2imZGQ9YJlMHG2C8skR33vKSvnULC5EMnUp56neqDxCMUeybm0d
+ jiydv3g3HBhR9b5fLqTKEG+yDvXZKKf0X/MR/+e6escq4NtjPECiaqXpEjxCSMC6C1Ps
+ 614iz5KsoKXx6SoNjfkSncz+4hF/RFrfulS6P9ybpJoyQQXCkAZlw6XE7+lOZduCrd5x
+ rOXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776980252; x=1777585052;
+ d=1e100.net; s=20251104; t=1776980246; x=1777585046;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=r/MkEQmRXLYmx51oofgr61oVs//gZmrORdrLItZ2SQM=;
- b=Or13HyNLShIOhaRI+zO+Kq0olySX0ZNOhrSLHTxtwTsRiljvZ1Ip4yr2ZOD+KOcZMO
- 6UryiPNgOtYwat1RYHwOHPZkiEa5zqDZkRF9/34C+e+HMF7GcbFrOV3ZCgFJ34Lr/nw0
- PVmqt4BAmv0++auU3nmAnxm7I3q2lCdafnn2znimPKVPG1+UzKdV9lTS+EZUH3O25hXf
- 6DtxQVlPOypE4Im/uGZWzVoC0JvF90mr9eGcWPRC64HG/Cd+t9/q11o032E1bW030oAU
- 0LIpyDCRtQKxXGW2vQ+O/zF72bMQFVtn2uCXZaElUpdTdXWRqB94B3jCQTrprSJwVf7i
- 7rkg==
-X-Gm-Message-State: AOJu0YzU7EzkDe1JWy0NcTkYfSrrSbbKYJ8fldWVok7U4nhmcpNs/pg9
- 4Sy8Yjp57udsfHeM/FV+Z596weWYXEr+13Bb88ih22QYBUFoWWIK5dJs
-X-Gm-Gg: AeBDietisU43J6DwvZCMAogCXeM3IAR3ADJZHd7SRdsnmEpiyg8/KROnjDIGFaozaAV
- lfnY06YvQ77rsct5qbimfi856NzfX/dMYHJtveL71dCNJtMHBOj7nsFrNCCKksFHtF0Yr0o4jDb
- 1odT6o7ZGtk+Ll/6462WQ6cB4oCGM0tXNIe0wvUicuwkbQ1gRgz91Yz5Z6N3rn6hG8oRXzq3W4W
- alnfacW7oKfTcflQtuyUbo/QULcfG8ojdwQZMg9LnkkSswsk4JSb46SkG6Mtr4y700p7Nn233E9
- +xOSVZd/v3uixNCzrw68NBhQG75zv8yEdIwG+Eh4F2+AZymCN3Ut9cpEh1FoyFqG0fLT0rQQwc7
- N+zJdt8MHFfGU89fGg8GNtUgCkLJGDYUnDBA3+ZOULL6hxqYWw6jw2ymrmG2b13lGnA3cBmfg8s
- annifEBie3C0nEFU78sJwfAfHZmMjB+12F45ib5kRA5Q==
-X-Received: by 2002:a05:600c:c177:b0:488:9e7e:e1e3 with SMTP id
- 5b1f17b1804b1-488fb7390e6mr198494035e9.2.1776980252229; 
- Thu, 23 Apr 2026 14:37:32 -0700 (PDT)
+ bh=uA+3oshFCqGtJFNZ2+y4Ee11ofsxVMEKZKGagbGyBPI=;
+ b=eIDby3b9Na6o+8djwW4sLDEtK/N9CKSnURdL9lpfiViydOe0vGeJ7WiEGceeLVQmit
+ dOxjHXE+ybvfJPRlGUiaAWyjcWfq6HGpOY3hO85Bh7TQDTtWLHb5hfYRX3sKzI0Pc4t8
+ 5PQQK3n9vW0iiFIy906SYoXL6zypQeZE4pNOJ1uldc+zDsgGjSUb6L63rLo0HCu1wdpB
+ hTuehaqjmSNvXn5jjOsjLnMCiFXXFaeL3iepDM2vrPKTIdte2KYSiC0Y9CncktZrzQrM
+ gz/nsC68AzE1MM4/2SE1CEvb7Fll9qcAgm22uIG4JC3KZ0VMXHQvakn1FiRLi7+1q3hW
+ gRJQ==
+X-Gm-Message-State: AOJu0YwGhrEsnA/uktpQ4R1iJ2mzlU3C+j1IkTezkFK73f1LIiPFN/N1
+ gVGxw9zlIrg/DfuvB2jdszi1b0S2moHvkzx/m/hk+X6oxPukEiuJG3ZCDKZBZGMD
+X-Gm-Gg: AeBDievndWLorc8/6XhkmY5xxa8lVO8VER13NXi4rej92CLB546xc6xkbgTkWKn3gXw
+ VQnqeY8wYZmVOmPuKs6NkyX4RpXY3QDZXR7n0Tp0jfAzNrNJpZdMN/8Ruq8JNrcGc00R2Ope5K0
+ gDCL6qCqIxy8S7QGgvmWpx0gVwsE0KloCxCt/bpkERkLxtjsaQenx2sMO7cI8W1JtD+7dDgYwHD
+ eyT3fEOIsmmYiPi7yIoSmtivXe+KPzOI9BmA6MN2DjsZBLS1OIYnI1N6dk5GsEuKaeS9IiMWUVy
+ /+ZPFA6YMaUIv/IWWx6pisyptCW3qBWADLAXuJuqDDs4AmAh09Mm/We67X3xRH5e5loN2ynKcRU
+ po6bwOzzWYjBPz2l3JEeG79jMdpkRXOy8GunOqzUCIQj6GhPZXWNNa2bdcBP0ezTBW0g4c1RBTk
+ saYagmwfhiS/yvAoBsx8KfGa4hzg2oXg/V1GLLlfGmUQ==
+X-Received: by 2002:a05:600c:1f82:b0:48a:5546:619e with SMTP id
+ 5b1f17b1804b1-48a55466251mr92148725e9.4.1776980245251; 
+ Thu, 23 Apr 2026 14:37:25 -0700 (PDT)
 Received: from [10.94.10.196] ([223.123.19.204])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48919f54572sm138755225e9.26.2026.04.23.14.37.29
+ 5b1f17b1804b1-48919f54572sm138755225e9.26.2026.04.23.14.37.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 14:37:31 -0700 (PDT)
+ Thu, 23 Apr 2026 14:37:24 -0700 (PDT)
 From: Ali Raza <elirazamumtaz@gmail.com>
-Date: Fri, 24 Apr 2026 02:36:40 +0500
-Subject: [PATCH v2 3/3] tests/tcg: Add test for /proc/self/task/ filtering
- and tkill validation
+Date: Fri, 24 Apr 2026 02:36:38 +0500
+Subject: [PATCH v2 1/3] linux-user: Filter /proc/*/task/ to hide
+ QEMU-internal threads
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260424-master-v2-3-8b50b5c063ed@gmail.com>
+Message-Id: <20260424-master-v2-1-8b50b5c063ed@gmail.com>
 References: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
 In-Reply-To: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
 To: qemu-devel@nongnu.org
@@ -78,8 +78,8 @@ Cc: Ali Raza <elirazamumtaz@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, deller@gmx.de
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=elirazamumtaz@gmail.com; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=elirazamumtaz@gmail.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,244 +103,473 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a multiarch linux-user test that verifies:
+When a guest process reads /proc/<pid>/task/ via getdents/getdents64,
+the host kernel returns directory entries for all host threads in the
+process, including QEMU-internal threads (RCU, TCG workers) that have
+no guest CPUState.  This causes problems for guest libraries like
+libcap's PSX that enumerate threads via /proc/self/task/ and send
+signals to each one -- signals sent to QEMU-internal threads are never
+handled, leading to deadlocks.
 
-1. /proc/self/task/ only lists guest threads -- spawns NUM_THREADS
-   pthreads, reads the task directory, and asserts every entry maps
-   to a known guest TID and the total count matches.
+Add filtering to do_getdents() and do_getdents64() that detects when
+the fd refers to a /proc/<pid>/task/ directory and skips entries whose
+TID does not belong to a guest thread.  Guest thread TIDs are
+identified by iterating the CPU list via CPU_FOREACH(), matching the
+existing pattern used for /proc/self/stat num_threads.
 
-2. tkill(guest_tid, 0) succeeds for all guest threads.
+This fixes the psx_test hang reported in containers using QEMU
+user-mode emulation for cross-architecture builds.
 
-3. tkill to a non-guest TID returns ESRCH.
-
-On native Linux this test trivially passes since there are no
-QEMU-internal threads.  Under QEMU user-mode, it exercises the
-getdents64 filtering and tkill validation added in the previous
-two commits.
-
+Resolves: https://github.com/AndrewGMorgan/libcap_mirror/issues/6
 Signed-off-by: Ali Raza (@locus-x64)
 
 ---
 Changes in v2:
-- Hard-assert ESRCH on tkill to a non-guest tid (was a printf).
-- Add tgkill coverage: success on guest tids; ESRCH on a wrong tgid.
+- Use pid_t instead of long for the parsed tid in do_getdents() and
+  do_getdents64() (suggested by Helge Deller).
+- Replace the ad-hoc readlink-at-getdents check with fd_trans-based
+  tagging at open time, eliminating a TOCTOU race and a broad-prefix
+  match that also matched /proc/<pid>/task/<tid>/fd.
+- Retry sys_getdents when an entire host batch is filtered out, so
+  the guest does not see a false EOF.
+- Parse the dirent TID with qemu_strtoi() instead of strtol() so
+  out-of-range values cannot wrap silently into pid_t.
 ---
- tests/tcg/multiarch/Makefile.target         |   2 +
- tests/tcg/multiarch/linux/linux-proc-task.c | 193 ++++++++++++++++++++++++++++
- 2 files changed, 195 insertions(+)
+ linux-user/fd-trans.c |   6 +
+ linux-user/fd-trans.h |  18 +++
+ linux-user/syscall.c  | 298 +++++++++++++++++++++++++++++++++++++-------------
+ 3 files changed, 244 insertions(+), 78 deletions(-)
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index 508149d57b..8d6e2af617 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -39,6 +39,8 @@ testthread: LDFLAGS+=-lpthread
- 
- threadcount: LDFLAGS+=-lpthread
- 
-+linux-proc-task: LDFLAGS+=-lpthread
-+
- signals: LDFLAGS+=-lrt -lpthread
- 
- munmap-pthread: CFLAGS+=-pthread
-diff --git a/tests/tcg/multiarch/linux/linux-proc-task.c b/tests/tcg/multiarch/linux/linux-proc-task.c
-new file mode 100644
-index 0000000000..0c41a4443f
---- /dev/null
-+++ b/tests/tcg/multiarch/linux/linux-proc-task.c
-@@ -0,0 +1,193 @@
-+/*
-+ * Test that /proc/self/task/ only lists guest threads.
-+ *
-+ * Under QEMU user-mode emulation, the host process may contain
-+ * internal threads (RCU, TCG workers) that are not guest threads.
-+ * These must be hidden from directory listings of /proc/<pid>/task/
-+ * and signals to non-guest TIDs must return ESRCH.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#define _GNU_SOURCE
-+#include <assert.h>
-+#include <dirent.h>
-+#include <errno.h>
-+#include <pthread.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/syscall.h>
-+#include <sys/types.h>
-+#include <unistd.h>
-+
-+#define NUM_THREADS 3
-+
-+static pid_t guest_tids[NUM_THREADS + 1]; /* +1 for main thread */
-+static int num_guest_tids;
-+static pthread_barrier_t barrier;
-+
-+static pid_t gettid_sys(void)
-+{
-+    return syscall(SYS_gettid);
-+}
-+
-+static void *thread_func(void *arg)
-+{
-+    int idx = (int)(intptr_t)arg;
-+
-+    guest_tids[idx] = gettid_sys();
-+    pthread_barrier_wait(&barrier);
-+
-+    /* Wait for main thread to finish testing. */
-+    pthread_barrier_wait(&barrier);
-+    return NULL;
-+}
+diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+index 64dd0745d2..6bad892b78 100644
+--- a/linux-user/fd-trans.c
++++ b/linux-user/fd-trans.c
+@@ -1881,3 +1881,9 @@ static abi_long host_to_target_data_inotify(void *buf, size_t len)
+ TargetFdTrans target_inotify_trans = {
+     .host_to_target_data = host_to_target_data_inotify,
+ };
 +
 +/*
-+ * Read /proc/self/task/ and return the count of numeric entries
-+ * (thread TIDs).  For each entry, verify it matches a known guest TID.
++ * No callbacks: this trans entry is purely a marker to identify fds
++ * that refer to our own /proc/<pid>/task directory.  See getdents().
 + */
-+static int count_and_verify_task_entries(void)
++TargetFdTrans target_proc_pid_task_trans;
+diff --git a/linux-user/fd-trans.h b/linux-user/fd-trans.h
+index 3bbc15fa1f..76b8c35374 100644
+--- a/linux-user/fd-trans.h
++++ b/linux-user/fd-trans.h
+@@ -142,4 +142,22 @@ extern TargetFdTrans target_signalfd_trans;
+ extern TargetFdTrans target_eventfd_trans;
+ extern TargetFdTrans target_timerfd_trans;
+ extern TargetFdTrans target_inotify_trans;
++
++/*
++ * Marker (no callbacks) used to tag fds that refer to /proc/<pid>/task
++ * for our own process.  Used by getdents to filter out QEMU-internal
++ * host threads (RCU, TCG workers) that have no guest CPUState.
++ */
++extern TargetFdTrans target_proc_pid_task_trans;
++
++static inline bool fd_trans_is_proc_pid_task(int fd)
 +{
-+    DIR *dir;
-+    struct dirent *de;
-+    int count = 0;
-+
-+    dir = opendir("/proc/self/task");
-+    assert(dir != NULL);
-+
-+    while ((de = readdir(dir)) != NULL) {
-+        char *endp;
-+        long tid;
-+        int i, found;
-+
-+        if (de->d_name[0] == '.') {
-+            continue; /* skip "." and ".." */
-+        }
-+
-+        tid = strtol(de->d_name, &endp, 10);
-+        if (*endp != '\0' || tid <= 0) {
-+            continue; /* non-numeric entry */
-+        }
-+
-+        /* Every TID in the listing must be a known guest thread. */
-+        found = 0;
-+        for (i = 0; i < num_guest_tids; i++) {
-+            if (guest_tids[i] == (pid_t)tid) {
-+                found = 1;
-+                break;
-+            }
-+        }
-+        if (!found) {
-+            fprintf(stderr, "FAIL: /proc/self/task/ contains unknown TID %ld\n",
-+                    tid);
-+            fprintf(stderr, "  Known guest TIDs:");
-+            for (i = 0; i < num_guest_tids; i++) {
-+                fprintf(stderr, " %d", guest_tids[i]);
-+            }
-+            fprintf(stderr, "\n");
-+        }
-+        assert(found);
-+        count++;
++    if (fd < 0) {
++        return false;
 +    }
 +
-+    closedir(dir);
-+    return count;
++    QEMU_LOCK_GUARD(&target_fd_trans_lock);
++    return fd < target_fd_max
++           && target_fd_trans[fd] == &target_proc_pid_task_trans;
++}
+ #endif
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index f4b74ad350..44f2cd851f 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8870,6 +8870,7 @@ static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
+     }
+ 
+     fd_trans_unregister(ret);
++    maybe_tag_proc_pid_task(ret);
+     unlock_user(pathname, guest_pathname, 0);
+     return ret;
+ }
+@@ -9108,6 +9109,58 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
+     return 0;
+ }
+ 
++/*
++ * If the freshly-opened host fd refers to our own /proc/<pid>/task
++ * directory, register a marker on it via fd_trans so getdents() can
++ * later filter out QEMU-internal host threads (RCU, TCG workers) that
++ * have no guest CPUState.  Tagging at open time (rather than at
++ * getdents time) avoids TOCTOU on the fd's resolved path and lets us
++ * piggy-back on the existing fd_trans infrastructure for dup/close.
++ */
++static void maybe_tag_proc_pid_task(int fd)
++{
++    char link_path[64];
++    char link_target[PATH_MAX];
++    char expected[64];
++    ssize_t len;
++    int expected_len;
++
++    if (fd < 0) {
++        return;
++    }
++
++    snprintf(link_path, sizeof(link_path), "/proc/self/fd/%d", fd);
++    len = readlink(link_path, link_target, sizeof(link_target) - 1);
++    if (len < 0) {
++        return;
++    }
++    link_target[len] = '\0';
++
++    expected_len = snprintf(expected, sizeof(expected),
++                            "/proc/%d/task", getpid());
++    if (expected_len > 0 && (ssize_t)expected_len == len
++        && memcmp(link_target, expected, expected_len) == 0) {
++        fd_trans_register(fd, &target_proc_pid_task_trans);
++    }
 +}
 +
 +/*
-+ * Verify that tkill(tid, 0) succeeds for all guest TIDs and that
-+ * tkill/tgkill to a TID that should not exist returns ESRCH.
++ * Check if a given host TID belongs to a guest thread by looking it up
++ * in the CPU list.  Must be called under RCU read lock.
 + */
-+static void test_tkill_validation(void)
++static bool is_guest_tid(pid_t tid)
 +{
-+    int i, ret;
-+    pid_t self = getpid();
++    CPUState *cpu;
 +
-+    /* Signal 0 to each guest TID should succeed via tkill and tgkill. */
-+    for (i = 0; i < num_guest_tids; i++) {
-+        ret = syscall(SYS_tkill, guest_tids[i], 0);
-+        if (ret != 0) {
-+            fprintf(stderr, "FAIL: tkill(%d, 0) returned %d (errno=%d)\n",
-+                    guest_tids[i], ret, errno);
++    CPU_FOREACH(cpu) {
++        TaskState *ts = get_task_state(cpu);
++        if (ts->ts_tid == tid) {
++            return true;
 +        }
-+        assert(ret == 0);
-+
-+        ret = syscall(SYS_tgkill, self, guest_tids[i], 0);
-+        if (ret != 0) {
-+            fprintf(stderr,
-+                    "FAIL: tgkill(%d, %d, 0) returned %d (errno=%d)\n",
-+                    self, guest_tids[i], ret, errno);
-+        }
-+        assert(ret == 0);
 +    }
++    return false;
++}
 +
+ #ifdef TARGET_NR_getdents
+ static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
+ {
+@@ -9116,78 +9169,123 @@ static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
+     int hlen, hoff, toff;
+     int hreclen, treclen;
+     off_t prev_diroff = 0;
++    bool filter_task = fd_trans_is_proc_pid_task(dirfd);
++    bool stop = false;
+ 
+     hdirp = g_try_malloc(count);
+     if (!hdirp) {
+         return -TARGET_ENOMEM;
+     }
+ 
+-#ifdef EMULATE_GETDENTS_WITH_GETDENTS
+-    hlen = sys_getdents(dirfd, hdirp, count);
+-#else
+-    hlen = sys_getdents64(dirfd, hdirp, count);
+-#endif
+-
+-    hlen = get_errno(hlen);
+-    if (is_error(hlen)) {
+-        return hlen;
+-    }
+-
+     tdirp = lock_user(VERIFY_WRITE, arg2, count, 0);
+     if (!tdirp) {
+         return -TARGET_EFAULT;
+     }
+ 
+-    for (hoff = toff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
++    toff = 0;
 +    /*
-+     * Try a TID that is very unlikely to be a guest thread.  Use
-+     * pid_max (typically 4194304) minus 1 as a probe.  On a real
-+     * kernel this returns ESRCH for a nonexistent thread; under QEMU
-+     * with validation it must also return ESRCH.  In the (extremely
-+     * unlikely) case that the TID does exist on the host, the kernel
-+     * may return 0; tolerate that to avoid spurious failures.
++     * Loop until we either produce a visible target entry, hit a
++     * real EOF (host returns 0), or hit an error.  Without this
++     * retry, a host batch consisting entirely of filtered entries
++     * would be reported to the guest as EOF.
 +     */
-+    ret = syscall(SYS_tkill, 4194303, 0);
-+    assert(ret == 0 || (ret == -1 && errno == ESRCH));
++    while (!stop) {
+ #ifdef EMULATE_GETDENTS_WITH_GETDENTS
+-        struct linux_dirent *hde = hdirp + hoff;
++        hlen = sys_getdents(dirfd, hdirp, count);
+ #else
+-        struct linux_dirent64 *hde = hdirp + hoff;
++        hlen = sys_getdents64(dirfd, hdirp, count);
+ #endif
+-        struct target_dirent *tde = tdirp + toff;
+-        int namelen;
+-        uint8_t type;
++        hlen = get_errno(hlen);
++        if (is_error(hlen)) {
++            unlock_user(tdirp, arg2, 0);
++            return hlen;
++        }
++        if (hlen == 0) {
++            break; /* real EOF */
++        }
+ 
+-        namelen = strlen(hde->d_name);
+-        hreclen = hde->d_reclen;
+-        treclen = offsetof(struct target_dirent, d_name) + namelen + 2;
+-        treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent));
++        for (hoff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
++#ifdef EMULATE_GETDENTS_WITH_GETDENTS
++            struct linux_dirent *hde = hdirp + hoff;
++#else
++            struct linux_dirent64 *hde = hdirp + hoff;
++#endif
++            struct target_dirent *tde = tdirp + toff;
++            int namelen;
++            uint8_t type;
 +
-+    ret = syscall(SYS_tgkill, self, 4194303, 0);
-+    assert(ret == 0 || (ret == -1 && errno == ESRCH));
++            namelen = strlen(hde->d_name);
++            hreclen = hde->d_reclen;
+ 
+-        if (toff + treclen > count) {
+             /*
+-             * If the host struct is smaller than the target struct, or
+-             * requires less alignment and thus packs into less space,
+-             * then the host can return more entries than we can pass
+-             * on to the guest.
++             * Filter /proc/<pid>/task/ listings to hide QEMU-internal
++             * host threads (RCU, TCG) that have no guest CPUState.
+              */
+-            if (toff == 0) {
+-                toff = -TARGET_EINVAL; /* result buffer is too small */
++            if (filter_task) {
++                int tid_int;
++                if (qemu_strtoi(hde->d_name, NULL, 10, &tid_int) == 0
++                    && tid_int > 0) {
++                    pid_t tid = (pid_t)tid_int;
++                    bool drop;
 +
-+    /* tgkill with a wrong tgid for a known-good tid must return ESRCH. */
-+    ret = syscall(SYS_tgkill, 4194303, guest_tids[0], 0);
-+    assert(ret == -1 && errno == ESRCH);
-+}
++                    WITH_RCU_READ_LOCK_GUARD() {
++                        drop = !is_guest_tid(tid);
++                    }
++                    if (drop) {
++                        treclen = 0;
++                        continue;
++                    }
++                }
++            }
++            treclen = offsetof(struct target_dirent, d_name) + namelen + 2;
++            treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent));
 +
-+int main(void)
-+{
-+    pthread_t threads[NUM_THREADS];
-+    int i, task_count;
++            if (toff + treclen > count) {
++                /*
++                 * If the host struct is smaller than the target struct, or
++                 * requires less alignment and thus packs into less space,
++                 * then the host can return more entries than we can pass
++                 * on to the guest.
++                 */
++                if (toff == 0) {
++                    toff = -TARGET_EINVAL; /* result buffer is too small */
++                    stop = true;
++                    break;
++                }
++                /*
++                 * Return what we have, resetting the file pointer to the
++                 * location of the first record not returned.
++                 */
++                lseek(dirfd, prev_diroff, SEEK_SET);
++                stop = true;
+                 break;
+             }
 +
-+    pthread_barrier_init(&barrier, NULL, NUM_THREADS + 1);
++            prev_diroff = hde->d_off;
++            tde->d_ino = tswapal(hde->d_ino);
++            tde->d_off = tswapal(hde->d_off);
++            tde->d_reclen = tswap16(treclen);
++            memcpy(tde->d_name, hde->d_name, namelen + 1);
 +
-+    /* Record main thread TID. */
-+    guest_tids[0] = gettid_sys();
-+    num_guest_tids = 1;
+             /*
+-             * Return what we have, resetting the file pointer to the
+-             * location of the first record not returned.
++             * The getdents type is in what was formerly a padding byte at the
++             * end of the structure.
+              */
+-            lseek(dirfd, prev_diroff, SEEK_SET);
+-            break;
++#ifdef EMULATE_GETDENTS_WITH_GETDENTS
++            type = *((uint8_t *)hde + hreclen - 1);
++#else
++            type = hde->d_type;
++#endif
++            *((uint8_t *)tde + treclen - 1) = type;
+         }
+ 
+-        prev_diroff = hde->d_off;
+-        tde->d_ino = tswapal(hde->d_ino);
+-        tde->d_off = tswapal(hde->d_off);
+-        tde->d_reclen = tswap16(treclen);
+-        memcpy(tde->d_name, hde->d_name, namelen + 1);
+-
+         /*
+-         * The getdents type is in what was formerly a padding byte at the
+-         * end of the structure.
++         * If we produced any visible target entry, return; otherwise
++         * loop again to fetch more host entries (avoid false EOF).
+          */
+-#ifdef EMULATE_GETDENTS_WITH_GETDENTS
+-        type = *((uint8_t *)hde + hreclen - 1);
+-#else
+-        type = hde->d_type;
+-#endif
+-        *((uint8_t *)tde + treclen - 1) = type;
++        if (toff != 0) {
++            break;
++        }
+     }
+ 
+     unlock_user(tdirp, arg2, toff);
+@@ -9203,57 +9301,99 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
+     int hlen, hoff, toff;
+     int hreclen, treclen;
+     off_t prev_diroff = 0;
++    bool filter_task = fd_trans_is_proc_pid_task(dirfd);
++    bool stop = false;
+ 
+     hdirp = g_try_malloc(count);
+     if (!hdirp) {
+         return -TARGET_ENOMEM;
+     }
+ 
+-    hlen = get_errno(sys_getdents64(dirfd, hdirp, count));
+-    if (is_error(hlen)) {
+-        return hlen;
+-    }
+-
+     tdirp = lock_user(VERIFY_WRITE, arg2, count, 0);
+     if (!tdirp) {
+         return -TARGET_EFAULT;
+     }
+ 
+-    for (hoff = toff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
+-        struct linux_dirent64 *hde = hdirp + hoff;
+-        struct target_dirent64 *tde = tdirp + toff;
+-        int namelen;
++    toff = 0;
++    /*
++     * Loop until we either produce a visible target entry, hit a
++     * real EOF (host returns 0), or hit an error.  Without this
++     * retry, a host batch consisting entirely of filtered entries
++     * would be reported to the guest as EOF.
++     */
++    while (!stop) {
++        hlen = get_errno(sys_getdents64(dirfd, hdirp, count));
++        if (is_error(hlen)) {
++            unlock_user(tdirp, arg2, 0);
++            return hlen;
++        }
++        if (hlen == 0) {
++            break; /* real EOF */
++        }
 +
-+    /* Spawn worker threads. */
-+    for (i = 0; i < NUM_THREADS; i++) {
-+        int ret = pthread_create(&threads[i], NULL, thread_func,
-+                                 (void *)(intptr_t)(i + 1));
-+        assert(ret == 0);
-+    }
++        for (hoff = 0; hoff < hlen; hoff += hreclen, toff += treclen) {
++            struct linux_dirent64 *hde = hdirp + hoff;
++            struct target_dirent64 *tde = tdirp + toff;
++            int namelen;
+ 
+-        namelen = strlen(hde->d_name) + 1;
+-        hreclen = hde->d_reclen;
+-        treclen = offsetof(struct target_dirent64, d_name) + namelen;
+-        treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent64));
++            namelen = strlen(hde->d_name) + 1;
++            hreclen = hde->d_reclen;
+ 
+-        if (toff + treclen > count) {
+             /*
+-             * If the host struct is smaller than the target struct, or
+-             * requires less alignment and thus packs into less space,
+-             * then the host can return more entries than we can pass
+-             * on to the guest.
++             * Filter /proc/<pid>/task/ listings to hide QEMU-internal
++             * host threads (RCU, TCG) that have no guest CPUState.
+              */
+-            if (toff == 0) {
+-                toff = -TARGET_EINVAL; /* result buffer is too small */
++            if (filter_task) {
++                int tid_int;
++                if (qemu_strtoi(hde->d_name, NULL, 10, &tid_int) == 0
++                    && tid_int > 0) {
++                    pid_t tid = (pid_t)tid_int;
++                    bool drop;
 +
-+    /* Wait for all threads to record their TIDs. */
-+    pthread_barrier_wait(&barrier);
-+    num_guest_tids = NUM_THREADS + 1;
++                    WITH_RCU_READ_LOCK_GUARD() {
++                        drop = !is_guest_tid(tid);
++                    }
++                    if (drop) {
++                        treclen = 0;
++                        continue;
++                    }
++                }
++            }
++            treclen = offsetof(struct target_dirent64, d_name) + namelen;
++            treclen = QEMU_ALIGN_UP(treclen, __alignof(struct target_dirent64));
 +
-+    printf("Guest TIDs:");
-+    for (i = 0; i < num_guest_tids; i++) {
-+        printf(" %d", guest_tids[i]);
-+    }
-+    printf("\n");
++            if (toff + treclen > count) {
++                /*
++                 * If the host struct is smaller than the target struct, or
++                 * requires less alignment and thus packs into less space,
++                 * then the host can return more entries than we can pass
++                 * on to the guest.
++                 */
++                if (toff == 0) {
++                    toff = -TARGET_EINVAL; /* result buffer is too small */
++                    stop = true;
++                    break;
++                }
++                /*
++                 * Return what we have, resetting the file pointer to the
++                 * location of the first record not returned.
++                 */
++                lseek(dirfd, prev_diroff, SEEK_SET);
++                stop = true;
+                 break;
+             }
+-            /*
+-             * Return what we have, resetting the file pointer to the
+-             * location of the first record not returned.
+-             */
+-            lseek(dirfd, prev_diroff, SEEK_SET);
+-            break;
 +
-+    /* Test 1: /proc/self/task/ entry count matches guest thread count. */
-+    task_count = count_and_verify_task_entries();
-+    printf("/proc/self/task/ entries: %d, expected: %d\n",
-+           task_count, num_guest_tids);
-+    assert(task_count == num_guest_tids);
-+
-+    /* Test 2: tkill validation. */
-+    test_tkill_validation();
-+
-+    /* Release worker threads. */
-+    pthread_barrier_wait(&barrier);
-+
-+    for (i = 0; i < NUM_THREADS; i++) {
-+        pthread_join(threads[i], NULL);
-+    }
-+
-+    pthread_barrier_destroy(&barrier);
-+
-+    printf("PASS: /proc/self/task/ filtering and tkill validation\n");
-+    return EXIT_SUCCESS;
-+}
++            prev_diroff = hde->d_off;
++            tde->d_ino = tswap64(hde->d_ino);
++            tde->d_off = tswap64(hde->d_off);
++            tde->d_reclen = tswap16(treclen);
++            tde->d_type = hde->d_type;
++            memcpy(tde->d_name, hde->d_name, namelen);
+         }
+ 
+-        prev_diroff = hde->d_off;
+-        tde->d_ino = tswap64(hde->d_ino);
+-        tde->d_off = tswap64(hde->d_off);
+-        tde->d_reclen = tswap16(treclen);
+-        tde->d_type = hde->d_type;
+-        memcpy(tde->d_name, hde->d_name, namelen);
++        if (toff != 0) {
++            break;
++        }
+     }
+ 
+     unlock_user(tdirp, arg2, toff);
+@@ -9732,6 +9872,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+                                   target_to_host_bitmask(arg2, fcntl_flags_tbl),
+                                   arg3, true));
+         fd_trans_unregister(ret);
++        maybe_tag_proc_pid_task(ret);
+         unlock_user(p, arg1, 0);
+         return ret;
+ #endif
+@@ -9742,6 +9883,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+                                   target_to_host_bitmask(arg3, fcntl_flags_tbl),
+                                   arg4, true));
+         fd_trans_unregister(ret);
++        maybe_tag_proc_pid_task(ret);
+         unlock_user(p, arg2, 0);
+         return ret;
+     case TARGET_NR_openat2:
 
 -- 
 2.43.0
