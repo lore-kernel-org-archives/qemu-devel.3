@@ -4,117 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F45FDEE45
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE688FDEE45
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:22:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFzcg-0004Uz-2H; Thu, 23 Apr 2026 15:22:02 -0400
+	id 1wFzcH-0002Wc-S4; Thu, 23 Apr 2026 15:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcT-0003pW-OE
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:51 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzbw-0002GB-4n
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:19 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcR-00029P-OT
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzbq-0001uD-2E
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:21:13 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9727A6A891;
- Thu, 23 Apr 2026 19:20:40 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 3C0F66A8A4;
+ Thu, 23 Apr 2026 19:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972040; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1776972020; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cps/+TDf6sawK3UL3T3/BEb1DwFfw9hUVfjlHW+dVCE=;
- b=d0ewgjhfU8Ehs3zaqPzUkOn/yphPywdhWVZi/HhaSmXzYkD5Xm53Qp++Crs8lTG9c9/OE0
- aX2lzN1V/4ljESipXaKAIPuxjlyU4yiHGgvGMiy6eEKib+ghoSziO3kJ4BqA4YtXmLMiO4
- NMdOIyS1it0TNNHFI0xluOKhs5Cc+2s=
+ bh=a0ZCd2HuC4Fz3TAvfTlRO8nxqPP6uGkjnV2AsiN6Twc=;
+ b=2QbVNoQXRToWbAnUkQv1+PA9/2sfaC51YMYvaGchpn07AlLEzneen8syMk7OCOCQh7vKKb
+ R6GI6QLa/X0KJK4n9p7Gupq9Un2ISA/caykLb9DNJdLwys1zSxmZYc46NYVrfbPV90mIOB
+ p0pDuD4oKnrr+u7sPcin0AJ5RkFAIsU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972040;
+ s=susede2_ed25519; t=1776972020;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cps/+TDf6sawK3UL3T3/BEb1DwFfw9hUVfjlHW+dVCE=;
- b=x3pVkF6eogbORMINI5+BE6oYdrUjEzF6z+xfEUuusuednmMnCFjcskF1FjNq5pfs+d1kwj
- sUNbRJJ0np4GGgDg==
+ bh=a0ZCd2HuC4Fz3TAvfTlRO8nxqPP6uGkjnV2AsiN6Twc=;
+ b=9uvpbc3aV31u/EQWfdamR14HY7omgpQZ6t7sOLEz7+3VMrqHdGLF3opngmU5zlQ0S3udWN
+ hsb+iIsQ+Gn3itDw==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=d0ewgjhf;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=x3pVkF6e
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972040; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1776972020; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cps/+TDf6sawK3UL3T3/BEb1DwFfw9hUVfjlHW+dVCE=;
- b=d0ewgjhfU8Ehs3zaqPzUkOn/yphPywdhWVZi/HhaSmXzYkD5Xm53Qp++Crs8lTG9c9/OE0
- aX2lzN1V/4ljESipXaKAIPuxjlyU4yiHGgvGMiy6eEKib+ghoSziO3kJ4BqA4YtXmLMiO4
- NMdOIyS1it0TNNHFI0xluOKhs5Cc+2s=
+ bh=a0ZCd2HuC4Fz3TAvfTlRO8nxqPP6uGkjnV2AsiN6Twc=;
+ b=2QbVNoQXRToWbAnUkQv1+PA9/2sfaC51YMYvaGchpn07AlLEzneen8syMk7OCOCQh7vKKb
+ R6GI6QLa/X0KJK4n9p7Gupq9Un2ISA/caykLb9DNJdLwys1zSxmZYc46NYVrfbPV90mIOB
+ p0pDuD4oKnrr+u7sPcin0AJ5RkFAIsU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972040;
+ s=susede2_ed25519; t=1776972020;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cps/+TDf6sawK3UL3T3/BEb1DwFfw9hUVfjlHW+dVCE=;
- b=x3pVkF6eogbORMINI5+BE6oYdrUjEzF6z+xfEUuusuednmMnCFjcskF1FjNq5pfs+d1kwj
- sUNbRJJ0np4GGgDg==
+ bh=a0ZCd2HuC4Fz3TAvfTlRO8nxqPP6uGkjnV2AsiN6Twc=;
+ b=9uvpbc3aV31u/EQWfdamR14HY7omgpQZ6t7sOLEz7+3VMrqHdGLF3opngmU5zlQ0S3udWN
+ hsb+iIsQ+Gn3itDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2E7FD593A3;
- Thu, 23 Apr 2026 19:20:38 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 36480593A3;
+ Thu, 23 Apr 2026 19:20:19 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WIcDOwZx6mlJCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:38 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KJZPAfNw6mlJCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:19 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 26/43] vmstate: Do not set size for VMS_ARRAY_OF_POINTER
-Date: Thu, 23 Apr 2026 16:19:40 -0300
-Message-ID: <20260423191958.1440-27-farosas@suse.de>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PULL 13/43] migration: convert vmstate_subsection_save/load
+ functions to bool
+Date: Thu, 23 Apr 2026 16:19:27 -0300
+Message-ID: <20260423191958.1440-14-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260423191958.1440-1-farosas@suse.de>
 References: <20260423191958.1440-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,linaro.org:email];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 9727A6A891
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,130 +118,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-When VMS_ARRAY_OF_POINTER is specified, it means the vmstate field is an
-array of pointers.
+Convert them to bool return value, as preparation to further
+convertion of vmstate_save/load_state().
 
-The size of the element is not relevant to whatever it is stored inside: it
-is always the host pointer size.
-
-Let's reserve the "size" field in this case for future use, update
-vmstate_size() so as to make it still work for array of pointers properly.
-
-When at this, provide rich documentation on how size / size_offset works in
-vmstate.
-
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260401202844.673494-4-peterx@redhat.com
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260304212303.667141-12-vsementsov@yandex-team.ru
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/migration/vmstate.h | 20 ++++++++++++++++----
- migration/savevm.c          |  3 +++
- migration/vmstate.c         | 10 +++++++++-
- 3 files changed, 28 insertions(+), 5 deletions(-)
+ migration/vmstate.c | 57 +++++++++++++++++++++------------------------
+ 1 file changed, 26 insertions(+), 31 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 32bb8e8ebc..350e62a55a 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -183,11 +183,26 @@ typedef enum {
- struct VMStateField {
-     const char *name;
-     size_t offset;
-+
-+    /*
-+     * @size or @size_offset specifies the size of the element embeded in
-+     * the field.  Only one of them should be present never both.  When
-+     * @size_offset is used together with VMS_VBUFFER, it means the size is
-+     * dynamic calculated instead of a constant.
-+     *
-+     * When the field is an array of any type, this stores the size of one
-+     * element of the array.
-+     *
-+     * NOTE: even if VMS_POINTER or VMS_ARRAY_OF_POINTER may be specified,
-+     * this parameter always reflects the real size of the objects that a
-+     * pointer point to.
-+     */
-     size_t size;
-+    size_t size_offset;
-+
-     size_t start;
-     int num;
-     size_t num_offset;
--    size_t size_offset;
-     const VMStateInfo *info;
-     enum VMStateFlags flags;
-     const VMStateDescription *vmsd;
-@@ -547,7 +562,6 @@ extern const VMStateInfo vmstate_info_qlist;
-     .version_id = (_version),                                        \
-     .num        = (_num),                                            \
-     .info       = &(_info),                                          \
--    .size       = sizeof(_type *),                                   \
-     .flags      = VMS_ARRAY|VMS_ARRAY_OF_POINTER,                    \
-     .offset     = vmstate_offset_array(_state, _field, _type *, _num), \
- }
-@@ -557,7 +571,6 @@ extern const VMStateInfo vmstate_info_qlist;
-     .version_id = (_v),                                              \
-     .num        = (_n),                                              \
-     .vmsd       = &(_vmsd),                                          \
--    .size       = sizeof(_type *),                                    \
-     .flags      = VMS_ARRAY|VMS_STRUCT|VMS_ARRAY_OF_POINTER,         \
-     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
- }
-@@ -567,7 +580,6 @@ extern const VMStateInfo vmstate_info_qlist;
-     .version_id = (_version),                                             \
-     .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
-     .info       = &(_info),                                               \
--    .size       = sizeof(_type *),                                          \
-     .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
-     .offset     = vmstate_offset_pointer(_state, _field, _type *),          \
- }
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 8115203b51..f5a6fd0c66 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -868,6 +868,9 @@ static void vmstate_check(const VMStateDescription *vmsd)
- 
-     if (field) {
-         while (field->name) {
-+            if (field->flags & VMS_ARRAY_OF_POINTER) {
-+                assert(field->size == 0);
-+            }
-             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
-                 /* Recurse to sub structures */
-                 vmstate_check(field->vmsd);
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index e98b5f5346..e29a8c3f49 100644
+index 53b57c09d8..8825aa3b1f 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -110,13 +110,21 @@ static int vmstate_n_elems(void *opaque, const VMStateField *field)
+@@ -21,11 +21,11 @@
+ #include "qemu/error-report.h"
+ #include "trace.h"
  
- static int vmstate_size(void *opaque, const VMStateField *field)
- {
--    int size = field->size;
-+    int size;
+-static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc,
+-                                   Error **errp);
+-static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, Error **errp);
++static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, JSONWriter *vmdesc,
++                                    Error **errp);
++static bool vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, Error **errp);
+ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                                 void *opaque, JSONWriter *vmdesc,
+                                 int version_id, Error **errp);
+@@ -305,10 +305,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+     }
+     assert(field->flags == VMS_END);
  
-     if (field->flags & VMS_VBUFFER) {
-         size = *(int32_t *)(opaque + field->size_offset);
-         if (field->flags & VMS_MULTIPLY) {
-             size *= field->size;
-         }
-+    } else if (field->flags & VMS_ARRAY_OF_POINTER) {
-+        /*
-+         * For an array of pointer, the each element is always size of a
-+         * host pointer.
-+         */
-+        size = sizeof(void *);
-+    } else {
-+        size = field->size;
+-    ret = vmstate_subsection_load(f, vmsd, opaque, errp);
+-    if (ret != 0) {
+-        qemu_file_set_error(f, ret);
+-        return ret;
++    if (!vmstate_subsection_load(f, vmsd, opaque, errp)) {
++        qemu_file_set_error(f, -EINVAL);
++        return -EINVAL;
      }
  
-     return size;
+     if (!vmstate_post_load(vmsd, opaque, version_id, errp)) {
+@@ -637,7 +636,7 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+         json_writer_end_array(vmdesc);
+     }
+ 
+-    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
++    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp) ? 0 : -EINVAL;
+ 
+ out:
+     if (vmsd->post_save) {
+@@ -667,15 +666,14 @@ int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+                                 errp);
+ }
+ 
+-static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, Error **errp)
++static bool vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, Error **errp)
+ {
+     ERRP_GUARD();
+     trace_vmstate_subsection_load(vmsd->name);
+ 
+     while (qemu_peek_byte(f, 0) == QEMU_VM_SUBSECTION) {
+         char idstr[256], *idstr_ret;
+-        int ret;
+         uint8_t version_id, len, size;
+         const VMStateDescription *sub_vmsd;
+ 
+@@ -683,12 +681,12 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+         if (len < strlen(vmsd->name) + 1) {
+             /* subsection name has to be "section_name/a" */
+             trace_vmstate_subsection_load_bad(vmsd->name, "(short)", "");
+-            return 0;
++            return true;
+         }
+         size = qemu_peek_buffer(f, (uint8_t **)&idstr_ret, len, 2);
+         if (size != len) {
+             trace_vmstate_subsection_load_bad(vmsd->name, "(peek fail)", "");
+-            return 0;
++            return true;
+         }
+         memcpy(idstr, idstr_ret, size);
+         idstr[size] = 0;
+@@ -696,41 +694,39 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+         if (strncmp(vmsd->name, idstr, strlen(vmsd->name)) != 0) {
+             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(prefix)");
+             /* it doesn't have a valid subsection name */
+-            return 0;
++            return true;
+         }
+         sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
+         if (sub_vmsd == NULL) {
+             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
+             error_setg(errp, "VM subsection '%s' in '%s' does not exist",
+                        idstr, vmsd->name);
+-            return -ENOENT;
++            return false;
+         }
+         qemu_file_skip(f, 1); /* subsection */
+         qemu_file_skip(f, 1); /* len */
+         qemu_file_skip(f, len); /* idstr */
+         version_id = qemu_get_be32(f);
+ 
+-        ret = vmstate_load_state(f, sub_vmsd, opaque, version_id, errp);
+-        if (ret) {
++        if (vmstate_load_state(f, sub_vmsd, opaque, version_id, errp) < 0) {
+             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(child)");
+             error_prepend(errp,
+-                          "Loading VM subsection '%s' in '%s' failed: %d: ",
+-                          idstr, vmsd->name, ret);
+-            return ret;
++                          "Loading VM subsection '%s' in '%s' failed: ",
++                          idstr, vmsd->name);
++            return false;
+         }
+     }
+ 
+     trace_vmstate_subsection_load_good(vmsd->name);
+-    return 0;
++    return true;
+ }
+ 
+-static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc,
+-                                   Error **errp)
++static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, JSONWriter *vmdesc,
++                                    Error **errp)
+ {
+     const VMStateDescription * const *sub = vmsd->subsections;
+     bool vmdesc_has_subsections = false;
+-    int ret = 0;
+ 
+     trace_vmstate_subsection_save_top(vmsd->name);
+     while (sub && *sub) {
+@@ -754,9 +750,8 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+             qemu_put_byte(f, len);
+             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
+             qemu_put_be32(f, vmsdsub->version_id);
+-            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc, errp);
+-            if (ret) {
+-                return ret;
++            if (vmstate_save_state(f, vmsdsub, opaque, vmdesc, errp) < 0) {
++                return false;
+             }
+ 
+             if (vmdesc) {
+@@ -770,5 +765,5 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+         json_writer_end_array(vmdesc);
+     }
+ 
+-    return ret;
++    return true;
+ }
 -- 
 2.51.0
 
