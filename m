@@ -4,76 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A90D4FDEE2B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE52FDEE29
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFxa5-0000kn-NH; Thu, 23 Apr 2026 13:11:13 -0400
+	id 1wFxku-0005lG-O0; Thu, 23 Apr 2026 13:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFxZs-0000jO-GC
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:11:00 -0400
-Received: from qs-2001a-snip4-8.eps.apple.com ([57.103.87.11]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wFxZr-0000jw-1e
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:11:00 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPS id
- 93AAA18752A7; Thu, 23 Apr 2026 17:10:57 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJA01fDl4fBBdGGVUERx5dVkIeGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVAAFQAXQZGeFV1WQNZH0R7PXFAdl8DRBQ8AF8OLnRAfzsBKXErRx5JClYJXghGEVsUVkNRGQxQTQFDCAoIRwNNF14yUwRfEVAW
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1776964258; x=1779556258;
- bh=HL1h/PxzAsbYksx2lRRPNSACLWEE9R23VAT67j2+jro=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=f5haz+dJFgu3MtF4k8Y9gZvlpKfszTwh/n/xhlw4e4Kh68HBqnHmPNhn0qOueNm4Dsi5PPw+QtkpAfkZ0X/Aa//lPFpZdFaYUERnO60KTQqRA7l6IM9iGyLOJg195eg6+IeD+QQ/pcLW/U5NkidB6iUN9GHcOsn3Jfo8nG4yHxfj6+Cs27mseZhvclD6vSzhCP0dtrwmoDI7ATJU0b3dB2Rx8sVX4apz1nSjmDSqkdp4AOITWxWBqA0e1ADvy664KLaszzPQJYHSj6u0mvAhcco5UhU7ZJDpWbkQqeCWsNuhzm0OXH5I18zNimmMmSur1IY17SnkIMa2vSZvCX7aKQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPSA id
- 2940C18747F9; Thu, 23 Apr 2026 17:09:15 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH 10/16] target/arm: Use generic hwaccel_enabled() to check
- 'host' cpu type
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260423170229.64655-11-philmd@linaro.org>
-Date: Thu, 23 Apr 2026 19:09:02 +0200
-Cc: qemu-devel@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8397646A-F442-4BEB-A414-D329EF0FC2DF@unpredictable.fr>
-References: <20260423170229.64655-1-philmd@linaro.org>
- <20260423170229.64655-11-philmd@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE3MCBTYWx0ZWRfX73EsA7XU3Y2O
- +aZk7bjoZbU6l0ZVeyc3dkgj23L+eaqBebHog45z6qgk4pjjqeq/BpaHenyn6PPG9ffLLu1AJzp
- RfGGRh0XMhGppV4Dl6r0JUqqTon42d1YTqfIOBymAWeXQN364aQldl4BBbIvNx6QLrIbJ5PLKae
- xlsNAyfe/OMtS+W35Kk+AaAm/YBYUz6SmEc0oGxKBzJVBHbEGj69sWeb+KemAsfR50DWqWVe9Dv
- T8X5HeUq8EtbSS4ayz9MhhWsyIEul0NccbmEQQ2JyLiRdYWrluId6nqkc8/NbalFEghzCLkHKN/
- ukIgcymZ0yWJXntJ5ggIpQZ0QSXBUfGnMUIBzHBDF+s+hz1maB4ZkiFexM7gno=
-X-Authority-Info-Out: v=2.4 cv=Dbcaa/tW c=1 sm=1 tr=0 ts=69ea52a1
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=c9H9iVsSBL8j0jD_ca4A:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: wXGSCDe0c4Df88tLz5Q_EoVJLpRDn_Zd
-X-Proofpoint-ORIG-GUID: wXGSCDe0c4Df88tLz5Q_EoVJLpRDn_Zd
-Received-SPF: pass client-ip=57.103.87.11;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+ (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
+ id 1wFxks-0005kr-IJ
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:22:22 -0400
+Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
+ id 1wFxkq-000107-Et
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:22:22 -0400
+Received: by mail-dl1-x1230.google.com with SMTP id
+ a92af1059eb24-12c565dd3a7so9535577c88.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:22:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1776964937; x=1777569737; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FAqgVbViTYcb7RPsu+Jzg5lkBkP6Jlwh5uu12OLWbpU=;
+ b=ao7UTEzKqIBDHJblncSFd9K+4gv2pjNFbdNG2D/7LgvkHBeHbMCG7J9Qkuw1Cd1iC1
+ quo9+o6+6GI1hljI+rbn4/iartkY1uqeyRGQZFvlTSH+2OmuNsWsKcliLa7e4zD2Etji
+ kU+hLUnJ2iy8EVBSYVtZBxusNjJECI4dTZtMIinrH7ksF94fmaoKU0KMVc3ORbV79YFu
+ LJP0kr9zdShCynye+9sSqwCbxsldlLHGcdeL4BxrUg0a3nlK1t6XDyx4IwYeYvE6VwIj
+ opmqhaCSGNFSh5pOYXsuhov23sqDMqhDFD31H2kvWJct5UE9ruxbldNg1RFMgZ7pm7bM
+ SPbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776964937; x=1777569737;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FAqgVbViTYcb7RPsu+Jzg5lkBkP6Jlwh5uu12OLWbpU=;
+ b=XLAfvCFdWXrHDnO5MIBTZTBpsPNGZtdqOm7MXAeEsQhY7t2rG3k+GJblS4cJ2Fhi3y
+ A1qN9hLsywnPB1gOY5yPfhAIWDjNzUpKXXGfD/3KZbklmX1Xp4A+MxnwPKWYp/uq39fy
+ 45UtslnalpD8c7YYnJmbqAl487yQA+UyFJTdy/vBT5nGcLrDnfe2gWXgMbLW6emBaIL9
+ l+idNdKf1y5Mll8+WcW8vLsl2xwOFsrxXnEMo0sffTjPBJE+tznZnHdwFf1Wgwg1ruyq
+ D8/R7RiGBfsrbHHW+v4N0mSxVibsWhLSaVpP+md7+fIbg367KP2W9g5iztE3A7rwVLWe
+ npSA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+u2VIGnjU/H8Cr8Ubtmxsq3ytmjRiGhQBdYlr7xa5NcAlKb1Vy1c6SQ7ciAK5rca1WTzZgpZN8900T@nongnu.org
+X-Gm-Message-State: AOJu0YzCKoA3oXmH3KFWlCa6XaoFVS9+czD/UHUbVkWi0KJz4ys9zS0f
+ EGSZWR0NohpTMRNMciw3xHCDFWcHGM0VCYlag1ngLVXKIzUthDaZzbyd
+X-Gm-Gg: AeBDieuv9qfh06kJUNv8phzI1jsjC8LyDt85tHl6n2R4ithJ8OXmZuCrrQkmB+gzP6k
+ yadjUURYR2p7Cdq3PtligLgpabZvxO5n4sPmWdU4xsewdRq7rsoFxp4RH4da8m6Ko+qHHvybgBi
+ MznmB8fCXR377HOVRs13iyFLg4Nc06ARke5TNu1QXyxXCaFzHwobWwkV35cPQXg0Y3ilVVhHFmE
+ HHRQDablVGjHr7+xcAYdL+JrV2Yq9kXChNV8XuJNCz+SC7Gd2dBYY9A6CS2RnIpggyo1FNz+FLx
+ bl2H+NRIyZqtZ1G8K3CdJn3k+zyog6yFhBrTnkck8byIDwTx9UQdVeXDCveubUKtRg259NSmEko
+ sGsxe8L0VPb/lO55KC2VWEWt96GEcZNnEM8BWJtKY4/tW27CAI+K1LDJc3lh7Xoj4LbdOSBJ/F6
+ UNeltX/fwf0Olspl6QfUqo913mHoh5mZ2W/CChYe5p2yz+UlxagNX16e9kMxzMx6SXy0rD0aNGb
+ SQ=
+X-Received: by 2002:a05:7022:6b8d:b0:11f:3483:bba6 with SMTP id
+ a92af1059eb24-12c73f717efmr15717435c88.13.1776964937006; 
+ Thu, 23 Apr 2026 10:22:17 -0700 (PDT)
+Received: from localhost.localdomain ([143.54.78.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2e539fa6134sm29307962eec.3.2026.04.23.10.22.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 23 Apr 2026 10:22:16 -0700 (PDT)
+From: Lucas Amaral <lucaaamaral@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Lucas Amaral <lucaaamaral@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, agraf@csgraf.de, mohamed@unpredictable.fr,
+ alex.bennee@linaro.org
+Subject: Re: [PATCH v4 0/3] hvf: map granule abstraction, configurable IPA,
+ and MAP_FIXED alignment fix
+Date: Thu, 23 Apr 2026 14:22:10 -0300
+Message-ID: <20260423172210.51760-1-lucaaamaral@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <CAFEAcA9587cZ+oOv2t6No6eBJdR9gxow8RFqy-JN=7OH3xk7HA@mail.gmail.com>
+References: <20260317175744.32469-1-lucaaamaral@gmail.com>
+ <CAFEAcA9587cZ+oOv2t6No6eBJdR9gxow8RFqy-JN=7OH3xk7HA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dl1-x1230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,46 +106,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Peter,
 
+Thanks for the review and for asking Mohamed and Alex to take a look.
 
-> On 23. Apr 2026, at 19:02, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> We should be able to use the 'host' CPU with any hardware accelerator.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> target/arm/arm-qmp-cmds.c | 5 +++--
-> target/arm/cpu.c          | 5 +++--
-> 2 files changed, 6 insertions(+), 4 deletions(-)
->=20
-[=E2=80=A6]
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index ccc47c8a9ad..4f98121be0b 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1629,8 +1629,9 @@ static void arm_cpu_realizefn(DeviceState *dev, =
-Error **errp)
->      * this is the first point where we can report it.
->      */
->     if (cpu->host_cpu_probe_failed) {
-> -        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled()) {
-> -            error_setg(errp, "The 'host' CPU type can only be used =
-with KVM, HVF or WHPX");
-> +        if (!hwaccel_enabled()) {
-> +            error_setg(errp, "The 'host' CPU type can only be used =
-with "
-> +                             "hardware accelator such =
-KVM/HVF/WHPX=E2=80=9D);
-accelerator such as
+> The question that comes to my mind is whether the two places changed
+> in accel/hvf to look at hvf_get_map_granule() really are the only
+> two places in the whole of QEMU where we call
+> qemu_real_host_page_size() and expect it to be also the guest page
+> size. The general idea of 'guest page size might not be the same as
+> the host page size QEMU itself gets' isn't hvf specific -- maybe we
+> should have a qemu_guest_page_size() function?
 
->         } else {
->             error_setg(errp, "Failed to retrieve host CPU features");
->         }
-> --=20
-> 2.53.0
->=20
->=20
+Good point. I'll audit the qemu_real_host_page_size() call sites to
+see which ones actually mean "guest page size" and whether a broader
+qemu_guest_page_size() abstraction makes sense. I'd send that as a
+follow-up series once these patches land, so the immediate HVF fix
+isn't blocked on the broader refactor.
 
+Thanks,
+Lucas
 
