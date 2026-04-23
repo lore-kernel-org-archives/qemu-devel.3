@@ -4,21 +4,21 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B47F99368
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 370D7F99368
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:32:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFrKn-00013C-3H; Thu, 23 Apr 2026 06:31:01 -0400
+	id 1wFrKn-00013H-B2; Thu, 23 Apr 2026 06:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrKE-0000nF-Gl
+ id 1wFrKE-0000nE-FC
  for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrK9-0005me-SS
+ id 1wFrK9-0005mh-Tj
  for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1776940218;
@@ -26,72 +26,71 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3n3FxpdFX8QEwtruRPtTMxey3qCGIDC6XniieDlmvks=;
- b=iCkJJWZHzQob61GE5rMV9/unt8vQiTCtjEcvSixopUVlXuKWlhoEFOsFahAAXpO3MazcEP
- KBL/612/mSsYA+iVw+SchJ2iMVQppaDpWqIeh1imYJ3aXKCcdzpjvVAOEqt2pvRTJYW5pG
- xilHA2mCTn4w4/ur/9YnGH971TQweRA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SvezQ3MLTmkGpNYucQ8nhsSa/DAi1TK3VmsXEHyf4wY=;
+ b=Xo1KHFjLNekvErf6Cji7IGAHmDM5FhH7Is0CjjEvHMK3YolqaHPgLSntgW184ZEoH7QeHq
+ rpIJ/F+qIgBWpmDh+A9/1EbSV0fDVkGThAd+xjFFCYPayfxkwBrcj+7d3uIIb8GsqYnCbt
+ c5m4InQaFwuxvBTpJsxj/82x2eNRknw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-MonI686aNKKAVkVp6Akexw-1; Thu, 23 Apr 2026 06:30:16 -0400
-X-MC-Unique: MonI686aNKKAVkVp6Akexw-1
-X-Mimecast-MFC-AGG-ID: MonI686aNKKAVkVp6Akexw_1776940216
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48a5adc141cso11521485e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:30:16 -0700 (PDT)
+ us-mta-80-re61eB8AOFK1pKUH7-GGfg-1; Thu, 23 Apr 2026 06:30:15 -0400
+X-MC-Unique: re61eB8AOFK1pKUH7-GGfg-1
+X-Mimecast-MFC-AGG-ID: re61eB8AOFK1pKUH7-GGfg_1776940215
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48919890a95so31319045e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:30:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776940215; x=1777545015; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776940214; x=1777545014; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3n3FxpdFX8QEwtruRPtTMxey3qCGIDC6XniieDlmvks=;
- b=Y4d//JbOmcRqbs0meMaGdXK66/bxRBIG097ZNx+9TOMuZos8bTuTxadBEa2zFI01yL
- eqFJjiPeZm4GbZSkmvAeQq4mo5qrJlNFjhqXxuHHq1/90gymr4JNrx8nKNmLgxYLCV3v
- SK188mW5yj4urQKblK3NziejpgGU/YxUcPtreF8rBvzDDll26313OEy8AAMs+EUz0o/i
- eWwQ/E71bv2EekR4YL3DEsP/cSLmYW38PUJqZH8oXIgkbZPS03wTtdW4GXdHHFmelFOE
- tGDZaIUS1G8hti5Nn1gPQnMKeqP/r8lpoQ7xXJvsMe0trrXWyqNQyHrXV8FM0Eok8wyA
- NaLQ==
+ bh=SvezQ3MLTmkGpNYucQ8nhsSa/DAi1TK3VmsXEHyf4wY=;
+ b=dMlg3r8inZRJG8H86pqQR2AdPDsA3NKwfqffDMOkHramzGuM+6mzhWldzU2WN/n7BO
+ yvGT6gMIbXAPVrKm7qdwi4Wjix3pd869LYhEud18p2odT28RRF2lM9wnmGY4PErM0Ozj
+ WiVX7CSHB/KeqCmBOGi4x3VFEIfjIsiQuMo4/kQR8Iqmnu4AwOvEBLQrlsHzSchOKbDV
+ f8Et/qiCZGrVecACrkXSWTv//UKRuGQ6xkDs/sXokbGPEmG4dAo/4f8l7d9SwFeK0AOS
+ tXIab7wJ6pUubOi5LKzNX+PuWmRRudUsh/BGUQ0EvJY14rdK8vbl0ha1I/KKgmjPvDCo
+ YHzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776940215; x=1777545015;
+ d=1e100.net; s=20251104; t=1776940214; x=1777545014;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3n3FxpdFX8QEwtruRPtTMxey3qCGIDC6XniieDlmvks=;
- b=U430X7N+TIVLWt+zr9nERHi7j4nDsUfpUaJebsRB2TjC+wbDcrToV6fnM7TWTRMHR3
- TMXgod58pKordk9lsqPKQtlf7zY66kVLadZVFZp4YRB3a9EPgW8Qhi0P7XvfHtokd1rO
- zKNgddwyY0Gu1IovysdbGh/n8O+g9u1jdZNmha2AUq6d5/ySm4uX9LlbQnjxCSoB9KIN
- nZ7RHkXmd6zg5DFEOVJq4zALyxBPbSQ5Mvm0vqszGdrGAfGLsfvY1eG0pUJkTA5VkhRC
- vBnZ2BDYPcNajoJKNpbKggFRMCVQ4cOcn9p49WHNZA1F4jpHE87HtQWki7AOm2/O8vwL
- YIRw==
-X-Gm-Message-State: AOJu0YwYVe7yHJUHxmhOiWQy2nFkXLu1jtlmHOuvbwq1TV1c679+oUpj
- oTK64g+0TYo04RxQk2wac0wSJaR321s60oVn3YBS5ybvPHtDHd6jCGNfSyqpFr07PtplxV6x3ys
- cSynBK049f/iBVil15mNdt6o4VA+PTk1EUQO1ZsTAl097aQRSTZrJXirLLe7z7nZO7LhsAYot/0
- Auhz2AtRMTXHuWI/1EkmLoEakVetGPgpXKDnPruS3n
-X-Gm-Gg: AeBDiesGVlvlrqYtZikLvf5y3CuGXgn+R10iMMM0Ix9etosSo7Q+cOQNxJHFB6uP6cS
- GN9kz+Y98jILEoIAYrZmyihifoAslGOvETGtaS3MCo82UZ3g8zFvfWhIhb5wC4dlockanKY8uPi
- gsqRG6TcR40islAy9KgMF4KuRYmXFD20f+vl3HgnaFIhgm5xAh0MLalPJ12T5Gg3mAgoB2TACtt
- NXIzlehEsUmwFiD32YKOE/IaYKcTFl5lvp+ioSjAPn4vpYYrx0MSE6iCE11QfkttrrElw1PNXci
- AWkjYJbKzTAnVeNlenrId+BzRLezUSAwSAB5WLOzkTUKHDW/MHicn/yiVa/C0u4zHlWfR3FZeTy
- gWuED+PovUS+sxdLHMeavXw9eRX0RwygiPBNyRf9Jzz0R/vyfhcXH51n0lUvy3FzntqvfTBajaQ
- IbQV1ZixjXXqu7HNTdCURhZwrUBbfazIQ9/Co=
-X-Received: by 2002:a05:600c:8b6b:b0:485:3c2e:60d5 with SMTP id
- 5b1f17b1804b1-488fb8859ddmr348293255e9.2.1776940214993; 
- Thu, 23 Apr 2026 03:30:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b6b:b0:485:3c2e:60d5 with SMTP id
- 5b1f17b1804b1-488fb8859ddmr348292585e9.2.1776940214393; 
- Thu, 23 Apr 2026 03:30:14 -0700 (PDT)
+ bh=SvezQ3MLTmkGpNYucQ8nhsSa/DAi1TK3VmsXEHyf4wY=;
+ b=Cc4Lnd5b3/8yT9M/GKRoW/rWKvIvcc1+N2BSdidHxDItgCtonnscEjJtqMJiWR+SIW
+ CuzrBcahfuRcX6KHqpgKGTOKS8NKBoikCcvTRLef2oFBTSMVYGLD7dCsXNTfnvdYBMqb
+ v5b1DwT/L6MPk2o8d6ZJXakCLsi2jl7eQBXDr9cJYOkuNxapW1f1Eq0Bif59qa0LY5jS
+ XM287+dc2cSzOoB24i55ferc0qNrtEcWhRZZSEmZRMVeoChpo5t7ItRdoSbUSLeVLu3e
+ 292e5pp2fYGHGLwHIwkPdRuLYXReRAnWMJyNv7QU9aE/cA3ozFvBOEcnJlQLJmrBuzH0
+ H8HQ==
+X-Gm-Message-State: AOJu0Yx13Zy+AeINTEZ7weGkSX3hQtrbUJ9ikRX4Q1E9aYJWbQlw8aE4
+ BW4QOZZuERiPGQ7A65JjP7NUun5AI9Sr53G9RLSa91qpQ7DQpa3G5VacZB6iFkDRRfaSBBcB0Ti
+ mTCYkLy/9dlyk0n6dAJRsP4/qtJ8TUmFsMg234Ruzxj2q69mlHPNRcktZ6n5DKUn4Zo9hmuYJna
+ d5I8IWsVdwJIt0DsaFTqxOmCCgnJmPe7+oEhnDS1Pq
+X-Gm-Gg: AeBDiesETDzaQ7w7JGmBCbiR6h9GM1dIfriIYt1BSJdzbXY5NfBOEJuZVilxV7xzJXp
+ hH80QXVvkIbTbEdH2ySC/zb91nX/7jz3QWM0fkuWO5dmqQ0NUd0+8T68wD7hhbSL6yb3H6p5Vuw
+ H2rWdDdRKD9LIkHh+3Vx8+Qrsnyx6pdJ8EOBAdH2kMZVsAVF0IHRUiYBGSCNbWRCwPHYMiIiZGC
+ u3Q61OvOSDSo9zsz1smfe/R775RDuNXAIULwl9LiPfMyzig1+Z+q3rOQvxwHGZ87wjDCmy+5gQ4
+ JZaciezuZUkMC0X2eiG/xcd17xIkgzJ8yBkqHEuqZ/0sZRSI+jQL4AdPAeQ4l4EUx7fOky/9zQY
+ 7q2GPm5TAj+tBiWjMXEwtlgnW2PIAaexGHBhVJPkcfhCSa+lVDGvt8j0gjUKJ826v9dKBg7jhMy
+ 1q1JPL240hV3ZM8bZ+dk+Yub1wJbTTRQ52cqk=
+X-Received: by 2002:a05:600c:64c7:b0:488:a2ac:a334 with SMTP id
+ 5b1f17b1804b1-488fb73aa3bmr395055905e9.3.1776940213384; 
+ Thu, 23 Apr 2026 03:30:13 -0700 (PDT)
+X-Received: by 2002:a05:600c:64c7:b0:488:a2ac:a334 with SMTP id
+ 5b1f17b1804b1-488fb73aa3bmr395055225e9.3.1776940212695; 
+ Thu, 23 Apr 2026 03:30:12 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-489fec8f7cbsm240212955e9.11.2026.04.23.03.30.13
+ 5b1f17b1804b1-4891bb3d121sm484876215e9.14.2026.04.23.03.30.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:30:13 -0700 (PDT)
+ Thu, 23 Apr 2026 03:30:11 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 18/25] target/i386/mshv: Fix segment regression in MMIO emu
-Date: Thu, 23 Apr 2026 12:29:15 +0200
-Message-ID: <20260423102922.443639-19-pbonzini@redhat.com>
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL 17/25] meson: Don't require nm for non-modular builds
+Date: Thu, 23 Apr 2026 12:29:14 +0200
+Message-ID: <20260423102922.443639-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423102922.443639-1-pbonzini@redhat.com>
 References: <20260423102922.443639-1-pbonzini@redhat.com>
@@ -121,81 +120,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-When the segmentation code has been reworked, there is now an
-unconditional call to emul_ops->read_segment_descriptor(). The MSHV impl
-was delegating this to x86_read_segement_descriptor(), which read from
-the GDT in guest memory. This fails for selector.idx == 0 and when no
-GDT is set up (which is the case in real mode).
+In the MSVC build environment, nm is missing; at the same time,
+scripts/undefsym.py exits with code 0 at the beginning
+for non-modular builds.
 
-In the fix we change the MSHV impl to fill segment descriptor from
-SegmentCache, that was populated from the hypervisor by mshv_load_regs()
-before instruction emulation.
+So, this change is harmless because it already didn't do anything
+in non-modular builds, but remove the additional tool requirements.
 
-Fixes: 09442d98ab (target/i386: emulate: segmentation rework)
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260410142652.367541-1-magnuskulke@linux.microsoft.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/r/20260327134401.270186-16-kkostiuk@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/mshv/mshv-cpu.c | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ meson.build | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 2bc978deb25..4ed6e7548f6 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1552,17 +1552,42 @@ static void read_segment_descriptor(CPUState *cpu,
-                                     struct x86_segment_descriptor *desc,
-                                     enum X86Seg seg_idx)
- {
--    bool ret;
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     SegmentCache *seg = &env->segs[seg_idx];
--    x86_segment_selector sel = { .sel = seg->selector & 0xFFFF };
-+    uint32_t limit;
+diff --git a/meson.build b/meson.build
+index 09cdd317699..a962b181e64 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3906,6 +3906,9 @@ modinfo_generate = find_program('scripts/modinfo-generate.py')
+ modinfo_files = []
+ audio_modinfo_files = []
  
--    ret = x86_read_segment_descriptor(cpu, desc, sel);
--    if (ret == false) {
--        error_report("failed to read segment descriptor");
--        abort();
-+    memset(desc, 0, sizeof(struct x86_segment_descriptor));
++block_syms = []
++qemu_syms = []
 +
-+    desc->type = (seg->flags & DESC_TYPE_MASK) >> DESC_TYPE_SHIFT;
-+    desc->s    = (seg->flags & DESC_S_MASK)    >> DESC_S_SHIFT;
-+    desc->dpl  = (seg->flags & DESC_DPL_MASK)  >> DESC_DPL_SHIFT;
-+    desc->p    = (seg->flags & DESC_P_MASK)    >> DESC_P_SHIFT;
-+    desc->avl  = (seg->flags & DESC_AVL_MASK)  >> DESC_AVL_SHIFT;
-+    desc->l    = (seg->flags & DESC_L_MASK)    >> DESC_L_SHIFT;
-+    desc->db   = (seg->flags & DESC_B_MASK)    >> DESC_B_SHIFT;
-+    desc->g    = (seg->flags & DESC_G_MASK)    >> DESC_G_SHIFT;
-+
-+    /*
-+     * SegmentCache stores the hypervisor-provided value verbatim (populated by
-+     * mshv_load_regs). We need to convert it to format expected by the
-+     * instruction emulator. We can have a limit value > 0xfffff with
-+     * granularity of 0 (byte granularity), which is not representable
-+     * in real x86_segment_descriptor. In this case we set granularity to 1
-+     * (4k granularity) and shift the limit accordingly.
-+     *
-+     * This quirk has been adopted from "whpx_segment_to_x86_description()"
-+     */
-+
-+    if (!desc->g && seg->limit <= 0xfffff) {
-+        limit = seg->limit;
-+    } else {
-+        limit = seg->limit >> 12;
-+        desc->g = 1;
-     }
-+
-+    x86_set_segment_limit(desc, limit);
-+    x86_set_segment_base(desc, seg->base);
- }
+ block_mods = []
+ system_mods = []
+ emulator_modules = []
+@@ -4021,18 +4024,18 @@ if enable_modules
+   if emulator_modules.length() > 0
+     alias_target('modules', emulator_modules)
+   endif
+-endif
  
- static const struct x86_emul_ops mshv_x86_emul_ops = {
+-nm = find_program('nm')
+-undefsym = find_program('scripts/undefsym.py')
+-block_syms = custom_target('block.syms', output: 'block.syms',
+-                             input: [libqemuutil, block_mods],
+-                             capture: true,
+-                             command: [undefsym, nm, '@INPUT@'])
+-qemu_syms = custom_target('qemu.syms', output: 'qemu.syms',
+-                             input: [libqemuutil, system_mods],
+-                             capture: true,
+-                             command: [undefsym, nm, '@INPUT@'])
++  nm = find_program('nm')
++  undefsym = find_program('scripts/undefsym.py')
++  block_syms = custom_target('block.syms', output: 'block.syms',
++                              input: [libqemuutil, block_mods],
++                              capture: true,
++                              command: [undefsym, nm, '@INPUT@'])
++  qemu_syms = custom_target('qemu.syms', output: 'qemu.syms',
++                              input: [libqemuutil, system_mods],
++                              capture: true,
++                              command: [undefsym, nm, '@INPUT@'])
++endif
+ 
+ authz_ss = authz_ss.apply({})
+ libauthz = static_library('authz', authz_ss.sources() + genh,
 -- 
 2.53.0
 
