@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B425F99366
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E141F99367
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFquW-0007Ag-D9; Thu, 23 Apr 2026 06:03:52 -0400
+	id 1wFquh-00087W-Nv; Thu, 23 Apr 2026 06:04:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtj-0006TF-Bv
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:08 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1wFqu0-0006VZ-Un
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:28 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqth-000287-GY
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:03 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-4411e1eba51so3072003f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:01 -0700 (PDT)
+ id 1wFqtw-0002Is-Br
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:17 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-43d03db7f87so4401447f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938580; x=1777543380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938595; x=1777543395; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jiyQOt8Idv0DVCCbXBGrIdQrWUe5DIPWOUWKcNILS1U=;
- b=GecMn9lyOOCqj98cJYuh3XEJ5kvV4GsjyQ5j47EoZsMNxTOIYzWbAwNmvZzWm/Jqdk
- VZ+IwjKPaB1Zxgw2AIeWNscG9y9ZRLMxdEmBX2ToydbEzZkehaiTWlijerVFkd6ob2Ej
- cuEvrVcPGqmOKv2I+LbiQvuCC+VJbSmMRlD3ofS8/j/f8V+9bB96C7ZGeRrGfSxDu2H9
- SzcyyiN5K312ZauQfTIBLiHXwKjGj61DSQJV5M3fYJh31FG+Ta3tBeW86QSsnGb77IUv
- wBBa2Jp0+MmRmLXZCqZ7tCehWzn2AJCdimPIldCWwRfFhQNIP31Z4kQPNGGUsgIUuyxU
- hkWg==
+ :reply-to; bh=YOyaac/ldGKuN+XC25ESAWOFzoZJtPFbNO1EUt1ltGA=;
+ b=fm2ztJqGLqwy6/oAFBomwODyz3QwmKc0g/MNDiz80FMkbvdr0X3fonRnzXkUcr6BxI
+ z9mXT6HdFIbwY8QWHhkdBcLjuMFpkOYx/L9bQQqQ/ZHoH790c1wUXkD1aEB4Ks9opVRo
+ yrWFJ5gT+Lo8b1/7fpAEKcTfmdb9/tuTuFiAjJu8j2QjwvIcpXjlVrN8roWHYJ0xSx7I
+ 1rpbmHPtZpQpX+37mJSTmVOcH2P0yFeXLDUkCNuZ2We4GEvwsDyVdxfSGOHden1thcEN
+ Iqee4AH81I7HrXUNI/Gqmo8F/WMs2GBblgCMXuvT+m2h1sJACg1uGh3gGraAgoPc1S1S
+ oGgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938580; x=1777543380;
+ d=1e100.net; s=20251104; t=1776938595; x=1777543395;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=jiyQOt8Idv0DVCCbXBGrIdQrWUe5DIPWOUWKcNILS1U=;
- b=SjJrBcKRXAvI4dYMil4DiPUysVAclwRj1a0gS0nKJM+RKeN0UoVG3U+/vp7cD7PMZ7
- 01pqy2xCfVBiOOrThykdLfU9hI5/pWBACDDMJLa2sYO0ZCLcZ6Rotg7cSSLMVZ/Kpi/A
- lXzA29cNmb0xIr7n0QswMJT0BkTYa2pVZzggVncMwNz1LsOepV83pzHO02gXfBAwEJ92
- MUoT5CmwcvdReCzgB+9VLkUJxrsZx4daC4INxVTOI09j0XGUcAsTVhsLzdVaF51fibb6
- 91yeHES3fSL9UQATxhVJxl1BFRjlT8/iHXFRyUCdcVCIwI/6gtzeGCQwzWpu/Lkph8wj
- zeng==
-X-Gm-Message-State: AOJu0YxvG/Y80/CZr2fVbtKPMLCjnCNrnmlkyAQz5RE4NVRhcn5XbNHT
- vyoIJdgge5Gzyx2IGmlpUw+2N+s3Sz561gFY2uONGmfyaH38QBItPo4xcJvk06k4foMYhQO8aoy
- bafMc
-X-Gm-Gg: AeBDievz9Ac9GCTfwMquuiNeZKy+GtPuQPVFbV54hBGAPa88a1qk/dr3G1YmfLzNhq3
- tcFTjKxVrpbIamclKYE351N1dSoqGFNzU4D6iFBFtftKoHFklSD+9CldEkUgDWWzXfHNlDsHjg2
- 4s14hCRtO6Luwc6XgAk5RKy9PQTXspIJwXDrrRNLdZfuJUCTsjFv1DlaYClbE3KQgfEbwtRnTSN
- WQ1a9FTkaPv+Rh0RVDjsBsm9fv/a25yrCaIcPbFbNDJyk+cQ+RokqAfcB49PUNGj4zzfwvldixI
- 0YqaiCXS4cpXCXIYW4gAMi7I/RHWw+FbET6MBfb/QfHpO+6UhWIZkOGj3iQ5zvhxokl7onkvNCd
- FUinK5AE40mzQSKG2BzeftBVUOAidINaW5F7Ui9NWu34o+zcD+vIazkj0M8rYVXDjQK1XICi0ZE
- 1Ne6QcJJjw9vzJChSR0ipytFa+iAi/ENoU4BjxlJiXZ7JIRuct7lCoTNLsLVBu39gXu/GeWzq04
- 0ExFVNbCQ5isEU8IP57/FyCkQtz99Ym7ONFP6+tJYUSRdvBeC57
-X-Received: by 2002:a05:6000:1acf:b0:43d:7946:bae6 with SMTP id
- ffacd0b85a97d-43fe3e236c2mr39770618f8f.43.1776938579888; 
- Thu, 23 Apr 2026 03:02:59 -0700 (PDT)
+ bh=YOyaac/ldGKuN+XC25ESAWOFzoZJtPFbNO1EUt1ltGA=;
+ b=DWDQ/ODz7JPrcFXrxr2DZLEvPSHnS+ktvOyl+mhAHseRkKjVEBEQaAqYNbsAbqD38z
+ LorE868w4LgCembNr6DMqQ8+Qmxd4qiAnxZW40NALeo+woinMJUHybQga2vpFj4/H9+K
+ AUNMp8GpuE2rB8rFezHquXOIgp32TqQJEC1ZALtmq4ekPa2t99GIsN+Pjm//Q29vU/qd
+ QuzWsn7lWQmnO0/4GnbP0eBNO9MaSf+/wBOvcXj8XVycr78l8Z1gOWQKE1a3P/gPqqHE
+ PCZwNErSi1HjtLQ7NZs7f1a5YovIUSlJ2eKaySjt5N/DToUEUn+wBV+6CEIXRcBzJeHr
+ m1QA==
+X-Gm-Message-State: AOJu0YyNwaA6kqTuY0Z6tR9/cfF+gUK9Vn6jpdxBJA5/SQ5LxCc2/FA6
+ biTV2u47N3YCwW48iF6x+Wff8nIcLib9Ys2TgFbBLoSW5F2Yy9gjRkOtaaHduVFiadQPPnsBiwu
+ 6+fuA
+X-Gm-Gg: AeBDietnshNUfvgkaN0cCHKL2FSbfic+lSaFhoh2blWl8bmtx/em5I5WG8uqS7+Wo5c
+ 4hu9Yr8rq9Zm9lHsLvohieMeBXJ76ScJUtEfTFK9QArnHH/FHG09PZYZyQwN2xdbxhZSVrvI13c
+ 4xEOXVtD7pxxjmA289yXgkN6ATIvZzrnOSZ6dh9RpfMy72muRfPIWCyEAX9If+72EVIunGkvM/F
+ 6J3TmhhF4ZhmIs4hU3u4uqBLTP67m29FfMPvdf1q7W6t8Fa93Lr1gnXnqdg30v44+0n2cutYO9X
+ nNfdTgw+kiXAgxBb0tKdkJlTpEsmfy4xjSpY1xMrd91FeR+QOU9jYMvL6VQnREE4ho62efTNJmm
+ 7fQT4N0v886CoNcc84udiRmjTnxp/RP6BKDCciRzUz/5/H2aoekHMwdYxpQ5dWtWyjB2OL1oVdz
+ 4Wr6DC0v8bbL8OE8aehVX03qEwSPSuH9UG0Z8acQnM6Cw7KaYsZfwH9Cfw3SRnfiGBCvNL8WtqH
+ Q82t1b9WWh7JuI5OE8Ha1KIjYYxNvzRf1xWcN4NuQ==
+X-Received: by 2002:a05:6000:4283:b0:43f:e211:1090 with SMTP id
+ ffacd0b85a97d-43fe3db3c62mr39345262f8f.1.1776938594861; 
+ Thu, 23 Apr 2026 03:03:14 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.59
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:02:59 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/59] target/arm/tcg/arm_ldst.h: merge in translate.c
-Date: Thu, 23 Apr 2026 11:01:56 +0100
-Message-ID: <20260423100229.2941820-27-peter.maydell@linaro.org>
+Subject: [PULL 40/59] MAINTAINERS: Remove Dongjiu Geng
+Date: Thu, 23 Apr 2026 11:02:10 +0100
+Message-ID: <20260423100229.2941820-41-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,121 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Dongjiu Geng has not posted to qemu-devel in some years and did not
+respond to a query about whether they still wished to be listed in
+our MAINTAINERS file.  Remove them, on the assumption that they are
+no longer active in QEMU.
 
-Only translate.c uses those functions, thus move them back to this file.
+This makes the "ACPI/HEST/GHES" section orphan.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260407222208.271838-18-pierrick.bouvier@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260416091654.316158-9-peter.maydell@linaro.org
 ---
- target/arm/tcg/arm_ldst.h  | 47 --------------------------------------
- target/arm/tcg/translate.c | 24 ++++++++++++++++++-
- 2 files changed, 23 insertions(+), 48 deletions(-)
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/arm_ldst.h b/target/arm/tcg/arm_ldst.h
-index cee0548a1c..e69de29bb2 100644
---- a/target/arm/tcg/arm_ldst.h
-+++ b/target/arm/tcg/arm_ldst.h
-@@ -1,47 +0,0 @@
--/*
-- * ARM load/store instructions for code (armeb-user support)
-- *
-- *  Copyright (c) 2012 CodeSourcery, LLC
-- *
-- * This library is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU Lesser General Public
-- * License as published by the Free Software Foundation; either
-- * version 2.1 of the License, or (at your option) any later version.
-- *
-- * This library is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * Lesser General Public License for more details.
-- *
-- * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-- */
--
--#ifndef ARM_LDST_H
--#define ARM_LDST_H
--
--#include "exec/translator.h"
--#include "qemu/bswap.h"
--
--/* Load an instruction and return it in the standard little-endian order */
--static inline uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
--                                    target_ulong addr, bool sctlr_b)
--{
--    return translator_ldl_swap(env, s, addr, bswap_code(sctlr_b));
--}
--
--/* Ditto, for a halfword (Thumb) instruction */
--static inline uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
--                                     target_ulong addr, bool sctlr_b)
--{
--#ifndef CONFIG_USER_ONLY
--    /* In big-endian (BE32) mode, adjacent Thumb instructions have been swapped
--       within each word.  Undo that now.  */
--    if (sctlr_b) {
--        addr ^= 2;
--    }
--#endif
--    return translator_lduw_swap(env, s, addr, bswap_code(sctlr_b));
--}
--
--#endif
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 0b3b4ab86b..b6abaff490 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -25,7 +25,6 @@
- #define TCG_ADDRESS_BITS 32
- #include "tcg/tcg-op-mem.h"
- #include "qemu/log.h"
--#include "arm_ldst.h"
- #include "semihosting/semihost.h"
- #include "cpregs.h"
- #include "exec/target_page.h"
-@@ -6281,6 +6280,22 @@ static void disas_thumb_insn(DisasContext *s, uint32_t insn)
-     }
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 34944c3948..db29b267ee 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2220,9 +2220,8 @@ F: tests/functional/x86_64/test_acpi_bits.py
+ F: docs/devel/testing/acpi-bits.rst
  
-+/* Ditto, for a halfword (Thumb) instruction */
-+static uint16_t arm_lduw_code(CPUARMState *env, DisasContextBase* s,
-+                              target_ulong addr, bool sctlr_b)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    /*
-+     * In big-endian (BE32) mode, adjacent Thumb instructions have been swapped
-+     * within each word. Undo that now.
-+     */
-+    if (sctlr_b) {
-+        addr ^= 2;
-+    }
-+#endif
-+    return translator_lduw_swap(env, s, addr, bswap_code(sctlr_b));
-+}
-+
- static bool insn_crosses_page(CPUARMState *env, DisasContext *s)
- {
-     /* Return true if the insn at dc->base.pc_next might cross a page boundary.
-@@ -6515,6 +6530,13 @@ static void arm_post_translate_insn(DisasContext *dc)
-     }
- }
- 
-+/* Load an instruction and return it in the standard little-endian order */
-+static uint32_t arm_ldl_code(CPUARMState *env, DisasContextBase *s,
-+                             target_ulong addr, bool sctlr_b)
-+{
-+    return translator_ldl_swap(env, s, addr, bswap_code(sctlr_b));
-+}
-+
- static void arm_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
- {
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
+ ACPI/HEST/GHES
+-R: Dongjiu Geng <gengdongjiu1@gmail.com>
+ L: qemu-arm@nongnu.org
+-S: Maintained
++S: Orphan
+ F: hw/acpi/ghes.c
+ F: include/hw/acpi/ghes.h
+ F: docs/specs/acpi_hest_ghes.rst
 -- 
 2.43.0
 
