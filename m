@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3B5FDEE2B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0719FDEE2D
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFxTs-0002Wm-C2; Thu, 23 Apr 2026 13:04:48 -0400
+	id 1wFxTy-0003Ff-6m; Thu, 23 Apr 2026 13:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxTD-0001YU-QP
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:09 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxTY-0001qR-Cv
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:32 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxT3-0005jf-5M
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:05 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43fe3e22e33so4556542f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:03:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFxTW-0005op-J0
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:04:27 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso45133025e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776963835; x=1777568635; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776963865; x=1777568665; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZCFQzooRNCLAU0lxbQyFXKr+3+SaXX5+jlkuAyFk6Qg=;
- b=io4xn7R/SmxpXazT0G6JihMVClWhfblgSELzjJ2T9I6R8z72Ll3TtzUhGBHwjkhSTO
- DpPcNEKiuC0a4WwpyNut/F94QufjFmK4D/Bs4WiLWQx2nQyF6s4fZNECGHxi3FjmCTXW
- MConiZCjTz0YU8u5En+pK3NLsuwJ+CK4ccgm8nPGboaQkt3paLiYTk9Y+P7NdLR+/gI6
- HMfddqwqQWiCuZiQhhEelInVV1spQZ/PGJSu3a11+gUhAH5jIzkbKrvkBWpH+X3mYrjK
- KEKCll51CHy3EB2ziSK1lccxa1JmFUKcnyCLXtMJC2WFeTlhpb0nOmX/fCXYXhAuS0lp
- SPbA==
+ bh=2+dlrVOsNPHtgWGTf3x2VGDZydKVga1ZwBAM/XkoOYY=;
+ b=sCnDhuB3ZAyT2wrOAo5H16zUQIj3rgvLp8qunMc6UatUz98hHGMzb4/JsRFIyn51Jr
+ p1674Ud4gVZtGgOAlcpmeeXxRvCN5M9vZ83TFRBvjQ5kqFr9RYiF0oYSeKvsQ0oTE5Bf
+ CRPVIF6rifzq7nSuZb/TxL23OBWQVqhmgpXn1+e4tpEM5VZw5LS/yF1dL1aWvIgxjtrj
+ mtEBTQexiyDyWBHY7oytUzlSjLQv7K/nkEFvlxGZYjmG00qFcMfEfQlojfRNGjrzdehv
+ fZzeK2RmbSW/cn4G6FHC70Kgr4ug68q+CaATPi5tFVOKI0okDyJKuNwRVi6+m/4GESNu
+ 7FDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776963835; x=1777568635;
+ d=1e100.net; s=20251104; t=1776963865; x=1777568665;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZCFQzooRNCLAU0lxbQyFXKr+3+SaXX5+jlkuAyFk6Qg=;
- b=D0//xyRfe6zi9MwsJdG5lJzyzN7oe55juUss1h0DmYon/qouwOH+/CjaRJUnr67xlb
- SfnjJtO4I6aBC6pocsJNR0knuk+IIutaHxhrAtPyb+fUN/D5xb8hYgfDRkt8lHUbxuOQ
- jMH7VHJKag+de1PtYMYIdoqu2IT4Lqph3I8Cwfl1uRwVt+KV/tVcr0NpIqihOL7KiEZf
- hq03wCZfWB2dOZXhE9nh3xI+dHiy2olkNIHhTkTmXKu55e2WMbnH81k0O/c0tyCHZF5g
- T033tfGFBMjUYtwa2z1q3Ds7wAKZrqmnz850Zh5XscpnV9ZK+pqUAE8ALu7gcYFs31ER
- UMjA==
-X-Gm-Message-State: AOJu0YwwTuD8ghQGk1pc6fBnFm4ZVZ3qJWksud8ZPef3BA57WAy2Z2Yb
- db7uYH87OR8EG1G6/++qFcIMIDL8S+dK92Oehms27FdO3pZmWrLzeOS/+PV/W1L7QNZ21U9VLmy
- HEIKcftw=
-X-Gm-Gg: AeBDieu1iiOdnPDeVoVsJHCX2eez/HpEh41SOodxslBfDigm8eiGw36Vr2cECtV1yGw
- qUmrZKH1Uf4GLlHHiIhFxqKXobsUciYY4OrNI+nb4wuzxy+hSEdFrG3LbrSZy6OUntCMYCq0mpa
- 4BVkIgkndtTcpj0u7ss/o6lIHY1TRxOf4H+iYQIVVcGgWiBdKr3xrCsDUMiqPXWvX0rUxqCy0dy
- QT04WSSQ0L0toVukCT9RYc4ERZuTUeNwbzQkGSPEnJHB6vUFnzDnj4X3odymAqr9D0o+1elME1s
- QRXM/fvSJoFQqUB92vRcGh6P9qggbHY/len1t85cZ3HO9qyl+dMqhQ+BdfIZjcf6KlgoOl2Q7gX
- y2L/kv3A6+7/GNCjYn+YR65g2RKe/Ll3rc/rFuvy32VMYKbrdxqBy9XiMwPPhwBqu8nKko1pw+Z
- pQ/lj8BWwqeqKzpPLeXUJZSksOJFVCPOAZjX32r+SF/yQ6mimOBw1pGK2HVCTqIb9U5wjdtmQnY
- UdYwSEuOuZwvgCEXOyxrQ==
-X-Received: by 2002:a05:6000:2909:b0:43d:733f:aee6 with SMTP id
- ffacd0b85a97d-43fe3dbecebmr42817355f8f.10.1776963835241; 
- Thu, 23 Apr 2026 10:03:55 -0700 (PDT)
+ bh=2+dlrVOsNPHtgWGTf3x2VGDZydKVga1ZwBAM/XkoOYY=;
+ b=epMWcFVggMae+gWd+L7+Sxh5TJcz/FBUffMTfPALSuTwzi/lN7/UT6WBBZy92CaHPr
+ 6/6oqF7JjwVpXDGnTay6UjgbFPcyw76kAErZmYJ5fYBSsrZ0Cf2x08XTRENy66VRo/PE
+ OgySpigG8U6LEhZOmuZns47MBGXcjVAD7ASjKd1vuDLcAmdp3SobN2pMj9FzVb8dmKIx
+ 9mCjc0JGL/K7v/3rB+4MCEboGWdtjP5aBwCP2vZBFkkKwPaYL9rOcNKylRkpc+pvlbxc
+ tmt8I8KwM4pfOwyiqbq4kUYj/WjBHj7Kjg4lnB8iJrV+Jiwj4z1nwPu2BH4ODjrHKemL
+ WO3Q==
+X-Gm-Message-State: AOJu0Yx0YMfba3qMr9UgnmaJnQYXtayQpT8j1j9X10RpRthgRQLKNuX8
+ ycAwYltSO/nRB+Mwn9EAI1skR30sBPr02qlTgIzjYFMeLbP/0/3nCaFQKi5CwZvGX31S/EpbIig
+ F8I9zeZY=
+X-Gm-Gg: AeBDiesSROZ6kIr+osY8y+6Gj0m+Sg8PoIq1evy9shIsXm6o9RAyueDphFfXDEib690
+ r4ZQag1P32IeXQgXu6EZAdypsao837IW3LmK1qFVU0NBtOHhhPo0zLG0MUtL3aEjavUSRak09ye
+ 9Ol1hm3sJMhN9j4+zevgpkwcEngl5gx5wAo7MFH0cM5XApgWW1bBe6Pb7aPiXTsDAipRT2MSiZk
+ VkqwZrx7WxJAh0FCAZYnf/QhCa9/mDg0xDSkmnhq3cKzm3/ts5H6gyAnsqyu0tqsqVVEFGDwA/2
+ 4Jk+D7a+OtzYCjaoXLVjZooE1vFwPiu/0Ac44dCZRminOEitHIuYA9KyvhubLjrtxiyOVj64Mi1
+ GBsFQeKo5JAXXlcaAJmzlkBCA6tiUVMsFuFDcIACPmSZJdgPH3jlMW/XJqqtCs485U9wS1HuKE5
+ nNtjrIi3HxVUHXoEpFR7i8Qn4LJwCDA24UnLIOwAMcn3NZ5fN9gooBWqJUITfagCGmcMRB9koAS
+ atCUocZuYs=
+X-Received: by 2002:a05:600c:46cb:b0:488:a723:ea53 with SMTP id
+ 5b1f17b1804b1-488fb744fbemr398891365e9.7.1776963864601; 
+ Thu, 23 Apr 2026 10:04:24 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e3a174sm59920785f8f.18.2026.04.23.10.03.53
+ 5b1f17b1804b1-488fc1c0354sm497194745e9.11.2026.04.23.10.04.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 10:03:54 -0700 (PDT)
+ Thu, 23 Apr 2026 10:04:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Roman Bolshakov <rbolshakov@ddn.com>,
@@ -73,26 +73,28 @@ Cc: Roman Bolshakov <rbolshakov@ddn.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 11/16] target/arm: Only set CPU_INTERRUPT_EXITTB for TCG
-Date: Thu, 23 Apr 2026 19:02:23 +0200
-Message-ID: <20260423170229.64655-12-philmd@linaro.org>
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 15/16] accel/hvf: fix double hv_vcpu_destroy() causing
+ teardown error on ARM
+Date: Thu, 23 Apr 2026 19:02:27 +0200
+Message-ID: <20260423170229.64655-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423170229.64655-1-philmd@linaro.org>
 References: <20260423170229.64655-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,32 +110,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 34c45d53026 ("target-arm: kvm - re-inject guest debug
-exceptions") removed CPU_INTERRUPT_EXITTB from KVM, but it
-also appears on HVF. Better to restrict it to TCG.
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+The following callstack causes hv_vcpu_destroy() to be called twice,
+producing HV_BAD_ARGUMENT on the already-destroyed handler:
+
+hvf_vcpu_destroy
+ |
+ |_ hv_vcpu_destroy
+ |
+ |_ hvf_arch_vcpu_destroy
+     |
+     |_ hv_vcpu_destroy
+
+The first hv_vcpu_destroy call covers both x86 and arm. Let's remove the
+second one, as it is redundant.
+
+This reverts commit feee55d36a1c5d494ee73812d279b439bb05137c.
+
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <ee6f642af1dab29aaf99f86ac9254ddd25765bf8.1776172276.git.matheus.bernardino@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20250630130937.3487-2-philmd@linaro.org>
 ---
- target/arm/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/hvf/hvf.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7389f2988c4..45183df4449 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9577,7 +9577,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 33595bac72c..a905d9bc370 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1219,13 +1219,8 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu)
  
-     arm_call_el_change_hook(cpu);
+ void hvf_arch_vcpu_destroy(CPUState *cpu)
+ {
+-    hv_return_t ret;
+-
+     timer_free(cpu->accel->wfi_timer);
+     cpu->accel->wfi_timer = NULL;
+-
+-    ret = hv_vcpu_destroy(cpu->accel->fd);
+-    assert_hvf_ok(ret);
+ }
  
--    if (!kvm_enabled()) {
-+    if (tcg_enabled()) {
-         cpu_set_interrupt(cs, CPU_INTERRUPT_EXITTB);
-     }
- 
+ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
 -- 
 2.53.0
 
