@@ -4,138 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEDFFAD40E
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 05:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E114FAD3E3
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 06:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFmSP-0007Yu-Mf; Thu, 23 Apr 2026 01:18:33 -0400
+	id 1wFnMa-0001PD-2j; Thu, 23 Apr 2026 02:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wFmSN-0007XG-Ti; Thu, 23 Apr 2026 01:18:31 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wFmSM-0003JZ-8W; Thu, 23 Apr 2026 01:18:31 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fxofDcK6hVZWd4l9TVlMvetFlmr7u1tuEc32e1TJ8kogNu4mfga738CSLqwwPHQI20eeR40ap/d5o6lf8HvtZ2gL8g5r1mHpgKOOWEsS8MsAsBmhkqWer2QCnaFvCHgJgsjHZ/5oc7MH/M881khWMB/b07KyRoMceLYd5wZaq2+Opx7kri51Z4/k+x9h7ERQzbB9TRwslxZWDMdJdwLDJUcJr++SrD/Y9QUKc4iRDUvpatpn5Qf0pSfXbe6Acg6heB9HLmZObHCwELd/1k3EuA1yJOfe6GmIiElehs5uOJstx3cZETd6fYcJiyWBnXVa06frQE9KeVGcCFKCTNRk+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eveFVAaUFisGuhujS70jnFNAwW7AmFpatrP7xxv5VQs=;
- b=KTD4ygpY3kacQLea0DdOE3R4+kd47NSE8R21p/HTvv8ppVoBSzoWpABX2QKjFKrRca1Z5tOXWh6wLoAusCGiv3PGC0HKxHFxBmoZJXCdapDcK02Je4W+ufxqaX6IKQnt1clNzRJ28H/bmCTbOBbkMM/QkOdX+rh2uctMnleLsDDe8YmpjckxbGKxw+HvnD1zUbbwd0UNl+DbulEuGXdJ6IiRvNx2QNVwAtygDJfssjy6/UGBZQHxLKbD+9u0If27y8mnn2vwpa2QkseC0ole1zZVwoU02cn9Xag/099HPJpMZYwW5rV9FdKW+aWY3B3HycHS8FkiLqtDRzLlp1r0tQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eveFVAaUFisGuhujS70jnFNAwW7AmFpatrP7xxv5VQs=;
- b=ehQQlkUR5PaRdyM3OkdyITzjtt8G7bpgk3h2/9x4A94JFDz7b/yMkXR7n1W14jnH5r4HYPZ1543GXMjkhIDbxfItDwxguh9zSd9WrCI2DUdafQUNSsM1KPKidKmXld56AIge2Jpn4tJZLHUHWEGH8GyS6uo0SddeMH3IDHkVfdg6AYHaH1p1Is4TPEko/VWpzqIm5s5vdMC7lI8d+w8wKWzw4APDaIp0ioTufaLPNQsWYTZ3Ir7gTAd1SLP20lNmjJ5y4zxiqiDpa4qANPN3mhsFYzhPbXFEUyiFWk5EHFWef27ooo1YveotfSK63AP7VjMjon6Ffxdk71M7CkPzgQ==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by KU4PR06MB8434.apcprd06.prod.outlook.com (2603:1096:d10:7a::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.21; Thu, 23 Apr
- 2026 05:18:22 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9846.021; Thu, 23 Apr 2026
- 05:18:22 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: "philmd@linaro.org" <philmd@linaro.org>, "peterx@redhat.com"
- <peterx@redhat.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Kane Chen
- <kane_chen@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
- "flwu@google.com" <flwu@google.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>, "farosas@suse.de" <farosas@suse.de>
-Subject: [PATCH v4 14/17] hw/usb/hcd-ehci: Add ctrldssegment-default property
-Thread-Topic: [PATCH v4 14/17] hw/usb/hcd-ehci: Add ctrldssegment-default
- property
-Thread-Index: AQHc0uCaXuRbyxdTQ06stlVwb/096A==
-Date: Thu, 23 Apr 2026 05:18:22 +0000
-Message-ID: <20260423051804.362095-15-jamin_lin@aspeedtech.com>
-References: <20260423051804.362095-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260423051804.362095-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KU4PR06MB8434:EE_
-x-ms-office365-filtering-correlation-id: 095c2925-b27d-405f-f99a-08dea0f7bd3e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|38070700021|921020|18002099003|22082099003|56012099003;
-x-microsoft-antispam-message-info: exuxnnuFoL69wQgQlTBNgNHzcFJKl7JMklIczxKxJArMXSuDd486HHoCdGJ2hFAED+ln+19idLV4FWa5dqrNUS64HaKkEIh1B11hsjqafVZC5tEItY0/+P1l+mIWLIW+QmeKOzcOgLvkpCeUuEd+x91zZghJ7DmTEbjx4z2kw5+ycqC0jGbp4iQ/fV2tsaBfFYa7cXYaumD4CroLFf9KmpLYCxVA54t32VHGI4QbiFlFvVAdmn6BLj64Vq5/ZUY2YTxDznly2aPbhmF1PHitb7s9iG/ktMKAiFwyGvw2RSbwncgNR5Z2CRs3ggYpkvVo2nOHYec1Qp52VLXwlucvqHkQ4vAxtleaCGOeSNrrKTtGKteFAJM8uBBmw6FkkQoltKZ+gMWuvrcWeHe1iz0weBEY6mP/X6EzYQxUzuNtquUdG867foSViyO3SkWjq0pNEdGjwNYVjxCE7RleOwgKpS2Rt0akAGhgyl6optV0YK0sExdTaZBWtARDIE95+sxFw9FBq1T/62hc69X3oZJPgFv2Y9FIn7TM7KUZ6cdg3gff/NhDlYzlC1l1TG9CS4mgze5CcQem9Az5WA3CrxAO41XRY64lOwfboHRYpXz57uz+e2s+GFbBgNIrYECJ0S7sYvPqj2MNkLI2hH2lzyjTTJKBf9XYS3pt9/o0yOEpsA8CexqSTczhaqBtEhyjhNthhVgerzLqiKOtc/LRPBo2W2dzeozNZ2SEEdd9FQ4TsUcpsZh38h0xamxciPyV/2hKLcSWXqvSima+WfAuWaGpLga9KiEJI1xK1TYWFkCxAN59F3cAgm/EWgV7Rv5TpPOo
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021)(921020)(18002099003)(22082099003)(56012099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?w/Zb42IR9LfFs57hd+sOHGKBT9h7ln+jUruVavMp30AoGzx2Hm1LlBLS1u?=
- =?iso-8859-1?Q?6Jvm0zXJWbj5tMIxB2m5CoPBNpYCygPhrvoTlxWkrGIVDTzg5tlfUi5mXP?=
- =?iso-8859-1?Q?IxirOg64iHppjc47xjC4OewAuikcXxg4hEzGtF23OM52lk14NCTtua35jE?=
- =?iso-8859-1?Q?8Wk48KZS/JTpYreI99LRilvosQcc/gnPuOaHMykFQCvPHXTUhW23eHriQJ?=
- =?iso-8859-1?Q?OGN+Jj7VOtFgsK2W8a0DmiFQ8tlFmQdcrnt3j6OpO5HVxYx50a41jyYA+B?=
- =?iso-8859-1?Q?3NNdyB6PRKEVWtl4Fg2RCu35uWmFl1luKF2tqzpLifHSVPa4OwhMgkS+lo?=
- =?iso-8859-1?Q?i6HEJg2A00kFFd/XU+E+Tbpb7U8DSnxOUToNfVaPimR6dwOZxr57Nu2OlM?=
- =?iso-8859-1?Q?PzXkhEa7kE4XauzDiFFYF4a3AIqXyAZFhqqhKPcSg9jYz2bqhdPVsTDfMW?=
- =?iso-8859-1?Q?VsHF95s2+3+b1CjdY9TNRCgO7o66SPlZLoCSBYZumrhXe2OH1o2Ue3GQG9?=
- =?iso-8859-1?Q?amK4C6pfICW+h4W+VqW3VwcDf+rq8TdXB0fFI/ZLpAOlJZ4owUonWttBam?=
- =?iso-8859-1?Q?XgCsjv9J5YQ3vIFr6ev2DqKgsk63Fn8bMoXcbgqCBL8f4QeQVeVCeuFDCT?=
- =?iso-8859-1?Q?vZsdPDOCUmA53azKdfcFFxlT1IOmW054lqTf+hodOMkhEpXnqItObl+mni?=
- =?iso-8859-1?Q?+UgTq6VOgGP22ovTi5jocn5Yfs+vzorhzRio4XGxxv1jsrZOaH/PX7hwm7?=
- =?iso-8859-1?Q?sQIGAsk1JsNvgHKDNsgZVtebgnaBBAEm0wgfM4k877O8+QYdRz9iRkpUr6?=
- =?iso-8859-1?Q?V/q+9DF62ZJJP8Z9W4nPCzJZtidVQB5npVHGZgzCQGKZgBppmP25fFPQ+y?=
- =?iso-8859-1?Q?HKccOrcN+D9vERBzBAv2AUNNvdO6SJIbvxv19wpsmcPaPUM54IGHKd3AEO?=
- =?iso-8859-1?Q?QHqee0KoRxPrL6yXI4evCSZoOjJhwmIr9rw0X1nppZlnmYe/VnNZ1SGGyD?=
- =?iso-8859-1?Q?6lTGXAxwV1H7sCoGCal+uxPsIvvt6VkYzNBFVyp4h91/aqMR6rQZInczKW?=
- =?iso-8859-1?Q?Jz6Hp79BIBXEu9sR2pXRASNTT9clTDkifbVGfkI4oHkEY2LLztl8Vo8KtG?=
- =?iso-8859-1?Q?Vq26B+/ENgan6Gb4mg5mAKa9mlTPKpok5iGLY2NfIDZZUe0AuCmUQ3aWTB?=
- =?iso-8859-1?Q?BJBLjXVhQDp1mvd7lCLGmn2VhX4Sau7Eny5CTzD1R3FDYU1TEtTpIKUweh?=
- =?iso-8859-1?Q?Gnn5v7eeyfYlZI6gul7hs5cWWYs9wJdikuCgekahf2sozrrsgoDBga5Sl3?=
- =?iso-8859-1?Q?UjRFJwe3pL7hEKJHHn7tMkZyKvWbvKjxACE3zuJWSMr6o+qIEu/1NZRK5F?=
- =?iso-8859-1?Q?g64kyG9uNpLqgDcHJZhKcwQ/EwZmb0UtCcRfJw8DTDkV7SXg86pTg7u6Q+?=
- =?iso-8859-1?Q?SQ9NDSCdA/9QW9Plj9cWRH2ewae0GcS3Y4NHXzDiakejsi1bsCu6vJg1Y2?=
- =?iso-8859-1?Q?DthRiNGkW2jT2IIRZ4zTq8bh/5gWfR5/MkTgRORyo9E09QT4m6vdVDeFLY?=
- =?iso-8859-1?Q?reaLQltCI2GdG07czu+Khs6wZXu8sFdTS1yaerH5+uhZfi/nFIrafWq73+?=
- =?iso-8859-1?Q?LA954Vykdo/ymXDrPd81GMlj92kRhRS+Daddw1CbRCpV6irS0r2q42Xb+s?=
- =?iso-8859-1?Q?BP0wmLiehmT9r2jZ5HuhkR7OKaRUcMlrngXDF7quvTOkBVjXRb6KkFaarn?=
- =?iso-8859-1?Q?3L2fos+ruAxae2TqglRW7tI7wbdJeBAp5Vt03ZU6NOER3Wkl/deILqCXc1?=
- =?iso-8859-1?Q?Pg8thvV4RQ=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1wFnMK-0001J5-24
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 02:16:20 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1wFnMH-0007XM-R2
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 02:16:19 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-6715594a4c2so7376718a12.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Apr 2026 23:16:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776924972; cv=none;
+ d=google.com; s=arc-20240605;
+ b=XBT6i18P5s7i9SXzgW81779g5dIGs736efjuzqlzlHyEwFWlLUSvBf6raO1LOflLbo
+ BZj2J7ZAspWcNQRQtcPvxU5A+Q2q1elFqsOzE9sqYkCiHvVkH/VQ7cBaSjYx4D1Vmfps
+ hcHrCaio6Wrqq0bC4GmTqVKH5C/LQ4mWxOjY/96n7GNC1pwhkpxm3ITQ89oqfpx5Ntnu
+ Iny+hNL8djKzmxtGCj3vqkkq83OvZo81L11T5fR48oZQxbDDzylp+8ANvYR0VQwRiXY9
+ hl9b41i5GkLg9NqkZD0WzhiOxBxKLBMkcPG/3+yfw+IjmkE8g0+S3rCjGzu9OYdnMptq
+ +WZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Yr0FKpvG1qp/N1v59n7D9PHPNc4wrXsQUtHCblRhBTk=;
+ fh=NX/RkK8NlS2Ov+x46b1s22NYb6qLuiuqJyZLvKgl/YM=;
+ b=iAP+itoai2hSXRZw2xRf1C0VdR8yTuPUFjiqjw12lIn+Nd8DeDqaXIKpry/IODgQL0
+ TFMP+xP0MRSQBp0INQB++TUf30UlbpUxVF6qmmEnt6zkWuW+/Ej0KCBLO3jFL+bD96e4
+ uYXIhixkrk7icIgKGSiVLit0CwnJCT/oXlfsrFYnbqX/S7ZGZI6/BPzVwUAqbmx2Q9yy
+ 2/Z20s6CAyVPUc7fvetoyu5hCap8M/bm9n0DuAA5+dg2o9NLp7MXGlI4lVxOuOJAei3O
+ UKvICPHdPOHD33jfkmY3bT68n6URqPHah7QM3n+i+j2Dr2FCzLrdhxGVR3colpwHhlN/
+ /bkg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1776924972; x=1777529772; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Yr0FKpvG1qp/N1v59n7D9PHPNc4wrXsQUtHCblRhBTk=;
+ b=glKr0IHRAVIPcQ+E4nbuEORL2m49u/z0iTXclsZwjVQy0N3R3LJSdXWFsn3ql38AC0
+ w3w2bJaP+k8cqG2d+ZAtqvY+TNtCi+O2HZF10nVQUyQTKjInLSao5FnA7dUnTHu1l8Ok
+ 7d551NwSK5eeK0IyV15HHlQ5FcVy3//kF2eBfwh0Jq5SHVepSq+1UgKaznAibGfG6i5M
+ wfA/IOPRyVKPpRaUnZL3GxkJ9j9Yv+1iQt7JVhpOWHmbUuRVvX8jWVS2gLk3WuHPMmUf
+ PkP3g8P66m8PFr1XQbo67MuN3dFw8qUdtraXPSoXYzaez+PiXcTp6m0CMQE0fPK9Idmc
+ FHTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776924972; x=1777529772;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Yr0FKpvG1qp/N1v59n7D9PHPNc4wrXsQUtHCblRhBTk=;
+ b=I7O5kiHIpdjx+oa4b7SXM9sJKrW8CNOLNZ0NZbMOrYWaK28nnfWZEUZzEhrjY+kL2B
+ 16xZjb/xRdWpJCa6WxuTVIOhFbehw2usK2PBeQkqIJKdHj/UAdnPUym2ykIQq4q2mbeK
+ iew/L1vLZvfYqzPdXfK4RgI9paNu+96mVLi20CpsgwqMQrkBJ2ByWLUJsiSA3l4MLci2
+ LPWFXdiA+stVb+fdYzxrunAHqJ+paAZvH5bvTtjkIqMcI2sCa0ixyr3V57OeGgoJ9AlX
+ cnry77Yb6OPpvuIS4HHLD5H3AXC4IrJn/K/+UXqD6x/dVlgQBNII2UdMzfZjpCdLJamp
+ fzDQ==
+X-Gm-Message-State: AOJu0Yyz6Atod3Fo+vGql9nWTSYZJ3V8rFSV8FKBtb5PX5HY60ZmfBVF
+ wJvB0THgoS1w9ee9SsvzwJHknJz9jJ+I+G61g8BLi8ama0mGRqHyJn3Bx/ZvLnqYN6wcni+Rxpm
+ CPxH3dk1rSGIfTGA52UupVtBPgePRrcZDRD94TfAtkw==
+X-Gm-Gg: AeBDieuwY1hdQFIXE6VXnXFCnaW0oyGrpbwHddD3QHYIuL9/RlN+rmKcWFbTXZcIENw
+ +rru6rIXeME1d4TnlZQSoWB0HnEyN/goX/uZLFBbsE/M6SvAERZ5cdY6HoxLEKF/D7MhR0wkAif
+ e6fo63jvd7xc8Y2OTDI2AljOUa+VkYnv8CpUBFgzZ8bSQwQdVXSNg6zD7GAY3JTxo6BzQ++Mfva
+ 38BFNh6vWtfKeVwCv5DhhRpjwBtP26H6nyDeXMVEPNP4JDRlIA476RYlg2pK2JMnUjiZBfQpMX4
+ HKRnr6lbTsVBoZPzdpKKv7QddbfyRNs=
+X-Received: by 2002:a05:6402:21c9:b0:672:522d:8f90 with SMTP id
+ 4fb4d7f45d1cf-672bfd736fbmr11437377a12.4.1776924972201; Wed, 22 Apr 2026
+ 23:16:12 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: WSjioN8iIP6OpWGW0Kk+oVWhFURRu3npXdCCSPm+ZZNmJrtDxMV72kJxJ3HlKYS6yectx60jnoeEh5N8itdccc3L8CCZEcunCuQdn6f+ceBa2x+VjmhaFVeDdfaMq7FCHWizg/G7UJUpq6iBzoioHFgWLod8XEdTqmx8zNRrKrG3kZNCSyrdYrSTyw+bQMotOtU/b0hNl43E/wD5gucOLbVwHomQrWQT7P1eUwkVR3SCnb1TQ4EMv1JxGjIGd9v2xXQo+BFdYMtpHTqMHjVJXjoZ9n1CVLWrmDgcl8LDNdDmDpX9KBAQAPv2O0sONxqtBUa/9x3otjBbvhf1IaxydA==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 095c2925-b27d-405f-f99a-08dea0f7bd3e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2026 05:18:22.5008 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: yoE9YgsugZCeMuJt0UoJ3eUSZ2rFUbxFh/9VGxTSvZpEzDw6S9Odla7X9wNxTf34wpqoWi5kRqBZW73o/MxnBRwBK2o706SD+A90Oz8ghU8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU4PR06MB8434
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+References: <20260421162912.3295598-1-jim.shu@sifive.com>
+ <a422dbe1-7955-4fb1-b88a-0d091c525019@oss.qualcomm.com>
+In-Reply-To: <a422dbe1-7955-4fb1-b88a-0d091c525019@oss.qualcomm.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Thu, 23 Apr 2026 14:16:00 +0800
+X-Gm-Features: AQROBzDc5m2HmXUCiVWD89_s0CdLyUHYFXdKXK2bcfpDdG9lUuHw6ri44EtyW_c
+Message-ID: <CALw707ow5D9nSmNARckozOmKOTBpOATFFNPMski9Y-yjD6RiWg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Defer the IOMMU translation and support access_type
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>, 
+ Michael Rolnik <mrolnik@gmail.com>, Helge Deller <deller@gmx.de>,
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, Max Filippov <jcmvbkbc@gmail.com>,
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>,
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=jim.shu@sifive.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,76 +141,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When 64-bit addressing is supported, the Linux EHCI driver programs the=0A=
-segment register to zero. See ehci_run function:=0A=
-https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-hcd.c=
-=0A=
-=0A=
-The driver comment also notes that descriptor structures allocated from=0A=
-the DMA pool use segment zero semantics.=0A=
-=0A=
-Descriptor memory is allocated using the DMA API. The platform driver=0A=
-configures a 64-bit DMA mask so memory can be allocated above 4GB.=0A=
-See ehci_platform_probe function:=0A=
-https://github.com/torvalds/linux/blob/master/drivers/usb/host/ehci-platfor=
-m.c=0A=
-=0A=
-On AST2700 platforms, system DRAM is mapped above 4GB at 0x400000000.=0A=
-As a result, descriptor addresses constructed directly from the guest=0A=
-EHCI registers do not match the actual system address used by the=0A=
-controller when fetching queue heads (QH) and queue element transfer=0A=
-descriptors (qTD).=0A=
-=0A=
-Add a ctrldssegment-default property so platforms can provide a=0A=
-descriptor address offset when constructing descriptor addresses.=0A=
-This allows systems where DRAM resides above 4GB to access EHCI=0A=
-descriptors correctly.=0A=
-=0A=
-The default value is zero, so existing machines are not affected.=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/usb/hcd-ehci.h | 5 ++++-=0A=
- hw/usb/hcd-ehci.c | 1 +=0A=
- 2 files changed, 5 insertions(+), 1 deletion(-)=0A=
-=0A=
-diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h=0A=
-index 8e6a8cdfb0..3d57e1de5f 100644=0A=
---- a/hw/usb/hcd-ehci.h=0A=
-+++ b/hw/usb/hcd-ehci.h=0A=
-@@ -264,6 +264,7 @@ struct EHCIState {=0A=
-     uint32_t maxframes;=0A=
-     bool migrate_fetch_addr_64bit;=0A=
-     bool caps_64bit_addr;=0A=
-+    uint32_t ctrldssegment_default;=0A=
- =0A=
-     /*=0A=
-      *  EHCI spec version 1.0 Section 2.3=0A=
-@@ -322,7 +323,9 @@ struct EHCIState {=0A=
-     DEFINE_PROP_BOOL("x-migrate-fetch-addr-64bit", _state, \=0A=
-                      ehci.migrate_fetch_addr_64bit, true), \=0A=
-     DEFINE_PROP_BOOL("caps-64bit-addr", _state, \=0A=
--                     ehci.caps_64bit_addr, false)=0A=
-+                     ehci.caps_64bit_addr, false), \=0A=
-+    DEFINE_PROP_UINT32("ctrldssegment-default", _state, \=0A=
-+                       ehci.ctrldssegment_default, 0)=0A=
- =0A=
- extern const VMStateDescription vmstate_ehci;=0A=
- =0A=
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
-index dfeb8ef70f..e8086f0432 100644=0A=
---- a/hw/usb/hcd-ehci.c=0A=
-+++ b/hw/usb/hcd-ehci.c=0A=
-@@ -1134,6 +1134,7 @@ static void ehci_opreg_write(void *ptr, hwaddr addr,=
-=0A=
-                           "      64-bit addressing capability is disabled\=
-n");=0A=
-             return;=0A=
-         }=0A=
-+        val |=3D s->ctrldssegment_default;=0A=
-         break;=0A=
- =0A=
-     case ASYNCLISTADDR:=0A=
--- =0A=
-2.43.0=0A=
+On Thu, Apr 23, 2026 at 12:01=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+
+Hi Pierrick,
+
+Thanks for discussing the design!
+
+>
+> Hi Jim,
+>
+> On 4/21/2026 9:29 AM, Jim Shu wrote:
+> > Note: v1 title is "accel/tcg: Pass the access_type to IOMMUMemoryRegion=
+"
+> >
+> > Incoming security protection devices feature more complex IOMMUMemoryRe=
+gion
+> > implementation in the CPU path than ARM MPC device. For example,
+> > RISC-V wgChecker [1] may permit the access with only RO/WO permissions.
+> > Consequently, the IOMMUMemoryRegion could return different sections for
+> > read & write access.
+> >
+>
+> The consequence is not directly implied for me.
+>
+> Why having a single translation and page protection handle read/write
+> access is not enough here?
+>
+> What is the (real world) use case to return different physical memory
+> locations depending on read/write access for a given virtual address?
+
+When permission is granted, the wgChecker device returns the original
+region of the address, called the downstream region
+When permission is denied, the wgChecker device returns a special
+MemoryRegion for error handling, called the blocked_io region).
+This region may trigger an IRQ and a bus error. Additionally, memory
+accesses to this region will result in 'read 0, write ignored' rather
+than triggering exceptions from the MMU or MPU.
+
+Consequently, implementing RWX permission checks on security
+protection devices may return different regions (either downstream or
+blocked_io) depending on the access type.
+This design is similar to the existing ARM MPC device
+(hw/misc/tz-mpc.c). The primary difference is that the MPC only checks
+the physical address rather than RWX permissions, meaning it returns
+either the downstream or blocked_io region for a single address
+regardless of the access type.
+
+I also considered an alternative design where CPUTLBEntryFull stores
+both the successful permission and the blocked_io region of the IOMMU
+region.
+In this scenario, the slow-path code utilizing CPUTLBEntryFull would
+check permissions and return the blocked_io region if access is denied
+
+However, the address_space_translate_iommu() implementation supports
+recursive IOMMU region translation.
+if multiple IOMMU regions are encountered during a single address
+translation, storing only the first region's permissions is
+insufficient.
+Ultimately, we still face a situation where RWX permissions might
+return different regions separately (e.g., downstream,
+blocked_io_iommu1, and blocked_io_iommu2).
+
+>
+> I'm not against the goal of this series, but trying to understand why it
+> went in this direction, which complexify this already complex code path.
+>
+> > To support such IOMMUMemoryRegion behavior in the CPU path, the design
+> > of IOMMU translation must be updated:
+> >
+> > 1. address_space_translate*() must now pass the access_type to
+> >     IOMMUMemoryRegion.
+> > 2. Since IOMMU translation results are too complex to be fully stored
+> >     in the CPU TLB. we will defer the translation until the actual acce=
+ss
+> >     occurs. Also, TLB is allowed to store the untranslated IOMMU region=
+.
+> >
+> > To implement deferred IOMMU translation, this patchset introduces the
+> > following changes:
+> >
+> > 1. tlb_set_page_full() no longer translates the IOMMU region
+> >     immediately. Instead, it stores the untranslated region directly in
+> >     the TLB. A new slow-path flag, TLB_IOMMU, is introduced to force
+> >     access into the slow path when a region has not yet been translated
+> >     in the TLB entry.
+> >
+> > 2. When the CPU utilizes a TLB entry in the slow path, it should perfor=
+m
+> >     the lazy IOMMU translation of the access_type first. The resulting
+> >     translated region and access type are stored in CPUTLBEntryFull.
+> >     Since the slow path always performs lazy translation first, we can
+> >     switch the CPUTLBEntryFull content to the correct access type befor=
+e
+> >     use.
+> >
+> > 3. To accelerate memory access in the fast path, lazy translation can
+> >     update the addend of the CPUTLBEntry when translating the region to=
+ a
+> >     host memory region. We restrict the IOMMU region to have a single
+> >     non-zero 'addend' across all permissions. If a second 'addend' is
+> >     present for a CPUTLBEntry, QEMU will trigger an assertion. This
+> >     limitation is sufficient for security devices, as their "secondary"
+> >     region is typically an IO region used to emulate device error
+> >     handling when access is rejected.
+> >
+> > 4. To support non-slow TLB flags, lazy translation can update the TLB
+> >     flags in the 'addr_idx' of the CPUTLBEntry. Lazy translation only
+> >     updates the flags for the permissions specified in @prot. This
+> >     ensures that each access_type of a translated region to maintains
+> >     independent TLB flags. For example, TLB_DIRTY of memory region will
+> >     not be "polluted" from other permission that translated to differen=
+t
+> >     region.
+> >
+> > Both RISC-V wgChecker [1] and RISC-V IOPMP [2] devices require this
+> > feature.
+> >
+> > [1] RISC-V WG:
+> > https://patchew.org/QEMU/20251021155548.584543-1-jim.shu@sifive.com/
+> > [2] RISC-V IOPMP:
+> > https://patchew.org/QEMU/20250312093735.1517740-1-ethan84@andestech.com=
+/
+> >
+> > Changed since v1:
+> > - Remove the ping-pong TLB entry behavior. Instead, defer the IOMMU
+> >    translation until actual access in the CPU path. Provide a IOMMU
+> >    lazy translation function with the special handling of 'addend'
+> >    and 'addr_idx' fields of CPUTLBEntry.
+> > - Fix the checkpatch warning.
+> >
+> >
+> > Jim Shu (5):
+> >    accel/tcg: Pass access_type as an argument of tlb_set_page*()
+> >    accel/tcg: address_space_translate*() will pass the correct
+> >      iommu_flags
+> >    accel/tcg: Provide early AS translate function
+> >    accel/tcg: Add IOMMU lazy translation function
+> >    accel/tcg: Support IOMMU lazy translation in CPU TLB
+> >
+> >   accel/tcg/cputlb.c                   | 247 +++++++++++++++++++++++++-=
+-
+> >   include/accel/tcg/iommu.h            |  17 +-
+> >   include/exec/cputlb.h                |  11 +-
+> >   include/exec/tlb-flags.h             |   4 +-
+> >   include/hw/core/cpu.h                |  15 ++
+> >   system/physmem.c                     |  60 ++++++-
+> >   target/alpha/helper.c                |   2 +-
+> >   target/avr/helper.c                  |   3 +-
+> >   target/hppa/mem_helper.c             |   1 -
+> >   target/i386/tcg/system/excp_helper.c |   3 +-
+> >   target/loongarch/tcg/tlb_helper.c    |   2 +-
+> >   target/m68k/helper.c                 |  10 +-
+> >   target/microblaze/helper.c           |   8 +-
+> >   target/mips/tcg/system/tlb_helper.c  |   4 +-
+> >   target/or1k/mmu.c                    |   2 +-
+> >   target/ppc/mmu_helper.c              |   2 +-
+> >   target/riscv/cpu_helper.c            |   2 +-
+> >   target/rx/cpu.c                      |   3 +-
+> >   target/s390x/tcg/excp_helper.c       |   2 +-
+> >   target/sh4/helper.c                  |   3 +-
+> >   target/sparc/mmu_helper.c            |   6 +-
+> >   target/tricore/helper.c              |   2 +-
+> >   target/xtensa/helper.c               |   3 +-
+> >   23 files changed, 354 insertions(+), 58 deletions(-)
+> >
+>
+
+Regards,
+Jim
 
