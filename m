@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4A9FDEE49
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A69FDEE47
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 19:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFzdL-0006a4-Ts; Thu, 23 Apr 2026 15:22:44 -0400
+	id 1wFzdN-0006kJ-KF; Thu, 23 Apr 2026 15:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzd0-0005FA-7z
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:22:25 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcx-0002TE-E6
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzcw-0005CZ-Ix
  for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:22:20 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wFzct-0002Rz-Ch
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 15:22:16 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id DC3C86A89D;
- Thu, 23 Apr 2026 19:20:53 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B10605BD92;
+ Thu, 23 Apr 2026 19:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1776972067; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HvefdpONNcFqysntqs+juTRcEx4K1r24uMyjySuc3B4=;
- b=HfWpPyWVopg946KlLkNC1v7DYtrHkvWa4ki5W0wM6JfeCCs9ofHdWwSPjdjlgdd+ps5aS8
- hA7dhLokseSV2vO//1ZLc5uorLB8ueB+iFsfNCz3UdZQcyQ9phZ9KxQgaSnYsdjrhR8Wwl
- yfmLnPkyEmsz+WgxYqkFLxcaXaUQMDo=
+ bh=M3UDVOPUiWpobauA+2TDTDMQ+HGhvLbgz+74mugUk44=;
+ b=XFUu2ywjfRqSIgmNBD8FBYE0YTyZbxhdv+4Y0cm6UJZUSwy/nzhRHj3g0oJIeafW2M/K2V
+ sjugS/zEV9fdrnTHWKY41Oe/TCfxQtJMlqnWNuMvBQV9knwulo3RuI3vKhtvjv/IPRj+Da
+ PZmdHUuGt2UcLyXpCMBbPHq435uE+kg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972054;
+ s=susede2_ed25519; t=1776972067;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HvefdpONNcFqysntqs+juTRcEx4K1r24uMyjySuc3B4=;
- b=84as9E81YOdwTP+XnBXGo3NLp0/8jnLyIVKjzEnmaC5DQnJSe+sOChWe3pv6tbbxJ/GkTN
- 0q/XwawXza4rz+Dg==
-Authentication-Results: smtp-out1.suse.de;
+ bh=M3UDVOPUiWpobauA+2TDTDMQ+HGhvLbgz+74mugUk44=;
+ b=tFJF+hjX4aaxmfYLFjRmwu2CO7wJBQhV7bvLAGBY5g/dzlIhieb+n3MzHrAPXSqcROTB/z
+ r53KmAcsin/ThyBw==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1776972053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1776972067; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HvefdpONNcFqysntqs+juTRcEx4K1r24uMyjySuc3B4=;
- b=D5MXxWtpZy2xg66vILptiBg1Fu9LBzIAuB4o8Sm9gsW+b81v5JK+mlll83TOSED0yzI582
- TY7mpqpF1+YDuzg552/Exq+VmDXhq8hnMdHuIdYUMK0sAwLzW4fJhI1QzbYoTxKh3PQH8L
- kOKF5N7J+nRKw6G9KEt+992IAcq2xsM=
+ bh=M3UDVOPUiWpobauA+2TDTDMQ+HGhvLbgz+74mugUk44=;
+ b=XFUu2ywjfRqSIgmNBD8FBYE0YTyZbxhdv+4Y0cm6UJZUSwy/nzhRHj3g0oJIeafW2M/K2V
+ sjugS/zEV9fdrnTHWKY41Oe/TCfxQtJMlqnWNuMvBQV9knwulo3RuI3vKhtvjv/IPRj+Da
+ PZmdHUuGt2UcLyXpCMBbPHq435uE+kg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1776972053;
+ s=susede2_ed25519; t=1776972067;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HvefdpONNcFqysntqs+juTRcEx4K1r24uMyjySuc3B4=;
- b=kaYG5hGsYumIMgGwvSyaM2G8b+1iYKZ+7wRXyswl+Zi9697hZqtsm1HeM+30fu67hOjUh7
- AsazX5xdDbXh6iBQ==
+ bh=M3UDVOPUiWpobauA+2TDTDMQ+HGhvLbgz+74mugUk44=;
+ b=tFJF+hjX4aaxmfYLFjRmwu2CO7wJBQhV7bvLAGBY5g/dzlIhieb+n3MzHrAPXSqcROTB/z
+ r53KmAcsin/ThyBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9D43C593A3;
- Thu, 23 Apr 2026 19:20:52 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7375C593A3;
+ Thu, 23 Apr 2026 19:21:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qLgRGhRx6mlJCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:20:52 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aFDxDyJx6mlJCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 Apr 2026 19:21:06 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 34/43] tests/unit/test-vmstate: add tests for
- VMS_ARRAY_OF_POINTER_AUTO_ALLOC
-Date: Thu, 23 Apr 2026 16:19:48 -0300
-Message-ID: <20260423191958.1440-35-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 43/43] migration/qemu-file: drop incorrect const from
+ qemu_get_buffer_at buf
+Date: Thu, 23 Apr 2026 16:19:57 -0300
+Message-ID: <20260423191958.1440-44-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260423191958.1440-1-farosas@suse.de>
 References: <20260423191958.1440-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo, intel.com:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,124 +120,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Add tests for VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC.
+qemu_get_buffer_at() reads data *into* buf -- it should not be const.
+Drop the qualifier and remove the now-unnecessary cast.
 
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-[peterx: Removed two tests due to macro not used, rebase, fix warning]
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260401202844.673494-12-peterx@redhat.com
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260420201317.30199-4-junjie.cao@intel.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/unit/test-vmstate.c | 86 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 86 insertions(+)
+ migration/qemu-file.c | 4 ++--
+ migration/qemu-file.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/unit/test-vmstate.c b/tests/unit/test-vmstate.c
-index dae15786aa..df1fb4c778 100644
---- a/tests/unit/test-vmstate.c
-+++ b/tests/unit/test-vmstate.c
-@@ -702,6 +702,88 @@ static void test_arr_ptr_prim_0_load(void)
-     }
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index 9dfb202203..d5a48115bd 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -550,7 +550,7 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
  }
  
-+static uint8_t wire_arr_ptr_with_nulls[] = {
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x00,
-+    VMS_MARKER_PTR_NULL,
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x02,
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x03,
-+    QEMU_VM_EOF
-+};
-+
-+typedef struct {
-+    uint32_t       ar_items_num;
-+    TestStructTriv **ar;
-+} TestVArrayOfPtrToStuctWithNULLs;
-+
-+const VMStateDescription vmsd_arps_with_nulls = {
-+    .name = "test/arps_with_nulls",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(
-+            ar, TestVArrayOfPtrToStuctWithNULLs, ar_items_num,
-+            0, vmsd_tst, TestStructTriv),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void test_arr_ptr_nulls_str_save(void)
-+{
-+    TestStructTriv ar[AR_SIZE] = { {.i = 0}, {.i = 1}, {.i = 2}, {.i = 3} };
-+    TestVArrayOfPtrToStuctWithNULLs sample = {};
-+    int idx;
-+
-+    sample.ar_items_num = AR_SIZE;
-+    sample.ar = g_new0(TestStructTriv*, sample.ar_items_num);
-+    sample.ar[0] = g_new0(TestStructTriv, 1);
-+    *sample.ar[0] = ar[0];
-+    /* note, sample.ar[1] remains NULL */
-+    sample.ar[2] = g_new0(TestStructTriv, 1);
-+    *sample.ar[2] = ar[2];
-+    sample.ar[3] = g_new0(TestStructTriv, 1);
-+    *sample.ar[3] = ar[3];
-+
-+    save_vmstate(&vmsd_arps_with_nulls, &sample);
-+    compare_vmstate(wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls));
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        g_free(sample.ar[idx]);
-+    }
-+    g_free(sample.ar);
-+}
-+
-+static void test_arr_ptr_nulls_str_load(void)
-+{
-+    TestStructTriv ar_gt[AR_SIZE] = {{.i = 0}, {.i = 0}, {.i = 2}, {.i = 3} };
-+    TestVArrayOfPtrToStuctWithNULLs obj = {};
-+    int idx;
-+
-+    obj.ar_items_num = AR_SIZE;
-+    obj.ar = g_new0(TestStructTriv*, obj.ar_items_num);
-+
-+    save_buffer(wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls));
-+    SUCCESS(load_vmstate_one(
-+                &vmsd_arps_with_nulls, &obj, 1,
-+                wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls)));
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        if (idx == 1) {
-+            g_assert_cmpint((uintptr_t)(obj.ar[idx]), ==, 0);
-+        } else {
-+            /* compare the target array ar with the ground truth array ar_gt */
-+            g_assert_cmpint(ar_gt[idx].i, ==, obj.ar[idx]->i);
-+        }
-+    }
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        g_free(obj.ar[idx]);
-+    }
-+    g_free(obj.ar);
-+}
-+
- /* test QTAILQ migration */
- typedef struct TestQtailqElement TestQtailqElement;
  
-@@ -1568,6 +1650,10 @@ int main(int argc, char **argv)
-                     test_arr_ptr_prim_0_save);
-     g_test_add_func("/vmstate/array/ptr/prim/0/load",
-                     test_arr_ptr_prim_0_load);
-+    g_test_add_func("/vmstate/array/ptr-nulls/str/save",
-+                    test_arr_ptr_nulls_str_save);
-+    g_test_add_func("/vmstate/array/ptr-nulls/str/load",
-+                    test_arr_ptr_nulls_str_load);
-     g_test_add_func("/vmstate/qtailq/save/saveq", test_save_q);
-     g_test_add_func("/vmstate/qtailq/load/loadq", test_load_q);
-     g_test_add_func("/vmstate/gtree/save/savedomain", test_gtree_save_domain);
+-size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+                           off_t pos)
+ {
+     Error *err = NULL;
+@@ -559,7 +559,7 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+         return 0;
+     }
+ 
+-    if (qio_channel_pread_all(f->ioc, (char *)buf, buflen, pos, &err) < 0) {
++    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
+         qemu_file_set_error_obj(f, -EIO, err);
+         return 0;
+     }
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index a390554208..8f824c124d 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -76,7 +76,7 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
+ off_t qemu_get_offset(QEMUFile *f);
+ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+                         off_t pos);
+-size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+                           off_t pos);
+ 
+ QIOChannel *qemu_file_get_ioc(QEMUFile *file);
 -- 
 2.51.0
 
