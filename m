@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9C1FDEE58
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5922BFDEE39
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG4d0-0004Y2-7d; Thu, 23 Apr 2026 20:42:42 -0400
+	id 1wG4ct-0004Te-Sg; Thu, 23 Apr 2026 20:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neotheuser@gmail.com>)
- id 1wG26S-0005iD-Gv
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:56 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wG1jr-0002a8-JO
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:35 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neotheuser@gmail.com>)
- id 1wG26Q-0005o0-TD
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:56 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-36132967e9bso1221921a91.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 15:00:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776981653; cv=none;
- d=google.com; s=arc-20240605;
- b=En57Cqut96Gdskg+8rZr6dbG1JnYJuh9WUuWq1W6jRUpQ6xXKDdUx6qUlMlCC7UyFD
- OGKksKaXt/N1LsZk7NVwQT015djdHLmKKQfHeNLX/giuxgGihTzZQZn8zGP4I380m1HN
- IkJyLGXaEdJ3spzXM4WRSNUe9Vg4XQXSZYJEKTA907EQtnPav36KJcAt4rooU9AWfAlW
- GzLhzQZy4t1najmpIM3SofKh72fshEJK4AbFr6hUha12XHFtpYTXrO/xxNZMdyt1jqcX
- RrjmMG7k60gO+8ETzTC7qwT2u3wS0yQg7ncOCBaM2L2/k+jWnIimdO3MiKV5sbMuH3mn
- jIRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=Z7bFIlilCKOglFdrvcs4Fkch43S2BM/m8esG/K4Mqis=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=fPzbUOCikmK3M2CXHr/1SHrdM+gEpaqleC2UTkSpFehF6Q1yskbKxK55zibjXXuFX8
- aj2R27NgMWgnD0xQZP3VeC3Z5sq5ZKyrfyaQblx+3Xv3uag1If8z7eq4U/qiyGhFLL2T
- 8+eUfxuF6vWz0Wbycz2yG83/KF8bhO90o243OsETcL+ilnxLDDoiytEesUlGofuQQrVz
- i3Ufb8LkEWFuTytkDbXIVriTu599iA5jqsBVXR9nrIx8WqVoknc9jKq9x5aFE7XB1cB3
- Go3vIhRTydja6/QqB/rNUR6LCP1xSAJITqtBWhVIS16eoJ7ZhsP63CZcARbHignHh3Y1
- PeMQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wG1jp-0001FU-Qw
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:35 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43d7b879691so949517f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 14:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776981653; x=1777586453; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Z7bFIlilCKOglFdrvcs4Fkch43S2BM/m8esG/K4Mqis=;
- b=FOqfyCfuvQU2uKPPGf/xrUVRx05zlsGPz8qBnq0toBa90+aPaEs1xB+p1I9g4YeteA
- dQH9gHBtnvnSguAKl2scqp/A+d64rfhJzCh8kMO9LddweMOyHGaWHq9XTIvHgGIprwT0
- hn897HCEtZXcmio+YgIe7wXCiMsidUJuvulYyOqk3DgMwSAxJeqed1IKZpCMMU76DUsd
- bq9tmlu1jwXVg8LOFStphkXXXc0bZo1/ODw5fvBENRnO5ESDnpbMYyP6FfvA2dQQYbf5
- ywAQ53XHfnwtog4pxJyIWOGL180h8v2rZ/0abQqwUd1WHiRebNPA0nzxQSLYAo+XvCOJ
- o09Q==
+ d=gmail.com; s=20251104; t=1776980252; x=1777585052; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=r/MkEQmRXLYmx51oofgr61oVs//gZmrORdrLItZ2SQM=;
+ b=UF1RupDWimT764MGZXSzRFg0eWEz1sWBLNiR0OKTF/C+ZCqeDX/w9avZBuvUG4eSf1
+ ldeKboIFwHWQW40vjzfGw2vZzROr4UZLNRkarSoc5yCbq0PQG2ME4J1r8dtcNoszl7bl
+ wqhhq8cZsOhIDDyn8QwfHsAHKhN1dVDIUmZCXT5D77LwtXi2in+fEv3Z2H/aXraLCH8h
+ efEUjaZMKqbnKau/0aeFl1Ujhks6lGoXhv0GcRAvRWci3JByYGRf+SWwYYJ4NhW68DfF
+ gF53VwLiFb57VzOsWqvFfjXai0iynHM1ekaAA/2v/gZtV6UXKuiZtKqk9WIj/xSEN16P
+ F+wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776981653; x=1777586453;
- h=to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Z7bFIlilCKOglFdrvcs4Fkch43S2BM/m8esG/K4Mqis=;
- b=cLjZxvrZKZ3KadYN+hyJSHLyS1cVSDG6bH/ni/9WZ5iJ9GuT5cOqUKoavolrijsSzr
- LT62K7jLWrUKiwlXISm6D6PI06yUc4NVSBPEVDK0qMpO+25KEhp8NEv7ahgH8ZeDLqxs
- 9SM9KJpIxb9gV3x2WeSaY++ZEvYc3QmAnQbOnp63oxwRJz8GKlxeBI2YXpLfVguPuN0i
- zK8r3kqGTbAmB6Ss9BKlUJsvwGrlXNrfP04M4lUG4t/THc1wWwOR9/BrUt8pyxytqTlq
- PbPe3D2X0oYmXuEh9elc355NJu9x4yBMdH3id8Wwzrr0/i/30vXm495ZNg8TTnFpKEi3
- wL+A==
-X-Gm-Message-State: AOJu0YxbOsXBcS3skbxbi3lTW2pI4Q7+kRETaG/yi9eWfatY4sImh8m7
- mlTT7TaRSr/JlJrLBR9r0ig8LvmXEh2nnz5bGdBibHpnz2c4JwXskbz0aLD5R+qEtd6cZfTK3RM
- NlLIhXYTdg9KCqQya2sO9Lg6G4oxga07ndT08
-X-Gm-Gg: AeBDietKjhEhhNO7IA4NA+NEgKP5cVrkGdCOtidhiFDz1Q+1SSPuxZqNEVXNXgdolgi
- Jlk6BG63hxj7fHED5Vh+9fvh+UavZE1od8+MZNHa0Q4k7AMuSNSqp45k347k0RWK0fASGEpcjNu
- NCnhbpElheMA1KFy3qwRKrzwTF8YakLIuMhFr7N7GUiAyeC8d3WJeNkXlwmFL0+ZEYpcpA2KtzH
- 8LmA4l4rIg0SkVn5PdV8glAmmqNH43/TjJWmkrF/eWNop9LlcnBTdp2b2iAMUTvKMYDvROjr5b8
- zC3QK+d9NALB4y8=
-X-Received: by 2002:a17:902:d60d:b0:2b0:4d17:4d6e with SMTP id
- d9443c01a7336-2b5f9f2d4aemr155824425ad.3.1776981652480; Thu, 23 Apr 2026
- 15:00:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1776980252; x=1777585052;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=r/MkEQmRXLYmx51oofgr61oVs//gZmrORdrLItZ2SQM=;
+ b=Or13HyNLShIOhaRI+zO+Kq0olySX0ZNOhrSLHTxtwTsRiljvZ1Ip4yr2ZOD+KOcZMO
+ 6UryiPNgOtYwat1RYHwOHPZkiEa5zqDZkRF9/34C+e+HMF7GcbFrOV3ZCgFJ34Lr/nw0
+ PVmqt4BAmv0++auU3nmAnxm7I3q2lCdafnn2znimPKVPG1+UzKdV9lTS+EZUH3O25hXf
+ 6DtxQVlPOypE4Im/uGZWzVoC0JvF90mr9eGcWPRC64HG/Cd+t9/q11o032E1bW030oAU
+ 0LIpyDCRtQKxXGW2vQ+O/zF72bMQFVtn2uCXZaElUpdTdXWRqB94B3jCQTrprSJwVf7i
+ 7rkg==
+X-Gm-Message-State: AOJu0YzU7EzkDe1JWy0NcTkYfSrrSbbKYJ8fldWVok7U4nhmcpNs/pg9
+ 4Sy8Yjp57udsfHeM/FV+Z596weWYXEr+13Bb88ih22QYBUFoWWIK5dJs
+X-Gm-Gg: AeBDietisU43J6DwvZCMAogCXeM3IAR3ADJZHd7SRdsnmEpiyg8/KROnjDIGFaozaAV
+ lfnY06YvQ77rsct5qbimfi856NzfX/dMYHJtveL71dCNJtMHBOj7nsFrNCCKksFHtF0Yr0o4jDb
+ 1odT6o7ZGtk+Ll/6462WQ6cB4oCGM0tXNIe0wvUicuwkbQ1gRgz91Yz5Z6N3rn6hG8oRXzq3W4W
+ alnfacW7oKfTcflQtuyUbo/QULcfG8ojdwQZMg9LnkkSswsk4JSb46SkG6Mtr4y700p7Nn233E9
+ +xOSVZd/v3uixNCzrw68NBhQG75zv8yEdIwG+Eh4F2+AZymCN3Ut9cpEh1FoyFqG0fLT0rQQwc7
+ N+zJdt8MHFfGU89fGg8GNtUgCkLJGDYUnDBA3+ZOULL6hxqYWw6jw2ymrmG2b13lGnA3cBmfg8s
+ annifEBie3C0nEFU78sJwfAfHZmMjB+12F45ib5kRA5Q==
+X-Received: by 2002:a05:600c:c177:b0:488:9e7e:e1e3 with SMTP id
+ 5b1f17b1804b1-488fb7390e6mr198494035e9.2.1776980252229; 
+ Thu, 23 Apr 2026 14:37:32 -0700 (PDT)
+Received: from [10.94.10.196] ([223.123.19.204])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48919f54572sm138755225e9.26.2026.04.23.14.37.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Apr 2026 14:37:31 -0700 (PDT)
+From: Ali Raza <elirazamumtaz@gmail.com>
+Date: Fri, 24 Apr 2026 02:36:40 +0500
+Subject: [PATCH v2 3/3] tests/tcg: Add test for /proc/self/task/ filtering
+ and tkill validation
 MIME-Version: 1.0
-From: Alec Ari <neotheuser@gmail.com>
-Date: Thu, 23 Apr 2026 17:00:40 -0500
-X-Gm-Features: AQROBzDQjfdFPfUC4orUIIZKOSoPZS1SUM0sEcnV0tYvemJ0xcf6ctera3ASrbs
-Message-ID: <CAM5Ud7OgnsygAHxjGEO-qo5+3zYiAQFN85D2bx1Wb62vK2hzRw@mail.gmail.com>
-Subject: [PATCH v2 1/1] raspi4b: Disable L2 cache
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260424-master-v2-3-8b50b5c063ed@gmail.com>
+References: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
+In-Reply-To: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
 To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=neotheuser@gmail.com; helo=mail-pj1-x102e.google.com
+Cc: Ali Raza <elirazamumtaz@gmail.com>, Laurent Vivier <laurent@vivier.eu>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, deller@gmx.de
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=elirazamumtaz@gmail.com; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,34 +103,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From c5eabff997cf2231326c532c2cbc51fa1334fb9b Mon Sep 17 00:00:00 2001
-From: Alec Ari <neotheuser@ymail.com>
-Date: Thu, 23 Apr 2026 16:42:06 -0500
-Subject: raspi4b: Disable L2 cache
+Add a multiarch linux-user test that verifies:
 
-L2 cache is not implemented yet, this patch requires
-`clk_ignore_unused` to be set in the kernel cli.
+1. /proc/self/task/ only lists guest threads -- spawns NUM_THREADS
+   pthreads, reads the task directory, and asserts every entry maps
+   to a known guest TID and the total count matches.
 
-Now able to boot a 7.0 mainline kernel.
+2. tkill(guest_tid, 0) succeeds for all guest threads.
 
-Signed-off-by: Alec Ari <neotheuser@ymail.com>
+3. tkill to a non-guest TID returns ESRCH.
+
+On native Linux this test trivially passes since there are no
+QEMU-internal threads.  Under QEMU user-mode, it exercises the
+getdents64 filtering and tkill validation added in the previous
+two commits.
+
+Signed-off-by: Ali Raza (@locus-x64)
+
 ---
- hw/arm/raspi4b.c | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v2:
+- Hard-assert ESRCH on tkill to a non-guest tid (was a printf).
+- Add tgkill coverage: success on guest tids; ESRCH on a wrong tgid.
+---
+ tests/tcg/multiarch/Makefile.target         |   2 +
+ tests/tcg/multiarch/linux/linux-proc-task.c | 193 ++++++++++++++++++++++++++++
+ 2 files changed, 195 insertions(+)
 
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 3eeb8f4..9580711 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -68,6 +68,7 @@ static void raspi4_modify_dtb(const struct
-arm_boot_info *info, void *fdt)
-         "brcm,bcm2711-rng200",
-         "brcm,bcm2711-thermal",
-         "brcm,bcm2711-genet-v5",
-+        "brcm,bcm2711-l2-intc",
-     };
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 508149d57b..8d6e2af617 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -39,6 +39,8 @@ testthread: LDFLAGS+=-lpthread
+ 
+ threadcount: LDFLAGS+=-lpthread
+ 
++linux-proc-task: LDFLAGS+=-lpthread
++
+ signals: LDFLAGS+=-lrt -lpthread
+ 
+ munmap-pthread: CFLAGS+=-pthread
+diff --git a/tests/tcg/multiarch/linux/linux-proc-task.c b/tests/tcg/multiarch/linux/linux-proc-task.c
+new file mode 100644
+index 0000000000..0c41a4443f
+--- /dev/null
++++ b/tests/tcg/multiarch/linux/linux-proc-task.c
+@@ -0,0 +1,193 @@
++/*
++ * Test that /proc/self/task/ only lists guest threads.
++ *
++ * Under QEMU user-mode emulation, the host process may contain
++ * internal threads (RCU, TCG workers) that are not guest threads.
++ * These must be hidden from directory listings of /proc/<pid>/task/
++ * and signals to non-guest TIDs must return ESRCH.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#define _GNU_SOURCE
++#include <assert.h>
++#include <dirent.h>
++#include <errno.h>
++#include <pthread.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/syscall.h>
++#include <sys/types.h>
++#include <unistd.h>
++
++#define NUM_THREADS 3
++
++static pid_t guest_tids[NUM_THREADS + 1]; /* +1 for main thread */
++static int num_guest_tids;
++static pthread_barrier_t barrier;
++
++static pid_t gettid_sys(void)
++{
++    return syscall(SYS_gettid);
++}
++
++static void *thread_func(void *arg)
++{
++    int idx = (int)(intptr_t)arg;
++
++    guest_tids[idx] = gettid_sys();
++    pthread_barrier_wait(&barrier);
++
++    /* Wait for main thread to finish testing. */
++    pthread_barrier_wait(&barrier);
++    return NULL;
++}
++
++/*
++ * Read /proc/self/task/ and return the count of numeric entries
++ * (thread TIDs).  For each entry, verify it matches a known guest TID.
++ */
++static int count_and_verify_task_entries(void)
++{
++    DIR *dir;
++    struct dirent *de;
++    int count = 0;
++
++    dir = opendir("/proc/self/task");
++    assert(dir != NULL);
++
++    while ((de = readdir(dir)) != NULL) {
++        char *endp;
++        long tid;
++        int i, found;
++
++        if (de->d_name[0] == '.') {
++            continue; /* skip "." and ".." */
++        }
++
++        tid = strtol(de->d_name, &endp, 10);
++        if (*endp != '\0' || tid <= 0) {
++            continue; /* non-numeric entry */
++        }
++
++        /* Every TID in the listing must be a known guest thread. */
++        found = 0;
++        for (i = 0; i < num_guest_tids; i++) {
++            if (guest_tids[i] == (pid_t)tid) {
++                found = 1;
++                break;
++            }
++        }
++        if (!found) {
++            fprintf(stderr, "FAIL: /proc/self/task/ contains unknown TID %ld\n",
++                    tid);
++            fprintf(stderr, "  Known guest TIDs:");
++            for (i = 0; i < num_guest_tids; i++) {
++                fprintf(stderr, " %d", guest_tids[i]);
++            }
++            fprintf(stderr, "\n");
++        }
++        assert(found);
++        count++;
++    }
++
++    closedir(dir);
++    return count;
++}
++
++/*
++ * Verify that tkill(tid, 0) succeeds for all guest TIDs and that
++ * tkill/tgkill to a TID that should not exist returns ESRCH.
++ */
++static void test_tkill_validation(void)
++{
++    int i, ret;
++    pid_t self = getpid();
++
++    /* Signal 0 to each guest TID should succeed via tkill and tgkill. */
++    for (i = 0; i < num_guest_tids; i++) {
++        ret = syscall(SYS_tkill, guest_tids[i], 0);
++        if (ret != 0) {
++            fprintf(stderr, "FAIL: tkill(%d, 0) returned %d (errno=%d)\n",
++                    guest_tids[i], ret, errno);
++        }
++        assert(ret == 0);
++
++        ret = syscall(SYS_tgkill, self, guest_tids[i], 0);
++        if (ret != 0) {
++            fprintf(stderr,
++                    "FAIL: tgkill(%d, %d, 0) returned %d (errno=%d)\n",
++                    self, guest_tids[i], ret, errno);
++        }
++        assert(ret == 0);
++    }
++
++    /*
++     * Try a TID that is very unlikely to be a guest thread.  Use
++     * pid_max (typically 4194304) minus 1 as a probe.  On a real
++     * kernel this returns ESRCH for a nonexistent thread; under QEMU
++     * with validation it must also return ESRCH.  In the (extremely
++     * unlikely) case that the TID does exist on the host, the kernel
++     * may return 0; tolerate that to avoid spurious failures.
++     */
++    ret = syscall(SYS_tkill, 4194303, 0);
++    assert(ret == 0 || (ret == -1 && errno == ESRCH));
++
++    ret = syscall(SYS_tgkill, self, 4194303, 0);
++    assert(ret == 0 || (ret == -1 && errno == ESRCH));
++
++    /* tgkill with a wrong tgid for a known-good tid must return ESRCH. */
++    ret = syscall(SYS_tgkill, 4194303, guest_tids[0], 0);
++    assert(ret == -1 && errno == ESRCH);
++}
++
++int main(void)
++{
++    pthread_t threads[NUM_THREADS];
++    int i, task_count;
++
++    pthread_barrier_init(&barrier, NULL, NUM_THREADS + 1);
++
++    /* Record main thread TID. */
++    guest_tids[0] = gettid_sys();
++    num_guest_tids = 1;
++
++    /* Spawn worker threads. */
++    for (i = 0; i < NUM_THREADS; i++) {
++        int ret = pthread_create(&threads[i], NULL, thread_func,
++                                 (void *)(intptr_t)(i + 1));
++        assert(ret == 0);
++    }
++
++    /* Wait for all threads to record their TIDs. */
++    pthread_barrier_wait(&barrier);
++    num_guest_tids = NUM_THREADS + 1;
++
++    printf("Guest TIDs:");
++    for (i = 0; i < num_guest_tids; i++) {
++        printf(" %d", guest_tids[i]);
++    }
++    printf("\n");
++
++    /* Test 1: /proc/self/task/ entry count matches guest thread count. */
++    task_count = count_and_verify_task_entries();
++    printf("/proc/self/task/ entries: %d, expected: %d\n",
++           task_count, num_guest_tids);
++    assert(task_count == num_guest_tids);
++
++    /* Test 2: tkill validation. */
++    test_tkill_validation();
++
++    /* Release worker threads. */
++    pthread_barrier_wait(&barrier);
++
++    for (i = 0; i < NUM_THREADS; i++) {
++        pthread_join(threads[i], NULL);
++    }
++
++    pthread_barrier_destroy(&barrier);
++
++    printf("PASS: /proc/self/task/ filtering and tkill validation\n");
++    return EXIT_SUCCESS;
++}
 
-     for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
 -- 
-2.53.0
+2.43.0
+
 
