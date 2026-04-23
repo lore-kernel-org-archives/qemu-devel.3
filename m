@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D3DF99367
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A8CF99367
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFquj-0008JP-9g; Thu, 23 Apr 2026 06:04:05 -0400
+	id 1wFqtS-0006Kk-JN; Thu, 23 Apr 2026 06:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqu4-0006Yo-IB
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:30 -0400
+ id 1wFqtN-0006J0-KR
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:41 -0400
 Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqu0-0002Jp-Ou
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:22 -0400
+ id 1wFqtM-0001yn-7f
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:41 -0400
 Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43fea39e066so5291818f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:18 -0700 (PDT)
+ ffacd0b85a97d-43d77f60944so5190295f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938598; x=1777543398; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938559; x=1777543359; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=c36wM9GXpuhtY8lyA+CKnk1dts9o0aviDitOSmQhN5c=;
- b=KTLXs/pKMtnnbIfRx+l1R59CQkY40G89K3EmNnnjcHKexHTwaFZlUdmAL794ikU41F
- IM3lzKvFYoJH+xgBut/qMBvLpxRKLQv2BnUvXUhoJe5L7XkqX5AiDisraRYgVI953k88
- thB0RLn9+4ux+0jRF/tId5YhOG8tzO4WAF14ol4nLNHDiC7xtuxmMYtmF7qgnvNceDO2
- 9SjZD8RJHbwePO8C+AOjAZvMw7lmDcjjrKTeTVVQNUDK5xhQn5gHP+G6SF7SqGs7kAxd
- yeWQzIRkNmKHbVC8DFGsDFPeBRuhHeJiZzlNxRSrKl+S1UuyrOTQdMXQgL1z8mJSng/X
- 08xQ==
+ :reply-to; bh=P91enuvCUzt6TPFUMJ9daNLwhYClu8JlGSNhfTMG02I=;
+ b=K1+q2JNq3IWhCOzgHfTtEE2uRaY956RCtCMY9kEOypz2DHECxmokMm9RbVLRb36+Xe
+ VjRq4inDEKRl0NHKhX6weLjWoC4jJZ98CEB6ZlyWz20zjRVtVubAZmc+v4WGBZJyGZ8x
+ iI1vKoQrAwzNbqI+INKMXc3J7x3pEbda3NkKKl8T0aJNqjacZlyY7RJgt0/BGPfaR7SK
+ HZO6sbWBviHSmElSLvmLBmkrLKTMIVFHMEeOMzZQ1qMEeRrmMdsTKQ3n1eSYeJL9XJtr
+ 8GTR+lZ2sox8BS801Nt8YIEnp918l4gHZ65UqnDWAhZ4fCXafW2TIEbzTjUJaDET9RD8
+ AF5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938598; x=1777543398;
+ d=1e100.net; s=20251104; t=1776938559; x=1777543359;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=c36wM9GXpuhtY8lyA+CKnk1dts9o0aviDitOSmQhN5c=;
- b=q7O3mheF8IPHQPDmE5lG+Z6PBcW4YvhS1+F6aGNcmbAUVbLFh+0Z+9yzwamrh2HXgb
- MVNTW5goJOjoMzCIIe6FK8uXuoeJDdXK78cqKF4BIatNe+iP4Lj/ilCpPO5yyc7IOrOo
- Y216eppaaBOM4Cn4oQNt8wCZhA9DKacaEpEfIku/1SfVlo4N3v3/rpniNyRFJUvzSQm3
- soq90JjcDY/42NrCxne9KP+6O4yJwhKIytruZhhLKLl+73EGkCra1/eFS6mwlELVk7c0
- aavB+cgVx5ArzMFgVBjXyLnvY3NbdJqFQT1qb9AtMpB63AkDhU//asaKk6Ur6sF0n3j/
- Y27A==
-X-Gm-Message-State: AOJu0Ywb78eWNz2twaSHIXcUbVU7j+gCNqs4JcYxWSRh0+llAPoGqrPX
- biJ2spmOuOu4hBnK4q0x/sJWLSbWTRUZeTluoviakWBH3r7L4VPcaVUTWBAd2UKXcsrL0aT8FMe
- k/NV/
-X-Gm-Gg: AeBDievIGoMg35yaX8u7+BZLtiGKekxQMuQTm0Pd2+sWVkK/8FXHEYfPB3cL+iGjz3U
- 47Bwt9tKk5rl7EGWfsX8+5PF1L+DaNni3Z5lOTsO8EhLEzj8S5jM3EtRrkLFf7WgQSSCoGxqlWT
- qv25UEhlu5XvvSo7bfGtVw21OVbcSVVV2pmnX4U2mU83rHokSxr+1z95q9zk8F3pOpR/zWGEdm7
- iwiW8tpTJLzEx40BkoUukT+7t2JLIrar3DjgS0ZjkL6LNjW8RiiXWXMTuzkU71+iSNbqS4037KJ
- 5Xt+ctOxjefEbkWwUzaxHdMApD5YreUAg3SWkSrano2j1sCyJS2kvBAz8xAxjKEEpFEAk/BcUlE
- 2909DobqnwEv6XRmVBSD+ZIx/yJfhJeIcR/tJLOUe5O+UEwK7bas3ZYlHYyM2CsoknvNAf3d+AJ
- DUYXxvIDp/eEMowrukRqZvV4/6z1CISZrFM2qZ9/HOoDUmsWHpqgI/IGJWVpPNh0g/kLZ9YUG+D
- jwaJmDYwBd+omiaGdAHsSVJx/IN8eTGZQ77lBQ+BPY3Coc76CC/
-X-Received: by 2002:a05:6000:2c0c:b0:43f:e22e:e8da with SMTP id
- ffacd0b85a97d-43fe3dc5b0bmr40547819f8f.5.1776938597764; 
- Thu, 23 Apr 2026 03:03:17 -0700 (PDT)
+ bh=P91enuvCUzt6TPFUMJ9daNLwhYClu8JlGSNhfTMG02I=;
+ b=FpqYxYwWZ6gZl+RDdKXldcHz0D56T3kjk3esbJo8+cWWyYLasS16t4iBONkitmQu/e
+ ylu25rGywte0ge/f6PTBLc9UBqDdU1MUhtgoV4UquDzc7W39/VEilDM31kUwJoY45OLE
+ QG9mszKqBEZQ3OwDa5E6S7sgnEpqvvmGrQEw52eVwC3ivGjKQwdyyA0f/m0q3Gk9Mybp
+ l2YCvUbGASbv8GPsx+dPOCQO8+u754Q5fllUitJdQWPby+dSn507VNN37Q4B3A/qbWz9
+ vJJJzMtACazF7ko7yQ6nw0+xm44FUAquvEQvisoAudlFPt4YcE0XghN/pQ/hMOF5QgLH
+ SFdA==
+X-Gm-Message-State: AOJu0YzxuYXLjVAeSwD5JWCtrPwKT0L5f0SIx3Q89k+uPln8jrChVf+t
+ oeOl0siBs5yvBvJy15qApjAafTGV14V3LKZ9ARHZ15qbgb969fqFmCwK5anyJsT/12U3cimlWaQ
+ XjO8I
+X-Gm-Gg: AeBDiesmPpggccIkF0AcuD3CtUjtWBTxMwfZ08bb5/gMBc2CrbcxLrEHoKqGE86+53f
+ GMgHNEO+2Oog4KQnyMhpFOYDXyWLsOAKyzb45FxCipghrqkc91aeTe3ndNgkwRCbVPXGk4jetk+
+ yi+yxFqht0HER7S7w8Vuuyqr+xvb1JAqqNDgjUCaS+0uB/aDhkpMAf/203b6UAAtPZCfllQ2PVs
+ IeOrU0vLTOV71KTUgBDv1+ERtDAp+dsNOGo8q+wvKz3ojt7Tv8K15G9G2mzKhnru7dhsacZOUap
+ v1AVusko199zHdcc9hFVpM/zl/xerKIgQjlpqooerx6BmXwDsue3YhBssKZX/1vDaFCn/aCGQ6p
+ ocdG/TdmdJxplllU3EFQiT0WmSBrD7qTh5WYqjxtcnA6CGIoUKC9vPCqVdgGguhXu6z4IT3sUEJ
+ 6YdqGcTu4qstE5GxF4VGh4MtuxpIpyw9e6nGK4xY/+MKnN8Jo1U6sQMwa34HOg4hN2WzIZoKjCD
+ jNyzKmRD8J9KPRzRyqerC4W/v1XfCav4vySG8BOV7e3Eg8sovYJ
+X-Received: by 2002:a5d:5d0e:0:b0:43d:7883:87c4 with SMTP id
+ ffacd0b85a97d-43fe3e17215mr41297679f8f.41.1776938558568; 
+ Thu, 23 Apr 2026 03:02:38 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.16
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:17 -0700 (PDT)
+ Thu, 23 Apr 2026 03:02:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/59] MAINTAINERS: Remove Mahmoud Mandour
-Date: Thu, 23 Apr 2026 11:02:13 +0100
-Message-ID: <20260423100229.2941820-44-peter.maydell@linaro.org>
+Subject: [PULL 07/59] tests/qtest/bios-table-test: testing new ARM ACPI PPTT
+ topology
+Date: Thu, 23 Apr 2026 11:01:37 +0100
+Message-ID: <20260423100229.2941820-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::429;
  envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
@@ -101,29 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mahmoud Mandour has not posted to qemu-devel in some years and did not
-respond to a query about whether they still wished to be listed in
-our MAINTAINERS file.  Remove them, on the assumption that they are
-no longer active in QEMU.
+From: Alireza Sanaee <alireza.sanaee@huawei.com>
 
+Test new PPTT topolopy with cache representation.
+
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Message-id: 20260311160609.358-8-alireza.sanaee@huawei.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260416091654.316158-13-peter.maydell@linaro.org
 ---
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+ tests/qtest/bios-tables-test.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 11ae4829fd..206ff228d3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4092,7 +4092,6 @@ M: Alex Bennée <alex.bennee@linaro.org>
- M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- T: git https://gitlab.com/stsquad/qemu plugins/next
- R: Alexandre Iooss <erdnaxe@crans.org>
--R: Mahmoud Mandour <ma.mandourr@gmail.com>
- S: Maintained
- F: docs/devel/tcg-plugins.rst
- F: plugins/
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index a5a5b8807b..510751799e 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2229,6 +2229,10 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+     };
+ 
+     test_acpi_one("-cpu cortex-a57 "
++                  "-M virt,smp-cache.0.cache=l1i,smp-cache.0.topology=cluster,"
++                  "smp-cache.1.cache=l1d,smp-cache.1.topology=cluster,"
++                  "smp-cache.2.cache=l2,smp-cache.2.topology=cluster,"
++                  "smp-cache.3.cache=l3,smp-cache.3.topology=cluster "
+                   "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
+     free_test_data(&data);
+ }
 -- 
 2.43.0
 
