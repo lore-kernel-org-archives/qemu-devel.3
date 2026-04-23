@@ -4,104 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4728DFC034E
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC58FC0352
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFw4f-0001Go-Ct; Thu, 23 Apr 2026 11:34:41 -0400
+	id 1wFw59-0001mt-CX; Thu, 23 Apr 2026 11:35:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFw4Z-0001GD-Mk
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:34:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wFw53-0001gT-Kx; Thu, 23 Apr 2026 11:35:05 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFw4X-0007bX-NS
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:34:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776958472;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1vi2s4ZLMrkpkIWuhE+Y2IAXXK453YyJfXd5Ybh++pA=;
- b=SWu0ExIGkwnocNzDeTp+OeETycFkIIJKBuWK5ChBo6EKerGzxIiqOFrBjBtJFcV5EgpQRD
- 8jeT469TUE/0NBy0aeMarEs/TtB+ULKD/3LfGgTlnuUTt3T+GpRYQD15kjVeBN4wSe1BQe
- 9/Jd+X4XhvjdwtaanTzpxIT2+gIMUUA=
-Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
- [209.85.221.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-533-sKn8hflmMiKFbL23xunVuw-1; Thu, 23 Apr 2026 11:34:24 -0400
-X-MC-Unique: sKn8hflmMiKFbL23xunVuw-1
-X-Mimecast-MFC-AGG-ID: sKn8hflmMiKFbL23xunVuw_1776958464
-Received: by mail-vk1-f199.google.com with SMTP id
- 71dfb90a1353d-56f67ce97a7so4525673e0c.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776958464; x=1777563264; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1vi2s4ZLMrkpkIWuhE+Y2IAXXK453YyJfXd5Ybh++pA=;
- b=DIQiYYjjUZP5L5yVZBgCmYtdxCvUUwo9xsZ8jobhf2QTOnnnDtGUzwYQkGLjJXvLXx
- CuAUtISW2SfuZm8e4Rnk7RT7TG5C24yp25duQCk8pSYGdLwC0ojVhLCF9EUv7UvrSllm
- Lhh2S0FuQzHWiKE5yZMViGKVx7KI6BJbHCmaeiDAasxAkIuavVPvSFehQ6xju/+9jss9
- s/dArPkEfB4ZpsbN707+JXQTKeunnwagCciebiwv9bi5jfEF1qBYo6e+uw0BIgk4UaHi
- MWJ+xw5uT4mX8WOQlllWCwK8vRYQT392gdRU4EDBU891L6iVQUS7FqukQWbH6Aq/yUih
- SETw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776958464; x=1777563264;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1vi2s4ZLMrkpkIWuhE+Y2IAXXK453YyJfXd5Ybh++pA=;
- b=PfP6dQYjqvYFXRQ4C8vVvVK9SXHZfkv1bU2BGCkeyAGDILWSiDbh1rkhdJiIoj9gUF
- 3b7+OcMInKOe8rrQ+lKdmH3+EesxWwRtYJTkmVkE/Z8Od2wSA9LJlgGjWY9mzUfVG911
- q6csspinzDMQVUJVFGU14Qz2Aj+T9OduVDU/CzMHWYYkyo6F5VWbN6/T4JvjycmAzJkf
- UTFssZqVQXAWQ5YBM/kaHmXCruCzVTuEQLbsTATLjQEu3yifz086YGjwTiM2nSiGeMWz
- NEtiZeFfbvi2zl0wcRzu1SvJCsHt6O0pvanvCW9u8OhR2Bvw7LXivJccJ2PjZOxAVWyg
- 8lGg==
-X-Gm-Message-State: AOJu0Yw5Fk1jnyVwQoRBN4J6fve4bAcWS2mxZJN2dDpKpMzonFC2fXpO
- f7/9/r2Ns+r1f37pMBEbiQeK9VAn5QKpfiu+QEj6LQxUMRL+d1Syc4rgk80vwU9/vyYEMiHNGCJ
- aBqAhvstiv8dCg4tw9uSJwsUvLXbsQs9ePZwX5tQeHzOjEUGH3Mti0DrI
-X-Gm-Gg: AeBDieu1pwQaAhnNFNQac4m7wqoiHZWCsGsGOMTf7skxjQU992u36PEeCTWq2Gfl7aJ
- RiYkljVkthQQSxF+s3BNu4ZiPA5XVaqle3R6uuBBZ7LUSfY4vl2NTGsGuMAHEzDT4cjiCy4fQA4
- CY5je0SXS3pXX9c1yWIc9W+BGejXhJQcZ6vJ3QJA7jdy2meSLQ3yyuE5ScOlJpAt73PJmy3IK4Z
- i1piMO0MfxWvOFFsOJF4Nsp+Nopyk7IuhEJs4gJNB/jQTWf3rJOGXT9t59k76hnvqeNvNlZV59T
- 0smTHa9BZnJQvKn8wHTSo9lExklkVYGlw8wCIpGbQmlF2UIdK45hAR9G+MY3UsqancpVx/ZwYy7
- aG0kN7CEoQuz3+zVUAUrjxhJaCYHeUyrg/YgNS2tQ+6wj/hdHly1bFMsSpw==
-X-Received: by 2002:a05:6122:4fa2:b0:56e:ded3:98eb with SMTP id
- 71dfb90a1353d-56fa585d299mr14144128e0c.6.1776958464078; 
- Thu, 23 Apr 2026 08:34:24 -0700 (PDT)
-X-Received: by 2002:a05:6122:4fa2:b0:56e:ded3:98eb with SMTP id
- 71dfb90a1353d-56fa585d299mr14144076e0c.6.1776958463553; 
- Thu, 23 Apr 2026 08:34:23 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-56fa92078adsm11328165e0c.7.2026.04.23.08.34.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 08:34:23 -0700 (PDT)
-Date: Thu, 23 Apr 2026 11:34:21 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v3 1/2] migration/vmstate: Add VMState support for
- GByteArray
-Message-ID: <aeo7_YcGk51EeCzJ@x1.local>
-References: <20260422082214.10390-1-armenon@redhat.com>
- <20260422082214.10390-2-armenon@redhat.com>
- <aekocd-UQ44uNCWI@x1.local> <aenKIbkSOjjGkg62@fedora>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wFw51-0007t1-UG; Thu, 23 Apr 2026 11:35:05 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63N80INA3657859; Thu, 23 Apr 2026 15:34:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=vvZsAL
+ 8K2QSrnCvs7j/H8Pm+8gQN+MJUnDV2OT96XAU=; b=PVzzNy9yG8PYrSVaOSdzUZ
+ YWCEVpHCKCNsmHfTChotYCr1xDT7Az4o7Ve6L4X7ifKnb1jAkMf+neBqYw5KRyfA
+ 7STzV0TWND9Ma4JEFX8zQxr/tJ9c77kIWjqckhVp5muoA6NvEesg9cia31oiVX4r
+ bXEm2ujCUjThlL7/c9vBbb5/74EGKNlFDRJ+Jxru+dTwg50tRDTaxhBqmPeRr4sF
+ rEcYi3V4AmkuU0h1GYRMQCNyLuY4pUzXBLJCUmlnX/zu/oxiBnD+BLa4lT16zZpY
+ lvQzgqcFNxVuivLksD3VNMHYiJOx0kjZvsljSFmEcyJAlBulXraSWVTma7GyNTNw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu7ru9t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Apr 2026 15:34:59 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63NF5RAe014813;
+ Thu, 23 Apr 2026 15:34:58 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkyq62a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Apr 2026 15:34:58 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63NFYsvE26018404
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Apr 2026 15:34:55 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D3ABB20043;
+ Thu, 23 Apr 2026 15:34:54 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 390BE20040;
+ Thu, 23 Apr 2026 15:34:54 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.71.73])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Apr 2026 15:34:54 +0000 (GMT)
+Message-ID: <58b470c7-c648-491a-9b6e-92d2db6d4224@linux.ibm.com>
+Date: Thu, 23 Apr 2026 17:34:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aenKIbkSOjjGkg62@fedora>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/9] target/s390x: Have MSA helper pass a mmu_idx argument
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20260423135035.50126-1-philmd@linaro.org>
+ <20260423135035.50126-8-philmd@linaro.org>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260423135035.50126-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: mrJgaxg1D-FybqzU9rXq3VCDcNFuL580
+X-Authority-Analysis: v=2.4 cv=Ksp9H2WN c=1 sm=1 tr=0 ts=69ea3c23 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=unCzzG8B7r6fckoFZIAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: mrJgaxg1D-FybqzU9rXq3VCDcNFuL580
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE1MyBTYWx0ZWRfXzzOp29B+NWBE
+ 5JdfEzlyIDTvZ5mX8toJhePz2iO1X1GBFOBpxs65vEPpi+cNiuxbpGseDQxxu3s/ksi/j+1PHSR
+ Ero+HiNdY82cMOgn3KVKd9/KdYaty4FUqh6GhxVb8qDOJ5bo2wd0+QLu8Vo+nxHhBJGJ2UOQE9O
+ Yz4UAQYmq+vPFdJV32CxiG+NNcAfgo/wNOiL0nlNikPdxetd8+vLOIUlW2GzPQKrbgxqud/MN2A
+ 1wVjvbMZ+lsJMHKk8d9FHyNS5MkhASogyTsm0IRPOfeoh72UhPgkvwNtOHYwnDX0cLcuQ1jYQMS
+ S4t6HaUvQG4llRCb0/pRBDPD62fCyg7NK1m0SPUdWyqI7lKQ+vOre8Hxh3sY3Wxyk+ZQhiHiGCg
+ OspB6Cs4SV/H/vCYm4vTDVpx/CK6DHyi51IRxZREb3SicaEciA9u2u7YVw2KhHV8OJwnNiO0Dov
+ AV2shNkJG16QqhN5Fwg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 adultscore=0 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604230153
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,16 +129,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 12:58:33PM +0530, Arun Menon wrote:
-> Regarding the assert(), Would you like me to remove the
-> explicit assert() in put_g_byte_array() as well? Since it is immediately
-> followed by a dereference:
-> 
-> qemu_put_be32(f, byte_array->len);
+On 4/23/26 14:50, Philippe Mathieu-Daudé wrote:
+> Next commit will use the cpu_ld/st_mmu() API and thus
+> will also use a @mmu_idx. In order to keep it simple to
+> review, propate @mmu_idx in a preliminary step.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/tcg/crypto_helper.c | 41 +++++++++++++++++---------------
+>   1 file changed, 22 insertions(+), 19 deletions(-)
 
-Your new version looks good, thanks.
 
--- 
-Peter Xu
+I was worrying that this might break bisectability with -Werror by 
+causing unused function argument warnings, but for some reason this does 
+not happen.
+
+
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
 
