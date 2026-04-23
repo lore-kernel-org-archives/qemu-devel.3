@@ -4,97 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B57F99362
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 09:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F41F99363
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 09:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqcS-0007Re-ED; Thu, 23 Apr 2026 05:45:12 -0400
+	id 1wFqgM-00086X-An; Thu, 23 Apr 2026 05:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prtyagi@redhat.com>)
- id 1wFqcP-0007Pa-6l
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:45:09 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wFqgI-000867-N9
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:49:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prtyagi@redhat.com>)
- id 1wFqcM-0006qd-JE
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:45:08 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wFqgG-0001E6-Os
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:49:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776937502;
+ s=mimecast20190719; t=1776937747;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=QmkogQDdECBhNaRQBes03dQMuEaKIs7Fl8qVdGf49BI=;
- b=jJD5ifHTzpiuN7QobPdatcGXOwVZ0r4Gshi7xL1Mf0JdPmr/qdwnrVjhrpwlk0DT4wF/3g
- a4FLYUuruu2flf9y7WAgTkUOfDZGcAi79OOf2iv9V8JADUisavRZ33cSGyWDZ6vXkQKE+y
- Vbrhm1AtAZNZpR1YDA34Sn/+umj7neQ=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-NV_2cQlmNGeL2ZQRewiZvw-1; Thu, 23 Apr 2026 05:44:58 -0400
-X-MC-Unique: NV_2cQlmNGeL2ZQRewiZvw-1
-X-Mimecast-MFC-AGG-ID: NV_2cQlmNGeL2ZQRewiZvw_1776937498
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c70dd30025fso8103981a12.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 02:44:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776937497; x=1777542297; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QmkogQDdECBhNaRQBes03dQMuEaKIs7Fl8qVdGf49BI=;
- b=lP88nE3BTAZd07uoepU9IDiW+RwdfT09hIZpdAAyr7ZbXz4hgR+paGtWQMcwW78UNH
- quiIGwMDSOgHHRDHPq+5qCS1ENrp58MGHfrNPcT0At5t6krpgK5LlJWMMKUxVYEZW/Ox
- +2+7hUeVQWtd0mfQtCHUAZaW1949HhhFVIjDgqEzM5heTM8NeFd2EbhRfVUTH6Iu3u2x
- 3ZIXMB8vdNbZW6DjnmoRcYFJJqCJ53zku2WCTrnv+Nz/CLuUJL0XaqJfHmmdJOAFllrC
- buZGKSGgMLpX94iGXVcL118ajtTb0AiqRSjilVfIp5CKj4BijcvcQfY2xH7CE3gW8Uxo
- hz1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776937497; x=1777542297;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QmkogQDdECBhNaRQBes03dQMuEaKIs7Fl8qVdGf49BI=;
- b=PRXRM4YV3TqAI8iA1N+pl8QPllayd/95lXv61RTBcAbN6OokJmscbnD45mAfYNxdpP
- 5XTnbS1nxJEDJcILMVqoMS0umqqpZ4S05EdW1BsQMYixg3+CS7NRIoYS8xhyjloBb5w8
- 8Mktlv42t8Ie1FkmgdrG5QWuJFA6tuX9YtigtRFtlY1DvYRVL6+Ei3WwQSjRSIgDifta
- uPvev4AmfQ92sMUeiTY9yMRM03Ley9nD9qlY4dDuLLUdBstTIAa8/l3iymFtdYihxQwc
- uswZ+4zLpgdmctFAcBwkXJHF373PyKf1rykh6CJ3c8iK+EUI2uyWnEFlBiwAKFAvOg1d
- xcYA==
-X-Gm-Message-State: AOJu0YzKL1trHfstfUtC20RNUmuDDdKxhFRRXDLgyrqcNvtfRylESvyw
- wm5h0VL8mNgwYITqPOhIJDgawqGd6BV3hK/UlqdiFY0soS0rRwJoKIbnP2BgR634uV5tNpBc2rs
- AsI40A9vT761gmBUpNiWZAMX1NAhoHQM3azNxez3qnhaoxth62n32eQUYZD1UvNg9FdzNwh2iyi
- tOYxTlNUhV6qxxVtZBFnffAtpDIT9q+zTOkLIV0Vw=
-X-Gm-Gg: AeBDieuy/NAdcVaRuS7td1TrDrV2Mj5tvD3y6S+RXqsvRLYjxPvrNal/SC2rgZtrMS1
- 7XrknPuUcF7GLwgRiumVQYDSK/GLtE7Q41Zb03unNDmIDeua2Mkj1p1BhNLbnWFQH6Ol8zrczUa
- OxSG8vk/H5nKyiaxMrARyEaqmAg7ARNunxhh+5ij5BsYoWsKtQlppqgh5aOMq08+aTrhasjC3Dn
- Ac4ziVR8cKjOqjf2iOIXOFVGNlTTmjIQq0G0hysDRq8g65+AMLnOuQeYucKrdRcG8InisW27g3u
- 5Tj7hwDKw67QK2fX+KVET1uU/qgllaJuJTbNbN2VZNbQDP86rp+5DW96En0Bv5LbJ8el3gwMc0r
- AyveYv97gXmID8+Qc3ZMcz4Xab6dNxSYCK7DagblK4CkcywHDi20BSYMMIUnFPnCBZ6GY
-X-Received: by 2002:a05:6a00:17a0:b0:82c:f877:3d13 with SMTP id
- d2e1a72fcca58-82f8c8c905dmr30448290b3a.26.1776937497044; 
- Thu, 23 Apr 2026 02:44:57 -0700 (PDT)
-X-Received: by 2002:a05:6a00:17a0:b0:82c:f877:3d13 with SMTP id
- d2e1a72fcca58-82f8c8c905dmr30448243b3a.26.1776937496446; 
- Thu, 23 Apr 2026 02:44:56 -0700 (PDT)
-Received: from prtyagi-thinkpadt14sgen2i.bengluru.csb ([115.110.236.142])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f8ebe6439sm19906405b3a.41.2026.04.23.02.44.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 02:44:54 -0700 (PDT)
-From: Pranav Tyagi <prtyagi@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xRYLKOrmE7/oEuDtADR2OmYYnbN1a9jH/1mSe5dCafw=;
+ b=gft42p6iNBLOE+IsHuZGBsWKDPQSAnCF8UG8CtWrx3EIjzUAXLbC2US70cr1j3Ucp/aozX
+ aFttf5hh086oEmRFYj7+dXn8tEwnnrxpzoMhTm3i/iWoY2p48oIOHvS7PllOdjSMbkAtCV
+ 5VT9y8anjZSD1ARYhMFiXJtzCnfjETA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-IbKQNFZ1PVaC5viRrDAIdQ-1; Thu,
+ 23 Apr 2026 05:49:06 -0400
+X-MC-Unique: IbKQNFZ1PVaC5viRrDAIdQ-1
+X-Mimecast-MFC-AGG-ID: IbKQNFZ1PVaC5viRrDAIdQ_1776937745
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07F2D1800473; Thu, 23 Apr 2026 09:49:05 +0000 (UTC)
+Received: from gondolin.str.redhat.com (dhcp-192-224.str.redhat.com
+ [10.33.192.224])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2789F3000709; Thu, 23 Apr 2026 09:49:02 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Pranav Tyagi <prtyagi@redhat.com>
-Subject: [PATCH v2] migration: Fix blocking in POSTCOPY_DEVICE during package
- load
-Date: Thu, 23 Apr 2026 15:14:38 +0530
-Message-ID: <20260423094438.43556-1-prtyagi@redhat.com>
-X-Mailer: git-send-email 2.53.0
+Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+Subject: [PULL 01/11] target/s390x/kvm: Simplify the async pfault handling code
+Date: Thu, 23 Apr 2026 11:48:46 +0200
+Message-ID: <20260423094856.270215-2-cohuck@redhat.com>
+In-Reply-To: <20260423094856.270215-1-cohuck@redhat.com>
+References: <20260423094856.270215-1-cohuck@redhat.com>
 MIME-Version: 1.0
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=prtyagi@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -118,146 +86,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The package_loaded event is not set in case MIG_RP_MSG_PONG does not
-arrive on the source from the destination in the return path thread. The
-migration thread would then be blocked waiting for package_loaded event
-indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition the
-source VM can safely resume as the destination has not yet started. The
-pong message can get lost in case of a network failure or destination
-crash before sending the pong.
+From: Thomas Huth <thuth@redhat.com>
 
-This patch removes the package_loaded event and uses rp_sem, instead of
-kicking multiple events. The error is detected in case of network
-failure or destination crash and rp_sem is set in the out path of the
-return path thread. This will kick the migration thread out from a
-condition of indefinitely waiting for rp_sem. The migration thread then
-fails early and breaks from the migration loop to resume the vm on the
-source side.
+Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
+KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel v4.4 to
+be able to use KVM. KVM_CAP_ASYNC_PF is available in the kernel
+since v3.15 and KVM_SYNC_PFAULT is available since kernel v3.18,
+so we can assume now that they are available in all supported
+kernels. Thus simplify the code a little bit by removing the
+checks for these features.
 
-Fixes: 7b842fe354c6 ("migration: Introduce POSTCOPY_DEVICE state")
-Signed-off-by: Pranav Tyagi <prtyagi@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20260317134531.460141-1-thuth@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
-V1: https://lore.kernel.org/all/20260421052227.8278-1-prtyagi@redhat.com/
+ target/s390x/kvm/kvm.c | 52 +++++++++---------------------------------
+ 1 file changed, 11 insertions(+), 41 deletions(-)
 
-changed in v2:
-- removed postcopy_package_loaded_event and using rp_sem to kick the
-  migration thread
-- using migration_rp_wait() in place of qemu_event_wait() in the
-  migration thread
-
- migration/migration.c | 48 ++++++++++++++++++++++++++++---------------
- migration/migration.h |  1 -
- 2 files changed, 31 insertions(+), 18 deletions(-)
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 5c9aaa6e58..6e4988a590 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1661,7 +1661,6 @@ int migrate_init(MigrationState *s, Error **errp)
-     migration_reset_vfio_bytes_transferred();
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 54d28e37d4dd..133e8c12fd4d 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -140,7 +140,6 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+     KVM_CAP_LAST_INFO
+ };
  
-     s->postcopy_package_loaded = false;
--    qemu_event_reset(&s->postcopy_package_loaded_event);
- 
-     return 0;
- }
-@@ -2317,7 +2316,7 @@ static void *source_return_path_thread(void *opaque)
-             if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
-                 trace_source_return_path_thread_postcopy_package_loaded();
-                 ms->postcopy_package_loaded = true;
--                qemu_event_set(&ms->postcopy_package_loaded_event);
-+                migration_rp_kick(ms);
-             }
-             break;
- 
-@@ -2388,16 +2387,21 @@ out:
-         trace_source_return_path_thread_bad_end();
-     }
- 
--    if (ms->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
-+    if (ms->state == MIGRATION_STATUS_POSTCOPY_RECOVER ||
-+        ms->state == MIGRATION_STATUS_POSTCOPY_DEVICE) {
-         /*
--         * this will be extremely unlikely: that we got yet another network
--         * issue during recovering of the 1st network failure.. during this
--         * period the main migration thread can be waiting on rp_sem for
--         * this thread to sync with the other side.
-+         * The migration thread can get stuck waiting for rp_sem if the
-+         * return path fails to sync with the destination. This handles
-+         * two specific cases:
-          *
--         * When this happens, explicitly kick the migration thread out of
--         * RECOVER stage and back to PAUSED, so the admin can try
--         * everything again.
-+         * POSTCOPY_RECOVER: A failure occurs during a recovery attempt.
-+         * We kick the migration thread back to PAUSED so the admin can
-+         * retry.
-+         *
-+         * POSTCOPY_DEVICE: The MIG_RP_MSG_PONG is lost due to a
-+         * network failure or destination crash. We kick the migration
-+         * thread out of its wait so it can fail the migration and safely
-+         * resume the VM on the source.
-          */
-         migration_rp_kick(ms);
-     }
-@@ -3226,12 +3230,24 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-         if (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE &&
-             (s->postcopy_package_loaded || complete_ready)) {
-             /*
--             * If package has been loaded, the event is set and we will
--             * immediatelly transition to POSTCOPY_ACTIVE. If we are ready for
--             * completion, we need to wait for destination to load the postcopy
--             * package before actually completing.
-+             * We will immediately transition to POSTCOPY_ACTIVE.
-+             * If we are ready for completion, we need to wait for
-+             * destination to load the postcopy package before actually
-+             * completing.
-              */
--            qemu_event_wait(&s->postcopy_package_loaded_event);
-+            while (!s->postcopy_package_loaded) {
-+                if (migration_rp_wait(s)) {
-+                    /*
-+                     * Error happened. Migration thread was stuck waiting in
-+                     * POSTCOPY_DEVICE for rp_sem which was never set.
-+                     */
-+                    migrate_set_state(&s->state,
-+                                    MIGRATION_STATUS_POSTCOPY_DEVICE,
-+                                    MIGRATION_STATUS_FAILING);
-+                    return MIG_ITERATE_BREAK;
-+                }
-+            }
-+            /* Acknowledgement received from the destination */
-             migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-                               MIGRATION_STATUS_POSTCOPY_ACTIVE);
+-static int cap_async_pf;
+ static int cap_mem_op;
+ static int cap_mem_op_extension;
+ static int cap_s390_irq;
+@@ -333,6 +332,7 @@ int kvm_arch_get_default_type(MachineState *ms)
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+ {
+     int required_caps[] = {
++        KVM_CAP_ASYNC_PF,
+         KVM_CAP_DEVICE_CTRL,
+         KVM_CAP_SYNC_REGS,
+     };
+@@ -340,7 +340,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     for (int i = 0; i < ARRAY_SIZE(required_caps); i++) {
+         if (!kvm_check_extension(s, required_caps[i])) {
+             error_report("KVM is missing capability #%d - "
+-                         "please use kernel 3.15 or newer", required_caps[i]);
++                         "please use kernel 4.4 or newer", required_caps[i]);
+             return -1;
          }
-@@ -3863,7 +3879,6 @@ static void migration_instance_finalize(Object *obj)
-     qemu_sem_destroy(&ms->rp_state.rp_pong_acks);
-     qemu_sem_destroy(&ms->postcopy_qemufile_src_sem);
-     error_free(ms->error);
--    qemu_event_destroy(&ms->postcopy_package_loaded_event);
+     }
+@@ -354,7 +354,6 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         return -1;
+     }
+ 
+-    cap_async_pf = kvm_check_extension(s, KVM_CAP_ASYNC_PF);
+     cap_mem_op = kvm_check_extension(s, KVM_CAP_S390_MEM_OP);
+     cap_mem_op_extension = kvm_check_extension(s, KVM_CAP_S390_MEM_OP_EXTENSION);
+     mem_op_storage_key_support = cap_mem_op_extension > 0;
+@@ -466,7 +465,8 @@ static int can_sync_regs(CPUState *cs, int regs)
  }
  
- static void migration_instance_init(Object *obj)
-@@ -3885,7 +3900,6 @@ static void migration_instance_init(Object *obj)
-     qemu_sem_init(&ms->wait_unplug_sem, 0);
-     qemu_sem_init(&ms->postcopy_qemufile_src_sem, 0);
-     qemu_mutex_init(&ms->qemu_file_lock);
--    qemu_event_init(&ms->postcopy_package_loaded_event, 0);
- }
+ #define KVM_SYNC_REQUIRED_REGS (KVM_SYNC_GPRS | KVM_SYNC_ACRS | \
+-                                KVM_SYNC_CRS | KVM_SYNC_PREFIX)
++                                KVM_SYNC_CRS | KVM_SYNC_PREFIX | \
++                                KVM_SYNC_PFAULT)
  
- /*
-diff --git a/migration/migration.h b/migration/migration.h
-index b6888daced..9081e6a612 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -512,7 +512,6 @@ struct MigrationState {
-     bool rdma_migration;
+ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+ {
+@@ -550,25 +550,10 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+     }
  
-     bool postcopy_package_loaded;
--    QemuEvent postcopy_package_loaded_event;
+     /* pfault parameters */
+-    if (can_sync_regs(cs, KVM_SYNC_PFAULT)) {
+-        cs->kvm_run->s.regs.pft = env->pfault_token;
+-        cs->kvm_run->s.regs.pfs = env->pfault_select;
+-        cs->kvm_run->s.regs.pfc = env->pfault_compare;
+-        cs->kvm_run->kvm_dirty_regs |= KVM_SYNC_PFAULT;
+-    } else if (cap_async_pf) {
+-        r = kvm_set_one_reg(cs, KVM_REG_S390_PFTOKEN, &env->pfault_token);
+-        if (r < 0) {
+-            return r;
+-        }
+-        r = kvm_set_one_reg(cs, KVM_REG_S390_PFCOMPARE, &env->pfault_compare);
+-        if (r < 0) {
+-            return r;
+-        }
+-        r = kvm_set_one_reg(cs, KVM_REG_S390_PFSELECT, &env->pfault_select);
+-        if (r < 0) {
+-            return r;
+-        }
+-    }
++    cs->kvm_run->s.regs.pft = env->pfault_token;
++    cs->kvm_run->s.regs.pfs = env->pfault_select;
++    cs->kvm_run->s.regs.pfc = env->pfault_compare;
++    cs->kvm_run->kvm_dirty_regs |= KVM_SYNC_PFAULT;
  
-     GSource *hup_source;
+     if (can_sync_regs(cs, KVM_SYNC_GSCB)) {
+         memcpy(cs->kvm_run->s.regs.gscb, env->gscb, 32);
+@@ -673,24 +658,9 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+     }
  
+     /* pfault parameters */
+-    if (can_sync_regs(cs, KVM_SYNC_PFAULT)) {
+-        env->pfault_token = cs->kvm_run->s.regs.pft;
+-        env->pfault_select = cs->kvm_run->s.regs.pfs;
+-        env->pfault_compare = cs->kvm_run->s.regs.pfc;
+-    } else if (cap_async_pf) {
+-        r = kvm_get_one_reg(cs, KVM_REG_S390_PFTOKEN, &env->pfault_token);
+-        if (r < 0) {
+-            return r;
+-        }
+-        r = kvm_get_one_reg(cs, KVM_REG_S390_PFCOMPARE, &env->pfault_compare);
+-        if (r < 0) {
+-            return r;
+-        }
+-        r = kvm_get_one_reg(cs, KVM_REG_S390_PFSELECT, &env->pfault_select);
+-        if (r < 0) {
+-            return r;
+-        }
+-    }
++    env->pfault_token = cs->kvm_run->s.regs.pft;
++    env->pfault_select = cs->kvm_run->s.regs.pfs;
++    env->pfault_compare = cs->kvm_run->s.regs.pfc;
+ 
+     if (can_sync_regs(cs, KVM_SYNC_DIAG318)) {
+         env->diag318_info = cs->kvm_run->s.regs.diag318;
 -- 
 2.53.0
 
