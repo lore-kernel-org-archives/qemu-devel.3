@@ -4,112 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B01FC035F
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A39FC037B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:47:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFwBR-0004RP-U9; Thu, 23 Apr 2026 11:41:43 -0400
+	id 1wFwGC-0005Sh-Gh; Thu, 23 Apr 2026 11:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wFwBH-0004Qj-Fk; Thu, 23 Apr 2026 11:41:31 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wFwFq-0005ST-7C
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:46:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wFwBF-0004bd-Fv; Thu, 23 Apr 2026 11:41:31 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63N6UOda3514977; Thu, 23 Apr 2026 15:41:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=z8XXMi
- t4NNbD+5Sh1l3oirBzG+cZBXiYSSAnflZfxZo=; b=hfEtPCkKTtcdhmn0Kn5vxJ
- ocKs1BLZAs7EL1ke8+BYWOmvfLYdO+ypSgTiXlT4tYTfwpIL4hY1eUkpmWsh8kzR
- +xjp+BlJk/ySYreaLm/0a75FORNxEqhhrhuG4AGGvlYJiOwPQbArtgiVwxmq2TA4
- yXZI4N1yNmJ/EjYO+EFvs5yna1dBiX4QkPTfwFc/p0pN3RgEp0mjqGTJmsTqipqo
- eD9qxL7Eq9bX+xRbxQ2HEQsZAkn7n5CUG+bN+hOB8vLmkogevGSG2aZvNLpcyTep
- g0Lod8GYuiQaAl2/eQUT8gHWP7iSYaG4H54ykfjlAUHSH4/qWroVmo5uUW/N8EAA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu29fgr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Apr 2026 15:41:25 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63NFZSqX031959;
- Thu, 23 Apr 2026 15:41:24 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkyf6ux-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Apr 2026 15:41:23 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63NFfKkV25100652
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Apr 2026 15:41:20 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 31F712004D;
- Thu, 23 Apr 2026 15:41:20 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCDED20043;
- Thu, 23 Apr 2026 15:41:19 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.71.73])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Apr 2026 15:41:19 +0000 (GMT)
-Message-ID: <986c02ec-4e43-41c9-b520-7c5a41ca4109@linux.ibm.com>
-Date: Thu, 23 Apr 2026 17:41:19 +0200
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wFwFn-0007Kk-Uh
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:46:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776959166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=whbzFQ4VHP3kJIXELgoI1gtvCiwr1NhPhtpv2xU4JYM=;
+ b=N2mom7vT9bX19+8pe+zCnCzb5Mk+B7WF1aI0XPXb6YL0/iXXJMY6WCjNPrMMpHXzHu2K+u
+ 269DzawekedzkaQPOskCHf2WUnDyM69Z3CO9V+ajn9pftWW7bU3vEQ+PFfbb9rkRqFM+Rg
+ bkiXoZsES/20qIgkVm31/EYVS3TzKkE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-aeA0Byb6Nd-Al1GiaGTttg-1; Thu,
+ 23 Apr 2026 11:46:02 -0400
+X-MC-Unique: aeA0Byb6Nd-Al1GiaGTttg-1
+X-Mimecast-MFC-AGG-ID: aeA0Byb6Nd-Al1GiaGTttg_1776959161
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CDCC7195608F; Thu, 23 Apr 2026 15:46:00 +0000 (UTC)
+Received: from fedora (unknown [10.43.3.182])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DD714180047F; Thu, 23 Apr 2026 15:45:58 +0000 (UTC)
+From: Juraj Marcin <jmarcin@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Jan Kiszka <jan.kiszka@siemens.com>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [RFC PATCH] migration: Synchronize CPUs sooner in postcopy switchover
+ phase
+Date: Thu, 23 Apr 2026 17:45:20 +0200
+Message-ID: <20260423154525.10292-1-jmarcin@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/s390x: Leverage 128-bit vector type in VLL /
- VSTL opcodes
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org
-References: <20260423141538.51583-1-philmd@linaro.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260423141538.51583-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE1MyBTYWx0ZWRfX+kyfrB/jsv/S
- ZwtoQLXz/sDTfG+NHxG8QkcB7YPnXLT/6sVb7ZlHjrzi+VMUXel9/TaKIA3QauZIlt8YnUJoHgg
- 5F3WN2Tba8DD/9P6tiM/bR2kroHiYe+HdyijY8sk3ixWjRa1YteCzo0V2qTa+DSiE10BEXFBAP4
- BiYkEaOpyV/y3P4o79ajfgCW277IoGDtkmrm0DhZ1VG3cnlbO3eIG2iZDAufaJVLXO2IY++A134
- sfg/5n61pLgU7S5jjAh8dDwzzMpeNIB5V8SJ1uW0wmAH/L0CmhSpJbKYm7CkFGcHiORzF1P+Gbw
- rxAgl1ORp7lQAO9G55aF7h+nVWlRiPV7ERozxTtYqjeFw82jg8v2sgTi2TIiuCUKegPvSD5ks7F
- /Thswvsfc5WMPUdIlyC/z95pvgc4H1zI/XxAj3I7Pe8I8rD/2xzfqX/jO0eykLSihTKswl4iBhq
- d8F/PyK1f4iUpUuERtg==
-X-Proofpoint-ORIG-GUID: E2ICGwY0wyS8sPlYn5krDIolSMgnlJ-u
-X-Proofpoint-GUID: E2ICGwY0wyS8sPlYn5krDIolSMgnlJ-u
-X-Authority-Analysis: v=2.4 cv=XMUAjwhE c=1 sm=1 tr=0 ts=69ea3da5 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=KKAkSRfTAAAA:8
- a=aKWiiJWHmIpsBlU-QCkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604230153
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,102 +84,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Juraj Marcin <jmarcin@redhat.com>
 
-On 4/23/26 15:15, Philippe Mathieu-Daudé wrote:
-> The access is unaligned, we can easily replace the 2
-> consecutive 64-bit calls by a single 128-bit one.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20260423135035.50126-1-philmd@linaro.org>
-> ---
->   target/s390x/tcg/vec.h        | 12 ++++++++++++
->   target/s390x/tcg/vec_helper.c | 19 ++++++++-----------
->   2 files changed, 20 insertions(+), 11 deletions(-)
->
-> diff --git a/target/s390x/tcg/vec.h b/target/s390x/tcg/vec.h
-> index 8d095efcfc6..34413f7e029 100644
-> --- a/target/s390x/tcg/vec.h
-> +++ b/target/s390x/tcg/vec.h
-> @@ -13,8 +13,10 @@
->   #define S390X_VEC_H
->   
->   #include "tcg/tcg.h"
-> +#include "qemu/int128.h"
->   
->   typedef union S390Vector {
-> +    Int128 quadword;
->       uint64_t doubleword[2];
->       uint32_t word[4];
->       uint16_t halfword[8];
-> @@ -72,6 +74,11 @@ static inline uint64_t s390_vec_read_element64(const S390Vector *v, uint8_t enr)
->       return v->doubleword[enr];
->   }
->   
-> +static inline Int128 s390_vec_read_element128(const S390Vector *v)
-> +{
-> +    return v->quadword;
-> +}
-> +
->   static inline uint64_t s390_vec_read_element(const S390Vector *v, uint8_t enr,
->                                                uint8_t es)
->   {
-> @@ -117,6 +124,11 @@ static inline void s390_vec_write_element64(S390Vector *v, uint8_t enr,
->       v->doubleword[enr] = data;
->   }
->   
-> +static inline void s390_vec_write_element128(S390Vector *v, Int128 data)
-> +{
-> +    v->quadword = data;
-> +}
-> +
->   static inline void s390_vec_write_element(S390Vector *v, uint8_t enr,
->                                             uint8_t es, uint64_t data)
->   {
-> diff --git a/target/s390x/tcg/vec_helper.c b/target/s390x/tcg/vec_helper.c
-> index 98eecd9fde6..feb99f51c78 100644
-> --- a/target/s390x/tcg/vec_helper.c
-> +++ b/target/s390x/tcg/vec_helper.c
-> @@ -48,14 +48,12 @@ void HELPER(vll)(CPUS390XState *env, void *v1, uint64_t addr, uint64_t bytes)
->       MemOpIdx oi;
->   
->       if (likely(bytes >= 16)) {
-> -        uint64_t t0, t1;
-> +        Int128 t;
->   
-> -        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
-> -        t0 = cpu_ldq_mmu(env, addr, oi, ra);
-> -        addr = wrap_address(env, addr + 8);
-> -        t1 = cpu_ldq_mmu(env, addr, oi, ra);
-> -        s390_vec_write_element64(v1, 0, t0);
-> -        s390_vec_write_element64(v1, 1, t1);
-> +        oi = make_memop_idx(MO_BE | MO_128 | MO_UNALN, mmu_idx);
-> +        addr = wrap_address(env, addr + 16);
+Previously, the post init CPU synchronization with the accelerator, like
+KVM, was performed in the bottom half of the POSTCOPY_RUN command
+handler. However, this causes several problems.
 
-I don't think we need to increment the address before loading from it.
+First issue is that if CPU synchronization fails, the destination QEMU
+crashes. However, it is too late to recover the source side as the
+response to special PING has been already sent, and both sides are
+already in the POSTCOPY_ACTIVE state.
 
-We used to have +8, because it's the offset of the 2nd half.
+By moving synchronization before responding, if the machine crashes, the
+response is never sent and the source side can resume from the
+POSTCOPY_DEVICE state.
 
-> +        t = cpu_ld16_mmu(env, addr, oi, ra);
-> +        s390_vec_write_element128(v1, t);
->       } else {
->           S390Vector tmp = {};
->   
-> @@ -206,10 +204,9 @@ void HELPER(vstl)(CPUS390XState *env, const void *v1, uint64_t addr,
->       probe_write_access(env, addr, MIN(bytes, 16), GETPC());
->   
->       if (likely(bytes >= 16)) {
-> -        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
-> -        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 0), oi, ra);
-> -        addr = wrap_address(env, addr + 8);
-> -        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 1), oi, ra);
-> +        oi = make_memop_idx(MO_BE | MO_128 | MO_UNALN, mmu_idx);
-> +        addr = wrap_address(env, addr + 16);
+Second issue is caused when migration is paused due to a network
+failure or user command right after transitioning to the POSTCOPY_ACTIVE
+state and the CPU synchronization causes a page fault. This page fault
+blocks the CPU and the main QEMU threads and cannot be resolved until
+postcopy migration is recovered. However, as libvirt also tries to
+execute 'cont' QMP command at this time (destination side transitions
+from POSTCOPY_DEVICE to POSTCOPY_ACTIVE), it will also halt waiting for
+the response from the blocked main QEMU thread, unaware of the fact that
+the migration is paused and needs to be recovered. Thus, it will wait
+indefinitely and never report postcopy migration error.
 
-Same.
+When the CPU synchronization happens sooner, and the network fails
+during it, the source side can transition from POSTCOPY_DEVICE to FAILED
+state and resume safely. If migration is paused later, the main thread
+won't be blocked by CPU synchronization and can respond to libvirt.
 
-> +        cpu_st16_mmu(env, addr, s390_vec_read_element128(v1), oi, ra);
->       } else {
->           oi = make_memop_idx(MO_8, mmu_idx);
->   
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+---
+I am posting this as RFC to discuss the point at which the CPU
+synchronization should happen.
+
+For the POSTCOPY_DEVICE state to be effective, this synchronization must
+happen before the destination machine responds to the special PING
+command. This leaves us with 2 options:
+
+1) In the PING command handler before responding to the specific
+   request, as proposed in this patch.
+
+2) After loading CPU VMSD, for example in the post_load hook.
+
+The first solution limits the number of places where synchronization
+needs to happen, however, having it in the PING command handler feels
+somewhat hacky.
+
+I have also tested the second solution, and while it seems natural to
+synchronize the CPU after its data is loaded in the post_load, there are
+multiple CPU types and VMSDs and each one would need to call
+synchronization in its post_load hook. This would basically revert Jan
+Kiszka's commit [1] which refactored CPU synchronization and united it
+to one place.
+
+Kind of middle ground idea I have, is to add a special flag to VMSDs
+that contain CPU data. After loading such VMSD the loadvm core would
+then run CPU synchronization for that specific CPU. This solution would
+bring the synchronization close to the actual load from the migration
+stream but also keep it in one place.
+
+[1]: ea375f9ab8c7 ("KVM: Rework VCPU state writeback API")
+---
+ migration/migration.c |  1 +
+ migration/migration.h |  7 +++++++
+ migration/savevm.c    | 16 +++++++++++++---
+ 3 files changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index 5c9aaa6e58..9753f7dc26 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -320,6 +320,7 @@ void migration_object_init(void)
+     current_incoming->page_requested = g_tree_new(page_request_addr_cmp);
+ 
+     current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
++    current_incoming->postcopy_device_cpu_synchronized = false;
+ 
+     migration_object_check(current_migration, &error_fatal);
+ 
+diff --git a/migration/migration.h b/migration/migration.h
+index b6888daced..799a686a0b 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -210,6 +210,13 @@ struct MigrationIncomingState {
+      */
+     QemuSemaphore postcopy_pause_sem_fast_load;
+ 
++    /*
++     * CPUs have been synchronized during POSTCOPY_DEVICE state before
++     * responding to a special PING to source. This means, synchronization is
++     * not required later during loadvm_postcopy_handle_run_bh().
++     */
++    bool postcopy_device_cpu_synchronized;
++
+     /* List of listening socket addresses  */
+     SocketAddressList *socket_address_list;
+ 
+diff --git a/migration/savevm.c b/migration/savevm.c
+index dd58f2a705..ad00c85887 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2143,9 +2143,10 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
+     /* TODO we should move all of this lot into postcopy_ram.c or a shared code
+      * in migration.c
+      */
+-    cpu_synchronize_all_post_init();
+-
+-    trace_vmstate_downtime_checkpoint("dst-postcopy-bh-cpu-synced");
++    if (!mis->postcopy_device_cpu_synchronized) {
++        cpu_synchronize_all_post_init();
++        trace_vmstate_downtime_checkpoint("dst-postcopy-bh-cpu-synced");
++    }
+ 
+     qemu_announce_self(&mis->announce_timer, migrate_announce_params());
+ 
+@@ -2510,6 +2511,15 @@ static int loadvm_process_command(QEMUFile *f, Error **errp)
+                        tmp32);
+             return -1;
+         }
++        if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
++            /*
++             * Try synchronizing CPU before responding. If it fails, QEMU exits
++             * and source side can resume.
++             */
++            cpu_synchronize_all_post_init();
++            mis->postcopy_device_cpu_synchronized = true;
++            trace_vmstate_downtime_checkpoint("dst-postcopy-bh-cpu-synced");
++        }
+         migrate_send_rp_pong(mis, tmp32);
+         return 0;
+ 
+-- 
+2.53.0
+
 
