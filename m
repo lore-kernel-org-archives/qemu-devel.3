@@ -4,118 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C2DF589D4
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 13:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DBFF589DA
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 13:51:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFuNw-0007vX-IP; Thu, 23 Apr 2026 09:46:28 -0400
+	id 1wFuSK-0000dB-2J; Thu, 23 Apr 2026 09:51:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wFuNc-0007uX-U8
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:46:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wFuNa-0002Yg-7l
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:46:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776951962;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=umWSGhwXjp13GgWmuga0aMUcGzPUo1FJVUkucVpdH04=;
- b=gAOw4/3WZmFIQdoYuqBryRo2oghC90Kqqv4UwHAmHT1jR1E4cpm60KUiIJ3R4HQd+5sR5S
- GMGF30KTb4YR8UsUBn1TWlrwkl+Dm5o2sp94/1acNqfJ9rs+29wTCTnoxDMbx9np2h87hw
- z7hcsge2naBVqCvnYHetn9esHischsQ=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-z_AiVprlO02dm71au6cApQ-1; Thu, 23 Apr 2026 09:46:01 -0400
-X-MC-Unique: z_AiVprlO02dm71au6cApQ-1
-X-Mimecast-MFC-AGG-ID: z_AiVprlO02dm71au6cApQ_1776951960
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3595485abbbso8296297a91.2
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 06:46:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuS6-0000bv-E5
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:50:51 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuS4-0005T2-2D
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:50:45 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so86213585e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 06:50:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776951960; x=1777556760; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=umWSGhwXjp13GgWmuga0aMUcGzPUo1FJVUkucVpdH04=;
- b=gY00F838UWmJWFgJwW3Ffhhy9IZ6AecGFhveU87VBSdaH0M1gssAGsEEuhxmtAceQi
- Awyr2r1MMWJ+yxOm1K3+H8WF0vIY1+tsTc/zyqUWkV8YozSgk+bsEj5ovPgXZHf9+LKe
- 1WEVbdaYTU3Bx9a1UBKXixZdUvg+s3GMu869kDLA3VZNz1ZsZknYRiMnOWvki+KnGpxX
- Skf3ZjEEY6S+eulqzyiX+xuq2x+UnBTeXhNK1a0YnPs/kPaau/NOctjZ2i11ySjLhHiC
- GKpjQ40p/0719ajbNsfY9wlhwfPXOvxpYdRw54ijunkv2bChCKSwyg2F5LCAdqDUypZQ
- uf+A==
+ d=linaro.org; s=google; t=1776952238; x=1777557038; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=s+Gh4gAhCyJWuIktnSc/R0tEKiQpXEAJ3EEfe3HRlIo=;
+ b=eZQJJTT2PNGwteGoYisNkprb0kNqBO7UlRrvvT0XLB5gKHK/oAv0Ukjjj06QEdMyYH
+ hynWdbs2lrMOnnOLLJeny7Qjbb31CFLvX99TzkuY/LMJCr52lB9fAn+pjDYOhy5dEOOL
+ 7twaN5VGxbRCWD/yNjeVMDIjx82p13ooUU2GcQmut902+4BAFh8G5E9NCsCXzKvlmOfc
+ Igpwfj1c7mQtCV+IRTyZ+bjhIIaker+KG4tcc4HEEnepTLumolJ/mqFU4gUnpZlkHlSp
+ 55cy99zy0ezX5F8QYbT+t9z9BG3HBf5NcHRLUAvsmJA0AyZ0Y/8egJ56OI7/EQKdu2/H
+ Mzwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776951960; x=1777556760;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=umWSGhwXjp13GgWmuga0aMUcGzPUo1FJVUkucVpdH04=;
- b=LkYvErZrF2Tp7cNFKcs52Opk/cIA7mcgh/10TevAF8itdXPLBZ3fb3GJVrLh1fqKzD
- wyDE6S/USVarUOR3RMtZpQgxn88Kn6H4KBwytlNaCt9IAlUtKARdirhwjojcsTVAHAn9
- 1uy6XUj8yuhpbxj8DHDUyx9nN/PnFeGU72PmLWDfrEhX9FctIM1Pce2vApkWn6ZRIVwA
- zT/sbYuQCI9edYbdw5q6sYZYS+aUuCASfweRooX94BAv4vrMYJD0xTl8JwwytMs60IBQ
- CxqXxwhMfb8YYwAiWnSWDdj5QZwO3nApoQUGQCi1RZPFt+7/SXSZyUN7nd4CaWyAjEcT
- KIhw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8PBg4tUe9K6d6WC7Ui+EOJXX98jUHkTGEfomYwOQwNp363eqk66PcAqSUQsqZoEmL85er1GGN+YBRd@nongnu.org
-X-Gm-Message-State: AOJu0Yyt+qGN6rHK7j7K6nr2v1ZjgGAJn1iQf0gbu69SK8XjQ3481X/i
- lyBH43i1Ffhqqet6E77+F5Kgw2yL7mfCHXGG0c6474Oca5mVGDpCMCoIinvpWaNbJWlkMcF6E86
- JedmxvsS5Wz0D7Brs768qYByfP3ULIKTjmU971Nuh298pQuTahaDoY8O9
-X-Gm-Gg: AeBDievz6yCC615E0wldDf6UrpAanDzRKyelNjs+UY5UwR6n6yS1/Max/DRFfFe3vqs
- 84AbbOdXGfubC3lNaCqgdF2cW0eHdKmvQhKuxt1zWyaIpHjBn7stDRCjV7VcVaN6+7fpxDRB4a0
- HO2wDknthsdNOn4CdqO910EdUwSj3mbVP4o/SQop2weYF6ZRr0whiTvlbVOQTnkSQH9BgryiELN
- 3xgBTRp6g4Oc0yBAd7h0bafi14kno0ESpiKeDc9mw8hoYKCUTqDendxGFNFUdCUVP1Edjovylp/
- MkXV/nwIVnnhDK8+4CpFFwptdzcl52ULOp61Yf94VzkA+8Q3WNNLHvLDBfJfdMjFMQjU3AIqq2z
- f0KEvk7rvSE/lGjWewRDFfTxEu6wosw==
-X-Received: by 2002:a17:90b:4fcc:b0:35d:8fdb:4f26 with SMTP id
- 98e67ed59e1d1-361403b7d66mr28635663a91.1.1776951959972; 
- Thu, 23 Apr 2026 06:45:59 -0700 (PDT)
-X-Received: by 2002:a17:90b:4fcc:b0:35d:8fdb:4f26 with SMTP id
- 98e67ed59e1d1-361403b7d66mr28635616a91.1.1776951959410; 
- Thu, 23 Apr 2026 06:45:59 -0700 (PDT)
-Received: from redhat.com ([2a02:8012:f011:0:f1ce:ac56:d2cd:7c2e])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-361410a7cb5sm20382034a91.9.2026.04.23.06.45.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 06:45:58 -0700 (PDT)
-Date: Thu, 23 Apr 2026 14:45:48 +0100
-From: "Daniel P. Berrange" <berrange@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PULL 25/32] crypto: fix lifecycle handling of gnutls
- credentials objects
-Message-ID: <aeoijCiAfbgGewXE@redhat.com>
-References: <20251103133727.423041-1-berrange@redhat.com>
- <20251103133727.423041-26-berrange@redhat.com>
- <9163e2f3-4bb9-4010-964f-20ca66ba964f@maciej.szmigiero.name>
- <6ffa975c-9d13-4569-bd50-59df75c89b9c@maciej.szmigiero.name>
+ d=1e100.net; s=20251104; t=1776952238; x=1777557038;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s+Gh4gAhCyJWuIktnSc/R0tEKiQpXEAJ3EEfe3HRlIo=;
+ b=HZ6pwyay9+tpmwG/ymwp3QxMwkkQgNwBPuUY2fgu/XorJfjo+/oBJafuIPBwuzv7sx
+ 4B3tbdLQeDcKDc1qaVRwkYenQqTSgB/qWR0CsI+mTDmf4+kCdNqnm54alzti75+lbH7t
+ koWRr/6nTgjeu2jiu6t+qLOx5kY/7peLUYe3fqjbPIg1m8zz6fy8A7yKcq3O7tMDzd4i
+ XG4XGesg55mFKEH3/iVBng8tNhjvzGtuOg3JEpiTicLlPJsGEKCC4SODXBarkaoIv2Hr
+ D93qmyN00EhAgRQgRPaU96NL8jFVIjhAHvNuNwSluATGZ7HCqjz5Ukg5NyWIpC0s6jrG
+ MrmQ==
+X-Gm-Message-State: AOJu0Yzg+bCeYy2fFCchtNHtaaguimHyBRm9H+rN37iJBsEJKs57Ho1G
+ sm7UK3beSIDX70oD3CS7I1SIu5oQsdKIwFMCV8tEsF6+DBPUWBvGrDQAAtp7m7QnYYaM1G5IwZI
+ 8TxU32hs=
+X-Gm-Gg: AeBDies3tnm+8xr+7eEPwNzL9Xgl+TP2LKkVNT0uzYM3xW4WmsLqZw2yO0PqG1U2pP1
+ 3bXkGzm1h5M1ezrFODoFufrlfQyxTNTr2/hHMRHtZ7kPelblJKOIAyukuwlOiD9jjURzbTg8DnW
+ JIEVw9M+QR9UxcDMum0mAZGE4DFki19yh036vcPlladC6ZYlJRl5O6+7nIYvMPBiRFwKhFVxVQt
+ r/ZNKIb6mUp+8csRQySKU5E2BpRaR56NXp4cJbMHVBP+NM8LEvV1axl78oWlo5p15ZbLaYdNVw6
+ vl1bNiFnbD/+Q4ytQiaaCyFOoFn3HqqptBs5kEnQNlWw92n+gozFkQiLtli4+RsGZ4zsPF/a+FM
+ TsYjDdLS5Q5PykIpnHFnygYoC0sC9M+xA0lveKU0Yo2HcC75Gf40z1lm8W3uiW9mfvXKS7NFoHl
+ iqGiQBzXrAWyX7h6dtAZfHqUd9BD1TPFnkCBo5LNfN2qIi4pbUxdhL8Gn+CxM/MhjZ9dQ70vjDn
+ YA4eFOJW4A=
+X-Received: by 2002:a05:600c:8483:b0:488:7ff6:1f75 with SMTP id
+ 5b1f17b1804b1-488fb782d91mr407738965e9.21.1776952238307; 
+ Thu, 23 Apr 2026 06:50:38 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a575ad67asm165558255e9.2.2026.04.23.06.50.36
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 23 Apr 2026 06:50:37 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/9] target/s390x/tcg: Compile various files once
+Date: Thu, 23 Apr 2026 15:50:26 +0200
+Message-ID: <20260423135035.50126-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6ffa975c-9d13-4569-bd50-59df75c89b9c@maciej.szmigiero.name>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,89 +103,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: "Daniel P. Berrange" <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 17, 2026 at 03:31:02PM +0200, Maciej S. Szmigiero wrote:
-> On 3.04.2026 20:25, Maciej S. Szmigiero wrote:
-> > On 3.11.2025 14:37, Daniel P. Berrangé wrote:
-> > > As described in the previous commit, the gnutls credentials need to
-> > > be kept alive for as long as the gnutls session object exists. Convert
-> > > the QCryptoTLSCreds objects to use QCryptoTLSCredsBox and holding the
-> > > gnutls credential objects. When loading the credentials into a gnutls
-> > > session, store a reference to the box into the QCryptoTLSSession object.
-> > > 
-> > > This has the useful side effect that the QCryptoTLSSession code no
-> > > longer needs to know about all the different credential types, it can
-> > > use the generic pointer stored in the box.
-> > > 
-> > > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > ---
-> > (..)
-> > > diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
-> > > index 5c55b07b2f..0a728ccbf6 100644
-> > > --- a/crypto/tlscredsanon.c
-> > > +++ b/crypto/tlscredsanon.c
-> > > @@ -36,6 +36,7 @@ static int
-> > >   qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
-> > >                               Error **errp)
-> > >   {
-> > > +    g_autoptr(QCryptoTLSCredsBox) box = NULL;
-> > >       g_autofree char *dhparams = NULL;
-> > >       int ret;
-> > > @@ -43,6 +44,8 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
-> > >               creds->parent_obj.dir ? creds->parent_obj.dir : "<nodir>");
-> > >       if (creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER) {
-> > > +        box = qcrypto_tls_creds_box_new_server(GNUTLS_CRD_ANON);
-> > > +
-> > >           if (creds->parent_obj.dir &&
-> > >               qcrypto_tls_creds_get_path(&creds->parent_obj,
-> > >                                          QCRYPTO_TLS_CREDS_DH_PARAMS,
-> > > @@ -50,7 +53,7 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
-> > >               return -1;
-> > >           }
-> > > -        ret = gnutls_anon_allocate_server_credentials(&creds->data.server);
-> > > +        ret = gnutls_anon_allocate_server_credentials(&box->data.anonserver);
-> > >           if (ret < 0) {
-> > >               error_setg(errp, "Cannot allocate credentials: %s",
-> > >                          gnutls_strerror(ret));
-> > > @@ -58,42 +61,26 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
-> > >           }
-> > >           if (qcrypto_tls_creds_get_dh_params_file(&creds->parent_obj, dhparams,
-> > > -                                                 &creds->parent_obj.dh_params,
-> > > -                                                 errp) < 0) {
-> > > +                                                 &box->dh_params, errp) < 0) {
-> > >               return -1;
-> > >           }
-> > > -        gnutls_anon_set_server_dh_params(creds->data.server,
-> > > -                                         creds->parent_obj.dh_params);
-> > > +        gnutls_anon_set_server_dh_params(box->data.anonserver,
-> > > +                                         box->dh_params);
-> > >       } else {
-> > > -        ret = gnutls_anon_allocate_client_credentials(&creds->data.client);
-> > > +        ret = gnutls_anon_allocate_client_credentials(&box->data.anonclient);
-> > 
-> > Pointed question - where's the object pointed to by "box" allocated in this case
-> > of an anonymous TLS client being loaded? :)
-> 
-> To be clear, that was supposed to be a humorous report of a regression introduced
-> by the above commit - sorry if it wasn't communicated well.
+When a file doesn't use any target-specific knowledge, it can
+be compiled once as common object. By moving the file to a
+meson 'common' source set, we ensure no target-specific API
+will be ever used [*]. This series move early few s390x TCG
+files to common because in the current state it is cheap
+enough to do so, no need to procrastinate.
 
-No problem. I understood your message, I simply forget to
-reply to it :-(
+[*] https://lore.kernel.org/qemu-devel/beefeef5-96ba-4645-a01a-7ca96055d93a@oss.qualcomm.com/
 
-> Reproducer:
-> > $ qemu-system-x86_64 -object tls-creds-anon,endpoint=client,id=test
-> > Segmentation fault
-> 
-> The above code branch really needs something like
-> "box = qcrypto_tls_creds_box_new_client(GNUTLS_CRD_ANON)".
+Philippe Mathieu-Daudé (9):
+  tcg: Include missing 'tcg/tcg-op-common.h' header in 'tcg-op-mem.h'
+  target/s390x: Do not compile KVM stubs for linux-user binary
+  target/s390x: Introduce common system/user meson source set
+  target/s390x: Compile few files as common unit
+  target/s390x: Compile translate.c as common unit
+  target/s390x: Compile vec_helper.c as common unit
+  target/s390x: Have MSA helper pass a mmu_idx argument
+  target/s390x: Compile crypto_helper.c as common unit
+  target/s390x: Replace cpu_stb_data_ra -> cpu_stb_mmu in STFLE opcode
 
-Yep, and even more importantly we needed a test case in test-crypto-tlssession
-to validate this works !
+ include/tcg/tcg-op-mem.h         |  2 +
+ target/s390x/tcg/crypto_helper.c | 80 +++++++++++++++++---------------
+ target/s390x/tcg/misc_helper.c   |  7 ++-
+ target/s390x/tcg/translate.c     |  6 ++-
+ target/s390x/tcg/vec_helper.c    | 34 +++++++++-----
+ target/s390x/kvm/meson.build     |  2 +-
+ target/s390x/meson.build         | 25 +++++-----
+ target/s390x/tcg/meson.build     |  8 ++--
+ 8 files changed, 96 insertions(+), 68 deletions(-)
 
-I've CC'd you on the proposal fix
+-- 
+2.53.0
 
 
