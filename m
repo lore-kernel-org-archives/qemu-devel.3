@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 160DAFC0340
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC0BAFC0342
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 15:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFvqN-0005Ts-HT; Thu, 23 Apr 2026 11:19:55 -0400
+	id 1wFvqQ-0005Ux-QZ; Thu, 23 Apr 2026 11:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFvqD-0005Sn-3h
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:46 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wFvqP-0005Uf-BC
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:57 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFvq5-0001pI-EP
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:44 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43eada6d900so6639877f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:19:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wFvqN-0002GZ-Qc
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 11:19:57 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43cf7683a28so4643203f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 08:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776957573; x=1777562373; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=27s9xoydCmoqaf8+7Uuu1ckK4PAczzBgfi1JCn/Q090=;
- b=WGU0ShI5iDwL0tUsE9g4ziOvyniCHidqiy7YCW8GVhlSKmLwdyxiRstBl9R9RBsljI
- uXZvbA/RZWkxecIrjVfxm/oMpFhB6Z+3MHTgP5o/ax6p41NLbNXXdu4CzhfUdoOJUEOU
- 0QqCe5yRiw78eQLkUNw8uKt4onEoG47gdM8wegJG2dG5zjr2Ym5EnT0tfrGM83y5ZK48
- sElLtrY0zDnY/qYxx58eabaYeXvyilPcE0rdVJssoCAirw8H6t+bd7XqV86g4jdvBGFN
- hu3BqdBl25Sx6worU3OjjRGkmt749U8ZIB5azP942A8hbEHx63johKAUj2QMU/FHR/2v
- x8JA==
+ d=linaro.org; s=google; t=1776957592; x=1777562392; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=228cf+S0c2e/rGab2mnaiBCrE3sra0xAuasuA/jsx9E=;
+ b=jB9b40NMRABq2FHd2IJ5iW4QbywGYjsx7jrYPgM76rvzMLHNaP1rfo1jPRpsv7amVt
+ KhiI3UBB13geVps2LdhiT2onsq+DvDD0dSnCccsAbGYHEMvBrAo4v7AcUag4+GFXYcwI
+ N0yCVhD5cZz/1dFy4CuChC1xdDFi9ycMQuetlvDY6xObVDI+vALtoX8tMEKeprwfLuiY
+ sbnyzjzwx0fxco/PwUXGwoXkiq9xjwszJBjcDUtWTIVAcUmhPC1M5pF6q67V7GL+4hUk
+ Mz2q3OUmeFZ2N1NcBgYiXdNGE9ypW1SthNUc7J7IdlO1DJMRLARz9CGTRa5atQUEwYdP
+ v69Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776957573; x=1777562373;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=27s9xoydCmoqaf8+7Uuu1ckK4PAczzBgfi1JCn/Q090=;
- b=OFtfCvDTWHQMtkYb6vpFUWEXqpeWso6JIWibDSrYKpDZVZcr5QkaHsj1DzBF3s61SG
- sTpUo7Jz4jluheAnnH+YcihMh5jYdAERD+lS14CGGZd+Jo6bB06Ypqe+KPcWK3ZWz+Y1
- RwZh5FVlfnHyrN2s1f8K9yCRbW8tM8vYVbrTjjPpVFDaNxP3boDXYhXvuMwxOYselDQh
- jJ48gK6kpDzQEv54l6W0YS8GJpuYfeXAoJpcoj8GqxSZzCxwdN77RRHKy4gnwJzdqATm
- 496Oiu/qbatHjT9TS1jPyJYp/SJl1jsrHe7pgVKy09owmEivjLSHN9lj+bUTZqx1p42e
- lrMg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9F7qG7D6EyDVNv026yUimaCCsEWAvL/0fjOtDRMPRT6aybK4ucI59ezRSqOC6/L0uSDnoB5WBdrQW9@nongnu.org
-X-Gm-Message-State: AOJu0YzMchysDI8dKSS//zsz8sD6iHwPrhGvxsFxzbxyXw4m2kM8q9gD
- QVqLfjlTEhUzn5+oO8KEDT7ZsKZOCf795VOBTX4WIukd1U3qMdevCSyeBI5w4Iv2/zk=
-X-Gm-Gg: AeBDieswdbSZC+uJpcjAB1eQF2M0oKGpgxdMNiZ4zYsFOJE/cOINrzn6k0kWC5lFk5K
- z3aZfM647pClaQO1bPZqNzYyzs77/YvMJXRFBeJRMZBsKL/S4qzLVS6ImNEa0N9XHo4IR0CeoSZ
- sec/8SnKhN5E1eOCoUUMFHzMRCzzIMHHl77Fd/B2/UGceNlSqFGHrEXl8Q0An3BafX60M6gJv0z
- Rzwh8nOMxA0RyjKwjiOIIG+iC6acbLQkc7v1uQs2+B5tjdalkzICSYEShRpkgfgOQ3HI2EaEjQU
- gE0LmS5S5EYEv+n358puq0VNur0wbvhdOW9W57jqZ89VTRzB4htBfXgyk9u7wPuP7UfcxKSvrxM
- pdhKpOuk+bbnYf1U3/HgT99HHSbbN9xhDWaFpo5IyqATXmgf/svGQ3SeBoSugcZ4NX5qe9RLDMY
- ehiSDyv1fT7gnKcfgaaKfzzc4leyf5QVw64v/ZSQW/cO4Su8sWKxZeQD1w5mkHhPFgJubWXVnU0
- aNi7E9lr9kp+uM=
-X-Received: by 2002:a05:6000:2212:b0:43d:68dc:9ca6 with SMTP id
- ffacd0b85a97d-43fe3dc7b4bmr42221253f8f.18.1776957573089; 
- Thu, 23 Apr 2026 08:19:33 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e46471sm51979209f8f.28.2026.04.23.08.19.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 08:19:32 -0700 (PDT)
-Message-ID: <052dc9b7-2258-493a-a6ac-74cf50ece341@linaro.org>
-Date: Thu, 23 Apr 2026 17:19:31 +0200
+ d=1e100.net; s=20251104; t=1776957592; x=1777562392;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=228cf+S0c2e/rGab2mnaiBCrE3sra0xAuasuA/jsx9E=;
+ b=NJYoq7cbz+sTFpIzhA9DxL6TNPM3/nuTNiX8pdmu83ycgWqt68tifEO9iNsjnbUl5D
+ rMDwQhmlePRycqEf9/xU/FlinNBFe5YxY+xK34HZ53KHNBchKJIGhg0KKbljIIbFWyp2
+ taTq4KoZ0bf0DBbdx67oB9wvqSXV8JLOdnD9KPkrkoriYtbChoky5gu3ZGAzdZxM1aOD
+ T2NNEWjuUa/nFo4MneGSW25CZ0dwiYk+oKJrhJJ8K3TCjD8VntggkfFV3il4OcA8RGai
+ az0BajcvfGFUtfjcMRMBjPhxaDE/4CSgyO9HYIGeVf8WbQTJ3CNO0y2/VOgX/Ij48DI4
+ UlHw==
+X-Gm-Message-State: AOJu0YwP8ZS0KxdxMQqcTSPydRbvKBMshsqU7Uv6wrESyoWvyMeq1n6Y
+ TYt2GaqSt6V785LXAdbT2ep4wIOVm5pxZfIwGkbRXu8sSB1oGMcp6iWRK21MHa4yI7s=
+X-Gm-Gg: AeBDievrqtBcRiDYKiRXZB/nftk1gAmfvRhrE5qur+sRfNaapngydRPIhyV5IqFUi2w
+ Fulc7N3XXDQ4+W4jnyan3wlr4XvOnrXc6hOIOQDiSRLz6OizufGqd3Ez3tVnqkcGipflb/nauQV
+ 4B2BAg7bMzaF7S7CrvaGwYRzTeslk84cv6t1zAtXods7wX0THhcYRQnzt8O6yyz8h0jXG06o+/V
+ CkFINWMiFaxV9Qctg7befj1d2ldwUz+kE9RMbJlOGpPymgLdkOnmOdZ36USPn/ob2hm9uBsn0Iq
+ ivybzTPnj1axgtnVJ/sTV2UmL5aBULXprPdbWC9nseMU/hhDJE9J8uK0eiizjODFgsGy5Vh+fWL
+ 3szpvcCjtMYpG2vGXu7GUfd6F9FUndgjJQhQD7z0rtFdO6955aAG6POoDUyN8EEn+4E/FHyvXEV
+ cfjE70BoXWOTBUK3YcryEAsOFiDJDtLeckAQ==
+X-Received: by 2002:a5d:64c4:0:b0:43d:708f:a63e with SMTP id
+ ffacd0b85a97d-43fe3dbddbbmr41774378f8f.10.1776957592440; 
+ Thu, 23 Apr 2026 08:19:52 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4cb1249sm50417720f8f.5.2026.04.23.08.19.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Apr 2026 08:19:47 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CA1F35F943;
+ Thu, 23 Apr 2026 16:19:46 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 2/2] hw/display: don't accidentally autofree existing virgl
+ resources
+Date: Thu, 23 Apr 2026 16:19:46 +0100
+Message-ID: <20260423151946.1853943-3-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260423151946.1853943-1-alex.bennee@linaro.org>
+References: <20260423151946.1853943-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add myself as maintainer for linux-user
-Content-Language: en-US
-To: Helge Deller <deller@kernel.org>, laurent@vivier.eu, qemu-devel@nongnu.org
-Cc: deller@gmx.de
-References: <20260423151521.3969-1-deller@kernel.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260423151521.3969-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,18 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/26 17:15, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
-> 
-> I'd like to step up as maintainer for linux-user. I'm actively using
-> linux-user to emulate a HP-PARISC (hppa) linux environment on my debian
-> buildd servers, so I'm very much interested that linux-user is running
-> good and stable.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
+While sanity checking a create blob operation the use of the auto
+freed res variable could lead to inadvertently freeing an existing
+blob.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Avoid this by in-lining the virtio_gpu_virgl_find_resource() check as
+the value is not needed anyway.
+
+While at it add a comment to the end and use g_steal_pointer to make
+it clearer the object lifetime exceeds the function bounds if we pass
+all the checks.
+
+Fixes: CVE-2026-6502
+Fixes: 7c092f17cce (virtio-gpu: Handle resource blob commands)
+Message-ID: 20260417094443.785462-1-alex.bennee@linaro.org
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-stable@nongnu.org
+Message-ID: <20260417122703.845442-1-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index b7a2d160ddd..add85bd4e61 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -830,8 +830,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    res = virtio_gpu_virgl_find_resource(g, cblob.resource_id);
+-    if (res) {
++    if (virtio_gpu_virgl_find_resource(g, cblob.resource_id)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
+                       __func__, cblob.resource_id);
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+@@ -884,8 +883,9 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+ 
+     res->base.dmabuf_fd = info.fd;
+ 
++    /* Now live, cleaned up in virtio_gpu_virgl_resource_unref */
+     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
+-    res = NULL;
++    g_steal_pointer(&res);
+ }
+ 
+ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+-- 
+2.47.3
+
 
