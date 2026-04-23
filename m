@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE52FDEE29
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7027FDEE29
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 17:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFxku-0005lG-O0; Thu, 23 Apr 2026 13:22:24 -0400
+	id 1wFxsg-0007Jv-N0; Thu, 23 Apr 2026 13:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wFxks-0005kr-IJ
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:22:22 -0400
-Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wFxkq-000107-Et
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:22:22 -0400
-Received: by mail-dl1-x1230.google.com with SMTP id
- a92af1059eb24-12c565dd3a7so9535577c88.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 10:22:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776964937; x=1777569737; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FAqgVbViTYcb7RPsu+Jzg5lkBkP6Jlwh5uu12OLWbpU=;
- b=ao7UTEzKqIBDHJblncSFd9K+4gv2pjNFbdNG2D/7LgvkHBeHbMCG7J9Qkuw1Cd1iC1
- quo9+o6+6GI1hljI+rbn4/iartkY1uqeyRGQZFvlTSH+2OmuNsWsKcliLa7e4zD2Etji
- kU+hLUnJ2iy8EVBSYVtZBxusNjJECI4dTZtMIinrH7ksF94fmaoKU0KMVc3ORbV79YFu
- LJP0kr9zdShCynye+9sSqwCbxsldlLHGcdeL4BxrUg0a3nlK1t6XDyx4IwYeYvE6VwIj
- opmqhaCSGNFSh5pOYXsuhov23sqDMqhDFD31H2kvWJct5UE9ruxbldNg1RFMgZ7pm7bM
- SPbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776964937; x=1777569737;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FAqgVbViTYcb7RPsu+Jzg5lkBkP6Jlwh5uu12OLWbpU=;
- b=XLAfvCFdWXrHDnO5MIBTZTBpsPNGZtdqOm7MXAeEsQhY7t2rG3k+GJblS4cJ2Fhi3y
- A1qN9hLsywnPB1gOY5yPfhAIWDjNzUpKXXGfD/3KZbklmX1Xp4A+MxnwPKWYp/uq39fy
- 45UtslnalpD8c7YYnJmbqAl487yQA+UyFJTdy/vBT5nGcLrDnfe2gWXgMbLW6emBaIL9
- l+idNdKf1y5Mll8+WcW8vLsl2xwOFsrxXnEMo0sffTjPBJE+tznZnHdwFf1Wgwg1ruyq
- D8/R7RiGBfsrbHHW+v4N0mSxVibsWhLSaVpP+md7+fIbg367KP2W9g5iztE3A7rwVLWe
- npSA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+u2VIGnjU/H8Cr8Ubtmxsq3ytmjRiGhQBdYlr7xa5NcAlKb1Vy1c6SQ7ciAK5rca1WTzZgpZN8900T@nongnu.org
-X-Gm-Message-State: AOJu0YzCKoA3oXmH3KFWlCa6XaoFVS9+czD/UHUbVkWi0KJz4ys9zS0f
- EGSZWR0NohpTMRNMciw3xHCDFWcHGM0VCYlag1ngLVXKIzUthDaZzbyd
-X-Gm-Gg: AeBDieuv9qfh06kJUNv8phzI1jsjC8LyDt85tHl6n2R4ithJ8OXmZuCrrQkmB+gzP6k
- yadjUURYR2p7Cdq3PtligLgpabZvxO5n4sPmWdU4xsewdRq7rsoFxp4RH4da8m6Ko+qHHvybgBi
- MznmB8fCXR377HOVRs13iyFLg4Nc06ARke5TNu1QXyxXCaFzHwobWwkV35cPQXg0Y3ilVVhHFmE
- HHRQDablVGjHr7+xcAYdL+JrV2Yq9kXChNV8XuJNCz+SC7Gd2dBYY9A6CS2RnIpggyo1FNz+FLx
- bl2H+NRIyZqtZ1G8K3CdJn3k+zyog6yFhBrTnkck8byIDwTx9UQdVeXDCveubUKtRg259NSmEko
- sGsxe8L0VPb/lO55KC2VWEWt96GEcZNnEM8BWJtKY4/tW27CAI+K1LDJc3lh7Xoj4LbdOSBJ/F6
- UNeltX/fwf0Olspl6QfUqo913mHoh5mZ2W/CChYe5p2yz+UlxagNX16e9kMxzMx6SXy0rD0aNGb
- SQ=
-X-Received: by 2002:a05:7022:6b8d:b0:11f:3483:bba6 with SMTP id
- a92af1059eb24-12c73f717efmr15717435c88.13.1776964937006; 
- Thu, 23 Apr 2026 10:22:17 -0700 (PDT)
-Received: from localhost.localdomain ([143.54.78.177])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2e539fa6134sm29307962eec.3.2026.04.23.10.22.14
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 10:22:16 -0700 (PDT)
-From: Lucas Amaral <lucaaamaral@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Lucas Amaral <lucaaamaral@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, agraf@csgraf.de, mohamed@unpredictable.fr,
- alex.bennee@linaro.org
-Subject: Re: [PATCH v4 0/3] hvf: map granule abstraction, configurable IPA,
- and MAP_FIXED alignment fix
-Date: Thu, 23 Apr 2026 14:22:10 -0300
-Message-ID: <20260423172210.51760-1-lucaaamaral@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CAFEAcA9587cZ+oOv2t6No6eBJdR9gxow8RFqy-JN=7OH3xk7HA@mail.gmail.com>
-References: <20260317175744.32469-1-lucaaamaral@gmail.com>
- <CAFEAcA9587cZ+oOv2t6No6eBJdR9gxow8RFqy-JN=7OH3xk7HA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFxsS-0007GP-GK
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:30:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFxsQ-0001Yn-PY
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 13:30:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1776965407;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=P0IDz+unECUag28QHv433Cz0pxf5uryWb30H9XoKREo=;
+ b=jBgAGyMUL5nNwmYKqpA1obX2USz8KMDbwtU+4F5EciXMfGvN8u00Xxw2/x0miQG/8nxVj6
+ 7otq1PGUBRgNkubM3vpZccNm+Hhd70FO/E+4udvgbFxbZvVaW1xjqJjsYhX5tNhHvfDBbZ
+ EtUVzgnJEpZ5ChpBgiGDUlRes/cF8dE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-rKAtRIouMaawoL20gTh-5A-1; Thu,
+ 23 Apr 2026 13:30:05 -0400
+X-MC-Unique: rKAtRIouMaawoL20gTh-5A-1
+X-Mimecast-MFC-AGG-ID: rKAtRIouMaawoL20gTh-5A_1776965404
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A9091956056
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 17:30:04 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 49FD7180058B
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 17:30:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B800621E6A28; Thu, 23 Apr 2026 19:30:01 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] tests: add test for json-streamer.c error recovery
+In-Reply-To: <CABgObfa954MMVPH==coTOAFxt_dHUvSiDDVHFPnA3aTL6L8F1Q@mail.gmail.com>
+ (Paolo Bonzini's message of "Thu, 23 Apr 2026 18:24:19 +0200")
+References: <20260331095950.512326-1-pbonzini@redhat.com>
+ <87cxzqrwqt.fsf@pond.sub.org>
+ <CABgObfa954MMVPH==coTOAFxt_dHUvSiDDVHFPnA3aTL6L8F1Q@mail.gmail.com>
+Date: Thu, 23 Apr 2026 19:30:01 +0200
+Message-ID: <878qadmvom.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dl1-x1230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,24 +90,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Thanks for the review and for asking Mohamed and Alex to take a look.
+> On Thu, Apr 23, 2026 at 8:56=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>> > +    } else {
+>> > +        qobject_unref(r->result);
+>>
+>> Unexpected calls to parse_emit() won't be detected as long as the last
+>> one yields the expected expression.  Worth detecting?  I'm not quite
+>> sure.  As far as I can tell, this is not reached at the moment.
+>
+> It's only covered in /errors/multiple_values of tests/unit/check-qson.c, =
+yes.
+>
+>> The stupidest way to detect is to assert r->result is still null.
+>
+> I'm all for simplicity.
+>
+>> Can't do that if we want to cover parsing multiple JSON expressions in
+>> sequence.  Collect all the results in an array?
+>
+> Yes, but not now. For now the assert will do.
 
-> The question that comes to my mind is whether the two places changed
-> in accel/hvf to look at hvf_get_map_granule() really are the only
-> two places in the whole of QEMU where we call
-> qemu_real_host_page_size() and expect it to be also the guest page
-> size. The general idea of 'guest page size might not be the same as
-> the host page size QEMU itself gets' isn't hvf specific -- maybe we
-> should have a qemu_guest_page_size() function?
+Makes sense.  Thanks!
 
-Good point. I'll audit the qemu_real_host_page_size() call sites to
-see which ones actually mean "guest page size" and whether a broader
-qemu_guest_page_size() abstraction makes sense. I'd send that as a
-follow-up series once these patches land, so the immediate HVF fix
-isn't blocked on the broader refactor.
-
-Thanks,
-Lucas
 
