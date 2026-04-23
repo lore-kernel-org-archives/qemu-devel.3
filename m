@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33990F9936E
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7960F9936B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFrKk-000118-Mv; Thu, 23 Apr 2026 06:30:58 -0400
+	id 1wFrKo-00014c-EG; Thu, 23 Apr 2026 06:31:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrJU-0000Vw-76
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:29:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wFrK2-0000l4-6y
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrJN-0005Gf-EL
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:29:36 -0400
+ id 1wFrJz-0005kt-3u
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:30:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776940171;
+ s=mimecast20190719; t=1776940210;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wp33Zu4qX2y8IsRyjTpZaoSUC9xqRB2bWLr9ktJjOXU=;
- b=e3TTqoB53qAyk+6vnR/GgyqugX8Qky95l3gHxMoeGlTilh93WHowXkq1hqRwdRJFKItKmb
- 3OY4yQyOzRAx6+aaSc1yNJ9Dm7N2loPOkg2GJl1ieXQADQDpoonNzZSj4Frfp7ew1qG0wZ
- EaL3r9orndvS+Ci2xRnmPmLCRP5qTGE=
+ bh=9hk+it+aWf+hIiKfd3aH+Bql7T1PmX28V5gYZq4O1mI=;
+ b=HN03l5RkuBEL0fx0EXNftjBURHJLTX67/Z+BthjU+tdk04KOkB430oHksXGzWa01M5WmiY
+ jvD1q/KYtLDF2xrzkLMipLfO7FzNKK2G03rNflP2MU8+zgFai5UltDjlwu3Mfb11PIlK8V
+ IY82gh1OiiTO5mZ2vkbNP/Ew0iwvHtA=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-_02stSVoNa20Kzszx5lWvw-1; Thu, 23 Apr 2026 06:29:29 -0400
-X-MC-Unique: _02stSVoNa20Kzszx5lWvw-1
-X-Mimecast-MFC-AGG-ID: _02stSVoNa20Kzszx5lWvw_1776940169
+ us-mta-490-96H_4pUhMK6EUrDDmO5YSA-1; Thu, 23 Apr 2026 06:30:09 -0400
+X-MC-Unique: 96H_4pUhMK6EUrDDmO5YSA-1
+X-Mimecast-MFC-AGG-ID: 96H_4pUhMK6EUrDDmO5YSA_1776940208
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-488dcaf2f2fso52902285e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:29:29 -0700 (PDT)
+ 5b1f17b1804b1-4837bfcfe0dso72599695e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776940168; x=1777544968; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776940207; x=1777545007; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wp33Zu4qX2y8IsRyjTpZaoSUC9xqRB2bWLr9ktJjOXU=;
- b=rqJYVfThLjWhJcs2j2khdSgRg48jmr+tMQ29M01x2ESkLa+RFUgsoSLC6hH900l857
- pEjf51MPJPJIhqiS783ayoRYsaEOx+E9GJ+1at5wJtJK7SCs2rmLSdjoDT7VI1DdV1q+
- OJwRVpioclSDX4G/HCVgmNj8fueW2krlxys5iZ3v0fHIungLB5JKOHLPXVdcNp6aClQI
- bcNnd/U29fvfzm7i/p8oUM/UF618mt80x2XfbEdpKE/YeLewCrzf/6sxl3Q20WeBQCu5
- a61HMEhtRKl7De/GWqvI+9r/xbr4jn4itlSgfrSZ3UWmhWjB2mOnh5X6BQk5aStBoaXI
- N6jQ==
+ bh=9hk+it+aWf+hIiKfd3aH+Bql7T1PmX28V5gYZq4O1mI=;
+ b=aQgyikV20FvL7oGyWb97vL6MAJ3GOdtL994ZnIoOo2Lmba6xQtsJxnnlouDaQY8vai
+ 2hpyGbZheL5mG5AIaQ+Hh7hllXeuPCwBKeSnQ4QZTatJNtqvaw0Bp0QqvAwA3KYjoRTI
+ 8cnVAd+hDo8B0aSkRMM2TmaIVM9qj2v4ZlAUFs7BpS8t0eHCgXDEVRO8NNuktuHx8INK
+ j7ccbQub/ZPyWAr0RGVQjtGuf5hJdWjXc+W1dWVcIKb4cUCKLYZCcGKiALchncGWQ6e/
+ e6Nai71F1llx3z+apZxjPKAKRo8aroq0qKiRl8SXNI3d11GYBnxMAQUUgqfk4Uu4ozov
+ 9oEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776940168; x=1777544968;
+ d=1e100.net; s=20251104; t=1776940207; x=1777545007;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wp33Zu4qX2y8IsRyjTpZaoSUC9xqRB2bWLr9ktJjOXU=;
- b=A56nLrdg4pD/y4TvYdufDR6DThZQXPmiKLJ1j485Ad44QMH24DvncYwkNpqnTHV2WL
- aaZsF6phdYWfmXYGyGeM2lMrZsGv9+dmBzces9YeXbDqWhUvosKFEPJck4e1SFe1Dfjd
- 0/XmqNF5gMRj7Gf2MKeJW93fbDGqMLYCOx6Ks6P6SdYS79LBFzq2OywuaJujiSHreilE
- vbx6jJ0pDoqUUC2I725F+3Xn8iVITcjyG/fQHapZyJZaZBCvsed42ArYCektjoqlR4o8
- aSKfI5K+2gX53BJLgbcvZnDtRno3UhkqdqbggGSt9LdBs9GaGKHmMGHz0NduQlUgGuES
- XgOQ==
-X-Gm-Message-State: AOJu0Yw5mxTMGB7Bmizs0auBSXz2IiCUfj2/jca+SnDLlrkKAnU1o0Kt
- KwNNfVQuoII3gPx/LD5qbKcSDGnLXwtCUw4rZZ1o25R9StD2t+QbkB0TD3eufyIZUFwLnoo/GnK
- C+8UbZfOLexmPBLA6+NlL6A5JAABajAgI9JlszA8ed0IuWIbE+wQiU4uimkmZ4dBhPYTCWdZyBH
- umqB32evJVq7s3CqsN0FZREZyP3MnA/ZUxzmRjC2du
-X-Gm-Gg: AeBDiet32hxGRW7yD3CsKnhxxJWtSMwF2lRKeAr2N/5BaN9Ihuf6grdjfR6e8+ven0s
- q4DmgKU1G4CUMnFHKTFMsnG+CJxj3HTKhO97vWkgtE2bhm2o5Hp+todD9WEB8ZjBmkhnYiscSdl
- vYg2jNKJ/Pal3tA6k2g6F05k8mHOq2ZGsq8D1TC/DUYgPygmpVzv+A5BZxwZVkn+2Yn44mnb0hJ
- 38nRJO40XD5J1ckuzbFC+GeZRynBNWQmIE1IB7SkswyexZBCuKAnRSnD7M/4y/nr0YuvnwxgGhj
- sDoiACvJRXm+kZKOywxp2en/C7SfjpXO8L+jt2TDxZsD5Bak2/gN3GJCe4jjC4t1JNnDQY3CMhP
- e05XUXrRj4faV5Cg/lqg1fcq+enE0zkguUCme8yAU3yz9YyH1SZP+j+9yhL2tQTTnvSBWLB496c
- fjOk9TUYoup9aKqaCd3BT5G8YlsH0hB1w2pxE=
-X-Received: by 2002:a05:600c:c108:b0:488:a82f:bbb6 with SMTP id
- 5b1f17b1804b1-488fb78e576mr259686055e9.27.1776940168151; 
- Thu, 23 Apr 2026 03:29:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:c108:b0:488:a82f:bbb6 with SMTP id
- 5b1f17b1804b1-488fb78e576mr259685645e9.27.1776940167591; 
- Thu, 23 Apr 2026 03:29:27 -0700 (PDT)
+ bh=9hk+it+aWf+hIiKfd3aH+Bql7T1PmX28V5gYZq4O1mI=;
+ b=CB62dragHRAj2UAmnCerJOyAuIem0/s7EriNSzvK5ad8sgogc7IbPR4cYvSn/4GIFX
+ guIE3clJD7wxE1hPg2MhvRFeILytXMEpnxVejsbBRaB5u5BJ7mKwlQDM1Xwb0oMKQdU4
+ 7KAoDZi2dnuDtFCd9VTCjOZ9KTh1LAYrIsgVXZEHWp9ZMmO3fFXCYHSZMrITHT2WecOw
+ PBTmtnwYIxN3OWvFI73Ldv4VhE7TtdvdbQilpL5WsmmT/tXLpKGBkhnNhPEZHVgR9NxW
+ 9ly5uThG3hDnrAXD5e50oYP3uHAwQzR+N+kK/HunlOXCOO21t9LUl5HPLBIqdGiMCN7a
+ 7XZQ==
+X-Gm-Message-State: AOJu0YzMMwVurJPz4henhDp8KTM2bG5gWjCYeSPRzEMIzYS3e8Ik9RMp
+ gXaL/Rpp023D080a0zGMhciShemvcZ1+NfHPlExNkJUKZ1ytv4qOEu5sSGN8cYTlSyCwwr/s7k/
+ BurKvDcRx0wC/qbjKrVH7KGAzpHnO1+hIY6gaougsPZQOn8f6D0RUFKVO02LCJIwLiXodmYP9L0
+ SUR5EltHLSWNZZ2FVYU1AcYgECK5xj2X7QfIg0ggM6
+X-Gm-Gg: AeBDiesaNsv7hXSAOXGyuop9YBPfiXbqj00/hyGQm/v/LgUSKe5mKPjaPcCUV5St9ej
+ Eb0FkBCgpeb3DQTx6dOFp9THHMI9VSVvapKCLKr9aYbJSgYCfChzDjdWSbw8Z10qm8+X1VpotEC
+ aJw1QPkeI+ZGRGCun0V6F7x6k8ZUe5CFHmeH/Mpk3qQXW5uHo3VbdF8IcF1XR5BoB3PW3QYfSfY
+ IMPhh2N29o35tiZo+GN8GsQ7UFXr06xa9Wo8K6QXmyBiuq7/hn6puUaELhGCDOKjjEShXKM55+C
+ FO1S3fEHE5khMZPrFe7ZenW3MBcTkKxYrSjw1QS6X6gv7IcXxW3naQf8eRHy2twyleTe7u7oxx8
+ 80H9dypRsFzI+GwbZIsWSURw4OwopwsDJ/3YoEMfDw8/e7GG2BJ+ZrlB7Ljx3MZjJvdPz1KNbx5
+ YvTh+jqbWtJcG+Fdx2eWC2K7za/yE/CaPbpCU=
+X-Received: by 2002:a05:600c:1616:b0:489:1cd2:6106 with SMTP id
+ 5b1f17b1804b1-4891cd261f1mr133250505e9.6.1776940206886; 
+ Thu, 23 Apr 2026 03:30:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:1616:b0:489:1cd2:6106 with SMTP id
+ 5b1f17b1804b1-4891cd261f1mr133250025e9.6.1776940206286; 
+ Thu, 23 Apr 2026 03:30:06 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a5549f582sm64450985e9.33.2026.04.23.03.29.26
+ 5b1f17b1804b1-48a575ad67asm155359945e9.2.2026.04.23.03.30.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:29:26 -0700 (PDT)
+ Thu, 23 Apr 2026 03:30:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Simon Scherer <scherer.simon89@gmail.com>,
-	qemu-stable@nongnu.org
-Subject: [PULL 02/25] target/i386: fix missing PF_INSTR in SIGSEGV context
-Date: Thu, 23 Apr 2026 12:28:59 +0200
-Message-ID: <20260423102922.443639-3-pbonzini@redhat.com>
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 15/25] util: Remove unused sys/param.h
+Date: Thu, 23 Apr 2026 12:29:12 +0200
+Message-ID: <20260423102922.443639-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423102922.443639-1-pbonzini@redhat.com>
 References: <20260423102922.443639-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,44 +121,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-When running linux-user emulation, the SIGSEGV handler does not
-correctly set the 4th bit (PF_INSTR) in the error_code variable of
-the context argument (context->uc_mcontext.gregs[REG_ERR]).
+We dropped the use of PATH_MAX in commit f3a8bdc1d5b26 (which
+basically completely rewrote the path handling).
+Now we don't need any sys/param.h defines.
 
-Because this bit is never set, guest applications cannot distinguish
-if a fault was due to missing executable permissions. This patch
-ensures that when a page fault occurs during an instruction fetch,
-the PF_INSTR flag is properly populated in the signal context.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3384
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260413115622.160212-1-scherer.simon89@gmail.com
-Cc: qemu-stable@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/r/20260327134401.270186-14-kkostiuk@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/user/excp_helper.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ util/path.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/excp_helper.c
-index 98fab4cbc3f..6c5df5e0e88 100644
---- a/target/i386/tcg/user/excp_helper.c
-+++ b/target/i386/tcg/user/excp_helper.c
-@@ -36,9 +36,10 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
-      * signal and set exception_index to EXCP_INTERRUPT.
-      */
-     env->cr[2] = addr;
--    env->error_code = ((access_type == MMU_DATA_STORE) << PG_ERROR_W_BIT)
--                    | (maperr ? 0 : PG_ERROR_P_MASK)
--                    | PG_ERROR_U_MASK;
-+    env->error_code = (maperr ? 0 : PG_ERROR_P_MASK)
-+                    | ((access_type == MMU_DATA_STORE) << PG_ERROR_W_BIT)
-+                    | PG_ERROR_U_MASK
-+                    | ((access_type == MMU_INST_FETCH) ? PG_ERROR_I_D_MASK : 0);
-     cs->exception_index = EXCP0E_PAGE;
- 
-     /* Disable do_interrupt_user. */
+diff --git a/util/path.c b/util/path.c
+index 72a255890e5..e1565894d20 100644
+--- a/util/path.c
++++ b/util/path.c
+@@ -4,7 +4,6 @@
+    The assumption is that this area does not change.
+ */
+ #include "qemu/osdep.h"
+-#include <sys/param.h>
+ #include "qemu/cutils.h"
+ #include "qemu/path.h"
+ #include "qemu/thread.h"
 -- 
 2.53.0
 
