@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F31FDEE52
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 22:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220D4FDEE51
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 22:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG2Cs-0003QR-PR; Thu, 23 Apr 2026 18:07:34 -0400
+	id 1wG2V1-00064p-7V; Thu, 23 Apr 2026 18:26:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG2Cr-0003Py-9b
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:07:33 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1wG2Uz-00064L-MG
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:26:17 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG2Cp-00006s-Sd
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:07:33 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-82fbf5d4dc2so3848427b3a.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 15:07:31 -0700 (PDT)
+ id 1wG2Uy-0001Q2-3b
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:26:17 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-35d9f68d011so4814022a91.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 15:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776982050; x=1777586850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776983174; x=1777587974; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hMIV2i+OE3URGyO4xgT0waGwjqUFAK+EWkaTNEuZse0=;
- b=nxvH3jxVLPFinJLQc06O1BXBNyMmlj4Q6mUo2EFLxSTV8n8d9WkoZmYHW18Cpl9Rui
- CZEUosl/4d5TPx05nb+besB2Hp5iK+E7g2Iq4CsvxZsNMGfflBOQnbNMZMiB4izygDQr
- orX+B5bxZs64Ord9mHMtlF+MEFh2Wi0/2WhMnh0ScHSv7Lpe31cYnuzg9FebVvaNL9N1
- gKp/m0kh7q02/sVr1+RCtF9wlLHjkhWvbv2emBu/+JYAvNgLxfBXBVcX+vrqpUfQQ6Cq
- NtzdP++PUBUFyuud3xUynuL4YxMKwGpFnR/REUCegyyW4RE8kAwZqANV5SJSK4mGT4HO
- otog==
+ bh=n/iigfwgrfWLAXFD3CTn0dBiOigG9aIfPf4zFLqqEFY=;
+ b=jdhyfM3E8TqZpNlbsc6nbSzZhHwCNMStO48YWM8pctTfx4vpkMwW1EpFuJeIscuZ7d
+ +6FwZs94b7ueFcXxD/Ahpq/kbak1Kcdp9F0zAslKn0huKJbfClP6EcNw8dKeP+7dPZnu
+ RIw3Au3nA7si2ckihO0H+UEZv6hQJLs3UI45WVsNVDg3MYpcCsQKT4IHajZL6t7P4bA5
+ SPWGeTdiTznefwSMujR68BrLNt4ckTgtcpTvcx/OuPTlUmCfu3LXgYNovy6awuZ6R255
+ yMrZFIJzNUQJSpVFBg1unZTt7vfw01TBCTn98Wguve1HpgecwgbBII+eOVC3YjljVdnD
+ v8Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776982050; x=1777586850;
+ d=1e100.net; s=20251104; t=1776983174; x=1777587974;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hMIV2i+OE3URGyO4xgT0waGwjqUFAK+EWkaTNEuZse0=;
- b=RRNuRy64RZHShzestXQcHmFj2t6zEz+lVKlI2VCQibCgPzGlnmKv0GhvN8hew6OCJB
- nybdupzhiOp4cJAIlcUoL0oDKoWTkD+s3JDr9amVcY9jXXWkfxbyMh9UnF4hMJIAyyuW
- 0iOdjZluo1GrgrUejVIyWXoul67SlOGafTa9jJrzS55EBbKSkYKdZ65s187hjifXaEt8
- AiHR1wMB9JgMMCdfxXsmfZYtlKWHb9QirBdZaW4e4tJP1MZ5mxoyEFwRsEEuley/VABw
- ED5Iy9b62Kn+RP9ltMuBqWgSiHOZ7OB59r9/cZjAELFTuNZGF79YD99cYdueT7nBDJSg
- uiCg==
+ bh=n/iigfwgrfWLAXFD3CTn0dBiOigG9aIfPf4zFLqqEFY=;
+ b=kpCKZF91Sijr4J7YAqSkYPfbatAL4dz733kWC23UlicVh/oO21Gxk5mjPe+4sp5w6n
+ RJSo24JhzZ8SbOiJyorV/OeQXTs/3EOXzuV6EZ9UaF1yeS9ucCtbElsxIX2LfZeeJYO8
+ Puyu4JWRAyxOwsnZTHfHakzxQMXDJWhFtfMPjyhkhV6ZGxvPmI8y9f8ptLP5ITPU4Uo3
+ CV8g4mPVkOnPW+SlqxAWyu+hXYNMCbt6HgaV/mbB0NL7kht9OPCRVCb4qjb5XQs72+EE
+ KojUnn7Yv0O4Ont7Oft3MoMRrP30UczCfPi730GSKmdGM6vgZe3tj5u6EIS2+JNWLLWL
+ 1JaQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/XLFD0XY/fR8dJCyNT7nn/EQ0/6XAWoXDUQZ1BHzT2T3vMcoSmIAmVCOQvISME2qMLcz81OfAOI6qN@nongnu.org
-X-Gm-Message-State: AOJu0YzQvTom3Z/wJp/Qz1NSRBnwUB096si782aoPMt4P+ow9HkWyeyj
- QAnDC6a17qlCEx4i59E4pDviNx2cRdB9tv8YqoJVy/QeQ/7QyxPVLuwLFiVYY2dkqDQ=
-X-Gm-Gg: AeBDieuYNur7coL+xkDWDTVIVfwFnsJizejwMJFP4BwgeO9TPj1AINydb79Q1aSXPS0
- v2KGLcWzfbs+zmu9h/fEwoBVEAH1UFNXhQxh6/koTaAXXFBTvNCyouMW9yS/F0nqcJttHzneKgG
- ErC29TKUdOdEp5i1IHzhqL/chq/JXmkZAT6ta2XInBz5s0MPzTh2tK9+97UxSAAHKUGMbk3Re2s
- Yht6WlbPH6CsOxweBLCOJ7mNdyG4Cytb70d/sVn6LklAGHBRI7HBgMAQwMOFrV5e9HjuwVzCT42
- 5NsG5flQuYxaVEG1CaZayssgjJz9Hrr6Bj/2yt16YnJzusubEjdQFWK6x0yRs58tKkoMUBsewYo
- JWKE467mIwX27K+R9IOLX74MztkqUXjRRVGay+imvqCC+qbm/CQrY3Il4TomdkEAWwcILAJoobE
- kBd+jEb9BJ2WlyL7D08rOLdyiRYlEEl40DnXaPfkw+b9fo1Yswhg==
-X-Received: by 2002:a05:6a00:1f09:b0:82f:3828:a009 with SMTP id
- d2e1a72fcca58-82f8c7dd504mr28337141b3a.3.1776982049853; 
- Thu, 23 Apr 2026 15:07:29 -0700 (PDT)
+ AFNElJ8tBrxn7ZJ6yYiVIJG49bizkCqHJHMXwUv04CDpMcC3idqBSz7fHtFENmP+TKlhiVlV6i7Ayc000hhF@nongnu.org
+X-Gm-Message-State: AOJu0YzduLskEQKgNGvc7UnEPvBhIZpGe64HRZQvYY/eVRM6GtN6ERCF
+ 9YiHySO0TADZm4uXoygk+P6+bvYlHKgZIINWVtLbTyTCpa5f0KJ/cnQPAlwEAXj7hPw=
+X-Gm-Gg: AeBDietuZgcNQMY0IbPdzFsxRRonur9j1pGEhP6MlzJd7s50ttqYH7UUSa2fyQX3+r6
+ uPCv72iOyTggyVnYVzrnBhYHuPtYHmmGswBL+EPrG/hiYoGEh+ohk6s0XDd6+KCxVxvZc4qNm+p
+ n3e3+zAftpA0voxysMMOiW7BWoiCHb0mLNEwH7U1N+k10mlMLsWy9p0FEPvI39mIi//ujoixTDy
+ mBOBeYUOUPLwhcGxGzVDyoeilP1BXyAeaJY4yLCp71dzK8cJGIAKG2zE5J8ZRl6QVnXalMZ0due
+ wk2REKr+F8Iy0rmlBfqQb3fJj2+EwqhbWIw9sEmPwNXyDnjgjonDiqa0fbewuAuu1N4VZ+TIZfF
+ 8cVlyk7Qmcpn68zzBmE6p6fdCDeO7sJnL16vSLzwomgE7r0nhTcqlwOa1283CjNv3NgBHY94VVV
+ WjqKaa7ecXP6GAXwU/HnCw8U5cjHjlY2ZxX7ft2cTeRhsR6MCjmQ==
+X-Received: by 2002:a17:90b:1fc4:b0:35b:e4f8:7cb0 with SMTP id
+ 98e67ed59e1d1-36140491cfcmr31031374a91.21.1776983174092; 
+ Thu, 23 Apr 2026 15:26:14 -0700 (PDT)
 Received: from [192.168.1.134] ([110.239.0.232])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f8ebb3fa2sm21411860b3a.29.2026.04.23.15.07.23
+ 98e67ed59e1d1-3613fb42e25sm10353803a91.3.2026.04.23.15.26.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 15:07:29 -0700 (PDT)
-Message-ID: <64b4d115-d33f-45cf-93e4-a3ff81741244@linaro.org>
-Date: Fri, 24 Apr 2026 08:07:19 +1000
+ Thu, 23 Apr 2026 15:26:13 -0700 (PDT)
+Message-ID: <03119ad8-de87-4bb4-8f73-062de85e8d6d@linaro.org>
+Date: Fri, 24 Apr 2026 08:26:05 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg: Remove unused tcg_gen_vec_*_tl() API
+Subject: Re: [PATCH 01/16] target: Simplify env_archcpu(cpu_env(cpu))
+ expression
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org
-References: <20260423101904.36131-1-philmd@linaro.org>
+Cc: Roman Bolshakov <rbolshakov@ddn.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, Mads Ynddal
+ <mads@ynddal.dk>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20260423170229.64655-1-philmd@linaro.org>
+ <20260423170229.64655-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260423101904.36131-1-philmd@linaro.org>
+In-Reply-To: <20260423170229.64655-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,18 +113,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/26 20:19, Philippe Mathieu-Daudé wrote:
-> No code uses the tcg_gen_vec_*_tl() API. Better to
-> remove it now, since to compile as translation unit
-> files once we need to avoid target_ulong uses.
+On 4/24/26 03:02, Philippe Mathieu-Daudé wrote:
+> env_archcpu(cpu_env(CPUState)) expands to ArchCPU,
+> available via the ARCH_CPU() macro. Use the latter
+> to avoid using &env.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Now this file only defines tcg_gen_gvec_dup_tl(), which
-> is used only once in target/riscv/insn_trans/trans_rvv.c.inc:
+>   target/arm/hvf/hvf.c       | 2 +-
+>   target/hexagon/translate.c | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 5fc8f6bbbd9..2fb768048b8 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -2303,7 +2303,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+>   
+>   static int hvf_handle_vmexit(CPUState *cpu, hv_vcpu_exit_t *exit)
+>   {
+> -    ARMCPU *arm_cpu = env_archcpu(cpu_env(cpu));
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+>       int ret = 0;
 
-Queued to tcg-next.
+ARM_CPU has an object_dynamic_cast_assert() inside; the env* converters do not.
+You should be making a considered choice about this change, not just "simpler".
 
 
 r~
+
+>   
+>       switch (exit->reason) {
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 633401451d8..825b236dd24 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -978,7 +978,7 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+>                                             CPUState *cs)
+>   {
+>       DisasContext *ctx = container_of(dcbase, DisasContext, base);
+> -    HexagonCPU *hex_cpu = env_archcpu(cpu_env(cs));
+> +    HexagonCPU *hex_cpu = HEXAGON_CPU(cs);
+>       uint32_t hex_flags = dcbase->tb->flags;
+>   
+>       ctx->mem_idx = MMU_USER_IDX;
+
 
