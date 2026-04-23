@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A8CF99367
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98697F99366
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqtS-0006Kk-JN; Thu, 23 Apr 2026 06:02:46 -0400
+	id 1wFqtR-0006Jl-4R; Thu, 23 Apr 2026 06:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtN-0006J0-KR
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:41 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1wFqtK-0006IG-Kg
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:39 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtM-0001yn-7f
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:41 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43d77f60944so5190295f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:02:39 -0700 (PDT)
+ id 1wFqtH-0001t3-Op
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:02:38 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43d03db7f87so4400704f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938559; x=1777543359; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938553; x=1777543353; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=P91enuvCUzt6TPFUMJ9daNLwhYClu8JlGSNhfTMG02I=;
- b=K1+q2JNq3IWhCOzgHfTtEE2uRaY956RCtCMY9kEOypz2DHECxmokMm9RbVLRb36+Xe
- VjRq4inDEKRl0NHKhX6weLjWoC4jJZ98CEB6ZlyWz20zjRVtVubAZmc+v4WGBZJyGZ8x
- iI1vKoQrAwzNbqI+INKMXc3J7x3pEbda3NkKKl8T0aJNqjacZlyY7RJgt0/BGPfaR7SK
- HZO6sbWBviHSmElSLvmLBmkrLKTMIVFHMEeOMzZQ1qMEeRrmMdsTKQ3n1eSYeJL9XJtr
- 8GTR+lZ2sox8BS801Nt8YIEnp918l4gHZ65UqnDWAhZ4fCXafW2TIEbzTjUJaDET9RD8
- AF5w==
+ :reply-to; bh=e4SVw6/0iy8VqNnBZElqRdTaBGFeTVDwu9oinIEbAL0=;
+ b=Q3YQHn/HubgLxujEtJmWVdy33TL/Lv8+zGGZ/JqOPDS5Znbj5kHJQXK/zc6KIbTxvv
+ fJ6hucKX6cF4pUnsrvdxuiwbpdGlDeDytL8drbr69mLP1iR0dERiKQ3Ze0gpV4fRxPfI
+ rhXYRE+NGrl0VvPAlegNg4o9APTWPWvdkx9BlwcpqAIgnb0PFeXW9BvjEtBMaDsAmmHa
+ /IBHUqzTPZiw1Rfee4u1WTP98PljsNoy2qt88RMdXhXhHNl+4mVIZ+YVCXgIjZpAtvAN
+ VYTmFOZlpmovHHsh+WsP+ax/BE6Jt72JcoC8kr/iScDoX0kBHq9YcDKwZc79P+XCN2Yn
+ USZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938559; x=1777543359;
+ d=1e100.net; s=20251104; t=1776938553; x=1777543353;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=P91enuvCUzt6TPFUMJ9daNLwhYClu8JlGSNhfTMG02I=;
- b=FpqYxYwWZ6gZl+RDdKXldcHz0D56T3kjk3esbJo8+cWWyYLasS16t4iBONkitmQu/e
- ylu25rGywte0ge/f6PTBLc9UBqDdU1MUhtgoV4UquDzc7W39/VEilDM31kUwJoY45OLE
- QG9mszKqBEZQ3OwDa5E6S7sgnEpqvvmGrQEw52eVwC3ivGjKQwdyyA0f/m0q3Gk9Mybp
- l2YCvUbGASbv8GPsx+dPOCQO8+u754Q5fllUitJdQWPby+dSn507VNN37Q4B3A/qbWz9
- vJJJzMtACazF7ko7yQ6nw0+xm44FUAquvEQvisoAudlFPt4YcE0XghN/pQ/hMOF5QgLH
- SFdA==
-X-Gm-Message-State: AOJu0YzxuYXLjVAeSwD5JWCtrPwKT0L5f0SIx3Q89k+uPln8jrChVf+t
- oeOl0siBs5yvBvJy15qApjAafTGV14V3LKZ9ARHZ15qbgb969fqFmCwK5anyJsT/12U3cimlWaQ
- XjO8I
-X-Gm-Gg: AeBDiesmPpggccIkF0AcuD3CtUjtWBTxMwfZ08bb5/gMBc2CrbcxLrEHoKqGE86+53f
- GMgHNEO+2Oog4KQnyMhpFOYDXyWLsOAKyzb45FxCipghrqkc91aeTe3ndNgkwRCbVPXGk4jetk+
- yi+yxFqht0HER7S7w8Vuuyqr+xvb1JAqqNDgjUCaS+0uB/aDhkpMAf/203b6UAAtPZCfllQ2PVs
- IeOrU0vLTOV71KTUgBDv1+ERtDAp+dsNOGo8q+wvKz3ojt7Tv8K15G9G2mzKhnru7dhsacZOUap
- v1AVusko199zHdcc9hFVpM/zl/xerKIgQjlpqooerx6BmXwDsue3YhBssKZX/1vDaFCn/aCGQ6p
- ocdG/TdmdJxplllU3EFQiT0WmSBrD7qTh5WYqjxtcnA6CGIoUKC9vPCqVdgGguhXu6z4IT3sUEJ
- 6YdqGcTu4qstE5GxF4VGh4MtuxpIpyw9e6nGK4xY/+MKnN8Jo1U6sQMwa34HOg4hN2WzIZoKjCD
- jNyzKmRD8J9KPRzRyqerC4W/v1XfCav4vySG8BOV7e3Eg8sovYJ
-X-Received: by 2002:a5d:5d0e:0:b0:43d:7883:87c4 with SMTP id
- ffacd0b85a97d-43fe3e17215mr41297679f8f.41.1776938558568; 
- Thu, 23 Apr 2026 03:02:38 -0700 (PDT)
+ bh=e4SVw6/0iy8VqNnBZElqRdTaBGFeTVDwu9oinIEbAL0=;
+ b=ewaqwmrU9xZGEP7VQzau2ebFcbziNtsJfUe188NAexF9BwpiiL6O9gh2SUBRxtV/Bz
+ s+vUg/JTCBLZ194joXD1clGpOCMi4NfjwTeP3mN1U69NjNjfXO8EZkR2uuVms4VSmBOx
+ Wyz+V/aTHTtih+kkDwCAXIOngW4odskEG3ricjP8jfAdeHpsppK2RFxExOu5Ko4+OBld
+ GGAvsLfFPVs9ZpY5XqcbKas5W+R61Gv+439JkzdwrplkZnpc9nDduqhSPBXYNLGyN4W4
+ fFujUcXX9Jb2jWzEAKj+05VLKuiUrpdfP9m9lGOJDbARX1ykJYBWDxCtUAW8i2bgsN3y
+ Jz7Q==
+X-Gm-Message-State: AOJu0YwQKiw0o/uEnEaPHR2lThRHsQh7wOp1/BYBuOSMUYuF2w/aafkI
+ i70079WrmpLv5T3tFg4/kP5O4EDIOYvxFqD8VFr3bZNwkBnVM7r+NDexzHy9iO7qFo6+lfpmb+r
+ zVlVf
+X-Gm-Gg: AeBDieuesy7Rov4G8F8UlnYgQpeu1zspGET2RNEf3/f7+EbA3bjVfgmd7HrQZC0R+A3
+ iyVuZpxeEs11uu1TJA891jsa8Wr4EX2NWCv0P3M33oXpto2DCoJC+V3jObuIS4GD3qOk0D5OCZT
+ 2kdKvQouAv4uTl+65eHM9Hao5iB3uBz9rQD7TWISQlXXeyVcGl1B/EihSyMPqkZGgnn8EwQ+D3v
+ CjAFcf4Zdgby/r0NNMtZWe4V60TZQ3qeB6pf+GCRFU96RE58Chlq4weN9TGn/feaJ4rtyOgfmBy
+ Y/B5OUG4IaGh0g8t9QlS+P5tBndSHVac5QCUX8D9KcHRkVqfbr8RZn1Ezcw9huvFCf/mVR3OyKo
+ jGHSVOlHotjImEcRQPTIze+qJ29teAB33+sZs6eVA/qtLCD5sPUspUAFF7gWz04jLTrJ6z1+asr
+ bljwBGV/yS9y8VmleGAR2sEhGj0hjAWFNE8unk1wfNvCV2bxoAobKODBOeI+mWIGo5FsFy5tzov
+ 9Ols/TS2s7Gg4EucW+fOO5CTnMDwsMZE+YKeQiBGQ==
+X-Received: by 2002:a05:6000:144d:b0:43c:fe0e:5bbc with SMTP id
+ ffacd0b85a97d-43fe3dc59a6mr39049155f8f.19.1776938553227; 
+ Thu, 23 Apr 2026 03:02:33 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.37
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.02.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:02:37 -0700 (PDT)
+ Thu, 23 Apr 2026 03:02:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/59] tests/qtest/bios-table-test: testing new ARM ACPI PPTT
- topology
-Date: Thu, 23 Apr 2026 11:01:37 +0100
-Message-ID: <20260423100229.2941820-8-peter.maydell@linaro.org>
+Subject: [PULL 02/59] hw/core/machine: topology functions capabilities added
+Date: Thu, 23 Apr 2026 11:01:32 +0100
+Message-ID: <20260423100229.2941820-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,33 +102,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alireza Sanaee <alireza.sanaee@huawei.com>
 
-Test new PPTT topolopy with cache representation.
+Add two functions one of which finds the lowest cache level defined in
+the cache description input, and the other checks if a given cache
+topology is defined at a particular cache level
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Message-id: 20260311160609.358-8-alireza.sanaee@huawei.com
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-id: 20260311160609.358-3-alireza.sanaee@huawei.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/bios-tables-test.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/core/machine-smp.c    | 52 ++++++++++++++++++++++++++++++++++++++++
+ include/hw/core/boards.h |  5 ++++
+ 2 files changed, 57 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index a5a5b8807b..510751799e 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2229,6 +2229,10 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
-     };
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 189c70015f..bef04aa2d7 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -406,3 +406,55 @@ bool machine_check_smp_cache(const MachineState *ms, Error **errp)
  
-     test_acpi_one("-cpu cortex-a57 "
-+                  "-M virt,smp-cache.0.cache=l1i,smp-cache.0.topology=cluster,"
-+                  "smp-cache.1.cache=l1d,smp-cache.1.topology=cluster,"
-+                  "smp-cache.2.cache=l2,smp-cache.2.topology=cluster,"
-+                  "smp-cache.3.cache=l3,smp-cache.3.topology=cluster "
-                   "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
-     free_test_data(&data);
+     return true;
  }
++
++/*
++ * This function assumes L3 and L2 have unified cache and L1 is split L1d and
++ * L1i.
++ */
++bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
++                                                   int *lowest_cache_level,
++                                                   CpuTopologyLevel topo_level)
++{
++    enum CacheLevelAndType cache_level;
++    enum CpuTopologyLevel t;
++
++    for (cache_level = CACHE_LEVEL_AND_TYPE_L1D;
++         cache_level < CACHE_LEVEL_AND_TYPE__MAX; cache_level++) {
++        t = machine_get_cache_topo_level(ms, cache_level);
++        if (t == topo_level) {
++            /* Assume L1 is split into L1d and L1i caches. */
++            if (cache_level == CACHE_LEVEL_AND_TYPE_L1D ||
++                cache_level == CACHE_LEVEL_AND_TYPE_L1I) {
++                *lowest_cache_level = 1; /* L1 */
++            } else {
++                /* Assume the other caches are unified. */
++                *lowest_cache_level = cache_level;
++            }
++
++            return true;
++        }
++    }
++
++    return false;
++}
++
++/*
++ * Check if there are caches defined at a particular level. It supports only
++ * L1, L2 and L3 caches, but this can be extended to more levels as needed.
++ *
++ * Return True on success, False otherwise.
++ */
++bool machine_defines_cache_at_topo_level(const MachineState *ms,
++                                         CpuTopologyLevel topology)
++{
++    enum CacheLevelAndType cache_level;
++
++    for (cache_level = CACHE_LEVEL_AND_TYPE_L1D;
++         cache_level < CACHE_LEVEL_AND_TYPE__MAX; cache_level++) {
++        if (machine_get_cache_topo_level(ms, cache_level) == topology) {
++            return true;
++        }
++    }
++
++    return false;
++}
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index b8dad0a107..f38b3f5f78 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -60,6 +60,11 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
+                                   CpuTopologyLevel level);
+ bool machine_check_smp_cache(const MachineState *ms, Error **errp);
+ void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
++bool machine_defines_cache_at_topo_level(const MachineState *ms,
++                                         CpuTopologyLevel topology);
++bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
++                                                   int *lowest_cache_level,
++                                                   CpuTopologyLevel topo_level);
+ 
+ /**
+  * machine_class_allow_dynamic_sysbus_dev: Add type to list of valid devices
 -- 
 2.43.0
 
