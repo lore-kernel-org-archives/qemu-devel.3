@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371C6FDEE39
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9C1FDEE58
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG4cw-0004U7-49; Thu, 23 Apr 2026 20:42:38 -0400
+	id 1wG4d0-0004Y2-7d; Thu, 23 Apr 2026 20:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wG1jo-0002Zz-JS
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:32 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <neotheuser@gmail.com>)
+ id 1wG26S-0005iD-Gv
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:56 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wG1jm-000188-V0
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:37:32 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43d7b879691so949512f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 14:37:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <neotheuser@gmail.com>)
+ id 1wG26Q-0005o0-TD
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 18:00:56 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-36132967e9bso1221921a91.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 15:00:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776981653; cv=none;
+ d=google.com; s=arc-20240605;
+ b=En57Cqut96Gdskg+8rZr6dbG1JnYJuh9WUuWq1W6jRUpQ6xXKDdUx6qUlMlCC7UyFD
+ OGKksKaXt/N1LsZk7NVwQT015djdHLmKKQfHeNLX/giuxgGihTzZQZn8zGP4I380m1HN
+ IkJyLGXaEdJ3spzXM4WRSNUe9Vg4XQXSZYJEKTA907EQtnPav36KJcAt4rooU9AWfAlW
+ GzLhzQZy4t1najmpIM3SofKh72fshEJK4AbFr6hUha12XHFtpYTXrO/xxNZMdyt1jqcX
+ RrjmMG7k60gO+8ETzTC7qwT2u3wS0yQg7ncOCBaM2L2/k+jWnIimdO3MiKV5sbMuH3mn
+ jIRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=Z7bFIlilCKOglFdrvcs4Fkch43S2BM/m8esG/K4Mqis=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=fPzbUOCikmK3M2CXHr/1SHrdM+gEpaqleC2UTkSpFehF6Q1yskbKxK55zibjXXuFX8
+ aj2R27NgMWgnD0xQZP3VeC3Z5sq5ZKyrfyaQblx+3Xv3uag1If8z7eq4U/qiyGhFLL2T
+ 8+eUfxuF6vWz0Wbycz2yG83/KF8bhO90o243OsETcL+ilnxLDDoiytEesUlGofuQQrVz
+ i3Ufb8LkEWFuTytkDbXIVriTu599iA5jqsBVXR9nrIx8WqVoknc9jKq9x5aFE7XB1cB3
+ Go3vIhRTydja6/QqB/rNUR6LCP1xSAJITqtBWhVIS16eoJ7ZhsP63CZcARbHignHh3Y1
+ PeMQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776980249; x=1777585049; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=U7LovPah/QE6KW73zZhcUInjXBKP1mVggfWfskBESs4=;
- b=gEQWWbK8+P3TiWRgMBVl+hKy+CG8W5NmbwXB6Ph6cebqPIREarfkrEcsulsO4CJGlu
- Fud+OJteYc2OaWua2KZHPcHv/jhI9TnQ1kjk0b7gGDtYNBouIrQUPzbByoqumAvU1VDd
- tAQ2vb8LxHog83rcBBmWWLhn90i+CJG6qargJLRFOqTlWkbZt8h0bf4SNayh/eYJzbK3
- vVJY5U57j6PakLHZSgRKUoSfzvD15Us1p44Rr8LVoqg6pzFZ5Se8ty/vwEDmFdjCLPbh
- VXA1yZNAPG6767WGuLtwbsWjrnGkL/AiQxX8z9ldgS+KKrJth1Bh/7/yM1qKTllPRcj6
- GSSA==
+ d=gmail.com; s=20251104; t=1776981653; x=1777586453; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Z7bFIlilCKOglFdrvcs4Fkch43S2BM/m8esG/K4Mqis=;
+ b=FOqfyCfuvQU2uKPPGf/xrUVRx05zlsGPz8qBnq0toBa90+aPaEs1xB+p1I9g4YeteA
+ dQH9gHBtnvnSguAKl2scqp/A+d64rfhJzCh8kMO9LddweMOyHGaWHq9XTIvHgGIprwT0
+ hn897HCEtZXcmio+YgIe7wXCiMsidUJuvulYyOqk3DgMwSAxJeqed1IKZpCMMU76DUsd
+ bq9tmlu1jwXVg8LOFStphkXXXc0bZo1/ODw5fvBENRnO5ESDnpbMYyP6FfvA2dQQYbf5
+ ywAQ53XHfnwtog4pxJyIWOGL180h8v2rZ/0abQqwUd1WHiRebNPA0nzxQSLYAo+XvCOJ
+ o09Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776980249; x=1777585049;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=U7LovPah/QE6KW73zZhcUInjXBKP1mVggfWfskBESs4=;
- b=OmOdaXBh/oQES9dpVJ5Pk6rSNO9TNUbsByLkIwacfiuPBadD3dT4TfP4Y0cYWT9pk+
- RK6JU4RyXbwNEhtjQDrjlkWF5vQGUgDC79ZWFD+7nmMD/wtd8gkqlgZdB/LqimAq8DTo
- oKffIpbGKPJ//z4xcq1E+gI/EdSxDtwLEzWy/3j4f6uWf2tm6XvWjVix7LYIbuDxw9EM
- PXp7q98XMUIm3L/TZd8imP3lHNmQ8LIMETP61PYV/NjRP7g8I3UC3/DlXHN+49nqRCuN
- HmaB6WuaEdpw5AcZwB7WxENrNnZz2X8IXFUHMdrobdi5FqkOcmMEKC0Mrk+XwSvNrLTK
- Rbsw==
-X-Gm-Message-State: AOJu0YycAmJwsY/mcsEeK40kYNQsEGm/4BKl3OR5M00b+NBmjCu6e4ST
- qSxGrVIBJk4WHkjTgr0o71eDfs6sqbc+fQp0FQuaspxAm9hjSQSArnysOqw1CsDw
-X-Gm-Gg: AeBDieum6XVnaYaDVVtYOKTuGJeAC3/Pxs9fYxydmC3f5/cVaIE5wEG4jDSbWM9WFut
- ka6KJVvg9j9JMnYIC/p8fZwgT4msInmVc1CIJoo4vD2ILSuo9qIQel2D/aHhkNY8nug6rpvMKTD
- GLEiJNp2ERJHoUVb+D2JzBqu1TLjQuNauck+RF2PYI2epog3wnAJOKzeoOYgp1fbhU+AExDIpDl
- zS/a5+apFevpNNSBSoMKn8KahZOoGikJs1wWAPtu9EuRhFQ4j0f6czhUISm1df6iBsbxFkeiTz9
- QMwY7iVudAix//gcaRENplcBu+CttrkxnFTLgU5pYDlgsWANnarvZNvUTaI9s9WjcnoBjStkMJQ
- NVl8moVi0lhJDEtnduuNonSfJ4Nf1Ra/PpnwIBbZHM/wo4Lhy4XkZ6SI4uWKqBSvsV4LWKqHKq7
- pFWAg/y8ftHPtcyppwY/55Iz4APVwJUD+T/dp8/Q14Nw==
-X-Received: by 2002:a05:600c:1389:b0:487:1826:e138 with SMTP id
- 5b1f17b1804b1-488fb739780mr210684635e9.1.1776980249086; 
- Thu, 23 Apr 2026 14:37:29 -0700 (PDT)
-Received: from [10.94.10.196] ([223.123.19.204])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48919f54572sm138755225e9.26.2026.04.23.14.37.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 14:37:27 -0700 (PDT)
-From: Ali Raza <elirazamumtaz@gmail.com>
-Date: Fri, 24 Apr 2026 02:36:39 +0500
-Subject: [PATCH v2 2/3] linux-user: Validate tkill/tgkill targets are guest
- threads
+ d=1e100.net; s=20251104; t=1776981653; x=1777586453;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Z7bFIlilCKOglFdrvcs4Fkch43S2BM/m8esG/K4Mqis=;
+ b=cLjZxvrZKZ3KadYN+hyJSHLyS1cVSDG6bH/ni/9WZ5iJ9GuT5cOqUKoavolrijsSzr
+ LT62K7jLWrUKiwlXISm6D6PI06yUc4NVSBPEVDK0qMpO+25KEhp8NEv7ahgH8ZeDLqxs
+ 9SM9KJpIxb9gV3x2WeSaY++ZEvYc3QmAnQbOnp63oxwRJz8GKlxeBI2YXpLfVguPuN0i
+ zK8r3kqGTbAmB6Ss9BKlUJsvwGrlXNrfP04M4lUG4t/THc1wWwOR9/BrUt8pyxytqTlq
+ PbPe3D2X0oYmXuEh9elc355NJu9x4yBMdH3id8Wwzrr0/i/30vXm495ZNg8TTnFpKEi3
+ wL+A==
+X-Gm-Message-State: AOJu0YxbOsXBcS3skbxbi3lTW2pI4Q7+kRETaG/yi9eWfatY4sImh8m7
+ mlTT7TaRSr/JlJrLBR9r0ig8LvmXEh2nnz5bGdBibHpnz2c4JwXskbz0aLD5R+qEtd6cZfTK3RM
+ NlLIhXYTdg9KCqQya2sO9Lg6G4oxga07ndT08
+X-Gm-Gg: AeBDietKjhEhhNO7IA4NA+NEgKP5cVrkGdCOtidhiFDz1Q+1SSPuxZqNEVXNXgdolgi
+ Jlk6BG63hxj7fHED5Vh+9fvh+UavZE1od8+MZNHa0Q4k7AMuSNSqp45k347k0RWK0fASGEpcjNu
+ NCnhbpElheMA1KFy3qwRKrzwTF8YakLIuMhFr7N7GUiAyeC8d3WJeNkXlwmFL0+ZEYpcpA2KtzH
+ 8LmA4l4rIg0SkVn5PdV8glAmmqNH43/TjJWmkrF/eWNop9LlcnBTdp2b2iAMUTvKMYDvROjr5b8
+ zC3QK+d9NALB4y8=
+X-Received: by 2002:a17:902:d60d:b0:2b0:4d17:4d6e with SMTP id
+ d9443c01a7336-2b5f9f2d4aemr155824425ad.3.1776981652480; Thu, 23 Apr 2026
+ 15:00:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260424-master-v2-2-8b50b5c063ed@gmail.com>
-References: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
-In-Reply-To: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
+From: Alec Ari <neotheuser@gmail.com>
+Date: Thu, 23 Apr 2026 17:00:40 -0500
+X-Gm-Features: AQROBzDQjfdFPfUC4orUIIZKOSoPZS1SUM0sEcnV0tYvemJ0xcf6ctera3ASrbs
+Message-ID: <CAM5Ud7OgnsygAHxjGEO-qo5+3zYiAQFN85D2bx1Wb62vK2hzRw@mail.gmail.com>
+Subject: [PATCH v2 1/1] raspi4b: Disable L2 cache
 To: qemu-devel@nongnu.org
-Cc: Ali Raza <elirazamumtaz@gmail.com>, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, deller@gmx.de
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=elirazamumtaz@gmail.com; helo=mail-wr1-x42e.google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=neotheuser@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,117 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The tkill and tgkill syscall handlers pass the guest-supplied TID
-directly to the host kernel without checking whether it belongs to a
-guest thread.  This allows a guest to send signals to QEMU-internal
-host threads (RCU, TCG workers) that have no CPUState and no guest
-signal handlers, which can cause hangs or disrupt QEMU operation.
+From c5eabff997cf2231326c532c2cbc51fa1334fb9b Mon Sep 17 00:00:00 2001
+From: Alec Ari <neotheuser@ymail.com>
+Date: Thu, 23 Apr 2026 16:42:06 -0500
+Subject: raspi4b: Disable L2 cache
 
-Add validation that checks the target TID against the guest CPU list
-before forwarding the signal to the host.  For tgkill, also verify
-that the tgid matches the current process.  Return -ESRCH for TIDs
-that do not correspond to any guest thread, matching the behavior a
-real kernel would return for a nonexistent thread.
+L2 cache is not implemented yet, this patch requires
+`clk_ignore_unused` to be set in the kernel cli.
 
-This complements the /proc/*/task/ filtering in the previous commit
-to provide defense-in-depth: even if a guest discovers or guesses a
-QEMU-internal thread TID, it cannot send signals to it.
+Now able to boot a 7.0 mainline kernel.
 
-Signed-off-by: Ali Raza (@locus-x64)
-
+Signed-off-by: Alec Ari <neotheuser@ymail.com>
 ---
-Changes in v2:
-- Range-check tid/tgid before narrowing from abi_long to pid_t.
-- do_tkill: only reject signals whose target lives in our own host
-  process and is not a guest thread; cross-process tkill is passed
-  through to the kernel unchanged.
-- do_tgkill: drop the previous tgid==getpid() blanket rejection and
-  apply the same in-our-process-only filter, so legitimate
-  cross-process tgkill keeps working.
-- New tid_is_qemu_internal() helper based on the CPU list and
-  /proc/self/task/<tid> presence.
----
- linux-user/syscall.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 53 insertions(+), 2 deletions(-)
+ hw/arm/raspi4b.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 44f2cd851f..c7dea1086c 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9161,6 +9161,27 @@ static bool is_guest_tid(pid_t tid)
-     return false;
- }
- 
-+/*
-+ * Return true iff @tid identifies a thread inside our own host process
-+ * that is not one of the guest threads -- i.e. a QEMU-internal helper
-+ * thread (RCU, TCG worker, ...).  Cross-process tids and unknown tids
-+ * are not classified here and the caller should pass the syscall
-+ * through to the kernel unchanged.
-+ */
-+static bool tid_is_qemu_internal(pid_t tid)
-+{
-+    char path[64];
-+
-+    WITH_RCU_READ_LOCK_GUARD() {
-+        if (is_guest_tid(tid)) {
-+            return false;
-+        }
-+    }
-+
-+    snprintf(path, sizeof(path), "/proc/self/task/%d", (int)tid);
-+    return access(path, F_OK) == 0;
-+}
-+
- #ifdef TARGET_NR_getdents
- static int do_getdents(abi_long dirfd, abi_long arg2, abi_long count)
- {
-@@ -13511,11 +13532,41 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #endif
- 
-     case TARGET_NR_tkill:
--        return get_errno(safe_tkill((int)arg1, target_to_host_signal(arg2)));
-+    {
-+        pid_t tid = (pid_t)arg1;
-+        if ((abi_long)tid != arg1) {
-+            return -TARGET_ESRCH;
-+        }
-+        /*
-+         * Reject signals that target one of our own QEMU-internal
-+         * helper threads (RCU, TCG worker, ...) which share our
-+         * host PID but have no guest CPUState.  Cross-process tids
-+         * are passed through unchanged.
-+         */
-+        if (tid_is_qemu_internal(tid)) {
-+            return -TARGET_ESRCH;
-+        }
-+        return get_errno(safe_tkill(tid, target_to_host_signal(arg2)));
-+    }
- 
-     case TARGET_NR_tgkill:
--        return get_errno(safe_tgkill((int)arg1, (int)arg2,
-+    {
-+        pid_t tgid = (pid_t)arg1;
-+        pid_t tid = (pid_t)arg2;
-+        if ((abi_long)tgid != arg1 || (abi_long)tid != arg2) {
-+            return -TARGET_ESRCH;
-+        }
-+        /*
-+         * Only screen targets in our own process; for cross-process
-+         * tgkill we have no way to know which TIDs are guest threads
-+         * in another QEMU instance, so the call is passed through.
-+         */
-+        if (tgid == getpid() && tid_is_qemu_internal(tid)) {
-+            return -TARGET_ESRCH;
-+        }
-+        return get_errno(safe_tgkill(tgid, tid,
-                          target_to_host_signal(arg3)));
-+    }
- 
- #ifdef TARGET_NR_set_robust_list
-     case TARGET_NR_set_robust_list:
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index 3eeb8f4..9580711 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -68,6 +68,7 @@ static void raspi4_modify_dtb(const struct
+arm_boot_info *info, void *fdt)
+         "brcm,bcm2711-rng200",
+         "brcm,bcm2711-thermal",
+         "brcm,bcm2711-genet-v5",
++        "brcm,bcm2711-l2-intc",
+     };
 
+     for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
 -- 
-2.43.0
-
+2.53.0
 
