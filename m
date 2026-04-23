@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77347F9936B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E004F9936C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFrLe-0002Ax-KW; Thu, 23 Apr 2026 06:31:54 -0400
+	id 1wFrKr-000177-Rv; Thu, 23 Apr 2026 06:31:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrL1-0001dT-VM
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:31:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wFrKn-00013q-S7
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:31:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wFrKq-0006AO-Uc
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:31:09 -0400
+ id 1wFrKj-00067l-1g
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:31:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776940263;
+ s=mimecast20190719; t=1776940256;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CXEYBCQhBS8pyO+GypVhIKr4nLl0vrpRMrlByTutUAw=;
- b=QhMtouFWeK3fKjzy07h8Pbdx+F2THA5AZsYYIdfku/K388DNAHOzr/5SHX+P0AqyTChbsO
- aQWqBCQx0pSTY2mZGzB3SyRBu3eL49AorfhiuRPbagarS+ibuiklqsVNQAQw0qF6VzJlwD
- HSa9kiF3Gsi7yR8ChRAlaHvsrOJYdfY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ERyMgSdbJE1FXknEB9Czp6yuKXaax6AJGVhcoUdtg0o=;
+ b=bdR7gY4aZOGreSeFOgN3jjhgXncX3QhJBLjaiVROehayffNGJ9WN/dbnqk3beZpWCwRPnX
+ 5EoAX/Qtl39gpgAuoCsvuFiDl2OyS2Vp7AVXe5kmUlXnN/doSc3rBzUeXq8y0TmBRB73no
+ f3x0sFhDYvNkqLCoUIdCg/yfVRhUBhs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-klV8Q2n4MSWTBlG2f37WYQ-1; Thu, 23 Apr 2026 06:31:02 -0400
-X-MC-Unique: klV8Q2n4MSWTBlG2f37WYQ-1
-X-Mimecast-MFC-AGG-ID: klV8Q2n4MSWTBlG2f37WYQ_1776940261
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43d780757eeso3979444f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:31:01 -0700 (PDT)
+ us-mta-91-1lzhnvH7MYyhrEl_X4ErsQ-1; Thu, 23 Apr 2026 06:30:54 -0400
+X-MC-Unique: 1lzhnvH7MYyhrEl_X4ErsQ-1
+X-Mimecast-MFC-AGG-ID: 1lzhnvH7MYyhrEl_X4ErsQ_1776940253
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-488bd1ee9e7so53870425e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1776940260; x=1777545060; darn=nongnu.org;
+ d=redhat.com; s=google; t=1776940252; x=1777545052; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CXEYBCQhBS8pyO+GypVhIKr4nLl0vrpRMrlByTutUAw=;
- b=qaXx41k5XgFOQz0anBPfz1m857sf6BUE8bYuB78MLmtk1eGWWpF/NU2KmlSbpSHoeo
- 7/3fDZD62Q96agtPrbpuwXRlI5CqeaQIe2QuBUH/ijQTkS9Mw3APPOwr/LudKDZRwSdW
- ySBdx33b305z8w5jafzDSN35rRvBde7XG+7tAJowR/BUAhO2gPd5JhBtPet60HNP2Sg1
- 4pp2FHJvJe0/drg1PJT74d5lmABpbpi1vlCSSMN7AjQBeFAjAXFDlm/REDKG0hxUOV93
- 4HnDxyexdBEFdAHOB7rdEYY1WfPtq1xbs6Gg+q/9EoYSBjBjTjaVKpHfp2zIc+Oon6Ty
- Z3ww==
+ bh=ERyMgSdbJE1FXknEB9Czp6yuKXaax6AJGVhcoUdtg0o=;
+ b=pv0FabqwL0C8n6cF9bINB3L7kGcWsUUlLWNRfqHybcNRBokEo6cNBQY5MbUnGCW/5N
+ eCXfAW4e7RAiWeghux7QLp309yQi1hJ6vW5vr6Y0y5ekWZSoJim2Cx2PQFUijnTJleuy
+ jn+gcYAPr60IttjdPnxhNF4F8DgKDVT2QghfP5UVq5Is09vGc8TRZi0FVgRlkLPRSTf5
+ 4HqTXHrTP/BwSHlV8aZM7M4wzEUtLBTcNYwMeZ8G5vx+9BI8adaC4fZhnEee/zNypTNv
+ CQk7r/EklkXnGUUX/8MqH+Mqx+q7YcLNYu8fKVjnxmxy3mDbyg01vmKK1/sZN0WtGJOZ
+ rYqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776940260; x=1777545060;
+ d=1e100.net; s=20251104; t=1776940252; x=1777545052;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CXEYBCQhBS8pyO+GypVhIKr4nLl0vrpRMrlByTutUAw=;
- b=EPjzhrWwQMLG3/x0XCw6JEY+Eq55xMplVa+G3qbu7pGD+vW8n3XGJh+HYF08huWRp+
- CdExDn9FTJsloUpTXYcwBJ3EuFCjKct86wAiW4lPJoTmed7F8uSaRs3O+up6daw8/07M
- d8/D4XU46672KE1f5xPgpHjZQUvtbFe9P1UjipI8hYU5+LX1acQ0mKqvaBC9iDyIN+bk
- uvodROUHMuf08GFvk9ByuyZfN63LLdwPZdvI4yiLRPz5y+B3NawKOIoiZxGa8ezUD1PL
- 6DTk0Zvl6EIT6ZWQyI7ZZ/D1ORr7/kJSER8/Og5Cu5SCQZoPztB2bYqTEIDOjSQV7HKR
- XmaQ==
-X-Gm-Message-State: AOJu0Yw+jtxhIwvwRYE1JegMmgl1Mry0xgQXIOJjOw0wsk7oOMNKR3Ik
- 4Wz5eXFqZ3bGtnnBnACscwS7T/p/S/TxU+Unsl0uSmPZJLp8iBrXArxn1AJOIKB9SlpJ4p2q6D4
- AsfSKlIBXKGDrkASTNc+2C7bNg+AKOXVwCGr5AYLuUTC3k4dsVjzn+ht9l+G6nx4nKaOArm07BG
- qsRUdwzaOC7tTc1rMmQHQBkXmhDYSV6wXN8BZUVYTS
-X-Gm-Gg: AeBDievpNGhrPgulbrc/b1xwZuqdEz055PcbJQLN18v7FE0ACbCPcElfAIKy1A2/T8N
- OjhYd7G4tJWL45u981LEobDmTLDcNCK0KFtOpJeI/SsCBATbaA1T/0TRf0d34LyDjqROEsj0EN+
- 6v9BVD7vrkDc6NBnuLdEvw96LFODiQUUM9hnveVob1UNA6EfjiPBWVxEtndCXqtGpC0vucbHXiy
- CNcOEHiggYx6KPWJUCWSnUj49Xanyv5gdTmtrn5UDM0gCMEhPwhn7xaE2CjK77VabekJ9q+8WDG
- ASqmV70sZVMbW593x1jR/4WgEmFJu6rI557nb3KoK6lBMARzF/aXxUtL7OwXpT/bmwRTSW8nr9H
- RaXk+gfjAC70UxWD2DsSulRxy6yL7/AaE1sh0KFGrXqgcfCdy+ptF47le8eGvx33lLz0a3Sn8nL
- 0D1BroK1z56amYcKL+w4wg+jQvneV/VsaLrBA=
-X-Received: by 2002:a5d:5848:0:b0:439:bee4:8a93 with SMTP id
- ffacd0b85a97d-43fe4073758mr42827328f8f.12.1776940260434; 
- Thu, 23 Apr 2026 03:31:00 -0700 (PDT)
-X-Received: by 2002:a5d:5848:0:b0:439:bee4:8a93 with SMTP id
- ffacd0b85a97d-43fe4073758mr42827260f8f.12.1776940259903; 
- Thu, 23 Apr 2026 03:30:59 -0700 (PDT)
+ bh=ERyMgSdbJE1FXknEB9Czp6yuKXaax6AJGVhcoUdtg0o=;
+ b=J7z+LPCdqP2vt1L+z9e3R7NZa1VdzUC8rzlpz/iZkw+E0nvm2hnRjhw3WZKppl1CiI
+ gOCON4koNP+9mdySQ4qyhY8gX2MtuHoqhiMxlnzdC3A7KirHsFjZ2CQ/1rB8TTVmguQS
+ NX4lVeeEdQRwxlaemsnCDZp70YrWVNRpaKEBW7HHNlFQk5mv8qsVhInWnEe0odBMjDB3
+ gx42P7wXmvUdbsvtauBK/gPuZIxCb0oOFz09R3MDewyl1yyPfWoc56iVJI0/kqbIH/ez
+ jnHCkMzzU1klLg+1aJCOz0abC4dkjK0MAJdgNjQ6Pp1FzqZqQrayM/SK3/nqZjMJjJJG
+ f8oQ==
+X-Gm-Message-State: AOJu0YyvivorjZF2vuBm0vvxXpfTgQ4MQHdu6PVoDE6bgk3ojdke9uNb
+ L7TzqOpOnQUo9JpC84uQ6gsMC/AEEWHdjIwyfrfw2VdC/c8o19rCFnXbXrda1F9wXr0btaJiF4c
+ xdkeIFuquzYuyfF0C1XH8K7ype5tdptBdTUV9GUFiPWUQbFuG7GQNl+ez4u/hebLnhrXT2ypNnI
+ +GJbzejQVnjYhdkf5UeVpOZXGpEjFFDtVQgY7oDbIZ
+X-Gm-Gg: AeBDievhNXgYV/M6/uHOsV5ryHROX325FqByRgIqT5oIFo3ztLFYpfHDM9ChgWdDpc0
+ ocmxu0Oo8uz1/4MDdE/0YxDiEdBTE6NptWJxIF4ZZ3I1XmpBTGUSnXVMwMcyU2PsL3QdoO9TIK9
+ SjmN4xf4wYODSxeST0bagajS/N6Mo3mv/mqAnU+Zh1We0pvL2P+nSmRjljG7BhtUUsI4yqgXWzh
+ HyS03OibmrOc3rsaz9km/LBIJRen9ShTxuvznxLkYrETiPoKYc7LAZAxavSvt+XCi6+esE/TWPC
+ LxjAu3vYPYjMUkOz2M/YtFF/r3Xh7CYTPg/etILeZLAoal+dH0CF2J4EZhAtU84TaTyEHgfU/Uq
+ 5VphJVDuhSH1gkT7aYUcbcVeKDx7uGhXKXUn8T1HWGE9MKFGjfpvx6+wGvk8SDp1QzoqYtA7ggf
+ qiUc8SsChvk5fIOQJRf8VytgtHCDNhshpnN/M=
+X-Received: by 2002:a05:600c:530f:b0:48a:56de:d640 with SMTP id
+ 5b1f17b1804b1-48a56dedc17mr156046625e9.16.1776940252411; 
+ Thu, 23 Apr 2026 03:30:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:530f:b0:48a:56de:d640 with SMTP id
+ 5b1f17b1804b1-48a56dedc17mr156046065e9.16.1776940251780; 
+ Thu, 23 Apr 2026 03:30:51 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cb1249sm48801208f8f.5.2026.04.23.03.30.58
+ 5b1f17b1804b1-4891ffd2030sm83443695e9.20.2026.04.23.03.30.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:30:58 -0700 (PDT)
+ Thu, 23 Apr 2026 03:30:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 25/25] target/i386: emulate: include name of unhandled
- instruction
-Date: Thu, 23 Apr 2026 12:29:22 +0200
-Message-ID: <20260423102922.443639-26-pbonzini@redhat.com>
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL 22/25] thread-win32: replace CRITICAL_SECTION with SRWLOCK
+Date: Thu, 23 Apr 2026 12:29:19 +0200
+Message-ID: <20260423102922.443639-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260423102922.443639-1-pbonzini@redhat.com>
 References: <20260423102922.443639-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,32 +120,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+SRWLOCK is a much cheaper primitive than CRITICAL_SECTION, which
+basically exists only as a legacy API.  The SRWLOCK is a single word
+in memory and it is cheaper to just initialize it always.
 
-Instead of just the command number, include the instruction name to make debugging easier.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260407141809.16862-2-mohamed@unpredictable.fr
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/emulate/x86_emu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ util/qemu-thread-win32.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
-index 55b1a68eb6c..c2da1a133f3 100644
---- a/target/i386/emulate/x86_emu.c
-+++ b/target/i386/emulate/x86_emu.c
-@@ -1399,8 +1399,8 @@ static void init_cmd_handler(void)
- bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
- {
-     if (!_cmd_handler[ins->cmd].handler) {
--        printf("Unimplemented handler (" TARGET_FMT_lx ") for %d (%x %x)\n",
--                env->eip,
-+        printf("Unimplemented handler (" TARGET_FMT_lx ") for %s - %d (%x %x)\n",
-+                env->eip, decode_cmd_to_string(ins->cmd),
-                 ins->cmd, ins->opcode[0],
-                 ins->opcode_len > 1 ? ins->opcode[1] : 0);
-         env->eip += ins->len;
+diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+index 272afc33856..3037732a6fe 100644
+--- a/util/qemu-thread-win32.c
++++ b/util/qemu-thread-win32.c
+@@ -242,7 +242,7 @@ struct QemuThreadData {
+     /* Only used for joinable threads. */
+     bool              exited;
+     void             *ret;
+-    CRITICAL_SECTION  cs;
++    SRWLOCK           lock;
+ };
+ 
+ static bool atexit_registered;
+@@ -295,9 +295,9 @@ void qemu_thread_exit(void *arg)
+     notifier_list_notify(&data->exit, NULL);
+     if (data->mode == QEMU_THREAD_JOINABLE) {
+         data->ret = arg;
+-        EnterCriticalSection(&data->cs);
++        AcquireSRWLockExclusive(&data->lock);
+         data->exited = true;
+-        LeaveCriticalSection(&data->cs);
++        ReleaseSRWLockExclusive(&data->lock);
+     } else {
+         g_free(data);
+     }
+@@ -328,7 +328,6 @@ void *qemu_thread_join(QemuThread *thread)
+         CloseHandle(handle);
+     }
+     ret = data->ret;
+-    DeleteCriticalSection(&data->cs);
+     g_free(data);
+     return ret;
+ }
+@@ -357,6 +356,7 @@ void qemu_thread_create(QemuThread *thread, const char *name,
+     struct QemuThreadData *data;
+ 
+     data = g_malloc(sizeof *data);
++    InitializeSRWLock(&data->lock);
+     data->start_routine = start_routine;
+     data->arg = arg;
+     data->mode = mode;
+@@ -364,10 +364,6 @@ void qemu_thread_create(QemuThread *thread, const char *name,
+     data->name = g_strdup(name);
+     notifier_list_init(&data->exit);
+ 
+-    if (data->mode != QEMU_THREAD_DETACHED) {
+-        InitializeCriticalSection(&data->cs);
+-    }
+-
+     hThread = (HANDLE) _beginthreadex(NULL, 0, win32_start_routine,
+                                       data, 0, &thread->tid);
+     if (!hThread) {
+@@ -406,14 +402,14 @@ HANDLE qemu_thread_get_handle(QemuThread *thread)
+         return NULL;
+     }
+ 
+-    EnterCriticalSection(&data->cs);
++    AcquireSRWLockExclusive(&data->lock);
+     if (!data->exited) {
+         handle = OpenThread(SYNCHRONIZE | THREAD_SUSPEND_RESUME |
+                             THREAD_SET_CONTEXT, FALSE, thread->tid);
+     } else {
+         handle = NULL;
+     }
+-    LeaveCriticalSection(&data->cs);
++    ReleaseSRWLockExclusive(&data->lock);
+     return handle;
+ }
+ 
 -- 
 2.53.0
 
