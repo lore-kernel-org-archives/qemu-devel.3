@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C334F99362
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 09:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B712BF99344
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 09:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFqhH-0008WM-Jf; Thu, 23 Apr 2026 05:50:11 -0400
+	id 1wFqhU-0000fy-EL; Thu, 23 Apr 2026 05:50:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wFqgO-00087K-80
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:49:19 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wFqgh-0008Al-DO
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:49:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wFqgM-0001HF-7G
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:49:15 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wFqgd-0001SN-Nw
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:49:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776937753;
+ s=mimecast20190719; t=1776937771;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OVaMSEVlkjvRUr5fJ15ohVKJp9SOXSWi+5tyUwSEAv4=;
- b=g6lbnL35XnNuzSUlcK2EvIAxkgtabB2PrF2uIXfxDUgCTRB6PvgPETEJ7ejidODQ78Qw/j
- MDXBcoDt3KUVtUbnaxPMNlSyQZfhOE55Vm0mU12JerZt6qSC3Yc5fOHTQfkkqux32DqZab
- yGgy+xWO+o2TUJJ8vJ/PwM76TrPXJoM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=MYssZ2jX6kV2gh+5VY85dXxJGS2UBMoRMWXKR4lB6jo=;
+ b=elv0OsQcWtpiWK82KGf/4aw1mJFtMEbhH8D5zNqzp1MsO3UdZMR1Iq4t68SJwxS3Ak5A2+
+ ha4lFY0jvwitdxOVGqj71gQ5ZTN0QUKYTDydokTpALUG863TGktfEhXJfZTo9bU8YFnU4O
+ j3viXySNaaTtMqqG8fC3OMItLpcxqr4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-mK7OZgy5NYiPKT-ANsc41g-1; Thu,
- 23 Apr 2026 05:49:09 -0400
-X-MC-Unique: mK7OZgy5NYiPKT-ANsc41g-1
-X-Mimecast-MFC-AGG-ID: mK7OZgy5NYiPKT-ANsc41g_1776937749
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-fuUw9cHqNfWNLmZF7eg_Gg-1; Thu,
+ 23 Apr 2026 05:49:25 -0400
+X-MC-Unique: fuUw9cHqNfWNLmZF7eg_Gg-1
+X-Mimecast-MFC-AGG-ID: fuUw9cHqNfWNLmZF7eg_Gg_1776937764
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D89D5195605C; Thu, 23 Apr 2026 09:49:08 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BC011800464; Thu, 23 Apr 2026 09:49:24 +0000 (UTC)
 Received: from gondolin.str.redhat.com (dhcp-192-224.str.redhat.com
  [10.33.192.224])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 54B29300757A; Thu, 23 Apr 2026 09:49:07 +0000 (UTC)
+ id 1E5DC3007572; Thu, 23 Apr 2026 09:49:21 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL 03/11] target/s390x: Replace legacy ld/st_phys ->
- address_space_ld/st (mmu)
-Date: Thu, 23 Apr 2026 11:48:48 +0200
-Message-ID: <20260423094856.270215-4-cohuck@redhat.com>
+Cc: qemu-s390x@nongnu.org, Jaehoon Kim <jhkim@linux.ibm.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+Subject: [PULL 11/11] hw/s390x/ccw: Disable legacy virtio-pci by default
+ (v11.1+)
+Date: Thu, 23 Apr 2026 11:48:56 +0200
+Message-ID: <20260423094856.270215-12-cohuck@redhat.com>
 In-Reply-To: <20260423094856.270215-1-cohuck@redhat.com>
 References: <20260423094856.270215-1-cohuck@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,39 +86,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Jaehoon Kim <jhkim@linux.ibm.com>
 
-Prefer the address_space_ld/st API over the legacy ld_phys()
-because it allow checking for bus access fault.
-This code however doesn't check for fault, so we simply inline
-the calls (not specifying any memory transaction attribute nor
-expecting transation result). No logical change intended.
+On the s390 Linux kernel, IO_SPACE_LIMIT has been 0 since the initial
+zPCI implementation (commit cd24834130ac "s390/pci: base support"),
+making I/O BARs unusable.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+However, when virtio-pci devices operate in transitional mode, QEMU
+unconditionally exposes the legacy interface via BAR0. This results in
+firmware warnings during PCI enumeration, such as:
+
+  pci 0005:00:00.0: [Firmware Bug]: BAR 0: invalid; can't size
+
+even though BAR0 is never usable on the s390 kernel.
+
+Close this gap by disabling legacy virtio-pci support starting from
+machine version 11.1. This effectively makes virtio-pci devices
+non-transitional and prevents the creation of the unusable legacy I/O
+BAR.
+
+This introduces s390x-specific global compatibility properties that
+set disable-legacy=on as the default for virtio-pci devices. Machine
+versions v11.0 and earlier set disable-legacy=off to maintain their
+original default behavior (legacy support enabled), ensuring VMs
+created with those versions continue to work identically.
+
+Users can override the default on the command line if needed:
+  - On v11.1+: -global virtio-pci.disable-legacy=off (to enable legacy)
+  - On v11.0-: -global virtio-pci.disable-legacy=on (to disable legacy)
+
+Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Message-ID: <20260319185203.11799-3-philmd@linaro.org>
+Message-ID: <20260420144759.2970726-2-jhkim@linux.ibm.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- target/s390x/mmu_helper.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-index 246573ff6429..255271b9d340 100644
---- a/target/s390x/mmu_helper.c
-+++ b/target/s390x/mmu_helper.c
-@@ -44,8 +44,9 @@ static void trigger_access_exception(CPUS390XState *env, uint32_t type,
-     } else {
-         CPUState *cs = env_cpu(env);
-         if (type != PGM_ADDRESSING) {
--            stq_be_phys(cs->as, env->psa + offsetof(LowCore, trans_exc_code),
--                        tec);
-+            address_space_stq_be(cs->as,
-+                                 env->psa + offsetof(LowCore, trans_exc_code),
-+                                 tec, MEMTXATTRS_UNSPECIFIED, NULL);
-         }
-         trigger_pgm_exception(env, type);
-     }
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index cc768daeb04c..4d35f9b10bcc 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -788,6 +788,21 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
+     g_free(val);
+ }
+ 
++ /*
++  * S390x-specific global compatibility properties.
++  *
++  * On the s390 kernel, legacy virtio-pci is not usable because I/O BARs
++  * are not supported (IO_SPACE_LIMIT is 0), and would only result in
++  * unusable BARs and firmware warnings.
++  *
++  * Therefore, starting from v11.1, disable legacy virtio-pci by default,
++  * while older machine types keep legacy behavior for compatibility.
++  */
++static GlobalProperty hw_compat_s390x[] = {
++    { TYPE_VIRTIO_PCI, "disable-legacy", "on", .optional = true},
++};
++static const size_t hw_compat_s390x_len = G_N_ELEMENTS(hw_compat_s390x);
++
+ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -878,6 +893,9 @@ static const TypeInfo ccw_machine_info = {
+         const void *data)                                                     \
+     {                                                                         \
+         MachineClass *mc = MACHINE_CLASS(oc);                                 \
++        /* Apply global s390x-wide default properties */                      \
++        compat_props_add(mc->compat_props, hw_compat_s390x,                   \
++                         hw_compat_s390x_len);                                \
+         MACHINE_VER_SYM(class_options, ccw, __VA_ARGS__)(mc);                 \
+         mc->desc = "Virtual s390x machine (version " MACHINE_VER_STR(__VA_ARGS__) ")"; \
+         mc->init = MACHINE_VER_SYM(mach_init, ccw, __VA_ARGS__);              \
+@@ -923,7 +941,15 @@ static void ccw_machine_11_0_instance_options(MachineState *machine)
+ 
+ static void ccw_machine_11_0_class_options(MachineClass *mc)
+ {
++    /*
++     * Preserve v11.0 and older version behavior:
++     * keep legacy virtio-pci enabled.
++     */
++    static GlobalProperty compat[] = {
++        { TYPE_VIRTIO_PCI, "disable-legacy", "off" },
++    };
+     ccw_machine_11_1_class_options(mc);
++    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+     compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
+ }
+ DEFINE_CCW_MACHINE(11, 0);
 -- 
 2.53.0
 
