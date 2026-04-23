@@ -4,74 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4257DF589CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 13:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FDDF589D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 13:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFtor-0007sm-Kk; Thu, 23 Apr 2026 09:10:15 -0400
+	id 1wFu18-0002RO-Jp; Thu, 23 Apr 2026 09:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFtok-0007lZ-NV
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:10:07 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFu17-0002R0-Dn
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:22:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wFtoh-0000sx-U3
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:10:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wFu13-0006eJ-GO
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 09:22:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1776949801;
+ s=mimecast20190719; t=1776950566;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Yrt2d1UQo/uEdzcrW8OrSRjEvCxJaOzjH26WIm+POgg=;
- b=gTPX0VfYwaEDWJDHQ6mWwSofVL72s82NNIcpBhbgwVsNeOsZSoABSwZv2C/d9R0YrfZj5S
- efXRFjd0hqmKZzZv0OOgOb5B+ENPeah5z4ZWwUg94FMAWNW+/9gpg465mggaYStKl8G0Hi
- iOJt40nyIlvLI8+SjV7/PBFeqauUT7Q=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-1J4vL3i2PR-OU2ExcLP58g-1; Thu,
- 23 Apr 2026 09:09:57 -0400
-X-MC-Unique: 1J4vL3i2PR-OU2ExcLP58g-1
-X-Mimecast-MFC-AGG-ID: 1J4vL3i2PR-OU2ExcLP58g_1776949796
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 18CAD19560AA; Thu, 23 Apr 2026 13:09:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85008180045E; Thu, 23 Apr 2026 13:09:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 34D0D21E6A28; Thu, 23 Apr 2026 15:09:53 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH V6 13/14] qapi: examine IOThread attachment status via
- query-iothreads
-In-Reply-To: <20260410150457.85190-14-zhangckid@gmail.com> (Zhang Chen's
- message of "Fri, 10 Apr 2026 23:04:56 +0800")
-References: <20260410150457.85190-1-zhangckid@gmail.com>
- <20260410150457.85190-14-zhangckid@gmail.com>
-Date: Thu, 23 Apr 2026 15:09:53 +0200
-Message-ID: <87340lomam.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=DfCH5Z07qyMyxYDVBvwks0o4DrO8Yc41upKqB1tbsvE=;
+ b=KF4htlZgivpxvi75U4ZtTC8AYJUV5kwrEPCvGE43EwXVSyP0vRrD/71uhzTHnDrQHelcPK
+ 6oJq4lziUzOJATngsG8dwPET0zVO4UZiWwdpCJ/IXGga3Sf/cRPjGWhjORBt3efbUcj3Rr
+ BIwKmXhx5dQR5bqKfFDHTyoQAP0betc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-271-iPhRjTb_PluwC9k7uH9NMQ-1; Thu, 23 Apr 2026 09:22:45 -0400
+X-MC-Unique: iPhRjTb_PluwC9k7uH9NMQ-1
+X-Mimecast-MFC-AGG-ID: iPhRjTb_PluwC9k7uH9NMQ_1776950564
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8abd6e281c0so182805786d6.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 06:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1776950564; x=1777555364; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=DfCH5Z07qyMyxYDVBvwks0o4DrO8Yc41upKqB1tbsvE=;
+ b=A5pvbgV7id3oqtQiAovdYkd4q46YsDNE6hW98Ax+YxSJuMarr2nAhRD5Tuqv0H+o/6
+ 5bfHVq0swZOLLm01ixW9H+h7u81MVJ4z5Lvu2UR51O68j7qBtohLMQ6VHNjR6r2Cy+k8
+ vLxl2e/wzZjl/zYVMoB+2QBXj8I4krckzZoCyboOFKvtIhc4B+QgVhhZOd6gyFDnfDg3
+ Yljpn9X802XkGzGjBnbDZI12QMVuzhG1o7Et4O4VHslsQaqsAWPzPQGEJ4SJ++BlQ2+b
+ ZomqiRHnysCh3TL75Npvkqcjzknq5I1fPu32+FIHWrdEOjzA+VHFA/g5SFpy5C5tanG6
+ ox/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1776950564; x=1777555364;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DfCH5Z07qyMyxYDVBvwks0o4DrO8Yc41upKqB1tbsvE=;
+ b=jApUH6cHMeylSD6u7KtTNkqVQ45pdTXJTGCt3itEqA2tL57PQk45NnNL/kVNvcIZ9I
+ AudcozsWW16VaXMffJLJSB+LE+zd0siuGUqpR8mXDe/skQ46g9mGAG4la5TKJdsRNIlW
+ x87LiqgO1Zt0rcJc7sKqfAXIykMUYOWbJOWnGzIQYCb2QTLDAnKVkr2yE84yqSEHeM7E
+ LUf7VqSwxyiK/XVVg6JqnwanE+c8oCOB2yyvfewMP76+x6zULWpZEBXMwrn0D7JuDgwz
+ s1tmU1RHzBRIhw/WLXN//YWaoNy4vPFCOzSzv03x8Tl6Fqa/uN/9cnnELScYl6Ze3Ota
+ MQlQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/Kh7u64Im3L0DH6mMFTmX4JDZKs83pRkOvmEo4OMFylgQdnc04KQZGV6jbyqxLAcPmux0d12TqA2JW@nongnu.org
+X-Gm-Message-State: AOJu0Yxv0KPcPJaw5vZ2oexdy3VwJjYO2ziXq/oqIGmWj/OoV24x4PQ9
+ QZ7LkD5sTMZr0ZUFmwlNrSKfjOVtyYsbbwtws1NXzsJJehzevqa2W8lUTURhCwbHVIIzdYaZZpE
+ PMzFA1/Fzpg1mX8zDHwAKysvHCrycZSkFTnLpJnQh0+By5fir/uzGcwMI
+X-Gm-Gg: AeBDiesjaP1TWZ4UtPUczki8v04hld7eVqqXivlmuBfWYYkz46YtH7k+3eyYiXKE37f
+ OC1xUaphgNJvBKz8cLA0DER8zTfanZVvnDX1hiOI6dusPr2BQRRAhzsnWVWxfy8RI4AJTYgP3Yi
+ XWXiCYyISmTnTASeoRQkwXZMYhqH7jremRkcJvqvzwrH9ZGqDJvacZDPoN2bZRPgIAOCESivtON
+ Hy1LX4r36XC4TYkg7gEe8FN5Zjblx43QOlt7CpTP4rOTEhGuMpKhLxSi9pIhRPeW7pMlhNeJZm3
+ Y3WbTvHk8QhKBmgUj0e6ZCUFrteVyupjepIlsx6RvLtUfhpx+HrsCa/ESaOhpG8uzeD0RauzgAj
+ 5MxhUX+BtAOKQqyG8JMfmY3kaz/ALli3nJpj22N7qR2899DsDrWEmFrjBfQ==
+X-Received: by 2002:a05:6214:27ee:b0:8ac:b1ad:3a29 with SMTP id
+ 6a1803df08f44-8b02816b33emr423689486d6.35.1776950564454; 
+ Thu, 23 Apr 2026 06:22:44 -0700 (PDT)
+X-Received: by 2002:a05:6214:27ee:b0:8ac:b1ad:3a29 with SMTP id
+ 6a1803df08f44-8b02816b33emr423688896d6.35.1776950563884; 
+ Thu, 23 Apr 2026 06:22:43 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8b02ac7834esm153455646d6.18.2026.04.23.06.22.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Apr 2026 06:22:43 -0700 (PDT)
+Date: Thu, 23 Apr 2026 09:22:40 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Claudio Fontana <cfontana@suse.de>, Trieu Huynh <vikingtc4@gmail.com>,
+ qemu-devel@nongnu.org, Jim Fehlig <jfehlig@suse.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH 0/2] migration: include timing and RAM stats on
+ destination when query-migrate
+Message-ID: <aeodIPAxxCK-D3Qk@x1.local>
+References: <20260405152612.93027-1-viking4@gmail.com> <878qb05gq7.fsf@suse.de>
+ <ada038hgmY9hNqPK@x1.local>
+ <5f29c2dd-95eb-44c6-b22e-1909f7453cdf@suse.de>
+ <ad1a9GaGQFHS4UHx@x1.local> <87ldeeehpm.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ldeeehpm.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,102 +121,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+On Wed, Apr 22, 2026 at 07:46:45PM -0300, Fabiano Rosas wrote:
+> I came to the thread to suggest this, but I see you already mentioned
+> it. I'm not sure what you mean by "forward", but I was actually thinking
+> "migrate". Do we have precedent for migrating a QAPI object? Do we want
+> to have it? =) Put that MigrationInfo at the end of the stream and we'd
+> have a nice symmetric interface for query-migrate in both src and dst.
 
-> Extend the 'IOThreadInfo' structure to include attachment metrics.
-> This allows users to monitor the associated devices by identify them
-> by their QOM paths.
->
-> New fields added to IOThreadInfo:
-> - @holders: IoThreadHolder(QOM path or block node name) of the devices
->             currently associated with this iothread.
+Do we need to "migrate" it, say, using VMSD data structures?
 
-See "I'm confused" below.
+We could, but I'm not yet sure if it's a good idea, especially if we should
+make that as part of ABI.  It may add some unnecessary burden to us.
 
->
-> These fields are also exposed via the Human Monitor Interface (HMP)
-> command 'info iothreads' to assist with manual debugging and
-> performance tuning.
->
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> 
+> (we have plans to deal with QEMU_VM_VMDESCRIPTION at some point anyway,
+> we could maybe rework that end section into something useful)
 
-[...]
+That might still be a bit early phase to contain all the stats info. For
+example, the real downtime needs to be calculated until src receiving the
+ACK, that should be after dest receive QEMU_VM_VMDESCRIPTION, IIRC.  So if
+we want to at least forward the downtime info, that might be too early.
 
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index d65d8012b2..e173d54a5e 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -94,7 +94,8 @@
->  # @IoThreadHolderKind:
->  #
->  # @block-node: Block node name.
-> -# @qom-object: Standard QOM path.
-> +#
-> +# @qom-object: QOM path.
->  #
->  # Since: 11.0
->  ##
+In all cases, I still think we should evaluate libvirt solution before any
+other explorations.. because so far we still don't know why it can't be
+done, and it's the simplest afaiu.
 
-Squash this into PATCH 02, please.
-
-> @@ -104,7 +105,7 @@
->  ##
->  # @IoThreadHolder:
->  #
-> -# @type: Current IoThread holder type support QOM path and Block node.
-> +# @type: Current IoThread holder type support QOM path and block node.
-
-This, too.
-
->  #
->  # Since: 11.0
->  ##
-> @@ -124,6 +125,13 @@
->  #
->  # @thread-id: ID of the underlying host thread
->  #
-> +# @holders: IoThreadHolder(QOM path or block node name) of the devices
-
-Space before (
-
-> +#     currently associated with this iothread.  Users can pre-allocate
-
-I'm confused.  What is holding what?
-
-A QOM object / block node / monitor holding an I/O thread?
-
-> +#     multiple iothread objects to serve as a persistent thread pool.
-> +#     When a device is hot-unplugged, it is detached from its
-> +#     iothread, but the iothread remains available, allowing future
-> +#     hot-plugged devices to attach to it.
-> +#
->  # @poll-max-ns: maximum polling time in ns, 0 means polling is
->  #     disabled (since 2.9)
->  #
-> @@ -141,6 +149,7 @@
->  { 'struct': 'IOThreadInfo',
->    'data': {'id': 'str',
->             'thread-id': 'int',
-> +           'holders': ['IoThreadHolder'],
->             'poll-max-ns': 'int',
->             'poll-grow': 'int',
->             'poll-shrink': 'int',
-> @@ -166,6 +175,8 @@
->  #              {
->  #                 "id":"iothread0",
->  #                 "thread-id":3134,
-> +#                 "holders":["/machine/peripheral/blk1/virtio-backend",
-> +#                            "/machine/peripheral/blk0/virtio-backend"],
->  #                 "poll-max-ns":32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
-> @@ -174,6 +185,7 @@
->  #              {
->  #                 "id":"iothread1",
->  #                 "thread-id":3135,
-> +#                 "holders":["/machine/peripheral/blk2/virtio-backend"],
->  #                 "poll-max-ns":32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
+-- 
+Peter Xu
 
 
