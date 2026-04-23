@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AA7F99363
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 545CDF99363
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 10:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFquY-0007Jm-Co; Thu, 23 Apr 2026 06:03:54 -0400
+	id 1wFquh-00085R-Bl; Thu, 23 Apr 2026 06:04:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtp-0006Tp-F2
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:10 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wFqtr-0006Uj-Cm
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:16 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wFqtn-0002B6-12
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:09 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488b8bc6bc9so46012475e9.3
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:06 -0700 (PDT)
+ id 1wFqtp-0002Ci-T3
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 06:03:11 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43d0deb7ad5so5318082f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 03:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776938585; x=1777543385; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776938588; x=1777543388; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qjsOOiWEcKRkZbDhDSNYHUlJMVTSEqAzf3AnwWpREd0=;
- b=V39q3GMUCekCnlrXg0I5fCc9OzxlpGHoIYkomozbmTT6DDNsDSFk5gYMohhr90GPor
- hieM24AoTNp861TQG61sx0nmqUKDCFi0wqDZqaX0O/NBcPmOLmFdVmZnmFAxe0LONmzb
- IZ3fuJhNKIzV3UBzFVoFZMhGDvYVVHevCUvb0UkvI2Q09RJPqepHg+IEdKyPiiiBUjID
- EMpOidaMeuAIDiE+88WDYUBqwQjL5aAnqz5oFxldspQfwP0QZKt2QOdmcTdn9zsfqk1t
- sbhJuV3U/T0K9oACI75xwexeKcR45zb8aYtw+UwtreQwM6+ruGup1b/xXCJpAzdW7qTR
- h2+A==
+ :reply-to; bh=3rKLMQ6RgFwzzecFEkNkkQjw+XyVm/JABTD5On1nUko=;
+ b=O9ioZw1EzoKG6qnVDxQKz74KjWwFENoJnMHkGrOBhibkJoa5trs9Zg10U3tF/0TJq4
+ XqUjfNUvjQPBbNqQCCLEJxIO1btfye5V7H65qEUdz0lKZb7+ZKap8iOA/2+B3HtbeaBt
+ J5Q/a2Mz0gSVCk4MznZVv/NMI3fC3r9P3YMkRvTI88hWM6gwqawWXdML0XGpzp7Dlvc6
+ URHSgxlRG5f6bY+RbLxDZuppV+OjGBAuz6iX2ZUm6F2uU51B68dRU2mXC+Z849g+Z1I/
+ 4hn3LzlkivXZT5MAFXmAtRcTbcgvZeupW47fVaj9wexnnwt4O7mzBQJxxKBzviYsbKjj
+ iq7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776938585; x=1777543385;
+ d=1e100.net; s=20251104; t=1776938588; x=1777543388;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qjsOOiWEcKRkZbDhDSNYHUlJMVTSEqAzf3AnwWpREd0=;
- b=F+LRquV9juuxtOeX19xXKIH7UJnq8uwk9eisbjasi5+jWX0gnMUC5e9qLS3YkcjXbF
- NC1TaDpdgasIA+xU37JwOPu8NGSg8JIPJfpiu2Ng+37n/dUPG9OqHTLBMSZ4i0b/mnlV
- Y/Z592Kl/u5Yn7oY8+8zKVt9zCJkdn+YcU0202reM5UoxUpUkAEt4ocFi07KIhLkpIgZ
- 1o/bf1yPwf6xYBjJixpRBtIaK+vC0Uz0+G0McXeTEvW9I2PS3xhfk5O86TINDS8k8Zoa
- vHg5BrbXnJbxuIes4EZ84G83nYJY2Mqi2nMpPRdwc7+lhor5PhqNstAT3UhRCcqaSCMl
- XV1A==
-X-Gm-Message-State: AOJu0YxDgx/q3OcLd4CYUiaSpxmyg5dnNFxwY2FgTC6z9O2dqJh5UxZ2
- QJpGG88OJ0NRmZImOOpuG5drtJdT7O8wOcHRxGNNbLErIogKDtsRWdN1QfpuMixx1lHeXb0DEJN
- 5Nboz
-X-Gm-Gg: AeBDiev4ItNx6AEfWZFiBsml1D0SKEc5vRsXb8gaeyWMmRN0YWu1FU0iWF6CxIDU4OP
- k5htt3eECJ5YIO0/faF2bfdV9/IKpVqQrb5kJ9yY3h3zULADfNVc05dJIS7eGGs7Y7g5BrwORYd
- W0s4E3umHb9OUy2xAuFwisNAPXM+59ay4N8AraSm39moS1EyPaZyYaafhsh8IxrShS/ChRith7S
- oSQBcowVGGhPPJI1YRs3K7gR2bkWl0/Lldk9npvjzRU9LNM6bghVc/ULKhec2Hp7IZA2U1Uhjrv
- mE2aTauUQgpNNst6h9rnXHvdacoikb/J3J9qIe4k+hw2FFUiPwrPVIA3xrSAZNru4XT3F8sBMKK
- 4Brn/wFjinrKGs29HXtCppf5DGJTsNu2SkFOwEf2Bxx8GKBZn/IoO9CmCO8SySK6Uur7Qf4Wfhv
- 84F87UILLdPn1w2krxC1JxKD9HUvEMDbpx4lDAmDoebW3WQMkLAo8ZQRWVfctyYdps+ja0o/fnL
- CDtfid+j2ykRMkEy7yUIDrj75eVfwOvWKbFg5TyDA==
-X-Received: by 2002:a05:600c:a08c:b0:48a:563c:c8c0 with SMTP id
- 5b1f17b1804b1-48a563cd176mr149717505e9.7.1776938585192; 
- Thu, 23 Apr 2026 03:03:05 -0700 (PDT)
+ bh=3rKLMQ6RgFwzzecFEkNkkQjw+XyVm/JABTD5On1nUko=;
+ b=B4Vg59YFetIRtgXxouyr/8/hwnP8owitPm5obKoUal6OobzSGdVC+SU0Tz5Wvph/r7
+ QGuQqQ7KQ4gnrbPV+JzNBs5eJkTVV0uHeeamrxxr+QsWn16yrOHrEUVDM5nen9qb2h4f
+ l97ytsGMyrseKmFMCs2aTn8DAjXEmJjGmyEjXJGFEzTVL57wlTV1EPsvRKzbf+5z20nY
+ Sod5PB00oOi2Mvlwdfa015tDbfR6DayAsLmkhfPZNk4JZKOJuePTNYNvHr+tFrukiDi6
+ yujBPKk7zvMprEJKQ0LH7DcocQJ0V5SmXr9eU9jNIKLQel2o/2eAihn9ZZxWjF7Gb3xm
+ EtAA==
+X-Gm-Message-State: AOJu0YyGFygrYAkz7Vso4yPXF0jFOWbjB0/IqGiNw1bvZgh1JtnJj+Qs
+ QuI5U0ASJe5XDkVT+LdtLAF7uE/yc9XYrf2yJrRkPjbn6AlT7+vDc8OYOLmx2bCuIge2pELiKVi
+ 6zUeS
+X-Gm-Gg: AeBDiev48KVt2GmBEwdE6EnNZcf7on2NPc49Bo39ZzzuBJ4ncocJdBO4hkfkP+ZSm7h
+ TXDBiPHWo2mOjZu71kZ7/qWKrW+YPfI9V7y8TIgsUdslmx2roejRSIxkWYJNFQgXrO82YMopisf
+ EncXkdKAWMjBdWU6IoFGEUJ3/ITC6OWZ87Lou7ZVknypJ4E7kbNF8rzVDjO0V8pYlhq7NKCF21U
+ 1Y242Usfmna3GrchnYGN4B1LxBci4TMDrM19BHHGv2yRYiWKfSOnTT/ozGKSeoe1DSlcUAaaOcu
+ /cQ5V/ZZyCus6jdDKwTwHY6q98lzZhkt4ABKf1uSFzw9QF+/GM6qYFXN2ZYGRH1nsAniUUQOn72
+ y+Z07yu/e+f6J7qUsBUaa615/SHDdERgaRo9fsESpeQKKxNtOpBsnLZkaI3yPy2P7ar+uAzK74S
+ HCQi1wzhk58yb+VItewu2tE92pCbS2eFPbKPJqlbbMYapQqnJs4zM7Gon7L6qLnI6VnqY3QoWAT
+ LcXp1sjMjrkAKG0/oUICkJqpEAuK/ie+WrdpfYctg==
+X-Received: by 2002:a05:6000:40de:b0:441:1ca1:6404 with SMTP id
+ ffacd0b85a97d-4411ca1642cmr19823611f8f.18.1776938588388; 
+ Thu, 23 Apr 2026 03:03:08 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.04
+ ffacd0b85a97d-43fe4e4eec9sm49323930f8f.34.2026.04.23.03.03.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 03:03:04 -0700 (PDT)
+ Thu, 23 Apr 2026 03:03:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/59] target/arm: Replace target_ulong -> vaddr in
- guarded_page_br()
-Date: Thu, 23 Apr 2026 11:02:01 +0100
-Message-ID: <20260423100229.2941820-32-peter.maydell@linaro.org>
+Subject: [PULL 34/59] MAINTAINERS: Remove Anup Patel
+Date: Thu, 23 Apr 2026 11:02:04 +0100
+Message-ID: <20260423100229.2941820-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260423100229.2941820-1-peter.maydell@linaro.org>
 References: <20260423100229.2941820-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,56 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Anup Patel has not posted to qemu-devel in some years and did not
+respond to a query about whether they still wished to be listed in
+our MAINTAINERS file.  Remove them, on the assumption that they are
+no longer active in QEMU.
 
-Following commit 15500df3b3b ("target/arm/tcg/translate.h: replace
-target_ulong with vaddr") change, adapt guarded_page_br().
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260401143456.79843-1-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260416091654.316158-3-peter.maydell@linaro.org
 ---
- target/arm/tcg/helper-a64-defs.h | 2 +-
- target/arm/tcg/helper-a64.c      | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
-index b6008b5a3a..3c3c5dddb7 100644
---- a/target/arm/tcg/helper-a64-defs.h
-+++ b/target/arm/tcg/helper-a64-defs.h
-@@ -131,7 +131,7 @@ DEF_HELPER_4(cpyfm, void, env, i32, i32, i32)
- DEF_HELPER_4(cpyfe, void, env, i32, i32, i32)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2fd2a5ebd2..5b5b686e76 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -842,7 +842,6 @@ F: tests/functional/arm/test_canona1100.py
+ F: docs/system/arm/digic.rst
  
- DEF_HELPER_FLAGS_1(guarded_page_check, TCG_CALL_NO_WG, void, env)
--DEF_HELPER_FLAGS_2(guarded_page_br, TCG_CALL_NO_RWG, void, env, tl)
-+DEF_HELPER_FLAGS_2(guarded_page_br, TCG_CALL_NO_RWG, void, env, vaddr)
- 
- DEF_HELPER_FLAGS_5(gvec_fdiv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fdiv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 2dec587d38..a7372aa6bb 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -1735,7 +1735,7 @@ void HELPER(cpyfe)(CPUARMState *env, uint32_t syndrome, uint32_t wdesc,
-     do_cpye(env, syndrome, wdesc, rdesc, false, GETPC());
- }
- 
--static bool is_guarded_page(CPUARMState *env, target_ulong addr, uintptr_t ra)
-+static bool is_guarded_page(CPUARMState *env, vaddr addr, uintptr_t ra)
- {
- #ifdef CONFIG_USER_ONLY
-     return page_get_flags(addr) & PAGE_BTI;
-@@ -1765,7 +1765,7 @@ void HELPER(guarded_page_check)(CPUARMState *env)
-     }
- }
- 
--void HELPER(guarded_page_br)(CPUARMState *env, target_ulong pc)
-+void HELPER(guarded_page_br)(CPUARMState *env, vaddr pc)
- {
-     /*
-      * We have already checked for branch via x16 and x17.
+ Goldfish RTC
+-M: Anup Patel <anup.patel@wdc.com>
+ M: Alistair Francis <Alistair.Francis@wdc.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
 -- 
 2.43.0
 
