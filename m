@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBC4F99357
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1E6F99351
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 09:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFq00-0008Gn-Le; Thu, 23 Apr 2026 05:05:28 -0400
+	id 1wFq03-0008P5-SZ; Thu, 23 Apr 2026 05:05:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wFpzp-0008EP-3d
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:05:18 -0400
-Received: from smtpout7.mo534.mail-out.ovh.net ([54.36.140.178])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wFq02-0008OJ-Go
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:05:30 -0400
+Received: from 5.mo534.mail-out.ovh.net ([54.36.140.176])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wFpzg-0005Wq-Ez
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:05:12 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4g1VXm0FqTz6CML;
- Thu, 23 Apr 2026 09:04:55 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu, 23 Apr 2026 09:04:55 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.58])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4g1VXl23Tfz1xpD;
- Thu, 23 Apr 2026 09:04:55 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wFpzx-0005kF-UJ
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 05:05:30 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4g1VYH6kqkz6CML;
+ Thu, 23 Apr 2026 09:05:23 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 23 Apr 2026 09:05:23 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.168.13])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4g1VYH5gB7z1xnY; Thu, 23 Apr 2026 09:05:23 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.0])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id E36B5203AAD; 
- Thu, 23 Apr 2026 09:04:52 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 8A5821B43ABB;
+ Thu, 23 Apr 2026 09:05:21 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S003b7e61853-cf4d-451a-85c8-44a7598bd18d,
+ (GARM-113S007b95cc11f-8ffa-4faf-83d8-760c28ddf65b,
  C846149266E0C9F4D826987B86006927C6E58490) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <bf941723-0024-4093-a345-b0c6403e5ee0@kaod.org>
-Date: Thu, 23 Apr 2026 11:04:52 +0200
+Message-ID: <aa626393-5757-4c43-96b3-370d8155b74d@kaod.org>
+Date: Thu, 23 Apr 2026 11:05:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 15/17] hw/arm/aspeed_ast27x0: Set EHCI
- ctrldssegment-default
+Subject: Re: [PATCH v4 17/17] tests/functional/aarch64/test_aspeed_ast2700:
+ Add USB EHCI test for AST2700 A1/A2
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "philmd@linaro.org" <philmd@linaro.org>,
  "peterx@redhat.com" <peterx@redhat.com>,
@@ -58,7 +58,7 @@ Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>,
  "farosas@suse.de" <farosas@suse.de>
 References: <20260423051804.362095-1-jamin_lin@aspeedtech.com>
- <20260423051804.362095-16-jamin_lin@aspeedtech.com>
+ <20260423051804.362095-18-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -103,23 +103,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260423051804.362095-16-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260423051804.362095-18-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 16192410987912473645
+x-ovh-tracer-id: 16200292288092417069
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEMDRuxfFzkfGjC8TvcSaM014oSusKzs418x7idWHomuzXrEllv8+5ZLvy2vctPVToMVzrmFfC8unPn87b4oQdtRZF6pUu4LsiDM011xUi3tnP5dxbIqgr7Lb5yyTo+h07ave6GNv37AuI6yfn6IuXjv0TJKzYu55DK4FJUn0zgBWjuGJfNTFFAS9XjRpaJGgBDpczbbzClsSAUT/Hd679OTtkpqICHUw9FE1BzZL5O+BVpiqI1lHtAsphLg6cptC1pwntBLBfubm4O98CbgBapsbOCwl5RT5iFYGFyX9NJnxymi2H2uv9YYD02E+LKg9BlfhBUO+R9TL9JonwXGiQWYuVcNXrtmX66obsfrBFO2mzpr7h8lW+LPhd+vhMVGlbjr/tyU6+uRAGO1mgUw5NOzaba66hJhhUO9WrFLCdVRR5n/zcNV3jOlLLB8gKxhCQDeWYchoYQL2A4+sLrNzDWQJQsqgmYref/MCugNeNOFJyknJVVyKQ7HmrrWEOk29zUu9FyUeDJ+E/0lipef5jHLRP0mt7Zmd47y6rxoUWZBZii75rSwXkXiOA/OZ4Vh+xUuvxnzZq3hgdujc8WNrTP+6Opnf1/cjzL/OjBRPOEMED58CjosJZCigzIKDHYifatuXNd/RYf6dKLwDMe+6453DtOH7PwupwZKuD7+zWFxA
-DKIM-Signature: a=rsa-sha256; bh=YqtUfP/qBQseiqrWC9m0CJI++wLuhwT9i+WKxoIA0Hc=; 
+X-VR-SPAMCAUSE: dmFkZTGoS7NlEyFt81jSX19rro+JqLaoKKBSoNj4WVSXw8Dyn59fZrkkyTkum6T15Gw2zC52mlRUeD3jIrRqXh6rBduh8M+dlfQE/uDVBAXLg2ODbB1uiIWVXHaySBF7hbVFquuKrmsHv+oAEZkcRwpZvVrfFsxeEQ1Z0zBZpjVwykFe4Vld7dEXTNi26C+VKEG1HXXs0mJF6A7F1imIrXJiNOjZolXNMeA4hz7OdQmBaJCNzmXrONnL6RL85Du+H8iZwSssGG+O73G9tQnH6sDFwi7CGp2i98rYUuZ2XUcKtY4Oh+ao7cOXuXJT+h5e6aZ/0gRSVCOUbCPuR/VQRZq5b+pMnQtoqdTBAGgiDTncxVg7hABJowiBg1yB25577tzGUsk9xya6Q67exJlib0oLxjPA2a51LJt1xJovfOuNbwZqgdUyu9N/u7uI42ZY7USFrW+q0cWsszDQ/Oupv+5hN8DiWWsFtrcThxD/vVGdBrpp9cmhHLTuI7vvJ8ton32YlcLFhjZ2P4QsiUua+zwcMgD4lC9jyehsStfhJeMqZ6pnp+fiISXZiZ+2ySGrOmwA+jy+qMHyF/vSn8kV9bHCzCaKwtcrPPNZmyFtjY0Aq/Mk+i2EX6Pj2oJOG/q1GyK3ndv02cusTeKoPzbiTHw3OMvq2sEqJwUtXttTf2yOSWzYRg
+DKIM-Signature: a=rsa-sha256; bh=Ghe9rSHypWlyy/6XHjoUiv3G309UCLhC/Plaf5lJnm0=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1776935097; v=1;
- b=eBrHSayMdObTicHZj2Q6ZqkdHblGKLPjrGkJdPmOXpZhiAmzfO3UYMq/HURMv8zKTdFWsvCn
- NsTh7njmyvC+yIcSiz1tsv654Jv/yvGsrTTp/YY94fVFK+09uvHofkiafpNwc5n8qX8mbkvxkLL
- L0WK5+fY8LSNruA23UinnqlyijL9PsyCD2TeYDChOmO1U7hbXu14j7hfu4F+nz6VPFUDOG1McH5
- sy5spXaRqbW0gzWPbbeiUKW5otXCRgEVW8Z+YisttqchmgwXoeTCyQhQ5fY/QEYRbP/2H2tcNt0
- b1TyFgwjeG/v6raQ3sEv3AgltIzVGzbXnqPVLJxsZ/dSg==
-Received-SPF: pass client-ip=54.36.140.178; envelope-from=clg@kaod.org;
- helo=smtpout7.mo534.mail-out.ovh.net
+ t=1776935124; v=1;
+ b=Shdu7i1S3M3qCSrRNZOrOydgU1XIPkIKwABAiZK1MccaYzV6zbNyF0Dj0OQx7p9decfeF2hX
+ Iu5d+JFtR7l9Q4qVLM8AvqP4SeRJnvBOOQWs9NYMDtGrx77bhjntPrcyb9BosmFv8NeBdNuj0UO
+ kB6Kz6S8SwX5BiW/GpQdmxXmPtV5UMwZTRqtY0pnlYMyF1CQdXGKMUOHuqy6S0VyTdL2tBj/RGn
+ kXzZmuc01KfUYuo3jl7oRufCmJzeLmjezB5Yv5zD5A0keYT3nUs6hD5q/gcURxY2G96uexGuycN
+ jMSXURuXruko28e5Px4ZhOq00cBUf0rk7+Z+/Lr850fBA==
+Received-SPF: pass client-ip=54.36.140.176; envelope-from=clg@kaod.org;
+ helo=5.mo534.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,43 +143,78 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/23/26 07:18, Jamin Lin wrote:
-> On AST2700 platforms, system DRAM is mapped above 4GB with a base
-> address at 0x400000000.
+> Add a functional test to verify USB EHCI support on the AST2700 A2/A1
+> by attaching a USB keyboard device and checking its
+> enumeration via lsusb.
 > 
-> The Linux EHCI driver programs the segment register to zero when
-> 64-bit addressing is supported. As a result, descriptor addresses
-> derived from the EHCI registers do not include the DRAM base
-> address.
-> 
-> Descriptor memory is allocated through the DMA API with a 64-bit
-> DMA mask, allowing descriptors to reside in DRAM above 4GB. On
-> AST2700, EHCI queue heads (QH) and queue element transfer
-> descriptors (qTD) are therefore placed at addresses starting from
-> 0x400000000.
-> 
-> Set the ctrldssegment-default property to 0x4 so the upper
-> 32 bits of descriptor addresses are adjusted accordingly. This
-> allows the emulated EHCI controller to construct correct system
-> addresses when accessing descriptors in DRAM above 4GB.
+> This introduces a helper routine that runs lsusb in the guest
+> and validates that the emulated "QEMU USB Keyboard" is detected.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/arm/aspeed_ast27x0.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   tests/functional/aarch64/test_aspeed_ast2700a1.py | 7 +++++++
+>   tests/functional/aarch64/test_aspeed_ast2700a2.py | 7 +++++++
+>   2 files changed, 14 insertions(+)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 87dcb82e1b..0cb39dc191 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -856,6 +856,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700a1.py b/tests/functional/aarch64/test_aspeed_ast2700a1.py
+> index b0c08854da..42b8b200cf 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700a1.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700a1.py
+> @@ -118,6 +118,11 @@ def do_ast2700_pcie_test(self):
+>               'ip addr show dev eth2',
+>               'inet 10.0.2.15/24')
 >   
->       /* EHCI */
->       for (i = 0; i < sc->ehcis_num; i++) {
-> +        object_property_set_int(OBJECT(&s->ehci[i]), "ctrldssegment-default",
-> +                                0x4, &error_abort);
->           if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
->               return;
->           }
+> +    def do_ast2700_usb_ehci_test(self):
+> +        exec_command_and_wait_for_pattern(self,
+> +            'lsusb',
+> +            'QEMU QEMU USB Keyboard')
+> +
+>       def start_ast2700_test(self, name, bus_id):
+>           num_cpu = 4
+>           load_images_list = [
+> @@ -161,10 +166,12 @@ def test_aarch64_ast2700a1_evb_sdk_v11_01(self):
+>           self.archive_extract(self.ASSET_SDK_V1101_AST2700A1)
+>           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
+>           self.vm.add_args('-netdev', 'user,id=net1')
+> +        self.vm.add_args('-device', 'usb-kbd,bus=usb-bus.3')
+>           self.start_ast2700_test('ast2700-a1-image', 1)
+>           self.verify_openbmc_boot_and_login('ast2700-a1')
+>           self.do_ast2700_i2c_test(1)
+>           self.do_ast2700_pcie_test()
+> +        self.do_ast2700_usb_ehci_test()
+>   
+>       def test_aarch64_ast2700a1_evb_sdk_vbootrom_v11_01(self):
+>           self.set_machine('ast2700a1-evb')
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700a2.py b/tests/functional/aarch64/test_aspeed_ast2700a2.py
+> index ed414999f4..40e0ad81ed 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700a2.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700a2.py
+> @@ -121,6 +121,11 @@ def do_ast2700_pcie_test(self):
+>               'ip addr show dev eth2',
+>               'inet 10.0.2.15/24')
+>   
+> +    def do_ast2700_usb_ehci_test(self):
+> +        exec_command_and_wait_for_pattern(self,
+> +            'lsusb',
+> +            'QEMU QEMU USB Keyboard')
+> +
+>       def start_ast2700_test(self, name, bus_id):
+>           num_cpu = 4
+>           load_images_list = [
+> @@ -164,10 +169,12 @@ def test_aarch64_ast2700a2_evb_sdk_v11_01(self):
+>           self.archive_extract(self.ASSET_SDK_V1101_AST2700A2)
+>           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
+>           self.vm.add_args('-netdev', 'user,id=net1')
+> +        self.vm.add_args('-device', 'usb-kbd,bus=usb-bus.3')
+>           self.start_ast2700_test('ast2700-default-image', 1)
+>           self.verify_openbmc_boot_and_login('ast2700-default')
+>           self.do_ast2700_i2c_test(1)
+>           self.do_ast2700_pcie_test()
+> +        self.do_ast2700_usb_ehci_test()
+>   
+>       def test_aarch64_ast2700a2_evb_sdk_vbootrom_v11_01(self):
+>           self.set_machine('ast2700a2-evb')
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
