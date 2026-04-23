@@ -4,89 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C29F589DB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 14:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADC4AF589DB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 14:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wFuqP-0004Mi-QZ; Thu, 23 Apr 2026 10:15:53 -0400
+	id 1wFuql-0004eJ-Kj; Thu, 23 Apr 2026 10:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuqI-0004Hp-A3
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 10:15:47 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wFuqF-0007Dv-4x
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 10:15:45 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4891c0620bcso40576775e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 07:15:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776953741; x=1777558541; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EMiZKnW464iYuxKCcLEJZ5twh56qmwlhp/zbGzm9asI=;
- b=GeMos1IeCfe5fFeod6VsRgZN+WsOSGITs3GnHbvQMEE7mHc4N7eFhXZP+KnD6R7Zfe
- HLOrP6B3KcZjm/W7V7wBOvLFZg9wCvto1y1zjNpL5qwgrNnD7PtpRiBRr1hxBk7sM2zS
- /0cCAJGavWFFgdLCJBcQ8VsIrS/C2hV0ycJ5N4sFjtWhP2gpKIAx2LvxoqjmluZ28pbC
- ttNTFPDJ+2Qlc4R0XKK7cmS+rXIu0jOgOgbx2OJ7hAv3zzbcyj/T3vBDcFmG6PTL3C3Z
- gn02XHS8Nzlf+1TO+6vU8ai/8KPBhYfynHMYz2bmJbBGdpJIuTJ9st4+JjCh6WUyB45y
- 9gHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776953741; x=1777558541;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EMiZKnW464iYuxKCcLEJZ5twh56qmwlhp/zbGzm9asI=;
- b=rssjaAQea93242J+lcRhDPD9A611uxSBL7H3IWeGqcKpHFNXvNFnVpoF+S4JtgAf3W
- HcUgCQ1IxSs4ke6+Xqp1prRnweDK/K/BulaUrDwcwjUtoTSj7mR+bYAOolHSEAoIn6av
- Bv0qu2sme9br8xhpxmDj6XIGBDJqEc+QYVar+IhhXVtcF5iMPreFyinBSoZhJBt+oyS8
- 2tZAMz2+w1ZSxER1gJ6CmX1uMxyYT1ZbXFmcs5Z3h/+WBaYVL2EGmEikWHI8NeU1oJ3U
- 9ssmaH7OOMfwTL2aCuUn/+t+sTTDmynT5f1hKsunSob7iHWsD8OBrnUa5GT6Yq1mFj59
- hjxA==
-X-Gm-Message-State: AOJu0Ywsj5ZbDxmVK7s7A47go7d/IhkTLvzbIToU6F7aP+Mo7bcHTL2e
- JOABp8RpzPuhf1+xVkzxDx7ZIu+tMMQbU8lCjpNzKDWuxEdS61b2FU2SVJKnZZJFUYSOV+/VHnU
- Ugahrwe4=
-X-Gm-Gg: AeBDietikK2PDhX0RR8k6/dKfGo4F31CxMtxTGmLZCD6WVNRv19o5P+rpjAmzqVHjP7
- p+ciYfHK63f8a/O8HQr2kW4g9N+ukcmflZypHqBXBRi0SdoZn3f9foadO2kCPF8Lf9ug6YsYC5s
- noC2TVxzXxe/hz+Mo3cF0nL2b3NlVyD04eCHnRhDvj2zoSIFd/yY1IyHbVdw0zEWg5+aEMzVJ5W
- OaMK1MxeblBrldAVAGJNjC0294vA1d2WS0AQUfTBSx55INyAYwJdBsXJjmGRlnMq0v7VChxifWk
- F9Z9IVqu3TyTPNcI/aNVjBBLAXkcqLCpX5QP6i3xKhKbsUdXEhuoJfBqHGM24/QqhzcGl/tKomS
- aChyZ4rcW96m1tzPtaD6x9lu/a23s9HTHeqUYYtWAyb98QDY6y1TSca3jdjTgsqTIlw/riZU/DQ
- McPWZ+YIxbs/PJIwiFPF2fugwpJ0vXBHY4GwYf+aeoLo8t8+DAQcC6dpAH79ONQRWXyuZkP3fbf
- WncHFZFHVL7jc/cWeQPZg==
-X-Received: by 2002:a05:600c:2e56:b0:488:d243:8da9 with SMTP id
- 5b1f17b1804b1-488fb73b2d3mr237607835e9.1.1776953741150; 
- Thu, 23 Apr 2026 07:15:41 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-489207ebd3asm140785175e9.6.2026.04.23.07.15.39
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 07:15:40 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] target/s390x: Leverage 128-bit vector type in VLL / VSTL
- opcodes
-Date: Thu, 23 Apr 2026 16:15:38 +0200
-Message-ID: <20260423141538.51583-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
+ id 1wFuqa-0004Tb-KY; Thu, 23 Apr 2026 10:16:08 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
+ id 1wFuqX-0007Gy-GI; Thu, 23 Apr 2026 10:16:04 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eAPE74i9Gnwub0m/yuVEpHU6u2Tn0RXVR1e+gNzPTTX4ZarxViN7uyx2Zufl1QXabkr28ySGRYU/irl6vNzpufXCOY4f5a6b3Rbpt/LcC9w9Mb7LaQOMtr8g3iDgz3AwqQlN62LtSQpNc5OgFrMNxgZ0J7cJfSPaEVglcJpERHtoBfubRmU67ZINSJskXIlHn4UoK7e0vvBV7EsYAwdMWuUUomUhKzAaTYL9yUUt0dfmYvmzbUM1bqyA75/voiDRjVZWQGyv137ntPoFucFWNbaAEnm7HYBLB3TsZEfg3hdVviLi4PVUl99wCSi9t42rrysj5QqyAuukeu7hDd+WdQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TWjnrs6gMiaSEZmXh1touQ1+0Jh7dc4+Y8Io2S6QQ/g=;
+ b=iZ9OKGoxJ1RZYA4rqfdjpxorWCjOWfkMaYv3qXCfudlWN3Sl0sE3sM16tNo4A9bb+gE279ac+t9x1pnbvRXAKSOaoJwQKGBTxy1SUtrSnWZRHMI5/dsTeIOW4dG3/CycReRe0VSCnWASXfU9lsehbdZr8bTb2bjN/+4aWsLmy65HskJOvj6S3smlpjauEtysVN1s9qslRIblh7pheNZTWP8PGgCZ6NoHaATb/J0on6H5XiSHzt93IRASIbTsizQkMH4pPHMa6xICHO4GN2hCQcfAyVqmsqIjE3QCFB73As/rB9Jbx7mHi6BJngM4Qu9RZvRzbAUPgRIQcZaza+HFBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TWjnrs6gMiaSEZmXh1touQ1+0Jh7dc4+Y8Io2S6QQ/g=;
+ b=RbgsCyYEn0dGEQ8ZPiO9sUq03gigVg7KFnL1N6SOFvjFjoRda7pENogbucplBBOfrY3vNUd8PoAy5L7jY/W7fSAFibm9fHDUIh6BQnHAN6PaJ/FRa7gKLA9YYkgIhL3eXDm0g5+GctGCmWL54vvE+5QVk8Ic13gQcdgIMrospsYM1a+Aeprz0qzdUcDiC4E8+Z7yg1OyRvy1ba5mkGepI79koMC1rJTrlKzGXcPp9HmDSECCMZkR31d2Ipci0EwTgSl2TZBFARBJ3EjQh7VfAVEtb0sN6N/uCqStAF+PdWrzLL+qSal44GSPywutZuTdYmiqBEha/6vECk/2E7Lszg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from SN7PR12MB7226.namprd12.prod.outlook.com (2603:10b6:806:2a9::18)
+ by BN7PPFCE25C719B.namprd12.prod.outlook.com
+ (2603:10b6:40f:fc02::6e1) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.21; Thu, 23 Apr
+ 2026 14:15:49 +0000
+Received: from SN7PR12MB7226.namprd12.prod.outlook.com
+ ([fe80::c07d:130a:7def:6807]) by SN7PR12MB7226.namprd12.prod.outlook.com
+ ([fe80::c07d:130a:7def:6807%5]) with mapi id 15.20.9846.021; Thu, 23 Apr 2026
+ 14:15:49 +0000
+Message-ID: <c9082536-6b4b-4e9a-a6ff-764dbbf649c9@nvidia.com>
+Date: Thu, 23 Apr 2026 10:15:46 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/5] vhost-user: add skip_drain param to GET_VRING_BASE
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>, virtio-fs@lists.linux.dev,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
+ <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
+ <613f140f-de27-4f83-8a02-5370833dd659@nvidia.com>
+ <965db8ae-b44a-4b29-b006-56e8474d52b5@yandex-team.ru>
+Content-Language: en-US
+From: Raphael Norwitz <rnorwitz@nvidia.com>
+In-Reply-To: <965db8ae-b44a-4b29-b006-56e8474d52b5@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-ClientProxiedBy: BL1PR13CA0307.namprd13.prod.outlook.com
+ (2603:10b6:208:2c1::12) To SN7PR12MB7226.namprd12.prod.outlook.com
+ (2603:10b6:806:2a9::18)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR12MB7226:EE_|BN7PPFCE25C719B:EE_
+X-MS-Office365-Filtering-Correlation-Id: 731e6be4-62dc-4bbd-f583-08dea142d1d4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: Vpauahl9Vj9UF+o8UbPqzkLG9yy7vO06jHB9UoV9djAeDdF06GELxGBsPWU1wbM2oforkPNcL/zRvTKJ2wzYtAkxW/RNGC0JQejsVwkKTwHy38xP8xUxrxnoRHG7xLUJc6Je38ybExjTTS6+hmw20EC4rL9vjnxgtbx+s7Eo8LdL0wewgr9B7I86Ustqwf1pgpXcJ5AWoIuYC7TfpKBIOgkAx9AZtiunR/uNYQj8zvYZCOwWNEjM+Bd1RPka8ELlzPBuYw7rkyns35klTfw2nc6Ucq1otH2L8fXXiNH9Dtf1z7RT7zAATmvjihF9dbyKNuDmq+ffPyEnr0kO0geJG1wyroyYqmbhvFr/UBD28+2V2khiqESvSXZoYNShfEcqsqBamxnFSPlYdmILFAquKOjfk5jg3O6WRqcWZG6pU9C6bwn420IVJFDc0YVEhiTtnmmeXHGL4KG0jDcc3s2Pp8MY9vxc8JcccpR5LopsOqLCmhKeUE/fyKoG/59grv/W8jloDVA/CCgq1I0SuWkwrtVQ+6hwskp36R790d19UfJ7zZMhU+jhZb6ymCv/9Wo+dXXBKT0IuGva8UHMtUtMpFwUvzHo1Muohs9jQT1fNQ9OhZe2qkTkOKKl3LXrjPOrS/iHu6knaj9fj5NpD5O8DrQYBkU9KTDskBbTlhvTmGH7b1xrt77V0q7jCkPwmGtwHZI3C4BGPS9MSZw8CwS6FzF0VWaSG0Car5CCebBzv14=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN7PR12MB7226.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SU1GMmc0WEtZZHNpb01OMUZ0bWJkRHJ5YXl5VHE1aXZheTNnWXFjSURLRUx2?=
+ =?utf-8?B?UUdsdCt0dHpaaWlFYUE5elZsRkpYc3Nqdy9YNXprcE9FeWJ0cXgzOUR6VTZ2?=
+ =?utf-8?B?d2wwMzBUZlhFZEl6dEhHZjlMdktXWnB3ZFR4bVFxTkJrY3Z2NjI5SmpUWGFT?=
+ =?utf-8?B?ZU8yL0sxbU9kVmI3MVBtbUxFeStQVksycy85Q0V1UDRWeWNGNTlERnExNWs5?=
+ =?utf-8?B?SFpOTElaWGR4WDY4QjZhZkE3ZmFOUnREc1FDcUJwSmY1RG16amYzOFFZU2I1?=
+ =?utf-8?B?Wk1zS1VQNytBd0F1U0c1UnFETTFtM3dacWZQanBVWFM4L1BseVpvdEt5RFFO?=
+ =?utf-8?B?cDRPS2lKeHVqTEJpZ3VaTnF2VEJCbzNPRUowaEJHREUzTDd4Q3NaQysvWm9X?=
+ =?utf-8?B?elRQSGw0b2k4NGlsbFNLcEpQZXY4TDJiOWRhem42dDV5bUdhK0tMM3RNb0JB?=
+ =?utf-8?B?cmI1bnR2MWg4eFlIWlBFSTNPbzJQNGhnM1JBRjZUQ0dVdkJXdG1vSldWREhL?=
+ =?utf-8?B?cUh5M01VdVY3c25FSVR1QXdlWmg1bE9VOTk3OXcxYTNIakFQeVJkeTBMaGRO?=
+ =?utf-8?B?ekdiVGdpazBVcFZmWWVTM1V6N2UramRDVTF3SDlDLzFvWE4vRjdQekRTazN1?=
+ =?utf-8?B?WTJKY2wyTDFscGE5ZGVzaHVDZ21maDhma010Y0kzbkJFMmlxWE1GZEhSaTNj?=
+ =?utf-8?B?WUJBcnIwbDZaUWVxWGNERlQxdiswUVRQMlpXVGtCSGZrT1RybnhoTFUxa3Vw?=
+ =?utf-8?B?QnJLVjZBa3ZXOERwV0MwSGdaK2FJVWIwQXAxTGRIRmw5NGZlSVAyZHh6REw4?=
+ =?utf-8?B?Rnd5Y1lsamRzZnZheUtwQzVpZ29RV1R3dFZTNXZmTDl2R29NMW9kdnNqQ1RW?=
+ =?utf-8?B?U2lrWWhZdGlQRmhRcDZNMnFKREd3K1dBMUpEK05VZGp4RmtLNHNwWE1RZTU4?=
+ =?utf-8?B?ZGRTUkRlUGw0cE9yRUdieExKU2N5bWU0SHFkU2pDRXo0VndkdGRDRW1rdXRs?=
+ =?utf-8?B?OGt3ZEorMXR6WTJkSFIvZ21lSFoycjZrcHNoUkxiL2lqN29pZUJBTTRXVzNY?=
+ =?utf-8?B?K1grS2ovSWc0UEtxa0hycFI2bFpVQVord2p3RE41bmxiaWZKMWhncXg1eHdC?=
+ =?utf-8?B?ZkN2azFhSmlraFdoN3BkRTVLYjZRaDlvbGp2dTZ1RFFtekdjKzF1V0Y3T0w3?=
+ =?utf-8?B?TXpzNTI2T29xeUxEVXdGbytwZ1hHWFJBNW55TjI2V1puZDQzZTBINm1mVGxN?=
+ =?utf-8?B?dEovSHZXV2RVeVhxajFpeHNoK3pOUlphVkRySjM4Z2tIR0YyZ1MvNGYxSEl0?=
+ =?utf-8?B?YmJ3by9TR0g1WE1CejRiY2pLL3ljUVFLdG1MRjlXRTFZaC9QL3JWa21ibENs?=
+ =?utf-8?B?ZWRwdW9VQmJ6c0Y2SXZucG9iMTRScTh5M0VCYXBQQzcrakhwWW5kSnMwM2lW?=
+ =?utf-8?B?YjdzSTNSQ3pTTEZUazlHZnJSZ1V3NGgzb3FtMFdJdVR5RkJZay9icTJWc2xC?=
+ =?utf-8?B?VXgzcllFWGc3SGtPWmt6WEVkRGtoYWx6MVJpYmJqUkxXOVRoMi9lbzNZRUtx?=
+ =?utf-8?B?VUZBeXUrOG94eDR1b2Q5bTBTMFV0VEN5OE5SQUJxZEg3VzhzZEhkMmZrN1g0?=
+ =?utf-8?B?V0xGYzNtS2k4eS9CSlFXdkVTQzJwN2JQK3Y1RHRITkJrWWtPbE1hcEEvOE1x?=
+ =?utf-8?B?K1FLMnZUU3lrSFVYU0NZTDEvd2tKbTEzbzJNVythSzZyNlZZVFNvMEFYa1B3?=
+ =?utf-8?B?cjdiemdXRU9VYUJpZE05ZEREUkFxY2xkNm5PMTR2dkRXQjdVaG80dDcvTUtG?=
+ =?utf-8?B?Z3dGeWRXcGcrbklrL29iaEdJRkEvLzZGSk1rbmFacFdGY3NFa01PSUxTWEho?=
+ =?utf-8?B?Y1RPeTloRVpqMzdOMHhjRDRaSGduWGlYWm9aRzd6WHFubVFZWFJWeE5aUjFL?=
+ =?utf-8?B?MXlQTjZpT2lDMTU2N0JBNGpHQmJ3c0lHVjJIT1h2cHR6Q0FleXNlZG5EVTZt?=
+ =?utf-8?B?WFd2VHp3OTRUamJ2YmNSdmMxR1BEVlNycFBFSnBjZUtZOFdsN001MFNNbjJo?=
+ =?utf-8?B?ZENJSHd5Z25zVEFxTnJaanVSaVZsUlRMMGV1QTRMN0RpRUpVQ2VscnRwTWxa?=
+ =?utf-8?B?K1luS0FNYWdBZUpmZ1pmZ2hPZGxhRGwyL2lkU0pWUFdYZDF6UUhQRWwwZ21I?=
+ =?utf-8?B?TjJhbmZlZHFINjBHdjFhMFBTd3drb1QrR1NTK3J5Vlg0Zk5Hczc2TytqVFNS?=
+ =?utf-8?B?cXo5c3EyNitQd3FSdXdhUC96YmsxZkx5ZC9xRzY2b3MyTHlDVmpnOUhsc01T?=
+ =?utf-8?B?NWlML21nZHNRRC9mMzVoSjlzem94NXhkSzB2OVMzMGVUTURoZkVmdz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 731e6be4-62dc-4bbd-f583-08dea142d1d4
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB7226.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2026 14:15:49.5322 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jkLl/tHr3EbqnlRqJiuCIzXZhZIEJK33i8uipgHn5wmFAE4ofwdvQYiRmkVwxhoIxycBPuDjo+O5pvjGkM7Yyg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPFCE25C719B
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=rnorwitz@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,95 +161,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The access is unaligned, we can easily replace the 2
-consecutive 64-bit calls by a single 128-bit one.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Based-on: <20260423135035.50126-1-philmd@linaro.org>
----
- target/s390x/tcg/vec.h        | 12 ++++++++++++
- target/s390x/tcg/vec_helper.c | 19 ++++++++-----------
- 2 files changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/target/s390x/tcg/vec.h b/target/s390x/tcg/vec.h
-index 8d095efcfc6..34413f7e029 100644
---- a/target/s390x/tcg/vec.h
-+++ b/target/s390x/tcg/vec.h
-@@ -13,8 +13,10 @@
- #define S390X_VEC_H
- 
- #include "tcg/tcg.h"
-+#include "qemu/int128.h"
- 
- typedef union S390Vector {
-+    Int128 quadword;
-     uint64_t doubleword[2];
-     uint32_t word[4];
-     uint16_t halfword[8];
-@@ -72,6 +74,11 @@ static inline uint64_t s390_vec_read_element64(const S390Vector *v, uint8_t enr)
-     return v->doubleword[enr];
- }
- 
-+static inline Int128 s390_vec_read_element128(const S390Vector *v)
-+{
-+    return v->quadword;
-+}
-+
- static inline uint64_t s390_vec_read_element(const S390Vector *v, uint8_t enr,
-                                              uint8_t es)
- {
-@@ -117,6 +124,11 @@ static inline void s390_vec_write_element64(S390Vector *v, uint8_t enr,
-     v->doubleword[enr] = data;
- }
- 
-+static inline void s390_vec_write_element128(S390Vector *v, Int128 data)
-+{
-+    v->quadword = data;
-+}
-+
- static inline void s390_vec_write_element(S390Vector *v, uint8_t enr,
-                                           uint8_t es, uint64_t data)
- {
-diff --git a/target/s390x/tcg/vec_helper.c b/target/s390x/tcg/vec_helper.c
-index 98eecd9fde6..feb99f51c78 100644
---- a/target/s390x/tcg/vec_helper.c
-+++ b/target/s390x/tcg/vec_helper.c
-@@ -48,14 +48,12 @@ void HELPER(vll)(CPUS390XState *env, void *v1, uint64_t addr, uint64_t bytes)
-     MemOpIdx oi;
- 
-     if (likely(bytes >= 16)) {
--        uint64_t t0, t1;
-+        Int128 t;
- 
--        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
--        t0 = cpu_ldq_mmu(env, addr, oi, ra);
--        addr = wrap_address(env, addr + 8);
--        t1 = cpu_ldq_mmu(env, addr, oi, ra);
--        s390_vec_write_element64(v1, 0, t0);
--        s390_vec_write_element64(v1, 1, t1);
-+        oi = make_memop_idx(MO_BE | MO_128 | MO_UNALN, mmu_idx);
-+        addr = wrap_address(env, addr + 16);
-+        t = cpu_ld16_mmu(env, addr, oi, ra);
-+        s390_vec_write_element128(v1, t);
-     } else {
-         S390Vector tmp = {};
- 
-@@ -206,10 +204,9 @@ void HELPER(vstl)(CPUS390XState *env, const void *v1, uint64_t addr,
-     probe_write_access(env, addr, MIN(bytes, 16), GETPC());
- 
-     if (likely(bytes >= 16)) {
--        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
--        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 0), oi, ra);
--        addr = wrap_address(env, addr + 8);
--        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 1), oi, ra);
-+        oi = make_memop_idx(MO_BE | MO_128 | MO_UNALN, mmu_idx);
-+        addr = wrap_address(env, addr + 16);
-+        cpu_st16_mmu(env, addr, s390_vec_read_element128(v1), oi, ra);
-     } else {
-         oi = make_memop_idx(MO_8, mmu_idx);
- 
--- 
-2.53.0
+On 4/16/26 5:26 AM, Alexandr Moshkov wrote:
+> Greetings! Thanks for reply!
+> 
+> 
+> On 4/15/26 20:21, Raphael Norwitz wrote:
+>> I’m not sure I like using the num field in vhost_vring_state to set 
+>> magic values which affect protocol behavior for GET_VRING_BASE. It 
+>> feels like a hack to me. I would think the proper solution if we want 
+>> to support migration from new to old would be to have new use a 
+>> different new message entirely. Can we do that?
+> 
+> I think we can, but I thought at first that this will be almost a 
+> complete copy of GET_VRING_BASE message, with the exception of waiting 
+> for drain of requests, so I choose to expand existing message.
+> 
+
+I think a new message would be cleaner. Anyone else have thoughts?
+
+> If this is not an appropriate approach, is it better to make a new 
+> message like GET_VRING_BASE or a separate message used together with 
+> default GET_VRING_BASE message (for example, message for setting some 
+> kind of status on the server)? What should I name this new message?
+> 
+
+Maybe GET_VRING_BASE_SKIP_DRAIN? How would a separate message used 
+together with default GET_VRING_BASE message work?
+
+> I also fix other comments, thanks!
+> 
+>>
+>> On 3/30/26 11:52 AM, Alexandr Moshkov wrote:
+>>> In case of migration of QEMU from the new version (where the
+>>> inllight-migration parameter is present), to the old one (where it is
+>>
+>> nit: spelling inllight-migration
+>>
+>>> absent) there is no way to disable this feature on the backend during
+>>> runtime.
+>>>
+>>> This commit slightly changes the semantics of the protocol feature
+>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+>>> adds a new parameter for GET_VRING_BASE, which allows to control the
+>>> drain in-flight requests on the backend.
+>>> Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
+>>> on anytime.
+>>>
+>>> In vhost-user-blk use inflight_migration param to enable skip_drain to
+>>> suspend in-flight I/O requests, and then migrate them throught inflight
+>>> subsection.
+>>>
+>>> Also now QEMU will always try to setup
+>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
+>>> backend. This will allow to use skip_drain parameter on GET_VRING_BASE
+>>> message.
+>>>
+>>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>>> ---
+>>>   docs/interop/vhost-user.rst    |  6 ++----
+>>>   hw/block/vhost-user-blk.c      | 30 ++++++++++++++++++++++++------
+>>>   hw/virtio/vhost-user.c         |  3 +--
+>>>   hw/virtio/vhost.c              |  1 +
+>>>   include/hw/virtio/vhost-user.h |  1 -
+>>>   5 files changed, 28 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>>> index bfa75ff9a3..63efc87264 100644
+>>> --- a/docs/interop/vhost-user.rst
+>>> +++ b/docs/interop/vhost-user.rst
+>>> @@ -1255,14 +1255,12 @@ Front-end message types
+>>>     *suspended*, see :ref:`Suspended device state
+>>>     <suspended_device_state>`.
+>>>   -  The request payload's *num* field is currently reserved and must be
+>>> -  set to 0.
+>>> -
+>>>     By default, the back-end must complete all inflight I/O requests 
+>>> for the
+>>>     specified vring before stopping it.
+>>>       If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+>>> -  feature has been negotiated, the back-end may suspend in-flight I/O
+>>> +  feature has been negotiated, using request payload's *num* field,
+>>> +  when *num* is set to 1, QEMU can tell the back-end to suspend in- 
+>>> flight I/O
+>>>     requests and record them as described in :ref:`Inflight I/O tracking
+>>>     <inflight_io_tracking>` instead of completing them before 
+>>> stopping the vring.
+>>>     How to suspend an in-flight request depends on the implementation 
+>>> of the back-end
+>>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+>>> index a3ecd83f54..522e9d34b5 100644
+>>> --- a/hw/block/vhost-user-blk.c
+>>> +++ b/hw/block/vhost-user-blk.c
+>>> @@ -134,10 +134,7 @@ static bool vhost_user_blk_inflight_needed(void 
+>>> *opaque)
+>>>   {
+>>>       struct VHostUserBlk *s = opaque;
+>>>   -    bool inflight_migration = virtio_has_feature(s- 
+>>> >dev.protocol_features,
+>>> - VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>> -
+>>> -    return inflight_migration;
+>>> +    return s->inflight_migration;
+>>>   }
+>>>     @@ -232,11 +229,14 @@ static int vhost_user_blk_stop(VirtIODevice 
+>>> *vdev)
+>>>           return 0;
+>>>       }
+>>>   +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
+>>
+>> nit: declarations on top
+>>
+>>> + runstate_check(RUN_STATE_FINISH_MIGRATE);
+>>> +
+>>>       force_stop = s->skip_get_vring_base_on_force_shutdown &&
+>>>                    qemu_force_shutdown_requested();
+>>>         ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+>>> -                       vhost_dev_stop(&s->dev, vdev, true, false);
+>>> +                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
+>>>         if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) 
+>>> < 0) {
+>>>           error_report("vhost guest notifier cleanup failed: %d", ret);
+>>> @@ -364,7 +364,6 @@ static int vhost_user_blk_connect(DeviceState 
+>>> *dev, Error **errp)
+>>>       vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+>>>         s->vhost_user.supports_config = true;
+>>> -    s->vhost_user.supports_inflight_migration = s->inflight_migration;
+>>>       ret = vhost_dev_init(&s->dev, &s->vhost_user, 
+>>> VHOST_BACKEND_TYPE_USER, 0,
+>>>                            errp);
+>>>       if (ret < 0) {
+>>> @@ -580,10 +579,29 @@ static struct vhost_dev 
+>>> *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+>>>       return &s->dev;
+>>>   }
+>>>   +static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
+>>> +{
+>>> +    VHostUserBlk *s = VHOST_USER_BLK(opaque);
+>>> +
+>>> +    bool inflight_migration_enabled = virtio_has_feature(
+>>> +        s->dev.protocol_features,
+>>> +        VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>> +    if (vhost_user_blk_inflight_needed(s) && ! 
+>>> inflight_migration_enabled) {
+>>> +        error_setg(errp, "can't migrate vhost-user-blk device: "
+>>> +                         "backend doesn't support "
+>>> + "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
+>>> +                         "protocol feature");
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    return true;
+>>> +}
+>>> +
+>>>   static const VMStateDescription vmstate_vhost_user_blk_inflight = {
+>>>       .name = "vhost-user-blk/inflight",
+>>>       .version_id = 1,
+>>>       .needed = vhost_user_blk_inflight_needed,
+>>> +    .pre_save_errp = vhost_user_blk_pre_save,
+>>>       .fields = (const VMStateField[]) {
+>>>           VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+>>>           VMSTATE_END_OF_LIST()
+>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>>> index bb8f8eab77..ed95ec7523 100644
+>>> --- a/hw/virtio/vhost-user.c
+>>> +++ b/hw/virtio/vhost-user.c
+>>> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct 
+>>> vhost_dev *dev, void *opaque,
+>>>               }
+>>>           }
+>>>   -        if (!u->user->supports_inflight_migration ||
+>>> -            !virtio_has_feature(protocol_features,
+>>> +        if (!virtio_has_feature(protocol_features,
+>>> VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+>>>               protocol_features &= ~(1ULL <<
+>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>> index ac4d6fca73..54e4ce2660 100644
+>>> --- a/hw/virtio/vhost.c
+>>> +++ b/hw/virtio/vhost.c
+>>> @@ -1398,6 +1398,7 @@ static int do_vhost_virtqueue_stop(struct 
+>>> vhost_dev *dev,
+>>>       int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>>>       struct vhost_vring_state state = {
+>>>           .index = vhost_vq_index,
+>>> +        .num = skip_drain,
+>>>       };
+>>>       int r = 0;
+>>>   diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/ 
+>>> vhost-user.h
+>>> index 53fe996686..c95bad5ddc 100644
+>>> --- a/include/hw/virtio/vhost-user.h
+>>> +++ b/include/hw/virtio/vhost-user.h
+>>> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
+>>>       GPtrArray *notifiers;
+>>>       int memory_slots;
+>>>       bool supports_config;
+>>> -    bool supports_inflight_migration;
+>>>   } VhostUserState;
+>>>     /**
+>>
 
 
