@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E011FFED3CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 14:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448F4FED3CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 14:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGH7z-00019p-QW; Fri, 24 Apr 2026 10:03:31 -0400
+	id 1wGHAd-0002Ej-6F; Fri, 24 Apr 2026 10:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGH7w-00019L-Bd
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:03:29 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGHAb-0002D8-WE
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:06:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGH7r-0005qG-Ag
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:03:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGHAa-00072W-ER
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:06:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777039401;
+ s=mimecast20190719; t=1777039571;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=FN7UDKC0D0XlNKYn7DoLgNGO92GIKAvMKYSFHNAB+cM=;
- b=ZbLHijvolz7FDlWlAxUNAUHNSlnQEHPRhpP0Fw6iLdIQ23yPXaaGrdyVyueGWGLwfJ1Hxr
- MKGIaa4/90OO5rP458a42qgBobn58fLpZShEoKadg2MXPytdY0t01p6Q61KussGzF2B6vX
- bf2CI8B1+QoHtW4H6/uBWdpH1hwDwoM=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HGWJOzmDgVRkNTfSSnRBxyLT2WjGlEsbKI4y2T3hvC8=;
+ b=i8ts8uI2XCo2PideQBOYnlA5Wj3YrSXckf50Kwh/O2NqMMnvNVNUwojDRfcOz4kfXXVsdZ
+ /s6vVXt2ITe6EVSp4cqvx6kUVgaZr4plNJXjamJrKBuWbSktb5PE10HpbLjFh6lkD0jVS6
+ z9bWx2cXPFzdlgc20rHevyqXfzrsZlU=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-GfEizOhmMT6FD29RQ51gaQ-1; Fri, 24 Apr 2026 10:03:19 -0400
-X-MC-Unique: GfEizOhmMT6FD29RQ51gaQ-1
-X-Mimecast-MFC-AGG-ID: GfEizOhmMT6FD29RQ51gaQ_1777039399
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-467e8ec004dso10005505b6e.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 07:03:19 -0700 (PDT)
+ us-mta-625-nEq6jBcfPzGCFszFRaG-TQ-1; Fri, 24 Apr 2026 10:06:08 -0400
+X-MC-Unique: nEq6jBcfPzGCFszFRaG-TQ-1
+X-Mimecast-MFC-AGG-ID: nEq6jBcfPzGCFszFRaG-TQ_1777039567
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-7de442b3402so5148255a34.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 07:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777039399; x=1777644199; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777039567; x=1777644367; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=FN7UDKC0D0XlNKYn7DoLgNGO92GIKAvMKYSFHNAB+cM=;
- b=c3eyXN75CIC4Xquk3/mYRJASojDA5gWTgrY3oeK3py8LO/wDbSKprU3oEo1BRHh9Hg
- hijeRTkXNFF7HMnLUzIGXbhlj1ALOxeKdg02sT7nBxf6YUSiLiQxsYcM2JiW8188VJKL
- QTmMxO+91a29pAYqylpoF5Ol2clsII7f6K28eC2eQp4xcv9utyTS0C3COphySrY8+uJ2
- lfx0e/9V+RWURMVjiti/MI54aReqe+JU/XCgDLiTdY98jY5VrTQHfFcZ0z0WVVWd19P8
- E6VecZ7y5TrUp349bonYKKmpGiU+5P2ioTOBHuAT6Wj4gVUMINpOdfDarsCDIyT3Sgdf
- q1Gg==
+ bh=HGWJOzmDgVRkNTfSSnRBxyLT2WjGlEsbKI4y2T3hvC8=;
+ b=H11OTjq7iJN7SqqaIgtBsUFv55u70QBmcam8j4L0AjmptevKj+c2Ab9OLO4Wk/K7ab
+ UsF5rjLDFywPEGU1WQBg0IdZq6trv26+1q+AWXa7P6GLWM+GMMISqmMHk/gX8Lw7B2r5
+ CGKoe11/gEghznUL/zB49tjXpvTgTHuPxUanzc2Pffp2vD9KZ4fOmrx5TPAXcnPOpVtv
+ E2IKpzhOqdJzkKiE5GmHVsUivWaGvCP067xz5bUErj2nwkwVIbAYKKPQEI6n9LWD+EB2
+ A9sWmSi2fPOTr7RbsGom66+3u7GT5vbea3C0mjFXGlg0c3CvbTLQBtkYGNfETWIN2uKl
+ XbiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777039399; x=1777644199;
+ d=1e100.net; s=20251104; t=1777039567; x=1777644367;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FN7UDKC0D0XlNKYn7DoLgNGO92GIKAvMKYSFHNAB+cM=;
- b=aYN9J7eqDmSJU3Cu/W9faO510Fw1JJxJTLv2Pu/pHlOcBl7qmTAHW7PCd/e9I//xR6
- pL1/2PmZeH5cpvmUsYLJ34YlLJR7Ck7iJvnpw48zyOKcNs70/uiOAN1XODOucZakyxfg
- QVv8g4yXBIo6RHUUJm6V7HG1wJukfCgIDJvYIj28xKeFyvpL5z51PQpL+1v2I/4jbH8T
- DJIWyLoQUqZAIYYBePXNtTW5nU0r01JLqIbVLhkPj0f+CaOlriEMklyGTImghgvB1I07
- s6pUq5pW95lE8jghrV3t2q8HUpBTjiqqxhG48bjmbybGW1azCQLW+ULLnuAqFNBkeWIe
- /BKA==
-X-Gm-Message-State: AOJu0YxsIDs/RuvBHfFmyH8C566n6u6kdl9swHUth2uIxxD2/L60MPqd
- fruaV+uLz+k3ZwZ5glI8KhILuf/Sylgh+jezZGOGyxpU7+GUd7sW2W81MU+TsHzCJBILFNARAZ9
- YHs+DgAGYWEqFf4HCZV9nPhuvBbLjVuW2O+YwFUYUKD+WqSHQy8qRvZvE
-X-Gm-Gg: AeBDies8i70fxkfkHuQCkYVhiQOtmFyUtlb//IMtcUljE4S2tf6JLulHu8cL+u/3UJ7
- a23AnOhrla9+2vv0JeZ4x4R8UckXHf6XINrG5Ah1PevjghxH++p04yg/Ru5e7nur2aFhDyjuJhi
- z57XdN1cv9fERncHeEtZuvcJi233Cc8wbKpdtNaQ1Tt3y0ZdxzHmmmLnqtkvouU3IxvUPe6same
- +B1N3Xu6X3GPPqCunoe6VZUJjMrG5OR+TkfKT58jAM7KWvQeYxdeapyZr425WaonVDdsK2xQieT
- QKm/AyvU273zH5SNa/IBXf2lz7Bl85GMqkAkei8WdRpnsBNVGApuPogV+FkFaqhKFzpPtGQxmgd
- 3z0ZO9eWPlyUP5WbWtz/ihBrAIwsM1IbsFdgUcg9HgpXOfeWYGjH8wSfAYQ==
-X-Received: by 2002:a05:6808:8484:b0:467:bfa:bdae with SMTP id
- 5614622812f47-4799c975e4cmr12360405b6e.20.1777039398871; 
- Fri, 24 Apr 2026 07:03:18 -0700 (PDT)
-X-Received: by 2002:a05:6808:8484:b0:467:bfa:bdae with SMTP id
- 5614622812f47-4799c975e4cmr12360347b6e.20.1777039398274; 
- Fri, 24 Apr 2026 07:03:18 -0700 (PDT)
+ bh=HGWJOzmDgVRkNTfSSnRBxyLT2WjGlEsbKI4y2T3hvC8=;
+ b=p7eDuO4Z6gS9gdMvTl/hen68m7eS8TQml0pMnmW2y0uVKuWaF/iZkAEPPx7YuCcy7o
+ 8RumO2Xl67WB3mjjK7a5A0oWo7VrKreKaehVcdRy0Qpu0DUjLeO/xdIK3cnRrpNkMU9D
+ exFWg4mdJiH2Bqmfg7ot3PnIngTX9ms8v2h1CEewi+f1TUQzn7CtxHIG1t73f+b5CbPJ
+ b2deRZJSnd1cad7TxdEIr0ltDAGMVVwio+5VcvqqsyEaxzEiCFF5YlusoXVV5ziAHHxH
+ RNwudPicmfYRIrzVtjmLlVbZFBU2FSHXjv0NLm3CxebTTVIxJan6xPkZnIQ95seD9h1B
+ ab8w==
+X-Gm-Message-State: AOJu0Yzqu4wEi8pnE72YsFCqGxFnvJyGPym+1yYC/ugHSL8MUy5RO4e6
+ Fg8KTMsnewQ/ULjWA82HqSd8BYU9B24MovE8sYspUQ5CJwUkVUaSJMdOXXwCozb3/AfulBt4aIm
+ bMUek/TI/ijfJ160rTGnIZLzhP0hW8rTAw0ZuKj37fklWEbfe3EatEroT
+X-Gm-Gg: AeBDievuUGu614+1ELHvl3aQ3wpz1znU8To2VeQNg/Dv+mBVyyHK14UlVEVDW2eQM2K
+ 8igDI2BVzSXqT2mMThNTS/0YwJSo9Qa/OCjH+x6NDS9Nw710P8hCiaZh/UlpqzaSfX/RRffSGFn
+ ZItkK4H4WC9XEq/l+eyWP/2jMm9SxR/OAB4xetfaBfVg0nsm91/PN13ycebpaIj2IhWosN0G8tI
+ Yz/JaJrzA/Sf9YpRvlOyafXE+FCHuNhZQrG+NouijVks8qxfdyLCkNkv2rivR0VM0p0V3K4sL7H
+ JfI8n1fCv/S2NDF7B8CjMb953oMeciDvBGLVD1JBaPI2CW54YDL3I8WNVgMAm5HE9sPiAk7CO76
+ aIdkdFgv57hJelY7kgh7hEPOeK8vnLAYQtUaqkLOlnJrSAQQ/7ptwWH/8ew==
+X-Received: by 2002:a05:6830:2b0a:b0:7d7:fd71:f2e4 with SMTP id
+ 46e09a7af769-7dc9518becbmr19395319a34.14.1777039567062; 
+ Fri, 24 Apr 2026 07:06:07 -0700 (PDT)
+X-Received: by 2002:a05:6830:2b0a:b0:7d7:fd71:f2e4 with SMTP id
+ 46e09a7af769-7dc9518becbmr19395253a34.14.1777039566566; 
+ Fri, 24 Apr 2026 07:06:06 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ac429ffsm187482036d6.2.2026.04.24.07.03.17
+ 6a1803df08f44-8b02ac7d4e6sm185486416d6.20.2026.04.24.07.06.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Apr 2026 07:03:17 -0700 (PDT)
-Date: Fri, 24 Apr 2026 10:03:16 -0400
+ Fri, 24 Apr 2026 07:06:05 -0700 (PDT)
+Date: Fri, 24 Apr 2026 10:06:04 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH v1] migration: Use QAPI_CLONE_MEMBERS in
- migrate_params_test_apply
-Message-ID: <aet4JNhPwnbQA9DI@x1.local>
-References: <20260414223718.23965-1-farosas@suse.de>
+To: Samuel Zhang <guoqing.zhang@amd.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com,
+ eblake@redhat.com, armbru@redhat.com, Emily.Deng@amd.com,
+ Victor.Zhao@amd.com, PengJu.Zhou@amd.com, Qing.Ma@amd.com
+Subject: Re: [PATCH v5] migration/rdma: add x-rdma-chunk-size parameter
+Message-ID: <aet4zLIat1S1KzOi@x1.local>
+References: <20260413035703.2602065-1-guoqing.zhang@amd.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260414223718.23965-1-farosas@suse.de>
+In-Reply-To: <20260413035703.2602065-1-guoqing.zhang@amd.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -115,42 +115,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 14, 2026 at 07:37:18PM -0300, Fabiano Rosas wrote:
-> Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
-> method makes the handling of the TLS strings more intuitive because it
-> clones them as well.
+On Mon, Apr 13, 2026 at 11:57:03AM +0800, Samuel Zhang wrote:
+> The default 1MB RDMA chunk size causes slow live migration because
+> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
+> 1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
 > 
-> This also fixes a segfault when a NULL TLS option is accessed as part
-> of a validation check for another option (e.g. in the zero-copy +
-> multifd compression case). Details follow:
+> Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
+> faster migration.
+> Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
 > 
-> Currently, after copying s->parameters to the temporary
-> MigrationParameters object before migrate_params_check(), the
-> references in temporary object to the TLS options are dropped, either
-> because:
+> Performance with RDMA live migration of 8GB RAM VM:
 > 
-> a) the user set a new option, in which case that's fine as
->    s->parameters still holds the reference to the old memory or,
+> | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
+> |-----------------------|----------|-------------------|
+> | 1M (default)          | 37.915   |  1,007            |
+> | 32M                   | 17.880   |  2,260            |
+> | 1024M                 |  4.368   | 17,529            |
 > 
-> b) the user did not set a new option, in which case keeping the
->    references in the temporary object would later cause them to be
->    freed along with it, leading to double-free when s->parameters is
->    also freed later on.
-> 
-> In this second case, it was overlooked that the TLS options can be
-> accessed already during migrate_params_check() as part of validation
-> of another option. Those pointers should not have been cleared.
-> 
-> Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
-> is not stealing a reference from s->parameters anymore.
-> 
-> Fixes: aed97f0563 ("migration: Normalize tls arguments")
-> Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-> Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Acked-by: Li Zhijian <lizhijian@fujitsu.com>
+> Tested-by: Li Zhijian <lizhijian@fujitsu.com>
 
-Queued and added cc:stable.
+Doesn't apply anymore..  Samuel, could you rebase to this branch and resend
+(the major diff is Fabiano's recent pull; it'll land master branch too in a
+few days)?
+
+https://gitlab.com/peterx/qemu/-/tree/next
+
+Thanks,
 
 -- 
 Peter Xu
