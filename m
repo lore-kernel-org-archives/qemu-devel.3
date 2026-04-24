@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4520AFDEE55
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Apr 2026 23:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41FA5FDEE56
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG3io-0003Rz-Qk; Thu, 23 Apr 2026 19:44:38 -0400
+	id 1wG43c-0006hd-QC; Thu, 23 Apr 2026 20:06:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wG3in-0003RC-9U
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 19:44:37 -0400
-Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
+ id 1wG43Z-0006gr-0g
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 20:06:05 -0400
+Received: from mail-dy1-x1335.google.com ([2607:f8b0:4864:20::1335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wG3ik-0007Bk-FY
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 19:44:37 -0400
-Received: by mail-dl1-x122e.google.com with SMTP id
- a92af1059eb24-12c565dd3a7so10502244c88.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 16:44:33 -0700 (PDT)
+ id 1wG43X-0000zO-Gq
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 20:06:04 -0400
+Received: by mail-dy1-x1335.google.com with SMTP id
+ 5a478bee46e88-2ba895adfeaso8087510eec.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 17:06:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776987872; x=1777592672; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1776989162; x=1777593962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PT/MiBm6K41jh+luxV+cKAOP03DvqX25ef3U/FQC4Fs=;
- b=bmoHcpmQJv0woRVTnUWisXFqbgk6KcFGx8oUMToDXZTQEISc+wqj4zx8PQf57Gi4oF
- li9MSlshu0phjSbZj8AwyV4xg8Es2N5/GpzqwIOpU+bWA9BOcLDNs40aLad03Js8xk75
- 20k0vVm1xUBNfNGykcwzqynP3fgL9prqDeOqdRY0Q13zUJKkXNwJHWBjKusqBvBlAgc6
- MZ+RAWyZMcHn6+cu7q63s8g+NMVTu7Z62V7JsGG0ZY757yHXqNJe5fDO64DmiwDF+n/R
- juLrdf+87d6Bg7qQZmKWL9ocPKep5HzuyV2+uawcaEMX8OIfwJt5zplqggn1RahGJ1yk
- kUEg==
+ bh=R9pycH1vrpngd62Fq+G7Rj4pLVjPW3yDgHDKQsT+bWY=;
+ b=HkUuW2i9cWbX9o+aadbLE8r6bqZ+HMln5icK1XGv4LJKuQlsPBJEHWJveoeEqGoPMY
+ 51xqBxinLb0LSWSdeRw7Jd9+G9O6XqPm3iZONOmijN0+gg07Zd7nQmNur7MgTplZH7yt
+ xZDkvEuc9imqr8+2MzUgS8NTQh98MOxNDICB/8TBEJwqlhoSn7joBxsykO07UPgrVGaD
+ nNt+olbyFYk/9BjRQGSfjdL40Qar+mFD2ixqt+mM4AKUvkgjKkQOd2AQ8tLQxYiew+Mu
+ 4NiWuf4x9nCeAnjERSU71F+Qx5+icFXruze5Auu2lvFmvSON7BpmG1jRKsWqOYeQ705Z
+ c9OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776987872; x=1777592672;
+ d=1e100.net; s=20251104; t=1776989162; x=1777593962;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PT/MiBm6K41jh+luxV+cKAOP03DvqX25ef3U/FQC4Fs=;
- b=oGcvJ6+5der6yQ6xtMCtXCrWQ7qSfWxuFZrKbNPyIyP3JGg597BHuABGhzcltKzrry
- FQ2YrhFRiTdI02t3OssR3obhj7ODtvFnAjyhAO6PEIYgMBrEUCFXUMPe+Rmt/xwtIBov
- n36StwD3yhq9NSusFRUu0RtP3J0zbloPecXrnUAelwOwXRRZtBZfE5WTn8uee62NBhJF
- j6PRVuyx2ksTdA9dc9KyuMZm7NfZ5BTI8qRo1e/uVPbTNzZakLCG07Z+UKCsUC+nW6ce
- xoBvLxfOCxDTUqUrq0o3A6FFRWQX8pSFOQdLo/Yw+6HRYKwtCmKES3ecMUYO14muhz0/
- 1AIg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+NJiYrQLpmvitwReqFeMogAgHXNOoE1MfWsu4/4k8za+nFNzNa2Ef9T6ZGcvcqwd8RnOlQVhhzbiJO@nongnu.org
-X-Gm-Message-State: AOJu0Yy5AhJW1wQkOJXHb3Afy4leTWXEq/jZxzTq1N3IokHutgv6eix8
- N4/UGCS25XL1yQExI0mI9q1pcTrI0ZGzncomiveudqTqY3g5CJBoxUj2
-X-Gm-Gg: AeBDieuD9vLkUc1I/XgLdednwzdrfPCnU1wZM1xu9VzJHoToYFPvErqXj7aZ1XEaVTj
- NN5bOMpMY3SBFO3fEgqN1PFWNxapUfHKqGNfGvPcSF6pVggp8MbwVI8Sq8vXbHSJ+k0clhCtmG1
- 4d7AU5PN090twRpjYuBKj63uHcdx6UZcUnOA6mNQGU/xCc0jJRWk+ltoLgOAZ180CeHA5m7Ggt+
- r37+GPR6Q/EpWsFeYW7/eZ7fEybC/4EfXqvCY/eerNmffGSvJ0XH0yT+P6FCPXSodxL3DQDBsWX
- REUPLIn/CXWzhdLmexBxQTBMBp1XE8PWRNg0V5eAhYfrQ4dm3xgfaDhEcJw1MmHipCGfkaXPnjL
- AoTjweZYvPLQ574KHP2cj6+fOuBuVQMuuPS2kG5JPo4WI6tIv3ozW2G5XNAe0RyA6+OYhdLcqS8
- yUPjlTe4pJewzBfQnw10LFOa8pVG/An/NqsdthkaKaYp1BCYT9Ef+nudVopw89AbGBDhaPMsXK
-X-Received: by 2002:a05:7022:eac8:b0:12c:2f8b:4c4d with SMTP id
- a92af1059eb24-12c73f7cbabmr17239478c88.15.1776987872200; 
- Thu, 23 Apr 2026 16:44:32 -0700 (PDT)
+ bh=R9pycH1vrpngd62Fq+G7Rj4pLVjPW3yDgHDKQsT+bWY=;
+ b=IhP1eai7703W0E+anDuDLp9Ee0TxuZqXY7k5lP+UNQBpDz5xrbc2VuUFafLDG2Iu9Z
+ GnL21LKMV44ggTq3ieq9o+21idly3UKm5ojHIhBwCBGkek796qRAqIrDbkO54Mwa9KBT
+ DoSCtLkNUEifB1MEzHfAJBou2Ks5+Ds/pgK6h4ILTZ+xhwvF9kbvhy7gyWAnAfI62CQ1
+ VRE+wgZ/P0VPx2xVvVU2pmh5WMCtGiaR7gzYquiT2l5zkBKZEsVyGCjg5PhdZC0IR1J+
+ vOz4pdw6Fld7pw+4zLFVcZ2xHq4aPAAPV95hJsdsb1GeSUtXI6b9SPkABh7lbxPdg+Vq
+ b0IA==
+X-Gm-Message-State: AOJu0YwAbo8nWWseeKIre2w0uNFQ7vHOMUvMNi3tk+tzHQTDUqWsRRaP
+ cwKvqDkGhwKtZA4TQIkDHh5LP9sxD9qlpG0AE0UfxoWYblNfxPowQu32iBP2WOm6jWM=
+X-Gm-Gg: AeBDiesI6Ya/eQ04fz9rUNZBXix0+4T4PgRkotSaA4LBKphrv/ll7V8q0mWiqfaA4oq
+ 3bHLwRZMw6JcCnA+17AaTEa9x09XykkP9AsUHhf0/yY/qYEnBH5F8UuRGKPuBzZK6nwkMuf0i8o
+ dQEj6EtwzmPE8voODDjOkglOCsvyKlPxVT4w3cgw2VYCxp+DiHa3T/CqXfwpR1fwi0CpyMumr97
+ Mt/FIRIOLa9ajceSgcr4v3QxtCo7DqHqAieb60vx5QiIwF8WXFprvmSy/afHq1r8IXqDqv2dfhs
+ zNlYO/m6YLxBzVn7liEXtf85yZQf2m35/Ei70ESrkOoSJzP7cW9mCuXCAz4AS6E9ZnblzctFoKL
+ +wxyfK2s252rmUiC882OoAIlFEBmo/Gc2EdQq+lD+B/wcomreIxuu6aZ8JSaUQCfzV3E2Nkrx2x
+ PpGp53FPG6LJf+QD7cLTl1Vf3Aw/Rv5cGKV6JR2xxU/ZXkRh3pgBpFb53OIS3no4xGFA2nYym2
+X-Received: by 2002:a05:693c:2c0f:b0:2d3:4252:b127 with SMTP id
+ 5a478bee46e88-2e479017537mr15538048eec.26.1776989161517; 
+ Thu, 23 Apr 2026 17:06:01 -0700 (PDT)
 Received: from localhost.localdomain ([2804:7f4:c030:44a8:c4b9:45be:963d:f3a])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c7b62fe87sm26531612c88.2.2026.04.23.16.44.29
+ 5a478bee46e88-2ea8e4b373dsm12958055eec.6.2026.04.23.17.05.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Apr 2026 16:44:31 -0700 (PDT)
+ Thu, 23 Apr 2026 17:06:01 -0700 (PDT)
 From: Lucas Amaral <lucaaamaral@gmail.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Lucas Amaral <lucaaamaral@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, agraf@csgraf.de,
- mohamed@unpredictable.fr
-Subject: Re: [PATCH v4 2/3] accel/hvf: introduce map granule abstraction and
- IPA property
-Date: Thu, 23 Apr 2026 20:44:26 -0300
-Message-ID: <20260423234426.7782-1-lucaaamaral@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
+ mohamed@unpredictable.fr, alex.bennee@linaro.org,
+ Lucas Amaral <lucaaamaral@gmail.com>
+Subject: [PATCH v5 3/3] target/arm/hvf: configure IPA granule on macOS 26
+Date: Thu, 23 Apr 2026 21:05:44 -0300
+Message-ID: <20260424000544.9617-4-lucaaamaral@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <87h5p1wnzw.fsf@draig.linaro.org>
-References: <20260317175744.32469-1-lucaaamaral@gmail.com>
- <20260317175744.32469-3-lucaaamaral@gmail.com>
- <87h5p1wnzw.fsf@draig.linaro.org>
+In-Reply-To: <20260424000544.9617-1-lucaaamaral@gmail.com>
+References: <20260424000544.9617-1-lucaaamaral@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dl1-x122e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1335;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,11 +101,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+Read the ipa-granule property (set by hvf_accel_init) and configure
+the HVF stage-2 translation granule via hv_vm_config_set_ipa_granule()
+on macOS 26+.  When ipa-granule=4k, use HV_IPA_GRANULE_4KB to allow
+HVF to map memory at 4KB granularity, matching 4KB-page guests on
+hosts with larger page sizes.
 
-> There is a minor preference to use the glib functions here, g_strcmp0().
+If macOS < 26 and a sub-host-page granule was requested, warn and
+fall back to the host page size.
 
-Will fix in v5, thanks.
+Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
+---
+ target/arm/hvf/hvf.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Lucas
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 1b5860c7..f506fc01 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1270,6 +1270,38 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+     }
+     chosen_ipa_bit_size = pa_range;
+ 
++    /*
++     * Configure IPA granule from the ipa-granule property.
++     * hvf_get_map_granule() was set by hvf_accel_init() before this call.
++     */
++    {
++        uint64_t granule = hvf_get_map_granule();
++        bool granule_set = false;
++
++#if defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && \
++    (__MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_26_0)
++        if (__builtin_available(macOS 26, *)) {
++            hv_ipa_granule_t hv_gran = (granule <= 4 * KiB)
++                ? HV_IPA_GRANULE_4KB : HV_IPA_GRANULE_16KB;
++            ret = hv_vm_config_set_ipa_granule(config, hv_gran);
++            if (ret != HV_SUCCESS) {
++                error_report("HVF: failed to set IPA granule: %s",
++                             hvf_return_string(ret));
++                goto cleanup;
++            }
++            granule_set = true;
++        }
++#endif
++
++        if (!granule_set && granule < qemu_real_host_page_size()) {
++            warn_report("HVF: ipa-granule=%zuKB requested but macOS < 26; "
++                        "falling back to host page size (%zuKB)",
++                        (size_t)(granule / KiB),
++                        (size_t)(qemu_real_host_page_size() / KiB));
++            hvf_set_map_granule(qemu_real_host_page_size());
++        }
++    }
++
+     ret = hv_vm_create(config);
+ 
+ cleanup:
+-- 
+2.52.0
+
 
