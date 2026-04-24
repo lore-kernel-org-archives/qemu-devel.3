@@ -4,144 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54E71FE51F4
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2076AFE51F5
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGCyW-0007mn-5V; Fri, 24 Apr 2026 05:37:28 -0400
+	id 1wGCzC-0007zX-JK; Fri, 24 Apr 2026 05:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wGCyO-0007mR-7F; Fri, 24 Apr 2026 05:37:20 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wGCyM-0004XO-M6; Fri, 24 Apr 2026 05:37:19 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CEJU+R6nu9vu2zf4grwqNB3kW570/HIOFQiGJ7H5nkyO3yygliYXpdGc4B4cmJ+vEr4RJBJlKP2GHNLBOxry1xK1xUFBkXmQ5MHqcGW2lAbCLnve8FAepYK+qBe/yLKHxw2CiqT+qB6+KlzHfjQz8y7857t7iCRUwUkvIds5FjDU5DBm5XbQpf3Edj8E9eJBiaoL4/hSnAByl/HHL/6E0V+un38kKwyYdgYa8OzYS4K1kOAQ7tAVywX9WEaX8qbvLcAf45Ht0jrEbeb1k29BNHG1IqpnixMXunxNAxdqk9QIdaFflterfPwouRUVSysKmeL3Lq2/rRsiWmQN+cSGng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q57+JOqLfLv40Z1DTf1tn91/GyvFrm1QGxULx7pXOKs=;
- b=PIQPiauJNy+ZHkZ4gKE0mh8KygE6tfy894HHi8O0AOHnNScUZ3Pgo1qD2djHvbg6KQn3EDREltycGr0jqjuiSu9a2M+OQm2xxiQZ3Y0jv2Rv2rG2NnL/uq9XO63OYJx/GucrdPN9Lt4FvdrvSVwS2YQWVB8Nij+SydkX3XOzDd406NrWkK5wy3cIOk7wMdOYiwb6bmLP29vn7/MaUHEWAsRC3Fmi/g9ojxZ7v7QTYGQ4zvuD6OeelKvYSRIFnDbJu7cIM38qvI7hn/915edZhDKgYmVmxS8omeS0pKqdcC1hfPxVkYll+cV5TtGJRFqKFbogyiQI9/nIqcO5Cr3wNA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q57+JOqLfLv40Z1DTf1tn91/GyvFrm1QGxULx7pXOKs=;
- b=bnHuP+QpdqpF5zofDW1lraFqOHeUyi4VeHYqyODDCWcSn72pOiUHUKYUIJYQFUg9ew5YtqAdfbpuAhmQ5skpLdhjDB9TmMnE8/Uvx0LuW0CD5gXhBlPpO75k7dJRfj44eYY6I3g+Acpvk18JmsX59z0ob7Ax+uyXqHT1iRU+oEF0zECX/jEOMwC+VQHJB+bjwL216bOLN/038VCDbz46ThESQkqbZ28jygRp+MGRgHH+godzbIiN4T4/EP6qWZkJtwbY2YZHJZF5oxLULGUhB/77fD0tQw7heM7NitVaEpVDDNsbMbI1MjwAd/6Yyh/YPvJ0yUwW8kpta5ZKh1gOkg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
- by IA1PR18MB5516.namprd18.prod.outlook.com (2603:10b6:208:451::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.32; Fri, 24 Apr
- 2026 09:37:14 +0000
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.20.9846.021; Fri, 24 Apr 2026
- 09:37:14 +0000
-Message-ID: <efd82233-83f9-4871-982c-8cc8dac6f577@axiado.com>
-Date: Fri, 24 Apr 2026 17:37:09 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/char/cadence_uart: Add BXRS register
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
- alistair@alistair23.me
-References: <20260212104432.4168886-1-kchiu@axiado.com>
- <CAFEAcA_u5B2RdVEaGycCQ6gCx1pQuT8rvGVGZpoKLTK+2s72+w@mail.gmail.com>
- <69691e3b-1605-4a5a-8ad5-0eec56ce3eed@axiado.com>
- <CAJy5ezpcvp0Qy-P9gE46oDtsxZxNO=xMV1k-GC3WF4yY3gARGw@mail.gmail.com>
- <CAFEAcA8mC4TkicLy9bcS8NYMDNcSUjsataGGmkMpViw4wBvmCA@mail.gmail.com>
- <CAJy5ezqTAMr=A3uAfmuWLepK66AdLRu4Q8AmFMh4+4q2HtDrkA@mail.gmail.com>
- <CAJy5ezogVjNxHLFVBp9wd332kwyR8peBHMEjoALg6pYfVk1q8g@mail.gmail.com>
- <cba7059c-9472-45f1-8fb2-06b26036f958@axiado.com>
- <CAFEAcA_jAyW5a2uyF7r=FBsw1dx3CCoVkU3hkxqQzAgxThYJEQ@mail.gmail.com>
-Content-Language: en-US
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-In-Reply-To: <CAFEAcA_jAyW5a2uyF7r=FBsw1dx3CCoVkU3hkxqQzAgxThYJEQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TP0P295CA0041.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:4::7)
- To SJ0PR18MB4479.namprd18.prod.outlook.com
- (2603:10b6:a03:37f::19)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1wGCyu-0007rg-SF
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:37:56 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1wGCys-0004dN-Dn
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:37:52 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-50335b926c2so59649631cf.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 02:37:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777023469; cv=none;
+ d=google.com; s=arc-20240605;
+ b=h/MBn9lr0mFDK/ku7KfwAa3APH9D9S3cF9oj4fq0PekP7mAr7J7cr15I52Kz/r5hBo
+ N72sfD45i7GdHotIwLqKjq7FBQ8vmAX+DgoBcyVVwdqgjUTYu2JYbXixMSsNPo9C5HYV
+ mWE84W5HhnRBMgAnRHFPsS4mFEeW+ypYuDd06Ng5BYz7VAQKND7ISDj9bcHWlniRrbty
+ Sdz1jtRYZv17/z656SvDWyfps82epI1q13V+IxFA/+QnCuc3OqtViIXsKucoVqiy4CNO
+ Is9yYSqKXqBEgkCPKKN6eRhL5vwhwnkNPgsi0mHb8MAuury7z0yElezm3OHwPxAwwQbK
+ pq4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=+Nh9lMzsGCzpxGxgA+xl/9Qq5hGURu9ZhNKe5ypNKxc=;
+ fh=huUyQFm5TluVBbLcqggc93ZVpvVU9XRZAzl+wX4rr8E=;
+ b=l1d6Cg0Uxa/tpz0PJ2IBcXSem43udveqGRchhE03YMG98bEIKEG72uBpyedfkfybap
+ xEvPpx2rKVfNZ6mTK37HXiEvBoN4dLyTWCyykfNrKtZoDvrFlAetImU7hbHrttXADpdC
+ AsO68sq1phVCMqdZR4uL1WYa/4X8I1gEQhkWHouFGdNcx6GZG6Ff+OnWlVC1qgFlKohY
+ PDwrW+Hq/8n+qx6S/f+ACKuanyeCvhF7W8sfYFwhrG4FnzYe8qddGcnQ//9mNjlQyW8k
+ XcYTzhi69s/LKaRguEZcCsXa15SfhfLBDA7sMklqjLnU0NahyshZMq7DD+7PQb4Vc78b
+ ALeA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777023469; x=1777628269; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+Nh9lMzsGCzpxGxgA+xl/9Qq5hGURu9ZhNKe5ypNKxc=;
+ b=cKGSApkgxtvZiXq4TIDLzamP034+04C5vT7mgn7yNy8aHh2UuPQxFshJASlrE8NPu8
+ uBglXWbxtx1U368EuTHLpaZWE+NtE6B3t3MruV30BnpFiYJ4sXSw2Ui0wiEaZrbNtzLU
+ 67eNxbT+1KIzVCWpV/WS7bT/pVjBmvVD7jzWnPsNrNarlezChos+BQCPD5odiJA59CsD
+ 98s3Y1/mVYiIMqIf+gVG+yhOR2kaIr1AKadNh1GrK9lLYH5/8Tcn5BV2td5KDURWxSGH
+ y1p6HFEhLLb2M03STNaFgXVDAYzBxDH2QwStQOLBr8MJTOfkJh8ceZg/Nio7Ce+bYx23
+ J6FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777023469; x=1777628269;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+Nh9lMzsGCzpxGxgA+xl/9Qq5hGURu9ZhNKe5ypNKxc=;
+ b=ndqn3VBzmhT1RtwHMEHVNCeBfQqTkq71X4aAOavsnz3cD1b+WqlqHNaq8vK8KDYNwR
+ GE8C6lkY6KxP0mJuB9P/VQOHK7NFv3u05TTo1uOM1iRMtAlTmlbvtRovZ5yF/AxKPnBo
+ yRMzxbI02bfJqF0q1dIsquda1i6UKRySslOgorW3CO51t6sLSHpi7N82L0TffuNGUSCu
+ WTrlhNrCeKy+FZekxU3Ux1HTg9t/y/ycNYMAbESSLINNyWOY5cEPF36AEKpZDXco5Tzt
+ Cj87vBgUXWkN3cII/ukqJPdR4W3zHFfWdD60YwVAteeidic6Ts/iPPLM/ew8zvuVKR1m
+ vbHg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8XcBYpnzXyZhVgwZzCjwgeEAjfMoAq8+1dXG9RpAIdgRk41hQosNdjRzV/a0Em6/iXn2evH5AEgy+G@nongnu.org
+X-Gm-Message-State: AOJu0YxO2bPtCO3ciVAn1kAvgz4zIo73PcTzZMfQxUBQ2zaqKFr9pnVq
+ cqhfwYXAj1KgqIWH8P3m2HQ+3THuOz7Yo6CXo/pSuRHsbw1I0kv+PFeh7vB7Xo2V+jsn2b3qGIL
+ 2brh30TzRlN9K2m7fU84tOOjZ4/tWkKY=
+X-Gm-Gg: AeBDiesBuvrfA3iYc7PMaxLO//0iNDQCIQQUHv4gU2CXkz8szQ2zExK1F5OD8TOOUt0
+ VcBeP1uoX9KndegMtBTagrSk1haC4RhsgSYWAvp7DYEjkFr6xyyrSPV2OXskJxfvWjEmc9Gp11L
+ +S8+Tmt0V0IytLk/r3LmvyaezWJaFxc45Vzl1+X6Uuz8FV+LtJwyWrRrdC4qEx5/Itb+6s+v9ZT
+ 8o3Lcjmlo4uxZl3wxea5JxGKg1rCwAZ0uCyj7G1NCSKXFuhnVU6r/HzHassPwWzvZckTjOW2PTO
+ Orm/RKhVDH/85ZF3aXkpuH3nZ9oXtUecVa04xo0tIG1DYs51vT9L1FuFcEkJT0ia031FlyyCjzQ
+ en9Gwj6HbaemFCXdqMMcdHphCiG1XLkpK4n08
+X-Received: by 2002:a05:622a:1994:b0:50b:404a:746e with SMTP id
+ d75a77b69052e-50e36ee74c4mr466498961cf.47.1777023468935; Fri, 24 Apr 2026
+ 02:37:48 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|IA1PR18MB5516:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1400db19-8b89-4c07-ab11-08dea1e510d0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|22082099003|18002099003|56012099003; 
-X-Microsoft-Antispam-Message-Info: LyWT7YCHXOZrvQqrwRgTY52tIjVP67uzsuDPde+dQe3AChkcFZEeCFs/f7LIYSjkG54KTVqHJc/Aiit693PXLAnq5NAc1FWHAcY3EmnwcO8msdcGPPsvEZeHzgR1Ys3D9atQKRXQdIOzCnRBWSJcUpJv8IHglxQ1baYDgkg3W4xQ0SNJE/4ZGn+JRdpuQL6pD+/qbsr1tnEnQzEsTb7FFX/ale4C3HqL/jEEI6UBFHT3pbpa9hkWb3TYbC7wJqfQtSjoZIU3UDYjvmyvfZVk+0LxqLwxT+xcsC1h+WtP7kGw+KKAro6wPwD4bc5ogamKy+0mwUy0r+KrEQHTknWb7yXa3IgobTv8mQVVLp27gRRj510L6IN20Zt8+UMWTIzAIwCcPIKDTG7/4YOD/DoebcB7b7p2TGZswCDq/p8BnJ1FV59PXDI5XcaixiMqaDbUQqYnvL/mzhHD1rqjbCsq3LW+ASmYCCl5AijUDwyAyphigI8W9n6KEbrNpzyyuSiUR4C+81KzRCszyouXZM10oy4gDdotg922MtAYY5MeIQ4CM8Gn6u+EMUuP/LFXOEGQuqY7RGtqbDXyAf6371oMRUlqA3VIx4p4QXV/qmLFHZmR6PsC2VJ7JIqQ5Cpue4bpISJBWJ82qr0mQrzhvPJHoA8gAl25Uc2dtMtwSA3j8nBMegQgoRdcsMTHvugxonndCDwitd8vWkRQOju9x6yoFbAkqgN1qYpB3E6NUNu2LjY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QTR0dmU3TlFEVFVxa0I4SGF1Z25OLzBYODlQT3UwV3ZUcVpQb3prK1o1NExS?=
- =?utf-8?B?MWRhTmhrN1VNNTlDVnMreXNqQXVLR1VWdjNTVmlINVVWajAvNGVhdTBEdWJF?=
- =?utf-8?B?a05NV2plRVB0Y3VMcGJZSmQxQ003cTNyLzRNaTNwbCtCWEVZZFF2dW5ES3N3?=
- =?utf-8?B?N01IZngxTlhHSnUxVHJyYXpYMnExc25RMUYxTGh2ai9vVnkxYTJTRE1sSXJB?=
- =?utf-8?B?bDZoZkd0NEFNWHdueUFtZ2U5eHVhVW00bXlQeXNXbXdzMzU4MGZOK0tPNUU5?=
- =?utf-8?B?YWZLd3N4RjRZSml2eXBKeXVYTGdoL3lZYy9WU3VJSk8zaTU2SlBRdzBVRVVz?=
- =?utf-8?B?ZEV1MWVDRGswUE1pcFk4Vy9aakpDb3BzeVQ4TU9IajlvbE9CZjVmQy9RcTN5?=
- =?utf-8?B?a09uZVB1SmQ1bFJJT2lCbDZHeUFkZ0RzY3JLc3N5dzRGZHg4VkZNMFNEbHB4?=
- =?utf-8?B?R0RsYkNJQTNNSHIwS2FOaWQ5L2tHVmRSdW1NeUJJSGJGSmtTaUJFTVdhaEp2?=
- =?utf-8?B?NzROTFN5NnJwREcwWFc0RUovZlJvREpnOGtmSWoyajRqZTY4cUgwQmVMaStZ?=
- =?utf-8?B?b1Nmcmo1dWd6dFNmMDlwcFlsdmFSRFUwcWMyd2pwTmNoRzBpb1ErRWtTVlZs?=
- =?utf-8?B?ZVdRa25aeURmS0tkTmJYTVZxSG45S0w1dEpsNU1ZV095NjN2dDhBWEtLK1Nt?=
- =?utf-8?B?V3czbnhHL0xiN2FySFZlVnBSZGw3bmtCNDNkeWtxVVlFaTJEcXlmRUllc3dl?=
- =?utf-8?B?WkdBUCtTZVVvVGhmaGVWRHZRSFFybmJkYzVrVy9qcmhpbXpNd1Y3cHBWRTJI?=
- =?utf-8?B?ZWtpbUdHOFNPeW80enRNd0Q1U2xrOFMybEZaSTZEbjBJZHMxT1dBZzQvVURu?=
- =?utf-8?B?Rk1ZV1BKZzIrb0xEbkJVWFpTVUhtVUlpN0dHcnM1ZVJ2T21LemZlQlpsMDRN?=
- =?utf-8?B?R1lXMG1hZUwvYnI2T3gzUzZsTUFMVmZVY2tHeWZFa1U3aThDWmw0VkxESkRu?=
- =?utf-8?B?Vk91cjRSbnpMWDUxZGtqRXNja205Z2I1MC84L2NzM1NYQ3pHQW5ZSFc1bWtN?=
- =?utf-8?B?WHFEa0xrNXNzS29wMmlPbDM5Um9XTmFJaGJPY0pDRkpqQTJNbEFnaFJLUklS?=
- =?utf-8?B?djFYTXN1OXJmVkVZZVJnSHdMSk1pVGgydjl4Mk9TWndISW5sdnpKVjRGaHkw?=
- =?utf-8?B?N3M2Y2xzWlBLRFpJbm9tak11UzlHSkFhaU5FTHpEaXRrR1lNdkRMaVoveWZJ?=
- =?utf-8?B?MXY5ZFpyR21UVGd6eE8wcW1UejlEeDN0aWNBeDFpOS9NOGgweWhWa3lmR2Vq?=
- =?utf-8?B?cllrQTVHTkt2U3hJVlllQ2s2L3lFUlE0ZGtYYjZ4WWV3aWJJTFFhUURjYzl1?=
- =?utf-8?B?YXlUT2hWYk9pdFUwdGRVdUFVbmNEV213cjg3MmMwVEpmeFc3RXBKUHZPR2lO?=
- =?utf-8?B?VUpFZTBCZjZJYVk2dDkyNmFOY290RHp1UThFUXZ3MVlGOEt1aC9wSSs0M0Nm?=
- =?utf-8?B?OUg5aTdOdlRNdHVHbWUzd1BFY0c3clVGaTBrOXl3STZmanZNL3JkSHIxOElQ?=
- =?utf-8?B?L0xPRDVIK2dqODRYd3VGQUx6TWNteHJPL3RJRTJPSTdVK0gyUTZ1bUhDMWdI?=
- =?utf-8?B?MGswb2M2disxZ0tOUlUvdzMrOWJxd0lKRkQ4VCtaU1ZkektHNUhSc2NET2p3?=
- =?utf-8?B?dmdqdVo1cjhQczN4dlFyakhzWGdtWWVtRFBlREpGeTg0ci9nVGVZQ2FHSHll?=
- =?utf-8?B?RzJsSDBZUkRwT3NiSzVQQ3lEcjdxNHA2aEpCZm81OGpSYTRJYjF0aS8vL3JE?=
- =?utf-8?B?NmZiejhyMEhHRGdveGdQTW1UdG90L2NWUzRWaVhHWGRHYzRWTkxNMEszL0pJ?=
- =?utf-8?B?RkFnZnprT2ZjZTMxYkRRdms3TEdHbXA2SGw1ankzK0Q4blhOL3pWcmd6QU0r?=
- =?utf-8?B?cmVUclI5ai83akgxclZLL0hmNDlMYWFRSElUTm9VUExCT3E4VmRTNnplTHlS?=
- =?utf-8?B?Z0cwYzVBcVJQc3JkaHFXdkVjT2YvamNrR2xzQWZ2VW16NFZUSEFGMDdkZWNE?=
- =?utf-8?B?TnFjWElXV3pvYUdnYTBrN2UxQml1ODUrQ3UrMFVKaUptYnJIS0NBNnFhQ3pF?=
- =?utf-8?B?WUJ2NE9sMlF5TDhwRWVkRGducDlZSno5d3p4SC9ITytSQnFZRlRHTWhWRjFC?=
- =?utf-8?B?L1c4cSs3Q0s4YVkrdFcwK1dpR29IVVRETWRISEhFdFRlMnBBVXZOZHZmWmZ3?=
- =?utf-8?B?d1llYWNqTUxGeXZENHRZampjTVQxWjI2R0tDbytpYVZxYnRJWVlyVmtkVko5?=
- =?utf-8?B?Mk1rR2U1bUtXVzN5b0xPN1dVRmlNVURaVlRYZjRqUnNkakZRZEhNZz09?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1400db19-8b89-4c07-ab11-08dea1e510d0
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2026 09:37:13.7498 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Q89maaOC5ghtkzMHjf8HngMW6ggcfHkOuWRiezwLBS/HABfbN18oygC+PDmNyJdRwsQFl063bgLLzKO0dyaJNQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR18MB5516
-Received-SPF: pass client-ip=2a01:111:f403:c10d::3;
- envelope-from=kchiu@axiado.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250822092410.25833-1-cjchen@igel.co.jp>
+ <20250822092410.25833-4-cjchen@igel.co.jp>
+ <3a80c5e5-9889-4830-9a00-5d4d92141a3a@linaro.org> <aLdA4uH5CGbfz9Gd@x1.local>
+ <CAFEAcA_TjVAzntgxdLF7rn4fwMk+YH6eiPdTVEQopRWceHGfrQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_TjVAzntgxdLF7rn4fwMk+YH6eiPdTVEQopRWceHGfrQ@mail.gmail.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Fri, 24 Apr 2026 02:37:37 -0700
+X-Gm-Features: AQROBzA4oNtGbgnyXqLpR4x5SgTfzheXqThJ0oWd9vt2hFm6mUPFHjKj7SoR4CA
+Message-ID: <CAMo8Bf+XAgaXsmQiURQXOicq9LkCfLpNVMz8dDSHHVfGttwvJw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/9] hw: npcm7xx_fiu and mx_pic change
+ .impl.unaligned = true
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Tomoyuki Hirose <hrstmyk811m@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-qt1-x82c.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,33 +124,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Edgar
-
-Could you send me more document about the new version of Cadence UART 
-device?
-I am not familiar with zynqmp so I don't know if anything missing except 
-for BXRS register
-
-B.R.
-
-Howard
-
-Peter Maydell 於 2026/4/24 下午 04:16 寫道:
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
+On Fri, Apr 24, 2026 at 2:09=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
 >
+> On Tue, 2 Sept 2025 at 20:09, Peter Xu <peterx@redhat.com> wrote:
+> >
+> > On Mon, Aug 25, 2025 at 01:00:21PM +0200, Philippe Mathieu-Daud=C3=A9 w=
+rote:
+> > > Hi,
+> > >
+> > > On 22/8/25 11:24, CJ Chen wrote:
+> > > > By setting .impl.unaligned =3D true, we allow QEMU to pass along
+> > > > unaligned requests directly as-is, rather than splitting them into
+> > > > multiple aligned sub-requests that might cause repeated device
+> > > > callbacks or unintended side effects.
+> > > >
+> > > > Signed-off-by: CJ Chen <cjchen@igel.co.jp>
+> > > > Tested-by: CJ Chen <cjchen@igel.co.jp>
+> > > > Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+> > > > Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+> > > > ---
+> > > >   hw/ssi/npcm7xx_fiu.c | 3 +++
+> > > >   hw/xtensa/mx_pic.c   | 3 +++
+> > > >   2 files changed, 6 insertions(+)
+> > >
+> > >
+> > > > diff --git a/hw/xtensa/mx_pic.c b/hw/xtensa/mx_pic.c
+> > > > index 8211c993eb..6bf524a918 100644
+> > > > --- a/hw/xtensa/mx_pic.c
+> > > > +++ b/hw/xtensa/mx_pic.c
+> > > > @@ -270,6 +270,9 @@ static const MemoryRegionOps xtensa_mx_pic_ops =
+=3D {
+> > > >       .valid =3D {
+> > > >           .unaligned =3D true,
+> > > >       },
+> > > > +    .impl =3D {
+> > > > +        .unaligned =3D true,
+> > > > +    },
+> > > >   };
+> > >
+> > > Surely a distinct patch.
+> >
+> > Besides that, I also don't understand how it used to work even before t=
+his
+> > change..
+> >
+> > E.g., both of the xtensa mx_pic read/write ignores size, that doesn't l=
+ook
+> > right already when there's totally no limitation of impl.*_access_size.
+> >
+> > Meanwhile, taking xtensa_mx_pic_ext_reg_read() as example, it'll return=
+ a
+> > u32 by offset smaller than MX_MAX_IRQ (where MIROUT=3D=3D0):
+> >
+> >     if (offset < MIROUT + MX_MAX_IRQ) {
+> >         return mx->mirout[offset - MIROUT];
+> >     }
+> >
+> > But it returns different u32 for different offsets.. so reading 0x0 ret=
+urns
+> > the 1st u32, then 0x1 returns the 2nd (rather than reading 0x4 returns
+> > that).
+> >
+> > Even if there might be a driver that works with it, it still doesn't lo=
+ok
+> > like the traditional way of doing MMIOs.. irrelevant of setting unalign=
+ed
+> > or not in its .impl.
 >
-> On Fri, 24 Apr 2026 at 04:08, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
->> Hi
->>
->> Do I need to take further action on this patch?
-> It sounds from what Edgar says that there are multiple
-> versions of this hardware device, which suggests that
-> we ought to have the device have a "version" property
-> or something similar so we can select the right
-> behaviour for zynq and zynqmp.
+> I had a look at this. Unfortunately there doesn't seem to be any
+> publicly available hardware documentation for this, but it looks
+> from the kernel driver like the hardware really does work in this
+> weird way. arch/xtensa/include/asm/mxregs.h has:
 >
-> Checking whether there's anything else missing in the
-> new version of the device might also be a good idea.
+> /*
+>  * RER/WER at, as       Read/write external register
+>  *      at: value
+>  *      as: address
+>  *
+>  * Address      Value
+>  * 00nn         0...0p..p       Interrupt Routing, route IRQ n to process=
+or p
+>  * 01pp         0...0d..d       16 bits (d) 'ored' as single IPI to proce=
+ssor p
+>  * 0180         0...0m..m       Clear enable specified by mask (m)
+>  * 0184         0...0m..m       Set enable specified by mask (m)
+>  * 0190         0...0x..x       8-bit IPI partition register
+>  *                              VVVVVVVVPPPPUUUUUUUUUUUUUUUUU
+>  *                              V (10-bit) Release/Version
+>  *                              P ( 4-bit) Number of cores - 1
+>  *                              U (18-bit) ID
+>  * 01a0         i.......i       32-bit ConfigID
+>  * 0200         0...0m..m       RunStall core 'n'
+>  * 0220         c               Cache coherency enabled
+>  */
 >
-> -- PMM
+> #define MIROUT(irq)     (0x000 + (irq))
+> #define MIPICAUSE(cpu)  (0x100 + (cpu))
+> #define MIPISET(cause)  (0x140 + (cause))
+> #define MIENG           0x180
+> #define MIENGSET        0x184
+> (etc)
+>
+> so the MIROUT and MIPICAUSE parts are more than byte wide but
+> the address decode puts them a byte apart. (This is kind of similar
+> to x86 PC in/out IO ports -- you can have a 32-bit IO port that
+> is immediately followed by another IO port, you don't have to
+> space the port numbers 4 apart.)
+
+That's correct, the address register in rer/wer xtensa opcodes identifies
+the register, and it looks like the usage pattern of this address space has
+changed over time. MX interrupt distributor uses addresses as indices,
+but in the more recent designs 32-bit wide registers are placed at addresse=
+s
+that are multiples of 4.
+
+> So I think this device definitely does need to have both
+> .valid and .impl set unaligned =3D true.
+
+--=20
+Thanks.
+-- Max
 
