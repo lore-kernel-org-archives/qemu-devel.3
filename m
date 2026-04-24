@@ -4,52 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FBAFE5204
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51CB8FE5204
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGDwU-0002b6-9p; Fri, 24 Apr 2026 06:39:26 -0400
+	id 1wGE0V-0005sl-07; Fri, 24 Apr 2026 06:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wGDwT-0002aZ-0o; Fri, 24 Apr 2026 06:39:25 -0400
-Received: from relay.virtuozzo.com ([130.117.225.111])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wGDwR-000200-7h; Fri, 24 Apr 2026 06:39:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Message-ID:Date:Subject
- :From; bh=EcnsQFbnncWE7Prrulk8hdwft53Btw+MTadW5OXdZ6Q=; b=wbwwoxqLyd8iuh9vy7o
- jOxUsAJMjWigQXUHNgzLzjAvRSrVXUeaaVjUw2HMvw2wQLHaiRVuNWoyNCLLh+1KG7yIIefqDQEK5
- s2sCAIQHeKJlsoerIbQ5TrAYQVtKJubLEqZQFHd0Y68q0S9JaH2GQg3jiYCDN/EvncOhHxXlIIm5Z
- EPwdt7VAwnbBBqRrV2epDGnc+zUVz/Zk1uUYUT+Y6s89XefhfWirADzGE1YLOKlobiGl/qBz8fqQL
- goO8R/hC9JS/Gy4t2c4QCoeFqrptoLCuaf9IfP2+ExpBdrJf5d7XZrslaSNqnNqt1Lc+49iQBoMiM
- pcfS8gZ6OrFeqSw==;
-Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=iris.sw.ru)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1wGDtf-00F3Ps-05;
- Fri, 24 Apr 2026 12:39:14 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGE0S-0005rQ-1w
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:43:32 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGE0P-0003ua-NI
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:43:31 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so69591945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 03:43:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777027408; x=1777632208; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=E2wkN1bufIhL14IHSKnpj7rUkgY1Gqo3hqaNAVYj5As=;
+ b=yF6/NFxrTrDyN2H1xKSPRMffX36PQQDCDbXeTaoJOLk3omw0vFBSmCrORIfZH5JH1r
+ KlJe9cTuD95+JTvepd0rVGTzFQB83C+mDH+m4uYQOTBrJfDXY3bScHJ0tz/ABxnaI9UB
+ isSSXL3Nvous7Omu+VJL1gJuYDzj0RQudCEdFgqOyE+Ey4XyNZKAXn92o6sAcNIcCthw
+ LlGrZxLVJy5m+CauODGzt931OhrTE65CtbQzUJaQuO1q2STOeATRYfYgQ77cErUjxzh4
+ 6g4vz/6ZGXzdqGg8whJ22OFgR7SYakzcOwtbeOMdVLOUbhuHb02RubjlQZJnusgg0zU3
+ aQsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777027408; x=1777632208;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E2wkN1bufIhL14IHSKnpj7rUkgY1Gqo3hqaNAVYj5As=;
+ b=B9RlXmsjWBjIYcvYdpchUPMjGdwqMcmcWsCnRQNTz5H5PNdspmnZXL2H/8OhewDo5E
+ 6wamCyniZjY/Gphs2MFG6xWI3OarG+XUfggZ1vk7vvPZsd6Wb0U7o9CSK1sZMa/k13nr
+ WlgWiDQhSC3NgiggXLCpKSwavOqwKUDflvVUj0wJWzz8aXCevNUvS49sQJ265D/34/MO
+ lWuTpQTNszEq0nYx5gkJnRHh3mw/u3PXHUq+Iqh9mT4zDBX9csCXXU0qaNTOU9J6z+vX
+ blZ1km7YknZ/jq0UssZy0T8f17Liw7lO+AnuTzzQnm9RuPM8ham+7dwe5hhqL0qm1P7x
+ EVTg==
+X-Gm-Message-State: AOJu0Ywsr40SEZEqtd6uCKkVttJDaGpLi6DOTFcjUIVhsVCsWiFTirGk
+ +dVDO42aF9VJ1ecEUeSlMRns3Yt1f7MNuxNUlkGeCWRzs4U+fq1DwZTz7hkSa4L5fEh6dCM5Eet
+ BNqLmtR4=
+X-Gm-Gg: AeBDieuxwa9uY0SeCzIsWnQ/N8C64MClHc+N2vcgnqPD1iguUAN7XW8x6Ru+Z2PuYoY
+ foMImPNNd9mgIFrwrPloM5xex8OpVdtrGggRLqeAx/kv0woOcNIgGtxQy1PJRVnJAzopm36aKH1
+ Wtj6boOXjRELG1tGdYbhsNDNLEQNus8wspcIvYLi3soFnVL6X53dLP2A3+FdQkZYIsks0C5jQC+
+ KrfEhkNMXNPEp/eoliZw31BpL+kk+ua9mVk5rBS9dMRg8D+/zRT2XE9ukZxlQPWeEnxruhGaYBF
+ 2A60DX9pZG3bhslnnWa8cXzvC2wF69rQTrNbJvnK/wKXBObpu8iLbTotbA2fQ79DLjDDcZotEXx
+ SdjgtIQfzIay+9aOsLKObhs0lOcKwPTaGKbgF0l3VXSFrjouSMohLaBg1dZw6E4FSgdxR1FoyOb
+ UiN3XpBE4pWspk3YdFO9y//KnXwCzZMV6TcED4O0VbBKEWDgVSF04AJpm7W+TgkcsD4s4aAeI4+
+ iPJrZiiZhQ=
+X-Received: by 2002:a05:600c:4e8f:b0:489:1fa5:997f with SMTP id
+ 5b1f17b1804b1-4891fa59adfmr296331575e9.9.1777027407697; 
+ Fri, 24 Apr 2026 03:43:27 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a66533ff4sm10927015e9.6.2026.04.24.03.43.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 24 Apr 2026 03:43:26 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org,
- "Denis V. Lunev" <den@openvz.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PATCH 0/2] block: fix two missed-wakeup hangs on shutdown path
-Date: Fri, 24 Apr 2026 12:39:15 +0200
-Message-ID: <20260424103917.248668-1-den@openvz.org>
-X-Mailer: git-send-email 2.51.0
+Cc: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@kernel.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3] target/s390x: Leverage 128-bit vector type in V{L,
+ ST}L opcodes
+Date: Fri, 24 Apr 2026 12:43:25 +0200
+Message-ID: <20260424104325.81484-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
- helo=relay.virtuozzo.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,92 +100,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Denis V. Lunev" <den@openvz.org>
-From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Problem
--------
+The access is unaligned (MO_UNALN), we can easily replace the 2
+consecutive 64-bit calls by a single 128-bit one.
+Considering atomicity of the new 128-bit access, the both opcodes
+VLL (Vector Load with Length) and VSTL (Vector STore with Length)
+access byte granularity, so use MO_ATOM_NONE.
 
-The qemu shutdown / blockdev-close path can deadlock permanently on
-upstream master.  The main thread enters ppoll(timeout=-1) holding
-BQL, no other thread has a wake source that points back at it, and
-qemu has to be SIGKILLed.  The hang has no timeout -- it is a hard
-deadlock, not a slow operation; behind BQL, RCU, VCPUs and every
-iothread path that needs BQL stall with it.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20260423135035.50126-1-philmd@linaro.org>
 
-Two independent missed-wakeup races in the block layer contribute.
-Both share the same shape: a waiter arms on one side, the waker
-reads stale state on its fast path and silently skips the kick, and
-nothing else on the AioContext will fire to recover.  They are
-different bugs in different subsystems and each patch stands on its
-own; they are posted together because they surface through the same
-test and the same symptom and are easiest to diagnose side by side.
+v3:
+- do not increase addr (Ilya)
+- MO_ATOM_NONE (Richard)
+---
+ target/s390x/tcg/vec.h        | 12 ++++++++++++
+ target/s390x/tcg/vec_helper.c | 17 ++++++-----------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
-Depending on which race fires, the main thread backtrace at the
-moment of hang is one of:
+diff --git a/target/s390x/tcg/vec.h b/target/s390x/tcg/vec.h
+index 8d095efcfc6..34413f7e029 100644
+--- a/target/s390x/tcg/vec.h
++++ b/target/s390x/tcg/vec.h
+@@ -13,8 +13,10 @@
+ #define S390X_VEC_H
+ 
+ #include "tcg/tcg.h"
++#include "qemu/int128.h"
+ 
+ typedef union S390Vector {
++    Int128 quadword;
+     uint64_t doubleword[2];
+     uint32_t word[4];
+     uint16_t halfword[8];
+@@ -72,6 +74,11 @@ static inline uint64_t s390_vec_read_element64(const S390Vector *v, uint8_t enr)
+     return v->doubleword[enr];
+ }
+ 
++static inline Int128 s390_vec_read_element128(const S390Vector *v)
++{
++    return v->quadword;
++}
++
+ static inline uint64_t s390_vec_read_element(const S390Vector *v, uint8_t enr,
+                                              uint8_t es)
+ {
+@@ -117,6 +124,11 @@ static inline void s390_vec_write_element64(S390Vector *v, uint8_t enr,
+     v->doubleword[enr] = data;
+ }
+ 
++static inline void s390_vec_write_element128(S390Vector *v, Int128 data)
++{
++    v->quadword = data;
++}
++
+ static inline void s390_vec_write_element(S390Vector *v, uint8_t enr,
+                                           uint8_t es, uint64_t data)
+ {
+diff --git a/target/s390x/tcg/vec_helper.c b/target/s390x/tcg/vec_helper.c
+index 98eecd9fde6..a86819f61b6 100644
+--- a/target/s390x/tcg/vec_helper.c
++++ b/target/s390x/tcg/vec_helper.c
+@@ -48,14 +48,11 @@ void HELPER(vll)(CPUS390XState *env, void *v1, uint64_t addr, uint64_t bytes)
+     MemOpIdx oi;
+ 
+     if (likely(bytes >= 16)) {
+-        uint64_t t0, t1;
++        Int128 t;
+ 
+-        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+-        t0 = cpu_ldq_mmu(env, addr, oi, ra);
+-        addr = wrap_address(env, addr + 8);
+-        t1 = cpu_ldq_mmu(env, addr, oi, ra);
+-        s390_vec_write_element64(v1, 0, t0);
+-        s390_vec_write_element64(v1, 1, t1);
++        oi = make_memop_idx(MO_128 | MO_UNALN | MO_ATOM_NONE | MO_BE, mmu_idx);
++        t = cpu_ld16_mmu(env, addr, oi, ra);
++        s390_vec_write_element128(v1, t);
+     } else {
+         S390Vector tmp = {};
+ 
+@@ -206,10 +203,8 @@ void HELPER(vstl)(CPUS390XState *env, const void *v1, uint64_t addr,
+     probe_write_access(env, addr, MIN(bytes, 16), GETPC());
+ 
+     if (likely(bytes >= 16)) {
+-        oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+-        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 0), oi, ra);
+-        addr = wrap_address(env, addr + 8);
+-        cpu_stq_mmu(env, addr, s390_vec_read_element64(v1, 1), oi, ra);
++        oi = make_memop_idx(MO_128 | MO_UNALN | MO_ATOM_NONE | MO_BE, mmu_idx);
++        cpu_st16_mmu(env, addr, s390_vec_read_element128(v1), oi, ra);
+     } else {
+         oi = make_memop_idx(MO_8, mmu_idx);
+ 
+-- 
+2.53.0
 
-  ppoll -> aio_poll -> bdrv_graph_wrlock -> blk_remove_bs
-      (patch 1 -- block/graph-lock)
-
-  ppoll -> aio_poll -> cache_clean_timer_del_and_wait -> qcow2_close
-      (patch 2 -- block/qcow2 cache_clean_timer)
-
-Race diagrams and the exact stale-state read are in each patch's
-commit message.
-
-Reproducer
-----------
-
-Environment used for the numbers below: 4-vCPU VM guest,
-kernel 6.12.x, upstream master at bb230769b4.  On modern bare-metal
-the window is narrow enough that the hangs rarely reproduce without
-a VM -- a VM guest under full CPU saturation is what makes the
-timing reliable.  Downstream trees that still use plain
-bdrv_graph_wrlock() in blk_remove_bs() hit the graph-lock race on
-the first iteration without any stress at all.
-
-    # reproducer
-    stress-ng --cpu "$(nproc)" --timeout 0 &
-    for r in $(seq 20); do
-        timeout 120 ./build/tests/qemu-iotests/check -qcow2 iothreads-create
-    done
-    kill %1
-
-With `stress-ng --cpu $(nproc)` both races surface.  With
-`stress-ng --cpu $(($(nproc) - 1))` or without a stressor neither
-reproduces reliably across 20 iterations.
-
-When a race fires, the Python QMP client times out on vm.run_job()
-after 5 s, the qemu process keeps running but never makes forward
-progress, and the outer `timeout 120` eventually kills it.  attach
-gdb before the timeout kills qemu to capture the stack and
-distinguish which of the two races fired.
-
-Results
--------
-
-Same guest, 20 iterations of the loop above:
-
-  upstream master:            10/20 FAIL (first fail at iter #2)
-  master + both patches:      20/20 PASS
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>
-Cc: Hanna Czenczek <hreitz@redhat.com>
-
-Denis V. Lunev (2):
-  block/graph-lock: fix missed wakeup in bdrv_graph_co_rdunlock()
-  block/qcow2: fix hangup in cache_clean_timer cancellation
-
- block/graph-lock.c | 12 +++++-------
- block/qcow2.c      | 28 +++++++++++++++++-----------
- 2 files changed, 22 insertions(+), 18 deletions(-)
-
---
-2.51.0
 
