@@ -4,93 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A69A7FED3C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E066CFED3CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 14:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGH3A-0006RE-Bf; Fri, 24 Apr 2026 09:58:32 -0400
+	id 1wGH5o-0008Tq-2g; Fri, 24 Apr 2026 10:01:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGH39-0006QU-Dc
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:58:31 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGH37-0004Ex-Qa
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:58:31 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so77068945e9.2
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:58:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGH5T-0008Qe-S4
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:00:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGH5R-00056x-Vm
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:00:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777039252;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GwumuizkFfW4BtGEByu3LeybmWfMZHEtBBMWT7PFlpc=;
+ b=BWpcLz4vqMvhRYKZ/qJq6Qj7yWv6LhVy3//FEEkz4+cLh+9z8W/Q3ZQuxDD444y2oHpxGx
+ PFrXz/vLQnUf+p7p7X528hmjuZTUSEzvLhf5/sXt7jroiq+Rj+CSQsvT39XbLkLYLEcgFy
+ x9RU3nAQO9yuPknXktsuIvmsnNko7F8=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-584-MbOv17ztO9G-t_z0GLUIxw-1; Fri, 24 Apr 2026 10:00:49 -0400
+X-MC-Unique: MbOv17ztO9G-t_z0GLUIxw-1
+X-Mimecast-MFC-AGG-ID: MbOv17ztO9G-t_z0GLUIxw_1777039249
+Received: by mail-oo1-f72.google.com with SMTP id
+ 006d021491bc7-672c40f3873so16288241eaf.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 07:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777039108; x=1777643908; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jeXr2YAxxcksPi4zIMDOPQzcc4Jtkevn9hjVtpztcmU=;
- b=bkB/INg/sZ2sOM++VianZA4NxmzLE1lsN7T32va5Bk3AcxdTbhHYUA7U0+t2NdSWLn
- wLD1uupiqBygec89OqOXUiH1+nQoP6Xr8m5G14C5LiIBTQqp7JJwIeTIBvzra4AIptL7
- MwQTeVIgTHxy4Q4aOyNFIpItkW0UAyEyP0RBKH5o8cNz7ZPluYw6SxOGt2/R8sjChi1v
- L9OW0WxB0bvWkDTJxV9AmOr6VrsE0G9NhuNx3k6/6QdITNudnNtN5lAzRn5ZwnmtORvV
- f9LW47e2UgS8df1P9GsKh6Zz85d9SwozXRjLGvgC55m/DFktroJXydpfDUfaY64gBpHc
- ZIEQ==
+ d=redhat.com; s=google; t=1777039248; x=1777644048; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=GwumuizkFfW4BtGEByu3LeybmWfMZHEtBBMWT7PFlpc=;
+ b=Go/fCEd1qwCn7gaJqzAtuaG4FHAJiq/Y6MQVRJrSbPUO39lQvChBuBez6bWYnPZ+oP
+ L2LL42nm0NmqvPXm3wwb22faKP8pU0IwOjPeUzCO7ahs09tmbnrno/vMd917u9SUCpZI
+ e+H1A+Jx7kEdZWHIO31zQhCVj8y7Pn1kd/aMM6cLBROYQqW83qYRK2S4dsqJ3uktq8gn
+ rZtbTHVAQvARlEIIJ8Yg9EgQrqfms0opsKX6xSqOX4IccFi3IP562C/YGNu8YoXAAK/f
+ bWiK2ywY4v2oWl7S8Qs4GkFynjuW/j5M7dYPUu+ja6/SV8UoTqB0dduoyQ5UhzzhiHUR
+ eYdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777039108; x=1777643908;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jeXr2YAxxcksPi4zIMDOPQzcc4Jtkevn9hjVtpztcmU=;
- b=mnlA4x4yAyO3Gh30ik/KHWt2+6R5c6XObzznNZTTmBEgAgWTAFXHqYjPbNKk6kLqdk
- w0TUbsqcWub0a5cvk/f/7Tt/oEQNCFP/v1NoOa7rV/+k3qwvCAcEp7DDD3iCZRcwbGgH
- eKac+mThzRDUpS6BArf00r1434noLZkuUR1+BaAJuYdIO6c53MDOpsDsV7ePmZsTd66K
- XiZTNoAMMXXHpvI3IytWhpZstzQABodcwY76BrFIhp8OtLTHH+0CYrJfR+FXPWVockVp
- aLuU3eBniysHXSOgthDJQXllIcw6Q/5YWw9B9rTBg8chMUBEJJw32pk56z4VJyTg1Le9
- /wRw==
+ d=1e100.net; s=20251104; t=1777039248; x=1777644048;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GwumuizkFfW4BtGEByu3LeybmWfMZHEtBBMWT7PFlpc=;
+ b=p/Z96k6SoFfwXQoJPjZAG+TdlJcBdFFfvIbD0riF+U4ZnDaJcQEyxN9kV6ro9NM15v
+ n++H+H4mo+5uI0M94g0OJbdhRcmJw7vDqjzlX1yXkUFSvaWUmb9fllyMFEYDquJtPM3C
+ E/rj/1kjjPLNWzmCCe278FIAuirzKlx3WXFvsAxYccqk8rzEYZk18vDdKJRn7AF+Ojvy
+ SwDbdF0zPkpu+p2TeTGp/s8xS/1Hnq/R2iJxv0dqNJCmBvqrcVHyvXQ5w4PRnU8chMqV
+ e93QQi1k0KE2NqeITLXW4ws2jNnTOuIxFsMcw7GR4b6lubrIC/NcdOvCwzWZqTCm4gKG
+ EvvQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+Tg/5cFnKCskx9Q5Nf5apT8/5l32KmnyfeT2roR7s1M4EVQij87+kM1kFMC7VBrEPRC+XTBgE18CSz@nongnu.org
-X-Gm-Message-State: AOJu0YwXb+5FxhiXAprk0QclUILSwwAoPMX2dyiGpelaivZbS4CAAshI
- dICMC0eEi2vCFbztlHcR4+bkYebJAy0RCrj2G1knAG5Iu4UfS4DOU91XMcU6mowoWOQ=
-X-Gm-Gg: AeBDieuC7czh0Fh46RftV/H0kC4sA+FEoovnU3y4lBo7FgvIyKCRhclYfNbBbCTzn41
- uUlg+dq3JqB3VyC1VTEHyd6IoQn8BzNwZVKJTd1GnrOgTPY8ia4pEtqKNmCcRGpkxoNK4k03MLs
- 9ul3kfylHsXriw5eou4L/bUmabsSrfH3UdaUzBSUqR1IX3VDQipvzv4x7dxohrh9bF6gbyg0rFq
- IlDLc3KaX7yUjSJBw89FYbawS9D5zvaY+FXgUfzlmDxJPj+U4fajcLja0OuInzVy5lJQTKPEfOY
- O+430Pvk6x3SxNpjutwyoJIQrQ2T90gCn3tPFUiJJVtQ9VSV4XdlgVGfdbV+PEuAYWOaBKrq08/
- ZPDqGpwvW2K9aJ9j/adLuNhOYr7Y6XQpbhNvlY7EHv0sDwI//ucI/VB0M/ZoOTAh+L8UJw8M7B+
- R9LmgRPs+/T7+gyWjFIFsPcyRckuup93TdGbOIBPiRX+PjfOFs+ZKIwLo2Fqwev0LWSXYaoSIHk
- 73N6lRhrFINJ80=
-X-Received: by 2002:a05:600c:8b8c:b0:489:1d74:56d with SMTP id
- 5b1f17b1804b1-4891d7406famr341492525e9.29.1777039107885; 
- Fri, 24 Apr 2026 06:58:27 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a66533ff4sm16606895e9.6.2026.04.24.06.58.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Apr 2026 06:58:27 -0700 (PDT)
-Message-ID: <e7022bd7-7fcc-4ba5-99be-35a032c41c52@linaro.org>
-Date: Fri, 24 Apr 2026 15:58:26 +0200
+ AFNElJ/FikYYtfqPw9FcMkcmzd9TSflDC+V4qVLqucKF8kFYuZQjKvdBHpmQkFj5OCOIRW4sVMdUh8eZb2/8@nongnu.org
+X-Gm-Message-State: AOJu0YyxHTYokqOSwT6V0Elq3lkVP24uPzPpk4TllUyTKlqTjfCZUDoO
+ CwhsnuWHs7IHbbB5urEkq6//9GUqDWEoHNcG5uzpsjowUc9O+kagEj8wA4lGFr0u/fOeAFDeNUQ
+ pSYr0aLA+v7vwSEjHm46g11s5uIfqBb6SuMWtEOymsZfPJht3tJxJN+He
+X-Gm-Gg: AeBDieu6wqrSXiQa+omsMk3EOYDjgY7KhRzc8JNVlxr3lCOpxWEZGLUZsZSTZWBImBn
+ vORijtDUDkyLPPQt25iVnLrpjfajnRU5A8l3j5j7G8Yp1kEpxqmSfI9C+apFm0iffqVj6GRlIx0
+ 2T3gOcTkIbRSCnBK5ol9Ymn0R5gGBW5WHox3VlDJ7ikeKZ5bo+L6/BzZVVjeV5qb/XgIxLcYDAu
+ BrOZgtRDxQQEAA4PQCrFsQNq/ssUiNFZBBsoWh49Kutb44IWXAncR0WqqxfHUGzAt3IHgPLlaby
+ QbTg5wUrCDroa3KnGOI0uTbZ4piFBgBMSOCqteutoy3v22vfJc4w7x0w/e2v54fBXXBIP6T6Xm2
+ x+l6K46LGX/BWGojJlYqSvG09ZGoiXv1v5gsEGmuXhC7Q54s9XXllbNhplw==
+X-Received: by 2002:a05:6820:188b:b0:694:9720:65e0 with SMTP id
+ 006d021491bc7-69497206ca5mr10322794eaf.39.1777039246816; 
+ Fri, 24 Apr 2026 07:00:46 -0700 (PDT)
+X-Received: by 2002:a05:6820:188b:b0:694:9720:65e0 with SMTP id
+ 006d021491bc7-69497206ca5mr10322757eaf.39.1777039246262; 
+ Fri, 24 Apr 2026 07:00:46 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8e7d5fe98dcsm1998381285a.7.2026.04.24.07.00.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Apr 2026 07:00:45 -0700 (PDT)
+Date: Fri, 24 Apr 2026 10:00:43 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: Pranav Tyagi <prtyagi@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH v2] migration: Fix blocking in POSTCOPY_DEVICE during
+ package load
+Message-ID: <aet3izm2oNoPgdgO@x1.local>
+References: <20260423094438.43556-1-prtyagi@redhat.com>
+ <aetGyqrqEdz2dLnc@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] intel_iommu: widen impl.min_access_size to 8 to
- fix MMIO abort
-Content-Language: en-US
-To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, yi.l.liu@intel.com,
- clement.mathieu--drif@bull.com, zhenzhong.duan@intel.com
-References: <20260424201842.176953-1-junjie.cao@intel.com>
- <20260424201842.176953-2-junjie.cao@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260424201842.176953-2-junjie.cao@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aetGyqrqEdz2dLnc@fedora>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,85 +118,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/26 22:18, Junjie Cao wrote:
-> Raise .impl.min_access_size from 4 to 8 in vtd_mem_ops so the memory
-> subsystem always widens guest accesses to 8 bytes before calling the
-> handler.  This eliminates all 25 assert(size == 4) sites that crashed
-> QEMU on an 8-byte access to a 32-bit-only register.
-> 
-> With size always 8, the if/else branches for 64-bit register pairs
-> collapse.  A zero-extended 4-byte write to the low half is safe:
-> wmask protects read-only upper bits, and trigger functions re-read
-> the register file and guard on their action bits.
-> 
-> The entry bounds check is relaxed to `addr >= DMAR_REG_SIZE` since
-> the widened size no longer reflects the guest access width; the
-> framework guarantees addr stays within the MemoryRegion.  Default
-> branches fall back to vtd_get/set_long() when addr + 8 would exceed
-> the register file.
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-> ---
->   hw/i386/intel_iommu.c | 121 ++++++++----------------------------------
->   1 file changed, 23 insertions(+), 98 deletions(-)
-> 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index f395fa248c..4b25907778 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -3697,7 +3697,7 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
->   
->       trace_vtd_reg_read(addr, size);
->   
-> -    if (addr + size > DMAR_REG_SIZE) {
-> +    if (addr >= DMAR_REG_SIZE) {
->           error_report_once("%s: MMIO over range: addr=0x%" PRIx64
->                             " size=0x%x", __func__, addr, size);
->           return (uint64_t)-1;
-> @@ -3707,13 +3707,9 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
->       /* Root Table Address Register, 64-bit */
->       case DMAR_RTADDR_REG:
->           val = vtd_get_quad_raw(s, DMAR_RTADDR_REG);
-> -        if (size == 4) {
-> -            val = val & ((1ULL << 32) - 1);
-> -        }
->           break;
->   
->       case DMAR_RTADDR_REG_HI:
-> -        assert(size == 4);
->           val = vtd_get_quad_raw(s, DMAR_RTADDR_REG) >> 32;
->           break;
->   
-> @@ -3722,26 +3718,21 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
->           val = s->iq |
->                 (vtd_get_quad(s, DMAR_IQA_REG) &
->                 (VTD_IQA_QS | VTD_IQA_DW_MASK));
-> -        if (size == 4) {
-> -            val = val & ((1ULL << 32) - 1);
-> -        }
->           break;
->   
->       case DMAR_IQA_REG_HI:
-> -        assert(size == 4);
->           val = s->iq >> 32;
->           break;
->   
->       case DMAR_PEUADDR_REG:
-> -        assert(size == 4);
+On Fri, Apr 24, 2026 at 12:33:02PM +0200, Juraj Marcin wrote:
+> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
-Does this device support unaligned accesses? (I doubt). Otherwise
-aren't all these assert(size == 4) now g_assert_not_reached()?
+Thank you!  I queued it for 11.1.
 
-
-> @@ -4184,7 +4109,7 @@ static const MemoryRegionOps vtd_mem_ops = {
->       .write = vtd_mem_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
->       .impl = {
-> -        .min_access_size = 4,
-> +        .min_access_size = 8,
->           .max_access_size = 8,
->       },
->       .valid = {
+-- 
+Peter Xu
 
 
