@@ -4,128 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C2AFED3C5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 12:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D5D5FED3C3
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 12:53:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGG1X-00059w-4X; Fri, 24 Apr 2026 08:52:47 -0400
+	id 1wGG1Z-0005AN-RC; Fri, 24 Apr 2026 08:52:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wGG1T-00059R-Nv
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 08:52:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
+ id 1wGG1Y-00059x-Ck; Fri, 24 Apr 2026 08:52:48 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wGG1R-0006DC-8d
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 08:52:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777035160;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PvpqaD5pQprg8kQpCjG4/3zKp7IuXHWAAtigm1MC0zo=;
- b=ehDy0h4Vksul3dir3x5uVxSkwiZhoexqclgC7RihQntODytZMiWX1gvqYjubEN9B3em+7W
- L8pBGaAIYLvG7TmBOLZdxQXG4Tmw+Gq0UksxQX5XB8Y7NohOVp42SDZdeGmS4qUVDB2Pil
- Opa8TP7P7oW7DYK+LPu9AMQmPuurNlM=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-oyMPRGRlPWa8i05Wv8COTA-1; Fri, 24 Apr 2026 08:52:33 -0400
-X-MC-Unique: oyMPRGRlPWa8i05Wv8COTA-1
-X-Mimecast-MFC-AGG-ID: oyMPRGRlPWa8i05Wv8COTA_1777035153
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-7a45cf7ff24so125017847b3.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 05:52:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777035153; cv=none;
- d=google.com; s=arc-20240605;
- b=gA7d2ZhEulf1kMSUAljdBq14NjqbTVUGXOPO+xmqylJUUsqWePNZOL3ykYZ031yNVB
- MeiO7OjAZvtQcEO/lUXARM5HFRRxL1ec18JZ9a8xAB7QF68JLJdTGDqx6ClnPeZjfbIt
- VWVCe3ZHQndDTAJUmKWtaFLGDVIO0L+xeJGTPY+jypNwPQRwRND+bIjTAH7bXjzuWDq5
- xjSLPVb2yYtFWIQZrHDx1SOz3+mn4RYRw0DWiCVUcpdNYxp9plCC7gSSNDZcby9+WlGM
- cEdlK4dsS6qX8DS+GSMBwiX6Yoto8eMKJATMxGt5HwHl1SldNgiCXO3JutixBXLt4cy0
- kMQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=PvpqaD5pQprg8kQpCjG4/3zKp7IuXHWAAtigm1MC0zo=;
- fh=FokTuDZJP0b72MuyfYB6pDu1SUcEvdw8SifBRO2CIB0=;
- b=FCnwLczuFiF7Vxn+ito0HWsC7FDQFmH0j87+3q3Z+RUZY6bSYXYoF3/l2mFi8M/pSQ
- m5FN48xi7WcgbhWb/0EpT9E23LmTkjCCno7J6hbUaEwtIWHpRJ2g73mX42uOHhD6xjv3
- smob4aiABOp2yH1RNuOsLs8gUscaRZyNdivJd2dtx2dcSXS8FuCLF8ZB4BtFTJIdfQHM
- Im06S4uFx4iBNNhLxJ9+QJXnX3czPy+ZNT+j8emi+NkhXqxcrbXJiJC3X/lRfEfHZXHk
- g4jFif7a+9N6c1P3aiZ2c40TxALqxZ0SvT+kBlPJqiW3Cv241oZsogOIb6F8y6GQJa26
- zt9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777035153; x=1777639953; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=PvpqaD5pQprg8kQpCjG4/3zKp7IuXHWAAtigm1MC0zo=;
- b=sG9vNsXc5ZOS6HhUsJWxG8P0imwl9DTxDHUHtjCve8vwlBOjqJ65HQtbeJCOCm1YlR
- L2NLjWnx4YxyLAzt6sxMRo3x70Npx4+AFJ025XRZKf+rm6ertCM54gvKY59OQgu2g990
- Sdu67X1xgr3FP4CJxJM/TuTxYtCp37EAaoRfMpnXVEOtddZ+cLWyYp30Ev3pcN5EnFQZ
- a0/QXBFbxgdn/gQRa7LRqnrk7GSDlkN0a3JmifLK3zfD0sfdJXjePVcvmjMtG/qdowys
- ixigV3g6cSokOtWClg5OWcrjhS6MeAdzifbiESeI/dpIQ5hHEUaRDuRCJhEpYqx1rOro
- iuXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777035153; x=1777639953;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PvpqaD5pQprg8kQpCjG4/3zKp7IuXHWAAtigm1MC0zo=;
- b=gyVgUgGwOa9kwXpVmQ+2IYkjZ0WZduZTFYHT/nHOBZJOQMfpSs7gjytZQEKsK3ix10
- eEtcASlqhY+PgIvufodr4iHb7OCZQ0GrPT9W+CGDAMasbYJm1+vpLaMEOLGfG0KrTuJ3
- 5+ppMs0eImxdlZslYdKKaZF08jVgB1k28EbzIj+4H4wo3LFkptPxjb6ghFGNB4Hu3aAl
- xpb5vOoj9quomSUY2F7ku/wrEew6BCc4z54Rur9+uHuje5saCaNunXQ75/ErhIFmYVdV
- 3emcOFkk9JqOZd9IGw5f7nNZx6SyWp9Ll+pkvOHTZBxyVBWEEnHdFRUA2bm9TLGjZ7Zy
- gpRA==
-X-Gm-Message-State: AOJu0Yw6/s4AoD6836cMsRRkuGJvLumTDw9dT6JZYpBCFoB0nV3me24r
- IsUs2GlF24oIO7vusFjl7pjWTTA93wDJHv8vamMX1VGfQAeBm7BcIhnVa4+DGQqI/hlkZl+j/PL
- y6x7xBukNMEH9YxCPOMMyXgQCvuZUJtEmxUf9QPprQoVBbt/PpA1Zmv6zHXJf/LOrJR3oCaCW04
- HVIxG1QbGEeOy4NNCZ6K3pK59+ferA+AI=
-X-Gm-Gg: AeBDiev4ozOhimvGT/hppCDNRmoaOvA141v4pOUw/EFaruJwoiEej+6qRtYZb82yLR5
- QF4R/0gfXyXwiPxXCaX82yo4Rb7ujrYCH82i6RS7lPB8U1Hg5OQTJkeyv0CCg+cYlw465VkLOLd
- irdWQa+Pt5MaiRqcDLJbOtYQpMNYqeQfGCHIkinJ3XvB+CJtjiUQCqDU8nLW9zHpoSxA+VznWoG
- COssVECCbHKOn+y4SvtX4/GfeaccZQejRw/xpXwVg3437l9
-X-Received: by 2002:a05:690c:6612:b0:7ba:f712:95f6 with SMTP id
- 00721157ae682-7baf712b9abmr197749377b3.3.1777035153118; 
- Fri, 24 Apr 2026 05:52:33 -0700 (PDT)
-X-Received: by 2002:a05:690c:6612:b0:7ba:f712:95f6 with SMTP id
- 00721157ae682-7baf712b9abmr197748987b3.3.1777035152543; Fri, 24 Apr 2026
- 05:52:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rnorwitz@nvidia.com>)
+ id 1wGG1W-0006DR-4W; Fri, 24 Apr 2026 08:52:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sd7LaZYA45YHOZKZ1L4goqNnBzDujYcS+4bmAyWZc8X0dGvK+6DeRsbGvBU0xnQf9NUpvWgP6gx185ku2kGv91miQ5D0uMrIk3izlKhcskwoXovt2N3McKwnb2h26zJxQSHjEz0RIDvaLopxT63wmlL79IYBsxClT8nHPtJKtSHERejuAPdRcFxHGop5qbAFal9fJJZdmP95HyMSn1gFoPMMMaNJvE+T9/OXetX2chIc5XC4F52zePbAFa0l/uxwsrYY9G1Gr2AewGaRmvSd0zJMW9ToDO3ieHOzYFFSz4bZLaOx7G8JsMr9JXidH49vl+GPlwoBrn4O7V5/hrqmEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pgHNwDFTTI2ETqwH+CPYGnz7CmL3LV9JgX2aN2jjj1s=;
+ b=k4T6cF1nqwCD6FvOr4Htvu34fI6MS9a/GsfZe/FmZhXNzclMsKetoZRW7n3rmNYQqX1jRZ6giw3MdHmTzISQN4YRFjzR4B4kZ1+CVr0OPYxOggYvPMzEh5Q2szGjZHFro42iJ53uNcUQBPkwj/onhDmi6TrNcXPAfnSwxI0K9tpL8Uaj3uENGe9UqZ+yFsXZDxO5hbIXyllmzpOdDQCa3DATtVAdxh74743NJj1EA55kr37HMC61hDeLTf+ylWjyY/Z2dHFaslxwfvbrvvJoieGXSRqszC8CH5H/qlyPOy6rexEWZ34qlEDcXZyPBdh6R5XRLhJL7OU1WtxdSk2pSA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pgHNwDFTTI2ETqwH+CPYGnz7CmL3LV9JgX2aN2jjj1s=;
+ b=m69JvWd6gg97KXdl/jIHVtHSEnCxXsMda0S3M5xJxKSqbUjVRzSwTXqNP3pSpMFd4BcUjff04Mh1jNBViwygcu1XgsBToJrRu4dD+NV0PfYnQopeA4b4t+XeEAMqCls6AgGHr61KCEhYpEwYbWvmAR/Yy3E0zhevH1FrDKS9BtPdVd6u8d6qXBsfVW71I4V9iglCTJxHE2Msf/eiQRS4IPiTghhmboqOLm9FBVDDZ1y/7OMuDjPt18CIWH9KcrrgtQHvpC0mmCQHtP8MyCiJ2YHz2B2k282pWuWHlbgYyRmaslqDALTUn0TGfcQAc4AnnQo9n4AER7fDXgjkBQFrCQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from SN7PR12MB7226.namprd12.prod.outlook.com (2603:10b6:806:2a9::18)
+ by LVUPR12MB999136.namprd12.prod.outlook.com (2603:10b6:408:39e::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.12; Fri, 24 Apr
+ 2026 12:52:38 +0000
+Received: from SN7PR12MB7226.namprd12.prod.outlook.com
+ ([fe80::c07d:130a:7def:6807]) by SN7PR12MB7226.namprd12.prod.outlook.com
+ ([fe80::c07d:130a:7def:6807%5]) with mapi id 15.20.9846.021; Fri, 24 Apr 2026
+ 12:52:38 +0000
+Message-ID: <1c6af04b-9efd-4d07-ab5c-e6d616818c2c@nvidia.com>
+Date: Fri, 24 Apr 2026 08:52:35 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/5] vhost-user: add skip_drain param to GET_VRING_BASE
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>, virtio-fs@lists.linux.dev,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
+ <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
+ <613f140f-de27-4f83-8a02-5370833dd659@nvidia.com>
+ <965db8ae-b44a-4b29-b006-56e8474d52b5@yandex-team.ru>
+ <c9082536-6b4b-4e9a-a6ff-764dbbf649c9@nvidia.com>
+ <19b0aa2e-90dc-4467-acc8-adc0bec7c388@yandex-team.ru>
+Content-Language: en-US
+From: Raphael Norwitz <rnorwitz@nvidia.com>
+In-Reply-To: <19b0aa2e-90dc-4467-acc8-adc0bec7c388@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MN0P223CA0013.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:208:52b::15) To SN7PR12MB7226.namprd12.prod.outlook.com
+ (2603:10b6:806:2a9::18)
 MIME-Version: 1.0
-References: <20260423220022.2180059-1-jsnow@redhat.com>
- <87mrysr08h.fsf@pond.sub.org>
-In-Reply-To: <87mrysr08h.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 24 Apr 2026 08:52:21 -0400
-X-Gm-Features: AQROBzAue56kt90Qnr7z4lUjKCYxd5V-YJRR_92zjlz9j06kiCP3YVjHG6mGrYg
-Message-ID: <CAFn=p-ZNOYwSybMQDHnw9FF88_RDaRNhJkFjCT3AHKu496Ggeg@mail.gmail.com>
-Subject: Re: [PATCH 00/12] qapi: add formal "intro" section
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Igor Mammedov <imammedo@redhat.com>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000005e59e0650343d5f"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR12MB7226:EE_|LVUPR12MB999136:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4ec9adf7-3648-47fd-5763-08dea2005d26
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: X64ESUxXKkcSzgHoJIWrSfKKMkzo7TY81/P1967TVMl3s/w3jFnW1KiJOi3OWm0raMBKJiCohXQCjai7CqkflQ9bg5D9SJMX80Mdll1D/orKN+x9bmlc4hRn0mj+Oo2kYubSeukDNUUHOvRjh2x43iR0m81HGXxNHtYbe4EAEWCkfpoQ0EEB2JjaNiA53AATttIVcGD31agJ/82P1bbyLuKIrJQioP4mZQODwe9jE/IvjfjZs6fs1uomz1wNzb+Dv6mQ+pljoEPM4MuB+QxCIUGU0BVeKHueBfgMgc/oEjL49d8zPmVfAAGhWoasWnR9onVjL/DUnltqqdjH2IngYQ9WtAEzpX7LGoKIKvpfRkpfpsO6S3ZMpCje/6IkPb7cAL5FJuJS3ueFGUJJsn+wskUq8kdF2gkmZeyJspW38ghQKFmDUS/csVnnbq8Ckbw17+a0kWJ1y3B2hKUXZij08eaQO5k8cuG8hVKqbHknHrR4hC5TcPbSSgr2r9ySk3tCtuSKbELMlJPRfOVvqIKuj6Fbimcw8Xbxz8bsE8GL2M7Cujj4UmmXIZ7Y53jsJm6DEy9DbOSQEfODcyVwoj3xxiRNJNzFRXNvPb1uqbKldF69vn/+avfXFLRMGiiaN9Hme2VC/EKx4KrwbIU90PD43yvwOv/V9jgIvIFEMS6SCmyliPilBaJ723YqbssrAOwa7ETk04t9ZdtAsSIdGMg7RkVnlUKZgDZgfc+vPltrpp8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN7PR12MB7226.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MUprRDQxeWtxSFNkVmttOFFJUWNheXFDb1VEYUdNQkZObkRUd2hxSFl4RnNL?=
+ =?utf-8?B?cm1tODdEaFBkRXBxb3NNMDh6SVJycFpQOG40RkM2MHdhcmRKaTdueFdWbHlH?=
+ =?utf-8?B?RWhMS3EwTHpTRDUreUxUSlRhemgyaTJXNXphU0tRYlhkcmpCNUt6bFBUMER6?=
+ =?utf-8?B?Yk9Mb0ZTSVcwdDJwN1kxR3BWWDBGL3dXYVZ1MTVGOEE0a2EvZkxVNmFvbnhF?=
+ =?utf-8?B?OTduWkJVMG1IZW9vdDhBN0xQM3VYSHRaREF4OG1vN3lseGpMRDVJVmhxcnlQ?=
+ =?utf-8?B?MWcwUlFyYVRmanRGVkhWK24vTW1LSmRoSXNDWmRiSlFhZXA1N1lHY0c4QmJl?=
+ =?utf-8?B?RXZudC9sMmVWVDJlczgydkRsMnlFeHY3WDU2YVpuS0dYSWpON3RxcjRkSVU5?=
+ =?utf-8?B?SXluV3hTSDU1OWc4ZlVsbFJ3MlI3SjlJZW5LVmJwcFR1a0t1eFphcjV0QWpZ?=
+ =?utf-8?B?YjNKSlVmQ0xkeHBHaHhYWnFjQkpacHBFeFVmUHdNRW9Ddzk0TGs0N3Z3eUg5?=
+ =?utf-8?B?ZXdZcFh2STFpSG84Um44MnRXaTA2OUgyenl2a1FKcm5uUE1VQ2JKS2c3RG9J?=
+ =?utf-8?B?N1BBSThVbUpyTllmY3FOUFhsWkJGR3BHWGpwcWtGRWRUazF0em9lR1ZYMkhM?=
+ =?utf-8?B?M3c0RlhBZGo0cnJhVHR2ZUpVbTNIZFNLUFZ3aG9iNThjbmo3K1daOUg3MzQv?=
+ =?utf-8?B?a1dGSEZQVk9HQU55QXlXSk03dHh3VlJyZFMwSHB2ckszUUswZ2duTWcxem53?=
+ =?utf-8?B?US9Pc3JBOStHcHlmdXgyREhPckthelk1Zzcrdm55Z2taQjY2YVpJellTZ25C?=
+ =?utf-8?B?VExzOWpBWmxZMnZpbnhZMzNkc0hScWtDdDNsNEFDTm5mNWQwQXRjNGxxTTdk?=
+ =?utf-8?B?elduYkUvZ0EreUY5YWRyaXZuZ2J6L1R2MHZDUUM5dVFHaTIweXM1c0xvY09I?=
+ =?utf-8?B?V29WL3ZOaW4xNHdvcW8xdm1mYmYweXEzdHd2bTUyV3o2dXdEa0gxRXptaSth?=
+ =?utf-8?B?dFBJM25kZ1ZMQVRDWGZGQmg5cUZMb0RYdHdqazluNlBkT1V5bkd2azZWVlNG?=
+ =?utf-8?B?YUhKdmlxOFBOZFREWkwzWFEwUVltaEdkMkFYbGxsN0lVelBBRzRDSTVYKy9N?=
+ =?utf-8?B?SDZEMDRuUHdienE4dlRlbUF6dm9OSTVmZnh3VWs1VFc3ZVdKV1AwdWZzTEli?=
+ =?utf-8?B?dzFzbWh2Y3B5UlBRSnRrbE9ScmRwS0JHckRuUElmVU92aktNZDdsYzk1Q1dJ?=
+ =?utf-8?B?WjM3UFVBc0ZXbFJLaXBpeGNYQ3RCMUhRZmFMTUdwSnRFMC9rUW5FUEwvWFZO?=
+ =?utf-8?B?RzNlQW5xdUpIeGxENmFsSjFPTjlYbzdEdHhsOHR5WExiclF6TjNVbWhqNlo2?=
+ =?utf-8?B?dXVkdVB2Tm5jR3hTSVp0U2JsQ29ncncxUlI2aUgrSDFscmloZUFvcHNHZVJL?=
+ =?utf-8?B?K2owcG5GbndNTllWTVBkWllNMnc4UFhlUHB3RExmTVR5bEUveTNlZDlBcDc5?=
+ =?utf-8?B?UktRemFYRmFhYmhoQm1xaFd2NlV6VmNWTzJDT1NnbDJjY3pOT2U1M0h5Tno1?=
+ =?utf-8?B?WnIxUTJ3UUI0K0NXRHZUKzgyc2xvc2FhVGtadmM2L1pOWUZHdXh6ZmZ2cnRO?=
+ =?utf-8?B?NDhyS3R4c3ZkaXR2SC9NYklqZkFGcU1Nd3NKc3k2d2hTQWcxTDU4RGwwU0E2?=
+ =?utf-8?B?bWF3aTR3WUdxY2tIMm1heFN6NTZYNjkzNzdNVHlER1JQcUJ5TnhhNHdjU2d5?=
+ =?utf-8?B?MCtCUHo2WnNSaHdJZjhJWm5KaGI2VEFVVUNKU3plQXdKaElEVUV5RGRTUXlP?=
+ =?utf-8?B?RGNEeTJNRnpGZW5Fd1BURnd5eDZZR3hOd09JUHNlUklheWhkQktIbDlua3gx?=
+ =?utf-8?B?ZGxUVW85Nmlvd0JNZWN4ZzJNSVQyQ2N1WEI0MmhhcFJHcVF2VXhISDZBQlRV?=
+ =?utf-8?B?UFhUdnIwaU9OYUNLbzdwamZQQ0xWV3pTY2oyY2h0M1VlWDdqckhuMHhDY05J?=
+ =?utf-8?B?eVFjclcwK2lvN2hLb254bUd0Rm85RWg5OGhGM1hMUmhjVnJPdHpEVTJaWkNQ?=
+ =?utf-8?B?VTRFU1AyemFscFRwQll4QmVhMms3anlCdUd2NWFJdVo2TnBBY2RaWWVjZjVq?=
+ =?utf-8?B?c2ZZMWFSRHRjRjF1NGFoTzBWQUhaTFVoQ0ZONjZJMHZkcGhIZURVU1Ewb2cw?=
+ =?utf-8?B?WTZIcEx0elpkcWNTeCs4TTZzQzAzRm1URGZFRWxsZlZ5VUE2UnhxbjYxbkIv?=
+ =?utf-8?B?YXV0WTUzL250TWFYWXFpZzFWMEtHWStkOE5Telluak1VTjZpWW1yMGw3dVB6?=
+ =?utf-8?B?bm5JMDFmRXR2Q3RydmxrRmc2b2hGbW5EbkF0VVVKTTNWcTdEMjNzZz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4ec9adf7-3648-47fd-5763-08dea2005d26
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB7226.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2026 12:52:38.1673 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kK9J2bnHhu6wzX1YA+Vr0zaoTbjlzjqDTwcx3kkSVAMgbifxtIE2OQl4c5VeWCCuO9ENxsTThmKVMPYlO4Y7XQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LVUPR12MB999136
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+ envelope-from=rnorwitz@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,460 +163,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000005e59e0650343d5f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Apr 24, 2026, 8:50=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
- wrote:
-
-> John Snow <jsnow@redhat.com> writes:
->
-> > Hiya, this is a series that explores a potential syntax for a
-> > designated "Intro" section. Markus knows why I want this, but for
-> > everyone else: a designated "Introduction" section is useful for the
-> > desired "inliner" feature for the new QAPI doc system. Commits explain
-> > a bit more. This is prep work and doesn't really change anything
-> > tangibly except source code syntax for the QAPI docs.
->
-> Let me elaborate a bit.
->
-> 1. Why "intro"?
->
-> Generated documentation often refers to types like this:
->
->     Command announce-self (Since: 4.0)
->
->        Trigger generation of broadcast RARP frames to update network
->        switches.  This can be useful when network bonds fail-over the
->        active slave.
->
->        Arguments:
->           * The members of "AnnounceParameters".
->
->        Example::
->
->           -> { "execute": "announce-self",
->                "arguments": {
->                    "initial": 50, "max": 550, "rounds": 10, "step": 50,
->                    "interfaces": ["vn2", "vn3"], "id": "bob" } }
->           <- { "return": {} }
->
-> The arguments are hidden behind link "AnnounceParameters".  Following
-> leads to:
->
->     Object AnnounceParameters (Since: 4.0)
->
->        Parameters for self-announce timers
->
->        Members:
->           * initial ("int") -- Initial delay (in ms) before sending
->             the first GARP/RARP announcement
->
->           * max ("int") -- Maximum delay (in ms) between GARP/RARP
->             announcement packets
->
->           * rounds ("int") -- Number of self-announcement attempts
->
->           * step ("int") -- Delay increase (in ms) after each self-
->             announcement attempt
->
->           * interfaces ("[string]", *optional*) -- An optional list of
->             interface names, which restricts the announcement to the
->             listed interfaces.  (Since 4.1)
->
->           * id ("string", *optional*) -- A name to be used to identify
->             an instance of announce-timers and to allow it to modified
->             later.  Not for use as part of the migration parameters.
->             (Since 4.1)
->
-> This is bad UX.  Especially when you have to chase multiple links.
->
-> John's doc inliner inlines AnnounceParameters documentation into
-> announce-self documentation.
->
-> However, we don't want to inline "Parameters for self-announce timers".
->
-> Definitions typically start with a short description of the thing being
-> defined.  John calls this "intro".  We don't want to inline these.
->
-> Syntactically, a doc comment begins with optional plain paragraphs.
-> These end when something else begins: argument or member description,
-> tagged section such as "Returns:", ...
->
-> Most of the time, these initial paragraphs are exactly the "intro".  But
-> not always.
->
-> Even without the inliner, we often need to know where "intro" ends.  In
-> the example above, "Arguments:" is auto-generated right after the
-> "intro", and for that, the generator needs to know where "intro" ends.
->
-> In his "qapi: enforce section ordering" series, John proposed syntax to
-> explicitly end "intro": a line "Details:".  He had to add it to roughly
-> one in 25 definition docs.
->
-> I fear adding "Details:" when needed is easily forgotten when it's so
-> rarely needed.  And I don't even trust myself to catch it patch review.
-> So we looked for clearer syntax.
->
-> This series implements one: instead of letting intro end when something
-> else starts, use indentation like we do for descriptions and tagged
-> sections.
->
-> Let's have a look at the current doc source for announce-self:
->
->     ##
->     # @announce-self:
->     #
->     # Trigger generation of broadcast RARP frames to update network
->     # switches.  This can be useful when network bonds fail-over the
->     # active slave.
->     #
->     # TODO: This line is a hack to separate the example from the body
->     #
->     # .. qmp-example::
->     #
->     #     -> { "execute": "announce-self",
->     #          "arguments": {
->     #              "initial": 50, "max": 550, "rounds": 10, "step": 50,
->     #              "interfaces": ["vn2", "vn3"], "id": "bob" } }
->     #     <- { "return": {} }
->     #
->     # Since: 4.0
->     ##
->
-> "Intro" ends when something else starts, namely the TODO: section.  We
-> need this hack so the doc generator inserts the "Arguments:" part where
-> we want it.
->
-> John's "qapi: enforce section ordering" series replaces the TODO hack
-> with a "Details:" line.
->
-> In new syntax, this instead becomes:
->
->     ##
->     # @announce-self: Trigger generation of broadcast RARP frames to
->     #     update network switches.  This can be useful when network bonds
->     #     fail-over the active slave.
->     #
->     # .. qmp-example::
->     #
->     #     -> { "execute": "announce-self",
->     #          "arguments": {
->     #              "initial": 50, "max": 550, "rounds": 10, "step": 50,
->     #              "interfaces": ["vn2", "vn3"], "id": "bob" } }
->     #     <- { "return": {} }
->     #
->     # Since: 4.0
->     ##
->
-> Now "intro" is indented, and its end is obvious.  Mistakes seem
-> unlikely.
->
-> We could instead do:
->
->     ##
->     # @announce-self:
->     #     Trigger generation of broadcast RARP frames to update network
->     #     switches.  This can be useful when network bonds fail-over the
->     #     active slave.
->     #
->     # .. qmp-example::
->     #
->     #     -> { "execute": "announce-self",
->     #          "arguments": {
->     #              "initial": 50, "max": 550, "rounds": 10, "step": 50,
->     #              "interfaces": ["vn2", "vn3"], "id": "bob" } }
->     #     <- { "return": {} }
->     #
->     # Since: 4.0
->     ##
->
-> I think I like this a bit better.
->
-> > It is designed so that this conversion can happen incrementally with
-> > no actual difference to the rendered manuals, so each QAPI module can
-> > be converted one at a time for easier review and merging in an
-> > arbitrary order.
->
-> Why not wholesale conversion?  As long as generated output stays the
-> same.  It does in this series, except for harmless line breaks.
->
-
-When we last spoke, we weren't convinced this was the right approach and we
-both wanted to see it. So I did enough to get a taste.
 
 
-> > This series demonstrates conversion of just four modules; if I'm given
-> > a thumbs up, I will convert the rest of QAPI, one module (or
-> > maintainer stanza) per patch like how I handled adding
-> > cross-references.
->
->
+On 4/24/26 4:57 AM, Alexandr Moshkov wrote:
+> Thanks for reply!
+> 
+> On 4/23/26 19:15, Raphael Norwitz wrote:
+>>
+>>
+>> On 4/16/26 5:26 AM, Alexandr Moshkov wrote:
+>>> Greetings! Thanks for reply!
+>>>
+>>>
+>>> On 4/15/26 20:21, Raphael Norwitz wrote:
+>>>> I’m not sure I like using the num field in vhost_vring_state to set 
+>>>> magic values which affect protocol behavior for GET_VRING_BASE. It 
+>>>> feels like a hack to me. I would think the proper solution if we 
+>>>> want to support migration from new to old would be to have new use a 
+>>>> different new message entirely. Can we do that?
+>>>
+>>> I think we can, but I thought at first that this will be almost a 
+>>> complete copy of GET_VRING_BASE message, with the exception of 
+>>> waiting for drain of requests, so I choose to expand existing message.
+>>>
+>>
+>> I think a new message would be cleaner. Anyone else have thoughts?
+>>
+>>> If this is not an appropriate approach, is it better to make a new 
+>>> message like GET_VRING_BASE or a separate message used together with 
+>>> default GET_VRING_BASE message (for example, message for setting some 
+>>> kind of status on the server)? What should I name this new message?
+>>>
+>>
+>> Maybe GET_VRING_BASE_SKIP_DRAIN? How would a separate message used 
+>> together with default GET_VRING_BASE message work? 
+> 
+> I was thinking about a message something like SET_VRING_ENABLE - for 
+> example SET_SKIP_DRAIN_ENABLE, that would enable/disable some state 
+> (skip_drain) in the backend.
 
---00000000000005e59e0650343d5f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I'd need to see the flow in more detail but sounds promising.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Apr 24, 2026, 8:50=E2=80=
-=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
-hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">John Snow &l=
-t;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Hiya, this is a series that explores a potential syntax for a<br>
-&gt; designated &quot;Intro&quot; section. Markus knows why I want this, bu=
-t for<br>
-&gt; everyone else: a designated &quot;Introduction&quot; section is useful=
- for the<br>
-&gt; desired &quot;inliner&quot; feature for the new QAPI doc system. Commi=
-ts explain<br>
-&gt; a bit more. This is prep work and doesn&#39;t really change anything<b=
-r>
-&gt; tangibly except source code syntax for the QAPI docs.<br>
-<br>
-Let me elaborate a bit.<br>
-<br>
-1. Why &quot;intro&quot;?<br>
-<br>
-Generated documentation often refers to types like this:<br>
-<br>
-=C2=A0 =C2=A0 Command announce-self (Since: 4.0)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0Trigger generation of broadcast RARP frames to u=
-pdate network<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0switches.=C2=A0 This can be useful when network =
-bonds fail-over the<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0active slave.<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0Arguments:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * The members of &quot;AnnounceParameter=
-s&quot;.<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0Example::<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -&gt; { &quot;execute&quot;: &quot;annou=
-nce-self&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;arguments&quot=
-;: {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;=
-initial&quot;: 50, &quot;max&quot;: 550, &quot;rounds&quot;: 10, &quot;step=
-&quot;: 50,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;=
-interfaces&quot;: [&quot;vn2&quot;, &quot;vn3&quot;], &quot;id&quot;: &quot=
-;bob&quot; } }<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;- { &quot;return&quot;: {} }<br>
-<br>
-The arguments are hidden behind link &quot;AnnounceParameters&quot;.=C2=A0 =
-Following<br>
-leads to:<br>
-<br>
-=C2=A0 =C2=A0 Object AnnounceParameters (Since: 4.0)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0Parameters for self-announce timers<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0Members:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * initial (&quot;int&quot;) -- Initial d=
-elay (in ms) before sending<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 the first GARP/RARP announcement<=
-br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * max (&quot;int&quot;) -- Maximum delay=
- (in ms) between GARP/RARP<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 announcement packets<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * rounds (&quot;int&quot;) -- Number of =
-self-announcement attempts<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * step (&quot;int&quot;) -- Delay increa=
-se (in ms) after each self-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 announcement attempt<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * interfaces (&quot;[string]&quot;, *opt=
-ional*) -- An optional list of<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 interface names, which restricts =
-the announcement to the<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 listed interfaces.=C2=A0 (Since 4=
-.1)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * id (&quot;string&quot;, *optional*) --=
- A name to be used to identify<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 an instance of announce-timers an=
-d to allow it to modified<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 later.=C2=A0 Not for use as part =
-of the migration parameters.<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (Since 4.1)<br>
-<br>
-This is bad UX.=C2=A0 Especially when you have to chase multiple links.<br>
-<br>
-John&#39;s doc inliner inlines AnnounceParameters documentation into<br>
-announce-self documentation.<br>
-<br>
-However, we don&#39;t want to inline &quot;Parameters for self-announce tim=
-ers&quot;.<br>
-<br>
-Definitions typically start with a short description of the thing being<br>
-defined.=C2=A0 John calls this &quot;intro&quot;.=C2=A0 We don&#39;t want t=
-o inline these.<br>
-<br>
-Syntactically, a doc comment begins with optional plain paragraphs.<br>
-These end when something else begins: argument or member description,<br>
-tagged section such as &quot;Returns:&quot;, ...<br>
-<br>
-Most of the time, these initial paragraphs are exactly the &quot;intro&quot=
-;.=C2=A0 But<br>
-not always.<br>
-<br>
-Even without the inliner, we often need to know where &quot;intro&quot; end=
-s.=C2=A0 In<br>
-the example above, &quot;Arguments:&quot; is auto-generated right after the=
-<br>
-&quot;intro&quot;, and for that, the generator needs to know where &quot;in=
-tro&quot; ends.<br>
-<br>
-In his &quot;qapi: enforce section ordering&quot; series, John proposed syn=
-tax to<br>
-explicitly end &quot;intro&quot;: a line &quot;Details:&quot;.=C2=A0 He had=
- to add it to roughly<br>
-one in 25 definition docs.<br>
-<br>
-I fear adding &quot;Details:&quot; when needed is easily forgotten when it&=
-#39;s so<br>
-rarely needed.=C2=A0 And I don&#39;t even trust myself to catch it patch re=
-view.<br>
-So we looked for clearer syntax.<br>
-<br>
-This series implements one: instead of letting intro end when something<br>
-else starts, use indentation like we do for descriptions and tagged<br>
-sections.<br>
-<br>
-Let&#39;s have a look at the current doc source for announce-self:<br>
-<br>
-=C2=A0 =C2=A0 ##<br>
-=C2=A0 =C2=A0 # @announce-self:<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Trigger generation of broadcast RARP frames to update netwo=
-rk<br>
-=C2=A0 =C2=A0 # switches.=C2=A0 This can be useful when network bonds fail-=
-over the<br>
-=C2=A0 =C2=A0 # active slave.<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # TODO: This line is a hack to separate the example from the =
-body<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # .. qmp-example::<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0-&gt; { &quot;execute&quot;: &quot;annou=
-nce-self&quot;,<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;arguments&quot;: {<=
-br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;initi=
-al&quot;: 50, &quot;max&quot;: 550, &quot;rounds&quot;: 10, &quot;step&quot=
-;: 50,<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;inter=
-faces&quot;: [&quot;vn2&quot;, &quot;vn3&quot;], &quot;id&quot;: &quot;bob&=
-quot; } }<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0&lt;- { &quot;return&quot;: {} }<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Since: 4.0<br>
-=C2=A0 =C2=A0 ##<br>
-<br>
-&quot;Intro&quot; ends when something else starts, namely the TODO: section=
-.=C2=A0 We<br>
-need this hack so the doc generator inserts the &quot;Arguments:&quot; part=
- where<br>
-we want it.<br>
-<br>
-John&#39;s &quot;qapi: enforce section ordering&quot; series replaces the T=
-ODO hack<br>
-with a &quot;Details:&quot; line.<br>
-<br>
-In new syntax, this instead becomes:<br>
-<br>
-=C2=A0 =C2=A0 ##<br>
-=C2=A0 =C2=A0 # @announce-self: Trigger generation of broadcast RARP frames=
- to<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0update network switches.=C2=A0 This can =
-be useful when network bonds<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0fail-over the active slave.<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # .. qmp-example::<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0-&gt; { &quot;execute&quot;: &quot;annou=
-nce-self&quot;,<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;arguments&quot;: {<=
-br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;initi=
-al&quot;: 50, &quot;max&quot;: 550, &quot;rounds&quot;: 10, &quot;step&quot=
-;: 50,<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;inter=
-faces&quot;: [&quot;vn2&quot;, &quot;vn3&quot;], &quot;id&quot;: &quot;bob&=
-quot; } }<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0&lt;- { &quot;return&quot;: {} }<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Since: 4.0<br>
-=C2=A0 =C2=A0 ##<br>
-<br>
-Now &quot;intro&quot; is indented, and its end is obvious.=C2=A0 Mistakes s=
-eem<br>
-unlikely.<br>
-<br>
-We could instead do:<br>
-<br>
-=C2=A0 =C2=A0 ##<br>
-=C2=A0 =C2=A0 # @announce-self:<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0Trigger generation of broadcast RARP fra=
-mes to update network<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0switches.=C2=A0 This can be useful when =
-network bonds fail-over the<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0active slave.<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # .. qmp-example::<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0-&gt; { &quot;execute&quot;: &quot;annou=
-nce-self&quot;,<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;arguments&quot;: {<=
-br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;initi=
-al&quot;: 50, &quot;max&quot;: 550, &quot;rounds&quot;: 10, &quot;step&quot=
-;: 50,<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;inter=
-faces&quot;: [&quot;vn2&quot;, &quot;vn3&quot;], &quot;id&quot;: &quot;bob&=
-quot; } }<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0&lt;- { &quot;return&quot;: {} }<br>
-=C2=A0 =C2=A0 #<br>
-=C2=A0 =C2=A0 # Since: 4.0<br>
-=C2=A0 =C2=A0 ##<br>
-<br>
-I think I like this a bit better.<br>
-<br>
-&gt; It is designed so that this conversion can happen incrementally with<b=
-r>
-&gt; no actual difference to the rendered manuals, so each QAPI module can<=
-br>
-&gt; be converted one at a time for easier review and merging in an<br>
-&gt; arbitrary order.<br>
-<br>
-Why not wholesale conversion?=C2=A0 As long as generated output stays the<b=
-r>
-same.=C2=A0 It does in this series, except for harmless line breaks.<br></b=
-lockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">When we=
- last spoke, we weren&#39;t convinced this was the right approach and we bo=
-th wanted to see it. So I did enough to get a taste.</div><div dir=3D"auto"=
-><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_containe=
-r"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
-:1px #ccc solid;padding-left:1ex">
-<br>
-&gt; This series demonstrates conversion of just four modules; if I&#39;m g=
-iven<br>
-&gt; a thumbs up, I will convert the rest of QAPI, one module (or<br>
-&gt; maintainer stanza) per patch like how I handled adding<br>
-&gt; cross-references.<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000005e59e0650343d5f--
+> 
+>>
+>>> I also fix other comments, thanks!
+>>>
+>>>>
+>>>> On 3/30/26 11:52 AM, Alexandr Moshkov wrote:
+>>>>> In case of migration of QEMU from the new version (where the
+>>>>> inllight-migration parameter is present), to the old one (where it is
+>>>>
+>>>> nit: spelling inllight-migration
+>>>>
+>>>>> absent) there is no way to disable this feature on the backend during
+>>>>> runtime.
+>>>>>
+>>>>> This commit slightly changes the semantics of the protocol feature
+>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+>>>>> adds a new parameter for GET_VRING_BASE, which allows to control the
+>>>>> drain in-flight requests on the backend.
+>>>>> Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
+>>>>> on anytime.
+>>>>>
+>>>>> In vhost-user-blk use inflight_migration param to enable skip_drain to
+>>>>> suspend in-flight I/O requests, and then migrate them throught 
+>>>>> inflight
+>>>>> subsection.
+>>>>>
+>>>>> Also now QEMU will always try to setup
+>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
+>>>>> backend. This will allow to use skip_drain parameter on GET_VRING_BASE
+>>>>> message.
+>>>>>
+>>>>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>>>>> ---
+>>>>>   docs/interop/vhost-user.rst    |  6 ++----
+>>>>>   hw/block/vhost-user-blk.c      | 30 ++++++++++++++++++++++++------
+>>>>>   hw/virtio/vhost-user.c         |  3 +--
+>>>>>   hw/virtio/vhost.c              |  1 +
+>>>>>   include/hw/virtio/vhost-user.h |  1 -
+>>>>>   5 files changed, 28 insertions(+), 13 deletions(-)
+>>>>>
+>>>>> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>>>>> index bfa75ff9a3..63efc87264 100644
+>>>>> --- a/docs/interop/vhost-user.rst
+>>>>> +++ b/docs/interop/vhost-user.rst
+>>>>> @@ -1255,14 +1255,12 @@ Front-end message types
+>>>>>     *suspended*, see :ref:`Suspended device state
+>>>>>     <suspended_device_state>`.
+>>>>>   -  The request payload's *num* field is currently reserved and 
+>>>>> must be
+>>>>> -  set to 0.
+>>>>> -
+>>>>>     By default, the back-end must complete all inflight I/O 
+>>>>> requests for the
+>>>>>     specified vring before stopping it.
+>>>>>       If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` 
+>>>>> protocol
+>>>>> -  feature has been negotiated, the back-end may suspend in-flight I/O
+>>>>> +  feature has been negotiated, using request payload's *num* field,
+>>>>> +  when *num* is set to 1, QEMU can tell the back-end to suspend 
+>>>>> in- flight I/O
+>>>>>     requests and record them as described in :ref:`Inflight I/O 
+>>>>> tracking
+>>>>>     <inflight_io_tracking>` instead of completing them before 
+>>>>> stopping the vring.
+>>>>>     How to suspend an in-flight request depends on the 
+>>>>> implementation of the back-end
+>>>>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+>>>>> index a3ecd83f54..522e9d34b5 100644
+>>>>> --- a/hw/block/vhost-user-blk.c
+>>>>> +++ b/hw/block/vhost-user-blk.c
+>>>>> @@ -134,10 +134,7 @@ static bool 
+>>>>> vhost_user_blk_inflight_needed(void *opaque)
+>>>>>   {
+>>>>>       struct VHostUserBlk *s = opaque;
+>>>>>   -    bool inflight_migration = virtio_has_feature(s- 
+>>>>> >dev.protocol_features,
+>>>>> - VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>>>> -
+>>>>> -    return inflight_migration;
+>>>>> +    return s->inflight_migration;
+>>>>>   }
+>>>>>     @@ -232,11 +229,14 @@ static int 
+>>>>> vhost_user_blk_stop(VirtIODevice *vdev)
+>>>>>           return 0;
+>>>>>       }
+>>>>>   +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
+>>>>
+>>>> nit: declarations on top
+>>>>
+>>>>> + runstate_check(RUN_STATE_FINISH_MIGRATE);
+>>>>> +
+>>>>>       force_stop = s->skip_get_vring_base_on_force_shutdown &&
+>>>>>                    qemu_force_shutdown_requested();
+>>>>>         ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+>>>>> -                       vhost_dev_stop(&s->dev, vdev, true, false);
+>>>>> +                       vhost_dev_stop(&s->dev, vdev, true, 
+>>>>> skip_drain);
+>>>>>         if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, 
+>>>>> false) < 0) {
+>>>>>           error_report("vhost guest notifier cleanup failed: %d", 
+>>>>> ret);
+>>>>> @@ -364,7 +364,6 @@ static int vhost_user_blk_connect(DeviceState 
+>>>>> *dev, Error **errp)
+>>>>>       vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+>>>>>         s->vhost_user.supports_config = true;
+>>>>> -    s->vhost_user.supports_inflight_migration = s- 
+>>>>> >inflight_migration;
+>>>>>       ret = vhost_dev_init(&s->dev, &s->vhost_user, 
+>>>>> VHOST_BACKEND_TYPE_USER, 0,
+>>>>>                            errp);
+>>>>>       if (ret < 0) {
+>>>>> @@ -580,10 +579,29 @@ static struct vhost_dev 
+>>>>> *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+>>>>>       return &s->dev;
+>>>>>   }
+>>>>>   +static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
+>>>>> +{
+>>>>> +    VHostUserBlk *s = VHOST_USER_BLK(opaque);
+>>>>> +
+>>>>> +    bool inflight_migration_enabled = virtio_has_feature(
+>>>>> +        s->dev.protocol_features,
+>>>>> +        VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>>>> +    if (vhost_user_blk_inflight_needed(s) && ! 
+>>>>> inflight_migration_enabled) {
+>>>>> +        error_setg(errp, "can't migrate vhost-user-blk device: "
+>>>>> +                         "backend doesn't support "
+>>>>> + "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
+>>>>> +                         "protocol feature");
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +
+>>>>> +    return true;
+>>>>> +}
+>>>>> +
+>>>>>   static const VMStateDescription vmstate_vhost_user_blk_inflight = {
+>>>>>       .name = "vhost-user-blk/inflight",
+>>>>>       .version_id = 1,
+>>>>>       .needed = vhost_user_blk_inflight_needed,
+>>>>> +    .pre_save_errp = vhost_user_blk_pre_save,
+>>>>>       .fields = (const VMStateField[]) {
+>>>>>           VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+>>>>>           VMSTATE_END_OF_LIST()
+>>>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>>>>> index bb8f8eab77..ed95ec7523 100644
+>>>>> --- a/hw/virtio/vhost-user.c
+>>>>> +++ b/hw/virtio/vhost-user.c
+>>>>> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct 
+>>>>> vhost_dev *dev, void *opaque,
+>>>>>               }
+>>>>>           }
+>>>>>   -        if (!u->user->supports_inflight_migration ||
+>>>>> -            !virtio_has_feature(protocol_features,
+>>>>> +        if (!virtio_has_feature(protocol_features,
+>>>>> VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+>>>>>               protocol_features &= ~(1ULL <<
+>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>>>> index ac4d6fca73..54e4ce2660 100644
+>>>>> --- a/hw/virtio/vhost.c
+>>>>> +++ b/hw/virtio/vhost.c
+>>>>> @@ -1398,6 +1398,7 @@ static int do_vhost_virtqueue_stop(struct 
+>>>>> vhost_dev *dev,
+>>>>>       int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, 
+>>>>> idx);
+>>>>>       struct vhost_vring_state state = {
+>>>>>           .index = vhost_vq_index,
+>>>>> +        .num = skip_drain,
+>>>>>       };
+>>>>>       int r = 0;
+>>>>>   diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/ 
+>>>>> vhost-user.h
+>>>>> index 53fe996686..c95bad5ddc 100644
+>>>>> --- a/include/hw/virtio/vhost-user.h
+>>>>> +++ b/include/hw/virtio/vhost-user.h
+>>>>> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
+>>>>>       GPtrArray *notifiers;
+>>>>>       int memory_slots;
+>>>>>       bool supports_config;
+>>>>> -    bool supports_inflight_migration;
+>>>>>   } VhostUserState;
+>>>>>     /**
+>>>>
+>>
 
 
