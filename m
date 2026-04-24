@@ -4,90 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2912CFF8850
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 22:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E538FF8850
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 22:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGOn7-0007to-2T; Fri, 24 Apr 2026 18:14:29 -0400
+	id 1wGP0y-0001gG-2C; Fri, 24 Apr 2026 18:28:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGOn5-0007tM-N8
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 18:14:27 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wGP0w-0001ft-2J
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 18:28:46 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGOn3-0005Bv-Rg
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 18:14:27 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2b7d3ecc10dso6235665ad.2
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 15:14:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777068864; x=1777673664; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1Gc5Zw+6rfjDygI1bc1DkZM/p7nsmTSlETdiH9XVpOM=;
- b=KGM+JpzmRCFqnrptALwvt05QrcXA4ecvuc+2p2xEXCvIYWaedA5oCdokggUL9p/Rgv
- XX8Na/0TO0hxZLuAznqdr8Hl+jgEO4YkMgKGxgslehmF6Ahc+Yccz4VSvb5OmAiZfkHf
- tdU2PNHUE/PuuU7oge/nu/OK66l467MO/8mvz7l8Kl46KYRLXxAxL7F791ubVy0keWRe
- puc17Y/Ewq7+rcr2wWtsg73N1kng7RDGgMv7fxVDkYH+A2fK7tGOLkDJt6S9SHoavaKo
- qBKFN/JnfunnsTQNok3yZx2HFoxiHQGkOV0hLWXlOEddElXZxXwIaLxqFUoVw30yWXnD
- iCyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777068864; x=1777673664;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1Gc5Zw+6rfjDygI1bc1DkZM/p7nsmTSlETdiH9XVpOM=;
- b=caeIXzyk5whqzyKPLOpywGzLOciIDDn7LZCpgp7TJT9bhrvyaPYJA4J0mik+V+YCTS
- RLCFZBFCNbARNLLnvVGnNMb/jcI57sZI9I+UTt4Rs+DZCn3Ud2rQFFAhBfFVBFhUywgd
- raxJAXdE0k0reSTp9RVyux+BiEaOnLbEa2RvIVFwPRbd8SPauA5FYEzsB26fRNfDlBvJ
- S5XB249qecV9EU6TU7NgPLdXDflseJbh17O4odpBhA5HNJusQ1scHJ2JdPyDI5zUGp8s
- f6W/NkPoU33QWkfP1wtKzLegGOYhh6PKvt7Wf7eqdzG2/JriOkpePGVCyZji2q4XePG4
- l/1g==
-X-Gm-Message-State: AOJu0YwctBBK1TA73r4fFx2R6GunSQFamZXD27AY4y3Hwc6PeYcWpaqS
- b9MFiHkts8ZY0UIF13Szgeb2QzezT4IF9rLy9zYZMrvEENV2duApjfeUNB3GsQFmeomPuCe5kdD
- paHeM0sc=
-X-Gm-Gg: AeBDiesrjLRoR4MQlFhG330yZRQqcUyCljzOYt51l44Jd1hfhpZgDF81F6hOtmXeYYB
- NW8LxFEBQYN86e4+KzHL7rp5SfH9nMZ7QrM5JwXTOkt7foKA6A2Vey1MMyz4UYuXbiW4wSfxfH8
- /2KQjCtFpTN9LUqrVzzbcYyyibm6gck1OiOcrcIFaAFT1PqxpUASZDcIXjubn3Lc6IylufRq3b2
- dkPpZT5kMTirJCMlTD65i94aAVxF78zFIgJkR+T6MQGrgo0Kn1yDGgwkwIHUHlv7V/maG8m1g7n
- 2Hc8FEvCzLDkN6wy9t/UqZQQ+PGTUba+Vj0nXhLfp5pO5r7naacNPaIIm7rhWnHH2x5eqI5DUy2
- ePso5vW5K6tXypfO0/DbIrd8n6jD8QjGYZ0mpvtyCs+YSNTuSYW4GOZ+q75Yd1qLM8+6fXOd5Sq
- tn4XjnEbwLueiVTJNayehPFcx3r1H75i42iO8N8Dr2BCiWiNOx6SiN3Wydz/NWqns=
-X-Received: by 2002:a17:903:2283:b0:2b0:54dc:63e with SMTP id
- d9443c01a7336-2b5f9fadcd4mr369265105ad.33.1777068863715; 
- Fri, 24 Apr 2026 15:14:23 -0700 (PDT)
-Received: from [192.168.10.140] ([180.233.125.15])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fa9ff39csm239650435ad.4.2026.04.24.15.14.21
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Apr 2026 15:14:22 -0700 (PDT)
-Message-ID: <3def1014-3eba-4778-8be7-cfb473a536d0@linaro.org>
-Date: Sat, 25 Apr 2026 08:14:18 +1000
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wGP0u-0008PA-Ck
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 18:28:45 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 62DDB5BD7A;
+ Fri, 24 Apr 2026 22:28:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777069721; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y2GKZgVTjuPGuWJRSTRyiniZD959Bff0LMg4PSsbrCc=;
+ b=SD7RuVaJcCnfaXUDndV20EVEHvIHAzEfcFxCPsCHjzkSAgQyiN3lE+kKQu+SgEEzrJLTax
+ K+cRpVy38Xj35fHpnMgIpTXIej2yWLGbUi0HWfB63Ev/5skoDrY9LECyxbuL5dybN8cR5P
+ c3HrsVYA3h4yx7RW5RXI/koSz7oqSMI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777069721;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y2GKZgVTjuPGuWJRSTRyiniZD959Bff0LMg4PSsbrCc=;
+ b=+4U4DYhIx7BMQHeGSm4azHDx+R0EOfUsJqqvYuDnsAkE/1EV8wyzZuxh5dd1fh3hNUfigF
+ jneqq4ejXK6A90Bg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SD7RuVaJ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=+4U4DYhI
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777069721; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y2GKZgVTjuPGuWJRSTRyiniZD959Bff0LMg4PSsbrCc=;
+ b=SD7RuVaJcCnfaXUDndV20EVEHvIHAzEfcFxCPsCHjzkSAgQyiN3lE+kKQu+SgEEzrJLTax
+ K+cRpVy38Xj35fHpnMgIpTXIej2yWLGbUi0HWfB63Ev/5skoDrY9LECyxbuL5dybN8cR5P
+ c3HrsVYA3h4yx7RW5RXI/koSz7oqSMI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777069721;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y2GKZgVTjuPGuWJRSTRyiniZD959Bff0LMg4PSsbrCc=;
+ b=+4U4DYhIx7BMQHeGSm4azHDx+R0EOfUsJqqvYuDnsAkE/1EV8wyzZuxh5dd1fh3hNUfigF
+ jneqq4ejXK6A90Bg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 00D87593A4;
+ Fri, 24 Apr 2026 22:28:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id o9efMJju62mnQwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 24 Apr 2026 22:28:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Peter Maydell
+ <peter.maydell@linaro.org>, Elisey Konstantinov
+ <elisey.konstantinov@gmail.com>
+Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, philmd@linaro.org
+Subject: Re: [PATCH] build: prefer sigaltstack over ucontext on Linux
+In-Reply-To: <a4fd79f8-43fa-4894-80d3-ed31ffec1ff6@ilande.co.uk>
+References: <616E96C0-F0A5-4A9E-A63B-3BC1B5F18094@gmail.com>
+ <aeswZxFn0zMj-3jb@redhat.com>
+ <06C2CFB8-BA33-46D6-9F84-B1F81A2A319E@gmail.com>
+ <aes4kEdQ_x8eI-m6@redhat.com>
+ <4FFF1823-815E-4956-9C80-9C62A98033B0@gmail.com>
+ <CAFEAcA_gX4N6YrhQBTi-YDvkafJXWEkkDU8Y9vz5nYce9OrHwQ@mail.gmail.com>
+ <a4fd79f8-43fa-4894-80d3-ed31ffec1ff6@ilande.co.uk>
+Date: Fri, 24 Apr 2026 19:28:38 -0300
+Message-ID: <87a4usdmcp.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] linux-user: Use int64_t in target__kernel_sock_timeval
-To: qemu-devel@nongnu.org
-References: <20260424091024.23495-1-deller@kernel.org>
- <20260424091024.23495-2-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260424091024.23495-2-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_TO(0.00)[ilande.co.uk,linaro.org,gmail.com];
+ ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ TAGGED_RCPT(0.00)[]; RCPT_COUNT_SEVEN(0.00)[8];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 62DDB5BD7A
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,35 +135,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/26 19:08, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
-> 
-> The Linux kernel uses the __s64 type for the tv_sec and tv_usec members of
-> target__kernel_sock_timeval, so prefer the native type here as well.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   linux-user/syscall_defs.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-> index 6967306be4..138ce6abb1 100644
-> --- a/linux-user/syscall_defs.h
-> +++ b/linux-user/syscall_defs.h
-> @@ -238,8 +238,8 @@ struct target_timeval {
->   };
->   
->   struct target__kernel_sock_timeval {
-> -    abi_llong tv_sec;
-> -    abi_llong tv_usec;
-> +    int64_t tv_sec;
-> +    int64_t tv_usec;
->   };
->   #endif
->   
+Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> writes:
 
-Nack. This has target alignment implications.
+> On 24/04/2026 12:51, Peter Maydell wrote:
+>
+>> The "New World" and "Old World" machines are listed in our
+>> MAINTAINERS file as "Odd Fixes", which means:
+>> 
+>> "It has a maintainer but they don't have time to do
+>>   much other than throw the odd patch in."
+>> 
+>> In other words, there is no active development work ongoing,
+>> and nobody with time and interest to investigate complex bugs.
+>> If it happens to work for people, that's great. If it doesn't
+>> work and somebody proposes a patch then we can review the patch
+>> (as we have done for this one). If it doesn't work and nobody
+>> proposes a satisfactory patch then it will likely remain broken.
+>
+> I'm around to do various small bits and pieces, but at least for the short term it's 
+> fairly hard to find the extended time that bugs like these require.
+>
+> Note that MacOS X before 10.2 (including MacOS 9) appear to be timing sensitive to 
+> the CUDA interrupts, so that might be another explanation. You could try 
+> experimenting with increasing the delay at 
+> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/misc/macio/cuda.c?ref_type=heads#L537 
+> to see if that helps?
+>
 
+Hi, just to let you all know I cannot reproduce this.
 
-r~
+MacOS X boots past the initial screen, the installer comes up and
+clicking around works fine. With both QEMU 10.0.0 and current master.
 
