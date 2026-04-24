@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7653CFED3EA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 15:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60833FED3E6
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 15:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGIgl-0003PA-38; Fri, 24 Apr 2026 11:43:31 -0400
+	id 1wGIgl-0003Rl-TC; Fri, 24 Apr 2026 11:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wGIgB-0002wg-5W
+ id 1wGIgB-0002wO-3i
  for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:42:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wGIg8-0007Uc-7y
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:42:54 -0400
+ id 1wGIg8-0007Tl-3O
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:42:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777045368;
+ s=mimecast20190719; t=1777045366;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MndI2TDLfJqvtsbee96/8Sl0n8ieTPjrzvQ8vfGF7Jw=;
- b=J22GGX/zIjVaKrtOfiy/IusfvtQSAcrSOyEZJ3zHAAYQ/cTT7rDFFdqVC/OPQbHjSnpnuc
- +YYoFhZmxKvh0LwhrQ6sAC6dBae/4vv3QwS4mDhEdqJ1xttwQf8HfNfHaRpLK1zf+pGlCu
- cUsOhjCxpDMAg3D5mu0Gj8jFpqNgMOU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TnH+MmJX3hZzpsoLX7l/ftgC8C5/EcD7vZd3k6VlQWU=;
+ b=XUI9bJJfw8MTBkZUjxW0Nr3KiYdoUDubn9bQ6rWLeDut2MPoI/4byyFeQU+Ur178QSx0F/
+ Vo/HGom5C4qhEqz7YSHGu2ypDhWgfb7G3cd4OQUqoUTINb8i5OV6KdgWCa55IZm8jfwNgB
+ Fr+1AgDw1UV7mUZXTb1dvXqsQxrSwF0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-ERhKzKNkNceqHMJbKpywNA-1; Fri,
- 24 Apr 2026 11:42:46 -0400
-X-MC-Unique: ERhKzKNkNceqHMJbKpywNA-1
-X-Mimecast-MFC-AGG-ID: ERhKzKNkNceqHMJbKpywNA_1777045365
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-pnfgo0zIOt-PyWokHYbpcQ-1; Fri,
+ 24 Apr 2026 11:42:42 -0400
+X-MC-Unique: pnfgo0zIOt-PyWokHYbpcQ-1
+X-Mimecast-MFC-AGG-ID: pnfgo0zIOt-PyWokHYbpcQ_1777045361
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 346571956046; Fri, 24 Apr 2026 15:42:45 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6564F1956088; Fri, 24 Apr 2026 15:42:41 +0000 (UTC)
 Received: from thinkbook.redhat.com (unknown [10.44.32.213])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D59991800370; Fri, 24 Apr 2026 15:42:41 +0000 (UTC)
+ id 4FBF2180047F; Fri, 24 Apr 2026 15:42:38 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -56,12 +56,11 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 09/16] docs/devel/testing: expand documentation for 'make
- check-block'
-Date: Fri, 24 Apr 2026 16:41:57 +0100
-Message-ID: <20260424154205.364268-10-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 08/16] tests: add a meson suite / make target per block I/O
+ tests format
+Date: Fri, 24 Apr 2026 16:41:56 +0100
+Message-ID: <20260424154205.364268-9-berrange@redhat.com>
 In-Reply-To: <20260424154205.364268-1-berrange@redhat.com>
 References: <20260424154205.364268-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -93,65 +92,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Explain in greater detail what 'check-block' will run for each format,
-and also document the new format specific targets.
+Currently each block format is classified as either 'quick', 'slow' or
+'thorough' and this controls whether its I/O tests are added to the meson
+suites 'block-quick', 'block-slow' or 'block-thorough'.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This suites are exposed the 'check-block' make target, accepting the
+optional SPEED variable.
+
+As we add more formats to the 'thorough' group, however, it becomes
+increasingly large and time consuming to run. What is needed is a make
+target that can exercise all tests for an individual format, regardless
+of speed classification.
+
+This makes use of the previous enhancement to mtest2make.py to introduce
+new meson suites 'block-$FORMAT-optional', which translate to new top
+level make targets 'check-block-$FORMAT'. These new targets always run
+all tests and as such do not need the SPEED variable to be set, but are
+not triggered by 'make check' or 'make check-block'.
+
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/devel/testing/main.rst    | 25 ++++++++++++++++++++++---
- tests/qemu-iotests/meson.build |  2 ++
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ tests/Makefile.include         | 3 ++-
+ tests/qemu-iotests/meson.build | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 0662766b5c..dc4f7202a5 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -221,9 +221,28 @@ same commit that alters the generator code.
- check-block
- ~~~~~~~~~~~
- 
--``make check-block`` runs a subset of the block layer iotests (the tests that
--are in the "auto" group).
--See the "QEMU iotests" section below for more information.
-+There are a variety of ways to exercise the block layer I/O tests
-+via make targets.
-+
-+A default ``make check`` or ``make check-block`` command will exercise
-+the ``qcow2`` format, using the tests tagged into the ``auto`` group
-+only.
-+
-+These targets accept the ``SPEED`` variable to augment the set of tests
-+to run. A slightly more comprehensive test plan can be run by defining
-+``SPEED=slow``, which enables all tests for the ``qcow2`` and ``raw``
-+formats. The most comprehensive test plan can be run by defining
-+``SPEED=thorough``, which enables all available tests for the formats
-+``parallels``, ``qcow2``, ``qed``, ``raw``, ``vdi``, ``vhdx``,
-+``vmdk``, and ``vpc``.
-+
-+Each of formats also has its own dedicated make target, named
-+``make check-block-$FORMAT`` which will run all available tests for
-+the designated format and does not require the ``SPEED`` variable
-+to be set.
-+
-+See the "QEMU iotests" section below for more information on the
-+block I/O test framework that is leveraged by these ``make`` targets.
- 
- .. _qemu-iotests:
- 
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index f257288194..a820980bbe 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -14,7 +14,8 @@ check-help:
+ 	@echo " $(MAKE) check-unit                    Run qobject tests"
+ 	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
+ 	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
+-	@echo " $(MAKE) check-block                   Run block tests"
++	@echo " $(MAKE) check-block                   Run block tests (all formats)"
++	@echo " $(MAKE) check-block-FORMAT            Run block tests (only for FORMAT)"
+ ifneq ($(filter $(all-check-targets), check-softfloat),)
+ 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
+ 	@echo " $(MAKE) check-tcg                     Run TCG tests"
 diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index 16a5e39476..66b09d6b97 100644
+index 1a24d801a3..16a5e39476 100644
 --- a/tests/qemu-iotests/meson.build
 +++ b/tests/qemu-iotests/meson.build
-@@ -10,6 +10,8 @@ endif
+@@ -62,7 +62,8 @@ foreach format, speed: qemu_iotests_formats
+     endforeach
+   endif
  
- qemu_iotests_binaries = [qemu_img, qemu_io, qemu_nbd, qsd]
- qemu_iotests_env = {'PYTHON': python.full_path()}
-+# If altering this definition, also update docs/devel/testing/main.rst
-+# section on 'check-block' targets to reflect the changes
- qemu_iotests_formats = {
-   'qcow2': 'quick',
-   'raw': 'slow',
+-  suites = []
++  # Every format gets put in the format specific suite
++  suites = ['block-' + format + '-optional']
+   # Any format tagged quick or slow also gets added to slow
+   # otherwise its tagged thorough
+   if speed != 'thorough'
 -- 
 2.53.0
 
