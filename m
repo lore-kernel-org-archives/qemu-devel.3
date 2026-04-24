@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B1A4FB44C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5353FB44C8
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGBXc-00050S-EG; Fri, 24 Apr 2026 04:05:36 -0400
+	id 1wGBXc-00050B-3h; Fri, 24 Apr 2026 04:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wGBXZ-0004u3-0c; Fri, 24 Apr 2026 04:05:33 -0400
+ id 1wGBXZ-0004u6-1v; Fri, 24 Apr 2026 04:05:33 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wGBXW-0001Eb-3R; Fri, 24 Apr 2026 04:05:32 -0400
+ id 1wGBXW-0001GV-8w; Fri, 24 Apr 2026 04:05:32 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oPolPRyKWd2XjIhc83ajGYbW41uF1uJ4t31apS9JQlC9AeiCOf3m8D7cylU0kQW42VCs2vvRLXRcpDTZHrQYv91vmLNgAPG6/AjMxnKTZvAQWtBF6x3/Q+DdoZfNcf9ThKRfTtypLfNIY9L0CzMeBkjKRRj10S8VBPteeIu+plFf/WXuV5DV1xmfUEK1AYlipL4RCUEzrsYJJp5uOZpQEa+CiKMC3594aBn/ChHRUzsGZ0OWkcBZXYpuCEEFyLShsb0SYkmaySQuQ+FBZafFTBqRo30KpWphcgJ93xdntwj5TuH2n8uZaUiko5b58Z3/pMeeee7fTsJNCvMp4GMX1w==
+ b=YJTYBUosmU+kvwyC3g6uExVIEy4mST7TCovrC0/MGy2HFyY7swwONxmqGVaLCOoGHRUNHwxMD/G95yhUCvuO3FWyQbPTZOfNPGYcyyomzcqDIuo5Nc17+uYHky4fxNFFjkYxNLZnctVtWzLVagVT5vVshKIUiUCYAtT3jeZox2nNZLtFN5o9uA0/gr97rVbUVrwal2m14gQgWxXr+wANwMt190D5WJPSkmkUOTak6nrHjH027Yn72wgOzk9TecAkusWaI0XyEl77mffDLm+/djajz9gzAJGY4Q05XOAKkDBGbSC9trMpt/VzapRYJGS4m4qdvnKT1ZeX+O+DFsBuLw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=njr4wCoeju2QssBCsergfxNnAQJ7Wb4og1kRDdF9wIg=;
- b=B2uz3EhAMWwUabFASd7IBt32Vcj+taOMyfhk9/xDaPjOeUhXBE+XXeYAlO0g5ybm+pqVAj59tcdrTAWM7lFu2v0dS0kzg2ZazZQB0wdQA0306Z7SDhv+l9ocq96RQ75NV5EedRvQuTCtUXQUaSk0RgrZgrT2EtjCd1UnI2ukrTbnyK3AkXSSqaG1mFlkcVDQjpE4NJ9A77VxOioduhDB8ghkWe119fBnqpwXOyQWPYMLojmoyKn1lidX4Ow9UXeOEpuW8Gf9VAu07muQjYPcaxKenx+JlbMF6cnTtCDdF/7Z/c5n6tNpf0UBa6CHpe5oK9WOmX23aEYJLNNi12OVkw==
+ bh=0t876nfq1PurFy1REImxgXmZt9Yx/BFkWkH/U1x38zE=;
+ b=eBSxyBYt615sKUKRAMSZ2BeV43BS0tq4STcJSgo0y7Wdgs3DPg1Gpe9VB0iGYG4/ghhTPcOGa7lPcpw3OlRMII74ScaMf8tkewGuU/WT1m8y7jFfCQsM3sF/eHcJCvUt+2pKd6cJxIf0G+2xKyC986p+1W5touusLuhAoreDVR63+LXkc7SshY1W3h2OqNZCIdpLNXgYTkxi9rxgTZHrIjYZtxaL1V/F1PW9H9p9UPbeejSs1/2+iaWloBfx5cz1st3J2BpphQ1IZDDLHHDvc5iOi9BGDbW43HPX74wgl4sRBOxbEUPI4mcYP4Dv6K0G3Ic6RP85fq6V2r1nDq0S6w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=njr4wCoeju2QssBCsergfxNnAQJ7Wb4og1kRDdF9wIg=;
- b=g+n0cwOwaDpYP+OtyTBeYc0LrSw10WkF5RPPmBq53tfniM+o4WCbbY9b7Lomua9U0yPfGVDjNmLJLtpxzMEn20tfleaWRKr7psvPLSXtAeLw1z0g2Nw0jKKlJH0klLWRkmYlb0DPcWYv8CDxjb1+62eBWP5mZFDoMi0mbi53qe5C9vZMlxT6ZWH3aeJ02Hgxl3SrderTvwhDqFYk0qCB6HMKBfLbSt6LtAwNKzYvT88RU/MmqRly9ycO/13e7MpNC61n6n+QpNMGUbjdonrYMLMVF/YR6QKb3/k8r0ysTtNhotjs9wD9cmeyxS6Ao3TH/P7vb6lSGcm+eWQDBFY9vg==
+ bh=0t876nfq1PurFy1REImxgXmZt9Yx/BFkWkH/U1x38zE=;
+ b=VoKhM+Q4tIUOwVva5a4qXVefqgwNkK5n7WUUp4qr/m/9WQ2qoztNhnrAP5xPlns2sEbYlPKron7JO0varJZKpUJNYSOzdmucxgxlufJjIqWQsv5jegsMB+Z2V+kwvKMQ0FivtI0otM564tMojTegMU3FAQGfv4bBGLOwgEYy/2QBw0rJr+B1sMHyL5JggF4oEjg1PBkCXzvtzxXWUuYetgqhWLJdItcfEJOIl6h+WnZyQeZBxMVr7TCv0h9CBUk8od4ub9vJWfzaOMENs3YHcwG+7QBPlHuRRNxn+ioBpzHf4eDGgjaNwk5hjs+bIRdZPtuRLl+fyd5vjSCjJqyLxw==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by SEYPR06MB5790.apcprd06.prod.outlook.com (2603:1096:101:b9::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.22; Fri, 24 Apr
- 2026 08:05:15 +0000
+ by SEZPR06MB5856.apcprd06.prod.outlook.com (2603:1096:101:9e::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.18; Fri, 24 Apr
+ 2026 08:05:20 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9846.021; Fri, 24 Apr 2026
- 08:05:14 +0000
+ 08:05:20 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "peterx@redhat.com" <peterx@redhat.com>, "philmd@linaro.org"
  <philmd@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
@@ -54,25 +54,23 @@ To: "peterx@redhat.com" <peterx@redhat.com>, "philmd@linaro.org"
  Bonzini <pbonzini@redhat.com>, Richard Henderson
  <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
  Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Ilya Leoshkevich
- <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, Cornelia Huck
- <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, Christian
- Borntraeger <borntraeger@linux.ibm.com>, "open list:ASPEED BMCs"
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, "open list:ASPEED BMCs"
  <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:sPAPR pseries" <qemu-ppc@nongnu.org>,
- "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+ "open list:S390 Virtio-ccw" <qemu-s390x@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  "farosas@suse.de" <farosas@suse.de>, "flwu@google.com" <flwu@google.com>, 
- "nabihestefan@google.com" <nabihestefan@google.com>,
- =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: [PATCH v5 04/18] hw/usb/hcd-ehci.c: Fix coding style issues reported
- by checkpatch
-Thread-Topic: [PATCH v5 04/18] hw/usb/hcd-ehci.c: Fix coding style issues
- reported by checkpatch
-Thread-Index: AQHc08EUlA9tchRfQE6UwrHrmEmDUA==
-Date: Fri, 24 Apr 2026 08:05:14 +0000
-Message-ID: <20260424080508.53992-5-jamin_lin@aspeedtech.com>
+ "nabihestefan@google.com" <nabihestefan@google.com>
+Subject: [PATCH v5 08/18] hw/core: Add 11.0 machine compatibility properties
+Thread-Topic: [PATCH v5 08/18] hw/core: Add 11.0 machine compatibility
+ properties
+Thread-Index: AQHc08EYz77OLqMUiE6xORGmT3HWyA==
+Date: Fri, 24 Apr 2026 08:05:20 +0000
+Message-ID: <20260424080508.53992-9-jamin_lin@aspeedtech.com>
 References: <20260424080508.53992-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260424080508.53992-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -82,63 +80,63 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEYPR06MB5790:EE_
-x-ms-office365-filtering-correlation-id: 8b1b70f5-fa8c-4f15-3f04-08dea1d8377e
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEZPR06MB5856:EE_
+x-ms-office365-filtering-correlation-id: f08ba83c-cb7a-475f-f34b-08dea1d83aac
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|921020|38070700021|22082099003|18002099003|18096099003|56012099003;
-x-microsoft-antispam-message-info: cif/Ny4VQogLmqVY56OPZ2B5wNowz0oRrgXg3SvvDS58Wpziqo7zywbScFAg+H1nCyAC/fSrE/v81jKbkGTC3507B3jBPMRNj34ej1WbuHutpoL+flSVjtYxQzdFtgw6TtkF/UyVwbYmWq/sslP6c5d33LR7esfv+kA0+enma2ZnKAEsSoKgn5cbFAIPiKc8vNjyKst/Od4WNRv7+11QJ0toTS9X3S0oU86cOpBplR7hpaJ1TNX/7l1fKYgeOu0Gt6W9S5SXbK0Am3SfAQRVXJTBGGK3UMloZB69lpDgaiR8TdYEtotVc+r6iHuC0zlktyIUq4x4WGIzDNPdrY6+AO77JOoanMEs65h0PyPpzKlAjJpZaCR96c6R0kBLjeMNZrIc0Dk2lBipwQwKKonBEaytt1VE8ZExG+OOqawC66BZxzUjlDEiEvgKBf7bxFuHiwiCAThty0dbuxwZUoJuZqS4zeSfQ48o3DzTNM680KvTpC+6P/9etiAJeqt11fAOWkT9/R3xxDnfuuo0nBkT/JED2YH7hcJg7sxdGd1PaNKj2E2OmLWa3rorPrX3DNnmJV2HhguImvDD0g5QuwzP6+vLUJvM8SJ7afoP1mqHmBiEmGII/A2ZDyY5QJCLzzxAJiqKUdMb4LGUnzzNmG4NCw1k0kOZJ7hlaoYJh3pHSs5O1VeF6Lf5eZKHhXIbctBC6Pifnt5jHYpmzQUJaq7xLVbCqqCRiopgcO6KdYMAD+De6P1yz5GYBq4c2eLXoAvBjvqcdb0UD/LN+RLt0fvuY9LG5/z/+4McOdX7Z+myFcRCmiGo6XfTeFbT4gGClIkp
+ ARA:13230040|1800799024|366016|7416014|376014|38070700021|921020|18002099003|22082099003|56012099003;
+x-microsoft-antispam-message-info: Iekyu2f5xx/mEfTM+/oitNfAJY3QXq1IXbbZFJGVxk7EehScF79Pt1G1pods+qp5r2fNxnBfEArkDtdsj9Q46HjBAUAFp7KH7zKY68gmC+gY3E7zEvaQh91a1dQpFKCXu7ESE0JXVW0O2gyADtuf2wNEF2KbRfOfySChbkFVrS3PcrJ34+1Z5KkeZEcRElo72F+efLuZ0Fy9uadz9DOHHYImtxyx141kKhikH2vpMs4l32x7F1GqFmkRtMu3CnFEU2HNXu7NgSts19pZh8p8xqfgIZyYfbeX8reKGRLdT2Ibq5xLUdMs73twgMIsgAEPpzd+gHt8WlyUgpHvulYnKHNhoHxAutixIUHBp3siWmE4tKFFITrnNQWF1jRaaX1FYqB3551Q2QL3oyzycBPkYYM2EurY91H76Q+Y35LYv5qYD3Uj5Qksg90p3DyNpcgjVGthRAjOj0QMnGUQ8EdRP6S+fCr9Th758abQaC2v2JvDkIwAYGnZ/JnthajaRIGxBz0k61aM8YMMDXXlR8XU81+3p/+TtpZ28x2tX/PI9pkBoiIlr9KrhgcC5aVgt++Op66P365+GM0wScsbE5dxcB+HquuGHwcKgAgSdX4H9iKl8BzOauP9Z9IC2CcMw8P1v8fYa4Oee4EYIXvYbi7zWto/+oTahorp9YfyLn7SYs+pclrc4aAbdY6GFN348BTwfCyLpX+1DAiX6zxBw+T3pkIdIxwvuW6vG759mrAeLFqU/8VF7ZOs6dnCZjr1fuvIecuEBmBXKnpIel2R7LxmNjRhZ7gSUOAqmeeQshwjzf+0gTA9eFBKTACMl1hmcpZH
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(921020)(38070700021)(22082099003)(18002099003)(18096099003)(56012099003);
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700021)(921020)(18002099003)(22082099003)(56012099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Z1ABad4YZ7Y8PsZI2oioxmbgF2/B+7QNYmzcASKLs/Yq8Nl+oZphqlVUPg?=
- =?iso-8859-1?Q?RqZxzRj+YATMXvekhbD+H2IKnM8ZgJfTjlD6L2s6Alb4rQ4K+vq15jfriQ?=
- =?iso-8859-1?Q?N8xtMSmGrhy51VAVTyyA3HC83P5oFZq21qV/5iR11NCLpDqxVdr22QnP/Y?=
- =?iso-8859-1?Q?U0nwPwJOLeAoOnqvQSaQn6zKAxlW/JYxLNX0MSALfpTG1ABICCd5sA09io?=
- =?iso-8859-1?Q?/eyxEP/4v6x5iS2Wi5PeUVKPM2ZxR0h0e8DEpa3xyid/sdHUeglJ/98srp?=
- =?iso-8859-1?Q?aPaznG6GLn6gSBnH9c2f0AmH8Sd5YmFSkBXz7RDqQ+HVhhlPrEuP3HaHnb?=
- =?iso-8859-1?Q?W9HVhXPtfjsDCyGXz9VFtrHMgFNs4/3e+3sW6ajxGsxkW0qO832ksVKqyd?=
- =?iso-8859-1?Q?gjQ8l9YiuBNQIrK0Yc0U+HF/5UsiDc1Yrtzqb/TpB+/0DXPTlE20NSk8fq?=
- =?iso-8859-1?Q?RDcFX6zQl6iJAWtb+FxpfqhjynVhQirqu5yjeuC0OoSzs3l6P+BMz7ktuy?=
- =?iso-8859-1?Q?yIaT+YD3EhyeHeC+ptxMGsjO1ez2WK6xpRaDObpI2mjCde8rVkvokUKrkF?=
- =?iso-8859-1?Q?3ic2Qxt7ooVu7dsu6tb3UtDCD/r/T36CtQTP/X8RAc7WEVxsXpJzFlOhXS?=
- =?iso-8859-1?Q?m7o/GqrFv86ApCg/4MLW5Fgt8OSUFLkCi4wt6D+vPRNt8luIvzYP2FZKvu?=
- =?iso-8859-1?Q?aYBGNMfgAwGoIDZLniEuWtGYphwpZs7rszHB5i3CD6l5NdSjJmQA6SlnNx?=
- =?iso-8859-1?Q?ZU4IgUxizyvILWbPAbxUJiMdIXpdsi1Vx8tZsVtpy92iR/q2IHzelZWNyq?=
- =?iso-8859-1?Q?rb0LsVNQzvQdUxHEeOTl0Yt2arJvNA+lILf7iY9lvvIM9QruawnsiZY15s?=
- =?iso-8859-1?Q?YUzeHil6Kfp58ogBhgyarJgaEwxCt/AJZ2Zbxqfi36Kf1Mq5fyyh7/+VzR?=
- =?iso-8859-1?Q?gXoDMihrRS5HqD8y98STFzPItZHXtYgRGlhYQZfGUQqhaKn4XAG0Xtvjoz?=
- =?iso-8859-1?Q?/6XY8BRtu7GaxYkpTQf64gnR5P0uM8TU1HsFWWFPkLjhM/jVcFi9Ra573E?=
- =?iso-8859-1?Q?lxIFnym4+KgjGw2ei6u9UVknvs8Bxb4JYZMpvtZpAhxGZCAKLrJcYmV15w?=
- =?iso-8859-1?Q?7AYYIpz8hEUGhLNuNms02r2OpgWdtHC6vfp/JxFW/EZj0BwsywsyiIGFy8?=
- =?iso-8859-1?Q?l/T+eDmLbMYssIRTvWHwttoPXsMIkzRz3Bx7/1BErhmRjyL6JJd/BAfGx4?=
- =?iso-8859-1?Q?EFyIchvsNYdctRQpYuZw+ur7Re5aLDcXPwhZBXFcabeUArl04QbOHYm5ya?=
- =?iso-8859-1?Q?I3zYJh2SV+d7rtNEEiIbzp1WSauY6g9cyRh+ZJDYJH4XUPknza7B1RCu68?=
- =?iso-8859-1?Q?YjiwYyb9KCL88C5BhBRe5zZAnzDmgkDBKdJAj3KMquVD3ifwMIZKwhaFUY?=
- =?iso-8859-1?Q?E/xVq/MsiANpdaeKrCHyR8vBbJEiGuiwEoEQHlPcJSBmdslNqU82HGRc5e?=
- =?iso-8859-1?Q?yjYlbYy9AOfgEyKyInH9/nqKjoidExdjQP6E2dN8hg43WDtUfO/JYXlJAj?=
- =?iso-8859-1?Q?Rev0szshJBK8mRcOLgDWiIn3tY1yqKTD8L+0SzfbngCsBY8GeVmMuS6p+D?=
- =?iso-8859-1?Q?pdKPsSn0tP7rDlP0MK5IiN+HG3NVtJa8Foj/mzGKX2GHRFjgr1NAZ929jT?=
- =?iso-8859-1?Q?8EdHB1eSOSmj16eR7XCDYbIkRx4vlf/jtQAG98sgkih6Foh/ZK59UGpIog?=
- =?iso-8859-1?Q?iDIJQwvk86YgeWzGu++wRkpRXwI6YrdYQ8bvwcqDReNkq06O6nAnqtg7PK?=
- =?iso-8859-1?Q?Hl5ARTSEXg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?O/loUQE22SkhmZp7A/6rDQe53lEdv0bdUMCSv74YiQPf9z4iRqPS3+24EA?=
+ =?iso-8859-1?Q?iLouicfmzpIwhDxOKUKWkyBMiyMO7Sz9gYYSWsLV81MR46Vx28eOMmTeNC?=
+ =?iso-8859-1?Q?11ABzhwsaoCpRepgacB7jaChJVpNkyK9uCiqGrHPBxb67WqmiyEVm0f90M?=
+ =?iso-8859-1?Q?76xRVFtZS8vzlK1Pg12XCQCxgIlHGoPO1+T6jnNkdsGuxNelpqTEq/g107?=
+ =?iso-8859-1?Q?hr/upUTdXq27L775/6zc4kn5b9dbz/oP5480Lec6aN848/yBdCQ7Mpaq0y?=
+ =?iso-8859-1?Q?xLmERkIap7PCAmIKp/yA5+dV+VEgCta41mDwfWfmfDxem5ODtqEg6YhPDr?=
+ =?iso-8859-1?Q?6u0vg4uV7PUArm8V/iTqddfktEhS7gcnqLEpbje9e7p5Eg52ckXRfS7tTu?=
+ =?iso-8859-1?Q?G5jcq/AKlvwb/PV6yduFs2uiceT6QFom1xakfVLkAE+L/fLqasH4sgiL7D?=
+ =?iso-8859-1?Q?cpON/P0RKbQOwogdijkwpWTrQl1RVZGRQiQ04SOIW39nc9Bm+r9769tuYZ?=
+ =?iso-8859-1?Q?r4+nbX+wqg4131hvoP3kecudkASdFWBdXBqCdSnzAp6EAj8BMvkyA2eX3D?=
+ =?iso-8859-1?Q?qWS6JfSHXX1YvIf3nGNDqtB/dELxwWhfI8M9acfPEQp4FDKcKjX+jfN3Jr?=
+ =?iso-8859-1?Q?QW4qx3xnwG2J36g70UAwxiDJkDd5SRh6f3sbv6xLQt7Lyr5GwBTlsY9epD?=
+ =?iso-8859-1?Q?NhBnWRaw4L9n3LNVN4ZlORozMuqwLvu444onTcYNBxu/g130pUEUvAzU7d?=
+ =?iso-8859-1?Q?cnEhbrgKVpGGI3ph6c46BPpRStr04fB73nRx2oPt3nEmtpkxd4ojYVWRMQ?=
+ =?iso-8859-1?Q?B2Sb+V2WKeOqOV4lH4rSgKBaQkWhzVJSlg39pi4cINs29CCfZOJROk+knr?=
+ =?iso-8859-1?Q?Bj4eDfsMmZasuBIxWDMlYk2Od/1O8cIhrO7NdhGu4k2OHocLYuH46UK3/5?=
+ =?iso-8859-1?Q?Glm8pB5yO5PAGWSD69/E4ZuglT1iz7ivLaeqRqOPudeDP90fktbyb6wyb/?=
+ =?iso-8859-1?Q?A+5wLBBrdLNNf3S0NpLxitHnXXCQ6m0TOv8ZmOcpkKQ0pwWELdXIROYMgw?=
+ =?iso-8859-1?Q?fVanTSk1L2QsztzJU2KeBOey51iBjK9lksmGkYOf7b0VSjt2CnW8+bR5S7?=
+ =?iso-8859-1?Q?/L9IfuItuy4vJVO4vXm7xlTeJ5Z9WvJPd2Jj5Rj7VcTlrPIAmYv2EkFGE2?=
+ =?iso-8859-1?Q?N15f+9S7fNfH/+pI+YjbYylORrqSlnJR393Vm5TAQ9pUqq2WdW4Maxfz90?=
+ =?iso-8859-1?Q?Z/OvaWf8v8R7exSkqWGav4Fy2Hqba4W+6ITVmGELlzm9v2aUXXjwANf/wS?=
+ =?iso-8859-1?Q?mDONVSyL+TdgNWy3Ok2L/eezZtA7yDntZaiLXpm7N3pI+sM09zHTv3lcYi?=
+ =?iso-8859-1?Q?AbEmFU1vd6YRfguPDdCElE0Bh0ROBeqo1wQrINhBhtW25vLgVY4FrlNtr9?=
+ =?iso-8859-1?Q?wLMy4PQ2DU9Q+mIpIlT4eDmvzuQTFSAoNX4jB8QV4fqQD7xzOow0ThxHhY?=
+ =?iso-8859-1?Q?woCv/QRVpcqzU7WnnUCc4n2IZrqpDvC1Id1P+O6rUzjIA+qeCu/5V/Mdog?=
+ =?iso-8859-1?Q?7x0Kyg750vcO/CADvyCPL0w771woVsMAzigujfIc7/7aR/RgMJErhD8Tqm?=
+ =?iso-8859-1?Q?SA253DB1T4jjFLw3LnMNhsMgAwRPCptlhryRMhqQSOsrClyba+LQXH+lQ3?=
+ =?iso-8859-1?Q?Z+tFdwRyn5Klnmp7fS3CxhlX99yj+iqmUQt7DG3Wz9BUok3RmBpEA7TV3f?=
+ =?iso-8859-1?Q?usunHRKjIt88T/rLQwEqiVPCVxPr5IJXt+6Z/o1iiRl6UmS0/KVQXBXoBJ?=
+ =?iso-8859-1?Q?d6z948nB6A=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: FEM0IBUuQc/wOaPJW5WY5r8n6Vs/J3kFh7JkDYHD7KkcOF2fO7uplHDkC6W7Os4ztKMb3YSKC/Wad+JMC3auVDHcuMd3pXTGlxcT3qfrPd94L5JCXve+Y9vts/mB4GMt1+WnhTEtIn3FkS+MR99RIdYmtCop4c6EgGrfUZHhIqPyrHRh2RBvi/PjAchwdGbVs101rJzoVcZp1mD3I0Ag3B5OUgEGclH5v9J+evwY+wBXiWTfVZt9uZeyg4Buf1gRgmbCPd+e67DpesXX7Ia3ox+bY2AIByuN99BTD9vf9OWtJHFqX2+VmsBKi8nFSDRRPCHN0vfeUmCyqN/XTj/7sA==
+X-Exchange-RoutingPolicyChecked: FirCX0mxlDbP5hhcCqn+Lvwfr1tOvQRonqRpnm2DtywHxVjDL9VA0mg936ZvpPhj06wlapXYAJiEKSxFWNcQ3IRKAyPwZjaraLC4470q+mXbi04a5HIR4mcHujxUlQriQ3XGL5C0csd4X6GQzB1OTxNsQCvQ9y17o8hQxKWDpEBwfi5fwA9E6zgGIaV1ZMF7m3GTq3LNCGaRbZjjU/I1I1GHZG/3NxRhA7qmqkFVGPpqV7U2DFYj1B2WC8hX303CfnoAMVu5q5S+II0BsrKnVYYG0fCa6fS271QGB/fzUBZUTGnXMmSiXOe7fQeFQ3NqRO/T292X5H69lPXDUB6afQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b1b70f5-fa8c-4f15-3f04-08dea1d8377e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Apr 2026 08:05:14.8655 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f08ba83c-cb7a-475f-f34b-08dea1d83aac
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Apr 2026 08:05:20.2459 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FK9OdcYA7TElTeIvkeko3r7VTkk108MWFgdCnuhuWynZeqpCwR7vcn6a1B4efTD+5GsM0YjAje8dNxr/JllofslPwwY6gFpPiMQ9HY1Xo/w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5790
+X-MS-Exchange-CrossTenant-userprincipalname: pExG1yh/x0i/ZbbJae58LRiwsCPivtpW9MeRJzb4zPoN4alX5aOqR2GmgtsrbouKhrs6GKe+B0IVImwj/7CPBzJhW4kWb7D9UD1vFq2EKeM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5856
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
  helo=TYDPR03CU002.outbound.protection.outlook.com
@@ -163,432 +161,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No functional change.=0A=
+Introduce hw_compat_11_0 and pc_compat_11_0 compatibility property arrays,=
+=0A=
+and wire them into the 11.0 machine types.=0A=
+=0A=
+Update all machine types so that version 11.0 inherits from 11.1 and applie=
+s=0A=
+the 11.0 compatibility properties. This follows the standard pattern where=
+=0A=
+older machine types retain legacy behavior through compat properties, while=
+=0A=
+newer machine types provide updated defaults.=0A=
+=0A=
+This change allows devices to maintain migration and behavior compatibility=
+=0A=
+for the 11.0 machine type, while enabling new behavior to be introduced in=
+=0A=
+later machine versions.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
-Reviewed-by: C=E9dric Le Goater <clg@redhat.com>=0A=
-Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>=0A=
 ---=0A=
- hw/usb/hcd-ehci.c | 129 +++++++++++++++++++++++++---------------------=0A=
- 1 file changed, 71 insertions(+), 58 deletions(-)=0A=
+ include/hw/core/boards.h   |  3 +++=0A=
+ include/hw/i386/pc.h       |  3 +++=0A=
+ hw/arm/virt.c              |  8 ++++++++=0A=
+ hw/core/machine.c          |  3 +++=0A=
+ hw/i386/pc.c               |  3 +++=0A=
+ hw/i386/pc_piix.c          | 11 ++++++++++-=0A=
+ hw/i386/pc_q35.c           | 11 ++++++++++-=0A=
+ hw/m68k/virt.c             |  7 +++++++=0A=
+ hw/ppc/spapr.c             | 13 ++++++++++++-=0A=
+ hw/s390x/s390-virtio-ccw.c | 11 +++++++++++=0A=
+ 10 files changed, 70 insertions(+), 3 deletions(-)=0A=
 =0A=
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
-index 23167bf96f..7e0b767eb9 100644=0A=
---- a/hw/usb/hcd-ehci.c=0A=
-+++ b/hw/usb/hcd-ehci.c=0A=
-@@ -41,21 +41,23 @@=0A=
- #define FRAME_TIMER_NS   (NANOSECONDS_PER_SECOND / FRAME_TIMER_FREQ)=0A=
- #define UFRAME_TIMER_NS  (FRAME_TIMER_NS / 8)=0A=
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h=0A=
+index b8dad0a107..db83fe9292 100644=0A=
+--- a/include/hw/core/boards.h=0A=
++++ b/include/hw/core/boards.h=0A=
+@@ -798,6 +798,9 @@ struct MachineState {=0A=
+         } \=0A=
+     } while (0)=0A=
  =0A=
--#define NB_MAXINTRATE    8        // Max rate at which controller issues i=
-nts=0A=
--#define BUFF_SIZE        5*4096   // Max bytes to transfer per transaction=
-=0A=
--#define MAX_QH           100      // Max allowable queue heads in a chain=
-=0A=
-+#define NB_MAXINTRATE    8      /* Max rate at which controller issues int=
-s */=0A=
-+#define BUFF_SIZE        (5 * 4096) /* Max bytes to transfer per transacti=
-on */=0A=
-+#define MAX_QH           100      /* Max allowable queue heads in a chain =
-*/=0A=
- #define MIN_UFR_PER_TICK 24       /* Min frames to process when catching u=
-p */=0A=
- #define PERIODIC_ACTIVE  512      /* Micro-frames */=0A=
++extern GlobalProperty hw_compat_11_0[];=0A=
++extern const size_t hw_compat_11_0_len;=0A=
++=0A=
+ extern GlobalProperty hw_compat_10_2[];=0A=
+ extern const size_t hw_compat_10_2_len;=0A=
  =0A=
--/*  Internal periodic / asynchronous schedule state machine states=0A=
-+/*=0A=
-+ * Internal periodic / asynchronous schedule state machine states=0A=
-  */=0A=
- typedef enum {=0A=
-     EST_INACTIVE =3D 1000,=0A=
-     EST_ACTIVE,=0A=
-     EST_EXECUTING,=0A=
-     EST_SLEEPING,=0A=
--    /*  The following states are internal to the state machine function=0A=
--    */=0A=
-+    /*=0A=
-+     * The following states are internal to the state machine function=0A=
-+     */=0A=
-     EST_WAITLISTHEAD,=0A=
-     EST_FETCHENTRY,=0A=
-     EST_FETCHQH,=0A=
-@@ -71,13 +73,13 @@ typedef enum {=0A=
- /* macros for accessing fields within next link pointer entry */=0A=
- #define NLPTR_GET(x)             ((x) & 0xffffffe0)=0A=
- #define NLPTR_TYPE_GET(x)        (((x) >> 1) & 3)=0A=
--#define NLPTR_TBIT(x)            ((x) & 1)  // 1=3Dinvalid, 0=3Dvalid=0A=
-+#define NLPTR_TBIT(x)            ((x) & 1)  /* 1=3Dinvalid, 0=3Dvalid */=
-=0A=
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h=0A=
+index 22325324d0..85a74363b5 100644=0A=
+--- a/include/hw/i386/pc.h=0A=
++++ b/include/hw/i386/pc.h=0A=
+@@ -208,6 +208,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, siz=
+e_t flash_size);=0A=
+ /* sgx.c */=0A=
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);=0A=
  =0A=
- /* link pointer types */=0A=
--#define NLPTR_TYPE_ITD           0     // isoc xfer descriptor=0A=
--#define NLPTR_TYPE_QH            1     // queue head=0A=
--#define NLPTR_TYPE_STITD         2     // split xaction, isoc xfer descrip=
-tor=0A=
--#define NLPTR_TYPE_FSTN          3     // frame span traversal node=0A=
-+#define NLPTR_TYPE_ITD           0     /* isoc xfer descriptor */=0A=
-+#define NLPTR_TYPE_QH            1     /* queue head */=0A=
-+#define NLPTR_TYPE_STITD         2     /* split xaction, isoc xfer descrip=
-tor */=0A=
-+#define NLPTR_TYPE_FSTN          3     /* frame span traversal node */=0A=
++extern GlobalProperty pc_compat_11_0[];=0A=
++extern const size_t pc_compat_11_0_len;=0A=
++=0A=
+ extern GlobalProperty pc_compat_10_2[];=0A=
+ extern const size_t pc_compat_10_2_len;=0A=
  =0A=
- #define SET_LAST_RUN_CLOCK(s) \=0A=
-     (s)->last_run_ns =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);=0A=
-@@ -88,10 +90,10 @@ typedef enum {=0A=
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c=0A=
+index ec0d8475ca..4855105f18 100644=0A=
+--- a/hw/arm/virt.c=0A=
++++ b/hw/arm/virt.c=0A=
+@@ -3719,8 +3719,16 @@ static void machvirt_machine_init(void)=0A=
+ }=0A=
+ type_init(machvirt_machine_init);=0A=
  =0A=
- #define set_field(data, newval, field) do { \=0A=
-     uint32_t val =3D *data; \=0A=
--    val &=3D ~ field##_MASK; \=0A=
-+    val &=3D ~field##_MASK; \=0A=
-     val |=3D ((newval) << field##_SH) & field##_MASK; \=0A=
-     *data =3D val; \=0A=
--    } while(0)=0A=
-+    } while (0)=0A=
++static void virt_machine_11_1_options(MachineClass *mc)=0A=
++{=0A=
++=0A=
++}=0A=
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)=0A=
++=0A=
+ static void virt_machine_11_0_options(MachineClass *mc)=0A=
+ {=0A=
++     virt_machine_11_1_options(mc);=0A=
++     compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len=
+);=0A=
+ }=0A=
+ DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)=0A=
  =0A=
- static const char *ehci_state_names[] =3D {=0A=
-     [EST_INACTIVE]     =3D "INACTIVE",=0A=
-@@ -472,8 +474,10 @@ static bool ehci_verify_pid(EHCIQueue *q, EHCIqtd *qtd=
+diff --git a/hw/core/machine.c b/hw/core/machine.c=0A=
+index 0aa77a57e9..1abc8ae737 100644=0A=
+--- a/hw/core/machine.c=0A=
++++ b/hw/core/machine.c=0A=
+@@ -38,6 +38,9 @@=0A=
+ #include "hw/acpi/generic_event_device.h"=0A=
+ #include "qemu/audio.h"=0A=
+ =0A=
++GlobalProperty hw_compat_11_0[] =3D {};=0A=
++const size_t hw_compat_11_0_len =3D G_N_ELEMENTS(hw_compat_11_0);=0A=
++=0A=
+ GlobalProperty hw_compat_10_2[] =3D {=0A=
+     { "scsi-block", "migrate-pr", "off" },=0A=
+     { "isa-cirrus-vga", "global-vmstate", "true" },=0A=
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c=0A=
+index 4b53b5be4a..2ecad3c503 100644=0A=
+--- a/hw/i386/pc.c=0A=
++++ b/hw/i386/pc.c=0A=
+@@ -73,6 +73,9 @@=0A=
+ #include "hw/xen/xen-bus.h"=0A=
+ #endif=0A=
+ =0A=
++GlobalProperty pc_compat_11_0[] =3D {};=0A=
++const size_t pc_compat_11_0_len =3D G_N_ELEMENTS(pc_compat_11_0);=0A=
++=0A=
+ GlobalProperty pc_compat_10_2[] =3D {};=0A=
+ const size_t pc_compat_10_2_len =3D G_N_ELEMENTS(pc_compat_10_2);=0A=
+ =0A=
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c=0A=
+index 4d71e0d51a..19e9641246 100644=0A=
+--- a/hw/i386/pc_piix.c=0A=
++++ b/hw/i386/pc_piix.c=0A=
+@@ -428,11 +428,20 @@ static void pc_i440fx_machine_options(MachineClass *m=
 )=0A=
-     }=0A=
+                      pc_piix_compat_defaults, pc_piix_compat_defaults_len)=
+;=0A=
  }=0A=
  =0A=
--/* Finish executing and writeback a packet outside of the regular=0A=
--   fetchqh -> fetchqtd -> execute -> writeback cycle */=0A=
+-static void pc_i440fx_machine_11_0_options(MachineClass *m)=0A=
++static void pc_i440fx_machine_11_1_options(MachineClass *m)=0A=
+ {=0A=
+     pc_i440fx_machine_options(m);=0A=
+ }=0A=
+ =0A=
++DEFINE_I440FX_MACHINE_AS_LATEST(11, 1);=0A=
++=0A=
++static void pc_i440fx_machine_11_0_options(MachineClass *m)=0A=
++{=0A=
++    pc_i440fx_machine_11_1_options(m);=0A=
++    compat_props_add(m->compat_props, hw_compat_11_0, hw_compat_11_0_len);=
+=0A=
++    compat_props_add(m->compat_props, pc_compat_11_0, pc_compat_11_0_len);=
+=0A=
++}=0A=
++=0A=
+ DEFINE_I440FX_MACHINE_AS_LATEST(11, 0);=0A=
+ =0A=
+ static void pc_i440fx_machine_10_2_options(MachineClass *m)=0A=
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c=0A=
+index cb23322f5a..72dd3324df 100644=0A=
+--- a/hw/i386/pc_q35.c=0A=
++++ b/hw/i386/pc_q35.c=0A=
+@@ -364,11 +364,20 @@ static void pc_q35_machine_options(MachineClass *m)=
+=0A=
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);=
+=0A=
+ }=0A=
+ =0A=
+-static void pc_q35_machine_11_0_options(MachineClass *m)=0A=
++static void pc_q35_machine_11_1_options(MachineClass *m)=0A=
+ {=0A=
+     pc_q35_machine_options(m);=0A=
+ }=0A=
+ =0A=
++DEFINE_Q35_MACHINE_AS_LATEST(11, 1);=0A=
++=0A=
++static void pc_q35_machine_11_0_options(MachineClass *m)=0A=
++{=0A=
++    pc_q35_machine_11_1_options(m);=0A=
++    compat_props_add(m->compat_props, hw_compat_11_0, hw_compat_11_0_len);=
+=0A=
++    compat_props_add(m->compat_props, pc_compat_11_0, pc_compat_11_0_len);=
+=0A=
++}=0A=
++=0A=
+ DEFINE_Q35_MACHINE_AS_LATEST(11, 0);=0A=
+ =0A=
+ static void pc_q35_machine_10_2_options(MachineClass *m)=0A=
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c=0A=
+index ffe6e23415..b056ef603c 100644=0A=
+--- a/hw/m68k/virt.c=0A=
++++ b/hw/m68k/virt.c=0A=
+@@ -367,8 +367,15 @@ type_init(virt_machine_register_types)=0A=
+ #define DEFINE_VIRT_MACHINE(major, minor) \=0A=
+     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)=0A=
+ =0A=
++static void virt_machine_11_1_options(MachineClass *mc)=0A=
++{=0A=
++}=0A=
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)=0A=
++=0A=
+ static void virt_machine_11_0_options(MachineClass *mc)=0A=
+ {=0A=
++    virt_machine_11_1_options(mc);=0A=
++    compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len)=
+;=0A=
+ }=0A=
+ DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)=0A=
+ =0A=
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c=0A=
+index 0ab39dfea6..5876f97979 100644=0A=
+--- a/hw/ppc/spapr.c=0A=
++++ b/hw/ppc/spapr.c=0A=
+@@ -4760,12 +4760,23 @@ static void spapr_machine_latest_class_options(Mach=
+ineClass *mc)=0A=
+ #define DEFINE_SPAPR_MACHINE(major, minor) \=0A=
+     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)=0A=
+ =0A=
 +/*=0A=
-+ * Finish executing and writeback a packet outside of the regular=0A=
-+ * fetchqh -> fetchqtd -> execute -> writeback cycle=0A=
++ * pseries-11.1=0A=
 + */=0A=
- static void ehci_writeback_async_complete_packet(EHCIPacket *p)=0A=
- {=0A=
-     EHCIQueue *q =3D p->queue;=0A=
-@@ -733,7 +737,7 @@ static void ehci_detach(USBPort *port)=0A=
-     ehci_queues_rip_device(s, port->dev, 0);=0A=
-     ehci_queues_rip_device(s, port->dev, 1);=0A=
- =0A=
--    *portsc &=3D ~(PORTSC_CONNECT|PORTSC_PED|PORTSC_SUSPEND);=0A=
-+    *portsc &=3D ~(PORTSC_CONNECT | PORTSC_PED | PORTSC_SUSPEND);=0A=
-     *portsc |=3D PORTSC_CSC;=0A=
- =0A=
-     ehci_raise_irq(s, USBSTS_PCD);=0A=
-@@ -858,7 +862,7 @@ void ehci_reset(void *opaque)=0A=
-      * Do the detach before touching portsc, so that it correctly gets sen=
-d to=0A=
-      * us or to our companion based on PORTSC_POWNER before the reset.=0A=
-      */=0A=
--    for(i =3D 0; i < EHCI_PORTS; i++) {=0A=
-+    for (i =3D 0; i < EHCI_PORTS; i++) {=0A=
-         devs[i] =3D s->ports[i].dev;=0A=
-         if (devs[i] && devs[i]->attached) {=0A=
-             usb_detach(&s->ports[i]);=0A=
-@@ -877,7 +881,7 @@ void ehci_reset(void *opaque)=0A=
-     s->astate =3D EST_INACTIVE;=0A=
-     s->pstate =3D EST_INACTIVE;=0A=
- =0A=
--    for(i =3D 0; i < EHCI_PORTS; i++) {=0A=
-+    for (i =3D 0; i < EHCI_PORTS; i++) {=0A=
-         if (s->companion_ports[i]) {=0A=
-             s->portsc[i] =3D PORTSC_POWNER | PORTSC_PPOWER;=0A=
-         } else {=0A=
-@@ -942,8 +946,9 @@ static void handle_port_owner_write(EHCIState *s, int p=
-ort, uint32_t owner)=0A=
-     uint32_t *portsc =3D &s->portsc[port];=0A=
-     uint32_t orig;=0A=
- =0A=
--    if (s->companion_ports[port] =3D=3D NULL)=0A=
-+    if (s->companion_ports[port] =3D=3D NULL) {=0A=
-         return;=0A=
-+    }=0A=
- =0A=
-     owner =3D owner & PORTSC_POWNER;=0A=
-     orig  =3D *portsc & PORTSC_POWNER;=0A=
-@@ -988,7 +993,7 @@ static void ehci_port_write(void *ptr, hwaddr addr,=0A=
-         trace_usb_ehci_port_reset(port, 1);=0A=
-     }=0A=
- =0A=
--    if (!(val & PORTSC_PRESET) &&(*portsc & PORTSC_PRESET)) {=0A=
-+    if (!(val & PORTSC_PRESET) && (*portsc & PORTSC_PRESET)) {=0A=
-         trace_usb_ehci_port_reset(port, 0);=0A=
-         if (dev && dev->attached) {=0A=
-             usb_port_reset(&s->ports[port]);=0A=
-@@ -1065,8 +1070,10 @@ static void ehci_opreg_write(void *ptr, hwaddr addr,=
++static void spapr_machine_11_1_class_options(MachineClass *mc)=0A=
++{=0A=
++    /* Defaults for the latest behaviour inherited from the base class */=
 =0A=
-         break;=0A=
- =0A=
-     case USBSTS:=0A=
--        val &=3D USBSTS_RO_MASK;              // bits 6 through 31 are RO=
-=0A=
--        ehci_clear_usbsts(s, val);          // bits 0 through 5 are R/WC=
-=0A=
-+        /* bits 6 through 31 are RO */=0A=
-+        val &=3D USBSTS_RO_MASK;=0A=
-+        /* bits 0 through 5 are R/WC */=0A=
-+        ehci_clear_usbsts(s, val);=0A=
-         val =3D s->usbsts;=0A=
-         ehci_update_irq(s);=0A=
-         break;=0A=
-@@ -1131,8 +1138,7 @@ static void ehci_flush_qh(EHCIQueue *q)=0A=
-     put_dwords(q->ehci, addr + 3 * sizeof(uint32_t), qh + 3, dwords - 3);=
-=0A=
- }=0A=
- =0A=
--// 4.10.2=0A=
--=0A=
-+/* 4.10.2 */=0A=
- static int ehci_qh_do_overlay(EHCIQueue *q)=0A=
- {=0A=
-     EHCIPacket *p =3D QTAILQ_FIRST(&q->packets);=0A=
-@@ -1145,8 +1151,7 @@ static int ehci_qh_do_overlay(EHCIQueue *q)=0A=
-     assert(p !=3D NULL);=0A=
-     assert(p->qtdaddr =3D=3D q->qtdaddr);=0A=
- =0A=
--    // remember values in fields to preserve in qh after overlay=0A=
--=0A=
-+    /*  remember values in fields to preserve in qh after overlay */=0A=
-     dtoggle =3D q->qh.token & QTD_TOKEN_DTOGGLE;=0A=
-     ping    =3D q->qh.token & QTD_TOKEN_PING;=0A=
- =0A=
-@@ -1170,7 +1175,7 @@ static int ehci_qh_do_overlay(EHCIQueue *q)=0A=
-     }=0A=
- =0A=
-     if (!(q->qh.epchar & QH_EPCHAR_DTC)) {=0A=
--        // preserve QH DT bit=0A=
-+        /* preserve QH DT bit */=0A=
-         q->qh.token &=3D ~QTD_TOKEN_DTOGGLE;=0A=
-         q->qh.token |=3D dtoggle;=0A=
-     }=0A=
-@@ -1397,9 +1402,7 @@ static int ehci_execute(EHCIPacket *p, const char *ac=
-tion)=0A=
-     return 1;=0A=
- }=0A=
- =0A=
--/*  4.7.2=0A=
-- */=0A=
--=0A=
-+/* 4.7.2 */=0A=
- static int ehci_process_itd(EHCIState *ehci,=0A=
-                             EHCIitd *itd,=0A=
-                             uint32_t addr)=0A=
-@@ -1411,13 +1414,13 @@ static int ehci_process_itd(EHCIState *ehci,=0A=
- =0A=
-     ehci->periodic_sched_active =3D PERIODIC_ACTIVE;=0A=
- =0A=
--    dir =3D(itd->bufptr[1] & ITD_BUFPTR_DIRECTION);=0A=
-+    dir =3D (itd->bufptr[1] & ITD_BUFPTR_DIRECTION);=0A=
-     devaddr =3D get_field(itd->bufptr[0], ITD_BUFPTR_DEVADDR);=0A=
-     endp =3D get_field(itd->bufptr[0], ITD_BUFPTR_EP);=0A=
-     max =3D get_field(itd->bufptr[1], ITD_BUFPTR_MAXPKT);=0A=
-     mult =3D get_field(itd->bufptr[2], ITD_BUFPTR_MULT);=0A=
- =0A=
--    for(i =3D 0; i < 8; i++) {=0A=
-+    for (i =3D 0; i < 8; i++) {=0A=
-         if (itd->transact[i] & ITD_XACT_ACTIVE) {=0A=
-             pg   =3D get_field(itd->transact[i], ITD_XACT_PGSEL);=0A=
-             off  =3D itd->transact[i] & ITD_XACT_OFFSET_MASK;=0A=
-@@ -1513,8 +1516,9 @@ static int ehci_process_itd(EHCIState *ehci,=0A=
- }=0A=
- =0A=
- =0A=
--/*  This state is the entry point for asynchronous schedule=0A=
-- *  processing.  Entry here constitutes a EHCI start event state (4.8.5)=
-=0A=
-+/*=0A=
-+ * This state is the entry point for asynchronous schedule=0A=
-+ * processing.  Entry here constitutes a EHCI start event state (4.8.5)=0A=
++}=0A=
++=0A=
++DEFINE_SPAPR_MACHINE_AS_LATEST(11, 1);=0A=
++=0A=
+ /*=0A=
+  * pseries-11.0=0A=
   */=0A=
- static int ehci_state_waitlisthead(EHCIState *ehci,  int async)=0A=
+ static void spapr_machine_11_0_class_options(MachineClass *mc)=0A=
  {=0A=
-@@ -1531,7 +1535,7 @@ static int ehci_state_waitlisthead(EHCIState *ehci,  =
-int async)=0A=
-     ehci_queues_rip_unused(ehci, async);=0A=
- =0A=
-     /*  Find the head of the list (4.9.1.1) */=0A=
--    for(i =3D 0; i < MAX_QH; i++) {=0A=
-+    for (i =3D 0; i < MAX_QH; i++) {=0A=
-         if (get_dwords(ehci, NLPTR_GET(entry), (uint32_t *) &qh,=0A=
-                        sizeof(EHCIqh) >> 2) < 0) {=0A=
-             return 0;=0A=
-@@ -1564,8 +1568,9 @@ out:=0A=
+-    /* Defaults for the latest behaviour inherited from the base class */=
+=0A=
++    spapr_machine_11_1_class_options(mc);=0A=
++    compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len)=
+;=0A=
  }=0A=
  =0A=
+ DEFINE_SPAPR_MACHINE_AS_LATEST(11, 0);=0A=
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c=0A=
+index 3ef009463d..f5b6051a67 100644=0A=
+--- a/hw/s390x/s390-virtio-ccw.c=0A=
++++ b/hw/s390x/s390-virtio-ccw.c=0A=
+@@ -906,13 +906,24 @@ static const TypeInfo ccw_machine_info =3D {=0A=
+ #define DEFINE_CCW_MACHINE(major, minor) \=0A=
+     DEFINE_CCW_MACHINE_IMPL(false, major, minor)=0A=
  =0A=
--/*  This state is the entry point for periodic schedule processing as=0A=
-- *  well as being a continuation state for async processing.=0A=
-+/*=0A=
-+ * This state is the entry point for periodic schedule processing as=0A=
-+ * well as being a continuation state for async processing.=0A=
-  */=0A=
- static int ehci_state_fetchentry(EHCIState *ehci, int async)=0A=
++static void ccw_machine_11_1_instance_options(MachineState *machine)=0A=
++{=0A=
++}=0A=
++=0A=
++static void ccw_machine_11_1_class_options(MachineClass *mc)=0A=
++{=0A=
++}=0A=
++DEFINE_CCW_MACHINE_AS_LATEST(11, 1);=0A=
+ =0A=
+ static void ccw_machine_11_0_instance_options(MachineState *machine)=0A=
  {=0A=
-@@ -1674,7 +1679,7 @@ static EHCIQueue *ehci_state_fetchqh(EHCIState *ehci,=
- int async)=0A=
- =0A=
- #if EHCI_DEBUG=0A=
-     if (q->qhaddr !=3D q->qh.next) {=0A=
--    DPRINTF("FETCHQH:  QH 0x%08x (h %x halt %x active %x) next 0x%08x\n",=
-=0A=
-+        DPRINTF("FETCHQH:  QH 0x%08x (h %x halt %x active %x) next 0x%08x\=
-n",=0A=
-                q->qhaddr,=0A=
-                q->qh.epchar & QH_EPCHAR_H,=0A=
-                q->qh.token & QTD_TOKEN_HALT,=0A=
-@@ -1756,7 +1761,8 @@ static int ehci_state_fetchsitd(EHCIState *ehci, int =
-async)=0A=
- /* Section 4.10.2 - paragraph 3 */=0A=
- static int ehci_state_advqueue(EHCIQueue *q)=0A=
- {=0A=
--    /* TO-DO: 4.10.2 - paragraph 2=0A=
-+    /*=0A=
-+     * TO-DO: 4.10.2 - paragraph 2=0A=
-      * if I-bit is set to 1 and QH is not active=0A=
-      * go to horizontal QH=0A=
-      */=0A=
-@@ -1929,8 +1935,10 @@ static int ehci_state_execute(EHCIQueue *q)=0A=
-         return -1;=0A=
-     }=0A=
- =0A=
--    // TODO verify enough time remains in the uframe as in 4.4.1.1=0A=
--    // TODO write back ptr to async list when done or out of time=0A=
-+    /*=0A=
-+     * TODO verify enough time remains in the uframe as in 4.4.1.1=0A=
-+     * TODO write back ptr to async list when done or out of time=0A=
-+     */=0A=
- =0A=
-     /* 4.10.3, bottom of page 82, go horizontal on transaction counter =3D=
-=3D 0 */=0A=
-     if (!q->async && q->transact_ctr =3D=3D 0) {=0A=
-@@ -2041,7 +2049,7 @@ static void ehci_advance_state(EHCIState *ehci, int a=
-sync)=0A=
-     int again;=0A=
- =0A=
-     do {=0A=
--        switch(ehci_get_state(ehci, async)) {=0A=
-+        switch (ehci_get_state(ehci, async)) {=0A=
-         case EST_WAITLISTHEAD:=0A=
-             again =3D ehci_state_waitlisthead(ehci, async);=0A=
-             break;=0A=
-@@ -2120,21 +2128,20 @@ static void ehci_advance_state(EHCIState *ehci, int=
- async)=0A=
-             ehci_reset(ehci);=0A=
-             again =3D 0;=0A=
-         }=0A=
--    }=0A=
--    while (again);=0A=
-+    } while (again);=0A=
++    ccw_machine_11_1_instance_options(machine);=0A=
  }=0A=
  =0A=
- static void ehci_advance_async_state(EHCIState *ehci)=0A=
+ static void ccw_machine_11_0_class_options(MachineClass *mc)=0A=
  {=0A=
-     const int async =3D 1;=0A=
++    ccw_machine_11_1_class_options(mc);=0A=
++    compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len)=
+;=0A=
+ }=0A=
+ DEFINE_CCW_MACHINE_AS_LATEST(11, 0);=0A=
  =0A=
--    switch(ehci_get_state(ehci, async)) {=0A=
-+    switch (ehci_get_state(ehci, async)) {=0A=
-     case EST_INACTIVE:=0A=
-         if (!ehci_async_enabled(ehci)) {=0A=
-             break;=0A=
-         }=0A=
-         ehci_set_state(ehci, async, EST_ACTIVE);=0A=
--        // No break, fall through to ACTIVE=0A=
-+        /* No break, fall through to ACTIVE */=0A=
- =0A=
-     case EST_ACTIVE:=0A=
-         if (!ehci_async_enabled(ehci)) {=0A=
-@@ -2158,7 +2165,8 @@ static void ehci_advance_async_state(EHCIState *ehci)=
-=0A=
-         ehci_set_state(ehci, async, EST_WAITLISTHEAD);=0A=
-         ehci_advance_state(ehci, async);=0A=
- =0A=
--        /* If the doorbell is set, the guest wants to make a change to the=
-=0A=
-+        /*=0A=
-+         * If the doorbell is set, the guest wants to make a change to the=
-=0A=
-          * schedule. The host controller needs to release cached data.=0A=
-          * (section 4.8.2)=0A=
-          */=0A=
-@@ -2185,13 +2193,13 @@ static void ehci_advance_periodic_state(EHCIState *=
-ehci)=0A=
-     uint32_t list;=0A=
-     const int async =3D 0;=0A=
- =0A=
--    // 4.6=0A=
-+    /* 4.6 */=0A=
- =0A=
--    switch(ehci_get_state(ehci, async)) {=0A=
-+    switch (ehci_get_state(ehci, async)) {=0A=
-     case EST_INACTIVE:=0A=
-         if (!(ehci->frindex & 7) && ehci_periodic_enabled(ehci)) {=0A=
-             ehci_set_state(ehci, async, EST_ACTIVE);=0A=
--            // No break, fall through to ACTIVE=0A=
-+            /* No break, fall through to ACTIVE */=0A=
-         } else=0A=
-             break;=0A=
- =0A=
-@@ -2215,7 +2223,7 @@ static void ehci_advance_periodic_state(EHCIState *eh=
-ci)=0A=
- =0A=
-         DPRINTF("PERIODIC state adv fr=3D%d.  [%08X] -> %08X\n",=0A=
-                 ehci->frindex / 8, list, entry);=0A=
--        ehci_set_fetch_addr(ehci, async,entry);=0A=
-+        ehci_set_fetch_addr(ehci, async, entry);=0A=
-         ehci_set_state(ehci, async, EST_FETCHENTRY);=0A=
-         ehci_advance_state(ehci, async);=0A=
-         ehci_queues_rip_unused(ehci, async);=0A=
-@@ -2240,7 +2248,8 @@ static void ehci_update_frindex(EHCIState *ehci, int =
-uframes)=0A=
-         ehci_raise_irq(ehci, USBSTS_FLR);=0A=
-     }=0A=
- =0A=
--    /* How many times will frindex roll over 0x4000 with this frame count?=
-=0A=
-+    /*=0A=
-+     * How many times will frindex roll over 0x4000 with this frame count?=
-=0A=
-      * usbsts_frindex is decremented by 0x4000 on rollover until it reache=
-s 0=0A=
-      */=0A=
-     int rollovers =3D (ehci->frindex + uframes) / 0x4000;=0A=
-@@ -2320,8 +2329,9 @@ static void ehci_work_bh(void *opaque)=0A=
-         ehci->async_stepdown++;=0A=
-     }=0A=
- =0A=
--    /*  Async is not inside loop since it executes everything it can once=
-=0A=
--     *  called=0A=
-+    /*=0A=
-+     * Async is not inside loop since it executes everything it can once=
-=0A=
-+     * called=0A=
-      */=0A=
-     if (ehci_async_enabled(ehci) || ehci->astate !=3D EST_INACTIVE) {=0A=
-         need_timer++;=0A=
-@@ -2339,15 +2349,18 @@ static void ehci_work_bh(void *opaque)=0A=
-     }=0A=
- =0A=
-     if (need_timer) {=0A=
--        /* If we've raised int, we speed up the timer, so that we quickly=
-=0A=
--         * notice any new packets queued up in response */=0A=
-+        /*=0A=
-+         * If we've raised int, we speed up the timer, so that we quickly=
-=0A=
-+         * notice any new packets queued up in response=0A=
-+         */=0A=
-         if (ehci->int_req_by_async && (ehci->usbsts & USBSTS_INT)) {=0A=
-             expire_time =3D t_now +=0A=
-                 NANOSECONDS_PER_SECOND / (FRAME_TIMER_FREQ * 4);=0A=
-             ehci->int_req_by_async =3D false;=0A=
-         } else {=0A=
--            expire_time =3D t_now + (NANOSECONDS_PER_SECOND=0A=
--                               * (ehci->async_stepdown+1) / FRAME_TIMER_FR=
-EQ);=0A=
-+            expire_time =3D t_now=0A=
-+                + (NANOSECONDS_PER_SECOND * (ehci->async_stepdown + 1) /=
-=0A=
-+                   FRAME_TIMER_FREQ);=0A=
-         }=0A=
-         timer_mod(ehci->frame_timer, expire_time);=0A=
-     }=0A=
 -- =0A=
 2.43.0=0A=
 
