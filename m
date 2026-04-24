@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AF1FFB44C8
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 07:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BA0CFB44C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 07:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGB9X-0001Po-2H; Fri, 24 Apr 2026 03:40:43 -0400
+	id 1wGBC3-0002HQ-8f; Fri, 24 Apr 2026 03:43:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wGB9V-0001NA-ML
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:40:41 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wGBBz-0002D0-AW
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:43:15 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wGB9T-0002eQ-TY
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:40:41 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so67776435e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 00:40:39 -0700 (PDT)
+ id 1wGBBx-0004dm-N0
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:43:15 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43d7213b6ebso4942549f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 00:43:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777016438; x=1777621238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777016592; x=1777621392; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=h8yL3odyhPrO2s0aCA6eGvSBe2pLsIa4gvh/0BggZZQ=;
- b=DW51G/ru3se3onfXl/Eh+sacpKDySJgrdkbkMruFIIKSaRi0qzM0xL4IxyothNheC4
- /SQI/pAbI5u/jb1KgvsnTNYcs2+GLesSPUfwulhsQlUSPOCNAbPKcU3OLuE2Ffcfm+8d
- pu60K9tlFt7gNXbVvrrGsC34ExyjUeRfgREgXU3Y8CmY012mK7cEsTuqqx/jqD83ayGY
- EeDoe9QjhkO0stn7USloM1Snnv7jKIHB760MgetCXizc5S9Wb85064htJqahEzQgOP0O
- fAILN6mMGEq3Ryezxjw1RUYJqnFe4anUN5lWaFjwlB7lCBJOrvg4wgF8NfPGks26uiu9
- 9THA==
+ bh=14KuYVGLmHAuezwvtJ6LG5O4sa7Z0ECI6R6C8/0j3nY=;
+ b=r9ztRLee6Ib6m/POAUib2enagsdqtTbPauB8x+2Zh+1iLeS4zYIwROb6jISwgAcxdp
+ 0EY1LqBe/Gs9EOOGV/pk7BdBdg5s6UaZgSZwdkEpxibu+F+Lcz5rkrHsPYGCt/qDzeOW
+ SG7g+YTyAfeciDpzbO9fvc2wuRLKRxe73soT37FYh3hRlHj4bdu1XU9ApDbQVgN61rEe
+ ++j5vMb5w2zw3GcKl4dRygPEIK62A8Ue8eJ3rLibhF11l81xd4bybidaLIXMiS4oJyJK
+ 3lugnFY6ZQ9LEd8MyEbiMO4hOCy/q/ETVCSuWHMI5LoUwrtrzh9GSos9Cd29qL2Zjnbn
+ J8yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777016438; x=1777621238;
+ d=1e100.net; s=20251104; t=1777016592; x=1777621392;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=h8yL3odyhPrO2s0aCA6eGvSBe2pLsIa4gvh/0BggZZQ=;
- b=eVTnWzUtEqlcSO+rfSn5BRsG9qlEeL8S8bJ+Z2Ad19KwCdfWtZYyKxM5bm5e2fqv08
- MO1UcZNvknkinjV3EBYz3GaTXR40QDq/TbYwf1FBlg+X/m6uwZPLAG7I7wDNyvbiQLhd
- /prx1zcHyk7Bard93vt9tnhNW4My4EGNJKTVhkuxaa1U3oA6FoQMRwwGRyRiYplP7IE6
- WKS7UDHMOQgEY/1lzp/G1714UQKsvYVWzh3uAd72r2ZX3jBKsXVw6qTK0gATRMV2Jd9o
- VGMWEuHfpyQH/H/cVeDUFDQ/+FsN/vk01LwpoyV84d3PGtFpqyeqqy3WxdsLkL+Y0Cy0
- lCTQ==
-X-Gm-Message-State: AOJu0YwFWg8tcfyBshd6KWE4RLBlH3GCK8X+YRY4OFc4GBllOG0hytec
- DbaiYUxCrNpm0N3CTkxfCoe7qKy7wiVuxpqz5USj4JnAIjuaHzpDj+uTrFxizPu3CerBSg1ncYF
- nLzveP6U=
-X-Gm-Gg: AeBDiesjAO5IvdlZppxQ920xu8EXScfo9TDxxzDY0/PBgedsIInsuPAMRNepvAh/Cx3
- 6VOXI/gM76plLLQL01qlcvXxJJ/bcsH0cvB/4AyZgX6C4D+i3xNQOmDDmfYj1IHIRnnfdV1CtnC
- EQ4WuoZa0uzVGWHZXbUBLa10Czu2Adxd2y9X13tPFgU3mFputC/KtDi5lMSf48c0anpOMCdBAe9
- N2Aw7vEaZ1M90iAZblHpKr+XYObqMojA4Du2FyyOOGKu0HkOXAM6ctxILNMyg8ECKwWwsBxvqZ3
- dmESZ+gF7i9ovf+l3cOQNczCVviEbi92sk6L08rPm6OKZopRfHfQrFqtM3s7ujRfK1wCA7bR9rJ
- drbqgXRGXtUeWbyE4czfCy+ILqroWelljJmswT+O4/69w3mxcyey0xzaiJvXYRMwzxGp0PfvBdu
- Jj9tLoqikZDdApb2x+9IC47lNSP1HfWBqnmhfOVud/3KyJzpJ/7ci2mLGPHue13i585GT3bc2QL
- wi3AnHXX8zTAsLW5bgADiCgCMwuxME8+Dx3DDc1nzMnhS+5KYtEmYH91/8NvoNI8KLtjswO
-X-Received: by 2002:a05:600c:828d:b0:48a:568f:ae8a with SMTP id
- 5b1f17b1804b1-48a568fb048mr213507425e9.8.1777016438020; 
- Fri, 24 Apr 2026 00:40:38 -0700 (PDT)
+ bh=14KuYVGLmHAuezwvtJ6LG5O4sa7Z0ECI6R6C8/0j3nY=;
+ b=tMPMZTCGaJaRksyHbmKspznSEnfjmVcqW1TtOgjLvHrZ+wwbfrXMapiraK/L4RtZkD
+ iR+EHknDPDWgup070sRrTSSbJk0WFBRX4kiumisW2ndZFimE7iux1wDYwxmUM/eaDcgO
+ pTZWi3ITO1OGpOhEIiwaFZDovIkaKZ3ifNTd/XQrxb78dssqTk28HRjSVT8ARY3KM7HV
+ mB+lnK3CkiIdmlICjTxWkYNgDFH9PV8jWGUOLalGj8gwckonSZGsr7dHTrzx1wKo3prg
+ E89TN5uOrtWDV2LsOy1Xkbe4dIvGsv7iUmX4DQnYd/Gowc+nRqJVNsCwnhhoKvv6hrAG
+ 8ERQ==
+X-Gm-Message-State: AOJu0Yx13d4ADpccZe8ZMYHec3OaLWOTDKoBHIoUlMkhf6946DJgARpX
+ hccZsO5cKINkgHgTfuIYSkPalBF1JzkHtrZ27nYGWD8O6AfxQ9d/R17djs7i2Ds7WA3TTBsdOfP
+ vI3yxvLo=
+X-Gm-Gg: AeBDiettiJqK0mTkoVNBcnM+Vcm2BBDgXbvc6Jo1aB4El1ujMC7b43/CgXG94Mv6Gya
+ qLjxZZp2cxu9ifcMucbJAwncOEY0olaUju3VpHdXdwduqtVX0TgOYZctxiv6VjyjKSBbN60SLq+
+ JWuNiohI/mK2x4loobPnrYsATssoTCB2Dz898urtBTL+H02AmaDYxjKQsgmsJz+MdwbKhnbv2dx
+ Pdi2frWotrI3VIlhwflWpr+IzUId9uKga2iFDx90wskr8Wr+M+V6FNWMHqk/8rcz8TSX8RD0rMH
+ ci1A1Ljv0STORuF6mxIXVV4BQnbGFFZtIp/5np9G4DvsttpN0Su7xF0UgV26BoMFu5nPPFBeHGt
+ rxt5SOpKUN7tm/id6hJdO2FPDtyTlbrgKj3Kdiq0DfAJAgHyp6HRaHj666Fw4maivGQvQQfwsXz
+ TsxxzZuBcjihNn447/5WqGvuMHzewzyp6oBJhzoO6HMxvlFvs7Xh2xH2YyukWXOG44jsvqRrd3S
+ oYzq8CKrtAHLRj6GDkhFWHy04WKwbDspGlE8zNc8EVsxQ+4fBAiMWMEtTuKIQ==
+X-Received: by 2002:a05:6000:2308:b0:43f:e9e2:efac with SMTP id
+ ffacd0b85a97d-43fe9e2f02amr41616689f8f.5.1777016591621; 
+ Fri, 24 Apr 2026 00:43:11 -0700 (PDT)
 Received: from meli-email.org (athedsl-338307.home.otenet.gr. [85.72.177.33])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc14a61asm528999295e9.15.2026.04.24.00.40.37
+ ffacd0b85a97d-43fe4cb13a0sm58448505f8f.8.2026.04.24.00.43.11
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 24 Apr 2026 00:40:37 -0700 (PDT)
-Date: Fri, 24 Apr 2026 10:40:21 +0300
+ Fri, 24 Apr 2026 00:43:11 -0700 (PDT)
+Date: Fri, 24 Apr 2026 10:41:21 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -79,12 +79,12 @@ User-Agent: meli/0.8.13
 References: <20260423213838.780814-1-pierrick.bouvier@oss.qualcomm.com>
  <20260423213838.780814-2-pierrick.bouvier@oss.qualcomm.com>
 In-Reply-To: <20260423213838.780814-2-pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <tdzmno.ffmka4n6ptcx@linaro.org>
+Message-ID: <tdzmry.259an10v60tlz@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,9 +113,6 @@ On Fri, 24 Apr 2026 00:38, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> 
 >
 >Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 >---
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
 > contrib/plugins/uftrace_symbols.py | 4 ++--
 > 1 file changed, 2 insertions(+), 2 deletions(-)
 >
@@ -131,6 +128,10 @@ Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 >-            # missing size information
 >+        if len(info) < 4:
 >+            # missing size/address information
+
+On a second thought, shouldn't this be != 4? Otherwise the unpacking 
+will fail with ValueError: too many values to unpack (expected 4)
+
 >             continue
 >         addr, size, type, name = info
 >         # add only symbols from .text section
