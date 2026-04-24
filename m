@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4EEFB44B4
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 06:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3116FB44A6
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 06:12:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG9gP-0002MK-Ku; Fri, 24 Apr 2026 02:06:33 -0400
+	id 1wG9li-0003AL-Jj; Fri, 24 Apr 2026 02:12:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wG9gO-0002MB-P7
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 02:06:32 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wG9lc-00039w-NQ
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 02:11:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wG9gL-0004iZ-Q4
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 02:06:32 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wG9lb-00075D-88
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 02:11:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777010788;
+ s=mimecast20190719; t=1777011113;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=zoWa3Azwdmkke+C73a7rGycQVFOKXBOEbN9D0SDBFh0=;
- b=ZptQ+5zPZECIboPSxdFgUi+S3gFodH3iqvJaVJY8YghwvKQHDv7wpX2g8cGQSPyArFotuG
- 1noZvWo4azX3EsV1CF0Az1bbBmpJrjwYWeXPUGP59gnX6Q00xMKj+B8g1+5jFtMHsBk7f/
- bqGiEha/eo2MnqccZdsKZVLGJqTRzQU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jFbrB9dceQErc9zTYJpCbSwhVssmE1zwm+K86ArDYPQ=;
+ b=H1W1Yfov72aoWM2/oc/MM/PJyXEh43KoHfGKp/Chf70pq67Tu0bCPvdDse9eYM4LSFLW2a
+ Be9Gb04W2lgdGo+cbIXCwHKtQ1HL+yk5LXIWI/rpW2/3cOpHahfDzSwSyTCmFkeRti/bbw
+ 3BZtg8cnciMLnib+JYz2P3r2POhSkbI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-91tANwg8MLCzMWNk_LWUxQ-1; Fri,
- 24 Apr 2026 02:06:26 -0400
-X-MC-Unique: 91tANwg8MLCzMWNk_LWUxQ-1
-X-Mimecast-MFC-AGG-ID: 91tANwg8MLCzMWNk_LWUxQ_1777010785
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-308-aYmYqtIrPQuYSLhiz3Lv6w-1; Fri,
+ 24 Apr 2026 02:11:50 -0400
+X-MC-Unique: aYmYqtIrPQuYSLhiz3Lv6w-1
+X-Mimecast-MFC-AGG-ID: aYmYqtIrPQuYSLhiz3Lv6w_1777011108
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65FC918002CC
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:06:25 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A89A418003F6; Fri, 24 Apr 2026 06:11:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA88F180047F
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:06:24 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69AF63007572; Fri, 24 Apr 2026 06:11:47 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 523F521E6A28; Fri, 24 Apr 2026 08:06:22 +0200 (CEST)
+ id 21EA021E6A28; Fri, 24 Apr 2026 08:11:45 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Elizabeth Ashurov <eashurov@redhat.com>
-Cc: qemu-devel@nongnu.org,  kkostiuk@redhat.com,  berrange@redhat.com,
- yvugenfi@redhat.com
-Subject: Re: [PATCH v3] qga: add security info to guest-get-osinfo
-In-Reply-To: <20260414141111.2471509-1-eashurov@redhat.com> (Elizabeth
- Ashurov's message of "Tue, 14 Apr 2026 17:11:11 +0300")
-References: <20260414141111.2471509-1-eashurov@redhat.com>
-Date: Fri, 24 Apr 2026 08:06:22 +0200
-Message-ID: <874il0yjs1.fsf@pond.sub.org>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  mst@redhat.com,  peterx@redhat.com,
+ farosas@suse.de,  raphael.s.norwitz@gmail.com,  bchaney@akamai.com,
+ qemu-devel@nongnu.org,  berrange@redhat.com,  pbonzini@redhat.com,
+ yc-core@yandex-team.ru,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v15 6/8] net/tap: support local migration with virtio-net
+In-Reply-To: <20260420193846.675844-7-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Mon, 20 Apr 2026 22:38:43 +0300")
+References: <20260420193846.675844-1-vsementsov@yandex-team.ru>
+ <20260420193846.675844-7-vsementsov@yandex-team.ru>
+Date: Fri, 24 Apr 2026 08:11:45 +0200
+Message-ID: <87tst0x4ym.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -86,185 +87,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Elizabeth Ashurov <eashurov@redhat.com> writes:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> Extend guest-get-osinfo to include security features status
-> (VBS, Secure Boot, TPM) in a nested 'security' field.
-> OS-specific data (e.g. Windows DeviceGuard) is separated
-> using a union to allow future per-OS extensions.
+> Support transferring of TAP state (including open fd) through
+> migration stream as part of viritio-net "local-migration".
 >
-> TPM and Secure Boot information are represented as dedicated
-> structs (GuestSecurityTPMInfo and GuestSecuritySecureBootInfo).
+> Add new option, incoming-fds, which should be set to true to
+> trigger new logic.
 >
-> The implementation queries Win32_DeviceGuard and Win32_Tpm via
-> WMI, and reads UEFI variables (SecureBoot, SetupMode, AuditMode,
-> DeployedMode) through GetFirmwareEnvironmentVariable().
+> For new option require explicitly unset script and downscript,
+> to keep possibility of implementing support for them in future.
 >
-> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+> Note disabling read polling on source stop for TAP migration:
+> otherwise, source process may steal packages from TAP fd even
+> after source vm STOP.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-[...]
-
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index c57bc9a02f..6f4b61355b 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1490,6 +1490,10 @@
->  #     * POSIX: as defined by os-release(5)
->  #     * Windows: contains string "server" or "client"
->  #
-> +# @security: Security features status.  Present if any security
-> +#     information (TPM, Secure Boot, etc.) could be retrieved.
-> +#     Currently populated on Windows guests only (since 11.1)
-> +#
->  # .. note:: On POSIX systems the fields @id, @name, @pretty-name,
->  #    @version, @version-id, @variant and @variant-id follow the
->  #    definition specified in os-release(5).  Refer to the manual page
-> @@ -1508,7 +1512,8 @@
->        '*kernel-release': 'str', '*kernel-version': 'str',
->        '*machine': 'str', '*id': 'str', '*name': 'str',
->        '*pretty-name': 'str', '*version': 'str', '*version-id': 'str',
-> -      '*variant': 'str', '*variant-id': 'str' } }
-> +      '*variant': 'str', '*variant-id': 'str',
-> +      '*security': 'GuestSecurityInfo' } }
->  
->  ##
->  # @guest-get-osinfo:
-> @@ -1952,3 +1957,130 @@
->    'returns': ['GuestNetworkRoute'],
->    'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
->  }
-> +
-> +##
-> +# @GuestSecurityInfoWindows:
-> +#
-> +# Windows-specific security features from the Win32_DeviceGuard
-> +# WMI class.  All values are raw integers as provided by the
-> +# Windows API.  See
-> +# https://learn.microsoft.com/en-us/windows/security/hardware-security/enable-virtualization-based-protection-of-code-integrity
-> +# for the meaning of each value.
-> +#
-> +# @vbs-status: Whether VBS is enabled and running.
-> +#
-> +# @available-security-properties: Relevant security properties
-> +#     available for VBS and memory integrity.
-> +#
-> +# @code-integrity-policy-enforcement-status: Code integrity
-> +#     policy enforcement status.
-> +#
-> +# @required-security-properties: Required security properties
-> +#     to enable VBS.
-
-What about "Security properties required to enable VBS"?
-
-> +#
-> +# @security-services-configured: Whether Credential Guard or
-> +#     memory integrity is configured.
-> +#
-> +# @security-services-running: Whether Credential Guard or
-> +#     memory integrity is running.
-> +#
-> +# @usr-cfg-code-integrity-policy-enforcement-status: User-mode
-> +#     code integrity policy enforcement status.
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'GuestSecurityInfoWindows',
-> +  'data': {
-> +      '*vbs-status': 'int',
-> +      '*available-security-properties': ['int'],
-> +      '*code-integrity-policy-enforcement-status': 'int',
-> +      '*required-security-properties': ['int'],
-> +      '*security-services-configured': ['int'],
-> +      '*security-services-running': ['int'],
-> +      '*usr-cfg-code-integrity-policy-enforcement-status': 'int' } }
-> +
-> +##
-> +# @GuestSecurityInfoType:
-> +#
-> +# Guest operating system type for security info.
-> +#
-> +# @windows: Microsoft Windows
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'enum': 'GuestSecurityInfoType',
-> +  'data': ['windows'] }
-> +
-> +##
-> +# @GuestSecurityInfoOs:
-> +#
-> +# OS-specific security information.
-> +#
-> +# @type: guest operating system type
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'union': 'GuestSecurityInfoOs',
-> +  'base': { 'type': 'GuestSecurityInfoType' },
-> +  'discriminator': 'type',
-> +  'data': {
-> +      'windows': 'GuestSecurityInfoWindows' } }
-> +
-> +##
-> +# @GuestSecurityTPMInfo:
-> +#
-> +# TPM device information.  The presence of this struct indicates
-> +# that a TPM device exists on the guest.
-> +#
-> +# @major-version: TPM specification major version (e.g. 1 or 2)
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'GuestSecurityTPMInfo',
-> +  'data': {
-> +      'major-version': 'int' } }
-> +
-> +##
-> +# @GuestSecuritySecureBootInfo:
-> +#
-> +# UEFI Secure Boot information.  The presence of this struct
-> +# indicates that the guest supports UEFI Secure Boot.
-> +#
-> +# @enabled: Whether Secure Boot is currently enabled
-> +#
-> +# @audit-mode: Whether Secure Boot is in audit mode
-> +#
-> +# @deployed-mode: Whether Secure Boot is in deployed mode
-> +#
-> +# @setup-mode: Whether Secure Boot is in setup mode
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'GuestSecuritySecureBootInfo',
-> +  'data': {
-> +      'enabled': 'bool',
-> +      '*audit-mode': 'bool',
-> +      '*deployed-mode': 'bool',
-> +      '*setup-mode': 'bool' } }
-> +
-> +##
-> +# @GuestSecurityInfo:
-> +#
-> +# Guest security features status.  Fields are optional; a missing
-> +# field means the information is not available on this guest OS.
-> +#
-> +# @tpm: TPM device information.  Absent if no TPM is present
-> +#     or the information is unavailable.
-> +#
-> +# @secure-boot: UEFI Secure Boot information.  Absent on
-> +#     legacy BIOS systems or if unavailable.
-> +#
-> +# @os: OS-specific security information
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'GuestSecurityInfo',
-> +  'data': {
-> +      '*tpm': 'GuestSecurityTPMInfo',
-> +      '*secure-boot': 'GuestSecuritySecureBootInfo',
-> +      '*os': 'GuestSecurityInfoOs' } }
-
-No real issues, just a doc phrasing suggestion.  Thus, QAPI schema
+QAPI schema
 Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
