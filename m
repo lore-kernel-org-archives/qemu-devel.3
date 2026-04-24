@@ -4,104 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA9BFED3D9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 14:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693AAFED3D9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 14:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGHvK-0006ms-38; Fri, 24 Apr 2026 10:54:31 -0400
+	id 1wGHwl-0007Wn-79; Fri, 24 Apr 2026 10:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wGHvD-0006mR-Su
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:54:23 -0400
-Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wGHwj-0007WZ-NX
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:55:57 -0400
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wGHvB-00060K-Ma
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:54:22 -0400
-Received: by mail-dy1-x132e.google.com with SMTP id
- 5a478bee46e88-2ba895adfeaso8739742eec.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 07:54:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777042459; cv=none;
- d=google.com; s=arc-20240605;
- b=jcR2ObG/NHPaz2BfyKZzCaFcJ90jvnGa+11zG4rWBWCKS4006c8M0WFjFoEP+Gp/Kq
- nSPBxAZBRRUhzSMvO7xHyHZstDX/ArBICU0vFSC4cw41pPSS62rZ8qYZpVGAvd3g8V9W
- BKGErsFmL4v5ZvF0FEICd7jeUeCat1t1a4DUKaU0uYW69pMyMChf2LiQ7N3S4STMriRl
- duWQ6nTDIK5zgUz6hbuEMlXn9DY2fyavDKU6SSY2xZ4VT5UxM6w1JoZM1SXpFGE489Qn
- Inkco3PQaXl4yw5HS2WLNpQzDFE6uw7KG/qENh7xid5GHO1d+E6jqJ2QzE/UOc9Axllp
- Wr2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=KbttfDnZFk3c4YOKbtM9vtEftSzEKA72FNq8uEMrsmk=;
- fh=hooBudXt5esqDtb27qV8/EVQeN48ikwKCqnHqctkwwU=;
- b=Yixe+WYiWfZ6/SjihrFDcknugd1fIyf3LgX9o3XoU+/cBEAgFLudyRfuUoMDB/ISuh
- f8GUzFIdxxza1pLdyBk0mIz5gTeXo9b+6Xw/3nrC4p1b+FpLi0tmLSpcCvl1alcabqcj
- 3vzJlDk3Q3cCCFIwcTTXlz7NmBVg8yca5uduYapqysCyvyXZUNgxry2YgB61FJvQpk1f
- 1MhR+1VNLSxgx98m2IIe4SlUtdOeFmdox41EdiWnUCa39ZtT9SOYlVfrb81poKoDbqvz
- ljkASfD+Vg5GFmc7r99at01O4/c/Ue7NdJnEdMUdypqqpm5x+Kh0EJ/gzmAH2kL6PDH5
- 9Lqg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wGHwi-0006Yz-6V
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:55:57 -0400
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-43d03db7f87so5446221f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 07:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777042459; x=1777647259; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KbttfDnZFk3c4YOKbtM9vtEftSzEKA72FNq8uEMrsmk=;
- b=kp5nQpeAf+P7wA0TD5cUXnij9hzKu1X1v2EtmRcNVhzrI97VOEcuLs3KCnC6khLZBp
- kZhq5Go3c/G9/85QcvPTMsmittg4jnBntSVPGTUEZJFdJrlxOeFSpIcha82fxE9BddY5
- gRdSGvtckSRFHq4bGXiM794isganUHYm2QHA/Ywcn29ObpqI3zm20olR9OGH798fCD6b
- TigWNDQUL9LOUsqWt3xkdwgXnnT7VfGmuf/fDYNu7mtLQmfZTvOezsizk34NtqAFMMtL
- zF2rRL1AAVBEErUaZ8BsA3azibbAXy/H9j2ynD50fXzOoZg19rCC7eF2rNTY92hLgaKQ
- lnYQ==
+ d=linaro.org; s=google; t=1777042553; x=1777647353; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sAoYJPbY9FIZ+jM/sV71aDZG1XRPYmzJyLJiM6Lq7ws=;
+ b=Zz5v/A1Bkym69xN0K+Gp0e5ezfv+uYycvP7Ix6kuKhrn12QG8DT2K+00BwvXcd+GAr
+ tuJLAXU52AXps00UN1gPX46b/cvW7ALzKLNtOoUl8PYLEDPl3pe3L/EmwWW4Ufkv4vAy
+ 3c/h7+IOi+cKF+dgM161EbleJmaMpzsF7jLlB0xdurhMbT/Lp6sqnDaM1a4WzFPnA/u7
+ JJXMGH5upNRCOTDdINEwF+/wjGZFRq0XI2tWVTHiwxi2kPbwj/UzVXVAv7xzZGx5gvV9
+ ib7uk8rw8THSWGiCFAoi3ORJS1+2ja6qcQIPIeY+qk50yKHc17u2EExnZFfuiy3H9Wjw
+ OVNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777042459; x=1777647259;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KbttfDnZFk3c4YOKbtM9vtEftSzEKA72FNq8uEMrsmk=;
- b=BHNrdJi8RtMHtM/QfbxQsyOTbuDntWZChgyaxTfZ5LBdwHqzcowVEYnSidSptHKpmi
- ItvaY42br9N2fr6nJ44F8xF3/zPqxK1+WZq77YfmwuN7oy7Ka9ulwFKF6/Tek4jfQz2o
- tj7WnmfgvgV1okCin2ov1R3SXyVMdQavQiC5USDRtUVH3o7+jqvA4af2POtGmbK9lawc
- Cn2ESdhRnmcWk5NSzk/DbIDecwpYJ9u2fSCbKkotwowRisSA2rM6yHmvC+cwN8snyRIo
- LWUZmDS4i5dxAx4iUZ80bXseqQDxikGx/XNl+CfFU2IPdExgzz1S0lVCVZoS8jGZNK6H
- Tiww==
-X-Gm-Message-State: AOJu0YyN8FQxG1+qtBRarbTPndXQ/KKYajGjeS/oEHFBSeDUhwynhR54
- 8xfqdr7mpvK9l0pgk5RtKzGur+awS0KGBWvySNxFtLGWhcaMhNnWVq2d43qd6uF/ldx4OaTOuz2
- Ln7GA36TAaRBe/HYnvzUlbFqwb4xq3qo=
-X-Gm-Gg: AeBDieuBzmsmbzGTFmMVVgvO84kEpQcHv8pbYU6/CqHOJxiRKcYnN8VyJyegiWTeR0d
- 9IZ2//F36gXN5eOIInrShiLlcB6iJexTtmQauaxNvipxhThwUd3Y5Is83Bn1tIkb3FXd4fp7wBa
- h2dN1OBsFG7RkxmsxpL1fxZ8Aub4hj5CHH4zaME7q8jW/v/kItW5vB58RYNS5N48U00dZAjcNqQ
- uD1LTGPowhm/JJW4c++y2ot0qiXyYwCPQMNT+V4e2dJMZPmtChsdaQKAH1PPzd/Bpiu3ZI7gAwG
- qwVCcCgLUwPyVMzAaI36xMRpyezITBntrlYIZUE5FYpYeCkNr4U=
-X-Received: by 2002:a05:7301:fd81:b0:2be:80c4:2c8c with SMTP id
- 5a478bee46e88-2eada6d6576mr1480875eec.8.1777042458742; Fri, 24 Apr 2026
- 07:54:18 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777042553; x=1777647353;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sAoYJPbY9FIZ+jM/sV71aDZG1XRPYmzJyLJiM6Lq7ws=;
+ b=QKah+u+oaS2YdMdp6tCBd7RNjRe++XrDFdEL+n+XG/rojA+aRQCfR6HBzPLxuF5EzR
+ rdG1OdXWANL6KrHCC1FFhVr9rG++evphN7eFhD3CrOTtdhhJnboPeQlSskRNCVJ7mEuY
+ U+ewhLwUG5UjrcHdoY3E8f57xJv25GZaNPuaefH7llE2zIlMLXiRSwVYwF4D6lVIlXGI
+ IA4cEShzFzgf6W+VOG2FiuXUgUfWlwHIIE0B0vPV2gc+c12z5Cspk4dQPB5/03wsupeQ
+ QSnhdU0XaY4/JMs461hYskdNGrp2mh3pYBQyw3zeF1mY5WXTIpaGCkP1hL4Ab4VmYrho
+ 68EA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/W84xkilBo/eAdEOEuW2JHrkWZHAVtpvb835KG/fOSffXuG1vpuo6N1rGSX3WfuPh7ShSHkbHxv8jo@nongnu.org
+X-Gm-Message-State: AOJu0YycP/Mgi2a/2VtqqA69d8sRbTHKxMbBoVAaKCEEvFmp9+84wRiK
+ XahVGr/2jHvum7198xzZ2KnGsZA8WKLTnXluoi3GoLWJRRi+AbMw4GpcP5yEITyPC5c=
+X-Gm-Gg: AeBDieutEauoP6ZX0vIuc0iYpd3bIdV7emZZMgRg0SlzSf+pcWBdcyy1jw6a2//nArL
+ S818kTRFyhVZ5STZsNbr6mhUc46HwBAoEr79J158oSaiKa3HO+4hRwXAMh8004as40o0Wmx/vXL
+ buZpSCDLIVwPEZZoBm3iWCiQkw3AmQh6b5CI0TCwxCouNEch9Vxc5NlSRhH4WAFcRcBgBV8YYGO
+ yYELhELFQHpagc/01smYBibt8yLAOU6di1hx+aSUVYrP/cZ9Q7l0uQJjJ4YgSKsPl3HQPAvgZbN
+ zCVO2IcB4O+dMSfMVAkuHAV9ARYJ71m94JvB/ZMFt6NCsJMCFKQXjGLKSpQNNC+luKtZA/me47j
+ 6oXMBnQJTaoomkPK7Gcq+Ei73yl9ytUYMYO/q+bH8Kel2x+8cuHhlU0zOBRqnhoW73GLKch9f6i
+ Z6iODVs+D7b1eWenMqi7iJTWBtw3BwZ6m2ew==
+X-Received: by 2002:a05:6000:2f8a:b0:43d:9bb5:bda5 with SMTP id
+ ffacd0b85a97d-43fe3e0ae25mr47785109f8f.40.1777042553120; 
+ Fri, 24 Apr 2026 07:55:53 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4cc0d51sm61966131f8f.10.2026.04.24.07.55.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Apr 2026 07:55:52 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 495405F7C7;
+ Fri, 24 Apr 2026 15:55:51 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org, Demi Marie
+ Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com, Eric Blake
+ <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
+ <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, jacob.oursland@gmail.com,
+ Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>, matthieu@minio.io, Max Chou
+ <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ mdean@redhat.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Roberto
+ Campesato <rbc@meta.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
+ Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU community call 28/4/2026 agenda items?
+User-Agent: mu4e 1.14.1-pre3; emacs 30.1
+Date: Fri, 24 Apr 2026 15:55:51 +0100
+Message-ID: <874il05rwo.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <sXJQOREScD4G6fYInirO2wbLtvZf6EK1yuTrP6U3GQBM5dIq7dhRnCm9uxSSiRRK0b4m7OEZRqEgjzHCTFoS0DruFvYUXh-UUXhkY0x786A=@proton.me>
-In-Reply-To: <sXJQOREScD4G6fYInirO2wbLtvZf6EK1yuTrP6U3GQBM5dIq7dhRnCm9uxSSiRRK0b4m7OEZRqEgjzHCTFoS0DruFvYUXh-UUXhkY0x786A=@proton.me>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 24 Apr 2026 18:54:07 +0400
-X-Gm-Features: AQROBzCX99rG3BrO5qZK5wSpYF9S5zClBApfbYPWa09Vv1eLCQHsCnwGWdGGhgM
-Message-ID: <CAJ+F1CK=jxw1Nf8UYa6jx344HknSXyj5A4MaoUWr5xJSK-ohjg@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/xhci: clamp interval exponent to avoid UB shift in
- xhci_init_epctx()
-To: Feifan Qian <bea1e@proton.me>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x442.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,57 +129,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
 
-On Fri, Apr 24, 2026 at 4:37=E2=80=AFPM Feifan Qian <bea1e@proton.me> wrote=
-:
->
-> The xHCI endpoint context dword 0 bits 23:16 ("Interval") are written
-> by the guest and passed directly as the shift amount in:
->
->     epctx->interval =3D 1 << ((ctx[0] >> 16) & 0xff);
->
-> The shift amount can be 0-255.  Shifting a 32-bit `int` left by >=3D 32
-> is undefined behaviour under C11 =C2=A76.5.7p4.  With UBSan
-> (halt_on_error=3D1) this causes QEMU to abort; with aggressive compiler
-> optimisations that assume UB is unreachable the result is
-> unpredictable.
->
-> Clamp the exponent to [0, 31] with MIN() before the shift, and use
-> `1u` (unsigned) to avoid shifting a signed integer.  The xHCI
-> specification defines a maximum meaningful Interval value of 15 for
-> most endpoint types; clamping to 31 is the minimal safe fix that
-> preserves the full unsigned 32-bit range for any compliant value.
+Hi,
 
-I think we should clamp it to 15, to comply with the spec.
-Otherwise, the patch looks fine.
+The KVM/QEMU community call is at:
 
->
-> Reported-by: Feifan Qian <bea1e@proton.me>
-> Signed-off-by: Feifan Qian <bea1e@proton.me>
-> ---
-> hw/usb/hcd-xhci.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-> index 0000000000..0000000001 100644
-> --- a/hw/usb/hcd-xhci.c
-> +++ b/hw/usb/hcd-xhci.c
-> @@ -1119,8 +1119,8 @@ static void xhci_init_epctx(XHCIEPContext *epctx,
->         xhci_ring_init(epctx->xhci, &epctx->ring, dequeue);
->         epctx->ring.ccs =3D ctx[2] & 1;
->     }
->
-> -    epctx->interval =3D 1 << ((ctx[0] >> 16) & 0xff);
-> +    epctx->interval =3D 1u << MIN((ctx[0] >> 16) & 0xffu, 31u);
-> }
->
-> static TRBCCode xhci_enable_ep(XHCIState *xhci, unsigned int slotid,
-> --
-> 2.43.0
->
+https://meet.jit.si/kvmcallmeeting
+@
+28/04/2026 14:00 UTC
 
+Are there any agenda items for the sync-up?
 
 --=20
-Marc-Andr=C3=A9 Lureau
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
