@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A67CFB44D6
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E75F589DF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGC4s-0004tO-54; Fri, 24 Apr 2026 04:39:59 -0400
+	id 1wGC4y-0005F4-3l; Fri, 24 Apr 2026 04:40:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wGC4U-0004mW-Cd; Fri, 24 Apr 2026 04:39:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wGC4X-0004o7-0v; Fri, 24 Apr 2026 04:39:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wGC4S-0005YT-8P; Fri, 24 Apr 2026 04:39:34 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wGC4V-0005Yo-HI; Fri, 24 Apr 2026 04:39:36 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63NJd8Rv3229404; Fri, 24 Apr 2026 08:39:30 GMT
+ 63NIBl353107467; Fri, 24 Apr 2026 08:39:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=9UbVaBHSsaJJHRuc6
- bRvTz0yLapktboekfF2dSz6h4Y=; b=THrad1fPLY2kLbwm/hIs50jMITfyDkfgd
- hH8p4xBUO4ryLOGbnEjOCI7X+z9rFaIrTF2Dwlqs9DF6L+kXNMXlrQ05rs29RVAh
- JB5QkhF7pYjCjli7vQnKR01c7MZqaOcHU7SrmGpZbiuKTfZtijENVQxlE6OlZEBW
- 7e9L5qEH9E1D92VHBdFJvaFefB9iZXCCTLPSdDHbPSKTDklcsBgPbNDa55leuY4t
- LhCi/s8QbzaWu4Ihl4tr953eDn1QifbNaT399ZorzspG0Tw75nuB25r4A3MhgmU6
- DXqSHooiaPCdXujXzo5rC1pFcS+So9K3frJqcH+7FHF7cRXSZXwYQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu2cwnt-1
+ :mime-version:references:subject:to; s=pp1; bh=3yctLBVUr5itl+sQ2
+ ufET2Z+aaKC+3gGfuhINJvRrkQ=; b=cYdnyTrdrkkD/JBynCZ3AdyFqA3BWDofe
+ /+PXAahueJgwvXpZJ4V0zKnTgs/4Ts2Bs8ywCpqv3WwpJ+pzTTp2raqQ7gxZb8hY
+ HeAPsUeSFOjuXc47gg2PNaLMqPmhj3gvD6s0iLuk96JBk1n0nZa2D0SzTBZQiXPS
+ lJJoCAKO4I1itwYbMZyoDKFOPbDInIojzSZ2itYA30L48/7vmdNkIwEh3qH7yOEV
+ SbJyUFniZ9lhdNh1re2+bnU3IJ8nCnMSx3pnjglDAFaNZntTVypo5gvImq8j+wck
+ 8uTcQmvoM76++vVTOtiYSaJCmmyBpA2s5KyKUiCBsDFNc7kG/aRIw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu6m4rm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2026 08:39:29 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O8ZaJC015624;
- Fri, 24 Apr 2026 08:39:29 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dpjkya3gc-1
+ Fri, 24 Apr 2026 08:39:33 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O8ZR5H010746;
+ Fri, 24 Apr 2026 08:39:32 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dpjky22f3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2026 08:39:28 +0000 (GMT)
+ Fri, 24 Apr 2026 08:39:32 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63O8dPxP51577212
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63O8dTM347120768
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Apr 2026 08:39:25 GMT
+ Fri, 24 Apr 2026 08:39:29 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 727A32004D;
- Fri, 24 Apr 2026 08:39:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 63AD520040;
+ Fri, 24 Apr 2026 08:39:29 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B2D320049;
- Fri, 24 Apr 2026 08:39:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 12BEF20049;
+ Fri, 24 Apr 2026 08:39:26 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.31.230]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Apr 2026 08:39:21 +0000 (GMT)
+ Fri, 24 Apr 2026 08:39:25 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
@@ -65,9 +65,9 @@ Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PATCH v6 07/10] pnv/mpipl: Write the preserved CPU and MDRT state
-Date: Fri, 24 Apr 2026 14:08:34 +0530
-Message-ID: <20260424083837.214947-8-adityag@linux.ibm.com>
+Subject: [PATCH v6 08/10] pnv/mpipl: Enable MPIPL support
+Date: Fri, 24 Apr 2026 14:08:35 +0530
+Message-ID: <20260424083837.214947-9-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424083837.214947-1-adityag@linux.ibm.com>
 References: <20260424083837.214947-1-adityag@linux.ibm.com>
@@ -75,31 +75,31 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: vG0wH6Ndyat_IEkItvL5BOd02HCufNr_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA3NiBTYWx0ZWRfX06yS2T12BqLR
- AdWE+ZMw/j9ULhad8y18GgV/RDLRYVQdk7IBwi5GDl1cL6utOfo91V5DHK53qADz8fZBmFxT6/G
- JvbhfXFQ/3pUaM3Ok6n67md2z/OGqnnFbjlePbWRNzKM8b4LDI46131wQ/i3G0TsU8QLM1XKk01
- ajr8gDLtERgGgSApAkmIVt7/lmoRmF2j47q674QP+u1uTwuXXZDN6rf8NZeVYYcAlj8BuH5WdhZ
- 1GhSakkJDn7KXfhK8/Tt3RyIRji8hrh31ypF4LeYpKVjw4shxlD8EEpBt36DNqU20R3lu4qoP6E
- ouLs+gpM65KFfXNs9AN7P/ToYAf2JWxzNMPWr7kN0PHYFl7BzeXUEToMBMHsl4dmWl9YnvhOYrT
- u+bnXEoRtQTrGNrX6XxTBiBZOOehNbiYjp8Y/h/ab0MxeExQb0l5XhjGT9H395Ci4UHDGITZprm
- o9i6ajsG8uFtt4Ixeug==
-X-Authority-Analysis: v=2.4 cv=C8LZDwP+ c=1 sm=1 tr=0 ts=69eb2c42 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA3NiBTYWx0ZWRfX1H55Vscbolhb
+ fD1stkPwLzePXfbxZF2Kn/NvsWwfpOS8Fn+jA0Ng/8AI/7expYfTIk1hRM0qAbpKafMy96VVL6f
+ SaNZSSrMUaK/XOv8pfvh7a6G0cE7dmhd2SFgY8RvG1xW0mGnYQ3gU+NuBoI5xKjxhjtHfWGYILB
+ HBaPQs7e3VUvoIG9253dZg5CLe/tgGs1+ztc9FjhOGPWgcJkYDs0cW5ejSqMaiKt88OTyBZbnne
+ JwvPqH/C4sl1q6wAECpSzQaJ7UJjEpq3VEOmhR+QxiLXenmLHpcK9zupeIeOiTUs7U4eYq88hSC
+ W6FS0E7jjfp3VIz9Dmal7M80s0Fq0+5T9GnlSCbzPwlSaX4jRPho7okwZ5pivyhyU6em5bGlV/t
+ dYRtoFi/lmngrrQ4pRWHsKw2GyZ+hcFYWCl9WAqzwF4s7RV3A5r5yjC1Vwwi44/3yUply1WMIn9
+ fg0xnoeuu53T/3Vij1Q==
+X-Proofpoint-ORIG-GUID: _bZuyExylvwh2yakrnZ0AifGgGjQb0iB
+X-Proofpoint-GUID: k8MiutsbCT9Zv7CdHqqvbhiSSAAFldVV
+X-Authority-Analysis: v=2.4 cv=BYfoFLt2 c=1 sm=1 tr=0 ts=69eb2c46 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=FAZnT6m9RyNNhMT2MuIA:9
-X-Proofpoint-ORIG-GUID: ER0xSbCrk1xDWAT1qvjvkhaH-e9wvSws
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=e4BzM2Stjwk3Es--iV8A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 clxscore=1015 bulkscore=0
  phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
  definitions=main-2604240076
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -122,250 +122,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Logic for preserving the CPU registers and memory regions has been done
-in previous patches.
+With all MPIPL support in place, export a "dump" node in device tree,
+signifying that PowerNV QEMU platform supports MPIPL
 
-Write those data at the relevant memory address, such as PROC_DUMP_AREA
-for CPU registers, and MDRT for preserved memory regions.
+Also, export fw-load-area dt node, which has details about where the
+kernel & initrd were loaded, so that kernel can verify whether the
+kernel/initrd images were loaded within the boot memory region. QEMU
+just exports these details in fw-load-area, the check for boot memory
+region is done in kernel.
 
-Also export "mpipl-boot" device tree node, for kernel to know that it's
-a 'dump active' boot
+Since now device tree can change at pnv_reset, hence regenerate device
+tree during pnv_reset
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv.c         |  39 +++++++++++-
- hw/ppc/pnv_mpipl.c   | 140 +++++++++++++++++++++++++++++++++++++++++++
- include/hw/ppc/pnv.h |   1 +
- 3 files changed, 179 insertions(+), 1 deletion(-)
+ hw/ppc/pnv.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 45 insertions(+), 1 deletion(-)
 
 diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 09b69c355a45..48f49bef8251 100644
+index 48f49bef8251..89096f9a8431 100644
 --- a/hw/ppc/pnv.c
 +++ b/hw/ppc/pnv.c
-@@ -750,10 +750,47 @@ static void pnv_reset(MachineState *machine, ResetType type)
- {
-     PnvMachineState *pnv = PNV_MACHINE(machine);
-     void *fdt;
-+    int node_offset;
-+    bool mpipl_write_succeeded = false;
+@@ -54,6 +54,7 @@
+ #include "hw/ppc/pnv_chip.h"
+ #include "hw/ppc/pnv_xscom.h"
+ #include "hw/ppc/pnv_pnor.h"
++#include "hw/ppc/pnv_mpipl.h"
  
-     qemu_devices_reset(type);
- 
--    if (!pnv->mpipl_state.is_next_boot_mpipl) {
-+    /*
-+     * Only on success of writing MPIPL data will the next boot be provided
-+     * "mpipl-boot" property in device tree
-+     * Otherwise boot like a normal non-MPIPL boot
-+     */
-+    if (pnv->mpipl_state.is_next_boot_mpipl) {
-+        /* Write the preserved MDRT and CPU State Data */
-+        mpipl_write_succeeded = do_mpipl_write(pnv);
-+    }
-+
-+    /*
-+     * If it's a MPIPL boot, add the "mpipl-boot" property, and reset the
-+     * boolean for MPIPL boot for next boot
-+     */
-+    if (mpipl_write_succeeded) {
-+        void *fdt_copy = g_malloc0(FDT_MAX_SIZE);
-+
-+        /* Create a writable copy of the fdt */
-+        _FDT((fdt_open_into(fdt, fdt_copy, FDT_MAX_SIZE)));
-+
-+        node_offset = fdt_path_offset(fdt_copy, "/ibm,opal/dump");
-+        _FDT((fdt_appendprop_u64(fdt_copy, node_offset, "mpipl-boot", 1)));
-+
-+        /* Update the fdt, and free the original fdt */
-+        if (fdt != machine->fdt) {
-+            /*
-+             * Only free the fdt if it's not machine->fdt, to prevent
-+             * double free, since we already free machine->fdt later
-+             */
-+            g_free(fdt);
-+        }
-+        fdt = fdt_copy;
-+
-+        /* This boot is an MPIPL, reset the boolean for next boot */
-+        pnv->mpipl_state.is_next_boot_mpipl = false;
-+    } else {
-         /*
-          * Set the "Thread Register State Entry Size", so that firmware can
-          * allocate enough memory to capture CPU state in the event of a
-diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
-index 308948b829cd..f5b228f5ba3c 100644
---- a/hw/ppc/pnv_mpipl.c
-+++ b/hw/ppc/pnv_mpipl.c
-@@ -20,6 +20,8 @@
-     (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
- #define MDDT_TABLE_RELOCATED                            \
-     (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
-+#define MDRT_TABLE_RELOCATED                            \
-+    (pnv->mpipl_state.skiboot_base + MDRT_TABLE_OFF)
- #define PROC_DUMP_RELOCATED                             \
-     (pnv->mpipl_state.skiboot_base + PROC_DUMP_AREA_OFF)
- 
-@@ -320,6 +322,139 @@ static bool pnv_mpipl_preserve_cpu_state(PnvMachineState *pnv)
-     return true;
+ #include "hw/isa/isa.h"
+ #include "hw/char/serial-isa.h"
+@@ -672,6 +673,39 @@ static void pnv_dt_power_mgt(PnvMachineState *pnv, void *fdt)
+     _FDT(fdt_setprop_cell(fdt, off, "ibm,enabled-stop-levels", 0xc0000000));
  }
  
-+/*
-+ * Write the preserved CPU state data in Processor Dump Area (PROC_DUMP_AREA)
-+ *
-+ * Returns true if everything went fine, else false for any error
-+ */
-+static bool pnv_mpipl_write_cpu_state(PnvMachineState *pnv)
++static void pnv_dt_mpipl_dump(PnvMachineState *pnv, void *fdt)
 +{
-+    MpiplProcDumpArea *proc_area = &pnv->mpipl_state.proc_area;
-+    MpiplPreservedCPUState *cpu_state = pnv->mpipl_state.cpu_states;
-+    const uint32_t num_cpu_states = pnv->mpipl_state.num_cpu_states;
-+    hwaddr next_regentries_hdr;
-+    AddressSpace *default_as = &address_space_memory;
-+    MemTxResult io_result;
-+    MemTxAttrs attrs;
-+
-+    /* Mark the memory transactions as privileged memory access */
-+    attrs.user = 0;
-+    attrs.memory = 1;
-+
-+    if (be32_to_cpu(proc_area->alloc_size) <
-+       (num_cpu_states * sizeof(MpiplPreservedCPUState))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "MPIPL: Size of buffer allocate by skiboot (%u bytes) is not"
-+            "enough to save all CPUs registers needed (%zu bytes)",
-+            be32_to_cpu(proc_area->alloc_size),
-+            num_cpu_states * sizeof(MpiplPreservedCPUState));
-+
-+        return false;
-+    }
-+
-+    proc_area->version = PROC_DUMP_AREA_VERSION_P9;
++    int off;
 +
 +    /*
-+     * This is the stride kernel/firmware should use to jump from a
-+     * register entries header to next CPU's header
++     * Add "dump" node so kernel knows MPIPL (aka fadump) is supported
++     *
++     * Note: This is only needed to be done since we are passing device tree to
++     * opal
++     *
++     * In case HDAT is supported in future, then opal can add these nodes by
++     * itself based on system attribute having MPIPL_SUPPORTED bit set
 +     */
-+    proc_area->thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
-+
-+    /* Write the header and register entries for each CPU */
-+    next_regentries_hdr = be64_to_cpu(proc_area->alloc_addr) & (~HRMOR_BIT);
-+    for (int i = 0; i < num_cpu_states; ++i) {
-+        io_result = address_space_write(default_as, next_regentries_hdr, attrs,
-+            &cpu_state->hdr, sizeof(MpiplRegDataHdr));
-+        if (io_result != MEMTX_OK) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                "MPIPL: Failed to write RegEntries Header\n");
-+            return false;
-+        }
-+
-+        io_result = address_space_write(default_as,
-+            next_regentries_hdr + sizeof(MpiplRegDataHdr), attrs,
-+            &cpu_state->reg_entries,
-+            NUM_REGS_PER_CPU * (sizeof(MpiplRegEntry)));
-+        if (io_result != MEMTX_OK) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                "MPIPL: Failed to write Register Entries\n");
-+            return false;
-+        }
-+
-+        /*
-+         * According to HDAT section:
-+         *  "15.3.1.5 Architected Register Data content":
-+         *
-+         * The next register entries header will be at current header +
-+         * "Thread Register State Entry size"
-+         *
-+         * Note: proc_area.thread_size == sizeof(MpiplPreservedCPUState)
-+         */
-+        next_regentries_hdr += sizeof(MpiplPreservedCPUState);
-+        ++cpu_state;
++    off = fdt_add_subnode(fdt, 0, "ibm,opal");
++    if (off == -FDT_ERR_EXISTS) {
++        off = fdt_path_offset(fdt, "/ibm,opal");
 +    }
 +
-+    /* Point the destination address to the preserved memory region */
-+    proc_area->dest_addr = proc_area->alloc_addr;
-+    proc_area->act_size  = cpu_to_be32(num_cpu_states *
-+            sizeof(MpiplPreservedCPUState));
++    _FDT(off);
++    off = fdt_add_subnode(fdt, off, "dump");
++    _FDT(off);
++    _FDT((fdt_setprop_string(fdt, off, "compatible", "ibm,opal-dump")));
 +
-+    io_result = address_space_write(default_as, PROC_DUMP_AREA_OFF, attrs,
-+        proc_area, sizeof(MpiplProcDumpArea));
-+    if (io_result != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "MPIPL: Failed to write Register Entries\n");
-+        return false;
-+    }
++    /* Add kernel and initrd as fw-load-area */
++    uint64_t fw_load_area[4] = {
++        cpu_to_be64(KERNEL_LOAD_ADDR), cpu_to_be64(KERNEL_MAX_SIZE),
++        cpu_to_be64(INITRD_LOAD_ADDR), cpu_to_be64(INITRD_MAX_SIZE)
++    };
 +
-+    return true;
++    _FDT((fdt_setprop(fdt, off, "fw-load-area",
++                    fw_load_area, sizeof(fw_load_area))));
 +}
 +
-+/*
-+ * Write the preserved MDRT table, representing preserved memory regions
-+ *
-+ * Returns true if everything went fine, else false for any error
-+ */
-+static bool pnv_mpipl_write_mdrt(PnvMachineState *pnv)
-+{
-+    MpiplPreservedState *state = &pnv->mpipl_state;
-+    AddressSpace *default_as = &address_space_memory;
-+    MemTxResult io_result;
-+    MemTxAttrs attrs;
-+
-+    /* Mark the memory transactions as privileged memory access */
-+    attrs.user = 0;
-+    attrs.memory = 1;
-+
-+    /*
-+     * Generally writes from platform during MPIPL don't go to a relocated
-+     * skiboot address
-+     *
-+     * Though for MDRT we are doing so, as this is the address skiboot
-+     * considers by default for MDRT
-+     *
-+     * MDRT/MDST/MDDT base addresses are actually meant to be shared by
-+     * platform in SPIRA structures.
-+     *
-+     * Not implementing SPIRA as it increases complexity for no gains.
-+     * Using the default address skiboot expects for MDRT, which is the
-+     * relocated MDRT, hence writing to it
-+     *
-+     * Other tables like MDST/MDDT should not be written to relocated
-+     * addresses, as skiboot will overwrite anything from SKIBOOT_BASE till
-+     * SKIBOOT_BASE+SKIBOOT_SIZE (which is 0x30000000-0x31c00000 by default)
-+     */
-+    io_result = address_space_write(default_as, MDRT_TABLE_RELOCATED, attrs,
-+            state->mdrt_table,
-+            state->num_mdrt_entries * sizeof(MdrtTableEntry));
-+    if (io_result != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "MPIPL: Failed to write MDRT table\n");
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- void do_mpipl_preserve(PnvMachineState *pnv)
+ static void *pnv_dt_create(MachineState *machine)
  {
-     pause_all_vcpus();
-@@ -340,3 +475,8 @@ void do_mpipl_preserve(PnvMachineState *pnv)
-      */
-     qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
- }
+     PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(machine);
+@@ -734,6 +768,9 @@ static void *pnv_dt_create(MachineState *machine)
+         pmc->dt_power_mgt(pnv, fdt);
+     }
+ 
++    /* Advertise support for MPIPL */
++    pnv_dt_mpipl_dump(pnv, fdt);
 +
-+bool do_mpipl_write(PnvMachineState *pnv)
-+{
-+    return pnv_mpipl_write_mdrt(pnv) && pnv_mpipl_write_cpu_state(pnv);
-+}
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 79de6b856923..88f44950fc69 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -296,5 +296,6 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
+     return fdt;
+ }
  
- /* MPIPL helpers */
- void do_mpipl_preserve(PnvMachineState *pnv);
-+bool do_mpipl_write(PnvMachineState *pnv);
+@@ -765,6 +802,10 @@ static void pnv_reset(MachineState *machine, ResetType type)
+         mpipl_write_succeeded = do_mpipl_write(pnv);
+     }
  
- #endif /* PPC_PNV_H */
++    /* Regenerate device tree */
++    fdt = pnv_dt_create(machine);
++    _FDT((fdt_pack(fdt)));
++
+     /*
+      * If it's a MPIPL boot, add the "mpipl-boot" property, and reset the
+      * boolean for MPIPL boot for next boot
+@@ -814,8 +855,11 @@ static void pnv_reset(MachineState *machine, ResetType type)
+                 sizeof(proc_area));
+     }
+ 
+-    fdt = machine->fdt;
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
++
++    /* Free previous device tree set by pnv_init/reset/machine_init_done */
++    g_free(machine->fdt);
++    machine->fdt = fdt;
+ }
+ 
+ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
 -- 
 2.53.0
 
