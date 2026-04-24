@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D596F589DF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5545FB44D6
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGC4S-0004ll-86; Fri, 24 Apr 2026 04:39:33 -0400
+	id 1wGC53-0005en-RH; Fri, 24 Apr 2026 04:40:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wGC4P-0004kG-AR; Fri, 24 Apr 2026 04:39:29 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wGC4c-0004tH-AE; Fri, 24 Apr 2026 04:39:48 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wGC4N-0005Xm-RP; Fri, 24 Apr 2026 04:39:29 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wGC4a-0005ZM-4d; Fri, 24 Apr 2026 04:39:41 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63O5HWVN335114; Fri, 24 Apr 2026 08:39:26 GMT
+ 63NJ0hGY3514956; Fri, 24 Apr 2026 08:39:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=qPFS081akU8hR3rm8
- VprqXJ4JCIYb/A4K8GZfM5+G00=; b=jrfbzpBkNCtkS/U3rYnrCDUoMSHGlACbw
- kkaPqHz6Etmz73TeXOeEtmOEQh2FLjgoSaArZmPUxTezdl4EE5bL9ar1hbAEdxeO
- 2WuF3ysIWask8wR4f1JBv4u9lzdp3SLyoiKf3iVW1rD6uzfbk4QG94bdU1Qhxl3I
- UmwJeCr1/amW9OhI/7j7CujNHk+5rBGxEJlTABicaZNr2H2fIVz1p3sz1ihQtFYw
- Tfw6goc/EZFXh8gE96nKZlOl1/yhy44vmBTjFk0h8AM0pRCtuGHnRuhKp7W5J6np
- mdp+sCzH3dPwUiI3/kC0bVBL3E4XhOVUZ2KcQeZRuOf+LzD2hPG3A==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu7v3nu-1
+ :mime-version:references:subject:to; s=pp1; bh=MS23vroGCnrfvJBx3
+ lYaC9ngQXZ+FgVHIOKqKbyae7o=; b=r30ZuMtm4RakFHfDXiOh6JwAc0wIX6pvm
+ AzmKk6jyU9evMttMuTzr2XWMXpzW5bRXkqzBC5S93m49GA/nbhRk0yvcNeveJGfb
+ PdBcutjkpi7+2kEeBPHYLTx8V3j4PssMX5+iudE9vYPpx47SacDotYhEaNXw2msO
+ ttnSP9AM2vZ9Z/viAw7XB9/dDkNUcKlCq7RnBzGb0JA0/IORqqhVQ0BpkP7oRusD
+ aJSA+37xd4jrYMhrk9D3PrhGEbQCCezkEOY+m2Rch9Sf9TznU+Zw3iU1xTB8r1ge
+ Z+18h7cwxmKJk5kn8dq0BMFudZaB4QTb/bwrl/i3paSNSOi8Ag+3w==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu2cxkv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2026 08:39:25 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O8ZaJB015624;
- Fri, 24 Apr 2026 08:39:25 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dpjkya3g8-1
+ Fri, 24 Apr 2026 08:39:38 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O8ZWLC002419;
+ Fri, 24 Apr 2026 08:39:37 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkya2d8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2026 08:39:25 +0000 (GMT)
+ Fri, 24 Apr 2026 08:39:36 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63O8dLm113828550
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63O8dXsj35782972
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Apr 2026 08:39:21 GMT
+ Fri, 24 Apr 2026 08:39:33 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8006320049;
- Fri, 24 Apr 2026 08:39:21 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4950B2004D;
+ Fri, 24 Apr 2026 08:39:33 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7B7A22004B;
- Fri, 24 Apr 2026 08:39:17 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ED03420040;
+ Fri, 24 Apr 2026 08:39:29 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.31.230]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Apr 2026 08:39:17 +0000 (GMT)
+ Fri, 24 Apr 2026 08:39:29 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
@@ -65,10 +65,9 @@ Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PATCH v6 06/10] pnv/mpipl: Set thread entry size to be allocated by
- firmware
-Date: Fri, 24 Apr 2026 14:08:33 +0530
-Message-ID: <20260424083837.214947-7-adityag@linux.ibm.com>
+Subject: [PATCH v6 09/10] tests/functional: Add test for MPIPL in PowerNV
+Date: Fri, 24 Apr 2026 14:08:36 +0530
+Message-ID: <20260424083837.214947-10-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424083837.214947-1-adityag@linux.ibm.com>
 References: <20260424083837.214947-1-adityag@linux.ibm.com>
@@ -76,30 +75,31 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: Aqp0Dw4H-ByUSyZeyGt1c_Zj11Amcehg
-X-Authority-Analysis: v=2.4 cv=Ksp9H2WN c=1 sm=1 tr=0 ts=69eb2c3e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA3NiBTYWx0ZWRfX3SOd2bmaHA9Q
+ gXOy37g2SAv7NdQYXaePH7QJXEaVYc6PjMtzyPs4te+IpZLOWQlpgT4B3gS76fyZ3SL0MirOxMx
+ 8MbcMMS9l6eraEacjpz0RBrbCAb8UDAS6ZSNjiyifJmvt6egT9BwAEL0NRjVOVhWP6kwH+4dFVP
+ jnq4FJhbPq2SYjaXWwuoArd2v5ymu9S5diHnK0ft9rQbAfS3XQ+Uv2yCu5pHbYQ7I4Gcg/bxPVx
+ jzKFrkj/0F32XaZAnx+Zo98LOFk0v+uBJJ9kBv71U7poFaIUH59Api0IJvlDh1agMcnYTnJmClC
+ QBc3qmPwvRbVSnW7RnOpST+okZ+phDJttnx6i9xfJWqhqJmL3fbz8Cd2AAmZd6lp/xGxgS5C1Pj
+ 83vsrKU3XYX3HoBOZoJWyLFgIHzyb8b9DXeTacTL5Vs7WSsC/gv7m2l3N6vT6yWZT67Xkp+Do8b
+ J/r5Tls+HafsdNhgtUA==
+X-Proofpoint-ORIG-GUID: 7nhhaDaHyaknJkKR7yzJtLtyYl2XPHsC
+X-Proofpoint-GUID: NxmNcVqUToPf_3sVDin2Tmia0y0FomRa
+X-Authority-Analysis: v=2.4 cv=XMUAjwhE c=1 sm=1 tr=0 ts=69eb2c4a cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=cAoldatroyQ9OnmYqHEA:9
-X-Proofpoint-GUID: JSC2oiNw0X4-YxsRvkW4-aNjr9dEeA3a
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA3NiBTYWx0ZWRfX+3LS4BojVzw3
- 33bLMDy/8+bTufepPpmBM5W307wjXGFKWMMwdg8xGPwGR+TNZWPib2SdWD9Qknd2sc3gZgfMwjl
- g3dRIm7W/ewZH/0FKZxPShx8M/ByU6zU2V0cfPpfyKqg7copTrvzMizkybZr023p9JzKIXohzmL
- DC4FinfOjoBMqoOx6ujEpZM+sBmLvxUl9rMDSiMU7MbKgcdLaf0RWY4/EPov2meMpFdbz2GI83k
- sCbNhyVhUDf/IxOohdDxkAfQ7be/keURS5BLgqydRNvNw5W62S8oiqs5RRDgiAiITR6/3sTuCpW
- f6S2bSriCAvHijsl+9I1gg3A424M8oY7+5dNldNMh+TCfUFYgQGk1Tf6Hpdb+cLYdXF9NB5QPfL
- loi1/iAX0e93MmSC+UA/cpd0nY+qlgD32qlrVS0zAqYxxtmzUiNEGtsDD3/zQobde5LO/ViZPjj
- 4p/JJRcNo8k6YtVnXEA==
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=xeNidhmBAAAA:20 a=vTr9H3xdAAAA:8 a=VnNF1IyMAAAA:8
+ a=yF-uCvtE38AvPGpA37UA:9 a=bA3UWDv6hWIuX7UZL3qL:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 malwarescore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 adultscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604240076
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -122,57 +122,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the "Thread Register State Entry Size" that is required by firmware
-(OPAL), to know size of memory to allocate to capture CPU state, in the
-event of a crash
+With MPIPL support implemented, enable fadump's functional test for PowerNV
+
+Also, current functional test for powernv uses op-build's Linux 5.10 image,
+which doesn't support adding "fadump=on" in argument due to this:
+
+    Kernel is locked down from Kernel configuration; see man kernel_lockdown.7
+
+Hence, instead of op-build's image, use the newer fedora vmlinuz as used
+in FADump PSeries functional test
+
+Also due to "bash#" string not showing up, rely on sh: no job control to
+check if testcase has reached till shell
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ tests/functional/ppc64/test_fadump.py | 35 ++++++++++-----------------
+ 1 file changed, 13 insertions(+), 22 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 524563dcfc23..09b69c355a45 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -748,10 +748,35 @@ static void pnv_powerdown_notify(Notifier *n, void *opaque)
+diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
+index bd9692f64c05..7ea65974e0ea 100755
+--- a/tests/functional/ppc64/test_fadump.py
++++ b/tests/functional/ppc64/test_fadump.py
+@@ -14,6 +14,7 @@ class QEMUFadump(LinuxKernelTest):
  
- static void pnv_reset(MachineState *machine, ResetType type)
- {
-+    PnvMachineState *pnv = PNV_MACHINE(machine);
-     void *fdt;
+     1. test_fadump_pseries:       PSeries
+     2. test_fadump_pseries_kvm:   PSeries + KVM
++    3. test_fadump_powernv:       PowerNV
+     """
  
-     qemu_devices_reset(type);
+     timeout = 90
+@@ -24,11 +25,6 @@ class QEMUFadump(LinuxKernelTest):
+     msg_registered_failed = ''
+     msg_dump_active = ''
  
-+    if (!pnv->mpipl_state.is_next_boot_mpipl) {
-+        /*
-+         * Set the "Thread Register State Entry Size", so that firmware can
-+         * allocate enough memory to capture CPU state in the event of a
-+         * crash
-+         */
+-    ASSET_EPAPR_KERNEL = Asset(
+-        ('https://github.com/open-power/op-build/releases/download/v2.7/'
+-         'zImage.epapr'),
+-        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
+-
+     ASSET_VMLINUZ_KERNEL = Asset(
+         ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
+          'releases/39/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
+@@ -62,16 +58,14 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
+             # SLOF takes upto >20s in startup time, use VOF
+             self.set_machine("pseries")
+             self.vm.add_args("-machine", "x-vof=on")
+-            self.vm.add_args("-m", "6G")
 +
-+        MpiplProcDumpArea proc_area;
-+
-+        proc_area.version = PROC_DUMP_AREA_VERSION_P9;
-+        proc_area.thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
-+
-+        /* These are to be allocated & assigned by the firmware */
-+        proc_area.alloc_addr = 0;
-+        proc_area.alloc_size = 0;
-+
-+        /* These get assigned after crash, when QEMU preserves the registers */
-+        proc_area.dest_addr = 0;
-+        proc_area.act_size = 0;
-+
-+        cpu_physical_memory_write(PROC_DUMP_AREA_OFF, &proc_area,
-+                sizeof(proc_area));
-+    }
-+
-     fdt = machine->fdt;
-     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
- }
++        self.vm.add_args("-m", "6G")
+ 
+         self.vm.set_console()
+ 
+         kernel_path = None
+ 
+-        if is_powernv:
+-            kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
+-        else:
+-            kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
++        kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
+ 
+         initrd_path = self.ASSET_FEDORA_INITRD.fetch()
+ 
+@@ -102,16 +96,14 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
+             timeout=20
+         )
+ 
+-        # Ensure fadump is registered successfully, if registration
+-        # succeeds, we get a log from rtas fadump:
+-        #
+-        #     rtas fadump: Registration is successful!
+-        self.wait_for_console_pattern(
+-            "rtas fadump: Registration is successful!"
+-        )
++        # Ensure fadump is registered successfully
++        if not is_powernv:
++            self.wait_for_console_pattern(
++                "rtas fadump: Registration is successful!"
++            )
+ 
+         # Wait for the shell
+-        self.wait_for_console_pattern("#")
++        self.wait_for_console_pattern("sh: no job control")
+ 
+         # Mount /proc since not available in the initrd used
+         exec_command(self, command="mount -t proc proc /proc")
+@@ -135,7 +127,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
+         # that qemu didn't pass the 'ibm,kernel-dump' device tree node
+         wait_for_console_pattern(
+             test=self,
+-            success_message="rtas fadump: Firmware-assisted dump is active",
++            success_message="fadump: Firmware-assisted dump is active",
+             failure_message="fadump: Reserved "
+         )
+ 
+@@ -148,7 +140,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
+         self.wait_for_console_pattern("preserving crash data")
+ 
+         # Wait for prompt
+-        self.wait_for_console_pattern("sh-5.2#")
++        self.wait_for_console_pattern("Run /bin/sh as init process")
+ 
+         # Mount /proc since not available in the initrd used
+         exec_command_and_wait_for_pattern(self,
+@@ -166,9 +158,8 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
+     def test_fadump_pseries(self):
+         return self.do_test_fadump(is_kvm=False, is_powernv=False)
+ 
+-    @skip("PowerNV Fadump not supported yet")
+     def test_fadump_powernv(self):
+-        return
++        return self.do_test_fadump(is_kvm=False, is_powernv=True)
+ 
+     def test_fadump_pseries_kvm(self):
+         """
 -- 
 2.53.0
 
