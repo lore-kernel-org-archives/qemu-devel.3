@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2F7FED3C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A69A7FED3C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGGzU-0004Cb-7m; Fri, 24 Apr 2026 09:54:44 -0400
+	id 1wGH3A-0006RE-Bf; Fri, 24 Apr 2026 09:58:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGGzP-00049p-0s
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:54:40 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGH39-0006QU-Dc
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:58:31 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGGzM-0002rv-De
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:54:38 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso65177635e9.3
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:54:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGH37-0004Ex-Qa
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:58:31 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so77068945e9.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777038873; x=1777643673; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1777039108; x=1777643908; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ty9h+ZYk6jAUeMMG5fjohOSnEAHIpxjQWLk+t2TduXA=;
- b=Uu23wpniZUIJe1Siwg8pBCvKg54Uq8/LRn7l3stS8wefwP8cIx6TUkAJkIAnQt4VFm
- C6ro5TVu3y2+kL04I34o3iWj2VxVzvBj4rEul6Yl0Cjh/G13jFqX/ZFoNUw/ODcDS8dl
- 6QIgObFJCeRqucnV5ElAPBvCgoF7Y4W/OnXvywIOv2PSizllTesnfV5VT1+ZTyjgR8e/
- 5KYU21/QnZTDf2c5nNGTuz+sSLlx/t7sCpj6Ers0JeeeZmaPnC9JzI7KJsBFirgStRLR
- UXp+5qeywfeMQIAfpiZmhhpiKbE5Uc58OfseXtsDWgJUjaboZDLOn05123G1ZK2yZaz3
- kR2w==
+ bh=jeXr2YAxxcksPi4zIMDOPQzcc4Jtkevn9hjVtpztcmU=;
+ b=bkB/INg/sZ2sOM++VianZA4NxmzLE1lsN7T32va5Bk3AcxdTbhHYUA7U0+t2NdSWLn
+ wLD1uupiqBygec89OqOXUiH1+nQoP6Xr8m5G14C5LiIBTQqp7JJwIeTIBvzra4AIptL7
+ MwQTeVIgTHxy4Q4aOyNFIpItkW0UAyEyP0RBKH5o8cNz7ZPluYw6SxOGt2/R8sjChi1v
+ L9OW0WxB0bvWkDTJxV9AmOr6VrsE0G9NhuNx3k6/6QdITNudnNtN5lAzRn5ZwnmtORvV
+ f9LW47e2UgS8df1P9GsKh6Zz85d9SwozXRjLGvgC55m/DFktroJXydpfDUfaY64gBpHc
+ ZIEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777038873; x=1777643673;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1777039108; x=1777643908;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ty9h+ZYk6jAUeMMG5fjohOSnEAHIpxjQWLk+t2TduXA=;
- b=P9h87i0CxVBd/TGVxQk8tl7EsvWGRJ/9nzSKK7lIgg3XsL0uIY1iBnZcissMU+4gEK
- AvPYNAGYw1nuKjUdQJEk7+VwT4ecd80s+O+l2ymLZqVc/CXuO9or9r3g6HWWPfgIOO6B
- 9qCme3cv0/vUYF8wQEe3Ao5xerw20+ssZAPeNwdJ4SQn7SXDZUBWVQX8fwbwT6rpC0Ds
- r2XEbe2hebuifh7EpLpiX8WOL9owNqH/RASWfWmE+tHNg7y1oGw8W3lLPatIxw3HWZc2
- J1cezKpXqgjwVB7lnk5+QforLQVCVctPVlQRqWL9KGNhqlAGdUDWW6nI36rm7iS6bQ6j
- Ri1A==
+ bh=jeXr2YAxxcksPi4zIMDOPQzcc4Jtkevn9hjVtpztcmU=;
+ b=mnlA4x4yAyO3Gh30ik/KHWt2+6R5c6XObzznNZTTmBEgAgWTAFXHqYjPbNKk6kLqdk
+ w0TUbsqcWub0a5cvk/f/7Tt/oEQNCFP/v1NoOa7rV/+k3qwvCAcEp7DDD3iCZRcwbGgH
+ eKac+mThzRDUpS6BArf00r1434noLZkuUR1+BaAJuYdIO6c53MDOpsDsV7ePmZsTd66K
+ XiZTNoAMMXXHpvI3IytWhpZstzQABodcwY76BrFIhp8OtLTHH+0CYrJfR+FXPWVockVp
+ aLuU3eBniysHXSOgthDJQXllIcw6Q/5YWw9B9rTBg8chMUBEJJw32pk56z4VJyTg1Le9
+ /wRw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/my0Ajy3Zt19ajzCBgxMH/F2zdJ04E6Uijgi59KsIybwhKV3msJJzP+Xxvbf8cJ75VRCms9kHDnEje@nongnu.org
-X-Gm-Message-State: AOJu0YzXjdd/qSJM608k3wXo90Ep1sVhPmMstwvVEWcuvIAsSCp3yn+b
- 0M4kVH8NQHNKXuInl6CF8KR3E3HffoDds9RJK7T9HJiKGaSS/9IXfyBYPrCXB1bivGY=
-X-Gm-Gg: AeBDieuM0OCISKuqZIzHLTADiVuDy1FbfQSngOYb8cqXHQd+pN+ZTt3Z1paN9tSCnM6
- PYAj0+2Zoqgd4AHnc+V7JktqJrlkwUER1qdDHOXBNMmFXaKikYoS5uT6/zJb9ySgPGncllJ5fWE
- 8ygM/ky07x1FQq7RnnZCgmNh7/EWYLDKqhYy041qu0EXtyr8TX6VOXF1CfU8EXab4ihOPlJ4bbL
- wjgH54logJJhNsW272x4MXxCwCN+3Sr2iZKnMA7vjCrmxJukmaBhLThx8jI7Ceje1cLrPOkepYL
- TJMZnfEVbRWffUJXYeYDwMfcDx8Bx+GkcanZL02sogHGmVdym6rqn70umRBWwur/UQv/Kk7skm6
- 2E0fP208SJ7pjltOQKk9JohSUR+eOphpSQTOoPwF6CHH9GGoBRKjrHUHdcF3rACj4E1lZLEHxi7
- +3WjjWpGONfXs/4eIS0IjQTVrcdN2rylOY2tCRpN1XCJCo/SKaoxRbHqiooLMQny5ntNWVdqmNx
- Skk
-X-Received: by 2002:a05:600c:890b:b0:488:a977:8d6 with SMTP id
- 5b1f17b1804b1-488fb775a35mr336928405e9.19.1777038872614; 
- Fri, 24 Apr 2026 06:54:32 -0700 (PDT)
+ AFNElJ+Tg/5cFnKCskx9Q5Nf5apT8/5l32KmnyfeT2roR7s1M4EVQij87+kM1kFMC7VBrEPRC+XTBgE18CSz@nongnu.org
+X-Gm-Message-State: AOJu0YwXb+5FxhiXAprk0QclUILSwwAoPMX2dyiGpelaivZbS4CAAshI
+ dICMC0eEi2vCFbztlHcR4+bkYebJAy0RCrj2G1knAG5Iu4UfS4DOU91XMcU6mowoWOQ=
+X-Gm-Gg: AeBDieuC7czh0Fh46RftV/H0kC4sA+FEoovnU3y4lBo7FgvIyKCRhclYfNbBbCTzn41
+ uUlg+dq3JqB3VyC1VTEHyd6IoQn8BzNwZVKJTd1GnrOgTPY8ia4pEtqKNmCcRGpkxoNK4k03MLs
+ 9ul3kfylHsXriw5eou4L/bUmabsSrfH3UdaUzBSUqR1IX3VDQipvzv4x7dxohrh9bF6gbyg0rFq
+ IlDLc3KaX7yUjSJBw89FYbawS9D5zvaY+FXgUfzlmDxJPj+U4fajcLja0OuInzVy5lJQTKPEfOY
+ O+430Pvk6x3SxNpjutwyoJIQrQ2T90gCn3tPFUiJJVtQ9VSV4XdlgVGfdbV+PEuAYWOaBKrq08/
+ ZPDqGpwvW2K9aJ9j/adLuNhOYr7Y6XQpbhNvlY7EHv0sDwI//ucI/VB0M/ZoOTAh+L8UJw8M7B+
+ R9LmgRPs+/T7+gyWjFIFsPcyRckuup93TdGbOIBPiRX+PjfOFs+ZKIwLo2Fqwev0LWSXYaoSIHk
+ 73N6lRhrFINJ80=
+X-Received: by 2002:a05:600c:8b8c:b0:489:1d74:56d with SMTP id
+ 5b1f17b1804b1-4891d7406famr341492525e9.29.1777039107885; 
+ Fri, 24 Apr 2026 06:58:27 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc177dafsm719952305e9.4.2026.04.24.06.54.31
+ 5b1f17b1804b1-48a66533ff4sm16606895e9.6.2026.04.24.06.58.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Apr 2026 06:54:31 -0700 (PDT)
-Message-ID: <2bf9724b-4b29-49b7-ac97-f7130056583f@linaro.org>
-Date: Fri, 24 Apr 2026 15:54:30 +0200
+ Fri, 24 Apr 2026 06:58:27 -0700 (PDT)
+Message-ID: <e7022bd7-7fcc-4ba5-99be-35a032c41c52@linaro.org>
+Date: Fri, 24 Apr 2026 15:58:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/16] tests/functional/test_aarch64_kvm: Stop dumping
- kernel ringbuf
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Roman Bolshakov <rbolshakov@ddn.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, Mads Ynddal
- <mads@ynddal.dk>, qemu-arm@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>
-References: <20260423170229.64655-1-philmd@linaro.org>
- <20260423170229.64655-5-philmd@linaro.org>
- <4072248e-a815-4868-80bb-a241496ffc78@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 1/2] intel_iommu: widen impl.min_access_size to 8 to
+ fix MMIO abort
 Content-Language: en-US
-In-Reply-To: <4072248e-a815-4868-80bb-a241496ffc78@redhat.com>
+To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, yi.l.liu@intel.com,
+ clement.mathieu--drif@bull.com, zhenzhong.duan@intel.com
+References: <20260424201842.176953-1-junjie.cao@intel.com>
+ <20260424201842.176953-2-junjie.cao@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260424201842.176953-2-junjie.cao@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,44 +106,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/26 09:39, Thomas Huth wrote:
-> On 23/04/2026 19.02, Philippe Mathieu-Daudé wrote:
->> Avoid the following kernel message to interfere our stdout parsing:
->>
->>    platform gpio-keys: deferred probe pending: gpio-keys: failed to 
->> get gpio
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/functional/aarch64/test_kvm.py | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/ 
->> aarch64/test_kvm.py
->> index 7545f5ed554..a03a6134626 100755
->> --- a/tests/functional/aarch64/test_kvm.py
->> +++ b/tests/functional/aarch64/test_kvm.py
->> @@ -48,6 +48,7 @@ def _launch_guest(self, kvm_mode="nvhe"):
->>           self.wait_for_console_pattern('buildroot login:')
->>           ec_and_wait(self, 'root', '#')
->> +        ec_and_wait(self, 'dmesg -n 1', '#')
->>           ec_and_wait(self, f"export PS1='{self.PS1}'", self.OK_CMD)
+On 24/4/26 22:18, Junjie Cao wrote:
+> Raise .impl.min_access_size from 4 to 8 in vtd_mem_ops so the memory
+> subsystem always widens guest accesses to 8 bytes before calling the
+> handler.  This eliminates all 25 assert(size == 4) sites that crashed
+> QEMU on an 8-byte access to a 32-bit-only register.
 > 
-> In other tests, we are adding "quiet" to the kernel_command_line to 
-> avoid this problem - that way the kernel messages also cannot interfere 
-> with the login prompt. Could you check whether that works here, too? If 
-> so, I think I'd rather prefer that solution instead.
+> With size always 8, the if/else branches for 64-bit register pairs
+> collapse.  A zero-extended 4-byte write to the low half is safe:
+> wmask protects read-only upper bits, and trigger functions re-read
+> the register file and guard on their action bits.
+> 
+> The entry bounds check is relaxed to `addr >= DMAR_REG_SIZE` since
+> the widened size no longer reflects the guest access width; the
+> framework guarantees addr stays within the MemoryRegion.  Default
+> branches fall back to vtd_get/set_long() when addr + 8 would exceed
+> the register file.
+> 
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> ---
+>   hw/i386/intel_iommu.c | 121 ++++++++----------------------------------
+>   1 file changed, 23 insertions(+), 98 deletions(-)
+> 
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index f395fa248c..4b25907778 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -3697,7 +3697,7 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+>   
+>       trace_vtd_reg_read(addr, size);
+>   
+> -    if (addr + size > DMAR_REG_SIZE) {
+> +    if (addr >= DMAR_REG_SIZE) {
+>           error_report_once("%s: MMIO over range: addr=0x%" PRIx64
+>                             " size=0x%x", __func__, addr, size);
+>           return (uint64_t)-1;
+> @@ -3707,13 +3707,9 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+>       /* Root Table Address Register, 64-bit */
+>       case DMAR_RTADDR_REG:
+>           val = vtd_get_quad_raw(s, DMAR_RTADDR_REG);
+> -        if (size == 4) {
+> -            val = val & ((1ULL << 32) - 1);
+> -        }
+>           break;
+>   
+>       case DMAR_RTADDR_REG_HI:
+> -        assert(size == 4);
+>           val = vtd_get_quad_raw(s, DMAR_RTADDR_REG) >> 32;
+>           break;
+>   
+> @@ -3722,26 +3718,21 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+>           val = s->iq |
+>                 (vtd_get_quad(s, DMAR_IQA_REG) &
+>                 (VTD_IQA_QS | VTD_IQA_DW_MASK));
+> -        if (size == 4) {
+> -            val = val & ((1ULL << 32) - 1);
+> -        }
+>           break;
+>   
+>       case DMAR_IQA_REG_HI:
+> -        assert(size == 4);
+>           val = s->iq >> 32;
+>           break;
+>   
+>       case DMAR_PEUADDR_REG:
+> -        assert(size == 4);
 
-I tried:
+Does this device support unaligned accesses? (I doubt). Otherwise
+aren't all these assert(size == 4) now g_assert_not_reached()?
 
--- >8 --
-          kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               f"console=ttyAMA0 kvm-arm.mode={kvm_mode}")
-+                               f" quiet console=ttyAMA0 
-kvm-arm.mode={kvm_mode}")
 
----
+> @@ -4184,7 +4109,7 @@ static const MemoryRegionOps vtd_mem_ops = {
+>       .write = vtd_mem_write,
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+>       .impl = {
+> -        .min_access_size = 4,
+> +        .min_access_size = 8,
+>           .max_access_size = 8,
+>       },
+>       .valid = {
 
-but it didn't help. Anyway no worries, I'll figure that later. Dropping
-this patch for now.
 
