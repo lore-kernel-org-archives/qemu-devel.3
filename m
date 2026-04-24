@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A010CFF8850
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 21:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A764EFF885A
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 21:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGOBU-0000fM-4Q; Fri, 24 Apr 2026 17:35:36 -0400
+	id 1wGODq-0001BH-3u; Fri, 24 Apr 2026 17:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGOBS-0000f9-UT; Fri, 24 Apr 2026 17:35:34 -0400
+ id 1wGODl-0001Ax-Fv; Fri, 24 Apr 2026 17:37:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGOBQ-0000XA-O3; Fri, 24 Apr 2026 17:35:34 -0400
+ id 1wGODi-0001dO-P5; Fri, 24 Apr 2026 17:37:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777066448; bh=2aUxflhbesovYjoiuM6g7Buz/54rnySd1fEme6QUmKA=;
+ t=1777066592; bh=O0Vy1KHg3Zrz4WR3PKLVHZi7keRNgpYeDaz6D8O4hfk=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ubu/sabCNI0j/6eq3klyZ2QAdI+mw5+wpDI56/ZQCstPFLMwYWgsL+k2qJQqoBZ+w
- af9/LYnzilHKMI7uWqAgKOgy2Fe5NsbJHERrLscKSpzpMXX8mM38xuh3KkDAWkYNrp
- 7F6iUUJlTWZzUjICUrrvp8aBZgX5+5p/u+2M3JROLJ5baDDh2hYi3HlcBz2WKLNvaf
- QiTtu1RQFtJSmd2ALC6J7fuuHj3e/ln6YlqNT3cw2jcfPBgSA51OLoBF2YnhKIDzU5
- 0oGWEGMjb1uCsKhIIhXpeCQ/c9pVQb6gOOAs2Wz3/yrpGw5Ob7dMU0c/nFIv+BUcXv
- ulCJouScSjDgA==
+ b=g+KbW8580nY+l2TnF6QtXeGANoMVXuYA2SLdMwo3JOTb7yb6nbSSGmmp2XYW+Q9Z6
+ xiLNxb2giEQmk6gijgmdlx3MDDlut8fe4BbhHmKczykRL9lytrBl9hpEREcduU1PZu
+ Gaq54lnGzCxXQko/GWPoxh7KHMEQij19VkvIYRizhSY9KEtzXAlZjwFaYyZMhx03nq
+ 4+Vowf7LRJ/df6yEV39MZxiA5dHNAhpgPo1N2aCQUGN/IMy8dqqB3c6HXovtZfB+IQ
+ bQjoPXD9jGaS+c6z5R4MClzMUTAI9Q8du6eWwcF8xn74I7bfc5gRmcHoL6ycpD7lmc
+ xEXaXhxSNVSoA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id B93941A2FAB;
- Sat, 25 Apr 2026 00:34:08 +0300 (MSK)
-Message-ID: <24a2d178-b674-4355-870e-415c259658e3@tls.msk.ru>
-Date: Sat, 25 Apr 2026 00:35:27 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id F3E261A2FAE;
+ Sat, 25 Apr 2026 00:36:31 +0300 (MSK)
+Message-ID: <9204d75c-e412-4857-933c-3ad3aee6736d@tls.msk.ru>
+Date: Sat, 25 Apr 2026 00:37:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/mshv: Fix segment regression in MMIO emu
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@microsoft.com>,
- =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Subject: Re: [PATCH v2] meson: add missing semicolon in
+ pthread_condattr_setclock test
+To: Stepan Popov <Stepan.Popov@kaspersky.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20260410142652.367541-1-magnuskulke@linux.microsoft.com>
+References: <20260330162250.97380-1-Stepan.Popov@kaspersky.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -87,9 +89,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260410142652.367541-1-magnuskulke@linux.microsoft.com>
+In-Reply-To: <20260330162250.97380-1-Stepan.Popov@kaspersky.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -113,30 +115,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.04.2026 17:26, Magnus Kulke wrote:
-> When the segmentation code has been reworked, there is now an
-> unconditional call to emul_ops->read_segment_descriptor(). The MSHV impl
-> was delegating this to x86_read_segement_descriptor(), which read from
-> the GDT in guest memory. This fails for selector.idx == 0 and when no
-> GDT is set up (which is the case in real mode).
+On 30.03.2026 19:22, Stepan Popov wrote:
+> The test code was missing a semicolon after the pthread_condattr_t
+> variable declaration.
 > 
-> In the fix we change the MSHV impl to fill segment descriptor from
-> SegmentCache, that was populated from the hypervisor by mshv_load_regs()
-> before instruction emulation.
-> 
-> Fixes: 09442d98ab (target/i386: emulate: segmentation rework)
-> 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->   target/i386/mshv/mshv-cpu.c | 39 ++++++++++++++++++++++++++++++-------
->   1 file changed, 32 insertions(+), 7 deletions(-)
+> Fixes: 657ac98b58 ("thread-posix: use monotonic clock for QemuCond and
+> QemuSemaphore")
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
 
-This looks like a qemu-stable material (11.0.x).
-
-Please let me know if it isn't.
+I'm picking this up for qemu stable series.
+Please let me know if I shouldn't do that.
 
 Thanks,
 
 /mjt
-
 
