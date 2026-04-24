@@ -4,51 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB5EFED3CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 14:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A3DFED3CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 14:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGHBa-0002Yv-9Z; Fri, 24 Apr 2026 10:07:14 -0400
+	id 1wGHBb-0002Ze-Ko; Fri, 24 Apr 2026 10:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wGHBY-0002Yf-1R
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:07:12 -0400
+ id 1wGHBZ-0002Yo-BG
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:07:13 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wGHBU-0007Oc-Ln
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:07:11 -0400
+ id 1wGHBU-0007OZ-RW
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 10:07:13 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63OE6rPa008037
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63OE6rPb008037
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Fri, 24 Apr 2026 23:06:54 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=7G78Igp1Lu4v5hrzs81W2MRUUjdazJoXCvgc1oemwsU=; 
+DKIM-Signature: a=rsa-sha256; bh=3PTC2WsTND6RCdsl4wWJ5P+BEs7aCKUgDSNSWQzTsg0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1777039614; v=1;
- b=I+86AiLMnFnJDxIxqZaO5Min/1beEcY3PNZoegX8oO7wWphDoNVAZNoYHzbQVzby
- JNYQw/0tpo+jlm/LU04ezqi8EvkIaHa1MTaUpy54n4eoZ3yRhjS/X5OzIHDWQ0jv
- 1Wq1GoUXMg/T+ev7bNWqWUmulJXHuXk9Vm8gyYalqj2mEomSAGY88olhlAbHKLai
- S2fIj2NBCoGBvU4g4r7ql8HvrwiT3OCbKjXNk/Irtc4OkawJilTPGxnV1bC8t5sh
- EGZOxtrMZQse0DX3ar0AgNbKEMfnLqVVHjBRSI26hYqEmpwkA5q7bhBTSLOCpK3w
- FV8ibtY3Trin2WcgjqJc9Q==
+ b=iKjWpbs58fhJZtKgFUahjFl//B4Zjdu/HFXfrZeL0bKOArFo4/RDFjW3vTh7qUik
+ zqyXqxLPysdbhXr90zViIWGqZXsR34UlOjX8y56xSW/BbX20ZyjKnq3sR+Mc7Cnn
+ dQiOAd8Q9HguIQuzn4EuVunjR5nfpsgIzMK/fbsg/DY7P028hIyO9syWY7GYycvl
+ C6lnbbA4eOPK+V3hftrw5aEC/TVbK8K0+83FHP7bSUC0sUNu1889V8zpPHezQ2c2
+ lqpz7S1M4vHVCr9EuAbQyUV6AtEf1aLBjKKlDmopQiDa8QRMKibmm7Tw/Kd2rePB
+ M5ojADkC/x3X1dtZYjJhNA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v2 0/2] virtio-gpu: Do not wait for the main thread during
- reset
-Date: Fri, 24 Apr 2026 23:06:40 +0900
-Message-Id: <20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 24 Apr 2026 23:06:41 +0900
+Subject: [PATCH v2 1/2] virtio-gpu: Run reset cleanup in the same BH
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WOQQ6DIBBFr2JmXQigxuiq92hcIB112lgsIKkx3
- r1UV12+yZ/3/wYeHaGHJtvAYSRP9pVAXTIwo34NyOieGJRQpRSqZsO8MJP3RVkVVV91GlJydtj
- T57Dc2sQj+WDdekij/F3//6NkkmGOuakQO1Pj1fmBG+LEFxbsc7VcG/6Yod1Pu8P3kqaFswI67
- ZEZO00UmixKyQUXKbt/AY0yuJ7OAAAA
-X-Change-ID: 20251029-gpu-c3f45747f7ba
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260424-gpu-v2-1-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
@@ -78,100 +74,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This fixes a deadlock I previously observed with the test in [1].
+Commit a41e2d97f92b ("virtio-gpu: reset gfx resources in main thread")
+made resource destruction run in the main thread, but left command and
+fence queue cleanup in virtio_gpu_reset(). When reset is initiated from
+a vCPU thread, virtio_gpu_reset() schedules reset_bh and then waits with
+qemu_cond_wait_bql(), which releases the BQL while the BH is running.
 
-However, I can no longer reproduce the issue reliably with that test, so
-I used Codex, a coding agent, to write a more reliable local test case,
-shown below. I applied to Codex for Open Source to get access. The test
-case is not intended for merge: current policy prohibits that, and it is
-probably not worth carrying anyway because race-condition tests are
-inherently fragile. The remaining patches were written by me.
+That split leaves a window after reset_bh has destroyed resources and
+before virtio_gpu_reset() drains cmdq/fenceq. Other virtio-gpu BHs can
+run in that window, so commands may be observed on the wrong side of the
+reset boundary:
 
-[1] https://lore.kernel.org/qemu-devel/20251014111234.3190346-9-alex.bennee@linaro.org/
+1.  vCPU thread A: Enter virtio_gpu_reset()
+2.  vCPU thread A: Schedule reset_bh
+3.  vCPU thread A: Wait in qemu_cond_wait_bql(&g->reset_cond)
+4.  vCPU thread A: Drop the BQL while waiting
+5.  vCPU thread B: Take the BQL
+6.  vCPU thread B: Queue a command
+7.  vCPU thread B: Drop the BQL
+8.  Main thread:   Take the BQL
+9.  Main thread:   Run virtio_gpu_reset_bh()
+10. Main thread:   Destroy resources
+11. Main thread:   Signal g->reset_cond
+12. Main thread:   Process the queued command
+13. Main thread:   Drop the BQL
+14. vCPU thread B: Take the BQL
+15. vCPU thread B: Queue another command
+16. vCPU thread B: Drop the BQL
+17. vCPU thread A: Take the BQL
+18. vCPU thread A: Leave qemu_cond_wait_bql(&g->reset_cond)
+19. vCPU thread A: Delete the second command from cmdq
 
-To: qemu-devel@nongnu.org
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Michael S. Tsirkin <mst@redhat.com>
+The first command is processed as if it happened after reset, while the
+second command is discarded as if it happened before reset.
+
+Move cmdq/fenceq cleanup and virtio_gpu_base_reset() into reset_bh so
+all virtio-gpu reset state is updated in the same main-thread callback.
+This keeps command processing from interleaving with a partially
+completed reset.
+
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/display/virtio-gpu.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-Below is the Codex-written test case:
-
-diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/functional/aarch64/test_gpu_blob.py
-index a913d3b29c84..52627b4541f9 100755
---- a/tests/functional/aarch64/test_gpu_blob.py
-+++ b/tests/functional/aarch64/test_gpu_blob.py
-@@ -13,7 +13,9 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index b998ce8324d6..d514b548efd9 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1582,6 +1582,7 @@ static void virtio_gpu_reset_bh(void *opaque)
+ {
+     VirtIOGPU *g = VIRTIO_GPU(opaque);
+     VirtIOGPUClass *vgc = VIRTIO_GPU_GET_CLASS(g);
++    struct virtio_gpu_ctrl_command *cmd;
+     struct virtio_gpu_simple_resource *res, *tmp;
+     uint32_t resource_id;
+     Error *local_err = NULL;
+@@ -1601,10 +1602,25 @@ static void virtio_gpu_reset_bh(void *opaque)
+         }
+     }
  
--from qemu.machine.machine import VMLaunchFailure
-+import subprocess
++    while (!QTAILQ_EMPTY(&g->cmdq)) {
++        cmd = QTAILQ_FIRST(&g->cmdq);
++        QTAILQ_REMOVE(&g->cmdq, cmd, next);
++        g_free(cmd);
++    }
 +
-+from qemu.machine.machine import AbnormalShutdown, VMLaunchFailure
++    while (!QTAILQ_EMPTY(&g->fenceq)) {
++        cmd = QTAILQ_FIRST(&g->fenceq);
++        QTAILQ_REMOVE(&g->fenceq, cmd, next);
++        g->inflight--;
++        g_free(cmd);
++    }
++
+     for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
+         dpy_gfx_replace_surface(g->parent_obj.scanout[i].con, NULL);
+     }
  
- from qemu_test import Asset
- from qemu_test import wait_for_console_pattern
-@@ -25,8 +27,7 @@ class Aarch64VirtBlobTest(LinuxKernelTest):
-                        'download?path=%2Fblob-test&files=qemu-880.bin',
-                        '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e2d569ea2e34e42eb')
++    virtio_gpu_base_reset(VIRTIO_GPU_BASE(g));
++
+     g->reset_finished = true;
+     qemu_cond_signal(&g->reset_cond);
+ }
+@@ -1612,7 +1628,6 @@ static void virtio_gpu_reset_bh(void *opaque)
+ void virtio_gpu_reset(VirtIODevice *vdev)
+ {
+     VirtIOGPU *g = VIRTIO_GPU(vdev);
+-    struct virtio_gpu_ctrl_command *cmd;
  
--    def test_virtio_gpu_blob(self):
+     if (qemu_in_vcpu_thread()) {
+         g->reset_finished = false;
+@@ -1623,21 +1638,6 @@ void virtio_gpu_reset(VirtIODevice *vdev)
+     } else {
+         aio_bh_call(g->reset_bh);
+     }
 -
-+    def launch_blob_test(self):
-         self.set_machine('virt')
-         self.require_accelerator("tcg")
+-    while (!QTAILQ_EMPTY(&g->cmdq)) {
+-        cmd = QTAILQ_FIRST(&g->cmdq);
+-        QTAILQ_REMOVE(&g->cmdq, cmd, next);
+-        g_free(cmd);
+-    }
+-
+-    while (!QTAILQ_EMPTY(&g->fenceq)) {
+-        cmd = QTAILQ_FIRST(&g->fenceq);
+-        QTAILQ_REMOVE(&g->fenceq, cmd, next);
+-        g->inflight--;
+-        g_free(cmd);
+-    }
+-
+-    virtio_gpu_base_reset(VIRTIO_GPU_BASE(vdev));
+ }
  
-@@ -65,9 +66,27 @@ def test_virtio_gpu_blob(self):
-                 self.log.info("unhandled launch failure: %s", excp.output)
-                 raise excp
- 
-+    def test_virtio_gpu_blob(self):
-+        self.launch_blob_test()
-+
-         self.wait_for_console_pattern('[INFO] virtio-gpu test finished')
-         # the test should cleanly exit
- 
-+    def test_virtio_gpu_blob_shutdown_race(self):
-+        self.launch_blob_test()
-+
-+        self.wait_for_console_pattern('[INFO] unmapping blob object resource')
-+
-+        try:
-+            self.vm.shutdown(timeout=10)
-+        except AbnormalShutdown as excp:
-+            if isinstance(excp.__cause__, subprocess.TimeoutExpired):
-+                raise AssertionError(
-+                    "QEMU failed to exit while virtio-gpu reset was racing "
-+                    "with shutdown") from excp
-+            self.log.info("QEMU exited before the shutdown request completed: %s",
-+                          excp)
-+
- 
- if __name__ == '__main__':
-     LinuxKernelTest.main()
+ static void
 
----
-Changes in v2:
-- Added the patch "virtio-gpu: Run reset cleanup in the same BH".
-- My assumption about the ordering was incorrect, so I changed the patch
-  to follow the approach used by virtio-gpu-gl.
-- Link to v1: https://lore.kernel.org/qemu-devel/20251029-gpu-v1-1-e3e3c7eebc9e@rsg.ci.i.u-tokyo.ac.jp
-
----
-Akihiko Odaki (2):
-      virtio-gpu: Run reset cleanup in the same BH
-      virtio-gpu: Do not wait for the main thread during reset
-
- include/hw/virtio/virtio-gpu.h |  4 +--
- hw/display/virtio-gpu.c        | 60 ++++++++++++++++++++----------------------
- 2 files changed, 30 insertions(+), 34 deletions(-)
----
-base-commit: 14f38a63b9adc02c0ebe3b5ada1f1208abaf21ea
-change-id: 20251029-gpu-c3f45747f7ba
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.53.0
 
 
